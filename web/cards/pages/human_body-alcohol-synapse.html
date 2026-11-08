@@ -1,385 +1,247 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: human_body-alcohol-synapse -->
-<!-- Look: a cyanotype blueprint of one synapse. White hairlines on Prussian blue, engineer's lettering, dimension chains, a hatched sending neuron above and a receiving neuron below.
-     Interaction: slide from SOBER to DRUNK. Four messengers cross the gap along real curved paths. GABA and dopamine pour out faster, while glutamate and acetylcholine dwindle and get blocked halfway. Ethanol molecules drift into the gap and the signal pulses below slow down.
-     Wow: at the full dose, ripples bloom from the GABA and dopamine receptors, crosses are drawn over the glutamate and ACh receptors, and the why slides in.
-     Layout: the drawing measures its own box, so text is always drawn at true size. It drops rows (signal line, then gauge bars) on short phones instead of shrinking. -->
-<title>Alcohol at the synapse</title>
+<!doctype html>
+<!-- slug: human_body-alcohol-four-messengers -->
+<!--
+  Thought to carry: alcohol does not loosen you by revving the brain up. Of the four messengers it acts on, it turns two up (GABA, dopamine) and two down (glutamate, acetylcholine). Together these changes slow the flow of information between neurons. That slower brain senses less, feels less tension, feels euphoric and remembers less.
+  Front: four synapses in a row, each with only its name. Tap each to guess more or less. Your guess shows as molecules in the gap and in the pill.
+  Back: the same four synapses with the same gap. The true molecules cross: a dense cluster spilling onto the receiving side for "more", one lonely molecule for "less". A thick arrow on each stem carries the up/down split. Under each, your own answer with a check or a cross. The effects (slower thought, less tension, euphoria, weaker memory) are told once, as the result of all four changes together, never pinned to one messenger.
+  Answer keys (checked against the brief): GABA more, glutamate less, dopamine more, acetylcholine less.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Alcohol's four messengers</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background-color:var(--c);background-image:
-  radial-gradient(ellipse 90% 60% at 50% 38%,rgba(110,170,240,.22),transparent 70%),
-  linear-gradient(rgba(234,244,255,.05) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(234,244,255,.05) 1px,transparent 1px);
-  background-size:100% 100%,22px 22px,22px 22px}
-#stage{position:relative;display:block;flex:1;min-height:0;background:none;border:0;box-shadow:none;padding:0}
-#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
-#pic text{font-family:var(--mono);font-weight:700}
-#doseRow{display:flex;align-items:center;gap:3cqw;font:700 max(1.5cqh,12px)/1 var(--mono);letter-spacing:.06em;color:var(--k);margin-top:.4cqh}
-#dose{--p:0%;flex:1;min-width:0;-webkit-appearance:none;appearance:none;background:transparent;height:max(4.4cqh,32px);margin:0;touch-action:none;cursor:pointer}
-#dose::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,#8fd3ff var(--p),rgba(234,244,255,.3) var(--p))}
-#dose::-moz-range-track{height:2px;background:linear-gradient(90deg,#8fd3ff var(--p),rgba(234,244,255,.3) var(--p))}
-#dose::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.4cqh,26px);height:max(3.4cqh,26px);margin-top:calc(max(1.7cqh,13px) * -1 + 1px);border-radius:50%;background:var(--c);border:2px solid var(--k);box-shadow:0 0 0 5px rgba(143,211,255,.18),0 0 18px rgba(143,211,255,.45)}
-#dose::-moz-range-thumb{width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:var(--c);border:2px solid var(--k);box-shadow:0 0 0 5px rgba(143,211,255,.18)}
-#why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);color:var(--k);margin:0}
-#why b{color:#8fd3ff}
-.answered .q{font-size:max(2.4cqh,15px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.turn.done>.front{display:none}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{display:flex;flex:1 1 auto;min-height:0}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic .hit{cursor:pointer}
+.front .foot,.back .foot{padding-right:0;min-height:46px}
+.foot .say,.foot .src{display:block;margin:0;padding-right:0;max-width:calc(100% - 116px);overflow-wrap:anywhere}
+.back .big{margin:0 0 1.4cqh;font-size:clamp(20px,3.3cqh,32px);line-height:1.04}
+.back .body{margin:1cqh 0 1cqh;font:500 max(1.85cqh,12.5px)/1.32 var(--body);overflow-wrap:anywhere}
+.front .q{margin-bottom:1.2cqh}
+#sure{margin-top:1.4cqh}
+#sure,#sure *{opacity:1!important}
+#sure{color:var(--k)}
+#sure [data-v]{color:var(--k)!important;border:1.5px solid var(--k)!important}
 </style>
-<article class="card" id="card" data-topic="human_body" data-kind="Slide · watch the synapse" style="--c:#0e3566;--k:#eaf4ff;--edge:#082044">
+<article class="card" id="card" data-topic="human_body" data-kind="Guess each · more or less">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLIDE THE DOSE</span></div>
-    <h2 class="q">What does alcohol actually do to the messengers between your neurons?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A blueprint of a synapse: a sending neuron above releases four messengers, GABA (brake), dopamine (reward), glutamate (thought) and acetylcholine (memory), across a gap to receptors on a receiving neuron below."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MORE OR LESS?</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Alcohol hits four brain messengers. Which does it turn up, which down?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="Four synapses in a row: GABA, glutamate, dopamine and acetylcholine. Tap each to guess more or less."></svg></div>
+        <div class="sure" id="sure"></div>
+        <div class="foot"><p class="say" id="say">Alcohol slows your thoughts. Tap each: after a drink, <b>more</b> of it or <b>less</b>?</p></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Two up, two down: the brain's messages slow.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same four synapses. Many GABA and dopamine molecules cross the gap, with arrows up. A single glutamate and a single acetylcholine molecule cross, with arrows down."></svg></div>
+        <p class="body">Together, the four changes slow the signals between neurons: you sense less, tension drops, you feel euphoric and your memory slips.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Feeling looser is not a faster brain: alcohol frees you by slowing it down.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023).</span></div>
+      </section>
     </div>
-    <div id="doseRow"><span>SOBER</span><input data-drag type="range" id="dose" min="0" max="100" value="0" aria-label="Alcohol in the blood"><span>DRUNK</span></div>
-    <p class="say" id="say">Neurons talk through chemical messengers. <b>Slide toward DRUNK</b> and watch which ones grow and which fade.</p>
-    <div id="why" class="gone"><p class="body"><b>More GABA and dopamine</b>: tension drops, you feel euphoric. <b>Less glutamate and ACh</b>: thoughts slow, memories don't stick.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Alcohol boosts the brake and the reward, and mutes the messengers of thought.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    // Once the turn has finished, the hidden front leaves the layout so its mirrored pieces never sit under the back.
+    setTimeout(() => t.classList.add('done'), Kit.calm ? 0 : 780);
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
-  const svg = Kit.$('pic'), dose = Kit.$('dose'), say = Kit.$('say'), stage = Kit.$('stage');
-  const INK = '#eaf4ff', CY = '#8fd3ff', GROUND = '#0e3566';
-  const NT = [
-    {n: 'GABA', r: 'brake', up: true, shape: 'hex'},
-    {n: 'DOPAMINE', r: 'reward', up: true, shape: 'dot'},
-    {n: 'GLUTAMATE', r: 'thought', up: false, shape: 'tri'},
-    {n: 'ACh', r: 'memory', up: false, shape: 'dia'}
+  gsap.registerPlugin(MotionPathPlugin);
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2'), bodyEl = document.querySelector('.back .body');
+  // t: +1 more, -1 less. Checked against the brief: GABA up, glutamate down, dopamine up, acetylcholine down.
+  const M = [
+    {id: 'GABA', n: ['GABA'], t: 1},
+    {id: 'glutamate', n: ['glutamate'], t: -1},
+    {id: 'dopamine', n: ['dopamine'], t: 1},
+    {id: 'acetylcholine', n: ['acetyl-', 'choline'], t: -1}
   ];
-  const CH = .62; // mono glyph width per em
-  let d = 0, W = 0, H = 0, fs = 12, cols = [], gMol = null, flowLabel = null, flowD = '', pulses = [], ambient = [], etoh = [];
-  let live = false, revealed = false, lastStep = 0, lastW = 0, lastH = 0, roT = 0;
-  const active = new Set(), acc = [Math.random(), Math.random(), Math.random(), Math.random()];
-  const act = i => NT[i].up ? 1 + 1.5 * d : 1 - .7 * d;
-  const rate = i => NT[i].up ? 1.1 + 3.4 * d : Math.max(.45, 2.5 - 1.95 * d);
-  const flowSpeed = () => 1 - .62 * d;
-  const T = (p, x, y, txt, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': 12, 'text-anchor': 'middle'}, a), p); e.textContent = txt; return e; };
-  const L = (p, a) => Kit.mk('path', Object.assign({fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, a), p);
+  const guess = [0, 0, 0, 0];
+  let locked = false, turned = false, K = '#fff', C = '#ff2d55', sureOn = false, GEO = null;
+  const SOFT = 'fill:color-mix(in srgb,var(--k) 13%,var(--c))';
 
-  // Keep a label inside its column so neighbours never touch.
-  function fitText(el, maxW) {
-    el.removeAttribute('textLength'); el.removeAttribute('lengthAdjust');
-    let w = 0; try { w = el.getComputedTextLength(); } catch (e) {}
-    if (w > maxW && maxW > 10) { el.setAttribute('textLength', maxW.toFixed(1)); el.setAttribute('lengthAdjust', 'spacingAndGlyphs'); }
+  const colors = () => { const cs = getComputedStyle(card); K = cs.getPropertyValue('--k').trim() || K; C = cs.getPropertyValue('--c').trim() || C; };
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: K, 'font-family': 'Figtree, sans-serif', 'font-weight': 700, 'text-anchor': 'middle'}, a), p); e.textContent = t; return e; };
+  const keepIn = (el, W) => { const w = el.getComputedTextLength ? el.getComputedTextLength() : 0; if (!w) return;
+    const x = +el.getAttribute('x'); el.setAttribute('x', Math.max(w / 2 + 1, Math.min(W - w / 2 - 1, x))); };
+
+  // One geometry for both faces: same size, same gap, same place.
+  // Under each synapse: a two-line name slot, then the pill.
+  function geom() {
+    const f2 = Kit.fitSvg(pic2), f1 = turned ? f2 : Kit.fitSvg(pic);
+    const mkG = (W, H) => { const fs = Math.max(12, Math.min(13.5, W / 26)), lh = fs * 1.25, cw = W / 4, ch = fs * 1.9;
+      return {W, H, fs, lh, cw, ch, A: H - 2 - ch - fs * .9 - lh - fs * 1.4}; };
+    const F = mkG(f1.W, f1.H), B = mkG(f2.W, f2.H);
+    const T = Math.max(6, F.fs * .5);
+    const raw = Math.min((F.A - T) / 5.1, (B.A - T) / 5.1);
+    const u = Math.max(10, Math.min(F.cw * .34, raw));
+    const r = Math.max(2.4, u * .11), gap = Math.max(u * .55, r * 4.4);
+    [F, B].forEach(G => { const yN = G.A + G.fs * 1.4;
+      Object.assign(G, {u, T, r, gap, yB: T + u * 1.7, yR: T + u * 1.7 + gap, yN, chipY: yN + G.lh + G.fs * .9}); });
+    return {F, B, raw};
   }
-
-  function mol(type, s, parent, fill = INK) {
-    const g = Kit.mk('g', {}, parent);
-    const poly = (n, r, rot) => { const pts = []; for (let k = 0; k < n; k++) { const a = rot + k * 2 * Math.PI / n; pts.push((Math.cos(a) * r).toFixed(2) + ',' + (Math.sin(a) * r).toFixed(2)); } return pts.join(' '); };
-    if (type === 'dot') Kit.mk('circle', {r: s * .9, fill}, g);
-    else if (type === 'hex') Kit.mk('polygon', {points: poly(6, s, 0), fill}, g);
-    else if (type === 'tri') Kit.mk('polygon', {points: poly(3, s * 1.2, -Math.PI / 2), fill}, g);
-    else Kit.mk('polygon', {points: poly(4, s * 1.15, 0), fill}, g);
-    return g;
-  }
-
-  function killAll() {
-    active.forEach(t => t.kill()); active.clear();
-    ambient.forEach(t => t.kill()); ambient = []; pulses = []; etoh = [];
-  }
-
   function layout() {
-    const box = svg.getBoundingClientRect();
-    if (box.width < 40 || box.height < 40) return;
-    killAll();
-    svg.innerHTML = '';
-    W = box.width; H = box.height; lastW = W; lastH = H;
-    svg.setAttribute('viewBox', `0 0 ${W.toFixed(1)} ${H.toFixed(1)}`);
-    fs = Math.max(12, Math.min(15, W / 27, H / 9));
+    bodyEl.style.display = '';
+    GEO = geom();
+    if (GEO.raw < 15) { bodyEl.style.display = 'none'; GEO = geom(); }
+  }
 
-    const defs = Kit.mk('defs', {}, svg);
-    const pat = Kit.mk('pattern', {id: 'hatch', width: 7, height: 7, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
-    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 7, stroke: INK, 'stroke-opacity': .11, 'stroke-width': 1}, pat);
-    const rg = Kit.mk('radialGradient', {id: 'glow'}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': CY, 'stop-opacity': .9}, rg);
-    Kit.mk('stop', {offset: 1, 'stop-color': CY, 'stop-opacity': 0}, rg);
-    const sh = Kit.mk('linearGradient', {id: 'shade', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': CY, 'stop-opacity': 0}, sh);
-    Kit.mk('stop', {offset: 1, 'stop-color': CY, 'stop-opacity': .14}, sh);
-
-    const showFlow = H >= fs * 9.6, showRead = H >= fs * 6.2, showBar = showRead && H >= fs * 7.6;
-
-    const needCol = 9 * CH * 12 + 8;
-    let xa = fs * 2.5; const xb = W - 2;
-    const dimOn = (xb - xa) / 4 >= needCol;
-    if (!dimOn) xa = 2;
-    const colW = (xb - xa) / 4;
-    const nameFs = Math.max(12, Math.min(fs, (colW - 8) / (9 * CH)));
-
-    const flowY = H - fs * .8;
-    const postB = showFlow ? H - fs * 1.8 : H - 1;
-    const namesY = postB - fs * .5;
-    const yPost = namesY - nameFs * 1.05 - fs * .45;
-    const yRead = fs * .95, by = yRead + fs * .6;
-    const top = showRead ? (showBar ? by + 6 : yRead + 6) : 4;
-    const span = yPost - top;
-    const yPre = top + span * .5, cl = yPost - yPre;
-    const rr = Math.max(4, Math.min(fs * 2, colW * .6, (yPre - top) * .9));
-    const rrP = Math.max(3, Math.min(rr, postB - yPost - 1));
-    const recH = Math.min(fs * .9, cl * .28), rw = Math.min(colW * .17, fs * 1.1);
-    const vr = Math.max(5, Math.min(colW * .27, (yPre - top) * .36, fs * 2.2));
-    const vy = Math.max(top + vr + 2, yPre - vr - Math.min(fs * .9, (yPre - top) * .15));
-
-    const bulb = `M${xa},-4 L${xa},${yPre - rr} Q${xa},${yPre} ${xa + rr},${yPre} L${xb - rr},${yPre} Q${xb},${yPre} ${xb},${yPre - rr} L${xb},-4`;
-    Kit.mk('path', {d: bulb, fill: 'url(#hatch)'}, svg);
-    Kit.mk('path', {d: bulb, fill: 'url(#shade)'}, svg);
-    L(svg, {d: bulb, 'stroke-width': 1.6, class: 'ln'});
-    const i4 = 4;
-    L(svg, {d: `M${xa + i4},-4 L${xa + i4},${yPre - rr} Q${xa + i4},${yPre - i4} ${xa + rr},${yPre - i4} L${xb - rr},${yPre - i4} Q${xb - i4},${yPre - i4} ${xb - i4},${yPre - rr} L${xb - i4},-4`, 'stroke-width': .8, 'stroke-dasharray': '2 3', opacity: .55});
-
-    const room = vy - vr - top;
-    if (room >= fs * 3) {
-      const mx = xa + colW * 2, my = top + room / 2, mrx = colW * .55, mry = Math.min(room * .3, fs * 1.1);
-      const mg = Kit.mk('g', {opacity: .8}, svg);
-      Kit.mk('ellipse', {cx: mx, cy: my, rx: mrx, ry: mry, fill: GROUND, stroke: INK, 'stroke-width': 1.2, class: 'ln'}, mg);
-      Kit.mk('ellipse', {cx: mx, cy: my, rx: mrx - 3, ry: mry - 3, fill: 'none', stroke: INK, 'stroke-width': .7, opacity: .6}, mg);
-      let cr = `M${mx - mrx * .72},${my}`; const n = 7;
-      for (let k = 1; k <= n; k++) cr += ` L${(mx - mrx * .72 + k * mrx * 1.44 / n).toFixed(1)},${(my + (k % 2 ? -1 : 1) * mry * .55).toFixed(1)}`;
-      L(mg, {d: cr, 'stroke-width': .9, opacity: .75});
-      const sx = [1, -1, 1, -1];
-      for (let i = 0; i < 4; i++) {
-        const cx = xa + colW * (i + .5) + sx[i] * colW * .24, cy = top + room * .5, r2 = Math.min(vr * .5, room * .3);
-        Kit.mk('circle', {cx, cy, r: r2, fill: GROUND, stroke: INK, 'stroke-width': .9, opacity: .5}, svg);
-        Kit.mk('circle', {cx, cy, r: r2 * .3, fill: NT[i].up ? CY : INK, opacity: .5}, svg);
-      }
-    }
-
-    const post = `M${xa},${postB} L${xa},${yPost + rrP} Q${xa},${yPost} ${xa + rrP},${yPost} L${xb - rrP},${yPost} Q${xb},${yPost} ${xb},${yPost + rrP} L${xb},${postB}`;
-    Kit.mk('path', {d: post, fill: 'url(#hatch)'}, svg);
-    L(svg, {d: post, 'stroke-width': 1.6, class: 'ln'});
-    L(svg, {d: `M${xa + i4},${postB} L${xa + i4},${yPost + rrP} Q${xa + i4},${yPost + i4} ${xa + rrP},${yPost + i4} L${xb - rrP},${yPost + i4} Q${xb - i4},${yPost + i4} ${xb - i4},${yPost + rrP} L${xb - i4},${postB}`, 'stroke-width': .8, 'stroke-dasharray': '2 3', opacity: .55});
-
-    if (dimOn) {
-      const dx = fs * 1.6, ah = 4, lx = fs * .7;
-      const dim = Kit.mk('g', {opacity: .85}, svg);
-      for (const y of [yPre, yPost]) L(dim, {d: `M${dx - 5},${y} L${xa - 3},${y}`, 'stroke-width': .8, 'stroke-dasharray': '3 3'});
-      L(dim, {d: `M${dx},${yPre + 2} L${dx},${yPost - 2} M${dx - ah},${yPre + ah * 1.6} L${dx},${yPre + 1} L${dx + ah},${yPre + ah * 1.6} M${dx - ah},${yPost - ah * 1.6} L${dx},${yPost - 1} L${dx + ah},${yPost - ah * 1.6}`, 'stroke-width': 1, class: 'ln'});
-      if (cl > 3 * CH * 12 + 14) T(dim, lx, (yPre + yPost) / 2, 'GAP', {transform: `rotate(-90 ${lx} ${(yPre + yPost) / 2})`, 'dominant-baseline': 'middle'});
-      L(dim, {d: `M${dx},${fs * .3} L${dx},${yPre - 3} M${dx - ah},${fs * .3} L${dx + ah},${fs * .3}`, 'stroke-width': 1, class: 'ln'});
-      if (yPre > 6 * CH * 12 + 20) T(dim, lx, yPre / 2, 'SENDER', {transform: `rotate(-90 ${lx} ${yPre / 2})`, 'dominant-baseline': 'middle'});
-      L(dim, {d: `M${dx},${yPost + 3} L${dx},${postB} M${dx - ah},${postB} L${dx + ah},${postB}`, 'stroke-width': 1, class: 'ln'});
-    }
-
-    cols = [];
-    const gTxt = Kit.mk('g', {}, svg);
-    NT.forEach((nt, i) => {
-      const cx = xa + colW * (i + .5), g = Kit.mk('g', {}, svg);
-      const paths = [];
-      for (let k = 0; k < 3; k++) {
-        const o = k - 1, sx = cx + o * vr * .45, sy = vy + vr * .35, ex = cx + o * rw * .35, ey = yPost - recH * .45;
-        const sw = (i % 2 ? 1 : -1) * colW * .1;
-        const p = `M${sx.toFixed(1)},${sy.toFixed(1)} C${(sx + o * colW * .3 + sw).toFixed(1)},${(yPre + cl * .4).toFixed(1)} ${(ex - o * colW * .22 - sw).toFixed(1)},${(ey - cl * .45).toFixed(1)} ${ex.toFixed(1)},${ey.toFixed(1)}`;
-        paths.push(p);
-        L(g, {d: p, 'stroke-width': .8, 'stroke-dasharray': '1.5 4', opacity: .3});
-      }
-      const ves = Kit.mk('g', {class: 'ves'}, g);
-      Kit.mk('circle', {cx, cy: vy, r: vr, fill: GROUND, stroke: INK, 'stroke-width': 1.3}, ves);
-      Kit.mk('circle', {cx, cy: vy, r: vr * .78, fill: 'none', stroke: INK, 'stroke-width': .7, 'stroke-dasharray': '1.5 2.5', opacity: .6}, ves);
-      for (let k = 0; k < 5; k++) {
-        const a = k * 1.256 + i, r2 = k ? vr * .42 : 0, m = mol(nt.shape, Math.max(1.6, vr * .13), ves, nt.up ? CY : INK);
-        m.setAttribute('transform', `translate(${(cx + Math.cos(a) * r2).toFixed(1)},${(vy + Math.sin(a) * r2).toFixed(1)})`);
-      }
-      const ry = yPost - recH * .4;
-      const glow = Kit.mk('circle', {cx, cy: ry, r: rw * 2.6, fill: 'url(#glow)', opacity: 0}, g);
-      const rec = L(g, {d: `M${cx - rw},${yPost - recH} C${cx - rw},${yPost + recH * .35} ${cx + rw},${yPost + recH * .35} ${cx + rw},${yPost - recH} M${cx - rw * .45},${yPost - recH * .2} L${cx - rw * .45},${yPost + fs * .4} M${cx + rw * .45},${yPost - recH * .2} L${cx + rw * .45},${yPost + fs * .4}`, 'stroke-width': 1.5, fill: GROUND, class: 'ln'});
-      let xg = null;
-      if (!nt.up) {
-        xg = Kit.mk('g', {opacity: revealed ? 1 : 0}, svg);
-        const s = rw * 1.2;
-        L(xg, {d: `M${cx - s},${ry - s} L${cx + s},${ry + s * .7}`, 'stroke-width': 2.2});
-        L(xg, {d: `M${cx + s},${ry - s} L${cx - s},${ry + s * .7}`, 'stroke-width': 2.2});
-      }
-      const tw = colW * .62, bx = cx - tw / 2;
-      let read = null, bar = null;
-      if (showRead) {
-        read = T(gTxt, cx, yRead, nt.r);
-        if (showBar) {
-          L(gTxt, {d: `M${bx},${by} L${bx + tw},${by} M${bx},${by - 3} L${bx},${by + 3} M${bx + tw},${by - 3} L${bx + tw},${by + 3}`, 'stroke-width': .8, opacity: .5});
-          bar = Kit.mk('line', {x1: bx, y1: by, x2: bx + tw * .4, y2: by, stroke: nt.up ? CY : INK, 'stroke-width': 2.6, 'stroke-linecap': 'round'}, gTxt);
-        }
-      }
-      const nm = T(gTxt, cx, namesY, nt.n, {'font-size': nameFs});
-      fitText(nm, colW - 10);
-      cols.push({cx, vy, ves, paths, glow, rec, g, xg, read, bar, bx, tw, ry, rw, glowBase: 0, maxW: colW - 12});
+  // One synapse: sending ending with vesicles, the gap, receiving ending with receptors. Stems stay open: the neurons go on.
+  function neuron(g, cx, G) {
+    const {u, T, yB, yR, A} = G, s = u * .3, y1 = yB - u * 1.15, X = k => cx + k * u;
+    const pre = `M${cx - s / 2},${T} V${y1} C${cx - s / 2},${y1 + u * .25} ${X(-1)},${y1 + u * .15} ${X(-1)},${yB - u * .3} Q${X(-1)},${yB} ${X(-.7)},${yB} H${X(.7)} Q${X(1)},${yB} ${X(1)},${yB - u * .3} C${X(1)},${y1 + u * .15} ${cx + s / 2},${y1 + u * .25} ${cx + s / 2},${y1} V${T}`;
+    const post = `M${cx - s / 2},${A} V${yR + u * 1.6} C${cx - s / 2},${yR + u * 1.3} ${X(-1.05)},${yR + u * 1.35} ${X(-1.05)},${yR + u * 1.05} V${yR + u * .12} Q${X(-1.05)},${yR} ${X(-.85)},${yR} H${X(.85)} Q${X(1.05)},${yR} ${X(1.05)},${yR + u * .12} V${yR + u * 1.05} C${X(1.05)},${yR + u * 1.35} ${cx + s / 2},${yR + u * 1.3} ${cx + s / 2},${yR + u * 1.6} V${A}`;
+    [pre, post].forEach(d => {
+      Kit.mk('path', {d: d + ' Z', style: SOFT, stroke: 'none'}, g);
+      Kit.mk('path', {d, fill: 'none', stroke: K, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
     });
-
-    const gEt = Kit.mk('g', {}, svg);
-    const y0 = yPre + cl * .18, y1 = yPost - recH - cl * .14;
-    if (y1 - y0 > 6) {
-      const s = Math.min(fs * .34, cl * .08 + 2);
-      for (let k = 0; k < 7; k++) {
-        const ex = xa + (k + .5) * (xb - xa) / 7 + (Math.random() - .5) * colW * .25;
-        const ey = y0 + ((k * .618 + .2) % 1) * (y1 - y0);
-        const outer = Kit.mk('g', {transform: `translate(${ex.toFixed(1)},${ey.toFixed(1)})`, opacity: 0}, gEt);
-        const inner = Kit.mk('g', {}, outer);
-        L(inner, {d: `M${-s},${s * .45} L0,${-s * .35} L${s},${s * .45}`, 'stroke-width': 1, opacity: .8});
-        Kit.mk('circle', {cx: -s, cy: s * .45, r: s * .36, fill: GROUND, stroke: INK, 'stroke-width': 1}, inner);
-        Kit.mk('circle', {cx: 0, cy: -s * .35, r: s * .36, fill: GROUND, stroke: INK, 'stroke-width': 1}, inner);
-        Kit.mk('circle', {cx: s, cy: s * .45, r: s * .4, fill: INK}, inner);
-        etoh.push(outer);
-        if (!Kit.calm) ambient.push(gsap.fromTo(inner, {x: -fs * .5, y: -fs * .3, rotation: -20}, {x: fs * .5, y: fs * .3, rotation: 20, svgOrigin: '0 0', duration: 2.2 + Math.random() * 1.6, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: -Math.random() * 3}));
-      }
+    [[-.42, .62], [.4, .68], [0, .3]].forEach(([dx, dy]) => {
+      const vx = cx + dx * u, vy = yB - dy * u, r = u * .2;
+      Kit.mk('circle', {cx: vx, cy: vy, r, fill: C, stroke: K, 'stroke-width': 1.2}, g);
+      [[-.35, .2], [.35, .15], [0, -.35]].forEach(([a, b]) => Kit.mk('circle', {cx: vx + a * r, cy: vy + b * r, r: Math.max(1, r * .16), fill: K}, g));
+    });
+    [-.62, -.11, .4].forEach(dx => Kit.mk('rect', {x: cx + dx * u, y: yR - u * .1, width: u * .22, height: u * .16, rx: u * .06, fill: K}, g));
+  }
+  // Where the molecules land: "more" is a crowd spilling onto the receiving side, "less" is one alone.
+  function spots(cx, G, v) {
+    const {u, yB, yR, r} = G;
+    if (v < 0) return [[cx + u * .15, (yB + yR) / 2]];
+    const rest = yR - u * .1 - r * .9, up = rest - r * 1.85, inn = yR + u * .32, P = [];
+    [-.84, -.42, 0, .42, .84].forEach(d => P.push([cx + d * u, rest]));
+    [-.63, -.21, .21, .63].forEach(d => P.push([cx + d * u, up]));
+    [-.5, .34].forEach(d => P.push([cx + d * u, inn]));
+    return P;
+  }
+  function arrow(g, cx, G, v) {
+    const {u, yR, A} = G, top = yR + u * 1.4, room = A - top;
+    const L = Math.max(u * .8, Math.min(u * 1.7, room - u * .15)), hw = u * .5, sw = u * .2, hl = Math.min(L * .5, u * .75);
+    const y0 = top + Math.max(0, room - L) / 2, y1 = y0 + L;
+    const d = v > 0
+      ? `M${cx},${y0} L${cx + hw},${y0 + hl} H${cx + sw} V${y1} H${cx - sw} V${y0 + hl} H${cx - hw} Z`
+      : `M${cx},${y1} L${cx + hw},${y1 - hl} H${cx + sw} V${y0} H${cx - sw} V${y1 - hl} H${cx - hw} Z`;
+    return Kit.mk('path', {d, fill: K, stroke: C, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, g);
+  }
+  // Name only, in a two-line slot, top-aligned across the row.
+  function labels(g, cx, m, G) {
+    m.n.forEach((t, i) => keepIn(txt(g, cx, G.yN + i * G.lh, t, {'font-size': G.fs, 'font-weight': 800}), G.W));
+  }
+  // Pill stays inside its own column, and its word (with mark) always fits inside the pill.
+  function pill(g, cx, G, v, ok) {
+    const w = Math.max(G.fs * 2.6, Math.min(G.cw - Math.max(6, G.fs * .6), G.fs * 5.2)), h = G.ch, x = cx - w / 2, y = G.chipY, c = Kit.mk('g', {class: 'chip'}, g);
+    if (!v) {
+      Kit.mk('rect', {x, y, width: w, height: h, rx: h / 2, fill: 'none', stroke: K, 'stroke-width': 1.4, 'stroke-dasharray': '4 3'}, c);
+      txt(c, cx, y + h * .68, '?', {'font-size': G.fs, 'font-weight': 800});
+      return c;
     }
-    gMol = Kit.mk('g', {}, svg);
-
-    flowLabel = null; flowD = '';
-    if (showFlow) {
-      const lw = 14 * CH * 12, x0 = xa + lw + 12, amp = fs * .32, wl = fs * 2.4;
-      flowLabel = T(svg, xa, flowY + 4.2, '', {'text-anchor': 'start'});
-      let x = x0, upw = true; flowD = `M${x0},${flowY}`;
-      while (x + wl / 2 <= xb - 8) { flowD += ` q${wl / 4},${upw ? -amp : amp} ${wl / 2},0`; x += wl / 2; upw = !upw; }
-      L(svg, {d: flowD, 'stroke-width': .9, 'stroke-dasharray': '3 3', opacity: .6});
-      L(svg, {d: `M${x - 6},${flowY - 4} L${x},${flowY} L${x - 6},${flowY + 4}`, 'stroke-width': 1.3});
-      for (let k = 0; k < 3; k++) {
-        const pg = Kit.mk('g', {}, svg);
-        Kit.mk('circle', {r: fs * .7, fill: 'url(#glow)'}, pg);
-        Kit.mk('circle', {r: fs * .22, fill: INK}, pg);
-        pulses.push(pg);
-        if (Kit.calm) {
-          const pos = MotionPathPlugin.getPositionOnPath(MotionPathPlugin.getRawPath(flowD), (k + .5) / 3);
-          gsap.set(pg, {x: pos.x, y: pos.y});
-        } else {
-          const t = gsap.to(pg, {motionPath: {path: flowD}, duration: 2.8, repeat: -1, ease: 'none'});
-          t.progress(k / 3); t.timeScale(flowSpeed()); t._pulse = true; ambient.push(t);
-        }
-      }
+    Kit.mk('rect', {x, y, width: w, height: h, rx: h / 2, fill: K}, c);
+    const t = txt(c, cx, y + h * .68, v > 0 ? 'more' : 'less', {'font-size': G.fs, 'font-weight': 800, fill: C});
+    const inner = w - h * .7;
+    let tw = t.getComputedTextLength() || G.fs * 2.3;
+    if (ok === undefined) {
+      if (tw > inner) { const k = inner / tw; t.setAttribute('font-size', G.fs * k); }
+      return c;
     }
-    update(true);
+    let fs = G.fs, ms = fs * .72, gp = fs * .38;
+    const k = Math.min(1, inner / (ms + gp + tw));
+    if (k < 1) { fs *= k; ms *= k; gp *= k; tw *= k; t.setAttribute('font-size', fs); t.setAttribute('y', y + h / 2 + fs * .35); }
+    const x0 = cx - (ms + gp + tw) / 2, mx = x0 + ms / 2, my = y + h / 2;
+    t.setAttribute('text-anchor', 'start'); t.setAttribute('x', x0 + ms + gp);
+    Kit.mk('path', {d: ok ? `M${mx - ms * .5},${my} l${ms * .35},${ms * .38} l${ms * .65},${-ms * .76}` : `M${mx - ms * .4},${my - ms * .4} l${ms * .8},${ms * .8} m0,${-ms * .8} l${-ms * .8},${ms * .8}`,
+      fill: 'none', stroke: C, 'stroke-width': Math.max(1.8, fs * .16), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, c);
+    return c;
   }
 
-  function flash(c) {
-    gsap.fromTo(c.glow, {attr: {opacity: .95}}, {attr: {opacity: c.glowBase}, duration: .7, ease: 'power2.out'});
-  }
-
-  function spawn(i) {
-    const c = cols[i]; if (!c || active.size > 80) return;
-    const up = NT[i].up, blocked = !up && Math.random() < .72 * d;
-    const p = c.paths[(Math.random() * c.paths.length) | 0];
-    const el = mol(NT[i].shape, fs * .3, gMol, up ? CY : INK);
-    const tw = gsap.to(el, {motionPath: {path: p, start: 0, end: blocked ? .4 + Math.random() * .15 : 1}, duration: (1.05 + .8 * d) * (blocked ? .6 : 1), ease: blocked ? 'power2.out' : 'power1.inOut', onComplete: () => {
-      active.delete(tw);
-      if (!blocked) flash(c);
-      const t2 = gsap.to(el, {opacity: 0, scale: blocked ? .15 : .6, transformOrigin: '50% 50%', duration: blocked ? .4 : .25, ease: 'power2.in', onComplete: () => { active.delete(t2); el.remove(); }});
-      active.add(t2);
-    }});
-    active.add(tw);
-    const tv = gsap.fromTo(c.ves, {scale: 1.09}, {scale: 1, transformOrigin: '50% 50%', duration: .4, ease: 'back.out(3)'});
-    active.add(tv);
-  }
-
-  function staticMols() {
-    if (!gMol) return;
-    gMol.innerHTML = '';
-    cols.forEach((c, i) => {
-      const n = Math.max(1, Math.round(rate(i) * 1.3));
-      for (let k = 0; k < n; k++) {
-        const blocked = !NT[i].up && k / n < .72 * d;
-        const t = blocked ? .25 + .2 * (k / n) : (k + .5) / n;
-        const pos = MotionPathPlugin.getPositionOnPath(MotionPathPlugin.getRawPath(c.paths[k % 3]), t);
-        const m = mol(NT[i].shape, fs * .3, gMol, NT[i].up ? CY : INK);
-        m.setAttribute('transform', `translate(${pos.x.toFixed(1)},${pos.y.toFixed(1)})`);
-        if (blocked) m.setAttribute('opacity', .4);
-      }
+  // ---------- front: your guesses ----------
+  const cols = [];
+  function drawFront() {
+    pic.innerHTML = '';
+    const G = GEO.F; cols.length = 0;
+    M.forEach((m, i) => {
+      const cx = G.cw * (i + .5), g = Kit.mk('g', {class: 'col'}, pic);
+      neuron(g, cx, G); labels(g, cx, m, G);
+      const dots = Kit.mk('g', {}, g), ch = Kit.mk('g', {}, g);
+      const hit = Kit.mk('rect', {x: i * G.cw, y: 0, width: G.cw, height: G.H, fill: 'transparent', class: 'hit'}, pic);
+      hit.addEventListener('click', () => tap(i));
+      cols.push({cx, g, dots, ch, G});
+      paintGuess(i, false);
     });
   }
-
-  function update(fromLayout) {
-    dose.style.setProperty('--p', (d * 100) + '%');
-    cols.forEach((c, i) => {
-      const a = act(i), up = NT[i].up, moved = Math.abs(a - 1) >= .12;
-      if (c.bar) c.bar.setAttribute('x2', c.bx + Math.min(1, a / 2.5) * c.tw);
-      if (c.read) {
-        const txt = NT[i].r + (moved ? (up ? ' ▲' : ' ▼') : '');
-        if (c.read.textContent !== txt || fromLayout) { c.read.textContent = txt; fitText(c.read, c.maxW); }
-        c.read.setAttribute('fill', up && moved ? CY : INK);
-        c.read.setAttribute('opacity', !up && moved ? (1 - .35 * d).toFixed(2) : 1);
-      }
-      c.glowBase = up ? .55 * d : 0;
-      if (!gsap.isTweening(c.glow)) c.glow.setAttribute('opacity', c.glowBase);
-      if (!up) c.g.setAttribute('opacity', (1 - .45 * d).toFixed(2));
-    });
-    etoh.forEach((e, k) => e.setAttribute('opacity', (Math.max(0, Math.min(1, d * 7.5 - k)) * .85).toFixed(2)));
-    if (flowLabel) flowLabel.textContent = 'SIGNAL ' + (d < .25 ? 'FAST' : d < .65 ? 'SLOWING' : 'SLOW');
-    ambient.forEach(t => { if (t._pulse) fromLayout ? t.timeScale(flowSpeed()) : gsap.to(t, {timeScale: flowSpeed(), duration: .35, ease: 'power2.out', overwrite: true}); });
-    pulses.forEach(p => p.setAttribute('opacity', (1 - .45 * d).toFixed(2)));
-    if (Kit.calm) staticMols();
-    if (!revealed) {
-      say.innerHTML = d > .35
-        ? 'Ethanol floods the gap. GABA and dopamine pour out; glutamate and acetylcholine thin out and get blocked. <b>Keep going.</b>'
-        : 'Neurons talk through chemical messengers. <b>Slide toward DRUNK</b> and watch which ones grow and which fade.';
-      if (d >= .9) reveal();
-    }
-  }
-
-  function reveal() {
-    revealed = true; Kit.haptic('success');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    Kit.$('card').classList.add('answered');
-    layout();
-    setTimeout(wow, 220);
-  }
-
-  function wow() {
-    if (!Kit.calm) gsap.from('#why .body, #keep', {y: 10, opacity: 0, duration: .55, stagger: .12, ease: 'power3.out'});
-    cols.forEach((c, i) => {
-      if (NT[i].up) {
-        if (Kit.calm) return;
-        for (let k = 0; k < 3; k++) {
-          const r = Kit.mk('circle', {cx: c.cx, cy: c.ry, r: c.rw, fill: 'none', stroke: CY, 'stroke-width': 1.4}, svg);
-          gsap.fromTo(r, {attr: {r: c.rw * .6}, opacity: .95}, {attr: {r: c.rw * 3.2}, opacity: 0, duration: 1.3, delay: k * .22, ease: 'expo.out', repeat: 1, repeatDelay: .35, onComplete: () => r.remove()});
-        }
-        if (c.read) gsap.fromTo(c.read, {scale: 1.35}, {scale: 1, transformOrigin: '50% 50%', duration: .9, ease: 'elastic.out(1,.4)'});
-      } else if (c.xg) {
-        c.xg.setAttribute('opacity', 1);
-        if (!Kit.calm) gsap.from(c.xg.querySelectorAll('path'), {drawSVG: '0%', duration: .45, stagger: .14, delay: i * .1, ease: 'power3.out'});
-      }
+  function paintGuess(i, anim) {
+    const {cx, dots, ch, G} = cols[i], v = guess[i];
+    dots.innerHTML = ''; ch.innerHTML = '';
+    pill(ch, cx, G, v);
+    if (!v) return;
+    spots(cx, G, v).forEach(([x, y], k) => {
+      const c = Kit.mk('circle', {cx: x, cy: y, r: G.r, fill: K}, dots);
+      if (anim && !Kit.calm) gsap.from(c, {attr: {cy: G.yB - G.r}, opacity: 0, duration: .35, delay: k * .025, ease: 'power2.out'});
     });
   }
-
-  dose.addEventListener('input', () => {
-    d = dose.value / 100;
-    const step = Math.round(d * 4);
-    if (step !== lastStep) { lastStep = step; Kit.haptic('selection'); }
-    update(false);
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    locked = true;
+    const right = M.filter((m, i) => guess[i] === m.t).length, ok = right === 4;
+    const said = M.map((m, i) => `${m.id} ${guess[i] > 0 ? 'more' : 'less'}`).join(', ');
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${right} of 4 right`);
+    setTimeout(() => Turn.over(), 700);
   });
+  function tap(i) {
+    if (locked) return;
+    guess[i] = guess[i] > 0 ? -1 : 1;
+    Kit.haptic('selection'); paintGuess(i, true);
+    if (!sureOn && guess.every(v => v)) { sureOn = true; sure.on(); Kit.$('say').innerHTML = 'Change any you like, then say how sure you are.'; }
+  }
 
-  gsap.ticker.add((time, dt) => {
-    if (!live || Kit.calm || !cols.length) return;
-    const s = Math.min(dt, 60) / 1000;
-    for (let i = 0; i < 4; i++) { acc[i] += s * rate(i); while (acc[i] >= 1) { acc[i] -= 1; spawn(i); } }
-  });
+  // ---------- back: the truth, crossing the same gap ----------
+  function drawBack(anim) {
+    pic2.innerHTML = '';
+    const G = GEO.B, {u, yB} = G, tl = gsap.timeline({paused: true});
+    M.forEach((m, i) => {
+      const cx = G.cw * (i + .5), g = Kit.mk('g', {}, pic2);
+      neuron(g, cx, G); labels(g, cx, m, G);
+      tl.from(g, {opacity: 0, y: 6, duration: .4, ease: 'power2.out'}, i * .07);
+      spots(cx, G, m.t).forEach(([ex, ey], k) => {
+        const o = (k % 5) - 2, sx = cx + o * u * .12, sy = yB - G.r;
+        const d = Kit.mk('circle', {cx: 0, cy: 0, r: G.r, fill: K}, g);
+        gsap.set(d, {x: ex, y: ey});
+        const path = `M${sx},${sy} C${sx},${sy + (ey - sy) * .5} ${ex},${ey - (ey - sy) * .5} ${ex},${ey}`;
+        tl.fromTo(d, {x: sx, y: sy, opacity: 0}, {opacity: 1, motionPath: {path}, duration: .7, ease: 'power2.inOut', immediateRender: false}, .5 + i * .14 + k * .04);
+      });
+      const a = arrow(g, cx, G, m.t);
+      tl.from(a, {opacity: 0, y: m.t > 0 ? 8 : -8, duration: .35, ease: 'power2.out'}, 1.5 + i * .14);
+      const c = pill(g, cx, G, guess[i], guess[i] === m.t);
+      tl.from(c, {opacity: 0, y: 4, duration: .35, ease: 'power2.out'}, 2.0 + i * .08);
+    });
+    if (anim && !Kit.calm) tl.play(); else tl.progress(1);
+  }
+  document.addEventListener('turned', () => { turned = true; colors(); layout(); drawBack(true); });
 
-  if (window.ResizeObserver) new ResizeObserver(() => {
-    clearTimeout(roT);
-    roT = setTimeout(() => {
-      const b = svg.getBoundingClientRect();
-      if (Math.abs(b.width - lastW) > 1 || Math.abs(b.height - lastH) > 1) layout();
-    }, 80);
-  }).observe(stage);
-
-  Kit.onShow.card = layout;
-  Kit.onEnter.card = () => {
-    live = true;
-    if (Kit.calm) return;
-    gsap.from(svg.querySelectorAll('.ln'), {drawSVG: '0%', duration: 1.2, stagger: .04, ease: 'power3.inOut'});
-    gsap.from(svg.querySelectorAll('.ves'), {scale: 0, transformOrigin: '50% 50%', duration: .7, stagger: .09, delay: .45, ease: 'back.out(2)'});
-    gsap.from(svg.querySelectorAll('text'), {opacity: 0, duration: .5, stagger: .02, delay: .6, ease: 'power3.out'});
-    gsap.from('#doseRow', {opacity: 0, y: 8, duration: .5, delay: .8, ease: 'power3.out'});
-  };
+  Kit.onShow.card = () => { colors(); layout(); drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic .col', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'}); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    live = true;
-    for (const v of [30, 60, 100]) { dose.value = v; dose.dispatchEvent(new Event('input')); await wait(Kit.calm ? 60 : 300); }
-    await wait(Kit.calm ? 100 : 1200);
+    [0, 1, 2, 3].forEach(i => tap(i));           // all "more"
+    tap(1); tap(3);                               // glutamate and acetylcholine: less
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 4400);
   };
 })();
 Kit.single();

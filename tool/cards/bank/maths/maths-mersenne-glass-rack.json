@@ -3,12 +3,12 @@
   "topic": "maths",
   "genre": "maths.estimation",
   "strand": "maths.estimation.big_numbers",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "What does the Lenstra–Pomerance–Wagstaff conjecture say about Mersenne primes?",
-  "answer": "The Lenstra–Pomerance–Wagstaff conjecture predicts about the same handful of Mersenne primes each time p doubles. Since that never runs dry, there should be infinitely many, and so infinitely many even perfect numbers. But it is a conjecture, not a proof.",
-  "move": "Predicted: Mersenne primes forever. Proven: not yet.",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Mersenne primes 2ᵖ−1 get rarer as p grows. Do they run out?",
+  "answer": "Mersenne primes 2ᵖ−1 get rarer as p grows, yet the Lenstra–Pomerance–Wagstaff conjecture predicts infinitely many, fitting the data well. That would mean infinitely many even perfect numbers. But a conjecture is not a proof.",
+  "move": "Rarer and rarer is not the same as running out.",
   "keywords": [
     "mersenne primes",
     "perfect numbers",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Glass tubes stacked for each doubling of p, with gold beads marking the Mersenne primes found so far. The level never drops as p doubles. Drag the glass to double p again and again.",
-    "ground": "#0c2630"
+    "label": "A horizontal axis of exponent p with a draggable dot and dots marking Mersenne primes that thin out as p grows. Asks where the count is far to the right and whether the primes run out."
   },
   "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=1308s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }

@@ -1,255 +1,300 @@
-<!doctype html>
-<!-- slug: space-bones-in-orbit -->
-<!-- Look: a plate from a printed science book on cream paper. Two thigh bones drawn flat: solid teal mineral inside an ink outline. Bone lost shows as pale pores opening in the solid bone, the spongy ends first. Red weight arrows; a band of soil under the Earth leg; a dashed orbit with a small flat Earth around the floating one.
-     Interaction: drag the months dial from 0 to 12. The leg in orbit sheds grains of bone at 1–2 % a month. The Earth leg, at under a tenth of that rate, barely changes.
-     Wow: on Earth the lost grains fall and land on the ground. In orbit the leg floats, a little planet circles it, and its grains drift off weightless. At twelve months a red "over 10× faster" stamp slams onto the plate. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Bones in orbit</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-bone-in-orbit -->
+<!-- Design note.
+     Thought to carry: bone is kept where load is felt. Take the weight away and the body takes bone back, 1–2% of bone mass a month, mostly in the legs, over ten times faster than osteoporosis on Earth.
+     Front: two thigh bones drawn as real femurs. Only the orbit bone moves: drag down on it and the spongy lattice is eaten and the canal hollows down the shaft, to the reader's guess for ONE month. A live −% sits under it. Then the reader says how sure they are.
+     Back: the same two femurs, larger, and nothing else. The orbit bone keeps the reader's hollowing, with the true 1–2% outlined in white. Four labels at most: Launch day, 1 month later, True, You.
+     Every figure is the video's: 1–2% of bone mass per month, over 10 times faster than osteoporosis. No extrapolation to longer trips. -->
+<title>Bone in orbit</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
-.say{overflow-wrap:anywhere}
-.done .q{font-size:max(2.4cqh,15px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible;transition:visibility 0s .36s}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .36s}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none}
+.zone{cursor:ns-resize}
+
+/* text kept clear of save and share */
+.face .say,.face .foot{box-sizing:border-box;min-height:46px;max-width:calc(100% - 128px);padding-right:0;margin-right:0;overflow-wrap:anywhere}
+.face .say{margin-top:16px}
+
+/* confidence chips: readable before, full white once the bone is dragged */
+#sure.idle,#sure.live{opacity:1;filter:none}
+#sure.idle button,#sure.live button{color:#fff;border-color:#fff;background:transparent}
+#sure.idle button{opacity:.6}
+#sure.live button{opacity:1}
+#sure>:first-child:not(button){color:#fff;opacity:1;font-weight:700}
+
+.back .big{margin:0 0 6px;line-height:1.02}
+.back .big .ln{display:block;white-space:nowrap}
+.back .stagebox{margin-top:8px}
+.back .math{margin:10px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-weight:500}
+.back .math b{font-weight:800}
+.back .body{margin:6px 0 8px}
+
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(5px)}}
+.kit-calm .hint{animation:none}
 </style>
-<article class="card" id="card" data-topic="space" data-kind="Drag the months · two legs" style="--c:#efe3c4;--k:#1d2526;--edge:#c9b384">
+<article class="card" id="card" data-topic="space" data-kind="Drag the bone · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">BONES IN ORBIT</span></div>
-    <h2 class="q">How much faster do bones thin in space than on Earth?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Two thigh bones filled with grains of bone: one on Earth with weight pressing on it, one floating in orbit with no weight. A dial below counts the months away."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BONE IN ORBIT</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Floating in orbit, how much bone mass can an astronaut lose in one month?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="Two thigh bones: one on launch day, one after a month in orbit that you hollow out by dragging down on it."></svg></div>
+        <div class="sure idle" id="sure"></div>
+        <p class="say" id="say"><b>Drag down on the orbit bone</b> to hollow it to your guess.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big"><span class="ln">1–2% of bone mass,</span><span class="ln">every month</span></p>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="The two thigh bones again. The orbit bone shows your hollowing, with the true 1 to 2 percent a month outlined in white."></svg></div>
+        <p class="math"><b>Over 10 times faster</b> than osteoporosis on Earth.</p>
+        <p class="body">With no weight pushing on them, astronauts' bones thin, mostly in the legs.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Bone stays only where load is felt.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)”, YouTube, 2018.</span></div>
+      </section>
     </div>
-    <p class="say" id="say"><b>Drag the dial</b> to keep the right leg in orbit for up to a year. Watch its bone.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Without weight on them, bones thin over 10× faster than with age on Earth.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(Physics2DPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#1d2526', TEAL = '#2c625d', RED = '#b5432e', PAPER = '#efe3c4', BONE = '#f8f0d9';
-  const SOIL = 'color-mix(in srgb, var(--k) 22%, var(--c))';
-  const SOFT = 'color-mix(in srgb, var(--k) 70%, var(--c))';
-  const SPACE_RATE = .015;   // 1–2 % a month: the middle of the range
-  const EARTH_RATE = .0015;  // over 10× slower: a tenth of that
-  const MAXM = 12;
-
-  // A femur in a 100 × 300 box: head top left, trochanter, shaft, two condyles.
-  const FEM = 'M22,14 C30,2 50,2 56,16 C60,26 58,34 54,40 L66,46 C72,40 82,40 84,50 C86,62 78,72 68,78 C62,120 60,190 64,236 C68,250 84,254 86,270 C88,288 76,298 64,292 C58,289 54,289 50,292 C38,298 22,292 22,276 C22,258 36,248 40,236 C44,190 42,120 40,84 C38,70 34,60 30,52 C18,48 12,26 22,14 Z';
-
-  // Grains of bone, worked out once in the bone's own units. Spongy ends go first, the hard outer wall last.
-  const DOTS = (() => {
-    const cv = document.createElement('canvas'); cv.width = 100; cv.height = 300;
-    const x = cv.getContext('2d'), P = new Path2D(FEM), inn = (a, b) => x.isPointInPath(P, a, b);
-    const out = [], s = 3.8, rs = s * .866;
-    let row = 0;
-    for (let y = 3; y < 298; y += rs, row++) for (let X = 2 + (row % 2) * s / 2; X < 98; X += s) {
-      if (!inn(X, y)) continue;
-      const cort = [[5, 0], [-5, 0], [0, 5], [0, -5]].some(([dx, dy]) => !inn(X + dx, y + dy));
-      const marrow = !cort && y > 95 && y < 225;
-      const r = cort ? 1.55 : marrow ? .75 + Kit.rnd() * .3 : 1.1 + Kit.rnd() * .4;
-      const t = cort ? 1 + Kit.rnd() : marrow ? .5 + Kit.rnd() * .8 : Kit.rnd() * .9;
-      out.push({x: X, y, r, t});
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), card = Kit.$('card'), sureBox = Kit.$('sure');
+  const BONE = '#fbf5e6', MARROW = '#e3bf8f', TRUTH = '#ffffff';
+  const MAXL = 10;                       // the drag goes from 0 to 10% lost in a month
+  let guess = 0, touched = false, answered = false, turned = false, built = false;
+  let K = '#fff', W = 0, H = 0, fs = 13, G = {};
+  const ink = () => { const v = getComputedStyle(card).getPropertyValue('--k').trim(); return v || '#fff'; };
+  const bgc = () => {
+    for (const el of [card, card.querySelector('.in')]) {
+      const c = el && getComputedStyle(el).backgroundColor;
+      if (c && c !== 'transparent' && !/rgba\([^)]*,\s*0\)$/.test(c)) return c;
     }
-    return out.sort((a, b) => a.t - b.t);
-  })();
-  const N = DOTS.length;
+    return '#ff2e5b';
+  };
+  const pct = v => `${v}%`;
+  const txt = (p, x, y, t, a = {}, st = '') => { const e = Kit.mk('text', Object.assign({x, y, fill: K}, a), p); e.setAttribute('style', `font-family:var(--body);font-size:${fs}px;font-weight:700;${st}`); e.textContent = t; return e; };
+  const width = (p, t, st = '') => { const e = txt(p, 0, -99, t, {}, st), l = e.getComputedTextLength(); e.remove(); return l; };
 
-  let W = 0, H = 0, fs = 13, months = 0, revealed = false, touched = false, lastInt = 0;
-  let bones = [], knob, fill, mLabel, stamp, fx, trackY, x0, x1, pulse, groundY = 0, loops = [];
+  // ---------- a right femur, front view, in units 100 wide and 300 tall ----------
+  const FEMUR = 'M40,86C36,72 30,60 26,50A18,18 0 1 1 36,28C44,32 52,33 58,29C61,25 63,21 69,21C76,21 80,29 78,40C76,54 70,62 68,78C70,130 68,190 64,232C66,246 82,250 84,264C88,282 80,294 70,292C62,290 58,280 52,280C46,280 42,290 34,292C22,294 14,282 18,266C22,250 38,246 40,232C42,190 42,140 42,106C38,104 35,98 38,93C39,91 40,89 40,86Z';
+  const ENDS = 'M0,0H100V84C80,84 62,90 58.5,104H51.5C48,90 30,84 0,84Z M0,300H100V244C80,244 62,238 58.5,222H51.5C48,238 30,244 0,244Z';
+  const yF = L => 92 + 140 * L / MAXL;   // how far down the shaft the hollow reaches
 
-  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--body)', 'font-weight': 600, 'text-anchor': 'middle'}, a), p); e.textContent = t; return e; };
-  const loop = t => (loops.push(t), t);
+  const LAT = {p: [], e: []};
+  function lattice(host) {
+    if (LAT.p.length) return;
+    const path = Kit.mk('path', {d: FEMUR, fill: 'none'}, host);
+    let pt = null; try { pt = host.createSVGPoint(); } catch (e) {}
+    const inF = (x, y) => { if (!pt || !path.isPointInFill) return true; pt.x = x; pt.y = y; try { return path.isPointInFill(pt); } catch (e) { return true; } };
+    const ok = (x, y) => inF(x, y) && inF(x + 4, y) && inF(x - 4, y) && inF(x, y + 4) && inF(x, y - 4);
+    for (let i = 0; i < 6000 && LAT.p.length < 90; i++) {
+      const top = Kit.rnd() < .58, x = 2 + Kit.rnd() * 86, y = top ? 16 + Kit.rnd() * 78 : 236 + Kit.rnd() * 56;
+      if (ok(x, y) && LAT.p.every(([a, b]) => (a - x) ** 2 + (b - y) ** 2 > 56)) LAT.p.push([x, y]);
+    }
+    path.remove();
+    const seen = new Set();
+    LAT.p.forEach((a, i) => {
+      LAT.p.map((b, j) => [j, (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2]).filter(([j, d]) => j !== i && d < 190)
+        .sort((u, v) => u[1] - v[1]).slice(0, 3)
+        .forEach(([j]) => { const k = Math.min(i, j) + '-' + Math.max(i, j); if (!seen.has(k)) { seen.add(k); LAT.e.push([i, j, Kit.rnd()]); } });
+    });
+  }
 
-  function layout() {
-    loops.forEach(t => t.kill()); loops = [];
-    svg.innerHTML = '';
+  function bone(p, ox, oy, s, loss, id, opt = {}) {
+    const g = Kit.mk('g', {transform: `translate(${ox},${oy}) scale(${s})`}, p);
+    Kit.mk('path', {d: FEMUR, fill: K, stroke: K, 'stroke-width': 2.6 / s, 'stroke-linejoin': 'round'}, g);
+    Kit.mk('path', {d: FEMUR, fill: BONE}, g);
+    const cp = Kit.mk('clipPath', {id}, g); Kit.mk('path', {d: FEMUR}, cp);
+    const inn = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
+    Kit.mk('path', {d: ENDS, fill: MARROW}, inn);
+    Kit.mk('rect', {x: 51.5, y: 100, width: 7, height: 126, rx: 3.5, fill: MARROW}, inn);
+    const eat = loss / MAXL, sw = Math.max(2.8, 1.6 / s);
+    LAT.e.forEach(([a, b, r]) => {
+      if (r < eat) return;
+      const A = LAT.p[a], B = LAT.p[b];
+      Kit.mk('line', {x1: A[0], y1: A[1], x2: B[0], y2: B[1], stroke: BONE, 'stroke-width': sw, 'stroke-linecap': 'round'}, inn);
+    });
+    if (loss > 0) Kit.mk('rect', {x: 45.5, y: 84, width: 19.5, height: Math.max(19.5, yF(loss) - 84), rx: 9.75, fill: MARROW}, inn);
+    Kit.mk('path', {d: FEMUR, fill: 'none', stroke: BONE, 'stroke-width': 7}, inn);
+    if (opt.band) {
+      const y1 = yF(1), y2 = yF(2), b = Kit.mk('g', {}, g);
+      const r = {x: 37, y: y1, width: 37, height: y2 - y1, rx: 2 / s};
+      Kit.mk('rect', Object.assign({fill: 'none', stroke: bgc(), 'stroke-width': 3.6 / s}, r), b);
+      Kit.mk('rect', Object.assign({fill: TRUTH, 'fill-opacity': .3, stroke: TRUTH, 'stroke-width': 1.8 / s}, r), b);
+      opt.bandG = b;
+    }
+    return g;
+  }
+
+  // ---------- the front ----------
+  function front() {
+    K = ink(); svg.innerHTML = '';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(13, Math.min(16, W / 25));
+    fs = Math.max(12, Math.min(14, W / 26));
+    lattice(svg);
+    const big = Math.max(24, Math.min(36, H * .11));
+    const foot = big * 1.1 + fs * 2.1;
+    const s = Math.max(.2, Math.min((H - foot - 8) / 300, W * .3 / 90));
+    const off = Math.max(50 * s + 14, 62);
+    const cxL = W / 2 - off, cxR = W / 2 + off;
+    const oy = Math.max(6, (H - foot - 296 * s) / 2), yb = oy + 296 * s;
+    const yLab = yb + big * 1.1 + fs * 1.5;
 
-    trackY = H - fs * 2.2; x0 = W * .1; x1 = W * .9;
-    const yb = trackY - fs * 6.4;
-    let k = (yb - fs * 4.2) / 300; k = Math.max(.05, Math.min(k, W * .22 / 100));
-    const y0 = yb - 300 * k, cxs = [W * .25, W * .75];
-    groundY = yb + 3;
+    G.left = Kit.mk('g', {}, svg); G.right = Kit.mk('g', {}, svg);
+    bone(G.left, cxL - 44.5 * s, oy, s, 0, 'bA');
+    txt(G.left, cxL, yLab, 'Launch day', {'text-anchor': 'middle'});
 
-    bones = [];
-    cxs.forEach((cx, i) => {
-      const earth = i === 0, w = 100 * k;
-      txt(svg, cx, fs * 1.2, earth ? 'Fig. 1a · Earth' : 'Fig. 1b · Orbit', {'font-weight': 700});
-      txt(svg, cx, fs * 2.55, earth ? 'weight on the leg' : 'no weight at all', {'font-weight': 500, style: `font-family:var(--body);fill:${SOFT}`});
-
-      const back = Kit.mk('g', {}, svg);
-      let front = null, flo = null;
-      if (earth) {
-        // The ground in section: a band of soil under a firm line, and the weight pressing down on the hip.
-        const gy = groundY;
-        Kit.mk('path', {d: `M${cx - w * .9},${gy} H${cx + w * .9} L${cx + w * .82},${gy + fs * .55} H${cx - w * .86} Z`, style: `fill:${SOIL}`}, back);
-        Kit.mk('line', {x1: cx - w * .9, x2: cx + w * .9, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, back);
-        const hx = cx + (38 - 50) * k, arrows = Kit.mk('g', {}, back);
-        [-1, 0, 1].forEach(d => {
-          const ax = hx + d * fs * 1.1, a1 = y0 - fs * 1.4 + Math.abs(d) * fs * .3, a2 = y0 - 2;
-          Kit.mk('path', {d: `M${ax},${a1} V${a2 - 5}`, stroke: RED, 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round'}, arrows);
-          Kit.mk('path', {d: `M${ax - 4.5},${a2 - 7} L${ax},${a2} L${ax + 4.5},${a2 - 7} Z`, fill: RED, stroke: RED, 'stroke-width': 1, 'stroke-linejoin': 'round'}, arrows);
-        });
-        if (!Kit.calm) loop(gsap.fromTo(arrows, {y: -3}, {y: 1, duration: .8, yoyo: true, repeat: -1, ease: 'power2.in'}));
-      } else {
-        // An orbit drawn in two halves so the little Earth passes behind the leg and in front of it.
-        const cy = y0 + 150 * k, rx = w * .82, ry = 300 * k * .12, rot = -18, R = rot * Math.PI / 180;
-        Kit.mk('path', {d: `M${cx - rx},${cy} A${rx},${ry} 0 0 1 ${cx + rx},${cy}`, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '4 5', 'stroke-linecap': 'round', opacity: .45, transform: `rotate(${rot} ${cx} ${cy})`}, back);
-        flo = { cx, cy, rx, ry, R };
-      }
-
-      const wrap = Kit.mk('g', {}, svg);
-      const G = Kit.mk('g', {transform: `translate(${cx - 50 * k},${y0}) scale(${k})`}, wrap);
-      // Solid bone: flat teal mineral. Each lost grain opens a pale pore in it.
-      Kit.mk('path', {d: FEM, fill: TEAL}, G);
-      const dg = Kit.mk('g', {}, G);
-      const els = DOTS.map(d => Kit.mk('circle', {cx: d.x, cy: d.y, r: d.r * 1.5, fill: BONE, opacity: 0}, dg));
-      Kit.mk('path', {d: FEM, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, G);
-
-      if (flo) {
-        front = Kit.mk('g', {}, svg);
-        Kit.mk('path', {d: `M${flo.cx - flo.rx},${flo.cy} A${flo.rx},${flo.ry} 0 0 0 ${flo.cx + flo.rx},${flo.cy}`, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '4 5', 'stroke-linecap': 'round', opacity: .7, transform: `rotate(-18 ${flo.cx} ${flo.cy})`}, front);
-        // The little Earth riding the orbit: a flat pale disc with one teal land shape.
-        const planet = Kit.mk('g', {}, back), pr = fs * .62;
-        Kit.mk('circle', {r: pr, fill: BONE, stroke: INK, 'stroke-width': 1.4}, planet);
-        Kit.mk('path', {d: `M${-pr * .55},${-pr * .45} C${-pr * .1},${-pr * .7} ${pr * .3},${-pr * .3} ${pr * .05},${pr * .05} C${-pr * .15},${pr * .35} ${-pr * .6},${pr * .2} ${-pr * .55},${-pr * .45} Z`, fill: TEAL}, planet);
-        const place = a => {
-          const ex = flo.rx * Math.cos(a), ey = flo.ry * Math.sin(a);
-          const px = flo.cx + ex * Math.cos(flo.R) - ey * Math.sin(flo.R), py = flo.cy + ex * Math.sin(flo.R) + ey * Math.cos(flo.R);
-          const inFront = Math.sin(a) > 0, host = inFront ? front : back;
-          if (planet.parentNode !== host) host.appendChild(planet);
-          planet.setAttribute('transform', `translate(${px},${py}) scale(${.8 + .25 * Math.sin(a)})`);
-        };
-        const o = {a: -.9}; place(o.a);
-        if (!Kit.calm) loop(gsap.to(o, {a: o.a + Math.PI * 2, duration: 7, repeat: -1, ease: 'none', onUpdate: () => place(o.a)}));
-        // Weightless: the leg drifts and turns, slow.
-        if (!Kit.calm) loop(gsap.to(wrap, {y: -fs * .35, rotation: 2.5, svgOrigin: `${cx} ${y0 + 150 * k}`, duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
-      }
-
-      const big = txt(svg, cx, yb + fs * 2.0, '100%', {'font-size': fs * 1.35, 'font-weight': 700, style: 'font-family:var(--display)'});
-      txt(svg, cx, yb + fs * 3.75, 'bone mass', {'font-weight': 500, style: `font-family:var(--body);fill:${SOFT}`});
-      bones.push({earth, cx, y0, k, els, lost: 0, big, G});
-    });
-
-    fx = Kit.mk('g', {}, svg);
-
-    // The dial of months.
-    mLabel = txt(svg, W / 2, trackY - fs * 1.2, '', {'font-weight': 600});
-    Kit.mk('line', {x1: x0, x2: x1, y1: trackY, y2: trackY, stroke: SOIL, 'stroke-width': 4, 'stroke-linecap': 'round', style: `stroke:${SOIL}`}, svg);
-    fill = Kit.mk('line', {x1: x0, x2: x0, y1: trackY, y2: trackY, stroke: RED, 'stroke-width': 4, 'stroke-linecap': 'round'}, svg);
-    for (let m = 0; m <= MAXM; m += 3) {
-      const tx = x0 + (x1 - x0) * m / MAXM;
-      Kit.mk('line', {x1: tx, x2: tx, y1: trackY + 5, y2: trackY + 9, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
-      txt(svg, tx, trackY + fs * 1.7, m === MAXM ? '12 mo' : String(m), {'font-weight': 500, 'text-anchor': m === MAXM ? 'end' : 'middle', x: m === MAXM ? tx + fs * .9 : tx});
-    }
-    knob = Kit.mk('g', {}, svg);
-    Kit.mk('circle', {r: fs * .85, fill: RED, stroke: INK, 'stroke-width': 2}, knob);
-
-    // The stamp, waiting in the gap between the two figures, above the orbit.
-    const k0 = bones[0].k, gap = (cxs[1] - cxs[0]) - 100 * k0, r = Math.max(fs * 1.9, Math.min(fs * 2.9, gap / 2 - 3));
-    const sx = W / 2, sy = bones[0].y0 + 300 * k0 * .34;
-    stamp = Kit.mk('g', {opacity: revealed ? 1 : 0}, svg);
-    Kit.mk('circle', {cx: sx, cy: sy, r, fill: PAPER, stroke: RED, 'stroke-width': 3}, stamp);
-    Kit.mk('circle', {cx: sx, cy: sy, r: r - 5, fill: 'none', stroke: RED, 'stroke-width': 1.2}, stamp);
-    const ss = Math.min(1, r / (fs * 2.9)), sf = Math.max(12, fs * ss);
-    txt(stamp, sx, sy - sf * 1.05, 'over', {fill: RED, 'font-weight': 700, 'font-size': sf});
-    txt(stamp, sx, sy + sf * .55, '10×', {fill: RED, 'font-weight': 700, 'font-size': sf * 1.7, style: 'font-family:var(--display)'});
-    txt(stamp, sx, sy + sf * 1.9, 'faster', {fill: RED, 'font-weight': 700, 'font-size': sf});
-    gsap.set(stamp, {svgOrigin: `${sx} ${sy}`, rotation: -12});
-
-    setMonths(months, false);
-    if (!touched && !Kit.calm) { pulse && pulse.kill(); pulse = gsap.to(knob.firstChild, {attr: {r: fs * 1.1}, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'}); }
+    G.rb = Kit.mk('g', {}, G.right);
+    G.geo = {cxR, oy, s};
+    bone(G.rb, cxR - 44.5 * s, oy, s, guess, 'bB');
+    G.hdo = Kit.mk('g', {}, G.right);
+    const hd = Kit.mk('g', {class: touched ? '' : 'hint'}, G.hdo);
+    Kit.mk('rect', {x: -15, y: -12, width: 30, height: 24, rx: 12, fill: bgc(), stroke: '#fff', 'stroke-width': 1.5}, hd);
+    Kit.mk('line', {x1: -7, x2: 7, y1: -4.5, y2: -4.5, stroke: '#fff', 'stroke-width': 2.6, 'stroke-linecap': 'round'}, hd);
+    Kit.mk('path', {d: 'M-5,1 L0,6 L5,1', stroke: '#fff', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hd);
+    placeHandle();
+    G.num = txt(G.right, cxR, yb + big * .95, `−${pct(guess)}`, {'text-anchor': 'middle', opacity: touched ? 1 : .6}, `font-family:var(--display);font-size:${big}px;font-weight:800`);
+    txt(G.right, cxR, yLab, '1 month later', {'text-anchor': 'middle'});
+    G.zone = Kit.mk('rect', {class: 'zone', x: cxR - 50 * s - 16, y: oy - 8, width: 100 * s + 32, height: yb - oy + big * 1.2 + 8, fill: 'transparent', 'pointer-events': 'all'}, G.right);
+    G.zone.addEventListener('pointerdown', start);
+  }
+  function placeHandle() {
+    const {cxR, oy, s} = G.geo;
+    const y = guess > 0 ? Math.max(96, yF(guess)) : 96;
+    G.hdo.setAttribute('transform', `translate(${cxR + (55.25 - 44.5) * s},${oy + y * s})`);
+  }
+  function setGuess(v) {
+    guess = Math.round(Math.max(0, Math.min(MAXL, v)) * 2) / 2;   // half-percent steps
+    if (!G.rb) return;
+    const {cxR, oy, s} = G.geo;
+    G.rb.innerHTML = '';
+    bone(G.rb, cxR - 44.5 * s, oy, s, guess, 'bB');
+    placeHandle();
+    G.num.textContent = `−${pct(guess)}`;
+  }
+  function wake() {
+    if (touched) return; touched = true;
+    const h = svg.querySelector('.hint'); if (h) h.classList.remove('hint');
+    if (G.num) G.num.setAttribute('opacity', 1);
+    sureBox.classList.remove('idle'); sureBox.classList.add('live');
   }
 
-  // A grain of bone leaves: it falls and lands on Earth, it drifts away in orbit.
-  function launch(b, d, burst) {
-    if (Kit.calm) return;
-    const x = b.cx + (d.x - 50) * b.k, y = b.y0 + d.y * b.k, r = Math.max(1.4, d.r * b.k * 1.15);
-    const c = Kit.mk('circle', {cx: x, cy: y, r, fill: RED}, fx);
-    if (b.earth) {
-      const lx = b.cx + (Kit.rnd() - .5) * 100 * b.k * .9;
-      gsap.timeline({onComplete: () => c.remove()})
-        .to(c, {attr: {cx: lx}, duration: .9, ease: 'power1.out'}, 0)
-        .to(c, {attr: {cy: groundY - r}, duration: .9, ease: 'bounce.out'}, 0)
-        .to(c, {opacity: 0, duration: 1.2, delay: 1.4});
-      return;
-    }
-    const v = {velocity: (burst ? 50 : 18) + Kit.rnd() * (burst ? 90 : 40), angle: Kit.rnd() * 360, gravity: 0, friction: .01};
-    gsap.to(c, {duration: 2.6, physics2D: v, opacity: 0, ease: 'power1.in', onComplete: () => c.remove()});
+  let drag = null;
+  function start(e) {
+    if (answered) return;
+    drag = {y: e.clientY, g: guess}; svg.setPointerCapture(e.pointerId);
+    wake();
   }
-
-  function apply(animate) {
-    bones.forEach(b => {
-      const n = Math.min(N, Math.round(N * (b.earth ? EARTH_RATE : SPACE_RATE) * months));
-      // A lost grain opens a pore; a regained grain fills it back in.
-      if (n > b.lost) for (let i = b.lost; i < n; i++) { gsap.killTweensOf(b.els[i]); b.els[i].setAttribute('opacity', 1); if (animate) launch(b, DOTS[i]); }
-      else for (let i = n; i < b.lost; i++) { if (animate && !Kit.calm) gsap.to(b.els[i], {attr: {opacity: 0}, duration: .35, ease: 'power2.out'}); else b.els[i].setAttribute('opacity', 0); }
-      b.lost = n;
-      const m = Math.round(months);
-      if (b.earth) b.big.textContent = m ? `>${(100 - .2 * m).toFixed(1)}%` : '100%';
-      else { b.big.textContent = m ? `${100 - 2 * m}–${100 - m}%` : '100%'; b.big.setAttribute('fill', m ? RED : INK); }
-    });
-  }
-
-  function setMonths(v, animate = true) {
-    months = Math.max(0, Math.min(MAXM, v));
-    const kx = x0 + (x1 - x0) * months / MAXM;
-    knob.setAttribute('transform', `translate(${kx},${trackY})`);
-    fill.setAttribute('x2', kx);
-    const m = Math.round(months);
-    mLabel.textContent = `Months in orbit · ${m}`;
-    if (animate && m !== lastInt) Kit.haptic('selection');
-    lastInt = m;
-    apply(animate);
-    if (months >= MAXM - .05 && !revealed) reveal();
-  }
-
-  function reveal() {
-    revealed = true; Kit.haptic('success');
-    card.classList.add('done');
-    say.innerHTML = 'Weightless, astronauts’ bones lose <b>1 to 2 % of their mass a month</b>, mostly in the legs: <b>over 10 times faster</b> than osteoporosis takes bone on Earth with age.';
-    Kit.show('keep');
-    if (Kit.calm) { gsap.set(stamp, {opacity: 1, scale: 1, rotation: -12}); return; }
-    gsap.fromTo(stamp, {opacity: 0, scale: 2.8, rotation: -45}, {opacity: 1, scale: 1, rotation: -12, duration: .75, ease: 'back.out(2.2)'});
-    const b = bones[1];
-    for (let i = 0; i < 46; i++) launch(b, DOTS[b.lost + Math.floor(Kit.rnd() * (N - b.lost))], true);
-    gsap.fromTo(b.G, {opacity: .55}, {opacity: 1, duration: .8, ease: 'power3.out'});
-  }
-
-  // ---------- touch ----------
-  let drag = false;
-  const at = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - x0) / (x1 - x0) * MAXM; };
-  svg.addEventListener('pointerdown', e => {
-    drag = true; svg.setPointerCapture(e.pointerId);
-    if (!touched) { touched = true; pulse && pulse.kill(); gsap.to(knob.firstChild, {attr: {r: fs * .85}, duration: .2}); }
-    gsap.fromTo(knob, {scale: 1.25}, {scale: 1, duration: .4, ease: 'back.out(3)'});
-    setMonths(at(e));
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const before = guess;
+    setGuess(drag.g + (e.clientY - drag.y) / Math.max(80, 140 * G.geo.s) * MAXL);
+    if (guess !== before && guess % 1 === 0) Kit.haptic('selection');
   });
-  svg.addEventListener('pointermove', e => { if (drag) setMonths(at(e)); });
-  const end = () => { drag = false; };
+  const end = () => { if (!drag) return; drag = null; if (touched && !answered) sure.on(); };
   svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  Kit.onShow.card = layout;
+  const sure = Kit.sure(sureBox, 'How sure are you?', p => {
+    if (answered) return; answered = true;
+    sureBox.classList.remove('idle', 'live');
+    const ok = guess >= 1 && guess <= 2;
+    Kit.answer({choice: `${pct(guess)} of bone mass a month`, correct: ok, sure: p});
+    sure.grade(ok, p, `${pct(guess)} a month, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back ----------
+  function fitBig() {
+    const b = document.querySelector('.back .big'); if (!b) return;
+    b.style.fontSize = '';
+    let f = parseFloat(getComputedStyle(b).fontSize) * .85, n = 0;
+    b.style.fontSize = f + 'px';
+    while (b.scrollWidth > b.clientWidth + 1 && n++ < 20) { f *= .95; b.style.fontSize = f + 'px'; }
+  }
+
+  function back(animate) {
+    K = ink(); svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), w = f.W, h = f.H;
+    fs = Math.max(12, Math.min(14, w / 26));
+    const lh = fs * 1.3;
+    lattice(svg2);
+
+    const tTrue = 'True: 1–2%', tYou = `You: ${pct(guess)}`;
+    const lw = Math.max(width(svg2, tTrue, 'font-weight:800'), width(svg2, tYou, 'font-weight:800'));
+    const wA = width(svg2, 'Launch day'), wB = width(svg2, '1 month later');
+    const labH = fs * 2;
+    const gapOf = s => Math.max(28, (wA + wB) / 2 + 18 - 88 * s);
+    const tot = s => 88 * s + gapOf(s) + 84 * s + 10 + lw;
+    let s = Math.max(.12, Math.min(.9, (h - labH - 6) / 296));
+    while (tot(s) > w - 6 && s > .12) s *= .95;
+    const oy = Math.max(2, (h - labH - 296 * s) / 2), base = oy + 296 * s;
+    const oxL = (w - tot(s)) / 2, oxR = oxL + 88 * s + gapOf(s);
+
+    const gTop = Kit.mk('g', {}, svg2);
+    const gL = Kit.mk('g', {}, gTop), gR = Kit.mk('g', {}, gTop);
+    bone(gL, oxL, oy, s, 0, 'cL');
+    txt(gL, oxL + 44.5 * s, base + fs * 1.5, 'Launch day', {'text-anchor': 'middle'});
+    const opt = {band: true};
+    bone(gR, oxR, oy, s, guess, 'cR', opt);
+    txt(gR, oxR + 44.5 * s, base + fs * 1.5, '1 month later', {'text-anchor': 'middle'});
+
+    // two labels to the right of the orbit bone, pushed apart so they never touch
+    const lx = oxR + 84 * s + 10;
+    const aT = oy + s * (yF(1) + yF(2)) / 2, aY = oy + s * Math.max(96, yF(guess));
+    let yT = aT, yY = aY;
+    if (Math.abs(yY - yT) < lh) {
+      const mid = (yT + yY) / 2, down = yY >= yT;
+      yT = mid + (down ? -lh / 2 : lh / 2); yY = mid + (down ? lh / 2 : -lh / 2);
+    }
+    const lab = (t, ay, ly, st) => {
+      const g = Kit.mk('g', {}, gTop);
+      Kit.mk('path', {d: `M${oxR + 70 * s},${ay} L${lx - 12},${ay} L${lx - 4},${ly}`, stroke: K, 'stroke-width': 1.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: st}, g);
+      txt(g, lx, ly + fs * .35, t, {}, 'font-weight:800');
+      return g;
+    };
+    const gTrue = lab(tTrue, aT, yT, 1);
+    const gYou = lab(tYou, aY, yY, .6);
+
+    if (animate && !Kit.calm && typeof gsap !== 'undefined') {
+      gsap.timeline()
+        .from(gTop, {opacity: 0, y: 8, duration: .5, ease: 'power3.out'})
+        .from(gYou, {opacity: 0, duration: .35, ease: 'power2.out'})
+        .from([opt.bandG, gTrue], {opacity: 0, duration: .5, ease: 'power2.out'}, '+=.15');
+    }
+  }
+
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => { fitBig(); back(true); built = true; }, Kit.calm ? 0 : 420); });
+
+  Kit.onShow.card = () => { front(); fitBig(); if (turned && built) back(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm) return;
-    bones.forEach((b, i) => {
-      gsap.from(b.G, {opacity: 0, duration: .6, delay: i * .15, ease: 'power3.out'});
-      gsap.from(b.els, {attr: {r: 0}, duration: .35, ease: 'back.out(3)', stagger: {amount: 1, from: 'start'}, delay: .2 + i * .15});
-    });
-    gsap.from(knob, {scale: 0, duration: .6, delay: .9, ease: 'elastic.out(1,.5)'});
+    if (Kit.calm || !G.left || typeof gsap === 'undefined') return;
+    gsap.timeline()
+      .from(G.left, {opacity: 0, y: 12, duration: .5, ease: 'power3.out'})
+      .from(G.right, {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}, '-=.25');
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    touched = true; pulse && pulse.kill();
-    for (let m = 1; m <= MAXM; m += 1) { setMonths(m); await wait(Kit.calm ? 5 : 40); }
-    await wait(Kit.calm ? 60 : 1200);
+    wake(); front(); setGuess(5); sure.on();
+    await wait(100);
+    sureBox.querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 3600);
   };
 })();
 Kit.single();

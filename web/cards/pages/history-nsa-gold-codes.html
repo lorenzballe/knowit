@@ -1,420 +1,244 @@
-<!doctype html>
-<!-- slug: history-nsa-gold-codes -->
-<!-- Look: a flat printed-book illustration at night. Two flat dune shapes, with a small White House on the far one. A ledge with the NSA building and its antenna. A dark code slip hanging on two threads, and a card printer. In front, the president and his briefcase. Everything is in the card's cream ink, its night blue and their tints. Gold is the only meaning colour: it marks the codes and the chain. There are no gradients, glows or shadows.
-     Interaction: tap the highlighted piece to build the chain link by link. The NSA's windows turn gold and it sends the gold codes, the printer prints them onto a plastic card, the card travels to the president's pocket, then into the nuclear football. Each gold line draws itself as its link forms.
-     Wow: the football opens and a spark runs down the whole chain from the NSA to the briefcase. Short gold rays burst out, the code slip swings and reads Authenticated, and a gold seal with a check lands on the briefcase.
-     Layout: two compositions (tall and wide) re-flow whenever the stage changes size, and a label solver keeps every caption apart. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Who makes the gold codes</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-gold-codes-maker -->
+<!-- Design note.
+     Thought to carry: a proof of identity is only worth something if someone else wrote it.
+     Front: three equal outlined tiles, one family of flat pictograms seen front-on (a head and shoulders behind the Resolute-style desk, two seated figures at a twin console, a low windowless building with one door). No lines between them, so no flow is implied before the reader chooses. Tap one, then say how sure. The pick gets a black YOU badge. At grading the wrong tiles fade to 35%.
+     Back: only what the brief says. Two pictograms, far apart: the agency on the left, the president on the right. One white plastic card is the focal point: it is born on the agency's roof and rides a single bold black arc into the president's hand. Two labels, nothing else. -->
+<title>Who writes the Gold Codes</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;overflow:visible}
-#pic .mono{font-family:var(--mono);font-weight:600}
-#pic .ttl{font-family:var(--body);font-weight:600}
-#pic .lbl{font-family:var(--body);font-weight:600;paint-order:stroke;stroke:var(--c);stroke-width:3px;stroke-linejoin:round}
-#pic .sign{font-family:var(--display);font-weight:800}
-.say b{color:#f4c04e}
-.keep b{color:#f4c04e}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);padding-bottom:48px;box-sizing:border-box}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .75s}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block;color:var(--k);overflow:visible}
+#pic .tile{cursor:pointer;outline:none}
+#pic .tile:focus-visible .frame{stroke-width:3}
+.front .say{max-width:calc(100% - max(28cqw,116px))}
+.back .big{margin:0 0 .4cqh;font-size:clamp(30px,6.6cqh,52px);line-height:1}
+.back .stagebox{margin:.8cqh 0}
+.back .body{margin:.4cqh 0 .8cqh}
+.back .foot{margin-top:.8cqh}
+.back .foot .src{display:block;max-width:100%}
+.q,.say,.body,.keep,.src{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="history" data-kind="Build the chain · gold codes" style="--c:#1b2537;--k:#f4ead4;--edge:#0d131e">
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">GOLD CODES</span></div>
-    <h2 class="q">Who makes the nuclear launch codes, and how do they reach the president?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A paper diorama: the NSA building on a ledge, a hanging panel of gold codes, a card printer, the president and the nuclear football briefcase, linked by a chain you build by tapping."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WHO WRITES IT</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Who makes the secret codes a US president needs to order a nuclear launch?</h2>
+        <div class="stagebox"><svg id="pic" role="group" aria-label="Three choices: the president, the launch officers, an intelligence agency. Tap one."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Tap who you think <b>writes the codes</b>. Then say how sure.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The NSA makes them.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="A plastic card leaves the agency along a single path into the president's hand."></svg></div>
+        <p class="body">To order a launch, the president must first pass an authentication. The NSA generates the Gold Codes and prints them on a plastic card he carries.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A proof of identity is only worth something if someone else wrote it.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023).</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Tap the glowing piece to build the chain, one link at a time.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The NSA makes the gold codes; the president carries them on a plastic card to prove a launch order is his.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)</span></div>
   </div>
 </article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
 <script src="kit/astute-card.js"></script>
 <script>
 (() => {
-  gsap.registerPlugin(DrawSVGPlugin, ScrambleTextPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
-  const GOLD = '#f4c04e', INK = '#f4ead4', BG = '#1b2537', EDGE = '#0d131e', TIE = '#b5403f';
-  // flat tints: p% of the card's ink over the card's colour
-  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
-  const mix = p => '#' + rgb(INK).map((a, i) => Math.round(a * p / 100 + rgb(BG)[i] * (1 - p / 100)).toString(16).padStart(2, '0')).join('');
-  const CREAM = INK, CREAMD = mix(72), NIGHT = EDGE;
-  const CODE = 'K7Q3·X9M2';
-  const SAY = [
-    'Tap the glowing piece to build the chain, one link at a time.',
-    'The <b>NSA</b>, the National Security Agency, generates special codes: the <b>gold codes</b>. Tap the printer.',
-    'They are printed on a small <b>plastic card</b>. Tap the president to hand it over.',
-    'He always carries the card. Tap the <b>nuclear football</b>, the briefcase only he can use.',
-    'To launch, he must first prove it’s really him: <b>the codes are the proof.</b>'
-  ];
-  let W = 0, H = 0, fs = 12, step = 0, R = {}, G = {}, tls = [], pend = [];
-  let seen = {w: 0, h: 0}, waitFit = false, fitT = 0, keepT = 0;
-  const C = {x: 0, y: 0, s: 1, r: 0, o: 0};
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const $$ = s => [...svg.querySelectorAll(s)];
-  const A = o => Object.entries(o).map(([k, v]) => `${k}="${typeof v === 'number' ? +v.toFixed(2) : v}"`).join(' ');
-  const el = (t, o, inner = '') => `<${t} ${A(o)}>${inner}</${t}>`;
+  // 0 president · 1 launch officers · 2 agency
+  const RIGHT = 2, NAMES = ['The president', 'The launch officers', 'An intelligence agency'];
+  let pick = -1, turned = false, answered = false, tl = null;
+  const pic = Kit.$('pic'), pic2 = Kit.$('pic2');
+  const hasG = () => typeof gsap !== 'undefined';
 
-  function placeCard() {
-    if (!R.card) return;
-    R.card.setAttribute('transform', `translate(${C.x.toFixed(1)},${C.y.toFixed(1)}) rotate(${C.r.toFixed(1)}) scale(${C.s.toFixed(3)})`);
-    R.card.setAttribute('opacity', Math.max(0, C.o).toFixed(3));
+  // ---------- one family of pictograms: 120 x 84, baseline at 84, radius 6, 3px cut lines ----------
+  const INK = 'fill:currentColor', CUT = 'fill:var(--c)', LINE = 'stroke:var(--c);stroke-width:3;stroke-linecap:round';
+  function bust(g, cx, hr, half, top) {
+    Kit.mk('circle', {cx, cy: top - 4 - hr, r: hr, style: INK}, g);
+    const r = hr + 1;
+    Kit.mk('path', {d: `M${cx-half},52V${top+r}A${r},${r} 0 0 1 ${cx-half+r},${top}H${cx+half-r}A${r},${r} 0 0 1 ${cx+half},${top+r}V52Z`, style: INK}, g);
+  }
+  const block = g => Kit.mk('rect', {x: 2, y: 46, width: 116, height: 38, rx: 6, style: `${INK};stroke:var(--c);stroke-width:3`}, g);
+  function icon(parent, i, x, y, k) {
+    const g = Kit.mk('g', {transform: `translate(${x},${y}) scale(${k})`}, parent);
+    if (i === 0) {            // head and shoulders behind the Resolute-style desk
+      bust(g, 60, 12, 26, 30);
+      block(g);
+      Kit.mk('line', {x1: 4, y1: 54, x2: 116, y2: 54, style: LINE}, g);
+      Kit.mk('rect', {x: 42, y: 60, width: 36, height: 19, rx: 3, style: `fill:none;${LINE}`}, g);
+      Kit.mk('circle', {cx: 60, cy: 69.5, r: 4, style: CUT}, g);
+    } else if (i === 1) {     // two seated figures at a twin console
+      bust(g, 31, 9, 16, 32); bust(g, 89, 9, 16, 32);
+      block(g);
+      Kit.mk('line', {x1: 60, y1: 48, x2: 60, y2: 84, style: LINE}, g);
+      [31, 89].forEach(c => {
+        Kit.mk('rect', {x: c - 18, y: 57, width: 36, height: 5, rx: 2.5, style: CUT}, g);
+        Kit.mk('circle', {cx: c - 8, cy: 72, r: 4, style: CUT}, g);
+        Kit.mk('circle', {cx: c + 8, cy: 72, r: 4, style: CUT}, g);
+      });
+    } else {                  // a low windowless building with a single door
+      Kit.mk('rect', {x: 18, y: 28, width: 84, height: 16, rx: 6, style: INK}, g);
+      Kit.mk('rect', {x: 2, y: 38, width: 116, height: 46, rx: 6, style: `${INK};stroke:var(--c);stroke-width:3`}, g);
+      Kit.mk('rect', {x: 50, y: 62, width: 20, height: 26, rx: 3, style: CUT}, g);
+    }
+    return g;
   }
 
-  // Keeps the captions apart: clamps them inside the stage, then nudges any that collide.
-  function placeLabels(list, obst) {
-    const out = [];
-    const box = l => { const w = l.t.length * fs * .66, x0 = l.a === 'middle' ? l.x - w / 2 : l.a === 'end' ? l.x - w : l.x; return {x0, x1: x0 + w, y0: l.y - fs * .9, y1: l.y + fs * .3}; };
-    const hit = (a, b) => a.x0 < b.x1 + 3 && b.x0 < a.x1 + 3 && a.y0 < b.y1 + 2 && b.y0 < a.y1 + 2;
-    list.forEach(l => {
-      let b = box(l);
-      if (b.x0 < 3) { l.x += 3 - b.x0; b = box(l); }
-      if (b.x1 > W - 3) { l.x -= b.x1 - (W - 3); b = box(l); }
-      for (let k = 0; k < 8; k++) { const o = [...out, ...obst].find(o => hit(b, o)); if (!o) break; l.y += o.y1 - b.y0 + 3; b = box(l); }
-      out.push(b);
+  // ---------- text helpers ----------
+  function wrap(svg, text, maxW, size) {
+    const t = Kit.mk('text', {style: `font:700 ${size}px var(--body)`}, svg);
+    const m = s => { t.textContent = s; return t.getComputedTextLength(); };
+    const out = []; let cur = '';
+    text.split(' ').forEach(w => { const nx = cur ? cur + ' ' + w : w; if (cur && m(nx) > maxW) { out.push(cur); cur = w; } else cur = nx; });
+    if (cur) out.push(cur); t.remove(); return out;
+  }
+  function lines(parent, arr, x, y, size, anchor) {
+    const t = Kit.mk('text', {x, y, 'text-anchor': anchor, fill: 'currentColor', style: `font:700 ${size}px var(--body)`}, parent);
+    arr.forEach((s, j) => { const sp = Kit.mk('tspan', {x, dy: j ? Math.round(size * 1.25) : 0}, t); sp.textContent = s; });
+    return t;
+  }
+  function badge(parent, cx, cy) {
+    const g = Kit.mk('g', {class: 'you'}, parent);
+    Kit.mk('rect', {x: cx - 22, y: cy - 11, width: 44, height: 22, rx: 11, style: 'fill:currentColor;stroke:var(--c);stroke-width:2'}, g);
+    const t = Kit.mk('text', {x: cx + 1, y: cy + 4.4, 'text-anchor': 'middle', style: 'fill:var(--c);font:800 12px var(--body);letter-spacing:.08em'}, g);
+    t.textContent = 'YOU';
+    return g;
+  }
+
+  // ---------- the front: three equal tiles in a balanced triangle ----------
+  let F = null;
+  function drawFront() {
+    pic.innerHTML = '';
+    const f = Kit.fitSvg(pic), W = f.W, H = f.H, fs = W >= 330 ? 14 : 13, lh = Math.round(fs * 1.25);
+    const gx = 14, gy = 14, tw = Math.min(176, (W - gx) / 2), padX = 10;
+    const ls = NAMES.map(t => wrap(pic, t, tw - 2 * padX, fs));
+    const n = Math.max(...ls.map(l => l.length)), fixed = 14 + 10 + n * lh + 10;
+    const k = Math.max(.35, Math.min(1.05, (tw - 28) / 120, ((H - gy - 20) / 2 - fixed) / 84));
+    const th = fixed + 84 * k, total = 2 * th + gy;
+    const y0 = Math.max(Math.min(12, H - total), Math.min(36, (H - total) * .3));
+    const pos = [{x: (W - 2 * tw - gx) / 2, y: y0}, {x: (W + gx) / 2, y: y0}, {x: (W - tw) / 2, y: y0 + th + gy}];
+    F = {pos, tw, sites: [], frames: [], badge: null};
+    F.sites = [0, 1, 2].map(i => {
+      const p = pos[i];
+      const g = Kit.mk('g', {class: 'tile', tabindex: '0', role: 'button', 'aria-label': NAMES[i]}, pic);
+      F.frames[i] = Kit.mk('rect', {class: 'frame', x: p.x + .75, y: p.y + .75, width: tw - 1.5, height: th - 1.5, rx: 16, fill: 'transparent', stroke: 'currentColor', 'stroke-width': 1.5, 'pointer-events': 'all'}, g);
+      icon(g, i, p.x + (tw - 120 * k) / 2, p.y + 14, k);
+      lines(g, ls[i], p.x + tw / 2, p.y + 14 + 84 * k + 10 + fs * .92 + (n - ls[i].length) * lh / 2, fs, 'middle');
+      g.addEventListener('click', () => choose(i));
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(i); } });
+      return g;
     });
+    if (pick >= 0) mark(false);
+    if (answered) grade(false);
+  }
+  function mark(anim) {
+    if (F.badge) F.badge.remove();
+    F.frames.forEach((r, i) => r.setAttribute('stroke-width', i === pick ? 2.5 : 1.5));
+    F.sites.forEach((g, i) => g.setAttribute('aria-pressed', i === pick ? 'true' : 'false'));
+    const p = F.pos[pick];
+    F.badge = badge(F.sites[pick], p.x + F.tw - 34, p.y);
+    if (anim && !Kit.calm && hasG()) gsap.from(F.badge, {opacity: 0, scale: .6, transformOrigin: '50% 50%', duration: .3, ease: 'back.out(2)'});
+  }
+  function grade(anim) {
+    F.sites.forEach((g, i) => { const o = i === RIGHT ? 1 : .35;
+      anim && !Kit.calm && hasG() ? gsap.to(g, {opacity: o, duration: .35, ease: 'power2.out'}) : g.setAttribute('opacity', o); });
+  }
+  function choose(i) {
+    if (answered) return;
+    const first = pick < 0; pick = i; Kit.haptic('selection'); mark(true);
+    if (first) sure.on();
   }
 
-  function build() {
-    tls.forEach(t => t.kill()); tls = []; pend = [];
-    gsap.killTweensOf($$('*'));
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    seen = {w: stage.clientWidth, h: stage.clientHeight};
-    const wide = H < W * .75;
-    fs = clamp(Math.min(W / 26, wide ? H / 11 : H / 24), 12, wide ? 13.5 : 14);
-
-    // ---------- layout: a tall diorama, or a wide one when the stage gets short
-    let ncx, bw, ny0, bh, cx0, chW, pw, pcx, py0, ph, cw, fd, bw2, prX, bodyH, hr, fxw, fcx, dp;
-    const chH = fs * 3.75, cy0 = wide ? fs * .35 : fs * .5;
-    if (!wide) {
-      cx0 = W * .5; chW = W - cx0 - fs * .5;
-      bw = Math.min(W * .36, fs * 10); ncx = Math.max(bw / 2 + fs * .5, W * .23);
-      bh = clamp(H * .15, fs * 3.4, fs * 5.5); ny0 = Math.max(fs * 2.6, H * .1);
-      pw = Math.min(W * .36, fs * 10); pcx = W - pw / 2 - fs * .6;
-      py0 = cy0 + chH + fs * 2.4; ph = clamp(H * .09, fs * 2.6, fs * 3.6);
-      cw = clamp(W * .25, fs * 5.6, fs * 7.4);
-      fd = fs * 1.1; bw2 = Math.min(W * .3, fs * 8); prX = Math.max(W * .24, bw2 / 2 + fs * .5);
-      bodyH = clamp(H * .17, fs * 3, fs * 5.5); hr = Math.min(bw2 * .19, fs * 1.25);
-      fxw = Math.min(W * .34, fs * 9); fcx = Math.min(W * .72, W - fxw / 2 - fs * .6);
-      dp = fs * 5;
-    } else {
-      const T = H * .48;
-      cx0 = W * .3; chW = Math.min(Math.max(fs * 9.8, W * .3), W * .4);
-      bw = Math.min(W * .24, cx0 - fs * 1.4); ncx = Math.max(bw / 2 + fs * .5, W * .14);
-      bh = clamp(T * .5, fs * 3.2, fs * 4.2); ny0 = fs * 2;
-      pw = Math.min(W * .26, fs * 7.5, W - (cx0 + chW) - fs * 1.4); pcx = W - pw / 2 - fs * .5;
-      py0 = fs * 1.9; ph = fs * 2.5;
-      cw = clamp(W * .2, fs * 5.2, fs * 6.4);
-      fd = fs * .7; bw2 = Math.min(W * .18, fs * 5); prX = Math.max(W * .2, bw2 / 2 + fs * .5);
-      bodyH = clamp((H - fd - T) * .42, fs * 2.2, fs * 4); hr = Math.min(bw2 * .2, fs * 1.05);
-      fxw = Math.min(W * .24, fs * 6.5); fcx = W - fxw / 2 - fs * .6;
-      dp = fs * 2.4;
-    }
-    const nx = ncx - bw / 2, nyb = ny0 + bh;
-    const ax = nx + bw * .8, ay = ny0 - fs * 1.45, tx = ax + fs * .2, ty = ay - fs * .3;
-    const rx = nx + bw + fs * .9;
-    const px0 = pcx - pw / 2, slotY = py0 + ph;
-    const ch = cw * .63, outY = slotY + ch / 2 + fs * .35, hidY = slotY - ch / 2 - 4;
-    const fly = H - fd, sy = fly - bodyH, hcy = sy - hr * 1.1, hh = bodyH;
-    const pkX = prX + bw2 * .22, pkY = sy + bodyH * .32, restY = pkY - ch * .08;
-    const fh2 = fxw * .5, fy0 = fly - fh2, fx0 = fcx - fxw / 2;
-    const chipO = `${(cx0 + chW / 2).toFixed(1)} 0`;
-    G = {pcx, outY, hidY, pkX, restY, chipO};
-
-    const LB = wide ? [
-      {t: '1 · NSA makes', x: ncx, y: nyb + fs * 1.35, a: 'middle'},
-      {t: '2 · Prints it', x: pcx - cw / 2 - fs * .5, y: slotY + fs * 1.4, a: 'end'},
-      {t: '3 · Carries it', x: prX + bw2 / 2 + fs * .4, y: hcy + fs * .3, a: 'start'},
-      {t: '4 · The football', x: fx0 - fs * .5, y: fy0 + fh2 * .55 + fs * .35, a: 'end'}
-    ] : [
-      {t: '1 · NSA makes', x: ncx, y: nyb + fs * 1.45, a: 'middle'},
-      {t: '2 · Prints it', x: pcx - cw / 2 - fs * .5, y: slotY + fs * 1.3, a: 'end'},
-      {t: '3 · Carries it', x: prX, y: hcy - hr - fs * .6, a: 'middle'},
-      {t: '4 · The football', x: fcx, y: fy0 - fh2 * .36 - fs * .6, a: 'middle'}
-    ];
-    placeLabels(LB, [{x0: cx0, x1: cx0 + chW, y0: cy0, y1: cy0 + chH}]);
-    const cap = i => el('text', {id: 'gc-cap' + i, class: `lbl gc-cap ${i < 2 ? 'e-m' : 'e-f'}`, x: LB[i].x, y: LB[i].y, 'text-anchor': LB[i].a, 'font-size': fs, fill: CREAM}, LB[i].t);
-
-    let s = `<defs><clipPath id="gc-clip" clipPathUnits="userSpaceOnUse"><rect x="0" y="${slotY - fs * .25}" width="${W}" height="${H}"/></clipPath></defs>`;
-
-    // ---- back plane: two flat dunes, a small White House on the far one
-    const hA0 = H * (wide ? .6 : .52), hAy = H * (wide ? .48 : .44), hA1 = H * (wide ? .52 : .48);
-    const hB0 = H * (wide ? .76 : .72), hb = H * (wide ? .7 : .66), hB1 = H * (wide ? .74 : .69);
-    let wh = '';
-    if (!wide) {
-      const w = clamp(W * .14, fs * 3.4, fs * 4.4), x = W * .5, y = hb + 1, wc = mix(52), wl = mix(62);
-      const wins = [-.4, -.3, -.22, .22, .3, .4].map(k => el('rect', {class: 'gc-whw', x: x + w * k - w * .025, y: y - w * .22, width: w * .05, height: w * .09, fill: mix(14)})).join('');
-      wh = `<g>
-        ${el('rect', {x: x - w / 2, y: y - w * .3, width: w, height: w * .3, fill: wc})}
-        ${el('rect', {x: x - w * .53, y: y - w * .33, width: w * 1.06, height: w * .04, fill: wl})}
-        ${el('rect', {x: x - w * .16, y: y - w * .4, width: w * .32, height: w * .4, fill: wl})}
-        ${el('path', {d: `M${x - w * .19},${y - w * .4} L${x},${y - w * .52} L${x + w * .19},${y - w * .4}Z`, fill: wl})}
-        ${[-.11, -.04, .04, .11].map(k => el('line', {x1: x + w * k, x2: x + w * k, y1: y - w * .37, y2: y, stroke: mix(30), 'stroke-width': 1})).join('')}
-        ${el('line', {x1: x, x2: x, y1: y - w * .52, y2: y - w * .52 - fs * .8, stroke: wl, 'stroke-width': 1})}
-        ${el('rect', {x: x, y: y - w * .52 - fs * .8, width: fs * .55, height: fs * .32, fill: wl})}
-        ${wins}</g>`;
-    }
-    s += `<g id="gc-back"><g class="e-b">
-      ${el('path', {d: `M-2,${hA0} Q${W * .28},${hAy} ${W * .5},${hAy + H * .02} T${W + 2},${hA1} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: mix(6)})}
-      ${wh}
-      ${el('path', {d: `M-2,${hB0} Q${W * .28},${hb} ${W * .38},${hb} L${W * .62},${hb} Q${W * .78},${hb} ${W + 2},${hB1} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: mix(11)})}
-    </g></g>`;
-
-    // ---- tap marks sit behind the pieces: a flat gold disc
-    const HL = [[ncx, ny0 + bh * .55, bw * .72], [pcx, py0 + ph * .5, pw * .66], [prX, (hcy - hr + fly) / 2, (fly - hcy + hr) * .62], [fcx, fy0 + fh2 * .4, fxw * .66]];
-    s += `<g id="gc-halos" class="e-g">${HL.map(([x, y, r]) => `<g class="gc-halo" opacity="0">${el('circle', {class: 'gc-hc', cx: x, cy: y, r, fill: GOLD, 'fill-opacity': .13})}</g>`).join('')}</g>`;
-
-    // ---- middle plane: the NSA ledge, the code slip, the printer, the chain
-    const sf = Math.max(12, Math.min(bh * .24, fs * 1.5)), sBase = ny0 + bh * .2 + sf * 1.02;
-    const wTop = sBase + fs * .35, wBot = nyb - bh * .1, rowsN = wBot - wTop > fs * 1.7 ? 2 : 1, rowH = (wBot - wTop) / rowsN, gap = bw / 15;
-    let wins = '';
-    for (let r = 0; r < rowsN; r++) for (let k = 0; k < 7; k++) wins += el('rect', {class: 'gc-win', x: nx + gap * (1 + 2 * k), y: wTop + r * rowH + rowH * .18, width: gap, height: rowH * .64, fill: mix(22)});
-    const waves = [.6, 1, 1.4].map(m => { const d = fs * m; return el('path', {class: 'gc-wave', d: `M${tx + d * .5},${ty - d * .87} A${d},${d} 0 0 1 ${tx + d * .5},${ty + d * .87}`, fill: 'none', stroke: GOLD, 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: 0}); }).join('');
-    const cliff = `M-2,${nyb} L${rx},${nyb} Q${rx + fs * 1.2},${nyb} ${rx + fs * .5},${nyb + dp * .35} Q${rx - fs * .3},${nyb + dp * .68} ${rx - W * .08},${nyb + dp * .84} Q${W * .1},${nyb + dp * 1.08} -2,${nyb + dp}Z`;
-    const L = [
-      `M${tx},${ty} C${tx + (cx0 - tx) * .45},${ty - fs * 1.1} ${cx0 - fs * 2},${cy0 + chH / 2} ${cx0},${cy0 + chH / 2}`,
-      wide ? `M${cx0 + chW},${cy0 + chH / 2} C${cx0 + chW + fs * 1.4},${cy0 + chH / 2} ${pcx},${py0 - fs * 2.4} ${pcx},${py0 - fs * .95}`
-           : `M${cx0 + chW * .5},${cy0 + chH} C${cx0 + chW * .5},${cy0 + chH + fs * 1.5} ${pcx},${py0 - fs * 2.5} ${pcx},${py0 - fs * .95}`,
-      `M${pcx},${outY} C${pcx - W * .05},${outY + H * .16} ${pkX + W * .22},${restY - H * .14} ${pkX},${restY}`,
-      `M${pkX},${restY} C${pkX + W * .1},${restY - H * .16} ${fcx - W * .05},${fy0 - H * .14} ${fcx},${fy0 + fh2 * .12}`
-    ];
-    const lineAttrs = {fill: 'none', 'stroke-linecap': 'round'};
-    const thTop = wide ? 0 : cy0 + chH;
-    const thread = mix(40), band = mix(55);
-    s += `<g id="gc-mid">
-      <g class="e-m">${el('path', {d: cliff, fill: mix(15)})}</g>
-      <g class="e-m">
-        ${el('rect', {x: nx + bw * .14, y: ny0, width: bw * .72, height: bh * .22, fill: CREAMD})}
-        ${el('rect', {x: nx, y: ny0 + bh * .2, width: bw, height: bh * .8, fill: CREAM})}
-        ${el('rect', {x: nx - bw * .03, y: ny0 + bh * .2, width: bw * 1.06, height: Math.max(2, bh * .05), fill: band})}
-        ${el('rect', {x: nx - bw * .04, y: nyb - Math.max(2, bh * .05), width: bw * 1.08, height: Math.max(2, bh * .05), fill: band})}
-        ${el('text', {class: 'sign', x: ncx, y: sBase, 'text-anchor': 'middle', 'font-size': sf, fill: NIGHT}, 'NSA')}
-        ${wins}
-        ${el('line', {x1: ax, y1: ny0, x2: ax, y2: ay + fs * .4, stroke: CREAMD, 'stroke-width': 2.2})}
-        ${el('path', {d: `M${ax - fs * .75},${ay} Q${ax - fs * .2},${ay + fs * 1.05} ${ax + fs * .75},${ay + fs * .25}Z`, fill: CREAM})}
-        ${el('line', {x1: ax, y1: ay + fs * .3, x2: tx, y2: ty, stroke: CREAMD, 'stroke-width': 1.4})}
-      </g>
-      ${el('circle', {id: 'gc-beacon', cx: tx, cy: ty, r: fs * .18, fill: GOLD})}
-      ${waves}
-      <g class="e-m"><g id="gc-swing"><g id="gc-idle">
-        ${el('line', {x1: cx0 + chW * .18, y1: 0, x2: cx0 + chW * .18, y2: cy0, stroke: thread, 'stroke-width': 1})}
-        ${el('line', {x1: cx0 + chW * .82, y1: 0, x2: cx0 + chW * .82, y2: cy0, stroke: thread, 'stroke-width': 1})}
-        ${el('rect', {x: cx0, y: cy0, width: chW, height: chH, rx: fs * .3, fill: NIGHT})}
-        ${el('rect', {id: 'gc-edge', x: cx0 + 3, y: cy0 + 3, width: chW - 6, height: chH - 6, rx: fs * .2, fill: 'none', stroke: GOLD, 'stroke-opacity': .3, 'stroke-width': 1.2})}
-        ${el('text', {id: 'gc-t1', class: 'ttl', x: cx0 + fs * .75, y: cy0 + fs * 1.35, 'font-size': fs, fill: GOLD, opacity: .7}, 'Gold codes')}
-        ${el('text', {id: 'gc-code', class: 'mono', x: cx0 + fs * .75, y: cy0 + fs * 2.95, 'font-size': fs, fill: GOLD}, '·········')}
-      </g></g></g>
-      <g class="e-m"><g id="gc-printer">
-        ${el('line', {x1: px0 + pw * .15, y1: thTop, x2: px0 + pw * .15, y2: py0, stroke: thread, 'stroke-width': 1})}
-        ${el('line', {x1: px0 + pw * .85, y1: thTop, x2: px0 + pw * .85, y2: py0, stroke: thread, 'stroke-width': 1})}
-        ${el('rect', {x: pcx - pw * .28, y: py0 - fs * .95, width: pw * .56, height: fs * 1.3, fill: CREAM})}
-        ${[.3, .6].map(k => el('line', {x1: pcx - pw * .2, x2: pcx + pw * .12, y1: py0 - fs * .95 + fs * k, y2: py0 - fs * .95 + fs * k, stroke: band, 'stroke-width': 1})).join('')}
-        ${el('rect', {x: px0, y: py0, width: pw, height: ph, rx: fs * .4, fill: CREAMD})}
-        ${[0, 1, 2].map(k => el('line', {x1: px0 + pw * .08, x2: px0 + pw * .3, y1: py0 + ph * (.36 + k * .13), y2: py0 + ph * (.36 + k * .13), stroke: mix(40), 'stroke-width': 1.4, 'stroke-linecap': 'round'})).join('')}
-        ${el('rect', {x: pcx - pw * .36, y: slotY - fs * .42, width: pw * .72, height: fs * .3, rx: fs * .15, fill: NIGHT})}
-        ${el('circle', {id: 'gc-led', cx: px0 + pw * .86, cy: py0 + ph * .4, r: fs * .28, fill: mix(35)})}
-      </g></g>
-      <g class="e-g">${L.map(d => el('path', {d, ...lineAttrs, stroke: mix(40), 'stroke-width': 1.4, 'stroke-dasharray': '2 6'})).join('')}</g>
-      <g>${L.map(d => el('path', {class: 'gc-line', d, ...lineAttrs, stroke: GOLD, 'stroke-width': 2.4})).join('')}</g>
-      ${cap(0)}${cap(1)}
-    </g>`;
-
-    // ---- front plane: floor, president, football, seal
-    const rays = Array.from({length: 11}, (_, k) => { const a = (-165 + k * 15) * Math.PI / 180, r1 = fxw * .42, r2 = r1 + fs * 2.2;
-      return el('line', {class: 'gc-ray', x1: fcx + Math.cos(a) * r1, y1: fy0 + Math.sin(a) * r1, x2: fcx + Math.cos(a) * r2, y2: fy0 + Math.sin(a) * r2, stroke: GOLD, 'stroke-width': 2.2, 'stroke-linecap': 'round'}); }).join('');
-    const sr = Math.min(fh2 * .44, fs * 1.6), sx = fcx, sy2 = fy0 + fh2 * .58;
-    const ruff = Array.from({length: 32}, (_, k) => { const a = k * Math.PI / 16, r = k % 2 ? sr * .96 : sr * 1.14; return `${(Math.cos(a) * r).toFixed(1)},${(Math.sin(a) * r).toFixed(1)}`; }).join(' ');
-    const seam = mix(26);
-    s += `<g id="gc-front">
-      <g class="e-f">${el('path', {d: `M-2,${fly} Q${W * .5},${fly - fs * .6} ${W + 2},${fly} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: mix(18)})}</g>
-      <g class="e-f"><g id="gc-pres">
-        ${el('rect', {x: prX - hr * .45, y: hcy + hr * .5, width: hr * .9, height: sy - hcy - hr * .5 + 3, fill: CREAMD})}
-        ${el('path', {d: `M${prX - bw2 / 2},${fly} L${prX - bw2 / 2},${sy + bw2 * .25} Q${prX - bw2 / 2},${sy} ${prX - bw2 * .2},${sy} L${prX + bw2 * .2},${sy} Q${prX + bw2 / 2},${sy} ${prX + bw2 / 2},${sy + bw2 * .25} L${prX + bw2 / 2},${fly}Z`, fill: NIGHT})}
-        ${el('path', {d: `M${prX - bw2 * .34},${sy + hh * .3} L${prX - bw2 * .36},${fly} M${prX + bw2 * .34},${sy + hh * .3} L${prX + bw2 * .36},${fly}`, stroke: seam, 'stroke-width': 1.3, fill: 'none'})}
-        ${el('path', {d: `M${prX - bw2 * .15},${sy} L${prX + bw2 * .15},${sy} L${prX},${sy + hh * .42}Z`, fill: CREAM})}
-        ${el('path', {d: `M${prX - fs * .25},${sy + 1} L${prX + fs * .25},${sy + 1} L${prX + fs * .14},${sy + fs * .6} L${prX + fs * .3},${sy + hh * .36} L${prX},${sy + hh * .44} L${prX - fs * .3},${sy + hh * .36} L${prX - fs * .14},${sy + fs * .6}Z`, fill: TIE})}
-        ${el('path', {d: `M${prX - bw2 * .16},${sy} L${prX - bw2 * .03},${sy + hh * .5} M${prX + bw2 * .16},${sy} L${prX + bw2 * .03},${sy + hh * .5}`, stroke: seam, 'stroke-width': 1.5, fill: 'none'})}
-        ${el('path', {d: `M${pkX - fs * .9},${pkY} L${pkX + fs * .9},${pkY}`, stroke: mix(34), 'stroke-width': 1.5, 'stroke-linecap': 'round'})}
-        ${el('circle', {cx: prX, cy: hcy, r: hr, fill: mix(88)})}
-        ${el('path', {d: `M${prX - hr},${hcy - hr * .05} Q${prX - hr * 1.05},${hcy - hr * 1.15} ${prX},${hcy - hr * 1.08} Q${prX + hr * 1.1},${hcy - hr * 1.1} ${prX + hr},${hcy - hr * .1} Q${prX + hr * .4},${hcy - hr * .75} ${prX - hr},${hcy - hr * .05}Z`, fill: mix(58)})}
-      </g></g>
-      <g class="e-f"><g id="gc-case">
-        ${el('path', {d: `M${fcx - fxw * .18},${fy0} C${fcx - fxw * .18},${fy0 - fh2 * .35} ${fcx + fxw * .18},${fy0 - fh2 * .35} ${fcx + fxw * .18},${fy0}`, stroke: NIGHT, 'stroke-width': fs * .42, fill: 'none', 'stroke-linecap': 'round'})}
-        ${el('rect', {x: fx0, y: fy0, width: fxw, height: fh2, rx: fh2 * .12, fill: NIGHT})}
-        ${el('rect', {id: 'gc-inner', x: fx0 + fs * .4, y: fy0, width: fxw - fs * .8, height: fh2 * .32, rx: fs * .2, fill: GOLD, opacity: 0})}
-        <g id="gc-lid">${el('rect', {x: fx0, y: fy0, width: fxw, height: fh2 * .32, rx: fh2 * .12, fill: mix(9)})}</g>
-        ${[-1, 1].map(sg => el('rect', {x: fcx + sg * fxw * .28 - fs * .35, y: fy0 + fh2 * .32 - fs * .3, width: fs * .7, height: fs * .6, rx: 2, fill: GOLD})).join('')}
-      </g></g>
-      <g transform="translate(${sx.toFixed(1)},${sy2.toFixed(1)})"><g id="gc-seal" opacity="0">
-        ${el('polygon', {points: ruff, fill: '#c8922c'})}
-        ${el('circle', {r: sr, fill: GOLD})}
-        ${el('path', {id: 'gc-check', d: `M${-sr * .38},${sr * .02} L${-sr * .1},${sr * .3} L${sr * .42},${-sr * .3}`, fill: 'none', stroke: NIGHT, 'stroke-width': Math.max(2, sr * .17), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'})}
-      </g></g>
-      <g>${rays}</g>
-      ${cap(2)}${cap(3)}
-    </g>`;
-
-    // ---- moving parts: the plastic card, the spark, the tap rings
-    const dash = [0, 1, 2, 3].map(k => el('rect', {class: 'gc-dash', x: -cw / 2 + cw * (.1 + k * .2), y: -ch / 2 + ch * .72, width: cw * .15, height: ch * .09, rx: 1, fill: NIGHT, opacity: 0})).join('');
-    s += `<g id="gc-fx">
-      <g id="gc-wrap" clip-path="url(#gc-clip)"><g id="gc-card" opacity="0">
-        ${el('rect', {x: -cw / 2, y: -ch / 2, width: cw, height: ch, rx: ch * .12, fill: CREAM, stroke: NIGHT, 'stroke-width': 1})}
-        ${el('rect', {x: -cw / 2 + .5, y: -ch / 2 + ch * .14, width: cw - 1, height: ch * .14, fill: GOLD})}
-        ${el('rect', {x: -cw / 2 + cw * .1, y: -ch / 2 + ch * .38, width: cw * .19, height: ch * .24, rx: 2, fill: GOLD})}
-        ${dash}
-      </g></g>
-      ${el('circle', {id: 'gc-spark', cx: tx, cy: ty, r: fs * .38, fill: '#fff3c4', stroke: GOLD, 'stroke-width': 2, opacity: 0})}
-      <g id="gc-pulses">${HL.map(([x, y, r]) => `<g class="gc-pg" opacity="0">${el('circle', {class: 'gc-pulse', cx: x, cy: y, r: r * .7, fill: 'none', stroke: GOLD, 'stroke-width': 1.6, opacity: .6})}</g>`).join('')}</g>
-    </g>`;
-
-    svg.innerHTML = s;
-    const q = id => svg.querySelector('#' + id);
-    R = {back: q('gc-back'), front: q('gc-front'), card: q('gc-card'), wrap: q('gc-wrap'), spark: q('gc-spark'), seal: q('gc-seal'), check: q('gc-check'),
-      code: q('gc-code'), t1: q('gc-t1'), edge: q('gc-edge'), led: q('gc-led'), printer: q('gc-printer'), pres: q('gc-pres'), beacon: q('gc-beacon'),
-      swing: q('gc-swing'), idle: q('gc-idle'), case: q('gc-case'), lid: q('gc-lid'), inner: q('gc-inner'), pulsesG: q('gc-pulses'),
-      L: $$('.gc-line'), wins: $$('.gc-win'), whw: $$('.gc-whw'), waves: $$('.gc-wave'), rays: $$('.gc-ray'), dash: $$('.gc-dash'), stars: $$('.gc-star'),
-      caps: [0, 1, 2, 3].map(i => q('gc-cap' + i)), halos: $$('.gc-halo'), pgs: $$('.gc-pg')};
-    gsap.set(R.L, {drawSVG: '0%'});
-    gsap.set(R.rays, {drawSVG: '0% 0%'});
-    Object.assign(C, {x: pcx, y: hidY, s: 1, r: 0, o: 0}); placeCard();
-    if (!Kit.calm) {
-      $$('.gc-pulse').forEach((c, i) => { const r0 = +c.getAttribute('r'); gsap.fromTo(c, {attr: {r: r0 * .85}, opacity: .9}, {attr: {r: r0 * 1.2}, opacity: 0, duration: 1.5, repeat: -1, ease: 'power2.out', delay: i * .1}); });
-      $$('.gc-hc').forEach(c => { const r0 = +c.getAttribute('r'); gsap.fromTo(c, {attr: {r: r0 * .92}}, {attr: {r: r0 * 1.1}, duration: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'}); });
-      gsap.fromTo(R.idle, {rotation: -.7, svgOrigin: G.chipO}, {rotation: .7, svgOrigin: G.chipO, duration: 2.8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
-      gsap.to(R.beacon, {opacity: .25, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'});
-    }
-    for (let i = 0; i < step; i++) run(i, true);
-    R.halos.forEach((g, j) => g.setAttribute('opacity', j === step ? 1 : 0));
-    R.pgs.forEach((g, j) => g.setAttribute('opacity', j === step ? 1 : 0));
-  }
-
-  function setHalo(k) { [...R.halos, ...R.pgs].forEach((g, j) => gsap.to(g, {opacity: j % 4 === k ? 1 : 0, duration: .3, ease: 'power2.out'})); }
-
-  const STEPS = [
-    () => { // the NSA generates the gold codes
-      const tl = gsap.timeline({paused: true});
-      tl.to(R.wins, {attr: {fill: GOLD}, duration: .25, stagger: {each: .03, from: 'random'}, ease: 'power2.out'}, 0)
-        .fromTo(R.waves, {drawSVG: '0%', opacity: 1}, {drawSVG: '100%', duration: .5, stagger: .12, ease: 'power2.out'}, .05)
-        .to(R.waves, {opacity: 0, duration: .45, stagger: .12, ease: 'power1.in'}, .55)
-        .to(R.L[0], {drawSVG: '100%', duration: .75, ease: 'power2.inOut'}, .2)
-        .to(R.edge, {attr: {'stroke-opacity': 1}, duration: .3}, .85)
-        .to(R.t1, {opacity: 1, duration: .3}, .85)
-        .to(R.code, {duration: 1.1, scrambleText: {text: CODE, chars: '0123456789ABCDEFGHJKMNPQRSTVWXYZ', speed: .5}}, .85)
-        .to(R.caps[0], {attr: {fill: GOLD}, duration: .3}, .85);
-      return {tl, end: () => {}};
-    },
-    () => { // printed on a plastic card
-      const tl = gsap.timeline({paused: true});
-      Object.assign(C, {x: G.pcx, y: G.hidY, s: 1, r: 0, o: 1}); placeCard();
-      tl.to(R.L[1], {drawSVG: '100%', duration: .6, ease: 'power2.inOut'}, 0)
-        .to(R.led, {attr: {fill: GOLD}, duration: .12, repeat: 6, yoyo: true, ease: 'sine.inOut'}, .35)
-        .to(R.printer, {y: 1.6, duration: .06, repeat: 9, yoyo: true, ease: 'sine.inOut'}, .45)
-        .to(C, {y: G.outY, duration: 1, ease: 'power3.out', onUpdate: placeCard}, .6)
-        .fromTo(R.dash, {opacity: 0}, {opacity: 1, duration: .12, stagger: .12}, .8)
-        .to(R.caps[1], {attr: {fill: GOLD}, duration: .3}, .6);
-      return {tl, end: () => { Object.assign(C, {x: G.pcx, y: G.outY, s: 1, r: 0, o: 1}); placeCard(); }};
-    },
-    () => { // the president carries it
-      const tl = gsap.timeline({paused: true}), P = {t: 0}, p = R.L[2], len = p.getTotalLength();
-      tl.to(p, {drawSVG: '100%', duration: .9, ease: 'power2.inOut'}, 0)
-        .to(P, {t: 1, duration: 1.25, ease: 'power2.inOut', onUpdate: () => { const pt = p.getPointAtLength(P.t * len); Object.assign(C, {x: pt.x, y: pt.y, s: 1 - .45 * P.t, r: -12 * P.t - 10 * Math.sin(P.t * Math.PI), o: 1}); placeCard(); }}, .2)
-        .to(R.pres, {y: -4, duration: .18, yoyo: true, repeat: 1, ease: 'power2.out'}, 1.42)
-        .to(R.caps[2], {attr: {fill: GOLD}, duration: .3}, 1.3);
-      return {tl, end: () => { const pt = p.getPointAtLength(len); Object.assign(C, {x: pt.x, y: pt.y, s: .55, r: -12, o: 1}); placeCard(); }};
-    },
-    () => { // the football: authentication
-      const tl = gsap.timeline({paused: true}), P = {t: 0}, p = R.L[3], len = p.getTotalLength();
-      const segs = R.L.map(l => l.getTotalLength()), tot = segs.reduce((a, b) => a + b, 0), S = {d: 0};
-      tl.to(p, {drawSVG: '100%', duration: .6, ease: 'power2.inOut'}, 0)
-        .to(R.lid, {scaleY: -.5, transformOrigin: '50% 0%', duration: .55, ease: 'back.out(1.7)'}, .05)
-        .to(R.inner, {opacity: 1, duration: .4, ease: 'power2.out'}, .15)
-        .to(P, {t: 1, duration: 1, ease: 'power2.inOut', onUpdate: () => { const pt = p.getPointAtLength(P.t * len); Object.assign(C, {x: pt.x, y: pt.y, s: .55 - .3 * P.t, r: -12 + 12 * P.t, o: P.t < .75 ? 1 : 1 - (P.t - .75) / .25}); placeCard(); }}, .2)
-        .set(R.spark, {opacity: 1}, 1.25)
-        .to(S, {d: tot, duration: 1.3, ease: 'power2.in', onUpdate: () => { let d = S.d, k = 0; while (k < 3 && d > segs[k]) { d -= segs[k]; k++; } const pt = R.L[k].getPointAtLength(Math.min(d, segs[k])); R.spark.setAttribute('cx', pt.x); R.spark.setAttribute('cy', pt.y); }}, 1.25)
-        .to(R.spark, {opacity: 0, duration: .15}, 2.55)
-        .to(R.case, {scale: 1.07, transformOrigin: '50% 100%', duration: .14, yoyo: true, repeat: 1, ease: 'power2.out'}, 2.55)
-        .fromTo(R.rays, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .45, stagger: .025, ease: 'expo.out'}, 2.55)
-        .to(R.rays, {drawSVG: '100% 100%', duration: .6, stagger: .02, ease: 'power2.in'}, 3.1)
-        .to(R.L, {attr: {'stroke-width': 3.2}, duration: .4, ease: 'power2.out'}, 2.55)
-        .to(R.t1, {duration: .7, scrambleText: {text: 'Authenticated', chars: 'abcdefghijklmnopqrstuvwxyz', speed: .6}}, 2.6)
-        .to(R.edge, {attr: {'stroke-width': 2.2}, duration: .3}, 2.6)
-        .fromTo(R.swing, {rotation: 4, svgOrigin: G.chipO}, {rotation: 0, svgOrigin: G.chipO, duration: 1.6, ease: 'elastic.out(1,.25)'}, 2.6)
-        .fromTo(R.seal, {scale: 2.8, opacity: 0, rotation: -35, transformOrigin: '50% 50%'}, {scale: 1, opacity: 1, rotation: -10, duration: .6, ease: 'back.out(2.4)'}, 2.7)
-        .fromTo(R.check, {drawSVG: '0%'}, {drawSVG: '100%', duration: .35, ease: 'power2.out'}, 3.05)
-        .to(R.caps[3], {attr: {fill: GOLD}, duration: .3}, 2.6);
-      if (R.whw.length) tl.to(R.whw, {attr: {fill: GOLD}, duration: .2, stagger: .05}, 2.9);
-      return {tl, end: () => { C.o = 0; placeCard(); }};
-    }
-  ];
-
-  function run(i, instant) {
-    if (i >= 2) R.wrap.removeAttribute('clip-path');
-    const {tl, end} = STEPS[i]();
-    if (instant) { tl.progress(1); tl.kill(); end(); }
-    else {
-      tls.push(tl); pend.push(end);
-      tl.eventCallback('onComplete', () => { end(); if (waitFit && !tls.some(t => t !== tl && t.isActive())) refit(); });
-      tl.play();
-    }
-  }
-  function flush() { tls.forEach(t => t.progress(1).kill()); tls = []; pend.forEach(f => f()); pend = []; }
-
-  // Re-flow the diorama when the stage changes size (the takeaway appearing, line breaks), never mid-animation.
-  function refit() {
-    waitFit = false;
-    build();
-    if (!Kit.calm) gsap.fromTo(svg, {opacity: 0}, {opacity: 1, duration: .35, ease: 'power1.out'});
-  }
-  new ResizeObserver(() => {
-    if (!R.card) return;
-    if (Math.abs(stage.clientWidth - seen.w) < 2 && Math.abs(stage.clientHeight - seen.h) < 2) return;
-    clearTimeout(fitT);
-    fitT = setTimeout(() => { if (tls.some(t => t.isActive())) waitFit = true; else refit(); }, 140);
-  }).observe(stage);
-
-  function go(instant) {
-    if (step >= 4 || !R.card) return;
-    flush();
-    const i = step++;
-    run(i, instant || Kit.calm);
-    setHalo(step);
-    say.innerHTML = SAY[step];
-    Kit.haptic(i === 3 ? 'success' : 'light');
-    if (step === 4) {
-      clearTimeout(keepT);
-      if (instant || Kit.calm) Kit.show('keep');
-      else keepT = setTimeout(() => Kit.show('keep'), 3500);
-    }
-  }
-  svg.addEventListener('click', () => go(false));
-
-  // Depth: the planes slide apart under the finger.
-  svg.addEventListener('pointermove', e => {
-    if (Kit.calm || !R.back) return;
-    const b = svg.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5;
-    gsap.to(R.back, {x: -x * 12, y: -y * 6, duration: .9, ease: 'power3.out', overwrite: 'auto'});
-    gsap.to(R.front, {x: x * 5, y: y * 2, duration: .9, ease: 'power3.out', overwrite: 'auto'});
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered || pick < 0) return; answered = true;
+    const ok = pick === RIGHT, said = NAMES[pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    grade(true);
+    setTimeout(() => Turn.over(), 700);
   });
 
-  Kit.onShow.card = build;
-  // The diorama assembles itself: far plane, hanging pieces dropping in on their threads, front plane.
-  Kit.onEnter.card = () => {
-    if (Kit.calm || !R.back) return;
-    gsap.timeline()
-      .from($$('.e-b'), {opacity: 0, y: H * .06, duration: 1.1, ease: 'power3.out'})
-      .from($$('.e-m'), {opacity: 0, y: -H * .12, duration: .9, stagger: .07, ease: 'back.out(1.3)'}, .2)
-      .from($$('.e-f'), {opacity: 0, y: H * .08, duration: .8, stagger: .06, ease: 'power3.out'}, .45)
-      .from($$('.e-g'), {opacity: 0, duration: .8, ease: 'power2.out'}, 1.1)
-      .from(R.pulsesG, {opacity: 0, duration: .6, ease: 'power2.out'}, 1.4);
-  };
+  // ---------- the back: the agency makes the card, the president carries it ----------
+  function drawBack(anim) {
+    if (tl) { tl.kill(); tl = null; }
+    pic2.innerHTML = '';
+    const f = Kit.fitSvg(pic2), W = f.W, H = f.H, fs = W >= 330 ? 14 : 13, lh = Math.round(fs * 1.25);
+    const LAB = ['The NSA generates the Gold Codes', 'The president carries the card'];
+    const ls = LAB.map(t => wrap(pic2, t, Math.min(W / 2 - 12, 176), fs));
+    const n = Math.max(...ls.map(l => l.length));
+    const top = 34, below = 16 + n * lh;
+    const k = Math.max(.35, Math.min(1.1, (W * .34) / 120, (H - top - below - 2) / 84));
+    const total = top + 84 * k + below, y0 = Math.max(0, (H - total) / 2), r = y0 + top, bot = r + 84 * k;
+    const A = 2, P = W - 2 - 120 * k;
+
+    const base = Kit.mk('g', {}, pic2);
+    const icons = [icon(base, 2, A, r, k), icon(base, 0, P, r, k)];
+    if (pick === 2) badge(base, A + 120 * k - 22, bot);
+    if (pick === 0) badge(base, P + 120 * k - 22, bot);
+
+    // the single bold path: agency roof → president's hand
+    const S = {x: A + 60 * k, y: r + 28 * k}, E = {x: P + 26 * k, y: r + 40 * k};
+    const yc = ((y0 + 16) - .125 * (S.y + E.y)) / .75;
+    const route = Kit.mk('path', {d: `M${S.x},${S.y} C${S.x + 10 * k},${yc} ${E.x - 30 * k},${yc} ${E.x},${E.y}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 3.5, 'stroke-linecap': 'round'}, pic2);
+    const RL = route.getTotalLength(); route.setAttribute('stroke-dasharray', RL); route.setAttribute('stroke-dashoffset', RL);
+
+    // the plastic card: the one focal point
+    const card = Kit.mk('g', {opacity: 0}, pic2);
+    Kit.mk('rect', {x: -17, y: -11, width: 34, height: 22, rx: 3, style: 'fill:#fff;stroke:currentColor;stroke-width:2'}, card);
+    Kit.mk('rect', {x: -16, y: -6.5, width: 32, height: 5, style: INK}, card);
+    Kit.mk('rect', {x: -12, y: 2, width: 15, height: 2.5, rx: 1.2, style: INK, opacity: .6}, card);
+    Kit.mk('rect', {x: -12, y: 6, width: 9, height: 2.5, rx: 1.2, style: INK, opacity: .6}, card);
+    const CS = 1.3 * k;
+    const place = (x, y, rot, s) => card.setAttribute('transform', `translate(${x},${y}) rotate(${rot}) scale(${CS * s})`);
+
+    // two labels: one under each actor, aligned to its outer edge
+    const labs = [
+      (() => { const g = Kit.mk('g', {opacity: 0}, pic2); lines(g, ls[0], A + 1, bot + 16 + fs * .92, fs, 'start'); return g; })(),
+      (() => { const g = Kit.mk('g', {opacity: 0}, pic2); lines(g, ls[1], P + 120 * k - 1, bot + 16 + fs * .92, fs, 'end'); return g; })()
+    ];
+
+    const at = p => { const pt = route.getPointAtLength(p * RL); place(pt.x, pt.y, -8 * p, 1); route.setAttribute('stroke-dashoffset', RL * (1 - p)); };
+    const end = () => {
+      route.setAttribute('stroke-dashoffset', 0);
+      card.setAttribute('opacity', 1); at(1); labs.forEach(l => l.setAttribute('opacity', 1)); base.setAttribute('opacity', 1);
+    };
+    if (!anim || Kit.calm || !hasG()) { end(); return; }
+    place(S.x, S.y, 0, .3);
+    const pr = {p: 0}, born = {s: .3};
+    tl = gsap.timeline({onComplete: end});
+    tl.from(icons, {opacity: 0, y: 6, duration: .4, stagger: .08, ease: 'power2.out'})
+      .set(card, {opacity: 1}, '+=.1')
+      .to(born, {s: 1, duration: .35, ease: 'back.out(2)', onUpdate: () => place(S.x, S.y, 0, born.s)})
+      .to(labs[0], {opacity: 1, duration: .3, ease: 'power2.out'}, '-=.1')
+      .to(pr, {p: 1, duration: 1.2, ease: 'power2.inOut', onUpdate: () => at(pr.p)}, '+=.1')
+      .to(labs[1], {opacity: 1, duration: .3, ease: 'power2.out'}, '-=.1');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm && F && hasG()) gsap.from(F.sites, {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'}); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    for (let i = 0; i < 4; i++) { go(true); await wait(120); }
-    await wait(900);
+    F.sites[0].dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(1700);
+    if (tl) tl.progress(1);
+    await wait(250);
   };
 })();
 Kit.single();

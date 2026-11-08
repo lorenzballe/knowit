@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611081213,
- "built": "2026-11-08T12:13:17Z",
+ "version": 202611081742,
+ "built": "2026-11-08T17:42:12Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -57157,12 +57157,12 @@
    "topic": "history",
    "genre": "history.decisions_that_changed_history",
    "strand": "history.decisions_that_changed_history.leaders_under_pressure",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Who makes the nuclear launch codes, and how do they reach the president?",
-   "answer": "The National Security Agency makes the gold codes. The president carries them on a plastic card, which proves that a launch order really comes from him.",
-   "move": "The NSA makes the gold codes; the president carries them on a plastic card to prove a launch order is his.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Who makes the secret codes a US president needs to order a nuclear launch?",
+   "answer": "The NSA makes them. To order a launch, the president must first pass an authentication. The NSA generates the Gold Codes and prints them on a plastic card he carries.",
+   "move": "A proof of identity is only worth something if someone else wrote it.",
    "keywords": [
     "gold codes",
     "nuclear launch codes",
@@ -57183,18 +57183,17 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive flowchart with a glowing piece to tap, one link at a time. Question: who makes the nuclear launch codes, and how do they reach the president?",
-    "ground": "#1b2537",
-    "page": "pages/history-nsa-gold-codes.html?v=4e022c127da9",
-    "bytes": 31955,
+    "label": "Question asking who makes the secret Gold Codes a US president needs to order a nuclear launch. The reader taps who they think writes them, then rates how sure they are.",
+    "page": "pages/history-nsa-gold-codes.html?v=de655cc4f19a",
+    "bytes": 14889,
     "thumbs": {
-     "front": "thumbs/history-nsa-gold-codes-front.webp?v=4e022c127da9",
-     "back": "thumbs/history-nsa-gold-codes-back.webp?v=4e022c127da9"
+     "front": "thumbs/history-nsa-gold-codes-front.webp?v=de655cc4f19a",
+     "back": "thumbs/history-nsa-gold-codes-back.webp?v=de655cc4f19a"
     }
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=107s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "history-old-maps-1",
@@ -61454,11 +61453,11 @@
    "genre": "history.learn_from_the_past",
    "strand": "history.learn_from_the_past.repeated_mistakes",
    "kind": "page",
-   "difficulty": "hard",
-   "principle": "none",
-   "question": "How long did the Vajont wave take to wipe out over ten villages?",
-   "answer": "A landslide wave erased more than ten villages in about four minutes. The destruction in the Vajont valley happened within minutes, not hours.",
-   "move": "A landslide wave erased more than ten villages in about four minutes.",
+   "difficulty": "medium",
+   "principle": "estimation",
+   "question": "The Vajont wave erased more than ten villages. How long did it take?",
+   "answer": "Just over four minutes. The Vajont wave, set off by a landslide, erased more than ten villages in the valley.",
+   "move": "A wave set off by a landslide gives no time. It sweeps a whole valley in minutes.",
    "keywords": [
     "vajont",
     "landslide",
@@ -61478,20 +61477,18 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A page asking how long the Vajont wave took to wipe out more than ten villages. A pink draggable marker sets a time guess on a scale, followed by a choice of how sure the reader is.",
-    "graded": false,
-    "ground": "#1a0b10",
-    "page": "pages/history-vajont-four-minutes.html?v=ca0d35c519b4",
-    "bytes": 25428,
+    "touch": "taps",
+    "label": "A map of the Vajont valley with villages disappearing in a flash. The reader taps a button to set a guess for how long the wave took to erase more than ten villages, then says how sure they are.",
+    "page": "pages/history-vajont-four-minutes.html?v=ada15cb84566",
+    "bytes": 18757,
     "thumbs": {
-     "front": "thumbs/history-vajont-four-minutes-front.webp?v=ca0d35c519b4",
-     "back": "thumbs/history-vajont-four-minutes-back.webp?v=ca0d35c519b4"
+     "front": "thumbs/history-vajont-four-minutes-front.webp?v=ada15cb84566",
+     "back": "thumbs/history-vajont-four-minutes-back.webp?v=ada15cb84566"
     }
    },
    "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=xUtCwhN8-pQ&t=20s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "history-vajont-lake-710",
@@ -62151,12 +62148,12 @@
    "topic": "human_body",
    "genre": "human_body.the_brain",
    "strand": "human_body.the_brain.neurons",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What does alcohol actually do to the messengers between your neurons?",
-   "answer": "Moving the slider toward DRUNK raises GABA and dopamine, which lowers tension and produces euphoria. It lowers glutamate and acetylcholine, so thoughts slow and memories don't stick.",
-   "move": "Alcohol boosts the brake and the reward, and mutes the messengers of thought.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Alcohol hits four brain messengers. Which does it turn up, which down?",
+   "answer": "Alcohol raises two of the four brain messengers and lowers the other two, so the brain's messages slow. Together these changes slow signals between neurons: you sense less, tension drops, you feel euphoric and memory slips.",
+   "move": "Feeling looser is not a faster brain: alcohol frees you by slowing it down.",
    "keywords": [
     "alcohol",
     "synapse",
@@ -62177,19 +62174,18 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A synapse diagram with a SOBER to DRUNK slider. Sliding toward DRUNK shows which neurotransmitters grow or fade, asking what alcohol does to the messengers between neurons.",
-    "ground": "#0e3566",
-    "page": "pages/human_body-alcohol-synapse.html?v=d5e91cd2bf46",
-    "bytes": 24229,
+    "touch": "taps",
+    "label": "Four brain messengers are shown, and the reader taps each to say whether alcohol makes it more or less active. Two go up and two go down, which slows the signals between neurons.",
+    "page": "pages/human_body-alcohol-synapse.html?v=2d6dd656ba6b",
+    "bytes": 15782,
     "thumbs": {
-     "front": "thumbs/human_body-alcohol-synapse-front.webp?v=d5e91cd2bf46",
-     "back": "thumbs/human_body-alcohol-synapse-back.webp?v=d5e91cd2bf46"
+     "front": "thumbs/human_body-alcohol-synapse-front.webp?v=2d6dd656ba6b",
+     "back": "thumbs/human_body-alcohol-synapse-back.webp?v=2d6dd656ba6b"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=r3KrMPQSUFs&t=326s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "human_body-anti-ageing-claims-1",
@@ -98968,12 +98964,12 @@
    "topic": "maths",
    "genre": "maths.estimation",
    "strand": "maths.estimation.big_numbers",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What does the Lenstra–Pomerance–Wagstaff conjecture say about Mersenne primes?",
-   "answer": "The Lenstra–Pomerance–Wagstaff conjecture predicts about the same handful of Mersenne primes each time p doubles. Since that never runs dry, there should be infinitely many, and so infinitely many even perfect numbers. But it is a conjecture, not a proof.",
-   "move": "Predicted: Mersenne primes forever. Proven: not yet.",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "Mersenne primes 2ᵖ−1 get rarer as p grows. Do they run out?",
+   "answer": "Mersenne primes 2ᵖ−1 get rarer as p grows, yet the Lenstra–Pomerance–Wagstaff conjecture predicts infinitely many, fitting the data well. That would mean infinitely many even perfect numbers. But a conjecture is not a proof.",
+   "move": "Rarer and rarer is not the same as running out.",
    "keywords": [
     "mersenne primes",
     "perfect numbers",
@@ -98994,18 +98990,17 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Glass tubes stacked for each doubling of p, with gold beads marking the Mersenne primes found so far. The level never drops as p doubles. Drag the glass to double p again and again.",
-    "ground": "#0c2630",
-    "page": "pages/maths-mersenne-glass-rack.html?v=008bc4212a43",
-    "bytes": 19062,
+    "label": "A horizontal axis of exponent p with a draggable dot and dots marking Mersenne primes that thin out as p grows. Asks where the count is far to the right and whether the primes run out.",
+    "page": "pages/maths-mersenne-glass-rack.html?v=6d5006b91ea4",
+    "bytes": 13545,
     "thumbs": {
-     "front": "thumbs/maths-mersenne-glass-rack-front.webp?v=008bc4212a43",
-     "back": "thumbs/maths-mersenne-glass-rack-back.webp?v=008bc4212a43"
+     "front": "thumbs/maths-mersenne-glass-rack-front.webp?v=6d5006b91ea4",
+     "back": "thumbs/maths-mersenne-glass-rack-back.webp?v=6d5006b91ea4"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=1308s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "maths-money-3",
@@ -106185,12 +106180,12 @@
    "topic": "medicine",
    "genre": "medicine.public_health",
    "strand": "medicine.public_health.clean_water",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What did DuPont's own 1961 rat tests find about C8?",
-   "answer": "DuPont's own 1961 rat tests fed rats C8 and watched the liver as the dose rose. Internal tests confirmed C8 caused liver damage and organ failure in rats and dogs, yet the company kept producing it for decades.",
-   "move": "Not deadly isn't safe: harm can start far below the dose that kills.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "C8 kills a rat at 570 mg/kg. How little made its liver grow abnormally?",
+   "answer": "In 1961, DuPont's own scientists found that C8 made rat livers grow abnormally at just 1.5 mg/kg, far below the 570 mg/kg dose that kills a rat. The company kept making C8 for decades.",
+   "move": "Ask how little harms, not how much kills.",
    "keywords": [
     "dupont",
     "c8",
@@ -106211,18 +106206,17 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page asking what DuPont's own 1961 rat tests found about C8. A slider raises the dose fed to rats while a liver view shows the effect as the dose climbs.",
-    "ground": "#0d1117",
-    "page": "pages/medicine-dupont-c8-dose.html?v=bb799b6baf42",
-    "bytes": 18878,
+    "label": "The page asks how little of the chemical C8 made rat livers grow abnormally. It contrasts a 570 mg/kg dose that kills a rat with 1.5 mg/kg, which DuPont's 1961 internal tests found harmful.",
+    "page": "pages/medicine-dupont-c8-dose.html?v=d52780661a84",
+    "bytes": 17334,
     "thumbs": {
-     "front": "thumbs/medicine-dupont-c8-dose-front.webp?v=bb799b6baf42",
-     "back": "thumbs/medicine-dupont-c8-dose-back.webp?v=bb799b6baf42"
+     "front": "thumbs/medicine-dupont-c8-dose-front.webp?v=d52780661a84",
+     "back": "thumbs/medicine-dupont-c8-dose-back.webp?v=d52780661a84"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=1097s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "medicine-dupont-safe-dose",
@@ -115625,12 +115619,12 @@
    "topic": "medicine",
    "genre": "medicine.judge_a_treatment",
    "strand": "medicine.judge_a_treatment.side_effects",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Does a tattoo cause long-term inflammation in nearby lymph nodes?",
-   "answer": "A study by the Institute for Research in Biomedicine in Bellinzona found that tattooed people generally have long-term inflammation in the lymph nodes near the tattoo. The card notes that good data on tattoos is still scarce, so treat this as an early signal rather than the final answer.",
-   "move": "A tattoo isn't only skin-deep: nearby lymph nodes can stay inflamed long-term.",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "Where in the body might a tattoo leave long-term inflammation?",
+   "answer": "The lymph nodes next door. A study by the Institute for Research in Biomedicine in Bellinzona found that people with tattoos have a higher level of long-term inflammation in the lymph nodes near the tattoo than people without. Look past the ink, to the nodes beside it.",
+   "move": "Look past the ink, to the nodes beside it: that is where the study found the difference.",
    "keywords": [
     "tattoos",
     "lymph_nodes",
@@ -115650,19 +115644,18 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A timeline with a draggable slider, from the day of getting a tattoo to long after. As the slider moves, it shows the lymph nodes near the tattoo, especially the armpit nodes, and asks whether they stay inflamed over time.",
-    "ground": "#123f73",
-    "page": "pages/medicine-tattoo-lymph-nodes.html?v=ddbc103d548f",
-    "bytes": 21439,
+    "touch": "taps",
+    "label": "An interactive page showing a tattoo on a body outline. It asks where in the body a tattoo might leave long-term inflammation. Readers tap a spot, or choose from: only the skin, somewhere far away, or nowhere, then say how sure they are.",
+    "page": "pages/medicine-tattoo-lymph-nodes.html?v=0780e1dab106",
+    "bytes": 18991,
     "thumbs": {
-     "front": "thumbs/medicine-tattoo-lymph-nodes-front.webp?v=ddbc103d548f",
-     "back": "thumbs/medicine-tattoo-lymph-nodes-back.webp?v=ddbc103d548f"
+     "front": "thumbs/medicine-tattoo-lymph-nodes-front.webp?v=0780e1dab106",
+     "back": "thumbs/medicine-tattoo-lymph-nodes-back.webp?v=0780e1dab106"
     }
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=1166s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "medicine-too-much-testing-1",
@@ -131353,12 +131346,12 @@
    "topic": "nature",
    "genre": "nature.systems_thinking",
    "strand": "nature.systems_thinking.chain_reactions",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How can a thin layer of clay make a whole hillside slide?",
-   "answer": "Rain that sinks down stops on a layer of clay, which lets no water through, and makes a slippery film there. The rock above soaks up water and gets heavier. On tilted layers, it breaks off and slides downhill on the wet clay.",
-   "move": "Wet clay is a lubricant: the rock above it rides down the slope.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Heavy rain soaks a tilted, layered hillside. Which layer will it slide on?",
+   "answer": "The clay is the layer the hill slides on. Rain soaks the rock above it and gets heavier, but the clay lets no water through. Water reaching the clay forms a slippery film, so on a tilted slope the layers above slide down on it.",
+   "move": "A slope gives way where water stops, not where it gets in.",
    "keywords": [
     "clay",
     "landslide",
@@ -131379,18 +131372,17 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A layered hillside with a sky to tap for rain. Tapping it shows water sinking through rock and stopping on a thin clay layer. Asks: how can a thin layer of clay make a whole hillside slide?",
-    "ground": "#f1e9d6",
-    "page": "pages/nature-clay-slide-plane.html?v=4380ce810037",
-    "bytes": 19933,
+    "label": "A tilted, layered hillside soaked by heavy rain. The question asks which layer the hill will slide on. The reader taps one layer, then says how sure they are of the choice.",
+    "page": "pages/nature-clay-slide-plane.html?v=2494d62312d1",
+    "bytes": 24618,
     "thumbs": {
-     "front": "thumbs/nature-clay-slide-plane-front.webp?v=4380ce810037",
-     "back": "thumbs/nature-clay-slide-plane-back.webp?v=4380ce810037"
+     "front": "thumbs/nature-clay-slide-plane-front.webp?v=2494d62312d1",
+     "back": "thumbs/nature-clay-slide-plane-back.webp?v=2494d62312d1"
     }
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=v98N4kQ52io&t=277s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "nature-climate-myths-1",
@@ -143631,10 +143623,10 @@
    "strand": "nature.oceans.currents",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "conditional",
-   "question": "What happens to a tsunami's speed as it approaches the coast?",
-   "answer": "Slower, and taller. The rising sea floor drags on the wave and slows it. Its energy can't vanish, so the water piles up taller.",
-   "move": "As the sea gets shallow, a tsunami trades speed for height.",
+   "principle": "reflection",
+   "question": "What happens to a tsunami's speed as it nears the coast?",
+   "answer": "Near the shore the tsunami slows drastically, yet it grows taller. Friction with the seabed and other factors slow it. Its energy can't vanish, so it goes into height.",
+   "move": "Slow a flow but leave its energy nowhere to go, and it doesn't fade. It piles up.",
    "keywords": [
     "tsunami",
     "shallow water",
@@ -143655,18 +143647,17 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A question asks what happens to a tsunami's speed as it approaches the coast, with three choices: it speeds up, stays the same, or slows down. A wave replay control lets the reader watch the wave move into shallow water.",
-    "ground": "#060a14",
-    "page": "pages/nature-tsunami-slows-down.html?v=7ab0d587a872",
-    "bytes": 16481,
+    "label": "A single wave drawn at equal time steps, approaching a coastline. The reader is asked whether the tsunami's speed near the shore is slower or faster, and drags to guess.",
+    "page": "pages/nature-tsunami-slows-down.html?v=63dba8d77136",
+    "bytes": 16491,
     "thumbs": {
-     "front": "thumbs/nature-tsunami-slows-down-front.webp?v=7ab0d587a872",
-     "back": "thumbs/nature-tsunami-slows-down-back.webp?v=7ab0d587a872"
+     "front": "thumbs/nature-tsunami-slows-down-front.webp?v=63dba8d77136",
+     "back": "thumbs/nature-tsunami-slows-down-back.webp?v=63dba8d77136"
     }
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=893s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "nature-twin-landslide-tsunami",
@@ -190259,12 +190250,12 @@
    "topic": "science",
    "genre": "science.materials",
    "strand": "science.materials.steel",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Heat steel a little hotter. How much more heat does it radiate?",
-   "answer": "Radiated power grows with the fourth power of absolute temperature. Doubling the temperature multiplies the radiated power by 16. So a slight rise in temperature means a huge rise in the heat steel loses.",
-   "move": "Radiated power ∝ T⁴: a little hotter means a lot more heat lost.",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "Steel made a little hotter radiates how much more heat?",
+   "answer": "Radiated power grows with the fourth power of absolute temperature, counted from absolute zero. The hot rail stands only a little further from zero, but that small step is multiplied by itself four times. Slight increases in temperature result in huge increases in power.",
+   "move": "Before trusting that a small step changes little, find the true zero and the exponent.",
    "keywords": [
     "steel",
     "radiated heat",
@@ -190284,18 +190275,17 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "An interactive drag control heats a steel bar while a graph shows its radiated power climbing steeply with temperature. It asks how much more heat steel radiates when it gets a little hotter.",
-    "ground": "#0c1022",
-    "page": "pages/science-fourth-power-glow.html?v=0c2b6ae0fee1",
-    "bytes": 20894,
+    "label": "Interactive guess-the-heat page: a steel rail is made a little hotter. The reader drags the hot rail's column up to guess how much more heat it radiates, then reads the reveal.",
+    "page": "pages/science-fourth-power-glow.html?v=6766f16498e6",
+    "bytes": 14258,
     "thumbs": {
-     "front": "thumbs/science-fourth-power-glow-front.webp?v=0c2b6ae0fee1",
-     "back": "thumbs/science-fourth-power-glow-back.webp?v=0c2b6ae0fee1"
+     "front": "thumbs/science-fourth-power-glow-front.webp?v=6766f16498e6",
+     "back": "thumbs/science-fourth-power-glow-back.webp?v=6766f16498e6"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=879s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "science-fractures-reach-aquifer",
@@ -194680,10 +194670,10 @@
    "strand": "science.cold_and_heat.why_ice_floats",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "computation",
-   "question": "Before atoms, what did Kepler guess makes snowflakes six-sided?",
-   "answer": "Kepler guessed water is built from tiny units. Stacked tight, each sits among six others, so the stack grows as a hexagon: a six-sided crystal.",
-   "move": "Kepler's guess: tiny water units stacking six around one build a six-sided snowflake.",
+   "principle": "reflection",
+   "question": "Before atoms were known, where did Kepler suspect a snowflake's six sides come from?",
+   "answer": "Kepler guessed that the smallest natural unit of water, essentially a molecule, could stack together mechanically to form the hexagonal crystal. Without atomic theory, he seemed on the verge of the idea.",
+   "move": "Tiny units arranging themselves into a crystal: Kepler anticipated molecular self-assembly.",
    "keywords": [
     "kepler",
     "snowflake",
@@ -194703,19 +194693,18 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Quiz page asking which number Kepler guessed made snowflakes six-sided, with options 4, 5, 6 and 8. The reveal shows tiny water units stacked so each sits among six others, forming a hexagon.",
-    "ground": "#22476f",
-    "page": "pages/science-kepler-water-units.html?v=e43a9bc990a5",
-    "bytes": 24905,
+    "touch": "taps",
+    "label": "Multiple-choice question asking where a snowflake's six sides come from, before atoms were known. Options: cold air shaping each flake six ways, tiny water units stacking together, or pure chance. The reader picks one and rates how sure they are.",
+    "page": "pages/science-kepler-water-units.html?v=9948bc7334a7",
+    "bytes": 20774,
     "thumbs": {
-     "front": "thumbs/science-kepler-water-units-front.webp?v=e43a9bc990a5",
-     "back": "thumbs/science-kepler-water-units-back.webp?v=e43a9bc990a5"
+     "front": "thumbs/science-kepler-water-units-front.webp?v=9948bc7334a7",
+     "back": "thumbs/science-kepler-water-units-back.webp?v=9948bc7334a7"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=189s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "science-kitchen-myths-1",
@@ -204904,11 +204893,11 @@
    "genre": "science.materials",
    "strand": "science.materials.plastics",
    "kind": "page",
-   "difficulty": "medium",
-   "principle": "none",
-   "question": "Teflon pans are safe. The chemicals used to make them aren't. Why?",
-   "answer": "Teflon chains are tens of thousands of atoms long, too big to absorb, so they're flushed out. PFOA is only 5 to 10 carbons long: it slips into the blood, and its acid end grabs proteins that carry it anywhere. Size decides which one gets in.",
-   "move": "Not the material but the size: giant chains pass through, small ones get in.",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "Swallow Teflon and you're pretty safe. Not so with the chemicals used to make it. Why?",
+   "answer": "Teflon's chains are too big to be absorbed, so swallowed Teflon is flushed out. Processing aids like PFOA or GenX are 5 to 10 carbons long and can enter the blood. Perfluoroalkyl acids, the most common, can bind to blood proteins and travel anywhere in the body.",
+   "move": "A chemical can only harm what it reaches, and here size decides whether it gets in.",
    "keywords": [
     "teflon",
     "pfoa",
@@ -204929,19 +204918,17 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Shows a Teflon pan coating as a very long chain of tens of thousands of atoms, and PFOA as a short molecule of 5 to 10 carbons. Asks which one can get into your blood, then how sure you are.",
-    "graded": false,
-    "ground": "#070a14",
-    "page": "pages/science-teflon-vs-pfoa.html?v=426e08ffcdde",
-    "bytes": 21309,
+    "label": "A tappable size comparison: a long Teflon chain, too big to enter the blood, beside a short processing aid like PFOA, 5 to 10 carbons long. The reader taps to grow the processing aid to the length they think it is.",
+    "page": "pages/science-teflon-vs-pfoa.html?v=03354915f560",
+    "bytes": 19348,
     "thumbs": {
-     "front": "thumbs/science-teflon-vs-pfoa-front.webp?v=426e08ffcdde",
-     "back": "thumbs/science-teflon-vs-pfoa-back.webp?v=426e08ffcdde"
+     "front": "thumbs/science-teflon-vs-pfoa-front.webp?v=03354915f560",
+     "back": "thumbs/science-teflon-vs-pfoa-back.webp?v=03354915f560"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=2024s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "science-telephoto-steep-bridge",
@@ -209136,12 +209123,12 @@
    "topic": "space",
    "genre": "space.mars_and_rovers",
    "strand": "space.mars_and_rovers.living_on_mars",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How much faster do bones thin in space than on Earth?",
-   "answer": "In space, bone density can decrease by one to two percent per month. That is over 10 times faster than the rate of osteoporosis on Earth. Without weight on them, bones thin far faster than they do with age on Earth.",
-   "move": "Without weight on them, bones thin over 10× faster than with age on Earth.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Floating in orbit, how much bone mass can an astronaut lose in one month?",
+   "answer": "Astronauts lose 1–2% of bone mass every month in orbit. That is over 10 times faster than osteoporosis on Earth. With no weight pushing on them, their bones thin, mostly in the legs.",
+   "move": "Bone stays only where load is felt.",
    "keywords": [
     "bones",
     "orbit",
@@ -209162,18 +209149,17 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dial-driven page. Drag the dial to keep a right leg in orbit for up to a year while watching the bone inside it. The page asks how much faster bones thin in space than on Earth.",
-    "ground": "#efe3c4",
-    "page": "pages/space-bones-in-orbit.html?v=baea4cc9d628",
-    "bytes": 16357,
+    "label": "Interactive card: a bone floating in orbit. It asks how much bone mass an astronaut can lose in one month. The reader drags down on the bone to hollow it to their guess.",
+    "page": "pages/space-bones-in-orbit.html?v=1808522e074a",
+    "bytes": 16644,
     "thumbs": {
-     "front": "thumbs/space-bones-in-orbit-front.webp?v=baea4cc9d628",
-     "back": "thumbs/space-bones-in-orbit-back.webp?v=baea4cc9d628"
+     "front": "thumbs/space-bones-in-orbit-front.webp?v=1808522e074a",
+     "back": "thumbs/space-bones-in-orbit-back.webp?v=1808522e074a"
     }
    },
    "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=SAQ-iIJkLzA&t=144s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "space-colours-of-stars-1",
@@ -245596,11 +245582,11 @@
    "genre": "technology.where_things_come_from",
    "strand": "technology.where_things_come_from.factories",
    "kind": "page",
-   "difficulty": "hard",
-   "principle": "none",
-   "question": "614 kg of iron sand, 670 kg of charcoal: how heavy is the block?",
-   "answer": "614 kg of iron sand and 670 kg of charcoal go in, 1,284 kg in all. The charcoal burns away, and 100 kg comes out as one lump of steel, iron and slag. Only about a third of it is good enough for a sword.",
-   "move": "A tatara turns 1,284 kg of sand and charcoal into one 100 kg block.",
+   "difficulty": "medium",
+   "principle": "estimation",
+   "question": "Sand and charcoal go into the furnace. How heavy is the block that comes out?",
+   "answer": "A tatara furnace takes in 1,284 kg of sand and charcoal and yields one 100 kg block, under 8% of the input. That block is a mix of steel, iron and slag, and only about a third of it is good enough for a sword.",
+   "move": "Judge a furnace by what comes out: 1,284 kg in, one 100 kg block out.",
    "keywords": [
     "tatara",
     "iron sand",
@@ -245621,19 +245607,17 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Guess-the-yield page: 614 kg of iron sand and 670 kg of charcoal go into a tatara furnace. The reader drags the right-hand pile to the weight of the steel block they expect, out of 1,284 kg in.",
-    "graded": false,
-    "ground": "#f3e9d3",
-    "page": "pages/technology-tatara-mass-balance.html?v=a63c59cf340d",
-    "bytes": 23649,
+    "label": "Interactive scale: drag an orange block to the weight you expect a tatara furnace to yield from sand and charcoal. The reveal shows 1,284 kg in and a 100 kg block out.",
+    "page": "pages/technology-tatara-mass-balance.html?v=e6bb1473b2ea",
+    "bytes": 15808,
     "thumbs": {
-     "front": "thumbs/technology-tatara-mass-balance-front.webp?v=a63c59cf340d",
-     "back": "thumbs/technology-tatara-mass-balance-back.webp?v=a63c59cf340d"
+     "front": "thumbs/technology-tatara-mass-balance-front.webp?v=e6bb1473b2ea",
+     "back": "thumbs/technology-tatara-mass-balance-back.webp?v=e6bb1473b2ea"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=744s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "technology-tatara-steel-race",
@@ -255213,9 +255197,9 @@
    "kind": "page",
    "difficulty": "medium",
    "principle": "availability",
-   "question": "Where did the WWF's 2013 study rank the Bermuda Triangle among dangerous seas?",
-   "answer": "The WWF's 2013 study of the world's most dangerous sea areas left the Bermuda Triangle out of its top 10. The eastern Mediterranean, and even the Black Sea, rank as more dangerous. So the Bermuda Triangle is not even a top-10 danger zone.",
-   "move": "By the data, the Bermuda Triangle is not even a top-10 danger zone.",
+   "question": "Where did the WWF rank the Bermuda Triangle in its 2013 study?",
+   "answer": "The WWF's 2013 study did not rank the Bermuda Triangle in its top 10 most dangerous maritime areas. It was not even in that list. The page uses this to show that how often a danger is talked about says little about how often it actually happens.",
+   "move": "How often you hear about a danger says little about how often it strikes.",
    "keywords": [
     "bermuda-triangle",
     "wwf",
@@ -255234,19 +255218,18 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Ranking list of dangerous sea areas from the WWF's 2013 study. The reader drags a red triangle to the rank where the Bermuda Triangle belongs, or below the line if it is not in the top 10.",
-    "ground": "#f2efe6",
-    "page": "pages/weird_facts-bermuda-not-top-ten.html?v=5fed8e76f571",
-    "bytes": 18175,
+    "touch": "taps",
+    "label": "Interactive page asking where the WWF ranked the Bermuda Triangle in its 2013 study of dangerous maritime areas. The reader places a step on a ranking; tapping reveals it was not even in the top 10.",
+    "page": "pages/weird_facts-bermuda-not-top-ten.html?v=97c015e55b36",
+    "bytes": 16568,
     "thumbs": {
-     "front": "thumbs/weird_facts-bermuda-not-top-ten-front.webp?v=5fed8e76f571",
-     "back": "thumbs/weird_facts-bermuda-not-top-ten-back.webp?v=5fed8e76f571"
+     "front": "thumbs/weird_facts-bermuda-not-top-ten-front.webp?v=97c015e55b36",
+     "back": "thumbs/weird_facts-bermuda-not-top-ten-back.webp?v=97c015e55b36"
     }
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=462s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "weird_facts-chainsaw-frozen-meat",

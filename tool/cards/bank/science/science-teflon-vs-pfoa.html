@@ -1,330 +1,331 @@
-<!doctype html>
-<!-- slug: science-teflon-vs-pfoa -->
-<!-- Look: a page from a biology book, printed flat on the card's night ink. The gut wall is a cross-section, a ring of lining cells with small gaps between them, around a flat red bloodstream with a few blood cells. The Teflon chain is drawn plainly as carbon beads with fluorine on each side, in the card's ink. PFOA is the same in amber, with a red acid end.
-     Interaction: bet which molecule gets into your blood. Picking lights your choice up. Then say how sure you are, and both molecules make the trip.
-     Wow: the endless Teflon chain bumps the wall, which turns red, and the chain streams away. Tiny PFOA slips through a gap, a protein grabs its acid end, and "5–10" carbons scrambles into place as it goes round in the blood. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-small-gets-in -->
+<!-- Design note.
+     Thought to carry: a chemical can only harm what it reaches. Size decides whether it gets in.
+     One colour rule everywhere: black carbon, white fluorine, orange acid end.
+     Front: a Teflon chain running off the card, and under it, on the same scale and aligned to the same first carbon,
+     a processing aid (like PFOA or GenX) that the reader grows by tapping. No wall, no gaps, no hints: just two chains.
+     Back: the reader's chain on the same carbon grid as the true range for processing aids (ghost carbons 5 to 10),
+     with a verdict and the confidence they picked. Under it, one plain line for the gut wall with one opening:
+     Teflon lies on the wall and is flushed out; a short acid-ended chain drops through the opening and docks on a protein.
+     No backdrop, no band: everything sits on the card. Four labels per face drawing at most. -->
 <title>Too big to get in</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
 <style>
-#card{background:var(--c)}
-#stage{display:flex;flex:1;min-height:0;overflow:hidden}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
-#opts{display:flex;gap:2.2cqw}
-.opt{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;font:700 max(2.1cqh,14px)/1.15 var(--body);color:var(--k);text-align:left;background:color-mix(in srgb,var(--k) 6%,var(--c));border:0;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 28%,var(--c));border-radius:1.6cqh;padding:1.2cqh 2.4cqw;cursor:pointer;transition:transform .12s ease-out,background .2s,box-shadow .2s}
-.opt small{display:block;max-width:100%;font:500 max(1.5cqh,12px)/1.2 var(--body);color:color-mix(in srgb,var(--k) 62%,var(--c));margin-top:.4cqh}
-.opt:active{transform:scale(.96)}
-.opt.on{background:var(--k);color:var(--c);box-shadow:inset 0 0 0 1.5px var(--k)}
-.opt.on small{color:color-mix(in srgb,var(--c) 70%,var(--k))}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{color:var(--k)}
-#why .body{overflow-wrap:break-word}
-.lab{font-family:var(--body);font-weight:600}
-.num{font-family:var(--display);font-weight:700}
-.f-k{fill:var(--k)}
-.f-k6{fill:color-mix(in srgb,var(--k) 60%,var(--c))}
-.f-k5{fill:color-mix(in srgb,var(--k) 50%,var(--c))}
-.f-blood{fill:color-mix(in srgb,#ef5b63 30%,var(--c))}
-.f-red{fill:#ef5b63}
-.f-amb{fill:#f4b56a}
-.s-k{stroke:var(--k)}
-.s-k6{stroke:color-mix(in srgb,var(--k) 60%,var(--c))}
-.s-k3{stroke:color-mix(in srgb,var(--k) 32%,var(--c))}
-.s-k2{stroke:color-mix(in srgb,var(--k) 20%,var(--c))}
-.s-red{stroke:#ef5b63}
-.s-amb{stroke:#f4b56a}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn>.face.gone{visibility:hidden}
+.kit-calm .turn{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+.face svg{flex:1;min-width:0;width:100%;height:100%;display:block;color:var(--k);overflow:hidden}
+#pic{touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.front .say{max-width:calc(100% - 104px);padding-right:0}
+.back .foot{max-width:calc(100% - 104px);padding-right:0}
+.back .big{font-size:max(3.1cqh,18px);line-height:1.1;margin:0 0 12px}
+.back .body{font-size:max(1.85cqh,13px);line-height:1.3;margin:.6cqh 0}
+.q,.say,.body,.keep{overflow-wrap:break-word}
+#sure{color:#111;opacity:1}
+#sure :not([data-v]):not(:has([data-v])){color:#111 !important;opacity:1 !important;font-weight:600}
+#sure [data-v]{color:#111 !important;background:transparent !important;border:1.6px solid #111 !important;opacity:1 !important;box-shadow:none !important;font-weight:700}
+#sure [data-v] *{color:inherit !important}
+#sure [data-v].picked{background:#111 !important;color:#fff !important}
+#sure [data-v].picked *{color:#fff !important}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#070a14;--k:#eaf0ff;--edge:#02030a">
+<article class="card" id="card" data-topic="science" data-kind="Tap to count · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">SIZE MATTERS</span></div>
-    <h2 class="q">Teflon pans are safe. The chemicals used to make them aren't. Why?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A long Teflon chain above a ring standing for the gut wall, a short PFOA molecule beside it, and the bloodstream inside the ring."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COUNT THE CARBONS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Swallow Teflon and you're pretty safe. Not so with the chemicals used to make it. Why?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A Teflon chain running off the edge of the card, with a key: black carbon, white fluorine, orange acid end. Below it, on the same scale, a processing aid like PFOA or GenX that you grow by tapping."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say"><b>Tap</b> to grow a processing aid like PFOA to the length you think it is.</p>
+      </section>
+      <section class="face back gone" aria-hidden="true">
+        <p class="big">Processing aids are 5 to 10 carbons: small enough to get in</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Your chain on the same carbon grid as the true range for processing aids, 5 to 10 carbons. Below, the long Teflon chain lies on the gut wall and is flushed out, while a short acid-ended chain drops through an opening into the blood and docks on a protein."></svg></div>
+        <p class="body">Teflon's chains are too big to be absorbed, so swallowed Teflon is flushed out. Processing aids like PFOA or GenX, 5 to 10 carbons long, can enter the blood. Their ends are usually acids; the most common, perfluoroalkyl acids, can bind to blood proteins and travel anywhere in the body.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A chemical can only harm what it reaches, and here size decides whether it gets in.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+      </section>
     </div>
-    <div id="opts">
-      <button class="opt" data-i="0" data-n="Teflon">Teflon<small>pan coating</small></button>
-      <button class="opt" data-i="1" data-n="PFOA">PFOA<small>used to make it</small></button>
-      <button class="opt" data-i="2" data-n="Both">Both<small>same chemistry</small></button>
-    </div>
-    <div id="why" class="gone"><p class="big">Size decides.</p><p class="body">Teflon is tens of thousands of atoms long: too big to absorb, so it's flushed out. PFOA is 5 to 10 carbons: it slips into the blood, and its acid end grabs proteins that carry it anywhere.</p></div>
-    <div id="sure"></div>
-    <p class="say" id="say">Bet: which one can get into your blood? Then say how sure you are.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Not the material but the size: giant chains pass through, small ones get in.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    const fr = t.querySelector('.front'), bk = t.querySelector('.back');
+    bk.classList.remove('gone');
+    t.classList.add('over'); fr.setAttribute('aria-hidden', 'true'); bk.removeAttribute('aria-hidden');
+    setTimeout(() => fr.classList.add('gone'), Kit.calm ? 0 : 780);
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script>
 (() => {
-const plug = [window.DrawSVGPlugin, window.ScrambleTextPlugin, window.SplitText].filter(Boolean);
-if (plug.length) gsap.registerPlugin(...plug);
-const svg = Kit.$('pic'), stage = Kit.$('stage');
-const RIGHT = 1;
-let pick = -1, state = 'idle', revealing = false, G = {}, E = {}, tl = null, orbit = null, loops = [], lastW = 0, lastH = 0, built = false;
-const pose = {x: 0, y: 0, rot: 0}, orb = {a: 0, rr: 0, rot: 0}, C = {flow: 0, ph: 0, speed: 0, t: 0};
-const deg = r => r * 180 / Math.PI, rad = d => d * Math.PI / 180;
+  const pic = Kit.$('pic'), pic2 = Kit.$('pic2');
+  const ACID = '#e4572e', PAPER = '#ffffff', MAX = 20;
+  let n = 1, locked = false, turned = false, fast = false, pct = null;
+  let W = 0, H = 0, fs = 12;
+  let FR = {}, tl2 = null;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-const setPose = () => E.pf && E.pf.setAttribute('transform', `translate(${pose.x.toFixed(2)},${pose.y.toFixed(2)}) rotate(${pose.rot.toFixed(2)})`);
-const orbPose = () => { pose.x = G.cx + orb.rr * Math.cos(rad(orb.a)); pose.y = G.cy + orb.rr * Math.sin(rad(orb.a)); pose.rot = orb.rot; setPose(); };
-const txt = (p, x, y, t, a) => { const e = Kit.mk('text', Object.assign({x, y, class: 'lab'}, a), p); e.textContent = t; return e; };
-const blob = (x, y, r) => { let d = ''; for (let i = 0; i <= 40; i++) { const a = i / 40 * Math.PI * 2, rr = r * (1 + .13 * Math.sin(3 * a + .6) + .08 * Math.cos(5 * a)); d += (i ? 'L' : 'M') + (x + rr * Math.cos(a)).toFixed(2) + ',' + (y + rr * Math.sin(a)).toFixed(2); } return d + 'Z'; };
-
-// the Teflon chain: drawn inside the stage only; atoms stream along it (dash offset), the wave rolls
-function drawChain() {
-  if (!E.chC) return;
-  const {xs, yc, A, s, per} = G, k = 2 * Math.PI / per, o = .55 * s;
-  let c = '', u = '', d = '';
-  for (let i = 0; i < xs.length; i++) {
-    const x = xs[i], y = yc + A * Math.sin(k * x + C.ph), xx = x.toFixed(1);
-    c += xx + ',' + y.toFixed(1) + ' '; u += xx + ',' + (y - o).toFixed(1) + ' '; d += xx + ',' + (y + o).toFixed(1) + ' ';
-  }
-  [E.chBond, E.chBack, E.chC].forEach(e => e.setAttribute('points', c));
-  E.chF1.setAttribute('points', u); E.chF2.setAttribute('points', d);
-  const off = -(C.flow % s);
-  [E.chC, E.chF1, E.chF2].forEach(e => e.setAttribute('stroke-dashoffset', off.toFixed(2)));
-  E.chBond.setAttribute('stroke-dashoffset', (off + .06 * s).toFixed(2));
-}
-gsap.ticker.add((t, dt) => {
-  if (!built || Kit.calm || !E.chC) return;
-  const ds = Math.min(dt, 50) / 1000;
-  C.flow += C.speed * ds; C.ph -= .7 * ds; C.t += ds;
-  drawChain();
-});
-
-// labels never collide, never leave the stage, inner ones stay inside the bloodstream
-function guard() {
-  const {W, H, cx, cy, R, M, mode} = G, kept = [];
-  const inRing = b => [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].every(([x, y]) => Math.hypot(x - cx, y - cy) <= R * .83);
-  const ov = (a, b) => a.x < b.x + b.width + 3 && b.x < a.x + a.width + 3 && a.y < b.y + b.height + 2 && b.y < a.y + a.height + 2;
-  [[E.num, 1], [E.pl, 0], [E.tl2, 0], [E.tl1, 0], [E.bl, 1], [E.carb, 1], [E.gw, 0]].forEach(([e, inner]) => {
-    if (!e) return;
-    let b; try { b = e.getBBox(); } catch (_) { return; }
-    if (!b || !(b.width > 0)) return;
-    let bad = b.x < 0 || b.y < 0 || b.x + b.width > W || b.y + b.height > H || (inner && !inRing(b)) || kept.some(k => ov(k, b));
-    if (!inner && mode === 'compact' && e !== E.gw && b.x + b.width > cx - R - M - 4) bad = true;
-    if (bad) e.setAttribute('display', 'none'); else kept.push(b);
-  });
-}
-
-function build() {
-  if (tl) { tl.kill(); tl = null; } if (orbit) { orbit.kill(); orbit = null; }
-  loops.forEach(t => t.kill()); loops = []; gsap.killTweensOf(C);
-  svg.innerHTML = ''; E = {};
-  const {W, H} = Kit.fitSvg(svg);
-  lastW = stage.clientWidth; lastH = stage.clientHeight; built = true;
-  const fs = Math.max(12, Math.min(14, W / 28)), sW = Math.max(6, Math.min(12, W / 32));
-  let mode, s, A, M, yc, yb, R, cx, cy;
-  const lay = () => {
-    A = s * .7; M = s;
-    if (mode === 'tall') {
-      yc = fs * 2.75 + A + .9 * s; yb = yc + A + .9 * s;
-      const t = yb + .4 * s, b = H - fs * 1.75;
-      R = Math.min(W * .32, (b - t) / 2 - M); cx = W / 2; cy = (t + b) / 2;
-    } else {
-      yc = A + .9 * s; yb = yc + A + .9 * s;
-      const t = yb + .3 * s, b = H - 1;
-      R = Math.min(W * .22, (b - t) / 2 - M); cx = W - R - M - fs * 1.2; cy = (t + b) / 2;
-    }
+  const T = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: 'currentColor', 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.textContent = t; return e; };
+  const fitT = (p, x, y, t, a = {}) => {
+    const e = T(p, x, y, t, a), w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
+    const l = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const sh = Math.max(1 - l, Math.min(0, W - 1 - (l + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    return e;
   };
-  const solve = m => { mode = m; s = sW; for (let i = 0; i < 6; i++) { lay(); s = Math.max(1.5, Math.min(sW, R / 10.5)); } lay(); };
-  solve('tall'); if (R < 52) solve('compact');
-  R = Math.max(8, R);
-  const per = Math.max(W * .58, s * 24), xs = [];
-  for (let x = s * .45; x <= W - s * .45; x += Math.max(1.5, s / 3)) xs.push(x);
-  const B = Math.max(12, Math.min(fs * 2.4, R * .3));
 
-  // where PFOA waits, and the lines of the legend
-  let x0, y0, ly1, ly2, ly3;
-  if (mode === 'tall') {
-    ly1 = fs * 1.05; ly2 = fs * 2.35; ly3 = H - fs * .35;
-    x0 = 4.8 * s; y0 = H - fs * 1.4 - .8 * s;
-  } else {
-    ly1 = yb + .3 * s + fs; ly2 = ly1 + fs * 1.3; ly3 = ly2 + fs * 1.3;
-    const plW = 19 * .62 * fs;
-    x0 = Math.max(4.8 * s, Math.min(cx - R - M - 5.4 * s, plW + 5.6 * s));
-    y0 = Math.min(ly3 - fs * .35, H - .9 * s);
+  // A perfluorinated chain: black carbons on a zigzag, a white fluorine above and below each, an orange acid end.
+  function chain(p, o) {
+    const s = o.s, dir = o.dir || 1, head = o.head !== false, sw = Math.max(1.2, s * .11);
+    const g = Kit.mk('g', {}, p), off = head ? s * .95 : 0;
+    const P = i => [o.x + dir * (off + i * s), o.y + (i % 2 ? -1 : 1) * s * .16];
+    const pts = [];
+    if (o.stubL != null) pts.push([o.stubL, o.y]);
+    if (head) pts.push([o.x, o.y]);
+    for (let i = 0; i < o.k; i++) pts.push(P(i));
+    if (o.stubR != null) pts.push([o.stubR, o.y]);
+    if (pts.length > 1) Kit.mk('polyline', {points: pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '), fill: 'none', stroke: 'currentColor', 'stroke-width': sw, 'stroke-linejoin': 'round'}, g);
+    const atoms = [];
+    for (let i = 0; i < o.k; i++) {
+      const [x, yy] = P(i), a = Kit.mk('g', {}, g);
+      for (const d of [-1, 1]) {
+        Kit.mk('line', {x1: x, y1: yy, x2: x, y2: yy + d * s * .58, stroke: 'currentColor', 'stroke-width': sw * .8}, a);
+        Kit.mk('circle', {cx: x, cy: yy + d * s * .58, r: s * .2, fill: PAPER, stroke: 'currentColor', 'stroke-width': sw * .8}, a);
+      }
+      Kit.mk('circle', {cx: x, cy: yy, r: s * .3, fill: 'currentColor', stroke: 'currentColor', 'stroke-width': sw}, a);
+      atoms.push(a);
+    }
+    let hd = null;
+    if (head) hd = Kit.mk('circle', {cx: o.x, cy: o.y, r: s * .34, fill: ACID, stroke: 'currentColor', 'stroke-width': sw}, g);
+    return {g, atoms, hd, P};
   }
-  const thp = Math.atan2(y0 - cy, x0 - cx);
-  G = {W, H, fs, s, A, M, yc, yb, R, cx, cy, per, xs, mode, B, x0, y0, thp};
 
-  const defs = Kit.mk('defs', {}, svg);
-
-  // the gut wall in cross-section: a ring of lining cells around the bloodstream
-  const arc = (r, a0, a1, sweep = 1) => { const p = a => `${(cx + r * Math.cos(a)).toFixed(2)},${(cy + r * Math.sin(a)).toFixed(2)}`; return `M${p(a0)}A${r},${r} 0 ${Math.abs(a1 - a0) > Math.PI ? 1 : 0} ${sweep} ${p(a1)}`; };
-  const ring = Kit.mk('g', {}, svg);
-  E.disc = Kit.mk('circle', {cx, cy, r: R - .48 * s, class: 'f-blood', opacity: .6}, ring);
-  // red blood cells, flat discs drifting round
-  E.cells = Kit.mk('g', {}, ring); E.stars = E.cells;
-  const cr = Math.max(1.4, R * .05);
-  for (let i = 0; i < 18; i++) {
-    const a = Kit.rnd() * Math.PI * 2, rr = R * (.42 + Kit.rnd() * .34), x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a);
-    Kit.mk('ellipse', {cx: x, cy: y, rx: cr, ry: cr * .62, class: 'f-red', opacity: (.55 + Kit.rnd() * .35).toFixed(2), transform: `rotate(${(deg(a) + Kit.rnd() * 60 - 30).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})`}, E.cells);
+  // A long Teflon run; its backbone runs on to the edge to show it carries on.
+  function teflon(p, x, y, s, stubL) {
+    const k = Math.max(1, Math.floor((W - s * .45 - x) / s) + 1);
+    return chain(p, {x, y, k, s, head: false, stubL, stubR: W - .5});
   }
-  const g = .8 * s / R, gaps = [...Array(8)].map((_, k) => thp + k * Math.PI / 4);
-  const ew = Math.max(1, Math.min(1.6, s * .16));
-  gaps.forEach((ga) => {
-    const a0 = ga + g, a1 = ga + Math.PI / 4 - g;
-    Kit.mk('path', {d: arc(R, a0, a1), fill: 'none', class: 's-k2', 'stroke-width': s * .95}, ring);
-    [-.48, .48].forEach(o => Kit.mk('path', {d: arc(R + o * s, a0, a1), class: 'mem s-k6', fill: 'none', 'stroke-width': ew, 'stroke-linecap': 'round'}, ring));
+
+  // ---------- the front ----------
+  function front() {
+    pic.innerHTML = '';
+    const f = Kit.fitSvg(pic); W = f.W; H = f.H;
+    fs = clamp(W / 26, 12, 14);
+    const topH = s => fs + 27 + 1.88 * s;
+    const blockH = s => fs + 6 + 1.88 * s;
+    const stMin = fs * 2.2 * 1.3 + fs + 10;
+    let s = Math.min(fs * 2.2, (W - 12) / 21.6);
+    while (s > 5 && topH(s) + blockH(s) + stMin + 24 > H) s -= .25;
+    const bigF = Math.max(fs * 2, Math.min(W * .2, (H - topH(s) - blockH(s) - 24 - fs - 10) / 1.3));
+    const stH = bigF * 1.3 + fs + 10;
+    const slack = Math.max(16, H - topH(s) - blockH(s) - stH);
+    const hx = 2 + .34 * s;
+
+    // Teflon, its label and the key. Its first carbon lines up with the processing aid's first carbon.
+    const tef = Kit.mk('g', {}, pic);
+    fitT(tef, 0, fs + 1, 'Teflon: tens of thousands of atoms long');
+    const yk = fs + 1 + 13;
+    let kx = 0;
+    for (const [lab, fill, r] of [['carbon', 'currentColor', 5], ['fluorine', PAPER, 4], ['acid end', ACID, 5.5]]) {
+      Kit.mk('circle', {cx: kx + 6, cy: yk, r, fill, stroke: 'currentColor', 'stroke-width': 1.4}, tef);
+      const t = T(tef, kx + 15, yk + 4, lab, {'font-size': 12, 'font-weight': 500});
+      kx += 15 + t.getComputedTextLength() + 16;
+    }
+    const tefY = yk + 13 + .94 * s;
+    teflon(tef, hx + .95 * s, tefY, s, .5);
+
+    // The processing aid, grown from its acid end.
+    const cw = Kit.mk('g', {}, pic);
+    const pb = tefY + .94 * s + slack * .4 + fs;
+    const chainY = pb + 6 + .94 * s;
+    fitT(cw, 0, pb, 'A processing aid, like PFOA or GenX');
+    FR = {hx, chainY, s};
+    FR.cg = Kit.mk('g', {}, cw);
+
+    // The reader's count, set large, between a minus and a plus.
+    const bottom = H - 4, unitTop = bottom - 2 - fs - 6, hy = unitTop - bigF * .3;
+    const hero = Kit.mk('g', {}, pic);
+    FR.num = T(hero, W / 2, hy, n, {'text-anchor': 'middle', 'font-size': bigF, 'font-weight': 800, style: 'font-family:var(--display)'});
+    FR.unit = T(hero, W / 2, bottom - 2, 'carbon', {'text-anchor': 'middle', 'font-weight': 600});
+    const cr = clamp(bigF * .36, 17, 26), cy = hy - bigF * .34, dx = Math.max(bigF * 1.25, cr * 2.6);
+    const btn = (x, sign, dark) => {
+      const c = Kit.mk('g', {'data-step': sign}, hero);
+      Kit.mk('circle', {cx: x, cy, r: cr, fill: dark ? 'currentColor' : PAPER, stroke: 'currentColor', 'stroke-width': 1.6}, c);
+      const a = cr * .42;
+      Kit.mk('path', {d: `M${x - a},${cy} H${x + a}` + (sign > 0 ? ` M${x},${cy - a} V${cy + a}` : ''), stroke: dark ? PAPER : 'currentColor', 'stroke-width': 2.4, 'stroke-linecap': 'round'}, c);
+    };
+    btn(W / 2 - dx, -1, false); btn(W / 2 + dx, 1, true);
+    FR.ent = [tef, cw, hero];
+    drawChain(false);
+  }
+
+  function drawChain(pop) {
+    if (!FR.cg) return;
+    FR.cg.innerHTML = '';
+    const c = chain(FR.cg, {x: FR.hx, y: FR.chainY, k: n, s: FR.s});
+    FR.num.textContent = n; FR.unit.textContent = n === 1 ? 'carbon' : 'carbons';
+    if (pop && !Kit.calm) gsap.from(c.atoms[c.atoms.length - 1], {opacity: 0, x: -FR.s * .5, duration: .25, ease: 'power2.out'});
+  }
+
+  function step(d) {
+    if (locked) return;
+    const v = clamp(n + d, 1, MAX);
+    if (v === n) return;
+    n = v; Kit.haptic('selection'); drawChain(d > 0);
+  }
+  pic.addEventListener('pointerdown', e => {
+    const c = e.target && e.target.closest ? e.target.closest('[data-step]') : null;
+    step(c ? +c.dataset.step : 1);
   });
-  // walls between the lining cells
-  E.ticks = Kit.mk('g', {}, ring);
-  for (let j = 0; j < 72; j++) {
-    const a = rad(j * 5 + 2.5); if (gaps.some(ga => Math.abs(Math.atan2(Math.sin(a - ga), Math.cos(a - ga))) < g * 1.6)) continue;
-    Kit.mk('line', {x1: cx + (R - .48 * s) * Math.cos(a), y1: cy + (R - .48 * s) * Math.sin(a), x2: cx + (R + .48 * s) * Math.cos(a), y2: cy + (R + .48 * s) * Math.sin(a), class: 's-k3', 'stroke-width': Math.max(.8, ew * .8)}, E.ticks);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', p => {
+    if (locked) return; locked = true; pct = p;
+    const b = Kit.$('sure').querySelector(`[data-v="${p}"]`); if (b) b.classList.add('picked');
+    const ok = n >= 5 && n <= 10;
+    Kit.answer({choice: `${n} carbons`, correct: ok, sure: p});
+    sure.grade(ok, p, `${n} carbons, ${ok ? 'in the range' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  sure.on();
+
+  // ---------- the back ----------
+  const verdict = k => k < 4 ? ['short of the range', 'too short'] : k === 4 ? ['just short of the range', 'just short']
+    : k <= 10 ? ['in the range', 'in range'] : k === 11 ? ['just past the range', 'just past'] : ['past the range', 'too long'];
+
+  function vText(p, a, b) {
+    const e = Kit.mk('text', {x: 0, y: 0, fill: 'currentColor', 'font-size': fs, style: 'font-family:var(--body)'}, p);
+    const t1 = Kit.mk('tspan', {'font-weight': 800}, e); t1.textContent = a;
+    if (b) { const t2 = Kit.mk('tspan', {'font-weight': 500}, e); t2.textContent = b; }
+    return e;
   }
-  E.flash = Kit.mk('path', {d: arc(R, rad(-132), rad(-48)), fill: 'none', class: 's-red', 'stroke-width': s * 1.05, 'stroke-linecap': 'round', opacity: 0}, ring);
-  E.poreFx = Kit.mk('circle', {cx: cx + R * Math.cos(thp), cy: cy + R * Math.sin(thp), r: s * .4, fill: 'none', class: 's-red', 'stroke-width': 1.5, opacity: 0}, ring);
-  E.shock = Kit.mk('circle', {cx, cy, r: R * .15, fill: 'none', class: 's-red', 'stroke-width': 1.5, opacity: 0}, ring);
-  const gr = R + M + fs * .3;
-  if (gr * rad(60) > fs * 5.9 + 4) {
-    Kit.mk('path', {id: 'gwp', d: arc(gr, rad(74), rad(14), 0), fill: 'none'}, defs);
-    E.gw = Kit.mk('text', {class: 'lab f-k6', 'font-size': fs}, ring);
-    const tp = Kit.mk('textPath', {href: '#gwp'}, E.gw); tp.textContent = 'Gut wall';
+
+  function back(anim) {
+    if (tl2) { tl2.kill(); tl2 = null; }
+    pic2.innerHTML = '';
+    const f = Kit.fitSvg(pic2); W = f.W; H = f.H;
+    fs = clamp(W / 26, 12, 14);
+    const L = {};
+    for (const k of ['wall', 'tef', 'tlab', 'range', 'guess', 'band', 'mol', 'blab']) L[k] = Kit.mk('g', {}, pic2);
+
+    // The verdict, with the confidence the reader picked. One line if it fits, else two.
+    const v = verdict(n), hd = `your guess: ${n}`, sp = pct != null ? pct : null;
+    const opts = sp != null ? [` · ${v[0]} · you were ${sp}% sure`, ` · ${v[1]} · ${sp}% sure`] : [` · ${v[0]}`, ` · ${v[1]}`];
+    let vEl = null, conf = null;
+    for (const o of opts) { vEl = vText(L.guess, hd, o); if (vEl.getComputedTextLength() <= W - 2) break; vEl.remove(); vEl = null; }
+    if (!vEl) {
+      vEl = vText(L.guess, hd, ` · ${v[0]}`);
+      if (vEl.getComputedTextLength() > W - 2) { vEl.remove(); vEl = vText(L.guess, hd, ` · ${v[1]}`); }
+      if (sp != null) conf = T(L.guess, 0, 0, `you were ${sp}% sure`, {'font-weight': 500});
+    }
+    const lines = conf ? 2 : 1;
+
+    // One scale for the whole back.
+    const wh = s => Math.max(.32 * s, 4);
+    const bhF = s => Math.max(2.3 * s, fs + 14);
+    const rowH = s => fs + 11 + 1.88 * s + 5 + fs * .85 + (lines - 1) * fs * 1.3;
+    const sceneH = s => fs + 5 + 1.88 * s + 3 + wh(s) + bhF(s);
+    const need = s => rowH(s) + 14 + sceneH(s);
+    let s = Math.min(fs * 1.9, (W - 6) / (Math.max(n, 10) + 1.7), (W - 130) / 12.2);
+    while (s > 4 && need(s) > H - 2) s -= .25;
+    const slack = Math.max(0, H - 2 - need(s));
+    const G1 = 14 + Math.min(slack * .5, 40), bh = bhF(s) + Math.min(slack * .2, 24), ww = wh(s);
+
+    // Guess and truth on one carbon grid, aligned at the acid end.
+    const hx = 2 + .34 * s, cx = i => hx + (.95 + (i - 1)) * s, cyz = i => ((i - 1) % 2 ? -1 : 1) * s * .16;
+    const rlY = fs, bY = rlY + 5, cy1 = bY + 6 + .94 * s;
+    fitT(L.range, (cx(5) + cx(10)) / 2, rlY, 'processing aids: 5–10 carbons', {'text-anchor': 'middle', 'font-weight': 800});
+    Kit.mk('path', {d: `M${cx(5) - .3 * s},${bY + 4} V${bY} H${cx(10) + .3 * s} V${bY + 4}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.4}, L.range);
+    if (n < 10) {
+      const pts = [[cx(n), cy1 + cyz(n)]];
+      for (let i = n + 1; i <= 10; i++) pts.push([cx(i), cy1 + cyz(i)]);
+      Kit.mk('polyline', {points: pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '), fill: 'none', stroke: 'currentColor', 'stroke-width': 1.1, 'stroke-dasharray': '3 3', 'stroke-opacity': .7}, L.range);
+      for (let i = Math.max(n + 1, 5); i <= 10; i++)
+        Kit.mk('circle', {cx: cx(i), cy: cy1 + cyz(i), r: s * .3, fill: PAPER, 'fill-opacity': .5, stroke: 'currentColor', 'stroke-width': 1.2, 'stroke-dasharray': '2 2'}, L.range);
+    }
+    chain(L.guess, {x: hx, y: cy1, k: n, s});
+    const vY = cy1 + .94 * s + 5 + fs * .85;
+    vEl.setAttribute('y', vY);
+    let lastV = vY;
+    if (conf) { lastV = vY + fs * 1.3; conf.setAttribute('y', lastV); }
+
+    // The scene: the gut wall is one plain line with one opening; the blood is simply below it.
+    const tlY = lastV + G1 + fs, tefY = tlY + 5 + .94 * s;
+    const wallY = tefY + .94 * s + 3 + ww / 2, bloodT = wallY + ww / 2, protY = bloodT + bh / 2;
+    const gA = Math.max(1.5 * s, 16), gB = gA + 8.6 * s;
+    for (const [a, b] of [[ww / 2, gA - ww / 2], [gB + ww / 2, W - ww / 2]])
+      Kit.mk('line', {x1: a, y1: wallY, x2: b, y2: wallY, stroke: 'currentColor', 'stroke-width': ww, 'stroke-linecap': 'round'}, L.wall);
+
+    // Teflon lies on the wall and is carried on out.
+    teflon(L.tef, gB + .6 * s, tefY, s);
+    const aw = 20, room = W - 1 - aw - 6 - gB;
+    let tl = null;
+    for (const t of ['Teflon: too big to get in, flushed out', 'Teflon: too big, flushed out', 'Teflon: flushed out']) {
+      tl = T(L.tlab, gB, tlY, t); if (tl.getComputedTextLength() <= room) break; tl.remove(); tl = null;
+    }
+    if (!tl) tl = fitT(L.tlab, gB, tlY, 'flushed out');
+    const ax = Math.min(W - 1 - aw, +tl.getAttribute('x') + tl.getComputedTextLength() + 6), ay = tlY - fs * .33;
+    Kit.mk('path', {d: `M${ax},${ay} H${ax + aw} M${ax + aw - 5},${ay - 4} L${ax + aw},${ay} L${ax + aw - 5},${ay + 4}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L.tlab);
+
+    // A short acid-ended chain above the opening; it drops through and docks on a protein, acid end first.
+    const x0 = gA + 7.75 * s, dockX = x0 + .5 * s;
+    const R = Math.min(1.1 * s, bh * .42), px = dockX + .34 * s + R * .92;
+    let d = '';
+    for (let i = 0; i <= 36; i++) { const t = i / 36 * Math.PI * 2, r = R * (1 + .08 * Math.sin(3 * t) + .05 * Math.cos(5 * t + 1));
+      d += (i ? 'L' : 'M') + (px + r * Math.cos(t)).toFixed(1) + ',' + (protY + r * Math.sin(t)).toFixed(1); }
+    Kit.mk('path', {d: d + 'Z', fill: PAPER, stroke: 'currentColor', 'stroke-width': 1.5}, L.band);
+    const lx = px + R + 10, lAv = W - 1 - lx;
+    const one = T(L.blab, lx, protY + fs * .35, 'into the blood, on a protein', {'font-weight': 800});
+    if (one.getComputedTextLength() > lAv) {
+      one.remove();
+      fitT(L.blab, lx, protY - fs * .25, 'into the blood,', {'font-weight': 800});
+      fitT(L.blab, lx, protY + fs * .95, 'on a protein', {'font-weight': 800});
+    }
+
+    const mol = Kit.mk('g', {}, L.mol);
+    chain(mol, {x: 0, y: 0, k: 7, s, dir: -1});
+    const P = {x: x0, y: tefY};
+    const setT = () => mol.setAttribute('transform', `translate(${P.x.toFixed(1)},${P.y.toFixed(1)})`);
+    setT();
+
+    const tm = gsap.timeline({paused: true});
+    tm.from(L.guess, {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from(L.range, {opacity: 0, duration: .5, ease: 'power2.out'}, '+=.35')
+      .from(L.wall, {opacity: 0, duration: .45, ease: 'power2.out'}, '+=.3')
+      .from([L.tef, L.band], {opacity: 0, duration: .5}, '<.1')
+      .from(L.mol, {opacity: 0, duration: .4}, '<')
+      .from(L.tlab, {opacity: 0, duration: .35}, '+=.1')
+      .to(P, {y: protY, duration: .8, ease: 'power2.in', onUpdate: setT}, '+=.3')
+      .to(P, {x: dockX, duration: .5, ease: 'power3.out', onUpdate: setT})
+      .from(L.blab, {opacity: 0, duration: .4}, '-=.15');
+    tl2 = tm;
+    if (!anim || Kit.calm) { tm.progress(1); P.x = dockX; P.y = protY; setT(); }
+    else { if (fast) tm.timeScale(6); setTimeout(() => tm.play(), fast ? 0 : 450); }
   }
 
-  // words inside the bloodstream
-  E.bl = txt(ring, cx, cy - .66 * B - .3 * fs - 3, 'Bloodstream', {class: 'lab f-red', 'font-size': fs, 'text-anchor': 'middle'});
-  E.num = txt(ring, cx, cy + B * .36, '5–10', {class: 'num f-k', 'font-size': B, 'text-anchor': 'middle', opacity: .85});
-  E.carb = txt(ring, cx, cy + .66 * B + 1.02 * fs + 3, 'carbons', {class: 'lab f-amb', 'font-size': fs, 'text-anchor': 'middle', opacity: 0});
+  document.addEventListener('turned', () => { turned = true; back(true); });
 
-  // Teflon: a chain far longer than the page, streaming past
-  E.tef = Kit.mk('g', {}, svg); E.tefIn = Kit.mk('g', {}, E.tef);
-  const pl = (a) => Kit.mk('polyline', Object.assign({fill: 'none', 'stroke-linejoin': 'round'}, a), E.tefIn);
-  E.chBond = pl({class: 's-k3', 'stroke-width': s * 1.1, 'stroke-dasharray': `${(s * .12).toFixed(2)} ${(s * .88).toFixed(2)}`});
-  E.chBack = pl({class: 's-k6', 'stroke-width': Math.max(.8, s * .16)});
-  E.chF1 = pl({class: 's-k6', 'stroke-width': s * .36, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
-  E.chF2 = pl({class: 's-k6', 'stroke-width': s * .36, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
-  E.chC = pl({class: 's-k', 'stroke-width': s * .58, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
-  E.tl1 = txt(svg, 0, ly1, 'Teflon · 10,000s+ atoms long', {class: 'lab f-k', 'font-size': fs});
-  E.tl2 = txt(svg, 0, ly2, 'too big → flushed out', {class: 'lab f-red', 'font-size': fs, opacity: 0});
-
-  // PFOA: eight carbons and an acid head
-  E.pf = Kit.mk('g', {}, svg); E.pfIn = Kit.mk('g', {}, E.pf);
-  const bp = [...Array(8)].map((_, i) => [-3.5 * s + i * s, (i % 2 ? .2 : -.2) * s]);
-  E.prot = Kit.mk('path', {d: blob(5.75 * s, 0, .95 * s), class: 'f-k5'}, E.pfIn);
-  Kit.mk('polyline', {points: [[-4.25 * s, bp[0][1]], ...bp, [4.6 * s, 0]].map(p => p.map(v => v.toFixed(2)).join(',')).join(' '), fill: 'none', class: 's-amb', 'stroke-width': s * .16, 'stroke-linejoin': 'round'}, E.pfIn);
-  bp.forEach(([x, y]) => { [-1, 1].forEach(sg => Kit.mk('circle', {cx: x, cy: y + sg * s * .55, r: s * .17, class: 'f-k6'}, E.pfIn)); Kit.mk('circle', {cx: x, cy: y, r: s * .28, class: 'f-amb'}, E.pfIn); });
-  Kit.mk('circle', {cx: -4.25 * s, cy: bp[0][1], r: s * .17, class: 'f-k6'}, E.pfIn);
-  Kit.mk('circle', {cx: 4.6 * s, cy: 0, r: s * .45, class: 'f-red'}, E.pfIn);
-  gsap.set(E.prot, {scale: 0, transformOrigin: '50% 50%'});
-  E.pl = txt(svg, 0, ly3, 'PFOA · 5–10 carbons', {class: 'lab f-amb', 'font-size': fs});
-
-  guard();
-  E.num.textContent = '?';
-  pose.x = x0; pose.y = y0; pose.rot = 0; setPose();
-  C.speed = state === 'done' ? s * 1.8 : s * .9; drawChain();
-
-  if (!Kit.calm) {
-    loops.push(gsap.to(E.cells, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 70, ease: 'none', repeat: -1}));
-  }
-}
-
-function applyHi(anim) {
-  if (pick < 0 || state === 'done') return;
-  const t = pick !== 1, p = pick !== 0, d = anim && !Kit.calm ? .35 : 0;
-  gsap.to(E.tef, {opacity: t ? 1 : .28, duration: d}); gsap.to([E.pfIn, E.pl], {opacity: p ? 1 : .28, duration: d});
-  if (anim && !Kit.calm) {
-    if (t) { gsap.fromTo(E.tefIn, {y: -G.s * .6}, {y: 0, duration: .8, ease: 'elastic.out(1,.35)'}); gsap.fromTo(C, {speed: G.s * 14}, {speed: G.s * .9, duration: 1.4, ease: 'power2.out'}); }
-    if (p) gsap.fromTo(E.pfIn, {scale: 1.4}, {scale: 1, duration: .8, ease: 'elastic.out(1,.35)', transformOrigin: '50% 50%'});
-  }
-}
-
-function startOrbit() { if (orbit) orbit.kill(); if (!Kit.calm) orbit = gsap.to(orb, {a: '+=360', rot: '+=360', duration: 18, ease: 'none', repeat: -1, onUpdate: orbPose}); }
-
-function applyEnd() {
-  if (tl) { tl.kill(); tl = null; } revealing = false; gsap.killTweensOf(C);
-  const {R, s} = G;
-  gsap.set(E.tefIn, {x: 0, y: 0}); gsap.set(E.tef, {opacity: .4}); gsap.set(E.pfIn, {opacity: 1, scale: 1}); gsap.set(E.pl, {opacity: 1});
-  gsap.set(E.flash, {opacity: .5}); gsap.set(E.tl2, {opacity: 1}); gsap.set(E.prot, {scale: 1}); gsap.set(E.disc, {opacity: 1});
-  C.speed = s * 1.8; drawChain();
-  E.num.textContent = '5–10'; gsap.set(E.num, {opacity: 1}); gsap.set(E.carb, {opacity: 1});
-  orb.a = 180; orb.rr = R * .62; orb.rot = 270; orbPose(); startOrbit();
-}
-
-function reveal() {
-  state = 'done';
-  if (Kit.calm) { applyEnd(); return; }
-  revealing = true;
-  const {W, R, s, cx, cy, thp, yc, A} = G, dir = [Math.cos(thp), Math.sin(thp)];
-  const bump = Math.max(s * .5, cy - R - .5 * s - (yc + A + .75 * s));
-  const p1 = {x: cx + (R + 5.2 * s) * dir[0], y: cy + (R + 5.2 * s) * dir[1]}, p2 = {x: cx + R * .45 * dir[0], y: cy + R * .45 * dir[1]};
-  const dt = deg(thp), rin = dt + 180, a1 = dt + 55;
-  tl = gsap.timeline({onComplete: () => { tl = null; revealing = false; startOrbit(); }});
-  tl.to([E.tef, E.pfIn, E.pl], {opacity: 1, duration: .3}, 0)
-    .to(E.tefIn, {y: bump, duration: .45, ease: 'power2.in'}, 0)
-    .to(E.flash, {opacity: 1, duration: .12, ease: 'power1.out'}, .42)
-    .add(() => Kit.haptic('light'), .42)
-    .to(E.tefIn, {y: 0, duration: .9, ease: 'elastic.out(1,.4)'}, .45)
-    .to(E.flash, {opacity: .5, duration: .6, ease: 'power2.out'}, .6)
-    .to(E.tl2, {opacity: 1, duration: .5, ease: 'power2.out'}, .8)
-    .to(C, {speed: W * .9, duration: 1.1, ease: 'power2.in'}, 1.1)
-    .to(C, {speed: s * 1.8, duration: 1.4, ease: 'power2.out'}, 2.2)
-    .to(E.tef, {opacity: .4, duration: 1.2, ease: 'power1.in'}, 1.8)
-    .to(pose, {x: p1.x, y: p1.y, rot: rin, duration: 1, ease: 'power3.inOut', onUpdate: setPose}, 1.0)
-    .to(pose, {x: p2.x, y: p2.y, duration: 1, ease: 'power2.out', onUpdate: setPose}, 2.0)
-    .fromTo(E.poreFx, {attr: {r: s * .4}, opacity: 1}, {attr: {r: s * 2.6}, opacity: 0, duration: .9, ease: 'expo.out'}, 2.15)
-    .add(() => Kit.haptic('success'), 2.2)
-    .fromTo(E.shock, {attr: {r: R * .15}, opacity: .9}, {attr: {r: R * .84}, opacity: 0, duration: 1.3, ease: 'expo.out'}, 2.4)
-    .to(E.disc, {opacity: 1, duration: 1, ease: 'power2.out'}, 2.4)
-    .to(E.prot, {scale: 1, duration: .7, ease: 'back.out(2.4)'}, 2.75)
-    .add(() => { orb.a = dt; orb.rr = R * .45; orb.rot = rin; }, 3.3)
-    .to(orb, {a: a1, rr: R * .62, rot: a1 + 90, duration: 1.2, ease: 'power2.inOut', onUpdate: orbPose}, 3.35)
-    .to(E.num, {opacity: 1, duration: .2}, 2.5)
-    .to(E.carb, {opacity: 1, duration: .6, ease: 'power2.out'}, 3.4);
-  if (window.ScrambleTextPlugin) tl.to(E.num, {scrambleText: {text: '5–10', chars: '0123456789', speed: .5, revealDelay: .4}, duration: 1.4}, 2.5);
-  else tl.add(() => { E.num.textContent = '5–10'; }, 3.2);
-}
-
-function relayout(force) {
-  if (!force && built && stage.clientWidth === lastW && stage.clientHeight === lastH) return;
-  build();
-  if (state === 'done') { if (revealing && !Kit.calm) reveal(); else applyEnd(); }
-  else applyHi(false);
-}
-
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].dataset.n;
-  Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-  Kit.show('keep');
-  if (!Kit.calm && window.SplitText) {
-    const sp = new SplitText('#why .big', {type: 'chars'});
-    gsap.from(sp.chars, {opacity: 0, y: 14, rotationX: -70, stagger: .035, duration: .7, ease: 'back.out(2)'});
-  }
-  reveal();
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); state = 'chosen'; applyHi(true); sure.on();
-});
-
-new ResizeObserver(() => { if (built) relayout(false); }).observe(stage);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (built) relayout(true); });
-Kit.onShow.card = () => relayout(true);
-Kit.onEnter.card = () => {
-  if (Kit.calm || state !== 'idle' || !E.tef) return;
-  gsap.from(E.stars, {opacity: 0, duration: 1.4, ease: 'power2.out'});
-  if (window.DrawSVGPlugin) gsap.from('.mem', {drawSVG: '50% 50%', duration: 1.3, stagger: .05, ease: 'power3.inOut'});
-  gsap.from(E.ticks.children, {opacity: 0, duration: .5, stagger: {each: .012, from: 'start'}, ease: 'power2.out'});
-  gsap.fromTo(C, {speed: G.W * .7}, {speed: G.s * .9, duration: 2.2, ease: 'expo.out'});
-  gsap.from(E.tef, {opacity: 0, duration: 1, ease: 'power2.out'});
-  gsap.from(E.pfIn, {scale: 0, transformOrigin: '50% 50%', duration: .9, delay: .5, ease: 'back.out(2)'});
-  gsap.from([E.tl1, E.pl, E.bl], {opacity: 0, duration: .6, delay: .7, stagger: .12, ease: 'power3.out'});
-  gsap.from('.opt', {opacity: 0, duration: .45, stagger: .07, delay: .4, ease: 'power2.out'});
-};
-Kit.play.card = async () => {
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  Kit.$('opts').children[1].click(); await wait(120);
-  Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(700);
-  applyEnd(); await wait(200);
-};
+  Kit.onShow.card = () => { front(); if (turned) back(false); };
+  Kit.onEnter.card = () => {
+    if (!Kit.calm && FR.ent) gsap.from(FR.ent, {opacity: 0, stagger: .15, duration: .5, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    fast = true;
+    for (let i = 0; i < 3; i++) { step(1); await w(60); }
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 1000 : 2900);
+  };
 })();
 Kit.single();
 </script>

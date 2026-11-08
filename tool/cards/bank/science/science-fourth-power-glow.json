@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.materials",
   "strand": "science.materials.steel",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Heat steel a little hotter. How much more heat does it radiate?",
-  "answer": "Radiated power grows with the fourth power of absolute temperature. Doubling the temperature multiplies the radiated power by 16. So a slight rise in temperature means a huge rise in the heat steel loses.",
-  "move": "Radiated power ∝ T⁴: a little hotter means a lot more heat lost.",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Steel made a little hotter radiates how much more heat?",
+  "answer": "Radiated power grows with the fourth power of absolute temperature, counted from absolute zero. The hot rail stands only a little further from zero, but that small step is multiplied by itself four times. Slight increases in temperature result in huge increases in power.",
+  "move": "Before trusting that a small step changes little, find the true zero and the exponent.",
   "keywords": [
     "steel",
     "radiated heat",
@@ -28,10 +28,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "An interactive drag control heats a steel bar while a graph shows its radiated power climbing steeply with temperature. It asks how much more heat steel radiates when it gets a little hotter.",
-    "ground": "#0c1022"
+    "label": "Interactive guess-the-heat page: a steel rail is made a little hotter. The reader drags the hot rail's column up to guess how much more heat it radiates, then reads the reveal."
   },
   "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=879s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }

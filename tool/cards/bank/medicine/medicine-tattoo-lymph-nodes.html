@@ -1,321 +1,318 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: medicine-tattoo-lymph-nodes -->
-<!-- Look: a cyanotype blueprint of a torso. White hairlines on Prussian blue, engineer's mono lettering, leader lines, a tick-marked timeline and a red-pencil revision mark.
-     Interaction: drag the timeline from "inked" to "long after". Lymph flows along curved vessels from the forearm tattoo to the armpit nodes. The skin heals, but those nodes swell and glow while the other side stays calm.
-     Wow: at "long after" a red pencil circles the still-inflamed nodes, rings burst outward, and a "LONG-TERM INFLAMED" stamp lands on the belly, clear of the nodes. On short stages the drawing becomes a compact schematic with its notes beside it. -->
-<title>The tattoo's lymph nodes</title>
+<!-- Design note.
+     Thought to carry: the reaction the study measured is not in the ink. It is in the lymph nodes next to it, and it is higher than in people without tattoos.
+     Front: one flat white figure on red with a dark anchor tattoo on the forearm, the only mark on the body. Nothing names an organ. The reader taps a spot on the body or picks a plain answer. The confidence row waits behind a one-line hint until there is a guess.
+     Back: the same figure. The armpit node on the tattoo's side is a single dark, swollen shape. The neck, far-armpit and groin nodes stay small and pale, so "near" is seen by contrast. There is no route and no arrow, because the brief gives a link, not a mechanism. Three labels at most: more inflamed, your tattoo, your guess. The text carries the comparison with people without tattoos. -->
+<title>Ink and the nodes next door</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background-image:
-  radial-gradient(120% 75% at 50% 38%, rgba(110,175,240,.22), transparent 70%),
-  linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
-  linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
-  background-size:100% 100%, 22px 22px, 22px 22px}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-.lb{font-family:var(--mono);font-weight:600;letter-spacing:.02em}
-.hint{animation:nudge 1.3s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateX(4px)}}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-.say{overflow-wrap:anywhere}
-.answered .q{font-size:max(2.4cqh,15px)}
+.card{--ink:#2b0a0c}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+/* Each face leaves the page while it is turned away, so nothing of it sits under the other face or the icons. */
+.turn>.front{transition:visibility 0s linear 0s}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .38s}
+.turn.over>.back{visibility:visible;transition:visibility 0s linear .38s}
+.kit-calm .turn,.kit-calm .turn>.front,.kit-calm .turn.over>.front,.kit-calm .turn.over>.back{transition:none}
+
+.face{gap:1.1cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;background:none;border:0;box-shadow:none;padding:0}
+#pic,#pic2{flex:1 1 auto;min-height:0;width:100%;height:100%;display:block}
+#pic{touch-action:manipulation}
+#pic [data-hit]{cursor:pointer}
+#chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding-top:.6cqh}
+.chip{font:700 max(1.85cqh,13px)/1.2 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 2px var(--k);border-radius:99px;padding:1cqh 3.6cqw;cursor:pointer}
+.chip.on{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px #fff}
+.q{overflow-wrap:break-word}
+.front .say{margin:0;font:600 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+
+/* The confidence row: hidden behind one plain line until a spot is chosen. */
+.sw{position:relative;flex:0 0 auto}
+.sw:not(.open) #sure{visibility:hidden}
+.sw.open #sure{opacity:1}
+.sw .hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;margin:0;font:600 max(1.8cqh,13px)/1.3 var(--body);color:var(--k);white-space:nowrap}
+.sw .hint svg{flex:0 0 auto;width:12px;height:14px}
+.sw.open .hint{display:none}
+#sure :has(> button){display:flex;gap:12px!important}
+#sure button{border-radius:99px;margin:0}
+
+.back .big{margin:0;font:800 max(3.6cqh,21px)/1.08 var(--display);overflow-wrap:break-word}
+.back .verdict{margin:0;font:600 max(1.95cqh,14px)/1.3 var(--body);overflow-wrap:break-word}
+.back .stagebox{min-height:110px}
+.back .body{margin:0;font:500 max(1.85cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.back .take{margin:0;font:700 max(1.9cqh,14px)/1.3 var(--body);overflow-wrap:break-word}
+.face .foot{min-height:46px;flex:0 0 auto}
+/* On the back the source shares the bottom row with the icons, kept clear of the 92px corner.
+   The row grows with the source instead of letting it spill on narrow screens. */
+.back .foot{display:flex;align-items:center;padding-right:100px;height:auto!important;max-height:none!important;overflow:visible;box-sizing:border-box}
+.back .src{margin:0;min-width:0;font:500 11.5px/1.25 var(--body);opacity:.85;overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="medicine" data-kind="Drag the timeline · nodes near a tattoo" style="--c:#123f73;--k:#eef5ff;--edge:#0a2748">
+<article class="card" id="card" data-topic="medicine" data-kind="Tap a spot · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">LYMPH NODES</span></div>
-    <h2 class="q">Does a tattoo cause long-term inflammation in nearby lymph nodes?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" data-drag role="img" aria-label="Blueprint of a torso with a tattoo on the left forearm. Lymph vessels run from the tattoo to the armpit lymph nodes. A timeline below runs from inked to long after."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP WHERE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Where in the body might a tattoo leave long-term inflammation?</h2>
+        <p class="say">Tap the spot you think reacts, or pick an answer.</p>
+        <div class="stagebox" id="stage">
+          <svg id="pic" role="img" aria-label="A standing figure with a dark anchor tattoo on the forearm on the right. Tap anywhere on the body."></svg>
+          <div id="chips">
+            <button class="chip" data-t="skin">Only the skin</button>
+            <button class="chip" data-t="far">Somewhere far away</button>
+            <button class="chip" data-t="none">Nowhere</button>
+          </div>
+        </div>
+        <div class="sw" id="sw">
+          <div class="sure" id="sure"></div>
+          <p class="hint" aria-hidden="true"><svg viewBox="0 0 14 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="12" height="8" rx="2" fill="currentColor" stroke="none"/><path d="M4 7V5a3 3 0 0 1 6 0v2"/></svg><span>Pick a spot, then say how sure.</span></p>
+        </div>
+        <div class="foot" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The lymph nodes next door.</p>
+        <p class="verdict" id="verdict"></p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same figure: the armpit node on the tattoo's side is swollen and dark. The neck, far armpit and groin nodes stay small and pale."></svg></div>
+        <p class="body">A study by the Institute for Research in Biomedicine in Bellinzona found that people with tattoos have a higher level of long-term inflammation in the lymph nodes near the tattoo than people without tattoos.</p>
+        <p class="take">Look past the ink, to the nodes beside it: that is where the study found the difference.</p>
+        <div class="foot"><p class="src">Source · Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025).</p></div>
+      </section>
     </div>
-    <div id="why" class="gone"><p class="body">The skin heals, but the story goes deeper. A study by the Institute for Research in Biomedicine in Bellinzona found that tattooed people generally have long-term inflammation in the lymph nodes near the tattoo. Good data on tattoos are still scarce, so take it as an early signal, not the last word.</p></div>
-    <p class="say" id="say">Drag along the timeline, from the day you get inked to long after. <b>Watch the armpit nodes.</b></p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A tattoo isn't only skin-deep: nearby lymph nodes can stay inflamed long-term.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
-  const svg = Kit.$('pic'), card = Kit.$('card'), stage = Kit.$('stage');
-  const INK = '#eaf3ff', DEEP = '#06152c', CORAL = '#ff7b5e', CALMF = '#1a5591';
-  const stops = [0, .3, .6, 1], names = ['INKED', 'WEEKS', 'MONTHS', 'LONG AFTER'];
-  let t = 0, revealed = false, touched = false, started = false, built = false, compact = false;
-  let W = 0, H = 0, fs = 12, s = 1, ox = 0, oy = 0, a = 0, b = 1, ry = 0;
-  let R = {};
-  const X = x => 200 - x;
-  const U = (x, y) => [ox + x * s, oy + y * s];
-  const clamp = (v, l, h) => Math.max(l, Math.min(h, v));
-  const sm = v => { v = clamp(v, 0, 1); return v * v * (3 - 2 * v); };
-  const sw = px => px / s;
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  const text = (p, x, y, str, o = {}) => { const e = Kit.mk('text', Object.assign({x, y, class: 'lb', 'font-size': fs, fill: INK}, o), p); e.textContent = str; return e; };
-  const fitText = (p, x, y, str, o = {}) => {
-    const e = text(p, x, y, str, o), w = e.getComputedTextLength(), an = o['text-anchor'] || 'start';
-    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
-    const sh = Math.max(2 - left, Math.min(0, W - 2 - (left + w)));
-    if (sh) e.setAttribute('x', x + sh);
-    return e;
+  if (window.DrawSVGPlugin) gsap.registerPlugin(DrawSVGPlugin);
+  const INK = '#2b0a0c', PAPER = '#ffffff';
+  let K = '#ffffff', RED = '#ff3b30';
+  // The figure in its own units: 100 tall, x = 0 down the middle. Tattoo on the forearm on the viewer's right.
+  const TAT = [19.8, 46];
+  const NODE = {neck: [[-3.8, 20.8], [3.8, 20.8]], armL: [[-13.4, 27.6]], groin: [[-6.8, 58], [6.8, 58]]};
+  const HOT = [13.4, 27.6];
+  const BODY = 'M2.6,14.5 L2.8,17.5 C3.2,19.6 8,19.8 12.5,20.6 C15.5,21.2 17.2,23 17.8,25.5 L20,37.5 L24.6,52.5 C25.4,55.8 19.8,57.4 19.2,54 L15,40 L13.6,30.5 C13.2,29.5 12.4,29.5 12.4,31 L12.6,52 C12.6,54 12.2,55 11.6,56 L10.2,95 C10.2,98.5 4.4,98.5 4.4,95 L2.2,62 C1.8,59.5 -1.8,59.5 -2.2,62 L-4.4,95 C-4.4,98.5 -10.2,98.5 -10.2,95 L-11.6,56 C-12.2,55 -12.6,54 -12.6,52 L-12.4,31 C-12.4,29.5 -13.2,29.5 -13.6,30.5 L-15,40 L-19.2,54 C-19.8,57.4 -25.4,55.8 -24.6,52.5 L-20,37.5 L-17.8,25.5 C-17.2,23 -15.5,21.2 -12.5,20.6 C-8,19.8 -3.2,19.6 -2.8,17.5 L-2.6,14.5 A7,7 0 1 1 2.6,14.5 Z';
+  const ZN = {head: 'the head', neck: 'the neck', shoulderR: 'the shoulder', shoulderL: 'the far shoulder', armRother: 'the inked arm', armLother: 'the far arm', armL: 'the far armpit', armR: 'the armpit by the tattoo', tattoo: 'the ink itself', chest: 'the chest', belly: 'the belly', groin: 'the groin', legs: 'the legs', skin: 'Only the skin', far: 'Somewhere far away', none: 'Nowhere'};
+  let pick = null, locked = false, sureOn = false, turned = false;
+  const F = {};
+
+  const ink = () => {
+    const cs = getComputedStyle(Kit.$('card'));
+    const v = cs.getPropertyValue('--k').trim(); if (v) K = v;
+    const bg = cs.backgroundColor; if (bg && bg !== 'transparent' && !/rgba\(0, 0, 0, 0\)/.test(bg)) RED = bg;
   };
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 
-  // Half a body (the reader's left), mirrored for the other side.
-  const HALF = [['M',92,46],['L',90,60],['Q',62,62,50,72],['Q',43,78,41,90],['L',31,142],['L',25,198],['Q',23,216,33,216],['Q',43,216,42,202],['L',47,150],['L',61,104],['Q',64,94,69,102],['L',72,165],['Q',73,200,66,234]];
-  const segs = m => HALF.map(p => ({c: p[0], v: p.slice(1).map((v, i) => i % 2 ? v : (m ? X(v) : v))}));
-  const dOf = sg => sg.map(q => q.c + q.v.join(',')).join(' ');
-  const rev = sg => { let o = ''; for (let i = sg.length - 1; i > 0; i--) { const q = sg[i], pv = sg[i - 1].v.slice(-2); o += q.c === 'Q' ? `Q${q.v[0]},${q.v[1]} ${pv[0]},${pv[1]} ` : `L${pv[0]},${pv[1]} `; } return o; };
-
-  function layout() {
-    gsap.killTweensOf(svg.querySelectorAll('*'));
-    svg.innerHTML = ''; R = {};
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H; if (!W || !H) return;
-    fs = clamp(W / 26, 12, 14);
-    const topH = fs * 3.7, rulerH = fs * 5;
-    const availH = H - topH - rulerH - fs * .3;
-    s = Math.min((W - fs * .5) / 166, availH / 230);
-    compact = s < .6;
-    if (compact) {
-      // Short stage: a small schematic at the left, notes beside it, a bare timeline below.
-      const cAvail = H - fs * 1.9;
-      s = Math.max(.12, Math.min(cAvail / 236, (W * .4) / 156));
-      ox = fs * .4 - 22 * s;
-      oy = Math.max(1, (cAvail - 230 * s) * .5) - 11 * s;
-    } else {
-      ox = W / 2 - 100 * s;
-      oy = topH - 12 * s + Math.max(0, availH - 230 * s) * .5;
-    }
-
-    const defs = Kit.mk('defs', {}, svg);
-    const gc = Kit.mk('radialGradient', {id: 'gC'}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': CORAL, 'stop-opacity': .95}, gc);
-    Kit.mk('stop', {offset: .45, 'stop-color': CORAL, 'stop-opacity': .35}, gc);
-    Kit.mk('stop', {offset: 1, 'stop-color': CORAL, 'stop-opacity': 0}, gc);
-    const gb = Kit.mk('linearGradient', {id: 'gB', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#9fd0ff', 'stop-opacity': .2}, gb);
-    Kit.mk('stop', {offset: 1, 'stop-color': '#9fd0ff', 'stop-opacity': .04}, gb);
-    const mk = Kit.mk('marker', {id: 'ar', viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: sw(6), markerHeight: sw(6), markerUnits: 'userSpaceOnUse', orient: 'auto'}, defs);
-    Kit.mk('path', {d: 'M1,1 L8,5 L1,9', fill: 'none', stroke: INK, 'stroke-width': 1.6}, mk);
-
-    const gF = Kit.mk('g', {transform: `translate(${ox},${oy}) scale(${s})`}, svg);
-    Kit.mk('path', {class: 'fillb', d: dOf(segs(0)) + ` L${X(66)},234 ` + rev(segs(1)) + 'Z', fill: 'url(#gB)'}, gF);
-    Kit.mk('ellipse', {class: 'fillb', cx: 100, cy: 30, rx: 15, ry: 18, fill: 'url(#gB)'}, gF);
-    const faint = {fill: 'none', stroke: INK, 'stroke-width': sw(1), 'stroke-dasharray': `${sw(3)} ${sw(3)}`, opacity: .35, class: 'fx'};
-    ['M94,58 C88,74 82,88 77,99', 'M80,115 C86,150 86,190 84,222', 'M36,176 C40,150 52,124 77,106'].forEach(d => {
-      Kit.mk('path', Object.assign({d}, faint), gF);
-      Kit.mk('path', Object.assign({d: d.replace(/(-?\d+(\.\d+)?),(-?\d+(\.\d+)?)/g, (m, x, _, y) => `${X(+x)},${y}`)}, faint), gF);
-    });
-    Kit.mk('line', {class: 'fx', x1: 100, x2: 100, y1: 4, y2: 240, stroke: INK, 'stroke-width': sw(.8), opacity: .4, 'stroke-dasharray': `${sw(9)} ${sw(3)} ${sw(1.5)} ${sw(3)}`}, gF);
-    const ol = {class: 'ol', fill: 'none', stroke: INK, 'stroke-width': sw(1.6), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
-    Kit.mk('path', Object.assign({d: dOf(segs(0))}, ol), gF);
-    Kit.mk('path', Object.assign({d: dOf(segs(1))}, ol), gF);
-    Kit.mk('ellipse', Object.assign({cx: 100, cy: 30, rx: 15, ry: 18}, ol), gF);
-    Kit.mk('path', Object.assign({d: 'M62,234 L91,234 L95,227 L100,241 L104,234 L138,234'}, ol, {'stroke-width': sw(1.2)}), gF);
-    const det = {class: 'fx', fill: 'none', stroke: INK, 'stroke-width': sw(1), opacity: .5, 'stroke-linecap': 'round'};
-    ['M82,70 Q92,75 100,72 Q108,75 118,70', 'M76,106 Q88,118 100,113 Q112,118 124,106', 'M33,140 Q39,144 46,141', `M${X(33)},140 Q${X(39)},144 ${X(46)},141`].forEach(d => Kit.mk('path', Object.assign({d}, det), gF));
-    Kit.mk('circle', {class: 'fx', cx: 100, cy: 182, r: 1.3, fill: 'none', stroke: INK, 'stroke-width': sw(1), opacity: .6}, gF);
-
-    // The drainage from the tattoo: three lymph vessels to the armpit nodes.
-    R.vessels = ['M164,176 C162,150 152,124 122,106', 'M160,180 C156,154 144,128 118,114', 'M168,172 C168,146 158,118 125,99'].map(d =>
-      Kit.mk('path', {class: 'vs', d, fill: 'none', stroke: INK, 'stroke-width': sw(1.2), opacity: .85, 'marker-end': 'url(#ar)'}, gF));
-
-    // The tattoo: a compass rose on the forearm, and the redness of fresh skin around it.
-    R.halo = Kit.mk('circle', {cx: 164, cy: 176, r: 15, fill: 'url(#gC)'}, gF);
-    const tg = Kit.mk('g', {class: 'nd', transform: 'translate(164,176)'}, gF);
-    let star = '';
-    for (let i = 0; i < 16; i++) { const r = i % 2 ? 2.3 : (i % 4 ? 4.6 : 6.4), an = i * Math.PI / 8 - Math.PI / 2; star += (i ? 'L' : 'M') + (r * Math.cos(an)).toFixed(2) + ',' + (r * Math.sin(an)).toFixed(2); }
-    Kit.mk('circle', {r: 7.6, fill: 'none', stroke: INK, 'stroke-width': sw(.8), opacity: .7}, tg);
-    Kit.mk('path', {d: star + 'Z', fill: DEEP, stroke: INK, 'stroke-width': sw(.9), 'stroke-linejoin': 'round'}, tg);
-
-    // Glow (breathing) and pulse rings behind the tattoo-side armpit.
-    const gw = Kit.mk('g', {}, gF);
-    R.glow = Kit.mk('circle', {cx: 122, cy: 106, r: 26, fill: 'url(#gC)', opacity: 0}, gw);
-    if (!Kit.calm) gsap.to(gw, {scale: 1.18, svgOrigin: '122 106', duration: 1.15, ease: 'sine.inOut', yoyo: true, repeat: -1});
-    R.rings = Kit.mk('g', {opacity: 0}, gF);
-    for (let i = 0; i < 2; i++) {
-      const c = Kit.mk('circle', {cx: 122, cy: 106, r: 5, fill: 'none', stroke: CORAL, 'stroke-width': sw(1.4)}, R.rings);
-      if (!Kit.calm) gsap.fromTo(c, {attr: {r: 6}, opacity: .9}, {attr: {r: 22}, opacity: 0, duration: 2.2, delay: i * 1.1, repeat: -1, ease: 'power2.out'});
-    }
-    R.burst = Kit.mk('g', {}, gF);
-
-    // The nodes: neck, armpits and groin. Only the ones by the tattoo will change.
-    const node = (x, y, r) => Kit.mk('circle', {class: 'nd', cx: x, cy: y, r, fill: CALMF, stroke: INK, 'stroke-width': sw(1.2)}, gF);
-    [[94, 55, 2.3], [106, 55, 2.3], [84, 222, 2.7], [80, 229, 2.3], [116, 222, 2.7], [120, 229, 2.3], [78, 106, 4], [82, 114, 3.2], [75, 99, 3]].forEach(n => node(...n));
-    R.hot = [[122, 106, 4], [118, 114, 3.2], [125, 99, 3]].map(n => ({e: node(...n), r0: n[2]}));
-    R.gP = Kit.mk('g', {}, gF);
-
-    // The red-pencil revision mark.
-    R.pencil = Kit.mk('path', {d: 'M136,100 C136,90 124,86 116,90 C106,95 105,110 110,117 C115,124 129,123 134,115 C138,108 137,100 130,94', fill: 'none', stroke: CORAL, 'stroke-width': sw(2.2), 'stroke-linecap': 'round', opacity: revealed ? 1 : 0}, gF);
-
-    const gL = Kit.mk('g', {}, svg);
-    R.gR = Kit.mk('g', {}, svg);
-    if (compact) buildCompact(gL); else buildFull(gL, topH);
-
-    built = true;
-    render();
+  function zoneOf(p) {
+    const [x, y] = p;
+    if (dist(p, HOT) <= 6) return 'armR';
+    if (dist(p, TAT) <= 5.5) return 'tattoo';
+    if (dist(p, NODE.armL[0]) <= 6) return 'armL';
+    if (y < 15.5) return 'head';
+    if (y < 22 && Math.abs(x) < 6) return 'neck';
+    if (y < 27) return x > 0 ? 'shoulderR' : 'shoulderL';
+    if (Math.abs(x) > 13.5) return x > 0 ? 'armRother' : 'armLother';
+    if (y < 41) return 'chest';
+    if (y < 55) return 'belly';
+    if (y < 64) return 'groin';
+    return 'legs';
   }
 
-  function buildFull(gL) {
-    // The stamp, on the reader's-left belly, well clear of the nodes and the tattoo note.
-    const sg = Kit.mk('g', {}, svg);
-    R.stamp = Kit.mk('g', {opacity: revealed ? 1 : 0}, sg);
-    const box = Kit.mk('rect', {fill: 'rgba(6,21,44,.62)', stroke: CORAL, 'stroke-width': 1.8, rx: 3}, R.stamp);
-    const box2 = Kit.mk('rect', {fill: 'none', stroke: CORAL, 'stroke-width': .8, opacity: .7, rx: 2, 'stroke-dasharray': '2 2'}, R.stamp);
-    const so = {'text-anchor': 'middle', fill: CORAL, 'font-weight': 800, 'letter-spacing': '.08em'};
-    const t1 = text(R.stamp, 0, -fs * .3, 'LONG-TERM', so), t2 = text(R.stamp, 0, fs * 1.5, 'INFLAMED', so);
-    const bw = Math.max(t1.getComputedTextLength(), t2.getComputedTextLength()) + fs * 1.3, y0 = -fs * 1.55, bh = fs * 3.5;
-    [['x', -bw / 2], ['y', y0], ['width', bw], ['height', bh]].forEach(([k, v]) => box.setAttribute(k, v));
-    [['x', -bw / 2 + 3], ['y', y0 + 3], ['width', bw - 6], ['height', bh - 6]].forEach(([k, v]) => box2.setAttribute(k, v));
-    const sp = U(84, 198);
-    sg.setAttribute('transform', `translate(${clamp(sp[0], bw / 2 + 4, W - bw / 2 - 4)},${sp[1] - fs * .2}) rotate(-3)`);
+  // A label in px, slid back inside the picture if it runs over an edge. Returns its box.
+  function label(parent, W, x, y, t, fs, a = {}) {
+    const e = Kit.mk('text', Object.assign({x, y, fill: K, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), parent);
+    e.textContent = t;
+    const w = e.getComputedTextLength(), anc = a['text-anchor'] || 'start';
+    const left = anc === 'end' ? x - w : anc === 'middle' ? x - w / 2 : x;
+    const shift = Math.max(3 - left, Math.min(0, W - 3 - (left + w)));
+    if (shift) e.setAttribute('x', x + shift);
+    return {e, l: left + shift, r: left + shift + w, t: y - fs * .8, b: y + fs * .25};
+  }
+  const hits = (a, list) => list.some(b => a.l < b.r + 6 && a.r > b.l - 6 && a.t < b.b + 4 && a.b > b.t - 4);
+  const line = (parent, x1, y1, x2, y2, col, w = 1.3) => Kit.mk('line', {x1, y1, x2, y2, stroke: col, 'stroke-width': w, 'stroke-linecap': 'round'}, parent);
 
-    // Labels and leaders, in screen space.
-    const l1 = fitText(gL, 2, fs * 1.15, 'NO TATTOO HERE', {'font-weight': 800});
-    text(gL, 2, fs * 2.6, 'nodes: calm', {opacity: .72});
-    const r1 = fitText(gL, W - 2, fs * 1.15, 'NEAR THE TATTOO', {'text-anchor': 'end', 'font-weight': 800, fill: '#ffd2c6'});
-    R.status = text(gL, W - 2, fs * 2.6, 'nodes: calm', {'text-anchor': 'end', opacity: .9});
-    const lead = (x0, y0, p) => {
-      Kit.mk('path', {class: 'ld', d: `M${x0},${y0} L${p[0]},${p[1]}`, stroke: INK, 'stroke-width': 1, opacity: .55, 'stroke-dasharray': '3 3', fill: 'none'}, gL);
-      Kit.mk('circle', {class: 'ld', cx: p[0], cy: p[1], r: 2, fill: INK}, gL);
-    };
-    lead(2 + l1.getComputedTextLength() * .5, fs * 3.15, U(73, 96));
-    lead(W - 2 - r1.getComputedTextLength() * .5, fs * 3.15, U(127, 96));
-    const tp = U(177, 172);
-    Kit.mk('line', {class: 'ld', x1: U(171, 176)[0], y1: U(171, 176)[1], x2: tp[0] - 3, y2: tp[1] - fs * .35, stroke: INK, 'stroke-width': 1, opacity: .7}, gL);
-    fitText(gL, tp[0], tp[1], 'TATTOO', {'font-weight': 800});
-    R.skin = fitText(gL, tp[0], tp[1] + fs * 1.45, 'healing', {opacity: .85});
-
-    // The timeline ruler.
-    const gR = R.gR;
-    ry = H - fs * 2.9; a = fs * 1.2; b = W - fs * 1.2;
-    text(gR, a, ry - fs * 1.3, 'TIME SINCE THE TATTOO →', {opacity: .7});
-    Kit.mk('line', {x1: a, x2: b, y1: ry, y2: ry, stroke: INK, 'stroke-width': 1, opacity: .55}, gR);
-    for (let i = 0; i <= 40; i++) {
-      const x = a + (b - a) * i / 40, maj = [0, 12, 24, 40].includes(i), h = maj ? fs * .6 : (i % 4 ? fs * .22 : fs * .38);
-      Kit.mk('line', {class: 'tk', x1: x, x2: x, y1: ry, y2: ry + h, stroke: INK, 'stroke-width': maj ? 1.4 : .9, opacity: maj ? .9 : .5}, gR);
-    }
-    stops.forEach((p, i) => text(gR, a + (b - a) * p, ry + fs * 1.75, names[i], {'text-anchor': i === 0 ? 'start' : i === 3 ? 'end' : 'middle', 'font-weight': 700, opacity: .85}));
-    knob(fs * .65);
+  // The figure: one flat white shape, and a crisp ink anchor on the forearm.
+  function figure(g, s) {
+    const body = Kit.mk('g', {}, g);
+    Kit.mk('path', {d: BODY, fill: PAPER}, body);
+    const sw = Math.max(.62, 1.4 / s);
+    const t = Kit.mk('g', {transform: `translate(${TAT[0]},${TAT[1]}) rotate(-17) scale(.9)`, fill: 'none', stroke: INK, 'stroke-width': sw, 'stroke-linecap': 'round'}, g);
+    Kit.mk('circle', {cx: 0, cy: -4.6, r: .95}, t);
+    Kit.mk('path', {d: 'M0,-3.65 V4.9 M-1.6,-2.5 H1.6 M-2.1,2.4 Q-1.9,5.2 0,5.3 Q1.9,5.2 2.1,2.4'}, t);
+    Kit.mk('path', {d: 'M-2.1,1.5 L-2.8,3 L-1.4,2.9Z M2.1,1.5 L2.8,3 L1.4,2.9Z', fill: INK, stroke: 'none'}, t);
+    return {body, tat: t};
+  }
+  // The reader's mark: white ring with an ink stroke, so it reads on white and on red.
+  function ring(parent, p, r, s) {
+    const g = Kit.mk('g', {fill: 'none'}, parent);
+    Kit.mk('circle', {cx: p[0], cy: p[1], r, stroke: PAPER, 'stroke-width': 5 / s}, g);
+    Kit.mk('circle', {cx: p[0], cy: p[1], r, stroke: INK, 'stroke-width': 2.2 / s}, g);
+    return g;
+  }
+  function geom(svg, fr, room) {
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, W / 27));
+    const s = Math.max(.4, Math.min(H * fr / 100, (W / 2 - room) / 29)), cx = W / 2, top = (H - 100 * s) / 2;
+    return {W, H, fs, s, cx, top, P: ([x, y]) => [cx + x * s, top + y * s]};
   }
 
-  function buildCompact(gL) {
-    ry = H - fs * .9; a = fs * .9; b = W - fs * .9;
-    const x0 = ox + 176 * s + fs * .9;
-    const lines = [['NEAR THE TATTOO', {'font-weight': 800, fill: '#ffd2c6'}, 'k'], ['nodes: calm', {opacity: .9}, 'status'], ['tattoo: healing', {opacity: .8}, 'skin'], ['other side: calm', {opacity: .62}, 'x']];
-    const room = ry - fs * .8;
-    lines.forEach((l, i) => {
-      const y = fs * 1.05 + i * fs * 1.45;
-      if (y + fs * .3 > room) return;
-      const e = text(gL, x0, y, l[0], l[1]);
-      if (l[2] === 'status') R.status = e;
-      if (l[2] === 'skin') R.skin = e;
-    });
-    const gR = R.gR;
-    Kit.mk('line', {x1: a, x2: b, y1: ry, y2: ry, stroke: INK, 'stroke-width': 1, opacity: .55}, gR);
-    stops.forEach(p => { const x = a + (b - a) * p; Kit.mk('line', {class: 'tk', x1: x, x2: x, y1: ry - fs * .3, y2: ry + fs * .3, stroke: INK, 'stroke-width': 1.2, opacity: .8}, gR); });
-    knob(fs * .55);
+  // ---------- the front ----------
+  function front() {
+    ink();
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const G = geom(svg, .81, 84); Object.assign(F, G);
+    const {W, fs, s, cx, P} = G;
+    F.g = Kit.mk('g', {transform: `translate(${cx},${G.top}) scale(${s})`}, svg);
+    const fig = figure(F.g, s); F.body = fig.body; F.tat = fig.tat;
+    Kit.mk('path', {d: BODY, fill: 'transparent', stroke: 'transparent', 'stroke-width': 14 / s, 'pointer-events': 'all', 'data-hit': 1}, F.g);
+    F.guess = Kit.mk('g', {'pointer-events': 'none'}, F.g);
+    F.labels = Kit.mk('g', {}, svg);
+    const t = P([23.6, TAT[1]]);
+    const lt = label(F.labels, W, cx + 29 * s, t[1] + fs * .35, 'your tattoo', fs);
+    line(F.labels, t[0], t[1], lt.l - 5, t[1], K, 1.3);
+    paintGuess(false);
   }
-
-  function knob(r) {
-    R.prog = Kit.mk('line', {x1: a, x2: a, y1: ry, y2: ry, stroke: CORAL, 'stroke-width': 3, 'stroke-linecap': 'round'}, R.gR);
-    R.knob = Kit.mk('g', {}, R.gR);
-    R.knobIn = Kit.mk('g', {}, R.knob);
-    Kit.mk('circle', {r, fill: DEEP, stroke: INK, 'stroke-width': 1.6}, R.knobIn);
-    Kit.mk('circle', {r: r * .38, fill: CORAL}, R.knobIn);
-    R.hint = Kit.mk('g', {class: 'hint', opacity: touched ? 0 : 1}, R.knobIn);
-    Kit.mk('path', {d: `M${r * 1.45},${-r * .55} l${r * .55},${r * .55} l${-r * .55},${r * .55} M${r * 2.15},${-r * .55} l${r * .55},${r * .55} l${-r * .55},${r * .55}`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, R.hint);
+  function paintGuess(anim) {
+    if (!F.g) return;
+    F.guess.innerHTML = '';
+    if (!pick || !pick.pt) return;
+    const r = pick.t === 'skin' ? 7.2 : Math.max(3, 10 / F.s);
+    const g = ring(F.guess, pick.pt, r, F.s);
+    if (anim && !Kit.calm && typeof gsap !== 'undefined') gsap.from(g, {scale: 1.6, opacity: 0, svgOrigin: `${pick.pt[0]} ${pick.pt[1]}`, duration: .35, ease: 'power3.out'});
   }
-
-  function render() {
-    if (!R.hot) return;
-    const I = sm(t / .35), red = 1 - sm((t - .04) / .34);
-    const fill = gsap.utils.interpolate(CALMF, DEEP)(I), stroke = gsap.utils.interpolate(INK, CORAL)(I);
-    R.hot.forEach(n => { n.e.setAttribute('r', n.r0 * (1 + .45 * I)); n.e.setAttribute('fill', fill); n.e.setAttribute('stroke', stroke); });
-    R.glow.setAttribute('opacity', I * .9);
-    R.glow.setAttribute('r', 16 + 12 * I);
-    R.rings.setAttribute('opacity', I);
-    R.halo.setAttribute('opacity', red * .9);
-    if (R.status) R.status.textContent = I < .1 ? 'nodes: calm' : I < .6 ? 'nodes: swelling' : t < .85 ? 'nodes: inflamed' : 'still inflamed';
-    if (R.skin) R.skin.textContent = (compact ? 'tattoo: ' : '') + (red > .6 ? 'fresh, red' : red > .12 ? 'healing' : 'healed');
-    const x = a + (b - a) * t;
-    R.prog.setAttribute('x2', x);
-    R.knob.setAttribute('transform', `translate(${x},${ry})`);
-    if (t >= .97 && !revealed) reveal();
+  function choose(t, pt) {
+    if (locked || !t) return;
+    pick = {t, pt};
+    Kit.$('chips').querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c.dataset.t === t));
+    paintGuess(true); Kit.haptic('selection');
+    if (!sureOn) { sureOn = true; Kit.$('sw').classList.add('open'); sure.on(); }
   }
-
-  function setT(v) {
-    const old = t; t = clamp(v, 0, 1);
-    if (stops.some(p => (old - p) * (t - p) < 0)) Kit.haptic('selection');
-    render();
-  }
-
-  function spawn() {
-    if (!R.vessels || !R.gP.isConnected) return;
-    const v = R.vessels[Math.floor(Kit.rnd() * 3)];
-    const c = Kit.mk('circle', {r: sw(2.2), fill: DEEP, stroke: INK, 'stroke-width': sw(.9), opacity: 0}, R.gP);
-    const d = 2 + Kit.rnd() * .8;
-    gsap.timeline({onComplete: () => c.remove()})
-      .to(c, {duration: d, ease: 'power1.inOut', motionPath: {path: v, align: v, alignOrigin: [.5, .5]}}, 0)
-      .to(c, {opacity: 1, duration: .3}, 0)
-      .to(c, {opacity: 0, duration: .35}, d - .35);
-  }
-  function emit() {
-    if (!Kit.calm && t > .01) spawn();
-    gsap.delayedCall(.6 - .4 * Math.min(1, t * 2.5), emit);
-  }
-  function start() { if (started) return; started = true; emit(); }
-
-  function reveal() {
-    revealed = true; Kit.haptic('success');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
-    if (Kit.calm) { R.pencil.setAttribute('opacity', 1); if (R.stamp) R.stamp.setAttribute('opacity', 1); return; }
-    gsap.set(R.pencil, {opacity: 1});
-    gsap.fromTo(R.pencil, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, ease: 'power2.inOut'});
-    if (R.stamp) gsap.fromTo(R.stamp, {opacity: 0, scale: 1.9, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .6, delay: .55, ease: 'back.out(2.2)'});
-    for (let i = 0; i < 3; i++) {
-      const c = Kit.mk('circle', {cx: 122, cy: 106, r: 4, fill: 'none', stroke: CORAL, 'stroke-width': sw(2)}, R.burst);
-      gsap.fromTo(c, {attr: {r: 4}, opacity: 1}, {attr: {r: 40}, opacity: 0, duration: 1.4, delay: .2 + i * .16, ease: 'expo.out', onComplete: () => c.remove()});
-    }
-    for (let i = 0; i < 10; i++) gsap.delayedCall(i * .08, spawn);
-  }
-
-  // The drag: anywhere on the picture, left to right is time.
-  let dragging = false;
-  const fromX = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - a) / (b - a); };
-  svg.addEventListener('pointerdown', e => {
-    dragging = true; svg.setPointerCapture(e.pointerId); start();
-    if (!touched) { touched = true; if (R.hint) gsap.to(R.hint, {opacity: 0, duration: .25}); }
-    if (R.knobIn) gsap.fromTo(R.knobIn, {scale: 1.35}, {scale: 1, duration: .45, ease: 'elastic.out(1,.5)'});
-    setT(fromX(e));
+  const chooseAt = p => choose(zoneOf(p), p);
+  Kit.$('pic').addEventListener('click', e => {
+    if (!e.target.closest('[data-hit]') || !F.g) return;
+    const m = F.g.getScreenCTM(); if (!m) return;
+    const q = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+    chooseAt([q.x, q.y]);
   });
-  svg.addEventListener('pointermove', e => { if (dragging) setT(fromX(e)); });
-  const end = () => { dragging = false; };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  Kit.$('chips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (b) choose(b.dataset.t, b.dataset.t === 'skin' ? TAT.slice() : null); });
 
-  let rq = 0;
-  new ResizeObserver(() => { if (built) { cancelAnimationFrame(rq); rq = requestAnimationFrame(layout); } }).observe(stage);
-  Kit.onShow.card = layout;
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (!pick || locked) return;
+    locked = true;
+    const ok = pick.t === 'armR';
+    Kit.answer({choice: ZN[pick.t], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${ZN[pick.t]}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  function verdict() {
+    const t = pick ? pick.t : 'none';
+    if (t === 'armR') return 'Right spot: the armpit beside the ink.';
+    if (t === 'none') return 'You said nowhere; it’s the armpit on the tattoo’s side.';
+    if (t === 'skin') return 'You said only the skin; it’s the armpit above the ink.';
+    if (t === 'far') return 'You said far away; it’s the armpit next to the tattoo.';
+    if (t === 'tattoo') return 'You tapped the ink itself; it’s the armpit above it.';
+    if (t === 'shoulderR' || t === 'armRother') return `Close: you tapped ${ZN[t]}; it’s the armpit above the ink.`;
+    return `You tapped ${ZN[t]}; it’s the armpit on the tattoo’s side.`;
+  }
+
+  // ---------- the back ----------
+  function back(anim) {
+    ink();
+    Kit.$('verdict').textContent = verdict();
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const G = geom(svg, .95, 100);
+    const {W, H, fs, s, cx, top, P} = G;
+    const g = Kit.mk('g', {transform: `translate(${cx},${top}) scale(${s})`}, svg);
+    const fig = figure(g, s);
+
+    // The other nodes: small and pale, for contrast.
+    const calm = Kit.mk('g', {}, g);
+    const cr = Math.max(1.5, 4.5 / s);
+    for (const k of ['neck', 'armL', 'groin']) for (const [x, y] of NODE[k]) Kit.mk('ellipse', {cx: x, cy: y, rx: cr, ry: cr * .7, fill: RED, 'fill-opacity': .5}, calm);
+
+    // The one focal point: the swollen node beside the tattoo.
+    const R = Math.max(2.8, 9 / s);
+    const hot = Kit.mk('ellipse', {cx: HOT[0], cy: HOT[1], rx: R, ry: R * .8, fill: INK}, g);
+
+    // Labels: more inflamed; your tattoo (pushed down if they would touch); your guess.
+    const boxes = [];
+    const L1 = Kit.mk('g', {}, svg), L2 = Kit.mk('g', {}, svg), L3 = Kit.mk('g', {}, svg);
+    const lx = cx + 29 * s;
+    const n0 = P([HOT[0] + R + 1.5, HOT[1]]);
+    const bI = label(L2, W, lx, n0[1] + fs * .35, 'more inflamed', fs, {'font-weight': 800});
+    line(L2, n0[0], n0[1], bI.l - 5, n0[1], K, 1.3);
+    boxes.push(bI);
+    const t0 = P([23.6, TAT[1]]);
+    let yT = t0[1] + fs * .35;
+    if (yT - fs * .8 < bI.b + 8) yT = bI.b + 8 + fs * .8;
+    const bT = label(L1, W, lx, yT, 'your tattoo', fs);
+    line(L1, t0[0], t0[1], bT.l - 5, yT - fs * .35, K, 1.3);
+    boxes.push(bT);
+
+    const mark = Kit.mk('g', {}, g);
+    const pt = pick && pick.pt;
+    if (pick && pick.t === 'armR') {
+      ring(mark, HOT, R + Math.max(1.5, 5 / s), s);
+    } else if (pt) {
+      const rr = pick.t === 'skin' ? 7.2 : Math.max(3, 10 / s);
+      ring(mark, pt, rr, s);
+      const gp = P(pt);
+      const cands = [];
+      const leftC = dy0 => ({x: cx - 29 * s, y: gp[1] + fs * .35 + dy0, anc: 'end'});
+      const rightC = dy0 => ({x: lx, y: gp[1] + fs * .35 + dy0, anc: 'start'});
+      for (const d of [0, fs * 1.8, -fs * 1.8, fs * 3.6]) { if (pt[0] > 0) cands.push(rightC(d), leftC(d)); else cands.push(leftC(d), rightC(d)); }
+      let placed = null;
+      for (const c of cands) {
+        if (c.y < fs || c.y > H - 4) continue;
+        const bx = label(L3, W, c.x, c.y, 'your guess', fs, {'text-anchor': c.anc, fill: INK, 'font-weight': 800});
+        if (!hits(bx, boxes)) { placed = Object.assign(bx, c); break; }
+        bx.e.remove();
+      }
+      if (placed) {
+        const ex = placed.anc === 'end' ? placed.r + 5 : placed.l - 5, ey = placed.y - fs * .35;
+        const ddx = ex - gp[0], ddy = ey - gp[1], dd = Math.hypot(ddx, ddy) || 1;
+        line(L3, gp[0] + ddx / dd * (rr * s + 3), gp[1] + ddy / dd * (rr * s + 3), ex, ey, INK, 1.3);
+      }
+    }
+
+    if (!anim || Kit.calm || typeof gsap === 'undefined') return;
+    // Calm beats: the body, the tattoo, the node, the guess.
+    gsap.set([L1, L2, L3, mark], {opacity: 0});
+    gsap.set(hot, {scale: .35, svgOrigin: `${HOT[0]} ${HOT[1]}`, opacity: .4});
+    const tl = gsap.timeline({delay: .35});
+    tl.from([fig.body, calm], {opacity: 0, duration: .45, ease: 'power2.out'})
+      .to(L1, {opacity: 1, duration: .3}, '-=.1')
+      .to(hot, {scale: 1, opacity: 1, duration: .6, ease: 'power3.out'}, '+=.15')
+      .to(L2, {opacity: 1, duration: .35}, '-=.25')
+      .to([mark, L3], {opacity: 1, duration: .35}, '+=.15');
+  }
+  document.addEventListener('turned', () => { turned = true; back(true); });
+
+  Kit.onShow.card = () => { front(); if (turned) back(false); };
   Kit.onEnter.card = () => {
-    start();
-    if (Kit.calm) return;
-    const q = sel => svg.querySelectorAll(sel);
-    gsap.timeline()
-      .from(q('.ol'), {drawSVG: '0%', duration: 1.3, ease: 'power2.inOut', stagger: .06})
-      .from(q('.fillb'), {opacity: 0, duration: .8}, '<.4')
-      .from(q('.fx'), {opacity: 0, duration: .6, stagger: .02}, '<.2')
-      .from(q('.vs'), {drawSVG: '0%', duration: .9, ease: 'power3.out', stagger: .12}, '-=.6')
-      .from(q('.nd'), {scale: 0, transformOrigin: '50% 50%', duration: .5, ease: 'back.out(3)', stagger: .03}, '-=.7')
-      .from(q('.lb, .ld'), {opacity: 0, duration: .5, stagger: .02}, '-=.5')
-      .from(q('.tk'), {scaleY: 0, transformOrigin: '50% 0%', duration: .4, stagger: .008, ease: 'power3.out'}, '-=.6')
-      .from(R.knobIn, {scale: 0, duration: .6, ease: 'back.out(3)'}, '-=.3');
+    if (Kit.calm || !F.g) return;
+    gsap.from(F.body, {opacity: 0, y: 8, duration: .5, ease: 'power3.out'});
+    gsap.from(F.tat, {opacity: 0, duration: .4, delay: .4, ease: 'power2.out'});
+    gsap.from(F.labels, {opacity: 0, duration: .4, delay: .6});
+    gsap.from('.chip', {opacity: 0, y: 6, stagger: .07, duration: .35, delay: .75, ease: 'power3.out'});
   };
   Kit.play.card = async () => {
-    start(); touched = true; if (R.hint) R.hint.setAttribute('opacity', 0);
-    for (let i = 1; i <= 20; i++) { setT(i / 20); await wait(Kit.calm ? 5 : 40); }
-    await wait(Kit.calm ? 80 : 1400);
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    chooseAt([-16, 22.5]);
+    await wait(Kit.calm ? 60 : 500);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 900 : 4200);
   };
 })();
 Kit.single();

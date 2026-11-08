@@ -3,12 +3,12 @@
   "topic": "medicine",
   "genre": "medicine.public_health",
   "strand": "medicine.public_health.clean_water",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "What did DuPont's own 1961 rat tests find about C8?",
-  "answer": "DuPont's own 1961 rat tests fed rats C8 and watched the liver as the dose rose. Internal tests confirmed C8 caused liver damage and organ failure in rats and dogs, yet the company kept producing it for decades.",
-  "move": "Not deadly isn't safe: harm can start far below the dose that kills.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "C8 kills a rat at 570 mg/kg. How little made its liver grow abnormally?",
+  "answer": "In 1961, DuPont's own scientists found that C8 made rat livers grow abnormally at just 1.5 mg/kg, far below the 570 mg/kg dose that kills a rat. The company kept making C8 for decades.",
+  "move": "Ask how little harms, not how much kills.",
   "keywords": [
     "dupont",
     "c8",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page asking what DuPont's own 1961 rat tests found about C8. A slider raises the dose fed to rats while a liver view shows the effect as the dose climbs.",
-    "ground": "#0d1117"
+    "label": "The page asks how little of the chemical C8 made rat livers grow abnormally. It contrasts a 570 mg/kg dose that kills a rat with 1.5 mg/kg, which DuPont's 1961 internal tests found harmful."
   },
   "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=1097s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }

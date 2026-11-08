@@ -3,12 +3,12 @@
   "topic": "medicine",
   "genre": "medicine.judge_a_treatment",
   "strand": "medicine.judge_a_treatment.side_effects",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Does a tattoo cause long-term inflammation in nearby lymph nodes?",
-  "answer": "A study by the Institute for Research in Biomedicine in Bellinzona found that tattooed people generally have long-term inflammation in the lymph nodes near the tattoo. The card notes that good data on tattoos is still scarce, so treat this as an early signal rather than the final answer.",
-  "move": "A tattoo isn't only skin-deep: nearby lymph nodes can stay inflamed long-term.",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Where in the body might a tattoo leave long-term inflammation?",
+  "answer": "The lymph nodes next door. A study by the Institute for Research in Biomedicine in Bellinzona found that people with tattoos have a higher level of long-term inflammation in the lymph nodes near the tattoo than people without. Look past the ink, to the nodes beside it.",
+  "move": "Look past the ink, to the nodes beside it: that is where the study found the difference.",
   "keywords": [
     "tattoos",
     "lymph_nodes",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A timeline with a draggable slider, from the day of getting a tattoo to long after. As the slider moves, it shows the lymph nodes near the tattoo, especially the armpit nodes, and asks whether they stay inflamed over time.",
-    "ground": "#123f73"
+    "touch": "taps",
+    "label": "An interactive page showing a tattoo on a body outline. It asks where in the body a tattoo might leave long-term inflammation. Readers tap a spot, or choose from: only the skin, somewhere far away, or nowhere, then say how sure they are."
   },
   "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=1166s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }
