@@ -244,7 +244,10 @@ void main() {
       testWidgets('a card without stays as it was; at ${text}x', (
         tester,
       ) async {
-        final List<Pill> five = pagedCards().take(5).toList();
+        PillBank.adopt(bankWithPictures({}));
+        final List<Pill> five = [
+          for (final Pill p in pagedCards().take(5)) PillBank.byId(p.id)!,
+        ];
         final AppState app = await _dayDone(five);
         await _pump(
           tester,
@@ -394,6 +397,7 @@ void main() {
     testWidgets('with no pictures in the bank, every tile in words', (
       tester,
     ) async {
+      PillBank.adopt(bankWithPictures({}));
       final CoreHost host = CoreHost(await readyApp());
       await pumpSections(tester, host, sectionsOf([_feed]));
       expect(find.byType(BoxTile), findsWidgets);

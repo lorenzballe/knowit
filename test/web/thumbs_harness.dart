@@ -16,7 +16,8 @@ List<Pill> pagedCards() => [
     if (p.web?.page != null && p.hasPage) p,
 ];
 
-/// The shipped bank, with the cards of [ids] given a front and a back.
+/// The shipped bank, with the cards of [ids] given a front and a back, and
+/// every other card none.
 BankBundle bankWithPictures(Set<String> ids) {
   final Map<String, Object?> doc =
       jsonDecode(kEmbeddedBank) as Map<String, Object?>;
@@ -32,6 +33,13 @@ BankBundle bankWithPictures(Set<String> ids) {
               'back': 'thumbs/${raw['id']}-back.webp?v=0123456789ab',
             },
           },
+        }
+      // The shipped bank names pictures for every free card it has them for;
+      // the cards not in [ids] are put back to none, so a test chooses.
+      else if (raw is Map && raw['web'] is Map)
+        {
+          ...raw,
+          'web': {...raw['web'] as Map}..remove('thumbs'),
         }
       else
         raw,
