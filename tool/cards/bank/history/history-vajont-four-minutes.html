@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: history-vajont-four-minutes -->
-<!-- Look: a flat printed map of the Vajont valley at night, like a plate in a history book. Two flat slopes with short hachures for the steep gorge, a flat blue reservoir, a solid concrete arch for the dam, and small houses with lit amber windows. A plain time scale runs underneath.
+<!-- Look: a flat printed map of the Vajont valley, like a plate in a history book, on warm sand-coloured paper. Two plain slopes in ink tints, a darker band where the gorge walls drop steeply, a flat blue reservoir, a solid concrete arch for the dam, and small dark houses with lit amber windows. A plain time scale runs underneath.
      Interaction: you drag a pink marker along a log scale from 1 minute to 1 week to guess how long the wave took. You say how sure you are, and then the valley replays it.
-     Wow: the landslide drops into the lake and the scene flashes. A clock races to 4:00 while the wave runs down the gorge, throwing spray, and the windows go dark one by one. The dark valley then shows "10+ villages". -->
+     Wow: the landslide drops into the lake and the scene flashes. A clock races to 4:00 while the wave runs down the gorge, throwing spray, and the windows go dark one by one. The faded valley then shows "10+ villages". -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Four minutes in the Vajont valley</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -10,15 +10,15 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
 <style>
-#card{background:var(--c)}
+#card{background:var(--c);background-image:none}
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
 .pulse{animation:pulse 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes pulse{50%{transform:scale(1.4);opacity:.55}}
 .kit-calm .pulse{animation:none}
-.say b{color:#ff7aa6}
+.say b{color:#c8185a}
 </style>
-<article class="card" id="card" data-topic="history" data-kind="Drag your guess · how fast" style="--c:#1a0b10;--k:#ffeef4;--edge:#0a0406">
+<article class="card" id="card" data-topic="history" data-kind="Drag your guess · how fast" style="--c:#f2d49b;--k:#2b1d14;--edge:#c9a866">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE TIME</span></div>
     <h2 class="q">How long did the Vajont wave take to wipe out over ten villages?</h2>
@@ -35,7 +35,7 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
-  const PINK = '#ff3d7f', WATER = '#4f86ab', WAVE = '#79abcb', FOAM = '#c9e1ee', AMBER = '#f0b44c';
+  const PINK = '#ff3d7f', PINK_TXT = '#c8185a', WATER = '#3f7bb0', WAVE = '#2a5d8f', FOAM = '#ffffff', AMBER = '#f0b44c';
   const INK = 'var(--k)', PINK_SOFT = 'color-mix(in srgb, #ff3d7f 50%, var(--c))';
   const mix = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const MAX = 10080, REAL = 4;
@@ -116,23 +116,17 @@
       return [Math.max(2, Math.min(W - 2, s.x + sg * s.nx * w)), Math.max(mapTop + 2, Math.min(mapTop + mapH, s.y + sg * s.ny * w))];
     };
 
-    // ---- the valley walls: a flat slope on each side, short hachures where the ground falls away
+    // ---- the valley walls: a flat mountain slope on each side, and a darker band where the walls drop into the gorge
     for (const sg of [1, -1]) {
-      const n = 34, inner = [], outer = [];
+      const n = 34, inner = [], steep = [], outer = [];
       for (let i = 0; i <= n; i++) {
-        const t = i / n;
-        inner.push(at(t, sg, width(t)));
-        outer.push(at(t, sg, width(t) * 1.75 * (i % 2 ? 1.16 : 1)));
+        const t = i / n, w = width(t);
+        inner.push(at(t, sg, w));
+        steep.push(at(t, sg, w * (1.22 + .05 * Math.sin(i * 1.3 + sg))));
+        outer.push(at(t, sg, w * (1.85 + .12 * Math.sin(i * .9 + sg * 2))));
       }
-      fill(G.ridge, toD(inner.concat(outer.slice().reverse())) + 'Z', mix(14));
-      draws.push(ln(G.ridge, toD(outer), mix(30), fs * .07));
-      let h = '';
-      const m = 44;
-      for (let i = 0; i <= m; i++) {
-        const t = i / m, w = width(t), a = at(t, sg, w * 1.04), b = at(t, sg, w * (1.3 + (i % 3) * .07));
-        h += `M${a[0].toFixed(1)},${a[1].toFixed(1)}L${b[0].toFixed(1)},${b[1].toFixed(1)}`;
-      }
-      draws.push(ln(G.ridge, h, mix(40), fs * .08));
+      fill(G.ridge, toD(inner.concat(outer.slice().reverse())) + 'Z', mix(16));
+      fill(G.ridge, toD(inner.concat(steep.slice().reverse())) + 'Z', mix(34));
     }
 
     // ---- the reservoir
@@ -140,30 +134,27 @@
     fill(G.lake, lakeD, WATER);
     lakeFlash = fill(G.lake, lakeD, FOAM, {opacity: 0});
     G.rip = Kit.mk('g', {}, G.lake);
-    for (let i = 0; i < 3; i++) { const [x, y] = P(.11 + i * .075, .25 + (i % 2) * .06); const r = ln(G.rip, `M${x - fs * .6},${y} q${fs * .3},-${fs * .2} ${fs * .6},0 t${fs * .6},0`, FOAM, fs * .07); r.setAttribute('opacity', .55); }
-    if (G0 && !Kit.calm) gsap.to(G.rip, {x: fs * .45, duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut'});
 
     // ---- the river below the dam, and the wave that will run down it
     const waveD = `M${pt(.38, .36)} ${rest}`;
-    draws.push(ln(G.river, waveD, WATER, fs * .12));
-    G.river.lastChild.setAttribute('opacity', .85);
-    wave = [ln(G.wave, waveD, WAVE, fs * .38)._paths[0], ln(G.wave, waveD, FOAM, fs * .13)._paths[0]];
+    draws.push(ln(G.river, waveD, WATER, fs * .14));
+    wave = [ln(G.wave, waveD, WATER, fs * .42)._paths[0], ln(G.wave, waveD, WAVE, fs * .2)._paths[0]];
     waveL = wave[0].getTotalLength();
     wave.forEach(p => { p.setAttribute('stroke-dasharray', `${waveL} ${waveL}`); p.setAttribute('stroke-dashoffset', waveL); });
-    for (let i = 0; i < 6; i++) spray.push(Kit.mk('circle', {r: fs * (.2 - i * .022), fill: i % 2 ? WAVE : FOAM, opacity: 0}, G.wave));
-    head = Kit.mk('circle', {r: fs * .42, fill: FOAM, opacity: 0}, G.wave);
+    for (let i = 0; i < 6; i++) spray.push(Kit.mk('circle', {r: fs * (.2 - i * .022), fill: i % 2 ? WATER : WAVE, opacity: 0}, G.wave));
+    head = Kit.mk('circle', {r: fs * .42, fill: WAVE, opacity: 0}, G.wave);
 
-    // ---- the landslide, on the lake's south flank: a slab of mountain with arrows showing where it slid
+    // ---- the landslide, on the lake's south flank: a slab of mountain with one arrow showing where it slid
     const sl = Kit.mk('g', {}, G.slide);
-    fill(sl, `M${pt(.13, .47)} Q${pt(.23, .56)} ${pt(.34, .46)} Q${pt(.25, .425)} ${pt(.13, .47)} Z`, mix(46));
-    for (let i = 0; i < 3; i++) {
-      const [x, y] = P(.19 + i * .05, .465);
-      const ax = x - fs * .25, ay = y + fs * .2, bx = x + fs * .25, by = y - fs * .15;
-      const dx = .82, dy = -.574, px = .574, py = .82, k = fs * .2, s = fs * .13;
-      ln(sl, `M${ax},${ay}L${bx},${by}M${(bx - dx * k + px * s).toFixed(1)},${(by - dy * k + py * s).toFixed(1)}L${bx},${by}L${(bx - dx * k - px * s).toFixed(1)},${(by - dy * k - py * s).toFixed(1)}`, mix(88), fs * .08);
+    fill(sl, `M${pt(.13, .47)} Q${pt(.23, .56)} ${pt(.34, .46)} Q${pt(.25, .425)} ${pt(.13, .47)} Z`, mix(58));
+    {
+      const [x, y] = P(.235, .475);
+      const ax = x - fs * .45, ay = y + fs * .32, bx = x + fs * .4, by = y - fs * .28;
+      const dx = .82, dy = -.574, px = .574, py = .82, k = fs * .3, s = fs * .2;
+      ln(sl, `M${ax},${ay}L${bx},${by}M${(bx - dx * k + px * s).toFixed(1)},${(by - dy * k + py * s).toFixed(1)}L${bx},${by}L${(bx - dx * k - px * s).toFixed(1)},${(by - dy * k - py * s).toFixed(1)}`, 'var(--c)', fs * .13);
     }
     slideShift = -mapH * .085;
-    ring = Kit.mk('ellipse', {cx: P(.23, .37)[0], cy: P(.23, .37)[1], rx: 1, ry: 1, fill: 'none', stroke: FOAM, 'stroke-width': fs * .12, opacity: 0}, G.slide);
+    ring = Kit.mk('ellipse', {cx: P(.23, .37)[0], cy: P(.23, .37)[1], rx: 1, ry: 1, fill: 'none', stroke: WATER, 'stroke-width': fs * .12, opacity: 0}, G.slide);
 
     // ---- the dam: a solid concrete arch
     const ds = sample(tDam), dw = width(tDam) * 1.05;
@@ -177,7 +168,7 @@
       const s = sample(t), w = width(t) * k;
       const x = s.x + sg * s.nx * w, y = s.y + sg * s.ny * w;
       const g = Kit.mk('g', {transform: `translate(${x.toFixed(1)},${y.toFixed(1)})`}, G.vill);
-      fill(g, `M${-hs},${hs * .7} V${-hs * .15} L0,${-hs} L${hs},${-hs * .15} V${hs * .7} Z`, mix(62));
+      fill(g, `M${-hs},${hs * .7} V${-hs * .15} L0,${-hs} L${hs},${-hs * .15} V${hs * .7} Z`, INK);
       Kit.mk('rect', {x: -hs * .26, y: hs * .02, width: hs * .52, height: hs * .5, fill: AMBER}, g);
       const time = t < tDam ? .02 + .09 * (t / tDam) : .12 + .88 * ((t - tDam) / (1 - tDam));
       villages.push({g, time, dead: false});
@@ -185,9 +176,9 @@
 
     // ---- labels in the drawing
     const [rx, ry] = P(.2, .31);
-    txt(G.lbl, rx, ry + fs * .35, 'Reservoir', {'text-anchor': 'middle'}, `fill:${FOAM};${body(L)}`);
+    txt(G.lbl, rx, ry + fs * .35, 'Reservoir', {'text-anchor': 'middle', stroke: 'none'}, `fill:${FOAM};${body(L)}`);
     const [lx, ly] = P(.235, .56);
-    txt(G.lbl, Math.max(fs * 2.5, lx), ly + fs * 1.25, 'Landslide', {'text-anchor': 'middle'}, `fill:${mix(85)};${body(L)}`);
+    txt(G.lbl, Math.max(fs * 2.5, lx), ly + fs * 1.25, 'Landslide', {'text-anchor': 'middle'}, `fill:${INK};${body(L)}`);
     txt(G.lbl, ds.x + fs * .7, ds.y + fs * .35, 'Dam', {}, `fill:${INK};${body(L)}`);
 
     // ---- date, clock, count
@@ -197,7 +188,7 @@
     const yN = yC + sC * .28 + sD * 1.0 + fs * .3;
     txt(G.hud, hx, yD, '9 Oct 1963', {'text-anchor': 'end'}, `fill:${mix(70)};${body(sD)}`);
     clock = txt(G.hud, hx, yC, '0:00', {'text-anchor': 'end'}, `fill:${INK};${disp(sC)};font-variant-numeric:tabular-nums`);
-    counter = txt(G.hud, hx, yN, 'Villages gone · 0', {'text-anchor': 'end'}, `fill:${AMBER};${body(sD)}`);
+    counter = txt(G.hud, hx, yN, 'Villages gone · 0', {'text-anchor': 'end'}, `fill:${mix(80)};${body(sD)}`);
 
     // ---- the closing sign: sized to the room above the scale
     buildSign();
@@ -225,7 +216,7 @@
     // ---- your marker
     G.gline = ln(G.guess, `M0,${sy - fs * 1.15} V${sy + fs * .5}`, PINK, fs * .14);
     G.knob = Kit.mk('circle', {cx: 0, cy: sy, r: fs * .55, fill: PINK, class: dragged ? '' : 'pulse'}, G.guess);
-    G.gtxt = txt(G.guess, 0, sy - fs * 1.5, '', {'text-anchor': 'middle'}, `fill:#ff86ad;${body(L)}`);
+    G.gtxt = txt(G.guess, 0, sy - fs * 1.5, '', {'text-anchor': 'middle'}, `fill:${PINK_TXT};${body(L)}`);
     drawGuess();
 
     if (revealed) finalState();
@@ -239,10 +230,10 @@
     // each line: [text, size, colour, style, line-box factor]; boxes are stacked with a real gap between them
     const need = ls => ls.reduce((a, l) => a + l[1] * l[4], 0) + gap * Math.max(0, ls.length - 1);
     let lines;
-    const three = [['9 Oct 1963', s3, mix(70), body, 1.3], ['10+ villages', s1, AMBER, disp, 1.25], ['gone in about 4 minutes', s2, INK, body, 1.3]];
+    const three = [['9 Oct 1963', s3, mix(70), body, 1.3], ['10+ villages', s1, INK, disp, 1.25], ['gone in about 4 minutes', s2, INK, body, 1.3]];
     if (avail >= need(three)) lines = three;
-    else if (avail >= 18 * 1.25 + s2 * 1.3 + gap) { s1 = Math.min(s1, (avail - s2 * 1.3 - gap) / 1.25); lines = [['10+ villages', s1, AMBER, disp, 1.25], ['gone in about 4 minutes', s2, INK, body, 1.3]]; }
-    else if (avail >= 15) lines = [['10+ villages · about 4 min', Math.min(avail / 1.3, fs * 1.3), AMBER, disp, 1.3]];
+    else if (avail >= 18 * 1.25 + s2 * 1.3 + gap) { s1 = Math.min(s1, (avail - s2 * 1.3 - gap) / 1.25); lines = [['10+ villages', s1, INK, disp, 1.25], ['gone in about 4 minutes', s2, INK, body, 1.3]]; }
+    else if (avail >= 15) lines = [['10+ villages · about 4 min', Math.min(avail / 1.3, fs * 1.3), INK, disp, 1.3]];
     else lines = [];
     // measure first, so a shrunk line is also placed at its shrunk size
     const els = lines.map(l => {
@@ -377,11 +368,12 @@
     if (fast) tl.timeScale(4);
   }
 
-  // ---------- the entrance: the map's lines draw on, then the rest fades in ----------
+  // ---------- the entrance: the slopes and the river come in, then the rest fades in ----------
   function enter() {
     if (!G0 || Kit.calm || revealed) return;
     const on = el => { const o = +(el.getAttribute('opacity') || 1); return gsap.fromTo(el, {opacity: 0}, {opacity: o, duration: .6, ease: 'power2.out'}); };
     const t = gsap.timeline();
+    t.add(on(G.ridge), .05);
     draws.forEach((g, i) => g._paths.forEach(p => {
       const len = p.getTotalLength(); p.style.strokeDasharray = `${len} ${len}`;
       t.fromTo(p, {strokeDashoffset: len}, {strokeDashoffset: 0, duration: 1.1, ease: EZ('neon')}, .05 + i * .1);

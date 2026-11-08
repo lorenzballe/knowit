@@ -1,8 +1,10 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: medicine-alcohol-iceberg -->
-<!-- Look: a printed cross-section of an iceberg in the sea, flat tints of the card's ink, one warm lamp. The berg's bands are scaled to deaths.
+<!-- Look: a printed cross-section of an iceberg in the sea, drawn flat on the card's own night blue. No panel behind it: the card colour is the water.
+     Under the water the berg is a single quiet silhouette, just one step lighter than the sea, with no lines inside it, so nothing reads as a box.
+     Its bands are scaled to deaths and only show once lit. A small hand lantern hangs from a coral float; its light is three plain rays that touch the ice.
      Interaction: only the cancer tip shows above the water. Drag the lamp down. Each band it passes lights up, its number scrambling in, while the counter climbs.
-     Wow: at the bottom the lamp's beam flares and a pale band sweeps up the berg. The counter assembles 2.6 M, the tip is ringed in coral, and "cancer is only 1 in 6 of them" builds itself letter by letter. -->
+     Wow: at the bottom the rays thicken for a moment and a flat lamp-yellow line sweeps up the berg. The counter assembles 2.6 M, the tip is outlined in coral, and "cancer is only 1 in 6 of them" builds itself letter by letter. -->
 <title>What lies beneath the glass</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -12,19 +14,19 @@
 <style>
 #stage{position:relative;display:flex;flex:1;min-height:0;border-radius:0;overflow:hidden;background:none;border:0;box-shadow:none}
 #pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
-#hud{position:absolute;left:0;right:0;top:0;padding:1.2cqh 3cqw 0;text-align:center;pointer-events:none;color:var(--k)}
-#hud .k{display:block;font:600 max(1.35cqh,12px)/1.35 var(--body);color:color-mix(in srgb,var(--k) 72%,var(--c));white-space:nowrap;perspective:300px}
-#hud .v{display:block;font:800 max(3.2cqh,20px)/1.15 var(--display);white-space:nowrap}
-#hud .v small{font:600 max(1.45cqh,12px) var(--body);color:color-mix(in srgb,var(--k) 72%,var(--c));margin-left:.4em}
+#hud{position:absolute;left:0;right:0;top:0;padding:1.2cqh 3cqw 0;text-align:center;pointer-events:none;color:var(--k);text-shadow:none}
+#hud .k{display:block;font:600 max(1.35cqh,12px)/1.35 var(--body);letter-spacing:0;text-transform:none;color:color-mix(in srgb,var(--k) 72%,var(--c));white-space:nowrap;perspective:300px}
+#hud .v{display:block;font:800 max(3.2cqh,20px)/1.15 var(--display);letter-spacing:0;white-space:nowrap;text-shadow:none}
+#hud .v small{font:600 max(1.45cqh,12px) var(--body);letter-spacing:0;text-transform:none;color:color-mix(in srgb,var(--k) 72%,var(--c));margin-left:.4em}
 #cnt{display:inline-block}
 #labs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.lab{position:absolute;left:0;top:0;text-align:center;color:var(--c);opacity:0;box-sizing:border-box;max-width:100%}
-.lab .n{display:block;font:700 max(1.5cqh,12px)/1.14 var(--body);overflow-wrap:anywhere}
-.lab .v{display:block;font:800 max(2.1cqh,14px)/1.16 var(--body);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.lab.one{white-space:nowrap;padding:.14em .65em;border-radius:.3em;background:var(--k)}
+.lab{position:absolute;left:0;top:0;text-align:center;color:var(--c);opacity:0;box-sizing:border-box;max-width:100%;box-shadow:none;text-shadow:none}
+.lab .n{display:block;font:700 max(1.5cqh,12px)/1.14 var(--body);letter-spacing:0;text-transform:none;overflow-wrap:anywhere}
+.lab .v{display:block;font:800 max(2.1cqh,14px)/1.16 var(--body);letter-spacing:0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.lab.one{white-space:nowrap;padding:.14em .65em;border-radius:0;background:var(--k)}
 .lab.one .n,.lab.one .v{display:inline;font-size:max(1.35cqh,12px);line-height:1.25}
 .lab.one .v{margin-left:.45em}
-.lab.one.wrap{white-space:normal;border-radius:.3em}
+.lab.one.wrap{white-space:normal;border-radius:0}
 </style>
 <article class="card" id="card" data-topic="medicine" data-kind="Drag the lamp · what lies beneath" style="--c:#06223a;--k:#eafcff;--edge:#031221">
   <div class="in">
@@ -62,11 +64,12 @@
   const hex = s => { s = (s || '').trim().replace('#', ''); if (s.length === 3) s = s.split('').map(ch => ch + ch).join(''); const n = parseInt(s, 16); return isNaN(n) || s.length !== 6 ? null : [n >> 16 & 255, n >> 8 & 255, n & 255]; };
   let KK = [234, 252, 255], CC = [6, 34, 58];
   const mix = n => 'rgb(' + KK.map((k, i) => Math.round(k * n / 100 + CC[i] * (1 - n / 100))).join(',') + ')';
-  let DARK = mix(20), LINE = mix(0), DLINE = mix(38);
+  // the hidden berg: one quiet silhouette, fill and edge the same tint, so no lines show inside it
+  let DARK = mix(11), LINE = mix(0), DLINE = mix(11);
   const lit = BANDS.map((b, i) => i === 0);
   let W = 0, H = 0, fs = 13, T = 0, B = 0, SY = 0, K = 1, cx = 0, LX = 0, MHW = 0, r = 8, glowR = 18, coneX = 0;
   let count = 410, lampF = 0, touched = false, done = false, finaleQueued = false, tipCoral = false, amb = [];
-  let lampG = null, cable = null, cone = null, hint = null, iceG = null, wrap = null, sweep = null;
+  let lampG = null, cable = null, cone = null, rays = [], hint = null, iceG = null, wrap = null, sweep = null;
   let sizeW = 0, sizeH = 0, built = false;
   const L = {y: 0};
   const qy = gsap.quickTo(L, 'y', {duration: .28, ease: 'power3.out', onUpdate: applyLamp});
@@ -105,7 +108,7 @@
   function readInk() {
     const cs = getComputedStyle(Kit.$('card'));
     KK = hex(cs.getPropertyValue('--k')) || KK; CC = hex(cs.getPropertyValue('--c')) || CC;
-    DARK = mix(20); LINE = mix(0); DLINE = mix(38);
+    DARK = mix(11); LINE = mix(0); DLINE = mix(11);
     BANDS.forEach(b => { b.c = mix(b.t); });
   }
 
@@ -127,10 +130,7 @@
     const cp = Kit.mk('clipPath', {id: 'ice'}, defs);
     Kit.mk('polygon', {points: bandPts(T, B, true)}, cp);
 
-    // ---- the sea: one flat block under the waterline
-    mk('rect', {x: 0, y: SY, width: W, height: Math.max(0, H - SY), fill: mix(9)});
-
-    // ---- the iceberg, band by band
+    // ---- the iceberg, band by band, flat slabs of ice (the card colour itself is the sea)
     iceG = mk('g', {});
     let y = T;
     BANDS.forEach((b, i) => {
@@ -141,27 +141,33 @@
     });
     const fx = mk('g', {'clip-path': 'url(#ice)'}, iceG);
     const hiX = Math.max(0, cx - MHW * 1.2);
-    sweep = mk('rect', {x: hiX, y: B - fs * 3, width: Math.min(MHW * 2.4, W - hiX - 1), height: fs * 3, fill: '#fff1c2', opacity: 0}, fx);
+    // the finale's sweep: one flat lamp-yellow stripe
+    sweep = mk('rect', {x: hiX, y: B - fs * .6, width: Math.min(MHW * 2.4, W - hiX - 1), height: fs * .6, fill: LAMP, opacity: 0}, fx);
 
     // ---- the surface: a single line that rolls gently
-    const wave = (ph, amp, y0) => { let d = `M0,${(y0 + amp * Math.sin(ph)).toFixed(1)}`; for (let x = 6; x <= W; x += 6) d += ` L${Math.min(x, W)},${(y0 + amp * Math.sin(x / 18 * P + ph)).toFixed(1)}`; return d; };
-    const surf = mk('path', {fill: 'none', stroke: mix(78), 'stroke-width': 1.8, 'stroke-linecap': 'round'});
+    const wave = (ph, amp, y0) => { let d = `M0,${(y0 + amp * Math.sin(ph)).toFixed(1)}`; for (let x = 6; x <= W; x += 6) d += ` L${Math.min(x, W)},${(y0 + amp * Math.sin(x / 30 * P + ph)).toFixed(1)}`; return d; };
+    const surf = mk('path', {fill: 'none', stroke: mix(78), 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
     const sw = {p: 0};
-    const drawS = () => { surf.setAttribute('d', wave(sw.p, 2, SY)); };
+    const drawS = () => { surf.setAttribute('d', wave(sw.p, 1.8, SY)); };
     drawS();
-    if (!Kit.calm) amb.push(gsap.to(sw, {p: -2 * P, duration: 4, repeat: -1, ease: 'none', onUpdate: drawS}));
+    if (!Kit.calm) amb.push(gsap.to(sw, {p: -2 * P, duration: 5, repeat: -1, ease: 'none', onUpdate: drawS}));
 
-    // ---- the lamp rig: a buoy, a cable, a lamp and its flat beam
+    // ---- the lamp rig: a float, a rope, a hand lantern and three plain rays of light
     wrap = mk('g', {});
-    cone = mk('polygon', {points: '0,0 0,0 0,0', fill: LAMP, opacity: .22}, wrap);
+    cone = mk('g', {stroke: LAMP, 'stroke-width': 1.6, 'stroke-linecap': 'round', fill: 'none'}, wrap);
+    rays = [0, 1, 2].map(() => mk('line', {}, cone));
     cable = mk('line', {x1: LX, x2: LX, y1: SY + fs * .3, y2: SY, stroke: mix(70), 'stroke-width': 1.4}, wrap);
     const buoy = mk('g', {transform: `translate(${LX},${SY})`}, wrap);
-    mk('ellipse', {cx: 0, cy: 0, rx: fs * .75, ry: fs * .38, fill: CORAL}, buoy);
+    mk('path', {d: `M${-fs * .7},${fs * .12} a${fs * .7},${fs * .62} 0 0 1 ${fs * 1.4},0 z`, fill: CORAL, stroke: LINE, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, buoy);
     lampG = mk('g', {}, wrap);
-    mk('rect', {x: -r * .75, y: -r * 1.55, width: r * 1.5, height: r * .85, rx: 2, fill: mix(45)}, lampG);
-    mk('circle', {r, fill: LAMP, stroke: mix(0), 'stroke-width': 1.5}, lampG);
+    // handle, cap, body with one frame bar, base
+    mk('path', {d: `M${-r * .55},${-r * .95} Q0,${-r * 2.15} ${r * .55},${-r * .95}`, fill: 'none', stroke: mix(70), 'stroke-width': 1.6, 'stroke-linecap': 'round'}, lampG);
+    mk('rect', {x: -r * .85, y: -r * 1.2, width: r * 1.7, height: r * .45, rx: 1, fill: mix(70)}, lampG);
+    mk('rect', {x: -r * .7, y: -r * .75, width: r * 1.4, height: r * 1.55, rx: r * .2, fill: LAMP, stroke: LINE, 'stroke-width': 1.4}, lampG);
+    mk('line', {x1: 0, x2: 0, y1: -r * .75, y2: r * .8, stroke: LINE, 'stroke-width': 1.2}, lampG);
+    mk('rect', {x: -r * .85, y: r * .8, width: r * 1.7, height: r * .4, rx: 1, fill: mix(70)}, lampG);
     hint = mk('g', {opacity: touched ? 0 : 1}, lampG);
-    [2.4, 3.3].forEach((k, j) => mk('path', {d: `M${-r * .6},${r * k} l${r * .6},${r * .55} l${r * .6},${-r * .55}`, fill: 'none', stroke: LAMP, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 1 - j * .4}, hint));
+    mk('path', {d: `M${-r * .6},${r * 2.4} l${r * .6},${r * .55} l${r * .6},${-r * .55}`, fill: 'none', stroke: LAMP, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
     if (!Kit.calm && !touched) amb.push(gsap.to(hint, {y: r * .7, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
 
     // ---- labels: HTML so the numbers can scramble; sized to their band, then de-collided
@@ -216,8 +222,14 @@
     if (!lampG) return;
     lampG.setAttribute('transform', `translate(${LX},${L.y.toFixed(1)})`);
     cable.setAttribute('y2', L.y - r * 1.55);
-    const sp = fs * 4.5, x0 = LX - r * .9;
-    cone.setAttribute('points', `${x0},${L.y - r * .5} ${coneX},${Math.max(SY + 1, L.y - sp)} ${coneX},${Math.min(H - 1, L.y + sp)} ${x0},${L.y + r * .5}`);
+    // three rays from the lantern to the ice face
+    const sp = fs * 4.5, x0 = LX - r * 1.2;
+    const ends = [Math.max(SY + 1, L.y - sp), L.y, Math.min(H - 1, L.y + sp)];
+    rays.forEach((l, k) => {
+      const ey = ends[k], ex = Math.min(x0 - fs * .6, Math.max(coneX, Rx(clamp(ey, SY, B)) + fs * .35));
+      l.setAttribute('x1', x0.toFixed(1)); l.setAttribute('y1', (L.y + (k - 1) * r * .45).toFixed(1));
+      l.setAttribute('x2', ex.toFixed(1)); l.setAttribute('y2', ey.toFixed(1));
+    });
     if (!touched) return;
     BANDS.forEach((b, i) => { if (!lit[i] && L.y >= trig(i)) light(i); });
   }
@@ -228,7 +240,7 @@
       b.poly.setAttribute('fill', b.c); b.poly.setAttribute('stroke', LINE);
       if (b.lab) { b.lab.style.opacity = 1; b.vEl.textContent = b.v + 'k'; }
     } else {
-      gsap.fromTo(b.poly, {attr: {fill: '#fff1c2'}}, {attr: {fill: b.c, stroke: LINE}, duration: .7, ease: 'power2.out'});
+      gsap.fromTo(b.poly, {attr: {fill: LAMP}}, {attr: {fill: b.c, stroke: LINE}, duration: .7, ease: 'power2.out'});
       if (b.lab) { gsap.fromTo(b.lab, {opacity: 0, scale: .7}, {opacity: 1, scale: 1, duration: .5, ease: 'back.out(2)'}); scramble(b.vEl, b.v + 'k'); }
     }
     scramble(Kit.$('cnt'), fmt());
@@ -253,13 +265,13 @@
       tipCoral = true;
       const tip = BANDS[0].poly;
       tip.setAttribute('stroke', LINE); tip.setAttribute('stroke-width', 1.5);
-      // the lamp's beam flares once, a flat wedge, no halo
-      gsap.fromTo(cone, {attr: {opacity: .55}}, {attr: {opacity: .22}, duration: 1.4, ease: 'expo.out'});
+      // the rays thicken once, then settle
+      gsap.fromTo(cone, {attr: {'stroke-width': 4}}, {attr: {'stroke-width': 1.6}, duration: 1.4, ease: 'expo.out'});
       gsap.timeline()
-        .set(sweep, {opacity: .7})
-        .fromTo(sweep, {attr: {y: B - fs * 3}}, {attr: {y: Math.max(0, T - fs * 2)}, duration: 1.1, ease: 'power2.inOut'})
+        .set(sweep, {opacity: 1})
+        .fromTo(sweep, {attr: {y: B - fs * .6}}, {attr: {y: Math.max(0, T - fs * 2)}, duration: 1.1, ease: 'power2.inOut'})
         .to(sweep, {opacity: 0, duration: .3});
-      BANDS.slice().reverse().forEach((b, j) => gsap.to(b.poly, {attr: {fill: '#ffffff'}, duration: .16, delay: .1 + j * .17, yoyo: true, repeat: 1, ease: 'power2.out'}));
+      BANDS.slice().reverse().forEach((b, j) => gsap.to(b.poly, {attr: {fill: LAMP}, duration: .16, delay: .1 + j * .17, yoyo: true, repeat: 1, ease: 'power2.out'}));
       gsap.to(tip, {attr: {stroke: CORAL, 'stroke-width': 2.5}, duration: .7, delay: 1.1, ease: 'power3.out'});
       if (BANDS[0].lab) gsap.fromTo(BANDS[0].lab, {scale: 1}, {scale: 1.12, duration: .3, delay: 1.1, yoyo: true, repeat: 1, ease: 'power2.out'});
     });

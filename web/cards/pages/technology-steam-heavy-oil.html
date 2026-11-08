@@ -15,7 +15,7 @@
 #steam{flex:1;-webkit-appearance:none;appearance:none;height:max(1.1cqh,7px);border-radius:1cqh;background:color-mix(in srgb, var(--k) 28%, var(--c));outline:none;margin:0}
 #steam::-webkit-slider-thumb{-webkit-appearance:none;width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:#e0532a;border:.35cqh solid var(--k);box-sizing:border-box;cursor:grab}
 #steam::-moz-range-thumb{width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:#e0532a;border:.35cqh solid var(--k);box-sizing:border-box;cursor:grab}
-#state{font:500 max(1.75cqh,12px)/1.3 var(--body);color:var(--k);opacity:.85}
+#state{font:500 max(1.75cqh,12px)/1.3 var(--body);color:var(--k);opacity:.85;letter-spacing:0;text-transform:none}
 #why{display:flex;flex-direction:column;gap:1cqh;padding-top:1.2cqh}
 #why .big{font:800 max(2.8cqh,18px)/1.1 var(--display)}
 #why .body{font:500 max(1.75cqh,12px)/1.35 var(--body)}
@@ -44,7 +44,7 @@ const cv = Kit.$('cv');
 let G = null, steam = 0, heat = 0, collected = 0, done = false, T = 0;
 const SURF = .16, RES0 = .54, RES1 = .9;
 const INJ = {u: .46, v: .68}, PROD = {u: .54, v: .82};
-const P = [], SAND = [], puffs = [], rising = [];
+const P = [], puffs = [], rising = [];
 // oil blobs on a jittered grid inside the reservoir
 (() => {
   const cols = 22, rows = 9;
@@ -53,18 +53,17 @@ const P = [], SAND = [], puffs = [], rising = [];
     const v = RES0 + .025 + (r + .5) / rows * (RES1 - RES0 - .05) + (Kit.rnd() - .5) * .02;
     P.push({u, v, h: 0, s: .7 + Kit.rnd() * .6, taken: false});
   }
-  for (let i = 0; i < 260; i++) SAND.push({u: Kit.rnd(), v: RES0 + Kit.rnd() * (RES1 - RES0), a: Kit.rnd()});
 })();
+// the ground in cross-section: surface, two layers of rock, cap rock, oil sands, deep rock
 const BANDS = [
-  {v: SURF, a: .006, k: 9},
-  {v: .22, a: .012, k: 5},
-  {v: .32, a: .014, k: 4},
-  {v: .42, a: .01, k: 6},
+  {v: SURF, a: 0, k: 1},
+  {v: .3, a: .012, k: 5},
+  {v: .43, a: .01, k: 4},
   {v: RES0, a: 0, k: 1},
   {v: RES1, a: 0, k: 1}
 ];
 // flat palette: card ink, card colour, their tints, plus heat and sand
-const HEAT = '#e0532a', SANDC = '#ecdcae', GRAIN = '#c9b07a', OIL = '#1d140d', OILWARM = '#7a3b0c';
+const HEAT = '#e0532a', SANDC = '#ecdcae', OIL = '#1d140d', OILWARM = '#7a3b0c';
 const C = {k: '#10100c', c: '#00a0ff', t18: '#2a7fb0', t28: '#2a6f9a', t22: '#2a779f', t50: '#1f4f6a', t40: '#24587a', t65: '#1a3a4c', light: '#d8eefc', font: 'Figtree, sans-serif'};
 function toRgb(s) {
   if (s.startsWith('color(')) {
@@ -130,27 +129,20 @@ function layer(x, W, H, top, bot, fill) {
   else { x.lineTo(W, H); x.lineTo(0, H); }
   x.closePath(); x.fillStyle = fill; x.fill();
 }
-function line(x, W, H, b) {
-  x.beginPath();
-  for (let i = 0; i <= 40; i++) { const u = i / 40, y = yAt(b, u, H); i ? x.lineTo(u * W, y) : x.moveTo(0, y); }
-  x.strokeStyle = C.k; x.lineWidth = 1.5; x.stroke();
-}
 function draw() {
   if (!G) return;
   const {x, W, H} = G, fs = Math.max(12, Math.min(W, H) * .036);
   x.clearRect(0, 0, W, H);
   x.lineJoin = 'round'; x.lineCap = 'round';
-  // the ground in cross-section, layer by layer
+  // the ground, cut open: flat layers, no outlines between them
   layer(x, W, H, BANDS[0], BANDS[1], C.t18);
   layer(x, W, H, BANDS[1], BANDS[2], C.t28);
-  layer(x, W, H, BANDS[2], BANDS[3], C.t22);
-  layer(x, W, H, BANDS[3], BANDS[4], C.t50);   // cap rock
-  layer(x, W, H, BANDS[4], BANDS[5], SANDC);   // oil sands
-  layer(x, W, H, BANDS[5], null, C.t40);
-  BANDS.forEach(b => line(x, W, H, b));
-  // sand grains
-  x.fillStyle = GRAIN;
-  for (const s of SAND) { x.beginPath(); x.arc(s.u * W, s.v * H, .7 + s.a * 1, 0, 7); x.fill(); }
+  layer(x, W, H, BANDS[2], BANDS[3], C.t50);   // cap rock
+  layer(x, W, H, BANDS[3], BANDS[4], SANDC);   // oil sands
+  layer(x, W, H, BANDS[4], null, C.t40);
+  const sy = SURF * H;
+  x.strokeStyle = C.k; x.lineWidth = 2.5;
+  x.beginPath(); x.moveTo(0, sy); x.lineTo(W, sy); x.stroke();
   // heated zone: a flat warm patch around the steam outlet, hotter at the core
   x.save(); x.beginPath(); x.rect(0, RES0 * H, W, (RES1 - RES0) * H); x.clip();
   if (heat > .01) {
@@ -165,13 +157,8 @@ function draw() {
   for (const p of P) {
     if (p.taken) continue;
     const rx = br * p.s * (1 + p.h * .3), ry = br * p.s * (1 - p.h * .15);
-    x.fillStyle = OIL;
+    x.fillStyle = p.h > .5 ? OILWARM : OIL;
     x.beginPath(); x.ellipse(p.u * W, p.v * H, rx, ry, 0, 0, 7); x.fill();
-    if (p.h > .02) {
-      x.globalAlpha = Math.min(1, p.h * 1.3); x.fillStyle = OILWARM;
-      x.beginPath(); x.ellipse(p.u * W, p.v * H, rx, ry, 0, 0, 7); x.fill();
-      x.globalAlpha = 1;
-    }
   }
   // steam leaving the injector
   x.fillStyle = '#fff';
@@ -181,34 +168,37 @@ function draw() {
   }
   x.globalAlpha = 1;
   x.restore();
-  // wells
-  const pw = Math.max(5, W * .02), sy = SURF * H;
-  const ix = INJ.u * W - pw / 2, iy = sy - H * .03, ih = INJ.v * H - sy + H * .03;
-  x.fillStyle = C.t65; x.fillRect(ix, iy, pw, ih);
-  if (steam > .01) { x.globalAlpha = steam; x.fillStyle = HEAT; x.fillRect(ix, iy, pw, ih); x.globalAlpha = 1; }
-  const px0 = PROD.u * W - pw / 2, ph = PROD.v * H - sy + H * .03;
-  x.fillStyle = C.light; x.fillRect(px0, iy, pw, ph);
-  x.strokeStyle = C.k; x.lineWidth = 2; x.strokeRect(px0, iy, pw, ph);
-  x.fillStyle = OIL;
-  for (const r of rising) { x.beginPath(); x.arc(PROD.u * W, r.v * H, pw * .32, 0, 7); x.fill(); }
-  // surface: steam plant and storage tank
-  const bh = H * .095, by = sy - bh - H * .02, bw = W * .2;
-  const bx = INJ.u * W - pw / 2 - bw - W * .03, tx = PROD.u * W + pw / 2 + W * .03;
+
+  // sizes of the things on the surface
+  const pw = Math.max(5, W * .02);
+  const bh = H * .075, bw = W * .2;
+  const bx = INJ.u * W - pw / 2 - bw - W * .05, by = sy - bh;
+  const wx = PROD.u * W;
+  const pipeY = sy - bh * .45;
   const hot = (fx, fy, fw, fh) => {
     x.fillStyle = C.t65; x.fillRect(fx, fy, fw, fh);
     if (steam > .01) { x.globalAlpha = steam; x.fillStyle = HEAT; x.fillRect(fx, fy, fw, fh); x.globalAlpha = 1; }
   };
-  hot(bx + bw, by + bh * .4, INJ.u * W - (bx + bw), pw * .8);
-  x.fillStyle = C.k;
-  x.fillRect(PROD.u * W, by + bh * .4, tx - PROD.u * W, pw * .8);
-  // plant: a low shed with a chimney
-  const chx = bx + bw * .14, chw = bw * .12, chh = bh * .45;
+  // injection well: a plain pipe that turns hot with the steam
+  const iy = pipeY, ih = INJ.v * H - iy;
+  hot(INJ.u * W - pw / 2, iy, pw, ih);
+  x.strokeStyle = C.k; x.lineWidth = 2; x.strokeRect(INJ.u * W - pw / 2, iy, pw, ih);
+  // production well: an open pipe where oil climbs to the pump
+  const wy = sy - H * .02, ph = PROD.v * H - wy;
+  x.fillStyle = C.light; x.fillRect(wx - pw / 2, wy, pw, ph);
+  x.strokeStyle = C.k; x.lineWidth = 2; x.strokeRect(wx - pw / 2, wy, pw, ph);
+  x.fillStyle = OIL;
+  for (const r of rising) { x.beginPath(); x.arc(wx, r.v * H, pw * .32, 0, 7); x.fill(); }
+
+  // the steam plant: a shed with a chimney, piped to the injector
+  hot(bx + bw, pipeY, INJ.u * W - pw / 2 - (bx + bw), pw * .8);
+  const chx = bx + bw * .14, chw = bw * .12, chh = bh * .55;
   hot(chx, by - chh, chw, chh);
   hot(bx, by, bw, bh);
   x.strokeStyle = C.k; x.lineWidth = 2;
   x.strokeRect(chx, by - chh, chw, chh); x.strokeRect(bx, by, bw, bh);
-  x.fillStyle = '#fff'; x.font = `700 ${fs}px ${C.font}`; x.textAlign = 'center'; x.textBaseline = 'middle';
-  x.fillText('Steam', bx + bw / 2, by + bh / 2);
+  x.fillStyle = '#fff'; x.font = `600 ${fs}px ${C.font}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillText('Steam', bx + bw / 2, by + bh / 2 + 1);
   if (steam > .02) {
     x.fillStyle = '#fff';
     for (let i = 0; i < 3; i++) {
@@ -218,17 +208,51 @@ function draw() {
     }
     x.globalAlpha = 1;
   }
-  // tank: a flat cylinder that fills with oil
-  const fill = Math.min(1, collected / 40), lid = Math.min(bh * .14, bw * .1);
-  x.fillStyle = C.light; x.fillRect(tx, by, bw, bh);
-  x.fillStyle = OIL; x.fillRect(tx, by + bh * (1 - fill), bw, bh * fill);
-  x.strokeStyle = C.k; x.lineWidth = 2; x.strokeRect(tx, by, bw, bh);
-  x.fillStyle = C.light; x.beginPath(); x.ellipse(tx + bw / 2, by, bw / 2, lid, 0, 0, 7); x.fill(); x.stroke();
+
+  // the pump: a nodding pumpjack over the production well, always running
+  const r = Math.max(8, H * .028), L1 = W * .085, L2 = W * .06;
+  const pvx = wx + r + L1, pvy = sy - H * .085;
+  const th = T * 2.2, a = Math.sin(th) * .14;
+  const hx = pvx - L1 * Math.cos(a), hy = pvy - L1 * Math.sin(a);
+  const ex = pvx + L2 * Math.cos(a), ey = pvy + L2 * Math.sin(a);
+  const tx = pvx + L2 + W * .07, tw = W * .18, tH = bh * 1.25, ty = sy - tH;
+  // pipeline from wellhead to tank
+  x.fillStyle = C.k; x.fillRect(wx, wy - pw * .8, tx - wx, pw * .8);
+  // rod hanging from the head into the well
+  x.strokeStyle = C.k; x.lineWidth = 2;
+  x.beginPath(); x.moveTo(wx, hy); x.lineTo(wx, wy - pw * .8); x.stroke();
+  // frame
+  x.fillStyle = C.t50; x.lineWidth = 2;
+  x.beginPath(); x.moveTo(pvx - W * .03, sy); x.lineTo(pvx, pvy); x.lineTo(pvx + W * .03, sy); x.closePath(); x.fill(); x.stroke();
+  // crank and arm
+  const ckx = pvx + L2, cky = sy - H * .028, rk = L2 * .14;
+  const pinx = ckx + Math.cos(th) * rk, piny = cky + Math.sin(th) * rk;
+  x.fillStyle = C.t65; x.beginPath(); x.arc(ckx, cky, Math.max(rk * 1.6, r * .55), 0, 7); x.fill(); x.stroke();
+  x.lineWidth = 3; x.beginPath(); x.moveTo(ex, ey); x.lineTo(pinx, piny); x.stroke();
+  // beam
+  x.lineWidth = Math.max(4, W * .012);
+  x.beginPath(); x.moveTo(hx, hy); x.lineTo(ex, ey); x.stroke();
+  // head
+  x.save(); x.translate(hx, hy); x.rotate(a);
+  x.fillStyle = C.k;
+  x.beginPath(); x.arc(0, 0, r, Math.PI / 2, Math.PI * 1.5); x.lineTo(r * .5, -r * .6); x.lineTo(r * .5, r * .6); x.closePath(); x.fill();
+  x.restore();
+  x.fillStyle = C.k; x.beginPath(); x.arc(pvx, pvy, 3, 0, 7); x.fill();
+
+  // storage tank that fills with oil
+  const fill = Math.min(1, collected / 40);
+  x.fillStyle = C.light; x.fillRect(tx, ty, tw, tH);
+  x.fillStyle = OIL; x.fillRect(tx, ty + tH * (1 - fill), tw, tH * fill);
+  x.strokeStyle = C.k; x.lineWidth = 2; x.strokeRect(tx, ty, tw, tH);
+  x.fillStyle = C.light;
+  x.beginPath(); x.moveTo(tx, ty); x.quadraticCurveTo(tx + tw / 2, ty - tH * .3, tx + tw, ty); x.closePath(); x.fill(); x.stroke();
   x.fillStyle = fill > .55 ? '#fff' : C.k;
-  x.fillText('Oil out', tx + bw / 2, by + bh / 2);
+  x.font = `600 ${fs}px ${C.font}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillText('Oil out', tx + tw / 2, ty + tH / 2 + 1);
+
   // labels, written on the layers they name
-  x.textAlign = 'left'; x.font = `600 ${fs}px ${C.font}`; x.fillStyle = SANDC;
-  x.fillText('Cap rock', W * .04, (.42 + RES0) / 2 * H + H * .01);
+  x.textAlign = 'left'; x.fillStyle = C.light;
+  x.fillText('Cap rock', W * .04, (.43 + RES0) / 2 * H + H * .006);
   x.fillText('Extra-heavy oil sands', W * .04, (RES1 + 1) / 2 * H);
 }
 function tick() { step(Math.min(.05, gsap.ticker.deltaRatio() / 60)); draw(); }

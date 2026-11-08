@@ -47,10 +47,11 @@ rowsOrder.forEach(r => { for (let c = 0; c < COLS; c++) order.push(r * COLS + c)
 let done = 0, nights = 0, finished = false;
 let J = [], G = {}, geo = null;
 
-// Flat palette: the card's ink, the card's colour and their mixes, plus one meaning colour (the hot weld)
-// and the pale steel of a finished plate.
-const HOT = '#ff9a1f';
-let PLATE = '#efe9d8', COLD = '#4a5560', TOWER = '#1d2a33', BRACE = '#3b4a55';
+// Flat palette: the card's ink, the card's colour and their mixes, plus one meaning colour (the hot weld).
+// Each joint is a seam on a floor; once welded, it becomes a thick ink plate.
+const HOT = '#ff8a1a';
+const MOON = '#f4eedb';
+let INK = '#10100c', FACADE = '#3a8fd0', BRACE = '#2a6a9a', SEAM = '#2a6a9a', TRACK = '#2a6a9a';
 
 function parseCol(s, fb) {
   s = (s || '').trim();
@@ -70,9 +71,11 @@ function palette() {
   const cs = getComputedStyle(Kit.$('card'));
   const k = parseCol(cs.getPropertyValue('--k'), [16, 16, 12]);
   const c = parseCol(cs.getPropertyValue('--c'), [0, 160, 255]);
-  TOWER = mix(k, c, .86);
-  BRACE = mix(k, c, .62);
-  COLD = mix(k, c, .48);
+  INK = mix(k, c, 1);
+  FACADE = mix(k, c, .14);
+  BRACE = mix(k, c, .32);
+  SEAM = mix(k, c, .3);
+  TRACK = mix(k, c, .25);
 }
 
 function draw() {
@@ -86,35 +89,42 @@ function draw() {
 
   const th = H * .88, tw = Math.min(W * .44, th * .42);
   const cx = W * .66, tx = cx - tw / 2, ty = H * .07;
-  const rg = th / ROWS, cg = tw / COLS;
-  geo = {fs, W, H};
+  // the tower: a sloped crown, the slab of floors, and the stilts it stands on
+  const crown = th * .06, legs = th * .1;
+  const by0 = ty + crown, bh = th - crown - legs, gy = ty + th;
+  const rg = bh / ROWS, cg = tw / COLS;
+  geo = {fs, W, H, rg};
 
   // a crescent moon: it is night work
-  const mr = Math.min(W, H) * .035, mx = W * .9, my = H * .08;
-  Kit.mk('circle', {cx: mx, cy: my, r: mr, fill: PLATE}, svg);
+  const mr = Math.min(W, H) * .04, mx = W * .9, my = H * .08;
+  Kit.mk('circle', {cx: mx, cy: my, r: mr, fill: MOON}, svg);
   Kit.mk('circle', {cx: mx + mr * .5, cy: my - mr * .3, r: mr * .9, style: 'fill:var(--c)'}, svg);
 
-  // tower body, flat
-  Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, fill: TOWER}, svg);
-  // chevron braces, the tower's real structure
-  const br = Kit.mk('g', {stroke: BRACE, 'stroke-width': 1.2, fill: 'none', 'stroke-linejoin': 'round'}, svg);
-  for (let r = 0; r < ROWS; r++) {
-    const y0 = ty + r * rg, y1 = y0 + rg;
-    for (let c = 0; c < COLS; c++) {
-      const x0 = tx + c * cg, xm = x0 + cg / 2, x1 = x0 + cg;
-      Kit.mk('path', {d: `M${x0} ${y1} L${xm} ${y0 + rg * .5} L${x1} ${y1}`}, br);
-    }
+  const tower = Kit.mk('g', {'stroke-linejoin': 'round'}, svg);
+  // stilts: one in the middle of the face, one at each side, with the open plaza between
+  const sw = cg * .9;
+  Kit.mk('rect', {x: cx - sw / 2, y: by0 + bh - 1, width: sw, height: legs + 1, fill: INK}, tower);
+  Kit.mk('rect', {x: tx + cg * .15, y: by0 + bh - 1, width: sw * .55, height: legs + 1, fill: BRACE}, tower);
+  Kit.mk('rect', {x: tx + tw - cg * .15 - sw * .55, y: by0 + bh - 1, width: sw * .55, height: legs + 1, fill: BRACE}, tower);
+  // sloped crown
+  Kit.mk('path', {d: `M${tx} ${by0} L${tx + tw} ${ty} L${tx + tw} ${by0} Z`, fill: BRACE, stroke: INK, 'stroke-width': 2}, tower);
+  // the slab of floors
+  Kit.mk('rect', {x: tx, y: by0, width: tw, height: bh, fill: FACADE, stroke: INK, 'stroke-width': 2}, tower);
+  // the tower's big chevron braces, one per tier of eight floors
+  const tier = 8;
+  for (let t = 0; t < ROWS / tier; t++) {
+    const y0 = by0 + t * tier * rg, y1 = y0 + tier * rg;
+    Kit.mk('path', {d: `M${tx + 2} ${y1 - 1} L${cx} ${y0 + 2} L${tx + tw - 2} ${y1 - 1}`, stroke: BRACE, 'stroke-width': Math.max(3, cg * .28), fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, tower);
   }
   // ground
-  Kit.mk('line', {x1: tx - tw * .25, y1: ty + th, x2: tx + tw * 1.25, y2: ty + th, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+  Kit.mk('line', {x1: tx - tw * .25, y1: gy, x2: tx + tw * 1.25, y2: gy, style: 'stroke:var(--k)', 'stroke-width': 2.4, 'stroke-linecap': 'round'}, svg);
 
   // floor 30 marker
-  const y30 = ty + R30 * rg + rg * .5;
+  const y30 = by0 + R30 * rg + rg * .5;
   const barBottom = H * .1 + fs * 6.6 + fs * .5;
   const ly = Math.max(y30 - fs * .15, barBottom + fs * 1.6);
   const lm = ly - fs * .35;
-  Kit.mk('rect', {x: tx - 3, y: ty + R30 * rg, width: tw + 6, height: rg, fill: 'none', stroke: HOT, 'stroke-width': 2}, svg);
-  Kit.mk('path', {d: `M${tx - 22} ${lm} L${tx - 14} ${lm} L${tx - 7} ${y30}`, style: 'stroke:var(--k)', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('path', {d: `M${tx - 22} ${lm} Q${tx - 12} ${lm - 1} ${tx - 7} ${y30}`, style: 'stroke:var(--k)', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, svg);
   const lx = tx - 26;
   Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', style: body(700), 'font-size': lab}, svg).textContent = 'Floor 30';
   Kit.mk('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'end', style: body(500), 'font-size': lab}, svg).textContent = 'rank #1';
@@ -125,30 +135,29 @@ function draw() {
   Kit.mk('text', {x: left, y: H * .1 + fs * 1.15, style: body(600), 'font-size': lab}, svg).textContent = 'welded';
   G.count = Kit.mk('text', {x: left, y: H * .1 + fs * 4, style: 'font-family:var(--display);font-weight:800;fill:var(--k)', 'font-size': fs * 2.6}, svg);
   G.night = Kit.mk('text', {x: left, y: H * .1 + fs * 5.6, style: body(500), 'font-size': lab}, svg);
-  // progress through the list
-  const by = H * .1 + fs * 6.6, bw = Math.max(20, tx - 30 - left);
-  Kit.mk('rect', {x: left, y: by, width: bw, height: fs * .5, fill: COLD}, svg);
-  G.bar = Kit.mk('rect', {x: left, y: by, width: bw * done / N, height: fs * .5, fill: HOT}, svg);
+  // how far down the list the crew has got
+  const bay = H * .1 + fs * 6.6, bw = Math.max(20, tx - 30 - left);
+  Kit.mk('rect', {x: left, y: bay, width: bw, height: fs * .4, fill: TRACK, rx: fs * .2}, svg);
+  G.bar = Kit.mk('rect', {x: left, y: bay, width: bw * done / N, height: fs * .4, fill: HOT, rx: fs * .2}, svg);
   geo.bw = bw;
   // bottom-left note
   G.note = Kit.mk('text', {x: left, y: H * .93, style: body(500), 'font-size': lab}, svg);
   G.note2 = Kit.mk('text', {x: left, y: H * .93 - fs * 1.3, style: body(500), 'font-size': lab}, svg);
 
-  // joints
-  const jr = Math.max(1.6, Math.min(cg, rg) * .2);
-  geo.jr = jr;
+  // joints: a thin seam on each floor; once welded, a thick ink plate covers it
+  const h0 = Math.max(1.5, rg * .14), h1 = Math.max(3, rg * .5);
+  geo.h0 = h0; geo.h1 = h1;
   const jg = Kit.mk('g', {}, svg);
-  G.fx = Kit.mk('g', {}, svg);
   J = [];
   const weldedSet = new Set(order.slice(0, done));
   for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
-    const x = tx + c * cg + cg / 2, y = ty + r * rg + rg * .5, i = r * COLS + c, w = weldedSet.has(i);
-    const g = Kit.mk('g', {}, jg);
-    const pL = Kit.mk('rect', {x: x - jr * 2.2, y: y - jr * .9, width: jr * .8, height: jr * 2.6, fill: PLATE, opacity: w ? 1 : 0}, g);
-    const pR = Kit.mk('rect', {x: x + jr * 1.4, y: y - jr * .9, width: jr * .8, height: jr * 2.6, fill: PLATE, opacity: w ? 1 : 0}, g);
-    const dot = Kit.mk('circle', {cx: x, cy: y, r: jr, fill: w ? PLATE : COLD}, g);
-    J[i] = {x, y, dot, pL, pR};
+    const x = tx + c * cg + cg / 2, y = by0 + r * rg + rg * .5, i = r * COLS + c, w = weldedSet.has(i);
+    const h = w ? h1 : h0;
+    const plate = Kit.mk('rect', {x: x - cg * .42, y: y - h / 2, width: cg * .84, height: h, fill: w ? INK : SEAM}, jg);
+    J[i] = {x, y, plate};
   }
+  // floor 30 outlined in the weld colour, on top so it stays readable
+  Kit.mk('rect', {x: tx - 4, y: by0 + R30 * rg, width: tw + 8, height: rg, fill: 'none', stroke: HOT, 'stroke-width': 2.4, rx: 2}, svg);
   text();
 }
 
@@ -170,13 +179,14 @@ function weld() {
   const calm = Kit.calm;
   batch.forEach((i, k) => {
     const j = J[i];
-    if (calm) { j.dot.setAttribute('fill', PLATE); j.pL.setAttribute('opacity', 1); j.pR.setAttribute('opacity', 1); return; }
+    if (!j) return;
+    const h1 = geo.h1;
+    if (calm) { j.plate.setAttribute('fill', INK); j.plate.setAttribute('height', h1); j.plate.setAttribute('y', j.y - h1 / 2); return; }
     const t = k * .035;
+    // the weld glows hot for a moment, then cools to a dark steel plate
     gsap.timeline({delay: t})
-      .to(j.dot, {attr: {fill: HOT, r: geo.jr * 1.8}, duration: .12})
-      .add(() => sparks(j.x, j.y))
-      .to(j.dot, {attr: {fill: PLATE, r: geo.jr}, duration: .35})
-      .to([j.pL, j.pR], {opacity: 1, duration: .25}, '<');
+      .to(j.plate, {attr: {fill: HOT, height: h1, y: j.y - h1 / 2}, duration: .12})
+      .to(j.plate, {attr: {fill: INK}, duration: .45});
   });
   if (!calm && G.count) {
     const o = {v: done - batch.length};
@@ -191,16 +201,6 @@ function weld() {
     setTimeout(text, calm ? 0 : 1000);
   } else {
     Kit.$('say').textContent = `Night ${nights} done. Tap for the next joints on the list.`;
-  }
-}
-
-// welding sparks: short flat strokes in the weld colour
-function sparks(x, y) {
-  if (!G.fx) return;
-  for (let s = 0; s < 5; s++) {
-    const a = Kit.rnd() * Math.PI * 2, d = geo.jr * (3 + Kit.rnd() * 4);
-    const l = Kit.mk('line', {x1: x, y1: y, x2: x, y2: y, stroke: HOT, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, G.fx);
-    gsap.to(l, {attr: {x2: x + Math.cos(a) * d, y2: y + Math.sin(a) * d}, opacity: 0, duration: .4, ease: 'power2.out', onComplete: () => l.remove()});
   }
 }
 

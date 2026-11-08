@@ -40,7 +40,7 @@ let pick = -1, ctx = null, W = 0, H = 0;
 let running = false, t = 0, last = 0, clock = 0, done = false;
 
 // flat palette, read from the card's own ink and colour
-const GRAPE = [92, 40, 110], PLASMA = [214, 0, 120];
+const GRAPE = [86, 38, 104], FLESH = [222, 226, 168], PLASMA = [214, 0, 120];
 let K = [16, 16, 12], C = [0, 230, 160], FB = 'sans-serif', FH = 'cursive';
 function toRGB(v, fb){
   const c = document.createElement('canvas').getContext('2d');
@@ -60,7 +60,7 @@ const mixKC = n => `rgb(${K.map((k, i) => Math.round(k * n / 100 + C[i] * (100 -
 const mixWith = (a, n) => `rgb(${a.map((v, i) => Math.round(v * n + C[i] * (1 - n))).join(',')})`;
 const rgba = (c, a) => `rgba(${c.join(',')},${a})`;
 
-// air molecules sit in a tidy, evenly spaced packing around the gap (not a random spray)
+// the air in the gap: 30 molecules, tracked (not drawn); each one torn into an ion makes a spark across the gap
 function mkSide(strong){
   const cand = [], sp = .36;
   for (let r = -6; r <= 6; r++){
@@ -101,18 +101,23 @@ function draw(){
   const INK = rgba(K, 1), SOFT = mixKC(45), FAINT = mixKC(14);
   x.clearRect(0, 0, W, H);
   x.lineCap = 'round'; x.lineJoin = 'round';
-  x.strokeStyle = FAINT; x.lineWidth = 1.5; x.beginPath(); x.moveTo(pw, H * .05); x.lineTo(pw, H * .95); x.stroke();
+  // a plain rule between the two experiments
+  x.strokeStyle = FAINT; x.lineWidth = 2; x.beginPath(); x.moveTo(pw, H * .14); x.lineTo(pw, H * .84); x.stroke();
   x.textAlign = 'center'; x.textBaseline = 'middle';
   S.forEach((s, i) => {
     const cx = pw * (i + .5), cy = H * .47, R = Math.min(pw * .19, H * .15);
+    const lw = Math.max(1.8, R * .035);
     let glow = 0, ions = 0; s.m.forEach(p => { glow += p.e; if (p.ion) ions++; }); glow /= s.m.length;
     // label
     x.font = `700 ${fs}px ${FB}`;
     x.fillStyle = s.strong ? INK : SOFT;
     x.fillText(s.strong ? 'Strong field' : 'Weak field', cx, H * .07);
-    // plasma: one flat, slightly ragged blob behind the grape, growing with the energy taken in
+    // the microwave's turntable, a flat plate under the grape
+    x.fillStyle = FAINT;
+    x.beginPath(); x.ellipse(cx, cy + R * 1.06, R * 2.05, R * .2, 0, 0, 7); x.fill();
+    // plasma: one flat, slightly ragged blob between the halves, growing with the energy taken in
     if (glow > .01){
-      const pulse = Kit.calm ? 1 : 1 + .06 * Math.sin(clock * 9);
+      const pulse = Kit.calm ? 1 : 1 + .05 * Math.sin(clock * 9);
       const r = R * (.4 + 1.3 * glow) * pulse;
       x.fillStyle = mixWith(PLASMA, .25 + .5 * glow);
       x.beginPath();
@@ -124,66 +129,54 @@ function draw(){
       }
       x.closePath(); x.fill();
     }
-    // grape halves, joined by a strip of skin underneath
+    // the grape, cut almost in two: a strip of skin still joins the halves underneath
     const gap = s.strong ? .8 : 1;
-    x.fillStyle = rgba(GRAPE, 1);
-    x.fillRect(cx - 1.25 * R, cy + R * .78, 2.5 * R, R * .14);
+    x.fillStyle = rgba(GRAPE, 1); x.strokeStyle = INK; x.lineWidth = lw;
+    x.beginPath(); x.rect(cx - 1.25 * R, cy + R * .76, 2.5 * R, R * .16); x.fill(); x.stroke();
     [-1, 1].forEach(d => {
       const gx = cx + d * 1.25 * R;
       x.fillStyle = rgba(GRAPE, 1); x.beginPath(); x.arc(gx, cy, R, 0, 7); x.fill();
-      // the cut face, turned toward the gap
-      x.fillStyle = 'rgb(176,150,170)';
-      x.beginPath(); x.ellipse(gx - d * R * .55, cy, R * .3 * gap, R * .78, 0, 0, 7); x.fill();
-      x.strokeStyle = INK; x.lineWidth = Math.max(1.5, R * .03);
-      x.beginPath(); x.arc(gx, cy, R, 0, 7); x.stroke();
+      x.strokeStyle = INK; x.lineWidth = lw; x.stroke();
+      // the cut face, pale flesh, turned toward the gap
+      const fx = gx - d * R * .55;
+      x.fillStyle = rgba(FLESH, 1);
+      x.beginPath(); x.ellipse(fx, cy, R * .3 * gap, R * .78, 0, 0, 7); x.fill(); x.stroke();
     });
     // field arrows in the gap, flipping with the microwaves
     const dir = on ? (sgn >= 0 ? 1 : -1) : 1;
     x.strokeStyle = s.strong ? INK : SOFT; x.fillStyle = x.strokeStyle;
-    x.lineWidth = s.strong ? Math.max(2.5, R * .08) : 1.5;
+    x.lineWidth = s.strong ? Math.max(2.5, R * .08) : 1.8;
     for (let k = -1; k <= 1; k++){
       const ay = cy + k * R * .5, L = R * .55, a0 = cx - dir * L / 2, a1 = cx + dir * L / 2;
       const hs = s.strong ? R * .16 : R * .1;
       x.beginPath(); x.moveTo(a0, ay); x.lineTo(a1 - dir * hs * .6, ay); x.stroke();
       x.beginPath(); x.moveTo(a1, ay); x.lineTo(a1 - dir * hs, ay - hs * .7); x.lineTo(a1 - dir * hs, ay + hs * .7); x.closePath(); x.fill();
     }
-    // air molecules (two joined atoms), ions (+) with their torn-off electron (−)
+    // sparks: each molecule torn into an ion makes one bold zigzag jump across the gap
+    const g0 = cx - R * (.7 - .3 * gap), g1 = cx + R * (.7 - .3 * gap);
     s.m.forEach(p => {
-      const jit = Kit.calm ? 0 : (on ? R * .025 : R * .012);
-      const bx = cx + p.x * R + Math.sin(clock * 7 + p.j) * jit, by = cy + p.y * R + Math.cos(clock * 6 + p.j * 2) * jit;
-      const sw = Kit.calm ? 0 : Math.sin(ph);
-      const ar = Math.max(2.4, R * .065);
-      if (!p.ion){
-        const ca = Math.cos(p.j) * ar * .75, sa = Math.sin(p.j) * ar * .75;
-        x.fillStyle = s.strong ? INK : SOFT;
-        x.beginPath(); x.arc(bx - ca, by - sa, ar, 0, 7); x.fill();
-        x.beginPath(); x.arc(bx + ca, by + sa, ar, 0, 7); x.fill();
-      } else {
-        const ir = Math.max(3.2, R * .085);
-        const ix = bx + p.e * R * .1 * sw;
-        x.fillStyle = rgba(PLASMA, 1); x.beginPath(); x.arc(ix, by, ir, 0, 7); x.fill();
-        x.strokeStyle = INK; x.lineWidth = 1.2; x.stroke();
-        if (ir >= 5){
-          x.strokeStyle = rgba(C, 1); x.lineWidth = Math.max(1.2, ir * .28);
-          x.beginPath(); x.moveTo(ix - ir * .5, by); x.lineTo(ix + ir * .5, by); x.moveTo(ix, by - ir * .5); x.lineTo(ix, by + ir * .5); x.stroke();
-        }
-        // the electron, a short ink dash pulled the other way by the field
-        const exx = bx + p.ex * R - p.e * R * .3 * sw, eyy = by + p.ey * R, el = Math.max(3, R * .05);
-        x.strokeStyle = INK; x.lineWidth = Math.max(1.6, R * .035);
-        x.beginPath(); x.moveTo(exx - el, eyy); x.lineTo(exx + el, eyy); x.stroke();
-        if (p.fl > 0){
-          x.strokeStyle = rgba(K, p.fl); x.lineWidth = 2; x.beginPath();
-          x.moveTo(bx - R * .2, by - R * .1); x.lineTo(bx - R * .03, by + R * .06); x.lineTo(bx + R * .05, by - R * .06); x.lineTo(bx + R * .22, by + R * .1); x.stroke();
-        }
-      }
+      if (!p.ion || p.fl <= 0) return;
+      const sy = cy + Math.max(-.6, Math.min(.6, p.y)) * R, zz = R * .1 * (p.ex > 0 ? 1 : -1);
+      x.strokeStyle = rgba(K, Math.min(1, p.fl * 1.5)); x.lineWidth = Math.max(2.2, R * .06);
+      x.beginPath();
+      x.moveTo(g0, sy);
+      x.lineTo(g0 + (g1 - g0) * .35, sy - zz);
+      x.lineTo(g0 + (g1 - g0) * .6, sy + zz);
+      x.lineTo(g1, sy);
+      x.stroke();
     });
-    // count and energy bar
+    // count and how much energy has been taken in
     x.fillStyle = s.strong ? INK : SOFT;
     x.font = `700 ${fs}px ${FB}`;
     x.fillText(`Ions ${ions}`, cx, H * .79);
     const bw = pw * .66, bh = Math.max(6, H * .028), by0 = H * .87;
-    x.fillStyle = FAINT; x.fillRect(cx - bw / 2, by0, bw, bh);
-    x.fillStyle = s.strong ? rgba(PLASMA, 1) : SOFT; x.fillRect(cx - bw / 2, by0, bw * glow, bh);
+    x.lineCap = 'round'; x.lineWidth = bh;
+    x.strokeStyle = FAINT; x.beginPath(); x.moveTo(cx - bw / 2 + bh / 2, by0 + bh / 2); x.lineTo(cx + bw / 2 - bh / 2, by0 + bh / 2); x.stroke();
+    if (glow > .005){
+      x.strokeStyle = s.strong ? rgba(PLASMA, 1) : SOFT;
+      const x0 = cx - bw / 2 + bh / 2, x1 = x0 + Math.max(0, (bw - bh) * glow);
+      x.beginPath(); x.moveTo(x0, by0 + bh / 2); x.lineTo(x1, by0 + bh / 2); x.stroke();
+    }
     if (s.strong && glow > .55){ x.fillStyle = INK; x.font = `700 ${fs * 1.25}px ${FH}`; x.fillText('Plasma!', cx, H * .145); }
   });
   x.fillStyle = SOFT; x.font = `600 ${Math.max(12, H * .034)}px ${FB}`; x.textAlign = 'center';

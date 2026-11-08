@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: science-grape-microwave-trap -->
-<!-- Look: a printed-science-book cut-away. Two grapes are drawn sliced in half on a flat microwave turntable plate, showing a purple skin around cream flesh. A finned magnetron box sends a squiggly wave at them. Everything is in flat fills, with amber standing for the microwaves.
+<!-- Look: a page from a printed science book, on a light grape-lavender page with no dark background. Two red grapes are cut in half on a plain microwave plate, so you see the purple skin around pale green flesh. A small magnetron box sends one wavy amber line at them. Everything is flat ink, the card's colour and their tints, plus the grape colours. Amber always means the microwaves.
      Interaction: pick what the microwaves do inside the grape, say how sure you are, and the options rearrange (Flip) into the true answer while the grapes act it out.
-     Wow moment: a wave slips in and bounces round and round inside the skin. The bounces settle into flat bands of a standing wave that pulse, and at the peak a drawn spark of plasma bursts where the grapes touch. -->
+     Wow moment: a wave slips in and bounces round and round inside the skin. The bounces settle into flat rings of a standing wave that pulse, and at the peak a hand-drawn spark of plasma bursts where the grapes touch. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Trapped in a grape</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -26,7 +26,7 @@
 .opt.wrong{opacity:.38;font-size:max(1.6cqh,12px);padding:.8cqh 4cqw}
 .opt.wrong.on{text-decoration:line-through;background:color-mix(in srgb,var(--k) 7%,transparent);color:var(--k)}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pick one · trapped waves" style="--c:#151a30;--k:#f4ede0;--edge:#0a0d1a">
+<article class="card" id="card" data-topic="science" data-kind="Pick one · trapped waves" style="--c:#dcd3ec;--k:#1d1630;--edge:#ab9fc8">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
     <h2 class="q">What do microwaves do once they get inside a grape?</h2>
@@ -53,15 +53,20 @@ let pick = -1, revealed = false;
 const cv = Kit.$('cv'), art = Kit.$('art');
 let X = null, W = 0, H = 0, fs = 12, G = null, BODY = 'sans-serif';
 const S = {floor: 0, grape: 0, mag: 0, ray: 0, mode: 0, plasma: 0};
-const sparks = [];
 
-// ---------- palette: ink, card colour, their mixes, and two flat meaning colours ----------
-let KC = [244, 237, 224], CC = [21, 26, 48];
+// ---------- palette: ink, card colour, their mixes, and flat meaning colours ----------
+let KC = [29, 22, 48], CC = [220, 211, 236];
 const hex = (h, fb) => { h = (h || '').trim(); return /^#[0-9a-f]{6}$/i.test(h) ? [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)) : fb; };
-const TINT = p => `rgb(${KC.map((k, i) => Math.round(k * p + CC[i] * (1 - p))).join(',')})`;
-const AMBER = '#f0962e';   // the microwaves, wherever they are
-const SKIN = '#7a2752';    // the grape skin
-const STEM = '#8a6a3e';
+const TA = p => KC.map((k, i) => k * p + CC[i] * (1 - p));
+const RGB = a => `rgb(${a.map(Math.round).join(',')})`;
+const TINT = p => RGB(TA(p));
+const MIX = (a, b, p) => a.map((v, i) => v + (b[i] - v) * p);
+const AMBER_A = [232, 128, 28];
+const AMBER = RGB(AMBER_A);   // the microwaves, wherever they are
+const SKIN = '#7a2752';       // the grape skin
+const FLESH_A = [234, 240, 204]; // the pale green grape flesh
+const HOT = '#fff3d2';        // the white-hot heart of the plasma
+const STEM = '#7d5f34';
 
 // ---------- geometry ----------
 function layout() {
@@ -121,24 +126,24 @@ function draw(t) {
   const {R, Rf, cx, cy, mag, plate} = G;
   X.clearRect(0, 0, W, H);
 
-  // the turntable plate: a flat dish with a visible rim
+  // the turntable plate: one flat dish with a drawn rim line, a shade darker than the page
   if (S.floor > 0) {
     const e = S.floor;
     X.save(); X.globalAlpha = clamp(e * 1.4); X.translate(cx, plate.y); X.scale(e, e);
-    X.fillStyle = TINT(.1); oval(0, R * .1, plate.rx, plate.ry);
-    X.fillStyle = TINT(.22); oval(0, 0, plate.rx, plate.ry);
-    X.fillStyle = TINT(.16); oval(0, plate.ry * .06, plate.rx * .7, plate.ry * .66);
+    X.fillStyle = TINT(.1); oval(0, 0, plate.rx, plate.ry);
+    X.strokeStyle = TINT(.24); X.lineWidth = Math.max(1.5, R * .03);
+    X.beginPath(); X.ellipse(0, plate.ry * .04, plate.rx * .72, plate.ry * .64, 0, 0, Math.PI * 2); X.stroke();
     X.restore();
   }
 
-  // the magnetron: a finned box with an antenna, sending one wave at the grapes
+  // the magnetron: a plain ink box with slots and an antenna, sending one wave at the grapes
   if (S.mag > 0) {
     const m = S.mag, b = mag.b, x0 = mag.x - b, y0 = mag.y - b * .5;
     X.save(); X.globalAlpha = m; X.translate(0, (1 - m) * -20);
-    X.fillStyle = TINT(.62); rrect(x0, y0, b * 2, b, b * .14); X.fill();
-    X.strokeStyle = TINT(.32); X.lineWidth = Math.max(1.5, b * .07); X.lineCap = 'round';
-    for (let i = 1; i <= 3; i++) { const fy = y0 + i * b / 4; X.beginPath(); X.moveTo(x0 + b * .18, fy); X.lineTo(x0 + b * 1.82, fy); X.stroke(); }
-    X.fillStyle = TINT(.62); X.fillRect(x0 + b * 2 - 1, mag.y - b * .12, b * .24, b * .24);
+    X.fillStyle = TINT(.85); rrect(x0, y0, b * 2, b, b * .16); X.fill();
+    X.strokeStyle = RGB(CC); X.lineWidth = Math.max(1.5, b * .08); X.lineCap = 'round';
+    for (let i = 0; i < 3; i++) { const fx = x0 + b * (.55 + i * .45); X.beginPath(); X.moveTo(fx, y0 + b * .25); X.lineTo(fx, y0 + b * .75); X.stroke(); }
+    X.fillStyle = TINT(.85); X.fillRect(x0 + b * 2 - 1, mag.y - b * .12, b * .24, b * .24);
     X.fillStyle = AMBER; disc(x0 + b * 2.28, mag.y, b * .15);
     X.restore();
     label('magnetron', mag.x, mag.y - b * .5 - 7, 'center', m * .85);
@@ -153,7 +158,7 @@ function draw(t) {
       const A = Math.max(3, R * .07), lam = Math.max(9, R * .26), ph = Kit.calm ? 0 : t * .008;
       const ah = Math.max(5, R * .1), end = Math.max(0, L * m - ah);
       X.save(); X.globalAlpha = m; X.strokeStyle = AMBER; X.fillStyle = AMBER;
-      X.lineWidth = Math.max(1.8, R * .035); X.lineCap = 'round'; X.lineJoin = 'round';
+      X.lineWidth = Math.max(2.4, R * .045); X.lineCap = 'round'; X.lineJoin = 'round';
       X.beginPath();
       for (let s = 0; s <= end; s += 1.5) {
         const taper = Math.min(1, s / (lam * .6), (end - s) / (lam * .4) + .15);
@@ -170,20 +175,19 @@ function draw(t) {
     }
   }
 
-  // the grapes, drawn cut in half: purple skin around pale flesh
+  // the grapes, cut in half: purple skin around pale green flesh that warms a little as the wave gets in
+  const FLESH = MIX(FLESH_A, AMBER_A, .16 * clamp(S.ray));
   for (const sd of [-1, 1]) {
     const gx = cx + sd * R, gs = S.grape; if (gs <= 0) continue;
     X.save(); X.translate(gx, cy); X.scale(gs, gs);
-    X.strokeStyle = STEM; X.lineWidth = Math.max(2, R * .05); X.lineCap = 'round';
+    X.strokeStyle = STEM; X.lineWidth = Math.max(2.5, R * .06); X.lineCap = 'round';
     X.beginPath(); X.moveTo(-sd * R * .1, -R * .97); X.quadraticCurveTo(-sd * R * .05, -R * 1.15, sd * R * .12, -R * 1.2); X.stroke();
     X.fillStyle = SKIN; disc(0, 0, R);
-    X.fillStyle = TINT(.84); disc(0, 0, Rf);
-    // the flesh warming as the wave arrives
-    if (S.ray > 0) { X.globalAlpha = .16 * S.ray; X.fillStyle = AMBER; disc(0, 0, Rf); X.globalAlpha = 1; }
+    X.fillStyle = RGB(FLESH); disc(0, 0, Rf);
     X.restore();
   }
 
-  // the field in the flesh: flat bands of a standing wave around the contact point, nodes fixed, swelling and fading
+  // the field in the flesh: flat rings of a standing wave around the contact point, nodes fixed, swelling and fading
   if (S.mode > 0) {
     const osc = Kit.calm ? .85 : Math.sin(t * .006), step = .275 * R;
     X.save();
@@ -192,7 +196,7 @@ function draw(t) {
       const inner = k === 0 ? 0 : step * (k - .5), outer = step * (k + .5);
       const d = k * .275, amp = .3 + .7 * Math.exp(-d * 1.7), e = (k % 2 ? -1 : 1) * amp * osc * S.mode;
       const a = Math.min(1, Math.abs(e) * 1.3); if (a < .02) continue;
-      X.globalAlpha = a; X.fillStyle = e > 0 ? AMBER : TINT(.38);
+      X.fillStyle = RGB(MIX(FLESH, e > 0 ? AMBER_A : TA(.3), a));
       X.beginPath(); X.arc(cx, cy, outer, 0, Math.PI * 2);
       if (inner > 0) X.arc(cx, cy, inner, 0, Math.PI * 2, true);
       X.fill('evenodd');
@@ -205,7 +209,7 @@ function draw(t) {
     X.save(); X.lineCap = 'round'; X.lineJoin = 'round';
     for (const ry of G.rays) {
       const gx = cx + ry.side * R, upto = S.ray * ry.L, P = q => [gx + q[0] * Rf, cy + q[1] * Rf];
-      X.globalAlpha = .95 * (1 - S.mode * .75); X.strokeStyle = AMBER; X.lineWidth = 2;
+      X.globalAlpha = .95 * (1 - S.mode * .75); X.strokeStyle = AMBER; X.lineWidth = 2.4;
       X.beginPath(); let head = P(ry.pts[0]); X.moveTo(head[0], head[1]);
       for (let k = 1; k < ry.pts.length; k++) {
         if (ry.seg[k] <= upto) { head = P(ry.pts[k]); X.lineTo(head[0], head[1]); }
@@ -220,7 +224,7 @@ function draw(t) {
     X.restore();
   }
 
-  // plasma at the contact point: a drawn spark, cream with an amber heart
+  // plasma at the contact point: a drawn spark, amber with a white-hot heart, and a few short ink spark strokes
   if (S.plasma > 0) {
     const fl = Kit.calm ? 1 : .82 + .18 * Math.sin(t * .045) * Math.sin(t * .017), pr = R * .5 * S.plasma * fl;
     const star = (r, inn, rot) => {
@@ -232,22 +236,20 @@ function draw(t) {
       X.closePath(); X.fill();
     };
     X.save();
-    X.fillStyle = TINT(1); star(pr, .4, Kit.calm ? 0 : t * .0006);
-    X.fillStyle = AMBER; star(pr * .5, .45, Math.PI / 16);
-    if (!Kit.calm && Math.random() < .5 * S.plasma) sparks.push({x: cx + (Math.random() - .5) * R * .2, y: cy, vx: (Math.random() - .5) * .6, vy: -.6 - Math.random() * 1.2, l: 1});
-    X.strokeStyle = TINT(1); X.lineCap = 'round';
-    for (let i = sparks.length - 1; i >= 0; i--) {
-      const p = sparks[i]; p.x += p.vx; p.y += p.vy; p.l -= .025;
-      if (p.l <= 0 || p.y < cy - R * 1.05) { sparks.splice(i, 1); continue; }
-      X.globalAlpha = p.l; X.lineWidth = 1.6;
-      X.beginPath(); X.moveTo(p.x, p.y); X.lineTo(p.x - p.vx * 3, p.y - p.vy * 3); X.stroke();
+    X.fillStyle = AMBER; star(pr, .4, Kit.calm ? 0 : t * .0006);
+    X.fillStyle = HOT; star(pr * .5, .45, Math.PI / 16);
+    X.strokeStyle = TINT(1); X.lineCap = 'round'; X.lineWidth = Math.max(2, R * .04);
+    for (let i = 0; i < 5; i++) {
+      const a = -Math.PI * (.2 + i * .15), w = Kit.calm ? 1 : .8 + .2 * Math.sin(t * .02 + i * 1.7);
+      const r0 = pr * 1.08, r1 = pr * (1.08 + .32 * w);
+      X.beginPath(); X.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); X.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); X.stroke();
     }
     X.restore();
     const la = clamp(S.plasma * 2 - .6);
     if (la > 0) {
       const ly = cy - R * 1.22 - 4;
-      X.save(); X.globalAlpha = la * .7; X.strokeStyle = TINT(1); X.lineWidth = 1.2;
-      X.beginPath(); X.moveTo(cx, ly + 5); X.lineTo(cx, cy - pr * .7); X.stroke(); X.restore();
+      X.save(); X.globalAlpha = la * .7; X.strokeStyle = TINT(1); X.lineWidth = 1.4;
+      X.beginPath(); X.moveTo(cx, ly + 5); X.lineTo(cx, cy - pr * 1.45); X.stroke(); X.restore();
       label('field peaks here', cx, ly, 'center', la);
     }
   }
