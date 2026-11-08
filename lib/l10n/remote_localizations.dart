@@ -4379,4 +4379,50 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get screensFrontTomorrow =>
       _words.text('screensFrontTomorrow') ?? _base.screensFrontTomorrow;
+
+  @override
+  String exploreDayRead(int read, int of) =>
+      _words.format('exploreDayRead', localeName, {'read': read, 'of': of}) ??
+      _base.exploreDayRead(read, of);
+
+  @override
+  String exploreDayLeft(int n) =>
+      _words.format('exploreDayLeft', localeName, {'n': n}) ??
+      _base.exploreDayLeft(n);
+
+  @override
+  String get exploreDayDone =>
+      _words.text('exploreDayDone') ?? _base.exploreDayDone;
+
+  @override
+  String get exploreDayOpen =>
+      _words.text('exploreDayOpen') ?? _base.exploreDayOpen;
+
+  @override
+  String exploreSixtyRecord(int n, int of) =>
+      _words.format('exploreSixtyRecord', localeName, {'n': n, 'of': of}) ??
+      _base.exploreSixtyRecord(n, of);
+
+  @override
+  String get exploreSixtyFirst =>
+      _words.text('exploreSixtyFirst') ?? _base.exploreSixtyFirst;
+
+  @override
+  String get exploreGameNone =>
+      _words.text('exploreGameNone') ?? _base.exploreGameNone;
+
+  @override
+  String exploreSubjectLevel(String subject, int n) =>
+      _words.format('exploreSubjectLevel', localeName, {
+        'subject': subject,
+        'n': n,
+      }) ??
+      _base.exploreSubjectLevel(subject, n);
+
+  @override
+  String exploreBecauseSaved(String question) =>
+      _words.format('exploreBecauseSaved', localeName, {
+        'question': question,
+      }) ??
+      _base.exploreBecauseSaved(question);
 }

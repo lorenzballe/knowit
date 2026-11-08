@@ -4322,4 +4322,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get screensFrontTomorrow => '明天的一期早上发布';
+
+  @override
+  String exploreDayRead(int read, int of) {
+    return '今天：已读 $read/$of';
+  }
+
+  @override
+  String exploreDayLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '还剩 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreDayDone => '全部读完';
+
+  @override
+  String get exploreDayOpen => '前往今天的卡片';
+
+  @override
+  String exploreSixtyRecord(int n, int of) {
+    return '最佳纪录 $n/$of';
+  }
+
+  @override
+  String get exploreSixtyFirst => '创造你的纪录';
+
+  @override
+  String get exploreGameNone => '现在这里没有可玩的。明天再来。';
+
+  @override
+  String exploreSubjectLevel(String subject, int n) {
+    return '$subject，等级 $n';
+  }
+
+  @override
+  String exploreBecauseSaved(String question) {
+    return '因为你收藏了“$question”';
+  }
 }

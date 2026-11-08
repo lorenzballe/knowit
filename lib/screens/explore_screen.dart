@@ -10,6 +10,7 @@ import '../data/pills_repository.dart';
 import '../data/topics.dart' show inkOn;
 import '../explore/blocks/bets/bet_host.dart';
 import '../explore/blocks/core/shelves.dart';
+import '../explore/blocks/core/your_day_block.dart' show StreakChip;
 import '../explore/explore_block.dart';
 import '../models/pill.dart';
 import '../remote/remote.dart';
@@ -21,6 +22,7 @@ import '../sync/trace.dart';
 import '../theme.dart';
 import '../widgets/explore/explore_engine.dart';
 import '../widgets/explore/first_shelves.dart' show CardRow;
+import '../widgets/explore/section_page.dart';
 import '../widgets/explore/story_player.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
@@ -60,7 +62,11 @@ import '../measure/shelves.dart';
 class ExploreScreen extends StatefulWidget {
   final AppState app;
 
-  const ExploreScreen({super.key, required this.app});
+  /// Takes the reader to the Today tab: the streak by the title, and the
+  /// panel of the day at the top of the page, send a tap there.
+  final VoidCallback? onToday;
+
+  const ExploreScreen({super.key, required this.app, this.onToday});
 
   @override
   State<ExploreScreen> createState() => ExploreScreenState();
@@ -338,6 +344,29 @@ class ExploreScreenState extends State<ExploreScreen>
     }
   }
 
+  /// The Today tab, from the panel of the day or the streak by the title.
+  @override
+  void openToday() {
+    Analytics.capture('explore today opened');
+    widget.onToday?.call();
+  }
+
+  /// A section on a page of its own, drawn for this same host: a game from
+  /// the quick games, opened from the shelf a finger was last on.
+  @override
+  void openSection(ExploreSection section) {
+    _sight.opened();
+    Analytics.capture('explore section opened', {
+      'shelf': section.id,
+      'block': section.block,
+    });
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => ExploreSectionPage(host: this, section: section),
+      ),
+    );
+  }
+
   /// Something done in a section that nothing else records — a reaction, a
   /// bet, a stance — said as one event for every block, named by what the
   /// block calls it.
@@ -355,30 +384,36 @@ class ExploreScreenState extends State<ExploreScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
-          child: _Head(
-            searching: _searching,
-            field: _field,
-            focus: _focus,
-            onOpenSearch: () {
-              Analytics.capture('explore search opened');
-              // What is opened from the search was not opened from a shelf.
-              _sight.forgetTouch();
-              setState(() => _searching = true);
-              _focus.requestFocus();
-            },
-            onCloseSearch: () {
-              Analytics.capture('explore search closed', {
-                'had_query': _query.trim().isNotEmpty,
-              });
-              _field.clear();
-              setState(() {
-                _searching = false;
-                _query = '';
-              });
-            },
-            onChanged: _typed,
+        // The streak by the title follows the day as it is finished.
+        ListenableBuilder(
+          listenable: widget.app,
+          builder: (context, _) => Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+            child: _Head(
+              streak: widget.app.liveStreak,
+              onStreak: widget.onToday == null ? null : openToday,
+              searching: _searching,
+              field: _field,
+              focus: _focus,
+              onOpenSearch: () {
+                Analytics.capture('explore search opened');
+                // What is opened from the search was not opened from a shelf.
+                _sight.forgetTouch();
+                setState(() => _searching = true);
+                _focus.requestFocus();
+              },
+              onCloseSearch: () {
+                Analytics.capture('explore search closed', {
+                  'had_query': _query.trim().isNotEmpty,
+                });
+                _field.clear();
+                setState(() {
+                  _searching = false;
+                  _query = '';
+                });
+              },
+              onChanged: _typed,
+            ),
           ),
         ),
         if (!_searching)
@@ -641,6 +676,8 @@ class ExploreScreenState extends State<ExploreScreen>
 /// The title, and the way into the whole pool.
 class _Head extends StatelessWidget {
   const _Head({
+    required this.streak,
+    required this.onStreak,
     required this.searching,
     required this.field,
     required this.focus,
@@ -648,6 +685,12 @@ class _Head extends StatelessWidget {
     required this.onCloseSearch,
     required this.onChanged,
   });
+
+  /// The days in a row, said in a chip beside the search: nothing at 0.
+  final int streak;
+
+  /// A tap on the streak: the day it counts is on Today.
+  final VoidCallback? onStreak;
 
   final bool searching;
   final TextEditingController field;
@@ -720,18 +763,33 @@ class _Head extends StatelessWidget {
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          context.l10n.tabExplore,
-          style: AppText.display(
-            size: 27,
-            weight: FontWeight.w600,
-            height: 1,
-            spacing: -0.8,
-            color: context.p.ink,
+        Expanded(
+          child: Text(
+            context.l10n.tabExplore,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppText.display(
+              size: 27,
+              weight: FontWeight.w600,
+              height: 1,
+              spacing: -0.8,
+              color: context.p.ink,
+            ),
           ),
         ),
+        // The streak, where the eye goes after the title: kept in sight on
+        // the tab a reader goes to once the day is read.
+        if (streak > 0)
+          GestureDetector(
+            key: const ValueKey('explore-streak'),
+            behavior: HitTestBehavior.opaque,
+            onTap: onStreak,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 4),
+              child: StreakChip(streak: streak, height: 38),
+            ),
+          ),
         Semantics(
           key: const ValueKey('explore-search'),
           button: true,

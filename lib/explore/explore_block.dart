@@ -164,6 +164,16 @@ abstract class ExploreHost {
   /// Narrows Explore to [subject], as its chip does.
   void openSubject(String subject);
 
+  /// Takes the reader to Today, the tab with the day's five: where a panel
+  /// that counts the day's cards sends a tap.
+  void openToday();
+
+  /// Shows [section] alone, on a page of its own over Explore, drawn by the
+  /// engine for this same host: a game picked from a row of games is played
+  /// there, with the room a game needs, rather than somewhere down a page
+  /// it may not be on.
+  void openSection(ExploreSection section);
+
   /// Notes something a reader did in a section that the app has no other
   /// record of — a reaction, a bet, a stance — under [event], with [facts].
   void note(ExploreSection section, String event, Map<String, Object?> facts);

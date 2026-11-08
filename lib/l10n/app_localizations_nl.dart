@@ -4527,4 +4527,48 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get screensFrontTomorrow => 'Die van morgen verschijnt \'s ochtends';
+
+  @override
+  String exploreDayRead(int read, int of) {
+    return 'Vandaag: $read van $of gelezen';
+  }
+
+  @override
+  String exploreDayLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'nog $n',
+      one: 'nog 1',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreDayDone => 'alles gelezen';
+
+  @override
+  String get exploreDayOpen => 'Naar de kaarten van vandaag';
+
+  @override
+  String exploreSixtyRecord(int n, int of) {
+    return 'Je record $n/$of';
+  }
+
+  @override
+  String get exploreSixtyFirst => 'Zet je record neer';
+
+  @override
+  String get exploreGameNone =>
+      'Hier valt nu niets te spelen. Kom morgen terug.';
+
+  @override
+  String exploreSubjectLevel(String subject, int n) {
+    return '$subject, niveau $n';
+  }
+
+  @override
+  String exploreBecauseSaved(String question) {
+    return 'Omdat je ‘$question’ bewaarde';
+  }
 }

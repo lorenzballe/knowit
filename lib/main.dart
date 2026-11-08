@@ -1644,7 +1644,11 @@ class _AstutoShellState extends State<AstutoShell>
           widget.onDeckOnTable?.call(onTable);
         },
       ),
-      ExploreScreen(key: _explore, app: widget.app),
+      ExploreScreen(
+        key: _explore,
+        app: widget.app,
+        onToday: () => _goTo(0, by: 'explore'),
+      ),
       ProfileScreen(
         app: widget.app,
         account: widget.account,

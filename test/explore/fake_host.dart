@@ -30,6 +30,8 @@ class FakeExploreHost implements ExploreHost {
   final List<(String, String)> shown = [];
   final List<String> plans = [];
   final List<String> subjects = [];
+  int todays = 0;
+  final List<ExploreSection> pages = [];
   final List<(String, String, Map<String, Object?>)> notes = [];
 
   @override
@@ -85,6 +87,12 @@ class FakeExploreHost implements ExploreHost {
 
   @override
   void openSubject(String subject) => subjects.add(subject);
+
+  @override
+  void openToday() => todays++;
+
+  @override
+  void openSection(ExploreSection section) => pages.add(section);
 
   @override
   void note(ExploreSection section, String event, Map<String, Object?> facts) =>

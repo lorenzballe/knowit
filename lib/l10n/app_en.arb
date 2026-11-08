@@ -4698,5 +4698,75 @@
  "screensFrontTomorrow": "Tomorrow's is out in the morning",
  "@screensFrontTomorrow": {
   "description": "Explore's front page: under 'That's today's edition'."
+ },
+ "exploreDayRead": "Today: {read} of {of} read",
+ "@exploreDayRead": {
+  "description": "Explore, the panel of the reader's day at the top: how many of today's cards are read, of how many.",
+  "placeholders": {
+   "read": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "exploreDayLeft": "{n, plural, =1{1 left} other{{n} left}}",
+ "@exploreDayLeft": {
+  "description": "Explore, the panel of the reader's day: after 'Today: 3 of 5 read ·', how many of today's cards are still to read.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "exploreDayDone": "all read",
+ "@exploreDayDone": {
+  "description": "Explore, the panel of the reader's day: after 'Today: 5 of 5 read ·', once the day's cards are all read."
+ },
+ "exploreDayOpen": "Go to today's cards",
+ "@exploreDayOpen": {
+  "description": "Explore, the panel of the reader's day: what a tap on it does, said to a screen reader."
+ },
+ "exploreSixtyRecord": "Your record {n}/{of}",
+ "@exploreSixtyRecord": {
+  "description": "Explore, the quick games: on the Sixty seconds tile, the most claims the reader ever got right in one round, of eight.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "exploreSixtyFirst": "Set your record",
+ "@exploreSixtyFirst": {
+  "description": "Explore, the quick games: on the Sixty seconds tile, before the reader has played a round."
+ },
+ "exploreGameNone": "Nothing to play here right now. Come back tomorrow.",
+ "@exploreGameNone": {
+  "description": "Explore: a game opened on a page of its own, when it has nothing to play right now."
+ },
+ "exploreSubjectLevel": "{subject}, level {n}",
+ "@exploreSubjectLevel": {
+  "description": "Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "exploreBecauseSaved": "Because you saved “{question}”",
+ "@exploreBecauseSaved": {
+  "description": "Explore, cards like the ones the reader saved: the reason over the row, with the start of the saved card's question.",
+  "placeholders": {
+   "question": {
+    "type": "String"
+   }
+  }
  }
 }

@@ -4538,4 +4538,48 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get screensFrontTomorrow => 'Celle de demain sort au matin';
+
+  @override
+  String exploreDayRead(int read, int of) {
+    return 'Aujourd\'hui : $read sur $of lues';
+  }
+
+  @override
+  String exploreDayLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'encore $n',
+      one: 'encore 1',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreDayDone => 'toutes lues';
+
+  @override
+  String get exploreDayOpen => 'Aller aux cartes du jour';
+
+  @override
+  String exploreSixtyRecord(int n, int of) {
+    return 'Ton record $n/$of';
+  }
+
+  @override
+  String get exploreSixtyFirst => 'Établis ton record';
+
+  @override
+  String get exploreGameNone =>
+      'Rien à jouer ici pour l\'instant. Reviens demain.';
+
+  @override
+  String exploreSubjectLevel(String subject, int n) {
+    return '$subject, niveau $n';
+  }
+
+  @override
+  String exploreBecauseSaved(String question) {
+    return 'Parce que tu as gardé « $question »';
+  }
 }

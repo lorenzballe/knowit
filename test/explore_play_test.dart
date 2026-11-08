@@ -10,6 +10,8 @@ import 'package:astuto/main.dart';
 import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/state/explore_play.dart';
 
+import 'shelves_explore.dart';
+
 /// Explore under the shelves that were always there, played: an answer
 /// given on a shelf, the round against the clock, a stake from the day's
 /// points. Each is a thing a reader does, so each is driven the way a
@@ -66,6 +68,9 @@ Future<void> _openExplore(WidgetTester tester) async {
 }
 
 void main() {
+  // The shelves played here stand where Explore had them before the
+  // strategic Explore.
+  useShelvesExplore();
   setUp(() {
     final view =
         TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;

@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "訂正",
   "screensFrontPuzzle": "今日のパズル",
   "screensFrontEnd": "今日の号はここまで",
-  "screensFrontTomorrow": "明日の号は朝に届きます"
+  "screensFrontTomorrow": "明日の号は朝に届きます",
+  "exploreDayRead": "今日：{of}枚中{read}枚読了",
+  "exploreDayLeft": "{n, plural, other{残り{n}枚}}",
+  "exploreDayDone": "すべて読了",
+  "exploreDayOpen": "今日のカードへ",
+  "exploreSixtyRecord": "自己ベスト {n}/{of}",
+  "exploreSixtyFirst": "記録をつくろう",
+  "exploreGameNone": "今は遊べるものがありません。また明日。",
+  "exploreSubjectLevel": "{subject}、レベル{n}",
+  "exploreBecauseSaved": "「{question}」を保存したから"
 }
