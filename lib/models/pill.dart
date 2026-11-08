@@ -504,6 +504,13 @@ class WebFace {
   /// poster under the page take it, so nothing flashes when the page is up.
   final Color? ground;
 
+  /// Small pictures of the page, its front and its back, published beside
+  /// it; null on a card not photographed yet, or whose page changed since
+  /// it was. Wherever the card is shown outside the deck — the day's shelf,
+  /// the reader's own shelves, Explore's feed — it is shown by these, the
+  /// whole card with its drawing, rather than as words about it.
+  final WebThumbs? thumbs;
+
   const WebFace({
     this.html,
     this.page,
@@ -512,10 +519,40 @@ class WebFace {
     this.touch = WebTouch.taps,
     this.label = '',
     this.ground,
+    this.thumbs,
   }) : assert(html != null || page != null, 'a free card has a page');
 
   /// Whether this build carries the kit the page needs.
   bool get showable => kit <= kCardKit;
+}
+
+/// Where a free card's two pictures are published, beside the bank:
+/// `thumbs/<id>-front.webp?v=<hash>` and `-back`, the hash the page's own
+/// (tool/cards/bundle.py names them only while they were taken from the page
+/// as it is now). The front is the card as it is first shown, its question
+/// and drawing, nothing answered; the back is the card once played, its
+/// answer, its drawing, the line to keep and the source. Each is the card at
+/// 366 by 606 points, edge to edge, with its foot-right corner left empty
+/// for the app's own save and share.
+@immutable
+class WebThumbs {
+  const WebThumbs({this.front, this.back});
+
+  /// The card as first shown, or null when only the back was taken.
+  final String? front;
+
+  /// The card once played, or null when only the front was taken.
+  final String? back;
+
+  /// The proportion of every picture, width to height: the card's.
+  static const double aspect = 366 / 606;
+
+  @override
+  bool operator ==(Object other) =>
+      other is WebThumbs && other.front == front && other.back == back;
+
+  @override
+  int get hashCode => Object.hash(front, back);
 }
 
 /// How much work a card expects.

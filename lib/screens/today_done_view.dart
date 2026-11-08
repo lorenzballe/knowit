@@ -23,6 +23,8 @@ import '../data/topics.dart';
 import '../widgets/share_day.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
+import '../widgets/web/card_thumb.dart';
+import '../widgets/web/web_card_page.dart' show groundOf;
 
 /// The Today tab once the five are done, from artboard 66a.
 ///
@@ -606,137 +608,256 @@ class _CardFace extends StatelessWidget {
     final Color soft = ink.withValues(alpha: darkInk ? 0.10 : 0.14);
 
     final Palette p = context.p;
+    final CardSide side = back ? CardSide.back : CardSide.front;
+    final Widget words = Padding(
+      padding: EdgeInsets.all(28 * s),
+      child: _words(context, s, ink: ink, sub: sub, soft: soft),
+    );
+    // A free card with its picture is shown by it, whole: the card as the
+    // reader met it, drawing and all, on the same shape, edge and glow as
+    // any card here. Where the picture will not come, its words, as on a
+    // card that has none.
+    if (CardThumb.has(pill, side)) {
+      final Color ground = groundOf(pill);
+      final Color mark = pill.web?.ground == null ? ink : inkOn(ground);
+      return Container(
+        key: const ValueKey('shelf-picture'),
+        width: width,
+        height: height,
+        decoration: _decoration(p, s, ground),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(34 * s),
+          child: CardThumb(
+            pill: pill,
+            side: side,
+            // Whole, never cut: the shelf's card is a little wider than the
+            // picture, and the picture's own ground either side of it is
+            // the card's margin.
+            fit: BoxFit.contain,
+            fallback: ColoredBox(color: pill.color, child: words),
+            foreground: _PictureControls(
+              saved: saved,
+              ink: mark,
+              fill: mark.withValues(alpha: 0.12),
+              onSave: onSave,
+              onShare: onShare,
+            ),
+          ),
+        ),
+      );
+    }
     return Container(
       width: width,
       height: height,
-      padding: EdgeInsets.all(28 * s),
-      decoration: BoxDecoration(
-        color: pill.color,
-        // The deck's corner, at the shelf's scale: one card, one shape.
-        borderRadius: BorderRadius.circular(34 * s),
-        border: cardHairline(pill.color, p.surface),
-        boxShadow: [
-          // A pool under the card rather than a wash over the screen: the
-          // canvas throws the card's colour across the whole page, which on
-          // a real phone reads as a filter over the app instead of as a lit
-          // object. Kept low and close, the same colour reads as light
-          // coming off the card — but pulled all the way in it stopped
-          // reaching the ground at all, so it spreads further than it did
-          // on the first pass and less far than the canvas asks.
-          if (glow > 0)
-            BoxShadow(
-              color: pill.color.withValues(
-                alpha: (p.isDark ? 0.52 : 0.36) * glow,
-              ),
-              offset: Offset(0, 30 * s),
-              blurRadius: 64 * s,
-              spreadRadius: -26 * s,
+      decoration: _decoration(p, s, pill.color),
+      child: words,
+    );
+  }
+
+  /// The card's shape, edge, glow and lift in [colour].
+  BoxDecoration _decoration(Palette p, double s, Color colour) {
+    return BoxDecoration(
+      color: colour,
+      // The deck's corner, at the shelf's scale: one card, one shape.
+      borderRadius: BorderRadius.circular(34 * s),
+      border: cardHairline(colour, p.surface),
+      boxShadow: [
+        // A pool under the card rather than a wash over the screen: the
+        // canvas throws the card's colour across the whole page, which on
+        // a real phone reads as a filter over the app instead of as a lit
+        // object. Kept low and close, the same colour reads as light
+        // coming off the card — but pulled all the way in it stopped
+        // reaching the ground at all, so it spreads further than it did
+        // on the first pass and less far than the canvas asks.
+        if (glow > 0)
+          BoxShadow(
+            color: pill.color.withValues(
+              alpha: (p.isDark ? 0.52 : 0.36) * glow,
             ),
-          // On paper, the deck's own lift under the pool. Half of black,
-          // blurred, was a grey slab there; on the night paper it was
-          // black on black, and is not drawn.
-          ...cardLift(p),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SubjectIcon(subject: pill.topic, size: 16 * s, ink: ink),
-              SizedBox(width: 8 * s),
-              Expanded(
-                child: Row(
-                  children: [
-                    Flexible(
+            offset: Offset(0, 30 * s),
+            blurRadius: 64 * s,
+            spreadRadius: -26 * s,
+          ),
+        // On paper, the deck's own lift under the pool. Half of black,
+        // blurred, was a grey slab there; on the night paper it was
+        // black on black, and is not drawn.
+        ...cardLift(p),
+      ],
+    );
+  }
+
+  /// The card in words: its head, the question or the reveal, and the two
+  /// things you do to a card at its foot.
+  Widget _words(
+    BuildContext context,
+    double s, {
+    required Color ink,
+    required Color sub,
+    required Color soft,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            SubjectIcon(subject: pill.topic, size: 16 * s, ink: ink),
+            SizedBox(width: 8 * s),
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      context.l10n.subjectOf(pill.topic).toUpperCase(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.label(
+                        size: 9.5 * s,
+                        weight: FontWeight.w700,
+                        spacing: 1.4,
+                        color: sub,
+                      ),
+                    ),
+                  ),
+                  if (chip case final String chip) ...[
+                    SizedBox(width: 8 * s),
+                    // The deck's own chip, at the shelf's scale.
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 7 * s,
+                        vertical: 2.5 * s,
+                      ),
+                      decoration: BoxDecoration(
+                        color: pill.wash,
+                        borderRadius: BorderRadius.circular(999),
+                      ),
                       child: Text(
-                        context.l10n.subjectOf(pill.topic).toUpperCase(),
+                        chip,
                         maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                         style: AppText.label(
-                          size: 9.5 * s,
-                          weight: FontWeight.w700,
-                          spacing: 1.4,
-                          color: sub,
+                          size: 8.5 * s,
+                          spacing: 1,
+                          color: ink.withValues(alpha: 0.7),
                         ),
                       ),
                     ),
-                    if (chip case final String chip) ...[
-                      SizedBox(width: 8 * s),
-                      // The deck's own chip, at the shelf's scale.
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 7 * s,
-                          vertical: 2.5 * s,
-                        ),
-                        decoration: BoxDecoration(
-                          color: pill.wash,
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                        child: Text(
-                          chip,
-                          maxLines: 1,
-                          style: AppText.label(
-                            size: 8.5 * s,
-                            spacing: 1,
-                            color: ink.withValues(alpha: 0.7),
-                          ),
-                        ),
-                      ),
-                    ],
                   ],
-                ),
+                ],
               ),
-              Text(
-                number.toString().padLeft(2, '0'),
+            ),
+            Text(
+              number.toString().padLeft(2, '0'),
+              style: AppText.label(
+                size: 9.5 * s,
+                weight: FontWeight.w700,
+                color: sub,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 22 * s),
+        Expanded(
+          child: back
+              ? _Back(pill: pill, scale: s, sub: sub)
+              : _Front(pill: pill, scale: s, sub: sub),
+        ),
+        SizedBox(height: 22 * s),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                context.l10n.tapToFlip,
                 style: AppText.label(
-                  size: 9.5 * s,
-                  weight: FontWeight.w700,
+                  size: 10 * s,
+                  weight: FontWeight.w600,
+                  spacing: 1.1,
                   color: sub,
                 ),
               ),
-            ],
-          ),
-          SizedBox(height: 22 * s),
-          Expanded(
-            child: back
-                ? _Back(pill: pill, scale: s, sub: sub)
-                : _Front(pill: pill, scale: s, sub: sub),
-          ),
-          SizedBox(height: 22 * s),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  context.l10n.tapToFlip,
-                  style: AppText.label(
-                    size: 10 * s,
-                    weight: FontWeight.w600,
-                    spacing: 1.1,
-                    color: sub,
+            ),
+            _HeartButton(
+              saved: saved,
+              ink: ink,
+              fill: soft,
+              size: 42 * s,
+              onTap: onSave,
+            ),
+            SizedBox(width: 12 * s),
+            _CardButton(
+              label: context.l10n.shareThisCard,
+              icon: Icons.ios_share_rounded,
+              ink: ink,
+              fill: soft,
+              size: 42 * s,
+              onTap: onShare,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+/// The save and share of a card shown by its picture, where the deck puts
+/// them on the same card: in the corner the page keeps empty for them, at
+/// the deck's measures scaled to the picture, so they sit on its ground and
+/// never on its words.
+class _PictureControls extends StatelessWidget {
+  const _PictureControls({
+    required this.saved,
+    required this.ink,
+    required this.fill,
+    required this.onSave,
+    required this.onShare,
+  });
+
+  final bool saved;
+  final Color ink;
+  final Color fill;
+  final VoidCallback onSave;
+  final VoidCallback onShare;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) {
+        // Where the picture lies in the card, drawn whole from the top.
+        const double aspect = WebThumbs.aspect;
+        final bool wide = box.maxWidth / box.maxHeight > aspect;
+        final double picture = wide ? box.maxHeight * aspect : box.maxWidth;
+        final double side = (box.maxWidth - picture) / 2;
+        final double foot = wide ? 0 : box.maxHeight - picture / aspect;
+        // The deck's card is 366 points across; its pair of 44 sits 17 in
+        // from the side and 15 up from the foot, 4 apart (pill_card.dart).
+        final double k = picture / 366;
+        return Stack(
+          children: [
+            Positioned(
+              right: side + 17 * k,
+              bottom: foot + 15 * k,
+              child: Row(
+                children: [
+                  _HeartButton(
+                    saved: saved,
+                    ink: ink,
+                    fill: fill,
+                    size: 44 * k,
+                    onTap: onSave,
                   ),
-                ),
+                  SizedBox(width: 4 * k),
+                  _CardButton(
+                    label: context.l10n.shareThisCard,
+                    icon: Icons.ios_share_rounded,
+                    ink: ink,
+                    fill: fill,
+                    size: 44 * k,
+                    onTap: onShare,
+                  ),
+                ],
               ),
-              _HeartButton(
-                saved: saved,
-                ink: ink,
-                fill: soft,
-                size: 42 * s,
-                onTap: onSave,
-              ),
-              SizedBox(width: 12 * s),
-              _CardButton(
-                label: context.l10n.shareThisCard,
-                icon: Icons.ios_share_rounded,
-                ink: ink,
-                fill: soft,
-                size: 42 * s,
-                onTap: onShare,
-              ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -985,7 +1106,8 @@ class _Back extends StatelessWidget {
           var hi = full;
           while (hi - lo > full * 0.01) {
             final mid = (lo + hi) / 2;
-            if (_blockHeight(mid, box.maxWidth, base, scaler) <= box.maxHeight) {
+            if (_blockHeight(mid, box.maxWidth, base, scaler) <=
+                box.maxHeight) {
               lo = mid;
             } else {
               hi = mid;
@@ -1011,7 +1133,8 @@ class _Back extends StatelessWidget {
         // Past the floor it scrolls, and the foot of it dissolves rather
         // than being cut: text sliced through the middle of a line reads as
         // a fault, text fading out reads as more below.
-        final bool fits = _blockHeight(s, box.maxWidth, base, scaler) <= box.maxHeight;
+        final bool fits =
+            _blockHeight(s, box.maxWidth, base, scaler) <= box.maxHeight;
         final Widget rising = RiseIn(
           duration: const Duration(milliseconds: 300),
           distance: 8,

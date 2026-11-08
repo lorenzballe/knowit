@@ -152,6 +152,7 @@ class FeedDeal {
           [for (final FeedBox box in boxes) grid.sizeOf(box)],
           isRead: isRead,
           look: feedLook,
+          pictures: true,
         );
         if (fitted.any((p) => p != null)) {
           placed = _longestInBiggest(context, fitted, boxes, grid, isRead);
@@ -204,6 +205,7 @@ List<Pill?> _longestInBiggest(
     ..[longest] = placed[big];
   bool fits(int i) {
     final Size box = grid.sizeOf(boxes[i]);
+    if (showsPicture(moved[i]!, box)) return true;
     return questionFits(
       context,
       moved[i]!,
@@ -412,6 +414,9 @@ class FeedBand extends StatelessWidget {
                       box: grid.sizeOf(boxes[b]),
                       read: host.isRead(pill),
                       look: feedLook(grid.sizeOf(boxes[b])),
+                      // A free card by its picture, front only, in the
+                      // boxes that show one (see [fitCards]).
+                      picture: true,
                     ),
                   ),
                 ),
