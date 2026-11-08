@@ -1,0 +1,291 @@
+<!doctype html>
+<!-- slug: technology-vine-robot-retract -->
+<!-- Thought to carry: in a tight space, pulling the tail makes the robot ungrow: its material runs back through its core and it goes back inside itself.
+     Front: the robot in a tight space, its tail running back through its core to a person. The reader picks what the body does when the tail is pulled, then says how sure.
+     Back: the same scene on the same S-path, pulled back. The tip shortens along the old path; a cut-away tip shows the skin turning inward into the core, which runs home. The old body stays as a faint dashed outline, named once beside its own tip. Drag between before and after.
+     The front shows only the still robot and three plain options of equal weight. No motion, no arrow and no tip detail shows how it ungrows. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How the robot pulls back</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front{transition:none}
+
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic2{touch-action:none;cursor:ew-resize}
+#opts{display:flex;flex-direction:column;gap:.8cqh;margin:.6cqh 0 calc(.4cqh + 12px)}
+.opt{font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+/* waiting for a pick: readable, clearly not yet active */
+#sure.wait,#sure.wait *{opacity:1!important;color:color-mix(in srgb,var(--k) 45%,var(--c))!important;border-color:color-mix(in srgb,var(--k) 45%,var(--c))!important}
+#sure.wait button{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 45%,var(--c))!important}
+.front .foot{min-height:44px;padding-right:96px;display:flex;align-items:center}
+.front .foot .say{margin:0;padding:0}
+.back .big{margin:0 0 .4cqh}
+.back .body{font-size:max(1.85cqh,13px);line-height:1.3;margin:.3cqh 0}
+.back .say{margin:.2cqh 0}
+.back .foot{min-height:44px;padding-right:96px}
+.q,.big,.body,.say,.keep,.src{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Pull the robot’s tail. What does its body do?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A tube-shaped robot in a tight space, its tail running back through its core to a person."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">It slides back out the way it went in</button>
+          <button class="opt" data-i="1">It goes back inside itself</button>
+          <button class="opt" data-i="2">It folds up like an accordion</button>
+        </div>
+        <div class="sure wait" id="sure"></div>
+        <div class="foot"><p class="say" id="say">It’s in a tight space. All you do is pull the tail.</p></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It ungrows, back inside itself.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same robot pulled back along the same path: its tip turns inward into the core and the body gets shorter."></svg></div>
+        <p class="say">Drag the picture: before, after, in between.</p>
+        <p class="body">The tail is the material running through the core. Pull it, and the body passes back through that core and turns inside itself.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Retraction is a hard problem. In a tight space, pulling the tail does it; a big open area is another case.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “This Unstoppable Robot Could Save Your Life” (2021)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const PAPER = '#fffdf7';
+  const ROCK = 'color-mix(in srgb,var(--k) 30%,var(--c))';
+  const RIGHT = 1;
+  const pic = Kit.$('pic'), pic2 = Kit.$('pic2'), opts = Kit.$('opts');
+  let pick = -1, gF = null, gB = null, tl = null, ready = false, drag = null, wasHome = false;
+  const st = {f: 0, lab: 0};   // f: 0 = before, 1 = pulled back
+
+  const mul = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const P2 = P => 'M' + P.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L');
+
+  function at(g, s) {
+    const p = g.pts; s = Math.max(0, Math.min(g.total, s));
+    let i = 1; while (i < p.length - 1 && p[i].s < s) i++;
+    const a = p[i - 1], b = p[i], k = (s - a.s) / ((b.s - a.s) || 1);
+    const tx = b.x - a.x, ty = b.y - a.y, m = Math.hypot(tx, ty) || 1;
+    return {x: a.x + tx * k, y: a.y + ty * k, tx: tx / m, ty: ty / m, nx: -ty / m, ny: tx / m};
+  }
+  function sub(g, s0, s1) {
+    const A = at(g, s0), B = at(g, s1); let d = `M${A.x.toFixed(1)},${A.y.toFixed(1)}`;
+    for (const q of g.pts) if (q.s > s0 && q.s < s1) d += `L${q.x.toFixed(1)},${q.y.toFixed(1)}`;
+    return d + `L${B.x.toFixed(1)},${B.y.toFixed(1)}`;
+  }
+  // outline of the tube from its base to s1, with a round tip
+  function outline(g, s1, r) {
+    const A = [], B = [];
+    for (const q of g.pts) { if (q.s >= s1) break; A.push([q.x + q.nx * r, q.y + q.ny * r]); B.push([q.x - q.nx * r, q.y - q.ny * r]); }
+    const E = at(g, s1);
+    for (let i = 0; i <= 12; i++) { const th = i / 12 * Math.PI, c = Math.cos(th) * r, sn = Math.sin(th) * r; A.push([E.x + E.nx * c + E.tx * sn, E.y + E.ny * c + E.ty * sn]); }
+    return P2(A.concat(B.reverse()));
+  }
+  // a block of the tight space whose inner face meets the tube wall
+  function rock(g, s, side, R, rnd) {
+    const e = g.w / 2 + .6, a = R * .5, m = at(g, s), h = R * (1.25 + .4 * rnd());
+    const off = (q, o) => [q.x + q.nx * side * o, q.y + q.ny * side * o];
+    const pt = (u, v) => [m.x + m.tx * u + m.nx * side * (e + v), m.y + m.ty * u + m.ny * side * (e + v)];
+    const face = []; for (let i = 0; i <= 6; i++) face.push(off(at(g, s - a + 2 * a * i / 6), e));
+    const out = [pt(a + R * (.25 + .3 * rnd()), h * (.35 + .2 * rnd())), pt(a * (.3 + .5 * rnd()), h), pt(-a * (.2 + .6 * rnd()), h * (.85 + .2 * rnd())), pt(-a - R * (.2 + .3 * rnd()), h * (.3 + .25 * rnd()))];
+    const c = pt(0, h * .5);
+    return {d: P2(face.concat(out)) + 'Z', s, side, a, R, h, cx: c[0], cy: c[1], dx: m.nx * side};
+  }
+
+  function geom(svg) {
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, (f.f || 13) * .95));
+    // keep the S the same shape on every stage: fit a fixed-aspect box, centred
+    const AS = .66, Dw = Math.min(W, H / AS), Dh = Dw * AS, ox = (W - Dw) / 2, oy = (H - Dh) / 2;
+    const X = u => ox + u * Dw, Y = v => oy + v * Dh;
+    const w = Math.max(13, Math.min(30, Dw * .068));
+    const P = [[X(.36), Y(.64)], [X(.62), Y(.80)], [X(.60), Y(.30)], [X(.86), Y(.24)]];
+    const pts = []; let acc = 0;
+    for (let i = 0; i <= 240; i++) {
+      const t = i / 240, u = 1 - t, c = [u * u * u, 3 * u * u * t, 3 * u * t * t, t * t * t];
+      const x = c[0] * P[0][0] + c[1] * P[1][0] + c[2] * P[2][0] + c[3] * P[3][0];
+      const y = c[0] * P[0][1] + c[1] * P[1][1] + c[2] * P[2][1] + c[3] * P[3][1];
+      if (i) acc += Math.hypot(x - pts[i - 1].x, y - pts[i - 1].y);
+      pts.push({x, y, s: acc});
+    }
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)], m = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+      pts[i].nx = -(b.y - a.y) / m; pts[i].ny = (b.x - a.x) / m;
+    }
+    const g = {W, H, fs, w, pts, total: acc, L: acc * .97, bx: P[0][0], by: P[0][1], ox};
+    g.Tmin = g.L * .42;
+    const rnd = mul(7);
+    g.rocks = [[.15, 1], [.3, -1], [.46, 1], [.61, -1], [.77, 1], [.92, -1]].map(([k, side]) => rock(g, g.L * k, side, w * (1 + .3 * rnd()), rnd));
+    return g;
+  }
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  function labels(g, parent, list) {
+    const lead = mk('g', {}, parent), txt = mk('g', {}, parent), placed = [], GAP = 24;
+    const clamp = (e, x, y) => {
+      e.setAttribute('x', x); e.setAttribute('y', y);
+      const b = e.getBBox();
+      if (b.x < 3) x += 3 - b.x; else if (b.x + b.width > g.W - 3) x -= b.x + b.width - (g.W - 3);
+      if (b.y < 2) y += 2 - b.y; else if (b.y + b.height > g.H - 2) y -= b.y + b.height - (g.H - 2);
+      e.setAttribute('x', x); e.setAttribute('y', y); return [x, y];
+    };
+    const hit = b => placed.some(q => b.x < q.x + q.width + GAP && q.x < b.x + b.width + GAP && b.y < q.y + q.height + GAP && q.y < b.y + b.height + GAP);
+    for (const L of list) {
+      const e = mk('text', {x: L.x, y: L.y, 'text-anchor': L.a || 'middle', style: `font:700 ${g.fs}px var(--body);fill:var(--k);paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round`}, txt);
+      e.textContent = L.t;
+      let ok = false;
+      for (const k of [0, 1, 2, 3, 4, 5, -1, -2, -3, -4, -5]) {
+        clamp(e, L.x, L.y + (L.dir || 1) * k * g.fs * 1.4);
+        if (!hit(e.getBBox())) { ok = true; break; }
+      }
+      if (!ok) clamp(e, L.x, L.y);
+      const b = e.getBBox(); placed.push(b);
+      if (L.from) {
+        const [fx, fy] = L.from, tx = Math.max(b.x + 4, Math.min(b.x + b.width - 4, fx));
+        const ty = fy < b.y ? b.y - 2 : fy > b.y + b.height ? b.y + b.height + 2 : b.y + b.height / 2;
+        if (Math.hypot(tx - fx, ty - fy) > 6) mk('line', {x1: fx, y1: fy, x2: tx, y2: ty, style: 'stroke:var(--k);stroke-width:1.3;stroke-linecap:round'}, lead);
+      }
+    }
+  }
+  function head(par, x, y, dx, dy, a, op) {
+    const px = -dy, py = dx;
+    mk('path', {d: `M${x.toFixed(1)},${y.toFixed(1)}L${(x - dx * a + px * a * .6).toFixed(1)},${(y - dy * a + py * a * .6).toFixed(1)}L${(x - dx * a - px * a * .6).toFixed(1)},${(y - dy * a - py * a * .6).toFixed(1)}Z`, style: `fill:var(--k);opacity:${op}`}, par);
+  }
+
+  // The same scene, before or after: the tight space, the tube on one fixed path, its core and tail, the person.
+  function scene(svg, g, o) {
+    svg.innerHTML = '';
+    const w = g.w, bx = g.bx, by = g.by, gy = by + w * 1.1, T = o.T;
+    const G = () => mk('g', {class: 'g'}, svg);
+    const gr = G(), gb = G(), gp = G(), gl = G();
+    const hx = Math.max(g.ox + w * .9, bx - w * 4.1), hand = hx + w * 1.05, boxL = bx - w * 1.9;
+    mk('path', {d: `M${Math.max(0, hx - w * 1.4)},${gy} L${bx - w * .6},${gy}`, style: 'stroke:var(--k);stroke-width:2;stroke-linecap:round;fill:none'}, gr);
+    for (const r of g.rocks) mk('path', {d: r.d, style: `fill:${ROCK};stroke:${ROCK};stroke-width:1;stroke-linejoin:round`}, gr);
+    // the robot as it was: a pale dashed outline on the very same path
+    if (o.ghost) mk('path', {d: outline(g, g.L, w / 2 + .9), style: `fill:none;stroke:${PAPER};stroke-opacity:.45;stroke-width:2;stroke-dasharray:5 4;stroke-linejoin:round`}, gb);
+    // the body: an ink outline, a paper skin, cut short along the same path
+    const body = sub(g, 0, T);
+    mk('path', {d: body, style: `fill:none;stroke:var(--k);stroke-width:${w + 3.2};stroke-linecap:round;stroke-linejoin:round`}, gb);
+    mk('path', {d: body, style: `fill:none;stroke:${PAPER};stroke-width:${w - .2};stroke-linecap:round;stroke-linejoin:round`}, gb);
+    // the core: the tail's material running through the middle
+    const dash = `${(w * .34).toFixed(1)} ${(w * .3).toFixed(1)}`;
+    if (T > w * .6) mk('path', {d: sub(g, 0, T - w * .38), style: `fill:none;stroke:var(--k);stroke-opacity:${o.cut != null ? .75 : .55};stroke-width:1.8;stroke-dasharray:${dash};stroke-dashoffset:${o.p.toFixed(1)}`}, gb);
+    // the tip, cut open: skin turns inward into the core, the core runs home
+    if (o.cut != null) {
+      const Tp = at(g, T), Lc = (u, v) => [Tp.x + Tp.tx * u * w + Tp.nx * v * w, Tp.y + Tp.ty * u * w + Tp.ny * v * w];
+      for (const sg of [-1, 1]) {
+        const a = Lc(.14, sg * .4), c = Lc(-.06, sg * .1), e = Lc(-.38, 0);
+        mk('path', {d: `M${a[0].toFixed(1)},${a[1].toFixed(1)}Q${c[0].toFixed(1)},${c[1].toFixed(1)} ${e[0].toFixed(1)},${e[1].toFixed(1)}`, style: 'fill:none;stroke:var(--k);stroke-width:1.8;stroke-linecap:round'}, gb);
+      }
+      const hs = Math.max(5, w * .28), op = o.cut.toFixed(2);
+      const e = Lc(-.38, 0), c = Lc(-.06, .1), m = Math.hypot(e[0] - c[0], e[1] - c[1]) || 1;
+      head(gb, e[0], e[1], (e[0] - c[0]) / m, (e[1] - c[1]) / m, hs, op);
+      const s0 = Lc(-1.7, 0), s1 = Lc(-2.3, 0);
+      mk('line', {x1: s0[0], y1: s0[1], x2: s1[0], y2: s1[1], style: `stroke:var(--k);stroke-width:2;stroke-linecap:round;opacity:${op}`}, gb);
+      head(gb, s1[0], s1[1], -Tp.tx, -Tp.ty, hs, op);
+    }
+    // the base, the tail out of its back, the person holding it
+    mk('rect', {x: boxL, y: by - w * .95, width: w * 2.25, height: w * 1.9, rx: w * .25, style: 'fill:var(--k)'}, gp);
+    mk('path', {d: `M${boxL},${by} L${hand},${by}`, style: `fill:none;stroke:var(--k);stroke-width:1.9;stroke-dasharray:${dash};stroke-dashoffset:${(-o.p).toFixed(1)}`}, gp);
+    for (const sg of [-1, 1]) mk('line', {x1: hx + sg * w * .18, y1: by + w * .2, x2: hx + sg * w * .3, y2: gy, style: `stroke:var(--k);stroke-width:${w * .22};stroke-linecap:round`}, gp);
+    mk('rect', {x: hx - w * .42, y: by - w * 1.25, width: w * .84, height: w * 1.55, rx: w * .42, style: 'fill:var(--k)'}, gp);
+    mk('line', {x1: hx + w * .1, y1: by - w * .85, x2: hand, y2: by, style: `stroke:var(--k);stroke-width:${w * .2};stroke-linecap:round`}, gp);
+    mk('circle', {cx: hx, cy: by - w * 1.78, r: w * .42, style: 'fill:var(--k)'}, gp);
+    mk('circle', {cx: hx + w * .18, cy: by - w * 1.84, r: Math.max(1.4, w * .06), style: 'fill:var(--c)'}, gp);
+    // words
+    if (o.front) {
+      const R = at(g, g.L * .84), K = g.rocks[2], kd = K.dx >= 0 ? 1 : -1;
+      labels(g, gl, [
+        {t: 'robot', x: R.x - w * .3, y: R.y - w * 2.2, a: 'end', from: [R.x - w * .1, R.y - w * .6]},
+        {t: 'tight space', x: K.cx + kd * (K.R * .9 + 6), y: K.cy + g.fs * .35, a: kd > 0 ? 'start' : 'end'},
+        {t: 'tail', x: (hand + boxL) / 2, y: by + g.fs * 1.5}
+      ]);
+    } else if (o.lab > 0) {
+      const A = at(g, g.L), Tp = at(g, T), up = Tp.ny <= 0 ? 1 : -1;
+      labels(g, gl, [
+        // the old tip, named once, right beside itself: no long leader
+        {t: 'before', x: A.x + w * .2, y: A.y - w * 1.1, a: 'end', dir: -1},
+        {t: 'goes back inside', x: Tp.x - w * .6, y: Tp.y - w * 1.9, a: 'end', dir: -1,
+          from: [Tp.x + (Tp.tx * .38 + Tp.nx * up * .38) * w, Tp.y + (Tp.ty * .38 + Tp.ny * up * .38) * w]}
+      ]);
+      gl.setAttribute('opacity', o.lab);
+    }
+  }
+
+  function drawFront() { if (gF) scene(pic, gF, {T: gF.L, p: 0, front: true}); }
+  function drawBack() {
+    if (!gB) return;
+    const g = gB, T = g.L - st.f * (g.L - g.Tmin), back = g.L - T, p = 2 * back;
+    const home = st.f > .995;
+    if (ready && home !== wasHome) Kit.haptic('selection');
+    wasHome = home;
+    scene(pic2, g, {T, p, ghost: true, cut: Math.min(1, st.f * 4), lab: st.lab});
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = opts.children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    Kit.$('sure').classList.remove('wait'); sure.on();
+  });
+
+  // The back builds in calm beats: the scene, the pull, the words.
+  document.addEventListener('turned', () => {
+    if (Kit.calm || typeof gsap === 'undefined') { st.f = 1; st.lab = 1; ready = true; wasHome = true; drawBack(); return; }
+    st.f = 0; st.lab = 0; drawBack();
+    tl = gsap.timeline({onUpdate: drawBack, onComplete: () => { ready = true; wasHome = st.f > .995; drawBack(); }})
+      .from(pic2, {opacity: 0, duration: .5, ease: 'power2.out'}, .45)
+      .to(st, {f: 1, duration: 2.4, ease: 'power2.inOut'}, '+=.3')
+      .to(st, {lab: 1, duration: .45, ease: 'power2.out'});
+  });
+
+  // Drag across the back: left pulls the tail, right lets it out again.
+  pic2.addEventListener('pointerdown', e => { if (!ready) return; drag = {x: e.clientX, f: st.f}; pic2.setPointerCapture(e.pointerId); });
+  pic2.addEventListener('pointermove', e => { if (!drag) return; st.f = Math.max(0, Math.min(1, drag.f + (drag.x - e.clientX) / gB.W * 1.6)); drawBack(); });
+  const end = () => { drag = null; };
+  pic2.addEventListener('pointerup', end); pic2.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = () => { gF = geom(pic); drawFront(); gB = geom(pic2); drawBack(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.timeline()
+      .from('#pic > g', {opacity: 0, y: 8, stagger: .16, duration: .5, ease: 'power2.out'})
+      .from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}, '-=.3');
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    opts.children[0].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(1200);
+    if (tl) tl.progress(1);
+    await wait(500);
+  };
+})();
+Kit.single();
+</script>
+</html>

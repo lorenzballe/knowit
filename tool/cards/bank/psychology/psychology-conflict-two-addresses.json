@@ -1,0 +1,37 @@
+{
+  "id": "psychology-conflict-two-addresses",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.conformity",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "One view: saying no hurts less than quietly putting up with it. Agree?",
+  "answer": "A no can cost a job, a friend or your safety, and some of that never comes back. A swallowed yes keeps arguing with you every time it returns. Weigh the shaded areas, not the peaks.",
+  "move": "Weigh the shaded areas, not the peaks.",
+  "keywords": [
+    "saying no",
+    "swallowed yes",
+    "conflict",
+    "self-betrayal"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable slider from one view to the other, with a jagged conflict line between two sides. It asks whether saying no hurts less than quietly putting up with it, and which of two costs you could undo in a year: the hard talk or the quiet yes.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Come Smettere di Essere Troppo Buoni” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=Gz7sy88tSQw&t=1912s",
+  "written": "2026-11-07"
+}

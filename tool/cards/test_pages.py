@@ -121,6 +121,9 @@ class ThePage(unittest.TestCase):
         self.assertEqual(self.problems(page=TEMPLATE.replace("</style>", "</style>" + grain, 1)), [])
         beside = grain.replace("}</style>", ",url(https://example.org/a.png)}</style>")
         self.assertTrue(any("a stylesheet points at" in p for p in self.problems(page=TEMPLATE.replace("</style>", "</style>" + beside, 1))))
+        # A function of the page that ends in url is not a stylesheet pointing anywhere.
+        drawn = "<script>function curl(g, cx, cy){return g} curl(g, cx + (x1 - xm), cy)</script>"
+        self.assertEqual(self.problems(page=TEMPLATE.replace("</style>", "</style>" + drawn, 1)), [])
 
     def test_small_enough_to_travel_and_for_the_embedded_bank_to_hold(self):
         heavy = TEMPLATE.replace("</style>", "</style><!--" + "x" * pages.MAX_BYTES + "-->", 1)

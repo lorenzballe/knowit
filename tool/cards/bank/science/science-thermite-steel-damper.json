@@ -1,0 +1,36 @@
+{
+  "id": "science-thermite-steel-damper",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "This thermite has pieces of pure steel mixed in. What does the steel do?",
+  "answer": "The steel never reacts; it just melts. It stays out of the reaction but soaks up heat as it melts, which helps control how fast the thermite burns and how hot it gets. It is one part of a recipe so dialed in that thermite can be lit indoors.",
+  "move": "You can help tame a fierce reaction without joining it: give its heat something to melt.",
+  "keywords": [
+    "thermite",
+    "steel",
+    "heat",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Thermite powder with pieces of steel mixed in. The reader taps the picture to drop the steel in, then picks what the steel does: burns as extra fuel, reacts and slows the chemistry, or takes no part and only melts."
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1382s",
+  "written": "2026-11-07"
+}

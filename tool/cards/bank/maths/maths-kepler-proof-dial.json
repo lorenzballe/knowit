@@ -1,0 +1,36 @@
+{
+  "id": "maths-kepler-proof-dial",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "How long did it take to formally prove Kepler's sphere packing conjecture?",
+  "answer": "The formal proof was published in 2017, about 400 years after Kepler stated the conjecture in 1611. Kepler stated it as fact but never proved it. Seeing his stackings are tight is easy; showing that no other stack is tighter is the hard part.",
+  "move": "Showing one arrangement is good is easy; showing it is the best means ruling out every other one, and there are infinitely many.",
+  "keywords": [
+    "kepler",
+    "sphere packing",
+    "supermarket oranges",
+    "kepler conjecture"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Timeline from 1611 to 2017 with a draggable pin. The reader drags the pin to the year the formal proof of Kepler's sphere packing conjecture was published."
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=126s",
+  "written": "2026-11-07"
+}

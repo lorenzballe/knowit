@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "135b215014ca4d39",
+ "hash": "05427ce4a59770cc",
  "app": {
   "gate": null,
   "flags": {},
@@ -18,16 +18,192 @@ const String kEmbeddedRemote = r'''
   "_": "Explore as the build's own (remote/examples/explore-today.json), with the new free cards on top for the TestFlight build: only that build's bank holds them, so no other build has anything to show there, and the sections end on 2026-12-15. To go back, set this file to null.",
   "sections": [
    {
+    "id": "debug-flicker-normal",
+    "block": "carousel",
+    "size": "m",
+    "gap": 0,
+    "title": {
+     "en": "Flicker test · normal cards · debug",
+     "it": "Prova lampo · carte normali · debug"
+    },
+    "subtitle": {
+     "en": "Open one and swipe five: does a card flicker as it comes up?",
+     "it": "Aprine una e scorrine cinque: la carta lampeggia quando arriva?"
+    },
+    "source": {
+     "ids": [
+      "science-absolute-zero-5",
+      "science-absolute-zero-9",
+      "history-1848-10",
+      "history-1848-5",
+      "nature-adaptation-2",
+      "nature-adaptation-3",
+      "space-asteroid-risk-2",
+      "space-asteroid-risk-3",
+      "technology-cables-3",
+      "technology-cables-4",
+      "human_body-ageing-well-2",
+      "human_body-ageing-well-3",
+      "psychology-adaptation-2",
+      "psychology-adaptation-3",
+      "economics-1929-10",
+      "economics-1929-3"
+     ]
+    },
+    "limit": 16,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    }
+   },
+   {
+    "id": "debug-flicker-drawn",
+    "block": "carousel",
+    "size": "m",
+    "gap": 0,
+    "title": {
+     "en": "Flicker test · cards with a drawing · debug",
+     "it": "Prova lampo · carte col disegno · debug"
+    },
+    "subtitle": {
+     "en": "The same, with cards drawn as pages",
+     "it": "Lo stesso, con le carte col disegno"
+    },
+    "source": {
+     "ids": [
+      "science-extinguisher-charges",
+      "science-cold-laminar-flow-6",
+      "science-pressure-at-depth",
+      "science-cfc-ozone-hole",
+      "science-gravel-third-friction",
+      "history-walled-city-crowd",
+      "history-paradox-of-escalation",
+      "maths-mersenne-glass-rack",
+      "maths-knot-theory-renaissance",
+      "maths-mercator-russia",
+      "medicine-alcohol-group-one",
+      "economics-slot-payback",
+      "economics-restart-clock",
+      "economics-resource-curse-flask",
+      "economics-oil-countdown",
+      "psychology-gravity-hill"
+     ]
+    },
+    "limit": 16,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    }
+   },
+   {
     "id": "debug-new-jewels-1",
     "block": "carousel",
     "size": "l",
     "gap": 0,
     "title": {
-     "en": "New jewel cards · debug (114, 1/2)",
-     "it": "Carte gioiello nuove · debug (114, 1/2)"
+     "en": "New jewel cards · debug (183, 1/4)",
+     "it": "Carte gioiello nuove · debug (183, 1/4)"
     },
     "source": {
      "ids": [
+      "science-graphene-helium-seal",
+      "science-dilute-fukushima-water",
+      "science-air-torpedo-sphere",
+      "science-push-harder-spin",
+      "science-cat-already-decided",
+      "science-arlington-teflon-blast",
+      "science-spinning-x-slowdown",
+      "science-many-worlds-dice",
+      "science-reynolds-goes-up",
+      "science-zero-g-smoke",
+      "science-thermite-steel-damper",
+      "science-weight-is-a-pull",
+      "science-bomb-layer",
+      "science-little-boy-waste",
+      "science-teflon-chain-reaction",
+      "science-sketch-before-measuring",
+      "science-foraminifera-clay-line",
+      "science-fault-breaks-layer",
+      "science-volcano-depth-tsunami",
+      "science-dna-spooled-tight",
+      "science-vinegar-eats-eggshell",
+      "science-rift-to-ocean",
+      "science-frozen-compass",
+      "science-magnetic-seafloor-stripes",
+      "science-steel-bar-signal",
+      "history-ivy-mike-blocks",
+      "history-little-boy-efficiency",
+      "history-shield-or-dove",
+      "history-tsar-cloud-height",
+      "history-disarm-in-steps",
+      "history-national-redoubt",
+      "history-great-power-war",
+      "history-nato-shrinking-cushion",
+      "history-silk-road-sentence",
+      "history-elephants-foot-dose",
+      "maths-perfect-tiling",
+      "maths-duverger-two-parties",
+      "maths-storm-jar-odds",
+      "maths-kepler-proof-dial",
+      "maths-question-seventeen",
+      "maths-fibonacci-gaps",
+      "maths-borda-spoiler-dial",
+      "medicine-eclipse-blind-spot",
+      "medicine-triple-dependency-window",
+      "food-acid-squeezes-protein",
+      "food-shark-mercury-climb"
+     ]
+    },
+    "limit": 46,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    },
+    "subtitle": {
+     "en": "Each with a look and a motion of its own, drawn straight on the card",
+     "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
+    }
+   },
+   {
+    "id": "debug-new-jewels-2",
+    "block": "carousel",
+    "size": "l",
+    "gap": 0,
+    "title": {
+     "en": "New jewel cards · debug (183, 2/4)",
+     "it": "Carte gioiello nuove · debug (183, 2/4)"
+    },
+    "source": {
+     "ids": [
+      "psychology-gentle-slope-frame",
+      "human_body-hyper-g-head",
+      "human_body-sweat-evaporation-heat",
+      "human_body-habits-mark-genes",
+      "technology-tape-growing-robot",
+      "technology-tail-pull-retract",
+      "technology-milk-carton-layers",
+      "technology-gps-light-rose",
+      "technology-five-times-downforce",
+      "technology-folding-the-steel",
+      "technology-messina-record-span",
+      "technology-sludge-to-biogas",
+      "technology-induction-foil-stick",
+      "technology-xm42-flamethrower",
+      "technology-backlash-pin-hole",
+      "nature-adriatic-dry-floor",
+      "nature-adria-sea-floor",
+      "nature-everest-underwater",
+      "nature-vesuvius-ash-volume",
+      "thinking-bermuda-per-ship",
+      "weird_facts-marble-football-fields",
+      "life-border-coin-flip",
+      "life-ecuador-murder-rate",
       "science-extinguisher-charges",
       "science-cold-laminar-flow-6",
       "science-pressure-at-depth",
@@ -50,7 +226,28 @@ const String kEmbeddedRemote = r'''
       "technology-motogp-power-weight",
       "technology-tempered-glass-squeeze",
       "technology-solar-depot-grid",
-      "technology-tatara-mass-balance",
+      "technology-tatara-mass-balance"
+     ]
+    },
+    "limit": 46,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    }
+   },
+   {
+    "id": "debug-new-jewels-3",
+    "block": "carousel",
+    "size": "l",
+    "gap": 0,
+    "title": {
+     "en": "New jewel cards · debug (183, 3/4)",
+     "it": "Carte gioiello nuove · debug (183, 3/4)"
+    },
+    "source": {
+     "ids": [
       "technology-graphene-fast-charge",
       "nature-vesuvius-warning-signs",
       "nature-ice-age-italy",
@@ -84,32 +281,7 @@ const String kEmbeddedRemote = r'''
       "science-snow-flips-friction",
       "science-sludge-cannibalism",
       "science-rock-restoration",
-      "science-pacific-background-radiation"
-     ]
-    },
-    "limit": 57,
-    "audience": {
-     "platforms": [
-      "ios"
-     ],
-     "until": "2026-12-15"
-    },
-    "subtitle": {
-     "en": "Each with a look and a motion of its own, drawn straight on the card",
-     "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
-    }
-   },
-   {
-    "id": "debug-new-jewels-2",
-    "block": "carousel",
-    "size": "l",
-    "gap": 0,
-    "title": {
-     "en": "New jewel cards · debug (114, 2/2)",
-     "it": "Carte gioiello nuove · debug (114, 2/2)"
-    },
-    "source": {
-     "ids": [
+      "science-pacific-background-radiation",
       "science-one-way-light",
       "science-magnetic-stripes",
       "science-kepler-water-units",
@@ -121,7 +293,28 @@ const String kEmbeddedRemote = r'''
       "science-grape-microwave-trap",
       "science-granite-near-diamond",
       "science-fourth-power-glow",
-      "science-fallout-layer",
+      "science-fallout-layer"
+     ]
+    },
+    "limit": 46,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    }
+   },
+   {
+    "id": "debug-new-jewels-4",
+    "block": "carousel",
+    "size": "l",
+    "gap": 0,
+    "title": {
+     "en": "New jewel cards · debug (183, 4/4)",
+     "it": "Carte gioiello nuove · debug (183, 4/4)"
+    },
+    "source": {
+     "ids": [
       "science-energy-glass",
       "science-bouncing-egg-bubbles",
       "science-bio-not-biodegradable",
@@ -169,7 +362,7 @@ const String kEmbeddedRemote = r'''
       "maths-penrose-lookalikes"
      ]
     },
-    "limit": 57,
+    "limit": 45,
     "audience": {
      "platforms": [
       "ios"
@@ -1662,6 +1855,40 @@ const String kEmbeddedRemote = r'''
    {
     "id": "theme-practical-0",
     "block": "practical"
+   },
+   {
+    "id": "feed",
+    "block": "feed",
+    "title": {
+     "en": "Keep exploring",
+     "it": "Continua a esplorare",
+     "de": "Weiter entdecken",
+     "es": "Sigue explorando",
+     "fr": "Continue d'explorer",
+     "ja": "もっと探す",
+     "ko": "계속 둘러보기",
+     "nl": "Verder ontdekken",
+     "pl": "Odkrywaj dalej",
+     "pt": "Continua a explorar",
+     "ru": "Исследуй дальше",
+     "tr": "Keşfetmeye devam et",
+     "zh": "继续探索"
+    },
+    "subtitle": {
+     "en": "The same for everyone. Nothing here is picked for you.",
+     "it": "Uguale per tutti. Niente qui è scelto per te.",
+     "de": "Für alle gleich. Nichts hier ist für dich ausgesucht.",
+     "es": "Igual para todos. Nada aquí está elegido para ti.",
+     "fr": "Pareil pour tout le monde. Rien ici n'est choisi pour toi.",
+     "ja": "誰にとっても同じ。あなた向けに選んだものはありません。",
+     "ko": "누구에게나 똑같아요. 맞춤으로 고른 건 없어요.",
+     "nl": "Voor iedereen hetzelfde. Niets hier is voor jou gekozen.",
+     "pl": "Dla wszystkich to samo. Nic tu nie jest wybrane dla ciebie.",
+     "pt": "Igual para todos. Nada aqui foi escolhido para ti.",
+     "ru": "Для всех одинаково. Здесь ничего не подобрано под тебя.",
+     "tr": "Herkes için aynı. Burada hiçbir şey senin için seçilmedi.",
+     "zh": "人人看到的都一样，没有为你挑选。"
+    }
    }
   ]
  },

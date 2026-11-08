@@ -1,0 +1,241 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-spinning-tube-x -->
+<!-- Design note.
+     Thought to carry: a mark on a spinning tube has two motions at once, the tube's travel and its own spin. Spin that points backwards subtracts, so the X's velocity is reduced. Spin that points forwards adds, so the O crosses the view faster.
+     Front: the tube, flat and end-on, with one arrow for its speed. Below it sits the X, with a single curl that says its spin points backwards. The reader drags the X's arrow to guess its speed. The drawing says nothing about where on the tube the X sits.
+     Back: the same vector rows. The reader's dashed guess comes first. A dotted line carries the tube's speed down through every row. The X's backward spin pulls its red arrow short of that line, and the O's forward spin carries its red arrow past it.
+     Four labels at most on each face, no box behind the drawing, and one red for the truth. -->
+<title>The X's speed on a spinning tube</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+/* Once turned, the front leaves the view entirely (after it has turned past edge-on), so its marks never sit over the back's. */
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .22s}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.front .say{box-sizing:border-box;max-width:calc(100% - 104px);padding-right:0}
+.back{gap:1cqh}
+.back .big{margin:0;font:800 max(3.1cqh,19px)/1.1 var(--display)}
+.back .body{margin:0;font:500 max(1.85cqh,12.5px)/1.32 var(--body)}
+.back .keep{font-size:max(1.8cqh,12.5px)}
+.src{display:block;padding-right:96px;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag a guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG YOUR GUESS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">A tube flies forward. The X on it spins backwards. How fast does the X move?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A tube seen end-on with an arrow for its forward speed. Below it, the X, whose spin points backwards. Drag to set the X's speed."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag the X's arrow: how fast does it go, next to the tube?</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Slower than the tube itself.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The tube's speed is a dotted line. The X's backward spin pulls its arrow short of that line, so its velocity is reduced. The O's spin points forwards and carries its arrow past the line."></svg></div>
+        <p class="body">The X travels with the tube, but its own spin points backwards, so it takes away from the tube's speed: the X's velocity is <b>reduced</b>. The O spins the way the tube moves, so its spin adds and it crosses your view much faster.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A mark on a spinning tube moves at the tube's speed plus its spin: backward spin subtracts, forward spin adds.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script>
+(() => {
+  const INK = '#14130f', PAPER = '#fffaf0', TRUE = '#e0452b';
+  const SPIN = 0.6;                 // the spin's share of the tube's speed, for the picture only
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let g = 0.3, touched = false, answered = false, turned = false, enabled = false;
+  let F = null, guessLayer = null;
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  // Every row starts at the same x (the tube's centre), so lengths compare at a glance.
+  const geo = (W, H, fs, back) => {
+    const chipR = fs * 1.15;
+    const r = back
+      ? clamp(Math.min((H - fs * 9.6) / 2, W * .12), fs * 1.6, 56)
+      : clamp(Math.min((H - fs * 6.2) / 2 * .8, W * .13), fs * 1.8, 64);
+    const cx = Math.max(r, chipR + fs * .7) + 4;
+    const x0 = cx, L = Math.max(fs * 3, (W - x0 - fs * 7) / 1.6);
+    return {W, H, fs, r, chipR, cx, x0, L, xr: x0 + L};
+  };
+  const lab = (G, parent, x, y, t, a = {}) => {
+    const e = Kit.mk('text', {x, y, fill: INK, 'font-family': 'Figtree, var(--body), sans-serif', 'font-size': G.fs, 'font-weight': a.w || 700, 'text-anchor': a.anchor || 'start'}, parent);
+    e.textContent = t;
+    const w = e.getComputedTextLength(), an = a.anchor || 'start';
+    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const shift = Math.max(3 - left, Math.min(0, G.W - 3 - (left + w)));
+    if (shift) e.setAttribute('x', x + shift);
+    return e;
+  };
+  // A straight arrow along a row: shaft and an open head at xb.
+  const arrow = (parent, xa, y, xb, color, w, dash) => {
+    const grp = Kit.mk('g', {}, parent), dir = xb >= xa ? 1 : -1, h = Math.max(7, w * 2.4);
+    if (Math.abs(xb - xa) > h * .6) Kit.mk('line', {x1: xa, y1: y, x2: xb - dir * w * .6, y2: y, stroke: color, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-dasharray': dash || 'none'}, grp);
+    Kit.mk('path', {d: `M${xb - dir * h},${y - h * .62} L${xb},${y} L${xb - dir * h},${y + h * .62}`, stroke: color, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, grp);
+    grp.dataset.dir = dir;
+    return grp;
+  };
+  // The tube end-on: a paper ring with a hollow middle. No marks on it.
+  const tube = (G, parent, cy) => {
+    const grp = Kit.mk('g', {}, parent);
+    Kit.mk('circle', {cx: G.cx, cy, r: G.r, fill: PAPER, stroke: INK, 'stroke-width': 2.2}, grp);
+    Kit.mk('circle', {cx: G.cx, cy, r: G.r * .7, style: 'fill:var(--c)', stroke: INK, 'stroke-width': 1.6}, grp);
+    return grp;
+  };
+  // A mark (X or O): a small paper disc with its letter.
+  const chip = (G, parent, y, t) => {
+    const grp = Kit.mk('g', {}, parent), ls = G.fs * 1.3;
+    Kit.mk('circle', {cx: G.cx, cy: y, r: G.chipR, fill: PAPER, stroke: INK, 'stroke-width': 2}, grp);
+    const e = Kit.mk('text', {x: G.cx, y: y + ls * .35, fill: INK, 'font-family': 'var(--display), sans-serif', 'font-size': ls, 'font-weight': 900, 'text-anchor': 'middle'}, grp);
+    e.textContent = t;
+    return grp;
+  };
+  // Spin pointing backwards: an arc over the mark, running to the left.
+  const curl = (parent, cx, cy, R) => {
+    const grp = Kit.mk('g', {}, parent);
+    const P = d => [cx + R * Math.cos(d * Math.PI / 180), cy + R * Math.sin(d * Math.PI / 180)];
+    const [ax, ay] = P(-30), [bx, by] = P(-150);
+    Kit.mk('path', {d: `M${ax},${ay} A${R},${R} 0 0 0 ${bx},${by}`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round'}, grp);
+    const t = -150 * Math.PI / 180, tx = Math.sin(t), ty = -Math.cos(t), nx = -ty, ny = tx, h = 7;
+    Kit.mk('path', {d: `M${bx - tx * h + nx * h * .6},${by - ty * h + ny * h * .6} L${bx},${by} L${bx - tx * h - nx * h * .6},${by - ty * h - ny * h * .6}`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, grp);
+    return grp;
+  };
+
+  // ---------- the front ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), fs = clamp(f.f || 13, 12, 14);
+    F = geo(f.W, f.H, fs, false);
+    const R = F.chipR + fs * .6;
+    const total = 2 * F.r + fs * 2.1 + R + F.chipR;
+    F.cy = Math.max(F.r + 4, (F.H - total) / 2 + F.r);
+    F.yX = F.cy + F.r + fs * 2.1 + R;
+    // beat 1: the tube and its speed
+    const b1 = Kit.mk('g', {class: 'beat'}, svg);
+    tube(F, b1, F.cy);
+    arrow(b1, F.x0, F.cy, F.xr, INK, 2.6);
+    lab(F, b1, F.xr + fs * .55, F.cy + fs * .36, "tube's speed");
+    // beat 2: the X and the way it spins
+    const b2 = Kit.mk('g', {class: 'beat'}, svg);
+    curl(b2, F.cx, F.yX, R);
+    lab(F, b2, F.cx - F.chipR, F.yX - R - fs * .55, 'spins backwards', {w: 800});
+    // beat 3: the reader's arrow, then the X on top of its tail
+    guessLayer = Kit.mk('g', {class: 'beat'}, svg);
+    const b4 = Kit.mk('g', {}, svg); chip(F, b4, F.yX, 'X');
+    drawGuess();
+  }
+  const gRange = () => [(F.chipR + F.fs * .9) / F.L, (F.W - F.fs * 7.5 - F.x0) / F.L];
+  function drawGuess() {
+    if (!guessLayer) return;
+    guessLayer.innerHTML = '';
+    const tip = F.x0 + g * F.L, fs = F.fs;
+    if (touched) arrow(guessLayer, F.x0, F.yX, tip, INK, 2.6, '6 5');
+    Kit.mk('circle', {cx: tip, cy: F.yX, r: fs * .62, fill: INK, stroke: PAPER, 'stroke-width': 2}, guessLayer);
+    const lx = tip + fs * 1.1;
+    lab(F, guessLayer, lx, F.yX + fs * .36, touched ? `${g.toFixed(1)}× the tube` : '← drag →', {w: 800});
+  }
+  const setFromX = clientX => {
+    const rc = svg.getBoundingClientRect(), [a, b] = gRange();
+    g = clamp((clientX - rc.left - F.x0) / F.L, a, b);
+    drawGuess();
+  };
+  let dragging = false;
+  svg.addEventListener('pointerdown', e => {
+    if (answered || !F) return;
+    dragging = true; touched = true; svg.setPointerCapture && svg.setPointerCapture(e.pointerId);
+    setFromX(e.clientX); Kit.haptic('selection');
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) setFromX(e.clientX); });
+  const end = () => { if (!dragging) return; dragging = false; if (touched && !enabled) { enabled = true; sure.on(); } };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered) return;
+    answered = true;
+    const ok = g < 0.95, said = `${g.toFixed(1)}× the tube's speed`;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back ----------
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), fs = clamp(f.f || 13, 12, 14), G = geo(f.W, f.H, fs, true);
+    const total = 2 * G.r + fs * 9;
+    const cy = Math.max(G.r + 4, (G.H - total) / 2 + G.r);
+    const yG = cy + G.r + fs * 2.2, yX = yG + fs * 2.6, yO = yX + fs * 3.1;
+    const beats = [0, 1, 2, 3].map(() => Kit.mk('g', {}, svg2));
+    // 1. the tube's speed, carried down through every row as a dotted line
+    tube(G, beats[0], cy);
+    arrow(beats[0], G.x0, cy, G.xr, INK, 2.4);
+    lab(G, beats[0], G.xr + fs * .55, cy + fs * .36, "tube's speed");
+    Kit.mk('line', {x1: G.xr, x2: G.xr, y1: cy + fs * .8, y2: yO + fs * .9, stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '2 4', 'stroke-linecap': 'round'}, beats[0]);
+    // 2. the reader's guess, dashed
+    const gtip = G.x0 + g * G.L;
+    arrow(beats[1], G.x0, yG, gtip, INK, 2.2, '6 5');
+    lab(G, beats[1], gtip + fs * .6, yG + fs * .36, 'your guess');
+    // 3. the X: the tube carries it forward, its backward spin pulls it back
+    const xNet = G.x0 + (1 - SPIN) * G.L;
+    const xTrue = arrow(beats[2], G.x0, yX, xNet, TRUE, 4);
+    const xSpin = arrow(beats[2], G.xr, yX - fs, xNet + fs * .3, INK, 2);
+    chip(G, beats[2], yX, 'X');
+    lab(G, beats[2], G.xr + fs * .55, yX + fs * .36, 'X: slower', {w: 800});
+    // 4. the O: its spin points the way the tube moves, and adds
+    const oNet = G.x0 + (1 + SPIN) * G.L;
+    const oTrue = arrow(beats[3], G.x0, yO, oNet, TRUE, 4);
+    const oSpin = arrow(beats[3], G.xr, yO - fs, oNet, INK, 2);
+    chip(G, beats[3], yO, 'O');
+    lab(G, beats[3], oNet + fs * .55, yO + fs * .36, 'O: faster', {w: 800});
+
+    if (!animate || Kit.calm || typeof gsap === 'undefined') return;
+    const grow = (el, d) => ({scaleX: 0, transformOrigin: +el.dataset.dir > 0 ? '0% 50%' : '100% 50%', duration: d || .6, ease: 'power3.out'});
+    gsap.timeline({delay: .35})
+      .from(beats[0], {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from(beats[1], {opacity: 0, duration: .45, ease: 'power2.out'}, '+=.2')
+      .from(beats[2], {opacity: 0, duration: .3}, '+=.3')
+      .from(xTrue, grow(xTrue, .7), '<')
+      .from(xSpin, grow(xSpin, .7), '<.25')
+      .from(beats[3], {opacity: 0, duration: .3}, '+=.35')
+      .from(oTrue, grow(oTrue, .8), '<')
+      .from(oSpin, grow(oSpin, .6), '<.3');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.from('#pic .beat', {opacity: 0, y: 8, stagger: .28, duration: .5, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const rc = svg.getBoundingClientRect(), x = rc.left + F.x0 + 1.4 * F.L, y = rc.top + F.yX;
+    const ev = t => svg.dispatchEvent(new PointerEvent(t, {bubbles: true, clientX: x, clientY: y, pointerId: 1, pointerType: 'touch'}));
+    ev('pointerdown'); ev('pointermove'); ev('pointerup');
+    await wait(150);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 900 : 3200);
+  };
+})();
+Kit.single();
+</script>
+</html>

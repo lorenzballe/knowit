@@ -1,0 +1,365 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-nato-shrinking-cushion -->
+<!-- Look: a night map made of glowing dust, drawn straight on the card. Cyan NATO, ember Russia, a dim grey cushion of land between, and Ukraine in gold.
+     Interaction: drag east along the timeline (1949, the USSR falls, 1997). Comet streams of cyan dust leave the West along glowing flight paths and swarm into Poland, Romania and Bulgaria.
+     Wow: at 1997 a shockwave rolls out, the buffer states flare cyan, the "cushion" bracket snaps down to Ukraine alone, and NATO's new edge lights up as Russia's doorstep. -->
+<title>The shrinking cushion</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;background:none;border:0;box-shadow:none}
+#map{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;background:transparent}
+.say b{color:#7fd6ff}
+.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag through time · the shrinking cushion" style="--c:#0b1020;--k:#eef1ff;--edge:#05070f">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NATO MOVES EAST</span></div>
+    <h2 class="q">How did NATO's growth after the USSR shrink Russia's buffer?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="map" data-drag role="img" aria-label="A map of glowing particles: NATO in the west, Poland, Romania and Bulgaria in the middle, Ukraine, and Russia in the east, with a timeline from 1949 to 1997."></canvas>
+    </div>
+    <p class="say" id="say">Russia wants land between itself and its old rival, the US. <b>Drag east through time.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>NATO reached Russia's doorstep: only Ukraine is left as Russia's cushion.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('map'), say = Kit.$('say');
+  const COL = {nato: [110, 205, 255], rus: [255, 112, 82], buf: [150, 152, 192], ukr: [255, 206, 96]};
+  const INK = '#eef1ff', BG = '#0b1020';
+  // regions in map units; u positions are re-solved in layout() so labels never collide
+  const R = {
+    west: {u: .12, v: .48, rx: .1, ry: .38, s: 1},
+    pol:  {u: .36, v: .2, rx: .07, ry: .14, s: 2},
+    rom:  {u: .37, v: .52, rx: .065, ry: .13, s: 3},
+    bul:  {u: .36, v: .83, rx: .055, ry: .09, s: 4},
+    ukr:  {u: .6, v: .48, rx: .08, ry: .22, s: 5},
+    rus:  {u: .87, v: .48, rx: .12, ry: .42, s: 6}
+  };
+  let ctx = null, W = 0, H = 0, fs = 12, mx = 0, my = 0, mw = 0, mh = 0, x0 = 0, x1 = 0, ty0 = 0, lab = 0, by = 0, capY = 0;
+  let XE = 0, XR = 0, XB0 = 0, WX = 0, compact = false, roomy = true;
+  let mono = 'monospace';
+  const S = {t: 0};
+  const FX = {ring: 0, ra: 0, door: 0, flare: 0};
+  let revealed = false, touched = false, dragging = false, pointer = null, phase = 0, running = false, tween = null;
+
+  // ---------- the dust ----------
+  const sample = reg => {
+    const a = Kit.rnd() * Math.PI * 2, r = Math.sqrt(Kit.rnd());
+    const rr = 1 + .14 * Math.sin(3 * a + reg.s) + .07 * Math.sin(5 * a + 2 * reg.s);
+    return [Math.cos(a) * r * rr, Math.sin(a) * r * rr];
+  };
+  const P = [];
+  const add = (type, reg, extra = {}) => {
+    const [ou, ov] = sample(R[reg]);
+    P.push(Object.assign({type, reg, ou, ov, x: NaN, y: NaN, vx: 0, vy: 0,
+      ph: Kit.rnd() * 6.28, f: .6 + Kit.rnd() * 1.4, sz: .7 + Kit.rnd() * 1.1, k: .025 + Kit.rnd() * .035, tw: Kit.rnd() * 6.28}, extra));
+  };
+  for (let i = 0; i < 380; i++) add('w', 'west');
+  const dests = [['pol', 110], ['rom', 100], ['bul', 60]];
+  for (const [reg, n] of dests) {
+    for (let i = 0; i < n; i++) add('b', reg);
+    for (let i = 0; i < Math.round(n * .95); i++) {
+      const [bu, bv] = sample(R[reg]);
+      add('m', 'west', {bu, bv, d: Kit.rnd() * .55, lift: Kit.rnd() - .25, dest: reg});
+    }
+  }
+  for (let i = 0; i < 170; i++) add('u', 'ukr');
+  for (let i = 0; i < 480; i++) add('r', 'rus');
+
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const ease = e => e < .5 ? 4 * e * e * e : 1 - Math.pow(-2 * e + 2, 3) / 2;
+  const mix = (a, b, q) => [a[0] + (b[0] - a[0]) * q, a[1] + (b[1] - a[1]) * q, a[2] + (b[2] - a[2]) * q];
+  const rgba = (c, a) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a})`;
+  const PX = u => mx + u * mw, PY = v => my + v * mh;
+  const kOf = () => clamp(S.t - 1);
+  const bufQ = (u, k) => clamp((k * 1.4 - (u - .3) * 2) / .6);
+  const home = (reg, ou, ov) => [R[reg].u + ou * R[reg].rx, R[reg].v + ov * R[reg].ry];
+
+  function target(p, k) {
+    const [hu, hv] = home(p.reg, p.ou, p.ov);
+    if (p.type === 'm') {
+      const [bu, bv] = home(p.dest, p.bu, p.bv);
+      const e = ease(clamp((k - p.d * .6) / .4));
+      return [hu + (bu - hu) * e, hv + (bv - hv) * e - Math.sin(Math.PI * e) * .16 * p.lift];
+    }
+    return [hu, hv];
+  }
+  function colour(p, k) {
+    if (p.type === 'w' || p.type === 'm') return COL.nato;
+    if (p.type === 'b') return mix(COL.buf, COL.nato, bufQ(R[p.reg].u, k));
+    if (p.type === 'u') return COL.ukr;
+    return COL.rus;
+  }
+
+  // ---------- layout ----------
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    const cs = getComputedStyle(Kit.$('card'));
+    mono = (cs.getPropertyValue('--mono') || 'monospace').trim() || 'monospace';
+    fs = Math.max(12, Math.min(14, W / 27));
+    if (H < 240) fs = 12;
+    compact = H < fs * 15; roomy = H > fs * 21;
+    mx = fs * .5; mw = W - fs;
+    by = fs * 1.55;
+    lab = compact ? fs * 1.5 : fs * 1.85;
+    ty0 = H - lab - fs * .45;
+    x0 = W * .1; x1 = W * .9;
+    my = by + fs * .75;
+    const bottom = ty0 - fs * (compact ? 1.05 : 1.5) - (roomy ? fs * 1.6 : 0);
+    mh = Math.max(24, bottom - my);
+    capY = bottom + fs * 1.2;
+
+    // solve horizontal positions from real label widths
+    ctx.font = `700 ${fs}px ${mono}`;
+    const tw = t => ctx.measureText(t).width;
+    const hb = Math.max(tw('BULGARIA'), tw('ROMANIA'), tw('POLAND')) / 2;
+    const hAllies = tw('US + allies') / 2;
+    WX = Math.max(mx + mw * .12, hAllies + 4);
+    const xb = Math.max(mx + mw * .35, WX + hAllies + fs * .6 + hb);
+    XE = Math.max(mx + mw * .5, xb + hb + fs * 1.7);
+    XR = mx + mw * .745;
+    XB0 = xb - Math.max(hb, mw * .07) - fs * .4;
+    R.west.u = (WX - mx) / mw; R.west.rx = Math.min(.1, (WX - mx) / mw * .9);
+    R.pol.u = (xb - mx) / mw; R.rom.u = R.pol.u + .012; R.bul.u = R.pol.u - .006;
+    R.ukr.u = ((XE + XR) / 2 - mx) / mw; R.ukr.rx = Math.min(.085, (XR - XE) / 2 / mw * .8);
+    R.rus.u = ((XR + mx + mw) / 2 - mx) / mw; R.rus.rx = Math.min(.13, (mx + mw - XR) / 2 / mw * .9);
+    for (const p of P) if (isNaN(p.x)) { const [u, v] = target(p, kOf()); p.x = PX(u); p.y = PY(v); }
+    draw(performance.now() / 1000);
+  }
+
+  // ---------- drawing ----------
+  function halo(x, y, w, h, a = .6) {
+    const rx = w / 2 + 6, ry = h;
+    ctx.save(); ctx.translate(x, y); ctx.scale(1, ry / rx);
+    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
+    g.addColorStop(0, `rgba(11,16,32,${a})`); g.addColorStop(.6, `rgba(11,16,32,${a * .6})`); g.addColorStop(1, 'rgba(11,16,32,0)');
+    ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore();
+  }
+  function text(t, x, y, o = {}) {
+    const s = o.s || fs;
+    ctx.font = `${o.w || 700} ${s}px ${o.f || mono}`;
+    const w = ctx.measureText(t).width, al = o.align || 'center';
+    let left = al === 'center' ? x - w / 2 : al === 'right' ? x - w : x;
+    left = Math.max(3, Math.min(W - 3 - w, left));
+    if (o.halo) halo(left + w / 2, y - s * .35, w, s * 1.1, (o.a == null ? 1 : o.a) * .65);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    ctx.globalAlpha = o.a == null ? 1 : o.a;
+    ctx.lineWidth = 3.5; ctx.strokeStyle = BG; ctx.lineJoin = 'round';
+    ctx.strokeText(t, left, y);
+    ctx.fillStyle = o.c || INK; ctx.fillText(t, left, y);
+    ctx.globalAlpha = 1;
+    return [left, w];
+  }
+  // soft elliptical glow that always fades out before the canvas edge (no visible box)
+  function glow(cx, cy, rx, ry, c, a) {
+    rx = Math.min(rx, cx - 1, W - cx - 1); ry = Math.min(ry, cy - 1, H - cy - 1);
+    if (rx < 4 || ry < 4) return;
+    ctx.save(); ctx.translate(cx, cy); ctx.scale(1, ry / rx);
+    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
+    g.addColorStop(0, rgba(c, a)); g.addColorStop(.55, rgba(c, a * .4)); g.addColorStop(1, rgba(c, 0));
+    ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore();
+  }
+
+  function draw(time) {
+    if (!ctx) return;
+    const k = kOf(), calm = Kit.calm;
+    ctx.clearRect(0, 0, W, H);
+
+    // a faint graticule, curved like a globe, fading toward the edges
+    ctx.save(); ctx.lineWidth = 1;
+    const gv = ctx.createLinearGradient(0, 0, W, 0);
+    gv.addColorStop(0, 'rgba(238,241,255,0)'); gv.addColorStop(.15, 'rgba(238,241,255,.065)');
+    gv.addColorStop(.85, 'rgba(238,241,255,.065)'); gv.addColorStop(1, 'rgba(238,241,255,0)');
+    ctx.strokeStyle = gv;
+    for (let i = 1; i < 6; i++) { const y = my + mh * i / 6; ctx.beginPath(); ctx.moveTo(mx, y + mh * .05); ctx.quadraticCurveTo(W / 2, y - mh * .07, W - mx, y + mh * .05); ctx.stroke(); }
+    for (let i = 1; i < 8; i++) { const x = mx + mw * i / 8; ctx.beginPath(); ctx.moveTo(x - mw * .02, my); ctx.quadraticCurveTo(x + (x - W / 2) * .08, my + mh / 2, x - mw * .02, my + mh); ctx.stroke(); }
+    ctx.restore();
+
+    // region glows
+    ctx.globalCompositeOperation = 'lighter';
+    const rg = (reg, c, a, m = 1.6) => { const g = R[reg]; glow(PX(g.u), PY(g.v), g.rx * mw * m, g.ry * mh * 1.35, c, a); };
+    rg('west', COL.nato, .17, 2.2); rg('rus', COL.rus, .15, 1.8); rg('ukr', COL.ukr, .13 + FX.door * .1, 1.9);
+    for (const r of ['pol', 'rom', 'bul']) { const q = bufQ(R[r].u, k); rg(r, mix(COL.buf, COL.nato, q), .08 + q * .09 + FX.flare * .22, 2); }
+
+    // flight paths while NATO grows east
+    const amp = Math.sin(Math.PI * k);
+    if (amp > .01) {
+      ctx.save(); ctx.lineWidth = 1.3; ctx.setLineDash([2, 7]); ctx.lineDashOffset = calm ? 0 : -time * 30;
+      for (const r of ['pol', 'rom', 'bul']) {
+        const sx = PX(R.west.u + R.west.rx * .5), sy = PY(R.west.v), ex = PX(R[r].u - R[r].rx * .4), ey = PY(R[r].v);
+        ctx.strokeStyle = rgba(COL.nato, .45 * amp);
+        ctx.beginPath(); ctx.moveTo(sx, sy); ctx.quadraticCurveTo((sx + ex) / 2, Math.min(sy, ey) - mh * .16, ex, ey); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // the particles
+    for (const p of P) {
+      const [u, v] = target(p, k);
+      let tx = PX(u), ty = PY(v);
+      if (calm) { p.x = tx; p.y = ty; p.vx = p.vy = 0; }
+      else {
+        tx += Math.sin(time * p.f + p.ph) * 2.2; ty += Math.cos(time * p.f * .8 + p.ph) * 2.2;
+        p.vx += (tx - p.x) * p.k; p.vy += (ty - p.y) * p.k;
+        if (pointer) {
+          const dx = p.x - pointer.x, dy = p.y - pointer.y, d2 = dx * dx + dy * dy, RR = fs * fs * 16;
+          if (d2 < RR && d2 > 1) { const s = (1 - d2 / RR) * 1.4 / Math.sqrt(d2); p.vx += dx * s - dy * s * .5; p.vy += dy * s + dx * s * .5; }
+        }
+        p.vx *= .86; p.vy *= .86; p.x += p.vx; p.y += p.vy;
+      }
+      const c = colour(p, k), spd = Math.hypot(p.vx, p.vy), sp = Math.min(1, spd / 4);
+      const a = clamp(calm ? .85 : .55 + .35 * Math.sin(time * 2 + p.tw) + sp * .3, .2, 1);
+      const s = p.sz * (1 + sp * .6);
+      if (spd > 1.2) { // comet tail
+        ctx.strokeStyle = rgba(c, a * .45); ctx.lineWidth = s * 1.3; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(p.x - p.vx * 3, p.y - p.vy * 3); ctx.lineTo(p.x, p.y); ctx.stroke();
+      }
+      ctx.fillStyle = rgba(c, a);
+      ctx.beginPath(); ctx.arc(p.x, p.y, s, 0, 6.29); ctx.fill();
+    }
+
+    // the shockwave at 1997
+    if (FX.ra > 0) {
+      const cx = XE, cy = PY(.5);
+      ctx.strokeStyle = rgba(COL.nato, FX.ra * .8); ctx.lineWidth = 2 + 6 * FX.ra;
+      ctx.beginPath(); ctx.arc(cx, cy, FX.ring, 0, 6.29); ctx.stroke();
+      ctx.strokeStyle = rgba([255, 255, 255], FX.ra * .4); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, FX.ring * .82, 0, 6.29); ctx.stroke();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+
+    // region labels, each on a soft dark halo so the dust never eats them
+    text('NATO', WX, PY(R.west.v) - fs * .2, {s: fs * 1.25, w: 800, c: '#bfeaff', halo: 1});
+    text('US + allies', WX, PY(R.west.v) + fs * 1.15, {s: fs, w: 600, c: '#bfeaff', a: .9, halo: 1});
+    const labs = {};
+    labs.pol = text('POLAND', PX(R.pol.u), PY(R.pol.v) + fs * .35, {halo: 1});
+    labs.rom = text('ROMANIA', PX(R.rom.u), PY(R.rom.v) + fs * .35, {halo: 1});
+    labs.bul = text('BULGARIA', PX(R.bul.u), PY(R.bul.v) + fs * .35, {halo: 1});
+    text('UKRAINE', PX(R.ukr.u), PY(R.ukr.v) + fs * .35, {c: '#ffe39a', halo: 1});
+    text(S.t < .5 ? 'USSR' : 'RUSSIA', PX(R.rus.u), PY(R.rus.v) + fs * .4, {s: fs * 1.2, w: 800, c: '#ffc0ad', halo: 1});
+
+    // the doorstep: NATO's new edge
+    if (FX.door > 0) {
+      const top = PY(.02), bot = PY(.98);
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      glow(XE, (top + bot) / 2, fs * 1.2, (bot - top) * .55, COL.nato, .14 * FX.door);
+      ctx.strokeStyle = rgba(COL.nato, .95 * FX.door); ctx.lineWidth = 2; ctx.setLineDash([5, 5]); ctx.lineDashOffset = calm ? 0 : -time * 14;
+      ctx.beginPath(); ctx.moveTo(XE, top); ctx.lineTo(XE, top + (bot - top) * FX.door); ctx.stroke();
+      ctx.restore();
+      // containment chevrons, pushing east toward the edge
+      ctx.strokeStyle = rgba(COL.nato, FX.door); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.setLineDash([]);
+      for (const r of ['pol', 'rom', 'bul']) {
+        const [l, w] = labs[r], cx = l + w + fs * .35, cy = PY(R[r].v);
+        for (let i = 0; i < 2; i++) {
+          const ox = Math.min(cx + i * fs * .45 + (calm ? 0 : Math.sin(time * 3 + i) * 1.5), XE - fs * .45);
+          ctx.globalAlpha = i ? 1 : .55;
+          ctx.beginPath(); ctx.moveTo(ox, cy - fs * .3); ctx.lineTo(ox + fs * .3, cy); ctx.lineTo(ox, cy + fs * .3); ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+      if (roomy) text("NATO on Russia's doorstep", XE, capY, {c: '#9fe0ff', a: FX.door});
+    }
+
+    // the cushion bracket
+    const xa = XB0 + (XE - XB0) * ease(k) + 2, xb = XR - 2;
+    ctx.strokeStyle = rgba(COL.ukr, .85); ctx.lineWidth = 1.6 + FX.flare * 2; ctx.setLineDash([]); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(xa, by + fs * .55); ctx.lineTo(xa, by); ctx.lineTo(xb, by); ctx.lineTo(xb, by + fs * .55); ctx.stroke();
+    text(k > .95 ? 'CUSHION: ONLY UKRAINE' : 'THE CUSHION', (xa + xb) / 2, by - fs * .5, {c: '#ffd970'});
+
+    // the timeline
+    const tx = x0 + (x1 - x0) * S.t / 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(238,241,255,.18)'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x0, ty0); ctx.lineTo(x1, ty0); ctx.stroke();
+    const tg = ctx.createLinearGradient(x0, 0, x1, 0);
+    tg.addColorStop(0, 'rgba(110,205,255,.35)'); tg.addColorStop(1, 'rgba(160,230,255,1)');
+    ctx.strokeStyle = tg;
+    ctx.beginPath(); ctx.moveTo(x0, ty0); ctx.lineTo(tx, ty0); ctx.stroke();
+    ['1949', 'USSR FALLS', '1997'].forEach((s, i) => {
+      const sx = x0 + (x1 - x0) * i / 2, on = S.t >= i - .02;
+      ctx.fillStyle = on ? '#9fe0ff' : 'rgba(238,241,255,.4)';
+      ctx.beginPath(); ctx.arc(sx, ty0, 3.5, 0, 6.29); ctx.fill();
+      text(s, sx, ty0 + lab, {w: on ? 800 : 600, c: on ? '#cfeeff' : INK, a: on ? 1 : .6});
+    });
+    ctx.globalCompositeOperation = 'lighter';
+    const hr = fs * 2.2, hg = ctx.createRadialGradient(tx, ty0, 0, tx, ty0, hr);
+    hg.addColorStop(0, 'rgba(140,215,255,.6)'); hg.addColorStop(1, 'rgba(140,215,255,0)');
+    ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(tx, ty0, hr, 0, 6.29); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+    if (!touched && !calm) {
+      const pr = (time * .8) % 1;
+      ctx.strokeStyle = `rgba(159,224,255,${1 - pr})`; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(tx, ty0, fs * .7 + pr * fs * 1.2, 0, 6.29); ctx.stroke();
+      ctx.strokeStyle = 'rgba(159,224,255,.9)';
+      const ax = tx + fs * 1.4 + Math.sin(time * 4) * 3;
+      ctx.beginPath(); ctx.moveTo(ax, ty0 - fs * .35); ctx.lineTo(ax + fs * .35, ty0); ctx.lineTo(ax, ty0 + fs * .35); ctx.stroke();
+    }
+    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(tx, ty0, fs * .62, 0, 6.29); ctx.fill();
+    ctx.fillStyle = '#6fcdff'; ctx.beginPath(); ctx.arc(tx, ty0, fs * .3, 0, 6.29); ctx.fill();
+  }
+
+  function loop() { draw(performance.now() / 1000); requestAnimationFrame(loop); }
+
+  // ---------- story ----------
+  function onPhase() {
+    const n = Math.round(S.t);
+    if (n === phase) return;
+    phase = n; Kit.haptic('selection');
+    if (revealed) return;
+    if (n === 1) say.innerHTML = 'The USSR falls. A wide cushion of land still lies between NATO and Russia. <b>Keep dragging east.</b>';
+    if (n === 0) say.innerHTML = '1949: the US founds NATO, allies who defend each other if attacked. <b>Drag east through time.</b>';
+  }
+  function reveal() {
+    if (revealed) return; revealed = true;
+    Kit.haptic('success');
+    say.innerHTML = 'After the USSR fell, <b>from 1997</b> NATO invited Central-Eastern Europe in: Poland, Romania and Bulgaria took on containing Russia.';
+    Kit.show('keep');
+    if (Kit.calm) { FX.door = 1; return; }
+    for (const p of P) if (p.type === 'b' || p.type === 'm') { const a = Kit.rnd() * 6.28, s = 3 + Kit.rnd() * 6; p.vx += Math.cos(a) * s; p.vy += Math.sin(a) * s; }
+    gsap.timeline()
+      .fromTo(FX, {ring: 0, ra: 1}, {ring: Math.max(W, H) * .9, ra: 0, duration: 1.4, ease: 'expo.out'}, 0)
+      .fromTo(FX, {flare: 1}, {flare: 0, duration: 1.2, ease: 'power2.out'}, 0)
+      .to(FX, {door: 1, duration: 1, ease: 'power3.inOut'}, .25);
+    gsap.from('#say, #keep', {opacity: 0, y: 10, stagger: .1, duration: .5, ease: 'power3.out'});
+  }
+  function goTo(n) {
+    if (tween) tween.kill();
+    const done = () => { onPhase(); if (n === 2) reveal(); };
+    if (Kit.calm) { S.t = n; done(); return; }
+    tween = gsap.to(S, {t: n, duration: .7, ease: 'power3.out', onUpdate: onPhase, onComplete: done});
+  }
+
+  // ---------- touch ----------
+  const local = e => { const r = cv.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+  const setT = x => { S.t = clamp((x - x0) / (x1 - x0) * 2, 0, 2); onPhase(); if (S.t > 1.97) reveal(); };
+  cv.addEventListener('pointerdown', e => {
+    dragging = true; touched = true; if (tween) tween.kill();
+    cv.setPointerCapture(e.pointerId); pointer = local(e); setT(pointer.x);
+  });
+  cv.addEventListener('pointermove', e => { if (!dragging) return; pointer = local(e); setT(pointer.x); });
+  const end = () => { if (!dragging) return; dragging = false; pointer = null; goTo(Math.round(S.t)); };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+  new ResizeObserver(() => { if (ctx) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (!Kit.calm) for (const p of P) { p.x = Kit.rnd() * W; p.y = Kit.rnd() * H; p.vx = (Kit.rnd() - .5) * 6; p.vy = (Kit.rnd() - .5) * 6; }
+    if (!running) { running = true; requestAnimationFrame(loop); }
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!running) { running = true; requestAnimationFrame(loop); }
+    touched = true; goTo(2);
+    await wait(Kit.calm ? 80 : 1600);
+    reveal(); FX.door = 1;
+    await wait(Kit.calm ? 80 : 1300);
+  };
+})();
+Kit.single();
+</script>
+</html>

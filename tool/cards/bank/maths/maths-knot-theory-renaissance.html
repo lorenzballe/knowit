@@ -1,454 +1,334 @@
-<!doctype html>
-<!-- slug: maths-knot-theory-renaissance -->
-<!-- Look: a cyanotype blueprint. White hairlines on Prussian blue, a drafted tube-knot atom that slowly turns in the ether, engineer's dimension arrows, a rubber FAILED stamp, and dashed "to be drawn" ghosts of the future.
-     Interaction: drag a little trefoil along a drafted timeline: past Kelvin's knotted atom (stamping it FAILED and stopping its spin), then through a century of loops of pure maths.
-     Wow: at "today" the knot splits in three and races down drafted branches that ink the ghost headphones, DNA and crystal lattice into solid lines. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Knot theory's renaissance</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-knots-century-later -->
+<!-- Thought to carry: a theory can die and still leave its maths behind. After Kelvin's knotted atoms failed, knot maths ran for about a century on curiosity alone before it found real jobs.
+     Front: every year after the theory failed is one dot, in rows of ten, beside a clean trefoil (Kelvin's knotted atom) and an empty dashed circle, "first real job?". The reader taps how many years they think it waited, then says how sure they are.
+     Back: the same years. A small trefoil heads the grid. The first hundred dots, the century the video describes, are filled white and bracketed "a century of curiosity alone". After it, a leader to "real jobs, in recent years" and three flat objects: a headphone tangle, a knotted catheter, a chemotherapy drip. The reader's guess is a red dot, with a line measuring how far it sits from the end of that century. -->
+<title>Knot theory's century of patience</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    radial-gradient(120% 70% at 25% 0%, rgba(160,205,255,.14), transparent 60%),
-    radial-gradient(110% 70% at 85% 105%, rgba(2,14,32,.45), transparent 62%),
-    linear-gradient(rgba(220,236,255,.06) 1px, transparent 1px) 0 0/22px 22px,
-    linear-gradient(90deg, rgba(220,236,255,.06) 1px, transparent 1px) 0 0/22px 22px,
-    #12406f;
-}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;overflow:visible}
-#pic:active{cursor:grabbing}
-.flow{animation:flow 2.6s linear infinite}
-@keyframes flow{to{stroke-dashoffset:-27}}
-.halo{animation:spin 7s linear infinite;transform-box:fill-box;transform-origin:center}
-@keyframes spin{to{transform:rotate(360deg)}}
-.kit-calm .flow,.kit-calm .halo{animation:none}
-.say b{font-weight:800}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.3cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:pointer}
+.front .say{margin:0;min-height:2.6em}
+.front #sure{visibility:hidden}
+.turn:not(.over) .front #sure.shown{visibility:visible}
+.face .note{margin:0;line-height:1.3}
+.face .foot{min-height:48px;flex:0 0 auto}
+.front .hint{font-size:max(1.6cqh,13px);line-height:1.3}
+.back .big{margin:0;font-size:max(2.7cqh,19px);line-height:1.12}
+.back .sub{margin:0;font-size:13px;font-weight:600;line-height:1.3}
+.back .body{margin:0;font-size:max(1.7cqh,13px);line-height:1.3}
+.q,.say,.body,.keep,.src,.hint,.big{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Drag the knot · a century of curiosity" style="--c:#12406f;--k:#eaf4ff;--edge:#0a2747">
+<article class="card" id="card" data-topic="maths" data-kind="Tap a year · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">KNOT THEORY</span></div>
-    <h2 class="q">How did a failed theory of atoms become a useful science?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" data-drag role="img" aria-label="A blueprint timeline: Kelvin's knotted vortex atom stamped failed in 1889, a century of looping pure maths, then three branches today: headphones, medicine and materials."></svg>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Kelvin's knotted atoms failed. How long did knot maths wait for a real job?</h2>
+        <p class="say" id="say"><b>Tap a dot</b> for how many years you think it waited.</p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="One dot for each year after Kelvin's knotted-atom theory failed, in rows of ten, beside a trefoil knot and an empty circle for the first real job. Tap how many years you think it waited."></svg></div>
+        <div id="sure"></div>
+        <p class="note"><span class="hint">Each dot is one year after the theory failed, in rows of ten.</span></p>
+        <div class="foot"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big" id="big">It took about a century.</p>
+        <p class="sub" id="sub"></p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same years. The first hundred, a century of curiosity alone, are filled in. After them, real jobs: a headphone tangle, a knotted catheter and a chemotherapy drip."></svg></div>
+        <p class="body">Today the same maths reaches headphone tangles, catheters, materials and chemotherapy.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> When a theory dies, ask what maths it left behind. That part may outlive it by a century.</div>
+        <p class="note"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></p>
+        <div class="foot"></div>
+      </section>
     </div>
-    <p class="say" id="say">Drag the little knot down the blueprint, from Kelvin’s atoms to today.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Maths done for pure curiosity can wait a century, then find real uses.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#eaf4ff', BLUE = '#12406f', TILT = 1.05, TN = 160;
-  const SAY = {
-    fail: '1889: Kelvin admits his knotted atoms have failed. “The difficulties are so great.” <b>Keep dragging.</b>',
-    mid: 'For the next century, knots were pure maths, studied out of nothing but curiosity. <b>Keep dragging.</b>',
-    why: 'Kelvin’s knotted atoms failed, so knots lived a century as pure maths. Now they turn up in tangled earbud wires, surgical catheters, chemotherapy and new materials. A study of tangles even won an Ig Nobel Prize.'
+  const svg1 = Kit.$('pic'), svg2 = Kit.$('pic2');
+  const ACC = '#d23f27';         // red: the reader's guess
+  const N = 150, USE = 100;      // dots = years after the theory failed; "for the next century" of curiosity alone
+  let guess = null, conf = null, locked = false, turned = false, G = null;
+  const css = n => getComputedStyle(Kit.$('card')).getPropertyValue(n).trim() || '#111';
+  const f1 = n => n.toFixed(1);
+
+  // cell coordinates: column 0..9, row 0 = years 0-9 after the failure
+  const XY = (g, cx, cy) => [g.gx + (cx + .5) * g.c, g.top + (cy + .5) * g.c];
+  const pos = (g, n) => { const p = XY(g, n % 10, Math.floor(n / 10)); return {x: p[0], y: p[1]}; };
+
+  const T = (p, x, y, s, g, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: css('--k'), 'font-size': a.fs || g.fs,
+      style: `font-family:var(--body);font-weight:${a.w || 700}`}, a.attrs || {}), p);
+    e.textContent = s; return e;
   };
-  const st = {p: 0};
-  let W = 0, H = 0, fs = 13, m = 12, pts = [], cum = [], total = 1, pA = .2, pT0 = .3, pT1 = .8, iEnd = 1, cur = 0;
-  let E = {}, mp = null, revealTl = null, streams = [], phi = 0, spd = .011;
-  let failed = false, mid = false, ending = false, revealed = false, whyShown = false, touched = false, entered = false, dragging = false;
-
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const S = x => Object.assign({fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, x || {});
-  function text(p, x, y, s, o = {}) {
-    const a = Object.assign({x, y, fill: INK, 'text-anchor': 'middle'}, o.attr || {});
-    a.style = `font:${o.w || 700} ${o.size || fs}px ${o.font || 'var(--body)'};letter-spacing:${o.ls || 0}em`;
-    const e = mk('text', a, p); e.textContent = s;
-    const w = e.getComputedTextLength(), an = a['text-anchor'];
-    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
-    const sh = Math.max(3 - left, Math.min(0, W - 3 - (left + w)));
-    if (sh) e.setAttribute('x', x + sh);
-    return e;
-  }
-  function cubic(a, b, c, d, n, first) {
-    for (let i = first ? 0 : 1; i <= n; i++) {
-      const t = i / n, u = 1 - t;
-      pts.push([u*u*u*a[0] + 3*u*u*t*b[0] + 3*u*t*t*c[0] + t*t*t*d[0], u*u*u*a[1] + 3*u*u*t*b[1] + 3*u*t*t*c[1] + t*t*t*d[1]]);
-    }
-  }
-  // A (2,3) torus knot: the trefoil Kelvin imagined as a knotted vortex atom, turning about its axis and tilted into perspective.
-  function torusKnot(cx, cy, R, r, T, n, ph = 0) {
-    const P = [];
-    for (let i = 0; i <= n; i++) {
-      const t = i / n * Math.PI * 2, q = R + r * Math.cos(3 * t);
-      const x = q * Math.cos(2 * t + ph), y = q * Math.sin(2 * t + ph), z = r * Math.sin(3 * t);
-      P.push([cx + x, cy + y * Math.cos(T) + z * Math.sin(T), -y * Math.sin(T) + z * Math.cos(T)]);
-    }
-    return P;
-  }
-  // A hollow tube drawn far-to-near, so every crossing goes truly over or under. Pooled so it can turn live.
-  function tubePool(par, n, w, lw) {
-    const o = [], i = [];
-    for (let k = 0; k < n; k++) {
-      o.push(mk('line', {stroke: INK, 'stroke-width': w}, par));
-      i.push(mk('line', {stroke: BLUE, 'stroke-width': w - 2 * lw, 'stroke-linecap': 'round'}, par));
-    }
-    return {o, i, n};
-  }
-  function paintTube(tp, P) {
-    const idx = [];
-    for (let k = 0; k < P.length - 1; k++) idx.push(k);
-    idx.sort((u, v) => (P[u][2] + P[u+1][2]) - (P[v][2] + P[v+1][2]));
-    idx.forEach((s, k) => {
-      const a = P[s], c = P[s+1];
-      for (const e of [tp.o[k], tp.i[k]]) {
-        e.setAttribute('x1', a[0].toFixed(1)); e.setAttribute('y1', a[1].toFixed(1));
-        e.setAttribute('x2', c[0].toFixed(1)); e.setAttribute('y2', c[1].toFixed(1));
+  function wrap(p, x, y, str, maxW, g, a = {}) {
+    const e = T(p, x, y, '', g, a), lh = g.fs * 1.3;
+    let line = [], n = 0, ts = Kit.mk('tspan', {x, dy: 0}, e);
+    for (const w of str.split(' ')) {
+      line.push(w); ts.textContent = line.join(' ');
+      if (ts.getComputedTextLength() > maxW && line.length > 1) {
+        line.pop(); ts.textContent = line.join(' '); line = [w]; n++;
+        ts = Kit.mk('tspan', {x, dy: lh}, e); ts.textContent = w;
       }
-    });
-  }
-  const trefoilD = sz => { let d = ''; for (let i = 0; i <= 90; i++) { const t = i / 90 * Math.PI * 2; d += (i ? 'L' : 'M') + ((Math.sin(t) + 2 * Math.sin(2*t)) * sz / 3).toFixed(2) + ',' + ((Math.cos(t) - 2 * Math.cos(2*t)) * sz / 3).toFixed(2); } return d + 'Z'; };
-  const rr = (x, y, w, h, r) => `M${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h-r}Q${x+w},${y+h} ${x+w-r},${y+h}H${x+r}Q${x},${y+h} ${x},${y+h-r}V${y+r}Q${x},${y} ${x+r},${y}Z`;
-
-  // ---------- the three icons of today ----------
-  function icoHead(g, cx, cy, s) {
-    mk('path', S({d: `M${cx-.7*s},${cy+.05*s} C${cx-.7*s},${cy-s} ${cx+.7*s},${cy-s} ${cx+.7*s},${cy+.05*s}`, 'stroke-width': 1.8}), g);
-    mk('path', S({d: `M${cx-.58*s},${cy+.02*s} C${cx-.58*s},${cy-.8*s} ${cx+.58*s},${cy-.8*s} ${cx+.58*s},${cy+.02*s}`, 'stroke-width': 1, opacity: .6}), g);
-    for (const x of [cx - .72*s, cx + .72*s]) {
-      mk('path', S({d: rr(x - .2*s, cy - .08*s, .4*s, .62*s, .14*s), fill: BLUE}), g);
-      mk('path', S({d: `M${x},${cy+.04*s}V${cy+.42*s}`, 'stroke-width': 1, opacity: .7}), g);
     }
-    mk('path', S({d: `M${cx-.72*s},${cy+.54*s} C${cx-.6*s},${cy+1.2*s} ${cx+.4*s},${cy+.5*s} ${cx+.05*s},${cy+.8*s} C${cx-.25*s},${cy+1.02*s} ${cx+.45*s},${cy+1.05*s} ${cx+.72*s},${cy+.54*s}`, 'stroke-width': 1.3}), g);
+    return {el: e, n: n + 1};
   }
-  function icoDNA(g, cx, cy, s) {
-    const n = 60, f = (y, ph) => cx + .42 * s * Math.sin((y - cy) / s * 3.3 + ph);
-    for (const ph of [0, Math.PI]) {
-      let d = '';
-      for (let i = 0; i <= n; i++) { const y = cy - .95*s + 1.9*s * i / n; d += (i ? 'L' : 'M') + f(y, ph).toFixed(1) + ',' + y.toFixed(1); }
-      mk('path', S({d, 'stroke-width': 1.8}), g);
+  const lead = (p, x1, y1, x2, y2, ink) => Kit.mk('path', {
+    d: Math.abs(y2 - y1) < .5 ? `M${f1(x1)} ${f1(y1)}H${f1(x2)}` : `M${f1(x1)} ${f1(y1)}H${f1(Math.max(x1, x2 - 10))}L${f1(x2)} ${f1(y2)}`,
+    fill: 'none', stroke: ink, 'stroke-width': 1.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
+
+  // A trefoil: one closed stroke, then the three over-crossings redrawn with equal clean breaks.
+  function trefoil(p, cx, cy, bw, bh, ink, bg, wf, wmin, wmax) {
+    const M = 240, raw = [];
+    for (let i = 0; i < M; i++) { const t = i / M * Math.PI * 2;
+      raw.push([Math.sin(t) + 2 * Math.sin(2 * t), Math.cos(t) - 2 * Math.cos(2 * t), -Math.sin(3 * t)]); }
+    const xs = raw.map(q => q[0]), ys = raw.map(q => q[1]);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    let k = Math.min(bw / (x1 - x0), bh / (y1 - y0));
+    const w = Math.max(wmin, Math.min(wmax, (x1 - x0) * k * wf));
+    k = Math.min((bw - w) / (x1 - x0), (bh - w) / (y1 - y0));
+    const ox = cx - (x0 + x1) / 2 * k, oy = cy - (y0 + y1) / 2 * k;
+    const P = raw.map(q => [ox + q[0] * k, oy + q[1] * k, q[2]]);
+    const gap = Math.max(1.2, w * .55), grp = Kit.mk('g', {}, p);
+    Kit.mk('path', {d: 'M' + P.map(q => f1(q[0]) + ' ' + f1(q[1])).join('L') + 'Z', fill: 'none', stroke: ink,
+      'stroke-width': w, 'stroke-linejoin': 'round'}, grp);
+    const seg = i => [P[i % M], P[(i + 1) % M]];
+    const X = (a, b, c, d) => { const r = (b[0] - a[0]) * (d[1] - c[1]) - (b[1] - a[1]) * (d[0] - c[0]); if (!r) return false;
+      const t = ((c[0] - a[0]) * (d[1] - c[1]) - (c[1] - a[1]) * (d[0] - c[0])) / r, u = ((c[0] - a[0]) * (b[1] - a[1]) - (c[1] - a[1]) * (b[0] - a[0])) / r;
+      return t >= 0 && t <= 1 && u >= 0 && u <= 1; };
+    const overs = [];
+    for (let i = 0; i < M; i++) for (let j = i + 3; j < M; j++) {
+      if (M - (j - i) < 3) continue;
+      const A = seg(i), B = seg(j);
+      if (X(A[0], A[1], B[0], B[1])) overs.push(P[i][2] > P[j][2] ? i : j);
     }
-    for (let k = 1; k < 10; k++) {
-      const y = cy - .95*s + 1.9*s * k / 10, x1 = f(y, 0), x2 = f(y, Math.PI);
-      if (Math.abs(x1 - x2) > .18 * s) mk('line', S({x1, x2, y1: y, y2: y, 'stroke-width': 1.1, opacity: .75}), g);
+    const sl = Math.hypot(P[1][0] - P[0][0], P[1][1] - P[0][1]) || 1, m = Math.ceil((w * 1.9 + gap) / sl);
+    const piece = (o, a, b) => { const pts = []; for (let i = o - a; i <= o + b; i++) pts.push(P[(i + M) % M]); return pts.map(q => f1(q[0]) + ',' + f1(q[1])).join(' '); };
+    for (const o of overs) {
+      Kit.mk('polyline', {points: piece(o, m - 1, m), fill: 'none', stroke: bg, 'stroke-width': w + gap * 2, 'stroke-linecap': 'butt', 'stroke-linejoin': 'round'}, grp);
+      Kit.mk('polyline', {points: piece(o, m, m + 1), fill: 'none', stroke: ink, 'stroke-width': w, 'stroke-linecap': 'butt', 'stroke-linejoin': 'round'}, grp);
     }
-  }
-  function icoLattice(g, cx, cy, s) {
-    const h = .42 * s, dx = Math.sqrt(3) * h / 2, C = [[cx - dx, cy - .315*s], [cx + dx, cy - .315*s], [cx, cy + .315*s]], V = [];
-    for (const [x, y] of C) {
-      let d = '';
-      for (let k = 0; k < 6; k++) { const a = -Math.PI / 2 + k * Math.PI / 3, vx = x + h * Math.cos(a), vy = y + h * Math.sin(a); V.push([vx, vy]); d += (k ? 'L' : 'M') + vx.toFixed(1) + ',' + vy.toFixed(1); }
-      mk('path', S({d: d + 'Z', 'stroke-width': 1.5}), g);
-    }
-    for (const [x, y] of V) mk('circle', S({cx: x, cy: y, r: Math.max(1.6, .07*s), fill: BLUE, 'stroke-width': 1.2}), g);
+    return grp;
   }
 
-  // ---------- the drawing ----------
-  function layout() {
-    if (mp) { mp.kill(); mp = null; }
-    if (revealTl) { revealTl.kill(); revealTl = null; }
-    streams.forEach(t => t.kill()); streams = [];
-    if (E.hint) gsap.killTweensOf(E.hint);
-    svg.innerHTML = ''; E = {};
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    if (W < 40 || H < 40) return;
-    fs = Math.max(12.5, Math.min(15, W / 25, H / 24));
-    m = Math.max(10, Math.min(W * .045, H * .034));
-    const small = Math.max(12, fs * .88);
-
-    // registration marks
-    const cm = mk('g', {opacity: .32}, svg);
-    [[6, 6], [W-6, 6], [6, H-6], [W-6, H-6]].forEach(([x, y]) => mk('path', S({d: `M${x-5},${y}H${x+5}M${x},${y-5}V${y+5}`, 'stroke-width': 1}), cm));
-
-    // ----- composition: a tall plan, or a compact plan when the stage is short -----
-    const geo = R => { const r = R * .42, RR = R + r; return {R, r, RR, yb: RR * Math.cos(TILT) + r * Math.sin(TILT)}; };
-    let G = geo(Math.min(W * .14, H * .075));
-    let s = Math.max(16, Math.min(W * .1, H * .075)), iy = H - s - fs * 1.5, ey = iy - s * .95 - 5;
-    let ay = Math.max(H * .17, fs * 1.7 + G.yb), aly = ay + G.yb + fs * 1.35;
-    let b = Math.min(W * .065, H * .05);
-    const need = b + fs * 2.95 + m * 1.55 + fs * .6, nHi = ey - fs * 1.8, ycMinT = aly + fs * .45 + b + 6;
-    const compact = ycMinT + need > nHi;
-    let ax, yc, Nx, Ny, busY, x0, span, A, dimY, labY, showDim = true, showDimLab = true, kLab = true, todayRight = false, labGap;
-    if (!compact) {
-      ax = W * .64; x0 = W * .13; span = W * .72; A = [W * .16, Math.max(H * .06, m * 1.7)];
-      yc = Math.max(ycMinT, Math.min(H * .4, nHi - need));
-      dimY = yc + b + fs * 1.5; labGap = fs * 1.45; labY = dimY + labGap;
-      const nLo = labY + m * 1.55 + fs * .6;
-      Ny = nLo + Math.max(0, nHi - nLo) * .3; Nx = W * .8; busY = Ny + (ey - Ny) * .5;
+  // ---------- the front ----------
+  function geoF(svg) {
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, W / 27)), gx = fs * 2.6;
+    const c = Math.max(6, Math.min((W * .56 - gx) / 10, (H - 6) / 15, 32));
+    const top = Math.max(3, (H - 15 * c) / 2), gr = gx + 10 * c, xr = gr + Math.max(16, c * .9);
+    return {W, H, fs, gx, c, top, gr, xr, rw: W - xr - 2, r: c * .32};
+  }
+  function drawFront() {
+    svg1.innerHTML = '';
+    const g = G = geoF(svg1), ink = css('--k'), bg = css('--c'), lh = g.fs * 1.3, has = guess !== null;
+    for (const n of [0, 50, 100]) T(svg1, g.gx - g.fs * .5, pos(g, n).y + g.fs * .35, String(n), g, {w: 600, attrs: {'text-anchor': 'end', opacity: .75}});
+    const dots = Kit.mk('g', {}, svg1);
+    for (let n = 0; n < N; n++) {
+      const q = pos(g, n), on = n === guess;
+      Kit.mk('circle', {class: 'dot', cx: q.x, cy: q.y, r: on ? g.r * 1.25 : g.r, fill: on ? ACC : 'none',
+        stroke: on ? 'none' : ink, 'stroke-opacity': .55, 'stroke-width': 1.3}, dots);
+    }
+    const ccx = g.xr + g.rw / 2;
+    // Kelvin's knotted atom, labelled from above
+    const ky = g.top + g.fs * .9;
+    const L1 = wrap(svg1, ccx, ky, "Kelvin's knotted atoms fail", g.rw, g, {attrs: {'text-anchor': 'middle'}});
+    const l1bot = ky + (L1.n - 1) * lh + g.fs * .4;
+    // the empty circle: first real job?
+    const bottom = Math.min(g.H - 3, g.top + 15 * g.c);
+    const L2 = wrap(svg1, ccx, 0, has ? 'years, your guess' : 'first real job?', g.rw, g, {attrs: {'text-anchor': 'middle'}});
+    const labY = bottom - g.fs * .3 - (L2.n - 1) * lh;
+    L2.el.setAttribute('y', labY);
+    const R = Math.max(20, Math.min(g.rw * .3, g.c * 1.5, 30)), ccy = labY - g.fs - 6 - R;
+    const tx = g.gr + 6, ty = has ? pos(g, guess).y : ccy;
+    const dx = ccx - tx, dy = ccy - ty, dl = Math.hypot(dx, dy);
+    if (dl > R + 14) { const e = (dl - R - 6) / dl;
+      Kit.mk('line', {x1: tx, y1: ty, x2: tx + dx * e, y2: ty + dy * e, stroke: ink, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg1); }
+    if (has) {
+      const nf = Math.max(13, Math.min(R * .7, 18));
+      Kit.mk('circle', {cx: ccx, cy: ccy, r: R, fill: ACC}, svg1);
+      T(svg1, ccx, ccy + nf * .36, String(guess), g, {fs: nf, w: 800, attrs: {'text-anchor': 'middle'}});
     } else {
-      kLab = H >= fs * 14; todayRight = true;
-      G = geo(Math.max(7, Math.min(W * .1, H * .085)));
-      s = Math.max(15, Math.min(W * .085, H * .09)); iy = H - s - fs * 1.4; ey = iy - s * .95 - 4;
-      busY = ey - fs * .6; Ny = busY - Math.max(fs * .9, m * 1.3); Nx = W * .72;
-      b = Math.min(W * .05, H * .055); x0 = W * .1; span = W * .46; A = [W * .12, m * 1.7];
-      ax = W * .8; ay = (kLab ? fs * 1.7 : 6) + G.yb; aly = ay + G.yb + fs * 1.35;
-      const ycMin = A[1] + b + fs * 1.4, ycMax = busY - 4 - fs * .3 - fs * 1.3 - fs * 1.05 - b;
-      yc = Math.max(ycMin, Math.min(Math.max(H * .36, aly + fs * .4 + b + 4), ycMax));
-      dimY = yc + b + fs * 1.05; labGap = fs * 1.3; labY = dimY + labGap;
-      showDimLab = labY + fs * .3 <= busY - 4; showDim = dimY + 6 <= busY - 3;
+      Kit.mk('circle', {cx: ccx, cy: ccy, r: R, fill: 'none', stroke: ink, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, svg1);
     }
-
-    // ----- Kelvin's atom: a knotted vortex ring turning in the ether -----
-    E.ax = ax; E.ay = ay; E.R = G.R; E.r = G.r; E.aly = aly; E.loopRight = x0 + span + b; E.loopTop = yc - b;
-    E.atom = mk('g', {}, svg);
-    const RR = G.RR;
-    mk('path', S({d: `M${ax-RR*1.8},${ay}H${ax+RR*1.8}M${ax},${ay-RR*.95}V${ay+RR*.95}`, 'stroke-width': .8, 'stroke-dasharray': '9 3 2 3', opacity: .3}), E.atom);
-    [[1.3, .58, '3 6'], [1.6, .72, '2 7']].forEach(([kx, ky, da]) => mk('ellipse', S({cx: ax, cy: ay, rx: RR * kx, ry: RR * ky, 'stroke-width': 1, 'stroke-dasharray': da, opacity: .42, class: 'flow'}), E.atom));
-    E.tp = tubePool(E.atom, TN, Math.max(5, G.R * .3), 1.3);
-    paintTube(E.tp, torusKnot(ax, ay, G.R, G.r, TILT, TN, phi));
-    let kBase = -1e9;
-    if (kLab) { kBase = Math.max(ay - G.yb - fs * .6, small); text(svg, ax, kBase, 'KELVIN’S ATOM', {font: 'var(--mono)', size: small, ls: .08}); }
-
-    // ----- the FAILED stamp -----
-    E.stamp = mk('g', {opacity: 0}, svg);
-    const sg = mk('g', {}, E.stamp);
-    const sfs = compact ? small : fs * 1.05;
-    const stx = mk('text', {x: 0, y: sfs * .36, fill: INK, 'text-anchor': 'middle', style: `font:800 ${sfs}px var(--mono);letter-spacing:${compact ? .06 : .12}em`}, sg);
-    stx.textContent = 'FAILED · 1889';
-    const tw = stx.getComputedTextLength() + sfs * (compact ? 1.1 : 1.6), th = sfs * 1.95;
-    sg.insertBefore(mk('rect', {x: -tw/2, y: -th/2, width: tw, height: th, rx: 3, fill: 'rgba(8,32,60,.88)', stroke: INK, 'stroke-width': 2}, sg), stx);
-    sg.insertBefore(mk('rect', {x: -tw/2 + 3, y: -th/2 + 3, width: tw - 6, height: th - 6, rx: 2, fill: 'none', stroke: INK, 'stroke-width': .8}, sg), stx);
-    const sn = Math.sin(11 * Math.PI / 180), cs = Math.cos(11 * Math.PI / 180);
-    const hx = tw / 2 * cs + th / 2 * sn, vy = tw / 2 * sn + th / 2 * cs;
-    E.scx = Math.max(hx + 3, Math.min(W - hx - 4, ax));
-    E.scy = Math.max(ay, kBase + 4 + vy, vy + 3);
-    sg.setAttribute('transform', `translate(${E.scx},${E.scy}) rotate(-11)`);
-
-    // ----- the timeline: down past the atom, a century of loops, then today -----
-    pts = [];
-    const n = 3, a = span / (2 * Math.PI * n);
-    cubic(A, [A[0] + W * .07, A[1] + (yc + b - A[1]) * .45], [x0 - W * .09, yc + b - (yc + b - A[1]) * .15], [x0, yc + b], 70, true);
-    const iT0 = pts.length - 1;
-    for (let i = 1; i <= 210; i++) { const th2 = Math.PI + i / 210 * 2 * Math.PI * n; pts.push([x0 + a * (th2 - Math.PI) - b * Math.sin(th2), yc - b * Math.cos(th2)]); }
-    const iT1 = pts.length - 1, T1 = pts[iT1];
-    cubic(T1, [Math.min(W - 6, Math.max(T1[0], Nx) + W * .12), T1[1] + (Ny - T1[1]) * .12], [Nx, Ny - (Ny - T1[1]) * .5], [Nx, Ny], 50, false);
-    iEnd = pts.length - 1;
-    cum = [0];
-    for (let i = 1; i <= iEnd; i++) cum.push(cum[i-1] + Math.hypot(pts[i][0] - pts[i-1][0], pts[i][1] - pts[i-1][1]));
-    total = cum[iEnd];
-    let iA = 0; while (iA < iT0 && pts[iA][1] < ay) iA++;
-    iA = Math.max(iA, Math.round(iT0 * .35));
-    pA = cum[iA] / total; pT0 = cum[iT0] / total; pT1 = cum[iT1] / total;
-    let best = 1e9; cur = 0;
-    for (let i = 0; i <= iEnd; i++) { const d = Math.abs(cum[i] / total - st.p); if (d < best) { best = d; cur = i; } }
-
-    atomLabel(false);
-
-    // dimension: a century
-    E.x0 = x0; E.span = span; E.dimY = dimY; E.showDim = showDim;
-    E.dim = mk('g', {opacity: 0, style: 'transition:opacity .5s'}, svg);
-    for (const x of [x0, x0 + span]) mk('line', S({x1: x, x2: x, y1: yc + b + 6, y2: dimY + 5, 'stroke-width': .9, opacity: .7}), E.dim);
-    mk('path', S({d: `M${x0+7},${dimY-3.5}L${x0},${dimY}L${x0+7},${dimY+3.5}`, 'stroke-width': 1.2}), E.dim);
-    E.dline = mk('line', S({x1: x0, x2: x0, y1: dimY, y2: dimY, 'stroke-width': 1.2}), E.dim);
-    E.dtip = mk('path', S({d: 'M-7,-3.5L0,0L-7,3.5', 'stroke-width': 1.2}), E.dim);
-    for (let k = 1; k < 10; k++) mk('line', S({x1: x0 + span * k / 10, x2: x0 + span * k / 10, y1: dimY - (k === 5 ? 3 : 1.6), y2: dimY + (k === 5 ? 3 : 1.6), 'stroke-width': .8, opacity: .55}), E.dim);
-    if (showDimLab) text(E.dim, x0 + span / 2, labY, 'A CENTURY OF PURE MATHS', {font: 'var(--mono)', size: small, ls: .06});
-
-    const d = 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L');
-    E.ghost = mk('path', S({d, 'stroke-width': 1.3, 'stroke-dasharray': '1.5 5', opacity: .5}), svg);
-    E.pen = mk('path', S({d, 'stroke-width': 1.3, opacity: 0}), svg);
-    E.glow = mk('path', S({d, 'stroke-width': 8, opacity: .12}), svg);
-    E.trail = mk('path', S({d, 'stroke-width': 2.2}), svg);
-
-    // today
-    mk('circle', S({cx: Nx, cy: Ny, r: m * 1.55, 'stroke-width': 1, 'stroke-dasharray': '2 4', opacity: .6, class: 'flow'}), svg);
-    if (todayRight) text(svg, Nx + m * 1.55 + 6, Ny + fs * .35, 'TODAY', {font: 'var(--mono)', size: small, ls: .1, attr: {'text-anchor': 'start'}});
-    else text(svg, Nx - m * 1.55 - 6, Ny + fs * .35, 'TODAY', {font: 'var(--mono)', size: small, ls: .1, attr: {'text-anchor': 'end'}});
-
-    // the three futures: dashed ghosts on the blueprint, waiting to be inked
-    const IX = [W * .17, W * .5, W * .83], NAMES = ['HEADPHONES', 'MEDICINE', 'MATERIALS'], DRAW = [icoHead, icoDNA, icoLattice];
-    const branchD = ix => {
-      const rad = Math.max(2, Math.min(fs * .7, (busY - Ny) * .8, (ey - busY) * .8)), dx = ix - Nx, sgn = Math.sign(dx);
-      if (Math.abs(dx) < 2 * rad + 2) return `M${Nx},${Ny} C${Nx},${(Ny + ey) / 2} ${ix},${(Ny + ey) / 2} ${ix},${ey}`;
-      return `M${Nx},${Ny}V${busY - rad}Q${Nx},${busY} ${Nx + sgn * rad},${busY}H${ix - sgn * rad}Q${ix},${busY} ${ix},${busY + rad}V${ey}`;
-    };
-    E.br = []; E.ic = []; E.gic = []; E.parts = []; E.il = []; E.trav = [];
-    IX.forEach((ix, i) => {
-      const bd = branchD(ix);
-      mk('path', S({d: bd, 'stroke-width': 1.2, 'stroke-dasharray': '1.5 5', opacity: .4}), svg);
-      E.br.push(mk('path', S({d: bd, 'stroke-width': 1.8}), svg));
-      const g = mk('g', {}, svg); DRAW[i](g, ix, iy, s);
-      const gh = g.cloneNode(true);
-      gh.setAttribute('opacity', .22);
-      gh.querySelectorAll('*').forEach(c => { c.setAttribute('stroke-dasharray', '2 3'); c.setAttribute('stroke-width', 1); });
-      svg.insertBefore(gh, g);
-      E.gic.push(gh); E.ic.push(g); E.parts.push([...g.children]);
-      E.il.push(text(svg, ix, iy + s + fs * (compact ? 1.1 : 1.2), NAMES[i], {font: 'var(--mono)', size: small, ls: .08}));
-    });
-    E.flash = mk('circle', S({cx: Nx, cy: Ny, r: m, opacity: 0, 'stroke-width': 2}), svg);
-    E.streamLayer = mk('g', {}, svg);
-    E.br.forEach(() => {
-      const g = mk('g', {opacity: 0}, svg);
-      mk('circle', {r: m * .75, fill: BLUE}, g);
-      mk('path', S({d: trefoilD(m * .55), 'stroke-width': 1.5}), g);
-      E.trav.push(g);
-    });
-
-    // the marker: a little trefoil you drag
-    E.marker = mk('g', {}, svg);
-    E.mIn = mk('g', {}, E.marker);
-    mk('circle', {r: m * 1.15, fill: BLUE}, E.mIn);
-    mk('circle', S({r: m * 1.5, 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: .75, class: 'halo'}), E.mIn);
-    E.spin = mk('g', {}, E.mIn);
-    paintTube(tubePool(E.spin, 120, Math.max(3.4, m * .3), 1.1), torusKnot(0, 0, m * .62, m * .3, 0, 120));
-
-    if (!touched) {
-      E.hint = mk('g', {}, svg);
-      const hx2 = A[0] + m * 1.8, hy = A[1];
-      text(E.hint, hx2 + fs * .3, hy + fs * .3, 'drag me', {font: 'var(--hand)', size: fs * 1.25, w: 400, attr: {'text-anchor': 'start'}});
-      mk('path', S({d: `M${hx2 + fs * 1.6},${hy + fs * .9} Q${hx2 + fs * 1.1},${hy + fs * 2.5} ${hx2 - fs * .2},${hy + fs * 2.3} M${hx2 + fs * .3},${hy + fs * 1.75} L${hx2 - fs * .2},${hy + fs * 2.3} L${hx2 + fs * .45},${hy + fs * 2.75}`, 'stroke-width': 1.4}), E.hint);
-      if (!Kit.calm) gsap.to(E.hint, {y: 4, repeat: -1, yoyo: true, duration: .8, ease: 'sine.inOut'});
-    }
-
-    mp = gsap.to(E.marker, {motionPath: {path: E.ghost}, duration: 1, ease: 'none', paused: true});
-    if (failed) paintFail(false);
-    if (revealed) paintRevealed();
-    else gsap.set([...E.br, ...E.ic, ...E.il], {opacity: 0});
-    apply();
+    // the trefoil, centred between them
+    const tTop = l1bot + g.fs * .7, tBot = ccy - R - g.fs * .9, room = tBot - tTop;
+    if (room > 40) trefoil(svg1, ccx, (tTop + tBot) / 2, Math.min(g.rw * .86, 180), room, ink, bg, .09, 3, 14);
   }
 
-  function atomLabel(f) {
-    if (E.alab) E.alab.remove();
-    E.alab = null;
-    const e = f ? text(svg, E.ax, E.aly, '“…the difficulties are so great”', {font: 'var(--hand)', size: fs * 1.15, w: 400})
-                : text(svg, E.ax, E.aly, 'every atom, a knotted vortex', {w: 700});
-    const bb = e.getBBox();
-    if (bb.x < E.loopRight + 4 && bb.y + bb.height > E.loopTop - 2) { e.remove(); return; }
-    E.alab = e;
+  function yearAt(e) {
+    const g = G, b = svg1.getBoundingClientRect();
+    const px = e.clientX - b.left, py = e.clientY - b.top;
+    const col = Math.max(0, Math.min(9, Math.floor((px - g.gx) / g.c)));
+    const row = Math.max(0, Math.min(14, Math.floor((py - g.top) / g.c)));
+    return Math.max(0, Math.min(N - 1, row * 10 + col));
   }
-
-  function setSay(html) { say.innerHTML = html; if (!Kit.calm) gsap.fromTo(say, {opacity: .15, y: 4}, {opacity: 1, y: 0, duration: .45, ease: 'power3.out'}); }
-
-  function apply() {
-    if (!mp) return;
-    const p = st.p;
-    mp.progress(p);
-    E.spin.setAttribute('transform', `rotate(${p * 720})`);
-    gsap.set([E.trail, E.glow], {drawSVG: `0% ${p * 100}%`});
-    const k = Math.max(0, Math.min(1, (p - pT0) / (pT1 - pT0))), xe = E.x0 + E.span * k;
-    E.dline.setAttribute('x2', xe);
-    E.dtip.setAttribute('transform', `translate(${xe},${E.dimY})`);
-    E.dim.style.opacity = k > .04 && E.showDim ? 1 : 0;
-    if (!failed && p >= pA) { failed = true; setSay(SAY.fail); paintFail(!Kit.calm); }
-    if (!mid && p >= pT0 + .03) { mid = true; setSay(SAY.mid); }
+  function setGuess(n) {
+    if (locked || n === guess) return;
+    const first = guess === null; guess = n; drawFront(); Kit.haptic('selection');
+    if (first) { sure.on(); Kit.$('sure').classList.add('shown'); Kit.$('say').innerHTML = '<b>Slide</b> to change your number of years, then say how sure you are.'; }
   }
+  let down = false;
+  svg1.addEventListener('pointerdown', e => { if (locked) return; down = true; svg1.setPointerCapture(e.pointerId); setGuess(yearAt(e)); });
+  svg1.addEventListener('pointermove', e => { if (down) setGuess(yearAt(e)); });
+  const up = () => { down = false; };
+  svg1.addEventListener('pointerup', up); svg1.addEventListener('pointercancel', up);
 
-  function paintFail(anim) {
-    atomLabel(true);
-    if (!anim) { gsap.set(E.stamp, {opacity: 1}); gsap.set(E.atom, {opacity: .42}); return; }
-    const o = `${E.scx} ${E.scy}`;
-    gsap.fromTo(E.stamp, {opacity: 0, scale: 2.4, svgOrigin: o}, {opacity: 1, scale: 1, svgOrigin: o, duration: .5, ease: 'back.out(2.2)'});
-    gsap.fromTo(E.atom, {x: -6}, {x: 0, duration: .8, ease: 'elastic.out(1.2,.22)', delay: .12});
-    gsap.to(E.atom, {opacity: .42, duration: .9, delay: .25, ease: 'power2.out'});
-    if (E.alab) gsap.fromTo(E.alab, {opacity: 0}, {opacity: 1, duration: .6, delay: .25});
-    Kit.haptic('light');
-  }
-
-  // the vortex atom turns in the ether, and winds down once it is stamped failed
-  gsap.ticker.add(() => {
-    if (!E.tp || Kit.calm) return;
-    if (failed) { if (spd < .0004) return; spd *= .95; }
-    phi += spd;
-    paintTube(E.tp, torusKnot(E.ax, E.ay, E.R, E.r, TILT, TN, phi));
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (guess === null) return;
+    locked = true; conf = pct;
+    const d = USE - guess, ok = Math.abs(d) <= 15;
+    Kit.answer({choice: String(guess), correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? `${guess} years: close` : d > 0 ? `${guess} years: too short` : `${guess} years: too long`);
+    setTimeout(() => Turn.over(), 700);
   });
 
-  // ---------- the reveal ----------
-  function finish() {
-    if (ending) return;
-    ending = true; dragging = false; touched = true; hideHint();
-    Kit.haptic('success');
-    if (Kit.calm) { revealed = true; paintRevealed(); return; }
-    reveal();
-  }
-  function showWhy() {
-    if (whyShown) return; whyShown = true;
-    setSay(SAY.why); Kit.show('keep'); card.classList.add('answered');
-  }
-  function reveal() {
-    revealed = true;
-    const tl = revealTl = gsap.timeline({onComplete: () => { revealTl = null; startStreams(); showWhy(); }});
-    tl.fromTo(E.flash, {attr: {r: m}, opacity: .9}, {attr: {r: Math.min(W, H) * .42}, opacity: 0, duration: 1.3, ease: 'expo.out'}, 0);
-    tl.fromTo(E.mIn, {scale: 1}, {scale: 1.4, duration: .2, ease: 'power2.out', yoyo: true, repeat: 1, transformOrigin: '50% 50%'}, 0);
-    E.br.forEach((br, i) => {
-      const t = .12 + i * .13;
-      tl.set(br, {opacity: 1}, t);
-      tl.fromTo(br, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: 1, ease: 'power3.inOut'}, t);
-      tl.set(E.trav[i], {opacity: 1}, t);
-      tl.fromTo(E.trav[i], {rotation: 0}, {motionPath: {path: br}, rotation: 540, transformOrigin: '50% 50%', duration: 1, ease: 'power3.inOut'}, t);
-      tl.to(E.trav[i], {opacity: 0, scale: 2.4, duration: .45, ease: 'power2.out'}, t + .95);
-      tl.to(E.gic[i], {opacity: 0, duration: .5, ease: 'power2.out'}, t + .85);
-      tl.set(E.ic[i], {opacity: 1}, t + .85);
-      tl.fromTo(E.parts[i], {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .8, stagger: .025, ease: 'power2.out'}, t + .85);
-      tl.fromTo(E.ic[i], {scale: .6}, {scale: 1, transformOrigin: '50% 50%', duration: 1.1, ease: 'elastic.out(1,.45)'}, t + .85);
-      tl.fromTo(E.il[i], {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, ease: 'power3.out'}, t + 1.15);
-    });
-  }
-  function paintRevealed() {
-    gsap.set([...E.br, ...E.ic, ...E.il], {opacity: 1});
-    gsap.set([...E.trav, ...E.gic], {opacity: 0});
-    startStreams(); showWhy();
-  }
-  function startStreams() {
-    if (Kit.calm || !E.br) return;
-    streams.forEach(t => t.kill()); streams = [];
-    E.br.forEach((br, i) => {
-      for (let j = 0; j < 2; j++) {
-        const dot = mk('circle', {r: 2.4, fill: INK, opacity: 0}, E.streamLayer);
-        const tl = gsap.timeline({repeat: -1, delay: i * .35 + j * 1.1, repeatDelay: .4});
-        tl.fromTo(dot, {opacity: 0}, {opacity: .95, duration: .3})
-          .to(dot, {motionPath: {path: br}, duration: 1.8, ease: 'power1.inOut'}, 0)
-          .to(dot, {opacity: 0, duration: .35}, 1.45);
-        streams.push(tl);
-      }
-    });
+  // ---------- the back ----------
+  function setWords() {
+    if (guess === null) return;
+    const a = Math.abs(USE - guess);
+    Kit.$('big').textContent = a <= 15 ? `You said ${guess} years. About right: it took about a century.`
+      : `You said ${guess} years. It took about a century.`;
+    Kit.$('sub').textContent = conf != null ? `You were ${conf}% sure.` : '';
   }
 
-  // ---------- the drag ----------
-  function hideHint() { if (E.hint) { gsap.killTweensOf(E.hint); gsap.to(E.hint, {opacity: 0, duration: .3}); } }
-  function goIdx(i) {
-    if (ending || !pts.length) return;
-    if (i >= iEnd - 2) i = iEnd;
-    cur = i;
-    gsap.to(st, {p: cum[i] / total, duration: Kit.calm ? .01 : .42, ease: 'power3.out', overwrite: true, onUpdate: apply,
-      onComplete: () => { apply(); if (cur === iEnd && st.p >= .999) finish(); }});
+  function geoB(svg) {
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(13.5, W / 28));
+    let c = 16, gx = 0;
+    for (let i = 0; i < 4; i++) { gx = c * .9 + fs * .8 + 10;
+      c = Math.max(6, Math.min((W - gx - c * .65 - 16 - Math.max(118, W * .34)) / 10, (H - 4) / 16, 30)); }
+    gx = c * .9 + fs * .8 + 10;
+    const gr = gx + 10 * c, bx = gr + c * .65, xr = bx + 16;
+    const top = Math.max(2, (H - 16 * c) / 2) + c;   // one header row for Kelvin's knot
+    return {W, H, fs, gx, c, top, gr, bx, xr, rw: W - xr - 2, r: c * .3};
   }
-  const local = e => { const r = svg.getBoundingClientRect(); return [(e.clientX - r.left) * W / r.width, (e.clientY - r.top) * H / r.height]; };
-  function nearest(x, y, lo, hi) {
-    let bi = cur, bd = 1e18;
-    for (let i = Math.max(0, lo); i <= Math.min(iEnd, hi); i++) { const dx = pts[i][0] - x, dy = pts[i][1] - y, d = dx*dx + dy*dy; if (d < bd) { bd = d; bi = i; } }
-    return bi;
-  }
-  const move = e => { const [x, y] = local(e); goIdx(nearest(x, y, cur - 45, cur + 45)); };
-  svg.addEventListener('pointerdown', e => {
-    if (ending || !pts.length) return;
-    dragging = true; svg.setPointerCapture(e.pointerId);
-    if (!touched) { touched = true; hideHint(); }
-    Kit.haptic('selection'); move(e);
-  });
-  svg.addEventListener('pointermove', e => { if (dragging && !ending) move(e); });
-  const end = () => { dragging = false; };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  Kit.onShow.card = layout;
-  Kit.onEnter.card = () => {
-    if (entered) return; entered = true;
-    if (Kit.calm || !E.ghost) return;
-    gsap.set(E.pen, {opacity: .9});
-    gsap.fromTo(E.pen, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: 1.6, ease: 'power2.inOut'});
-    gsap.to(E.pen, {opacity: 0, duration: .6, delay: 1.5});
-    gsap.from(E.ghost, {opacity: 0, duration: .8, delay: 1.2});
-    gsap.from(E.gic, {opacity: 0, duration: .9, stagger: .15, delay: 1.3});
-    gsap.from(E.atom, {scale: .5, opacity: 0, svgOrigin: `${E.ax} ${E.ay}`, duration: 1.1, ease: 'back.out(1.7)', delay: .15});
-    gsap.from(E.mIn, {scale: 0, transformOrigin: '50% 50%', duration: .8, ease: 'back.out(2.6)', delay: .35});
-    if (E.hint) gsap.from(E.hint, {opacity: 0, x: -8, duration: .6, ease: 'power3.out', delay: 1.1});
+  const PICT = {
+    phones: [
+      {c: [-.5, -.74, .15]}, {c: [.5, -.74, .15]},
+      {d: 'M-.5 -.6C-.52 -.2 .42 -.28 .34 .08C.26 .42 -.38 .36 -.3 .06C-.22 -.22 .22 .02 .1 .3C.04 .44 0 .5 0 .62'},
+      {d: 'M.5 -.6C.52 -.36 .05 -.3 -.06 -.06'},
+      {d: 'M-.08 .62H.08V.92H-.08Z', fill: 1}],
+    catheter: [
+      {c: [-.72, -.86, .13]},
+      {d: 'M-.72 -.86C-.45 -.55 -.12 -.3 0 .02C.1 .3 -.12 .66 -.42 .54C-.72 .42 -.58 .02 -.28 .06C.04 .1 .38 .45 .72 .86', t: 1.35}],
+    drip: [
+      {d: 'M-.38 -.92H.38Q.46 -.92 .46 -.84V-.34Q.46 -.16 .26 -.16H-.26Q-.46 -.16 -.46 -.34V-.84Q-.46 -.92 -.38 -.92Z', fill: 1},
+      {d: 'M0 -.16V.28'},
+      {d: 'M-.13 .28H.13V.56H-.13Z'},
+      {d: 'M0 .66C.1 .78 .11 .88 0 .93C-.11 .88 -.1 .78 0 .66Z', fill: 1}]
   };
+  function pict(p, kind, cx, cy, S, ink, sw) {
+    const k = S / 2, grp = Kit.mk('g', {transform: `translate(${f1(cx)} ${f1(cy)}) scale(${k.toFixed(3)})`}, p);
+    for (const s of PICT[kind]) {
+      const wid = sw * (s.t || 1) / k;
+      if (s.d) Kit.mk('path', {d: s.d, fill: s.fill ? ink : 'none', stroke: ink, 'stroke-width': wid, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, grp);
+      else Kit.mk('circle', {cx: s.c[0], cy: s.c[1], r: s.c[2], fill: ink, stroke: ink, 'stroke-width': wid}, grp);
+    }
+    return grp;
+  }
+
+  function drawBack(anim) {
+    svg2.innerHTML = '';
+    const g = geoB(svg2), ink = css('--k'), bg = css('--c'), lh = g.fs * 1.3, has = guess !== null;
+    const path = (d, col, w, par = svg2) => Kit.mk('path', {d, fill: 'none', stroke: col, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, par);
+
+    // Kelvin's knot heads the grid
+    const hy = g.top - g.c * .5, hx = g.gx + g.c * .5;
+    const head = Kit.mk('g', {}, svg2);
+    trefoil(head, hx, hy, g.c * 1.1, g.c * .95, ink, bg, .1, 1.6, 3);
+    const kx = g.gx + g.c * 1.25, kt = T(head, kx, hy + g.fs * .35, '', g);
+    for (const s of ["Kelvin's knotted atoms fail", 'Knotted atoms fail']) { kt.textContent = s; if (kt.getComputedTextLength() <= g.W - kx - 2) break; }
+
+    // the years: a filled century, then the rest left open
+    const cent = Kit.mk('g', {}, svg2), since = Kit.mk('g', {}, svg2);
+    for (let n = 0; n < N; n++) { if (n === guess) continue;
+      const q = pos(g, n);
+      if (n < USE) Kit.mk('circle', {cx: q.x, cy: q.y, r: g.r, fill: ink}, cent);
+      else Kit.mk('circle', {cx: q.x, cy: q.y, r: g.r, fill: 'none', stroke: ink, 'stroke-opacity': .55, 'stroke-width': 1.2}, since);
+    }
+
+    // the reader's guess
+    const ring = Kit.mk('g', {}, svg2);
+    if (has) { const q = pos(g, guess);
+      Kit.mk('circle', {cx: q.x, cy: q.y, r: g.r * 1.3, fill: ACC}, ring);
+      Kit.mk('circle', {cx: q.x, cy: q.y, r: g.c * .5, fill: 'none', stroke: ink, 'stroke-width': 1.5}, ring); }
+
+    // the century, bracketed in the left gutter
+    const lx = g.gx - g.c * .9, y0 = g.top + g.c * .15, y1 = g.top + g.c * 9.85, cg = Kit.mk('g', {}, svg2);
+    path(`M${f1(lx + g.c * .2)} ${f1(y0)}H${f1(lx)}V${f1(y1)}H${f1(lx + g.c * .2)}`, ink, 1.5, cg);
+    const cl = T(cg, lx - 6, (y0 + y1) / 2, '', g, {attrs: {'text-anchor': 'middle', transform: `rotate(-90 ${f1(lx - 6)} ${f1((y0 + y1) / 2)})`}});
+    for (const s of ['a century of curiosity alone', 'a century of curiosity', 'curiosity alone']) { cl.textContent = s; if (cl.getComputedTextLength() <= y1 - y0 - 6) break; }
+
+    // the gap to the end of the century, and the labels down the right
+    const yO = g.top + g.c * 10, yG = has ? pos(g, guess).y : null, gb = Kit.mk('g', {}, svg2);
+    if (has && Math.abs(yG - yO) > 1) path(`M${f1(g.bx)} ${f1(yG)}V${f1(yO)}`, ink, 1.5, gb);
+    const specs = [{ay: yO, ax: g.gr + 7, t: 'Real jobs, in recent years', key: 'u'}];
+    if (has) specs.push({ay: yG, ax: g.gr + 7, t: `your guess: ${guess} years`, key: 'g', w: 600});
+    const blocks = specs.map(s => { const grp = Kit.mk('g', {}, svg2), w = wrap(grp, g.xr, 0, s.t, g.rw, g, {w: s.w || 700});
+      return Object.assign(s, {grp, h: (w.n - 1) * lh}); }).sort((a, b) => a.ay - b.ay || (a.key === 'g' ? -1 : 1));
+    let prev = hy + lh * 1.1;
+    for (const b of blocks) { b.at = Math.max(b.ay, prev); prev = b.at + b.h + lh * 1.1; }
+    let lim = g.H - g.fs * .4;
+    for (let i = blocks.length - 1; i >= 0; i--) { const b = blocks[i]; if (b.at + b.h > lim) b.at = lim - b.h; lim = b.at - lh * 1.1; }
+    const L = {};
+    let btm = 0;
+    for (const b of blocks) {
+      b.grp.setAttribute('transform', `translate(0,${f1(b.at + g.fs * .35)})`);
+      L[b.key] = [b.grp, lead(svg2, b.ax, b.ay, g.xr - 5, b.at, ink)];
+      if (b.at >= yO - 1 || b.key === 'u') btm = Math.max(btm, b.at + b.h + g.fs * .5);
+    }
+
+    // the real jobs: three flat objects under their label
+    const avail = g.H - 3 - btm - g.fs * .5;
+    const S = Math.min((g.rw - 14) / 3, g.c * 2.6, avail);
+    const picts = [];
+    if (S >= 18) ['phones', 'catheter', 'drip'].forEach((kd, i) =>
+      picts.push(pict(svg2, kd, g.xr + S / 2 + i * (S + 7), btm + g.fs * .5 + S / 2, S, ink, Math.max(1.6, S * .055))));
+
+    svg2.setAttribute('aria-label', `The same years after the theory failed. The first hundred, a century of curiosity alone, are filled in. After them, real jobs in recent years: a headphone tangle, a knotted catheter and a chemotherapy drip.${has ? ` Your guess, ${guess} years, is marked in red.` : ''}`);
+
+    if (!anim || typeof gsap === 'undefined') return;
+    const tl = gsap.timeline();
+    tl.from(head, {opacity: 0, duration: .3, ease: 'power2.out'})
+      .from(cent.children, {opacity: 0, duration: .25, stagger: .008, ease: 'power2.out'})
+      .from(cg, {opacity: 0, duration: .3}, '-=.3')
+      .from(since, {opacity: 0, duration: .3})
+      .from(L.u, {opacity: 0, duration: .25}, '<')
+      .from(picts, {opacity: 0, duration: .3, stagger: .08});
+    if (has) tl.from([ring, gb, ...(L.g || [])], {opacity: 0, duration: .3, ease: 'power2.out'});
+  }
+
+  document.addEventListener('turned', () => { turned = true; setWords(); drawBack(!Kit.calm); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm && typeof gsap !== 'undefined') gsap.from('#pic .dot', {opacity: 0, duration: .3, stagger: .004, ease: 'power2.out'}); };
   Kit.play.card = async () => {
-    const w = ms => new Promise(r => setTimeout(r, ms));
-    touched = true; hideHint();
-    for (const f of [.15, .45, .75, 1]) { goIdx(Math.round(iEnd * f)); await w(Kit.calm ? 60 : 550); }
-    if (!ending) { st.p = 1; apply(); finish(); }
-    await w(200);
-    if (revealTl) revealTl.progress(1);
-    await w(400);
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setGuess(25);
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 4200);
   };
 })();
 Kit.single();

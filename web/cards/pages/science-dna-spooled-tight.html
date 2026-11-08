@@ -1,0 +1,298 @@
+<!doctype html>
+<!-- slug: science-dna-spools-folds -->
+<!-- Thought to carry: DNA does not tangle because it is packed in order. It wraps around histone proteins first, and only then do those wrapped beads fold, again and again.
+     Front: a wiggly thread in a nucleus, two empty slots, then the chromosome it must become. The reader taps the two steps between them, in order. A third option, bunching up like headphones in a bag, is the tangle that never happens.
+     Back: one line that compacts. Thread on two histone spools sits in a lens. That lens is a ringed patch of the folded nucleosomes. The folds are a ringed patch of the chromosome. Four labels: 2 nm at one end, cm at the other, histone and folded in between. The reader's two picks sit underneath, in the same columns.
+     Why the front gives nothing away: the true steps are named by what they do, and the decoy is the outcome the video says we would expect. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Wrapped first, then folded: how DNA fits without tangling</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+/* keep the front's last row clear of the save and share buttons */
+.turn>.front{padding-bottom:max(7cqh,52px);box-sizing:border-box}
+/* once turned, the mirrored front is gone for good, not just facing away */
+.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
+.kit-calm .turn.over>.front{transition:none}
+/* before the turn, the back is not there at all */
+.turn>.back{visibility:hidden}
+.turn.over>.back{visibility:visible;transition:visibility 0s .38s}
+.kit-calm .turn.over>.back{transition:none}
+
+.front .stagebox{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.4cqh}
+.back .stagebox{flex:1;min-height:0;display:flex;margin-top:max(1.4cqh,8px)}
+#pic,#pic2{flex:1;min-height:0;width:100%;height:100%;display:block}
+.front .say{flex:none;margin:0}
+#opts{display:grid;grid-template-columns:1fr;gap:1cqh;flex:none}
+.opt{font:700 max(1.85cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:1.6cqh;padding:1.3cqh 3.2cqw;cursor:pointer;display:flex;align-items:center;gap:2.6cqw;overflow-wrap:anywhere}
+.opt .n{flex:none;width:max(2.8cqh,18px);height:max(2.8cqh,18px);border-radius:50%;display:grid;place-items:center;font:800 max(1.6cqh,12px)/1 var(--body);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 40%,transparent)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt.on .n{background:var(--c);color:var(--k);box-shadow:none}
+.opt.locked{cursor:default}
+
+#sure{margin-top:clamp(14px,3cqh,22px)}
+#sure.wait{opacity:1!important;filter:none!important}
+#sure.wait>:first-child{opacity:1!important;color:var(--k)!important}
+#sure.wait [data-v]{opacity:1!important;background:transparent!important;box-shadow:none!important;outline:1.5px dashed color-mix(in srgb,var(--k) 45%,transparent);outline-offset:-1.5px;color:color-mix(in srgb,var(--k) 60%,transparent)!important;cursor:default;pointer-events:none}
+
+.back .big{font-size:max(2.9cqh,17px)}
+.back .body{font-size:max(1.9cqh,13px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Put in order · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">DNA is 2 nm wide. A chromosome is cm long. How does it fit without tangling?</h2>
+        <div class="stagebox">
+          <svg id="pic" role="img" aria-label="A wiggly thread of DNA in a nucleus, two empty slots for your steps, then a chromosome."></svg>
+          <p class="say" id="say">Tap the two steps from thread to chromosome, in order, then say how sure you are. <b>One of the three never happens.</b></p>
+          <div id="opts">
+            <button class="opt" data-k="fold"><span class="n"></span><span>Nucleosomes fold, again and again</span></button>
+            <button class="opt" data-k="tangle"><span class="n"></span><span>It bunches up like headphones in a bag</span></button>
+            <button class="opt" data-k="wrap"><span class="n"></span><span>DNA wraps around histone proteins</span></button>
+          </div>
+        </div>
+        <div class="sure" id="sure"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It never tangles. It wraps, then folds, again and again.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="One thread compacting: DNA 2 nanometres wide wrapped on two histone proteins, which is a patch of the folded nucleosomes, which is a patch of the centimetre-long chromosome. Below it, your order."></svg></div>
+        <p class="body">DNA wraps around histone proteins, forming nucleosomes, and the nucleosomes fold again and again. Massive compaction that stays organized: no headphones-in-a-bag knot.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> To pack something long without knots, wrap it first, then fold what you wrapped.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Why Women Are Stripey” (YouTube, 2014)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const TRUE = ['wrap', 'fold'];
+  const NAMES = {wrap: 'Wraps around histones', fold: 'Nucleosomes fold', tangle: 'Bunches up'};
+  const BEAD = '#ffffff', NO = '#c8321f';
+  let picks = [], locked = false, turned = false;
+
+  const css = (v) => getComputedStyle(Kit.$('card')).getPropertyValue(v).trim() || '#111';
+  const text = (p, x, y, t, fs, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: css('--k'), style: `font:700 ${fs}px var(--body)`}, a), p);
+    e.textContent = t; return e;
+  };
+  const fitText = (p, x, y, t, fs, W, a = {}) => {
+    const e = text(p, x, y, t, fs, a), w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
+    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const sh = Math.max(2 - left, Math.min(0, W - 2 - (left + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    return {e, left: left + sh, right: left + sh + w};
+  };
+
+  // the folded string of nucleosomes: rows that turn back on themselves
+  const foldPts = (cx, cy, u) => {
+    const pts = [];
+    for (let j = 0; j < 4; j++) {
+      const row = [-1.5, -.5, .5, 1.5].map(c => [cx + c * .3 * u, cy + (j - 1.5) * .3 * u]);
+      pts.push(...(j % 2 ? row.reverse() : row));
+    }
+    return pts;
+  };
+
+  // ---------- the pictures, drawn at one size ----------
+  function icon(p, k, cx, cy, r) {
+    const g = Kit.mk('g', {}, p), k_ = css('--k'), sw = Math.max(1.3, r * .05);
+    const line = {stroke: k_, 'stroke-width': sw, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'};
+    if (k === 'start') {
+      Kit.mk('circle', Object.assign({cx, cy, r: r * .92}, line), g);
+      let d = '';
+      for (let i = 0; i <= 80; i++) { const t = i / 80; const x = cx + (-.62 + 1.24 * t) * r, y = cy + r * (.28 * Math.sin(t * Math.PI * 3.2) + .12 * Math.sin(t * Math.PI * 7)); d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); }
+      Kit.mk('path', Object.assign({d}, line, {'stroke-width': sw * .9}), g);
+    }
+    if (k === 'wrap') {
+      const br = r * .27, xs = [-.64, 0, .64].map(t => cx + t * r);
+      Kit.mk('path', Object.assign({d: `M${cx - r},${cy + r * .1} C${cx - r * .8},${cy - r * .25} ${cx - r * .45},${cy + r * .2} ${cx},${cy} S${cx + r * .7},${cy - r * .15} ${cx + r},${cy - r * .05}`}, line), g);
+      xs.forEach(x => {
+        Kit.mk('circle', {cx: x, cy, r: br, fill: BEAD, stroke: k_, 'stroke-width': sw}, g);
+        for (const dy of [-br * .28, br * .28]) Kit.mk('ellipse', Object.assign({cx: x, cy: cy + dy, rx: br * 1.12, ry: br * .38, transform: `rotate(-22 ${x} ${cy + dy})`}, line), g);
+      });
+    }
+    if (k === 'fold') {
+      const pts = foldPts(cx, cy, r * 1.05);
+      Kit.mk('path', Object.assign({d: 'M' + pts.map(q => q.map(v => v.toFixed(1)).join(',')).join('L')}, line), g);
+      pts.forEach(([x, y]) => Kit.mk('circle', {cx: x, cy: y, r: r * .12, fill: BEAD, stroke: k_, 'stroke-width': sw}, g));
+    }
+    if (k === 'tangle') {
+      let d = '';
+      for (let i = 0; i <= 200; i++) { const t = i / 200 * Math.PI * 2; const x = cx + r * .62 * Math.sin(5 * t) * Math.cos(1.3 * t), y = cy + r * .58 * Math.sin(7 * t + 1) * Math.cos(.7 * t); d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); }
+      Kit.mk('path', Object.assign({d}, line), g);
+    }
+    if (k === 'chrom') {
+      const w = Math.max(5, r * .38), c = .12;
+      Kit.mk('path', Object.assign({d: `M${cx - r * .45},${cy - r * .85} Q${cx + c * r},${cy} ${cx - r * .45},${cy + r * .85} M${cx + r * .45},${cy - r * .85} Q${cx - c * r},${cy} ${cx + r * .45},${cy + r * .85}`}, line, {'stroke-width': w}), g);
+    }
+    return g;
+  }
+  const chevron = (p, x, y, s, op = .55) => Kit.mk('path', {d: `M${x - s * .4},${y - s} L${x + s * .4},${y} L${x - s * .4},${y + s}`, stroke: css('--k'), 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: op}, p);
+  const pop = (g) => { if (!Kit.calm) gsap.from(g, {opacity: 0, scale: .55, transformOrigin: '50% 50%', duration: .45, ease: 'power3.out'}); };
+
+  // ---------- front: thread, your two steps, chromosome ----------
+  function drawFront(fresh = -1) {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg); if (W < 10 || H < 10) return;
+    const fs = Math.max(12, Math.min(14, W / 26)), cw = W / 4;
+    const r = Math.max(10, Math.min(cw * .34, (H - fs * 2.2) / 2 * .92)), cy = (H - fs * 1.8) / 2 + 2;
+    const ly = cy + r + fs * 1.25;
+    for (let i = 0; i < 4; i++) {
+      const cx = cw * (i + .5);
+      if (i) chevron(svg, cw * i, cy, Math.max(4, r * .16));
+      if (i === 0) { icon(svg, 'start', cx, cy, r); fitText(svg, cx, ly, 'wiggly thread', fs, W, {'text-anchor': 'middle', 'font-weight': 600}); continue; }
+      if (i === 3) { icon(svg, 'chrom', cx, cy, r * .9); fitText(svg, cx, ly, 'chromosome', fs, W, {'text-anchor': 'middle', 'font-weight': 600}); continue; }
+      const k = picks[i - 1];
+      if (k) { const g = icon(svg, k, cx, cy, r * .9); if (fresh === i - 1) pop(g); }
+      else Kit.mk('circle', {cx, cy, r: r * .8, fill: 'none', stroke: css('--k'), 'stroke-width': 1.5, 'stroke-dasharray': '3 4', opacity: .45}, svg);
+      text(svg, cx, ly, String(i), fs, {'text-anchor': 'middle', 'font-weight': 800});
+    }
+  }
+
+  function refreshButtons() {
+    Kit.$('opts').querySelectorAll('.opt').forEach(b => {
+      const i = picks.indexOf(b.dataset.k);
+      b.classList.toggle('on', i >= 0); b.querySelector('.n').textContent = i >= 0 ? i + 1 : '';
+      if (locked) b.classList.add('locked');
+    });
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = picks.join() === TRUE.join();
+    Kit.answer({choice: picks.map(k => NAMES[k]).join(' → '), correct: ok, sure: pct});
+    const inPlace = picks.filter((k, i) => k === TRUE[i]).length;
+    sure.grade(ok, pct, ok ? 'The real order' : `${inPlace} of 2 in place`);
+    Kit.hide('say');
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('sure').classList.add('wait');
+
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || locked) return;
+    const k = b.dataset.k, i = picks.indexOf(k);
+    if (i >= 0) { picks.splice(i, 1); Kit.haptic('selection'); refreshButtons(); drawFront(); return; }
+    picks.push(k); Kit.haptic('selection');
+    if (picks.length === 2) { locked = true; Kit.$('sure').classList.remove('wait'); sure.on(); }
+    refreshButtons(); drawFront(picks.length - 1);
+  });
+
+  // ---------- back: one thread compacting, lens inside lens, and yours under it ----------
+  function drawBack(anim) {
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg); if (W < 10 || H < 10) return;
+    const k_ = css('--k');
+    const fs = Math.max(12, Math.min(14, W / 26));
+    const ry = Math.max(10, Math.min(15, H * .05, W * .04)), s = Math.max(4, ry * .38);
+    const Y = fs * 1.5 + 8 + ry * 2 + 6 + s * 2 + 4, D = H - Y;
+    const fr = [.28, .28, .44], xs = []; let acc = 0;
+    for (const f of fr) { xs.push((acc + f / 2) * W); acc += f; }
+    const T = fs * 1.8, B = fs * 1.8, avail = Math.max(40, D - T - B), cy = T + avail / 2;
+    const rc = Math.max(16, Math.min(fr[0] * W * .42, avail / 2 * .92));
+    const Rx = Math.max(18, Math.min(avail / 2.1, fr[2] * W / 1.35));
+
+    const defs = Kit.mk('defs', {}, svg);
+    const art = Kit.mk('g', {}, svg), labels = Kit.mk('g', {}, svg), yours = Kit.mk('g', {}, svg);
+    const ln = (p, d, w = 1.5, extra = {}) => Kit.mk('path', Object.assign({d, stroke: k_, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, extra), p);
+    const lens = (p, id, cx, cy_, r, draw) => {
+      const cp = Kit.mk('clipPath', {id: 'lz' + id}, defs); Kit.mk('circle', {cx, cy: cy_, r}, cp);
+      draw(Kit.mk('g', {'clip-path': `url(#lz${id})`}, p));
+      Kit.mk('circle', {cx, cy: cy_, r, fill: 'none', stroke: k_, 'stroke-width': 1.5}, p);
+    };
+    const ring = (p, cx, cy_, r, col = k_) => Kit.mk('circle', {cx, cy: cy_, r, fill: 'none', stroke: col, 'stroke-width': 1.5}, p);
+    const wedge = (p, ax, ay, ar, bx, by, br) => {
+      const dx = bx - ax, dy = by - ay, d = Math.hypot(dx, dy), f = Math.atan2(dy, dx);
+      const al = Math.acos(Math.max(-1, Math.min(1, (ar - br) / d)));
+      for (const sg of [1, -1]) { const a = f + sg * al;
+        ln(p, `M${ax + ar * Math.cos(a)},${ay + ar * Math.sin(a)} L${bx + br * Math.cos(a)},${by + br * Math.sin(a)}`, 1, {opacity: .6}); }
+    };
+    const stages = [];
+
+    // 1 · bare thread wrapped on two histones (the closest view)
+    const x0 = xs[0], g1 = Kit.mk('g', {}, art); stages.push(g1);
+    const b1 = [x0 - .45 * rc, x0 + .45 * rc], bR = .27 * rc, tw = Math.max(1.8, rc * .06);
+    lens(g1, 1, x0, cy, rc, p => {
+      ln(p, `M${x0 - 1.1 * rc},${cy + .32 * rc} Q${x0 - .8 * rc},${cy + .3 * rc} ${b1[0]},${cy} Q${x0},${cy + .35 * rc} ${b1[1]},${cy} Q${x0 + .8 * rc},${cy - .3 * rc} ${x0 + 1.1 * rc},${cy - .3 * rc}`, tw);
+      b1.forEach(x => {
+        Kit.mk('circle', {cx: x, cy, r: bR, fill: BEAD, stroke: k_, 'stroke-width': tw}, p);
+        for (const dy of [-bR * .3, bR * .3]) Kit.mk('ellipse', {cx: x, cy: cy + dy, rx: bR * 1.15, ry: bR * .36, transform: `rotate(-22 ${x} ${cy + dy})`, fill: 'none', stroke: k_, 'stroke-width': tw}, p);
+      });
+    });
+
+    // 2 · the nucleosomes folded back and forth; the ringed pair is lens 1
+    const x1 = xs[1], g2 = Kit.mk('g', {}, art); stages.push(g2);
+    const fp = foldPts(x1, cy, rc), fb = .12 * rc, fw = Math.max(1.4, rc * .04);
+    const r2 = [(fp[0][0] + fp[1][0]) / 2, fp[0][1], .26 * rc];
+    wedge(g2, x0, cy, rc, r2[0], r2[1], r2[2]);
+    lens(g2, 2, x1, cy, rc, p => {
+      const ends = `M${fp[0][0] - .5 * rc},${fp[0][1] - .4 * rc} L` + fp.map(q => q.join(',')).join(' L') + ` L${fp[15][0] + .5 * rc},${fp[15][1] + .4 * rc}`;
+      ln(p, ends, fw);
+      fp.forEach(([x, y]) => {
+        Kit.mk('circle', {cx: x, cy: y, r: fb, fill: BEAD, stroke: k_, 'stroke-width': fw}, p);
+        Kit.mk('ellipse', {cx: x, cy: y, rx: fb * 1.15, ry: fb * .36, transform: `rotate(-22 ${x} ${y})`, fill: 'none', stroke: k_, 'stroke-width': fw}, p);
+      });
+    });
+    ring(g2, ...r2);
+
+    // 3 · the chromosome, the hero; the ringed patch of one arm is lens 2
+    const x2 = xs[2], g3 = Kit.mk('g', {}, art); stages.push(g3);
+    const r3 = [x2 - .236 * Rx, cy - .425 * Rx, .17 * Rx];
+    wedge(g3, x1, cy, rc, r3[0], r3[1], r3[2]);
+    ln(g3, `M${x2 - .45 * Rx},${cy - .85 * Rx} Q${x2 + .12 * Rx},${cy} ${x2 - .45 * Rx},${cy + .85 * Rx} M${x2 + .45 * Rx},${cy - .85 * Rx} Q${x2 - .12 * Rx},${cy} ${x2 + .45 * Rx},${cy + .85 * Rx}`, Math.max(6, Rx * .38));
+    ring(g3, ...r3, BEAD);
+
+    // four labels: the two ends on top, the two steps under their lenses
+    fitText(labels, 2, fs * 1.05, 'DNA, 2 nm wide', fs, W);
+    ln(labels, `M${x0},${fs * 1.45} L${x0},${cy + .175 * rc - tw}`, 1.1);
+    fitText(labels, W - 2, fs * 1.05, 'chromosome: cm long', fs, W, {'text-anchor': 'end'});
+    const yl = cy + rc + fs * 1.4;
+    fitText(labels, x0, yl, 'histone', fs, W, {'text-anchor': 'middle'});
+    fitText(labels, x1, yl, 'folded', fs, W, {'text-anchor': 'middle'});
+
+    // yours: same two columns, one icon size, the mark in a fixed slot below
+    text(yours, 0, D + fs * 1.3, 'Your order', fs, {'font-weight': 800});
+    const yc = D + fs * 1.5 + 8 + ry, ym = yc + ry + 6 + s;
+    const tick = (x) => ln(yours, `M${x - s},${ym} l${s * .7},${s * .7} l${s * 1.3},${-s * 1.4}`, 2.2);
+    const cross = (x) => ln(yours, `M${x - s * .75},${ym - s * .75} l${s * 1.5},${s * 1.5} M${x + s * .75},${ym - s * .75} l${-s * 1.5},${s * 1.5}`, 2.2, {stroke: NO});
+    picks.forEach((k, i) => {
+      const cx = xs[i];
+      if (k === TRUE[i]) { icon(yours, k, cx, yc, ry); tick(cx); return; }
+      const off = ry * 1.3;
+      icon(yours, k, cx - off, yc, ry); cross(cx - off);
+      icon(yours, TRUE[i], cx + off, yc, ry).setAttribute('opacity', .5);
+    });
+
+    if (anim && !Kit.calm) {
+      gsap.from(stages, {opacity: 0, scale: .8, transformOrigin: '50% 50%', duration: .5, stagger: .2, ease: 'power3.out'});
+      gsap.from(labels, {opacity: 0, duration: .5, delay: .9, ease: 'power2.out'});
+      gsap.from(yours, {opacity: 0, y: 8, duration: .5, delay: 1.3, ease: 'power2.out'});
+    }
+  }
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => drawBack(true), Kit.calm ? 0 : 380); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .06, duration: .4, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (const k of TRUE) { Kit.$('opts').querySelector(`[data-k="${k}"]`).click(); await wait(80); }
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 3400);
+  };
+})();
+Kit.single();
+</script>
+</html>

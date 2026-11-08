@@ -275,4 +275,12 @@ def check(doc) -> list[str]:
             continue
         problems += check_common(section, where)
         problems += [f"{where}: {p}" for p in known[block](section)]
+    # The feed goes on without an end: a section after it could never be reached.
+    listed = [s for s in doc["sections"] if isinstance(s, dict)]
+    for i, section in enumerate(listed[:-1]):
+        if section.get("block") == "feed":
+            problems.append(
+                f"section {section.get('id')!r}: the feed goes on without an end, so it stands last; "
+                f"{listed[i + 1].get('id')!r} after it would never be reached"
+            )
     return problems

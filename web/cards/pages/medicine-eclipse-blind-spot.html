@@ -1,0 +1,420 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-eclipse-blind-spot -->
+<!-- Look: the visual field drawn as a surveyor's topographic map, the "hill of vision", on cream paper. Brown contour lines with hachures on the outer slope, hypsometric tints from meadow green to a snowy summit where you look, a soft hillshade, and a time scale laid out like a trail.
+     Interaction: the contours breathe and a sun sits on the summit, its rays slowly turning. Dragging the pin along the trail sets how long you think she stared, and the glare and rays swell over the peak as the seconds grow.
+     Wow: a red flag drops at 6 s and the trail between your guess and hers lights up red. The glare flares and collapses, then the summit caves into a black pit ringed by ticked depression contours: the scotoma, labelled by a leader that draws itself.
+     Composition: the hill is fitted into the free space around its labels, so no label ever sits on the map, on any phone, before or after the answer. -->
+<title>Six seconds at the sun</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
+#pic text{font-family:var(--body);fill:#2a1e12}
+#pic .mono{font-family:var(--mono)}
+#pic .halo{paint-order:stroke;stroke:#efe6d2;stroke-width:4px;stroke-linejoin:round}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.q{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Drag a guess · the stare" style="--c:#efe6d2;--k:#2a1e12;--edge:#c9b68f">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOLAR RETINOPATHY</span></div>
+    <h2 class="q">A 20-year-old stared at the 2017 eclipse. How long until permanent damage?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A map of the visual field drawn as a hill with contour lines, its summit where you look, above a time scale with a pin to drag."></svg>
+    </div>
+    <div id="why" class="gone"><p class="body"><b>Six seconds was enough.</b> The eclipse burned the centre of her retina for good (solar retinopathy): a scotoma, a black spot right where she looks.</p></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the pin to how long you think she stared, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Never look at the sun with the naked eye: seconds can scar the retina for life.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Non guardare mai il sole ad occhio nudo, si potrebbero avere danni alla retina, anche permanenti!” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (typeof DrawSVGPlugin !== 'undefined') gsap.registerPlugin(DrawSVGPlugin);
+  const svg = Kit.$('pic');
+  const INK = '#2a1e12', LINE = '#6b4a2c', PAPER = '#efe6d2', RED = '#b3261e';
+  const PAL = ['#c6d7ab', '#b5cc93', '#ccd392', '#ddcb88', '#e3b77b', '#da9d66', '#ca8458', '#d8ae86', '#ebdbc0', '#f9f3e6'];
+  const N = PAL.length, MAXT = 180, REAL = 6;
+  const UMIN = Math.sqrt(1 / MAXT), U6 = Math.sqrt(REAL / MAXT);
+  const PH = [0, 1, 2].map(() => Kit.rnd() * 6.283), PD = Array.from({length: N + 4}, () => (Kit.rnd() - .5) * .9);
+  let W = 0, H = 0, fs = 12, SY = 0, CY = 0, X0 = 0, X1 = 0, MB = 0, R = 50, cx = 0, cy = 0;
+  let u = Math.sqrt(45 / MAXT), touched = false, done = false, pending = false, entered = false, dragging = false;
+  let ambient = [], E = {}, tlR = null, tlE = null, pt = 0, rt = 0;
+
+  const T = () => Math.max(1, Math.round(MAXT * u * u));
+  const fmt = t => t < 60 ? `${t} s` : `${(t / 60).toFixed(t % 60 ? 1 : 0)} min`;
+  const ux = v => X0 + v * (X1 - X0);
+  const f1 = v => v.toFixed(1);
+  const text = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs}, a), p); e.textContent = t; return e; };
+
+  function closed(p) {
+    const n = p.length, q = f1;
+    let d = `M${q(p[0][0])},${q(p[0][1])}`;
+    for (let i = 0; i < n; i++) {
+      const a = p[(i - 1 + n) % n], b = p[i], c = p[(i + 1) % n], e = p[(i + 2) % n];
+      d += `C${q(b[0] + (c[0] - a[0]) / 6)},${q(b[1] + (c[1] - a[1]) / 6)} ${q(c[0] - (e[0] - b[0]) / 6)},${q(c[1] - (e[1] - b[1]) / 6)} ${q(c[0])},${q(c[1])}`;
+    }
+    return d + 'Z';
+  }
+  // a contour of the hill of vision: wider to the side, summit right where you look
+  function ringPts(i, rr, amp, ox = 0, sx = 1.06, k = 64, c0 = cx, c1 = cy) {
+    const pts = [];
+    for (let a = 0; a < k; a++) {
+      const th = a / k * 6.283, j = PD[i] || 0;
+      const n = Math.sin(2 * th + PH[0] + j) * .5 + Math.sin(3 * th + PH[1] - j) * .32 + Math.sin(5 * th + PH[2] + j * 2) * .18;
+      const r = rr * (1 + amp * n);
+      pts.push([c0 + ox + Math.cos(th) * r * sx, c1 + Math.sin(th) * r]);
+    }
+    return pts;
+  }
+
+  // fit the biggest hill that touches no label
+  function fitHill(rects) {
+    const base = ringPts(0, 1, .08, .07, 1.06, 64, 0, 0);
+    const inR = (x, y, r) => x > r.x && x < r.x + r.w && y > r.y && y < r.y + r.h;
+    const fits = (r, x, y) => {
+      for (const p of base) {
+        const px = x + r * p[0], py = y + r * p[1];
+        if (px < 2 || px > W - 2 || py < 2 || py > MB) return false;
+        for (const q of rects) if (inR(px, py, q)) return false;
+      }
+      for (const q of rects) for (const [qx, qy] of [[q.x, q.y], [q.x + q.w, q.y], [q.x, q.y + q.h], [q.x + q.w, q.y + q.h], [q.x + q.w / 2, q.y + q.h / 2]]) {
+        const dx = (qx - x - .07 * r) / (1.12 * r), dy = (qy - y) / (1.04 * r);
+        if (dx * dx + dy * dy < 1) return false;
+      }
+      return true;
+    };
+    const Rmax = Math.min((W - 6) / 2.3, (MB - 4) / 2.18);
+    for (let r = Math.floor(Rmax); r >= 12; r--) {
+      const yA = 2 + 1.09 * r, yB = MB - 1.09 * r, xA = 2 + 1.08 * r, xB = W - 2 - 1.23 * r;
+      if (yB < yA || xB < xA) continue;
+      const xs = [], ys = [];
+      for (let k = 0; k <= 12; k++) xs.push(xA + (xB - xA) * k / 12);
+      for (let k = 0; k <= 6; k++) ys.push(yA + (yB - yA) * k / 6);
+      const ym = (yA + yB) / 2;
+      xs.sort((a, b) => Math.abs(a - W / 2) - Math.abs(b - W / 2));
+      ys.sort((a, b) => Math.abs(a - ym) - Math.abs(b - ym));
+      for (const x of xs) for (const y of ys) if (fits(r, x, y)) return {r, x, y};
+    }
+    return {r: 12, x: W / 2, y: Math.max(14, MB / 2)};
+  }
+
+  function layout() {
+    ambient.forEach(t => t.kill()); ambient = [];
+    if (tlR) tlR.kill(); if (tlE) tlE.kill();
+    gsap.killTweensOf(svg.querySelectorAll('*'));
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 27));
+    SY = H - fs * 1.9; CY = SY - fs * 2; MB = SY - fs * 2.95;
+    X0 = fs * 1.4; X1 = W - fs * 1.4;
+
+    const defs = Kit.mk('defs', {}, svg);
+    defs.innerHTML = `
+      <radialGradient id="gl"><stop offset="0" stop-color="#fffdf2"/><stop offset=".22" stop-color="#fff3b8" stop-opacity=".95"/><stop offset=".55" stop-color="#ffcb4f" stop-opacity=".42"/><stop offset="1" stop-color="#ffae1f" stop-opacity="0"/></radialGradient>
+      <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#3a2210" stop-opacity=".24"/></linearGradient>
+      <radialGradient id="pit" cx=".42" cy=".38" r=".62"><stop offset="0" stop-color="#030201"/><stop offset=".72" stop-color="#140c07"/><stop offset="1" stop-color="#43301f"/></radialGradient>
+      <pattern id="grain" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".6" fill="#5a3b20" opacity=".2"/><circle cx="4.5" cy="4.2" r=".45" fill="#5a3b20" opacity=".14"/></pattern>
+      <filter id="lift" x="-15%" y="-15%" width="130%" height="135%"><feDropShadow dx="0" dy="${f1(fs * .35)}" stdDeviation="${f1(fs * .55)}" flood-color="#3b2410" flood-opacity=".3"/></filter>
+      <linearGradient id="bar" x1="0" x2="1"><stop offset="0" stop-color="#a7c58c"/><stop offset=".4" stop-color="#e2b46f"/><stop offset="1" stop-color="#8e2a1c"/></linearGradient>`;
+
+    const mapL = Kit.mk('g', {}, svg);
+
+    // ---------- labels first, so the hill can avoid them ----------
+    const rects = [];
+    E.leg = Kit.mk('g', {}, svg);
+    if (!done && MB > fs * 6) {
+      const a = text(E.leg, 3, fs * 1.05, 'VISUAL FIELD MAP', {class: 'mono halo', 'font-weight': 700, 'font-size': Math.max(12, fs * .9)});
+      const b = text(E.leg, 3, fs * 2.4, 'higher = sharper sight', {class: 'halo', 'font-weight': 600, 'font-size': 12, opacity: .85});
+      const lw = Math.max(a.getComputedTextLength(), b.getComputedTextLength());
+      rects.push({x: 0, y: 0, w: lw + 10, h: fs * 2.95});
+    }
+    const y2 = MB - fs * .25, y1 = y2 - fs * 1.35;
+    const mkLab = (a, b, col) => {
+      const g = Kit.mk('g', {}, svg);
+      const t1 = text(g, W - 3, y1, a, {'text-anchor': 'end', class: 'mono halo', 'font-weight': 800, fill: col});
+      const t2 = text(g, W - 3, y2, b, {'text-anchor': 'end', class: 'halo', 'font-weight': 700, 'font-size': 12});
+      t1.style.fill = col;
+      return {g, w: Math.max(t1.getComputedTextLength(), t2.getComputedTextLength())};
+    };
+    const fo = mkLab('FOVEA', 'where you look', INK), so = mkLab('SCOTOMA', 'a black spot for life', RED);
+    const lw = Math.max(fo.w, so.w), lx = W - 3 - lw;
+    rects.push({x: lx - 8, y: y1 - fs * 1.1, w: lw + 11, h: y2 + fs * .4 - (y1 - fs * 1.1)});
+    E.fovL = fo.g; E.scoL = so.g;
+
+    const fit = fitHill(rects);
+    R = fit.r; cx = fit.x; cy = fit.y;
+    const o = `${cx} ${cy}`;
+
+    // ---------- the map ----------
+    const map = E.map = Kit.mk('g', {}, mapL);
+    const tilt = E.tilt = Kit.mk('g', {}, map);
+    E.levels = []; E.lines = []; E.fills = [];
+    let outer = '', pts0 = null;
+    for (let i = 0; i < N; i++) {
+      const t = i / N, rr = R * Math.pow(1 - t, .82);
+      const pts = ringPts(i, rr, .045 + .035 * (1 - t), R * .07 * (1 - t), 1.06 - .04 * t);
+      const d = closed(pts);
+      if (!i) { outer = d; pts0 = pts; }
+      const g = Kit.mk('g', {}, tilt);
+      const fp = Kit.mk('path', {d, fill: PAL[i]}, g);
+      if (!i) fp.setAttribute('filter', 'url(#lift)');
+      const lp = Kit.mk('path', {d, fill: 'none', stroke: LINE, 'stroke-width': i % 3 === 0 ? 1.5 : .8, 'stroke-opacity': i % 3 === 0 ? .9 : .65, 'stroke-linejoin': 'round'}, g);
+      E.levels.push(g); E.lines.push(lp); E.fills.push(fp);
+    }
+    // hachures down the outer slope, like a surveyor's cliff marks
+    const hg = Kit.mk('g', {stroke: LINE, 'stroke-width': .9, 'stroke-opacity': .5, 'stroke-linecap': 'round'}, E.levels[0]);
+    E.hach = hg;
+    const hl = Math.max(2.5, Math.min(fs * .32, R * .06));
+    for (let a = 0; a < pts0.length; a += 2) {
+      const [px, py] = pts0[a], dx = px - cx, dy = py - cy, L = Math.hypot(dx, dy) || 1;
+      Kit.mk('line', {x1: f1(px), y1: f1(py), x2: f1(px + dx / L * hl), y2: f1(py + dy / L * hl)}, hg);
+    }
+    E.shade = Kit.mk('path', {d: outer, fill: 'url(#shade)', 'pointer-events': 'none'}, tilt);
+    E.grain = Kit.mk('path', {d: outer, fill: 'url(#grain)', 'pointer-events': 'none'}, tilt);
+    const ax = E.axes = Kit.mk('g', {stroke: INK, 'stroke-opacity': .32, 'stroke-width': .9, 'stroke-dasharray': '2 4'}, map);
+    Kit.mk('line', {x1: cx - R * 1.02, x2: cx + R * 1.16, y1: cy, y2: cy}, ax);
+    Kit.mk('line', {x1: cx, x2: cx, y1: cy - R * .98, y2: cy + R * .98}, ax);
+
+    // the sun on the summit: glare and slowly turning rays
+    E.rays = Kit.mk('g', {stroke: '#e39a2e', 'stroke-linecap': 'round', 'pointer-events': 'none'}, map);
+    for (let k = 0; k < 16; k++) {
+      const th = k / 16 * 6.283, r1 = R * .46, r2 = R * (k % 2 ? .6 : .74);
+      Kit.mk('line', {x1: f1(cx + Math.cos(th) * r1), y1: f1(cy + Math.sin(th) * r1), x2: f1(cx + Math.cos(th) * r2), y2: f1(cy + Math.sin(th) * r2), 'stroke-width': k % 2 ? 1 : 1.6, 'stroke-opacity': k % 2 ? .45 : .7}, E.rays);
+    }
+    E.glare = Kit.mk('circle', {cx, cy, r: R * .62, fill: 'url(#gl)'}, map);
+    E.flash = Kit.mk('circle', {cx, cy, r: R * 1.15, fill: '#fffbe9', opacity: 0, 'pointer-events': 'none'}, map);
+
+    // the scotoma: a pit where the summit was
+    const pitG = E.pitG = Kit.mk('g', {}, map);
+    const rc = Math.max(5, R * .15);
+    E.pit = Kit.mk('path', {d: closed(ringPts(N, rc, .14, 0, 1.04, 40)), fill: 'url(#pit)'}, pitG);
+    E.rings = []; E.ticks = [];
+    [1.42, 1.85].forEach((m, k) => {
+      const pts = ringPts(N + 1 + k, rc * m, .12, 0, 1.05, 48);
+      E.rings.push(Kit.mk('path', {d: closed(pts), fill: 'none', stroke: INK, 'stroke-width': k ? 1 : 1.5, 'stroke-opacity': k ? .65 : .95}, pitG));
+      if (!k) for (let a = 0; a < pts.length; a += 3) {
+        const [px, py] = pts[a], dx = cx - px, dy = cy - py, L = Math.hypot(dx, dy) || 1, l = Math.min(fs * .38, rc * .3);
+        E.ticks.push(Kit.mk('line', {x1: px, y1: py, x2: px + dx / L * l, y2: py + dy / L * l, stroke: INK, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, pitG));
+      }
+    });
+
+    // leaders: from the summit to the label, never across it
+    const lead = from => {
+      const side = cx < lx - R * .3;
+      const ex = side ? lx - 5 : W - 3 - lw * .5, ey = side ? y1 - fs * .35 : y1 - fs * 1.2;
+      const c1 = side ? [from[0] + (ex - from[0]) * .45, from[1]] : [from[0], from[1] + (ey - from[1]) * .5];
+      const c2 = side ? [ex - (ex - from[0]) * .3, ey] : [ex, ey - (ey - from[1]) * .35];
+      return `M${f1(from[0])},${f1(from[1])} C${f1(c1[0])},${f1(c1[1])} ${f1(c2[0])},${f1(c2[1])} ${f1(ex)},${f1(ey)}`;
+    };
+    E.fovLead = Kit.mk('path', {d: lead([cx + 3, cy + 3]), fill: 'none', stroke: INK, 'stroke-width': 1.1, 'stroke-dasharray': '3 3'}, fo.g);
+    Kit.mk('circle', {cx, cy, r: 2.2, fill: INK}, fo.g);
+    E.scoLead = Kit.mk('path', {d: lead([cx + rc * 1.3, cy + rc * 1.1]), fill: 'none', stroke: RED, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, svg);
+    svg.appendChild(E.scoL);
+
+    // ---------- the trail of seconds ----------
+    const sc = E.scale = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: X0, y: SY + fs * .3, width: X1 - X0, height: Math.max(3, fs * .24), rx: fs * .12, fill: 'url(#bar)', opacity: .85}, sc);
+    Kit.mk('line', {x1: X0, x2: X1, y1: SY, y2: SY, stroke: LINE, 'stroke-width': 2, 'stroke-dasharray': '7 4', 'stroke-linecap': 'round'}, sc);
+    [2, 10, 20, 45, 90, 150].forEach(t => { const x = ux(Math.sqrt(t / MAXT)); Kit.mk('line', {x1: x, x2: x, y1: SY - fs * .2, y2: SY + fs * .2, stroke: LINE, 'stroke-width': .9, opacity: .7}, sc); });
+    [[0, '0'], [5, '5 s'], [30, '30 s'], [60, '1 min'], [120, '2 min'], [180, '3 min']].forEach(([t, l]) => {
+      const x = ux(Math.sqrt(t / MAXT));
+      Kit.mk('line', {x1: x, x2: x, y1: SY - fs * .35, y2: SY + fs * .35, stroke: INK, 'stroke-width': 1.5}, sc);
+      text(sc, x, SY + fs * 1.45, l, {'text-anchor': 'middle', class: 'mono', 'font-size': 12, 'font-weight': 600});
+    });
+
+    // the stretch of trail between your guess and hers
+    E.span = Kit.mk('path', {fill: 'none', stroke: RED, 'stroke-width': 3.4, 'stroke-linecap': 'round', opacity: .9}, svg);
+
+    // the real answer: a red flag at 6 s, its chip on the same row as yours
+    E.realG = Kit.mk('g', {}, svg);
+    E.pole = Kit.mk('path', {fill: 'none', stroke: RED, 'stroke-width': 2, 'stroke-linecap': 'round'}, E.realG);
+    E.dot = Kit.mk('circle', {r: fs * .3, fill: RED, stroke: PAPER, 'stroke-width': 1.5}, E.realG);
+    E.realChip = Kit.mk('g', {}, svg);
+    E.realLink = Kit.mk('path', {fill: 'none', stroke: RED, 'stroke-width': 2, 'stroke-linecap': 'round'}, E.realChip);
+    const rtx = text(E.realChip, 0, CY + fs * .36, 'her: 6 s', {'text-anchor': 'middle', 'font-weight': 800, fill: PAPER, 'font-size': 12});
+    rtx.style.fill = PAPER;
+    const rw = E.realChipW = rtx.getComputedTextLength() + fs * 1.1;
+    E.realChip.insertBefore(Kit.mk('rect', {x: -rw / 2, y: CY - fs * .68, width: rw, height: fs * 1.36, rx: fs * .68, fill: RED}), rtx);
+
+    // your pin
+    const pg = E.pinG = Kit.mk('g', {}, svg), s = fs * .44;
+    Kit.mk('ellipse', {cx: 0, cy: SY + 1, rx: s * .8, ry: s * .25, fill: INK, opacity: .25}, pg);
+    Kit.mk('path', {d: `M0,${SY} C${-s},${SY - s * 1.2} ${-s},${SY - s * 2.2} 0,${SY - s * 2.2} C${s},${SY - s * 2.2} ${s},${SY - s * 1.2} 0,${SY}Z`, fill: INK}, pg);
+    Kit.mk('circle', {cx: 0, cy: SY - s * 1.45, r: s * .36, fill: PAPER}, pg);
+    E.chipG = Kit.mk('g', {}, svg);
+    E.youLink = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, E.chipG);
+    E.chipR = Kit.mk('rect', {y: CY - fs * .68, height: fs * 1.36, rx: fs * .68, fill: PAPER, stroke: INK, 'stroke-width': 1.5}, E.chipG);
+    E.chipT = text(E.chipG, 0, CY + fs * .36, '', {'text-anchor': 'middle', 'font-weight': 800, 'font-size': 12});
+
+    gsap.set([E.realG, E.realChip, E.span, E.pitG, E.scoL, E.scoLead], {autoAlpha: 0});
+    gsap.set([E.glare, E.rays], {svgOrigin: o});
+    setU(u, true);
+    if (done) { const a = pending; pending = false; reveal(a); }
+    if (entered && !Kit.calm && !(done && tlR && tlR.isActive())) startAmbient();
+  }
+
+  // ---------- the breathing hill ----------
+  function startAmbient() {
+    ambient.forEach(t => t.kill()); ambient = [];
+    const o = `${cx} ${cy}`;
+    E.levels.forEach((g, i) => ambient.push(gsap.to(g, {scale: 1 + .014 * (.4 + i / N), svgOrigin: o, duration: 2.8, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .16})));
+    ambient.push(gsap.to(E.tilt, {rotation: 1.4, svgOrigin: o, duration: 9, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+    if (!done) {
+      ambient.push(gsap.to(E.glare, {opacity: .72, duration: 1.6, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+      ambient.push(gsap.to(E.rays, {rotation: '+=360', svgOrigin: o, duration: 40, repeat: -1, ease: 'none'}));
+    } else ambient.push(gsap.to(E.pit, {scale: 1.05, svgOrigin: o, duration: 2.2, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+  }
+
+  // where the two chips sit on their shared row, pushed apart if they would touch
+  function chipPos() {
+    const gx = ux(u), rx = ux(U6), yw = E.chipW, hw = E.realChipW, gap = fs * .45;
+    const cl = (v, w) => Math.max(w / 2 + 2, Math.min(W - w / 2 - 2, v));
+    let a = cl(rx, hw), b = cl(gx, yw);
+    const need = (hw + yw) / 2 + gap;
+    if (Math.abs(b - a) < need) {
+      const sd = gx >= rx ? 1 : -1, m = (a + b) / 2;
+      a = m - sd * need / 2; b = m + sd * need / 2;
+      const lo = Math.min(a - hw / 2, b - yw / 2), hi = Math.max(a + hw / 2, b + yw / 2);
+      let sh = 0; if (lo < 2) sh = 2 - lo; if (hi > W - 2) sh = W - 2 - hi;
+      a += sh; b += sh;
+    }
+    return {a, b};
+  }
+
+  function setU(v, quick) {
+    u = Math.max(UMIN, Math.min(1, v));
+    const x = ux(u), q = quick || Kit.calm;
+    E.chipT.textContent = done ? `you: ${fmt(T())}` : fmt(T());
+    const w = E.chipW = E.chipT.getComputedTextLength() + fs * 1.2;
+    E.chipR.setAttribute('width', w); E.chipR.setAttribute('x', -w / 2);
+    const b = done ? chipPos().b : Math.max(w / 2 + 2, Math.min(W - w / 2 - 2, x));
+    E.youLink.setAttribute('d', `M${f1(x - b)},${f1(SY - fs * .98)} L0,${f1(CY + fs * .68)}`);
+    const sc = done ? .14 : .18 + .95 * u, o = `${cx} ${cy}`;
+    if (q) { gsap.set(E.pinG, {x}); gsap.set(E.chipG, {x: b}); gsap.set([E.glare, E.rays], {scale: sc, svgOrigin: o}); }
+    else {
+      gsap.to(E.pinG, {x, duration: .14, ease: 'power3.out', overwrite: 'auto'});
+      gsap.to(E.chipG, {x: b, duration: .14, ease: 'power3.out', overwrite: 'auto'});
+      gsap.to([E.glare, E.rays], {scale: sc, svgOrigin: o, duration: .35, ease: 'power3.out', overwrite: 'auto'});
+      gsap.fromTo(E.levels.slice(6), {x: () => (Math.random() - .5) * 2 * u}, {x: 0, duration: .25, ease: 'power2.out', overwrite: 'auto'});
+    }
+  }
+
+  // ---------- the reveal ----------
+  function reveal(anim) {
+    const rx = ux(U6), gx = ux(u), o = `${cx} ${cy}`;
+    setU(u, true);
+    const {a} = chipPos();
+    E.pole.setAttribute('d', `M${f1(rx)},${f1(SY)} V${f1(SY - fs * .98)}`);
+    E.dot.setAttribute('cx', rx); E.dot.setAttribute('cy', SY);
+    E.realLink.setAttribute('d', `M${f1(rx - a)},${f1(SY - fs * .98)} L0,${f1(CY + fs * .68)}`);
+    gsap.set(E.realChip, {x: a});
+    E.span.setAttribute('d', `M${f1(gx)},${f1(SY)} L${f1(rx)},${f1(SY)}`);
+    const shown = [E.realG, E.realChip, E.pitG, E.scoL, E.scoLead, E.span];
+    if (!anim || Kit.calm) {
+      gsap.set(shown, {autoAlpha: 1});
+      gsap.set([E.fovL, E.rays], {autoAlpha: 0}); gsap.set(E.glare, {scale: .14, opacity: .45, svgOrigin: o});
+      return;
+    }
+    ambient.forEach(t => t.kill()); ambient = [];
+    gsap.set(E.pitG, {autoAlpha: 1});
+    gsap.set(E.pit, {scale: 0, svgOrigin: o});
+    gsap.set(E.rings, {drawSVG: '0%'}); gsap.set(E.ticks, {opacity: 0});
+    tlR = gsap.timeline({onComplete: startAmbient})
+      .fromTo(E.realG, {y: -fs * 2.2, autoAlpha: 0}, {y: 0, autoAlpha: 1, duration: .55, ease: 'back.out(2.4)'})
+      .fromTo(E.realChip, {y: -fs * 1.6, autoAlpha: 0}, {y: 0, autoAlpha: 1, duration: .5, ease: 'back.out(2)'}, '<.08')
+      .set(E.span, {autoAlpha: 1}, '<.15')
+      .fromTo(E.span, {drawSVG: '0%'}, {drawSVG: '100%', duration: .6, ease: 'power2.inOut'}, '<')
+      .to(E.glare, {scale: 1.6, opacity: 1, svgOrigin: o, duration: .45, ease: 'power2.in'}, '<.1')
+      .to(E.rays, {scale: 1.5, rotation: '+=40', svgOrigin: o, duration: .45, ease: 'power2.in'}, '<')
+      .to(E.flash, {opacity: .85, duration: .1, ease: 'power1.in'})
+      .add(() => Kit.haptic('success'))
+      .set(E.rays, {autoAlpha: 0})
+      .to(E.flash, {opacity: 0, duration: .7, ease: 'expo.out'})
+      .to(E.glare, {scale: .14, opacity: .45, svgOrigin: o, duration: .7, ease: 'expo.out'}, '<')
+      .to(E.pit, {scale: 1, svgOrigin: o, duration: 1.2, ease: 'elastic.out(1,.42)'}, '<')
+      .fromTo(E.map, {x: -4}, {x: 0, duration: .6, ease: 'elastic.out(1.5,.18)'}, '<')
+      .to(E.levels.slice(5), {scale: .97, svgOrigin: o, duration: .25, yoyo: true, repeat: 1, ease: 'power2.out', stagger: .03}, '<')
+      .to(E.rings, {drawSVG: '100%', duration: .8, stagger: .14, ease: 'power2.out'}, '<.15')
+      .to(E.ticks, {opacity: 1, stagger: .025, duration: .2}, '<.3')
+      .to(E.fovL, {autoAlpha: 0, duration: .25}, '<')
+      .set(E.scoLead, {autoAlpha: 1}, '<.1')
+      .fromTo(E.scoLead, {drawSVG: '0%'}, {drawSVG: '100%', duration: .55, ease: 'power2.out'}, '<')
+      .fromTo(E.scoL, {autoAlpha: 0, y: 6}, {autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out'}, '<.3');
+  }
+
+  // ---------- touch ----------
+  const xOf = e => e.clientX - svg.getBoundingClientRect().left;
+  svg.addEventListener('pointerdown', e => {
+    if (done) return; dragging = true;
+    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    Kit.haptic('selection');
+    gsap.fromTo(E.pinG, {scale: 1}, {scale: 1.18, transformOrigin: '50% 100%', duration: .12, ease: 'power3.out'});
+    setU((xOf(e) - X0) / (X1 - X0));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) setU((xOf(e) - X0) / (X1 - X0)); });
+  const end = () => {
+    if (!dragging) return; dragging = false;
+    gsap.to(E.pinG, {scale: 1, transformOrigin: '50% 100%', duration: .5, ease: 'elastic.out(1.2,.4)'});
+    if (!touched) { touched = true; sure.on(); }
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const t = T(), ok = t <= 12;
+    done = true; pending = true;
+    Kit.answer({choice: fmt(t), correct: ok, sure: pct});
+    Kit.hide('say'); Kit.show('why');
+    sure.grade(ok, pct, `${fmt(t)}, ${ok ? 'right' : 'wrong'}`);
+    Kit.show('keep');
+    // rebuild once the stage has its final size, then play the reveal on the new layout
+    clearTimeout(pt); clearTimeout(rt);
+    pt = setTimeout(layout, 90);
+  });
+
+  new ResizeObserver(() => {
+    if (!W) return;
+    clearTimeout(rt);
+    rt = setTimeout(() => {
+      const r = svg.getBoundingClientRect();
+      if (Math.abs(r.width - W) < 1 && Math.abs(r.height - H) < 1) return;
+      if (pending) { clearTimeout(pt); }
+      layout();
+    }, 80);
+  }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+
+  Kit.onEnter.card = () => {
+    entered = true;
+    if (Kit.calm || done) return;
+    const o = `${cx} ${cy}`;
+    tlE = gsap.timeline({onComplete: startAmbient});
+    tlE.from(E.fills, {opacity: 0, scale: .9, svgOrigin: o, duration: .7, stagger: .06, ease: 'power3.out'})
+      .from(E.lines, {drawSVG: '0%', duration: .9, stagger: .06, ease: 'power2.inOut'}, '<')
+      .from([E.shade, E.grain, E.axes, E.hach], {opacity: 0, duration: .6}, '<.4')
+      .from(E.glare, {opacity: 0, duration: .9, ease: 'expo.out'}, '-=.4')
+      .from(E.rays, {opacity: 0, rotation: -60, svgOrigin: o, duration: 1.1, ease: 'expo.out'}, '<')
+      .from(E.scale, {opacity: 0, y: 8, duration: .45, ease: 'power3.out'}, '<')
+      .from([E.pinG, E.chipG], {y: -fs * 2, opacity: 0, duration: .6, ease: 'back.out(2.2)', stagger: .06}, '<.15')
+      .from([E.fovL, E.leg], {opacity: 0, duration: .5}, '<.2');
+  };
+
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const r = svg.getBoundingClientRect(), x = r.left + ux(Math.sqrt(20 / MAXT)), y = r.top + SY;
+    svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+    svg.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 250 : 3300);
+  };
+})();
+Kit.single();
+</script>
+</html>

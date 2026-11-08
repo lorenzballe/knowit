@@ -1,0 +1,276 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-steel-bar-signal -->
+<!-- Design note.
+     Thought to carry: even a rigid steel bar does not answer everywhere at once. A change at one end is a signal, and it needs a finite, very, very short time to reach the other end.
+     Front: one flat steel bar on two supports, with one arrow at its left end for "a change here". Three labels at most: the change, the far end, the reader's guess.
+       The guess is pinned to the far end. The bar itself never moves, so the answer stays the reader's.
+     Back: the headline is the verdict, with a line under it repeating the pick and how sure the reader was.
+       The same bar drawn three times down a bare time arrow: a change at one end, a signal travels down, the far end moves.
+       The signal is one small dark pulse, the only focal point. A dashed line marks where the far end started.
+       Last, the video's own evidence: a falling slinky, its top collapsed while the bottom still hangs. Four labels in all.
+-->
+<title>A steel bar is not instant</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .4s}
+.turn>.back{visibility:hidden}
+.turn.over>.back{visibility:visible;transition:visibility 0s linear .35s}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front,.kit-calm .turn.over>.back{transition:none}
+
+.face{gap:1.1cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex;background:none;border:0;box-shadow:none}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
+.q{overflow-wrap:break-word}
+#opts{display:flex;flex-direction:column;gap:.9cqh;flex:none}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer;overflow-wrap:break-word}
+.opt.on{background:#d9482b;color:#fff;box-shadow:none}
+.opt:disabled{cursor:default}
+#sure{flex:none}
+#sure.locked,#sure.locked *{opacity:1!important;color:var(--k)!important;filter:none!important}
+#sure.locked [data-v]{background:transparent!important;box-shadow:inset 0 0 0 2px var(--k)!important;border-color:var(--k)!important}
+.spacer{flex:none;height:max(5.5cqh,46px)}
+.back .big{margin:0;font:800 max(3.2cqh,19px)/1.15 var(--display);overflow-wrap:break-word}
+.back .said{margin:0;display:flex;align-items:center;gap:.45em;font:700 max(1.9cqh,13px)/1.25 var(--body);flex:none}
+.back .said:empty{display:none}
+.back .said svg{flex:none;width:1.3em;height:1.3em}
+.back .body{margin:0;font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.back .keep{flex:none}
+.back .foot{flex:none;max-width:calc(100% - 104px)}
+.back .foot .src{display:block;font-size:max(1.5cqh,12px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RIGID?</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Change one end of a steel bar. When does the far end feel it?</h2>
+        <p class="say" id="say">Pick when the far end responds. Then say how sure you are.</p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A long steel bar resting on two supports. An arrow marks a change at its left end. The far end is on the right."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">At the same instant</button>
+          <button class="opt" data-i="1">A very short time later</button>
+          <button class="opt" data-i="2">Long enough to watch it wait</button>
+        </div>
+        <div class="sure" id="sure"></div>
+        <div class="spacer"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big" id="verdict">A very, very short time later.</p>
+        <p class="said" id="said"></p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same bar three times down a time arrow: a change at one end, a signal travels down the bar, the far end moves. Below, a falling slinky: its top has collapsed while its bottom still hangs where it was. The slinky does it slowly."></svg></div>
+        <p class="body">The change at one end is a signal, and the far end only moves once it arrives. A falling slinky shows it slowly. In steel the time is very, very short, but never zero.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Even in a rigid steel bar, a signal takes a finite time to get from one end to the other.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script>
+(() => {
+  const STEEL = '#c3ccd4', GUESS = '#d9482b', RIGHT = 1;
+  const GUESSES = ['you: same instant', 'you: very short time', 'you: a visible wait'];
+  const SAID = ['at the same instant', 'a very short time later', 'long enough to watch'];
+  const VERDICT = ['Not at once. It takes a very, very short time.', 'Right. A finite time, very, very short.', 'It waits, but only a very, very short time.'];
+  let pick = -1, turned = false, fs = 12;
+  const clamp = (a, b, v) => Math.max(a, Math.min(b, v));
+
+  const text = (p, x, y, t, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: 'currentColor', 'font-family': 'Figtree, var(--body), sans-serif', 'font-size': fs, 'font-weight': 700}, a), p);
+    e.style.color = 'var(--k)'; e.textContent = t; return e;
+  };
+  const fit = (e, W) => {
+    const w = e.getComputedTextLength(), x = +e.getAttribute('x'), an = e.getAttribute('text-anchor') || 'start';
+    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const s = Math.max(1 - left, Math.min(0, W - 1 - (left + w)));
+    if (s) e.setAttribute('x', x + s); return e;
+  };
+  const stroke = el => { el.style.stroke = 'var(--k)'; return el; };
+  const ink = el => { el.style.fill = 'var(--k)'; return el; };
+  const support = (p, sx, yTop, th) => ink(Kit.mk('path', {d: `M${sx},${yTop} l${-th * .55},${th * 1.1} h${th * 1.1}z`}, p));
+  const arrowIn = (p, xa, xb, y, sw) => stroke(Kit.mk('path', {d: `M${xa},${y} H${xb} M${xb - 6},${y - 6} L${xb},${y} L${xb - 6},${y + 6}`, fill: 'none', 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p));
+  const bar = (p, x0, L, y, th) => stroke(Kit.mk('rect', {x: x0, y: y - th / 2, width: L, height: th, rx: 2, fill: STEEL, 'stroke-width': 1.8}, p));
+
+  // ---------- front ----------
+  let front = {};
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg); fs = clamp(12, 14, W / 27);
+    const x0 = W * .2, x1 = W * .93, L = x1 - x0, LG = 9, ax0 = W * .04;
+
+    const here = text(svg, ax0, 0, 'a change here');
+    const tag = text(svg, x1, 0, '', {'text-anchor': 'end', 'font-weight': 800});
+    let tagW = 0; for (const g of GUESSES) { tag.textContent = g; tagW = Math.max(tagW, tag.getComputedTextLength()); }
+    tag.textContent = pick >= 0 ? GUESSES[pick] : '';
+    const two = here.getComputedTextLength() + tagW + 20 > x1 - ax0;
+    const far = text(svg, x1, 0, 'the far end', {'text-anchor': 'end'});
+
+    const need = th => {
+      const up = th / 2 + LG + fs * .78 + (two ? fs * 1.5 : 0), down = th / 2 + th * 1.1 + 4 + fs * 1.05;
+      return {up, tot: up + down + 6};
+    };
+    let th = clamp(8, 20, W * .05);
+    while (th > 8 && need(th).tot > H) th -= .25;
+    const n = need(th), y = 3 + n.up + Math.max(0, (H - n.tot) / 2);
+
+    for (const sx of [x0 + L * .18, x1 - L * .18]) support(svg, sx, y + th / 2, th);
+    bar(svg, x0, L, y, th);
+    const arr = Kit.mk('g', {}, svg);
+    arrowIn(arr, ax0, x0 - 5, y, 2.4);
+
+    const ly = y - th / 2 - LG;
+    here.setAttribute('y', ly);
+    const ty = two ? ly - fs * 1.5 : ly;
+    tag.setAttribute('y', ty);
+    const tick = Kit.mk('line', {x1: x1 - 1, x2: x1 - 1, y1: ty + 3, y2: y - th / 2 - 1, stroke: GUESS, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    gsap.set([tag, tick], {opacity: pick >= 0 ? 1 : 0});
+    const fy = y + th / 2 + th * 1.1 + 4 + fs * .78;
+    far.setAttribute('y', fy);
+    stroke(Kit.mk('line', {x1: x1 - 1, x2: x1 - 1, y1: y + th / 2 + 2, y2: fy - fs * .78 - 2, 'stroke-width': 1}, svg));
+    fit(here, W); fit(tag, W); fit(far, W);
+    front = {arr, tag, tick};
+  }
+  function strike() {
+    const {arr, tag, tick} = front;
+    tag.textContent = GUESSES[pick]; fit(tag, Kit.$('pic').viewBox.baseVal.width);
+    if (Kit.calm) { gsap.set([tag, tick], {opacity: 1}); return; }
+    gsap.timeline()
+      .to(arr, {x: -6, duration: .2, ease: 'power2.out'})
+      .to(arr, {x: 3, duration: .12, ease: 'power3.in'})
+      .to(arr, {x: 0, duration: .4, ease: 'power2.out'})
+      .fromTo([tag, tick], {opacity: 0}, {opacity: 1, duration: .35, ease: 'power2.out'}, '-=.3');
+  }
+
+  // ---------- back ----------
+  function drawBack(animate) {
+    const svg = Kit.$('pic2'), body = document.querySelector('.back .body');
+    svg.innerHTML = ''; body.style.display = '';
+    let {W, H} = Kit.fitSvg(svg); fs = clamp(12, 13, W / 26);
+    const plan = s => {
+      const th = 9 + 5 * s, G = 7 + 6 * Math.min(1, s * 1.6), gap = 6 + 10 * s, sk = .65 + .35 * s;
+      const lane = fs * .78 + G;
+      const rows = [lane + th + th * 1.1 + 2, lane + th + 2, lane + th + 2];
+      const gapS = Math.max(gap * 1.3, 8), slH = 46 * sk;
+      const tot = rows.reduce((a, c) => a + c, 0) + gap * 2 + gapS + Math.max(slH, 8 + fs * 1.3);
+      return {th, gap, sk, lane, rows, gapS, slH, tot};
+    };
+    if (plan(0).tot > H) { body.style.display = 'none'; ({W, H} = Kit.fitSvg(svg)); }
+    let s = 1; while (s > 0 && plan(s).tot > H) s = +(s - .05).toFixed(2);
+    const pl = plan(Math.max(0, s)), {th, lane, sk} = pl;
+    const slack = Math.max(0, H - pl.tot), extra = Math.min(slack / 5, 12);
+    const gap = pl.gap + extra, gapS = pl.gapS + extra;
+    let cur = Math.max(0, (H - pl.tot - extra * 3) / 2);
+
+    const x0 = W * .2, x1 = W * .93, L = x1 - x0, AX = 14, LX = AX + 9;
+    const d = clamp(3, L * .04, W - x1 - 14);
+    const P = [.03, .5, .965];
+    const NAMES = ['a change at one end', 'a signal travels down', 'the far end moves'];
+    const tl = gsap.timeline({paused: true});
+    const frame = Kit.mk('g', {}, svg), ys = [];
+
+    P.forEach((p, k) => {
+      const yl = cur + fs * .78, yc = cur + lane + th / 2, at = k * .75;
+      ys.push({yl, yc});
+      const g = Kit.mk('g', {}, svg), mover = Kit.mk('g', {}, g);
+      if (k === 0) {
+        for (const sx of [x0 + L * .18, x1 - L * .18]) support(g, sx, yc + th / 2, th);
+        arrowIn(g, Math.max(AX + 10, x0 - W * .1), x0 - 4, yc, 2);
+      }
+      bar(mover, x0, L, yc, th);
+      // The signal: one small pulse, the only thing in ink inside the bar.
+      const pulse = Kit.mk('g', {}, mover);
+      for (const o of [-4.5, -1.5, 1.5, 4.5]) stroke(Kit.mk('line', {x1: o, x2: o, y1: yc - th / 2 + 2, y2: yc + th / 2 - 2, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, pulse));
+      const notes = Kit.mk('g', {}, svg);
+      stroke(Kit.mk('line', {x1: AX, x2: AX + 5, y1: yl - fs * .32, y2: yl - fs * .32, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, notes));
+      fit(text(notes, LX, yl, NAMES[k]), W);
+      if (k === 2) stroke(Kit.mk('path', {d: `M${x1 + d + 3},${yc} H${x1 + d + 11} M${x1 + d + 7.5},${yc - 3.5} L${x1 + d + 11},${yc} L${x1 + d + 7.5},${yc + 3.5}`, fill: 'none', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, notes));
+
+      const from = x0 + (k ? P[k - 1] : 0) * L, to = x0 + p * L;
+      tl.fromTo(g, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .3, ease: 'power2.out'}, at)
+        .fromTo(notes, {opacity: 0}, {opacity: 1, duration: .3, ease: 'power2.out'}, at + .05)
+        .fromTo(pulse, {x: from}, {x: to, duration: .6, ease: 'power1.inOut'}, at + .2);
+      if (k === 2) tl.fromTo(mover, {x: 0}, {x: d, duration: .3, ease: 'power2.out'}, at + .8);
+      cur += pl.rows[k] + gap;
+    });
+    cur -= gap;
+
+    const t0 = ys[0].yl - fs * .32, tip = ys[2].yc + th / 2 + 8;
+    stroke(Kit.mk('path', {d: `M${AX},${t0} V${tip} M${AX - 4},${tip - 5} L${AX},${tip} L${AX + 4},${tip - 5}`, fill: 'none', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, frame));
+    stroke(Kit.mk('line', {x1, x2: x1, y1: ys[0].yc - th / 2 - 3, y2: ys[2].yc + th / 2 + 3, 'stroke-width': 1.2, 'stroke-dasharray': '4 4', opacity: .55}, frame));
+    tl.fromTo(frame, {opacity: 0}, {opacity: 1, duration: .3, ease: 'power2.out'}, 0);
+
+    // The video's evidence: a dropped slinky, top collapsed, bottom still hanging where it was.
+    const st = cur + gapS, rx = 12 * sk, sx = x0 + rx + 1, ry = Math.max(1.5, 2.2 * sk);
+    const sg = Kit.mk('g', {}, svg), clump = Kit.mk('g', {}, sg);
+    const coil = (p, cy) => stroke(Kit.mk('ellipse', {cx: sx, cy, rx, ry, fill: 'none', 'stroke-width': 1.3}, p));
+    stroke(Kit.mk('path', {d: `M${sx},${st} V${st + 5 * sk} M${sx - 3},${st + 5 * sk - 3} L${sx},${st + 5 * sk} L${sx + 3},${st + 5 * sk - 3}`, fill: 'none', 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, clump));
+    for (let i = 0; i < 4; i++) coil(clump, st + (8 + i * 1.8) * sk);
+    let cy = st + 18.4 * sk; coil(sg, cy);
+    for (const gp of [7, 6, 5, 4.4, 3.8]) { cy += gp * sk; coil(sg, cy); }
+    fit(text(sg, sx + rx + 10, st + pl.slH * .5 + fs * .35, 'a falling slinky does it slowly'), W);
+    tl.fromTo(sg, {opacity: 0}, {opacity: 1, duration: .3, ease: 'power2.out'}, 2.5)
+      .fromTo(clump, {y: -6 * sk}, {y: 0, duration: .6, ease: 'power2.in'}, 2.5);
+
+    if (animate && !Kit.calm) tl.play(); else tl.progress(1);
+  }
+
+  // ---------- the reader's answer, on the back ----------
+  function setVerdict(pct) {
+    const ok = pick === RIGHT;
+    Kit.$('verdict').textContent = VERDICT[pick];
+    Kit.$('said').innerHTML =
+      `<svg viewBox="0 0 20 20" role="img" aria-label="${ok ? 'right' : 'wrong'}"><circle cx="10" cy="10" r="10" style="fill:${ok ? 'var(--k)' : GUESS}"/>` +
+      `<path d="${ok ? 'M5.6 10.4l3 3 5.8-6.8' : 'M6.6 6.6l6.8 6.8M13.4 6.6l-6.8 6.8'}" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>` +
+      `<span>You said ${SAID[pick]}, ${pct}% sure</span>`;
+  }
+
+  // ---------- answer and turn ----------
+  const sureEl = Kit.$('sure');
+  const sure = Kit.sure(sureEl, 'How sure are you? Answer first.', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'not quite'}`);
+    setVerdict(pct);
+    setTimeout(() => Turn.over(), 700);
+  });
+  sureEl.classList.add('locked');
+  const relabel = t => {
+    const el = [...sureEl.querySelectorAll('*')].find(e => !e.children.length && /How sure/.test(e.textContent));
+    if (el) el.textContent = t;
+  };
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    [...Kit.$('opts').children].forEach(o => o.disabled = true);
+    sureEl.classList.remove('locked'); relabel('How sure are you?');
+    strike(); sure.on();
+  });
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => drawBack(true), Kit.calm ? 0 : 380); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[0].click(); await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4400);
+  };
+})();
+Kit.single();
+</script>
+</html>

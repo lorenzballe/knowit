@@ -1,0 +1,37 @@
+{
+  "id": "food-shark-mercury-climb",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.food_safety",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A mollusc, two fish, a shark. Where does the most mercury end up?",
+  "answer": "The shark. Mercury builds up along a food chain, so the biggest fish ends up holding the most. In high doses it can harm development, above all in children and in pregnancy. It is still fish, with benefits too.",
+  "move": "What builds up along a food chain ends up at the top.",
+  "keywords": [
+    "shark",
+    "mercury",
+    "methylmercury",
+    "food chain",
+    "pregnancy"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A food chain picture showing a mollusc, two fish and a shark. The question asks where the most mercury ends up. Drag across the picture to pick an animal."
+  },
+  "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=810s",
+  "written": "2026-11-07"
+}

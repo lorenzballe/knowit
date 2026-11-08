@@ -1,0 +1,37 @@
+{
+  "id": "nature-adriatic-dry-floor",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.greenhouse_effect",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "In the ice age, the northern Adriatic was land. How much lower was the sea?",
+  "answer": "The sea was about 120 m lower in the ice age. Spread over 200 km, that is only about 0.6 m per km, so the coast moved roughly 200 km south and the Adriatic as we know it was gone.",
+  "move": "On flat ground, a small change in height is a huge change in distance.",
+  "keywords": [
+    "adriatic-sea",
+    "last-glacial-period",
+    "sea-level",
+    "italy",
+    "coastline"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drag-to-guess page with a sea-level graphic. The reader drags the sea down to a guess for how far lower it was in the ice age. The reveal says about 120 m lower, moving the coast about 200 km south."
+  },
+  "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=JM-n3IqZRCo&t=95s",
+  "written": "2026-11-06"
+}

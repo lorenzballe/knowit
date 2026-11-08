@@ -1,0 +1,193 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-vesuvius-cube -->
+<!-- Thought to carry: volume grows with the cube of the side, so a huge-sounding volume makes a surprisingly small block.
+     Front: a pale cube on the ground beside a 1 km bar; the reader drags its top to build the pile Vesuvius threw out in ten days, reading their own volume as they go.
+     Back: the least the pile could be, 245 million m³, grows as an orange cube 626 m a side, with the reader's cube drawn dashed over it on the same scale.
+     The front shows only the reader's own cube and its volume: no true value, no target line, no verdict until they commit and say how sure. -->
+<title>The pile from ten days of Vesuvius</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;gap:1.2cqh}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* once the card has turned past edge-on, take the front out of the picture entirely */
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .38s}
+/* until the card turns, the back is mirrored and unseen: keep it out of the picture too,
+   so its lines never sit (flipped) under the save and share corner */
+.turn>.back{visibility:hidden;transition:visibility 0s linear .38s}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front,.kit-calm .turn>.back{transition:none}
+.stagebox{flex:1;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.back .big{margin:0;overflow-wrap:anywhere}
+.back .body{margin:0;font:500 max(1.85cqh,12.5px)/1.35 var(--body)}
+/* keep both bottom lines clear of the save and share corner */
+.say{overflow-wrap:anywhere;padding-right:0;max-width:calc(100% - 104px);box-sizing:border-box}
+.foot{padding-right:0;max-width:calc(100% - 104px);box-sizing:border-box}
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-4px)}}
+.kit-calm .hint{animation:none}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag the cube · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BUILD THE PILE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How much material did Vesuvius throw out in ten days in 1944?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A cube on the ground beside a one kilometre bar. Drag its top to make it bigger or smaller."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag the cube up or down until it holds <b>everything</b> the volcano threw out in ten days.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">More than 245 million m³</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="An orange cube 626 metres a side, the least the material would fill, with your guess drawn dashed over it."></svg></div>
+        <p class="body">626 × 626 × 626 is about 245 million, so the material would fill at least a cube 626 m a side. Falling ash and lapilli damaged towns such as Pompei, Nocera, Scafati and Poggiomarino.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Ten times wider holds a thousand times more: big volumes hide in small cubes.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const TRUE_SIDE = Math.cbrt(245e6);       // ≈ 626 m, the floor: the video says "more than"
+  const MAXS = 2400, MINS = 30;
+  const GUESS = {top: '#ffffff', front: '#f1f4ee', side: '#d3dccf'};
+  const TRUTH = {top: '#ec7a4b', front: '#d4501f', side: '#a63a12'};
+  const INK = 'var(--k)';
+  let side = 150, touched = false, locked = false, turned = false;
+  let W = 0, H = 0, fs = 12, GY = 0, X0 = 0, S = 1;
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+
+  const fmt = v => v >= 1e9 ? `${(v / 1e9).toFixed(v >= 1e10 ? 0 : 1)} billion m³`
+    : v >= 1e6 ? `${v >= 1e7 ? Math.round(v / 1e6) : (v / 1e6).toFixed(1)} million m³`
+    : `${Math.round(v / 1e3)} thousand m³`;
+  const sideFmt = s => s >= 1000 ? `${(s / 1000).toFixed(1)} km` : `${Math.round(s / 10) * 10} m`;
+  const text = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  const pts = arr => arr.map(p => p.join(',')).join(' ');
+
+  // An oblique cube resting on the ground at x0: front face a×a, depth drawn at half size, 30°.
+  function cube(g, x0, gy, a, st, extra = {}) {
+    const dx = a * .5 * .866, dy = a * .5 * .5;
+    const base = Object.assign({stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, extra);
+    Kit.mk('polygon', Object.assign({points: pts([[x0 + a, gy], [x0 + a + dx, gy - dy], [x0 + a + dx, gy - a - dy], [x0 + a, gy - a]]), fill: st.side}, base), g);
+    Kit.mk('polygon', Object.assign({points: pts([[x0, gy - a], [x0 + a, gy - a], [x0 + a + dx, gy - a - dy], [x0 + dx, gy - a - dy]]), fill: st.top}, base), g);
+    Kit.mk('rect', Object.assign({x: x0, y: gy - a, width: a, height: a, fill: st.front}, base), g);
+    return {dx, dy};
+  }
+
+  // ---------- the front: your cube ----------
+  function front() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 26));
+    const heroH = Math.max(fs * 5, H * .2);
+    GY = H - fs * 2.8; X0 = W * .1;
+    S = Math.min((W * .84) / (MAXS * 1.433), (GY - heroH - 6) / (MAXS * 1.25));
+    const big = Math.max(20, Math.min(H * .1, W * .085));
+    text(svg, X0, big * .95, fmt(side ** 3), {'font-family': 'var(--display)', 'font-size': big, 'font-weight': 800});
+    text(svg, X0, big * .95 + fs * 1.6, `your cube: ${sideFmt(side)} a side`, {'font-weight': 600});
+    Kit.mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: INK, 'stroke-width': 2}, svg);
+    const ry = GY + fs * .9, km = 1000 * S;
+    Kit.mk('path', {d: `M${X0},${ry - 4} V${ry + 4} M${X0},${ry} H${X0 + km} M${X0 + km},${ry - 4} V${ry + 4}`, stroke: INK, 'stroke-width': 1.6, fill: 'none'}, svg);
+    text(svg, X0 + km + 6, ry + fs * .35, '1 km', {'font-weight': 600});
+    const a = side * S, c = cube(Kit.mk('g', {}, svg), X0, GY, a, GUESS);
+    if (!touched && !locked) {
+      const hx = X0 + a + c.dx + fs * 1.1, hy = GY - a - c.dy;
+      const h = Kit.mk('g', {class: 'hint'}, svg);
+      Kit.mk('path', {d: `M${hx},${hy + fs * .4} v-${fs * 1.5} m-5,6 l5,-6 l5,6`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, h);
+      text(h, hx + fs * .7, hy - fs * .2, 'drag', {'font-weight': 600});
+    }
+  }
+
+  const setFromY = y => { side = Math.max(MINS, Math.min(MAXS, (GY - y) / 1.25 / S)); front(); };
+  let drag = false;
+  const yOf = e => e.clientY - svg.getBoundingClientRect().top;
+  svg.addEventListener('pointerdown', e => { if (locked) return; drag = true; touched = true; svg.setPointerCapture(e.pointerId); setFromY(yOf(e)); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) setFromY(yOf(e)); });
+  const up = () => { if (!drag) return; drag = false; sure.on(); };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (locked) return; locked = true;
+    const v = side ** 3, ok = v >= 180e6 && v <= 330e6;
+    Kit.answer({choice: fmt(v), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${fmt(v)}, ${ok ? 'close' : v > 245e6 ? 'too big' : 'too small'}`);
+    front();
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back: the least the pile could be, your cube over it ----------
+  const B = {t: 0, d: 0, g: 0};
+  function back() {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), w = f.W, h = f.H;
+    const top = fs * 4.6, gy = h - fs * 1.6, x0 = w * .1;
+    const M = Math.max(side, TRUE_SIDE) * 1.05;
+    const s = Math.min((w * .82) / (M * 1.433), Math.max(10, gy - top) / (M * 1.25));
+    Kit.mk('line', {x1: 0, x2: w, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2}, svg2);
+    const at = TRUE_SIDE * s * B.t, g = Kit.mk('g', {}, svg2);
+    if (B.t > 0) cube(g, x0, gy, at, TRUTH);
+    const A = TRUE_SIDE * s, dx = A * .433, dy = A * .25;
+    if (B.d > 0) {
+      const m = Kit.mk('g', {opacity: B.d}, svg2), my = gy + fs * .8;
+      Kit.mk('path', {d: `M${x0},${my - 4} V${my + 4} M${x0},${my} H${x0 + A} M${x0 + A},${my - 4} V${my + 4}`, stroke: INK, 'stroke-width': 1.6, fill: 'none'}, m);
+      text(m, x0 + A + 6, my + fs * .35, '626 m', {'font-weight': 800});
+      text(m, 2, fs * 1.2, 'more than 245 million m³', {'font-weight': 800});
+      text(m, 2, fs * 2.5, 'fills at least this cube', {'font-weight': 600});
+      const tx = x0 + A * .5 + dx * .5, ty = gy - A - dy * .5;
+      Kit.mk('path', {d: `M${fs * 2},${fs * 2.9} L${tx},${ty}`, stroke: INK, 'stroke-width': 1, fill: 'none'}, m);
+      Kit.mk('circle', {cx: tx, cy: ty, r: 2.4, fill: INK}, m);
+    }
+    if (B.g > 0) {
+      const gq = Kit.mk('g', {opacity: B.g}, svg2), a = side * s;
+      const c = cube(gq, x0, gy, a, {top: 'none', front: 'none', side: 'none'}, {stroke: '#ffffff', 'stroke-width': 2.4, 'stroke-dasharray': '6 4'});
+      const cx = x0 + a + c.dx, cy = gy - a - c.dy;
+      const lx = w - 2, ly = fs * 3.9;
+      text(gq, lx, ly, `your guess: ${fmt(side ** 3)}`, {'text-anchor': 'end', 'font-weight': 800});
+      const sx = Math.min(lx - fs, Math.max(cx, w * .55));
+      Kit.mk('path', {d: `M${sx},${ly + fs * .4} L${cx},${cy}`, stroke: INK, 'stroke-width': 1, fill: 'none'}, gq);
+      Kit.mk('circle', {cx, cy, r: 2.4, fill: '#ffffff', stroke: INK, 'stroke-width': 1}, gq);
+    }
+  }
+
+  document.addEventListener('turned', () => {
+    turned = true;
+    if (Kit.calm || typeof gsap === 'undefined') { B.t = B.d = B.g = 1; back(); return; }
+    gsap.timeline({delay: .55, onUpdate: back, onComplete: back})
+      .to(B, {t: 1, duration: 1.1, ease: 'power3.out'})
+      .to(B, {d: 1, duration: .45, ease: 'power2.out'}, '+=.1')
+      .to(B, {g: 1, duration: .5, ease: 'power2.out'}, '+=.35');
+  });
+
+  Kit.onShow.card = () => { front(); if (turned) back(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined' || touched) return;
+    const z = {s: MINS}; side = MINS; front();
+    gsap.to(z, {s: 150, duration: .9, ease: 'power3.out', onUpdate: () => { if (!touched) { side = z.s; front(); } }});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; side = 1300; front(); sure.on();
+    await wait(100);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 900 : 3800);
+  };
+})();
+Kit.single();
+</script>
+</html>

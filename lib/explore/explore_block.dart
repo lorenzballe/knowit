@@ -170,6 +170,14 @@ abstract class ExploreHost {
 }
 
 /// One kind of section.
+/// A block whose section, standing last on the page, goes on for as long as
+/// the reader scrolls: the engine draws it as a sliver of its own after the
+/// other sections, rather than as one more of them ([ExploreSliver]).
+abstract interface class EndlessBlock {
+  /// [section] as a sliver.
+  Widget sliver(BuildContext context, ExploreHost host, ExploreSection section);
+}
+
 abstract class ExploreBlock {
   const ExploreBlock();
 

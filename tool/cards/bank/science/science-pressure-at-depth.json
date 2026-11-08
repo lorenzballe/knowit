@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.physics",
   "strand": "science.physics.gravity",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How hard does the sea press, on the way down to the Titanic?",
-  "answer": "Every 10 m of water adds one atmosphere, plus one for the air: 301 at 3,000 m, 381 at the Titanic. Each square metre of hull bears some 3,800 tonnes, almost half the 8,000-tonne Eiffel Tower.",
-  "move": "Every 10 m down adds one atmosphere, and the sea never stops adding.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "On the dive to the Titanic, 3,800 m down, at 3,000 m: what presses on 1 m²?",
+  "answer": "At 3,000 m the pressure is 301 atmospheres: one for every 10 m of water, plus one from the air. That is about 3,000 tonnes on each square metre, a third of the Eiffel Tower's weight.",
+  "move": "Deep pressure is plain counting: every 10 m of water, one more atmosphere.",
   "keywords": [
     "titanic",
     "ocean",
@@ -29,10 +29,10 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Drag a submarine down a depth scale toward the Titanic, 3,800 m below, asking how hard the sea presses on the way. Pressure readings rise with depth, and the hull load per square metre is compared with the 8,000-tonne Eiffel Tower.",
-    "ground": "#1e2b27"
+    "label": "A tower drawn beside a one-square-metre patch at 3,000 m depth, on the way to the Titanic at 3,800 m. The reader drags the tower up to show how much of its weight presses on that square metre.",
+    "ground": "#eef0ea"
   },
   "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=360s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }

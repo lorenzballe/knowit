@@ -1,0 +1,241 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-rage-steel-balloon -->
+<!-- Design note.
+     Thought to carry: volume is not the tell; whether rage is the only lever someone has left is.
+     Front: a flushed, trembling man shouting and pointing at a smaller figure. Drag a dot between "agree" and "disagree" and his balloon body turns hollow or solid: your read of him.
+     Back: four people in a row, two loud and two calm, insides covered. The covers lift, then they regroup into loud/calm × empty/solid. Every cell is filled, so loudness alone sorts no one.
+     Front gives nothing away: it only draws your own read of one shouter. No verdict, no grid, no count until you commit. -->
+<title>The steel balloon</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+#pic text,#pic2 text{font-family:var(--body);font-weight:700}
+#go{align-self:flex-start;margin-top:.6cqh}
+#go[disabled]{opacity:.35;pointer-events:none}
+.back .big{font:800 max(2.7cqh,17px)/1.15 var(--display);margin:0 0 .6cqh}
+.back .mine{font:600 max(1.7cqh,12px)/1.25 var(--body);color:inherit;opacity:.85;margin:.4cqh 0 0}
+.back .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:.5cqh 0 0;overflow-wrap:break-word}
+.back .keep{margin-top:1cqh}
+.back .foot{padding-right:96px}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Point of view · take a side">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: does raging at someone reveal weakness, not strength?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A flushed man shouts and points at a smaller person. Below, a line from agree to disagree with a dot you can drag."></svg></div>
+        <p class="say" id="say">Drag the dot to where you stand. Nothing here is right or wrong.</p>
+        <button class="btn" id="go" disabled>That's where I stand</button>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Rage can hide a void, or carry a cause.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Four people sorted into loud or calm, and empty or solid inside. Each of the four groups has someone in it."></svg></div>
+        <p class="mine" id="mine"></p>
+        <p class="body"><b>For it:</b> people who can win with skill or reasons rarely need to explode. Rage fills the gap, like a balloon of steel: hard outside, empty inside.</p>
+        <p class="body"><b>Against:</b> anger at a real wrong can be fair, and it works. Plenty of calm people are insecure. The tell isn't the volume, it's having no other lever.</p>
+        <div class="keep"><b>ASK YOURSELF</b> The last time I raised my voice, was it a choice, or the only lever I had left?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2026) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2'), go = Kit.$('go');
+  const RED = '#e0452f';
+  let v = .5, touched = false, committed = false, turned = false, tl = null;
+  let G = null, fs = 13, INK = '#111', C = '#fff';
+  const colors = () => { const cs = getComputedStyle(card); INK = cs.getPropertyValue('--k').trim() || '#111'; C = cs.getPropertyValue('--c').trim() || '#fff'; };
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs}, a), p); e.textContent = t; return e; };
+  const ln = (p, x1, y1, x2, y2, w, a = {}) => Kit.mk('line', Object.assign({x1, y1, x2, y2, stroke: INK, 'stroke-width': w, 'stroke-linecap': 'round'}, a), p);
+
+  // ---------- front: the shouter, and your read of him ----------
+  function drawFront() {
+    colors(); pic.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(pic); fs = Math.max(12, Math.min(14, f));
+    const l2 = H - fs * .4, l1 = l2 - fs * 1.3, sy = l1 - fs * 2.1, gy = sy - fs * 2.4;
+    const s = Math.max(20, Math.min(W * .16, (gy - fs * 1.2) / 2.35));
+    const scene = Kit.mk('g', {id: 'scene'}, pic);
+
+    // ground and contact shadows
+    const cx = W * .42, tx = W * .84, ts = s * .72;
+    Kit.mk('ellipse', {cx: cx + s * .02, cy: gy, rx: s * .55, ry: s * .07, fill: INK, opacity: .14}, scene);
+    Kit.mk('ellipse', {cx: tx, cy: gy, rx: ts * .5, ry: ts * .07, fill: INK, opacity: .14}, scene);
+
+    // the shouter
+    const lw = Math.max(3, s * .09), sw = Math.max(2.5, s * .07);
+    const rx = s * .46, ry = s * .6, ty = gy - s * .45 - ry;
+    ln(scene, cx - s * .2, gy, cx - s * .1, gy - s * .5, lw);
+    ln(scene, cx + s * .24, gy, cx + s * .1, gy - s * .5, lw);
+    const shx = cx + rx * .6, shy = ty - ry * .5, hx2 = shx + s * .95, hy2 = ty - ry * .8;
+    ln(scene, shx, shy, hx2, hy2, lw * 1.1);
+    ln(scene, hx2, hy2, hx2 + s * .2, hy2 - s * .03, lw * .55);
+    // trembling hand
+    for (const d of [-1, 1]) Kit.mk('path', {d: `M${hx2 - s * .12},${hy2 + d * s * .16} q${s * .1},${d * s * .05} ${s * .22},0`, stroke: INK, 'stroke-width': Math.max(1.5, s * .035), fill: 'none', 'stroke-linecap': 'round'}, scene);
+    Kit.mk('ellipse', {cx, cy: ty, rx, ry, style: 'fill:var(--c)', stroke: INK, 'stroke-width': sw}, scene);
+    const core = Kit.mk('ellipse', {cx, cy: ty, rx: 0, ry: 0, fill: INK}, scene);
+    const shine = Kit.mk('path', {d: `M${cx - rx * .62},${ty - ry * .05} Q${cx - rx * .58},${ty - ry * .62} ${cx - rx * .12},${ty - ry * .74}`, stroke: INK, 'stroke-width': Math.max(2, s * .05), fill: 'none', 'stroke-linecap': 'round', opacity: .45}, scene);
+    const r = s * .3, hx = cx + s * .1, hy = ty - ry - r * .72;
+    Kit.mk('circle', {cx: hx, cy: hy, r, fill: RED, stroke: INK, 'stroke-width': sw}, scene);
+    Kit.mk('circle', {cx: hx + r * .38, cy: hy - r * .12, r: Math.max(1.6, r * .1), fill: INK}, scene);
+    ln(scene, hx + r * .08, hy - r * .5, hx + r * .62, hy - r * .28, Math.max(2, r * .1));
+    Kit.mk('ellipse', {cx: hx + r * .7, cy: hy + r * .38, rx: r * .17, ry: r * .22, fill: INK}, scene);
+    // the shout
+    for (const a of [-24, 0, 24]) {
+      const t = a * Math.PI / 180, x0 = hx + r * 1.25, y0 = hy + r * .2, L0 = s * .1, L1 = s * .42;
+      ln(scene, x0 + Math.cos(t) * L0, y0 + Math.sin(t) * L0, x0 + Math.cos(t) * L1, y0 + Math.sin(t) * L1, Math.max(2, s * .05));
+    }
+
+    // the person on the receiving end, leaning back
+    const tg = Kit.mk('g', {transform: `rotate(8 ${tx} ${gy})`}, scene);
+    const trx = ts * .42, tryy = ts * .56, tty = gy - ts * .45 - tryy, tr = ts * .29;
+    ln(tg, tx - ts * .13, gy, tx - ts * .1, gy - ts * .48, lw * .8);
+    ln(tg, tx + ts * .13, gy, tx + ts * .1, gy - ts * .48, lw * .8);
+    Kit.mk('ellipse', {cx: tx, cy: tty, rx: trx, ry: tryy, fill: INK, 'fill-opacity': .22, stroke: INK, 'stroke-width': sw * .85}, tg);
+    Kit.mk('circle', {cx: tx, cy: tty - tryy - tr * .72, r: tr, style: 'fill:var(--c)', stroke: INK, 'stroke-width': sw * .85}, tg);
+    Kit.mk('circle', {cx: tx - tr * .4, cy: tty - tryy - tr * .8, r: Math.max(1.5, tr * .1), fill: INK}, tg);
+
+    // your read of him: pinned to his body
+    const lx = cx - rx - fs * .9;
+    ln(scene, lx + fs * .25, ty, cx - rx - 2, ty, 1.2, {opacity: .7});
+    const t1 = txt(scene, lx, ty - fs * .25, '', {'text-anchor': 'end'});
+    const t2 = txt(scene, lx, ty + fs * 1.05, '', {'text-anchor': 'end'});
+
+    // the line between the two views
+    const ui = Kit.mk('g', {id: 'ui'}, pic);
+    const x0 = fs * 1.1, x1 = W - fs * 1.1;
+    ln(ui, x0, sy, x1, sy, 3, {opacity: .3});
+    ln(ui, (x0 + x1) / 2, sy - fs * .45, (x0 + x1) / 2, sy + fs * .45, 2, {opacity: .3});
+    txt(ui, 2, l1, 'Agree: rage');
+    txt(ui, 2, l2, 'shows emptiness', {'font-weight': 600});
+    txt(ui, W - 2, l1, 'Disagree: it can', {'text-anchor': 'end'});
+    txt(ui, W - 2, l2, 'show strength', {'text-anchor': 'end', 'font-weight': 600});
+    const knob = Kit.mk('circle', {cx: 0, cy: sy, r: fs * .85, fill: INK, style: 'stroke:var(--c)', 'stroke-width': 3}, ui);
+
+    G = {x0, x1, rx, ry, core, shine, knob, t1, t2};
+    paint();
+  }
+  function paint() {
+    if (!G) return;
+    G.knob.setAttribute('cx', G.x0 + (G.x1 - G.x0) * v);
+    const k = touched ? Math.pow(v, .9) * .9 : .45;
+    G.core.setAttribute('rx', G.rx * k); G.core.setAttribute('ry', G.ry * k);
+    G.core.setAttribute('opacity', touched ? 1 : .25);
+    G.shine.setAttribute('opacity', Math.max(0, .5 - v * .7));
+    const [a, b] = !touched ? ['what\u2019s', 'inside?'] : v < .4 ? ['hollow', 'inside'] : v > .6 ? ['solid', 'inside'] : ['can\u2019t', 'tell'];
+    G.t1.textContent = a; G.t2.textContent = b;
+  }
+  function setFrom(e) {
+    if (committed || !G) return;
+    const r = pic.getBoundingClientRect();
+    v = Math.max(0, Math.min(1, (e.clientX - r.left - G.x0) / (G.x1 - G.x0)));
+    if (!touched) { touched = true; go.disabled = false; Kit.haptic('selection'); }
+    paint();
+  }
+  let drag = false;
+  pic.addEventListener('pointerdown', e => { drag = true; pic.setPointerCapture(e.pointerId); setFrom(e); });
+  pic.addEventListener('pointermove', e => { if (drag) setFrom(e); });
+  const end = () => { drag = false; };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+  const choiceOf = () => v < .2 ? 'Agree' : v < .4 ? 'Lean agree' : v <= .6 ? 'Torn' : v <= .8 ? 'Lean disagree' : 'Disagree';
+  go.addEventListener('click', () => {
+    if (committed || !touched) return;
+    committed = true; go.disabled = true;
+    const choice = choiceOf();
+    const sure = Math.min(90, Math.max(50, 50 + Math.round(Math.abs(v - .5) * 8) * 10));
+    Kit.answer({choice, correct: null, sure});
+    Kit.$('mine').textContent = `You stood: ${choice.toLowerCase()}. Here is the best case on each side.`;
+    Kit.haptic('success');
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back: four people, sorted two ways ----------
+  function fig(p, s, loud, solid) {
+    const g = Kit.mk('g', {}, p), sw = Math.max(2, s * .07), lw = Math.max(2.5, s * .085);
+    const rx = s * .42, ry = s * .55, ty = -s * .42 - ry, r = s * .27, hy = ty - ry - r * .7;
+    Kit.mk('ellipse', {cx: 0, cy: 0, rx: s * .45, ry: s * .06, fill: INK, opacity: .14}, g);
+    ln(g, -s * .15, 0, -s * .1, -s * .45, lw); ln(g, s * .15, 0, s * .1, -s * .45, lw);
+    Kit.mk('ellipse', {cx: 0, cy: ty, rx, ry, style: 'fill:var(--c)', stroke: INK, 'stroke-width': sw}, g);
+    if (solid) Kit.mk('ellipse', {cx: 0, cy: ty, rx: rx * .8, ry: ry * .82, fill: INK}, g);
+    else Kit.mk('path', {d: `M${-rx * .6},${ty} Q${-rx * .56},${ty - ry * .6} ${-rx * .1},${ty - ry * .72}`, stroke: INK, 'stroke-width': sw * .8, fill: 'none', 'stroke-linecap': 'round', opacity: .45}, g);
+    const cover = Kit.mk('ellipse', {cx: 0, cy: ty, rx: rx - sw / 2, ry: ry - sw / 2, style: 'fill:color-mix(in srgb,var(--k) 28%,var(--c))'}, g);
+    Kit.mk('circle', {cx: 0, cy: hy, r, fill: loud ? RED : C, style: loud ? '' : 'fill:var(--c)', stroke: INK, 'stroke-width': sw}, g);
+    Kit.mk('circle', {cx: r * .38, cy: hy - r * .12, r: Math.max(1.4, r * .1), fill: INK}, g);
+    if (loud) {
+      Kit.mk('ellipse', {cx: r * .68, cy: hy + r * .4, rx: r * .16, ry: r * .2, fill: INK}, g);
+      for (const a of [-24, 0, 24]) { const t = a * Math.PI / 180, x0 = r * 1.2, y0 = hy + r * .2; ln(g, x0 + Math.cos(t) * s * .08, y0 + Math.sin(t) * s * .08, x0 + Math.cos(t) * s * .34, y0 + Math.sin(t) * s * .34, Math.max(1.6, s * .045)); }
+    } else ln(g, r * .3, hy + r * .42, r * .7, hy + r * .38, Math.max(1.6, r * .09));
+    return {g, cover};
+  }
+  function drawBack(anim) {
+    colors(); pic2.innerHTML = ''; if (tl) { tl.kill(); tl = null; }
+    const {W, H, f} = Kit.fitSvg(pic2); fs = Math.max(12, Math.min(14, f));
+    const top = fs * 1.9, ch = (H - top) / 2;
+    const s = Math.max(14, Math.min(ch / 2.3, W * .11));
+    const c1 = W * .45, c2 = W * .8, r1 = top + ch - fs * .2, r2 = top + 2 * ch - fs * .3;
+    const labels = Kit.mk('g', {opacity: 0}, pic2);
+    txt(labels, c1, fs * 1.1, 'loud', {'text-anchor': 'middle'});
+    txt(labels, c2, fs * 1.1, 'calm', {'text-anchor': 'middle'});
+    txt(labels, 2, r1 - s * 1.0, 'empty inside');
+    txt(labels, 2, r2 - s * 1.0, 'solid inside');
+    ln(labels, 2, top + ch + fs * .1, W - 2, top + ch + fs * .1, 1.2, {opacity: .3, 'stroke-dasharray': '4 5'});
+    ln(labels, (c1 + c2) / 2, top - fs * .2, (c1 + c2) / 2, H - 2, 1.2, {opacity: .3, 'stroke-dasharray': '4 5'});
+    // what you see first: two loud, two calm
+    const people = [[1, 0, c1, r1], [1, 1, c1, r2], [0, 0, c2, r1], [0, 1, c2, r2]];
+    const rowY = H * .5 + s * 1.05, rowX = [.16, .4, .64, .86];
+    const figs = people.map(([loud, solid, gx, gy], i) => {
+      const F = fig(pic2, s, loud, solid); F.end = {x: gx, y: gy}; F.start = {x: W * rowX[i], y: rowY}; return F;
+    });
+    const gs = figs.map(F => F.g), covers = figs.map(F => F.cover);
+    if (!anim || Kit.calm) {
+      figs.forEach(F => gsap.set(F.g, F.end)); gsap.set(covers, {opacity: 0}); gsap.set(labels, {opacity: 1}); return;
+    }
+    figs.forEach(F => gsap.set(F.g, F.start));
+    tl = gsap.timeline({delay: .55});
+    tl.from(gs, {opacity: 0, duration: .5, stagger: .12, ease: 'power2.out'})
+      .to(covers, {opacity: 0, duration: .5, stagger: .12, ease: 'power2.out'}, '+=.45')
+      .addLabel('move', '+=.4');
+    figs.forEach(F => tl.to(F.g, {x: F.end.x, y: F.end.y, duration: .9, ease: 'power3.inOut'}, 'move'));
+    tl.to(labels, {opacity: 1, duration: .45, ease: 'power2.out'}, '-=.25');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#scene', {opacity: 0, y: 8, duration: .6, ease: 'power3.out'});
+    gsap.from('#ui', {opacity: 0, duration: .5, delay: .35, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; v = .27; go.disabled = false; paint();
+    await wait(100);
+    go.click();
+    await wait(950);
+    if (tl) tl.progress(1);
+    await wait(900);
+  };
+})();
+Kit.single();
+</script>
+</html>

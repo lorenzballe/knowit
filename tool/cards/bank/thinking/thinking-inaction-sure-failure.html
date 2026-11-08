@@ -1,0 +1,221 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-inaction-sure-failure -->
+<!-- Design note.
+     Thought to carry: compare the cost of failing with what waiting already costs, not failing with nothing.
+     Front: a figure where two roads part, "Do nothing" ending at a wall and "Act" forking into two question marks. The reader drags the figure along a line between the two views and commits.
+     Back: the same fork twice. Where a failure is a bump and the door is closing, the view holds. Where a failure is a cliff and waiting still gets there, it breaks. The reader's spot sits under both.
+     Front gives nothing away: it only draws the view's own claim and asks where you stand. Neither end is marked right, and the conditions appear only on the back. -->
+<title>Is doing nothing a sure failure?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn>.front{transition:visibility 0s .75s}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.front{transition:none}
+.face{gap:1.2cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+svg text{font-family:var(--body);font-weight:700;fill:var(--k)}
+.road{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
+.ink{fill:var(--k)}
+.paper{fill:#fff;stroke:var(--k)}
+#go{align-self:flex-start;font:700 max(2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.6cqh;padding:1.3cqh 4.5cqw;cursor:pointer}
+#go[disabled]{opacity:.35;cursor:default}
+.back .big{margin:0;overflow-wrap:break-word}
+.back .body{margin:0;font-size:max(1.85cqh,13px);line-height:1.3}
+.back .foot{padding-right:112px}
+.front .say{margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Take a side · one view">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: is doing nothing a guaranteed failure?</h2>
+        <div class="stagebox" id="st1"><svg id="pic" role="img" aria-label="A figure where two roads part: Do nothing ends at a wall, Act forks into two unknown ends. A line below runs between two views."></svg></div>
+        <p class="say" id="say">A coach's claim: <b>if you never try, you fail anyway</b>, so trying can only add a chance. Drag the figure to where you stand.</p>
+        <button id="go" disabled>This is where I stand</button>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It hangs on how far you could fall.</p>
+        <div class="stagebox" id="st2"><svg id="pic2" role="img" aria-label="The same fork twice. Left: failing is a cliff, and waiting still reaches a flag. Right: failing is a bump, and waiting hits a wall."></svg></div>
+        <p class="body"><b>For:</b> when the chance passes while you wait, not trying is a sure no, and a small failure costs little more. <b>Against:</b> waiting is not always a no, and when a mistake does lasting harm, preparing first beats leaping.</p>
+        <div class="keep"><b>ASK YOURSELF</b> If I try and fail, what do I lose that waiting isn't already costing me?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2017) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), say = Kit.$('say'), go = Kit.$('go');
+  let p = .5, moved = false, done = false, turned = false;
+  let W = 0, H = 0, fs = 13, T0 = 0, T1 = 0, TY = 0, R = {};
+  const mk = (t, a, par) => Kit.mk(t, a, par);
+  const txt = (par, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs}, a), par); e.textContent = s; return e; };
+  const txt2 = (par, x, y, lines, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs}, a), par);
+    lines.forEach((s, i) => { const t = mk('tspan', {x, dy: i ? '1.15em' : 0}, e); t.textContent = s; }); return e; };
+
+  // The fork: one start, a road to the left (waiting), a road to the right that splits in two (acting).
+  function fork(par, ox, w, top, bot, road) {
+    const h = bot - top;
+    const S = {x: ox + w * .5, y: bot}, L = {x: ox + w * .2, y: top + h * .2}, F = {x: ox + w * .72, y: top + h * .56};
+    const U = {x: ox + w * .64, y: top + h * .08}, D = {x: ox + w * .93, y: top + h * .4};
+    const a = {class: 'road', 'stroke-width': road, 'stroke-opacity': .22};
+    const wait = mk('path', Object.assign({d: `M${S.x},${S.y} C${S.x},${S.y - h * .38} ${L.x},${L.y + h * .4} ${L.x},${L.y}`}, a), par);
+    const act = mk('path', Object.assign({d: `M${S.x},${S.y} C${S.x},${S.y - h * .26} ${F.x},${F.y + h * .2} ${F.x},${F.y}`}, a), par);
+    const up = mk('path', Object.assign({d: `M${F.x},${F.y} C${F.x},${F.y - h * .22} ${U.x},${U.y + h * .18} ${U.x},${U.y}`}, a), par);
+    const dn = mk('path', Object.assign({d: `M${F.x},${F.y} C${F.x},${F.y - h * .1} ${D.x},${D.y + h * .02} ${D.x},${D.y}`}, a), par);
+    return {S, L, F, U, D, wait, act, up, dn, roads: [wait, act, up, dn]};
+  }
+  const wall = (par, c, road) => { const g = mk('g', {}, par), w = road * 3.6, hh = road * 1.3;
+    mk('rect', {x: c.x - w / 2, y: c.y - hh, width: w, height: hh, rx: 2, class: 'ink'}, g);
+    mk('line', {x1: c.x - w / 2, x2: c.x + w / 2, y1: c.y - hh / 2, y2: c.y - hh / 2, stroke: 'var(--c)', 'stroke-width': 1.2}, g);
+    mk('line', {x1: c.x, x2: c.x, y1: c.y - hh, y2: c.y - hh / 2, stroke: 'var(--c)', 'stroke-width': 1.2}, g);
+    return g; };
+  const flag = (par, c, road) => { const g = mk('g', {}, par), ph = road * 2.6;
+    mk('line', {x1: c.x, x2: c.x, y1: c.y, y2: c.y - ph, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, g);
+    mk('path', {d: `M${c.x},${c.y - ph} l${road * 1.7},${road * .5} l${-road * 1.7},${road * .5}z`, class: 'paper', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, g);
+    return g; };
+  const ask = (par, c, road) => { const g = mk('g', {}, par);
+    mk('circle', {cx: c.x, cy: c.y, r: Math.max(road * .95, fs * .8), class: 'paper', 'stroke-width': 1.6}, g);
+    txt(g, c.x, c.y + fs * .36, '?', {'text-anchor': 'middle', 'font-weight': 800});
+    return g; };
+  const person = (par, r) => { const g = mk('g', {}, par);
+    mk('path', {d: `M${-r * .8},0 v${-r * 1.3} a${r * .8},${r * .8} 0 0 1 ${r * 1.6},0 v${r * 1.3}z`, class: 'paper', 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    mk('circle', {cx: 0, cy: -r * 2.75, r: r * .72, class: 'paper', 'stroke-width': 1.6}, g);
+    mk('circle', {cx: r * .22, cy: -r * 2.85, r: 1.3, class: 'ink'}, g);
+    return g; };
+
+  const choice = v => v < .2 ? 'Disagree: waiting is often wiser' : v < .4 ? 'Lean against the view' : v < .6 ? 'Torn between the two' : v < .8 ? 'Lean towards the view' : 'Agree: doing nothing is a sure fail';
+
+  // ---------- front ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; fs = Math.max(12, Math.min(14, f.f || 13));
+    const road = Math.max(8, Math.min(W, H) * .045);
+    const top = fs * 2.4, bot = H - fs * 5.8;
+    T0 = W * .06; T1 = W * .94; TY = H - fs * 3.7;
+    const g = mk('g', {}, svg);
+    R = fork(g, W * .03, W * .94, top, bot, road); R.road = road;
+    R.ends = [wall(g, R.L, road), ask(g, R.U, road), ask(g, R.D, road)];
+    R.labs = [
+      txt(g, R.L.x + road * 2.2, R.L.y - road * .65 + fs * .36, 'Do nothing'),
+      txt(g, R.F.x - road * 1.1, R.F.y + fs * .36, 'Act', {'text-anchor': 'end'})
+    ];
+    // The line between the two views.
+    const t = mk('g', {}, svg);
+    mk('line', {x1: T0, x2: T1, y1: TY, y2: TY, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-opacity': .45}, t);
+    for (const x of [T0, (T0 + T1) / 2, T1]) mk('line', {x1: x, x2: x, y1: TY - fs * .35, y2: TY + fs * .35, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-opacity': .45}, t);
+    txt2(t, T0, TY + fs * 1.6, ['Waiting can', 'be wiser'], {'font-size': fs * .95});
+    txt2(t, T1, TY + fs * 1.6, ['Doing nothing', '= sure fail'], {'text-anchor': 'end', 'font-size': fs * .95});
+    R.dot = mk('circle', {cx: 0, cy: TY, r: fs * .5, class: 'ink'}, t);
+    R.me = person(svg, Math.max(7, Math.min(W, H) * .028));
+    place();
+  }
+  function place() {
+    if (!R.me) return;
+    const side = p < .5 ? R.wait : R.act, len = side.getTotalLength(), k = Math.abs(p - .5) * 2;
+    const pt = side.getPointAtLength(len * .5 * k);
+    R.me.setAttribute('transform', `translate(${pt.x},${pt.y + R.road * .2})`);
+    R.dot.setAttribute('cx', T0 + (T1 - T0) * p);
+    R.wait.setAttribute('stroke-opacity', .14 + .3 * (1 - p));
+    for (const r of [R.act, R.up, R.dn]) r.setAttribute('stroke-opacity', .14 + .3 * p);
+  }
+  function setP(v) {
+    p = Math.max(0, Math.min(1, v)); place();
+    if (!moved) { moved = true; go.disabled = false; }
+    say.innerHTML = `You: <b>${choice(p)}.</b> Move again, or stand here.`;
+  }
+  let drag = false;
+  const fromX = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - T0) / (T1 - T0); };
+  svg.addEventListener('pointerdown', e => { if (done) return; drag = true; svg.setPointerCapture(e.pointerId); setP(fromX(e)); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) setP(fromX(e)); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  go.addEventListener('click', () => {
+    if (!moved || done) return; done = true; go.disabled = true;
+    Kit.answer({choice: choice(p), correct: null, sure: Math.round(Math.abs(p - .5) * 200)});
+    Kit.haptic('success');
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function drawBack(anim) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), w2 = f.W, h2 = f.H, fz = Math.max(12, Math.min(14, f.f || 13));
+    fs = fz;
+    const road = Math.max(6, Math.min(w2 / 2, h2) * .05);
+    const top = fz * 2.2, bot = h2 - fz * 4.6, ty = h2 - fz * 1.9, t0 = w2 * .06, t1 = w2 * .94;
+    const roads = [], ends = [], labs = [];
+    [['cliff', 0], ['bump', 1]].forEach(([mode, i]) => {
+      const ox = i * w2 / 2 + w2 * .02, w = w2 / 2 - w2 * .04, g = mk('g', {}, svg2);
+      const k = fork(g, ox, w, top, bot, road);
+      roads.push(...k.roads);
+      ends.push(flag(g, k.U, road));
+      if (mode === 'bump') {
+        ends.push(wall(g, k.L, road));
+        const m = mk('g', {}, g);
+        mk('path', {d: `M${k.D.x - road * 1.1},${k.D.y + road * .5} a${road * 1.1},${road * 1.1} 0 0 1 ${road * 2.2},0z`, class: 'ink'}, m);
+        ends.push(m);
+      } else {
+        ends.push(flag(g, k.L, road));
+        const m = mk('g', {}, g);
+        mk('path', {d: `M${k.D.x - road * 1.3},${k.D.y - road * .1} L${k.D.x + road * 1.5},${k.D.y - road * .1} L${k.D.x + road * .1},${Math.min(bot, k.D.y + (bot - top) * .38)}z`, class: 'ink'}, m);
+        ends.push(m);
+      }
+      labs.push(txt(svg2, k.S.x, bot + fz * 1.7, mode === 'cliff' ? 'If it fails: a cliff' : 'If it fails: a bump', {'text-anchor': 'middle', 'font-size': fz}));
+    });
+    const t = mk('g', {}, svg2);
+    mk('line', {x1: t0, x2: t1, y1: ty, y2: ty, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-opacity': .45}, t);
+    for (const x of [t0, (t0 + t1) / 2, t1]) mk('line', {x1: x, x2: x, y1: ty - fz * .35, y2: ty + fz * .35, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-opacity': .45}, t);
+    const mx = t0 + (t1 - t0) * p, me = mk('g', {}, t);
+    mk('circle', {cx: 0, cy: ty, r: fz * .5, class: 'ink'}, me);
+    const you = txt(me, 0, ty + fz * 1.5, 'you', {'text-anchor': 'middle'});
+    const yw = you.getComputedTextLength ? you.getComputedTextLength() : 20;
+    const sx = Math.max(yw / 2 + 2 - mx, Math.min(0, w2 - 2 - yw / 2 - mx));
+    you.setAttribute('x', sx);
+    me.setAttribute('transform', `translate(${mx},0)`);
+    if (!anim || Kit.calm || typeof gsap === 'undefined') return;
+    roads.forEach(r => { const L = r.getTotalLength(); r.style.strokeDasharray = L; r.style.strokeDashoffset = L; });
+    gsap.timeline()
+      .to(roads, {strokeDashoffset: 0, duration: .9, stagger: .06, ease: 'power2.out'}, .35)
+      .from(ends, {opacity: 0, scale: .6, transformOrigin: '50% 100%', duration: .45, stagger: .08, ease: 'power3.out'}, '-=.3')
+      .from(labs, {opacity: 0, y: 6, duration: .4, stagger: .1, ease: 'power2.out'}, '+=.1')
+      .from(me, {opacity: 0, duration: .4, ease: 'power2.out'}, '-=.2');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined' || !R.roads) return;
+    gsap.timeline()
+      .from(R.roads, {opacity: 0, duration: .5, stagger: .1, ease: 'power2.out'})
+      .from([...R.ends, ...R.labs], {opacity: 0, y: 6, duration: .4, stagger: .07, ease: 'power3.out'}, '-=.2')
+      .from(R.me, {opacity: 0, duration: .4, ease: 'power2.out'}, '-=.1');
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setP(.8); await wait(150);
+    go.click();
+    await wait(Kit.calm ? 900 : 2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

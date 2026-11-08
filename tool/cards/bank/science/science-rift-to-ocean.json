@@ -1,0 +1,38 @@
+{
+  "id": "science-rift-to-ocean",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a continent splitting in two make an ocean?",
+  "answer": "An ocean starts when a continent cracks and the sea moves into the gap. As the two halves drift apart over millions of years, a chain of volcanoes along the middle builds new sea floor. That new floor is what makes it an ocean rather than a sea, as the Red Sea is.",
+  "move": "An ocean starts as a continent torn in two, flooded by the sea, with volcanoes building its floor.",
+  "keywords": [
+    "red sea",
+    "continental rift",
+    "ocean formation",
+    "volcanoes",
+    "sea floor"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A time-lapse illustration of a continent breaking apart, with sea water flooding the gap between the halves. A brass dial lets the reader run time forward through millions of years.",
+    "ground": "#15252a"
+  },
+  "source": "Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=6_AkkpTNgLY&t=73s",
+  "written": "2026-11-04"
+}

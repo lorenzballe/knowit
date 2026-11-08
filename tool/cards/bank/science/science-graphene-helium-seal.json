@@ -1,0 +1,37 @@
+{
+  "id": "science-graphene-helium-seal",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the most impermeable material known?",
+  "answer": "Graphene is the most impermeable material known. The lid is a sheet of graphene, and helium pushed against it cannot pass through. Graphene lets no gas through, not even helium.",
+  "move": "Graphene lets no gas through, not even helium: the most impermeable material known.",
+  "keywords": [
+    "graphene",
+    "helium",
+    "gas",
+    "impermeability"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A reader holds a pump button to push helium gas against a sheet of graphene that serves as the lid. The question asks: what is the most impermeable material known?",
+    "ground": "#f3e8d3"
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=133s",
+  "written": "2026-11-04"
+}

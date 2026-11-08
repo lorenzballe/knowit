@@ -1,0 +1,37 @@
+{
+  "id": "science-spinning-x-slowdown",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A tube flies forward. The X on it spins backwards. How fast does the X move?",
+  "answer": "The X moves slower than the tube itself. It travels with the tube, but its backward spin subtracts from the tube's speed, so its velocity is reduced. The O, spinning forward, adds to the speed and crosses the view much faster.",
+  "move": "A mark on a spinning tube moves at the tube's speed plus its spin: backward spin subtracts, forward spin adds.",
+  "keywords": [
+    "veritasium",
+    "spinning tube trick",
+    "x and o",
+    "velocity",
+    "spin"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tube flies forward while an X mark on it spins backwards. The reader drags an arrow to guess how fast the X moves next to the tube, and the reveal says it moves slower than the tube, while an O spinning forward moves faster."
+  },
+  "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=7rAiZR_zasg&t=48s",
+  "written": "2026-11-07"
+}

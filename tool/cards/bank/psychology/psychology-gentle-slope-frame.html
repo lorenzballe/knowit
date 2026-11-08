@@ -1,0 +1,207 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-gentle-slope-illusion -->
+<!-- Design note.
+     Thought to carry: on a road with nothing around it, the brain judges a gentle stretch against the two steep stretches on either side, and it struggles to tell which way the gentle one goes.
+     Front: one road of three stretches (steep, gentle, steep), drawn flat with no horizon, no lamp and no tree, because the brief says there is nothing beyond the road to compare with. A walker stands on the middle stretch. The reader drags the orange dot to one of three possible references: the horizon, landmarks or the steep stretches.
+     Back: the same road, still. Three plain labels appear on one row under it: very steep, gentle, very steep. The text names the video's three combined factors. The drawing never says which way any stretch goes, because the video does not say. -->
+<title>The gentle slope the brain can't read</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .38s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.front .how{margin:.55em 0 0;font:500 max(1.9cqh,14px)/1.3 var(--body);color:var(--k);opacity:.9}
+.front .sure{flex:none}
+.front .hint{margin:8px 100px 0 0;min-height:44px;font:500 13px/1.3 var(--body);color:var(--k);opacity:.75;flex:none}
+.front.lock #sure{opacity:1!important;filter:none!important}
+.front.lock #sure [data-v]{opacity:1!important;background:transparent!important;box-shadow:none!important;border:1.5px solid color-mix(in srgb,var(--k) 40%,transparent)!important;color:color-mix(in srgb,var(--k) 50%,transparent)!important}
+.back .big{margin:0;font-size:max(3.2cqh,19px);line-height:1.15}
+.back .body{margin-top:.4em;font-size:max(1.85cqh,13px);line-height:1.3;flex:none}
+.back .keep{font-size:max(1.75cqh,12.5px);flex:none}
+.back .foot{flex:none}
+.back .foot .src{display:block;margin-right:100px;font-size:12px;line-height:1.3}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Drag to guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">READ THE ROAD</span></div>
+    <div class="turn">
+      <section class="face front lock">
+        <h2 class="q">Walking this road, what does your brain judge the middle stretch against?</h2>
+        <p class="how" id="say">Drag the orange dot to your answer. Then say how sure.</p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A road of three stretches, steep, gentle, steep, with nothing around it and a walker on the middle one. Below it, a slider with three answers: the horizon, landmarks, the steep stretches."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="hint" id="hint">Move the dot first to unlock.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Against the two steep stretches beside it.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same road, labelled: very steep, gentle, very steep."></svg></div>
+        <p class="body">Three things add up. Nothing beyond the road to compare with. A gentle stretch between two very steep ones. And no view past the horizon. So the brain struggles to tell which way the middle goes.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> With no outside reference, the brain uses the slopes next to a slope as its reference.</div>
+        <div class="foot"><span class="src">Source · Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const STEEP = 22, GENT = 6, SEGS = [[.3, STEEP], [.4, GENT], [.3, STEEP]];
+  const ORANGE = '#e8552f', PAPER = '#ffffff', R = Math.PI / 180;
+  const INKS = 'stroke:var(--k)';
+  const CHOICES = ['the horizon', 'landmarks', 'the steep stretches'], RIGHT = 2;
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), front = document.querySelector('.front');
+  let g = 1, touched = false, asked = false, turned = false, answered = false;
+  let S = {}, knob = null, tl = null;
+
+  // The road in unit lengths, centred on its own bounding box.
+  const U = (() => {
+    const p = [[0, 0]];
+    for (const [l, a] of SEGS) { const q = p[p.length - 1]; p.push([q[0] + l * Math.cos(a * R), q[1] - l * Math.sin(a * R)]); }
+    const xs = p.map(q => q[0]), ys = p.map(q => q[1]);
+    const mx = (Math.min(...xs) + Math.max(...xs)) / 2, my = (Math.min(...ys) + Math.max(...ys)) / 2;
+    return {pts: p.map(q => [q[0] - mx, q[1] - my]), w: Math.max(...xs) - Math.min(...xs), h: Math.max(...ys) - Math.min(...ys)};
+  })();
+  const along = (P, i, t) => [P[i][0] + (P[i + 1][0] - P[i][0]) * t, P[i][1] + (P[i + 1][1] - P[i][1]) * t];
+  const text = (parent, x, y, t, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, style: `fill:var(--k);font:700 ${fs}px var(--body)`}, a), parent); e.textContent = t; return e; };
+  const pts = P => P.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ');
+  const scaled = s => U.pts.map(q => [q[0] * s, q[1] * s]);
+  const sizeOf = (W, H, fs, extra) => {
+    const s = Math.max(60, Math.min(W * .86 / U.w, (H - extra) / .33));
+    return {s, rw: Math.max(5, s * .03)};
+  };
+
+  // ---------------- the drawing ----------------
+  function road(G, P, rw) {
+    Kit.mk('polyline', {points: pts(P), fill: 'none', 'stroke-width': rw, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', style: INKS}, G);
+    Kit.mk('polyline', {points: pts(P), fill: 'none', 'stroke-width': Math.max(1.2, rw * .16), 'stroke-dasharray': `${rw * 1.6} ${rw * 1.5}`, style: 'stroke:var(--c)'}, G);
+  }
+  function walker(G, P, s, rw) {
+    const [x, y] = along(P, 1, .42), fy = y - rw / 2;
+    const hh = s * .12, hip = fy - hh * .45, sh = hip - hh * .33, hr = hh * .13;
+    Kit.mk('path', {d: `M${x - hh * .13},${fy} L${x},${hip} L${x + hh * .15},${fy}`, fill: 'none', 'stroke-width': hh * .09, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: INKS}, G);
+    Kit.mk('path', {d: `M${x + hh * .02},${sh + hh * .05} L${x + hh * .12},${hip - hh * .02}`, fill: 'none', 'stroke-width': hh * .07, 'stroke-linecap': 'round', style: INKS}, G);
+    Kit.mk('rect', {x: x - hh * .1, y: sh, width: hh * .2, height: hip - sh + hh * .04, rx: hh * .08, fill: PAPER, 'stroke-width': 1.5, style: INKS}, G);
+    Kit.mk('circle', {cx: x, cy: sh - hr - hh * .04, r: hr, fill: PAPER, 'stroke-width': 1.5, style: INKS}, G);
+    Kit.mk('circle', {cx: x + hr * .45, cy: sh - hr - hh * .06, r: Math.max(1.2, hr * .16), style: 'fill:var(--c)'}, G);
+  }
+  // A label on one row under the road, with a thin leader up to its stretch.
+  function tag(G, P, i, s, rw, rowY, fs, word, cx, cy) {
+    const m = along(P, i, .5), x = cx + m[0];
+    Kit.mk('line', {x1: x, x2: x, y1: cy + m[1] + rw / 2 + 4, y2: rowY - fs * 1.05, 'stroke-width': 1.2, style: INKS}, G);
+    text(G, x, rowY, word, fs, {'text-anchor': 'middle'});
+  }
+
+  // ---------------- the front ----------------
+  function drawFront() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26));
+    const {s, rw} = sizeOf(W, H, fs, fs * 8.2);
+    const P = scaled(s), topOff = s * .15 + rw, bottomOff = U.h / 2 * s + rw / 2;
+    const total = topOff + bottomOff + fs * 8, cx = W / 2, cy = Math.max(0, (H - total) / 2) + topOff;
+    const a = Kit.mk('g', {class: 'bt'}, svg), sc = Kit.mk('g', {transform: `translate(${cx},${cy})`}, a);
+    road(sc, P, rw); walker(sc, P, s, rw);
+    // Name the middle stretch.
+    const rowY = cy + bottomOff + fs * 1.6, b = Kit.mk('g', {class: 'bt'}, svg);
+    tag(b, P, 1, s, rw, rowY, fs, 'middle stretch', cx, cy);
+    // The slider: three stops.
+    const trackY = rowY + fs * 2.5, x0 = W * .12, x1 = W * .88, xm = (x0 + x1) / 2, c = Kit.mk('g', {class: 'bt'}, svg);
+    Kit.mk('line', {x1: x0, x2: x1, y1: trackY, y2: trackY, 'stroke-width': 2, 'stroke-linecap': 'round', style: INKS}, c);
+    for (const x of [x0, xm, x1]) Kit.mk('line', {x1: x, x2: x, y1: trackY - fs * .4, y2: trackY + fs * .4, 'stroke-width': 1.6, style: INKS}, c);
+    const ty = trackY + fs * 2, kr = fs * .85;
+    text(c, Math.max(4, x0 - kr), ty, CHOICES[0], fs);
+    text(c, xm, ty, CHOICES[1], fs, {'text-anchor': 'middle'});
+    // The long answer wraps onto two lines so it keeps clear of "landmarks".
+    const xr = Math.min(W - 4, x1 + kr);
+    const long = text(c, xr, ty, '', fs, {'text-anchor': 'end'});
+    Kit.mk('tspan', {x: xr, dy: 0}, long).textContent = 'the steep';
+    Kit.mk('tspan', {x: xr, dy: fs * 1.2}, long).textContent = 'stretches';
+    knob = Kit.mk('g', {}, c);
+    S = {W, H, fs, x0, x1, trackY};
+    drawKnob();
+  }
+  function drawKnob() {
+    if (!knob) return;
+    knob.innerHTML = '';
+    const {fs, x0, x1, trackY} = S, gx = x0 + g / 2 * (x1 - x0);
+    Kit.mk('circle', {cx: gx, cy: trackY, r: fs * .85, fill: ORANGE, 'stroke-width': 2, style: INKS}, knob);
+    if (!touched) for (const sg of [-1, 1]) Kit.mk('path', {d: `M${gx + sg * fs * 1.5},${trackY - fs * .45} l${sg * fs * .45},${fs * .45} l${-sg * fs * .45},${fs * .45}`, fill: 'none', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: INKS}, knob);
+  }
+  let stop = 1;
+  function setG(v) {
+    g = Math.max(0, Math.min(2, v));
+    const n = Math.round(g); if (n !== stop) { stop = n; Kit.haptic('selection'); }
+    drawKnob();
+  }
+  function unlock() {
+    if (asked) return; asked = true;
+    front.classList.remove('lock');
+    Kit.$('hint').textContent = 'Pick one to see the answer.';
+    sure.on();
+  }
+  const fromX = e => { const r = svg.getBoundingClientRect(); return ((e.clientX - r.left) - S.x0) / (S.x1 - S.x0) * 2; };
+  let dragging = false;
+  svg.addEventListener('pointerdown', e => { if (answered) return; dragging = true; touched = true; svg.setPointerCapture(e.pointerId); setG(fromX(e)); unlock(); });
+  svg.addEventListener('pointermove', e => { if (dragging) setG(fromX(e)); });
+  const end = () => { if (!dragging) return; dragging = false; g = Math.round(g); drawKnob(); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const said = () => CHOICES[Math.round(g)];
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered) return; answered = true;
+    g = Math.round(g); drawKnob();
+    const ok = g === RIGHT;
+    Kit.answer({choice: said(), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said()}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------------- the back ----------------
+  function drawBack(instant) {
+    if (tl) tl.kill();
+    svg2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg2), fs = Math.max(12, Math.min(14, W / 26));
+    const {s, rw} = sizeOf(W, H, fs, fs * 2.6);
+    const P = scaled(s), topOff = s * .15 + rw, bottomOff = U.h / 2 * s + rw / 2;
+    const total = topOff + bottomOff + fs * 2.2, cx = W / 2, cy = Math.max(0, (H - total) / 2) + topOff;
+    const sc = Kit.mk('g', {transform: `translate(${cx},${cy})`}, svg2);
+    road(sc, P, rw); walker(sc, P, s, rw);
+    const rowY = cy + bottomOff + fs * 1.7, hide = instant ? '' : 'opacity:0';
+    const steep = Kit.mk('g', {style: hide}, svg2), gentle = Kit.mk('g', {style: hide}, svg2);
+    tag(steep, P, 0, s, rw, rowY, fs, 'very steep', cx, cy);
+    tag(steep, P, 2, s, rw, rowY, fs, 'very steep', cx, cy);
+    tag(gentle, P, 1, s, rw, rowY, fs, 'gentle', cx, cy);
+    if (instant || typeof gsap === 'undefined') { steep.style.opacity = 1; gentle.style.opacity = 1; return; }
+    tl = gsap.timeline({delay: .5})
+      .to(gentle, {opacity: 1, duration: .45, ease: 'power2.out'})
+      .to(steep, {opacity: 1, duration: .5, ease: 'power2.out'}, '+=.35');
+  }
+
+  document.addEventListener('turned', () => { turned = true; drawBack(Kit.calm); });
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(true); };
+  Kit.onEnter.card = () => { if (!Kit.calm && typeof gsap !== 'undefined') gsap.from('#pic .bt', {opacity: 0, y: 10, stagger: .14, duration: .5, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; setG(2);
+    unlock();
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1200 : 4500);
+  };
+})();
+Kit.single();
+</script>
+</html>

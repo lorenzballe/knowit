@@ -1,0 +1,212 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: life-giving-without-return -->
+<!-- Thought to carry: whether a gift is "wasted" depends on how many rounds you judge it over, and on whether the other side can notice at all.
+     Front: two scenes at one scale. On the left, someone turns down a gift. On the right, someone gives to a person who returns nothing. The reader slides to their side, and the giver's arm holds the gift back or reaches out, while the sign between the scenes reads = or ≠.
+     Back: a round-by-round picture of two receivers. One never gives back, so the view holds. One gives back later, so the case against holds. The reader's dot sits on the line below.
+     The front gives nothing away: it shows only the view's comparison and the reader's own position. There is no verdict, no rounds and no return until the reader commits. -->
+<title>Generous or foolish?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* only the face toward the reader stays rendered, so the mirrored side never sits under the visible one */
+.turn>.front{visibility:visible;transition:visibility 0s .37s}
+.turn.over>.front{visibility:hidden}
+.turn>.back{visibility:hidden;transition:visibility 0s .37s}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#scale{position:relative;height:max(5.4cqh,38px);margin:0 4cqw;touch-action:none;cursor:ew-resize}
+#track{position:absolute;left:0;right:0;top:50%;height:max(.35cqh,2px);background:var(--k);opacity:.75;border-radius:2px}
+#track::before,#track::after{content:"";position:absolute;top:50%;width:max(.35cqh,2px);height:max(1.8cqh,12px);background:var(--k);transform:translateY(-50%)}
+#track::before{left:0}#track::after{right:0}
+#dot{position:absolute;top:50%;left:50%;width:max(3.4cqh,24px);height:max(3.4cqh,24px);border-radius:50%;background:#ff4f2e;box-shadow:0 0 0 max(.5cqh,3px) var(--c);transform:translate(-50%,-50%)}
+.ends{display:flex;justify-content:space-between;gap:4cqw;margin:.4cqh 0 1cqh;font:500 max(1.75cqh,12px)/1.2 var(--body);color:var(--k)}
+.ends b{display:block;font-weight:800;font-size:max(2cqh,13px)}
+.ends span:last-child{text-align:right}
+#commit{align-self:flex-start;margin-bottom:.6cqh}
+.back .big{margin-bottom:.4cqh}
+.back .body{font-size:max(1.85cqh,12.5px)}
+.back .keep{margin-top:1cqh}
+/* keep the source clear of the save and share buttons in the bottom-right corner */
+.face .foot{padding-right:max(32cqw,128px);box-sizing:border-box}
+.face .foot .src{display:block;white-space:normal;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Take a side · one view">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: giving to people who give nothing back is foolish. Agree?</h2>
+        <div class="stagebox" id="stage">
+          <svg id="pic" role="img" aria-label="Left: a person turns down a gift. Right: a person offers a gift to someone who has a pile of gifts and gives nothing back."></svg>
+        </div>
+        <div id="scale"><div id="track"></div><div id="dot"></div></div>
+        <div class="ends"><span><b>Agree</b>as foolish as saying no</span><span><b>Disagree</b>giving is never a waste</span></div>
+        <p class="say" id="say">Slide to your side: is the giver on the right a fool?</p>
+        <button class="btn gone" id="commit">This is my side</button>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2022) · a point of view</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Both are right, about different people.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Two receivers over four rounds: one never gives back, one starts giving back from the third round. Your position sits on the line below."></svg></div>
+        <p class="body"><b>For the view:</b> giving again and again to someone who never returns anything costs you, and it teaches them to take. <b>Against it:</b> most trust starts with a gift nobody has repaid yet. Judge it on the first round only, and every act of generosity looks like a bad deal.</p>
+        <div class="keep"><b>ASK YOURSELF</b> When I call a gift wasted, am I judging the person, or only the first round?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2022) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const ACC = '#ff4f2e';                // the reader's own side, everywhere on the card
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), scale = Kit.$('scale'), track = Kit.$('track'), dot = Kit.$('dot');
+  let t = .5, touched = false, done = false, turned = false, INK = '#141414', C = '#fff';
+  const mk = (tag, a, p) => Kit.mk(tag, a, p);
+  const colours = () => { const cs = getComputedStyle(Kit.$('card')); INK = cs.getPropertyValue('--k').trim() || INK; C = cs.getPropertyValue('--c').trim() || C; };
+  const text = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree, sans-serif', 'font-size': 13, 'font-weight': 700, 'text-anchor': 'middle'}, a), p); e.textContent = s; return e; };
+
+  // A round-headed person standing on y = foot, facing left (-1) or right (1).
+  function person(p, x, foot, s, op, face) {
+    const g = mk('g', {opacity: op}, p), bw = s * .62, bh = s * 1.15, top = foot - bh, r = s * .3, hy = top - r * 1.15;
+    mk('path', {d: `M${x - bw / 2},${foot} L${x - bw / 2},${top + bw / 2} A${bw / 2},${bw / 2} 0 0 1 ${x + bw / 2},${top + bw / 2} L${x + bw / 2},${foot} Z`, fill: INK}, g);
+    mk('circle', {cx: x, cy: hy, r, fill: INK}, g);
+    mk('circle', {cx: x + face * r * .45, cy: hy - r * .1, r: Math.max(1.3, r * .13), fill: C}, g);
+    return {g, sh: [x + face * bw * .32, top + bw * .42], headTop: hy - r};
+  }
+  const arm = (g, a, b, s) => mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: INK, 'stroke-width': s * .15, 'stroke-linecap': 'round'}, g);
+  function gift(p, x, y, z) {
+    const g = mk('g', {}, p), w = z, h = z * .8, sw = Math.max(1.2, z * .08);
+    mk('rect', {x: x - w / 2, y: y - h / 2, width: w, height: h, rx: z * .06, fill: '#fff', stroke: INK, 'stroke-width': sw}, g);
+    mk('path', {d: `M${x},${y - h / 2}V${y + h / 2}M${x - w / 2},${y}H${x + w / 2}`, stroke: INK, 'stroke-width': sw}, g);
+    mk('path', {d: `M${x},${y - h / 2} c${-w * .34},${-h * .5} ${-w * .46},${h * .05} 0,0 c${w * .34},${-h * .5} ${w * .46},${h * .05} 0,0`, fill: 'none', stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, g);
+    return g;
+  }
+  const ground = (p, x0, x1, y) => mk('path', {d: `M${x0},${y} Q${(x0 + x1) / 2},${y + 2.2} ${x1},${y - .6}`, stroke: INK, 'stroke-width': 1.7, fill: 'none', 'stroke-linecap': 'round'}, p);
+
+  // ---------- the front: the view's comparison, and the reader's own giver ----------
+  function drawFront() {
+    colours(); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 28));
+    const gy = H - fs * 2.4, s = Math.max(14, Math.min(W * .085, (gy - fs * 2.6) / 2.05)), z = s * .5;
+
+    // Left: someone turns down a good gift.
+    const L = mk('g', {class: 'sL'}, svg), lx = W * .24;
+    ground(L, lx - s * 1.65, lx + s * 1.65, gy);
+    const off = person(L, lx - s * .95, gy, s, .42, 1), ref = person(L, lx + s * .95, gy, s, 1, -1);
+    const oh = [lx - s * .95 + s * .8, gy - s * .95];
+    arm(off.g, off.sh, oh, s);
+    gift(L, oh[0], oh[1] - z * .35, z);
+    const palm = [lx + s * .95 - s * .62, gy - s * 1.72];
+    arm(ref.g, ref.sh, palm, s);
+    mk('ellipse', {cx: palm[0], cy: palm[1], rx: s * .1, ry: s * .16, fill: INK}, ref.g);
+    text(L, lx + s * .95, ref.headTop - fs * .55, 'No, thanks.', {'font-size': fs, 'font-weight': 800});
+    text(L, lx, gy + fs * 1.5, 'turns down a gift', {'font-size': fs, 'font-weight': 600});
+
+    // Right: someone gives to a person who returns nothing. The reader decides how far the arm goes.
+    const R = mk('g', {class: 'sR'}, svg), rx = W * .76;
+    ground(R, rx - s * 1.65, rx + s * 1.65, gy);
+    const giv = person(R, rx - s * .95, gy, s, 1, 1), tak = person(R, rx + s * .95, gy, s, .42, -1);
+    const reach = touched ? t : .5, hand = [rx - s * .95 + s * (.32 + .78 * reach), gy - s * (.92 + .12 * reach)];
+    arm(giv.g, giv.sh, hand, s);
+    const pz = z * .72, px = rx + s * .95 + s * .62;
+    gift(R, px - pz * .55, gy - pz * .42, pz); gift(R, px + pz * .55, gy - pz * .42, pz); gift(R, px, gy - pz * 1.25, pz);
+    gift(R, hand[0], hand[1] - z * .35, z);
+    text(R, rx, gy + fs * 1.5, 'gives, gets nothing', {'font-size': fs, 'font-weight': 600});
+
+    // Between them, the reader's verdict on the comparison.
+    const sym = !touched || (t > .38 && t < .62) ? '?' : t <= .38 ? '=' : '≠';
+    const S = mk('g', {class: 'sym'}, svg);
+    text(S, W * .5, gy - s * .7, sym, {'font-family': 'var(--display), Georgia, serif', 'font-size': Math.max(28, s * 1.1), 'font-weight': 800, fill: touched ? ACC : INK});
+  }
+
+  // ---------- the back: rounds, and two kinds of receiver ----------
+  function drawBack(anim) {
+    colours(); svg2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg2), fs = Math.max(12, Math.min(14, W / 28));
+    const s = Math.max(12, Math.min(W * .055, H * .1)), half = W * .14;
+    const fy = fs * .3 + s * 1.85, rowsTop = fy + fs * .5, lineY = H - fs * 2, capY = lineY - fs * 1.7, rowsBot = capY - fs * 1.2;
+    const gap = (rowsBot - rowsTop) / 4, z = Math.max(9, Math.min(s * .6, gap * .42));
+    const tl = anim && !Kit.calm ? gsap.timeline() : null, figs = [], outs = [], backs = [], arrows = [];
+    [{cx: W * .27, ret: false, cap: 'never gives back'}, {cx: W * .73, ret: true, cap: 'gives back, later'}].forEach(col => {
+      const gx = col.cx - half, kx = col.cx + half, G = mk('g', {}, svg2);
+      for (const x of [gx, kx]) mk('line', {x1: x, x2: x, y1: fy + 2, y2: rowsBot, stroke: INK, 'stroke-width': 1.3, opacity: .28}, G);
+      figs.push(person(G, gx, fy, s, 1, 1).g, person(G, kx, fy, s, .42, -1).g);
+      for (let i = 0; i < 4; i++) {
+        const y = rowsTop + (i + .5) * gap, two = col.ret && i >= 2, yo = two ? y - gap * .24 : y;
+        const ar = (a, b, yy) => { const d = Math.sign(b - a), A = mk('path', {d: `M${a},${yy}H${b}M${b - d * 5},${yy - 4}L${b},${yy}L${b - d * 5},${yy + 4}`, stroke: INK, 'stroke-width': 1.3, fill: 'none', opacity: .55, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G); arrows.push(A); };
+        ar(gx + 4, kx - 4, yo);
+        const o = gift(G, 0, 0, z); gsap.set(o, {x: kx - z * .9, y: yo - z * .5}); outs.push([o, gx + z * .9]);
+        if (two) { const yb = y + gap * .24; ar(kx - 4, gx + 4, yb); const b = gift(G, 0, 0, z); gsap.set(b, {x: gx + z * .9, y: yb - z * .5}); backs.push([b, kx - z * .9]); }
+      }
+      text(G, col.cx, capY, col.cap, {'font-size': fs, 'font-weight': 700});
+    });
+    // The reader's own place on the line between the two views.
+    const x0 = W * .1, x1 = W * .9, D = mk('g', {}, svg2);
+    mk('line', {x1: x0, x2: x1, y1: lineY, y2: lineY, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, D);
+    for (const x of [x0, x1]) mk('line', {x1: x, x2: x, y1: lineY - 5, y2: lineY + 5, stroke: INK, 'stroke-width': 1.6}, D);
+    text(D, x0, lineY + fs * 1.45, 'agree', {'font-size': fs, 'text-anchor': 'start', 'font-weight': 600});
+    text(D, x1, lineY + fs * 1.45, 'disagree', {'font-size': fs, 'text-anchor': 'end', 'font-weight': 600});
+    const dt = mk('circle', {cx: x0 + (x1 - x0) * t, cy: lineY, r: Math.max(6, fs * .55), fill: ACC, stroke: C, 'stroke-width': 3}, D);
+    if (!tl) return;
+    tl.from(figs, {opacity: 0, y: -6, duration: .45, stagger: .06, ease: 'power3.out'})
+      .from(arrows, {opacity: 0, duration: .3, stagger: .05}, '-=.1')
+      .from(outs.map(o => o[0]), {x: i => outs[i][1], opacity: 0, duration: .55, stagger: .12, ease: 'power2.out'}, '<')
+      .from(backs.map(b => b[0]), {x: i => backs[i][1], opacity: 0, duration: .6, stagger: .15, ease: 'power2.out'}, '+=.15')
+      .from(D, {opacity: 0, duration: .35}, '+=.1')
+      .from(dt, {attr: {cx: (x0 + x1) / 2}, duration: .6, ease: 'power3.out'}, '<');
+  }
+
+  // ---------- the gesture ----------
+  function setT(v) { t = Math.max(0, Math.min(1, v)); dot.style.left = (t * 100) + '%'; drawFront(); }
+  const fromX = e => { const r = track.getBoundingClientRect(); return (e.clientX - r.left) / r.width; };
+  let drag = false;
+  scale.addEventListener('pointerdown', e => {
+    if (done) return; drag = true; scale.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; Kit.show('commit'); }
+    setT(fromX(e)); Kit.haptic('selection');
+  });
+  scale.addEventListener('pointermove', e => { if (drag) setT(fromX(e)); });
+  const end = () => { drag = false; };
+  scale.addEventListener('pointerup', end); scale.addEventListener('pointercancel', end);
+
+  Kit.$('commit').addEventListener('click', () => {
+    if (done || !touched) return; done = true; Kit.haptic('selection');
+    const side = t <= .38 ? 'agree' : t >= .62 ? 'disagree' : 'in between';
+    Kit.answer({choice: `${side} (${Math.round((1 - t) * 100)}% agree)`, correct: null, sure: null});
+    setTimeout(() => Turn.over(), 700);
+  });
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.timeline()
+      .from('#pic .sL', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'})
+      .from('#pic .sym', {opacity: 0, duration: .4, ease: 'power2.out'}, '+=.05')
+      .from('#pic .sR', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'}, '-=.15')
+      .from(['#scale', '.ends'], {opacity: 0, y: 6, duration: .4, stagger: .08, ease: 'power2.out'}, '-=.1');
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; Kit.show('commit'); setT(.28);
+    await wait(150);
+    Kit.$('commit').click();
+    await wait(Kit.calm ? 900 : 3600);
+  };
+})();
+Kit.single();
+</script>
+</html>

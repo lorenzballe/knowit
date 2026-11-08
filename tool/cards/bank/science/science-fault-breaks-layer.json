@@ -1,0 +1,38 @@
+{
+  "id": "science-fault-breaks-layer",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "What happens to a rock layer where a fault cuts it?",
+  "answer": "The fault cuts the red unit in two, and one side slides down it. The layer stops at the fault and carries on lower down. Beyond the fault its base still dips; it is not flat.",
+  "move": "A fault breaks a layer's continuity: offset, with a dipping base, not a flat one.",
+  "keywords": [
+    "fault",
+    "rock layer",
+    "geology",
+    "stratigraphy",
+    "cross-section"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Diagram of a rock layer cut by a fault. The question asks what happens to the red layer where the fault cuts it. Options: runs on unbroken; drops with a flat base; drops with a dipping base.",
+    "ground": "#eee4cf"
+  },
+  "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=2956s",
+  "written": "2026-11-04"
+}

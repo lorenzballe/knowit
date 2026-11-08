@@ -1,0 +1,37 @@
+{
+  "id": "science-sketch-before-measuring",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.testable_claims",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Building a geological section from a map: what do you do first?",
+  "answer": "The first step is a quick hand sketch with no measurements, showing where each fault must surface and where the folds sit. Precise measurements come after. Drawing the shape of the answer first gives you a picture that already holds together.",
+  "move": "Draw the shape of the answer first, then measure into a picture that already holds together.",
+  "keywords": [
+    "geological_section",
+    "geological_map",
+    "fault",
+    "anticline",
+    "syncline"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Ordering task: 'Building a geological section from a map: what do you do first?' Four steps to tap in order: draw the ground's profile along the section; do the precise measurements; sketch faults and folds by hand with no measures; project faults and fold axes onto the section. An undo button is available."
+  },
+  "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=2087s",
+  "written": "2026-11-07"
+}

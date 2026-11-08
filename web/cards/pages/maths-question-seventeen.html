@@ -1,0 +1,364 @@
+<!doctype html>
+<!-- slug: maths-question-seventeen -->
+<!-- Look: a vintage brass instrument on bottle-green leather. Big coin B is the dial face, engraved with a guilloché rosette. Small coin A rolls around its rim, and a blued-steel needle counts A's turns. Beside the dial, the test's five answers appear as pencil bubbles on an answer sheet.
+     Interaction: each tap rolls coin A a quarter of the way around B. At every quarter, A leaves a faint stamp of itself with its arrow pointing straight up again, so each quarter is one full turn. The window counts the turns, and the needle swings to them with a damped wobble. Gold flags on the scale mark the five answers, and the key's B is red.
+     Wow moment: after the last tap the needle settles on 4, between the flags. The flags morph into red X's, a pencil X is struck through every bubble, and a red ring is drawn around the 4 that no one could choose. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Question 17</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation;overflow:visible}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{color:var(--k)}
+.answered #why .big{font-size:clamp(22px,5.2cqh,46px);line-height:1.02;letter-spacing:-.01em}
+#why .body{font:500 max(1.85cqh,13px)/1.34 var(--body);overflow-wrap:anywhere}
+#roll{align-self:flex-start}
+.say b{color:#f4c862}
+.answered .q{font-size:max(2.4cqh,15px)}
+.tight .say{font-size:13px;line-height:1.32}
+.tight.answered .q{font-size:15px;line-height:1.12}
+.tight #why .body{font-size:13px;line-height:1.3}
+.tight .keep{padding-top:1.3cqh;padding-bottom:1.3cqh}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Tap to roll · the answer key" style="--c:#16241f;--k:#f3e7c9;--edge:#0b1411">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ROLL THE COIN</span></div>
+    <h2 class="q">Why did nobody answer question 17 correctly?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A brass dial: coin B is the dial face, small coin A rolls around its rim, and a needle counts how many times coin A turns. The test's five answers, A to E, are shown as answer bubbles and as flags on the scale."></svg>
+    </div>
+    <p class="say" id="say">Q17: coin A has a third of coin B's radius and rolls once around B. How many times does A turn? The key said <b>B: 3</b>. <b>Tap to roll.</b></p>
+    <button class="btn" id="roll">Roll A a quarter of the way</button>
+    <div id="why" class="gone">
+      <p class="big">4 turns, and 4 wasn't a choice.</p>
+      <p class="body">Coin A turns 3 times to cover the length of B's edge, plus once more for going all the way around B. The test writers thought 3 too, so the correct answer wasn't on the test.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When everyone gets it wrong, check the answer key too.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.MorphSVGPlugin) gsap.registerPlugin(MorphSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), roll = Kit.$('roll'), card = Kit.$('card');
+  const RED = '#e2483a', INK = '#2a2116', CREAM = '#f3e7c9', STEEL = '#1b2531', GOLD = '#f4c862', PINK = '#ff7b6b', FLAG = '#2c6e55';
+  const OPTS = [[1.5, 'A', '3/2'], [3, 'B', '3'], [4.5, 'C', '9/2'], [6, 'D', '6'], [9, 'E', '9']];
+  const st = {theta: 0, needle: 0};
+  let n = 0, revealed = false, xDone = false, built = false, sayLocked = false;
+  let W = 0, H = 0, fs, R, r, cx, cy, mode, E = {};
+
+  const rad = d => d * Math.PI / 180;
+  const ang = v => -135 + v * 30;
+  const pt = (rr, deg) => [cx + rr * Math.sin(rad(deg)), cy - rr * Math.cos(rad(deg))];
+  const xD = (x, y, q) => {
+    const s = q * 1.3, a = q * .26, P = [[-a, -s], [a, -s], [a, -a], [s, -a], [s, a], [a, a], [a, s], [-a, s], [-a, a], [-s, a], [-s, -a], [-a, -a]];
+    const c = Math.SQRT1_2;
+    return 'M' + P.map(([px, py]) => `${(x + (px - py) * c).toFixed(2)},${(y + (px + py) * c).toFixed(2)}`).join(' L') + 'Z';
+  };
+  const txt = (p, x, y, t, a) => { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle'}, a), p); e.textContent = t; return e; };
+  const arrowD = q => q >= 22
+    ? `M${-q * .09},${q * .1} L${q * .09},${q * .1} L${q * .09},${-q * .45} L${q * .24},${-q * .45} L0,${-q * .8} L${-q * .24},${-q * .45} L${-q * .09},${-q * .45}Z`
+    : `M0,${-q * .92} L${q * .34},${-q * .42} L${-q * .34},${-q * .42}Z`;
+
+  function setCap(final) {
+    const c = E.cap; if (!c) return;
+    c.textContent = '';
+    const span = (t, a) => { const s = Kit.mk('tspan', a, c); s.textContent = t; };
+    if (mode === 'stack') {
+      if (final) span('4 turns: not among A to E', {fill: PINK, 'font-weight': 800});
+      else { span('Turns of coin A · ', {fill: CREAM, 'fill-opacity': .8}); span('key said B', {fill: PINK, 'font-weight': 800}); }
+    } else {
+      if (final) span('Answer: 4', {fill: PINK, 'font-weight': 800});
+      else span('Turns of A?', {fill: CREAM, 'fill-opacity': .85});
+    }
+  }
+
+  function addStamp(k, anim) {
+    const th = k * Math.PI / 2, x = cx + (R + r) * Math.sin(th), y = cy - (R + r) * Math.cos(th);
+    const g = Kit.mk('g', {transform: `translate(${x},${y})`}, E.stampG);
+    const inner = Kit.mk('g', {opacity: .6}, g);
+    Kit.mk('circle', {r: r * .97, fill: CREAM, 'fill-opacity': .05, stroke: CREAM, 'stroke-opacity': .55, 'stroke-width': 1, 'stroke-dasharray': '3 3'}, inner);
+    Kit.mk('path', {d: arrowD(r), fill: GOLD}, inner);
+    if (anim && !Kit.calm) gsap.from(inner, {opacity: 0, scale: .6, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(2)'});
+  }
+
+  function layout() {
+    const f = Kit.fitSvg(svg);
+    card.classList.toggle('tight', card.clientHeight < 560);
+    if (built && Math.abs(f.W - W) < 1 && Math.abs(f.H - H) < 1) { render(); return; }
+    svg.innerHTML = ''; built = false; E = {};
+    W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 26));
+
+    // Pick the composition that gives the biggest dial: answer sheet below, or beside.
+    const rowH = fs * 2.2, capS = rowH + fs * 1.9;
+    const R1 = .3 * Math.min(W - 8, H - capS - 6);
+    const PW = Math.max(96, fs * 8), rows = Math.max(17, fs * 1.4);
+    const sideOK = H >= fs * 2 + 5 * rows;
+    const R2 = sideOK ? .3 * Math.min(W - PW - fs - 8, H - 6) : 0;
+    mode = R1 >= R2 * .88 ? 'stack' : 'side';
+    R = Math.max(16, mode === 'stack' ? R1 : R2); r = R / 3;
+    const D = 10 * R / 3;
+    let px0 = 0;
+    if (mode === 'stack') { const top = Math.max(2, (H - D - capS) / 2); cx = W / 2; cy = top + 5 * R / 3; }
+    else { const left = Math.max(2, (W - D - fs - PW) / 2); cx = left + 5 * R / 3; cy = H / 2; px0 = left + D + fs; }
+
+    // ---------- materials ----------
+    const defs = Kit.mk('defs', {}, svg);
+    const grad = (type, id, a, stops) => { const g = Kit.mk(type, Object.assign({id}, a), defs); stops.forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g)); return g; };
+    grad('radialGradient', 'brass', {cx: '38%', cy: '30%', r: '75%'}, [[0, '#fff1b8'], [.25, '#e9c46a'], [.6, '#b8862f'], [1, '#5e3f12']]);
+    grad('linearGradient', 'brassRim', {x1: 0, y1: 0, x2: 1, y2: 1}, [[0, '#ffe9a3'], [.45, '#c99a3d'], [.55, '#8a6122'], [1, '#e8c26a']]);
+    grad('radialGradient', 'enamel', {cx: '42%', cy: '35%', r: '70%'}, [[0, '#fffaea'], [.6, '#f1e5c4'], [1, '#d2bd8b']]);
+    grad('radialGradient', 'silver', {cx: '35%', cy: '30%', r: '80%'}, [[0, '#ffffff'], [.35, '#dfe3e6'], [.75, '#9aa3aa'], [1, '#5b636a']]);
+    grad('radialGradient', 'glass', {cx: '30%', cy: '20%', r: '90%'}, [[0, '#ffffff', .55], [.4, '#ffffff', .08], [1, '#ffffff', 0]]);
+    grad('radialGradient', 'halo', {cx: '50%', cy: '50%', r: '50%'}, [[.55, GOLD, .10], [1, GOLD, 0]]);
+    const sh = Kit.mk('filter', {id: 'shadow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
+    Kit.mk('feDropShadow', {dx: 0, dy: R * .05, stdDeviation: R * .06, 'flood-color': '#000', 'flood-opacity': .55}, sh);
+    const sh2 = Kit.mk('filter', {id: 'nshadow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    Kit.mk('feDropShadow', {dx: R * .02, dy: R * .03, stdDeviation: R * .012, 'flood-color': '#000', 'flood-opacity': .4}, sh2);
+
+    const world = E.world = Kit.mk('g', {}, svg);
+
+    // soft lamp-light pooled around the instrument, the path A's centre follows, and how far it has gone
+    Kit.mk('circle', {cx, cy, r: R * 1.75, fill: 'url(#halo)'}, world);
+    const L = E.L = 2 * Math.PI * (R + r);
+    Kit.mk('circle', {cx, cy, r: R + r, fill: 'none', stroke: CREAM, 'stroke-opacity': .22, 'stroke-width': 1.2, 'stroke-dasharray': '2 6'}, world);
+    for (let k = 0; k < 4; k++) {
+      const [x1, y1] = pt(R + r - 4, k * 90), [x2, y2] = pt(R + r + 4, k * 90);
+      Kit.mk('line', {x1, y1, x2, y2, stroke: CREAM, 'stroke-opacity': .4, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, world);
+    }
+    E.trail = Kit.mk('circle', {cx, cy, r: R + r, fill: 'none', stroke: GOLD, 'stroke-width': 2.4, 'stroke-linecap': 'round', transform: `rotate(-90 ${cx} ${cy})`, 'stroke-dasharray': `0 ${L}`, opacity: .85}, world);
+    E.stampG = Kit.mk('g', {}, world);
+    E.stamped = 0;
+
+    // ---------- coin B: the dial ----------
+    const dial = E.dial = Kit.mk('g', {}, world);
+    Kit.mk('circle', {cx, cy, r: R, fill: 'url(#brass)', filter: 'url(#shadow)'}, dial);
+    Kit.mk('circle', {cx, cy, r: R * .985, fill: 'none', stroke: 'url(#brassRim)', 'stroke-width': R * .05}, dial);
+    for (let i = 0; i < 144; i++) {
+      const a = i * 2.5, [x1, y1] = pt(R * .945, a), [x2, y2] = pt(R * .995, a);
+      Kit.mk('line', {x1, y1, x2, y2, stroke: '#3b270b', 'stroke-opacity': .45, 'stroke-width': .9}, dial);
+    }
+    Kit.mk('circle', {cx, cy, r: R * .925, fill: 'none', stroke: '#4a3210', 'stroke-width': 1.2, 'stroke-opacity': .7}, dial);
+    Kit.mk('circle', {cx, cy, r: R * .9, fill: 'url(#enamel)'}, dial);
+    // guilloché rosette engraved in the enamel
+    const ros = Kit.mk('g', {opacity: .9}, dial);
+    for (let i = 0; i < 18; i++) Kit.mk('ellipse', {cx, cy, rx: R * .52, ry: R * .17, fill: 'none', stroke: '#6b5326', 'stroke-opacity': .07, 'stroke-width': .8, transform: `rotate(${i * 10} ${cx} ${cy})`}, ros);
+    for (let k = 1; k < 9; k++) Kit.mk('circle', {cx, cy, r: R * k * .1, fill: 'none', stroke: '#6b5326', 'stroke-opacity': .045, 'stroke-width': 1}, dial);
+    Kit.mk('circle', {cx, cy, r: R * .88, fill: 'none', stroke: INK, 'stroke-opacity': .35, 'stroke-width': .8}, dial);
+    Kit.mk('path', {d: `M${cx - R * .035},${cy - R * .99} L${cx + R * .035},${cy - R * .99} L${cx},${cy - R * .9}Z`, fill: RED}, dial);
+
+    // engraved scale, 0 to 9 turns
+    const ticks = E.ticks = Kit.mk('g', {}, dial);
+    const [ax0, ay0] = pt(R * .86, ang(0)), [ax1, ay1] = pt(R * .86, ang(9));
+    Kit.mk('path', {d: `M${ax0},${ay0} A${R * .86},${R * .86} 0 1 1 ${ax1},${ay1}`, fill: 'none', stroke: INK, 'stroke-width': 1.3, class: 'tick'}, ticks);
+    for (let i = 0; i <= 90; i++) {
+      const v = i / 10, major = i % 10 === 0, half = i % 5 === 0;
+      const [x1, y1] = pt(R * (major ? .7 : half ? .76 : .81), ang(v)), [x2, y2] = pt(R * .86, ang(v));
+      Kit.mk('line', {x1, y1, x2, y2, stroke: INK, 'stroke-width': major ? 2.2 : half ? 1.3 : .7, 'stroke-opacity': major || half ? 1 : .55, 'stroke-linecap': 'round', class: 'tick'}, ticks);
+    }
+    const lf = Math.max(12, Math.min(fs, R * .2));
+    const nr = Math.max(0, Math.min(R * .6, R * .7 - lf * .62));
+    let stepN = 1;
+    while (stepN < 4 && 2 * nr * Math.sin(rad(15 * stepN)) < lf * 1.35) stepN *= 2;
+    let vals = [];
+    for (let v = 0; v <= 9; v += stepN) vals.push(v);
+    if (2 * nr * Math.sin(rad(15 * stepN)) < lf * 1.35) vals = [4];
+    const LB = [];
+    vals.forEach(v => {
+      const [x, y] = pt(nr, ang(v));
+      const t = txt(ticks, x, y, v, {dy: '.36em', fill: INK, 'font-size': lf, 'font-weight': 700, style: 'font-family:var(--mono)', class: 'tick'});
+      LB.push({x, y, w: String(v).length * lf * .62, h: lf * 1.2});
+      if (v === 4) E.four = t;
+    });
+    const [fx, fy] = pt(nr, ang(4)), rr = fs * .92, ringLen = 2 * Math.PI * rr * 1.08;
+    E.ring4 = Kit.mk('circle', {cx: fx, cy: fy, r: rr, fill: 'none', stroke: RED, 'stroke-width': 2.4, transform: `rotate(-100 ${fx} ${fy})`, 'stroke-dasharray': `${ringLen} 999`, 'stroke-dashoffset': xDone ? 0 : ringLen, 'stroke-linecap': 'round'}, dial);
+
+    // the five answers as flags on the scale (the key's B in red)
+    const fw = Math.max(3.5, R * .045), fh = Math.max(7, R * .1), fr = R * .855;
+    E.marks = [];
+    OPTS.forEach(([v, l]) => {
+      const a = ang(v), u = [Math.sin(rad(a)), -Math.cos(rad(a))], p = [Math.cos(rad(a)), Math.sin(rad(a))];
+      const [tx, ty] = pt(fr, a), [bx, by] = pt(fr - fh, a), [mx, my] = pt(fr - fh * .5, a);
+      const tri = `M${tx},${ty} L${bx + p[0] * fw},${by + p[1] * fw} L${bx - p[0] * fw},${by - p[1] * fw}Z`;
+      const m = Kit.mk('path', {d: xDone ? xD(mx, my, fw * 1.15) : tri, fill: xDone ? RED : (l === 'B' ? RED : FLAG), stroke: xDone ? 'none' : '#f3e7c9', 'stroke-width': .8, 'stroke-linejoin': 'round'}, dial);
+      m.dataset.x = mx; m.dataset.y = my; m.dataset.q = fw * 1.15;
+      E.marks.push(m);
+    });
+
+    // readout window
+    const wh = fs * 1.45, ww = Math.max(R * .5, fs * 2.8), wy = cy + R * .82 - wh;
+    const zc = nr * Math.SQRT1_2;
+    const clear = !vals.includes(0) || (zc - lf * .4 > ww / 2 + 2) || (zc + lf * .45 < wy - cy - 1);
+    E.read = null;
+    if (wy - cy >= R * .28 && clear) {
+      Kit.mk('rect', {x: cx - ww / 2 - 2, y: wy - 2, width: ww + 4, height: wh + 4, rx: 4, fill: 'url(#brassRim)'}, dial);
+      Kit.mk('rect', {x: cx - ww / 2, y: wy, width: ww, height: wh, rx: 3, fill: '#120e09'}, dial);
+      E.read = txt(dial, cx, wy + wh / 2, '0.0', {dy: '.36em', fill: GOLD, 'font-size': Math.max(12, wh * .62), 'font-weight': 700, style: 'font-family:var(--mono)'});
+      Kit.mk('rect', {x: cx - ww / 2, y: wy, width: ww, height: wh * .45, rx: 3, fill: '#fff', opacity: .07}, dial);
+      if (R >= 80) {
+        const cw = 10 * (12 * .66 + .96) + 6, ch = 16;
+        const cands = [cy + R * .25, cy + R * .075 + ch / 2 + 3, wy - ch / 2 - 5, cy - R * .3];
+        const ok = ty => ty + ch / 2 + 2 <= wy && ty - ch / 2 >= cy - R * .8 &&
+          LB.every(b => Math.abs(b.x - cx) > (b.w + cw) / 2 + 2 || Math.abs(b.y - ty) > (b.h + ch) / 2 + 2);
+        const ty = cands.find(ok);
+        if (ty != null) txt(dial, cx, ty, 'TURNS OF A', {dy: '.36em', fill: '#6b5326', 'fill-opacity': .75, 'font-size': 12, 'font-weight': 700, 'letter-spacing': '.08em', style: 'font-family:var(--mono)'});
+      }
+    }
+
+    // needle
+    const ng = E.needle = Kit.mk('g', {}, dial), nl = R * .78, nw = R * .032;
+    Kit.mk('path', {d: `M${-nw},${R * .14} L${nw},${R * .14} L${nw * .35},${-nl} L${-nw * .35},${-nl}Z`, fill: STEEL, filter: 'url(#nshadow)'}, ng);
+    Kit.mk('path', {d: `M${-nw * .55},${-nl * .78} L${nw * .55},${-nl * .78} L${nw * .35},${-nl} L${-nw * .35},${-nl}Z`, fill: RED}, ng);
+    Kit.mk('circle', {r: R * .075, fill: 'url(#brass)', stroke: '#4a3210', 'stroke-width': 1}, ng);
+    Kit.mk('circle', {r: R * .025, fill: STEEL}, ng);
+    Kit.mk('circle', {cx, cy, r: R * .9, fill: 'url(#glass)', 'pointer-events': 'none'}, dial);
+
+    // ---------- coin A ----------
+    E.coinWrap = Kit.mk('g', {}, world);
+    E.coin = Kit.mk('g', {}, E.coinWrap);
+    Kit.mk('circle', {r, fill: 'url(#silver)', filter: 'url(#shadow)'}, E.coin);
+    E.spin = Kit.mk('g', {}, E.coin);
+    for (let i = 0; i < 60; i++) {
+      const a = rad(i * 6);
+      Kit.mk('line', {x1: Math.sin(a) * r * .9, y1: -Math.cos(a) * r * .9, x2: Math.sin(a) * r * .99, y2: -Math.cos(a) * r * .99, stroke: '#3c4248', 'stroke-opacity': .45, 'stroke-width': .8}, E.spin);
+    }
+    Kit.mk('circle', {r: r * .86, fill: 'none', stroke: '#3c4248', 'stroke-opacity': .5, 'stroke-width': 1}, E.spin);
+    Kit.mk('path', {d: arrowD(r), fill: RED}, E.spin);
+    txt(E.spin, 0, r >= 22 ? r * .45 : r * .22, 'A', {dy: '.36em', fill: '#2a2f36', 'font-size': Math.max(12, r * .42), 'font-weight': 800, style: 'font-family:var(--mono)'});
+
+    // ---------- the answer sheet ----------
+    E.bubG = Kit.mk('g', {}, svg);
+    E.bx = []; E.bubs = [];
+    const brx = fs * .82, bry = fs * .66;
+    const bubble = (bx, by, l, val, isKey, vx, anchor) => {
+      const g = Kit.mk('g', {}, E.bubG);
+      Kit.mk('ellipse', {cx: bx, cy: by, rx: brx, ry: bry, fill: isKey ? CREAM : 'none', stroke: CREAM, 'stroke-opacity': isKey ? 1 : .65, 'stroke-width': 1.3}, g);
+      txt(g, bx, by, l, {dy: '.36em', fill: isKey ? INK : CREAM, 'font-size': 12, 'font-weight': 800, style: 'font-family:var(--mono)'});
+      txt(g, vx, by, val, {dy: '.36em', 'text-anchor': anchor, fill: CREAM, 'fill-opacity': .85, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--mono)'});
+      if (isKey && mode === 'stack') {
+        E.key = Kit.mk('ellipse', {cx: bx, cy: by, rx: brx + 4, ry: bry + 4, fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-dasharray': `${(brx + bry + 8) * 2.6} 99`, transform: `rotate(-20 ${bx} ${by})`, 'stroke-linecap': 'round'}, g);
+      }
+      const pair = [[-1, -1, 1, 1], [1, -1, -1, 1]].map(([a, b, c, d]) => {
+        const x1 = bx + a * brx * .95, y1 = by + b * bry * 1.2, x2 = bx + c * brx * .95, y2 = by + d * bry * 1.2, len = Math.hypot(x2 - x1, y2 - y1);
+        return Kit.mk('line', {x1, y1, x2, y2, stroke: RED, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-dasharray': `${len} ${len + 4}`, 'stroke-dashoffset': xDone ? 0 : len}, g);
+      });
+      E.bx.push(pair); E.bubs.push(g);
+      return g;
+    };
+    if (mode === 'stack') {
+      const rowY = cy + 5 * R / 3 + fs * .6 + rowH / 2;
+      const iw = Math.min((W - 8) / 5, fs * 4.6), x0 = cx - 2.5 * iw;
+      OPTS.forEach(([, l, val], i) => {
+        const vw = val.length * fs * .62, pw = 2 * brx + fs * .4 + vw, ic = x0 + (i + .5) * iw;
+        const bx = ic - pw / 2 + brx;
+        bubble(bx, rowY, l, val, l === 'B', bx + brx + fs * .4, 'start');
+      });
+      E.cap = txt(svg, cx, rowY + rowH / 2 + fs * 1.15, '', {'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body)'});
+    } else {
+      const rs = Math.min(fs * 1.9, (H - fs * 2.2) / 5), blockH = fs * 1.8 + 5 * rs, y0 = cy - blockH / 2;
+      E.cap = txt(svg, px0, y0 + fs * .8, '', {dy: '.36em', 'text-anchor': 'start', 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body)'});
+      OPTS.forEach(([, l, val], i) => {
+        const by = y0 + fs * 1.8 + rs * (i + .5), bx = px0 + brx + 1;
+        bubble(bx, by, l, val, l === 'B', bx + brx + fs * .45, 'start');
+        if (l === 'B') E.keyTag = txt(E.bubG, bx + brx + fs * .45 + fs * 2.4, by, 'key', {dy: '.36em', 'text-anchor': 'start', fill: PINK, 'font-size': 12, 'font-weight': 800, style: 'font-family:var(--body)'});
+      });
+    }
+    setCap(xDone);
+
+    built = true;
+    render(true);
+    if (!sayLocked && say.offsetHeight) { say.style.minHeight = say.offsetHeight + 'px'; sayLocked = true; }
+  }
+
+  function render(quiet) {
+    if (!built) return;
+    const th = st.theta, x = cx + (R + r) * Math.sin(th), y = cy - (R + r) * Math.cos(th);
+    E.coin.setAttribute('transform', `translate(${x},${y})`);
+    E.spin.setAttribute('transform', `rotate(${4 * th * 180 / Math.PI})`);
+    E.trail.setAttribute('stroke-dasharray', `${E.L * th / (2 * Math.PI)} ${E.L}`);
+    E.needle.setAttribute('transform', `translate(${cx},${cy}) rotate(${ang(st.needle)})`);
+    if (E.read) E.read.textContent = (th / (Math.PI / 2)).toFixed(1);
+    const q = Math.min(4, Math.floor(th / (Math.PI / 2) + 1e-4));
+    while (E.stamped < q) addStamp(++E.stamped, quiet !== true);
+  }
+
+  const LINES = [
+    '',
+    'A quarter of the way round, and A’s arrow points up again: <b>one</b> full turn. <b>Tap again.</b>',
+    'Halfway round: <b>two</b> turns. <b>Tap again.</b>',
+    '<b>Three</b> turns, the key’s answer B… but A isn’t back at the start yet. <b>One more.</b>'
+  ];
+
+  function step() {
+    if (n >= 4) return;
+    n++; Kit.haptic('light');
+    const me = n;
+    if (n < 4) say.innerHTML = LINES[n];
+    if (Kit.calm) { st.theta = n * Math.PI / 2; st.needle = n; render(); if (me === 4) reveal(); return; }
+    gsap.fromTo(E.coin, {scale: .93}, {scale: 1, duration: .5, ease: 'back.out(3)', transformOrigin: '50% 50%'});
+    gsap.to(st, {theta: n * Math.PI / 2, duration: 1.2, ease: 'power2.out', onUpdate: render, overwrite: 'auto', onComplete: () => { if (me === 4) reveal(); }});
+    gsap.to(st, {needle: n, duration: 2, delay: .25, ease: 'elastic.out(1,.3)', onUpdate: render, overwrite: 'auto'});
+  }
+
+  function runX() {
+    if (xDone || !built) return;
+    xDone = true;
+    const calm = Kit.calm || !window.gsap;
+    const morph = !!window.MorphSVGPlugin && !calm;
+    E.marks.forEach((p, i) => {
+      const d = xD(+p.dataset.x, +p.dataset.y, +p.dataset.q);
+      if (!morph) { p.setAttribute('d', d); p.setAttribute('fill', RED); p.setAttribute('stroke', 'none'); return; }
+      gsap.to(p, {morphSVG: d, fill: RED, stroke: 'rgba(0,0,0,0)', duration: .6, delay: .2 + i * .12, ease: 'back.out(2.2)'});
+    });
+    E.bx.forEach((pair, i) => pair.forEach((l, j) => {
+      if (calm) l.setAttribute('stroke-dashoffset', 0);
+      else gsap.to(l, {attr: {'stroke-dashoffset': 0}, duration: .2, delay: .35 + i * .15 + j * .1, ease: 'power2.in'});
+    }));
+    if (calm) { E.ring4.setAttribute('stroke-dashoffset', 0); setCap(true); st.needle = 4; render(); return; }
+    gsap.to(E.bubs, {opacity: .78, duration: .4, delay: 1.2});
+    gsap.to(E.ring4, {attr: {'stroke-dashoffset': 0}, duration: .8, delay: 1.25, ease: 'power3.inOut'});
+    if (E.four) gsap.fromTo(E.four, {scale: 1}, {scale: 1.35, duration: .35, delay: 1.35, yoyo: true, repeat: 1, ease: 'power2.out', transformOrigin: '50% 50%'});
+    gsap.to(E.cap, {opacity: 0, duration: .2, delay: .9, onComplete: () => { setCap(true); gsap.fromTo(E.cap, {opacity: 0, y: 5}, {opacity: 1, y: 0, duration: .5, ease: 'power3.out'}); }});
+  }
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true; Kit.haptic('success');
+    card.classList.add('answered');
+    Kit.hide('say'); Kit.hide('roll'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.fromTo(['#why > *', '#keep'], {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, stagger: .12, delay: .15, ease: 'power3.out'});
+    requestAnimationFrame(() => requestAnimationFrame(() => { layout(); runX(); }));
+  }
+
+  svg.addEventListener('click', step);
+  roll.addEventListener('click', step);
+  Kit.onShow.card = layout;
+
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !built || n) return;
+    const tl = gsap.timeline();
+    tl.from(E.dial, {scale: .86, opacity: 0, duration: .8, ease: 'expo.out', svgOrigin: `${cx} ${cy}`})
+      .from(E.ticks.querySelectorAll('.tick'), {opacity: 0, duration: .25, stagger: .004}, '-=.5')
+      .from(E.marks, {opacity: 0, scale: 0, transformOrigin: '50% 100%', duration: .4, stagger: .06, ease: 'back.out(2.5)'}, '-=.3')
+      .from(E.bubs, {opacity: 0, y: 6, duration: .4, stagger: .06, ease: 'power3.out'}, '-=.35')
+      .from(E.coinWrap, {y: -R * .6, opacity: 0, duration: .8, ease: 'bounce.out'}, '-=.8')
+      .to(st, {needle: 9, duration: .7, ease: 'power2.inOut', onUpdate: render}, '-=.5')
+      .to(st, {needle: 0, duration: 1.6, ease: 'elastic.out(1,.35)', onUpdate: render});
+  };
+
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(res => setTimeout(res, ms));
+    for (let i = 0; i < 4; i++) { roll.click(); await wait(Kit.calm ? 60 : 450); }
+    await wait(Kit.calm ? 100 : 2600);
+    if (!revealed) { gsap.killTweensOf(st); st.theta = 2 * Math.PI; st.needle = 4; render(); reveal(); await wait(Kit.calm ? 60 : 2200); }
+  };
+})();
+Kit.single();
+</script>
+</html>

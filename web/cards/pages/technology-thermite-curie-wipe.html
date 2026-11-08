@@ -1,297 +1,223 @@
-<!doctype html>
-<!-- slug: technology-thermite-curie-wipe -->
-<!-- Look: a hard-drive platter drawn flat, like a figure in a printed science book. Its stored bits are small arrow-shaped magnets on three tracks: ink arrows point one way (1), light brown arrows point the other way (0). A red read-head trail reads the word stored on track 2.
-     Interaction: press and hold to light the thermite tile at the centre. Flat orange heat zones spread across the platter, the arrows wobble and turn in random directions, and the read head's bits turn to "?". Let go below the Curie mark and the arrows spring back into line on elastic easing.
-     Wow: hold past the Curie temperature and a white flash runs across the platter. The platter shakes, a scorch mark and ash are left behind, the arrows stay scattered, and the trail redraws itself over the scrambled magnets and reads nothing. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Thermite and the Curie temperature</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-thermite-data-wipe -->
+<!-- Thought to carry: data on a magnetic drive lasts only as long as its magnetism. Thermite's heat can take that away.
+     Front: a flat side view of a hard drive with a thermite tile on its lid. A magnifier on the platter drops to one
+       enlarged band of the disk, where the stored data shows as marks. Three answers of equal length and register,
+       each one physical outcome. The right one sits in the middle.
+     Back: the tile burns, heat runs through the lid onto the platter, the magnified band warms and its marks fade away.
+       The only claim made is the video's: past the Curie temperature, magnets lose their magnetism, and the data
+       becomes unrecoverable. A one-line verdict under the headline repeats what the reader picked and how sure they were. -->
+<title>Thermite and the hard drive</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
-<script src="kit/vendor/d3.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0;background:none!important;border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;padding:0!important}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none;overflow:visible}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{font:800 max(2.4cqh,15px)/1.2 var(--display);overflow-wrap:anywhere}
-#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
-.say{overflow-wrap:anywhere}
-.answered .q{font-size:max(2.5cqh,15px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s .37s}
+.turn>.front{visibility:visible;transition:visibility 0s .37s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face{gap:1.2cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+.opt{font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 45%,transparent);border-radius:1.6cqh;padding:1.1cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.front .sure{margin-right:100px}
+.front .say{margin:0 100px 0 0}
+.back .big{font-size:max(2.6cqh,16px);line-height:1.15;margin:0}
+.back .verdict{font:500 max(1.75cqh,13px)/1.3 var(--body);color:var(--k);margin:0}
+.back .verdict b{font-weight:700}
+.back .body{font-size:max(1.85cqh,13px);line-height:1.3;margin:0}
+.back .foot{padding-right:96px}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Hold to heat · Curie temperature" style="--c:#efe6d0;--k:#2a1f14;--edge:#cdbd98">
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO HEAT</span></div>
-    <h2 class="q">How can thermite be used to destroy data?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A hard drive platter whose stored bits are drawn as small arrow-shaped magnets on three tracks, a thermite tile at its centre, a read head trail on the middle track and a heat gauge with the Curie temperature marked."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How does thermite's heat make a hard drive's data unrecoverable?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A hard drive seen from the side, a thermite tile on its lid. A magnifier on the platter shows an enlarged band of the disk, with the stored data drawn as dark marks."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">It burns a hole through the disk</button>
+          <button class="opt" data-i="1">The magnets lose their magnetism</button>
+          <button class="opt" data-i="2">It fuses the arm to the disk</button>
+        </div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Pick one. Then say how sure you are.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Past the Curie temperature, the magnetism goes.</p>
+        <p class="verdict" id="verdict" aria-live="polite"></p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The tile burns and heat runs through the lid onto the platter. In the enlarged band of the disk, the marks that held the data fade away."></svg></div>
+        <p class="body">Past a certain temperature, the Curie temperature, magnets lose their magnetism. So information stored on a magnetic hard drive heated that far becomes unrecoverable.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Data on a magnetic drive lasts only as long as its magnetism.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)</span></div>
+      </section>
     </div>
-    <p class="say" id="say">This drive stores data as a map of tiny magnets. <b>Press and hold to light the thermite.</b> Let go to let it cool.</p>
-    <div id="why" class="gone"><p class="big">Past the Curie temperature, magnets lose their magnetism.</p><p class="body">The data was only a pattern of magnets. Once the heat erases it, cooling does not bring it back, so the data is unrecoverable. That is why thermite's heat is used to destroy information.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Heat a magnet past its Curie temperature and the data it held is gone for good.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-(() => {
-  gsap.registerPlugin(Physics2DPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#2a1f14', MUTE = '#7a6a52', PAPER = '#efe6d0', TRAIL = '#c2361f';
-  const HEAT = '#e0761c', FLAME = '#f2b13a', SCORCH = '#4a2c14';
-  // Tints of the ink on the card colour (same as color-mix(in srgb, var(--k) n%, var(--c))).
-  const tint = n => { const h = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)), a = h(INK), b = h(PAPER), f = n / 100; return 'rgb(' + a.map((v, i) => Math.round(v * f + b[i] * (1 - f))).join(',') + ')'; };
-  const WORD = 'KEY';
-  const BITS = [...WORD].map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join('').split('').map(Number);
-  const SG = .066;
-  const S = {T: 0, intro: 1, p: 1};
-  let destroyed = false, holding = false, released = 0, dirty = true;
-  let W = 0, H = 0, fs = 13, cx = 0, cy = 0, R = 50, ready = false, L = {}, tween = null;
-  let finishResolve; const finished = new Promise(r => finishResolve = r);
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 
-  // The platter's magnets: three tracks of bits, the middle one spells the word.
-  const sites = [], arrows = [];
-  (() => {
-    const rnd = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
-    [[.34, 14, null], [.58, 24, BITS], [.82, 32, null]].forEach(([r, n, b]) => {
-      const bits = []; for (let k = 0; k < n; k++) bits.push(b ? b[k] : (rnd() < .5 ? 1 : 0));
-      for (let k = 0; k < n; k++) {
-        const a = -Math.PI / 2 + (k + .5) / n * 2 * Math.PI, s = bits[k] ? 1 : -1;
-        arrows.push({i: sites.length, s, x: r * Math.cos(a), y: r * Math.sin(a), base: (a + s * Math.PI / 2) * 180 / Math.PI});
-        sites.push({x: r * Math.cos(a), y: r * Math.sin(a), s, a: 1});
-        if (bits[(k + 1) % n] === bits[k]) { const a2 = a + Math.PI / n; sites.push({x: r * Math.cos(a2), y: r * Math.sin(a2), s, a: .35}); }
-      }
-    });
-    // Each magnet's own direction once the order is lost, plus a hand-drawn wobble.
-    arrows.forEach(ar => { ar.rot = (rnd() - .5) * 360; ar.hand = (rnd() - .5) * 8; });
-  })();
-  const readPts = BITS.map((_, k) => { const a = -Math.PI / 2 + (k + .5) / 24 * 2 * Math.PI; return {x: .58 * Math.cos(a), y: .58 * Math.sin(a)}; });
-  const Mof = T => T < 0 ? Math.min(1.25, 1 - T * .8) : T >= 1 ? 0 : Math.pow(1 - T, .35);
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const HEAT = '#e4572e', WARM = '#f8d2c1', TILE = '#6f6a64';
+const PAT = [1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1];   // marks on the enlarged band: stored data
+const RIGHT = 1;
+const NAMES = ['it burns a hole through the disk', 'the magnets lose their magnetism', 'it fuses the arm to the disk'];
+const TAILS = ['The video points to the magnets instead.', 'That is what the video shows.', 'The video points to the magnets instead.'];
+let pick = -1, FR = null, turned = false;
 
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const text = (p, x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700, 'paint-order': 'stroke', stroke: PAPER, 'stroke-width': 3, 'stroke-linejoin': 'round'}, a), p); e.textContent = t; return e; };
-  const fit = e => { try { const b = e.getBBox(); const sh = Math.max(3 - b.x, Math.min(0, W - 3 - (b.x + b.width))); if (sh) e.setAttribute('x', +e.getAttribute('x') + sh); } catch (_) {} return e; };
+const cl = (v, a, b) => Math.max(a, Math.min(b, v));
+function cols() {
+  const s = getComputedStyle(Kit.$('card'));
+  return {k: s.getPropertyValue('--k').trim() || '#111', c: s.getPropertyValue('--c').trim() || '#fff'};
+}
+function txt(p, x, y, t, o) {
+  const e = Kit.mk('text', {x, y, 'text-anchor': o.anchor || 'start',
+    style: `font:${o.w || 700} ${o.fs}px ${o.font || 'var(--body)'};fill:${o.fill}`}, p);
+  e.textContent = t; return e;
+}
 
-  function gauge(x0, x1, gl, gy) {
-    const bh = fs * .45;
-    L.gx0 = x0; L.gx1 = x1;
-    mk('rect', {x: x0, y: gy - bh / 2, width: x1 - x0, height: bh, rx: bh / 2, fill: tint(16)}, svg);
-    L.gfill = mk('rect', {x: x0, y: gy - bh / 2, width: 0, height: bh, rx: bh / 2, fill: HEAT}, svg);
-    const mx = x0 + (x1 - x0) / 1.25;
-    L.mark = mk('line', {x1: mx, x2: mx, y1: gy - fs * .7, y2: gy + fs * .7, stroke: TRAIL, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, svg);
-    fit(text(svg, mx, gl, 'Curie temperature', {'text-anchor': 'middle', fill: TRAIL, 'font-weight': 800}));
-    text(svg, x0, gl, 'heat', {fill: MUTE, 'font-weight': 700});
-    L.knob = mk('circle', {cx: x0, cy: gy, r: fs * .5, fill: PAPER, stroke: INK, 'stroke-width': 1.8}, svg);
+// The drive from the side, a thermite tile on its lid, and one enlarged band of the platter.
+function scene(svg, back) {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg), {k} = cols();
+  const fs = Math.max(12, Math.min(14, W / 26)), R = {};
+
+  const x0 = W * .05, x1 = W * .95;
+  const cx0 = x0, cx1 = W * .8, cw = cx1 - cx0;
+
+  // vertical plan, scaled to the room the stage gets
+  const tileH = cl(H * .05, 8, 14);
+  const bandH = cl(H * .13, 16, 34);
+  const gap = cl(H * .09, 14, 34);
+  const lblH = fs * 1.5;
+  const rest = tileH + 2 + gap + bandH + lblH;
+  const caseH = cl(H - rest - 6, 50, 150);
+  const y0 = Math.max(2, (H - rest - caseH) / 2);
+  const top = y0 + tileH + 2, bot = top + caseH;
+  const bTop = bot + gap, bBot = bTop + bandH;
+
+  // the case: outline only, nothing behind it
+  Kit.mk('rect', {x: cx0, y: top, width: cw, height: caseH, rx: Math.min(10, caseH * .08), fill: 'none', stroke: k, 'stroke-width': 2.4}, svg);
+
+  const ph = cl(caseH * .05, 4, 7), py = top + caseH * .42;
+  const px0 = cx0 + cw * .05, px1 = cx0 + cw * .72, pcx = cx0 + cw * .32;
+  const mx = cx0 + cw * .15, mr = Math.max(10, ph * 2.4), my = py + ph / 2;
+  const tileW = cw * .24, tileX = mx - tileW / 2;
+
+  // heat running from the tile, through the lid, onto the platter (back only)
+  R.waves = [];
+  if (back) {
+    const ys = top - 1, ye = py - 2;
+    for (const off of [-.6, 0, .6]) {
+      const x = mx + off * mr; let d = `M${x},${ys}`, y = ys, s = 1;
+      while (y + 8 <= ye) { d += ` q${2.6 * s},4 0,8`; y += 8; s = -s; }
+      d += ` L${x},${ye}`;
+      R.waves.push(Kit.mk('path', {d, stroke: HEAT, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, svg));
+    }
   }
 
-  function layout() {
-    svg.innerHTML = ''; L = {};
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(15, W / 26));
-    const mfs = Math.max(12, fs * .92), bitsW = 26 * mfs * .62;
+  // platter on its spindle: the same unbroken line on both faces
+  Kit.mk('rect', {x: pcx - 6, y: py + ph, width: 12, height: bot - py - ph - 1.2, fill: k}, svg);
+  Kit.mk('rect', {x: px0, y: py, width: px1 - px0, height: ph, rx: ph / 2, fill: k}, svg);
+  // the read arm
+  const ax = cx1 - cw * .08, ay = top + caseH * .2, hx = cx0 + cw * .58;
+  Kit.mk('path', {d: `M${ax},${ay} L${hx},${py - ph * .9}`, stroke: k, 'stroke-width': 3.5, 'stroke-linecap': 'round', fill: 'none'}, svg);
+  Kit.mk('circle', {cx: ax, cy: ay, r: 5, fill: k}, svg);
+  Kit.mk('rect', {x: hx - 6, y: py - ph * .9 - 2, width: 12, height: 4, fill: k}, svg);
 
-    // Two compositions: stacked (readout above, gauge below) or side-by-side when the stage is short.
-    const vBitsY = mfs * 1.05, vWordY = vBitsY + fs * 2.35, vTop = vWordY + fs * .8, vBot = fs * 4.2;
-    const Rv = Math.min(W * .42, (H - vTop - vBot) / 2 - 4);
-    const Rh = Math.min(H / 2 - 5, (W - 8 - bitsW - fs * 1.3) / 2.08);
-    const vert = Rv >= 40 && Rv >= Rh * .95;
-    let hasGauge = true, gx0, gx1, gl, gy, bitsX, bitsY, wordX, wordY, anchor;
-    if (vert) {
-      R = Rv; cx = W / 2; cy = vTop + (H - vTop - vBot) / 2;
-      bitsX = wordX = cx; bitsY = vBitsY; wordY = vWordY; anchor = 'middle';
-      gx0 = W * .08; gx1 = W * .92; gl = cy + R * 1.04 + fs * 1.5; gy = gl + fs * 1.15;
-    } else {
-      R = Math.max(20, Rh); cx = R * 1.04 + 4; cy = H / 2;
-      const colX = cx + R * 1.04 + fs * 1.3, colW = W - colX - 6;
-      hasGauge = H >= fs * 6.6;
-      const blockH = fs * 1.3 + fs * 1.9 + (hasGauge ? fs * 3.3 : 0) + fs * .35;
-      wordX = bitsX = colX; anchor = 'start';
-      wordY = cy - blockH / 2 + fs * 1.2; bitsY = wordY + fs * 1.9;
-      gx0 = colX; gx1 = colX + colW; gl = bitsY + fs * 1.95; gy = gl + fs * 1.1;
-    }
+  // the thermite tile on the lid
+  R.tile = Kit.mk('rect', {x: tileX, y: top - tileH - 1, width: tileW, height: tileH, rx: 2, fill: TILE}, svg);
+  txt(svg, tileX + tileW + fs * .6, top - tileH / 2 - 1 + fs * .35, back ? 'thermite, burning' : 'thermite tile', {fs, fill: k});
 
-    const defs = mk('defs', {}, svg);
-    const clip = mk('clipPath', {id: 'tClip'}, defs); mk('circle', {cx, cy, r: R}, clip);
+  // platter label, right of the spindle, under the platter
+  txt(svg, pcx + 14, py + ph + fs * 1.15, 'platter', {fs, fill: k});
 
-    L.map = mk('g', {}, svg);
-    // The platter: a flat disc with a firm outline.
-    mk('circle', {cx, cy, r: R, fill: tint(8)}, L.map);
-    const inner = mk('g', {'clip-path': 'url(#tClip)'}, L.map);
-    // Heat drawn as two flat zones spreading from the tile.
-    L.heat = mk('circle', {cx, cy, r: R, fill: HEAT, opacity: 0}, inner);
-    L.glow = mk('circle', {cx, cy, r: R * .2, fill: FLAME, opacity: 0}, inner);
-    // Scorch mark and ash left on the bare platter.
-    let qa = 11; const ra = () => (qa = (qa * 9301 + 49297) % 233280) / 233280;
-    let bd = '';
-    for (let k = 0; k < 28; k++) { const a = k / 28 * 2 * Math.PI, rr = R * .6 * (1 + .1 * Math.sin(k * 2.3) + (ra() - .5) * .16); bd += (k ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ',' + (cy + rr * Math.sin(a)).toFixed(1); }
-    L.burn = mk('path', {d: bd + 'Z', fill: SCORCH, 'stroke-linejoin': 'round', opacity: destroyed ? .5 : 0}, inner);
-    L.ash = mk('g', {opacity: destroyed ? .6 : 0}, inner);
-    for (let i = 0; i < 50; i++) { const rr = Math.sqrt(ra()) * R * .92, a = ra() * 6.283; mk('circle', {cx: cx + rr * Math.cos(a), cy: cy + rr * Math.sin(a), r: (.5 + ra() * 1.4) * Math.max(1, R / 90), fill: ra() < .6 ? INK : tint(55)}, L.ash); }
-    // The three tracks.
-    [.34, .58, .82].forEach(r => mk('circle', {cx, cy, r: r * R, fill: 'none', stroke: tint(28), 'stroke-width': 1}, inner));
-    // The magnets: little arrows along each track. Ink points one way (1), brown the other (0).
-    const al = R * .12, sw = R * .014, hw = R * .036, hx = al * .08;
-    const ad = `M${-al / 2},${-sw} H${hx} V${-hw} L${al / 2},0 L${hx},${hw} V${sw} H${-al / 2} Z`;
-    L.arr = arrows.map(ar => ({ar, x: cx + ar.x * R, y: cy + ar.y * R, el: mk('path', {d: ad, fill: ar.s > 0 ? INK : tint(45), 'stroke-linejoin': 'round'}, inner)}));
-    L.flash = mk('circle', {cx, cy, r: R, fill: '#fffbea', opacity: 0}, inner);
-    L.routeU = mk('path', {fill: 'none', stroke: PAPER, 'stroke-width': 5, 'stroke-linecap': 'round', opacity: .85}, inner);
-    L.route = mk('path', {fill: 'none', stroke: TRAIL, 'stroke-width': 2.3, 'stroke-dasharray': '6 4', 'stroke-linecap': 'round'}, inner);
-    L.head = mk('circle', {r: Math.max(4, R * .035), fill: TRAIL, stroke: PAPER, 'stroke-width': 2}, inner);
-    mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-width': 1.8}, L.map);
-    // The spindle hub.
-    mk('circle', {cx, cy, r: R * .2, fill: tint(16), stroke: INK, 'stroke-width': 1.2}, L.map);
+  // magnifier on the platter, and its line down to the band
+  Kit.mk('circle', {cx: mx, cy: my, r: mr, fill: 'none', stroke: k, 'stroke-width': 1.6, 'stroke-dasharray': '3 3'}, svg);
+  Kit.mk('line', {x1: mx, x2: mx, y1: my + mr, y2: bTop, stroke: k, 'stroke-width': 1.4, 'stroke-dasharray': '3 3'}, svg);
 
-    // The thermite tile at the hub: a block of grey aluminium and rust-red iron oxide.
-    const s = R * .26;
-    const tg = mk('g', {transform: `translate(${cx},${cy}) rotate(8)`}, L.map);
-    L.tile = mk('g', {}, tg);
-    mk('rect', {x: -s / 2, y: -s / 2, width: s, height: s, rx: s * .14, fill: '#433c37', stroke: INK, 'stroke-width': 1.4}, L.tile);
-    let q = 3; const r2 = () => (q = (q * 9301 + 49297) % 233280) / 233280;
-    for (let i = 0; i < 22; i++) mk('circle', {cx: (r2() - .5) * s * .8, cy: (r2() - .5) * s * .8, r: .6 + r2() * 1.4, fill: r2() < .5 ? '#9a8f84' : '#8a3a1f'}, L.tile);
-    L.hot = mk('rect', {x: -s / 2, y: -s / 2, width: s, height: s, rx: s * .14, fill: FLAME, stroke: INK, 'stroke-width': 1.4, opacity: 0}, L.tile);
-    L.ring = mk('circle', {cx, cy, r: 0, fill: 'none', stroke: HEAT, opacity: 0}, L.map);
-    L.sparks = mk('g', {}, svg);
-
-    // What the read head reads off track 2.
-    L.bits = text(svg, bitsX, bitsY, '', {'text-anchor': anchor, 'font-family': 'var(--mono)', 'font-size': mfs, 'font-weight': 600, fill: MUTE});
-    L.word = text(svg, wordX, wordY, '', {'text-anchor': anchor, 'font-family': 'var(--display)', 'font-size': fs * (vert ? 1.35 : 1.25), 'font-weight': 800});
-
-    if (vert) {
-      // The tile callout, always below the readout.
-      const lx = cx + R * .5, ly = Math.max(cy - R * .97, vWordY + fs * 2.1);
-      mk('path', {d: `M${cx + s * .45},${cy - s * .45} L${lx},${ly + fs * .35}`, stroke: INK, 'stroke-width': 1.2, fill: 'none', 'stroke-linecap': 'round'}, svg);
-      mk('circle', {cx: cx + s * .45, cy: cy - s * .45, r: 2.2, fill: INK}, svg);
-      fit(text(svg, lx + 4, ly, 'thermite tile', {'font-weight': 600}));
-    }
-
-    if (hasGauge) gauge(gx0, gx1, gl, gy);
-    else { L.gx0 = L.gx1 = 0; L.gfill = mk('rect', {opacity: 0}, svg); L.mark = mk('line', {opacity: 0}, svg); L.knob = mk('circle', {opacity: 0}, svg); }
-
-    ready = true;
-    dirty = true; render(gsap.ticker.time);
-  }
-
-  function render(t) {
-    if (!ready) return;
-    const T = S.T, amp = destroyed ? 0 : S.intro * Mof(T), jit = clamp(T, 0, 1) * .4;
-    const am = sites.map((_, i) => amp * (1 + jit * Math.sin(t * 9 + i * 1.7)));
-
-    // The magnets: in line when cold, turning every which way as the order melts.
-    const o = clamp(amp, 0, 1), sc = .75 + .25 * Math.min(amp, 1.2), op = (.45 + .55 * o).toFixed(3);
-    for (const a of L.arr) {
-      const ar = a.ar, ang = ar.base + ar.hand + (1 - o) * ar.rot + jit * 40 * Math.sin(t * 9 + ar.i * 1.7);
-      a.el.setAttribute('transform', `translate(${a.x.toFixed(1)},${a.y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(${sc.toFixed(3)})`);
-      a.el.setAttribute('opacity', op);
-    }
-
-    // The read head's trail and what it finds.
-    const p = clamp(S.p, 0, 1), steps = Math.max(2, Math.round(p * 120)), rr = .58 * R;
-    let d = '', hx = cx, hy = cy - rr;
-    for (let k = 0; k <= steps; k++) { const a = -Math.PI / 2 + (k / steps) * p * 2 * Math.PI; hx = cx + rr * Math.cos(a); hy = cy + rr * Math.sin(a); d += (k ? 'L' : 'M') + hx.toFixed(1) + ',' + hy.toFixed(1); }
-    L.route.setAttribute('d', d); L.routeU.setAttribute('d', d);
-    L.head.setAttribute('cx', hx); L.head.setAttribute('cy', hy);
-    const shown = Math.floor(p * 24 + 1e-6);
-    const bits = readPts.map((pt, k) => {
-      if (k >= shown) return '·';
-      let v = 0; sites.forEach((s, i) => { const dx = pt.x - s.x, dy = pt.y - s.y, d2 = dx * dx + dy * dy; if (d2 < .05) v += Math.exp(-d2 / (2 * SG * SG)) * s.a * s.s * am[i]; });
-      return v > .3 ? '1' : v < -.3 ? '0' : '?';
-    });
-    let word = '', lost = false;
-    for (let c = 0; c < 3; c++) {
-      const g = bits.slice(c * 8, c * 8 + 8);
-      if (g.includes('?')) { word += '?'; lost = true; } else if (g.includes('·')) word += '·';
-      else word += String.fromCharCode(parseInt(g.join(''), 2));
-    }
-    L.bits.textContent = [0, 8, 16].map(i => bits.slice(i, i + 8).join('')).join(' ');
-    L.word.textContent = `read head: “${word}”`;
-    L.word.setAttribute('fill', lost ? TRAIL : INK);
-
-    // Heat on the platter and the tile.
-    const h = clamp(T, 0, 1.2), fl = 1 + .1 * Math.sin(t * 23) * (h > 0 ? 1 : 0);
-    L.heat.setAttribute('opacity', (h * .38 * fl).toFixed(3));
-    L.glow.setAttribute('r', R * (.2 + h * .45)); L.glow.setAttribute('opacity', clamp(h * .9 * fl, 0, .85).toFixed(3));
-    L.hot.setAttribute('opacity', clamp(h * 1.4, 0, 1).toFixed(3));
-    if (L.gx1 > L.gx0) {
-      const fx = L.gx0 + (L.gx1 - L.gx0) * h / 1.25;
-      L.gfill.setAttribute('width', Math.max(0, fx - L.gx0)); L.knob.setAttribute('cx', fx);
-    }
-    dirty = false;
-  }
-
-  function spark() {
-    const c = mk('circle', {cx, cy, r: .8 + Math.random() * 2, fill: Math.random() < .5 ? FLAME : HEAT}, L.sparks);
-    gsap.to(c, {physics2D: {velocity: R * (.6 + Math.random() * 1.4) * (.5 + clamp(S.T, 0, 1.2)), angle: -90 + (Math.random() - .5) * 170, gravity: R * 3}, opacity: 0, duration: .6 + Math.random() * .5, ease: 'power1.in', onComplete: () => c.remove()});
-  }
-
-  let last = 0;
-  gsap.ticker.add(time => {
-    const dt = Math.min(.05, time - last); last = time;
-    if (holding && !destroyed) { S.T += dt * .33; if (S.T >= 1) { S.T = 1; destroy(); } }
-    if (L.sparks && !Kit.calm && (holding || (destroyed && S.T > .5)) && Math.random() < .25 + S.T * .5) spark();
-    if (dirty || holding || gsap.isTweening(S) || Math.abs(S.T) > .002) render(time);
+  // the enlarged band of the disk, the focal point: marks are the stored data
+  R.band = Kit.mk('rect', {x: x0, y: bTop, width: x1 - x0, height: bandH, rx: bandH * .2, fill: WARM, 'fill-opacity': 0, stroke: k, 'stroke-width': 2}, svg);
+  const cw2 = (x1 - x0) / PAT.length, mh = bandH * .5;
+  R.marks = [];
+  PAT.forEach((b, i) => {
+    if (!b) return;
+    R.marks.push(Kit.mk('rect', {x: x0 + cw2 * i + cw2 * .2, y: bTop + (bandH - mh) / 2, width: cw2 * .6, height: mh, rx: Math.min(3, cw2 * .15), fill: k}, svg));
   });
+  const ly = bBot + fs * 1.25;
+  if (back) R.lost = txt(svg, x0, ly, 'magnetism lost, data gone', {fs, fill: k});
+  else txt(svg, x0, ly, 'data, stored magnetically', {fs, fill: k});
+  if (back) R.lost.setAttribute('opacity', 0);
+  return R;
+}
 
-  function destroy() {
-    destroyed = true; holding = false; Kit.haptic('success');
-    if (tween) tween.kill();
-    if (Kit.calm) { S.T = 0; S.p = 1; L.burn.setAttribute('opacity', .5); L.ash.setAttribute('opacity', .6); dirty = true; finish(); return; }
-    gsap.to(L.tile, {scale: 1, duration: .8, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%'});
-    gsap.timeline({onComplete: finish})
-      .to(S, {T: 1.2, duration: .5, ease: 'power2.out'})
-      .fromTo(L.ring, {attr: {r: R * .15, 'stroke-width': fs * .9}, opacity: 1}, {attr: {r: R * 1.6, 'stroke-width': 1}, opacity: 0, duration: 1.2, ease: 'expo.out'}, 0)
-      .fromTo(L.flash, {opacity: .9}, {opacity: 0, duration: 1, ease: 'power2.out'}, .05)
-      .fromTo(L.map, {x: -R * .06}, {x: 0, duration: 1.2, ease: 'elastic.out(1.3,.18)'}, .05)
-      .fromTo(L.mark, {attr: {'stroke-width': 6}}, {attr: {'stroke-width': 2.4}, duration: .9, ease: 'back.out(3)'}, 0)
-      .to(L.burn, {opacity: .5, duration: 1.4, ease: 'power2.out'}, .2)
-      .to(L.ash, {opacity: .6, duration: 1.6, ease: 'power2.out'}, .4)
-      .set(S, {p: 0}, .7)
-      .to(S, {p: 1, duration: 1.8, ease: 'power2.inOut'}, .75)
-      .to(S, {T: 0, duration: 2.2, ease: 'power3.inOut'}, .8);
-  }
-  function finish() {
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
-    dirty = true; finishResolve();
-  }
+function backFinal(R) {
+  gsap.set(R.tile, {attr: {fill: HEAT}});
+  gsap.set(R.waves, {opacity: 1});
+  gsap.set(R.band, {attr: {'fill-opacity': 1}});
+  gsap.set(R.marks, {opacity: 0});
+  gsap.set(R.lost, {opacity: 1});
+}
 
-  svg.addEventListener('pointerdown', e => {
-    if (destroyed) return;
-    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
-    holding = true; if (tween) tween.kill(); S.intro = Math.max(S.intro, .001);
-    Kit.haptic('light');
-    gsap.to(L.tile, {scale: .86, duration: .14, ease: 'power3.out', transformOrigin: '50% 50%'});
-    gsap.fromTo(L.knob, {attr: {r: fs * .5}}, {attr: {r: fs * .72}, duration: .35, ease: 'back.out(3)'});
-  });
-  const up = () => {
-    if (!holding || destroyed) return;
-    holding = false; released++;
-    gsap.to(L.tile, {scale: 1, duration: .9, ease: 'elastic.out(1.1,.35)', transformOrigin: '50% 50%'});
-    gsap.to(L.knob, {attr: {r: fs * .5}, duration: .6, ease: 'elastic.out(1,.4)'});
-    tween = gsap.to(S, {T: 0, duration: Kit.calm ? .01 : 1.8, ease: 'elastic.out(1,.32)'});
-    Kit.haptic('selection');
-    say.innerHTML = 'It sprang back. Below the Curie temperature the magnets keep their pattern, so the data survives. <b>Hold longer.</b>';
-  };
-  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+function playBack() {
+  const R = scene(Kit.$('pic2'), true);
+  if (Kit.calm) { backFinal(R); return; }
+  gsap.timeline({delay: .45})
+    // beat 1: the tile burns, heat runs down onto the platter
+    .to(R.tile, {attr: {fill: HEAT}, duration: .5, ease: 'power2.out'})
+    .to(R.waves, {opacity: 1, duration: .4, stagger: .12, ease: 'power2.out'}, '<.15')
+    // beat 2: the band of the disk warms
+    .to(R.band, {attr: {'fill-opacity': 1}, duration: .7, ease: 'power2.inOut'}, '+=.1')
+    // beat 3: the marks that held the data fade out
+    .to(R.marks, {opacity: 0, duration: .5, stagger: {each: .08, from: 'random'}, ease: 'power2.in'}, '-=.2')
+    // beat 4: say what happened
+    .to(R.lost, {opacity: 1, duration: .4}, '+=.1');
+}
 
-  new ResizeObserver(() => { if (ready) layout(); }).observe(Kit.$('stage'));
-  Kit.onShow.card = layout;
-  Kit.onEnter.card = () => {
-    if (Kit.calm) { S.intro = 1; S.p = 1; dirty = true; return; }
-    gsap.fromTo(S, {intro: 0}, {intro: 1, duration: 1.6, ease: 'elastic.out(1,.45)'});
-    gsap.fromTo(S, {p: 0}, {p: 1, duration: 1.8, delay: .6, ease: 'power2.inOut'});
-    if (L.map) gsap.from(L.map, {scale: .9, transformOrigin: '50% 50%', opacity: 0, duration: .9, ease: 'back.out(1.6)'});
-  };
-  Kit.play.card = async () => {
-    const wait = ms => new Promise(r => setTimeout(r, ms));
-    const b = svg.getBoundingClientRect();
-    svg.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1, clientX: b.left + b.width / 2, clientY: b.top + b.height / 2}));
-    S.T = .97;
-    await wait(Kit.calm ? 150 : 300);
-    if (!destroyed) { S.T = 1; destroy(); }
-    await finished;
-    await wait(300);
-  };
-})();
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: you said “${said}”`);
+  Kit.$('verdict').innerHTML = `<b>You said: ${NAMES[pick]}.</b> ${pct}% sure. ${TAILS[pick]}`;
+  setTimeout(() => Turn.over(), 700);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  Kit.$('say').textContent = 'Now: how sure are you?';
+});
+document.addEventListener('turned', () => { turned = true; playBack(); });
+
+Kit.onShow.card = () => {
+  FR = scene(Kit.$('pic'), false);
+  if (turned) backFinal(scene(Kit.$('pic2'), true));
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm || !FR) return;
+  gsap.from(FR.tile, {y: -14, opacity: 0, duration: .5, ease: 'power3.out'});
+  gsap.from(FR.marks, {opacity: 0, duration: .4, stagger: .05, delay: .3, ease: 'power2.out'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .2, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[0].click();
+  await wait(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(900);
+  Turn.over();
+  await wait(Kit.calm ? 200 : 3800);
+};
 Kit.single();
 </script>
 </html>

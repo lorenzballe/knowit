@@ -1,0 +1,37 @@
+{
+  "id": "technology-folding-the-steel",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Smiths fold the steel again and again. Which two things does that buy?",
+  "answer": "Smiths fold steel to spread impurities thinner and to give it a grain. Each fold spreads the flecks further apart, so no spot stays weak. The grain reinforces the blade in the direction it will be hit, rather than making it equally strong in every direction.",
+  "move": "Spread a flaw thin enough, everywhere, and it stops being a weak point.",
+  "keywords": [
+    "sword",
+    "steel",
+    "impurities",
+    "grain",
+    "japan"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice quiz asking which two reasons smiths fold steel again and again, from four options: gathers impurities in one spot, spreads impurities through the steel, gives the steel a grain, or makes it equally strong every way. The reader then rates how sure they are."
+  },
+  "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=909s",
+  "written": "2026-11-07"
+}

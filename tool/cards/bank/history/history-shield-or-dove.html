@@ -1,0 +1,319 @@
+<!doctype html>
+<!-- slug: history-shield-or-dove -->
+<!-- Look: two neon tube signs on a dark brick wall, a red Swiss shield and an ice-blue dove, with an amber "SWITZERLAND" plate whose arrow can point at either.
+     Interaction: the reader taps the sign that hangs over Switzerland. The plate's arrow swings to it, then the reader says how sure they are.
+     Wow: in "war elsewhere" both signs read STAY OUT. Then an invader strikes the shield, which flares and throws it back with sparks, while the dove sputters out. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Shield or dove</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#card{background-color:#1d0f0f}
+#stage{display:flex;flex:1;min-height:0;overflow:hidden}
+#neon{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;overflow:hidden}
+.hit{cursor:pointer}
+.q{text-shadow:0 0 2.4cqh rgba(255,70,95,.28)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why .r{color:#ff6b7e;font-weight:800}
+#why .i{color:#9fe9ff;font-weight:800}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap a sign · how sure" style="--c:#1d0f0f;--k:#f8ece6;--edge:#0b0505">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SHIELD OR DOVE</span></div>
+    <h2 class="q">Switzerland is neutral. Does that make it pacifist?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="neon" role="img" aria-label="Two neon signs on a brick wall: a red shield with a white cross labelled Neutrality, and a blue dove labelled Pacifism. An amber Switzerland sign points at one of them."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the neon sign that hangs over <b>Switzerland</b>: the shield or the dove.</p>
+    <div id="why" class="gone"><p class="body"><span class="r">Neutrality</span> is a political status: take no side in other countries' wars. <span class="i">Pacifism</span> is a moral stance against all violence, and Switzerland never adopted it. Invaded, it fights, and it is very hard to conquer.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Neutral means taking no side, not refusing to defend yourself.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(CustomEase, DrawSVGPlugin);
+  // A neon tube catching: stutters on, dips, holds.
+  const fp = [[0,0],[.05,.85],[.09,.05],[.16,.9],[.2,.15],[.28,1],[.44,.5],[.5,1],[1,1]];
+  let ed = 'M0,0'; for (let i = 1; i < fp.length; i++) ed += ` C${fp[i-1]} ${fp[i]} ${fp[i]}`;
+  CustomEase.create('flick', ed);
+
+  const card = Kit.$('card'), svg = Kit.$('neon'), say = Kit.$('say');
+
+  // ---------- the brick wall: the whole card's ground ----------
+  let b = `<svg xmlns='http://www.w3.org/2000/svg' width='96' height='48'><rect width='96' height='48' fill='#0c0606'/>`;
+  const shade = () => { const r = 46 + Math.floor(Kit.rnd() * 14), g = 22 + Math.floor(Kit.rnd() * 8); return `rgb(${r},${g},${g - 3})`; };
+  [[1,1],[49,1],[-23,25],[25,25],[73,25]].forEach(([x,y]) => {
+    b += `<rect x='${x}' y='${y}' width='46' height='22' rx='1.5' fill='${shade()}'/>`;
+    b += `<rect x='${x+1}' y='${y}' width='44' height='2' fill='rgba(255,200,180,.06)'/>`;
+    b += `<rect x='${x+1}' y='${y+19}' width='44' height='3' fill='rgba(0,0,0,.25)'/>`;
+    for (let k = 0; k < 5; k++) b += `<circle cx='${x + 4 + Kit.rnd()*38}' cy='${y + 3 + Kit.rnd()*16}' r='${.4 + Kit.rnd()*.8}' fill='rgba(0,0,0,.3)'/>`;
+  });
+  b += `</svg>`;
+  card.style.backgroundImage = [
+    'radial-gradient(ellipse 70% 45% at 50% 40%, rgba(255,60,90,.13), transparent 70%)',
+    'radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(0,0,0,.72) 100%)',
+    'linear-gradient(rgba(14,6,6,.42), rgba(14,6,6,.42))',
+    `url("data:image/svg+xml,${encodeURIComponent(b)}")`
+  ].join(',');
+  card.style.backgroundSize = 'auto, auto, auto, 96px 48px';
+
+  // ---------- the signs ----------
+  const C = {red: '#ff2e4d', white: '#fff3ee', ice: '#8fe6ff', amber: '#ffbf3c', violet: '#c77dff', glass: '#4d2d2a', cap: '#e2c2b8', unlit: '#7a4a44'};
+  const SHIELD = 'M50,6 C64,14 78,16 90,16 C90,52 78,78 50,94 C22,78 10,52 10,16 C22,16 36,14 50,6 Z';
+  const CROSS = 'M43,25 L57,25 L57,39 L71,39 L71,53 L57,53 L57,67 L43,67 L43,53 L29,53 L29,39 L43,39 Z';
+  const DOVE = [
+    'M14,42 C18,38 20,36 23,35 C26,30 34,29 38,35 C46,45 58,46 70,42 C78,40 86,35 95,30 C92,36 90,41 88,46 C80,48 76,52 70,56 C58,66 40,65 30,53 C26,48 21,45 14,42 Z',
+    'M40,40 C41,24 50,12 68,5 C65,16 67,27 75,37',
+    'M50,41 C52,30 57,22 66,16',
+    'M14,42 C10,48 8,54 7,60',
+    'M10,49 C6,46 2,47 1,50 C4,52 7,52 10,49 Z',
+    'M8,56 C12,54 15,55 16,58 C13,60 10,59 8,56 Z'
+  ];
+  const P = (d, ox, oy, k) => { let i = 0; return d.replace(/-?\d*\.?\d+/g, n => ((i++ % 2) ? oy + n * k : ox + n * k).toFixed(1)); };
+
+  let pick = -1, done = false, W = 0, H = 0, fs = 13, G = {}, el = {}, tlRev = null, wob = null, hum = null;
+  const ang = {v: 0};
+
+  const txt = (parent, x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle'}, a), parent); e.textContent = s; return e; };
+  const target = i => -Math.atan2(G.cx[i] - W / 2, G.ty - G.pivot) * 180 / Math.PI;
+  const setArrow = () => { if (el.arrow) el.arrow.setAttribute('transform', `translate(${W / 2},${G.pivot}) rotate(${ang.v})`); };
+  const tw = e => { try { return e.getComputedTextLength(); } catch (_) { return 0; } };
+
+  function build() {
+    if (tlRev) { tlRev.kill(); tlRev = null; }
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(16, H * .042, W * .042));
+
+    // tall layout: plate hangs above, scenario rows stacked under; compact: plate between the signs, rows on one line each
+    const needT = fs * 8.7;
+    let plateH = fs * 2, A = Math.max(fs * 1.6, Math.min(fs * 3, H * .07));
+    let y0 = fs * 1.1, pivot = y0 + plateH, top = pivot + A + fs;
+    let s = Math.min(W * .38, H - top - needT);
+    const tall = s >= Math.max(64, W * .2);
+    let cx, ty, labelY, row1, row2, cap1, cap2;
+    if (tall) {
+      const off = Math.max(0, (H - (top + s + needT)) / 2) * .7;
+      y0 += off; pivot += off; top += off;
+      labelY = top + s + fs * 1.6; cap1 = labelY + fs * 1.9; row1 = cap1 + fs * 1.4; cap2 = row1 + fs * 1.7; row2 = cap2 + fs * 1.4;
+      cx = [W * .26, W * .74]; ty = top + s * .08;
+    } else {
+      plateH = fs * 1.7; A = fs * 1.5; top = fs * .4;
+      s = Math.max(30, Math.min(W * .3, H - top - fs * 4.75));
+      top += Math.max(0, (H - (top + s + fs * 4.75)) / 2) * .8;
+      cx = [W * .21, W * .79];
+      y0 = top + s * .02; pivot = y0 + plateH; ty = top + s * .55;
+      labelY = top + s + fs * 1.25; row1 = labelY + fs * 1.6; row2 = row1 + fs * 1.45; cap1 = row1; cap2 = row2;
+    }
+    G = {cx, top, s, pivot, A, y0, ty, tall};
+    const k = s / 100, w = Math.max(2.2, s * .03);
+
+    // defs: a two-radius glow and a light spill per colour
+    const defs = Kit.mk('defs', {}, svg);
+    const fl = Kit.mk('filter', {id: 'glow', filterUnits: 'userSpaceOnUse', x: -W * .2, y: -H * .2, width: W * 1.4, height: H * 1.4}, defs);
+    Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: Math.max(1.5, fs * .22), result: 'a'}, fl);
+    Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: Math.max(4, fs * .75), result: 'b'}, fl);
+    const mg = Kit.mk('feMerge', {}, fl);
+    ['b', 'b', 'a', 'SourceGraphic'].forEach(n => Kit.mk('feMergeNode', {in: n}, mg));
+    [['sR', C.red], ['sI', C.ice], ['sA', C.amber]].forEach(([id, col]) => {
+      const g = Kit.mk('radialGradient', {id}, defs);
+      Kit.mk('stop', {offset: 0, 'stop-color': col, 'stop-opacity': .3}, g);
+      Kit.mk('stop', {offset: .55, 'stop-color': col, 'stop-opacity': .08}, g);
+      Kit.mk('stop', {offset: 1, 'stop-color': col, 'stop-opacity': 0}, g);
+    });
+
+    // the amber plate, hanging on two chains, and its arrow
+    const plate = Kit.mk('g', {}, svg);
+    const pt = txt(plate, W / 2, y0 + plateH * .67, 'SWITZERLAND', {fill: C.amber, filter: 'url(#glow)', style: `font:800 ${Math.max(12, fs * (tall ? 1.02 : .95))}px var(--display);letter-spacing:${tall ? .22 : .14}em`});
+    const pw = Math.min(W - 4, tw(pt) + fs * 1.6), pcy = y0 + plateH / 2;
+    Kit.mk('ellipse', {cx: W / 2, cy: pcy, rx: Math.min(pw * .75, W / 2 - 1), ry: Math.max(2, Math.min(plateH * 1.4, pcy - 1, H - pcy - 1)), fill: 'url(#sA)'}, plate);
+    plate.appendChild(pt);
+    [-1, 1].forEach(sg => Kit.mk('line', {x1: W / 2 + sg * pw * .38, x2: W / 2 + sg * pw * .42, y1: 0, y2: y0, stroke: '#6b4a44', 'stroke-width': 1.4, 'stroke-dasharray': '3 2'}, svg));
+    Kit.mk('rect', {x: W / 2 - pw / 2, y: y0, width: pw, height: plateH, rx: fs * .5, fill: 'none', stroke: C.amber, 'stroke-width': 1.6, filter: 'url(#glow)'}, plate);
+    // little screws on the plate
+    [-1, 1].forEach(sg => Kit.mk('circle', {cx: W / 2 + sg * (pw / 2 - fs * .45), cy: pcy, r: 1.4, fill: '#7a5a3a'}, plate));
+    el.plate = plate;
+    el.arrow = Kit.mk('g', {}, svg);
+    const ap = Kit.mk('g', {filter: 'url(#glow)'}, el.arrow);
+    Kit.mk('path', {d: `M0,${fs * .2} L0,${A} M${-fs * .5},${A - fs * .55} L0,${A} L${fs * .5},${A - fs * .55}`, fill: 'none', stroke: C.amber, 'stroke-width': w * .9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, ap);
+    Kit.mk('circle', {cx: 0, cy: 0, r: fs * .22, fill: C.amber}, el.arrow);
+
+    // one sign: glass tube (always there), lit tube on top
+    el.on = []; el.lit = []; el.tube = []; el.draw = []; el.ghost = []; el.spill = [];
+    const sign = (i, paths, col, spillId, extras, mounts, label) => {
+      const ghost = Kit.mk('g', {}, svg);
+      paths.forEach(([d]) => Kit.mk('path', {d, fill: 'none', stroke: C.glass, 'stroke-width': w * 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .75}, ghost));
+      mounts.forEach(([x, y]) => Kit.mk('circle', {cx: x, cy: y, r: Math.max(1.8, s * .02), fill: '#140909', stroke: '#7a554e', 'stroke-width': 1}, ghost));
+      const on = Kit.mk('g', {}, svg), lit = Kit.mk('g', {}, on);
+      const cy = top + s * .5, r = Math.max(4, Math.min(s * .95, cx[i] * .9, (W - cx[i]) * .9, cy * .95, (H - cy) * .95));
+      el.spill[i] = Kit.mk('circle', {cx: cx[i], cy, r, fill: `url(#${spillId})`, opacity: .8}, lit);
+      const tube = Kit.mk('g', {filter: 'url(#glow)'}, lit), draws = [];
+      paths.forEach(([d, c]) => draws.push(Kit.mk('path', {d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, tube)));
+      extras(tube);
+      paths.forEach(([d]) => draws.push(Kit.mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': w * .38, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .8}, tube)));
+      const lfs = fs * 1.2;
+      const lt = txt(on, cx[i], labelY, label, {fill: col, filter: 'url(#glow)', style: `font:800 ${lfs}px var(--display);letter-spacing:.1em`});
+      const room = 2 * Math.min(cx[i], W - cx[i]) - 6, L = tw(lt);
+      if (L > room) lt.setAttribute('style', `font:800 ${Math.max(12, lfs * room / L)}px var(--display);letter-spacing:.06em`);
+      el.on[i] = on; el.lit[i] = lit; el.tube[i] = tube; el.draw[i] = draws; el.ghost[i] = ghost;
+    };
+    const sx = cx[0] - 50 * k, sy = top;
+    sign(0, [[P(SHIELD, sx, sy, k), C.red], [P(CROSS, sx, sy, k), C.white]], C.red, 'sR', () => {},
+      [[50,6],[10,16],[90,16],[50,94]].map(([x, y]) => [sx + x * k, sy + y * k]), 'NEUTRALITY');
+    const dx = cx[1] - 48 * k, dy = top + s * .17;
+    sign(1, DOVE.map(d => [P(d, dx, dy, k), C.ice]), C.ice, 'sI',
+      t => Kit.mk('circle', {cx: dx + 28 * k, cy: dy + 37 * k, r: Math.max(1.4, w * .55), fill: C.ice}, t),
+      [[38,35],[70,56],[95,30]].map(([x, y]) => [dx + x * k, dy + y * k]), 'PACIFISM');
+
+    // the two scenarios: dark glass before the answer, lit at the reveal
+    const capA = {fill: C.cap, style: `font:600 12px var(--mono);letter-spacing:.08em`};
+    if (tall) capA.style = `font:600 ${Math.max(12, fs * .9)}px var(--mono);letter-spacing:.08em`;
+    const valA = col => ({fill: col, filter: 'url(#glow)', style: `font:800 ${fs}px var(--mono);letter-spacing:.06em`});
+    el.cap1 = txt(svg, W / 2, cap1, tall ? 'IF OTHERS GO TO WAR' : 'OTHERS AT WAR', capA);
+    el.cap2 = txt(svg, W / 2, cap2, tall ? 'IF SOMEONE INVADES' : 'IF INVADED', capA);
+    const vals = [['STAY OUT', 'FIGHT BACK'], ['STAY OUT', 'NEVER FIGHT']], ys = [row1, row2];
+    el.v = [[], []]; el.ph = [];
+    [0, 1].forEach(i => [0, 1].forEach(r => {
+      el.ph.push(txt(svg, cx[i], ys[r], '· · ·', {fill: C.unlit, style: `font:800 ${fs}px var(--mono);letter-spacing:.2em`}));
+      el.v[i][r] = txt(svg, cx[i], ys[r], vals[i][r], valA(i ? C.ice : C.red));
+    }));
+    if (!tall) {   // keep each row's three words apart
+      [0, 1].forEach(r => {
+        const cw = tw(r ? el.cap2 : el.cap1) / 2 + fs * .5;
+        const L = el.v[0][r], R = el.v[1][r];
+        if (cx[0] + tw(L) / 2 > W / 2 - cw) { L.setAttribute('text-anchor', 'start'); L.setAttribute('x', 3); }
+        if (cx[1] - tw(R) / 2 < W / 2 + cw) { R.setAttribute('text-anchor', 'end'); R.setAttribute('x', W - 3); }
+      });
+    }
+    el.caps = [el.cap1, el.cap2];
+    el.vals = [...el.v[0], ...el.v[1]];
+
+    // the invader and the sparks it throws off the shield
+    const ix = cx[0] - s * .4, iy = top + s * .42, tx = Math.max(3, ix - fs * 3.2);
+    G.ix = ix; G.iy = iy;
+    el.inv = Kit.mk('g', {opacity: 0, filter: 'url(#glow)'}, svg);
+    const hd = Math.min(fs * .8, (ix - tx) * .4);
+    el.invP = Kit.mk('path', {d: `M${tx},${iy} L${ix - fs * .3},${iy} M${ix - fs * .3 - hd},${iy - hd * .8} L${ix - fs * .3},${iy} L${ix - fs * .3 - hd},${iy + hd * .8}`, fill: 'none', stroke: C.violet, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, el.inv);
+    el.sparks = Kit.mk('g', {opacity: 0}, svg);
+    const maxR = Math.max(6, (ix - 3) / 1.5);
+    for (let j = 0; j < 11; j++) {
+      const a = (110 + j * 14) * Math.PI / 180, r2 = Math.min(fs * (1.1 + (j % 3) * .35), maxR, (iy - 3) / 1.5), r1 = Math.min(fs * .5, r2 * .45);
+      Kit.mk('line', {x1: ix + Math.cos(a) * r1, y1: iy + Math.sin(a) * r1, x2: ix + Math.cos(a) * r2, y2: iy + Math.sin(a) * r2, stroke: j % 2 ? C.white : C.amber, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, el.sparks);
+    }
+
+    // big touch targets over each sign
+    [0, 1].forEach(i => Kit.mk('circle', {cx: cx[i], cy: top + s * .5, r: Math.min(s * .66, cx[i] - 1, W - cx[i] - 1), fill: 'transparent', class: 'hit', 'data-i': i}, svg));
+
+    // the state we are in
+    if (done) { ang.v = target(0); gsap.set(el.on[1], {opacity: .2}); gsap.set(el.ph, {opacity: 0}); }
+    else {
+      gsap.set(el.vals, {opacity: 0}); gsap.set(el.caps, {opacity: .45});
+      if (pick >= 0) { ang.v = target(pick); gsap.set(el.on[1 - pick], {opacity: .4}); }
+    }
+    setArrow();
+    startHum();
+  }
+
+  function startWobble() {
+    if (Kit.calm || pick >= 0 || done) return;
+    if (wob) wob.kill();
+    const amp = Math.max(12, Math.min(40, Math.abs(target(0)) * .6));
+    ang.v = -amp; setArrow();
+    wob = gsap.to(ang, {v: amp, duration: 1.3, ease: 'sine.inOut', yoyo: true, repeat: -1, onUpdate: setArrow});
+  }
+  // Every few seconds a tube hiccups, like old neon does.
+  function startHum() {
+    if (Kit.calm || hum) return;
+    const go = () => {
+      const i = Kit.rnd() < .5 ? 0 : 1, t = el.tube && el.tube[i];
+      if (t && !(done && i === 1)) gsap.fromTo(t, {opacity: 1}, {opacity: .45, duration: .05, yoyo: true, repeat: 3, ease: 'none'});
+      hum = gsap.delayedCall(2.5 + Kit.rnd() * 3, go);
+    };
+    hum = gsap.delayedCall(3, go);
+  }
+
+  function choose(i) {
+    if (pick >= 0) return;
+    pick = i; Kit.haptic('selection');
+    if (wob) { wob.kill(); wob = null; }
+    gsap.to(ang, {v: target(i), duration: Kit.calm ? 0 : .6, ease: 'back.out(2.2)', onUpdate: setArrow});
+    gsap.to(el.on[1 - i], {opacity: .4, duration: Kit.calm ? 0 : .35, ease: 'power2.out'});
+    if (!Kit.calm) {
+      gsap.fromTo(el.tube[i], {scale: 1}, {scale: 1.06, duration: .12, yoyo: true, repeat: 1, transformOrigin: '50% 50%', ease: 'power2.out'});
+      gsap.fromTo(el.spill[i], {opacity: .8}, {opacity: 1, duration: .15, yoyo: true, repeat: 1});
+    }
+    say.innerHTML = `You pointed Switzerland at the <b>${i ? 'dove' : 'shield'}</b>.`;
+    sure.on();
+  }
+  svg.addEventListener('pointerdown', e => { const h = e.target.closest('.hit'); if (h) choose(+h.getAttribute('data-i')); });
+
+  function reveal() {
+    done = true;
+    if (wob) { wob.kill(); wob = null; }
+    if (Kit.calm) { build(); return; }
+    const rows1 = [el.v[0][0], el.v[1][0]], ph1 = [el.ph[0], el.ph[2]], ph2 = [el.ph[1], el.ph[3]];
+    tlRev = gsap.timeline()
+      .to(ang, {v: target(0), duration: 1, ease: 'elastic.out(1,.45)', onUpdate: setArrow}, 0)
+      .to(el.on, {opacity: 1, duration: .3, ease: 'power2.out'}, 0)
+      .to(el.cap1, {opacity: 1, duration: .6, ease: 'flick'}, .3)
+      .to(ph1, {opacity: 0, duration: .25}, .5)
+      .fromTo(rows1, {opacity: 0}, {opacity: 1, duration: .8, ease: 'flick'}, .5)
+      .to(el.cap2, {opacity: 1, duration: .6, ease: 'flick'}, 1.3)
+      .set(el.inv, {opacity: 1}, 1.55)
+      .fromTo(el.invP, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .45, ease: 'power3.in'}, 1.55)
+      .add(() => Kit.haptic('success'), 2)
+      .fromTo(el.tube[0], {scale: 1}, {scale: 1.1, duration: .12, yoyo: true, repeat: 1, transformOrigin: '50% 50%', ease: 'power2.out'}, 2)
+      .fromTo(el.spill[0], {opacity: .8}, {opacity: 1, duration: .12, yoyo: true, repeat: 1}, 2)
+      .fromTo(el.sparks, {opacity: 1, scale: .3}, {opacity: 0, scale: 1.5, svgOrigin: `${G.ix} ${G.iy}`, duration: .7, ease: 'expo.out'}, 2)
+      .to(el.invP, {drawSVG: '0% 0%', duration: .5, ease: 'power3.out'}, 2.02)
+      .to(el.inv, {opacity: 0, duration: .5, ease: 'power2.out'}, 2.1)
+      .to(ph2, {opacity: 0, duration: .25}, 2.05)
+      .fromTo(el.v[0][1], {opacity: 0}, {opacity: 1, duration: .6, ease: 'flick'}, 2.05)
+      .fromTo(el.v[1][1], {opacity: 0}, {opacity: 1, duration: .6, ease: 'flick'}, 2.25)
+      .to(el.on[1], {opacity: .2, duration: 1.1, ease: 'flick'}, 2.7);
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === 0, said = ok ? 'The shield: neutral, not pacifist' : 'The dove: pacifist';
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    sure.grade(ok, pct, `${ok ? 'The shield' : 'The dove'}, ${ok ? 'right' : 'wrong'}`);
+    card.classList.add('answered');
+    setTimeout(reveal, 120);   // after the stage has settled to its new size
+  });
+
+  Kit.onShow.card = build;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || pick >= 0 || !el.on) return;
+    gsap.set([...el.on, el.plate, el.arrow], {opacity: 0});
+    gsap.timeline()
+      .from(el.ghost, {opacity: 0, duration: .6, stagger: .12, ease: 'power2.out'}, 0)
+      .from([...el.caps, ...el.ph], {opacity: 0, duration: .6, stagger: .05, ease: 'power2.out'}, .2)
+      .fromTo(el.draw[0], {drawSVG: '50% 50%'}, {drawSVG: '0% 100%', duration: 1, ease: 'expo.out', stagger: .06}, .25)
+      .to(el.on[0], {opacity: 1, duration: 1, ease: 'flick'}, .25)
+      .fromTo(el.draw[1], {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: 1, ease: 'expo.out', stagger: .05}, .75)
+      .to(el.on[1], {opacity: 1, duration: 1, ease: 'flick'}, .75)
+      .to(el.plate, {opacity: 1, duration: .8, ease: 'flick'}, 1.35)
+      .to(el.arrow, {opacity: 1, duration: .5, ease: 'flick'}, 1.7)
+      .from('#say', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'}, 1.5)
+      .add(startWobble, 1.8);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    choose(1);
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 400 : 4200);
+  };
+})();
+Kit.single();
+</script>
+</html>

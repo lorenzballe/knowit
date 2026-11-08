@@ -1,0 +1,38 @@
+{
+  "id": "medicine-triple-dependency-window",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.smoking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does willpower alone fail for 96% of smokers?",
+  "answer": "Only 4 in 100 smokers quit on willpower alone. Nicotine, habits and beliefs hold at once, so outside help, medicines included, makes the difference.",
+  "move": "Three dependencies at once: body, habit, mind. Fight them together, with help.",
+  "keywords": [
+    "smoking",
+    "nicotine",
+    "willpower",
+    "habit",
+    "quitting"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three locks of smoking on a glass window with a rim of panes. The question asks why willpower alone fails for 96% of smokers. Tap each lobe to light a dependency: nicotine, habit, or belief. The four gold rim panes, out of 100 smokers, are the ones who quit alone.",
+    "ground": "#15111f"
+  },
+  "source": "Geopop, “Il 96% delle persone non riesce a smettere di fumare da solo: perché e quali sono i metodi migliori” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=BqJhH7s_s74&t=9s",
+  "written": "2026-11-04"
+}

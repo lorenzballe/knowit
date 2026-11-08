@@ -1,0 +1,244 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-lottery-versus-love -->
+<!-- Thought to carry: the odds are only half the price. What you stake when you lose (money in private or a "no" from someone in your life) decides whether a fear is foolish or fair.
+     Front: two real tickets side by side, a lottery slip (1 in 20,000) and a "Do you like me? yes/no" note (1 in 10). The reader drags a little figure along a line between "the fear is fair" and "it's irrational"; the ticket they lean to lifts.
+     Back: the same two tickets, each now with what a loss costs under it. A few euros lost alone; a colleague's "no" can cost a friendship; a stranger's "no" costs a minute. Both the case for and the case against are drawn as bars.
+     The front shows only the odds the view rests on, never the stakes. The reader commits to a side before seeing that the price of a "no" depends on who says it. -->
+<title>The lottery and love</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+/* Hide the face turned away once the card passes edge-on, so its mirrored text never sits under the other face. */
+.turn.over>.front{visibility:hidden;transition:visibility 0s .37s}
+.turn.over>.back{visibility:visible;transition:visibility 0s .37s}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face{gap:1.1cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.back .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+.back .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+/* Keep the source clear of the save and share buttons: let it wrap short of them. */
+.foot .src{display:block;flex:0 1 auto;min-width:0;max-width:calc(100% - 112px);white-space:normal;overflow-wrap:break-word;line-height:1.3}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Take a side · point of view">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: why risk 1‑in‑20,000 on lottery, not 1‑in‑10 on love?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A lottery ticket with odds of 1 in 20,000 and a 'Do you like me?' note with odds of 1 in 10. Below, a figure you drag between 'the fear is fair' and 'it's irrational'."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">The view: we dread a “no” more than losing money. <b>Drag yourself to where you stand.</b></p>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2024) · a point of view</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The odds aren’t the whole price.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same two tickets, with what a loss costs under each: a few euros lost alone, a colleague's no that may cost a friendship, a stranger's no that costs a minute."></svg></div>
+        <p class="body"><b>For the view:</b> love’s odds are far better, and a stranger’s “no” is gone by lunch. Passing on that is fear, not maths.</p>
+        <p class="body"><b>Against it:</b> a ticket is lost cheaply and in private. A “no” from someone in your life can cost the friendship, so the fear can be fair.</p>
+        <div class="keep"><b>ASK YOURSELF</b> Is it the odds that stop me, or what this one “no” would really cost?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2024) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const A = '#e0452b', PAPER = '#fffdf7', DARK = '#18171c';
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let p = .5, touched = false, armed = false, answered = false, turned = false;
+  let W = 0, H = 0, fs = 12, L0 = 0, L1 = 0, LY = 0, R = {}, backTl = null;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  const T = (parent, x, y, str, o = {}) => {
+    const e = Kit.mk('text', {x, y, 'font-size': o.size || fs, 'text-anchor': o.anchor || 'start', 'font-weight': o.w || 700}, parent);
+    e.style.fontFamily = o.font || 'var(--body)'; e.style.fill = o.fill || 'var(--k)'; e.textContent = str; return e;
+  };
+  // Shrink a text until it fits a width.
+  const fit = (e, maxW) => { let s = +e.getAttribute('font-size'); while (s > 12 && e.getComputedTextLength() > maxW) { s -= 1; e.setAttribute('font-size', s); } return e; };
+
+  // A paper ticket, centred on 0,0, with a torn-off stub and side notches.
+  function ticket(g, tw, th, kind, mini) {
+    const w = tw / 2, h = th / 2, r = tw * .05, n = Math.min(tw * .06, th * .06), sy = -h + th * .26;
+    const d = `M${-w + r},${-h} H${w - r} A${r},${r} 0 0 1 ${w},${-h + r} V${sy - n} A${n},${n} 0 0 0 ${w},${sy + n} V${h - r} A${r},${r} 0 0 1 ${w - r},${h} H${-w + r} A${r},${r} 0 0 1 ${-w},${h - r} V${sy + n} A${n},${n} 0 0 0 ${-w},${sy - n} V${-h + r} A${r},${r} 0 0 1 ${-w + r},${-h} Z`;
+    const shape = Kit.mk('path', {d, fill: PAPER, stroke: DARK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    Kit.mk('line', {x1: -w + n + 3, x2: w - n - 3, y1: sy, y2: sy, stroke: DARK, 'stroke-width': 1.2, 'stroke-dasharray': '3 4', opacity: .5}, g);
+    fit(T(g, 0, (-h + sy) / 2 + fs * .36, kind === 'lot' ? 'Lottery' : 'Asking out', {anchor: 'middle', fill: DARK, w: 800}), tw * .86);
+    const odds = kind === 'lot' ? '20,000' : '10';
+    if (mini) {
+      const hs = Math.min((h - sy) * .42, tw * .2);
+      const e = T(g, 0, sy + (h - sy) * .5 + hs * .35, '1 in ' + odds, {anchor: 'middle', fill: DARK, font: 'var(--display)', w: 800, size: hs});
+      let s = hs; while (s > 12 && e.getComputedTextLength() > tw * .84) { s -= 1; e.setAttribute('font-size', s); }
+      return shape;
+    }
+    const y1 = sy + fs * 1.55;
+    T(g, 0, y1, '1 in', {anchor: 'middle', fill: DARK, w: 600, size: fs * 1.05});
+    const hs = Math.min(th * .19, tw * .82 / 3.3);
+    const hero = T(g, 0, y1, odds, {anchor: 'middle', fill: DARK, font: 'var(--display)', w: 800, size: hs});
+    let hsz = hs;
+    if (kind === 'lot') { let s = hs; while (s > 14 && hero.getComputedTextLength() > tw * .84) { s -= 1; hero.setAttribute('font-size', s); } R.hs = s; hsz = s; }
+    else { hsz = R.hs || hs; hero.setAttribute('font-size', hsz); }
+    // Sit the big number a clear line below "1 in", whatever its final size.
+    const heroY = y1 + fs * .45 + hsz;
+    hero.setAttribute('y', heroY);
+    const yd = heroY + fs * .9, room = h - fs * .5 - yd;
+    if (kind === 'lot' && room > fs * 1.6) {
+      const cols = 6, s = Math.min(tw * .8 / cols * .78, room / 2 * .78), gap = s / .78 - s, gx = -(cols * s + (cols - 1) * gap) / 2;
+      const marked = [1, 4, 8];
+      for (let i = 0; i < 12; i++) {
+        const x = gx + (i % cols) * (s + gap), y = yd + Math.floor(i / cols) * (s + gap);
+        Kit.mk('rect', {x, y, width: s, height: s, rx: s * .15, fill: 'none', stroke: DARK, 'stroke-width': 1.1, opacity: .55}, g);
+        if (marked.includes(i)) Kit.mk('path', {d: `M${x + s * .2},${y + s * .2} L${x + s * .8},${y + s * .8} M${x + s * .8},${y + s * .2} L${x + s * .2},${y + s * .8}`, stroke: DARK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, g);
+      }
+    } else if (kind === 'love' && room > fs * 1.4) {
+      T(g, 0, yd + fs * .9, 'Do you like me?', {anchor: 'middle', fill: DARK, w: 600, size: fs});
+      if (room > fs * 3.2) {
+        const b = fs * .8, y = yd + fs * 2.05;
+        [['yes', -tw * .2], ['no', tw * .14]].forEach(([t, x]) => {
+          Kit.mk('rect', {x, y, width: b, height: b, rx: 2, fill: 'none', stroke: DARK, 'stroke-width': 1.3}, g);
+          T(g, x + b + 4, y + b * .9, t, {fill: DARK, w: 600, size: fs});
+        });
+      }
+    }
+    return shape;
+  }
+
+  // ---------- the front ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = clamp(W / 27, 12, 14);
+    LY = H - fs * 3.3; L0 = W * .1; L1 = W * .9;
+    const figH = clamp(H * .15, 34, 58), tBot = LY - figH - fs * 1.9, top = fs * 1.4;
+    let th = Math.max(80, tBot - top); const tw = Math.min(W * .4, th * .8); th = Math.min(th, tw * 1.7);
+    R = {};
+    [['lot', W * .27], ['love', W * .73]].forEach(([k, cx]) => {
+      const outer = Kit.mk('g', {transform: `translate(${cx},${tBot - th / 2})`}, svg), inner = Kit.mk('g', {}, outer);
+      R[k] = {outer, inner, shape: ticket(inner, tw, th, k, false)};
+    });
+    // The line between the two views.
+    const line = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: L0, x2: L1, y1: LY, y2: LY, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, line).style.stroke = 'var(--k)';
+    [L0, (L0 + L1) / 2, L1].forEach((x, i) => { const e = Kit.mk('line', {x1: x, x2: x, y1: LY - (i === 1 ? 4 : 7), y2: LY + (i === 1 ? 4 : 7), 'stroke-width': 2, 'stroke-linecap': 'round'}, line); e.style.stroke = 'var(--k)'; });
+    T(line, L0, LY + fs * 1.55, 'Disagree:', {w: 800});
+    T(line, L0, LY + fs * 2.85, 'the fear is fair', {w: 600});
+    T(line, L1, LY + fs * 1.55, 'Agree:', {w: 800, anchor: 'end'});
+    T(line, L1, LY + fs * 2.85, 'it’s irrational', {w: 600, anchor: 'end'});
+    // You.
+    const fig = Kit.mk('g', {}, svg), fr = figH * .19, fw = fr * 1.9, bh = figH - fr * 2.15;
+    Kit.mk('rect', {x: -fw / 2, y: -bh, width: fw, height: bh, rx: fw * .42, fill: A, stroke: DARK, 'stroke-width': 1.4}, fig);
+    Kit.mk('circle', {cx: 0, cy: -bh - fr * 1.05, r: fr, fill: A, stroke: DARK, 'stroke-width': 1.4}, fig);
+    Kit.mk('circle', {cx: fr * .38, cy: -bh - fr * 1.15, r: 1.6, fill: DARK}, fig);
+    T(fig, 0, -figH - fs * .45, 'you', {anchor: 'middle', w: 800});
+    const hint = Kit.mk('g', {opacity: touched ? 0 : 1}, fig), hy = -bh * .55, hx = fw / 2 + fs * .6;
+    [-1, 1].forEach(s => { const e = Kit.mk('path', {d: `M${s * hx},${hy - 5} l${s * 5},5 l${-s * 5},5`, fill: 'none', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint); e.style.stroke = 'var(--k)'; });
+    R.fig = fig; R.hint = hint;
+    update(true);
+  }
+
+  function update(instant) {
+    if (!R.fig) return;
+    const x = L0 + p * (L1 - L0);
+    R.fig.setAttribute('transform', `translate(${x},${LY}) rotate(${(p - .5) * 14})`);
+    const lifts = {lot: clamp((.5 - p) * 2, 0, 1), love: clamp((p - .5) * 2, 0, 1)};
+    for (const k of ['lot', 'love']) {
+      const l = lifts[k], dir = k === 'lot' ? -1 : 1, on = l > .3;
+      gsap.to(R[k].inner, {y: -l * fs * .9, rotation: dir * l * 3, transformOrigin: '50% 100%', duration: instant || Kit.calm ? 0 : .25, ease: 'power2.out', overwrite: true});
+      R[k].shape.setAttribute('stroke', on ? A : DARK); R[k].shape.setAttribute('stroke-width', on ? 3 : 1.6);
+      R[k].outer.setAttribute('opacity', touched && !on && lifts[k === 'lot' ? 'love' : 'lot'] > .3 ? .7 : 1);
+    }
+  }
+
+  const side = () => p < .4 ? 'lot' : p > .6 ? 'love' : 'mid';
+  const choice = () => ({lot: 'Disagree: the fear is fair', love: 'Agree: it is irrational', mid: 'Torn between the two'})[side()];
+  function setP(v) { p = clamp(v, 0, 1); if (!touched) { touched = true; if (R.hint) R.hint.setAttribute('opacity', 0); } update(false); }
+  function arm() { if (armed || !touched) return; armed = true; sure.on(); Kit.haptic('selection'); }
+
+  let dragging = false;
+  const fromX = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - L0) / (L1 - L0); };
+  svg.addEventListener('pointerdown', e => { if (answered) return; dragging = true; svg.setPointerCapture(e.pointerId); setP(fromX(e)); });
+  svg.addEventListener('pointermove', e => { if (dragging) setP(fromX(e)); });
+  const end = () => { if (dragging) { dragging = false; arm(); } };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered) return; answered = true;
+    Kit.answer({choice: choice(), correct: null, sure: pct});
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back ----------
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W2 = f.W, H2 = f.H, s = clamp(W2 / 27, 12, 14); fs = s;
+    const th = clamp(H2 - s * 13.2, 56, H2 * .45), tw = W2 * .36, colW = W2 * .42, tTop = s * 1.8;
+    const cols = {lot: W2 * .27, love: W2 * .73}, sd = side(), parts = {t: [], tag: [], head: [], r1: [], r2: []};
+    for (const k of ['lot', 'love']) {
+      const g = Kit.mk('g', {transform: `translate(${cols[k]},${tTop + th / 2})`}, svg2), inner = Kit.mk('g', {}, g);
+      const sh = ticket(inner, tw, th, k, true);
+      if (sd === k) { sh.setAttribute('stroke', A); sh.setAttribute('stroke-width', 3); }
+      parts.t.push(inner);
+    }
+    const tagX = sd === 'mid' ? W2 / 2 : cols[sd];
+    parts.tag.push(T(svg2, tagX, tTop - s * .55, sd === 'mid' ? 'you: torn' : 'your side', {anchor: 'middle', w: 800, fill: A}));
+    const yb = tTop + th + s * 1.8;
+    parts.head.push(T(svg2, W2 / 2, yb, 'what a loss costs you', {anchor: 'middle', w: 800}));
+    const row = (k, y, frac, l1, l2, bucket) => {
+      const x = cols[k] - colW / 2, bar = Kit.mk('rect', {x, y, width: Math.max(6, colW * frac), height: s * .55, rx: s * .27}, svg2);
+      bar.style.fill = 'var(--k)';
+      const a = T(svg2, x, y + s * .55 + s * 1.3, l1, {w: 700}), b = T(svg2, x, y + s * .55 + s * 2.6, l2, {w: 500});
+      fit(a, colW); fit(b, colW);
+      bucket.push({bar, w: Math.max(6, colW * frac), txt: [a, b]});
+    };
+    const y1 = yb + s * 1.1;
+    row('lot', y1, .12, 'a few euros, alone,', 'forgotten by Friday', parts.r1);
+    row('love', y1, 1, 'a colleague: perhaps', 'the friendship', parts.r1);
+    row('love', y1 + s * 4.4, .14, 'a stranger: a red', 'face for a minute', parts.r2);
+    if (backTl) backTl.kill();
+    if (!animate || Kit.calm) { backTl = null; return; }
+    const grow = (bucket, at) => {
+      bucket.forEach(r => backTl.fromTo(r.bar, {attr: {width: 0}}, {attr: {width: r.w}, duration: .8, ease: 'power2.out'}, at));
+      backTl.from(bucket.flatMap(r => r.txt), {opacity: 0, y: 6, duration: .4, stagger: .05, ease: 'power2.out'}, at + '+=.3');
+    };
+    backTl = gsap.timeline({delay: .45});
+    backTl.from(parts.t, {opacity: 0, y: 10, duration: .5, stagger: .12, ease: 'power3.out'})
+      .from(parts.tag, {opacity: 0, duration: .35}, '-=.2')
+      .from(parts.head, {opacity: 0, duration: .35}, '+=.15');
+    grow(parts.r1, '+=.1');
+    grow(parts.r2, '+=.6');
+  }
+
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !R.lot) return;
+    gsap.from([R.lot.outer, R.love.outer], {opacity: 0, y: 12, duration: .55, stagger: .14, ease: 'power3.out'});
+    gsap.from(R.fig, {opacity: 0, duration: .5, delay: .4});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setP(.82); arm();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 1700);
+    if (backTl) backTl.progress(1);
+    await wait(100);
+  };
+})();
+Kit.single();
+</script>
+</html>

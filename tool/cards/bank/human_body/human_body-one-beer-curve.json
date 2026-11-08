@@ -3,12 +3,12 @@
   "topic": "human_body",
   "genre": "human_body.your_body_your_choices",
   "strand": "human_body.your_body_your_choices.small_daily_habits",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "After one strong beer, does everyone's alcohol curve look the same?",
-  "answer": "After one strong beer, the card asks whether everyone's alcohol curve looks the same. One man drank one 8.6% beer and blew into a breathalyser every 10 minutes. The reader draws a guess for how his reading moved over 3 hours. How fast a body clears alcohol is personal, so his curve is his alone.",
-  "move": "How fast a body clears alcohol is personal: his curve is his alone.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "After one 8.6% beer, where is your blood alcohol 2 h 55 later?",
+  "answer": "He drank one 8.6% beer and blew into a professional breathalyser every 10 minutes. At 2 h 55 he read 0.20 g/L. That curve is his, with his metabolism and all the conditions of that single test; another body clears the same glass at its own pace.",
+  "move": "A careful measurement on one body describes that body, not yours.",
   "keywords": [
     "alcohol",
     "beer",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Drawing page asking how one man's breath alcohol reading would change over 3 hours after one 8.6% beer, tested every 10 minutes. The reader draws a guess of the curve.",
-    "ground": "#17120b"
+    "label": "Interactive chart of blood alcohol over time after one 8.6% beer, with a dashed line the reader drags up or down to set a point. The reader is asked where their own blood alcohol is 2 hours 55 minutes after the drink."
   },
   "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=iEM_OvUoolY&t=294s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

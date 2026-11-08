@@ -1,0 +1,226 @@
+<!doctype html>
+<!-- slug: science-dense-fast-turbulent -->
+<!--
+  Thought to carry: density, speed and pipe width all sit on top of one ratio, viscosity below it. Hold viscosity and raise density or speed, and the flow is pushed toward chaos.
+  Front: one calm pipe, its streamlines in neat dashed layers, flowing left to right. The reader predicts, then says how sure.
+  Back: the ratio, then the same pipe twice: denser (tight, heavy dashes that curl downstream), denser and faster (longer arrow, eddies all along).
+  Front gives nothing away. The trap "a heavier liquid flows calmer" stays open until the turn.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Denser, faster, messier</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s .37s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .37s}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.2cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+.opt{font:700 max(1.95cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.25cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+
+/* Confidence pills before a pick: present, plainly not yet available. */
+#sure :not(button,[data-v]):not(button *,[data-v] *){color:var(--k)}
+#sure.wait,#sure.wait *{opacity:1!important;filter:none!important}
+#sure.wait :not(button,[data-v]):not(button *,[data-v] *){color:var(--k)!important}
+#sure.wait :is(button,[data-v]){background:transparent!important;box-shadow:none!important;outline:1.5px dashed color-mix(in srgb,var(--k) 45%,transparent)!important;outline-offset:-1.5px;color:color-mix(in srgb,var(--k) 45%,transparent)!important}
+#sure.wait :is(button,[data-v]) *{color:inherit!important}
+
+/* The bottom strip of each face stays clear beside the save and share. */
+.front .sayrow{flex:0 0 auto;margin-right:100px;min-height:max(44px,2.6em);display:flex;align-items:flex-end}
+.front .say{margin:0;padding:0}
+.back .big{margin:0;font-size:clamp(20px,3.7cqh,24px);line-height:1.08;overflow-wrap:anywhere}
+.back .body{margin:0;font-size:max(1.85cqh,12.5px);line-height:1.3}
+.back .foot{flex:0 0 auto;padding-right:0;min-height:44px;display:flex;align-items:flex-end}
+.back .src{display:block;max-width:calc(100% - 116px);font-size:12px;line-height:1.3}
+
+svg text{font-family:var(--body);font-weight:700;fill:var(--k)}
+.flow{animation:flow linear infinite}
+.flow2{animation:flow2 linear infinite}
+@keyframes flow{to{stroke-dashoffset:-40}}
+@keyframes flow2{to{stroke-dashoffset:-36}}
+.kit-calm .flow,.kit-calm .flow2{animation:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLOW TYPE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Keep viscosity fixed. Make the liquid denser and faster. What happens to the flow?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A liquid flowing smoothly left to right through a pipe, in parallel layers."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">It stays smooth: a heavier liquid flows calmer</button>
+          <button class="opt" data-i="1">It turns chaotic: swirls and eddies</button>
+          <button class="opt" data-i="2">Denser calms it, faster stirs it: they cancel out</button>
+        </div>
+        <div id="sure"></div>
+        <div class="sayrow"><p class="say" id="say">Pick what the flow does, then say how sure you are.</p></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Chaotic. Both push the same way.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Density times speed times width, over viscosity held fixed. Two pipes: denser, with tight layers curling downstream; denser and faster, broken into eddies all along."></svg></div>
+        <p class="body">That ratio is the Reynolds number. Raise any term on top, viscosity unchanged, and it climbs toward turbulence.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Ask which side of the ratio a change sits on. On top, it pushes toward chaos.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Flusso laminare stazionario” (YouTube, 2019).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const RIGHT = 1;
+  let pick = -1, turned = false, backDrawn = false, tl = null;
+  const INK = 'var(--k)';
+  const rng = s => () => (s = (s * 16807) % 2147483647) / 2147483647;
+
+  function text(parent, x, y, t, a = {}) { const e = Kit.mk('text', Object.assign({x, y, 'font-size': 13}, a), parent); e.textContent = t; return e; }
+  function walls(g, x0, x1, yt, yb) {
+    for (const y of [yt, yb]) Kit.mk('line', {x1: x0, x2: x1, y1: y, y2: y, stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round'}, g);
+  }
+  function arrow(p, xe, y, len, w = 2) {
+    Kit.mk('path', {d: `M${xe - len},${y} H${xe} M${xe - 6},${y - 5} L${xe},${y} L${xe - 6},${y + 5}`, stroke: INK, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
+  }
+  // The inside of a pipe, so dashes enter and leave cleanly at its ends.
+  function inside(svg, id, xa, xb, yt, yb) {
+    const c = Kit.mk('clipPath', {id}, svg);
+    Kit.mk('rect', {x: xa, y: yt, width: Math.max(0, xb - xa), height: Math.max(0, yb - yt)}, c);
+    return Kit.mk('g', {'clip-path': `url(#${id})`}, svg);
+  }
+  // One dashed streamline; the middle layers run faster, as in a real pipe.
+  function dashRow(g, xa, xb, y, f, tight) {
+    const sp = 1 - Math.pow(2 * f - 1, 2);
+    Kit.mk('line', {x1: xa, x2: xb, y1: y, y2: y, stroke: INK, 'stroke-width': tight ? 2.6 : 1.8,
+      'stroke-dasharray': tight ? '12 6' : '22 18', 'stroke-dashoffset': (f * 37).toFixed(1), class: tight ? 'flow2' : 'flow',
+      style: `animation-duration:${(1.1 / (.25 + sp)).toFixed(2)}s`, opacity: .85}, g);
+  }
+  // A loose curl: a streamline arrives along one side, then winds inward.
+  function curl(g, cx, cy, R, s, turns) {
+    let d = `M${(cx - 1.6 * R).toFixed(1)},${(cy - s * R).toFixed(1)} L${cx.toFixed(1)},${(cy - s * R).toFixed(1)}`;
+    const th0 = -s * Math.PI / 2, N = 36;
+    for (let k = 1; k <= N; k++) {
+      const t = k / N, th = th0 + s * t * turns * Math.PI, r = R * (1 - .62 * t);
+      d += ` L${(cx + r * Math.cos(th)).toFixed(1)},${(cy + r * Math.sin(th)).toFixed(1)}`;
+    }
+    return Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', pathLength: 1}, g);
+  }
+
+  // ---------- front: the calm pipe ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const x0 = 1.5, x1 = W - 1.5, ABOVE = 24, BELOW = 30;
+    const ph = Math.max(30, Math.min(H - ABOVE - BELOW, W * .34));
+    const top = Math.max(0, (H - (ABOVE + ph + BELOW)) / 2);
+    const yt = top + ABOVE, yb = yt + ph;
+    arrow(svg, x1 - 1, top + 8, 52, 2.2);
+    const n = ph >= 70 ? 7 : ph >= 46 ? 5 : 3;
+    const g = inside(svg, 'in-front', x0 + 3, x1 - 3, yt + 2, yb - 2);
+    for (let j = 0; j < n; j++) { const f = (j + 1) / (n + 1); dashRow(g, x0 + 3, x1 - 3, yt + f * ph, f, false); }
+    walls(svg, x0, x1, yt, yb);
+    text(svg, x0, yb + 22, 'A liquid, gliding in smooth layers');
+  }
+
+  // ---------- back: the ratio, and the pipe changed twice ----------
+  const ROWS = ['Denser', 'Denser and faster'];
+  function drawBack(animate) {
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const x0 = 1.5, x1 = W - 1.5, G = 52, LAB = 13, GAP = 9, SP = 16;
+    const ph = Math.max(16, Math.min(56, Math.floor((H - G - 2 * (LAB + GAP) - SP) / 2)));
+    const block = G + 2 * (LAB + GAP + ph) + SP, top = Math.max(0, (H - block) / 2);
+
+    // The fraction: only the top side will grow.
+    const fx = W / 2, half = Math.min(112, W * .42), f0 = animate ? 13 : 16;
+    const t = Kit.mk('text', {x: fx, y: top + 15, 'text-anchor': 'middle', 'font-size': 13}, svg);
+    const ts = (s, fs) => { const e = Kit.mk('tspan', {'font-size': fs}, t); e.textContent = s; return e; };
+    const dens = ts('density', f0); ts(' × ', 13); const spd = ts('speed', f0); ts(' × width', 13);
+    Kit.mk('line', {x1: fx - half, x2: fx + half, y1: top + 23, y2: top + 23, stroke: INK, 'stroke-width': 2}, svg);
+    text(svg, fx, top + 40, 'viscosity, held fixed', {'text-anchor': 'middle', 'font-size': 13, opacity: .75});
+
+    const n = ph >= 40 ? 6 : ph >= 26 ? 4 : 3, r = rng(131), strips = [];
+    const turns = ph < 34 ? 1.8 : 2.25;
+    let y = top + G;
+    ROWS.forEach((lab, i) => {
+      const base = y + LAB, yt = base + GAP, yb = yt + ph; y = yb + SP;
+      const g = Kit.mk('g', {opacity: animate ? 0 : 1}, svg), curls = [];
+      text(g, x0, base, lab);
+      arrow(g, x1 - 1, base - 4, [26, 64][i]);
+      const rowY = j => yt + (j + 1) / (n + 1) * ph;
+      if (i === 0) {
+        const xm = x0 + (x1 - x0) * .46, R = ph * .28;
+        const inner = inside(g, 'in-back', x0 + 3, xm, yt + 2, yb - 2);
+        for (let j = 0; j < n; j++) dashRow(inner, x0 + 3, xm, rowY(j), (j + 1) / (n + 1), true);
+        [[.24, .38, 1], [.56, .64, -1], [.86, .4, 1]].forEach(([a, b, s]) => curls.push(curl(g, xm + (x1 - xm) * a, yt + ph * b, R, s, turns)));
+      } else {
+        const R = ph * .24, L = x1 - x0 - 8, k = Math.min(8, Math.max(4, Math.floor(L / (R * 3.3)))), step = L / k;
+        for (let m = 0; m < k; m++) {
+          const s = m % 2 ? -1 : 1, rr = R * (.85 + .3 * r());
+          const cx = x0 + 4 + m * step + 1.6 * R + (step - 2.6 * R) / 2;
+          curls.push(curl(g, cx, yt + ph * (s > 0 ? .38 : .62), rr, s, turns));
+        }
+      }
+      walls(g, x0, x1, yt, yb);
+      if (animate) curls.forEach(c => { c.setAttribute('stroke-dasharray', '1 1'); c.setAttribute('stroke-dashoffset', 1); });
+      strips.push({g, curls});
+    });
+    return {strips, dens, spd};
+  }
+
+  function buildBack() {
+    backDrawn = true;
+    if (tl) tl.kill();
+    if (Kit.calm) { drawBack(false); return; }
+    const B = drawBack(true);
+    tl = gsap.timeline({delay: .45});
+    tl.to(B.dens, {attr: {'font-size': 16}, duration: .4, ease: 'back.out(2)'}, 0);
+    B.strips.forEach((b, i) => {
+      const at = .3 + i * .9;
+      tl.to(b.g, {opacity: 1, duration: .45, ease: 'power2.out'}, at);
+      if (b.curls.length) tl.to(b.curls, {attr: {'stroke-dashoffset': 0}, duration: .7, stagger: .1, ease: 'power2.out'}, at + .25);
+    });
+    tl.to(B.spd, {attr: {'font-size': 16}, duration: .4, ease: 'back.out(2)'}, 1.0);
+  }
+  document.addEventListener('turned', () => { turned = true; buildBack(); });
+
+  // ---------- the answer ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? 'Right: it turns chaotic' : 'Not quite: it turns chaotic');
+    Kit.hide('say');
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('sure').classList.add('wait');
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    Kit.$('sure').classList.remove('wait'); sure.on();
+  });
+
+  Kit.onShow.card = () => { drawFront(); if (turned && backDrawn) { if (tl) tl.kill(); drawBack(false); } };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[0].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4600);
+  };
+})();
+Kit.single();
+</script>
+</html>

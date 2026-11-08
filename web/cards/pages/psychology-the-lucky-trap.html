@@ -1,0 +1,332 @@
+<!doctype html>
+<!-- slug: psychology-the-lucky-trap -->
+<!-- Design note.
+     Thought to carry: the danger is not the hope, it is what the hope quietly replaces. Same luck, same storm; the net decides the fall.
+     Front: a tightrope between two posts, "Agree" on the left and "Disagree" on the right, a small pennant on each post and a cloud forming. Below the rope, a faint dotted outline that nothing explains yet. The reader drags the walker to where they stand, then says how sure.
+     Back: two walkers stood where the reader stood. One cloud, one shower of slanted rain over both ropes, and both ropes snap at the same moment. On the left the rope hangs from the posts and the walker lies on the ground, the full drop. On the right the same blow lands in a net: a short drop, a bounce, caught. A small "you" over each break shows where the reader stood. The net is the only difference.
+     The front gives nothing away: no verdict, no fall. Only the two views as two ends of one rope and the reader's place on it. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The "I'm lucky" trap</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s linear .37s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .37s}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.2cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.front::after{content:"";flex:0 0 max(4.6cqh,40px)}
+.say,.body,.big,.you{overflow-wrap:break-word}
+.back .head{display:flex;flex-direction:column}
+.back .big{margin:0;font-size:clamp(26px,min(8.4cqw,5.2cqh),44px);line-height:1.04;text-wrap:balance}
+.you{margin:6px 0 0;font:600 17px/1.3 var(--body);color:rgba(255,255,255,.8)}
+.back .body{margin:0;font:500 max(1.8cqh,12.5px)/1.36 var(--body)}
+.back .body b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Take a side · a point of view">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: does feeling lucky set you up for a harder fall?</h2>
+        <div class="stagebox"><svg id="pic" data-drag role="img" aria-label="A tightrope walker between two posts, each with a small pennant. The left end says agree, the right end says disagree. A cloud is forming above."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag the walker to where you stand on the rope. Then say how sure you are.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <div class="head">
+          <p class="big">Same luck. The net decides the fall.</p>
+          <p class="you" id="you"></p>
+        </div>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Two walkers on two ropes under one cloud. The same rain hits both ropes and both snap. With no net, the walker falls the whole height and lies on the ground. With a net, the walker drops a short way, bounces and is caught."></svg></div>
+        <p class="body"><b>For the view:</b> when luck seems to do the work, you stop checking, so the first real blow lands from full height. <b>Against it:</b> people who expect good things often try more and get up faster. The risk is not hope. It is hope that replaces the net.</p>
+        <div class="keep"><b>ASK YOURSELF</b> What am I not checking, because I expect it to go well?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2020) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const $ = Kit.$, card = $('card');
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  let INK = '#111', PAPER = '#ffffff', fs = 13;
+  let p = .5, touched = false, armed = false, done = false, choice = '', turned = false, backTl = null;
+  const F = {}, L = {a: 0};
+  const names = v => v < .2 ? 'fully agree' : v < .4 ? 'mostly agree' : v < .6 ? 'torn between the two' : v < .8 ? 'mostly disagree' : 'fully disagree';
+
+  const colours = () => { INK = getComputedStyle(card).getPropertyValue('--k').trim() || '#111'; };
+  const T = (parent, x, y, t, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), parent);
+    e.textContent = t; return e;
+  };
+  function cloud(parent, cx, cy, w, op) {
+    const g = Kit.mk('g', {style: `opacity:${op}`}, parent);
+    [[-.28, .05, .19], [0, -.06, .26], [.27, .04, .2]].forEach(([dx, dy, r]) => Kit.mk('circle', {cx: cx + dx * w, cy: cy + dy * w, r: r * w, fill: INK}, g));
+    Kit.mk('rect', {x: cx - .44 * w, y: cy + .02 * w, width: .88 * w, height: .2 * w, rx: .1 * w, fill: INK}, g);
+    return g;
+  }
+  // A walker, feet at the origin.
+  function body(parent, u) {
+    const g = Kit.mk('g', {}, parent), lc = {'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none', stroke: INK};
+    Kit.mk('path', Object.assign({d: `M${-u * .5},0 L0,${-u * 1.6} L${u * .5},0`, 'stroke-width': u * .32}, lc), g);
+    Kit.mk('line', Object.assign({x1: 0, y1: -u * 1.6, x2: 0, y2: -u * 3.1, 'stroke-width': u * .55}, lc), g);
+    Kit.mk('path', Object.assign({d: `M${-u * 1.2},${-u * 2.45} L0,${-u * 2.95} L${u * 1.2},${-u * 2.45}`, 'stroke-width': u * .24}, lc), g);
+    Kit.mk('circle', {cx: 0, cy: -u * 3.85, r: u * .62, fill: INK}, g);
+    return g;
+  }
+  const pole = (parent, u) => Kit.mk('path', {d: `M${-u * 3.2},${-u * 2.4} Q0,${-u * 2.95} ${u * 3.2},${-u * 2.4}`, stroke: INK, 'stroke-width': Math.max(1.6, u * .17), fill: 'none', 'stroke-linecap': 'round'}, parent);
+
+  // ---------- the front: one rope between two views ----------
+  function drawFront() {
+    colours();
+    const svg = $('pic'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    fs = clamp(W / 27, 12, 14);
+    const u = clamp(Math.min(H * .065, W * .045), 8, 15), x0 = fs * 1.1, x1 = W - fs * 1.1;
+    const cw = Math.min(W * .34, H * .36), ccy = cw * .34 + 3, cbot = ccy + cw * .22;
+    const ry = Math.max(cbot + u * 5 + 10, H * .44);
+    Object.assign(F, {W, H, u, ry, x0, x1, lo: x0 + u * 3.6, hi: x1 - u * 3.6, sag: u * .5});
+    Kit.mk('line', {x1: 0, x2: W, y1: H - 1.5, y2: H - 1.5, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    F.cloud = cloud(svg, W * .6, ccy, cw, .2);
+    const ptop = Math.max(4, ry - u * 4.7 - fs * 1.6);
+    for (const x of [x0, x1]) Kit.mk('line', {x1: x, x2: x, y1: ptop, y2: H - 1.5, stroke: INK, 'stroke-width': 3.2, 'stroke-linecap': 'round'}, svg);
+    // A pennant on each post, facing the rope.
+    F.sign = Kit.mk('g', {}, svg);
+    for (const [x, s] of [[x0, 1], [x1, -1]])
+      Kit.mk('path', {d: `M${x},${ptop + 1} L${x + s * fs * 2.4},${ptop + fs * .65} L${x},${ptop + fs * 1.3} Z`, fill: INK, 'stroke-linejoin': 'round'}, F.sign);
+    F.rope = Kit.mk('path', {stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linejoin': 'round'}, svg);
+    // The two views, under each end of the rope.
+    F.labels = [];
+    [['Agree:', 'it makes you', 'stop preparing'], ['Disagree:', 'it makes you', 'bold and tough']].forEach((lines, side) => {
+      lines.forEach((t, i) => F.labels.push(T(svg, side ? x1 - fs * .6 : x0 + fs * .6, ry + fs * 1.9 + i * fs * 1.3, t,
+        {'text-anchor': side ? 'end' : 'start', 'font-weight': i ? 600 : 800})));
+    });
+    // A faint outline below, left unexplained. The back pays it off.
+    const labEnd = ry + fs * 4.6, room = H - 4 - labEnd;
+    if (room > fs * 2.4) {
+      const nt = labEnd + Math.max(fs, room * .3), dep = Math.min(fs * 2.6, (H - 6 - nt) * .6), a = x0 + 4, b = x1 - 4;
+      if (dep > fs * .6) F.net = Kit.mk('path', {d: `M${a},${nt} L${b},${nt} M${a},${nt} Q${(a + b) / 2},${nt + dep * 2} ${b},${nt}`,
+        stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-dasharray': '0.1 7', opacity: .35}, svg);
+    }
+    F.walk = Kit.mk('g', {}, svg);
+    F.lean = Kit.mk('g', {}, F.walk);
+    body(F.lean, u); pole(F.lean, u);
+    F.hint = Kit.mk('g', {}, F.walk);
+    if (!touched) for (const s of [-1, 1]) {
+      const hx = s * u * 2.1, hy = -u * .9;
+      Kit.mk('path', {d: `M${hx},${hy - u * .45} l${s * u * .45},${u * .45} l${-s * u * .45},${u * .45}`, stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, F.hint);
+    }
+    setP(p); applyLean();
+  }
+  function setP(v) {
+    p = clamp(v, 0, 1);
+    const wx = F.lo + (F.hi - F.lo) * p;
+    F.rope.setAttribute('d', `M${F.x0},${F.ry} L${wx},${F.ry + F.sag} L${F.x1},${F.ry}`);
+    F.walk.setAttribute('transform', `translate(${wx},${F.ry + F.sag})`);
+  }
+  const applyLean = () => F.lean && F.lean.setAttribute('transform', `rotate(${L.a})`);
+
+  const svg = $('pic'), say = $('say');
+  let dragging = false, lastX = 0;
+  const xOf = e => e.clientX - svg.getBoundingClientRect().left;
+  const moveTo = x => {
+    const dx = x - lastX; lastX = x;
+    setP((x - F.lo) / (F.hi - F.lo));
+    if (typeof gsap !== 'undefined' && !Kit.calm) {
+      gsap.killTweensOf(L);
+      gsap.timeline({onUpdate: applyLean}).to(L, {a: clamp(dx * 1.4, -12, 12), duration: .12, ease: 'power2.out'}).to(L, {a: 0, duration: .7, ease: 'power2.out'});
+    }
+    say.innerHTML = armed ? `You: <b>${names(p)}</b>. Now, how sure are you?` : `You: <b>${names(p)}</b>. Let go where you stand.`;
+  };
+  svg.addEventListener('pointerdown', e => {
+    if (done) return; dragging = true; svg.setPointerCapture(e.pointerId); lastX = xOf(e);
+    if (!touched) { touched = true; F.hint && (F.hint.innerHTML = ''); Kit.haptic('selection'); }
+    moveTo(xOf(e));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) moveTo(xOf(e)); });
+  const release = () => {
+    if (!dragging) return; dragging = false;
+    if (touched && !armed && !done) { armed = true; sure.on(); }
+    say.innerHTML = `You: <b>${names(p)}</b>. Now, how sure are you?`;
+  };
+  svg.addEventListener('pointerup', release); svg.addEventListener('pointercancel', release);
+
+  const sure = Kit.sure($('sure'), 'How sure are you?', pct => {
+    if (done) return; done = true;
+    choice = names(p);
+    Kit.answer({choice, correct: null, sure: pct});
+    $('you').textContent = `You stood at “${choice}”, ${pct}% sure. Both walkers stood where you did.`;
+    setTimeout(() => Turn.over(), Kit.calm ? 30 : 700);
+  });
+
+  // ---------- the back: one storm, two ropes, one net ----------
+  function drawBack(anim) {
+    colours();
+    const svg = $('pic2'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    fs = clamp(W / 27, 12, 14);
+    const u = clamp(Math.min(H * .05, W * .038), 6.5, 12);
+    const gy = H - (14 + fs * 2.65) - 1;
+    const cw = clamp(Math.min(W * .3, H * .34), 46, 120), ccy = cw * .34 + 2, cb = ccy + cw * .22;
+    const ry = Math.min(Math.max(cb + Math.max(u * 3, 22), H * .2), gy - u * 6), sag = u * .45;
+    const scene = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: 0, x2: W, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, scene);
+    const sky = cloud(svg, W / 2, ccy, cw, .34);
+    const halves = [{x0: fs * .6, x1: W / 2 - fs * .8, net: false}, {x0: W / 2 + fs * .8, x1: W - fs * .6, net: true}];
+    const dir = p < .5 ? 1 : -1;            // which way the body falls: head toward the open side
+    const marks = Kit.mk('g', {style: 'opacity:0'}, svg);
+    const drops = [];
+
+    halves.forEach(h => {
+      const m = u * 3.4, wx = h.x0 + m + (h.x1 - h.x0 - 2 * m) * p; h.wx = wx;
+      for (const x of [h.x0, h.x1]) Kit.mk('line', {x1: x, x2: x, y1: ry - u * 1.5, y2: gy, stroke: INK, 'stroke-width': 2.8, 'stroke-linecap': 'round'}, scene);
+      h.cxb = wx + dir * u * 2.2;
+      if (h.net) {
+        // The net, strung between the posts below the rope.
+        h.a = h.x0 + 3; h.b = h.x1 - 3;
+        h.nety = ry + (gy - ry) * .42;
+        h.depth = Math.min(fs * 1.4, (gy - h.nety) * .45);
+        h.N = Math.max(5, Math.round((h.b - h.a) / (fs * 1.3)));
+        h.tw = clamp((h.cxb - h.a) / (h.b - h.a), .12, .88);
+        h.netEl = Kit.mk('path', {stroke: INK, 'stroke-width': 1.3, fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: .9}, scene);
+        h.contact = h.nety - u * .5;
+        h.Dmax = Math.min(u * 1.8, (gy - h.nety - h.depth) * .8);
+        h.Drest = h.Dmax * .5;
+      }
+      h.land = gy - u * .62 - 1.5;
+      h.rope = Kit.mk('path', {stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, svg);
+      h.walk = Kit.mk('g', {}, svg); body(h.walk, u);
+      h.poleG = Kit.mk('g', {}, svg); pole(h.poleG, u);
+      const lo = (h.net ? h.a : h.x0 + 3) + u * 3.2, hi = (h.net ? h.b : h.x1 - 3) - u * 3.2;
+      h.pcx = clamp(wx - dir * (u * 3.2 + 3), lo, hi);
+      h.s = {k: 0, y: ry + sag, r: 0, D: 0, pf: 0};
+      const cx = (h.x0 + h.x1) / 2;
+      T(scene, cx, gy + 14 + fs, 'Trusting luck,', {'text-anchor': 'middle', 'font-weight': 800});
+      T(scene, cx, gy + 14 + fs * 2.3, h.net ? 'and a net' : 'no net', {'text-anchor': 'middle', 'font-weight': 600});
+      // Where you stood, and how far that place fell.
+      T(marks, wx, ry - 7, 'you', {'text-anchor': 'middle', 'font-size': 12, 'font-weight': 800});
+      Kit.mk('circle', {cx: wx, cy: ry + sag, r: 2.6, fill: INK}, marks);
+      const end = (h.net ? h.contact + h.Drest : h.land) - u * .5 - 4;
+      const dl = Kit.mk('line', {x1: wx, x2: wx, y1: ry + sag + 5, y2: ry + sag + 5, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '3 4', 'stroke-linecap': 'round'}, svg);
+      drops.push([dl, Math.max(ry + sag + 5, end)]);
+      render(h);
+    });
+
+    // One cloud, one rain, over both ropes.
+    const rain = Kit.mk('g', {style: 'opacity:0'}, svg);
+    const rt = cb + 5, rb = ry - 4, band = rb - rt;
+    if (band > 10) {
+      const step = Math.max(14, W / 22), len = Math.min(band * .5, fs * 1.2), slx = len * .4;
+      const clear = Math.max(fs * 1.7, u * 3.5);
+      const posts = halves.flatMap(h => [h.x0, h.x1]);
+      let c = 0;
+      for (let x = step * .5; x < W + slx; x += step, c++) for (const row of [0, 1]) {
+        const xs = x + (row ? step * .5 : 0), y1 = rt + (row ? band - len : (c % 2) * band * .15);
+        const xa = xs - slx;
+        if (xa < 3 || xs > W - 3) continue;
+        if (halves.some(h => xs > h.wx - clear && xa < h.wx + clear)) continue;
+        if (posts.some(px => xs > px - 4 && xa < px + 4)) continue;
+        Kit.mk('line', {x1: xs, y1, x2: xa, y2: y1 + len, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .6}, rain);
+      }
+    }
+
+    function prof(h, t) {
+      return t <= h.tw ? (1 - Math.cos(Math.PI * t / h.tw)) / 2 : (1 - Math.cos(Math.PI * (1 - t) / (1 - h.tw))) / 2;
+    }
+    function netD(h, D) {
+      const X = t => h.a + (h.b - h.a) * t, Y = (t, f) => h.nety + h.depth * f * Math.sin(Math.PI * t) + D * prof(h, t);
+      let d = '';
+      for (const f of [0, .5, 1]) { d += `M${X(0)},${Y(0, f)}`; for (let k = 1; k <= 36; k++) d += ` L${X(k / 36)},${Y(k / 36, f)}`; }
+      for (let k = 0; k < h.N; k++) {
+        const t0 = k / h.N, t1 = (k + 1) / h.N;
+        for (const [f0, f1] of [[0, .5], [.5, 1]])
+          d += ` M${X(t0)},${Y(t0, f0)} L${X(t1)},${Y(t1, f1)} M${X(t1)},${Y(t1, f0)} L${X(t0)},${Y(t0, f1)}`;
+      }
+      return d;
+    }
+    function render(h) {
+      const {k, y, r, D, pf} = h.s, wx = h.wx;
+      const lerp = (a, b) => a + (b - a) * k;
+      if (k <= 0) h.rope.setAttribute('d', `M${h.x0},${ry} L${wx},${ry + sag} L${h.x1},${ry}`);
+      else {
+        // Snapped: each half swings down and hangs from its post.
+        const piece = (px, len, s) => {
+          const hl = Math.min(len * .85, gy - ry - 6);
+          const ex = lerp(wx - s * u * .3, px + s * 6), ey = lerp(ry + sag, ry + hl);
+          const cx = lerp((px + wx) / 2, px + s * 13), cy = lerp(ry + sag * .5, ry + hl * .55);
+          return `M${px},${ry} Q${cx},${cy} ${ex},${ey}`;
+        };
+        h.rope.setAttribute('d', `${piece(h.x0, wx - h.x0, 1)} ${piece(h.x1, h.x1 - wx, -1)}`);
+      }
+      if (h.net) h.netEl.setAttribute('d', netD(h, D));
+      h.walk.setAttribute('transform', `translate(${wx},${y}) rotate(${r})`);
+      const rest = h.net ? h.nety + D * prof(h, (h.pcx - h.a) / (h.b - h.a)) + u * 2.4 - 1 : gy + u * 2.4 - 1.5;
+      h.poleG.setAttribute('transform', `translate(${wx + (h.pcx - wx) * pf},${ry + sag + (rest - ry - sag) * pf})`);
+    }
+
+    const [hl, hr] = halves, R = (h) => () => render(h), at = 1.35;
+    const tl = gsap.timeline({paused: true});
+    tl.from(scene, {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from(sky, {opacity: 0, y: -10, duration: .6, ease: 'power2.out'}, .4)
+      .fromTo(rain, {opacity: 0, y: -10}, {opacity: 1, y: 0, duration: .4, ease: 'power1.in'}, .95)
+      .call(() => { if (anim) Kit.haptic('light'); }, null, at);
+    // The same blow, at the same moment, on both ropes.
+    for (const h of halves) tl.to(h.s, {k: 1, duration: .5, ease: 'power2.out', onUpdate: R(h)}, at);
+    // No net: the whole height.
+    tl.to(hl.s, {y: hl.land, r: dir * 90, pf: 1, duration: .62, ease: 'power2.in', onUpdate: R(hl)}, at + .02);
+    // A net: a short drop, the mesh gives, a bounce, caught.
+    tl.to(hr.s, {y: hr.contact, r: dir * 90, duration: .34, ease: 'power2.in', onUpdate: R(hr)}, at + .02)
+      .to(hr.s, {pf: 1, duration: .45, ease: 'power2.in', onUpdate: R(hr)}, at + .02)
+      .to(hr.s, {D: hr.Dmax, y: hr.contact + hr.Dmax, duration: .16, ease: 'power1.out', onUpdate: R(hr)}, at + .36)
+      .to(hr.s, {D: 0, y: hr.contact - u * 1.4, duration: .26, ease: 'power2.out', onUpdate: R(hr)}, at + .52)
+      .to(hr.s, {y: hr.contact, duration: .22, ease: 'power2.in', onUpdate: R(hr)}, at + .78)
+      .to(hr.s, {D: hr.Drest, y: hr.contact + hr.Drest, duration: .32, ease: 'power2.out', onUpdate: R(hr)}, at + 1);
+    tl.to(marks, {opacity: 1, duration: .35, ease: 'power2.out'}, at + 1.2);
+    drops.forEach(([dl, y2], i) => tl.to(dl, {attr: {y2}, duration: .5, ease: 'power2.out'}, at + 1.3 + i * .12));
+    backTl = tl;
+    if (anim) tl.play(); else tl.progress(1);
+  }
+
+  document.addEventListener('turned', () => { turned = true; drawBack(!Kit.calm); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined' || !F.cloud) return;
+    gsap.from(F.cloud, {opacity: 0, y: -10, duration: .9, ease: 'power2.out'});
+    gsap.from(F.sign, {opacity: 0, y: -6, duration: .5, delay: .25, ease: 'power3.out'});
+    gsap.from(F.labels, {opacity: 0, y: 4, duration: .4, delay: .45, stagger: .05, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; if (F.hint) F.hint.innerHTML = '';
+    setP(.3); armed = true; sure.on();
+    say.innerHTML = `You: <b>${names(p)}</b>. Now, how sure are you?`;
+    await wait(100);
+    const b = $('sure').querySelector('[data-v="80"]') || $('sure').querySelector('[data-v]');
+    if (b) b.click();
+    await wait(Kit.calm ? 200 : 1600);
+    if (!turned) Turn.over();
+    await wait(100);
+    if (backTl) backTl.progress(1);
+    await wait(200);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-volcano-depth-tsunami",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.risk_in_numbers",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How deep must an undersea volcano's crater be for its tsunami risk to be very low?",
+  "answer": "Deeper than 500–600 m, the tsunami risk is very low. An eruption shoves the water column, but the energy disperses in the water. From the Marsili, just over 500 m down, only some pumice would come up.",
+  "move": "Judge an undersea volcano by the water above its crater.",
+  "keywords": [
+    "tsunami",
+    "submarine volcano",
+    "crater",
+    "marsili"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drag-to-guess page with a cross-section of an undersea volcano. The reader drags its top up or down to the depth where they think tsunami risk turns very low, then reads the reveal: 500–600 m.",
+    "ground": "#dcecea"
+  },
+  "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=563s",
+  "written": "2026-11-07"
+}

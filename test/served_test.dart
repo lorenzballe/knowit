@@ -177,6 +177,66 @@ void main() {
     },
   );
 
+  test('a slow server does not hold the splash: past the start wait the '
+      'phone deals', () async {
+    final MemoryServedStore store = MemoryServedStore()
+      ..slow = const Duration(seconds: 2);
+    store.days['me:$today'] = _aDay(today);
+    Served.useForTest(
+      Served(
+        storeOverride: store,
+        uidOverride: 'me',
+        startWait: const Duration(milliseconds: 150),
+      ),
+    );
+    final Stopwatch took = Stopwatch()..start();
+    final AppState app = AppState();
+    await app.init();
+    expect(app.dealtBy, 'phone');
+    expect(app.todaysDeck, hasLength(kPillsPerDay));
+    expect(
+      took.elapsed,
+      lessThan(const Duration(seconds: 1)),
+      reason: 'the day came ${took.elapsedMilliseconds} ms after the start',
+    );
+  });
+
+  test('from the late afternoon tomorrow is fetched as the app goes, once, '
+      'and its first pages with it', () async {
+    final MemoryServedStore store = MemoryServedStore();
+    final DateTime now = DateTime.now();
+    final String tomorrow = dateKey(now.add(const Duration(days: 1)));
+    store.onAsk[tomorrow] = _aDay(tomorrow);
+    Served.useForTest(Served(storeOverride: store, uidOverride: 'me'));
+    final AppState app = AppState();
+    await app.init();
+    final int atStart = store.asked;
+
+    // Before the server deals tomorrow itself, the phone does not ask.
+    await app.askTomorrowIfDue(
+      now: DateTime(now.year, now.month, now.day, 16, 30),
+    );
+    expect(store.asked, atStart);
+    expect(app.servedTomorrow, isNull);
+
+    await app.askTomorrowIfDue(
+      now: DateTime(now.year, now.month, now.day, 17, 30),
+    );
+    expect(store.asked, atStart + 1);
+    expect(app.servedTomorrow?.date, tomorrow);
+    expect(
+      (await Served.instance.keptDay(now.add(const Duration(days: 1))))?.date,
+      tomorrow,
+      reason: 'the morning finds it on the phone',
+    );
+
+    // Kept: leaving again does not ask again.
+    await app.askTomorrowIfDue(
+      now: DateTime(now.year, now.month, now.day, 21, 0),
+    );
+    expect(store.asked, atStart + 1);
+  });
+
   test(
     'Explore as served: shelves whole, the reader\'s own, and offline said',
     () async {

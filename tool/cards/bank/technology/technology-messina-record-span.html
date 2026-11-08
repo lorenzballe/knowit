@@ -1,0 +1,259 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-messina-bridge-span -->
+<!-- Thought to carry: size a leap against the record as a ratio. 3,300 m is not "a bit longer" than 1,900 m: it is 1.7 times.
+     Front: today's record suspension bridge drawn to scale, and a second bridge below it on the same scale. The scale runs to about
+     3.5 times the record, so there is visible room to drag. The reader drags the red far tower out to where Messina's single span
+     would have to end. It starts short of the record at 1,200 m, so every guess is a deliberate drag. Then the reader sets how sure
+     they are, then turns the card.
+     Back: the true 3,300 m span, its deck dropping in 100 m at a time. The record lies on it as a solid slate ghost. 1× and 1.7× sit
+     at the towers, +1,400 m is bracketed and the reader's red tower is marked. The takeaway uses the reader's own ratio and confidence.
+     Headline states the ratio plainly (1.7 times), not "nearly twice".
+     Facts from the video only: record about 1,900 m; Messina would need 3,300 m, more than 1 km longer. -->
+<title>One span across the Strait</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#card{--k:#13252d;background:#e6f0ef!important;color:#13252d}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* The face turned away is mirrored by the flip; take it out of view entirely once it has turned past edge-on,
+   so its mirrored text never lands under the save and share or on the visible face's labels. */
+.turn:not(.over)>.back{visibility:hidden}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face{gap:1.2cqh}
+.face .stagebox{flex:1;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize;outline:none}
+#pic:focus-visible{outline:2px solid #13252d;outline-offset:2px;border-radius:6px}
+.q{overflow-wrap:anywhere}
+.front .say{margin:0;padding:0;width:auto;max-width:none;color:#13252d}
+/* Confidence: solid outlines, dark text, the chosen one filled. */
+#sure{opacity:1!important;color:#13252d}
+#sure :not([data-v]){color:#13252d}
+#sure [data-v]{background:transparent!important;border:1.5px solid #13252d!important;color:#13252d!important;opacity:1!important;font-weight:700;box-shadow:none!important}
+#sure:not(.live) [data-v]{border-color:#a7bbc0!important;color:#5f777f!important}
+#sure [data-v].pick{background:#13252d!important;color:#fff!important}
+.go{align-self:flex-start;max-width:calc(100% - 112px);min-height:44px;padding:0 22px;border-radius:999px;border:1.5px solid #13252d;background:#13252d;color:#fff;font:700 15px/1 var(--body);cursor:pointer;flex:none}
+.go:disabled{background:transparent;color:#5f777f;border-color:#a7bbc0;cursor:default}
+.back .big{margin:0;overflow-wrap:anywhere;font-size:clamp(30px,5.4cqh,46px);line-height:1.02}
+.back .body{margin:0;font-size:clamp(14px,2.15cqh,18px);line-height:1.38}
+.back .keep{background:transparent!important;border:0;border-left:3px solid #13252d;border-radius:0;padding:2px 0 2px 12px;margin:0;font-size:clamp(13px,1.95cqh,16px);line-height:1.38}
+.back .foot{padding-right:0;margin:0}
+.back .src{display:block;max-width:calc(100% - 112px)}
+.nb{white-space:nowrap}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag the tower · how far">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ONE SPAN</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">The Messina Bridge would hang in one span. How long, against today's record?</h2>
+        <div class="stagebox"><svg id="pic" tabindex="0" role="img" aria-label="Today's longest single-span suspension bridge drawn to scale, and below it a bridge whose red far tower you drag to set its length. Arrow keys also move it."></svg></div>
+        <p class="say" id="say">Drag the red tower out to where Messina's single span would end.</p>
+        <div class="sure" id="sure"></div>
+        <button class="go" id="go" type="button" disabled>Turn the card</button>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">About 1.7 times the record</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The 3,300 metre Messina span drawn to scale, 1.7 times the 1,900 metre record laid on it, the 1,400 metres beyond bracketed, and your guess marked."></svg></div>
+        <p class="body">The longest single span today is about <span class="nb">1,900 m</span>. To cross the Strait in one leap, Messina would need <span class="nb">3,300 m</span>: more than <span class="nb">1 km</span> longer.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> <span id="keepTxt">Read any leap past a record as a ratio first.</span></div>
+        <div class="foot"><span class="src">Source · Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const RECORD = 1900, TRUE = 3300, MIN = 600, MAX = 6600, START = 1200;   // MAX: about 3.5 times the record
+  const INK = '#13252d', MUTE = '#4d6670', SEA = '#bcd8dd', GHOST = '#7f9ea8', RED = '#a3271c';
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), go = Kit.$('go'), say = Kit.$('say'), sureEl = Kit.$('sure');
+  let guess = START, touched = false, pick = null, answered = false, turned = false, built = false;
+  let G = {};
+
+  const fmt = m => Math.round(m).toLocaleString('en-US') + '\u00a0m';
+  const ratio = m => (m / RECORD).toFixed(1) + '×';
+  const txt = (p, x, y, t, a = {}, font = 'var(--body)') => { const e = Kit.mk('text', Object.assign({x, y}, a), p); e.setAttribute('style', 'font-family:' + font); if (t != null) e.textContent = t; return e; };
+  const tsp = (p, t, a = {}) => { const e = Kit.mk('tspan', a, p); e.textContent = t; return e; };
+  const fsOf = W => Math.max(12, Math.min(14, W / 27));
+
+  // A suspension bridge, flat: back-stays, the main cable's curve, hangers, two towers, the deck.
+  function bridge(p, xa, xb, yd, T, col, o = {}) {
+    const back = T * .7, top = yd - T, low = yd - 3, mid = (xa + xb) / 2, half = (xb - xa) / 2, b = {};
+    b.hang = Kit.mk('g', {}, p);
+    const n = Math.max(3, Math.round((xb - xa) / 8));
+    for (let i = 1; i < n; i++) {
+      const x = xa + (xb - xa) * i / n, y = low + (top - low) * Math.pow((x - mid) / half, 2);
+      Kit.mk('line', {x1: x, x2: x, y1: y, y2: yd, stroke: col, 'stroke-width': 1, opacity: .5}, b.hang);
+    }
+    b.cable = Kit.mk('path', {d: `M${xa - back},${yd} L${xa},${top} Q${mid},${2 * low - top} ${xb},${top} L${xb + back},${yd}`, fill: 'none', stroke: col, 'stroke-width': 2, 'stroke-linejoin': 'round'}, p);
+    if (!o.noDeck) b.deck = Kit.mk('line', {x1: xa - back, x2: xb + back, y1: yd, y2: yd, stroke: col, 'stroke-width': 3.2}, p);
+    b.towers = [[xa, col, 4.5], [xb, o.farCol || col, o.farCol ? 6 : 4.5]].map(([x, c, w]) => Kit.mk('rect', {x: x - w / 2, y: top, width: w, height: T + 10, fill: c}, p));
+    return b;
+  }
+  const sea = (p, W, yd) => Kit.mk('rect', {x: 0, y: yd + 4, width: W, height: 10, fill: SEA}, p);
+
+  // ---------- front ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = fsOf(W);
+    const hs = Math.max(34, Math.min(H * .22, W * .19, 74));
+    const yH = hs * .78, ySub = yH + hs * .2 + fs * 1.25, top = ySub + fs * .9;
+    const cap = fs * .8 + 14, water = 14, gap = Math.max(12, fs * 1.2);
+    const T = Math.max(18, Math.min(54, W * .12, (H - top - gap - 2 * (cap + water + 2)) / 2));
+    const back = T * .7, pad = 1, x0 = pad + back, s = (W - pad - back - x0) / MAX;
+    const bh = cap + T + water + 2, free = H - top - 2 * bh - gap, st = top + Math.max(0, free * .5);
+    G = {W, H, fs, T, back, x0, s};
+    G.y1 = st + cap + T; G.y2 = G.y1 + water + 2 + gap + cap + T;
+
+    // The hero: the reader's own number.
+    G.hero = txt(svg, W / 2, yH, fmt(guess), {'text-anchor': 'middle', 'font-size': hs, 'font-weight': 800, fill: INK}, 'var(--display)');
+    txt(svg, W / 2, ySub, 'your guess', {'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, fill: MUTE});
+    // The record, on the shared scale.
+    sea(svg, W, G.y1);
+    bridge(svg, x0, x0 + RECORD * s, G.y1, T, INK);
+    txt(svg, pad, G.y1 - T - 14, 'Longest single span today: 1,900\u00a0m', {'font-size': fs, 'font-weight': 700, fill: INK});
+    sea(svg, W, G.y2);
+    G.mine = Kit.mk('g', {}, svg);
+    paintMine();
+  }
+  function paintMine() {
+    const g = G, p = G.mine; if (!p) return; p.innerHTML = '';
+    const xb = g.x0 + guess * g.s, yt = g.y2 - g.T;
+    bridge(p, g.x0, xb, g.y2, g.T, INK, {farCol: RED});
+    Kit.mk('circle', {cx: xb, cy: yt, r: 7, fill: RED}, p);
+    if (!touched) {   // a drag cue to the right of the handle, clear of the label above
+      const a = xb + 13, b = xb + 41;
+      Kit.mk('path', {d: `M${a},${yt} H${b} M${a + 5},${yt - 4} L${a},${yt} L${a + 5},${yt + 4} M${b - 5},${yt - 4} L${b},${yt} L${b - 5},${yt + 4}`, stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
+    }
+    txt(p, 1, yt - 14, touched ? 'Messina: your span' : 'Messina: drag the red tower', {'font-size': g.fs, 'font-weight': 700, fill: INK});
+    if (G.hero) G.hero.textContent = fmt(guess);
+  }
+  function setGuess(m) {
+    if (answered) return;
+    const v = Math.max(MIN, Math.min(MAX, Math.round(m / 50) * 50));
+    if (v === guess && touched) return;
+    guess = v;
+    if (!touched) { touched = true; sure.on(); sureEl.classList.add('live'); if (pick == null) say.textContent = 'Now say how sure you are.'; }
+    paintMine();
+  }
+  let drag = false;
+  const mOf = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - G.x0) / G.s; };
+  svg.addEventListener('pointerdown', e => { if (answered) return; drag = true; svg.setPointerCapture(e.pointerId); setGuess(mOf(e)); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) setGuess(mOf(e)); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  svg.addEventListener('keydown', e => {
+    const d = e.key === 'ArrowRight' ? 100 : e.key === 'ArrowLeft' ? -100 : 0;
+    if (d) { e.preventDefault(); setGuess(guess + d); }
+  });
+
+  // Confidence: picking it unlocks the turn; nothing is graded until the reader turns.
+  sureEl.addEventListener('click', e => {
+    const b = e.target.closest('[data-v]'); if (!b || !touched || answered) return;
+    sureEl.querySelectorAll('[data-v]').forEach(x => x.classList.toggle('pick', x === b));
+  }, true);
+  const sure = Kit.sure(sureEl, 'How sure are you?', pct => {
+    if (answered || !touched) return;
+    pick = pct; go.disabled = false;
+    say.textContent = 'Turn the card to see the real span.';
+  });
+  go.addEventListener('click', () => {
+    if (answered || !touched || pick == null) return;
+    answered = true; go.disabled = true;
+    const err = Math.abs(guess - TRUE), ok = err <= 250;
+    Kit.answer({choice: fmt(guess), correct: ok, sure: pick});
+    sure.grade(ok, pick, `${fmt(guess)}, ${ok ? 'right' : 'off by ' + fmt(err)}`);
+    const cal = ok ? (pick >= 70 ? 'Close, and rightly sure.' : 'Close: you could have been surer.')
+                   : (pick >= 70 ? `Off by ${fmt(err)}: too sure for that miss.` : `Off by ${fmt(err)}, and your doubt was fair.`);
+    Kit.$('keepTxt').textContent = `You guessed ${ratio(guess)} the record, ${pick}% sure; it is 1.7×. ${cal} Read any leap past a record as a ratio first.`;
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H, fs = fsOf(W), lh = fs * 1.5, pad = 1;
+    const fixed = 2 * lh + 10 + 14 + fs * 1.6 + 14 + lh;
+    const T = Math.max(18, Math.min(58, W * .14, H - fixed));
+    const back = T * .7, far = Math.max(TRUE, guess);
+    const x0 = pad + back, s = (W - pad - back - x0) / far, X = m => x0 + m * s;
+    const xr = X(RECORD), xt = X(TRUE), xg = X(guess);
+    const y0 = Math.max(0, (H - fixed - T) * .5);
+    const yA = y0 + fs, yB = yA + lh, yd = yB + 10 + T;
+    const yg = yd + 14 + fs * 1.15, yb = yg + fs * .45 + 10, yl = yb + fs * 1.3;
+    const clampX = (e, x) => { const w = e.getComputedTextLength(); e.setAttribute('x', Math.max(w / 2 + 1, Math.min(W - w / 2 - 1, x))); return w; };
+
+    sea(svg2, W, yd);
+    // Beat 1: the record, a solid slate ghost laid on Messina's deck.
+    const gh = Kit.mk('g', {}, svg2);
+    Kit.mk('rect', {x: x0, y: yd - 4.5, width: xr - x0, height: 9, fill: GHOST}, gh);
+    Kit.mk('path', {d: `M${x0},${yd - T} Q${(x0 + xr) / 2},${2 * (yd - 3) - (yd - T)} ${xr},${yd - T}`, fill: 'none', stroke: GHOST, 'stroke-width': 2.4}, gh);
+    Kit.mk('rect', {x: xr - 2.5, y: yd - T, width: 5, height: T + 10, fill: GHOST}, gh);
+    const rl = txt(gh, xr, yB, null, {'text-anchor': 'middle', 'font-size': fs, fill: INK});
+    tsp(rl, '1× ', {'font-weight': 800}); tsp(rl, 'record, 1,900\u00a0m', {'font-weight': 600});
+    const rw = clampX(rl, xr), rRight = +rl.getAttribute('x') + rw / 2;
+
+    // Beat 2: Messina, its deck laid 100 m at a time.
+    const m = Kit.mk('g', {}, svg2), segs = [], sw = s * 100;
+    const b = bridge(m, x0, xt, yd, T, INK, {noDeck: true});
+    for (let i = 0; i < TRUE / 100; i++) segs.push(Kit.mk('rect', {x: X(i * 100) + .3, y: yd - 1.6, width: Math.max(1, sw - .6), height: 3.2, fill: INK}, m));
+    const ends = [Kit.mk('line', {x1: x0 - back, x2: x0, y1: yd, y2: yd, stroke: INK, 'stroke-width': 3.2}, m),
+                  Kit.mk('line', {x1: xt, x2: xt + back, y1: yd, y2: yd, stroke: INK, 'stroke-width': 3.2}, m)];
+
+    // Beat 3: the ratio at the far tower, the 1,400 m beyond the record, and the reader's own tower.
+    const notes = Kit.mk('g', {}, svg2);
+    const ml = txt(notes, xt, yA, null, {'text-anchor': 'middle', 'font-size': fs, fill: INK});
+    tsp(ml, '1.7× ', {'font-weight': 800}); tsp(ml, 'Messina, 3,300\u00a0m', {'font-weight': 600});
+    clampX(ml, xt);
+    if (rRight < xt - 4) Kit.mk('line', {x1: xt, x2: xt, y1: yA + 5, y2: yd - T - 3, stroke: INK, 'stroke-width': 1}, notes);
+    Kit.mk('path', {d: `M${xr},${yb - 5} V${yb} H${xt} V${yb - 5}`, fill: 'none', stroke: INK, 'stroke-width': 1.6}, notes);
+    const pl = txt(notes, (xr + xt) / 2, yl, '+1,400\u00a0m', {'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: INK});
+    clampX(pl, (xr + xt) / 2);
+    Kit.mk('rect', {x: xg - 1.5, y: yd - T, width: 3, height: T + 14, fill: RED}, notes);
+    Kit.mk('line', {x1: xg, x2: xg, y1: yd + 14, y2: yg - fs * .35, stroke: RED, 'stroke-width': 1.5}, notes);
+    Kit.mk('circle', {cx: xg, cy: yd - T, r: 4, fill: RED}, notes);
+    const gl = txt(notes, xg + 8, yg, `your guess: ${fmt(guess)}`, {'font-size': fs, 'font-weight': 700, fill: RED});
+    const gw = gl.getComputedTextLength();
+    if (xg + 8 + gw > W - 1) { gl.setAttribute('text-anchor', 'end'); gl.setAttribute('x', Math.max(gw + 1, xg - 8)); }
+
+    if (!animate || Kit.calm) return;
+    const L = b.cable.getTotalLength();
+    gsap.set(gh, {opacity: 0}); gsap.set([...b.towers, ...ends, b.cable, b.hang, notes], {opacity: 0});
+    gsap.set(segs, {y: -26, opacity: 0});
+    gsap.timeline()
+      .to(gh, {opacity: 1, duration: .5, ease: 'power2.out'})
+      .to(b.towers[0], {opacity: 1, duration: .3}, '-=.1')
+      .to(segs, {y: 0, opacity: 1, duration: .32, ease: 'power3.in', stagger: .045}, '<')
+      .to([b.towers[1], ...ends], {opacity: 1, duration: .3})
+      .set(b.cable, {opacity: 1})
+      .fromTo(b.cable, {attr: {'stroke-dasharray': L, 'stroke-dashoffset': L}}, {attr: {'stroke-dashoffset': 0}, duration: .8, ease: 'power2.inOut'})
+      .to(b.hang, {opacity: 1, duration: .5}, '<.2')
+      .to(notes, {opacity: 1, duration: .5, ease: 'power2.out'});
+  }
+
+  document.addEventListener('turned', () => { turned = true; requestAnimationFrame(() => { drawBack(!built); built = true; }); });
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm && G.mine) gsap.from(G.mine, {opacity: 0, y: 8, duration: .5, ease: 'power3.out', delay: .2}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setGuess(2600); await wait(150);
+    sureEl.querySelector('[data-v="80"]').click(); await wait(300);
+    go.click();
+    await wait(Kit.calm ? 900 : 4200);
+  };
+})();
+Kit.single();
+</script>
+</html>

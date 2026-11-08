@@ -1,0 +1,294 @@
+<!doctype html>
+<!-- slug: science-undersea-volcano-depth -->
+<!-- Design note.
+     Thought to carry: judge an undersea volcano by the water above its crater. The eruption shoves the water column, but the energy disperses in the water, and with the crater deeper than 500–600 m the tsunami risk is very low.
+     Front: a flat sea in cross-section with a depth scale (0 to 1,500 m), a boat on top and a volcano you drag up or down. The crater starts at 1,000 m. One label: the crater depth.
+     Back: the same scale and only four labels. A cone at 200 m whose push reaches the top and lifts it; the Marsili, just over 500 m down, whose push stays low and sends up only pumice; the 500–600 m band behind both; the reader's guess as a coral line with the confidence they chose. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How deep must an undersea volcano be for its tsunami risk to be very low?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;gap:1.1cqh;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back{visibility:hidden}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.front .sayrow{min-height:46px;padding-right:104px;box-sizing:border-box;flex:0 0 auto}
+.front .sayrow .say{margin:0;padding:0;max-width:100%;overflow-wrap:anywhere}
+.back .foot{min-height:46px;padding-right:104px;box-sizing:border-box}
+.back .big{font-size:max(3.1cqh,19px);line-height:1.12;margin-bottom:6px}
+.back .big .nb{white-space:nowrap}
+.back .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+.back .keep{font-size:max(1.8cqh,13px);line-height:1.3}
+.src{overflow-wrap:anywhere}
+#sure{color:var(--k)}
+#sure *{opacity:1!important}
+#sure *:not(button){color:var(--k)!important}
+#sure button{color:var(--k)!important;border:1.5px solid rgba(16,38,46,.6)!important;background:rgba(255,255,255,.45);font-weight:700}
+#sure button *{color:inherit!important}
+#sure button[aria-pressed="true"],#sure button[aria-checked="true"],#sure button.on,#sure button.sel,#sure button.picked,#sure button.is-on{background:var(--k)!important;color:#fff!important;border-color:var(--k)!important}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag the volcano · how sure" style="--c:#dcecea;--k:#10262e;--edge:#b3d0cd">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE VOLCANO</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How deep must an undersea volcano's crater be for its tsunami risk to be very low?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A sea in cross-section, 0 to 1,500 metres deep, with a boat on top and an undersea volcano whose crater depth you set by dragging."></svg></div>
+        <div class="sure" id="sure"></div>
+        <div class="sayrow"><p class="say" id="say">Drag the volcano's top up or down to where you think the tsunami risk turns very low.</p></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Deeper than <span class="nb">500–600&nbsp;m</span>, the tsunami risk is very low</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="On the same 0 to 1,500 metre scale: an eruption 200 metres down moves the water column up to the surface, while from the Marsili, just over 500 metres down, only some pumice reaches the top. Your guess is marked against the 500 to 600 metre band."></svg></div>
+        <p class="body">An eruption shoves the water column, but the energy disperses in the water. From the Marsili, just over 500 m down, only some pumice would come up.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Judge an undersea volcano by the water above its crater.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  gsap.registerPlugin(MotionPathPlugin);
+  const CORAL = '#e4572e', AMBER = '#f2b630', INK = '#10262e', ROCK = '#2e2a27', FOAM = '#fbf7ee', SEA = '#86c0c9';
+  const MAXM = 1500;
+  const fmt = m => Math.round(m).toLocaleString('en-US');
+  const FS = W => Math.max(12, Math.min(13.5, W / 27));
+  const S = {depth: 1000, touched: false, locked: false, guess: null, pct: null, turned: false};
+  let F = {}, tl = null;
+
+  const txt = (p, x, y, t, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.textContent = t; return e; };
+  const tw = (e, fs, t) => { let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} return w || t.length * fs * .56; };
+  const hit = (a, b, m = 3) => a && b && a.x0 < b.x1 + m && b.x0 < a.x1 + m && a.y0 < b.y1 + m && b.y0 < a.y1 + m;
+  const bb = e => { try { const b = e.getBBox(); if (b && (b.width || b.height)) return {x0: b.x, x1: b.x + b.width, y0: b.y, y1: b.y + b.height}; } catch (_) {} return null; };
+  const union = (...bs) => bs.filter(Boolean).reduce((a, b) => ({x0: Math.min(a.x0, b.x0), x1: Math.max(a.x1, b.x1), y0: Math.min(a.y0, b.y0), y1: Math.max(a.y1, b.y1)}));
+  function pill(p, text, fs, fill) {
+    const g = Kit.mk('g', {}, p);
+    const r = Kit.mk('rect', {fill}, g);
+    const e = Kit.mk('text', {fill: '#fff', 'font-size': fs, 'font-weight': 800, style: 'font-family:var(--body)'}, g);
+    e.textContent = text;
+    const pad = fs * .6, h = fs * 1.65, w = tw(e, fs, text) + 2 * pad;
+    r.setAttribute('width', w); r.setAttribute('height', h); r.setAttribute('rx', h / 2); r.setAttribute('y', -h / 2);
+    e.setAttribute('x', pad); e.setAttribute('y', fs * .36);
+    const o = {g, w, h, box: null, at(x0, cy) { g.setAttribute('transform', `translate(${x0},${cy})`); o.box = {x0, x1: x0 + w, y0: cy - h / 2, y1: cy + h / 2}; return o; }};
+    return o;
+  }
+  function seaPath(x0, W, H, Y0, fs) {
+    let d = `M${x0},${Y0}`; const per = fs * 3; let i = 0;
+    for (let x = x0; x < W; x += per / 2, i++) d += ` Q${x + per / 4},${Y0 + (i % 2 ? 2 : -2)} ${Math.min(W, x + per / 2)},${Y0}`;
+    return d + ` L${W},${H} L${x0},${H} Z`;
+  }
+  function cone(cx, ys, yb, hwT, hwB, seed) {
+    const N = 12, L = [], R = [];
+    for (let i = 0; i <= N; i++) {
+      const t = i / N, y = yb + (ys - yb) * t, hw = hwT + (hwB - hwT) * Math.pow(1 - t, 1.8);
+      const j = (i > 0 && i < N) ? Math.sin(i * 2.3 + seed) * 1.1 : 0;
+      L.push(`${(cx - hw + j).toFixed(1)},${y.toFixed(1)}`); R.unshift(`${(cx + hw + Math.sin(i * 1.7 + seed) * 1.1 * (i > 0 && i < N)).toFixed(1)},${y.toFixed(1)}`);
+    }
+    const c = hwT * .7;
+    return `M${L.join(' L')} L${cx - hwT * .45},${ys + c} L${cx + hwT * .45},${ys + c} L${R.join(' L')} Z`;
+  }
+  function seabed(x0, W, H, yb) {
+    let d = `M${x0},${yb}`;
+    for (let i = 1; i <= 10; i++) d += ` L${x0 + (W - x0) * i / 10},${yb + Math.sin(i * 1.9) * 1.4}`;
+    return d + ` L${W},${H} L${x0},${H} Z`;
+  }
+  // the same depth scale on both faces; figures thin out when the scale is squeezed
+  function ticks(p, GX, Y0, PX, fs) {
+    const g = Kit.mk('g', {}, p), ls = Math.max(12, fs * .92);
+    const step = [250, 500, 750, 1500].find(s => s * PX >= ls * 1.45) || 1500;
+    for (let m = 0; m <= MAXM; m += 250) {
+      const y = Y0 + m * PX;
+      if (m > 0 && m < MAXM) Kit.mk('line', {x1: GX, x2: GX + (m % 500 ? fs * .45 : fs * .8), y1: y, y2: y, stroke: INK, 'stroke-width': 1.2}, g);
+      if (m % step === 0) txt(g, GX - fs * .3, y + ls * .35, m === 0 ? '0 m' : fmt(m), ls, {'text-anchor': 'end', 'font-weight': 500});
+    }
+    return g;
+  }
+
+  // ---------- front ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = FS(W);
+    const GX = fs * 2.9, SW = W - GX, Y0 = fs * 2.2, YB = H - fs * .5, PX = (YB - Y0) / MAXM, cx = GX + SW * .6;
+    F = {svg, W, H, fs, GX, SW, Y0, YB, PX, cx};
+    Kit.mk('path', {d: seaPath(GX, W, H, Y0, fs), fill: SEA}, svg);
+    F.vol = Kit.mk('g', {}, svg);
+    Kit.mk('path', {d: seabed(GX, W, H, YB), fill: ROCK}, svg);
+    ticks(svg, GX, Y0, PX, fs);
+    const s = fs / 13, b = Kit.mk('g', {}, svg);
+    Kit.mk('path', {d: `M${cx - 15 * s},${Y0 - 2 * s} L${cx + 16 * s},${Y0 - 2 * s} L${cx + 11 * s},${Y0 + 4 * s} L${cx - 11 * s},${Y0 + 4 * s} Z`, fill: FOAM, stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, b);
+    Kit.mk('rect', {x: cx - 6 * s, y: Y0 - 10 * s, width: 6 * s, height: 8 * s, rx: 2 * s, fill: INK}, b);
+    Kit.mk('circle', {cx: cx - 3 * s, cy: Y0 - 13.5 * s, r: 3.6 * s, fill: INK}, b);
+    F.gl = Kit.mk('g', {}, svg);
+    render();
+  }
+  function render() {
+    if (!F.vol) return;
+    const {W, fs, GX, SW, Y0, YB, PX, cx} = F, ys = Y0 + S.depth * PX, hwT = Math.max(8, SW * .04), hwB = Math.min(W * .36, SW * .6 - fs * 1.4);
+    F.vol.innerHTML = ''; F.gl.innerHTML = '';
+    Kit.mk('path', {d: cone(cx, ys, YB + 2, hwT, hwB, 1), fill: ROCK}, F.vol);
+    Kit.mk('line', {x1: GX + fs * .9, x2: cx - hwT, y1: ys, y2: ys, stroke: CORAL, 'stroke-width': 2, 'stroke-dasharray': '5 4'}, F.gl);
+    const c = pill(F.gl, `crater at ${fmt(Math.round(S.depth / 10) * 10)} m`, fs, CORAL);
+    c.at(Math.max(GX + fs * .9, cx - hwT - fs * .6 - c.w), Math.max(Y0 + c.h / 2 + 2, ys));
+    if (!S.touched) {
+      const ax = cx, a0 = ys - fs * .7, a1 = Math.max(Y0 + fs * 1.4, ys - fs * 3);
+      if (a0 - a1 > fs) Kit.mk('path', {d: `M${ax},${a0} V${a1} m-5,6 l5,-6 l5,6 M${ax - 5},${a0 - 6} l5,6 l5,-6`, stroke: FOAM, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, F.gl);
+    }
+  }
+
+  // ---------- drag ----------
+  const svg = Kit.$('pic'); let dragging = false;
+  const setFrom = e => { const r = svg.getBoundingClientRect(); S.depth = Math.max(30, Math.min(MAXM - 50, (e.clientY - r.top - F.Y0) / F.PX)); render(); };
+  svg.addEventListener('pointerdown', e => { if (S.locked) return; gsap.killTweensOf(S); dragging = true; S.touched = true; svg.setPointerCapture(e.pointerId); setFrom(e); });
+  svg.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+  const end = () => { if (!dragging) return; dragging = false; commit(); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  let asked = false;
+  function commit() {
+    if (asked) return; asked = true; Kit.haptic('selection'); sure.on();
+    Kit.$('say').textContent = 'Settled on a depth? Say how sure you are.';
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (S.locked) return; S.locked = true;
+    const d = Math.round(S.depth / 10) * 10, ok = d >= 400 && d <= 700; S.guess = d; S.pct = pct;
+    Kit.answer({choice: `${fmt(d)} m`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${fmt(d)} m, ${ok ? 'right' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function drawBack(anim) {
+    if (tl) { tl.kill(); tl = null; }
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = FS(W), LH = fs * 1.45;
+    const GX = fs * 2.9, SW = W - GX, hh = fs * .8;
+    const l1 = fs * .95, l2 = l1 + LH, Y0 = l2 + fs * .9 + hh + 2, YB = H - fs * .5, PX = (YB - Y0) / MAXM, y = m => Y0 + m * PX;
+    const defs = Kit.mk('defs', {}, svg), cp = Kit.mk('clipPath', {id: 'wc'}, defs);
+    Kit.mk('rect', {x: GX, y: Y0 - 1, width: SW, height: H}, cp);
+
+    Kit.mk('path', {d: seaPath(GX, W, H, Y0, fs), fill: SEA}, svg);
+    const band = Kit.mk('rect', {x: GX, y: y(500), width: SW, height: 100 * PX, fill: AMBER, 'shape-rendering': 'crispEdges'}, svg);
+
+    const cx1 = GX + SW * .5, cx2 = GX + SW * .84, hwT = Math.max(6, SW * .024), hwB = SW * .14;
+    const ys1 = y(200), ys2 = y(510), f1 = ys1 + hwT * .7, f2 = ys2 + hwT * .7;
+
+    // the eruption's push: from 200 m it reaches the top; from the Marsili it stays in the water
+    const arcsG = Kit.mk('g', {'clip-path': 'url(#wc)'}, svg), A1 = [], A2 = [];
+    const th = 26 * Math.PI / 180, sn = Math.sin(th), cs = Math.cos(th);
+    const arc = (cx, cy, r) => `M${(cx - r * sn).toFixed(1)},${(cy - r * cs).toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 0 1 ${(cx + r * sn).toFixed(1)},${(cy - r * cs).toFixed(1)}`;
+    const D1 = f1 - Y0, n1 = Math.max(3, Math.min(7, Math.round(D1 / (fs * .6)))), st = D1 / n1;
+    for (let k = 1; k <= n1; k++) A1.push(Kit.mk('path', {d: arc(cx1, f1, st * k), fill: 'none', stroke: FOAM, 'stroke-width': 3, 'stroke-linecap': 'round'}, arcsG));
+    const D2 = f2 - Y0, n2 = Math.max(2, Math.min(3, Math.floor(D2 * .3 / st)));
+    for (let k = 1; k <= n2; k++) A2.push(Kit.mk('path', {d: arc(cx2, f2, st * k), fill: 'none', stroke: FOAM, 'stroke-width': 3 - k * .6, opacity: 1 - .3 * (k - 1), 'stroke-linecap': 'round'}, arcsG));
+
+    // the surface, lifted above the shallow cone
+    const hw = Math.min(SW * .16, fs * 4.5);
+    const hump = Kit.mk('path', {d: `M${cx1 - hw},${Y0 + 1} C${cx1 - hw * .4},${Y0 + 1} ${cx1 - hw * .35},${Y0 - hh} ${cx1},${Y0 - hh} C${cx1 + hw * .35},${Y0 - hh} ${cx1 + hw * .4},${Y0 + 1} ${cx1 + hw},${Y0 + 1} Z`, fill: SEA}, svg);
+    const c1 = Kit.mk('path', {d: cone(cx1, ys1, YB + 2, hwT, hwB, 2), fill: ROCK}, svg);
+    const c2 = Kit.mk('path', {d: cone(cx2, ys2, YB + 2, hwT, hwB, 3), fill: ROCK}, svg);
+    Kit.mk('path', {d: seabed(GX, W, H, YB), fill: ROCK}, svg);
+    ticks(svg, GX, Y0, PX, fs);
+
+    // pumice from the Marsili, rising to float on top
+    const pum = [];
+    [-1.4, -.45, .45, 1.4].forEach((k, i) => {
+      const el = Kit.mk('ellipse', {cx: 0, cy: 0, rx: fs * .32, ry: fs * .24, fill: FOAM, stroke: INK, 'stroke-width': .9}, svg);
+      const pts = [{x: cx2, y: f2 - 2}, {x: cx2 + fs * (.8 - i * .3), y: f2 - D2 * .35}, {x: cx2 - fs * (.6 - i * .2), y: f2 - D2 * .7}, {x: cx2 + k * fs * .9, y: Y0 - 1}];
+      gsap.set(el, {x: pts[3].x, y: pts[3].y}); pum.push({el, pts});
+    });
+
+    // labels 1 and 2: the two cones, same baseline, each with a leader
+    const top = Kit.mk('g', {}, svg);
+    const rA = txt(top, W - 2, l1, 'Marsili, ~500 m', fs, {'text-anchor': 'end'}), rB = txt(top, W - 2, l2, 'some pumice', fs, {'text-anchor': 'end', 'font-weight': 500});
+    const wR = Math.max(tw(rA, fs, 'Marsili, ~500 m'), tw(rB, fs, 'some pumice'));
+    const lA = txt(top, 0, l1, 'Cone at 200 m', fs, {'text-anchor': 'end'}), lB = txt(top, 0, l2, 'water column moves', fs, {'text-anchor': 'end', 'font-weight': 500});
+    const wL = Math.max(tw(lA, fs, 'Cone at 200 m'), tw(lB, fs, 'water column moves'));
+    const xL = Math.max(wL + 2, Math.min(cx1 + fs * 1.5, W - 2 - wR - fs * 1.2));
+    lA.setAttribute('x', xL); lB.setAttribute('x', xL);
+    Kit.mk('line', {x1: Math.min(cx1, xL - fs), x2: cx1, y1: l2 + fs * .45, y2: Y0 - hh - 3, stroke: INK, 'stroke-width': 1.2}, top);
+    Kit.mk('line', {x1: cx2, x2: cx2, y1: l2 + fs * .45, y2: Y0 - fs * .55, stroke: INK, 'stroke-width': 1.2}, top);
+    const topBoxes = [
+      union({x0: xL - wL, x1: xL, y0: 0, y1: l2 + fs * .3}, bb(lA), bb(lB)),
+      union({x0: W - 2 - wR, x1: W - 2, y0: 0, y1: l2 + fs * .3}, bb(rA), bb(rB))
+    ];
+
+    // the reader's guess line, under the labels
+    const G = S.guess == null ? 1000 : S.guess, pct = S.pct;
+    const gg = Kit.mk('g', {}, svg), gy = y(G);
+    Kit.mk('line', {x1: GX, x2: W, y1: gy, y2: gy, stroke: CORAL, 'stroke-width': 2, 'stroke-dasharray': '5 4'}, gg);
+
+    // label 3: the band figure
+    const bl = Kit.mk('g', {}, svg), bx = GX + fs * 1.1;
+    const bandIn = 100 * PX >= fs * 1.25, by = bandIn ? y(550) + fs * .36 : y(500) - fs * .35;
+    const bt = txt(bl, bx, by, '500–600 m', fs, {'font-weight': 800, style: 'font-family:var(--display)'});
+    const blBox = union({x0: bx, x1: bx + tw(bt, fs, '500–600 m'), y0: by - fs * .85, y1: by + fs * .25}, bb(bt));
+
+    // label 4: the guess and the confidence chosen, placed where it touches nothing
+    const gp = pill(gg, pct != null ? `you said ${fmt(G)} m · ${pct}% sure` : `you said ${fmt(G)} m`, fs, CORAL);
+    const occ = [blBox, ...topBoxes];
+    const xLeft = Math.max(GX + 2, Math.min(GX + fs * .9, W - 2 - gp.w)), xRight = Math.max(GX + 2, W - 2 - gp.w);
+    const fits = (x0, cy) => { gp.at(x0, cy); const b = gp.box; return b.y0 >= Y0 + 1 && b.y1 <= H - 1 && !occ.some(o => hit(b, o)); };
+    const offs = [0]; for (let d = 2; d <= H; d += 2) offs.push(d, -d);
+    let gx0 = xLeft, gcy = null;
+    for (const o of offs) { if (Math.abs(o) > gp.h * 1.3) break; if (fits(xLeft, gy + o)) { gcy = gy + o; break; } }
+    if (gcy == null) for (const o of offs) {
+      if (fits(xRight, gy + o)) { gx0 = xRight; gcy = gy + o; break; }
+      if (fits(xLeft, gy + o)) { gx0 = xLeft; gcy = gy + o; break; }
+    }
+    if (gcy == null) { gx0 = xLeft; gcy = Math.max(Y0 + gp.h / 2 + 1, Math.min(H - gp.h / 2 - 1, gy)); }
+    gp.at(gx0, gcy);
+    if (Math.abs(gcy - gy) > gp.h / 2) {
+      const lx = gx0 + fs * .9, ln = Kit.mk('line', {x1: lx, x2: lx, y1: gcy + (gy > gcy ? gp.h / 2 : -gp.h / 2), y2: gy, stroke: CORAL, 'stroke-width': 1.5}, gg);
+      gg.insertBefore(ln, gp.g);
+    }
+
+    tl = gsap.timeline();
+    tl.from(band, {opacity: 0, duration: .5, ease: 'power2.out'}, 0)
+      .from(bl, {opacity: 0, duration: .4}, .3)
+      .from([c1, c2], {y: (YB - Y0) * .2, opacity: 0, duration: .7, ease: 'power3.out', stagger: .12}, .2);
+    A1.forEach((el, k) => tl.from(el, {opacity: 0, duration: .25}, 1 + k * .12));
+    A2.forEach((el, k) => tl.from(el, {opacity: 0, duration: .25}, 1 + k * .12));
+    tl.from(hump, {scaleY: 0, transformOrigin: '50% 100%', duration: .7, ease: 'power2.out'}, 1 + n1 * .12);
+    pum.forEach(({el, pts}, i) => {
+      tl.fromTo(el, {x: pts[0].x, y: pts[0].y, opacity: 0}, {opacity: 1, duration: .2}, 1.5 + i * .2)
+        .to(el, {motionPath: {path: pts, curviness: 1.3}, duration: 1.8, ease: 'power1.out'}, 1.5 + i * .2);
+    });
+    tl.from(top, {opacity: 0, duration: .4}, 2.2)
+      .from(gg, {opacity: 0, duration: .45, ease: 'power2.out'}, 2.8);
+    if (!anim) tl.progress(1);
+  }
+
+  document.addEventListener('turned', () => { S.turned = true; setTimeout(() => drawBack(!Kit.calm), Kit.calm ? 0 : 320); });
+  Kit.onShow.card = () => { drawFront(); if (S.turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || S.touched) return;
+    gsap.fromTo(S, {depth: 1300}, {depth: 1000, duration: 1.1, ease: 'power3.out', onUpdate: render});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    gsap.killTweensOf(S); S.depth = 900; S.touched = true; render(); commit();
+    await w(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 1000 : 5000);
+  };
+})();
+Kit.single();
+</script>
+</html>

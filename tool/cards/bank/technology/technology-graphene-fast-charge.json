@@ -5,10 +5,10 @@
   "strand": "technology.batteries.charging",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "none",
-  "question": "How fast could a graphene phone battery charge, from empty to full?",
-  "answer": "A smartphone battery made with graphene could charge completely in just a few seconds, says the video. It is a forecast, and the battery should also last much longer.",
-  "move": "Graphene's big promise for phones: a full charge in seconds.",
+  "principle": "estimation",
+  "question": "How long would a graphene battery take to fully charge a phone?",
+  "answer": "The video's hope is that a phone's graphene battery could recharge completely in a few seconds. Guesses in minutes or hours are not a bit slower; they are off by powers of ten.",
+  "move": "When the material changes, count the zeros before the digits.",
   "keywords": [
     "graphene",
     "smartphone",
@@ -27,12 +27,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A phone with a graphene battery and a lightning bolt icon. The question asks how fast it could charge from empty to full. The reader places a bet on a time axis, then rates how sure they are.",
-    "graded": false,
-    "ground": "#f4efe4"
+    "touch": "drags",
+    "label": "A slider page asking how long a graphene battery would take to fully charge a phone, from one second to five hours. The reader drags a dot to a guess. An illustration shows a phone with a lightning bolt charging from 0% to 100%."
   },
   "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=207s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }

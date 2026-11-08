@@ -1,0 +1,37 @@
+{
+  "id": "science-frozen-compass",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Earth's field flipped. Which way does the old rock's magnet point now?",
+  "answer": "The old rock's magnet still points the old way. While the rock is hot, its magnetic domains take the direction of Earth's field. Below the Curie point they lock in place, so the recorded direction cannot change even if the field later reverses.",
+  "move": "A record holds the moment it set, not the present: ask when it froze.",
+  "keywords": [
+    "lava",
+    "magnetite",
+    "hematite",
+    "curie point",
+    "earth's magnetic field"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A magnified grain of old rock with an arrow showing its magnetic direction. The reader drags the arrow to where the rock's magnet points today, after Earth's magnetic field has flipped."
+  },
+  "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=86s",
+  "written": "2026-11-07"
+}

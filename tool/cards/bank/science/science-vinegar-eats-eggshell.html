@@ -1,0 +1,415 @@
+<!doctype html>
+<!-- slug: science-vinegar-eats-eggshell -->
+<!--
+Look: a phosphor oscilloscope on black. A glass of vinegar drawn in green light, a lens that zooms to the shell's surface, a scrolling terminal log and a live trace of "shell left".
+Interaction: drag right across the scope to fast-forward the soak. Bubbles fizz off the egg, shell units in the lens break into CO₂, and the trace falls. Time only runs forward, like the reaction.
+Wow: at 48 h the chalky, bumpy shell morphs (MorphSVG) into a smooth membrane. The egg turns translucent, its yolk glows through, and it wobbles like rubber.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why vinegar eats an eggshell</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#card{background-color:#030806;background-image:radial-gradient(120% 70% at 50% 38%,rgba(57,255,122,.11),transparent 62%),repeating-linear-gradient(0deg,rgba(0,0,0,.32) 0 1px,transparent 1px 3px)}
+#card .q{text-shadow:0 0 .9cqh rgba(57,255,122,.45)}
+#card .say b{color:#7dffa6}
+#stage{display:flex;flex:1;min-height:0;overflow:hidden}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+.mono{font-family:var(--mono)}
+.ping{animation:ping 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes ping{from{transform:scale(.7);opacity:.9}to{transform:scale(2.3);opacity:0}}
+.blink{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.kit-calm .ping,.kit-calm .blink{animation:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag through time · zoom in" style="--c:#030806;--k:#c9ffd8;--edge:#000">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ACID VS SHELL</span></div>
+    <h2 class="q">Why does an eggshell disappear when you soak it in vinegar?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="An egg in a glass of vinegar, a zoom lens on the shell's surface, a terminal log and a trace of how much shell is left over 48 hours."></svg>
+    </div>
+    <p class="say" id="say"><b>Drag right across the scope</b> to soak the egg for 48 hours, and watch the shell.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Vinegar's acid eats calcium carbonate: those bubbles are the shell turning into CO₂.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'uovo che rimbalza!” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MorphSVGPlugin, ScrambleTextPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
+  const G = '#39ff7a', G2 = '#d4ffe0', HOURS = 48;
+  const hash = i => { const v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
+  const MSG = [
+    [0, '> vinegar: acetic acid'],
+    [0, '> shell: calcium carbonate'],
+    [1.5, '> they react: CO₂ bubbles ↑'],
+    [8, '> CaCO₃+acid → Ca acetate+H₂O+CO₂'],
+    [20, '> shell thins, egg turns translucent'],
+    [34, '> calcium carbonate running out'],
+    [48, '> 48 h: shell gone, membrane left']
+  ];
+  const S = {t: 0};
+  let target = 0, done = false, touched = false, built = false, entered = false;
+  let W = 0, H = 0, fs = 13, fm = 12, E = {}, morph = null, units = [], logN = -1, geo = {}, lastW = 0, lastH = 0;
+
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: G, 'font-size': fm, class: 'mono'}, a), p); e.textContent = t; return e; };
+  const fitText = e => { const w = e.getComputedTextLength(), an = e.getAttribute('text-anchor') || 'start', x = +e.getAttribute('x'); const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x; const sh = Math.max(2 - left, Math.min(0, W - 2 - (left + w))); if (sh) e.setAttribute('x', x + sh); return e; };
+  const hits = (a, b, pad = 2) => { try { const A = a.getBBox(), B = b.getBBox(); return A.x < B.x + B.width + pad && B.x < A.x + A.width + pad && A.y < B.y + B.height + pad && B.y < A.y + A.height + pad; } catch (_) { return false; } };
+
+  function eggD(cx, cy, rx, ry, b) {
+    let d = ''; const N = 72;
+    for (let i = 0; i < N; i++) {
+      const a = i / N * Math.PI * 2;
+      const j = b ? 1 + b * (hash(i) - .5) * 1.6 + b * .5 * Math.sin(i * 5.3) : 1;
+      const x = cx + rx * Math.cos(a) * (1 + .1 * Math.sin(a)) * j, y = cy + ry * Math.sin(a) * j;
+      d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    return d + 'Z';
+  }
+
+  function build() {
+    (E.tw || []).forEach(t => t.kill());
+    if (morph) { morph.kill(); morph = null; }
+    svg.innerHTML = ''; units = []; E = {tw: []}; logN = -1;
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const sr = stage.getBoundingClientRect(); lastW = sr.width; lastH = sr.height;
+    fs = Math.max(12.5, Math.min(15, W / 26)); fm = Math.max(12, fs * .88);
+    const defs = Kit.mk('defs', {}, svg);
+    defs.innerHTML = `
+      <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="${(fs * .18).toFixed(2)}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="bloom" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="${(fs * .7).toFixed(2)}"/></filter>
+      <linearGradient id="liq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${G}" stop-opacity=".24"/><stop offset="1" stop-color="${G}" stop-opacity=".05"/></linearGradient>
+      <radialGradient id="yolkG"><stop offset="0" stop-color="${G2}"/><stop offset=".5" stop-color="${G}" stop-opacity=".85"/><stop offset="1" stop-color="${G}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="shellG" cx=".36" cy=".3" r=".85"><stop offset="0" stop-color="${G}" stop-opacity=".62"/><stop offset=".7" stop-color="${G}" stop-opacity=".26"/><stop offset="1" stop-color="${G}" stop-opacity=".14"/></radialGradient>
+      <linearGradient id="scanG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${G}" stop-opacity="0"/><stop offset="1" stop-color="${G}" stop-opacity=".22"/></linearGradient>
+      <pattern id="grain" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".9" fill="${G2}" opacity=".55"/><circle cx="5.5" cy="5" r=".7" fill="${G2}" opacity=".35"/></pattern>`;
+
+    // ---------- layout (adapts to the stage: roomy at the start, compact once the answer shows) ----------
+    const compact = H < 300;
+    const nLog = H < 250 ? 0 : H < 420 ? 2 : 3, lh = fm * 1.3;
+    const graphH = compact ? fs * 4 : Math.max(H * .19, fs * 4.6), gTop = H - graphH + fs * .4, gBot = H - fs * 1.55;
+    const logBot = gTop - fs * 1.05;
+    const sTop = fs * 2.2, sBot = nLog ? logBot - (nLog - 1) * lh - fm - fs * .5 : gTop - fs * .7, sH = sBot - sTop;
+    const gw = Math.min(W * .44, sH * .8), gcx = W * .29;
+    const y0 = sTop + fs * .2, y1 = sBot - fs * .3;
+    const xl = gcx - gw / 2, xr = gcx + gw / 2, bl = gcx - gw * .43, br = gcx + gw * .43;
+    const ly = y0 + (y1 - y0) * .16;
+    const avail = y1 - ly - fs * 2.2;
+    const ry = Math.max(fs, Math.min(avail / 2, gw * .45)), rx = ry * .76;
+    const ecx = gcx, ecy = y1 - fs * .35 - ry;
+    const lr = Math.max(fs * 1.6, Math.min(W * .2, sH / 2 - fs * 1.5));
+    const lcx = Math.min(W * .77, W - lr - fs * 1.1), lcy = sTop + sH / 2;
+    const gx0 = fs * .3, gx1 = W - fs * .3;
+    geo = {nLog, lh, gTop, gBot, logBot, ly, ecx, ecy, rx, ry, lr, lcx, lcy, gx0, gx1, gw, y1};
+
+    // ---------- header readouts ----------
+    E.time = txt(svg, 0, fs * 1.45, 'T+00 h', {'font-size': fs * 1.35, 'font-weight': 700, fill: G2, filter: 'url(#glow)'});
+    const gn = 10, gwid = fs * .5, gg = fs * .18, gX0 = W - gn * (gwid + gg) + gg;
+    E.gauge = [];
+    for (let i = 0; i < gn; i++) E.gauge.push(Kit.mk('rect', {x: gX0 + i * (gwid + gg), y: fs * .55, width: gwid, height: fs * .95, rx: 1.5, fill: G}, svg));
+    txt(svg, gX0 - fs * .45, fs * 1.4, 'SHELL', {'text-anchor': 'end', opacity: .8});
+
+    // ---------- graph: shell left vs time ----------
+    const gr = Kit.mk('g', {id: 'graph'}, svg);
+    for (let i = 0; i <= 4; i++) { const y = gTop + (gBot - gTop) * i / 4; Kit.mk('line', {x1: gx0, x2: gx1, y1: y, y2: y, stroke: G, 'stroke-opacity': i === 4 ? .45 : .13, 'stroke-width': 1}, gr); }
+    for (let h = 0; h <= HOURS; h += 6) { const x = gx0 + (gx1 - gx0) * h / HOURS; Kit.mk('line', {x1: x, x2: x, y1: gTop, y2: gBot, stroke: G, 'stroke-opacity': h % 24 ? .1 : .3, 'stroke-width': 1, 'stroke-dasharray': '2 4'}, gr); }
+    for (let h = 0; h <= HOURS; h += 1.5) { const x = gx0 + (gx1 - gx0) * h / HOURS; Kit.mk('line', {x1: x, x2: x, y1: gBot - fs * (h % 6 ? .2 : .4), y2: gBot, stroke: G, 'stroke-opacity': .5}, gr); }
+    txt(gr, gx0, gBot + fs * 1.2, '0 h', {opacity: .75});
+    txt(gr, (gx0 + gx1) / 2, gBot + fs * 1.2, '24 h', {opacity: .75, 'text-anchor': 'middle'});
+    txt(gr, gx1, gBot + fs * 1.2, '48 h', {opacity: .75, 'text-anchor': 'end'});
+    txt(gr, gx1 - fs * .3, gTop + fs * 1.1, 'SHELL LEFT', {opacity: .7, 'text-anchor': 'end'});
+    const X = h => gx0 + (gx1 - gx0) * h / HOURS, Y = h => gTop + fs * .5 + (h / HOURS) * (gBot - gTop - fs) + fs * .14 * Math.sin(h * 3.1) * Math.cos(h * .9);
+    geo.X = X; geo.Y = Y;
+    let gd = `M${X(0)},${Y(0)}`; for (let h = .8; h <= HOURS; h += .8) gd += ` L${X(h).toFixed(1)},${Y(h).toFixed(1)}`;
+    E.ghost = Kit.mk('path', {d: gd, fill: 'none', stroke: G, 'stroke-width': 1, 'stroke-opacity': .28, 'stroke-dasharray': '2 5'}, gr);
+    E.trB = Kit.mk('path', {fill: 'none', stroke: G, 'stroke-width': fs * .5, 'stroke-opacity': .35, filter: 'url(#bloom)', 'stroke-linecap': 'round'}, gr);
+    E.tr = Kit.mk('path', {fill: 'none', stroke: G2, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, gr);
+    E.cur = Kit.mk('line', {y1: gTop, y2: gBot, stroke: G, 'stroke-opacity': .55, 'stroke-width': 1.2}, gr);
+    if (!touched) E.ring = Kit.mk('circle', {r: fs * .5, fill: 'none', stroke: G2, 'stroke-width': 1.5, class: 'ping'}, gr);
+    E.knob = Kit.mk('circle', {r: fs * .45, fill: G, stroke: G2, 'stroke-width': 1.5, filter: 'url(#glow)'}, gr);
+    if (!touched) E.hint = txt(gr, gx0 + fs * 1.4, gTop + fs * 1.1, 'drag →', {fill: G2, 'font-weight': 700, class: 'mono blink'});
+
+    // ---------- the glass of vinegar ----------
+    const clip = Kit.mk('clipPath', {id: 'gin'}, defs);
+    Kit.mk('path', {d: `M${xl + fs * .12},${y0} L${bl + fs * .1},${y1 - fs * .1} L${br - fs * .1},${y1 - fs * .1} L${xr - fs * .12},${y0}Z`}, clip);
+    const inG = Kit.mk('g', {'clip-path': 'url(#gin)'}, svg);
+    E.inG = inG;
+    Kit.mk('rect', {x: xl, y: ly, width: gw, height: y1 - ly, fill: 'url(#liq)'}, inG);
+    Kit.mk('ellipse', {cx: ecx, cy: y1 - fs * .2, rx: rx * .85, ry: fs * .28, fill: G, opacity: .28, filter: 'url(#bloom)'}, inG);
+    const per = fs * 2.4, amp = fs * .13;
+    E.wave = Kit.mk('path', {fill: 'none', stroke: G2, 'stroke-width': 1.5, filter: 'url(#glow)'}, inG);
+    const drawWave = ph => { let d = ''; for (let x = xl; x <= xr + .1; x += 3) d += (d ? 'L' : 'M') + x.toFixed(1) + ',' + (ly + amp * Math.sin(x / per * Math.PI * 2 + ph)).toFixed(2); E.wave.setAttribute('d', d); };
+    drawWave(0);
+    if (!Kit.calm) { const ph = {p: 0}; E.tw.push(gsap.to(ph, {p: Math.PI * 2, duration: 2.2, ease: 'none', repeat: -1, onUpdate: () => drawWave(ph.p)})); }
+    E.bub = Kit.mk('g', {}, inG);
+    if (Kit.calm && S.t < HOURS) for (let i = 0; i < 7; i++) { const a = -Math.PI * (.15 + .7 * hash(i + 40)), d = hash(i + 60); Kit.mk('circle', {cx: ecx + rx * Math.cos(a) * 1.05 + (hash(i + 9) - .5) * fs, cy: ecy + ry * Math.sin(a) - d * (ecy - ry - ly), r: fs * (.12 + .15 * hash(i + 3)), fill: 'none', stroke: G2, 'stroke-width': 1.2}, E.bub); }
+    txt(svg, gcx, ly + fs * 1.45, 'VINEGAR', {'text-anchor': 'middle', opacity: .75, 'letter-spacing': '.12em'});
+
+    // ---------- the egg ----------
+    E.egg = Kit.mk('g', {}, svg);
+    const shellP = Kit.mk('path', {id: 'shellP', d: eggD(ecx, ecy, rx, ry, .055)}, defs);
+    const smoothD = eggD(ecx, ecy, rx, ry, 0);
+    Kit.mk('ellipse', {cx: ecx, cy: ecy, rx: rx * 1.02, ry: ry * 1.01, fill: '#020604', 'fill-opacity': .85}, E.egg);
+    E.bloom = Kit.mk('ellipse', {cx: ecx, cy: ecy + ry * .1, rx: rx * .95, ry: rx * .95, fill: G, filter: 'url(#bloom)'}, E.egg);
+    gsap.set(E.bloom, {opacity: done ? .5 : 0});
+    E.yolk = Kit.mk('ellipse', {cx: ecx, cy: ecy + ry * .1, rx: rx * .62, ry: rx * .62, fill: 'url(#yolkG)'}, E.egg);
+    E.shellFill = Kit.mk('use', {href: '#shellP', fill: 'url(#shellG)'}, E.egg);
+    E.shellGrain = Kit.mk('use', {href: '#shellP', fill: 'url(#grain)'}, E.egg);
+    E.mem = Kit.mk('path', {d: smoothD, fill: 'none', stroke: G2, 'stroke-width': 1.2, 'stroke-dasharray': '4 3'}, E.egg);
+    E.shellLine = Kit.mk('use', {href: '#shellP', fill: 'none', stroke: G, 'stroke-linejoin': 'round', filter: 'url(#glow)'}, E.egg);
+    // bubbles clinging to the shell, gone with it
+    E.cling = Kit.mk('g', {}, E.egg);
+    for (let i = 0; i < 9; i++) { const a = -Math.PI * .1 + Math.PI * 1.2 * hash(i + 70); Kit.mk('circle', {cx: ecx + rx * 1.03 * Math.cos(a) * (1 + .1 * Math.sin(a)), cy: ecy + ry * 1.02 * Math.sin(a), r: fs * (.1 + .1 * hash(i + 80)), fill: 'none', stroke: G2, 'stroke-width': 1, opacity: .8}, E.cling); }
+    Kit.mk('path', {d: `M${ecx - rx * .55},${ecy - ry * .45} Q${ecx - rx * .3},${ecy - ry * .8} ${ecx + rx * .05},${ecy - ry * .82}`, fill: 'none', stroke: G2, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .55}, E.egg);
+    morph = gsap.to(shellP, {morphSVG: smoothD, duration: 1, ease: 'none', paused: true});
+
+    // glass outline on top of egg and liquid
+    Kit.mk('path', {d: `M${xl},${y0} L${bl},${y1} L${br},${y1} L${xr},${y0}`, fill: 'none', stroke: G, 'stroke-width': fs * .16, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', filter: 'url(#glow)'}, svg);
+    Kit.mk('line', {x1: bl - fs * .2, x2: br + fs * .2, y1: y1 + fs * .25, y2: y1 + fs * .25, stroke: G, 'stroke-width': 1.4, opacity: .55}, svg);
+    Kit.mk('line', {x1: xl + gw * .09, y1: y0 + fs * .9, x2: bl + gw * .07, y2: y1 - fs * .9, stroke: G2, 'stroke-width': 2.2, opacity: .22, 'stroke-linecap': 'round'}, svg);
+    for (let i = 1; i < 7; i++) { const t = i / 7, px = xr + (br - xr) * t, py = y0 + (y1 - y0) * t; Kit.mk('line', {x1: px - fs * .15, y1: py, x2: px - fs * (i % 2 ? .45 : .75), y2: py, stroke: G, 'stroke-opacity': .5, 'stroke-width': 1}, svg); }
+
+    // ---------- the zoom lens on the shell's surface ----------
+    const mx = ecx + rx * .93, my = ecy - ry * .15;
+    Kit.mk('circle', {cx: mx, cy: my, r: fs * .45, fill: 'none', stroke: G2, 'stroke-width': 1.3}, svg);
+    for (const a of [Math.PI * .8, Math.PI * 1.2]) Kit.mk('line', {x1: mx + fs * .4, y1: my, x2: lcx + lr * Math.cos(a), y2: lcy + lr * Math.sin(a), stroke: G, 'stroke-opacity': .45, 'stroke-dasharray': '3 4'}, svg);
+    const Lg = Kit.mk('g', {id: 'lensG'}, svg);
+    const lc = Kit.mk('clipPath', {id: 'lensC'}, defs);
+    Kit.mk('circle', {cx: lcx, cy: lcy, r: lr}, lc);
+    const inL = Kit.mk('g', {'clip-path': 'url(#lensC)'}, Lg);
+    const surf = lcy - lr * .12, cell = lr * .27;
+    Kit.mk('rect', {x: lcx - lr, y: lcy - lr, width: lr * 2, height: surf - lcy + lr, fill: G, 'fill-opacity': .07}, inL);
+    const mY = surf + 3 * cell + cell * .35;
+    Kit.mk('rect', {x: lcx - lr, y: mY, width: lr * 2, height: Math.max(0, lcy + lr - mY), fill: G, 'fill-opacity': .06}, inL);
+    for (let k = 0; k < 2; k++) { let d = `M${lcx - lr},${mY + k * cell * .22}`; for (let x = lcx - lr; x < lcx + lr - 1; x += cell * .5) d += ` q${cell * .25},${(k ? -1 : 1) * cell * .1} ${cell * .5},0`; Kit.mk('path', {d, fill: 'none', stroke: G2, 'stroke-width': 1.2, opacity: .75}, inL); }
+    for (let r = 0; r < 3; r++) for (let c = -1; c < Math.ceil(2 * lr / cell) + 1; c++) {
+      const x = lcx - lr + (c + .5 + (r % 2) * .5) * cell, y = surf + (r + .5) * cell;
+      if (Math.abs(x - lcx) > lr) continue;
+      const g = Kit.mk('g', {}, inL), t = cell * .3;
+      Kit.mk('path', {d: `M${x - t * .2},${y - t * .75} L${x + t * .55},${y + t * .55} L${x - t * .95},${y + t * .55}Z`, fill: G, 'fill-opacity': .85}, g);
+      Kit.mk('circle', {cx: x + t * .75, cy: y - t * .35, r: cell * .12, fill: G2}, g);
+      units.push({el: g, x, y, th: (r + .08 + .84 * hash(r * 31 + c + 7)) / 3, gone: false});
+    }
+    E.acid = Kit.mk('g', {}, inL);
+    for (let i = 0; i < 5; i++) {
+      const ax = lcx - lr * .7 + lr * 1.4 * (i + .5) / 5, ay = lcy - lr * .72 + (hash(i + 20)) * (surf - lcy + lr * .55) * .9;
+      const g = Kit.mk('g', {}, E.acid);
+      Kit.mk('line', {x1: ax, y1: ay, x2: ax + cell * .28, y2: ay - cell * .16, stroke: G2, 'stroke-width': 1.2}, g);
+      Kit.mk('circle', {cx: ax, cy: ay, r: cell * .11, fill: G2}, g);
+      Kit.mk('circle', {cx: ax + cell * .28, cy: ay - cell * .16, r: cell * .08, fill: G2}, g);
+      if (!Kit.calm) E.tw.push(gsap.to(g, {x: (hash(i) - .5) * cell * 1.2, y: cell * .35 * (hash(i + 5) + .3), duration: 1.6 + hash(i + 2), ease: 'sine.inOut', yoyo: true, repeat: -1}));
+    }
+    E.co2 = Kit.mk('g', {}, inL);
+    // slow phosphor scan sweeping the lens
+    const scan = Kit.mk('rect', {x: lcx - lr, y: lcy - lr, width: lr * 2, height: lr * .35, fill: 'url(#scanG)'}, inL);
+    if (!Kit.calm) E.tw.push(gsap.to(scan, {y: lr * 1.65, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1}));
+    else scan.remove();
+    E.skin = txt(inL, lcx, mY - cell * .45, 'membrane', {'text-anchor': 'middle', fill: G2, 'font-weight': 700});
+    gsap.set(E.skin, {opacity: done ? 1 : 0});
+    Kit.mk('circle', {cx: lcx, cy: lcy, r: lr, fill: 'none', stroke: G, 'stroke-width': fs * .15, filter: 'url(#glow)'}, Lg);
+    Kit.mk('circle', {cx: lcx, cy: lcy, r: lr + fs * .32, fill: 'none', stroke: G, 'stroke-opacity': .25, 'stroke-width': 1}, Lg);
+    for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2, r0 = lr + fs * .32, r1 = r0 + fs * (i % 6 ? .18 : .4); Kit.mk('line', {x1: lcx + r0 * Math.cos(a), y1: lcy + r0 * Math.sin(a), x2: lcx + r1 * Math.cos(a), y2: lcy + r1 * Math.sin(a), stroke: G, 'stroke-opacity': .55}, Lg); }
+    const botY = lcy + lr + fs * 1.3, roomBot = botY <= (nLog ? sBot + fs * .4 : gTop - fs * .3);
+    E.legend = roomBot ? '• acid  ▲ shell' : '• acid ▲ shell ○ CO₂';
+    E.lensTop = fitText(txt(Lg, lcx, Math.max(fs * 2.9, lcy - lr - fs * .75), done ? 'membrane only' : E.legend, {'text-anchor': 'middle', fill: G2}));
+    // on tight stages the lens title sits on top of the inner "membrane" tag: keep only the title then
+    {
+      const probe = E.lensTop.textContent;
+      let clash = false;
+      for (const t of [E.legend, 'membrane only']) { E.lensTop.textContent = t; if (hits(E.lensTop, E.skin)) clash = true; }
+      E.lensTop.textContent = probe;
+      if (clash) { E.skin.remove(); E.skin = null; }
+    }
+    if (roomBot) fitText(txt(Lg, lcx, botY, '○ CO₂ gas', {'text-anchor': 'middle', opacity: .85}));
+
+    // ---------- the terminal log ----------
+    E.logEls = [];
+    if (nLog) {
+      const logC = Kit.mk('clipPath', {id: 'logC'}, defs);
+      Kit.mk('rect', {x: 0, y: logBot - (nLog - 1) * lh - fm * 1.05, width: W, height: (nLog - 1) * lh + fm * 1.4}, logC);
+      const lg = Kit.mk('g', {'clip-path': 'url(#logC)'}, svg);
+      E.logEls = MSG.map(m => txt(lg, 0, logBot + lh * 1.2, m[1]));
+    }
+
+    built = true;
+    render(false);
+  }
+
+  function render(anim) {
+    if (!built) return;
+    const p = Math.min(1, S.t / HOURS), s = 1 - p;
+    morph.progress(p);
+    E.shellFill.setAttribute('opacity', (s * .95).toFixed(3));
+    E.shellGrain.setAttribute('opacity', (s * .9).toFixed(3));
+    E.shellLine.setAttribute('stroke-width', (1 + fs * .32 * s).toFixed(2));
+    E.shellLine.setAttribute('opacity', (.35 + .65 * s).toFixed(3));
+    E.cling.setAttribute('opacity', Math.max(0, 1 - p * 1.6).toFixed(3));
+    E.mem.setAttribute('opacity', (.2 + .8 * p).toFixed(3));
+    E.yolk.setAttribute('opacity', (.1 + .85 * p).toFixed(3));
+    E.time.textContent = 'T+' + String(Math.round(S.t)).padStart(2, '0') + ' h';
+    const lit = Math.ceil(s * 10 - 1e-3);
+    E.gauge.forEach((r, i) => r.setAttribute('fill-opacity', i < lit ? 1 : .12));
+    const {X, Y} = geo;
+    let d = `M${X(0)},${Y(0)}`;
+    for (let h = .4; h < S.t; h += .4) d += ` L${X(h).toFixed(1)},${Y(h).toFixed(1)}`;
+    d += ` L${(X(S.t) + .1).toFixed(1)},${Y(S.t).toFixed(1)}`;
+    E.tr.setAttribute('d', d); E.trB.setAttribute('d', d);
+    const cx = X(S.t), cy = Y(S.t);
+    E.cur.setAttribute('x1', cx); E.cur.setAttribute('x2', cx);
+    E.knob.setAttribute('cx', cx); E.knob.setAttribute('cy', cy);
+    if (E.ring) { E.ring.setAttribute('cx', cx); E.ring.setAttribute('cy', cy); }
+    updUnits(anim); updLog(anim);
+  }
+
+  function updUnits(anim) {
+    const p = S.t / HOURS;
+    units.forEach(u => {
+      const gone = p >= u.th;
+      if (gone === u.gone && anim) return;
+      u.gone = gone;
+      if (gone && anim && !Kit.calm) {
+        gsap.to(u.el, {opacity: 0, scale: .2, y: -geo.lr * .06, transformOrigin: '50% 50%', duration: .45, ease: 'power2.in'});
+        co2(u.x, u.y);
+      } else gsap.set(u.el, {opacity: gone ? 0 : 1, scale: 1, y: 0});
+    });
+  }
+
+  // One shell unit leaves: a CO₂ bubble rises, the calcium drifts off into the vinegar.
+  function co2(x, y) {
+    const lr = geo.lr, r = lr * .06;
+    const b = Kit.mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: G2, 'stroke-width': 1.3}, E.co2);
+    gsap.timeline({onComplete: () => b.remove()})
+      .to(b, {attr: {cy: geo.lcy - lr * .9, r: r * 1.8}, duration: 1.3 + Math.random() * .5, ease: 'power1.in'})
+      .to(b, {attr: {cx: x + (Math.random() - .5) * lr * .3}, duration: 1.4, ease: 'sine.inOut'}, 0)
+      .to(b, {opacity: 0, duration: .3}, '-=.3');
+    const c = Kit.mk('circle', {cx: x, cy: y, r: lr * .035, fill: G2}, E.co2);
+    gsap.to(c, {attr: {cx: x + (Math.random() - .5) * lr * .6, cy: y - lr * (.25 + Math.random() * .3)}, opacity: 0, duration: 1.4, ease: 'power2.out', onComplete: () => c.remove()});
+  }
+
+  function updLog(anim) {
+    if (!E.logEls.length) return;
+    const n = MSG.filter(m => m[0] <= S.t + 1e-6).length, prev = logN;
+    if (n === prev) return;
+    logN = n;
+    const {logBot, lh, nLog} = geo;
+    E.logEls.forEach((el, i) => {
+      let y, op;
+      if (i >= n) { y = logBot + lh * 1.2; op = 0; }
+      else { const k = n - 1 - i; y = logBot - k * lh; op = k >= nLog ? 0 : [1, .6, .35][k]; }
+      el.setAttribute('fill', i === n - 1 ? G2 : G);
+      if (anim && !Kit.calm && prev >= 0) {
+        gsap.to(el, {attr: {y}, opacity: op, duration: .45, ease: 'power3.out'});
+        if (i >= prev && i < n) { el.textContent = ''; gsap.to(el, {scrambleText: {text: MSG[i][1], chars: '01#<>/%', speed: .7}, duration: .8}); }
+      } else { el.textContent = MSG[i][1]; gsap.set(el, {attr: {y}, opacity: op}); }
+    });
+  }
+
+  // ---------- fizz in the glass, as long as there is shell to eat ----------
+  function spawn() {
+    const s = 1 - S.t / HOURS, rush = gsap.isTweening(S);
+    if (built && s > .01 && !Kit.calm && E.bub.childElementCount < 40) {
+      const {ecx, ecy, rx, ry, ly} = geo;
+      const a = -Math.PI * (.06 + .88 * Math.random());
+      const x = ecx + rx * Math.cos(a) * (1 + .1 * Math.sin(a)), y = ecy + ry * Math.sin(a);
+      const r = fs * (.1 + .2 * Math.random()), dur = .9 + (y - ly) / (fs * 9);
+      const b = Kit.mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: G2, 'stroke-width': 1.2, opacity: 0}, E.bub);
+      gsap.timeline({onComplete: () => b.remove()})
+        .to(b, {opacity: .95, duration: .15})
+        .to(b, {attr: {cy: ly + r}, duration: dur, ease: 'power1.in'}, 0)
+        .to(b, {attr: {cx: x + (Math.random() - .5) * fs * 1.1}, duration: dur, ease: 'sine.inOut'}, 0)
+        .to(b, {opacity: 0, attr: {r: r * 1.7}, duration: .25}, dur - .1);
+    }
+    gsap.delayedCall(s > .01 ? (rush ? .035 : .09 + .3 * (1 - s)) : .5, spawn);
+  }
+
+  // ---------- time only runs forward ----------
+  function setTarget(h) {
+    h = Math.max(0, Math.min(HOURS, h)); if (h > HOURS - 1.2) h = HOURS;
+    if (done || h <= target + .05) return;
+    if (!touched) {
+      touched = true; Kit.haptic('selection');
+      if (E.ring) { E.ring.remove(); E.ring = null; }
+      if (E.hint) { const hn = E.hint; gsap.to(hn, {opacity: 0, duration: .25, onComplete: () => hn.remove()}); }
+    }
+    const old = target; target = h;
+    if (Math.floor(old / 12) !== Math.floor(h / 12)) Kit.haptic('light');
+    if (Kit.calm) { S.t = h; render(false); if (h >= HOURS) finish(); return; }
+    gsap.to(S, {t: h, duration: .55, ease: 'power3.out', overwrite: true, onUpdate: () => render(true), onComplete: () => { if (S.t >= HOURS - 1e-3) finish(); }});
+  }
+
+  function finish() {
+    if (done) return; done = true;
+    S.t = HOURS; render(false);
+    Kit.haptic('success'); card.classList.add('answered');
+    say.innerHTML = 'Vinegar is <b>acetic acid</b> and the shell is <b>calcium carbonate</b>. They react into calcium acetate, water and <b>carbon dioxide</b>: the bubbles. After about 48 hours only the soft, translucent membrane is left.';
+    Kit.show('keep');
+    // the stage just got smaller: redraw at its new size so nothing shrinks, then reveal
+    requestAnimationFrame(() => requestAnimationFrame(() => { build(); if (!Kit.calm) reveal(); }));
+  }
+
+  function reveal() {
+    const {ecx, ecy, rx, ry} = geo;
+    const ring = Kit.mk('ellipse', {cx: ecx, cy: ecy, rx: rx, ry: ry, fill: 'none', stroke: G2, 'stroke-width': 3, filter: 'url(#glow)'}, E.inG);
+    gsap.to(ring, {attr: {rx: rx * 1.5, ry: ry * 1.25}, opacity: 0, 'stroke-width': .5, duration: 1.1, ease: 'expo.out', onComplete: () => ring.remove()});
+    gsap.timeline()
+      .fromTo(E.bloom, {opacity: 0}, {opacity: 1, duration: .25, ease: 'power2.out'})
+      .to(E.bloom, {opacity: .5, duration: 1, ease: 'power2.inOut'});
+    gsap.timeline()
+      .to(E.egg, {scaleY: .84, scaleX: 1.1, svgOrigin: `${ecx} ${ecy + ry}`, duration: .16, ease: 'power2.in'})
+      .to(E.egg, {scaleY: 1, scaleX: 1, svgOrigin: `${ecx} ${ecy + ry}`, duration: 1.1, ease: 'elastic.out(1,.3)'});
+    if (E.skin) gsap.fromTo(E.skin, {opacity: 0}, {opacity: 1, duration: .6, delay: .3});
+    E.lensTop.textContent = E.legend;
+    gsap.to(E.lensTop, {scrambleText: {text: 'membrane only', chars: '01#<>', speed: .6}, duration: .9, onComplete: () => fitText(E.lensTop)});
+    gsap.fromTo(E.tr, {attr: {'stroke-width': 5}}, {attr: {'stroke-width': 2}, duration: .9, ease: 'power3.out'});
+  }
+
+  // ---------- touch ----------
+  let drag = false;
+  const hx = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - geo.gx0) / (geo.gx1 - geo.gx0) * HOURS; };
+  svg.addEventListener('pointerdown', e => { drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setTarget(hx(e)); });
+  svg.addEventListener('pointermove', e => { if (drag) setTarget(hx(e)); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // redraw whenever the stage changes size, so text stays real-size
+  let roRaf = 0;
+  if (window.ResizeObserver) new ResizeObserver(() => {
+    cancelAnimationFrame(roRaf);
+    roRaf = requestAnimationFrame(() => {
+      if (!built) return;
+      const r = stage.getBoundingClientRect();
+      if (Math.abs(r.width - lastW) > 2 || Math.abs(r.height - lastH) > 2) build();
+    });
+  }).observe(stage);
+
+  Kit.onShow.card = build;
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    spawn();
+    if (Kit.calm || !built) return;
+    const {ecx, ecy, ry, ly, gw} = geo;
+    const drop = Math.max(0, ecy - ry - fs * .6);
+    gsap.fromTo(E.egg, {y: -drop, opacity: 0}, {y: 0, opacity: 1, duration: .75, ease: 'power3.in', onComplete: () => {
+      gsap.fromTo(E.egg, {scaleY: .9, scaleX: 1.06, svgOrigin: `${ecx} ${ecy + ry}`}, {scaleY: 1, scaleX: 1, svgOrigin: `${ecx} ${ecy + ry}`, duration: .7, ease: 'elastic.out(1,.4)'});
+    }});
+    gsap.delayedCall(.55, () => { for (let i = 0; i < 2; i++) { const s = Kit.mk('ellipse', {cx: ecx, cy: ly, rx: fs * .5, ry: fs * .15, fill: 'none', stroke: G2, 'stroke-width': 1.5}, E.inG); gsap.to(s, {attr: {rx: gw * (.3 + i * .1), ry: fs * .3}, opacity: 0, duration: .8, delay: i * .12, ease: 'power3.out', onComplete: () => s.remove()}); } });
+    gsap.from('#lensG', {scale: 0, rotation: -40, transformOrigin: '50% 50%', duration: .9, ease: 'back.out(1.5)', delay: .35});
+    gsap.from('#graph > *', {opacity: 0, duration: .5, stagger: .012, ease: 'power2.out'});
+    E.logEls.slice(0, 2).forEach((el, i) => { el.textContent = ''; gsap.to(el, {scrambleText: {text: MSG[i][1], chars: '01#<>/%', speed: .6}, duration: .8, delay: .3 + i * .35}); });
+    gsap.from(E.gauge, {opacity: 0, scaleY: 0, transformOrigin: '50% 100%', stagger: .04, duration: .35, ease: 'back.out(2)', delay: .2});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setTarget(HOURS);
+    await wait(Kit.calm ? 100 : 1700);
+    if (!done) finish();
+  };
+})();
+Kit.single();
+</script>
+</html>

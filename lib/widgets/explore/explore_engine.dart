@@ -155,22 +155,45 @@ class ExploreSliver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // A section that goes on without an end can only stand last; it is
+    // drawn after the others, as a sliver of its own.
+    final ExploreSlot? endless =
+        slots.isNotEmpty && slots.last.block is EndlessBlock
+        ? slots.last
+        : null;
+    final List<ExploreSlot> listed = endless == null
+        ? slots
+        : slots.sublist(0, slots.length - 1);
     final Map<String, int> at = {
-      for (int i = 0; i < slots.length; i++) slots[i].section.id: i,
+      for (int i = 0; i < listed.length; i++) listed[i].section.id: i,
     };
-    return SliverList(
+    final Widget list = SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, i) => _Slot(
-          key: ValueKey('section-${slots[i].section.id}'),
+          key: ValueKey('section-${listed[i].section.id}'),
           host: host,
-          slot: slots[i],
+          slot: listed[i],
         ),
-        childCount: slots.length,
+        childCount: listed.length,
         findChildIndexCallback: (Key key) {
           if (key is! ValueKey<String>) return null;
           return at[key.value.substring('section-'.length)];
         },
       ),
+    );
+    if (endless == null) return list;
+    return SliverMainAxisGroup(
+      slivers: [
+        list,
+        SliverPadding(
+          padding: EdgeInsets.only(top: endless.gap),
+          sliver: (endless.block as EndlessBlock).sliver(
+            context,
+            host,
+            endless.section,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,0 +1,36 @@
+{
+  "id": "technology-messina-record-span",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.hype_cycles",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "The Messina Bridge would hang in one span. How long, against today's record?",
+  "answer": "The longest single span today is about 1,900 m. To cross the Strait in one leap, Messina would need 3,300 m: more than 1 km longer. Read as a ratio, that is about 1.7 times the record.",
+  "move": "Read any leap past a record as a ratio first.",
+  "keywords": [
+    "messina-bridge",
+    "strait-of-messina",
+    "suspension-bridge",
+    "longest-span"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A bridge-span comparison. The reader drags a red tower outward to where a single span across the Strait of Messina would end, then turns the card to see how that span compares with the longest span today."
+  },
+  "source": "Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=-Jcz-q5tih4&t=441s",
+  "written": "2026-11-07"
+}

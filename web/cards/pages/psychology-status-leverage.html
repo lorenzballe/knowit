@@ -1,0 +1,339 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-status-leverage -->
+<!-- Thought to carry: leverage is what someone can give or withhold that you need; status can still pull without giving anything.
+     Front: a star in sunglasses holds out a gold card ("Do you know who I am?"). The reader drags themself along the pavement, close and bowing or far and upright, then says how firmly they hold it.
+     Back: the gold card drains to an empty dashed outline (the case for). Then three thin gold strings run from him to you, admiration, fear of judgement, the crowd's eyes, and tilt you toward him anyway (the case against). The reader's spot and confidence stay marked, and one line answers them.
+     Front gives nothing away: a neutral prompt, no verdict, both cases wait on the back. -->
+<title>Does status give them power over you?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
+#pic{touch-action:none;cursor:ew-resize;outline:none}
+#pic .hit{cursor:grab}
+#pic text,#pic2 text{font-family:var(--body)}
+.front .say{padding-right:0;margin-right:max(26cqw,96px);overflow-wrap:anywhere}
+/* Confidence row: legible before, inviting after. */
+#sure{margin:24px 0!important;opacity:1!important;filter:none!important;color:var(--k)}
+#sure *{opacity:1!important;filter:none!important}
+#sure :not(button){color:var(--k)!important}
+#sure button{background:transparent!important;border:2px solid var(--k)!important;color:rgba(255,255,255,.72)!important;color:color-mix(in srgb,var(--k) 72%,transparent)!important;font-weight:700}
+#sure.lit button{background:var(--k)!important;color:var(--c)!important;cursor:pointer}
+#sure.lit button:active{transform:scale(.96)}
+.back .big{font-size:max(2.7cqh,16px);line-height:1.15;margin:0}
+.back .mine{font-size:max(2cqh,13px);line-height:1.25;margin:0;overflow-wrap:anywhere}
+.back .body{font-size:max(1.85cqh,12px);line-height:1.3;margin:0;overflow-wrap:anywhere}
+.back{gap:1.1cqh}
+.back .foot{padding-right:0;margin-right:max(28cqw,100px)}
+.back .foot .src{font-size:max(1.5cqh,12px)}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Take a side · a point of view">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Does fame or wealth, by itself, give someone power over you?</h2>
+        <div class="stagebox" id="stage">
+          <svg id="pic" tabindex="0" role="img" aria-label="A famous person in sunglasses holds out a gold card. You stand on the pavement and can move closer or further away. Use the arrow keys or drag."></svg>
+        </div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say"><b>Drag yourself to where you stand.</b></p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">One view: no use to you, no hold on you.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The star's gold card drains to an empty outline. Three thin strings, admiration, fear of judgement and the crowd's eyes, still run from him to you and tilt you toward him. A dot on the pavement marks where you stood."></svg></div>
+        <p class="mine" id="mine"></p>
+        <p class="body"><b>For:</b> leverage is what someone can give or withhold that you need. Need nothing, and the gold card is blank. <b>Against:</b> status pulls with nothing given, along those three strings.</p>
+        <div class="keep"><b>ASK YOURSELF</b> When someone important makes me shrink, what exactly could they give me, or take away?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2016) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2'), say = Kit.$('say'), mine = Kit.$('mine'), sureEl = Kit.$('sure');
+  const GOLD = '#EDB43A', CORAL = '#E4553A', PAPER = '#FFFFFF';   // gold = status, coral = you
+  let INK = '#121212', BG = '#ffffff';
+  let t = .5, touched = false, committed = false, answered = false, turned = false, drag = false, grab = 0, myPct = 70;
+  let F = {}, youLayer = null, gen = 0, tl = null;
+
+  const colors = () => { const cs = getComputedStyle(card); INK = cs.getPropertyValue('--k').trim() || INK; BG = cs.getPropertyValue('--c').trim() || BG; };
+  const txt = (p, x, y, s, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+  const lean = v => -15 * (1 - v);
+
+  // A simple round-headed figure standing on the ground at x.
+  function person(p, x, gy, h, body) {
+    const g = Kit.mk('g', {}, p);
+    const r = h * .13, hw = h * .15, sh = gy - h + 2.15 * r, hip = gy - h * .4, lw = Math.max(3, h * .075);
+    for (const s of [-1, 1]) Kit.mk('rect', {x: x + s * hw * .45 - lw / 2, y: hip - 2, width: lw, height: gy - hip + 1, rx: lw / 2, fill: INK}, g);
+    Kit.mk('path', {d: `M${x - hw},${sh + r * .35} Q${x - hw},${sh} ${x - hw + r * .4},${sh} L${x + hw - r * .4},${sh} Q${x + hw},${sh} ${x + hw},${sh + r * .35} L${x + hw * .86},${hip} L${x - hw * .86},${hip} Z`, fill: body}, g);
+    const hy = gy - h + r;
+    Kit.mk('circle', {cx: x, cy: hy, r, fill: BG, stroke: INK, 'stroke-width': Math.max(1.6, h * .012)}, g);
+    return {g, r, hy, sh, hw, hip, lw};
+  }
+
+  // The star: coat, sunglasses, an arm held out with a card.
+  function star(p, x, gy, h) {
+    const v = person(p, x, gy, h, INK);
+    Kit.mk('rect', {x: x - v.r * .05, y: v.hy - v.r * .32, width: v.r * 1.02, height: v.r * .4, rx: v.r * .14, fill: INK}, p);
+    const s0 = [x + v.hw * .7, v.sh + v.r * .45], hand = [x + h * .3, v.sh + h * .03];
+    Kit.mk('line', {x1: s0[0], y1: s0[1], x2: hand[0], y2: hand[1], stroke: INK, 'stroke-width': v.lw * 1.1, 'stroke-linecap': 'round'}, p);
+    const cw = h * .22, ch = cw * .63;
+    const wrap = Kit.mk('g', {}, p);
+    const inner = Kit.mk('g', {transform: `translate(${hand[0]},${hand[1]}) rotate(-12)`}, wrap);
+    const rect = Kit.mk('rect', {x: -cw * .1, y: -ch * .85, width: cw, height: ch, rx: ch * .12, fill: GOLD, stroke: INK, 'stroke-width': 1.5}, inner);
+    const stripe = Kit.mk('line', {x1: -cw * .1, x2: cw * .9, y1: -ch * .55, y2: -ch * .55, stroke: INK, 'stroke-width': Math.max(2, ch * .12), opacity: .85}, inner);
+    const chip = Kit.mk('rect', {x: cw * .05, y: -ch * .35, width: cw * .2, height: ch * .2, rx: 1.5, fill: 'none', stroke: INK, 'stroke-width': 1.2}, inner);
+    // Midpoint of the card's top edge, after the -12° tilt.
+    const a = -12 * Math.PI / 180, lx = cw * .4, ly = -ch * .85;
+    const topMid = [hand[0] + lx * Math.cos(a) - ly * Math.sin(a), hand[1] + lx * Math.sin(a) + ly * Math.cos(a)];
+    return {v, hand, cw, ch, wrap, rect, stripe, chip, topMid, right: hand[0] + cw * .92, cx: hand[0] + cw * .4, top: hand[1] - ch * .85 - cw * .2};
+  }
+
+  // ---------- FRONT ----------
+  function front() {
+    colors(); pic.innerHTML = '';
+    const f = Kit.fitSvg(pic), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, W / 26));
+    const top = fs * 3.3, bottom = fs * 2.5 + 20;
+    const h = Math.max(40, Math.min(W * .54, H * .66, H - top - bottom - 4));
+    const gy = Math.max(0, (H - top - bottom - h) * .4) + top + h;
+    F = {W, H, fs, gy, h};
+    Kit.mk('line', {x1: W * .02, x2: W * .98, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, pic);
+    const l1 = gy + 18 + fs * .75, l2 = l1 + fs * 1.45;
+    txt(pic, W * .02, l1, 'Close: their status', fs);
+    txt(pic, W * .02, l2, 'alone sways me', fs, {'font-weight': 600});
+    txt(pic, W * .98, l1, 'Far: only what they', fs, {'text-anchor': 'end'});
+    txt(pic, W * .98, l2, 'can give me counts', fs, {'text-anchor': 'end', 'font-weight': 600});
+
+    const vx = W * .14, s = star(pic, vx, gy, h);
+    const bub = Kit.mk('g', {class: 'bub'}, pic);
+    const tEl = txt(bub, 0, 0, 'Do you know who I am?', fs);
+    const tw = tEl.getComputedTextLength(), bw = tw + fs * 1.4, bh = fs * 2;
+    const bx = Math.max(2, Math.min(W - bw - 2, vx - fs * 1.2)), by = Math.max(2, s.v.hy - s.v.r - fs * 3);
+    const tx = Math.min(bx + bw - fs * 1.2, vx + s.v.r * .4);
+    Kit.mk('path', {d: `M${bx + bh * .4},${by} H${bx + bw - bh * .4} Q${bx + bw},${by} ${bx + bw},${by + bh * .4} V${by + bh * .6} Q${bx + bw},${by + bh} ${bx + bw - bh * .4},${by + bh} H${tx + fs * .5} L${tx - fs * .1},${by + bh + fs * .75} L${tx - fs * .3},${by + bh} H${bx + bh * .4} Q${bx},${by + bh} ${bx},${by + bh * .6} V${by + bh * .4} Q${bx},${by} ${bx + bh * .4},${by} Z`, fill: BG, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, bub);
+    bub.appendChild(tEl); tEl.setAttribute('x', bx + fs * .7); tEl.setAttribute('y', by + bh / 2 + fs * .36);
+
+    F.x0 = s.right + h * .36; F.x1 = Math.max(F.x0 + 1, W * .97 - h * .16);
+    youLayer = Kit.mk('g', {}, pic);
+    drawYou();
+  }
+
+  function drawYou() {
+    if (!youLayer) return;
+    youLayer.innerHTML = '';
+    const {gy, h, fs, W} = F, x = F.x0 + (F.x1 - F.x0) * t, a = lean(t);
+    const rad = a * Math.PI / 180, c = Math.cos(rad), sn = Math.sin(rad);
+    const R = (px, py) => [x + (px - x) * c - (py - gy) * sn, gy + (px - x) * sn + (py - gy) * c];
+    const g = Kit.mk('g', {transform: `rotate(${a} ${x} ${gy})`}, youLayer);
+    const p = person(g, x, gy, h * .94, CORAL);
+    Kit.mk('circle', {cx: x - p.r * .42, cy: p.hy - p.r * .1, r: Math.max(1.6, p.r * .1), fill: INK}, g);
+    Kit.mk('rect', {class: 'hit', x: x - p.hw - 14, y: p.hy - p.r - 8, width: p.hw * 2 + 28, height: gy - p.hy + p.r + 8, fill: 'transparent'}, g);
+    F.x = x; F.hitR = p.hw + 18;
+
+    // "you", tied to the torso by a short leader; flips side near the right edge.
+    const lab = txt(youLayer, 0, 0, 'you', fs), lw = lab.getComputedTextLength();
+    const ly = p.sh + (p.hip - p.sh) * .22;
+    let sd = 1, A = R(x + p.hw, ly);
+    if (A[0] + 19 + lw > W - 2) { sd = -1; A = R(x - p.hw, ly); }
+    Kit.mk('line', {x1: A[0] + sd * 3, y1: A[1], x2: A[0] + sd * 15, y2: A[1], stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, youLayer);
+    lab.setAttribute('x', A[0] + sd * 19); lab.setAttribute('y', A[1] + fs * .36);
+    if (sd < 0) lab.setAttribute('text-anchor', 'end');
+
+    // Handle: a white disc with a red core under the feet.
+    Kit.mk('circle', {cx: x, cy: gy, r: 14, fill: PAPER, stroke: INK, 'stroke-width': 1.5}, youLayer);
+    Kit.mk('circle', {cx: x, cy: gy, r: 6, fill: CORAL}, youLayer);
+    if (!touched) {
+      const off = Math.max(14, p.hw * .45 + p.lw / 2 + 3) + 16, cy = gy - 12, k = 7;
+      for (const sg of [-1, 1]) Kit.mk('path', {d: `M${x + sg * off},${cy - k} l${sg * k},${k} l${-sg * k},${k}`, stroke: INK, 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, youLayer);
+    }
+  }
+
+  function setT(v) { t = Math.max(0, Math.min(1, v)); drawYou(); }
+  const localX = e => e.clientX - pic.getBoundingClientRect().left;
+  const setX = px => setT((px - F.x0) / (F.x1 - F.x0));
+  pic.addEventListener('pointerdown', e => {
+    if (answered) return;
+    const px = localX(e); grab = Math.abs(px - F.x) <= F.hitR ? px - F.x : 0;
+    drag = true; touched = true; pic.setPointerCapture(e.pointerId); setX(px - grab); Kit.haptic('selection');
+  });
+  pic.addEventListener('pointermove', e => { if (drag) setX(localX(e) - grab); });
+  const up = () => { if (!drag) return; drag = false; commit(); };
+  pic.addEventListener('pointerup', up); pic.addEventListener('pointercancel', up);
+  pic.addEventListener('keydown', e => {
+    if (answered) return;
+    const k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!k) return;
+    e.preventDefault(); touched = true; setT(t + k * .05); commit();
+  });
+
+  function commit() {
+    if (committed) return; committed = true; sure.on(); sureEl.classList.add('lit');
+    say.innerHTML = 'You can still move. <b>Then say how firmly you hold it.</b>';
+  }
+  const side = () => t < .34 ? 'their status alone sways me' : t > .66 ? 'only what they can give me counts' : 'somewhere in between';
+  function writeMine() {
+    const where = t < .34 ? 'close' : t > .66 ? 'far' : 'in the middle';
+    const reply = t < .34 ? "Ask what he's actually offering." : t > .66 ? 'Watch the strings anyway.' : 'The card is blank. The strings are not.';
+    mine.innerHTML = `<b>You stood ${where}, ${myPct}% sure.</b> ${reply}`;
+  }
+
+  const sure = Kit.sure(sureEl, 'How firmly do you hold it?', pct => {
+    if (answered) return; answered = true; myPct = pct;
+    Kit.answer({choice: `${side()} (${Math.round(t * 100)}% toward "only what they can give")`, correct: null, sure: pct});
+    writeMine();
+    say.innerHTML = 'Now the best case for it, and against it.';
+    setTimeout(() => Turn.over(), Kit.calm ? 80 : 700);
+  });
+
+  // ---------- BACK ----------
+  function back(instant) {
+    const my = ++gen; if (tl) { tl.kill(); tl = null; }
+    colors(); pic2.innerHTML = '';
+    const f = Kit.fitSvg(pic2), W = f.W, H = f.H;
+    const fl = Math.max(12, Math.min(14, W / 26)), fs = 12;
+    const gy = H - fl * .4 - 4;
+
+    // The same pavement, Close to Far.
+    const cL = txt(pic2, 2, gy + fl * .36, 'Close', fl);
+    const fR = txt(pic2, W - 2, gy + fl * .36, 'Far', fl, {'text-anchor': 'end'});
+    const lx0 = 2 + cL.getComputedTextLength() + 8, lx1 = W - 2 - fR.getComputedTextLength() - 8;
+    Kit.mk('line', {x1: lx0, x2: lx1, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, pic2);
+
+    const mh = Math.round(fl * 1.25), mw = Math.round(mh * 1.6);
+    const h = Math.max(40, Math.min(gy - Math.max(mh, fl * 1.2) - 12, W * .42, 165));
+    const sx = lx0 + h * .15 + 4;
+    const s = star(pic2, sx, gy, h), v = s.v;
+
+    // Strings sit behind you, so your torso covers their ends.
+    const strL = Kit.mk('g', {}, pic2);
+    const yhw = h * .94 * .15, yx = lx1 - yhw - 6;
+    const yg = Kit.mk('g', {}, pic2);
+    const p = person(yg, yx, gy, h * .94, CORAL);
+    Kit.mk('circle', {cx: yx - p.r * .42, cy: p.hy - p.r * .1, r: Math.max(1.6, p.r * .1), fill: INK}, yg);
+
+    // Where the reader stood on the front.
+    const dx = (s.right + 10) + (yx - s.right - 10) * t;
+    Kit.mk('circle', {cx: dx, cy: gy, r: 7, fill: PAPER, stroke: INK, 'stroke-width': 1.2}, pic2);
+    Kit.mk('circle', {cx: dx, cy: gy, r: 3.5, fill: CORAL}, pic2);
+
+    const labL = Kit.mk('g', {}, pic2);
+    const words = ['admiration', 'fear of judgement', "the crowd's eyes"];
+    const LW = words.map(w => { const e = txt(labL, 0, -99, w, fs, {'font-weight': 600}); const n = e.getComputedTextLength(); e.remove(); return n; });
+
+    const hipS = gy - h * .4, shS = v.sh;
+    const edge = y => y <= hipS ? sx + v.hw * (1 - .14 * (y - shS) / (hipS - shS)) - 1 : sx + v.hw * .45 + v.lw / 2 - .5;
+    const oy = [shS + h * .12, shS + h * .25]; oy.push(Math.max(oy[1] + 8, Math.min(shS + h * .38, gy - 30)));
+    const O = oy.map(y => [edge(y), y]);
+    const E = [.12, .5, .88].map(fr => [yx - p.hw * (1 - .14 * fr) + 1.5, p.sh + (p.hip - p.sh) * fr]);
+    const sw = Math.max(1.5, h * .012);
+
+    function pose(a, d, lo) {
+      if (my !== gen) return;
+      yg.setAttribute('transform', `rotate(${a} ${yx} ${gy})`);
+      strL.innerHTML = ''; labL.innerHTML = ''; labL.setAttribute('opacity', lo);
+      const rad = a * Math.PI / 180, c = Math.cos(rad), sn = Math.sin(rad);
+      const R = ([px, py]) => [yx + (px - yx) * c - (py - gy) * sn, gy + (px - yx) * sn + (py - gy) * c];
+      const hc = R([yx, p.hy]);
+      O.forEach((o, i) => {
+        const e = R(E[i]), ddx = e[0] - o[0], ddy = e[1] - o[1], len = Math.hypot(ddx, ddy), ux = ddx / len, uy = ddy / len;
+        const ang = Math.atan2(ddy, ddx) * 180 / Math.PI;
+        const at = u => [o[0] + ddx * u, o[1] + ddy * u];
+        const seg = (u0, u1) => { const A = at(u0), B = at(u1); Kit.mk('line', {x1: A[0], y1: A[1], x2: B[0], y2: B[1], stroke: GOLD, 'stroke-width': sw, 'stroke-linecap': 'round'}, strL); };
+        const label = (bx, by, anchor) => txt(labL, bx, by, words[i], fs, {'font-weight': 600, 'text-anchor': anchor, transform: `rotate(${ang} ${bx} ${by})`});
+        if (i === 1 && lo > 0) {
+          const uc = .42, hu = (LW[1] / 2 + 5) / len;
+          seg(0, uc - hu); seg(uc + hu, 1);
+          const C = at(uc); label(C[0] - uy * fs * .35, C[1] + ux * fs * .35, 'middle');
+        } else seg(0, d);
+        if (lo <= 0) return;
+        if (i === 0) {
+          const endX = Math.min(e[0] - 6, hc[0] - p.r - 8), P = at((endX - o[0]) / ddx);
+          label(P[0] + uy * 4, P[1] - ux * 4, 'end');
+        } else if (i === 2) {
+          const P = at(8 / len), off = 4 + fs * .75;
+          label(P[0] - uy * off, P[1] + ux * off, 'start');
+        }
+      });
+    }
+
+    // Inset: gold card → empty outline, tied to his hand by a short leader.
+    const ins = Kit.mk('g', {opacity: instant || Kit.calm ? 1 : 0}, pic2);
+    const bandBottom = gy - h - 6, by = bandBottom - mh;
+    const cap = Kit.mk('text', {fill: INK, 'font-size': fl, 'font-weight': 600}, ins);
+    const c1 = Kit.mk('tspan', {'font-weight': 700}, cap); c1.textContent = 'No need: ';
+    const c2 = Kit.mk('tspan', {}, cap); c2.textContent = 'the card goes blank';
+    const capW = cap.getComputedTextLength();
+    const total = mw * 2 + 36 + capW;
+    const left = Math.max(2, Math.min(W - 2 - total, s.topMid[0] - mw / 2 - 26 - mw));
+    Kit.mk('rect', {x: left, y: by, width: mw, height: mh, rx: mh * .14, fill: GOLD, stroke: INK, 'stroke-width': 1.2}, ins);
+    Kit.mk('line', {x1: left, x2: left + mw, y1: by + mh * .32, y2: by + mh * .32, stroke: INK, 'stroke-width': Math.max(1.5, mh * .12)}, ins);
+    Kit.mk('rect', {x: left + mw * .15, y: by + mh * .55, width: mw * .2, height: mh * .22, rx: 1, fill: 'none', stroke: INK, 'stroke-width': 1}, ins);
+    const ax = left + mw + 6, ay = by + mh / 2;
+    Kit.mk('path', {d: `M${ax},${ay} H${ax + 13} M${ax + 9},${ay - 4} L${ax + 13},${ay} L${ax + 9},${ay + 4}`, stroke: INK, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, ins);
+    const dmx = left + mw + 26;
+    Kit.mk('rect', {x: dmx, y: by, width: mw, height: mh, rx: mh * .14, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '3 2.5'}, ins);
+    cap.setAttribute('x', dmx + mw + 10); cap.setAttribute('y', ay + fl * .36);
+    Kit.mk('line', {x1: dmx + mw / 2, y1: by + mh + 3, x2: s.topMid[0], y2: s.topMid[1] - 3, stroke: INK, 'stroke-width': 1.2}, ins);
+
+    const blank = () => {
+      if (my !== gen) return;
+      s.rect.setAttribute('fill', 'none'); s.rect.setAttribute('stroke-dasharray', '4 3'); s.rect.setAttribute('stroke-width', 1.6);
+      s.stripe.remove(); s.chip.remove();
+    };
+
+    const st = {a: lean(t), d: 0, lo: 0};
+    const draw = () => pose(st.a, st.d, st.lo);
+    if (instant || Kit.calm) { blank(); st.a = lean(t) - 7; st.d = 1; st.lo = 1; draw(); return; }
+    draw();
+    // Beat 1: the card drains. Beat 2: the strings arrive anyway. Beat 3: they pull.
+    const org = `${s.hand[0] + s.cw * .4} ${s.hand[1] - s.ch * .4}`;
+    tl = gsap.timeline({delay: .5})
+      .to(s.wrap, {scaleX: 0, svgOrigin: org, duration: .26, ease: 'power2.in', onComplete: blank})
+      .to(s.wrap, {scaleX: 1, svgOrigin: org, duration: .3, ease: 'power3.out'})
+      .to(ins, {opacity: 1, duration: .45, ease: 'power2.out'}, '+=.05')
+      .to(st, {d: 1, duration: .8, ease: 'power2.inOut', onUpdate: draw}, '+=.35')
+      .to(st, {lo: 1, duration: .35, ease: 'power1.out', onUpdate: draw})
+      .to(st, {a: lean(t) - 7, duration: 1, ease: 'power2.inOut', onUpdate: draw}, '+=.15');
+  }
+
+  document.addEventListener('turned', () => { turned = true; back(false); });
+
+  Kit.onShow.card = () => { front(); if (turned) back(true); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || turned) return;
+    gsap.from('#pic > *', {opacity: 0, y: 8, stagger: .06, duration: .45, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; setT(.78); commit();
+    await wait(120);
+    const b = sureEl.querySelector('[data-v="80"]') || sureEl.querySelector('button');
+    if (b) b.click();
+    if (!answered) { answered = true; myPct = 80; writeMine(); }
+    await wait(Kit.calm ? 300 : 1100);
+    if (!turned) Turn.over();
+    back(true);
+    await wait(400);
+  };
+})();
+Kit.single();
+</script>
+</html>

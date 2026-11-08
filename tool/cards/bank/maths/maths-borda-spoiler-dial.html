@@ -1,0 +1,317 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-borda-irrelevant-candidate -->
+<!-- Thought to carry: a fair choice between two options should not hinge on a third that nobody would pick, yet Borda's points depend on how many names are on the ballot.
+     Front: five made-up paper ballots (three Ann>Ben, two Ben>Ann) with their Borda points and the tally, Ann 3 to Ben 2. The question says plainly the count is made up. A dashed blue slot with a ghost "Carl" shows where each voter puts hopeless Carl. Tap who wins now, then say how sure.
+     Back: Carl drops into his slots, the points re-count (2,1,0), and the bars grow to Ann 6, Ben 7, Carl 2. A bracket on every ballot shows the Ann-Ben gap: 1 on Ann's ballots, 2 (blue) on Ben's, because Carl sits between them there. The sum line under the bars adds the gaps. Tap the ballots to pull Carl out and watch Ann win again.
+     The ballots are an invented illustration of the video's rule (last place 0, one point more per place up), and both faces say so. Only the rule, the 1784 method and Condorcet's words come from the video. -->
+<title>Borda's hopeless candidate</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s .38s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:1.6cqh}
+#pic,#pic2{flex:0 0 auto;width:100%;display:block}
+#pic2{cursor:pointer}
+#opts{display:flex;gap:2.4cqw}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#sure{margin-bottom:16px}
+#sure.wait{display:none}
+.front .say{padding-right:0;margin-right:96px;font-size:max(1.9cqh,13px)}
+.back .big{font-size:max(3.4cqh,20px);margin:0 0 1.6cqh}
+.back .stagebox{padding:.6cqh 0 1.6cqh}
+.back .body{font-size:max(1.75cqh,12px);line-height:1.32;margin:0}
+.back .body .note{opacity:.75}
+.back .body .undo{display:block;margin-top:.45em}
+.back .keep{margin-top:1.4cqh}
+.back .foot{padding-right:96px}
+.face p,.face h2{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BORDA COUNT</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Add a hopeless third candidate to this made-up Borda count. Who wins now?</h2>
+        <div class="stagebox" id="stage">
+          <svg id="pic" role="img" aria-label="Five invented ranked ballots: three put Ann above Ben, two put Ben above Ann. Ann leads 3 points to 2. A dashed blue slot on each ballot shows where that voter ranks a new candidate, Carl: last on Ann's ballots, between Ben and Ann on Ben's."></svg>
+          <div id="opts">
+            <button class="opt" data-i="0">Ann</button>
+            <button class="opt" data-i="1">Ben</button>
+            <button class="opt" data-i="2">A tie</button>
+          </div>
+        </div>
+        <div id="sure" class="wait"></div>
+        <p class="say" id="say">Carl can't win. Each voter puts him in the blue slot. <b>Count, then tap the winner.</b></p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Ben wins, 7 to 6.</p>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="The same invented ballots with Carl added. On Ann's three ballots Ann leads Ben by 1 point; on Ben's two ballots Carl sits between them and Ben leads by 2. Totals: Ann 6, Ben 7, Carl 2. Ann's leads add to 3, Ben's to 4."></svg></div>
+        <p class="body">Nobody changed their mind about Ann versus Ben. But on Ben's ballots Carl sits between them, so Ben's lead there doubles, from 1 to 2. Borda's points depend on how many names are on the ballot, so a candidate nobody picks changed the winner. Condorcet: it “relies on irrelevant factors.” <span class="note">These ballots are invented; the rule is Borda's.</span> <b class="undo" id="undo">Tap the ballots to undo.</b></p>
+        <div class="keep"><b>WHAT TO KEEP</b> A fair choice between two things can't hinge on a third nobody picks.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const BEN = '#d4432c', CARL = '#2c62c9', PAPER = '#fffdf6', PEN = '#1c1b18';
+  const ORDER = ['Ann', 'Ben', 'Carl'];
+  // Each name keeps its row: Carl's row is the slot.
+  const SLOT = {A: {Ann: 0, Ben: 1, Carl: 2}, B: {Ben: 0, Carl: 1, Ann: 2}};
+  let S1 = null, S2 = null, turned = false, backWith = true, backTl = null;
+
+  const txt = (parent, x, y, t, a = {}, style = '') => {
+    const e = Kit.mk('text', Object.assign({x, y}, a), parent);
+    e.setAttribute('style', 'font-family:var(--body);font-weight:700;' + style);
+    e.textContent = t; return e;
+  };
+
+  // The scene: five paper ballots, then the tally. Height is only what the drawing needs.
+  function scene(svg, back, avail) {
+    svg.innerHTML = '';
+    const fit = Kit.fitSvg(svg) || {};
+    const W = fit.W || svg.getBoundingClientRect().width || 300;
+    const fs = Math.max(12, Math.min(13.5, fit.f || 13));
+    const head = fs * 2;
+    const fixed = back ? head + fs * .7 + fs * 2 : head + fs * 2.2;
+    const units = back ? 3.5 + 3 : 3.5 + 2;
+    // Rows never get closer than a full line of text, so stacked names cannot touch;
+    // if space is short, the whole drawing scales down instead.
+    const rh = Math.max(fs * 1.35, Math.min(fs * 2.3, (avail - fixed) / units));
+    const Hn = fixed + units * rh;
+    svg.setAttribute('viewBox', `0 0 ${W} ${Hn}`);
+    svg.style.height = Math.max(40, Math.min(Hn, avail)) + 'px';
+
+    const pad = 2, g = Math.max(3, W * .012), G = Math.max(10, W * .04);
+    const bw = (W - 2 * pad - 3 * g - G) / 5;
+    const bx = i => pad + i * (bw + g) + (i >= 3 ? G - g : 0);
+    const y0 = head, padY = rh * .25, bh = 3 * rh + 2 * padY;
+    const rc = k => y0 + padY + rh * (k + .5);
+    const base = k => rc(k) + fs * .35;
+    const S = {W, fs, rh, ballots: [], tally: {}, vals: {Ann: 0, Ben: 0, Carl: 0}, root: Kit.mk('g', {}, svg)};
+    const ink = 'fill:var(--k);';
+
+    // Who voted how.
+    const group = (a, b, t) => {
+      const x0 = bx(a) + 1, x1 = bx(b) + bw - 1, yb = fs * 1.5;
+      Kit.mk('path', {d: `M${x0},${yb + 4} V${yb} H${x1} V${yb + 4}`, fill: 'none', 'stroke-width': 1.3, style: 'stroke:var(--k)'}, S.root);
+      txt(S.root, (x0 + x1) / 2, fs * 1.05, t, {'text-anchor': 'middle', 'font-size': fs}, ink);
+    };
+    group(0, 2, '3 voters'); group(3, 4, '2 voters');
+
+    for (let i = 0; i < 5; i++) {
+      const type = i < 3 ? 'A' : 'B', x = bx(i), sl = SLOT[type];
+      const gr = Kit.mk('g', {class: 'ballot'}, S.root);
+      Kit.mk('rect', {x, y: y0, width: bw, height: bh, rx: 2.5, fill: PAPER, stroke: PEN, 'stroke-width': 1.4}, gr);
+      const ip = Math.max(2.5, bw * .06), lw = fs * .6;
+      const labCx = x + bw - ip - lw / 2, brX = labCx - lw / 2 - fs * .15, tick = fs * .2;
+      const ptEnd = back ? brX - tick - fs * .12 : x + bw - ip;
+
+      // Carl's slot: a dashed blue box with his ghost name.
+      const slot = Kit.mk('g', {}, gr);
+      const sx0 = x + ip * .5, sx1 = back ? brX - tick - fs * .1 : x + bw - ip * .5;
+      Kit.mk('rect', {x: sx0, y: rc(sl.Carl) - rh * .42, width: sx1 - sx0, height: rh * .84, rx: 3, fill: 'none', stroke: CARL, 'stroke-width': 1.4, 'stroke-dasharray': '3 2.5'}, slot);
+      txt(slot, x + ip, base(sl.Carl), 'Carl', {'font-size': fs, fill: CARL, opacity: .6});
+
+      const names = {}, pts = {};
+      ORDER.forEach(n => {
+        const e = txt(gr, x + ip, base(sl[n]), n, {'font-size': fs, fill: n === 'Ann' ? PEN : n === 'Ben' ? BEN : CARL}, 'font-weight:800');
+        e._y = base(sl[n]); names[n] = e;
+        pts[n] = txt(gr, ptEnd, base(sl[n]), '', {'font-size': fs, fill: PEN, 'text-anchor': 'end', opacity: .6});
+      });
+
+      // The Ann–Ben gap, on the back only.
+      let br = null;
+      if (back) {
+        const r0 = Math.min(sl.Ann, sl.Ben), r1 = Math.max(sl.Ann, sl.Ben);
+        const yt = rc(r0) - fs * .36, yb2 = rc(r1) + fs * .36;
+        const path = Kit.mk('path', {d: `M${brX - tick},${yt} H${brX} V${yb2} H${brX - tick}`, fill: 'none', stroke: PEN, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, gr);
+        const lab = txt(gr, labCx, (yt + yb2) / 2 + fs * .35, '1', {'font-size': fs, fill: PEN, 'text-anchor': 'middle'}, 'font-weight:800');
+        br = {path, lab};
+      }
+      S.ballots.push({type, names, pts, slot, br});
+    }
+
+    let ty0;
+    if (back) ty0 = y0 + bh + fs * .7;
+    else {
+      txt(S.root, 0, y0 + bh + fs * 1.45, 'Last place 0 points, +1 per place up', {'font-size': fs, opacity: .78}, ink + 'font-weight:600');
+      ty0 = y0 + bh + fs * 2.2;
+    }
+
+    // The tally: names in white, the bar carries the colour.
+    const x0 = fs * 3.2, unit = (W - x0 - fs * 2) / 7, barH = Math.min(rh * .5, fs * .9);
+    S.x0 = x0; S.unit = unit;
+    (back ? ORDER : ['Ann', 'Ben']).forEach((n, k) => {
+      const cy = ty0 + rh * (k + .5);
+      const row = Kit.mk('g', {}, S.root);
+      const name = txt(row, 0, cy + fs * .36, n, {'font-size': fs}, ink + 'font-weight:800');
+      const bar = Kit.mk('rect', {x: x0, y: cy - barH / 2, width: 0, height: barH, rx: 2}, row);
+      bar.setAttribute('style', n === 'Ann' ? 'fill:var(--k)' : `fill:${n === 'Ben' ? BEN : CARL}`);
+      const num = txt(row, x0 + fs * .4, cy + fs * .38, '0', {'font-size': fs * 1.1}, ink + 'font-weight:800');
+      S.tally[n] = {row, name, bar, num};
+    });
+
+    if (back) S.sum = txt(S.root, 0, ty0 + rh * 3 + fs * 1.3, '', {'font-size': fs}, ink + 'font-weight:700');
+    return S;
+  }
+
+  const setSum = (S, w) => {
+    if (!S.sum) return;
+    S.sum.textContent = '';
+    [['Ann +1 +1 +1 = 3', 1], [' vs ', .7], [w ? 'Ben +2 +2 = 4' : 'Ben +1 +1 = 2', 1]].forEach(([s, o]) => {
+      const t = Kit.mk('tspan', {opacity: o}, S.sum); t.textContent = s;
+    });
+  };
+
+  // The state: without Carl (two names) or with him (three), drawn at once or played through.
+  function apply(S, w, anim) {
+    if (!S) return null;
+    const play = anim && !Kit.calm && typeof gsap !== 'undefined';
+    const tl = play ? gsap.timeline() : null;
+    const tv = w ? {Ann: 6, Ben: 7, Carl: 2} : {Ann: 3, Ben: 2, Carl: 0};
+    S.ballots.forEach((b, i) => {
+      const d = i * .08;
+      const P = b.type === 'A' ? {Ann: w ? 2 : 1, Ben: w ? 1 : 0, Carl: 0} : {Ben: w ? 2 : 1, Carl: 1, Ann: 0};
+      const c = b.names.Carl;
+      if (play) {
+        if (w) tl.fromTo(c, {opacity: 0, attr: {y: c._y - S.rh * .45}}, {opacity: 1, attr: {y: c._y}, duration: .5, ease: 'power3.out'}, .15 + d);
+        else tl.to(c, {opacity: 0, duration: .3}, d);
+        tl.to(b.slot, {opacity: w ? 0 : 1, duration: .3}, (w ? .15 : .2) + d);
+      } else { c.setAttribute('opacity', w ? 1 : 0); c.setAttribute('y', c._y); b.slot.setAttribute('opacity', w ? 0 : 1); }
+
+      ORDER.forEach(n => {
+        const p = b.pts[n], show = n !== 'Carl' || w, v = show ? String(P[n]) : '';
+        if (play) {
+          if (p.textContent === v) return;
+          tl.to(p, {opacity: 0, duration: .15}, .4 + d);
+          tl.call(() => { p.textContent = v; }, null, .55 + d);
+          if (show) tl.to(p, {opacity: .6, duration: .25}, .55 + d);
+        } else { p.textContent = v; p.setAttribute('opacity', show ? .6 : 0); }
+      });
+
+      if (b.br) {
+        const big = b.type === 'B' && w, t = big ? '2' : '1', col = big ? CARL : PEN;
+        const set = () => {
+          b.br.lab.textContent = t; b.br.lab.setAttribute('fill', col);
+          b.br.path.setAttribute('stroke', col); b.br.path.setAttribute('stroke-width', big ? 2 : 1.4);
+          b.br.path.setAttribute('stroke-opacity', big ? 1 : .5);
+        };
+        if (play) {
+          if (b.br.lab.textContent !== t) {
+            tl.to(b.br.lab, {opacity: 0, duration: .15}, .65 + d);
+            tl.call(set, null, .8 + d);
+            tl.to(b.br.lab, {opacity: 1, duration: .25}, .8 + d);
+          }
+        } else set();
+      }
+    });
+
+    Object.keys(S.tally).forEach((n, k) => {
+      const t = S.tally[n], target = tv[n];
+      const rowOp = n === 'Carl' ? (w ? 1 : 0) : 1;
+      const setNum = v => { t.num.textContent = Math.round(v); t.num.setAttribute('x', S.x0 + v * S.unit + S.fs * .4); };
+      if (play) {
+        const o = {v: S.vals[n]};
+        tl.to(t.row, {opacity: rowOp, duration: .3}, 1.05);
+        tl.to(o, {v: target, duration: .85, ease: 'power2.out', onUpdate: () => { t.bar.setAttribute('width', Math.max(0, o.v * S.unit)); setNum(o.v); }}, 1.1 + k * .08);
+      } else {
+        t.row.setAttribute('opacity', rowOp);
+        t.bar.setAttribute('width', target * S.unit); setNum(target);
+      }
+      S.vals[n] = target;
+    });
+
+    if (S.sum) {
+      if (play) {
+        tl.to(S.sum, {opacity: 0, duration: .2}, 1.2);
+        tl.call(() => setSum(S, w), null, 1.4);
+        tl.to(S.sum, {opacity: 1, duration: .35}, 1.4);
+      } else { setSum(S, w); S.sum.setAttribute('opacity', 1); }
+    }
+    return tl;
+  }
+
+  const availFront = () => {
+    const st = Kit.$('stage'), gap = parseFloat(getComputedStyle(st).rowGap) || 0;
+    return st.clientHeight - Kit.$('opts').offsetHeight - gap;
+  };
+  const availBack = () => {
+    const st = Kit.$('stage2'), cs = getComputedStyle(st);
+    return st.clientHeight - (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0);
+  };
+  function drawFront() { S1 = scene(Kit.$('pic'), false, availFront()); apply(S1, false, false); }
+  function drawBack(animate) {
+    if (backTl) { backTl.kill(); backTl = null; }
+    S2 = scene(Kit.$('pic2'), true, availBack());
+    if (animate && !Kit.calm && typeof gsap !== 'undefined') {
+      apply(S2, false, false);
+      gsap.from(S2.root, {opacity: 0, duration: .4, ease: 'power2.out'});
+      backWith = true; Kit.$('undo').textContent = 'Tap the ballots to undo.';
+      setTimeout(() => { backTl = apply(S2, true, true); }, 650);
+    } else apply(S2, backWith, false);
+  }
+
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+  Kit.$('pic2').addEventListener('click', () => {
+    if (!turned || !S2) return;
+    backWith = !backWith; Kit.haptic('selection');
+    Kit.$('undo').textContent = backWith ? 'Tap the ballots to undo.' : 'Tap the ballots to add Carl back.';
+    if (backTl) backTl.kill();
+    backTl = apply(S2, backWith, true);
+  });
+
+  // The answer, then how sure, then the turn.
+  const RIGHT = 1; let pick = -1;
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    Kit.$('sure').classList.remove('wait'); sure.on();
+    requestAnimationFrame(() => drawFront());
+  });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !S1 || typeof gsap === 'undefined') return;
+    gsap.from('#pic .ballot', {opacity: 0, y: 14, stagger: .07, duration: .5, ease: 'power3.out'});
+    ['Ann', 'Ben'].forEach((n, k) => {
+      const t = S1.tally[n], v = S1.vals[n], o = {v: 0};
+      gsap.to(o, {v, duration: .7, delay: .5 + k * .1, ease: 'power2.out', onUpdate: () => {
+        t.bar.setAttribute('width', o.v * S1.unit); t.num.textContent = Math.round(o.v); t.num.setAttribute('x', S1.x0 + o.v * S1.unit + S1.fs * .4);
+      }});
+    });
+    gsap.from('#opts .opt', {opacity: 0, y: 8, stagger: .06, delay: .7, duration: .4, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[0].click();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 3400);
+  };
+})();
+Kit.single();
+</script>
+</html>

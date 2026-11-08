@@ -1,0 +1,407 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-great-power-war -->
+<!-- Look: a Swiss poster on warm paper: strict grid with registration marks, one huge numeral, two black squares for the great powers, one hot red for fire.
+     Interaction: drag from your power to aim, release to launch a swarm of hundreds of particles. Hit Iran and the fire splashes but stays inside the ring, while proxy pulses keep feeding it from both sides.
+     Wow: aim at the other power and the swarm detonates: a direct red line cuts the sheet, shockwaves, a counter-strike, the ring breaks open and its fire escapes, embers across the whole sheet, the card flushes red and the "1" scrambles into "?". -->
+<title>The step from regional to great-power war</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+.q{font-weight:800;letter-spacing:-.01em}
+#why{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{color:#e8260f}
+.say{overflow-wrap:anywhere}
+.say b{color:#e8260f}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Aim and launch · how wars spread" style="--c:#efebe2;--k:#0d0d0c;--edge:#c9c2b4">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GREAT POWERS</span></div>
+    <h2 class="q">What is the potential consequence if the conflict becomes direct?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A poster: two great powers as black squares, Iran as a red ring between them, and a huge numeral counting the regions at war."></canvas>
+    </div>
+    <p class="say" id="say">Drag from your power to aim, let go to launch. <b>Hit Iran first.</b></p>
+    <p class="gone" id="why"><b>No longer a Middle East war.</b> While the powers only clash through Iran, the conflict stays regional. If one struck the other directly, it becomes a clash between great powers, with consequences no one can predict.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Through Iran, the war is regional. Direct, it is great powers, and unpredictable.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say'), stage = Kit.$('stage');
+  const INK = '#0d0d0c', RED = '#ff2d17', PAPER = '#efebe2';
+  let x = null, W = 0, H = 0, fs = 12, pad = 12, k = 1, laid = false;
+  let DISP = 'sans-serif', MONO = 'monospace';
+  // Geometry lives in G so a resize can glide instead of jump.
+  const G = {ax: 0, ay: 0, bx: 0, by: 0, rx: 0, ry: 0, rr: 40, s: 40, ns: 100};
+  const A = {get x() { return G.ax; }, get y() { return G.ay; }};
+  const B = {get x() { return G.bx; }, get y() { return G.by; }};
+  const R = {get x() { return G.rx; }, get y() { return G.ry; }, get r() { return G.rr; }};
+  let parts = [], rings = [], flight = null, aiming = false, aim = null, touched = false, over = false;
+  let numeral = '1', numColor = INK, cap = ['ONE REGION AT WAR'], paper = PAPER;
+  const fx = {flash: 0, numScale: 1, direct: 0};
+  const I = {grid: 1, pA: 1, pB: 1, reg: 1, num: 1};
+  const rnd = () => Kit.rnd();
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  function layout(animate) {
+    const oW = W, oH = H;
+    cv.style.width = ''; cv.style.height = '';
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
+    if (!W || !H) return;
+    const cs = getComputedStyle(card);
+    DISP = cs.getPropertyValue('--display').trim() || 'sans-serif';
+    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    fs = clamp(W / 30, 12, 14); k = Math.max(.7, Math.min(W, H * 1.2) / 360);
+    pad = Math.max(10, Math.min(W, H) * .045);
+    x.font = `700 ${fs}px ${MONO}`;
+    const capW = Math.max(...['ONE REGION AT WAR', 'CONSEQUENCES:', 'UNPREDICTABLE'].map(t => x.measureText(t).width));
+    let T;
+    if (H > W * .78) {
+      // Tall sheet: numeral top-left, B top-right, A bottom-left, Iran low-centre.
+      const s = clamp(Math.min(W, H) * .14, 34, 64);
+      T = {ax: pad + s / 2, ay: H - pad - s / 2, bx: W - pad - s / 2, by: pad + s / 2 + 2,
+           rx: W * .6, ry: H * .6, rr: Math.max(40, Math.min(W * .2, H * .17)), s, ns: Math.min(H * .28, W * .4)};
+    } else {
+      // Short sheet: numeral keeps its own column, the three actors share the rest.
+      const s = clamp(H * .22, 28, 56), ns = Math.min(H * .5, W * .22);
+      const x0 = pad + Math.max(ns * .62, capW) + Math.max(16, W * .03), area = W - pad - x0;
+      T = {ax: x0 + s / 2, ay: H - pad - s / 2, bx: W - pad - s / 2, by: pad + s / 2,
+           rx: x0 + area * .52, ry: H * .5, rr: Math.max(26, Math.min(H * .28, area * .17)), s, ns};
+    }
+    if (animate && laid && oW && oH && !Kit.calm) {
+      const sx = W / oW, sy = H / oH;
+      for (const p of parts) if (p.m !== 'held') { p.x *= sx; p.y *= sy; p.px *= sx; p.py *= sy; }
+      for (const r of rings) { r.x *= sx; r.y *= sy; }
+      gsap.to(G, {...T, duration: .8, ease: 'power3.inOut'});
+    } else {
+      if (laid && oW && oH) { const sx = W / oW, sy = H / oH; for (const p of parts) { p.x *= sx; p.y *= sy; p.px = p.x; p.py = p.y; } }
+      Object.assign(G, T);
+    }
+    laid = true;
+  }
+
+  const zoneOf = p => {
+    if (Math.hypot(p.x - R.x, p.y - R.y) < R.r * 1.12) return 'reg';
+    if (Math.abs(p.x - B.x) < G.s * 1.1 && Math.abs(p.y - B.y) < G.s * 1.1) return 'dir';
+    return 'miss';
+  };
+  const ctrl = (P0, T) => { const d = Math.hypot(T.x - P0.x, T.y - P0.y); return {x: (P0.x + T.x) / 2, y: Math.max(fs, Math.min(P0.y, T.y) - d * .35)}; };
+  const bez = (P0, P1, P2, t) => { const u = 1 - t; return {x: u * u * P0.x + 2 * u * t * P1.x + t * t * P2.x, y: u * u * P0.y + 2 * u * t * P1.y + t * t * P2.y}; };
+  const easeT = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const origin = () => ({x: A.x + G.s * .3, y: A.y - G.s * .3});
+
+  // ---------- launch ----------
+  function launch(T) {
+    if (flight || over || !x) return;
+    touched = true;
+    const zone = zoneOf(T), P0 = origin(), P1 = ctrl(P0, T), n = 240;
+    flight = {zone, T: {x: T.x, y: T.y}, P0, P1, n, arrived: 0, first: false};
+    Kit.haptic('light');
+    for (let i = 0; i < n; i++) {
+      const p = {m: 'fly', t: Kit.calm ? 1 : -rnd() * .35, dur: .8 + rnd() * .3, jx: (rnd() - .5) * 26 * k, jy: (rnd() - .5) * 26 * k, ph: rnd() * 6.28, col: rnd() < .22 ? INK : RED, x: P0.x, y: P0.y, px: P0.x, py: P0.y, sz: 1.6 + rnd() * 1.8};
+      parts.push(p);
+      if (Kit.calm) { p.x = T.x + p.jx * .5; p.y = T.y + p.jy * .5; arrive(p); }
+    }
+  }
+
+  function arrive(p) {
+    const z = flight.zone;
+    if (z === 'reg') {
+      const a = rnd() * 6.28, sp = (60 + rnd() * 180) * k;
+      p.m = 'held'; p.vx = Math.cos(a) * sp; p.vy = Math.sin(a) * sp;
+      const d = Math.hypot(p.x - R.x, p.y - R.y); if (d > R.r * .85) { p.x = R.x + (p.x - R.x) / d * R.r * .8; p.y = R.y + (p.y - R.y) / d * R.r * .8; }
+      if (Kit.calm) { const b = rnd() * 6.28, rr = Math.sqrt(rnd()) * R.r * .85; p.x = R.x + Math.cos(b) * rr; p.y = R.y + Math.sin(b) * rr; }
+      if (!flight.first) { flight.first = true; regionHit(); }
+    } else if (z === 'dir') {
+      const a = rnd() * 6.28, sp = (150 + rnd() * 500) * k;
+      p.m = 'free'; p.vx = Math.cos(a) * sp; p.vy = Math.sin(a) * sp; p.life = rnd() < .2 ? Infinity : 1 + rnd() * 2.5;
+      if (!flight.first) { flight.first = true; boom(); }
+    } else { p.m = 'fade'; p.life = .6; p.vx = (rnd() - .5) * 60; p.vy = (rnd() - .5) * 60; }
+    flight.arrived++;
+    if (flight.arrived >= flight.n) {
+      const z0 = flight.zone; flight = null;
+      if (z0 === 'miss' && !over) say.innerHTML = 'Missed: it fell on empty ground. <b>Aim at the ring, then at the other power.</b>';
+    }
+  }
+
+  function ring(cx, cy, max, dur, delay = 0, w = 3) {
+    if (Kit.calm) return;
+    const r = {x: cx, y: cy, r: 2, a: 1, w}; rings.push(r);
+    gsap.to(r, {r: max, a: 0, duration: dur, delay, ease: 'expo.out', onComplete: () => rings.splice(rings.indexOf(r), 1)});
+  }
+
+  function regionHit() {
+    gsap.fromTo(fx, {flash: 1}, {flash: 0, duration: 1.2, ease: 'power3.out'});
+    ring(R.x, R.y, R.r, .9); ring(R.x, R.y, R.r * .7, 1.1, .12, 2);
+    if (!Kit.calm) gsap.fromTo(fx, {numScale: 1.08}, {numScale: 1, duration: .8, ease: 'elastic.out(1,.35)'});
+    Kit.haptic('selection');
+    say.innerHTML = 'It splashes, but stays inside the ring: <b>a regional war</b>. Now aim straight at the other great power.';
+  }
+
+  function burst(cx, cy, n, speed) {
+    for (let i = 0; i < n; i++) {
+      const keep = rnd() < .2;
+      if (Kit.calm && !keep) continue;
+      const a = rnd() * 6.28, sp = (40 + Math.pow(rnd(), .6) * speed) * k;
+      const p = {m: 'free', x: cx, y: cy, px: cx, py: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, col: rnd() < .2 ? INK : RED, sz: 1.4 + rnd() * 2.2, ph: rnd() * 6.28, life: keep ? Infinity : .9 + rnd() * 2.6};
+      if (Kit.calm) { p.x = p.px = rnd() * W; p.y = p.py = rnd() * H; p.vx = p.vy = 0; }
+      parts.push(p);
+    }
+  }
+
+  function boom() {
+    over = true; Kit.haptic('success');
+    const big = Math.hypot(W, H) * 1.2;
+    if (Kit.calm) fx.direct = 1; else gsap.fromTo(fx, {direct: 0}, {direct: 1, duration: .45, ease: 'power4.out'});
+    burst(B.x, B.y, 520, 900);
+    ring(B.x, B.y, big, 1.6, 0, 5); ring(B.x, B.y, big * .7, 1.8, .15, 2);
+    const later = (ms, f) => Kit.calm ? f() : setTimeout(f, ms);
+    later(420, () => { burst(A.x, A.y, 320, 700); ring(A.x, A.y, big * .8, 1.5, 0, 4); Kit.haptic('light'); });
+    later(800, () => {
+      burst(R.x, R.y, 260, 600); ring(R.x, R.y, big * .6, 1.4, 0, 3);
+      // The ring no longer holds: its fire escapes onto the sheet.
+      for (const p of parts) if (p.m === 'held') {
+        const a = Math.atan2(p.y - R.y, p.x - R.x) + (rnd() - .5) * .6, sp = (120 + rnd() * 380) * k;
+        p.m = 'free'; p.vx = Math.cos(a) * sp; p.vy = Math.sin(a) * sp; p.ph = rnd() * 6.28; p.life = rnd() < .25 ? Infinity : .8 + rnd() * 2;
+        if (Kit.calm) { p.vx = p.vy = 0; p.x = p.px = rnd() * W; p.y = p.py = rnd() * H; }
+      }
+    });
+    // The card itself takes the heat, edge to edge.
+    if (Kit.calm) card.style.setProperty('--c', '#f6ddd4');
+    else gsap.timeline().to(card, {'--c': '#ffc9ba', duration: .18, ease: 'power2.out'}).to(card, {'--c': '#f6ddd4', duration: 1.6, ease: 'power3.out'});
+    if (!Kit.calm) gsap.fromTo(cv, {x: 12, y: -8}, {x: 0, y: 0, duration: 1.2, ease: 'elastic.out(1,.18)'});
+    // The numeral loses count.
+    const seq = ['2', '5', '3', '8', '4', '9', '?'];
+    numColor = RED;
+    if (Kit.calm) numeral = '?';
+    else seq.forEach((c, i) => setTimeout(() => { numeral = c; if (c === '?') gsap.fromTo(fx, {numScale: 1.35}, {numScale: 1, duration: 1, ease: 'elastic.out(1,.3)'}); }, 90 * i));
+    cap = ['CONSEQUENCES:', 'UNPREDICTABLE'];
+    later(1200, reveal);
+  }
+
+  function reveal() {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.fromTo(['#why', '#keep'], {opacity: 0, y: 10}, {opacity: 1, y: 0, stagger: .12, duration: .5, ease: 'power3.out'});
+  }
+
+  // ---------- update ----------
+  function update(dt) {
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]; p.px = p.x; p.py = p.y;
+      if (p.m === 'fly') {
+        if (!flight) { parts.splice(i, 1); continue; }
+        p.t += dt / p.dur; if (p.t < 0) continue;
+        if (p.t >= 1) { p.x = flight.T.x + p.jx * .4; p.y = flight.T.y + p.jy * .4; p.px = p.x; p.py = p.y; arrive(p); continue; }
+        const e = easeT(p.t), q = bez(flight.P0, flight.P1, flight.T, e), w = Math.sin(p.t * Math.PI);
+        p.x = q.x + p.jx * w + Math.sin(p.ph + p.t * 9) * 3 * w; p.y = q.y + p.jy * w;
+        if (p.t < .03) { p.px = p.x; p.py = p.y; }
+      } else if (p.m === 'held') {
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        const dx = p.x - R.x, dy = p.y - R.y, d = Math.hypot(dx, dy) || 1, lim = R.r * .9;
+        if (d > lim) { const nx = dx / d, ny = dy / d, dot = p.vx * nx + p.vy * ny; p.vx -= 2 * dot * nx; p.vy -= 2 * dot * ny; p.x = R.x + nx * lim; p.y = R.y + ny * lim; }
+        const sp = Math.hypot(p.vx, p.vy), want = 22 * k;
+        if (sp > want) { const f = Math.exp(-1.4 * dt); p.vx *= f; p.vy *= f; }
+      } else if (p.m === 'free') {
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        const f = Math.exp(-1.8 * dt); p.vx = p.vx * f + (rnd() - .5) * 30 * dt * k; p.vy = p.vy * f + (rnd() - .5) * 30 * dt * k;
+        if (p.x < 1) { p.x = 1; p.vx = Math.abs(p.vx) * .5; } if (p.x > W - 1) { p.x = W - 1; p.vx = -Math.abs(p.vx) * .5; }
+        if (p.y < 1) { p.y = 1; p.vy = Math.abs(p.vy) * .5; } if (p.y > H - 1) { p.y = H - 1; p.vy = -Math.abs(p.vy) * .5; }
+        if (p.life !== Infinity) { p.life -= dt; if (p.life <= 0) parts.splice(i, 1); }
+      } else if (p.m === 'fade') {
+        p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt; if (p.life <= 0) parts.splice(i, 1);
+      }
+    }
+  }
+
+  // ---------- draw ----------
+  function txt(t, X, Y, font, col, align = 'left', halo = false) {
+    x.font = font; x.textAlign = align;
+    if (halo) { x.lineJoin = 'round'; x.lineWidth = 5; x.strokeStyle = paper; x.strokeText(t, X, Y); }
+    x.fillStyle = col; x.fillText(t, X, Y);
+  }
+
+  function draw(now) {
+    paper = getComputedStyle(card).getPropertyValue('--c').trim() || PAPER;
+    const s = G.s;
+    x.clearRect(0, 0, W, H);
+    x.textBaseline = 'alphabetic';
+
+    // The grid: thin rules on a strict four-column sheet, registration crosses at the joints.
+    x.save(); x.globalAlpha = .1 * I.grid; x.strokeStyle = INK; x.lineWidth = 1;
+    for (let i = 1; i < 4; i++) { const gx = Math.round(W * i / 4) + .5; x.beginPath(); x.moveTo(gx, 0); x.lineTo(gx, H * I.grid); x.stroke(); }
+    for (let i = 1; i < 4; i++) { const gy = Math.round(H * i / 4) + .5; x.beginPath(); x.moveTo(0, gy); x.lineTo(W * I.grid, gy); x.stroke(); }
+    x.globalAlpha = .45 * I.grid; x.lineWidth = 1.2;
+    for (let i = 1; i < 4; i++) for (let j = 1; j < 4; j++) {
+      const gx = Math.round(W * i / 4) + .5, gy = Math.round(H * j / 4) + .5;
+      x.beginPath(); x.moveTo(gx - 4, gy); x.lineTo(gx + 4, gy); x.moveTo(gx, gy - 4); x.lineTo(gx, gy + 4); x.stroke();
+    }
+    x.restore();
+    x.fillStyle = RED; x.fillRect(pad, pad * .4, Math.min(W * .2, G.ns * .9) * I.grid, Math.max(4, H * .012));
+
+    // The huge numeral: how many regions are at war.
+    const ny = pad + G.ns * .78 + 6 + (1 - I.num) * 30;
+    x.save(); x.globalAlpha = I.num;
+    x.translate(pad, ny); x.scale(fx.numScale, fx.numScale);
+    txt(numeral, 0, 0, `900 ${G.ns}px ${DISP}`, numColor);
+    x.restore();
+
+    // Proxy lines: each power reaches the region, not each other. Pulses keep feeding it.
+    if (!over) {
+      x.save(); x.globalAlpha = .45 * I.reg; x.strokeStyle = INK; x.lineWidth = 1.4; x.setLineDash([3, 5]); x.lineDashOffset = -now / 60;
+      const segs = [A, B].map(P => {
+        const dx = R.x - P.x, dy = R.y - P.y, d = Math.hypot(dx, dy) || 1;
+        return {x0: P.x + dx / d * s * .75, y0: P.y + dy / d * s * .75, x1: R.x - dx / d * R.r * 1.25, y1: R.y - dy / d * R.r * 1.25};
+      });
+      for (const g of segs) { x.beginPath(); x.moveTo(g.x0, g.y0); x.lineTo(g.x1, g.y1); x.stroke(); }
+      x.setLineDash([]); x.fillStyle = RED;
+      if (!Kit.calm) for (const g of segs) for (let j = 0; j < 3; j++) {
+        const t = ((now / 1600) + j / 3) % 1; x.globalAlpha = I.reg * Math.sin(t * Math.PI);
+        x.fillRect(g.x0 + (g.x1 - g.x0) * t - 2.5, g.y0 + (g.y1 - g.y0) * t - 2.5, 5, 5);
+      }
+      x.restore();
+    } else if (fx.direct > 0) {
+      // The direct line: power to power, no region in between.
+      x.save(); x.strokeStyle = RED; x.lineWidth = 3; x.lineCap = 'round';
+      x.beginPath(); x.moveTo(A.x, A.y); x.lineTo(A.x + (B.x - A.x) * fx.direct, A.y + (B.y - A.y) * fx.direct); x.stroke();
+      x.restore();
+    }
+
+    // The region: Iran, a red ring.
+    const g = x.createRadialGradient(R.x, R.y - R.r * .3, R.r * .1, R.x, R.y, R.r);
+    g.addColorStop(0, `rgba(255,45,23,${.1 + fx.flash * .25})`); g.addColorStop(1, `rgba(255,45,23,${.22 + fx.flash * .3})`);
+    x.save(); x.globalAlpha = I.reg;
+    x.beginPath(); x.moveTo(R.x, R.y); x.arc(R.x, R.y, R.r, -Math.PI / 2, -Math.PI / 2 + 6.2832 * I.reg); x.closePath(); x.fillStyle = g; x.fill();
+    if (over) x.setLineDash([R.r * .34, R.r * .16]); // containment broken
+    x.beginPath(); x.arc(R.x, R.y, R.r, -Math.PI / 2, -Math.PI / 2 + 6.2832 * I.reg); x.strokeStyle = RED; x.lineWidth = 2.4 + fx.flash * 6; x.stroke();
+    x.setLineDash([2, 6]); x.lineDashOffset = Kit.calm ? 0 : now / 90; x.lineWidth = 1; x.strokeStyle = INK; x.globalAlpha = .4 * I.reg;
+    x.beginPath(); x.arc(R.x, R.y, R.r * 1.22, 0, 6.2832); x.stroke(); x.setLineDash([]);
+    x.globalAlpha = .6 * I.reg; x.lineWidth = 1.2;
+    for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2; x.beginPath(); x.moveTo(R.x + Math.cos(a) * R.r * 1.1, R.y + Math.sin(a) * R.r * 1.1); x.lineTo(R.x + Math.cos(a) * R.r * 1.34, R.y + Math.sin(a) * R.r * 1.34); x.stroke(); }
+    x.restore();
+
+    // Shockwaves.
+    for (const r of rings) { x.save(); x.globalAlpha = r.a; x.strokeStyle = RED; x.lineWidth = r.w * (.4 + r.a); x.beginPath(); x.arc(r.x, r.y, r.r, 0, 6.2832); x.stroke(); x.restore(); }
+
+    // Particles: streaks while fast, flickering squares at rest.
+    for (const p of parts) {
+      if (p.m === 'fly' && p.t < 0) continue;
+      const sp = Math.hypot(p.x - p.px, p.y - p.py);
+      let a;
+      if (p.m === 'fade') a = Math.max(0, p.life / .6);
+      else if (p.m === 'free') {
+        a = Math.min(1, .45 + sp / 6);
+        if (p.life !== Infinity) a *= Math.min(1, p.life / .6);
+        else if (sp < 1 && !Kit.calm) a *= .5 + .4 * Math.sin(now / 190 + p.ph);
+      } else a = .9;
+      x.globalAlpha = Math.max(0, a);
+      if (sp > 2.5) { x.strokeStyle = p.col; x.lineWidth = p.sz; x.beginPath(); x.moveTo(p.px - (p.x - p.px), p.py - (p.y - p.py)); x.lineTo(p.x, p.y); x.stroke(); }
+      else { x.fillStyle = p.col; x.fillRect(p.x - p.sz / 2, p.y - p.sz / 2, p.sz, p.sz); }
+    }
+    x.globalAlpha = 1;
+
+    // Words sit above the fire, each on a paper halo.
+    x.save(); x.globalAlpha = I.num;
+    cap.forEach((c, i) => txt(c, pad + 2, ny + fs * 1.7 + i * fs * 1.45, `700 ${fs}px ${MONO}`, i && over ? RED : INK, 'left', true));
+    x.restore();
+    x.save(); x.globalAlpha = I.reg;
+    txt('IRAN', R.x, R.y + R.r * .1, `900 ${Math.max(16, R.r * .4)}px ${DISP}`, INK, 'center', true);
+    txt(over ? 'NOT JUST REGIONAL' : 'REGIONAL WAR', R.x, R.y + R.r * .1 + fs * 1.6, `700 ${fs}px ${MONO}`, over ? RED : INK, 'center', true);
+    x.restore();
+
+    // The two great powers: black squares, one hot letter each.
+    const power = (P, sc, L, lab, below) => {
+      if (sc <= 0) return;
+      x.save(); x.translate(P.x, P.y); x.scale(sc, sc);
+      x.fillStyle = 'rgba(13,13,12,.18)'; x.fillRect(-s / 2 + 4, -s / 2 + 5, s, s);
+      const lg = x.createLinearGradient(-s / 2, -s / 2, s / 2, s / 2); lg.addColorStop(0, '#2c2b28'); lg.addColorStop(1, '#000');
+      x.fillStyle = lg; x.fillRect(-s / 2, -s / 2, s, s);
+      x.fillStyle = RED; x.fillRect(-s / 2, s / 2 - s * .1, s, s * .1);
+      txt(L, 0, s * .2, `900 ${s * .6}px ${DISP}`, PAPER, 'center');
+      x.restore();
+      x.save(); x.globalAlpha = sc;
+      if (below) txt(lab, P.x + s / 2, P.y + s / 2 + fs * 1.5, `700 ${fs}px ${MONO}`, INK, 'right', true);
+      else txt(lab, P.x - s / 2, P.y - s / 2 - fs * .8, `700 ${fs}px ${MONO}`, INK, 'left', true);
+      x.restore();
+    };
+    power(A, I.pA, 'A', 'GREAT POWER A · YOU', false);
+    power(B, I.pB, 'B', 'GREAT POWER B', true);
+
+    // Hint: crop marks breathing around your square.
+    if (!touched && !Kit.calm) {
+      const o = Math.min(pad - 2, 5 + (Math.sin(now / 260) + 1) * 2.5), h = s / 2 + o, c = s * .26;
+      x.save(); x.strokeStyle = RED; x.lineWidth = 2.2; x.globalAlpha = .6 + Math.sin(now / 260) * .3;
+      x.beginPath();
+      for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
+        const cx = A.x + sx * h, cy = A.y + sy * h;
+        x.moveTo(cx - sx * c, cy); x.lineTo(cx, cy); x.lineTo(cx, cy - sy * c);
+      }
+      x.stroke(); x.restore();
+    }
+
+    // The aim: dashed arc, reticle, and what it would hit.
+    if (aiming && aim) {
+      const P0 = origin(), P1 = ctrl(P0, aim), z = zoneOf(aim), hot = z !== 'miss';
+      x.save(); x.strokeStyle = hot ? RED : INK; x.lineWidth = 2; x.setLineDash([6, 6]); x.lineDashOffset = -now / 25;
+      x.beginPath(); x.moveTo(P0.x, P0.y); x.quadraticCurveTo(P1.x, P1.y, aim.x, aim.y); x.stroke(); x.setLineDash([]);
+      x.beginPath(); x.arc(aim.x, aim.y, 12, 0, 6.2832); x.stroke();
+      x.beginPath(); x.moveTo(aim.x - 18, aim.y); x.lineTo(aim.x - 6, aim.y); x.moveTo(aim.x + 6, aim.y); x.lineTo(aim.x + 18, aim.y); x.moveTo(aim.x, aim.y - 18); x.lineTo(aim.x, aim.y - 6); x.moveTo(aim.x, aim.y + 6); x.lineTo(aim.x, aim.y + 18); x.stroke();
+      const lab = z === 'reg' ? 'VIA IRAN' : z === 'dir' ? 'DIRECT HIT' : 'NO TARGET';
+      x.font = `800 ${fs}px ${MONO}`; const tw = x.measureText(lab).width + 12;
+      const lx = Math.max(2, Math.min(W - tw - 2, aim.x - tw / 2)), ly = aim.y - 26 - fs < 2 ? aim.y + 26 : aim.y - 26 - fs;
+      x.fillStyle = hot ? RED : INK; x.fillRect(lx, ly, tw, fs + 8);
+      txt(lab, lx + tw / 2, ly + fs + 2, `800 ${fs}px ${MONO}`, PAPER, 'center');
+      x.restore();
+    }
+  }
+
+  let last = 0, running = false;
+  function frame(t) {
+    const dt = Math.min(.04, last ? (t - last) / 1000 : .016); last = t;
+    if (x && W && H) { update(dt); draw(t); }
+    requestAnimationFrame(frame);
+  }
+  const run = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
+
+  // The stage shrinks when the answer appears: redraw at the true size, never stretch.
+  new ResizeObserver(() => {
+    if (!laid) return;
+    const r = stage.getBoundingClientRect();
+    if (Math.abs(r.width - W) > 1 || Math.abs(r.height - H) > 1) { layout(true); draw(performance.now()); }
+  }).observe(stage);
+
+  // ---------- touch ----------
+  const pos = e => { const r = cv.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+  cv.addEventListener('pointerdown', e => { if (flight || over) return; aiming = true; aim = pos(e); touched = true; cv.setPointerCapture(e.pointerId); Kit.haptic('selection'); });
+  cv.addEventListener('pointermove', e => { if (aiming) aim = pos(e); });
+  cv.addEventListener('pointerup', e => { if (!aiming) return; aiming = false; launch(pos(e)); });
+  cv.addEventListener('pointercancel', () => { aiming = false; });
+
+  Kit.onShow.card = () => { layout(false); run(); if (x && W && H) draw(performance.now()); };
+  Kit.onEnter.card = () => {
+    run();
+    if (Kit.calm) return;
+    Object.assign(I, {grid: 0, pA: 0, pB: 0, reg: 0, num: 0});
+    gsap.timeline()
+      .to(I, {grid: 1, duration: .8, ease: 'expo.out'})
+      .to(I, {num: 1, duration: .7, ease: 'power3.out'}, .15)
+      .to(I, {pA: 1, duration: .7, ease: 'back.out(2)'}, .3)
+      .to(I, {pB: 1, duration: .7, ease: 'back.out(2)'}, .42)
+      .to(I, {reg: 1, duration: 1, ease: 'power3.inOut'}, .5);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    run(); Object.assign(I, {grid: 1, pA: 1, pB: 1, reg: 1, num: 1});
+    launch({x: R.x, y: R.y});
+    await wait(Kit.calm ? 80 : 1600);
+    launch({x: B.x, y: B.y});
+    await wait(Kit.calm ? 160 : 3600);
+  };
+})();
+Kit.single();
+</script>
+</html>

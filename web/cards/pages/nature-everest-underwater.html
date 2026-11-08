@@ -1,0 +1,214 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-everest-underwater -->
+<!-- Design note.
+     Thought to carry: we size the world from the surface we can see, so the hidden half (a depth, a base, a cost) gets shrunk.
+     Front: a flat cross-section of a calm sea with Everest drawn to vertical scale; the reader drags the mountain down to where they think its foot meets the deepest seabed, and a live chip says where the summit ends up.
+     Back: the real trench floor at 10,900 m appears, Everest settles from the reader's guess onto it, a yellow bracket shows the "2 km" of sea still over the summit, and the Trieste dives along its route to the bottom.
+     The front gives nothing away: the sea fades into darkness with no floor, no depth scale and no trench value; the only number shown is the reader's own guess. -->
+<title>Everest in the Challenger Deep</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* the face turned away is also taken out of view once it has rotated past edge-on */
+.turn>.front{visibility:visible;transition:visibility 0s .38s}
+.turn.over>.front{visibility:hidden}
+.turn>.back{visibility:hidden;transition:visibility 0s .38s}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face{gap:1.2cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.card .front p.say{padding-right:96px;overflow-wrap:anywhere}
+.back .body{overflow-wrap:anywhere}
+.foot .src{display:block;padding-right:96px;overflow-wrap:anywhere}
+.front .foot.spacer .src{visibility:hidden}
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(4px)}}
+.kit-calm .hint{animation:none}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag Everest down · how deep" style="--c:#e4ecee;--k:#10212c;--edge:#b7c8ce">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE MOUNTAIN</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Stand Everest on the deepest seabed. Where does its summit end up?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A sea in cross-section with Mount Everest drawn to scale; drag it down into the dark water."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say"><b>Drag Everest down</b> until its foot rests on the deepest seabed, wherever you think that is.</p>
+        <div class="foot spacer" aria-hidden="true"><span class="src">&nbsp;</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Over 2 km under the waves.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Everest standing on the floor of the Challenger Deep, its summit over 2 km below the surface, and the Trieste diving to the bottom."></svg></div>
+        <p class="body">The Challenger Deep, in the Pacific, goes down over 10,900 m. Everest is about 8,848 m tall, so even standing on the bottom its summit stays over 2 km under water.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> We size things from the surface we can see; measure the hidden half before you compare.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+gsap.registerPlugin(MotionPathPlugin);
+(() => {
+  const TOP = 3, BOT = -12.4, EV = 8.848, DEEP = 10.9, TRUE_PEAK = EV - DEEP; // -2.052 km
+  const INK = '#10212c', CREAM = '#f3efe4', GUESS_SEA = '#ffa552', GUESS_SKY = '#b4530a', TRUTH = '#ffd75e';
+  const STONE = '#8f8c84', SHADE = '#6c6962', BED = '#34302a';
+  const R = [[0,0],[.1,.07],[.16,.06],[.27,.17],[.36,.22],[.5,.42],[.62,.5],[.78,.74],[.9,.86],[1,1]];
+  const L = [[-.09,.05],[-.15,.1],[-.24,.12],[-.35,.3],[-.48,.4],[-.6,.58],[-.76,.7],[-.88,.9],[-1,1]];
+  const SH = [[0,0],[.1,.07],[.16,.06],[.27,.17],[.36,.22],[.5,.42],[.62,.5],[.78,.74],[.9,.86],[1,1],[.32,1],[.14,.52],[.05,.2]];
+  const SNOW = [[0,0],[.1,.07],[.16,.06],[.21,.11],[.14,.14],[.08,.11],[.01,.16],[-.06,.11],[-.12,.13],[-.15,.1],[-.09,.05]];
+
+  let peak = 2.2, guess = null, touched = false, asked = false, committed = false, turned = false;
+  let W = 0, H = 0, fs = 13, PX = 1, gM = null, gL = null, readout = null, lead = null, hint = null, cx = 0, hw = 0;
+  const yOf = k => (TOP - k) / (TOP - BOT) * H;
+  const label = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.textContent = t; return e; };
+  const pts = (arr, x0, y0, hgt, w) => arr.map(([x, y]) => `${(x0 + x * w).toFixed(1)},${(y0 + y * hgt).toFixed(1)}`).join(' ');
+
+  function sea(svg, id, deep) {
+    const defs = Kit.mk('defs', {}, svg), y0 = yOf(0);
+    const g = Kit.mk('linearGradient', {id, x1: 0, y1: y0, x2: 0, y2: H, gradientUnits: 'userSpaceOnUse'}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#3a8bad'}, g);
+    Kit.mk('stop', {offset: 1, 'stop-color': deep}, g);
+    Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: `url(#${id})`}, svg);
+  }
+  function mountain(p, x0, py) {
+    const hgt = EV * PX;
+    Kit.mk('polygon', {points: pts([...L.slice().reverse(), ...R], x0, py, hgt, hw), fill: STONE}, p);
+    Kit.mk('polygon', {points: pts(SH, x0, py, hgt, hw), fill: SHADE}, p);
+    Kit.mk('polygon', {points: pts(SNOW, x0, py, hgt, hw), fill: '#ffffff'}, p);
+  }
+  function tint(svg) { const y0 = yOf(0); Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: '#0a2c40', opacity: .45}, svg); }
+  function surface(svg) {
+    const y0 = yOf(0); let d = `M0,${y0}`;
+    for (let x = 0; x < W; x += 24) d += ` q6,-2.2 12,0 q6,2.2 12,0`;
+    Kit.mk('path', {d, stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, svg);
+  }
+  const guessColour = k => k > 0 ? GUESS_SKY : GUESS_SEA;
+
+  // ---------- front ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 26)); PX = H / (TOP - BOT);
+    cx = W * .4; hw = W * .3;
+    sea(svg, 'seaA', '#050f16');
+    gM = Kit.mk('g', {}, svg); mountain(gM, cx, yOf(0));
+    tint(svg);
+    gL = Kit.mk('g', {}, svg);
+    label(gL, cx, yOf(0) + EV * PX * .55, 'Everest, 8,848 m', {'text-anchor': 'middle', fill: CREAM});
+    lead = Kit.mk('line', {x1: cx + fs * .5, x2: cx + hw * .42 - 5, y1: yOf(0), y2: yOf(0), 'stroke-width': 1.2}, gL);
+    readout = label(gL, cx + hw * .42, yOf(0) + fs * .35, '', {'font-weight': 800});
+    if (!touched) {
+      hint = Kit.mk('g', {class: 'hint'}, gL);
+      const ay = yOf(0) + EV * PX * .26;
+      Kit.mk('path', {d: `M${cx - hw * .1},${ay} v${fs * 1.4} m-5,-6 l5,6 l5,-6`, stroke: CREAM, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
+    }
+    surface(svg);
+    setPeak(peak);
+  }
+  function setPeak(v) {
+    peak = Math.max(-5, Math.min(2.6, v));
+    const dy = yOf(peak) - yOf(0);
+    gM.setAttribute('transform', `translate(0,${dy})`); gL.setAttribute('transform', `translate(0,${dy})`);
+    const c = guessColour(peak);
+    readout.setAttribute('fill', c); lead.setAttribute('stroke', c);
+    readout.textContent = Math.abs(peak) < .05 ? 'summit: at the surface' : peak > 0 ? `summit: ${peak.toFixed(1)} km up` : `summit: ${(-peak).toFixed(1)} km under`;
+  }
+  const svg = Kit.$('pic'); let drag = null;
+  svg.addEventListener('pointerdown', e => {
+    if (committed) return; drag = {y: e.clientY, p: peak}; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; if (hint) hint.remove(); Kit.haptic('selection'); }
+  });
+  svg.addEventListener('pointermove', e => { if (drag) setPeak(drag.p - (e.clientY - drag.y) / PX); });
+  const end = () => {
+    if (!drag) return; drag = null;
+    if (!asked && touched) { asked = true; sure.on(); Kit.$('say').innerHTML = 'Move it again if you like. <b>Then say how sure you are.</b>'; }
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (committed) return; committed = true; guess = peak;
+    const ok = guess <= -1.5 && guess >= -2.6, said = readout.textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function drawBack(anim) {
+    const s = Kit.$('pic2'); s.innerHTML = '';
+    const f = Kit.fitSvg(s); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 26)); PX = H / (TOP - BOT);
+    cx = W * .4; hw = W * .3;
+    const floorY = yOf(-DEEP), py = yOf(TRUE_PEAK), g0 = guess == null ? -1 : guess;
+    sea(s, 'seaB', '#06141d');
+    const bed = Kit.mk('path', {d: `M0,${yOf(-6.4)} C${W * .12},${yOf(-6.6)} ${W * .2},${yOf(-8.6)} ${W * .28},${floorY} L${W * .86},${floorY} C${W * .92},${yOf(-9)} ${W * .95},${yOf(-6.8)} ${W},${yOf(-6.2)} L${W},${H} L0,${H}Z`, fill: BED}, s);
+    const m = Kit.mk('g', {}, s); mountain(m, cx, py);
+    Kit.mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: BED}, s);
+    tint(s);
+    const top = Kit.mk('g', {}, s);
+    // the reader's guess
+    const gy = yOf(g0), gc = guessColour(g0);
+    const gLine = Kit.mk('g', {}, top);
+    Kit.mk('line', {x1: W * .03, x2: W * .97, y1: gy, y2: gy, stroke: gc, 'stroke-width': 1.8, 'stroke-dasharray': '6 5'}, gLine);
+    label(gLine, W * .03, gy - fs * .45, 'your guess', {fill: gc, 'font-weight': 800});
+    // labels pinned to what they name
+    const evL = label(top, cx, yOf(-6.6), 'Everest, 8,848 m', {'text-anchor': 'middle', fill: CREAM});
+    const flL = label(top, W * .03, floorY + fs * 1.25, 'deepest floor: 10,900 m', {fill: CREAM});
+    // the truth: 2 km of sea over the summit
+    const bx = cx + fs * .7, y0 = yOf(0);
+    const br = Kit.mk('path', {d: `M${bx - 4},${y0} h8 M${bx},${y0} V${py} M${bx - 4},${py} h8`, stroke: TRUTH, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round'}, top);
+    const hs = Math.max(fs * 1.6, Math.min(fs * 3.2, (y0 - py) * 1.05));
+    const hero = Kit.mk('text', {x: bx + fs * .6, y: (y0 + py) / 2 + hs * .34, fill: TRUTH, 'font-size': hs, 'font-weight': 800, style: 'font-family:var(--display)'}, top);
+    hero.textContent = '2 km';
+    // the Trieste's dive, 1960
+    const route = Kit.mk('path', {d: `M${W * .86},${y0 + fs * .4} C${W * .97},${yOf(-4)} ${W * .7},${yOf(-7.2)} ${W * .8},${floorY - fs * .7}`, stroke: CREAM, 'stroke-width': 1.3, fill: 'none', 'stroke-dasharray': '2 5', opacity: .45, 'stroke-linecap': 'round'}, top);
+    const sub = Kit.mk('g', {opacity: 0}, top), u = fs * .9;
+    Kit.mk('rect', {x: -u * .15, y: -u * .75, width: u * .3, height: u * .35, fill: CREAM}, sub);
+    Kit.mk('ellipse', {cx: 0, cy: -u * .2, rx: u, ry: u * .32, fill: CREAM}, sub);
+    Kit.mk('circle', {cx: 0, cy: u * .3, r: u * .3, fill: CREAM, stroke: INK, 'stroke-width': 1}, sub);
+    const trL = label(top, W - 4, floorY + fs * 1.25, 'Trieste, 1960', {'text-anchor': 'end', fill: CREAM});
+    surface(s);
+
+    const tl = gsap.timeline();
+    tl.from(bed, {opacity: 0, duration: .5, ease: 'power2.out'})
+      .fromTo(m, {y: yOf(g0) - py}, {y: 0, duration: 1, ease: 'power3.inOut'}, '+=.15')
+      .from([evL, flL], {opacity: 0, duration: .4, ease: 'power2.out'}, '-=.3')
+      .from(br, {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from(hero, {opacity: 0, x: -6, duration: .5, ease: 'power3.out'}, '<')
+      .from(route, {opacity: 0, duration: .3}, '+=.1')
+      .set(sub, {opacity: 1})
+      .to(sub, {motionPath: {path: route, align: route, alignOrigin: [.5, .5]}, duration: 3, ease: 'power1.inOut'})
+      .from(trL, {opacity: 0, duration: .4, ease: 'power2.out'});
+    if (!anim || Kit.calm) tl.progress(1);
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 8, duration: .6, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; if (hint) hint.remove(); setPeak(-0.6);
+    if (!asked) { asked = true; sure.on(); }
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 2200);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "science-push-harder-spin",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to the globe’s acceleration when you increase the applied force?",
+  "answer": "Increasing the applied force raises the torque, which directly raises angular acceleration. The globe floats on water, so friction is tiny, and its resistance to spinning, I, never changes. So α = τ ÷ I: twice the push gives twice the spin-up.",
+  "move": "Same object, more torque, more angular acceleration: τ = Iα.",
+  "keywords": [
+    "globe",
+    "torque",
+    "angular_acceleration",
+    "earth_spin",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page showing a globe floating on water. Drag back from the globe to wind up a push, then let go, and try three different forces. Asks: what happens to the globe's acceleration when you increase the applied force?",
+    "ground": "#f1eee6"
+  },
+  "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=9zso7ChaQXQ&t=27s",
+  "written": "2026-11-04"
+}

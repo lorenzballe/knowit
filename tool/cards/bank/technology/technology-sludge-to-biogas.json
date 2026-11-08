@@ -1,0 +1,38 @@
+{
+  "id": "technology-sludge-to-biogas",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a sewage plant turn its sludge into its own energy?",
+  "answer": "At the DAC plant in Genoa, every tank is sealed to keep the smells in. Inside, the sludge is treated so it gives off biogas, and the plant reuses that gas itself, covering up to 50% of the energy it needs.",
+  "move": "Sludge is fuel: a plant can make up to half its own energy from it.",
+  "keywords": [
+    "sewage",
+    "sludge",
+    "biogas",
+    "genoa",
+    "wastewater"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four step tiles to put in order: sludge comes in, the sealed tank, biogas is collected, and the plant's own power. Tap them in the order the energy travels.",
+    "ground": "#ece2cb"
+  },
+  "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=vmwPachp1SE&t=352s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "life-border-coin-flip",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.risk_taking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the chance of being killed or caught when fleeing North Korea?",
+  "answer": "About 1 in 2 people fleeing North Korea are killed or caught. Tap the drawing to watch four people run for the border and see where they land.",
+  "move": "Fleeing North Korea is a coin flip with your life: about 1 in 2 are killed or caught.",
+  "keywords": [
+    "north-korea",
+    "border-crossing",
+    "defectors",
+    "coin-flip",
+    "risk"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A drawing of four people running toward a border, with the question: what is the chance of being killed or caught when fleeing North Korea? Tap the drawing to watch where they land.",
+    "ground": "#0d3466"
+  },
+  "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=135s",
+  "written": "2026-11-04"
+}

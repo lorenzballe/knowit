@@ -1,396 +1,252 @@
-<!doctype html>
-<!-- slug: technology-undersea-cable-blur -->
-<!-- Look: a vintage brass receiving instrument over a cross-section of the sea, with paper tapes of the sent and received signal.
-     Interaction: each tap lays more cable and widens the sea. The same · — · is sent again, the cable glows as it soaks up charge, and the far needle and tape answer.
-     Wow: at full length the crisp sent trace morphs into the smeared received one, and the brass needle crawls up and can no longer fall back between dots. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Why undersea cables blurred the telegraph</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-cable-smears-pulses -->
+<!-- Design note.
+     Thought to carry: over a long undersea cable, the pulses came out lengthened and distorted, and dots got hard to tell from dashes.
+     Front: a sea, a cable between two shores, the crisp "dot dash dot" that goes in. The reader draws with a finger what comes out.
+     Back: one focal point, the orange line of what arrived, drawn over the reader's guess. It starts with each pulse, so it shows no delay.
+     The edges are rounded and the tails run long, so dots and the dash look much more alike.
+     A short/long toggle shows that the long cable does it, as the brief says ("long cables increased capacitance").
+     The text names the cause only as the brief does, and it reports the debate: Thomson's water-in-a-rubber-tube picture,
+     and Heaviside and Fitzgerald's fields, the view that proved correct. The drawing makes no claim about the mechanism, only about what came out. -->
+<title>Why the undersea cable blurred</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;overflow:visible}
-#pic .m{font-family:var(--mono);fill:var(--k)}
-#pic .eng{font-family:var(--mono);fill:#3b2a12;letter-spacing:.12em}
-#row{display:flex;align-items:center;gap:3cqw;padding:.9cqh 0}
-#lay{display:inline-flex;align-items:baseline;gap:1.6cqw;flex:none;white-space:nowrap;
-  font:800 max(2.1cqh,14px)/1.1 var(--body);color:#2a1a06;border:0;border-radius:99px;padding:1.3cqh 5cqw;cursor:pointer;
-  background:linear-gradient(160deg,#fbe3a0 0%,#d9a64e 45%,#a7742a 100%);
-  box-shadow:inset 0 .2cqh 0 rgba(255,255,255,.55),inset 0 -.3cqh 0 rgba(80,45,5,.45),0 .5cqh 1.1cqh rgba(0,0,0,.32);
-  transition:transform .08s ease-out}
-#lay:active{transform:scale(.97)}
-#lay small{font:700 max(1.7cqh,12px)/1 var(--mono);opacity:.75}
-.say{font:600 max(2cqh,13px)/1.3 var(--body)}
-#why .body{font:600 max(2cqh,13px)/1.35 var(--body);margin:0}
-.keep{overflow-wrap:anywhere}
-.q{overflow-wrap:anywhere}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible;transition:visibility 0s linear .37s}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .37s}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex;position:relative}
+.face svg.pic{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:crosshair}
+.lb{font-family:var(--body);font-weight:700;fill:var(--k)}
+/* confidence chips: solid and legible; greyed only until a stroke exists */
+#sure,#sure *{opacity:1!important}
+#sure [data-v]{height:40px;min-height:40px;padding-top:0;padding-bottom:0;box-sizing:border-box;border:1.5px solid var(--k);color:var(--k);transition:border-color .35s,color .35s}
+#sure:not(.live){color:color-mix(in srgb,var(--k) 45%,transparent)}
+#sure:not(.live) [data-v]{border-color:color-mix(in srgb,var(--k) 28%,transparent);color:color-mix(in srgb,var(--k) 38%,transparent)}
+.front .bar{flex:0 0 46px}
+.back .big{font-size:max(3cqh,17px);line-height:1.15;margin:0 0 .3cqh}
+.back .verdict{font-family:var(--body);font-weight:700;font-size:15px;line-height:1.25;margin:0 0 .4cqh;color:var(--k)}
+.back .body{font-size:max(1.75cqh,12px);line-height:1.3;margin:.6cqh 0}
+.back .keep{font-size:max(1.7cqh,12px);padding-top:10px;padding-bottom:10px}
+.back .foot{padding-right:104px}
+.src{overflow-wrap:anywhere}
+.len{position:absolute;right:7%;bottom:0;display:flex;height:28px;box-sizing:border-box;border:1.5px solid var(--k);border-radius:14px;overflow:hidden}
+.len button{font:600 13px/1 var(--body);color:var(--k);background:transparent;border:0;margin:0;padding:0 10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.len button[aria-pressed="true"]{background:var(--k);color:#fff}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Tap to lay cable · watch the needle" style="--c:#0f2a30;--k:#f3e7c9;--edge:#06171b">
+<article class="card" id="card" data-topic="technology" data-kind="Draw it · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">UNDERSEA CABLE</span></div>
-    <h2 class="q">Why did early undersea telegraph cables blur dots and dashes together?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A brass receiving needle above a cross-section of the sea, with a telegraph cable on the seabed and paper tapes showing the sent and received signal."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAW IT</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">A crisp dot-dash-dot enters a long undersea cable. What comes out?</h2>
+        <div class="stagebox"><svg id="pic" class="pic" role="img" aria-label="Two shores and a cable on the seabed. Below, the pulses sent, and an empty strip where you draw what arrives."></svg></div>
+        <div class="sure" id="sure"></div>
+        <div class="bar" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Lengthened and distorted</p>
+        <p class="verdict" id="verdict"></p>
+        <div class="stagebox">
+          <svg id="pic2" class="pic" role="img" aria-label="What arrived: the same three pulses with rounded edges and long tails, so the dots look much like the dash."></svg>
+          <div class="len" id="len" role="group" aria-label="Cable length"><button type="button" data-l="short" aria-pressed="false">short cable</button><button type="button" data-l="long" aria-pressed="true">long cable</button></div>
+        </div>
+        <p class="body">Long cables increased capacitance, so the pulses were stretched and blurred, and dots were hard to tell from dashes. Scientists debated why. William Thomson pictured signals flowing like water through a rubber tube. Heaviside and Fitzgerald argued that the fields around the wire carried the energy, and their view proved correct.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Over a long enough line, a message can smear until a dot looks like a dash.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021).</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Tap to lay more cable under the sea and send <b>· — ·</b> again.</p>
-    <div id="row"><button id="lay">Lay more cable<small id="cnt">1/5</small></button></div>
-    <div id="why" class="gone"><p class="body">A long cable soaks up charge: its capacitance grows with its length. Each pulse must fill it before the far end rises, then drain it before it falls, so pulses stretch and blur into each other.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Longer cable, more capacitance: pulses stretch until dots and dashes merge.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script>
 (() => {
-  gsap.registerPlugin(MorphSVGPlugin, DrawSVGPlugin, ScrambleTextPlugin, CustomEase);
-  const svg = Kit.$('pic'), btn = Kit.$('lay');
-  const T = 16, NSMP = 240, RC = 0.034, PER = 4, MAXN = 5;
-  const AMBER = '#ffbf52', CREAM = '#f3e7c9';
-  const sentAt = t => ((t >= 1 && t < 2) || (t >= 3 && t < 6) || (t >= 7 && t < 8)) ? 1 : 0;
-  let n = 1, built = false, play = null, shoreTw = null, done = false, wowStarted = false, wowCall = null, lastSize = '';
-  const P = {t: 0}, S = {e: 0, ph: 0}, ang = {a: 0, v: 0, target: 0};
-  const E = {};
-  let W, H, fs, R, lf, cx, cy, hs, xL, xs, sec, yC, yB, landTop, sTop, TP = {};
-  const clamp = (lo, v, hi) => Math.max(lo, Math.min(hi, v));
+  const N = 240, TT = 16, ON = [[1, 2], [3, 6], [7, 8]];   // dot, dash, dot (time units)
+  const ACC = '#ee5a24';                                      // what arrived
+  const TEAL = '#0b3d52';                                     // the reader's guess
+  const sentAt = t => ON.some(([a, b]) => t >= a && t < b) ? 1 : 0;
+  // What arrived, drawn without claiming a mechanism or a delay: each pulse starts on time,
+  // but its edges round off and its tail runs long. A longer cable smears more.
+  const smear = tau => {
+    const out = [], sub = 20, dt = TT / ((N - 1) * sub); let s = 0;
+    for (let i = 0; i < N; i++) {
+      out.push(s);
+      for (let k = 0; k < sub; k++) s += (sentAt((i * sub + k) * dt) - s) * dt / tau;
+    }
+    return out;
+  };
+  const LONG = smear(.85), SHORT = smear(.1);
+  const SENT = Array.from({length: N}, (_, i) => sentAt(i / (N - 1) * TT));
+  const g = new Array(N).fill(null);
+  let locked = false, live = false, turned = false, G1 = null, guessG = null, subEl = null, mode = 'long', back = null, tl = null;
+  let subText = 'Use your finger, left to right.';
+  const svg1 = Kit.$('pic'), svg2 = Kit.$('pic2');
+  const ink = p => `color-mix(in srgb,var(--k) ${p}%,transparent)`;
 
-  // The cable as a ladder of resistance and capacitance: every stretch of cable stores charge.
-  const cache = {};
-  function sim(k) {
-    if (cache[k]) return cache[k];
-    const N = PER * k, dt = .005;
-    let v = new Float64Array(N + 1), nv = new Float64Array(N + 1);
-    const recv = new Float32Array(NSMP), nodes = [];
-    let t = 0;
-    for (let i = 0; i < NSMP; i++) {
-      const ti = i * T / (NSMP - 1);
-      while (t < ti - 1e-9) {
-        v[0] = sentAt(t); nv[0] = v[0];
-        for (let j = 1; j <= N; j++) {
-          const fl = (v[j - 1] - v[j]) + (j < N ? v[j + 1] - v[j] : 0);
-          nv[j] = v[j] + dt / RC * fl;
-        }
-        const tmp = v; v = nv; nv = tmp; t += dt;
-      }
-      recv[i] = v[N]; nodes.push(Float32Array.from(v.subarray(1)));
-    }
-    return cache[k] = {recv, nodes, N};
+  function geo(svg, isBack) {
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, (f.f || 13)));
+    const x0 = W * .07, x1 = W * .93;
+    const top = fs * 2.2, mid = isBack ? fs * 2.6 : fs * 2.6 + 24, bot = isBack ? 40 : 6;
+    let U = (H - (isBack ? 44 : 56) - top - mid - bot) / 2.2;
+    U = Math.max(18, Math.min(isBack ? 60 : 76, U));
+    const yR = H - bot, yS = yR - U * 1.2 - mid, sH = Math.max(30, yS - U - top), yL = yS + fs * 2.15;
+    return {W, H, fs, sH, x0, x1, U, yS, yR, yL, X: i => x0 + (x1 - x0) * i / (N - 1), T: t => x0 + (x1 - x0) * t / TT};
   }
-  const SENT = Array.from({length: NSMP}, (_, i) => sentAt(i * T / (NSMP - 1)));
-  function decode(r) {
-    const du = T / (NSMP - 1), out = []; let run = 0;
-    for (let i = 0; i <= r.length; i++) {
-      const on = i < r.length && r[i] > .5;
-      if (on) run++; else if (run) { out.push(run * du < 2 ? '·' : '—'); run = 0; }
+  const txt = (p, x, y, s, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, class: 'lb', 'font-size': fs}, a), p); e.textContent = s; return e; };
+
+  function scene(svg, G) {
+    const {W, sH} = G, fh = Math.min(G.fs * 2.3, sH * .3), lt = fh + 2, sY = lt + sH * .08, sb = sH - Math.max(5, sH * .1);
+    const root = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: W * .1, y: sY, width: W * .8, height: sH - sY, style: `fill:${ink(12)}`}, root);
+    const land = s => { const m = x => s < 0 ? x : W - x;
+      return `M${m(0)},${lt} L${m(W * .11)},${lt} C${m(W * .14)},${lt} ${m(W * .15)},${sY + sH * .15} ${m(W * .23)},${sH} L${m(0)},${sH} Z`; };
+    Kit.mk('path', {d: land(-1), style: `fill:${ink(72)}`}, root);
+    Kit.mk('path', {d: land(1), style: `fill:${ink(72)}`}, root);
+    const d = `M${W * .1},${lt} C${W * .17},${lt} ${W * .19},${sb} ${W * .32},${sb} L${W * .68},${sb} C${W * .81},${sb} ${W * .83},${lt} ${W * .9},${lt}`;
+    const cable = Kit.mk('path', {d, style: 'fill:none;stroke:var(--k);stroke-width:2.6;stroke-linecap:round'}, root);
+    for (const x of [W * .05, W * .95]) {   // a sender and a receiver
+      Kit.mk('rect', {x: x - fh * .2, y: lt - fh * .58, width: fh * .4, height: fh * .58, rx: fh * .18, style: 'fill:var(--k)'}, root);
+      Kit.mk('circle', {cx: x, cy: lt - fh * .82, r: fh * .2, style: 'fill:var(--k)'}, root);
     }
-    return out.length ? out.join(' ') : 'nothing';
+    return {root, cable};
   }
-  const pathOf = (arr, base) => {
-    let d = '';
-    for (let i = 0; i < arr.length; i++) {
-      const x = TP.x0 + (TP.x1 - TP.x0) * i / (arr.length - 1), y = base - arr[i] * TP.h;
-      d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
-    }
+  function sentStrip(svg, G) {
+    const {x0, x1, yS, U, fs, T} = G, p = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: x0, x2: x1, y1: yS, y2: yS, style: `stroke:${ink(30)};stroke-width:1.2`}, p);
+    let d = `M${x0},${yS}`;
+    for (const [a, b] of ON) d += ` L${T(a)},${yS} L${T(a)},${yS - U} L${T(b)},${yS - U} L${T(b)},${yS}`;
+    d += ` L${x1},${yS}`;
+    Kit.mk('path', {d, style: 'fill:none;stroke:var(--k);stroke-width:2.6;stroke-linejoin:round'}, p);
+    txt(p, x0, yS - U - fs * .55, 'Sent', fs);
+    return p;
+  }
+  const pathOf = (arr, G) => {
+    let d = '', on = false;
+    arr.forEach((v, i) => { if (v == null) { on = false; return; }
+      d += `${on ? 'L' : 'M'}${G.X(i).toFixed(1)},${(G.yR - v * G.U).toFixed(1)} `; on = true; });
     return d;
   };
-  const mk = (tag, a, p) => Kit.mk(tag, a, p);
-  const txt = (p, x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs}, a), p); e.textContent = t; return e; };
-  const P2 = (deg, r) => { const a = deg * Math.PI / 180; return [cx + r * R * Math.sin(a), cy - r * R * Math.cos(a)]; };
-  const pt = p => p[0].toFixed(1) + ',' + p[1].toFixed(1);
-  const tlen = (e, est) => { let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} return Math.max(w || 0, est); };
 
-  function build() {
-    const box = Kit.$('stage').getBoundingClientRect(), key = Math.round(box.width) + 'x' + Math.round(box.height);
-    if (built && key === lastSize) return;
-    lastSize = key;
-    if (shoreTw) shoreTw.kill();
-    svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(14, W / 28));
+  // ---------- front ----------
+  function drawFront() {
+    svg1.innerHTML = '';
+    G1 = geo(svg1, false);
+    const {x0, x1, yR, yL, fs} = G1;
+    scene(svg1, G1).root.setAttribute('class', 'b1');
+    sentStrip(svg1, G1).setAttribute('class', 'b2');
+    const r = Kit.mk('g', {class: 'b3'}, svg1);
+    Kit.mk('line', {x1: x0, x2: x1, y1: yR, y2: yR, style: `stroke:${ink(40)};stroke-width:1.4;stroke-dasharray:5 5`}, r);
+    txt(r, x0, yL, 'What comes out? Draw it here', fs);
+    subEl = txt(r, x0, yL + 19, subText, 15, {style: 'font-weight:400'});
+    guessG = Kit.mk('path', {d: '', style: `fill:none;stroke:${TEAL};stroke-width:3;stroke-linecap:round;stroke-linejoin:round`}, svg1);
+    renderGuess();
+  }
+  const renderGuess = () => { if (guessG) guessG.setAttribute('d', pathOf(g, G1)); };
+  const setSub = s => { subText = s; if (subEl) subEl.textContent = s; };
 
-    // ---- vertical budget: dial, shore, sea, two tapes — every block keeps a sane minimum ----
-    const lr = fs * 1.45;
-    const fixed = 4 + 2.65 * fs + 4 + .3 * fs + 2 * lr + .3 * fs + 3;
-    const flex = Math.max(0, H - fixed);
-    const dialH = r => 1.23 * r + 1.35 * Math.max(12, Math.min(16, r * .1));
-    const solveR = a => { let r = (a - 16.2) / 1.23; if (r > 120) r = a / 1.365; return r; };
-    let sh = clamp(22, flex * .13, 56), sea = clamp(40, flex * .22, W * .24);
-    R = Math.min(W * .36, solveR(flex - 2 * sh - sea));
-    if (R < 44) { sh = 22; sea = 40; R = Math.min(W * .36, solveR(flex - 2 * sh - sea)); }
-    R = Math.max(30, R);
-    let spare = Math.max(0, flex - dialH(R) - 2 * sh - sea);
-    const dsea = Math.max(0, Math.min(spare * .35, W * .26 - sea)); sea += dsea; spare -= dsea;
-    const dsh = Math.max(0, Math.min(spare * .2, 60 - sh)); sh += dsh; spare -= 2 * dsh;
-    const g = Math.max(0, spare) / 4;
-    hs = sea / .8;
-    lf = Math.max(12, Math.min(16, R * .1));
-
-    cx = W / 2; cy = 4 + g + R;
-    const dialB = cy + R * .18 + lf * 1.35;
-    const lblY = dialB + R * .05 + g + fs * 1.35;
-    landTop = lblY + 4 + fs * 1.3;
-    sTop = landTop + hs * .1; yB = landTop + hs * .7; yC = yB - hs * .1;
-    const lb = landTop + hs * .8;
-    xL = W * .13; xs = xL + hs * .3; sec = (W * .8 - xs) / MAXN;
-    const tz0 = lb + g + fs * .3;
-
-    // ---- defs ----
-    const defs = mk('defs', {}, svg);
-    const lg = (id, stops, a) => { const gg = mk('linearGradient', Object.assign({id}, a), defs); stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op ?? 1}, gg)); };
-    lg('brass', [[0, '#fbe3a0'], [.35, '#d4a24c'], [.7, '#9c6b22'], [1, '#e2b866']], {x1: 0, y1: 0, x2: 1, y2: 1});
-    lg('brassD', [[0, '#7a5216'], [1, '#c9963f']], {x1: 0, y1: 0, x2: 0, y2: 1});
-    lg('plaque', [[0, '#2a1a08'], [1, '#4a3212']], {x1: 0, y1: 0, x2: 0, y2: 1});
-    lg('sea', [[0, '#2a6a74', .85], [1, '#0a1f24', .95]], {x1: 0, y1: 0, x2: 0, y2: 1});
-    lg('ray', [[0, CREAM, .12], [1, CREAM, 0]], {x1: 0, y1: 0, x2: 0, y2: 1});
-    const rg = mk('radialGradient', {id: 'face', cx: .5, cy: .9, r: .9}, defs);
-    mk('stop', {offset: 0, 'stop-color': '#fbf2da'}, rg); mk('stop', {offset: .75, 'stop-color': '#ecdcb3'}, rg); mk('stop', {offset: 1, 'stop-color': '#c9b182'}, rg);
-    const shf = mk('filter', {id: 'shadow', x: '-20%', y: '-20%', width: '140%', height: '150%'}, defs);
-    mk('feDropShadow', {dx: 0, dy: R * .04, stdDeviation: R * .045, 'flood-color': '#000', 'flood-opacity': .55}, shf);
-    const gl = mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-    mk('feGaussianBlur', {stdDeviation: 2.4, result: 'b'}, gl);
-    const mg = mk('feMerge', {}, gl); mk('feMergeNode', {in: 'b'}, mg); mk('feMergeNode', {in: 'SourceGraphic'}, mg);
-    const pat = mk('pattern', {id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
-    mk('rect', {width: 6, height: 6, fill: '#163338'}, pat);
-    mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: CREAM, 'stroke-opacity': .16, 'stroke-width': 1.2}, pat);
-
-    // ---- the brass instrument ----
-    const dial = E.dial = mk('g', {}, svg);
-    const plateG = mk('g', {filter: 'url(#shadow)'}, dial);
-    const plate = mk('path', {fill: 'url(#brass)', stroke: '#6b4512', 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, plateG);
-    const rim = mk('path', {d: `M${pt(P2(-70, .965))} A${R * .965},${R * .965} 0 0 1 ${pt(P2(70, .965))}`, fill: 'none', stroke: '#fff3c8', 'stroke-opacity': .55, 'stroke-width': 1}, dial);
-    mk('path', {d: `M${pt(P2(-64, .92))} A${R * .92},${R * .92} 0 0 1 ${pt(P2(64, .92))} L${pt(P2(64, .22))} A${R * .22},${R * .22} 0 0 0 ${pt(P2(-64, .22))} Z`, fill: 'url(#face)', stroke: '#5c3c10', 'stroke-width': 1.6}, dial);
-    mk('path', {d: `M${pt(P2(-58, .87))} A${R * .87},${R * .87} 0 0 1 ${pt(P2(58, .87))}`, fill: 'none', stroke: '#3b2a12', 'stroke-width': 1}, dial);
-    // a red danger band on the scale
-    mk('path', {d: `M${pt(P2(29, .9))} A${R * .9},${R * .9} 0 0 1 ${pt(P2(55, .9))}`, fill: 'none', stroke: '#9a2a14', 'stroke-opacity': .5, 'stroke-width': Math.max(2, R * .03)}, dial);
-    const ticks = E.ticks = mk('g', {}, dial);
-    for (let i = 0; i <= 20; i++) {
-      const a = -55 + 110 * i / 20, maj = i % 5 === 0;
-      const p1 = P2(a, .87), p2 = P2(a, maj ? .74 : .8);
-      mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: i > 14 ? '#9a2a14' : '#3b2a12', 'stroke-width': maj ? 1.8 : 1, 'stroke-linecap': 'round'}, ticks);
+  let drawing = false, lastI = null;
+  function addPt(e) {
+    const r = svg1.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, {x0, x1, yR, U} = G1;
+    const i = Math.max(0, Math.min(N - 1, Math.round((x - x0) / (x1 - x0) * (N - 1))));
+    const v = Math.max(0, Math.min(1.05, (yR - y) / U));
+    if (lastI != null && lastI !== i) {
+      const a = g[lastI], s = Math.sign(i - lastI);
+      for (let k = lastI + s; k !== i; k += s) g[k] = a + (v - a) * (k - lastI) / (i - lastI);
     }
-    const l0 = P2(-55, .6), l1 = P2(55, .6);
-    txt(dial, l0[0], l0[1] + lf * .35, '0', {class: 'eng', 'font-size': lf, 'text-anchor': 'middle', 'font-weight': 700});
-    txt(dial, l1[0], l1[1] + lf * .35, '1', {class: 'eng', 'font-size': lf, 'text-anchor': 'middle', 'font-weight': 700});
-    // engraved nameplate on the brass base, well clear of the scale numbers
-    const nb = cy + R * .18 + lf * .95;
-    const plq = mk('rect', {fill: 'url(#plaque)', stroke: '#f6dc9a', 'stroke-opacity': .45, 'stroke-width': .8, rx: 2}, dial);
-    const name = txt(dial, cx, nb, 'FAR END', {class: 'eng', 'font-size': lf, 'text-anchor': 'middle', 'font-weight': 700, fill: '#f6dc9a'});
-    const tw = tlen(name, 5.04 * lf);
-    plq.setAttribute('x', cx - tw / 2 - lf * .45); plq.setAttribute('y', nb - lf * .92);
-    plq.setAttribute('width', tw + lf * .9); plq.setAttribute('height', lf * 1.2);
-    const sr = Math.max(2.5, R * .032), bw = Math.max(R * .5, tw / 2 + lf * .45 + sr * 3.4);
-    plate.setAttribute('d', `M${pt(P2(-72, 1))} A${R},${R} 0 0 1 ${pt(P2(72, 1))} L${(cx + bw).toFixed(1)},${dialB.toFixed(1)} L${(cx - bw).toFixed(1)},${dialB.toFixed(1)} Z`);
-    [-1, 1].forEach(sd => {
-      const sx = cx + sd * (tw / 2 + lf * .45 + sr * 1.7), sy = nb - lf * .32;
-      mk('circle', {cx: sx, cy: sy, r: sr, fill: 'url(#brassD)', stroke: '#5c3c10', 'stroke-width': .8}, dial);
-      mk('line', {x1: sx - sr * .7, y1: sy - sr * .3, x2: sx + sr * .7, y2: sy + sr * .3, stroke: '#3b2a12', 'stroke-width': .9}, dial);
-    });
-    // needle
-    const nd = E.needle = mk('g', {}, dial);
-    const nw = Math.max(1.6, R * .018);
-    mk('path', {d: `M${cx - nw},${cy + R * .1} L${cx - nw * .5},${cy - R * .6} L${cx},${cy - R * .86} L${cx + nw * .5},${cy - R * .6} L${cx + nw},${cy + R * .1} Z`, fill: '#1b130b'}, nd);
-    mk('circle', {cx, cy: cy + R * .12, r: R * .045, fill: '#1b130b'}, nd);
-    mk('circle', {cx, cy, r: R * .075, fill: 'url(#brass)', stroke: '#5c3c10', 'stroke-width': 1}, dial);
-    mk('circle', {cx: cx - R * .02, cy: cy - R * .02, r: R * .022, fill: '#fff3c8', opacity: .8}, dial);
-    // glass glare
-    mk('path', {d: `M${pt(P2(-50, .8))} A${R * .8},${R * .8} 0 0 1 ${pt(P2(-12, .8))}`, fill: 'none', stroke: '#fff', 'stroke-opacity': .32, 'stroke-width': R * .05, 'stroke-linecap': 'round'}, dial);
-    rim.parentNode.appendChild(rim);
-
-    // ---- the sea ----
-    const seaG = E.seaG = mk('g', {}, svg);
-    E.sea = mk('path', {fill: 'url(#sea)'}, seaG);
-    E.rays = [0, 1, 2].map(() => mk('path', {fill: 'url(#ray)'}, seaG));
-    E.surf = mk('path', {fill: 'none', stroke: CREAM, 'stroke-opacity': .55, 'stroke-width': 1.3}, seaG);
-    E.bub = [];
-    for (let i = 0; i < 9; i++) E.bub.push({el: mk('circle', {r: .9 + Kit.rnd() * 1.3, fill: 'none', stroke: CREAM, 'stroke-width': .8, opacity: 0}, seaG), o: Kit.rnd(), f: Kit.rnd(), sp: .09 + Kit.rnd() * .1});
-    const sand = mk('g', {}, seaG);
-    for (let i = 0; i < 80; i++) mk('circle', {cx: xL + Kit.rnd() * (W * .9 - xL), cy: yB - Kit.rnd() * hs * .05, r: .6 + Kit.rnd() * .9, fill: CREAM, opacity: .2 + Kit.rnd() * .2}, sand);
-    E.cable = mk('path', {fill: 'none', stroke: '#05110f', 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
-    E.cableIn = mk('path', {fill: 'none', stroke: '#b98a3c', 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-opacity': .7}, svg);
-    const glowG = mk('g', {filter: 'url(#glow)'}, svg);
-    E.glow = [];
-    for (let j = 1; j <= MAXN * PER; j++) E.glow.push(mk('line', {x1: xs + (j - 1) * sec / PER, x2: xs + j * sec / PER, y1: yC, y2: yC, stroke: AMBER, 'stroke-width': 3.4, 'stroke-linecap': 'round', opacity: 0}, glowG));
-    E.glowL = mk('path', {fill: 'none', stroke: AMBER, 'stroke-width': 3.4, 'stroke-linecap': 'round', opacity: 0}, glowG);
-    // lands
-    E.landL = mk('path', {d: `M-1,${landTop} L${xL - hs * .15},${landTop} L${xL + hs * .2},${lb} L-1,${lb} Z`, fill: 'url(#hatch)', stroke: CREAM, 'stroke-opacity': .5, 'stroke-width': 1.2}, svg);
-    E.landR = mk('path', {fill: 'url(#hatch)', stroke: CREAM, 'stroke-opacity': .5, 'stroke-width': 1.2}, svg);
-    E.lb = lb;
-    // huts
-    const hut = (lampId) => {
-      const gg = mk('g', {}, svg), w = fs * 1.5, h = fs * 1.3;
-      mk('rect', {x: -w / 2, y: -h * .62, width: w, height: h * .62, fill: '#24464b', stroke: CREAM, 'stroke-width': 1.2}, gg);
-      mk('path', {d: `M${-w * .62},${-h * .6} L0,${-h} L${w * .62},${-h * .6} Z`, fill: CREAM, 'fill-opacity': .85}, gg);
-      E[lampId] = mk('rect', {x: -w * .17, y: -h * .48, width: w * .34, height: h * .28, fill: AMBER, opacity: 0, filter: 'url(#glow)'}, gg);
-      return gg;
-    };
-    E.hutL = hut('lampL'); E.hutL.setAttribute('transform', `translate(${xL * .5},${landTop})`);
-    E.hutR = hut('lampR');
-    txt(svg, 2, lblY, 'SEND', {class: 'm', 'font-weight': 700});
-    E.lblR = txt(svg, 0, lblY, 'RECEIVE', {class: 'm', 'font-weight': 700, 'text-anchor': 'middle'});
-    E.lblRw = tlen(E.lblR, 7 * fs * .6);
-
-    // ---- the tapes ----
-    TP = {x0: fs * .6, x1: W - fs * .6, h: Math.max(10, sh - 9)};
-    const strip = (top, label, right, col) => {
-      txt(svg, TP.x0, top + fs, label, {class: 'm', 'font-weight': 700, opacity: .8});
-      const r = txt(svg, TP.x1, top + fs, right, {class: 'm', 'font-weight': 800, 'text-anchor': 'end', fill: col});
-      const sy = top + lr;
-      mk('rect', {x: TP.x0 - 3, y: sy, width: TP.x1 - TP.x0 + 6, height: sh, rx: 3, fill: CREAM, 'fill-opacity': .07, stroke: CREAM, 'stroke-opacity': .22}, svg);
-      for (let u = 1; u < T; u++) { const x = TP.x0 + (TP.x1 - TP.x0) * u / T; mk('line', {x1: x, x2: x, y1: sy + 2, y2: sy + sh - 2, stroke: CREAM, 'stroke-opacity': .07}, svg); }
-      return {sy, sh, base: sy + sh - 4, r};
-    };
-    const a = strip(tz0, 'SENT', '· — ·', CREAM);
-    const b = strip(a.sy + sh + fs * .3, 'RECEIVED', '', AMBER);
-    TP.sBase = a.base; TP.rBase = b.base;
-    E.reads = b.r; E.reads.textContent = 'reads ' + decode(sim(n).recv);
-    mk('line', {x1: TP.x0, x2: TP.x1, y1: TP.rBase - TP.h * .5, y2: TP.rBase - TP.h * .5, stroke: AMBER, 'stroke-opacity': .35, 'stroke-dasharray': '3 4'}, svg);
-    E.sent = mk('path', {d: pathOf(SENT, TP.sBase), fill: 'none', stroke: CREAM, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
-    E.rx = mk('path', {d: pathOf(sim(n).recv, TP.rBase), fill: 'none', stroke: AMBER, 'stroke-width': 2.4, 'stroke-linejoin': 'round', filter: 'url(#glow)'}, svg);
-    E.ghost = mk('path', {d: E.sent.getAttribute('d'), fill: 'none', stroke: CREAM, 'stroke-width': 2, opacity: 0}, svg);
-    E.ph = [a, b].map(s => mk('line', {x1: TP.x0, x2: TP.x0, y1: s.sy + 1, y2: s.sy + s.sh - 1, stroke: CREAM, 'stroke-width': 1.4, 'stroke-opacity': .7}, svg));
-
-    built = true;
-    S.e = xs + n * sec;
-    drawShore(); frame(P.t); setNeedle();
-    if (done) scheduleWow();
+    g[i] = v; lastI = i; renderGuess();
   }
-
-  function drawSurf() {
-    const xR = S.e + hs * .3, x0 = xL - hs * .1, x1 = xR + hs * .1, ph = S.ph;
-    const yAt = x => sTop + Math.sin(x / 11 + ph) * 1.6 + Math.sin(x / 23 - ph * .7) * 1;
-    let surf = `M${x0.toFixed(1)},${yAt(x0).toFixed(1)}`;
-    for (let x = x0 + 6; x < x1; x += 6) surf += ` L${x.toFixed(1)},${yAt(x).toFixed(1)}`;
-    surf += ` L${x1.toFixed(1)},${yAt(x1).toFixed(1)}`;
-    E.surf.setAttribute('d', surf);
-    E.sea.setAttribute('d', surf + ` L${x1.toFixed(1)},${yB} L${x0.toFixed(1)},${yB} Z`);
-    // soft light shafts that drift with the swell
-    E.rays.forEach((r, i) => {
-      const c = xs + (S.e - xs) * (.2 + i * .3) + Math.sin(ph * .4 + i * 2) * hs * .08, w = hs * .1;
-      r.setAttribute('d', `M${c - w},${sTop + 2} L${c + w},${sTop + 2} L${c + w * 2.2},${yB - 2} L${c - w * .2},${yB - 2} Z`);
-    });
+  function activate() {
+    if (live) return;
+    live = true; Kit.haptic('selection');
+    sure.on();
+    const el = Kit.$('sure'); el.classList.add('live');
+    setSub('Redraw freely, then pick how sure.');
+    if (!Kit.calm) gsap.from(el.querySelectorAll('[data-v]'), {scale: .9, duration: .4, stagger: .05, ease: 'back.out(2.2)'});
   }
+  svg1.addEventListener('pointerdown', e => {
+    if (locked || !G1) return;
+    const r = svg1.getBoundingClientRect(); if (e.clientY - r.top < G1.sH) return;
+    drawing = true; lastI = null; svg1.setPointerCapture(e.pointerId); addPt(e);
+  });
+  svg1.addEventListener('pointermove', e => { if (drawing && !locked) addPt(e); });
+  const stop = () => { if (drawing && g.filter(v => v != null).length >= 8) activate(); drawing = false; lastI = null; };
+  svg1.addEventListener('pointerup', stop); svg1.addEventListener('pointercancel', stop);
 
-  function drawShore() {
-    const e = S.e, xR = e + hs * .3, lb = E.lb;
-    drawSurf();
-    E.landR.setAttribute('d', `M${W + 1},${landTop} L${xR + hs * .15},${landTop} L${xR - hs * .2},${lb} L${W + 1},${lb} Z`);
-    const hx = Math.min(W - fs, xR + hs * .15 + fs * 1.2), lx = xL * .5;
-    E.hutR.setAttribute('transform', `translate(${hx},${landTop})`);
-    E.lblR.setAttribute('x', Math.min(W - 2 - E.lblRw / 2, hx));
-    const d = `M${lx},${landTop} C${lx + hs * .3},${landTop} ${xs - hs * .2},${yC} ${xs},${yC} L${e},${yC} C${e + hs * .2},${yC} ${hx - hs * .3},${landTop} ${hx},${landTop}`;
-    E.cable.setAttribute('d', d); E.cableIn.setAttribute('d', d);
-    E.glowL.setAttribute('d', `M${lx},${landTop} C${lx + hs * .3},${landTop} ${xs - hs * .2},${yC} ${xs},${yC}`);
-    E.glow.forEach((gg, j) => gg.style.display = xs + (j + 1) * sec / PER <= e + 1 ? '' : 'none');
-  }
-
-  function frame(t) {
-    if (!built) return;
-    const D = sim(n), f = t / T * (NSMP - 1), i = Math.min(NSMP - 2, Math.floor(f)), u = f - i;
-    const rv = D.recv[i] * (1 - u) + D.recv[i + 1] * u;
-    ang.target = (P.on ? rv : 0);
-    E.glow.forEach((gg, j) => gg.setAttribute('opacity', j < D.N ? (D.nodes[i][j] * (1 - u) + D.nodes[i + 1][j] * u).toFixed(3) : 0));
-    const s = sentAt(t);
-    E.glowL.setAttribute('opacity', s); E.lampL.setAttribute('opacity', s); E.lampR.setAttribute('opacity', Math.min(1, rv).toFixed(3));
-    const x = TP.x0 + (TP.x1 - TP.x0) * t / T;
-    E.ph.forEach(p => { p.setAttribute('x1', x); p.setAttribute('x2', x); });
-  }
-
-  function setNeedle() {
-    if (!E.needle) return;
-    const a = Math.max(-.08, Math.min(1.08, ang.a));
-    E.needle.setAttribute('transform', `rotate(${(-55 + 110 * a).toFixed(2)} ${cx} ${cy})`);
-  }
-  // The needle is a real mass on a spring; the sea breathes; bubbles rise off the cable.
-  gsap.ticker.add((time, dms) => {
-    if (!built) return;
-    if (Kit.calm) { ang.a = ang.target; setNeedle(); return; }
-    S.ph = time * 1.3; drawSurf();
-    const span = yB - sTop - 8;
-    E.bub.forEach(b => {
-      const life = (time * b.sp + b.o) % 1;
-      b.el.setAttribute('cy', (yB - 5 - life * span).toFixed(1));
-      b.el.setAttribute('cx', (xs + b.f * (S.e - xs) + Math.sin(time * 2 + b.o * 9) * 2).toFixed(1));
-      b.el.setAttribute('opacity', (.5 * Math.sin(life * Math.PI)).toFixed(2));
-    });
-    const dt = Math.min(.05, dms / 1000) / 4;
-    for (let k = 0; k < 4; k++) { const acc = 160 * (ang.target - ang.a) - 10 * ang.v; ang.v += acc * dt; ang.a += ang.v * dt; }
-    setNeedle();
+  const rms = (a, b) => { let e = 0; for (let i = 0; i < N; i++) e += ((a[i] || 0) - b[i]) ** 2; return Math.sqrt(e / N); };
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    locked = true;
+    const eT = rms(g, LONG), eS = rms(g, SENT), ok = eT < .16, crisp = !ok && eS < eT;
+    Kit.$('verdict').textContent = ok ? `You were ${pct}% sure it would stretch. It did.`
+      : crisp ? `You were ${pct}% sure it would stay crisp.` : `You were ${pct}% sure of a curve unlike this.`;
+    Kit.answer({choice: ok ? 'stretched, rounded pulses' : crisp ? 'a crisp copy' : 'a curve unlike what arrived', correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? 'Your curve: close to what arrived' : 'Your curve: not what arrived');
+    setTimeout(() => Turn.over(), 700);
   });
 
-  function send() {
-    if (play) play.kill();
-    P.t = 0; P.on = true;
-    play = gsap.to(P, {t: T, duration: Kit.calm ? 0 : 3.6, ease: 'none', onUpdate: () => frame(P.t), onComplete: () => frame(T)});
+  // ---------- back ----------
+  function drawBack(animate) {
+    if (tl) { tl.kill(); tl = null; }
+    svg2.innerHTML = '';
+    const G = geo(svg2, true), {x0, x1, yR, yL, fs} = G;
+    const sc = scene(svg2, G), st = sentStrip(svg2, G);
+    // arrival strip, legend, guess
+    const r = Kit.mk('g', {}, svg2);
+    Kit.mk('line', {x1: x0, x2: x1, y1: yR, y2: yR, style: `stroke:${ink(30)};stroke-width:1.2`}, r);
+    const sy = yL - fs * .33;
+    Kit.mk('line', {x1: x0, x2: x0 + 28, y1: sy, y2: sy, style: `stroke:${ACC};stroke-width:3.8;stroke-linecap:round`}, r);
+    const t1 = txt(r, x0 + 36, yL, 'what arrived', fs);
+    const gx = x0 + 36 + t1.getComputedTextLength() + 20;
+    Kit.mk('line', {x1: gx, x2: gx + 28, y1: sy, y2: sy, style: `stroke:${TEAL};stroke-width:2;stroke-linecap:round;opacity:.6`}, r);
+    txt(r, gx + 36, yL, 'your guess', fs);
+    Kit.mk('path', {d: pathOf(g, G), style: `fill:none;stroke:${TEAL};stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.6`}, r);
+    const cur = (mode === 'long' ? LONG : SHORT).slice();
+    const tr = Kit.mk('path', {d: pathOf(cur, G), style: `fill:none;stroke:${ACC};stroke-width:3.8;stroke-linecap:round;stroke-linejoin:round`}, svg2);
+    back = {G, tr, cur};
+    if (!animate || Kit.calm) return;
+    const TL = tr.getTotalLength();
+    tr.style.strokeDasharray = TL; tr.style.strokeDashoffset = TL;
+    tl = gsap.timeline({delay: .55, onComplete: () => { tr.style.strokeDasharray = 'none'; }})
+      .from([sc.root, st, r], {opacity: 0, duration: .45, stagger: .12, ease: 'power2.out'})
+      .to(tr, {strokeDashoffset: 0, duration: 1.8, ease: 'power2.inOut'}, '+=.15');
   }
-
-  function step() {
-    if (n >= MAXN || !built) return;
-    n++; Kit.haptic('light');
-    Kit.$('cnt').textContent = n + '/5';
-    gsap.fromTo(btn, {scale: .95}, {scale: 1, duration: .35, ease: 'power2.out', clearProps: 'transform'});
-    const D = sim(n), d = pathOf(D.recv, TP.rBase), word = 'reads ' + decode(D.recv);
-    if (play) play.kill(); P.on = false; frame(0);
-    if (Kit.calm) {
-      S.e = xs + n * sec; drawShore(); E.rx.setAttribute('d', d); E.reads.textContent = word; send();
-    } else {
-      shoreTw = gsap.to(S, {e: xs + n * sec, duration: .8, ease: 'power3.inOut', onUpdate: drawShore});
-      gsap.to(E.rx, {morphSVG: d, duration: 1, ease: 'power3.inOut', delay: .15});
-      try { gsap.to(E.reads, {scrambleText: {text: word, chars: '·—', speed: .6}, duration: .8, delay: .2}); } catch (e) { E.reads.textContent = word; }
-      gsap.delayedCall(.75, send);
-    }
-    if (n === MAXN) gsap.delayedCall(Kit.calm ? 0 : 1.1, finish);
+  function setMode(m) {
+    if (m === mode) return;
+    mode = m; Kit.haptic('selection');
+    Kit.$('len').querySelectorAll('button').forEach(bt => bt.setAttribute('aria-pressed', bt.dataset.l === m ? 'true' : 'false'));
+    if (!back) return;
+    if (tl) { tl.progress(1); tl.kill(); tl = null; }
+    back.tr.style.strokeDasharray = 'none'; back.tr.style.strokeDashoffset = 0;
+    const from = back.cur.slice(), to = m === 'long' ? LONG : SHORT, o = {k: 0};
+    const upd = () => { back.cur = from.map((v, i) => v + (to[i] - v) * o.k); back.tr.setAttribute('d', pathOf(back.cur, back.G)); };
+    if (Kit.calm) { o.k = 1; upd(); return; }
+    gsap.to(o, {k: 1, duration: .7, ease: 'power2.inOut', onUpdate: upd});
   }
+  Kit.$('len').addEventListener('click', e => { const bt = e.target.closest('button'); if (bt) setMode(bt.dataset.l); });
+  document.addEventListener('turned', () => { turned = true; requestAnimationFrame(() => drawBack(true)); });
 
-  // The wow: the crisp message itself flows down and smears into what arrives.
-  function wow() {
-    if (Kit.calm || !built) return;
-    wowStarted = true;
-    gsap.set(E.ghost, {attr: {d: E.sent.getAttribute('d')}, opacity: .95});
-    gsap.to(E.ghost, {morphSVG: E.rx.getAttribute('d'), duration: 1.5, ease: 'expo.inOut'});
-    gsap.to(E.ghost, {opacity: 0, duration: .5, delay: 1.3, ease: 'power2.out'});
-    gsap.fromTo(E.rx, {attr: {'stroke-width': 2.4}}, {attr: {'stroke-width': 5}, duration: .35, delay: 1.3, yoyo: true, repeat: 1, ease: 'power2.out'});
-    send();
-  }
-  function scheduleWow() {
-    if (wowStarted || Kit.calm) return;
-    if (wowCall) wowCall.kill();
-    wowCall = gsap.delayedCall(.12, wow);
-  }
-
-  function finish() {
-    if (done) return; done = true;
-    Kit.hide('say'); Kit.hide('row'); Kit.show('why'); Kit.show('keep');
-    Kit.haptic('success');
-    if (!Kit.calm) gsap.fromTo('#keep', {y: 12, opacity: 0}, {y: 0, opacity: 1, duration: .6, ease: 'power3.out', delay: .2});
-    requestAnimationFrame(() => requestAnimationFrame(() => { build(); scheduleWow(); }));
-  }
-
-  btn.addEventListener('click', step);
-  svg.addEventListener('click', () => { Kit.haptic('selection'); send(); });
-
-  new ResizeObserver(() => { if (built) build(); }).observe(Kit.$('stage'));
-  Kit.onShow.card = build;
-  Kit.onEnter.card = () => {
-    if (!built) build();
-    if (Kit.calm) { send(); return; }
-    gsap.from(E.dial, {opacity: 0, scale: .85, transformOrigin: `${cx}px ${cy}px`, duration: .9, ease: 'back.out(1.6)'});
-    gsap.from(E.ticks.children, {drawSVG: '0%', duration: .4, stagger: .02, ease: 'power2.out', delay: .3});
-    gsap.from(E.cable, {drawSVG: '0%', duration: 1, ease: 'power3.inOut', delay: .2});
-    gsap.from([E.sent, E.rx], {drawSVG: '0%', duration: 1.1, ease: 'power3.out', stagger: .15, delay: .4});
-    gsap.from('#row', {opacity: 0, duration: .5, ease: 'power2.out', delay: .6});
-    ang.a = 1.05; ang.v = 0;
-    gsap.delayedCall(1.2, send);
-  };
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(['.b1', '.b2', '.b3'], {opacity: 0, y: 8, duration: .5, stagger: .15, ease: 'power3.out'}); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    if (!built) build();
-    for (let i = 0; i < 4; i++) { btn.click(); await wait(Kit.calm ? 60 : 250); }
-    finish();
-    await wait(Kit.calm ? 100 : 2000);
+    for (let i = 0; i < N; i++) g[i] = sentAt(i / (N - 1) * TT + .1);   // the usual guess: a crisp copy
+    renderGuess(); activate();
+    await wait(Kit.calm ? 100 : 500);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 5200);
   };
 })();
 Kit.single();

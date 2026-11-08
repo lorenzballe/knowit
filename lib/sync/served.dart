@@ -29,8 +29,12 @@ import '../models/pill.dart';
 /// server: the request for a day is bounded, the evening asks for tomorrow
 /// ahead of the morning, and what came back is kept on the phone.
 class Served extends ChangeNotifier {
-  Served({this.storeOverride, this.uidOverride, DateTime Function()? clock})
-    : _clock = clock ?? DateTime.now;
+  Served({
+    this.storeOverride,
+    this.uidOverride,
+    DateTime Function()? clock,
+    this.startWait = kStartWait,
+  }) : _clock = clock ?? DateTime.now;
 
   static Served instance = Served();
 
@@ -41,14 +45,24 @@ class Served extends ChangeNotifier {
   final String? uidOverride;
   final DateTime Function() _clock;
 
-  /// How long the morning waits for the server before dealing on the phone.
-  /// The document is usually there already, dealt the evening before or by
-  /// the nightly pass, and read from the phone's own cache in milliseconds.
+  /// How long Explore waits for the server's shelves before it shows the
+  /// phone's own.
   static const Duration morningWait = Duration(seconds: 4);
 
   /// How long asking the server to deal a day may take, when the document
   /// is not there: a cold function and the profile's reads.
   static const Duration dealWait = Duration(seconds: 8);
+
+  /// How long a new day waits for the server, all told, before the phone
+  /// deals it: the reader is looking at the splash for every millisecond.
+  /// A feed opens on what the phone already holds and never on a request,
+  /// so the morning's day is asked for the evening before
+  /// ([AppState.askTomorrowIfDue]); this is only the wait for a day that
+  /// was not, and past it the phone deals, as it does without signal.
+  static const Duration kStartWait = Duration(milliseconds: 1500);
+
+  /// [kStartWait], or shorter under a test.
+  final Duration startWait;
 
   /// Explore as last read stands this long before it is asked for again.
   static const Duration exploreFresh = Duration(minutes: 10);
@@ -78,15 +92,19 @@ class Served extends ChangeNotifier {
     final ServedStore? store = _store;
     final String? uid = _uid;
     if (store == null || uid == null) return null;
+    // One wait for both: the document, then the server asked to deal it.
+    final Stopwatch waited = Stopwatch()..start();
+    Duration left() => startWait - waited.elapsed;
     try {
-      final ServedDay? had = await store.day(uid, key).timeout(morningWait);
+      final ServedDay? had = await store.day(uid, key).timeout(left());
       if (had != null) {
         await _keep(had);
         return had;
       }
+      if (left() <= Duration.zero) return null;
       final ServedDay? dealt = await store
           .askDay(uid, key, tz: _clock().timeZoneOffset.inMinutes)
-          .timeout(dealWait);
+          .timeout(left());
       if (dealt != null) await _keep(dealt);
       return dealt;
     } catch (error) {
@@ -489,11 +507,15 @@ class MemoryServedStore implements ServedStore {
   bool refusing = false;
   int asked = 0;
 
+  /// How long a day takes to come back, as a slow line would make it.
+  Duration slow = Duration.zero;
+
   /// What [askDay] deals when asked, keyed by date; a date not here is refused.
   final Map<String, ServedDay> onAsk = {};
 
   @override
   Future<ServedDay?> day(String uid, String date) async {
+    if (slow > Duration.zero) await Future<void>.delayed(slow);
     if (refusing) throw StateError('unavailable');
     return days['$uid:$date'];
   }
@@ -501,6 +523,7 @@ class MemoryServedStore implements ServedStore {
   @override
   Future<ServedDay?> askDay(String uid, String date, {required int tz}) async {
     asked += 1;
+    if (slow > Duration.zero) await Future<void>.delayed(slow);
     if (refusing) throw StateError('unavailable');
     final ServedDay? dealt = onAsk[date];
     if (dealt != null) days['$uid:$date'] = dealt;

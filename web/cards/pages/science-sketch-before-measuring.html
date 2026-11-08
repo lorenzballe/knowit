@@ -1,0 +1,260 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-sketch-before-measuring -->
+<!-- Thought to carry: draw the shape of the answer first, then measure.
+     Front: a geological map with a fold (nested U-shaped bands around a dashed axis) cut and shifted by a fault, and a section line.
+     The reader taps four steps in the order they would do them, then says how sure. Only the first place is graded:
+     the video is firm on step one and nothing more.
+     Back: the same section line turned on its side, drawn only as the pencil sketch the video asks for first:
+     wobbly ground, folded layers, the fault, the fold axis. No numbers, no data, two labels. -->
+<title>Sketch before you measure</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.front{visibility:hidden}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.stagebox{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;background:none;border:0;box-shadow:none}
+#pic,#pic2{flex:1 1 auto;min-height:0;width:100%;display:block}
+#steps{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw;margin:1cqh 0 0}
+.st{display:flex;gap:2cqw;align-items:center;text-align:left;font:700 max(1.7cqh,12.5px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 7%,transparent);border:0;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 2.4cqw;cursor:pointer;min-height:7cqh;overflow-wrap:anywhere;transition:opacity .3s}
+.st .n{flex:none;box-sizing:border-box;width:max(3.3cqh,24px);height:max(3.3cqh,24px);border-radius:6px;display:grid;place-items:center;border:1.5px dashed var(--k);font:800 max(1.8cqh,13px)/1 var(--display)}
+.st.on .n{background:var(--k);color:var(--c);border-style:solid}
+.st .you{display:block;font-weight:600;font-size:max(1.35cqh,12px);opacity:.75;margin-top:.3cqh}
+.st.hit{box-shadow:inset 0 0 0 2.5px var(--k)}
+.st.later{opacity:.5}
+.done .st{cursor:default}
+
+#sure{margin-top:16px;color:var(--k);opacity:1}
+#sure [data-v]{opacity:1;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 60%,transparent);color:color-mix(in srgb,var(--k) 60%,transparent);pointer-events:none}
+#sure.ready [data-v]{box-shadow:inset 0 0 0 1.5px var(--k);color:var(--k);pointer-events:auto}
+
+.front .say{margin-right:96px;min-height:44px;box-sizing:border-box;margin-top:.8cqh}
+.undo{background:none;border:0;padding:0 0 0 .55em;font:inherit;font-weight:700;color:var(--k);text-decoration:underline;text-underline-offset:3px;cursor:pointer;visibility:hidden}
+.undo.show{visibility:visible}
+
+.back .big{font:800 max(2.9cqh,18px)/1.15 var(--display);margin:0 0 .4cqh}
+.back .mine{font:600 max(1.6cqh,12.5px)/1.3 var(--body);color:var(--k);margin:0 0 .6cqh}
+.back .stagebox{min-height:max(20cqh,96px)}
+.back .body{font:500 max(1.65cqh,12.5px)/1.3 var(--body);margin:.8cqh 0 .6cqh}
+.back .keep{margin-bottom:.6cqh}
+.foot{padding-right:104px}
+.back .foot{flex:none;min-height:44px;display:flex;align-items:flex-start;box-sizing:border-box}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap the order · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP THE ORDER</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Building a geological section from a map: what do you do first?</h2>
+        <div class="stagebox" id="stage">
+          <svg id="pic" role="img" aria-label="A geological map: bands of rock folded into a U around a dashed fold axis, cut by a fault that shifts the bands on its right, with a section line drawn across."></svg>
+          <div id="steps">
+            <button class="st" data-id="topo"><span class="n"></span><span class="tx">Draw the ground's profile along the section</span></button>
+            <button class="st" data-id="data"><span class="n"></span><span class="tx">Do the precise measurements</span></button>
+            <button class="st" data-id="sketch"><span class="n"></span><span class="tx">Sketch faults and folds by hand, no measures</span></button>
+            <button class="st" data-id="project"><span class="n"></span><span class="tx">Project faults and fold axes onto the section</span></button>
+          </div>
+        </div>
+        <div class="sure" id="sure"></div>
+        <p class="say"><span id="say">Tap them in your order.</span><button class="undo" id="undo" type="button">undo last</button></p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big" id="ans">First, a hand sketch. No measures.</p>
+        <p class="mine" id="mine"></p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The section line turned on its side and drawn as a quick pencil sketch: the ground, the folded layers, the fold axis and the fault reaching the surface. No measurements."></svg></div>
+        <p class="body" id="whytxt">A quick sketch by hand, no measures: where each fault must surface, where the folds sit. The precise measurements come after.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Draw the shape of the answer first, then measure into a picture that already holds together.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  gsap.registerPlugin(Flip, DrawSVGPlugin);
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), steps = Kit.$('steps'), say = Kit.$('say'), undo = Kit.$('undo'), sureEl = Kit.$('sure');
+  let picks = [], answered = false, turned = false, SEC = null;
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const mix = p => `fill:color-mix(in srgb,var(--k) ${p}%,var(--c))`;
+  const lab = (p, x, y, t, a = {}, fs = 13) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree, sans-serif', 'font-size': fs, 'font-weight': 700, style: 'fill:var(--k)'}, a), p); e.textContent = t; return e; };
+  const ord = n => n + ({1: 'st', 2: 'nd', 3: 'rd'}[n] || 'th');
+
+  // ---------- the front: the map ----------
+  function drawMap() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg); const fs = Math.max(12, Math.min(14, W / 26));
+    const top = fs * 1.7;
+    const mw = Math.max(40, Math.min(W - 4, (H - top - 4) * 1.7)), mh = mw / 1.7;
+    const x0 = (W - mw) / 2, y0 = top + Math.max(0, (H - top - mh) / 2), x1 = x0 + mw, y1 = y0 + mh;
+    const L = x0, R = x1, T = y0, B = y1;
+    const defs = Kit.mk('defs', {}, svg);
+    const cp = Kit.mk('clipPath', {id: 'sheet'}, defs); Kit.mk('rect', {x: x0, y: y0, width: mw, height: mh, rx: 6}, cp);
+    const fT = [x0 + mw * .66, y0 - 12], fB = [x0 + mw * .5, y1 + 12];
+    const fAt = y => fT[0] + (fB[0] - fT[0]) * ((y - fT[1]) / (fB[1] - fT[1]));
+    const cl = Kit.mk('clipPath', {id: 'leftf'}, defs); Kit.mk('polygon', {points: `${x0 - 20},${y0 - 20} ${fT} ${fB} ${x0 - 20},${y1 + 20}`}, cl);
+    const cr = Kit.mk('clipPath', {id: 'rightf'}, defs); Kit.mk('polygon', {points: `${fT} ${x1 + 20},${y0 - 20} ${x1 + 20},${y1 + 20} ${fB}`}, cr);
+    const g = Kit.mk('g', {'clip-path': 'url(#sheet)', id: 'mapg'}, svg);
+    Kit.mk('rect', {x: L, y: T, width: R - L, height: B - T, style: mix(14)}, g);
+    const tones = [30, 50, 18, 68, 40, 85];
+    const ax = x0 + mw * .4;
+    const band = (k, dy) => ({a: mw * (.78 - k * .12), ny: y0 + mh * (.98 - k * .135) + dy, ye: y0 - 30 + dy});
+    const fold = (parent, dy) => tones.forEach((tn, k) => {
+      const {a, ny, ye} = band(k, dy);
+      const xa = Math.max(L - 5, ax - a), xb = Math.min(R + 5, ax + a), p = [], n = 48;
+      for (let j = 0; j <= n; j++) { const x = xa + (xb - xa) * j / n, u = (x - ax) / a;
+        const y = Math.min(B + 5, Math.max(T - 5, ye + (1 - u * u) * (ny - ye))); p.push(`${x.toFixed(1)},${y.toFixed(1)}`); }
+      Kit.mk('path', {d: `M${p.join('L')}L${xb.toFixed(1)},${T - 5}L${xa.toFixed(1)},${T - 5}Z`, style: mix(tn), class: 'band'}, parent);
+    });
+    // the fault shifts every band on its right
+    const shift = -Math.max(20, Math.min(30, mh * .13));
+    fold(Kit.mk('g', {'clip-path': 'url(#leftf)'}, g), 0);
+    fold(Kit.mk('g', {'clip-path': 'url(#rightf)'}, g), shift);
+    // fold axis and fault
+    Kit.mk('line', {x1: ax, x2: ax, y1: y0 + 3, y2: y0 + mh * .66, style: 'stroke:var(--c)', 'stroke-width': 2, 'stroke-dasharray': '5 4'}, g);
+    Kit.mk('line', {x1: fAt(T - 5), y1: T - 5, x2: fAt(B + 5), y2: B + 5, style: 'stroke:var(--k)', 'stroke-width': 3.2, 'stroke-linecap': 'round'}, g);
+    // the section line, with plain end bars
+    const sy = y0 + mh * .5, tA = x0 + 10, tB = x1 - 10, fX = fAt(sy);
+    Kit.mk('line', {x1: tA, x2: tB, y1: sy, y2: sy, style: 'stroke:var(--c)', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    [tA, tB].forEach(x => Kit.mk('line', {x1: x, x2: x, y1: sy - 8, y2: sy + 8, style: 'stroke:var(--c)', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg));
+    // three labels: two above the sheet over their lines, one on the section line's left end
+    lab(svg, ax + 3, y0 - 7, 'fold axis', {'text-anchor': 'end'}, fs);
+    lab(svg, fAt(y0) - 3, y0 - 7, 'fault', {'text-anchor': 'start'}, fs);
+    lab(svg, tA + 6, sy - 9, 'section', {style: 'fill:var(--k);stroke:var(--c);stroke-width:4px;paint-order:stroke;stroke-linejoin:round'}, fs);
+    // where each band boundary crosses the section, for the back
+    const len = tB - tA;
+    const hOf = (k, dy) => { const {a, ny, ye} = band(k, dy), r = (sy - ye) / (ny - ye); return r < 1 ? a * Math.sqrt(1 - r) / len : null; };
+    SEC = {pA: (ax - tA) / len, pF: (fX - tA) / len, hL: tones.map((_, k) => hOf(k, 0)), hR: tones.map((_, k) => hOf(k, shift))};
+  }
+
+  // ---------- the front: picking an order ----------
+  function paintPicks() {
+    [...steps.children].forEach(b => { const i = picks.indexOf(b.dataset.id);
+      b.classList.toggle('on', i >= 0); b.querySelector('.n').textContent = i >= 0 ? i + 1 : ''; });
+    undo.classList.toggle('show', picks.length > 0 && !answered);
+    sureEl.classList.toggle('ready', picks.length === 4 || answered);
+    if (!answered) say.textContent = picks.length === 4 ? 'Now, how sure are you?' : 'Tap them in your order.';
+  }
+  const textOf = id => steps.querySelector(`[data-id="${id}"] .tx`).textContent;
+  let sureOn = false;
+  const sure = Kit.sure(sureEl, 'How sure are you?', pct => {
+    if (answered || picks.length < 4) return; answered = true;
+    const ok = picks[0] === 'sketch', you = picks.indexOf('sketch') + 1;
+    Kit.answer({choice: picks.map(textOf).join(' → '), correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? 'Sketch first, right' : `Sketch ${ord(you)}, it comes first`);
+    Kit.$('ans').textContent = ok ? 'Right: a hand sketch, no measures.' : 'First, a hand sketch. No measures.';
+    Kit.$('mine').textContent = `You put the sketch ${ord(you)} · it comes 1st · you were ${pct}% sure`;
+    steps.classList.add('done'); undo.classList.remove('show');
+    // only the first step is graded: the sketch moves to the first place, the rest keep the reader's order, unnumbered
+    const state = Flip.getState('.st');
+    ['sketch', ...picks.filter(id => id !== 'sketch')].forEach((id, k) => {
+      const b = steps.querySelector(`[data-id="${id}"]`); steps.appendChild(b);
+      if (k === 0) { b.classList.add('on', 'hit'); b.querySelector('.n').textContent = 1;
+        const s = document.createElement('span'); s.className = 'you'; s.textContent = `you said ${you}`; b.querySelector('.tx').appendChild(s); }
+      else { b.classList.remove('on'); b.classList.add('later'); b.querySelector('.n').textContent = ''; }
+    });
+    if (!Kit.calm) Flip.from(state, {duration: .6, ease: 'power2.inOut', stagger: .04, onComplete: drawMap});
+    else drawMap();
+    say.textContent = 'The sketch comes first.';
+    setTimeout(() => Turn.over(), Kit.calm ? 300 : 900);
+  });
+  steps.addEventListener('click', e => {
+    const b = e.target.closest('.st'); if (!b || answered) return;
+    const id = b.dataset.id, i = picks.indexOf(id);
+    if (i >= 0) picks = picks.slice(0, i); else if (picks.length < 4) picks.push(id);
+    Kit.haptic('selection'); paintPicks();
+    if (picks.length === 4 && !sureOn) { sureOn = true; sure.on(); }
+  });
+  undo.addEventListener('click', () => { if (answered || !picks.length) return; picks.pop(); Kit.haptic('selection'); paintPicks(); });
+
+  // ---------- the back: the same section, as the pencil sketch that comes first ----------
+  function drawBack(animate) {
+    svg2.innerHTML = ''; seed = 11;
+    if (!SEC) return;
+    const {W, H} = Kit.fitSvg(svg2); const fs = Math.max(12, Math.min(14, W / 26));
+    const sx0 = 4, sx1 = W - 4, len = sx1 - sx0;
+    const yL = fs * 1.1;                                  // label baseline
+    const amp = Math.min(4, H * .03), G0 = yL + fs * .9 + amp, yb = H - 2;
+    const Dav = Math.max(16, yb - G0);
+    const gy = x => G0 + amp * Math.sin(x / W * 4.4 + .7);
+    const ax = sx0 + SEC.pA * len, fx0 = sx0 + SEC.pF * len, fTop = gy(fx0);
+    const fxAt = y => fx0 - (y - fTop) * .3;
+    const h0 = SEC.hL[0] || .5, al = .9 * Dav / (h0 * h0);
+    const zAt = (h, x) => { const d = (x - ax) / len; return G0 + al * (h * h - d * d); };
+
+    const defs = Kit.mk('defs', {}, svg2);
+    const gp = []; for (let x = -4; x <= W + 4; x += 6) gp.push([x, gy(x)]);
+    const cb = Kit.mk('clipPath', {id: 'b2below'}, defs);
+    Kit.mk('polygon', {points: gp.map(p => p.join(',')).join(' ') + ` ${W + 4},${yb} -4,${yb}`}, cb);
+    const cl = Kit.mk('clipPath', {id: 'b2lf'}, defs);
+    Kit.mk('polygon', {points: `-10,-10 ${fxAt(-10)},-10 ${fxAt(H + 10)},${H + 10} -10,${H + 10}`}, cl);
+    const cr = Kit.mk('clipPath', {id: 'b2rf'}, defs);
+    Kit.mk('polygon', {points: `${fxAt(-10)},-10 ${W + 10},-10 ${W + 10},${H + 10} ${fxAt(H + 10)},${H + 10}`}, cr);
+    const below = Kit.mk('g', {'clip-path': 'url(#b2below)'}, svg2);
+    const skL = Kit.mk('g', {'clip-path': 'url(#b2lf)'}, below), skR = Kit.mk('g', {'clip-path': 'url(#b2rf)'}, below);
+    const lb = Kit.mk('g', {}, svg2);
+
+    // everything in one pencil: wobbly, by hand, no measures
+    const pencil = (d, w = 1.8) => ({d, fill: 'none', style: 'stroke:var(--k)', 'stroke-opacity': .85, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+    const wob = (p, ph) => 'M' + p.map(([x, y]) => `${x.toFixed(1)},${(y + Math.sin(x * .055 + ph) * 1 + (rnd() - .5) * 1.1).toFixed(1)}`).join('L');
+    const segs = (fn, keep) => { const out = []; let cur = [];
+      for (let x = sx0; x <= sx1 + .1; x += 5) { const y = fn(x), ok = y >= gy(x) - 4 && y <= yb + 4 && keep(x, y);
+        if (ok) cur.push([x, y]); else if (cur.length) { out.push(cur); cur = []; } }
+      if (cur.length) out.push(cur); return out.filter(c => c.length > 1); };
+
+    const gpts = []; for (let x = sx0; x <= sx1 + .1; x += 5) gpts.push([x, gy(x)]);
+    const ground = Kit.mk('path', pencil(wob(gpts, 2), 2.4), svg2);
+    const layers = [];
+    SEC.hL.forEach((h, k) => h != null && segs(x => zAt(h, x), (x, y) => x < fxAt(y) + 4).forEach(p => layers.push(Kit.mk('path', pencil(wob(p, k)), skL))));
+    SEC.hR.forEach((h, k) => h != null && segs(x => zAt(h, x), (x, y) => x > fxAt(y) - 4).forEach(p => layers.push(Kit.mk('path', pencil(wob(p, k + 3)), skR))));
+    const rough = []; for (let i = 0; i <= 8; i++) { const y = fTop + (yb - fTop) * i / 8; rough.push([fxAt(y) + (rnd() - .5) * 2.2, y]); }
+    const fault = Kit.mk('path', pencil('M' + rough.map(p => p.map(v => v.toFixed(1)).join(',')).join('L'), 2.8), svg2);
+    const axis = Kit.mk('path', Object.assign(pencil(`M${ax.toFixed(1)},${gy(ax).toFixed(1)}L${(ax + (rnd() - .5) * 2).toFixed(1)},${yb}`, 1.6), {'stroke-dasharray': '5 4'}), svg2);
+
+    // two labels, side by side above the ground, each with a short leader straight down
+    const lf = lab(lb, 0, yL, 'fault surfaces here', {}, fs), wf = lf.getComputedTextLength();
+    const fL = Math.max(2, Math.min(fx0 - 6, W - 2 - wf)); lf.setAttribute('x', fL);
+    const la = lab(lb, 0, yL, 'fold axis', {'text-anchor': 'end'}, fs), wa = la.getComputedTextLength();
+    const aR = Math.max(2 + wa, Math.min(ax + 6, fL - 12)); la.setAttribute('x', aR);
+    const lead = (x1, x2, y2) => Kit.mk('line', {x1, y1: yL + 5, x2, y2, style: 'stroke:var(--k)', 'stroke-width': 1}, lb);
+    lead(Math.min(Math.max(ax, aR - wa + 4), aR - 4), ax, gy(ax) - 5);
+    lead(Math.min(Math.max(fx0, fL + 4), fL + wf - 4), fx0, fTop - 5);
+
+    if (!animate || Kit.calm) return;
+    const tl = gsap.timeline({delay: .45});
+    tl.from(ground, {drawSVG: 0, duration: .6, ease: 'power2.out'})
+      .from(layers, {drawSVG: 0, duration: .7, ease: 'power2.inOut', stagger: .04}, '-=.2')
+      .from(fault, {drawSVG: 0, duration: .45, ease: 'power2.out'}, '-=.2')
+      .from(axis, {opacity: 0, duration: .35}, '<')
+      .from(lb, {opacity: 0, duration: .35}, '-=.1');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawMap(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (Kit.calm) return;
+    gsap.from('#mapg .band', {opacity: 0, duration: .5, stagger: .03, ease: 'power2.out'});
+    gsap.from('.st', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (const id of ['topo', 'sketch', 'project', 'data']) { steps.querySelector(`[data-id="${id}"]`).click(); await wait(60); }
+    sureEl.querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 700 : 5000);
+  };
+})();
+Kit.single();
+</script>
+</html>

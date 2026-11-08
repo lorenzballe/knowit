@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.cold_and_heat",
   "strand": "science.cold_and_heat.cold_myths",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How can a low temperature keep a flow smooth and laminar?",
-  "answer": "A low Reynolds number means laminar flow. Cold water lowers the Reynolds number by being thicker and slower, so the flow stays smooth and laminar.",
-  "move": "A low Reynolds number means laminar flow, and cold water lowers it by being thicker and slower.",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Which water is more likely to pour in one smooth stream, cold or hot?",
+  "answer": "Cold, probably. A stream stays smooth while its Reynolds number, speed weighed against viscosity, stays low. Cold changes the water's viscosity and can also slow the flow, and both lower that number.",
+  "move": "Smooth or rough is a ratio, not just a speed: cool the water and the stream tends to calm.",
   "keywords": [
     "laminar flow",
     "reynolds number",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Interactive page: a blue valve to tap, which makes water colder one step at a time. The page asks how a low temperature can keep a flow smooth and laminar.",
-    "ground": "#17262a"
+    "touch": "drags",
+    "label": "A water tap being dragged open, with its knob marked cold and hot. The question asks which water is more likely to pour in one smooth stream: cold, hot, or no difference."
   },
   "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=I3IpKEtWqvU&t=413s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }

@@ -1,0 +1,295 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-rotten-cake-no -->
+<!-- Thought to carry: we never deliberate over a rotten cake because it is unmistakable, so the real question about any "no" is whether the thing is really that clear, or we are only stalling.
+     Front: one table, two diners at the same scale. Left, a figure shoves away a rotten cake without a glance. Right, a figure faces "a colleague takes credit for your idea". Dragging the dot from "No, at once" to "Hear them out first" moves the right figure's hand from push to chin, and doubts bubble up.
+     Back: a balance. On one pan the rotten cake ("obvious, again and again"), on the other the unclear card ("a first time, unclear"). Your dot slides onto the beam and tips it to your side, with the strongest case for and against.
+     The front gives nothing away: no verdict, no "right" spot, only the view named as one person's view and the reader's own position, committed before either case is shown. -->
+<title>The rotten cake</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;gap:1.2cqh}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
+.turn:not(.over)>.back{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.back .big{font-size:max(2.9cqh,18px);line-height:1.15;margin:0}
+.cases{display:flex;flex-direction:column;gap:.8cqh}
+.cases .body{margin:0;font-size:max(1.9cqh,13px);line-height:1.3}
+.cases b{font-weight:800}
+.say,.q,.body{overflow-wrap:break-word}
+.face .foot{padding-right:120px;box-sizing:border-box;min-width:0}
+.face .foot .src{display:block;white-space:normal;overflow-wrap:break-word;line-height:1.3;max-width:100%}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Take a side · how firmly">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: why not refuse bad treatment as fast as a rotten cake?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="Two people at one table. One pushes away a rotten cake. The other faces a colleague taking credit for their idea. A slider runs from No, at once to Hear them out first."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Diventare Strong says: treat it like the cake. <b>Drag the dot to where you stand.</b></p>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2021) · a point of view</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The cake is easy because it is obvious.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="A balance: a rotten cake on one pan, an unclear first slight on the other, and your position on the beam."></svg></div>
+        <div class="cases">
+          <p class="body"><b>For:</b> you never debate the cake. Every excuse you invent for someone is work you do so they don't have to.</p>
+          <p class="body"><b>Against:</b> people are rarely as plain as a cake. A first, unclear slight can have a reason, and a fast no can be wrong.</p>
+        </div>
+        <div class="keep"><b>ASK YOURSELF</b> Am I still weighing this because it's unclear, or because saying no feels rude?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2021) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const YOU = '#e0442a', BROWN = '#6f4a28', DARK = '#452d17', WHITE = '#ffffff';
+  let t = .5, touched = false, done = false, turned = false, fs = 13;
+  let F = null;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const colors = () => { const s = getComputedStyle(Kit.$('card')); return {k: s.getPropertyValue('--k').trim() || '#111', c: s.getPropertyValue('--c').trim() || '#fff'}; };
+
+  function lab(p, x, y, str, W, col, a = {}) {
+    const e = Kit.mk('text', Object.assign({x, y, fill: col, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body)`}, a), p);
+    e.textContent = str;
+    const w = e.getComputedTextLength(), anc = a['text-anchor'] || 'middle';
+    const left = anc === 'end' ? x - w : anc === 'middle' ? x - w / 2 : x;
+    const shift = Math.max(2 - left, Math.min(0, W - 2 - (left + w)));
+    if (shift) e.setAttribute('x', x + shift);
+    return e;
+  }
+
+  // The rotten cake, standing on its base line b, centred on px.
+  function cake(p, px, b, s, K) {
+    const g = Kit.mk('g', {}, p), x0 = px - s * .42, x1 = px + s * .42, top = b - s * .5, r = s * .07;
+    Kit.mk('rect', {x: x0, y: top, width: x1 - x0, height: s * .5, rx: s * .06, fill: BROWN}, g);
+    let d = `M${x0},${top + s * .12} L${x0},${top + r} Q${x0},${top} ${x0 + r},${top} L${x1 - r},${top} Q${x1},${top} ${x1},${top + r} L${x1},${top + s * .12}`;
+    const n = 5, seg = (x1 - x0) / n;
+    for (let i = 0; i < n; i++) { const xp = x1 - i * seg, xa = xp - seg, dep = i % 2 ? .34 : .2; d += ` C${xp},${top + s * dep} ${xa},${top + s * dep} ${xa},${top + s * .12}`; }
+    Kit.mk('path', {d: d + 'Z', fill: DARK}, g);
+    Kit.mk('rect', {x: px - s * .03, y: top - s * .17, width: s * .06, height: s * .17, rx: 1, fill: WHITE, stroke: K, 'stroke-width': 1.2, transform: `rotate(14 ${px} ${top})`}, g);
+    for (const dx of [-.2, .16]) Kit.mk('path', {d: `M${px + dx * s},${top - s * .24} q${s * .08},${-s * .09} 0,${-s * .18} q${-s * .08},${-s * .09} 0,${-s * .18}`, fill: 'none', stroke: K, 'stroke-width': 1.5, 'stroke-linecap': 'round', opacity: .55}, g);
+    const fx = px + s * .4, fy = top - s * .06;
+    Kit.mk('ellipse', {cx: fx - s * .03, cy: fy - s * .04, rx: s * .045, ry: s * .025, fill: WHITE, stroke: K, 'stroke-width': .9}, g);
+    Kit.mk('ellipse', {cx: fx + s * .03, cy: fy - s * .04, rx: s * .045, ry: s * .025, fill: WHITE, stroke: K, 'stroke-width': .9}, g);
+    Kit.mk('circle', {cx: fx, cy: fy, r: Math.max(1.6, s * .03), fill: K}, g);
+    return g;
+  }
+  // The bad treatment: a place card served on a plate.
+  function slip(p, px, b, s, K) {
+    const g = Kit.mk('g', {transform: `rotate(-5 ${px} ${b})`}, p);
+    const w = s * .66, h = s * .62, x = px - w / 2, y = b - h;
+    Kit.mk('rect', {x, y, width: w, height: h, rx: 3, fill: WHITE, stroke: K, 'stroke-width': 1.6}, g);
+    [[.2, .62], [.4, .48], [.6, .56]].forEach(([fy, fw]) => Kit.mk('line', {x1: x + w * .16, x2: x + w * (.16 + fw), y1: y + h * fy + h * .08, y2: y + h * fy + h * .08, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round'}, g));
+    return g;
+  }
+  function plate(p, px, T, s, K) {
+    const ry = s * .08;
+    Kit.mk('ellipse', {cx: px, cy: T - ry, rx: s * .62, ry, fill: WHITE, stroke: K, 'stroke-width': 1.5}, p);
+    return T - ry * 1.3;
+  }
+  // A seated figure behind the table: torso, round head, one eye looking dir.
+  function figure(p, fx, T, s, K, Cc, dir) {
+    const g = Kit.mk('g', {class: 'fig'}, p), bw = s * .62, bh = s * .8, r = bw * .38, hr = s * .26;
+    Kit.mk('path', {d: `M${fx - bw / 2},${T} L${fx - bw / 2},${T - bh + r} Q${fx - bw / 2},${T - bh} ${fx - bw / 2 + r},${T - bh} L${fx + bw / 2 - r},${T - bh} Q${fx + bw / 2},${T - bh} ${fx + bw / 2},${T - bh + r} L${fx + bw / 2},${T} Z`, fill: K}, g);
+    const hx = fx + dir * s * .05, hy = T - bh - hr * 1.15;
+    Kit.mk('circle', {cx: hx, cy: hy, r: hr, fill: K}, g);
+    Kit.mk('circle', {cx: hx + dir * hr * .45, cy: hy - hr * .1, r: Math.max(1.6, s * .035), fill: Cc}, g);
+    return {g, bw, bh, hx, hy, hr, sh: [fx + bw * .3, T - bh * .74]};
+  }
+
+  // ---------- the front ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), {k: K, c: Cc} = colors();
+    fs = Math.max(12, Math.min(14, W / 26));
+    const Sy = H - fs * 2.4, T = Sy - fs * 5.3, s = Math.max(28, Math.min(W * .2, (T - 6) / 2.5));
+    const xL = W * .25, xR = W * .75, x0 = W * .1, x1 = W * .9;
+
+    // left: the cake, shoved away without a look
+    const fL = figure(svg, xL - s * .78, T, s, K, Cc, -1);
+    const pxL = xL + s * .32;
+    const shove = Kit.mk('g', {class: 'shove'}, svg);
+    cake(shove, pxL, plate(shove, pxL, T, s, K), s, K);
+    const armL = Kit.mk('g', {class: 'armL'}, svg);
+    Kit.mk('line', {x1: fL.sh[0], y1: fL.sh[1], x2: pxL - s * .5, y2: T - s * .3, stroke: K, 'stroke-width': fL.bw * .26, 'stroke-linecap': 'round'}, armL);
+    Kit.mk('rect', {x: pxL - s * .5 - fL.bw * .1, y: T - s * .3 - fL.bw * .26, width: fL.bw * .2, height: fL.bw * .5, rx: fL.bw * .1, fill: K}, armL);
+
+    // right: the same table, the same plate, a person and a choice
+    const fR = figure(svg, xR - s * .78, T, s, K, Cc, 1);
+    const pxR = xR + s * .32;
+    const served = Kit.mk('g', {class: 'served'}, svg);
+    slip(served, pxR, plate(served, pxR, T, s, K), s, K);
+    const bubbles = [0, 1, 2].map(i => {
+      const g = Kit.mk('g', {opacity: 0}, svg), r = s * (.07 + i * .06);
+      const bx = fR.hx + fR.hr * .5 + i * s * .2, by = fR.hy - fR.hr * 1.35 - i * s * .36;
+      Kit.mk('circle', {cx: bx, cy: by, r, fill: WHITE, stroke: K, 'stroke-width': 1.4}, g);
+      if (i) { const q = Kit.mk('text', {x: bx, y: by + fs * .36, 'text-anchor': 'middle', fill: K, style: `font:800 ${fs}px var(--body)`}, g); q.textContent = '?'; }
+      return g;
+    });
+    const arm = Kit.mk('line', {stroke: K, 'stroke-width': fR.bw * .26, 'stroke-linecap': 'round'}, svg);
+    const hand = Kit.mk('circle', {r: fR.bw * .17, fill: K}, svg);
+
+    // the table, one for both
+    Kit.mk('rect', {x: W * .03, y: T, width: W * .94, height: Math.max(3, s * .06), rx: 2, fill: K}, svg);
+
+    // labels, under what they name
+    const lb = Kit.mk('g', {class: 'lbl'}, svg);
+    Kit.mk('line', {x1: pxL + s * .12, x2: pxL + s * .12, y1: T + s * .06 + 3, y2: T + fs * .55, stroke: K, 'stroke-width': 1}, lb);
+    lab(lb, pxL + s * .12, T + fs * 1.6, 'a rotten cake', W, K);
+    Kit.mk('line', {x1: pxR, x2: pxR, y1: T + s * .06 + 3, y2: T + fs * .55, stroke: K, 'stroke-width': 1}, lb);
+    lab(lb, pxR, T + fs * 1.6, 'a colleague takes', W, K, {style: `font:600 ${fs}px var(--body)`});
+    lab(lb, pxR, T + fs * 2.9, 'credit for your idea', W, K, {style: `font:600 ${fs}px var(--body)`});
+
+    // the line between two views
+    const sl = Kit.mk('g', {class: 'slide'}, svg);
+    Kit.mk('line', {x1: x0, x2: x1, y1: Sy, y2: Sy, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round'}, sl);
+    for (const x of [x0, x1]) Kit.mk('line', {x1: x, x2: x, y1: Sy - fs * .4, y2: Sy + fs * .4, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round'}, sl);
+    lab(sl, x0 - fs * .3, Sy + fs * 1.65, 'No, at once', W, K, {'text-anchor': 'start'});
+    lab(sl, x1 + fs * .3, Sy + fs * 1.65, 'Hear them out first', W, K, {'text-anchor': 'end'});
+    const dot = Kit.mk('circle', {cy: Sy, r: fs * .78, 'stroke-width': 2.2}, sl);
+
+    F = {W, H, s, T, x0, x1, Sy, fR, pxR, arm, hand, dot, bubbles, served, K, Cc, shove, armL};
+    gsap.set(shove, {x: s * .12, rotation: 6, transformOrigin: '50% 100%'});
+    gsap.set(armL, {x: s * .12});
+    setT(t);
+  }
+
+  function setT(v) {
+    t = clamp(v); if (!F) return;
+    const {s, T, fR, pxR, arm, hand, dot, bubbles, served, x0, x1, K, Cc} = F;
+    const push = [pxR - s * .44, T - s * .32], chin = [fR.hx + fR.hr * .55, fR.hy + fR.hr * 1.05];
+    const e = t * t * (3 - 2 * t), hx = push[0] + (chin[0] - push[0]) * e, hy = push[1] + (chin[1] - push[1]) * e;
+    const dx = t < .5 ? s * .14 * (1 - t / .5) : 0;
+    const handX = hx + (1 - e) * dx;
+    arm.setAttribute('x1', fR.sh[0]); arm.setAttribute('y1', fR.sh[1]); arm.setAttribute('x2', handX); arm.setAttribute('y2', hy);
+    hand.setAttribute('cx', handX); hand.setAttribute('cy', hy);
+    gsap.set(served, {x: dx, rotation: dx / s * 40, transformOrigin: '50% 100%'});
+    bubbles.forEach((b, i) => b.setAttribute('opacity', clamp((t - (.45 + i * .17)) / .12)));
+    dot.setAttribute('cx', x0 + t * (x1 - x0));
+    dot.setAttribute('fill', touched ? YOU : Cc);
+    dot.setAttribute('stroke', touched ? YOU : K);
+  }
+
+  const spot = v => v < .2 ? 'No, at once' : v < .4 ? 'Lean to no at once' : v < .6 ? 'Right in between' : v < .8 ? 'Lean to hearing them out' : 'Hear them out first';
+
+  function choose(v) {
+    if (done) return;
+    if (!touched) { touched = true; Kit.haptic('selection'); sure.on(); }
+    setT(v);
+    Kit.$('say').innerHTML = `Your spot: <b>${spot(t)}</b>. Move it, or say how firmly you hold it.`;
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How firmly do you hold it?', pct => {
+    if (done) return; done = true;
+    Kit.answer({choice: spot(t), correct: null, sure: pct});
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  const svgF = Kit.$('pic');
+  let drag = false;
+  const tOf = e => { const r = svgF.getBoundingClientRect(); return (e.clientX - r.left - F.x0) / (F.x1 - F.x0); };
+  svgF.addEventListener('pointerdown', e => { if (done || !F) return; drag = true; svgF.setPointerCapture(e.pointerId); choose(tOf(e)); });
+  svgF.addEventListener('pointermove', e => { if (drag) choose(tOf(e)); });
+  const end = () => { drag = false; };
+  svgF.addEventListener('pointerup', end); svgF.addEventListener('pointercancel', end);
+
+  // ---------- the back: a balance ----------
+  function drawBack(animate) {
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), {k: K, c: Cc} = colors();
+    fs = Math.max(12, Math.min(14, W / 26));
+    const cx = W / 2, py = fs * 2.8, L = Math.min(W * .34, H * .9), MAXA = 10;
+    const d = L * Math.sin(MAXA * Math.PI / 180);
+    const panMax = H - fs * 3.5, hl = Math.max(fs * 2, panMax - d - py), s = Math.max(24, Math.min(W * .17, hl * .72)), pw = s * .7;
+    const A = (t - .5) * 2 * MAXA, U = (t * 2 - 1) * L * .82;
+
+    const stand = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: cx - 2.5, y: py, width: 5, height: H - fs * .4 - py, fill: K}, stand);
+    Kit.mk('rect', {x: cx - fs * 2.2, y: H - fs * .4 - 5, width: fs * 4.4, height: 5, rx: 2, fill: K}, stand);
+    Kit.mk('polygon', {points: `${cx},${py} ${cx - fs * .8},${py + fs * 1.4} ${cx + fs * .8},${py + fs * 1.4}`, fill: K}, stand);
+
+    const pans = [-1, 1].map(sg => {
+      const g = Kit.mk('g', {}, svg);
+      Kit.mk('line', {x1: 0, y1: 0, x2: -pw, y2: hl, stroke: K, 'stroke-width': 1.2}, g);
+      Kit.mk('line', {x1: 0, y1: 0, x2: pw, y2: hl, stroke: K, 'stroke-width': 1.2}, g);
+      if (sg < 0) cake(g, 0, hl - 1, s, K); else slip(g, 0, hl - 1, s, K);
+      Kit.mk('path', {d: `M${-pw * 1.08},${hl} Q0,${hl + pw * .42} ${pw * 1.08},${hl} Z`, fill: WHITE, stroke: K, 'stroke-width': 1.5}, g);
+      return g;
+    });
+    const beam = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: cx - L - 3, y: py - 3, width: 2 * L + 6, height: 6, rx: 3, fill: K}, beam);
+    Kit.mk('circle', {cx, cy: py, r: 3.5, fill: Cc}, beam);
+
+    const lb = Kit.mk('g', {}, svg);
+    lab(lb, cx - L, H - fs * 1.9, 'obvious,', W, K);
+    lab(lb, cx - L, H - fs * .6, 'again and again', W, K);
+    lab(lb, cx + L, H - fs * 1.9, 'a first time,', W, K);
+    lab(lb, cx + L, H - fs * .6, 'unclear', W, K);
+
+    const dot = Kit.mk('circle', {r: fs * .72, fill: YOU, stroke: Cc, 'stroke-width': 2}, svg);
+    const you = Kit.mk('text', {'text-anchor': 'middle', fill: YOU, style: `font:800 ${fs}px var(--body)`}, svg); you.textContent = 'you';
+
+    const st = {a: 0, pl: 0, pr: 0, u: 0, dot: 0, base: 0};
+    const place = () => {
+      const a = st.a * Math.PI / 180;
+      stand.setAttribute('opacity', st.base); beam.setAttribute('opacity', st.base); lb.setAttribute('opacity', Math.min(st.pl, st.pr) > 0 ? 1 : 0);
+      beam.setAttribute('transform', `rotate(${st.a} ${cx} ${py})`);
+      pans.forEach((g, i) => { const sg = i ? 1 : -1, p = i ? st.pr : st.pl;
+        g.setAttribute('transform', `translate(${cx + sg * L * Math.cos(a)} ${py + sg * L * Math.sin(a) - (1 - p) * fs * 1.6})`); g.setAttribute('opacity', p); });
+      const dx = cx + st.u * Math.cos(a), dy = py + st.u * Math.sin(a) - 3 - fs * .5;
+      dot.setAttribute('cx', dx); dot.setAttribute('cy', dy); dot.setAttribute('opacity', st.dot);
+      you.setAttribute('x', dx); you.setAttribute('y', dy - fs * 1.05); you.setAttribute('opacity', st.dot);
+    };
+    if (!animate) { Object.assign(st, {a: A, pl: 1, pr: 1, u: U, dot: 1, base: 1}); place(); return; }
+    place();
+    gsap.timeline({onUpdate: place, delay: .55})
+      .to(st, {base: 1, duration: .45, ease: 'power2.out'})
+      .to(st, {pl: 1, duration: .5, ease: 'power3.out'})
+      .to(st, {pr: 1, duration: .5, ease: 'power3.out'}, '-=.3')
+      .to(st, {dot: 1, duration: .3, ease: 'power2.out'}, '+=.15')
+      .to(st, {u: U, a: A, duration: 1, ease: 'power2.inOut'});
+  }
+
+  document.addEventListener('turned', () => { turned = true; drawBack(!Kit.calm); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !F) return;
+    gsap.timeline()
+      .from('#pic .fig', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'})
+      .from('#pic .shove, #pic .served', {opacity: 0, y: -10, stagger: .12, duration: .45, ease: 'power3.out'}, '-=.15')
+      .from('#pic .shove', {x: 0, rotation: 0, duration: .35, ease: 'power2.out'}, '+=.1')
+      .from('#pic .armL', {x: 0, opacity: 0, duration: .35, ease: 'power2.out'}, '<')
+      .from('#pic .lbl, #pic .slide', {opacity: 0, duration: .4, stagger: .1, ease: 'power2.out'}, '+=.05');
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    choose(.3);
+    await w(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 900 : 3800);
+  };
+})();
+Kit.single();
+</script>
+</html>
