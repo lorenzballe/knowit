@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive timeline from 2013 to 2023 with a draggable slider. Each year adds one hexagon as the euro total of the EU's Graphene Flagship grows toward 1 billion euros."
   },
   "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",

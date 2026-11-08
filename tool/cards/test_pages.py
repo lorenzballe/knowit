@@ -96,6 +96,15 @@ class ThePage(unittest.TestCase):
         drags = dict(page_card()["web"], touch="drags")
         self.assertTrue(any("data-drag" in p for p in self.problems(web=drags)))
 
+    def test_a_slider_is_the_page_s_to_drag(self):
+        slider = TEMPLATE + '<input type="range" min="0" max="10">'
+        found = self.problems(page=slider)
+        self.assertTrue(any("takes drags" in p for p in found))
+        self.assertTrue(any("marked data-drag" in p for p in found))
+        drags = dict(page_card()["web"], touch="drags")
+        marked = TEMPLATE + '<input data-drag type="range" min="0" max="10">'
+        self.assertFalse(any("slider" in p for p in self.problems(page=marked, web=drags)))
+
     def test_nothing_from_anywhere_but_the_kit(self):
         cases = {
             '<link rel="stylesheet" href="https://example.org/a.css">': "not in the kit",

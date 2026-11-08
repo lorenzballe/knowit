@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "An animated timeline of a car taking a right-hand corner, with a draggable scrubber. It shows the car's weight swinging one way when the driver steers away, then hard the other way as they turn back, with the unloaded tyres losing grip. The reader is asked to drag the timeline through the corner."
   },
   "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",

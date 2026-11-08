@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A card titled Traction control, asking which electronic aid stops the rear wheel spinning when you accelerate. The answer shows sensors detecting wheel slip and a control unit cutting engine torque, plus a prompt to open the throttle with TC off, then switch it on and try again."
   },
   "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",

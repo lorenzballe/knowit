@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A depth dial runs from 0 to 3,500 metres beside readouts for depth, pressure in atmospheres, and load in tons per square metre. Dragging it down shows cars piling onto one square metre, reaching about 2,000 cars at 3,500 metres."
   },
   "source": "Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023)",

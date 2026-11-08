@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Timeline from 0 h to 24 h of a tatara smelter's temperature, peaking near 1,500 °C just under iron's 1,538 °C melting point. Drag to pump the bellows. Asks what the smelter's temperature is and why it matters."
   },
   "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",

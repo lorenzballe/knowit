@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A year slider from 1986 to 2020 sits over a Geiger counter reading at Chernobyl. Dragging the years shows the counter clicking until the long-lived cesium and strontium are removed, then going quiet."
   },
   "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",

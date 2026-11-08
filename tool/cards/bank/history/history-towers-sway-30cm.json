@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A slider for guessing how far the top of the Twin Towers swayed sideways when the planes hit, from 10 cm to 30 m. The reveal says the answer is about 30 cm, and that the impact itself did not bring the towers down.",
     "graded": false
   },

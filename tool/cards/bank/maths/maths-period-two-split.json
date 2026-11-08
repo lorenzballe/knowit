@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A graph titled 'The logistic map' asks what happens when growth rate R passes 3. A control sets R, with marks at 2.5, 2.8, 3 and 3.4, and a Run button plays 30 years of population, which alternates between high and low levels once R is above 3."
   },
   "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",

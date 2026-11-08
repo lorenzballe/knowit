@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Card titled Heavy Oil asking why Venezuela's extra-heavy oil needs steam to come out of the ground. A pump is shown running with nothing coming up, and a slider lets the reader move the steam from OFF to on."
   },
   "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",

@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Astute card titled Earthquakes. A magnitude slider set to M 6.0 sits above two city panels. The question asks why Japan gets big earthquakes all the time yet damage stays low. Drag the magnitude up to 8 and watch both cities."
   },
   "source": "Geopop, “Terremoti in Giappone - come prevenire i disastri del rischio sismico con l'ingegneria” (YouTube, 2021)",

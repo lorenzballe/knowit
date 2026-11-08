@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A card titled FLIP SHIP asks how a toilet still works on a ship that flips upright. Readers can drag to tip the ship upright, then lock the pivots and try again."
   },
   "source": "Geopop, “Come funziona la manovra della FLIP, la \"nave\" che si immergeva in verticale sul mare” (YouTube, 2024)",

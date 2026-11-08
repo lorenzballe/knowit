@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive: a carrier jet's catapult launch, step by step. Drag the slider to fire the catapult and watch the jet accelerate to take-off speed on the carrier deck."
   },
   "source": "Geopop, “Sulle portaerei come funziona la fase di decollo? Con le… catapulte! #geopop #aerei #airplane” (YouTube, 2023)",

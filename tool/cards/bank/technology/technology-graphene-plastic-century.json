@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Split-screen slide with a slider to move forward a century on both sides, from today to +100 years. It asks how to think about the future of graphene. One side shows a person from 1919 holding a piece of plastic, the other a person from 2019 holding a graphene sheet."
   },
   "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",

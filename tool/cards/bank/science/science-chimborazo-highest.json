@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Card asking which mountain becomes highest if Earth stops spinning, with choices Everest, Chimborazo and Kilimanjaro. After picking and rating confidence, the reveal shows Chimborazo at 13,600 m rising above Everest once the equatorial bulge flattens."
   },
   "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",

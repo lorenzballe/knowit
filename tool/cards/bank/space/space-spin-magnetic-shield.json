@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "An interactive page asking why a stopped Earth would wipe out all life. A slider labelled Earth's spin, at 100%, shows a magnetic shield around the planet. Dragging the spin to zero makes the shield disappear."
   },
   "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",

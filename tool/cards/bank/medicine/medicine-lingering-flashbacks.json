@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A slider labelled 'Time since last use' starts at 'just taken'. Drag it forward to see two views of one scene. The drug leaves both, but in one view a trippy visual distortion stays for months."
   },
   "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",

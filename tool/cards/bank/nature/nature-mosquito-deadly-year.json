@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A year-long timeline from JAN to DEC with a draggable marker and a counter reading 0 deaths so far on day 0. Dragging through the year fills up the mosquito's toll. The page asks why the mosquito is the most lethal animal in the world."
   },
   "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",

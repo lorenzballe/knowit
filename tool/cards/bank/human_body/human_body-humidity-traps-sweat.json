@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive card titled 'Astute free card SWEAT' asks how high humidity stops sweat from cooling us. A humidity dial runs from Dry (40%) to Muggy, showing sweat evaporating in dry air and sweat staying liquid on skin in muggy air, with heat trapped in the body."
   },
   "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",

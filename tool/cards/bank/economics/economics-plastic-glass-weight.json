@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive page asking why plastic is cheaper than glass to produce. A slider follows one bottle through three stages, make, weigh and ship, from factory to shop, showing that the making saves about one cent while the lighter weight cuts transport costs."
   },
   "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",

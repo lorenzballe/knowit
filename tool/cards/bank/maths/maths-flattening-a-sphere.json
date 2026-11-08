@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A balloon-shaped skin with a Torn open control showing 0% area at 60 degrees and a ×1.0 scale, plus Keep true sizes and Close the gaps options. It asks why a balloon cannot be flattened without tearing or stretching. Tap the balloon to cut it open."
   },
   "source": "Geopop, “L'inganno delle mappe: le vere dimensioni dei Paesi come Russia e USA non sono come crediamo” (YouTube, 2022)",

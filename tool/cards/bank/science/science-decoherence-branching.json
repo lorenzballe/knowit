@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A quantum wave drawn as one ripple, with a slider that lets air molecules and photons hit an atom. A counter reads Hits 0 of 30 and Interference 100%. The question asks how the air turns one quantum wave into separate worlds."
   },
   "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",

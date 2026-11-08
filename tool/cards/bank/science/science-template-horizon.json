@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Question: What is a template horizon in drawing a geological cross-section? A blank section shows only the ground surface. A slider builds the section in four steps, from one continuous key layer."
   },
   "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",

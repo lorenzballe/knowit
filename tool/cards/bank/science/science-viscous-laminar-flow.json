@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Question: why does honey pour in smooth layers while water turns turbulent? A speed slider runs from slow to fast, with honey and water in the same pipe at the same speed."
   },
   "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",

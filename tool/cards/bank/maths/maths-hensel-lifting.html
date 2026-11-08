@@ -20,7 +20,7 @@
     <h2 class="q">How can you solve an equation one prime-power digit at a time?</h2>
     <div class="stagebox" id="stage">
       <svg id="pic"></svg>
-      <div id="scrub"><input type="range" id="sl" min="0" max="9" step="1" value="0" aria-label="digits found"><span id="cnt">0 / 9 digits</span></div>
+      <div id="scrub"><input data-drag type="range" id="sl" min="0" max="9" step="1" value="0" aria-label="digits found"><span id="cnt">0 / 9 digits</span></div>
     </div>
     <p class="say" id="say">Drag the slider: each step tries 0, 1, 2 for the next power of 3.</p>
     <div id="why" class="gone"><p class="body">Each new digit only has to work for one more power of 3, so there are just three choices to test, and exactly one fits. Keep going forever and the digits build an exact 3-adic solution of x² = 7.</p></div>

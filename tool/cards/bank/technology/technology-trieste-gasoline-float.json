@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive card titled BUOYANCY asking why the Trieste carried 85,000 litres of gasoline just to float. A float diagram shows seawater being swapped for gasoline by dragging, with a counter reading 0 L gasoline."
   },
   "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",

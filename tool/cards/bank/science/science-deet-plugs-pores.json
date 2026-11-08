@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive page asking how DEET stops a mosquito from smelling you. A slider reading 'Slide to spray DEET' moves from 'No DEET' to 'Full spray', showing a mosquito antenna's pores being corked."
   },
   "source": "Geopop, “Quali antizanzare funzionano meglio? Zampironi, spray: analizziamoli dal punto di vista chimico” (YouTube, 2024)",

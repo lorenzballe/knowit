@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive page with a slider that traps ships in the Gulf one by one. It asks what the roughly 1,000 stuck ships are worth, and shows the idle fleet's value of over $25 billion and the share carrying oil or gas."
   },
   "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",

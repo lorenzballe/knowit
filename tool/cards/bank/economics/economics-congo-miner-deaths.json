@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A slider asks readers to guess how many Congolese miners die each day according to the UN, with marks at 10, 100, 1,000 and 5,000. Then the page reveals about 1,000 a day, or one miner every 86 seconds, and asks how sure they are.",
     "graded": false
   },

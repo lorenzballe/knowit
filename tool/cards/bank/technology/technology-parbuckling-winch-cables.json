@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive card asking what the parbuckling technique is used for. A winch control starts at 0%. Dragging it reels in cables fixed to a ship's hull, slowly rotating the ship upright, and it stops when you stop dragging."
   },
   "source": "Geopop, “Costa Concordia, la ricostruzione del naufragio dal momento dell’impatto alla rimozione del relitto” (YouTube, 2022)",
