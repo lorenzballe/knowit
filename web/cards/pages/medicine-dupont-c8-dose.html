@@ -1,328 +1,270 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: medicine-dupont-c8-dose -->
-<!-- Look: a rat built from a thousand top-lit pale dots standing on a faint lab floor, pink ear and nose, its liver a dense red swarm, C8 as crisp acid-green sparks.
-     Interaction: drag along a log dose scale and C8 particles stream up into the rat, swarm through its body and cling to the liver.
-     Wow: at 1.5 mg/kg, below cyanide's lethal band, the liver blooms with a shockwave. At 570 the rat flips onto its back, and the C8 keeps glinting. -->
-<title>C8 in the rat</title>
+<!-- slug: science-c8-rat-dose -->
+<!-- Thought to carry: the dose that kills tells you almost nothing about the dose that quietly harms. Ask how little does damage.
+     Front: a flat rat with its liver drawn as a faint dashed outline, above a log dose ruler (0.1 to 1000 mg/kg). Known marks: C8 kills at 570, cyanide kills at 5–15 (both from the video).
+     The reader drags a white dot to the smallest dose they think made the livers grow abnormally, then says how sure they are.
+     Back: the same rat, same size, same place, same ruler. The liver grows past its dashed outline. A red dot lands on 1.5 mg/kg,
+     the smallest dose the video reports ("as little as"). It is not presented as a threshold.
+     A red bracket measures the gap to the lethal dose (570 / 1.5 = 380× lower). The reader's miss sits inside their own pill, tied to 1.5 by a thin ink bracket.
+     Every marker is placed by the same log10 function the ticks use. -->
+<title>DuPont's own rats</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#card{background-image:radial-gradient(120% 70% at 50% 28%,rgba(216,255,90,.06),transparent 60%),radial-gradient(90% 60% at 60% 40%,rgba(255,78,62,.06),transparent 70%)}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-.say b{color:#d8ff5a}
-.keep b{color:#d8ff5a}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.front{visibility:hidden}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.face .foot{padding-right:max(26cqw,100px);min-height:44px;display:flex;align-items:flex-end}
+.front .ctx{font:600 13px/1.35 var(--body);color:var(--k);opacity:.75;margin:0}
+.front .sure [data-v]{border:1.5px solid var(--k)}
+.back .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+.back .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:.4em 0 0}
+.q,.body,.keep,.src,.ctx{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="medicine" data-kind="Drag the dose · what the lab saw" style="--c:#0d1117;--k:#efe9dc;--edge:#05070b">
+<article class="card" id="card" data-topic="medicine" data-kind="Drag a guess · dose and harm">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">INTERNAL DATA</span></div>
-    <h2 class="q">What did DuPont's own 1961 rat tests find about C8?</h2>
-    <div class="stagebox" id="stage">
-      <canvas id="pic" role="img" aria-label="A rat drawn in dots with a red liver, above a dose scale in milligrams of C8 per kilogram, from 0.1 to 1000, with cyanide's lethal dose of 5 to 15 marked."></canvas>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DOSE AND HARM</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">C8 kills a rat at 570 mg/kg. How little made its liver grow abnormally?</h2>
+        <div class="stagebox"><svg id="pic" data-drag role="img" aria-label="A rat with its liver outlined, above a dose ruler from 0.1 to 1000 milligrams per kilogram. C8 kills at 570; cyanide kills at 5 to 15. Drag the white dot to the smallest dose you think made the rats' livers grow abnormally."></svg></div>
+        <div class="sure" id="sure"></div>
+        <div class="foot"><p class="ctx">DuPont's in-house scientists, 1961.</p></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">As little as 1.5 mg/kg.</p>
+        <p class="body">DuPont's own tests in 1961 found livers growing abnormally at that dose. The company kept making C8 for decades.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same rat and ruler: as little as 1.5 milligrams per kilogram made the livers grow abnormally, 380 times below the lethal dose of 570."></svg></div>
+        <div class="keep"><b>WHAT TO KEEP</b> Ask how little harms, not how much kills.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025).</span></div>
+      </section>
     </div>
-    <p class="say" id="say">DuPont's lab fed rats C8 in 1961. <b>Drag along the scale</b> to raise the dose and watch the liver.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Not deadly isn't safe: harm can start far below the dose that kills.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const cv = Kit.$('pic'), say = Kit.$('say');
-  const C8 = '#d8ff5a', INK = '#efe9dc', CYA = '#a58cff', RED = '#ff4f3e';
-  const LMIN = -1, LMAX = 3, LIVER_DOSE = 1.5, LETHAL = 570;
-  const R = Kit.rnd;
-  let x = null, W = 0, H = 0, fs = 12, s = 1, cx = 0, cy = 0, Hs = 0, X0 = 0, X1 = 0, labTop = 0;
-  let dose = 0.1, gT = 1, growth = 1, dead = 0, flash = 0, ring = -1;
-  let crossed = false, ended = false, touched = false, entered = false, enterT = 0, running = false;
-  const z = {dead: 0, flash: 0, ring: -1};
+  const RED = '#d2312a', WHITE = '#ffffff';
+  const LO = -1, HI = 3;                                  // log10 of mg/kg: 0.1 to 1000
+  const TRUE = Math.log10(1.5), KILL = Math.log10(570), CY0 = Math.log10(5), CY1 = Math.log10(15);
+  // a lobed liver, centred on 0,0, about 22 units wide in rat units
+  const LIVER = 'M-11,-1.5C-11.5,-5.5 -6,-6.5 -1,-6C4,-5.6 9,-4.6 11,-2.8C11.8,-2 11,-1 9.5,-.6C6.5,.3 4,1 2.2,1.6L.8,.6C.2,2.8 -2,5.6 -5.5,5.6C-9,5.6 -10.8,2.2 -11,-1.5Z';
+  const NORMAL = .68, GROWN = 1.05;
+  let g = 2, moved = false, locked = false, turned = false, pick = null, sayState = 0;
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let L = null, hnd = null, sayG = null;
 
-  // ---------- the rat, as a shape in unit coordinates ----------
-  const ell = (u, v, ex, ey, rx, ry) => ((u - ex) / rx) ** 2 + ((v - ey) / ry) ** 2 < 1;
-  const EYE = [.6, -.02], NOSE = [.8, .06], EAR = [.38, -.17];
-  function inBody(u, v) {
-    if ((u - EYE[0]) ** 2 + (v - EYE[1]) ** 2 < .0014) return false; // the eye
-    return ell(u, v, -.05, .07, .5, .29) || ell(u, v, .4, .03, .24, .17) || ell(u, v, .64, .06, .17, .1) ||
-      ell(u, v, EAR[0], EAR[1], .1, .11) || ell(u, v, -.3, .36, .13, .07) || ell(u, v, .27, .35, .09, .06);
-  }
-  const LX = .12, LY = .04, LRX = .15, LRY = .1;
-  const body = [], ear = [], liver = [], c8 = [];
-  const mkP = (u, v, extra = {}) => Object.assign({u, v, x: 0, y: 0, vx: 0, vy: 0, fx: R(), fy: R(), t0: R() * .9, ph: R() * 6.28, sz: .9 + R() * .9, tone: 1, tl: 0}, extra);
-  while (body.length < 1100) {
-    const u = -.56 + R() * 1.42, v = -.3 + R() * .76;
-    if (inBody(u, v) && !ell(u, v, LX, LY, LRX * .9, LRY * .9) && !ell(u, v, EAR[0], EAR[1], .055, .065)) {
-      const sh = v + (R() - .5) * .14;
-      body.push(mkP(u, v, {tone: sh < -.07 ? 0 : sh < .18 ? 1 : 2}));
-    }
-  }
-  for (let i = 0; i < 150; i++) { // the tail, thick at the base
-    const t = R(), a = (1 - t) ** 2, b = 2 * (1 - t) * t, c = t * t;
-    const u = a * -.5 + b * -.86 + c * -1.08, v = a * .12 + b * .36 + c * -.06, th = .03 * (1 - t) + .006;
-    body.push(mkP(u + (R() - .5) * th * 2, v + (R() - .5) * th * 2, {sz: .7 + R() * .6, tone: 1, tl: t}));
-  }
-  while (ear.length < 46) { const u = EAR[0] + (R() - .5) * .11, v = EAR[1] + (R() - .5) * .13; if (ell(u, v, EAR[0], EAR[1], .055, .065)) ear.push(mkP(u, v, {sz: .8 + R() * .7})); }
-  for (let i = 0; i < 300; i++) liver.push(mkP(0, 0, {lr: Math.sqrt(R()), la: R() * 6.283, sz: 1 + R() * 1.1}));
-  for (let i = 0; i < 420; i++) {
-    const inL = R() < .6, b = body[Math.floor(R() * 1000)];
-    c8.push(mkP(b.u, b.v, {inL, lr: Math.sqrt(R()) * .95, la: R() * 6.283, on: false, a: 0, sz: 1 + R() * .7}));
-  }
-
-  const T = (u, v) => [cx + u * s, cy + (.07 + (v - .07) * (1 - 2 * dead)) * s];
-  const liverUV = (lr, la) => [LX + lr * Math.cos(la) * LRX * growth * (1 + .1 * Math.sin(3 * la)), LY + lr * Math.sin(la) * LRY * growth];
-  function bodyUV(p) {
-    if (growth < 1.01) return [p.u, p.v];
-    const dx = (p.u - LX) / (LRX * growth), dy = (p.v - LY) / (LRY * growth), d = Math.hypot(dx, dy);
-    if (d >= 1.1 || d < 1e-4) return [p.u, p.v];
-    return [LX + dx / d * 1.1 * LRX * growth, LY + dy / d * 1.1 * LRY * growth];
-  }
-
-  // ---------- the scale ----------
-  const xOf = d => X0 + (Math.log10(d) - LMIN) / (LMAX - LMIN) * (X1 - X0);
-  const countOf = d => Math.round(420 * (Math.log10(d) - LMIN) / (LMAX - LMIN));
-
-  function layout() {
-    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(14, W / 27));
-    X0 = W * .07; X1 = W * .93; Hs = H - fs * 4.2;
-    labTop = fs * 3.4;
-    const bottom = Hs - fs * 5.4, avail = Math.max(40, bottom - labTop);
-    s = Math.min(W * .94 / 2.08, avail / .76);
-    cx = W / 2 + .06 * s; cy = labTop + avail / 2 - .08 * s;
-    const place = p => { const [tx, ty] = T(p.u, p.v); if (entered) { p.x = tx; p.y = ty; } else { p.x = p.fx * W; p.y = p.fy * H; } };
-    body.forEach(place); ear.forEach(place);
-    liver.forEach(p => { const [u, v] = liverUV(p.lr, p.la); p.u = u; p.v = v; place(p); });
-    c8.forEach(p => { if (p.on) { const [tx, ty] = T(p.u, p.v); p.x = tx; p.y = ty; } });
-    if (!running) { running = true; requestAnimationFrame(frame); }
-  }
-
-  // ---------- the dose ----------
-  function setDose(d) {
-    if (ended) return;
-    d = Math.max(.1, Math.min(1000, d));
-    if (Math.abs(Math.log10(d) - Math.log10(LIVER_DOSE)) < .035) d = LIVER_DOSE;
-    dose = d;
-    const n = countOf(d), kx = xOf(d);
-    c8.forEach((p, i) => {
-      if (i < n && !p.on) { p.on = true; p.a = 1; p.x = kx + (R() - .5) * 10; p.y = Hs; p.vx = (R() - .5) * 6; p.vy = -(5 + R() * 7); }
-      else if (i >= n && p.on) p.on = false;
-    });
-    gT = d < LIVER_DOSE ? 1 : 1 + .8 * Math.pow(Math.min(1, (Math.log10(d) - Math.log10(LIVER_DOSE)) / (Math.log10(200) - Math.log10(LIVER_DOSE))), .7);
-    if (!crossed && d >= LIVER_DOSE) liverEvent();
-    if (d >= LETHAL) endEvent();
-  }
-  function liverEvent() {
-    crossed = true; Kit.haptic('success');
-    say.innerHTML = 'There: at <b>1.5 mg/kg</b> the rat\u2019s liver starts to grow abnormally. Cyanide only kills a rat at 5. <b>Keep going.</b>';
-    if (Kit.calm) return;
-    gsap.fromTo(z, {flash: 1}, {flash: 0, duration: 1.4, ease: 'power3.out'});
-    gsap.fromTo(z, {ring: 0}, {ring: 1, duration: 1.3, ease: 'expo.out', onComplete: () => { z.ring = -1; }});
-    liver.forEach(p => { p.vx += Math.cos(p.la) * 9 * R(); p.vy += Math.sin(p.la) * 9 * R(); });
-  }
-  function endEvent() {
-    if (ended) return;
-    ended = true; Kit.haptic('light');
-    say.innerHTML = 'DuPont\u2019s own scientists saw it in 1961: C8 swelled rat livers at 1.5 mg/kg, below cyanide\u2019s lethal dose. It took 570 to kill, but its carbon\u2011fluorine tail barely breaks down, and it mimics the fatty acids bodies use. DuPont kept making it for decades.';
-    Kit.show('keep');
-    if (Kit.calm) { z.dead = 1; return; }
-    gsap.to(z, {dead: 1, duration: 1.8, ease: 'elastic.out(1,.55)'});
-  }
-
-  let drag = false;
-  const fromX = e => { const r = cv.getBoundingClientRect(); return Math.pow(10, LMIN + (e.clientX - r.left - X0) / (X1 - X0) * (LMAX - LMIN)); };
-  cv.addEventListener('pointerdown', e => { if (ended) return; drag = true; touched = true; cv.setPointerCapture(e.pointerId); Kit.haptic('selection'); setDose(fromX(e)); });
-  cv.addEventListener('pointermove', e => { if (drag) setDose(fromX(e)); });
-  const up = () => { drag = false; };
-  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
-
-  // ---------- drawing ----------
-  const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
-  function fitText(t, tx, ty, align = 'start') {
-    const w = x.measureText(t).width;
-    let left = align === 'end' ? tx - w : align === 'center' ? tx - w / 2 : tx;
-    left = Math.max(4, Math.min(W - 4 - w, left));
-    x.textAlign = 'left'; x.fillText(t, left, ty);
-  }
-  const spring = (p, tx, ty, k, dmp = .8) => { p.vx = (p.vx + (tx - p.x) * k) * dmp; p.vy = (p.vy + (ty - p.y) * k) * dmp; p.x += p.vx; p.y += p.vy; };
-  const dotPath = arr => { x.beginPath(); for (const p of arr) { x.moveTo(p.x + p.sz, p.y); x.arc(p.x, p.y, p.sz, 0, 6.283); } x.fill(); };
-
-  function frame(t) {
-    requestAnimationFrame(frame);
-    if (!x) return;
-    const now = t / 1000, since = entered ? now - enterT : -1;
-    dead = z.dead; flash = z.flash; ring = z.ring;
-    growth += (gT - growth) * .07;
-    x.clearRect(0, 0, W, H);
-    const kx = xOf(dose), live = Math.max(0, 1 - Math.min(1, dead)), ready = since > .7 || Kit.calm;
-    const breath = Kit.calm ? 0 : .014 * Math.sin(now * 2.6) * live;
-
-    // Lab tag
-    x.font = `600 ${fs}px var(--mono), ui-monospace, monospace`; x.fillStyle = 'rgba(239,233,220,.5)'; x.textBaseline = 'alphabetic';
-    x.textAlign = 'left'; x.fillText('DUPONT IN-HOUSE LAB \u00b7 1961', 4, fs * 1.2);
-
-    // Lab floor, faint and fading at both ends
-    if (ready) {
-      const fy = cy + .45 * s, fl = cx - 1.1 * s, fr = cx + 1 * s;
-      const fg = x.createLinearGradient(fl, 0, fr, 0);
-      fg.addColorStop(0, 'rgba(239,233,220,0)'); fg.addColorStop(.25, 'rgba(239,233,220,.2)');
-      fg.addColorStop(.75, 'rgba(239,233,220,.2)'); fg.addColorStop(1, 'rgba(239,233,220,0)');
-      x.strokeStyle = fg; x.lineWidth = 1; x.setLineDash([1, 4]);
-      x.beginPath(); x.moveTo(fl, fy); x.lineTo(fr, fy); x.stroke(); x.setLineDash([]);
-    }
-
-    // Body: top-lit, breathing, tail swaying
-    for (const p of body) {
-      let tx, ty;
-      if (since > p.t0 || Kit.calm) {
-        let [u, v] = bodyUV(p);
-        if (p.tl) v += Kit.calm ? 0 : Math.sin(now * 1.8 - p.tl * 3.2) * .035 * p.tl * live;
-        else { u += (u + .05) * breath * .5; v += (v - .07) * breath; }
-        [tx, ty] = T(u, v); tx += Math.sin(now * 1.6 + p.ph) * .45; ty += Math.cos(now * 1.3 + p.ph) * .45;
-      } else { tx = p.fx * W; ty = p.fy * H; }
-      spring(p, tx, ty, .055);
-    }
-    const bc = mix([236, 230, 216], [110, 114, 122], Math.min(1, dead));
-    [.82, .6, .38].forEach((al, k) => { x.fillStyle = `rgba(${bc},${al - Math.min(1, dead) * .18})`; dotPath(body.filter(p => p.tone === k)); });
-
-    // Pink ear
-    for (const p of ear) {
-      let tx, ty;
-      if (since > p.t0 + .3 || Kit.calm) [tx, ty] = T(p.u, p.v + breath * .5); else { tx = p.fx * W; ty = p.fy * H; }
-      spring(p, tx, ty, .055);
-    }
-    x.fillStyle = `rgba(${mix([255, 150, 165], [130, 110, 118], Math.min(1, dead))},.7)`; dotPath(ear);
-
-    // Whiskers, nose and eye
-    if (since > .8 || Kit.calm) {
-      const [nx, ny] = T(NOSE[0] - .02, NOSE[1] - .01), tw = Kit.calm ? 0 : Math.sin(now * 9) * Math.max(0, Math.sin(now * 1.3)) * .012 * live;
-      x.strokeStyle = `rgba(${bc},.4)`; x.lineWidth = 1; x.beginPath();
-      [[.17, -.1], [.19, -.01], [.16, .08]].forEach(([dx, dy], i) => {
-        const [ex, ey] = T(NOSE[0] + dx, NOSE[1] + dy + tw * (i - 1)), [qx, qy] = T(NOSE[0] + dx * .55, NOSE[1] + dy * .35);
-        x.moveTo(nx, ny); x.quadraticCurveTo(qx, qy, ex, ey);
-      });
-      x.stroke();
-      const [px, py] = T(NOSE[0] + .01, NOSE[1]);
-      x.fillStyle = dead > .5 ? 'rgba(150,120,128,.8)' : '#ff9aa8'; x.beginPath(); x.arc(px, py, Math.max(2, s * .016), 0, 6.283); x.fill();
-      const [ex, ey] = T(EYE[0], EYE[1]), er = Math.max(2, s * .016);
-      x.strokeStyle = INK; x.fillStyle = INK; x.lineWidth = 1.6;
-      if (dead > .5) { x.beginPath(); x.moveTo(ex - er, ey - er); x.lineTo(ex + er, ey + er); x.moveTo(ex + er, ey - er); x.lineTo(ex - er, ey + er); x.stroke(); }
-      else {
-        const blink = Kit.calm ? 1 : (Math.sin(now * .9) > .985 ? .15 : 1);
-        x.beginPath(); x.ellipse(ex, ey, er * .75, er * .75 * blink, 0, 0, 6.283); x.fill();
-      }
-    }
-
-    // Liver glow, ring and dots
-    const [lcx, lcy] = T(LX, LY), sw = Math.min(1, (growth - 1) / .8);
-    x.globalCompositeOperation = 'lighter';
-    const gr = x.createRadialGradient(lcx, lcy, 0, lcx, lcy, s * LRX * growth * 1.9);
-    const ga = .1 + sw * .16 + flash * .5 + Math.sin(now * 3) * .03 * sw;
-    gr.addColorStop(0, `rgba(255,79,62,${ga})`); gr.addColorStop(1, 'rgba(255,79,62,0)');
-    x.fillStyle = gr; x.beginPath(); x.arc(lcx, lcy, s * LRX * growth * 1.9, 0, 6.283); x.fill();
-    x.globalCompositeOperation = 'source-over';
-    if (ring >= 0) {
-      x.strokeStyle = `rgba(255,79,62,${(1 - ring) * .9})`; x.lineWidth = 2.5 * (1 - ring) + .5;
-      x.beginPath(); x.ellipse(lcx, lcy, s * LRX * (1 + ring * 2.6), s * LRY * (1 + ring * 2.6), 0, 0, 6.283); x.stroke();
-    }
-    for (const p of liver) {
-      let tx, ty;
-      if (since > p.t0 * .6 + .5 || Kit.calm) { const [u, v] = liverUV(p.lr, p.la + Math.sin(now * .7 + p.ph) * .04); [tx, ty] = T(u, v); }
-      else { tx = p.fx * W; ty = p.fy * H; }
-      spring(p, tx, ty, .06);
-    }
-    x.fillStyle = `rgb(${mix([170, 70, 64], [255, 84, 66], Math.max(sw, flash))})`; dotPath(liver);
-
-    // Liver label
-    if (since > 1 || Kit.calm) {
-      const ty = labTop - fs * .8, top = lcy - Math.abs(s * LRY * growth) - 2;
-      x.strokeStyle = 'rgba(255,79,62,.55)'; x.lineWidth = 1; x.setLineDash([2, 3]);
-      x.beginPath(); x.moveTo(lcx, ty + 4); x.lineTo(lcx, Math.max(ty + 6, Math.min(top, lcy - 4))); x.stroke(); x.setLineDash([]);
-      x.font = `700 ${fs}px var(--mono), ui-monospace, monospace`; x.fillStyle = '#ff7a6c';
-      fitText(crossed ? 'liver \u00b7 growing' : 'liver', lcx, ty, 'center');
-    }
-
-    // C8 particles: crisp sparks that swarm in, cling to the liver, and keep glinting
-    for (const p of c8) {
-      if (!p.on && p.a <= 0) continue;
-      let tx, ty;
-      if (p.on) {
-        const [u, v] = p.inL ? liverUV(p.lr, p.la + now * .25) : [p.u + Math.sin(now * 1.1 + p.ph) * .025, p.v + Math.cos(now * .9 + p.ph) * .02];
-        [tx, ty] = T(u, v);
-      } else { tx = kx; ty = Hs; p.a -= .035; }
-      spring(p, tx, ty, .035, .86);
-    }
-    x.globalCompositeOperation = 'lighter';
-    x.fillStyle = 'rgba(216,255,90,.06)'; x.beginPath();
-    for (const p of c8) if (p.a > 0) { const r = p.sz * 2.4; x.moveTo(p.x + r, p.y); x.arc(p.x, p.y, r, 0, 6.283); }
-    x.fill();
-    x.globalCompositeOperation = 'source-over';
-    for (const p of c8) {
-      if (p.a <= 0) continue;
-      const tw = Kit.calm ? 1 : .65 + .35 * Math.sin(now * 5 + p.ph * 3);
-      x.fillStyle = `rgba(226,255,120,${.95 * p.a * tw})`; x.beginPath(); x.arc(p.x, p.y, p.sz, 0, 6.283); x.fill();
-    }
-
-    // The scale
-    const lg = x.createLinearGradient(X0, 0, X1, 0);
-    const kf = Math.max(0, Math.min(1, (kx - X0) / (X1 - X0)));
-    lg.addColorStop(0, C8); lg.addColorStop(kf, C8); lg.addColorStop(Math.min(1, kf + .001), 'rgba(239,233,220,.3)'); lg.addColorStop(1, 'rgba(239,233,220,.3)');
-    x.strokeStyle = lg; x.lineWidth = 2.5; x.lineCap = 'round'; x.beginPath(); x.moveTo(X0, Hs); x.lineTo(X1, Hs); x.stroke();
-    x.lineWidth = 1;
-    for (let e = LMIN; e <= LMAX; e++) for (let m = 1; m < 10; m++) {
-      if (e === LMAX && m > 1) break;
-      const xx = xOf(m * 10 ** e), big = m === 1;
-      x.strokeStyle = big ? 'rgba(239,233,220,.75)' : 'rgba(239,233,220,.28)';
-      x.beginPath(); x.moveTo(xx, Hs - (big ? 5 : 3)); x.lineTo(xx, Hs + (big ? 5 : 3)); x.stroke();
-    }
-    x.font = `600 ${fs}px var(--mono), ui-monospace, monospace`; x.fillStyle = 'rgba(239,233,220,.62)';
-    ['0.1', '1', '10', '100', '1000'].forEach((l, i) => { x.textAlign = 'center'; x.fillText(l, xOf(10 ** (i - 1)), Hs + fs * 1.55); });
-
-    // Cyanide band: always there, row A
-    const c0 = xOf(5), c1 = xOf(15);
-    x.fillStyle = 'rgba(165,140,255,.35)'; x.fillRect(c0, Hs - 6, c1 - c0, 12);
-    x.fillStyle = CYA; x.fillRect(c0, Hs - 1.5, c1 - c0, 3);
-    x.font = `700 ${fs}px var(--mono), ui-monospace, monospace`; x.fillStyle = CYA;
-    fitText('cyanide kills: 5\u201315', c0, Hs - fs * 1.1, 'start');
-
-    // Liver mark: row C
-    if (crossed) {
-      const lx = xOf(LIVER_DOSE), ry = Hs - fs * 3.9;
-      x.strokeStyle = 'rgba(255,79,62,.8)'; x.lineWidth = 1.2;
-      x.beginPath(); x.moveTo(lx, Hs - 8); x.lineTo(lx, ry + fs * .35); x.stroke();
-      x.fillStyle = RED; x.beginPath(); x.arc(lx, Hs, 3.5, 0, 6.283); x.fill();
-      x.fillStyle = '#ff7a6c'; fitText('1.5 \u00b7 liver grows abnormally', lx - 3, ry, 'start');
-    }
-    // Lethal mark: row B
-    if (ended) {
-      const dx = xOf(LETHAL), ry = Hs - fs * 2.5;
-      x.strokeStyle = 'rgba(239,233,220,.7)'; x.lineWidth = 1.2;
-      x.beginPath(); x.moveTo(dx, Hs - 8); x.lineTo(dx, ry + fs * .35); x.stroke();
-      x.fillStyle = INK; fitText('570 \u00b7 C8 kills', dx + 3, ry, 'end');
-    }
-
-    // Knob and readout
-    const pulse = touched ? 0 : (Math.sin(now * 4) + 1) / 2;
-    const kg = x.createRadialGradient(kx, Hs, 0, kx, Hs, fs * (1.5 + pulse * .6));
-    kg.addColorStop(0, 'rgba(216,255,90,.55)'); kg.addColorStop(1, 'rgba(216,255,90,0)');
-    x.fillStyle = kg; x.beginPath(); x.arc(kx, Hs, fs * (1.5 + pulse * .6), 0, 6.283); x.fill();
-    x.fillStyle = C8; x.beginPath(); x.arc(kx, Hs, fs * .5, 0, 6.283); x.fill();
-    x.strokeStyle = '#0d1117'; x.lineWidth = 2; x.beginPath(); x.arc(kx, Hs, fs * .22, 0, 6.283); x.stroke();
-    x.font = `800 ${fs}px var(--mono), ui-monospace, monospace`; x.fillStyle = C8;
-    const val = dose < 10 ? dose.toFixed(1) : String(Math.round(dose));
-    fitText(`${val} mg of C8 per kg${touched ? '' : '  \u2192'}`, kx, Hs + fs * 3, 'center');
-  }
-
-  Kit.onShow.card = layout;
-  Kit.onEnter.card = () => {
-    if (entered) return;
-    entered = true; enterT = performance.now() / 1000;
-    if (Kit.calm) layout();
+  const fmt = lg => { const v = Math.pow(10, lg); return v < 10 ? String(Math.round(v * 10) / 10) : v < 100 ? String(Math.round(v)) : String(Math.round(v / 10) * 10); };
+  const valOf = lg => parseFloat(fmt(lg));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const missTxt = v => {
+    const r = v / 1.5, f = x => x < 10 ? String(Math.round(x * 10) / 10) : String(Math.round(x));
+    return r >= 2 ? `${f(r)}× too high` : r <= .5 ? `${f(1 / r)}× too low` : 'about right';
   };
+  const T = (p, x, y, s, a = {}, st = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y}, a), p);
+    e.setAttribute('style', `fill:${st.fill || 'var(--k)'};font:${st.w || 700} ${st.fs || L.fs}px ${st.ff || 'var(--body)'}`);
+    e.textContent = s; return e;
+  };
+  const ink = (p, tag, a, style) => { const e = Kit.mk(tag, a, p); e.setAttribute('style', style); return e; };
+
+  // One layout for both faces, in the coordinates of the turning box, so the rat and the ruler
+  // sit at exactly the same place on the front and on the back.
+  function layout() {
+    const f1 = Kit.fitSvg(svg), f2 = Kit.fitSvg(svg2), W = f1.W;
+    const fs = Math.max(12, Math.min(14, W / 28));
+    const oF = svg.parentNode.offsetTop, oB = svg2.parentNode.offsetTop;
+    const top = Math.max(oF, oB) + fs * .6, bot = Math.min(oF + f1.H, oB + f2.H) - fs * .3, A = bot - top;
+    const below = fs * 5.3;
+    const rest = h => 10 + .74 * h + 16 + fs * 2.85 + below;   // shadow gap, numeral, clear space, bracket + labels, below the axis
+    let hs = Math.min(44, Math.max(34, W * .125));
+    let s = Math.min(W * .6, 250) / 105;
+    const fit = h => (A - rest(h)) / 42.9;
+    if (fit(hs) < s) { if (fit(hs) < 1.35) hs = 34; s = Math.max(.55, Math.min(s, fit(hs))); }
+    const G = 42.9 * s + rest(hs), free = Math.max(0, A - G);
+    const Yb = top + free * .42 + 40.5 * s;
+    const Ya = Yb + 2.4 * s + 10 + .74 * hs + 16 + fs * 2.85;
+    const x0 = W * .08, x1 = W * .92;
+    const X = lg => x0 + (lg - LO) / (HI - LO) * (x1 - x0);  // the only scale: ticks and markers alike
+    return {W, fs, hs, s, oF, oB, Yb, Ya, x0, x1, X};
+  }
+
+  // A flat rat facing left; feet on baseY. The liver: dashed = normal size, red = grown (back only).
+  function rat(p, baseY, reveal) {
+    const s = L.s, grp = Kit.mk('g', {transform: `translate(${L.W / 2 - 54.5 * s},${baseY - 50 * s}) scale(${s})`}, p);
+    ink(grp, 'ellipse', {cx: 56, cy: 50, rx: 40, ry: 2.4}, 'fill:var(--k);opacity:.14');
+    ink(grp, 'path', {d: 'M86,38 Q104,40 101,47 Q97,51 74,49'}, 'fill:none;stroke:var(--k);stroke-width:2.4;stroke-linecap:round');
+    ink(grp, 'ellipse', {cx: 58, cy: 31, rx: 30, ry: 17}, 'fill:var(--k)');
+    ink(grp, 'path', {d: 'M34,20 Q16,26 5,35 Q16,42 36,44 Z'}, 'fill:var(--k)');
+    ink(grp, 'ellipse', {cx: 44, cy: 47.5, rx: 6, ry: 2.6}, 'fill:var(--k)');
+    ink(grp, 'ellipse', {cx: 74, cy: 47.5, rx: 7, ry: 2.6}, 'fill:var(--k)');
+    ink(grp, 'circle', {cx: 31, cy: 17, r: 7.5}, 'fill:var(--k)');
+    ink(grp, 'circle', {cx: 31, cy: 17, r: 4}, 'fill:var(--c);opacity:.55');
+    ink(grp, 'circle', {cx: 19, cy: 31, r: 1.7}, 'fill:var(--c)');
+    const lv = Kit.mk('g', {transform: 'translate(49,31)'}, grp);
+    let red = null;
+    if (reveal) { red = Kit.mk('g', {transform: `scale(${GROWN})`}, lv); ink(red, 'path', {d: LIVER}, `fill:${RED}`); }
+    const nm = Kit.mk('g', {transform: `scale(${NORMAL})`}, lv);
+    ink(nm, 'path', {d: LIVER}, 'fill:none;stroke:#fff;stroke-width:1.4;stroke-dasharray:3 2.6;vector-effect:non-scaling-stroke;opacity:.75');
+    return red;
+  }
+
+  function axis(p, AY) {
+    const {X, fs} = L;
+    ink(p, 'line', {x1: L.x0, x2: L.x1, y1: AY, y2: AY}, 'stroke:var(--k);stroke-width:2;stroke-linecap:round');
+    [-1, 0, 1, 2, 3].forEach(k => {
+      ink(p, 'line', {x1: X(k), x2: X(k), y1: AY, y2: AY + fs * .45}, 'stroke:var(--k);stroke-width:1.5');
+      const e = T(p, X(k), AY + fs * 1.55, k === -1 ? '0.1' : String(Math.pow(10, k)), {'text-anchor': 'middle'}, {w: 600});
+      e.style.opacity = .7;
+    });
+    const kx = X(KILL);
+    ink(p, 'circle', {cx: kx, cy: AY, r: fs * .35}, 'fill:var(--k)');
+    const t = T(p, kx, AY - fs * 1.35, 'C8 kills: 570', {'text-anchor': 'middle'});
+    const h = t.getComputedTextLength() / 2; t.setAttribute('x', clamp(kx, h + 2, L.W - h - 2));
+  }
+
+  function pill(p, x, top, txt) {
+    const fs = L.fs, t = T(p, x, top + fs * 1.1, txt, {'text-anchor': 'middle'}, {w: 800});
+    const half = t.getComputedTextLength() / 2 + fs * .6, cx = clamp(x, half + 2, L.W - half - 2);
+    t.setAttribute('x', cx);
+    const r = Kit.mk('rect', {x: cx - half, y: top, width: half * 2, height: fs * 1.55, rx: fs * .78}, p);
+    r.setAttribute('style', `fill:${WHITE};stroke:var(--k);stroke-width:1.4`);
+    p.insertBefore(r, t);
+    return {cx, half, mid: top + fs * .775};
+  }
+
+  // centred, wrapped text with bold runs, set inside the band between the rat and the ruler
+  function rich(p, segs, yTop, yBot, size) {
+    const words = []; segs.forEach(sg => sg.t.split(' ').forEach(w => { if (w) words.push({w, b: sg.b}); }));
+    const fill = (el, arr) => { el.textContent = ''; arr.forEach((o, i) => {
+      const t = Kit.mk('tspan', {}, el); t.setAttribute('style', `font:${o.b ? 800 : 500} ${size}px var(--body)`); t.textContent = (i ? ' ' : '') + o.w; }); };
+    const probe = Kit.mk('text', {x: -9999, y: -9999}, p), maxW = L.W - L.fs * 2.4, lines = [];
+    let cur = [];
+    words.forEach(o => { const tryL = cur.concat(o); fill(probe, tryL);
+      if (cur.length && probe.getComputedTextLength() > maxW) { lines.push(cur); cur = [o]; } else cur = tryL; });
+    if (cur.length) lines.push(cur); probe.remove();
+    const lh = size * 1.32, mid = (yTop + yBot) / 2, y0 = mid - (lines.length - 1) * lh / 2 + size * .35;
+    lines.forEach((ln, i) => { const t = Kit.mk('text', {x: L.W / 2, y: y0 + i * lh, 'text-anchor': 'middle'}, p); t.setAttribute('style', 'fill:var(--k)'); fill(t, ln); });
+  }
+  const SAY = [
+    [{t: 'Drag the white dot', b: 1}, {t: "to the smallest dose you think made the livers grow abnormally."}],
+    [{t: 'Happy with it?'}, {t: 'Now say how sure you are.', b: 1}]
+  ];
+  function drawSay() {
+    if (!sayG) return; sayG.innerHTML = '';
+    const rb = L.Yb - L.oF, AY = L.Ya - L.oF;
+    rich(sayG, SAY[sayState], rb + 2.4 * L.s + 4, AY - L.fs * 2.2, Math.max(13, L.fs * 1.08));
+  }
+
+  // ---------- front ----------
+  function drawFront() {
+    svg.innerHTML = ''; L = layout();
+    const {X, fs} = L, AY = L.Ya - L.oF, rb = L.Yb - L.oF;
+    ink(svg, 'line', {x1: X(CY0), x2: X(CY1), y1: AY, y2: AY}, `stroke:var(--k);stroke-width:${fs * .55};stroke-linecap:round;opacity:.4`);
+    axis(svg, AY);
+    const cy = T(svg, X((CY0 + CY1) / 2), AY + fs * 2.95, 'cyanide kills: 5–15', {'text-anchor': 'middle'}, {w: 600});
+    cy.style.opacity = .65;
+    rat(svg, rb, false);
+    sayG = Kit.mk('g', {}, svg); drawSay();
+    hnd = Kit.mk('g', {}, svg); placeHandle();
+  }
+  function placeHandle() {
+    if (!hnd || !L) return; hnd.innerHTML = '';
+    const AY = L.Ya - L.oF, x = L.X(g);
+    ink(hnd, 'circle', {cx: x, cy: AY, r: L.fs * .8}, `fill:${WHITE};stroke:var(--k);stroke-width:2.2`);
+    pill(hnd, x, AY + L.fs * 3.55, `your guess: ${fmt(g)} mg/kg`);
+  }
+  const lgFrom = e => { const r = svg.getBoundingClientRect(), px = e.clientX - r.left; return clamp(LO + (px - L.x0) / (L.x1 - L.x0) * (HI - LO), LO, HI); };
+  let drag = false;
+  svg.addEventListener('pointerdown', e => { if (locked || !L) return; drag = true; svg.setPointerCapture(e.pointerId); g = lgFrom(e); placeHandle(); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) { g = lgFrom(e); placeHandle(); } });
+  const up = () => { if (!drag) return; drag = false; if (!moved) { moved = true; sayState = 1; drawSay(); } };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    locked = true; pick = g;
+    const v = valOf(g), ok = v >= .75 && v <= 3, said = `${fmt(g)} mg/kg`;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  sure.on();   // the starting guess is a real guess: the chips are live from the start
+
+  // ---------- back ----------
+  function drawBack(animate) {
+    svg2.innerHTML = ''; L = layout();
+    const {X, fs, W} = L, AY = L.Ya - L.oB, rb = L.Yb - L.oB;
+    axis(svg2, AY);
+    const gl = pick === null ? g : pick, gx = X(gl), v = valOf(gl), tx = X(TRUE), kx = X(KILL);
+
+    // the reader's guess, exactly where they left it, with the miss inside the same pill
+    const you = Kit.mk('g', {}, svg2);
+    ink(you, 'circle', {cx: gx, cy: AY, r: fs * .8}, `fill:${WHITE};stroke:var(--k);stroke-width:2.2`);
+    const mine = Kit.mk('g', {}, svg2);
+    const P = pill(mine, gx, AY + fs * 2.35, `your guess: ${fmt(gl)} · ${missTxt(v)}`);
+
+    // the lowest harmful dose the video reports
+    const truth = Kit.mk('g', {}, svg2);
+    ink(truth, 'circle', {cx: tx, cy: AY, r: fs * .7}, `fill:${RED}`);
+    const lt = T(truth, tx, AY - fs * 1.35, 'liver grew: 1.5', {'text-anchor': 'middle'}, {w: 800, fill: RED});
+    const lw = lt.getComputedTextLength() / 2; lt.setAttribute('x', clamp(tx, lw + 2, W - lw - 2));
+
+    // the reader's miss: a thin ink bracket from 1.5 to their pill
+    const right = gx >= tx, edge = right ? P.cx - P.half : P.cx + P.half, span = right ? edge - tx : tx - edge;
+    if (span > fs) {
+      const b = Kit.mk('g', {}, mine); mine.insertBefore(b, mine.firstChild);
+      ink(b, 'line', {x1: tx, x2: edge, y1: P.mid, y2: P.mid}, 'stroke:var(--k);stroke-width:1.5');
+      ink(b, 'line', {x1: tx, x2: tx, y1: P.mid, y2: AY + fs * 2.1}, 'stroke:var(--k);stroke-width:1.5');
+    }
+
+    // the gap between harm and death: 570 / 1.5 = 380×
+    const by = AY - fs * 2.85, bk = Kit.mk('g', {}, svg2);
+    const bar = ink(bk, 'line', {x1: tx, x2: kx, y1: by, y2: by}, `stroke:${RED};stroke-width:2.2;stroke-linecap:round`);
+    ink(bk, 'line', {x1: tx, x2: tx, y1: by, y2: by + fs * .5}, `stroke:${RED};stroke-width:2.2`);
+    const legR = ink(bk, 'line', {x1: kx, x2: kx, y1: by, y2: by + fs * .5}, `stroke:${RED};stroke-width:2.2`);
+    let hs = L.hs;
+    const hero = T(bk, (tx + kx) / 2, by - 16, '380× lower', {'text-anchor': 'middle'}, {w: 800, fs: hs, ff: 'var(--display)', fill: RED});
+    while (hs > 28 && hero.getComputedTextLength() > W - fs) { hs -= 1; hero.style.fontSize = hs + 'px'; }
+    const hw = hero.getComputedTextLength() / 2; hero.setAttribute('x', clamp((tx + kx) / 2, hw + fs * .5, W - hw - fs * .5));
+
+    // the same rat, its liver grown past its normal outline
+    const red = rat(svg2, rb, true);
+    svg2.setAttribute('aria-label', `The same rat and ruler: as little as 1.5 milligrams per kilogram made the livers grow abnormally, 380 times below the lethal dose of 570. Your guess, ${fmt(gl)}: ${missTxt(v)}.`);
+
+    if (!animate || Kit.calm) return;
+    const o = {k: NORMAL}; red.setAttribute('transform', `scale(${NORMAL})`);
+    const tl = gsap.timeline({delay: .55});
+    tl.from(truth, {y: -fs * 2.5, opacity: 0, duration: .55, ease: 'power3.out'})
+      .to(o, {k: GROWN, duration: 1, ease: 'power2.inOut', onUpdate: () => red.setAttribute('transform', `scale(${o.k})`)}, '<.1')
+      .from(bar, {attr: {x2: tx}, duration: .8, ease: 'power2.inOut'}, '-=.3')
+      .from(legR, {opacity: 0, duration: .2}, '>-.1')
+      .from(hero, {opacity: 0, y: 8, duration: .5, ease: 'power3.out'}, '>-.1')
+      .from(mine, {opacity: 0, duration: .5, ease: 'power2.out'}, '+=.2');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm && hnd) gsap.from(hnd, {opacity: 0, y: 8, duration: .5, ease: 'power3.out', delay: .2}); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    Kit.onEnter.card(); touched = true;
-    setDose(1.5); await wait(Kit.calm ? 60 : 900);
-    setDose(600); await wait(Kit.calm ? 80 : 2000);
+    g = 2; placeHandle();
+    await wait(120);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 900 : 4600);
   };
 })();
 Kit.single();

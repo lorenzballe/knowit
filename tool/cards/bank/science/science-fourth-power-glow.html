@@ -1,302 +1,224 @@
-<!doctype html>
-<!-- slug: science-fourth-power-glow -->
-<!-- Look: a forge at night, cold blue-black to the edges, one rail section of steel heating from grey to white-hot, embers drifting up, heat rings pulsing out, the whole stage lit by its glow.
-     Interaction: drag across the picture to raise the absolute temperature; the steel's colour, glow and rings answer at once, a heat-colour scale fills along the axis, and the power curve draws itself as you go.
-     Wow: at twice the temperature the steel flares white, a heat flash washes the stage, the power readout scrambles into ×16 and the headline assembles letter by letter. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>A little hotter, a lot more heat</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-glow-fourth-power -->
+<!-- Thought to carry: before you trust that a small step makes a small difference, find the true zero and the exponent.
+     Front: two rail cross-sections on one temperature line that starts at absolute zero. The hot rail stands only a little
+     further from zero than the warm one. The warm rail wears a dashed 1× column of heat. The reader drags the hot rail's column up to a guess.
+     Back: the same line and rails. Each rail now carries its real column of heat, drawn with the brief's law (distance from
+     absolute zero, raised to the fourth power). The reader's guess stays as a dashed outline. No multiple is stated:
+     the brief gives no number, only "slight increases in temperature result in huge increases in power". -->
+<title>A little hotter, far more heat</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
-<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#card{background:radial-gradient(120% 55% at 28% 34%,#22203a 0%,#111527 45%,#070910 100%)}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{color:#ffc46b;font:800 max(3.2cqh,19px)/1.1 var(--display);margin:0;text-shadow:0 0 2cqh rgba(255,140,40,.45)}
-#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0}
-.say b{color:#ffb35c}
-.answered .q{font-size:max(2.5cqh,15px)}
-.pulse{animation:pulse 1.5s ease-in-out infinite}
-@keyframes pulse{50%{transform:translateX(5px)}}
-.kit-calm .pulse{animation:none}
-.halo{animation:halo 1.8s ease-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes halo{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.6);opacity:0}}
-.kit-calm .halo{animation:none;opacity:.4}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s .37s}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .37s}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block;color:var(--k);overflow:visible}
+#pic{touch-action:none;cursor:ns-resize}
+
+.front .say{margin:.45em 0 0;min-height:0}
+.front .sure{margin-top:.9em}
+.front .corner{flex:none;height:44px}
+#sure{color:color-mix(in srgb,var(--k) 70%,transparent)}
+#sure>*{opacity:1}
+#sure [data-v]{opacity:1;color:color-mix(in srgb,var(--k) 70%,transparent);border:1.5px solid color-mix(in srgb,var(--k) 70%,transparent)}
+#sure.armed{color:var(--k)}
+#sure.armed [data-v]{color:var(--k);border-color:var(--k)}
+
+.back .big{font:800 max(3.2cqh,19px)/1.1 var(--display);margin:0}
+.back .body{font:500 max(1.9cqh,13px)/1.32 var(--body);margin:.7em 0 0;overflow-wrap:anywhere}
+.back .keep{font-size:max(1.8cqh,12.5px)}
+.back .foot{padding-right:144px;min-height:44px;box-sizing:border-box}
+.back .foot .src{display:block}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Drag the heat · T to the fourth" style="--c:#0c1022;--k:#f4ece0;--edge:#04060c">
+<article class="card" id="card" data-topic="science" data-kind="Drag a guess · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE HEAT</span></div>
-    <h2 class="q">Heat steel a little hotter. How much more heat does it radiate?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A glowing rail section of steel and a graph of radiated power against absolute temperature, which climbs ever more steeply."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE HEAT</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Steel made a little hotter radiates how much more heat?</h2>
+        <p class="say" id="say">Drag the hot rail's column up to your guess.</p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="Two steel rails in cross-section on a temperature line that starts at absolute zero. The hot rail stands only a little further from zero than the warm one. The warm rail carries a column of heat marked 1 times. You drag the hot rail's column up to your guess."></svg></div>
+        <div class="sure" id="sure"></div>
+        <div class="corner" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Far more heat than the small step.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same two rails on the line from absolute zero, a small step apart. The warm rail carries a short column of heat. The hot rail's column rises far higher, beside the dashed outline of your guess."></svg></div>
+        <p class="body">Radiated power grows with the <b>fourth power</b> of absolute temperature, counted from absolute zero. The hot rail stands only a little further from zero, but that small step is multiplied by itself four times. Slight increases in temperature result in huge increases in power.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Before trusting that a small step changes little, find the true zero and the exponent.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)</span></div>
+      </section>
     </div>
-    <p class="say" id="say"><b>Drag right</b> to heat the steel, and watch how much power it radiates.</p>
-    <div id="why" class="gone">
-      <p class="big" id="big">2× hotter, 16× the heat</p>
-      <p class="body">Radiated power grows with the fourth power of absolute temperature: 2 × 2 × 2 × 2 = 16. So a slight rise in temperature means a huge rise in the heat steel loses.</p>
-    </div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Radiated power ∝ T⁴: a little hotter means a lot more heat lost.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  try { gsap.registerPlugin(DrawSVGPlugin, SplitText, ScrambleTextPlugin); } catch (e) {}
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#f4ece0', MUTE = 'rgba(244,236,224,.58)', BG = '#0c1022';
-  const st = {t: 1};
-  let W = 0, H = 0, fs = 13, sm = 12, gx0, gx1, gy0, gy1, R, cx, cy, rMax;
-  let done = false, touched = false, scrambling = false, built = false, lastStep = 10, stage = 0;
-  let loops = [];
-  const L = {};
-  const P = t => t ** 4;
-  const X = t => gx0 + (t - 1) * (gx1 - gx0);
-  const Y = p => gy1 - (p / 16) * (gy1 - gy0);
-  const mk = (tag, a, p) => Kit.mk(tag, a, p);
-  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.textContent = s; return e; };
+  // The drawing, not a measurement: the hot rail stands RAT times as far from absolute zero as the warm one.
+  // Its column of heat is drawn as RAT to the fourth power of the warm one's. No figure is printed.
+  const RAT = 1.32, POW = Math.pow(RAT, 4);
+  const FAR = 2;                                           // a guess this tall reads "far more", not "a little more"
+  const MAXG = 6, CHERRY = '#8f2316', BRIGHT = '#ffb02e';
+  const RAIL = 'M-30,0 Q-36,0 -36,6 L-36,44 L-10,58 L-8,135 Q-8,145 -20,150 L-75,160 L-75,172 L75,172 L75,160 L20,150 Q8,145 8,135 L10,58 L36,44 L36,6 Q36,0 30,0 Z';
+  let g = 1, touched = false, answered = false, turned = false;
+  let geo = null, els = {};
+  const fmt = v => (Math.round(v * 2) / 2).toString().replace(/\.0$/, '') + '×';
 
-  // Colour of hot steel as it heats: grey, dull red, orange, yellow, white.
-  const STOPS = [[0, [86, 92, 108]], [.12, [122, 26, 14]], [.3, [208, 52, 20]], [.52, [255, 124, 32]], [.76, [255, 204, 96]], [1, [255, 248, 228]]];
-  function heatA(h) {
-    h = Math.max(0, Math.min(1, h));
-    for (let i = 1; i < STOPS.length; i++) if (h <= STOPS[i][0]) {
-      const [a, ca] = STOPS[i - 1], [b, cb] = STOPS[i], k = (h - a) / (b - a);
-      return ca.map((v, j) => Math.round(v + (cb[j] - v) * k));
-    }
-    return [255, 248, 228];
-  }
-  const rgb = (a, m = 1) => `rgb(${a.map(v => Math.round(v * m)).join(',')})`;
-  const heat = h => rgb(heatA(h));
+  const txt = (p, x, y, t, a = {}, size, w = 700, fam = 'var(--body)') => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: 'currentColor', style: `font:${w} ${size}px/1 ${fam}`}, a), p);
+    e.textContent = t; return e;
+  };
+  const rail = (p, x, y, sc, fill) => Kit.mk('path', {d: RAIL, fill, stroke: 'currentColor', 'stroke-width': 1.6 / sc, 'stroke-linejoin': 'round', transform: `translate(${x},${y}) scale(${sc})`}, p);
+  const ghost = (p, a) => Kit.mk('rect', Object.assign({fill: 'currentColor', 'fill-opacity': .14, stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-dasharray': '5 4'}, a), p);
 
-  function railPath(s, dx = 0, dy = 0) {
-    const pts = [[-.42,-1.05],[.42,-1.05],[.5,-.95],[.5,-.6],[.17,-.42],[.17,.55],[.84,.8],[.84,1],[-.84,1],[-.84,.8],[-.17,.55],[-.17,-.42],[-.5,-.6],[-.5,-.95]];
-    return 'M' + pts.map(([x, y]) => `${(cx + dx + x * s).toFixed(1)},${(cy + dy + y * s).toFixed(1)}`).join('L') + 'Z';
+  // the shared ground: a line from absolute zero, two ticks a small step apart
+  function ground(s, W, B, L, x0, x1, fs) {
+    const gnd = Kit.mk('g', {}, s);
+    Kit.mk('line', {x1: L, x2: W - 2, y1: B + 1, y2: B + 1, stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round'}, gnd);
+    [L, x0, x1].forEach(x => Kit.mk('line', {x1: x, x2: x, y1: B + 1, y2: B + 6, stroke: 'currentColor', 'stroke-width': 1.6}, gnd));
+    const row = B + fs * 2.1, yb = B + fs * .85;
+    txt(gnd, L, row, 'absolute zero', {}, fs, 700);
+    Kit.mk('path', {d: `M${x0},${yb - 4} V${yb} H${x1} V${yb - 4}`, stroke: 'currentColor', 'stroke-width': 1.4, fill: 'none'}, gnd);
+    txt(gnd, (x0 + x1) / 2, row, 'a little hotter', {'text-anchor': 'middle'}, fs, 700);
+    return gnd;
   }
 
-  function build() {
-    loops.forEach(l => l.kill()); loops = [];
-    svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(12.5, Math.min(16, W / 26, H / 22)); sm = Math.max(12, fs * .84);
-    gx0 = fs * 3.9; gx1 = W - fs * 2.2; gy0 = fs * 2.2; gy1 = H - fs * 3.4;
-    const gw = gx1 - gx0, gh = gy1 - gy0;
-    R = Math.max(14, Math.min(gw * .1, gh * .12));
-    cx = gx0 + R * 1.35; cy = gy0 + R * 1.6;
-    rMax = Math.max(R * 1.2, Math.min(R * 3.2, cx - 3, cy - 3, W - cx - 3, H - cy - 3));
+  // ---------- the front: two rails on the line from zero, one column to drag ----------
+  function front() {
+    const s = Kit.$('pic'); s.innerHTML = '';
+    const f = Kit.fitSvg(s), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f));
+    const r = fs * .85, L = 2, B = H - fs * 2.6;
+    let sc = Math.max(.2, Math.min(H * .22 / 172, W * .22 / 150)), cw, x0, x1;
+    const place = () => { cw = Math.max(72 * sc, fs * 1.6); x1 = W - 2 - (cw / 2 + fs * .5 + fs * 2.8); x0 = L + (x1 - L) / RAT; };
+    place();
+    if (150 * sc > x1 - x0 - 10) { sc = (x1 - x0 - 10) / 150; place(); }
+    const rh = 172 * sc, top = B - rh, colTop = 2 * r + 12;
+    const u = Math.max(3, (top - 2 - colTop) / MAXG);
+    const xs = [x0, x1];
+    geo = {top, u, cw, xs, fs, r};
 
-    const defs = mk('defs', {}, svg);
-    // Stage-wide forge light (a rect, so nothing spills)
-    const gg = mk('radialGradient', {id: 'gg', gradientUnits: 'userSpaceOnUse', cx, cy, r: Math.max(W, H) * .75}, defs);
-    L.gs = [0, .25, 1].map((o, i) => mk('stop', {offset: o, 'stop-opacity': [.55, .18, 0][i]}, gg));
-    const fg = mk('radialGradient', {id: 'fg', gradientUnits: 'userSpaceOnUse', cx, cy, r: Math.hypot(W, H) * .8}, defs);
-    [[0, '#fffaf0', 1], [.35, '#ffd890', .55], [1, '#ff8a24', 0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, fg));
-    const hg = mk('radialGradient', {id: 'hg'}, defs);
-    L.hs = [0, .45, 1].map((o, i) => mk('stop', {offset: o, 'stop-opacity': [.9, .3, 0][i]}, hg));
-    const ag = mk('linearGradient', {id: 'ag', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    [['0', '#fff1c8', .7], ['.35', '#ff8a24', .42], ['1', '#8a1c0a', .06]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, ag));
-    const sh = mk('linearGradient', {id: 'sh', x1: 0, y1: 0, x2: .3, y2: 1}, defs);
-    [['0', '#fff', .5], ['.4', '#fff', 0], ['1', '#000', .5]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, sh));
-    const sb = mk('linearGradient', {id: 'sb', x1: 0, y1: 0, x2: 1, y2: 0}, defs);
-    [['0', '#fff', 0], ['.5', '#fff', .75], ['1', '#fff', 0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, sb));
-    const scale = mk('linearGradient', {id: 'sc', gradientUnits: 'userSpaceOnUse', x1: gx0, y1: 0, x2: gx1, y2: 0}, defs);
-    STOPS.forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': rgb(c)}, scale));
-    const cp = mk('clipPath', {id: 'rc'}, defs); mk('path', {d: railPath(R)}, cp);
-    const cs = mk('clipPath', {id: 'cs'}, defs); L.scaleClip = mk('rect', {x: gx0, y: 0, width: 0, height: H}, cs);
-    const bl = mk('filter', {id: 'bl', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-    mk('feGaussianBlur', {stdDeviation: Math.max(2, R * .14)}, bl);
+    ground(s, W, B, L, x0, x1, fs);
+    [CHERRY, BRIGHT].forEach((c, i) => rail(Kit.mk('g', {class: 'rail'}, s), xs[i], top, sc, c));
 
-    L.glow = mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#gg)'}, svg);
-
-    // Grid and axes
-    const grid = mk('g', {}, svg);
-    [4, 8, 12, 16].forEach(p => mk('line', {x1: gx0, x2: gx1, y1: Y(p), y2: Y(p), stroke: 'rgba(160,180,255,.1)', 'stroke-width': 1}, grid));
-    [1, 4, 8, 16].forEach(p => txt(grid, gx0 - fs * .45, Y(p) + sm * .35, `${p}×`, {'text-anchor': 'end', 'font-size': sm, fill: MUTE, style: 'font-family:var(--mono)'}));
-    [[1, '1×', 'start'], [1.5, '1.5×', 'middle'], [2, '2×', 'end']].forEach(([t, s, a]) => txt(grid, X(t), gy1 + fs * 1.55, s, {'text-anchor': a, 'font-size': sm, fill: MUTE, style: 'font-family:var(--mono)'}));
-    txt(grid, (gx0 + gx1) / 2, gy1 + fs * 2.95, 'absolute temperature →', {'text-anchor': 'middle', 'font-size': sm, fill: INK});
-    txt(grid, 0, 0, 'power radiated →', {'text-anchor': 'middle', 'font-size': sm, fill: INK, transform: `translate(${fs * 1},${(gy0 + gy1) / 2}) rotate(-90)`});
-    // Heat-colour scale under the axis: dim in full, lit up to the current temperature
-    mk('rect', {x: gx0, y: gy1 + 3, width: gw, height: 3, rx: 1.5, fill: 'url(#sc)', opacity: .18}, svg);
-    mk('rect', {x: gx0, y: gy1 + 3, width: gw, height: 3, rx: 1.5, fill: 'url(#sc)', 'clip-path': 'url(#cs)'}, svg);
-    L.axes = [
-      mk('line', {class: 'ax', x1: gx0, x2: gx0, y1: gy1, y2: gy0 - 2, stroke: 'rgba(244,236,224,.6)', 'stroke-width': 1.6, 'stroke-linecap': 'round'}, svg),
-      mk('line', {class: 'ax', x1: gx0, x2: gx1 + 2, y1: gy1, y2: gy1, stroke: 'rgba(244,236,224,.6)', 'stroke-width': 1.6, 'stroke-linecap': 'round'}, svg)];
-
-    // What it would be if power simply tracked temperature
-    L.lin = mk('line', {class: 'ax', x1: X(1), y1: Y(1), x2: X(2), y2: Y(2), stroke: 'rgba(150,190,255,.85)', 'stroke-width': 1.8, 'stroke-dasharray': '5 5'}, svg);
-
-    L.area = mk('path', {fill: 'url(#ag)'}, svg);
-    L.drops = mk('path', {stroke: 'rgba(244,236,224,.35)', 'stroke-width': 1, 'stroke-dasharray': '3 4', fill: 'none'}, svg);
-    L.curveGlow = mk('path', {fill: 'none', 'stroke-width': fs * .5, 'stroke-linecap': 'round', opacity: .35, filter: 'url(#bl)'}, svg);
-    L.curve = mk('path', {fill: 'none', 'stroke-width': Math.max(2.5, fs * .2), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
-    const labY = Y(2) - fs * .7;
-    L.linLab = txt(svg, X(2) - fs * .3, labY, 'if power grew just like T', {'text-anchor': 'end', 'font-size': sm, fill: '#a9c6ff', stroke: BG, 'stroke-width': 3, 'paint-order': 'stroke'});
-
-    // The steel: halo, heat rings, embers, the rail itself
-    L.halo = mk('circle', {cx, cy, r: R, fill: 'url(#hg)'}, svg);
-    L.rings = mk('g', {fill: 'none'}, svg);
-    for (let i = 0; i < 3; i++) {
-      const c = mk('circle', {cx, cy, r: R * 1.2, 'stroke-width': Math.max(1.2, fs * .12), opacity: 0}, L.rings);
-      if (!Kit.calm) loops.push(gsap.fromTo(c, {attr: {r: R * 1.2}, opacity: .85}, {attr: {r: rMax}, opacity: 0, duration: 2.2, ease: 'power1.out', repeat: -1, delay: i * .73}));
-      else c.setAttribute('opacity', .3), c.setAttribute('r', R * 1.2 + (rMax - R * 1.2) * (i + 1) / 3);
-    }
-    mk('ellipse', {cx: cx + R * .1, cy: cy + R * 1.08, rx: R * 1.1, ry: R * .14, fill: '#000', opacity: .45}, svg);
-    L.embers = mk('g', {}, svg);
-    for (let i = 0; i < 20; i++) {
-      const r0 = .8 + Kit.rnd() * 1.6;
-      const x0 = cx + (Kit.rnd() - .5) * R * 1.4, y0 = cy - R * (.7 + Kit.rnd() * .35);
-      const x1 = Math.max(r0 + 3, Math.min(W - r0 - 3, x0 + (Kit.rnd() - .3) * R * 1.8));
-      const y1 = Math.max(r0 + 3, y0 - R * (1 + Kit.rnd() * 1.8));
-      const c = mk('circle', {cx: x0, cy: y0, r: r0, opacity: 0}, L.embers);
-      if (Kit.calm) { c.setAttribute('cx', x0 + (x1 - x0) * Kit.rnd()); c.setAttribute('cy', y0 + (y1 - y0) * Kit.rnd()); c.setAttribute('opacity', .6); continue; }
-      const d = 1.6 + Kit.rnd() * 2.2;
-      const tl = gsap.timeline({repeat: -1, delay: Kit.rnd() * 3});
-      tl.fromTo(c, {attr: {cx: x0, cy: y0}}, {attr: {cx: x1, cy: y1}, duration: d, ease: 'sine.out'}, 0)
-        .fromTo(c, {opacity: 0}, {opacity: 1, duration: d * .25, ease: 'power2.out'}, 0)
-        .to(c, {opacity: 0, duration: d * .5, ease: 'power2.in'}, d * .5);
-      loops.push(tl);
-    }
-    L.railG = mk('g', {}, svg);
-    L.railGlow = mk('path', {d: railPath(R), filter: 'url(#bl)', opacity: 0}, L.railG);
-    // Extruded depth: a stack of darker copies stepping back-right
-    L.depth = mk('g', {}, L.railG);
-    for (let i = 6; i >= 1; i--) mk('path', {d: railPath(R, R * .04 * i, -R * .03 * i), 'stroke-linejoin': 'round'}, L.depth);
-    L.rail = mk('path', {d: railPath(R), stroke: 'rgba(0,0,0,.45)', 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, L.railG);
-    mk('path', {d: railPath(R), fill: 'url(#sh)'}, L.railG);
-    const sheenG = mk('g', {'clip-path': 'url(#rc)'}, L.railG);
-    L.sheen = mk('rect', {x: cx - R * 1.8, y: cy - R * 1.2, width: R * .5, height: R * 2.4, fill: 'url(#sb)', transform: `skewX(-18)`, 'transform-origin': `${cx} ${cy}`, opacity: .5}, sheenG);
-    if (!Kit.calm) loops.push(gsap.fromTo(L.sheen, {attr: {x: cx - R * 1.8}}, {attr: {x: cx + R * 1.3}, duration: 1.3, ease: 'power2.inOut', repeat: -1, repeatDelay: 2.2, delay: 1}));
-    L.flash = mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#fg)', opacity: 0, 'pointer-events': 'none'}, svg);
-
-    // Readouts, spaced by real text extents so nothing touches
-    const rx = cx + R * 1.1 + fs * .9;
-    let vf = Math.min(fs * 1.65, Math.max(sm * 1.2, (gh) * .15));
-    const stack = v => { const y1 = 0, y2 = y1 + .25 * sm + .95 * v + 4, y3 = y2 + .27 * v + .95 * sm + 6, y4 = y3 + .25 * sm + .95 * v + 4; return [y1, y2, y3, y4, y4 + .27 * v]; };
-    let ry = Math.max(gy0 + sm * .5, cy - R * 1.15);
-    const limit = labY - sm - 6; // keep clear of the dashed-line label
-    let s = stack(vf);
-    if (ry + s[4] > limit) { vf = Math.max(sm * 1.1, vf - (ry + s[4] - limit) / 2.4); s = stack(vf); }
-    L.read = mk('g', {}, svg);
-    const ts = {stroke: BG, 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
-    txt(L.read, rx, ry + s[0], 'TEMPERATURE', Object.assign({'font-size': sm, fill: MUTE, 'letter-spacing': '.08em'}, ts));
-    L.tV = txt(L.read, rx, ry + s[1], '×1.00', Object.assign({'font-size': vf, 'font-weight': 700, style: 'font-family:var(--mono)'}, ts));
-    txt(L.read, rx, ry + s[2], 'POWER RADIATED', Object.assign({'font-size': sm, fill: MUTE, 'letter-spacing': '.08em'}, ts));
-    L.pV = txt(L.read, rx, ry + s[3], '×1.0', Object.assign({'font-size': vf, 'font-weight': 800, style: 'font-family:var(--mono)'}, ts));
-
-    // The handle
-    L.mark = mk('g', {}, svg);
-    L.mHalo = mk('circle', {r: fs, fill: 'none', stroke: '#ffd38a', 'stroke-width': 1.5, class: 'halo'}, L.mark);
-    L.mDot = mk('circle', {r: fs * .55, stroke: '#fff', 'stroke-width': 2}, L.mark);
-    L.hint = mk('g', {class: 'pulse'}, svg);
-    txt(L.hint, X(1) + fs * 1.5, Y(1) - fs * 1.1, 'drag →', {'font-size': fs, fill: '#ffd38a', 'font-weight': 800, stroke: BG, 'stroke-width': 3, 'paint-order': 'stroke'});
-    if (touched) L.hint.style.display = 'none';
-    built = true;
-    update();
+    // the warm rail's heat: the yardstick
+    const ref = Kit.mk('g', {class: 'col'}, s);
+    ghost(ref, {x: x0 - cw / 2, y: top - 2 - u, width: cw, height: u, rx: Math.min(3, u / 3)});
+    txt(ref, x0 - cw / 2 - fs * .45, top - 2 - u / 2 + fs * .35, '1×', {'text-anchor': 'end'}, fs, 800);
+    // the hot rail's heat: the reader's guess
+    const gc = Kit.mk('g', {class: 'col'}, s);
+    els.col = ghost(gc, {x: x1 - cw / 2, width: cw, rx: Math.min(3, u / 3)});
+    els.knob = Kit.mk('g', {}, gc);
+    Kit.mk('circle', {r, fill: 'currentColor'}, els.knob);
+    const c = fs * .3;
+    Kit.mk('path', {d: `M${-c},${-c * .3} l${c},${-c} l${c},${c} M${-c},${c * .3} l${c},${c} l${c},${-c}`, stroke: 'var(--c)', 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, els.knob);
+    els.val = txt(gc, x1 + cw / 2 + fs * .5, 0, '', {}, fs, 800);
+    setG(g);
   }
-
-  const fmtP = p => p >= 15.95 ? '×16' : '×' + p.toFixed(1);
-
-  function update() {
-    if (!built) return;
-    const t = st.t, p = P(t), pf = (p - 1) / 15, h = t - 1, ca = heatA(h), col = rgb(ca);
-    L.rail.setAttribute('fill', col);
-    L.depth.setAttribute('fill', rgb(ca, .5));
-    L.railGlow.setAttribute('fill', col); L.railGlow.setAttribute('opacity', Math.min(1, h * 1.6));
-    L.sheen.setAttribute('opacity', .55 - .4 * h);
-    L.hs.forEach(s => s.setAttribute('stop-color', col));
-    L.gs.forEach(s => s.setAttribute('stop-color', col));
-    L.glow.setAttribute('opacity', .05 + .95 * pf);
-    L.halo.setAttribute('r', R * 1.2 + (rMax - R * 1.2) * Math.min(1, pf * 1.2)); L.halo.setAttribute('opacity', .1 + .9 * pf);
-    L.rings.setAttribute('stroke', col); L.rings.setAttribute('opacity', .06 + .94 * pf);
-    L.embers.setAttribute('fill', heat(Math.min(1, h + .25))); L.embers.setAttribute('opacity', Math.min(1, .05 + pf * 1.5));
-    L.scaleClip.setAttribute('width', Math.max(0, X(t) - gx0));
-    let d = '';
-    for (let i = 0; i <= 48; i++) { const u = 1 + (t - 1) * i / 48; d += (i ? 'L' : 'M') + X(u).toFixed(1) + ',' + Y(P(u)).toFixed(1); }
-    L.curve.setAttribute('d', d); L.curveGlow.setAttribute('d', d);
-    L.curve.setAttribute('stroke', heat(Math.max(.45, h))); L.curveGlow.setAttribute('stroke', col);
-    L.area.setAttribute('d', d + `L${X(t)},${gy1}L${X(1)},${gy1}Z`);
-    L.drops.setAttribute('d', `M${X(t)},${Y(p)}V${gy1}M${gx0},${Y(p)}H${X(t)}`);
-    L.mark.setAttribute('transform', `translate(${X(t)},${Y(p)})`);
-    L.mDot.setAttribute('fill', col);
-    L.tV.textContent = '×' + t.toFixed(2);
-    if (!scrambling) L.pV.textContent = fmtP(p);
-    L.pV.setAttribute('fill', heat(Math.max(.5, h)));
-    const s = Math.floor(h * 10);
-    if (s !== lastStep) { if (touched && !done) Kit.haptic('selection'); lastStep = s; }
-    if (!done) {
-      const ns = t >= 1.5 ? 2 : t >= 1.2 ? 1 : 0;
-      if (ns !== stage) {
-        stage = ns;
-        say.innerHTML = ns === 2 ? 'Only 1.5× hotter, yet already <b>5× the power</b>. Keep going.'
-          : ns === 1 ? 'Just 20% hotter, and the power has already <b>doubled</b>. Keep dragging.'
-          : '<b>Drag right</b> to heat the steel, and watch how much power it radiates.';
-      }
-    }
+  function setG(v) {
+    g = Math.max(1, Math.min(MAXG, Math.round(v * 2) / 2));
+    if (!geo) return;
+    const {top, u, xs, fs, r} = geo, y = top - 2 - g * u;
+    els.col.setAttribute('y', y); els.col.setAttribute('height', g * u);
+    els.knob.setAttribute('transform', `translate(${xs[1]},${y - 8 - r})`);
+    els.val.setAttribute('y', y + Math.min(u / 2, fs) + fs * .35); els.val.textContent = fmt(g);
   }
-
-  function setT(t) {
-    t = Math.max(1, Math.min(2, t));
-    if (Kit.calm) { st.t = t; update(); }
-    else gsap.to(st, {t, duration: .28, ease: 'power3.out', onUpdate: update, overwrite: true});
-    if (!done && t >= 1.985) reveal();
-  }
-
-  function reveal() {
-    done = true; Kit.haptic('success');
-    card.classList.add('answered');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (Kit.calm) { st.t = 2; update(); return; }
-    gsap.to(st, {t: 2, duration: .35, ease: 'power3.out', onUpdate: update, overwrite: true});
-    gsap.fromTo(L.flash, {opacity: .95}, {opacity: 0, duration: 1.5, ease: 'expo.out'});
-    gsap.fromTo(L.railG, {scale: 1.18}, {scale: 1, svgOrigin: `${cx} ${cy}`, duration: 1.2, ease: 'elastic.out(1,.35)'});
-    gsap.fromTo(L.curve, {attr: {'stroke-width': fs * .6}}, {attr: {'stroke-width': Math.max(2.5, fs * .2)}, duration: .9, ease: 'power3.out'});
-    scrambling = true;
-    try {
-      gsap.to(L.pV, {duration: 1.1, scrambleText: {text: '×16', chars: '0123456789×', speed: .5}, ease: 'power2.inOut', onComplete: () => { scrambling = false; update(); }});
-    } catch (e) { scrambling = false; }
-    gsap.fromTo(L.pV, {scale: 1}, {scale: 1.2, svgOrigin: `${+L.pV.getAttribute('x')} ${+L.pV.getAttribute('y')}`, duration: .35, yoyo: true, repeat: 1, ease: 'power2.out', delay: .9});
-    try {
-      const sp = new SplitText('#big', {type: 'chars,words'});
-      gsap.from(sp.chars, {opacity: 0, y: 14, rotationX: -80, scale: .6, transformOrigin: '50% 100%', duration: .7, stagger: .035, ease: 'back.out(2.2)', delay: .25});
-    } catch (e) {}
-    gsap.from('#why .body, #keep', {opacity: 0, y: 10, duration: .6, stagger: .12, ease: 'power3.out', delay: .7});
-  }
-
-  // Drag anywhere on the picture
-  let dragging = false;
-  const fromX = e => { const r = svg.getBoundingClientRect(); return 1 + (e.clientX - r.left - gx0) / (gx1 - gx0); };
-  svg.addEventListener('pointerdown', e => {
-    dragging = true;
-    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
-    if (!touched) { touched = true; gsap.to(L.hint, {opacity: 0, duration: .25, ease: 'power2.out', onComplete: () => L.hint.style.display = 'none'}); }
-    Kit.haptic('light'); setT(fromX(e));
+  const pic = Kit.$('pic');
+  let drag = false, off = 0;
+  const fromY = e => { const b = pic.getBoundingClientRect(); return (geo.top - 2 - (e.clientY - b.top - off)) / geo.u; };
+  pic.addEventListener('pointerdown', e => {
+    if (answered || !geo) return; drag = true; pic.setPointerCapture(e.pointerId);
+    const b = pic.getBoundingClientRect(), px = e.clientX - b.left, dy = (e.clientY - b.top) - (geo.top - 2 - g * geo.u);
+    off = (Math.abs(px - geo.xs[1]) < geo.cw && dy > -(2 * geo.r + 14) && dy < 12) ? Math.min(0, dy) : 0;
+    touched = true; setG(fromY(e)); Kit.haptic('selection');
   });
-  svg.addEventListener('pointermove', e => { if (dragging) setT(fromX(e)); });
-  const end = () => { dragging = false; };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  pic.addEventListener('pointermove', e => { if (!drag) return; const o = g; setG(fromY(e)); if (g !== o) Kit.haptic('selection'); });
+  const arm = () => { sure.on(); Kit.$('sure').classList.add('armed'); };
+  const end = () => { if (!drag) return; drag = false; arm(); Kit.$('say').textContent = 'Happy with it? Say how sure you are.'; };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
 
-  Kit.onShow.card = build;
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered) return; answered = true;
+    const ok = g >= FAR;
+    Kit.answer({choice: fmt(g) + ' as much heat', correct: ok, sure: pct});
+    sure.grade(ok, pct, `${fmt(g)}: ${ok ? 'far more, yes' : 'only a little more'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back: the same rails, each with its real column of heat ----------
+  function back(anim) {
+    const s = Kit.$('pic2'); s.innerHTML = '';
+    const f = Kit.fitSvg(s), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f));
+    const hs = Math.round(fs * 1.45), L = 2, B = H - fs * 2.6;
+    const meas = (t, size, w, fam) => { const e = txt(s, -999, -999, t, {}, size, w, fam); const n = e.getComputedTextLength() || t.length * size * .6; e.remove(); return n; };
+    const wHero = meas('far more', hs, 800, 'var(--display)');
+
+    let sc = Math.max(.18, Math.min(H * .22 / 172, W * .22 / 150)), cw, x0, x1;
+    const place = () => { cw = Math.max(72 * sc, fs * 1.6); x1 = W - 2 - Math.max(75 * sc + 2, cw / 2 + fs * .6 + wHero + 2); x0 = L + (x1 - L) / RAT; };
+    place();
+    if (150 * sc > x1 - x0 - 10) { sc = (x1 - x0 - 10) / 150; place(); }
+    const rh = 172 * sc, top = B - rh, base = top - 2;
+    const Tp = fs * 1.1, ymax = Math.max(POW + .3, g + .3);
+    const u = Math.max(2, (base - Tp) / ymax), rx = Math.min(3, u / 4);
+
+    const gnd = ground(s, W, B, L, x0, x1, fs);
+    const rails = Kit.mk('g', {}, s);
+    rail(rails, x0, top, sc, CHERRY);
+    rail(rails, x1, top, sc, BRIGHT);
+
+    // the warm rail: its heat
+    const one = Kit.mk('rect', {x: x0 - cw / 2, y: base - u, width: cw, height: u, rx, fill: CHERRY}, s);
+
+    // the hot rail: its heat, by the fourth power of its distance from zero
+    const hH = POW * u, yH = base - hH;
+    const hot = Kit.mk('rect', {x: x1 - cw / 2, y: yH, width: cw, height: hH, rx, fill: CHERRY}, s);
+
+    // the reader's guess, left as a dashed outline; its label kept clear of the warm rail's column
+    const yG = base - g * u, you = Kit.mk('g', {}, s);
+    Kit.mk('rect', {x: x1 - cw / 2 - 4, y: yG, width: cw + 8, height: g * u, rx: 3, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-dasharray': '5 4'}, you);
+    const ly = Math.max(fs * .9, Math.min(yG + fs * .35, base - u - fs * .6));
+    txt(you, x1 - cw / 2 - 10, ly, `you: ${fmt(g)}`, {'text-anchor': 'end'}, fs, 800);
+
+    // the one focal words, beside the tall column; lines spaced so their glyph boxes stay clear of each other
+    const hero = Kit.mk('g', {}, s), hx = x1 + cw / 2 + fs * .6, hy = Math.max(hs * .85, yH + hs * .8);
+    txt(hero, hx, hy, 'far more', {}, hs, 800, 'var(--display)');
+    txt(hero, hx, hy + hs * 1.4, 'heat', {}, hs, 800, 'var(--display)');
+
+    if (!anim || Kit.calm) return;
+    gsap.timeline({delay: .35})
+      .from(gnd, {opacity: 0, duration: .4, ease: 'power2.out'})
+      .from(one, {opacity: 0, duration: .3}, '-=.1')
+      .from(you, {opacity: 0, duration: .35, ease: 'power2.out'})
+      .from(hot, {attr: {y: base, height: 0}, duration: 1, ease: 'power3.in'}, '+=.15')
+      .from(hero, {opacity: 0, duration: .4, ease: 'power2.out'});
+  }
+  document.addEventListener('turned', () => { turned = true; back(true); });
+
+  Kit.onShow.card = () => { front(); if (turned) back(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm || !built) return;
-    const tl = gsap.timeline();
-    try { tl.from(L.axes.concat([L.lin]), {drawSVG: '0%', duration: .9, stagger: .1, ease: 'power3.inOut'}, 0); } catch (e) {}
-    tl.from(L.railG, {opacity: 0, scale: .6, svgOrigin: `${cx} ${cy}`, duration: .9, ease: 'back.out(1.8)'}, .2)
-      .from(L.read.children, {opacity: 0, x: -10, duration: .5, stagger: .07, ease: 'power3.out'}, .4)
-      .from([L.mark, L.linLab, L.hint], {opacity: 0, duration: .5, ease: 'power2.out'}, .8);
-    try { tl.to(L.tV, {duration: .8, scrambleText: {text: '×1.00', chars: '0123456789', speed: .6}}, .45); } catch (e) {}
+    if (Kit.calm) return;
+    gsap.from('#pic .rail', {opacity: 0, y: 14, stagger: .12, duration: .5, ease: 'power3.out'});
+    gsap.from('#pic .col', {opacity: 0, duration: .45, stagger: .15, delay: .45, ease: 'power2.out'});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const r = svg.getBoundingClientRect();
-    const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {clientX: r.left + x, clientY: r.top + H / 2, pointerId: 1, bubbles: true}));
-    ev('pointerdown', gx0);
-    for (let i = 1; i <= 10; i++) { ev('pointermove', gx0 + (gx1 - gx0) * i / 10); await wait(Kit.calm ? 10 : 40); }
-    ev('pointerup', gx1);
-    await wait(Kit.calm ? 100 : 1800);
+    touched = true; setG(1.5); arm();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 4600);
   };
 })();
 Kit.single();

@@ -5,10 +5,10 @@
   "strand": "science.cold_and_heat.why_ice_floats",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "computation",
-  "question": "Before atoms, what did Kepler guess makes snowflakes six-sided?",
-  "answer": "Kepler guessed water is built from tiny units. Stacked tight, each sits among six others, so the stack grows as a hexagon: a six-sided crystal.",
-  "move": "Kepler's guess: tiny water units stacking six around one build a six-sided snowflake.",
+  "principle": "reflection",
+  "question": "Before atoms were known, where did Kepler suspect a snowflake's six sides come from?",
+  "answer": "Kepler guessed that the smallest natural unit of water, essentially a molecule, could stack together mechanically to form the hexagonal crystal. Without atomic theory, he seemed on the verge of the idea.",
+  "move": "Tiny units arranging themselves into a crystal: Kepler anticipated molecular self-assembly.",
   "keywords": [
     "kepler",
     "snowflake",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Quiz page asking which number Kepler guessed made snowflakes six-sided, with options 4, 5, 6 and 8. The reveal shows tiny water units stacked so each sits among six others, forming a hexagon.",
-    "ground": "#22476f"
+    "touch": "taps",
+    "label": "Multiple-choice question asking where a snowflake's six sides come from, before atoms were known. Options: cold air shaping each flake six ways, tiny water units stacking together, or pure chance. The reader picks one and rates how sure they are."
   },
   "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=189s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }

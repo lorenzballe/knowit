@@ -1,378 +1,275 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: technology-tatara-mass-balance -->
-<!-- Look: a smith's field notebook. Cream paper, pencil hatching, watercolour washes and handwritten labels; a clay tatara between a tall tower of what goes in and a pile you shape yourself.
-     Interaction: drag the right-hand pile to the weight of the block you expect from 614 kg of iron sand plus 670 kg of charcoal, then say how sure you are, and the furnace fires.
-     Wow: grains fly into the furnace on real ballistic arcs while smoke rolls out and the 1,284 kg tower drains to a dashed ghost, then the walls are pulled apart and a glowing 100 kg block is flung across onto your guess. -->
+<!-- slug: science-tatara-mass-balance -->
+<!-- Design note.
+     Thought to carry: a heavy charge is not a heavy yield. 1,284 kg go in, one 100 kg block comes out,
+     and that block is steel, iron and slag together, only about a third of it good enough for a sword.
+     Front: one charge as a single pile at left, 670 kg of charcoal stacked on 614 kg of iron sand, area as weight.
+     To its right, on the same ground line, a small orange block with no number on it. The reader drags it to the size
+     of block they expect, then says how sure they are. Block and pile share one shape, so their areas compare honestly.
+     Back: the same pile, now a pale flat outline (everything that went in). The one focal point is the real 100 kg block,
+     white, sitting in its corner with its sword-grade third hatched. The reader's orange block stands beside it at the
+     value they set, and a white copy of it shrinks into the real block. Four labels, nothing else.
+     Facts only from the video: 614 kg, 670 kg, 100 kg block of steel, iron and slag, about a third sword grade.
+     No claim about where the rest goes. -->
 <title>What a tatara gives back</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
 <style>
-#card{background-color:var(--c);background-image:radial-gradient(130% 95% at 50% 38%,transparent 55%,rgba(120,86,40,.17)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .26 0 0 0 0 .14 0 0 0 .10 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:hidden}
-#pic text{font-family:var(--hand);font-weight:700}
-#why{margin:0}
-.flick{transform-box:fill-box;transform-origin:50% 100%;animation:flick .45s ease-in-out infinite alternate}
-@keyframes flick{to{transform:scaleY(.72) skewX(5deg)}}
-.bob{animation:bob 1.3s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(-4px)}}
-.kit-calm .flick,.kit-calm .bob{animation:none}
-.q,.say,.body{overflow-wrap:anywhere}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back{visibility:hidden}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .38s}
+.kit-calm .turn,.kit-calm .turn.over>.front{transition:none}
+.stagebox{display:flex;flex:1;min-height:0}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:nesw-resize}
+svg text{font-family:var(--body);font-weight:700;fill:var(--k)}
+svg text.num{font-family:var(--display);font-weight:800}
+svg text.lt{fill:var(--c)}
+.coal{fill:color-mix(in srgb,var(--k) 88%,var(--c))}
+.sand{fill:color-mix(in srgb,var(--k) 24%,var(--c))}
+.gs{fill:#ef6a3a}
+.base{fill:none;stroke:var(--k);stroke-width:1.4}
+.knob{fill:#ef6a3a;stroke:var(--k);stroke-width:2.2}
+.arrow{fill:none;stroke:var(--k);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hint{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translate(3px,-3px)}}
+.kit-calm .hint{animation:none}
+.pile{fill:color-mix(in srgb,var(--k) 9%,var(--c));stroke:var(--k);stroke-width:1.3}
+.div{fill:none;stroke:var(--k);stroke-width:1}
+.tru{fill:#fff}
+.edge{fill:none;stroke:var(--k);stroke-width:1.6}
+.hatch{stroke:var(--k);stroke-width:1.3}
+.lead{fill:none;stroke:var(--k);stroke-width:1.1}
+.pin{fill:var(--k)}
+.face{gap:1.2cqh}
+.front .say{margin:0}
+.front .foot{min-height:44px;flex:0 0 auto}
+.back .big{margin:0}
+.back .body{margin:0}
+.card .back .foot .src{display:block;flex:1 1 auto;min-width:0;width:calc(100% - 104px);max-width:calc(100% - 104px)}
+@media (max-height:720px){.back .body{font-size:15px;line-height:1.38}}
+/* confidence row: clearly live, dark on green */
+.card #sure{color:#0f2a22;opacity:1!important}
+.card #sure *{opacity:1!important}
+.card #sure button{border:2px solid #0f2a22!important;color:#0f2a22!important;background:transparent!important;box-shadow:none!important}
+.card #sure button[aria-pressed="true"],.card #sure button[aria-checked="true"],.card #sure button.on,.card #sure button.is-on,
+.card #sure button.picked,.card #sure button.chosen,.card #sure button.sel,.card #sure button.active{background:#0f2a22!important;color:var(--c)!important}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Drag your guess · how sure" style="--c:#f3e9d3;--k:#2b2219;--edge:#d6c4a0">
+<article class="card" id="card" data-topic="technology" data-kind="Size your guess · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE YIELD</span></div>
-    <h2 class="q">614 kg of iron sand, 670 kg of charcoal: how heavy is the block?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" data-drag role="img" aria-label="A tower of iron sand and charcoal, a clay tatara furnace, and a pile on the right you drag to your guess of the block's weight."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MASS BALANCE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Sand and charcoal go into the furnace. How heavy is the block that comes out?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="One smelting charge as a pile: 670 kg of charcoal on top of 614 kg of iron sand, area as weight. Beside it, an orange block you resize to guess the block that comes out."></svg></div>
+        <div id="sure"></div>
+        <p class="say" id="say">Drag the orange block to the size you expect. <b>Area is weight.</b></p>
+        <div class="foot" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">100 kg. Under 8% of what went in.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The 1,284 kg charge as a pale pile. In its corner, the 100 kg block that came out, a third of it hatched as sword grade. Your guessed block stands beside it in orange."></svg></div>
+        <p class="body">And that block is steel, iron and slag together. Only about a third of it is good enough for a sword.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Judge a furnace by what comes out: 1,284 kg in, one 100 kg block out.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
+      </section>
     </div>
-    <p class="body gone" id="why"><b>1,284 kg in, 100 kg out.</b> The charcoal is the fire, and it burns away. What is left is one lump of steel, iron and slag, and only about a third of it is good enough for a sword.</p>
-    <div id="sure"></div>
-    <p class="say" id="say"><b>Drag the right-hand pile</b> to the weight of the block you expect.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A tatara turns 1,284 kg of sand and charcoal into one 100 kg block.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const PHYS = typeof Physics2DPlugin !== 'undefined';
-  if (PHYS) gsap.registerPlugin(Physics2DPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say');
-  const INK = '#2b2219', CREAM = '#f6edd8', SAND = '#4b4b55', COAL = '#1c1917', CLAY = '#c98a52',
-        STEEL = '#5d7283', FIRE = '#e8732a', GOLD = '#d9a23a';
-  const IN = 1284, SANDKG = 614, COALKG = 670, OUT = 100;
-  let W = 0, H = 0, fs = 13, GY = 0, TOP = 0, PX = 1, G = {}, compact = false;
-  let guess = 500, phase = 'guess', touched = false, sureOn = false, quick = false, pct = null, uiDone = false, faded = false;
-  let L = {}, F = {}, B = {}, live = [];
-  const st = {v: guess}, drain = {k: 1};
-  const fmt = n => Math.round(n).toLocaleString('en-US');
-  const fz = m => Math.max(12.5, fs * m);
-  const isDone = () => phase === 'done' || phase === 'landed';
+  if (window.MorphSVGPlugin) gsap.registerPlugin(MorphSVGPlugin);
+  const SAND = 614, COAL = 670, IN = SAND + COAL, OUT = 100;
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let kg = 0, touched = false, locked = false, turned = false, final = null;
+  let G = {};
 
-  // ---------- pencil and watercolour ----------
-  const rng = s => () => { s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-  function wob(pts, seed, amp, step = 15) {
-    const r = rng(seed); let d = '';
-    for (let i = 0; i < pts.length; i++) {
-      const [x0, y0] = pts[i], [x1, y1] = pts[(i + 1) % pts.length];
-      const len = Math.hypot(x1 - x0, y1 - y0) || 1, m = Math.max(1, Math.round(len / step));
-      const nx = -(y1 - y0) / len, ny = (x1 - x0) / len;
-      for (let j = 0; j < m; j++) {
-        const t = j / m, o = (r() - .5) * amp;
-        d += (d ? 'L' : 'M') + (x0 + (x1 - x0) * t + nx * o).toFixed(1) + ',' + (y0 + (y1 - y0) * t + ny * o).toFixed(1);
-      }
-    }
-    return d + 'Z';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const fmt = v => v.toLocaleString('en-US');
+  const f1 = v => (+v).toFixed(1);
+  function text(p, x, y, t, cls, size, anchor) {
+    const e = Kit.mk('text', {x: f1(x), y: f1(y), 'font-size': size, class: cls || ''}, p);
+    if (anchor) e.setAttribute('text-anchor', anchor);
+    e.textContent = t; return e;
   }
-  const R = (x, y, w, h) => [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
-  function sketch(g, pts, seed, o = {}) {
-    const grp = Kit.mk('g', {}, g);
-    if (o.fill) Kit.mk('path', {d: wob(pts, seed, 3.5), fill: o.fill, opacity: o.op ?? .82, filter: 'url(#wash)'}, grp);
-    if (o.pat) Kit.mk('path', {d: wob(pts, seed + 5, 2), fill: `url(#${o.pat})`, opacity: o.patOp ?? .55}, grp);
-    if (o.ink !== false) {
-      const a = {d: wob(pts, seed + 1, 1.6), fill: 'none', stroke: o.ink || INK, 'stroke-width': o.sw || 1.25, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
-      if (o.dash) a['stroke-dasharray'] = o.dash;
-      Kit.mk('path', a, grp);
-      if (!o.dash) Kit.mk('path', {d: wob(pts, seed + 2, 2.2), fill: 'none', stroke: o.ink || INK, 'stroke-width': (o.sw || 1.25) * .5, opacity: .55}, grp);
-    }
-    return grp;
-  }
-  function T(g, x, y, s, a = {}) {
-    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'text-anchor': 'middle'}, a), g);
-    e.textContent = s; return e;
-  }
+  function tw(e, s, size) { let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} return w || s.length * size * .58; }
+  function rect(p, x, y, w, h, cls) { return Kit.mk('rect', {x: f1(x), y: f1(y), width: f1(Math.max(0, w)), height: f1(Math.max(0, h)), class: cls || ''}, p); }
+  function setRect(e, x, y, w, h) { e.setAttribute('x', f1(x)); e.setAttribute('y', f1(y)); e.setAttribute('width', f1(Math.max(0, w))); e.setAttribute('height', f1(Math.max(0, h))); }
 
-  function defs() {
-    const d = Kit.mk('defs', {}, svg);
-    d.innerHTML = `
-      <filter id="wash" x="-12%" y="-12%" width="124%" height="124%">
-        <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="4" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="7" result="d"/>
-        <feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="9" result="g"/>
-        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.2 1.3" result="ga"/>
-        <feComposite in="d" in2="ga" operator="in"/>
-      </filter>
-      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="0" y1="0" x2="0" y2="6" stroke="${INK}" stroke-width=".7"/></pattern>
-      <pattern id="hatchL" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-42)"><line x1="0" y1="0" x2="0" y2="5" stroke="${CREAM}" stroke-width=".6"/><line x1="0" y1="2.5" x2="5" y2="2.5" stroke="${CREAM}" stroke-width=".35"/></pattern>
-      <pattern id="dots" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="2" r=".7" fill="${CREAM}"/><circle cx="5" cy="5.5" r=".5" fill="${CREAM}"/><circle cx="5.6" cy="1.2" r=".35" fill="#c9d2da"/></pattern>
-      <radialGradient id="heat"><stop offset="0" stop-color="#ffe08a" stop-opacity=".95"/><stop offset=".45" stop-color="${FIRE}" stop-opacity=".75"/><stop offset="1" stop-color="${FIRE}" stop-opacity="0"/></radialGradient>`;
+  // ---------- the front: one pile at left, the guess at right, same ground line ----------
+  function pileLabel(p, g, x, y, bh, num, word, cls) {
+    const pad = Math.max(8, g.fs * .7), big = g.fs * 1.4;
+    const step = big * .35 + g.fs * 1.2;
+    const b1 = y + pad + big * .8, b2 = b1 + step;
+    if (bh >= (b2 - y) + g.fs * .35 + pad) {
+      text(p, x + pad, b1, num, 'num ' + cls, big);
+      text(p, x + pad, b2, word, cls, g.fs);
+    } else text(p, x + pad, y + bh / 2 + g.fs * .36, num + ' ' + word, cls, g.fs);
   }
-
-  // ---------- the scene ----------
-  function layout() {
-    if (phase === 'smelting' || phase === 'landed') { live.forEach(t => t.kill && t.kill()); live = []; phase = 'done'; }
+  function drawFront() {
     svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(13, Math.min(16, W / 24));
-    compact = phase === 'done' && H < fs * 12;
-    GY = compact ? H - fs * .7 : H - fs * 2.3;
-    TOP = compact ? fs * 1.8 : fs * 3.6;
-    PX = Math.max(.02, (GY - TOP) / IN);
-    G = {lx: W * .05, lw: W * .25, cx: W * .5, fw: W * .24, fh: Math.min((GY - TOP) * .5, W * .36), rx: W * .71, rw: W * .24, bcx: W * .83, bw: W * .2};
-    defs();
-    for (const k of ['ground', 'in', 'furn', 'out', 'block', 'fx']) L[k] = Kit.mk('g', {}, svg);
-    drawGround();
-    drawIn(phase === 'guess' ? 1 : 0);
-    drawFurn();
-    drawGuess();
-    drawBlock();
-    if (phase === 'done') doneUI();
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = clamp(W / 25, 12, 14);
+    const gap = clamp(W * .08, 18, 32), top = Math.max(16, fs * 1.1), bot = fs * 2.1;
+    let w = (W - gap - 6) / 2, h = Math.min(H - top - bot, w * 1.8);
+    if (h < w * .9) w = Math.max(40, h / .9);
+    h = Math.max(40, h);
+    const x0 = (W - 2 * w - gap) / 2, yb = top + h + Math.max(0, (H - top - bot - h) / 2), yt = yb - h;
+    const hc = h * COAL / IN, ys = yt + hc, xg = x0 + w + gap;
+    const g = G = {W, H, fs, w, h, x0, yb, yt, ys, xg, r0: clamp(64 / w, .3, .5)};
+    Kit.mk('path', {d: `M${f1(x0 - 4)},${f1(yb)}H${f1(xg + w + 4)}`, class: 'base'}, svg);
+    g.coal = rect(svg, x0, yt, w, hc, 'coal');
+    g.sand = rect(svg, x0, ys, w, h - hc, 'sand');
+    g.pileLab = Kit.mk('g', {}, svg);
+    pileLabel(g.pileLab, g, x0, yt, hc, '670 kg', 'charcoal', 'lt');
+    pileLabel(g.pileLab, g, x0, ys, h - hc, '614 kg', 'iron sand', '');
+    g.guess = rect(svg, xg, yb, 0, 0, 'gs');
+    g.knob = Kit.mk('circle', {r: Math.max(8, fs * .62), class: 'knob'}, svg);
+    g.hint = Kit.mk('path', {d: '', class: 'arrow hint'}, svg);
+    g.gl = text(svg, xg, yb + fs * 1.55, '', '', fs);
+    paintGuess();
   }
-
-  function drawGround() {
-    const g = L.ground, r = rng(77);
-    Kit.mk('path', {d: wob([[0, GY], [W, GY], [W, GY + .1], [0, GY + .1]], 3, 1.4, 22), fill: 'none', stroke: INK, 'stroke-width': 1.6}, g);
-    for (let x = 6; x < W; x += 7 + r() * 4) Kit.mk('line', {x1: x, y1: GY + 2, x2: x - 4 - r() * 3, y2: Math.min(H - 1, GY + 6 + r() * 3), stroke: INK, 'stroke-width': .7, opacity: .45}, g);
-    if (compact) return;
-    const cy = GY + fs * 1.6, a = {'font-size': fz(.95), opacity: .72};
-    T(g, G.lx + G.lw / 2, cy, 'goes in', a);
-    T(g, G.cx, cy, 'the tatara', a);
-    T(g, G.rx + G.rw / 2, cy, 'comes out', a);
+  function paintGuess() {
+    const g = G; if (!g.guess) return;
+    const r = touched ? Math.sqrt(kg / IN) : g.r0, gw = g.w * r, gh = g.h * r, x = g.xg + gw, y = g.yb - gh;
+    setRect(g.guess, g.xg, y, gw, gh);
+    g.knob.setAttribute('cx', f1(x)); g.knob.setAttribute('cy', f1(y));
+    const k = g.fs * .9;
+    g.hint.setAttribute('d', touched || locked ? '' : `M${f1(x + k * .8)},${f1(y - k * .8)}l${f1(k)},${f1(-k)}m${f1(-k * .75)},0h${f1(k * .75)}v${f1(k * .75)}`);
+    const s = touched ? `your block: ${fmt(kg)} kg` : 'your block';
+    g.gl.textContent = s; g.gl.setAttribute('x', f1(g.xg));
+    const w = tw(g.gl, s, g.fs);
+    if (g.xg + w > g.W - 2) g.gl.setAttribute('x', f1(g.W - 2 - w));
   }
-
-  // The tower of what is fed in: charcoal below, iron sand above, both drained by k.
-  function drawIn(k) {
-    const g = L.in; g.innerHTML = '';
-    const {lx, lw} = G, mid = lx + lw / 2, topY = GY - IN * PX * k;
-    if (k < 1) {
-      sketch(g, R(lx, GY - IN * PX, lw, IN * PX), 11, {dash: '5 4', sw: 1.1});
-      Kit.mk('line', {x1: lx, x2: lx + lw, y1: GY - COALKG * PX, y2: GY - COALKG * PX, stroke: INK, 'stroke-width': .9, 'stroke-dasharray': '3 4', opacity: .6}, g);
-    }
-    if (k > .002) {
-      const c = COALKG * k * PX, s = SANDKG * k * PX;
-      sketch(g, R(lx, GY - c, lw, c), 21, {fill: COAL, pat: 'hatchL', patOp: .45});
-      sketch(g, R(lx, GY - c - s, lw, s), 31, {fill: SAND, pat: 'dots', patOp: .8});
-    }
-    const lab = (cy, hs, a, b, short) => {
-      const col = topY < cy - fs * 1.3 ? CREAM : INK;
-      if (hs >= fs * 3.6) {
-        T(g, mid, cy - fs * .6, a, {fill: col, 'font-size': fz(.95)});
-        T(g, mid, cy + fs * 1.2, b, {fill: col, 'font-size': fs * 1.1});
-      } else if (hs >= fs * 1.5) T(g, mid, cy + fs * .35, short, {fill: col, 'font-size': fz(.95)});
-    };
-    lab(GY - (COALKG + SANDKG / 2) * PX, SANDKG * PX, 'iron sand', '614 kg', 'sand 614');
-    lab(GY - COALKG / 2 * PX, COALKG * PX, 'charcoal', '670 kg', 'coal 670');
-    T(g, mid, GY - IN * PX - fs * .6, '1,284 kg', {'font-size': fs * 1.05});
+  function setFrom(e) {
+    const b = svg.getBoundingClientRect(), px = e.clientX - b.left, py = e.clientY - b.top;
+    const rr = Math.max((px - G.xg) / G.w, (G.yb - py) / G.h);
+    const v = clamp(IN * Math.pow(Math.max(0, rr), 2), 5, IN);
+    kg = v < 60 ? Math.round(v) : Math.round(v / 10) * 10;
+    paintGuess();
   }
-
-  // The clay furnace, in two halves so it can be taken apart.
-  function drawFurn() {
-    const g = L.furn; g.innerHTML = ''; F = {};
-    if (phase === 'done') return;
-    const {cx, fw, fh} = G, x0 = cx - fw / 2, x1 = cx + fw / 2, ty = GY - fh, inset = fw * .09;
-    F.left = Kit.mk('g', {}, g); F.right = Kit.mk('g', {}, g);
-    sketch(F.left, [[x0, GY], [x0 + inset, ty], [cx, ty], [cx, GY]], 41, {fill: CLAY, pat: 'hatch', patOp: .32});
-    sketch(F.right, [[cx, GY], [cx, ty], [x1 - inset, ty], [x1, GY]], 51, {fill: CLAY, pat: 'hatch', patOp: .32});
-    [[F.left, -1, x0], [F.right, 1, x1]].forEach(([h, sg, xe]) => {
-      for (let i = 0; i < 3; i++) {
-        const y = GY - fh * (.2 + .14 * i), xw = xe - sg * inset * (1 - (GY - y) / fh);
-        Kit.mk('path', {d: `M${xw},${y} l${sg * fs * .9},${-fs * .35}`, stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, h);
-        Kit.mk('path', {d: `M${xw},${y} l${sg * fs * .9},${-fs * .35}`, stroke: '#9c6a3a', 'stroke-width': 1.1, 'stroke-linecap': 'round'}, h);
-      }
-      Kit.mk('path', {d: `M${cx + sg * fw * .18},${GY - fh * .75} l${sg * 4},${fs * .6} l${-sg * 2},${fs * .5}`, stroke: INK, 'stroke-width': .8, fill: 'none', opacity: .6}, h);
-    });
-    F.glow = Kit.mk('g', {}, g);
-    Kit.mk('ellipse', {cx, cy: GY - fh * .5, rx: fw * .42, ry: fh * .55, fill: 'url(#heat)', opacity: .5}, F.glow);
-    Kit.mk('ellipse', {cx, cy: ty, rx: fw * .34, ry: fs * .4, fill: COAL}, F.glow);
-    Kit.mk('ellipse', {cx, cy: ty + 1, rx: fw * .26, ry: fs * .22, fill: FIRE, opacity: .9}, F.glow);
-    F.glowOp = F.glow.firstChild;
-    F.flame = Kit.mk('g', {}, g);
-    [[-.17, .8, 0], [.02, 1.25, .15], [.18, .9, .3]].forEach(([dx, hh, dl]) => {
-      const x = cx + dx * fw, w = fw * .1, h = fs * 1.4 * hh;
-      const p = Kit.mk('path', {d: `M${x - w},${ty} Q${x - w * .3},${ty - h} ${x + w * .1},${ty - h * 1.3} Q${x + w * .5},${ty - h * .45} ${x + w},${ty}Z`, fill: FIRE, opacity: .85, class: 'flick', style: `animation-delay:${dl}s`}, F.flame);
-      Kit.mk('path', {d: `M${x - w * .45},${ty} Q${x},${ty - h * .7} ${x + w * .45},${ty}Z`, fill: '#ffd36b', opacity: .9, class: 'flick', style: `animation-delay:${dl + .1}s`}, F.flame);
-      p.setAttribute('filter', 'url(#wash)');
-    });
-    F.count = Kit.mk('g', {opacity: 0}, g);
-    T(F.count, cx, GY - fh * .5 - fs * .45, 'fed in', {'font-size': fz(.95)});
-    F.countT = T(F.count, cx, GY - fh * .5 + fs * 1.35, '0 kg', {'font-size': fs * 1.1});
-  }
-
-  // Your guess: a pile on the right, or its dashed ghost once the real block is out.
-  function drawGuess() {
-    if (!L.out) return;
-    const g = L.out; g.innerHTML = '';
-    const {rx, rw} = G, h = Math.max(2, st.v * PX), top = GY - h, mid = rx + rw / 2;
-    if (isDone()) sketch(g, R(rx, top, rw, h), 61, {dash: '5 4', sw: 1.2});
-    else sketch(g, R(rx, top, rw, h), 61, {fill: STEEL, op: .72, pat: 'hatch', patOp: .4});
-    if (compact) {
-      T(g, mid, top - fs * .5, `guess ${fmt(guess)} kg`, {'font-size': fz(.95)});
-    } else {
-      T(g, mid, top - fs * 2.4, 'your guess', {'font-size': fz(.95), opacity: .75});
-      T(g, mid, top - fs * .55, `${fmt(guess)} kg`, {'font-size': fs * 1.15});
-    }
-    if (!touched && phase === 'guess' && h > fs * 3.4) {
-      const hint = Kit.mk('g', {class: 'bob'}, g), y1 = top + fs * .7, y2 = top + fs * 2.6;
-      Kit.mk('path', {d: `M${mid},${y1} V${y2} M${mid - 5},${y1 + 6} L${mid},${y1} L${mid + 5},${y1 + 6} M${mid - 5},${y2 - 6} L${mid},${y2} L${mid + 5},${y2 - 6}`, stroke: CREAM, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
-    }
-  }
-
-  // The real block: 100 kg, drawn to the same scale as the tower.
-  function drawBlock() {
-    const g = L.block; g.innerHTML = ''; B = {};
-    const {bcx, bw} = G, bh = Math.max(7, OUT * PX), x0 = bcx - bw / 2;
-    const pts = [[x0, GY], [x0 + 3, GY - bh * .82], [bcx - bw * .2, GY - bh], [bcx + bw * .22, GY - bh * .9], [x0 + bw - 2, GY - bh * .66], [x0 + bw, GY]];
-    B.g = Kit.mk('g', {}, g);
-    B.inner = Kit.mk('g', {}, B.g);
-    Kit.mk('ellipse', {cx: bcx, cy: GY + 1, rx: bw * .55, ry: 2.5, fill: INK, opacity: .25}, B.inner);
-    sketch(B.inner, pts, 71, {fill: STEEL, op: .9, pat: 'hatch', patOp: .5, sw: 1.4});
-    B.gold = sketch(B.inner, R(x0 + 2, GY - bh * .8, bw / 3, bh * .8), 81, {fill: GOLD, op: .9, ink: false});
-    B.hot = Kit.mk('path', {d: wob(pts, 91, 2), fill: FIRE, opacity: 0, filter: 'url(#wash)'}, B.inner);
-    B.lab = Kit.mk('g', {}, g);
-    const xe = W * .685;
-    T(B.lab, xe, GY - fs * 2.05, '100 kg block', {'text-anchor': 'end', 'font-size': fs * 1.2});
-    T(B.lab, xe, GY - fs * .45, '⅓ is sword steel', {'text-anchor': 'end', 'font-size': fz(.95), fill: '#7a520c'});
-    Kit.mk('path', {d: `M${xe + 3},${GY - fs * 1.3} Q${(xe + x0) / 2},${GY - fs * 1.6} ${x0 - 3},${GY - Math.min(bh, fs) * .5}`, stroke: INK, 'stroke-width': 1, fill: 'none', 'stroke-linecap': 'round'}, B.lab);
-    if (phase !== 'done') { gsap.set(B.g, {opacity: 0}); gsap.set(B.lab, {opacity: 0}); gsap.set(B.gold, {opacity: 0}); }
-  }
-
-  // ---------- the drag ----------
-  function setGuess(v, instant) {
-    guess = Math.max(10, Math.min(IN, Math.round(v / 10) * 10));
-    if (instant || Kit.calm) { st.v = guess; drawGuess(); return; }
-    gsap.to(st, {v: guess, duration: .18, ease: 'power3.out', overwrite: true, onUpdate: drawGuess});
-    drawGuess();
-  }
-  const fromY = e => { const r = svg.getBoundingClientRect(); return (GY - (e.clientY - r.top)) / PX; };
-  let dragging = false;
+  function released() { sure.on(); Kit.$('say').innerHTML = 'Happy with your block? <b>Say how sure you are.</b>'; }
+  let drag = false;
   svg.addEventListener('pointerdown', e => {
-    if (phase !== 'guess' || pct !== null) return;
-    dragging = true; svg.setPointerCapture(e.pointerId);
-    if (!touched) { touched = true; Kit.haptic('selection'); }
-    setGuess(fromY(e));
+    if (locked) return; drag = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { Kit.haptic('selection'); touched = true; }
+    setFrom(e);
   });
-  svg.addEventListener('pointermove', e => { if (dragging) setGuess(fromY(e)); });
-  const up = () => {
-    if (!dragging) return; dragging = false;
-    if (!sureOn) { sureOn = true; sure.on(); say.innerHTML = 'Keep adjusting if you like. <b>Then say how sure you are</b>, and the furnace fires.'; }
-  };
+  svg.addEventListener('pointermove', e => { if (drag) setFrom(e); });
+  const up = () => { if (!drag) return; drag = false; released(); };
   svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
 
-  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', p => {
-    if (pct !== null) return;
-    pct = p;
-    Kit.answer({choice: `${guess} kg`, correct: Math.abs(guess - OUT) <= 40, sure: p});
-    Kit.hide('say');
-    if (Kit.calm || quick || !PHYS) { phase = 'done'; st.v = guess; layout(); return; }
-    smelt();
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    locked = true; final = kg; paintGuess();
+    const ok = final >= 50 && final <= 200;
+    Kit.answer({choice: `${fmt(final)} kg`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${fmt(final)} kg, ${ok ? 'close' : 'far off'}`);
+    setTimeout(() => Turn.over(), 700);
   });
 
-  // ---------- idle embers over the furnace mouth ----------
-  function ember() {
-    if (phase === 'guess' && !Kit.calm && L.fx && G.fh) {
-      const r = Kit.rnd, el = Kit.mk('circle', {cx: G.cx + (r() - .5) * G.fw * .4, cy: GY - G.fh - 2, r: .8 + r(), fill: r() < .5 ? '#ffb347' : '#ffd36b'}, L.fx);
-      gsap.to(el, {y: -fs * (2 + r() * 2.5), x: (r() - .5) * fs * 1.6, opacity: 0, duration: 1 + r() * .8, ease: 'power1.out', onComplete: () => el.remove()});
-    }
-    gsap.delayedCall(.3 + Kit.rnd() * .5, ember);
-  }
+  // ---------- the back: the pale charge, the real block in its corner, your guess beside ----------
+  function drawBack(instant) {
+    svg2.innerHTML = '';
+    const val = final == null ? kg : final;
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H, fs = clamp(W / 26, 12, 13.5);
+    const T = ['100 kg came out', 'a third: sword grade'];
+    let Lw = 0;
+    for (const t of T) { const e = text(svg2, 0, -50, t, '', fs); Lw = Math.max(Lw, tw(e, t, fs)); e.remove(); }
+    Lw += 2;
+    const r = Math.sqrt(Math.max(val, 5) / IN), lead = fs * 1.4, gap = fs * 1.4;
+    const top = fs * 1.9, bot = fs * 2.1;
+    let w = (W - lead - Lw - gap - 4) / (1 + r), h = Math.min(H - top - bot, w * 1.8);
+    if (h < w * .9) w = h / .9;
+    w = Math.max(30, w); h = Math.max(40, h);
+    const used = w + lead + Lw + gap + r * w, x0 = Math.max(2, (W - used) / 2);
+    const yb = top + h + Math.max(0, (H - top - bot - h) / 2), yt = yb - h;
+    const kb = Math.sqrt(OUT / IN), bw = w * kb, bh = h * kb, xr = x0 + w, bx = xr - bw, by = yb - bh;
+    const lx = xr + lead, xg = lx + Lw + gap, gw = w * r, gh = h * r;
 
-  // ---------- the smelt ----------
-  function grain() {
-    const r = Kit.rnd, topY = GY - IN * PX * drain.k;
-    const sx = G.lx + G.lw * (.15 + .7 * r()), sy = topY - 2;
-    const tx = G.cx + G.fw * (r() - .5) * .45, ty = GY - G.fh;
-    let el;
-    if (r() < .48) el = Kit.mk('circle', {cx: sx, cy: sy, r: 1.4 + r() * 1.3, fill: SAND}, L.fx);
-    else { const s = 2.5 + r() * 2.2; el = Kit.mk('path', {d: `M${sx - s},${sy} L${sx - s * .2},${sy - s} L${sx + s},${sy - s * .3} L${sx + s * .4},${sy + s * .8}Z`, fill: COAL}, L.fx); }
-    const Tm = .7 + .25 * r(), Gr = H * 2.4, dx = tx - sx, dy = ty - sy;
-    const vx = dx / Tm, vy = (dy - .5 * Gr * Tm * Tm) / Tm;
-    live.push(gsap.to(el, {duration: Tm, ease: 'none', physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: Gr}, rotation: r() * 360, onComplete: () => el.remove()}));
-  }
-  function puff() {
-    const r = Kit.rnd, el = Kit.mk('circle', {cx: G.cx + (r() - .5) * G.fw * .3, cy: GY - G.fh - fs * .8, r: fs * (.35 + r() * .25), fill: r() < .5 ? '#7d746a' : '#948a7d', opacity: 0}, L.fx);
-    L.fx.insertBefore(el, L.fx.firstChild);
-    const tl = gsap.timeline({onComplete: () => el.remove()});
-    tl.to(el, {opacity: .34, duration: .35, ease: 'power1.out'}, 0)
-      .to(el, {y: -H * (.18 + r() * .14), x: (r() - .5) * fs * 3.5, scale: 2.4 + r(), transformOrigin: '50% 50%', duration: 1.8, ease: 'power1.out'}, 0)
-      .to(el, {opacity: 0, duration: 1.1, ease: 'power1.in'}, .7);
-    live.push(tl);
-  }
-  function sparks(n, power, x = G.cx, y = GY - G.fh, col = '#ffb347', spread = 70) {
-    for (let i = 0; i < n; i++) {
-      const r = Kit.rnd, el = Kit.mk('circle', {cx: x + (r() - .5) * G.fw * .4, cy: y, r: .9 + r() * 1.4, fill: col}, L.fx);
-      const d = .8 + .5 * r();
-      live.push(gsap.to(el, {duration: d, ease: 'none', physics2D: {velocity: H * (.45 + .6 * r()) * power, angle: -90 + (r() - .5) * spread, gravity: H * 1.6}, onComplete: () => el.remove()}));
-      live.push(gsap.to(el, {opacity: 0, duration: d * .6, delay: d * .4, ease: 'power2.in'}));
-    }
-  }
-  function smelt() {
-    phase = 'smelting'; drawGuess();
-    const D = 2.8, cnt = {v: 0};
-    const tl = gsap.timeline({onComplete: reveal}); live.push(tl);
-    tl.to(F.count, {opacity: 1, duration: .4, ease: 'power2.out'}, 0)
-      .to(drain, {k: 0, duration: D, ease: 'power1.inOut', onUpdate: () => drawIn(drain.k)}, 0)
-      .to(cnt, {v: IN, duration: D, ease: 'power1.inOut', onUpdate: () => { F.countT.textContent = `${fmt(cnt.v)} kg`; }}, .15)
-      .to(F.glowOp, {opacity: 1, duration: D, ease: 'power2.in'}, 0)
-      .to(F.flame, {scale: 1.5, transformOrigin: '50% 100%', duration: D, ease: 'power2.in'}, 0);
-    for (let i = 0; i < 80; i++) tl.call(grain, null, i * (D - .7) / 80);
-    for (let t = .9; t < D; t += .28) tl.call(() => sparks(4, .8), null, t);
-    for (let t = .5; t < D + .3; t += .22) tl.call(puff, null, t);
-  }
-  function reveal() {
-    Kit.haptic('light');
-    const tl = gsap.timeline(); live.push(tl);
-    tl.to(F.count, {opacity: 0, duration: .25}, 0)
-      .call(() => sparks(26, 1.25, G.cx, GY - G.fh * .4, '#ffc25c', 110), null, .1)
-      .to(F.left, {x: -W * .08, rotation: -12, opacity: 0, transformOrigin: '0% 100%', duration: .8, ease: 'power3.in'}, .1)
-      .to(F.right, {x: W * .08, rotation: 12, opacity: 0, transformOrigin: '100% 100%', duration: .8, ease: 'power3.in'}, .1)
-      .to([F.glow, F.flame], {opacity: 0, duration: .6, ease: 'power2.out'}, .25)
-      .set(B.g, {x: G.cx - G.bcx, y: 0, opacity: 1}, .2)
-      .set(B.hot, {opacity: 1}, .2)
-      .to(B.hot, {opacity: 0, duration: 1.6, ease: 'power2.out'}, .6)
-      .call(launch, null, 1.1);
-  }
-  function launch() {
-    const dx = G.cx - G.bcx, Tm = .8, Gr = H * 2.6, vx = -dx / Tm, vy = -.5 * Gr * Tm;
-    live.push(gsap.to(B.g, {duration: Tm, ease: 'none', physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: Gr}, onComplete: land}));
-  }
-  function land() {
-    gsap.set(B.g, {x: 0, y: 0});
-    phase = 'landed'; drawGuess();
-    Kit.haptic('success');
-    sparks(10, .35, G.bcx, GY - 2, '#8a7a66', 150);
-    const tl = gsap.timeline({onComplete: () => { phase = 'done'; doneUI(); }}); live.push(tl);
-    tl.fromTo(B.inner, {scaleY: .62, scaleX: 1.15}, {scaleY: 1, scaleX: 1, transformOrigin: '50% 100%', duration: .8, ease: 'elastic.out(1,.38)'}, 0)
-      .fromTo(B.lab, {opacity: 0, x: -10}, {opacity: 1, x: 0, duration: .55, ease: 'power3.out'}, .2)
-      .to(B.gold, {opacity: 1, duration: .6, ease: 'power2.out'}, .55);
-  }
-  function doneUI() {
-    if (uiDone) return; uiDone = true;
-    const ok = Math.abs(guess - OUT) <= 40;
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    sure.grade(ok, pct ?? 80, `You said ${fmt(guess)} kg; it is 100 kg`);
-  }
+    const defs = Kit.mk('defs', {}, svg2);
+    const cp = Kit.mk('clipPath', {id: 'swc'}, defs);
+    rect(cp, bx, yb - bh / 3, bw, bh / 3);
 
-  // Redraw at true size whenever the stage changes, so labels never shrink below legibility.
-  let rq = 0;
-  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
-    cancelAnimationFrame(rq);
-    rq = requestAnimationFrame(() => {
-      if (!L.in || phase === 'smelting' || phase === 'landed') return;
-      const r = svg.getBoundingClientRect();
-      if (Math.abs(r.width - W) < 2 && Math.abs(r.height - H) < 2) return;
-      layout();
-      if (phase === 'done' && !faded && !Kit.calm) { faded = true; gsap.fromTo(svg, {opacity: .35}, {opacity: 1, duration: .5, ease: 'power2.out'}); }
+    // everything that went in: one pale flat pile, with its total above it
+    const pileG = Kit.mk('g', {}, svg2);
+    rect(pileG, x0, yt, w, h, 'pile');
+    text(pileG, x0, yt - fs * .7, '1,284 kg went in', '', fs);
+
+    // one shared ground line
+    Kit.mk('path', {d: `M${f1(x0 - 4)},${f1(yb)}H${f1(Math.max(xg + gw, xr) + 4)}`, class: 'base'}, svg2);
+
+    // your guess, solid orange
+    const guessG = Kit.mk('g', {}, svg2);
+    rect(guessG, xg, yb - gh, gw, gh, 'gs');
+    const gs = `your guess: ${fmt(val)} kg`;
+    const gl = text(guessG, xg + gw, yb + fs * 1.55, gs, '', fs, 'end');
+    const glw = tw(gl, gs, fs);
+    if (xg + gw > W - 2) gl.setAttribute('x', f1(W - 2));
+    if (Math.min(xg + gw, W - 2) - glw < 2) { gl.setAttribute('text-anchor', 'start'); gl.setAttribute('x', 2); }
+
+    // the real block, the focal point
+    const tru = rect(svg2, bx, by, bw, bh, 'tru');
+    const blockG = Kit.mk('g', {}, svg2);
+    const hatch = Kit.mk('g', {'clip-path': 'url(#swc)'}, blockG);
+    for (let d = -bh; d < bw + bh; d += 4.5) Kit.mk('line', {x1: f1(bx + d), y1: f1(yb), x2: f1(bx + d + bh), y2: f1(yb - bh), class: 'hatch'}, hatch);
+    rect(blockG, bx, by, bw, bh, 'edge');
+    Kit.mk('path', {d: `M${f1(bx)},${f1(yb - bh / 3)}H${f1(xr)}`, class: 'div'}, blockG);
+
+    // two labels at right, never closer than a line apart, never on the ground line
+    const L = [{t: T[0], ax: xr, ay: by + bh * .3}, {t: T[1], ax: xr, ay: yb - bh / 6}];
+    L[1].ly = Math.min(L[1].ay + fs * .35, yb - fs * .5);
+    L[0].ly = Math.max(fs + 1, Math.min(L[0].ay + fs * .35, L[1].ly - fs * 1.4));
+    L.forEach(l => {
+      l.g = Kit.mk('g', {}, svg2);
+      const ty = l.ly - fs * .35;
+      Kit.mk('path', {d: `M${f1(l.ax)},${f1(l.ay)}H${f1(xr + 3)}L${f1(lx - 6)},${f1(ty)}H${f1(lx - 2)}`, class: 'lead'}, l.g);
+      Kit.mk('circle', {cx: f1(l.ax), cy: f1(l.ay), r: 2.2, class: 'pin'}, l.g);
+      text(l.g, lx, l.ly, l.t, '', fs);
     });
-  }).observe(Kit.$('stage'));
 
-  Kit.onShow.card = layout;
+    if (instant || Kit.calm) return;
+    const all = [pileG, guessG, tru, blockG, L[0].g, L[1].g];
+    gsap.set(all, {opacity: 0});
+    const tl = gsap.timeline({delay: .35});
+    tl.to(pileG, {opacity: 1, duration: .45, ease: 'power2.out'})
+      .to(guessG, {opacity: 1, duration: .4, ease: 'power2.out'}, '+=.1')
+      .set(tru, {opacity: 1, attr: {x: xg, y: yb - gh, width: gw, height: gh}}, '+=.3')
+      .to(tru, {attr: {x: bx, y: by, width: bw, height: bh}, duration: 1, ease: 'power3.inOut'})
+      .to([blockG, L[0].g], {opacity: 1, duration: .35, ease: 'power2.out'}, '-=.1')
+      .to(L[1].g, {opacity: 1, duration: .4, ease: 'power2.out'}, '+=.25');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(false); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(true); };
   Kit.onEnter.card = () => {
-    if (Kit.calm || phase !== 'guess' || !L.in) return;
-    gsap.from([L.in, L.furn, L.out], {scaleY: 0, transformOrigin: '50% 100%', duration: .95, ease: 'back.out(1.3)', stagger: .16});
-    gsap.from(L.ground, {opacity: 0, duration: .6, ease: 'power2.out'});
+    if (Kit.calm || !G.guess) return;
+    gsap.from([G.coal, G.sand, G.pileLab], {opacity: 0, duration: .5, stagger: .1, ease: 'power2.out'});
+    gsap.from([G.guess, G.knob, G.gl], {opacity: 0, duration: .4, delay: .4, ease: 'power2.out'});
   };
-  ember();
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    quick = true; touched = true;
-    setGuess(400, true);
-    if (!sureOn) { sureOn = true; sure.on(); }
-    await wait(100);
-    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
-    await wait(500);
+    const target = 600;
+    if (!Kit.calm && G.guess) {
+      const o = {v: IN * G.r0 * G.r0};
+      touched = true;
+      await new Promise(res => gsap.to(o, {v: target, duration: .9, ease: 'power2.inOut',
+        onUpdate: () => { kg = Math.round(o.v / 10) * 10; paintGuess(); }, onComplete: res}));
+    }
+    touched = true; kg = target; paintGuess(); released();
+    await wait(300);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 5000);
   };
 })();
 Kit.single();

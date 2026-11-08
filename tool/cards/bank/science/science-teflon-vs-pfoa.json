@@ -4,11 +4,11 @@
   "genre": "science.materials",
   "strand": "science.materials.plastics",
   "kind": "page",
-  "difficulty": "medium",
-  "principle": "none",
-  "question": "Teflon pans are safe. The chemicals used to make them aren't. Why?",
-  "answer": "Teflon chains are tens of thousands of atoms long, too big to absorb, so they're flushed out. PFOA is only 5 to 10 carbons long: it slips into the blood, and its acid end grabs proteins that carry it anywhere. Size decides which one gets in.",
-  "move": "Not the material but the size: giant chains pass through, small ones get in.",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Swallow Teflon and you're pretty safe. Not so with the chemicals used to make it. Why?",
+  "answer": "Teflon's chains are too big to be absorbed, so swallowed Teflon is flushed out. Processing aids like PFOA or GenX are 5 to 10 carbons long and can enter the blood. Perfluoroalkyl acids, the most common, can bind to blood proteins and travel anywhere in the body.",
+  "move": "A chemical can only harm what it reaches, and here size decides whether it gets in.",
   "keywords": [
     "teflon",
     "pfoa",
@@ -29,11 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Shows a Teflon pan coating as a very long chain of tens of thousands of atoms, and PFOA as a short molecule of 5 to 10 carbons. Asks which one can get into your blood, then how sure you are.",
-    "graded": false,
-    "ground": "#070a14"
+    "label": "A tappable size comparison: a long Teflon chain, too big to enter the blood, beside a short processing aid like PFOA, 5 to 10 carbons long. The reader taps to grow the processing aid to the length they think it is."
   },
   "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=2024s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }

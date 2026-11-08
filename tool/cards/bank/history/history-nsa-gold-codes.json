@@ -3,12 +3,12 @@
   "topic": "history",
   "genre": "history.decisions_that_changed_history",
   "strand": "history.decisions_that_changed_history.leaders_under_pressure",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Who makes the nuclear launch codes, and how do they reach the president?",
-  "answer": "The National Security Agency makes the gold codes. The president carries them on a plastic card, which proves that a launch order really comes from him.",
-  "move": "The NSA makes the gold codes; the president carries them on a plastic card to prove a launch order is his.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Who makes the secret codes a US president needs to order a nuclear launch?",
+  "answer": "The NSA makes them. To order a launch, the president must first pass an authentication. The NSA generates the Gold Codes and prints them on a plastic card he carries.",
+  "move": "A proof of identity is only worth something if someone else wrote it.",
   "keywords": [
     "gold codes",
     "nuclear launch codes",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive flowchart with a glowing piece to tap, one link at a time. Question: who makes the nuclear launch codes, and how do they reach the president?",
-    "ground": "#1b2537"
+    "label": "Question asking who makes the secret Gold Codes a US president needs to order a nuclear launch. The reader taps who they think writes them, then rates how sure they are."
   },
   "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=107s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }

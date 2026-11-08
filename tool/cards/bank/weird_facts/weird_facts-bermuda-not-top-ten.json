@@ -6,9 +6,9 @@
   "kind": "page",
   "difficulty": "medium",
   "principle": "availability",
-  "question": "Where did the WWF's 2013 study rank the Bermuda Triangle among dangerous seas?",
-  "answer": "The WWF's 2013 study of the world's most dangerous sea areas left the Bermuda Triangle out of its top 10. The eastern Mediterranean, and even the Black Sea, rank as more dangerous. So the Bermuda Triangle is not even a top-10 danger zone.",
-  "move": "By the data, the Bermuda Triangle is not even a top-10 danger zone.",
+  "question": "Where did the WWF rank the Bermuda Triangle in its 2013 study?",
+  "answer": "The WWF's 2013 study did not rank the Bermuda Triangle in its top 10 most dangerous maritime areas. It was not even in that list. The page uses this to show that how often a danger is talked about says little about how often it actually happens.",
+  "move": "How often you hear about a danger says little about how often it strikes.",
   "keywords": [
     "bermuda-triangle",
     "wwf",
@@ -27,11 +27,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Ranking list of dangerous sea areas from the WWF's 2013 study. The reader drags a red triangle to the rank where the Bermuda Triangle belongs, or below the line if it is not in the top 10.",
-    "ground": "#f2efe6"
+    "touch": "taps",
+    "label": "Interactive page asking where the WWF ranked the Bermuda Triangle in its 2013 study of dangerous maritime areas. The reader places a step on a ranking; tapping reveals it was not even in the top 10."
   },
   "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=462s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }

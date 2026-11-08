@@ -1,389 +1,322 @@
 <!doctype html>
-<!-- slug: science-kepler-water-units -->
-<!-- Look: winter-blue paper collage. Ice-paper discs with torn edges and a frosty sheen, a kraft-paper tray held with masking tape, a full cut-out cumulus cloud, slow paper snow drifting across the card, all boiling in stop-motion jitter, with layered paper shadows.
-     Interaction: hold to pour Kepler's "smallest units of water", real Matter.js bodies that fall, collide and stack, then guess how many touch each one.
-     Wow: the pile shakes tight into a honeycomb. One unit lights up, a hexagon draws through its six neighbours as they count off, and a sparkling paper snowflake lifts out of it. On short phones the reveal re-composes: label left, tray centre, snowflake right. -->
+<!-- slug: science-keplers-stacked-water -->
+<!-- Thought to carry: before atoms, Kepler speculated that water's tiny units stack together mechanically to form the hexagonal crystal.
+     Front: you in the snow holding up one six-armed flake on a mitten. It is magnified, and at its centre one blank unit of water with a question mark. You pick where the six comes from.
+     Back: Matter.js drops small units into a tray, the brief's suggested diagram. They settle into a hexagonal stack labelled "Kepler's guess", one cluster lights up, and that cluster grows into the six arms of the front's flake.
+     The text never gives the units a shape and never adds a mechanism the video does not state. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Kepler's tiny units</title>
+<title>Kepler's stacked water</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/matter.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.2cqh}
-#cv{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:pointer}
-#opts{display:flex;justify-content:center;gap:5cqw;padding:.4cqh 0 .8cqh}
-#opts.wait{visibility:hidden}
-.opt{font:800 max(3cqh,18px)/1 var(--display);width:max(7.4cqh,48px);height:max(7.4cqh,48px);border-radius:50%;border:0;background:#f8efdf;color:#14304e;box-shadow:.45cqh .6cqh 0 rgba(4,14,30,.45);cursor:pointer;transition:background .15s}
-.opt:nth-child(1){rotate:-5deg}.opt:nth-child(2){rotate:4deg}.opt:nth-child(3){rotate:-2deg}.opt:nth-child(4){rotate:6deg}
-.opt.on{background:#ffc845}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{font:800 max(3cqh,18px)/1.1 var(--display);color:#ffc845}
-#why .body{font:500 max(1.8cqh,13px)/1.32 var(--body)}
+#card{--c:#E8EEF2 !important;--k:#15191C !important;background:var(--c)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .75s}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face{gap:1.1cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 26%,transparent);border-radius:1.6cqh;padding:1.25cqh 4cqw;cursor:pointer;text-wrap:balance}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.front .say{padding-right:0;margin:0 112px 0 0;max-width:calc(100% - 112px);box-sizing:border-box}
+.back .big{margin:0;font-size:clamp(26px,4.4cqh,42px);line-height:1.02}
+.verdict{display:flex;align-items:center;gap:8px;margin:0;font:700 max(1.8cqh,13px)/1.25 var(--body);color:var(--k)}
+.verdict:empty{display:none}
+.verdict svg{flex:none;width:20px;height:20px}
+.back .body{margin:0;font-size:max(1.85cqh,13px)}
+.keep{background:color-mix(in srgb,#4f7a94 15%,var(--c)) !important}
+.back .foot .src{display:block;padding-right:96px}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pour, then guess · how sure" style="--c:#22476f;--k:#fbf3e4;--edge:#132f4d">
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">POUR AND STACK</span></div>
-    <h2 class="q">Before atoms, what did Kepler guess makes snowflakes six-sided?</h2>
-    <div class="stagebox" id="stage">
-      <canvas id="cv" data-drag role="img" aria-label="A paper cloud pours small paper discs, Kepler's tiny units of water, into a tray where they stack into a honeycomb."></canvas>
-      <div id="opts" class="wait">
-        <button class="opt" data-n="4">4</button>
-        <button class="opt" data-n="5">5</button>
-        <button class="opt" data-n="6">6</button>
-        <button class="opt" data-n="8">8</button>
-      </div>
-      <div id="why" class="gone"><p class="big">Six around one</p><p class="body">With no theory of atoms yet, Kepler guessed water is built from tiny units. Stacked tight, each one sits among six others, so the stack grows as a hexagon: a six-sided crystal.</p></div>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">KEPLER'S GUESS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Before atoms were known, where did Kepler suspect a snowflake's six sides come from?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A person in the snow holds up a six-armed snowflake on a mitten. The flake is magnified, and at its centre one blank unit of water is marked with a question mark."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">Cold air shapes each flake six ways</button>
+          <button class="opt" data-i="1">Tiny units of water stack together</button>
+          <button class="opt" data-i="2">Pure chance, flake by flake</button>
+        </div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Pick where the six comes from, then say how sure you are.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Tiny units, stacked together</p>
+        <p class="verdict" id="verdict"></p>
+        <div class="stagebox"><canvas id="pic2" role="img" aria-label="Kepler's guess: small units of water fall into a tray and stack into a hexagonal arrangement. One cluster lights up and, stacked further, grows into the six arms of a snowflake, the hexagonal crystal."></canvas></div>
+        <p class="body">With no theory of atoms, Kepler seemed on the verge of one. He speculated about the smallest natural unit of water, essentially a molecule, and how these tiny units could stack together mechanically to form the hexagonal crystal.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Tiny units arranging themselves into a crystal: Kepler anticipated molecular self-assembly.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)</span></div>
+      </section>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say">Kepler pictured water as tiny units. <b>Hold the picture to pour them in.</b></p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Kepler's guess: tiny water units stacking six around one build a six-sided snowflake.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const Game = (() => {
-  const cv = Kit.$('cv'), say = Kit.$('say'), card = Kit.$('card');
-  const M = window.Matter;
-  const ICE = ['#e8f3fa', '#d6e9f5', '#f4f8fb', '#cfe3f1'], CORAL = '#ff6f4f', GOLD = '#ffc845', CREAM = '#f8efdf', KRAFT = '#c8935a', NAVY = '#14304e', SHADOW = 'rgba(4,14,30,.45)';
-  const ROWS = [9, 8, 9, 8, 9], TOTAL = 43, S3 = Math.sqrt(3) / 2;
-  const sites = [];
-  ROWS.forEach((n, i) => { for (let j = 0; j < n; j++) sites.push({u: (i % 2 ? 1 : .5) + j, v: .5 + i * S3, row: i, j}); });
-  const CENTRE = sites.findIndex(s => s.row === 2 && s.j === 4);
-  const ang = i => Math.atan2(sites[i].v - sites[CENTRE].v, sites[i].u - sites[CENTRE].u);
-  const NB = sites.map((s, i) => i).filter(i => i !== CENTRE && Math.hypot(sites[i].u - sites[CENTRE].u, sites[i].v - sites[CENTRE].v) < 1.05).sort((a, b) => ang(b) - ang(a));
-  const CLOUD_TXT = 'tiny units of water';
-
-  let x, W = 0, H = 0, d = 30, r = 15, x0 = 0, floorY = 0, wallT = 8, wallTop = 0, fs = 14, shx = 2, shy = 3, side = false;
-  let cloud = {}, fl = {}, pieces = [], tapes = [], pat = null, hand = 'cursive', disp = 'sans-serif';
-  let engine = null, discs = [], bySite = [];
-  let phase = 'pour', poured = 0, pouring = false, queue = 0, lastDrop = 0, touched = false, calmFrames = 0, settleT = 0;
-  const rev = {snap: 0, glow: 0, hex: 0, flake: 0, gone: 0};
-  const enter = {w: 1, c: 1};
-  const clamp = v => Math.max(0, Math.min(1, v));
-  const snow = Array.from({length: 18}, () => ({u: Kit.rnd(), v: Kit.rnd(), s: .8 + Kit.rnd() * 1.8, sp: .5 + Kit.rnd(), ph: Kit.rnd() * 6}));
-
-  // Paper grain, laid over every cut-out.
-  const grain = document.createElement('canvas'); grain.width = grain.height = 90;
-  { const g = grain.getContext('2d');
-    for (let i = 0; i < 1100; i++) { g.fillStyle = Kit.rnd() < .5 ? 'rgba(255,255,255,.4)' : 'rgba(70,45,20,.16)'; g.fillRect(Kit.rnd() * 90, Kit.rnd() * 90, 1 + Kit.rnd() * 1.6, 1); }
-    g.strokeStyle = 'rgba(90,60,30,.12)'; g.lineWidth = .6;
-    for (let i = 0; i < 26; i++) { const a = Kit.rnd() * 90, b = Kit.rnd() * 90; g.beginPath(); g.moveTo(a, b); g.quadraticCurveTo(a + 6, b + Kit.rnd() * 6, a + 10 + Kit.rnd() * 8, b + Kit.rnd() * 4); g.stroke(); } }
-
-  const variants = (n, amp) => [0, 1, 2].map(() => Array.from({length: n}, (_, k) => 1 - amp * Kit.rnd() - (Kit.rnd() < .12 ? amp * 1.2 : 0)));
-  function tornRect(xa, ya, xb, yb, amp) {
-    return [0, 1, 2].map(() => {
-      const p = [], st = Math.max(6, amp * 2.6);
-      const edge = (x1, y1, x2, y2) => { const L = Math.hypot(x2 - x1, y2 - y1), n = Math.max(2, Math.round(L / st)), nx = -(y2 - y1) / L, ny = (x2 - x1) / L;
-        for (let k = 0; k < n; k++) { const t = k / n, o = (Kit.rnd() - .5) * amp; p.push([x1 + (x2 - x1) * t + nx * o, y1 + (y2 - y1) * t + ny * o]); } };
-      edge(xa, ya, xb, ya); edge(xb, ya, xb, yb); edge(xb, yb, xa, yb); edge(xa, yb, xa, ya); return p;
-    });
-  }
-  // A rounded slab of torn paper (the cloud's flat belly).
-  const slab = (cx, cy, w, h, amp) => [0, 1, 2].map(() => Array.from({length: 48}, (_, i) => {
-    const t = i / 48 * Math.PI * 2, c = Math.cos(t), s = Math.sin(t), k = 1 - amp * Kit.rnd();
-    return [cx + w / 2 * Math.sign(c) * Math.abs(c) ** .45 * k, cy + h / 2 * Math.sign(s) * Math.abs(s) ** .7 * k]; }));
-  const poly = pts => { x.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) x.lineTo(pts[i][0], pts[i][1]); x.closePath(); };
-  const circlePts = (cx, cy, rad, f, a = 0) => f.map((k, i) => { const t = a + i / f.length * Math.PI * 2; return [cx + Math.cos(t) * rad * k, cy + Math.sin(t) * rad * k]; });
-  // One cut-out: its shadow on the card, the flat colour, the grain, the white core of a torn edge.
-  function paper(addPath, col, lift = 1) {
-    x.save(); x.translate(shx * lift, shy * lift); x.beginPath(); addPath(); x.fillStyle = SHADOW; x.fill(); x.restore();
-    x.beginPath(); addPath(); x.fillStyle = col; x.fill();
-    x.save(); x.globalAlpha *= .6; x.fillStyle = pat; x.fill(); x.restore();
-    x.save(); x.globalAlpha *= .55; x.strokeStyle = '#ffffff'; x.lineWidth = 1; x.stroke(); x.restore();
-  }
-  // Several overlapping cut-outs read as one sheet: torn white rim outside, no seams inside.
-  function sheet(shapes, col) {
-    x.save(); x.translate(shx, shy); x.beginPath(); shapes.forEach(poly); x.fillStyle = SHADOW; x.fill(); x.restore();
-    x.beginPath(); shapes.forEach(poly);
-    x.lineWidth = 2.6; x.lineJoin = 'round'; x.strokeStyle = 'rgba(255,255,255,.85)'; x.stroke();
-    x.fillStyle = col; x.fill();
-    x.save(); x.globalAlpha *= .6; x.fillStyle = pat; x.fill(); x.restore();
-  }
-
-  function mkDisc() { return {f: variants(20, .07), col: ICE[Math.floor(Kit.rnd() * ICE.length)], body: null, u: 0, v: 0, a: Kit.rnd() * 6, vx: 0, vy: 0, site: -1}; }
-  function mkBody(px, py, a, vx, vy) {
-    const b = M.Bodies.circle(px, py, r * .995, {restitution: .05, friction: .004, frictionStatic: 0, frictionAir: .012, slop: .01});
-    M.Body.setAngle(b, a || 0); if (vx || vy) M.Body.setVelocity(b, {x: vx, y: vy});
-    M.Composite.add(engine.world, b); return b;
-  }
-  function buildEngine() {
-    engine = M.Engine.create(); engine.positionIterations = 10; engine.velocityIterations = 8;
-    const o = {isStatic: true, friction: 0, restitution: 0};
-    M.Composite.add(engine.world, [
-      M.Bodies.rectangle(x0 - 100, floorY - H, 200, H * 4, o),
-      M.Bodies.rectangle(x0 + 9 * d + 100, floorY - H, 200, H * 4, o),
-      M.Bodies.rectangle(W / 2, floorY + 100, W * 3, 200, o)]);
-  }
-
-  function layout() {
-    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
-    if (W < 20 || H < 20) return;
-    const cs = getComputedStyle(card);
-    hand = cs.getPropertyValue('--hand').trim() || 'cursive'; disp = cs.getPropertyValue('--display').trim() || 'sans-serif';
-    if (engine) discs.forEach(o => { const p = o.body.position; o.u = (p.x - x0) / d; o.v = (floorY - p.y) / d; o.a = o.body.angle; o.vx = o.body.velocity.x / d; o.vy = o.body.velocity.y / d; });
-    const wt = Math.max(7, W * .03);
-    const dTop = Math.min((W - 2 * wt - 10) / 9, (H * .6) / 4.7), dSide = Math.min(W * .58 / 9, (H - 10) / 5.3);
-    // Short stage at the reveal: lay it out sideways so the tray stays big and the words stay clear.
-    side = phase === 'reveal' && dSide > dTop * 1.08;
-    d = side ? dSide : dTop; r = d / 2;
-    wallT = Math.max(7, d * .32); shx = Math.max(2, d * .08); shy = Math.max(2.5, d * .11);
-    if (side) { const tot = 4.76 * d + wallT + shy + 3; wallTop = Math.max(2, (H - tot) / 2); floorY = wallTop + 4.76 * d; }
-    else { floorY = H - wallT - shy - 3; wallTop = floorY - (.5 + 4 * S3 + .5) * d - d * .7; }
-    x0 = (W - 9 * d) / 2;
-    const gut = x0 - wallT;
-    fs = side ? Math.max(13, Math.min(20, gut / 7.5)) : Math.max(13, Math.min(20, W / 21, wallTop / 3.2));
-
-    // The cloud is cut to fit its words.
-    x.font = `700 ${fs}px ${hand}`;
-    const tw = x.measureText(CLOUD_TXT).width;
-    const cw = Math.min(W * .86, Math.max(tw * 1.32, 9 * d * .6)), ch = Math.max(24, Math.min(wallTop * .72, Math.max(fs * 3.3, cw * .36)));
-    const lobes = [[-.3, -.06, .3], [-.11, -.22, .4], [.13, -.17, .35], [.32, -.03, .27]].map(([a, b, c]) => {
-      const rr = c * ch, dx = Math.max(-cw / 2 + rr * .9, Math.min(cw / 2 - rr * .9, a * cw)), fv = variants(22, .06);
-      return [0, 1, 2].map(k => circlePts(dx, b * ch, rr, fv[k]));
-    });
-    cloud = {cx: W / 2, cw, ch, cy: Math.max(ch * .56 + 4, wallTop * .46), shapes: [slab(0, ch * .18, cw, ch * .52, .035), ...lobes]};
-
-    fl = side
-      ? {side: true, x: x0 + 9 * d + wallT + gut / 2, y: (wallTop + floorY) / 2, R: Math.max(16, Math.min(gut * .34, (floorY - wallTop) * .36))}
-      : {side: false, x: W * .7, y: wallTop * .5, R: Math.max(18, Math.min(wallTop * .4, W * .19))};
-
-    pieces = [tornRect(x0 - wallT, wallTop, x0, floorY, 2.2), tornRect(x0 + 9 * d, wallTop, x0 + 9 * d + wallT, floorY, 2.2), tornRect(x0 - wallT - 3, floorY, x0 + 9 * d + wallT + 3, floorY + wallT, 2.2)];
-    const tp = Math.max(4, d * .14), th = Math.max(8, d * .36);
-    tapes = [tornRect(x0 - wallT - tp, wallTop + d * .15, x0 + tp, wallTop + d * .15 + th, 1.6), tornRect(x0 + 9 * d - tp, wallTop + d * .45, x0 + 9 * d + wallT + tp, wallTop + d * .45 + th, 1.6)];
-    pat = x.createPattern(grain, 'repeat');
-    if (phase === 'pour' || phase === 'settle') { buildEngine(); discs.forEach(o => o.body = mkBody(x0 + o.u * d, floorY - o.v * d, o.a, o.vx * d, o.vy * d)); }
-    draw(performance.now());
-  }
-
-  function drop() {
-    const o = mkDisc(), lo = Math.max(x0 + r + 1, cloud.cx - cloud.cw * .36), hi = Math.min(x0 + 9 * d - r - 1, cloud.cx + cloud.cw * .36);
-    o.body = mkBody(lo + Kit.rnd() * (hi - lo), cloud.cy + cloud.ch * .15, Kit.rnd() * 6, (Kit.rnd() - .5) * 1.2, 1);
-    discs.push(o); poured++;
-    if (poured % 5 === 1) Kit.haptic('selection');
-    if (poured >= TOTAL) { phase = 'settle'; settleT = performance.now(); pouring = false; queue = 0; say.innerHTML = 'Let them settle…'; }
-  }
-
-  function assign() {
-    const pairs = [];
-    discs.forEach((o, a) => sites.forEach((s, b) => pairs.push([(o.u - s.u) ** 2 + (o.v - s.v) ** 2, a, b])));
-    pairs.sort((p, q) => p[0] - q[0]);
-    const usedD = new Set(), usedS = new Set(); bySite = [];
-    for (const [, a, b] of pairs) { if (usedD.has(a) || usedS.has(b)) continue; usedD.add(a); usedS.add(b); discs[a].site = b; bySite[b] = discs[a]; }
-  }
-  function showPick() {
-    assign(); phase = 'pick';
-    Kit.$('opts').classList.remove('wait');
-    if (!Kit.calm) gsap.from('.opt', {scale: .2, opacity: 0, y: 14, stagger: .06, duration: .55, ease: 'back.out(2.2)'});
-    say.innerHTML = 'Packed in, how many units touch <b>each one</b>? <b>Pick a number.</b>';
-    Kit.haptic('light');
-  }
-  function toPick() {
-    discs.forEach(o => { const p = o.body.position; o.u = (p.x - x0) / d; o.v = (floorY - p.y) / d; o.a = o.body.angle; o.body = null; });
-    engine = null; showPick();
-  }
-  function instant() {
-    engine = null; discs = []; poured = TOTAL; touched = true;
-    sites.forEach(s => { const o = mkDisc(); o.u = s.u + (Kit.rnd() - .5) * .14; o.v = s.v + (Kit.rnd() - .5) * .08; discs.push(o); });
-    showPick();
-  }
-
-  function reveal() {
-    phase = 'reveal'; Kit.haptic('success');
-    if (Kit.calm) { Object.assign(rev, {snap: 1, glow: 1, hex: 1, flake: 1, gone: 1}); layout(); return; }
-    layout();
-    gsap.timeline()
-      .to(rev, {gone: 1, duration: .55, ease: 'power2.in'}, 0)
-      .to(rev, {snap: 1, duration: 1.2, ease: 'elastic.out(1,.42)'}, 0)
-      .to(rev, {glow: 1, duration: .9, ease: 'power1.out'}, '-=.6')
-      .to(rev, {hex: 1, duration: 1.1, ease: 'power2.inOut'}, '-=.5')
-      .to(rev, {flake: 1, duration: 1.4, ease: 'expo.out'}, '-=.25');
-  }
-
-  function pos(o) {
-    if (o.body) return {X: o.body.position.x, Y: o.body.position.y, a: o.body.angle};
-    const s = sites[o.site] || o, k = phase === 'reveal' ? rev.snap : 0;
-    const u = o.u + (s.u - o.u) * k, v = o.v + (s.v - o.v) * k;
-    return {X: x0 + u * d, Y: floorY - v * d, a: o.a};
-  }
-  const fitFont = (txt, weight, size, family, maxW) => { let s = size; do { x.font = `${weight} ${s}px ${family}`; if (x.measureText(txt).width <= maxW) break; s -= .5; } while (s > 12); return s; };
-
-  function draw(t) {
-    if (!x || W < 20) return;
-    x.clearRect(0, 0, W, H);
-    const fr = Kit.calm ? 0 : Math.floor(t / 125) % 3;
-    const ew = Math.min(1.2, enter.w), ec = enter.c;
-
-    // Paper snow drifting past.
-    x.fillStyle = 'rgba(251,243,228,.17)';
-    snow.forEach(s => { const yy = ((s.v + (Kit.calm ? 0 : t * s.sp / 70000)) % 1) * H, xx = s.u * W + (Kit.calm ? 0 : Math.sin(t / 1600 + s.ph) * 7);
-      x.beginPath(); x.arc(xx, yy, s.s, 0, Math.PI * 2); x.fill(); });
-
-    // The kraft-paper tray, taped down.
-    x.save(); x.translate(0, (1 - ew) * H * .5); x.globalAlpha = clamp(ew * 2);
-    pieces.forEach(p => paper(() => poly(p[fr]), KRAFT, .8));
-    tapes.forEach(p => { x.save(); x.globalAlpha *= .82; paper(() => poly(p[fr]), '#efe3c9', .3); x.restore(); });
-    x.restore();
-
-    // Ghost drops showing where the units will fall, until the first touch.
-    if (phase === 'pour' && !touched && !Kit.calm && ec >= 1 && discs.length === 0) {
-      const top = cloud.cy + cloud.ch * .4, bot = floorY - r;
-      x.save(); x.setLineDash([3, 4]); x.lineWidth = 1.6; x.strokeStyle = CREAM;
-      for (let k = 0; k < 3; k++) {
-        const q = ((t / 1500) + k / 3) % 1, yy = top + (bot - top) * q * q, xx = cloud.cx + (k - 1) * d * 1.6;
-        x.globalAlpha = .5 * Math.sin(Math.PI * q);
-        x.beginPath(); x.arc(xx, yy, r * .85, 0, Math.PI * 2); x.stroke();
-      }
-      x.restore();
-    }
-
-    // The tiny units.
-    discs.forEach(o => {
-      const p = pos(o); let col = o.col, sc = 1;
-      if (phase === 'reveal') {
-        const k = o.site === CENTRE ? 0 : NB.indexOf(o.site) + 1;
-        if (o.site === CENTRE || k > 0) { const g = clamp((rev.glow - k * .09) / .45); if (g > 0) { col = k ? GOLD : CORAL; sc = 1 + .22 * Math.sin(Math.PI * g); } }
-      }
-      paper(() => poly(circlePts(p.X, p.Y, r * sc, o.f[fr], p.a)), col, sc);
-      // Frost sheen.
-      x.save(); x.globalAlpha = .6; x.strokeStyle = '#ffffff'; x.lineCap = 'round'; x.lineWidth = Math.max(1.2, r * .12);
-      x.beginPath(); x.arc(p.X - r * .08, p.Y - r * .08, r * sc * .58, Math.PI * 1.08, Math.PI * 1.52); x.stroke(); x.restore();
-    });
-
-    // The hexagon through the six neighbours, counted off as the line reaches them.
-    if (phase === 'reveal' && rev.hex > 0 && bySite[CENTRE]) {
-      const P = NB.map(i => pos(bySite[i])); P.push(P[0]);
-      const segs = []; let tot = 0;
-      for (let i = 0; i < 6; i++) { const L = Math.hypot(P[i + 1].X - P[i].X, P[i + 1].Y - P[i].Y); segs.push(L); tot += L; }
-      let left = rev.hex * tot;
-      const path = () => { x.beginPath(); x.moveTo(P[0].X, P[0].Y); let rem = left; for (let i = 0; i < 6 && rem > 0; i++) { const k = Math.min(1, rem / segs[i]); x.lineTo(P[i].X + (P[i + 1].X - P[i].X) * k, P[i].Y + (P[i + 1].Y - P[i].Y) * k); rem -= segs[i]; } };
-      x.lineCap = 'round'; x.lineJoin = 'round'; x.lineWidth = Math.max(3, d * .11);
-      x.save(); x.translate(shx * .6, shy * .6); path(); x.strokeStyle = SHADOW; x.stroke(); x.restore();
-      path(); x.strokeStyle = '#fffaf0'; x.stroke();
-      const nfs = Math.max(12, r * .9);
-      x.font = `800 ${nfs}px ${disp}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = NAVY;
-      for (let k = 0; k < 6; k++) { const g = clamp((rev.hex - k / 6) * 6); if (g <= 0) continue; const q = pos(bySite[NB[k]]); x.save(); x.globalAlpha = g; x.translate(q.X, q.Y); x.scale(.6 + .4 * g, .6 + .4 * g); x.fillText(String(k + 1), 0, 1); x.restore(); }
-    }
-
-    // The cut-out cloud the units pour from.
-    const ca = clamp(ec) * (1 - rev.gone);
-    if (ca > 0) {
-      const breathe = (!touched && !Kit.calm) ? 1 + .03 * Math.sin(t / 380) : 1;
-      x.save(); x.globalAlpha = ca;
-      x.translate(cloud.cx, cloud.cy - (1 - ec) * (cloud.cy + cloud.ch) - rev.gone * cloud.ch * .4); x.scale(breathe, breathe);
-      sheet(cloud.shapes.map(s => s[fr]), CREAM);
-      const s = fitFont(CLOUD_TXT, 700, Math.min(fs, cloud.ch / 3.1), hand, cloud.cw * .8);
-      x.font = `700 ${s}px ${hand}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = NAVY;
-      x.fillText(CLOUD_TXT, 0, cloud.ch * .2);
-      x.restore();
-    }
-
-    // The snowflake that the stacking builds, and Kepler's name on it.
-    if (phase === 'reveal' && rev.flake > 0 && bySite[CENTRE]) {
-      const p = rev.flake, c = pos(bySite[CENTRE]);
-      const fx = c.X + (fl.x - c.X) * p, fy = c.Y + (fl.y - c.Y) * p, R = fl.R * (.2 + .8 * p), rot = (1 - p) * -1.4 + [0, .015, -.012][fr];
-      const arms = () => { x.beginPath(); for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3, co = Math.cos(a), si = Math.sin(a); x.moveTo(0, 0); x.lineTo(co * R, si * R);
-        [[.42, .34], [.7, .22], [.9, .1]].forEach(([q, l]) => { const bx = co * R * q, by = si * R * q; for (const sg of [-1, 1]) { const b = a + sg * Math.PI / 3; x.moveTo(bx, by); x.lineTo(bx + Math.cos(b) * R * l, by + Math.sin(b) * R * l); } }); } };
-      x.save(); x.globalAlpha = clamp(p * 3); x.lineCap = 'round'; x.lineJoin = 'round'; x.lineWidth = Math.max(3, R * .13);
-      x.save(); x.translate(fx + shx, fy + shy); x.rotate(rot); arms(); x.strokeStyle = SHADOW; x.stroke(); x.restore();
-      x.save(); x.translate(fx, fy); x.rotate(rot); arms(); x.strokeStyle = '#fffaf0'; x.stroke(); x.globalAlpha *= .5; x.strokeStyle = pat; x.stroke();
-      x.globalAlpha = clamp(p * 3); x.beginPath(); for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3 + Math.PI / 6; x[k ? 'lineTo' : 'moveTo'](Math.cos(a) * R * .22, Math.sin(a) * R * .22); } x.closePath(); x.fillStyle = CORAL; x.fill();
-      x.restore();
-      // Twinkles orbiting the finished flake.
-      const tw = clamp((p - .55) * 2.5);
-      if (tw > 0) {
-        x.strokeStyle = GOLD; x.lineWidth = Math.max(1.5, R * .05);
-        for (let k = 0; k < 6; k++) {
-          const a = k * Math.PI / 3 + Math.PI / 6 + (Kit.calm ? 0 : t / 2600), rr = R * 1.22, sx = fx + Math.cos(a) * rr, sy = fy + Math.sin(a) * rr;
-          const z = Math.max(2.5, R * .09) * (Kit.calm ? 1 : .6 + .4 * Math.sin(t / 260 + k * 1.7));
-          x.globalAlpha = tw; x.beginPath(); x.moveTo(sx - z, sy); x.lineTo(sx + z, sy); x.moveTo(sx, sy - z); x.lineTo(sx, sy + z); x.stroke();
-        }
-      }
-      x.restore();
-
-      const la = clamp((p - .35) * 2.2);
-      if (la > 0) {
-        if (fl.side) {
-          const cxl = (x0 - wallT) / 2, maxW = x0 - wallT - 12, slide = (1 - la) * -14;
-          if (maxW > 40) {
-            x.save(); x.globalAlpha = la; x.textAlign = 'center'; x.textBaseline = 'middle';
-            const s1 = fitFont("Kepler's guess", 800, fs * 1.2, hand, maxW), s2 = fitFont('six around one', 700, fs, hand, maxW);
-            x.font = `800 ${s1}px ${hand}`; x.fillStyle = GOLD; x.fillText("Kepler's guess", cxl + slide, fl.y - s1 * .72);
-            x.font = `700 ${s2}px ${hand}`; x.fillStyle = '#fbf3e4'; x.fillText('six around one', cxl + slide, fl.y + s2 * .78);
-            x.restore();
-          }
-        } else {
-          const lx = Math.max(6, x0 - wallT), maxW = fl.x - fl.R * 1.45 - 10 - lx, slide = (1 - la) * -14;
-          if (maxW > 40) {
-            x.save(); x.globalAlpha = la; x.textAlign = 'left'; x.textBaseline = 'middle';
-            const s1 = fitFont("Kepler's guess", 800, fs * 1.2, hand, maxW);
-            x.font = `800 ${s1}px ${hand}`; x.fillStyle = GOLD; x.fillText("Kepler's guess", lx + slide, fl.y - s1 * .55);
-            const s2 = fitFont('six around one', 700, fs, hand, maxW);
-            x.font = `700 ${s2}px ${hand}`; x.fillStyle = '#fbf3e4'; x.fillText('six around one', lx + slide, fl.y - s1 * .55 + Math.max(s1, s2) * 1.45);
-            x.restore();
-          }
-        }
-      }
-    }
-  }
-
-  function tick(t) {
-    requestAnimationFrame(tick);
-    if (engine) {
-      if ((pouring || queue > 0) && poured < TOTAL && t - lastDrop > 58) { drop(); lastDrop = t; queue = Math.max(0, queue - 1); }
-      for (let i = 0; i < 2; i++) M.Engine.update(engine, 1000 / 120);
-      if (phase === 'settle') {
-        let mx = 0; discs.forEach(o => mx = Math.max(mx, o.body.speed));
-        calmFrames = mx < .12 ? calmFrames + 1 : 0;
-        if (calmFrames > 25 || t - settleT > 3500) toPick();
-      }
-    }
-    draw(t);
-  }
-
-  cv.addEventListener('pointerdown', e => {
-    if (phase !== 'pour') return;
-    touched = true;
-    if (Kit.calm || !engine) { instant(); return; }
-    pouring = true; queue = 3; cv.setPointerCapture(e.pointerId);
-    drop(); lastDrop = performance.now(); Kit.haptic('light');
-  });
-  const stop = () => { pouring = false; };
-  cv.addEventListener('pointerup', stop); cv.addEventListener('pointercancel', stop);
-
-  let started = false;
-  const start = () => { if (started) return; started = true; requestAnimationFrame(tick); };
-  return {layout, start, instant, reveal, get phase() { return phase; },
-    enter() { start(); if (Kit.calm) return; gsap.fromTo(enter, {w: 0, c: 0}, {w: 1, duration: 1, ease: 'power3.out'}); gsap.fromTo(enter, {c: 0}, {c: 1, duration: .9, delay: .35, ease: 'back.out(1.6)', immediateRender: false}); }};
-})();
-
-let pick = -1;
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === 6;
-  Kit.answer({choice: `${pick} neighbours`, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${pick}, ${ok ? 'right' : 'wrong'}`);
-  Kit.show('keep');
-  Game.reveal();
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0 || Game.phase !== 'pick') return;
-  pick = +b.dataset.n; b.classList.add('on'); Kit.haptic('selection'); sure.on();
-  if (!Kit.calm) gsap.fromTo(b, {scale: .85}, {scale: 1, duration: .5, ease: 'elastic.out(1,.4)'});
-});
-Kit.onShow.card = () => Game.layout();
-Kit.onEnter.card = () => Game.enter();
-Kit.play.card = async () => {
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  Game.start();
-  if (Game.phase === 'pour' || Game.phase === 'settle') Game.instant();
-  await wait(80);
-  Kit.$('opts').querySelector('[data-n="6"]').click();
-  await wait(120);
-  Kit.$('sure').querySelector('[data-v="80"]').click();
-  await wait(Kit.calm ? 150 : 3600);
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
 };
+(() => {
+  const card = Kit.$('card'), opts = Kit.$('opts');
+  const ACC = '#e4572e', TINT = '#f6c6b4';
+  const css = n => getComputedStyle(card).getPropertyValue(n).trim();
+  let INK = '#15191C', BG = '#E8EEF2', BODY = 'Figtree, sans-serif';
+  const RIGHT = 1, SHORT = ['cold air', 'stacking units', 'chance'];
+  let pick = -1, turned = false;
+  const SQ3 = Math.sqrt(3);
+
+  // ---------- the front: you, a flake, the flake magnified, one unknown unit at its centre ----------
+  const svg = Kit.$('pic'); let arms = [], inset = null;
+  function drawFront() {
+    INK = css('--k') || INK; BG = css('--c') || BG; BODY = css('--body') || BODY;
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26));
+    const T = (x, y, t, a = {}, p = svg) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: `font-family:${BODY}`}, a), p); e.textContent = t; return e; };
+    const ln = (p, x1, y1, x2, y2, w, a = {}) => Kit.mk('line', Object.assign({x1, y1, x2, y2, stroke: INK, 'stroke-width': w, 'stroke-linecap': 'round'}, a), p);
+    const TOPLAB = 'its smallest unit of water';
+    const measure = t => { const e = T(0, 0, t); const w = e.getComputedTextLength(); e.remove(); return w; };
+    const topW = measure(TOPLAB), youW = measure('you');
+    const gy = H - 1.5;
+    const ring = Math.max(28, Math.min(W * .3, (H - fs * 3.15 - 4) / 2)), R = ring / 1.16, gap = Math.max(14, ring * .28);
+    let u = Math.max(.5, Math.min((gy - fs * 1.35) / 92.5, (gy - 2) / 107, ring * .02, (W - 2 * ring - gap - 4) / 54));
+    let start, px, cx, cy;
+    const lay = () => { start = Math.max(2, (W - (54 * u + gap + 2 * ring)) / 2); px = start + 17 * u; cx = start + 54 * u + gap + ring; cy = fs * 1.55 + ring; };
+    lay();
+    // if the top label would sit over the figure's column, keep the figure (and its "you") below the label's row
+    const topL = Math.min(W - topW - 1, Math.max(1, cx - topW / 2));
+    if (topL < Math.max(px + youW / 2, px + 37 * u) + 6) {
+      u = Math.max(.5, Math.min(u, (gy - fs * 3.1) / 92.5, (gy - fs * 1.9) / 107));
+      lay();
+    }
+    const X = v => px + v * u, Y = v => gy - v * u;
+
+    ln(svg, Math.max(1, start - 8), gy, Math.min(W - 1, cx + ring + 8), gy, 1.6);
+
+    const fig = Kit.mk('g', {fill: INK}, svg);
+    for (const lx of [-8, 2.5]) Kit.mk('rect', {x: X(lx), y: Y(22), width: 5.5 * u, height: 22 * u - 1, rx: 1.5 * u}, fig);
+    for (const bx of [-9.5, 2]) Kit.mk('rect', {x: X(bx), y: Y(6.5), width: 7.5 * u, height: 6.5 * u - 1, rx: 2.4 * u}, fig);
+    Kit.mk('path', {d: `M${X(-12)},${Y(64)} Q${X(-12)},${Y(74)} ${X(-3)},${Y(74)} L${X(3)},${Y(74)} Q${X(12)},${Y(74)} ${X(12)},${Y(64)} L${X(17)},${Y(20)} Q${X(17)},${Y(18)} ${X(15)},${Y(18)} L${X(-15)},${Y(18)} Q${X(-17)},${Y(18)} ${X(-17)},${Y(20)} Z`}, fig);
+    ln(fig, X(-10), Y(66), X(-15.5), Y(40), 6 * u);
+    Kit.mk('circle', {cx: X(-15.8), cy: Y(38.5), r: 3.6 * u}, fig);
+    ln(fig, X(9), Y(66), X(26), Y(85), 6 * u);
+    Kit.mk('circle', {cx: X(28), cy: Y(88), r: 4.8 * u}, fig);
+    Kit.mk('circle', {cx: X(23.6), cy: Y(89.5), r: 2.2 * u}, fig);
+    Kit.mk('circle', {cx: X(0), cy: Y(84), r: 8.5 * u}, fig);
+    T(px, Y(92.5) - fs * .5, 'you', {'text-anchor': 'middle'});
+
+    const fx = X(30), fy = Y(101), fr = 6 * u, fw = Math.max(1.2, .9 * u);
+    for (let k = 0; k < 6; k++) {
+      const a = k * Math.PI / 3, c = Math.cos(a), s = Math.sin(a);
+      ln(svg, fx, fy, fx + fr * c, fy + fr * s, fw);
+      for (const t of [-1, 1]) { const bx = fx + fr * .55 * c, by = fy + fr * .55 * s, b = a + t * Math.PI / 3; ln(svg, bx, by, bx + fr * .38 * Math.cos(b), by + fr * .38 * Math.sin(b), fw * .85); }
+    }
+
+    const D = Math.hypot(fx - cx, fy - cy), th = Math.atan2(fy - cy, fx - cx), al = Math.acos(Math.min(1, ring / D));
+    for (const sg of [-1, 1]) ln(svg, fx, fy, cx + ring * Math.cos(th + sg * al), cy + ring * Math.sin(th + sg * al), 1, {'stroke-dasharray': '3 4', opacity: .5, 'stroke-linecap': 'butt'});
+    Kit.mk('circle', {cx, cy, r: ring, fill: 'none', stroke: INK, 'stroke-width': 1.4, opacity: .55}, svg);
+
+    const sw = Math.max(2.5, R * .05); arms = [];
+    for (let k = 0; k < 6; k++) {
+      const a = k * Math.PI / 3, c = Math.cos(a), s = Math.sin(a), g = Kit.mk('g', {}, svg);
+      ln(g, cx, cy, cx + R * c, cy + R * s, sw);
+      for (const [p, l] of [[.42, .26], [.7, .18]]) for (const t of [-1, 1]) {
+        const bx = cx + R * p * c, by = cy + R * p * s, b = a + t * Math.PI / 3;
+        ln(g, bx, by, bx + R * l * Math.cos(b), by + R * l * Math.sin(b), sw * .8);
+      }
+      arms.push(g);
+    }
+
+    const ri = Math.max(fs * 1.2, R * .27), sq = ri * 1.06;
+    inset = Kit.mk('g', {}, svg);
+    Kit.mk('circle', {cx, cy, r: ri, fill: BG, stroke: ACC, 'stroke-width': 2.2}, inset);
+    Kit.mk('rect', {x: cx - sq / 2, y: cy - sq / 2, width: sq, height: sq, rx: sq * .3, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '3 3'}, inset);
+    T(cx, cy + fs * .4, '?', {'text-anchor': 'middle', 'font-size': fs * 1.15, 'font-weight': 800}, inset);
+
+    const place = (el, x) => { const w = el.getComputedTextLength(); el.setAttribute('x', Math.min(W - w / 2 - 1, Math.max(w / 2 + 1, x))); };
+    place(T(cx, fs, TOPLAB, {'text-anchor': 'middle'}), cx);
+    ln(svg, cx, fs * 1.35, cx, cy - ri - 2, 1.2, {'stroke-linecap': 'butt'});
+    place(T(cx, cy + ring + fs * 1.2, 'a snowflake, magnified', {'text-anchor': 'middle'}), cx);
+  }
+
+  // ---------- the choice ----------
+  const verdict = Kit.$('verdict');
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = opts.children[pick].textContent, P = String(pct).replace(/%$/, '');
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    const icon = ok
+      ? `<svg viewBox="0 0 20 20" role="img" aria-label="right"><circle cx="10" cy="10" r="10" fill="${INK}"/><path d="M5.5 10.3l3 3 6-6.4" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      : `<svg viewBox="0 0 20 20" role="img" aria-label="wrong"><circle cx="10" cy="10" r="10" fill="${ACC}"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+    verdict.innerHTML = `${icon}<span>You picked: ${SHORT[pick]} · ${P}% sure</span>`;
+    setTimeout(() => Turn.over(), 700);
+  });
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  });
+
+  // ---------- the back: small units fall, stack, and grow into six arms ----------
+  const LAB = {kep: "Kepler's guess", unit: 'tiny units of water', crys: 'the hexagonal crystal'};
+  const cv = Kit.$('pic2'); let ctx, W = 0, H = 0, fs = 12, d = 20, r = 10, x0 = 0, floorY = 0, wallTop = 0, lw = 2.5, targets = [], L = {};
+  let eng = null, balls = [], calls = [], state = 0, hexA = 0, growA = 0, labA = 0, loop = 0, tl = null;
+  const rowY = j => floorY - r - j * d * SQ3 / 2;
+  function geom() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 26));
+    ctx.font = `700 ${fs}px ${BODY}`;
+    const kw = ctx.measureText(LAB.kep).width, tw = ctx.measureText(LAB.unit).width, cw = ctx.measureText(LAB.crys).width;
+    let dd = Math.max(5, Math.min((H - fs * 4.2) / 4.764, W / 12)), ag = 0, padL = 0, padR = 0;
+    for (; dd > 5; dd -= .5) {
+      ag = Math.max(2 * dd, (tw + cw) / 2 + 16 - 4.85 * dd);
+      padL = Math.max(0, tw / 2 - 2.5 * dd, kw / 2 - 2.5 * dd);
+      padR = Math.max(0, cw / 2 - 2.35 * dd);
+      if (padL + 9.7 * dd + ag + padR <= W - 2) break;
+    }
+    d = dd; r = d / 2; lw = Math.max(2, d * .085);
+    x0 = 1 + padL + Math.max(0, (W - 2 - (padL + 9.7 * d + ag + padR)) / 2);
+    L.y1 = fs; L.bracketY = fs * 1.45; wallTop = L.bracketY + fs * .5;
+    floorY = H - fs * 2.25;
+    L.yb = H - fs * .4;
+    L.kx = Math.max(kw / 2 + 1, x0 + 2.5 * d);
+    L.tx = Math.min(W - tw / 2 - 1, Math.max(tw / 2 + 1, x0 + 2.5 * d));
+    L.Rf = 2.35 * d; L.fcx = x0 + 5 * d + ag + L.Rf;
+    L.cx = Math.min(W - cw / 2 - 1, Math.max(cw / 2 + 1, L.fcx));
+    targets = [];
+    for (let j = 0; j < 5; j++) { const n = j % 2 ? 4 : 5; for (let i = 0; i < n; i++) targets.push({x: x0 + (j % 2 ? d : r) + i * d, y: rowY(j), j, i}); }
+    L.fcy = rowY(2) - .2 * d;
+  }
+  const T = (j, i) => targets.find(t => t.j === j && t.i === i);
+  const ring6 = () => [T(2, 3), T(1, 2), T(1, 1), T(2, 1), T(3, 1), T(3, 2)];
+  function arrowHead(x, y, ang, s) {
+    ctx.beginPath(); ctx.moveTo(x + s * Math.cos(ang + 2.6), y + s * Math.sin(ang + 2.6)); ctx.lineTo(x, y); ctx.lineTo(x + s * Math.cos(ang - 2.6), y + s * Math.sin(ang - 2.6)); ctx.stroke();
+  }
+  function draw() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.globalAlpha = 1;
+    ctx.strokeStyle = INK; ctx.lineWidth = lw;
+    ctx.beginPath(); ctx.moveTo(x0 - lw / 2, wallTop); ctx.lineTo(x0 - lw / 2, floorY + lw / 2); ctx.lineTo(x0 + 5 * d + lw / 2, floorY + lw / 2); ctx.lineTo(x0 + 5 * d + lw / 2, wallTop); ctx.stroke();
+    const C = T(2, 2), NB = ring6();
+    for (const b of balls) {
+      const p = b.body ? b.body.position : b.p;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r - .8, 0, Math.PI * 2);
+      ctx.fillStyle = hexA > 0 && b.t === C ? ACC : (hexA > 0 && NB.includes(b.t) ? TINT : '#ffffff');
+      ctx.fill(); ctx.lineWidth = 1.6; ctx.strokeStyle = INK; ctx.stroke();
+    }
+    if (hexA > 0) {
+      ctx.globalAlpha = hexA;
+      ctx.beginPath(); NB.forEach((t, k) => k ? ctx.lineTo(t.x, t.y) : ctx.moveTo(t.x, t.y)); ctx.closePath();
+      ctx.strokeStyle = ACC; ctx.lineWidth = Math.max(2, d * .08); ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+    if (growA > 0) {
+      ctx.globalAlpha = Math.min(1, growA * 1.6); ctx.strokeStyle = INK; ctx.lineWidth = 1.3;
+      const sx = x0 + 5 * d + lw + .3 * d, sy = rowY(4) - r + .55 * d;
+      const ea = Math.PI * 7 / 6, ex = L.fcx + L.Rf * 1.02 * Math.cos(ea), ey = L.fcy + L.Rf * 1.02 * Math.sin(ea);
+      const qx = (sx + ex) / 2, qy = Math.min(sy, ey) - .6 * d;
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.quadraticCurveTo(qx, qy, ex, ey); ctx.stroke();
+      arrowHead(ex, ey, Math.atan2(ey - qy, ex - qx), Math.max(6, d * .25));
+      const g = growA, Rf = L.Rf, fx = L.fcx, fy = L.fcy, d2 = d * .5;
+      ctx.globalAlpha = 1; ctx.strokeStyle = INK;
+      for (let k = 0; k < 6; k++) {
+        const a = k * Math.PI / 3, c = Math.cos(a), s = Math.sin(a), len = Rf * (.3 + .7 * g);
+        ctx.lineWidth = lw; ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(fx + len * c, fy + len * s); ctx.stroke();
+        for (const [p, l] of [[.42, .26], [.7, .18]]) {
+          const q = Math.max(0, Math.min(1, (len / Rf - p) / .14)); if (!q) continue;
+          for (const t of [-1, 1]) { const bx = fx + Rf * p * c, by = fy + Rf * p * s, b = a + t * Math.PI / 3;
+            ctx.lineWidth = lw * .85; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + Rf * l * q * Math.cos(b), by + Rf * l * q * Math.sin(b)); ctx.stroke(); }
+        }
+      }
+      const pts = [[fx, fy, ACC]].concat([0, 1, 2, 3, 4, 5].map(k => [fx + d2 * Math.cos(k * Math.PI / 3), fy + d2 * Math.sin(k * Math.PI / 3), TINT]));
+      for (const [x, y, col] of pts) { ctx.beginPath(); ctx.arc(x, y, d2 / 2 - .5, 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 1.4; ctx.strokeStyle = INK; ctx.stroke(); }
+    }
+    if (labA > 0) {
+      ctx.globalAlpha = labA; ctx.fillStyle = INK; ctx.strokeStyle = INK; ctx.lineWidth = 1.2;
+      ctx.font = `700 ${fs}px ${BODY}`; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'center';
+      const bx1 = x0 + .15 * d, bx2 = x0 + 4.85 * d, by = L.bracketY;
+      ctx.beginPath(); ctx.moveTo(bx1, by + .22 * d); ctx.lineTo(bx1, by); ctx.lineTo(bx2, by); ctx.lineTo(bx2, by + .22 * d); ctx.stroke();
+      ctx.fillText(LAB.kep, L.kx, L.y1);
+      ctx.fillText(LAB.unit, L.tx, L.yb);
+      ctx.fillText(LAB.crys, L.cx, L.yb);
+      ctx.globalAlpha = 1;
+    }
+  }
+  function frame() {
+    if (state !== 1) return;
+    Matter.Engine.update(eng, 1000 / 60);
+    draw(); loop = requestAnimationFrame(frame);
+  }
+  function stopSim() {
+    calls.forEach(c => c.kill()); calls = [];
+    cancelAnimationFrame(loop);
+    if (eng) { Matter.World.clear(eng.world, false); Matter.Engine.clear(eng); eng = null; }
+  }
+  function startSim() {
+    stopSim(); if (tl) { tl.kill(); tl = null; }
+    state = 1; hexA = growA = labA = 0; balls = [];
+    const M = Matter;
+    eng = M.Engine.create(); eng.gravity.y = 1.2;
+    const wall = {isStatic: true, friction: 0};
+    M.World.add(eng.world, [
+      M.Bodies.rectangle(x0 - 60, floorY - H, 120, H * 3, wall),
+      M.Bodies.rectangle(x0 + 5 * d + .6 + 60, floorY - H, 120, H * 3, wall),
+      M.Bodies.rectangle(W / 2, floorY + 60, W * 3, 120, wall)]);
+    targets.forEach((t, k) => calls.push(gsap.delayedCall(k * .1, () => {
+      const b = M.Bodies.circle(t.x + (Kit.rnd() - .5) * .6, -r * 1.2, r - .25, {restitution: 0, friction: 0, frictionStatic: 0, frictionAir: .015, slop: .01});
+      M.World.add(eng.world, b); balls.push({body: b, p: {x: t.x, y: -r}});
+      if (k % 5 === 0) Kit.haptic('selection');
+    })));
+    calls.push(gsap.delayedCall(targets.length * .1 + 1.1, settle));
+    loop = requestAnimationFrame(frame);
+  }
+  function settle() {
+    const free = balls.slice();
+    for (const t of targets) {
+      let best = 0, bd = 1e9;
+      free.forEach((b, k) => { const p = b.body.position, q = (p.x - t.x) ** 2 + (p.y - t.y) ** 2; if (q < bd) { bd = q; best = k; } });
+      const b = free.splice(best, 1)[0]; b.t = t; b.p = {x: b.body.position.x, y: b.body.position.y}; b.body = null;
+    }
+    state = 2; stopSim();
+    const o = {hexA: 0, growA: 0, labA: 0};
+    tl = gsap.timeline({onUpdate: draw, onComplete: draw})
+      .to(balls.map(b => b.p), {x: i => balls[i].t.x, y: i => balls[i].t.y, duration: .5, ease: 'power2.out'})
+      .to(o, {hexA: 1, duration: .5, ease: 'power2.out', onStart: () => Kit.haptic('success'), onUpdate: () => { hexA = o.hexA; }}, '+=.15')
+      .to(o, {growA: 1, duration: .9, ease: 'power2.inOut', onUpdate: () => { growA = o.growA; }}, '+=.1')
+      .to(o, {labA: 1, duration: .45, ease: 'power2.out', onUpdate: () => { labA = o.labA; }}, '-=.2');
+  }
+  function finish() {
+    stopSim(); if (tl) { tl.kill(); tl = null; } state = 2;
+    balls = targets.map(t => ({t, p: {x: t.x, y: t.y}})); hexA = growA = labA = 1; draw();
+  }
+  document.addEventListener('turned', () => { turned = true; INK = css('--k') || INK; BODY = css('--body') || BODY; geom(); if (Kit.calm) finish(); else startSim(); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) { geom(); finish(); } };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from(arms, {opacity: 0, duration: .45, stagger: .07, ease: 'power2.out'});
+    if (inset) gsap.from(inset, {opacity: 0, duration: .4, delay: .5, ease: 'power2.out'});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(res => setTimeout(res, ms));
+    opts.children[1].click(); await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(1700);
+    finish(); await wait(200);
+  };
+})();
 Kit.single();
 </script>
 </html>

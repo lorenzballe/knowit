@@ -3,12 +3,12 @@
   "topic": "space",
   "genre": "space.mars_and_rovers",
   "strand": "space.mars_and_rovers.living_on_mars",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How much faster do bones thin in space than on Earth?",
-  "answer": "In space, bone density can decrease by one to two percent per month. That is over 10 times faster than the rate of osteoporosis on Earth. Without weight on them, bones thin far faster than they do with age on Earth.",
-  "move": "Without weight on them, bones thin over 10× faster than with age on Earth.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Floating in orbit, how much bone mass can an astronaut lose in one month?",
+  "answer": "Astronauts lose 1–2% of bone mass every month in orbit. That is over 10 times faster than osteoporosis on Earth. With no weight pushing on them, their bones thin, mostly in the legs.",
+  "move": "Bone stays only where load is felt.",
   "keywords": [
     "bones",
     "orbit",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dial-driven page. Drag the dial to keep a right leg in orbit for up to a year while watching the bone inside it. The page asks how much faster bones thin in space than on Earth.",
-    "ground": "#efe3c4"
+    "label": "Interactive card: a bone floating in orbit. It asks how much bone mass an astronaut can lose in one month. The reader drags down on the bone to hollow it to their guess."
   },
   "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
   "reference": "https://www.youtube.com/watch?v=SAQ-iIJkLzA&t=144s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }
