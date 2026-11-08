@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Card titled Underground Crystals asking what natural process fills cavities in rocks with crystals. A drag control loads underground water with salt, going from none to too much."
   },
   "source": "Geopop, “Come creare i cristalli fatti in casa? Esperimento facile” (YouTube, 2018)",

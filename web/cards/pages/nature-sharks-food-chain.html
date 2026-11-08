@@ -1,402 +1,215 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: nature-sharks-food-chain -->
-<!-- Look: a page from a natural history book. The card is a clear mid-sea blue with open space all round. There's no dark panel.
-     One wavy surface line crosses the top, with a plain pale boat floating on it. One big flat shark has a deep slate back and a
-     pale belly, the way real sharks are coloured. Below it swims a school of plain amber fish. At the bottom a pale sandy seabed
-     holds a few single strands of darker seagrass and a handful of small pale curled krill. Nothing else.
-     Interaction: drag the shark up along the fishing line to the boat. The school stops fleeing as the shark rises. Let go out of the water and the shark is gone; let go too early and it springs back.
-     Wow: a splash, then a flat coral front sinks through the levels. The school spreads into the shark's water and down to the seabed, the small life fades out and the grass shrinks, and IMBALANCE scrambles into place.
-     Legend: a plain column on the left, in the body font, that the fish never cross. When the stage gets short it folds into one row along the seabed, so it always stays readable. -->
-<title>Take the shark away</title>
+<!doctype html>
+<!-- slug: nature-sharks-top-of-chain -->
+<!-- Thought to carry: sharks sit at the top of the food chain. Take them out and the fish they kept in check explode, and the whole sea loses its balance.
+     Front: the stake (about 100 million sharks and rays a year), then a flat two-tier chain: one shark above, orange mid-sized fish below, all facing right.
+     The reader answers with one gesture: More / Fewer / About the same. Picking turns the shark into a pale outline, and only then the confidence row fades in.
+     Back: two columns on one baseline. The same shark lies there as a ghost outline. The mid-sized fish stack in tidy rows and break far through their "before" dash.
+     One "before" label, one quiet up-arrow. Nothing is claimed about any level the video does not name. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sharks at the top</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
-<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#card.card{background:var(--c)}
-#card .q{color:#f4fbff}
-#card .say{color:#dcedf7}
-#card .say b{color:#ffcf6b}
-#stage{display:flex;flex:1;min-height:0;position:relative}
-#sea{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
-#sea:active{cursor:grabbing}
-#why{display:flex;flex-direction:column;gap:.7cqh}
-#why .big{font:800 max(4.4cqh,24px)/1 var(--display);color:#ff9478;min-height:1em;margin:0}
-#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);color:#e6f2fa;margin:0;overflow-wrap:anywhere}
-#card .keep{color:#f4fbff;opacity:1}
-#card .keep b{color:#ffcf6b}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face{gap:1.2cqh}
+.front{padding-bottom:46px;box-sizing:border-box}
+.dek{font:500 max(1.9cqh,13px)/1.35 var(--body);color:var(--k);margin:0}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#opts{display:flex;gap:2cqw}
+.opt{flex:1 1 auto;font:700 max(2cqh,14px)/1.15 var(--body);color:var(--c);background:var(--k);border:0;border-radius:999px;padding:1.3cqh 1.4cqw;cursor:pointer;white-space:nowrap;transition:background .25s,color .25s,box-shadow .25s}
+.opt[data-i="2"]{flex-grow:1.7}
+#opts.done .opt{cursor:default}
+#opts.done .opt:not(.on){background:transparent;color:var(--k);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--k) 35%,transparent)}
+#sure{transition:opacity .45s ease}
+#sure.wait{opacity:0;visibility:hidden;pointer-events:none}
+.back .foot{padding-right:96px}
+.back .big{font-size:max(3.2cqh,18px);line-height:1.15;margin:0}
+.back .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Drag the shark out · the food chain" style="--c:#1a5f92;--k:#f4fbff;--edge:#0c3352">
+<article class="card" id="card" data-topic="nature" data-kind="Take the shark out · predict" style="--c:#8fd0dc;--k:#0d2a33;--edge:#5aa6b6">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">PULL THE SHARK</span></div>
-    <h2 class="q">Why would losing sharks throw the whole sea off balance?</h2>
-    <div class="stagebox" id="stage">
-      <canvas id="sea" data-drag role="img" aria-label="A shark patrols above a school of mid-size fish, with small glowing life on the seabed. A fishing line runs from the shark to a boat on the surface. Bars show how many sharks, mid fish and small life there are."></canvas>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAKE ONE OUT</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">No more sharks. What happens to the fish they eat?</h2>
+        <p class="dek">About 100 million sharks and rays die every year. Take them off the top of this chain:</p>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A food chain in the sea: sharks on top eat mid-sized fish."></svg></div>
+        <div id="opts" role="group" aria-label="Your answer">
+          <button class="opt" data-i="0">More</button>
+          <button class="opt" data-i="1">Fewer</button>
+          <button class="opt" data-i="2">About the same</button>
+        </div>
+        <div id="sure" class="wait"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">More. With no one hunting them, they explode.</p>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="Two columns: the shark gone, and the mid-sized fish piled far above their old level."></svg></div>
+        <p class="body">Sharks sit at the top of the food chain and keep the fish below them in check. Take them away and those fish multiply unchecked, and the whole sea, and with it the planet’s ecosystem, tips out of balance.</p>
+        <div class="keep"><b>WHAT TO KEEP</b>The predator at the top is the regulator: remove it and its prey explodes.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)</span></div>
+      </section>
     </div>
-    <div id="why" class="gone"><p class="big" id="big"></p><p class="body" id="whybody">Sharks sit at the top of the food chain and keep their prey in check. Take them away and the prey multiply, and every level below tips out of balance. Yet about 100 million sharks and rays die every year.</p></div>
-    <p class="say" id="say">Sharks keep the fish below them in check. <b>Drag the shark up to the boat.</b></p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A top predator is the brake: remove it and the whole food web runs out of balance.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-gsap.registerPlugin(SplitText, ScrambleTextPlugin);
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const cv = Kit.$('sea'), say = Kit.$('say');
-  const R = Kit.rnd, clamp = (v, a, b) => Math.max(a, Math.min(b, v)), TAU = Math.PI * 2;
-  let x = null, W = 0, H = 0, fs = 12, BODY = 'sans-serif', L = 100, SURF = 0, HOME = {x: 0, y: 0}, FL = 14, BOAT = 0;
-  let compact = false, GY = [0, 0, 0], UMIN = .04, FT0 = 0, FTB = 0, FB0 = 0, FBB = 0;
-  const st = {show: 1, ox: 0, oy: 0, mid: 1, small: 1, wave: -1, splash: 0, hint: 1, glow: 0};
-  const tgt = {tx: 0, ty: 0};
-  let dragging = false, removed = false, done = false, started = false, last = 0, T = 0, grab = null, cascade = null, splashX = 0;
-  const N0 = 11, MAXMID = 3.4;
-  const AMBER = '#ffc35a', RED = '#ff9478';
-  const fish = [], dots = [], fronds = [];
-  // small life: a handful of krill, few enough to read as animals and not as specks
-  for (let i = 0; i < 9; i++) dots.push({u: .34 + i / 8 * .58 + (R() - .5) * .04, v: .83 + R() * .06, p: R() * TAU, d: R() < .5 ? -1 : 1, a: 1});
-  for (let i = 0; i < 5; i++) fronds.push({u: .32 + i / 4 * .6 + (R() - .5) * .04, h: .6 + R() * .4, p: R() * TAU});
-  const newFish = (u, v, born) => fish.push({u, v, d: R() < .5 ? -1 : 1, sp: .035 + R() * .03, p: R() * TAU, sc: born ? 0 : 1, die: false, z: .82 + R() * .32});
-  for (let i = 0; i < N0; i++) newFish(.3 + R() * .64, .47 + R() * .2, false);
-
-  // ---------- palette: the card's ink and edge mixed into the card's colour ----------
-  const hx = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16)); };
-  let KC = [244, 251, 255], CC = [26, 95, 146], EC = [12, 51, 82];
-  const blend = (A, n) => `rgb(${A.map((v, i) => Math.round(v * n / 100 + CC[i] * (1 - n / 100))).join(',')})`;
-  const mix = n => blend(KC, n), dk = n => blend(EC, n);
-  let P = {};
-
-  function layout() {
-    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(15, Math.min(W, H) * .036));
-    const cs = getComputedStyle(Kit.$('card'));
-    BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
-    const k = cs.getPropertyValue('--k').trim(), c = cs.getPropertyValue('--c').trim(), e = cs.getPropertyValue('--edge').trim();
-    if (/^#[0-9a-f]{3,6}$/i.test(k)) KC = hx(k);
-    if (/^#[0-9a-f]{3,6}$/i.test(c)) CC = hx(c);
-    if (/^#[0-9a-f]{3,6}$/i.test(e)) EC = hx(e);
-    P = {line: mix(75), boat: mix(90), top: dk(70), fin: dk(50), belly: mix(92), gill: dk(45), eye: dk(100),
-         krill: mix(85), grass: dk(40), sand: mix(26), track: mix(35), text: mix(96), drop: mix(88)};
-    SURF = Math.max(H * .1, fs * 2.8);
-    L = Math.min(W * .5, H * .36);
-    HOME = {x: W * .6, y: Math.max(H * .29, SURF + L * .4)};
-    FL = clamp(W * .05, 12, 24);
-    BOAT = W * .8;
-    GY = [HOME.y - fs * .2, H * .5, H * .79];
-    compact = H < fs * 13 || GY[1] - GY[0] < fs * 2.6 || GY[2] - GY[1] < fs * 2.6;
-    UMIN = compact ? .04 : clamp((Math.max(6, W * .03) + W * .24 + fs * .9) / W, .04, .42);
-    if (compact) {
-      FT0 = SURF + FL; FTB = SURF + FL * .8; FB0 = FBB = Math.max(FT0 + 4, H - fs * 2.6);
-    } else {
-      FT0 = H * .43; FTB = Math.max(H * .26, SURF + FL); FB0 = H * .7; FBB = H * .85;
-    }
-    if (!started) { started = true; requestAnimationFrame(loop); }
-  }
-
-  const lift = () => clamp(-tgt.ty / (HOME.y - SURF), 0, 1.4);
-  const presence = () => removed ? 0 : 1 - clamp(-st.oy / (HOME.y - SURF), 0, 1);
-  const sharkPos = () => {
-    const calmish = dragging || removed ? 0 : 1;
-    return {x: HOME.x + st.ox + Math.sin(T * .35) * W * .02 * calmish, y: HOME.y + st.oy + Math.sin(T * .7) * H * .012 * calmish};
+  const RIGHT = 0, ACC = '#f2703a';
+  const P = {
+    S: 'M-0.38,0 C-0.15,-0.13 0.25,-0.12 0.5,0.01 C0.3,0.08 -0.1,0.09 -0.38,0.02 Z M-0.36,0.01 L-0.5,-0.14 L-0.44,0.01 L-0.5,0.11 Z M-0.02,-0.1 L0.06,-0.24 L0.14,-0.105 Z M0.12,0.06 L0.04,0.18 L0.22,0.06 Z',
+    F: 'M0.5,0 C0.3,-0.26 -0.15,-0.26 -0.3,0 C-0.15,0.26 0.3,0.26 0.5,0 Z M-0.26,0 L-0.5,-0.2 L-0.44,0 L-0.5,0.2 Z'
   };
-  const boom = () => clamp((st.mid - 1) / (MAXMID - 1), 0, 1);
+  let pick = -1, turned = false, sim = null, front = null;
+  const svg = Kit.$('pic');
 
-  // ---------- simulation ----------
-  function update(dt) {
-    const k = Math.min(1, dt * 16);
-    st.ox += (tgt.tx - st.ox) * k; st.oy += (tgt.ty - st.oy) * k;
-    const sp = sharkPos(), pr = presence(), b = boom();
-    const top = (FT0 + (FTB - FT0) * b) / H, bot = (FB0 + (FBB - FB0) * b) / H;
-    const alive = fish.filter(f => !f.die), want = Math.round(N0 * st.mid);
-    for (let n = 0; n < 2 && alive.length < want; n++) {
-      const s = alive[(R() * alive.length) | 0] || {u: .6, v: .55};
-      newFish(clamp(s.u + (R() - .5) * .06, UMIN, .95), s.v + (R() - .5) * .04, true); alive.push(fish[fish.length - 1]);
-    }
-    if (alive.length > want) alive[alive.length - 1].die = true;
-    const speed = 1 + b * .5;
-    for (let i = fish.length - 1; i >= 0; i--) {
-      const f = fish[i];
-      f.sc += ((f.die ? 0 : 1) - f.sc) * Math.min(1, dt * 4);
-      if (f.die && f.sc < .02) { fish.splice(i, 1); continue; }
-      f.u += f.d * f.sp * speed * dt;
-      f.v += Math.sin(T * 1.3 + f.p) * dt * .02;
-      if (f.v < top) f.v += (top - f.v) * dt * 2; if (f.v > bot) f.v += (bot - f.v) * dt * 2;
-      const dx = f.u * W - sp.x, dy = f.v * H - sp.y, dist = Math.hypot(dx, dy) || 1, Rr = L * .62 * pr;
-      if (dist < Rr) { const p = (1 - dist / Rr) * dt * .6; f.u += dx / dist * p * .6; f.v += dy / dist * p * .6; f.d = dx > 0 ? 1 : -1; }
-      if (f.u < UMIN) { f.u += (UMIN - f.u) * Math.min(1, dt * 3); f.d = 1; }
-      if (f.u > .96) { f.u = .96; f.d = -1; }
-    }
-    dots.forEach((d, i) => { const on = i / dots.length < st.small ? 1 : 0; d.a += (on - d.a) * Math.min(1, dt * 3); d.u += Math.sin(T * .5 + d.p) * dt * .004; });
+  // ---------- shared drawing: one fish, one shark, used on both faces ----------
+  function fish(p, x, y, w, fill, rot = 0) {
+    const g = Kit.mk('g', {transform: `translate(${x},${y}) rotate(${rot}) scale(${w})`}, p);
+    Kit.mk('path', {d: P.F, style: `fill:${fill};stroke:var(--k)`, 'stroke-width': 1.3, 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, g);
+    Kit.mk('circle', {cx: .3, cy: -.04, r: Math.max(1.4 / w, .03), style: 'fill:var(--k)'}, g);
+    return g;
   }
+  function shark(p, x, y, L) {
+    const g = Kit.mk('g', {}, p);
+    const t = Kit.mk('g', {transform: `translate(${x},${y}) scale(${L})`}, g);
+    const fill = Kit.mk('g', {}, t);
+    Kit.mk('path', {d: P.S, style: 'fill:var(--k)'}, fill);
+    Kit.mk('circle', {cx: .38, cy: -.02, r: 1.8 / L, style: 'fill:var(--c)'}, fill);
+    const line = Kit.mk('path', {d: P.S, fill: 'none', style: 'stroke:var(--k);opacity:0', 'stroke-width': 1.5, 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, t);
+    return {g, fill, line};
+  }
+  function arrow(p, x, y0, y1, op = 1) {
+    if (Math.abs(y1 - y0) < 12) return null;
+    const d = y1 > y0 ? 1 : -1;
+    return Kit.mk('path', {d: `M${x},${y0} V${y1} M${x - 5},${y1 - 7 * d} L${x},${y1} L${x + 5},${y1 - 7 * d}`, style: `stroke:var(--k);opacity:${op}`, fill: 'none', 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
+  }
+  const label = (p, x, y, t, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 700, style: 'fill:var(--k);font-family:var(--body)'}, a), p); e.textContent = t; return e; };
 
-  // ---------- drawing ----------
-  const surfY = px => SURF + Math.sin(px * .03 + T * 1.4) * 2 + Math.sin(px * .08 - T) * 1;
-  function surface() {
-    // the sea is the card itself: just one wavy line for the surface
-    const glow = st.glow;
-    x.save();
-    x.strokeStyle = glow > .5 ? AMBER : P.line; x.lineWidth = 2.5; x.lineJoin = 'round'; x.lineCap = 'round';
-    x.beginPath();
-    for (let px = 0; px <= W; px += 6) { const y = surfY(px); px ? x.lineTo(px, y) : x.moveTo(px, y); }
-    x.stroke(); x.restore();
-    // a small fishing boat, flat: hull, cabin, rod
-    const bx = BOAT, by = surfY(BOAT), hw = Math.min(W * .11, 60), rock = Math.sin(T * 1.2) * .04;
-    x.save(); x.translate(bx, by); x.rotate(rock);
-    x.fillStyle = P.boat;
-    x.beginPath(); x.moveTo(-hw, -fs * .3); x.lineTo(hw * 1.05, -fs * .45); x.quadraticCurveTo(hw * .85, fs * .5, hw * .6, fs * .55); x.lineTo(-hw * .7, fs * .55); x.closePath(); x.fill();
-    x.fillRect(-hw * .58, -fs * 1.1, hw * .6, fs * .9);
-    x.fillStyle = mix(0); x.fillRect(-hw * .46, -fs * .88, hw * .16, fs * .3); x.fillRect(-hw * .22, -fs * .88, hw * .16, fs * .3);
-    x.strokeStyle = P.boat; x.lineWidth = 2; x.lineCap = 'round'; x.beginPath(); x.moveTo(hw * .3, -fs * .4); x.lineTo(hw * .95, -fs * 1.9); x.stroke();
-    x.restore();
+  // ---------- the front: a still two-link chain ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26));
+    const L = Math.min(W * .5, H * .95);
+    const yS = Math.max(L * .26, H * .28), mw = Math.min(W * .14, H * .24), yM = H - mw * .4;
+    const AX = W * .645;
+    const gS = Kit.mk('g', {class: 'tier'}, svg), gM = Kit.mk('g', {class: 'tier'}, svg);
+
+    label(gS, 0, yS + fs * .35, 'sharks', fs);
+    const sh = shark(gS, W * .66, yS, L);
+    const top = yS + L * .2, bot = yM - mw * .32;
+    const a1 = arrow(gS, AX, top, bot);
+    if (a1) label(gS, AX + 8, (top + bot) / 2 + fs * .35, 'eats', fs, {'font-weight': 600});
+
+    label(gM, 0, yM + fs * .35, 'mid-sized fish', fs);
+    [[.42, .02], [.53, -.06], [.77, .04], [.89, -.05]].forEach(([x, dy]) => fish(gM, W * x, yM + mw * dy * 2, mw, ACC));
+    front = {sh, a1};
+    if (pick >= 0) ghost(true);
   }
-  function seabed() {
-    // a pale sandy floor, a tint of the ink
-    const floor = px => H * .955 + Math.sin(px * .021) * H * .015 + Math.sin(px * .067 + 1) * H * .006;
-    const b = 1 - st.small;
-    // seagrass: one thick strand each, shrinking as the small life goes
-    x.lineCap = 'round';
-    x.strokeStyle = b > .5 ? dk(22) : P.grass; x.lineWidth = Math.max(5, fs * .45);
-    fronds.forEach(f => {
-      const bx = f.u * W, by = floor(bx) + 2, h = f.h * H * .14 * (.3 + .7 * st.small), sw = Math.sin(T * .9 + f.p) * h * .22;
-      x.beginPath(); x.moveTo(bx, by); x.quadraticCurveTo(bx - sw * .4, by - h * .55, bx + sw, by - h); x.stroke();
-    });
-    x.fillStyle = P.sand; x.beginPath(); x.moveTo(0, H);
-    for (let px = 0; px <= W; px += W / 24) x.lineTo(px, floor(px));
-    x.lineTo(W, floor(W)); x.lineTo(W, H); x.closePath(); x.fill();
-    // small life: krill, a curled body with a head
-    const r = Math.max(4, fs * .38);
-    x.save(); x.strokeStyle = P.krill; x.fillStyle = P.krill; x.lineWidth = Math.max(2.2, fs * .18); x.lineCap = 'round';
-    dots.forEach(d => {
-      if (d.a < .02) return;
-      const px = d.u * W, py = d.v * H + Math.sin(T * 1.1 + d.p) * 3;
-      x.globalAlpha = st.show * d.a;
-      x.save(); x.translate(px, py); x.scale(d.d, 1); x.rotate(Math.sin(T + d.p) * .2);
-      x.beginPath(); x.arc(0, 0, r, Math.PI * .95, Math.PI * 2.1); x.stroke();
-      x.beginPath(); x.arc(r * .95, r * .35, r * .3, 0, TAU); x.fill();
-      x.restore();
-    });
-    x.restore();
-    if (compact) {
-      // the legend sits on the sand
-      x.fillStyle = P.sand; x.beginPath(); x.moveTo(0, H);
-      for (let px = 0; px <= W; px += W / 24) x.lineTo(px, H - fs * 2.4 + Math.sin(px * .03) * 2);
-      x.lineTo(W, H); x.closePath(); x.fill();
+  // the shark leaves the chain: the same animal, now only an outline
+  function ghost(instant) {
+    if (!front) return;
+    const {sh, a1} = front;
+    if (instant || Kit.calm) {
+      sh.fill.style.opacity = 0; sh.line.style.opacity = .45; if (a1) a1.style.opacity = .2; return;
     }
-  }
-  function drawFish(f) {
-    const l = FL * f.sc * f.z; if (l < .6) return;
-    const px = f.u * W, py = f.v * H, wag = Math.sin(T * 9 + f.p) * l * .08;
-    x.save(); x.translate(px, py); x.scale(f.d, 1); x.globalAlpha *= .5 + .5 * f.sc;
-    x.fillStyle = AMBER;
-    x.beginPath(); x.moveTo(-l * .36, 0); x.lineTo(-l * .7, -l * .24 + wag); x.lineTo(-l * .62, wag); x.lineTo(-l * .7, l * .24 + wag); x.closePath(); x.fill();
-    x.beginPath(); x.moveTo(-l * .02, -l * .18); x.lineTo(-l * .2, -l * .32); x.lineTo(-l * .26, -l * .14); x.closePath(); x.fill();
-    x.beginPath(); x.ellipse(0, 0, l * .5, l * .22, 0, 0, TAU); x.fill();
-    x.fillStyle = P.eye; x.beginPath(); x.arc(l * .3, -l * .04, Math.max(1, l * .05), 0, TAU); x.fill();
-    x.restore();
-  }
-  function drawShark(cx, cy, len, ang, w) {
-    x.save(); x.translate(cx, cy); x.rotate(ang); x.scale(len, len);
-    // far pectoral fin
-    x.fillStyle = P.fin;
-    x.beginPath(); x.moveTo(.14, .06); x.quadraticCurveTo(.06, .12, -.01, .18); x.quadraticCurveTo(.04, .1, .03, .07); x.closePath(); x.fill();
-    // body: dark slate back
-    x.fillStyle = P.top; x.beginPath();
-    x.moveTo(.5, .02);
-    x.quadraticCurveTo(.46, -.08, .3, -.1);
-    x.lineTo(.12, -.11);
-    x.quadraticCurveTo(.04, -.2, -.03, -.31);
-    x.quadraticCurveTo(-.02, -.17, -.08, -.1);
-    x.quadraticCurveTo(-.25, -.07, -.39, -.03 + w * .5);
-    x.quadraticCurveTo(-.46, -.13 + w, -.56, -.25 + w * 1.4);
-    x.quadraticCurveTo(-.5, -.08 + w, -.47, w);
-    x.quadraticCurveTo(-.5, .07 + w, -.54, .13 + w * 1.2);
-    x.quadraticCurveTo(-.45, .06 + w * .6, -.39, .035 + w * .5);
-    x.quadraticCurveTo(-.2, .1, .04, .11);
-    x.quadraticCurveTo(.32, .12, .44, .06);
-    x.quadraticCurveTo(.5, .04, .5, .02);
-    x.closePath(); x.fill();
-    // pale belly (countershading), one flat shape with a clean edge
-    x.save(); x.clip();
-    x.fillStyle = P.belly; x.beginPath();
-    x.moveTo(.6, .005); x.quadraticCurveTo(.15, -.045, -.42, .03 + w * .5); x.lineTo(-.42, .4); x.lineTo(.6, .4); x.closePath(); x.fill();
-    x.restore();
-    // gills, mouth
-    x.strokeStyle = P.gill; x.lineWidth = 1.8 / len; x.lineCap = 'round';
-    for (let i = 0; i < 3; i++) { const gx = .27 - i * .03; x.beginPath(); x.moveTo(gx, -.02); x.quadraticCurveTo(gx - .016, .02, gx, .055); x.stroke(); }
-    x.beginPath(); x.moveTo(.44, .055); x.quadraticCurveTo(.39, .075, .33, .066); x.stroke();
-    // near fins
-    x.fillStyle = P.fin;
-    x.beginPath(); x.moveTo(.2, .07); x.quadraticCurveTo(.1, .14, .02, .24); x.quadraticCurveTo(.08, .12, .06, .08); x.closePath(); x.fill();
-    x.beginPath(); x.moveTo(-.22, .08); x.lineTo(-.27, .13); x.lineTo(-.28, .075); x.closePath(); x.fill();
-    x.fillStyle = P.top;
-    x.beginPath(); x.moveTo(-.26, -.06); x.lineTo(-.3, -.11); x.lineTo(-.31, -.05); x.closePath(); x.fill();
-    x.fillStyle = P.belly; x.beginPath(); x.arc(.385, -.025, .017, 0, TAU); x.fill();
-    x.fillStyle = P.eye; x.beginPath(); x.arc(.388, -.025, .01, 0, TAU); x.fill();
-    x.restore();
-  }
-  function fishingLine(sp) {
-    if (removed) return;
-    const a = st.hint * .9 + (dragging ? .4 : 0); if (a < .02) return;
-    const hw = Math.min(W * .11, 60);
-    const sx = sp.x - L * .03, sy = sp.y - L * .3, ex = BOAT + hw * .95, ey = SURF - fs * 1.9, cxp = ex, cyp = sy - L * .1;
-    x.save(); x.globalAlpha *= .85 * Math.min(1, a); x.strokeStyle = P.line; x.lineWidth = 1.5;
-    x.beginPath(); x.moveTo(sx, sy); x.quadraticCurveTo(cxp, cyp, ex, ey); x.stroke();
-    x.restore();
-    // one amber arrow travels up the line: this is the way to drag
-    const t = (T * .45) % 1, q = (p0, p1, p2) => (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
-    const px = q(sx, cxp, ex), py = q(sy, cyp, ey), ang = Math.atan2(2 * (1 - t) * (cyp - sy) + 2 * t * (ey - cyp), 2 * (1 - t) * (cxp - sx) + 2 * t * (ex - cxp));
-    x.save(); x.translate(px, py); x.rotate(ang); x.globalAlpha *= Math.min(1, a) * Math.sin(t * Math.PI); x.fillStyle = AMBER;
-    x.beginPath(); x.moveTo(fs * .55, 0); x.lineTo(-fs * .3, -fs * .35); x.lineTo(-fs * .3, fs * .35); x.closePath(); x.fill();
-    x.restore();
-  }
-  function splash() {
-    const s = st.splash; if (s <= 0 || s >= 1) return;
-    x.save(); x.globalAlpha *= 1 - s;
-    x.fillStyle = P.drop;
-    // a crown of flat drops thrown up from the surface
-    for (let i = 0; i < 7; i++) {
-      const a = -Math.PI * (.18 + .64 * i / 6), r = W * .12 * s;
-      const dx = splashX + Math.cos(a) * r, dy = SURF + Math.sin(a) * r * .9 + s * s * fs * 3, dr = Math.max(2.5, fs * .22) * (1 - s * .4);
-      x.beginPath(); x.ellipse(dx, dy, dr * .8, dr * 1.25, a + Math.PI / 2, 0, TAU); x.fill();
-    }
-    x.strokeStyle = P.drop; x.lineWidth = 2;
-    x.beginPath(); x.ellipse(splashX, SURF + 2, W * .12 * s, fs * .45 * s, 0, 0, TAU); x.stroke();
-    x.restore();
-  }
-  function waveBand() {
-    // the coral front: one flat band with a wavy leading edge
-    const w = st.wave; if (w <= 0 || w >= 1) return;
-    const y = SURF + (H - SURF) * w, a = Math.sin(w * Math.PI), h = fs * 1.6;
-    x.save();
-    x.globalAlpha *= .25 * a; x.fillStyle = RED; x.beginPath(); x.moveTo(0, y - h);
-    for (let px = 0; px <= W; px += 12) x.lineTo(px, y - h + Math.sin(px * .05 + T * 3) * 3);
-    x.lineTo(W, y); x.lineTo(0, y); x.closePath(); x.fill();
-    x.restore();
-    x.save(); x.globalAlpha *= a; x.strokeStyle = RED; x.lineWidth = 2.5; x.lineJoin = 'round'; x.beginPath();
-    for (let px = 0; px <= W; px += 12) { const yy = y + Math.sin(px * .05 + T * 3) * 3; px ? x.lineTo(px, yy) : x.moveTo(px, yy); }
-    x.stroke(); x.restore();
-  }
-  function gauge(X0, bw, y, text, v, max, col) {
-    const bh = Math.max(4, fs * .4), by = y + fs * .5;
-    x.save();
-    x.font = `500 ${fs}px ${BODY}`; x.textBaseline = 'alphabetic';
-    x.fillStyle = P.text; x.fillText(text, X0, y);
-    // a plain bar: thin line for the room, a flat bar for how many
-    x.fillStyle = P.track; x.fillRect(X0, by + bh / 2 - 1, bw, 2);
-    x.fillStyle = col; x.fillRect(X0, by, Math.max(0, bw * clamp(v / max, 0, 1)), bh);
-    if (max > 1) { x.fillStyle = P.text; x.fillRect(X0 + bw / max - 1, by - 3, 2, bh + 6); }
-    x.restore();
-  }
-  function labels() {
-    const pr = presence(), b = boom();
-    const items = [
-      [pr < .02 ? 'Sharks ✕' : 'Sharks', pr < .02 ? 'Shark ✕' : 'Shark', pr, 1, pr < .5 ? RED : P.belly],
-      [b > .3 ? 'Mid fish ▲' : 'Mid fish', b > .3 ? 'Fish ▲' : 'Fish', st.mid, MAXMID, b > .3 ? RED : AMBER],
-      [st.small < .6 ? 'Small life ▼' : 'Small life', st.small < .6 ? 'Small ▼' : 'Small', st.small, 1, st.small < .6 ? RED : P.krill]
-    ];
-    const X0 = Math.max(6, W * .03);
-    if (!compact) {
-      items.forEach((it, i) => gauge(X0, W * .24, GY[i], it[0], it[2], it[3], it[4]));
-    } else {
-      const colW = (W - 2 * X0) / 3;
-      x.font = `500 ${fs}px ${BODY}`;
-      items.forEach((it, i) => {
-        const t = x.measureText(it[0]).width > colW - fs * .6 ? it[1] : it[0];
-        gauge(X0 + i * colW, colW - fs * 1.2, H - fs * 1.15, t, it[2], it[3], it[4]);
-      });
-    }
+    gsap.to(sh.fill, {opacity: 0, duration: .6, ease: 'power2.out'});
+    gsap.to(sh.line, {opacity: .45, duration: .6, ease: 'power2.out'});
+    if (a1) gsap.to(a1, {opacity: .2, duration: .6});
   }
 
-  function loop(t) {
-    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t; T += dt * (Kit.calm ? .4 : 1);
-    if (x && W) {
-      update(dt);
-      x.clearRect(0, 0, W, H);
-      x.save(); x.globalAlpha = st.show;
-      surface();
-      seabed();
-      fish.forEach(drawFish);
-      waveBand();
-      const sp = sharkPos();
-      fishingLine(sp);
-      const vy = tgt.ty - st.oy, ang = clamp(vy * .005, -.6, .6) - clamp(lift(), 0, 1) * .45 * (dragging || removed ? 1 : 0);
-      if (sp.y > -L) drawShark(sp.x, sp.y, L, ang, Math.sin(T * (dragging ? 7 : 3.2)) * .03);
-      splash();
-      labels();
-      x.restore();
-    }
-    requestAnimationFrame(loop);
-  }
-
-  // ---------- touch ----------
-  const pt = e => { const r = cv.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
-  cv.addEventListener('pointerdown', e => {
-    if (removed) return;
-    dragging = true; cv.setPointerCapture(e.pointerId);
-    gsap.killTweensOf(tgt);
-    const p = pt(e); grab = {x: p.x, y: p.y, tx: tgt.tx, ty: tgt.ty};
-    gsap.to(st, {hint: 0, duration: .3, ease: 'power2.out'});
-    Kit.haptic('selection');
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
   });
-  cv.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    const p = pt(e);
-    tgt.tx = clamp(grab.tx + p.x - grab.x, -W * .4, W * .3);
-    tgt.ty = clamp(grab.ty + p.y - grab.y, -(HOME.y - SURF) - L * .3, H * .15);
-    const out = lift() > .8;
-    gsap.to(st, {glow: out ? 1 : 0, duration: .2, overwrite: 'auto'});
-    say.innerHTML = out ? 'Out of the water. <b>Let go.</b>' : 'Up it goes, and the fish below stop fleeing. <b>Keep pulling.</b>';
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.$('opts').classList.add('done');
+    Kit.haptic('selection'); ghost(false);
+    Kit.$('sure').classList.remove('wait'); sure.on();
   });
-  const end = () => {
-    if (!dragging) return; dragging = false;
-    if (lift() > .8) return removeShark();
-    gsap.to(st, {glow: 0, hint: 1, duration: .4});
-    say.innerHTML = 'Back it dives, and the fish scatter again. <b>Pull it all the way out.</b>';
-    gsap.to(tgt, {tx: 0, ty: 0, duration: 1.2, ease: 'elastic.out(1,.45)'});
-  };
-  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
 
-  function removeShark() {
-    if (removed) return;
-    removed = true; dragging = false; splashX = HOME.x + st.ox; Kit.haptic('success');
-    say.innerHTML = '<b>Gone.</b> Now watch the fish it used to eat.';
-    gsap.to(st, {glow: 0, hint: 0, duration: .3});
-    cascade = gsap.timeline({onComplete: reveal})
-      .to(tgt, {ty: -(HOME.y + L * 1.3), tx: tgt.tx + W * .08, duration: .8, ease: 'power3.in'})
-      .fromTo(st, {splash: 0}, {splash: 1, duration: 1.2, ease: 'power2.out'}, .25)
-      .fromTo(st, {wave: 0}, {wave: 1, duration: 2.4, ease: 'power1.inOut'}, .5)
-      .to(st, {mid: MAXMID, duration: 2.6, ease: 'power2.inOut'}, .7)
-      .to(st, {small: .16, duration: 2.3, ease: 'power2.in'}, 1.5);
-    if (Kit.calm) cascade.progress(1);
+  // ---------- the back: two columns, one pile breaks through ----------
+  function buildBack(instant) {
+    if (sim) sim.stop();
+    const s2 = Kit.$('pic2'); s2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(s2), fs = Math.max(12, Math.min(14, W / 26));
+    const G = H - fs * 1.9, TOP = Math.max(34, fs * 2.6), PH = Math.max(70, G - TOP);
+    const bw = W * .4, X0 = [W * .04, W * .54], CX = X0.map(x => x + bw / 2);
+
+    const defs = Kit.mk('defs', {}, s2);
+    const c = Kit.mk('clipPath', {id: 'colM'}, defs); Kit.mk('rect', {x: X0[1], y: -H, width: bw, height: G + H}, c);
+
+    // sharks: lying on the floor, a low "before"
+    const L = Math.min(bw * .8, PH * .32 / .42);
+    const sh = shark(s2, CX[0], G - .18 * L - 1, L);
+    const yS = G - .42 * L - 12;
+
+    // mid-sized fish: a modest pile, then it breaks through
+    const w0 = Math.max(26, Math.min(46, bw / 3)), n = Math.max(2, Math.round(bw / w0)), cell = bw / n, w = cell * .98, rh = w * .42;
+    const na = Math.max(5, Math.floor(PH * .9 / rh)), nb = Math.max(2, Math.min(na - 3, Math.round(na * .36)));
+    const yMb = G - nb * rh, yMa = G - na * rh - w * .06;
+
+    const row = (p, r) => {
+      const g = Kit.mk('g', {}, p), odd = r % 2, y = G - rh * (r + .5), rot = odd ? -6 : 6;
+      for (let i = 0; i < n + odd; i++) fish(g, X0[1] + cell * (odd ? i : i + .5), y, w, ACC, rot);
+      return g;
+    };
+    const gm = Kit.mk('g', {'clip-path': 'url(#colM)'}, s2), mRows = [];
+    for (let r = 0; r < na; r++) mRows.push(row(gm, r));
+
+    // floor, before dashes (the mid one overhangs the pile so it reads), one "before" label, one arrow, two names
+    Kit.mk('path', {d: `M0,${G} H${W}`, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, s2);
+    const dashes = Kit.mk('g', {}, s2);
+    Kit.mk('path', {d: `M${CX[0] - bw * .3},${yS} H${CX[0] + bw * .3}`, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-dasharray': '6 5', fill: 'none'}, dashes);
+    Kit.mk('path', {d: `M${X0[1] - 14},${yMb} H${Math.min(W, X0[1] + bw + 14)}`, style: 'stroke:var(--k)', 'stroke-width': 2.4, 'stroke-dasharray': '6 5', fill: 'none'}, dashes);
+    label(dashes, CX[0], yS - 8, 'before', Math.max(12, fs - 1), {'font-weight': 600, 'text-anchor': 'middle'});
+    const arrows = Kit.mk('g', {}, s2);
+    arrow(arrows, CX[1], yMa - 6, Math.max(4, yMa - 32), .6);
+    ['sharks', 'mid-sized fish'].forEach((t, i) => label(s2, CX[i], G + fs * 1.35, t, fs, {'text-anchor': 'middle'}));
+
+    if (instant) {
+      sh.fill.style.opacity = 0; sh.line.style.opacity = .45;
+      sim = {stop() {}};
+      return;
+    }
+    const tl = gsap.timeline({delay: .1});
+    // beat 1: the sea as it was
+    tl.from(sh.g, {y: -30, opacity: 0, duration: .5, ease: 'power2.out'}, 0);
+    mRows.slice(0, nb).forEach((g, r) => tl.from(g, {y: -24, opacity: 0, duration: .35, ease: 'power2.out'}, .1 + r * .1));
+    tl.fromTo(dashes, {opacity: 0}, {opacity: 1, duration: .4}, 1.2);
+    // beat 2: the shark goes
+    tl.call(() => Kit.haptic('selection'), null, 2);
+    tl.to(sh.fill, {opacity: 0, duration: .6}, 2).to(sh.line, {opacity: .45, duration: .6}, 2);
+    // beat 3: the fish it ate explode
+    mRows.slice(nb).forEach((g, i) => tl.from(g, {y: -40, opacity: 0, duration: .4, ease: 'power2.out'}, 2.8 + i * .18));
+    tl.from(arrows, {opacity: 0, duration: .5}, 2.8 + (na - nb) * .18 + .2);
+    sim = {stop() { tl.kill(); }};
   }
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => buildBack(Kit.calm), Kit.calm ? 0 : 450); });
 
-  function reveal() {
-    if (done) return; done = true;
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    const big = Kit.$('big');
-    if (Kit.calm) { big.textContent = 'IMBALANCE'; return; }
-    gsap.to(big, {duration: 1.5, ease: 'power2.out', scrambleText: {text: 'IMBALANCE', chars: '≈~▲▼<>/ABCDEFGHIKLMNOPRSTUVXYZ', revealDelay: .4, speed: .5}});
-    gsap.from(big, {scale: .8, opacity: 0, duration: .6, ease: 'back.out(2)', transformOrigin: 'left center'});
-    const split = new SplitText('#whybody', {type: 'words'});
-    gsap.from(split.words, {opacity: 0, y: 8, duration: .5, stagger: .025, ease: 'power3.out', delay: .35});
-    gsap.fromTo('#keep', {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: .6, ease: 'power3.out', delay: .9});
-  }
-
-  Kit.onShow.card = layout;
-  Kit.onEnter.card = () => {
-    if (Kit.calm || removed) return;
-    gsap.fromTo(st, {show: 0}, {show: 1, duration: 1.2, ease: 'power2.out'});
-    st.ox = tgt.tx = -W * .75;
-    gsap.to(tgt, {tx: 0, duration: 1.9, ease: 'power3.out', delay: .25});
-    fish.forEach(f => { f.sc = 0; });
-  };
+  Kit.onShow.card = () => { drawFront(); if (turned) buildBack(true); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic .tier', {opacity: 0, y: 10, stagger: .18, duration: .5, ease: 'power3.out'}); };
   Kit.play.card = async () => {
-    const wait = ms => new Promise(r => setTimeout(r, ms));
-    tgt.ty = -(HOME.y - SURF) - L * .2; await wait(200);
-    removeShark(); await wait(60);
-    cascade.progress(1); reveal();
-    await wait(Kit.calm ? 1200 : 1900);
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    await w(Kit.calm ? 60 : 600);
+    Kit.$('opts').children[0].click(); await w(Kit.calm ? 120 : 700);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 1000 : 7400);
   };
 })();
 Kit.single();

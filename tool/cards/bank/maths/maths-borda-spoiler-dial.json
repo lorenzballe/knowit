@@ -1,0 +1,37 @@
+{
+  "id": "maths-borda-spoiler-dial",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Add a hopeless third candidate to this made-up Borda count. Who wins now?",
+  "answer": "Carl can't win, yet adding him flips the made-up Borda count: Ben beats Ann 7 to 6, though Ann led 3 to 2 without him. Carl sits between them on Ben's ballots, doubling Ben's lead there. Borda's points depend on how many names are on the ballot, so the irrelevant candidate changed the winner.",
+  "move": "A fair choice between two things can't hinge on a third nobody picks.",
+  "keywords": [
+    "condorcet",
+    "borda count",
+    "voting",
+    "ballot",
+    "ada"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks who wins a made-up three-candidate Borda count of Ann, Ben and Carl, with Carl a hopeless ghost slot on every ballot. Shows Ann ahead 3 to 2 before Carl, then Ben ahead 7 to 6 once Carl is counted, with gap brackets on each ballot."
+  },
+  "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=506s",
+  "written": "2026-11-07"
+}

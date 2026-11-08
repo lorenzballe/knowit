@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A coiled slinky drawn as a column of turns, shown expanding and contracting together like breathing. A slider labelled Softer to Stiffer sets the stiffness. The reader drags it until their model's breathing matches the real slinky's."
   },
   "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",

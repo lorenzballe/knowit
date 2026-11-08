@@ -1,0 +1,37 @@
+{
+  "id": "science-arlington-teflon-blast",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why did the 1944 Teflon production attempt cause a massive explosion?",
+  "answer": "Polymerizing the solid cylinder made heat that could not dissipate. The heat stayed in, expanded and built up pressure until it failed. It caused a massive explosion at Arlington in 1944 that killed two workers.",
+  "move": "A reaction that makes heat needs a way to take that heat away. Without one, the heat stays in, expands and creates the force.",
+  "keywords": [
+    "teflon",
+    "tfe",
+    "arlington",
+    "polymerization",
+    "explosion"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Seen from above, one solid cylinder of TFE turns into Teflon, making heat. Tap where that heat ends up."
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=513s",
+  "written": "2026-11-07"
+}

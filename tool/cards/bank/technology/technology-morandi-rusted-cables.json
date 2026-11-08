@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A row of 100 dots, each standing for 1% of the steel cables in Pile 9's stay of the Morandi bridge. The reader drags to guess what percentage were corroded, then rates how sure they are.",
     "graded": false
   },

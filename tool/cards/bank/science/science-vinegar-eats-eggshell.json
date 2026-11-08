@@ -1,0 +1,38 @@
+{
+  "id": "science-vinegar-eats-eggshell",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does an eggshell disappear when you soak it in vinegar?",
+  "answer": "Vinegar's acid eats calcium carbonate: those bubbles are the shell turning into CO₂. Drag right across the scope to soak the egg for 48 hours, and watch the shell.",
+  "move": "Vinegar's acid eats calcium carbonate: those bubbles are the shell turning into CO₂.",
+  "keywords": [
+    "eggshell",
+    "vinegar",
+    "acid",
+    "calcium carbonate",
+    "carbon dioxide"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An egg half-submerged in a clear liquid in a glass, shown in a scope. Drag right across the scope to soak it for 48 hours and watch the shell. Asks why the eggshell disappears when soaked in vinegar.",
+    "ground": "#030806"
+  },
+  "source": "Geopop, “L'uovo che rimbalza!” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=CKE7qFWpADI",
+  "written": "2026-11-04"
+}

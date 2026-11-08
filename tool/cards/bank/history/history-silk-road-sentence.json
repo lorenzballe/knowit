@@ -1,0 +1,38 @@
+{
+  "id": "history-silk-road-sentence",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "What punishment did Silk Road's founder get, and when?",
+  "answer": "Silk Road opened in 2011. Its founder was arrested two years later and, in 2013, received two life sentences. The correct choice is 'Two life terms, in 2013.'",
+  "move": "Two years later its founder got two life sentences.",
+  "keywords": [
+    "silk road",
+    "dark web",
+    "life sentence",
+    "founder",
+    "marketplace"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A quiz asks what punishment Silk Road's founder received and when. Four answer choices appear, one marked as the correct answer, with a note to pick a sentence and then rate confidence.",
+    "ground": "#f3ecdf"
+  },
+  "source": "Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=vW8FrJywMhA&t=391s",
+  "written": "2026-11-04"
+}

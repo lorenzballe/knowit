@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A geological cross-section showing a tilted rock layer, with a draggable control that turns the section away from the layer's strike. The page asks what apparent dip is and how geologists find it."
   },
   "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",

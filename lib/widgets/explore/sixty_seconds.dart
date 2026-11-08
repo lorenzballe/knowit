@@ -25,11 +25,17 @@ class SixtySeconds extends StatefulWidget {
     required this.pills,
     required this.onOpen,
     this.onShown,
+    this.onFinished,
   });
 
   final List<Pill> pills;
   final void Function(List<Pill>, Pill) onOpen;
   final ValueChanged<Pill>? onShown;
+
+  /// A round just ended, with how many claims were right: what the record
+  /// outside the day is kept from. Not called for a round shown again as it
+  /// ended earlier today.
+  final ValueChanged<int>? onFinished;
 
   @override
   State<SixtySeconds> createState() => _SixtySecondsState();
@@ -113,6 +119,7 @@ class _SixtySecondsState extends State<SixtySeconds>
       'answered': _answers!.length,
       'seconds': took.round(),
     });
+    widget.onFinished?.call(right);
   }
 
   int get _right {

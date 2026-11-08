@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Card titled Astute free card asks why it is impossible to lift a car off the ground. An interactive pull slider sets your strength, and a Lift button tests it. A Switch gravity off option is also shown."
   },
   "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",

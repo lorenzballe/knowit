@@ -1,0 +1,254 @@
+<!doctype html>
+<!-- slug: history-ashgabat-marble-fields -->
+<!-- Thought to carry: a huge area looks smaller once you take its square root. 692 football fields of marble make a square only about 26 fields a side.
+     Front: one football field as the unit, on a faint dashed ground of fields. The reader drags a square block open from a single field, N by N. The counter stays "?" until they drag. Then they say how sure they are.
+     Back: the real marble, 26 × 26 fields plus a 16-field remainder, drawn flat and white. The reader's own square sits on top of it, sharing its corner and baseline. Two dimension bars compare the sides (N across against 26 across). The verdict reacts to the guess and repeats the reader's confidence.
+     The front never shows 692, the real block or any verdict. The reader commits a size first, and only the back draws the true one. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ashgabat's marble, laid flat</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .4s}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face{gap:1.2cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:nwse-resize}
+.front .say{margin-right:100px;overflow-wrap:break-word}
+.front .foot{min-height:46px;flex:0 0 auto}
+#sure.live{color:var(--k)!important;opacity:1!important}
+#sure.live [data-v]{background:transparent!important;border:1.5px solid var(--k)!important;color:var(--k)!important;opacity:1!important;box-shadow:none!important}
+#sure.live [data-v].chosen{background:var(--k)!important;color:#ffb000!important}
+.back .big{margin:0;overflow-wrap:break-word}
+.back .body{margin:0;font-size:max(1.9cqh,13px);line-height:1.35;overflow-wrap:break-word}
+.back .mine{margin:0;font-size:max(1.8cqh,13px);font-weight:700;overflow-wrap:break-word}
+.back .keep{overflow-wrap:break-word}
+.back .foot{padding-right:100px;min-height:46px}
+.back .src{font-size:12px;line-height:1.3}
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translate(3px,3px)}}
+.kit-calm .hint{animation:none}
+</style>
+<article class="card" id="card" data-topic="weird_facts" data-kind="Drag a block · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SIZE IT UP</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Ashgabat's marble, laid flat: how many football fields would it cover?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A square block of football fields that grows as you drag its corner across a ground of fields."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Over 540 new buildings, about 4.5 million slabs of white Carrara marble. <b>Drag the corner to size the block.</b></p>
+        <div class="foot" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">More than 692 football fields</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The real marble, a square about 26 fields a side, with your square drawn on its corner."></svg></div>
+        <p class="body" id="verdict">Ashgabat's marble would pave more than 692 football fields: a square only about 26 across.</p>
+        <p class="mine" id="mine"></p>
+        <div class="keep"><b>WHAT TO KEEP</b> Don't divide, root it: √692 ≈ 26 fields a side.</div>
+        <div class="foot"><span class="src">Source · Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const INK = 'var(--k)', MARBLE = '#f6f4ee', VEIN = '#c9c3b6', GRID = '#d6d1c6';
+  const SHADE = 'color-mix(in srgb,var(--k) 16%,transparent)';
+  const MAXN = 36;                          // the drag ground: 36 × 36 fields
+  const TRUE_N = 692, SIDE = 26, REM = TRUE_N - SIDE * SIDE; // 692 = 26 × 26 + 16
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let n = 1, touched = false, locked = false, turned = false, sureOn = false, pick = null;
+  let F = {};
+
+  const txt = (parent, x, y, t, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, style: `font-family:${a.font || 'var(--body)'};font-weight:${a.w || 700};font-size:${a.fs}px`}, a.attrs || {}), parent);
+    e.textContent = t; return e;
+  };
+  const cellLines = (x0, y0, cols, rows, c) => {
+    let d = '';
+    for (let i = 1; i < cols; i++) d += `M${(x0 + i * c).toFixed(1)},${y0.toFixed(1)}v${(rows * c).toFixed(1)}`;
+    for (let j = 1; j < rows; j++) d += `M${x0.toFixed(1)},${(y0 + j * c).toFixed(1)}h${(cols * c).toFixed(1)}`;
+    return d;
+  };
+
+  // ---------- front ----------
+  function front() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, W / 26)), m = 2;
+
+    // The unit: one tile = one football field.
+    const t = fs * 1.7, lg = Kit.mk('g', {id: 'legend'}, svg);
+    Kit.mk('rect', {x: m, y: m, width: t, height: t, fill: MARBLE, stroke: INK, 'stroke-width': 1.2}, lg);
+    const fw = t * .74, fh = fw / 1.5, fx = m + (t - fw) / 2, fy = m + (t - fh) / 2;
+    Kit.mk('rect', {x: fx, y: fy, width: fw, height: fh, fill: 'none', stroke: INK, 'stroke-width': .9}, lg);
+    Kit.mk('line', {x1: fx + fw / 2, x2: fx + fw / 2, y1: fy, y2: fy + fh, stroke: INK, 'stroke-width': .9}, lg);
+    Kit.mk('circle', {cx: fx + fw / 2, cy: fy + fh / 2, r: fh * .22, fill: 'none', stroke: INK, 'stroke-width': .9}, lg);
+    txt(lg, m + t + fs * .6, m + t / 2 + fs * .36, '= one football field', {fs, w: 600});
+
+    const top = m + t + fs * 1.1, hs = Math.max(18, fs * 1.4);
+    const sideR = Math.min(H - top - hs / 2 - m, W - m - hs / 2 - fs * 7.5);
+    const sideB = Math.min(H - top - hs / 2 - fs * 3.2 - m, W - 2 * m - hs / 2);
+    const right = sideR >= sideB, side = Math.max(40, right ? sideR : sideB), cw = side / MAXN;
+    const gx = m, gy = top;
+
+    // the ground to cover: faint dashed fields
+    let d = '';
+    for (let i = 0; i <= MAXN; i++) d += `M${(gx + i * cw).toFixed(1)},${gy}v${side.toFixed(1)}M${gx},${(gy + i * cw).toFixed(1)}h${side.toFixed(1)}`;
+    Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-opacity': .22, 'stroke-width': .6, 'stroke-dasharray': '1.2 2'}, svg);
+
+    const blk = Kit.mk('g', {id: 'block'}, svg);
+    const rect = Kit.mk('rect', {x: gx, y: gy, fill: SHADE, stroke: INK, 'stroke-width': 1.6}, blk);
+    const grid = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-opacity': .35, 'stroke-width': .6}, blk);
+    const handle = Kit.mk('g', {}, blk), hin = Kit.mk('g', {class: 'hint'}, handle);
+    Kit.mk('rect', {x: -hs / 2, y: -hs / 2, width: hs, height: hs, rx: 2, fill: '#fff', stroke: INK, 'stroke-width': 1.5}, hin);
+    Kit.mk('path', {d: `M${hs * .28},${-hs * .12}L${-hs * .12},${hs * .28}M${hs * .28},${hs * .08}L${hs * .08},${hs * .28}`, stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round', fill: 'none'}, hin);
+
+    let hero, l1, l2;
+    if (right) {
+      const cx = gx + side + hs / 2 + fs * .8, b = gy + side;
+      hero = txt(svg, cx, b - fs * 3.3, '', {fs: fs * 2.3, w: 800, font: 'var(--display)'});
+      l1 = txt(svg, cx, b - fs * 1.35, '', {fs, w: 600});
+      l2 = txt(svg, cx, b, '', {fs, w: 600});
+    } else {
+      const b = gy + side + hs / 2 + fs * 2.4;
+      hero = txt(svg, gx, b, '', {fs: fs * 2.3, w: 800, font: 'var(--display)'});
+      l1 = txt(svg, gx, b - fs * .1, '', {fs, w: 600}); l2 = null;
+    }
+    F = {fs, gx, gy, cw, rect, grid, handle, hin, hero, l1, l2, right};
+    setN(n);
+  }
+  function setN(v) {
+    n = Math.max(1, Math.min(MAXN, Math.ceil(v)));
+    const {gx, gy, cw, fs} = F; if (!F.rect) return;
+    const s = n * cw;
+    F.rect.setAttribute('width', s); F.rect.setAttribute('height', s);
+    F.grid.setAttribute('d', cellLines(gx, gy, n, n, cw));
+    F.handle.setAttribute('transform', `translate(${gx + s},${gy + s})`);
+    F.hin.setAttribute('class', touched ? '' : 'hint');
+    const N = touched ? (n * n).toLocaleString('en') : '?', dims = touched ? `${n} × ${n}` : '? × ?';
+    F.hero.textContent = N;
+    if (F.right) { F.l1.textContent = 'fields'; F.l2.textContent = dims; }
+    else {
+      F.l1.textContent = `fields · ${dims}`;
+      const est = N.length * fs * 2.3 * .62;
+      F.l1.setAttribute('x', gx + Math.max(F.hero.getComputedTextLength(), est) + fs * .9);
+    }
+  }
+  const fromPt = e => { const r = svg.getBoundingClientRect(); return Math.max(e.clientX - r.left - F.gx, e.clientY - r.top - F.gy) / F.cw; };
+  const arm = () => { if (sureOn) return; sureOn = true; sure.on(); Kit.$('sure').classList.add('live'); };
+  let drag = false;
+  svg.addEventListener('pointerdown', e => { if (locked) return; drag = true; svg.setPointerCapture(e.pointerId); touched = true; setN(fromPt(e)); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) { const old = n; setN(fromPt(e)); if (n !== old && n % 5 === 0) Kit.haptic('selection'); } });
+  const end = () => { if (!drag) return; drag = false; arm(); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (locked) return; locked = true; pick = pct;
+    Kit.$('sure').querySelectorAll('[data-v]').forEach(b => b.classList.toggle('chosen', String(b.dataset.v) === String(pct)));
+    const N = n * n, ok = n >= 24 && n <= 29;
+    Kit.answer({choice: `${N} fields`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${N} fields, ${ok ? 'close' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back: words ----------
+  function words() {
+    const N = n * n, ok = n >= 24 && n <= 29, f1 = x => x.toFixed(1).replace(/\.0$/, '');
+    let v;
+    if (ok) v = `You pictured ${n} across; it's 26. You sized it by its side, which is the trick.`;
+    else if (N < TRUE_N) v = (n >= 16 && n <= 21)
+      ? `You pictured ${n} across; it's 26. Doubling the area adds only about 40% to the side.`
+      : `You pictured ${n} across; it's 26. ${f1(TRUE_N / N)}× the area takes only ${f1(SIDE / n)}× the side.`;
+    else v = `Big totals have short sides. You pictured ${n} across; it's only 26.`;
+    Kit.$('verdict').textContent = v;
+    const off = Math.max(N, TRUE_N) / Math.min(N, TRUE_N);
+    Kit.$('mine').textContent = pick == null ? '' : `You were ${pick}% sure, and ${ok ? 'close' : f1(off) + '× off'}.`;
+  }
+
+  // ---------- back: drawing ----------
+  function back(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, W / 26)), m = 2;
+    const cols = Math.max(n, SIDE + 1), rows = Math.max(n, SIDE);
+    const upH = fs * 1.6, downH = fs * 5;
+    const c = Math.min((W - 2 * m) / cols, (H - 2 * m - upH - downH) / rows);
+    const x0 = m + 1, used = upH + rows * c + downH;
+    const base = Math.max(m, (H - used) / 2) + upH + rows * c;
+
+    // the marble: 26 × 26 fields, plus the 16 left over, bottom-aligned
+    const tx = x0, ty = base - SIDE * c;
+    const outline = `M${tx},${ty}h${SIDE * c}v${(SIDE - REM) * c}h${c}v${REM * c}h${-(SIDE + 1) * c}z`;
+    const cp = Kit.mk('clipPath', {id: 'mclip'}, svg2);
+    const cr = Kit.mk('rect', {x: tx - 2, y: ty - 2, width: (SIDE + 1) * c + 4, height: SIDE * c + 4}, cp);
+    const gM = Kit.mk('g', {'clip-path': 'url(#mclip)'}, svg2);
+    Kit.mk('path', {d: outline, fill: MARBLE}, gM);
+    let gd = cellLines(tx, ty, SIDE, SIDE, c);
+    for (let j = 0; j <= REM; j++) gd += `M${tx + SIDE * c},${base - j * c}h${c}`;
+    Kit.mk('path', {d: gd, fill: 'none', stroke: GRID, 'stroke-width': .6}, gM);
+    // one vein, once, in a single row of fields
+    const vy = ty + 7.5 * c, a = c * .28;
+    Kit.mk('path', {d: `M${tx + 3 * c},${vy + a * .4} C${tx + 7 * c},${vy - a} ${tx + 10 * c},${vy + a} ${tx + 14 * c},${vy - a * .3} S${tx + 19 * c},${vy + a * .6} ${tx + 21 * c},${vy - a * .2}`, fill: 'none', stroke: VEIN, 'stroke-width': 1, 'stroke-linecap': 'round'}, gM);
+    Kit.mk('path', {d: outline, fill: 'none', stroke: INK, 'stroke-width': 1.6}, gM);
+
+    // the remainder, named
+    const gR = Kit.mk('g', {}, svg2);
+    const topY = Math.min(ty, base - n * c) - fs * .55;
+    const eq = txt(gR, tx + (SIDE + 1) * c, topY, '692 = 26 × 26 + 16', {fs: 12, w: 600, attrs: {'text-anchor': 'end'}});
+    if (tx + (SIDE + 1) * c - eq.getComputedTextLength() < m) { eq.setAttribute('text-anchor', 'start'); eq.setAttribute('x', tx); }
+
+    // your guess, on the marble's corner and baseline
+    const gG = Kit.mk('g', {}, svg2), gs = n * c;
+    Kit.mk('rect', {x: x0, y: base - gs, width: gs, height: gs, fill: SHADE}, gG);
+    if (n > 1) Kit.mk('path', {d: cellLines(x0, base - gs, n, n, c), fill: 'none', stroke: INK, 'stroke-opacity': .25, 'stroke-width': .6}, gG);
+    Kit.mk('rect', {x: x0, y: base - gs, width: gs, height: gs, fill: 'none', stroke: INK, 'stroke-width': 2.2}, gG);
+
+    // two sides, compared
+    const gB = Kit.mk('g', {}, svg2);
+    const bar = (y, len) => Kit.mk('path', {d: `M${x0},${y - 4}v8M${x0},${y}H${x0 + len}M${x0 + len},${y - 4}v8`, stroke: INK, 'stroke-width': 1.4, fill: 'none'}, gB);
+    const y1 = base + fs * 1.0, y2 = y1 + fs * 2.3;
+    bar(y1, gs); txt(gB, x0, y1 + fs * 1.3, `your guess · ${n} across`, {fs, w: 700});
+    bar(y2, SIDE * c);
+    const ml = n < SIDE ? `the marble · 26 across, only ${SIDE - n} more` : n === SIDE ? 'the marble · 26 across too' : 'the marble · only 26 across';
+    txt(gB, x0, y2 + fs * 1.3, ml, {fs, w: 700});
+
+    if (animate && !Kit.calm && window.gsap) {
+      gsap.set([gG, gB, gR], {opacity: 0}); gsap.set(cr, {attr: {width: 0}});
+      gsap.timeline({delay: .45})
+        .to(cr, {attr: {width: (SIDE + 1) * c + 4}, duration: 1.1, ease: 'power3.out'})
+        .to(gG, {opacity: 1, duration: .45, ease: 'power2.out'}, '-=.2')
+        .to([gB, gR], {opacity: 1, duration: .45, ease: 'power2.out'}, '+=.1');
+    }
+  }
+  document.addEventListener('turned', () => { turned = true; words(); back(true); });
+
+  Kit.onShow.card = () => { front(); if (turned) back(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(['#legend', '#block'], {opacity: 0, y: 8, stagger: .15, duration: .5, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; setN(18);
+    arm();
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 3200);
+  };
+})();
+Kit.single();
+</script>
+</html>

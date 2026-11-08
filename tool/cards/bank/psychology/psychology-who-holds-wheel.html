@@ -1,0 +1,310 @@
+<!doctype html>
+<!-- slug: psychology-who-holds-wheel -->
+<!--
+  Thought to carry: from outside, steering and a jammed wheel draw the same straight line; only a bend tells them apart.
+  Front: a straight road whose two edges are the two views ("it shows I steer my life" vs "it can be a rut or a mask").
+    The reader drags their car toward the side they lean to. The chips appear only after that, then they say how sure they are.
+  Back: the same road, now with its bend. One shared line runs up the straight to an open circle, "paths split here".
+    From there a solid line runs straight up and off the asphalt (wheel locked), and a dotted trail follows the curve (holds the wheel).
+    The reader's own car sits on the shared straight, offset toward the side they chose. On the straight, nobody can tell yet.
+  The front gives nothing away: no bend, no second car, no verdict.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Who holds the wheel</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back{visibility:hidden}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
+.kit-calm .turn{transition:none}
+.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.2cqh}
+.face .stagebox{flex:1 1 0;min-height:0;position:relative;background:none;border:0;box-shadow:none}
+.face .stagebox svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden}
+#pic{touch-action:none;cursor:ew-resize}
+.front .say{margin:0}
+.front::after{content:"";flex:none;height:max(5.5cqh,46px)}
+.sure-wrap{opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s .45s}
+.sure-wrap.live{opacity:1;visibility:visible;transition:opacity .45s ease}
+.kit-calm .sure-wrap{transition:none}
+
+.back .big{font:800 max(2.7cqh,16px)/1.15 var(--display);margin:0;overflow-wrap:break-word}
+.back .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.back .pair{display:flex;flex-direction:column;gap:16px}
+.back .keep{font-size:max(1.8cqh,12px)}
+.back .foot{min-height:max(6cqh,48px);padding-right:112px;box-sizing:border-box}
+.back .src{font-size:max(1.4cqh,12px);line-height:1.3}
+.ch{transition:opacity .3s}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Point of view · where you stand">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Does a steady character prove you're the one steering?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A straight road seen from above. Its left edge says it shows I steer my life, its right edge says it can be a rut or a mask. Your car sits between them; drag it toward the side you lean to."></svg></div>
+        <div class="sure-wrap" id="surewrap"><div class="sure" id="sure"></div></div>
+        <p class="say" id="say">That's Alex Onofri's view. <b>Drag your car</b> toward the side you lean to.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">A straight track can't tell you who is steering.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="One shared line runs up a straight road to the point where the paths split. From there one car, wheel locked, drives straight on and off the road edge, which looks decisive. The other follows the curve. Your car sits on the shared straight, where you can't yet tell which car you are."></svg></div>
+        <div class="pair">
+          <p class="body"><b>For:</b> Decide who you are before the pressure comes, and the moment can't steer you.</p>
+          <p class="body"><b>Against:</b> A steady hand and a jammed wheel draw the same line until the road bends.</p>
+        </div>
+        <p class="body"><b>Test steadiness only at bends:</b> if things changed and you didn't, ask whether that was a choice or a habit.</p>
+        <div class="keep"><b>ASK YOURSELF</b> When the road last bent, did I turn, or just stay who I'd said I was?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2017) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const card = Kit.$('card'), say = Kit.$('say');
+  const ink = () => getComputedStyle(card).getPropertyValue('--k').trim() || '#14110f';
+  const ground = () => getComputedStyle(card).getPropertyValue('--c').trim() || '#e9e4da';
+  const FONT = 'font-family:var(--body)';
+  let v = .5, touched = false, moved = false, locked = false, turned = false;
+  const st = {ang: 0};
+  const F = {};
+
+  const text = (p, x, y, t, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: ink(), 'font-size': F.fs || 13, 'font-weight': 700, style: FONT}, a), p);
+    e.textContent = t; return e;
+  };
+  // A car seen from above, nose up: one flat shape, windows cut in the ground colour.
+  function carShape(p, cw, open) {
+    const ch = cw * 1.7, K = ink(), C = ground();
+    const body = {x: -cw / 2, y: -ch / 2, width: cw, height: ch, rx: cw * .3, fill: open ? C : K};
+    if (open) Object.assign(body, {stroke: K, 'stroke-width': 1.8});
+    Kit.mk('rect', body, p);
+    Kit.mk('rect', {x: -cw * .32, y: -ch * .25, width: cw * .64, height: ch * .15, rx: cw * .08, fill: open ? K : C}, p);
+    Kit.mk('rect', {x: -cw * .27, y: ch * .24, width: cw * .54, height: ch * .08, rx: cw * .05, fill: open ? K : C}, p);
+    return ch;
+  }
+
+  // ---------- front: a straight road between two views ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, K = ink();
+    const fs = F.fs = Math.max(12, Math.min(14, W / 26));
+    Object.assign(F, {W, H});
+    F.rl = Math.max(6, W * .06); F.rr = W - F.rl;
+    const labH = fs * 3.3, rH = Math.max(0, (H - labH) * .75), y0 = Math.max(0, (H - labH - rH) / 2);
+    F.top = y0 + labH; F.bot = Math.min(H, F.top + rH);
+    const g = F.road = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: F.rl, y: F.top, width: F.rr - F.rl, height: Math.max(0, F.bot - F.top), fill: K, 'fill-opacity': .1}, g);
+    for (const x of [F.rl, F.rr]) Kit.mk('line', {x1: x, x2: x, y1: F.top, y2: F.bot, stroke: K, 'stroke-width': 2.4}, g);
+    Kit.mk('line', {x1: W / 2, x2: W / 2, y1: F.top + 4, y2: F.bot, stroke: K, 'stroke-opacity': .4, 'stroke-width': 1.5, 'stroke-dasharray': '9 10'}, g);
+    const lab = F.labs = Kit.mk('g', {}, svg);
+    text(lab, F.rl, y0 + fs * 1.05, 'Yes: it shows', {'font-weight': 800});
+    text(lab, F.rl, y0 + fs * 2.35, 'I steer my life', {'font-weight': 800});
+    text(lab, F.rr, y0 + fs * 1.05, 'No: it can be', {'font-weight': 800, 'text-anchor': 'end'});
+    text(lab, F.rr, y0 + fs * 2.35, 'a rut or a mask', {'font-weight': 800, 'text-anchor': 'end'});
+    F.cw = Math.max(16, Math.min(W * .13, 42, (F.bot - F.top) * .34));
+    F.cy = (F.top + F.bot) / 2;
+    F.trail = Kit.mk('line', {stroke: K, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    F.car = Kit.mk('g', {}, svg);
+    F.ch = carShape(F.car, F.cw, false);
+    F.chev = Kit.mk('g', {class: 'ch', opacity: touched ? 0 : 1}, F.car);
+    const d = F.cw * .5 + fs * .9, a = fs * .45;
+    Kit.mk('path', {d: `M${-d},${-a} l${-a},${a} l${a},${a} M${d},${-a} l${a},${a} l${-a},${a}`, stroke: K, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, F.chev);
+    F.lead = Kit.mk('line', {stroke: K, 'stroke-width': 1.3}, svg);
+    F.you = text(svg, 0, 0, 'you', {'font-weight': 800});
+    place();
+  }
+  function place() {
+    if (!F.car) return;
+    const m = F.cw * .95, x = F.rl + m + v * (F.rr - F.rl - 2 * m);
+    F.x = x;
+    F.car.setAttribute('transform', `translate(${x},${F.cy}) rotate(${st.ang})`);
+    for (const [k, val] of Object.entries({x1: x, x2: x, y1: F.cy + F.ch / 2, y2: F.bot})) F.trail.setAttribute(k, val);
+    const right = v < .55, edge = F.cw / 2 + (touched ? 6 : F.fs * 2.2);
+    const x1 = right ? x + edge : x - edge, x2 = right ? x1 + 12 : x1 - 12;
+    const yl = F.cy - F.fs * .33;
+    F.lead.setAttribute('x1', x1); F.lead.setAttribute('x2', x2); F.lead.setAttribute('y1', yl); F.lead.setAttribute('y2', yl);
+    F.you.setAttribute('x', right ? x2 + 3 : x2 - 3); F.you.setAttribute('y', F.cy);
+    F.you.setAttribute('text-anchor', right ? 'start' : 'end');
+  }
+  function setFromX(cx) {
+    const r = Kit.$('pic').getBoundingClientRect(), m = F.cw * .95;
+    const nv = Math.max(0, Math.min(1, (cx - r.left - F.rl - m) / (F.rr - F.rl - 2 * m)));
+    st.ang = Math.max(-20, Math.min(20, (nv - v) * 500));
+    v = nv; place();
+    if (!Kit.calm) gsap.to(st, {ang: 0, duration: .6, ease: 'power2.out', onUpdate: place, overwrite: true});
+    else { st.ang = 0; place(); }
+  }
+  const pic = Kit.$('pic');
+  let dragging = false;
+  pic.addEventListener('pointerdown', e => {
+    if (locked) return; dragging = true; pic.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; F.chev && F.chev.setAttribute('opacity', 0); }
+    setFromX(e.clientX);
+  });
+  pic.addEventListener('pointermove', e => { if (dragging) setFromX(e.clientX); });
+  const up = () => { if (!dragging) return; dragging = false; committed(); };
+  pic.addEventListener('pointerup', up); pic.addEventListener('pointercancel', up);
+  function committed() {
+    if (moved) return; moved = true; Kit.haptic('selection'); sure.on(); place();
+    Kit.$('surewrap').classList.add('live');
+    say.innerHTML = 'Now say how sure you are. <b>You can still move the car.</b>';
+  }
+  const towardYes = () => Math.round((1 - v) * 100);
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (locked) return; locked = true;
+    Kit.answer({choice: `${towardYes()}% toward “it shows I steer my life”`, correct: null, sure: pct});
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back: one track, until the paths split ----------
+  function drawBack(anim) {
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, K = ink(), C = ground();
+    if (W < 60 || H < 40) return;
+    const fs = Math.max(12, Math.min(13, W / 26)), lh = fs * 1.28;
+    const M = Kit.mk('text', {x: -999, y: -999, 'font-size': fs, style: FONT}, svg);
+    const meas = (t, wt) => { M.setAttribute('font-weight', wt); M.textContent = t; return M.getComputedTextLength(); };
+    const wrap = (t, w, wt) => {
+      const out = []; let cur = '';
+      for (const wd of t.split(' ')) { const tr = cur ? cur + ' ' + wd : wd; if (!cur || meas(tr, wt) <= w) cur = tr; else { out.push(cur); cur = wd; } }
+      if (cur) out.push(cur); return out;
+    };
+    const h = Math.max(12, Math.min(19, W * .055)), cw = Math.max(9, Math.min(15, h * .74)), ch = cw * 1.7;
+    const colW = Math.max(108, Math.min(170, W * .44));
+    const xc = colW + 10 + h, xL = xc + h / 2, xR0 = xc + h + 10, rW = W - 2 - xR0;
+    const exitDy = R => Math.sqrt(3 * R * h + .75 * h * h);
+    const pc = towardYes();
+    const CAP_LOCK = 'Steadiness can be rigidity, or a pose for others.';
+    const CAP_YOU = "On the straight, you can't yet tell which car you are.";
+    const MODES = [
+      {lock: {b: 'Wheel locked: straight on, so it looks decisive.', r: CAP_LOCK}, hold: {b: 'Holds the wheel:', r: 'turns with the road'}, you: {b: `you: ${pc}% toward “I steer”`, r: CAP_YOU}, fork: 'paths split here'},
+      {lock: {b: 'Straight on, so it looks decisive.', r: CAP_LOCK}, hold: {b: 'Holds the wheel: turns with the road'}, you: {b: `you: ${pc}% “I steer”`, r: CAP_YOU}, fork: 'paths split here'},
+      {lock: {b: 'Straight on, so it looks decisive.', r: CAP_LOCK}, hold: {b: 'Turns with the road'}, you: {b: `you: ${pc}% “I steer”`}, fork: 'paths split here'},
+      {lock: {b: 'Straight on, so it looks decisive.'}, hold: {b: 'Turns with the road'}, you: {b: `you: ${pc}% “I steer”`}, fork: 'paths split here'},
+      {lock: {b: 'Looks decisive'}, hold: {b: 'Turns'}, you: {b: 'you'}, fork: 'split here'}
+    ];
+    const plan = m => {
+      if (rW < 40) return null;
+      const g = (o, w) => ({b: o.b ? wrap(o.b, w, 800) : [], r: o.r ? wrap(o.r, w, 500) : []});
+      const lk = g(m.lock, colW), yo = g(m.you, colW), ho = g(m.hold, rW);
+      const wide = (o, w) => o.b.some(t => meas(t, 800) > w) || o.r.some(t => meas(t, 500) > w);
+      if (wide(lk, colW) || wide(yo, colW) || wide(ho, rW) || meas(m.fork, 800) > colW) return null;
+      const n = o => o.b.length + o.r.length;
+      const HL = n(lk) * lh, HY = n(yo) * lh, HH = n(ho) * lh;
+      const Rmin = h * 1.5, Rw = W - 2 - xc - ch * 1.7;
+      if (Rw < Rmin) return null;
+      const lo = Math.max(HL + 10 + fs * .6, exitDy(Rmin) + ch * .75 + 2, Rmin + h + 2);
+      const hi = Math.min(H - 10 - fs * .45 - HY, H - ch - 12);
+      if (lo > hi) return null;
+      const yB = Math.max(lo, Math.min(hi, H * .5));
+      const E = yB - ch * .75 - 2;
+      const R = Math.max(Rmin, Math.min(Rw, yB - h - 2, (E * E - .75 * h * h) / (3 * h), W * .3));
+      const cx0 = xc + R, yH = yB - R + h / 2;
+      const dx = xR0 - cx0, rad = R - h - 5;
+      let y0 = dx >= 0 ? yB - R + h + 6 : (-dx < rad ? yB - Math.sqrt(rad * rad - dx * dx) : yB + 4);
+      y0 = Math.max(y0, yH + cw / 2 + 10);
+      if (y0 + HH > H - 2) return null;
+      return {lk, yo, ho, HL, yB, R, yH, y0, fork: m.fork};
+    };
+    let L = null;
+    for (const m of MODES) { L = plan(m); if (L) break; }
+    M.remove();
+    if (!L) return;
+    const {yB, R, yH, y0} = L;
+
+    const mkT = (p, x, y, t, wt) => { const e = Kit.mk('text', {x, y, fill: K, 'font-size': fs, 'font-weight': wt, style: FONT}, p); e.textContent = t; return e; };
+    const block = (p, x, top, o) => {
+      let i = 0; const ws = [];
+      for (const t of o.b) ws.push(mkT(p, x, top + fs * .82 + i++ * lh, t, 800).getComputedTextLength());
+      for (const t of o.r) ws.push(mkT(p, x, top + fs * .82 + i++ * lh, t, 500).getComputedTextLength());
+      return {mid: top + fs * .47, w0: ws[0] || 0};
+    };
+    const hair = (p, x1, y1, x2, y2) => Kit.mk('line', {x1, y1, x2, y2, stroke: K, 'stroke-width': 1}, p);
+
+    // road: one lighter band, two thin edges, one dashed centre line
+    const rp = o => `M${xc + o},${H} L${xc + o},${yB} A${R - o},${R - o} 0 0 1 ${xc + R},${yB - R + o} L${W - 2},${yB - R + o}`;
+    const road = Kit.mk('g', {}, svg);
+    Kit.mk('path', {d: rp(0), fill: 'none', stroke: K, 'stroke-opacity': .13, 'stroke-width': 2 * h}, road);
+    for (const o of [-h, h]) Kit.mk('path', {d: rp(o), fill: 'none', stroke: K, 'stroke-width': 1.4}, road);
+    Kit.mk('path', {d: rp(0), fill: 'none', stroke: K, 'stroke-opacity': .5, 'stroke-width': 1.2, 'stroke-dasharray': '5 6'}, road);
+
+    // the two paths: shared up to the fork, then solid straight on vs dotted round the curve
+    const yA = yB - exitDy(R) - ch * .2;
+    const cx2 = Math.min(W - 2 - ch / 2 - 2, xc + R + Math.max(ch * .6 + 2, (W - 2 - xc - R) * .45));
+    const shared = Kit.mk('path', {d: `M${xL},${H} L${xL},${yB}`, stroke: K, 'stroke-width': 2.4, fill: 'none'}, svg);
+    const lockP = Kit.mk('path', {d: `M${xL},${yB} L${xL},${yA + ch / 2}`, stroke: K, 'stroke-width': 2.4, fill: 'none'}, svg);
+    const steerP = Kit.mk('path', {d: `M${xL},${yB} A${R - h / 2},${R - h / 2} 0 0 1 ${xc + R},${yH} L${Math.max(xc + R, cx2 - ch / 2 - 3)},${yH}`, stroke: K, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-dasharray': '0 6', fill: 'none'}, svg);
+
+    const carL = Kit.mk('g', {transform: `translate(${xL},${yA})`}, svg); carShape(carL, cw, false);
+    const carS = Kit.mk('g', {transform: `translate(${cx2},${yH}) rotate(90)`}, svg); carShape(carS, cw, false);
+
+    // the reader, still on the shared straight
+    const tY = yB + fs * .45 + 9, yMidY = tY + fs * .47;
+    const xY = Math.max(xc - h + cw / 2 + 2, Math.min(xc + h - cw / 2 - 2, xL + (v - .5) * 2 * h * .8));
+    const yY = Math.max(yB + 8 + ch / 2, Math.min(H - ch / 2 - 2, yMidY));
+    const carY = Kit.mk('g', {transform: `translate(${xY},${yY})`}, svg); carShape(carY, cw, true);
+
+    const fork = Kit.mk('circle', {cx: xL, cy: yB, r: 5.5, fill: C, stroke: K, 'stroke-width': 2}, svg);
+
+    // labels: left column (locked, fork, you), inside the curve (holds the wheel)
+    const gLock = Kit.mk('g', {}, svg), gFork = Kit.mk('g', {}, svg), gYou = Kit.mk('g', {}, svg), gHold = Kit.mk('g', {}, svg);
+    const tL = Math.max(2, Math.min(yB - fs * .6 - 8 - L.HL, yA - fs * .47));
+    const bl = block(gLock, 0, tL, L.lk);
+    if (bl.w0 + 6 < xL - cw / 2 - 10) hair(gLock, bl.w0 + 6, bl.mid, xL - cw / 2 - 4, yA);
+    const ft = mkT(gFork, 0, yB + fs * .35, L.fork, 800), fw = ft.getComputedTextLength();
+    if (fw + 6 < xL - 12) hair(gFork, fw + 6, yB, xL - 9, yB);
+    const by = block(gYou, 0, tY, L.yo);
+    if (by.w0 + 6 < xY - cw / 2 - 8) hair(gYou, by.w0 + 6, by.mid, xY - cw / 2 - 4, yY);
+    const bh = block(gHold, xR0, y0, L.ho);
+    const lx = Math.max(xR0 + 4, Math.min(cx2, xR0 + bh.w0 - 2));
+    hair(gHold, cx2, yH + cw / 2 + 3, lx, y0 - 2);
+
+    if (!anim || Kit.calm) return;
+    for (const el of [shared, lockP]) { const Ln = el.getTotalLength(); el.setAttribute('stroke-dasharray', Ln); el.setAttribute('stroke-dashoffset', Ln); }
+    gsap.set([road, fork, steerP, carL, carS, carY, gLock, gFork, gYou, gHold], {opacity: 0});
+    gsap.timeline({delay: .45})
+      .to(road, {opacity: 1, duration: .5, ease: 'power2.out'})
+      .to(shared, {attr: {'stroke-dashoffset': 0}, duration: .7, ease: 'power2.inOut'})
+      .to([carY, gYou], {opacity: 1, duration: .4, stagger: .1}, '-=.2')
+      .to([fork, gFork], {opacity: 1, duration: .35, stagger: .1}, '+=.1')
+      .to(lockP, {attr: {'stroke-dashoffset': 0}, duration: .8, ease: 'power2.out'}, '+=.3')
+      .to(steerP, {opacity: 1, duration: .8, ease: 'power2.out'}, '<')
+      .to([carL, carS], {opacity: 1, duration: .35, stagger: .1}, '-=.3')
+      .to([gLock, gHold], {opacity: 1, duration: .4, stagger: .12});
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !F.car) return;
+    gsap.from(F.labs, {opacity: 0, duration: .5, ease: 'power2.out'});
+    gsap.from([F.trail, F.car, F.you, F.lead], {opacity: 0, duration: .5, delay: .25, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; v = .3; if (F.chev) F.chev.setAttribute('opacity', 0); place(); committed();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 5200);
+  };
+})();
+Kit.single();
+</script>
+</html>

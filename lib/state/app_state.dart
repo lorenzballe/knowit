@@ -10,6 +10,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../analytics.dart';
+import '../data/card_pages.dart';
 import '../data/card_json.dart';
 import '../data/daily.dart';
 import '../data/genres.dart';
@@ -74,6 +75,7 @@ class AppState extends ChangeNotifier {
 
   static const _kStreak = 'knowit.streak';
   static const _kBestStreak = 'knowit.bestStreak';
+  static const _kSixtyBest = 'knowit.sixtyBest';
   static const _kLastCompletion = 'knowit.lastCompletionDate';
   static const _kFreezes = 'knowit.freezes';
   static const _kFrozeOn = 'knowit.frozeOn';
@@ -138,6 +140,12 @@ class AppState extends ChangeNotifier {
 
   int streak = 0;
   int bestStreak = 0;
+
+  /// The most claims the reader has ever got right in one round of Sixty
+  /// seconds on Explore, 0 before the first round. The round itself is a
+  /// day's play (ExplorePlay) and starts clean every morning; the record is
+  /// what outlasts it, so the game has something to beat tomorrow.
+  int sixtyBest = 0;
   String? lastCompletionDate;
 
   /// Days the reader can miss without losing the streak. Earned by keeping
@@ -354,6 +362,11 @@ class AppState extends ChangeNotifier {
 
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
+    // What the start shows while the rest is read and the day dealt: Today
+    // in grey to a reader who has a Today, and nothing to a first open,
+    // which goes to the welcome.
+    onboarded = _prefs.getBool(_kOnboarded) ?? false;
+    notifyListeners();
     // The newest bank the last run downloaded, before a card is dealt from
     // the one built in. Adopting later, mid-day, would re-deal the table.
     PillBank.restore(_prefs);
@@ -446,6 +459,7 @@ class AppState extends ChangeNotifier {
   Future<void> _restore() async {
     streak = _prefs.getInt(_kStreak) ?? 0;
     bestStreak = _prefs.getInt(_kBestStreak) ?? 0;
+    sixtyBest = _prefs.getInt(_kSixtyBest) ?? 0;
     lastCompletionDate = _prefs.getString(_kLastCompletion);
     freezes = _prefs.getInt(_kFreezes) ?? 1;
     frozeOn = _prefs.getString(_kFrozeOn);
@@ -926,6 +940,15 @@ class AppState extends ChangeNotifier {
     );
   }
 
+  /// A round of Sixty seconds ended with [right] claims right: kept as the
+  /// record when it beats it. A round that only ties it changes nothing.
+  Future<void> noteSixtyRound(int right) async {
+    if (right <= sixtyBest) return;
+    sixtyBest = right;
+    await _prefs.setInt(_kSixtyBest, sixtyBest);
+    notifyListeners();
+  }
+
   // ── Streak ────────────────────────────────────────────────────────────
 
   /// The streak as it stands right now. A stored streak only still counts if
@@ -1273,16 +1296,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kCompletedDates, completedDates);
     // Tomorrow, asked for tonight, so the morning is one read: the trace of
     // today goes first, so tomorrow is dealt from a day that includes it.
-    unawaited(
-      Trace.instance
-          .flush()
-          .then((_) => Served.instance.prefetch(dayShift(today, 1)))
-          .then((ServedDay? day) {
-            if (day == null) return;
-            servedTomorrow = day;
-            notifyListeners();
-          }),
-    );
+    unawaited(_askTomorrow());
     Analytics.capture('day completed', {
       'streak_days': streak,
       'best_streak': bestStreak,
@@ -1704,7 +1718,7 @@ class AppState extends ChangeNotifier {
   /// tonight can say what opens the morning and the morning will agree.
   List<Pill> get tomorrowsDeck {
     final tomorrow = DateTime(today.year, today.month, today.day + 1);
-    final ServedDay? kept = servedTomorrow;
+    final ServedDay? kept = _servedTomorrow;
     if (kept != null) return kept.cards;
     return _deal(
       tomorrow,
@@ -1717,6 +1731,52 @@ class AppState extends ChangeNotifier {
   /// Tomorrow as the server dealt it, when the evening's ask came back.
   /// Read synchronously off the last answer kept in memory.
   ServedDay? servedTomorrow;
+
+  /// [servedTomorrow] while it is still tomorrow: an app left open overnight
+  /// holds, in the morning, an answer that is today's.
+  ServedDay? get _servedTomorrow {
+    final ServedDay? kept = servedTomorrow;
+    return kept != null && kept.date == dateKey(dayShift(today, 1))
+        ? kept
+        : null;
+  }
+
+  /// From this hour of the reader's day the server deals their tomorrow on
+  /// its own (PREPARE_TOMORROW_FROM in functions/src/serve.ts), and so the
+  /// phone asks for it too.
+  static const int kTomorrowFrom = 17;
+
+  bool _askingTomorrow = false;
+
+  /// Tomorrow, asked for whenever the app goes out of sight or comes back
+  /// from the late afternoon on, so the morning opens on what the phone
+  /// already holds, the first card at once, as a feed opens on its first
+  /// post, and not on a request to a server. Not earlier: the server keeps
+  /// the first deal of a day, and a morning's ask would deal tomorrow from a
+  /// day barely begun. Asked until it comes back, then kept.
+  Future<void> askTomorrowIfDue({DateTime? now}) async {
+    if (!ready || _servedTomorrow != null) return;
+    if ((now ?? DateTime.now()).hour < kTomorrowFrom) return;
+    await _askTomorrow();
+  }
+
+  /// Asks the server for tomorrow, today's trace first, keeps the answer, and
+  /// fetches the pages of its first free cards, so the morning's first card
+  /// comes up drawn.
+  Future<void> _askTomorrow() async {
+    if (_askingTomorrow) return;
+    _askingTomorrow = true;
+    try {
+      await Trace.instance.flush();
+      final ServedDay? day = await Served.instance.prefetch(dayShift(today, 1));
+      if (day == null) return;
+      servedTomorrow = day;
+      CardPages.instance.warm(day.cards.where((p) => p.hasPage).take(3));
+      notifyListeners();
+    } finally {
+      _askingTomorrow = false;
+    }
+  }
 
   /// True when tomorrow is the morning after a full week kept, and so has
   /// three cards of the reader's own instead of two. Astute+ has five every
@@ -2960,6 +3020,7 @@ class AppState extends ChangeNotifier {
     _profileSent = null;
     streak = 0;
     bestStreak = 0;
+    sixtyBest = 0;
     lastCompletionDate = null;
     completedDates = [];
     savedIds = [];

@@ -1,0 +1,36 @@
+{
+  "id": "thinking-inaction-sure-failure",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "One view: is doing nothing a guaranteed failure?",
+  "answer": "A coach claims that if you never try, you fail anyway, so trying can only add a chance. The card's counterpoint: waiting is not always a no, and when a mistake does lasting harm, preparing first beats leaping. Where you stand depends on how far you could fall.",
+  "move": "It hangs on how far you could fall.",
+  "keywords": [
+    "inaction",
+    "risk",
+    "decision",
+    "coach",
+    "failure"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A point-of-view card asking whether doing nothing is a sure failure. A draggable figure lets the reader place themselves between two views. The reader is asked what trying and failing would lose beyond what waiting already costs.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Come Eliminare Blocchi Emotivi E Mentali” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=fQI6yxRsP74&t=585s",
+  "written": "2026-11-07"
+}

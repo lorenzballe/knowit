@@ -1,0 +1,377 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-sludge-to-biogas -->
+<!-- Look: a museum diorama cut from layered paper (far hills, drifting paper clouds, a rayed sun, the plant with its trees, a sealed tank, a gas dome, a generator), each plane with its own soft shadow, bleeding off the card's edges and drifting in parallax on a torn strip of paper ground.
+     Interaction: tap the four steps in the order the energy travels; the paper chips flip into the real order and the diorama runs that chain, station by station.
+     Wow: sludge, bubbles, gas and sparks travel along the real curved pipes, the windows light up, and the gauge needle springs to "up to 50%" of the plant's energy. -->
+<title>Sludge that runs the plant</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1.1cqh 2.6cqw}
+.chip{font:700 max(1.95cqh,13px)/1.15 var(--body);color:var(--k);background:#fbf6ea;border:0;border-radius:.7cqh;padding:1.25cqh 2.6cqw;display:flex;align-items:center;gap:2.2cqw;text-align:left;cursor:pointer;box-shadow:0 .45cqh 1cqh rgba(70,50,20,.22),0 .1cqh 0 rgba(70,50,20,.18);overflow-wrap:anywhere;-webkit-tap-highlight-color:transparent}
+.chip .n{flex:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;border:2px dashed color-mix(in srgb,var(--k) 40%,transparent);font:800 max(1.8cqh,12px)/1 var(--mono);display:grid;place-items:center;transition:background .2s,color .2s,border-color .2s}
+.chip.set .n{background:var(--k);color:#fbf6ea;border:2px solid var(--k)}
+.chip.ok .n{background:#4f7d4a;border-color:#4f7d4a;color:#fff}
+.chip.no .n{background:#b4523a;border-color:#b4523a;color:#fff}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
+#why .big{font-family:var(--display);font-size:clamp(22px,min(4.2cqh,7cqw),44px);line-height:1.04;margin:0}
+#why .big i{font-style:normal;color:#b8742a}
+.say b{color:#8a3d22}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Put in order · biogas" style="--c:#ece2cb;--k:#1f2a2c;--edge:#cdbf9f">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
+    <h2 class="q">How does a sewage plant turn its sludge into its own energy?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A paper diorama of a treatment plant: a sludge pipe, a sealed tank, a gas dome, a generator and a gauge of the plant's energy."></svg>
+      <div id="opts">
+        <button class="chip" data-k="2"><span class="n"></span><span>Biogas is collected</span></button>
+        <button class="chip" data-k="3"><span class="n"></span><span>The plant's own power</span></button>
+        <button class="chip" data-k="0"><span class="n"></span><span>Sludge comes in</span></button>
+        <button class="chip" data-k="1"><span class="n"></span><span>The sealed tank</span></button>
+      </div>
+      <div id="why" class="gone"><p class="big">Sludge <i>→</i> biogas <i>→</i> power</p><p class="body">At the DAC plant in Genoa every tank is sealed, to keep the smells in. Inside, the sludge is treated so it also gives off biogas, and the plant reuses that gas itself: up to 50% of the energy it needs.</p></div>
+    </div>
+    <p class="say" id="say">Tap the four steps in the order the energy travels.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Sludge is fuel: a plant can make up to half its own energy from it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin, Flip);
+  const svg = Kit.$('pic'), opts = Kit.$('opts'), say = Kit.$('say'), stage = Kit.$('stage'), card = Kit.$('card');
+  const INK = '#1f2a2c', PAPER = '#fbf6ea', GOLD = '#f0a52c', SLUDGE = '#6e4f33', PIPE = '#3b4a4a', LIT = '#ffd166', EARTH = '#56654f';
+  let W = 0, H = 0, fs = 12, A = 0, GY = 0, S = null, loops = [], idle = [], revealed = false, locked = false, n = 0, entered = false, lastW = 0, lastH = 0;
+  let doneResolve; const done = new Promise(r => doneResolve = r);
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => {
+    const e = mk('text', Object.assign({x, y, 'text-anchor': 'middle', fill: INK, style: 'font-family:var(--mono)', 'font-size': fs, 'font-weight': 700}, a), p);
+    e.textContent = s;
+    const w = e.getComputedTextLength(), anc = e.getAttribute('text-anchor');
+    const left = anc === 'middle' ? x - w / 2 : anc === 'end' ? x - w : x;
+    const sh = Math.max(3 - left, Math.min(0, W - 3 - (left + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    return e;
+  };
+  const pipe = (p, d, w) => { mk('path', {d, fill: 'none', stroke: PIPE, 'stroke-width': w, 'stroke-linecap': 'round'}, p); mk('path', {d, fill: 'none', stroke: '#8fa098', 'stroke-width': w * .42, 'stroke-linecap': 'round', opacity: .9}, p); return mk('path', {d, fill: 'none', stroke: 'none'}, p); };
+
+  function defs() {
+    const d = mk('defs', {}, svg);
+    [['pp1', 2, 3, .16], ['pp2', 3, 4, .22], ['pp3', 4, 5, .3]].forEach(([id, dy, sd, op]) => {
+      const f = mk('filter', {id, x: '-20%', y: '-25%', width: '140%', height: '160%'}, d);
+      mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.85', numOctaves: 2, seed: 7, result: 'n'}, f);
+      mk('feColorMatrix', {in: 'n', type: 'matrix', values: '0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .1  .5 0 0 0 -.18', result: 'na'}, f);
+      mk('feComposite', {in: 'na', in2: 'SourceGraphic', operator: 'in', result: 'tex'}, f);
+      const m = mk('feMerge', {result: 'm'}, f); mk('feMergeNode', {in: 'SourceGraphic'}, m); mk('feMergeNode', {in: 'tex'}, m);
+      mk('feDropShadow', {in: 'm', dx: 0, dy, stdDeviation: sd, 'flood-color': '#3a2a10', 'flood-opacity': op}, f);
+    });
+    const glow = mk('filter', {id: 'glow', x: '-100%', y: '-100%', width: '300%', height: '300%'}, d);
+    mk('feGaussianBlur', {stdDeviation: 2.2, result: 'b'}, glow);
+    const gm = mk('feMerge', {}, glow); mk('feMergeNode', {in: 'b'}, gm); mk('feMergeNode', {in: 'SourceGraphic'}, gm);
+    const lg = (id, c0, c1) => { const g = mk('linearGradient', {id, x1: 0, x2: 1, y1: 0, y2: 0}, d); mk('stop', {offset: 0, 'stop-color': c0}, g); mk('stop', {offset: .45, 'stop-color': PAPER}, g); mk('stop', {offset: 1, 'stop-color': c1}, g); };
+    lg('body', '#efe6d2', '#d9cdb2');
+    const rg = mk('radialGradient', {id: 'sph', cx: .35, cy: .3, r: .8}, d); mk('stop', {offset: 0, 'stop-color': '#fffdf6'}, rg); mk('stop', {offset: 1, 'stop-color': '#d6c9ac'}, rg);
+    const gg = mk('radialGradient', {id: 'gasg', cx: .4, cy: .35, r: .7}, d); mk('stop', {offset: 0, 'stop-color': '#ffe39a'}, gg); mk('stop', {offset: 1, 'stop-color': GOLD}, gg);
+    return d;
+  }
+
+  function draw() {
+    loops.forEach(t => t.kill()); loops = [];
+    idle.forEach(t => t.kill()); idle = [];
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; lastW = W; lastH = H;
+    if (W < 50 || H < 40) { S = S || null; return; }
+    fs = Math.max(12, Math.min(14, W / 27));
+    const LB = fs * 2.3;
+    GY = H - LB; A = GY;
+    const compact = A < fs * 11;
+    // full bleed: the paper scene runs right up to the card's own edges (never past them)
+    const cr = card.getBoundingClientRect(), sr = svg.getBoundingClientRect(), k = sr.width ? W / sr.width : 1;
+    const X0 = -Math.max(0, sr.left - cr.left) * k + 1, X1 = W + Math.max(0, cr.right - sr.right) * k - 1;
+    const d = defs();
+    const layers = [], inner = [];
+    ['pp1', 'pp2', 'pp3'].forEach(() => { const o = mk('g', {}, svg); layers.push(o); inner.push(mk('g', {}, o)); });
+    const [back, mid, front] = inner;
+    S = {inner, layers, st: [], wins: [], labs: [], compact};
+
+    // ---- far plane: a rayed paper sun, paper clouds, two hills
+    const sx = W * .17, sy = Math.max(A * .1 + 4, GY - A * .8), sr0 = Math.max(fs * .7, A * .07);
+    S.rays = mk('g', {filter: 'url(#pp1)'}, back);
+    const rp = []; for (let i = 0; i < 24; i++) { const a = i * Math.PI / 12, r = i % 2 ? sr0 * 1.25 : sr0 * 1.65; rp.push(`${sx + Math.cos(a) * r},${sy + Math.sin(a) * r}`); }
+    mk('polygon', {points: rp.join(' '), fill: '#f6cf7c'}, S.rays);
+    mk('circle', {cx: sx, cy: sy, r: sr0, fill: '#efb34a', filter: 'url(#pp1)'}, back);
+    S.clouds = [[W * .44, GY - A * .78, 1], [W * .7, GY - A * .9, .75]].map(([cx, cy, s]) => {
+      const c = mk('g', {filter: 'url(#pp1)'}, back), u = Math.max(fs * .5, A * .05) * s;
+      mk('rect', {x: cx - u * 2.2, y: cy - u * .2, width: u * 4.4, height: u * 1.1, rx: u * .55, fill: '#f7f0df'}, c);
+      mk('circle', {cx: cx - u * .9, cy, r: u * .8, fill: '#f7f0df'}, c);
+      mk('circle', {cx: cx + u * .4, cy: cy - u * .25, r: u * 1.05, fill: '#f7f0df'}, c);
+      return c;
+    });
+    if (compact) S.clouds.forEach(c => c.setAttribute('opacity', 0));
+    mk('path', {d: `M${X0},${GY} V${GY - A * .44} C${W * .2},${GY - A * .62} ${W * .42},${GY - A * .36} ${W * .66},${GY - A * .5} S${W * .95},${GY - A * .56} ${X1},${GY - A * .42} V${GY} Z`, fill: '#d6c9a6', filter: 'url(#pp1)'}, back);
+    mk('path', {d: `M${X0},${GY} V${GY - A * .3} C${W * .25},${GY - A * .4} ${W * .5},${GY - A * .22} ${W * .78},${GY - A * .33} S${W + 10},${GY - A * .3} ${X1},${GY - A * .26} V${GY} Z`, fill: '#bcc3a0', filter: 'url(#pp1)'}, back);
+
+    // ---- middle plane: paper trees and the plant's buildings, windows dark until the power flows
+    [[W * .5, .2], [W * .04, .16], [W * .93, .22]].forEach(([x, h]) => {
+      const t = mk('g', {filter: 'url(#pp2)'}, mid), r = Math.max(fs * .45, A * h * .32);
+      mk('rect', {x: x - 1.5, y: GY - A * h * .55, width: 3, height: A * h * .55, fill: '#6d5a40'}, t);
+      mk('ellipse', {cx: x, cy: GY - A * h * .55 - r * .8, rx: r * .85, ry: r * 1.15, fill: '#8a9a6e'}, t);
+    });
+    [[0, .2, .34], [.45, .56, .27], [.7, .99, .2]].forEach(([a, b, h]) => {
+      const x0 = W * a, x1 = W * b, y0 = GY - A * h, bg = mk('g', {filter: 'url(#pp2)'}, mid);
+      mk('path', {d: `M${x0},${GY} V${y0 + fs * .4} L${(x0 + x1) / 2},${y0 - fs * .4} L${x1},${y0 + fs * .4} V${GY} Z`, fill: '#94a08e'}, bg);
+      const cols = Math.max(1, Math.floor((x1 - x0) / (fs * 1.6))), rows = Math.floor((GY - y0 - fs * 1.4) / (fs * 1.5));
+      const cw = (x1 - x0) / cols;
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) S.wins.push(mk('rect', {x: x0 + c * cw + cw * .3, y: y0 + fs * 1.1 + r * fs * 1.5, width: cw * .4, height: fs * .75, rx: 1.5, fill: '#727e6c'}, bg));
+    });
+
+    // ---- front plane: a torn strip of paper ground that carries the station names
+    const g0 = mk('g', {filter: 'url(#pp3)'}, front);
+    let bot = '', step = fs * 1.4;
+    for (let x = X1; x > X0; x -= step) bot += ` L${Math.max(X0, x - step)},${H - fs * .12 - Kit.rnd() * fs * .3}`;
+    mk('path', {d: `M${X0},${GY - 2} Q${W * .3},${GY - fs * .5} ${W * .6},${GY - 1} T${X1},${GY - 3} V${H - fs * .2}${bot} Z`, fill: EARTH}, g0);
+    for (let i = 0; i < 9; i++) mk('rect', {x: W * (.05 + i * .11) + Kit.rnd() * fs, y: GY + fs * .2, width: fs * (.6 + Kit.rnd()), height: 1.4, rx: .7, fill: '#6f7f66'}, g0);
+
+    const tx = W * .36, tr = Math.min(W * .13, A * .2), ttop = GY - A * .5;
+    const ya = GY - A * .14;
+    const hx = W * .62, hr = Math.min(W * .1, A * .13), hy = GY - A * .36;
+    const gw = Math.min(W * .17, A * (compact ? .3 : .24)), gh = A * (compact ? .22 : .17), gx = W * .86, gy0 = GY - gh;
+    const gr = compact ? Math.max(fs * .9, Math.min(W * .08, A * .24)) : Math.min(W * .11, A * .15);
+    const gcx = W - gr - fs * .9;
+    const gcy = compact ? Math.max(gr + fs * .6 + 2, GY - A * .62) : Math.max(GY - A * .66, fs * 2.6 + gr);
+    const cabX = gcx + gr + fs * .35;
+
+    // station 1: the sludge pipe, coming in from the card's edge
+    const s0 = mk('g', {}, front); S.st.push(s0);
+    const pw0 = fs * .8, px0 = X0 + pw0 / 2;
+    S.p0 = pipe(s0, `M${px0},${ya - A * .02} C${W * .07},${ya - A * .09} ${W * .15},${ya + A * .05} ${tx - tr * .3},${ya}`, pw0);
+    mk('rect', {x: W * .07, y: ya - A * .07 - fs * .2, width: fs * .5, height: fs * .9, rx: 2, fill: PIPE}, s0);
+
+    // station 2: the sealed tank, with a cutaway window
+    const s1 = mk('g', {filter: 'url(#pp3)'}, front); S.st.push(s1);
+    mk('path', {d: `M${tx - tr},${GY} V${ttop + tr * .6} C${tx - tr},${ttop + tr * .05} ${tx - tr * .45},${ttop} ${tx},${ttop} C${tx + tr * .45},${ttop} ${tx + tr},${ttop + tr * .05} ${tx + tr},${ttop + tr * .6} V${GY} Z`, fill: 'url(#body)', stroke: INK, 'stroke-width': 1.4}, s1);
+    const by = ttop + tr * .5;
+    mk('rect', {x: tx - tr, y: by, width: tr * 2, height: Math.max(3, Math.min(fs * .5, tr * .3)), fill: PIPE}, s1);
+    if (tr > fs * 1.4) for (let i = 0; i < 7; i++) mk('circle', {cx: tx - tr * .85 + i * tr * 1.7 / 6, cy: by + Math.min(fs * .25, tr * .15), r: Math.max(1.3, fs * .1), fill: '#e8dcc0'}, s1);
+    const room = GY - by;
+    let showSeal = room > fs * 5.2;
+    let sealT = null;
+    if (showSeal) {
+      sealT = txt(s1, tx, by + fs * 1.85, 'SEALED', {fill: '#9c4428', 'font-size': fs, 'font-weight': 800, transform: `rotate(-6 ${tx} ${by + fs * 1.5})`, 'letter-spacing': '.1em'});
+      if (sealT.getComputedTextLength() > tr * 1.9) { sealT.remove(); sealT = null; showSeal = false; }
+    }
+    const wx0 = tx - tr * .64, wx1 = tx + tr * .64, ww = wx1 - wx0;
+    const wy1 = GY - Math.min(fs * .6, room * .12);
+    const wy0 = Math.min(wy1 - Math.max(fs * .8, room * .2), Math.max(by + (showSeal ? fs * 2.4 : Math.min(fs * .9, room * .2)), ttop + tr * 1.25));
+    const wh = Math.max(4, wy1 - wy0), wrx = Math.min(fs * .5, ww * .3, wh * .3);
+    const cp = mk('clipPath', {id: 'win'}, d); mk('rect', {x: wx0, y: wy0, width: ww, height: wh, rx: wrx}, cp);
+    mk('rect', {x: wx0, y: wy0, width: ww, height: wh, rx: wrx, fill: '#2b3433'}, s1);
+    const wg = mk('g', {'clip-path': 'url(#win)'}, s1);
+    const lv = wy0 + wh * .42;
+    S.level = mk('path', {d: `M${wx0 - 4},${lv} Q${wx0 + ww * .25},${lv - Math.min(fs * .4, wh * .15)} ${wx0 + ww * .5},${lv} T${wx1 + 4},${lv} V${wy0 + wh + 4} H${wx0 - 4} Z`, fill: SLUDGE}, wg);
+    S.bub = [];
+    for (let i = 0; i < 6; i++) S.bub.push(mk('circle', {cx: wx0 + ww * (.15 + .7 * Kit.rnd()), cy: wy0 + wh - Math.min(fs * .4, wh * .15), r: Math.max(1.2, Math.min(fs * (.12 + .12 * Kit.rnd()), ww * .08)), fill: '#ffe39a', opacity: 0}, wg));
+    S.bubH = Math.max(4, wy0 + wh - lv + fs * .5);
+    mk('rect', {x: wx0, y: wy0, width: ww, height: wh, rx: wrx, fill: 'none', stroke: INK, 'stroke-width': 1.6}, s1);
+
+    // station 3: the gas pipe and the gas dome
+    const s2 = mk('g', {}, front); S.st.push(s2);
+    S.p1 = pipe(s2, `M${tx},${ttop + 2} C${tx},${ttop - A * .2} ${hx - hr * 1.3},${hy - hr - A * .2} ${hx - hr * .55},${hy - hr * .82}`, Math.max(4, fs * .55));
+    const hg = mk('g', {filter: 'url(#pp3)'}, s2);
+    [-.7, 0, .7].forEach(k2 => mk('line', {x1: hx + k2 * hr, y1: hy + hr * .4, x2: hx + k2 * hr * 1.25, y2: GY, stroke: INK, 'stroke-width': 2}, hg));
+    mk('circle', {cx: hx, cy: hy, r: hr, fill: 'url(#sph)', stroke: INK, 'stroke-width': 1.4}, hg);
+    S.gas = mk('circle', {cx: hx, cy: hy, r: hr * .8, fill: 'url(#gasg)', opacity: 0}, hg);
+    mk('path', {d: `M${hx - hr * .55},${hy - hr * .45} A${hr * .7},${hr * .7} 0 0 1 ${hx + hr * .1},${hy - hr * .72}`, fill: 'none', stroke: '#fff', 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .8}, hg);
+
+    // station 4: pipe to the generator, the generator, cable up to the gauge
+    const s3 = mk('g', {}, front); S.st.push(s3);
+    S.p2 = pipe(s3, `M${hx + hr * .95},${hy + hr * .3} C${hx + hr * 2},${hy + hr * .5} ${gx - gw * .25},${gy0 - A * .12} ${gx - gw * .2},${gy0 + 1}`, Math.max(4, fs * .5));
+    S.p3 = mk('path', {d: `M${gx + gw * .3},${gy0} C${gx + gw * .3},${gy0 - A * .1} ${cabX},${gcy + A * .12} ${cabX},${gcy + 2}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, s3);
+    const gg = mk('g', {filter: 'url(#pp3)'}, s3);
+    mk('rect', {x: gx - gw / 2, y: gy0, width: gw, height: gh, rx: Math.min(fs * .35, gh * .2), fill: 'url(#body)', stroke: INK, 'stroke-width': 1.4}, gg);
+    const wr = Math.min(gh, gw) * .32, wcx = gx - gw * .14, wcy = gy0 + gh * .52;
+    S.wheel = mk('g', {}, gg);
+    mk('circle', {cx: wcx, cy: wcy, r: wr, fill: PIPE}, S.wheel);
+    for (let i = 0; i < 3; i++) { const a = i * Math.PI / 3; mk('line', {x1: wcx - Math.cos(a) * wr * .8, y1: wcy - Math.sin(a) * wr * .8, x2: wcx + Math.cos(a) * wr * .8, y2: wcy + Math.sin(a) * wr * .8, stroke: '#e8dcc0', 'stroke-width': 2}, S.wheel); }
+    mk('circle', {cx: wcx, cy: wcy, r: wr * .22, fill: GOLD}, S.wheel);
+    S.wcx = wcx; S.wcy = wcy;
+    S.led = mk('circle', {cx: gx + gw * .3, cy: gy0 + gh * .3, r: Math.max(2, Math.min(fs * .22, gh * .12)), fill: '#6b5148'}, gg);
+
+    // the gauge: the plant's energy needs
+    const gz = mk('g', {filter: 'url(#pp3)'}, front);
+    const arcD = `M${gcx - gr},${gcy} A${gr},${gr} 0 0 1 ${gcx + gr},${gcy}`, rim = Math.min(fs * .5, gr * .4), aw = Math.min(fs * .55, gr * .35);
+    mk('path', {d: `M${gcx - gr - rim},${gcy + 1} A${gr + rim},${gr + rim} 0 0 1 ${gcx + gr + rim},${gcy + 1} Z`, fill: PAPER, stroke: INK, 'stroke-width': 1.3}, gz);
+    mk('path', {d: arcD, fill: 'none', stroke: '#ddd0b2', 'stroke-width': aw}, gz);
+    S.arcL = Math.PI * gr;
+    S.arc = mk('path', {d: arcD, fill: 'none', stroke: GOLD, 'stroke-width': aw, 'stroke-dasharray': S.arcL, 'stroke-dashoffset': S.arcL}, gz);
+    [0, .25, .5, .75, 1].forEach(t => { const a = Math.PI * (1 - t), r1 = gr * .8, r2 = gr * (t === .5 ? .52 : .66); mk('line', {x1: gcx + Math.cos(a) * r1, y1: gcy - Math.sin(a) * r1, x2: gcx + Math.cos(a) * r2, y2: gcy - Math.sin(a) * r2, stroke: INK, 'stroke-width': t === .5 ? 2.4 : 1.2}, gz); });
+    S.burst = mk('circle', {cx: gcx, cy: gcy - gr * .4, r: gr * .4, fill: 'none', stroke: GOLD, 'stroke-width': 3, opacity: 0}, front);
+    const nw = Math.min(fs * .22, gr * .16);
+    S.needle = mk('path', {d: `M${gcx - nw},${gcy} L${gcx},${gcy - gr * .8} L${gcx + nw},${gcy} Z`, fill: '#9c4428'}, front);
+    mk('circle', {cx: gcx, cy: gcy, r: Math.min(fs * .35, gr * .25), fill: INK}, front);
+    S.gcx = gcx; S.gcy = gcy; S.gr = gr; S.cabX = cabX;
+    gsap.set(S.needle, {rotation: -88, svgOrigin: `${gcx} ${gcy}`});
+    if (!compact) txt(front, gcx, gcy - gr - rim - fs * .55, "PLANT'S ENERGY", {'font-size': 12 > fs * .95 ? 12 : fs * .95, 'letter-spacing': '.04em'});
+    // the reading sits on its own little paper tag
+    S.tag = mk('rect', {x: 0, y: 0, width: 10, height: fs * 1.5, rx: fs * .3, fill: PAPER, filter: 'url(#pp2)'}, front);
+    S.read = mk('text', {x: gcx, y: compact ? gcy - fs * .05 : gcy + fs * 1.65, 'text-anchor': compact ? 'end' : 'middle', fill: INK, style: 'font-family:var(--display)', 'font-size': fs * 1.15, 'font-weight': 800}, front);
+    S.read.textContent = '? %';
+    fixRead();
+
+    // station names on the paper ground
+    const fx = mk('g', {}, front); S.fx = fx;
+    const lfs = Math.max(12, fs * .92), ly = GY + LB * .62;
+    [[W * .1, 'SLUDGE'], [tx, 'SEALED TANK'], [hx, 'BIOGAS'], [gx, 'POWER']].forEach(([x, s]) => S.labs.push(txt(front, x, ly, s, {fill: PAPER, 'font-size': lfs, opacity: .62, 'letter-spacing': '.05em'})));
+    spreadLabels(lfs);
+
+    // travellers, hidden until the flow runs
+    const mkDots = (k2, r, fill, gl) => Array.from({length: k2}, () => mk('circle', {cx: 0, cy: 0, r, fill, opacity: 0, filter: gl ? 'url(#glow)' : null}, fx));
+    S.dSl = mkDots(3, fs * .3, '#8a6644');
+    S.dG1 = mkDots(4, fs * .22, '#ffd36b', true);
+    S.dG2 = mkDots(3, fs * .2, '#ffd36b', true);
+    S.dSp = Array.from({length: 3}, () => mk('path', {d: `M0,${-fs * .4} L${fs * .22},0 L0,${fs * .4} L${-fs * .22},0 Z`, fill: '#fff3b0', opacity: 0, filter: 'url(#glow)'}, fx));
+
+    S.qx = layers.map(g => gsap.quickTo(g, 'x', {duration: .9, ease: 'power3.out'}));
+
+    // idle life: the sun turns, the clouds drift
+    if (!Kit.calm) {
+      idle.push(gsap.to(S.rays, {rotation: 360, svgOrigin: `${sx} ${sy}`, duration: 50, ease: 'none', repeat: -1}));
+      S.clouds.forEach((c, i) => idle.push(gsap.fromTo(c, {x: -W * .03}, {x: W * .05, duration: 9 + i * 3, ease: 'sine.inOut', yoyo: true, repeat: -1})));
+    }
+    if (revealed) applyEnd();
+  }
+
+  function spreadLabels(lfs) {
+    const L = S.labs.map(t => { const w = t.getComputedTextLength(), x = +t.getAttribute('x'); return {t, w, l: x - w / 2}; });
+    const gap = lfs * .6;
+    for (let i = 1; i < L.length; i++) if (L[i].l < L[i - 1].l + L[i - 1].w + gap) L[i].l = L[i - 1].l + L[i - 1].w + gap;
+    for (let i = L.length - 1; i >= 0; i--) {
+      const lim = i === L.length - 1 ? W - 3 : L[i + 1].l - gap;
+      if (L[i].l + L[i].w > lim) L[i].l = lim - L[i].w;
+    }
+    L.forEach(o => o.t.setAttribute('x', Math.max(3, o.l) + o.w / 2));
+  }
+
+  function fixRead() {
+    const r = S.read, w = r.getComputedTextLength(), y = +r.getAttribute('y');
+    let left;
+    if (S.compact) { const right = S.gcx - S.gr - fs * .9; r.setAttribute('x', right); left = right - w; }
+    else { let cx = S.gcx; const lim = S.cabX - fs * .5; if (cx + w / 2 > lim) cx -= cx + w / 2 - lim; if (cx - w / 2 < 3) cx = 3 + w / 2; r.setAttribute('x', cx); left = cx - w / 2; }
+    S.tag.setAttribute('x', left - fs * .4); S.tag.setAttribute('width', w + fs * .8);
+    S.tag.setAttribute('y', y - fs * 1.08); S.tag.setAttribute('height', fs * 1.45);
+  }
+
+  // ---- the flows (each loops for as long as the card is shown)
+  const travel = (dots, path, dur, ease, gap) => dots.forEach((dt, i) => loops.push(gsap.fromTo(dt, {opacity: 0}, {opacity: 1, duration: .2, delay: i * gap, onStart: () => loops.push(gsap.to(dt, {motionPath: {path, align: path, alignOrigin: [.5, .5]}, duration: dur, ease, repeat: -1}))})));
+  const loopSludge = () => travel(S.dSl, S.p0, 2.6, 'power1.inOut', .85);
+  const loopBubbles = () => S.bub.forEach((b, i) => loops.push(gsap.fromTo(b, {y: 0, opacity: 0}, {y: -S.bubH, opacity: 1, duration: 1.6 + Kit.rnd(), delay: i * .3, ease: 'power1.in', repeat: -1})));
+  const loopGas1 = () => travel(S.dG1, S.p1, 1.9, 'sine.inOut', .45);
+  const loopGas2 = () => travel(S.dG2, S.p2, 1.5, 'sine.inOut', .5);
+  const loopSparks = () => travel(S.dSp, S.p3, 1.05, 'power2.in', .35);
+  const loopWheel = () => { loops.push(gsap.to(S.wheel, {rotation: 360, svgOrigin: `${S.wcx} ${S.wcy}`, duration: 1.1, ease: 'none', repeat: -1})); gsap.to(S.led, {attr: {fill: '#7fd36b'}, duration: .2}); };
+  const loopNeedle = () => loops.push(gsap.to(S.needle, {rotation: 3, svgOrigin: `${S.gcx} ${S.gcy}`, duration: .9, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .4}));
+
+  function applyEnd() {
+    S.labs.forEach(l => l.setAttribute('opacity', 1));
+    gsap.set(S.level, {y: -S.bubH * .15});
+    gsap.set(S.gas, {opacity: 1, scale: 1, transformOrigin: '50% 50%'});
+    S.wins.forEach(w => w.setAttribute('fill', LIT));
+    gsap.set(S.needle, {rotation: 0, svgOrigin: `${S.gcx} ${S.gcy}`});
+    S.arc.setAttribute('stroke-dashoffset', S.arcL / 2);
+    S.read.textContent = 'up to 50%';
+    fixRead();
+    S.led.setAttribute('fill', '#7fd36b');
+    if (Kit.calm) return;
+    loopSludge(); loopBubbles(); loopGas1(); loopGas2(); loopSparks(); loopWheel(); loopNeedle();
+  }
+
+  const pop = (tl, g, at, k = .035) => tl.to(g, {y: -A * k, duration: .25, ease: 'power2.out'}, at).to(g, {y: 0, duration: .7, ease: 'bounce.out'}, at + .25);
+
+  function reveal() {
+    Kit.haptic('success');
+    const chips = [...opts.children];
+    const state = Flip.getState(chips);
+    chips.sort((a, b) => a.dataset.k - b.dataset.k).forEach(c => opts.appendChild(c));
+    let right = true;
+    chips.forEach(c => { const ok = +c.dataset.r === +c.dataset.k + 1; right = right && ok; c.classList.add(ok ? 'ok' : 'no'); });
+    say.innerHTML = right ? '<b>Spot on.</b> Now watch it run.' : 'Here is the real order. <b>Watch it run.</b>';
+    revealed = true;
+    if (Kit.calm || !S) { if (S) applyEnd(); setTimeout(finish, 900); return; }
+    Flip.from(state, {duration: .75, ease: 'power3.inOut', stagger: .05});
+    const tl = gsap.timeline({delay: .75, onComplete: () => { loopNeedle(); setTimeout(finish, 900); }});
+    const lab = (i, at) => tl.to(S.labs[i], {attr: {opacity: 1}, duration: .3}, at);
+    pop(tl, S.st[0], 0); lab(0, 0); tl.add(loopSludge, 0);
+    pop(tl, S.st[1], .9); lab(1, .9); tl.to(S.level, {y: -S.bubH * .15, duration: 1.2, ease: 'power2.out'}, .9); tl.add(loopBubbles, 1);
+    pop(tl, S.st[2], 1.8); lab(2, 1.8); tl.add(loopGas1, 1.7);
+    tl.fromTo(S.gas, {opacity: 0, scale: .2, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: 1.3, ease: 'elastic.out(1,.5)'}, 2.2);
+    pop(tl, S.st[3], 2.8); lab(3, 2.8); tl.add(loopGas2, 2.7); tl.add(loopWheel, 3.1); tl.add(loopSparks, 3.3);
+    if (S.wins.length) tl.to(S.wins, {attr: {fill: LIT}, duration: .25, stagger: {each: .035, from: 'random'}, ease: 'power2.out'}, 3.6);
+    tl.to(S.needle, {rotation: 0, svgOrigin: `${S.gcx} ${S.gcy}`, duration: 1.8, ease: 'elastic.out(1,.32)'}, 3.6);
+    tl.to(S.arc, {attr: {'stroke-dashoffset': S.arcL / 2}, duration: 1.3, ease: 'power3.out'}, 3.6);
+    const o = {v: 0};
+    tl.to(o, {v: 50, duration: 1.3, ease: 'power3.out', onUpdate: () => { S.read.textContent = `up to ${Math.round(o.v)}%`; fixRead(); }}, 3.6);
+    tl.fromTo(S.tag, {scale: 1}, {scale: 1.12, transformOrigin: '50% 50%', duration: .2, yoyo: true, repeat: 1, ease: 'power2.out'}, 4.9);
+    tl.fromTo(S.burst, {attr: {r: S.gr * .4}, opacity: .9}, {attr: {r: S.gr * 1.6}, opacity: 0, duration: 1.1, ease: 'expo.out'}, 4.4);
+    tl.set(S.burst, {attr: {r: S.gr * .4}}, 5.5);
+    tl.fromTo(S.layers[2], {y: 0}, {y: -3, duration: .15, yoyo: true, repeat: 1, ease: 'power2.out'}, 4.4);
+  }
+
+  function finish() {
+    Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('light');
+    if (!Kit.calm) gsap.from(['#why .big', '#why .body'], {opacity: 0, y: 10, stagger: .1, duration: .5, ease: 'power3.out', clearProps: 'all'});
+    doneResolve();
+  }
+
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b || locked) return;
+    const chips = [...opts.children];
+    if ('r' in b.dataset) {
+      const r = +b.dataset.r;
+      chips.forEach(c => { if ('r' in c.dataset && +c.dataset.r >= r) { delete c.dataset.r; c.querySelector('.n').textContent = ''; c.classList.remove('set'); } });
+      n = r - 1; Kit.haptic('light'); return;
+    }
+    n++; b.dataset.r = n; b.querySelector('.n').textContent = n; b.classList.add('set'); Kit.haptic('selection');
+    gsap.fromTo(b, {scale: .94}, {scale: 1, duration: .45, ease: 'back.out(3)'});
+    if (S && !Kit.calm) { const tl = gsap.timeline(); pop(tl, S.st[+b.dataset.k], 0, .025); }
+    if (n === 4) { locked = true; setTimeout(reveal, 380); }
+  });
+
+  stage.addEventListener('pointermove', e => {
+    if (!S || !S.qx || Kit.calm) return; const r = svg.getBoundingClientRect(); if (!r.width) return;
+    const dx = Math.max(-.5, Math.min(.5, (e.clientX - r.left) / r.width - .5));
+    S.qx.forEach((q, i) => q(dx * [-5, -10, -16][i]));
+  });
+  stage.addEventListener('pointerleave', () => S && S.qx && S.qx.forEach(q => q(0)));
+
+  let raf = 0;
+  const ro = new ResizeObserver(() => {
+    if (!S) return;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => { const r = svg.getBoundingClientRect(); if (Math.abs(r.width - lastW) > .5 || Math.abs(r.height - lastH) > .5 || true) draw(); });
+  });
+  ro.observe(stage); ro.observe(svg);
+  Kit.onShow.card = () => { S = S || {}; draw(); };
+  Kit.onEnter.card = () => {
+    if (entered || Kit.calm || !S || !S.inner) return; entered = true;
+    gsap.from(S.inner, {y: A * .3, opacity: 0, duration: 1.1, stagger: .16, ease: 'expo.out'});
+    gsap.from('.chip', {y: 14, opacity: 0, duration: .5, stagger: .07, delay: .5, ease: 'back.out(2)'});
+    if (!revealed) gsap.to(S.needle, {rotation: -80, svgOrigin: `${S.gcx} ${S.gcy}`, duration: .6, yoyo: true, repeat: 1, delay: 1, ease: 'power2.inOut'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const order = [0, 1, 2, 3];
+    for (const k of order) { opts.querySelector(`.chip[data-k="${k}"]`).click(); await wait(120); }
+    await done; await wait(Kit.calm ? 80 : 500);
+  };
+})();
+Kit.single();
+</script>
+</html>

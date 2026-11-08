@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "An interactive page with a plane and a draggable slider up to 1.8g, beside a figure whose blood level shifts from head to feet. The page asks why 1.8g makes you dizzy and hard to stand."
   },
   "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",

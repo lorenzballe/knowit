@@ -1,0 +1,38 @@
+{
+  "id": "science-zero-g-smoke",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a candle smoke more in zero gravity?",
+  "answer": "A flame breathes by rising, carrying hot exhaust away and drawing fresh air in. Without gravity that rising stops, so the flame chokes on its own exhaust. Oxygen cannot reach the fuel efficiently, so combustion is incomplete and visible smoke forms.",
+  "move": "A flame breathes by rising. Without gravity it chokes on its own exhaust.",
+  "keywords": [
+    "candle",
+    "flame",
+    "microgravity",
+    "smoke",
+    "combustion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Left: a smoky, spherical flame in zero gravity. Right: a clean flame in normal gravity. Asks why a candle smokes more without gravity, and invites the reader to drag gravity down to zero and watch the flame.",
+    "ground": "#0e1820"
+  },
+  "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=285s",
+  "written": "2026-11-04"
+}

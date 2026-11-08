@@ -1,0 +1,380 @@
+<!doctype html>
+<!-- slug: science-teflon-chain-reaction -->
+<!-- Look: a thermal x-ray camera on a night-violet card. TFE molecules glow in false-colour heat: hot carbon backbones, cool blue fluorine fringes. A scan band sweeps across the cylinder.
+     Interaction: turn the pressure dial. The gas is squeezed and runs hotter until one C=C double bond snaps. A d3 chart shows free gas trading off against chain length.
+     Wow: the break jumps from molecule to molecule into one long, cooling chain. A heat pulse then runs its full length, the readout scrambles to "PTFE POWDER", and the chain keeps a slow shimmer. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How a gas turned into Teflon</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#card{background-image:radial-gradient(120% 65% at 50% 34%,#24124a 0%,rgba(36,18,74,0) 72%),repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#pic:active{cursor:grabbing}
+.mono{font-family:var(--mono)}
+.say b{color:#ffb236}
+.say{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.3cqh,15px)}
+.answered .say{font-size:max(2.05cqh,14px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Turn the dial · chain reaction" style="--c:#0d0b16;--k:#f1ebff;--edge:#000">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PRESSURE DIAL</span></div>
+    <h2 class="q">How did a cylinder of TFE gas turn into solid Teflon powder?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="An x-ray view of TFE molecules in a gas cylinder, a pressure dial, and a chart of free gas molecules against chain length."></svg>
+    </div>
+    <p class="say" id="say"><b>Turn the dial</b> to raise the pressure on the TFE gas in the cylinder.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One broken double bond set off a chain reaction that turned a gas into Teflon.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const N = 30, COLS = 6, ROWS = 5, INK = '#f1ebff', PI = Math.PI;
+  const heat = d3.scaleLinear().domain([0, .2, .42, .66, .85, 1])
+    .range(['#1e1452', '#5223b0', '#c42a83', '#ff5b2e', '#ffb236', '#fff6cf']).clamp(true);
+  const cool = d3.interpolateRgb('#3f45c8', '#eef2ff');
+  const cHeat = h => heat(.4 + .6 * h), fCool = h => cool(Math.min(1, .2 + .8 * h * h));
+  if (window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+
+  let W = 0, H = 0, fs = 13, top = 0, bot = 0, FH = 0, d = 20, rh = 40, x0 = 0, y0 = 0, gap = 3, sw = 2;
+  let p = 0, phase = 'gas', touched = false, said = 0, lastT = 0, hdrText = 'TFE GAS';
+  const COOL = .3;
+  const wave = {w: -20, on: 0};
+  const R = {vals: {gas: N, chain: 0}, shown: {gas: N, chain: 0}};
+  const mols = Array.from({length: N}, (_, i) => {
+    const gx = i % COLS, gy = Math.floor(i / COLS);
+    return {i, u: .14 + .72 * (gx + .5 + (Kit.rnd() - .5) * .55) / COLS, v: .08 + .84 * (gy + .5 + (Kit.rnd() - .5) * .5) / ROWS,
+      vx: Kit.gauss(), vy: Kit.gauss(), rot: Kit.rnd() * 360, vr: (Kit.rnd() - .5) * 160,
+      k: 0, b: 1, hl: COOL, lock: false, tr: 0, s: 1, x: 0, y: 0, r: 0, h: COOL};
+  });
+  const links = Array.from({length: N - 1}, () => ({p: 0}));
+  const mk = (t, a, par) => Kit.mk(t, a, par);
+  const txt = (par, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, class: 'mono'}, a), par); e.textContent = s; return e; };
+
+  // Where molecule i sits in the finished chain: rows snake back and forth.
+  function target(i) {
+    const r = Math.floor(i / COLS), c = i % COLS, col = r % 2 ? COLS - 1 - c : c;
+    return {x: x0 + col * 2 * d, y: y0 + r * rh, r: r % 2 ? 180 : 0};
+  }
+  const gasHeat = (m, t) => .3 + .55 * p + .07 * Math.sin(t * 4 + m.i * 1.7);
+
+  function setBar(k, val) {
+    R.shown[k] = val;
+    const el = R.bars && R.bars[k]; if (!el) return;
+    const y = R.y(Math.max(0, val));
+    el.setAttribute('y', y);
+    el.setAttribute('height', Math.max(0, R.base - y));
+  }
+
+  function layout() {
+    if (R.scanTw) R.scanTw.kill();
+    if (R.ringTw) R.ringTw.kill();
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, f.f || 13));
+    const CH = Math.min(Math.max(H * .34, fs * 8.2), fs * 11.5);
+    top = fs * 2.2; bot = H - CH - fs * .4; FH = bot - top;
+    rh = FH / ROWS; d = Math.min(W / (2 * COLS + 1.6), rh / 2.3);
+    gap = d * .15; sw = Math.max(1.6, d * .1);
+    x0 = W / 2 - (COLS - 1) * d; y0 = top + rh / 2;
+    const ctl = bot + fs * 1.1;
+
+    const defs = mk('defs', {}, svg);
+    const fl = mk('filter', {id: 'glow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: Math.max(1.4, d * .11), result: 'b'}, fl);
+    const fm = mk('feMerge', {}, fl); mk('feMergeNode', {in: 'b'}, fm); mk('feMergeNode', {in: 'SourceGraphic'}, fm);
+    const bl = mk('filter', {id: 'bloom', x: '-100%', y: '-100%', width: '300%', height: '300%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: Math.max(2, d * .3)}, bl);
+    const grad = (id, stops) => { const g = mk('linearGradient', {id, x1: 0, y1: 1, x2: 0, y2: 0}, defs); stops.forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g)); };
+    grad('gGas', [[0, heat(.48)], [1, heat(.95)]]);
+    grad('gChain', [[0, cool(.15)], [1, heat(.5)]]);
+    const sc = mk('linearGradient', {id: 'scan', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    [[0, 0], [.78, .14], [1, 0]].forEach(([o, a]) => mk('stop', {offset: o, 'stop-color': '#ffd9a8', 'stop-opacity': a}, sc));
+    const cp = mk('clipPath', {id: 'fieldclip'}, defs); mk('rect', {x: 0, y: top - fs * .3, width: W, height: FH + fs * .6}, cp);
+
+    // Header readout + legend (colours match the cool state of the atoms)
+    R.hdr = txt(svg, 2, fs * 1.15, hdrText, {'font-weight': 700, 'letter-spacing': '.06em', opacity: .9, fill: phase === 'done' ? '#ffb236' : INK});
+    const lg = txt(svg, W - 2, fs * 1.15, 'FLUORINE', {'text-anchor': 'end', opacity: .75});
+    let lx = W - 2 - lg.getComputedTextLength() - fs * .55;
+    mk('circle', {cx: lx, cy: fs * .78, r: fs * .28, fill: fCool(.5)}, svg);
+    const lc = txt(svg, lx - fs * .75, fs * 1.15, 'CARBON', {'text-anchor': 'end', opacity: .75});
+    lx = lx - fs * .75 - lc.getComputedTextLength() - fs * .6;
+    mk('circle', {cx: lx, cy: fs * .78, r: fs * .4, fill: cHeat(.4), stroke: cHeat(.6), 'stroke-width': 1.2}, svg);
+
+    // Viewfinder corners
+    const L = fs * 1.1, yt = top - fs * .35, yb = bot + fs * .1;
+    [[2, yt, 1, 1], [W - 2, yt, -1, 1], [2, yb, 1, -1], [W - 2, yb, -1, -1]].forEach(([x, y, sx, sy]) =>
+      mk('path', {d: `M${x},${y + sy * L} V${y} H${x + sx * L}`, stroke: INK, 'stroke-width': 1.4, fill: 'none', opacity: .45}, svg));
+
+    // Scan band sweeping the cylinder
+    const sg = mk('g', {'clip-path': 'url(#fieldclip)'}, svg);
+    const bh = FH * .24;
+    R.scan = mk('g', {}, sg);
+    mk('rect', {x: 0, y: 0, width: W, height: bh, fill: 'url(#scan)'}, R.scan);
+    mk('line', {x1: 0, x2: W, y1: bh * .78, y2: bh * .78, stroke: '#ffe2b8', 'stroke-width': 1, opacity: .3}, R.scan);
+    if (!Kit.calm) R.scanTw = gsap.fromTo(R.scan, {y: top - bh}, {y: bot - bh * .5, duration: 2.8, ease: 'sine.inOut', repeat: -1, yoyo: true});
+    else gsap.set(R.scan, {y: top + FH * .3});
+
+    // Molecules
+    R.field = mk('g', {filter: 'url(#glow)'}, svg);
+    R.linkG = mk('g', {}, R.field);
+    R.molG = mk('g', {}, R.field);
+    R.flashG = mk('g', {}, svg);
+    R.links = links.map(() => mk('path', {fill: 'none', 'stroke-width': sw, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': '0 1'}, R.linkG));
+    const FP = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
+    mols.forEach(m => {
+      const g = mk('g', {}, R.molG); m.el = g;
+      m.fl = FP.map(([sx, sy]) => mk('line', {x1: sx * d / 2, y1: 0, x2: sx * d / 2, y2: sy * .8 * d, 'stroke-width': sw * .7, 'stroke-linecap': 'round', opacity: .8}, g));
+      m.bA = mk('line', {x1: -d / 2, x2: d / 2, 'stroke-width': sw, 'stroke-linecap': 'round'}, g);
+      m.bB = mk('line', {x1: -d / 2, x2: d / 2, 'stroke-width': sw, 'stroke-linecap': 'round'}, g);
+      m.fc = FP.map(([sx, sy]) => mk('circle', {cx: sx * d / 2, cy: sy * .8 * d, r: d * .2}, g));
+      m.cc = [-1, 1].map(sx => mk('circle', {cx: sx * d / 2, cy: 0, r: d * .29, 'stroke-width': Math.max(1, sw * .55)}, g));
+    });
+
+    // Pressure dial
+    const cx = W * .27, avail = H - fs * 1.4 - ctl - fs * 1.1;
+    const r = Math.max(28, Math.min(W * .19, avail / 1.18));
+    const aw = Math.max(7, r * .16), cy = H - fs * 1.45 - aw;
+    Object.assign(R, {cx, cy, dr: r, aw});
+    R.arc = d3.arc().innerRadius(r - aw).outerRadius(r).cornerRadius(aw / 2);
+    const dg = mk('g', {transform: `translate(${cx},${cy})`}, svg);
+    mk('path', {d: R.arc({startAngle: -PI / 2, endAngle: PI / 2}), fill: INK, opacity: .1}, dg);
+    R.prog = mk('path', {filter: 'url(#glow)'}, dg);
+    R.ticks = [];
+    for (let j = 0; j <= 24; j++) {
+      const t = j / 24, th = PI * (1 - t), r1 = r + 3, r2 = r + 3 + (j % 4 ? fs * .35 : fs * .7);
+      R.ticks.push(mk('line', {x1: r1 * Math.cos(th), y1: -r1 * Math.sin(th), x2: r2 * Math.cos(th), y2: -r2 * Math.sin(th), stroke: heat(.2 + .8 * t), 'stroke-width': j % 4 ? 1.2 : 2, 'stroke-linecap': 'round'}, dg));
+    }
+    R.bond = txt(dg, 0, -r * .28, 'C=C', {'text-anchor': 'middle', 'font-size': Math.max(14, Math.min(r * .4, fs * 1.9)), 'font-weight': 800});
+    const ly = aw + fs * 1.05;
+    txt(dg, 0, ly, 'PRESSURE', {'text-anchor': 'middle', opacity: .7, 'letter-spacing': '.08em'});
+    if (r > 60) { txt(dg, -r + aw / 2, ly, 'LOW', {'text-anchor': 'middle', opacity: .55}); txt(dg, r - aw / 2, ly, 'HIGH', {'text-anchor': 'middle', opacity: .55}); }
+    R.ring = mk('circle', {r: aw, fill: 'none', stroke: '#ffe2b8', 'stroke-width': 2}, dg);
+    R.knob = mk('circle', {r: aw * .85, fill: '#fff6cf', stroke: heat(.7), 'stroke-width': 2.5, filter: 'url(#glow)'}, dg);
+    if (!touched && !Kit.calm) R.ringTw = gsap.fromTo(R.ring, {attr: {r: aw * .9}, opacity: .9}, {attr: {r: aw * 2.4}, opacity: 0, duration: 1.4, ease: 'power2.out', repeat: -1});
+    if (touched || Kit.calm) R.ring.setAttribute('opacity', 0);
+
+    // The trade-off chart
+    const c0 = W * .58, c1 = W * .97, base = H - fs * 1.75, ctop = ctl + fs * 3;
+    R.base = base;
+    R.y = d3.scaleLinear([0, N], [base, ctop]);
+    R.xb = d3.scaleBand(['gas', 'chain'], [c0, c1]).padding(.3);
+    txt(svg, c0, ctl + fs * .9, 'MOLECULES', {opacity: .6, 'letter-spacing': '.08em'});
+    mk('line', {x1: c0, x2: c1, y1: base, y2: base, stroke: INK, 'stroke-width': 1.2, opacity: .5}, svg);
+    R.bars = {}; R.nums = {};
+    ['gas', 'chain'].forEach(k => {
+      const x = R.xb(k), bw = R.xb.bandwidth(), v = R.vals[k];
+      R.bars[k] = mk('rect', {x, width: bw, y: base, height: 0, rx: 2, fill: `url(#${k === 'gas' ? 'gGas' : 'gChain'})`, stroke: k === 'gas' ? 'none' : '#a991ff', 'stroke-width': 1.2}, svg);
+      setBar(k, v);
+      R.nums[k] = txt(svg, x + bw / 2, R.y(v) - fs * .45, v, {'text-anchor': 'middle', 'font-weight': 800, 'font-size': fs * 1.15});
+      txt(svg, x + bw / 2, base + fs * 1.25, k === 'gas' ? 'FREE GAS' : 'CHAIN', {'text-anchor': 'middle', opacity: .75, 'letter-spacing': '.04em'});
+    });
+    drawDial();
+    frame();
+  }
+
+  function drawDial() {
+    if (!R.prog) return;
+    R.prog.setAttribute('d', R.arc({startAngle: -PI / 2, endAngle: -PI / 2 + PI * Math.max(.001, p)}));
+    R.prog.setAttribute('fill', heat(.3 + .65 * p));
+    const th = PI * (1 - p), rr = R.dr - R.aw / 2, kx = rr * Math.cos(th), ky = -rr * Math.sin(th);
+    R.knob.setAttribute('cx', kx); R.knob.setAttribute('cy', ky);
+    R.ring.setAttribute('cx', kx); R.ring.setAttribute('cy', ky);
+    R.ticks.forEach((t, j) => t.setAttribute('opacity', j / 24 <= p + .001 ? 1 : .28));
+    R.bond.textContent = phase === 'gas' ? 'C=C' : 'C–C';
+    R.bond.setAttribute('fill', phase === 'gas' ? INK : '#ffb236');
+  }
+
+  function updateChart(dur) {
+    if (!R.bars) return;
+    const ch = mols.filter(m => m.lock).length, v = {gas: N - ch, chain: ch};
+    ['gas', 'chain'].forEach(k => {
+      const fromN = R.vals[k], fromB = R.shown[k], to = v[k]; R.vals[k] = to;
+      d3.select(R.bars[k]).interrupt().transition().duration(dur).ease(d3.easeBackOut.overshoot(1.3))
+        .tween('bar', () => { const it = d3.interpolateNumber(fromB, to); return t => setBar(k, it(t)); });
+      d3.select(R.nums[k]).interrupt().transition().duration(dur).ease(d3.easeCubicOut)
+        .attr('y', R.y(to) - fs * .45)
+        .tween('text', function () { const el = this, it = d3.interpolateRound(fromN, to); return t => { el.textContent = it(t); }; });
+    });
+  }
+
+  // Every frame: the gas jiggles and spreads out, locked molecules sit in the chain, links draw between them.
+  function frame() {
+    const now = performance.now(), dt = Math.min(.05, lastT ? (now - lastT) / 1000 : .016); lastT = now;
+    if (!W || !mols[0].el) return;
+    const t = now / 1000, a = .5 * (1 - .32 * p), sp = Kit.calm ? 0 : 22 + 150 * p;
+    const mx = d * 1.15 / W, my = d * 1.15 / FH;
+    let lo = .5 - a + mx, hi = .5 + a - mx, lov = .5 - a + my, hiv = .5 + a - my;
+    if (lo > hi) lo = hi = .5; if (lov > hiv) lov = hiv = .5;
+    // soft repulsion so the gas never clumps
+    if (!Kit.calm) {
+      const md = d * (2.3 - .5 * p);
+      for (let i = 0; i < N; i++) { const A = mols[i]; if (A.lock) continue;
+        for (let j = i + 1; j < N; j++) { const B = mols[j]; if (B.lock) continue;
+          const dx = (A.u - B.u) * W, dy = (A.v - B.v) * FH, ds = Math.hypot(dx, dy) || .01;
+          if (ds < md) { const f = (md - ds) * 2.2 * dt / ds;
+            A.u += dx * f / W; A.v += dy * f / FH; B.u -= dx * f / W; B.v -= dy * f / FH; } } }
+    }
+    mols.forEach(m => {
+      if (!m.lock) {
+        m.u += m.vx * sp * dt / W; m.v += m.vy * sp * dt / FH;
+        if (!Kit.calm) m.rot += m.vr * (1 + 2.5 * p) * dt;
+        if (m.u < lo) { m.u += (lo - m.u) * .25; m.vx = Math.abs(m.vx); }
+        if (m.u > hi) { m.u -= (m.u - hi) * .25; m.vx = -Math.abs(m.vx); }
+        if (m.v < lov) { m.v += (lov - m.v) * .25; m.vy = Math.abs(m.vy); }
+        if (m.v > hiv) { m.v -= (m.v - hiv) * .25; m.vy = -Math.abs(m.vy); }
+        if (Math.random() < dt * .8) { m.vx += (Math.random() - .5); m.vy += (Math.random() - .5); const n = Math.hypot(m.vx, m.vy) || 1; m.vx /= n; m.vy /= n; }
+      }
+      const gx = m.u * W, gy = top + m.v * FH, T = target(m.i);
+      m.x = gx + (T.x - gx) * m.k; m.y = gy + (T.y - gy) * m.k;
+      m.r = m.lock ? m.rot + (m.tr - m.rot) * m.k : m.rot;
+      let h = m.lock ? m.hl : gasHeat(m, t);
+      if (phase === 'done' && !Kit.calm) h += .09 * Math.max(0, Math.sin(t * 2.2 - m.i * .45));
+      if (wave.on) h += .75 * Math.exp(-((m.i - wave.w) ** 2) / 5);
+      h = Math.max(0, Math.min(1, h));
+      m.h = h;
+      m.el.setAttribute('transform', `translate(${m.x},${m.y}) rotate(${m.r}) scale(${m.s})`);
+      m.bA.setAttribute('y1', gap * m.b); m.bA.setAttribute('y2', gap * m.b);
+      m.bB.setAttribute('y1', -gap * m.b); m.bB.setAttribute('y2', -gap * m.b); m.bB.setAttribute('opacity', m.b);
+      const col = cHeat(h), fcol = fCool(h), bcol = cHeat(Math.min(1, h + .2));
+      m.cc.forEach(c => { c.setAttribute('fill', col); c.setAttribute('stroke', cHeat(Math.min(1, h + .3))); });
+      m.fc.forEach(c => c.setAttribute('fill', fcol));
+      m.fl.forEach(l => l.setAttribute('stroke', fcol));
+      m.bA.setAttribute('stroke', bcol); m.bB.setAttribute('stroke', bcol);
+    });
+    links.forEach((L, i) => {
+      const el = R.links[i]; if (!el) return;
+      if (L.p <= 0) { el.setAttribute('stroke-dasharray', '0 1'); return; }
+      const A = mols[i], B = mols[i + 1], ar = A.r * PI / 180, br = B.r * PI / 180;
+      const ax = A.x + Math.cos(ar) * d / 2, ay = A.y + Math.sin(ar) * d / 2;
+      const bx = B.x - Math.cos(br) * d / 2, by = B.y - Math.sin(br) * d / 2;
+      let path;
+      if ((i + 1) % COLS === 0) {
+        const side = Math.floor(i / COLS) % 2 ? -1 : 1, c = side > 0 ? Math.max(ax, bx) + d * 1.25 : Math.min(ax, bx) - d * 1.25;
+        path = `M${ax},${ay} C${c},${ay} ${c},${by} ${bx},${by}`;
+      } else path = `M${ax},${ay} L${bx},${by}`;
+      el.setAttribute('d', path);
+      el.setAttribute('stroke-dasharray', `${L.p} 1`);
+      el.setAttribute('stroke', cHeat(Math.min(1, Math.max(A.h, B.h) + .2)));
+    });
+  }
+  gsap.ticker.add(frame);
+
+  function lock(i) {
+    const m = mols[i]; if (m.lock) return;
+    m.hl = gasHeat(m, performance.now() / 1000); m.lock = true;
+    const T = target(i); m.tr = T.r + 360 * Math.round((m.rot - T.r) / 360);
+  }
+  function flash(i) {
+    if (Kit.calm || !R.flashG) return;
+    const m = mols[i], c = mk('circle', {cx: m.x, cy: m.y, r: d * .2, fill: '#fff3d0', filter: 'url(#bloom)'}, R.flashG);
+    gsap.to(c, {attr: {r: d * 1.5}, opacity: 0, duration: .65, ease: 'expo.out', onComplete: () => c.remove()});
+  }
+
+  function setP(v) {
+    if (phase !== 'gas') return;
+    const old = p; p = Math.max(0, Math.min(1, v));
+    if (Math.floor(p * 10) !== Math.floor(old * 10)) Kit.haptic('selection');
+    drawDial();
+    if (p > .4 && !said) { said = 1; say.innerHTML = 'The gas is squeezed harder and harder. Each TFE molecule still holds its <b>C=C</b> double bond. <b>Keep turning.</b>'; }
+    if (p >= .94) breakFirst();
+  }
+
+  function breakFirst() {
+    if (phase !== 'gas') return;
+    phase = 'chain'; touched = true; p = Math.max(p, .94);
+    if (R.ringTw) R.ringTw.kill(); R.ring && R.ring.setAttribute('opacity', 0);
+    Kit.haptic('light'); drawDial();
+    say.innerHTML = 'Snap! Under high pressure one <b>C=C</b> double bond breaks. Its two carbons each have a free bonding site…';
+    if (Kit.calm) {
+      mols.forEach(m => { lock(m.i); m.k = 1; m.b = 0; m.hl = COOL; });
+      links.forEach(l => l.p = 1); updateChart(0); finish(); return;
+    }
+    const tl = gsap.timeline(), st = .12;
+    mols.forEach((m, i) => {
+      const T = i === 0 ? 0 : .4 + (i - 1) * st;
+      tl.call(lock, [i], T);
+      tl.to(m, {k: 1, duration: .42, ease: 'back.out(1.7)'}, T + (i ? 0 : .12));
+      if (i) { tl.to(links[i - 1], {p: 1, duration: .2, ease: 'power2.out'}, T + .14); tl.call(updateChart, [260], T + .14); }
+      else tl.call(updateChart, [260], .05);
+      const tb = i ? T + .26 : 0;
+      tl.to(m, {b: 0, duration: .15, ease: 'power3.in'}, tb);
+      tl.call(flash, [i], tb + .05);
+      tl.to(m, {hl: 1, duration: .06, ease: 'power1.out'}, tb + .05);
+      tl.to(m, {hl: COOL, duration: .8, ease: 'power2.out'}, tb + .11);
+    });
+    tl.call(() => { say.innerHTML = '…so it grabs a carbon of the next TFE molecule and breaks <b>its</b> double bond. That one does the same, again and again.'; }, null, 1.1);
+    tl.call(() => { wave.on = 1; wave.w = -6; }, null, '+=.3');
+    tl.to(wave, {w: N + 8, duration: 1.5, ease: 'power2.inOut'});
+    tl.call(() => { wave.on = 0; }, null);
+    tl.call(finish, null, '-=.7');
+  }
+
+  function finish() {
+    if (phase === 'done') return;
+    phase = 'done'; Kit.haptic('success'); updateChart(Kit.calm ? 0 : 500);
+    say.innerHTML = 'High pressure broke one double bond. Each freed carbon grabbed the next TFE molecule, over and over, until all the gas was locked in long <b>polytetrafluoroethylene</b> chains: a slippery white powder.';
+    Kit.show('keep'); card.classList.add('answered');
+    hdrText = 'PTFE POWDER';
+    if (R.hdr) {
+      if (!Kit.calm && window.ScrambleTextPlugin) gsap.to(R.hdr, {duration: 1.1, scrambleText: {text: hdrText, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ=–', speed: .5}});
+      else R.hdr.textContent = hdrText;
+      R.hdr.setAttribute('fill', '#ffb236');
+    }
+    if (!Kit.calm && R.field) gsap.fromTo(R.field, {scale: 1.04, transformOrigin: '50% 50%'}, {scale: 1, duration: 1.4, ease: 'elastic.out(1,.45)'});
+  }
+
+  // Touch: grab the dial by angle, or drag sideways anywhere on the picture.
+  let drag = null;
+  const ptr = e => { const r = svg.getBoundingClientRect(), sx = W / (r.width || W), sy = H / (r.height || H); return {x: (e.clientX - r.left) * sx, y: (e.clientY - r.top) * sy}; };
+  const angP = q => { let a = Math.atan2(R.cy - q.y, q.x - R.cx); if (a < 0) a = q.x < R.cx ? PI : 0; return 1 - a / PI; };
+  svg.addEventListener('pointerdown', e => {
+    if (phase !== 'gas') return;
+    const q = ptr(e); svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; if (R.ringTw) R.ringTw.kill(); gsap.to(R.ring, {opacity: 0, duration: .2}); }
+    const near = Math.hypot(q.x - R.cx, q.y - R.cy) < R.dr * 1.6 && q.y < R.cy + R.dr * .5;
+    drag = {near, x: q.x, p0: p};
+    if (near) setP(angP(q));
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag || phase !== 'gas') return;
+    const q = ptr(e);
+    setP(drag.near ? angP(q) : drag.p0 + (q.x - drag.x) / (W * .7));
+  });
+  const end = () => { drag = null; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !R.ticks) return;
+    mols.forEach(m => m.s = 0);
+    gsap.to(mols, {s: 1, duration: .8, ease: 'back.out(2.2)', stagger: {each: .028, from: 'random'}});
+    gsap.from(R.ticks, {opacity: 0, duration: .35, stagger: .025, ease: 'power2.out'});
+    gsap.from(R.knob, {attr: {r: 0}, duration: .6, delay: .6, ease: 'back.out(3)'});
+    if (phase === 'gas') {
+      R.vals.gas = 0; setBar('gas', 0);
+      if (R.nums.gas) { R.nums.gas.textContent = 0; R.nums.gas.setAttribute('y', R.y(0) - fs * .45); }
+      setTimeout(() => updateChart(900), 350);
+    }
+    if (window.ScrambleTextPlugin && R.hdr) gsap.from(R.hdr, {duration: .9, scrambleText: {text: '', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', speed: .5}});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true;
+    if (Kit.calm) setP(1);
+    else { const o = {p}; await new Promise(res => gsap.to(o, {p: 1, duration: .8, ease: 'power2.in', onUpdate: () => setP(o.p), onComplete: res})); }
+    for (let i = 0; i < 120 && phase !== 'done'; i++) await wait(100);
+    await wait(Kit.calm ? 60 : 1200);
+  };
+})();
+Kit.single();
+</script>
+</html>

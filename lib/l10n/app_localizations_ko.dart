@@ -4337,4 +4337,46 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get screensFrontTomorrow => '내일 판은 아침에 나와요';
+
+  @override
+  String exploreDayRead(int read, int of) {
+    return '오늘: $of개 중 $read개 읽음';
+  }
+
+  @override
+  String exploreDayLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n개 남음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreDayDone => '모두 읽음';
+
+  @override
+  String get exploreDayOpen => '오늘의 카드로 가기';
+
+  @override
+  String exploreSixtyRecord(int n, int of) {
+    return '최고 기록 $n/$of';
+  }
+
+  @override
+  String get exploreSixtyFirst => '기록을 세워 보세요';
+
+  @override
+  String get exploreGameNone => '지금은 할 수 있는 게임이 없어요. 내일 다시 오세요.';
+
+  @override
+  String exploreSubjectLevel(String subject, int n) {
+    return '$subject, 레벨 $n';
+  }
+
+  @override
+  String exploreBecauseSaved(String question) {
+    return '보관한 ‘$question’ 때문에';
+  }
 }

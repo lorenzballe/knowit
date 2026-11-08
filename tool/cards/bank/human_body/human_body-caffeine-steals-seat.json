@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A slider labeled from No coffee to Lots. Sliding to pour in caffeine shows which molecules take the seats on a receptor, and the page asks how caffeine stops you feeling tired."
   },
   "source": "Geopop, “Ho bevuto 4 caffè tutti insieme: gli effetti della caffeina sul corpo umano e sul cervello” (YouTube, 2024)",

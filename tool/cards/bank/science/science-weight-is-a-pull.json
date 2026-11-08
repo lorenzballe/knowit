@@ -1,0 +1,38 @@
+{
+  "id": "science-weight-is-a-pull",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the fundamental definition of weight?",
+  "answer": "Weight is not something the ball has; it is the Earth's pull on the ball, pointing toward the Earth's centre from every spot. Take the Earth away and the weight goes, but the 5 kg of matter, the mass, stays.",
+  "move": "Mass is how much matter; weight is the Earth's pull on it.",
+  "keywords": [
+    "weight",
+    "mass",
+    "earth",
+    "gravity",
+    "scale"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A ball sits on a spring scale that reads 5.0 kg, with a globe labelled Earth beside it that you can tap to move the scale. The question asks: what is the fundamental definition of weight?",
+    "ground": "#efe4c8"
+  },
+  "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=_Z0X0yE8Ioc&t=23s",
+  "written": "2026-11-04"
+}

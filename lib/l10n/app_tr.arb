@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Düzeltmeler",
   "screensFrontPuzzle": "Günün bulmacası",
   "screensFrontEnd": "Bugünün baskısı bu kadar",
-  "screensFrontTomorrow": "Yarınki sabah çıkıyor"
+  "screensFrontTomorrow": "Yarınki sabah çıkıyor",
+  "exploreDayRead": "Bugün: {of} karttan {read} okundu",
+  "exploreDayLeft": "{n, plural, other{{n} kaldı}}",
+  "exploreDayDone": "hepsi okundu",
+  "exploreDayOpen": "Bugünün kartlarına git",
+  "exploreSixtyRecord": "Rekorun {n}/{of}",
+  "exploreSixtyFirst": "Rekorunu belirle",
+  "exploreGameNone": "Şu an burada oynanacak bir şey yok. Yarın tekrar gel.",
+  "exploreSubjectLevel": "{subject}, seviye {n}",
+  "exploreBecauseSaved": "“{question}” kartını sakladığın için"
 }

@@ -321,10 +321,12 @@ void main() {
     expect(answers, [('a', '1|Salt water', 70)]);
     expect(_back(), findsNothing);
 
-    // Answered, a tap on nothing turns it, and the back is the card's own.
+    // Answered, a tap on nothing still turns nothing: the page has turned
+    // itself and drawn its own why, and the app's back would only change
+    // the card's colour and say it again in words.
     page.say(const PageTap());
     await settle(tester);
-    expect(_back(), findsOneWidget);
+    expect(_back(), findsNothing);
   });
 
   testWidgets('a card that only tells turns at the first tap', (tester) async {

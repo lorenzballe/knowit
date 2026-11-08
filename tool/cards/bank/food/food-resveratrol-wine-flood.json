@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A card titled Red Wine asks how many glasses a day would give a heart-helping dose of resveratrol. A drag control lets the reader pour glasses; the total shown is about 16,000 glasses, roughly 2,000 litres, a day."
   },
   "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",

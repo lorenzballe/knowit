@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Shows a 106 m cube for the 1.2 million m³ tank, with a slider that zooms in toward the tritium. Asks how much tritium the water holds, and reveals about 23 g."
   },
   "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",

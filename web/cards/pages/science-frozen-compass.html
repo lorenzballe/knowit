@@ -1,0 +1,235 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-rocks-remember -->
+<!-- Thought to carry: a record keeps the moment it set, not the present; to read any record, ask when it froze.
+     Front: one rock in cross-section. Earth's field today points left. Inside the rock, only the field it cooled under
+     (a pale arrow pointing right). One grain of the rock is magnified, with no answer in it yet: a stub and a handle.
+     The reader sets it, then says how sure they are.
+     Back: the same rock side by side, before and after the flip. The field above turns around and the arrows inside
+     the rock stay exactly as they were. Under them, the reader's guess against the rock, coloured by correctness. -->
+<title>The rock that remembers</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* Hide the face turned away once the turn passes edge-on, so its labels never sit under the other face's. */
+.turn>.front{visibility:visible;transition:visibility 0s linear .37s}
+.turn.over>.front{visibility:hidden}
+.turn>.back{visibility:hidden;transition:visibility 0s linear .37s}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+/* Keep the front's last row clear of the save and share controls at the card's foot. */
+.turn>.front{padding-bottom:calc(48px + env(safe-area-inset-bottom,0px))}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:grab}
+/* Order follows the action: drag first, then say how sure. */
+.front .say{margin:12px 0 0}
+.front #sure{margin-top:26px;opacity:1}
+.card:not(.answered) #sure [data-v]{opacity:1;color:var(--k);border:2px solid var(--k)}
+.card:not(.answered) #sure > :not([data-v]){opacity:1;color:var(--k)}
+.back .big{margin:0}
+.back .stagebox{margin:10px 0 6px}
+/* The source never runs under the save and share controls: 92px box + 16px clearance. */
+.back .foot{padding-right:108px;box-sizing:border-box}
+.q,.body,.say,.keep,.src{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Turn the arrow · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ROCK MEMORY</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Earth's field flipped. Which way does the old rock's magnet point now?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A rock in cross-section. Earth's field today points left. The rock cooled when the field pointed right. One grain of the rock is magnified, with an arrow you can set."></svg></div>
+        <p class="say" id="say">Drag the arrow in the magnified grain to where it points <b>today</b>.</p>
+        <div class="sure" id="sure"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Still the old way. It froze.</p>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="Side by side: when the rock cooled, the field and the rock's arrows point right. After the flip the field points left and the rock's arrows still point right. Below, your guess against the rock."></svg></div>
+        <p class="body">While the rock is hot, its magnetic domains take the direction of Earth's field. Below the Curie point they lock in place, so the recorded direction can't change, even if the field later reverses.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A record holds the moment it set, not the present: ask when it froze.</div>
+        <div class="foot"><span class="src">Source · Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  gsap.registerPlugin(DrawSVGPlugin);
+  const NEEDLE = '#ffffff', MISS = '#d4321c';
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2');
+  let K = '#111', C = '#fff';
+  let ang = -Math.PI / 2, touched = false, moved = false, locked = false, turned = false, M = null;
+
+  // Back headline: about 20% smaller, 10% more leading, so line 1 never touches line 2.
+  (() => { const b = document.querySelector('.back .big'); if (!b) return;
+    const s = getComputedStyle(b), fz = parseFloat(s.fontSize), lh = parseFloat(s.lineHeight);
+    const ratio = isNaN(lh) ? 1.05 : lh / fz;
+    b.style.fontSize = (fz * .8).toFixed(1) + 'px'; b.style.lineHeight = (ratio * 1.1).toFixed(3); })();
+
+  const css = () => { const s = getComputedStyle(card); K = s.getPropertyValue('--k').trim() || '#111'; C = s.getPropertyValue('--c').trim() || '#fff'; };
+  const txt = (p, x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: K, 'font-family': 'Figtree, sans-serif', 'font-weight': 700}, a), p); e.textContent = s; return e; };
+  const len = (t, fs) => t.getComputedTextLength() || t.textContent.length * fs * .56;
+  const arrowD = (l, h) => `M${-l},0 L${l},0 M${l - h},${-h} L${l},0 L${l - h},${h}`;
+  const LINE = {fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'};
+  // A small arrow centred on (x,y), pointing along `deg`.
+  const grain = (p, x, y, l, deg, stroke, w) => {
+    const o = Kit.mk('g', {transform: `translate(${x},${y})`}, p);
+    const i = Kit.mk('g', {transform: `rotate(${deg})`}, o);
+    Kit.mk('path', Object.assign({d: arrowD(l, l * .45), stroke, 'stroke-width': w}, LINE), i);
+    return i;
+  };
+  // A field arrow from x1 to x2 at y, head sized by fs: the one stroke and head every field arrow shares.
+  const fieldD = (x1, x2, y, fs) => { const s = Math.sign(x1 - x2); return `M${x1},${y} L${x2},${y} M${x2 + s * fs * .7},${y - fs * .5} L${x2},${y} L${x2 + s * fs * .7},${y + fs * .5}`; };
+  const field = (p, x1, x2, y, fs, cls, stroke) => Kit.mk('path', Object.assign({d: fieldD(x1, x2, y, fs), stroke: stroke || K, 'stroke-width': 3, class: cls || ''}, LINE), p);
+  const rough = (x0, x1, y, amp, ph) => { let d = ''; for (let x = x0; x <= x1 + .1; x += 8) d += ` L${x.toFixed(1)},${(y + Math.sin(x * .09 + ph) * amp + Math.sin(x * .031 + ph * 2) * amp).toFixed(1)}`; return d; };
+
+  // ---------- the front: one rock, today's field, one grain to set ----------
+  function drawFront() {
+    css(); pic.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(pic); const fs = Math.max(12, Math.min(14, f));
+    const gy = H - 3, x0 = W * .02, x1 = W * .93;
+
+    // Label 1: Earth's field today, pointing left.
+    txt(pic, W * .5, fs * 1.15, "Earth's field today", {'text-anchor': 'middle', 'font-size': fs});
+    field(pic, W * .74, W * .26, fs * 2.5, fs, 'fieldline');
+
+    // Where the magnified grain sits decides where the rock starts.
+    const r = Math.max(22, Math.min(W * .17, H * .15)), cx = W * .3, cy = Math.max(fs * 3.4 + r, H * .34);
+    const top = Math.max(H * .52, cy + r + fs * 1.2);
+    const tx = cx + fs * 2.8;
+
+    // The rock, flat, sitting on the ground line.
+    Kit.mk('path', {d: `M${x0},${gy} L${x0},${top}` + rough(x0, x1, top, 1.4, 1) + ` L${x1 + W * .02},${gy} Z`, fill: K, 'fill-opacity': .9}, pic);
+    Kit.mk('line', {x1: 0, x2: W, y1: gy, y2: gy, stroke: K, 'stroke-width': 2}, pic);
+
+    // Label 2: the field the rock cooled under, drawn pale inside the rock.
+    const oy = top + (gy - top) * .4;
+    const cl = txt(pic, tx, oy, 'field when it cooled', {'font-size': fs, fill: C});
+    if (tx + len(cl, fs) > x1 - 8) cl.textContent = 'when it cooled';
+    const ay = oy + fs * 1.3;
+    if (ay + fs * .6 < gy - 4) field(pic, tx, tx + fs * 3.2, ay, fs, '', C).setAttribute('stroke-opacity', .8);
+
+    // One grain of the rock, magnified.
+    const ty = top + (gy - top) * .62;
+    Kit.mk('line', {x1: cx, y1: cy + r, x2: cx, y2: top, stroke: K, 'stroke-width': 1.4}, pic);
+    Kit.mk('line', {x1: cx, y1: top, x2: cx, y2: ty - 4, stroke: C, 'stroke-width': 1.4}, pic);
+    Kit.mk('circle', {cx, cy: ty, r: 4, fill: 'none', stroke: C, 'stroke-width': 1.6}, pic);
+    Kit.mk('circle', {cx, cy, r, fill: K}, pic);
+    const rr = r * .7;
+    // Label 3 (inside the grain): the only instruction in the drawing.
+    const hint = txt(pic, cx, cy + r * .5, 'drag', {'text-anchor': 'middle', 'font-size': 12, 'font-weight': 600, fill: NEEDLE, 'fill-opacity': .8});
+    const ga = Kit.mk('g', {transform: `translate(${cx},${cy})`}, pic);
+    const needle = Kit.mk('g', {}, ga);
+    const shaft = Kit.mk('path', Object.assign({stroke: NEEDLE, 'stroke-width': 3.4}, LINE), needle);
+    const knob = Kit.mk('circle', {r: Math.max(6, r * .14), fill: NEEDLE, stroke: K, 'stroke-width': 2}, needle);
+    Kit.mk('circle', {r: 3, fill: NEEDLE}, ga);
+    // Label 4: what the circle is.
+    const lx = cx + r + fs * .6;
+    txt(pic, lx, cy - fs * .2, 'one grain,', {'font-size': fs});
+    txt(pic, lx, cy + fs * 1.15, 'magnified', {'font-size': fs, 'font-weight': 600});
+    M = {cx, cy, rr, r, needle, shaft, knob, hint};
+    paint();
+  }
+
+  // Neutral until touched: a short stub with a handle. Once set: a full arrow.
+  function paint() {
+    if (!M) return;
+    const {rr, r, needle, shaft, knob, hint} = M;
+    needle.setAttribute('transform', `rotate(${ang * 180 / Math.PI})`);
+    if (!touched) { shaft.setAttribute('d', `M0,0 L${rr * .55},0`); knob.setAttribute('cx', rr * .55); knob.style.display = ''; hint.style.display = ''; }
+    else { const h = r * .24; shaft.setAttribute('d', `M${-rr * .45},0 L${rr},0 M${rr - h},${-h} L${rr},0 L${rr - h},${h}`); knob.style.display = 'none'; hint.style.display = 'none'; }
+  }
+  const setAng = a => { ang = a; paint(); };
+  let drag = false;
+  const fromEv = e => { const b = pic.getBoundingClientRect(); touched = true; setAng(Math.atan2(e.clientY - b.top - M.cy, e.clientX - b.left - M.cx)); };
+  pic.addEventListener('pointerdown', e => { if (locked || !M) return; drag = true; pic.setPointerCapture(e.pointerId); fromEv(e); Kit.haptic('selection'); });
+  pic.addEventListener('pointermove', e => { if (drag) fromEv(e); });
+  const up = () => { if (!drag) return; drag = false; if (!moved) { moved = true; sure.on(); } };
+  pic.addEventListener('pointerup', up); pic.addEventListener('pointercancel', up);
+
+  const dirName = () => { const d = Math.abs(Math.atan2(Math.sin(ang), Math.cos(ang))); return d < Math.PI / 4 ? 'the old way' : d > Math.PI * 3 / 4 ? 'the new way' : 'sideways'; };
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    locked = true; card.classList.add('answered');
+    const said = dirName(), ok = said === 'the old way';
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `You pointed it ${said}: ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back: the same rock before and after the flip, then the guess ----------
+  function drawBack(animate) {
+    css(); pic2.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(pic2); const fs = Math.max(12, Math.min(14, f));
+    const cs = [W * .25, W * .75], cw = W * .42;
+    const bT = fs * 3.3, foot = fs * 2.6;
+    const bh = Math.max(fs * 2.6, Math.min(H - bT - foot, cw * .62));
+    const Hu = bT + bh + foot;
+    const root = Kit.mk('g', {transform: `translate(0,${Math.max(0, (H - Hu) / 2).toFixed(1)})`}, pic2);
+    const bB = bT + bh, cY = bB + fs * 2;
+    const gl = Math.max(6, Math.min(fs * .8, cw * .1));
+    const n = bh > fs * 5.5 ? 3 : bh > fs * 3.4 ? 2 : 1;
+    const rows = Array.from({length: n}, (_, k) => bT + bh * (k + 1) / (n + 1));
+    const blocks = [], fields = [], oldG = [[], []];
+
+    cs.forEach((c, i) => {
+      txt(root, c, fs * .95, i ? 'after the flip' : 'when it cooled', {'text-anchor': 'middle', 'font-size': fs});
+      fields.push(i ? field(root, c + cw * .3, c - cw * .3, fs * 2.2, fs) : field(root, c - cw * .3, c + cw * .3, fs * 2.2, fs));
+      blocks.push(Kit.mk('path', {d: `M${c - cw / 2},${bB} L${c - cw / 2},${bT}` + rough(c - cw / 2, c + cw / 2, bT, 1.4, i) + ` L${c + cw / 2},${bB} Z`, fill: K, 'fill-opacity': .9}, root));
+      rows.forEach(ry => [-.28, 0, .28].forEach(p => oldG[i].push(grain(root, c + p * cw, ry, gl, 0, C, 2.4).querySelector('path'))));
+    });
+
+    // The reader's guess against the rock, centred under both.
+    const ok = dirName() === 'the old way', al = fs * .75, hh = fs * .42, ay = cY - fs * .35;
+    const lane = Kit.mk('g', {}, root);
+    const t1 = txt(lane, 0, cY, 'your guess', {'font-size': fs, 'font-weight': 600});
+    let x = len(t1, fs) + fs * .5;
+    const gg = Kit.mk('g', {transform: `translate(${x + al},${ay}) rotate(${ang * 180 / Math.PI})`}, lane);
+    Kit.mk('path', Object.assign({d: arrowD(al, hh), stroke: ok ? K : MISS, 'stroke-width': 3}, LINE), gg);
+    x += al * 2 + fs * 1.4;
+    const t2 = txt(lane, x, cY, 'the rock', {'font-size': fs, 'font-weight': 600});
+    x += len(t2, fs) + fs * .5;
+    Kit.mk('path', Object.assign({d: arrowD(al, hh), stroke: K, 'stroke-width': 3, transform: `translate(${x + al},${ay})`}, LINE), lane);
+    x += al * 2;
+    lane.setAttribute('transform', `translate(${Math.max(4, (W - x) / 2).toFixed(1)},0)`);
+
+    if (!animate || Kit.calm) return;
+    gsap.timeline()
+      .from(blocks[0], {opacity: 0, y: 8, duration: .45, ease: 'power2.out'})
+      .from(fields[0], {drawSVG: 0, duration: .55, ease: 'power2.inOut'}, '-=.1')
+      .from(oldG[0], {drawSVG: 0, duration: .4, stagger: .04, ease: 'power2.out'})
+      .from([blocks[1], ...oldG[1]], {opacity: 0, duration: .45, ease: 'power2.out'}, '+=.15')
+      .from(fields[1], {drawSVG: 0, duration: .7, ease: 'power2.inOut'}, '+=.1')
+      .from(lane, {opacity: 0, duration: .5, ease: 'power2.out'}, '+=.2');
+  }
+
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('.fieldline', {drawSVG: 0, duration: .8, ease: 'power2.inOut'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; setAng(Math.PI); if (!moved) { moved = true; sure.on(); }
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

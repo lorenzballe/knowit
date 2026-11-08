@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Fe de erratas",
   "screensFrontPuzzle": "El acertijo del día",
   "screensFrontEnd": "Esta es la edición de hoy",
-  "screensFrontTomorrow": "La de mañana sale por la mañana"
+  "screensFrontTomorrow": "La de mañana sale por la mañana",
+  "exploreDayRead": "Hoy: {read} de {of} leídas",
+  "exploreDayLeft": "{n, plural, =1{queda 1} other{quedan {n}}}",
+  "exploreDayDone": "todas leídas",
+  "exploreDayOpen": "Ir a las cartas de hoy",
+  "exploreSixtyRecord": "Tu récord {n}/{of}",
+  "exploreSixtyFirst": "Marca tu récord",
+  "exploreGameNone": "Ahora mismo no hay nada que jugar aquí. Vuelve mañana.",
+  "exploreSubjectLevel": "{subject}, nivel {n}",
+  "exploreBecauseSaved": "Porque guardaste «{question}»"
 }

@@ -1,0 +1,394 @@
+<!doctype html>
+<!-- slug: science-zero-g-smoke -->
+<!-- Look: a night-blue topographic map of a candle flame, with heat as stacked contour bands, exhaust as hatched ground, and oxygen as dashed routes that draw themselves toward the wick.
+     Interaction: drag gravity from 1 g to 0 g on the map's scale bar. Buoyancy fades, the teardrop relaxes into a dim sphere, the exhaust stops rising and closes around the flame, and the oxygen routes are cut short.
+     Wow: at 0 g the exhaust shell pulses out, soot billows from the round flame, and a label draws in to name the culprit: its own exhaust blocks the oxygen. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why zero-g flames smoke</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/d3.min.js"></script>
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;position:relative;background:none!important;border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;padding:0!important}
+#stage::before,#stage::after{display:none!important}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+.say b{color:#ffd27a}
+.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag gravity · how a flame breathes" style="--c:#0e1820;--k:#f2e8d5;--edge:#060c11">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG GRAVITY</span></div>
+    <h2 class="q">Why does a candle smoke more in zero gravity?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="pic" data-drag role="img" aria-label="A topographic map of a candle flame: heat contours, hatched exhaust, and dashed oxygen routes, with a gravity scale from 1 g to 0 g."></canvas>
+    </div>
+    <p class="say" id="say"><b>Drag gravity down to zero</b> and watch how the flame breathes.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A flame breathes by rising. Without gravity it chokes on its own exhaust.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('pic'), say = Kit.$('say');
+  const S = {g: 1, amp: 1, route: 1, pulse: 0, label: 0, bar: 1};
+  let x = null, W = 0, H = 0, fs = 12, cell = 5, nx = 0, ny = 0, Tv, Pv, Ov, HUD = 56;
+  let cx = 0, cy = 0, s = 30, X0 = 0, X1 = 0, BY = 0, target = 1;
+  let touched = false, done = false, mid = false, hatch = null, smoke = [], sparks = [], last = 0, running = false;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const HEAT = [.1, .22, .36, .5, .64, .78, .9];
+  const HCOL = ['#6e1a12', '#a8301a', '#d9561e', '#f08a2a', '#f9b84c', '#fde08f', '#fffbe9'];
+  const monoFam = () => getComputedStyle(document.body).getPropertyValue('--mono') || 'monospace';
+  const MONO = (w = 600) => `${w} ${fs}px ${monoFam()}`;
+
+  function layout() {
+    const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
+    if (!W || !H) return;
+    fs = Math.max(12, Math.min(14, W / 28));
+    HUD = fs * 4.7;
+    s = Math.max(12, Math.min(W / 9, (H - HUD - fs * .6) / 6.6));
+    cx = W / 2; cy = H - s * 2;
+    X0 = fs * 1.4; X1 = W - fs * 1.4; BY = fs * 2.55;
+    cell = Math.max(4, Math.round(Math.min(W, H) / 80));
+    nx = Math.ceil(W / cell) + 1; ny = Math.ceil(H / cell) + 1;
+    Tv = new Float64Array(nx * ny); Pv = new Float64Array(nx * ny); Ov = new Float64Array(nx * ny);
+    const o = document.createElement('canvas'); o.width = o.height = 9;
+    const ox = o.getContext('2d'); ox.strokeStyle = 'rgba(214,206,196,.55)'; ox.lineWidth = 1.2;
+    ox.beginPath(); ox.moveTo(-1, 10); ox.lineTo(10, -1); ox.stroke();
+    hatch = x.createPattern(o, 'repeat');
+    if (!running) { running = true; requestAnimationFrame(tick); }
+    draw(performance.now() / 1000);
+  }
+
+  // Heat, exhaust and oxygen as three fields over the map.
+  function geom() {
+    const g = clamp(S.g);
+    return {g, A: S.amp * (.72 + .28 * g), fy: cy - s * (.9 + 1.2 * g), syU: 1 + 1.5 * g, syD: .85 + .1 * (1 - g), sx0: .95 - .3 * g,
+      w0: Math.pow(1 - g, 1.3) * S.amp, w1: g * S.amp};
+  }
+  function fieldAt(px, py, t, G) {
+    const fl = Kit.calm ? 0 : 1, dx = (px - cx) / s, dy = (py - G.fy) / s;
+    const sway = fl * G.g * .18 * Math.sin(t * 2.6 + dy * .9) * Math.max(0, -dy) / G.syU;
+    const ex = dx - sway, sx = G.sx0 * (1 + fl * .035 * Math.sin(t * 11)), sy = dy < 0 ? G.syU : G.syD;
+    const T = G.A * Math.exp(-.5 * (ex * ex / (sx * sx) + dy * dy / (sy * sy)));
+    const r = Math.hypot(dx, dy);
+    const p0 = .95 * Math.exp(-.5 * Math.pow(Math.max(0, r - 1.7) / .95, 2));
+    const hy = dy + G.syU * 1.6;
+    let p1 = 0;
+    if (hy < .6) {
+      const up = -hy, wd = .5 + .2 * Math.max(0, up);
+      const wob = dx - sway * .5 - fl * .25 * Math.sin(t * 1.4 - up * .6) * Math.min(1, up * .25);
+      p1 = .8 * Math.exp(-.5 * Math.pow(wob / wd, 2)) * Math.exp(-Math.max(0, up) * .08) * clamp((.6 - hy) / 1.4);
+    }
+    const P = G.w0 * p0 + G.w1 * p1;
+    const O = clamp(1 - 1.3 * T - .75 * P);
+    return [T, P, O];
+  }
+  function computeFields(t, G) {
+    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+      const f = fieldAt(i * cell, j * cell, t, G), k = j * nx + i;
+      Tv[k] = f[0]; Pv[k] = f[1]; Ov[k] = f[2];
+    }
+  }
+  const pathOf = mp => {
+    const p = new Path2D();
+    for (const poly of mp.coordinates) for (const ring of poly) {
+      ring.forEach((pt, i) => i ? p.lineTo(pt[0] * cell, pt[1] * cell) : p.moveTo(pt[0] * cell, pt[1] * cell));
+      p.closePath();
+    }
+    return p;
+  };
+  const contours = (vals, th) => d3.contours().size([nx, ny]).thresholds(th)(vals);
+
+  // The oxygen routes: two trails from the edges of the map toward the wick.
+  function routes() {
+    const L = [[6, cy - s * 1.4], [cx - s * 3.2, cy - s * 1.7], [cx - s * 2, cy + s * .2], [cx - s * .25, cy - s * .45]];
+    const R = L.map(([a, b]) => [W - a, b]);
+    return [L, R];
+  }
+  const bez = (p, t) => {
+    const u = 1 - t;
+    return [0, 1].map(k => u * u * u * p[0][k] + 3 * u * u * t * p[1][k] + 3 * u * t * t * p[2][k] + t * t * t * p[3][k]);
+  };
+
+  function draw(t) {
+    if (!x || !W) return;
+    const G = geom();
+    x.clearRect(0, 0, W, H);
+    computeFields(t, G);
+
+    // A graticule, as printed on a map.
+    const gs = s * 1.6;
+    x.strokeStyle = 'rgba(242,232,213,.05)'; x.lineWidth = 1;
+    x.beginPath();
+    for (let gx = cx % gs; gx < W; gx += gs) { x.moveTo(gx, HUD); x.lineTo(gx, H); }
+    for (let gy = cy % gs; gy < H; gy += gs) if (gy > HUD) { x.moveTo(0, gy); x.lineTo(W, gy); }
+    x.stroke();
+    x.fillStyle = 'rgba(242,232,213,.14)';
+    for (let gx = cx % gs; gx < W; gx += gs) for (let gy = cy % gs; gy < H; gy += gs) if (gy > HUD) x.fillRect(gx - 2, gy - .5, 4, 1);
+
+    // Oxygen in the air, as fine teal contours.
+    contours(Ov, [.6, .75, .88, .96]).forEach((c, i) => {
+      x.strokeStyle = `rgba(127,214,230,${.16 + i * .07})`; x.lineWidth = i % 2 ? 1 : 1.4;
+      x.stroke(pathOf(c));
+    });
+
+    // The glow of the heat.
+    const fy = G.fy;
+    x.globalCompositeOperation = 'lighter';
+    const gl = x.createRadialGradient(cx, fy, 0, cx, fy, s * 4.5);
+    gl.addColorStop(0, `rgba(255,170,70,${.22 * G.A})`); gl.addColorStop(1, 'rgba(255,120,40,0)');
+    x.fillStyle = gl; x.beginPath(); x.arc(cx, fy, s * 4.5, 0, 7); x.fill();
+    x.globalCompositeOperation = 'source-over';
+
+    // Heat as elevation bands, with darker contour lines.
+    contours(Tv, HEAT).forEach((c, i) => {
+      if (!c.coordinates.length) return;
+      const p = pathOf(c);
+      x.fillStyle = HCOL[i]; x.globalAlpha = i ? .96 : .85; x.fill(p, 'evenodd'); x.globalAlpha = 1;
+      x.strokeStyle = 'rgba(14,24,32,.55)'; x.lineWidth = i % 2 ? 1.7 : .9; x.stroke(p);
+    });
+
+    // Rising sparks while the flame still breathes.
+    if (sparks.length) {
+      x.globalCompositeOperation = 'lighter';
+      for (const q of sparks) {
+        const a = clamp(q.life / q.max) * .9;
+        x.fillStyle = `rgba(255,200,110,${a})`; x.beginPath(); x.arc(q.x, q.y, q.r, 0, 7); x.fill();
+      }
+      x.globalCompositeOperation = 'source-over';
+    }
+
+    // The candle.
+    const top = cy + s * .4, hw = s * .75;
+    const wax = x.createLinearGradient(cx - hw, 0, cx + hw, 0);
+    wax.addColorStop(0, '#bfae8c'); wax.addColorStop(.35, '#fbf1dc'); wax.addColorStop(.6, '#efe2c4'); wax.addColorStop(1, '#a8977a');
+    x.fillStyle = wax; x.fillRect(cx - hw, top, hw * 2, H - top + 2);
+    x.fillStyle = 'rgba(14,24,32,.18)'; x.fillRect(cx + hw * .55, top, hw * .45, H - top + 2);
+    x.beginPath(); x.ellipse(cx, top, hw, s * .18, 0, 0, 7);
+    x.fillStyle = `rgba(255,${200 + 40 * G.g},150,1)`; x.fill();
+    x.fillStyle = '#e9dcbd';
+    x.beginPath(); x.moveTo(cx - hw * .6, top); x.quadraticCurveTo(cx - hw * .7, top + s * .9, cx - hw * .5, top + s * 1.0); x.quadraticCurveTo(cx - hw * .35, top + s * .6, cx - hw * .3, top); x.fill();
+    x.strokeStyle = '#1b1410'; x.lineWidth = Math.max(2, s * .07); x.lineCap = 'round';
+    x.beginPath(); x.moveTo(cx, top); x.quadraticCurveTo(cx + s * .05, top - s * .3, cx - s * .04 + G.g * s * .1, top - s * .55); x.stroke();
+
+    // Exhaust: hatched ground where the burnt gas sits.
+    contours(Pv, [.35, .6]).forEach((c, i) => {
+      if (!c.coordinates.length) return;
+      const p = pathOf(c);
+      x.fillStyle = `rgba(150,146,140,${.16 + i * .12})`; x.fill(p, 'evenodd');
+      x.fillStyle = hatch; x.globalAlpha = .55 + i * .3; x.fill(p, 'evenodd'); x.globalAlpha = 1;
+      x.setLineDash(i ? [] : [4, 3]); x.strokeStyle = 'rgba(214,206,196,.75)'; x.lineWidth = i ? 1.4 : 1; x.stroke(p); x.setLineDash([]);
+    });
+
+    // The pulse at the reveal: the shell rings out.
+    if (S.pulse > 0 && S.pulse < 1) {
+      x.strokeStyle = `rgba(255,214,140,${(1 - S.pulse) * .8})`; x.lineWidth = 3 * (1 - S.pulse) + 1;
+      x.beginPath(); x.arc(cx, fy, s * (1.5 + S.pulse * 3), 0, 7); x.stroke();
+    }
+
+    // Soot.
+    for (const q of smoke) {
+      const a = clamp(q.life / q.max) * clamp((q.max - q.life) / .5) * .5;
+      const rr = q.r * (1 + (q.max - q.life) * .5);
+      const gr = x.createRadialGradient(q.x, q.y, 0, q.x, q.y, rr);
+      gr.addColorStop(0, `rgba(176,170,162,${a})`); gr.addColorStop(1, 'rgba(176,170,162,0)');
+      x.fillStyle = gr; x.beginPath(); x.arc(q.x, q.y, rr, 0, 7); x.fill();
+    }
+
+    // The map fades out under the scale bar, so the plume never runs through the labels.
+    x.save(); x.globalCompositeOperation = 'destination-out';
+    const fg = x.createLinearGradient(0, HUD - fs * 1.1, 0, HUD + fs * 1.8);
+    fg.addColorStop(0, 'rgba(0,0,0,1)'); fg.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = fg; x.fillRect(0, 0, W, HUD + fs * 1.8);
+    x.restore();
+
+    // The oxygen routes, drawing themselves toward the fuel.
+    x.font = MONO(); x.textBaseline = 'alphabetic';
+    routes().forEach((p, ri) => {
+      const N = 90, pts = [];
+      let end = N, blocked = false, reached = false;
+      for (let k = 0; k <= N; k++) {
+        const q = bez(p, k / N); pts.push(q);
+        const i = clamp(Math.round(q[0] / cell), 0, nx - 1), j = clamp(Math.round(q[1] / cell), 0, ny - 1), v = j * nx + i;
+        if (end === N && Pv[v] > .55) { end = k; blocked = true; }
+        if (end === N && Tv[v] > .15) { end = k; reached = true; }
+      }
+      const shown = Math.min(end, Math.floor(S.route * N));
+      if (shown < 1) return;
+      x.strokeStyle = 'rgba(127,214,230,.25)'; x.lineWidth = 5; x.lineCap = 'round';
+      x.beginPath(); pts.slice(0, shown + 1).forEach((q, k) => k ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1])); x.stroke();
+      x.setLineDash([fs * .55, fs * .45]); x.lineDashOffset = Kit.calm ? 0 : -t * 26;
+      x.strokeStyle = '#8fe3f0'; x.lineWidth = 2.2; x.stroke(); x.setLineDash([]);
+      const q0 = pts[0];
+      x.fillStyle = '#8fe3f0'; x.beginPath(); x.arc(q0[0], q0[1], 3.5, 0, 7); x.fill();
+      x.textAlign = ri ? 'right' : 'left';
+      x.fillText('O₂', q0[0] + (ri ? -2 : 2), q0[1] - fs * .7);
+      if (shown === end) {
+        const e = pts[end];
+        if (blocked) {
+          const d = fs * .42; x.strokeStyle = '#ff9b85'; x.lineWidth = 2.6;
+          x.beginPath(); x.moveTo(e[0] - d, e[1] - d); x.lineTo(e[0] + d, e[1] + d); x.moveTo(e[0] + d, e[1] - d); x.lineTo(e[0] - d, e[1] + d); x.stroke();
+        } else if (reached) {
+          x.fillStyle = 'rgba(200,250,255,.9)'; x.beginPath(); x.arc(e[0], e[1], 3.5 + (Kit.calm ? 0 : Math.sin(t * 6) * 1), 0, 7); x.fill();
+        }
+      }
+    });
+
+    // The reveal label, pinned to the top of the exhaust shell.
+    if (S.label > 0) {
+      const a = clamp(S.label), shellTop = cy - s * .9 - s * 3.05;
+      const ly = Math.max(HUD + fs * 1.4, Math.min(cy - s * 5.1, shellTop - fs * 2.6));
+      const off = (1 - S.label) * 8;
+      x.globalAlpha = a; x.textAlign = 'center';
+      x.font = MONO(700); x.lineJoin = 'round';
+      x.strokeStyle = 'rgba(14,24,32,.9)'; x.lineWidth = 5;
+      x.strokeText('its own exhaust', cx, ly - fs * .7 + off);
+      x.strokeText('blocks the oxygen', cx, ly + fs * .7 + off);
+      x.fillStyle = '#ffd9a0';
+      x.fillText('its own exhaust', cx, ly - fs * .7 + off);
+      x.fillText('blocks the oxygen', cx, ly + fs * .7 + off);
+      const t0 = ly + fs * 1.2, len = shellTop - t0;
+      if (len > 2) {
+        x.strokeStyle = '#ffd9a0'; x.lineWidth = 1.4;
+        x.beginPath(); x.moveTo(cx, t0); x.lineTo(cx, t0 + len * a); x.stroke();
+        x.beginPath(); x.arc(cx, t0 + len * a, 2.2, 0, 7); x.fillStyle = '#ffd9a0'; x.fill();
+      }
+      x.globalAlpha = 1;
+    }
+
+    // Legend, bottom left, only where it has room.
+    const legendTop = H - fs * 4.25, routeY = cy - s * 1.4;
+    if (routeY + fs * .8 < legendTop) {
+      x.font = MONO(); x.textAlign = 'left';
+      const lx = fs * .5, rows = [['heat', 0], ['exhaust', 1], ['fresh air', 2]];
+      rows.forEach(([n, k], i) => {
+        const y = H - fs * .6 - (2 - i) * fs * 1.45;
+        if (k === 0) { x.fillStyle = '#f08a2a'; x.fillRect(lx, y - fs * .75, fs * 1.4, fs * .8); x.fillStyle = '#fde08f'; x.fillRect(lx + fs * .45, y - fs * .75, fs * .5, fs * .8); }
+        if (k === 1) { x.fillStyle = 'rgba(150,146,140,.3)'; x.fillRect(lx, y - fs * .75, fs * 1.4, fs * .8); x.fillStyle = hatch; x.fillRect(lx, y - fs * .75, fs * 1.4, fs * .8); }
+        if (k === 2) { x.setLineDash([4, 3]); x.strokeStyle = '#8fe3f0'; x.lineWidth = 2; x.beginPath(); x.moveTo(lx, y - fs * .35); x.lineTo(lx + fs * 1.4, y - fs * .35); x.stroke(); x.setLineDash([]); }
+        x.fillStyle = 'rgba(242,232,213,.8)'; x.fillText(n, lx + fs * 1.9, y);
+      });
+    }
+
+    // The gravity scale bar.
+    const bx = X0 + (1 - clamp(S.g, -.06, 1.06)) * (X1 - X0);
+    x.globalAlpha = S.bar;
+    x.font = MONO(700);
+    x.fillStyle = '#f2e8d5'; x.textAlign = 'left';
+    x.fillText(`GRAVITY ${clamp(S.g).toFixed(2)} g`, X0 - fs * .4, fs * 1.05);
+    const chip = G.g > .66 ? 'tall, clean flame' : G.g > .22 ? 'shorter, sootier' : 'round, smoky flame';
+    x.font = MONO(); x.textAlign = 'right';
+    const cw = x.measureText(chip).width + fs;
+    x.fillStyle = G.g > .22 ? 'rgba(249,184,76,.18)' : 'rgba(176,170,162,.25)';
+    x.beginPath(); x.roundRect(X1 + fs * .4 - cw, fs * .05, cw, fs * 1.35, fs * .6); x.fill();
+    x.fillStyle = G.g > .22 ? '#fde08f' : '#e2dad0'; x.fillText(chip, X1 - fs * .1, fs * 1.05);
+    x.strokeStyle = 'rgba(242,232,213,.35)'; x.lineWidth = 1;
+    for (let k = 0; k <= 20; k++) { const tx = X0 + k / 20 * (X1 - X0), h = k % 5 ? fs * .25 : fs * .5; x.beginPath(); x.moveTo(tx, BY - h); x.lineTo(tx, BY + h); x.stroke(); }
+    const tr = x.createLinearGradient(X0, 0, X1, 0); tr.addColorStop(0, '#f9b84c'); tr.addColorStop(1, '#b0aaa2');
+    x.strokeStyle = 'rgba(242,232,213,.25)'; x.lineWidth = 3; x.beginPath(); x.moveTo(X0, BY); x.lineTo(X1, BY); x.stroke();
+    x.strokeStyle = tr; x.lineWidth = 3; x.beginPath(); x.moveTo(X0, BY); x.lineTo(clamp(bx, X0, X1), BY); x.stroke();
+    x.fillStyle = 'rgba(242,232,213,.75)';
+    x.textAlign = 'left'; x.fillText('1 g · Earth', X0 - fs * .4, BY + fs * 1.75);
+    x.textAlign = 'right'; x.fillText('0 g · orbit', X1 + fs * .4, BY + fs * 1.75);
+    const kr = fs * .75;
+    x.fillStyle = 'rgba(0,0,0,.35)'; x.beginPath(); x.arc(bx, BY + 2, kr, 0, 7); x.fill();
+    const kg = x.createRadialGradient(bx - kr * .3, BY - kr * .3, 1, bx, BY, kr);
+    kg.addColorStop(0, '#fff3cf'); kg.addColorStop(1, G.g > .3 ? '#f0a03a' : '#9a948c');
+    x.fillStyle = kg; x.beginPath(); x.arc(bx, BY, kr, 0, 7); x.fill();
+    x.strokeStyle = '#0e1820'; x.lineWidth = 1.5; x.stroke();
+    if (!touched) {
+      const n = Kit.calm ? 0 : (Math.sin(t * 4) + 1) * 3;
+      x.strokeStyle = '#ffd27a'; x.lineWidth = 2.2; x.lineCap = 'round';
+      const ax = bx + kr + 6 + n;
+      x.beginPath(); x.moveTo(ax, BY); x.lineTo(ax + fs * 1.3, BY); x.moveTo(ax + fs * .9, BY - 4); x.lineTo(ax + fs * 1.3, BY); x.lineTo(ax + fs * .9, BY + 4); x.stroke();
+    }
+    x.globalAlpha = 1;
+  }
+
+  function spawn(n, G) {
+    for (let i = 0; i < n && smoke.length < 260; i++) {
+      const a = Kit.rnd() * Math.PI * 2, r = s * (1.1 + Kit.rnd() * .7);
+      const px = cx + Math.cos(a) * r, py = G.fy + Math.sin(a) * r * (1 - G.g * .4) - G.g * s * G.syU;
+      const sp = 6 + Kit.rnd() * 12, life = 3 + Kit.rnd() * 2.5;
+      smoke.push({x: px, y: py, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, r: s * (.25 + Kit.rnd() * .3), life, max: life});
+    }
+  }
+  let acc = 0, sacc = 0;
+  function tick(now) {
+    const t = now / 1000, dt = Math.min(.05, last ? t - last : .016); last = t;
+    const G = geom();
+    acc += dt * 46 * Math.pow(1 - G.g, 2) * S.amp;
+    if (acc >= 1) { spawn(Math.floor(acc), G); acc -= Math.floor(acc); }
+    if (!Kit.calm) {
+      sacc += dt * 9 * Math.pow(G.g, 1.5) * S.amp;
+      while (sacc >= 1 && sparks.length < 60) {
+        sacc -= 1;
+        const life = .9 + Kit.rnd() * 1.1;
+        sparks.push({x: cx + (Kit.rnd() - .5) * s * .4, y: G.fy - s * G.syU * 1.5, vx: (Kit.rnd() - .5) * 10, vy: -(s * 1.4 + Kit.rnd() * s * 1.6) * G.g, r: .8 + Kit.rnd() * 1.1, life, max: life, ph: Kit.rnd() * 6});
+      }
+      if (sacc >= 1) sacc = 0;
+    }
+    for (const q of smoke) { q.vy -= G.g * 70 * dt; q.x += q.vx * dt; q.y += q.vy * dt; q.vx *= .995; q.vy *= .995; q.life -= dt; }
+    for (const q of sparks) { q.x += (q.vx + Math.sin(t * 3 + q.ph) * 8) * dt; q.y += q.vy * dt; q.life -= dt; }
+    smoke = smoke.filter(q => q.life > 0);
+    sparks = sparks.filter(q => q.life > 0 && q.y > HUD - fs);
+    if (!mid && S.g < .6) { mid = true; if (!done) say.innerHTML = 'Less weight, less lift: the hot exhaust stops rising away. <b>Keep going.</b>'; }
+    draw(t);
+    requestAnimationFrame(tick);
+  }
+
+  function reveal() {
+    if (done) return; done = true;
+    Kit.haptic('success');
+    say.innerHTML = 'On Earth, hot exhaust is lighter than the air, so it rises away and fresh air flows in. With no weight there is no lift: the exhaust stays around the flame, oxygen can’t reach the fuel, and burning is incomplete. <b>That is the smoke.</b>';
+    Kit.show('keep');
+    spawn(60, geom());
+    if (Kit.calm) { S.label = 1; return; }
+    gsap.fromTo(S, {pulse: 0}, {pulse: 1, duration: 1.6, ease: 'expo.out'});
+    gsap.fromTo(S, {label: 0}, {label: 1, duration: 1, ease: 'back.out(1.8)', delay: .35});
+  }
+
+  function setG(v) {
+    target = clamp(v);
+    if (Kit.calm) S.g = target;
+    else gsap.to(S, {g: target, duration: .6, ease: 'back.out(2.4)', overwrite: 'auto'});
+    if (target <= .03 && !done) gsap.delayedCall(Kit.calm ? 0 : .45, () => { if (target <= .03) reveal(); });
+  }
+  let drag = false;
+  const gOf = e => { const r = cv.getBoundingClientRect(); return 1 - (e.clientX - r.left - X0) / (X1 - X0); };
+  cv.addEventListener('pointerdown', e => { drag = true; touched = true; cv.setPointerCapture(e.pointerId); Kit.haptic('selection'); setG(gOf(e)); });
+  cv.addEventListener('pointermove', e => { if (drag) setG(gOf(e)); });
+  const up = () => { drag = false; };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  // The stage shrinks when the explanation appears: re-fit so nothing stretches.
+  if (window.ResizeObserver) {
+    let pend = 0;
+    new ResizeObserver(() => {
+      if (!x || pend) return;
+      pend = requestAnimationFrame(() => { pend = 0; layout(); });
+    }).observe(Kit.$('stage'));
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.timeline()
+      .fromTo(S, {bar: 0}, {bar: 1, duration: .6, ease: 'power3.out'})
+      .fromTo(S, {amp: 0}, {amp: 1, duration: 1.5, ease: 'elastic.out(1,.55)'}, .1)
+      .fromTo(S, {route: 0}, {route: 1, duration: 1.6, ease: 'power3.inOut'}, .6);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    S.amp = 1; S.route = 1; S.bar = 1; touched = true;
+    setG(0);
+    await wait(Kit.calm ? 80 : 700);
+    reveal();
+    await wait(Kit.calm ? 80 : 1500);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive card asking how many extra floors the intact floor below the impact could hold. Two choices are shown, 6 floors and 11 floors, with a button to lock in a guess before the reveal.",
     "graded": false
   },

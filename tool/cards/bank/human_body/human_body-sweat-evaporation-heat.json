@@ -1,0 +1,38 @@
+{
+  "id": "human_body-sweat-evaporation-heat",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.sun_and_skin",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does sweat cool you only when it evaporates?",
+  "answer": "Turning sweat into vapour takes energy, called latent heat, which it draws from your skin. The vapour carries that heat away, so your temperature falls. Wet skin alone doesn't cool you; sweat cools you as it evaporates.",
+  "move": "Wet skin alone doesn't cool you: sweat cools you as it evaporates and carries your heat off.",
+  "keywords": [
+    "sweat",
+    "evaporation",
+    "latent_heat",
+    "skin",
+    "body_temperature"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Drag-and-drop page asking why sweat cools you only when it evaporates. A bead of sweat sits in a pore; the reader drags it onto warm skin to show how evaporation carries heat away.",
+    "ground": "#061c33"
+  },
+  "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=AIVEax2_yEA&t=13s",
+  "written": "2026-11-04"
+}

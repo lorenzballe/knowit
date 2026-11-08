@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive diagram of a cell surrounded by water. A slider adds salt outside the cell, and arrows show water leaving the cell as it shrinks. The question asks why too much salt makes cells lose water."
   },
   "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",

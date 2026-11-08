@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Two drug names, ketamine and MDMA, with buttons for MDMA, Ketamine, Both and Unknown mix, and a slider. Asks what happens when one dose mixes both drugs. Drag the slider to add one drug, then the other, then both."
   },
   "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",

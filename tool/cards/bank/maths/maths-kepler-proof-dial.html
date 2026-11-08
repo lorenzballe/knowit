@@ -1,0 +1,280 @@
+<!doctype html>
+<!-- slug: maths-kepler-proof-wait -->
+<!--
+Thought to carry: showing one stack is good is easy; showing it is the best means ruling out every other one, and there are infinitely many.
+Front: Kepler's pyramid of cannonballs, drawn flat and alone, above a bare timeline that starts at his 1611. The reader drags a red pin to the year they think the formal proof was published; the confidence chips appear only once the pin is dropped. The front has four labels: "Kepler, 1611", "2100", the year being dragged, and the hint under it.
+Back: the headline answers the reader ("You said 1850; the formal proof was published in 2017."). The drawing has one focal point, the wait: 1611 to the published proof in 2017, a bracket "about 400 years", the reader's guess as a red dot and the miss as a red segment. Above it, without words, Kepler's stack in solid white and rival stacks in outline, thinning out to the right: the ones that had to be ruled out. If the phone is too short, the row of stacks is left out whole, never half.
+Facts kept to the brief: Kepler named two stackings (hexagonal close packing and face-centred cubic) as equally and optimally efficient; around 400 years; formal proof published in 2017.
+Nothing is given away on the front: unlabelled century ticks only, no 2017 mark, no verdict.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kepler's 400-year wait</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s .36s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .36s}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.front .say{margin-right:min(108px,29cqw);padding-right:0}
+.back .foot{padding-right:min(100px,27cqw)}
+.back .big{margin:0;font-size:min(8.4cqw,42px);line-height:1.06}
+.back .body{margin:0}
+.back{gap:1.2cqh}
+.front{gap:1cqh}
+svg text{font-family:var(--body);font-weight:700;fill:var(--k)}
+svg .disp{font-family:var(--display);font-weight:800}
+.card{--g:#d6452a}
+
+/* the confidence chips stay out of sight until the pin is dropped, then arrive at full strength */
+.card .sure{opacity:0;visibility:hidden;transition:opacity .4s ease,visibility 0s .4s}
+.card .sure.live{opacity:1!important;visibility:visible;transition:opacity .4s ease}
+.kit-calm .card .sure{transition:none}
+
+.nudge{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(4px)}}
+.kit-calm .nudge{animation:none}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag the year · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE YEAR</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How long did it take to formally prove Kepler's sphere packing conjecture?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A pyramid of cannonballs above a timeline from Kepler's 1611 to 2100, with a red pin to drag to a year."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">In 1611 Kepler said two stackings tie as the tightest possible: hexagonal close packing and face-centred cubic. <b>Drag the pin to the year the formal proof was published.</b></p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big" id="verdict">The formal proof was published in 2017.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Kepler's stack in solid white beside rival stacks drawn in outline, thinning out to the right. Below, a timeline from Kepler in 1611 to the formal proof published in 2017, about 400 years, with the reader's guess marked in red."></svg></div>
+        <p class="body">Kepler stated it as fact but never proved it. Seeing his stackings are tight is easy; showing that no other stack is tighter is the hard part.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Showing one arrangement is good is easy; showing it is the best means ruling out every other one, and there are infinitely many.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const TRUE = 2017, START = 1611, END = 2100;
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  const S = {year: START, moved: false, locked: false, turned: false};
+  let G = {};
+
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y}, a), p); e.textContent = t; return e; };
+  const box = e => { const w = e.getComputedTextLength(), a = e.getAttribute('text-anchor') || 'start', x = +e.getAttribute('x');
+    const l = a === 'end' ? x - w : a === 'middle' ? x - w / 2 : x; return [l, l + w, +e.getAttribute('y')]; };
+  // two labels clash only if they share a row and their spans overlap
+  const hits = (a, b, p = 6) => Math.abs(a[2] - b[2]) < 4 && a[0] < b[1] + p && b[0] < a[1] + p;
+  // keep a text inside the picture, sliding it in from either edge
+  const clampText = (e, W, pad = 1) => {
+    const [l, r] = box(e), x = +e.getAttribute('x');
+    const shift = Math.max(pad - l, Math.min(0, W - pad - r));
+    if (shift) e.setAttribute('x', x + shift);
+    return e;
+  };
+  const fsOf = f => Math.max(12, Math.min(14, f || 13));
+
+  // ---------- front ----------
+  let F = {};
+  function drawFront() {
+    svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg), fs = fsOf(f);
+    const x0 = fs * 1.1, x1 = W - fs * 1.3, X = y => x0 + (y - START) / (END - START) * (x1 - x0);
+    const yA = H - fs * 3.6, gy = yA - fs * 5.6;
+    G = {W, H, fs, x0, x1, X, yA};
+
+    // Kepler's pyramid, alone and centred: rows of 5, 4, 3, 2, 1, each ball resting in the dip between two below
+    const r = Math.min(W * .05, (gy - fs * .8) / 8.93, fs * 2.2);
+    if (r >= 5) {
+      const cx = W / 2;
+      Kit.mk('line', {x1: cx - 5.7 * r, x2: cx + 5.7 * r, y1: gy, y2: gy, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+      for (let k = 0; k < 5; k++) { const n = 5 - k; for (let i = 0; i < n; i++)
+        Kit.mk('circle', {cx: cx + (i - (n - 1) / 2) * 2 * r, cy: gy - r - k * r * Math.sqrt(3), r: r - .6, fill: 'var(--k)', class: 'ball'}, svg); }
+    }
+
+    // the timeline starts with Kepler; centuries are ticked, not named
+    Kit.mk('line', {x1: X(START), x2: X(END), y1: yA, y2: yA, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    for (let y = 1700; y <= END; y += 100)
+      Kit.mk('line', {x1: X(y), x2: X(y), y1: yA - 4, y2: yA + 4, stroke: 'var(--k)', 'stroke-width': 1.6}, svg);
+    Kit.mk('circle', {cx: X(START), cy: yA, r: fs * .35, fill: 'var(--k)'}, svg);
+    txt(svg, 0, yA + fs * 1.5, 'Kepler, 1611', {'font-size': fs, 'font-weight': 800});
+    clampText(txt(svg, X(END), yA + fs * 1.5, '2100', {'text-anchor': 'middle', 'font-size': fs, 'font-weight': 600, opacity: .8}), W);
+
+    F.bar = Kit.mk('line', {x1: X(START), y1: yA, y2: yA, stroke: 'var(--k)', 'stroke-width': fs * .4, 'stroke-linecap': 'round', opacity: .5}, svg);
+    // the pin: its tip on the line, its head parked just above
+    const hy = -fs * 1.9;
+    F.pin = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: 0, x2: 0, y1: 0, y2: hy, stroke: 'var(--g)', 'stroke-width': 2.6}, F.pin);
+    Kit.mk('circle', {cx: 0, cy: 0, r: 2.6, fill: 'var(--g)'}, F.pin);
+    Kit.mk('circle', {cx: 0, cy: hy, r: fs * .95, fill: 'var(--g)', stroke: 'var(--c)', 'stroke-width': 2}, F.pin);
+    F.q = txt(F.pin, 0, hy + fs * .43, '?', {'text-anchor': 'middle', 'font-size': fs * 1.2, 'font-weight': 800});
+    F.chev = Kit.mk('g', {transform: `translate(${fs * 1.45},${hy})`}, F.pin);
+    Kit.mk('path', {d: 'M0,-4 l4,4 l-4,4 M6,-4 l4,4 l-4,4', stroke: 'var(--k)', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', class: 'nudge'}, F.chev);
+    F.read = txt(svg, 0, yA - fs * 3.25, '', {class: 'disp', 'text-anchor': 'middle', 'font-size': fs * 2.1});
+    F.later = txt(svg, 0, yA + fs * 3.2, '', {'text-anchor': 'middle', 'font-size': fs, 'font-weight': 600});
+    paintFront();
+  }
+  function paintFront() {
+    const g = G, x = g.X(S.year);
+    F.bar.setAttribute('x2', x);
+    F.bar.style.opacity = S.year > START + 1 ? '' : 0;
+    F.pin.setAttribute('transform', `translate(${x},${g.yA})`);
+    F.q.style.display = S.moved ? 'none' : '';
+    F.chev.style.display = S.moved ? 'none' : '';
+    F.read.setAttribute('x', x); F.read.textContent = S.moved ? String(S.year) : '';
+    if (S.moved) clampText(F.read, g.W);
+    const n = S.year - START;
+    F.later.setAttribute('x', x);
+    F.later.textContent = S.moved ? `${n} year${n === 1 ? '' : 's'} after Kepler` : 'drag the pin';
+    clampText(F.later, g.W);
+  }
+  function setYear(y) { S.year = Math.round(Math.max(START, Math.min(END, y))); paintFront(); }
+  const yearAt = e => { const r = svg.getBoundingClientRect(), x = e.clientX - r.left; return START + (x - G.x0) / (G.x1 - G.x0) * (END - START); };
+  let drag = false, last = 0;
+  svg.addEventListener('pointerdown', e => { if (S.locked) return; drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} move(e); });
+  svg.addEventListener('pointermove', e => { if (drag) move(e); });
+  function move(e) {
+    S.moved = true; setYear(yearAt(e));
+    const c = Math.floor(S.year / 50); if (c !== last) { last = c; Kit.haptic('selection'); }
+  }
+  const sureOn = () => { sure.on(); Kit.$('sure').classList.add('live'); };
+  const up = () => { if (!drag) return; drag = false; if (S.moved && !S.locked) sureOn(); };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (S.locked) return;
+    S.locked = true;
+    const off = S.year - TRUE, ok = Math.abs(off) <= 30;
+    Kit.answer({choice: String(S.year), correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? `${S.year}, close` : `${S.year}, ${Math.abs(off)} years too ${off < 0 ? 'early' : 'late'}`);
+    setTimeout(Turn.over, 700);
+  });
+
+  // ---------- back ----------
+  const verdict = y => y === TRUE ? `You said ${y}, the very year the formal proof was published.`
+    : y < TRUE ? `You said ${y}; the formal proof was published in ${TRUE}.`
+    : `You said ${y}; the formal proof came sooner, in ${TRUE}.`;
+
+  function drawBack(anim) {
+    svg2.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg2), fs = fsOf(f), A = anim && !Kit.calm && typeof gsap !== 'undefined';
+    const above = fs * 1.5, below = fs * 3.4, gap = fs * 1.5;
+
+    // the row of stacks only if it fits whole; it spans about 36 radii and stands 7.2 radii tall
+    const r = Math.min((H - above - below - gap - 2) / 7.2, (W - 4) / 36.5, fs * 1.15);
+    const rowOn = r >= 3.5;
+    const total = above + below + (rowOn ? 7.2 * r + gap : 0);
+    const top = Math.max(0, (H - total) / 2);
+    const gy = top + 7.2 * r;
+    const yA = Math.min(H - below, rowOn ? gy + gap + above : top + above);
+
+    const kep = Kit.mk('g', {}, svg2), rivals = [], trail = Kit.mk('g', {}, svg2);
+    if (rowOn) {
+      const row = [kep, trail];
+      let x = 0;
+      // Kepler's stack: solid
+      for (let k = 0; k < 4; k++) { const n = 4 - k; for (let i = 0; i < n; i++)
+        Kit.mk('circle', {cx: x + 4 * r + (i - (n - 1) / 2) * 2 * r, cy: gy - r - k * r * Math.sqrt(3), r: r - .5, fill: 'var(--k)'}, kep); }
+      x += 10 * r;
+      // the rivals: drawn in outline, each one still to be ruled out
+      const hollow = (p, cx, cy, rr) => Kit.mk('circle', {cx, cy, r: rr - 1, fill: 'none', stroke: 'var(--k)', 'stroke-width': 1.6}, p);
+      const rival = (w, pts, o) => {
+        const g = Kit.mk('g', {opacity: o}, svg2);
+        pts.forEach(([a, b]) => hollow(g, x + a * r, gy - b * r, r));
+        rivals.push(g); row.push(g); x += (w + 2) * r;
+      };
+      const sq = []; for (let j = 0; j < 3; j++) for (let i = 0; i < 3; i++) sq.push([1 + 2 * i, 1 + 2 * j]);
+      rival(6, sq, .85);                                                               // square grid
+      rival(7, [[1, 1], [3.4, 1], [6, 1], [2.3, 3.3], [4.9, 3], [3.5, 5.2]], .65);      // loose pile
+      x -= .3 * r;
+      rival(4.7, [[1, 1], [3, 1], [1, 3], [3.7, 2.95], [1.7, 4.95]], .5);              // lopsided cluster
+      x -= .8 * r;
+      [[.75, .4], [.55, .28], [.4, .18]].forEach(([k, o]) => { x += k * r; hollow(trail, x, gy - k * r, k * r + .5).setAttribute('opacity', o); x += k * r + r * .6; });
+      const dx = Math.max(0, (W - x) / 2);
+      row.forEach(g => g.setAttribute('transform', `translate(${dx},0)`));
+      Kit.mk('line', {x1: dx, x2: dx + x, y1: gy, y2: gy, stroke: 'var(--k)', 'stroke-width': 1.5, opacity: .45}, svg2).parentNode.insertBefore(svg2.lastChild, svg2.firstChild);
+    }
+
+    // ----- the wait: the one focal point -----
+    const D1 = Math.max(TRUE, S.year), x0 = fs * .6, x1 = W - fs * .75;
+    const X = y => x0 + (y - START) / (D1 - START) * (x1 - x0);
+    const xT = X(TRUE), xg = X(S.year), ry = yA + fs * 1.65, ty = yA - fs * .95;
+
+    const bar = Kit.mk('line', {x1: x0, x2: A ? x0 : xT, y1: yA, y2: yA, stroke: 'var(--k)', 'stroke-width': fs * .4, 'stroke-linecap': 'round'}, svg2);
+    if (S.year > TRUE) Kit.mk('line', {x1: xT, x2: xg, y1: yA, y2: yA, stroke: 'var(--k)', 'stroke-width': 1.5, 'stroke-dasharray': '3 4', opacity: .6}, svg2);
+    // the miss, in the reader's colour
+    const m1 = Math.min(xg, xT), m2 = Math.max(xg, xT);
+    const band = Kit.mk('line', {x1: A ? xg : m1, x2: A ? xg : m2, y1: yA, y2: yA, stroke: 'var(--g)', 'stroke-width': fs * .4 + 1}, svg2);
+    if (S.year === TRUE) band.style.display = 'none';
+    Kit.mk('circle', {cx: x0, cy: yA, r: fs * .42, fill: 'var(--k)'}, svg2);
+    const cap = Kit.mk('circle', {cx: xT, cy: yA, r: fs * .58, fill: 'var(--k)', stroke: 'var(--c)', 'stroke-width': 2}, svg2);
+
+    // four labels: Kepler, the published proof, the reader, the span
+    const startLab = txt(svg2, 0, ry, 'Kepler, 1611', {'font-size': fs, 'font-weight': 700});
+    const prov = clampText(txt(svg2, xT + fs * .58, ty, 'formal proof published 2017', {'text-anchor': 'end', 'font-size': fs, 'font-weight': 800}), W);
+    const you = Kit.mk('g', {}, svg2);
+    Kit.mk('circle', {cx: xg, cy: yA, r: fs * .5, fill: 'var(--g)', stroke: 'var(--c)', 'stroke-width': 2}, you);
+    const youLab = clampText(txt(you, xg, ry, `you said ${S.year}`, {'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800}), W);
+    if (hits(box(youLab), box(startLab))) {
+      youLab.setAttribute('y', ty); youLab.setAttribute('x', xg); clampText(youLab, W);
+      if (hits(box(youLab), box(prov))) { youLab.setAttribute('y', ry); youLab.setAttribute('x', xg); clampText(youLab, W); startLab.remove(); }
+    }
+
+    // bracket under the line: 1611 to 2017
+    const brk = Kit.mk('g', {}, svg2), by = yA + fs * 2.8, mid = (x0 + xT) / 2;
+    const bt = txt(brk, mid, by + fs * .36, 'about 400 years', {'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800});
+    const tw = bt.getComputedTextLength();
+    const gl = mid - tw / 2 - 6, gr = mid + tw / 2 + 6;
+    Kit.mk('path', {d: `M${x0},${by - fs * .4} V${by} H${Math.max(x0, gl)} M${Math.min(xT, gr)},${by} H${xT} V${by - fs * .4}`, stroke: 'var(--k)', 'stroke-width': 1.5, fill: 'none'}, brk);
+
+    if (!A) return;
+    gsap.set([kep, ...rivals, trail, you, cap, prov, brk], {opacity: 0});
+    const tl = gsap.timeline({delay: .5});
+    tl.to(kep, {opacity: 1, duration: .4, ease: 'power2.out'})
+      .to(rivals, {opacity: i => [.85, .65, .5][i], duration: .3, stagger: .15}, '+=.05')
+      .to(trail, {opacity: 1, duration: .35}, '-=.1')
+      .to(you, {opacity: 1, duration: .3}, '-=.1')
+      .to(bar, {attr: {x2: xT}, duration: 1.05, ease: 'power2.inOut'})
+      .to([cap, prov], {opacity: 1, duration: .3, ease: 'power2.out', onStart: () => Kit.haptic('success')})
+      .to(band, {attr: {x1: m1, x2: m2}, duration: .55, ease: 'power2.out'}, '-=.05')
+      .to(brk, {opacity: 1, duration: .35}, '-=.2');
+  }
+  document.addEventListener('turned', () => {
+    S.turned = true;
+    Kit.$('verdict').textContent = verdict(S.year);
+    drawBack(true);
+  });
+
+  Kit.onShow.card = () => { drawFront(); if (S.turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.from('#pic .ball', {opacity: 0, y: -8, duration: .4, stagger: .03, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    S.moved = true; setYear(1850); sureOn();
+    await wait(150);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 1100 : 5600);
+  };
+})();
+Kit.single();
+</script>
+</html>

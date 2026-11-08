@@ -1,4 +1,4 @@
-"""Checks for the core blocks of Explore: The engine's own blocks: every shelf the app had before Explore came from the server, and the generic ones that show any cards at any size (carousels, grids, bento, hero, banner…), plus text, countdown, subjects, promo, spacer, divider and web.
+"""Checks for the core blocks of Explore: The engine's own blocks: every shelf the app had before Explore came from the server, and the generic ones that show any cards at any size (carousels, grids, bento, hero, banner…), plus text, countdown, subjects, promo, spacer, divider and web; the feed; and the reader's own: their day, quick games, their subjects' levels and cards like the ones they saved.
 
 The common fields of a section — its words, `limit`, `gap`, `audience` and
 `source` — are checked in parts/explore.py for every block. This module
@@ -319,6 +319,34 @@ def web(section: dict) -> list[str]:
     return problems
 
 
+# The games a quick-games tile can open, by the names `games` gives them
+# (lib/explore/blocks/core/quick_games_block.dart, kQuickGames).
+QUICK_GAMES = ("sixty", "spot-false", "true-false", "bets-bigger")
+
+
+def quick_games(section: dict) -> list[str]:
+    problems = shelf("games")(section)
+    games = section.get("games")
+    if games is None:
+        return problems
+    if not isinstance(games, list) or not 1 <= len(games) <= 4:
+        return problems + [f"`games` is a list of one to four of {', '.join(QUICK_GAMES)}"]
+    for game in games:
+        if game not in QUICK_GAMES:
+            problems.append(f"games has {game!r}, which is not one of {', '.join(QUICK_GAMES)}")
+    if len(set(map(str, games))) != len(games):
+        problems.append("games names one twice")
+    return problems
+
+
+def subject_levels(section: dict) -> list[str]:
+    problems = shelf("limit")(section)
+    limit = section.get("limit")
+    if isinstance(limit, int) and not isinstance(limit, bool) and limit > 20:
+        problems.append("`limit` is at most 20, every subject of the row at the top")
+    return problems
+
+
 # block name -> check(section) returning a list of problems, each a line a
 # person can act on. A block listed here is a block the app can draw.
 BLOCKS: dict[str, Callable[[dict], list[str]]] = {
@@ -371,4 +399,13 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     "spacer": spacer,
     "divider": divider,
     "web": web,
+    # The whole bank in the day's order, for as long as the reader scrolls: it deals its own.
+    "feed": shelf(),
+    # The reader's own: their day, a minute's play, how far they have gone
+    # in each subject, and more like what they saved. Each works out its
+    # own and reads no `source`.
+    "your-day": shelf(),
+    "quick-games": quick_games,
+    "subject-levels": subject_levels,
+    "like-saved": shelf("limit"),
 }

@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive diagram: two plates, one aluminium and one plastic, each with ice, both at room temperature. Drag time forward to see where heat flows. Asks why ice melts faster on aluminium."
   },
   "source": "Veritasium, “Misconceptions About Temperature” (YouTube, 2012)",

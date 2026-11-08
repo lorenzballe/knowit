@@ -1,0 +1,37 @@
+{
+  "id": "science-little-boy-waste",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Little Boy carried 64 kg of uranium-235. How much of it actually split?",
+  "answer": "Under 1 kg. Just 1.5%. Gun-type bombs like Little Boy had low efficiency: 98.5% of the 64 kg of U-235 took no part in the reaction and fell as radioactive debris.",
+  "move": "A bomb's mass is not its yield; ask how much of it reacts.",
+  "keywords": [
+    "little boy",
+    "uranium-235",
+    "gun-type bomb",
+    "fission",
+    "radioactive debris"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A grid of 64 squares, each 1 kg of uranium-235, that the reader drags across to estimate how many kg split. Below it are confidence buttons from 50% to 90% and a Reveal button."
+  },
+  "source": "Geopop, “La bomba atomica di Oppenheimer - Animazione 3D di come funziona e com'è fatta dentro” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=oDETa3ktK8M&t=200s",
+  "written": "2026-11-07"
+}

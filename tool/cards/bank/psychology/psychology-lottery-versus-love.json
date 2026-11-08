@@ -1,0 +1,38 @@
+{
+  "id": "psychology-lottery-versus-love",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "One view: why risk 1‑in‑20,000 on lottery, not 1‑in‑10 on love?",
+  "answer": "The view says the odds aren't the whole price: a stranger's 'no' is gone by lunch, so passing up love can be fear rather than maths. Against it, a lost ticket is cheap and private, while a 'no' from someone in your life can cost a friendship, so the fear can be fair.",
+  "move": "Is it the odds that stop me, or what this one \"no\" would really cost?",
+  "keywords": [
+    "lottery",
+    "love",
+    "rejection",
+    "fear",
+    "odds"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A point-of-view card titled 'The lottery and love'. It asks why people risk a 1-in-20,000 lottery ticket but not a 1-in-10 chance in love, and argues that fear of a 'no' outweighs the odds. It ends by asking: is it the odds that stop me, or what this one 'no' would really cost?",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Sei MENO Intelligente di Quanto Pensi: 7 Segni” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cevmdNkWJ5g&t=741s",
+  "written": "2026-11-07"
+}

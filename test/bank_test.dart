@@ -82,6 +82,10 @@ void main() {
               f.path,
       };
       final embedded = PillBank.embedded.cards.map((p) => p.id).toSet();
+      final File thumbs = File('web/cards/thumbs/index.json');
+      final Map<String, Object?> thumbsIndex = thumbs.existsSync()
+          ? jsonDecode(thumbs.readAsStringSync()) as Map<String, Object?>
+          : const {};
       expect(onDisk.keys.toSet(), embedded, reason: 'run tool/cards/bundle.py');
       for (final f in files) {
         final raw = jsonDecode(f.readAsStringSync()) as Map<String, Object?>;
@@ -116,6 +120,14 @@ void main() {
               .substring(0, 12);
           web['page'] = 'pages/$id.html?v=$hash';
           web['bytes'] = utf8.encode(page).length;
+          // Its pictures, front and back, named while they were taken from
+          // the page as it is now (tool/cards/thumbs.cjs, bundle.py).
+          if (thumbsIndex[id] == hash) {
+            web['thumbs'] = {
+              'front': 'thumbs/$id-front.webp?v=$hash',
+              'back': 'thumbs/$id-back.webp?v=$hash',
+            };
+          }
           expect(
             File('web/cards/pages/$id.html').readAsStringSync(),
             page,

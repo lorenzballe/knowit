@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "An oil supply gauge with a switch between Strait open and Strait closed. The question asks what a prolonged total closure of the Strait of Hormuz would cut from global oil supply. A timeline slider lets the reader extend the closure."
   },
   "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",

@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A card asking which lands first when a medicine ball and a small ball are dropped together, with choices: the heavy ball, both at the same time, or the light ball. Below are the equations a = F ÷ m = m·g ÷ m = g and a Drop control that shows the balls falling.",
     "graded": false
   },

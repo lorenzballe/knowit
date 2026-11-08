@@ -1,0 +1,390 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-silk-road-sentence -->
+<!-- Look: a risograph print on cream stock. A teal plate and a fluorescent-pink plate overprint in multiply, with speckled grain, halftone dots and a pink plate that sits slightly off register. The navy key plate is knocked out of the paper, so labels stay crisp over strings and beams.
+     Interaction: you bet on the founder's sentence. Your choice drops weights onto the right pan of the scales of justice, and the scales swing with real weight and keep breathing while they wait. Then you say how sure you are.
+     Wow moment (two acts): first two LIFE slabs slam onto the pan in a puff of pink dust and the beam tips all the way. Then the answer arrives, the print re-composes to fit, the plates jolt out of register and snap back, a TWO LIFE SENTENCES banner unrolls, and a d3 timeline zooms from two decades down to 2011→2013, with a bracket drawn across: two years.
+     Layout: the drawing re-fits itself to any stage. Scale + timeline when there is room, scale only on short screens before the answer, and a banner + timeline strip at the end on short screens. -->
+<title>Two lives for Silk Road</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+.card{background-image:radial-gradient(rgba(31,34,64,.075) .6px,transparent .9px),radial-gradient(rgba(255,79,168,.09) .7px,transparent 1px);background-size:5px 5px,7px 7px;background-position:0 0,2px 3px}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
+.m{font-family:var(--mono);font-weight:700;letter-spacing:.02em}
+#opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.4cqw;padding:0 4px 4px 0}
+.opt{min-width:0;font:800 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:#f7f1e6;border:0;border-radius:.7cqh;padding:1.1cqh 2cqw;text-align:left;cursor:pointer;box-shadow:inset 0 0 0 2px #00a3b4,3px 3px 0 #ff4fa8;transition:transform .12s cubic-bezier(.2,.8,.3,1),box-shadow .12s,opacity .2s;overflow-wrap:normal;hyphens:none}
+.opt small{display:block;font:700 max(1.5cqh,12px)/1.2 var(--mono);opacity:.75;margin-top:.5cqh}
+.opt:active{transform:translate(2px,2px);box-shadow:inset 0 0 0 2px #00a3b4,1px 1px 0 #ff4fa8}
+.opt.on{background:#007d8a;color:#fff;box-shadow:3px 3px 0 #ff4fa8}
+.opt.dim{opacity:.42}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{color:var(--k);text-shadow:2px 1px 0 rgba(255,79,168,.75);font-size:clamp(22px,4.3cqh,40px);line-height:1.05}
+.keep b{color:#007d8a}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Bet · how sure" style="--c:#f3ecdf;--k:#1f2240;--edge:#d6c9b0">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SILK ROAD</span></div>
+    <h2 class="q">What punishment did Silk Road's founder get, and when?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Scales of justice. The Silk Road market sits on the left pan and the founder's sentence on the right, with a timeline from the 2011 launch below."></svg>
+    </div>
+    <div id="opts">
+      <button class="opt" data-i="0">20 years<small>in 2017</small></button>
+      <button class="opt" data-i="1">One life term<small>in 2011</small></button>
+      <button class="opt" data-i="2">Two life terms<small>in 2013</small></button>
+    </div>
+    <div id="why" class="gone"><p class="big">Two life terms, in 2013</p><p class="body">Silk Road was a dark-web marketplace. Its founder was arrested two years after it opened.</p></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a sentence to load the scale. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Silk Road opened in 2011. Two years later its founder got two life sentences.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+const NAMES = ['20 years, in 2017', 'One life term, in 2011', 'Two life terms, in 2013'];
+let pick = -1;
+
+const INK = {T: '#00a3b4', P: '#ff4fa8', K: '#1f2240'}, PAPER = '#f3ecdf';
+const ANG = [-2, 7, 16], NONE = -10, SN = Math.sin(16 * Math.PI / 180);
+const svg = Kit.$('pic');
+let W, H, fs, cx, pivotY, L, S, pw, baseY, axisY, bannerY, mode = 'A', hasBanner = false, scTop = 0;
+let lay = {}, blockEls = [], bannerEls = [], late = [], tl = {}, askEls = [];
+let st = {a: NONE}, sway = 0, shown = -1, revealed = false, endMode = false, busy = false;
+let z = {v: 0}, reg = {x: 1.6, y: -1.2}, lastSize = '';
+const xs = d3.scaleLinear();
+const dom = v => [2004 + (2010.2 - 2004) * v, 2024 + (2013.8 - 2024) * v];
+const KO = {stroke: PAPER, 'stroke-width': 3.5, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
+
+const fix = (a, k) => { const o = {}; for (const n in a) o[n] = a[n] === '@' ? INK[k] : a[n]; return o; };
+const add = (ks, g, tag, a) => ks.split('').map(k => Kit.mk(tag, fix(a, k), lay[k][g]));
+const txt = (ks, g, x, y, s, a = {}) => add(ks, g, 'text', Object.assign({x, y, class: 'm', fill: '@', 'font-size': fs}, a)).map(e => { e.textContent = s; return e; });
+
+function setReg() { if (lay.P) lay.P.outer.setAttribute('transform', `translate(${reg.x} ${reg.y})`); }
+
+function pose() {
+  if (!lay.T || mode === 'C') return;
+  const a = st.a + sway, r = a * Math.PI / 180, ex = L * Math.cos(r), ey = L * Math.sin(r), sw = -sway * 1.6;
+  for (const k in lay) {
+    const o = lay[k];
+    o.beam.setAttribute('transform', `rotate(${a} ${cx} ${pivotY})`);
+    o.panL.setAttribute('transform', `translate(${cx - ex} ${pivotY - ey}) rotate(${sw})`);
+    o.panR.setAttribute('transform', `translate(${cx + ex} ${pivotY + ey}) rotate(${sw})`);
+  }
+}
+
+// how big can the scales be inside a band of height Z?
+function fitScale(Z, force) {
+  let l = Math.min(W * .34, fs * 10), p, s, top, need;
+  for (;;) {
+    p = Math.min(W * .27, l * .8);
+    top = Math.max(fs * 1.7, SN * l + fs * .6);
+    const rest = top + SN * l + p * .2 + fs * .3;
+    s = Math.max(fs * 3.1, Math.min(fs * 5.4, Z - rest));
+    need = rest + s;
+    if ((need <= Z && (s >= fs * 4 || l <= fs * 6)) || l <= fs * 3.6) break;
+    l = Math.max(fs * 3.6, l * .93);
+  }
+  return (need <= Z || force) ? {L: l, pw: p, S: s, top, need} : null;
+}
+
+function build() {
+  svg.innerHTML = '';
+  tl = {}; askEls = []; blockEls = []; bannerEls = []; late = [];
+  const r = svg.getBoundingClientRect();
+  W = Math.max(240, r.width || 0); H = Math.max(60, r.height || 0);
+  lastSize = Math.round(r.width) + 'x' + Math.round(r.height);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  fs = Math.max(12, Math.min(14, W / 25));
+  cx = W / 2;
+
+  // composition: pick what fits
+  const bH = fs * 2.7, tA = fs * 2.4, tB = fs * 1.95, tlNeed = tA + tB + fs * .5;
+  let sc = null; hasBanner = false;
+  if (endMode) {
+    if ((sc = fitScale(H - tlNeed - bH - 3))) { mode = 'A'; hasBanner = true; }
+    else if ((sc = fitScale(H - tlNeed - 3))) mode = 'A';
+    else { mode = 'C'; hasBanner = H >= tA + tB + bH; }
+  } else {
+    if ((sc = fitScale(H - tlNeed - 3))) mode = 'A';
+    else { mode = 'B'; sc = fitScale(H - 6, true); }
+  }
+  if (sc) { L = sc.L; pw = sc.pw; S = sc.S; scTop = sc.top; }
+  if (mode === 'A') {
+    axisY = H - tB;
+    const rb = axisY - tA - fs * .5, rt = 3 + (hasBanner ? bH : 0);
+    pivotY = rt + Math.max(0, rb - rt - sc.need) * .55 + sc.top;
+  } else if (mode === 'B') {
+    pivotY = 3 + Math.max(0, H - 6 - sc.need) * .5 + sc.top;
+  } else {
+    const tot = (hasBanner ? bH : 0) + tA + tB, off = Math.max(0, (H - tot) / 2);
+    axisY = off + (hasBanner ? bH : 0) + tA;
+    bannerY = off + bH / 2;
+  }
+  if (mode !== 'C') { baseY = pivotY + SN * L + S + pw * .17; bannerY = pivotY - scTop - fs * 1.35; }
+
+  // inks: grain that eats the plates, halftone screens
+  const defs = Kit.mk('defs', {}, svg);
+  [['T', 3], ['P', 11]].forEach(([k, seed]) => {
+    const fl = Kit.mk('filter', {id: 'gr' + k, x: '-5%', y: '-5%', width: '110%', height: '110%'}, defs);
+    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.9', numOctaves: 2, seed, result: 'n'}, fl);
+    Kit.mk('feColorMatrix', {in: 'n', type: 'matrix', values: '0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -3.2 2.35', result: 'm'}, fl);
+    Kit.mk('feComposite', {in: 'SourceGraphic', in2: 'm', operator: 'in'}, fl);
+    const p = Kit.mk('pattern', {id: 'dots' + k, width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(' + (k === 'T' ? 15 : 45) + ')'}, defs);
+    Kit.mk('circle', {cx: 2.5, cy: 2.5, r: 1.25, fill: INK[k]}, p);
+  });
+
+  lay = {};
+  for (const k of ['T', 'P', 'K']) {
+    const outer = Kit.mk('g', {style: k === 'K' ? '' : 'mix-blend-mode:multiply'}, svg);
+    const inner = Kit.mk('g', k === 'K' ? {} : {filter: `url(#gr${k})`, opacity: .95}, outer);
+    const o = {outer, inner};
+    for (const n of ['tl', 'base', 'panL', 'panR', 'beam', 'banner']) o[n] = Kit.mk('g', {}, inner);
+    o.blocks = Kit.mk('g', {}, o.panR);
+    lay[k] = o;
+  }
+  setReg();
+
+  if (mode !== 'C') drawScale();
+  if (mode !== 'B') drawTL();
+  if (hasBanner) drawBanner();
+  pose();
+}
+
+function drawScale() {
+  const hb = Math.max(fs * 1.3, Math.min(fs * 3, L * .96 - pw / 2 - fs * .5));
+  const bt = Math.min(fs * 1.2, (baseY - pivotY) * .25);
+  // the stand
+  add('P', 'base', 'ellipse', {cx, cy: baseY + fs * .15, rx: hb * 1.3, ry: fs * .42, fill: 'url(#dotsP)'});
+  add('T', 'base', 'rect', {x: cx - fs * .36, y: pivotY, width: fs * .72, height: Math.max(0, baseY - pivotY), fill: '@'});
+  add('P', 'base', 'rect', {x: cx - fs * .12, y: pivotY + fs * .8, width: fs * .26, height: Math.max(0, baseY - pivotY - bt - fs * 1.2), fill: '@'});
+  add('T', 'base', 'path', {d: `M${cx - hb},${baseY} L${cx + hb},${baseY} L${cx + hb * .38},${baseY - bt} L${cx - hb * .38},${baseY - bt}Z`, fill: '@'});
+  add('P', 'base', 'path', {d: `M${cx - hb * .72},${baseY - bt * .3} H${cx + hb * .72}`, stroke: '@', 'stroke-width': 2.4});
+  add('P', 'base', 'circle', {cx, cy: pivotY - fs * 1.05, r: fs * .42, fill: '@'});
+  add('T', 'base', 'path', {d: `M${cx},${pivotY - fs * .6} V${pivotY}`, stroke: '@', 'stroke-width': 3});
+
+  // the beam (rotated about the pivot)
+  add('P', 'beam', 'rect', {x: cx - L, y: pivotY - fs * .3, width: 2 * L, height: fs * .6, rx: fs * .3, fill: '@'});
+  for (let i = -4; i <= 4; i++) if (i) add('T', 'beam', 'path', {d: `M${cx + i * L / 4.6},${pivotY - fs * .22} v${fs * .44}`, stroke: '@', 'stroke-width': 1.6});
+  add('T', 'beam', 'circle', {cx, cy: pivotY, r: fs * .62, fill: '@'});
+  add('P', 'beam', 'circle', {cx, cy: pivotY, r: fs * .95, fill: 'none', stroke: '@', 'stroke-width': 2.2});
+  [-1, 1].forEach(s => add('T', 'beam', 'circle', {cx: cx + s * L, cy: pivotY, r: fs * .34, fill: '@'}));
+
+  // the pans
+  for (const g of ['panL', 'panR']) {
+    add('T', g, 'path', {d: `M0,0 L${-pw / 2},${S} M0,0 L${pw / 2},${S}`, stroke: '@', 'stroke-width': 1.4, fill: 'none'});
+    const dish = `M${-pw / 2},${S} Q0,${S + pw * .34} ${pw / 2},${S}Z`;
+    add('T', g, 'path', {d: dish, fill: '@'});
+    add('P', g, 'path', {d: dish, fill: 'url(#dotsP)', stroke: '@', 'stroke-width': 2});
+  }
+  // left pan: the marketplace, crates of goods
+  const ch = Math.min(fs * 1.1, S * .22), cw = pw * .3, cy0 = S - ch - 1;
+  [[-cw - 1, cy0], [1, cy0], [-cw / 2, cy0 - ch - 1]].forEach(([x, y]) => {
+    add('P', 'panL', 'rect', {x, y, width: cw, height: ch, fill: '@'});
+    add('T', 'panL', 'path', {d: `M${x + 2},${y + 2} L${x + cw - 2},${y + ch - 2} M${x + cw - 2},${y + 2} L${x + 2},${y + ch - 2}`, stroke: '@', 'stroke-width': 1.3});
+    add('T', 'panL', 'rect', {x: x + 1, y: y + 1, width: cw - 2, height: ch - 2, fill: 'none', stroke: '@', 'stroke-width': 1.2});
+  });
+  txt('K', 'panL', 0, cy0 - ch - fs * .5, 'SILK ROAD', Object.assign({'text-anchor': 'middle'}, KO));
+  askEls = txt('K', 'panR', 0, S - fs * .55, 'SENTENCE?', Object.assign({'text-anchor': 'middle', opacity: .85, display: shown < 0 ? 'inline' : 'none'}, KO));
+
+  drawBlocks(shown, false);
+}
+
+function drawTL() {
+  xs.range([fs * 1.4, W - fs * 1.4]);
+  const vis = revealed ? 'inline' : 'none';
+  tl.band = add('T', 'tl', 'line', {y1: axisY, y2: axisY, stroke: '@', 'stroke-width': fs * .38, 'stroke-linecap': 'round', opacity: .7})[0];
+  tl.axis = Kit.mk('g', {transform: `translate(0,${axisY})`, style: `color:${INK.K}`}, lay.K.tl);
+  tl.br = add('T', 'tl', 'path', {fill: 'none', stroke: '@', 'stroke-width': 2, display: vis})[0];
+  tl.l1 = add('P', 'tl', 'circle', {cy: axisY - 1.2, r: fs * .45, fill: '@'})[0];
+  tl.a1 = add('T', 'tl', 'circle', {cy: axisY, r: fs * .58, fill: 'none', stroke: '@', 'stroke-width': 2.6, display: vis})[0];
+  tl.a2 = add('P', 'tl', 'circle', {cy: axisY - 1.2, r: fs * .3, fill: '@', display: vis})[0];
+  tl.l1t = txt('K', 'tl', 0, 0, 'OPENS 2011', KO)[0];
+  tl.a1t = txt('K', 'tl', 0, 0, 'ARREST', Object.assign({'text-anchor': 'start', display: vis}, KO))[0];
+  tl.bt = txt('K', 'tl', 0, 0, 'TWO YEARS', Object.assign({'text-anchor': 'middle', display: vis}, KO))[0];
+  late = [tl.a1, tl.a2, tl.a1t, tl.br, tl.bt];
+  placeTL();
+}
+
+function placeTL() {
+  if (!tl.axis) return;
+  xs.domain(dom(z.v));
+  const [a, b] = xs.domain(), span = b - a, step = span > 14 ? 4 : span > 7 ? 2 : 1;
+  const vals = d3.range(Math.ceil(a / step) * step, b + 1e-9, step);
+  d3.select(tl.axis).call(d3.axisBottom(xs).tickValues(vals).tickFormat(d3.format('d')).tickSize(fs * .45).tickPadding(fs * .3));
+  d3.select(tl.axis).select('.domain').attr('stroke-width', 1.4);
+  d3.select(tl.axis).selectAll('text').attr('class', 'm').attr('font-size', Math.max(12, fs * .9));
+  const [x0, x1] = xs.range(), p1 = xs(2011), p3 = xs(2013), yb = axisY - fs * 1.5;
+  tl.band.setAttribute('x1', x0); tl.band.setAttribute('x2', x1);
+  tl.l1.setAttribute('cx', p1 + 1.6);
+  tl.a1.setAttribute('cx', p3); tl.a2.setAttribute('cx', p3 + 1.6);
+  if (z.v < .5) {
+    tl.l1t.textContent = 'OPENS 2011';
+    tl.l1t.setAttribute('text-anchor', 'middle');
+    tl.l1t.setAttribute('x', Math.max(fs * 3.4, p1)); tl.l1t.setAttribute('y', axisY - fs * .95);
+  } else {
+    tl.l1t.textContent = 'OPENS';
+    tl.l1t.setAttribute('text-anchor', 'end');
+    tl.l1t.setAttribute('x', p1 - fs * .6); tl.l1t.setAttribute('y', yb + fs * .36);
+  }
+  tl.a1t.setAttribute('x', p3 + fs * .6); tl.a1t.setAttribute('y', yb + fs * .36);
+  tl.br.setAttribute('d', `M${p1},${axisY - fs * .65} V${yb} H${p3} V${axisY - fs * .65}`);
+  tl.bt.setAttribute('x', (p1 + p3) / 2); tl.bt.setAttribute('y', yb + fs * .36);
+}
+
+function drawBanner() {
+  let bf = fs * 1.1;
+  const bt = txt('K', 'banner', cx, bannerY + bf * .36, 'TWO LIFE SENTENCES', {'text-anchor': 'middle', 'font-size': bf, 'font-weight': 800})[0];
+  let tw = bt.getComputedTextLength() || 18 * .62 * bf;
+  const maxTw = W - fs * 6.5;
+  if (tw > maxTw) { const k = Math.max(12 / bf, maxTw / tw); bf *= k; tw *= k; bt.setAttribute('font-size', bf); bt.setAttribute('y', bannerY + bf * .36); }
+  const bw = tw / 2 + fs * .9, bh = fs * 1.05;
+  add('P', 'banner', 'path', {d: `M${cx - bw},${bannerY - bh} H${cx + bw} V${bannerY + bh} H${cx - bw}Z`, fill: '@'});
+  add('T', 'banner', 'path', {d: `M${cx - bw + 3},${bannerY - bh + 3} H${cx + bw - 3} V${bannerY + bh - 3} H${cx - bw + 3}Z`, fill: 'none', stroke: '@', 'stroke-width': 1.2});
+  [-1, 1].forEach(s => {
+    const x = cx + s * bw;
+    add('T', 'banner', 'path', {d: `M${x},${bannerY - bh * .6} L${x + s * fs * 1.5},${bannerY - bh * .6} L${x + s * fs * .9},${bannerY + bh * .2} L${x + s * fs * 1.5},${bannerY + bh * 1.05} L${x},${bannerY + bh * 1.05}Z`, fill: '@'});
+  });
+  bannerEls = [lay.T.banner, lay.P.banner, lay.K.banner];
+  gsap.set(bannerEls, {scaleX: revealed ? 1 : 0, opacity: revealed ? 1 : 0, svgOrigin: `${cx} ${bannerY}`});
+}
+
+function dust(y, w) {
+  for (let i = 0; i < 6; i++) {
+    const s = i < 3 ? -1 : 1, a = ((i % 3) * 28 + 12) * Math.PI / 180, x = s * (w / 2 + 2);
+    const ln = Kit.mk('path', {d: `M${x},${y} l${s * fs * .9 * Math.cos(a)},${-fs * .9 * Math.sin(a)}`, stroke: INK.P, 'stroke-width': 2, 'stroke-linecap': 'round'}, lay.P.panR);
+    gsap.fromTo(ln, {opacity: 1, scale: .3, svgOrigin: `${x} ${y}`}, {opacity: 0, scale: 1.4, duration: .5, ease: 'power2.out', onComplete: () => ln.remove()});
+  }
+}
+
+function drawBlocks(kind, anim) {
+  for (const k in lay) lay[k].blocks.innerHTML = '';
+  blockEls = []; shown = kind;
+  askEls.forEach(e => e.setAttribute('display', kind < 0 ? 'inline' : 'none'));
+  if (kind < 0 || mode === 'C' || !lay.T) return;
+  const spec = kind === 0 ? [{w: .6, t: '20 YRS'}] : kind === 1 ? [{w: .82, t: 'LIFE'}] : [{w: .82, t: 'LIFE'}, {w: .66, t: 'LIFE'}];
+  const bh = Math.max(fs * 1.3, Math.min(fs * 1.6, S * .34));
+  let y = S - 1;
+  spec.forEach((b, i) => {
+    const bw = Math.max(pw * b.w, fs * (b.t.length * .62 + 1.4));
+    y -= bh + (i ? 3 : 0);
+    const g = add('PTK', 'blocks', 'g', {});
+    Kit.mk('rect', {x: -bw / 2, y, width: bw, height: bh, rx: 2, fill: INK.P}, g[0]);
+    Kit.mk('rect', {x: -bw / 2 + 2.5, y: y + 2.5, width: bw, height: bh, rx: 2, fill: 'url(#dotsT)', opacity: .5}, g[1]);
+    Kit.mk('rect', {x: -bw / 2 + 3, y: y + 3, width: bw - 6, height: bh - 6, rx: 1, fill: 'none', stroke: INK.T, 'stroke-width': 1.2}, g[1]);
+    const t = Kit.mk('text', {x: 0, y: y + bh / 2 + fs * .36, 'text-anchor': 'middle', class: 'm', fill: INK.K, 'font-size': fs, 'font-weight': 800}, g[2]);
+    t.textContent = b.t;
+    blockEls.push({g, y: y + bh, w: bw});
+  });
+  if (!anim) return;
+  if (Kit.calm) { st.a = ANG[kind]; pose(); return; }
+  blockEls.forEach((b, i) => gsap.from(b.g, {y: -(pivotY + S), duration: .5, ease: 'power3.in', delay: i * .3,
+    onComplete: () => {
+      Kit.haptic('light'); dust(S - 1, b.w);
+      gsap.fromTo(b.g, {scaleY: .82, svgOrigin: `0 ${S}`}, {scaleY: 1, duration: .5, ease: 'elastic.out(1,.4)'});
+    }}));
+  gsap.killTweensOf(st);
+  gsap.to(st, {a: ANG[kind], duration: 1.7, ease: 'elastic.out(1,.32)', delay: .48 + (blockEls.length - 1) * .3, onUpdate: pose});
+}
+
+function checkSize() {
+  const r = svg.getBoundingClientRect();
+  if (Math.round(r.width) + 'x' + Math.round(r.height) !== lastSize) build();
+}
+
+function finale() {
+  Kit.haptic('success');
+  gsap.killTweensOf(reg);
+  gsap.fromTo(reg, {x: 10, y: -7}, {x: 1.6, y: -1.2, duration: 1.1, ease: 'elastic.out(1,.35)', onUpdate: setReg});
+  if (bannerEls.length) gsap.to(bannerEls, {scaleX: 1, opacity: 1, duration: .8, ease: 'back.out(1.7)', svgOrigin: `${cx} ${bannerY}`});
+  if (mode === 'A') gsap.fromTo(st, {a: ANG[2] + 6}, {a: ANG[2], duration: 1.2, ease: 'elastic.out(1,.3)', onUpdate: pose});
+  const done = ms => setTimeout(() => { busy = false; checkSize(); }, ms);
+  if (!tl.axis) { done(1200); return; }
+  d3.select(svg).transition('zoom').duration(1000).ease(d3.easeExpInOut)
+    .tween('zoom', () => { const i = d3.interpolate(z.v, 1); return t => { z.v = i(t); placeTL(); }; })
+    .on('end', () => {
+      late.forEach(e => { e.setAttribute('display', 'inline'); e.setAttribute('opacity', 0); });
+      gsap.to([tl.a1, tl.a2, tl.a1t], {attr: {opacity: 1}, duration: .3, ease: 'power2.out'});
+      gsap.fromTo(tl.a1, {attr: {r: fs * 1.6}}, {attr: {r: fs * .58}, duration: .6, ease: 'back.out(2)'});
+      const len = tl.br.getTotalLength();
+      gsap.set(tl.br, {attr: {opacity: 1, 'stroke-dasharray': len, 'stroke-dashoffset': len}});
+      gsap.to(tl.br, {attr: {'stroke-dashoffset': 0}, duration: .5, ease: 'power3.out', delay: .1});
+      gsap.to(tl.bt, {attr: {opacity: 1}, duration: .3, delay: .45});
+      done(900);
+    });
+}
+
+function showText() { Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }
+
+// act two: the answer arrives, the print re-composes to fit, then the timeline zooms
+function act2() {
+  gsap.to(svg, {opacity: 0, duration: .2, ease: 'power1.in', onComplete: () => {
+    gsap.killTweensOf(st); st.a = ANG[2]; shown = 2; endMode = true;
+    showText(); build();
+    revealed = true;
+    gsap.to(svg, {opacity: 1, duration: .35, ease: 'power1.out'});
+    finale();
+  }});
+}
+
+function reveal() {
+  if (Kit.calm) { showText(); endMode = true; revealed = true; shown = 2; z.v = 1; st.a = ANG[2]; reg = {x: 1.6, y: -1.2}; build(); return; }
+  busy = true;
+  Kit.$('say').textContent = 'Weighing it…';
+  const t = gsap.timeline();
+  gsap.killTweensOf(st);
+  if (shown !== 2) {
+    const old = blockEls.flatMap(b => b.g);
+    t.to(old, {y: -H * .5, x: W * .18, rotation: 35, opacity: 0, duration: .5, ease: 'power2.in', transformOrigin: '50% 50%'});
+    t.to(st, {a: NONE, duration: .55, ease: 'power2.out', onUpdate: pose}, '<.1');
+    t.add(() => drawBlocks(2, true));
+    t.add(act2, 2.0);
+  } else {
+    t.to(st, {a: 20, duration: .25, ease: 'power3.in', onUpdate: pose});
+    t.to(st, {a: ANG[2], duration: 1.3, ease: 'elastic.out(1,.3)', onUpdate: pose});
+    t.add(act2, 1.25);
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = NAMES[pick];
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on');
+  [...Kit.$('opts').children].forEach(o => { if (o !== b) o.classList.add('dim'); });
+  Kit.haptic('selection');
+  drawBlocks(pick, true);
+  sure.on();
+});
+
+Kit.onShow.card = () => { if (!busy) build(); };
+if (window.ResizeObserver) new ResizeObserver(() => { if (!busy && lay.T) checkSize(); }).observe(Kit.$('stage'));
+if (!Kit.calm) gsap.ticker.add(() => { sway = Math.sin(performance.now() / 1100) * .5; pose(); });
+
+let entered = false;
+Kit.onEnter.card = () => {
+  if (entered || Kit.calm) return; entered = true;
+  gsap.from('.opt', {opacity: 0, stagger: .08, duration: .5, ease: 'power2.out', delay: .4});
+  if (!lay.T) return;
+  gsap.from([lay.T.inner, lay.P.inner, lay.K.inner], {opacity: 0, duration: .6, stagger: .18, ease: 'power2.out'});
+  gsap.fromTo(reg, {x: 14, y: -10}, {x: 1.6, y: -1.2, duration: 1.4, ease: 'power3.out', onUpdate: setReg});
+  if (shown < 0) gsap.fromTo(st, {a: 8}, {a: NONE, duration: 2, ease: 'elastic.out(1,.3)', delay: .3, onUpdate: pose});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[0].click();
+  await wait(Kit.calm ? 100 : 900);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(Kit.calm ? 600 : 4200);
+};
+Kit.single();
+</script>
+</html>

@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive page with a slider from 0 to 9 digits. Each step tries 0, 1 or 2 for the next power of 3, building the digits of a solution to x² = 7 one at a time."
   },
   "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",

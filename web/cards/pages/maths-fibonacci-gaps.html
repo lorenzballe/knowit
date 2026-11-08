@@ -1,0 +1,402 @@
+<!doctype html>
+<!-- slug: maths-fibonacci-gaps -->
+<!-- Look: a museum diorama at night. A Penrose tiling is the back paper plane, fading softly into the card. Parallel cream strips float above it on soft shadows, and gold and teal paper chips fill the gaps.
+     Interaction: drag the glowing counter up from the bottom. Each gap you pass is filled and counted as long or short. The tally and a Fibonacci row answer at once, every Fibonacci strip flares gold, and the planes shift in parallax under your finger.
+     Wow: at 34 gaps (21 long, 13 short) a gold bracket draws itself up the whole stack, a light sweeps up the chips, the tiling redraws in gold from its centre, and long ÷ short shows 1.615, close to φ = 1.618. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The gaps that count in Fibonacci</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+.hint{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-5px)}}
+.kit-calm .hint{animation:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag to count · gaps that never repeat" style="--c:#1c2340;--k:#f4ecda;--edge:#10152b">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COUNT THE GAPS</span></div>
+    <h2 class="q">How do the gaps in a Penrose tiling hide the Fibonacci numbers?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A Penrose tiling with one set of parallel lines drawn over it. The gaps between the lines are long or short, and a counter tallies them against the Fibonacci numbers."></svg>
+    </div>
+    <p class="say" id="say"><b>Drag up</b> from the bottom to count the gaps, long and short.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Count the long and short gaps: you get Fibonacci numbers, and their ratio closes in on the golden ratio.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(DrawSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
+  const PHI = (1 + Math.sqrt(5)) / 2, N = 34;
+  const CREAM = '#f4ecda', GOLD = '#f2b54a', TEAL = '#6fd3c6', INKD = '#0b1022';
+  // The gaps from the bottom up: long and short, never repeating (L → LS, S → L).
+  let word = 'L';
+  while (word.length < N) word = [...word].map(c => c === 'L' ? 'LS' : 'L').join('');
+  word = word.slice(0, N);
+  const FIB = [1, 1, 2, 3, 5, 8, 13, 21], MILES = [1, 2, 3, 5, 8, 13, 21, 34];
+  const WHY = 'The gaps never repeat, yet the counts are neighbouring Fibonacci numbers: <b>21 long, 13 short</b>. Their ratio nears φ = 1.618…, which no fraction equals, so no block can repeat.';
+
+  let n = 0, best = 0, litMax = 0, done = false, touched = false, built = false, dragging = false;
+  let W = 0, H = 0, fs = 13, x0 = 0, x1 = 0, bx = 0, sw = 2, yL = [], els = {}, lw = 0, lh = 0, rPre = '';
+  let qT = null, qM = null, qF = null;
+
+  const cnt = m => { let L = 0; for (let i = 0; i < m; i++) if (word[i] === 'L') L++; return [L, m - L]; };
+  const T = (p, x, y, s, size, fill, font, extra = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill, 'font-size': size, style: `font-family:${font}`}, extra), p);
+    e.textContent = s; return e;
+  };
+  const F1 = v => v.toFixed(1);
+
+  // A Penrose tiling (thick and thin rhombs) grown from a wheel of half-rhomb triangles.
+  function penrose(cx, cy, R, depth) {
+    let tr = [];
+    for (let i = 0; i < 10; i++) {
+      let b = [cx + R * Math.cos((2 * i - 1) * Math.PI / 10), cy + R * Math.sin((2 * i - 1) * Math.PI / 10)];
+      let c = [cx + R * Math.cos((2 * i + 1) * Math.PI / 10), cy + R * Math.sin((2 * i + 1) * Math.PI / 10)];
+      if (i % 2 === 0) [b, c] = [c, b];
+      tr.push([0, [cx, cy], b, c]);
+    }
+    const lerp = (p, q, t) => [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t];
+    for (let d = 0; d < depth; d++) {
+      const nx = [];
+      for (const [k, A, B, C] of tr) {
+        if (k === 0) { const P = lerp(A, B, 1 / PHI); nx.push([0, C, P, B], [1, P, C, A]); }
+        else { const Q = lerp(B, A, 1 / PHI), R2 = lerp(B, C, 1 / PHI); nx.push([1, R2, C, A], [1, Q, R2, B], [0, R2, Q, A]); }
+      }
+      tr = nx;
+    }
+    return tr;
+  }
+
+  // Keep every piece of the tiling inside the stage (polygons and segments are cut to a box).
+  function clipPoly(P, a, b, c, d) {
+    for (const [ax, s, v] of [[0, 1, a], [0, -1, c], [1, 1, b], [1, -1, d]]) {
+      const out = [];
+      for (let i = 0; i < P.length; i++) {
+        const p = P[i], q = P[(i + 1) % P.length], ip = s * (p[ax] - v) >= 0, iq = s * (q[ax] - v) >= 0;
+        if (ip) out.push(p);
+        if (ip !== iq) { const t = (v - p[ax]) / (q[ax] - p[ax]); out.push([p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t]); }
+      }
+      P = out; if (!P.length) break;
+    }
+    return P;
+  }
+  function clipSeg(A, B, a, b, c, d) {
+    let t0 = 0, t1 = 1; const dx = B[0] - A[0], dy = B[1] - A[1];
+    const p = [-dx, dx, -dy, dy], q = [A[0] - a, c - A[0], A[1] - b, d - A[1]];
+    for (let i = 0; i < 4; i++) {
+      if (p[i] === 0) { if (q[i] < 0) return null; }
+      else { const r = q[i] / p[i]; if (p[i] < 0) { if (r > t1) return null; if (r > t0) t0 = r; } else { if (r < t0) return null; if (r < t1) t1 = r; } }
+    }
+    return [[A[0] + t0 * dx, A[1] + t0 * dy], [A[0] + t1 * dx, A[1] + t1 * dy]];
+  }
+
+  function build() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const sr = stage.getBoundingClientRect(); lw = sr.width; lh = sr.height;
+    fs = Math.max(12, Math.min(15, f.f || 13));
+    const sm = Math.max(12, fs * .85);
+    x0 = Math.max(30, W * .08); x1 = W * .55;
+    const kr = Math.min(10, x0 * .36), kx = x0 * .46;
+    const top = Math.max(fs, kr + 5), bot = Math.max(fs * 1.3, kr + 6);
+    const u = (H - top - bot) / (21 * PHI + 13);
+    yL = [H - bot];
+    for (let i = 0; i < N; i++) yL.push(yL[i] - (word[i] === 'L' ? PHI : 1) * u);
+    sw = Math.max(1, Math.min(3.4, u * .32));
+    bx = x1 + Math.max(8, W * .025);
+
+    const fr = `filterUnits="userSpaceOnUse" x="${-W}" y="${-H}" width="${3 * W}" height="${3 * H}"`;
+    const defs = Kit.mk('defs', {}, svg);
+    defs.innerHTML = `
+      <filter id="sh1" ${fr}><feDropShadow dx="0" dy="2.4" stdDeviation="1.7" flood-color="#03050d" flood-opacity=".75"/></filter>
+      <filter id="sh2" ${fr}><feDropShadow dx="0" dy="1" stdDeviation=".9" flood-color="#03050d" flood-opacity=".55"/></filter>
+      <filter id="glow" ${fr}><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <radialGradient id="fade" cx=".42" cy=".5" r=".62"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".8"/><stop offset=".85" stop-color="#fff" stop-opacity=".2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <mask id="tm" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="0" y="0" width="${W}" height="${H}" fill="url(#fade)"/></mask>
+      <linearGradient id="gL" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fbd27a"/><stop offset="1" stop-color="#d9962c"/></linearGradient>
+      <linearGradient id="gS" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9be6dc"/><stop offset="1" stop-color="#46aa9f"/></linearGradient>
+      <linearGradient id="shine" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff8e6" stop-opacity=".65"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <radialGradient id="kg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e2d6bd"/></radialGradient>`;
+
+    // ---- back plane: the tiling, melting softly into the card ----
+    const pT = Kit.mk('g', {}, svg), gT = Kit.mk('g', {mask: 'url(#tm)'}, pT);
+    const cx = (x0 + x1) / 2, cy = H / 2;
+    const R = Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) * 1.08;
+    const edge = Math.max(16, Math.min(W, H) / 11);
+    const depth = Math.max(4, Math.min(7, Math.round(Math.log(R / edge) / Math.log(PHI))));
+    const ca = 7, cb = 6, cc = W - 7, cd = H - 6;
+    const tris = penrose(cx, cy, R, depth).filter(([, A, B, C]) => {
+      const xs = [A[0], B[0], C[0]], ys = [A[1], B[1], C[1]];
+      return Math.max(...xs) > ca && Math.min(...xs) < cc && Math.max(...ys) > cb && Math.min(...ys) < cd;
+    }).map(t => { const m = [(t[1][0] + t[2][0] + t[3][0]) / 3, (t[1][1] + t[2][1] + t[3][1]) / 3]; t.d = Math.hypot(m[0] - cx, m[1] - cy); return t; })
+      .sort((a, b) => a.d - b.d);
+    let fThick = '', fThin = '';
+    for (const [k, A, B, C] of tris) {
+      const P = clipPoly([A, B, C], ca, cb, cc, cd);
+      if (P.length < 3) continue;
+      const p = 'M' + P.map(q => `${F1(q[0])},${F1(q[1])}`).join('L') + 'Z';
+      if (k === 0) fThick += p; else fThin += p;
+    }
+    els.fills = [
+      Kit.mk('path', {d: fThick, fill: CREAM, 'fill-opacity': .05}, gT),
+      Kit.mk('path', {d: fThin, fill: GOLD, 'fill-opacity': .1}, gT)
+    ];
+    const RINGS = 6, per = Math.ceil(tris.length / RINGS);
+    els.rings = [];
+    for (let r = 0; r < RINGS; r++) {
+      let d = '';
+      for (const [, A, B, C] of tris.slice(r * per, (r + 1) * per)) {
+        for (const [P, Q] of [[C, A], [A, B]]) {
+          const s = clipSeg(P, Q, ca, cb, cc, cd);
+          if (s) d += `M${F1(s[0][0])},${F1(s[0][1])}L${F1(s[1][0])},${F1(s[1][1])}`;
+        }
+      }
+      if (d) els.rings.push(Kit.mk('path', {d, fill: 'none', stroke: CREAM, 'stroke-opacity': .26, 'stroke-width': .9, 'stroke-linecap': 'round'}, gT));
+    }
+
+    // ---- middle plane: the gaps and the parallel lines ----
+    const pM = Kit.mk('g', {}, svg);
+    const gC = Kit.mk('g', {filter: 'url(#sh2)'}, pM);
+    els.chips = [];
+    for (let i = 0; i < N; i++) {
+      const r = Kit.mk('rect', {x: x0, y: yL[i + 1], width: x1 - x0, height: yL[i] - yL[i + 1], fill: word[i] === 'L' ? 'url(#gL)' : 'url(#gS)'}, gC);
+      gsap.set(r, {scaleX: i < n ? 1 : 0, transformOrigin: '0% 50%'});
+      els.chips.push(r);
+    }
+    const shH = Math.min(40, (yL[0] - yL[N]) * .25);
+    els.shine = Kit.mk('rect', {x: x0, y: yL[0] - shH, width: x1 - x0, height: shH, fill: 'url(#shine)', opacity: 0}, pM);
+    els.shH = shH;
+    const gB = Kit.mk('g', {filter: 'url(#sh1)'}, pM);
+    els.bars = [];
+    for (let i = 0; i <= N; i++) {
+      const hit = MILES.includes(i) && i <= best;
+      els.bars.push(Kit.mk('line', {x1: x0, x2: x1, y1: yL[i], y2: yL[i], stroke: hit ? '#ffe2a3' : CREAM, 'stroke-width': hit ? sw * 1.3 : sw, 'stroke-linecap': 'round'}, gB));
+    }
+    // The gold bracket, one piece for every Fibonacci stretch reached.
+    const gG = Kit.mk('g', {filter: 'url(#glow)'}, pM);
+    els.seg = MILES.map((m, k) => {
+      const y0 = k ? yL[MILES[k - 1]] : yL[0];
+      const p = Kit.mk('path', {d: `M${bx},${y0}V${yL[m]}H${x1 + sw}`, fill: 'none', stroke: GOLD, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, gG);
+      gsap.set(p, {drawSVG: m <= best ? '100%' : '0%'});
+      return p;
+    });
+    Kit.mk('path', {d: `M${x1 + sw},${yL[0]}H${bx}`, fill: 'none', stroke: GOLD, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .7}, gG);
+    els.final = Kit.mk('path', {d: `M${bx},${yL[0]}V${yL[N]}`, fill: 'none', stroke: '#ffd78a', 'stroke-width': 3.4, 'stroke-linecap': 'round'}, gG);
+    gsap.set(els.final, {drawSVG: done ? '100%' : '0%'});
+
+    // The counter the reader drags.
+    const cur = Kit.mk('g', {}, pM);
+    els.cur = cur;
+    Kit.mk('line', {x1: x0 - 4, x2: x1 + 4, y1: 0, y2: 0, stroke: '#ffffff', 'stroke-width': 1.7, 'stroke-linecap': 'round', filter: 'url(#glow)'}, cur);
+    const knob = Kit.mk('g', {filter: 'url(#sh1)'}, cur);
+    els.knob = knob;
+    Kit.mk('circle', {cx: kx, cy: 0, r: kr, fill: 'url(#kg)'}, knob);
+    Kit.mk('path', {d: `M${kx - kr * .4},${kr * .18}L${kx},${-kr * .28}L${kx + kr * .4},${kr * .18}`, fill: 'none', stroke: INKD, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, knob);
+    els.hint = Kit.mk('g', {class: 'hint'}, cur);
+    if (touched || n > 0) els.hint.style.display = 'none';
+    for (const j of [0, 1]) Kit.mk('path', {d: `M${kx - 5},${-kr - 5 - j * 6}l5,-5l5,5`, fill: 'none', stroke: CREAM, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: j ? .45 : .9}, els.hint);
+    gsap.set(cur, {y: yL[n]});
+
+    // ---- front plane: the tally, laid out row by row so it always fits ----
+    const pF = Kit.mk('g', {}, svg);
+    const cx0 = bx + Math.max(12, W * .04), colW = W - cx0 - 8;
+    const hh = s => s * 1.32, ch = Math.max(17, sm * 1.45), vs = fs * 1.25;
+    // Extra room under the big counts so their glyph box never touches the label below.
+    const bGap = s => s * .32 + 8;
+    const o = {ratLab: 1, rat: 1, phi: 1, fibLab: 1};
+    let B = Math.max(sm * 1.5, Math.min(fs * 2.9, (colW / 2 - 6) / 1.3, H * .2));
+    const total = () => hh(sm) + 1 + hh(B) + bGap(B) + (o.ratLab ? hh(sm) + 1 : 0) + (o.rat ? hh(vs) + 2 : 0) + (o.phi ? hh(sm) : 0) + 6 + (o.fibLab ? hh(sm) + 3 : 0) + ch * 2 + 3;
+    const room = H - 8;
+    const shrink = lo => { while (total() > room && B > lo) B = Math.max(lo, B - 1); };
+    shrink(Math.max(sm * 1.5, fs * 2));
+    if (total() > room) o.fibLab = 0;
+    if (total() > room) o.ratLab = 0;
+    shrink(sm * 1.5);
+    if (total() > room) o.phi = 0;
+    if (total() > room) o.rat = 0;
+    let y = Math.max(4, (H - total()) / 2);
+    const row = s => { const b = y + s; y += hh(s); return b; };
+    const g = Kit.mk('g', {}, pF);
+    els.col = g;
+    const lab = {'font-weight': 700, 'letter-spacing': '.08em'};
+    const xS = cx0 + colW / 2 + 2;
+    const yLab = row(sm); y += 1;
+    T(g, cx0, yLab, 'LONG', sm, GOLD, 'var(--mono)', lab);
+    T(g, xS, yLab, 'SHORT', sm, TEAL, 'var(--mono)', lab);
+    const yNum = row(B); y += bGap(B);
+    els.L = T(g, cx0, yNum, '0', B, GOLD, 'var(--display)', {'font-weight': 800});
+    els.S = T(g, xS, yNum, '0', B, TEAL, 'var(--display)', {'font-weight': 800});
+    if (o.ratLab) { T(g, cx0, row(sm), 'LONG ÷ SHORT', sm, CREAM, 'var(--mono)', {'font-weight': 700, 'letter-spacing': '.02em', opacity: .75}); y += 1; }
+    rPre = o.ratLab ? '' : 'L÷S ';
+    els.R = o.rat ? T(g, cx0, row(vs), rPre + '—', vs, CREAM, 'var(--mono)', {'font-weight': 700}) : null;
+    if (o.rat) y += 2;
+    els.Ph = o.phi ? T(g, cx0, row(sm), '→ φ = 1.618…', sm, GOLD, 'var(--mono)', {'font-weight': 700, opacity: done ? 1 : 0}) : null;
+    y += 6;
+    if (o.fibLab) { T(g, cx0, row(sm), 'FIBONACCI', sm, CREAM, 'var(--mono)', Object.assign({opacity: .75}, lab)); y += 3; }
+    const yR1 = y, yR2 = y + ch + 3;
+    const gap = 3, cw = (colW - gap * 3) / 4;
+    els.lad = FIB.map((v, j) => {
+      const c = j % 4, rr = j < 4 ? yR1 : yR2, x = cx0 + c * (cw + gap);
+      const r = Kit.mk('rect', {x, y: rr, width: cw, height: ch, rx: ch * .28, fill: 'none', stroke: CREAM, 'stroke-opacity': .18, 'stroke-width': 1.2}, g);
+      const t = T(g, x + cw / 2, rr + ch / 2 + sm * .34, String(v), sm, CREAM, 'var(--mono)', {'font-weight': 700, 'text-anchor': 'middle', opacity: .5});
+      return {r, t};
+    });
+
+    const qt = (el, p) => gsap.quickTo(el, p, {duration: .9, ease: 'power3.out'});
+    qT = {x: qt(pT, 'x'), y: qt(pT, 'y')};
+    qM = {x: qt(pM, 'x'), y: qt(pM, 'y')};
+    qF = {x: qt(pF, 'x'), y: qt(pF, 'y')};
+    els.pT = pT; els.pM = pM; els.pF = pF; els.gB = gB;
+    built = true;
+    readout(false);
+  }
+
+  function ladder(L, S, anim) {
+    let k = -1;
+    for (let j = 1; j < 8; j++) if (FIB[j] === L && FIB[j - 1] === S) k = j;
+    const fresh = k > litMax;
+    if (k > litMax) litMax = k;
+    els.lad.forEach((c, j) => {
+      const isL = k > 0 && j === k, isS = k > 0 && j === k - 1;
+      if (isL || isS) {
+        c.r.setAttribute('fill', isL ? GOLD : TEAL); c.r.setAttribute('stroke-opacity', 0);
+        c.t.setAttribute('fill', INKD); c.t.setAttribute('opacity', 1);
+        if (anim && fresh && !Kit.calm) gsap.fromTo([c.r, c.t], {scale: 1.35}, {scale: 1, duration: .55, ease: 'back.out(3)', transformOrigin: '50% 50%'});
+      } else {
+        const seen = j <= litMax;
+        c.r.setAttribute('fill', 'none'); c.r.setAttribute('stroke-opacity', seen ? .5 : .18);
+        c.t.setAttribute('fill', CREAM); c.t.setAttribute('opacity', seen ? .9 : .5);
+      }
+    });
+  }
+
+  function readout(anim) {
+    const [L, S] = cnt(n);
+    const bump = (e, v) => { if (e.textContent !== v) { e.textContent = v; if (anim && !Kit.calm) gsap.fromTo(e, {scale: 1.15}, {scale: 1, duration: .35, ease: 'power3.out', transformOrigin: '0% 100%'}); } };
+    bump(els.L, String(L)); bump(els.S, String(S));
+    if (els.R) els.R.textContent = rPre + (S ? (L / S).toFixed(3) : '—');
+    ladder(L, S, anim);
+    if (!done) {
+      let s;
+      if (n === 0) s = '<b>Drag up</b> from the bottom to count the gaps, long and short.';
+      else if (MILES.includes(n) && n >= 3) s = `<b>${L} long, ${S} short:</b> two Fibonacci numbers side by side. Keep going.`;
+      else if (n < 8) s = 'Long, short, long, long… wait, that breaks the pattern. <b>Keep counting.</b>';
+      else s = 'No block ever repeats, yet the totals keep landing on Fibonacci numbers. <b>Go to the top.</b>';
+      if (say.innerHTML !== s) say.innerHTML = s;
+    }
+  }
+
+  function setN(m, anim = true) {
+    if (!built || done) return;
+    m = Math.max(0, Math.min(N, m)); if (m === n) return;
+    const old = n; n = m;
+    if (n > 0 && els.hint) els.hint.style.display = 'none';
+    const lo = Math.min(old, m), hi = Math.max(old, m);
+    for (let i = lo; i < hi; i++) {
+      const on = i < m, step = on ? i - old : old - 1 - i;
+      gsap.to(els.chips[i], {scaleX: on ? 1 : 0, duration: anim && !Kit.calm ? .4 : 0, delay: anim && !Kit.calm ? step * .022 : 0, ease: on ? 'power3.out' : 'power2.in', overwrite: true});
+    }
+    gsap.to(els.cur, {y: yL[n], duration: Kit.calm ? 0 : .32, ease: 'power3.out', overwrite: true});
+    // A new Fibonacci stretch reached: its strip flares gold and its bracket draws itself.
+    MILES.forEach((ms, k) => {
+      if (ms <= n && ms > best) {
+        const bar = els.bars[ms];
+        bar.setAttribute('stroke', '#ffe2a3');
+        if (Kit.calm || !anim) { bar.setAttribute('stroke-width', sw * 1.3); gsap.set(els.seg[k], {drawSVG: '100%'}); }
+        else {
+          gsap.fromTo(bar, {attr: {'stroke-width': sw * 2.6}}, {attr: {'stroke-width': sw * 1.3}, duration: .7, ease: 'power3.out'});
+          gsap.fromTo(els.seg[k], {drawSVG: '0%'}, {drawSVG: '100%', duration: .7, ease: 'expo.out'});
+        }
+        if (ms >= 3) Kit.haptic('light');
+      }
+    });
+    best = Math.max(best, n);
+    readout(anim);
+    if (n === N) finish();
+  }
+
+  function finish() {
+    if (done) return;
+    done = true; dragging = false;
+    Kit.haptic('success');
+    card.classList.add('answered');
+    say.innerHTML = WHY; Kit.show('keep');
+    requestAnimationFrame(() => requestAnimationFrame(wow));
+  }
+
+  // The reveal: the whole stack is bracketed in gold, a light sweeps up, and the tiling redraws from its centre.
+  function wow() {
+    gsap.set(els.final, {drawSVG: '100%'}); if (els.Ph) gsap.set(els.Ph, {opacity: 1});
+    if (Kit.calm) return;
+    const tl = gsap.timeline();
+    tl.fromTo(els.final, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1.3, ease: 'expo.inOut'}, 0)
+      .fromTo(els.shine, {attr: {y: yL[0] - els.shH}, opacity: 1}, {attr: {y: yL[N]}, duration: 1.2, ease: 'power2.inOut'}, .1)
+      .to(els.shine, {opacity: 0, duration: .35}, 1.15)
+      .fromTo(els.chips, {opacity: .3}, {opacity: 1, duration: .5, stagger: .028, ease: 'power2.out'}, 0)
+      .fromTo(els.rings, {drawSVG: '50% 50%', attr: {stroke: GOLD, 'stroke-opacity': .65}}, {drawSVG: '0% 100%', attr: {stroke: CREAM, 'stroke-opacity': .26}, duration: 1.8, stagger: .14, ease: 'expo.out'}, .25)
+      .fromTo([els.L, els.S], {scale: 1.25}, {scale: 1, duration: .8, ease: 'elastic.out(1,.45)', transformOrigin: '0% 100%', stagger: .1}, 1);
+    if (els.Ph) tl.fromTo(els.Ph, {opacity: 0, x: -6}, {opacity: 1, x: 0, duration: .6, ease: 'back.out(2)'}, .9);
+  }
+
+  // ---- touch ----
+  const nAt = py => { let m = 0; for (let i = 1; i <= N; i++) if (yL[i] >= py) m = i; return m; };
+  const hideHint = () => {
+    if (touched) return; touched = true;
+    if (els.hint) gsap.to(els.hint, {opacity: 0, duration: .25, onComplete: () => { if (els.hint) els.hint.style.display = 'none'; }});
+  };
+  const local = e => { const r = svg.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top, w: r.width, h: r.height}; };
+  const par = p => {
+    if (!qT || Kit.calm) return;
+    const dx = p.x / p.w - .5, dy = p.y / p.h - .5;
+    qT.x(-dx * 10); qT.y(-dy * 8); qM.x(dx * 2); qM.y(dy * 1.5); qF.x(dx * 4); qF.y(dy * 3);
+  };
+  svg.addEventListener('pointerdown', e => {
+    if (!built) return;
+    const p = local(e); par(p);
+    if (done) return;
+    dragging = true; hideHint(); svg.setPointerCapture(e.pointerId);
+    Kit.haptic('selection');
+    if (!Kit.calm) gsap.fromTo(els.knob, {scale: 1.25}, {scale: 1, duration: .4, ease: 'back.out(3)', transformOrigin: '50% 50%'});
+    setN(nAt(p.y));
+  });
+  svg.addEventListener('pointermove', e => { if (!built) return; const p = local(e); par(p); if (dragging) setN(nAt(p.y)); });
+  const end = () => { dragging = false; if (qT && !Kit.calm) { qT.x(0); qT.y(0); qM.x(0); qM.y(0); qF.x(0); qF.y(0); } };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  new ResizeObserver(() => {
+    if (!built) return;
+    const r = stage.getBoundingClientRect();
+    if (Math.abs(r.width - lw) > 1 || Math.abs(r.height - lh) > 1) build();
+  }).observe(stage);
+
+  Kit.onShow.card = build;
+  Kit.onEnter.card = () => {
+    if (!built || Kit.calm) return;
+    const tl = gsap.timeline();
+    tl.from(els.rings, {drawSVG: '50% 50%', duration: 1.5, stagger: .13, ease: 'power3.out'}, 0)
+      .from(els.fills, {opacity: 0, duration: 1.2, ease: 'power2.out'}, .3)
+      .from(els.gB, {y: -10, opacity: 0, duration: .9, ease: 'power3.out'}, .25)
+      .from(els.bars, {drawSVG: '0%', duration: .7, stagger: .018, ease: 'power3.out'}, .3)
+      .from(els.col.children, {opacity: 0, y: 6, duration: .5, stagger: .03, ease: 'power3.out'}, .6)
+      .from(els.cur, {opacity: 0, duration: .4, ease: 'power2.out'}, 1)
+      .from(els.knob, {scale: 0, duration: .6, ease: 'back.out(2.5)', transformOrigin: '50% 50%'}, 1);
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    hideHint();
+    for (let m = 1; m <= N; m++) { setN(m, !Kit.calm); await w(Kit.calm ? 0 : 18); }
+    await w(Kit.calm ? 80 : 2000);
+  };
+})();
+Kit.single();
+</script>
+</html>

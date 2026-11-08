@@ -23,7 +23,7 @@
     <h2 class="q">Why does honey pour in smooth layers while water turns turbulent?</h2>
     <div class="stagebox" id="stage">
       <canvas id="cv"></canvas>
-      <div id="ctl"><label for="spd">Speed</label><span class="end">slow</span><input type="range" id="spd" min="0" max="100" value="8" aria-label="Flow speed"><span class="end">fast</span></div>
+      <div id="ctl"><label for="spd">Speed</label><span class="end">slow</span><input data-drag type="range" id="spd" min="0" max="100" value="8" aria-label="Flow speed"><span class="end">fast</span></div>
       <div id="why" class="gone">
         <p class="big">Honey wins: it stays smooth.</p>
         <p class="body">The Reynolds number weighs speed, density and pipe size against viscosity. Keep those three the same and raise the viscosity: the number drops, so the flow stays laminar instead of turning turbulent.</p>

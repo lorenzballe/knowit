@@ -1,455 +1,295 @@
-<!doctype html>
-<!-- slug: life-carving-cage-homes -->
-<!-- Look: a cyanotype section drawing of one old Hong Kong flat, white engineer's hairlines on Prussian blue, hatched load-bearing slabs and columns, dimension arrows, furnished rooms.
-     Interaction: tap the old inner walls and they crumble into real bricks that fall and pile up (Matter.js); load-bearing parts only shudder. Then tap the dashed lines and thin boards drop in and stack.
-     Wow: the units light up one by one, one "30–40 m²" dimension splits into three "≈10 m²" ones, and a mini kitchen and mini bathroom pop into each new unit. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Three homes out of one flat</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: life-cage-home-walls -->
+<!--
+  Thought to carry: Hong Kong's tiny illegal flats are cut out of old flats. The walls that are not load-bearing come down without authorization, and thinner ones go up.
+  Front: a plain section through one old flat, drawn as a sketch and said to be one. Four inner walls at one weight, one of them labelled load-bearing. The reader taps the walls the builders would knock down, then says how sure.
+  Back: the reader's own taps come first, as a verdict. Then the three free walls fall as bricks and stay as dashed outlines. The load-bearing wall stays, one thin new wall goes in, and three homes of about 10 m² appear, each with a bunk, a toilet and a small hob.
+-->
+<title>Cutting one flat into three</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/matter.min.js"></script>
 <style>
-#card{background-color:var(--c);background-image:
-  radial-gradient(120% 70% at 25% 15%,rgba(255,255,255,.08),transparent 60%),
-  radial-gradient(90% 60% at 90% 100%,rgba(0,10,30,.35),transparent 70%),
-  linear-gradient(rgba(234,243,255,.055) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(234,243,255,.055) 1px,transparent 1px);
-  background-size:100% 100%,100% 100%,22px 22px,22px 22px}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer}
-.say b{color:#fff}
-.answered .q{font-size:max(2.5cqh,15px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* the face turned away is really gone, so nothing hides behind the other one */
+.turn>.front{transition:visibility 0s .37s}
+.turn.over>.front{visibility:hidden}
+.turn>.back{visibility:hidden;transition:visibility 0s .37s}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block;color:var(--k);touch-action:manipulation}
+.lab{font-family:var(--body);font-weight:700;fill:currentColor}
+.hero{font-family:var(--display);font-weight:800;fill:currentColor}
+.hit{cursor:pointer}
+.front .say{margin-top:.4cqh;margin-bottom:1.2cqh}
+/* the pills keep their own row; save and share get a clear band beneath */
+.front .sure{margin-bottom:64px}
+.back .big{font-size:max(2.9cqh,17px);line-height:1.15;margin:0 0 12px}
+.back .body{font:500 max(1.85cqh,13px)/1.32 var(--body);margin:max(1.2cqh,10px) 0 0}
+.back .keep{margin-top:max(1.2cqh,10px)}
 </style>
-<article class="card" id="card" data-topic="life" data-kind="Tap the walls · build it" style="--c:#123f72;--k:#eaf3ff;--edge:#0a2a52">
+<article class="card" id="card" data-topic="life" data-kind="Tap the walls · which ones come down">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">BUILD IT</span></div>
-    <h2 class="q">How do Hong Kong landlords turn one flat into three homes?</h2>
-    <div class="stagebox" id="stage">
-      <canvas id="pic" role="img" aria-label="A section drawing of one furnished flat between two concrete floors, with two thick inner walls dividing a living room, a bedroom and a kitchen, and hatched load-bearing columns at each end."></canvas>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP THE WALLS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">To carve one old flat into tiny homes, which walls come down?</h2>
+        <p class="say" id="say">A sketch of an old flat. Tap every wall the builders would knock down.</p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A sketch of an old flat cut open, with four inner walls and a person standing in it. One of the walls is labelled load-bearing."></svg></div>
+        <div class="sure" id="sure"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Every wall but the load-bearing one.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same flat: your choices marked, three walls gone and shown dashed, the load-bearing wall kept, and one thin new wall making three homes of about 10 square metres, each with a bunk, a toilet and a small hob."></svg></div>
+        <p class="body">In huge old blocks like the Monster Building, the walls that aren’t load-bearing come down without authorization, and thinner ones go up. A 30–40 m² studio becomes three homes of about 10 m² each, with a mini kitchen and bath: roughly a prison cell.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Most of Hong Kong’s tiny flats are illegal: old flats cut up by knocking down walls that aren’t load-bearing and putting up thinner ones.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Old flats in giant blocks like the Monster Building get carved up. <b>Tap the two thick inner walls.</b></p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One old flat, thinner walls, three homes the size of a prison cell.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script>
 (() => {
-  const {Engine, Bodies, Body, Composite, Events} = Matter;
-  const cv = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#eaf3ff', ink = a => `rgba(234,243,255,${a})`;
-  const engine = Engine.create(); engine.gravity.y = 1.1;
-  const world = engine.world;
-  const S = {walls: [1, 1], slots: [0, 0], step: 'break', shake: 0, reveal: 0, sweep: 1, enter: 1, flash: 0, rooms: 1, guides: 0};
-  let x = null, W = 0, H = 0, G = null, mono = 'monospace', rubble = [], boards = [[], []], dust = [], fast = 1, gen = 0;
+  // A sketch in metres, not a real plan: a flat 7.5 m across inside; slabs 0.25 m; old walls 0.22 m; new wall 0.08 m.
+  const S = {L: 7.5, T: .3, SL: .25, WH: 2.65, WT: .22, NT: .08, stub: .45};
+  const OLD = [1.3, 2.5, 4.1, 6.0], BEAR = 1;           // in this sketch, the wall at 2.5 m is the load-bearing one
+  const RED = '#d2412a', BROWN = '#8a3a20';
+  const picked = new Set();
+  let answered = false, turned = false, quick = false, fs = 13;
+  let backTl = null, tick = null;
 
-  const clamp = v => Math.max(0, Math.min(1, v));
-  const backOut = p => { const q = p - 1; return 1 + 2.7 * q * q * q + 1.7 * q * q; };
-
-  function layout() {
-    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
-    mono = getComputedStyle(card).getPropertyValue('--mono').trim() || 'monospace';
-    const fs = Math.max(12, Math.min(15, Math.min(H * .036, W * .04)));
-    const m = W * .05, x0 = m, x1 = W - m, colW = Math.max(11, W * .045);
-    const top = Math.max(fs * 2.6, H * .13), t = Math.max(9, H * .04);
-    const Cy = top + t, Fy = Math.min(H * .8, H - t - fs * 3.2);
-    const ix0 = x0 + colW, ix1 = x1 - colW, iw = ix1 - ix0, rh = Fy - Cy;
-    G = {fs, m, x0, x1, colW, top, t, Cy, Fy, ix0, ix1, iw, rh,
-      oldX: [ix0 + iw * .37, ix0 + iw * .69], oldW: Math.max(10, W * .036),
-      slotX: [ix0 + iw / 3, ix0 + iw * 2 / 3], thinW: Math.max(3.5, W * .011),
-      bh: rh / 4 - .6, dimY: Fy + t + fs * 1.7};
-    rebuild();
+  const lab = (g, x, y, t, o = {}) => {
+    const size = o.size || fs; delete o.size;
+    const e = Kit.mk('text', Object.assign({x, y, class: 'lab'}, o), g);
+    e.textContent = t; e.style.fontSize = size + 'px'; return e;
+  };
+  const arrowUp = (g, cx, y) => Kit.mk('path', {d: `M${cx - 4.5},${y + 7} H${cx + 4.5} L${cx},${y} Z`, fill: 'currentColor'}, g);
+  function person(g, cx, fy, s, a = {}) {
+    const gg = Kit.mk('g', a, g), bw = .4 * s, top = fy - 1.42 * s;
+    Kit.mk('rect', {x: cx - bw / 2, y: top, width: bw, height: 1.42 * s, rx: bw / 2, fill: 'currentColor'}, gg);
+    Kit.mk('circle', {cx, cy: top - .21 * s, r: .17 * s, fill: 'currentColor'}, gg);
+    Kit.mk('circle', {cx: cx + .07 * s, cy: top - .23 * s, r: Math.max(1, .028 * s), style: 'fill:var(--c)'}, gg);
+    return gg;
   }
 
-  function rebuild() {
-    gen++;
-    Composite.clear(world, false);
-    const g = G, st = {isStatic: true, friction: .8};
-    Composite.add(world, [
-      Bodies.rectangle(W / 2, g.Fy + 100, W * 3, 200, st),
-      Bodies.rectangle(W / 2, g.Cy - 100, W * 3, 200, st),
-      Bodies.rectangle(g.ix0 - 100, H / 2, 200, H * 3, st),
-      Bodies.rectangle(g.ix1 + 100, H / 2, 200, H * 3, st)]);
-    g.oldB = g.oldX.map((ox, i) => {
-      const b = Bodies.rectangle(ox, g.Cy + g.rh / 2, g.oldW, g.rh, st);
-      if (S.walls[i]) Composite.add(world, b);
-      return b;
+  // ---------------- FRONT ----------------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg); fs = Math.max(12, Math.min(14, f));
+    const wm = S.L + 2 * S.T, hm = 2 * S.stub + 2 * S.SL + S.WH;
+    const g0 = Kit.mk('g', {}, svg);
+    const tag = lab(g0, 0, 0, 'load-bearing', {'text-anchor': 'end'}), tw = tag.getComputedTextLength();
+    const botR = 16 + fs * .3 + 2;
+    let s = Math.min((W - 8) / wm, (H - 6 - botR) / hm, (W / 2 - 10 - tw) / 1.25);
+    s = Math.max(s, 10);
+    const ox = (W - wm * s) / 2, oy = Math.max(0, (H - botR - hm * s) / 2);
+    const X = m => ox + (S.T + m) * s;
+    const ceil = oy + (S.stub + S.SL) * s, floor = ceil + S.WH * s, bottom = floor + (S.SL + S.stub) * s;
+    const ww = S.WT * s, cx = X(OLD[BEAR]);
+
+    // the flat: two slabs, two outer walls, all in one ink
+    Kit.mk('rect', {x: ox, y: ceil - S.SL * s, width: wm * s, height: S.SL * s, fill: 'currentColor'}, g0);
+    Kit.mk('rect', {x: ox, y: floor, width: wm * s, height: S.SL * s, fill: 'currentColor'}, g0);
+    for (const x of [ox, ox + (S.T + S.L) * s]) Kit.mk('rect', {x, y: oy, width: S.T * s, height: hm * s, fill: 'currentColor'}, g0);
+    person(g0, X(3.3), floor, s);
+
+    // the one label, under the wall it names
+    arrowUp(g0, cx, bottom + 3);
+    tag.setAttribute('x', cx - 9); tag.setAttribute('y', bottom + 16);
+
+    const walls = Kit.mk('g', {id: 'walls'}, g0);
+    OLD.forEach((m, i) => {
+      const r = Kit.mk('rect', {x: X(m) - ww / 2, y: ceil, width: ww, height: S.WH * s, fill: picked.has(i) ? RED : 'currentColor', class: 'ow'}, walls);
+      r.dataset.i = i;
     });
-    rubble = []; dust = []; S.sweep = 1;
-    if (S.step === 'sweep') { S.step = 'build'; S.guides = 1; S.rooms = 0; }
-    boards = [[], []];
-    S.slots.forEach((s, j) => { if (s) { placeStatic(j); S.slots[j] = 2; } });
-    if (S.step === 'build' && S.slots[0] === 2 && S.slots[1] === 2) reveal();
+    OLD.forEach((m, i) => {
+      const h = Kit.mk('rect', {x: X(m) - .4 * s, y: ceil - 4, width: .8 * s, height: S.WH * s + 8, fill: 'transparent', class: 'hit'}, g0);
+      h.dataset.i = i;
+    });
   }
-
-  function placeStatic(j) {
-    boards[j] = [];
-    for (let k = 0; k < 4; k++) {
-      const b = Bodies.rectangle(G.slotX[j], G.Fy - G.bh * (k + .5) - k * .2, G.thinW, G.bh, {isStatic: true, label: 'board'});
-      boards[j].push(b); Composite.add(world, b);
+  Kit.$('pic').addEventListener('click', e => {
+    const h = e.target.closest('.hit'); if (!h || answered) return;
+    const i = +h.dataset.i;
+    picked.has(i) ? picked.delete(i) : picked.add(i);
+    const r = Kit.$('pic').querySelector(`.ow[data-i="${i}"]`);
+    if (r) {
+      r.setAttribute('fill', picked.has(i) ? RED : 'currentColor');
+      if (!Kit.calm) gsap.fromTo(r, {opacity: .4}, {opacity: 1, duration: .25, ease: 'power2.out'});
     }
-  }
-
-  function puff(px, py, n, spread) {
-    if (Kit.calm) return;
-    for (let i = 0; i < n; i++) dust.push({x: px + (Kit.rnd() - .5) * spread, y: py, vx: (Kit.rnd() - .5) * 2.4, vy: -Kit.rnd() * 1.6, l: 1});
-  }
-
-  Events.on(engine, 'collisionStart', ev => {
-    for (const p of ev.pairs) for (const b of [p.bodyA, p.bodyB]) {
-      if (b.label === 'board' && !b.isStatic && b.speed > 2.5) { puff(b.position.x, b.bounds.max.y, 8, G.thinW * 4); Kit.haptic('light'); }
-      else if (b.label === 'brick' && b.speed > 4 && dust.length < 80) puff(b.position.x, b.bounds.max.y, 2, 6);
-    }
+    Kit.haptic('selection'); sure.on();
   });
 
-  // ---------- the story ----------
-  function breakWall(i) {
-    if (!S.walls[i] || S.step !== 'break') return;
-    S.walls[i] = 0; Kit.haptic('selection');
-    Composite.remove(world, G.oldB[i]);
-    if (!Kit.calm) {
-      const cols = 2, rows = 9, bw = G.oldW / cols, bh = G.rh / rows;
-      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-        const b = Bodies.rectangle(G.oldX[i] - G.oldW / 2 + bw * (c + .5), G.Cy + bh * (r + .5), bw * .94, bh * .94, {friction: .6, restitution: .12, density: .002, label: 'brick', chamfer: {radius: 1}});
-        Body.setVelocity(b, {x: (Kit.rnd() - .5) * 5 * (1.2 - r / rows), y: -Kit.rnd() * 1.2});
-        Body.setAngularVelocity(b, (Kit.rnd() - .5) * .35);
-        rubble.push(b); Composite.add(world, b);
-      }
-      puff(G.oldX[i], G.Fy, 14, G.oldW * 3);
-    }
-    const left = S.walls[0] + S.walls[1];
-    if (left) { say.innerHTML = 'Down, and the floor above did not move: that wall held <b>nothing</b> up. <b>Now the other one.</b>'; return; }
-    S.step = 'sweep';
-    say.innerHTML = 'One open room. Clearing the rubble…';
-    if (Kit.calm) { S.rooms = 0; toBuild(); return; }
-    gsap.to(S, {rooms: 0, duration: .6, ease: 'power2.out'});
-    const g = gen;
-    setTimeout(() => {
-      if (g !== gen) return;
-      gsap.to(S, {sweep: 0, duration: .7, ease: 'power2.in', onComplete: () => {
-        if (g !== gen) return;
-        rubble.forEach(b => Composite.remove(world, b)); rubble = []; S.sweep = 1; toBuild();
-      }});
-    }, 1400 * fast);
-  }
-
-  function toBuild() {
-    S.step = 'build';
-    if (Kit.calm) S.guides = 1; else gsap.to(S, {guides: 1, duration: .6, ease: 'power3.out'});
-    say.innerHTML = 'Now the new walls go in: much <b>thinner</b>. <b>Tap the two dashed lines.</b>';
-  }
-
-  function dropSlot(j) {
-    if (S.step !== 'build' || S.slots[j]) return;
-    S.slots[j] = 1; Kit.haptic('selection');
-    if (Kit.calm) { placeStatic(j); settle(j); return; }
-    const g = gen;
-    for (let k = 0; k < 4; k++) setTimeout(() => {
-      if (g !== gen) return;
-      const b = Bodies.rectangle(G.slotX[j], G.Cy + G.bh / 2 + 1, G.thinW, G.bh, {inertia: Infinity, friction: .9, restitution: 0, density: .004, label: 'board'});
-      Body.setVelocity(b, {x: 0, y: 1.5});
-      boards[j].push(b); Composite.add(world, b);
-    }, k * 340 * fast);
-    setTimeout(() => { if (g === gen) settle(j); }, (3 * 340 + 1000) * fast);
-    if (S.slots[1 - j] === 0) say.innerHTML = 'Thin boards, stacked floor to ceiling. <b>One more line.</b>';
-  }
-
-  function settle(j) {
-    boards[j].sort((a, b) => b.position.y - a.position.y).forEach((b, k) => {
-      Body.setStatic(b, true);
-      Body.setPosition(b, {x: G.slotX[j], y: G.Fy - G.bh * (k + .5) - k * .2});
-    });
-    S.slots[j] = 2;
-    if (S.slots[0] === 2 && S.slots[1] === 2) reveal();
-  }
-
-  function reveal() {
-    if (S.step === 'done') return;
-    S.step = 'done'; Kit.haptic('success');
-    say.innerHTML = 'Most of these flats are illegal. The old walls that hold nothing up come down and thinner ones go in, so a 30–40 m² flat becomes <b>three units of about 10 m²</b>, each with a mini kitchen and mini bathroom: the size of a single prison cell.';
-    card.classList.add('answered'); Kit.show('keep');
-    if (Kit.calm) { S.reveal = 1; S.guides = 0; return; }
-    gsap.to(S, {guides: 0, duration: .3});
-    gsap.fromTo(S, {flash: 1}, {flash: 0, duration: 1.2, ease: 'expo.out'});
-    gsap.fromTo(S, {reveal: 0}, {reveal: 1, duration: 2, ease: 'power2.out'});
-  }
-
-  function shakeIt(msg) {
-    Kit.haptic('light');
-    if (!Kit.calm) gsap.to(S, {keyframes: [{shake: 5, duration: .05}, {shake: -4, duration: .07}, {shake: 3, duration: .07}, {shake: -1.5, duration: .07}, {shake: 0, duration: .1}], ease: 'power2.out'});
-    if (msg && S.step !== 'done') say.innerHTML = 'That part is <b>load-bearing</b>: it carries the floors above, so it stays. ' + (S.step === 'break' ? '<b>Tap the thick inner walls.</b>' : '<b>Tap the dashed lines.</b>');
-  }
-
-  cv.addEventListener('pointerdown', e => {
-    if (!G) return;
-    const r = cv.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top, g = G;
-    const inRoom = py > g.Cy && py < g.Fy;
-    if (S.step === 'break' && inRoom) {
-      let best = -1, bd = 1e9;
-      g.oldX.forEach((ox, i) => { const d = Math.abs(px - ox); if (S.walls[i] && d < Math.max(26, g.iw * .1) && d < bd) { bd = d; best = i; } });
-      if (best >= 0) return breakWall(best);
-    }
-    if (S.step === 'build' && inRoom) {
-      let best = -1, bd = 1e9;
-      g.slotX.forEach((sx, j) => { const d = Math.abs(px - sx); if (!S.slots[j] && d < g.iw * .14 && d < bd) { bd = d; best = j; } });
-      if (best >= 0) return dropSlot(best);
-    }
-    const onCol = py > g.Cy - g.t && py < g.Fy + g.t && ((px > g.x0 - 6 && px < g.ix0 + 4) || (px > g.ix1 - 4 && px < g.x1 + 6));
-    const onSlab = (py > g.Cy - g.t - 6 && py < g.Cy + 2) || (py > g.Fy - 2 && py < g.Fy + g.t + 6) || py < g.top;
-    if (onCol || onSlab) shakeIt(true);
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered) return; answered = true;
+    const ok = picked.size === 3 && [0, 2, 3].every(i => picked.has(i));
+    const list = [...picked].sort().map(i => i + 1);
+    const said = list.length ? `knock down wall${list.length > 1 ? 's' : ''} ${list.join(', ')} of 4` : 'knock down none';
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${list.length} of 4 marked, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
   });
 
-  // ---------- drawing ----------
-  function font(w = 600, s = G.fs) { x.font = `${w} ${s}px ${mono}`; try { x.letterSpacing = '1px'; } catch (_) {} }
-  function txt(s, cx, y, align = 'center', a = 1, w = 700, size) {
-    if (a <= 0) return; font(w, size); x.globalAlpha = a; x.fillStyle = INK; x.textAlign = align; x.fillText(s, cx, y); x.globalAlpha = 1;
-  }
-  function hatch(x0, y0, w, h, gap = 6) {
-    x.save(); x.beginPath(); x.rect(x0, y0, w, h); x.clip();
-    x.fillStyle = ink(.08); x.fillRect(x0, y0, w, h);
-    x.beginPath(); for (let s = -h; s < w; s += gap) { x.moveTo(x0 + s, y0 + h); x.lineTo(x0 + s + h, y0); }
-    x.strokeStyle = ink(.5); x.lineWidth = 1; x.stroke(); x.restore();
-    x.strokeStyle = INK; x.lineWidth = 1.6; x.strokeRect(x0, y0, w, h);
-  }
-  function arrowHead(px, py, dir) {
-    x.beginPath(); x.moveTo(px, py); x.lineTo(px - dir * 7, py - 3.2); x.lineTo(px - dir * 7, py + 3.2); x.closePath(); x.fill();
-  }
-  function dim(xa, xb, y, label, a, p) {
-    if (a <= .01 || p <= .01) return;
-    const fs = G.fs; x.save(); x.globalAlpha = a; x.strokeStyle = INK; x.fillStyle = INK; x.lineWidth = 1.1;
-    const c = (xa + xb) / 2, L = (xb - xa) / 2 * p, A = c - L, B = c + L;
-    font(700); const tw = x.measureText(label).width + 12;
-    x.beginPath();
-    x.moveTo(xa, G.Fy + G.t + 3); x.lineTo(xa, y + fs * .55);
-    x.moveTo(xb, G.Fy + G.t + 3); x.lineTo(xb, y + fs * .55);
-    if (L > tw / 2) { x.moveTo(A + 1, y); x.lineTo(c - tw / 2, y); x.moveTo(c + tw / 2, y); x.lineTo(B - 1, y); }
-    x.stroke();
-    if (L > tw / 2 + 8) { arrowHead(A + 1, y, -1); arrowHead(B - 1, y, 1); }
-    x.globalAlpha = a * clamp(p * 1.4); x.textAlign = 'center'; x.fillText(label, c, y + fs * .36);
-    x.restore();
-  }
-  function ring(cx, cy, t, a) {
-    if (a <= 0) return;
-    const ph = Kit.calm ? .5 : (t / 1400) % 1, r = G.fs * (.8 + ph * 1.5);
-    x.save(); x.globalAlpha = a * (Kit.calm ? .7 : 1 - ph); x.strokeStyle = INK; x.lineWidth = 1.6;
-    x.beginPath(); x.arc(cx, cy, r, 0, 7); x.stroke();
-    x.globalAlpha = a * .9; x.fillStyle = INK; x.beginPath(); x.arc(cx, cy, 3, 0, 7); x.fill(); x.restore();
-  }
-  function poly(b) {
-    const v = b.vertices; x.beginPath(); x.moveTo(v[0].x, v[0].y); for (let i = 1; i < v.length; i++) x.lineTo(v[i].x, v[i].y); x.closePath();
-  }
-  function box(px, py, w, h, fill = .1) { x.fillStyle = ink(fill); x.fillRect(px, py, w, h); x.strokeRect(px, py, w, h); }
+  // ---------------- BACK ----------------
+  function stopBack() { if (backTl) { backTl.kill(); backTl = null; } if (tick) { gsap.ticker.remove(tick); tick = null; } }
 
-  // The old flat's furniture: a family-sized home before it is carved up.
-  function furniture(a, t) {
-    if (a <= 0) return;
-    const g = G, F = g.Fy, rh = g.rh, w0 = g.oldW / 2;
-    const xs = [g.ix0, g.oldX[0] - w0, g.oldX[0] + w0, g.oldX[1] - w0, g.oldX[1] + w0, g.ix1];
-    x.save(); x.globalAlpha = a * .85; x.strokeStyle = INK; x.lineWidth = 1.2;
-    // living room: sofa, side table, floor lamp, framed picture
-    let xa = xs[0], lw = xs[1] - xs[0];
-    const sx = xa + lw * .1, sw = lw * .55, seat = rh * .17;
-    box(sx, F - seat, sw, seat * .55);
-    box(sx + sw * .04, F - seat * 1.95, sw * .92, seat * 1.4 - seat * .55, .06);
-    box(sx - lw * .04, F - seat * 1.3, lw * .07, seat * 1.3 - seat * .25);
-    box(sx + sw - lw * .03, F - seat * 1.3, lw * .07, seat * 1.3 - seat * .25);
-    x.beginPath(); x.moveTo(sx + 2, F - seat * .45); x.lineTo(sx + 2, F); x.moveTo(sx + sw - 2, F - seat * .45); x.lineTo(sx + sw - 2, F); x.stroke();
-    const lx = xa + lw * .84, lt = F - rh * .5;
-    x.beginPath(); x.moveTo(lx, F); x.lineTo(lx, lt); x.moveTo(lx - lw * .05, F); x.lineTo(lx + lw * .05, F); x.stroke();
-    x.beginPath(); x.moveTo(lx - lw * .045, lt); x.lineTo(lx + lw * .045, lt); x.lineTo(lx + lw * .07, lt + rh * .09); x.lineTo(lx - lw * .07, lt + rh * .09); x.closePath();
-    x.fillStyle = ink(.2 + (Kit.calm ? 0 : .06 * Math.sin(t / 700))); x.fill(); x.stroke();
-    const pw = sw * .5, ph = rh * .14, py = F - rh * .56;
-    box(sx + sw / 2 - pw / 2, py, pw, ph, .04);
-    x.beginPath(); x.moveTo(sx + sw / 2 - pw / 2 + 4, py + ph - 4); x.lineTo(sx + sw / 2 - pw * .1, py + ph * .4); x.lineTo(sx + sw / 2 + pw * .1, py + ph * .7); x.lineTo(sx + sw / 2 + pw * .3, py + ph * .3); x.lineTo(sx + sw / 2 + pw / 2 - 4, py + ph - 4); x.stroke();
-    // bedroom: bed with headboard and pillow, bedside lamp
-    xa = xs[2]; const bw = xs[3] - xs[2];
-    const bx = xa + bw * .1, bl = bw * .78, mh = rh * .08, bt = F - rh * .15;
-    box(bx, bt, bl, mh, .14);
-    box(bx, F - rh * .36, bw * .06, rh * .36, .1);
-    x.beginPath(); x.ellipse(bx + bw * .17, bt - mh * .35, bw * .08, mh * .45, 0, 0, 7); x.fillStyle = ink(.12); x.fill(); x.stroke();
-    x.beginPath(); x.moveTo(bx + bw * .25, bt + 1); x.quadraticCurveTo(bx + bl * .6, bt - mh * .7, bx + bl, bt + mh * .2); x.stroke();
-    x.beginPath(); x.moveTo(bx + bw * .06, bt + mh); x.lineTo(bx + bw * .06, F); x.moveTo(bx + bl - 2, bt + mh); x.lineTo(bx + bl - 2, F); x.stroke();
-    // kitchen: counter with hob and pan, tall fridge, wall cupboard
-    xa = xs[4]; const kw = xs[5] - xs[4];
-    const cx0 = xa + kw * .08, cw = kw * .52, ch = rh * .3;
-    box(cx0, F - ch, cw, ch);
-    x.beginPath(); x.moveTo(cx0 + cw / 2, F - ch + 4); x.lineTo(cx0 + cw / 2, F - 3); x.stroke();
-    box(cx0 + cw * .15, F - ch - rh * .05, cw * .32, rh * .05, .2);
-    x.beginPath(); x.moveTo(cx0 + cw * .47, F - ch - rh * .035); x.lineTo(cx0 + cw * .62, F - ch - rh * .035); x.stroke();
-    box(cx0, F - rh * .68, cw, rh * .12, .06);
-    const fx = xa + kw * .68, fw = kw * .25, fh = rh * .58;
-    box(fx, F - fh, fw, fh, .1);
-    x.beginPath(); x.moveTo(fx, F - fh * .64); x.lineTo(fx + fw, F - fh * .64);
-    x.moveTo(fx + fw * .2, F - fh * .9); x.lineTo(fx + fw * .2, F - fh * .74);
-    x.moveTo(fx + fw * .2, F - fh * .55); x.lineTo(fx + fw * .2, F - fh * .38); x.stroke();
-    x.restore();
+  // one home of about 10 m², drawn flat in the figure's ink: a bunk, a toilet, a two-ring hob
+  function home(g, X, s, floor, a, b) {
+    const gap = Math.max(1.5, .03 * s);
+    Kit.mk('rect', {x: X(a + .06), y: floor - 2.0 * s, width: (b - a - .12) * s, height: .1 * s, fill: 'currentColor'}, g);
+    const my = floor - 2.0 * s - gap - .17 * s;
+    Kit.mk('rect', {x: X(a + .06), y: my, width: (b - a - .12) * s, height: .17 * s, rx: .05 * s, fill: 'currentColor'}, g);
+    Kit.mk('rect', {x: X(a + .12), y: my - .08 * s, width: .42 * s, height: .14 * s, rx: .06 * s, fill: 'currentColor'}, g);
+    Kit.mk('rect', {x: X(a + .06), y: floor - .8 * s, width: .14 * s, height: .38 * s, rx: .02 * s, fill: 'currentColor'}, g);
+    Kit.mk('path', {d: `M${X(a + .06)},${floor - .44 * s} H${X(a + .6)} q0,${.2 * s} ${-.2 * s},${.25 * s} l${-.04 * s},${.19 * s} H${X(a + .2)} V${floor - .44 * s} Z`, fill: 'currentColor'}, g);
+    Kit.mk('rect', {x: X(b - .65), y: floor - .86 * s, width: .57 * s, height: .86 * s, fill: 'currentColor'}, g);
+    for (const c of [b - .5, b - .24]) Kit.mk('ellipse', {cx: X(c), cy: floor - .93 * s, rx: .09 * s, ry: Math.max(1.6, .035 * s), fill: 'none', stroke: 'currentColor', 'stroke-width': 1.5}, g);
   }
 
-  // The mini kitchen and mini bathroom each new unit gets.
-  function fittings(xa, xb, p) {
-    if (p <= 0) return;
-    const g = G, uw = xb - xa, rh = g.rh, s = backOut(clamp(p));
-    x.save(); x.translate((xa + xb) / 2, g.Fy); x.scale(s, s); x.translate(-(xa + xb) / 2, -g.Fy);
-    x.globalAlpha = clamp(p * 2); x.strokeStyle = INK; x.lineWidth = 1.3; x.fillStyle = ink(.12);
-    // mini kitchen: counter, hob, pot, wall cupboard
-    const kx = xa + uw * .09, kw = uw * .34, kh = rh * .3;
-    x.fillRect(kx, g.Fy - kh, kw, kh); x.strokeRect(kx, g.Fy - kh, kw, kh);
-    x.beginPath(); x.moveTo(kx + kw / 2, g.Fy - kh + 4); x.lineTo(kx + kw / 2, g.Fy - 3); x.stroke();
-    x.beginPath(); x.moveTo(kx + kw * .2, g.Fy - kh - 2); x.lineTo(kx + kw * .45, g.Fy - kh - 2); x.moveTo(kx + kw * .58, g.Fy - kh - 2); x.lineTo(kx + kw * .82, g.Fy - kh - 2); x.stroke();
-    x.strokeRect(kx + kw * .2, g.Fy - kh - 2 - rh * .06, kw * .25, rh * .06);
-    x.fillRect(kx, g.Fy - rh * .66, kw, rh * .11); x.strokeRect(kx, g.Fy - rh * .66, kw, rh * .11);
-    // mini bathroom: a cubicle with a toilet and a shower head
-    const bx = xb - uw * .38, bt = g.Fy - rh * .58;
-    x.beginPath(); x.moveTo(bx, g.Fy); x.lineTo(bx, bt); x.lineTo(xb - g.thinW, bt); x.stroke();
-    x.setLineDash([3, 3]); x.beginPath(); x.arc(bx, g.Fy, uw * .14, -Math.PI / 2, 0); x.stroke(); x.setLineDash([]);
-    const tx = xb - uw * .12, tw = uw * .07;
-    x.fillRect(tx - tw / 2, g.Fy - rh * .27, tw, rh * .12); x.strokeRect(tx - tw / 2, g.Fy - rh * .27, tw, rh * .12);
-    x.beginPath(); x.moveTo(tx - tw / 2, g.Fy - rh * .15); x.lineTo(tx - uw * .2, g.Fy - rh * .15); x.quadraticCurveTo(tx - uw * .2, g.Fy - rh * .03, tx - uw * .1, g.Fy - rh * .03); x.lineTo(tx - uw * .1, g.Fy); x.moveTo(tx - tw / 2, g.Fy - rh * .03); x.lineTo(tx - tw / 2, g.Fy); x.stroke();
-    x.beginPath(); x.moveTo(xb - uw * .07, bt + 3); x.lineTo(xb - uw * .07, bt + rh * .08); x.lineTo(xb - uw * .15, bt + rh * .08); x.stroke();
-    for (let i = 0; i < 3; i++) { x.beginPath(); x.arc(xb - uw * (.13 + i * .02), bt + rh * (.13 + i * .025), 1, 0, 7); x.fillStyle = INK; x.fill(); }
-    x.restore();
-  }
+  function drawBack(animate) {
+    stopBack();
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg); fs = Math.max(12, Math.min(14, f));
+    const wm = S.L + 2 * S.T, hm = 2 * S.stub + 2 * S.SL + S.WH;
 
-  function draw(t) {
-    if (!G || !x) return;
-    const g = G, fs = g.fs, sh = S.shake;
-    x.clearRect(0, 0, W, H);
-    x.save();
-    if (S.enter < 1) { x.beginPath(); x.rect(0, 0, W * S.enter, H); x.clip(); }
+    const dash = Kit.mk('g', {}, svg), rooms = Kit.mk('g', {}, svg), fresh = Kit.mk('g', {}, svg),
+      frame = Kit.mk('g', {}, svg), oldG = Kit.mk('g', {}, svg), bricksG = Kit.mk('g', {}, svg),
+      notes = Kit.mk('g', {}, svg), marks = Kit.mk('g', {}, svg);
 
-    // the building around the flat: floors above, their load flowing down the columns
-    x.save(); x.translate(sh, 0);
-    x.strokeStyle = ink(.35); x.lineWidth = 1; x.setLineDash([4, 5]);
-    x.beginPath();
-    for (const cx of [g.x0, g.ix0, g.ix1, g.x1]) { x.moveTo(cx, 0); x.lineTo(cx, g.top); }
-    x.moveTo(0, g.top * .2); x.lineTo(W, g.top * .2);
-    x.stroke();
-    x.strokeStyle = INK; x.fillStyle = INK; x.lineWidth = 1.4; x.setLineDash([5, 4]);
-    x.lineDashOffset = Kit.calm ? 0 : -t / 45;
-    for (const cx of [g.x0 + g.colW / 2, g.x1 - g.colW / 2]) {
-      x.beginPath(); x.moveTo(cx, g.top * .3); x.lineTo(cx, g.top - 7); x.stroke();
-    }
-    x.setLineDash([]);
-    for (const cx of [g.x0 + g.colW / 2, g.x1 - g.colW / 2]) { x.beginPath(); x.moveTo(cx, g.top - 1); x.lineTo(cx - 3.5, g.top - 8); x.lineTo(cx + 3.5, g.top - 8); x.closePath(); x.fill(); }
-    x.restore();
-    txt('FLOORS ABOVE', g.ix0 + 6, g.top * .6 + fs * .35, 'left', .85, 700);
+    const l1 = lab(notes, 0, 0, 'load-bearing', {'text-anchor': 'end'}), l2 = lab(notes, 0, 0, 'new thin wall');
+    const w1 = l1.getComputedTextLength(), w2 = l2.getComputedTextLength();
+    const hs = Math.round(fs * 2.2), topR = hs * .74 + 18, botR = 16 + fs * .3 + 2;
+    let s = Math.min((W - 8) / wm, (H - topR - botR) / hm, (W / 2 - 10 - w1) / 1.25, (W / 2 - 10 - w2) / 1.25);
+    s = Math.max(s, 10);
+    const ox = (W - wm * s) / 2, top = Math.max(0, (H - topR - botR - hm * s) / 2);
+    const X = m => ox + (S.T + m) * s;
+    const heroBase = top + hs * .74, brY = heroBase + 8, y0 = top + topR;
+    const ceil = y0 + (S.stub + S.SL) * s, floor = ceil + S.WH * s, bottom = floor + (S.SL + S.stub) * s;
+    const base = bottom + 16, ww = S.WT * s, cx = X(OLD[BEAR]), nt = Math.max(2, S.NT * s), tx = X(5);
 
-    // slabs and columns
-    x.save(); x.translate(sh, 0);
-    const sx0 = g.x0 - g.m * .7, sx1 = g.x1 + g.m * .7;
-    hatch(sx0, g.Cy - g.t, sx1 - sx0, g.t); hatch(sx0, g.Fy, sx1 - sx0, g.t);
-    hatch(g.x0, g.Cy, g.colW, g.rh, 5); hatch(g.ix1, g.Cy, g.colW, g.rh, 5);
-    x.restore();
+    // structure: slabs, outer walls and the load-bearing wall, all in ink
+    Kit.mk('rect', {x: ox, y: ceil - S.SL * s, width: wm * s, height: S.SL * s, fill: 'currentColor'}, frame);
+    Kit.mk('rect', {x: ox, y: floor, width: wm * s, height: S.SL * s, fill: 'currentColor'}, frame);
+    for (const x of [ox, ox + (S.T + S.L) * s]) Kit.mk('rect', {x, y: y0, width: S.T * s, height: hm * s, fill: 'currentColor'}, frame);
+    const keep = Kit.mk('rect', {x: cx - ww / 2, y: ceil, width: ww, height: S.WH * s, fill: 'currentColor'}, frame);
 
-    // the room, lit at the reveal: each unit glows, one after the other
-    if (S.flash > 0) { x.fillStyle = ink(.28 * S.flash); x.fillRect(g.ix0, g.Cy, g.iw, g.rh); }
-    const ux = [g.ix0, g.slotX[0], g.slotX[1], g.ix1];
-    if (S.reveal > 0) for (let u = 0; u < 3; u++) {
-      const p = clamp((S.reveal - .2 - u * .15) / .4); if (p <= 0) continue;
-      const cx = (ux[u] + ux[u + 1]) / 2, br = Kit.calm ? 1 : .85 + .15 * Math.sin(t / 900 + u * 2.1);
-      const gr = x.createRadialGradient(cx, g.Cy, 0, cx, g.Cy, g.rh * 1.1);
-      gr.addColorStop(0, ink(.13 * p * br)); gr.addColorStop(1, ink(.02 * p));
-      x.fillStyle = gr; x.fillRect(ux[u], g.Cy, ux[u + 1] - ux[u], g.rh);
-    }
+    // the three walls that came down, where they stood; the ones you tapped in full ink
+    [0, 2, 3].forEach(i => Kit.mk('rect', {x: X(OLD[i]) - ww / 2 + .6, y: ceil + .6, width: ww - 1.2, height: S.WH * s - 1.2, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.2, 'stroke-dasharray': '4 3', opacity: picked.has(i) ? 1 : .42}, dash));
 
-    furniture(S.rooms, t);
+    // one thin new wall, three homes
+    const thinWall = Kit.mk('rect', {x: tx - nt / 2, y: ceil, width: nt, height: S.WH * s, fill: 'currentColor'}, fresh);
+    [[0, 2.5 - S.WT / 2], [2.5 + S.WT / 2, 5 - S.NT / 2], [5 + S.NT / 2, 7.5]].forEach(([a, b]) => home(rooms, X, s, floor, a, b));
+    person(rooms, X(3.5), floor, s);
 
-    // the old thick walls, brick by brick
-    g.oldX.forEach((ox, i) => {
-      if (!S.walls[i]) return;
-      const wx = ox - g.oldW / 2, rows = 9, bh = g.rh / rows;
-      x.fillStyle = ink(.12); x.fillRect(wx, g.Cy, g.oldW, g.rh);
-      x.strokeStyle = ink(.45); x.lineWidth = 1; x.beginPath();
-      for (let r = 1; r < rows; r++) { x.moveTo(wx, g.Cy + r * bh); x.lineTo(wx + g.oldW, g.Cy + r * bh); }
-      for (let r = 0; r < rows; r++) { const jx = wx + g.oldW * (r % 2 ? .3 : .7); x.moveTo(jx, g.Cy + r * bh); x.lineTo(jx, g.Cy + (r + 1) * bh); }
-      x.stroke();
-      x.strokeStyle = INK; x.lineWidth = 1.6; x.strokeRect(wx, g.Cy, g.oldW, g.rh);
-      if (S.step === 'break') ring(ox, g.Cy + g.rh * .42, t + i * 500, S.enter >= 1 ? 1 : 0);
+    // two labels on one baseline: an arrow to the kept wall, a leader to the new one
+    arrowUp(notes, cx, bottom + 3);
+    l1.setAttribute('x', cx - 9); l1.setAttribute('y', base);
+    l2.setAttribute('x', tx + 7); l2.setAttribute('y', base);
+    Kit.mk('line', {x1: tx, x2: tx, y1: floor + S.SL * s, y2: base - fs * .3, stroke: 'currentColor', 'stroke-width': 1.2}, notes);
+
+    // about 10 m², measured on one home
+    const x1 = cx + ww / 2 + 1, x2 = tx - nt / 2 - 1;
+    Kit.mk('path', {d: `M${x1},${brY + 5} V${brY} H${x2} V${brY + 5}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.3}, notes);
+    const hero = Kit.mk('text', {x: (x1 + x2) / 2, y: heroBase, 'text-anchor': 'middle', class: 'hero'}, notes);
+    hero.style.fontSize = hs + 'px';
+    const pre = Kit.mk('tspan', {class: 'lab'}, hero); pre.textContent = 'about '; pre.style.fontSize = Math.round(fs * 1.25) + 'px';
+    const num = Kit.mk('tspan', {}, hero); num.textContent = '10 m²';
+
+    // the verdict on the reader's own taps
+    const r = Math.max(7, fs * .55), my = floor - 1.3 * s, markEls = [];
+    [...picked].sort().forEach(i => {
+      const g = Kit.mk('g', {transform: `translate(${X(OLD[i])},${my})`}, marks), ok = i !== BEAR;
+      const inner = Kit.mk('g', {}, g);
+      Kit.mk('circle', {r, style: 'fill:var(--c)', stroke: ok ? 'currentColor' : BROWN, 'stroke-width': 1.5}, inner);
+      const k = r * .38;
+      Kit.mk('path', {d: ok ? `M${-r * .42},${r * .02} L${-r * .1},${r * .34} L${r * .45},${-r * .34}` : `M${-k},${-k} L${k},${k} M${k},${-k} L${-k},${k}`, fill: 'none', stroke: ok ? 'currentColor' : BROWN, 'stroke-width': 1.9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, inner);
+      markEls.push(inner);
     });
 
-    // rubble
-    if (rubble.length) {
-      x.save(); x.globalAlpha = S.sweep;
-      for (const b of rubble) { poly(b); x.fillStyle = ink(.16); x.fill(); x.strokeStyle = INK; x.lineWidth = 1.1; x.stroke(); }
-      x.restore();
-    }
+    if (!animate) return;
 
-    // guides for the new walls
-    if (S.guides > 0) g.slotX.forEach((sx, j) => {
-      if (S.slots[j]) return;
-      x.save(); x.globalAlpha = S.guides * .8; x.strokeStyle = INK; x.lineWidth = 1.2; x.setLineDash([6, 6]);
-      x.lineDashOffset = Kit.calm ? 0 : -t / 60;
-      x.beginPath(); x.moveTo(sx, g.Cy + 2); x.lineTo(sx, g.Fy - 2); x.stroke(); x.restore();
-      ring(sx, g.Cy + g.rh * .5, t + j * 600, S.guides);
-    });
+    // start from the flat as the reader left it
+    const gone = [0, 2, 3].map(i => Kit.mk('rect', {x: X(OLD[i]) - ww / 2, y: ceil, width: ww, height: S.WH * s, fill: picked.has(i) ? RED : 'currentColor'}, oldG));
+    if (picked.has(BEAR)) keep.setAttribute('fill', RED);
+    const ink = getComputedStyle(svg).color;
+    gsap.set([dash, rooms, fresh, notes], {opacity: 0});
+    gsap.set(thinWall, {scaleY: 0, transformOrigin: '50% 0%'});
+    if (markEls.length) gsap.set(markEls, {scale: 0, opacity: 0, transformOrigin: '50% 50%'});
 
-    // thin boards
-    for (const col of boards) for (const b of col) {
-      poly(b); x.fillStyle = ink(.9); x.fill(); x.strokeStyle = '#0a2a52'; x.lineWidth = .8; x.stroke();
-    }
-
-    // labels inside the flat
-    const ry = g.Cy + fs * 1.8;
-    if (S.rooms > 0) {
-      const w0 = g.oldW / 2, xs = [g.ix0, g.oldX[0] - w0, g.oldX[0] + w0, g.oldX[1] - w0, g.oldX[1] + w0, g.ix1], names = ['LIVING', 'BEDROOM', 'KITCHEN'];
-      names.forEach((n, i) => {
-        const a = xs[i * 2], b = xs[i * 2 + 1];
-        let s = fs; font(700, s); while (s > 12 && x.measureText(n).width > (b - a) - 14) { s -= .5; font(700, s); }
-        txt(n, (a + b) / 2, ry, 'center', S.rooms * .9, 700, s);
+    const bring = () => {
+      const {Engine, Bodies, Composite, Body} = Matter;
+      const eng = Engine.create(); eng.gravity.y = 1; eng.gravity.scale = .0016;
+      const st = {isStatic: true};
+      Composite.add(eng.world, [
+        Bodies.rectangle(W / 2, floor + 60, W * 3, 120, st),
+        Bodies.rectangle(ox + S.T * s - 60, floor - 200, 120, 800, st),
+        Bodies.rectangle(ox + (S.T + S.L) * s + 60, floor - 200, 120, 800, st),
+        Bodies.rectangle(cx, ceil + S.WH * s / 2, ww, S.WH * s, st)
+      ]);
+      const n = 9, bw = ww, bh = S.WH * s / n, list = [];
+      [0, 2, 3].forEach(i => {
+        const side = Kit.rnd() < .5 ? -1 : 1;
+        for (let j = 0; j < n; j++) {
+          const b = Bodies.rectangle(X(OLD[i]), ceil + (j + .5) * bh, bw - .6, bh - .6, {friction: .55, frictionStatic: .9, restitution: .08, density: .002});
+          Body.setVelocity(b, {x: (Kit.rnd() - .5) * 1.2 + side * (1 - j / n) * 1.6, y: 0});
+          Body.setAngularVelocity(b, (Kit.rnd() - .5) * .08);
+          const rr = Kit.mk('rect', {x: -bw / 2, y: -bh / 2, width: bw - .6, height: bh - .6, fill: RED}, bricksG);
+          list.push([b, rr]);
+        }
       });
-    }
-    if (S.reveal > 0) for (let u = 0; u < 3; u++) {
-      const p = clamp((S.reveal - .25 - u * .13) / .4);
-      txt(`UNIT ${u + 1}`, (ux[u] + ux[u + 1]) / 2, ry, 'center', p, 800);
-      fittings(ux[u] + g.thinW, ux[u + 1] - g.thinW, p);
-    }
+      Composite.add(eng.world, list.map(p => p[0]));
+      gone.forEach(g => g.remove());
+      gsap.to(dash, {opacity: 1, duration: .4, ease: 'power2.out'});
+      Kit.haptic('light');
+      tick = () => {
+        Engine.update(eng, 1000 / 60);
+        for (const [b, rr] of list) rr.setAttribute('transform', `translate(${b.position.x},${b.position.y}) rotate(${b.angle * 57.2958})`);
+      };
+      gsap.ticker.add(tick);
+    };
 
-    // dimensions
-    dim(g.ix0, g.ix1, g.dimY, 'ONE FLAT · 30–40 m²', clamp(1 - S.reveal * 3), 1);
-    if (S.reveal > 0) for (let u = 0; u < 3; u++) {
-      const p = clamp((S.reveal - .15 - u * .1) / .45), n = Math.round(10 * clamp(p * 1.3));
-      dim(ux[u], ux[u + 1], g.dimY, `≈${n} m²`, clamp(S.reveal * 3), p < 1 ? 1 - Math.pow(1 - p, 3) : 1);
-    }
-
-    // dust
-    if (dust.length) {
-      x.fillStyle = INK;
-      dust = dust.filter(d => (d.l -= .022) > 0);
-      for (const d of dust) { d.x += d.vx; d.y += d.vy; d.vy += .03; d.vx *= .97; x.globalAlpha = d.l * .7; x.beginPath(); x.arc(d.x, d.y, 1.3 + (1 - d.l) * 1.5, 0, 7); x.fill(); }
-      x.globalAlpha = 1;
-    }
-    x.restore();
-
-    // the printing scan line of the entrance
-    if (S.enter < 1 && S.enter > 0) {
-      const sx = W * S.enter, gr = x.createLinearGradient(sx - 30, 0, sx, 0);
-      gr.addColorStop(0, ink(0)); gr.addColorStop(1, ink(.35));
-      x.fillStyle = gr; x.fillRect(sx - 30, 0, 30, H);
-      x.fillStyle = ink(.9); x.fillRect(sx - 1, 0, 1.5, H);
-    }
+    backTl = gsap.timeline({delay: .35});
+    if (markEls.length) backTl.to(markEls, {scale: 1, opacity: 1, duration: .35, ease: 'back.out(2)', stagger: .14}).add(() => Kit.haptic('selection'));
+    if (picked.has(BEAR)) backTl.to(keep, {fill: ink, duration: .35, ease: 'power2.out'}, '+=.45').add(() => keep.setAttribute('fill', 'currentColor'));
+    backTl
+      .to(gone, {fill: RED, duration: .3, ease: 'power2.out', stagger: .08}, '+=.25')
+      .add(bring, '+=.3')
+      .add(() => { if (tick) { gsap.ticker.remove(tick); tick = null; } }, '+=2.1')
+      .to(bricksG, {opacity: 0, duration: .45, ease: 'power2.in'})
+      .set(fresh, {opacity: 1})
+      .to(thinWall, {scaleY: 1, duration: .5, ease: 'power3.out'}, '-=.1')
+      .to(rooms, {opacity: 1, duration: .45, ease: 'power2.out'}, '-=.25')
+      .to(notes, {opacity: 1, duration: .5, ease: 'power2.out'}, '+=.05')
+      .from(hero, {y: 6, duration: .5, ease: 'power3.out'}, '<')
+      .add(() => Kit.haptic('success'));
   }
 
-  function tick(t) {
-    if (G) { Engine.update(engine, 1000 / 60); draw(t); }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+  document.addEventListener('turned', () => { turned = true; drawBack(!Kit.calm && !quick); });
 
-  Kit.onShow.card = layout;
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm) return;
-    gsap.fromTo(S, {enter: 0}, {enter: 1, duration: 1.4, ease: 'power3.inOut'});
+    if (Kit.calm || turned) return;
+    gsap.from('#pic .ow', {scaleY: 0, transformOrigin: '50% 100%', duration: .5, ease: 'power3.out', stagger: .08, delay: .15});
   };
   Kit.play.card = async () => {
-    fast = .4; S.enter = 1;
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const until = async (f, max = 6000) => { const t0 = Date.now(); while (!f() && Date.now() - t0 < max) await wait(50); };
-    breakWall(0); await wait(Kit.calm ? 50 : 250); breakWall(1);
-    await until(() => S.step === 'build');
-    dropSlot(0); dropSlot(1);
-    await until(() => S.step === 'done');
-    await wait(Kit.calm ? 100 : 2200);
+    quick = true;
+    for (const i of [0, 2, 3]) { Kit.$('pic').querySelector(`.hit[data-i="${i}"]`).dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(60); }
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(1700);
   };
 })();
 Kit.single();

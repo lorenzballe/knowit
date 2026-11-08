@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A card titled Zero-G asks how a plane falls exactly like a pen in a vacuum. It shows a plane with thrust, drag and gravity arrows, a thrust slider, and a pen floating in the cabin. The reader is asked to slide the thrust, then keep the pen floating."
   },
   "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",

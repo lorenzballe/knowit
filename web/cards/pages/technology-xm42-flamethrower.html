@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-xm42-flamethrower-label -->
+<!-- Thought to carry: what you may buy depends on the category the law files a thing under, not on how fierce it looks in action.
+     Front: the M9, a military flamethrower used in Vietnam in the 1960s, and the civilian XM42, each throwing its jet, one under the other, as the video shows them. The reader picks why the XM42 is sold in U.S. gun shops, then says how sure.
+     Back: one flame forks into two boxes the law can file it in. One box is marked Military-grade. The other, marked Hobby device, has a shop shelf for a lid, and the XM42 lands on it. -->
+<title>Why the XM42 is on the shelf</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .36s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.front{visibility:hidden}
+.turn:not(.over)>.back{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+.face .stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
+.front .stagebox{margin-top:20px}
+#opts{display:flex;flex-direction:column;gap:1cqh;margin-top:1.4cqh}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#sure{margin-top:16px}
+/* Locked until a reason is picked: a clear disabled look, not a faded one. */
+#sure.locked{opacity:1!important;filter:none!important}
+#sure.locked *{opacity:1!important;color:var(--k)!important}
+#sure.locked [data-v]{background:transparent!important;border-color:transparent!important;color:color-mix(in srgb,var(--k) 40%,transparent)!important;box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--k) 40%,transparent)!important;cursor:default}
+#sure.locked [data-v] *{color:inherit!important}
+.front .band{flex:0 0 64px}
+.back .big{font:800 max(3.2cqh,19px)/1.1 var(--display);margin:0 0 .5cqh}
+.back .dek{font:600 max(1.8cqh,13px)/1.3 var(--body);margin:0 0 1.6cqh}
+.back .stagebox{margin:4px 0 16px}
+.back .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0 0 .8cqh;flex:0 0 auto}
+.back .keep{flex:0 0 auto}
+.back .foot{padding-right:100px;min-height:48px;box-sizing:border-box;flex:0 0 auto;display:flex;align-items:flex-end}
+.back .src{font-size:12px;line-height:1.3}
+.q,.dek,.body,.keep,.src{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag" id="tag">PICK ONE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Why can the XM42 flamethrower be bought in U.S. gun stores?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="The military M9, used in Vietnam in the 1960s, and the civilian XM42, on sale in U.S. gun shops, each throwing its jet of fire."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">Its tank is too small for a weapon</button>
+          <button class="opt" data-i="1">It counts as a non-lethal hobby device</button>
+          <button class="opt" data-i="2">It is sold only with a federal permit</button>
+        </div>
+        <div class="sure" id="sure"></div>
+        <div class="band" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The law files it as a hobby tool.</p>
+        <p class="dek" id="dek"></p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="One flame forks into two boxes, one marked Military-grade, one marked Hobby device. The XM42 sits on the shelf of the Hobby device box."></svg></div>
+        <p class="body">The XM42 is classed as a non-lethal incendiary device and sold under hobbyist rules, unlike fully military-grade weapons.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> What you may buy depends on how the law files it, not on how fierce it looks.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const RIGHT = 1, FLAME = '#ff5a1f', CORE = '#ffc23d';
+  const SHORT = ['a tank too small for a weapon', 'a non-lethal hobby device', 'a federal permit'];
+  let pick = -1, turned = false;
+  const col = () => { const s = getComputedStyle(Kit.$('card')); return {K: s.getPropertyValue('--k').trim() || '#111', C: s.getPropertyValue('--c').trim() || '#eee'}; };
+  const txt = (g, x, y, s, fs, K, a = {}) => { const e = Kit.mk('text', {x, y, fill: K, style: `font-family:var(--body);font-size:${fs}px;font-weight:${a.w || 700}`, 'text-anchor': a.anchor || 'start'}, g); e.textContent = s; return e; };
+  // A caption in two weights: the name in bold, the rest in regular.
+  const cap = (g, x, y, a, b, fs, K, anchor = 'start') => {
+    const e = Kit.mk('text', {x, y, fill: K, 'text-anchor': anchor, style: `font-family:var(--body);font-size:${fs}px`}, g);
+    const t1 = Kit.mk('tspan', {style: 'font-weight:800'}, e); t1.textContent = a;
+    const t2 = Kit.mk('tspan', {style: 'font-weight:500'}, e); t2.textContent = b;
+    return e;
+  };
+  const wd = (e, s, fs) => { let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} return w || s.length * fs * .56; };
+
+  // The M9: two tall fuel tanks on a frame, a pressure ball, a hose to the wand. Local box 100 x 100, nozzle at (98,65).
+  function m9(g, K, C) {
+    Kit.mk('path', {d: 'M30,90 C38,104 56,100 58,70', stroke: K, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round'}, g);
+    for (const x of [4, 26]) { Kit.mk('rect', {x, y: 8, width: 18, height: 76, rx: 9, fill: K}, g); Kit.mk('rect', {x: x + 5, y: 3, width: 8, height: 6, rx: 1.5, fill: K}, g); }
+    Kit.mk('rect', {x: 2, y: 34, width: 46, height: 4, fill: C}, g);
+    Kit.mk('rect', {x: 2, y: 62, width: 46, height: 4, fill: C}, g);
+    Kit.mk('circle', {cx: 24, cy: 90, r: 7, fill: K}, g);
+    Kit.mk('rect', {x: 52, y: 62, width: 40, height: 6, rx: 2, fill: K}, g);
+    Kit.mk('rect', {x: 58, y: 67, width: 5, height: 11, rx: 1.5, fill: K}, g);
+    Kit.mk('rect', {x: 79, y: 67, width: 5, height: 11, rx: 1.5, fill: K}, g);
+    Kit.mk('rect', {x: 91, y: 60, width: 7, height: 10, rx: 1.5, fill: K}, g);
+  }
+  // The XM42: a handheld body with a stock, a fuel tank slung under it, two grips. Local box 100 x 44, nozzle at (92,20).
+  function xm42(g, K) {
+    Kit.mk('rect', {x: 0, y: 14, width: 14, height: 16, rx: 3, fill: K}, g);
+    Kit.mk('rect', {x: 10, y: 14, width: 70, height: 12, rx: 4, fill: K}, g);
+    Kit.mk('rect', {x: 30, y: 10, width: 30, height: 4, rx: 1, fill: K}, g);
+    Kit.mk('rect', {x: 20, y: 28, width: 36, height: 11, rx: 5.5, fill: K}, g);
+    Kit.mk('polygon', {points: '58,25 66,25 62,42 54,42', fill: K}, g);
+    Kit.mk('rect', {x: 70, y: 25, width: 5, height: 12, rx: 1.5, fill: K}, g);
+    Kit.mk('rect', {x: 80, y: 16, width: 12, height: 8, rx: 1.5, fill: K}, g);
+  }
+  // One flame shape, drawn flat: an orange jet with a yellow core. Tip reaches about 1.007 L.
+  function flame(parent, x, y, L, h) {
+    const g = Kit.mk('g', {transform: `translate(${x},${y})`}, parent), f = Kit.mk('g', {class: 'fl'}, g);
+    const d = (L, h) => `M0,${-h * .25} C${L * .3},${-h * .8} ${L * .65},${-h * 1.05} ${L},${-h * .45} C${L * 1.04},${h * .05} ${L * .9},${h * .55} ${L * .74},${h * .5} C${L * .5},${h * .9} ${L * .2},${h * .55} 0,${h * .25} Z`;
+    Kit.mk('path', {d: d(L, h), fill: FLAME}, f);
+    Kit.mk('path', {d: d(L * .62, h * .5), fill: CORE}, f);
+    return f;
+  }
+
+  // ---------- the front: two machines, each with its jet ----------
+  function front() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), {K, C} = col(), fs = W < 330 ? 13 : 14, band = fs * 1.3;
+    cap(svg, 0, fs, 'M9', ' · Vietnam, 1960s', fs, K);
+    cap(svg, 0, H - fs * .28, 'XM42', ' · on sale in U.S. gun shops', fs, K);
+    const rTop = band + 6, rBot = H - band - 6, gap = 6, rowH = Math.max(12, (rBot - rTop - gap) / 2);
+    const maxw = Math.max(80, Math.min(150, W * .34));
+    const s1 = Math.max(.1, Math.min(rowH / 100, maxw / 100));
+    const s2 = Math.max(.1, Math.min(rowH / 44, maxw / 100) * .9);
+    const NX = Math.max(98 * s1, 92 * s2);
+    const oy1 = rTop + (rowH - 100 * s1) / 2, oy2 = rTop + rowH + gap + (rowH - 44 * s2) / 2;
+    m9(Kit.mk('g', {transform: `translate(${NX - 98 * s1},${oy1}) scale(${s1})`}, svg), K, C);
+    xm42(Kit.mk('g', {transform: `translate(${NX - 92 * s2},${oy2}) scale(${s2})`}, svg), K);
+    const ny1 = oy1 + 65 * s1, ny2 = oy2 + 20 * s2;
+    const fh = Math.max(6, Math.min(30, rowH * .58, (ny2 - ny1) * .48));
+    const x0 = NX + 1, L = Math.max(30, (W - 3 - x0) / 1.007);
+    flame(svg, x0, ny1, L, fh); flame(svg, x0, ny2, L, fh);
+  }
+
+  // ---------- the back: one flame, two boxes the law can file it in ----------
+  function back(animate) {
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), {K, C} = col();
+    const pf = W < 330 ? 12 : 13;
+    const cw = Math.min(W * .42, 170), cxL = W * .25, cxR = W * .75;
+    // The flame, drawn once, in the centre.
+    const fh = Math.max(6, Math.min(14, H * .06)), fy = fh + 1, fL = Math.min(W * .36, fh * 7.5);
+    const fl = flame(svg, W / 2 - fL * 1.007 / 2, fy, fL, fh);
+    // It forks to the two boxes.
+    const f0 = fy + fh * .65 + 4, forkH = Math.max(10, Math.min(20, H * .07)), fm = f0 + forkH * .45, Ay = f0 + forkH;
+    const fork = Kit.mk('path', {d: `M${W / 2},${f0}V${fm}M${cxL},${fm}H${cxR}M${cxL},${fm}V${Ay}M${cxR},${fm}V${Ay}M${cxL - 4},${Ay - 4}L${cxL},${Ay}L${cxL + 4},${Ay - 4}M${cxR - 4},${Ay - 4}L${cxR},${Ay}L${cxR + 4},${Ay - 4}`,
+      stroke: K, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    const cabTop = Ay + 5, ph = pf + 10, pw = cw - 14;
+    const cf = H < 170 ? 13 : 16, capH = cf + 6;
+    const cabH = Math.max(ph + 10, H - capH - cabTop), cabBot = cabTop + cabH;
+    const plate = (g, cx, y, s) => {
+      Kit.mk('rect', {x: cx - pw / 2, y, width: pw, height: ph, rx: 3, fill: C}, g);
+      const t = txt(g, cx, y + ph / 2 + pf * .36, s, pf, K, {w: 800, anchor: 'middle'});
+      if (wd(t, s, pf) > pw - 10) { t.setAttribute('textLength', pw - 10); t.setAttribute('lengthAdjust', 'spacingAndGlyphs'); }
+    };
+    // Military-grade: a tall box, shut.
+    const Lg = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: cxL - cw / 2, y: cabTop, width: cw, height: cabH, rx: 4, fill: K}, Lg);
+    plate(Lg, cxL, cabTop + Math.max(5, Math.min(10, (cabH - ph) / 4)), 'Military-grade');
+    // Hobby device: a low box whose lid is a shop shelf, the XM42 on it.
+    const Rg = Kit.mk('g', {}, svg);
+    const ch = Math.max(ph + 8, Math.min(cabH - 18, cabH * .45)), cy0 = cabBot - ch;
+    Kit.mk('rect', {x: cxR - cw / 2, y: cy0, width: cw, height: ch, rx: 4, fill: K}, Rg);
+    Kit.mk('rect', {x: cxR - cw / 2 - 6, y: cy0 - 4, width: cw + 12, height: 5, rx: 1.5, fill: K}, Rg);
+    plate(Rg, cxR, cy0 + (ch - ph) / 2, 'Hobby device');
+    const room = Math.max(6, cy0 - 4 - cabTop), sx = Math.max(.12, Math.min(cw * .85 / 100, room / 44));
+    const xw = Kit.mk('g', {}, svg);
+    xm42(Kit.mk('g', {transform: `translate(${cxR - 46 * sx},${cy0 - 4 - 42 * sx}) scale(${sx})`}, xw), K);
+    // One caption: the name of the object on the shelf.
+    const capt = txt(svg, cxR, cabBot + 4 + cf, 'XM42', cf, K, {w: 800, anchor: 'middle'});
+    if (!animate || Kit.calm) return;
+    const tl = gsap.timeline();
+    tl.from(fl, {scaleX: 0, transformOrigin: '0% 50%', duration: .6, ease: 'power3.out'})
+      .from(fork, {opacity: 0, duration: .3})
+      .from([Lg, Rg], {opacity: 0, y: 6, stagger: .1, duration: .35, ease: 'power2.out'})
+      .from(xw, {y: -(room + 20), opacity: 0, duration: .7, ease: 'bounce.out'}, '+=.1')
+      .from(capt, {opacity: 0, y: 6, duration: .35, ease: 'power2.out'}, '+=.05');
+  }
+  document.addEventListener('turned', () => { turned = true; back(true); });
+
+  // ---------- the answer ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: see why`);
+    const tag = Kit.$('tag'); if (tag) tag.textContent = `${ok ? 'Correct' : 'Not quite'} · ${pct}% sure`;
+    Kit.$('dek').textContent = `Your pick: ${SHORT[pick]}, ${pct}% sure.`;
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('sure').classList.add('locked');
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    Kit.$('sure').classList.remove('locked'); sure.on();
+  });
+
+  Kit.onShow.card = () => { front(); if (turned) back(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#pic .fl', {scaleX: 0, transformOrigin: '0% 50%', duration: .7, stagger: .25, ease: 'power3.out', delay: .2});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out', delay: .5});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[0].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 3600);
+  };
+})();
+Kit.single();
+</script>
+</html>

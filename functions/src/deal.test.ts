@@ -44,11 +44,11 @@ test('the shelves that turn over are the phone\'s, card for card', () => {
     'space-expansion-8', 'sport-suits-7', 'economics-rent-7', 'weird_facts-axolotls-7', 'technology-factories-5', 'thinking-10',
   ]);
   assert.deepEqual(pickedCards(bank, ALL_TIME_SEED, 6).map((c) => c.id), [
-    'language-double-negatives-3', 'economics-education-3', 'nature-bees-7', 'technology-training-9', 'thinking-h13', 'medicine-resistance-7',
+    'language-double-negatives-3', 'economics-education-3', 'nature-bees-7', 'technology-five-times-downforce', 'thinking-h13', 'medicine-resistance-7',
   ]);
   // Reference values printed by askingPills (lib/data/pills_repository.dart).
   assert.deepEqual(askingCards(bank, ALL_TIME_SEED, 6).map((c) => c.id), [
-    'language-double-negatives-3', 'economics-averages-that-mislead-2', 'nature-bees-1', 'technology-training-4', 'thinking-h10', 'medicine-resistance-10',
+    'language-double-negatives-3', 'economics-averages-that-mislead-2', 'nature-bees-1', 'technology-five-times-downforce', 'thinking-h10', 'medicine-resistance-10',
   ]);
 });
 
@@ -275,8 +275,10 @@ test('what was seen is never dealt again; the taste leans the draw', () => {
   for (const id of second.own) assert.ok(!first.own.includes(id));
   // A reader who loves black holes gets them first.
   const holes = Object.fromEntries(['strand:space.black_holes.event_horizons', 'strand:space.black_holes.hawking_radiation', 'strand:space.black_holes.supermassive_ones', 'genre:space.black_holes'].map((k) => [k, 0.6]));
+  // Over sixty days: a lean shows in what a reader gets over weeks, and over
+  // three a handful of cards either way is the luck of the draw.
   let withHoles = 0, without = 0;
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 60; i++) {
     const date = shiftDate(DAY, i);
     const lover = { ...profileOf({ topicWeights: { space: 1 }, pickedTopics: ['space', 'thinking'] }), taste: holes };
     withHoles += dealDay(bank, lover, date, 'r').own.filter((id) => bank.byId.get(id)?.genre === 'space.black_holes').length;

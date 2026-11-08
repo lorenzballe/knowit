@@ -1,0 +1,274 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-many-worlds-determinism -->
+<!-- Design note.
+     Thought to carry (the video's point): in Many-Worlds every possible outcome happens, 100% of the time.
+     A result only looks random because you experience one tiny sliver of the multiverse.
+     The die is a stand-in for a quantum object, and the front says so plainly.
+     Front: one big die on a table, you beside it, a hand-drawn curl that says "tap". Each roll fills one die outline in your tally.
+     Then you pick: truly random, fixed, or random until you look.
+     Back: the same scene, small, at the top. One roll fans into six branches. Each ends in one face and one copy of you.
+     Your branch, the face you last rolled, is the red line. A bracket under all six: every one happens.
+     Two labels on each face. No frames, no panels, no backdrop. Flat colour only.
+     The face turned away is hidden after the flip, so its mirrored text never sits under save and share. -->
+<title>Every face, every time</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* The face turned away is out of play: hidden at the midpoint of the flip. */
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.1cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{cursor:pointer;touch-action:manipulation}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+
+/* Confidence row, waiting: full contrast, outline pills, label in the body colour. */
+.surewrap.wait .sure,.surewrap.wait .sure *{opacity:1!important;filter:none!important}
+.surewrap.wait .sure,.surewrap.wait .sure *:not(button){color:var(--k)!important}
+.surewrap.wait .sure button{background:transparent!important;color:var(--k)!important;border-color:var(--k)!important;box-shadow:inset 0 0 0 2px var(--k)!important;pointer-events:none}
+
+/* Keep the confidence row and the closing line clear of the save and share buttons. */
+.front .surewrap{box-sizing:border-box;padding-right:108px;min-width:0}
+.front .say{width:fit-content;max-width:calc(100% - 108px);padding-right:0;font-size:max(1.9cqh,13px);margin-right:auto}
+
+.back .big{font-size:clamp(24px,4.2cqh,38px);line-height:1.04}
+.back .body{font-size:max(1.9cqh,13px)}
+.back .foot{box-sizing:border-box;padding-right:108px;min-height:44px}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MANY WORLDS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">If Many-Worlds is true, is a quantum outcome random?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A die on a table with you beside it. Tap the die to roll it."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">Truly random: nothing decides the face</button>
+          <button class="opt" data-i="1">Fixed: the whole result was certain</button>
+          <button class="opt" data-i="2">Random until you look, then fixed</button>
+        </div>
+        <div class="surewrap wait" id="surewrap"><div class="sure" id="sure"></div></div>
+        <p class="say" id="say">The die stands in for a quantum object.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Fixed. Every face lands, 100% of the time.</p>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="One roll fans into six branches, each with one face and one copy of you."></svg></div>
+        <p class="body">In Many-Worlds every possible outcome happens, each in its own branch. It only looks random because you experience one tiny sliver of the multiverse.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Random from inside your sliver. Deterministic for the universe as a whole.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const RIGHT = 1, SHORT = ['Truly random', 'Fixed', 'Random until you look'];
+  const YOU = '#e0482f', DIE = '#ffffff';
+  let INK = '#111', CC = '#ccc';
+  let pick = -1, face = 5, seen = [], rolling = false, turned = false, built = false;
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let F = {}, dieInner = null, shadow = null, tallyG = null;
+  const cl = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  const colors = () => { const cs = getComputedStyle(Kit.$('card')); INK = cs.getPropertyValue('--k').trim() || '#111'; CC = cs.getPropertyValue('--c').trim() || '#ddd'; };
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': a.fs || 13, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.removeAttribute('fs'); e.textContent = t; return e; };
+  const line = (p, d, a = {}) => Kit.mk('path', Object.assign({d, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', pathLength: 1}, a), p);
+
+  const PIPS = {1: [[0,0]], 2: [[-1,-1],[1,1]], 3: [[-1,-1],[0,0],[1,1]], 4: [[-1,-1],[1,-1],[-1,1],[1,1]], 5: [[-1,-1],[1,-1],[0,0],[-1,1],[1,1]], 6: [[-1,-1],[1,-1],[-1,0],[1,0],[-1,1],[1,1]]};
+  function drawDie(g, n, ds) {
+    g.innerHTML = '';
+    Kit.mk('rect', {x: -ds/2, y: -ds/2, width: ds, height: ds, rx: ds*.18, fill: DIE, stroke: INK, 'stroke-width': Math.max(1.4, ds*.045)}, g);
+    if (n) for (const [px, py] of PIPS[n]) Kit.mk('circle', {cx: px*ds*.26, cy: py*ds*.26, r: Math.max(1.2, ds*.085), fill: INK}, g);
+  }
+  // A table and a person beside it; origin is the floor under the table's centre.
+  function drawTable(g, tw, figColor, figOpacity = 1) {
+    const th = tw*.5, leg = tw*.05;
+    Kit.mk('rect', {x: -tw/2, y: -th, width: tw, height: th*.12, rx: th*.03, fill: INK}, g);
+    for (const s of [-1, 1]) Kit.mk('rect', {x: s*tw*.4 - leg/2, y: -th*.9, width: leg, height: th*.9, fill: INK}, g);
+    const fx = -tw*.72, bw = tw*.16, bh = tw*.62, r = tw*.1, hy = -bh - r*1.25;
+    const fig = Kit.mk('g', {opacity: figOpacity}, g);
+    Kit.mk('rect', {x: fx - bw/2, y: -bh, width: bw, height: bh, rx: bw/2, fill: figColor}, fig);
+    Kit.mk('circle', {cx: fx, cy: hy, r, fill: figColor}, fig);
+    Kit.mk('circle', {cx: fx + r*.4, cy: hy - r*.1, r: Math.max(1.1, r*.14), fill: INK}, fig);
+  }
+  // A small copy of you standing on the floor at (x, gy).
+  function mini(g, x, gy, s, op) {
+    const bw = s*.32, bh = s*.85, r = s*.24, hy = gy - bh - r*1.25;
+    const f = Kit.mk('g', {opacity: op}, g);
+    Kit.mk('rect', {x: x - bw/2, y: gy - bh, width: bw, height: bh, rx: bw/2, fill: YOU}, f);
+    Kit.mk('circle', {cx: x, cy: hy, r, fill: YOU}, f);
+    Kit.mk('circle', {cx: x + r*.4, cy: hy - r*.1, r: Math.max(1.1, r*.16), fill: INK}, f);
+  }
+
+  // ---------- front ----------
+  function layoutFront() {
+    svg.innerHTML = ''; gsap.killTweensOf('*');
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f || 13));
+
+    // The tally: six empty die outlines that fill in as you roll.
+    tallyG = Kit.mk('g', {}, svg);
+    const lab = txt(svg, 2, 0, 'Your rolls', {fs});
+    const x0 = 2 + lab.getComputedTextLength() + fs*.9;
+    const step = Math.min(fs*1.65*1.32, (W - 2 - x0)/6), cs = Math.min(fs*1.65, step/1.28), ty = cs/2 + 2;
+    lab.setAttribute('y', ty + fs*.36);
+    F = {W, H, fs, x0, step, cs, ty};
+    drawTally(false);
+
+    // The scene, as large as the stage allows.
+    const T = cs + 4 + fs*.6, FY = H - 2;
+    const tw = cl(Math.min(W*.6, (FY - T - 4)/1.03), 60, 400), ds = tw*.42, cx = W/2 + tw*.15;
+    const dy = FY - tw*.5 - ds/2;
+    Object.assign(F, {tw, ds, cx, FY, jump: Math.max(ds*.25, Math.min(ds*.7, dy - ds/2 - T))});
+    Kit.mk('line', {x1: 0, x2: W, y1: FY, y2: FY, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    drawTable(Kit.mk('g', {transform: `translate(${cx},${FY})`}, svg), tw, YOU);
+    shadow = Kit.mk('ellipse', {cx, cy: FY - tw*.5 - 1, rx: ds*.55, ry: Math.max(2, ds*.07), fill: INK, opacity: .18}, svg);
+    const outer = Kit.mk('g', {transform: `translate(${cx},${dy})`}, svg);
+    dieInner = Kit.mk('g', {}, outer);
+    drawDie(dieInner, face, ds);
+
+    // Tap mark: a curl over the die's corner, same flat line as the drawing.
+    const hint = Kit.mk('g', {transform: `translate(${cx},${dy})`}, svg);
+    const R = ds*.8, a0 = -70*Math.PI/180, a1 = -22*Math.PI/180;
+    const p0 = [R*Math.cos(a0), R*Math.sin(a0)], p1 = [R*Math.cos(a1), R*Math.sin(a1)];
+    Kit.mk('path', {d: `M${p0} A${R} ${R} 0 0 1 ${p1}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, hint);
+    const t = [-Math.sin(a1), Math.cos(a1)], nrm = [Math.cos(a1), Math.sin(a1)], h = ds*.13;
+    const tip = [p1[0] + t[0]*h*.7, p1[1] + t[1]*h*.7], bk = [p1[0] - t[0]*h*.5, p1[1] - t[1]*h*.5];
+    Kit.mk('path', {d: `M${bk[0] + nrm[0]*h*.75},${bk[1] + nrm[1]*h*.75} L${tip} L${bk[0] - nrm[0]*h*.75},${bk[1] - nrm[1]*h*.75}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
+    txt(hint, ds*.62, ds*.22, 'tap', {fs});
+  }
+  function drawTally(pop) {
+    const {x0, step, cs, ty} = F; tallyG.innerHTML = '';
+    const show = seen.slice(-6); let last = null;
+    for (let i = 0; i < 6; i++) {
+      const g = Kit.mk('g', {transform: `translate(${x0 + i*step + cs/2},${ty})`}, tallyG);
+      if (show[i]) { drawDie(g, show[i], cs); last = g; }
+      else Kit.mk('rect', {x: -cs/2 + .75, y: -cs/2 + .75, width: cs - 1.5, height: cs - 1.5, rx: cs*.18, fill: 'none', stroke: INK, 'stroke-width': 1.5}, g);
+    }
+    if (pop && last && !Kit.calm) gsap.from(last, {scale: .4, opacity: 0, duration: .3, ease: 'back.out(2)', transformOrigin: '50% 50%'});
+  }
+  function roll() {
+    if (rolling || turned) return;
+    rolling = true; Kit.haptic('selection');
+    const n = 1 + Math.floor(Math.random()*6), {ds, jump} = F;
+    const done = () => { face = n; drawDie(dieInner, n, ds); seen.push(n); drawTally(true); rolling = false; Kit.haptic('light'); };
+    if (Kit.calm) { done(); return; }
+    const swap = setInterval(() => drawDie(dieInner, 1 + Math.floor(Math.random()*6), ds), 75);
+    gsap.timeline({onComplete: () => { clearInterval(swap); gsap.set(dieInner, {rotation: 0}); done(); }})
+      .to(dieInner, {y: -jump, rotation: 190, duration: .28, ease: 'power2.out', svgOrigin: '0 0'})
+      .to(shadow, {attr: {rx: ds*.3}, opacity: .08, duration: .28, ease: 'power2.out'}, 0)
+      .to(dieInner, {y: 0, rotation: 360, duration: .28, ease: 'power2.in', svgOrigin: '0 0'})
+      .to(shadow, {attr: {rx: ds*.55}, opacity: .18, duration: .28, ease: 'power2.in'}, .28)
+      .to(dieInner, {rotation: 352, duration: .07, yoyo: true, repeat: 1, svgOrigin: '0 0'});
+  }
+  svg.addEventListener('click', roll);
+
+  // ---------- back ----------
+  function layoutBack(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f || 13));
+    const last = seen.length ? seen[seen.length - 1] : face;
+    svg2.setAttribute('aria-label', `One roll fans into six branches, each with one face and one copy of you. Your branch shows the ${last}. All six happen, 100% of the time.`);
+
+    // Bottom up: the closing label, the bracket, "you see one", the six endings.
+    const colW = W/6;
+    const wholeY = H - fs*.3, by = wholeY - fs*1.3, youY = by - fs*.75, gy = youY - fs*1.15;
+    const ds = cl(Math.min(colW*.42, gy*.22), 12, 28), ey = gy - ds*1.5 - 4;
+
+    // Top: the front's scene, small, the die in the air and blank. Dropped if there is no room.
+    const tw0 = Math.min(70, W*.2, (ey - 22)/1.15), scene = tw0 >= 30;
+    const ox = W/2, oy = scene ? tw0*1.05 + 2 : 2;
+    let originG = null;
+    if (scene) {
+      originG = Kit.mk('g', {transform: `translate(${ox},${oy})`}, svg2);
+      Kit.mk('line', {x1: -tw0*.95, x2: tw0*.62, y1: 0, y2: 0, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, originG);
+      drawTable(originG, tw0, YOU);
+      drawDie(Kit.mk('g', {transform: `translate(0,${-tw0*.8}) rotate(18)`}, originG), 0, tw0*.32);
+    }
+
+    // One roll, six branches. Yours in red.
+    const y0 = oy + (scene ? 3 : 0), fan = [];
+    let redD = '';
+    for (let i = 0; i < 6; i++) {
+      const ex = colW*(i + .5);
+      const d = `M${ox},${y0} C${ox},${y0 + (ey - y0)*.6} ${ex},${y0 + (ey - y0)*.4} ${ex},${ey}`;
+      if (i + 1 === last) redD = d; else fan.push(line(svg2, d, {'stroke-opacity': .3}));
+    }
+    const redP = line(svg2, redD, {stroke: YOU, 'stroke-width': 3});
+
+    // Six endings: a face and a copy of you on each.
+    const units = [];
+    for (let i = 0; i < 6; i++) {
+      const ex = colW*(i + .5), mine = i + 1 === last, g = Kit.mk('g', {}, svg2);
+      Kit.mk('line', {x1: ex - ds*.9, x2: ex + ds*.9, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-opacity': mine ? 1 : .3}, g);
+      mini(g, ex - ds*.55, gy, ds, mine ? 1 : .35);
+      drawDie(Kit.mk('g', {transform: `translate(${ex + ds*.32},${gy - ds/2})`}, g), i + 1, ds);
+      units.push(g);
+    }
+
+    const exR = colW*(last - .5);
+    const youL = txt(svg2, 0, youY, 'you see one', {fs});
+    const yw = youL.getComputedTextLength();
+    youL.setAttribute('x', cl(exR - yw/2, fs*.6 + 4, W - fs*.6 - 4 - yw));
+    const brace = Kit.mk('path', {d: `M${fs*.6},${by - fs*.5} V${by} H${W - fs*.6} V${by - fs*.5}`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg2);
+    const wholeL = txt(svg2, W/2, wholeY, 'all six happen, 100% of the time', {fs, 'text-anchor': 'middle', 'font-weight': 800});
+    if (wholeL.getComputedTextLength() > W - 8) wholeL.textContent = 'all six, 100% of the time';
+
+    if (!animate || Kit.calm) return;
+    const paths = [...fan, redP];
+    paths.forEach(p => gsap.set(p, {attr: {'stroke-dasharray': '1 2', 'stroke-dashoffset': 1}}));
+    gsap.set([youL, brace, wholeL, ...units], {opacity: 0});
+    const tl = gsap.timeline({delay: .45});
+    if (originG) tl.from(originG, {opacity: 0, duration: .4, ease: 'power2.out'});
+    tl.to(paths, {attr: {'stroke-dashoffset': 0}, duration: .8, ease: 'power2.inOut'})
+      .to(units, {opacity: 1, duration: .3, stagger: .06, ease: 'power2.out'}, '-=.2')
+      .to(youL, {opacity: 1, duration: .35}, '+=.05')
+      .to([brace, wholeL], {opacity: 1, duration: .45, ease: 'power2.out'}, '+=.2');
+  }
+  document.addEventListener('turned', () => { turned = true; built = true; layoutBack(true); });
+
+  // ---------- the answer ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT;
+    Kit.answer({choice: SHORT[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${SHORT[pick]}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    Kit.$('surewrap').classList.remove('wait'); sure.on();
+  });
+
+  Kit.onShow.card = () => { colors(); layoutFront(); if (built) layoutBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#pic > *', {opacity: 0, y: 8, stagger: .06, duration: .45, ease: 'power3.out'});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i < 3; i++) { roll(); await wait(Kit.calm ? 50 : 850); }
+    Kit.$('opts').children[1].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4800);
+  };
+})();
+Kit.single();
+</script>
+</html>

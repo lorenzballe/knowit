@@ -1,0 +1,270 @@
+<!doctype html>
+<!-- slug: food-mercury-up-the-chain -->
+<!--
+  The thought to carry: methylmercury builds up along a food chain, so the risk sits with the animal at the top, the shark.
+  Front: a mollusc holding a red speck of methylmercury, a small fish, a bigger fish and a shark in a row, each eating the one on its left. The reader drags along the row to pick where the most mercury ends up.
+  Back: the same row again. The arrows draw themselves and red specks gather in each animal, more at each step, until the shark holds the most. The dot counts are only a picture of "more", never a figure. The reader's pick is marked.
+  The front gives nothing away: only the chain and the mercury in the mollusc.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mercury up the food chain</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+.face .stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize;outline:none}
+.front .say{padding-right:0;margin-right:96px;box-sizing:border-box}
+.back .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0 0 .6cqh}
+.back .body{font:500 max(1.8cqh,12.5px)/1.32 var(--body);margin:.8cqh 0;overflow-wrap:break-word}
+.back .keep{font-size:max(1.8cqh,12.5px)}
+.back .foot .src{display:block;margin-right:96px}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Drag to pick · up the food chain">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FOOD CHAIN</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">A mollusc, two fish, a shark. Where does the most mercury end up?</h2>
+        <div class="stagebox"><svg id="pic" tabindex="0" role="img" aria-label="A mollusc holding a speck of methylmercury, a small fish, a bigger fish and a shark in a row, each eating the one on its left. Drag or use the arrow keys to pick where the most mercury ends up."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag across the picture to pick an animal.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The shark. The mercury ends up at the top.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same chain: mollusc, small fish, bigger fish, shark. Red specks of methylmercury gather in each animal, more at each step, and the shark at the top holds the most."></svg></div>
+        <p class="body">A big fish eats a smaller one, which ate a smaller one still, which ate a mollusc. The methylmercury builds up along the chain and the biggest fish ends up holding it. In high doses it can cause problems, above all during development: for children and in pregnancy. It is still fish, with benefits too.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> What builds up along a food chain ends up at the top.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.DrawSVGPlugin) gsap.registerPlugin(DrawSVGPlugin);
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2');
+  const RED = '#d33a24';
+  const NAMES = ['the mollusc', 'the small fish', 'the bigger fish', 'the shark'];
+  const TRUE = 3;
+  let INK = '#121212', PAPER = '#ffffff', fs = 13;
+  let pick = -1, answered = false, turned = false, backTl = null;
+  const F = {};
+
+  // Animals in unit boxes, facing left. Aspect = height / width.
+  const SHAPE = {
+    mussel: 'M0,.62 C.08,.15 .62,-.02 1,.3 C.85,.78 .35,1.02 0,.62Z',
+    fish: 'M0,.5 C.16,.12 .58,.12 .76,.46 L1,.18 L.94,.5 L1,.82 L.76,.54 C.58,.88 .16,.88 0,.5Z',
+    shark: 'M0,.52 C.08,.36 .3,.3 .52,.34 L.62,.06 L.66,.37 C.75,.4 .82,.44 .86,.47 L1,.1 L.95,.52 L1,.9 L.86,.57 C.7,.66 .5,.7 .44,.69 L.47,.92 L.33,.69 C.18,.68 .06,.62 0,.52Z'
+  };
+  const AS = {mussel: .55, fish: .5, shark: .42};
+  const BODY = {mussel: [.5, .5, .28, .2], fish: [.38, .5, .27, .22], shark: [.44, .52, .3, .13]};
+  const KINDS = ['mussel', 'fish', 'fish', 'shark'];
+
+  const colours = () => {
+    const cs = getComputedStyle(card);
+    INK = cs.getPropertyValue('--k').trim() || INK;
+    PAPER = cs.getPropertyValue('--c').trim() || PAPER;
+  };
+  const text = (p, x, y, t, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p);
+    e.textContent = t; return e;
+  };
+  function animal(p, kind, cx, cy, w) {
+    const h = w * AS[kind], g = Kit.mk('g', {}, p);
+    Kit.mk('path', {d: SHAPE[kind], fill: INK, transform: `translate(${cx - w / 2},${cy - h / 2}) scale(${w},${h})`}, g);
+    if (kind !== 'mussel' && w > 14) Kit.mk('circle', {cx: cx - w / 2 + w * (kind === 'shark' ? .1 : .14), cy: cy - h * .06, r: Math.max(1.2, w * .018), fill: PAPER}, g);
+    return g;
+  }
+  // Points inside the animal's body, packed tight enough for n dots, from the middle out.
+  function dots(kind, cx, cy, w, n) {
+    const h = w * AS[kind], b = BODY[kind];
+    const ex = cx - w / 2 + b[0] * w, ey = cy - h / 2 + b[1] * h, rx = b[2] * w, ry = b[3] * h;
+    let s = Math.max(rx, ry) * 1.2, pts = [];
+    for (let k = 0; k < 80; k++) {
+      pts = [];
+      let row = 0;
+      for (let y = ey - ry; y <= ey + ry + .01; y += s * .87, row++) {
+        for (let x = ex - rx + (row % 2 ? s / 2 : 0); x <= ex + rx + .01; x += s) {
+          if (((x - ex) / rx) ** 2 + ((y - ey) / ry) ** 2 <= 1) pts.push([x, y]);
+        }
+      }
+      if (pts.length >= n) break;
+      s *= .93;
+    }
+    if (n === 1) pts = [[ex, ey]];
+    pts.sort((a, c) => (((a[0] - ex) / rx) ** 2 + ((a[1] - ey) / ry) ** 2) - (((c[0] - ex) / rx) ** 2 + ((c[1] - ey) / ry) ** 2));
+    return {pts: pts.slice(0, n), r: Math.max(1.4, Math.min(s * .34, w * .06))};
+  }
+  const arrow = (p, x0, x1, y) => Kit.mk('path', {d: `M${x0},${y} H${x1} M${x1 - 4},${y - 3.5} L${x1},${y} L${x1 - 4},${y + 3.5}`, stroke: INK, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', class: 'arw'}, p);
+  const tri = (x, y, s) => `M${x - s},${y - s * 1.3} L${x + s},${y - s * 1.3} L${x},${y}Z`;
+  const clampX = (x, label, W, m) => { const hw = label.length * fs * .3; return Math.max(m + hw, Math.min(W - m - hw, x)); };
+
+  // One row of the chain, laid out the same way on both faces.
+  function row(W, sw) {
+    const m = W * .04, sizes = [W * .08, W * .11, W * .17, sw];
+    const gap = (W - 2 * m - sizes.reduce((a, b) => a + b)) / 3;
+    let x = m; const cx = [];
+    sizes.forEach(w => { cx.push(x + w / 2); x += w + gap; });
+    return {m, sizes, gap, cx};
+  }
+
+  // ---------- FRONT ----------
+  function drawFront() {
+    colours();
+    pic.innerHTML = '';
+    const {W, H} = Kit.fitSvg(pic);
+    fs = Math.max(12, Math.min(14, W / 26));
+    const fit = (H - fs * 8.4) / AS.shark;
+    const sw = Math.min(W * .42, Math.max(Math.min(W * .26, Math.max(W * .14, fit)), fit)), sh = sw * AS.shark;
+    const R = row(W, sw);
+    const above = sh / 2 + fs * 3, below = Math.max(fs * 4.6, sh / 2 + fs * 1.8);
+    const cy = Math.max(0, (H - above - below) / 2) + above;
+
+    const g = Kit.mk('g', {}, pic);
+    KINDS.forEach((k, i) => {
+      animal(g, k, R.cx[i], cy, R.sizes[i]);
+      if (i < 3) arrow(g, R.cx[i] + R.sizes[i] / 2 + R.gap * .18, R.cx[i + 1] - R.sizes[i + 1] / 2 - R.gap * .18, cy);
+    });
+    // The mollusc's methylmercury.
+    const md = dots('mussel', R.cx[0], cy, R.sizes[0], 1);
+    Kit.mk('circle', {cx: md.pts[0][0], cy: md.pts[0][1], r: Math.max(2.4, R.sizes[0] * .14), fill: RED}, g);
+    const mBot = cy + R.sizes[0] * AS.mussel / 2;
+    const mY = mBot + fs * 2;
+    Kit.mk('line', {x1: R.cx[0], x2: R.cx[0], y1: mBot + 3, y2: mY - fs * .95, stroke: RED, 'stroke-width': 1.2}, g);
+    text(g, R.m, mY, 'methylmercury', {fill: RED, 'font-weight': 800});
+    // The rule.
+    text(g, R.m, cy + below - fs * .3, 'Each eats the one on its left.', {'font-weight': 600});
+
+    // The reader's marker, riding just above the row.
+    F.cx = R.cx; F.W = W; F.m = R.m;
+    F.markY = cy - sh / 2 - fs * .45;
+    F.tri = Kit.mk('path', {d: '', fill: RED, opacity: 0}, g);
+    F.lab = text(g, clampX(R.cx[0], 'most here?', W, R.m), F.markY - fs * 1.15, 'most here?', {fill: RED, 'font-weight': 800, 'text-anchor': 'middle', opacity: 0});
+    F.anim = g;
+    paintPick();
+  }
+  function paintPick() {
+    if (!F.tri) return;
+    const on = pick >= 0 ? 1 : 0;
+    F.tri.setAttribute('opacity', on); F.lab.setAttribute('opacity', on);
+    if (!on) return;
+    const x = F.cx[pick];
+    F.tri.setAttribute('d', tri(x, F.markY, fs * .4));
+    F.lab.setAttribute('x', clampX(x, 'most here?', F.W, F.m));
+  }
+  function setPick(i) {
+    if (answered) return;
+    i = Math.max(0, Math.min(3, i));
+    const first = pick < 0;
+    if (i !== pick) { pick = i; paintPick(); Kit.haptic('selection'); }
+    if (first) sure.on();
+  }
+  let dragging = false;
+  const fromX = e => {
+    const x = e.clientX - pic.getBoundingClientRect().left;
+    let best = 0;
+    F.cx.forEach((c, i) => { if (Math.abs(c - x) < Math.abs(F.cx[best] - x)) best = i; });
+    return best;
+  };
+  pic.addEventListener('pointerdown', e => { if (answered) return; dragging = true; pic.setPointerCapture(e.pointerId); setPick(fromX(e)); });
+  pic.addEventListener('pointermove', e => { if (dragging) setPick(fromX(e)); });
+  const end = () => { dragging = false; };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+  pic.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { setPick(pick < 0 ? 0 : pick + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { setPick(pick < 0 ? 0 : pick - 1); e.preventDefault(); }
+  });
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    answered = true;
+    const ok = pick === TRUE;
+    Kit.answer({choice: NAMES[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- BACK ----------
+  // Red specks grow along the chain. A picture of "more", not a count.
+  const SPECKS = [1, 3, 7, 18];
+  function drawBack(animate) {
+    colours();
+    pic2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(pic2);
+    fs = Math.max(12, Math.min(14, W / 26));
+    const sw = Math.max(W * .2, Math.min(W * .42, (H - fs * 4.4) / AS.shark)), sh = sw * AS.shark;
+    const R = row(W, sw);
+    const cy = fs * 2.2 + sh / 2 + Math.max(0, (H - fs * 4.4 - sh) / 2);
+
+    const gA = Kit.mk('g', {}, pic2), gD = Kit.mk('g', {}, pic2), gT = Kit.mk('g', {}, pic2);
+    const animals = [], arws = [], specks = [[], [], [], []];
+    KINDS.forEach((k, i) => {
+      animals.push(animal(gA, k, R.cx[i], cy, R.sizes[i]));
+      if (i < 3) arws.push(arrow(gA, R.cx[i] + R.sizes[i] / 2 + R.gap * .18, R.cx[i + 1] - R.sizes[i + 1] / 2 - R.gap * .18, cy));
+      const d = dots(k, R.cx[i], cy, R.sizes[i], SPECKS[i]);
+      const r = i === 0 ? Math.max(2.4, R.sizes[0] * .14) : d.r;
+      d.pts.forEach(([px, py]) => specks[i].push(Kit.mk('circle', {cx: px, cy: py, r, fill: RED}, gD)));
+    });
+
+    const yb = Math.min(H - 3, cy + sh / 2 + fs * 1.5);
+    const lm = text(gT, R.m, yb, 'mollusc', {'font-weight': 600});
+    const ls = text(gT, W - R.m, yb, 'shark, at the top', {'text-anchor': 'end', fill: RED, 'font-weight': 800});
+    const p = pick < 0 ? TRUE : pick, my = cy - sh / 2 - fs * .35;
+    const mk = Kit.mk('path', {d: tri(R.cx[p], my, fs * .4), fill: INK}, gT);
+    const yl = text(gT, clampX(R.cx[p], 'your pick', W, R.m), my - fs * 1.1, 'your pick', {'text-anchor': 'middle', 'font-weight': 600});
+
+    if (backTl) backTl.kill();
+    if (!animate || Kit.calm) return;
+    gsap.set(animals.slice(1), {opacity: .25});
+    gsap.set([...specks[1], ...specks[2], ...specks[3]], {opacity: 0});
+    gsap.set([ls, mk, yl], {opacity: 0});
+    if (window.DrawSVGPlugin) gsap.set(arws, {drawSVG: '0%'});
+    backTl = gsap.timeline({delay: .35})
+      .from([animals[0], ...specks[0], lm], {opacity: 0, duration: .4, ease: 'power2.out'});
+    for (let i = 1; i < 4; i++) {
+      if (window.DrawSVGPlugin) backTl.to(arws[i - 1], {drawSVG: '100%', duration: .35, ease: 'power2.inOut'}, '+=.05');
+      backTl.to(animals[i], {opacity: 1, duration: .3, ease: 'power2.out'}, '-=.1')
+        .to(specks[i], {opacity: 1, duration: .2, stagger: .025, ease: 'power2.out'}, '-=.15');
+    }
+    backTl.to(ls, {opacity: 1, duration: .35, ease: 'power2.out'})
+      .to([mk, yl], {opacity: 1, duration: .35, ease: 'power2.out'}, '-=.1');
+  }
+
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !F.anim) return;
+    const arw = F.anim.querySelectorAll('.arw');
+    if (window.DrawSVGPlugin) gsap.from(arw, {drawSVG: '0%', duration: .5, stagger: .15, delay: .3, ease: 'power2.out'});
+    gsap.from(F.anim.querySelectorAll('g>path'), {opacity: 0, x: -6, duration: .45, stagger: .1, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setPick(2);
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 1700);
+    if (backTl) backTl.progress(1);
+    await wait(200);
+  };
+})();
+Kit.single();
+</script>
+</html>

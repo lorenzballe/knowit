@@ -374,8 +374,15 @@ class _PillCardStackState extends State<PillCardStack>
     switch (message) {
       case final PageAnswer answer:
         _answerFromPage(pill, answer);
-      case PageFlip() || PageTap():
+      // A page is the whole card, back and all: it turns itself over when
+      // its reader answers, and draws its own why. So a tap it left alone
+      // turns nothing. Turned onto the app's own back, the card changed
+      // colour and said again in words what the page had just drawn. Only
+      // a page that asks to be turned (Kit.flip) is.
+      case PageFlip():
         _turnOver();
+      case PageTap():
+        break;
       case PageDone():
         _sendOn();
       case PagePan(:final phase, :final delta, :final velocity):
@@ -1015,5 +1022,151 @@ class _PillCardStackState extends State<PillCardStack>
     }
 
     return layers;
+  }
+}
+
+/// The deck before its cards have come: the card in front and the edge of
+/// the one behind it, where they will stand, in grey, with a light passing
+/// over them, the way a feed opens on the outline of its first post rather
+/// than on a wheel. Sized as the deck sizes its cards, so nothing moves when
+/// the cards arrive.
+class DeckSkeleton extends StatefulWidget {
+  const DeckSkeleton({super.key});
+
+  @override
+  State<DeckSkeleton> createState() => _DeckSkeletonState();
+}
+
+class _DeckSkeletonState extends State<DeckSkeleton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _light = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1500),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Still, for a reader who asked for less motion.
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _light.stop();
+    } else if (!_light.isAnimating) {
+      _light.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _light.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    final Color card = Color.alphaBlend(
+      ink.withValues(alpha: 0.07),
+      context.p.surface,
+    );
+    final Color behind = Color.alphaBlend(
+      ink.withValues(alpha: 0.04),
+      context.p.surface,
+    );
+    final Color bar = ink.withValues(alpha: 0.09);
+    return Center(
+      child: LayoutBuilder(
+        builder: (context, box) {
+          // The deck's own measure (_PillCardStackState.build).
+          final double height = math.min(
+            math.max(0, box.maxHeight - _PillCardStackState._air * 2),
+            box.maxWidth * _PillCardStackState._cardAspect,
+          );
+          const double shrink = _PillCardStackState._shrink;
+          final double down = _PillCardStackState._peek + height * shrink / 2;
+          Widget line(double widthShare, double tall) => FractionallySizedBox(
+            widthFactor: widthShare,
+            child: Container(
+              height: tall,
+              decoration: BoxDecoration(
+                color: bar,
+                borderRadius: BorderRadius.circular(tall / 2),
+              ),
+            ),
+          );
+          final double q = math.max(height * 0.034, 18) * 1.1;
+          return SizedBox(
+            key: const ValueKey('deck-skeleton-card'),
+            width: box.maxWidth,
+            height: height,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // The edge of the card behind, as the deck shows it.
+                Positioned.fill(
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..translateByDouble(0.0, down, 0.0, 1.0)
+                      ..scaleByDouble(1 - shrink, 1 - shrink, 1.0, 1.0),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: behind,
+                        borderRadius: BorderRadius.circular(34),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned.fill(
+                  child: AnimatedBuilder(
+                    animation: _light,
+                    builder: (context, child) => ShaderMask(
+                      blendMode: BlendMode.srcATop,
+                      shaderCallback: (rect) {
+                        final double t = _light.value * 2 - 0.5;
+                        return LinearGradient(
+                          begin: Alignment(-1 + t * 2, -0.6),
+                          end: Alignment(t * 2, 0.6),
+                          colors: [
+                            Colors.transparent,
+                            ink.withValues(alpha: 0.06),
+                            Colors.transparent,
+                          ],
+                          stops: const [0.25, 0.5, 0.75],
+                        ).createShader(rect);
+                      },
+                      child: child,
+                    ),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: card,
+                        borderRadius: BorderRadius.circular(34),
+                      ),
+                      // The places a card's head, question and foot take.
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(28, 30, 28, 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            line(0.3, 10),
+                            SizedBox(height: height * 0.05),
+                            line(0.92, q),
+                            const SizedBox(height: 10),
+                            line(0.8, q),
+                            const SizedBox(height: 10),
+                            line(0.55, q),
+                            const Spacer(),
+                            line(0.45, 10),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }

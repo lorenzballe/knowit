@@ -3,12 +3,12 @@
   "topic": "technology",
   "genre": "technology.the_internet",
   "strand": "technology.the_internet.privacy",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How can thermite be used to destroy data?",
-  "answer": "Heating a hard drive past the Curie temperature erases its magnetic data, and cooling does not bring it back. The data was only a pattern of magnets, so the thermite's heat makes it unrecoverable.",
-  "move": "Heat a magnet past its Curie temperature and the data it held is gone for good.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How does thermite's heat make a hard drive's data unrecoverable?",
+  "answer": "The right answer is the second option: the magnets lose their magnetism. Past the Curie temperature, magnets lose their magnetism, so information stored on a magnetic hard drive heated that far becomes unrecoverable.",
+  "move": "Data on a magnetic drive lasts only as long as its magnetism.",
   "keywords": [
     "thermite",
     "curie-temperature",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Question card asking how thermite can destroy data. Press and hold to heat a drive's magnets past their Curie temperature, then let go so it cools.",
-    "ground": "#efe6d0"
+    "touch": "taps",
+    "label": "A quiz titled Thermite and the hard drive asks how thermite's heat makes a hard drive's data unrecoverable. Three options are offered: it burns a hole through the disk, the magnets lose their magnetism, or it fuses the arm to the disk. The reader picks one and then rates how sure they are."
   },
   "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1013s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }

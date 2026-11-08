@@ -1,0 +1,39 @@
+{
+  "id": "history-shield-or-dove",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Switzerland is neutral. Does that make it pacifist?",
+  "answer": "Neutrality is a political status: taking no side in other countries' wars. Pacifism is a moral stance against all violence, which Switzerland never adopted. Invaded, Switzerland fights, and it is very hard to conquer.",
+  "move": "Neutral means taking no side, not refusing to defend yourself.",
+  "keywords": [
+    "switzerland",
+    "neutrality",
+    "pacifism",
+    "shield",
+    "dove"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A neon sign reading 'Shield or dove' hangs over Switzerland. The reader taps it to choose between a shield and a dove, to find out whether Swiss neutrality means pacifism.",
+    "graded": false,
+    "ground": "#1d0f0f"
+  },
+  "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=2Y0RgQmmESI&t=303s",
+  "written": "2026-11-04"
+}

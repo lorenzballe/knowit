@@ -57,6 +57,9 @@ PUBLISHED = ROOT / "web" / "cards" / "v2" / "cards.json"
 VERSION = PUBLISHED.parent / "version.json"
 # One file per free card's page, fetched by the phone when it is wanted.
 PAGES = ROOT / "web" / "cards" / "pages"
+# The small pictures of each page, its front and its back (tool/cards/thumbs.cjs), and the hash of
+# the page each was taken from.
+THUMBS = ROOT / "web" / "cards" / "thumbs"
 # The bank for builds that read every page inside its card (format 1), and
 # its version note: where those builds look, and always will.
 LEGACY = ROOT / "web" / "cards" / "cards.json"
@@ -163,6 +166,25 @@ def page_ref(card: dict) -> str:
     return f"{page_file(card)}?v={page_hash(card['_html'])}"
 
 
+def thumbs_index() -> dict[str, str]:
+    """The page hash each card's pictures were taken from, by card."""
+    index = THUMBS / "index.json"
+    return json.loads(index.read_text(encoding="utf-8")) if index.exists() else {}
+
+
+def thumbs_of(card: dict, index: dict[str, str]) -> dict | None:
+    """The pictures of a free card's page, front and back, named with the page's hash: only while
+    they were taken from the page as it is now. A card whose page changed since goes without until
+    thumbs.cjs takes them again, and the app draws it as it would with no picture."""
+    h = page_hash(card["_html"])
+    if index.get(card["id"]) != h:
+        return None
+    return {side: f"thumbs/{card['id']}-{side}.webp?v={h}" for side in ("front", "back")}
+
+
+_THUMBS: dict[str, str] | None = None
+
+
 def bundled(card: dict, *, inline: bool = False) -> dict:
     """A card as the app reads it. A free card's face names its page, which
     travels as a file of its own; with [inline], for the builds that came
@@ -172,8 +194,14 @@ def bundled(card: dict, *, inline: bool = False) -> dict:
         if inline:
             out["web"] = {**out["web"], "html": card["_html"]}
         else:
+            global _THUMBS
+            if _THUMBS is None:
+                _THUMBS = thumbs_index()
             out["web"] = {**out["web"], "page": page_ref(card),
                           "bytes": len(card["_html"].encode("utf-8"))}
+            pictures = thumbs_of(card, _THUMBS)
+            if pictures:
+                out["web"]["thumbs"] = pictures
     return out
 
 

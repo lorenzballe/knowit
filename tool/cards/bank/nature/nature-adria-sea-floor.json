@@ -1,0 +1,39 @@
+{
+  "id": "nature-adria-sea-floor",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What kind of place was the Adria microplate 220 million years ago?",
+  "answer": "Adria was a sea floor about 220 million years ago, lying under the Tethys sea. Thick carbonate sediment piled up on it and hardened into Triassic limestone and dolomite, the rock now found high in the Alps and Apennines.",
+  "move": "Italy's limestone and dolomite peaks began as sea floor on Adria.",
+  "keywords": [
+    "adria",
+    "tethys",
+    "alps",
+    "apennines",
+    "limestone"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four geology steps about the Adria microplate, shown as tappable cards. The reader taps them in the order they happened around 220 million years ago.",
+    "graded": false,
+    "ground": "#efe5cf"
+  },
+  "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=DTOssDc8keo&t=268s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "thinking-bermuda-per-ship",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why isn't the Bermuda Triangle more dangerous than other seas?",
+  "answer": "The Triangle counts the most wrecks, but it is vast and busy, so it piles up wrecks. Divide each sea's wrecks by the ships that cross it, and the risk per ship crossing the Triangle is the same as in other seas.",
+  "move": "A big count means little until you divide it by how many passed.",
+  "keywords": [
+    "bermuda triangle",
+    "shipwrecks",
+    "ship traffic",
+    "risk",
+    "bermuda"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question: Why isn't the Bermuda Triangle more dangerous than other seas? A dial to drag right divides each sea's wrecks by the ships that cross it. Before dividing, the Triangle has the most wrecks; after dividing, its risk per ship matches other seas.",
+    "ground": "#050c07"
+  },
+  "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=410s",
+  "written": "2026-11-04"
+}

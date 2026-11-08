@@ -96,6 +96,15 @@ class ThePage(unittest.TestCase):
         drags = dict(page_card()["web"], touch="drags")
         self.assertTrue(any("data-drag" in p for p in self.problems(web=drags)))
 
+    def test_a_slider_is_the_page_s_to_drag(self):
+        slider = TEMPLATE + '<input type="range" min="0" max="10">'
+        found = self.problems(page=slider)
+        self.assertTrue(any("takes drags" in p for p in found))
+        self.assertTrue(any("marked data-drag" in p for p in found))
+        drags = dict(page_card()["web"], touch="drags")
+        marked = TEMPLATE + '<input data-drag type="range" min="0" max="10">'
+        self.assertFalse(any("slider" in p for p in self.problems(page=marked, web=drags)))
+
     def test_nothing_from_anywhere_but_the_kit(self):
         cases = {
             '<link rel="stylesheet" href="https://example.org/a.css">': "not in the kit",
@@ -121,6 +130,9 @@ class ThePage(unittest.TestCase):
         self.assertEqual(self.problems(page=TEMPLATE.replace("</style>", "</style>" + grain, 1)), [])
         beside = grain.replace("}</style>", ",url(https://example.org/a.png)}</style>")
         self.assertTrue(any("a stylesheet points at" in p for p in self.problems(page=TEMPLATE.replace("</style>", "</style>" + beside, 1))))
+        # A function of the page that ends in url is not a stylesheet pointing anywhere.
+        drawn = "<script>function curl(g, cx, cy){return g} curl(g, cx + (x1 - xm), cy)</script>"
+        self.assertEqual(self.problems(page=TEMPLATE.replace("</style>", "</style>" + drawn, 1)), [])
 
     def test_small_enough_to_travel_and_for_the_embedded_bank_to_hold(self):
         heavy = TEMPLATE.replace("</style>", "</style><!--" + "x" * pages.MAX_BYTES + "-->", 1)

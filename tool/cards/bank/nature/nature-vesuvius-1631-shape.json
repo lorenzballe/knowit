@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A wide, low volcano cone drawn to true scale, with a slider to restore its real height. It asks what kind of eruption occurred in 1631 and how big Vesuvius is."
   },
   "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",

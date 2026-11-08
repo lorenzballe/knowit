@@ -303,8 +303,17 @@ void main() {
         for (final s in kOwnExplore)
           if (watched.containsKey(s.id)) s.id,
       ];
-      expect(order.first, 'today');
-      expect(order, containsAllInOrder(['today', 'top', 'asking', 'month']));
+      expect(order.first, 'your-day');
+      expect(
+        order,
+        containsAllInOrder([
+          'your-day',
+          'bets-day',
+          'quick-games',
+          'top',
+          'theme-practical-0',
+        ]),
+      );
       expect(
         [for (final id in order) watched[id]],
         [for (int i = 1; i <= order.length; i++) i],

@@ -3,12 +3,12 @@
   "topic": "technology",
   "genre": "technology.batteries",
   "strand": "technology.batteries.charging",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "What two jobs does the depot's 30 kW solar roof do?",
-  "answer": "The 30 kW solar roof does two jobs. First, it and its storage batteries recharge the whole convoy quickly. Once the train is full, the surplus is sold to the local grid, so the depot works as a small power plant.",
-  "move": "The train fills first. Whatever sunshine is left over goes to the grid.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What two jobs does the depot's 30 kW solar system do?",
+  "answer": "The depot's 30 kW solar system charges the train, then sells the rest. With its storage batteries it quickly recharges the whole convoy. What the train can't take is sold to the local grid, so the depot works as a small power plant.",
+  "move": "Panels with one user waste what that user can't take. A second buyer, the grid, puts the rest to work.",
   "keywords": [
     "solar-depot",
     "solar-roof",
@@ -28,10 +28,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A depot roof with solar panels sits under a sun the reader can drag across the sky. Arrows show energy flowing from the roof to the convoy's batteries and, once the train is full, out to the local grid. The page asks what two jobs the 30 kW solar roof does.",
-    "ground": "#0c1a2b"
+    "label": "Depot roof with solar panels and arrows showing energy flowing to a train and to the grid. It asks what two jobs the 30 kW system does; drag the sun across the day to watch the train charge."
   },
   "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=1famKvkfFKM&t=47s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }

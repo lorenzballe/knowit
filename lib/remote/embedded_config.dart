@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "135b215014ca4d39",
+ "hash": "ad367cf1b6788699",
  "app": {
   "gate": null,
   "flags": {},
@@ -18,16 +18,192 @@ const String kEmbeddedRemote = r'''
   "_": "Explore as the build's own (remote/examples/explore-today.json), with the new free cards on top for the TestFlight build: only that build's bank holds them, so no other build has anything to show there, and the sections end on 2026-12-15. To go back, set this file to null.",
   "sections": [
    {
+    "id": "debug-flicker-normal",
+    "block": "carousel",
+    "size": "m",
+    "gap": 0,
+    "title": {
+     "en": "Flicker test · normal cards · debug",
+     "it": "Prova lampo · carte normali · debug"
+    },
+    "subtitle": {
+     "en": "Open one and swipe five: does a card flicker as it comes up?",
+     "it": "Aprine una e scorrine cinque: la carta lampeggia quando arriva?"
+    },
+    "source": {
+     "ids": [
+      "science-absolute-zero-5",
+      "science-absolute-zero-9",
+      "history-1848-10",
+      "history-1848-5",
+      "nature-adaptation-2",
+      "nature-adaptation-3",
+      "space-asteroid-risk-2",
+      "space-asteroid-risk-3",
+      "technology-cables-3",
+      "technology-cables-4",
+      "human_body-ageing-well-2",
+      "human_body-ageing-well-3",
+      "psychology-adaptation-2",
+      "psychology-adaptation-3",
+      "economics-1929-10",
+      "economics-1929-3"
+     ]
+    },
+    "limit": 16,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    }
+   },
+   {
+    "id": "debug-flicker-drawn",
+    "block": "carousel",
+    "size": "m",
+    "gap": 0,
+    "title": {
+     "en": "Flicker test · cards with a drawing · debug",
+     "it": "Prova lampo · carte col disegno · debug"
+    },
+    "subtitle": {
+     "en": "The same, with cards drawn as pages",
+     "it": "Lo stesso, con le carte col disegno"
+    },
+    "source": {
+     "ids": [
+      "science-extinguisher-charges",
+      "science-cold-laminar-flow-6",
+      "science-pressure-at-depth",
+      "science-cfc-ozone-hole",
+      "science-gravel-third-friction",
+      "history-walled-city-crowd",
+      "history-paradox-of-escalation",
+      "maths-mersenne-glass-rack",
+      "maths-knot-theory-renaissance",
+      "maths-mercator-russia",
+      "medicine-alcohol-group-one",
+      "economics-slot-payback",
+      "economics-restart-clock",
+      "economics-resource-curse-flask",
+      "economics-oil-countdown",
+      "psychology-gravity-hill"
+     ]
+    },
+    "limit": 16,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    }
+   },
+   {
     "id": "debug-new-jewels-1",
     "block": "carousel",
     "size": "l",
     "gap": 0,
     "title": {
-     "en": "New jewel cards · debug (114, 1/2)",
-     "it": "Carte gioiello nuove · debug (114, 1/2)"
+     "en": "New jewel cards · debug (183, 1/4)",
+     "it": "Carte gioiello nuove · debug (183, 1/4)"
     },
     "source": {
      "ids": [
+      "science-graphene-helium-seal",
+      "science-dilute-fukushima-water",
+      "science-air-torpedo-sphere",
+      "science-push-harder-spin",
+      "science-cat-already-decided",
+      "science-arlington-teflon-blast",
+      "science-spinning-x-slowdown",
+      "science-many-worlds-dice",
+      "science-reynolds-goes-up",
+      "science-zero-g-smoke",
+      "science-thermite-steel-damper",
+      "science-weight-is-a-pull",
+      "science-bomb-layer",
+      "science-little-boy-waste",
+      "science-teflon-chain-reaction",
+      "science-sketch-before-measuring",
+      "science-foraminifera-clay-line",
+      "science-fault-breaks-layer",
+      "science-volcano-depth-tsunami",
+      "science-dna-spooled-tight",
+      "science-vinegar-eats-eggshell",
+      "science-rift-to-ocean",
+      "science-frozen-compass",
+      "science-magnetic-seafloor-stripes",
+      "science-steel-bar-signal",
+      "history-ivy-mike-blocks",
+      "history-little-boy-efficiency",
+      "history-shield-or-dove",
+      "history-tsar-cloud-height",
+      "history-disarm-in-steps",
+      "history-national-redoubt",
+      "history-great-power-war",
+      "history-nato-shrinking-cushion",
+      "history-silk-road-sentence",
+      "history-elephants-foot-dose",
+      "maths-perfect-tiling",
+      "maths-duverger-two-parties",
+      "maths-storm-jar-odds",
+      "maths-kepler-proof-dial",
+      "maths-question-seventeen",
+      "maths-fibonacci-gaps",
+      "maths-borda-spoiler-dial",
+      "medicine-eclipse-blind-spot",
+      "medicine-triple-dependency-window",
+      "food-acid-squeezes-protein",
+      "food-shark-mercury-climb"
+     ]
+    },
+    "limit": 46,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    },
+    "subtitle": {
+     "en": "Each with a look and a motion of its own, drawn straight on the card",
+     "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
+    }
+   },
+   {
+    "id": "debug-new-jewels-2",
+    "block": "carousel",
+    "size": "l",
+    "gap": 0,
+    "title": {
+     "en": "New jewel cards · debug (183, 2/4)",
+     "it": "Carte gioiello nuove · debug (183, 2/4)"
+    },
+    "source": {
+     "ids": [
+      "psychology-gentle-slope-frame",
+      "human_body-hyper-g-head",
+      "human_body-sweat-evaporation-heat",
+      "human_body-habits-mark-genes",
+      "technology-tape-growing-robot",
+      "technology-tail-pull-retract",
+      "technology-milk-carton-layers",
+      "technology-gps-light-rose",
+      "technology-five-times-downforce",
+      "technology-folding-the-steel",
+      "technology-messina-record-span",
+      "technology-sludge-to-biogas",
+      "technology-induction-foil-stick",
+      "technology-xm42-flamethrower",
+      "technology-backlash-pin-hole",
+      "nature-adriatic-dry-floor",
+      "nature-adria-sea-floor",
+      "nature-everest-underwater",
+      "nature-vesuvius-ash-volume",
+      "thinking-bermuda-per-ship",
+      "weird_facts-marble-football-fields",
+      "life-border-coin-flip",
+      "life-ecuador-murder-rate",
       "science-extinguisher-charges",
       "science-cold-laminar-flow-6",
       "science-pressure-at-depth",
@@ -50,7 +226,28 @@ const String kEmbeddedRemote = r'''
       "technology-motogp-power-weight",
       "technology-tempered-glass-squeeze",
       "technology-solar-depot-grid",
-      "technology-tatara-mass-balance",
+      "technology-tatara-mass-balance"
+     ]
+    },
+    "limit": 46,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    }
+   },
+   {
+    "id": "debug-new-jewels-3",
+    "block": "carousel",
+    "size": "l",
+    "gap": 0,
+    "title": {
+     "en": "New jewel cards · debug (183, 3/4)",
+     "it": "Carte gioiello nuove · debug (183, 3/4)"
+    },
+    "source": {
+     "ids": [
       "technology-graphene-fast-charge",
       "nature-vesuvius-warning-signs",
       "nature-ice-age-italy",
@@ -84,32 +281,7 @@ const String kEmbeddedRemote = r'''
       "science-snow-flips-friction",
       "science-sludge-cannibalism",
       "science-rock-restoration",
-      "science-pacific-background-radiation"
-     ]
-    },
-    "limit": 57,
-    "audience": {
-     "platforms": [
-      "ios"
-     ],
-     "until": "2026-12-15"
-    },
-    "subtitle": {
-     "en": "Each with a look and a motion of its own, drawn straight on the card",
-     "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
-    }
-   },
-   {
-    "id": "debug-new-jewels-2",
-    "block": "carousel",
-    "size": "l",
-    "gap": 0,
-    "title": {
-     "en": "New jewel cards · debug (114, 2/2)",
-     "it": "Carte gioiello nuove · debug (114, 2/2)"
-    },
-    "source": {
-     "ids": [
+      "science-pacific-background-radiation",
       "science-one-way-light",
       "science-magnetic-stripes",
       "science-kepler-water-units",
@@ -121,7 +293,28 @@ const String kEmbeddedRemote = r'''
       "science-grape-microwave-trap",
       "science-granite-near-diamond",
       "science-fourth-power-glow",
-      "science-fallout-layer",
+      "science-fallout-layer"
+     ]
+    },
+    "limit": 46,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    }
+   },
+   {
+    "id": "debug-new-jewels-4",
+    "block": "carousel",
+    "size": "l",
+    "gap": 0,
+    "title": {
+     "en": "New jewel cards · debug (183, 4/4)",
+     "it": "Carte gioiello nuove · debug (183, 4/4)"
+    },
+    "source": {
+     "ids": [
       "science-energy-glass",
       "science-bouncing-egg-bubbles",
       "science-bio-not-biodegradable",
@@ -169,7 +362,7 @@ const String kEmbeddedRemote = r'''
       "maths-penrose-lookalikes"
      ]
     },
-    "limit": 57,
+    "limit": 45,
     "audience": {
      "platforms": [
       "ios"
@@ -1557,9 +1750,230 @@ const String kEmbeddedRemote = r'''
     "block": "offline"
    },
    {
+    "id": "your-day",
+    "block": "your-day",
+    "gap": 4,
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "bets-day",
+    "block": "bets-day",
+    "size": "l",
+    "title": {
+     "en": "The daily challenge",
+     "it": "La sfida del giorno",
+     "de": "Die Herausforderung des Tages",
+     "es": "El reto del día",
+     "fr": "Le défi du jour",
+     "ja": "今日のチャレンジ",
+     "ko": "오늘의 도전",
+     "nl": "De uitdaging van de dag",
+     "pl": "Wyzwanie dnia",
+     "pt": "O desafio do dia",
+     "ru": "Задание дня",
+     "tr": "Günün meydan okuması",
+     "zh": "每日挑战"
+    },
+    "subtitle": {
+     "en": "The same for everyone today. Lock in your guess, then see how far off you were.",
+     "it": "Uguale per tutti, oggi. Blocca la tua stima, poi guarda di quanto hai sbagliato.",
+     "de": "Heute für alle gleich. Leg dich fest, dann sieh, wie weit du danebenlagst.",
+     "es": "Hoy, igual para todos. Fija tu estimación y luego mira cuánto te has desviado.",
+     "fr": "Le même pour tout le monde aujourd'hui. Valide ton estimation, puis découvre l'écart.",
+     "ja": "今日は誰にとっても同じ。予想を確定して、どれだけ近かったか確かめよう。",
+     "ko": "오늘은 모두에게 같아요. 추측을 확정하고 얼마나 빗나갔는지 확인하세요.",
+     "nl": "Vandaag voor iedereen hetzelfde. Leg je schatting vast en zie hoe ver je ernaast zat.",
+     "pl": "Dziś dla wszystkich to samo. Zatwierdź swój typ i sprawdź, jak daleko był od prawdy.",
+     "pt": "Hoje, igual para todos. Fixa o teu palpite e vê a que distância ficaste.",
+     "ru": "Сегодня для всех одно и то же. Зафиксируй догадку и узнай, насколько она точна.",
+     "tr": "Bugün herkes için aynı. Tahminini kilitle, sonra ne kadar yaklaştığını gör.",
+     "zh": "今天人人相同。锁定你的估计，再看看差了多少。"
+    },
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "path",
+    "block": "purpose.set",
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "quick-games",
+    "block": "quick-games",
+    "title": {
+     "en": "Quick games",
+     "it": "Giochi veloci",
+     "de": "Schnelle Spiele",
+     "es": "Juegos rápidos",
+     "fr": "Jeux rapides",
+     "ja": "クイックゲーム",
+     "ko": "빠른 게임",
+     "nl": "Snelle spelletjes",
+     "pl": "Szybkie gry",
+     "pt": "Jogos rápidos",
+     "ru": "Быстрые игры",
+     "tr": "Hızlı oyunlar",
+     "zh": "快速游戏"
+    },
+    "subtitle": {
+     "en": "A minute or two each. Pick one and play.",
+     "it": "Un minuto o due ciascuno. Scegline uno e gioca.",
+     "de": "Je ein, zwei Minuten. Such dir eins aus und spiel.",
+     "es": "Uno o dos minutos cada uno. Elige uno y juega.",
+     "fr": "Une minute ou deux chacun. Choisis-en un et joue.",
+     "ja": "どれも1〜2分。選んで遊ぼう。",
+     "ko": "하나에 1~2분. 골라서 플레이하세요.",
+     "nl": "Een minuutje of twee per stuk. Kies er een en speel.",
+     "pl": "Każda na minutę lub dwie. Wybierz i graj.",
+     "pt": "Um ou dois minutos cada. Escolhe um e joga.",
+     "ru": "По минуте-другой на каждую. Выбери и играй.",
+     "tr": "Her biri bir iki dakika. Birini seç ve oyna.",
+     "zh": "每个只要一两分钟。选一个开始玩。"
+    },
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "subject-levels",
+    "block": "subject-levels",
+    "title": {
+     "en": "Your subjects",
+     "it": "Le tue materie",
+     "de": "Deine Fächer",
+     "es": "Tus temas",
+     "fr": "Tes sujets",
+     "ja": "あなたの分野",
+     "ko": "나의 주제",
+     "nl": "Jouw vakken",
+     "pl": "Twoje tematy",
+     "pt": "Os teus temas",
+     "ru": "Твои темы",
+     "tr": "Konuların",
+     "zh": "你的主题"
+    },
+    "subtitle": {
+     "en": "Level 1 to 10, from the cards you read and get right.",
+     "it": "Livello da 1 a 10, dalle carte che leggi e indovini.",
+     "de": "Stufe 1 bis 10, aus den Karten, die du liest und richtig beantwortest.",
+     "es": "Nivel del 1 al 10, según las cartas que lees y aciertas.",
+     "fr": "Niveau 1 à 10, selon les cartes que tu lis et réussis.",
+     "ja": "読んだカードと正解したカードから決まるレベル1〜10。",
+     "ko": "읽고 맞힌 카드로 정해지는 레벨 1~10.",
+     "nl": "Niveau 1 tot 10, uit de kaarten die je leest en goed hebt.",
+     "pl": "Poziom od 1 do 10, z kart, które czytasz i odgadujesz.",
+     "pt": "Nível de 1 a 10, pelas cartas que lês e acertas.",
+     "ru": "Уровень от 1 до 10 — по карточкам, которые ты читаешь и угадываешь.",
+     "tr": "Okuduğun ve doğru bildiğin kartlara göre 1'den 10'a seviye.",
+     "zh": "等级 1 到 10，取决于你读过和答对的卡片。"
+    },
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "like-saved",
+    "block": "like-saved",
+    "title": {
+     "en": "More like what you saved",
+     "it": "Altre come quelle che hai salvato",
+     "de": "Mehr wie das, was du behalten hast",
+     "es": "Más como lo que guardaste",
+     "fr": "D'autres comme celles que tu as gardées",
+     "ja": "保存したカードに似たもの",
+     "ko": "보관한 카드와 비슷한 카드",
+     "nl": "Meer zoals wat je bewaarde",
+     "pl": "Więcej podobnych do zachowanych",
+     "pt": "Mais como o que guardaste",
+     "ru": "Похожие на сохранённые",
+     "tr": "Sakladıklarına benzer kartlar",
+     "zh": "和你收藏的相似"
+    },
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
+   },
+   {
     "id": "today",
     "block": "today",
-    "gap": 0
+    "gap": 0,
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "top",
@@ -1567,15 +1981,51 @@ const String kEmbeddedRemote = r'''
    },
    {
     "id": "loved",
-    "block": "loved"
+    "block": "loved",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "asking",
-    "block": "asking"
+    "block": "asking",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "mine",
-    "block": "mine"
+    "block": "mine",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "where-you-live",
@@ -1583,15 +2033,51 @@ const String kEmbeddedRemote = r'''
    },
    {
     "id": "month",
-    "block": "month"
+    "block": "month",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "signature-numbers",
-    "block": "numbers"
+    "block": "numbers",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "signature-debates",
-    "block": "debates"
+    "block": "debates",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "theme-sharpest-0",
@@ -1599,69 +2085,283 @@ const String kEmbeddedRemote = r'''
    },
    {
     "id": "theme-origins-0",
-    "block": "origins"
+    "block": "origins",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "theme-stories-0",
-    "block": "stories"
+    "block": "stories",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "theme-trueOrFalse-0",
-    "block": "true-false"
+    "block": "true-false",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "came-back",
-    "block": "came-back"
+    "block": "came-back",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "move-sampling",
-    "block": "move-sampling"
+    "block": "move-sampling",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "move-counterfactual",
-    "block": "move-compared"
+    "block": "move-compared",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "work",
-    "block": "work"
+    "block": "work",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "unmask",
-    "block": "unmask"
+    "block": "unmask",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "how-sure",
     "block": "how-sure",
-    "gap": 28
+    "gap": 28,
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "what-if",
-    "block": "what-if"
+    "block": "what-if",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "series",
-    "block": "series"
+    "block": "series",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "sixty",
-    "block": "sixty"
+    "block": "sixty",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "mood",
     "block": "mood",
-    "gap": 28
+    "gap": 28,
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "did-you-know",
-    "block": "did-you-know"
+    "block": "did-you-know",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "surprise",
-    "block": "surprise"
+    "block": "surprise",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "theme-practical-0",
     "block": "practical"
+   },
+   {
+    "id": "feed",
+    "block": "feed",
+    "title": {
+     "en": "Keep exploring",
+     "it": "Continua a esplorare",
+     "de": "Weiter entdecken",
+     "es": "Sigue explorando",
+     "fr": "Continue d'explorer",
+     "ja": "もっと探す",
+     "ko": "계속 둘러보기",
+     "nl": "Verder ontdekken",
+     "pl": "Odkrywaj dalej",
+     "pt": "Continua a explorar",
+     "ru": "Исследуй дальше",
+     "tr": "Keşfetmeye devam et",
+     "zh": "继续探索"
+    },
+    "subtitle": {
+     "en": "The same for everyone. Nothing here is picked for you.",
+     "it": "Uguale per tutti. Niente qui è scelto per te.",
+     "de": "Für alle gleich. Nichts hier ist für dich ausgesucht.",
+     "es": "Igual para todos. Nada aquí está elegido para ti.",
+     "fr": "Pareil pour tout le monde. Rien ici n'est choisi pour toi.",
+     "ja": "誰にとっても同じ。あなた向けに選んだものはありません。",
+     "ko": "누구에게나 똑같아요. 맞춤으로 고른 건 없어요.",
+     "nl": "Voor iedereen hetzelfde. Niets hier is voor jou gekozen.",
+     "pl": "Dla wszystkich to samo. Nic tu nie jest wybrane dla ciebie.",
+     "pt": "Igual para todos. Nada aqui foi escolhido para ti.",
+     "ru": "Для всех одинаково. Здесь ничего не подобрано под тебя.",
+     "tr": "Herkes için aynı. Burada hiçbir şey senin için seçilmedi.",
+     "zh": "人人看到的都一样，没有为你挑选。"
+    }
    }
   ]
  },

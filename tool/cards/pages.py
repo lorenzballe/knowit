@@ -47,7 +47,9 @@ MEDIA_SRC = re.compile(r"<(img|audio|video|source|track|image)\b[^>]*\b(?:src|hr
 IMPORT_MAP = re.compile(r"<script\b[^>]*\btype\s*=\s*[\"']importmap[\"'][^>]*>([\s\S]*?)</script\s*>", re.I)
 IMPORT_FROM = re.compile(r"""\b(?:import|from)\s*\(?\s*["']([^"']+)["']""")
 KIT_URL = re.compile(r"""Kit\.url\(\s*['"]([^'"]+)['"]\s*\)""")
-CSS_URL = re.compile(r"""url\(\s*(['"]?)([^'")]+)\1\s*\)""")
+# A stylesheet's url( stands after a colon, a comma, a space or a bracket; a script's curl(...) or
+# toUrl(...) is a function of the page, not a picture it loads.
+CSS_URL = re.compile(r"""(?<![\w$])url\(\s*(['"]?)([^'")]+)\1\s*\)""")
 # A picture carried as data names its own parts (a grain filter at url(%23n)), and a picture shown
 # as an image loads nothing from outside: what is inside it is its own.
 CSS_DATA = re.compile(r"""url\(\s*(?:"data:[^"]*"|'data:[^']*')\s*\)""")
@@ -148,6 +150,16 @@ def check_page(card: dict, page: str | None, *, files: set[str] | None = None) -
         p.append("a card that only tells records nothing: Kit.answer does nothing on it")
     if web.get("touch") == "drags" and not re.search(r"data-drag|touch-action\s*:\s*none", page):
         p.append("a card that takes drags marks what it holds: data-drag, or touch-action: none")
+    # A slider is dragged. On a card that takes only taps, or with the slider unmarked, the app keeps
+    # the drag and throws the card away from under the reader's thumb.
+    for tag in re.findall(r"<input\b[^>]*>", page, re.I):
+        if (_attr(tag, "type") or "").lower() != "range":
+            continue
+        if web.get("touch") != "drags":
+            p.append("a card with a slider takes drags (web.touch drags), or the app throws the card when the slider is dragged")
+        if not re.search(r"\sdata-drag\b", tag):
+            p.append("a slider is marked data-drag, so the app hands the page every drag that starts on it")
+        break
 
     # Nothing from anywhere but the kit.
     for tag in LINK.findall(page):

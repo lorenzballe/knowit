@@ -3,12 +3,12 @@
   "topic": "nature",
   "genre": "nature.systems_thinking",
   "strand": "nature.systems_thinking.chain_reactions",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Why would losing sharks throw the whole sea off balance?",
-  "answer": "Sharks sit at the top of the food chain and keep the fish below them in check. Take them away and their prey multiply, so every level beneath tips out of balance. Yet about 100 million sharks and rays die every year.",
-  "move": "A top predator is the brake: remove it and the whole food web runs out of balance.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "No more sharks. What happens to the fish they eat?",
+  "answer": "Sharks at the top of the food chain keep the fish below them in check. Take them away and those fish multiply unchecked, and the whole sea, with it the planet's ecosystem, tips out of balance. About 100 million sharks and rays die every year.",
+  "move": "The predator at the top is the regulator: remove it and its prey explodes.",
   "keywords": [
     "sharks",
     "rays",
@@ -28,11 +28,11 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Interactive card titled 'Take the shark away' asks why losing sharks would throw the whole sea off balance. A draggable shark is shown; the reader drags it up to a boat to remove it from the ocean.",
-    "ground": "#06283f"
+    "touch": "taps",
+    "label": "Question asking what happens to the fish that sharks eat if sharks are removed from the top of the ocean food chain. Three choices are offered: More, Fewer, or About the same. The reader picks one, and the page then reveals the answer.",
+    "ground": "#8fd0dc"
   },
   "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=138s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }

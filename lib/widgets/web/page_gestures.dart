@@ -8,7 +8,7 @@
 ///
 /// * a tap, always: buttons, choices and anything else on the page that is
 ///   pressed is the page's. A tap the page does nothing with comes back as
-///   [PageTap], and turns the card over as a tap on any card does.
+///   [PageTap], and turns nothing: the page is the whole card, back and all.
 /// * on a card that holds the finger itself ([WebTouch.drags]), every touch
 ///   that starts on a part the page marked as its own (`data-drag`, or
 ///   `touch-action: none`: a slider, a canvas to draw on, a game), taken at

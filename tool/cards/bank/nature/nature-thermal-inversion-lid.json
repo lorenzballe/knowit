@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Diagram of a valley with smog trapped near the ground. A slider cools the air at ground level; the reader watches whether the smog can rise under the warmer air above."
   },
   "source": "Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)",

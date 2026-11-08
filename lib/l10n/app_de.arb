@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Berichtigungen",
   "screensFrontPuzzle": "Das Rätsel des Tages",
   "screensFrontEnd": "Das war die heutige Ausgabe",
-  "screensFrontTomorrow": "Die von morgen erscheint am Morgen"
+  "screensFrontTomorrow": "Die von morgen erscheint am Morgen",
+  "exploreDayRead": "Heute: {read} von {of} gelesen",
+  "exploreDayLeft": "{n, plural, =1{noch 1} other{noch {n}}}",
+  "exploreDayDone": "alle gelesen",
+  "exploreDayOpen": "Zu den Karten von heute",
+  "exploreSixtyRecord": "Dein Rekord {n}/{of}",
+  "exploreSixtyFirst": "Stell deinen Rekord auf",
+  "exploreGameNone": "Gerade gibt es hier nichts zu spielen. Komm morgen wieder.",
+  "exploreSubjectLevel": "{subject}, Stufe {n}",
+  "exploreBecauseSaved": "Weil du „{question}“ behalten hast"
 }

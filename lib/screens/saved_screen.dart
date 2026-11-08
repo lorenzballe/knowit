@@ -7,7 +7,11 @@ import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/card_edge.dart';
 import '../widgets/motion.dart';
+import '../widgets/subject_icon.dart';
+import '../widgets/web/card_thumb.dart';
+import '../widgets/web/web_card_page.dart' show groundOf;
 import '../widgets/share_sheet.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
@@ -417,11 +421,16 @@ class _SavedRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 6),
-              child: TopicDot(pill.color),
-            ),
-            const SizedBox(width: 12),
+            if (CardThumb.has(pill, CardSide.back)) ...[
+              _RowPicture(pill: pill),
+              const SizedBox(width: 14),
+            ] else ...[
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: TopicDot(pill.color),
+              ),
+              const SizedBox(width: 12),
+            ],
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -471,6 +480,54 @@ class _SavedRow extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A kept card in small at the head of its row: the picture of its back,
+/// since it was read, the whole card with its drawing at a glance.
+///
+/// As tall as the row's two marks at its end, so a row with a picture is as
+/// tall as one without, and as wide as the card's proportion makes it. A
+/// picture that will not come leaves the same card in small, its subject's
+/// colour and mark, so the rows stay in line.
+class _RowPicture extends StatelessWidget {
+  const _RowPicture({required this.pill});
+
+  final Pill pill;
+
+  /// The two marks at the row's end, one over the other.
+  static const double height = 88;
+  static const double width = height * WebThumbs.aspect;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ground = groundOf(pill);
+    return ExcludeSemantics(
+      // The question beside it says what the card is.
+      child: Container(
+        key: ValueKey('saved-picture-${pill.id}'),
+        width: width,
+        height: height,
+        decoration: cardFace(context, ground, radius: 9),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(9),
+          child: CardThumb(
+            pill: pill,
+            side: CardSide.back,
+            fallback: ColoredBox(
+              color: pill.color,
+              child: Center(
+                child: SubjectIcon(
+                  subject: pill.topic,
+                  size: 18,
+                  ink: pill.ink,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

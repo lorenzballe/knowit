@@ -1,0 +1,36 @@
+{
+  "id": "technology-gps-light-rose",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How does GPS depend on light having the same speed in all directions?",
+  "answer": "GPS satellites send time-stamped signals. If light's speed changed with direction, the signals would arrive at different rates, so the clocks wouldn't be properly synced. Positioning needs that sync.",
+  "move": "GPS doesn't check that light is the same every way. It's built on it.",
+  "keywords": [
+    "gps",
+    "speed_of_light",
+    "satellites",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A quiz asking how GPS depends on light travelling at the same speed in every direction. The reader drags a light pulse, then picks one of three answers: it doesn't need it, to sync its clocks, or to aim its signals."
+  },
+  "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=pTn6Ewhb27k&t=620s",
+  "written": "2026-11-07"
+}

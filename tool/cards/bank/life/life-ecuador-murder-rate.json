@@ -1,0 +1,37 @@
+{
+  "id": "life-ecuador-murder-rate",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.first_principles",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "For every 100,000 Ecuadorians, how many homicides a year?",
+  "answer": "Homicides in Ecuador have reached 1 in 2,500 people a year. On average that is 40 per 100,000. Dividing 100,000 by 40 gives 2,500, so each block of 2,500 people has one homicide a year.",
+  "move": "Divide 100,000 by it and you get the size of the group where it happens once a year.",
+  "keywords": [
+    "ecuador",
+    "homicide",
+    "organised crime",
+    "prisons",
+    "election"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A crowd of figures on a slider. Drag sideways to guess how many homicides a year occur per 100,000 Ecuadorians. The headline reads 'One in 2,500'."
+  },
+  "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=8-KoJBcxLek&t=409s",
+  "written": "2026-11-07"
+}

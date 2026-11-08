@@ -40,7 +40,6 @@ import 'utils/home_widget.dart';
 import 'utils/reminders.dart' show remindersSupported;
 import 'utils/upright.dart';
 import 'theme.dart';
-import 'widgets/ambient.dart';
 import 'widgets/consent.dart';
 import 'widgets/place_ask.dart';
 import 'remote/build_number.dart';
@@ -475,6 +474,9 @@ class _AstutoRootState extends State<AstutoRoot> {
         // hear of everything since the last card: a card of today's shelf
         // read in Explore is not offered there again.
         if (_app.ready) _app.refreshHomeWidget();
+        // From the late afternoon, tomorrow is fetched as the reader leaves,
+        // so the morning opens on cards the phone already holds.
+        unawaited(_app.askTomorrowIfDue());
         // The sitting is over, and the questions put in it with it — and
         // the experiments it was in, said again in the next one.
         _askedThisSitting = false;
@@ -512,6 +514,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         // Where the reader lives, read again once a week for a reader who
         // allowed it, and never with a prompt.
         if (_app.ready) _app.refreshPlaceIfDue();
+        unawaited(_app.askTomorrowIfDue());
         // A night asleep in memory: the day turned while the app was away,
         // and it is dealt before a widget's tap looks for its card in it.
         unawaited(
@@ -1196,7 +1199,7 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_app.ready) return const _Splash();
+    if (!_app.ready) return _Splash(today: _app.onboarded);
 
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 320),
@@ -1311,46 +1314,43 @@ class _AstutoRootState extends State<AstutoRoot> {
 /// The opening frame: the wordmark on paper, so the app never shows a bare
 /// spinner while stored state loads.
 class _Splash extends StatelessWidget {
-  const _Splash();
+  const _Splash({required this.today});
+
+  /// Whether the reader has a Today to open on. A first open goes to the
+  /// welcome, and shows nothing of a screen it will not see.
+  final bool today;
+
+  /// No tab is lit yet, and none answers: the bar is the bar the app opens
+  /// on, drawn before the day has come.
+  static final ValueNotifier<List<double>> _unlit = ValueNotifier(const [
+    1,
+    0,
+    0,
+  ]);
 
   @override
   Widget build(BuildContext context) {
+    if (!today) return Scaffold(backgroundColor: context.p.surface);
+    // The app's own screen before its day has come: the shell, the bar and
+    // Today in grey, where the cards will stand, as a feed opens on the
+    // outline of its posts and never on a wheel. The same frame as
+    // [_AstutoShellState.build], so nothing moves when the day lands.
     return Scaffold(
       backgroundColor: context.p.surface,
-      body: Stack(
-        children: [
-          // The colour arrives before anything else does. A launch screen is
-          // the one moment the app is only a promise, and a plain background
-          // spends it saying nothing.
-          Positioned.fill(child: AmbientBlooms(colors: kSceneBlooms.first)),
-          const Positioned.fill(child: Bokeh()),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Astute',
-                  style: AppText.display(
-                    size: 30,
-                    weight: FontWeight.w700,
-                    spacing: -1,
-                    color: context.p.ink,
-                  ),
-                ),
-                const SizedBox(height: 18),
-                SizedBox(
-                  width: 26,
-                  height: 26,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: context.p.ink.withValues(alpha: 0.35),
-                  ),
-                ),
-              ],
+      extendBody: true,
+      body: SafeArea(
+        bottom: false,
+        minimum: const EdgeInsets.only(top: 12),
+        child: Builder(
+          builder: (context) => Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.paddingOf(context).bottom,
             ),
+            child: const TodaySkeleton(),
           ),
-        ],
+        ),
       ),
+      bottomNavigationBar: _AstutoTabBar(lit: _unlit, onChanged: (_) {}),
     );
   }
 }
@@ -1644,7 +1644,11 @@ class _AstutoShellState extends State<AstutoShell>
           widget.onDeckOnTable?.call(onTable);
         },
       ),
-      ExploreScreen(key: _explore, app: widget.app),
+      ExploreScreen(
+        key: _explore,
+        app: widget.app,
+        onToday: () => _goTo(0, by: 'explore'),
+      ),
       ProfileScreen(
         app: widget.app,
         account: widget.account,

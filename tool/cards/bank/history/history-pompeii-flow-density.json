@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A slider running from thin cloud to very dense flow, with percentages from 0% to 100% for air and filled space. It asks how the pyroclastic flow filled the spaces of Pompeii, and the reader slides the cloud to see where it gets in."
   },
   "source": "Geopop, “\"Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026)",

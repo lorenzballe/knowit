@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A coin-flip bet: lose $10 or win a larger amount. A draggable slider sets the win amount, and the reader drags it up until the bet feels fair. The page explains that losses weigh about twice as much as gains."
   },
   "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",

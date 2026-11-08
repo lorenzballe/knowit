@@ -1,0 +1,240 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-triple-dependency-window -->
+<!-- Look: a night-lit rose window. Three overlapping lobes of jittered mosaic glass, lead cames, candle-flicker panes, a slow passing light, and a rim of 100 small panes.
+     Interaction: tap a lobe and its glass lights pane by pane, rippling out from your finger (nicotine, habits, beliefs). Overlaps only mix colour when both dependencies are lit. Dark lobes breathe softly to invite a tap.
+     Wow: with all three lit, the centre flares white-hot ("96%"). Then the rim lights pane by pane: 96 rose panes, and 4 gold ones for those who quit on willpower alone. -->
+<title>Three locks of smoking</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#why{display:flex;flex-direction:column;gap:.5cqh}
+#why .big{font:800 max(2.5cqh,16px)/1.15 var(--display);color:#ffd98a;margin:0}
+#why .body{font:500 max(1.7cqh,12.5px)/1.35 var(--body);margin:0}
+#why .body b{color:#ffd98a}
+.say b{color:#ffd98a}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Tap the glass · three dependencies" style="--c:#15111f;--k:#f6efe1;--edge:#07060c">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP THE GLASS</span></div>
+    <h2 class="q">Why does willpower alone fail for 96% of smokers?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A stained-glass rose window: three overlapping lobes named Physiological, Behavioral and Psychological, inside a rim of 100 small panes."></svg>
+    </div>
+    <p class="say" id="say">Tap each lobe of the window to light the dependency it holds.</p>
+    <div id="why" class="gone"><p class="big">Only 4 in 100 quit on willpower alone.</p><p class="body">Each rim pane is one smoker: the <b>4 gold</b> ones quit alone. Nicotine, habits and beliefs hold at once, so outside help, medicines included, makes the difference.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Three dependencies at once: body, habit, mind. Fight them together, with help.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il 96% delle persone non riesce a smettere di fumare da solo: perché e quali sono i metodi migliori” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const LEAD = '#0a0812', DARK = '#17121f';
+  const COL = {1:'#ff4d6d', 2:'#ffb238', 4:'#3d8bff', 3:'#ff7a3a', 6:'#3fd48e', 5:'#a95cff', 7:'#fff3c4'};
+  const DEP = [
+    ['Physiological', 'nicotine', 'Body', 'Physiological: the body itself depends on <b>nicotine</b>.'],
+    ['Behavioral', 'habits', 'Habit', 'Behavioral: the daily <b>habits</b> built around each cigarette.'],
+    ['Psychological', 'beliefs', 'Mind', 'Psychological: the <b>beliefs</b> that pull you back to smoking.']
+  ];
+  let lit = [0, 0, 0], revealed = false, revealing = false;
+  let W, H, S, cx, cy, r, d, s, fs, compact, ext, C = [], tiles = [], ring = [], labs = [], halos = [], hints = [], beads = [], cHalo, cText, sweepTw = null, loops = [], fx;
+
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+  const vary = (c, v) => v > 0 ? mix(c, '#ffffff', v * .2) : mix(c, '#000000', -v * .24);
+  const mask = () => lit[0] | lit[1] << 1 | lit[2] << 2;
+  const tileCol = t => { const mm = t.m & mask(); return vary(mm ? COL[mm] : mix(COL[t.m], DARK, .74), t.v); };
+  const ringCol = (i, on) => on ? vary(i < 4 ? '#ffd166' : '#e8456b', ((i * 37) % 11) / 11 - .5) : vary('#2c2440', ((i * 53) % 13) / 13 - .5);
+  let seed = 7; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+
+  function build() {
+    loops.forEach(t => t.kill()); loops = []; hints = [];
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    S = Math.min(W, H); cx = W / 2; cy = H / 2;
+    r = S * .235; d = S * .148; s = S / 21;
+    compact = S < 280;
+    fs = Math.max(12, S / 24);
+    ext = d + r + s * .6;
+    C = [-90, 150, 30].map(a => ({x: cx + d * Math.cos(a * Math.PI / 180), y: cy + d * Math.sin(a * Math.PI / 180)}));
+    const NS = (t, a, p) => Kit.mk(t, a, p || svg);
+
+    const defs = NS('defs', {});
+    const cp = NS('clipPath', {id: 'u'}, defs);
+    C.forEach(c => NS('circle', {cx: c.x, cy: c.y, r}, cp));
+    const fl = NS('filter', {id: 'bl', x: '-60%', y: '-60%', width: '220%', height: '220%'}, defs);
+    NS('feGaussianBlur', {stdDeviation: s * 1.3}, fl);
+    const band = S * .34;
+    const lg = NS('linearGradient', {id: 'sw', gradientUnits: 'userSpaceOnUse', x1: cx - ext - band, x2: cx - ext, y1: cy, y2: cy, gradientTransform: `rotate(-24 ${cx} ${cy})`}, defs);
+    [[0, 0], [.5, .4], [1, 0]].forEach(([o, a]) => NS('stop', {offset: o, 'stop-color': '#fffaf0', 'stop-opacity': a}, lg));
+    const rg = NS('radialGradient', {id: 'vg', cx: .5, cy: .5, r: .5}, defs);
+    [[0, 0], [.6, 0], [1, .45]].forEach(([o, a]) => NS('stop', {offset: o, 'stop-color': '#000', 'stop-opacity': a}, rg));
+
+    // The glow the lit glass throws onto the card.
+    halos = C.map((c, i) => NS('circle', {cx: c.x, cy: c.y, r: r * .9, fill: COL[1 << i], filter: 'url(#bl)', opacity: lit[i] ? .45 : 0}));
+    cHalo = NS('circle', {cx, cy, r: S * .13, fill: '#fff3c4', filter: 'url(#bl)', opacity: revealed ? .85 : 0});
+
+    // The mosaic: a jittered lattice cut into Voronoi panes, bounded to the window.
+    seed = 7;
+    const pts = [], meta = [];
+    for (let y = cy - ext, row = 0; y <= cy + ext; y += s * .87, row++) {
+      for (let x = cx - ext + (row % 2) * s / 2; x <= cx + ext; x += s) {
+        const px = x + (rnd() - .5) * s * .7, py = y + (rnd() - .5) * s * .7;
+        const ds = C.map(c => Math.hypot(px - c.x, py - c.y));
+        if (Math.min(...ds) > r + s * .5) continue;
+        let m = ds.reduce((a, v, k) => a | (v < r ? 1 << k : 0), 0);
+        if (!m) m = 1 << ds.indexOf(Math.min(...ds));
+        pts.push([px, py]); meta.push({m, v: rnd() * 2 - 1});
+      }
+    }
+    const vor = d3.Delaunay.from(pts).voronoi([cx - ext, cy - ext, cx + ext, cy + ext]);
+    const glass = NS('g', {'clip-path': 'url(#u)'});
+    const groups = [0, 1, 2, 3].map(() => NS('g', {}, glass));
+    tiles = pts.map((p, i) => {
+      const t = Object.assign({x: p[0], y: p[1]}, meta[i]);
+      t.el = NS('path', {d: 'M' + vor.cellPolygon(i).join('L') + 'Z', fill: tileCol(t), stroke: LEAD, 'stroke-width': s * .17, 'stroke-linejoin': 'round'}, groups[i % 4]);
+      return t;
+    });
+    // Light passing across the glass (the gradient moves, the rect stays put), and a darker edge.
+    NS('rect', {x: cx - ext, y: cy - ext, width: ext * 2, height: ext * 2, fill: 'url(#sw)', style: 'mix-blend-mode:screen;pointer-events:none'}, glass);
+    NS('rect', {x: cx - ext, y: cy - ext, width: ext * 2, height: ext * 2, fill: 'url(#vg)', style: 'pointer-events:none'}, glass);
+
+    // Lead cames with a thin gilt edge.
+    C.forEach(c => {
+      NS('circle', {cx: c.x, cy: c.y, r, fill: 'none', stroke: LEAD, 'stroke-width': s * .42});
+      NS('circle', {cx: c.x, cy: c.y, r: r + s * .21, fill: 'none', stroke: 'rgba(255,226,170,.24)', 'stroke-width': 1});
+    });
+
+    // Jewel beads between lobes and rim.
+    const RB = S * .405;
+    beads = [];
+    for (let i = 0; i < 24; i++) {
+      const a = (i * 15 - 90) * Math.PI / 180;
+      beads.push(NS('circle', {cx: cx + RB * Math.cos(a), cy: cy + RB * Math.sin(a), r: Math.max(1.4, s * .14), fill: revealed ? '#ffe7a8' : '#3a3150', stroke: LEAD, 'stroke-width': .8}));
+    }
+
+    // The rim: 100 panes, one per smoker in 100. Kept fully inside the drawing.
+    const R0 = S * .425, R1 = S * .468, P = (a, rr) => [cx + rr * Math.cos(a), cy + rr * Math.sin(a)];
+    ring = [];
+    for (let i = 0; i < 100; i++) {
+      const a0 = (-90 + (i - 2) * 3.6 + .35) * Math.PI / 180, a1 = (-90 + (i - 1) * 3.6 - .35) * Math.PI / 180;
+      const [x0, y0] = P(a0, R1), [x1, y1] = P(a1, R1), [x2, y2] = P(a1, R0), [x3, y3] = P(a0, R0);
+      ring.push(NS('path', {d: `M${x0},${y0}A${R1},${R1} 0 0 1 ${x1},${y1}L${x2},${y2}A${R0},${R0} 0 0 0 ${x3},${y3}Z`, fill: ringCol(i, revealed), stroke: LEAD, 'stroke-width': s * .12}));
+    }
+    [R0 - s * .08, R1 + s * .08].forEach(rr => NS('circle', {cx, cy, r: rr, fill: 'none', stroke: LEAD, 'stroke-width': s * .18}));
+    NS('circle', {cx, cy, r: R1 + s * .26, fill: 'none', stroke: 'rgba(255,226,170,.22)', 'stroke-width': 1});
+
+    // Names in the glass. On small windows: short names only, so nothing collides.
+    labs = C.map((c, i) => {
+      const ux = (c.x - cx) / d, uy = (c.y - cy) / d;
+      const lx = c.x + ux * r * (compact ? .5 : .42), ly = c.y + uy * r * (compact ? .5 : .42) - (compact ? 0 : (i ? 0 : fs * .5)) + (compact ? fs * .35 : 0);
+      const g = NS('g', {style: 'pointer-events:none'});
+      const n = NS('text', {x: lx, y: ly, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: '#fff', stroke: LEAD, 'stroke-width': fs * .32, 'paint-order': 'stroke', 'stroke-linejoin': 'round', style: 'font-family:var(--body);letter-spacing:.02em', opacity: lit[i] ? 1 : .62}, g);
+      n.textContent = compact ? DEP[i][2] : DEP[i][0];
+      let sb = null;
+      if (!compact) {
+        sb = NS('text', {x: lx, y: ly + fs * 1.4, 'text-anchor': 'middle', 'font-size': fs * 1.15, 'font-weight': 700, fill: '#ffe7a8', stroke: LEAD, 'stroke-width': fs * .3, 'paint-order': 'stroke', 'stroke-linejoin': 'round', style: 'font-family:var(--hand)', opacity: lit[i] ? 1 : 0}, g);
+        sb.textContent = DEP[i][1];
+      }
+      return {n, sb};
+    });
+    const cfs = Math.max(12.5, fs * 1.05);
+    cText = NS('text', {x: cx, y: cy + cfs * .36, 'text-anchor': 'middle', 'font-size': cfs, 'font-weight': 900, fill: LEAD, stroke: '#fff3c4', 'stroke-width': cfs * .3, 'paint-order': 'stroke', 'stroke-linejoin': 'round', style: 'font-family:var(--body);pointer-events:none', opacity: revealed ? 1 : 0});
+    cText.textContent = '96%';
+    fx = NS('g', {style: 'pointer-events:none'});
+
+    // Ambient: candle-flicker panes, a slow passing light, dark lobes breathing.
+    if (!Kit.calm) {
+      groups.forEach((g, k) => loops.push(gsap.to(g, {opacity: .76, duration: 1.6 + k * .55, delay: k * .4, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
+      sweepTw = gsap.fromTo(lg, {attr: {x1: cx - ext - band - S * .3, x2: cx - ext - S * .3}}, {attr: {x1: cx + ext + S * .3, x2: cx + ext + band + S * .3}, duration: 5.5, ease: 'sine.inOut', repeat: -1, repeatDelay: 1.4});
+      loops.push(sweepTw);
+      halos.forEach((h, i) => { if (!lit[i] && !revealed) { const tw = gsap.to(h, {opacity: .16, duration: 1.4, delay: i * .45, yoyo: true, repeat: -1, ease: 'sine.inOut'}); hints[i] = tw; loops.push(tw); } });
+      loops.push(gsap.to(beads, {opacity: .55, duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut', stagger: {each: .08, repeat: -1, yoyo: true}}));
+    } else lg.setAttribute('x1', cx - S * 3), lg.setAttribute('x2', cx - S * 2.5);
+  }
+
+  function shock(x, y) {
+    if (Kit.calm) return;
+    const max = Math.min(r * 1.1, x, W - x, y, H - y) - 3;
+    if (max <= s) return;
+    const c = Kit.mk('circle', {cx: x, cy: y, r: s * .6, fill: 'none', stroke: '#fff7e0', 'stroke-width': 2.2, opacity: .9}, fx);
+    gsap.to(c, {attr: {r: max}, opacity: 0, duration: .75, ease: 'power2.out', onComplete: () => c.remove()});
+    if (sweepTw) sweepTw.restart();
+  }
+
+  function light(k, px, py) {
+    shock(px, py);
+    if (lit[k]) { Kit.haptic('light'); return; }
+    lit[k] = 1; Kit.haptic('selection');
+    if (hints[k]) { hints[k].kill(); hints[k] = null; }
+    tiles.forEach(t => {
+      if (!(t.m & (1 << k))) return;
+      const col = tileCol(t);
+      if (Kit.calm) { t.el.setAttribute('fill', col); return; }
+      const delay = Math.hypot(t.x - px, t.y - py) / S * 1.1;
+      gsap.timeline({delay}).to(t.el, {attr: {fill: '#fffaf0'}, duration: .08, ease: 'power1.out'}).to(t.el, {attr: {fill: col}, duration: .45, ease: 'power3.out'});
+    });
+    const L = labs[k];
+    if (Kit.calm) { halos[k].setAttribute('opacity', .45); L.n.setAttribute('opacity', 1); if (L.sb) L.sb.setAttribute('opacity', 1); }
+    else {
+      gsap.to(halos[k], {opacity: .45, duration: 1, ease: 'power2.out'});
+      gsap.to(L.n, {opacity: 1, duration: .3});
+      if (L.sb) gsap.fromTo(L.sb, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .6, delay: .25, ease: 'back.out(2.5)'});
+    }
+    const n = lit.reduce((a, b) => a + b, 0);
+    say.innerHTML = DEP[k][3] + (n < 3 ? ` <b>${3 - n} still dark.</b>` : ' <b>All three, at the same time.</b>');
+    if (n === 3) { revealing = true; setTimeout(reveal, Kit.calm ? 0 : 1100); }
+  }
+
+  function reveal() {
+    revealed = true;
+    hints.forEach(t => t && t.kill()); hints = [];
+    const done = () => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); };
+    if (Kit.calm) { ring.forEach((p, i) => p.setAttribute('fill', ringCol(i, true))); beads.forEach(b => b.setAttribute('fill', '#ffe7a8')); cHalo.setAttribute('opacity', .85); cText.setAttribute('opacity', 1); done(); return; }
+    const tl = gsap.timeline({onComplete: done});
+    tl.fromTo(cHalo, {opacity: 0, attr: {r: S * .03}}, {opacity: .95, attr: {r: S * .19}, duration: .9, ease: 'expo.out'})
+      .to(cHalo, {opacity: .8, attr: {r: S * .13}, duration: .8, ease: 'power2.inOut'}, '>-.1');
+    tiles.filter(t => t.m === 7).forEach(t => tl.fromTo(t.el, {attr: {fill: '#ffffff'}}, {attr: {fill: tileCol(t)}, duration: 1.2, ease: 'power2.out'}, 0));
+    tl.fromTo(cText, {opacity: 0, scale: .2, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .7, ease: 'back.out(3)'}, .25);
+    tl.to(beads, {attr: {fill: '#ffe7a8'}, duration: .3, stagger: .04}, .5);
+    tl.to(ring.slice(4), {attr: {fill: (i) => ringCol(i + 4, true)}, duration: .25, ease: 'power2.out', stagger: .013}, .7);
+    tl.fromTo(ring.slice(0, 4), {attr: {fill: '#ffffff'}}, {attr: {fill: (i) => ringCol(i, true)}, duration: .9, ease: 'elastic.out(1,.4)', stagger: .09}, '>-.05');
+  }
+
+  svg.addEventListener('pointerdown', e => {
+    if (revealing || revealed || !C.length) return;
+    const b = svg.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
+    const ds = C.map(c => Math.hypot(x - c.x, y - c.y));
+    let cand = [0, 1, 2].filter(k => ds[k] < r);
+    if (!cand.length) { const k = ds.indexOf(Math.min(...ds)); if (ds[k] < r * 1.5) cand = [k]; else return; }
+    const dark = cand.filter(k => !lit[k]), pool = dark.length ? dark : cand;
+    const k = pool.reduce((a, b) => ds[b] < ds[a] ? b : a);
+    light(k, x, y);
+  });
+
+  Kit.onShow.card = build;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !tiles.length) return;
+    const sorted = tiles.slice().sort((a, b) => Math.hypot(a.x - cx, a.y - cy) - Math.hypot(b.x - cx, b.y - cy)).map(t => t.el);
+    gsap.from(sorted, {opacity: 0, duration: .5, ease: 'power2.out', stagger: {amount: 1.1}});
+    gsap.from(ring, {opacity: 0, duration: .3, ease: 'power2.out', stagger: .008, delay: .3});
+    gsap.from(labs.map(l => l.n), {opacity: 0, y: 8, duration: .6, ease: 'power3.out', stagger: .15, delay: 1});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (let k = 0; k < 3; k++) {
+      const b = svg.getBoundingClientRect(), c = C[k], ux = (c.x - cx) / d, uy = (c.y - cy) / d;
+      svg.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, clientX: b.left + c.x + ux * r * .5, clientY: b.top + c.y + uy * r * .5}));
+      await wait(Kit.calm ? 30 : 250);
+    }
+    await wait(Kit.calm ? 100 : 4200);
+  };
+})();
+Kit.single();
+</script>
+</html>

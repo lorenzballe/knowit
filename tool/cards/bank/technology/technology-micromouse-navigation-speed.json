@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive page: a Micromouse robot drives a maze route. Sliders set speed (30%) and sharp turns, and a Launch button starts the run. Text says finding the route is easy and driving it fast is hard, and asks the reader to set the speed, pick the turns and launch."
   },
   "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",

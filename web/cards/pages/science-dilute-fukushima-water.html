@@ -1,0 +1,282 @@
+<!doctype html>
+<!-- slug: science-diluted-five-hundred -->
+<!--
+The thought to carry: "70 times over the limit" is only half a sentence. Put it next to the divisor and the scare flips: on a ladder of tens, ÷500 is a longer step than ×70, so it has to end below the limit.
+Front: the ladder from 100 to a million Bq/L, a squat steel tank at 700,000 and a glass at the WHO limit. The reader drags an orange drop, parked just under the tank, to where the water lands after ÷500.
+Back: the same ladder at the same scale and position. A ×70 bracket runs from the limit up to the tank, and beside it the longer ÷500 arrow runs from the tank down to 1,500. The guess stays on the left of the axis, and the result sits on the right.
+The front shows only the inputs (tank level, limit, the factor in the question). It gives no landing point and no verdict until the reader commits.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Diluted 500 times</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.2cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
+#pic{touch-action:none;cursor:ns-resize}
+#pic text,#pic2 text{font-family:var(--body)}
+
+/* the confidence pills read as live controls */
+#sure,#sure [data-v]{opacity:1!important}
+#sure>:first-child{color:#0d0d0d!important;opacity:1!important}
+#sure [data-v]{border:1.5px solid #0d0d0d!important;color:#0d0d0d!important}
+
+/* keep text clear of save and share: the box itself is narrower, not padded */
+.front .say{align-self:flex-start;max-width:calc(100% - max(108px,29cqw));margin:0}
+
+.back .big{margin:0;font-size:max(3cqh,19px);line-height:1.15;white-space:nowrap;overflow:hidden}
+.back .you{margin:-.5cqh 0 0;font-size:max(1.8cqh,13px);line-height:1.3;font-weight:700;color:#a83a05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.back .body{margin:0;font-size:max(1.8cqh,13px);line-height:1.3}
+.back .keep{font-size:max(1.75cqh,13px);padding-top:10px;padding-bottom:10px}
+.back .foot{padding-right:max(100px,26cqw)}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag your guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG YOUR GUESS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">700,000 Bq/L, diluted 500 times. Where does it land?</h2>
+        <div class="stagebox"><svg id="pic" data-drag role="img" aria-label="A ladder of radioactivity in steps of ten, from 100 to a million becquerel per litre. A steel tank sits at 700,000, a glass at the WHO drinking limit of 10,000, and an orange drop you can drag down to your guess."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag the drop to your guess, then say how sure.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big" id="big">Six times under the limit.</p>
+        <p class="you" id="you">&nbsp;</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="On the same ladder, the tank at 700,000 is 70 times the WHO limit of 10,000. Dividing by 500 is a longer step than that, so the water lands at 1,500 Bq/L, below the limit."></svg></div>
+        <p class="body">“Seventy times the limit” sounds alarming. But ÷500 is a longer step than ×70, so 700,000 Bq/L lands at about 1,500, under the WHO’s 10,000 for drinking water.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Hear “X times too much”? Ask how many times it will be divided.</div>
+        <div class="foot"><span class="src">Source · Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const LO = 2, HI = 6;                 // the ladder: 100 to 1,000,000 Bq/L, in steps of ten
+  const TANK = 700000, LIMIT = 10000, AFTER = 1500;
+  const GUESS = '#a83a05', TRUE = '#0b2a6f';
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), card = Kit.$('card');
+  let G = 600000, touched = false, locked = false, turned = false, backTl = null, PCT = null;
+  let F = null, FF = null, gGuess = null, INK = '#111';
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': F.fs, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+  const round2 = v => { const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
+  const fmt = v => round2(v).toLocaleString('en-US');
+  const dropPath = (x, y, r) => `M${x},${y - 1.75 * r} Q${x + r * 1.05},${y - .55 * r} ${x + r},${y + .1 * r} A${r},${r} 0 0 1 ${x - r},${y + .1 * r} Q${x - r * 1.05},${y - .55 * r} ${x},${y - 1.75 * r}Z`;
+  const cv = document.createElement('canvas').getContext('2d');
+  const fam = n => getComputedStyle(card).getPropertyValue(n).trim() || 'sans-serif';
+  const tw = (s, size, w = 700, f = '--body') => { cv.font = `${w} ${size}px ${fam(f)}`; return cv.measureText(s).width; };
+  const absY = el => { let y = 0; for (let e = el; e; e = e.offsetParent) y += e.offsetTop; return y; };
+
+  // One chart window shared by both faces, so the ladder does not move when the card turns.
+  function frame(s) {
+    s.innerHTML = '';
+    INK = getComputedStyle(card).getPropertyValue('--k').trim() || '#111';
+    const f = Kit.fitSvg(s), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, W / 24));
+    const boxes = [...card.querySelectorAll('.stagebox')];
+    const o = absY(s.parentNode);
+    let wT = Math.max(...boxes.map(absY)) - o, wB = Math.min(...boxes.map(b => absY(b) + b.offsetHeight)) - o;
+    if (!(wB - wT > fs * 8)) { wT = 0; wB = H; }
+    const hy = wT + fs, top = wT + fs * 2.9, bot = wB - fs * 1.7;
+    const y = v => top + (HI - Math.log10(v)) / (HI - LO) * (bot - top);
+    const v = py => Math.pow(10, HI - (py - top) / (bot - top) * (HI - LO));
+    const D = (bot - top) / (HI - LO);
+    const r = fs * .58;
+    // columns: left labels | axis | icons | labels | ×70 bracket | ÷500 arrow
+    const ax = Math.max(W * .22, Math.ceil(Math.max(tw('1 million', fs, 600), tw('your guess', fs, 700), tw('you said', fs, 700)) + r + 8));
+    const AR = W - 6, BR = AR - Math.max(36, tw('×70', fs * 1.15, 800, '--display') + 14);
+    const TW = Math.max(tw('Tank water', fs, 600), tw('WHO limit', fs, 600), tw('700,000', fs, 800));
+    const lx = BR - 9 - TW;
+    const s0 = Math.max(18, Math.min(32, D * .5)), tkW = s0 * 1.45;
+    const ix = lx - 9 - tkW / 2, gEnd = ix - tkW / 2 - 7;
+    return F = {W, H, fs, hy, top, bot, y, v, D, r, ax, AR, BR, lx, ix, s: s0, tkW, gEnd, ticks: []};
+  }
+
+  // The ladder, the tank and the glass: the same on both faces.
+  function scene(p) {
+    const {W, fs, hy, y, ax, ix, s, tkW, lx} = F;
+    const g = mk('g', {}, p);
+    txt(g, 0, hy, 'Bq per litre', {'font-weight': 600, opacity: .75});
+    mk('line', {x1: ax, x2: ax, y1: F.top - 4, y2: F.bot + 4, stroke: INK, 'stroke-width': 1.6}, g);
+    ['100', '1,000', '10,000', '100,000', '1 million'].forEach((t, i) => {
+      const yy = y(Math.pow(10, LO + i));
+      mk('line', {x1: ax - 5, x2: ax, y1: yy, y2: yy, stroke: INK, 'stroke-width': 1.4}, g);
+      F.ticks.push({y: yy, el: txt(g, 0, yy + fs * .35, t, {'font-weight': 600, opacity: .75})});
+    });
+    // the tank: squat steel cylinder, flat roof, one weld seam
+    const ty = y(TANK), ly = y(LIMIT);
+    mk('line', {x1: ax, x2: W, y1: ty, y2: ty, stroke: INK, 'stroke-width': 1.2, opacity: .55}, g);
+    const x0 = ix - tkW / 2, t0 = ty - s / 2, rf = s * .11, bT = t0 + rf, bH = s - rf;
+    mk('rect', {x: x0, y: bT, width: tkW, height: bH, fill: '#fff', 'fill-opacity': .4}, g);
+    mk('rect', {x: ix + tkW * .16, y: bT, width: tkW * .34, height: bH, fill: INK, 'fill-opacity': .2}, g);
+    mk('line', {x1: x0, x2: x0 + tkW, y1: bT + bH * .5, y2: bT + bH * .5, stroke: INK, 'stroke-width': 1}, g);
+    mk('rect', {x: x0, y: bT, width: tkW, height: bH, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    mk('rect', {x: x0 - 1.5, y: t0, width: tkW + 3, height: rf + .8, rx: .8, fill: INK}, g);
+    // tank labels: number under the line if there is room above the limit labels, otherwise both stack above the line
+    const numBottom = ty + fs + 3 + fs * .3, whoTop = ly - fs - 8 - fs * .85;
+    if (whoTop - numBottom >= 4) {
+      txt(g, lx, ty - 5, 'Tank water', {'font-weight': 600});
+      txt(g, lx, ty + fs + 3, '700,000', {'font-weight': 800});
+    } else {
+      txt(g, lx, ty - fs - 8, 'Tank water', {'font-weight': 600});
+      txt(g, lx, ty - 5, '700,000', {'font-weight': 800});
+    }
+    // the glass at the WHO limit, same height as the tank
+    mk('line', {x1: ax, x2: W, y1: ly, y2: ly, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '6 5'}, g);
+    const gw = s * .8, gt = ly - s / 2, gb = ly + s / 2;
+    mk('path', {d: `M${ix - gw * .4},${gt + s * .35} L${ix + gw * .4},${gt + s * .35} L${ix + gw * .31},${gb} L${ix - gw * .31},${gb} Z`, fill: INK, 'fill-opacity': .22}, g);
+    mk('path', {d: `M${ix - gw / 2},${gt} L${ix - gw * .34},${gb} L${ix + gw * .34},${gb} L${ix + gw / 2},${gt}`, fill: '#fff', 'fill-opacity': .35, stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    txt(g, lx, ly - fs - 8, 'WHO limit', {'font-weight': 600});
+    txt(g, lx, ly - 5, '10,000', {'font-weight': 800});
+    return g;
+  }
+  // the guess label sits left of the axis; any tick label it would touch steps aside
+  function guessLabel(p, gy, word) {
+    const {fs, ticks} = F, gT = gy - 5 - fs * .8, gB = gy + fs * 1.3 + 3;
+    ticks.forEach(t => { const hit = t.y - fs * .45 < gB + 3 && t.y + fs * .6 > gT - 3; t.el.style.visibility = hit ? 'hidden' : ''; });
+    txt(p, 0, gy - 5, word, {fill: GUESS, 'font-weight': 700});
+    txt(p, 0, gy + fs + 3, fmt(G), {fill: GUESS, 'font-weight': 800});
+  }
+
+  // ---------- front ----------
+  function drawFront() {
+    FF = frame(svg); scene(svg);
+    gGuess = mk('g', {}, svg);
+    drawGuess();
+  }
+  function drawGuess() {
+    if (!gGuess || !FF) return;
+    F = FF; gGuess.innerHTML = '';
+    const {fs, y, ax, gEnd, r} = F, gy = y(G);
+    mk('line', {x1: ax, x2: gEnd, y1: gy, y2: gy, stroke: GUESS, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, gGuess);
+    if (!touched) {          // a faint hint down into the empty band
+      const hx = ax + 16, h0 = gy + r + 10, h1 = y(160);
+      const h = mk('g', {opacity: .5}, gGuess);
+      mk('path', {d: `M${hx},${h0} V${h1}`, stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '2 4', 'stroke-linecap': 'round', fill: 'none'}, h);
+      mk('path', {d: `M${hx - 5},${h1 - 7} L${hx},${h1} L${hx + 5},${h1 - 7}`, stroke: INK, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, h);
+      txt(h, hx + 10, h1 + fs * .1, 'drag down', {'font-weight': 600});
+    }
+    mk('path', {d: dropPath(ax, gy, r * 1.15), fill: GUESS}, gGuess);
+    guessLabel(gGuess, gy, 'your guess');
+  }
+  function setFromY(py) {
+    G = Math.max(100, Math.min(1000000, FF.v(py)));
+    drawGuess();
+  }
+  let dragging = false;
+  const localY = e => e.clientY - svg.getBoundingClientRect().top;
+  svg.addEventListener('pointerdown', e => {
+    if (locked) return; dragging = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; Kit.haptic('selection'); sure.on(); }
+    setFromY(localY(e));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) setFromY(localY(e)); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  function youLine() {
+    const g = round2(G), ok = g >= 1000 && g <= 2500, at = PCT != null ? `, at ${PCT}% sure` : '';
+    if (ok) return `You were close${at}.`;
+    const k = g > AFTER ? g / AFTER : AFTER / g;
+    const ks = k < 10 ? (Math.round(k * 10) / 10).toString() : Math.round(k).toLocaleString('en-US');
+    return `You were ${ks}× too ${g > AFTER ? 'high' : 'low'}${at}.`;
+  }
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    locked = true; PCT = pct;
+    const g = round2(G), ok = g >= 1000 && g <= 2500, said = `${fmt(G)} Bq/L`;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'off'}`);
+    Kit.$('you').textContent = youLine();
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function drawBack(animate) {
+    if (backTl) { backTl.kill(); backTl = null; }
+    frame(svg2);
+    const {W, fs, y, ax, ix, lx, AR, BR, gEnd, r} = F;
+    const y7 = y(TANK), y10 = y(LIMIT), y15 = y(AFTER);
+    // the diluted drop, under the tank and the glass, so it seems to come out of the tank
+    const drop = mk('path', {d: dropPath(ix, y15, r), fill: TRUE}, svg2);
+    const gA = scene(svg2);
+    // the reader's guess, kept on the left
+    const gGs = mk('g', {}, svg2), gy = y(G);
+    mk('line', {x1: ax, x2: gEnd, y1: gy, y2: gy, stroke: GUESS, 'stroke-width': 2, 'stroke-dasharray': '3 4'}, gGs);
+    mk('path', {d: dropPath(ax, gy, r), fill: GUESS}, gGs);
+    guessLabel(gGs, gy, 'you said');
+    // ×70: the limit up to the tank
+    const gB = mk('g', {}, svg2), bl = 10 + (y10 - y7);
+    const brk = mk('path', {d: `M${BR - 5},${y7} H${BR} V${y10} H${BR - 5}`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round', 'stroke-dasharray': bl, 'stroke-dashoffset': 0}, gB);
+    const t70 = txt(gB, (BR + AR) / 2, (y7 + y10) / 2 + fs * .4, '×70', {'text-anchor': 'middle', 'font-size': fs * 1.15, 'font-weight': 800, style: 'font-family:var(--display)'});
+    // ÷500: the tank down to where the water lands; a longer step, so it ends below the limit
+    const len = y15 - y7;
+    const arrow = mk('path', {d: `M${AR},${y7} V${y15 - 1}`, stroke: TRUE, 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-dasharray': len, 'stroke-dashoffset': 0}, svg2);
+    const head = mk('path', {d: `M${AR - 5},${y15 - 8} L${AR},${y15} L${AR + 5},${y15 - 8}`, stroke: TRUE, 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg2);
+    const dz = fs * 1.3;
+    const div = txt(svg2, AR - 10, (y10 + y15) / 2 + dz * .36, '÷500', {'text-anchor': 'end', fill: TRUE, 'font-size': dz, 'font-weight': 800, style: 'font-family:var(--display)'});
+    // where it lands
+    const gT = mk('g', {}, svg2);
+    mk('line', {x1: ax, x2: W, y1: y15, y2: y15, stroke: TRUE, 'stroke-width': 2.4}, gT);
+    txt(gT, lx, y15 + fs + 4, 'after dilution', {fill: TRUE, 'font-weight': 700});
+    txt(gT, lx, y15 + fs * 2 + 8, '1,500', {fill: TRUE, 'font-weight': 800});
+    svg2.insertBefore(gT, drop);
+
+    if (!animate || Kit.calm || typeof gsap === 'undefined') return;
+    backTl = gsap.timeline({delay: .35})
+      .from(gA, {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from(gGs, {opacity: 0, duration: .35, ease: 'power2.out'}, '+=.05')
+      .fromTo(brk, {attr: {'stroke-dashoffset': bl}}, {attr: {'stroke-dashoffset': 0}, duration: .6, ease: 'power2.out'}, '+=.2')
+      .from(t70, {opacity: 0, duration: .3, ease: 'power2.out'}, '-=.2')
+      .fromTo(arrow, {attr: {'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: 1.2, ease: 'power2.inOut'}, '+=.3')
+      .from(drop, {y: y7 - y15, duration: 1.2, ease: 'power2.inOut'}, '<')
+      .from([head, div], {opacity: 0, duration: .35, ease: 'power2.out'}, '-=.35')
+      .from(gT, {opacity: 0, duration: .5, ease: 'power2.out'});
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  function fitBig() {
+    const b = Kit.$('big'); b.style.fontSize = '';
+    let z = parseFloat(getComputedStyle(b).fontSize) || 19;
+    while (b.scrollWidth > b.clientWidth + 1 && z > 15) { z -= .5; b.style.fontSize = z + 'px'; }
+  }
+  Kit.onShow.card = () => { fitBig(); drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.from(svg.children, {opacity: 0, y: 6, stagger: .12, duration: .45, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; sure.on(); G = 4000; drawGuess();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(1100);
+    if (backTl) backTl.progress(1);
+    await wait(150);
+  };
+})();
+Kit.single();
+</script>
+</html>

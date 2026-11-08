@@ -1,0 +1,320 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-trapped-heat-runaway -->
+<!-- Design note.
+     Thought to carry (the brief's own): polymerizing TFE in one solid cylinder made heat that could not get away.
+     It stayed in, expanded and built up pressure until the plant failed catastrophically.
+     Front: the instruction comes right under the question. Below it is the cylinder seen from above: a flat disc of TFE turning solid,
+     with short polymer-chain marks in an even weave inside a thick steel wall. There is room all around the disc.
+     The reader taps where the reaction's heat ends up: inside the solid, or out past the wall. The confidence chips appear only after the tap.
+     Back: the same disc at the same size. It warms evenly, right through, because nothing in the brief says one spot was hotter.
+     Short red arrows press out from inside and stop at the steel, because the heat cannot leave and builds the force.
+     The wall stays whole, since the brief speaks of pressure and failure, not of a vessel tearing.
+     There are three labels: heat stays in, pressure builds and your tap. A placement check keeps every label clear of the others.
+     Layout: the face turned away is hidden (visibility) at the half-turn, so its mirrored content never sits under the corner buttons. -->
+<title>The heat had no way out</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s linear .3s}
+.turn>.front{visibility:visible;transition:visibility 0s linear .3s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{cursor:crosshair;touch-action:none}
+.q,.say{overflow-wrap:anywhere}
+.card .front .say{flex:0 0 auto;margin:.4cqh 0 .6cqh;padding:0;font-size:max(2.2cqh,15px);line-height:1.3;max-width:none}
+.front .sure{flex:0 0 auto}
+.front .sure.wait{visibility:hidden}
+.turn.over>.front .sure{visibility:hidden}
+.front .fspace{flex:0 0 44px}
+.card .back .big{font-size:clamp(26px,8.6cqw,34px);line-height:1.04;margin:0 0 .4cqh}
+.back .body{font:500 max(1.8cqh,12px)/1.32 var(--body);margin:.6cqh 0;overflow-wrap:anywhere}
+.back .keep{font-size:max(1.75cqh,12px)}
+.back .foot{min-height:44px;padding-right:100px;box-sizing:border-box}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap the plan · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ARLINGTON 1944</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Why did the 1944 Teflon production attempt cause a massive explosion?</h2>
+        <p class="say" id="say">Seen from above: one solid cylinder of TFE turning into Teflon, making heat. <b>Tap where that heat ends up.</b></p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A steel cylinder seen from above, filled evenly with TFE turning into solid Teflon. Tap where the reaction's heat ends up: inside the solid, or outside the cylinder."></svg></div>
+        <div class="sure wait" id="sure"></div>
+        <div class="fspace" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The heat had no way out.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same cylinder, now warm right through. Arrows push outward from inside and stop at the steel wall: the heat stays in and pressure builds."></svg></div>
+        <p class="body">Polymerizing the solid cylinder made heat that could not dissipate. It stayed in, expanded and built up pressure until it failed: a massive explosion at Arlington in 1944 that killed two workers.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A reaction that makes heat needs a way to take that heat away. Without one, the heat stays in, expands and creates the force.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  if (window.gsap && window.MorphSVGPlugin) gsap.registerPlugin(MorphSVGPlugin);
+  const HOT = '#c63b22', YOU = '#2459c9', PALE = '#fdf0e2', WARM = '#f7c09b';
+  const ZONE = ['inside the solid', 'outside the cylinder'], RIGHT = 0;
+  const pic = Kit.$('pic'), pic2 = Kit.$('pic2'), say = Kit.$('say'), sureBox = Kit.$('sure');
+  let tap = null, pick = -1, answered = false, turned = false, G = {cx: 0, cy: 0, R: 1}, fs = 13;
+  const rad = d => d * Math.PI / 180;
+
+  const txt = (parent, x, y, lines, W, o = {}) => {
+    const anc = o.anchor || 'middle', lh = fs * 1.22;
+    const e = Kit.mk('text', {x, y, 'text-anchor': anc, 'font-size': fs, 'font-weight': 700, style: `font-family:var(--body);fill:${o.fill || 'var(--k)'}`}, parent);
+    [].concat(lines).forEach((t, i) => { const s = Kit.mk('tspan', {x, dy: i ? lh : 0}, e); s.textContent = t; });
+    if (o.clamp !== false) {
+      const b = e.getBBox(), sh = b.x < 3 ? 3 - b.x : b.x + b.width > W - 3 ? W - 3 - b.x - b.width : 0;
+      if (sh) { e.setAttribute('x', x + sh); e.querySelectorAll('tspan').forEach(s => s.setAttribute('x', x + sh)); }
+    }
+    return e;
+  };
+  const lead = (parent, x1, y1, x2, y2, col) => Kit.mk('line', {x1, y1, x2, y2, style: `stroke:${col || 'var(--k)'}`, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, parent);
+
+  // where the reader's tap sits on a given drawing: kept clear of the wall, kept on the stage
+  const spot = (cx, cy, R, sw, W, H, m) => {
+    if (!tap) return null;
+    const d = Math.hypot(tap.x, tap.y) || .001;
+    const inMax = 1 - (sw / 2 + m + 3) / R, outMin = 1 + (sw / 2 + m + 3) / R;
+    let k = 1;
+    if (tap.inside) { if (d > inMax) k = Math.max(0, inMax) / d; }
+    else if (d < outMin) k = outMin / d;
+    const x = Math.min(W - m - 3, Math.max(m + 3, cx + tap.x * k * R));
+    const y = Math.min(H - m - 3, Math.max(m + 3, cy + tap.y * k * R));
+    return [x, y];
+  };
+  // the biggest disc the back can hold
+  const backR = (W, H, f) => { const f2 = Math.max(12, Math.min(14, f)); return Math.max(26, Math.min((H - f2 * 1.9 - 4) / 2.07, W * .4)); };
+
+  // ---------- front: the plan, even and blank ----------
+  function drawFront() {
+    pic.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(pic); fs = Math.max(12, Math.min(14, f));
+    const top = fs + 2, bot = fs * 1.5 + 4;
+    let R = Math.max(30, Math.min(W * .36, (H - top - bot) / 2.04));
+    const bb = Kit.fitSvg(pic2), br = backR(bb.W, bb.H, bb.f);
+    if (br >= 90) R = Math.min(R, br);               // the same object, the same size, on both faces
+    const sw = Math.max(5, R * .07), cx = W / 2, cy = top + R + Math.max(0, (H - top - bot - 2 * R - sw / 2) / 2);
+    G = {cx, cy, R, W, H};
+    const g = Kit.mk('g', {id: 'plan'}, pic);
+    Kit.mk('circle', {cx, cy, r: R, fill: '#fff', opacity: .55}, g);
+    // TFE turning into chains, evenly, right through
+    const mg = Kit.mk('g', {id: 'mols'}, g), d = R * .21, s = Math.max(2.6, R * .032), h = Math.max(1.8, R * .022);
+    for (let j = -6; j <= 6; j++) for (let i = -6; i <= 6; i++) {
+      const x = cx + (i + (j & 1) * .5) * d, y = cy + j * d * .866;
+      if (Math.hypot(x - cx, y - cy) > R * .8) continue;
+      const a = ((((i + 2 * j) % 3) + 3) % 3) * Math.PI / 3 + .3, ux = Math.cos(a), uy = Math.sin(a);
+      let p = '';
+      [-1.5, -.5, .5, 1.5].forEach((t, k) => { const o = k % 2 ? h : -h;
+        p += (k ? 'L' : 'M') + (x + ux * t * s - uy * o).toFixed(1) + ',' + (y + uy * t * s + ux * o).toFixed(1); });
+      Kit.mk('path', {d: p, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .3}, mg);
+    }
+    Kit.mk('circle', {cx, cy, r: R, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': sw}, g);
+    // steel wall: label up-left, short leader to the rim
+    const ly = cy - R - fs * .25, lx = cx - R * .66, ro = R + sw / 2 + 1;
+    txt(g, lx, ly + fs * .35, 'steel wall', W, {anchor: 'end'});
+    lead(g, lx + 4, ly, cx + Math.cos(rad(-118)) * ro, cy + Math.sin(rad(-118)) * ro);
+    // the material: label down-right, leader touching just inside the rim
+    const cap = txt(g, cx + R * .95, cy + R + sw / 2 + fs * 1.25, 'TFE turning solid, right through', W, {anchor: 'end'});
+    const cb = cap.getBBox(), ri = R - sw - 5, ix = cx + Math.cos(rad(48)) * ri, iy = cy + Math.sin(rad(48)) * ri;
+    lead(g, Math.min(cb.x + cb.width - 10, cx + R * .8), cb.y - 1, ix, iy);
+    Kit.mk('circle', {cx: ix, cy: iy, r: 2.2, style: 'fill:var(--k)'}, g);
+    const p = spot(cx, cy, R, sw, W, H, fs * 1.1);
+    if (p) {
+      Kit.mk('circle', {cx: p[0], cy: p[1], r: fs * 1.1, fill: 'none', stroke: YOU, 'stroke-width': 2}, pic);
+      Kit.mk('circle', {cx: p[0], cy: p[1], r: fs * .42, fill: YOU, id: 'dot'}, pic);
+    }
+  }
+
+  let sureOn = false;
+  function tapAt(rx, ry) {
+    if (answered) return;
+    const inside = Math.hypot(rx, ry) < 1;
+    tap = {x: rx, y: ry, inside};
+    pick = inside ? 0 : 1;
+    say.innerHTML = `You tapped <b>${ZONE[pick]}</b>. Tap again to move it, then say how sure you are.`;
+    drawFront(); Kit.haptic('selection');
+    if (!Kit.calm) gsap.from('#dot', {attr: {r: 0}, duration: .25, ease: 'power3.out'});
+    if (!sureOn) {
+      sureOn = true; sureBox.classList.remove('wait'); sure.on();
+      if (!Kit.calm) gsap.from(sureBox, {opacity: 0, y: 6, duration: .35, ease: 'power2.out'});
+    }
+  }
+  pic.addEventListener('pointerdown', e => {
+    const r = pic.getBoundingClientRect();
+    tapAt((e.clientX - r.left - G.cx) / G.R, (e.clientY - r.top - G.cy) / G.R);
+  });
+
+  const sure = Kit.sure(sureBox, 'How sure are you?', pct => {
+    if (pick < 0 || answered) return;
+    answered = true;
+    const ok = pick === RIGHT;
+    Kit.answer({choice: ZONE[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${ZONE[pick][0].toUpperCase() + ZONE[pick].slice(1)}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back: the same cylinder, warm right through, pushing on its wall ----------
+  let tl = null;
+  function drawBack(animate) {
+    if (tl) { tl.kill(); tl = null; }
+    pic2.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(pic2); fs = Math.max(12, Math.min(14, f));
+    const R = Math.min(G.R || 999, backR(W, H, f));
+    const sw = Math.max(5, R * .07), top = fs * 1.9, cx = W / 2;
+    const cy = top + R + Math.max(0, (H - top - 2 * R - sw - 4) / 2);
+    const at = (d, r) => [cx + Math.cos(rad(d)) * r, cy + Math.sin(rad(d)) * r];
+    const lh = fs * 1.22, Rin = R - sw / 2 - 3, Rout = R + sw / 2 + 3, op = animate ? 0 : 1;
+    const obst = [];
+
+    const g = Kit.mk('g', {}, pic2);
+    // the solid, one flat warmth right through
+    const disc = Kit.mk('circle', {cx, cy, r: R, fill: animate ? PALE : WARM}, g);
+    // heat pressing out from inside, stopped by the steel
+    const AG = Kit.mk('g', {}, g), arrows = [], aw = Math.max(2.2, R * .022), ah = Math.max(4.5, R * .06);
+    const tipR = R - sw / 2 - 1.5;
+    [22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5].forEach(d => {
+      const c = Math.cos(rad(d)), s = Math.sin(rad(d)), [x0, y0] = at(d, R * .5), [x1, y1] = at(d, tipR);
+      const hx1 = x1 - c * ah - s * ah * .75, hy1 = y1 - s * ah + c * ah * .75, hx2 = x1 - c * ah + s * ah * .75, hy2 = y1 - s * ah - c * ah * .75;
+      const el = Kit.mk('g', {}, AG);
+      Kit.mk('path', {d: `M${x0.toFixed(2)},${y0.toFixed(2)}L${x1.toFixed(2)},${y1.toFixed(2)}M${hx1.toFixed(2)},${hy1.toFixed(2)}L${x1.toFixed(2)},${y1.toFixed(2)}L${hx2.toFixed(2)},${hy2.toFixed(2)}`,
+        fill: 'none', stroke: HOT, 'stroke-width': aw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, el);
+      arrows.push({el, c, s});
+      obst.push({seg: [x0, y0, x1, y1]}, {seg: [hx1, hy1, x1, y1]}, {seg: [hx2, hy2, x1, y1]});
+    });
+    // the steel wall, whole
+    const wall = Kit.mk('circle', {cx, cy, r: R, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': sw}, g);
+
+    // placement helpers: every label goes where nothing else is
+    const box = el => { const b = el.getBBox(); return {x: b.x - 3, y: b.y - 2, w: b.width + 6, h: b.height + 4}; };
+    const rectHit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+    const segRect = ([x0, y0, x1, y1], b) => { for (let i = 0; i <= 12; i++) { const x = x0 + (x1 - x0) * i / 12, y = y0 + (y1 - y0) * i / 12;
+      if (x > b.x && x < b.x + b.w && y > b.y && y < b.y + b.h) return true; } return false; };
+    const clash = b => obst.some(o => o.seg ? segRect(o.seg, b) : rectHit(o, b));
+    const corners = b => [[b.x, b.y], [b.x + b.w, b.y], [b.x, b.y + b.h], [b.x + b.w, b.y + b.h]];
+    const inDisc = b => corners(b).every(([x, y]) => Math.hypot(x - cx, y - cy) < Rin);
+    const near = (b, r) => Math.hypot(Math.max(b.x - cx, 0, cx - b.x - b.w), Math.max(b.y - cy, 0, cy - b.y - b.h)) < r;
+    const outDisc = b => !near(b, Rout);
+    const inStage = b => b.x >= 0 && b.y >= 0 && b.x + b.w <= W && b.y + b.h <= H;
+    const place = (cands, mine) => {
+      for (const mk of cands) {
+        const r = mk(), b = box(r.t);
+        const leadBad = r.lead && obst.some(o => !o.seg && !(mine && o.mk) && segRect(r.lead, o));
+        if (inStage(b) && (!r.ok || r.ok(b)) && !clash(b) && !leadBad) { obst.push(b); if (r.lead) obst.push({seg: r.lead}); return r.g; }
+        r.g.remove();
+      }
+      const r = cands[0](); obst.push(box(r.t)); return r.g;
+    };
+    const block = (parent, x, yc, lines, anchor, fill) =>
+      txt(parent, x, yc - (lines.length - 1) * lh / 2 + fs * .35, lines, W, {anchor, fill, clamp: false});
+
+    // your tap, as a marker first so labels keep clear of it
+    const TG = Kit.mk('g', {opacity: op}, pic2), m = fs * .85;
+    const p = spot(cx, cy, R, sw, W, H, m);
+    const [px, py] = p || [0, 0];
+    if (p) {
+      Kit.mk('circle', {cx: px, cy: py, r: m, fill: 'none', stroke: '#fff4e6', 'stroke-width': 5}, TG);
+      Kit.mk('circle', {cx: px, cy: py, r: m, fill: 'none', stroke: YOU, 'stroke-width': 2.4}, TG);
+      Kit.mk('circle', {cx: px, cy: py, r: fs * .32, fill: YOU}, TG);
+      obst.push({x: px - m - 3, y: py - m - 3, w: 2 * m + 6, h: 2 * m + 6, mk: true});
+    }
+
+    const L = Kit.mk('g', {}, pic2);
+    // label 1: the heat stays in
+    const heatC = [cy, cy - R * .3, cy + R * .3].map(yc => () => {
+      const gg = Kit.mk('g', {opacity: op}, L);
+      return {g: gg, t: block(gg, cx, yc, ['heat stays in'], 'middle'), ok: inDisc};
+    }).concat([-1, 1].map(side => () => {
+      const gg = Kit.mk('g', {opacity: op}, L), x = cx + side * (R + sw / 2 + 14);
+      const t = block(gg, x, cy, ['heat', 'stays in'], side < 0 ? 'end' : 'start');
+      const ln = [x - side * 4, cy, cx + side * R * .3, cy];
+      lead(gg, ...ln);
+      return {g: gg, t, lead: ln, ok: outDisc};
+    }));
+    const heat = place(heatC);
+
+    // label 2: pressure builds against the steel
+    const presC = [1, -1].map(side => () => {
+      const gg = Kit.mk('g', {opacity: op}, L), x = cx + side * R * .42, yc = cy - R - sw / 2 - fs * .9;
+      const t = block(gg, x, yc, ['pressure builds'], side > 0 ? 'start' : 'end'), b = t.getBBox();
+      const [ex, ey] = at(side > 0 ? -72 : -108, Rout);
+      const ln = [side > 0 ? b.x - 4 : b.x + b.width + 4, yc, ex, ey];
+      lead(gg, ...ln);
+      return {g: gg, t, lead: ln, ok: outDisc};
+    }).concat([1, -1].map(side => () => {
+      const gg = Kit.mk('g', {opacity: op}, L), x = cx + side * (R + sw / 2 + 12), yc = cy - R * .66;
+      const t = block(gg, x, yc, ['pressure', 'builds'], side > 0 ? 'start' : 'end');
+      const [ex, ey] = at(side > 0 ? -42 : -138, Rout);
+      const ln = [x - side * 4, yc, ex, ey];
+      lead(gg, ...ln);
+      return {g: gg, t, lead: ln, ok: outDisc};
+    }));
+    const pres = place(presC);
+
+    // label 3: your tap, on its own leader
+    if (p) {
+      const tc = [];
+      for (const D of [10, 22, 36, 52, 70]) for (const d of [180, 0, 155, 205, 25, 335, 90, 270, 125, 55, 235, 305]) tc.push(() => {
+        const c = Math.cos(rad(d)), s = Math.sin(rad(d)), gg = Kit.mk('g', {}, TG);
+        const ax = px + c * (m + D), ay = py + s * (m + D);
+        const anchor = c > .35 ? 'start' : c < -.35 ? 'end' : 'middle';
+        const x = ax + (anchor === 'start' ? 3 : anchor === 'end' ? -3 : 0);
+        const y = anchor === 'middle' ? (s > 0 ? ay + fs * .9 : ay - 3) : ay + fs * .35;
+        const ln = [px + c * (m + 2), py + s * (m + 2), ax, ay];
+        lead(gg, ...ln, YOU);
+        return {g: gg, t: txt(gg, x, y, 'your tap', W, {anchor, fill: YOU, clamp: false}), lead: ln, ok: b => inDisc(b) || outDisc(b)};
+      });
+      place(tc, true);
+    }
+
+    if (!animate) return;
+    tl = gsap.timeline({delay: .2});
+    // beat 1: the whole solid warms, right through
+    tl.to(disc, {attr: {fill: WARM}, duration: .9, ease: 'power1.inOut'})
+      .to([heat, TG], {opacity: 1, duration: .3}, '-=.3')
+    // beat 2: the heat pushes out and meets the steel
+      .addLabel('push', '+=.1');
+    arrows.forEach((a, i) => tl.fromTo(a.el, {opacity: 0, x: -a.c * R * .18, y: -a.s * R * .18},
+      {opacity: 1, x: 0, y: 0, duration: .5, ease: 'power2.in'}, 'push+=' + (i * .03)));
+    // beat 3: nowhere to go, so the force builds
+    tl.to(wall, {attr: {'stroke-width': sw * 1.3}, duration: .14, yoyo: true, repeat: 1, ease: 'power2.out'}, 'push+=.6')
+      .to(pres, {opacity: 1, duration: .3}, 'push+=.65');
+  }
+
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => drawBack(!Kit.calm), Kit.calm ? 0 : 450); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#plan', {opacity: 0, scale: .96, transformOrigin: '50% 50%', duration: .6, ease: 'power3.out'});
+    gsap.from('#mols path', {opacity: 0, duration: .4, stagger: .008, delay: .25, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    tapAt(.05, -.08);
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4400);
+  };
+})();
+Kit.single();
+</script>
+</html>

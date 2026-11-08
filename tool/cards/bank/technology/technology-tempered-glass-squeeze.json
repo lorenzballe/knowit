@@ -3,12 +3,12 @@
   "topic": "technology",
   "genre": "technology.where_things_come_from",
   "strand": "technology.where_things_come_from.factories",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How does thermal tempering make glass stronger?",
-  "answer": "Tempered glass is heated to about 700 °C and then cooled in an instant. The surface locks in a squeeze, so a knock or sudden heat must undo that squeeze before the glass gives way. That makes it about 6–7× stronger than ordinary glass.",
-  "move": "Tempered glass is tougher because its surface is born squeezed.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Red-hot glass is cooled in an instant. Its skin ends up squeezed or stretched?",
+  "answer": "Tempered glass is heated to about 700 °C, then cooled in an instant. Its outer surface contracts and locks in compression, a squeeze that raises its resistance to mechanical stress and thermal shock.",
+  "move": "Tempered glass is tougher because its skin is locked in a squeeze.",
   "keywords": [
     "tempered-glass",
     "thermal-tempering",
@@ -28,10 +28,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A pane of glass under a press, shown as two versions: A, ordinary glass, and B, tempered glass. The reader presses and holds to load each picture, ordinary first. The question asked is how thermal tempering makes glass stronger.",
-    "ground": "#efe5c9"
+    "label": "Page titled 'Why tempered glass is tough' asks whether the glass skin ends up squeezed or stretched. A slice can be dragged sideways: left squeezes the skin, right stretches it. The reader's answer is marked right or wrong."
   },
   "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=QB4WuTk_ja8&t=129s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

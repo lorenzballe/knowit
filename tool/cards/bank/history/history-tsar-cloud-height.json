@@ -1,0 +1,37 @@
+{
+  "id": "history-tsar-cloud-height",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "How high did the Tsar Bomba's mushroom cloud rise?",
+  "answer": "The Tsar Bomba's cloud rose 64 km high and spanned about 40 km wide. The bomb was dropped from about 10 km and went off at 4 km. That height is roughly seven Everests stacked.",
+  "move": "Past mountains and planes, our eye stops measuring: count in heights you know.",
+  "keywords": [
+    "tsar_bomba",
+    "mount_everest",
+    "mushroom_cloud",
+    "soviet_union",
+    "nuclear_test"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page: a draggable mushroom cloud asks the reader to guess how high the Tsar Bomba's cloud rose, then rate their confidence. The reveal shows the cloud at 64 km high and 40 km wide, beside a scaled Everest silhouette."
+  },
+  "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=tesv0xoNhCo&t=436s",
+  "written": "2026-11-07"
+}

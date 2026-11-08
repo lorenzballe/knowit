@@ -1,0 +1,337 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-folded-steel -->
+<!-- Thought to carry: a flaw spread thin enough everywhere stops being a weak point anywhere, and the same folds give the steel a grain.
+     Front: a bar of raw steel on an anvil, three rust flecks of impurity in it, a faint fold line at its centre and the hammer mid-strike. The reader picks two of four reasons for folding, then says how sure.
+     The wrong options are the exact opposites of the two the video gives: "gathers them in one spot" against "spreads them through", "equally strong every way" against "gives a grain".
+     Back: the reader's own picks, marked, with their confidence echoed. Then the same bar twice: raw, with its three flecks, and folded, the flecks cut and spread thin.
+     The folded bar is live: "Fold again" folds it for real. An arrow shows the direction of the hit, which the grain reinforces.
+     No layer counts are claimed; the only figure is the video's own: some swords have more than a billion layers. -->
+<title>Why smiths fold steel</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:minmax(0,1fr);transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* the face turned away is truly gone, so its labels never sit under the other face */
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face .stagebox{flex:1;min-height:0;position:relative;display:flex}
+#pic,#pic2{flex:1;min-width:0;min-height:0;width:100%;height:100%;display:block;overflow:visible}
+
+/* front, in reading order: drawing, instruction, options, confidence */
+.front .say{margin:.6cqh 0 1.1cqh}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.5cqw;margin:0}
+.opt{font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#sure{margin-top:2.4cqh}
+#sure.locked,#sure.locked *{opacity:1!important;color:var(--k)!important}
+#sure.locked button{background:transparent!important;box-shadow:none!important;border:1.5px dashed color-mix(in srgb,var(--k) 70%,transparent)!important;cursor:not-allowed}
+
+/* back */
+.back .big{font-size:max(3cqh,18px);line-height:1.15;margin:0 0 1cqh}
+#you{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 1.4cqh}
+.chip{font:700 max(1.55cqh,12px)/1 var(--body);padding:.55em .8em;border-radius:99px;white-space:nowrap;color:var(--k)}
+.chip.ok{background:var(--k);color:var(--c)}
+.chip.no{box-shadow:inset 0 0 0 1.5px var(--k)}
+.chip.no .t{text-decoration:line-through;text-decoration-thickness:1.5px}
+.verdict{flex-basis:100%;font:600 max(1.6cqh,12px)/1.3 var(--body);color:var(--k);margin-top:2px}
+.ctrl{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:44px;margin:1.4cqh 0 1.6cqh}
+.note{margin:0;font:600 max(1.7cqh,13px)/1.25 var(--body);color:var(--k)}
+#fold{flex:none;font-size:max(1.8cqh,13px)}
+.back .body{font-size:max(1.8cqh,13px);line-height:1.3;margin:0 0 1.6cqh}
+.face .foot .src{display:block;max-width:calc(100% - 104px);line-height:1.25}
+
+/* short screens: tighten the back so everything stays inside the card, never under 12px */
+@media (max-height:720px){
+  .back .big{font-size:17px;margin:0 0 5px}
+  #you{margin:0 0 6px;gap:4px}
+  .verdict{margin-top:0}
+  .ctrl{margin:6px 0 8px}
+  .note{font-size:12.5px}
+  .back .body{font-size:13px;line-height:1.25;margin:0 0 8px}
+  .back .keep{font-size:13px;line-height:1.25}
+  .back .foot .src{font-size:12px}
+}
+@media (max-height:560px){
+  .back .big{font-size:16px}
+  .chip,.verdict,.note,.back .body,.back .keep,.back .foot .src{font-size:12px}
+  .ctrl{margin:4px 0 6px}
+}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick two · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag" id="tag">PICK TWO</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Smiths fold the steel again and again. Which two things does that buy?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A bar of raw steel on an anvil with three rust-coloured flecks of impurity in it, a faint fold line at its centre, and a hammer coming down on it."></svg></div>
+        <p class="say" id="say">Pick the two real reasons. Then say how sure you are.</p>
+        <div id="opts">
+          <button class="opt" data-i="0">Gathers the impurities in one spot</button>
+          <button class="opt" data-i="1">Spreads the impurities through</button>
+          <button class="opt" data-i="2">Gives the steel a grain</button>
+          <button class="opt" data-i="3">Makes it equally strong every way</button>
+        </div>
+        <div class="sure locked" id="sure"></div>
+        <div class="foot" aria-hidden="true"><span class="src">&nbsp;</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It spreads the impurities, and it gives the steel a grain.</p>
+        <div id="you"></div>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same bar twice. Above, raw, with three lumps of impurity. Below, folded: the lumps are cut and spread into thin streaks through the steel. An arrow shows the direction of the hit, which the grain reinforces."></svg></div>
+        <div class="ctrl">
+          <p class="note" id="cnt" aria-live="polite">Each fold spreads the flecks thinner.</p>
+          <button class="btn gone" id="fold">Fold again</button>
+        </div>
+        <p class="body">The impurities end up spread throughout, so no spot is weak, and the grain reinforces the blade in the direction it will be hit.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Spread a flaw thin enough, everywhere, and it stops being a weak point.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (2024)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const STEEL = '#d4d9dd', OX = '#9aa1a8', RUST = '#b8442a', RUSTD = '#6b2313', WOOD = '#9a6a3a';
+  const card = Kit.$('card'), mk = Kit.mk;
+  const css = v => getComputedStyle(card).getPropertyValue(v).trim();
+  const ink = () => css('--k') || '#111';
+  const paper = () => css('--c') || '#00e8a2';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const text = (g, x, y, t, a = {}, st = '') => { const e = mk('text', Object.assign({x, y, fill: ink(), style: 'font-family:var(--body);font-weight:700;' + st}, a), g); e.textContent = t; return e; };
+
+  // ---------- the impurities: three hand-shaped flecks, in bar units (u along 0..1, v up 0..1) ----------
+  const JIT = [1, .78, .93, .66, 1.06, .86, .72, .98, .9, .8, .95];
+  const SEED = [[.18, .6, 1], [.4, .37, -1], [.72, .58, .6]];
+  const fleck0 = SEED.map(([cu, cv, sk], k) => {
+    const P = [];
+    for (let i = 0; i < 11; i++) {
+      const a = i / 11 * 6.2832 + k * .5, r = JIT[(i + k * 4) % 11], ex = Math.cos(a) * r, ey = Math.sin(a) * r;
+      P.push([cu + ex * .036 + ey * .011 * sk, cv + ey * .16]);
+    }
+    return P;
+  });
+  // one fold, exactly: cut at the middle, the right half turns over onto the left, then all is drawn back to length
+  const clipX = (P, left) => {
+    const ins = p => left ? p[0] <= .5 : p[0] >= .5, out = [];
+    for (let i = 0; i < P.length; i++) {
+      const a = P[i], b = P[(i + 1) % P.length], ia = ins(a), ib = ins(b);
+      if (ia) out.push(a);
+      if (ia !== ib) { const t = (.5 - a[0]) / (b[0] - a[0]); out.push([.5, a[1] + t * (b[1] - a[1])]); }
+    }
+    return out.length > 2 ? out : null;
+  };
+  const foldOnce = polys => { const r = []; polys.forEach(P => {
+    const L = clipX(P, true), R = clipX(P, false);
+    if (L) r.push(L.map(([u, v]) => [2 * u, v / 2]));
+    if (R) r.push(R.map(([u, v]) => [2 * (1 - u), 1 - v / 2]));
+  }); return r; };
+  const MAXF = 6;
+  const states = [fleck0]; for (let i = 1; i <= MAXF; i++) states.push(foldOnce(states[i - 1]));
+  const piecesAt = n => states[Math.min(n, MAXF)];
+  const mapper = G => { const mx = 8, my = Math.min(8, G.h * .2);
+    return {X: u => G.x0 + mx + u * (G.w - 2 * mx), Y: v => G.y0 + my + (1 - v) * (G.h - 2 * my)}; };
+
+  // the bar, in side view, after n folds (the darker bands are the oxidised steel the video mentions)
+  function strip(g, defs, G, n, id) {
+    const {x0, y0, w, h} = G, {X, Y} = mapper(G), K = ink();
+    mk('rect', {x: x0, y: y0, width: w, height: h, fill: STEEL}, g);
+    if (n) { const s = Math.min(2 ** n, 64);
+      for (let i = 1; i < s; i += 2) { const top = i === s - 1 ? y0 : Y((i + 1) / s), bot = Y(i / s);
+        mk('rect', {x: x0, y: top, width: w, height: Math.max(.3, bot - top + .15), fill: OX}, g); } }
+    const cp = mk('clipPath', {id}, defs); mk('rect', {x: x0 + 2, y: y0 + 1, width: w - 4, height: h - 2}, cp);
+    const fg = mk('g', {'clip-path': `url(#${id})`}, g), sw = n === 0 ? 1.1 : n < 5 ? .7 : .5;
+    piecesAt(n).forEach(P => mk('path', {d: 'M' + P.map(([u, v]) => X(u).toFixed(2) + ',' + Y(v).toFixed(2)).join('L') + 'Z',
+      fill: RUST, stroke: RUSTD, 'stroke-width': sw, 'stroke-linejoin': 'round'}, fg));
+    mk('rect', {x: x0, y: y0, width: w, height: h, fill: 'none', stroke: K, 'stroke-width': 1.6}, g);
+  }
+
+  // ---------- front: raw steel under the hammer ----------
+  const svg = Kit.$('pic');
+  function drawFront() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = clamp(W / 27, 12, 14), K = ink();
+    const defs = mk('defs', {}, svg);
+    const L1 = 'impurities: silicon, sulfur, phosphorus', L2 = 'silicon, sulfur, phosphorus';
+    const pr = text(svg, 0, -200, L1, {}, `font-size:${fs}px`), tw1 = pr.getComputedTextLength();
+    pr.textContent = L2; const tw2 = pr.getComputedTextLength(); pr.remove();
+    const S29 = Math.sin(29 * Math.PI / 180), C29 = Math.cos(29 * Math.PI / 180);
+
+    const geo = h => {
+      const w = Math.min(W * .92, h * 10), x0 = (W - w) / 2, hd = h * .72, hh = h * 1.15, gap = 3, th = Math.max(5, h * .22);
+      let hx = x0 + w * .7; const avail = hx - hd / 2 - 14 - x0, one = tw1 <= avail;
+      if (!one && tw2 > avail) hx = Math.min(x0 + w * .8, x0 + tw2 + 14 + hd / 2);
+      const L = Math.max(h, Math.min(w * .32, (W - 6 - hx) / C29));
+      const hamAbove = Math.max(gap + hh, gap + hh * .62 + L * S29 + th) + 6;
+      const labAbove = (one ? fs * 1.3 : fs * 2.6) + 14;
+      const above = Math.max(hamAbove, labAbove);
+      const aw = w * .48, ah = Math.min(aw * .62, H - above - h - 2);
+      return {w, x0, hd, hh, gap, th, hx, L, one, above, aw, ah, h, total: above + h + ah};
+    };
+    let g; for (let h = clamp(H * .14, 20, 40); ; h -= 2) { g = geo(h); if ((g.total <= H && g.ah >= g.aw * .36) || h <= 14) break; }
+    const {w, x0, hd, hh, gap, th, hx, L, one, above, aw, ah, h} = g;
+    const oy = Math.max(0, (H - g.total) / 2), y0 = oy + above, ty = y0 + h, G = {x0, y0, w, h};
+
+    // the anvil: horn, face, waist, feet — one ink, one cut-out highlight on the face
+    const ax = x0 + w * .56, fl = ax - aw / 2, fr = ax + aw / 2, hl = aw * .5, B = ty + Math.max(8, ah), A = B - ty, ft = A * .27;
+    const an = mk('g', {}, svg);
+    mk('path', {fill: K, d: `M${fl},${ty} H${fr} V${ty + ft * .75} Q${fr},${ty + ft} ${fr - aw * .1},${ty + ft} Q${ax + aw * .2},${ty + ft} ${ax + aw * .19},${ty + A * .52} Q${ax + aw * .19},${ty + A * .8} ${ax + aw * .42},${B - A * .09} V${B} H${ax - aw * .42} V${B - A * .09} Q${ax - aw * .19},${ty + A * .8} ${ax - aw * .19},${ty + A * .52} Q${ax - aw * .2},${ty + ft} ${fl + aw * .02},${ty + ft} Q${fl - hl * .55},${ty + ft * 1.05} ${fl - hl},${ty + ft * .2} Q${fl - hl * .5},${ty - .5} ${fl},${ty} Z`}, an);
+    mk('rect', {x: fl + aw * .05, y: ty + ft * .36, width: aw * .78, height: Math.max(1.5, ft * .14), rx: 1, style: `fill:${paper()}`}, an);
+
+    // the bar, with the fold line it is about to get
+    const bg = mk('g', {}, svg); strip(bg, defs, G, 0, 'fin');
+    mk('line', {x1: x0 + w / 2, x2: x0 + w / 2, y1: y0 + 3, y2: y0 + h - 3, stroke: K, 'stroke-width': 1.2, 'stroke-dasharray': '3 3', opacity: .35}, bg);
+
+    // the hammer, mid-strike, with one short impact mark
+    const sy = y0 - gap, hm = mk('g', {transform: `rotate(-7 ${hx} ${sy})`}, svg), ay = sy - hh * .62;
+    mk('rect', {x: hx, y: ay - th / 2, width: L, height: th, rx: th / 2, fill: WOOD, stroke: K, 'stroke-width': 1.3, transform: `rotate(-22 ${hx} ${ay})`}, hm);
+    const c = hd * .12;
+    mk('path', {fill: K, d: `M${hx - hd / 2 + c},${sy - hh} H${hx + hd / 2 - c} L${hx + hd / 2},${sy - hh + c} V${sy - c} L${hx + hd / 2 - c},${sy} H${hx - hd / 2 + c} L${hx - hd / 2},${sy - c} V${sy - hh + c} Z`}, hm);
+    const ix = hx - hd / 2 - 4, iy = y0 - 3, r1 = h * .16, r2 = h * .42, im = mk('g', {stroke: K, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
+    [200, 228, 256].forEach(d => { const a = d * Math.PI / 180;
+      mk('line', {x1: ix + Math.cos(a) * r1, y1: iy + Math.sin(a) * r1, x2: ix + Math.cos(a) * r2, y2: iy + Math.sin(a) * r2}, im); });
+
+    // one label, pinned to one fleck
+    const {X, Y} = mapper(G), A0 = fleck0[0], top = Y(Math.max(...A0.map(p => p[1]))), lx = X(.18);
+    const lab = mk('g', {}, svg), base = y0 - 14 - (one ? fs * .3 : fs * 1.6);
+    const t = text(lab, x0, base, '', {}, `font-size:${fs}px`);
+    if (one) t.textContent = L1;
+    else { const a = mk('tspan', {x: x0}, t); a.textContent = 'impurities:';
+      const b = mk('tspan', {x: x0, dy: fs * 1.3, style: 'font-weight:600'}, t); b.textContent = L2; }
+    const lineBottom = one ? base : base + fs * 1.3;
+    mk('line', {x1: lx, x2: lx, y1: lineBottom + 5, y2: top - 2, stroke: K, 'stroke-width': 1.2}, lab);
+  }
+
+  // ---------- back: raw, then folded (live) ----------
+  const svg2 = Kit.$('pic2'), foldBtn = Kit.$('fold'), note = Kit.$('cnt');
+  let GL = null, liveG, labLive, rowsG = [], tl = null, busy = false, built = false, n = 2, defs2;
+  const NOTE = 'Each fold spreads the flecks thinner.', LAST = 'Some swords have more than a billion layers.';
+
+  function paintNote() { note.textContent = n >= MAXF ? LAST : NOTE; }
+  function paintLive() { liveG.innerHTML = ''; defs2.querySelectorAll('#blive').forEach(e => e.remove()); strip(liveG, defs2, GL, n, 'blive'); }
+
+  function drawBack() {
+    if (tl) { tl.kill(); tl = null; busy = false; }
+    svg2.innerHTML = ''; rowsG = [];
+    const {W, H} = Kit.fitSvg(svg2), fs = clamp(W / 28, 12, 13), K = ink();
+    defs2 = mk('defs', {}, svg2);
+    const band = fs * 1.75, gap = clamp(H * .07, 6, 22), x0 = 1, w = W - 2;
+    const h = clamp((H - 2 * band - gap - 4) / 2, 10, 38);
+    const used = 2 * band + gap + 2 * h, oy = Math.max(2, (H - used) / 2);
+    const G1 = {x0, y0: oy + band, w, h}, G2 = {x0, y0: G1.y0 + h + gap + band, w, h};
+    const base = G => G.y0 - band + fs;
+
+    // row 1: raw steel, the impurities in lumps
+    const r1 = mk('g', {}, svg2); rowsG.push(r1);
+    strip(r1, defs2, G1, 0, 'b0');
+    { const {X, Y} = mapper(G1), A0 = fleck0[0], top = Y(Math.max(...A0.map(p => p[1]))), lx = X(.18);
+      text(r1, x0, base(G1), 'impurities', {}, `font-size:${fs}px`);
+      mk('line', {x1: lx, x2: lx, y1: base(G1) + 4, y2: top - 2, stroke: K, 'stroke-width': 1.2}, r1); }
+
+    // row 2: folded, live; the hit comes from above and the grain reinforces it
+    const r2 = mk('g', {}, svg2); rowsG.push(r2);
+    GL = G2; liveG = mk('g', {}, r2); labLive = mk('g', {}, r2);
+    const hitT = text(labLive, 0, base(G2), 'grain: reinforced this way', {}, `font-size:${fs}px`);
+    const tw = hitT.getComputedTextLength(), tx = x0 + w - tw, ax = tx - 9;
+    hitT.setAttribute('x', tx);
+    const ay1 = G2.y0 - band + 2, ay2 = G2.y0 - 3;
+    mk('path', {d: `M${ax},${ay1} V${ay2} m-4,-5 l4,5 l4,-5`, stroke: K, 'stroke-width': 1.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, labLive);
+    const fl = text(labLive, x0, base(G2), 'folded, spread thin', {}, `font-size:${fs}px`);
+    if (x0 + fl.getComputedTextLength() > ax - 14) fl.textContent = 'folded';
+    const cl = mk('clipPath', {id: 'cl'}, defs2); mk('rect', {x: x0 - 2, y: G2.y0 - 2, width: w / 2 + 2, height: h + 4}, cl);
+    const cr = mk('clipPath', {id: 'cr'}, defs2); mk('rect', {x: x0 + w / 2, y: G2.y0 - 2, width: w / 2 + 2, height: h + 4}, cr);
+    paintLive();
+
+    paintNote();
+    if (!built && !Kit.calm) { rowsG.forEach(r => r.setAttribute('opacity', 0)); note.style.opacity = 0; }
+  }
+
+  function fold() {
+    if (busy || n >= MAXF || !GL) return; busy = true; Kit.haptic('selection');
+    const {x0, y0, w, h} = GL, mid = x0 + w / 2;
+    const finish = () => { n++; tl = null; busy = false; paintLive(); paintNote(); gsap.set(labLive, {opacity: 1});
+      if (n >= MAXF) { Kit.hide('fold'); Kit.haptic('success'); } };
+    if (Kit.calm) { finish(); return; }
+    liveG.innerHTML = ''; defs2.querySelectorAll('#blive').forEach(e => e.remove());
+    const all = mk('g', {}, liveG), Lh = mk('g', {}, all), S = mk('g', {}, all), R = mk('g', {}, S);
+    strip(mk('g', {'clip-path': 'url(#cl)'}, Lh), defs2, GL, n, 'blive');
+    strip(mk('g', {'clip-path': 'url(#cr)'}, R), defs2, GL, n, 'blive2');
+    const o = `${mid} ${y0}`;
+    tl = gsap.timeline({onComplete: () => { defs2.querySelectorAll('#blive2').forEach(e => e.remove()); finish(); }})
+      .to(labLive, {opacity: 0, duration: .2}, 0)
+      .to(R, {rotation: -180, svgOrigin: o, duration: .9, ease: 'power2.inOut'}, .1)
+      .to(S, {scaleY: .14, svgOrigin: o, duration: .45, ease: 'power1.in'}, .1)
+      .to(S, {scaleY: 1, svgOrigin: o, duration: .45, ease: 'power1.out'}, .55)
+      .to(all, {scaleX: 2, scaleY: .5, svgOrigin: `${x0} ${y0 + h}`, duration: .5, ease: 'power3.out'}, 1.02);
+  }
+  foldBtn.addEventListener('click', fold);
+
+  function build() {
+    if (built) return; built = true;
+    if (Kit.calm) { rowsG.forEach(r => r.setAttribute('opacity', 1)); note.style.opacity = 1; Kit.show('fold'); return; }
+    gsap.fromTo(rowsG, {opacity: 0, y: 6}, {opacity: 1, y: 0, stagger: .4, duration: .45, ease: 'power2.out'});
+    const end = .4 * (rowsG.length - 1) + .3;
+    gsap.to(note, {opacity: 1, duration: .4, delay: end});
+    setTimeout(() => { Kit.show('fold'); gsap.from(foldBtn, {opacity: 0, y: 6, duration: .4, ease: 'power2.out'}); }, (end + .3) * 1000);
+  }
+  let score = '';
+  document.addEventListener('turned', () => { if (score) Kit.$('tag').textContent = score; setTimeout(build, Kit.calm ? 0 : 500); });
+
+  // ---------- the guess ----------
+  const RIGHT = [1, 2], SHORT = ['Gathers them in one spot', 'Spreads them through', 'Gives a grain', 'Equally strong every way'];
+  const picked = [], opts = Kit.$('opts'), sureEl = Kit.$('sure');
+  const sure = Kit.sure(sureEl, 'How sure are you?', pct => {
+    const hits = picked.filter(i => RIGHT.includes(i)).length, ok = hits === 2;
+    const said = picked.map(i => opts.children[i].textContent).join(' + ');
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? 'Both right' : `${hits} of 2 right`);
+    // the back, made personal
+    const you = Kit.$('you'); you.innerHTML = '';
+    picked.forEach(i => { const r = RIGHT.includes(i), s = document.createElement('span');
+      s.className = 'chip ' + (r ? 'ok' : 'no'); s.setAttribute('aria-label', (r ? 'Right: ' : 'Wrong: ') + SHORT[i]);
+      s.innerHTML = `<span aria-hidden="true">${r ? '✓' : '✗'}</span> <span class="t"></span>`; s.querySelector('.t').textContent = SHORT[i]; you.append(s); });
+    const hi = pct >= 70;
+    const word = hits === 2 ? (hi ? 'Earned.' : 'You knew more than you said.') : hits === 1 ? (hi ? 'More sure than right.' : 'A fair hedge.') : (pct >= 60 ? 'Too sure.' : 'At least you hedged.');
+    const v = document.createElement('span'); v.className = 'verdict'; v.textContent = `You said ${pct}% — ${hits} of 2 right. ${word}`; you.append(v);
+    score = `${hits} OF 2 RIGHT`;
+    drawBack();
+    setTimeout(() => Turn.over(), 700);
+  });
+  sureEl.classList.add('locked');
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b) return;
+    const i = +b.dataset.i, k = picked.indexOf(i);
+    if (k >= 0) { picked.splice(k, 1); b.classList.remove('on'); return; }
+    if (picked.length >= 2) return;
+    picked.push(i); b.classList.add('on'); Kit.haptic('selection');
+    if (picked.length === 2) { Kit.$('say').textContent = 'Two picked. Now, how sure?'; sureEl.classList.remove('locked'); sure.on(); }
+  });
+
+  Kit.onShow.card = () => { drawFront(); drawBack(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#pic > *:not(defs)', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .06, duration: .4, delay: .25, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    opts.children[1].click(); opts.children[2].click();
+    await wait(100);
+    sureEl.querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 4200);
+  };
+})();
+Kit.single();
+</script>
+</html>

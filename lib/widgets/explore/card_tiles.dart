@@ -27,6 +27,8 @@ import '../../theme.dart';
 import '../card_edge.dart';
 import '../scaled_text.dart';
 import '../subject_icon.dart';
+import '../web/card_thumb.dart';
+import '../web/web_card_page.dart' show groundOf;
 import 'first_shelves.dart' show ReadTick;
 
 /// The steps of a row of cards, smallest first. [m] and [l] are the two
@@ -344,6 +346,7 @@ class BoxTile extends StatelessWidget {
     required this.box,
     this.read = false,
     this.look,
+    this.picture = false,
   });
 
   /// The card.
@@ -358,18 +361,62 @@ class BoxTile extends StatelessWidget {
   /// How it is drawn, when not as [TileLook.forBox] draws a box this size.
   final TileLook? look;
 
+  /// Whether a free card with a picture of its front is shown by it, in a
+  /// box that shows it well ([pictureFits]).
+  final bool picture;
+
   @override
   Widget build(BuildContext context) {
     final TileLook drawn = look ?? TileLook.forBox(box);
+    final Widget words = TileBody(pill: pill, look: drawn, read: read);
+    if (picture && showsPicture(pill, box)) {
+      return Container(
+        key: ValueKey('tile-picture-${pill.id}'),
+        width: box.width,
+        height: box.height,
+        decoration: cardFace(context, groundOf(pill), radius: drawn.radius),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(drawn.radius),
+          child: CardThumb(
+            pill: pill,
+            // Only ever the front: the back would give the answer away.
+            side: CardSide.front,
+            // From the head down where the box is the card's shape or
+            // wider; in a box taller than the card, the card whole, its
+            // ground carrying on under it.
+            fit: box.width / box.height >= WebThumbs.aspect
+                ? BoxFit.cover
+                : BoxFit.contain,
+            fallback: ColoredBox(
+              color: pill.color,
+              child: Padding(
+                padding: EdgeInsets.all(drawn.padding),
+                child: words,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     return Container(
       width: box.width,
       height: box.height,
       padding: EdgeInsets.all(drawn.padding),
       decoration: cardFace(context, pill.color, radius: drawn.radius),
-      child: TileBody(pill: pill, look: drawn, read: read),
+      child: words,
     );
   }
 }
+
+/// Whether a box of [box] shows a card's picture well: one about as wide as
+/// it is tall, or taller. A picture cut to a box twice as wide as it is
+/// tall shows only the card's head, a third of the card, and none of its
+/// drawing; such a box sets the card in words instead.
+bool pictureFits(Size box) => box.width <= box.height * 1.25;
+
+/// Whether [pill] is shown by the picture of its front in a box of [box].
+bool showsPicture(Pill pill, Size box) =>
+    pictureFits(box) && CardThumb.has(pill, CardSide.front);
 
 /// What is inside a tile's margins: the head, the question, the foot.
 class TileBody extends StatelessWidget {
@@ -634,12 +681,19 @@ final Map<String, double> _lines = {};
 /// each box the first card not yet placed whose question it holds whole.
 /// The smallest boxes choose first, since they can hold the fewest; a box
 /// no card fits is left empty (null), and the section leaves it out.
+///
+/// With [pictures], as on a feed whose tiles show a free card by its
+/// picture ([BoxTile.picture]): a card shown by its picture fits whatever
+/// the length of its question, since the picture is the card whole; and a
+/// box too wide to show a picture takes a card without one where it can,
+/// so the cards with drawings go to the boxes that show them.
 List<Pill?> fitCards(
   BuildContext context,
   List<Pill> cards,
   List<Size> boxes, {
   required bool Function(Pill) isRead,
   TileLook Function(Size box)? look,
+  bool pictures = false,
 }) {
   final List<int> order = List<int>.generate(boxes.length, (i) => i)
     ..sort((a, b) {
@@ -651,13 +705,22 @@ List<Pill?> fitCards(
   final Set<String> used = {};
   for (final int i in order) {
     final TileLook drawn = (look ?? TileLook.forBox)(boxes[i]);
-    for (final Pill pill in cards) {
-      if (used.contains(pill.id)) continue;
-      if (questionFits(context, pill, boxes[i], drawn, read: isRead(pill))) {
-        placed[i] = pill;
-        used.add(pill.id);
-        break;
+    final bool wide = pictures && !pictureFits(boxes[i]);
+    bool fits(Pill pill) =>
+        (pictures && showsPicture(pill, boxes[i])) ||
+        questionFits(context, pill, boxes[i], drawn, read: isRead(pill));
+    // In a wide box, first a card that has no picture to lose there.
+    for (final bool plain in wide ? const [true, false] : const [false]) {
+      for (final Pill pill in cards) {
+        if (used.contains(pill.id)) continue;
+        if (plain && CardThumb.has(pill, CardSide.front)) continue;
+        if (fits(pill)) {
+          placed[i] = pill;
+          used.add(pill.id);
+          break;
+        }
       }
+      if (placed[i] != null) break;
     }
   }
   return placed;

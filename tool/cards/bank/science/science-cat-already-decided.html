@@ -1,0 +1,333 @@
+<!doctype html>
+<!-- slug: science-cat-already-decided -->
+<!-- The thought to carry: not knowing an outcome is not the same as the outcome being undecided.
+     Front: a person rests a hand on a shut box. A cutaway shows what is inside: an atom, a detector,
+     and a cat sitting behind the detector, so its state is hidden. The reader picks an answer, then says how sure.
+     Back: time runs up the card. One you and one shut box stand on the path. In Many-Worlds the path forks
+     when the detector clicks, while the box is still shut. Further up, each copy opens its own box: one finds
+     the cat alive, the other finds it dead. The split comes well before the opening.
+     Four labels on the back, laid out in fixed bands so the fork note can never meet the opening note.
+     The front draws no answer and grades none: no fork and no verdict until the card turns. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Schrödinger's cat, already decided</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.1cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+#pic,#pic2{flex:1 1 auto;min-height:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:.9cqh;flex:0 0 auto;margin-top:28px}
+.opt{font:700 max(1.95cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+
+/* The confidence row before a pick: waiting, not broken. */
+#sure.wait,#sure.wait *{opacity:1!important;filter:none!important}
+#sure.wait *{color:var(--k)!important}
+#sure.wait [data-v]{color:color-mix(in srgb,var(--k) 55%,transparent)!important;background:transparent!important;border:1.5px solid color-mix(in srgb,var(--k) 55%,transparent)!important;box-shadow:none!important}
+
+.front .say{flex:0 0 auto;min-height:44px;margin:0 96px 0 0;padding:0;box-sizing:border-box}
+.back .big{margin:0;font-size:max(2.5cqh,18px);line-height:1.15}
+.back .stagebox{margin-top:4px;margin-bottom:max(0px,calc(18px - 1.1cqh))}
+.back .body{margin:0;font-size:max(1.85cqh,13px);line-height:1.28}
+.back .keep{padding-top:max(1.5cqh,11px);padding-bottom:max(1.5cqh,11px)}
+.back .foot{min-height:44px;margin-right:96px;padding-right:0;box-sizing:border-box}
+.back .src{font-size:12px;line-height:1.3;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MANY WORLDS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">In Many-Worlds, before you open the box, is the cat alive or dead?</h2>
+        <div class="stagebox" id="stage">
+          <svg id="pic" role="img" aria-label="A person rests a hand on a shut box. A cutaway shows an atom, a detector, and a cat sitting behind the detector, so you cannot see whether it is alive."></svg>
+          <div id="opts">
+            <button class="opt" data-i="0">Both alive and dead, until you look</button>
+            <button class="opt" data-i="1">Neither yet: your look decides it</button>
+            <button class="opt" data-i="2">Already one or the other; you find out which</button>
+          </div>
+        </div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Pick the Many-Worlds answer, then say how sure you are.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Already one or the other. In Many-Worlds, you split first.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Time runs upward. One you stands by a shut box. In Many-Worlds the path forks when the detector clicks, while the box is still shut. Higher up, each copy opens its box: this you finds the cat alive, the other you finds it dead."></svg></div>
+        <p class="body">In Many-Worlds, the detector tangles with the air and light in the box almost at once, and that splits the world, and you, into two identical copies. Each copy's cat is already alive or already dead. Opening the box only tells you which copy you are.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Not knowing an outcome is not the same as it being undecided.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (2020).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const RIGHT = 2, ACC = '#e0502a', TAN = '#d9a764', TAN2 = '#c48d48', INSIDE = '#f3e0bf';
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2');
+  let pick = -1, answered = false, turned = false, tl = null;
+  let INK = '#111', PAPER = '#fff';
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const colours = () => { const cs = getComputedStyle(card); INK = cs.getPropertyValue('--k').trim() || '#111'; PAPER = cs.getPropertyValue('--c').trim() || '#fff'; };
+  const txt = (p, x, y, s, a, fs) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree, sans-serif', 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+  const fit = (e, W) => { const w = e.getComputedTextLength(), an = e.getAttribute('text-anchor') || 'start', x = +e.getAttribute('x');
+    const l = an === 'middle' ? x - w / 2 : an === 'end' ? x - w : x, sh = Math.max(3 - l, Math.min(0, W - 3 - (l + w))); if (sh) e.setAttribute('x', x + sh); return e; };
+  const measure = (p, s, a, fs) => { const e = txt(p, 0, -50, s, a, fs), w = e.getComputedTextLength(); e.remove(); return w; };
+  const wrap = (p, s, maxW, a, fs) => { const pr = txt(p, 0, -50, '', a, fs), out = []; let cur = '';
+    for (const w of s.split(' ')) { const t = cur ? cur + ' ' + w : w; pr.textContent = t;
+      if (cur && pr.getComputedTextLength() > maxW) { out.push(cur); cur = w; } else cur = t; }
+    if (cur) out.push(cur); pr.remove(); return out; };
+
+  // A round-headed person, feet at (0,0), height s.
+  function person(g, s, col, eye) {
+    mk('rect', {x: -s * .17, y: -s * .7, width: s * .34, height: s * .7, rx: s * .15, fill: col, class: 'fb'}, g);
+    mk('circle', {cx: 0, cy: -s * .86, r: s * .14, fill: col, class: 'fb'}, g);
+    if (eye) mk('circle', {cx: s * .06 * eye, cy: -s * .87, r: Math.max(1.3, s * .022), fill: PAPER}, g);
+  }
+  // A sitting cat, base at (x,y), size s (used inside the front cutaway).
+  function sittingCat(g, x, y, s) {
+    mk('path', {d: `M${x + s * .22},${y - s * .08} q${s * .38},${-s * .04} ${s * .3},${-s * .46}`, stroke: INK, 'stroke-width': s * .07, fill: 'none', 'stroke-linecap': 'round'}, g);
+    mk('ellipse', {cx: x, cy: y - s * .38, rx: s * .27, ry: s * .38, fill: INK}, g);
+    mk('circle', {cx: x, cy: y - s * .85, r: s * .22, fill: INK}, g);
+    mk('path', {d: `M${x - s * .21},${y - s * .92} L${x - s * .16},${y - s * 1.16} L${x - s * .04},${y - s * 1.03} Z M${x + s * .21},${y - s * .92} L${x + s * .16},${y - s * 1.16} L${x + s * .04},${y - s * 1.03} Z`, fill: INK}, g);
+  }
+  function box(g, cx, yb, bw, bh) {
+    const face = mk('rect', {x: cx - bw / 2, y: yb - bh, width: bw, height: bh, rx: 1.5, fill: TAN, stroke: INK, 'stroke-width': 1.6}, g);
+    const lid = mk('rect', {x: cx - bw * .54, y: yb - bh * 1.16, width: bw * 1.08, height: bh * .16, rx: 1.5, fill: TAN2, stroke: INK, 'stroke-width': 1.6}, g);
+    return {face, lid};
+  }
+
+  // ---------- the front ----------
+  function drawFront() {
+    pic.innerHTML = ''; colours();
+    const {W, H} = Kit.fitSvg(pic), fs = Math.max(12, Math.min(13, W / 28));
+    const GY = H - 2;
+    const bh = Math.max(28, Math.min(W * .31, (GY - fs - 16) / 1.16, (GY - 4) / 1.85));
+    const bw = bh * 1.75, ph = bh * 1.85;
+    const L = -bw / 2 - ph * .47, R = bw * .54, off = (W - (R - L)) / 2 - L;
+    const bcx = off, px = off - bw / 2 - ph * .3, bx0 = bcx - bw / 2, top = GY - bh, lidTop = GY - bh * 1.16;
+
+    mk('line', {x1: W * .04, x2: W * .96, y1: GY, y2: GY, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, pic);
+    const pg = mk('g', {transform: `translate(${px},${GY})`}, pic); person(pg, ph, INK, 1);
+    box(pic, bcx, GY, bw, bh);
+
+    // The cutaway: what is in the box, with the cat's state hidden behind the detector.
+    const cx0 = bx0 + bw * .08, cy0 = top + bh * .16, cw = bw * .84, ch = bh * .7, yF = cy0 + ch - bh * .06;
+    mk('rect', {x: cx0, y: cy0, width: cw, height: ch, rx: 2, fill: INSIDE, stroke: INK, 'stroke-width': 1.3}, pic);
+    const ax = cx0 + cw * .15, ay = cy0 + ch * .5;
+    for (const r of [35, -35]) mk('ellipse', {cx: ax, cy: ay, rx: ch * .22, ry: ch * .08, fill: 'none', stroke: INK, 'stroke-width': 1.1, transform: `rotate(${r} ${ax} ${ay})`}, pic);
+    mk('circle', {cx: ax, cy: ay, r: Math.max(2, ch * .06), fill: INK}, pic);
+    const dw = cw * .26, dh = ch * .56, dx = cx0 + cw * .5, s = dh / .95, catX = dx + cw * .02;
+    sittingCat(pic, catX, yF, s);
+    mk('rect', {x: dx - dw / 2, y: yF - dh, width: dw, height: dh, rx: 2, fill: INK}, pic);
+    mk('rect', {x: dx - dw / 2 - cw * .07, y: yF - dh * .78, width: cw * .07 + 1, height: dh * .18, fill: INK}, pic);
+
+    // The hand on the lid.
+    const hr = Math.max(3, ph * .045), hx = bcx - bw * .44, hy = lidTop - hr * .55;
+    mk('path', {d: `M${px + ph * .08},${GY - ph * .6} L${hx},${hy}`, stroke: INK, 'stroke-width': ph * .075, 'stroke-linecap': 'round', fill: 'none'}, pic);
+    mk('circle', {cx: hx, cy: hy, r: hr, fill: INK}, pic);
+
+    // Three labels above the box, each with a thin leader into the cutaway.
+    const ly = lidTop - 11;
+    const items = [
+      {s: 'atom', x: ax, tx: ax, ty: ay - ch * .12},
+      {s: 'detector', x: dx - dw * .2, tx: dx - dw * .2, ty: yF - dh + 2},
+      {s: 'cat', x: catX + s * .48, tx: catX + s * .5, ty: yF - s * .5}
+    ];
+    const els = items.map(it => txt(pic, it.x, ly, it.s, {'text-anchor': 'middle', 'font-weight': 600}, fs));
+    const ws = els.map(e => e.getComputedTextLength()), c = items.map(i => i.x), gap = 12;
+    c[0] = Math.max(c[0], px + ph * .17 + 8 + ws[0] / 2);
+    for (let i = 1; i < 3; i++) c[i] = Math.max(c[i], c[i - 1] + (ws[i - 1] + ws[i]) / 2 + gap);
+    if (c[2] > W - 3 - ws[2] / 2) { c[2] = W - 3 - ws[2] / 2; for (let i = 1; i >= 0; i--) c[i] = Math.min(c[i], c[i + 1] - (ws[i] + ws[i + 1]) / 2 - gap); }
+    items.forEach((it, i) => {
+      els[i].setAttribute('x', c[i]);
+      mk('line', {x1: c[i], y1: ly + 4, x2: it.tx, y2: it.ty, stroke: INK, 'stroke-width': 1.1, 'stroke-linecap': 'round'}, pic);
+    });
+  }
+
+  // ---------- the back ----------
+  // Bands from the top: names of the two copies · the two opened boxes · "you open the box" ·
+  // the fork with its note · one you and the shut box at the bottom. Each band gets its own height,
+  // so no note can ride up onto another.
+  function drawBack(animate) {
+    if (tl) { tl.kill(); tl = null; }
+    pic2.innerHTML = ''; colours();
+    const {W, H} = Kit.fitSvg(pic2);
+    const fs = H < 220 ? 12 : Math.max(12, Math.min(14, W / 27)), lh = fs * 1.3;
+    const Tx = W / 2, roadW = Math.max(9, Math.min(14, W * .04));
+    const lx = Tx + roadW / 2 + 10, maxW = W - lx - 3;
+    const L1 = wrap(pic2, 'detector clicks: you split', maxW, {'font-weight': 700}, fs);
+    const L2 = wrap(pic2, 'while the box is still shut', maxW, {'font-weight': 500}, fs);
+    const N = L1.length + L2.length;
+
+    // Does "you open the box" fit on one line between the two copies? Judge it at the largest boxes.
+    const bhMax = Math.min(W * .12, 40), bwMax = Math.min(W * .24, bhMax * 1.6);
+    const exMax = Math.max(W * .2, 22 + bwMax / 2) + bwMax / 2 + bhMax * 1.45 * .32;
+    const oN = measure(pic2, 'you open the box', {}, fs) > W - 2 * exMax - roadW - 16 ? 2 : 1;
+    const oBand = 1.4 * fs + (oN - 1) * lh / 2;        // from the box floor to the bottom of the opening note
+    const gapF = oBand + .7 * fs + 10;                 // floor of the opened boxes to the fork, clear of both notes
+
+    const topB = fs * 1.4;
+    let fb = clamp(H * .2, 22, 46);
+    const botNeed = () => Math.max(fb + 10, .65 * fs + (N - 1) * lh + 2);
+    let Fy = H - botNeed();
+    let bh = (Fy - gapF - topB - 6) / 1.65;
+    if (bh < 12) { fb = 22; Fy = H - botNeed(); bh = (Fy - gapF - topB - 6) / 1.65; }
+    bh = clamp(bh, 10, bhMax);
+    const bw = Math.min(W * .24, bh * 1.6), fh = bh * 1.45;
+    const yb = topB + 6 + bh * 1.65;
+    Fy = Math.max(Fy, yb + gapF);
+    const yV = Math.max(yb + 4, Math.min(yb + fs * 1.3 + 6, Fy - 18));
+    const xL = Math.max(W * .2, 22 + bw / 2), xR = W - xL;
+    const eL = {x: xL + bw / 2 + fh * .32}, eR = {x: xR - bw / 2 - fh * .32};
+    const y0 = H - 2 - roadW / 2, a = (Fy - yV) * .5;
+    const dOf = e => `M${Tx},${y0} L${Tx},${Fy} C${Tx},${Fy - a} ${e.x},${yV + a} ${e.x},${yV} L${e.x},${yb}`;
+
+    // Time, running up the card.
+    const aT = topB + 6;
+    mk('path', {d: `M5,${H - 3} L5,${aT} M1,${aT + 6} L5,${aT} L9,${aT + 6}`, stroke: INK, 'stroke-opacity': .3, 'stroke-width': 1.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, pic2);
+
+    const roads = [eL, eR].map(e => mk('path', {d: dOf(e), stroke: INK, 'stroke-opacity': .13, 'stroke-width': roadW, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, pic2));
+    const len = roads.map(r => r.getTotalLength()), trunk = y0 - Fy;
+    roads.forEach((r, i) => r.setAttribute('stroke-dasharray', `${len[i]} ${len[i]}`));
+
+    // The fork: the detector clicks while the box is still shut.
+    const lgF = mk('g', {}, pic2);
+    mk('line', {x1: Tx - roadW / 2 - 4, x2: Tx + roadW / 2 + 6, y1: Fy, y2: Fy, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, lgF);
+    let y = Fy + fs * .35;
+    L1.forEach(s => { txt(lgF, lx, y, s, {'font-weight': 700}, fs); y += lh; });
+    L2.forEach(s => { txt(lgF, lx, y, s, {'font-weight': 500}, fs); y += lh; });
+
+    // Later: each copy opens its own box.
+    const lgO = mk('g', {}, pic2), yT = yb + fs * .75;
+    for (const e of [eL, eR]) mk('line', {x1: e.x - roadW / 2 - 4, x2: e.x + roadW / 2 + 4, y1: yT, y2: yT, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, lgO);
+    const room = eR.x - eL.x - roadW - 16;
+    if (oN === 1 && measure(pic2, 'you open the box', {}, fs) <= room) {
+      txt(lgO, Tx, yT + fs * .35, 'you open the box', {'text-anchor': 'middle'}, fs);
+    } else {
+      txt(lgO, Tx, yT + fs * .35 - lh * .5, 'you open', {'text-anchor': 'middle'}, fs);
+      txt(lgO, Tx, yT + fs * .35 + lh * .5, 'the box', {'text-anchor': 'middle'}, fs);
+    }
+
+    // Before: one you, one shut box.
+    const gBot = mk('g', {}, pic2), bh2 = Math.min(fb * .5, bh * 1.1), bw2 = bh2 * 1.6;
+    box(gBot, Tx - fb * .17 - 7 - bw2 * .54, H - 2, bw2, bh2);
+    const pB = mk('g', {transform: `translate(${Tx},${H - 2})`}, gBot); person(pB, fb, INK, 0);
+
+    // After: two boxes, lids tipped open.
+    function openBox(x, alive, side) {
+      const g = mk('g', {}, pic2), top = yb - bh, x0 = x - bw / 2, x1 = x + bw / 2, d = bw * .12 * side, fH = bh * .42;
+      const flap = mk('path', {d: `M${x0},${top} L${x1},${top} L${x1 + d},${top - fH} L${x0 + d},${top - fH} Z`, fill: TAN2, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, g);
+      const head = mk('g', {}, g);
+      let paws = null;
+      if (alive) {
+        const r = bh * .34, cy = top - r * .45;
+        mk('path', {d: `M${x - r * .85},${cy - r * .35} L${x - r * .62},${cy - r * 1.15} L${x - r * .12},${cy - r * .9} Z M${x + r * .85},${cy - r * .35} L${x + r * .62},${cy - r * 1.15} L${x + r * .12},${cy - r * .9} Z`, fill: INK}, head);
+        mk('circle', {cx: x, cy, r, fill: INK}, head);
+        for (const k of [-1, 1]) mk('circle', {cx: x + k * r * .38, cy: cy - r * .1, r: Math.max(1, r * .13), fill: PAPER}, head);
+      } else {
+        const r = bh * .28, hx = x - bw * .06, cy = top - r * .3;
+        mk('path', {d: `M${x + bw * .2},${top + bh * .25} L${x + bw * .3},${top - bh * .46}`, stroke: INK, 'stroke-width': r * .42, 'stroke-linecap': 'round', fill: 'none'}, head);
+        mk('path', {d: `M${hx - r * .6},${cy - r * .72} L${hx - r * 1.45},${cy - r * .85} L${hx - r * .95},${cy - r * .15} Z`, fill: INK}, head);
+        mk('circle', {cx: hx, cy, r, fill: INK}, head);
+        const ex = hx + r * .1, ey = cy - r * .3, e = r * .2;
+        mk('path', {d: `M${ex - e},${ey - e} L${ex + e},${ey + e} M${ex + e},${ey - e} L${ex - e},${ey + e}`, stroke: PAPER, 'stroke-width': Math.max(1.1, r * .12), 'stroke-linecap': 'round'}, head);
+      }
+      mk('rect', {x: x0, y: top, width: bw, height: bh, rx: 1.5, fill: TAN, stroke: INK, 'stroke-width': 1.6}, g);
+      if (alive) {
+        const r = bh * .34; paws = mk('g', {}, g);
+        for (const k of [-1, 1]) mk('ellipse', {cx: x + k * r * .62, cy: top, rx: r * .36, ry: r * .24, fill: INK}, paws);
+      }
+      const lid = mk('rect', {x: x - bw * .54, y: yb - bh * 1.16, width: bw * 1.08, height: bh * .16, rx: 1.5, fill: TAN2, stroke: INK, 'stroke-width': 1.6}, g);
+      return {g, flap, head, paws, lid};
+    }
+    const tops = [openBox(xL, true, -1), openBox(xR, false, 1)];
+
+    // You, and the copy of you that will not be you.
+    const gB = mk('g', {}, pic2), gA = mk('g', {}, pic2);
+    person(gA, fh, INK, 0); person(gB, fh, INK, 0);
+    const at = (g, i, p) => { const pt = roads[i].getPointAtLength(Math.max(0, Math.min(1, p)) * len[i]); g.setAttribute('transform', `translate(${pt.x},${pt.y})`); };
+    const walk = {p: 0}; at(gA, 0, 0); at(gB, 1, 0);
+
+    const cL = (xL - bw / 2 + eL.x + fh * .17) / 2;
+    const labA = fit(txt(pic2, cL, fs * 1.05, 'this you · cat alive', {'text-anchor': 'middle'}, fs), W);
+    const labB = fit(txt(pic2, W - cL, fs * 1.05, 'other you · cat dead', {'text-anchor': 'middle'}, fs), W);
+
+    tl = gsap.timeline({paused: true});
+    roads.forEach((r, i) => gsap.set(r, {attr: {'stroke-dashoffset': len[i]}}));
+    gsap.set([gBot, lgF, lgO, labA, labB, gA, gB], {opacity: 0});
+    tops.forEach(t => {
+      gsap.set(t.g, {opacity: 0});
+      gsap.set(t.flap, {scaleY: 0, transformOrigin: '50% 100%'});
+      gsap.set(t.head, {y: bh * .6, opacity: 0});
+      if (t.paws) gsap.set(t.paws, {opacity: 0});
+    });
+    tl.to(gBot, {opacity: 1, duration: .4, ease: 'power2.out'})
+      .to(roads, {attr: {'stroke-dashoffset': i => len[i] - trunk}, duration: .5, ease: 'power2.out'})
+      .to(lgF, {opacity: 1, duration: .4})
+      .to(roads, {attr: {'stroke-dashoffset': 0}, duration: .8, ease: 'power2.inOut'}, '+=.15')
+      .to([gA, gB], {opacity: 1, duration: .25}, '<')
+      .to(walk, {p: 1, duration: 1.5, ease: 'power1.inOut', onUpdate: () => { at(gA, 0, walk.p); at(gB, 1, walk.p); }}, '<')
+      .to(gA.querySelectorAll('.fb'), {attr: {fill: ACC}, duration: .4}, '<.4')
+      .to(tops.map(t => t.g), {opacity: 1, duration: .4}, '-=.7')
+      .to(lgO, {opacity: 1, duration: .35}, '+=.15')
+      .to(tops.map(t => t.lid), {y: -bh * .3, opacity: 0, duration: .35, stagger: .25, ease: 'power2.out'}, '+=.1')
+      .to(tops.map(t => t.flap), {scaleY: 1, duration: .4, stagger: .25, ease: 'power2.out'}, '<')
+      .to(tops.map(t => t.head), {y: 0, opacity: 1, duration: .5, stagger: .25, ease: 'power3.out'}, '<.1')
+      .to(tops[0].paws, {opacity: 1, duration: .25}, '<.35')
+      .to([labA, labB], {opacity: 1, duration: .4, stagger: .2}, '-=.05');
+    if (animate && !Kit.calm) tl.play(); else tl.progress(1);
+  }
+
+  // ---------- the answer ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered || pick < 0) return; answered = true;
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('sure').classList.add('wait');
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || answered) return;
+    pick = +b.dataset.i;
+    [...Kit.$('opts').children].forEach(o => o.classList.toggle('on', o === b));
+    Kit.$('sure').classList.remove('wait');
+    Kit.haptic('selection'); sure.on();
+  });
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => drawBack(true), Kit.calm ? 0 : 450); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[0].click(); await wait(120);
+    const s = Kit.$('sure').querySelector('[data-v="80"]') || Kit.$('sure').querySelector('[data-v]'); if (s) s.click();
+    await wait(1400);
+    if (!turned) Turn.over();
+    await wait(600);
+    if (!tl) drawBack(false); else tl.progress(1);
+    await wait(150);
+  };
+})();
+Kit.single();
+</script>
+</html>

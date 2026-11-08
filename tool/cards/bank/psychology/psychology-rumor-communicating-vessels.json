@@ -1,0 +1,38 @@
+{
+  "id": "psychology-rumor-communicating-vessels",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.first_impressions",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "One view: answer a rumor by showing your worth, not chasing it. Agree?",
+  "answer": "Rumors are judged against what people already hold of you, so the more they know of your good side, the less room a rumor has. But talking yourself up can look defensive or vain, and an unanswered claim can harden into \"what everyone knows\".",
+  "move": "ASK YOURSELF When you hear a rumor about someone you know, what wins: their denial, or what you had already seen of them?",
+  "keywords": [
+    "rumors",
+    "reputation",
+    "first_impressions",
+    "self_promotion",
+    "word_of_mouth"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Slider card: drag a jug along a line between two views on answering a rumor, from chasing it to showing your worth. A question asks whether their denial or what you had already seen of them wins.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Come Gestire Chi Parla Male Di Te Alle Spalle” (YouTube, 2016)",
+  "reference": "https://www.youtube.com/watch?v=qLjrwAHB4uc&t=143s",
+  "written": "2026-11-07"
+}

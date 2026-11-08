@@ -1,0 +1,37 @@
+{
+  "id": "technology-five-times-downforce",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A micromouse's fan sucks it to the floor. How hard, in mouse weights?",
+  "answer": "A micromouse's fan sucks it to the floor. Its fan, often built from handheld drone parts, pulls the mouse down with five times the force of its weight. A small fan can press a robot to the floor far harder than its own weight does.",
+  "move": "A small fan can press a robot to the floor far harder than its own weight does.",
+  "keywords": [
+    "micromouse",
+    "vacuum fan",
+    "drone parts",
+    "veritasium",
+    "maze"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Blocks to drag up to show how hard a micromouse's fan pulls it to the floor, in mouse weights. Drag first, then choose Drag up to stack the fan's pull."
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=1214s",
+  "written": "2026-11-07"
+}

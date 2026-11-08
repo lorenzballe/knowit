@@ -3,12 +3,12 @@
   "topic": "life",
   "genre": "life.money_and_time",
   "strand": "life.money_and_time.enough_money",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How do Hong Kong landlords turn one flat into three homes?",
-  "answer": "Hong Kong landlords carve old flats in giant blocks like the Monster Building into three homes. They do it by adding thin, non-load-bearing walls to existing rooms, a method called cage-home construction, done without government authorization. The resulting homes are the size of a prison cell.",
-  "move": "One old flat, thinner walls, three homes the size of a prison cell.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "To carve one old flat into tiny homes, which walls come down?",
+  "answer": "Only the load-bearing wall stays; every other wall can be knocked down. In huge old blocks like the Monster Building, non-load-bearing walls come down without authorization and thinner ones go up. A 30–40 m² studio becomes three homes of about 10 m² each.",
+  "move": "Most of Hong Kong's tiny flats are illegal: old flats cut up by knocking down walls that aren't load-bearing and putting up thinner ones.",
   "keywords": [
     "hong-kong",
     "monster-building",
@@ -27,11 +27,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Floor plan of one old Hong Kong flat. Tap the two thick inner walls to see how the flat is carved into three small homes.",
-    "ground": "#123f72"
+    "touch": "taps",
+    "label": "A sketch of an old flat. The reader taps every wall that builders would knock down to carve the flat into tiny homes. The task is to leave only the load-bearing wall standing."
   },
   "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=6fBSVSmYSaE&t=57s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }

@@ -1,368 +1,275 @@
 <!doctype html>
-<!-- slug: science-pressure-at-depth -->
-<!-- Look: a page from a printed science book, on a pale sea-blue card with no box behind the drawing. There is one wavy blue line for the surface, a thin plumb line with depth marks, a low mound of seabed with the Titanic lying in two pieces, a small flat yellow sub, and a flat Eiffel Tower standing on a 1 m² slab of hull. Every shape is a solid fill with an even ink stroke. Orange means weight and pressure; a magenta pen links the sub to its square metre.
-     Interaction: drag the little sub down the plumb line. The sum "1 + depth ÷ 10" rewrites itself, the orange squeeze arrows round the hull grow, bubbles rise, and the tower fills (by area) with the tonnes pressing on one square metre.
-     Wow: at the Titanic a magenta pen rings "381 atm", the sub creaks and lets out bubbles, and the whole tower is traced in orange: almost half of it now sits on 1 m². -->
+<!-- slug: science-pressure-deep-sea -->
+<!-- Thought to carry: deep-sea pressure is plain counting. Every 10 m of water adds one atmosphere, plus one from the air, so at 3,000 m, on the way down to the Titanic at 3,800 m, it is 301 atmospheres: about 3,000 t on 1 m², roughly a third of the Eiffel Tower.
+     Front: the Eiffel Tower (8,000 t) and a 1 m² tile under a column of sea sit side by side on one baseline. The reader drags to fill the tower with how much of its weight they think presses on that tile.
+     Back: the sea pours down the column while the headline itself counts 1 → 301 atmospheres. Then the tower fills in blue to the true 3,000 t, and the reader's coral line stays where it was.
+     Four labels at most on each face; the two tags beside the tower are pushed apart so they never touch.
+     The face turned away is hidden (visibility) once the turn passes its middle, so its text never sits behind the save and share buttons. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Pressure at 3800 m</title>
+<title>The weight of 3,000 metres</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0;background:none!important;box-shadow:none!important;border:0!important}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:visible;background:none!important}
-/* Printed-book look: flat fills, no textures or filters, labels in the body font. */
-#pic,#pic *{filter:none!important}
-#pic text{font-family:var(--body)!important;letter-spacing:0!important;text-transform:none!important}
-#pic text.disp{font-family:var(--display)!important}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{font:600 max(1.85cqh,12.5px)/1.32 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
-#why .body b{color:#b5401a}
-.say b{color:#b5401a}
-.hint{animation:nudge 1.3s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateY(5px)}}
-.kit-calm .hint{animation:none}
-.answered .q{font-size:max(2.5cqh,15px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .36s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* Only the face toward the reader exists for layout and touch: the other one is hidden from the middle of the turn. */
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1 1 0;min-height:0;display:flex;overflow:hidden}
+.face .stagebox svg{flex:1;min-width:0;min-height:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+/* The last line of each face stays clear of the save and share buttons at the bottom right. */
+.card .turn .front .say,.card .turn .back .foot{box-sizing:border-box;width:calc(100% - 112px);max-width:calc(100% - 112px);min-height:44px;margin-right:auto;align-self:flex-start;flex:0 0 auto;white-space:normal;overflow-wrap:break-word;overflow:visible}
+.card .turn .back .foot{display:flex;align-items:flex-end;height:auto;max-height:none;margin-top:0;margin-bottom:0;padding-top:0}
+.card .turn .back .foot .src{display:block;max-width:100%;font-size:12px;line-height:1.3;white-space:normal;overflow-wrap:break-word}
+.back .big{margin:0 0 .4cqh;font-variant-numeric:tabular-nums;white-space:nowrap}
+.back .body{overflow-wrap:break-word;flex:0 0 auto}
+.back .keep{flex:0 0 auto}
+/* Small phones: the back's text tightens so the source line stays inside the card; the picture gives up the room. */
+@media (max-width:420px),(max-height:700px){
+  .card .turn .back .big{margin-bottom:2px}
+  .card .turn .back .body{font-size:13px;line-height:1.3;margin-top:4px;margin-bottom:4px}
+  .card .turn .back .keep{font-size:12px;line-height:1.3;margin-top:4px;margin-bottom:4px;padding-top:4px;padding-bottom:4px}
+  .card .turn .back .foot{min-height:40px}
+  .card .turn .back .foot .src{font-size:11px;line-height:1.25}
+}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Drag the sub down · the weight of water" style="--c:#b3dbe0;--k:#12252c;--edge:#86bcc4">
+<article class="card" id="card" data-topic="science" data-kind="Drag to guess · how sure" style="--c:#eef0ea;--k:#13212c;--edge:#c8cfc6">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO THE DEEP</span></div>
-    <h2 class="q">How hard does the sea press, on the way down to the Titanic?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A cross-section of the sea: a small submarine on a depth line from the surface to the Titanic at 3800 m, a live sum of the pressure, and an Eiffel Tower standing on one square metre of hull, filling with the weight that presses on it."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEP PRESSURE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">On the dive to the Titanic, 3,800 m down, at 3,000 m: what presses on 1 m²?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="The Eiffel Tower beside a one square metre tile under a column of sea 3,000 metres deep."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag up the tower: <b>how much of its weight</b> presses on that square metre?</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big" id="big">301 atmospheres</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The sea column fills while the pressure counts up to 301 atmospheres; the tower fills to 3,000 of its 8,000 tonnes."></svg></div>
+        <p class="body">Every 10 m of water adds one atmosphere, plus one from the air. At 3,000 m, on the way to the Titanic at 3,800 m, that makes 301: about 3,000 t on 1 m², a third of the Eiffel Tower.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Deep pressure is plain counting: every 10 m of water, one more atmosphere.</div>
+        <div class="foot"><span class="src">Source · Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024).</span></div>
+      </section>
     </div>
-    <p class="say" id="say"><b>Drag the sub down</b> toward the Titanic, 3,800 m below.</p>
-    <div id="why" class="gone"><p class="body">Every 10 m of water adds <b>one atmosphere</b>, plus one for the air: 301 at 3,000 m, <b>381</b> at the Titanic. Each square metre of hull bears some <b>3,800 tonnes</b>, almost half the 8,000-tonne Eiffel Tower.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Every 10 m down adds one atmosphere, and the sea never stops adding.</div>
-    <div class="foot"><span class="src">Source · Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  if (typeof DrawSVGPlugin !== 'undefined') gsap.registerPlugin(DrawSVGPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  // Ink, one weight colour (orange), one pen colour (magenta), the sea's blue, and the sub's yellow.
-  const CH = '#12252c', YE = '#d9572a', BL = '#2f74a3', PK = '#b02f68', HULL = '#12252c', SUB = '#f2c94c';
-  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
-  const MAX = 3800, TOWER = 8000;
-  const st = {d: 0};
-  let revealed = false, touched = false, said = 0, built = false, compact = false;
-  let W, H, fs, pad, y0, y1, sb, colX, seaR, rx0, rx1, cx, yT, yB, th, B, subRx, subRy;
-  let cum = [];
-  const E = {};
+  const INK = '#13212c', CORAL = '#e0552b', SEA = '#1f5f8e';
+  const TOWER_T = 8000, TRUE_T = 3000, TRUTH = TRUE_T / TOWER_T;
+  const pos = v => Math.max(0, v);
+  // The tower in unit coordinates: x from -0.5 to 0.5 (base), y from 0 (tip) to 1 (ground).
+  const TOWER = [['M',-.012,0],['L',.012,0],['L',.012,.06],['L',.03,.065],['L',.03,.09],['L',.025,.09],['Q',.032,.40,.09,.52],['L',.11,.52],['L',.11,.54],['L',.095,.54],['Q',.13,.66,.19,.72],['L',.24,.72],['L',.24,.75],['L',.22,.75],['Q',.30,.90,.5,1],['L',.3,1],['Q',.28,.80,0,.80],['Q',-.28,.80,-.3,1],['L',-.5,1],['Q',-.30,.90,-.22,.75],['L',-.24,.75],['L',-.24,.72],['L',-.19,.72],['Q',-.13,.66,-.095,.54],['L',-.11,.54],['L',-.11,.52],['L',-.09,.52],['Q',-.032,.40,-.025,.09],['L',-.03,.09],['L',-.03,.065],['L',-.012,.06],['Z']];
+  const towerD = (cx, top, sx, sy) => TOWER.map(([c, ...n]) => c + n.map((v, i) => (i % 2 ? top + v * sy : cx + v * sx).toFixed(2)).join(' ')).join(' ');
 
-  const yOf = m => y0 + (m / MAX) * (y1 - y0);
-  const atmOf = m => 1 + m / 10;
-  const hw = t => B * Math.pow(1 - t, 2.3) * .94 + B * .04 * (1 - t) + fs * .14;
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const T = (p, x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: CH, 'font-size': fs}, a), p); e.textContent = s; return e; };
-  const fitT = (p, x, y, s, a = {}) => {
-    const e = T(p, x, y, s, a), w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
-    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
-    const sh = Math.max(3 - left, Math.min(0, W - 3 - (left + w)));
-    if (sh) e.setAttribute('x', x + sh);
+  // How much of the tower lies below each height: its drawn area stands in for its weight.
+  const N = 400, cum = new Float32Array(N), right = new Float32Array(N);
+  (() => {
+    const cv = document.createElement('canvas'); cv.width = 200; cv.height = N;
+    const x = cv.getContext('2d'); x.fill(new Path2D(towerD(100, 0, 200, N)));
+    const d = x.getImageData(0, 0, 200, N).data, cnt = new Float32Array(N); let tot = 0;
+    for (let r = 0; r < N; r++) { let c = 0, rx = 100; for (let i = 0; i < 200; i++) if (d[(r * 200 + i) * 4 + 3] > 128) { c++; rx = i; } cnt[r] = c; right[r] = rx; tot += c; }
+    let s = 0; for (let r = N - 1; r >= 0; r--) { s += cnt[r]; cum[r] = s / tot; }
+  })();
+  const row = lv => Math.max(0, Math.min(N - 1, Math.round(lv * (N - 1))));
+  const fracAt = lv => cum[row(lv)];
+  const hwAt = lv => Math.max(.01, (right[row(lv)] + 1 - 100) / 200);
+  let levelT = 1; for (let r = N - 1; r >= 0; r--) if (cum[r] >= TRUTH) { levelT = r / (N - 1); break; }
+
+  let level = 1, tons = 0, touched = false, locked = false, turned = false, tl = null, entered = false;
+  let G = null, F = {};
+  const fmt = n => n.toLocaleString('en');
+
+  // Layout: column of sea at the right edge, a lane for labels in the middle, the tower takes what is left.
+  function geo(svg) {
+    const f = Kit.fitSvg(svg), W = Math.max(60, f.W), H = Math.max(60, f.H), fs = Math.max(12, Math.min(14, W / 27));
+    const GY = Math.max(fs * 3, H - fs * 2.3), Sy = Math.min(fs * 1.1, GY * .2);
+    const cw = Math.max(24, fs * 2.2), slab = fs * .55;
+    const ccx = W - Math.max(cw * .85, fs * 4.9) - 2, colL = ccx - cw / 2;
+    const LW = fs * 6.2;
+    const room = Math.max(40, colL - 12 - LW - 10 - 4);
+    const Ht = Math.max(20, Math.min(GY - fs * .6, room / .39)), sx = .39 * Ht;
+    const cx = 4 + sx / 2 + Math.max(0, room - sx) * .35, Ty = GY - Ht;
+    return {svg, W, H, fs, GY, Sy, Ht, sx, cx, Ty, cw, ccx, colL, slab, lx: cx + sx / 2 + 10};
+  }
+  const yOf = lv => G.Ty + lv * G.Ht;
+  function txt(p, x, y, t, a = {}) {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': G.fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p);
+    e.textContent = t; return e;
+  }
+  function keepIn(e) {
+    const b = e.getBBox(); let dx = 0;
+    if (b.x < 2) dx = 2 - b.x; else if (b.x + b.width > G.W - 2) dx = G.W - 2 - b.x - b.width;
+    if (dx) e.setAttribute('x', +e.getAttribute('x') + dx);
     return e;
-  };
-  // Put a text so the top of its box sits at `top`; returns the bottom of the box.
-  const stack = (e, top) => { e.setAttribute('y', 0); const b = e.getBBox(); e.setAttribute('y', top - b.y); return top + b.height; };
-  // Stack two lines of different fonts with a safe gap that does not rely on font metrics alone.
-  const stackPair = (a, b, top, sz) => {
-    const aB = stack(a, top), ay = +a.getAttribute('y');
-    b.setAttribute('y', 0); const bb = b.getBBox();
-    const by = Math.max(ay + sz * 1.5, aB + fs * .3 - bb.y, ay + sz * .45 + fs * .3 + Math.max(sz * .8, -bb.y));
-    b.setAttribute('y', by);
-    return by + Math.max(bb.y + bb.height, sz * .3);
-  };
-  const P = (p, d, a = {}) => Kit.mk('path', Object.assign({d, fill: 'none', stroke: CH, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, a), p);
-  const wobble = (xa, xb, y, amp, n) => { let s = `M${xa.toFixed(1)},${y.toFixed(1)}`; for (let i = 1; i <= n; i++) { const x = xa + (xb - xa) * i / n; s += ` L${x.toFixed(1)},${(y + Math.sin(i * 1.7) * amp + (Kit.rnd() - .5) * amp).toFixed(1)}`; } return s; };
-  const ringD = (x, y, rx, ry) => { let s = ''; for (let i = 0; i <= 46; i++) { const a = -2.5 + i / 40 * Math.PI * 2, k = 1 + .05 * Math.sin(i * .8) + i * .0025; s += (i ? ' L' : 'M') + (x + Math.cos(a) * rx * k).toFixed(1) + ',' + (y + Math.sin(a) * ry * k).toFixed(1); } return s; };
-  const tAt = ff => { if (ff <= 0) return 0; for (let i = 1; i < cum.length; i++) if (cum[i] >= ff) { const k = (ff - cum[i - 1]) / ((cum[i] - cum[i - 1]) || 1); return (i - 1 + k) / (cum.length - 1); } return 1; };
+  }
+  const wave = (x0, x1, y, a = 2.4, step = 12) => { let d = `M${x0},${y}`; for (let x = x0, k = 0; x < x1; x += step, k++) d += ` q${step / 2},${k % 2 ? a : -a} ${step},0`; return d; };
 
-  function layout() {
-    if (E.bob) gsap.killTweensOf(E.bob);
-    svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    svg.removeAttribute('filter');
-    fs = Math.max(12, Math.min(16, f.f || W / 26));
-    pad = fs * .5;
-    compact = H < fs * 21;
-    seaR = W * .4; rx0 = W * .44; rx1 = W - pad;
-    subRx = fs * 1.35; subRy = fs * .62;
-
-    const defs = Kit.mk('defs', {}, svg);
-    defs.innerHTML = `<clipPath id="towerClip"><path id="towerShape"/></clipPath>`;
-
-    const g = Kit.mk('g', {}, svg);
-    const tx = Kit.mk('g', {id: 'words'}, svg);
-    E.dust = Kit.mk('g', {}, svg);
-    const small = Math.max(12, fs * .88), body = 'font-family:var(--body)', disp = 'font-family:var(--display)';
-
-    // ---------- the depth column: labels, plumb line, sea ----------
-    const probe = T(tx, 0, 0, '3000 m', {'font-size': small, 'font-weight': 600, style: body});
-    const labW = probe.getComputedTextLength(); probe.remove();
-    const labR = pad + labW;
-    colX = labR + fs * 2.1;
-    if (colX + fs * 3.2 > seaR) { seaR = colX + fs * 3.2; rx0 = Math.max(rx0, seaR + fs * .5); }
-
-    y0 = compact ? fs * 1.3 : fs * 1.8;
-    sb = H - fs * 2.1;
-    y1 = sb - fs * 3.4;
-    const step = (y1 - y0) / 3.8 >= small * 1.45 ? 1000 : 2000;
-
-    // The surface: one wavy blue line. The rest is open water on the card's own colour.
-    P(g, wobble(pad, seaR, y0, fs * .1, 10), {stroke: BL, 'stroke-width': 2.6, class: 'draw'});
-    P(g, `M${colX},${y0} V${y1}`, {'stroke-width': 1.2, opacity: .55, class: 'draw'});
-    E.ticks = [];
-    for (let m = 0; m <= 3000; m += step) {
-      const y = yOf(m);
-      P(g, `M${colX - fs * .4},${y} L${colX + fs * .4},${y}`, {'stroke-width': 1.6, class: 'draw'});
-      E.ticks.push({y, e: T(tx, labR, y + small * .35, `${m} m`, {'text-anchor': 'end', 'font-size': small, 'font-weight': 600, style: body, opacity: .9})});
+  // The pieces both faces share: ground, the tower, the sea column on its tile, the two captions.
+  function scene(svg, id) {
+    const g = {}; for (const k of ['ground', 'tower', 'sea', 'notes']) g[k] = Kit.mk('g', {}, svg);
+    const {W, GY, Sy, cx, Ty, sx, Ht, cw, ccx, slab, fs} = G, d = towerD(cx, Ty, sx, Ht);
+    Kit.mk('line', {x1: 4, x2: W - 4, y1: GY, y2: GY, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, g.ground);
+    keepIn(txt(g.ground, cx, GY + fs * 1.45, 'Eiffel Tower, 8,000 t', {'text-anchor': 'middle'}));
+    keepIn(txt(g.ground, ccx, GY + fs * 1.45, '1 m², 3,000 m deep', {'text-anchor': 'middle'}));
+    const cp = Kit.mk('clipPath', {id}, Kit.mk('defs', {}, svg)); Kit.mk('path', {d}, cp);
+    Kit.mk('path', {d, fill: INK, 'fill-opacity': .07}, g.tower);
+    const fill = Kit.mk('rect', {x: cx - sx / 2, width: sx, y: GY, height: 0, fill: SEA, 'clip-path': `url(#${id})`}, g.tower);
+    const fill2 = Kit.mk('rect', {x: cx - sx / 2, width: sx, y: GY, height: 0, fill: CORAL, 'clip-path': `url(#${id})`}, g.tower);
+    Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.7, 'stroke-linejoin': 'round'}, g.tower);
+    // The sea: its surface, the column above the tile, a break because 3,000 m will not fit.
+    Kit.mk('path', {d: wave(ccx - cw * 1.6, W - 6, Sy), fill: 'none', stroke: SEA, 'stroke-width': 2, 'stroke-linecap': 'round'}, g.sea);
+    const colH = pos(GY - slab - Sy);
+    const col = Kit.mk('rect', {x: ccx - cw / 2, y: Sy, width: cw, height: colH, fill: SEA}, g.sea);
+    Kit.mk('rect', {x: ccx - cw / 2, y: Sy, width: cw, height: colH, fill: 'none', stroke: INK, 'stroke-width': 1.4}, g.sea);
+    if (colH > fs * 3) {
+      const yb = Sy + colH * .42, bh = fs * .6, x0 = ccx - cw / 2 - 5, x1 = ccx + cw / 2 + 5;
+      Kit.mk('path', {d: `${wave(x0, x1, yb, 2, 8)} L${x1},${yb + bh} ${wave(x0, x1, yb + bh, 2, 8).replace('M', 'L').replace(/^L[^q]*/, '')} L${x0},${yb + bh} Z`, style: 'fill:var(--c)', stroke: 'none'}, g.sea);
+      Kit.mk('path', {d: wave(x0, x1, yb, 2, 8), fill: 'none', stroke: INK, 'stroke-width': 1.3}, g.sea);
+      Kit.mk('path', {d: wave(x0, x1, yb + bh, 2, 8), fill: 'none', stroke: INK, 'stroke-width': 1.3}, g.sea);
     }
-
-    // The seabed: a low mound of mud, and the Titanic lying on it in two pieces.
-    {
-      const n = 10, amp = fs * .12, xa = pad, xb = seaR;
-      let d = `M${xa.toFixed(1)},${(sb + fs * .4).toFixed(1)}`;
-      for (let i = 0; i <= n; i++) {
-        const x = xa + (xb - xa) * i / n, k = Math.sin(Math.PI * i / n);
-        const y = sb + fs * .4 * (1 - Math.pow(k, .35)) + Math.sin(i * 1.7) * amp * k;
-        d += ` L${x.toFixed(1)},${y.toFixed(1)}`;
-      }
-      d += ` Q${((xa + xb) / 2).toFixed(1)},${(sb + fs * .75).toFixed(1)} ${xa.toFixed(1)},${(sb + fs * .4).toFixed(1)} Z`;
-      Kit.mk('path', {d, class: 'dash', style: `fill:${tint(22)}`}, g);
-    }
-    const shipF = `fill:${tint(45)}`;
-    const b0 = colX - fs * .2, b1 = Math.min(seaR - fs * .2, colX + fs * 3);
-    P(g, `M${b0},${sb - fs * .1} L${b1 - fs * .7},${sb - fs * .2} L${b1},${sb - fs * 1.2} L${b0 + fs * .35},${sb - fs * .95} l${-fs * .2},${fs * .25} l${fs * .15},${fs * .22} l${-fs * .22},${fs * .18} Z`, {'stroke-width': 1.6, style: shipF, class: 'draw'});
-    P(g, `M${b0 + fs * 1.5},${sb - fs * 1.02} l${fs * .3},${-fs * .95}`, {'stroke-width': 1.6, class: 'draw'});
-    const s0 = pad + fs * .2, s1 = colX - fs * 1.1;
-    if (s1 - s0 > fs * 1.6) {
-      P(g, `M${(s0 + s1) / 2 - fs * .3},${sb - fs * .8} l${fs * .12},${-fs * .55} l${fs * .45},0 l${-fs * .02},${fs * .55}`, {'stroke-width': 1.4, style: shipF, class: 'draw'});
-      P(g, `M${s0},${sb - fs * .1} L${s1},${sb - fs * .12} l${fs * .2},${-fs * .25} l${-fs * .18},${-fs * .2} l${fs * .1},${-fs * .3} L${s0 + fs * .35},${sb - fs * .82} Z`, {'stroke-width': 1.6, style: shipF, class: 'draw'});
-    }
-    fitT(tx, pad, sb + fs * 1.55, 'Titanic · 3,800 m', {'font-size': small, 'font-weight': 600, style: body});
-
-    // ---------- the sum ----------
-    const s1z = Math.max(12, fs), eSz = small;
-    let f2z = compact ? fs * 1.6 : fs * 1.95;
-    const fa = compact ? 'start' : 'middle', fx = compact ? rx0 + fs * .5 : (rx0 + rx1) / 2;
-    E.f1 = T(tx, fx, 0, '1 + 3800 ÷ 10', {'text-anchor': fa, 'font-size': s1z, 'font-weight': 600, style: body, opacity: .85});
-    E.f2 = T(tx, fx, 0, '= 381 atm', {'text-anchor': fa, 'font-size': f2z, 'font-weight': 800, style: disp, class: 'disp'});
-    E.f3 = T(tx, fx, 0, compact ? '≈ 3,800 t / m²' : '≈ 3,800 t on 1 m²', {'text-anchor': fa, 'font-size': s1z, 'font-weight': 700, style: body, fill: YE});
-    const room = compact ? (rx1 - fx) - fs * 5.5 : (rx1 - rx0) - fs * 1.8;
-    let w2 = E.f2.getComputedTextLength();
-    if (w2 + fs * .8 > room) { f2z = Math.max(fs * 1.3, f2z * room / (w2 + fs * .8)); E.f2.setAttribute('font-size', f2z); w2 = E.f2.getComputedTextLength(); }
-    let yy = stack(E.f1, fs * .1);
-    yy = stack(E.f2, yy + fs * .45);
-    const formB = stack(E.f3, yy + fs * .45);
-
-    const e1 = T(tx, 0, 0, 'Eiffel Tower', {'font-size': eSz, 'font-weight': 600, style: body});
-    const e2 = T(tx, 0, 0, '≈ 8,000 t', {'font-size': eSz, 'font-weight': 600, style: body, opacity: .85});
-    const eW = Math.max(e1.getComputedTextLength(), e2.getComputedTextLength());
-
-    // ---------- the 1 m² slab and the Eiffel Tower standing on it ----------
-    if (compact) {
-      const eTop = formB + fs * .5;
-      [e1, e2].forEach(e => e.setAttribute('x', fx));
-      stackPair(e1, e2, eTop, eSz);
-      const formW = Math.max(E.f1.getComputedTextLength(), w2 + fs * .8, E.f3.getComputedTextLength(), eW);
-      const towerL = Math.min(fx + formW + fs * .6, rx1 - fs * 4.4);
-      cx = (towerL + rx1) / 2;
-      yT = fs * 1.6; yB = H - fs * 3; th = Math.max(fs * 4, yB - yT);
-      B = Math.min((rx1 - towerL) / 2 * .8, th * .3);
-    } else {
-      cx = fx;
-      yT = formB + fs * 1.7; yB = H - fs * 3; th = Math.max(fs * 4, yB - yT);
-      B = Math.min((rx1 - rx0) / 2 * .78, th * .3);
-      const eTop = yT + fs * .1, eBot = stackPair(e1, e2, eTop, eSz);
-      const tB = clamp((yB - eBot) / th, 0, 1);
-      let lx = cx + hw(tB) + fs * .9;
-      if (lx + eW > W - 3) { const ll = cx - hw(tB) - fs * .9 - eW; lx = ll >= rx0 - fs * .5 ? ll : W - 3 - eW; }
-      [e1, e2].forEach(e => e.setAttribute('x', lx));
-    }
-
-    cum = [0]; const NA = 80;
-    for (let i = 1; i <= NA; i++) cum.push(cum[i - 1] + hw((i - .5) / NA));
-    cum = cum.map(v => v / cum[NA]);
-
-    const h0 = hw(0);
-    // The slab: one square metre of hull, a flat block.
-    P(g, `M${cx - B - fs * .5},${yB + fs * .05} L${cx + B + fs * .5},${yB + fs * .05} L${cx + B + fs * .05},${yB + fs * 1.05} L${cx - B - fs * .95},${yB + fs * 1.05} Z`, {'stroke-width': 2, style: `fill:${tint(45)}`, class: 'draw'});
-
-    let s = '';
-    const N = 26;
-    for (let i = 0; i <= N; i++) { const t = i / N; s += (i ? ' L' : 'M') + (cx - hw(t)).toFixed(1) + ',' + (yB - t * th).toFixed(1); }
-    s += ` L${cx},${yT - fs * .4}`;
-    for (let i = N; i >= 0; i--) { const t = i / N; s += ' L' + (cx + hw(t)).toFixed(1) + ',' + (yB - t * th).toFixed(1); }
-    s += ` L${cx + h0 * .6},${yB} Q${cx},${yB - th * .17} ${cx - h0 * .6},${yB} Z`;
-    svg.querySelector('#towerShape').setAttribute('d', s);
-
-    // The tower: a flat silhouette that fills with flat orange, the weight on one square metre.
-    Kit.mk('path', {d: s, style: `fill:${tint(10)}`}, g);
-    const inT = Kit.mk('g', {'clip-path': 'url(#towerClip)'}, g);
-    E.fillBase = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: YE, opacity: .2}, inT);
-    E.fill = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: YE}, inT);
-    E.outline = P(g, s, {'stroke-width': 2.3, class: 'draw'});
-    // Two platforms, one bold line each.
-    [.2, .47].forEach(t => {
-      const y = yB - t * th, w = hw(t) + fs * .35;
-      P(g, `M${cx - w},${y} L${cx + w},${y}`, {'stroke-width': 2.4, class: 'draw'});
-    });
-    P(g, `M${cx},${yT - fs * .4} V${yT - fs * 1.2}`, {'stroke-width': 1.6, class: 'draw'});
-    E.level = P(g, '', {stroke: CH, 'stroke-width': 2.2});
-    E.glow = P(g, s, {stroke: YE, 'stroke-width': 3, opacity: 0});
-    fitT(tx, cx - fs * .2, yB + fs * 2.45, '1 m² of hull', {'text-anchor': 'middle', 'font-size': small, 'font-weight': 600, style: body, fill: PK});
-
-    // ---------- the pen line: from the sub to one square metre of its hull ----------
-    E.tArrow = P(g, '', {stroke: PK, 'stroke-width': 2});
-    E.tHead = P(g, '', {stroke: PK, 'stroke-width': 2});
-
-    // ---------- bubbles and the sub, squeezed from every side ----------
-    E.bub = Kit.mk('g', {}, g);
-    E.sub = Kit.mk('g', {}, g);
-    E.subIn = Kit.mk('g', {}, E.sub);
-    E.bob = Kit.mk('g', {}, E.subIn);
-    E.arrows = [];
-    for (let i = 0; i < 8; i++) E.arrows.push(P(E.bob, '', {stroke: YE, 'stroke-width': 2}));
-    // A plain flat sub: yellow body, fin and tail in ink outline, one round porthole.
-    const subA = {fill: SUB, stroke: CH, 'stroke-width': 1.6, 'stroke-linejoin': 'round'};
-    Kit.mk('path', Object.assign({d: `M${-subRx * .3},${-subRy * .6} L${-subRx * .2},${-subRy - fs * .42} L${subRx * .22},${-subRy - fs * .42} L${subRx * .28},${-subRy * .6} Z`}, subA), E.bob);
-    Kit.mk('path', Object.assign({d: `M${-subRx + fs * .15},0 l${-fs * .6},${-fs * .5} l0,${fs * 1} Z`}, subA), E.bob);
-    Kit.mk('ellipse', Object.assign({cx: 0, cy: 0, rx: subRx, ry: subRy}, subA), E.bob);
-    Kit.mk('circle', {cx: subRx * .5, cy: -fs * .03, r: fs * .27, fill: BL, stroke: HULL, 'stroke-width': 1.6}, E.bob);
-    E.hint = Kit.mk('g', {class: 'hint', opacity: touched ? 0 : 1}, E.sub);
-    P(E.hint, `M0,${fs * 1.35} v${fs * 1.3} m${-fs * .38},${-fs * .45} l${fs * .38},${fs * .45} l${fs * .38},${-fs * .45}`, {stroke: CH, 'stroke-width': 2.4});
-    if (!Kit.calm) gsap.to(E.bob, {y: fs * .16, duration: 1.6, yoyo: true, repeat: -1, ease: 'sine.inOut'});
-
-    E.ring = P(g, '', {stroke: PK, 'stroke-width': 2.6, opacity: 0});
-
-    built = true;
-    update();
-    if (revealed) { fitRing(); E.ring.setAttribute('opacity', 1); }
+    Kit.mk('rect', {x: ccx - cw * .85, y: GY - slab, width: cw * 1.7, height: slab, fill: INK, rx: 1.5}, g.sea);
+    return {g, fill, fill2, col, colH};
   }
 
-  function fitRing() {
-    const b = E.f2.getBBox();
-    E.ring.setAttribute('d', ringD(b.x + b.width / 2, b.y + b.height * .55, b.width / 2 + fs * .8, b.height * .5 + fs * .22));
+  // ---------- front ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = ''; G = geo(svg);
+    const s = scene(svg, 'clipA'); F = s;
+    s.col.setAttribute('fill-opacity', .9);
+    // The push on the tile: three arrows near the bottom of the water.
+    const ay = G.GY - G.slab - G.fs * 2.2;
+    if (ay > G.Sy + 4) [-.27, 0, .27].forEach(p => { const x = G.ccx + p * G.cw; Kit.mk('path', {d: `M${x},${ay} v${G.fs * 1.3} m-3.5,-4.5 l3.5,4.5 l3.5,-4.5`, stroke: '#fff', 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, s.g.sea); });
+    F.line = Kit.mk('line', {stroke: CORAL, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, s.g.notes);
+    // One label: "your guess" over the tonnes.
+    F.lab = txt(s.g.notes, G.lx, 0, '', {fill: CORAL});
+    F.l1 = Kit.mk('tspan', {x: G.lx, 'font-weight': 600}, F.lab); F.l1.textContent = 'your guess';
+    F.l2 = Kit.mk('tspan', {x: G.lx, dy: G.fs * 1.55, 'font-weight': 800, 'font-size': G.fs * 1.3}, F.lab);
+    F.hint = Kit.mk('g', {}, s.g.notes);
+    const hx = G.lx + 2, hy = G.GY - G.fs * .8;
+    Kit.mk('path', {d: `M${hx},${hy} v-${G.fs * 2.4} m-5,6 l5,-6 l5,6`, stroke: CORAL, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, F.hint);
+    txt(F.hint, hx + 10, hy - G.fs * 1.1, 'drag up', {fill: CORAL});
+    F.groups = [s.g.ground, s.g.tower, s.g.sea, s.g.notes];
+    paintGuess();
+  }
+  function paintGuess() {
+    const y = yOf(level), on = touched;
+    F.fill2.setAttribute('y', y); F.fill2.setAttribute('height', pos(G.GY - y + 2));
+    F.hint.style.display = on ? 'none' : '';
+    for (const e of [F.line, F.lab]) e.style.display = on ? '' : 'none';
+    if (!on) return;
+    const hw = hwAt(level) * G.sx;
+    F.line.setAttribute('x1', G.cx - hw); F.line.setAttribute('x2', G.lx - 5); F.line.setAttribute('y1', y); F.line.setAttribute('y2', y);
+    const ly = Math.max(G.fs * 1.4, Math.min(G.GY - G.fs * 1.6, y));
+    F.lab.setAttribute('y', ly - G.fs * .45);
+    F.l2.textContent = `${fmt(tons)} t`;
+  }
+  function setLevel(lv) {
+    level = Math.max(.02, Math.min(.995, lv));
+    tons = Math.max(100, Math.min(TOWER_T, Math.round(fracAt(level) * TOWER_T / 100) * 100));
+    paintGuess();
   }
 
-  function update() {
-    if (!built) return;
-    const d = st.d, a = atmOf(d), sy = yOf(d), fr = a / atmOf(MAX);
-    E.sub.setAttribute('transform', `translate(${colX},${sy})`);
-    const L = fs * (.25 + 1.15 * fr), hl = fs * .32;
-    E.arrows.forEach((p, i) => {
-      const an = i / 8 * Math.PI * 2 + .2, ux = Math.cos(an), uy = Math.sin(an);
-      const ex = ux * (subRx + 3), ey = uy * (subRy + 3), sx = ex + ux * L, sy2 = ey + uy * L;
-      const r1 = [ux * Math.cos(.55) - uy * Math.sin(.55), ux * Math.sin(.55) + uy * Math.cos(.55)];
-      const r2 = [ux * Math.cos(-.55) - uy * Math.sin(-.55), ux * Math.sin(-.55) + uy * Math.cos(-.55)];
-      p.setAttribute('d', `M${sx.toFixed(1)},${sy2.toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} M${(ex + r1[0] * hl).toFixed(1)},${(ey + r1[1] * hl).toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} L${(ex + r2[0] * hl).toFixed(1)},${(ey + r2[1] * hl).toFixed(1)}`);
-      p.setAttribute('stroke-width', (1.6 + fr * 1.8).toFixed(2));
-      p.setAttribute('opacity', (.6 + fr * .4).toFixed(2));
-    });
-    // Depth labels step aside when the squeezed sub swells past them.
-    E.ticks.forEach(({y, e}) => {
-      const prox = clamp((Math.abs(y - sy) - fs * .4) / (fs * 1.2), 0, 1);
-      e.setAttribute('opacity', (.9 * (1 - (1 - prox) * Math.min(.85, fr * 1.6))).toFixed(2));
-    });
-    // The sum.
-    const tonnes = a * 10, tt = tonnes >= 1000 ? Math.round(tonnes / 100) * 100 : Math.round(tonnes), ts = tt.toLocaleString('en-US');
-    E.f1.textContent = `1 + ${Math.round(d)} ÷ 10`;
-    E.f2.textContent = `= ${Math.round(a)} atm`;
-    E.f3.textContent = compact ? `≈ ${ts} t / m²` : `≈ ${ts} t on 1 m²`;
-    // The tower fills, by area, with the tonnes on one square metre.
-    const ff = Math.min(1, tonnes / TOWER), t = tAt(ff), ly = yB - t * th;
-    [E.fill, E.fillBase].forEach(r => { r.setAttribute('y', ly); r.setAttribute('height', yB - ly + 2); });
-    const lw = hw(t) + fs * .55;
-    E.level.setAttribute('d', `M${cx - lw},${ly} L${cx + lw},${ly}`);
-    E.level.setAttribute('opacity', ff > .01 ? 1 : 0);
-    // The pen line follows the sub down, then runs across to the slab.
-    const sx = colX + subRx + fs * .6, ex = cx - B - fs * 1.0, ey = yB + fs * .55;
-    const c1x = Math.min(sx + fs, ex - fs), c1y = sy + (ey - sy) * .9, c2x = sx + (ex - sx) * .6, c2y = ey;
-    E.tArrow.setAttribute('d', `M${sx},${sy} C${c1x},${c1y} ${c2x},${c2y} ${ex},${ey}`);
-    const dx = ex - c2x, dy = ey - c2y, dl = Math.hypot(dx, dy) || 1, ux = dx / dl, uy = dy / dl, h = fs * .55;
-    E.tHead.setAttribute('d', `M${ex - ux * h - uy * h * .6},${ey - uy * h + ux * h * .6} L${ex},${ey} L${ex - ux * h + uy * h * .6},${ey - uy * h - ux * h * .6}`);
+  const pic = Kit.$('pic');
+  let drag = false;
+  const lvFrom = e => { const r = pic.getBoundingClientRect(); return ((e.clientY - r.top) - G.Ty) / G.Ht; };
+  pic.addEventListener('pointerdown', e => { if (locked) return; drag = true; touched = true; pic.setPointerCapture(e.pointerId); setLevel(lvFrom(e)); Kit.haptic('selection'); });
+  pic.addEventListener('pointermove', e => { if (drag) setLevel(lvFrom(e)); });
+  const release = () => { if (!drag) return; drag = false; sure.on(); };
+  pic.addEventListener('pointerup', release); pic.addEventListener('pointercancel', release);
 
-    if (!revealed) {
-      if (said < 1 && d >= 100) { said = 1; say.innerHTML = 'At 100 m it is already <b>11 atmospheres</b>: 10 from the water, 1 from the air. <b>Keep going down.</b>'; }
-      if (said < 2 && d >= 2000) { said = 2; say.innerHTML = '2,000 m: <b>201 atmospheres</b>. The Titanic is still <b>1,800 m deeper.</b>'; }
-      if (d >= MAX - .5) reveal();
-    }
-  }
-
-  function reveal() {
-    revealed = true; Kit.haptic('success');
-    card.classList.add('answered');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    requestAnimationFrame(() => requestAnimationFrame(wow));
-  }
-  function wow() {
-    if (!built) return;
-    fitRing();
-    E.ring.setAttribute('opacity', 1);
-    if (Kit.calm || typeof DrawSVGPlugin === 'undefined') return;
-    gsap.fromTo(E.ring, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, ease: 'power3.inOut'});
-    gsap.fromTo(E.glow, {drawSVG: '0%', opacity: 1}, {drawSVG: '100%', duration: 1.6, ease: 'power2.inOut', delay: .3, onComplete: () => gsap.to(E.glow, {opacity: 0, duration: .9})});
-    gsap.fromTo(E.f2, {scale: 1.25, transformOrigin: '50% 60%'}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)'});
-    gsap.fromTo([E.fill, E.fillBase], {opacity: i => i ? .2 : 1}, {opacity: .45, duration: .5, ease: 'power2.out', delay: 1.8, repeat: 1, yoyo: true});
-    // The hull creaks.
-    gsap.fromTo(E.bob, {x: -1.8}, {x: 1.8, duration: .05, repeat: 11, yoyo: true, ease: 'none', delay: .2, onComplete: () => gsap.set(E.bob, {x: 0})});
-    // Bubbles squeezed out of the hull.
-    const bx = colX, by = yOf(st.d);
-    E.dust.innerHTML = '';
-    for (let i = 0; i < 12; i++) {
-      const c = Kit.mk('circle', {cx: bx + (Kit.rnd() - .5) * subRx * 1.6, cy: by - subRy * .5, r: 1.2 + Kit.rnd() * 2, fill: 'none', stroke: CH, 'stroke-width': 1.2, opacity: .8}, E.dust);
-      gsap.to(c, {attr: {cx: '+=' + (Kit.rnd() - .5) * fs * 2, cy: '-=' + (fs * 1.5 + Kit.rnd() * fs * 3)}, opacity: 0, duration: 1.2 + Kit.rnd(), ease: 'power2.out', delay: .5 + Kit.rnd() * .4});
-    }
-  }
-
-  // ---------- bubbles rising from the sub ----------
-  setInterval(() => {
-    if (!built || Kit.calm || document.hidden || !E.bub) return;
-    const sy = yOf(st.d);
-    if (sy - y0 < fs * 1.6) return;
-    const c = Kit.mk('circle', {cx: colX + (Kit.rnd() - .3) * fs * .8, cy: sy - subRy - fs * .3, r: 1 + Kit.rnd() * 1.7, fill: 'none', stroke: CH, 'stroke-width': 1, opacity: .6}, E.bub);
-    const rise = Math.min(fs * (2 + Kit.rnd() * 2.5), sy - y0 - fs * .8);
-    gsap.to(c, {attr: {cy: '-=' + rise, cx: '+=' + (Kit.rnd() - .5) * fs}, opacity: 0, duration: 1.6 + Kit.rnd(), ease: 'sine.out', onComplete: () => c.remove()});
-  }, 700);
-
-  // ---------- the drag ----------
-  let dragging = false;
-  const fromY = e => { const r = svg.getBoundingClientRect(); let v = (e.clientY - r.top - y0) / (y1 - y0) * MAX; v = clamp(v, 0, MAX); if (v > MAX - 150) v = MAX; return v; };
-  function goTo(v) {
-    if (Kit.calm) { st.d = v; update(); return; }
-    gsap.to(st, {d: v, duration: .35, ease: 'power3.out', overwrite: true, onUpdate: update});
-  }
-  svg.addEventListener('pointerdown', e => {
-    dragging = true; svg.setPointerCapture(e.pointerId);
-    if (!touched) { touched = true; Kit.haptic('light'); if (E.hint) gsap.to(E.hint, {opacity: 0, duration: .25}); }
-    goTo(fromY(e));
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (locked) return; locked = true;
+    const ok = tons >= 2000 && tons <= 4000;
+    Kit.answer({choice: `${fmt(tons)} t`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${fmt(tons)} t, ${ok ? 'close' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
   });
-  svg.addEventListener('pointermove', e => { if (dragging) goTo(fromY(e)); });
-  const end = () => { dragging = false; };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  new ResizeObserver(() => { if (built) layout(); }).observe(Kit.$('stage'));
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (built) layout(); });
-  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', () => { if (built) layout(); });
-  Kit.onShow.card = layout;
+  // ---------- back ----------
+  // A level mark across the tower, then a short elbow to its label in the lane.
+  function mark(parent, lv, c, color) {
+    const y = yOf(lv), hw = hwAt(lv) * G.sx, x2 = G.lx - 5;
+    let d = `M${(G.cx - hw).toFixed(1)},${y.toFixed(1)}`;
+    d += Math.abs(c - y) > 1.5 ? ` H${G.lx - 14} L${x2},${c.toFixed(1)}` : ` H${x2}`;
+    Kit.mk('path', {d, fill: 'none', stroke: color, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, parent);
+  }
+  function drawBack(anim) {
+    if (tl) { tl.kill(); tl = null; }
+    const svg = Kit.$('pic2'); svg.innerHTML = ''; G = geo(svg);
+    const s = scene(svg, 'clipB'), {fs, GY, Sy, lx} = G, big = Kit.$('big');
+    // Two tags beside the tower: placed at their own height, then pushed apart so they never touch.
+    const guess = {lv: level, y: yOf(level), h: fs * 2.45}, truth = {lv: levelT, y: yOf(levelT), h: fs * 1.35};
+    const top = Sy + fs * .9, bot = GY - fs * .5, gap = fs * .7;
+    for (const i of [guess, truth]) i.c = Math.max(top + i.h / 2, Math.min(bot - i.h / 2, i.y));
+    const [a, b] = [guess, truth].sort((p, q) => p.c - q.c || p.y - q.y), need = (a.h + b.h) / 2 + gap;
+    if (b.c - a.c < need) {
+      const mid = (a.c + b.c) / 2; a.c = mid - need / 2; b.c = mid + need / 2;
+      if (a.c - a.h / 2 < top) { a.c = top + a.h / 2; b.c = a.c + need; }
+      if (b.c + b.h / 2 > bot) { b.c = bot - b.h / 2; a.c = b.c - need; }
+    }
+    // Your guess: a coral line where you left it, one two-line label.
+    const gl = Kit.mk('g', {}, s.g.notes);
+    if (touched) {
+      mark(gl, guess.lv, guess.c, CORAL);
+      const g1 = guess.c - guess.h / 2 + fs * .9;
+      const lab = txt(gl, lx, g1, '', {fill: CORAL});
+      const t1 = Kit.mk('tspan', {x: lx, 'font-weight': 600}, lab); t1.textContent = 'your guess';
+      const t2 = Kit.mk('tspan', {x: lx, dy: fs * 1.3, 'font-weight': 700}, lab); t2.textContent = `${fmt(tons)} t`;
+    }
+    // The truth: the tower filled to 3,000 of its 8,000 tonnes.
+    const tg = Kit.mk('g', {}, s.g.notes);
+    mark(tg, truth.lv, truth.c, SEA);
+    txt(tg, lx, truth.c + fs * 1.3 * .36, '3,000 t', {fill: SEA, 'font-weight': 800, 'font-size': fs * 1.3});
+    // The headline is the counter: it climbs as the water comes down.
+    const set = (p, q) => {
+      s.col.setAttribute('height', pos(s.colH * p));
+      const n = Math.round(1 + 300 * p);
+      big.textContent = n === 1 ? '1 atmosphere' : `${n} atmospheres`;
+      const ty = GY - q * (GY - truth.y);
+      s.fill.setAttribute('y', ty); s.fill.setAttribute('height', pos(GY - ty + 2));
+    };
+    if (!anim || Kit.calm || typeof gsap === 'undefined') { set(1, 1); return; }
+    const z = {p: 0, q: 0}; set(0, 0);
+    tg.style.opacity = 0;
+    tl = gsap.timeline({onUpdate: () => set(z.p, z.q), onComplete: () => set(1, 1)})
+      .from([s.g.tower, s.g.sea, gl], {opacity: 0, y: 8, duration: .5, stagger: .1, ease: 'power2.out'})
+      .to(z, {p: 1, duration: 1.6, ease: 'none'}, '+=.15')
+      .to(z, {q: 1, duration: 1, ease: 'power3.out'}, '+=.2')
+      .to(tg, {opacity: 1, duration: .45, ease: 'power2.out'}, '-=.35');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm || !built || typeof DrawSVGPlugin === 'undefined') return;
-    const tl = gsap.timeline();
-    tl.from(svg.querySelectorAll('.draw'), {drawSVG: '0%', duration: .9, stagger: .03, ease: 'power2.inOut'})
-      .from(svg.querySelectorAll('.dash'), {opacity: 0, duration: .5, stagger: .004, ease: 'power1.out', clearProps: 'opacity'}, .2)
-      .from(svg.querySelectorAll('#words text'), {opacity: 0, y: 4, duration: .4, stagger: .05, ease: 'power3.out', clearProps: 'opacity,transform'}, .5)
-      .from(E.subIn, {y: -fs * 2.2, opacity: 0, duration: .8, ease: 'back.out(2.2)'}, .7)
-      .from([E.tArrow, E.tHead], {drawSVG: '0%', duration: .7, ease: 'power3.out'}, 1.1);
+    if (entered || Kit.calm || typeof gsap === 'undefined' || !F.groups) return; entered = true;
+    gsap.timeline()
+      .from(F.groups[0], {opacity: 0, duration: .4, ease: 'power2.out'})
+      .from(F.groups[1], {opacity: 0, y: 12, duration: .55, ease: 'power3.out'}, '-=.1')
+      .from(F.groups[2], {opacity: 0, y: -12, duration: .55, ease: 'power3.out'}, '-=.2')
+      .from(F.groups[3], {opacity: 0, duration: .4, ease: 'power2.out'}, '+=.05');
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    touched = true; if (E.hint) E.hint.setAttribute('opacity', 0);
-    if (Kit.calm) { st.d = MAX; update(); await wait(120); return; }
-    gsap.to(st, {d: MAX, duration: 1.1, ease: 'power2.inOut', overwrite: true, onUpdate: update});
-    await wait(3600);
+    touched = true;
+    let lv = .9; for (let r = N - 1; r >= 0; r--) if (cum[r] >= .15) { lv = r / (N - 1); break; }
+    setLevel(lv); sure.on();
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(1000);
+    if (tl) tl.progress(1);
+    await wait(150);
   };
 })();
 Kit.single();

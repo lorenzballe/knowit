@@ -4447,4 +4447,47 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get screensFrontTomorrow => 'Yarınki sabah çıkıyor';
+
+  @override
+  String exploreDayRead(int read, int of) {
+    return 'Bugün: $of karttan $read okundu';
+  }
+
+  @override
+  String exploreDayLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaldı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreDayDone => 'hepsi okundu';
+
+  @override
+  String get exploreDayOpen => 'Bugünün kartlarına git';
+
+  @override
+  String exploreSixtyRecord(int n, int of) {
+    return 'Rekorun $n/$of';
+  }
+
+  @override
+  String get exploreSixtyFirst => 'Rekorunu belirle';
+
+  @override
+  String get exploreGameNone =>
+      'Şu an burada oynanacak bir şey yok. Yarın tekrar gel.';
+
+  @override
+  String exploreSubjectLevel(String subject, int n) {
+    return '$subject, seviye $n';
+  }
+
+  @override
+  String exploreBecauseSaved(String question) {
+    return '“$question” kartını sakladığın için';
+  }
 }
