@@ -60,7 +60,17 @@ function inspect() {
   for (let a = 0; a < texts.length; a++) for (let c = a + 1; c < texts.length; c++) { const A = texts[a].b, B = texts[c].b; if (A.left < B.right && B.left < A.right && A.top < B.bottom && B.top < A.bottom) { issues.push(`labels overlap: "${texts[a].t}" / "${texts[c].t}"`); a = texts.length; break; } }
   const kids = inn ? [...inn.children].filter(k => !k.classList.contains('gone') && getComputedStyle(k).display !== 'none') : [];
   for (let k = 1; k < kids.length; k++) { const gap = kids[k].getBoundingClientRect().top - kids[k - 1].getBoundingClientRect().bottom; if (gap > cb.height * .22 && !kids[k - 1].classList.contains('stagebox')) issues.push(`empty band of ${Math.round(gap)}px`); }
-  return {id: card.id, issues};
+  // How tall the drawing is, and how much of the column's foot is left empty: held start to end by the caller.
+  const pics = inn ? [...inn.querySelectorAll('svg, canvas')].filter(e => !e.closest('.gone') && !e.parentElement.closest('svg') && getComputedStyle(e).display !== 'none') : [];
+  const painted = e => { if (e.tagName !== 'svg') return e.getBoundingClientRect(); let t = Infinity, b = -Infinity;
+    for (const g of e.querySelectorAll('path,rect,circle,ellipse,line,polyline,polygon,text,image,use')) { const st = getComputedStyle(g); if (st.display === 'none' || st.visibility === 'hidden' || +st.opacity === 0 || g.closest('[opacity="0"],defs,clipPath,mask,pattern')) continue; const r = g.getBoundingClientRect(); if (!r.width && !r.height) continue; t = Math.min(t, r.top); b = Math.max(b, r.bottom); }
+    return {height: b > t ? b - t : 0}; };
+  const drawH = Math.max(0, ...pics.map(e => painted(e).height));
+  const body = kids.filter(k => !k.matches('.foot, .src'));
+  const footEl = inn && inn.querySelector(':scope > .foot, :scope > .src');
+  let low = -Infinity; for (const k of body) for (const el of [k, ...k.querySelectorAll('*')]) { if (el.closest('svg') && el.tagName !== 'svg') continue; const st = getComputedStyle(el); if (st.display === 'none' || st.visibility === 'hidden' || +st.opacity === 0 || el.closest('.gone')) continue; if (!([...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) || el.matches('svg,canvas,img,button,input'))) continue; const r = el.getBoundingClientRect(); if (r.width && r.height) low = Math.max(low, r.bottom); }
+  const foot = isFinite(low) ? (footEl ? footEl.getBoundingClientRect().top : inn.getBoundingClientRect().bottom) - low : 0;
+  return {id: card.id, issues, drawH, foot, cardH: cb.height};
 }
 
 async function deck() {
@@ -158,6 +168,7 @@ async function single() {
         const inside = (h) => zones.some(([x, y, w, ht]) => h.x >= x && h.x <= x + w && h.y >= y && h.y <= y + ht);
         say(where, held.filter(h => !inside(h)).map(h => `${h.what} is dragged, but the app would throw the card: mark it data-drag on a card whose web.touch is drags`));
       }
+      let drawStart = 0;
       for (const stage of ['start', 'end']) {
         if (stage === 'end') {
           const played = await p.evaluate(async () => { const f = typeof Kit !== 'undefined' && Kit.play && Kit.play[document.querySelector('.card')?.id]; if (!f) return false; await f(); return true; });
@@ -165,6 +176,9 @@ async function single() {
           await p.waitForTimeout(calm ? 800 : 3200);
         }
         const r = await p.evaluate(inspect);
+        // The drawing must come back as it was when the answer shows: not squeezed to make room, with the foot left bare.
+        if (stage === 'start') drawStart = r.drawH;
+        else if (drawStart && r.drawH < drawStart * .8 && r.foot > r.cardH * .07) r.issues.push(`the drawing shrinks at the end (${Math.round(drawStart)} to ${Math.round(r.drawH)}px) and leaves ${Math.round(r.foot)}px empty below`);
         const more = await p.evaluate(([corner, controls]) => {
           const issues = [], W = innerWidth, H = innerHeight;
           if (document.scrollingElement.scrollHeight > H + 1 || document.scrollingElement.scrollWidth > W + 1) issues.push('the page scrolls');
