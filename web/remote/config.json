@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "hash": "aae325ba5543dce0",
+ "hash": "ad367cf1b6788699",
  "app": {
   "gate": null,
   "flags": {},
@@ -1746,7 +1746,20 @@
    {
     "id": "your-day",
     "block": "your-day",
-    "gap": 4
+    "gap": 4,
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
    },
    {
     "id": "bets-day",
@@ -1781,11 +1794,37 @@
      "ru": "Сегодня для всех одно и то же. Зафиксируй догадку и узнай, насколько она точна.",
      "tr": "Bugün herkes için aynı. Tahminini kilitle, sonra ne kadar yaklaştığını gör.",
      "zh": "今天人人相同。锁定你的估计，再看看差了多少。"
+    },
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
     }
    },
    {
     "id": "path",
-    "block": "purpose.set"
+    "block": "purpose.set",
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
    },
    {
     "id": "quick-games",
@@ -1819,6 +1858,19 @@
      "ru": "По минуте-другой на каждую. Выбери и играй.",
      "tr": "Her biri bir iki dakika. Birini seç ve oyna.",
      "zh": "每个只要一两分钟。选一个开始玩。"
+    },
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
     }
    },
    {
@@ -1853,6 +1905,19 @@
      "ru": "Уровень от 1 до 10 — по карточкам, которые ты читаешь и угадываешь.",
      "tr": "Okuduğun ve doğru bildiğin kartlara göre 1'den 10'a seviye.",
      "zh": "等级 1 到 10，取决于你读过和答对的卡片。"
+    },
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
     }
    },
    {
@@ -1872,6 +1937,36 @@
      "ru": "Похожие на сохранённые",
      "tr": "Sakladıklarına benzer kartlar",
      "zh": "和你收藏的相似"
+    },
+    "audience": {
+     "any": [
+      {
+       "minBuild": 55
+      },
+      {
+       "platforms": [
+        "web",
+        "android"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "today",
+    "block": "today",
+    "gap": 0,
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
     }
    },
    {
@@ -1879,12 +1974,350 @@
     "block": "top"
    },
    {
+    "id": "loved",
+    "block": "loved",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "asking",
+    "block": "asking",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "mine",
+    "block": "mine",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
     "id": "where-you-live",
     "block": "where-you-live"
    },
    {
+    "id": "month",
+    "block": "month",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "signature-numbers",
+    "block": "numbers",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "signature-debates",
+    "block": "debates",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
     "id": "theme-sharpest-0",
     "block": "sharpest"
+   },
+   {
+    "id": "theme-origins-0",
+    "block": "origins",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "theme-stories-0",
+    "block": "stories",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "theme-trueOrFalse-0",
+    "block": "true-false",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "came-back",
+    "block": "came-back",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "move-sampling",
+    "block": "move-sampling",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "move-counterfactual",
+    "block": "move-compared",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "work",
+    "block": "work",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "unmask",
+    "block": "unmask",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "how-sure",
+    "block": "how-sure",
+    "gap": 28,
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "what-if",
+    "block": "what-if",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "series",
+    "block": "series",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "sixty",
+    "block": "sixty",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "mood",
+    "block": "mood",
+    "gap": 28,
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "did-you-know",
+    "block": "did-you-know",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
+   },
+   {
+    "id": "surprise",
+    "block": "surprise",
+    "audience": {
+     "all": [
+      {
+       "platforms": [
+        "ios"
+       ]
+      },
+      {
+       "maxBuild": 54
+      }
+     ]
+    }
    },
    {
     "id": "theme-practical-0",

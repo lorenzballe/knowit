@@ -74,6 +74,18 @@ async function shoot(browser, card) {
     const played = await page.evaluate(async () => { const f = typeof Kit !== 'undefined' && Kit.play && Kit.play[document.querySelector('.card')?.id]; if (!f) return false; await f(); return true; });
     if (!played) throw new Error('no Kit.play');
     await page.waitForTimeout(3200);
+    // The back is shown for a card someone read, with their own answer, which this one is not: the
+    // answer played here is the photographer's. So what speaks of it (the kit's verdict line, and any
+    // line or label saying what "you" said or guessed) is hidden, its room kept, before the picture.
+    await page.evaluate(() => {
+      const YOU = /\b(you (said|were|guessed|picked|chose|put|answered|placed|went)|your (guess|pick|answer|choice|bet|estimate))\b/i;
+      document.querySelectorAll('.grade').forEach(el => { el.style.visibility = 'hidden'; });
+      for (const el of document.querySelectorAll('.card *')) {
+        const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join(' ');
+        if (YOU.test(own)) el.style.visibility = 'hidden';
+      }
+    });
+    await page.waitForTimeout(100);
     await page.screenshot({path: path.join(RAW, `${card.id}-back.png`)});
   } finally {
     await page.close();

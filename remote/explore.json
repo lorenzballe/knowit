@@ -1,1918 +1,2351 @@
 {
- "_": "Explore as the build's own (remote/examples/explore-today.json), with the new free cards on top for the TestFlight build: only that build's bank holds them, so no other build has anything to show there, and the sections end on 2026-12-15. To go back, set this file to null.",
- "sections": [
-  {
-   "id": "debug-flicker-normal",
-   "block": "carousel",
-   "size": "m",
-   "gap": 0,
-   "title": {
-    "en": "Flicker test · normal cards · debug",
-    "it": "Prova lampo · carte normali · debug"
-   },
-   "subtitle": {
-    "en": "Open one and swipe five: does a card flicker as it comes up?",
-    "it": "Aprine una e scorrine cinque: la carta lampeggia quando arriva?"
-   },
-   "source": {
-    "ids": [
-     "science-absolute-zero-5",
-     "science-absolute-zero-9",
-     "history-1848-10",
-     "history-1848-5",
-     "nature-adaptation-2",
-     "nature-adaptation-3",
-     "space-asteroid-risk-2",
-     "space-asteroid-risk-3",
-     "technology-cables-3",
-     "technology-cables-4",
-     "human_body-ageing-well-2",
-     "human_body-ageing-well-3",
-     "psychology-adaptation-2",
-     "psychology-adaptation-3",
-     "economics-1929-10",
-     "economics-1929-3"
-    ]
-   },
-   "limit": 16,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-flicker-drawn",
-   "block": "carousel",
-   "size": "m",
-   "gap": 0,
-   "title": {
-    "en": "Flicker test · cards with a drawing · debug",
-    "it": "Prova lampo · carte col disegno · debug"
-   },
-   "subtitle": {
-    "en": "The same, with cards drawn as pages",
-    "it": "Lo stesso, con le carte col disegno"
-   },
-   "source": {
-    "ids": [
-     "science-extinguisher-charges",
-     "science-cold-laminar-flow-6",
-     "science-pressure-at-depth",
-     "science-cfc-ozone-hole",
-     "science-gravel-third-friction",
-     "history-walled-city-crowd",
-     "history-paradox-of-escalation",
-     "maths-mersenne-glass-rack",
-     "maths-knot-theory-renaissance",
-     "maths-mercator-russia",
-     "medicine-alcohol-group-one",
-     "economics-slot-payback",
-     "economics-restart-clock",
-     "economics-resource-curse-flask",
-     "economics-oil-countdown",
-     "psychology-gravity-hill"
-    ]
-   },
-   "limit": 16,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-jewels-1",
-   "block": "carousel",
-   "size": "l",
-   "gap": 0,
-   "title": {
-    "en": "New jewel cards · debug (183, 1/4)",
-    "it": "Carte gioiello nuove · debug (183, 1/4)"
-   },
-   "source": {
-    "ids": [
-     "science-graphene-helium-seal",
-     "science-dilute-fukushima-water",
-     "science-air-torpedo-sphere",
-     "science-push-harder-spin",
-     "science-cat-already-decided",
-     "science-arlington-teflon-blast",
-     "science-spinning-x-slowdown",
-     "science-many-worlds-dice",
-     "science-reynolds-goes-up",
-     "science-zero-g-smoke",
-     "science-thermite-steel-damper",
-     "science-weight-is-a-pull",
-     "science-bomb-layer",
-     "science-little-boy-waste",
-     "science-teflon-chain-reaction",
-     "science-sketch-before-measuring",
-     "science-foraminifera-clay-line",
-     "science-fault-breaks-layer",
-     "science-volcano-depth-tsunami",
-     "science-dna-spooled-tight",
-     "science-vinegar-eats-eggshell",
-     "science-rift-to-ocean",
-     "science-frozen-compass",
-     "science-magnetic-seafloor-stripes",
-     "science-steel-bar-signal",
-     "history-ivy-mike-blocks",
-     "history-little-boy-efficiency",
-     "history-shield-or-dove",
-     "history-tsar-cloud-height",
-     "history-disarm-in-steps",
-     "history-national-redoubt",
-     "history-great-power-war",
-     "history-nato-shrinking-cushion",
-     "history-silk-road-sentence",
-     "history-elephants-foot-dose",
-     "maths-perfect-tiling",
-     "maths-duverger-two-parties",
-     "maths-storm-jar-odds",
-     "maths-kepler-proof-dial",
-     "maths-question-seventeen",
-     "maths-fibonacci-gaps",
-     "maths-borda-spoiler-dial",
-     "medicine-eclipse-blind-spot",
-     "medicine-triple-dependency-window",
-     "food-acid-squeezes-protein",
-     "food-shark-mercury-climb"
-    ]
-   },
-   "limit": 46,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   },
-   "subtitle": {
-    "en": "Each with a look and a motion of its own, drawn straight on the card",
-    "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
-   }
-  },
-  {
-   "id": "debug-new-jewels-2",
-   "block": "carousel",
-   "size": "l",
-   "gap": 0,
-   "title": {
-    "en": "New jewel cards · debug (183, 2/4)",
-    "it": "Carte gioiello nuove · debug (183, 2/4)"
-   },
-   "source": {
-    "ids": [
-     "psychology-gentle-slope-frame",
-     "human_body-hyper-g-head",
-     "human_body-sweat-evaporation-heat",
-     "human_body-habits-mark-genes",
-     "technology-tape-growing-robot",
-     "technology-tail-pull-retract",
-     "technology-milk-carton-layers",
-     "technology-gps-light-rose",
-     "technology-five-times-downforce",
-     "technology-folding-the-steel",
-     "technology-messina-record-span",
-     "technology-sludge-to-biogas",
-     "technology-induction-foil-stick",
-     "technology-xm42-flamethrower",
-     "technology-backlash-pin-hole",
-     "nature-adriatic-dry-floor",
-     "nature-adria-sea-floor",
-     "nature-everest-underwater",
-     "nature-vesuvius-ash-volume",
-     "thinking-bermuda-per-ship",
-     "weird_facts-marble-football-fields",
-     "life-border-coin-flip",
-     "life-ecuador-murder-rate",
-     "science-extinguisher-charges",
-     "science-cold-laminar-flow-6",
-     "science-pressure-at-depth",
-     "science-cfc-ozone-hole",
-     "science-gravel-third-friction",
-     "history-walled-city-crowd",
-     "history-paradox-of-escalation",
-     "maths-mersenne-glass-rack",
-     "maths-knot-theory-renaissance",
-     "maths-mercator-russia",
-     "medicine-alcohol-group-one",
-     "economics-slot-payback",
-     "economics-restart-clock",
-     "economics-resource-curse-flask",
-     "economics-oil-countdown",
-     "psychology-gravity-hill",
-     "human_body-dream-switch",
-     "human_body-one-beer-curve",
-     "technology-fire-contains-methane",
-     "technology-motogp-power-weight",
-     "technology-tempered-glass-squeeze",
-     "technology-solar-depot-grid",
-     "technology-tatara-mass-balance"
-    ]
-   },
-   "limit": 46,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-jewels-3",
-   "block": "carousel",
-   "size": "l",
-   "gap": 0,
-   "title": {
-    "en": "New jewel cards · debug (183, 3/4)",
-    "it": "Carte gioiello nuove · debug (183, 3/4)"
-   },
-   "source": {
-    "ids": [
-     "technology-graphene-fast-charge",
-     "nature-vesuvius-warning-signs",
-     "nature-ice-age-italy",
-     "nature-europe-slab-swing",
-     "nature-sharks-food-chain",
-     "space-earth-spaghettified",
-     "life-48-hour-shelter",
-     "life-permanent-time-choice",
-     "life-carving-cage-homes",
-     "weird_facts-not-a-flamethrower",
-     "weird_facts-bermuda-not-top-ten",
-     "technology-yellow-button-anomaly",
-     "technology-v1-decision-speed-1",
-     "technology-undersea-cable-blur",
-     "technology-thermite-curie-wipe",
-     "technology-stacked-solar-cell",
-     "technology-micromouse-fan-grip",
-     "technology-micromouse-diagonal-cut-15",
-     "technology-material-fatigue",
-     "technology-fastest-not-shortest",
-     "space-sidereal-extra-spin",
-     "space-filter-adapter",
-     "space-bones-in-orbit",
-     "space-apollo13-tank-fire",
-     "science-vajont-wet-clay",
-     "science-two-spheres-focus",
-     "science-thermite-control",
-     "science-telephoto-steep-bridge",
-     "science-teflon-vs-pfoa",
-     "science-steam-feeds-power",
-     "science-snow-flips-friction",
-     "science-sludge-cannibalism",
-     "science-rock-restoration",
-     "science-pacific-background-radiation",
-     "science-one-way-light",
-     "science-magnetic-stripes",
-     "science-kepler-water-units",
-     "science-iridium-gubbio-clay",
-     "science-hotter-than-sun",
-     "science-heatwave-without-emissions",
-     "science-heat-of-a-drag",
-     "science-graphene-sticky-tape",
-     "science-grape-microwave-trap",
-     "science-granite-near-diamond",
-     "science-fourth-power-glow",
-     "science-fallout-layer"
-    ]
-   },
-   "limit": 46,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-jewels-4",
-   "block": "carousel",
-   "size": "l",
-   "gap": 0,
-   "title": {
-    "en": "New jewel cards · debug (183, 4/4)",
-    "it": "Carte gioiello nuove · debug (183, 4/4)"
-   },
-   "source": {
-    "ids": [
-     "science-energy-glass",
-     "science-bouncing-egg-bubbles",
-     "science-bio-not-biodegradable",
-     "psychology-slot-reward-loop",
-     "psychology-misconception-memory",
-     "nature-yakutsk-heat-spikes",
-     "nature-tsunami-slows-down",
-     "nature-plastic-patch-france",
-     "nature-permafrost-thaw-line",
-     "nature-lituya-bay-wave",
-     "nature-clay-slide-plane",
-     "medicine-tattoo-lymph-nodes",
-     "medicine-tattoo-flu-boost",
-     "medicine-pink-cocaine-name",
-     "medicine-dupont-c8-dose",
-     "medicine-alcohol-iceberg",
-     "maths-reidemeister-upper-bound",
-     "maths-pivotal-voter-dictator",
-     "maths-hakens-knot-scanner",
-     "maths-feigenbaum-ratio-ladder",
-     "maths-coin-rotation-paradox",
-     "human_body-lead-hardened-arteries",
-     "human_body-inherited-gene-switches",
-     "human_body-highway-hypnosis",
-     "human_body-alcohol-synapse",
-     "human_body-acetaldehyde-liver",
-     "history-vajont-four-minutes",
-     "history-un-partition-scale",
-     "history-three-deadly-inventions",
-     "history-putins-domestic-mirror",
-     "history-popular-mechanics-flaw",
-     "history-nsa-gold-codes",
-     "history-norwegian-rocket-alarm",
-     "history-leaded-iq-loss",
-     "history-italy-nuclear-bases",
-     "history-guayaquil-prison-bars",
-     "history-gold-codes-card",
-     "history-gaza-kept-controls",
-     "economics-the-great-split",
-     "space-frozen-horizon-light",
-     "maths-knot-equivalence",
-     "technology-hydrogen-plugs-holes",
-     "maths-collatz-rival-loop",
-     "space-aerogel-comet-catch",
-     "maths-penrose-lookalikes"
-    ]
-   },
-   "limit": 45,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-unboxed-1",
-   "block": "carousel",
-   "size": "m",
-   "gap": 0,
-   "title": {
-    "en": "Out of their box · debug (175, 1/3)",
-    "it": "Senza riquadro · debug (175, 1/3)"
-   },
-   "source": {
-    "ids": [
-     "science-iron-sand-concentration",
-     "science-thermite-tap-time",
-     "maths-collatz-rival-loop",
-     "maths-knot-equivalence",
-     "space-aerogel-comet-catch",
-     "maths-penrose-lookalikes",
-     "space-frozen-horizon-light",
-     "economics-flies-window",
-     "economics-gulf-idle-fleet",
-     "technology-hydrogen-plugs-holes",
-     "economics-hormuz-pipeline-shortfall",
-     "food-apple-slow-breath",
-     "food-mine-apple-cells",
-     "history-alcatraz-dummy-heads-4",
-     "history-atmosphere-fusion-fire",
-     "history-bakelite-fossil-plastic",
-     "history-baia-sunken-city",
-     "history-gardening-mines-crib",
-     "history-pompeii-pyroclastic-flow",
-     "history-pyramid-sun-rays",
-     "history-crimea-1954-gift",
-     "history-senna-suspension-fragment",
-     "history-titanic-propeller-lever",
-     "human_body-bone-powder-texture",
-     "history-vesuvius-first-film",
-     "human_body-forgotten-dreams",
-     "human_body-humidity-traps-sweat",
-     "human_body-radioactive-atom-inside",
-     "human_body-salt-osmosis-cell",
-     "human_body-ink-meets-macrophages",
-     "human_body-tattoo-ink-relay",
-     "life-child-miners-potosi",
-     "life-inch-of-pay",
-     "life-fancy-car-crosswalk",
-     "maths-wyoming-mercator-pole",
-     "medicine-hidden-opioid-dose",
-     "maths-sandpile-any-size",
-     "medicine-laser-eye-monitor",
-     "medicine-laser-tattoo-removal",
-     "medicine-lingering-flashbacks",
-     "medicine-mri-field-strength",
-     "nature-asteroid-tsunami-energy",
-     "medicine-popcorn-laser-effect",
-     "nature-bay-funnel-tide",
-     "nature-cave-rescue-time",
-     "nature-column-collapse-flows-2",
-     "nature-column-collapse-flows",
-     "nature-delta-salinity-dam",
-     "nature-glacier-wave-amplifier",
-     "nature-gulf-stream-storms",
-     "nature-greenland-ice-air",
-     "nature-gulf-stream-storms-2",
-     "nature-half-mountain-tsunami",
-     "nature-leaking-fracking-tank",
-     "nature-marsili-wave-height",
-     "nature-mariana-trench-depth",
-     "nature-marsili-water-shield",
-     "nature-mediterranean-plates",
-     "nature-mosquito-winter-eggs",
-     "nature-mosquito-winter-basement"
-    ]
-   },
-   "limit": 60,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   },
-   "subtitle": {
-    "en": "The drawing now sits on the card, no box of its own",
-    "it": "Il disegno ora sta direttamente sulla carta, senza riquadro"
-   }
-  },
-  {
-   "id": "debug-unboxed-2",
-   "block": "carousel",
-   "size": "m",
-   "gap": 0,
-   "title": {
-    "en": "Out of their box · debug (175, 2/3)",
-    "it": "Senza riquadro · debug (175, 2/3)"
-   },
-   "source": {
-    "ids": [
-     "nature-obsidian-natural-glass",
-     "nature-red-forest-chernobyl",
-     "nature-red-sea-algae",
-     "nature-siberian-anticyclone-trap",
-     "nature-spider-rock-gift",
-     "nature-thermal-inversion-lid",
-     "nature-trench-volcano-food",
-     "nature-tristan-hot-spot",
-     "nature-ten-am-rule",
-     "nature-tsunami-sea-retreat",
-     "nature-twin-landslide-tsunami",
-     "nature-yakutsk-record-cold",
-     "nature-water-carves-caves",
-     "psychology-once-in-a-while",
-     "science-antarctica-co2-2100",
-     "science-artesian-well-pressure",
-     "science-bank-floor-rubbish",
-     "science-bradyseism-breathing-ground",
-     "science-cerberus-heat-dome",
-     "science-corium-steam-blast",
-     "science-channel-tunnel-chalk",
-     "science-cosmic-rays-planes",
-     "science-darvaza-gas-blowout",
-     "science-decoherence-branching",
-     "science-earth-stops-wind",
-     "science-dry-ice-frost",
-     "science-eruption-cloud-heat",
-     "science-flame-gravity-meter",
-     "science-flame-shape-gravity",
-     "science-flame-spark-gap",
-     "science-flame-splits-field",
-     "science-flashover-ten-seconds",
-     "science-flames-standing-wave",
-     "science-foam-fire-water",
-     "science-fukushima-tritium-grams",
-     "science-gibraltar-mega-cascade",
-     "science-fukushima-hydrogen-blast",
-     "science-fukushima-tritium-filter",
-     "science-glass-fused-rock",
-     "science-glass-pass-window",
-     "science-grape-contact-point",
-     "science-grape-plasma",
-     "science-grape-plasma-ions",
-     "science-graphene-relativistic-electrons",
-     "science-greenland-craton-ores",
-     "science-hydrophobic-sphere-race",
-     "science-hypergravity-flame",
-     "science-impact-vs-sumatra",
-     "science-iter-cold-magnets",
-     "science-iter-hot-cold",
-     "science-indium-traps",
-     "science-light-energy-flow",
-     "science-leidenfrost-vapor-cushion",
-     "science-opposite-lens-errors",
-     "science-pressure-in-tons",
-     "science-pollen-climate-diary",
-     "science-sardinia-corsica-door",
-     "science-seismic-aseismic-faults",
-     "science-s-waves-vanish",
-     "science-seismic-chalk-map"
-    ]
-   },
-   "limit": 60,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-unboxed-3",
-   "block": "carousel",
-   "size": "m",
-   "gap": 0,
-   "title": {
-    "en": "Out of their box · debug (175, 3/3)",
-    "it": "Senza riquadro · debug (175, 3/3)"
-   },
-   "source": {
-    "ids": [
-     "science-shared-volcanic-rock",
-     "science-shade-ball-raft",
-     "science-tethys-ocean-wedge",
-     "science-teflon-mechanical-grip",
-     "science-thermite-oxide-seal",
-     "science-truck-squeezes-water",
-     "science-tunnel-smoke-drift",
-     "science-underground-crystal-cavities",
-     "science-two-slit-fringes",
-     "science-vapor-lava-bubbles",
-     "science-water-meets-lava",
-     "science-well-to-time",
-     "science-xenon-blind-control",
-     "space-black-hole-sky",
-     "space-corona-outshone",
-     "space-flat-earth-challenge",
-     "space-flash-then-silence",
-     "space-four-copies",
-     "space-gravity-delay",
-     "space-graphene-space-elevator",
-     "space-frozen-horizon-light-2",
-     "space-lagrange-hilltops",
-     "space-hundred-billion-galaxies",
-     "space-moon-flag-wave",
-     "space-red-moon-eclipse",
-     "space-spin-magnetic-shield",
-     "space-sunward-blind-spot",
-     "space-van-allen-donut",
-     "technology-carbon-fibre-buckling",
-     "technology-archimedes-bridge-buoyancy",
-     "technology-core-fire-temperature",
-     "technology-closed-loop-geothermal",
-     "technology-graphene-plastic-century",
-     "technology-graphene-desalination",
-     "technology-induction-magnetic-field",
-     "technology-micromouse-diagonal-blinders",
-     "technology-neutral-temperature-welding",
-     "technology-night-weld-ranking",
-     "technology-night-yard-rovers",
-     "technology-sewer-spoil-removal",
-     "technology-relay-maze-brain",
-     "technology-printed-micro-machines",
-     "technology-secretly-blue",
-     "technology-tatara-steel-race",
-     "technology-steam-heavy-oil",
-     "technology-tunnel-foam-mix",
-     "technology-tunnel-water-table",
-     "technology-tin-pancake",
-     "technology-yakutsk-stilt-houses",
-     "thinking-confusion-helps-memory",
-     "thinking-hidden-popcorn",
-     "thinking-random-end-cooperation",
-     "thinking-tester-probes-forgiveness",
-     "thinking-one-word",
-     "weird_facts-skin-of-aerogel"
-    ]
-   },
-   "limit": 55,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-science-1",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Science (234, 1/4)",
-    "it": "Nuove · Scienza (234, 1/4)"
-   },
-   "source": {
-    "ids": [
-     "science-adiabatic-compression",
-     "science-adriatic-flexural-basin",
-     "science-aharonov-bohm",
-     "science-air-off-bacteria",
-     "science-air-wrapped-drag",
-     "science-aluminium-ice-melt",
-     "science-antarctica-ancient-craton",
-     "science-antarctica-co2-2100",
-     "science-anthropocene-boundary-layer",
-     "science-apparent-dip",
-     "science-artesian-well-pressure",
-     "science-aseismic-fault-creep",
-     "science-backward-spin-x",
-     "science-bank-floor-rubbish",
-     "science-belt-friction-equation",
-     "science-bermuda-gas-myth",
-     "science-big-globe-spin",
-     "science-blue-aerogel",
-     "science-boiling-point-pressure",
-     "science-bradyseism-breathing-ground",
-     "science-branches-human-summary",
-     "science-branching-body-decays",
-     "science-branching-energy-slices",
-     "science-bubbles-feed-bacteria",
-     "science-bunny-suit-cleanroom",
-     "science-burning-plastic-energy",
-     "science-campi-flegrei-cycles",
-     "science-canadair-foam-surfactant",
-     "science-caps-bottles-sorting",
-     "science-carbon-filter-pores",
-     "science-carbon-in-steel",
-     "science-cerberus-heat-dome",
-     "science-chain-reaction",
-     "science-channel-tunnel-chalk",
-     "science-chernobyl-lingering-cesium",
-     "science-chernobyl-reactor-lid",
-     "science-chernobyl-steam-blast",
-     "science-chimborazo-highest",
-     "science-cold-deodorant-spray",
-     "science-cold-to-hot",
-     "science-corium-steam-blast",
-     "science-cosmic-rays-planes",
-     "science-count-the-ball",
-     "science-darvaza-gas-blowout",
-     "science-decoherence-branching",
-     "science-deet-plugs-pores",
-     "science-delayed-club-jolt",
-     "science-diamond-fog-test",
-     "science-diamond-sandpaper-test",
-     "science-doubled-gem-facets",
-     "science-dry-a-jelly",
-     "science-dry-ice-frost",
-     "science-earth-stops-wind",
-     "science-einstein-synchronization",
-     "science-elevator-air-drag",
-     "science-eruption-cloud-heat",
-     "science-eruption-forecast-odds",
-     "science-evacuation-drill-chaos",
-     "science-falling-elevator-flat",
-     "science-falling-slinky-centre"
-    ]
-   },
-   "limit": 60,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-science-2",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Science (234, 2/4)",
-    "it": "Nuove · Scienza (234, 2/4)"
-   },
-   "source": {
-    "ids": [
-     "science-fallout-two-weeks",
-     "science-feeling-cold-flow",
-     "science-feeling-heat-flow",
-     "science-field-light-speed",
-     "science-flame-gravity-meter",
-     "science-flame-not-plasma",
-     "science-flame-shape-gravity",
-     "science-flame-spark-gap",
-     "science-flame-splits-field",
-     "science-flames-standing-wave",
-     "science-flashover-temperature",
-     "science-flashover-ten-seconds",
-     "science-foam-fire-water",
-     "science-fractures-reach-aquifer",
-     "science-fukushima-hydrogen-blast",
-     "science-fukushima-tritium-filter",
-     "science-fukushima-tritium-grams",
-     "science-fully-developed-sea",
-     "science-fusion-fuel-grams",
-     "science-gap-colour",
-     "science-gibraltar-mega-cascade",
-     "science-glass-fused-rock",
-     "science-glass-pass-window",
-     "science-glass-recycling-loop",
-     "science-glass-shatters-voice",
-     "science-globe-inertia-tons",
-     "science-globe-spin-inertia",
-     "science-globe-water-film",
-     "science-grape-contact-point",
-     "science-grape-plasma",
-     "science-grape-plasma-ions",
-     "science-graphene-one-atom",
-     "science-graphene-relativistic-electrons",
-     "science-graphene-vs-steel",
-     "science-greenland-craton-ores",
-     "science-half-life-clock",
-     "science-hanging-wheel-precession",
-     "science-heat-feeds-extremes",
-     "science-heat-runaway-loop",
-     "science-hydrophobic-sphere-race",
-     "science-hypergravity-flame",
-     "science-ice-hexagon-holes",
-     "science-ice-lifts-gibraltar",
-     "science-ice-regelation-wire",
-     "science-impact-vs-sumatra",
-     "science-india-hits-eurasia",
-     "science-indium-traps",
-     "science-inertia-car-push",
-     "science-iron-sand-concentration",
-     "science-iter-cold-magnets",
-     "science-iter-hot-cold",
-     "science-kelvin-vortex-atoms",
-     "science-knotted-molecule",
-     "science-kola-coring",
-     "science-kola-rock-cores",
-     "science-landslide-depth-volume",
-     "science-layers-in-step",
-     "science-leidenfrost-vapor-cushion",
-     "science-lifting-a-car",
-     "science-light-energy-flow"
-    ]
-   },
-   "limit": 60,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-science-3",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Science (234, 3/4)",
-    "it": "Nuove · Scienza (234, 3/4)"
-   },
-   "source": {
-    "ids": [
-     "science-light-fields-in-phase",
-     "science-liquid-gas-ships",
-     "science-lowside-vs-highside",
-     "science-magnet-fake-diamonds",
-     "science-magnetic-plasma-cage",
-     "science-many-worlds-flow",
-     "science-martensite-needles",
-     "science-mass-cancels-falling",
-     "science-maxwell-light-wave",
-     "science-mediterranean-refill-speed",
-     "science-mediterranean-salt-layer",
-     "science-mercury-period-doubling",
-     "science-metals-boil-thermite",
-     "science-moon-water-land",
-     "science-motogp-braking-zone",
-     "science-neutron-slips-in",
-     "science-ocean-salt-mass",
-     "science-one-shared-wavefunction",
-     "science-opposite-lens-errors",
-     "science-paper-plastic-cycles",
-     "science-patterson-clean-lab",
-     "science-phone-microwaves-dna",
-     "science-piccard-white-mud",
-     "science-pinhole-sun-image",
-     "science-piranha-solution",
-     "science-plastic-sediment-layer",
-     "science-poles-closer-center",
-     "science-pollen-climate-diary",
-     "science-poynting-vector-arrow",
-     "science-pressure-in-tons",
-     "science-pressure-melts-ice",
-     "science-push-spins-globe",
-     "science-quakes-rising-ground",
-     "science-quantum-superposition",
-     "science-quasi-crystal-icosahedrons",
-     "science-radiation-inside-out",
-     "science-rail-heat-growth",
-     "science-rally-pendulum-effect",
-     "science-rally-thousandth-second",
-     "science-rally-wheel-spin",
-     "science-rock-atom-clocks",
-     "science-room-temperature-boiling",
-     "science-s-waves-vanish",
-     "science-salt-rusts-cables",
-     "science-sardinia-corsica-door",
-     "science-sardinia-stable-block",
-     "science-scherzer-round-lens",
-     "science-scotch-tape-graphene",
-     "science-seismic-aseismic-faults",
-     "science-seismic-chalk-map",
-     "science-seismic-time-axis",
-     "science-shade-ball-raft",
-     "science-shade-balls",
-     "science-shared-volcanic-rock",
-     "science-slinky-bottom-waits",
-     "science-slinky-breathing-mode",
-     "science-slinky-compression-wave",
-     "science-slinky-tennis-ball",
-     "science-slinky-twist-first",
-     "science-solid-inner-core"
-    ]
-   },
-   "limit": 60,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-science-4",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Science (234, 4/4)",
-    "it": "Nuove · Scienza (234, 4/4)"
-   },
-   "source": {
-    "ids": [
-     "science-solid-nitrogen-bath",
-     "science-spinning-proton-magnets",
-     "science-spinning-slinky-zerog",
-     "science-spinning-tube-speed",
-     "science-spinning-wheel",
-     "science-squeezed-plutonium",
-     "science-steel-heat-capacity",
-     "science-stratovolcano-explosivity",
-     "science-sulfur-brittle-steel",
-     "science-superacids-hammett-scale",
-     "science-supersaturation-crystals",
-     "science-swell-travels-far",
-     "science-tatara-heat",
-     "science-teflon-mechanical-grip",
-     "science-template-horizon",
-     "science-tethys-ocean-wedge",
-     "science-thermite-density-separation",
-     "science-thermite-oxide-seal",
-     "science-thermite-pulsing",
-     "science-thermite-tap-time",
-     "science-thin-air-same-heat",
-     "science-tiny-earth-wobble",
-     "science-titan-implosion-speed",
-     "science-toothpaste-eggshell-bases",
-     "science-transtensional-fault",
-     "science-truck-car-forces",
-     "science-truck-squeezes-water",
-     "science-tsar-bomba-stages",
-     "science-tunnel-core-samples",
-     "science-tunnel-fault-step",
-     "science-tunnel-or-bridge",
-     "science-tunnel-smoke-drift",
-     "science-two-slit-fringes",
-     "science-tyres-stir-cesium",
-     "science-ultrasound-repellents",
-     "science-underground-crystal-cavities",
-     "science-uranium-critical-mass",
-     "science-urchin-neutron-initiator",
-     "science-vapor-lava-bubbles",
-     "science-venezuela-buried-folds",
-     "science-vertical-faults-mistake",
-     "science-vibration-chain",
-     "science-viscous-laminar-flow",
-     "science-volcano-breathing",
-     "science-water-meets-lava",
-     "science-wave-base-depth",
-     "science-wave-energy-depth",
-     "science-weather-attribution-method",
-     "science-well-to-time",
-     "science-why-drill-kola",
-     "science-wire-through-ice",
-     "science-xenon-blind-control",
-     "science-yoyo-string-binding",
-     "science-zero-g-thrust"
-    ]
-   },
-   "limit": 54,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-technology-1",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Technology (112, 1/2)",
-    "it": "Nuove · Tecnologia (112, 1/2)"
-   },
-   "source": {
-    "ids": [
-     "technology-archimedes-bridge-buoyancy",
-     "technology-asbestos-stays-onsite",
-     "technology-ballast-drains-water",
-     "technology-bending-solid-titanium",
-     "technology-brenner-freight-time",
-     "technology-bridge-quake-test",
-     "technology-bullet-splitting-sword",
-     "technology-cable-steel-weight",
-     "technology-carbon-fibre-buckling",
-     "technology-carrier-catapult-launch",
-     "technology-centrifugal-clutch",
-     "technology-channel-tunnel-length",
-     "technology-chernobyl-arch-slide",
-     "technology-closed-loop-geothermal",
-     "technology-core-fire-temperature",
-     "technology-corner-wind-braces",
-     "technology-damper-mass-fraction",
-     "technology-damper-saves-millions",
-     "technology-deep-alpine-tunnel",
-     "technology-diagonal-turn-explosion",
-     "technology-dry-plastic-fizz",
-     "technology-engines-freeze-yakutsk",
-     "technology-eshima-rigid-frame",
-     "technology-eshima-steep-ramp",
-     "technology-evolved-footpaths",
-     "technology-flip-pivoting-fixtures",
-     "technology-flip-vertical-stability",
-     "technology-fukushima-sea-wall",
-     "technology-google-googol-name",
-     "technology-graphene-bionic-limbs",
-     "technology-graphene-desalination",
-     "technology-graphene-flagship-billion",
-     "technology-graphene-plastic-century",
-     "technology-gripper-costs-cents",
-     "technology-heat-pump-savings",
-     "technology-hoover-dam-blocks",
-     "technology-human-hair-mechanism",
-     "technology-induction-cassette-press",
-     "technology-induction-it-control",
-     "technology-induction-magnetic-field",
-     "technology-iron-armor-capacitance",
-     "technology-italy-free-route",
-     "technology-iter-eiffel-weight",
-     "technology-load-redistribution-towers",
-     "technology-louvre-blind-spots",
-     "technology-low-pressure-lifting",
-     "technology-micromouse-diagonal-blinders",
-     "technology-micromouse-diagonals-16",
-     "technology-micromouse-navigation-speed",
-     "technology-morandi-rusted-cables",
-     "technology-motogp-braking-distance",
-     "technology-neutral-temperature-welding",
-     "technology-night-weld-ranking",
-     "technology-night-yard-rovers",
-     "technology-no-continuous-wire",
-     "technology-nordic-ground-heat",
-     "technology-not-a-flamethrower-2",
-     "technology-octane-knock-resistance",
-     "technology-old-solar-train",
-     "technology-one-hammer-tunnel"
-    ]
-   },
-   "limit": 60,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-technology-2",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Technology (112, 2/2)",
-    "it": "Nuove · Tecnologia (112, 2/2)"
-   },
-   "source": {
-    "ids": [
-     "technology-onion-hops-anonymity",
-     "technology-parbuckling-winch-cables",
-     "technology-pier-magnitude-seven",
-     "technology-predictable-safing",
-     "technology-printed-micro-machines",
-     "technology-punctured-vine-robot",
-     "technology-quake-prevention-pays",
-     "technology-quantum-fewer-steps",
-     "technology-rail-expansion-gaps",
-     "technology-rail-neutral-temperature",
-     "technology-rainy-summer-hydro",
-     "technology-rally-jump-throttle",
-     "technology-rbmk-crane-dome",
-     "technology-relay-maze-brain",
-     "technology-rich-get-linked",
-     "technology-rotor-sail",
-     "technology-secretly-blue",
-     "technology-sewer-spoil-removal",
-     "technology-sky-airspace-blocks",
-     "technology-smart-road-link",
-     "technology-solar-oil-eroi",
-     "technology-solar-train-drivetrain",
-     "technology-static-load-floors",
-     "technology-steam-heavy-oil",
-     "technology-steel-at-1000",
-     "technology-steel-softens-first",
-     "technology-swaying-tower-stress",
-     "technology-tatara-steel-race",
-     "technology-the-weak-weld",
-     "technology-thermite-rail-welds",
-     "technology-third-impact-load",
-     "technology-tin-pancake",
-     "technology-titan-hull-shape",
-     "technology-touch-field-change",
-     "technology-touch-screen-conductor",
-     "technology-tower-leg-sections",
-     "technology-towers-casualty-multiplier",
-     "technology-traction-control-slip",
-     "technology-trieste-gasoline-float",
-     "technology-trucks-to-rail",
-     "technology-tunnel-foam-mix",
-     "technology-tunnel-ground-freezing",
-     "technology-tunnel-pressure-barrier-5",
-     "technology-tunnel-water-table",
-     "technology-twin-tunnel-links",
-     "technology-upside-down-blocks",
-     "technology-vine-robot-camera",
-     "technology-vine-robot-retraction",
-     "technology-vine-robot-sand",
-     "technology-vinyl-stereo-groove",
-     "technology-weakest-floor-thirty",
-     "technology-yakutsk-stilt-houses"
-    ]
-   },
-   "limit": 52,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-history-1",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · History (84, 1/2)",
-    "it": "Nuove · Storia (84, 1/2)"
-   },
-   "source": {
-    "ids": [
-     "history-alcatraz-dummy-heads-4",
-     "history-alcatraz-spoon-wall",
-     "history-alcatraz-vent-duct",
-     "history-ashgabat-carrara-marble",
-     "history-ashgabat-star-symbol",
-     "history-atmosphere-fusion-fire",
-     "history-atomic-shadow",
-     "history-baia-sunken-city",
-     "history-bakelite-fossil-plastic",
-     "history-beccaria-deterrence",
-     "history-bermuda-triangle-name",
-     "history-bombe-single-loop",
-     "history-borgia-alberoni-occupations",
-     "history-brothers-home-prisoners",
-     "history-capaci-timing-error",
-     "history-celluloid-fire",
-     "history-china-execution-count",
-     "history-china-philippines-route",
-     "history-concordia-salvage-crew",
-     "history-crimea-1954-gift",
-     "history-dark-web-origin",
-     "history-directors-light-sentence",
-     "history-dresden-twelve-bullets",
-     "history-ecuador-terrorist-label",
-     "history-elevator-fall-record",
-     "history-ethyl-name-trick",
-     "history-fat-man-implosion",
-     "history-firing-squad-return",
-     "history-first-plastic-plant",
-     "history-franklin-cannon-shutters",
-     "history-gardening-mines-crib",
-     "history-glass-that-fell",
-     "history-granite-five-millimetres-5",
-     "history-greenland-compact",
-     "history-hitlers-unbreakable-machine",
-     "history-hydrogen-wall",
-     "history-iran-executions-2025",
-     "history-jack-foley-maps",
-     "history-kgb-pistolero-walk",
-     "history-kiev-cradle-rus",
-     "history-kilogram-prefix",
-     "history-korean-auschwitz",
-     "history-llull-before-condorcet",
-     "history-nagasaki-radiation-fade",
-     "history-nato-nuclear-yes",
-     "history-north-korea-classes",
-     "history-north-korea-famine",
-     "history-pile-one-reactor",
-     "history-pompeii-casts",
-     "history-pompeii-fire-cloud",
-     "history-pompeii-flow-density",
-     "history-pompeii-pyroclastic-flow",
-     "history-prison-forced-labour",
-     "history-pyramid-sun-rays",
-     "history-pyramid-top-third",
-     "history-pyramid-worker-tombs",
-     "history-rag-paper-scroll",
-     "history-russia-warhead-share",
-     "history-san-marino-appeals",
-     "history-san-marino-small"
-    ]
-   },
-   "limit": 60,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-history-2",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · History (84, 2/2)",
-    "it": "Nuove · Storia (84, 2/2)"
-   },
-   "source": {
-    "ids": [
-     "history-sand-to-sword",
-     "history-senna-suspension-fragment",
-     "history-senna-throttle-lift",
-     "history-silent-death-penalty",
-     "history-soviet-bomb-isotopes",
-     "history-soviet-lifeline-cut",
-     "history-sperm-whale-oil",
-     "history-straight-ramp-waste",
-     "history-swiss-axis-shells",
-     "history-swiss-cushion-state",
-     "history-swiss-nazi-gold",
-     "history-titanic-lifeboat-shortfall",
-     "history-titanic-open-bulkheads",
-     "history-titanic-propeller-lever",
-     "history-towers-sway-30cm",
-     "history-trieste-window-crack",
-     "history-turing-weather-crib",
-     "history-us-iran-axis",
-     "history-us-warhead-inventory",
-     "history-vajont-lake-710",
-     "history-vesuvius-first-film",
-     "history-weighing-the-air",
-     "history-welchman-diagonal-board",
-     "history-wet-sand-sled"
-    ]
-   },
-   "limit": 24,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-nature-1",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Nature (84, 1/2)",
-    "it": "Nuove · Natura (84, 1/2)"
-   },
-   "source": {
-    "ids": [
-     "nature-1976-impossible-heatwave",
-     "nature-alps-trap-smog",
-     "nature-asteroid-tsunami-energy",
-     "nature-bared-teeth",
-     "nature-bay-funnel-tide",
-     "nature-burning-plastic-waste",
-     "nature-campi-flegrei-uplift",
-     "nature-cave-rescue-time",
-     "nature-co2-antarctic-ice",
-     "nature-column-collapse-flows",
-     "nature-column-collapse-flows-2",
-     "nature-delta-salinity-dam",
-     "nature-eruption-cloud-speed",
-     "nature-etna-flank-collapse",
-     "nature-etna-new-peak",
-     "nature-everest-trench-flip",
-     "nature-glacier-wave-amplifier",
-     "nature-glass-co2-savings",
-     "nature-greenland-ice-air",
-     "nature-greenland-ice-thickness",
-     "nature-gulf-stream-storms",
-     "nature-gulf-stream-storms-2",
-     "nature-half-mountain-tsunami",
-     "nature-heatwave-only-beginning-2",
-     "nature-hidden-shark-toll",
-     "nature-la-luna-shale",
-     "nature-landslide-speed-range",
-     "nature-landslide-speed-water",
-     "nature-landslide-volume-estimate",
-     "nature-leaking-fracking-tank",
-     "nature-limestone-water-network",
-     "nature-longest-straw",
-     "nature-malaria-smell-trick",
-     "nature-mariana-trench-depth",
-     "nature-marsili-water-shield",
-     "nature-marsili-wave-height",
-     "nature-mediterranean-plates",
-     "nature-milan-first-30",
-     "nature-mosquito-blood-eggs",
-     "nature-mosquito-deadly-year",
-     "nature-mosquito-ear-heat",
-     "nature-mosquito-six-needles",
-     "nature-mosquito-winter-basement",
-     "nature-mosquito-winter-eggs",
-     "nature-nacre-two-components",
-     "nature-nazare-canyon-wave",
-     "nature-obsidian-natural-glass",
-     "nature-ocean-salt-cube",
-     "nature-oyster-water-filter",
-     "nature-pearl-defence",
-     "nature-pfas-everywhere-rain",
-     "nature-plastic-comes-back",
-     "nature-po-valley-basin",
-     "nature-prevention-before-damage",
-     "nature-red-forest-chernobyl",
-     "nature-red-sea-algae",
-     "nature-sea-level-drop",
-     "nature-sharks-overfishing-toll",
-     "nature-siberian-anticyclone-trap",
-     "nature-smallest-eruption-volume"
-    ]
-   },
-   "limit": 60,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-nature-2",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Nature (84, 2/2)",
-    "it": "Nuove · Natura (84, 2/2)"
-   },
-   "source": {
-    "ids": [
-     "nature-spider-alarm-line",
-     "nature-spider-empty-shell",
-     "nature-spider-rock-gift",
-     "nature-spineless-peyote-defense",
-     "nature-super-caldera-violence",
-     "nature-supercooled-bottle",
-     "nature-ten-am-rule",
-     "nature-thermal-inversion-lid",
-     "nature-tree-pressure-climb",
-     "nature-tree-water-tension",
-     "nature-trees-from-air",
-     "nature-trench-volcano-food",
-     "nature-tristan-hot-spot",
-     "nature-tsunami-no-wall",
-     "nature-tsunami-sea-retreat",
-     "nature-twin-landslide-tsunami",
-     "nature-venice-flood-causes",
-     "nature-venice-high-water",
-     "nature-vesuvius-1631-shape",
-     "nature-vesuvius-inside-somma",
-     "nature-vesuvius-one-eruption",
-     "nature-water-carves-caves",
-     "nature-xylem-no-bubbles",
-     "nature-yakutsk-record-cold"
-    ]
-   },
-   "limit": 24,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-human_body",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · The body (41)",
-    "it": "Nuove · Corpo umano (41)"
-   },
-   "source": {
-    "ids": [
-     "human_body-alcohol-heat-loss",
-     "human_body-alcohol-neuron-apoptosis",
-     "human_body-antiperspirant-pore-plug",
-     "human_body-blastocyst-membrane-shield",
-     "human_body-bone-powder-texture",
-     "human_body-caffeine-steals-seat",
-     "human_body-coca-hunger-thirst",
-     "human_body-collapse-outruns-brain",
-     "human_body-egg-breaks-spell",
-     "human_body-egg-chemical-call",
-     "human_body-final-push-phase",
-     "human_body-forgotten-dreams",
-     "human_body-freedive-hardest-depth",
-     "human_body-freediving-burning-phase",
-     "human_body-hangover-headache-dehydration",
-     "human_body-humidity-traps-sweat",
-     "human_body-hyper-g-dizziness",
-     "human_body-ink-meets-macrophages",
-     "human_body-love-chemistry",
-     "human_body-love-survival-mechanism",
-     "human_body-mescaline-serotonin-locks",
-     "human_body-mosquito-dna-spots",
-     "human_body-one-strong-beer",
-     "human_body-osmotic-pressure-cells",
-     "human_body-pfas-builds-up",
-     "human_body-pfas-exit-routes",
-     "human_body-plastic-credit-card",
-     "human_body-radiation-breaks-dna",
-     "human_body-radioactive-atom-inside",
-     "human_body-salt-free-deodorant",
-     "human_body-salt-osmosis-cell",
-     "human_body-salt-sea-glass",
-     "human_body-sea-water-harm",
-     "human_body-stripy-x-mosaic",
-     "human_body-tattoo-ink-relay",
-     "human_body-three-smoky-breaths",
-     "human_body-thrown-from-car",
-     "human_body-uv-retina-damage",
-     "human_body-water-only-marathon",
-     "human_body-water-overdose",
-     "human_body-x-chromosome-silencing"
-    ]
-   },
-   "limit": 41,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-maths",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Maths (39)",
-    "it": "Nuove · Matematica (39)"
-   },
-   "source": {
-    "ids": [
-     "maths-all-nines-minus-one",
-     "maths-coin-extra-turn",
-     "maths-collatz-loop-length",
-     "maths-collatz-peak",
-     "maths-feigenbaum-universality",
-     "maths-fermat-padic-numbers",
-     "maths-flattening-a-sphere",
-     "maths-halting-problem",
-     "maths-hensel-lifting",
-     "maths-hundred-bets-safety",
-     "maths-hundred-good-bets",
-     "maths-knot-tricolorability",
-     "maths-mandelbrot-bifurcation-slice",
-     "maths-mercator-greenland",
-     "maths-mercator-stretch",
-     "maths-odd-perfect-bound",
-     "maths-odd-perfect-numbers",
-     "maths-one-seventh-10adic",
-     "maths-padic-own-squares",
-     "maths-penrose-golden-ratio",
-     "maths-pentagons-never-tile",
-     "maths-perfect-triangle-cubes",
-     "maths-period-doubling-chaos",
-     "maths-period-two-split",
-     "maths-perko-pair-knots",
-     "maths-pools-of-rock",
-     "maths-ranked-choice-paradox",
-     "maths-sandpile-any-size",
-     "maths-spoof-perfect-numbers",
-     "maths-st-petersburg",
-     "maths-tao-arbitrarily-small",
-     "maths-ten-adic-third",
-     "maths-three-adic-squares",
-     "maths-true-but-unprovable",
-     "maths-two-tiles-never",
-     "maths-uncountable-bus",
-     "maths-wang-never-repeats",
-     "maths-windows-of-order",
-     "maths-wyoming-mercator-pole"
-    ]
-   },
-   "limit": 39,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-medicine",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Medicine (30)",
-    "it": "Nuove · Medicina (30)"
-   },
-   "source": {
-    "ids": [
-     "medicine-alcohol-one-in-twenty",
-     "medicine-cigarette-filter-myth",
-     "medicine-codeine-breathing-brake",
-     "medicine-codeine-to-morphine",
-     "medicine-deadliest-drug-alcohol",
-     "medicine-deodorant-cancer-link",
-     "medicine-dose-makes-poison",
-     "medicine-dupont-safe-dose",
-     "medicine-femtosecond-laser-ring",
-     "medicine-firefighters-blood-donation",
-     "medicine-first-drop-risk",
-     "medicine-flesh-eating-vibrio",
-     "medicine-heart-period-doubling",
-     "medicine-heated-glycerol-aldehydes",
-     "medicine-hidden-opioid-dose",
-     "medicine-isolated-island-illness",
-     "medicine-ketamine-mdma-clash",
-     "medicine-laser-eye-monitor",
-     "medicine-laser-tattoo-removal",
-     "medicine-lingering-flashbacks",
-     "medicine-mescaline-dopamine-reward",
-     "medicine-mri-field-strength",
-     "medicine-popcorn-laser-effect",
-     "medicine-premium-lens-race",
-     "medicine-proton-precession-cone",
-     "medicine-quit-smoking-combo",
-     "medicine-radiation-cancer",
-     "medicine-resonance-radio-push",
-     "medicine-soft-robot-throat",
-     "medicine-water-kidney-stones"
-    ]
-   },
-   "limit": 30,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-space",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Space (27)",
-    "it": "Nuove · Spazio (27)"
-   },
-   "source": {
-    "ids": [
-     "space-apollo-slingshot",
-     "space-black-hole-sky",
-     "space-corona-outshone",
-     "space-dzhanibekov-flip",
-     "space-elastic-resistance",
-     "space-entropy-then-now",
-     "space-flash-then-silence",
-     "space-flat-earth-challenge",
-     "space-four-copies",
-     "space-frozen-horizon-light-2",
-     "space-gps-relativity-clocks",
-     "space-graphene-space-elevator",
-     "space-gravity-curved-spacetime",
-     "space-gravity-delay",
-     "space-heat-death-clock",
-     "space-hundred-billion-galaxies",
-     "space-lagrange-hilltops",
-     "space-moon-flag-wave",
-     "space-no-water-phases",
-     "space-penrose-two-universes",
-     "space-quake-shortened-day",
-     "space-red-moon-eclipse",
-     "space-solar-day-spin",
-     "space-spice-stuffy-nose",
-     "space-spin-magnetic-shield",
-     "space-sunward-blind-spot",
-     "space-van-allen-donut"
-    ]
-   },
-   "limit": 27,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-thinking",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Thinking (23)",
-    "it": "Nuove · Logica (23)"
-   },
-   "source": {
-    "ids": [
-     "thinking-airport-tells",
-     "thinking-because",
-     "thinking-bell-or-tail",
-     "thinking-confusion-helps-memory",
-     "thinking-cool-down",
-     "thinking-easiest-to-fool",
-     "thinking-effort-body-signs",
-     "thinking-eyes-dont-tell",
-     "thinking-fukushima-radiation-toll",
-     "thinking-generous-tit-tat",
-     "thinking-hidden-popcorn",
-     "thinking-hypnosis-recall",
-     "thinking-known-last-round",
-     "thinking-nice-strategies-win",
-     "thinking-noisy-tit-for-tat",
-     "thinking-one-word",
-     "thinking-power-of-no",
-     "thinking-random-end-cooperation",
-     "thinking-tester-probes-forgiveness",
-     "thinking-three-letters",
-     "thinking-two-four-seven",
-     "thinking-vicious-cycle",
-     "thinking-weight-of-disproof"
-    ]
-   },
-   "limit": 23,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-psychology",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Psychology (21)",
-    "it": "Nuove · Psicologia (21)"
-   },
-   "source": {
-    "ids": [
-     "psychology-bamboccia-disillusa",
-     "psychology-confidence-trap",
-     "psychology-dream-logic-filter",
-     "psychology-e-on-forehead",
-     "psychology-effort-means-learning",
-     "psychology-gaze-limit",
-     "psychology-lead-crime-echo",
-     "psychology-loss-weighs-double",
-     "psychology-midas-touch",
-     "psychology-niche-expertise-respect",
-     "psychology-once-in-a-while",
-     "psychology-psychogenic-polydipsia",
-     "psychology-pupil-pick",
-     "psychology-room-you-hear",
-     "psychology-second-knock",
-     "psychology-seven-percent",
-     "psychology-spinning-tube",
-     "psychology-spinning-tube-trick-1",
-     "psychology-spinning-tube-trick-3",
-     "psychology-spotlight",
-     "psychology-stranger-distance"
-    ]
-   },
-   "limit": 21,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-economics",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Economics (11)",
-    "it": "Nuove · Economia (11)"
-   },
-   "source": {
-    "ids": [
-     "economics-australia-geologist-pay",
-     "economics-coltan-price-spike",
-     "economics-congo-miner-deaths",
-     "economics-flies-window",
-     "economics-gulf-idle-fleet",
-     "economics-hormuz-oil-cut",
-     "economics-hormuz-pipeline-shortfall",
-     "economics-iran-war-energy-bill",
-     "economics-one-mine-share",
-     "economics-plastic-glass-weight",
-     "economics-strait-traffic-collapse"
-    ]
-   },
-   "limit": 11,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-life",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Life (10)",
-    "it": "Nuove · Vita (10)"
-   },
-   "source": {
-    "ids": [
-     "life-assisted-evacuation-drill",
-     "life-cage-home-ages",
-     "life-cage-home-size",
-     "life-child-miners-potosi",
-     "life-death-penalty-homosexuality",
-     "life-fancy-car-crosswalk",
-     "life-inch-of-pay",
-     "life-jerks-dont-climb",
-     "life-material-trap",
-     "life-who-taught-your-scale"
-    ]
-   },
-   "limit": 10,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-food",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Food (9)",
-    "it": "Nuove · Cibo (9)"
-   },
-   "source": {
-    "ids": [
-     "food-apple-slow-breath",
-     "food-cchbc-bottle-code",
-     "food-estimated-weight-mark",
-     "food-estimated-weight-tolerance",
-     "food-mine-apple-cells",
-     "food-onion-tear-gas",
-     "food-resveratrol-wine-flood",
-     "food-shark-fin-soup",
-     "food-vacuum-reactor"
-    ]
-   },
-   "limit": 9,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "debug-new-weird_facts",
-   "block": "carousel",
-   "size": "m",
-   "title": {
-    "en": "New · Weird facts (4)",
-    "it": "Nuove · Curiosità (4)"
-   },
-   "source": {
-    "ids": [
-     "weird_facts-air-holds-you-up",
-     "weird_facts-chainsaw-frozen-meat",
-     "weird_facts-covered-ferris-wheel",
-     "weird_facts-skin-of-aerogel"
-    ]
-   },
-   "limit": 4,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   }
-  },
-  {
-   "id": "nothing",
-   "block": "nothing-here"
-  },
-  {
-   "id": "offline",
-   "block": "offline"
-  },
-  {
-   "id": "your-day",
-   "block": "your-day",
-   "gap": 4
-  },
-  {
-   "id": "bets-day",
-   "block": "bets-day",
-   "size": "l",
-   "title": {
-    "en": "The daily challenge",
-    "it": "La sfida del giorno",
-    "de": "Die Herausforderung des Tages",
-    "es": "El reto del día",
-    "fr": "Le défi du jour",
-    "ja": "今日のチャレンジ",
-    "ko": "오늘의 도전",
-    "nl": "De uitdaging van de dag",
-    "pl": "Wyzwanie dnia",
-    "pt": "O desafio do dia",
-    "ru": "Задание дня",
-    "tr": "Günün meydan okuması",
-    "zh": "每日挑战"
-   },
-   "subtitle": {
-    "en": "The same for everyone today. Lock in your guess, then see how far off you were.",
-    "it": "Uguale per tutti, oggi. Blocca la tua stima, poi guarda di quanto hai sbagliato.",
-    "de": "Heute für alle gleich. Leg dich fest, dann sieh, wie weit du danebenlagst.",
-    "es": "Hoy, igual para todos. Fija tu estimación y luego mira cuánto te has desviado.",
-    "fr": "Le même pour tout le monde aujourd'hui. Valide ton estimation, puis découvre l'écart.",
-    "ja": "今日は誰にとっても同じ。予想を確定して、どれだけ近かったか確かめよう。",
-    "ko": "오늘은 모두에게 같아요. 추측을 확정하고 얼마나 빗나갔는지 확인하세요.",
-    "nl": "Vandaag voor iedereen hetzelfde. Leg je schatting vast en zie hoe ver je ernaast zat.",
-    "pl": "Dziś dla wszystkich to samo. Zatwierdź swój typ i sprawdź, jak daleko był od prawdy.",
-    "pt": "Hoje, igual para todos. Fixa o teu palpite e vê a que distância ficaste.",
-    "ru": "Сегодня для всех одно и то же. Зафиксируй догадку и узнай, насколько она точна.",
-    "tr": "Bugün herkes için aynı. Tahminini kilitle, sonra ne kadar yaklaştığını gör.",
-    "zh": "今天人人相同。锁定你的估计，再看看差了多少。"
-   }
-  },
-  {
-   "id": "path",
-   "block": "purpose.set"
-  },
-  {
-   "id": "quick-games",
-   "block": "quick-games",
-   "title": {
-    "en": "Quick games",
-    "it": "Giochi veloci",
-    "de": "Schnelle Spiele",
-    "es": "Juegos rápidos",
-    "fr": "Jeux rapides",
-    "ja": "クイックゲーム",
-    "ko": "빠른 게임",
-    "nl": "Snelle spelletjes",
-    "pl": "Szybkie gry",
-    "pt": "Jogos rápidos",
-    "ru": "Быстрые игры",
-    "tr": "Hızlı oyunlar",
-    "zh": "快速游戏"
-   },
-   "subtitle": {
-    "en": "A minute or two each. Pick one and play.",
-    "it": "Un minuto o due ciascuno. Scegline uno e gioca.",
-    "de": "Je ein, zwei Minuten. Such dir eins aus und spiel.",
-    "es": "Uno o dos minutos cada uno. Elige uno y juega.",
-    "fr": "Une minute ou deux chacun. Choisis-en un et joue.",
-    "ja": "どれも1〜2分。選んで遊ぼう。",
-    "ko": "하나에 1~2분. 골라서 플레이하세요.",
-    "nl": "Een minuutje of twee per stuk. Kies er een en speel.",
-    "pl": "Każda na minutę lub dwie. Wybierz i graj.",
-    "pt": "Um ou dois minutos cada. Escolhe um e joga.",
-    "ru": "По минуте-другой на каждую. Выбери и играй.",
-    "tr": "Her biri bir iki dakika. Birini seç ve oyna.",
-    "zh": "每个只要一两分钟。选一个开始玩。"
-   }
-  },
-  {
-   "id": "subject-levels",
-   "block": "subject-levels",
-   "title": {
-    "en": "Your subjects",
-    "it": "Le tue materie",
-    "de": "Deine Fächer",
-    "es": "Tus temas",
-    "fr": "Tes sujets",
-    "ja": "あなたの分野",
-    "ko": "나의 주제",
-    "nl": "Jouw vakken",
-    "pl": "Twoje tematy",
-    "pt": "Os teus temas",
-    "ru": "Твои темы",
-    "tr": "Konuların",
-    "zh": "你的主题"
-   },
-   "subtitle": {
-    "en": "Level 1 to 10, from the cards you read and get right.",
-    "it": "Livello da 1 a 10, dalle carte che leggi e indovini.",
-    "de": "Stufe 1 bis 10, aus den Karten, die du liest und richtig beantwortest.",
-    "es": "Nivel del 1 al 10, según las cartas que lees y aciertas.",
-    "fr": "Niveau 1 à 10, selon les cartes que tu lis et réussis.",
-    "ja": "読んだカードと正解したカードから決まるレベル1〜10。",
-    "ko": "읽고 맞힌 카드로 정해지는 레벨 1~10.",
-    "nl": "Niveau 1 tot 10, uit de kaarten die je leest en goed hebt.",
-    "pl": "Poziom od 1 do 10, z kart, które czytasz i odgadujesz.",
-    "pt": "Nível de 1 a 10, pelas cartas que lês e acertas.",
-    "ru": "Уровень от 1 до 10 — по карточкам, которые ты читаешь и угадываешь.",
-    "tr": "Okuduğun ve doğru bildiğin kartlara göre 1'den 10'a seviye.",
-    "zh": "等级 1 到 10，取决于你读过和答对的卡片。"
-   }
-  },
-  {
-   "id": "like-saved",
-   "block": "like-saved",
-   "title": {
-    "en": "More like what you saved",
-    "it": "Altre come quelle che hai salvato",
-    "de": "Mehr wie das, was du behalten hast",
-    "es": "Más como lo que guardaste",
-    "fr": "D'autres comme celles que tu as gardées",
-    "ja": "保存したカードに似たもの",
-    "ko": "보관한 카드와 비슷한 카드",
-    "nl": "Meer zoals wat je bewaarde",
-    "pl": "Więcej podobnych do zachowanych",
-    "pt": "Mais como o que guardaste",
-    "ru": "Похожие на сохранённые",
-    "tr": "Sakladıklarına benzer kartlar",
-    "zh": "和你收藏的相似"
-   }
-  },
-  {
-   "id": "top",
-   "block": "top"
-  },
-  {
-   "id": "where-you-live",
-   "block": "where-you-live"
-  },
-  {
-   "id": "theme-sharpest-0",
-   "block": "sharpest"
-  },
-  {
-   "id": "theme-practical-0",
-   "block": "practical"
-  },
-  {
-   "id": "feed",
-   "block": "feed",
-   "title": {
-    "en": "Keep exploring",
-    "it": "Continua a esplorare",
-    "de": "Weiter entdecken",
-    "es": "Sigue explorando",
-    "fr": "Continue d'explorer",
-    "ja": "もっと探す",
-    "ko": "계속 둘러보기",
-    "nl": "Verder ontdekken",
-    "pl": "Odkrywaj dalej",
-    "pt": "Continua a explorar",
-    "ru": "Исследуй дальше",
-    "tr": "Keşfetmeye devam et",
-    "zh": "继续探索"
-   },
-   "subtitle": {
-    "en": "The same for everyone. Nothing here is picked for you.",
-    "it": "Uguale per tutti. Niente qui è scelto per te.",
-    "de": "Für alle gleich. Nichts hier ist für dich ausgesucht.",
-    "es": "Igual para todos. Nada aquí está elegido para ti.",
-    "fr": "Pareil pour tout le monde. Rien ici n'est choisi pour toi.",
-    "ja": "誰にとっても同じ。あなた向けに選んだものはありません。",
-    "ko": "누구에게나 똑같아요. 맞춤으로 고른 건 없어요.",
-    "nl": "Voor iedereen hetzelfde. Niets hier is voor jou gekozen.",
-    "pl": "Dla wszystkich to samo. Nic tu nie jest wybrane dla ciebie.",
-    "pt": "Igual para todos. Nada aqui foi escolhido para ti.",
-    "ru": "Для всех одинаково. Здесь ничего не подобрано под тебя.",
-    "tr": "Herkes için aynı. Burada hiçbir şey senin için seçilmedi.",
-    "zh": "人人看到的都一样，没有为你挑选。"
-   }
-  }
- ]
+  "_": "Explore as the build's own (remote/examples/explore-today.json), with the new free cards on top for the TestFlight build: only that build's bank holds them, so no other build has anything to show there, and the sections end on 2026-12-15. To go back, set this file to null.",
+  "sections": [
+    {
+      "id": "debug-flicker-normal",
+      "block": "carousel",
+      "size": "m",
+      "gap": 0,
+      "title": {
+        "en": "Flicker test · normal cards · debug",
+        "it": "Prova lampo · carte normali · debug"
+      },
+      "subtitle": {
+        "en": "Open one and swipe five: does a card flicker as it comes up?",
+        "it": "Aprine una e scorrine cinque: la carta lampeggia quando arriva?"
+      },
+      "source": {
+        "ids": [
+          "science-absolute-zero-5",
+          "science-absolute-zero-9",
+          "history-1848-10",
+          "history-1848-5",
+          "nature-adaptation-2",
+          "nature-adaptation-3",
+          "space-asteroid-risk-2",
+          "space-asteroid-risk-3",
+          "technology-cables-3",
+          "technology-cables-4",
+          "human_body-ageing-well-2",
+          "human_body-ageing-well-3",
+          "psychology-adaptation-2",
+          "psychology-adaptation-3",
+          "economics-1929-10",
+          "economics-1929-3"
+        ]
+      },
+      "limit": 16,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-flicker-drawn",
+      "block": "carousel",
+      "size": "m",
+      "gap": 0,
+      "title": {
+        "en": "Flicker test · cards with a drawing · debug",
+        "it": "Prova lampo · carte col disegno · debug"
+      },
+      "subtitle": {
+        "en": "The same, with cards drawn as pages",
+        "it": "Lo stesso, con le carte col disegno"
+      },
+      "source": {
+        "ids": [
+          "science-extinguisher-charges",
+          "science-cold-laminar-flow-6",
+          "science-pressure-at-depth",
+          "science-cfc-ozone-hole",
+          "science-gravel-third-friction",
+          "history-walled-city-crowd",
+          "history-paradox-of-escalation",
+          "maths-mersenne-glass-rack",
+          "maths-knot-theory-renaissance",
+          "maths-mercator-russia",
+          "medicine-alcohol-group-one",
+          "economics-slot-payback",
+          "economics-restart-clock",
+          "economics-resource-curse-flask",
+          "economics-oil-countdown",
+          "psychology-gravity-hill"
+        ]
+      },
+      "limit": 16,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-jewels-1",
+      "block": "carousel",
+      "size": "l",
+      "gap": 0,
+      "title": {
+        "en": "New jewel cards · debug (183, 1/4)",
+        "it": "Carte gioiello nuove · debug (183, 1/4)"
+      },
+      "source": {
+        "ids": [
+          "science-graphene-helium-seal",
+          "science-dilute-fukushima-water",
+          "science-air-torpedo-sphere",
+          "science-push-harder-spin",
+          "science-cat-already-decided",
+          "science-arlington-teflon-blast",
+          "science-spinning-x-slowdown",
+          "science-many-worlds-dice",
+          "science-reynolds-goes-up",
+          "science-zero-g-smoke",
+          "science-thermite-steel-damper",
+          "science-weight-is-a-pull",
+          "science-bomb-layer",
+          "science-little-boy-waste",
+          "science-teflon-chain-reaction",
+          "science-sketch-before-measuring",
+          "science-foraminifera-clay-line",
+          "science-fault-breaks-layer",
+          "science-volcano-depth-tsunami",
+          "science-dna-spooled-tight",
+          "science-vinegar-eats-eggshell",
+          "science-rift-to-ocean",
+          "science-frozen-compass",
+          "science-magnetic-seafloor-stripes",
+          "science-steel-bar-signal",
+          "history-ivy-mike-blocks",
+          "history-little-boy-efficiency",
+          "history-shield-or-dove",
+          "history-tsar-cloud-height",
+          "history-disarm-in-steps",
+          "history-national-redoubt",
+          "history-great-power-war",
+          "history-nato-shrinking-cushion",
+          "history-silk-road-sentence",
+          "history-elephants-foot-dose",
+          "maths-perfect-tiling",
+          "maths-duverger-two-parties",
+          "maths-storm-jar-odds",
+          "maths-kepler-proof-dial",
+          "maths-question-seventeen",
+          "maths-fibonacci-gaps",
+          "maths-borda-spoiler-dial",
+          "medicine-eclipse-blind-spot",
+          "medicine-triple-dependency-window",
+          "food-acid-squeezes-protein",
+          "food-shark-mercury-climb"
+        ]
+      },
+      "limit": 46,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      },
+      "subtitle": {
+        "en": "Each with a look and a motion of its own, drawn straight on the card",
+        "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
+      }
+    },
+    {
+      "id": "debug-new-jewels-2",
+      "block": "carousel",
+      "size": "l",
+      "gap": 0,
+      "title": {
+        "en": "New jewel cards · debug (183, 2/4)",
+        "it": "Carte gioiello nuove · debug (183, 2/4)"
+      },
+      "source": {
+        "ids": [
+          "psychology-gentle-slope-frame",
+          "human_body-hyper-g-head",
+          "human_body-sweat-evaporation-heat",
+          "human_body-habits-mark-genes",
+          "technology-tape-growing-robot",
+          "technology-tail-pull-retract",
+          "technology-milk-carton-layers",
+          "technology-gps-light-rose",
+          "technology-five-times-downforce",
+          "technology-folding-the-steel",
+          "technology-messina-record-span",
+          "technology-sludge-to-biogas",
+          "technology-induction-foil-stick",
+          "technology-xm42-flamethrower",
+          "technology-backlash-pin-hole",
+          "nature-adriatic-dry-floor",
+          "nature-adria-sea-floor",
+          "nature-everest-underwater",
+          "nature-vesuvius-ash-volume",
+          "thinking-bermuda-per-ship",
+          "weird_facts-marble-football-fields",
+          "life-border-coin-flip",
+          "life-ecuador-murder-rate",
+          "science-extinguisher-charges",
+          "science-cold-laminar-flow-6",
+          "science-pressure-at-depth",
+          "science-cfc-ozone-hole",
+          "science-gravel-third-friction",
+          "history-walled-city-crowd",
+          "history-paradox-of-escalation",
+          "maths-mersenne-glass-rack",
+          "maths-knot-theory-renaissance",
+          "maths-mercator-russia",
+          "medicine-alcohol-group-one",
+          "economics-slot-payback",
+          "economics-restart-clock",
+          "economics-resource-curse-flask",
+          "economics-oil-countdown",
+          "psychology-gravity-hill",
+          "human_body-dream-switch",
+          "human_body-one-beer-curve",
+          "technology-fire-contains-methane",
+          "technology-motogp-power-weight",
+          "technology-tempered-glass-squeeze",
+          "technology-solar-depot-grid",
+          "technology-tatara-mass-balance"
+        ]
+      },
+      "limit": 46,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-jewels-3",
+      "block": "carousel",
+      "size": "l",
+      "gap": 0,
+      "title": {
+        "en": "New jewel cards · debug (183, 3/4)",
+        "it": "Carte gioiello nuove · debug (183, 3/4)"
+      },
+      "source": {
+        "ids": [
+          "technology-graphene-fast-charge",
+          "nature-vesuvius-warning-signs",
+          "nature-ice-age-italy",
+          "nature-europe-slab-swing",
+          "nature-sharks-food-chain",
+          "space-earth-spaghettified",
+          "life-48-hour-shelter",
+          "life-permanent-time-choice",
+          "life-carving-cage-homes",
+          "weird_facts-not-a-flamethrower",
+          "weird_facts-bermuda-not-top-ten",
+          "technology-yellow-button-anomaly",
+          "technology-v1-decision-speed-1",
+          "technology-undersea-cable-blur",
+          "technology-thermite-curie-wipe",
+          "technology-stacked-solar-cell",
+          "technology-micromouse-fan-grip",
+          "technology-micromouse-diagonal-cut-15",
+          "technology-material-fatigue",
+          "technology-fastest-not-shortest",
+          "space-sidereal-extra-spin",
+          "space-filter-adapter",
+          "space-bones-in-orbit",
+          "space-apollo13-tank-fire",
+          "science-vajont-wet-clay",
+          "science-two-spheres-focus",
+          "science-thermite-control",
+          "science-telephoto-steep-bridge",
+          "science-teflon-vs-pfoa",
+          "science-steam-feeds-power",
+          "science-snow-flips-friction",
+          "science-sludge-cannibalism",
+          "science-rock-restoration",
+          "science-pacific-background-radiation",
+          "science-one-way-light",
+          "science-magnetic-stripes",
+          "science-kepler-water-units",
+          "science-iridium-gubbio-clay",
+          "science-hotter-than-sun",
+          "science-heatwave-without-emissions",
+          "science-heat-of-a-drag",
+          "science-graphene-sticky-tape",
+          "science-grape-microwave-trap",
+          "science-granite-near-diamond",
+          "science-fourth-power-glow",
+          "science-fallout-layer"
+        ]
+      },
+      "limit": 46,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-jewels-4",
+      "block": "carousel",
+      "size": "l",
+      "gap": 0,
+      "title": {
+        "en": "New jewel cards · debug (183, 4/4)",
+        "it": "Carte gioiello nuove · debug (183, 4/4)"
+      },
+      "source": {
+        "ids": [
+          "science-energy-glass",
+          "science-bouncing-egg-bubbles",
+          "science-bio-not-biodegradable",
+          "psychology-slot-reward-loop",
+          "psychology-misconception-memory",
+          "nature-yakutsk-heat-spikes",
+          "nature-tsunami-slows-down",
+          "nature-plastic-patch-france",
+          "nature-permafrost-thaw-line",
+          "nature-lituya-bay-wave",
+          "nature-clay-slide-plane",
+          "medicine-tattoo-lymph-nodes",
+          "medicine-tattoo-flu-boost",
+          "medicine-pink-cocaine-name",
+          "medicine-dupont-c8-dose",
+          "medicine-alcohol-iceberg",
+          "maths-reidemeister-upper-bound",
+          "maths-pivotal-voter-dictator",
+          "maths-hakens-knot-scanner",
+          "maths-feigenbaum-ratio-ladder",
+          "maths-coin-rotation-paradox",
+          "human_body-lead-hardened-arteries",
+          "human_body-inherited-gene-switches",
+          "human_body-highway-hypnosis",
+          "human_body-alcohol-synapse",
+          "human_body-acetaldehyde-liver",
+          "history-vajont-four-minutes",
+          "history-un-partition-scale",
+          "history-three-deadly-inventions",
+          "history-putins-domestic-mirror",
+          "history-popular-mechanics-flaw",
+          "history-nsa-gold-codes",
+          "history-norwegian-rocket-alarm",
+          "history-leaded-iq-loss",
+          "history-italy-nuclear-bases",
+          "history-guayaquil-prison-bars",
+          "history-gold-codes-card",
+          "history-gaza-kept-controls",
+          "economics-the-great-split",
+          "space-frozen-horizon-light",
+          "maths-knot-equivalence",
+          "technology-hydrogen-plugs-holes",
+          "maths-collatz-rival-loop",
+          "space-aerogel-comet-catch",
+          "maths-penrose-lookalikes"
+        ]
+      },
+      "limit": 45,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-unboxed-1",
+      "block": "carousel",
+      "size": "m",
+      "gap": 0,
+      "title": {
+        "en": "Out of their box · debug (175, 1/3)",
+        "it": "Senza riquadro · debug (175, 1/3)"
+      },
+      "source": {
+        "ids": [
+          "science-iron-sand-concentration",
+          "science-thermite-tap-time",
+          "maths-collatz-rival-loop",
+          "maths-knot-equivalence",
+          "space-aerogel-comet-catch",
+          "maths-penrose-lookalikes",
+          "space-frozen-horizon-light",
+          "economics-flies-window",
+          "economics-gulf-idle-fleet",
+          "technology-hydrogen-plugs-holes",
+          "economics-hormuz-pipeline-shortfall",
+          "food-apple-slow-breath",
+          "food-mine-apple-cells",
+          "history-alcatraz-dummy-heads-4",
+          "history-atmosphere-fusion-fire",
+          "history-bakelite-fossil-plastic",
+          "history-baia-sunken-city",
+          "history-gardening-mines-crib",
+          "history-pompeii-pyroclastic-flow",
+          "history-pyramid-sun-rays",
+          "history-crimea-1954-gift",
+          "history-senna-suspension-fragment",
+          "history-titanic-propeller-lever",
+          "human_body-bone-powder-texture",
+          "history-vesuvius-first-film",
+          "human_body-forgotten-dreams",
+          "human_body-humidity-traps-sweat",
+          "human_body-radioactive-atom-inside",
+          "human_body-salt-osmosis-cell",
+          "human_body-ink-meets-macrophages",
+          "human_body-tattoo-ink-relay",
+          "life-child-miners-potosi",
+          "life-inch-of-pay",
+          "life-fancy-car-crosswalk",
+          "maths-wyoming-mercator-pole",
+          "medicine-hidden-opioid-dose",
+          "maths-sandpile-any-size",
+          "medicine-laser-eye-monitor",
+          "medicine-laser-tattoo-removal",
+          "medicine-lingering-flashbacks",
+          "medicine-mri-field-strength",
+          "nature-asteroid-tsunami-energy",
+          "medicine-popcorn-laser-effect",
+          "nature-bay-funnel-tide",
+          "nature-cave-rescue-time",
+          "nature-column-collapse-flows-2",
+          "nature-column-collapse-flows",
+          "nature-delta-salinity-dam",
+          "nature-glacier-wave-amplifier",
+          "nature-gulf-stream-storms",
+          "nature-greenland-ice-air",
+          "nature-gulf-stream-storms-2",
+          "nature-half-mountain-tsunami",
+          "nature-leaking-fracking-tank",
+          "nature-marsili-wave-height",
+          "nature-mariana-trench-depth",
+          "nature-marsili-water-shield",
+          "nature-mediterranean-plates",
+          "nature-mosquito-winter-eggs",
+          "nature-mosquito-winter-basement"
+        ]
+      },
+      "limit": 60,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      },
+      "subtitle": {
+        "en": "The drawing now sits on the card, no box of its own",
+        "it": "Il disegno ora sta direttamente sulla carta, senza riquadro"
+      }
+    },
+    {
+      "id": "debug-unboxed-2",
+      "block": "carousel",
+      "size": "m",
+      "gap": 0,
+      "title": {
+        "en": "Out of their box · debug (175, 2/3)",
+        "it": "Senza riquadro · debug (175, 2/3)"
+      },
+      "source": {
+        "ids": [
+          "nature-obsidian-natural-glass",
+          "nature-red-forest-chernobyl",
+          "nature-red-sea-algae",
+          "nature-siberian-anticyclone-trap",
+          "nature-spider-rock-gift",
+          "nature-thermal-inversion-lid",
+          "nature-trench-volcano-food",
+          "nature-tristan-hot-spot",
+          "nature-ten-am-rule",
+          "nature-tsunami-sea-retreat",
+          "nature-twin-landslide-tsunami",
+          "nature-yakutsk-record-cold",
+          "nature-water-carves-caves",
+          "psychology-once-in-a-while",
+          "science-antarctica-co2-2100",
+          "science-artesian-well-pressure",
+          "science-bank-floor-rubbish",
+          "science-bradyseism-breathing-ground",
+          "science-cerberus-heat-dome",
+          "science-corium-steam-blast",
+          "science-channel-tunnel-chalk",
+          "science-cosmic-rays-planes",
+          "science-darvaza-gas-blowout",
+          "science-decoherence-branching",
+          "science-earth-stops-wind",
+          "science-dry-ice-frost",
+          "science-eruption-cloud-heat",
+          "science-flame-gravity-meter",
+          "science-flame-shape-gravity",
+          "science-flame-spark-gap",
+          "science-flame-splits-field",
+          "science-flashover-ten-seconds",
+          "science-flames-standing-wave",
+          "science-foam-fire-water",
+          "science-fukushima-tritium-grams",
+          "science-gibraltar-mega-cascade",
+          "science-fukushima-hydrogen-blast",
+          "science-fukushima-tritium-filter",
+          "science-glass-fused-rock",
+          "science-glass-pass-window",
+          "science-grape-contact-point",
+          "science-grape-plasma",
+          "science-grape-plasma-ions",
+          "science-graphene-relativistic-electrons",
+          "science-greenland-craton-ores",
+          "science-hydrophobic-sphere-race",
+          "science-hypergravity-flame",
+          "science-impact-vs-sumatra",
+          "science-iter-cold-magnets",
+          "science-iter-hot-cold",
+          "science-indium-traps",
+          "science-light-energy-flow",
+          "science-leidenfrost-vapor-cushion",
+          "science-opposite-lens-errors",
+          "science-pressure-in-tons",
+          "science-pollen-climate-diary",
+          "science-sardinia-corsica-door",
+          "science-seismic-aseismic-faults",
+          "science-s-waves-vanish",
+          "science-seismic-chalk-map"
+        ]
+      },
+      "limit": 60,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-unboxed-3",
+      "block": "carousel",
+      "size": "m",
+      "gap": 0,
+      "title": {
+        "en": "Out of their box · debug (175, 3/3)",
+        "it": "Senza riquadro · debug (175, 3/3)"
+      },
+      "source": {
+        "ids": [
+          "science-shared-volcanic-rock",
+          "science-shade-ball-raft",
+          "science-tethys-ocean-wedge",
+          "science-teflon-mechanical-grip",
+          "science-thermite-oxide-seal",
+          "science-truck-squeezes-water",
+          "science-tunnel-smoke-drift",
+          "science-underground-crystal-cavities",
+          "science-two-slit-fringes",
+          "science-vapor-lava-bubbles",
+          "science-water-meets-lava",
+          "science-well-to-time",
+          "science-xenon-blind-control",
+          "space-black-hole-sky",
+          "space-corona-outshone",
+          "space-flat-earth-challenge",
+          "space-flash-then-silence",
+          "space-four-copies",
+          "space-gravity-delay",
+          "space-graphene-space-elevator",
+          "space-frozen-horizon-light-2",
+          "space-lagrange-hilltops",
+          "space-hundred-billion-galaxies",
+          "space-moon-flag-wave",
+          "space-red-moon-eclipse",
+          "space-spin-magnetic-shield",
+          "space-sunward-blind-spot",
+          "space-van-allen-donut",
+          "technology-carbon-fibre-buckling",
+          "technology-archimedes-bridge-buoyancy",
+          "technology-core-fire-temperature",
+          "technology-closed-loop-geothermal",
+          "technology-graphene-plastic-century",
+          "technology-graphene-desalination",
+          "technology-induction-magnetic-field",
+          "technology-micromouse-diagonal-blinders",
+          "technology-neutral-temperature-welding",
+          "technology-night-weld-ranking",
+          "technology-night-yard-rovers",
+          "technology-sewer-spoil-removal",
+          "technology-relay-maze-brain",
+          "technology-printed-micro-machines",
+          "technology-secretly-blue",
+          "technology-tatara-steel-race",
+          "technology-steam-heavy-oil",
+          "technology-tunnel-foam-mix",
+          "technology-tunnel-water-table",
+          "technology-tin-pancake",
+          "technology-yakutsk-stilt-houses",
+          "thinking-confusion-helps-memory",
+          "thinking-hidden-popcorn",
+          "thinking-random-end-cooperation",
+          "thinking-tester-probes-forgiveness",
+          "thinking-one-word",
+          "weird_facts-skin-of-aerogel"
+        ]
+      },
+      "limit": 55,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-science-1",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Science (234, 1/4)",
+        "it": "Nuove · Scienza (234, 1/4)"
+      },
+      "source": {
+        "ids": [
+          "science-adiabatic-compression",
+          "science-adriatic-flexural-basin",
+          "science-aharonov-bohm",
+          "science-air-off-bacteria",
+          "science-air-wrapped-drag",
+          "science-aluminium-ice-melt",
+          "science-antarctica-ancient-craton",
+          "science-antarctica-co2-2100",
+          "science-anthropocene-boundary-layer",
+          "science-apparent-dip",
+          "science-artesian-well-pressure",
+          "science-aseismic-fault-creep",
+          "science-backward-spin-x",
+          "science-bank-floor-rubbish",
+          "science-belt-friction-equation",
+          "science-bermuda-gas-myth",
+          "science-big-globe-spin",
+          "science-blue-aerogel",
+          "science-boiling-point-pressure",
+          "science-bradyseism-breathing-ground",
+          "science-branches-human-summary",
+          "science-branching-body-decays",
+          "science-branching-energy-slices",
+          "science-bubbles-feed-bacteria",
+          "science-bunny-suit-cleanroom",
+          "science-burning-plastic-energy",
+          "science-campi-flegrei-cycles",
+          "science-canadair-foam-surfactant",
+          "science-caps-bottles-sorting",
+          "science-carbon-filter-pores",
+          "science-carbon-in-steel",
+          "science-cerberus-heat-dome",
+          "science-chain-reaction",
+          "science-channel-tunnel-chalk",
+          "science-chernobyl-lingering-cesium",
+          "science-chernobyl-reactor-lid",
+          "science-chernobyl-steam-blast",
+          "science-chimborazo-highest",
+          "science-cold-deodorant-spray",
+          "science-cold-to-hot",
+          "science-corium-steam-blast",
+          "science-cosmic-rays-planes",
+          "science-count-the-ball",
+          "science-darvaza-gas-blowout",
+          "science-decoherence-branching",
+          "science-deet-plugs-pores",
+          "science-delayed-club-jolt",
+          "science-diamond-fog-test",
+          "science-diamond-sandpaper-test",
+          "science-doubled-gem-facets",
+          "science-dry-a-jelly",
+          "science-dry-ice-frost",
+          "science-earth-stops-wind",
+          "science-einstein-synchronization",
+          "science-elevator-air-drag",
+          "science-eruption-cloud-heat",
+          "science-eruption-forecast-odds",
+          "science-evacuation-drill-chaos",
+          "science-falling-elevator-flat",
+          "science-falling-slinky-centre"
+        ]
+      },
+      "limit": 60,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-science-2",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Science (234, 2/4)",
+        "it": "Nuove · Scienza (234, 2/4)"
+      },
+      "source": {
+        "ids": [
+          "science-fallout-two-weeks",
+          "science-feeling-cold-flow",
+          "science-feeling-heat-flow",
+          "science-field-light-speed",
+          "science-flame-gravity-meter",
+          "science-flame-not-plasma",
+          "science-flame-shape-gravity",
+          "science-flame-spark-gap",
+          "science-flame-splits-field",
+          "science-flames-standing-wave",
+          "science-flashover-temperature",
+          "science-flashover-ten-seconds",
+          "science-foam-fire-water",
+          "science-fractures-reach-aquifer",
+          "science-fukushima-hydrogen-blast",
+          "science-fukushima-tritium-filter",
+          "science-fukushima-tritium-grams",
+          "science-fully-developed-sea",
+          "science-fusion-fuel-grams",
+          "science-gap-colour",
+          "science-gibraltar-mega-cascade",
+          "science-glass-fused-rock",
+          "science-glass-pass-window",
+          "science-glass-recycling-loop",
+          "science-glass-shatters-voice",
+          "science-globe-inertia-tons",
+          "science-globe-spin-inertia",
+          "science-globe-water-film",
+          "science-grape-contact-point",
+          "science-grape-plasma",
+          "science-grape-plasma-ions",
+          "science-graphene-one-atom",
+          "science-graphene-relativistic-electrons",
+          "science-graphene-vs-steel",
+          "science-greenland-craton-ores",
+          "science-half-life-clock",
+          "science-hanging-wheel-precession",
+          "science-heat-feeds-extremes",
+          "science-heat-runaway-loop",
+          "science-hydrophobic-sphere-race",
+          "science-hypergravity-flame",
+          "science-ice-hexagon-holes",
+          "science-ice-lifts-gibraltar",
+          "science-ice-regelation-wire",
+          "science-impact-vs-sumatra",
+          "science-india-hits-eurasia",
+          "science-indium-traps",
+          "science-inertia-car-push",
+          "science-iron-sand-concentration",
+          "science-iter-cold-magnets",
+          "science-iter-hot-cold",
+          "science-kelvin-vortex-atoms",
+          "science-knotted-molecule",
+          "science-kola-coring",
+          "science-kola-rock-cores",
+          "science-landslide-depth-volume",
+          "science-layers-in-step",
+          "science-leidenfrost-vapor-cushion",
+          "science-lifting-a-car",
+          "science-light-energy-flow"
+        ]
+      },
+      "limit": 60,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-science-3",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Science (234, 3/4)",
+        "it": "Nuove · Scienza (234, 3/4)"
+      },
+      "source": {
+        "ids": [
+          "science-light-fields-in-phase",
+          "science-liquid-gas-ships",
+          "science-lowside-vs-highside",
+          "science-magnet-fake-diamonds",
+          "science-magnetic-plasma-cage",
+          "science-many-worlds-flow",
+          "science-martensite-needles",
+          "science-mass-cancels-falling",
+          "science-maxwell-light-wave",
+          "science-mediterranean-refill-speed",
+          "science-mediterranean-salt-layer",
+          "science-mercury-period-doubling",
+          "science-metals-boil-thermite",
+          "science-moon-water-land",
+          "science-motogp-braking-zone",
+          "science-neutron-slips-in",
+          "science-ocean-salt-mass",
+          "science-one-shared-wavefunction",
+          "science-opposite-lens-errors",
+          "science-paper-plastic-cycles",
+          "science-patterson-clean-lab",
+          "science-phone-microwaves-dna",
+          "science-piccard-white-mud",
+          "science-pinhole-sun-image",
+          "science-piranha-solution",
+          "science-plastic-sediment-layer",
+          "science-poles-closer-center",
+          "science-pollen-climate-diary",
+          "science-poynting-vector-arrow",
+          "science-pressure-in-tons",
+          "science-pressure-melts-ice",
+          "science-push-spins-globe",
+          "science-quakes-rising-ground",
+          "science-quantum-superposition",
+          "science-quasi-crystal-icosahedrons",
+          "science-radiation-inside-out",
+          "science-rail-heat-growth",
+          "science-rally-pendulum-effect",
+          "science-rally-thousandth-second",
+          "science-rally-wheel-spin",
+          "science-rock-atom-clocks",
+          "science-room-temperature-boiling",
+          "science-s-waves-vanish",
+          "science-salt-rusts-cables",
+          "science-sardinia-corsica-door",
+          "science-sardinia-stable-block",
+          "science-scherzer-round-lens",
+          "science-scotch-tape-graphene",
+          "science-seismic-aseismic-faults",
+          "science-seismic-chalk-map",
+          "science-seismic-time-axis",
+          "science-shade-ball-raft",
+          "science-shade-balls",
+          "science-shared-volcanic-rock",
+          "science-slinky-bottom-waits",
+          "science-slinky-breathing-mode",
+          "science-slinky-compression-wave",
+          "science-slinky-tennis-ball",
+          "science-slinky-twist-first",
+          "science-solid-inner-core"
+        ]
+      },
+      "limit": 60,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-science-4",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Science (234, 4/4)",
+        "it": "Nuove · Scienza (234, 4/4)"
+      },
+      "source": {
+        "ids": [
+          "science-solid-nitrogen-bath",
+          "science-spinning-proton-magnets",
+          "science-spinning-slinky-zerog",
+          "science-spinning-tube-speed",
+          "science-spinning-wheel",
+          "science-squeezed-plutonium",
+          "science-steel-heat-capacity",
+          "science-stratovolcano-explosivity",
+          "science-sulfur-brittle-steel",
+          "science-superacids-hammett-scale",
+          "science-supersaturation-crystals",
+          "science-swell-travels-far",
+          "science-tatara-heat",
+          "science-teflon-mechanical-grip",
+          "science-template-horizon",
+          "science-tethys-ocean-wedge",
+          "science-thermite-density-separation",
+          "science-thermite-oxide-seal",
+          "science-thermite-pulsing",
+          "science-thermite-tap-time",
+          "science-thin-air-same-heat",
+          "science-tiny-earth-wobble",
+          "science-titan-implosion-speed",
+          "science-toothpaste-eggshell-bases",
+          "science-transtensional-fault",
+          "science-truck-car-forces",
+          "science-truck-squeezes-water",
+          "science-tsar-bomba-stages",
+          "science-tunnel-core-samples",
+          "science-tunnel-fault-step",
+          "science-tunnel-or-bridge",
+          "science-tunnel-smoke-drift",
+          "science-two-slit-fringes",
+          "science-tyres-stir-cesium",
+          "science-ultrasound-repellents",
+          "science-underground-crystal-cavities",
+          "science-uranium-critical-mass",
+          "science-urchin-neutron-initiator",
+          "science-vapor-lava-bubbles",
+          "science-venezuela-buried-folds",
+          "science-vertical-faults-mistake",
+          "science-vibration-chain",
+          "science-viscous-laminar-flow",
+          "science-volcano-breathing",
+          "science-water-meets-lava",
+          "science-wave-base-depth",
+          "science-wave-energy-depth",
+          "science-weather-attribution-method",
+          "science-well-to-time",
+          "science-why-drill-kola",
+          "science-wire-through-ice",
+          "science-xenon-blind-control",
+          "science-yoyo-string-binding",
+          "science-zero-g-thrust"
+        ]
+      },
+      "limit": 54,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-technology-1",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Technology (112, 1/2)",
+        "it": "Nuove · Tecnologia (112, 1/2)"
+      },
+      "source": {
+        "ids": [
+          "technology-archimedes-bridge-buoyancy",
+          "technology-asbestos-stays-onsite",
+          "technology-ballast-drains-water",
+          "technology-bending-solid-titanium",
+          "technology-brenner-freight-time",
+          "technology-bridge-quake-test",
+          "technology-bullet-splitting-sword",
+          "technology-cable-steel-weight",
+          "technology-carbon-fibre-buckling",
+          "technology-carrier-catapult-launch",
+          "technology-centrifugal-clutch",
+          "technology-channel-tunnel-length",
+          "technology-chernobyl-arch-slide",
+          "technology-closed-loop-geothermal",
+          "technology-core-fire-temperature",
+          "technology-corner-wind-braces",
+          "technology-damper-mass-fraction",
+          "technology-damper-saves-millions",
+          "technology-deep-alpine-tunnel",
+          "technology-diagonal-turn-explosion",
+          "technology-dry-plastic-fizz",
+          "technology-engines-freeze-yakutsk",
+          "technology-eshima-rigid-frame",
+          "technology-eshima-steep-ramp",
+          "technology-evolved-footpaths",
+          "technology-flip-pivoting-fixtures",
+          "technology-flip-vertical-stability",
+          "technology-fukushima-sea-wall",
+          "technology-google-googol-name",
+          "technology-graphene-bionic-limbs",
+          "technology-graphene-desalination",
+          "technology-graphene-flagship-billion",
+          "technology-graphene-plastic-century",
+          "technology-gripper-costs-cents",
+          "technology-heat-pump-savings",
+          "technology-hoover-dam-blocks",
+          "technology-human-hair-mechanism",
+          "technology-induction-cassette-press",
+          "technology-induction-it-control",
+          "technology-induction-magnetic-field",
+          "technology-iron-armor-capacitance",
+          "technology-italy-free-route",
+          "technology-iter-eiffel-weight",
+          "technology-load-redistribution-towers",
+          "technology-louvre-blind-spots",
+          "technology-low-pressure-lifting",
+          "technology-micromouse-diagonal-blinders",
+          "technology-micromouse-diagonals-16",
+          "technology-micromouse-navigation-speed",
+          "technology-morandi-rusted-cables",
+          "technology-motogp-braking-distance",
+          "technology-neutral-temperature-welding",
+          "technology-night-weld-ranking",
+          "technology-night-yard-rovers",
+          "technology-no-continuous-wire",
+          "technology-nordic-ground-heat",
+          "technology-not-a-flamethrower-2",
+          "technology-octane-knock-resistance",
+          "technology-old-solar-train",
+          "technology-one-hammer-tunnel"
+        ]
+      },
+      "limit": 60,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-technology-2",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Technology (112, 2/2)",
+        "it": "Nuove · Tecnologia (112, 2/2)"
+      },
+      "source": {
+        "ids": [
+          "technology-onion-hops-anonymity",
+          "technology-parbuckling-winch-cables",
+          "technology-pier-magnitude-seven",
+          "technology-predictable-safing",
+          "technology-printed-micro-machines",
+          "technology-punctured-vine-robot",
+          "technology-quake-prevention-pays",
+          "technology-quantum-fewer-steps",
+          "technology-rail-expansion-gaps",
+          "technology-rail-neutral-temperature",
+          "technology-rainy-summer-hydro",
+          "technology-rally-jump-throttle",
+          "technology-rbmk-crane-dome",
+          "technology-relay-maze-brain",
+          "technology-rich-get-linked",
+          "technology-rotor-sail",
+          "technology-secretly-blue",
+          "technology-sewer-spoil-removal",
+          "technology-sky-airspace-blocks",
+          "technology-smart-road-link",
+          "technology-solar-oil-eroi",
+          "technology-solar-train-drivetrain",
+          "technology-static-load-floors",
+          "technology-steam-heavy-oil",
+          "technology-steel-at-1000",
+          "technology-steel-softens-first",
+          "technology-swaying-tower-stress",
+          "technology-tatara-steel-race",
+          "technology-the-weak-weld",
+          "technology-thermite-rail-welds",
+          "technology-third-impact-load",
+          "technology-tin-pancake",
+          "technology-titan-hull-shape",
+          "technology-touch-field-change",
+          "technology-touch-screen-conductor",
+          "technology-tower-leg-sections",
+          "technology-towers-casualty-multiplier",
+          "technology-traction-control-slip",
+          "technology-trieste-gasoline-float",
+          "technology-trucks-to-rail",
+          "technology-tunnel-foam-mix",
+          "technology-tunnel-ground-freezing",
+          "technology-tunnel-pressure-barrier-5",
+          "technology-tunnel-water-table",
+          "technology-twin-tunnel-links",
+          "technology-upside-down-blocks",
+          "technology-vine-robot-camera",
+          "technology-vine-robot-retraction",
+          "technology-vine-robot-sand",
+          "technology-vinyl-stereo-groove",
+          "technology-weakest-floor-thirty",
+          "technology-yakutsk-stilt-houses"
+        ]
+      },
+      "limit": 52,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-history-1",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · History (84, 1/2)",
+        "it": "Nuove · Storia (84, 1/2)"
+      },
+      "source": {
+        "ids": [
+          "history-alcatraz-dummy-heads-4",
+          "history-alcatraz-spoon-wall",
+          "history-alcatraz-vent-duct",
+          "history-ashgabat-carrara-marble",
+          "history-ashgabat-star-symbol",
+          "history-atmosphere-fusion-fire",
+          "history-atomic-shadow",
+          "history-baia-sunken-city",
+          "history-bakelite-fossil-plastic",
+          "history-beccaria-deterrence",
+          "history-bermuda-triangle-name",
+          "history-bombe-single-loop",
+          "history-borgia-alberoni-occupations",
+          "history-brothers-home-prisoners",
+          "history-capaci-timing-error",
+          "history-celluloid-fire",
+          "history-china-execution-count",
+          "history-china-philippines-route",
+          "history-concordia-salvage-crew",
+          "history-crimea-1954-gift",
+          "history-dark-web-origin",
+          "history-directors-light-sentence",
+          "history-dresden-twelve-bullets",
+          "history-ecuador-terrorist-label",
+          "history-elevator-fall-record",
+          "history-ethyl-name-trick",
+          "history-fat-man-implosion",
+          "history-firing-squad-return",
+          "history-first-plastic-plant",
+          "history-franklin-cannon-shutters",
+          "history-gardening-mines-crib",
+          "history-glass-that-fell",
+          "history-granite-five-millimetres-5",
+          "history-greenland-compact",
+          "history-hitlers-unbreakable-machine",
+          "history-hydrogen-wall",
+          "history-iran-executions-2025",
+          "history-jack-foley-maps",
+          "history-kgb-pistolero-walk",
+          "history-kiev-cradle-rus",
+          "history-kilogram-prefix",
+          "history-korean-auschwitz",
+          "history-llull-before-condorcet",
+          "history-nagasaki-radiation-fade",
+          "history-nato-nuclear-yes",
+          "history-north-korea-classes",
+          "history-north-korea-famine",
+          "history-pile-one-reactor",
+          "history-pompeii-casts",
+          "history-pompeii-fire-cloud",
+          "history-pompeii-flow-density",
+          "history-pompeii-pyroclastic-flow",
+          "history-prison-forced-labour",
+          "history-pyramid-sun-rays",
+          "history-pyramid-top-third",
+          "history-pyramid-worker-tombs",
+          "history-rag-paper-scroll",
+          "history-russia-warhead-share",
+          "history-san-marino-appeals",
+          "history-san-marino-small"
+        ]
+      },
+      "limit": 60,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-history-2",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · History (84, 2/2)",
+        "it": "Nuove · Storia (84, 2/2)"
+      },
+      "source": {
+        "ids": [
+          "history-sand-to-sword",
+          "history-senna-suspension-fragment",
+          "history-senna-throttle-lift",
+          "history-silent-death-penalty",
+          "history-soviet-bomb-isotopes",
+          "history-soviet-lifeline-cut",
+          "history-sperm-whale-oil",
+          "history-straight-ramp-waste",
+          "history-swiss-axis-shells",
+          "history-swiss-cushion-state",
+          "history-swiss-nazi-gold",
+          "history-titanic-lifeboat-shortfall",
+          "history-titanic-open-bulkheads",
+          "history-titanic-propeller-lever",
+          "history-towers-sway-30cm",
+          "history-trieste-window-crack",
+          "history-turing-weather-crib",
+          "history-us-iran-axis",
+          "history-us-warhead-inventory",
+          "history-vajont-lake-710",
+          "history-vesuvius-first-film",
+          "history-weighing-the-air",
+          "history-welchman-diagonal-board",
+          "history-wet-sand-sled"
+        ]
+      },
+      "limit": 24,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-nature-1",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Nature (84, 1/2)",
+        "it": "Nuove · Natura (84, 1/2)"
+      },
+      "source": {
+        "ids": [
+          "nature-1976-impossible-heatwave",
+          "nature-alps-trap-smog",
+          "nature-asteroid-tsunami-energy",
+          "nature-bared-teeth",
+          "nature-bay-funnel-tide",
+          "nature-burning-plastic-waste",
+          "nature-campi-flegrei-uplift",
+          "nature-cave-rescue-time",
+          "nature-co2-antarctic-ice",
+          "nature-column-collapse-flows",
+          "nature-column-collapse-flows-2",
+          "nature-delta-salinity-dam",
+          "nature-eruption-cloud-speed",
+          "nature-etna-flank-collapse",
+          "nature-etna-new-peak",
+          "nature-everest-trench-flip",
+          "nature-glacier-wave-amplifier",
+          "nature-glass-co2-savings",
+          "nature-greenland-ice-air",
+          "nature-greenland-ice-thickness",
+          "nature-gulf-stream-storms",
+          "nature-gulf-stream-storms-2",
+          "nature-half-mountain-tsunami",
+          "nature-heatwave-only-beginning-2",
+          "nature-hidden-shark-toll",
+          "nature-la-luna-shale",
+          "nature-landslide-speed-range",
+          "nature-landslide-speed-water",
+          "nature-landslide-volume-estimate",
+          "nature-leaking-fracking-tank",
+          "nature-limestone-water-network",
+          "nature-longest-straw",
+          "nature-malaria-smell-trick",
+          "nature-mariana-trench-depth",
+          "nature-marsili-water-shield",
+          "nature-marsili-wave-height",
+          "nature-mediterranean-plates",
+          "nature-milan-first-30",
+          "nature-mosquito-blood-eggs",
+          "nature-mosquito-deadly-year",
+          "nature-mosquito-ear-heat",
+          "nature-mosquito-six-needles",
+          "nature-mosquito-winter-basement",
+          "nature-mosquito-winter-eggs",
+          "nature-nacre-two-components",
+          "nature-nazare-canyon-wave",
+          "nature-obsidian-natural-glass",
+          "nature-ocean-salt-cube",
+          "nature-oyster-water-filter",
+          "nature-pearl-defence",
+          "nature-pfas-everywhere-rain",
+          "nature-plastic-comes-back",
+          "nature-po-valley-basin",
+          "nature-prevention-before-damage",
+          "nature-red-forest-chernobyl",
+          "nature-red-sea-algae",
+          "nature-sea-level-drop",
+          "nature-sharks-overfishing-toll",
+          "nature-siberian-anticyclone-trap",
+          "nature-smallest-eruption-volume"
+        ]
+      },
+      "limit": 60,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-nature-2",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Nature (84, 2/2)",
+        "it": "Nuove · Natura (84, 2/2)"
+      },
+      "source": {
+        "ids": [
+          "nature-spider-alarm-line",
+          "nature-spider-empty-shell",
+          "nature-spider-rock-gift",
+          "nature-spineless-peyote-defense",
+          "nature-super-caldera-violence",
+          "nature-supercooled-bottle",
+          "nature-ten-am-rule",
+          "nature-thermal-inversion-lid",
+          "nature-tree-pressure-climb",
+          "nature-tree-water-tension",
+          "nature-trees-from-air",
+          "nature-trench-volcano-food",
+          "nature-tristan-hot-spot",
+          "nature-tsunami-no-wall",
+          "nature-tsunami-sea-retreat",
+          "nature-twin-landslide-tsunami",
+          "nature-venice-flood-causes",
+          "nature-venice-high-water",
+          "nature-vesuvius-1631-shape",
+          "nature-vesuvius-inside-somma",
+          "nature-vesuvius-one-eruption",
+          "nature-water-carves-caves",
+          "nature-xylem-no-bubbles",
+          "nature-yakutsk-record-cold"
+        ]
+      },
+      "limit": 24,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-human_body",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · The body (41)",
+        "it": "Nuove · Corpo umano (41)"
+      },
+      "source": {
+        "ids": [
+          "human_body-alcohol-heat-loss",
+          "human_body-alcohol-neuron-apoptosis",
+          "human_body-antiperspirant-pore-plug",
+          "human_body-blastocyst-membrane-shield",
+          "human_body-bone-powder-texture",
+          "human_body-caffeine-steals-seat",
+          "human_body-coca-hunger-thirst",
+          "human_body-collapse-outruns-brain",
+          "human_body-egg-breaks-spell",
+          "human_body-egg-chemical-call",
+          "human_body-final-push-phase",
+          "human_body-forgotten-dreams",
+          "human_body-freedive-hardest-depth",
+          "human_body-freediving-burning-phase",
+          "human_body-hangover-headache-dehydration",
+          "human_body-humidity-traps-sweat",
+          "human_body-hyper-g-dizziness",
+          "human_body-ink-meets-macrophages",
+          "human_body-love-chemistry",
+          "human_body-love-survival-mechanism",
+          "human_body-mescaline-serotonin-locks",
+          "human_body-mosquito-dna-spots",
+          "human_body-one-strong-beer",
+          "human_body-osmotic-pressure-cells",
+          "human_body-pfas-builds-up",
+          "human_body-pfas-exit-routes",
+          "human_body-plastic-credit-card",
+          "human_body-radiation-breaks-dna",
+          "human_body-radioactive-atom-inside",
+          "human_body-salt-free-deodorant",
+          "human_body-salt-osmosis-cell",
+          "human_body-salt-sea-glass",
+          "human_body-sea-water-harm",
+          "human_body-stripy-x-mosaic",
+          "human_body-tattoo-ink-relay",
+          "human_body-three-smoky-breaths",
+          "human_body-thrown-from-car",
+          "human_body-uv-retina-damage",
+          "human_body-water-only-marathon",
+          "human_body-water-overdose",
+          "human_body-x-chromosome-silencing"
+        ]
+      },
+      "limit": 41,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-maths",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Maths (39)",
+        "it": "Nuove · Matematica (39)"
+      },
+      "source": {
+        "ids": [
+          "maths-all-nines-minus-one",
+          "maths-coin-extra-turn",
+          "maths-collatz-loop-length",
+          "maths-collatz-peak",
+          "maths-feigenbaum-universality",
+          "maths-fermat-padic-numbers",
+          "maths-flattening-a-sphere",
+          "maths-halting-problem",
+          "maths-hensel-lifting",
+          "maths-hundred-bets-safety",
+          "maths-hundred-good-bets",
+          "maths-knot-tricolorability",
+          "maths-mandelbrot-bifurcation-slice",
+          "maths-mercator-greenland",
+          "maths-mercator-stretch",
+          "maths-odd-perfect-bound",
+          "maths-odd-perfect-numbers",
+          "maths-one-seventh-10adic",
+          "maths-padic-own-squares",
+          "maths-penrose-golden-ratio",
+          "maths-pentagons-never-tile",
+          "maths-perfect-triangle-cubes",
+          "maths-period-doubling-chaos",
+          "maths-period-two-split",
+          "maths-perko-pair-knots",
+          "maths-pools-of-rock",
+          "maths-ranked-choice-paradox",
+          "maths-sandpile-any-size",
+          "maths-spoof-perfect-numbers",
+          "maths-st-petersburg",
+          "maths-tao-arbitrarily-small",
+          "maths-ten-adic-third",
+          "maths-three-adic-squares",
+          "maths-true-but-unprovable",
+          "maths-two-tiles-never",
+          "maths-uncountable-bus",
+          "maths-wang-never-repeats",
+          "maths-windows-of-order",
+          "maths-wyoming-mercator-pole"
+        ]
+      },
+      "limit": 39,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-medicine",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Medicine (30)",
+        "it": "Nuove · Medicina (30)"
+      },
+      "source": {
+        "ids": [
+          "medicine-alcohol-one-in-twenty",
+          "medicine-cigarette-filter-myth",
+          "medicine-codeine-breathing-brake",
+          "medicine-codeine-to-morphine",
+          "medicine-deadliest-drug-alcohol",
+          "medicine-deodorant-cancer-link",
+          "medicine-dose-makes-poison",
+          "medicine-dupont-safe-dose",
+          "medicine-femtosecond-laser-ring",
+          "medicine-firefighters-blood-donation",
+          "medicine-first-drop-risk",
+          "medicine-flesh-eating-vibrio",
+          "medicine-heart-period-doubling",
+          "medicine-heated-glycerol-aldehydes",
+          "medicine-hidden-opioid-dose",
+          "medicine-isolated-island-illness",
+          "medicine-ketamine-mdma-clash",
+          "medicine-laser-eye-monitor",
+          "medicine-laser-tattoo-removal",
+          "medicine-lingering-flashbacks",
+          "medicine-mescaline-dopamine-reward",
+          "medicine-mri-field-strength",
+          "medicine-popcorn-laser-effect",
+          "medicine-premium-lens-race",
+          "medicine-proton-precession-cone",
+          "medicine-quit-smoking-combo",
+          "medicine-radiation-cancer",
+          "medicine-resonance-radio-push",
+          "medicine-soft-robot-throat",
+          "medicine-water-kidney-stones"
+        ]
+      },
+      "limit": 30,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-space",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Space (27)",
+        "it": "Nuove · Spazio (27)"
+      },
+      "source": {
+        "ids": [
+          "space-apollo-slingshot",
+          "space-black-hole-sky",
+          "space-corona-outshone",
+          "space-dzhanibekov-flip",
+          "space-elastic-resistance",
+          "space-entropy-then-now",
+          "space-flash-then-silence",
+          "space-flat-earth-challenge",
+          "space-four-copies",
+          "space-frozen-horizon-light-2",
+          "space-gps-relativity-clocks",
+          "space-graphene-space-elevator",
+          "space-gravity-curved-spacetime",
+          "space-gravity-delay",
+          "space-heat-death-clock",
+          "space-hundred-billion-galaxies",
+          "space-lagrange-hilltops",
+          "space-moon-flag-wave",
+          "space-no-water-phases",
+          "space-penrose-two-universes",
+          "space-quake-shortened-day",
+          "space-red-moon-eclipse",
+          "space-solar-day-spin",
+          "space-spice-stuffy-nose",
+          "space-spin-magnetic-shield",
+          "space-sunward-blind-spot",
+          "space-van-allen-donut"
+        ]
+      },
+      "limit": 27,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-thinking",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Thinking (23)",
+        "it": "Nuove · Logica (23)"
+      },
+      "source": {
+        "ids": [
+          "thinking-airport-tells",
+          "thinking-because",
+          "thinking-bell-or-tail",
+          "thinking-confusion-helps-memory",
+          "thinking-cool-down",
+          "thinking-easiest-to-fool",
+          "thinking-effort-body-signs",
+          "thinking-eyes-dont-tell",
+          "thinking-fukushima-radiation-toll",
+          "thinking-generous-tit-tat",
+          "thinking-hidden-popcorn",
+          "thinking-hypnosis-recall",
+          "thinking-known-last-round",
+          "thinking-nice-strategies-win",
+          "thinking-noisy-tit-for-tat",
+          "thinking-one-word",
+          "thinking-power-of-no",
+          "thinking-random-end-cooperation",
+          "thinking-tester-probes-forgiveness",
+          "thinking-three-letters",
+          "thinking-two-four-seven",
+          "thinking-vicious-cycle",
+          "thinking-weight-of-disproof"
+        ]
+      },
+      "limit": 23,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-psychology",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Psychology (21)",
+        "it": "Nuove · Psicologia (21)"
+      },
+      "source": {
+        "ids": [
+          "psychology-bamboccia-disillusa",
+          "psychology-confidence-trap",
+          "psychology-dream-logic-filter",
+          "psychology-e-on-forehead",
+          "psychology-effort-means-learning",
+          "psychology-gaze-limit",
+          "psychology-lead-crime-echo",
+          "psychology-loss-weighs-double",
+          "psychology-midas-touch",
+          "psychology-niche-expertise-respect",
+          "psychology-once-in-a-while",
+          "psychology-psychogenic-polydipsia",
+          "psychology-pupil-pick",
+          "psychology-room-you-hear",
+          "psychology-second-knock",
+          "psychology-seven-percent",
+          "psychology-spinning-tube",
+          "psychology-spinning-tube-trick-1",
+          "psychology-spinning-tube-trick-3",
+          "psychology-spotlight",
+          "psychology-stranger-distance"
+        ]
+      },
+      "limit": 21,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-economics",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Economics (11)",
+        "it": "Nuove · Economia (11)"
+      },
+      "source": {
+        "ids": [
+          "economics-australia-geologist-pay",
+          "economics-coltan-price-spike",
+          "economics-congo-miner-deaths",
+          "economics-flies-window",
+          "economics-gulf-idle-fleet",
+          "economics-hormuz-oil-cut",
+          "economics-hormuz-pipeline-shortfall",
+          "economics-iran-war-energy-bill",
+          "economics-one-mine-share",
+          "economics-plastic-glass-weight",
+          "economics-strait-traffic-collapse"
+        ]
+      },
+      "limit": 11,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-life",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Life (10)",
+        "it": "Nuove · Vita (10)"
+      },
+      "source": {
+        "ids": [
+          "life-assisted-evacuation-drill",
+          "life-cage-home-ages",
+          "life-cage-home-size",
+          "life-child-miners-potosi",
+          "life-death-penalty-homosexuality",
+          "life-fancy-car-crosswalk",
+          "life-inch-of-pay",
+          "life-jerks-dont-climb",
+          "life-material-trap",
+          "life-who-taught-your-scale"
+        ]
+      },
+      "limit": 10,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-food",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Food (9)",
+        "it": "Nuove · Cibo (9)"
+      },
+      "source": {
+        "ids": [
+          "food-apple-slow-breath",
+          "food-cchbc-bottle-code",
+          "food-estimated-weight-mark",
+          "food-estimated-weight-tolerance",
+          "food-mine-apple-cells",
+          "food-onion-tear-gas",
+          "food-resveratrol-wine-flood",
+          "food-shark-fin-soup",
+          "food-vacuum-reactor"
+        ]
+      },
+      "limit": 9,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "debug-new-weird_facts",
+      "block": "carousel",
+      "size": "m",
+      "title": {
+        "en": "New · Weird facts (4)",
+        "it": "Nuove · Curiosità (4)"
+      },
+      "source": {
+        "ids": [
+          "weird_facts-air-holds-you-up",
+          "weird_facts-chainsaw-frozen-meat",
+          "weird_facts-covered-ferris-wheel",
+          "weird_facts-skin-of-aerogel"
+        ]
+      },
+      "limit": 4,
+      "audience": {
+        "platforms": [
+          "ios"
+        ],
+        "until": "2026-12-15"
+      }
+    },
+    {
+      "id": "nothing",
+      "block": "nothing-here"
+    },
+    {
+      "id": "offline",
+      "block": "offline"
+    },
+    {
+      "id": "your-day",
+      "block": "your-day",
+      "gap": 4,
+      "audience": {
+        "any": [
+          {
+            "minBuild": 55
+          },
+          {
+            "platforms": [
+              "web",
+              "android"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "bets-day",
+      "block": "bets-day",
+      "size": "l",
+      "title": {
+        "en": "The daily challenge",
+        "it": "La sfida del giorno",
+        "de": "Die Herausforderung des Tages",
+        "es": "El reto del día",
+        "fr": "Le défi du jour",
+        "ja": "今日のチャレンジ",
+        "ko": "오늘의 도전",
+        "nl": "De uitdaging van de dag",
+        "pl": "Wyzwanie dnia",
+        "pt": "O desafio do dia",
+        "ru": "Задание дня",
+        "tr": "Günün meydan okuması",
+        "zh": "每日挑战"
+      },
+      "subtitle": {
+        "en": "The same for everyone today. Lock in your guess, then see how far off you were.",
+        "it": "Uguale per tutti, oggi. Blocca la tua stima, poi guarda di quanto hai sbagliato.",
+        "de": "Heute für alle gleich. Leg dich fest, dann sieh, wie weit du danebenlagst.",
+        "es": "Hoy, igual para todos. Fija tu estimación y luego mira cuánto te has desviado.",
+        "fr": "Le même pour tout le monde aujourd'hui. Valide ton estimation, puis découvre l'écart.",
+        "ja": "今日は誰にとっても同じ。予想を確定して、どれだけ近かったか確かめよう。",
+        "ko": "오늘은 모두에게 같아요. 추측을 확정하고 얼마나 빗나갔는지 확인하세요.",
+        "nl": "Vandaag voor iedereen hetzelfde. Leg je schatting vast en zie hoe ver je ernaast zat.",
+        "pl": "Dziś dla wszystkich to samo. Zatwierdź swój typ i sprawdź, jak daleko był od prawdy.",
+        "pt": "Hoje, igual para todos. Fixa o teu palpite e vê a que distância ficaste.",
+        "ru": "Сегодня для всех одно и то же. Зафиксируй догадку и узнай, насколько она точна.",
+        "tr": "Bugün herkes için aynı. Tahminini kilitle, sonra ne kadar yaklaştığını gör.",
+        "zh": "今天人人相同。锁定你的估计，再看看差了多少。"
+      },
+      "audience": {
+        "any": [
+          {
+            "minBuild": 55
+          },
+          {
+            "platforms": [
+              "web",
+              "android"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "path",
+      "block": "purpose.set",
+      "audience": {
+        "any": [
+          {
+            "minBuild": 55
+          },
+          {
+            "platforms": [
+              "web",
+              "android"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "quick-games",
+      "block": "quick-games",
+      "title": {
+        "en": "Quick games",
+        "it": "Giochi veloci",
+        "de": "Schnelle Spiele",
+        "es": "Juegos rápidos",
+        "fr": "Jeux rapides",
+        "ja": "クイックゲーム",
+        "ko": "빠른 게임",
+        "nl": "Snelle spelletjes",
+        "pl": "Szybkie gry",
+        "pt": "Jogos rápidos",
+        "ru": "Быстрые игры",
+        "tr": "Hızlı oyunlar",
+        "zh": "快速游戏"
+      },
+      "subtitle": {
+        "en": "A minute or two each. Pick one and play.",
+        "it": "Un minuto o due ciascuno. Scegline uno e gioca.",
+        "de": "Je ein, zwei Minuten. Such dir eins aus und spiel.",
+        "es": "Uno o dos minutos cada uno. Elige uno y juega.",
+        "fr": "Une minute ou deux chacun. Choisis-en un et joue.",
+        "ja": "どれも1〜2分。選んで遊ぼう。",
+        "ko": "하나에 1~2분. 골라서 플레이하세요.",
+        "nl": "Een minuutje of twee per stuk. Kies er een en speel.",
+        "pl": "Każda na minutę lub dwie. Wybierz i graj.",
+        "pt": "Um ou dois minutos cada. Escolhe um e joga.",
+        "ru": "По минуте-другой на каждую. Выбери и играй.",
+        "tr": "Her biri bir iki dakika. Birini seç ve oyna.",
+        "zh": "每个只要一两分钟。选一个开始玩。"
+      },
+      "audience": {
+        "any": [
+          {
+            "minBuild": 55
+          },
+          {
+            "platforms": [
+              "web",
+              "android"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "subject-levels",
+      "block": "subject-levels",
+      "title": {
+        "en": "Your subjects",
+        "it": "Le tue materie",
+        "de": "Deine Fächer",
+        "es": "Tus temas",
+        "fr": "Tes sujets",
+        "ja": "あなたの分野",
+        "ko": "나의 주제",
+        "nl": "Jouw vakken",
+        "pl": "Twoje tematy",
+        "pt": "Os teus temas",
+        "ru": "Твои темы",
+        "tr": "Konuların",
+        "zh": "你的主题"
+      },
+      "subtitle": {
+        "en": "Level 1 to 10, from the cards you read and get right.",
+        "it": "Livello da 1 a 10, dalle carte che leggi e indovini.",
+        "de": "Stufe 1 bis 10, aus den Karten, die du liest und richtig beantwortest.",
+        "es": "Nivel del 1 al 10, según las cartas que lees y aciertas.",
+        "fr": "Niveau 1 à 10, selon les cartes que tu lis et réussis.",
+        "ja": "読んだカードと正解したカードから決まるレベル1〜10。",
+        "ko": "읽고 맞힌 카드로 정해지는 레벨 1~10.",
+        "nl": "Niveau 1 tot 10, uit de kaarten die je leest en goed hebt.",
+        "pl": "Poziom od 1 do 10, z kart, które czytasz i odgadujesz.",
+        "pt": "Nível de 1 a 10, pelas cartas que lês e acertas.",
+        "ru": "Уровень от 1 до 10 — по карточкам, которые ты читаешь и угадываешь.",
+        "tr": "Okuduğun ve doğru bildiğin kartlara göre 1'den 10'a seviye.",
+        "zh": "等级 1 到 10，取决于你读过和答对的卡片。"
+      },
+      "audience": {
+        "any": [
+          {
+            "minBuild": 55
+          },
+          {
+            "platforms": [
+              "web",
+              "android"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "like-saved",
+      "block": "like-saved",
+      "title": {
+        "en": "More like what you saved",
+        "it": "Altre come quelle che hai salvato",
+        "de": "Mehr wie das, was du behalten hast",
+        "es": "Más como lo que guardaste",
+        "fr": "D'autres comme celles que tu as gardées",
+        "ja": "保存したカードに似たもの",
+        "ko": "보관한 카드와 비슷한 카드",
+        "nl": "Meer zoals wat je bewaarde",
+        "pl": "Więcej podobnych do zachowanych",
+        "pt": "Mais como o que guardaste",
+        "ru": "Похожие на сохранённые",
+        "tr": "Sakladıklarına benzer kartlar",
+        "zh": "和你收藏的相似"
+      },
+      "audience": {
+        "any": [
+          {
+            "minBuild": 55
+          },
+          {
+            "platforms": [
+              "web",
+              "android"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "today",
+      "block": "today",
+      "gap": 0,
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "top",
+      "block": "top"
+    },
+    {
+      "id": "loved",
+      "block": "loved",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "asking",
+      "block": "asking",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "mine",
+      "block": "mine",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "where-you-live",
+      "block": "where-you-live"
+    },
+    {
+      "id": "month",
+      "block": "month",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "signature-numbers",
+      "block": "numbers",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "signature-debates",
+      "block": "debates",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-sharpest-0",
+      "block": "sharpest"
+    },
+    {
+      "id": "theme-origins-0",
+      "block": "origins",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-stories-0",
+      "block": "stories",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-trueOrFalse-0",
+      "block": "true-false",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "came-back",
+      "block": "came-back",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "move-sampling",
+      "block": "move-sampling",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "move-counterfactual",
+      "block": "move-compared",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "work",
+      "block": "work",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "unmask",
+      "block": "unmask",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "how-sure",
+      "block": "how-sure",
+      "gap": 28,
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "what-if",
+      "block": "what-if",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "series",
+      "block": "series",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "sixty",
+      "block": "sixty",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "mood",
+      "block": "mood",
+      "gap": 28,
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "did-you-know",
+      "block": "did-you-know",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise",
+      "block": "surprise",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
+    },
+    {
+      "id": "theme-practical-0",
+      "block": "practical"
+    },
+    {
+      "id": "feed",
+      "block": "feed",
+      "title": {
+        "en": "Keep exploring",
+        "it": "Continua a esplorare",
+        "de": "Weiter entdecken",
+        "es": "Sigue explorando",
+        "fr": "Continue d'explorer",
+        "ja": "もっと探す",
+        "ko": "계속 둘러보기",
+        "nl": "Verder ontdekken",
+        "pl": "Odkrywaj dalej",
+        "pt": "Continua a explorar",
+        "ru": "Исследуй дальше",
+        "tr": "Keşfetmeye devam et",
+        "zh": "继续探索"
+      },
+      "subtitle": {
+        "en": "The same for everyone. Nothing here is picked for you.",
+        "it": "Uguale per tutti. Niente qui è scelto per te.",
+        "de": "Für alle gleich. Nichts hier ist für dich ausgesucht.",
+        "es": "Igual para todos. Nada aquí está elegido para ti.",
+        "fr": "Pareil pour tout le monde. Rien ici n'est choisi pour toi.",
+        "ja": "誰にとっても同じ。あなた向けに選んだものはありません。",
+        "ko": "누구에게나 똑같아요. 맞춤으로 고른 건 없어요.",
+        "nl": "Voor iedereen hetzelfde. Niets hier is voor jou gekozen.",
+        "pl": "Dla wszystkich to samo. Nic tu nie jest wybrane dla ciebie.",
+        "pt": "Igual para todos. Nada aqui foi escolhido para ti.",
+        "ru": "Для всех одинаково. Здесь ничего не подобрано под тебя.",
+        "tr": "Herkes için aynı. Burada hiçbir şey senin için seçilmedi.",
+        "zh": "人人看到的都一样，没有为你挑选。"
+      }
+    }
+  ]
 }
