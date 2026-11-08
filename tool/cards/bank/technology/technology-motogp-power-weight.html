@@ -1,443 +1,306 @@
 <!doctype html>
-<!-- slug: technology-motogp-power-weight -->
-<!-- Look: a museum diorama of a racetrack in layered cut paper (sun, clouds, three hill mounds rising from a torn-edge ground board, a grandstand, trees), each plane with its own soft shadow and paper grain, drifting in gentle depth parallax. The diorama is an island of paper laid straight on the card, with no box behind it.
-     Interaction: the reader stretches the red "push per kilo" arrow of a 1,300 kg car to guess the horsepower it needs to pull like a 280 hp, 168 kg MotoGP bike. Then the two paper cutouts race along the real curved track at a constant acceleration set by hp/kg, with speed streaks that grow as they go faster.
-     Wow moment: the bike's hidden arrow shoots out, the car's arrow springs elastically to 2,000 hp, both cutouts are lifted back to the line and race again nose to nose, and paper confetti flies off the finish on curved motion paths. -->
+<!-- slug: science-motogp-power-kilo -->
+<!--
+Thought to carry: how hard a machine shoves you depends on power per kilo, not on power alone. Halving the weight does what doubling the engine does.
+Front: a MotoGP bike and its tucked rider (280 hp, 168 kg dry) carry their own 2.8 bricks of 100 hp. Beside them stands a 1,300 kg car. The reader drags up to pile 100 hp bricks on the car's roof (real Matter.js bodies). A live counter rides on top of the pile.
+Back: Rossi's answer, 20 bricks (about 2,000 hp), falls onto the roof. The reader's guess stands beside it as a dashed outline. Identical arrows in front of the bike and the car end at matching finish marks. The text says his figure is rough: he gives 2,000, then "more or less 1,800", and he notes that 168 kg is dry and to count about 175 kg with fluids.
+The front shows only the bike's own figures and load and the car's weight. There is no target, no scale and no verdict.
+-->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Savage acceleration</title>
+<title>Pull like a MotoGP bike</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/matter.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
-#pic .pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.6s ease-out infinite}
-@keyframes pulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.75);opacity:0}}
-#pic .flag{transform-box:fill-box;transform-origin:0 50%;animation:wave 1.1s ease-in-out infinite alternate}
-@keyframes wave{from{transform:skewY(-7deg) scaleX(.9)}to{transform:skewY(5deg) scaleX(1)}}
-#pic .nudge{animation:nudge 1.3s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateX(4px)}}
-.kit-calm #pic .pulse,.kit-calm #pic .flag,.kit-calm #pic .nudge{animation:none}
-.say{overflow-wrap:anywhere}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* Once the front has rotated out of view, take it out of the visible set so its readout never sits on the back's labels. */
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .38s}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front{transition:none}
+.face{gap:1.2cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.front::after,.back::after{content:"";flex:none;height:44px}
+.back .foot{flex:none}
+.back .big{margin:0;font-size:max(2.9cqh,17px);line-height:1.15;overflow-wrap:break-word}
+.back .body{margin:0;font-size:max(1.85cqh,12px);line-height:1.35;overflow-wrap:break-word}
+.say{margin:0;overflow-wrap:break-word}
+#sure{opacity:.66;transition:opacity .35s ease}
+#sure:not(.live) *{opacity:1 !important}
+#sure.live{opacity:1}
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-4px)}}
+.kit-calm .hint{animation:none}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Stretch the arrow · how sure" style="--c:#efe3cc;--k:#22190f;--edge:#c9b28b">
+<article class="card" id="card" data-topic="technology" data-kind="Pile the power · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">DIAL THE POWER</span></div>
-    <h2 class="q">How much power would a car need to accelerate like a MotoGP bike?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A paper diorama of a racetrack: a MotoGP bike and a car on the starting line, and below them two arrows showing horsepower per kilo."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOTOGP</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">What power would a 1,300 kg car need to accelerate like a MotoGP bike?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A MotoGP bike with its tucked rider, 280 hp and 168 kg dry, carrying two and four-fifths bricks of 100 hp, beside a 1,300 kg car. You pile bricks of horsepower on the car's roof."></svg></div>
+        <p class="say" id="say"><b>Drag up</b> to pile power on the car, 100 hp a brick, until it would pull like the bike.</p>
+        <div class="sure" id="sure"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">About 2,000 hp, by Rossi's reckoning.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="On the car's roof, a pile of 20 bricks, about 2,000 hp, beside a dashed outline of your guess. Identical arrows in front of the bike and the car reach matching finish marks."></svg></div>
+        <p class="body">Same pull, rough figure: Rossi says 2,000 hp, then “more or less 1,800”. His 168 kg is a dry weight; with fluids he counts about 175 kg, which lowers the car's number.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Halving the weight does what doubling the engine does: compare power per kilo, never power alone.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022).</span></div>
+      </section>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say">Drag the <b>red arrow</b>: give the 1,300 kg car enough horsepower to pull like the 168 kg bike.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Acceleration is set by power per kilo, not by power alone.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  if (window.MotionPathPlugin) gsap.registerPlugin(MotionPathPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
-  const C = {ink:'#22190f', sun:'#eeb04a', cloud:'#fbf6ec', far:'#cbd5cf', far2:'#b2c3b8', mid:'#93ab8a', near:'#6f8f59', near2:'#5a7a48', base:'#3f5a33',
-    road:'#3a332d', kerbR:'#c8402e', kerbW:'#f7f0e3', bike:'#17696e', suit:'#f2b632', car:'#d9572b', glass:'#26363f', dark:'#2b2621'};
-  const RB = 280 / 168, KG = 1300, T0 = .13, T1 = .95;
-  const S = {hp: 150, bA: 0, pB: 0, pC: 0, vB: 0, vC: 0};
-  let phase = 'guess', touched = false, released = false, dragging = false, SPEED = 1, entered = false, pend = false;
-  let W = 0, H = 0, zW = 0, zH = 0, fs = 12, sb = 0, ax0 = 0, Lmax = 0, yBL = 0, yBA = 0, yCL = 0, yCA = 0, u = 20, m = 12, xL = 0, xR = 0, P = [];
-  let layers = [], qx = [], lanes = {}, veh = {}, ui = {}, vehLayer = null, finishPt = {x:0, y:0}, cloudTw = [];
-  let endRes; const ended = new Promise(r => endRes = r);
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const wait = ms => new Promise(r => setTimeout(r, ms / SPEED));
-  const fmt = n => Math.round(n).toLocaleString('en-US');
-  const fr = i => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
-  const clampN = (v, a, b) => Math.max(a, Math.min(b, v));
-  const poly = (pts, par, a) => mk('path', Object.assign({d: 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z'}, a), par);
-  const U = pts => pts.map(([x, y]) => [x * u, y * u]);
-  const T = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: C.ink, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono)'}, a), p); e.textContent = s; return e; };
+  const card = Kit.$('card'), say = Kit.$('say');
+  const GUESS = '#ff5a36', PAPER = '#fffdf8', TRUTH = 20, MAX = 30, COLS = 3;
+  let INK = '#111';
+  let n = 0, touched = false, sureOn = false, answered = false, turned = false, fast = false, build = 0;
+  let F = null, pileF = null, pileB = null, readout = null, hint = null;
+  const fmt = v => v.toLocaleString('en-US');
+  const wait = ms => new Promise(r => setTimeout(r, ms));
 
-  // ---------- board geometry ----------
-  const X = f => xL + (xR - xL) * f;
-  const gy = f => sb * (.6 - .16 * f) + sb * .02 * Math.sin(f * 5 + 1);
-  const env = f => Math.pow(Math.max(0, Math.sin(Math.PI * f)), .4);
-  const cl = p => [clampN(p[0], xL + fs * .1, xR - fs * .1), p[1]];
-  const mound = (yf, n = 48) => { const t = [], b = []; for (let i = 0; i <= n; i++) { const f = i / n, g = gy(f); t.push([X(f), g + (yf(f) - g) * env(f)]); b.push([X(f), g + fs * .6]); } return [...t, ...b.reverse()]; };
-
-  // ---------- geometry of the track ----------
-  const bez = t => { const k = 1 - t, a = k*k*k, b = 3*k*k*t, c = 3*k*t*t, d = t*t*t; return [a*P[0][0]+b*P[1][0]+c*P[2][0]+d*P[3][0], a*P[0][1]+b*P[1][1]+c*P[2][1]+d*P[3][1]]; };
-  const tan = t => { const k = 1 - t, a = -3*k*k, b = 3*k*k - 6*k*t, c = 6*k*t - 3*t*t, d = 3*t*t; return [a*P[0][0]+b*P[1][0]+c*P[2][0]+d*P[3][0], a*P[0][1]+b*P[1][1]+c*P[2][1]+d*P[3][1]]; };
-  const frame = t => { const p = bez(t), d = tan(t), l = Math.hypot(d[0], d[1]) || 1; return {p, n: [d[1] / l, -d[0] / l], w: 1 - .55 * t}; };
-  const off = (f, k) => [f.p[0] + f.n[0] * k * f.w, f.p[1] + f.n[1] * k * f.w];
-
-  function defs() {
-    const d = mk('defs', {}, svg), s1 = fs * .28, s2 = fs * .14, c = fs * .28;
-    d.innerHTML = `
-    <filter id="pp" x="-5%" y="-15%" width="110%" height="140%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="${s1}"/><feOffset dy="${s1 * 1.1}" result="o"/>
-      <feFlood flood-color="#3b2810" flood-opacity=".32"/><feComposite in2="o" operator="in" result="sh"/>
-      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" result="n"/>
-      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 -.33" result="na"/>
-      <feComposite in="na" in2="SourceGraphic" operator="in" result="tx"/>
-      <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/><feMergeNode in="tx"/></feMerge></filter>
-    <filter id="ps" x="-25%" y="-35%" width="150%" height="180%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="${s2}"/><feOffset dy="${s2 * 1.3}" result="o"/>
-      <feFlood flood-color="#3b2810" flood-opacity=".4"/><feComposite in2="o" operator="in" result="sh"/>
-      <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <radialGradient id="sunG" cx=".38" cy=".34" r=".75"><stop offset="0" stop-color="#fce6a6"/><stop offset="1" stop-color="#eaa841"/></radialGradient>
-    <linearGradient id="roadG" gradientUnits="userSpaceOnUse" x1="0" y1="${sb}" x2="${W}" y2="${sb * .5}"><stop offset="0" stop-color="#332c26"/><stop offset="1" stop-color="#776c60"/></linearGradient>
-    <pattern id="chk" width="${c * 2}" height="${c * 2}" patternUnits="userSpaceOnUse"><rect width="${c * 2}" height="${c * 2}" fill="#f7f0e3"/><rect width="${c}" height="${c}" fill="#22190f"/><rect x="${c}" y="${c}" width="${c}" height="${c}" fill="#22190f"/></pattern>`;
-    return d;
+  // One layout in metres turned into pixels (P px per metre):
+  // bike 0–2.05 · arrow to 3.05 · car 3.2–7.5 · arrow to 8.5.
+  function geom(W, H, rows) {
+    const fs = Math.max(12, Math.min(14, W / 27)), SPAN = 8.5;
+    const Pw = (W - 2 * Math.max(6, W * .03)) / SPAN;
+    const D = fs * 1.95, top = fs * 2.4;
+    let P = Math.min(Pw, (H - D - top) / (1.45 + rows * .12));
+    P = Math.max(6, P);
+    const k = Math.max(.12, Math.min(.26, (H - D - top - 1.45 * P) / (rows * P)));
+    const GY = H - D, x0 = (W - SPAN * P) / 2, c0 = x0 + 3.2 * P;
+    return {W, H, fs, GY, P, x0, c0, roofY: GY - 1.45 * P, bw: .46 * P, hb: k * P,
+      cx: c0 + 1.85 * P, sw: Math.max(2, Math.min(3, .08 * P))};
   }
-  const layer = (d, filt) => {
-    const o = mk('g', {}, svg), i = mk('g', filt ? {filter: `url(#${filt})`} : {}, o);
-    layers.push({outer: o, inner: i, d}); return i;
-  };
-  const size = () => { const r = stage.getBoundingClientRect(); return {w: Math.floor(r.width), h: Math.floor(r.height)}; };
-
-  // ---------- the diorama ----------
-  function layout() {
-    const z = size(); if (z.w < 60 || z.h < 60) return;
-    gsap.killTweensOf('.conf'); cloudTw.forEach(t => t.kill()); cloudTw = [];
-    svg.innerHTML = ''; layers = []; qx = [];
-    zW = z.w; zH = z.h;
-    W = z.w;
-    fs = Math.max(12, Math.min(14, W / 26));
-    // never lay out shorter than the rows need plus a real diorama; the viewBox scales it down if the stage is tight
-    H = Math.max(z.h, Math.ceil(fs * 7.65 + 120));
-    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    yCA = H - fs * 1.5; yCL = yCA - fs * 1.3; yBA = yCL - fs * 2.0; yBL = yBA - fs * 1.3; sb = yBL - fs * 1.55;
-    ax0 = fs * .6; Lmax = W - ax0 - fs * 1.4;
-    m = fs * .9; xL = m; xR = W - m;
-    u = Math.max(12, Math.min(W * .085, sb * .12));
-    P = [[xL, .86 * sb], [.56 * W, .98 * sb], [.40 * W, .56 * sb], [.9 * W, .50 * sb]];
-    const df = defs();
-
-    // sun
-    const sun = layer(.08, 'ps');
-    mk('circle', {cx: W * .78, cy: sb * .2, r: sb * .125, fill: C.sun, opacity: .25}, sun);
-    mk('circle', {cx: W * .78, cy: sb * .2, r: sb * .085, fill: 'url(#sunG)'}, sun);
-    // clouds
-    const cld = layer(.18, 'ps');
-    [[W * .2, sb * .15, sb * .042, 1], [W * .52, sb * .08, sb * .032, -1], [W * .62, sb * .3, sb * .026, 1]].forEach(([x, y, s, dir], k) => {
-      const g = mk('g', {}, cld);
-      [[0, 0, 1], [.95, -.4, .82], [1.8, 0, .72], [-.85, .12, .62]].forEach(([dx, dy, r]) => mk('circle', {cx: x + dx * s, cy: y + dy * s, r: r * s, fill: C.cloud}, g));
-      mk('rect', {x: x - 1.45 * s, y: y, width: 3.95 * s, height: s * .62, rx: s * .3, fill: C.cloud}, g);
-      if (!Kit.calm) cloudTw.push(gsap.to(g, {x: dir * fs * .8, duration: 6 + k * 2, ease: 'sine.inOut', yoyo: true, repeat: -1}));
-    });
-    // far mountains, rising from the board's ends
-    const far = layer(.3, 'pp');
-    const pk = [[.08, .32], [.18, .38], [.3, .2], [.44, .34], [.56, .24], [.7, .36], [.82, .18], [.92, .32]];
-    const farTop = [[X(0), gy(0)], ...pk.map(([x, y]) => [X(x), sb * y]), [X(1), gy(1)]], farBot = [];
-    for (let i = 0; i <= 30; i++) farBot.push([X(1 - i / 30), gy(1 - i / 30) + fs * .6]);
-    poly([...farTop, ...farBot], far, {fill: C.far});
-    pk.filter((_, i) => i % 2 === 0).forEach(([x, y]) => { const px = X(x), py = sb * y, s = sb * .05;
-      poly([[px, py], [px + s * .9, py + s * .8], [px + s * .3, py + s * .6], [px - s * .2, py + s * .9], [px - s * .8, py + s * .7]], far, {fill: '#f4efe4'}); });
-    const far2 = layer(.4, 'pp');
-    poly(mound(f => sb * (.42 - .02 * f) + sb * .03 * Math.sin(f * 7 + .5)), far2, {fill: C.far2});
-    // mid hills
-    const mid = layer(.5, 'pp');
-    poly(mound(f => sb * (.5 - .06 * f) + sb * .03 * Math.sin(f * 4 + 2)), mid, {fill: C.mid});
-    // grandstand and trees
-    const st = layer(.58, 'ps');
-    const gx0 = W * .1, gx1 = W * .37, gb = sb * .6, gh = sb * .14, tiers = 4;
-    for (let i = 0; i < tiers; i++) {
-      const ty = gb - gh + i * gh / tiers;
-      mk('rect', {x: gx0 + i * fs * .15, y: ty, width: Math.max(0, gx1 - gx0 - i * fs * .3), height: gh / tiers + 1, fill: i % 2 ? '#e7d9bf' : '#f3eadb'}, st);
-      const n = Math.floor((gx1 - gx0 - fs * .6) / (fs * .42));
-      for (let j = 0; j < n; j++) { const cc = [C.car, C.suit, C.bike, '#f7f0e3', '#7a5c8e', C.dark][Math.floor(fr(i * 31 + j) * 6)];
-        mk('circle', {cx: gx0 + fs * .35 + j * fs * .42 + i * fs * .1, cy: ty + gh / tiers * .45, r: Math.max(1.4, fs * .12), fill: cc}, st); }
-    }
-    poly([[gx0 - fs * .5, gb - gh - fs * .25], [gx1 + fs * .5, gb - gh - fs * .95], [gx1 + fs * .5, gb - gh - fs * .6], [gx0 - fs * .5, gb - gh + fs * .1]], st, {fill: C.kerbR});
-    for (let k = 0; k < 5; k++) { const x = gx0 + (gx1 - gx0) * (k + .5) / 5; mk('line', {x1: x, x2: x, y1: gb - gh - fs * .2 - (fs * .7) * (k + .5) / 5, y2: gb - gh, stroke: C.dark, 'stroke-width': 1.2}, st); }
-    [[.6, 1], [.67, .8], [.84, 1.1], [.9, .75]].forEach(([x, s]) => {
-      const f = (W * x - xL) / (xR - xL), tx = W * x, ty = gy(f) + sb * .02, r = sb * .045 * s;
-      mk('rect', {x: tx - r * .12, y: ty - r * 1.4, width: r * .24, height: r * 1.5, fill: '#6b4f33'}, st);
-      mk('circle', {cx: tx, cy: ty - r * 1.9, r, fill: '#557949'}, st);
-      mk('circle', {cx: tx - r * .3, cy: ty - r * 2.2, r: r * .45, fill: '#6f9460'}, st);
-    });
-    // the ground board: torn on three sides, the track printed on it
-    const top = [], right = [], bot = [], left = [];
-    for (let i = 0; i <= 48; i++) top.push([X(i / 48), gy(i / 48)]);
-    for (let y = gy(1) + fs * .7, i = 0; y < sb - fs * .3; y += fs * .7, i++) right.push([xR - fr(i + 50) * fs * .3, y]);
-    for (let x = xR, i = 0; x > xL; x -= fs * .7, i++) bot.push([x, sb + (fr(i) - .5) * fs * .35]);
-    bot.push([xL, sb]);
-    for (let y = sb - fs * .7, i = 0; y > gy(0) + fs * .3; y -= fs * .7, i++) left.push([xL + fr(i + 90) * fs * .3, y]);
-    const gd = 'M' + [...top, ...right, ...bot, ...left].map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z';
-    const cp = mk('clipPath', {id: 'gclip'}, df); mk('path', {d: gd}, cp);
-    const gr = layer(.75, 'pp');
-    mk('path', {d: gd, fill: C.base, transform: `translate(0,${fs * .3})`}, gr);
-    mk('path', {d: gd, fill: C.near}, gr);
-    const stripes = mk('g', {'clip-path': 'url(#gclip)'}, gr);
-    for (let k = -1; k < 8; k++) { const x = xL + k * W * .16; poly([[x, sb * .4], [x + W * .07, sb * .4], [x + W * .02, sb * 1.02], [x - W * .05, sb * 1.02]].map(cl), stripes, {fill: '#82a26b', opacity: .45}); }
-    const road = mk('g', {'clip-path': 'url(#gclip)'}, gr);
-    const rw = u * 1.4, g = rw * .55, N = 72, up = [], dn = [], mid0 = [];
-    for (let i = 0; i <= N; i++) { const fm = frame(i / N); up.push(cl(off(fm, rw + fs * .5))); dn.push(cl(off(fm, -rw - fs * .5))); }
-    poly([...up, ...dn.reverse()], road, {fill: '#a8b88c', opacity: .7});
-    up.length = 0; dn.length = 0;
-    for (let i = 0; i <= N; i++) { const fm = frame(i / N); up.push(cl(off(fm, rw))); dn.push(cl(off(fm, -rw))); mid0.push(cl(fm.p)); }
-    poly([...up, ...[...dn].reverse()], road, {fill: 'url(#roadG)'});
-    const pl = pts => 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L');
-    for (const e of [up, dn]) {
-      mk('path', {d: pl(e), fill: 'none', stroke: C.kerbW, 'stroke-width': fs * .34}, road);
-      mk('path', {d: pl(e), fill: 'none', stroke: C.kerbR, 'stroke-width': fs * .34, 'stroke-dasharray': `${fs * .55} ${fs * .55}`}, road);
-    }
-    mk('path', {d: pl(mid0), fill: 'none', stroke: C.kerbW, 'stroke-width': Math.max(1, fs * .1), 'stroke-dasharray': `${fs * .9} ${fs * .7}`, opacity: .6}, road);
-    const quad = (ta, tb, fill) => { const a = frame(ta), b = frame(tb); poly([off(a, rw), off(b, rw), off(b, -rw), off(a, -rw)], road, {fill}); };
-    quad(T0 + .012, T0 + .02, C.kerbW);
-    quad(T1, T1 + .022, 'url(#chk)');
-    // vehicles, lanes, the flag
-    vehLayer = layer(.75);
-    const lane = k => { const pts = []; for (let i = 0; i <= 60; i++) pts.push(off(frame(T0 + (T1 - T0) * i / 60), k)); const el = mk('path', {d: pl(pts), fill: 'none', stroke: 'none'}, vehLayer);
-      let raw = null; if (window.MotionPathPlugin) { try { raw = MotionPathPlugin.getRawPath(el); MotionPathPlugin.cacheRawPathMeasurements(raw); } catch (e) { raw = null; } }
-      return {el, raw, len: el.getTotalLength()}; };
-    lanes.C = lane(g); lanes.B = lane(-g);
-    const ff = frame(T1 + .011); finishPt = {x: ff.p[0], y: ff.p[1]};
-    const fp = off(ff, rw + fs * .25), fh = u * .95 * ff.w / (1 - .55 * T0);
-    const flagG = mk('g', {filter: 'url(#ps)'}, vehLayer);
-    mk('line', {x1: fp[0], x2: fp[0], y1: fp[1], y2: fp[1] - fh * 1.6, stroke: C.dark, 'stroke-width': Math.max(1.4, fs * .14), 'stroke-linecap': 'round'}, flagG);
-    mk('rect', {x: fp[0], y: fp[1] - fh * 1.6, width: fh * .9, height: fh * .6, fill: 'url(#chk)', class: 'flag'}, flagG);
-    veh.C = buildCar(vehLayer); veh.B = buildBike(vehLayer);
-    // front grass, the nearest plane
-    const fr0 = layer(1.15, 'ps');
-    const tuft = (x, s, k) => { for (let j = 0; j < 5; j++) { const bx = x + (j - 2) * s * .35, hh = s * (1 + fr(k * 7 + j) * .8), lean = (fr(k * 3 + j) - .5) * s * .9;
-      poly([[bx - s * .14, sb + fs * .05], [bx + lean, sb - hh], [bx + s * .14, sb + fs * .05]], fr0, {fill: j % 2 ? C.near2 : '#4f6e3f'}); } };
-    tuft(xL + fs * 1.4, fs * 1.1, 1); tuft(W * .16, fs * .8, 2); tuft(xR - fs * 1.5, fs * 1.2, 3); tuft(W * .82, fs * .75, 4);
-
-    drawUI(); place();
-    if (!Kit.calm) qx = layers.map(l => ({d: l.d, x: gsap.quickTo(l.inner, 'x', {duration: 1, ease: 'power3'}), y: gsap.quickTo(l.inner, 'y', {duration: 1, ease: 'power3'})}));
+  function T(g, G, x, y, s, a = {}) {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': G.fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), g);
+    e.textContent = s;
+    const w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
+    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const sh = Math.max(2 - left, Math.min(0, G.W - 2 - (left + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    e._w = w;
+    return e;
+  }
+  function wheel(g, x, y, r) {
+    Kit.mk('circle', {cx: x, cy: y, r, fill: INK}, g);
+    Kit.mk('circle', {cx: x, cy: y, r: r * .55, fill: PAPER}, g);
+    Kit.mk('circle', {cx: x, cy: y, r: r * .2, fill: INK}, g);
   }
 
-  function wheel(par, cx, cy, r) {
-    const g = mk('g', {}, par);
-    mk('circle', {cx, cy, r, fill: '#1d1916'}, g);
-    mk('circle', {cx, cy, r: r * .62, fill: '#9a917f'}, g);
-    mk('circle', {cx, cy, r: r * .48, fill: '#2c2722'}, g);
-    for (let k = 0; k < 3; k++) { const a = k * Math.PI / 3; mk('line', {x1: cx - Math.cos(a) * r * .5, y1: cy - Math.sin(a) * r * .5, x2: cx + Math.cos(a) * r * .5, y2: cy + Math.sin(a) * r * .5, stroke: '#9a917f', 'stroke-width': r * .13}, g); }
-    mk('circle', {cx, cy, r: r * .15, fill: '#e3dccd'}, g);
-    return {g, cx, cy};
-  }
-  function streaks(par, x0, ys, col) {
-    const g = mk('g', {opacity: 0}, par);
-    ys.forEach(([y, l], i) => mk('line', {x1: x0 - l * u, x2: x0, y1: y * u, y2: y * u, stroke: i % 2 ? col : C.ink, 'stroke-opacity': i % 2 ? .8 : .35, 'stroke-width': Math.max(1.3, u * .07), 'stroke-linecap': 'round'}, g));
+  // The bike, the tucked rider and the car on one ground line, in one hand: 3 px ink, off-white fill.
+  function scene(svg, G) {
+    const {P, GY, x0, c0, sw, fs} = G, g = Kit.mk('g', {}, svg);
+    const X = (o, x) => +(o + x * P).toFixed(1), Y = y => +(GY - y * P).toFixed(1);
+    const pts = (o, a) => a.map(([x, y]) => `${X(o, x)},${Y(y)}`).join(' ');
+    const path = (o, a) => 'M' + a.map(([x, y]) => `${X(o, x)},${Y(y)}`).join(' L');
+    const ink = w => ({stroke: INK, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+    Kit.mk('line', {x1: 0, x2: G.W, y1: GY, y2: GY, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, g);
+
+    const b = Kit.mk('g', {class: 'veh'}, g), rod = Math.max(2.5, .075 * P);
+    Kit.mk('path', Object.assign({d: path(x0, [[1.75, .3], [1.6, .8]])}, ink(rod)), b);
+    wheel(b, X(x0, .33), Y(.3), .3 * P); wheel(b, X(x0, 1.75), Y(.3), .3 * P);
+    Kit.mk('path', Object.assign({d: path(x0, [[.33, .3], [.88, .44]])}, ink(rod * 1.3)), b);
+    Kit.mk('polygon', {points: pts(x0, [[.08, .93], [.56, .93], [.66, .87], [.98, .96], [1.3, 1.04], [1.58, 1.12], [1.98, .8], [1.96, .64], [1.62, .44], [1.16, .3], [.86, .34], [.62, .6], [.16, .84]]), fill: PAPER, stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, b);
+    Kit.mk('polygon', {points: pts(x0, [[1.46, 1.08], [1.58, 1.12], [1.84, .93], [1.63, .95]]), fill: INK}, b);
+    Kit.mk('path', Object.assign({d: path(x0, [[.7, .98], [1.06, .72], [.84, .55]])}, ink(.12 * P)), b);
+    Kit.mk('polygon', {points: pts(x0, [[.6, .93], [.64, 1.1], [1.1, 1.25], [1.3, 1.18], [1.2, 1.04], [.88, .93]]), fill: INK, stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, b);
+    Kit.mk('path', Object.assign({d: path(x0, [[1.22, 1.15], [1.36, .99], [1.56, 1.05]])}, ink(.09 * P)), b);
+    Kit.mk('circle', {cx: X(x0, 1.41), cy: Y(1.24), r: .14 * P, fill: PAPER, stroke: INK, 'stroke-width': sw * .85}, b);
+    Kit.mk('polygon', {points: pts(x0, [[1.44, 1.31], [1.55, 1.25], [1.54, 1.17], [1.44, 1.2]]), fill: INK}, b);
+
+    const c = Kit.mk('g', {class: 'veh'}, g);
+    Kit.mk('polygon', {points: pts(c0, [[.05, .25], [0, .72], [.12, .92], [.55, 1.0], [1.1, 1.45], [2.6, 1.45], [3.15, 1.0], [4.1, .86], [4.3, .58], [4.25, .25]]), fill: PAPER, stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, c);
+    Kit.mk('polygon', {points: pts(c0, [[1.18, 1.35], [2.55, 1.35], [3.0, 1.03], [.72, 1.03]]), fill: INK}, c);
+    Kit.mk('line', {x1: X(c0, 1.95), x2: X(c0, 1.95), y1: Y(1.03), y2: Y(1.37), stroke: PAPER, 'stroke-width': Math.max(2, .08 * P)}, c);
+    Kit.mk('line', {x1: X(c0, 1.95), x2: X(c0, 1.95), y1: Y(.32), y2: Y(.98), stroke: INK, 'stroke-width': 1.5}, c);
+    wheel(c, X(c0, .85), Y(.32), .32 * P); wheel(c, X(c0, 3.45), Y(.32), .32 * P);
+
+    const lab = Kit.mk('g', {class: 'veh'}, g);
+    const bl = T(lab, G, X(x0, 1.05), GY + fs * 1.45, '280 hp · 168 kg dry', {'text-anchor': 'middle'});
+    const bRight = +bl.getAttribute('x') + bl._w / 2;
+    T(lab, G, Math.max(X(c0, 2.15), bRight + fs * 3.2), GY + fs * 1.45, '1,300 kg', {'text-anchor': 'middle'});
     return g;
   }
-  function buildBike(par) {
-    const wrap = mk('g', {}, par);
-    mk('ellipse', {cx: 0, cy: 0, rx: u * .85, ry: u * .09, fill: 'rgba(34,25,15,.3)'}, wrap);
-    const streak = streaks(wrap, -.95 * u, [[-.3, .7], [-.55, .9], [-.82, .55]], C.bike);
-    const lift = mk('g', {}, wrap), b = mk('g', {filter: 'url(#ps)'}, lift);
-    const r = u * .29, wheels = [wheel(b, -.58 * u, -r, r), wheel(b, .62 * u, -r, r)];
-    poly(U([[-.58, -.29], [-.1, -.44], [.1, -.37], [-.5, -.21]]), b, {fill: C.dark});
-    mk('line', {x1: .62 * u, y1: -.29 * u, x2: .42 * u, y2: -.74 * u, stroke: C.dark, 'stroke-width': u * .07}, b);
-    poly(U([[-.84, -.6], [-.3, -.63], [-.22, -.48], [-.7, -.46]]), b, {fill: C.bike});
-    poly(U([[-.3, -.62], [.05, -.7], [.38, -.82], [.62, -.78], [.87, -.56], [.75, -.4], [.35, -.33], [-.12, -.33], [-.22, -.48]]), b, {fill: C.bike});
-    poly(U([[0, -.6], [.6, -.67], [.73, -.5], [.1, -.47]]), b, {fill: C.suit});
-    poly(U([[.42, -.82], [.62, -.96], [.71, -.86], [.62, -.78]]), b, {fill: '#a8cbcc'});
-    poly(U([[-.33, -.67], [.02, -.67], [.17, -.42], [.05, -.37], [-.05, -.55], [-.3, -.55]]), b, {fill: C.dark});
-    poly(U([[-.41, -.68], [-.2, -.98], [.2, -1.01], [.45, -.9], [.4, -.8], [.05, -.83], [-.25, -.62]]), b, {fill: C.suit});
-    poly(U([[.15, -.9], [.5, -.78], [.46, -.71], [.12, -.82]]), b, {fill: C.dark});
-    mk('circle', {cx: .43 * u, cy: -.98 * u, r: .15 * u, fill: '#f7f0e3'}, b);
-    poly(U([[.47, -1.04], [.58, -.99], [.56, -.92], [.46, -.94]]), b, {fill: C.ink});
-    return {wrap, lift, wheels, r, streak};
+  // A 2.8-brick load: two full bricks and a 0.8 brick, stacked from a base line upward.
+  function load(g, x, base, w, hb, cls) {
+    [1, 1, .8].forEach((f, r) => Kit.mk('rect', Object.assign({x: x, y: base - (r + 1) * hb + .5, width: Math.max(1, w * f - .5), height: Math.max(1, hb - 1), rx: Math.min(1.5, hb * .25), fill: INK}, cls ? {class: cls} : {}), g));
   }
-  function buildCar(par) {
-    const wrap = mk('g', {}, par);
-    mk('ellipse', {cx: 0, cy: 0, rx: u * 1.4, ry: u * .1, fill: 'rgba(34,25,15,.3)'}, wrap);
-    const streak = streaks(wrap, -1.45 * u, [[-.28, .5], [-.45, .6], [-.62, .38]], C.car);
-    const lift = mk('g', {}, wrap), b = mk('g', {filter: 'url(#ps)'}, lift);
-    poly(U([[-1.32, -.5], [-1.2, -.68], [-1.0, -.68], [-1.04, -.55]]), b, {fill: C.dark});
-    poly(U([[-1.3, -.2], [-1.33, -.46], [-1.15, -.54], [-.62, -.57], [-.32, -.81], [.18, -.85], [.5, -.65], [1.12, -.55], [1.33, -.42], [1.35, -.2]]), b, {fill: C.car});
-    poly(U([[-1.3, -.22], [1.35, -.22], [1.3, -.15], [-1.28, -.15]]), b, {fill: C.dark});
-    poly(U([[-.5, -.59], [-.28, -.77], [.15, -.79], [.41, -.62]]), b, {fill: C.glass});
-    poly(U([[-.06, -.6], [-.03, -.78], [.02, -.78], [0, -.6]]), b, {fill: C.car});
-    poly(U([[-1.26, -.42], [1.27, -.4], [1.3, -.34], [-1.27, -.36]]), b, {fill: C.kerbW, opacity: .9});
-    mk('circle', {cx: 1.25 * u, cy: -.45 * u, r: .055 * u, fill: '#f6dc8a'}, b);
-    const r = u * .25;
-    [-.78, .82].forEach(x => mk('circle', {cx: x * u, cy: -.24 * u, r: r * 1.22, fill: C.dark}, b));
-    const wheels = [wheel(b, -.78 * u, -.24 * u, r), wheel(b, .82 * u, -.24 * u, r)];
-    return {wrap, lift, wheels, r, streak};
+  // The bike's own 280 hp, sitting on its tail.
+  function bikeBricks(svg, G) {
+    const g = Kit.mk('g', {}, svg);
+    load(g, G.x0 + .09 * G.P, G.GY - .93 * G.P, G.bw, G.hb, 'bb');
   }
-  function at(ln, p) {
-    if (ln.raw) { const q = MotionPathPlugin.getPositionOnPath(ln.raw, p, true); if (q && isFinite(q.x)) return q; }
-    const a = ln.el.getPointAtLength(p * ln.len), b = ln.el.getPointAtLength(Math.min(ln.len, p * ln.len + 1));
-    return {x: a.x, y: a.y, angle: Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI};
-  }
-  function place() {
-    if (!veh.B) return;
-    for (const [k, p, v0] of [['C', S.pC, S.vC], ['B', S.pB, S.vB]]) {
-      const v = veh[k], ln = lanes[k], q = at(ln, p), tt = T0 + (T1 - T0) * p, s = (1 - .55 * tt) / (1 - .55 * T0);
-      v.wrap.setAttribute('transform', `translate(${q.x.toFixed(2)},${q.y.toFixed(2)}) rotate(${((q.angle || 0) * .3).toFixed(2)}) scale(${s.toFixed(3)})`);
-      const rot = p * ln.len / v.r * 57.3;
-      v.wheels.forEach(w => w.g.setAttribute('transform', `rotate(${rot.toFixed(1)} ${w.cx} ${w.cy})`));
-      v.streak.setAttribute('opacity', (Math.min(1, v0) * .9).toFixed(2));
+
+  // A pile of 100 hp bricks that really fall and stack, in three guided columns on the roof.
+  function Pile(g, cx, floorY, bw, hb, fill, stroke) {
+    const {Engine, Bodies, Composite, Body} = Matter;
+    const E = Engine.create(); E.positionIterations = 10; E.velocityIterations = 8; E.gravity.y = 1;
+    const p = bw + 2, L = floorY + 3000, t = 6, wall = {isStatic: true, friction: 0};
+    const parts = [Bodies.rectangle(cx, floorY + 15, COLS * p + 60, 30, {isStatic: true})];
+    for (let j = 0; j <= COLS; j++) {
+      const x = cx + (j - COLS / 2) * p, outer = j === 0 || j === COLS;
+      parts.push(Bodies.rectangle(outer ? x + (j === 0 ? -t / 2 : t / 2) : x, floorY - L / 2, outer ? t : 1.6, L, wall));
     }
+    Composite.add(E.world, parts);
+    const list = [];
+    const sx = k => cx + ((k % COLS) - (COLS - 1) / 2) * p, ty = k => floorY - (Math.floor(k / COLS) + .5) * hb;
+    const draw = () => list.forEach(o => { o.el.setAttribute('x', o.b.position.x - bw / 2 + .5); o.el.setAttribute('y', o.b.position.y - hb / 2 + .5); });
+    return {
+      set(m) {
+        while (list.length > m) { const o = list.pop(); Composite.remove(E.world, o.b); o.el.remove(); }
+        while (list.length < m) {
+          const k = list.length; let y = ty(k) - hb * 2.5;
+          for (const o of list) if (o.k % COLS === k % COLS) y = Math.min(y, o.b.position.y - hb * 1.15);
+          const b = Bodies.rectangle(sx(k), y, bw, hb, {friction: .5, frictionStatic: 1, restitution: 0, inertia: Infinity, frictionAir: .01});
+          Composite.add(E.world, b);
+          const el = Kit.mk('rect', {width: bw - 1, height: Math.max(1, hb - 1), rx: Math.min(2, hb * .25), fill, stroke: stroke || 'none', 'stroke-width': stroke ? .8 : 0}, g);
+          list.push({b, el, k});
+        }
+        draw();
+      },
+      settle() { list.forEach(o => { Body.setPosition(o.b, {x: sx(o.k), y: ty(o.k)}); Body.setVelocity(o.b, {x: 0, y: 0}); }); draw(); },
+      step() { Engine.update(E, 1000 / 60); draw(); }
+    };
   }
 
-  // ---------- the two arrows: push per kilo ----------
-  const lenOf = r => r / 2.4 * Lmax;
-  function arrowD(x0, y, len) { const h = fs * .42; len = Math.max(len, h * 1.3); const x1 = x0 + Math.max(0, len - h * 1.3);
-    return `M${x0},${y - h * .48}L${x1},${y - h * .48}L${x1},${y - h}L${x0 + len},${y}L${x1},${y + h}L${x1},${y + h * .48}L${x0},${y + h * .48}Z`; }
-  function drawUI() {
-    const g = ui.g = mk('g', {}, svg);
-    mk('circle', {cx: ax0 + fs * .3, cy: yBL - fs * .33, r: fs * .3, fill: C.bike}, g);
-    T(g, ax0 + fs * .9, yBL, 'BIKE 168 kg · 280 hp');
-    ui.bR = T(g, W - fs * .3, yBL, '? hp/kg', {'text-anchor': 'end'});
-    mk('line', {x1: ax0, x2: ax0 + Lmax, y1: yBA, y2: yBA, stroke: C.ink, 'stroke-opacity': .2, 'stroke-width': 1.3, 'stroke-dasharray': '3 4'}, g);
-    ui.bArrow = mk('path', {fill: C.bike, filter: 'url(#ps)'}, g);
-    ui.bQ = mk('g', {filter: 'url(#ps)'}, g);
-    mk('rect', {x: ax0, y: yBA - fs * .6, width: fs * 1.5, height: fs * 1.2, rx: fs * .3, fill: C.kerbW}, ui.bQ);
-    T(ui.bQ, ax0 + fs * .75, yBA + fs * .36, '?', {'text-anchor': 'middle', fill: C.bike, 'font-weight': 800});
-    ui.guide = mk('line', {x1: 0, x2: 0, y1: yBA + fs * .5, y2: yCA - fs * .5, stroke: C.ink, 'stroke-width': 1.4, 'stroke-dasharray': '2 3', opacity: 0}, g);
-    mk('circle', {cx: ax0 + fs * .3, cy: yCL - fs * .33, r: fs * .3, fill: C.car}, g);
-    ui.cL = T(g, ax0 + fs * .9, yCL, '');
-    ui.cR = T(g, W - fs * .3, yCL, '', {'text-anchor': 'end'});
-    mk('line', {x1: ax0, x2: ax0 + Lmax, y1: yCA, y2: yCA, stroke: C.ink, 'stroke-opacity': .2, 'stroke-width': 1.3, 'stroke-dasharray': '3 4'}, g);
-    ui.cArrow = mk('path', {fill: C.car, filter: 'url(#ps)'}, g);
-    ui.knob = mk('g', {opacity: phase === 'guess' ? 1 : 0}, g);
-    mk('circle', {cx: 0, cy: 0, r: fs * .6, fill: 'none', stroke: C.car, 'stroke-width': 2, class: 'pulse'}, ui.knob);
-    ui.knobIn = mk('g', {filter: 'url(#ps)'}, ui.knob);
-    mk('circle', {cx: 0, cy: 0, r: fs * .62, fill: C.kerbW, stroke: C.car, 'stroke-width': fs * .18}, ui.knobIn);
-    mk('circle', {cx: 0, cy: 0, r: fs * .2, fill: C.car}, ui.knobIn);
-    ui.hint = T(ui.knob, fs * 1.1, fs * .38, 'drag →', {style: 'font-family:var(--hand)', 'font-size': fs * 1.15, class: 'nudge'});
-    updateUI();
+  // ---------- the front ----------
+  function layoutFront() {
+    INK = getComputedStyle(card).getPropertyValue('--k').trim() || '#111';
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); F = geom(f.W, f.H, MAX / COLS);
+    scene(svg, F); bikeBricks(svg, F);
+    pileF = Pile(Kit.mk('g', {}, svg), F.cx, F.roofY, F.bw, F.hb, GUESS, INK);
+    pileF.set(n); pileF.settle();
+    hint = null;
+    if (!touched) {
+      hint = Kit.mk('g', {class: 'hint'}, svg);
+      const ay = F.roofY - 5;
+      Kit.mk('path', {d: `M${F.cx},${ay} v-${F.fs * 1.7} m-6,7 l6,-7 l6,7`, stroke: INK, 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
+    }
+    readout = T(svg, F, F.cx, 0, '', {'text-anchor': 'middle', 'font-size': F.fs * 1.7, 'font-weight': 800, style: 'font-family:var(--display)'});
+    showReadout();
   }
-  function updateUI() {
-    if (!ui.cArrow) return;
-    const lc = lenOf(S.hp / KG);
-    ui.cArrow.setAttribute('d', arrowD(ax0, yCA, lc));
-    ui.knob.setAttribute('transform', `translate(${ax0 + lc},${yCA})`);
-    ui.cL.textContent = `CAR 1,300 kg · ${fmt(S.hp)} hp`;
-    ui.cR.textContent = `${(S.hp / KG).toFixed(2)} hp/kg`;
-    if (S.bA > 0) {
-      ui.bArrow.style.display = ''; ui.bArrow.setAttribute('d', arrowD(ax0, yBA, lenOf(RB) * S.bA));
-      ui.bR.textContent = `${(RB * S.bA).toFixed(2)} hp/kg`; ui.bQ.setAttribute('opacity', Math.max(0, 1 - S.bA * 3));
-    } else { ui.bArrow.style.display = 'none'; ui.bR.textContent = '? hp/kg'; ui.bQ.setAttribute('opacity', 1); }
-    const gx = ax0 + lenOf(RB); ui.guide.setAttribute('x1', gx); ui.guide.setAttribute('x2', gx);
-    ui.guide.setAttribute('opacity', S.bA >= .999 ? .5 : 0);
-    ui.hint.style.display = touched ? 'none' : '';
+  function showReadout() {
+    if (!readout || !F) return;
+    readout.textContent = n ? `${fmt(n * 100)} hp` : '? hp';
+    readout.setAttribute('opacity', n ? 1 : .6);
+    const y = n ? F.roofY - Math.ceil(n / COLS) * F.hb - 7 : F.roofY - 5 - F.fs * 1.7 - 7;
+    readout.setAttribute('y', y);
+    readout.setAttribute('x', F.cx);
+    const w = readout.getComputedTextLength(), left = F.cx - w / 2;
+    const sh = Math.max(2 - left, Math.min(0, F.W - 2 - (left + w)));
+    if (sh) readout.setAttribute('x', F.cx + sh);
+  }
+  function setN(v) {
+    v = Math.max(0, Math.min(MAX, v));
+    if (v === n) return;
+    n = v; pileF.set(n); if (Kit.calm) pileF.settle(); showReadout(); Kit.haptic('selection');
   }
 
-  // ---------- touch ----------
-  const loc = e => { const r = svg.getBoundingClientRect(), k = Math.min(r.width / W, r.height / H) || 1,
-      ox = (r.width - W * k) / 2, oy = (r.height - H * k) / 2;
-    return {x: (e.clientX - r.left - ox) / k, y: (e.clientY - r.top - oy) / k, nx: (e.clientX - r.left) / r.width - .5, ny: (e.clientY - r.top) / r.height - .5}; };
-  function setFromX(x) {
-    let h = Math.round(Math.max(0, x - ax0) / Lmax * 2.4 * KG / 50) * 50; h = Math.max(100, Math.min(3000, h));
-    if (h === S.hp) return;
-    if (Math.floor(h / 500) !== Math.floor(S.hp / 500)) Kit.haptic('light');
-    S.hp = h; updateUI();
-    if (veh.C && !Kit.calm) gsap.to(veh.C.lift, {x: (h / 3000) * u * .35, duration: .3, ease: 'power3.out', overwrite: 'auto'});
-  }
-  function release() {
-    if (released) return; released = true; sure.on();
-    say.innerHTML = 'Set? Now say <b>how sure</b> you are, and they race.';
-  }
-  let tgt = {x: 0, y: 0}, lastMove = -1e9;
+  const svg = Kit.$('pic');
+  let drag = false;
+  const fromY = e => { const r = svg.getBoundingClientRect(); return Math.round((F.roofY - (e.clientY - r.top)) / F.hb * COLS); };
   svg.addEventListener('pointerdown', e => {
-    if (phase !== 'guess') return; const p = loc(e); if (p.y < sb) return;
-    dragging = true; touched = true; svg.setPointerCapture(e.pointerId); Kit.haptic('selection');
-    gsap.to(ui.knobIn, {scale: 1.3, duration: .15, ease: 'power3.out', transformOrigin: '50% 50%'});
-    setFromX(p.x); updateUI();
+    if (answered || !F) return;
+    drag = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; if (hint) hint.remove(); }
+    setN(fromY(e));
   });
-  svg.addEventListener('pointermove', e => { const p = loc(e); tgt = {x: p.nx, y: p.ny}; lastMove = performance.now(); if (dragging) setFromX(p.x); });
-  const up = () => { if (!dragging) return; dragging = false; gsap.to(ui.knobIn, {scale: 1, duration: .6, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%'}); release(); };
-  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+  svg.addEventListener('pointermove', e => { if (drag) setN(fromY(e)); });
+  const end = () => {
+    if (!drag) return; drag = false;
+    if (n > 0 && !sureOn) wake();
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  gsap.ticker.add(() => {
-    if (Kit.calm || !entered || !qx.length) return;
-    const now = performance.now(); let nx = tgt.x, ny = tgt.y;
-    if (now - lastMove > 2500) { const t = now / 1000; nx = Math.sin(t * .35) * .35; ny = Math.cos(t * .27) * .25; }
-    nx = clampN(nx, -.5, .5) + (S.pB + S.pC) * .12; ny = clampN(ny, -.5, .5);
-    qx.forEach(q => { q.x(-nx * fs * .55 * q.d); q.y(-ny * fs * .3 * q.d); });
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered || n === 0) return;
+    answered = true;
+    const ok = Math.abs(n * 100 - TRUTH * 100) <= 300, said = `${fmt(n * 100)} hp`;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'close' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
   });
+  function wake() {
+    sureOn = true; sure.on(); Kit.$('sure').classList.add('live');
+    say.innerHTML = 'Happy with your pile? Say <b>how sure</b> you are. You can still drag.';
+  }
 
-  // ---------- the race: constant acceleration, so distance grows with time squared ----------
-  function race(carHp) {
-    return new Promise(res => {
-      const DB = 2.1, DC = DB * Math.sqrt(RB / (carHp / KG)), Tt = Math.min(Math.max(DB, DC), DB * 1.75) + .15, clk = {t: 0};
-      S.pB = S.pC = S.vB = S.vC = 0; place();
-      gsap.to(clk, {t: Tt, duration: Tt, ease: 'none', onUpdate() {
-        S.pB = Math.min(1, (clk.t / DB) ** 2); S.pC = Math.min(1, (clk.t / DC) ** 2);
-        S.vB = S.pB < 1 ? clk.t / DB : 0; S.vC = S.pC < 1 ? clk.t / DC : 0; place(); },
-        onComplete: () => { S.vB = S.vC = 0; place(); res({DB, DC}); }});
+  // ---------- the back ----------
+  function layoutBack(animate) {
+    const my = ++build;
+    const s2 = Kit.$('pic2'); s2.innerHTML = '';
+    const f = Kit.fitSvg(s2), rows = Math.ceil(Math.max(TRUTH, n) / COLS), G = geom(f.W, f.H, rows);
+    scene(s2, G); bikeBricks(s2, G);
+    const {cx, bw, hb, roofY, fs, P, GY, x0, c0} = G, p = bw + 2;
+    const px0 = cx - COLS * p / 2, px1 = cx + COLS * p / 2;
+
+    // Your guess: a dashed outline beside Rossi's pile, same width, same base.
+    const gx = px1 + .12 * P, gw = COLS * p - 2, gh = (n / COLS) * hb, gTop = roofY - gh;
+    const gG = Kit.mk('g', {opacity: animate ? 0 : 1}, s2);
+    Kit.mk('rect', {x: gx, y: gTop, width: gw, height: Math.max(2, gh), fill: 'none', stroke: GUESS, 'stroke-width': 2, 'stroke-dasharray': '5 4'}, gG);
+    T(gG, G, gx, gTop - 6, `you: ${fmt(n * 100)} hp`);
+
+    // Rossi's figure: twenty real bricks.
+    pileB = Pile(Kit.mk('g', {}, s2), cx, roofY, bw, hb, INK);
+
+    // The same pull: identical arrows to matching finish marks.
+    const tG = Kit.mk('g', {opacity: animate ? 0 : 1}, s2);
+    const finTop = GY - 1.45 * P, aw = Math.max(3, .1 * P), hd = aw * 2, ay = GY - .55 * P;
+    const bfin = x0 + 3.05 * P, cfin = c0 + 5.3 * P;
+    [[x0 + 2.15 * P, bfin], [c0 + 4.4 * P, cfin]].forEach(([s, e]) => {
+      Kit.mk('line', {x1: e, x2: e, y1: GY, y2: finTop, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '4 4'}, tG);
+      Kit.mk('path', {d: `M${s},${ay} H${e - aw} M${e - aw - hd},${ay - hd} L${e - aw},${ay} L${e - aw - hd},${ay + hd}`, stroke: INK, 'stroke-width': aw, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, tG);
     });
-  }
-  function confetti() {
-    const cols = [C.car, C.suit, C.bike, C.kerbW, C.kerbR, '#7a5c8e'];
-    const cx = v => clampN(v, fs, W - fs), cy = v => clampN(v, fs, sb);
-    for (let i = 0; i < 22; i++) {
-      const r = mk('rect', {x: -fs * .18, y: -fs * .11, width: fs * .36, height: fs * .22, fill: cols[i % cols.length], class: 'conf'}, vehLayer);
-      const dx = (fr(i * 9) - .62) * W * .45, hgt = sb * (.12 + fr(i * 5) * .25), fall = sb * (.05 + fr(i * 3) * .2);
-      gsap.set(r, {x: finishPt.x, y: finishPt.y});
-      gsap.to(r, {motionPath: {path: [{x: finishPt.x, y: finishPt.y}, {x: cx(finishPt.x + dx * .55), y: cy(finishPt.y - hgt)}, {x: cx(finishPt.x + dx), y: cy(finishPt.y + fall)}], curviness: 1.2, autoRotate: true},
-        duration: 1.5 + fr(i) * .7, ease: 'power2.out', delay: fr(i * 2) * .15});
-      gsap.to(r, {opacity: 0, duration: .5, delay: 1.4 + fr(i) * .7, onComplete: () => r.remove()});
-    }
-  }
-  const WHY = 'The bike has 280 hp for only 168 kg dry: about <b>1.7 hp per kilo</b>. To match that, a 1,300 kg car needs roughly <b>2,000 hp</b>. That\'s why Rossi calls MotoGP acceleration savage.';
-  function relayoutIfNeeded() { requestAnimationFrame(() => { const z = size(); if (z.w !== zW || z.h !== zH) layout(); }); }
-  function finish() {
-    phase = 'done'; S.hp = 2000; S.bA = 1; S.pB = 1; S.pC = 1; S.vB = S.vC = 0;
-    updateUI(); place(); ui.knob.setAttribute('opacity', 0);
-    say.innerHTML = WHY; Kit.show('keep');
-    pend = false; relayoutIfNeeded();
-    endRes();
-  }
-  async function go(pct) {
-    if (phase !== 'guess') return;
-    phase = 'race'; dragging = false;
-    const guess = S.hp, ok = guess >= 1700 && guess <= 2400;
-    Kit.answer({choice: `${fmt(guess)} hp`, correct: ok, sure: pct});
-    sure.grade(ok, pct, `${fmt(guess)} hp, ${ok ? 'about right' : 'off'}`);
-    if (Kit.calm) { finish(); return; }
-    gsap.to(ui.knob, {opacity: 0, duration: .3});
-    gsap.to(veh.C.lift, {x: 0, duration: .25, ease: 'power2.out'});
-    say.innerHTML = '<b>Go!</b> Both start together, full throttle.';
-    const r1 = await race(guess), k = r1.DC / r1.DB;
-    Kit.haptic('light');
-    say.innerHTML = k > 1.06 ? `With ${fmt(guess)} hp the car is left behind: only ${(guess / KG).toFixed(2)} hp for each kilo it carries.`
-      : k < .94 ? `With ${fmt(guess)} hp the car pulls away: more push per kilo than the bike.`
-      : `Neck and neck: ${fmt(guess)} hp gives the car about the bike's push per kilo.`;
-    await wait(1400);
-    say.innerHTML = 'The bike\'s push: <b>280 hp ÷ 168 kg</b>. The video\'s match: a 1,300 kg car with about <b>2,000 hp</b>.';
-    const tl = gsap.timeline();
-    tl.to([veh.B.lift, veh.C.lift], {y: -u * 1.3, opacity: 0, duration: .35, ease: 'power2.in', stagger: .06})
-      .add(() => { S.pB = S.pC = 0; place(); })
-      .to([veh.C.lift, veh.B.lift], {y: 0, opacity: 1, duration: .7, ease: 'back.out(2.2)', stagger: .1})
-      .to(S, {bA: 1, duration: 1.2, ease: 'expo.out', onUpdate: updateUI}, .25)
-      .to(S, {hp: 2000, duration: 1.6, ease: 'elastic.out(1,.55)', onUpdate: updateUI}, .75);
-    await tl; await wait(350);
-    await race(2000);
-    Kit.haptic('success'); confetti();
-    await wait(500);
-    finish();
-  }
-  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', go);
 
-  // keep the drawing at real pixel size whenever the stage changes height
-  new ResizeObserver(() => {
-    const z = size(); if (z.w < 60 || z.h < 60) return;
-    if (z.w === zW && z.h === zH) return;
-    if (phase === 'race') { pend = true; return; }
-    requestAnimationFrame(() => { const q = size(); if (q.w !== zW || q.h !== zH) layout(); });
-  }).observe(stage);
+    // The pile's label, on a short leader to its top, kept clear of the finish mark.
+    const fsT = fs * 1.4, top = roofY - Math.ceil(TRUTH / COLS) * hb, lx = px0 - .45 * P;
+    const yb = Math.min(top + .35 * fsT, finTop - 8);
+    Kit.mk('line', {x1: lx + 3, y1: yb - .32 * fsT, x2: px0 - 1, y2: top, stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, tG);
+    T(tG, G, lx, yb, '2,000 hp', {'text-anchor': 'end', 'font-size': fsT, 'font-weight': 800, style: 'font-family:var(--display)'});
 
-  Kit.onShow.card = layout;
+    if (!animate) { pileB.set(TRUTH); pileB.settle(); return; }
+    gsap.to(gG, {opacity: 1, duration: .45, delay: .6, ease: 'power2.out'});
+    const t0 = 1.1;
+    for (let i = 1; i <= TRUTH; i++) gsap.delayedCall(t0 + i * .06, () => { if (my === build) pileB.set(i); });
+    gsap.delayedCall(t0 + TRUTH * .06 + .6, () => { if (my !== build) return; Kit.haptic('success'); gsap.to(tG, {opacity: 1, duration: .5, ease: 'power2.out'}); });
+  }
+  document.addEventListener('turned', () => { turned = true; layoutBack(!Kit.calm && !fast && typeof gsap !== 'undefined'); });
+
+  // ---------- the loop ----------
+  let running = false;
+  const tick = () => { if (pileF) pileF.step(); if (pileB) pileB.step(); requestAnimationFrame(tick); };
+  const run = () => { if (!running) { running = true; requestAnimationFrame(tick); } };
+
+  Kit.onShow.card = () => { layoutFront(); if (turned) layoutBack(false); run(); };
   Kit.onEnter.card = () => {
-    entered = true;
-    if (!layers.length) layout();
-    if (Kit.calm || !layers.length) return;
-    gsap.from(layers.map(l => l.outer), {y: -sb * .3, opacity: 0, duration: 1, ease: 'back.out(1.3)', stagger: .08});
-    gsap.from([veh.C.lift, veh.B.lift], {y: -u * 2.4, opacity: 0, duration: .9, ease: 'bounce.out', stagger: .15, delay: .75});
-    gsap.from(ui.g, {opacity: 0, y: fs, duration: .7, ease: 'power3.out', delay: .5});
+    run();
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.from('#pic .veh', {opacity: 0, y: 10, stagger: .14, duration: .5, ease: 'power3.out'});
+    gsap.from('#pic .bb', {opacity: 0, y: -24, stagger: .1, duration: .4, delay: .55, ease: 'power2.in'});
   };
   Kit.play.card = async () => {
-    SPEED = 5; gsap.globalTimeline.timeScale(5);
-    touched = true; setFromX(ax0 + lenOf(1200 / KG)); updateUI(); release();
-    await wait(150);
-    Kit.$('sure').querySelector('[data-v="80"]').click();
-    await ended; await new Promise(r => setTimeout(r, 300));
-    gsap.globalTimeline.timeScale(1); SPEED = 1;
+    fast = true; run(); touched = true; if (hint) hint.remove();
+    setN(9); pileF.settle(); if (!sureOn) wake();
+    await wait(120);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(1700);
   };
 })();
 Kit.single();

@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611080030,
- "built": "2026-11-08T00:30:59Z",
+ "version": 202611080701,
+ "built": "2026-11-08T07:01:36Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -86308,12 +86308,12 @@ const String kEmbeddedBank = r'''
    "topic": "life",
    "genre": "life.money_and_time",
    "strand": "life.money_and_time.enough_money",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How do Hong Kong landlords turn one flat into three homes?",
-   "answer": "Hong Kong landlords carve old flats in giant blocks like the Monster Building into three homes. They do it by adding thin, non-load-bearing walls to existing rooms, a method called cage-home construction, done without government authorization. The resulting homes are the size of a prison cell.",
-   "move": "One old flat, thinner walls, three homes the size of a prison cell.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "To carve one old flat into tiny homes, which walls come down?",
+   "answer": "Only the load-bearing wall stays; every other wall can be knocked down. In huge old blocks like the Monster Building, non-load-bearing walls come down without authorization and thinner ones go up. A 30–40 m² studio becomes three homes of about 10 m² each.",
+   "move": "Most of Hong Kong's tiny flats are illegal: old flats cut up by knocking down walls that aren't load-bearing and putting up thinner ones.",
    "keywords": [
     "hong-kong",
     "monster-building",
@@ -86332,15 +86332,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Floor plan of one old Hong Kong flat. Tap the two thick inner walls to see how the flat is carved into three small homes.",
-    "ground": "#123f72",
-    "page": "pages/life-carving-cage-homes.html?v=70e90cb35456",
-    "bytes": 25353
+    "touch": "taps",
+    "label": "A sketch of an old flat. The reader taps every wall that builders would knock down to carve the flat into tiny homes. The task is to leave only the load-bearing wall standing.",
+    "page": "pages/life-carving-cage-homes.html?v=bce0204f07f0",
+    "bytes": 18568
    },
    "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=6fBSVSmYSaE&t=57s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "life-child-miners-potosi",
@@ -101318,12 +101317,12 @@ const String kEmbeddedBank = r'''
    "topic": "medicine",
    "genre": "medicine.public_health",
    "strand": "medicine.public_health.prevention",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How does the international cancer agency classify alcohol?",
-   "answer": "The International Agency for Research on Cancer puts alcohol in Group 1: there is sufficient evidence that it causes cancer. Cigarette smoke is in the same group. So drinking raises the risk of some kinds of cancer.",
-   "move": "Alcohol is a Group 1 carcinogen, the same group as cigarette smoke.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "How sure is the cancer agency that alcohol causes cancer?",
+   "answer": "The agency puts alcohol in Group 1, carcinogenic to humans, alongside cigarette smoke: the evidence that it causes cancer is sufficient. So drinking raises the risk of some cancers.",
+   "move": "A ranking of evidence tells you how sure we are, not how much it hurts.",
    "keywords": [
     "alcohol",
     "cancer",
@@ -101343,15 +101342,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Page asks how the international cancer agency classifies alcohol. Each tap adds one study until the evidence is sufficient, then reveals Group 1: carcinogenic to humans, listed alongside cigarette smoke.",
-    "ground": "#f2eee4",
-    "page": "pages/medicine-alcohol-group-one.html?v=20733d4f6819",
-    "bytes": 19683
+    "touch": "drags",
+    "label": "A page asks where the cancer agency IARC places alcohol. A wine glass is dragged along a ranked scale of evidence groups, then revealed as Group 1, carcinogenic to humans, alongside cigarette smoke.",
+    "page": "pages/medicine-alcohol-group-one.html?v=4eb90349fdb2",
+    "bytes": 16610
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=205s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "medicine-alcohol-iceberg",
@@ -189620,12 +189618,12 @@ const String kEmbeddedBank = r'''
    "topic": "science",
    "genre": "science.physics",
    "strand": "science.physics.why_things_fall",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What is the “third dimension of friction” when rallying on gravel?",
-   "answer": "On gravel, a car's tyres balance rolling friction and sliding friction at the same time. Rolling pushes the car forward, while sliding carries it sideways. Both act together, so gravel grip is a hybrid rather than pure roll or pure slide.",
-   "move": "Gravel grip is a hybrid: roll to go forward, slide to go sideways, at once.",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "On gravel, why does a rally driver let the car slide into corners?",
+   "answer": "A rally driver on gravel lets the car slide into corners because it rolls forward and slides sideways at once. The video calls this almost a third kind of friction, halfway between rolling and sliding. Using both lets the car slow down less going into the bend.",
+   "move": "A slide isn't always lost grip: used on purpose, it's a second force to steer with.",
    "keywords": [
     "rally driving",
     "gravel",
@@ -189645,15 +189643,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A horizontal slider with a draggable jewel, labelled ROLL at one end and SLIDE at the other. The question asks how a rally car's tyres should meet gravel: drag the jewel between roll and slide.",
-    "ground": "#19140f",
-    "page": "pages/science-gravel-third-friction.html?v=151979b57faa",
-    "bytes": 25331
+    "touch": "taps",
+    "label": "Multiple-choice card asking why a rally driver lets the car slide into corners on gravel. Three reasons are offered, and the reader picks one and rates how sure they are.",
+    "page": "pages/science-gravel-third-friction.html?v=f71dcfb5bdb8",
+    "bytes": 19161
    },
    "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=2SCEUgazR_8&t=241s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "science-gravity-1",
@@ -236229,10 +236226,10 @@ const String kEmbeddedBank = r'''
    "strand": "technology.batteries.charging",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "none",
-   "question": "How fast could a graphene phone battery charge, from empty to full?",
-   "answer": "A smartphone battery made with graphene could charge completely in just a few seconds, says the video. It is a forecast, and the battery should also last much longer.",
-   "move": "Graphene's big promise for phones: a full charge in seconds.",
+   "principle": "estimation",
+   "question": "How long would a graphene battery take to fully charge a phone?",
+   "answer": "The video's hope is that a phone's graphene battery could recharge completely in a few seconds. Guesses in minutes or hours are not a bit slower; they are off by powers of ten.",
+   "move": "When the material changes, count the zeros before the digits.",
    "keywords": [
     "graphene",
     "smartphone",
@@ -236251,16 +236248,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A phone with a graphene battery and a lightning bolt icon. The question asks how fast it could charge from empty to full. The reader places a bet on a time axis, then rates how sure they are.",
-    "graded": false,
-    "ground": "#f4efe4",
-    "page": "pages/technology-graphene-fast-charge.html?v=9c7e9470120c",
-    "bytes": 15870
+    "touch": "drags",
+    "label": "A slider page asking how long a graphene battery would take to fully charge a phone, from one second to five hours. The reader drags a dot to a guess. An illustration shows a phone with a lightning bolt charging from 0% to 100%.",
+    "page": "pages/technology-graphene-fast-charge.html?v=993233a73036",
+    "bytes": 15711
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=207s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "technology-graphene-flagship-billion",
@@ -238666,11 +238661,11 @@ const String kEmbeddedBank = r'''
    "genre": "technology.batteries",
    "strand": "technology.batteries.electric_cars",
    "kind": "page",
-   "difficulty": "hard",
-   "principle": "none",
-   "question": "How much power would a car need to accelerate like a MotoGP bike?",
-   "answer": "A bike weighing 168 kg with about 280 hp accelerates about as hard as a 1,300 kg car would need roughly 2,000 hp to match. Power per kilo is what sets acceleration, so the car needs far more horsepower to pull like the bike.",
-   "move": "Acceleration is set by power per kilo, not by power alone.",
+   "difficulty": "medium",
+   "principle": "estimation",
+   "question": "What power would a 1,300 kg car need to accelerate like a MotoGP bike?",
+   "answer": "Drag power bricks onto a 1,300 kg car until it pulls like a MotoGP bike. Rossi reckons about 2,000 hp, later saying more or less 1,800 hp. His 168 kg is dry weight; with fluids he counts about 175 kg, which lowers the car's figure.",
+   "move": "Halving the weight does what doubling the engine does: compare power per kilo, never power alone.",
    "keywords": [
     "motogp",
     "horsepower",
@@ -238691,15 +238686,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive dial: drag a red arrow to set the horsepower of a 1,300 kg car so it accelerates like a 168 kg MotoGP bike. Shows the question, a takeaway box and a source credit.",
-    "graded": false,
-    "ground": "#efe3cc",
-    "page": "pages/technology-motogp-power-weight.html?v=171d53def9c4",
-    "bytes": 32187
+    "label": "A MotoGP bike and a heavy 1,300 kg car side by side. Drag 100 hp power bricks onto the car until it pulls like the bike. How much power does the car need?",
+    "page": "pages/technology-motogp-power-weight.html?v=8a2162604485",
+    "bytes": 18948
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=96s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "technology-neutral-temperature-welding",
@@ -241736,12 +241729,12 @@ const String kEmbeddedBank = r'''
    "topic": "technology",
    "genre": "technology.batteries",
    "strand": "technology.batteries.charging",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What two jobs does the depot's 30 kW solar roof do?",
-   "answer": "The 30 kW solar roof does two jobs. First, it and its storage batteries recharge the whole convoy quickly. Once the train is full, the surplus is sold to the local grid, so the depot works as a small power plant.",
-   "move": "The train fills first. Whatever sunshine is left over goes to the grid.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "What two jobs does the depot's 30 kW solar system do?",
+   "answer": "The depot's 30 kW solar system charges the train, then sells the rest. With its storage batteries it quickly recharges the whole convoy. What the train can't take is sold to the local grid, so the depot works as a small power plant.",
+   "move": "Panels with one user waste what that user can't take. A second buyer, the grid, puts the rest to work.",
    "keywords": [
     "solar-depot",
     "solar-roof",
@@ -241761,14 +241754,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A depot roof with solar panels sits under a sun the reader can drag across the sky. Arrows show energy flowing from the roof to the convoy's batteries and, once the train is full, out to the local grid. The page asks what two jobs the 30 kW solar roof does.",
-    "ground": "#0c1a2b",
-    "page": "pages/technology-solar-depot-grid.html?v=d8fc948aa735",
-    "bytes": 26330
+    "label": "Depot roof with solar panels and arrows showing energy flowing to a train and to the grid. It asks what two jobs the 30 kW system does; drag the sun across the day to watch the train charge.",
+    "page": "pages/technology-solar-depot-grid.html?v=98f1bf897248",
+    "bytes": 21138
    },
    "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=1famKvkfFKM&t=47s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "technology-solar-oil-eroi",
@@ -242764,12 +242756,12 @@ const String kEmbeddedBank = r'''
    "topic": "technology",
    "genre": "technology.the_internet",
    "strand": "technology.the_internet.privacy",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How can thermite be used to destroy data?",
-   "answer": "Heating a hard drive past the Curie temperature erases its magnetic data, and cooling does not bring it back. The data was only a pattern of magnets, so the thermite's heat makes it unrecoverable.",
-   "move": "Heat a magnet past its Curie temperature and the data it held is gone for good.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "How does thermite's heat make a hard drive's data unrecoverable?",
+   "answer": "The right answer is the second option: the magnets lose their magnetism. Past the Curie temperature, magnets lose their magnetism, so information stored on a magnetic hard drive heated that far becomes unrecoverable.",
+   "move": "Data on a magnetic drive lasts only as long as its magnetism.",
    "keywords": [
     "thermite",
     "curie-temperature",
@@ -242789,15 +242781,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Question card asking how thermite can destroy data. Press and hold to heat a drive's magnets past their Curie temperature, then let go so it cools.",
-    "ground": "#efe6d0",
-    "page": "pages/technology-thermite-curie-wipe.html?v=4141562b3953",
-    "bytes": 19909
+    "touch": "taps",
+    "label": "A quiz titled Thermite and the hard drive asks how thermite's heat makes a hard drive's data unrecoverable. Three options are offered: it burns a hole through the disk, the magnets lose their magnetism, or it fuses the arm to the disk. The reader picks one and then rates how sure they are.",
+    "page": "pages/technology-thermite-curie-wipe.html?v=26418029e0b1",
+    "bytes": 12225
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1013s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "technology-thermite-rail-welds",
@@ -244711,12 +244702,12 @@ const String kEmbeddedBank = r'''
    "topic": "technology",
    "genre": "technology.the_internet",
    "strand": "technology.the_internet.cables",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why did early undersea telegraph cables blur dots and dashes together?",
-   "answer": "Undersea cable soaks up electric charge, and that capacity grows with its length. Each pulse has to fill the cable before the far end rises, then drain it before it falls. Stretched pulses blur into each other, so dots and dashes merge.",
-   "move": "Longer cable, more capacitance: pulses stretch until dots and dashes merge.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "A crisp dot-dash-dot enters a long undersea cable. What comes out?",
+   "answer": "Long cables increased capacitance, so pulses were stretched and blurred, and dots were hard to tell from dashes. Thomson pictured signals flowing like water through a rubber tube, but Heaviside and Fitzgerald argued that the fields around the wire carried the energy, and their view proved correct.",
+   "move": "Over a long enough line, a message can smear until a dot looks like a dash.",
    "keywords": [
     "telegraph",
     "undersea cable",
@@ -244736,15 +244727,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A question asks why early undersea telegraph cables blurred dots and dashes together. A dot-dash-dot sequence is shown beside a Lay more cable button, with a counter reading 1 of 5.",
-    "ground": "#0f2a30",
-    "page": "pages/technology-undersea-cable-blur.html?v=b708a0bc0d17",
-    "bytes": 24895
+    "touch": "drags",
+    "label": "Interactive page asking the reader to draw what comes out of a long undersea cable when a crisp dot-dash-dot signal enters it. The choices are a short cable or a long cable. The reveal shows the pulse came out lengthened and distorted.",
+    "page": "pages/technology-undersea-cable-blur.html?v=2458fb2d6b30",
+    "bytes": 16171
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=632s",
-   "written": "2026-11-03"
+   "written": "2026-11-08"
   },
   {
    "id": "technology-upside-down-blocks",

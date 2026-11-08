@@ -1,248 +1,252 @@
 <!doctype html>
-<!-- slug: technology-graphene-fast-charge -->
-<!-- Look: a page from a printed science book. A flat phone drawn in dark ink sits on a pale disc. Inside it, the battery fills with green, and the green is drawn as graphene's honeycomb. Beside the phone is a plain time axis with ink pins. There is one meaning colour, green for charge.
-     Interaction: bet on how long a graphene phone takes to charge. Your bet becomes a pin on a time axis that runs from seconds to hours, and then you say how sure you are.
-     Wow moment: the d3 axis collapses from hours to seconds and the pins for the hour and the minute fly off the chart. The phone fills from 0 to 100% in 3 seconds as the curve draws, and the disc behind the phone bursts with short green strokes. -->
+<!-- slug: technology-graphene-seconds -->
+<!--
+Thought to carry: a new material does not shave minutes off; it can move the number by powers of ten. Ask first how many zeros, then the digits.
+Front: a clean phone whose battery is drawn as a graphene lattice. The reader drags a dot along a time ruler (1 s to 5 h, log scale), the phone reads "full in …", then the reader says how sure they are.
+Back: one picture. Two phones charge for the same few seconds. The graphene battery fills to 100%, and the battery charging at the reader's pace shows a sliver. "e.g. 3 s" is only the brief's illustrative tick; the video says "a few seconds", and presents it as a hope ("could").
+No baseline for today's batteries appears anywhere: the brief gives none. Every gap is measured against the reader's own guess.
+Front gives nothing away: no marked answer and no "real" tick on the ruler. It starts at 1 h.
+-->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Graphene charges in seconds</title>
+<title>Graphene batteries could charge in seconds</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/d3.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0;background:transparent;border:0;box-shadow:none}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
-#opts{display:flex;gap:2.4cqw;margin-top:.6cqh;padding:0 .6cqh .6cqh 0}
-.opt{flex:1 1 0;min-width:0;font:800 max(1.8cqh,13px)/1.15 var(--body);color:var(--k);background:transparent;border:2px solid var(--k);border-radius:99px;padding:1.1cqh 1cqw;cursor:pointer;transition:transform .12s cubic-bezier(.3,1.6,.5,1),background .15s,color .15s;white-space:normal;text-align:center}
-.opt:active{transform:scale(.95)}
-.opt.on{background:var(--k);border-color:var(--k);color:var(--c)}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{font:800 max(2.7cqh,17px)/1.1 var(--display);color:var(--k)}
-#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);color:var(--k)}
-.say{font:600 max(1.9cqh,13px)/1.3 var(--body)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .75s}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front{transition:none}
+
+.face>h2,.face>p,.face>.sure,.face>.keep,.face>.foot{flex-shrink:0}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block;color:var(--k);overflow:hidden}
+#pic{touch-action:none;cursor:ew-resize}
+.face .q{overflow-wrap:break-word}
+.face .spacer{flex:0 0 46px}
+
+/* front: slider, then the instruction, then how sure */
+.front .say{font:600 max(1.9cqh,13px)/1.3 var(--body);margin:1.2cqh 0 1.6cqh}
+.front .sure{color:var(--k);opacity:1!important;filter:none!important}
+.card .front .sure button{background:#fff;color:#141414;border-color:#fff;opacity:1}
+.card .front .sure button[aria-pressed="true"],.card .front .sure button.on,.card .front .sure button.picked{background:#141414;color:#fff;border-color:#141414}
+
+/* back: headline, one picture, two short paragraphs, source */
+.back .big{font:800 max(3.4cqh,22px)/1.12 var(--display);margin:0 0 1.4cqh}
+.back .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:1.4cqh 0 0;overflow-wrap:break-word}
+.back .body b{font-weight:700}
+.card .back .keep{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;border-radius:0!important;margin:1.4cqh 0 0!important;font:500 max(1.8cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.card .back .keep b{display:block;margin-bottom:.3em}
+.back .foot{margin-top:1.4cqh;box-sizing:border-box}
+.back .src{font-size:max(1.4cqh,12px)}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure" style="--c:#f4efe4;--k:#1f2140;--edge:#d8ccb6">
+<article class="card" id="card" data-topic="technology" data-kind="Drag a guess · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">GRAPHENE</span></div>
-    <h2 class="q">How fast could a graphene phone battery charge, from empty to full?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A phone with an empty graphene battery beside a time axis running from seconds to hours, with three pins for the three bets."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE TIME</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How long would a graphene battery take to fully charge a phone?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A phone with a battery on its screen, and a time ruler from one second to five hours with a dot to drag."></svg></div>
+        <p class="say" id="say">Drag the dot to your guess, from one second to five hours.</p>
+        <div class="sure" id="sure"></div>
+        <div class="spacer"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It could take a few seconds.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Two phones charging for the same few seconds: the graphene battery reaches 100%, the battery charging at your guessed pace shows a sliver."></svg></div>
+        <p class="body" id="why">The video’s hope: a phone’s graphene battery could recharge completely in a few seconds.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> When the material changes, count the zeros before the digits. Next to a few seconds, a guess in minutes or hours is not a bit slower: it is off by powers of ten.</div>
+        <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019).</span></div>
+        <div class="spacer"></div>
+      </section>
     </div>
-    <div id="opts">
-      <button class="opt" data-i="0">About an hour</button>
-      <button class="opt" data-i="1">About a minute</button>
-      <button class="opt" data-i="2">A few seconds</button>
-    </div>
-    <div id="why" class="gone"><p class="big">A few seconds</p><p class="body">A smartphone battery made with graphene could charge completely in just a few seconds. It is a forecast (“it is thought”, says the video), and the battery should also last much longer.</p></div>
-    <div id="sure"></div>
-    <p class="say" id="say">Place your bet on the time axis. Then say how sure you are.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Graphene's big promise for phones: a full charge in seconds.</div>
-    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)</span></div>
   </div>
 </article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
 <script src="kit/astute-card.js"></script>
 <script>
-const CH = '#2e9a62';
-const INK = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
-const CHT = `color-mix(in srgb, ${CH} 24%, var(--c))`;
-const CHD = `color-mix(in srgb, ${CH} 55%, var(--k))`;
-const RIGHT = 2, T = [3600, 60, 3], FULL = 3, OFF = ['1 h', '1 min'];
-const S = {m: 0, e: 0, b: 0, up: 0, ax: 1, pick: -1};
-const svg = Kit.$('pic');
-let G = null, R = {};
-const lvl = t => t >= FULL ? 1 : 1 - Math.pow(1 - t / FULL, 2.2);
-const clamp = v => Math.max(0, Math.min(1, v));
-const P = v => Math.max(0.1, v);
-const op = (el, v) => { el.setAttribute('opacity', v); el.style.visibility = v < .02 ? 'hidden' : 'visible'; };
+(() => {
+  const GUESS = '#e4572e', TRUE = '#17935a', SCREEN = '#ffffff', INK = '#141414';
+  const MAXS = 18000, TRUTH = 3;          // ruler 1 s .. 5 h; 3 s is only the brief's illustrative "few seconds"
+  let guess = 3600, moved = false, answered = false, turned = false, sureP = null;
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), mk = Kit.mk;
+  let F = {};
 
-function hex(cx, cy, r) {
-  let d = '';
-  for (let k = 0; k < 6; k++) { const a = (-90 + 60 * k) * Math.PI / 180; d += (k ? 'L' : 'M') + (cx + r * Math.cos(a)).toFixed(2) + ',' + (cy + r * Math.sin(a)).toFixed(2); }
-  return d + 'Z';
-}
+  // One value, one wording: what the reader sees is what the back computes with.
+  const snap = s => s < 59.5 ? Math.max(1, Math.round(s)) : s < 3570 ? Math.round(s / 60) * 60 : Math.round(s / 360) * 360;
+  const fmt = s => s < 59.5 ? `${Math.max(1, Math.round(s))} s`
+    : s < 3570 ? `${Math.round(s / 60)} min`
+    : `${(Math.round(s / 360) / 10).toString()} h`;
+  const pct = a => { const p = a * 100; return a <= 0 ? '0%' : p < .1 ? '<0.1%' : p < 1 ? `${p.toFixed(1)}%` : `${Math.round(p)}%`; };
+  const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five'];
 
-function build() {
-  svg.innerHTML = '';
-  const f = Kit.fitSvg(svg), W = f.W, H = f.H, mk = Kit.mk;
-  if (W < 60 || H < 40) { G = null; return; }
-  const fs = Math.max(12, Math.min(14, H / 16));
+  const txt = (p, x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, fill: 'currentColor', style: 'font-family:Figtree,var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, a), p); e.textContent = t; return e; };
 
-  // ---------- layout: phone column on the left, chart on the right ----------
-  const colW = Math.min(W * .4, Math.max(W * .27, H * .72));
-  const half = Math.max(8, Math.min(colW / 2, H / 2) - 10);
-  const dr = half / 1.5;
-  const px = colW / 2, py = H / 2;
-  const ph = dr * 2.1, pw = ph * .52;
-  const cx0 = colW + fs * 1.3, cx1 = W - fs * 1.5;
-  const axisY = H - fs * 1.75;
-  const chartTop = Math.max(fs * 1.2, Math.min(axisY - fs * 2.5, fs * 2.1));
-  G = {W, H, fs, cx0, cx1, axisY, chartTop, px, py, pw, ph, dr};
-  G.xl = d3.scaleLog().domain([1, 10800]).range([cx0, cx1]);
-  G.xn = d3.scaleLinear().domain([0, 5]).range([cx0, cx1]);
-  G.yc = d3.scaleLinear().domain([0, 1]).range([axisY, chartTop]);
-
-  // ---------- defs: graphene honeycomb, chart clip ----------
-  const defs = mk('defs', {}, svg);
-  const hr = Math.max(3, pw * .08), hw = Math.sqrt(3) * hr;
-  const hp = mk('pattern', {id: 'hexP', width: hw, height: 3 * hr, patternUnits: 'userSpaceOnUse'}, defs);
-  [[hw / 2, 1.5 * hr], [0, 0], [hw, 0], [0, 3 * hr], [hw, 3 * hr]].forEach(([x, y]) => mk('path', {d: hex(x, y, hr), 'stroke-width': Math.max(1, hr * .2), style: `fill:none;stroke:${CHD}`}, hp));
-  const cp = mk('clipPath', {id: 'chartClip'}, defs);
-  mk('rect', {x: cx0 - fs, y: 0, width: P(cx1 - cx0 + fs * 2), height: H}, cp);
-
-  const gB = mk('g', {}, svg);
-  const gT = mk('g', {}, svg);
-  const gP = mk('g', {}, svg);
-  const gL = mk('g', {}, svg);
-  R = {gB, gT, gP, gL};
-
-  // ---------- the disc behind the phone, and its burst ----------
-  R.disc = mk('g', {}, gB);
-  mk('circle', {cx: px, cy: py, r: P(dr), style: `fill:${INK(9)}`}, R.disc);
-  R.rays = [];
-  for (let k = 0; k < 12; k++) R.rays.push(mk('line', {'stroke-width': Math.max(2.5, fs * .22), 'stroke-linecap': 'round', style: `stroke:${CH}`}, gB));
-
-  // ---------- the phone ----------
-  const bx0 = px - pw / 2, by0 = py - ph / 2, sw = Math.max(1.5, pw * .05);
-  mk('rect', {x: bx0, y: by0, width: P(pw), height: P(ph), rx: P(pw * .17), style: 'fill:var(--k)'}, gT);
-  const si = pw * .09;
-  mk('rect', {x: bx0 + si, y: by0 + si, width: P(pw - 2 * si), height: P(ph - 2 * si), rx: P(pw * .1), style: 'fill:var(--c)'}, gT);
-  mk('rect', {x: px - pw * .14, y: by0 + si * .3, width: P(pw * .28), height: P(si * .4), rx: P(si * .2), style: `fill:${INK(45)}`}, gT);
-  const bw = pw * .5, bh = ph * .4, bx = px - bw / 2, by = by0 + ph * .18;
-  mk('rect', {x: px - bw * .18, y: by - bh * .08, width: P(bw * .36), height: P(bh * .08), rx: 1.5, style: 'fill:var(--k)'}, gT);
-  mk('rect', {x: bx, y: by, width: P(bw), height: P(bh), rx: P(bw * .12), 'stroke-width': sw, style: 'fill:none;stroke:var(--k)'}, gT);
-  const pad = sw * 1.3;
-  G.fill = {x: bx + pad, y: by + pad, w: P(bw - 2 * pad), h: P(bh - 2 * pad)};
-  R.fillP = mk('rect', {x: G.fill.x, width: G.fill.w, rx: P(bw * .05), style: `fill:${CH}`}, gP);
-  R.fillH = mk('rect', {x: G.fill.x, width: G.fill.w, fill: 'url(#hexP)'}, gP);
-  const bs = bh * .5, bcx = px - bs * .5, bcy = by + bh / 2 - bs / 2;
-  const bolt = 'M.62,0 L.12,.58 H.46 L.36,1 L.88,.38 H.54 Z'.replace(/([.\d]+),([.\d]+)/g, (_, a, b) => `${(bcx + a * bs).toFixed(1)},${(bcy + b * bs).toFixed(1)}`).replace(/H([.\d]+)/g, (_, a) => `H${(bcx + a * bs).toFixed(1)}`);
-  R.boltT = mk('path', {d: bolt, 'stroke-width': Math.max(1.2, sw * .6), 'stroke-linejoin': 'round', style: 'fill:var(--c);stroke:var(--k)'}, gP);
-  const pfs = Math.max(12, Math.min(20, pw * .28));
-  const room = (by0 + ph - si) - (by + bh);
-  R.pct = null;
-  if (pfs * 2.5 <= pw - 2 * si && room >= pfs * 1.1) {
-    R.pct = mk('text', {x: px, y: by + bh + room * .5 + pfs * .36, 'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': pfs, style: 'fill:var(--k)'}, gL);
+  // Honeycomb tile: the graphene lattice, flat lines, optional ground.
+  function lattice(p, id, r, ground, line, sw, op = 1) {
+    const defs = mk('defs', {}, p), w = Math.sqrt(3) * r;
+    const pat = mk('pattern', {id, patternUnits: 'userSpaceOnUse', width: w, height: 3 * r}, defs);
+    if (ground) mk('rect', {width: w, height: 3 * r, fill: ground}, pat);
+    mk('path', {d: `M${w / 2},${.5 * r}L${w},${r}L${w},${2 * r}L${w / 2},${2.5 * r}L0,${2 * r}L0,${r}Z M${w / 2},0V${.5 * r} M${w / 2},${2.5 * r}V${3 * r}`,
+      fill: 'none', stroke: line, 'stroke-width': sw, 'stroke-opacity': op}, pat);
   }
 
-  // ---------- the chart ----------
-  R.linT = [0, 1, 2, 3, 4, 5].map(t => ({t}));
-  R.area = mk('path', {'clip-path': 'url(#chartClip)', style: `fill:${CHT}`}, gP);
-  R.curve = mk('path', {'stroke-width': Math.max(3, fs * .24), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: `fill:none;stroke:${CH}`}, gP);
-  R.head = mk('circle', {r: fs * .38, style: `fill:${CH}`}, gP);
-  R.full = mk('line', {x1: cx0, x2: cx1, y1: chartTop, y2: chartTop, 'stroke-width': 1.3, 'stroke-dasharray': '5 4', style: `stroke:${INK(55)}`}, gT);
-  R.axis = mk('line', {x1: cx0, y1: axisY, y2: axisY, 'stroke-width': Math.max(2, fs * .16), 'stroke-linecap': 'round', style: 'stroke:var(--k)'}, gT);
-  const lab = (x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 600, 'stroke-width': 3, 'stroke-linejoin': 'round', 'paint-order': 'stroke', style: 'fill:var(--k);stroke:var(--c)'}, a), gL); e.textContent = t; return e; };
-  const ly = axisY + fs * 1.3;
-  R.logT = [[1, '1 s'], [60, '1 min'], [3600, '1 h']].map(([t, s]) => ({t, tk: mk('line', {'stroke-width': 1.6, style: 'stroke:var(--k)'}, gT), lb: lab(0, ly, s, {'text-anchor': 'middle'})}));
-  R.linT.forEach(o => { o.tk = mk('line', {'stroke-width': 1.6, style: 'stroke:var(--k)'}, gT); o.lb = lab(0, ly, o.t + ' s', {'text-anchor': 'middle'}); });
-  R.pins = T.map(() => ({st: mk('line', {'stroke-width': 2, 'stroke-linecap': 'round', style: 'stroke:var(--k)'}, gT), hd: mk('circle', {r: fs * .38, style: 'fill:var(--k)'}, gT), pk: mk('circle', {r: fs * .38, style: `fill:${CH};stroke:var(--k)`, 'stroke-width': 1.5}, gP)}));
-  R.fullLb = lab(cx0, chartTop - fs * .45, '100%');
-  R.timer = lab(cx1, chartTop - fs * .45, '', {'text-anchor': 'end'});
-  R.bet = lab(cx0 + fs * 2.4, Math.max(axisY - fs * 2.7, chartTop + fs * 1.2), 'your bet', {'text-anchor': 'middle'});
-  R.off = lab(cx1, axisY - fs * .5, '', {'text-anchor': 'end'});
-  R.done = lab(G.xn(FULL) - fs * .6, chartTop + fs * 1.2, 'full!', {'text-anchor': 'end', 'font-family': 'var(--hand)', style: `fill:${CHD};stroke:var(--c)`});
-  update();
-}
+  // A phone, drawn clean: ink body, white screen, a battery with no glyph.
+  function phone(p, cx, top, h, paint, bt = .17, bk = .36) {
+    const w = h * .49, g = mk('g', {}, p), m = w * .055;
+    mk('rect', {x: cx - w / 2, y: top, width: w, height: h, rx: w * .16, fill: 'currentColor'}, g);
+    mk('rect', {x: cx - w / 2 + m, y: top + m, width: w - 2 * m, height: h - 2 * m, rx: w * .12, fill: SCREEN}, g);
+    mk('rect', {x: cx - w * .12, y: top + m + h * .018, width: w * .24, height: h * .022, rx: h * .011, fill: 'currentColor'}, g);
+    const bw = w * .4, bh = h * bk, bx = cx - bw / 2, by = top + h * bt, sw = Math.max(1.6, w * .028), ins = sw * 1.7;
+    mk('rect', {x: cx - bw * .2, y: by - bh * .06, width: bw * .4, height: bh * .07, rx: 1.5, fill: 'currentColor'}, g);
+    const innerH = bh - 2 * ins, base = by + bh - ins;
+    const fill = mk('rect', {x: bx + ins, y: base, width: bw - 2 * ins, height: 0, fill: paint}, g);
+    mk('rect', {x: bx, y: by, width: bw, height: bh, rx: bw * .14, fill: 'none', stroke: 'currentColor', 'stroke-width': sw}, g);
+    const set = (lv, minPx = 0) => { lv = Math.max(0, Math.min(1, lv)); const hh = lv > 0 ? Math.max(minPx, innerH * lv) : 0; fill.setAttribute('height', hh); fill.setAttribute('y', base - hh); };
+    return {g, w, h, top, set, below: by + bh, cell: (bw - 2 * ins) / 7};
+  }
 
-function X(t) { return G.xl(Math.max(t, 1)) * (1 - S.m) + G.xn(t) * S.m; }
+  // ---------- FRONT ----------
+  const xOf = s => F.x0 + Math.log(s) / Math.log(MAXS) * (F.x1 - F.x0);
+  const sOf = x => Math.exp(Math.max(0, Math.min(1, (x - F.x0) / (F.x1 - F.x0))) * Math.log(MAXS));
 
-function update() {
-  if (!G) return;
-  const {fs, cx0, cx1, axisY, chartTop, px, py, dr} = G;
-  const L = lvl(S.e), fl = G.fill, fh = fl.h * L;
-  [R.fillP, R.fillH].forEach(r => { r.setAttribute('y', fl.y + fl.h - fh); r.setAttribute('height', Math.max(0, fh)); });
-  if (R.pct) R.pct.textContent = Math.round(L * 100) + '%';
-  R.boltT.setAttribute('opacity', S.e > 0 ? 1 : 0);
-  const b = Math.max(0, Math.min(1.25, S.b));
-  R.disc.setAttribute('transform', `translate(${px},${py}) scale(${1 + .16 * b}) translate(${-px},${-py})`);
-  R.rays.forEach((ln, k) => {
-    const a = k / R.rays.length * Math.PI * 2 + .2, r0 = dr * (1.1 + .12 * b), r1 = r0 + dr * .22 * clamp(b);
-    ln.setAttribute('x1', px + Math.cos(a) * r0); ln.setAttribute('y1', py + Math.sin(a) * r0);
-    ln.setAttribute('x2', px + Math.cos(a) * r1); ln.setAttribute('y2', py + Math.sin(a) * r1);
-    ln.setAttribute('opacity', b > .01 ? 1 : 0);
+  function drawFront() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(12, Math.min(14, W / 27));
+    const ph = Math.min(H * .6, W * .42 / .49 * 1.4);
+    F = {W, H, fs, x0: W * .09, x1: W * .91, ry: Math.min(H - fs * 2.6, H * .04 + ph + fs * 3.6)};
+    const ph2 = Math.max(60, Math.min(ph, F.ry - fs * 3.4 - H * .03));
+    lattice(svg, 'hexF', Math.max(2.4, ph2 * .49 * .4 / 7), null, INK, .9, .3);
+    const P = phone(svg, W / 2, H * .03, ph2, 'url(#hexF)');
+    P.set(1);
+    F.phone = P;
+    const sy = P.below + (P.top + P.h - P.below) * .32;
+    txt(P.g, W / 2, sy, 'full in', {'font-size': fs, 'font-weight': 600, fill: '#555'});
+    F.read = txt(P.g, W / 2, sy + Math.max(fs * 1.5, P.w * .2), fmt(guess), {'font-size': Math.max(fs * 1.25, P.w * .17), 'font-weight': 800, fill: GUESS, style: 'font-family:var(--display)'});
+    const r = mk('g', {}, svg); F.ruler = r;
+    mk('line', {x1: F.x0, x2: F.x1, y1: F.ry, y2: F.ry, stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round'}, r);
+    // six ticks, four words: the unlabelled ones are 10 s and 10 min
+    [[1, '1 s'], [10, ''], [60, '1 min'], [600, ''], [3600, '1 h'], [18000, '5 h']].forEach(([s, t]) => {
+      const x = xOf(s);
+      mk('line', {x1: x, x2: x, y1: F.ry - fs * .45, y2: F.ry + fs * .45, stroke: 'currentColor', 'stroke-width': 1.6}, r);
+      if (t) txt(r, x, F.ry + fs * 1.75, t, {'font-size': fs, 'font-weight': 600});
+    });
+    const hr = Math.max(11, fs * .95);
+    F.knob = mk('g', {}, r);
+    mk('circle', {cx: 0, cy: 0, r: hr, fill: GUESS}, F.knob);
+    mk('path', {d: `M${-hr * .2},${-hr * .35} l${-hr * .3},${hr * .35} l${hr * .3},${hr * .35} M${hr * .2},${-hr * .35} l${hr * .3},${hr * .35} l${-hr * .3},${hr * .35}`, stroke: SCREEN, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, F.knob);
+    place();
+  }
+  function place() {
+    if (!F.knob) return;
+    F.knob.setAttribute('transform', `translate(${xOf(guess)},${F.ry})`);
+    F.read.textContent = fmt(guess);
+  }
+  function setGuess(s) { guess = snap(s); place(); }
+
+  let drag = false;
+  const xFrom = e => e.clientX - svg.getBoundingClientRect().left;
+  svg.addEventListener('pointerdown', e => { if (answered) return; drag = true; svg.setPointerCapture(e.pointerId); setGuess(sOf(xFrom(e))); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) setGuess(sOf(xFrom(e))); });
+  const up = () => { if (!drag) return; drag = false; if (!moved) { moved = true; Kit.$('say').textContent = 'Happy with it? Say how sure you are.'; sure.on(); } };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', p => {
+    if (answered) return; answered = true; sureP = p;
+    const ok = guess <= 10, said = fmt(guess);
+    Kit.answer({choice: said, correct: ok, sure: p});
+    sure.grade(ok, p, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
   });
-  // axis and ticks
-  R.axis.setAttribute('x2', cx0 + (cx1 - cx0) * S.ax);
-  const tick = (o, v) => {
-    const x0 = X(o.t), inside = x0 <= cx1 + 1, x = inside ? x0 : cx1, vis = inside ? v * S.ax : 0;
-    o.tk.setAttribute('x1', x); o.tk.setAttribute('x2', x); o.tk.setAttribute('y1', axisY); o.tk.setAttribute('y2', axisY + fs * .35);
-    o.tk.setAttribute('opacity', vis); o.lb.setAttribute('x', x); op(o.lb, vis);
+
+  // ---------- BACK ----------
+  // One picture: two phones, the same few seconds, two very different batteries.
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg2);
+    const said = fmt(guess), ok = guess <= 10;
+    const lf = Math.max(14, Math.min(17, W / 22));
+    const head = lf + 14, capH = 50;
+    const ph = Math.max(48, Math.min(H - head - capH, W * .3 / .49, 300));
+    const used = head + ph + capH, oy = Math.max(0, (H - used) / 2);
+    const cL = W * .29, cR = W * .71;
+
+    // the one line that says what we are looking at
+    const line = mk('text', {x: W / 2, y: oy + lf, 'text-anchor': 'middle', fill: 'currentColor', 'font-weight': 800, 'font-size': lf, style: 'font-family:var(--display)'}, svg2);
+    line.append('After the same few seconds ');
+    const eg = mk('tspan', {'font-size': 13, 'font-weight': 600, style: 'font-family:Figtree,var(--body)'}, line); eg.textContent = '(e.g. 3 s)';
+
+    const top = oy + head;
+    lattice(svg2, 'hexB', Math.max(2.2, ph * .49 * .44 / 7), TRUE, SCREEN, .9);
+    const L = phone(svg2, cL, top, ph, GUESS, .2, .5), R = phone(svg2, cR, top, ph, 'url(#hexB)', .2, .5);
+
+    // under each phone: swatch + name, then the charge reached, in ink
+    const capY = top + ph + 20;
+    let pl, pr;
+    const cap = (cx, k, col) => {
+      const g = mk('g', {}, svg2);
+      const a = txt(g, cx + 8, capY, k, {'font-size': 14, 'font-weight': 600});
+      let tw = 0; try { tw = a.getComputedTextLength(); } catch (e) {}
+      if (!tw) tw = k.length * 14 * .52;
+      mk('rect', {x: cx + 8 - tw / 2 - 16, y: capY - 10, width: 10, height: 10, rx: 2, fill: col}, g);
+      const v = txt(g, cx, capY + 25, '0%', {'font-size': 20, 'font-weight': 800, style: 'font-family:var(--display)'});
+      return [g, v];
+    };
+    const [gL, vL] = cap(cL, `your guess, ${said}`, GUESS); pl = vL;
+    const [gR, vR] = cap(cR, 'graphene', TRUE); pr = vR;
+
+    svg2.setAttribute('aria-label', `Two phones charging for the same few seconds: the graphene battery reaches 100%; the battery charging at your guessed pace of ${said} reaches ${pct(Math.min(1, TRUTH / guess))}.`);
+
+    const zeros = Math.max(1, Math.round(Math.log10(guess / TRUTH)));
+    const pay = sureP == null ? '' : ok
+      ? ` <b>You were ${sureP}% sure, and right: seconds, not minutes.</b>`
+      : ` <b>You were ${sureP}% sure, and off by about ${WORDS[zeros] || zeros} power${zeros > 1 ? 's' : ''} of ten.</b>`;
+    Kit.$('why').innerHTML = `The video’s hope: a phone’s graphene battery could recharge completely in a few seconds.${pay}`;
+
+    const show = t => {
+      const a = Math.min(1, t / guess), b = Math.min(1, t / TRUTH);
+      L.set(a, 2); R.set(b);
+      pl.textContent = pct(a); pr.textContent = pct(b);
+    };
+    if (!animate || Kit.calm) { show(TRUTH); return; }
+    show(0);
+    const z = {t: 0};
+    gsap.timeline()
+      .from([L.g, R.g], {opacity: 0, y: 12, duration: .5, stagger: .12, ease: 'power3.out'})
+      .from([gL, gR, line], {opacity: 0, duration: .35, stagger: .08, ease: 'power2.out'}, '-=.2')
+      .to(z, {t: TRUTH, duration: TRUTH, ease: 'none', onUpdate: () => show(z.t), onComplete: () => Kit.haptic('success')}, '+=.25');
+  }
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => drawBack(true), Kit.calm ? 0 : 450); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !F.phone) return;
+    gsap.timeline()
+      .from(F.phone.g, {opacity: 0, y: 14, duration: .55, ease: 'power3.out'})
+      .from(F.ruler, {opacity: 0, y: 8, duration: .45, ease: 'power2.out'}, '-=.2');
   };
-  R.logT.forEach(o => tick(o, 1 - S.m)); R.linT.forEach(o => tick(o, S.m));
-  // pins
-  R.pins.forEach((p, i) => {
-    const x0 = X(T[i]), inside = x0 <= cx1 + 1, x = inside ? x0 : cx1, inn = clamp(S.ax * 1.8 - i * .3), on = i === S.pick;
-    const h = Math.max(0, fs * (1.1 + (on ? .9 * S.up : 0)) * inn), y = axisY - h, vis = inside ? 1 : 0;
-    p.st.setAttribute('x1', x); p.st.setAttribute('x2', x); p.st.setAttribute('y1', axisY); p.st.setAttribute('y2', y);
-    p.hd.setAttribute('cx', x); p.hd.setAttribute('cy', y); p.pk.setAttribute('cx', x); p.pk.setAttribute('cy', y);
-    p.st.setAttribute('opacity', vis * inn); p.hd.setAttribute('opacity', vis * inn * (on ? .25 : 1));
-    p.pk.setAttribute('opacity', vis * inn * (on ? clamp(S.up) : 0)); p.pk.setAttribute('r', P(fs * (.38 + .14 * (on ? Math.max(0, S.up) : 0))));
-  });
-  if (S.pick >= 0) {
-    const x = X(T[S.pick]);
-    R.bet.setAttribute('x', Math.max(cx0 + fs * 2.4, Math.min(cx1 - fs * 2.4, x)));
-    R.bet.setAttribute('y', Math.max(axisY - fs * 2.7, chartTop + fs * 1.2));
-    R.off.textContent = S.pick !== RIGHT ? `you: ${OFF[S.pick]} →` : '';
-  }
-  op(R.bet, S.pick >= 0 ? clamp(S.up) * clamp(1 - S.m * 2) : 0);
-  op(R.off, S.pick >= 0 && S.pick !== RIGHT ? clamp(S.m * 2 - 1) : 0);
-  R.full.setAttribute('opacity', S.m); op(R.fullLb, S.m);
-  R.timer.textContent = S.m > 0 ? `t = ${S.e.toFixed(1)} s` : 't = ?';
-  op(R.timer, S.ax);
-  // curve
-  if (S.e > 0) {
-    const pts = d3.range(0, 41).map(k => { const t = S.e * k / 40; return [G.xn(t), G.yc(lvl(t))]; });
-    const line = d3.line().curve(d3.curveMonotoneX)(pts);
-    R.curve.setAttribute('d', line);
-    R.area.setAttribute('d', line + `L${pts[40][0]},${axisY}L${pts[0][0]},${axisY}Z`);
-    R.head.setAttribute('cx', pts[40][0]); R.head.setAttribute('cy', pts[40][1]);
-    R.head.setAttribute('opacity', S.e < FULL ? 1 : 0);
-  } else { R.curve.setAttribute('d', ''); R.area.setAttribute('d', ''); R.head.setAttribute('opacity', 0); }
-  op(R.done, clamp(S.b * 1.5));
-}
-
-// ---------- the answer playing out ----------
-let doneRes; const finished = new Promise(r => doneRes = r);
-function reveal() {
-  if (Kit.calm) { S.m = 1; S.e = FULL; S.b = 1; update(); doneRes(); return; }
-  gsap.timeline({onUpdate: update, onComplete: doneRes})
-    .to(S, {m: 1, duration: 1.4, ease: 'expo.inOut'})
-    .to(S, {e: FULL, duration: FULL, ease: 'none'}, '+=.15')
-    .add(() => Kit.haptic('success'))
-    .to(S, {b: 1, duration: 1.1, ease: 'elastic.out(1,.45)'});
-}
-
-let pick = -1;
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
-  Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-  Kit.show('keep');
-  reveal();
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = S.pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
-  if (Kit.calm) { S.up = 1; update(); } else gsap.to(S, {up: 1, duration: .55, ease: 'back.out(2.6)', onUpdate: update});
-});
-
-new ResizeObserver(() => build()).observe(Kit.$('stage'));
-Kit.onShow.card = build;
-Kit.onEnter.card = () => {
-  if (Kit.calm || !G) return;
-  S.ax = 0; update();
-  gsap.to(S, {ax: 1, duration: 1.1, ease: 'power3.out', delay: .35, onUpdate: update});
-  gsap.fromTo(R.gP, {opacity: 0}, {opacity: 1, duration: 1.2, ease: 'expo.out'});
-  gsap.from([R.gB, R.gT], {opacity: 0, duration: .5, ease: 'power2.out'});
-  gsap.from('.opt', {opacity: 0, stagger: .07, duration: .45, ease: 'power2.out', delay: .4});
-};
-Kit.play.card = async () => {
-  Kit.$('opts').children[RIGHT].click();
-  await new Promise(r => setTimeout(r, 150));
-  Kit.$('sure').querySelector('[data-v="80"]').click();
-  await Promise.race([finished, new Promise(r => setTimeout(r, 7500))]);
-};
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setGuess(3600); moved = true;
+    Kit.$('say').textContent = 'Happy with it? Say how sure you are.';
+    sure.on();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 7000);
+  };
+})();
 Kit.single();
 </script>
 </html>

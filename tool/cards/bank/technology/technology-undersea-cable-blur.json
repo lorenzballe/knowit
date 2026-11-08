@@ -3,12 +3,12 @@
   "topic": "technology",
   "genre": "technology.the_internet",
   "strand": "technology.the_internet.cables",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Why did early undersea telegraph cables blur dots and dashes together?",
-  "answer": "Undersea cable soaks up electric charge, and that capacity grows with its length. Each pulse has to fill the cable before the far end rises, then drain it before it falls. Stretched pulses blur into each other, so dots and dashes merge.",
-  "move": "Longer cable, more capacitance: pulses stretch until dots and dashes merge.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A crisp dot-dash-dot enters a long undersea cable. What comes out?",
+  "answer": "Long cables increased capacitance, so pulses were stretched and blurred, and dots were hard to tell from dashes. Thomson pictured signals flowing like water through a rubber tube, but Heaviside and Fitzgerald argued that the fields around the wire carried the energy, and their view proved correct.",
+  "move": "Over a long enough line, a message can smear until a dot looks like a dash.",
   "keywords": [
     "telegraph",
     "undersea cable",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A question asks why early undersea telegraph cables blurred dots and dashes together. A dot-dash-dot sequence is shown beside a Lay more cable button, with a counter reading 1 of 5.",
-    "ground": "#0f2a30"
+    "touch": "drags",
+    "label": "Interactive page asking the reader to draw what comes out of a long undersea cable when a crisp dot-dash-dot signal enters it. The choices are a short cable or a long cable. The reveal shows the pulse came out lengthened and distorted."
   },
   "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=632s",
-  "written": "2026-11-03"
+  "written": "2026-11-08"
 }

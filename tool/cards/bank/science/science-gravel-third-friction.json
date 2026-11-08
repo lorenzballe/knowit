@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.physics",
   "strand": "science.physics.why_things_fall",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "What is the “third dimension of friction” when rallying on gravel?",
-  "answer": "On gravel, a car's tyres balance rolling friction and sliding friction at the same time. Rolling pushes the car forward, while sliding carries it sideways. Both act together, so gravel grip is a hybrid rather than pure roll or pure slide.",
-  "move": "Gravel grip is a hybrid: roll to go forward, slide to go sideways, at once.",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "On gravel, why does a rally driver let the car slide into corners?",
+  "answer": "A rally driver on gravel lets the car slide into corners because it rolls forward and slides sideways at once. The video calls this almost a third kind of friction, halfway between rolling and sliding. Using both lets the car slow down less going into the bend.",
+  "move": "A slide isn't always lost grip: used on purpose, it's a second force to steer with.",
   "keywords": [
     "rally driving",
     "gravel",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A horizontal slider with a draggable jewel, labelled ROLL at one end and SLIDE at the other. The question asks how a rally car's tyres should meet gravel: drag the jewel between roll and slide.",
-    "ground": "#19140f"
+    "touch": "taps",
+    "label": "Multiple-choice card asking why a rally driver lets the car slide into corners on gravel. Three reasons are offered, and the reader picks one and rates how sure they are."
   },
   "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=2SCEUgazR_8&t=241s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }
