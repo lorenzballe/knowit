@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Quiz card asking what share of shark and ray species over-fishing pushes toward extinction. Four options: about 1 in 20, about 1 in 10, more than 1 in 3, about 9 in 10. The reader picks one, then rates how sure they are. A reveal then shows the answer."
   },
   "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",

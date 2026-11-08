@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Question: why is carbon fibre risky deep underwater? A panel of thin fibres is shown. Pull and Squeeze controls and a pressure slider up to 300 times atmospheric let the reader watch the fibres buckle sideways under squeeze."
   },
   "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",

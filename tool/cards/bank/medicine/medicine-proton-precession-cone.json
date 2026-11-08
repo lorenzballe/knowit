@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Card asks what protons in the body do once an MRI magnetic field switches on. Four choices are offered: line up and stay still, trace a cone around the field, spin off at random, or draw a cone. A weak-to-strong field control is shown below.",
     "graded": false
   },

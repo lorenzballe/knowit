@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Card asking how the Hoover Dam changed the water in the Colorado River delta, with a slider from little to most water held back upstream. Dragging the slider holds back more of the river at the dam."
   },
   "source": "Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)",

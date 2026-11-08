@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Titled 'Habits mark your genes', the page asks how the way you live switches genes on or off. A slider labelled REMOVE and ADD adds or removes chemical marks on one gene when dragged.",
     "ground": "#0b3a63"
   },

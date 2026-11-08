@@ -26,7 +26,7 @@
     <h2 class="q">How can two specially designed lenses nearly cancel spherical aberration?</h2>
     <div class="stagebox" id="stage">
       <div id="pic"><svg id="sv" role="img" aria-label="Light rays pass through lens 1 and lens 2 to an image point. Below, lens 1's error curve plus lens 2's error curve equals their sum."></svg></div>
-      <div id="tune"><span class="lab">LENS 2</span><input id="k" type="range" min="0" max="1.6" step="0.01" value="0" aria-label="How strongly lens 2 errs the other way"></div>
+      <div id="tune"><span class="lab">LENS 2</span><input data-drag id="k" type="range" min="0" max="1.6" step="0.01" value="0" aria-label="How strongly lens 2 errs the other way"></div>
     </div>
     <div id="why" class="gone"><p>Lens 1 focuses its edge rays too soon. Lens 2 has the same error pointing the other way, so together the errors add up to almost zero.</p></div>
     <p class="say" id="say">Drag until every ray meets in one point.</p>

@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A slider runs from less gas to more gas and shows a chain: greenhouse gases trap heat, the atmosphere grows unstable, and heat waves and storms become more frequent and stronger. The question asks how the climate crisis makes extreme weather more frequent and stronger."
   },
   "source": "Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)",

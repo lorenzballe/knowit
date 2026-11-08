@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive: drag a gravity slider from 0 g up to 1.8 g and watch a candle flame stretch taller as gravity increases. Asks why the flame grows longer at 1.8 g."
   },
   "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",

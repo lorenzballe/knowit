@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Quiz card asking how many people Iran executed in 2025, per Amnesty International. A row of dots is filled with a slider up to the reader's guess, and a button locks the guess in.",
     "graded": false
   },

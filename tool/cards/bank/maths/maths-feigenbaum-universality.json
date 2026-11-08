@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Two bifurcation diagrams, one for the logistic map and one for the sine map, with a slider that zooms into the forks. The reader is asked to drag the slider and compare the two maps."
   },
   "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",

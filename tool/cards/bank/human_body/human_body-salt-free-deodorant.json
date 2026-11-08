@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Question card: Why might a light sweater use a salt-free deodorant? A slider runs from 'I sweat a little' to 'I sweat a lot'. Drag it to a light sweater to reveal that aluminum salts plug sweat pores, so with little sweat their action is wasted."
   },
   "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",

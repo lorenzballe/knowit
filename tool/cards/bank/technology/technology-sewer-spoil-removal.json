@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Interactive card asking how bank robbers in Naples hid the dirt they dug. A slider moves from 0% to 100% of the spoil sent into a sewer, showing how much stays in the tunnel versus how much the sewer water carries away."
   },
   "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",

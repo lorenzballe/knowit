@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "An interactive card titled Vine Robot. It asks what happens if a growing inflatable robot is punctured. The reader sets an air pressure and presses Grow, while three needles wait along the way to puncture the robot."
   },
   "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",

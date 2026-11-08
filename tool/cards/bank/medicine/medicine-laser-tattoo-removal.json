@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A question asks how a laser hits only tattoo ink and spares the skin. A slider runs from long pulse to picosecond pulse; the reader drags it to make the pulse shorter."
   },
   "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",

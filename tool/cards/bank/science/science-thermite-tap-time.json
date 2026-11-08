@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A thermite crucible with a dial to choose the tap time and a countdown timer. Slide the dial to pick when to open the bottom and pour the molten metal."
   },
   "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",

@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Diagram of the attribution method: a real event, then climate models, then attribution. A slider moves a model world from our world to one with no climate crisis, asking what the gap between the two shows."
   },
   "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",

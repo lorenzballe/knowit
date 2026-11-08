@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A tree's water column drawn as stretched water molecules, labeled about −15 atm in the xylem against 1 atm of outside air. A slider sets how much water the leaf evaporates. The page asks how low the pressure in a tree's xylem can become."
   },
   "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",

@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Card asking why rally drivers must consider wheel spin rate when landing from a jump. Interactive control: set the throttle in the air, then tap Land."
   },
   "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",

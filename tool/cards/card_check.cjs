@@ -143,6 +143,21 @@ async function single() {
       const {page: p, heard, errors, asked} = s;
       const where = `on ${phone} (${vp.phone}${calm ? ', motion reduced' : ''})`;
       if (!heard.some(m => m.t === 'ready')) say(where, ['never said it was ready (Kit.single() and a first frame)']);
+      // The finger, shared with the deck (lib/widgets/web/page_gestures.dart): a drag that starts
+      // outside the zones the page reported throws the card. So every slider on show, and anything
+      // the page marked data-drag, must lie inside a zone, or dragging it sends the card away.
+      if (!calm) {
+        await p.waitForTimeout(300);
+        const zones = (heard.filter(m => m.t === 'zones').pop() || {rects: []}).rects;
+        const held = await p.evaluate(() => [...document.querySelectorAll('input[type=range],[data-drag]')]
+          .filter(el => el.getAttribute('data-drag') !== 'off' && !el.closest('.gone'))
+          .map(el => { const s = getComputedStyle(el), b = el.getBoundingClientRect();
+            return s.display === 'none' || s.visibility === 'hidden' || b.width < 1 || b.height < 1 ? null
+              : {what: el.id ? '#' + el.id : el.tagName.toLowerCase(), x: b.left + b.width / 2, y: b.top + b.height / 2}; })
+          .filter(Boolean));
+        const inside = (h) => zones.some(([x, y, w, ht]) => h.x >= x && h.x <= x + w && h.y >= y && h.y <= y + ht);
+        say(where, held.filter(h => !inside(h)).map(h => `${h.what} is dragged, but the app would throw the card: mark it data-drag on a card whose web.touch is drags`));
+      }
       for (const stage of ['start', 'end']) {
         if (stage === 'end') {
           const played = await p.evaluate(async () => { const f = typeof Kit !== 'undefined' && Kit.play && Kit.play[document.querySelector('.card')?.id]; if (!f) return false; await f(); return true; });

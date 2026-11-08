@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A page asking why the first car in the 1992 Capaci convoy exploded before Falcone's. The reader picks one of three reasons, then watches a test run and the real convoy at 110 km/h."
   },
   "source": "Geopop, “La ricostruzione 3D dell’attentato a Giovanni Falcone – Le dinamiche tecniche della strage Capaci” (YouTube, 2025)",

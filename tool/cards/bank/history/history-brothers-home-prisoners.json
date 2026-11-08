@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "An interactive card asks how many people held at Brothers Home were truly homeless. A 0 to 100 percent slider lets the reader guess a share and lock it in before the answer is revealed.",
     "graded": false
   },

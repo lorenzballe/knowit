@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A slider labelled Recycling cycles starts at 0. Dragging it sends paper and plastic through recycling again and again. The page asks how many times plastic can be recycled compared with paper."
   },
   "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",

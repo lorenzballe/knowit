@@ -29,7 +29,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "Multiple-choice question asking what falling in love is for, biologically speaking. Three options: to make us feel happy, the survival of the species, or to lower our stress. Below, a low-to-high slider asks how sure the reader is of their pick."
   },
   "source": "Geopop, “Cosa succede nel nostro cervello quando ci innamoriamo? La biochimica dell’amore” (YouTube, 2025)",

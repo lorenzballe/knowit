@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A card asking how the Nazaré canyon makes waves grow so tall. It shows a water-under-the-crest diagram and a wave height slider, contrasting the deep canyon with the rapidly rising seafloor near the coast."
   },
   "source": "Geopop, “Perché le onde più alte del mondo si formano proprio a Nazarè in Portogallo? E come si creano?” (YouTube, 2023)",

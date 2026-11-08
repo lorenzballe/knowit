@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A timeline with 'impact' at the start and 'later' at the end. Drag it forward from the hit while watching the golf club's shaft and your hand. Asks why a golf club feels light after you hit the ball."
   },
   "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",

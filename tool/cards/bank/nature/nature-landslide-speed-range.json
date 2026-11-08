@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A timeline slider from 0 seconds to 10 years. A rockfall breaks loose and comes down fast, while a slide like Niscemi's has not visibly moved. The reader drags the slider to see both slopes over time and asks how fast a landslide moves."
   },
   "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",

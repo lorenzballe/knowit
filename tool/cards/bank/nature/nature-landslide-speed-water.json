@@ -27,7 +27,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "A clay slope at 30 degrees with a water slider at 20%. Asks the reader whether lots of water makes the landslide faster or slower, and they pick Faster or Slower."
   },
   "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",

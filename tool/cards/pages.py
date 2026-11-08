@@ -150,6 +150,16 @@ def check_page(card: dict, page: str | None, *, files: set[str] | None = None) -
         p.append("a card that only tells records nothing: Kit.answer does nothing on it")
     if web.get("touch") == "drags" and not re.search(r"data-drag|touch-action\s*:\s*none", page):
         p.append("a card that takes drags marks what it holds: data-drag, or touch-action: none")
+    # A slider is dragged. On a card that takes only taps, or with the slider unmarked, the app keeps
+    # the drag and throws the card away from under the reader's thumb.
+    for tag in re.findall(r"<input\b[^>]*>", page, re.I):
+        if (_attr(tag, "type") or "").lower() != "range":
+            continue
+        if web.get("touch") != "drags":
+            p.append("a card with a slider takes drags (web.touch drags), or the app throws the card when the slider is dragged")
+        if not re.search(r"\sdata-drag\b", tag):
+            p.append("a slider is marked data-drag, so the app hands the page every drag that starts on it")
+        break
 
     # Nothing from anywhere but the kit.
     for tag in LINK.findall(page):

@@ -28,7 +28,7 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
+    "touch": "drags",
     "label": "An elevator cabin drawn falling, with a slider running from Vacuum to Real air and an arrow pushing up on the cabin. The question asks how air resistance changes the elevator's crash."
   },
   "source": "Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022)",
