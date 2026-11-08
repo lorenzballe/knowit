@@ -374,8 +374,15 @@ class _PillCardStackState extends State<PillCardStack>
     switch (message) {
       case final PageAnswer answer:
         _answerFromPage(pill, answer);
-      case PageFlip() || PageTap():
+      // A page is the whole card, back and all: it turns itself over when
+      // its reader answers, and draws its own why. So a tap it left alone
+      // turns nothing. Turned onto the app's own back, the card changed
+      // colour and said again in words what the page had just drawn. Only
+      // a page that asks to be turned (Kit.flip) is.
+      case PageFlip():
         _turnOver();
+      case PageTap():
+        break;
       case PageDone():
         _sendOn();
       case PagePan(:final phase, :final delta, :final velocity):
