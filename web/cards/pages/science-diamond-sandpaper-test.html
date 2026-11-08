@@ -8,8 +8,8 @@
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #tabs{display:flex;gap:2.4cqw}
-.tab{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 3cqw;cursor:pointer}
-.tab.on{background:var(--k);color:var(--c);box-shadow:none}
+.tab{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;outline:.22cqh solid color-mix(in srgb,var(--k) 30%,transparent);outline-offset:-.22cqh;border-radius:1.8cqh;padding:1.3cqh 3cqw;cursor:pointer}
+.tab.on{background:var(--k);color:var(--c);outline-color:transparent}
 #wrap{flex:1;min-height:0;position:relative}
 #pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;color:var(--k)}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
@@ -61,32 +61,41 @@ function build() {
   const cp = Kit.mk('clipPath', {id: 'pav'}, defs);
   Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${.5*s},${-.5*s} 0,0`}, cp);
   const sw = Math.max(1.5, s * .014);
-  // sandpaper sheet: flat paper backing, grit along its face
-  Kit.mk('rect', {x: x0, y: gy, width: x1 - x0, height: H * .97 - gy, rx: 4, fill: '#c99a5b', stroke: 'currentColor', 'stroke-width': sw * .9, 'stroke-linejoin': 'round'}, svg);
+  // sandpaper sheet: a plain kraft-paper sheet, its lower edge a little torn
+  const yb = H * .97, sh = yb - gy;
+  let torn = `M${x0},${gy} L${x1},${gy} L${x1},${yb - sh * .12}`;
+  const steps = 14;
+  for (let i = 1; i <= steps; i++) {
+    const x = x1 - (x1 - x0) * i / steps;
+    const y = yb - sh * (i % 2 ? .02 : .09) - sh * .04 * ((i * 7) % 3) / 2;
+    torn += ` L${x},${y}`;
+  }
+  torn += ' Z';
+  Kit.mk('path', {d: torn, fill: '#c99a5b', stroke: 'currentColor', 'stroke-width': sw * .9, 'stroke-linejoin': 'round'}, svg);
   // grit grains
   const grit = GRIT.map(() => Kit.mk('path', {'stroke-linejoin': 'round'}, svg));
-  // stone
+  // stone: a cut gem drawn flat, facets in white and pale tints of the card colour
   const stone = Kit.mk('g', {}, svg);
-  const lite = 'color-mix(in srgb, var(--k) 14%, #ffffff)';
-  const mid = 'color-mix(in srgb, var(--k) 7%, #ffffff)';
-  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${-.28*s},${-.72*s} ${.28*s},${-.72*s} ${.5*s},${-.5*s}`, fill: mid}, stone);
-  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} 0,${-.5*s} 0,0`, fill: lite}, stone);
+  const pale = 'color-mix(in srgb, var(--c) 28%, #ffffff)';
+  const shade = 'color-mix(in srgb, var(--c) 55%, #ffffff)';
+  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${-.28*s},${-.72*s} ${.28*s},${-.72*s} ${.5*s},${-.5*s}`, fill: pale}, stone);
+  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} 0,${-.5*s} 0,0`, fill: shade}, stone);
   Kit.mk('polygon', {points: `0,${-.5*s} ${.5*s},${-.5*s} 0,0`, fill: '#ffffff'}, stone);
   Kit.mk('polygon', {points: `${-.28*s},${-.72*s} 0,${-.5*s} ${.28*s},${-.72*s}`, fill: '#ffffff'}, stone);
   const scr = Kit.mk('g', {'clip-path': 'url(#pav)'}, stone);
+  const frost = Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${.5*s},${-.5*s} 0,0`, fill: 'color-mix(in srgb, var(--k) 22%, #ffffff)', opacity: 0}, scr);
   const scLines = SCR.map(d => Kit.mk('line', {x1: (d.u - d.dx / 2) * s, y1: -(d.v - d.dy / 2) * s, x2: (d.u + d.dx / 2) * s, y2: -(d.v + d.dy / 2) * s, stroke: 'currentColor', 'stroke-width': Math.max(1, s * .008), 'stroke-linecap': 'round', opacity: 0}, scr));
-  const frost = Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${.5*s},${-.5*s} 0,0`, fill: '#ffffff', opacity: 0}, stone);
   const L = (a, b, c, d) => Kit.mk('line', {x1: a * s, y1: b * s, x2: c * s, y2: d * s, stroke: 'currentColor', 'stroke-width': sw * .55, 'stroke-linecap': 'round'}, stone);
   L(-.28, -.72, -.25, -.5); L(.28, -.72, .25, -.5); L(0, 0, -.25, -.5); L(0, 0, .25, -.5);
   Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${-.28*s},${-.72*s} ${.28*s},${-.72*s} ${.5*s},${-.5*s} 0,0`, fill: 'none', stroke: 'currentColor', 'stroke-width': sw, 'stroke-linejoin': 'round'}, stone);
   Kit.mk('line', {x1: -.5 * s, y1: -.5 * s, x2: .5 * s, y2: -.5 * s, stroke: 'currentColor', 'stroke-width': sw, 'stroke-linecap': 'round'}, stone);
-  // shine strokes beside the crown: the stone's brilliance (fades as a fake goes dull)
+  // three short strokes beside the crown: the stone's sparkle (fades as a fake goes dull)
   const cx = -.5 * s, cy = -.72 * s, r0 = s * .08, r1 = s * .2;
   const ray = a => { const c = Math.cos(a), n = Math.sin(a); return `M${cx + c * r0},${cy + n * r0} L${cx + c * r1},${cy + n * r1}`; };
   const spark = Kit.mk('path', {class: 'spark', d: [ray(-Math.PI * .58), ray(-Math.PI * .78), ray(-Math.PI * .98)].join(' '), fill: 'none', stroke: 'currentColor', 'stroke-width': sw, 'stroke-linecap': 'round'}, stone);
   // labels
-  const t1 = Kit.mk('text', {x: W * .03, y: fs * 1.3, fill: 'currentColor', style: `font:700 ${fs}px var(--body)`}, svg);
-  const t2 = Kit.mk('text', {x: W * .03, y: fs * 3.0, fill: 'currentColor', style: `font:700 ${fs}px var(--body)`}, svg);
+  const t1 = Kit.mk('text', {x: W * .03, y: fs * 1.3, fill: 'currentColor', style: `font:600 ${fs}px var(--body)`}, svg);
+  const t2 = Kit.mk('text', {x: W * .03, y: fs * 3.0, fill: 'currentColor', style: `font:600 ${fs}px var(--body)`}, svg);
   G = {W, H, gy, gh, tipY, s, x0, x1, grit, stone, scLines, frost, spark, t1, t2};
   render();
 }
@@ -106,7 +115,7 @@ function render() {
   G.stone.setAttribute('transform', `translate(${S.x * W},${tipY})`);
   const n = S.mode ? Math.round(p * SCR.length) : 0;
   G.scLines.forEach((l, i) => l.setAttribute('opacity', i < n ? .85 : 0));
-  G.frost.setAttribute('opacity', S.mode ? p * .45 : 0);
+  G.frost.setAttribute('opacity', S.mode ? p * .7 : 0);
   G.spark.style.opacity = S.mode ? 1 - p * .9 : 1;
   G.t1.textContent = n ? `Stone: ${n} scratches` : 'Stone: no scratches';
   G.t2.textContent = flat ? `Sandpaper: ${flat} grains worn flat` : 'Sandpaper: grit still sharp';

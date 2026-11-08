@@ -30,7 +30,7 @@
 const MIN = -273, MAX = 50, TRUE = -269;
 const INK = '#10100c';
 const COLD = '#2a5bd7', HOT = '#d8471f';
-const PLASMA = '#f08a2c', PLASMA_HI = '#ffd77a';
+const PLASMA = '#f08a2c', PLASMA_HI = '#c9461b';
 const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 let v = 0, moved = false, revealed = false, entered = false;
 let G = null, flick = null;
@@ -70,17 +70,18 @@ function draw(){
     Kit.mk('line', {x1: cx, y1: topY + fs*1.75, x2: cx, y2: cy - rmy, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
   }
 
-  // the hollow ring (vacuum vessel), seen from above
+  // the hollow ring (vacuum vessel), seen from above: a plain flat doughnut
   const ell = (a, b) => `M${cx-a},${cy}a${a},${b} 0 1,0 ${2*a},0a${a},${b} 0 1,0 ${-2*a},0Z`;
-  Kit.mk('path', {d: ell(rx, ry) + ell(ri, riy), 'fill-rule': 'evenodd', style: `fill:${tint(78)}`, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('path', {d: ell(rx, ry) + ell(ri, riy), 'fill-rule': 'evenodd', style: `fill:${tint(12)}`, stroke: INK, 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, svg);
 
   // the plasma floating inside it: a flat hot band that never touches the walls
   const pw = (rx - ri)*.42;
   Kit.mk('ellipse', {cx, cy, rx: rm, ry: rmy, fill: 'none', stroke: PLASMA, 'stroke-width': pw}, svg);
   const per = Math.PI*(3*(rm+rmy) - Math.sqrt((3*rm+rmy)*(rm+3*rmy)));
-  const hl = Kit.mk('ellipse', {cx, cy, rx: rm, ry: rmy, fill: 'none', stroke: PLASMA_HI, 'stroke-width': pw*.38, 'stroke-linecap': 'round', 'stroke-dasharray': `${per*.12} ${per*.38}`}, svg);
+  // short darker strokes that travel round: the plasma circulating
+  const hl = Kit.mk('ellipse', {cx, cy, rx: rm, ry: rmy, fill: 'none', stroke: PLASMA_HI, 'stroke-width': Math.max(pw*.22, 2), 'stroke-linecap': 'round', 'stroke-dasharray': `${per*.05} ${per*.075}`}, svg);
 
-  // magnet coils wrapped around the ring
+  // magnet coils wrapped around the ring: flat bands with an ink edge
   const col = revealed ? COLD : coilColor(v);
   const coils = [], glows = [];
   const cw = Math.max(fs*.55, 6);
@@ -89,9 +90,10 @@ function draw(){
     const e = .12;
     const x1 = cx + ri*(1-e)*Math.cos(a), y1 = cy + riy*(1-e)*Math.sin(a);
     const x2 = cx + rx*(1+e)*Math.cos(a), y2 = cy + ry*(1+e)*Math.sin(a);
-    // frost on the chilled coils (shown after the answer)
-    const g = Kit.mk('line', {x1, y1, x2, y2, stroke: '#cfe0ff', 'stroke-width': cw + fs*.5, 'stroke-linecap': 'round', opacity: revealed ? 1 : 0}, svg);
+    Kit.mk('line', {x1, y1, x2, y2, stroke: INK, 'stroke-width': cw + 4, 'stroke-linecap': 'round'}, svg);
     const l = Kit.mk('line', {x1, y1, x2, y2, stroke: col, 'stroke-width': cw, 'stroke-linecap': 'round'}, svg);
+    // frost on the chilled coils (shown after the answer): a broken white crust along each coil
+    const g = Kit.mk('line', {x1, y1, x2, y2, stroke: '#ffffff', 'stroke-width': Math.max(cw*.32, 2), 'stroke-linecap': 'round', 'stroke-dasharray': `${cw*.35} ${cw*.55}`, opacity: revealed ? 1 : 0}, svg);
     glows.push(g); coils.push(l);
   }
   const ml = txt(revealed ? 'Magnets · −269 °C' : (moved ? `Magnets · ${fmt(v)} °C ?` : 'Magnets · ? °C'), cx, magY, {fill: INK});
@@ -101,11 +103,11 @@ function draw(){
   const x0 = pad, x1 = W - pad;
   const X = val => x0 + (val - MIN)/(MAX - MIN)*(x1 - x0);
   const th = fs*.56;
-  Kit.mk('rect', {x: x0, y: scaleY - th/2, width: x1 - x0, height: th, rx: th/2, style: `fill:${tint(14)}`, stroke: INK, 'stroke-width': 1.5}, svg);
+  Kit.mk('rect', {x: x0, y: scaleY - th/2, width: x1 - x0, height: th, rx: th/2, style: `fill:${tint(10)}`, stroke: INK, 'stroke-width': 2}, svg);
   const colEnd = revealed ? X(TRUE) : X(v);
-  const column = Kit.mk('rect', {x: x0, y: scaleY - th/2, width: Math.max(colEnd - x0, th), height: th, rx: th/2, fill: col, stroke: INK, 'stroke-width': 1.5}, svg);
+  const column = Kit.mk('rect', {x: x0, y: scaleY - th/2, width: Math.max(colEnd - x0, th), height: th, rx: th/2, fill: col, stroke: INK, 'stroke-width': 2}, svg);
   [-200, -100, 0].forEach(t => {
-    Kit.mk('line', {x1: X(t), y1: scaleY + fs*.4, x2: X(t), y2: scaleY + fs*.8, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
+    Kit.mk('line', {x1: X(t), y1: scaleY + fs*.4, x2: X(t), y2: scaleY + fs*.8, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
     txt(t === 0 ? '0 °C' : fmt(t), X(t), scaleY + r + fs*1.05, {fill: INK, 'font-weight': 500});
   });
   const hx = X(v);

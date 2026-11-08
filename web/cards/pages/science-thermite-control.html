@@ -1,9 +1,9 @@
 <!doctype html>
 <!-- slug: science-thermite-control -->
 <!--
-Look: a printed-book diagram: two flasks drawn flat in outline, one of explosive and one of thermite. Each has a simple pressure gauge on its cork, named beside it, and a plain "energy out" graph runs underneath.
-Interaction: drag anywhere to scrub time. The explosive turns to gas. The thermite turns to solid and liquid: sparks, a hot front, then a molten pool that sloshes when you scrub fast.
-Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork flies, the glass cracks and smoke bursts out. The thermite beside it keeps glowing, its gauge near zero.
+Look: a printed-book cutaway: two thick clay pots cut in half and sitting on the ground, one of explosive and one of thermite. Each pot has a lid with a plain pressure dial on top, named beside it. A plain "energy out" graph runs underneath.
+Interaction: drag anywhere to scrub time. The explosive turns to gas. The thermite turns to solid and liquid: sparks, a hot front, then a molten pool that sloshes when you scrub fast, while the pot wall heats up.
+Wow: crossing the explosive's moment, the dial pins and turns red, the lid flies off, the pot cracks and smoke bursts out. The thermite pot beside it keeps burning, its dial near zero.
 -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Thermite control</title>
@@ -16,12 +16,12 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
 #pic .fade{transition:opacity .45s ease}
 .say{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Scrub the timeline · gas or liquid" style="--c:#0c1426;--k:#e9f1ff;--edge:#060a13">
+<article class="card" id="card" data-topic="science" data-kind="Scrub the timeline · gas or liquid" style="--c:#efe4cf;--k:#1f1a14;--edge:#d6c6a6">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SCRUB TIME</span></div>
     <h2 class="q">Why is thermite controllable when explosives are not?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Two corked glass flasks with pressure gauges, an explosive and thermite, above a graph of energy released over time."></svg>
+      <svg id="pic" role="img" aria-label="Two lidded clay pots cut in half, each with a pressure dial, one holding an explosive and one thermite, above a graph of energy released over time."></svg>
     </div>
     <p class="say" id="say">Both start as a solid powder. <b>Drag across the picture</b> to run time and see what each becomes.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No gas, no blast: thermite's products don't expand.</div>
@@ -32,12 +32,16 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const TXT = '#e9f1ff', EXC = '#ff6b4a', THC = '#ffc247';
+  const TXT = '#1f1a14', EXC = '#d4402a', THC = '#d98a0b';
   // flat tints of the card's ink on the card's colour, and of the two meaning colours
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const mixC = (col, n) => `color-mix(in srgb, ${col} ${n}%, var(--c))`;
-  const WALL = tint(62), CORK = mixC(THC, 48), GAS = mixC(EXC, 52), PUFF = `color-mix(in srgb, ${EXC} 70%, var(--k))`;
-  const IRON = `color-mix(in srgb, ${THC} 45%, #fff)`, SLAG = `color-mix(in srgb, ${EXC} 65%, ${THC})`;
+  const INK = 'var(--k)';
+  const CLAY = tint(34), LID = tint(46), EDGE = INK;
+  const POWE = '#fbf7ee', POWT = mixC(EXC, 62);
+  const GAS = mixC(EXC, 36), PUFF = mixC(EXC, 55), HOT = mixC(THC, 85);
+  const IRON = '#f3b81f', SLAG = `color-mix(in srgb, ${EXC} 55%, ${THC})`;
+  const SPARK = '#e9a514';
   const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
   const ss = (a, b, v) => { const x = cl((v - a) / (b - a)); return x * x * (3 - 2 * x); };
   const TE0 = .36, TE1 = .40, TB = .386, TT0 = .12, TT1 = .9;
@@ -59,16 +63,9 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
     e.textContent = s;
     return e;
   };
-  // powder: a flat ground with a few grains of a second and third tone
-  const grain = (defs, id, base, dots) => {
-    const p = mk('pattern', {id, width: 8, height: 8, patternUnits: 'userSpaceOnUse'}, defs);
-    mk('rect', {width: 8, height: 8, style: 'fill:' + base}, p);
-    for (let i = 0; i < 5; i++) mk('circle', {cx: 1 + rr() * 6, cy: 1 + rr() * 6, r: .7 + rr() * .6, style: 'fill:' + dots[i % dots.length]}, p);
-  };
-  const flaskPath = F => {
-    const {cx, top, fb, bw, nw, nh} = F, r = bw * .13, sh = top + nh;
-    return `M${cx - nw / 2},${top} L${cx - nw / 2},${sh} L${cx - bw / 2},${fb - r} Q${cx - bw / 2},${fb} ${cx - bw / 2 + r},${fb} L${cx + bw / 2 - r},${fb} Q${cx + bw / 2},${fb} ${cx + bw / 2},${fb - r} L${cx + nw / 2},${sh} L${cx + nw / 2},${top} Z`;
-  };
+  // a crucible-like pot: wide mouth, narrower foot, rounded bottom corners
+  const potPath = (cx, top, bot, wt, wb, r) =>
+    `M${cx - wt / 2},${top} L${cx - wb / 2},${bot - r} Q${cx - wb / 2},${bot} ${cx - wb / 2 + r},${bot} L${cx + wb / 2 - r},${bot} Q${cx + wb / 2},${bot} ${cx + wb / 2},${bot - r} L${cx + wt / 2},${top} Z`;
   const wave = (F, y0, phase, amp, tl, bottom, closed) => {
     const x0 = F.cx - F.bw / 2 - 4, x1 = F.cx + F.bw / 2 + 4;
     let d = '';
@@ -85,85 +82,82 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
   };
 
   function flask(F, id, kind) {
-    const g = F.g = mk('g', {}, svg), d = flaskPath(F);
-    if (kind === 'T') {
-      // heat: two flat steps of warm light around the flask
-      const hrx = Math.min(F.bw * .85, W - F.cx - 2);
-      F.halo = mk('ellipse', {cx: F.cx, cy: F.fb - F.fh * .25, rx: hrx, ry: F.fh * .55, style: 'fill:' + THC, opacity: 0}, g);
-      F.halo2 = mk('ellipse', {cx: F.cx, cy: F.fb - F.fh * .2, rx: hrx * .66, ry: F.fh * .38, style: 'fill:' + THC, opacity: 0}, g);
-      F.pool = mk('ellipse', {cx: F.cx, cy: F.fb + fs * .2, rx: Math.min(F.bw * .7, W - F.cx - 2), ry: fs * .45, style: 'fill:' + THC, opacity: 0}, g);
-    }
+    const g = F.g = mk('g', {}, svg);
+    const th = F.th = Math.max(6, F.bw * .1);
+    F.ib = F.fb - th;
+    const outer = potPath(F.cx, F.top, F.fb, F.bw, F.bw * .8, F.bw * .12);
+    const inner = potPath(F.cx, F.top, F.ib, F.bw - th * 2.2, F.bw * .8 - th * 2, F.bw * .07);
     const cp = mk('clipPath', {id: 'in' + id}, E.defs);
-    mk('path', {d}, cp);
-    const inner = mk('g', {'clip-path': `url(#in${id})`}, g);
-    mk('path', {d, style: 'fill:' + tint(7)}, inner);
+    mk('path', {d: inner}, cp);
+    // the inside of the cut pot: its far wall, a shade darker than the page
+    const ig = mk('g', {'clip-path': `url(#in${id})`}, g);
     const x0 = F.cx - F.bw / 2 - 4, wB = F.bw + 8;
+    mk('rect', {x: x0, y: F.top, width: wB, height: F.fh + 4, style: 'fill:' + tint(9)}, ig);
     if (kind === 'E') {
-      F.gas = mk('rect', {x: x0, y: F.top, width: wB, height: F.fh + 4, style: 'fill:' + GAS, opacity: 0}, inner);
-      F.swg = mk('g', {opacity: 0}, inner);
-      F.sw = [0, 1, 2, 3, 4].map(() => mk('circle', {r: F.bw * .17, style: 'fill:' + PUFF, opacity: .45}, F.swg));
-      F.pow = mk('rect', {x: x0, y: F.fb, width: wB, height: 0, fill: 'url(#grainE)'}, inner);
-      F.powTop = mk('line', {x1: x0, x2: x0 + wB, style: 'stroke:' + tint(90), 'stroke-width': 1.4, opacity: .5}, inner);
-      let cd = '';
-      sd = 11;
-      for (let k = 0; k < 5; k++) {
-        let x = F.cx + (rr() - .5) * F.bw * .55, y = F.fb - F.fh * (.2 + rr() * .4);
-        cd += `M${x.toFixed(1)},${y.toFixed(1)}`;
-        for (let j = 0; j < 4; j++) {
-          x += (rr() - .5) * F.bw * .38;
-          y += (rr() - .5) * F.fh * .28;
-          cd += `L${x.toFixed(1)},${y.toFixed(1)}`;
-        }
-      }
-      F.cracks = mk('path', {d: cd, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.6, 'stroke-linejoin': 'bevel', 'stroke-linecap': 'round', opacity: 0}, inner);
+      F.gas = mk('rect', {x: x0, y: F.top, width: wB, height: F.fh + 4, style: 'fill:' + GAS, opacity: 0}, ig);
+      F.swg = mk('g', {opacity: 0}, ig);
+      F.sw = [0, 1, 2, 3, 4].map(() => mk('circle', {r: F.bw * .15, style: 'fill:' + PUFF}, F.swg));
+      F.pow = mk('rect', {x: x0, y: F.ib, width: wB, height: 0, style: 'fill:' + POWE + ';stroke:' + INK, 'stroke-width': 2}, ig);
     } else {
-      F.pow = mk('path', {fill: 'url(#grainT)'}, inner);
-      F.slag = mk('path', {style: 'fill:' + SLAG, opacity: 0}, inner);
-      F.iron = mk('path', {style: 'fill:' + IRON, opacity: 0}, inner);
-      sd = 31;
-      F.bub = Array.from({length: 6}, () => {
-        const c = mk('circle', {r: Math.max(1, fs * .1 + rr() * fs * .1), fill: '#fff8e0', opacity: 0}, inner);
-        c._u = rr(); c._v = rr();
-        return c;
-      });
-      F.front = mk('path', {stroke: '#fff4d0', 'stroke-width': Math.max(2, fs * .22), fill: 'none', opacity: 0, 'stroke-linecap': 'round'}, inner);
-      F.embg = mk('g', {}, inner);
+      F.pow = mk('path', {style: 'fill:' + POWT}, ig);
+      F.slag = mk('path', {style: 'fill:' + SLAG, opacity: 0}, ig);
+      F.iron = mk('path', {style: 'fill:' + IRON, opacity: 0}, ig);
+      F.bub = [];
+      F.front = mk('path', {stroke: '#fff3c4', 'stroke-width': Math.max(2.5, fs * .26), fill: 'none', opacity: 0, 'stroke-linecap': 'round'}, ig);
+      F.embg = mk('g', {}, ig);
+      F.emb = [];
       sd = 23;
-      F.emb = Array.from({length: 16}, () => {
-        const c = mk('circle', {r: Math.max(1, fs * .08 + rr() * fs * .08), style: 'fill:' + IRON, opacity: 0}, F.embg);
-        c._u = rr(); c._v = rr();
-        return c;
-      });
-      F.spk = Array.from({length: 8}, () => {
-        const l = mk('line', {stroke: '#fff4d0', 'stroke-width': 1.4, 'stroke-linecap': 'round', opacity: 0}, F.embg);
+      // a few short sparks thrown up by the burning front
+      F.spk = Array.from({length: 6}, () => {
+        const l = mk('line', {stroke: SPARK, 'stroke-width': Math.max(2, fs * .16), 'stroke-linecap': 'round', opacity: 0}, F.embg);
         l._u = rr(); l._v = rr();
         return l;
       });
     }
-    // the glass: one even outline and a lip
-    mk('path', {d, fill: 'none', style: 'stroke:' + WALL, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, g);
-    mk('rect', {x: F.cx - F.nw / 2 - 3, y: F.top - 2, width: F.nw + 6, height: 4, rx: 2, style: 'fill:' + WALL}, g);
-    // the tube to the gauge, the cork, the gauge
-    F.tube = mk('line', {x1: F.cx, x2: F.cx, y1: G.gyC + G.gr, y2: F.top - fs * .45, style: 'stroke:' + WALL, 'stroke-width': 2.4}, g);
+    // the pot wall, cut through: a thick flat band of clay
+    mk('path', {d: outer + inner, 'fill-rule': 'evenodd', style: 'fill:' + CLAY}, g);
+    if (kind === 'T') F.hot = mk('path', {d: outer + inner, 'fill-rule': 'evenodd', style: 'fill:' + HOT, opacity: 0}, g);
+    mk('path', {d: outer + inner, 'fill-rule': 'evenodd', fill: 'none', style: 'stroke:' + EDGE, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, g);
+    if (kind === 'E') {
+      // cracks run in from the wall
+      let cd = '';
+      sd = 11;
+      for (let k = 0; k < 5; k++) {
+        const side = k % 2 ? 1 : -1;
+        let y = F.top + F.fh * (.12 + rr() * .6);
+        const f = (y - F.top) / F.fh;
+        let x = F.cx + side * (F.bw / 2 - F.bw * .1 * f);
+        cd += `M${x.toFixed(1)},${y.toFixed(1)}`;
+        for (let j = 0; j < 4; j++) {
+          x -= side * (.3 + rr() * .7) * F.bw * .1;
+          y += (rr() - .35) * F.fh * .16;
+          cd += `L${x.toFixed(1)},${y.toFixed(1)}`;
+        }
+      }
+      F.cracks = mk('path', {d: cd, fill: 'none', style: 'stroke:' + INK, 'stroke-width': 2.4, 'stroke-linejoin': 'bevel', 'stroke-linecap': 'round', opacity: 0}, g);
+    }
+    // the pipe to the dial, the lid, the dial
+    const lidH = fs * .55;
+    F.tube = mk('line', {x1: F.cx, x2: F.cx, y1: G.gyC + G.gr, y2: F.top - lidH, style: 'stroke:' + EDGE, 'stroke-width': 2.4}, g);
     F.cork = mk('g', {}, g);
-    mk('path', {d: `M${F.cx - F.nw / 2 - 1.5},${F.top - fs * .45} H${F.cx + F.nw / 2 + 1.5} L${F.cx + F.nw / 2 - 1},${F.top + fs * .75} H${F.cx - F.nw / 2 + 1} Z`, style: 'fill:' + CORK, 'stroke-linejoin': 'round'}, F.cork);
+    mk('rect', {x: F.cx - F.bw / 2 - 3, y: F.top - lidH, width: F.bw + 6, height: lidH, rx: 3, style: 'fill:' + LID + ';stroke:' + INK, 'stroke-width': 2.2}, F.cork);
     const gg = mk('g', {}, g), gr = G.gr, gy = G.gyC;
-    if (kind === 'E') F.gglow = mk('circle', {cx: F.cx, cy: gy, r: gr + 5, fill: EXC, opacity: 0}, gg);
-    mk('circle', {cx: F.cx, cy: gy, r: gr + 1, style: 'fill:' + tint(12) + ';stroke:' + WALL, 'stroke-width': 2}, gg);
+    mk('circle', {cx: F.cx, cy: gy, r: gr + 1, style: 'fill:#fbf7ee;stroke:' + INK, 'stroke-width': 2.4}, gg);
+    if (kind === 'E') F.gglow = mk('circle', {cx: F.cx, cy: gy, r: gr - .5, fill: EXC, opacity: 0}, gg);
     mk('path', {d: arc(F.cx, gy, gr * .72, 60, 120), stroke: EXC, 'stroke-width': gr * .2, fill: 'none'}, gg);
-    F.needle = mk('line', {x1: F.cx, y1: gy + gr * .15, x2: F.cx, y2: gy - gr * .78, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, gg);
-    mk('circle', {cx: F.cx, cy: gy, r: gr * .15, fill: kind === 'E' ? EXC : THC}, gg);
-    // the name beside its gauge, and what it is now under the bench
+    F.needle = mk('line', {x1: F.cx, y1: gy + gr * .15, x2: F.cx, y2: gy - gr * .78, style: 'stroke:' + INK, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, gg);
+    mk('circle', {cx: F.cx, cy: gy, r: gr * .15, style: 'fill:' + INK}, gg);
+    // the name beside its dial, and what it is now under the ground line
     const gap = gr + 2 + fs * .4;
     const avail = kind === 'E' ? F.cx - gap - G.pad : W - G.pad - F.cx - gap;
     const nfs = z(Math.min(fs, avail / (9 * .52)));
-    txt(g, kind === 'E' ? F.cx - gap : F.cx + gap, gy + nfs * .36, kind === 'E' ? 'Explosive' : 'Thermite', {'text-anchor': kind === 'E' ? 'end' : 'start', fill: kind === 'E' ? EXC : THC, 'font-size': nfs, style: BODY + 'font-weight:700'});
+    txt(g, kind === 'E' ? F.cx - gap : F.cx + gap, gy + nfs * .36, kind === 'E' ? 'Explosive' : 'Thermite', {'text-anchor': kind === 'E' ? 'end' : 'start', fill: kind === 'E' ? EXC : '#b86e00', 'font-size': nfs, style: BODY + 'font-weight:700'});
     F.stat = txt(g, F.cx, G.statY, 'solid powder', {'text-anchor': 'middle', 'font-size': G.lf, opacity: .9});
     F.statS = '';
     if (kind === 'E') {
       F.smokeG = mk('g', {opacity: 0}, svg);
       F.smoke = Array.from({length: 9}, (_, i) => {
-        const c = mk('circle', {r: 0, style: 'fill:' + tint(38), opacity: 0}, F.smokeG);
+        const c = mk('circle', {r: 0, style: 'fill:' + tint(30), opacity: 0}, F.smokeG);
         if (i < 4) {
           c._x = F.cx; c._y = F.top;
           c._a = -Math.PI / 2 + (i - 1.5) * .45;
@@ -185,23 +179,21 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
     G.lf = z(fs * .95);
     sd = 5;
     const defs = E.defs = mk('defs', {}, svg);
-    grain(defs, 'grainE', tint(72), [tint(48), tint(90)]);
-    grain(defs, 'grainT', mixC(EXC, 42), [tint(78), mixC(EXC, 22)]);
 
-    // vertical budget: gauges, flasks, state line, graph
+    // vertical budget: dials, pots, state line, graph
     const pad = G.pad = fs * .55;
     G.gr = cl(H * .06, 10, fs * 1.25);
     G.gyC = pad + G.gr;
-    const top = G.gyC + G.gr + fs * .85;
+    const top = G.gyC + G.gr + fs * .85 + fs * .55;
     G.gh = cl(H * .27, fs * 3.7, fs * 7);
     G.gb = H - fs * .8; G.gt = G.gb - G.gh;
     G.statY = G.gt - fs * .6;
     const fb = Math.round(G.statY - fs * 1.55), fh = fb - top;
-    const bw = Math.min(W * .36, fh * 1.1), nw = bw * .3, nh = fh * .3;
-    E.L = {cx: W * .28, top, fb, fh, bw, nw, nh};
-    E.R = {cx: W * .72, top, fb, fh, bw, nw, nh};
-    // the bench
-    mk('rect', {x: pad, y: fb + 1, width: W - pad * 2, height: fs * .38, rx: fs * .1, style: 'fill:' + tint(24)}, svg);
+    const bw = Math.min(W * .36, fh * 1.1);
+    E.L = {cx: W * .28, top, fb, fh, bw};
+    E.R = {cx: W * .72, top, fb, fh, bw};
+    // the ground
+    mk('rect', {x: pad, y: fb, width: W - pad * 2, height: fs * .38, rx: fs * .1, style: 'fill:' + tint(55)}, svg);
     flask(E.R, 1, 'T');
     flask(E.L, 0, 'E');
     txt(svg, W / 2, G.gyC + fs * .33, '← pressure →', {'text-anchor': 'middle', 'font-size': G.lf, opacity: .65, style: BODY + 'font-weight:500'});
@@ -224,18 +216,18 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
       return d;
     };
     const dT = line(rateT), dE = line(rateE);
-    mk('path', {d: dT + `L${G.gx1},${G.gb}L${G.gx0},${G.gb}Z`, fill: THC, opacity: .22}, cv);
-    mk('path', {d: dE + `L${G.gx1},${G.gb}L${G.gx0},${G.gb}Z`, fill: EXC, opacity: .3}, cv);
+    mk('path', {d: dT + `L${G.gx1},${G.gb}L${G.gx0},${G.gb}Z`, style: 'fill:' + mixC(THC, 30)}, cv);
+    mk('path', {d: dE + `L${G.gx1},${G.gb}L${G.gx0},${G.gb}Z`, style: 'fill:' + mixC(EXC, 32)}, cv);
     mk('path', {d: dT, fill: 'none', stroke: THC, 'stroke-width': 2.6, 'stroke-linejoin': 'round'}, cv);
     mk('path', {d: dE, fill: 'none', stroke: EXC, 'stroke-width': 2.6, 'stroke-linejoin': 'round'}, cv);
     // two plain axes, as in a book
-    mk('path', {d: `M${G.gx0},${G.gt}V${G.gb}H${G.gx1}`, fill: 'none', style: 'stroke:' + tint(45), 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, gp);
+    mk('path', {d: `M${G.gx0},${G.gt}V${G.gb}H${G.gx1}`, fill: 'none', style: 'stroke:' + INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, gp);
     const row = G.gt + lf * 1.15;
     txt(gp, G.gx0 + fs * .5, row, 'energy out', {'font-size': lf, opacity: .75, style: BODY + 'font-weight:500'});
     txt(gp, G.gx1 - fs * .5, row, 'time →', {'text-anchor': 'end', 'font-size': lf, opacity: .75, style: BODY + 'font-weight:500'});
     const sx = G.gx0 + .38 * G.gw;
     E.offLbl = txt(gp, sx + fs * .45, row, '↑ off the chart', {fill: EXC, 'font-size': lf, opacity: 0, class: 'fade'});
-    E.stLbl = txt(gp, G.gx0 + .66 * G.gw, G.gb - plat - fs * .35, 'slow and steady', {fill: THC, 'font-size': lf, 'text-anchor': 'middle', opacity: 0, class: 'fade'});
+    E.stLbl = txt(gp, G.gx0 + .66 * G.gw, G.gb - plat - fs * .35, 'slow and steady', {fill: '#b86e00', 'font-size': lf, 'text-anchor': 'middle', opacity: 0, class: 'fade'});
     E.head = mk('line', {y1: G.gt, y2: G.gb, style: 'stroke:var(--k)', 'stroke-width': 1.4, opacity: .8}, gp);
     const kr = fs * .55;
     E.ring = mk('circle', {cy: G.gb, r: kr, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.5, opacity: 0}, gp);
@@ -258,8 +250,7 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
 
     // explosive: solid into gas, all at once
     const pH = (1 - e) * .24 * L.fh;
-    L.pow.setAttribute('y', L.fb - pH); L.pow.setAttribute('height', Math.max(0, pH));
-    L.powTop.setAttribute('y1', L.fb - pH); L.powTop.setAttribute('y2', L.fb - pH); L.powTop.setAttribute('opacity', pH > 1 ? .5 : 0);
+    L.pow.setAttribute('y', L.ib - pH); L.pow.setAttribute('height', Math.max(0, pH));
     const gasO = e * (1 - .55 * ss(.39, .55, t));
     L.gas.setAttribute('opacity', gasO); L.swg.setAttribute('opacity', gasO);
     L.sw.forEach((c, i) => {
@@ -282,12 +273,12 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
     });
     const pE = cl(e * 1.45) * (1 - ss(.388, .43, t));
     needle(L, pE + (pE > .85 ? Math.sin(ph * 40) * .02 : 0));
-    L.gglow.setAttribute('opacity', pE > .6 ? (pE - .6) * 2 * (.6 + .3 * Math.sin(ph * 30)) : 0);
+    L.gglow.setAttribute('opacity', pE > .6 ? cl((pE - .6) * 2.5 * (.75 + .25 * Math.sin(ph * 30))) : 0);
     stat(L, e < .02 ? 'solid powder' : e < .98 ? 'solid → gas' : t < .5 ? 'gas, expanding' : 'gas, everywhere', e < .02 ? TXT : EXC);
 
     // thermite: solid into solid and liquid, steadily
     const fh = R.fh, hi = r * .13 * fh, hs = r * .08 * fh, hp = (1 - r) * .24 * fh;
-    const yI = R.fb - hi, yS = yI - hs, yP = yS - hp;
+    const yI = R.ib - hi, yS = yI - hs, yP = yS - hp;
     const amp = (fs * .08 + Math.min(1, Math.abs(tv) * 30) * fs * .25) * Math.min(1, hi / (fs * .4));
     R.iron.setAttribute('d', wave(R, yI, ph * 2.2, amp, tilt, R.fb + 4, true));
     R.slag.setAttribute('d', wave(R, yS, ph * 2.2 + 1.3, amp * 1.2, tilt * 1.1, R.fb + 4, true));
@@ -298,12 +289,7 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
     const act = r > 0 && r < 1;
     R.front.setAttribute('d', `M${x0},${yP}H${x1}`);
     R.front.setAttribute('opacity', act ? .75 + .25 * Math.sin(ph * 17) : 0);
-    R.emb.forEach((c, i) => {
-      const life = (ph * .8 + i / R.emb.length) % 1;
-      c.setAttribute('cx', R.cx + (c._u - .5) * R.bw * .55 + Math.sin(life * 6 + i) * fs * .3);
-      c.setAttribute('cy', yP - Math.sin(life * Math.PI) * fs * (1 + c._v * 2.6));
-      c.setAttribute('opacity', act && !Kit.calm ? Math.sin(life * Math.PI) : 0);
-    });
+    R.emb.forEach(() => {});
     R.spk.forEach((l, i) => {
       const life = (ph * 1.6 + i / R.spk.length) % 1, a = -Math.PI / 2 + (l._u - .5) * 1.4;
       const x = R.cx + (l._v - .5) * R.bw * .4, d0 = life * fh * .5, d1 = d0 + fs * .7;
@@ -311,18 +297,11 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
       l.setAttribute('x2', x + Math.cos(a) * d1); l.setAttribute('y2', yP + Math.sin(a) * d1);
       l.setAttribute('opacity', act && !Kit.calm ? 1 - life : 0);
     });
-    R.bub.forEach((c, i) => {
-      const life = (ph * .35 + c._v + i * .17) % 1;
-      c.setAttribute('cx', R.cx + (c._u - .5) * R.bw * .6);
-      c.setAttribute('cy', R.fb - 2 - life * Math.max(0, hi + hs - 3));
-      c.setAttribute('opacity', r > .15 && !Kit.calm ? .7 * Math.sin(life * Math.PI) : 0);
-    });
-    const haloO = r <= 0 ? 0 : cl((r < 1 ? .6 + .12 * Math.sin(ph * 7) + .06 * Math.sin(ph * 23) : .38 + .05 * Math.sin(ph * 2)) + boost.b * .5);
-    R.halo.setAttribute('opacity', haloO * .14);
-    R.halo2.setAttribute('opacity', haloO * .16);
-    R.pool.setAttribute('opacity', haloO * .4);
+    // the clay wall itself heats up
+    const hotO = r <= 0 ? 0 : cl((r < 1 ? .6 + .12 * Math.sin(ph * 7) + .06 * Math.sin(ph * 23) : .38 + .05 * Math.sin(ph * 2)) + boost.b * .5);
+    R.hot.setAttribute('opacity', hotO * .8);
     needle(R, r > 0 ? .04 + .015 * Math.sin(ph * 9) : 0);
-    stat(R, r <= 0 ? 'solid powder' : r < 1 ? 'solid → liquid' : 'solids + liquids', r <= 0 ? TXT : THC);
+    stat(R, r <= 0 ? 'solid powder' : r < 1 ? 'solid → liquid' : 'solids + liquids', r <= 0 ? TXT : '#b86e00');
 
     // the graph and the playhead
     const px = G.gx0 + t * G.gw;
@@ -342,14 +321,14 @@ Wow: crossing the explosive's moment, the gauge pins and flashes red, the cork f
     Kit.haptic('success');
     if (Kit.calm || !built) return;
     const L = E.L;
-    gsap.fromTo(E.flash, {opacity: .55}, {opacity: 0, duration: .8, ease: 'expo.out'});
+    gsap.fromTo(E.flash, {opacity: .4}, {opacity: 0, duration: .8, ease: 'expo.out'});
     gsap.fromTo(svg, {x: -6}, {x: 0, duration: .7, ease: 'elastic.out(1.2,.25)', clearProps: 'transform'});
-    const ring = mk('circle', {cx: L.cx, cy: L.top + L.fh * .55, r: 2, fill: 'none', stroke: EXC, 'stroke-width': 3}, E.fx);
-    gsap.to(ring, {attr: {r: Math.min(L.bw * .9, L.cx - 2), 'stroke-width': .3}, opacity: 0, duration: .7, ease: 'power3.out', onComplete: () => ring.remove()});
-    for (let i = 0; i < 16; i++) {
-      const x = L.cx + (Math.random() - .5) * L.bw * .7, y = L.top + L.fh * (.2 + Math.random() * .7), q = fs * (.25 + Math.random() * .45);
-      const p = mk('polygon', {points: `${x},${y - q} ${x + q * .8},${y + q * .6} ${x - q * .6},${y + q * .4}`, style: 'fill:' + tint(30) + ';stroke:' + WALL, 'stroke-width': 1, 'stroke-linejoin': 'round'}, E.fx);
-      const a = Math.random() * Math.PI * 2, d = L.bw * (.3 + Math.random() * .6);
+    // chips of clay fly off the pot
+    for (let i = 0; i < 10; i++) {
+      const side = i % 2 ? 1 : -1;
+      const x = L.cx + side * L.bw * (.3 + Math.random() * .18), y = L.top + L.fh * (.1 + Math.random() * .75), q = fs * (.35 + Math.random() * .45);
+      const p = mk('polygon', {points: `${x},${y - q} ${x + q * .8},${y + q * .6} ${x - q * .6},${y + q * .4}`, style: 'fill:' + CLAY + ';stroke:' + INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, E.fx);
+      const a = (side > 0 ? 0 : Math.PI) + (Math.random() - .5) * 1.6, d = L.bw * (.3 + Math.random() * .6);
       gsap.to(p, {x: Math.cos(a) * d, y: Math.sin(a) * d - fs * 2, rotation: (Math.random() - .5) * 540, svgOrigin: `${x} ${y}`, opacity: 0, duration: .9 + Math.random() * .5, ease: 'power3.out', onComplete: () => p.remove()});
     }
   }

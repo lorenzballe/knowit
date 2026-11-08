@@ -4,11 +4,11 @@
   "genre": "history.learn_from_the_past",
   "strand": "history.learn_from_the_past.repeated_mistakes",
   "kind": "page",
-  "difficulty": "medium",
-  "principle": "estimation",
-  "question": "The Vajont wave erased more than ten villages. How long did it take?",
-  "answer": "Just over four minutes. The Vajont wave, set off by a landslide, erased more than ten villages in the valley.",
-  "move": "A wave set off by a landslide gives no time. It sweeps a whole valley in minutes.",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How long did the Vajont wave take to wipe out over ten villages?",
+  "answer": "A landslide wave erased more than ten villages in about four minutes. The destruction in the Vajont valley happened within minutes, not hours.",
+  "move": "A landslide wave erased more than ten villages in about four minutes.",
   "keywords": [
     "vajont",
     "landslide",
@@ -28,10 +28,12 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A map of the Vajont valley with villages disappearing in a flash. The reader taps a button to set a guess for how long the wave took to erase more than ten villages, then says how sure they are."
+    "touch": "drags",
+    "label": "A page asking how long the Vajont wave took to wipe out more than ten villages. A pink draggable marker sets a time guess on a scale, followed by a choice of how sure the reader is.",
+    "graded": false,
+    "ground": "#1a0b10"
   },
   "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=xUtCwhN8-pQ&t=20s",
-  "written": "2026-11-08"
+  "written": "2026-11-03"
 }

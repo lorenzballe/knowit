@@ -1,269 +1,279 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: nature-tsunami-slows-grows -->
-<!-- Thought to carry: slow a flow down without draining its energy, and it does not fade; it piles up into height.
-     Front: a flat cross-section from open sea to the coast, with a fisherman in a boat and a walker on the shore. Depth is drawn
-     as two double-headed arrows, "deep" and "shallow". One wave is drawn at equal time steps. Dragging the marker (slower, same,
-     faster) re-spaces the dashed copies of your guessed wave as it heads for the shore.
-     Back: the true snapshots build one by one, low and far apart at sea, bunched and tall over the shallow seabed. Your guessed
-     wave stays on the drawing as low dashed outlines, so the comparison happens in the picture itself. Three labels only.
-     Front gives nothing away: it starts on "same speed" and every copy has the same height.
-     One mark for the reader, dashed. The truth is solid. -->
-<title>Why a tsunami grows</title>
+<!-- slug: nature-tsunami-slows-down -->
+<!-- Look: a page from a printed science book on warm sand-coloured paper: a cut-out slice of the sea, with no box around it. The water is one flat blue resting on a brown slab of sea bed with a rough-cut lower edge. The bed rises to a small town of plain houses. Above the water there is a plain speed arrow and a height bar.
+     Interaction: bet on what the wave's speed does near the coast and say how sure you are. The wave then crosses from deep to shallow water, dropping a dot at every equal tick of time. After that, drag it anywhere to replay.
+     Wow moment: the dots bunch up as the wave brakes. The speed arrow shrinks while the height bar grows, the crest rises over the town throwing spray, and "Slower, and taller" scrambles into place. -->
+<title>Why a tsunami grows at the coast</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
-.card .in{perspective:1600px}
-.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s .38s}
-.turn.over>.back{visibility:visible}
-.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
-.turn.over{transform:rotateY(180deg)}
-.kit-calm .turn,.kit-calm .turn>.face{transition:none}
-.stagebox{flex:1 1 auto;min-height:0;display:flex}
-.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
-#pic{touch-action:none;cursor:ew-resize}
-.card .front .say{padding-right:0;margin-right:96px}
-.card .back .foot{padding-right:0;margin-right:96px}
-.card .back .src{font-size:13px;line-height:1.35;color:#0e2a1a;opacity:1}
-.back .big{margin:0;font-size:clamp(30px,7.2cqw,52px);line-height:1.02}
-.back .body{margin:0}
-.face{gap:1.2cqh}
-.q,.body,.say,.keep{overflow-wrap:break-word}
-/* Confidence pills: legible before and after arming. */
-.card #sure,.card #sure *{opacity:1!important}
-.card #sure{color:#0e2a1a}
-.card #sure [data-v]{border:1.5px solid #0e2a1a!important}
-.card #sure [data-v]:not(.on):not(.picked):not(.sel):not(.is-on):not([aria-pressed="true"]):not([aria-checked="true"]){color:#0e2a1a}
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;overflow:visible}
+.done #pic{cursor:ew-resize}
+#opts{display:flex;gap:2cqw}
+.opt{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 6%,var(--c));border:0;box-shadow:inset 0 0 0 max(.2cqh,1px) color-mix(in srgb,var(--k) 30%,var(--c));border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere;transition:background .15s,box-shadow .15s}
+.opt.on{background:#1f5f94;color:#fdf3d6;box-shadow:inset 0 0 0 max(.2cqh,1px) #1f5f94}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{color:#1f5f94;min-height:1.1em}
+#why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);color:var(--k)}
+#why .body b,.say b{color:#1f5f94}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Drag to guess · how sure">
+<article class="card" id="card" data-topic="nature" data-kind="Bet · how sure · watch" style="--c:#f3d98e;--k:#1b1410;--edge:#dcbf6c">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO GUESS</span></div>
-    <div class="turn">
-      <section class="face front">
-        <h2 class="q">What happens to a tsunami's speed as it nears the coast?</h2>
-        <div class="stagebox"><svg id="pic" role="img" aria-label="A cross-section of the sea, deep offshore and shallow near the coast. One wave is drawn at equal time steps, with a slider below for its speed near the coast."></svg></div>
-        <div class="sure" id="sure"></div>
-        <p class="say" id="say">One wave, drawn at equal time steps. Drag: near the shore, is it <b>slower</b> or <b>faster</b>?</p>
-      </section>
-      <section class="face back" aria-hidden="true">
-        <p class="big">It slows drastically, and grows taller.</p>
-        <div class="stagebox"><svg id="pic2" role="img" aria-label="The true wave at equal time steps: low and far apart at sea, bunched up and tall over the shallow seabed. Your guessed wave is shown dashed for comparison."></svg></div>
-        <p class="body">As the water gets shallower, friction with the seabed and other factors slow it. Its energy can't vanish, so it goes into height.</p>
-        <div class="keep"><b>WHAT TO KEEP</b> Slow a flow but leave its energy nowhere to go, and it doesn't fade. It piles up.</div>
-        <div class="foot"><span class="src">Source · Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019).</span></div>
-      </section>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TSUNAMI</span></div>
+    <h2 class="q">What happens to a tsunami's speed as it approaches the coast?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A night sea in cross-section: a tsunami travels from deep ocean over a rising sea floor towards a coastal town, with gauges for its speed and height."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It speeds up</button>
+        <button class="opt" data-i="1">It stays the same</button>
+        <button class="opt" data-i="2">It slows down</button>
+      </div>
+      <div id="why" class="gone"><p class="big" id="word">Slower, and taller</p><p class="body">The rising sea floor drags on the wave and slows it. Its energy can't vanish, so the water piles up taller. <b>Drag the wave</b> to replay.</p></div>
     </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Make your bet, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>As the sea gets shallow, a tsunami trades speed for height.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)</span></div>
   </div>
 </article>
-<script>
-const Turn = {
-  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
-    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
-    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
-};
-</script>
 <script src="kit/astute-card.js"></script>
 <script>
 (() => {
-  const YOU = '#0e2a1a';                       // the reader's mark: dashed lines, hollow ring
-  const SEA = 'fill:color-mix(in srgb,var(--k) 14%,transparent)';
-  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
-  let g = 0, armed = false, locked = false, turned = false, dragging = false, G = null, pct = null;
-  let frontGhosts = [];
-  const sm = u => u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
+  if (window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  if (window.SplitText) gsap.registerPlugin(SplitText);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), opts = Kit.$('opts');
+  // flat colours on sand paper: deep blue (wave and speed), flat sea blue, red-orange (height), and tints of the card's ink
+  const CY = '#1f5f94', AM = '#d5532a', SEA = '#3b86c0', DOT = '#fdf3d6', INK = '#1b1410', MUTE = 'rgba(27,20,16,.72)';
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+  const RIGHT = 2;
+  let pick = -1, phase = 'bet', tween = null, twinkles = [];
+  const st = {t: 0, bob: 0};
 
-  function geom(el, back) {
-    const f = Kit.fitSvg(el), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f || 13));
-    return {W, H, fs, back};
-  }
-  // Sea surface at sy, deep floor, a slope up to a shallow shelf, then the shore.
-  function shore(G, sy, floor) {
-    const {W, fs} = G;
-    G.sy = sy; G.floor = floor; G.yd = floor - fs * .7; G.Dd = G.yd - sy;
-    G.Dsh = Math.min(G.Dd * .7, Math.max(G.back ? fs * 1.4 : fs * 2.6, G.Dd * .26));
-    G.x0 = W * .22; G.xs = W * .32; G.xm = W * .58; G.xb = W * .8; G.xc = W * .86; G.px = W * .93;
-    G.s = x => x <= G.xs ? 0 : x >= G.xm ? 1 : sm((x - G.xs) / (G.xm - G.xs));
-    G.bedY = x => {
-      if (x <= G.xb) return sy + G.Dd - (G.Dd - G.Dsh) * G.s(x);
-      if (x <= G.xc) return sy + G.Dsh * (1 - sm((x - G.xb) / (G.xc - G.xb)));
-      return sy - Math.min((x - G.xc) * .25, fs * .8);
+  // ---------- the physics, in u: the fraction of the way from open ocean to the shore ----------
+  const smooth = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const D = u => 1 - .965 * smooth(.36, 1, u);          // depth, 1 = deep ocean
+  const U0 = .03, UEND = .94, V0 = .3, DT = 1 / 120;
+  const TU = [U0];
+  { let u = U0; while (u < UEND) { u += V0 * Math.sqrt(D(u)) * DT; TU.push(Math.min(u, UEND)); } }
+  const TEND = (TU.length - 1) * DT, NT = 14, TK = TEND / NT;
+  const uAt = t => { const i = Math.max(0, Math.min(TU.length - 1, t / DT)), i0 = Math.floor(i), i1 = Math.min(TU.length - 1, i0 + 1); return TU[i0] + (TU[i1] - TU[i0]) * (i - i0); };
+  const tAt = u => { let lo = 0, hi = TU.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (TU[m] < u) lo = m; else hi = m; } return hi * DT; };
+  const AMP = u => Math.pow(D(u), -.5);                  // energy kept: shallower means taller
+  const AMAX = AMP(UEND);
+
+  // ---------- geometry ----------
+  let W = 0, H = 0, fs = 12, seaY = 0, X0 = 0, XS = 0, depthPx = 0, A0 = 0, xLand = 0, LX = 0, G = {}, lastW = 0, lastH = 0;
+  const xOf = u => X0 + u * (XS - X0), uOf = x => (x - X0) / (XS - X0);
+  const beachY = x => { const f0 = seaY + 3 + D(1) * depthPx; return f0 + (seaY - H * .06 - f0) * smooth(XS, W * .97, x); };
+  const floorY = x => x <= XS ? seaY + 3 + D(Math.max(0, uOf(x))) * depthPx : beachY(x);
+  // a little unevenness in the drawn sea bed, so it reads as rock and sand rather than a ruled curve
+  const bumpy = x => floorY(x) - (x < XS ? Math.abs(Math.sin(x * .09) * 1.4 + Math.sin(x * .031 + 1) * 1.8) : 0);
+  // the rough-cut underside of the slice of sea bed
+  const under = x => H - 3 - Math.abs(Math.sin(x * .043 + .6) * 2.2 + Math.sin(x * .11) * 1.2);
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--body)'}, a), p); e.textContent = s; return e; };
+
+  // speed: a plain arrow whose length is the speed
+  function speedMeter(x0, cy, len, r, parent) {
+    const g = mk('g', {class: 'gauge'}, parent), t = Math.max(5, fs * .75), hh = t * 1.1, hl = t * 1.2;
+    txt(g, x0, cy - r * .55, 'Speed', {fill: MUTE});
+    mk('line', {x1: x0, x2: x0, y1: cy - hh, y2: cy + hh, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
+    const val = mk('path', {fill: CY, 'stroke-linejoin': 'round'}, g);
+    const word = txt(g, x0, cy + r * .55 + fs * .35, '', {'font-weight': 700, fill: CY});
+    const set = v => {
+      const L = Math.max(hl + 2, len * Math.max(.015, Math.min(1, v))), xe = x0 + L, xn = xe - hl;
+      val.setAttribute('d', `M${x0},${(cy - t / 2).toFixed(1)}H${xn.toFixed(1)}V${(cy - hh).toFixed(1)}L${xe.toFixed(1)},${cy.toFixed(1)}L${xn.toFixed(1)},${(cy + hh).toFixed(1)}V${(cy + t / 2).toFixed(1)}H${x0}Z`);
     };
+    return {g, val, word, set, r};
   }
-  const rel = (G, x) => 1 - .88 * G.s(x);
-  const cTrue = (G, x) => Math.sqrt(rel(G, x));
-  const cGuess = (G, x) => { const s = G.s(x); return Math.max(.12, g < 0 ? 1 + g * .85 * s : 1 + g * 1.6 * s); };
-  function travel(G, c, a, b) { let t = 0; const dx = G.W / 1200; for (let x = a; x < b; x += dx) t += dx / c(G, x); return t; }
-  function series(G, c, dt, n, xMax) {
-    const out = [G.x0], dx = G.W / 1200; let x = G.x0, t = 0;
-    for (let k = 1; k <= n; k++) {
-      while (t < k * dt && x < xMax) { t += dx / c(G, x); x += dx; }
-      if (t < k * dt) break;
-      out.push(x);
-    }
-    return out;
-  }
-  // Seven true snapshots, the last one well clear of the shore; widths keep a 6px gap between crest bases.
-  function train(G) {
-    const N = 6, xLast = Math.min(G.xb - 8, G.px - 28);
-    const dt = travel(G, cTrue, G.x0, xLast) / N;
-    const xs = series(G, cTrue, dt, N, xLast + 3);
-    let b0 = G.W * .065;
-    for (let k = 0; k < xs.length - 1; k++) b0 = Math.min(b0, (xs[k + 1] - xs[k] - 6) / (cTrue(G, xs[k]) + cTrue(G, xs[k + 1])));
-    return {dt, xs, b0: Math.max(4, b0)};
-  }
-  function crest(G, x, A, b) {
-    const x1 = Math.min(x + b, G.xc), xa = x - b; let d = '';
-    for (let i = 0; i <= 24; i++) {
-      const t = xa + (x1 - xa) * i / 24, y = G.sy - A * Math.cos((t - x) / b * Math.PI / 2) ** 2;
-      d += (i ? 'L' : 'M') + t.toFixed(1) + ',' + y.toFixed(1);
-    }
-    return d;
-  }
-  const text = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree, sans-serif', 'font-size': G.fs, 'font-weight': 700, style: 'fill:var(--k)'}, a), parent); e.textContent = t; return e; };
-  const line = (parent, x1, y1, x2, y2, st) => Kit.mk('line', {x1, y1, x2, y2, style: st || 'stroke:var(--k);stroke-width:1.2'}, parent);
-  function person(parent, x, feet, h) {
-    Kit.mk('line', {x1: x, y1: feet - h * .08, x2: x, y2: feet - h * .58, style: `stroke:var(--k);stroke-width:${h * .3};stroke-linecap:round`}, parent);
-    Kit.mk('circle', {cx: x, cy: feet - h * .82, r: h * .17, style: 'fill:var(--k)'}, parent);
-  }
-  function depthArrow(parent, x, y1, y2) {
-    const h = 4;
-    line(parent, x, y1, x, y2, 'stroke:var(--k);stroke-width:1.4');
-    Kit.mk('path', {d: `M${x - h},${y1 + h}L${x},${y1}L${x + h},${y1 + h}M${x - h},${y2 - h}L${x},${y2}L${x + h},${y2 - h}`, style: 'fill:none;stroke:var(--k);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round'}, parent);
-  }
-  function scene(G, parent) {
-    const {W, sy, xc, floor, fs} = G;
-    let sea = `M0,${sy}L${xc},${sy}`;
-    for (let i = 0; i <= 90; i++) { const x = xc - xc * i / 90; sea += `L${x.toFixed(1)},${G.bedY(x).toFixed(1)}`; }
-    Kit.mk('path', {d: sea + 'Z', style: SEA}, parent);
-    let bed = `M0,${G.bedY(0)}`;
-    for (let i = 0; i <= 120; i++) { const x = W * i / 120; bed += `L${x.toFixed(1)},${G.bedY(x).toFixed(1)}`; }
-    Kit.mk('path', {d: bed + `L${W},${floor}L0,${floor}Z`, style: 'fill:var(--k)'}, parent);
-    line(parent, 0, sy, xc, sy, 'stroke:var(--k);stroke-width:1.6');
-    const bx = W * .05, bw = W * .085;
-    Kit.mk('path', {d: `M${bx - bw / 2},${sy - bw * .1}L${bx + bw / 2},${sy - bw * .1}L${bx + bw * .34},${sy + bw * .14}L${bx - bw * .34},${sy + bw * .14}Z`, style: 'fill:var(--k)'}, parent);
-    person(parent, bx, sy - bw * .1, fs * 1.7);
-    person(parent, G.px, G.bedY(G.px), fs * 2);
+  // height: a column of water standing on a line, as tall as the wave
+  function heightMeter(cx, cy, r, parent) {
+    const g = mk('g', {class: 'gauge'}, parent), w = Math.max(10, fs * 1.4), base = cy + r * .75, full = r * 1.5;
+    const val = mk('rect', {x: cx - w / 2, width: w, fill: AM}, g);
+    mk('line', {x1: cx - w, x2: cx + w, y1: base, y2: base, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
+    txt(g, cx, base + fs * 1.3, 'Height', {'text-anchor': 'middle', fill: MUTE});
+    const word = txt(g, cx + w / 2 + fs * .5, cy + fs * .35, '', {'font-weight': 700, fill: AM});
+    const set = v => {
+      const h = full * Math.max(.015, Math.min(1, v));
+      val.setAttribute('y', (base - h).toFixed(1)); val.setAttribute('height', h.toFixed(1));
+    };
+    return {g, val, word, set, r};
   }
 
-  // ---------- front ----------
-  let SC = {};
-  function drawFront() {
-    svg.innerHTML = ''; G = geom(svg, false);
-    const {W, H, fs} = G, root = Kit.mk('g', {}, svg);
-    const A0 = fs * .95;
-    const sy = Math.round(Math.max(fs * 3 + 6, A0 + 8)), yT = H - fs * 2.3;
-    shore(G, sy, yT - fs * 1.7);
-    scene(G, root);
-    const T = train(G), xs = series(G, cGuess, T.dt, 6, G.xb);
-    frontGhosts = [];
-    xs.forEach((x, k) => {
-      const d = crest(G, x, A0, T.b0 * (k ? cGuess(G, x) : 1));
-      if (!k) { Kit.mk('path', {d: d + 'Z', style: SEA}, root); Kit.mk('path', {d, style: 'fill:none;stroke:var(--k);stroke-width:2.2'}, root); return; }
-      frontGhosts.push(Kit.mk('path', {d, style: `fill:none;stroke:${YOU};stroke-width:2;stroke-dasharray:5 4`}, root));
-    });
-    // Depth, drawn.
-    const dx = W * .075, dT = sy + fs * .7, dB = G.yd - 5;
-    depthArrow(root, dx, dT, dB);
-    text(root, dx + 8, (dT + dB) / 2 + fs * .35, 'deep');
-    const shx = (G.xm + G.xb) / 2, sT = sy + 4, sB = sy + G.Dsh - 3;
-    depthArrow(root, shx, sT, sB);
-    text(root, shx - 8, (sT + sB) / 2 + fs * .35, 'shallow', {'text-anchor': 'end'});
-    // The scale.
-    const xL = W * .1, xR = W * .9; SC = {xL, xR};
-    line(root, xL, yT, xR, yT, 'stroke:var(--k);stroke-width:2;stroke-linecap:round;opacity:.5');
-    [[xL, 'slower', 'start'], [(xL + xR) / 2, 'same speed', 'middle'], [xR, 'faster', 'end']].forEach(([x, t, a]) => {
-      line(root, x, yT - fs * .45, x, yT + fs * .45, 'stroke:var(--k);stroke-width:1.6');
-      text(root, x, yT + fs * 1.9, t, {'text-anchor': a});
-    });
-    const mx = xL + (g + 1) / 2 * (xR - xL), r = fs * .75;
-    if (!armed) for (const s of [-1, 1]) Kit.mk('path', {d: `M${mx + s * (r + 5)},${yT - 4}l${s * 4},4l${-s * 4},4`, style: 'fill:none;stroke:var(--k);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round'}, root);
-    Kit.mk('circle', {cx: mx, cy: yT, r, style: `fill:var(--c);stroke:${YOU};stroke-width:3`}, root);
-  }
-  function setG(v) { g = Math.max(-1, Math.min(1, v)); drawFront(); }
-  const fromX = e => { const r = svg.getBoundingClientRect(); const x = (e.clientX - r.left) * (G.W / r.width); setG((x - SC.xL) / (SC.xR - SC.xL) * 2 - 1); };
-  svg.addEventListener('pointerdown', e => { if (locked) return; dragging = true; svg.setPointerCapture(e.pointerId); fromX(e); });
-  svg.addEventListener('pointermove', e => { if (dragging && !locked) fromX(e); });
-  const end = () => { if (!dragging) return; dragging = false; if (!armed) { armed = true; drawFront(); sure.on(); Kit.haptic('selection'); } };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  function layout() {
+    twinkles.forEach(t => t.kill()); twinkles = [];
+    svg.innerHTML = ''; G = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; if (!W || !H) return;
+    lastW = W; lastH = H;
+    fs = Math.max(12, Math.min(14, f.f || 12));
+    seaY = H * .52; X0 = W * .03; XS = W * .86; A0 = H * .025; LX = W * .012;
+    // the deep sea bed sits on a slab of earth, so the slice reads as an object, not a box
+    depthPx = (H - seaY) * .74;
+    xLand = XS; while (xLand < W && beachY(xLand) > seaY) xLand += 1;
 
-  const choiceText = () => g < -.25 ? 'slower' : g > .25 ? 'faster' : 'about the same';
-  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', p => {
-    if (locked) return; locked = true; pct = p;
-    const said = choiceText(), ok = g < -.25;
-    Kit.answer({choice: said, correct: ok, sure: p});
-    sure.grade(ok, p, `${said}, ${ok ? 'right' : 'wrong'}`);
-    setTimeout(() => Turn.over(), 700);
+    // the two measures, above the water on the left
+    const r = Math.max(20, Math.min(W * .115, (seaY - fs * 1.4) / 2.4, 70)), cy = r * 1.13 + 3;
+    G.speed = speedMeter(W * .055, cy, W * .25, r, svg);
+    G.height = heightMeter(W * .45, cy, r, svg);
+
+    // the sea, then the sea bed and the coast on top of it
+    G.sea = mk('path', {fill: SEA}, svg);
+    let bd = `M${LX.toFixed(1)},${bumpy(LX).toFixed(1)}`;
+    for (let x = LX + 4; x <= W + .1; x += 4) bd += `L${x.toFixed(1)},${bumpy(x).toFixed(1)}`;
+    let ud = '';
+    for (let x = W; x >= LX - .1; x -= 6) ud += `L${x.toFixed(1)},${under(x).toFixed(1)}`;
+    const ground = mk('g', {class: 'ground'}, svg);
+    mk('path', {d: bd + `L${W},${bumpy(W).toFixed(1)}` + ud + 'Z', style: `fill:${tint(62)}`}, ground);
+    mk('path', {d: bd, fill: 'none', style: `stroke:${tint(82)}`, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, ground);
+    // a little town on the shore: plain houses with a window
+    [.905, .935, .963].forEach((p, i) => {
+      const x = W * p, b = beachY(x) + 1, w = fs * (i === 1 ? 1 : .8), h = fs * (i === 1 ? .9 : .7);
+      mk('path', {d: `M${x - w / 2},${b}V${b - h}L${x},${b - h - w * .45}L${x + w / 2},${b - h}V${b}Z`, style: `fill:${tint(i === 1 ? 90 : 78)}`}, ground);
+      mk('rect', {x: x - w * .14, y: b - h * .62, width: w * .28, height: h * .3, style: 'fill:var(--c)'}, ground);
+    });
+    txt(svg, W - 3, beachY(W * .93) - fs * 2.1, 'coast', {'text-anchor': 'end', fill: MUTE});
+    txt(svg, X0 + 3, seaY + fs * 2.4, 'deep ocean', {fill: DOT});
+    txt(svg, xOf(.78), seaY + fs * 2.4, 'shallow', {'text-anchor': 'end', fill: DOT});
+    G.legend = txt(svg, X0 + 3, seaY + fs * 3.8, '• = equal time steps', {fill: DOT, opacity: phase === 'bet' ? 0 : 1});
+
+    G.surf = mk('path', {fill: 'none', stroke: CY, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    G.spray = mk('g', {}, svg);
+    G.dots = mk('g', {}, svg);
+    // a small pointer marking the wave
+    G.ret = mk('g', {}, svg);
+    const rr = fs * .62;
+    mk('path', {d: `M${(-rr * .6).toFixed(1)},${(-rr).toFixed(1)}L${(rr * .6).toFixed(1)},${(-rr).toFixed(1)}L0,0Z`, fill: INK, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, G.ret);
+    draw();
+  }
+
+  function draw() {
+    if (!G.sea || !W) return;
+    const u = uAt(st.t), d = D(u), A = A0 * AMP(u), s = Math.max(W * .02, W * .075 * Math.sqrt(d)), xc = xOf(u);
+    const sF = s * (1 - .5 * (1 - d)), sB = s * 1.2;
+    let path = '', surf = '', first = true;
+    for (let x = LX; x <= W + .1; x += 2.5) {
+      const dx = x - xc, ss = dx > 0 ? sF : sB, y = seaY - A * Math.exp(-((dx / ss) ** 2)) + Math.sin(x * .045 + st.bob) * .7;
+      const seg = `${first ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`; first = false;
+      path += seg; if (x <= xLand) surf += seg;
+    }
+    const bed = (seaY + 3 + depthPx + 2).toFixed(1);
+    G.sea.setAttribute('d', path + `L${W},${bed}L${LX.toFixed(1)},${bed}Z`);
+    G.surf.setAttribute('d', surf);
+    const top = seaY - A;
+    G.ret.setAttribute('transform', `translate(${xc.toFixed(1)},${(top - fs * .5).toFixed(1)})`);
+    // spray flung off the crest once it rears up
+    const ht = AMP(u) / AMAX;
+    G.spray.innerHTML = '';
+    if (ht > .4) for (let i = 0; i < 9; i++) {
+      const ph = (st.bob * .35 + i * .37) % 1, k = (ht - .4) / .6;
+      const x = xc + sF * (.15 + (i % 3) * .2) + ph * sF * .5, y = top + 2 - Math.sin(ph * Math.PI) * fs * .9 * k;
+      mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: (1.2 + (i % 3) * .5).toFixed(2), fill: CY, opacity: ((1 - ph) * k).toFixed(2)}, G.spray);
+    }
+    // one dot for every equal tick of time: they bunch up as the wave brakes
+    G.dots.innerHTML = '';
+    if (phase !== 'bet') for (let k = 0; k * TK <= st.t + 1e-6; k++) {
+      const x = xOf(uAt(k * TK));
+      mk('line', {x1: x, x2: x, y1: seaY + 2, y2: seaY + fs * .7, stroke: DOT, 'stroke-opacity': .8, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, G.dots);
+      mk('circle', {cx: x, cy: seaY + fs * .95, r: 2.6, fill: DOT}, G.dots);
+    }
+    // the measures
+    const sp = Math.sqrt(d);
+    [[G.speed, sp, sp > .75 ? 'fast' : sp > .45 ? 'slower' : 'slow'], [G.height, ht, ht < .35 ? 'low' : ht < .7 ? 'taller' : 'tall']].forEach(([g, v, w]) => {
+      g.set(v);
+      const ww = g.r >= 30 ? w : '';
+      if (g.word.textContent !== ww) g.word.textContent = ww;
+    });
+  }
+
+  // re-draw crisply whenever the stage changes size (e.g. when the answer appears)
+  let rq = 0;
+  new ResizeObserver(() => {
+    if (rq) return;
+    rq = requestAnimationFrame(() => {
+      rq = 0;
+      const b = svg.getBoundingClientRect();
+      if (b.width && b.height && (Math.abs(b.width - lastW) > 1 || Math.abs(b.height - lastH) > 1)) layout();
+    });
+  }).observe(svg);
+
+  // ---------- the bet ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = opts.children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    Kit.hide('opts'); run();
+  });
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+    if (!Kit.calm) gsap.fromTo(b, {scale: .94}, {scale: 1, duration: .45, ease: 'back.out(3)'});
   });
 
-  // ---------- back ----------
-  function drawBack(animate) {
-    svg2.innerHTML = ''; G = geom(svg2, true);
-    const {W, H, fs} = G, root = Kit.mk('g', {}, svg2);
-    const meas = (s, w) => { const e = text(root, 0, -60, s, {'font-weight': w}); let n = 0; try { n = e.getComputedTextLength(); } catch (_) {} e.remove(); return n || s.length * fs * .6; };
-    const LP = ['at sea: ', 'fast, low'], RP = ['near shore: ', 'slow, tall'];
-    const wL1 = meas(LP[0], 600), wL2 = meas(LP[1], 800), wR1 = meas(RP[0], 600), wR2 = meas(RP[1], 800);
-    const x0 = W * .22, xlGuess = W * .8 - 8;
-    const fitsOne = Math.max(2, x0 - (wL1 + wL2) / 2) + wL1 + wL2 + 12 <= Math.min(W - 2, xlGuess + (wR1 + wR2) / 2) - wR1 - wR2;
-    const rows = fitsOne ? [fs * 1.0] : [fs * 1.0, fs * 2.3], lb = rows[rows.length - 1] + fs * .3;
-    const Acap = fs * 2.2, A0 = fs * .6;
-    const sy = Math.round(lb + 6 + Acap + 2), yK = H - 3;
-    shore(G, sy, yK - fs * 1.5);
-    scene(G, root);
-    const T = train(G), N = T.xs.length, xl = T.xs[N - 1];
-    const tA = x => Math.min(Acap, A0 / Math.sqrt(rel(G, x))), tB = x => T.b0 * cTrue(G, x);
-    const gx = series(G, cGuess, T.dt, 6, G.xb);
-
-    // Your guess, left on the drawing: low dashed copies where you said the wave would be.
-    const mine = Kit.mk('g', {}, root);
-    gx.forEach((x, k) => { if (k) Kit.mk('path', {d: crest(G, x, A0, T.b0 * cGuess(G, x)), style: `fill:none;stroke:${YOU};stroke-width:1.8;stroke-dasharray:4 3`}, mine); });
-    // The truth, solid.
-    const truth = Kit.mk('g', {}, root);
-    const waves = T.xs.map(x => {
-      const gk = Kit.mk('g', {}, truth), d = crest(G, x, tA(x), tB(x));
-      Kit.mk('path', {d: d + 'Z', style: SEA}, gk);
-      Kit.mk('path', {d, style: 'fill:none;stroke:var(--k);stroke-width:2.4;stroke-linejoin:round'}, gk);
-      return gk;
-    });
-    // Two notes, each with a leader to its crest.
-    const notes = Kit.mk('g', {}, root);
-    const note = (pair, x, anchor) => {
-      if (fitsOne) {
-        const e = text(notes, x, rows[0], '', {'text-anchor': anchor});
-        Kit.mk('tspan', {'font-weight': 600}, e).textContent = pair[0];
-        Kit.mk('tspan', {'font-weight': 800}, e).textContent = pair[1];
-      } else {
-        text(notes, x, rows[0], pair[0].trim(), {'text-anchor': anchor, 'font-weight': 600});
-        text(notes, x, rows[1], pair[1], {'text-anchor': anchor, 'font-weight': 800});
-      }
-    };
-    const wL = fitsOne ? wL1 + wL2 : Math.max(wL1, wL2), wR = fitsOne ? wR1 + wR2 : Math.max(wR1, wR2);
-    note(LP, Math.max(2, G.x0 - wL / 2), 'start');
-    line(notes, G.x0, lb + 2, G.x0, G.sy - tA(G.x0) - 3);
-    note(RP, Math.min(W - 2, xl + wR / 2), 'end');
-    line(notes, xl, lb + 2, xl, G.sy - tA(xl) - 3);
-    // One key, under the seabed.
-    const key = Kit.mk('g', {}, root), kw = fs * 1.8;
-    line(key, 2, yK - fs * .33, 2 + kw, yK - fs * .33, `stroke:${YOU};stroke-width:1.8;stroke-dasharray:4 3`);
-    text(key, 2 + kw + fs * .5, yK, pct != null ? `your guess, ${String(pct).replace('%', '')}% sure` : 'your guess', {'font-weight': 600, style: `fill:${YOU}`});
-
-    if (animate && !Kit.calm) {
-      gsap.from([mine, key], {opacity: 0, duration: .4, ease: 'power2.out', delay: .55});
-      gsap.from(waves, {opacity: 0, y: 6, duration: .45, ease: 'power3.out', stagger: .26, delay: .95});
-      gsap.from(notes, {opacity: 0, duration: .5, ease: 'power2.out', delay: 1 + N * .26});
-    }
+  function run() {
+    phase = 'run';
+    say.innerHTML = 'Watch the dots: one drops at <b>every equal tick of time</b>.';
+    if (G.legend) gsap.to(G.legend, {opacity: 1, duration: Kit.calm ? 0 : .5});
+    st.t = 0;
+    if (Kit.calm) { st.t = TEND; draw(); reveal(); return; }
+    tween = gsap.to(st, {t: TEND, duration: TEND * 1.05, ease: 'none', onUpdate: draw, onComplete: reveal});
   }
-  document.addEventListener('turned', () => { turned = true; drawBack(true); });
 
-  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
-  Kit.onEnter.card = () => { if (!Kit.calm && frontGhosts.length) gsap.from(frontGhosts, {opacity: 0, x: -8, stagger: .08, duration: .4, ease: 'power3.out'}); };
+  function reveal() {
+    if (phase === 'done') return;
+    phase = 'done'; card.classList.add('done');
+    Kit.hide('say');
+    Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    layout();
+    const word = Kit.$('word'), target = 'Slower, and taller';
+    if (Kit.calm) { word.textContent = target; return; }
+    if (window.ScrambleTextPlugin) { word.textContent = ''; gsap.to(word, {duration: 1.1, scrambleText: {text: target, chars: 'SLOWERTALLHIGH', speed: .5, revealDelay: .25}, ease: 'power2.out'}); }
+    else gsap.from(word, {opacity: 0, y: 8, duration: .6, ease: 'power3.out'});
+    gsap.from('#why .body', {opacity: 0, y: 8, duration: .6, delay: .35, ease: 'power3.out'});
+    // the wow: the two measures give a little jolt (after the stage settles)
+    gsap.delayedCall(.08, () => {
+      if (!G.speed) return;
+      [G.speed, G.height].forEach((g, i) => gsap.fromTo(g.val, {scale: 1.15, transformOrigin: i ? '50% 100%' : '0% 50%'}, {scale: 1, duration: 1, delay: i * .12, ease: 'elastic.out(1,.4)'}));
+    });
+  }
+
+  // ---------- replay by dragging ----------
+  let drag = false;
+  const scrub = e => {
+    const b = svg.getBoundingClientRect(), u = Math.max(U0, Math.min(UEND, uOf((e.clientX - b.left) * (W / b.width))));
+    gsap.to(st, {t: tAt(u), duration: Kit.calm ? 0 : .25, ease: 'power3.out', overwrite: true, onUpdate: draw});
+  };
+  svg.addEventListener('pointerdown', e => { if (phase !== 'done') return; if (tween) tween.kill(); drag = true; svg.setPointerCapture(e.pointerId); Kit.haptic('light'); scrub(e); });
+  svg.addEventListener('pointermove', e => { if (drag) scrub(e); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // ---------- show, enter, play ----------
+  Kit.onShow.card = layout;
+  let entered = false;
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    if (Kit.calm) return;
+    gsap.ticker.add(() => { st.bob += .05; if (phase !== 'run') draw(); });
+    const tl = gsap.timeline({defaults: {ease: 'power3.out'}});
+    if (window.SplitText) {
+      const sp = new SplitText('.q', {type: 'words,chars'});
+      tl.from(sp.chars, {opacity: 0, y: 6, duration: .4, stagger: .012, onComplete: () => sp.revert()}, 0);
+    }
+    tl.from('#pic .ground', {opacity: 0, duration: .8}, 0)
+      .from('#pic .gauge', {opacity: 0, scale: .6, transformOrigin: '50% 50%', duration: .9, stagger: .12, ease: 'back.out(1.6)'}, .15)
+      .from(G.sea, {opacity: 0, y: 20, duration: .9}, .2)
+      .from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .45}, .45);
+  };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    setG(.5); if (!armed) { armed = true; drawFront(); sure.on(); }
-    await wait(120);
-    Kit.$('sure').querySelector('[data-v="80"]').click();
-    await wait(Kit.calm ? 900 : 1800);
+    opts.children[RIGHT].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(300);
+    if (tween) tween.progress(1);
+    await wait(Kit.calm ? 100 : 1400);
   };
 })();
 Kit.single();

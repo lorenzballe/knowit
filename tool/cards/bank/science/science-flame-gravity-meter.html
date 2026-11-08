@@ -10,8 +10,8 @@
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 #ctl{display:flex;flex-direction:column;gap:1cqh}
 #g{width:100%;accent-color:var(--k);height:max(3.2cqh,22px);margin:0;cursor:pointer}
-.ticks{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--k);opacity:.75}
-#check{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+#ctl .ticks{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--body);font-family:var(--body);letter-spacing:0;text-transform:none;color:var(--k);opacity:.75}
+#check{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;box-shadow:none}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font-size:max(2.6cqh,16px);line-height:1.15}
 #why .body{font-size:max(1.75cqh,12px);line-height:1.3}
@@ -45,8 +45,16 @@ let x = null, W = 0, H = 0, ticking = false;
 const fmt = g => (Math.round(g * 20) / 20).toFixed(2).replace(/0$/, '') + ' g';
 const lerp = (a, b, t) => a + (b - a) * t;
 const cssv = (n, d) => (getComputedStyle(Kit.$('card')).getPropertyValue(n) || getComputedStyle(document.body).getPropertyValue(n) || '').trim() || d;
-const BLUE = [58, 88, 206], ORANGE = [238, 110, 38];
+// flat flame colours: one blue, one orange, one pale yellow — never blended into each other
+const BLUE = '#3a58ce', ORANGE = '#ee6e26', CORE = '#ffe28c', WAX = '#f6efd9';
 const rgb = (a, b, t) => `rgb(${Math.round(lerp(a[0], b[0], t))},${Math.round(lerp(a[1], b[1], t))},${Math.round(lerp(a[2], b[2], t))})`;
+// read a css colour as [r,g,b] so the card's ink and colour can be mixed into flat tints
+const probe = document.createElement('canvas').getContext('2d');
+function toRGB(s, d) {
+  probe.fillStyle = d; probe.fillStyle = s; const v = probe.fillStyle;
+  if (v[0] === '#') return [1, 3, 5].map(i => parseInt(v.slice(i, i + 2), 16));
+  const m = v.match(/[\d.]+/g); return m ? m.slice(0, 3).map(Number) : [0, 0, 0];
+}
 
 function rr(px, py, w, h, r) {
   x.beginPath(); x.moveTo(px + r, py); x.arcTo(px + w, py, px + w, py + h, r); x.arcTo(px + w, py + h, px, py + h, r);
@@ -70,13 +78,14 @@ function arrow(x0, y0, x1, y1, hw) {
   x.lineTo(x1 - hw * Math.cos(a + .55), y1 - hw * Math.sin(a + .55));
   x.stroke();
 }
-function air(cx, by, w, g, ink) {
+// cool air sliding in underneath, hot gas pushed up: drawn as plain tinted arrows
+function air(cx, by, w, g, tint) {
   if (g < .05) return;
   const L = w * .8 * Math.min(g, 2), k = 2.4 * Math.pow(g, 0.7), c = Math.min(1, g / 0.45);
   const cy = by - w * (0.15 + 0.35 * c), tip = cy - w - k * w;
-  x.save(); x.strokeStyle = ink; x.globalAlpha = .5; x.lineCap = 'round'; x.lineJoin = 'round';
-  x.lineWidth = Math.max(1.5, w * .06);
-  const hw = Math.max(4, w * .2);
+  x.save(); x.strokeStyle = tint; x.lineCap = 'round'; x.lineJoin = 'round';
+  x.lineWidth = Math.max(2, w * .09);
+  const hw = Math.max(5, w * .24);
   [-1, 1].forEach(s => arrow(cx + s * (w * 1.3 + L), by + w * .15, cx + s * w * 1.3, by + w * .15, hw));
   arrow(cx, tip - w * .35, cx, tip - w * .35 - L, hw);
   x.restore();
@@ -88,53 +97,62 @@ function flame(cx, by, w, g, t, seed, ink) {
   const sway = amp * Math.sin(t * f * 6.283 + seed) + amp * 0.5 * Math.sin(t * f * 3.7 + seed * 2);
   const hj = 1 + 0.07 * Math.min(g, 1.5) * Math.sin(t * f * 5.3 + seed);
   x.save(); x.globalCompositeOperation = 'source-over';
-  // outer flame: flat, blue when there is no up, orange when gravity drives it
+  // flat orange body; the blue part at the bottom climbs up as gravity weakens, until the whole ball is blue
   shape(cx, cy, w, k, sway, hj, 1);
-  x.fillStyle = rgb(BLUE, ORANGE, c); x.fill();
-  // blue base where fresh air feeds in
-  if (c > 0) {
-    x.save(); x.clip();
-    x.fillStyle = rgb(BLUE, BLUE, 0);
-    x.beginPath(); x.ellipse(cx, cy + w * 1.05, w * 1.2, w * .6, 0, 0, 7); x.fill();
-    x.restore();
+  x.fillStyle = ORANGE; x.fill();
+  x.save(); x.clip();
+  const m = 1 - c, top = cy + w * .45 - m * w * 2.2, ry = w * .6 + m * w * 2.2;
+  x.fillStyle = BLUE;
+  x.beginPath(); x.ellipse(cx, top + ry, w * 1.2 + m * w, ry, 0, 0, 7); x.fill();
+  x.restore();
+  // inner core: one flat pale yellow, shrinking away as gravity fades
+  if (c > .25) {
+    const s = .55 * Math.min(1, (c - .25) / .5);
+    shape(cx, cy + w * .25, w, k * 1.05, sway * .8, hj, s);
+    x.fillStyle = CORE; x.fill();
   }
-  // inner core
-  if (c > 0) { shape(cx, cy + w * .25, w, k * 1.05, sway * .8, hj, .55); x.fillStyle = `rgba(255,238,176,${c})`; x.fill(); }
   // ink outline
   shape(cx, cy, w, k, sway, hj, 1);
-  x.strokeStyle = ink; x.lineJoin = 'round'; x.lineWidth = Math.max(1.5, w * .06); x.stroke();
+  x.strokeStyle = ink; x.lineJoin = 'round'; x.lineWidth = Math.max(1.5, w * .07); x.stroke();
   x.restore();
+}
+// a plain wax stick: one flat fill, one ink outline
+function candle(cx, top, ground, w, ink) {
+  const lw = Math.max(1.5, w * .07), h = Math.max(4, ground - top);
+  rr(cx - w * .5, top, w, h, w * .12);
+  x.fillStyle = WAX; x.fill();
+  x.strokeStyle = ink; x.lineWidth = lw; x.stroke();
 }
 function draw() {
   if (!x) return;
   x.clearRect(0, 0, W, H);
   const ink = cssv('--k', '#10100c');
-  const bodyF = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
-  const dispF = getComputedStyle(document.body).getPropertyValue('--display') || bodyF;
+  const K = toRGB(ink, '#10100c'), C = toRGB(cssv('--c', '#00e6a5'), '#00e6a5');
+  const tint = p => rgb(C, K, p);
+  const bodyF = cssv('--body', 'Figtree, sans-serif');
+  const dispF = cssv('--display', bodyF);
   const gap = W * .04, pw = (W - gap) / 2, fs = Math.max(12, Math.min(H * .055, pw * .1));
   const t = Kit.calm ? 0.3 : st.t;
+  const ground = H - fs * 2.4;
+  // one shared tabletop under both candles: a single ink line
+  x.strokeStyle = ink; x.lineCap = 'round'; x.lineWidth = Math.max(1.5, fs * .12);
+  x.beginPath(); x.moveTo(W * .04, ground); x.lineTo(W * .96, ground); x.stroke();
   [[st.gm, 'Mystery', st.revealed ? fmt(st.gm) : '? g', 1.3], [st.gy, 'Yours', fmt(st.gy), 4.1]].forEach(([g, name, val, seed], i) => {
     const px = i * (pw + gap);
     x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'middle';
-    x.globalAlpha = .85;
     x.font = `700 ${fs}px ${bodyF}`;
     x.fillText(name, px + pw / 2, fs * 1.3);
-    x.globalAlpha = i === 0 && !st.revealed ? .55 : 1;
+    x.fillStyle = i === 0 && !st.revealed ? tint(.55) : ink;
     x.font = `800 ${fs * 1.25}px ${dispF}`;
     x.fillText(val, px + pw / 2, H - fs * 1.1);
-    x.globalAlpha = 1;
-    const w = Math.min(pw * .15, H * .085), cx = px + pw / 2;
-    const ground = H - fs * 2.4;
-    const candleTop = ground - H * .06, by = candleTop - w * .35;
+    const w = Math.min(pw * .15, H * .078), cx = px + pw / 2;
+    const candleTop = ground - H * .1, by = candleTop - w * .35;
     const gg = g * (i === 0 ? st.grow : 1);
-    air(cx, by, w, gg, ink);
-    // table line
-    x.strokeStyle = ink; x.lineCap = 'round'; x.lineWidth = Math.max(1.5, w * .06);
-    x.beginPath(); x.moveTo(cx - w * 1.7, ground); x.lineTo(cx + w * 1.7, ground); x.stroke();
-    // candle
-    x.fillStyle = '#f6f0dc'; rr(cx - w * .5, candleTop, w, Math.max(4, ground - candleTop), w * .15); x.fill();
-    x.strokeStyle = ink; x.lineWidth = Math.max(1.5, w * .06); x.stroke();
-    x.strokeStyle = ink; x.lineWidth = Math.max(2, w * .1); x.beginPath(); x.moveTo(cx, candleTop + 2); x.lineTo(cx, by); x.stroke();
+    air(cx, by, w, gg, tint(.45));
+    candle(cx, candleTop, ground, w, ink);
+    // wick
+    x.strokeStyle = ink; x.lineCap = 'round'; x.lineWidth = Math.max(2, w * .1);
+    x.beginPath(); x.moveTo(cx, candleTop + 2); x.lineTo(cx, by); x.stroke();
     flame(cx, by, w, gg, t, seed, ink);
   });
 }

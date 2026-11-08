@@ -1,9 +1,9 @@
 <!doctype html>
 <!-- slug: technology-material-fatigue -->
 <!--
-  Look: a printed cross-section of the Titan's carbon-fibre wall, a flat ring of wound plies like a page from a science book, with a ring of flat arrows showing the sea pushing in and a few bubbles where the hull moves. Beside or below it, a plain chart races the hull's strength against the pressure, over a faint outline of the five dives to come.
+  Look: a printed cross-section of the Titan's carbon-fibre wall, drawn flat like a page from a science book: one solid band of carbon around the open cabin, a ring of plain arrows for the sea pushing in, and a few bubbles where the hull moves. Below or beside it, a plain chart compares the hull's strength with the pressure, over a faint outline of the five dives to come.
   Interaction: each tap on Dive sends the hull down and back up. The arrows close in and squeeze the wall, and every squeeze leaves red dents that never spring back. The gold line sinks and the red safety margin to the pressure shrinks.
-  Wow moment: on the fifth dive the strength line meets the pressure. The ring collapses into the centre, a shock ring bursts outward and the debris sinks slowly into the dark.
+  Wow moment: on the fifth dive the strength line meets the pressure. The ring collapses into the centre, a shock ring runs outward and the debris sinks slowly.
 -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Material fatigue</title>
@@ -62,9 +62,12 @@
 
   function build() {
     for (let l = 0; l < LAYERS; l++) for (let i = 0; i < M; i++) {
-      hull.push({th: (i + (l % 2) * .5) / M * TAU, f: l / (LAYERS - 1), l, j: Kit.rnd(),
-        x: Kit.rnd() * W, y: Kit.rnd() * H, vx: 0, vy: 0, dent: 0, heat: 0, dmg: false, out: false, age: 0,
-        rot: 0, vr: 0, k: .035 + Kit.rnd() * .05});
+      const h = {th: (i + (l % 2) * .5) / M * TAU, f: l / (LAYERS - 1), l, j: Kit.rnd(),
+        x: 0, y: 0, vx: 0, vy: 0, dent: 0, heat: 0, dmg: false, out: false, age: 0,
+        rot: 0, vr: 0, k: .035 + Kit.rnd() * .05};
+      // Every fibre starts wound into the wall: the hull is whole from the first glance.
+      const [tx, ty] = tgt(h); h.x = tx; h.y = ty;
+      hull.push(h);
     }
     for (let i = 0; i < 300; i++) sea.push({th: Kit.rnd() * TAU, u: Math.pow(Kit.rnd(), .8), sp: (Kit.rnd() - .5) * .0016, s: .7 + Kit.rnd() * 1.3, x: Kit.rnd() * W, y: Kit.rnd() * H, a: Kit.rnd()});
     built = true;
@@ -125,10 +128,10 @@
   }
 
   function spawnBubble(fromCentre) {
-    if (bub.length > 170) return;
+    if (bub.length > 60) return;
     const a = Kit.rnd() * TAU, r = fromCentre ? R * .3 * Kit.rnd() : R * 1.02;
     bub.push({x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r, vy: -R * (.006 + .012 * Kit.rnd()),
-      r: Math.max(1, R * (.008 + .022 * Kit.rnd())), ph: Kit.rnd() * 6, life: 1});
+      r: Math.max(1.5, R * (.014 + .026 * Kit.rnd())), ph: Kit.rnd() * 6, life: 1});
   }
 
   function step() {
@@ -136,7 +139,7 @@
     const dp = st.p - prevP; prevP = st.p;
     dir = Math.abs(dp) > .0005 ? Math.sign(dp) : 0;
     if (!st.dead && entered && !Kit.calm) {
-      const n = Math.abs(dp) * 110;
+      const n = Math.abs(dp) * 30;
       for (let i = 0; i < Math.floor(n); i++) spawnBubble(false);
       if (Kit.rnd() < n % 1) spawnBubble(false);
     }
@@ -183,36 +186,28 @@
     if (!x) return;
     x.save();
     x.clearRect(0, 0, W, H);
-    // The card itself is the deep: no backdrop is painted.
+    // The card itself is the sea: no backdrop is painted.
     if (st.shake > .01) x.translate((Kit.rnd() - .5) * st.shake * 10, (Kit.rnd() - .5) * st.shake * 10);
     const L = Math.max(2, R * .03);
     x.lineJoin = 'round'; x.lineCap = 'round';
 
     if (!st.dead) {
       // How far the fibres still are from the wall they wind into.
-      let ra = 0;
-      if (entered) {
-        let err = 0, n = 0;
-        for (let i = 0; i < hull.length; i += 7) { const [tx, ty] = tgt(hull[i]); err += Math.hypot(hull[i].x - tx, hull[i].y - ty); n++; }
-        ra = clamp(1 - err / n / (R * .15));
-      }
+      let err = 0, n = 0;
+      for (let i = 0; i < hull.length; i += 7) { const [tx, ty] = tgt(hull[i]); err += Math.hypot(hull[i].x - tx, hull[i].y - ty); n++; }
+      const ra = clamp(1 - err / n / (R * .15));
       if (ra > .01) {
         x.globalAlpha = ra;
-        // The cabin.
-        x.fillStyle = col(.05); x.beginPath(); ringPath(0); x.fill();
-        // The wall: a flat band of carbon that follows every dent.
-        x.fillStyle = col(.2); x.beginPath(); ringPath(LAYERS - 1); ringPath(0); x.fill('evenodd');
-        // The wound plies inside it.
-        x.lineWidth = Math.max(1, R * .01);
-        for (let l = 1; l < LAYERS - 1; l++) { x.strokeStyle = col(l % 2 ? .45 : .32); x.beginPath(); ringPath(l); x.stroke(); }
-        // Outer and inner skin.
-        x.strokeStyle = col(1); x.lineWidth = Math.max(1.5, R * .022); x.beginPath(); ringPath(LAYERS - 1); x.stroke();
-        x.strokeStyle = col(.7); x.lineWidth = Math.max(1, R * .014); x.beginPath(); ringPath(0); x.stroke();
+        // The wall: one solid band of carbon that follows every dent. The cabin inside is left open.
+        x.fillStyle = col(.82); x.beginPath(); ringPath(LAYERS - 1); ringPath(0); x.fill('evenodd');
+        // Two thin seams: the fibre is wound in layers.
+        x.strokeStyle = col(.55); x.lineWidth = Math.max(1, R * .008);
+        for (const l of [2, 4]) { x.beginPath(); ringPath(l); x.stroke(); }
         x.globalAlpha = 1;
       }
       if (ra < .99) {
-        // Loose fibres, before they settle into the wall.
-        x.globalAlpha = 1 - ra; x.strokeStyle = col(.65); x.lineWidth = Math.max(1.2, R * .012); x.beginPath();
+        // Loose fibres, while the wall is still settling.
+        x.globalAlpha = 1 - ra; x.strokeStyle = col(.82); x.lineWidth = Math.max(1.2, R * .012); x.beginPath();
         for (const h of hull) if (!h.dmg) {
           const a = h.th + Math.PI / 2 + (h.l % 2 ? .6 : -.6), c = Math.cos(a) * L / 2, s = Math.sin(a) * L / 2;
           x.moveTo(h.x - c, h.y - s); x.lineTo(h.x + c, h.y + s);
@@ -224,10 +219,10 @@
       for (const h of hull) if (h.dmg) { const r = L * (.45 + .35 * h.heat); x.moveTo(h.x + r, h.y); x.arc(h.x, h.y, r, 0, TAU); }
       x.fill();
     } else {
-      // Debris: shards sinking into the dark.
-      x.lineWidth = Math.max(1, R * .011);
+      // Debris: shards sinking.
+      x.lineWidth = Math.max(1.2, R * .014);
       for (const red of [false, true]) {
-        x.strokeStyle = red ? RED : col(.55); x.beginPath();
+        x.strokeStyle = red ? RED : col(.7); x.beginPath();
         for (const h of hull) if (h.dmg === red) {
           const c = Math.cos(h.rot) * L * .6, s = Math.sin(h.rot) * L * .6;
           x.moveTo(h.x - c, h.y - s); x.lineTo(h.x + c, h.y + s);
@@ -235,30 +230,26 @@
         x.stroke();
       }
     }
-    // Bubbles where the hull moves through the water.
-    x.lineWidth = 1;
-    for (const b of bub) { x.strokeStyle = col(.6, .7 * b.life); x.beginPath(); x.arc(b.x, b.y, b.r, 0, TAU); x.stroke(); }
+    // A few bubbles where the hull moves through the water.
+    x.lineWidth = Math.max(1.2, R * .01);
+    for (const b of bub) { x.strokeStyle = col(.7, .8 * b.life); x.beginPath(); x.arc(b.x, b.y, b.r, 0, TAU); x.stroke(); }
     // The sea pushing in from every side.
     if (!st.dead && st.p > .02) {
-      const N = 18, hd = Math.max(3, R * .05);
-      x.strokeStyle = col(.8); x.fillStyle = col(.8); x.globalAlpha = .9 * st.p; x.lineWidth = Math.max(1.4, R * .016);
+      const N = 12, hd = Math.max(4, R * .07);
+      x.strokeStyle = col(.85); x.fillStyle = col(.85); x.globalAlpha = st.p; x.lineWidth = Math.max(2, R * .024);
       for (let i = 0; i < N; i++) {
         const a = i / N * TAU + .17, r0 = R * (1.5 - .22 * st.p), len = R * (.05 + .12 * st.p), ca = Math.cos(a), sa = Math.sin(a);
         const r1 = r0 - len;
         x.beginPath(); x.moveTo(cx + ca * r0, cy + sa * r0); x.lineTo(cx + ca * (r1 + hd * .6), cy + sa * (r1 + hd * .6)); x.stroke();
         x.beginPath(); x.moveTo(cx + ca * r1, cy + sa * r1);
         x.lineTo(cx + ca * (r1 + hd) - sa * hd * .55, cy + sa * (r1 + hd) + ca * hd * .55);
-        x.lineTo(cx + ca * (r1 + hd) + sa * hd * .55, cy + sa * (r1 + hd) - ca * hd * .55); x.fill();
+        x.lineTo(cx + ca * (r1 + hd) + sa * hd * .55, cy + sa * (r1 + hd) - ca * hd * .55); x.closePath(); x.fill();
       }
       x.globalAlpha = 1;
     }
-    // The implosion: a flash of heat, then a shock ring.
-    if (st.flash > .01) {
-      x.fillStyle = AMBER; x.globalAlpha = st.flash * .6;
-      x.beginPath(); x.arc(cx, cy, R * (.35 + .8 * (1 - st.flash)), 0, TAU); x.fill(); x.globalAlpha = 1;
-    }
+    // The implosion: one plain shock ring running outward.
     if (st.dead && st.boom > 0 && st.boom < 1) {
-      x.strokeStyle = col(.9, 1 - st.boom); x.lineWidth = Math.max(1.5, R * .03 * (1 - st.boom));
+      x.strokeStyle = col(.85, 1 - st.boom); x.lineWidth = Math.max(1.5, R * .025);
       x.beginPath(); x.arc(cx, cy, R * (.15 + 2.2 * st.boom), 0, TAU); x.stroke();
     }
     // Words in the middle of the ring.
@@ -267,11 +258,11 @@
       if (st.dead) {
         if (st.ta > .01) {
           const t1 = 'Imploded', t2 = `On dive ${st.dive}`;
-          x.globalAlpha = st.ta; x.lineJoin = 'round'; x.strokeStyle = col(0); x.lineWidth = fs * .5;
+          x.globalAlpha = st.ta;
           x.font = `700 ${fs * 1.7}px ${DISP}`;
-          x.strokeText(t1, cx, cy - fs * .8); x.fillStyle = RED; x.fillText(t1, cx, cy - fs * .8);
+          x.fillStyle = RED; x.fillText(t1, cx, cy - fs * .8);
           x.font = `700 ${fs}px ${BODY}`;
-          x.strokeText(t2, cx, cy + fs * 1.05); x.fillStyle = col(1); x.fillText(t2, cx, cy + fs * 1.05);
+          x.fillStyle = col(1); x.fillText(t2, cx, cy + fs * 1.05);
           x.globalAlpha = 1;
         }
       } else {
@@ -293,7 +284,7 @@
     const ux = u => px0 + u / SLOTS * (px1 - px0);
     const vy = v => py1 - v / 1.05 * (py1 - py0);
     x.save();
-    // Legend.
+    // Legend: a plain line and a plain patch, each with its word.
     x.font = `700 ${fs}px ${BODY}`; x.textBaseline = 'middle';
     x.strokeStyle = AMBER; x.lineWidth = 3; x.lineCap = 'round'; x.beginPath(); x.moveTo(px0, ly1); x.lineTo(px0 + fs * 1.1, ly1); x.stroke();
     x.fillStyle = AMBER; x.textAlign = 'left'; x.fillText(legA, px0 + fs * 1.6, ly1);
@@ -302,25 +293,19 @@
     x.fillStyle = col(.85); x.fillText('Pressure', sx + fs * 1.6, ly2);
     x.fillStyle = col(.35); x.fillRect(sx, ly2 - fs * .4, fs * 1.1, fs * .8);
     // The dives still to come, as a faint outline.
-    x.setLineDash([2, 3]); x.strokeStyle = col(.28); x.lineWidth = 1; x.beginPath();
+    x.strokeStyle = col(.25); x.lineWidth = 1; x.lineJoin = 'round'; x.beginPath();
     for (let i = 0; i < SLOTS; i++) for (let j = 0; j <= 36; j++) {
       const X = ux(i + j / 36), Y = vy(ghostP(j / 36) * D);
       (i || j) ? x.lineTo(X, Y) : x.moveTo(X, Y);
     }
     x.stroke();
     // The pressure at depth: the same peak every time.
-    x.setLineDash([4, 4]); x.strokeStyle = col(.5);
-    x.beginPath(); x.moveTo(px0, vy(D)); x.lineTo(px1, vy(D)); x.stroke(); x.setLineDash([]);
+    x.strokeStyle = col(.5); x.lineWidth = 1.5;
+    x.beginPath(); x.moveTo(px0, vy(D)); x.lineTo(px1, vy(D)); x.stroke();
     const last = hist[hist.length - 1];
-    // The safety margin left between strength and pressure.
-    if (!st.dead && entered) {
-      const a = .08 + .32 * clamp(1 - (st.S - D) / .38);
-      x.fillStyle = `rgba(255,91,74,${a})`;
-      x.fillRect(ux(last.u), vy(st.S), px1 - ux(last.u), vy(D) - vy(st.S));
-    }
     // The cycles: high pressure, surface, high pressure, surface.
     if (hist.length > 1) {
-      x.fillStyle = col(.22); x.beginPath(); x.moveTo(ux(hist[0].u), py1);
+      x.fillStyle = col(.3); x.beginPath(); x.moveTo(ux(hist[0].u), py1);
       for (const h of hist) x.lineTo(ux(h.u), vy(h.p * D));
       x.lineTo(ux(last.u), py1); x.fill();
       x.strokeStyle = col(.85); x.lineWidth = 1.6; x.lineJoin = 'round'; x.beginPath();
@@ -328,18 +313,23 @@
     }
     // Strength: where it would go if nothing changed, then the real line.
     if (!st.dead) {
-      x.setLineDash([2, 5]); x.strokeStyle = 'rgba(255,207,110,.45)'; x.lineWidth = 1.5;
-      x.beginPath(); x.moveTo(ux(last.u), vy(st.S)); x.lineTo(px1, vy(st.S)); x.stroke(); x.setLineDash([]);
+      x.setLineDash([2, 5]); x.strokeStyle = AMBER; x.globalAlpha = .55; x.lineWidth = 1.5;
+      x.beginPath(); x.moveTo(ux(last.u), vy(st.S)); x.lineTo(px1, vy(st.S)); x.stroke(); x.setLineDash([]); x.globalAlpha = 1;
     }
-    x.strokeStyle = st.dead ? RED : AMBER; x.lineJoin = 'round'; x.lineWidth = 2.8; x.beginPath();
+    // The safety margin left between strength and pressure: one solid red bar.
+    if (!st.dead && entered) {
+      const bw = Math.max(4, fs * .4), bx = Math.min(px1 - bw / 2, Math.max(px0 + bw / 2, ux(last.u)));
+      x.fillStyle = RED; x.fillRect(bx - bw / 2, vy(st.S), bw, vy(D) - vy(st.S));
+    }
+    x.strokeStyle = st.dead ? RED : AMBER; x.lineJoin = 'round'; x.lineWidth = 3; x.beginPath();
     hist.forEach((h, i) => i ? x.lineTo(ux(h.u), vy(h.S)) : x.moveTo(ux(h.u), vy(h.S)));
     if (!st.dead) x.lineTo(ux(last.u), vy(st.S));
     x.stroke();
     if (st.dead) {
       // Where strength met pressure.
-      const bx = ux(st.uDead), by = vy(D);
-      if (st.boom < 1) { x.strokeStyle = `rgba(255,91,74,${1 - st.boom})`; x.lineWidth = 2; x.beginPath(); x.arc(bx, by, 3 + fs * 1.3 * st.boom, 0, TAU); x.stroke(); }
-      x.fillStyle = RED; x.beginPath(); x.arc(ux(last.u), vy(0), 3.5, 0, TAU); x.fill();
+      x.fillStyle = RED;
+      x.beginPath(); x.arc(ux(st.uDead), vy(D), 5, 0, TAU); x.fill();
+      x.beginPath(); x.arc(ux(last.u), vy(0), 3.5, 0, TAU); x.fill();
     } else {
       x.fillStyle = AMBER; x.beginPath(); x.arc(ux(last.u), vy(st.S), 4, 0, TAU); x.fill();
     }
@@ -350,7 +340,7 @@
     for (let i = 0; i < SLOTS; i++) {
       const on = i + 1 === st.dive;
       x.font = `${on ? 800 : 600} ${fs}px ${BODY}`;
-      x.fillStyle = on ? (st.dead ? RED : col(1)) : col(.45);
+      x.fillStyle = on ? (st.dead ? RED : col(1)) : col(.5);
       x.fillText(long ? `dive ${i + 1}` : `${i + 1}`, ux(i + .5), py1 + fs * 1.1);
     }
     x.restore();
@@ -408,7 +398,7 @@
     Kit.haptic('success'); btn.classList.add('busy');
     if (Kit.calm) { for (let i = 0; i < 200; i++) step(); st.boom = 1; st.ta = 1; bub.length = 0; }
     else {
-      for (let i = 0; i < 45; i++) spawnBubble(true);
+      for (let i = 0; i < 24; i++) spawnBubble(true);
       st.flash = 1; st.shake = 1;
       gsap.to(st, {flash: 0, duration: 1.4, ease: 'expo.out'});
       gsap.to(st, {shake: 0, duration: .8, ease: 'power3.out'});

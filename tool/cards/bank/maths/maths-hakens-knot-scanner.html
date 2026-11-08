@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- slug: maths-hakens-knot-scanner -->
-<!-- Look: a page from a maths book on a night-dark card: the knot is drawn as a plain knot diagram, with a gap at every under-crossing. A ruled line moves down it, and the part already checked turns amber.
+<!-- Look: a page from a maths book, printed on warm paper: the knot is drawn as one plain ink cord, with a gap at every under-crossing. A small pencil rules a line down it, and the part already checked turns orange.
      Interaction: drag the dial to feed bigger knots. The scan crawls slower, and a d3 chart of run time keeps rescaling, so every bigger knot dwarfs all before it.
      Wow: past the line the age of the universe drops into the chart, the frame whites out, a rubber stamp lands, and the scan freezes at 0.000000%. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -16,11 +16,11 @@
 #dial{flex:0 0 max(6.4cqh,44px);width:100%;display:block}
 #chart text,#dial text{font-family:var(--body);fill:var(--k)}
 #why .body{font:500 max(1.95cqh,13px)/1.35 var(--body);color:var(--k);margin:0}
-.say b{color:#fcc22e}
+.say b{color:#b94f0c}
 .answered .q{font-size:max(2.4cqh,15px)}
-.keep b{color:#fcc22e}
+.keep b{color:#b94f0c}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Turn the dial · sure but slow" style="--c:#0c0716;--k:#f6efe6;--edge:#000">
+<article class="card" id="card" data-topic="maths" data-kind="Turn the dial · sure but slow" style="--c:#efe3cc;--k:#1e1a2b;--edge:#000">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HAKEN 1961</span></div>
     <h2 class="q">What was the first algorithm to tell any knot from the unknot?</h2>
@@ -39,9 +39,11 @@
 <script>
 (() => {
   const card = Kit.$('card'), cv = Kit.$('knot'), chart = Kit.$('chart'), dial = Kit.$('dial'), stage = Kit.$('stage');
-  const GROUND = '#0c0716', INK = '#f6efe6', AMBER = '#fcc22e';
+  // paper, ink, and one meaning colour (orange = already checked / too long)
+  const GROUND = '#efe3cc', INK = '#1e1a2b', AMBER = '#b94f0c';
   const mix = d3.interpolateRgb(GROUND, INK);
-  const MUTE = mix(.62), SOFT = mix(.38);
+  const MUTE = mix(.62), SOFT = mix(.3);
+  const WOOD = '#d9b07a', BODYP = '#e0a21c';
 
   // Knots to feed in: torus knots, sorted by how many crossings they have.
   const gcd = (a, b) => b ? gcd(b, a % b) : a;
@@ -81,7 +83,7 @@
     hudW = w;
   }
 
-  // ---------- the knot diagram ----------
+  // ---------- the knot diagram: one plain ink cord, gaps where it passes under ----------
   function drawKnot() {
     if (!CV) return;
     const {x: c, W, H} = CV;
@@ -93,7 +95,8 @@
     const s = Math.max(6, box / 6.7) * pop.s, cx = W / 2, cy = H / 2;
 
     const y0 = cy - 3.15 * s, y1 = cy + 3.15 * s, sy = y0 + (y1 - y0) * scan;
-    const lw = Math.max(1.6, Math.min(7, s * .95 / (K.p + K.q)));
+    const lw = Math.max(2.6, Math.min(10, s * 1.35 / (K.p + K.q)));
+    const gap = lw * .9 + 4;
     const N = P.length - 1, lim = N * intro.d, live = intro.d >= .999;
     // over-crossings are drawn last, with a gap cut in the strand beneath
     for (const i of ORDER) {
@@ -102,23 +105,29 @@
       const ax = cx + a[0] * s, ay = cy + a[1] * s, bx = cx + b[0] * s, by = cy + b[1] * s;
       const checked = live && (ay + by) / 2 < sy;
       c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by);
-      c.strokeStyle = GROUND; c.lineWidth = lw + 3.4; c.lineCap = 'butt'; c.stroke();
+      c.strokeStyle = GROUND; c.lineWidth = lw + gap; c.lineCap = 'butt'; c.stroke();
       c.strokeStyle = checked ? AMBER : INK; c.lineWidth = lw; c.lineCap = 'round'; c.stroke();
     }
 
-    // the scan line
+    // the scan line: a ruled pencil line, drawn by a small flat pencil at its left end
     const xl = cx - 3.35 * s, xr = cx + 3.35 * s;
     if (live) {
-      c.strokeStyle = INK; c.lineWidth = 1.5; c.lineCap = 'butt';
+      c.strokeStyle = INK; c.lineWidth = 1.4; c.lineCap = 'round';
       c.beginPath(); c.moveTo(xl, sy); c.lineTo(xr, sy); c.stroke();
-      c.fillStyle = INK; c.beginPath(); c.moveTo(xl - 8, sy - 5); c.lineTo(xl - 1, sy); c.lineTo(xl - 8, sy + 5); c.closePath(); c.fill();
+      const ph = 3.6, tip = xl - 1, cone = 7, bodyL = 9;
+      // sharpened wood
+      c.fillStyle = WOOD; c.beginPath(); c.moveTo(tip, sy); c.lineTo(tip - cone, sy - ph); c.lineTo(tip - cone, sy + ph); c.closePath(); c.fill();
+      // graphite point
+      c.fillStyle = INK; c.beginPath(); c.moveTo(tip, sy); c.lineTo(tip - 2.8, sy - 1.45); c.lineTo(tip - 2.8, sy + 1.45); c.closePath(); c.fill();
+      // painted body
+      c.fillStyle = BODYP; c.fillRect(tip - cone - bodyL, sy - ph, bodyL, ph * 2);
     }
 
     // the frame whites out at the reveal
-    if (flash.v > .001) { c.fillStyle = `rgba(246,239,230,${flash.v})`; c.fillRect(0, 0, W, H); }
+    if (flash.v > .001) { c.fillStyle = `rgba(255,252,246,${flash.v})`; c.fillRect(0, 0, W, H); }
 
     // captions
-    const LF = `600 ${fs}px ${BODY}`;
+    const LF = `500 ${fs}px ${BODY}`;
     const frozen = K.c >= CU;
     c.textBaseline = 'alphabetic';
     c.textAlign = 'left'; c.font = LF;
@@ -137,15 +146,16 @@
     c.fillStyle = MUTE; c.fillText(v[0], W - 2, H - fs * 1.8);
     c.fillStyle = frozen || solved ? AMBER : INK; c.fillText(v[1], W - 2, H - fs * .35);
 
-    // the rubber stamp
+    // the rubber stamp: orange ink on the paper, a heavy frame and a thin inner one
     if (stamp.v > .01) {
       const a = Math.min(1, stamp.v), sc = .8 + .2 * stamp.v, f2 = fs * 1.2;
       c.save(); c.globalAlpha = a; c.translate(cx, cy); c.rotate(-.07); c.scale(sc, sc);
       c.font = `700 ${f2}px ${BODY}`; c.textAlign = 'center';
       const l1 = 'Longer than the', l2 = 'age of the universe';
       const w = Math.max(c.measureText(l1).width, c.measureText(l2).width) + f2 * 1.4, h = f2 * 3.4;
-      c.fillStyle = GROUND; c.strokeStyle = AMBER; c.lineWidth = 2.5;
-      c.beginPath(); c.rect(-w / 2, -h / 2, w, h); c.fill(); c.stroke();
+      c.fillStyle = GROUND; c.strokeStyle = AMBER; c.lineJoin = 'round';
+      c.lineWidth = 3.5; c.beginPath(); c.rect(-w / 2, -h / 2, w, h); c.fill(); c.stroke();
+      c.lineWidth = 1.2; c.beginPath(); c.rect(-w / 2 + 5, -h / 2 + 5, w - 10, h - 10); c.stroke();
       c.fillStyle = AMBER; c.fillText(l1, 0, -f2 * .2); c.fillText(l2, 0, f2 * 1.15);
       c.restore();
     }
@@ -166,29 +176,29 @@
     clipR = Kit.mk('rect', {x: ml, y: mt - 16, width: CW - ml - mr + 14, height: B - mt + 16}, cp);
 
     // the sure line: it never moves
-    const t1 = Kit.mk('text', {x: ml, y: cfs * 1.15, 'font-size': cfs, 'font-weight': 600}, chart); t1.textContent = 'Sure of the answer';
+    const t1 = Kit.mk('text', {x: ml, y: cfs * 1.15, 'font-size': cfs, 'font-weight': 500}, chart); t1.textContent = 'Sure of the answer';
     const t2 = Kit.mk('text', {x: CW - mr, y: cfs * 1.15, 'font-size': cfs, 'font-weight': 700, 'text-anchor': 'end'}, chart); t2.textContent = '100%';
     const a0 = ml + t1.getComputedTextLength() + 8, a1 = CW - mr - t2.getComputedTextLength() - 8;
-    if (a1 > a0) Kit.mk('line', {x1: a0, x2: a1, y1: cfs * .75, y2: cfs * .75, stroke: INK, 'stroke-width': 1.6}, chart);
+    if (a1 > a0) Kit.mk('line', {x1: a0, x2: a1, y1: cfs * .75, y2: cfs * .75, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, chart);
 
-    Kit.mk('line', {x1: ml, x2: CW - mr, y1: B, y2: B, stroke: MUTE, 'stroke-width': 1.4}, chart);
-    Kit.mk('line', {x1: ml, x2: ml, y1: mt, y2: B, stroke: MUTE, 'stroke-width': 1.4}, chart);
+    Kit.mk('line', {x1: ml, x2: CW - mr, y1: B, y2: B, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, chart);
+    Kit.mk('line', {x1: ml, x2: ml, y1: mt, y2: B, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, chart);
     Kit.mk('line', {x1: xS(CU), x2: xS(CU), y1: B, y2: B + 5, stroke: AMBER, 'stroke-width': 2}, chart);
-    const yl = Kit.mk('text', {x: 0, y: 0, 'font-size': cfs, 'font-weight': 600, 'text-anchor': 'middle', style: `fill:${MUTE}`, transform: `translate(${cfs * 1.05},${(mt + B) / 2}) rotate(-90)`}, chart);
+    const yl = Kit.mk('text', {x: 0, y: 0, 'font-size': cfs, 'font-weight': 500, 'text-anchor': 'middle', style: `fill:${MUTE}`, transform: `translate(${cfs * 1.05},${(mt + B) / 2}) rotate(-90)`}, chart);
     yl.textContent = 'Time to run →'; if (yl.getComputedTextLength() > B - mt) yl.textContent = 'Time →';
     if (yl.getComputedTextLength() > B - mt) yl.textContent = '';
-    const xl = Kit.mk('text', {x: CW - mr, y: CH - cfs * .2, 'font-size': cfs, 'font-weight': 600, 'text-anchor': 'end', style: `fill:${MUTE}`}, chart); xl.textContent = 'Bigger knots →';
+    const xl = Kit.mk('text', {x: CW - mr, y: CH - cfs * .2, 'font-size': cfs, 'font-weight': 500, 'text-anchor': 'end', style: `fill:${MUTE}`}, chart); xl.textContent = 'Bigger knots →';
 
     const g = Kit.mk('g', {'clip-path': 'url(#cc)'}, chart);
-    areaP = Kit.mk('path', {style: 'fill:color-mix(in srgb, #fcc22e 26%, var(--c))'}, g);
-    lineP = Kit.mk('path', {fill: 'none', stroke: AMBER, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, g);
+    areaP = Kit.mk('path', {style: 'fill:color-mix(in srgb, #b94f0c 20%, var(--c))'}, g);
+    lineP = Kit.mk('path', {fill: 'none', stroke: AMBER, 'stroke-width': 2.6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
     uniL = Kit.mk('line', {x1: ml, x2: CW - mr, y1: -999, y2: -999, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '7 4'}, g);
     uniT = Kit.mk('text', {x: ml + 6, y: -999, 'font-size': cfs, 'font-weight': 700}, g);
     uniT.textContent = 'Age of the universe';
     if (uniT.getComputedTextLength() > xS(CU) - ml - 18) uniT.textContent = 'Universe age';
     dropL = Kit.mk('line', {x1: ml, x2: ml, y1: B, y2: B, stroke: SOFT, 'stroke-width': 1.2}, g);
     dotG = Kit.mk('g', {}, g);
-    Kit.mk('circle', {r: 5, fill: AMBER, stroke: GROUND, 'stroke-width': 2}, dotG);
+    Kit.mk('circle', {r: 5, fill: AMBER}, dotG);
     renderChart(0);
   }
   function renderChart(ms) {
@@ -214,7 +224,7 @@
     const f = Kit.fitSvg(dial); DW = f.W; DH = f.H;
     const tr = Math.max(13, Math.min(DH * .38, 17)); pad = tr + 3; ty = DH / 2;
     const xu = pad + UI / (n - 1) * (DW - 2 * pad);
-    // the track: plain up to the line, amber where the run outlasts the universe
+    // the track: plain up to the line, orange where the run outlasts the universe
     Kit.mk('line', {x1: pad, x2: xu, y1: ty, y2: ty, stroke: SOFT, 'stroke-width': 4, 'stroke-linecap': 'round'}, dial);
     Kit.mk('line', {x1: xu, x2: DW - pad, y1: ty, y2: ty, stroke: AMBER, 'stroke-width': 4, 'stroke-linecap': 'round'}, dial);
     Kit.mk('line', {x1: xu, x2: xu, y1: ty - tr * .9, y2: ty + tr * .9, stroke: AMBER, 'stroke-width': 2}, dial);
@@ -257,7 +267,7 @@
     Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
     if (Kit.calm) return;
     gsap.timeline()
-      .fromTo(flash, {v: 0}, {v: .8, duration: .12, ease: 'power2.out'})
+      .fromTo(flash, {v: 0}, {v: .85, duration: .12, ease: 'power2.out'})
       .to(flash, {v: 0, duration: 1, ease: 'expo.out'})
       .fromTo(stamp, {v: 0}, {v: 1, duration: .6, ease: 'back.out(2)'}, '<')
       .to(stamp, {v: 0, duration: .5, ease: 'power2.in'}, '+=1.6');

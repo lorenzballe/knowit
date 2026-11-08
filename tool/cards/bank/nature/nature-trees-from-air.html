@@ -11,24 +11,20 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-/* The stage is one drawing: a tree made of grains, the ground, and a soil-share slider under it. */
+/* The stage is one drawing: a flat picture-book tree standing on a band of ground, and a soil-share slider under it.
+   The guess fills the tree from its foot upward with soil, like a jar filling; after the answer the soil drains away
+   and the air's colour pours down from the top of the crown. Three big CO2 molecules beside the tree are the air. */
 #stage{position:relative;display:flex;flex-direction:column;min-height:0}
-#art{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;cursor:grab;outline:none;--soil:color-mix(in srgb,#9a6235 74%,var(--k))}
+#art{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;cursor:grab;outline:none;--soil:color-mix(in srgb,#9a6235 74%,var(--k));--air:color-mix(in srgb,var(--k) 52%,var(--c))}
 #art.drag{cursor:grabbing}
 #art.over{cursor:default}
-#art .sil{fill:color-mix(in srgb,var(--k) 13%,var(--c))}
-#art .wood{fill:color-mix(in srgb,var(--k) 24%,var(--c))}
-#art .twig{fill:none;stroke:color-mix(in srgb,var(--k) 24%,var(--c));stroke-linecap:round;stroke-linejoin:round}
-#art .mol{fill:var(--k);stroke:var(--k)}
-#art .mc{fill:var(--c);stroke:var(--k)}
-#art .bond{fill:none;stroke:var(--k)}
-#art .amb{opacity:.55}
-#art .grain,#art .ground,#art .fsoil{fill:var(--soil)}
-#art .grain{stroke:none}
-#art .ring{fill:none;stroke:color-mix(in srgb,var(--k) 38%,var(--c))}
-#art .root{fill:none;stroke:color-mix(in srgb,var(--c) 55%,var(--soil));stroke-linecap:round}
+#art .sil{fill:color-mix(in srgb,var(--k) 16%,var(--c))}
+#art .wood{fill:color-mix(in srgb,var(--k) 30%,var(--c))}
+#art .ground,#art .fsoil{fill:var(--soil)}
+#art .tair,#art .fair{fill:var(--air)}
+#art .root{fill:none;stroke:color-mix(in srgb,var(--k) 55%,var(--soil));stroke-linecap:round}
 #art .track{fill:color-mix(in srgb,var(--k) 7%,var(--c));stroke:color-mix(in srgb,var(--k) 30%,var(--c))}
-#art .fair,#art .knob{fill:var(--k)}
+#art .knob{fill:var(--k)}
 #art .kring{fill:none;stroke:var(--k);opacity:0}
 #art:focus-visible .kring{opacity:1}
 #art .chev{fill:none;stroke:var(--c);stroke-linecap:round;stroke-linejoin:round}
@@ -55,34 +51,37 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const TRUTH = .05, OK_MAX = .15, D = .054;
+const TRUTH = .05, OK_MAX = .15;
 const svg = Kit.$('art'), why = Kit.$('why'), say = Kit.$('say');
+// The CO2 molecules are drawn big: a few plain shapes, not a sprinkle.
+const AMB = 2.1;
 
 // The tree, measured in tree heights: base at (0,0), top at y = -1.
 const LOBES = [[0,-.70,.27],[-.25,-.60,.20],[.25,-.62,.21],[-.13,-.85,.15],[.14,-.84,.16],[-.37,-.52,.12],[.37,-.54,.12]];
 const TRUNK = 'M-.13 0Q-.08-.02-.075-.14L-.065-.5H.065L.075-.14Q.08-.02.13 0Z';
-// The boughs that carry the crown, in the trunk's colour.
-const BOUGHS = ['M0-.46Q-.02-.6 0-.78', 'M-.03-.47Q-.14-.52-.27-.6', 'M.03-.47Q.15-.53.27-.62', 'M-.01-.6Q-.08-.7-.13-.82', 'M.01-.62Q.09-.72.14-.8', 'M-.16-.54Q-.27-.53-.36-.52', 'M.17-.56Q.28-.55.36-.54'];
 const half = y => y < -.14 ? .065 + .01 * (y + .5) / .36 : .075 + .055 * ((y + .14) / .14) ** 2;
 const inCanopy = (x, y, m) => LOBES.some(([a, b, r]) => (x - a) ** 2 + (y - b) ** 2 <= (r - m) ** 2);
 const inTrunk = (x, y, m) => y <= -.005 && y >= -.48 && Math.abs(x) <= half(y) - m;
+// The air beside the tree (tree units and a tilt), and where those molecules settle in the crown.
+const AIR = [[-.42, -.93, -25], [.43, -.96, 20], [.34, -.24, -10]];
+const INSIDE = [[-.22, -.62, -15], [.03, -.84, 10], [.25, -.64, 25]];
 
-// Its matter, one grain per slot, the same on every phone. Each slot has a rank: a soil share p
-// paints the lowest-ranked p of them as soil, so the soil is scattered through the whole tree.
-const slots = [];
-for (let row = 0, y = -.03; y > -1.02; row++, y -= D * .866)
-  for (let x = -.52 + (row % 2) * D / 2; x < .52; x += D) {
-    const px = x + (Kit.rnd() - .5) * D * .3, py = y + (Kit.rnd() - .5) * D * .3;
-    if (inCanopy(px, py, D * .42) || inTrunk(px, py, D * .22)) slots.push({x: px, y: py, rot: Kit.rnd() * 180, r: Kit.rnd()});
-  }
-[...slots].sort((a, b) => a.r - b.r).forEach((s, i) => s.rank = i);
-const N = slots.length, NSOIL = Math.max(1, Math.round(N * TRUTH));
+// The tree's area, sampled once: level(q) is the height below which a share q of the tree lies,
+// so a soil share fills the tree from its foot to that line.
+const YS = [];
+for (let y = -1.0; y < 0; y += .008) for (let x = -.52; x < .52; x += .008) if (inCanopy(x, y, 0) || inTrunk(x, y, 0)) YS.push(y);
+YS.sort((a, b) => b - a);
+const level = q => {
+  if (q <= 0) return .03;
+  if (q >= 1) return -1.02;
+  const i = q * (YS.length - 1), j = Math.floor(i);
+  return YS[j] + (YS[Math.min(j + 1, YS.length - 1)] - YS[j]) * (i - j);
+};
 
 const st = {p: .5, phase: 'guess', guess: null, shrink: 0, touched: false};
 let L = null, E = {}, key = '', tl = null, hint = null, t0 = 0, ticking = false, drag = null;
 let doneResolve; const revealDone = new Promise(r => doneResolve = r);
-const prng = s => () => { s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-const put = (el, x, y, r) => el.setAttribute('transform', `translate(${x.toFixed(4)},${y.toFixed(4)}) rotate(${r.toFixed(1)})`);
+const put = (el, x, y, r, s = 1) => el.setAttribute('transform', `translate(${x.toFixed(4)},${y.toFixed(4)}) rotate(${r.toFixed(1)})` + (s !== 1 ? ` scale(${s.toFixed(3)})` : ''));
 const pct = p => Math.round(p * 100);
 
 function layout(W, H, f) {
@@ -99,7 +98,17 @@ function layout(W, H, f) {
   return {W, H, fs, pad, bh, kr, barT, barB, barM, labY, gh, gy, S, top: gy - S, cx: W / 2, xa: kr + 4, xb: W - kr - 4, kDone: 1};
 }
 
-// Draw at the real size, from the state alone: the slider, the reveal's end, or the end itself.
+// A carbon dioxide molecule as a chemistry book draws it: O–C–O, two solid oxygens and a hollow carbon.
+function molecule(defs, id, ink, hole) {
+  const m = Kit.mk('g', {id}, defs);
+  Kit.mk('path', {d: 'M-.023 0H.023', style: `fill:none;stroke:${ink};stroke-width:.008;stroke-linecap:round`}, m);
+  for (const cx of [-.0235, .0235]) Kit.mk('circle', {cx, cy: 0, r: .0108, style: `fill:${ink}`}, m);
+  Kit.mk('circle', {cx: 0, cy: 0, r: .0084, style: `fill:${hole};stroke:${ink};stroke-width:.0042`}, m);
+}
+function soilAt(lv) { E.soilR.setAttribute('y', lv.toFixed(4)); E.soilR.setAttribute('height', Math.max(0, .06 - lv).toFixed(4)); }
+function airTo(b) { E.airR.setAttribute('height', Math.max(0, b + 1.05 + .003).toFixed(4)); }
+
+// Draw at the real size, from the state alone: the slider, or the end.
 function draw(force) {
   if (st.phase === 'reveal') return;
   svg.style.width = svg.style.height = '';
@@ -111,67 +120,56 @@ function draw(force) {
   svg.textContent = '';
   const done = st.phase === 'done';
   const defs = Kit.mk('defs', {}, svg);
-  // A carbon dioxide molecule as a chemistry book draws it: O–C–O, two dark oxygens, a hollow carbon.
-  const m = Kit.mk('g', {id: 'co2'}, defs);
-  Kit.mk('path', {class: 'bond', d: 'M-.0145 0H.0145', 'stroke-width': .005}, m);
-  Kit.mk('circle', {cx: -.0148, cy: 0, r: .0082, 'stroke-width': 0}, m);
-  Kit.mk('circle', {cx: .0148, cy: 0, r: .0082, 'stroke-width': 0}, m);
-  Kit.mk('circle', {class: 'mc', cx: 0, cy: 0, r: .0058, 'stroke-width': .0028}, m);
-  // A clod of soil: a small uneven lump.
-  Kit.mk('path', {id: 'grain', d: 'M-.0125-.003Q-.011-.0125.0005-.0125Q.0125-.0115.0128.0005Q.0122.0118.002.0122Q-.0085.013-.0118.0065Q-.0135.002-.0125-.003Z'}, defs);
-  Kit.mk('circle', {id: 'ring', r: .0095, 'stroke-width': 1.2 / L.S}, defs);
+  molecule(defs, 'co2', 'var(--k)', 'var(--c)');
+  molecule(defs, 'co2L', 'var(--c)', 'var(--air)');
+  const cp = Kit.mk('clipPath', {id: 'treeclip'}, defs);
+  Kit.mk('path', {d: TRUNK}, cp);
+  for (const [a, b, r] of LOBES) Kit.mk('circle', {cx: a, cy: b, r}, cp);
   Kit.mk('rect', {x: L.xa, y: L.barT, width: L.xb - L.xa, height: L.bh, rx: L.bh / 2}, Kit.mk('clipPath', {id: 'barclip'}, defs));
 
-  // The air: a few CO2 molecules drifting beside the crown, clear of it.
+  // The air: three CO2 molecules drifting beside the crown.
   if (!done) {
-    const R = prng(5), g = Kit.mk('g', {}, svg);
-    for (let n = 0; n < 600 && E.amb.length < 11; n++) {
-      const x = L.pad + R() * (W - 2 * L.pad), y = L.fs * .9 + R() * (L.top + L.S * .45 - L.fs * .9);
-      if (inCanopy((x - L.cx) / L.S, (y - L.gy) / L.S, -.06)) continue;
-      if (y < L.top + L.fs * .3 && Math.abs(x - L.cx) < L.fs * 5.4) continue;
-      if (E.amb.some(a => Math.hypot(a.x - x, a.y - y) < L.S * .12)) continue;
-      E.amb.push({x, y, rot: R() * 180, ph: R() * 6.3, el: Kit.mk('use', {href: '#co2', class: 'mol amb'}, g)});
-    }
+    const g = Kit.mk('g', {}, svg);
+    AIR.forEach(([ax, ay, rot], i) => E.amb.push({x: L.cx + ax * L.S, y: L.gy + ay * L.S, rot, ph: i * 2.1, el: Kit.mk('use', {href: '#co2'}, g)}));
     bob(ticking ? (performance.now() - t0) / 1000 : 0);
   }
 
-  // The tree: a flat crown and trunk with its boughs, and its grains on top.
+  // The tree: a flat crown and trunk; inside it, the soil fills from the foot and the air from the top.
   const tg = E.tree = Kit.mk('g', {}, svg);
   Kit.mk('path', {class: 'wood', d: TRUNK}, tg);
   const sil = Kit.mk('g', {class: 'sil'}, tg);
   for (const [a, b, r] of LOBES) Kit.mk('circle', {cx: a, cy: b, r}, sil);
-  const bg0 = Kit.mk('g', {class: 'twig'}, tg);
-  BOUGHS.forEach((d, i) => Kit.mk('path', {d, 'stroke-width': i < 3 ? .04 : .026}, bg0));
-  E.pg = Kit.mk('g', {}, tg);
-  const k0 = Math.round(st.p * N);
-  for (const s of slots) {
-    s.soil = done ? s.rank < NSOIL : s.rank < k0;
-    const kind = s.soil ? 'grain' : done ? 'co2' : 'ring';
-    s.el = Kit.mk('use', {href: '#' + kind, class: kind === 'co2' ? 'mol' : kind}, E.pg);
-    put(s.el, s.x, s.y, s.rot);
-  }
+  const fg = Kit.mk('g', {'clip-path': 'url(#treeclip)'}, tg);
+  E.soilR = Kit.mk('rect', {class: 'fsoil', x: -.6, y: 0, width: 1.2, height: 0}, fg);
+  E.airR = Kit.mk('rect', {class: 'tair', x: -.6, y: -1.05, width: 1.2, height: 0}, fg);
+  E.mg = Kit.mk('g', {}, tg);
+  if (done) {
+    soilAt(level(TRUTH)); airTo(level(TRUTH));
+    for (const [x, y, r] of INSIDE) put(Kit.mk('use', {href: '#co2L'}, E.mg), x, y, r, AMB);
+  } else { soilAt(level(st.p)); airTo(-1.05); }
 
-  // The ground, drawn over the tree's foot so falling grains sink into it: a band of soil, its top a little uneven.
+  // The ground, drawn over the tree's foot: a band of soil, its top a little uneven.
   {
-    const R = prng(3), n = 14; let d = `M0 ${L.gy + L.gh}V${(L.gy + .6).toFixed(1)}`;
-    for (let i = 1; i <= n; i++) d += `L${(W * i / n).toFixed(1)} ${(L.gy + (R() - .5) * 1.8).toFixed(1)}`;
+    const ys = [.2, -.5, .4, -.3, .6, -.1, .3, -.6, .1, .5, -.4, .2, -.2, .4];
+    let d = `M0 ${L.gy + L.gh}V${(L.gy + .6).toFixed(1)}`;
+    ys.forEach((v, i) => d += `L${(W * (i + 1) / ys.length).toFixed(1)} ${(L.gy + v * 1.8).toFixed(1)}`);
     Kit.mk('path', {class: 'ground', d: d + `V${L.gy + L.gh}Z`}, svg);
   }
-  const rg = Kit.mk('g', {class: 'root', 'stroke-width': Math.max(1.6, L.S * .013)}, svg);
-  for (const [dx, ex, ey] of [[-.06, -.36, .7], [-.025, -.17, .92], [.025, .15, .88], [.06, .33, .66]])
+  const rg = Kit.mk('g', {class: 'root', 'stroke-width': Math.max(2, L.S * .016)}, svg);
+  for (const [dx, ex, ey] of [[-.05, -.3, .75], [0, 0, .9], [.05, .3, .72]])
     Kit.mk('path', {d: `M${L.cx + dx * L.S} ${L.gy + .5}Q${L.cx + ex * L.S * .45} ${L.gy + L.gh * .5} ${L.cx + ex * L.S} ${L.gy + L.gh * ey}`}, rg);
 
-  // The slider is also the answer's chart: soil on the left, the rest on the right.
+  // The slider is also the answer's chart: soil on the left, the air on the right.
   const bg = Kit.mk('g', {}, svg);
   Kit.mk('rect', {class: 'track', x: L.xa, y: L.barT, width: L.xb - L.xa, height: L.bh, rx: L.bh / 2, 'stroke-width': 1.2}, bg);
   const cg = Kit.mk('g', {'clip-path': 'url(#barclip)'}, bg);
   E.soil = Kit.mk('rect', {class: 'fsoil', x: L.xa, y: L.barT, width: 0, height: L.bh}, cg);
   E.air = Kit.mk('rect', {class: 'fair', x: L.xa, y: L.barT, width: 0, height: L.bh}, cg);
   E.lab = Kit.mk('text', {x: L.xa, y: L.labY, 'font-size': L.fs.toFixed(1)}, bg);
-  E.labR = Kit.mk('text', {x: L.xb, y: L.labY, 'font-size': (L.fs * 1.08).toFixed(1), 'text-anchor': 'end'}, bg);
+  E.labR = Kit.mk('text', {x: L.xb, y: L.labY, 'font-size': L.fs.toFixed(1), 'text-anchor': 'end'}, bg);
   E.you = Kit.mk('g', {opacity: 0}, bg);
   E.youLine = Kit.mk('line', {class: 'tick', y1: L.barT - 4, y2: L.barB + 4, 'stroke-width': 2.2}, E.you);
-  E.youTxt = Kit.mk('text', {class: 'mut', x: L.cx, y: L.barB + L.fs * 1.08, 'font-size': (L.fs * .86).toFixed(1), 'text-anchor': 'middle'}, E.you);
+  E.youTxt = Kit.mk('text', {class: 'mut', x: L.cx, y: L.barB + L.fs * 1.08, 'font-size': L.fs.toFixed(1), 'text-anchor': 'middle'}, E.you);
   E.youTxt.textContent = 'your guess';
   E.knob = Kit.mk('g', {}, bg);
   Kit.mk('circle', {class: 'kring', r: L.kr + 3.5, 'stroke-width': 2}, E.knob);
@@ -198,10 +196,10 @@ function draw(force) {
 
 function bob(t) {
   if (!L || !E.amb) return;
-  const A = L.S * .02;
+  const A = L.S * .015;
   for (const a of E.amb) {
-    a.cx = a.x + Math.sin(t * .8 + a.ph) * A; a.cy = a.y + Math.cos(t * .6 + a.ph * 1.7) * A * .7; a.cr = a.rot + Math.sin(t * .5 + a.ph) * 30;
-    a.el.setAttribute('transform', `translate(${a.cx.toFixed(1)},${a.cy.toFixed(1)}) scale(${L.S.toFixed(2)}) rotate(${a.cr.toFixed(1)})`);
+    a.cx = a.x + Math.sin(t * .8 + a.ph) * A; a.cy = a.y + Math.cos(t * .6 + a.ph * 1.7) * A * .7; a.cr = a.rot + Math.sin(t * .5 + a.ph) * 12;
+    a.el.setAttribute('transform', `translate(${a.cx.toFixed(1)},${a.cy.toFixed(1)}) scale(${(L.S * AMB).toFixed(2)}) rotate(${a.cr.toFixed(1)})`);
   }
 }
 function placeTree() {
@@ -231,15 +229,11 @@ function youAt(p) {
   E.you.setAttribute('opacity', 1);
 }
 
-// The reader's guess: the share of the tree's grains that came out of the soil.
+// The reader's guess: the share of the tree that came out of the soil, filled from its foot.
 function setP(p) {
   if (st.phase !== 'guess' || !L) return;
   st.p = Math.max(0, Math.min(1, p));
-  const k = Math.round(st.p * N);
-  for (const s of slots) {
-    const soil = s.rank < k;
-    if (soil !== s.soil) { s.soil = soil; s.el.setAttribute('href', soil ? '#grain' : '#ring'); s.el.setAttribute('class', soil ? 'grain' : 'ring'); }
-  }
+  soilAt(level(st.p));
   bar(st.p, 0); labels();
 }
 function stopHint() { if (hint) { hint.kill(); hint = null; } }
@@ -279,8 +273,8 @@ svg.addEventListener('keydown', e => {
   setP(Math.round(st.p * 20 + d) / 20); touched();
 });
 
-// How sure, after the guess. Then the drawing answers: the soil falls back into the ground and
-// the air pours in through the crown until the tree is whole again.
+// How sure, after the guess. Then the drawing answers: the soil drains back into the ground,
+// the molecules fly into the crown, and the air's colour pours down until the tree is whole again.
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', v => {
   if (st.phase !== 'guess') return;
   stopHint();
@@ -296,53 +290,37 @@ function reveal() {
   svg.classList.add('over');
   svg.setAttribute('role', 'img');
   svg.setAttribute('aria-label', 'About 95% of the tree came from carbon dioxide in the air; about 5% from everything else.');
-  if (Kit.calm || !L || !E.pg) { finish(); return; }
+  if (Kit.calm || !L || !E.mg) { finish(); return; }
   st.phase = 'reveal';
-  const R = prng(9), S = L.S, toL = (x, y) => [(x - L.cx) / S, (y - L.gy) / S];
-  const fly = [], fall = [], rise = [];
-  const air = slots.filter(s => s.rank >= NSOIL).sort((a, b) => b.y - a.y);
-  air.forEach((s, i) => {
-    const a = E.amb[i];
-    let p0, r0, o0 = 0;
-    if (a) { p0 = toL(a.cx ?? a.x, a.cy ?? a.y); r0 = a.cr ?? a.rot; o0 = .55; a.el.style.opacity = 0; }
-    else { p0 = toL(L.W * (R() * 1.3 - .15), -L.H * (.03 + R() * .2)); r0 = R() * 360; }
-    const p2 = [s.x, s.y];
-    let p1;
-    if (s.y > -.43) p1 = [s.x * .3 + (R() - .5) * .14, -.58 - R() * .18];
-    else { const k = (R() - .5) * .6; p1 = [(p0[0] + p2[0]) / 2 - (p2[1] - p0[1]) * k, (p0[1] + p2[1]) / 2 + (p2[0] - p0[0]) * k]; }
-    const el = Kit.mk('use', {href: '#co2', class: 'mol', opacity: o0}, E.pg);
-    put(el, p0[0], p0[1], r0);
-    fly.push({el, p0, p1, p2, r0, r1: s.rot + 360 * Math.round(R() * 2 - 1), o0, ring: s.soil ? null : s.el, t: .4 + 1.35 * i / air.length + R() * .15, d: .65 + R() * .3});
-    if (s.soil) fall.push({el: s.el, x: s.x, y: s.y, x1: s.x * .7 + (R() - .5) * .1, y1: L.gh / S * (.4 + R() * .5), r0: s.rot, r1: s.rot + (R() - .5) * 240, t: .05 + R() * .4, d: .45 + R() * .3});
+  const S = L.S, toL = (x, y) => [(x - L.cx) / S, (y - L.gy) / S];
+  const lv0 = level(st.p), lvT = level(TRUTH);
+  const fly = E.amb.map((a, i) => {
+    const p0 = toL(a.cx ?? a.x, a.cy ?? a.y), [x2, y2, r2] = INSIDE[i];
+    const p1 = [(p0[0] + x2) / 2, Math.min(p0[1], y2) - .1];
+    const r0 = a.cr ?? a.rot;
+    const el = Kit.mk('use', {href: '#co2'}, E.mg);
+    put(el, p0[0], p0[1], r0, AMB);
+    a.el.style.opacity = 0;
+    return {el, p0, p1, p2: [x2, y2], r0, r1: r2, t: .2 + i * .22, d: .75, light: false};
   });
-  for (const s of slots) if (s.rank < NSOIL && !s.soil) {
-    s.el.setAttribute('href', '#grain'); s.el.setAttribute('class', 'grain'); s.el.setAttribute('opacity', 0);
-    rise.push({el: s.el, x: s.x, y: s.y, r: s.rot, t: .3 + R() * .6, d: .8 + R() * .3});
-  }
-  const total = Math.max(...fly.map(o => o.t + o.d), ...fall.map(o => o.t + o.d), ...rise.map(o => o.t + o.d)) + .05;
-  const out3 = u => 1 - (1 - u) ** 3, B = {p: st.p}, clock = {T: 0}, n = fly.length;
+  const tS = .05, dS = .8, tA = .7, dA = 1.0;
+  const total = Math.max(tS + dS, tA + dA, ...fly.map(o => o.t + o.d)) + .05;
+  const out3 = u => 1 - (1 - u) ** 3, cl = u => Math.max(0, Math.min(1, u)), B = {p: st.p}, clock = {T: 0};
   const frame = () => {
-    const T = clock.T; let got = 0;
+    const T = clock.T;
+    soilAt(lv0 + (lvT - lv0) * out3(cl((T - tS) / dS)));
+    const fA = cl((T - tA) / dA), a = fA * fA * (3 - 2 * fA);
+    const ab = a > 0 ? level(1 - a * (1 - TRUTH)) : -1.05;
+    airTo(ab);
     for (const o of fly) {
-      const u = Math.min(1, (T - o.t) / o.d);
-      if (u <= 0) continue;
-      if (u >= 1) got++;
-      if (o.fin) continue;
-      const e = out3(u), m = 1 - e;
-      put(o.el, m * m * o.p0[0] + 2 * m * e * o.p1[0] + e * e * o.p2[0], m * m * o.p0[1] + 2 * m * e * o.p1[1] + e * e * o.p2[1], o.r0 + (o.r1 - o.r0) * e);
-      o.el.setAttribute('opacity', (o.o0 + (1 - o.o0) * Math.min(1, u * 4)).toFixed(2));
-      if (o.ring) o.ring.setAttribute('opacity', Math.max(0, Math.min(1, (1 - u) / .3)).toFixed(2));
-      if (u >= 1) o.fin = true;
+      const u = cl((T - o.t) / o.d);
+      if (u > 0 && !o.fin) {
+        const e = out3(u), m = 1 - e;
+        put(o.el, m * m * o.p0[0] + 2 * m * e * o.p1[0] + e * e * o.p2[0], m * m * o.p0[1] + 2 * m * e * o.p1[1] + e * e * o.p2[1], o.r0 + (o.r1 - o.r0) * e, AMB);
+        if (u >= 1) o.fin = true;
+      }
+      if (o.fin && !o.light && ab >= o.p2[1]) { o.light = true; o.el.setAttribute('href', '#co2L'); }
     }
-    for (const o of fall) {
-      const u = Math.max(0, Math.min(1, (T - o.t) / o.d));
-      if (u > 0 && !o.fin) { put(o.el, o.x + (o.x1 - o.x) * u, o.y + (o.y1 - o.y) * u * u, o.r0 + (o.r1 - o.r0) * u); if (u >= 1) o.fin = true; }
-    }
-    for (const o of rise) {
-      const u = Math.max(0, Math.min(1, (T - o.t) / o.d));
-      if (u > 0 && !o.fin) { const e = out3(u); put(o.el, o.x * e, .02 + (o.y - .02) * e, o.r); o.el.setAttribute('opacity', Math.min(1, u * 3).toFixed(2)); if (u >= 1) o.fin = true; }
-    }
-    const a = got / n;
     bar(B.p, a);
     E.lab.textContent = `${pct(B.p)}%`;
     E.labR.textContent = a > 0 ? `${Math.round(a * (100 - pct(TRUTH)))}% from the air` : '';

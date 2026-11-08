@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: life-permanent-time-choice -->
-<!-- Look: a page from a printed science book: two flat flasks drawn in ink on the card's deep teal, one holding a flat amber "summer" hour and one a flat blue "winter" hour, joined by a plain pipe with a tap. The hour flows back and forth through the pipe.
-     Interaction: watch the hour flow between the flasks, pick what the EU vote abolished, say how sure; then tap a flask to drop a country's choice into it.
-     Wow: the tap turns shut and the pipe breaks apart, pieces and drops falling under gravity (Physics2D). Both flasks stay, each now "permanent". -->
+<!-- Look: a page from a printed book: two plain wall clocks drawn flat on the card's deep teal, a summer clock and a winter clock. Each face carries a flat wedge of its colour, its share of "the hour", with the hour hand riding the wedge's edge. A flat bar with a lever links them; the hour flows back and forth along it, one wedge shrinking as the other grows.
+     Interaction: watch the hour move between the clocks, pick what the EU vote abolished, say how sure; then tap a clock to drop a country's choice into it.
+     Wow: the lever turns shut and the bar breaks apart, pieces and drops falling under gravity (Physics2D). Both clocks stay, each now "permanent". -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Abolished: the switch</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -26,7 +26,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
     <h2 class="q">In 2019 an EU vote targeted summer time. What did it abolish?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Two glass flasks, summer time and winter time, joined by a tube with a valve; the liquid flows back and forth between them."></svg>
+      <svg id="pic" role="img" aria-label="Two wall clocks, summer time and winter time, joined by a bar with a lever; the hour moves back and forth between them, one clock's share shrinking as the other's grows."></svg>
       <div id="opts">
         <button class="opt" data-i="0">Summer time itself</button>
         <button class="opt" data-i="1">The switch between the two</button>
@@ -55,10 +55,6 @@ let G = null, slosh = null, prevL = .45;
 const mk = (t, a, p) => Kit.mk(t, a, p);
 const txt = (p, x, y, s, a = {}, font = 'var(--body)') => { const e = mk('text', Object.assign({x, y, 'text-anchor': 'middle', fill: INK, style: 'font-family:' + font}, a), p); e.textContent = s; return e; };
 
-function flaskPath(cx, by, bw, nw, top, sh) {
-  const r = bw * .09, hw = bw / 2, hn = nw / 2;
-  return `M${cx - hn},${top} L${cx - hn},${sh} L${cx - hw + r * .5},${by - r * .9} Q${cx - hw},${by} ${cx - hw + r * 1.5},${by} L${cx + hw - r * 1.5},${by} Q${cx + hw},${by} ${cx + hw - r * .5},${by - r * .9} L${cx + hn},${sh} L${cx + hn},${top} Z`;
-}
 const nameOf = (s, compact) => (S.revealed && compact) ? 'Always ' + s.n.split(' ')[0].toLowerCase() : s.n;
 
 function layout() {
@@ -66,28 +62,27 @@ function layout() {
   const {W, H} = Kit.fitSvg(svg);
   const f = Math.max(12, Math.min(14, W / 27));
   const compact = H < f * 17;
-  const defs = mk('defs', {}, svg);
 
-  // vertical budget: icons above the mouths, one or two label rows below the shelf
+  // vertical budget: season marks above the clocks, one or two label rows below
   const by = H - f * (compact ? 1.9 : 3.4), topY = f * 2.2;
-  const fh = Math.max(24, Math.min(by - topY, W * .72));
-  const bw = Math.min(W * .34, fh * .8), nw = bw * .3;
-  const top = by - fh, sh = top + fh * .32;
+  const R = Math.max(14, Math.min(W * .17, (by - topY - f * .3) / 2));
+  const cyc = by - f * .3 - R, top = cyc - R;
   const sides = {L: {cx: W * .26, c: SUM, n: 'Summer time'}, R: {cx: W * .74, c: WIN, n: 'Winter time'}};
-  const ty = by - fh * .14, th = Math.max(6, bw * .08);
-  const xa = sides.L.cx + bw * .44, xb = sides.R.cx - bw * .44;
-  G = {W, H, f, by, top, sh, bw, nw, ty, th, xa, xb, sides, compact, fh};
+  const ty = cyc, th = Math.max(6, R * .16);
+  const xa = sides.L.cx + R - 1, xb = sides.R.cx - R + 1;
+  G = {W, H, f, by, top, R, cyc, ty, th, xa, xb, sides, compact};
 
-  // the shelf: one plain ink line
-  mk('line', {x1: W * .04, x2: W * .96, y1: by + 1.5, y2: by + 1.5, stroke: T3, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
-
-  // the pipe with its tap (only while the switch exists)
+  // the link with its lever (only while the switch exists)
   const tube = mk('g', {id: 'tube'}, svg); G.tube = tube;
   const stubs = mk('g', {id: 'stubs', opacity: S.revealed ? 1 : 0}, svg); G.stubs = stubs;
   const sl = (xb - xa) * .2;
   [[xa, xa + sl, SUM[0]], [xb - sl, xb, WIN[0]]].forEach(([a, b, c], i) => {
-    mk('rect', {x: a, y: ty - th / 2, width: b - a, height: th, fill: c, stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, stubs);
-    mk('circle', {cx: i ? a : b, cy: ty, r: th * .62, fill: BG, stroke: INK, 'stroke-width': 1.8}, stubs);
+    const e = i ? a : b, j = th * .5;
+    // a short stub with a broken, jagged end
+    const pts = i
+      ? `${b},${ty - j} ${e + j * .6},${ty - j} ${e},${ty - j * .2} ${e + j * .7},${ty + j * .3} ${e + j * .2},${ty + j} ${b},${ty + j}`
+      : `${a},${ty - j} ${e - j * .6},${ty - j} ${e},${ty - j * .2} ${e - j * .7},${ty + j * .3} ${e - j * .2},${ty + j} ${a},${ty + j}`;
+    mk('polygon', {points: pts, fill: c, stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, stubs);
   });
   if (!S.revealed) {
     mk('rect', {x: xa, y: ty - th / 2, width: xb - xa, height: th, fill: T2}, tube);
@@ -101,19 +96,21 @@ function layout() {
     G.vx = vx;
   }
 
-  // flasks: a flat body, flat liquid, one ink outline
+  // clocks: a flat face, a flat wedge of the season's colour, one ink rim, two hands
   for (const k of ['L', 'R']) {
     const s = sides[k], cx = s.cx;
-    const d = flaskPath(cx, by, bw, nw, top, sh);
-    const cp = mk('clipPath', {id: 'clip' + k}, defs); mk('path', {d}, cp);
     const g = mk('g', {id: 'glass' + k}, svg); s.g = g;
-    mk('path', {d, fill: T1}, g);
-    const lq = mk('g', {'clip-path': `url(#clip${k})`}, g);
-    s.liq = mk('path', {fill: s.c[0]}, lq);
-    s.surf = mk('path', {fill: 'none', stroke: s.c[1], 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, lq);
-    mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, g);
-    mk('rect', {x: cx - nw / 2 - 4, y: top - 3, width: nw + 8, height: 6, rx: 2, fill: INK}, g);
-    // the season above the mouth: a sun, a snowflake
+    mk('circle', {cx, cy: cyc, r: R, fill: T1}, g);
+    s.wedge = mk('path', {fill: s.c[0]}, g);
+    mk('circle', {cx, cy: cyc, r: R, fill: 'none', stroke: INK, 'stroke-width': 2.4}, g);
+    for (let q = 0; q < 4; q++) {
+      const a = q * Math.PI / 2, r1 = R * .8, r2 = R * .92;
+      mk('line', {x1: cx + Math.sin(a) * r1, y1: cyc - Math.cos(a) * r1, x2: cx + Math.sin(a) * r2, y2: cyc - Math.cos(a) * r2, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
+    }
+    mk('line', {x1: cx, y1: cyc, x2: cx, y2: cyc - R * .74, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
+    s.hand = mk('line', {x1: cx, y1: cyc, x2: cx, y2: cyc - R * .55, stroke: INK, 'stroke-width': 3.6, 'stroke-linecap': 'round'}, g);
+    mk('circle', {cx, cy: cyc, r: Math.max(3, R * .06), fill: INK}, g);
+    // the season above the clock: a sun, a snowflake
     const iy = top - f * 1.25, ic = mk('g', {}, g); s.icon = ic; s.iy = iy;
     if (k === 'L') {
       mk('circle', {cx, cy: iy, r: f * .34, fill: SUM[0]}, ic);
@@ -125,8 +122,8 @@ function layout() {
     if (!compact) s.perm = txt(svg, cx, by + f * 1.35, 'permanent', {'font-size': f * 1.15, 'font-weight': 600, fill: s.c[0], opacity: S.revealed ? 1 : 0}, 'var(--hand)');
     s.name = txt(svg, cx, by + f * (compact ? 1.45 : 2.75), nameOf(s, compact), {'font-size': f, 'font-weight': 700, fill: S.revealed && compact ? s.c[0] : INK});
   }
-  // centre label, between the necks
-  const cy = compact ? Math.max(f * 1.1, ty - f * 2.4) : top + fh * .1;
+  // centre label, between the clocks' tops
+  const cy = compact ? Math.max(f * 1.1, ty - f * 2.4) : top - f * .1;
   G.c1 = txt(svg, W / 2, cy, S.revealed ? 'No switch' : 'The switch', {'font-size': f, 'font-weight': 700});
   G.c2 = txt(svg, W / 2, cy + f * 1.3, S.revealed ? 'tap to pick' : 'twice a year', {'font-size': f, 'font-weight': 500, fill: T3});
   G.fx = mk('g', {}, svg);
@@ -134,21 +131,24 @@ function layout() {
   draw();
 }
 
-function surfY(l) { return G.by - 3 - l * (G.by - G.sh - 6); }
+// where a dropped choice lands: the clock's centre
+function surfY(l) { return G.cyc; }
 function draw() {
   if (!G) return;
-  const {bw, by, f} = G, t = S.t;
+  const {R, cyc} = G, t = S.t, TAU = Math.PI * 2;
   for (const k of ['L', 'R']) {
-    const s = G.sides[k], cx = s.cx, sy = surfY(S[k]), amp = (k === 'L' ? S.aL : S.aR) * f * .55;
-    const tilt = (k === 'L' ? 1 : -1) * Math.max(-1, Math.min(1, S.flow)) * f * .5 + amp * .6 * Math.sin(t * 4.2 + (k === 'L' ? 0 : 1.7));
-    let top = '';
-    for (let x = cx - bw / 2 - 2; x <= cx + bw / 2 + 6; x += 6) {
-      const u = (x - cx) / (bw / 2);
-      const y = sy + tilt * u + amp * Math.sin(u * 3.4 + t * 6.5) * .5 + .9 * Math.sin(u * 9 - t * 3.1);
-      top += (top ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+    const s = G.sides[k], cx = s.cx, amp = k === 'L' ? S.aL : S.aR;
+    const lean = (k === 'L' ? 1 : -1) * Math.max(-1, Math.min(1, S.flow)) * .06;
+    let a = S[k] * TAU + lean + amp * .1 * Math.sin(t * 6.5 + (k === 'L' ? 0 : 1.7));
+    a = Math.max(0, Math.min(TAU - .01, a));
+    const r = R - 1.2;
+    if (a < .01) s.wedge.setAttribute('d', '');
+    else {
+      const x = cx + Math.sin(a) * r, y = cyc - Math.cos(a) * r;
+      s.wedge.setAttribute('d', `M${cx},${cyc} L${cx},${(cyc - r).toFixed(1)} A${r} ${r} 0 ${a > Math.PI ? 1 : 0} 1 ${x.toFixed(1)},${y.toFixed(1)} Z`);
     }
-    s.surf.setAttribute('d', top);
-    s.liq.setAttribute('d', top + `L${cx + bw / 2 + 6},${by + 4} L${cx - bw / 2 - 2},${by + 4} Z`);
+    s.hand.setAttribute('x2', (cx + Math.sin(a) * R * .55).toFixed(1));
+    s.hand.setAttribute('y2', (cyc - Math.cos(a) * R * .55).toFixed(1));
   }
   if (G.dash && !S.revealed) G.dash.setAttribute('stroke-dashoffset', S.off.toFixed(1));
 }
@@ -171,7 +171,7 @@ function startSlosh() {
     .to({}, {duration: .55});
 }
 
-// --- the reveal: the tap shuts, the pipe breaks apart ---
+// --- the reveal: the lever shuts, the link breaks apart ---
 function burst(x0, y0, n, colors, opts = {}) {
   for (let i = 0; i < n; i++) {
     const shard = Math.random() < (opts.glass ?? .5);
@@ -216,7 +216,7 @@ function reveal() {
     });
 }
 
-// --- after the reveal: drop a country's choice into a flask ---
+// --- after the reveal: drop a country's choice into a clock ---
 function launch(k) {
   const s = G.sides[k], f = G.f;
   if (Kit.calm) { S[k] = Math.min(.84, S[k] + .05); return; }

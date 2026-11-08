@@ -11,8 +11,8 @@
 #ctl{display:flex;gap:3cqw}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
-.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
-.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:transparent;border:.22cqh solid color-mix(in srgb,var(--k) 45%,var(--c));box-shadow:none;border-radius:1.8cqh;padding:1.6cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);border-color:var(--k)}
 </style>
 <article class="card" id="card" data-topic="psychology" data-kind="Try it · two sides">
   <div class="in">
@@ -55,28 +55,34 @@ function pal(){
   const deep = n => 'rgb(' + c.map(v => Math.round(v*(1-n))).join(',') + ')';
   const fam = v => cs.getPropertyValue(v).trim() || 'sans-serif';
   PAL = {
-    ink: mix(1), soft: mix(.78), track: mix(.2), frame: mix(.16),
-    tube: mix(.9), mouth: deep(.35), line: deep(.6),
+    ink: mix(1), soft: mix(.78), track: mix(.25), rule: mix(.35),
+    tube: '#efe4cf', mouth: '#a9875c', line: deep(.7),
     body: fam('--body'), display: fam('--display')
   };
   return PAL;
 }
 
-function rr(x, X, Y, w, h, r){ x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+w,Y,X+w,Y+h,r); x.arcTo(X+w,Y+h,X,Y+h,r); x.arcTo(X,Y+h,X,Y,r); x.arcTo(X,Y,X+w,Y,r); x.closePath(); }
+function rr(x, X, Y, w, h, r){ r = Math.max(0, Math.min(r, w/2, h/2)); x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+w,Y,X+w,Y+h,r); x.arcTo(X+w,Y+h,X,Y+h,r); x.arcTo(X,Y+h,X,Y,r); x.arcTo(X,Y,X+w,Y,r); x.closePath(); }
 
-// a plain paper tube seen from the side, open end facing right
+// a plain cardboard tube seen from the side, open end facing right: flat fills, one outline
 function body(x, cx, cy, w, h){
   const P = pal(), e = h*.17, L = cx - w/2 + e, R = cx + w/2 - e, T = cy - h/2, B = cy + h/2;
-  const lw = Math.max(1.2, h*.035);
+  const lw = Math.max(1.4, h*.035);
   x.save();
-  x.lineJoin = 'round'; x.lineWidth = lw; x.strokeStyle = P.line;
+  x.lineJoin = 'round'; x.lineCap = 'round'; x.lineWidth = lw; x.strokeStyle = P.line;
   x.beginPath(); x.moveTo(L, T); x.lineTo(R, T);
-  x.ellipse(R, cy, e, h/2, 0, -Math.PI/2, Math.PI/2);
+  x.lineTo(R, B);
   x.lineTo(L, B);
   x.ellipse(L, cy, e, h/2, 0, Math.PI/2, Math.PI*1.5);
-  x.closePath(); x.fillStyle = P.tube; x.fill(); x.stroke();
-  x.beginPath(); x.ellipse(R, cy, e*.92, h/2*.92, 0, 0, Math.PI*2);
+  x.closePath(); x.fillStyle = P.tube; x.fill();
+  // the open end: one flat, darker ellipse (the inside of the cardboard)
+  x.beginPath(); x.ellipse(R, cy, e, h/2, 0, 0, Math.PI*2);
   x.fillStyle = P.mouth; x.fill();
+  // outline
+  x.beginPath(); x.moveTo(L, T); x.lineTo(R, T);
+  x.moveTo(L, B); x.lineTo(R, B);
+  x.moveTo(L, B); x.ellipse(L, cy, e, h/2, 0, Math.PI/2, Math.PI*1.5);
+  x.stroke();
   x.beginPath(); x.ellipse(R, cy, e, h/2, 0, 0, Math.PI*2); x.stroke();
   x.restore();
 }
@@ -90,49 +96,81 @@ function letter(x, L, t, cx, cy, h, a){
   x.restore();
 }
 
+// the stitched picture: each letter drawn flat and face-on, as strong as the share of time it faced you
+function stitched(x, L, share, cx, cy, h){
+  if (share < .03) return;
+  x.save(); x.globalAlpha = Math.min(1, share);
+  x.fillStyle = COL[L]; x.font = `900 ${h*.72}px ${pal().display}`;
+  x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(L, cx, cy + h*.02);
+  x.restore();
+}
+
+// a fingertip coming down from above, nail towards the viewer
+function finger(x, fx, y0, y1, fw){
+  const skin = '#eebf9c', nail = '#f6d3bc', edge = '#6e4230';
+  const h = y1 - y0; if (h < fw*.8) return;
+  x.save(); x.lineJoin = 'round'; x.lineCap = 'round';
+  x.lineWidth = Math.max(1.5, fw*.06); x.strokeStyle = edge;
+  x.beginPath();
+  x.moveTo(fx - fw/2, y0);
+  x.lineTo(fx - fw/2, y1 - fw/2);
+  x.arc(fx, y1 - fw/2, fw/2, Math.PI, 0, true);
+  x.lineTo(fx + fw/2, y0);
+  x.fillStyle = skin; x.fill(); x.stroke();
+  const nw = fw*.56, nh = fw*.62, ny = y1 - fw*.1 - nh;
+  rr(x, fx - nw/2, ny, nw, nh, nw*.42);
+  x.fillStyle = nail; x.fill(); x.lineWidth = Math.max(1, fw*.04); x.stroke();
+  const ky = Math.max(y0 + fw*.3, ny - fw*.55);
+  x.lineWidth = Math.max(1, fw*.035);
+  for (let i = 0; i < 2; i++){
+    const yy = ky - i*fw*.16;
+    x.beginPath(); x.moveTo(fx - fw*.2, yy); x.quadraticCurveTo(fx, yy + fw*.07, fx + fw*.2, yy); x.stroke();
+  }
+  x.restore();
+}
+
 function draw(){
   if (!S) return;
   const {x, W, H} = S, P = pal(), ink = P.ink;
   x.clearRect(0, 0, W, H);
   const f = Math.max(12, Math.min(W*.042, H*.05)), FONT = `600 ${f}px ${P.body}`;
   x.font = FONT; x.textBaseline = 'alphabetic'; x.textAlign = 'left';
-  // snapshots: one small photo per instant
+  // snapshots: one small picture per instant, laid out like frames on a page
   x.fillStyle = P.soft; x.fillText('Each instant, one image', 0, f);
   const n = 8, gap = W*.015, tw = (W - gap*(n-1))/n, thh = Math.min(tw*.55, H*.1), sy = f*1.6 + thh/2 + 2;
   for (let i = 0; i < n; i++){
     const cx = i*(tw+gap) + tw/2, t = strip.length ? strip[Math.max(0, strip.length - n + i)] ?? th : th;
-    x.fillStyle = P.frame; x.fillRect(cx - tw/2, sy - thh*.62, tw, thh*1.24);
-    body(x, cx, sy, tw*.84, thh*.86);
-    if (strip.length > i || !pressed) { letter(x,'O',t,cx,sy,thh*.86,1); letter(x,'X',t,cx,sy,thh*.86,1); }
+    body(x, cx, sy, tw*.9, thh*.9);
+    if (strip.length > i || !pressed) { letter(x,'O',t,cx,sy,thh*.9,1); letter(x,'X',t,cx,sy,thh*.9,1); }
   }
+  // share of time each side faced you
+  let o = 0, X = 0; for (const h of hist){ if (h === 'O') o++; else if (h === 'X') X++; }
+  const tot = hist.length || 1, po = pressed ? o/tot : 0, px = pressed ? X/tot : 0;
   // big view
   const barsH = f*3.6, top = sy + thh/2 + f*2.2, bot = H - barsH - f*.6;
   x.font = FONT; x.textAlign = 'left'; x.fillStyle = P.soft; x.fillText('What your brain stitches', 0, top - f*.5);
   const reg = bot - top, bh = Math.min(reg*.5, W*.3), bw = Math.min(W*.86, bh*2.6), cx = W/2, cy = top + reg*.62;
   body(x, cx, cy, bw, bh);
   if (!pressed) { letter(x,'O',th,cx,cy,bh,1); letter(x,'X',th,cx,cy,bh,1); }
-  else for (const s of trail){ const a = .09*(1 - s.age/.35); letter(x,'O',s.t,cx,cy,bh,a); letter(x,'X',s.t,cx,cy,bh,a); }
+  else {
+    const tot2 = po + px || 1;
+    stitched(x, 'O', po/tot2, cx - bh*.02, cy, bh);
+    stitched(x, 'X', px/tot2, cx + bh*.02, cy, bh);
+  }
   // finger
   if (pressed){
     const fw = bh*.34, fy = cy - bh/2 - reg*.02, fx = cx + bw*.18;
-    x.save(); x.lineJoin = 'round';
-    rr(x, fx-fw/2, top + f*.2, fw, fy - top - f*.2, fw*.45);
-    x.fillStyle = '#eebf9c'; x.fill(); x.lineWidth = Math.max(1.5, fw*.05); x.strokeStyle = '#6e4230'; x.stroke();
-    rr(x, fx-fw*.28, fy - fw*.72, fw*.56, fw*.5, fw*.2);
-    x.fillStyle = '#f8d9c4'; x.fill(); x.lineWidth = Math.max(1, fw*.035); x.stroke();
-    x.restore();
+    finger(x, fx, top + f*.2, fy, fw);
     x.fillStyle = ink; x.font = FONT; x.textAlign = 'right';
     x.fillText('finger on ' + pressed, fx - fw*.8, top + f*1.4); x.textAlign = 'left';
   }
   // bars
-  let o = 0, X = 0; for (const h of hist){ if (h === 'O') o++; else if (h === 'X') X++; }
-  const tot = hist.length || 1, po = pressed ? o/tot : 0, px = pressed ? X/tot : 0;
   const lw = f*4.6, bx = lw, bwid = W - lw - f*3.4;
   [['O', po], ['X', px]].forEach(([L, p], i) => {
     const y = H - barsH + i*f*1.8 + f*.3;
     x.fillStyle = ink; x.font = FONT; x.textAlign = 'left'; x.fillText(L + ' seen', 0, y + f*.85);
-    rr(x, bx, y, bwid, f*1.1, f*.4); x.fillStyle = P.track; x.fill();
-    if (p > .005){ rr(x, bx, y, Math.max(f*.8, bwid*p), f*1.1, f*.4); x.fillStyle = COL[L]; x.fill(); }
+    rr(x, bx, y, bwid, f*1.1, f*.55); x.fillStyle = P.track; x.fill();
+    if (p > .005){ rr(x, bx, y, Math.max(f*1.1, bwid*p), f*1.1, f*.55); x.fillStyle = COL[L]; x.fill(); }
     x.fillStyle = ink; x.fillText(pressed ? Math.round(p*100) + '%' : '–', bx + bwid + f*.4, y + f*.85);
   });
 }

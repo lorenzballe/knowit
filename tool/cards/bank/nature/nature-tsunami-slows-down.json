@@ -5,10 +5,10 @@
   "strand": "nature.oceans.currents",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "reflection",
-  "question": "What happens to a tsunami's speed as it nears the coast?",
-  "answer": "Near the shore the tsunami slows drastically, yet it grows taller. Friction with the seabed and other factors slow it. Its energy can't vanish, so it goes into height.",
-  "move": "Slow a flow but leave its energy nowhere to go, and it doesn't fade. It piles up.",
+  "principle": "conditional",
+  "question": "What happens to a tsunami's speed as it approaches the coast?",
+  "answer": "Slower, and taller. The rising sea floor drags on the wave and slows it. Its energy can't vanish, so the water piles up taller.",
+  "move": "As the sea gets shallow, a tsunami trades speed for height.",
   "keywords": [
     "tsunami",
     "shallow water",
@@ -29,9 +29,10 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A single wave drawn at equal time steps, approaching a coastline. The reader is asked whether the tsunami's speed near the shore is slower or faster, and drags to guess."
+    "label": "A question asks what happens to a tsunami's speed as it approaches the coast, with three choices: it speeds up, stays the same, or slows down. A wave replay control lets the reader watch the wave move into shallow water.",
+    "ground": "#060a14"
   },
   "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=893s",
-  "written": "2026-11-08"
+  "written": "2026-11-03"
 }

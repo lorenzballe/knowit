@@ -1,10 +1,13 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Parking on a hilltop</title>
 <!-- The Sun-Earth system seen turning with Earth: the effective potential (gravity of both plus the
-     centrifugal term) drawn as a landscape of flat terraces, like a cut-paper relief map. The reader picks the Lagrange point
+     centrifugal term) drawn as a landscape of a few flat terraces, like a printed relief map cut from paper. The reader picks the Lagrange point
      where a nudged probe stays, says how sure, then five probes are nudged at once and integrated in
      the rotating frame (restricted three-body problem, Coriolis included): L1-L3 slide off their
      saddles, L4 and L5 loop on their hilltops. Earth's mass is exaggerated (mu = 0.02) so the dips show.
+     Painted flat: the low ground (the Sun's pit, Earth's dip) is the card itself, each higher terrace a
+     flat sheet of the card's ink, never close to white, each with one even edge line in the card's
+     deepened colour, so the sheets read as paper layers and not as shine. Only four sheets.
      Inspired by Veritasium, "Do we know how magnets work yet?". Touch: taps. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -14,6 +17,7 @@
 #stage{position:relative;cursor:pointer}
 #map,#marks{position:absolute;inset:0;width:100%;height:100%;display:block}
 #marks{overflow:visible;pointer-events:none}
+#marks text{stroke:none;paint-order:normal;filter:none}
 #note{position:absolute;right:1.4cqh;bottom:1cqh;font:600 max(1.45cqh,11px)/1 var(--body);opacity:.7}
 .answered .q{font-size:max(2.5cqh,15px)}
 .answered #stage{cursor:default}
@@ -57,7 +61,7 @@
   const T_END = 12, LOST = .42;
   const toS = (x, y) => [ox + x * k, oy - y * k];
 
-  // ---------- the colours: the card's own, its ink, and one deep night tone for the pits ----------
+  // ---------- the colours: the card's own, and flat sheets of its ink laid on it ----------
   const RED = '#f0553c';
   const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
   const css = c => `rgb(${c.map(Math.round).join(',')})`;
@@ -69,20 +73,24 @@
     if (n.length < 3) return fb;
     return /^color\(/.test(col) ? n.slice(0, 3).map(x => x * 255) : n.slice(0, 3);
   }
-  // terrace heights, low to high: the Sun's pit, the slopes, the saddles, the ridge along the orbit
-  const LV = [-2.1, -1.8, -1.68, -1.626, -1.613, -1.6, -1.56, -1.53, -1.51, -1.5, -1.492];
+  // terrace heights, low to high: the low ground (pits), the saddles (L1, L2, L3 each sit just under a step), the hilltops
+  const LV = [-1.62, -1.58, -1.54, -1.505];
+  const STEP = [0, .2, .36, .52, .68];                   // how much ink in each terrace, low to high; never near white
   // the map is a flat cut-out oval
   const EL = [.07, 0, 1.24, 1.0];
   const inMap = (x, y) => ((x - EL[0]) / EL[2]) ** 2 + ((y - EL[1]) / EL[3]) ** 2 <= 1;
 
   // ---------- the landscape ----------
   function paintRelief() {
-    const C = rgbOf('var(--c)', [47, 91, 255]), K = rgbOf('var(--k)', [255, 255, 255]), NIGHT = [14, 22, 74];
-    const LIGHT = lum(K) >= lum(C) ? mix(C, K, .9) : mix(C, [255, 255, 255], .86);
-    const DARK = mix(C, NIGHT, .8), lowEnd = mix(C, NIGHT, .2), highStart = mix(C, LIGHT, .25);
-    const N = LV.length + 1, cols = [];
-    for (let j = 0; j < N; j++) { const t = j / (N - 1); cols.push(t <= .5 ? mix(DARK, lowEnd, t / .5) : mix(highStart, LIGHT, (t - .5) / .5)); }
-    pal = {C, LIGHT, DARK, cols};
+    const C = rgbOf('var(--c)', [47, 91, 255]), K = rgbOf('var(--k)', [255, 255, 255]);
+    const inkLight = lum(K) >= lum(C);
+    // words on pale ground: the card's colour, deepened; words on low ground: the ink itself
+    const DARK = inkLight ? mix(C, [8, 14, 48], .55) : K;
+    const LIGHT = inkLight ? K : mix(C, [255, 255, 255], .9);
+    const cols = STEP.map(t => mix(C, K, t));
+    // one even edge line for every paper sheet
+    const EDGE = inkLight ? mix(C, [8, 14, 48], .4) : mix(C, K, .85);
+    pal = {C, LIGHT, DARK, cols, EDGE};
     // terrace outlines from a coarse grid; filled flat, one tint per step
     const n = 2, nx = Math.ceil(W / n), ny = Math.ceil(H / n), vals = new Float64Array(nx * ny);
     for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) { const x = (i * n - ox) / k, y = (oy - j * n) / k; vals[j * nx + i] = Math.max(-3, -Om(x, y)); }
@@ -96,20 +104,22 @@
     return lum(under) > .55 ? css(pal.DARK) : css(pal.LIGHT);
   }
   function landscape(c) {
-    c.save();
     const [cx, cy] = toS(EL[0], EL[1]);
+    c.save();
     c.beginPath(); c.ellipse(cx, cy, EL[2] * k, EL[3] * k, 0, 0, 7); c.clip();
-    c.fillStyle = css(pal.cols[0]); c.fillRect(0, 0, W, H);
     const n = 2, path = d3.geoPath(null, c);
     c.scale(n, n);
-    bands.forEach((g, i) => { c.fillStyle = css(pal.cols[i + 1]); c.beginPath(); path(g); c.fill(); });
+    c.lineJoin = 'round'; c.lineWidth = 1.5 / n; c.strokeStyle = css(pal.EDGE);
+    bands.forEach((g, i) => { c.fillStyle = css(pal.cols[i + 1]); c.beginPath(); path(g); c.fill(); c.stroke(); });
     c.restore();
+    // the edge of the cut-out map
+    c.lineWidth = 1.5; c.strokeStyle = css(pal.EDGE);
+    c.beginPath(); c.ellipse(cx, cy, EL[2] * k, EL[3] * k, 0, 0, 7); c.stroke();
   }
   function bodies(c) {
     const [sx, sy] = toS(-MU, 0), [ex, ey] = toS(1 - MU, 0), rs = Math.max(7, k * .075);
     c.fillStyle = '#f6c443'; c.beginPath(); c.arc(sx, sy, rs, 0, 7); c.fill();
-    c.fillStyle = '#9fdcef'; c.beginPath(); c.arc(ex, ey, Math.max(3.5, k * .028), 0, 7); c.fill();
-    c.lineWidth = 1.5; c.strokeStyle = css(pal.DARK); c.stroke();
+    c.fillStyle = '#5fc48a'; c.beginPath(); c.arc(ex, ey, Math.max(3.5, k * .028), 0, 7); c.fill();
   }
 
   // ---------- the probes ----------
@@ -147,7 +157,7 @@
   function marks(upto) {
     svg.innerHTML = '';
     const fs = Math.max(11.5, Math.min(14, k * .105));
-    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, style: 'font-family:var(--body),Figtree,sans-serif', 'font-weight': 700, 'font-size': fs, fill: inkAt(x, y - fs * .35)}, a), svg); e.textContent = s; return e; };
+    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, style: 'font-family:var(--body),Figtree,sans-serif;stroke:none', 'font-weight': 700, 'font-size': fs, fill: inkAt(x, y - fs * .35)}, a), svg); e.textContent = s; return e; };
     const [sx, sy] = toS(-MU, 0), [ex, ey] = toS(1 - MU, 0);
     txt(sx, sy + Math.max(7, k * .075) * 1.9 + fs * .9, 'Sun', {'text-anchor': 'middle'});
     txt(ex, ey + fs * 1.55, 'Earth', {'text-anchor': 'middle'});
