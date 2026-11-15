@@ -2970,7 +2970,7 @@ void main() {
       expect(dates['day_one'], dateKey(DateTime.now()));
     });
 
-    testWidgets('the day can be sent as five squares and nothing else', (
+    testWidgets('the day can be sent as its five questions and nothing else', (
       tester,
     ) async {
       SharedPreferences.setMockInitialValues(_installed(plus: true));
@@ -3014,10 +3014,13 @@ void main() {
       final String text = copied!;
       expect(text, startsWith('Astute #${editionOf(DateTime.now())}'));
       expect(text, contains('Five cards a day. Your turn.'));
-      // The five questions go with it — they are what makes a friend want
-      // the app — and never an answer.
+      // The five questions go with it, a line each — they are what makes a
+      // friend want the app — and never an answer.
+      expect(
+        text.split('\n').where((line) => line.startsWith('· ')),
+        hasLength(kPillsPerDay),
+      );
       for (final pill in _todaysFive) {
-        expect(text, contains(pill.question));
         expect(text, isNot(contains(pill.answer)));
       }
       expect(text, contains('astutetheapp.com'));
