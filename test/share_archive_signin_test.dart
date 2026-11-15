@@ -454,8 +454,8 @@ void main() {
       String button,
     ) async {
       final copied = _clipboard(tester);
-      sendCardText = (_) async => false;
-      addTearDown(() => sendCardText = shareText);
+      sendText = (_) async => false;
+      addTearDown(() => sendText = shareText);
       await tester.pumpWidget(
         _host(
           Scaffold(

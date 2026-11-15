@@ -1,3 +1,11 @@
+import 'share_text.dart';
+
+/// How a short message — a card's question and its page — is handed to the
+/// system's share sheet: the platform's own, false where there is none so
+/// the caller copies it. A test, which has no sheet (and whose desktop
+/// stand-in never returns), puts its own here.
+Future<bool> Function(String text) sendText = shareText;
+
 /// The site, as an image that leaves the app prints it: short enough to be
 /// read off a screenshot and typed into a browser.
 const String kSiteHost = 'astutetheapp.com';

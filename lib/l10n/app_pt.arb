@@ -1110,5 +1110,6 @@
   "shareAnswerNote": "O teu amigo vê primeiro a pergunta. A resposta está a um toque, na página da carta.",
   "shareWhichSide": "De que lado estás?",
   "rereadRight": "Da primeira vez acertaste.",
-  "rereadWrong": "Da primeira vez falhaste."
+  "rereadWrong": "Da primeira vez falhaste.",
+  "betsDayShareLine": "O desafio de hoje no Astute: {off, plural, =0{acertei em cheio} =1{falhei por 1 ponto} other{falhei por {off} pontos}}. Fazes melhor?"
 }

@@ -18,7 +18,9 @@ BANK = {
         {"id": "art-side", "topic": "art", "kind": "debate", "question": "Did it?",
          "sides": ["Yes", "No"], "answer": "One side.", "counterpoint": "The other.", "move": "Either way."},
         {"id": "art-sum", "topic": "art", "kind": "number", "question": "How much?",
-         "hint": "Add them up.", "steps": ["One plus one", "Two"], "answer": "Two."},
+         "hint": "Add them up.", "steps": ["One plus one", "Two"], "answer": "Two.", "value": 2, "unit": "apples"},
+        {"id": "art-guess", "topic": "art", "kind": "estimate", "question": "Roughly?",
+         "value": 5.6, "unit": "tonnes", "withinFactor": 3, "answer": "About 5.6."},
         {"id": "no-question", "topic": "art", "kind": "read"},
     ]
 }
@@ -32,7 +34,7 @@ class CardPages(unittest.TestCase):
     def test_a_page_for_every_card_and_the_shared_style(self):
         with tempfile.TemporaryDirectory() as d:
             n = cp.write(Path(d), BANK)
-            self.assertEqual(n, 6, "every card with a question")
+            self.assertEqual(n, 7, "every card with a question")
             for cid in ("space-x", "maths-y", "art-pick", "history-read", "art-side", "art-sum"):
                 self.assertTrue((Path(d) / "c" / f"{cid}.html").exists(), cid)
             self.assertFalse((Path(d) / "c" / "no-question.html").exists())
@@ -84,6 +86,13 @@ class CardPages(unittest.TestCase):
         self.assertIn("Hint · Add them up.", page)
         self.assertIn("<li>One plus one</li>", page)
         self.assertNotIn("<li>Two</li>", page, "the last step is the answer, said once")
+        self.assertIn('<form class="guess" data-value="2" data-unit="apples">', page)
+        self.assertIn('placeholder="Your guess"', page)
+        self.assertNotIn('class="reveal"', page, "a number is guessed, not shown")
+
+    def test_an_estimate_counts_a_guess_within_its_factor_as_close(self):
+        page = cp.render(card("art-guess"))
+        self.assertIn('data-factor="3"', page)
 
 
 if __name__ == "__main__":

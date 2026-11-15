@@ -1,5 +1,8 @@
 /// The bet of the day (139e): one share, the same card for everyone given
-/// the same shelf, set on a track and locked in; then how far off it was.
+/// the same shelf, set on a track and locked in; then how far off it was,
+/// and a way to send it on — how far off, never the answer, and the card's
+/// page, where a friend makes a guess of their own: the same game, the
+/// way a day's puzzle everyone plays is talked about.
 ///
 /// The canvas shows what everyone else guessed once the reader locks in.
 /// Those figures were made up for the prototype, and the phone has no real
@@ -11,9 +14,12 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import '../../../analytics.dart';
 import '../../../l10n/l10n.dart';
 import '../../../theme.dart';
+import '../../../utils/share_link.dart';
 import '../../explore_block.dart';
 import 'answers.dart';
 import 'bet_host.dart';
@@ -194,6 +200,37 @@ class DayTile extends StatelessWidget {
       }
     }
 
+    // The bet of the day, sent on: how far off the reader was, never the
+    // answer, and the card's page, where a friend locks in a guess of
+    // their own and is told how far off they were. The same card for
+    // every reader today, so the two are playing the same game.
+    Future<void> challenge(int off) async {
+      final String text = [
+        l.betsDayShareLine(off),
+        pill.question,
+        cardLink(pill.id),
+      ].join('\n');
+      final bool shared = await sendText(text);
+      Analytics.capture('pill shared', {
+        'pill_id': pill.id,
+        'topic': pill.topic,
+        'as': shared ? 'link' : 'copied',
+        'from': 'day challenge',
+        'off': off,
+      });
+      if (!shared) {
+        await Clipboard.setData(ClipboardData(text: text));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l.copiedToClipboard),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    }
+
     Widget settled() {
       final int off = (guess - answer.value).abs().round();
       final int? s = bet?.confidence;
@@ -227,6 +264,18 @@ class DayTile extends StatelessWidget {
             ),
           ],
           BetWhy(pill, ink: ink),
+          if (first) ...[
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: BetButton(
+                key: ValueKey('bets-day-challenge-${pill.id}'),
+                label: l.challengeFriend,
+                ink: ink,
+                onTap: () => challenge(off),
+              ),
+            ),
+          ],
         ],
       );
     }

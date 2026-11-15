@@ -13,15 +13,8 @@ import '../theme.dart';
 import '../utils/share_image.dart';
 import '../utils/share_link.dart';
 import '../utils/share_origin.dart';
-import '../utils/share_text.dart';
 import 'ui.dart';
 import 'scaled_text.dart';
-
-/// How a card's message is handed over: the platform's sheet. Under a
-/// test, which has no sheet (and whose desktop stand-in never returns),
-/// whatever the test puts here.
-@visibleForTesting
-Future<bool> Function(String text) sendCardText = shareText;
 
 /// Opens the share sheet for [pill]: the card as it leaves, and the ways it
 /// can go.
@@ -137,7 +130,7 @@ class _ShareSheetState extends State<_ShareSheet> {
   Future<void> _send() async {
     final l = context.l10n;
     final String text = _message;
-    final bool shared = await sendCardText(text);
+    final bool shared = await sendText(text);
     Analytics.capture('pill shared', {
       'pill_id': widget.pill.id,
       'topic': widget.pill.topic,

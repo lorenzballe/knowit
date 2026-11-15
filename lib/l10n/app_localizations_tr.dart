@@ -4652,4 +4652,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get rereadWrong => 'İlk seferde yanıldın.';
+
+  @override
+  String betsDayShareLine(int off) {
+    String _temp0 = intl.Intl.pluralLogic(
+      off,
+      locale: localeName,
+      other: '$off puan saptım',
+      zero: 'tam isabet',
+    );
+    return 'Astute\'ta bugünün meydan okuması: $_temp0. Daha iyisini yapabilir misin?';
+  }
 }

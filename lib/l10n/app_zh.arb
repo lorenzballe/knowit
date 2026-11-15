@@ -1110,5 +1110,6 @@
   "shareAnswerNote": "朋友会先看到问题，答案在卡片页面上，点一下就能看到。",
   "shareWhichSide": "你站哪一边？",
   "rereadRight": "第一次你答对了。",
-  "rereadWrong": "第一次你答错了。"
+  "rereadWrong": "第一次你答错了。",
+  "betsDayShareLine": "今天的 Astute 挑战：{off, plural, =0{我正好猜中} other{我差了 {off} 个百分点}}。你能猜得更准吗？"
 }

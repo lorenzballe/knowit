@@ -10,11 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/explore/blocks/bets/answers.dart';
 import 'package:astuto/explore/blocks/bets/bets_day.dart';
+import 'package:astuto/explore/blocks/bets/deal.dart' show answerOf;
 import 'package:astuto/explore/blocks/bets_blocks.dart';
 import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/utils/share_link.dart';
+import 'package:astuto/utils/share_text.dart';
 
 import 'bets_host.dart';
 
@@ -498,6 +501,36 @@ void main() {
       await tapKey(tester, 'bets-sure-$streak-90');
       expect(host.sure.single.$2, '70');
       expect(host.app.judgements.last.correct, isFalse);
+    });
+
+    testWidgets('played, it is sent on: how far off, its question and its '
+        'page, never the answer', (tester) async {
+      final List<String> sent = [];
+      sendText = (text) async {
+        sent.add(text);
+        return true;
+      };
+      addTearDown(() => sendText = shareText);
+      final BetsTestHost host = await start(tester);
+      await show(tester, host, [
+        section('bets-day', {
+          'size': 'l',
+          'source': {
+            'ids': [streak],
+          },
+        }),
+      ]);
+      expect(find.byKey(ValueKey('bets-day-challenge-$streak')), findsNothing);
+      await setTrack(tester, 'bets-day-track-$streak', 70);
+      await tapKey(tester, 'bets-day-lock-$streak');
+      await tapKey(tester, 'bets-sure-$streak-90');
+      await tapKey(tester, 'bets-day-challenge-$streak');
+      final Pill pill = PillBank.byId(streak)!;
+      final int off = (70 - answerOf(pill)!.value).abs().round();
+      expect(sent, [
+        "Today's challenge on Astute: I was $off points off. Can you do "
+            'better?\n${pill.question}\n${cardLink(streak)}',
+      ]);
     });
   });
 
