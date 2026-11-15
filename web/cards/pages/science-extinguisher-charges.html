@@ -21,7 +21,7 @@
 .answered #why .big{font-size:max(3.6cqh,21px);line-height:1.02;margin:0}
 .answered #why .body{font-size:max(1.85cqh,13px);line-height:1.38;margin:0}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#1b2a31;--k:#f3ead7;--edge:#0c1519">
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FORENSICS</span></div>
     <h2 class="q">Why did the robbers put tiny explosive charges on the fire extinguishers?</h2>
@@ -46,7 +46,7 @@ gsap.registerPlugin(MotionPathPlugin);
 const RIGHT = 1;
 let pick = -1;
 const svg = Kit.$('pic'), card = Kit.$('card');
-const UV = '#7df4e4', POW = '#efe8d8';
+const UV = '#ffffff', POW = '#ffffff';
 let W = 0, H = 0, fs = 12, blown = false, tl = null, ledTw = null, breathTw = null, amb = [];
 let G = {}, prints = [], heaps = [], S = {};
 const mk = (t, a, p) => Kit.mk(t, a || {}, p);
@@ -87,26 +87,26 @@ function layout() {
   defs.innerHTML = `
   <filter id="pp" x="-8%" y="-8%" width="118%" height="125%">
     <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="n"/>
-    <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .55 0 0 0 -.22" result="na"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 .06  0 0 0 0 .06  0 0 0 0 .05  .55 0 0 0 -.22" result="na"/>
     <feComposite in="na" in2="SourceAlpha" operator="in" result="g"/>
     <feGaussianBlur in="SourceAlpha" stdDeviation="${fs * .4}" result="b"/>
     <feOffset in="b" dx="${fs * .15}" dy="${fs * .35}" result="o"/>
-    <feFlood flood-color="#03070a" flood-opacity=".6"/>
+    <feFlood flood-color="#10100c" flood-opacity=".3"/>
     <feComposite in2="o" operator="in" result="s"/>
     <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/><feMergeNode in="g"/></feMerge>
   </filter>
-  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${fs * .22}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${fs * .22}" result="b"/><feMerge><feMergeNode in="SourceGraphic"/></feMerge></filter>
   <filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${fs * .13}"/></filter>
   <filter id="blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${fs * .5}"/></filter>
-  <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#44656f"/><stop offset="1" stop-color="#2a434b"/></linearGradient>
-  <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c454d"/><stop offset="1" stop-color="#152227"/></linearGradient>
-  <linearGradient id="gDoor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a7b84"/><stop offset="1" stop-color="#47656e"/></linearGradient>
-  <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6e140a"/><stop offset=".32" stop-color="#c63823"/><stop offset=".48" stop-color="#f06b4c"/><stop offset=".68" stop-color="#bf3121"/><stop offset="1" stop-color="#6a1408"/></linearGradient>
-  <linearGradient id="gSteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a2f33"/><stop offset=".45" stop-color="#9aa4aa"/><stop offset="1" stop-color="#30373b"/></linearGradient>
-  <radialGradient id="gLamp"><stop offset="0" stop-color="#fff6dc" stop-opacity=".2"/><stop offset="1" stop-color="#fff6dc" stop-opacity="0"/></radialGradient>
-  <radialGradient id="gFlash"><stop offset="0" stop-color="#fffbe8"/><stop offset=".35" stop-color="#ffd98a" stop-opacity=".85"/><stop offset="1" stop-color="#ff9a4a" stop-opacity="0"/></radialGradient>
-  <radialGradient id="gPow" cx=".4" cy=".35"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="${POW}"/><stop offset="1" stop-color="#d8cfbc"/></radialGradient>
-  <linearGradient id="gBeam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${UV}" stop-opacity="0"/><stop offset=".5" stop-color="${UV}" stop-opacity=".22"/><stop offset="1" stop-color="${UV}" stop-opacity="0"/></linearGradient>`;
+  <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10100c"/><stop offset="1" stop-color="#10100c"/></linearGradient>
+  <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00835b"/><stop offset="1" stop-color="#00835b"/></linearGradient>
+  <linearGradient id="gDoor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".14"/><stop offset="1" stop-color="#ffffff" stop-opacity=".14"/></linearGradient>
+  <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c0301d"/><stop offset="1" stop-color="#c0301d"/></linearGradient>
+  <linearGradient id="gSteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+  <radialGradient id="gLamp"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gFlash"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></radialGradient>
+  <radialGradient id="gPow" cx=".4" cy=".35"><stop offset="0" stop-color="${POW}"/><stop offset="1" stop-color="${POW}"/></radialGradient>
+  <linearGradient id="gBeam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${UV}" stop-opacity=".16"/><stop offset="1" stop-color="${UV}" stop-opacity=".16"/></linearGradient>`;
 
   for (const n of ['back', 'mid', 'fx', 'front', 'ui']) { const o = mk('g', {}, svg); G[n] = {o, i: mk('g', {}, o)}; }
 
@@ -119,9 +119,9 @@ function layout() {
   const vp = {x: W * .5, y: H * .2};
   for (let k = 0; k <= 8; k++) {
     const bx = W * .015 + (W * .97) * k / 8, t = (floorTop - vp.y) / (fBot - vp.y);
-    mk('line', {x1: vp.x + (bx - vp.x) * t, y1: floorTop, x2: bx, y2: fBot, stroke: '#fff', 'stroke-opacity': .05, 'stroke-width': 1}, B);
+    mk('line', {x1: vp.x + (bx - vp.x) * t, y1: floorTop, x2: bx, y2: fBot, stroke: '#fff', 'stroke-opacity': .25, 'stroke-width': 1}, B);
   }
-  [.18, .42, .7].forEach(p => { const y = floorTop + (fBot - floorTop) * p, sp = (1 - p) * W * .08; mk('line', {x1: W * .03 + sp, x2: W * .97 - sp, y1: y, y2: y, stroke: '#fff', 'stroke-opacity': .05}, B); });
+  [.18, .42, .7].forEach(p => { const y = floorTop + (fBot - floorTop) * p, sp = (1 - p) * W * .08; mk('line', {x1: W * .03 + sp, x2: W * .97 - sp, y1: y, y2: y, stroke: '#fff', 'stroke-opacity': .25}, B); });
 
   const wallD = `M${x0},${yb} V${yt + r} Q${x0},${yt} ${x0 + r},${yt} H${x1 - r} Q${x1},${yt} ${x1},${yt + r} V${yb} Z`;
   mk('path', {d: wallD, fill: 'url(#gWall)', filter: 'url(#pp)'}, B);
@@ -134,30 +134,30 @@ function layout() {
   for (let rr = 0; rr < rows; rr++) for (let c = 0; c < cols; c++) {
     const x = gx0 + c * cw + gap / 2, y = gy0 + rr * ch + gap / 2, w = pos(cw - gap, 1), h = pos(ch - gap, 1);
     if (open.has(c + ',' + rr)) {
-      mk('rect', {x, y, width: w, height: h, rx: 2, fill: '#0d171b'}, B);
-      mk('rect', {x: x + w * .1, y: y + h * .15, width: w * .8, height: h * .7, fill: '#16242a'}, B);
-      mk('polygon', {points: `${x + w},${y} ${x + w + w * .32},${y - h * .1} ${x + w + w * .32},${y + h + h * .1} ${x + w},${y + h}`, fill: '#6b8b93', stroke: '#2a3f45', 'stroke-width': .8}, B);
+      mk('rect', {x, y, width: w, height: h, rx: 2, fill: '#00835b'}, B);
+      mk('rect', {x: x + w * .1, y: y + h * .15, width: w * .8, height: h * .7, fill: '#10100c'}, B);
+      mk('polygon', {points: `${x + w},${y} ${x + w + w * .32},${y - h * .1} ${x + w + w * .32},${y + h + h * .1} ${x + w},${y + h}`, fill: '#00835b', stroke: '#fff', 'stroke-opacity': .6, 'stroke-width': .8}, B);
       continue;
     }
-    mk('rect', {x, y, width: w, height: h, rx: 2, fill: 'url(#gDoor)', stroke: '#2c434a', 'stroke-width': .8}, B);
+    mk('rect', {x, y, width: w, height: h, rx: 2, fill: 'url(#gDoor)', stroke: '#fff', 'stroke-opacity': .3, 'stroke-width': .8}, B);
     mk('line', {x1: x + 2, x2: x + w - 2, y1: y + 1.2, y2: y + 1.2, stroke: '#fff', 'stroke-opacity': .22}, B);
-    mk('rect', {x: x + w * .3, y: y + h * .16, width: w * .4, height: Math.max(2, h * .12), rx: 1, fill: '#c9a45c', opacity: .75}, B);
-    mk('circle', {cx: x + w * .78, cy: y + h * .6, r: Math.max(1.6, Math.min(w, h) * .07), fill: '#d7b46a', stroke: '#6b5426', 'stroke-width': .6}, B);
+    mk('rect', {x: x + w * .3, y: y + h * .16, width: w * .4, height: Math.max(2, h * .12), rx: 1, fill: '#fff', opacity: .75}, B);
+    mk('circle', {cx: x + w * .78, cy: y + h * .6, r: Math.max(1.6, Math.min(w, h) * .07), fill: '#fff', stroke: '#10100c', 'stroke-width': .6}, B);
   }
-  mk('ellipse', {cx: W * .5, cy: yt + H * .05, rx: (x1 - x0) * .5, ry: H * .26, fill: 'url(#gLamp)', 'clip-path': 'url(#cw)'}, B);
+  mk('ellipse', {cx: W * .5, cy: yt + H * .05, rx: (x1 - x0) * .5, ry: H * .26, fill: 'none', 'clip-path': 'url(#cw)'}, B);
   S.wall = {gx0, gx1, gy0, gy1};
-  if (!blown) motes(B, 10, 3, '#fff6dc', {x0: W * .25, x1: W * .75, y0: gy0, y1: H * .45}, .5);
+  if (!blown) motes(B, 10, 3, '#ffffff', {x0: W * .25, x1: W * .75, y0: gy0, y1: H * .45}, .5);
 
   // ---- mid plane: the counter with an emptied box ----
   const M = G.mid.i, ct = H * .56, cm = H * .62, cb = H * .78;
   const cg = mk('g', {filter: 'url(#pp)'}, M);
-  mk('polygon', {points: `${W * .56},${ct} ${W * .95},${ct} ${W * .975},${cm} ${W * .54},${cm}`, fill: '#6c8d92'}, cg);
-  mk('rect', {x: W * .54, y: cm, width: W * .435, height: cb - cm, fill: '#38545b'}, cg);
+  mk('polygon', {points: `${W * .56},${ct} ${W * .95},${ct} ${W * .975},${cm} ${W * .54},${cm}`, fill: '#00835b'}, cg);
+  mk('rect', {x: W * .54, y: cm, width: W * .435, height: cb - cm, fill: '#00E5A0', stroke: '#10100c', 'stroke-width': 1}, cg);
   mk('line', {x1: W * .54, x2: W * .975, y1: cm + 1, y2: cm + 1, stroke: '#fff', 'stroke-opacity': .18}, M);
-  [.38, .7].forEach(p => mk('rect', {x: W * (.54 + .435 * p) - W * .07, y: cm + (cb - cm) * .2, width: W * .14, height: (cb - cm) * .6, rx: 2, fill: 'none', stroke: '#fff', 'stroke-opacity': .08}, M));
+  [.38, .7].forEach(p => mk('rect', {x: W * (.54 + .435 * p) - W * .07, y: cm + (cb - cm) * .2, width: W * .14, height: (cb - cm) * .6, rx: 2, fill: 'none', stroke: '#10100c', 'stroke-opacity': .25}, M));
   const tx = W * .84, ty = H * .575, tw = W * .09, th = Math.min(fs * .5, H * .025);
-  mk('polygon', {points: `${tx - tw / 2},${ty - th} ${tx + tw / 2},${ty - th} ${tx + tw * .6},${ty + th * .6} ${tx - tw * .6},${ty + th * .6}`, fill: 'url(#gSteel)', stroke: '#1d272b', 'stroke-width': .8}, M);
-  for (let k = 0; k < 3; k++) mk('ellipse', {cx: tx - tw * .7 - k * fs * .55, cy: ty + th * .3 + (k % 2) * 2, rx: fs * .28, ry: fs * .14, fill: '#e0b856', stroke: '#7a5a1a', 'stroke-width': .6}, M);
+  mk('polygon', {points: `${tx - tw / 2},${ty - th} ${tx + tw / 2},${ty - th} ${tx + tw * .6},${ty + th * .6} ${tx - tw * .6},${ty + th * .6}`, fill: 'url(#gSteel)', stroke: '#10100c', 'stroke-width': .8}, M);
+  for (let k = 0; k < 3; k++) mk('ellipse', {cx: tx - tw * .7 - k * fs * .55, cy: ty + th * .3 + (k % 2) * 2, rx: fs * .28, ry: fs * .14, fill: '#ffffff', stroke: '#10100c', 'stroke-width': .6}, M);
   S.counter = {x0: W * .58, x1: W * .92, y0: ct + 3, y1: pos(cm - 2, ct + 4)};
 
   // ---- the traces, glowing under UV ----
@@ -183,30 +183,30 @@ function layout() {
 
   // ---- front plane: the extinguisher and its tiny charge ----
   const F = G.front.i, ex = W * .22, base = H * .935, bw = Math.min(W * .15, H * .1), bh = H * .34, top = base - bh;
-  mk('ellipse', {cx: ex + fs * .4, cy: base + 1, rx: bw * .85, ry: Math.min(fs * .45, H * .02), fill: '#000', opacity: .45, filter: 'url(#blur)'}, F);
+  mk('ellipse', {cx: ex + fs * .4, cy: base + 1, rx: bw * .85, ry: Math.min(fs * .45, H * .02), fill: '#10100c', opacity: .3, filter: 'url(#blur)'}, F);
   const eg = mk('g', {filter: 'url(#pp)'}, F);
-  mk('path', {d: `M${ex + bw * .18},${top - bh * .08} C${ex + bw * 1.05},${top - bh * .02} ${ex + bw * .95},${base - bh * .55} ${ex + bw * .66},${base - bh * .4}`, fill: 'none', stroke: '#15191b', 'stroke-width': Math.max(3, bw * .12), 'stroke-linecap': 'round'}, eg);
-  mk('polygon', {points: `${ex + bw * .6},${base - bh * .42} ${ex + bw * .74},${base - bh * .4} ${ex + bw * .8},${base - bh * .22} ${ex + bw * .5},${base - bh * .24}`, fill: '#1c2124'}, eg);
-  mk('rect', {x: ex - bw / 2, y: top, width: bw, height: bh, rx: bw * .38, fill: 'url(#gRed)'}, eg);
-  mk('rect', {x: ex - bw / 2, y: base - bh * .09, width: bw, height: bh * .09, rx: bw * .1, fill: '#4a0e06', opacity: .55}, eg);
+  mk('path', {d: `M${ex + bw * .18},${top - bh * .08} C${ex + bw * 1.05},${top - bh * .02} ${ex + bw * .95},${base - bh * .55} ${ex + bw * .66},${base - bh * .4}`, fill: 'none', stroke: '#10100c', 'stroke-width': Math.max(3, bw * .12), 'stroke-linecap': 'round'}, eg);
+  mk('polygon', {points: `${ex + bw * .6},${base - bh * .42} ${ex + bw * .74},${base - bh * .4} ${ex + bw * .8},${base - bh * .22} ${ex + bw * .5},${base - bh * .24}`, fill: '#10100c'}, eg);
+  mk('rect', {x: ex - bw / 2, y: top, width: bw, height: bh, rx: bw * .38, fill: 'url(#gRed)', stroke: '#10100c', 'stroke-width': 1.2}, eg);
+  mk('rect', {x: ex - bw / 2, y: base - bh * .09, width: bw, height: bh * .09, rx: bw * .1, fill: '#10100c', opacity: .5}, eg);
   mk('rect', {x: ex - bw * .3, y: top + bh * .1, width: bw * .09, height: bh * .72, rx: bw * .05, fill: '#fff', opacity: .3}, eg);
   const ly = top + bh * .46, lh = bh * .24;
-  mk('rect', {x: ex - bw / 2, y: ly, width: bw, height: lh, fill: '#efe5cf'}, eg);
+  mk('rect', {x: ex - bw / 2, y: ly, width: bw, height: lh, fill: '#ffffff'}, eg);
   mk('rect', {x: ex - bw / 2, y: ly, width: bw, height: lh, fill: 'url(#gRed)', opacity: .18}, eg);
-  for (let k = 0; k < 3; k++) mk('line', {x1: ex - bw * .3, x2: ex + bw * (.3 - k * .12), y1: ly + lh * (.3 + k * .2), y2: ly + lh * (.3 + k * .2), stroke: '#5a1a10', 'stroke-width': 1.2, opacity: .7}, eg);
-  mk('rect', {x: ex - bw * .16, y: top - bh * .07, width: bw * .32, height: bh * .09, rx: 1.5, fill: 'url(#gSteel)'}, eg);
-  mk('path', {d: `M${ex - bw * .26},${top - bh * .07} H${ex + bw * .3} L${ex + bw * .2},${top - bh * .14} H${ex - bw * .18} Z`, fill: '#262c2f'}, eg);
-  mk('path', {d: `M${ex - bw * .2},${top - bh * .13} L${ex - bw * .62},${top - bh * .2}`, stroke: '#3a4246', 'stroke-width': Math.max(3, bw * .1), 'stroke-linecap': 'round'}, eg);
+  for (let k = 0; k < 3; k++) mk('line', {x1: ex - bw * .3, x2: ex + bw * (.3 - k * .12), y1: ly + lh * (.3 + k * .2), y2: ly + lh * (.3 + k * .2), stroke: '#10100c', 'stroke-width': 1.2, opacity: .7}, eg);
+  mk('rect', {x: ex - bw * .16, y: top - bh * .07, width: bw * .32, height: bh * .09, rx: 1.5, fill: 'url(#gSteel)', stroke: '#10100c', 'stroke-width': .8}, eg);
+  mk('path', {d: `M${ex - bw * .26},${top - bh * .07} H${ex + bw * .3} L${ex + bw * .2},${top - bh * .14} H${ex - bw * .18} Z`, fill: '#10100c'}, eg);
+  mk('path', {d: `M${ex - bw * .2},${top - bh * .13} L${ex - bw * .62},${top - bh * .2}`, stroke: '#10100c', 'stroke-width': Math.max(3, bw * .1), 'stroke-linecap': 'round'}, eg);
   const chx = ex - bw * .02, chy = top + bh * .26, cwb = bw * .46, chb = bw * .3;
-  mk('path', {d: `M${chx + cwb * .45},${chy} C${chx + cwb * .9},${chy - bh * .12} ${ex + bw * .1},${top - bh * .02} ${ex + bw * .05},${top - bh * .05}`, fill: 'none', stroke: '#e84a3a', 'stroke-width': 1.4}, F);
-  mk('path', {d: `M${chx + cwb * .3},${chy} C${chx + cwb * .5},${chy - bh * .16} ${ex - bw * .1},${top - bh * .02} ${ex - bw * .12},${top - bh * .05}`, fill: 'none', stroke: '#f2c94c', 'stroke-width': 1.4}, F);
-  mk('rect', {x: chx - cwb / 2, y: chy - chb / 2, width: cwb, height: chb, rx: 2, fill: '#24282b', stroke: '#0c0e0f', 'stroke-width': .8, filter: 'url(#pp)'}, F);
-  [-.3, .3].forEach(p => mk('rect', {x: chx + cwb * p - bw * .05, y: chy - chb * .8, width: bw * .1, height: chb * 1.6, fill: '#c9c9bd', opacity: .7}, F));
-  const led = mk('circle', {cx: chx - cwb * .08, cy: chy, r: Math.max(2.2, fs * .26), fill: '#ff3b2f', filter: 'url(#glow)'}, F);
+  mk('path', {d: `M${chx + cwb * .45},${chy} C${chx + cwb * .9},${chy - bh * .12} ${ex + bw * .1},${top - bh * .02} ${ex + bw * .05},${top - bh * .05}`, fill: 'none', stroke: '#c0301d', 'stroke-width': 1.4}, F);
+  mk('path', {d: `M${chx + cwb * .3},${chy} C${chx + cwb * .5},${chy - bh * .16} ${ex - bw * .1},${top - bh * .02} ${ex - bw * .12},${top - bh * .05}`, fill: 'none', stroke: '#10100c', 'stroke-width': 1.4}, F);
+  mk('rect', {x: chx - cwb / 2, y: chy - chb / 2, width: cwb, height: chb, rx: 2, fill: '#10100c', stroke: '#fff', 'stroke-width': .8, filter: 'url(#pp)'}, F);
+  [-.3, .3].forEach(p => mk('rect', {x: chx + cwb * p - bw * .05, y: chy - chb * .8, width: bw * .1, height: chb * 1.6, fill: '#ffffff', opacity: .7}, F));
+  const led = mk('circle', {cx: chx - cwb * .08, cy: chy, r: Math.max(2.2, fs * .26), fill: '#c0301d', filter: 'url(#glow)'}, F);
   S.led = led; S.o = {x: chx, y: chy}; S.noz = {x: ex + bw * .68, y: base - bh * .24};
   const lx = ex + bw * .5 + fs * 1.1;
   mk('path', {d: `M${chx + cwb * .55},${chy + 2} Q${lx - fs * .4},${chy + fs * .1} ${lx - fs * .25},${chy - fs * .15}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': 1.1, opacity: .85}, G.ui.i);
-  const lt = mk('text', {x: lx, y: chy - fs * .05, fill: '#f3ead7', 'font-size': fs * 1.05, style: 'font-family:var(--hand)'}, G.ui.i); lt.textContent = 'tiny charge';
+  const lt = mk('text', {x: lx, y: chy - fs * .05, fill: 'var(--k)', 'font-size': fs * 1.05, style: 'font-family:var(--hand)'}, G.ui.i); lt.textContent = 'tiny charge';
   S.label = lt;
   if (blown) gsap.set(lt, {opacity: 0});
 
@@ -221,7 +221,7 @@ function layout() {
   // ---- the UV readout and the lamp's beam ----
   const U = G.ui.i;
   S.chip = mk('g', {transform: `translate(${x0 + fs * .9},${yt + fs * .75})`}, U);
-  S.chipR = mk('rect', {x: 0, y: 0, height: fs * 1.75, width: fs * 10, rx: fs * .875, fill: '#0b1418', 'fill-opacity': .85, stroke: UV, 'stroke-opacity': .55}, S.chip);
+  S.chipR = mk('rect', {x: 0, y: 0, height: fs * 1.75, width: fs * 10, rx: fs * .875, fill: '#10100c', 'fill-opacity': .85, stroke: UV, 'stroke-opacity': .55}, S.chip);
   mk('circle', {cx: fs * .85, cy: fs * .875, r: fs * .28, fill: UV, filter: 'url(#glow)'}, S.chip);
   S.chipT = mk('text', {x: fs * 1.45, y: fs * 1.22, fill: UV, 'font-size': fs * .92, 'font-weight': 700, style: 'font-family:var(--mono)'}, S.chip);
   chipText(blown ? 'UV · 0 READABLE' : 'UV · 5 TRACES');
@@ -229,7 +229,7 @@ function layout() {
 
   if (blown) {
     prints.forEach(p => p.g.setAttribute('opacity', .06));
-    led.setAttribute('fill', '#3a2a28'); led.removeAttribute('filter');
+    led.setAttribute('fill', '#00835b'); led.removeAttribute('filter');
     const Rd = rng(99);
     for (let k = 0; k < 26; k++) { const d = surfacePoint(Rd); mk('circle', {cx: d.x, cy: d.y, r: fs * (.25 + Rd() * .4), fill: POW, opacity: .5, filter: 'url(#soft)'}, G.fx.i); }
     haze();
@@ -257,7 +257,7 @@ function blast() {
   tl = gsap.timeline({onComplete: () => { blown = true; tl = null; haze(); }});
   tl.to(S.led, {opacity: 1, scale: 1.7, svgOrigin: `${o.x} ${o.y}`, duration: .07, repeat: 5, yoyo: true, ease: 'power2.inOut'});
   tl.add('boom');
-  tl.call(() => { Kit.haptic('success'); S.led.setAttribute('fill', '#3a2a28'); S.led.removeAttribute('filter'); }, null, 'boom');
+  tl.call(() => { Kit.haptic('success'); S.led.setAttribute('fill', '#00835b'); S.led.removeAttribute('filter'); }, null, 'boom');
   tl.fromTo(flash, {scale: 0, opacity: 1}, {scale: 1, opacity: 0, svgOrigin: `${o.x} ${o.y}`, duration: .9, ease: 'expo.out', onComplete: () => flash.remove()}, 'boom');
   tl.fromTo(G.front.i, {x: -fs * .6, rotation: -2, svgOrigin: `${o.x} ${H}`}, {x: 0, rotation: 0, duration: .9, ease: 'elastic.out(1,.25)'}, 'boom');
   tl.to(S.label, {opacity: 0, duration: .3, ease: 'power2.out'}, 'boom');

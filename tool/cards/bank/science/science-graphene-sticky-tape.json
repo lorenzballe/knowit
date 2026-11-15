@@ -27,8 +27,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Card titled 'Graphene was found with sticky tape'. It asks how graphene was first discovered and has a PEEL IT prompt: pull the tape up to peel the graphite flake, then do it again. The WHAT TO KEEP box says the material of the future was first peeled off with household tape.",
-    "ground": "#0b0718"
+    "label": "Card titled 'Graphene was found with sticky tape'. It asks how graphene was first discovered and has a PEEL IT prompt: pull the tape up to peel the graphite flake, then do it again. The WHAT TO KEEP box says the material of the future was first peeled off with household tape."
   },
   "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=75s",

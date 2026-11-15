@@ -19,7 +19,7 @@
 .kit-calm .pulse{animation:none;opacity:.5}
 .foot .src{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Drag the zoom · depth squeezes" style="--c:#0d3561;--k:#eaf4ff;--edge:#061a36">
+<article class="card" id="card" data-topic="science" data-kind="Drag the zoom · depth squeezes">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE ZOOM</span></div>
     <h2 class="q">Why do zoomed photos make this bridge look so steep?</h2>
@@ -37,7 +37,7 @@
 (() => {
   const svg = Kit.$('pic'), card = Kit.$('card');
   // flat paints: the card's ink and colour, their tints, and one meaning colour (amber: the cars and what the camera sees)
-  const K = 'var(--k)', CC = 'var(--c)', EDGE = 'var(--edge)', SUN = '#f3b545', SUN2 = '#c98a22';
+  const K = 'var(--k)', CC = 'var(--c)', EDGE = 'var(--edge)', SUN = '#b53a00', SUN2 = '#7d2900';
   const M = p => `color-mix(in srgb, var(--k) ${p}%, var(--c))`;
   const sty = (f, s, w) => `style="fill:${f || 'none'};stroke:${s || 'none'};stroke-width:${w == null ? 1 : w}"`;
   // The bridge, in metres: a smooth ramp up, a short top, a ramp down. It never changes.

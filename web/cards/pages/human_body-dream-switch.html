@@ -20,7 +20,7 @@ Wow: find all four dreams and amber pencil lines draw themselves from each dream
 @keyframes nudge{50%{transform:translateX(6px)}}
 .kit-calm .hint{animation:none}
 </style>
-<article class="card" id="card" data-topic="human_body" data-kind="Scrub the night · the dream switch" style="--c:#f3ead5;--k:#2b2219;--edge:#cdbb94">
+<article class="card" id="card" data-topic="human_body" data-kind="Scrub the night · the dream switch">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SCRUB THE NIGHT</span></div>
     <h2 class="q">Which part of the brain switches on every time you dream?</h2>
@@ -38,7 +38,7 @@ Wow: find all four dreams and amber pencil lines draw themselves from each dream
 gsap.registerPlugin(DrawSVGPlugin);
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const INK = '#2b2219', BLUE = '#3e4f8f', FIRE = '#c4531c', PAPER = '#f3ead5';
+  const INK = '#ffffff', BLUE = '#9e1638', FIRE = '#ffe45c', PAPER = '#FF2D5F';
   // An illustrative night: the phases come and go; dreams turn up in REM, deep and light sleep alike.
   const SEG = [[0,.06,'light'],[.06,.18,'deep'],[.18,.24,'light'],[.24,.30,'rem'],[.30,.36,'light'],[.36,.50,'deep'],[.50,.62,'light'],[.62,.70,'deep'],[.70,.80,'light'],[.80,.94,'rem'],[.94,1,'light']];
   const DREAMS = [[.25,.29],[.40,.45],[.54,.59],[.84,.90]];
@@ -88,8 +88,6 @@ gsap.registerPlugin(DrawSVGPlugin);
     mk('feGaussianBlur', {in: 'd', stdDeviation: .7}, fl);
     const hp = (id, ang, gap, w) => { const p = mk('pattern', {id, patternUnits: 'userSpaceOnUse', width: gap, height: gap, patternTransform: `rotate(${ang})`}, defs); mk('line', {x1: 0, y1: 0, x2: 0, y2: gap, stroke: INK, 'stroke-width': w}, p); };
     hp('h1', 38, 5, .6); hp('h2', -40, 3.4, .7);
-    const rg = mk('radialGradient', {id: 'gl'}, defs);
-    [[0,'#fff6d8',1],[.35,'#ffc061',.95],[.7,'#ee7a35',.45],[1,'#e0582a',0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, rg));
 
     // ---- vertical plan: readout + bubble / brain / night chart ----
     const rowGap = clamp(ms * 1.45, H * .055, ms * 2.4);
@@ -119,22 +117,22 @@ gsap.registerPlugin(DrawSVGPlugin);
     E.icons = [];
     E.bands = DREAMS.map(([a, b]) => {
       const g = mk('g', {class: 'band'}, hy), xm = xs((a + b) / 2), r = ms * .4, icy = bandsTop - r - 3;
-      mk('rect', {x: xs(a), y: bandsTop, width: xs(b) - xs(a), height: bandsBot - bandsTop, rx: 3, fill: '#6d82c4', opacity: .26, filter: 'url(#wc)', class: 'bw'}, g);
-      E.icons.push(mk('path', {d: `M${xm + r * .2},${icy - r} A${r},${r} 0 1 0 ${xm + r * .2},${icy + r} A${r * .78},${r * .78} 0 1 1 ${xm + r * .2},${icy - r} Z`, fill: BLUE}, g));
+      mk('rect', {x: xs(a), y: bandsTop, width: xs(b) - xs(a), height: bandsBot - bandsTop, rx: 3, fill: '#ffffff', opacity: .26, filter: 'url(#wc)', class: 'bw'}, g);
+      E.icons.push(mk('path', {d: `M${xm + r * .2},${icy - r} A${r},${r} 0 1 0 ${xm + r * .2},${icy + r} A${r * .78},${r * .78} 0 1 1 ${xm + r * .2},${icy - r} Z`, fill: INK}, g));
       return g;
     });
     let d = `M${xs(0)},${RY[SEG[0][2]]}`;
     SEG.forEach((sg, i) => { d += ` L${xs(sg[1])},${RY[sg[2]]}`; if (SEG[i + 1]) d += ` L${xs(sg[1])},${RY[SEG[i + 1][2]]}`; });
-    mk('path', {d: d + ` L${xs(1)},${bandsBot} L${xs(0)},${bandsBot} Z`, fill: '#8fa0d8', opacity: .18, filter: 'url(#wc)', class: 'wash'}, hy);
+    mk('path', {d: d + ` L${xs(1)},${bandsBot} L${xs(0)},${bandsBot} Z`, fill: '#ffffff', opacity: .18, filter: 'url(#wc)', class: 'wash'}, hy);
     E.hyp = mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, hy);
     tx(hy, gx0, H - 3, 'fall asleep', {style: `font:600 ${ms}px var(--mono)`, opacity: .7});
     tx(hy, gx1, H - 3, 'wake up', {'text-anchor': 'end', style: `font:600 ${ms}px var(--mono)`, opacity: .7});
 
     // ---- the brain, from the side, front to the left ----
     const br = mk('g', {}, svg);
-    mk('path', {d: mp(STEM), fill: '#d9a79a', opacity: .75, filter: 'url(#wc)', class: 'wash'}, br);
-    mk('path', {d: mp(OUT), fill: '#eab9a6', opacity: .7, filter: 'url(#wc)', class: 'wash'}, br);
-    mk('path', {d: mp(CERE), fill: '#d9998a', opacity: .75, filter: 'url(#wc)', class: 'wash'}, br);
+    mk('path', {d: mp(STEM), fill: BLUE, opacity: .75, filter: 'url(#wc)', class: 'wash'}, br);
+    mk('path', {d: mp(OUT), fill: BLUE, opacity: .7, filter: 'url(#wc)', class: 'wash'}, br);
+    mk('path', {d: mp(CERE), fill: BLUE, opacity: .75, filter: 'url(#wc)', class: 'wash'}, br);
     const cp = mk('clipPath', {id: 'bc'}, defs); mk('path', {d: mp(OUT)}, cp); mk('path', {d: mp(CERE)}, cp); mk('path', {d: mp(STEM)}, cp);
     const hg = mk('g', {'clip-path': 'url(#bc)', class: 'wash'}, br);
     mk('rect', {x: X(5), y: Y(0), width: 95 * s, height: 78 * s, fill: 'url(#h1)', opacity: .22}, hg);
@@ -142,7 +140,7 @@ gsap.registerPlugin(DrawSVGPlugin);
     mk('ellipse', {cx: X(80), cy: Y(63), rx: 13 * s, ry: 7 * s, fill: 'url(#h2)', opacity: .45}, hg);
     mk('ellipse', {cx: X(64), cy: Y(70), rx: 5 * s, ry: 6 * s, fill: 'url(#h2)', opacity: .45}, hg);
     // a soft warm wash at the back of the brain that blooms with each dream
-    E.warm = mk('ellipse', {cx: X(80), cy: Y(38), rx: 16 * s, ry: 14 * s, fill: '#f29a5c', opacity: 0, filter: 'url(#wc)'}, hg);
+    E.warm = mk('ellipse', {cx: X(80), cy: Y(38), rx: 16 * s, ry: 14 * s, fill: FIRE, opacity: 0, filter: 'url(#wc)'}, hg);
     const lw = Math.max(1.3, s * .5);
     mk('path', {d: mp(STEM), fill: 'none', stroke: INK, 'stroke-width': lw, class: 'draw'}, br);
     [OUT, CERE].forEach(q => mk('path', {d: mp(q), fill: 'none', stroke: INK, 'stroke-width': lw * 1.4, 'stroke-linejoin': 'round', class: 'draw'}, br));
@@ -155,8 +153,8 @@ gsap.registerPlugin(DrawSVGPlugin);
     const nd = mk('g', {transform: `translate(${NX},${NY})`}, svg);
     E.ring = mk('circle', {r: s * 4.5, fill: 'none', stroke: INK, 'stroke-width': 1.1, 'stroke-dasharray': '2 3', opacity: .55}, nd);
     E.gl = mk('g', {opacity: 0}, nd);
-    E.blob = mk('circle', {r: s * 12, fill: 'url(#gl)', filter: 'url(#wc)'}, E.gl);
-    mk('circle', {r: Math.max(3, s * 2.6), fill: '#fff4d4', stroke: FIRE, 'stroke-width': 1.2}, E.gl);
+    E.blob = mk('circle', {r: s * 12, fill: FIRE, opacity: .35, filter: 'url(#wc)'}, E.gl);
+    mk('circle', {r: Math.max(3, s * 2.6), fill: FIRE, stroke: INK, 'stroke-width': 1.2}, E.gl);
     E.rays = [];
     for (let i = 0; i < 9; i++) {
       const a = i / 9 * Math.PI * 2 + .2, ra = s * 6.5, rb = s * (i % 2 ? 9 : 11);
@@ -172,16 +170,16 @@ gsap.registerPlugin(DrawSVGPlugin);
     E.clIn = mk('g', {}, E.cl);
     [[.3, 1.1], [.58, 1.6], [.84, 2.2]].forEach(([k, r]) => {
       const x0 = X(86), y0 = Y(20), x1 = cx - rx * .35, y1 = cy + ry * 1.25;
-      mk('circle', {cx: x0 + (x1 - x0) * k, cy: y0 + (y1 - y0) * k, r: Math.max(2.5, Math.min(7, s * r)), fill: '#fbf6ea', stroke: INK, 'stroke-width': 1.3}, E.clIn);
+      mk('circle', {cx: x0 + (x1 - x0) * k, cy: y0 + (y1 - y0) * k, r: Math.max(2.5, Math.min(7, s * r)), fill: '#ffffff', stroke: BLUE, 'stroke-width': 1.3}, E.clIn);
     });
-    E.cloudP = mk('path', {d: cloudD(cx, cy, rx, ry), fill: '#fbf6ea', stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, E.clIn);
-    mk('ellipse', {cx, cy, rx: rx * .85, ry: ry * .7, fill: '#8fa0d8', opacity: .3, filter: 'url(#wc)'}, E.clIn);
+    E.cloudP = mk('path', {d: cloudD(cx, cy, rx, ry), fill: '#ffffff', stroke: BLUE, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, E.clIn);
+    mk('ellipse', {cx, cy, rx: rx * .85, ry: ry * .7, fill: PAPER, opacity: .3, filter: 'url(#wc)'}, E.clIn);
     const k = ry * .62;
     E.doo = DOODLE.map(q => mk('path', {d: pairs(q, u => cx + u * k * 1.35, v => cy + v * k), fill: 'none', stroke: BLUE, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', display: 'none'}, E.clIn));
 
     // ---- the notebook readout, top left ----
     E.rd1 = tx(svg, 0, hs, '', {style: `font:700 ${hs}px var(--hand)`});
-    E.rd2 = tx(svg, 0, hs + ms * 1.55, '', {style: `font:700 ${ms}px var(--mono)`, fill: BLUE});
+    E.rd2 = tx(svg, 0, hs + ms * 1.55, '', {style: `font:700 ${ms}px var(--mono)`, fill: INK});
 
     // ---- the moon you drag ----
     E.sc = mk('g', {}, svg);
@@ -190,7 +188,7 @@ gsap.registerPlugin(DrawSVGPlugin);
     E.hint = mk('g', {class: touched ? '' : 'hint'}, E.sc);
     const my = chartTop + hr + 1;
     mk('circle', {cx: 0, cy: my, r: hr, fill: BLUE, stroke: INK, 'stroke-width': 1.4}, E.hint);
-    mk('circle', {cx: -hr * .1, cy: my, r: hr * .55, fill: '#fbf1d4'}, E.hint);
+    mk('circle', {cx: -hr * .1, cy: my, r: hr * .55, fill: '#ffffff'}, E.hint);
     mk('circle', {cx: hr * .17, cy: my - hr * .14, r: hr * .48, fill: BLUE}, E.hint);
 
     // ---- idle life ----
@@ -228,7 +226,7 @@ gsap.registerPlugin(DrawSVGPlugin);
     cur = dreamAt(t);
     place();
     E.bands.forEach((g, i) => g.querySelector('.bw').setAttribute('opacity', seen.has(i) ? .45 : .26));
-    E.icons.forEach((p, i) => p.setAttribute('fill', seen.has(i) ? FIRE : BLUE));
+    E.icons.forEach((p, i) => p.setAttribute('fill', seen.has(i) ? FIRE : INK));
     gsap.set(E.gl, {opacity: cur >= 0 || done ? 1 : 0});
     gsap.set(E.warm, {opacity: cur >= 0 || done ? .45 : 0});
     gsap.set(E.cl, {opacity: cur >= 0 ? 1 : 0});

@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Earth and the Moon, shown pulling on each other with equal force. A draggable control makes Earth heavier while its wobble is shown. Asks: why does Earth barely wobble?",
-    "ground": "#0b1026"
+    "label": "Earth and the Moon, shown pulling on each other with equal force. A draggable control makes Earth heavier while its wobble is shown. Asks: why does Earth barely wobble?"
   },
   "source": "Veritasium, “Best Film on Newton's Third Law. Ever.” (YouTube, 2011)",
   "reference": "https://www.youtube.com/watch?v=8bTdMmNZm2M",

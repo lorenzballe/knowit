@@ -16,7 +16,7 @@
 .answered .q{font-size:max(2.5cqh,15px)}
 @container (max-height:520px){.answered .in{gap:7px}}
 </style>
-<article class="card" id="card" data-topic="space" data-kind="Drag to answer · the orbit to scale" style="--c:#0b1026;--k:#f3f0e8;--edge:#2b5cff">
+<article class="card" id="card" data-topic="space" data-kind="Drag to answer · the orbit to scale">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">THE NEAREST DAY</span></div>
     <h2 class="q">When in the year does the Earth pass closest to the Sun?</h2>
@@ -41,7 +41,7 @@
   const STARTS = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
   const svg = Kit.$('orbit'), sky = Kit.$('sky'), card = Kit.$('card'), caption = Kit.$('cap');
   // Flat colours: the card's ink and sky, tints of the ink on the sky, the Sun, and the sea.
-  const INK = '#f3f0e8', SKY = '#0b1026', SEA = '#3f7fe6', NIGHT = '#1d3a7a', SUN = '#ffd24a';
+  const INK = '#ffffff', SKY = '#2b5cff', SEA = '#ffffff', NIGHT = '#152f8f', SUN = '#ffd24a';
   const mix = (a, b, p) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.substr(i, 2), 16) * p + parseInt(b.substr(i, 2), 16) * (1 - p)).toString(16).padStart(2, '0')).join('');
   const MONTH_A = mix(INK, SKY, .5), MONTH_B = mix(INK, SKY, .26), LINE = mix(INK, SKY, .55);
   // 0: the reader is placing the Earth. 1: it runs on to its nearest day. 2: answered.

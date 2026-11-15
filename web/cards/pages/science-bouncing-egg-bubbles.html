@@ -17,13 +17,13 @@
   border:0;border-radius:999px;padding:0 5.5cqw;height:max(5.4cqh,40px);margin:0;cursor:pointer;
   box-shadow:none;transition:transform .08s}
 #go:active{transform:scale(.95)}
-#go.drop{color:#2a1300;background:#f0a347;box-shadow:none}
+#go.drop{color:#fff;background:#b8400a;box-shadow:none}
 #pips{display:flex;align-items:center;gap:1.6cqw}
 .pip{width:max(1.1cqh,8px);height:max(1.1cqh,8px);border-radius:50%;background:color-mix(in srgb,var(--k) 18%,transparent);transition:background .3s}
-.pip.on{background:#8fd3ea}
+.pip.on{background:var(--k)}
 .say{font:600 max(1.95cqh,13px)/1.3 var(--body)}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Tap to react · drop it" style="--c:#070b1c;--k:#dff8ff;--edge:#02030a">
+<article class="card" id="card" data-topic="science" data-kind="Tap to react · drop it">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO FIZZ</span></div>
     <h2 class="q">What causes the tiny bubbles that let the egg bounce?</h2>
@@ -41,8 +41,8 @@
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), row = Kit.$('row'), stage = Kit.$('stage'), pips = Kit.$('pips').children;
   // Flat meaning colours: CO₂ blue, egg amber; the shell is plain eggshell cream.
-  const BUB = '#8fd3ea', BUBLINE = '#3b7f99', AMBER = '#f0a347', CREAM = '#efe3cb', SHELLLINE = '#b89c72',
-        MEM = '#f2c27e', MEMLINE = '#c47a32', LIGHT = '#f9dcaa', YOLK = '#ec9620';
+  const BUB = 'var(--k)', BUBLINE = 'var(--k)', AMBER = '#b8400a', CREAM = 'var(--edge)', SHELLLINE = 'var(--k)',
+        MEM = 'color-mix(in srgb, #b8400a 40%, var(--c))', MEMLINE = '#b8400a', LIGHT = 'color-mix(in srgb, #b8400a 14%, var(--c))', YOLK = '#b8400a';
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const TAU = Math.PI * 2;
   let W = 0, H = 0, fs = 12, cx = 0, cy = 0, R = 0, th = 0, ery = 0, erx = 0, floorY = 0, D = 0, bw = 0;
@@ -118,11 +118,11 @@
     L.gasA = mk('rect', {y: -bh / 2, height: bh, rx: bh / 2, fill: BUB}, L.gauge);
 
     L.legend = mk('g', {}, svg);
-    text(L.legend, fs, fs * 1.25, 'Shell, CaCO₃', {fill: CREAM});
-    text(L.legend, W - fs, fs * 1.25, 'CO₂ gas', {fill: BUB, 'text-anchor': 'end'});
+    text(L.legend, fs, fs * 1.25, 'Shell, CaCO₃', {fill: 'var(--k)'});
+    text(L.legend, W - fs, fs * 1.25, 'CO₂ gas', {fill: 'var(--k)', 'text-anchor': 'end'});
 
     // The egg.
-    L.shadow = mk('ellipse', {cx, cy: floorY + 2, rx: erx * .9, ry: fs * .3, fill: '#000', opacity: .12}, svg);
+    L.shadow = mk('ellipse', {cx, cy: floorY + 2, rx: erx * .9, ry: fs * .3, fill: 'var(--k)', opacity: .12}, svg);
     L.mv = mk('g', {}, svg);
     L.sq = mk('g', {}, L.mv);
     mk('path', {d: eggPath(cx, cy), fill: MEM, stroke: MEMLINE, 'stroke-width': 1.6}, L.sq);
@@ -170,9 +170,9 @@
     L.fx = mk('g', {}, svg);
     L.notes = mk('g', {opacity: dropped ? 1 : 0}, svg);
     const ly = floorY - ery * 1.3, lx = cx - erx * 1.15 - fs * .5;
-    mk('path', {d: `M${lx + fs * .3},${ly + fs * .55}L${cx - erx * .7},${floorY - ery * 1.05}`, stroke: MEM, 'stroke-width': 1.2, fill: 'none'}, L.notes);
-    text(L.notes, lx, ly, 'membrane', {'text-anchor': 'end', fill: MEM});
-    text(L.notes, lx, ly + fs * 1.35, '+ CO₂ bubbles', {'text-anchor': 'end', fill: BUB});
+    mk('path', {d: `M${lx + fs * .3},${ly + fs * .55}L${cx - erx * .7},${floorY - ery * 1.05}`, stroke: AMBER, 'stroke-width': 1.2, fill: 'none'}, L.notes);
+    text(L.notes, lx, ly, 'membrane', {'text-anchor': 'end', fill: AMBER});
+    text(L.notes, lx, ly + fs * 1.35, '+ CO₂ bubbles', {'text-anchor': 'end', fill: 'var(--k)'});
     text(L.notes, cx + erx * 1.15 + fs * .5, floorY - ery * .9, 'boing!', {'font-size': fs * 1.5, fill: AMBER}, 'var(--hand)');
 
     if (dropped) {
@@ -224,7 +224,7 @@
       const c = mk('circle', {cx: x, cy: y, r: fs * (.15 + Kit.rnd() * .3), fill: 'none', stroke: BUB, 'stroke-width': 1.3}, L.fx);
       gsap.to(c, {attr: {cy: y - ery * (.6 + Kit.rnd() * 1.1), cx: x + (Kit.rnd() - .5) * fs * 3}, opacity: 0, duration: 1.3 + Kit.rnd() * 1.1, delay: Kit.rnd() * .35, ease: 'power2.out', onComplete: () => c.remove()});
     }
-    const t = text(L.fx, cx + erx * .9, cy - ery * .9, 'CO₂', {fill: BUB});
+    const t = text(L.fx, cx + erx * .9, cy - ery * .9, 'CO₂', {fill: 'var(--k)'});
     gsap.fromTo(t, {opacity: 0, y: 6}, {opacity: 1, y: -fs * 1.2, duration: .5, ease: 'power3.out'});
     gsap.to(t, {opacity: 0, y: -fs * 3, duration: .8, delay: .9, ease: 'power2.in', onComplete: () => t.remove()});
   }

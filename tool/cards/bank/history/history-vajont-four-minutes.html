@@ -10,15 +10,14 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
 <style>
-#card{background:var(--c);background-image:none}
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
 .pulse{animation:pulse 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes pulse{50%{transform:scale(1.4);opacity:.55}}
 .kit-calm .pulse{animation:none}
-.say b{color:#c8185a}
+.say b{color:#a30d4a}
 </style>
-<article class="card" id="card" data-topic="history" data-kind="Drag your guess · how fast" style="--c:#f2d49b;--k:#2b1d14;--edge:#c9a866">
+<article class="card" id="card" data-topic="history" data-kind="Drag your guess · how fast">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE TIME</span></div>
     <h2 class="q">How long did the Vajont wave take to wipe out over ten villages?</h2>
@@ -35,8 +34,8 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
-  const PINK = '#ff3d7f', PINK_TXT = '#c8185a', WATER = '#3f7bb0', WAVE = '#2a5d8f', FOAM = '#ffffff', AMBER = '#f0b44c';
-  const INK = 'var(--k)', PINK_SOFT = 'color-mix(in srgb, #ff3d7f 50%, var(--c))';
+  const PINK = '#a30d4a', PINK_TXT = '#a30d4a', WATER = 'var(--k)', WAVE = 'var(--edge)', FOAM = '#ffffff', AMBER = '#ffc640';
+  const INK = 'var(--k)', PINK_SOFT = 'color-mix(in srgb, #a30d4a 50%, var(--c))';
   const mix = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const MAX = 10080, REAL = 4;
   const G0 = typeof gsap !== 'undefined';

@@ -68,10 +68,10 @@ function rgbOf(el, prop) {
   return s.startsWith('color(') ? v.map(n => n * 255) : v;
 }
 function paints() {
-  const k = rgbOf(dial, 'color') || [255, 255, 255], c = rgbOf(Kit.$('add'), 'color') || [40, 90, 255];
-  const night = lerp(c, [8, 10, 26], .8), ember = [238, 136, 70];
-  C = {k, night, ember, sun: lerp(k, [255, 206, 110], .6), gal: lerp(night, k, .2), core: lerp(night, k, .5),
-    end: lerp(lerp(night, ember, .2), k, .07)};
+  const k = rgbOf(dial, 'color') || [255, 255, 255], c = rgbOf(Kit.$('add'), 'color') || [43, 92, 255];
+  const night = [21, 47, 143], ember = [238, 136, 70];
+  C = {k, c, night, ember, sun: k, gal: lerp(night, k, .2), core: lerp(night, k, .5),
+    end: lerp(night, k, .1)};
 }
 
 // The sky, kept to a few things: three suns that cool and go out, three galaxies that fade, and the last black hole.
@@ -187,7 +187,7 @@ function drawSky() {
 function hole(bx, by, r) {
   const x = ctx;
   disk(bx, by, r, Math.PI, TAU);
-  x.fillStyle = '#000'; x.beginPath(); x.arc(bx, by, r, 0, TAU); x.fill();
+  x.fillStyle = rgb(C.c); x.beginPath(); x.arc(bx, by, r, 0, TAU); x.fill();
   disk(bx, by, r, 0, Math.PI);
 }
 

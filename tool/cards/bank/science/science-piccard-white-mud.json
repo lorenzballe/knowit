@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Quiz: what Jacques Piccard saw through his porthole on the Mariana Trench floor in 1960. Options: pitch-black water and dark ooze; white mud in crystal-clear water; a thick brown cloud of silt; white mud in clear water. Lights come on after the pick.",
-    "ground": "#062436"
+    "label": "Quiz: what Jacques Piccard saw through his porthole on the Mariana Trench floor in 1960. Options: pitch-black water and dark ooze; white mud in crystal-clear water; a thick brown cloud of silt; white mud in clear water. Lights come on after the pick."
   },
   "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=6rdDnFsCYSo&t=112s",

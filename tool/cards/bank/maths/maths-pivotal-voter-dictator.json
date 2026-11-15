@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A draggable rail for moving candidate B to the top of a voter's ranking, one voter at a time, asking which single voter ends up deciding the society-wide result.",
-    "ground": "#0b1828"
+    "label": "A draggable rail for moving candidate B to the top of a voter's ranking, one voter at a time, asking which single voter ends up deciding the society-wide result."
   },
   "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=957s",

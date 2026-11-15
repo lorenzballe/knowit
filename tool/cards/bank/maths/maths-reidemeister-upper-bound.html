@@ -23,15 +23,15 @@
 #ctl output{font:800 max(2.6cqh,16px)/1 var(--mono);min-width:1.6em;text-align:right;color:var(--k)}
 #n{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:max(5cqh,34px);background:transparent;touch-action:none;margin:0;cursor:pointer}
 #n::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:color-mix(in srgb,var(--k) 28%,transparent)}
-#n::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-10px;border-radius:50%;background:#0d3d73;border:3px solid #ffd88a;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+#n::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-10px;border-radius:50%;background:var(--k);border:3px solid #052e22;box-shadow:0 2px 8px rgba(8,89,65,.35)}
 #n::-moz-range-track{height:6px;border-radius:6px;background:color-mix(in srgb,var(--k) 28%,transparent)}
-#n::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#0d3d73;border:3px solid #ffd88a;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+#n::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--k);border:3px solid #052e22;box-shadow:0 2px 8px rgba(8,89,65,.35)}
 #go{align-self:flex-start}
 .say{overflow-wrap:anywhere}
 .answered .q{font-size:max(2.4cqh,15px)}
 .answered .say{font-size:max(1.95cqh,13px);line-height:1.35}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Slide the crossings · the bound" style="--c:#0d3c71;--k:#eef5ff;--edge:#082a52">
+<article class="card" id="card" data-topic="maths" data-kind="Slide the crossings · the bound">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SLIDE THE CROSSINGS</span></div>
     <h2 class="q">What is the current upper bound on Reidemeister moves between two knots?</h2>
@@ -50,7 +50,7 @@
 (() => {
   gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
   const svg = Kit.$('pic'), stage = Kit.$('stage'), rng = Kit.$('n'), nv = Kit.$('nv'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card');
-  const INK = '#eef5ff', FAINT = 'rgba(238,245,255,.58)', HAIR = 'rgba(238,245,255,.12)', AMB = '#ffd88a', B0 = '#124b8c', B1 = '#0d3c71', MID = '#0d3c71';
+  const INK = '#ffffff', FAINT = 'rgba(255,255,255,.72)', HAIR = 'rgba(255,255,255,.18)', AMB = '#052e22', B0 = '#0E9A70', B1 = '#0E9A70', MID = '#0E9A70';
   let W = 0, H = 0, fs = 13, n = 1, phase = 'slide', touched = false, done = false, mode = 'tall';
   let treeTL = null, galTw = null, lastW = 0, lastH = 0, rM = 1.25, rD = 1.3;
   const st = {t: 0};
@@ -71,12 +71,12 @@
   function defs() {
     const d = Kit.mk('defs', {}, svg);
     const core = Kit.mk('radialGradient', {id: 'core'}, d);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#fff', 'stop-opacity': 1}, core); Kit.mk('stop', {offset: .4, 'stop-color': AMB, 'stop-opacity': .6}, core); Kit.mk('stop', {offset: 1, 'stop-color': AMB, 'stop-opacity': 0}, core);
+    Kit.mk('stop', {offset: 0, 'stop-color': AMB, 'stop-opacity': 1}, core); Kit.mk('stop', {offset: .4, 'stop-color': AMB, 'stop-opacity': 1}, core); Kit.mk('stop', {offset: 1, 'stop-color': AMB, 'stop-opacity': 1}, core);
     const s = Math.max(10, Math.round(W / 26));
     const p1 = Kit.mk('pattern', {id: 'grid', width: s, height: s, patternUnits: 'userSpaceOnUse'}, d);
     Kit.mk('path', {d: `M${s} 0H0V${s}`, fill: 'none', stroke: HAIR, 'stroke-width': .6}, p1);
     const p2 = Kit.mk('pattern', {id: 'grid5', width: s * 5, height: s * 5, patternUnits: 'userSpaceOnUse'}, d);
-    Kit.mk('path', {d: `M${s * 5} 0H0V${s * 5}`, fill: 'none', stroke: 'rgba(238,245,255,.2)', 'stroke-width': .8}, p2);
+    Kit.mk('path', {d: `M${s * 5} 0H0V${s * 5}`, fill: 'none', stroke: 'rgba(255,255,255,.26)', 'stroke-width': .8}, p2);
     const gf = Kit.mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, d);
     Kit.mk('feGaussianBlur', {stdDeviation: 2.2, result: 'b'}, gf);
     const m = Kit.mk('feMerge', {}, gf); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
@@ -182,7 +182,7 @@
     const d = `M${x0},${y0} Q${W / 2},${yc} ${x1},${y0}`;
     E.arc = Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.4}, g);
     const len = E.len = E.arc.getTotalLength();
-    E.lit = Kit.mk('path', {d, fill: 'none', stroke: AMB, 'stroke-width': 3.2, 'stroke-linecap': 'round', 'stroke-dasharray': `${len} ${len}`, 'stroke-dashoffset': len, filter: 'url(#glow)'}, g);
+    E.lit = Kit.mk('path', {d, fill: 'none', stroke: AMB, 'stroke-width': 3.2, 'stroke-linecap': 'round', 'stroke-dasharray': `${len} ${len}`, 'stroke-dashoffset': len}, g);
     E.P = t => E.arc.getPointAtLength(clamp(t, 0, 1) * len);
     E.ticks = [];
     for (let p = 0; p <= 15; p++) {
@@ -210,7 +210,7 @@
   function drawMark() {
     const g = E.mk = Kit.mk('g', {}, G.mark);
     E.ring = Kit.mk('circle', {r: fs * .8, fill: 'none', stroke: AMB, 'stroke-width': 1, opacity: .55}, g);
-    Kit.mk('circle', {r: fs * .4, fill: AMB, stroke: B1, 'stroke-width': 2, filter: 'url(#glow)'}, g);
+    Kit.mk('circle', {r: fs * .4, fill: AMB, stroke: B1, 'stroke-width': 2}, g);
     E.mlab = T(g, 0, -fs * 1.15, sci(n), {class: 'm', 'text-anchor': 'middle', 'font-size': 13, fill: AMB, 'font-weight': 800, stroke: B1, 'stroke-width': 4, 'paint-order': 'stroke'});
   }
   function place(t) {
@@ -287,7 +287,7 @@
     let cont = '';
     for (let j = 0; j < 128; j++) cont += `M${NX(7) + 3},${NY(7, j)}H${W - fs * .8}`;
     const contP = Kit.mk('path', {d: cont, stroke: INK, 'stroke-width': .6, 'stroke-dasharray': '2 3', opacity: anim ? 0 : .3}, g);
-    const root = Kit.mk('circle', {cx: xr, cy: mid, r: fs * .42, fill: AMB, filter: 'url(#glow)'}, g);
+    const root = Kit.mk('circle', {cx: xr, cy: mid, r: fs * .42, fill: AMB}, g);
     const leaves = Kit.mk('g', {opacity: anim ? 0 : 1}, g), r = seeded(5);
     for (let j = 0; j < 128; j++) Kit.mk('circle', {cx: NX(7), cy: NY(7, j), r: .9 + r() * .7, fill: INK, class: r() < .35 ? 'tw' : '', style: `animation-delay:${(r() * 2.4).toFixed(2)}s`}, leaves);
     const endHdr = () => { if (small) { small.setAttribute('font-size', 12.5); small.textContent = '236¹¹ moves, only 2 choices each:'; fit(small, hdrW); } finalBig(); };
@@ -316,7 +316,7 @@
     for (let i = 0; i < 22; i++) {
       const leaf = Math.floor(rs() * 128); let d = `M${xr},${mid}`;
       for (let L = 1; L <= 7; L++) { const j = leaf >> (7 - L), pj = j >> 1, px = NX(L - 1), py = NY(L - 1, pj), cx = NX(L), cy = NY(L, j), mx = (px + cx) / 2; d += ` C${mx},${py} ${mx},${cy} ${cx},${cy}`; }
-      const dot = Kit.mk('circle', {cx: 0, cy: 0, r: Math.max(1.8, fs * .2), fill: AMB, filter: 'url(#glow)', opacity: 0}, g);
+      const dot = Kit.mk('circle', {cx: 0, cy: 0, r: Math.max(1.8, fs * .2), fill: AMB, opacity: 0}, g);
       tl.set(dot, {opacity: 1}, .55 + i * .03)
         .to(dot, {motionPath: {path: d}, duration: 7 * step + .2, ease: 'sine.inOut'}, .55 + i * .03)
         .to(dot, {opacity: 0, duration: .4}, 3.05 + i * .02);

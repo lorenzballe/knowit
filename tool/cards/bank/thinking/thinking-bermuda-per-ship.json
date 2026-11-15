@@ -27,8 +27,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Question: Why isn't the Bermuda Triangle more dangerous than other seas? A dial to drag right divides each sea's wrecks by the ships that cross it. Before dividing, the Triangle has the most wrecks; after dividing, its risk per ship matches other seas.",
-    "ground": "#050c07"
+    "label": "Question: Why isn't the Bermuda Triangle more dangerous than other seas? A dial to drag right divides each sea's wrecks by the ships that cross it. Before dividing, the Triangle has the most wrecks; after dividing, its risk per ship matches other seas."
   },
   "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=410s",

@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Titled 'Habits mark your genes', the page asks how the way you live switches genes on or off. A slider labelled REMOVE and ADD adds or removes chemical marks on one gene when dragged.",
-    "ground": "#0b3a63"
+    "label": "Titled 'Habits mark your genes', the page asks how the way you live switches genes on or off. A slider labelled REMOVE and ADD adds or removes chemical marks on one gene when dragged."
   },
   "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
   "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=266s",

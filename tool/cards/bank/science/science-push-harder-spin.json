@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page showing a globe floating on water. Drag back from the globe to wind up a push, then let go, and try three different forces. Asks: what happens to the globe's acceleration when you increase the applied force?",
-    "ground": "#f1eee6"
+    "label": "Interactive page showing a globe floating on water. Drag back from the globe to wind up a push, then let go, and try three different forces. Asks: what happens to the globe's acceleration when you increase the applied force?"
   },
   "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
   "reference": "https://www.youtube.com/watch?v=9zso7ChaQXQ&t=27s",

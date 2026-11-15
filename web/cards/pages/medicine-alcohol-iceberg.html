@@ -20,7 +20,7 @@
 #hud .v small{font:600 max(1.45cqh,12px) var(--body);letter-spacing:0;text-transform:none;color:color-mix(in srgb,var(--k) 72%,var(--c));margin-left:.4em}
 #cnt{display:inline-block}
 #labs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.lab{position:absolute;left:0;top:0;text-align:center;color:var(--c);opacity:0;box-sizing:border-box;max-width:100%;box-shadow:none;text-shadow:none}
+.lab{position:absolute;left:0;top:0;text-align:center;color:var(--edge);opacity:0;box-sizing:border-box;max-width:100%;box-shadow:none;text-shadow:none}
 .lab .n{display:block;font:700 max(1.5cqh,12px)/1.14 var(--body);letter-spacing:0;text-transform:none;overflow-wrap:anywhere}
 .lab .v{display:block;font:800 max(2.1cqh,14px)/1.16 var(--body);letter-spacing:0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .lab.one{white-space:nowrap;padding:.14em .65em;border-radius:0;background:var(--k)}
@@ -28,7 +28,7 @@
 .lab.one .v{margin-left:.45em}
 .lab.one.wrap{white-space:normal;border-radius:0}
 </style>
-<article class="card" id="card" data-topic="medicine" data-kind="Drag the lamp · what lies beneath" style="--c:#06223a;--k:#eafcff;--edge:#031221">
+<article class="card" id="card" data-topic="medicine" data-kind="Drag the lamp · what lies beneath">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DIVE DOWN</span></div>
     <h2 class="q">Alcohol killed 2.6 million people in 2019. What actually killed them?</h2>
@@ -53,16 +53,16 @@
   // t = how much of the card's ink is mixed into the card colour for the lit band: paler at the top, deeper below.
   const BANDS = [
     {n: 'Cancer', v: 410, t: 95},
-    {n: 'Heart & vessels', v: 474, t: 85},
-    {n: 'Digestive diseases', v: 578, t: 76},
-    {n: 'Infectious diseases', v: 284, t: 67},
-    {n: 'Crashes, self-harm & violence', v: 724, t: 58},
-    {n: 'Other', v: 130, t: 44, other: true}
+    {n: 'Heart & vessels', v: 474, t: 90},
+    {n: 'Digestive diseases', v: 578, t: 84},
+    {n: 'Infectious diseases', v: 284, t: 78},
+    {n: 'Crashes, self-harm & violence', v: 724, t: 72},
+    {n: 'Other', v: 130, t: 64, other: true}
   ];
-  const CORAL = '#ff8a65', LAMP = '#ffd36b', P = Math.PI;
+  const CORAL = '#9e1c14', LAMP = '#ffd60a', P = Math.PI;
   // flat tints of the card's ink (--k) into the card's colour (--c)
   const hex = s => { s = (s || '').trim().replace('#', ''); if (s.length === 3) s = s.split('').map(ch => ch + ch).join(''); const n = parseInt(s, 16); return isNaN(n) || s.length !== 6 ? null : [n >> 16 & 255, n >> 8 & 255, n & 255]; };
-  let KK = [234, 252, 255], CC = [6, 34, 58];
+  let KK = [255, 255, 255], CC = [255, 59, 48];
   const mix = n => 'rgb(' + KK.map((k, i) => Math.round(k * n / 100 + CC[i] * (1 - n / 100))).join(',') + ')';
   // the hidden berg: one quiet silhouette, fill and edge the same tint, so no lines show inside it
   let DARK = mix(11), LINE = mix(0), DLINE = mix(11);
@@ -158,7 +158,7 @@
     rays = [0, 1, 2].map(() => mk('line', {}, cone));
     cable = mk('line', {x1: LX, x2: LX, y1: SY + fs * .3, y2: SY, stroke: mix(70), 'stroke-width': 1.4}, wrap);
     const buoy = mk('g', {transform: `translate(${LX},${SY})`}, wrap);
-    mk('path', {d: `M${-fs * .7},${fs * .12} a${fs * .7},${fs * .62} 0 0 1 ${fs * 1.4},0 z`, fill: CORAL, stroke: LINE, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, buoy);
+    mk('path', {d: `M${-fs * .7},${fs * .12} a${fs * .7},${fs * .62} 0 0 1 ${fs * 1.4},0 z`, fill: '#ffffff', stroke: LINE, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, buoy);
     lampG = mk('g', {}, wrap);
     // handle, cap, body with one frame bar, base
     mk('path', {d: `M${-r * .55},${-r * .95} Q0,${-r * 2.15} ${r * .55},${-r * .95}`, fill: 'none', stroke: mix(70), 'stroke-width': 1.6, 'stroke-linecap': 'round'}, lampG);

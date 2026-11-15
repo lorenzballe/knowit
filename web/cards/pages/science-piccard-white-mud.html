@@ -67,19 +67,19 @@ function draw(){
 
   const g = Kit.mk('g', {'clip-path':'url(#cp)'}, svg);
   // clear deep water, flat
-  Kit.mk('rect', {x:cx-r, y:cy-r, width:2*r, height:2*r, fill:'#9fd0e0'}, g);
+  Kit.mk('rect', {x:cx-r, y:cy-r, width:2*r, height:2*r, style:'fill:color-mix(in srgb, var(--c) 40%, white)'}, g);
   // white mud floor
   const fy = cy + r*.42;
-  Kit.mk('path', {d:`M${cx-r} ${fy+r*.1} Q${cx-r*.5} ${fy-r*.08} ${cx} ${fy} T${cx+r} ${fy-r*.04} L${cx+r} ${cy+r} L${cx-r} ${cy+r}Z`, fill:'#f4f2ea'}, g);
+  Kit.mk('path', {d:`M${cx-r} ${fy+r*.1} Q${cx-r*.5} ${fy-r*.08} ${cx} ${fy} T${cx+r} ${fy-r*.04} L${cx+r} ${cy+r} L${cx-r} ${cy+r}Z`, style:'fill:#fff'}, g);
   Kit.mk('path', {d:`M${cx-r} ${fy+r*.1} Q${cx-r*.5} ${fy-r*.08} ${cx} ${fy} T${cx+r} ${fy-r*.04}`, fill:'none', style:`stroke:${ink}`, 'stroke-width':lw*.7, 'stroke-linecap':'round'}, g);
   for (let i = 0; i < 6; i++){
     const x = cx - r*.7 + Kit.rnd()*r*1.4, y = fy + r*.16 + Kit.rnd()*r*.3, w = r*(.06+Kit.rnd()*.07);
-    Kit.mk('path', {d:`M${x-w} ${y} Q${x} ${y-r*.035} ${x+w} ${y}`, fill:'none', stroke:'#c9c6b8', 'stroke-width':lw*.6, 'stroke-linecap':'round'}, g);
+    Kit.mk('path', {d:`M${x-w} ${y} Q${x} ${y-r*.035} ${x+w} ${y}`, fill:'none', style:`stroke:${ink}`, 'stroke-opacity':.35, 'stroke-width':lw*.6, 'stroke-linecap':'round'}, g);
   }
   // light from the lamps, flat
   el.beams = Kit.mk('g', {opacity:0}, g);
-  Kit.mk('polygon', {points:`${cx-r*.55},${cy-r} ${cx-r*.25},${cy-r} ${cx+r*.15},${fy+r*.2} ${cx-r*.95},${fy+r*.2}`, fill:'#fff', 'fill-opacity':.3}, el.beams);
-  Kit.mk('polygon', {points:`${cx+r*.25},${cy-r} ${cx+r*.55},${cy-r} ${cx+r*.95},${fy+r*.2} ${cx-r*.15},${fy+r*.2}`, fill:'#fff', 'fill-opacity':.3}, el.beams);
+  Kit.mk('polygon', {points:`${cx-r*.55},${cy-r} ${cx-r*.25},${cy-r} ${cx+r*.15},${fy+r*.2} ${cx-r*.95},${fy+r*.2}`, style:'fill:#fff', 'fill-opacity':.55}, el.beams);
+  Kit.mk('polygon', {points:`${cx+r*.25},${cy-r} ${cx+r*.55},${cy-r} ${cx+r*.95},${fy+r*.2} ${cx-r*.15},${fy+r*.2}`, style:'fill:#fff', 'fill-opacity':.55}, el.beams);
   // (kept for the script's drift animation; nothing decorative inside)
   el.specks = Kit.mk('g', {opacity:0}, g);
   // darkness: lights off — the window is simply black

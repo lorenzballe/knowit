@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive diagram of Apollo 13's path around the Moon. An orange dot can be dragged to fire the lunar module's thrusters, then released, to show how a small nudge lets the Moon's gravity swing the ship home.",
-    "ground": "#0b1026"
+    "label": "Interactive diagram of Apollo 13's path around the Moon. An orange dot can be dragged to fire the lunar module's thrusters, then released, to show how a small nudge lets the Moon's gravity swing the ship home."
   },
   "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=465s",

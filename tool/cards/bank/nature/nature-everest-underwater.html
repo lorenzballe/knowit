@@ -34,7 +34,7 @@
 @keyframes nudge{50%{transform:translateY(4px)}}
 .kit-calm .hint{animation:none}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Drag Everest down · how deep" style="--c:#e4ecee;--k:#10212c;--edge:#b7c8ce">
+<article class="card" id="card" data-topic="nature" data-kind="Drag Everest down · how deep">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE MOUNTAIN</span></div>
     <div class="turn">
@@ -65,8 +65,8 @@ const Turn = {
 gsap.registerPlugin(MotionPathPlugin);
 (() => {
   const TOP = 3, BOT = -12.4, EV = 8.848, DEEP = 10.9, TRUE_PEAK = EV - DEEP; // -2.052 km
-  const INK = '#10212c', CREAM = '#f3efe4', GUESS_SEA = '#ffa552', GUESS_SKY = '#b4530a', TRUTH = '#ffd75e';
-  const STONE = '#8f8c84', SHADE = '#6c6962', BED = '#34302a';
+  const INK = '#10100c', CREAM = '#ffffff', GUESS_SEA = '#ffffff', GUESS_SKY = '#10100c', TRUTH = '#ffffff';
+  const STONE = '#6f6c64', SHADE = '#4a4842', BED = '#10100c';
   const R = [[0,0],[.1,.07],[.16,.06],[.27,.17],[.36,.22],[.5,.42],[.62,.5],[.78,.74],[.9,.86],[1,1]];
   const L = [[-.09,.05],[-.15,.1],[-.24,.12],[-.35,.3],[-.48,.4],[-.6,.58],[-.76,.7],[-.88,.9],[-1,1]];
   const SH = [[0,0],[.1,.07],[.16,.06],[.27,.17],[.36,.22],[.5,.42],[.62,.5],[.78,.74],[.9,.86],[1,1],[.32,1],[.14,.52],[.05,.2]];
@@ -81,7 +81,7 @@ gsap.registerPlugin(MotionPathPlugin);
   function sea(svg, id, deep) {
     const defs = Kit.mk('defs', {}, svg), y0 = yOf(0);
     const g = Kit.mk('linearGradient', {id, x1: 0, y1: y0, x2: 0, y2: H, gradientUnits: 'userSpaceOnUse'}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#3a8bad'}, g);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#007a2f'}, g);
     Kit.mk('stop', {offset: 1, 'stop-color': deep}, g);
     Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: `url(#${id})`}, svg);
   }
@@ -91,7 +91,7 @@ gsap.registerPlugin(MotionPathPlugin);
     Kit.mk('polygon', {points: pts(SH, x0, py, hgt, hw), fill: SHADE}, p);
     Kit.mk('polygon', {points: pts(SNOW, x0, py, hgt, hw), fill: '#ffffff'}, p);
   }
-  function tint(svg) { const y0 = yOf(0); Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: '#0a2c40', opacity: .45}, svg); }
+  function tint(svg) { const y0 = yOf(0); Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: '#10100c', opacity: .45}, svg); }
   function surface(svg) {
     const y0 = yOf(0); let d = `M0,${y0}`;
     for (let x = 0; x < W; x += 24) d += ` q6,-2.2 12,0 q6,2.2 12,0`;
@@ -105,7 +105,7 @@ gsap.registerPlugin(MotionPathPlugin);
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     fs = Math.max(12, Math.min(14, W / 26)); PX = H / (TOP - BOT);
     cx = W * .4; hw = W * .3;
-    sea(svg, 'seaA', '#050f16');
+    sea(svg, 'seaA', '#007a2f');
     gM = Kit.mk('g', {}, svg); mountain(gM, cx, yOf(0));
     tint(svg);
     gL = Kit.mk('g', {}, svg);
@@ -155,7 +155,7 @@ gsap.registerPlugin(MotionPathPlugin);
     fs = Math.max(12, Math.min(14, W / 26)); PX = H / (TOP - BOT);
     cx = W * .4; hw = W * .3;
     const floorY = yOf(-DEEP), py = yOf(TRUE_PEAK), g0 = guess == null ? -1 : guess;
-    sea(s, 'seaB', '#06141d');
+    sea(s, 'seaB', '#007a2f');
     const bed = Kit.mk('path', {d: `M0,${yOf(-6.4)} C${W * .12},${yOf(-6.6)} ${W * .2},${yOf(-8.6)} ${W * .28},${floorY} L${W * .86},${floorY} C${W * .92},${yOf(-9)} ${W * .95},${yOf(-6.8)} ${W},${yOf(-6.2)} L${W},${H} L0,${H}Z`, fill: BED}, s);
     const m = Kit.mk('g', {}, s); mountain(m, cx, py);
     Kit.mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: BED}, s);

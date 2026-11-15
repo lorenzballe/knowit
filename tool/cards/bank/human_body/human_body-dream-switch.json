@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Dark night-sky page with a moon you drag through one night and a brain that lights up each time a dream starts. It asks which part of the brain switches on every time you dream.",
-    "ground": "#f3ead5"
+    "label": "Dark night-sky page with a moon you drag through one night and a brain that lights up each time a dream starts. It asks which part of the brain switches on every time you dream."
   },
   "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=ddHHHndH-6c&t=428s",

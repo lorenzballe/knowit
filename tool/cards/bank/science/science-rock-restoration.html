@@ -21,7 +21,7 @@
 .kit-calm .bob{animation:none}
 .answered .q{font-size:max(2.4cqh,15px)}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Drag the blocks · undo the faults" style="--c:#140b09;--k:#f6efe4;--edge:#050202">
+<article class="card" id="card" data-topic="science" data-kind="Drag the blocks · undo the faults">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">RESTORE THE ROCK</span></div>
     <h2 class="q">Why do geologists undo the faults in a broken rock section?</h2>
@@ -45,9 +45,9 @@
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
   // Flat paint: tints of the card's ink, one sandy ochre for the clinoform unit, one vermilion for the faults.
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
-  const SAND = '#d39a52', RD = '#e0553a', FLASH = '#f6efe4';
-  const T1 = tint(84), T2 = tint(68), L1 = tint(48), L2 = tint(36), TOPF = tint(92);
-  const shade = col => `color-mix(in srgb, ${col} 70%, var(--c))`;
+  const SAND = 'color-mix(in srgb, #ffffff 45%, var(--c))', RD = '#b3200a', FLASH = '#f6efe4';
+  const T1 = tint(12), T2 = tint(22), L1 = tint(34), L2 = tint(44), TOPF = tint(8);
+  const shade = col => `color-mix(in srgb, ${col} 78%, var(--k))`;
   const F = [[.30, .38], [.64, .72]];   // faults: x at the top and at the bottom of the block (normal faults dipping right)
   const SL = .08;                        // horizontal slip per unit of throw: the blocks slide along the fault plane
   const PRESENT = [.13, .10];            // today's throw on each fault, in block heights
@@ -132,7 +132,7 @@
     const X = u => x0 + u * bw, Y = v => y0 + v * bh;
     const path = pts => 'M' + pts.map(([u, v]) => X(u).toFixed(1) + ',' + Y(v).toFixed(1)).join('L');
     const poly = pts => pts.map(([u, v]) => X(u).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ');
-    const edge = `fill:none;stroke:var(--c);stroke-linejoin:round`;
+    const edge = `fill:none;stroke:var(--k);stroke-linejoin:round`;
 
     svg.innerHTML = `<defs></defs>`;
 
@@ -151,7 +151,7 @@
       const t = Kit.mk('text', {x: 0, y: sy, 'font-size': sfs, style: DISP + ';fill:var(--k)'}, sg);
       t.textContent = word[i]; letters.push(t);
     }
-    const sub = Kit.mk('text', {x: cx, y: sy + fs2 * 1.55, 'text-anchor': 'middle', 'font-size': fs2, style: `font-family:var(--body);font-weight:600;fill:${SAND}`}, sign);
+    const sub = Kit.mk('text', {x: cx, y: sy + fs2 * 1.55, 'text-anchor': 'middle', 'font-size': fs2, style: `font-family:var(--body);font-weight:600;fill:var(--k)`}, sign);
     sub.textContent = '← clinoforms build out to the left';
 
     // The three blocks: top face, front face with flat beds clipped inside, outline, fault line, handle.
@@ -169,7 +169,7 @@
         BOUNDS.filter(b => b.line).forEach(b => lines.push(Kit.mk('path', {d: path([[1, b.v], [1 + DX, b.v - DY]]), 'stroke-width': lw * .6, style: edge + ';opacity:.5'}, g)));
         Kit.mk('polygon', {points: poly([[1, 0], [1, 1], [1 + DX, 1 - DY], [1 + DX, -DY]]), 'stroke-width': lw * .9, style: edge}, g);
       }
-      Kit.mk('polygon', {points: poly([[tops[k], 0], [tops[k + 1], 0], [tops[k + 1] + DX, -DY], [tops[k] + DX, -DY]]), 'stroke-width': lw * .9, style: `fill:${TOPF};stroke:var(--c);stroke-linejoin:round`}, g);
+      Kit.mk('polygon', {points: poly([[tops[k], 0], [tops[k + 1], 0], [tops[k + 1] + DX, -DY], [tops[k] + DX, -DY]]), 'stroke-width': lw * .9, style: `fill:${TOPF};stroke:var(--k);stroke-linejoin:round`}, g);
       const cid = 'clip' + k, cp = Kit.mk('clipPath', {id: cid}, svg.querySelector('defs'));
       Kit.mk('polygon', {points: poly(front)}, cp);
       const inner = Kit.mk('g', {'clip-path': `url(#${cid})`}, g);

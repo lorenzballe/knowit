@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Animated globe orbiting the Sun. Hold the button to run one solar day and watch a 'you' marker on the globe turn back toward the Sun, past one full rotation.",
-    "ground": "#1a1200"
+    "label": "Animated globe orbiting the Sun. Hold the button to run one solar day and watch a 'you' marker on the globe turn back toward the Sun, past one full rotation."
   },
   "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=744s",

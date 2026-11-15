@@ -30,8 +30,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "A draggable pin on a time scale asks how long a 20-year-old stared at the 2017 eclipse, followed by a choice of how sure you are. The reveal states that six seconds was enough to leave a permanent black spot in her central vision.",
-    "graded": false,
-    "ground": "#efe6d2"
+    "graded": false
   },
   "source": "Geopop, “Non guardare mai il sole ad occhio nudo, si potrebbero avere danni alla retina, anche permanenti!” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=7CUTjOwAU4w&t=30s",

@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A page titled How a gas turned into Teflon. A pressure dial raises the pressure on TFE gas in a cylinder. The question asks how that gas became solid Teflon powder.",
-    "ground": "#0d0b16"
+    "label": "A page titled How a gas turned into Teflon. A pressure dial raises the pressure on TFE gas in a cylinder. The question asks how that gas became solid Teflon powder."
   },
   "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=165s",

@@ -18,7 +18,7 @@
 .blink{animation:blink 1.6s steps(2) infinite}
 @keyframes blink{50%{opacity:.25}}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pull the tape · peel the flake" style="--c:#0b0718;--k:#f1ecff;--edge:#030208">
+<article class="card" id="card" data-topic="science" data-kind="Pull the tape · peel the flake">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PEEL IT</span></div>
     <h2 class="q">How was graphene first discovered?</h2>
@@ -39,12 +39,12 @@
   let W = 0, H = 0, fs = 12, sx = 0, sw = 0, base = 0, lh = 4, th = 20, hudH = 50, chartTop = 0, chartBot = 0, thr = 40, compact = false;
   let scanTween = null, mode = 'lin';
   const G = {}, lift = {y: 0};
-  const RAMP = ['#fff7d6', '#ffd23f', '#ff7a1a', '#e0245e', '#7a1fa2', '#2a0b5c'];
+  const RAMP = ['#10100c', '#10100c', '#0a3a2a', '#006b4a', '#00835b', '#00835b'];
   const ramp = d3.interpolateRgbBasis(RAMP);
   const heat = i => ramp(Math.max(0, Math.min(1, i / (TOTAL - 1))));
   const jit = []; for (let i = 0; i < TOTAL; i++) jit.push([Kit.rnd(), Kit.rnd()]);
   const MONO = getComputedStyle(document.documentElement).getPropertyValue('--mono') || 'monospace';
-  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: '#e9e4ff', 'font-family': MONO, 'font-size': fs, 'font-weight': 700, 'letter-spacing': '.04em'}, a), p); e.textContent = t; return e; };
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: '#10100c', 'font-family': MONO, 'font-size': fs, 'font-weight': 700, 'letter-spacing': '.04em'}, a), p); e.textContent = t; return e; };
   const kill = k => { if (G[k]) { G[k].kill(); G[k] = null; } };
 
   function layout() {
@@ -69,13 +69,13 @@
     // ---- defs ----
     const defs = Kit.mk('defs', {}, svg);
     const sc = Kit.mk('linearGradient', {id: 'scan', x1: 0, x2: 0, y1: 0, y2: 1}, defs);
-    [['0', 0], ['.7', .1], ['.96', .45], ['1', 0]].forEach(([o, a]) => Kit.mk('stop', {offset: o, 'stop-color': '#9ff8ff', 'stop-opacity': a}, sc));
+    [['0', 0], ['.7', .05], ['.96', .2], ['1', 0]].forEach(([o, a]) => Kit.mk('stop', {offset: o, 'stop-color': '#10100c', 'stop-opacity': a}, sc));
     const tp = Kit.mk('linearGradient', {id: 'tape', x1: 0, x2: 0, y1: 0, y2: 1}, defs);
-    Kit.mk('stop', {offset: '0', 'stop-color': '#c4fbff', 'stop-opacity': .95}, tp); Kit.mk('stop', {offset: '.5', 'stop-color': '#7ff0ff', 'stop-opacity': .9}, tp); Kit.mk('stop', {offset: '1', 'stop-color': '#3cc4dd', 'stop-opacity': .85}, tp);
+    Kit.mk('stop', {offset: '0', 'stop-color': '#b5124a', 'stop-opacity': 1}, tp); Kit.mk('stop', {offset: '.5', 'stop-color': '#b5124a', 'stop-opacity': 1}, tp); Kit.mk('stop', {offset: '1', 'stop-color': '#b5124a', 'stop-opacity': 1}, tp);
     const hs = Kit.mk('linearGradient', {id: 'hs', x1: 0, x2: 0, y1: 0, y2: 1}, defs);
     RAMP.forEach((c, i) => Kit.mk('stop', {offset: i / (RAMP.length - 1), 'stop-color': c}, hs));
     const band = Kit.mk('linearGradient', {id: 'band', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
-    [['0', '#e0245e', 0], ['.25', '#ff7a1a', .35], ['.5', '#fff7d6', .45], ['.75', '#ff7a1a', .35], ['1', '#e0245e', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, band));
+    [['0', '#b5124a', 0], ['.25', '#b5124a', .1], ['.5', '#b5124a', .16], ['.75', '#b5124a', .1], ['1', '#b5124a', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, band));
     const gl = Kit.mk('filter', {id: 'glow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
     Kit.mk('feGaussianBlur', {stdDeviation: Math.max(2, fs * .25), result: 'b'}, gl);
     const fm = Kit.mk('feMerge', {}, gl); Kit.mk('feMergeNode', {in: 'b'}, fm); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, fm);
@@ -85,39 +85,39 @@
     G.clip = Kit.mk('rect', {x: sx, y: base - lh, width: sw, height: lh}, cp);
 
     // ---- the scene sits directly on the card's ground (no backdrop) ----
-    const grid = Kit.mk('g', {stroke: '#8f7bff', 'stroke-opacity': .07, 'stroke-width': 1}, svg);
+    const grid = Kit.mk('g', {stroke: '#10100c', 'stroke-opacity': .07, 'stroke-width': 1}, svg);
     for (let x = fs * 2; x < W; x += fs * 2.2) Kit.mk('line', {x1: x, x2: x, y1: 0, y2: H}, grid);
     for (let y = fs * 2; y < H; y += fs * 2.2) Kit.mk('line', {x1: 0, x2: W, y1: y, y2: y}, grid);
     // HUD brackets
-    const m = fs * .6, L = fs * 1.4, by = chartTop - fs * .6, br = Kit.mk('g', {stroke: '#bfb4ff', 'stroke-opacity': .55, 'stroke-width': 1.6, fill: 'none'}, svg);
+    const m = fs * .6, L = fs * 1.4, by = chartTop - fs * .6, br = Kit.mk('g', {stroke: '#10100c', 'stroke-opacity': .7, 'stroke-width': 1.6, fill: 'none'}, svg);
     [[m, m, 1, 1], [W - m, m, -1, 1], [m, by, 1, -1], [W - m, by, -1, -1]].forEach(([x, y, a, b]) => Kit.mk('path', {d: `M${x},${y + b * L} V${y} H${x + a * L}`}, br));
     // HUD text
     const lx = fs * 1.3;
     if (compact) {
-      Kit.mk('circle', {cx: lx, cy: fs * 1.75 - fs * .34, r: fs * .26, fill: '#ff3b5c', class: 'blink'}, svg);
-      G.left = txt(svg, lx + fs * .65, fs * 1.75, 'IR · MANCHESTER 2004', {fill: '#bfb4ff', 'font-weight': 600});
-      G.hudL = txt(svg, W - lx, fs * 1.75, '', {'text-anchor': 'end', fill: '#fff3c4'});
+      Kit.mk('circle', {cx: lx, cy: fs * 1.75 - fs * .34, r: fs * .26, fill: '#b5124a', class: 'blink'}, svg);
+      G.left = txt(svg, lx + fs * .65, fs * 1.75, 'IR · MANCHESTER 2004', {fill: '#10100c', opacity: .75, 'font-weight': 600});
+      G.hudL = txt(svg, W - lx, fs * 1.75, '', {'text-anchor': 'end', fill: '#10100c'});
       G.hudP = null;
     } else {
-      G.left = txt(svg, lx, fs * 2.2, 'IR · MANCHESTER 2004', {fill: '#bfb4ff', 'font-weight': 600});
-      Kit.mk('circle', {cx: lx + fs * .28, cy: fs * 3.3, r: fs * .28, fill: '#ff3b5c', class: 'blink'}, svg);
-      txt(svg, lx + fs * .9, fs * 3.65, 'REC', {fill: '#ff8fa3', 'font-weight': 600});
-      G.hudL = txt(svg, W - lx, fs * 2.2, '', {'text-anchor': 'end', fill: '#fff3c4'});
-      G.hudP = txt(svg, W - lx, fs * 3.65, '', {'text-anchor': 'end', fill: '#bfb4ff', 'font-weight': 600});
+      G.left = txt(svg, lx, fs * 2.2, 'IR · MANCHESTER 2004', {fill: '#10100c', opacity: .75, 'font-weight': 600});
+      Kit.mk('circle', {cx: lx + fs * .28, cy: fs * 3.3, r: fs * .28, fill: '#b5124a', class: 'blink'}, svg);
+      txt(svg, lx + fs * .9, fs * 3.65, 'REC', {fill: '#b5124a', 'font-weight': 600});
+      G.hudL = txt(svg, W - lx, fs * 2.2, '', {'text-anchor': 'end', fill: '#10100c'});
+      G.hudP = txt(svg, W - lx, fs * 3.65, '', {'text-anchor': 'end', fill: '#10100c', opacity: .75, 'font-weight': 600});
     }
     // heat scale bar with a live marker
     G.hy0 = hudH + fs * .3; G.hy1 = base - fs * .3; G.mark = null;
     if (G.hy1 - G.hy0 > fs * 2) {
       const bx = W - fs * 1.5;
       Kit.mk('rect', {x: bx, y: G.hy0, width: fs * .45, height: G.hy1 - G.hy0, rx: fs * .2, fill: 'url(#hs)', opacity: .9}, svg);
-      G.mark = Kit.mk('path', {d: `M${bx - 3},0 l-${fs * .55},-${fs * .32} v${fs * .64}z`, fill: '#fff3c4', filter: 'url(#glow)'}, svg);
+      G.mark = Kit.mk('path', {d: `M${bx - 3},0 l-${fs * .55},-${fs * .32} v${fs * .64}z`, fill: '#b5124a'}, svg);
       gsap.set(G.mark, {y: markY()});
     }
 
     // ---- the flake ----
-    G.aura = Kit.mk('ellipse', {cx: sx + sw / 2, cy: base - TOTAL * lh * .3, rx: sw * .55, ry: Math.max(fs, TOTAL * lh * .45), fill: '#ff7a1a', opacity: .18, filter: 'url(#blur)'}, svg);
+    G.aura = Kit.mk('ellipse', {cx: sx + sw / 2, cy: base - TOTAL * lh * .3, rx: sw * .55, ry: Math.max(fs, TOTAL * lh * .45), fill: '#00835b', opacity: .1}, svg);
     if (!Kit.calm) G.breath = gsap.to(G.aura, {attr: {rx: sw * .62}, duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1});
-    Kit.mk('line', {x1: sx - sw * .06, x2: sx + sw * 1.06, y1: base + 1.5, y2: base + 1.5, stroke: '#5a4a8a', 'stroke-width': 1.5}, svg);
+    Kit.mk('line', {x1: sx - sw * .06, x2: sx + sw * 1.06, y1: base + 1.5, y2: base + 1.5, stroke: '#10100c', 'stroke-width': 1.5}, svg);
     G.stack = Kit.mk('g', {}, svg);
     G.fx = Kit.mk('g', {'pointer-events': 'none'}, svg);
     G.hex = Kit.mk('g', {opacity: 0}, svg);
@@ -125,14 +125,14 @@
 
     // ---- chart ----
     G.chart = Kit.mk('g', {}, svg);
-    Kit.mk('line', {x1: fs * .9, x2: W - fs * .9, y1: chartTop - fs * .1, y2: chartTop - fs * .1, stroke: '#3a2e60', 'stroke-width': 1}, G.chart);
-    G.cap = txt(G.chart, fs * .9, H - fs * .55, '', {fill: '#bfb4ff', 'font-weight': 600});
+    Kit.mk('line', {x1: fs * .9, x2: W - fs * .9, y1: chartTop - fs * .1, y2: chartTop - fs * .1, stroke: '#10100c', 'stroke-opacity': .35, 'stroke-width': 1}, G.chart);
+    G.cap = txt(G.chart, fs * .9, H - fs * .55, '', {fill: '#10100c', opacity: .75, 'font-weight': 600});
     G.bars = d3.select(Kit.mk('g', {}, G.chart));
 
     // ---- scan line ----
     const bh = H * .14;
     G.scan = Kit.mk('rect', {x: 0, y: -bh, width: W, height: bh, fill: 'url(#scan)', 'pointer-events': 'none'}, svg);
-    G.flash = Kit.mk('rect', {width: W, height: H, fill: '#fff7d6', opacity: 0, 'pointer-events': 'none'}, svg);
+    G.flash = Kit.mk('rect', {width: W, height: H, fill: '#ffffff', opacity: 0, 'pointer-events': 'none'}, svg);
     if (!Kit.calm) scanTween = gsap.fromTo(G.scan, {attr: {y: -bh}}, {attr: {y: H}, duration: 2.8, ease: 'sine.inOut', repeat: -1, repeatDelay: .25});
     else G.scan.setAttribute('y', chartTop - bh);
 
@@ -160,23 +160,23 @@
     G.aura.setAttribute('fill', heat(n - 1));
     if (n > 1) for (let k = 0; k < 7; k++) {
       const x = sx + sw * (.07 + .86 * k / 6) + (jit[k][0] - .5) * fs;
-      G.strands.push([Kit.mk('line', {x1: x, x2: x, y1: G.crackY, y2: G.crackY, stroke: '#9ff8ff', 'stroke-width': 1.1, 'stroke-linecap': 'round', opacity: 0}, strands), x]);
+      G.strands.push([Kit.mk('line', {x1: x, x2: x, y1: G.crackY, y2: G.crackY, stroke: '#10100c', 'stroke-width': 1.1, 'stroke-linecap': 'round', opacity: 0}, strands), x]);
     }
-    G.crack = Kit.mk('line', {x1: sx, x2: sx + sw, y1: G.crackY, y2: G.crackY, stroke: '#9ff8ff', 'stroke-width': 2, filter: 'url(#glow)', opacity: 0}, G.stack);
+    G.crack = Kit.mk('line', {x1: sx, x2: sx + sw, y1: G.crackY, y2: G.crackY, stroke: '#b5124a', 'stroke-width': 2, opacity: 0}, G.stack);
     if (n > 1 && !done) {
       const tg = Kit.mk('g', {}, top); G.tape = tg;
       const ty = base - n * lh - th - 1, tx = sx - sw * .04, tw = sw * 1.08;
-      Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, rx: 3, fill: '#7ff6ff', opacity: .35, filter: 'url(#glow)'}, tg);
-      Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, rx: 3, fill: 'url(#tape)', stroke: '#e6feff', 'stroke-width': 1.2}, tg);
+      Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, rx: 3, fill: '#b5124a', opacity: .15}, tg);
+      Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, rx: 3, fill: 'url(#tape)', stroke: '#10100c', 'stroke-width': 1.2}, tg);
       for (let x = tx + 6; x < tx + tw - 6; x += 7) Kit.mk('line', {x1: x, x2: x + 3, y1: ty + 3, y2: ty + th - 3, stroke: '#ffffff', 'stroke-opacity': .22, 'stroke-width': 1}, tg);
       Kit.mk('rect', {x: tx + 3, y: ty + 2, width: tw - 6, height: Math.max(1, th * .12), rx: 1, fill: '#fff', opacity: .55}, tg);
       // the curled free end of the tape
       const ex = tx + tw;
-      Kit.mk('path', {d: `M${ex - fs * .2},${ty} Q${ex + fs * .7},${ty - fs * .1} ${ex + fs * .95},${ty - fs * .85} Q${ex + fs * .3},${ty + th * .3} ${ex},${ty + th * .7}Z`, fill: '#e6feff', opacity: .9, stroke: '#9ff8ff', 'stroke-width': 1}, tg);
-      txt(tg, tx + tw / 2, ty + th / 2 + fs * .36, 'PULL ↑', {'text-anchor': 'middle', fill: '#062029', 'font-weight': 800, 'letter-spacing': '.14em'});
+      Kit.mk('path', {d: `M${ex - fs * .2},${ty} Q${ex + fs * .7},${ty - fs * .1} ${ex + fs * .95},${ty - fs * .85} Q${ex + fs * .3},${ty + th * .3} ${ex},${ty + th * .7}Z`, fill: '#ffffff', opacity: .9, stroke: '#b5124a', 'stroke-width': 1}, tg);
+      txt(tg, tx + tw / 2, ty + th / 2 + fs * .36, 'PULL ↑', {'text-anchor': 'middle', fill: '#ffffff', 'font-weight': 800, 'letter-spacing': '.14em'});
       if (!touched) {
         const cx = tx + tw / 2, hg = Kit.mk('g', {class: 'hint'}, tg);
-        Kit.mk('path', {d: `M${cx},${ty - 4} v-${fs * 1.3} m-6,7 l6,-7 l6,7`, stroke: '#9ff8ff', 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#glow)'}, hg);
+        Kit.mk('path', {d: `M${cx},${ty - 4} v-${fs * 1.3} m-6,7 l6,-7 l6,7`, stroke: '#b5124a', 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hg);
       }
     }
     render();
@@ -212,13 +212,13 @@
     const hy = d => d.on ? Math.min(y0 - 1.5, ys(d.v)) : y0, hh = d => d.on ? Math.max(1.5, y0 - ys(d.v)) : 0;
     const col = v => ramp(Math.min(1, (v - 1) / (TOTAL - 1)) * .86);
     G.bars.selectAll('rect.slot').data(data).join('rect').attr('class', 'slot')
-      .attr('x', d => x(d.i)).attr('width', x.bandwidth()).attr('y', y0).attr('height', 2).attr('fill', '#3a2e60');
+      .attr('x', d => x(d.i)).attr('width', x.bandwidth()).attr('y', y0).attr('height', 2).attr('fill', '#10100c').attr('fill-opacity', .3);
     const r = G.bars.selectAll('rect.bar').data(data).join(e => e.append('rect').attr('class', 'bar').attr('y', y0).attr('height', 0))
       .attr('x', d => x(d.i)).attr('width', x.bandwidth()).attr('rx', 2).attr('fill', d => col(d.v))
-      .attr('stroke', '#ffffff').attr('stroke-opacity', .12).attr('filter', d => d.v === 1 && d.on ? 'url(#glow)' : null);
+      .attr('stroke', '#10100c').attr('stroke-opacity', .12).attr('filter', null);
     const t = G.bars.selectAll('text.val').data(data).join(e => e.append('text').attr('class', 'val').attr('y', y0 - 4))
       .attr('x', d => x(d.i) + x.bandwidth() / 2).attr('text-anchor', 'middle').attr('font-family', MONO).attr('font-size', fs).attr('font-weight', 700)
-      .attr('fill', '#fff3c4').text(d => d.v).attr('opacity', d => d.on ? 1 : 0);
+      .attr('fill', '#10100c').text(d => d.v).attr('opacity', d => d.on ? 1 : 0);
     if (dur) {
       r.transition().duration(dur).ease(d3.easeBackOut.overshoot(1.4)).attr('y', hy).attr('height', hh);
       t.transition().duration(dur).ease(d3.easeBackOut.overshoot(1.4)).attr('y', d => hy(d) - 4);
@@ -260,19 +260,19 @@
         let d = '';
         const dist = Math.hypot(xx - (sx + sw / 2), yy - cy);
         for (let k = 0; k < 6; k++) { const ang = Math.PI / 180 * (60 * k - 30), px = xx + r * Math.cos(ang), py = yy + r * Math.sin(ang); d += (k ? 'L' : 'M') + px.toFixed(1) + ',' + py.toFixed(1); if (k < 2) atoms.push([px, py, dist]); }
-        hexes.push([Kit.mk('path', {d: d + 'Z', fill: 'none', stroke: '#fff3c4', 'stroke-width': 1.6, filter: 'url(#glow)', 'stroke-linejoin': 'round'}, inner), dist]);
+        hexes.push([Kit.mk('path', {d: d + 'Z', fill: 'none', stroke: '#10100c', 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, inner), dist]);
       }
     }
-    const dots = atoms.map(([x, y, d]) => [Kit.mk('circle', {cx: x, cy: y, r: Math.max(2, r * .13), fill: '#ffffff'}, inner), d]);
-    Kit.mk('rect', {x: sx, y: top, width: sw, height: bh, fill: 'none', stroke: '#9ff8ff', 'stroke-opacity': .6, 'stroke-width': 1.2, 'stroke-dasharray': '4 4'}, G.hex);
-    txt(G.hexLabel, sx + sw / 2, base + fs * 1.5, 'ONE LAYER = GRAPHENE', {'text-anchor': 'middle', fill: '#fff7d6', filter: 'url(#glow)'});
+    const dots = atoms.map(([x, y, d]) => [Kit.mk('circle', {cx: x, cy: y, r: Math.max(2, r * .13), fill: '#10100c'}, inner), d]);
+    Kit.mk('rect', {x: sx, y: top, width: sw, height: bh, fill: 'none', stroke: '#00835b', 'stroke-opacity': 1, 'stroke-width': 1.2, 'stroke-dasharray': '4 4'}, G.hex);
+    txt(G.hexLabel, sx + sw / 2, base + fs * 1.5, 'ONE LAYER = GRAPHENE', {'text-anchor': 'middle', fill: '#10100c'});
     G.hex.setAttribute('opacity', 1);
     const dotEls = dots.map(e => e[0]);
     const twinkle = delay => { if (!Kit.calm) G.tw = gsap.to(dotEls, {opacity: .3, duration: 1.1, ease: 'sine.inOut', delay, stagger: {each: .045, from: 'random', repeat: -1, yoyo: true}}); };
     if (instant || Kit.calm) {
       G.clip.setAttribute('y', top); G.clip.setAttribute('height', bh);
       G.hexLabel.setAttribute('opacity', 1); G.stack.setAttribute('opacity', 0);
-      G.aura.setAttribute('opacity', .3); G.aura.setAttribute('ry', bh * .6); G.aura.setAttribute('cy', cy);
+      G.aura.setAttribute('opacity', .14); G.aura.setAttribute('ry', bh * .6); G.aura.setAttribute('cy', cy);
       twinkle(0);
       return;
     }
@@ -283,7 +283,7 @@
       .to(G.stack, {opacity: 0, duration: .4, ease: 'power2.out'}, '<')
       .fromTo(G.clip, {attr: {y: base - lh, height: lh}}, {attr: {y: top, height: bh}, duration: 1.1, ease: 'expo.inOut'}, '<')
       .from(sorted, {opacity: 0, scale: .2, transformOrigin: '50% 50%', duration: .5, ease: 'back.out(2)', stagger: {each: .6 / sorted.length}}, '<.25')
-      .to(G.aura, {attr: {opacity: .32, ry: bh * .6, cy}, duration: 1, ease: 'power3.out'}, '<')
+      .to(G.aura, {attr: {opacity: .14, ry: bh * .6, cy}, duration: 1, ease: 'power3.out'}, '<')
       .to(G.hexLabel, {opacity: 1, duration: .5, ease: 'power2.out'}, '-=.4');
   }
 

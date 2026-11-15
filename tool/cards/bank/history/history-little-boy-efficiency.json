@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page. A grid of dots stands for uranium, each dot 0.1% of the bomb's uranium. Holding the button runs a chain reaction, showing how many dots split. Asks why Little Boy was so inefficient.",
-    "ground": "#0f1415"
+    "label": "Interactive page. A grid of dots stands for uranium, each dot 0.1% of the bomb's uranium. Holding the button runs a chain reaction, showing how many dots split. Asks why Little Boy was so inefficient."
   },
   "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=o47-tXGxpv8&t=236s",

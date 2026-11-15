@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Four outcomes of Vibrio vulnificus infection are listed: ulcers, necrosis, amputation, death. A hold button lets the reader watch the bacterium feed. The reveal says it lives in sea water and is extremely rare but very dangerous.",
-    "ground": "#0b3d63"
+    "label": "Four outcomes of Vibrio vulnificus infection are listed: ulcers, necrosis, amputation, death. A hold button lets the reader watch the bacterium feed. The reveal says it lives in sea water and is extremely rare but very dangerous."
   },
   "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=WtF2R7J9DUo&t=337s",

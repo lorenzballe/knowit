@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Asks what the potential consequence is if the conflict becomes direct. Shows a drag-to-aim, release-to-launch interface: drag from your power to aim at Iran, and a photo of a nuclear explosion captioned Direct Confrontation.",
-    "ground": "#efebe2"
+    "label": "Asks what the potential consequence is if the conflict becomes direct. Shows a drag-to-aim, release-to-launch interface: drag from your power to aim at Iran, and a photo of a nuclear explosion captioned Direct Confrontation."
   },
   "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=WZuXvvDRTgg&t=2003s",

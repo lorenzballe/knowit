@@ -10,10 +10,6 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
 <style>
-#card{background:
-  repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),
-  radial-gradient(120% 75% at 50% 42%,#0b1f12 0%,#050c07 55%,#020503 100%)}
-#card .q{text-shadow:0 0 1.2cqh color-mix(in srgb,var(--k) 45%,transparent)}
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
 #why{display:flex;flex-direction:column;gap:1cqh}
@@ -25,7 +21,7 @@
 .answered .q{font-size:max(2.4cqh,15px)}
 @media (max-height:720px){.answered #why .body{font-size:13px;line-height:1.3}}
 </style>
-<article class="card" id="card" data-topic="thinking" data-kind="Drag the dial · divide by ships" style="--c:#050c07;--k:#8dffae;--edge:#010302">
+<article class="card" id="card" data-topic="thinking" data-kind="Drag the dial · divide by ships">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DIVIDE IT</span></div>
     <h2 class="q">Why isn't the Bermuda Triangle more dangerous than other seas?</h2>
@@ -42,7 +38,7 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), card = Kit.$('card'), stage = Kit.$('stage');
-  const G = '#8dffae', HOT = '#eafff1', DIM = 'rgba(141,255,174,.15)';
+  const G = 'var(--k)', HOT = '#b3261e', DIM = 'color-mix(in srgb,var(--k) 15%,transparent)';
   const MORPH = typeof MorphSVGPlugin !== 'undefined';
   if (MORPH) gsap.registerPlugin(MorphSVGPlugin);
   const RISK = 25;   // simulated: every sea, one ship in 25 lost: the same risk per ship
@@ -95,13 +91,13 @@
 
     const defs = Kit.mk('defs', {}, svg);
     const ph = Kit.mk('filter', {id: 'ph', x: '-30%', y: '-60%', width: '160%', height: '220%'}, defs);
-    Kit.mk('feGaussianBlur', {stdDeviation: fs * .22, result: 'b'}, ph);
+    Kit.mk('feGaussianBlur', {stdDeviation: 0, result: 'b'}, ph);
     const mg = Kit.mk('feMerge', {}, ph); Kit.mk('feMergeNode', {in: 'b'}, mg); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, mg);
     const bl = Kit.mk('filter', {id: 'bl', x: '-30%', y: '-60%', width: '160%', height: '220%'}, defs);
-    Kit.mk('feGaussianBlur', {stdDeviation: fs * .5}, bl);
+    Kit.mk('feGaussianBlur', {stdDeviation: 0}, bl);
     const ag = Kit.mk('linearGradient', {id: 'ag', gradientUnits: 'userSpaceOnUse', x1: 0, x2: 0, y1: gTop, y2: base}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': G, 'stop-opacity': .32}, ag);
-    Kit.mk('stop', {offset: 1, 'stop-color': G, 'stop-opacity': 0}, ag);
+    Kit.mk('stop', {offset: 0, 'stop-color': G, 'stop-opacity': .12}, ag);
+    Kit.mk('stop', {offset: 1, 'stop-color': G, 'stop-opacity': .12}, ag);
 
     // ---- the seas ----
     Z.forEach((z, i) => {
@@ -120,7 +116,7 @@
       }
       const cp = Kit.mk('clipPath', {id: 'zc' + i}, defs); Kit.mk('path', {d}, cp);
       const g = Kit.mk('g', {class: 'zg'}, svg);
-      Kit.mk('path', {d, fill: 'rgba(141,255,174,.045)', stroke: G, 'stroke-width': 1.4, 'stroke-dasharray': '4 3', opacity: .8, filter: 'url(#ph)'}, g);
+      Kit.mk('path', {d, fill: 'color-mix(in srgb,var(--k) 5%,transparent)', stroke: G, 'stroke-width': 1.4, 'stroke-dasharray': '4 3', opacity: .8, filter: 'url(#ph)'}, g);
       // traffic density, in proportion to how busy the sea is
       const dots = Kit.mk('g', {'clip-path': `url(#zc${i})`, opacity: .45}, g);
       for (let k = 0; k < z.t * 9; k++) {
@@ -135,9 +131,9 @@
 
     // ---- the scope ----
     const gr = Kit.mk('g', {}, svg);
-    for (let k = 0; k <= 4; k++) { const y = gTop + (base - gTop) * k / 4; Kit.mk('line', {class: 'gr', x1: 0, x2: W, y1: y, y2: y, stroke: k === 4 ? 'rgba(141,255,174,.45)' : DIM, 'stroke-width': 1, 'stroke-dasharray': k === 4 ? '' : '2 4'}, gr); }
+    for (let k = 0; k <= 4; k++) { const y = gTop + (base - gTop) * k / 4; Kit.mk('line', {class: 'gr', x1: 0, x2: W, y1: y, y2: y, stroke: k === 4 ? 'color-mix(in srgb,var(--k) 45%,transparent)' : DIM, 'stroke-width': 1, 'stroke-dasharray': k === 4 ? '' : '2 4'}, gr); }
     for (let k = 1; k < 3; k++) Kit.mk('line', {class: 'gr', x1: cw * k, x2: cw * k, y1: gTop, y2: base, stroke: DIM, 'stroke-dasharray': '2 4'}, gr);
-    for (let x = 0; x <= W; x += cw / 6) Kit.mk('line', {class: 'gr', x1: x, x2: x, y1: base, y2: base + fs * .35, stroke: 'rgba(141,255,174,.4)'}, gr);
+    for (let x = 0; x <= W; x += cw / 6) Kit.mk('line', {class: 'gr', x1: x, x2: x, y1: base, y2: base + fs * .35, stroke: 'color-mix(in srgb,var(--k) 40%,transparent)'}, gr);
     ylab = txt(svg, 2, hBase, '', {'font-weight': 700});
 
     // the trace: one spike for raw wrecks, three equal bumps per ship
@@ -161,7 +157,7 @@
     const tg = Kit.mk('g', {'clip-path': 'url(#tc)'}, svg);
     area = Kit.mk('path', {d: '', fill: 'url(#ag)', stroke: 'none'}, tg);
     level = Kit.mk('line', {x1: 0, x2: W, y1: lvlY, y2: lvlY, stroke: HOT, 'stroke-width': 1.2, 'stroke-dasharray': '6 5', opacity: 0}, tg);
-    glow = Kit.mk('path', {d: dOf(rawY), fill: 'none', stroke: G, 'stroke-width': fs * .45, opacity: .45, filter: 'url(#bl)'}, tg);
+    glow = Kit.mk('path', {d: dOf(rawY), fill: 'none', stroke: 'none', 'stroke-width': fs * .45, opacity: .45, filter: 'url(#bl)'}, tg);
     trace = Kit.mk('path', {d: dOf(rawY), fill: 'none', stroke: HOT, 'stroke-width': 1.8, 'stroke-linejoin': 'round', filter: 'url(#ph)'}, tg);
     Z.forEach(z => tops.push(Kit.mk('circle', {cx: z.cx, cy: lvlY, r: fs * .28, fill: HOT, filter: 'url(#ph)', opacity: 0}, tg)));
     sweep = Kit.mk('circle', {cx: 0, cy: base, r: fs * .26, fill: HOT, filter: 'url(#ph)'}, tg);
@@ -170,14 +166,14 @@
 
     // ---- the dial ----
     x0 = fs * 1.2; x1 = W - fs * 1.2;
-    Kit.mk('line', {x1: x0, x2: x1, y1: trackY, y2: trackY, stroke: 'rgba(141,255,174,.3)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
-    for (let k = 0; k <= 10; k++) { const x = x0 + (x1 - x0) * k / 10; Kit.mk('line', {x1: x, x2: x, y1: trackY - (k % 5 ? 3 : 6), y2: trackY + (k % 5 ? 3 : 6), stroke: 'rgba(141,255,174,.45)'}, svg); }
+    Kit.mk('line', {x1: x0, x2: x1, y1: trackY, y2: trackY, stroke: 'color-mix(in srgb,var(--k) 30%,transparent)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    for (let k = 0; k <= 10; k++) { const x = x0 + (x1 - x0) * k / 10; Kit.mk('line', {x1: x, x2: x, y1: trackY - (k % 5 ? 3 : 6), y2: trackY + (k % 5 ? 3 : 6), stroke: 'color-mix(in srgb,var(--k) 45%,transparent)'}, svg); }
     fillLine = Kit.mk('line', {x1: x0, x2: x0, y1: trackY, y2: trackY, stroke: G, 'stroke-width': 3, 'stroke-linecap': 'round', filter: 'url(#ph)'}, svg);
     txt(svg, x0 - fs * .6, labY, 'WRECKS', {opacity: .8});
     txt(svg, x1 + fs * .6, labY, 'WRECKS ÷ SHIPS', {'text-anchor': 'end', 'font-weight': 700});
     knob = Kit.mk('g', {class: 'knob'}, svg);
     if (!touched) Kit.mk('circle', {r: kr, fill: 'none', stroke: G, 'stroke-width': 1.5, class: 'pulse'}, knob);
-    Kit.mk('circle', {r: kr, fill: '#04100a', stroke: G, 'stroke-width': 2, filter: 'url(#ph)'}, knob);
+    Kit.mk('circle', {r: kr, fill: 'var(--c)', stroke: G, 'stroke-width': 2, filter: 'url(#ph)'}, knob);
     Kit.mk('circle', {r: fs * .25, fill: HOT}, knob);
 
     apply(true);
@@ -257,7 +253,7 @@
     if (z.acc >= RISK) { z.acc = 0; s.doom = true; s.dx = z.cx + (Kit.rnd() * 2 - 1) * z.halfW(y) * .6; }
     s.g = Kit.mk('g', {}, lay);
     Kit.mk('line', {x1: -fs * .9, x2: 0, y1: 0, y2: 0, stroke: G, 'stroke-width': 1.2, opacity: .45}, s.g);
-    Kit.mk('circle', {r: fs * .2, fill: HOT}, s.g);
+    Kit.mk('circle', {r: fs * .2, fill: G}, s.g);
     ships.push(s);
   }
   function wreck(s) {
@@ -268,7 +264,7 @@
     gsap.to(ring, {attr: {r: fs * 1.4}, opacity: 0, duration: 1, ease: 'expo.out', onComplete: () => ring.remove()});
     gsap.to(xm, {opacity: 0, duration: 1.5, delay: 3.5, ease: 'power2.in', onComplete: () => xm.remove()});
     if (!done) scramble(logT, `${z.name}: 1 LOST`, .4);
-    if (p < .5 && !Kit.calm) gsap.fromTo(z.t2, {attr: {fill: '#ffffff'}}, {attr: {fill: HOT}, duration: .8});
+    if (p < .5 && !Kit.calm) gsap.fromTo(z.t2, {attr: {fill: 'var(--k)'}}, {attr: {fill: HOT}, duration: .8});
     readouts();
   }
   let last = 0;

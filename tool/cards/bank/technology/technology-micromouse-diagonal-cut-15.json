@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page titled 'Aim and launch': the reader drags from a mouse to aim one straight diagonal line through a zigzag maze of posts, then releases it. It asks what the Micromouse equivalent of the Fosbury flop is.",
-    "ground": "#f1ede4"
+    "label": "Interactive page titled 'Aim and launch': the reader drags from a mouse to aim one straight diagonal line through a zigzag maze of posts, then releases it. It asks what the Micromouse equivalent of the Fosbury flop is."
   },
   "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=826s",

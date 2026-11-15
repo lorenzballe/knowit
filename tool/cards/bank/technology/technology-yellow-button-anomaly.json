@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page showing camera car footage of a race car at the Tamburello corner. Drag left to steer frame by frame and watch the yellow button on the steering wheel, which has a 30 mm callout.",
-    "ground": "#0a3466"
+    "label": "Interactive page showing camera car footage of a race car at the Tamburello corner. Drag left to steer frame by frame and watch the yellow button on the steering wheel, which has a 30 mm callout."
   },
   "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=gh5UkpxPTFA&t=609s",

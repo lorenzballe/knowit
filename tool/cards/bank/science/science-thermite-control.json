@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A scrubbable picture comparing thermite and explosives over time, with both starting as a solid powder. It asks why thermite is controllable when explosives are not.",
-    "ground": "#0c1426"
+    "label": "A scrubbable picture comparing thermite and explosives over time, with both starting as a solid powder. It asks why thermite is controllable when explosives are not."
   },
   "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1308s",

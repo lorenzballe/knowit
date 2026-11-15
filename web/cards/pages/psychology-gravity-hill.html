@@ -14,7 +14,7 @@
 .done .q{font-size:max(2.4cqh,15px)}
 .say{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="psychology" data-kind="Swing the needle · brush the trees" style="--c:#17231d;--k:#f3e7c9;--edge:#0b120e">
+<article class="card" id="card" data-topic="psychology" data-kind="Swing the needle · brush the trees">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">OPTICAL ILLUSION</span></div>
     <h2 class="q">Why does a downhill road appear to be uphill?</h2>
@@ -34,8 +34,8 @@
   let ox = null, x = null, W = 0, H = 0, dpr = 1, fs = 12, SH = 0, L = 0, LS = 0, rw = 6, rb = 5;
   let RC = {x: 0, y: 0}, D = {cx: 0, cy: 0, R: 60}, BODY = 'Figtree, sans-serif';
   // flat palette: the card's ink and colour, their tints, and two meaning colours
-  let KC = [243, 231, 201], CC = [23, 35, 29], INK = '#17231d', EDGE = '#0b120e';
-  const AMBER = '#e2a93b', AMBER_D = '#8a5a10', RUST = '#b8492f', RUST_D = '#a63d26';
+  let KC = [255, 255, 255], CC = [155, 92, 255], INK = '#ffffff', EDGE = '#5a2ea6';
+  const AMBER = '#ffd23f', AMBER_D = '#ffd23f', RUST = '#ffffff', RUST_D = '#ffffff';
   const hex = (s, fb) => { s = (s || '').trim(); if (!/^#[0-9a-f]{6}$/i.test(s)) return fb; return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16)); };
   const mix = n => { const t = n / 100; return `rgb(${KC.map((k, i) => Math.round(k * t + CC[i] * (1 - t))).join(',')})`; };
   // The slopes are illustrative: two steep stretches around a gentle one, all going down.
@@ -64,7 +64,7 @@
   // ---------- the forest: a far layer, then hundreds of near leaves, stored in units of the scene ----------
   function build() {
     parts = []; trees = []; back = []; bleaf = []; loose = 0;
-    const PB = [mix(6), mix(9), mix(13)];
+    const PB = [mix(14), mix(20), mix(26)];
     const PF = [AMBER, mix(15), mix(23), mix(32), mix(43), mix(56)];
     for (let i = 0; i < 16; i++) back.push({u: (i + Kit.rnd()) / 16, v: .02 + Kit.rnd() * .12, w: .5 + Kit.rnd() * .7});
     for (let i = 0; i < 130; i++) {
@@ -97,7 +97,7 @@
     const cs = getComputedStyle(card);
     BODY = cs.getPropertyValue('--body').trim() || 'Figtree, sans-serif';
     KC = hex(cs.getPropertyValue('--k'), KC); CC = hex(cs.getPropertyValue('--c'), CC);
-    INK = mix(0); EDGE = cs.getPropertyValue('--edge').trim() || EDGE;
+    INK = mix(100); EDGE = cs.getPropertyValue('--edge').trim() || EDGE;
     fs = Math.max(12, Math.min(15, W / 28));
     SH = H * .6;
     RC = {x: W * .5, y: SH * .64}; L = W * .42; LS = W * .56;
@@ -137,7 +137,7 @@
       o.globalAlpha = S.rev; o.beginPath(); o.moveTo(-W * 1.2, hzY);
       for (let i = 0; i <= 48; i++) { const xx = -W * 1.2 + i * W * 2.4 / 48; o.lineTo(xx, hzY - SH * (.02 + .03 * Math.abs(Math.sin(i * 1.7)) + .018 * Math.sin(i * .6))); }
       o.lineTo(W * 1.2, hzY); o.lineTo(W * 1.2, SH * 1.5); o.lineTo(-W * 1.2, SH * 1.5); o.closePath();
-      o.fillStyle = mix(8); o.fill(); o.globalAlpha = 1;
+      o.fillStyle = mix(16); o.fill(); o.globalAlpha = 1;
     }
     if (S.hz > 0) {
       const x0 = -W * .62, x1 = x0 + W * 1.24 * S.hz;
@@ -173,7 +173,7 @@
       const off = rw / 2 + rb; p.x += n.x * off; p.y += n.y * off;
       o.globalAlpha = ball.al * cl((1.6 - s) / .3, 0, 1);
       o.fillStyle = AMBER; o.beginPath(); o.arc(p.x, p.y, rb, 0, 6.283); o.fill();
-      const sp = s * L / rb; o.strokeStyle = INK; o.lineWidth = 1.4;
+      const sp = s * L / rb; o.strokeStyle = EDGE; o.lineWidth = 1.4;
       o.beginPath(); o.moveTo(p.x + Math.cos(sp) * rb * .75, p.y + Math.sin(sp) * rb * .75); o.lineTo(p.x - Math.cos(sp) * rb * .75, p.y - Math.sin(sp) * rb * .75); o.stroke();
       o.globalAlpha = 1;
     }
@@ -249,7 +249,7 @@
     const dp = (r, b) => { x.beginPath(); x.arc(cx, cy, r, Math.PI, 0); x.lineTo(cx + r, cy + b); x.lineTo(cx - r, cy + b); x.closePath(); };
     const Ro = R * 1.07, bo = fs * 1.15;
     // the paper protractor
-    x.fillStyle = mix(92); dp(Ro, bo); x.fill();
+    x.fillStyle = EDGE; dp(Ro, bo); x.fill();
     // down and up zones
     x.lineWidth = R * .06; x.lineCap = 'butt';
     x.strokeStyle = AMBER; x.beginPath(); x.arc(cx, cy, R * .875, dAng(-15), dAng(0)); x.stroke();
@@ -274,7 +274,7 @@
     needle(na, false);
     // hub
     x.fillStyle = INK; x.beginPath(); x.arc(cx, cy, hr, 0, 6.283); x.fill();
-    x.fillStyle = mix(92); x.beginPath(); x.arc(cx, cy, hr * .3, 0, 6.283); x.fill();
+    x.fillStyle = EDGE; x.beginPath(); x.arc(cx, cy, hr * .3, 0, 6.283); x.fill();
     // the reading, printed under the gauge
     let txt;
     if (S.phase === 'guess') txt = S.touched ? fmt(nt) : 'Drag the needle';
@@ -393,6 +393,7 @@
 Kit.single();
 </script>
 </html>
+
 <script data-redraw>
 // Draw again when a drawing changes size: the answer coming in can take room from it, and a canvas
 // left as it was would be stretched by the browser.

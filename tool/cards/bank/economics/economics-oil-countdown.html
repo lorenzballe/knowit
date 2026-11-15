@@ -11,13 +11,13 @@
 <style>
 #stage{display:flex;flex:1;min-height:0}
 #cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-.say b,#why b{color:#ffb547}
+.say b,#why b{color:#a61e00}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);color:#ffb547;margin:0}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);color:#a61e00;margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="economics" data-kind="Drag a guess · drain the oil" style="--c:#15110c;--k:#f6ecd9;--edge:#000">
+<article class="card" id="card" data-topic="economics" data-kind="Drag a guess · drain the oil">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">OIL CLOCK</span></div>
     <h2 class="q">At today's pace, how many years of oil are left?</h2>
@@ -59,17 +59,15 @@
   });
   tEnd = P.reduce((m, p) => Math.max(m, p.L), 0) + DUR;
   // rock grain around the trap
-  const GR = Array.from({length: 150}, () => ({u: Kit.rnd(), v: Kit.rnd(), a: .03 + Kit.rnd() * .06, r: .6 + Kit.rnd() * .9}));
+  const GR = Array.from({length: 150}, () => ({u: Kit.rnd(), v: Kit.rnd(), a: .06 + Kit.rnd() * .1, r: .6 + Kit.rnd() * .9}));
 
-  // ---- glowing sprites ----
-  function sprite(r, g, b) {
+  // ---- flat dot sprites ----
+  function sprite(col) {
     const c = document.createElement('canvas'); c.width = c.height = 64;
-    const k = c.getContext('2d'), gr = k.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gr.addColorStop(0, 'rgba(255,250,232,1)'); gr.addColorStop(.18, `rgba(${r},${g},${b},1)`);
-    gr.addColorStop(.42, `rgba(${r},${g},${b},.33)`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
-    k.fillStyle = gr; k.fillRect(0, 0, 64, 64); return c;
+    const k = c.getContext('2d');
+    k.fillStyle = col; k.beginPath(); k.arc(32, 32, 11, 0, 6.2832); k.fill(); return c;
   }
-  const GOLD = [sprite(255, 196, 74), sprite(255, 168, 52)], FLAME = sprite(255, 226, 140), EMBER = [sprite(255, 108, 42), sprite(232, 78, 36)];
+  const GOLD = [sprite('#10100c'), sprite('#10100c')], FLAME = sprite('#a61e00'), EMBER = [sprite('#10100c'), sprite('#9c8d00')];
 
   function fit() {
     const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
@@ -127,64 +125,62 @@
       // rock grain + domed strata over the trap
       for (const g of GR) {
         const gy = g.v * (colTop - fs * 1.6);
-        x.fillStyle = `rgba(246,236,217,${g.a * E.v})`; x.beginPath(); x.arc(g.u * W, gy, g.r, 0, 6.29); x.fill();
+        x.fillStyle = `rgba(16,16,12,${g.a * E.v})`; x.beginPath(); x.arc(g.u * W, gy, g.r, 0, 6.29); x.fill();
       }
       x.lineWidth = 1;
       for (let i = 0; i < 7; i++) {
         const y0 = resTop - fs * .4 + i * (resBot - resTop + fs * 1.2) / 6.5;
         x.beginPath();
         for (let k = 0; k <= 40; k++) { const px = k / 40 * W, py = y0 - ry * .35 * Math.cos(Math.PI * (k / 40 - .5)) + Math.sin(k * .7 + i + t * .15) * 1.5; k ? x.lineTo(px, py) : x.moveTo(px, py); }
-        x.strokeStyle = `rgba(246,236,217,${(.035 + (i % 2) * .025) * E.v})`; x.stroke();
+        x.strokeStyle = `rgba(16,16,12,${(.08 + (i % 2) * .05) * E.v})`; x.stroke();
       }
-      // the pocket: warm glow while it holds oil, a dashed ghost when empty
+      // the pocket: a flat tint while it holds oil, a dashed ghost when empty
       x.save(); blob(); x.clip();
-      const g = x.createRadialGradient(rcx, rcy + ry * .3, 0, rcx, rcy, rx * 1.1);
-      g.addColorStop(0, `rgba(255,160,50,${.22 * full * E.v})`); g.addColorStop(1, 'rgba(255,120,30,0)');
-      x.fillStyle = g; x.fillRect(rcx - rx * 1.2, rcy - ry * 1.2, rx * 2.4, ry * 2.4);
+      x.fillStyle = `rgba(16,16,12,${.06 * full * E.v})`; x.fillRect(rcx - rx * 1.2, rcy - ry * 1.2, rx * 2.4, ry * 2.4);
       x.restore();
-      blob(); x.setLineDash([3, 5]); x.strokeStyle = `rgba(255,190,100,${(.22 + .14 * (1 - full)) * E.v})`; x.lineWidth = 1.2; x.stroke(); x.setLineDash([]);
+      blob(); x.setLineDash([3, 5]); x.strokeStyle = `rgba(16,16,12,${(.4 + .2 * (1 - full)) * E.v})`; x.lineWidth = 1.2; x.stroke(); x.setLineDash([]);
     }
 
     // empty year-slots waiting to be filled: one faint shelf per year
     for (let y = 0; y < AX; y++) {
       const inGuess = guess != null && y < guess;
-      const a = (y % 5 === 4 ? .07 : .04) + (inGuess && !done ? .05 : 0);
-      x.fillStyle = inGuess && !done ? `rgba(255,181,71,${a})` : `rgba(246,236,217,${a * E.v})`;
+      const a = (y % 5 === 4 ? .12 : .07) + (inGuess && !done ? .08 : 0);
+      x.fillStyle = inGuess && !done ? `rgba(166,30,0,${a})` : `rgba(16,16,12,${a * E.v})`;
       x.fillRect(plotL + y * colW + colW * .18, colTop, Math.max(.8, colW * .64), colH);
     }
 
     // the timeline
-    x.strokeStyle = 'rgba(246,236,217,.55)'; x.lineWidth = 1.4;
+    x.strokeStyle = 'rgba(16,16,12,.7)'; x.lineWidth = 1.4;
     x.beginPath(); x.moveTo(plotL, base + .5); x.lineTo(plotR, base + .5); x.stroke();
     const lblY = base + fs * (roomy ? 1.4 : 1.22);
     for (let y = 0; y <= AX; y += 5) {
       const px = plotL + y * colW, bg = y % 25 === 0;
       x.beginPath(); x.moveTo(px, base + 1); x.lineTo(px, base + (bg ? fs * .4 : fs * .2)); x.stroke();
-      if (bg) label(y === AX ? '100 yrs' : String(y), px, lblY, fs, MONO, 'rgba(246,236,217,.7)', y === 0 ? 'left' : y === AX ? 'right' : 'center');
+      if (bg) label(y === AX ? '100 yrs' : String(y), px, lblY, fs, MONO, 'rgba(16,16,12,.8)', y === 0 ? 'left' : y === AX ? 'right' : 'center');
     }
 
     const tagY = colTop - fs * .45, postTop = colTop - fs * 1.5;
     // the guess: a finish post on the timeline, its label on the free side
     if (guess != null) {
       const gx = plotL + guess * colW, gt = `your guess: ${guess}`, gw = tw(gt, fs, MONO);
-      x.setLineDash([4, 4]); x.strokeStyle = 'rgba(246,236,217,.85)'; x.lineWidth = 1.5;
+      x.setLineDash([4, 4]); x.strokeStyle = 'rgba(16,16,12,.85)'; x.lineWidth = 1.5;
       x.beginPath(); x.moveTo(gx, base); x.lineTo(gx, postTop); x.stroke(); x.setLineDash([]);
-      x.fillStyle = '#f6ecd9'; x.beginPath(); x.arc(gx, base, locked ? 3.5 : 5.5, 0, 6.29); x.fill();
-      if (!locked) { x.strokeStyle = 'rgba(246,236,217,.35)'; x.beginPath(); x.arc(gx, base, 9 + Math.sin(t * 4) * 1.5, 0, 6.29); x.stroke(); }
+      x.fillStyle = '#10100c'; x.beginPath(); x.arc(gx, base, locked ? 3.5 : 5.5, 0, 6.29); x.fill();
+      if (!locked) { x.strokeStyle = 'rgba(16,16,12,.45)'; x.beginPath(); x.arc(gx, base, 9 + Math.sin(t * 4) * 1.5, 0, 6.29); x.stroke(); }
       const side = R.v > 0 ? (guess < YEARS ? -1 : 1) : (gx + 6 + gw <= W - 2 ? 1 : -1);
-      label(gt, side > 0 ? gx + 6 : gx - 6 - gw, tagY, fs, MONO, '#f6ecd9');
+      label(gt, side > 0 ? gx + 6 : gx - 6 - gw, tagY, fs, MONO, '#10100c');
     } else if (!touched) {
       const a = .55 + .35 * Math.sin(t * 3.2), k = 70 + 12 * Math.sin(t * 1.6), kx = plotL + k * colW;
       x.globalAlpha = a * E.v;
-      label('◀ drag to guess ▶', plotL + 70 * colW, colTop + colH * .5 + fs * .35, fs, MONO, '#f6ecd9', 'center');
+      label('◀ drag to guess ▶', plotL + 70 * colW, colTop + colH * .5 + fs * .35, fs, MONO, '#10100c', 'center');
       x.globalAlpha = .7 * E.v;
-      x.fillStyle = '#f6ecd9'; x.beginPath(); x.arc(kx, base, 4.5, 0, 6.29); x.fill();
-      x.strokeStyle = `rgba(246,236,217,${.4 * a})`; x.lineWidth = 1.2; x.beginPath(); x.arc(kx, base, 9, 0, 6.29); x.stroke();
+      x.fillStyle = '#10100c'; x.beginPath(); x.arc(kx, base, 4.5, 0, 6.29); x.fill();
+      x.strokeStyle = `rgba(16,16,12,${.5 * a})`; x.lineWidth = 1.2; x.beginPath(); x.arc(kx, base, 9, 0, 6.29); x.stroke();
       x.globalAlpha = 1;
     }
 
     // the dots
-    x.globalCompositeOperation = 'lighter';
+    x.globalCompositeOperation = 'source-over';
     const wave = done ? t - tDone : -1;
     for (let i = 0; i < N; i++) {
       const p = P[i];
@@ -210,37 +206,37 @@
     // counters
     const yi = String(Math.floor(yrs + 1e-6)), li = left.toLocaleString('en-US');
     if (hdr === 2) {
-      label('YEARS FROM 2019', plotL, fs * 1.1, fs, MONO, 'rgba(246,236,217,.65)');
-      label(yi, plotL, fs * 1.1 + big * 1.05, big, MONO, '#f6ecd9');
-      label('BN BARRELS LEFT', plotR, fs * 1.1, fs, MONO, 'rgba(246,236,217,.65)', 'right');
-      label(li, plotR, fs * 1.1 + big * 1.05, big, MONO, '#ffc04a', 'right');
+      label('YEARS FROM 2019', plotL, fs * 1.1, fs, MONO, 'rgba(16,16,12,.75)');
+      label(yi, plotL, fs * 1.1 + big * 1.05, big, MONO, '#10100c');
+      label('BN BARRELS LEFT', plotR, fs * 1.1, fs, MONO, 'rgba(16,16,12,.75)', 'right');
+      label(li, plotR, fs * 1.1 + big * 1.05, big, MONO, '#a61e00', 'right');
     } else if (hdr === 1) {
       const nb = fs * 1.15, by = fs * 1.15;
-      const w1 = label(yi, plotL, by, nb, MONO, '#f6ecd9');
-      label(' yrs from 2019', plotL + w1, by, fs, MONO, 'rgba(246,236,217,.65)');
+      const w1 = label(yi, plotL, by, nb, MONO, '#10100c');
+      label(' yrs from 2019', plotL + w1, by, fs, MONO, 'rgba(16,16,12,.75)');
       const sw = tw(' bn left', fs, MONO), nw = tw(li, nb, MONO);
-      label(' bn left', plotR - sw, by, fs, MONO, 'rgba(246,236,217,.65)');
-      label(li, plotR - sw - nw, by, nb, MONO, '#ffc04a');
+      label(' bn left', plotR - sw, by, fs, MONO, 'rgba(16,16,12,.75)');
+      label(li, plotR - sw - nw, by, nb, MONO, '#a61e00');
     }
 
-    // the answer: an amber post at 45.2 and the result inside the empty pocket
+    // the answer: an accent post at 45.2 and the result inside the empty pocket
     if (R.v > 0) {
       const ax = plotL + YEARS * colW, at = '1,650 ÷ 36.5 ≈ 45', aw = tw(at, fs, MONO);
       const side = guess != null && guess < YEARS ? 1 : -1;
       x.globalAlpha = Math.min(1, R.v);
-      x.save(); x.shadowColor = 'rgba(255,150,40,.8)'; x.shadowBlur = 10;
-      x.strokeStyle = '#ffb547'; x.lineWidth = 1.6; x.beginPath(); x.moveTo(ax, postTop); x.lineTo(ax, base); x.stroke(); x.restore();
-      x.fillStyle = '#ffb547'; x.beginPath(); x.arc(ax, base, 3.5, 0, 6.29); x.fill();
-      label(at, side > 0 ? ax + 6 : ax - 6 - aw, tagY, fs, MONO, '#ffb547');
+      x.save();
+      x.strokeStyle = '#a61e00'; x.lineWidth = 1.6; x.beginPath(); x.moveTo(ax, postTop); x.lineTo(ax, base); x.stroke(); x.restore();
+      x.fillStyle = '#a61e00'; x.beginPath(); x.arc(ax, base, 3.5, 0, 6.29); x.fill();
+      label(at, side > 0 ? ax + 6 : ax - 6 - aw, tagY, fs, MONO, '#a61e00');
       if (showPocket) {
         const h = 2 * ry, two = h >= fs * 4.2;
         let size = two ? Math.min(h - fs * 2, W * .13, fs * 3.6) : Math.min(h * .85, W * .12, fs * 3);
         size *= (.7 + .3 * R.v);
         if (size >= fs * 1.2) {
           const by = two ? rcy + size * .3 - fs * .5 : rcy + size * .33;
-          x.save(); x.shadowColor = 'rgba(255,150,40,.7)'; x.shadowBlur = 24 * R.v;
-          label('≈ 45 years', rcx, by, size, DISP, '#ffc04a', 'center'); x.restore();
-          if (two) label('the last barrel ≈ 2065', rcx, by + fs * 1.5, fs, MONO, 'rgba(246,236,217,.8)', 'center');
+          x.save();
+          label('≈ 45 years', rcx, by, size, DISP, '#a61e00', 'center'); x.restore();
+          if (two) label('the last barrel ≈ 2065', rcx, by + fs * 1.5, fs, MONO, 'rgba(16,16,12,.85)', 'center');
         }
       }
       x.globalAlpha = 1;

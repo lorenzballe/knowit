@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A broken rock section with two faults and two sunken blocks showing glowing layers. Drag each sunken block up until its layers meet the ones beside it. The question asks why geologists undo the faults in the rock.",
-    "ground": "#140b09"
+    "label": "A broken rock section with two faults and two sunken blocks showing glowing layers. Drag each sunken block up until its layers meet the ones beside it. The question asks why geologists undo the faults in the rock."
   },
   "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=6125s",

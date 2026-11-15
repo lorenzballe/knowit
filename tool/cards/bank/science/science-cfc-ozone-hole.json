@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Four step cards describing how CFCs destroy ozone, to be tapped in the order they happen: a chlorine atom breaks free, the CFC drifts up to the stratosphere, the chlorine breaks an ozone molecule, a UV photon hits the CFC.",
-    "ground": "#f5ecdc"
+    "label": "Four step cards describing how CFCs destroy ozone, to be tapped in the order they happen: a chlorine atom breaks free, the CFC drifts up to the stratosphere, the chlorine breaks an ozone molecule, a UV photon hits the CFC."
   },
   "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1261s",

@@ -10,7 +10,6 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
 <style>
-#card{background:var(--c)}
 #stage{display:flex;position:relative;flex:1;min-height:0}
 #map{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
 #aim{display:flex;gap:2.4cqw}
@@ -26,7 +25,7 @@
 .chip.lit{color:var(--c);background:var(--k);box-shadow:none}
 #why .body{font-size:max(1.9cqh,13px)}
 </style>
-<article class="card" id="card" style="--c:#efe7d6;--k:#24323a;--edge:#d6c9ae" data-topic="nature" data-kind="Aim and launch · plate motion">
+<article class="card" id="card" data-topic="nature" data-kind="Aim and launch · plate motion">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">LAUNCH THE SLAB</span></div>
     <h2 class="q">Which way did a slab of Europe swing, 25 million years ago?</h2>
@@ -59,8 +58,8 @@
   const RIGHT = 1, NAMES = ['Clockwise', 'Anticlockwise'];
   const T0 = 48, T1 = 6, D = Math.PI / 180;
   const cs = getComputedStyle(Kit.$('card'));
-  const INK = cs.getPropertyValue('--k').trim() || '#24323a', PAPER = cs.getPropertyValue('--c').trim() || '#efe7d6';
-  const MUTED = '#6a7272', SLAB = '#c7693f', RIFT = '#6e4130', TEAR = '#f0c4a2', SEA = '#8db3cb', SEAINK = '#33617f', RED = '#c0392b';
+  const INK = cs.getPropertyValue('--k').trim() || '#10100c', PAPER = cs.getPropertyValue('--c').trim() || '#00D451';
+  const MUTED = `color-mix(in srgb, ${INK} 72%, ${PAPER})`, SLAB = '#a82314', RIFT = '#007a2f', TEAR = '#ffffff', SEA = '#10100c', SEAINK = '#ffffff', RED = '#a82314';
   const tint = n => `fill:color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const st = {s: 0, nud: 0};
   let W = 0, H = 0, fs = 12, P = [0, 0], L = 100, w = 26, edge = [], far = [], coastE = [], cracks = [], compact = false;
@@ -166,7 +165,7 @@
     const slab = pts([...edge, ...far.slice().reverse()]);
     mk('polygon', {points: slab, fill: SLAB}, G.block);
     G.rim = mk('polygon', {points: slab, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round', class: launched ? '' : 'pulse'}, G.block);
-    G.seam = mk('polyline', {points: pts([P, ...coastE]), fill: 'none', stroke: RED, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: 0}, svg);
+    G.seam = mk('polyline', {points: pts([P, ...coastE]), fill: 'none', stroke: '#ffffff', 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: 0}, svg);
 
     // ---- the aim arrow ----
     G.aim = mk('g', {}, svg);
@@ -198,7 +197,7 @@
       if (len() > avail) era.remove();
       if (!launched) {
         const sp = rot(w * 1.15, L * .55, T0);
-        G.slabLbl = T(G.labels, sp[0], sp[1], 'the slab', {fill: '#8a3f1f', 'text-anchor': 'middle'});
+        G.slabLbl = T(G.labels, sp[0], sp[1], 'the slab', {fill: INK, 'text-anchor': 'middle'});
       }
     }
     if (done) {

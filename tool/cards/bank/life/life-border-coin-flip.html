@@ -15,22 +15,12 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/matter.min.js"></script>
 <style>
-#card{
-  background-image:
-    radial-gradient(120% 75% at 50% 32%, rgba(120,175,255,.17), transparent 62%),
-    radial-gradient(140% 90% at 50% 120%, rgba(0,10,40,.35), transparent 60%),
-    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px),
-    linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
-  background-size:100% 100%,100% 100%,22px 22px,22px 22px,110px 110px,110px 110px;
-}
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
 .say{overflow-wrap:anywhere}
 .answered .q{font-size:max(2.4cqh,15px)}
 </style>
-<article class="card" id="card" data-topic="life" data-kind="Tap to send · the odds at the border" style="--c:#0d3466;--k:#f1f6ff;--edge:#071f45">
+<article class="card" id="card" data-topic="life" data-kind="Tap to send · the odds at the border">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO CROSS</span></div>
     <h2 class="q">What is the chance of being killed or caught when fleeing North Korea?</h2>
@@ -48,7 +38,7 @@
   const {Engine, Bodies, Body, Composite} = Matter;
   const cv = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
   const TOTAL = 24, WAVE = 4;
-  const GROUND = '#0d3466', INK = '#f1f6ff', LINE = 'rgba(228,239,255,.86)', SOFT = 'rgba(228,239,255,.5)', FAINT = 'rgba(228,239,255,.17)', CORAL = '#ff9c86';
+  const GROUND = '#FFC49B', INK = '#10100c', LINE = 'rgba(16,16,12,.86)', SOFT = 'rgba(16,16,12,.55)', FAINT = 'rgba(16,16,12,.17)', CORAL = '#b3201a';
   let x = null, W = 0, H = 0, fs = 12, r = 8, G = {}, MONO = 'monospace', lastSz = '';
   let engine = null, plank = null, balls = [], outs = [], released = 0, decL = 0, decR = 0;
   let revealed = false, pending = false, running = false, last = 0, clock = 0, sway = 0;
@@ -297,7 +287,7 @@
     const col = side === 'L' ? CORAL : INK;
     x.save(); x.translate(px, py);
     x.beginPath(); x.arc(0, 0, r, 0, Math.PI * 2);
-    x.fillStyle = side === 'L' ? 'rgba(255,156,134,.24)' : side === 'R' ? 'rgba(228,239,255,.2)' : 'rgba(228,239,255,.1)'; x.fill();
+    x.fillStyle = side === 'L' ? 'rgba(179,32,26,.18)' : side === 'R' ? 'rgba(16,16,12,.16)' : 'rgba(16,16,12,.08)'; x.fill();
     x.lineWidth = 1.3; x.strokeStyle = col; x.stroke();
     x.save(); x.clip();
     x.fillStyle = col;
@@ -346,7 +336,7 @@
     G.pegs.forEach(([px, py], i) => {
       const s = backOut(cl((intro.pegs - i / G.pegs.length * .55) / .45)); if (s <= 0) return;
       const pr = r * .42 * s;
-      x.beginPath(); x.arc(px, py, pr, 0, Math.PI * 2); x.fillStyle = 'rgba(228,239,255,.14)'; x.fill();
+      x.beginPath(); x.arc(px, py, pr, 0, Math.PI * 2); x.fillStyle = 'rgba(16,16,12,.14)'; x.fill();
       x.strokeStyle = LINE; x.lineWidth = 1.3; x.stroke();
       x.beginPath();
       for (let k = 0; k < 4; k++) { const a = k * Math.PI / 2 + Math.PI / 4; x.moveTo(px + Math.cos(a) * pr, py + Math.sin(a) * pr); x.lineTo(px + Math.cos(a) * (pr + r * .45 * s), py + Math.sin(a) * (pr + r * .45 * s)); }
@@ -381,7 +371,7 @@
     x.setLineDash([]); x.globalAlpha = 1;
 
     // People, with a faint pencil trail while they run.
-    x.lineWidth = Math.max(1, r * .9); x.strokeStyle = 'rgba(228,239,255,.13)';
+    x.lineWidth = Math.max(1, r * .9); x.strokeStyle = 'rgba(16,16,12,.13)';
     for (const b of balls) {
       if (b.counted) continue;
       const v = b.velocity, s = Math.hypot(v.x, v.y);
@@ -391,7 +381,7 @@
 
     // The cell bars over the bad bin.
     x.globalAlpha = intro.walls;
-    x.strokeStyle = 'rgba(255,156,134,.5)'; x.lineWidth = 1.3;
+    x.strokeStyle = 'rgba(179,32,26,.5)'; x.lineWidth = 1.3;
     const xe = cx - G.wt - 1;
     line(G.ol + 3, G.yB, xe, G.yB); line(G.ol + 3, G.yB + 4, xe, G.yB + 4);
     const step = Math.max(11, W * .05);
@@ -402,7 +392,7 @@
     if (plank) {
       const v = plank.vertices;
       x.beginPath(); x.moveTo(v[0].x, v[0].y); for (let i = 1; i < v.length; i++) x.lineTo(v[i].x, v[i].y); x.closePath();
-      x.fillStyle = 'rgba(228,239,255,.22)'; x.fill(); x.strokeStyle = INK; x.lineWidth = 1.5; x.stroke();
+      x.fillStyle = 'rgba(16,16,12,.22)'; x.fill(); x.strokeStyle = INK; x.lineWidth = 1.5; x.stroke();
       x.beginPath(); x.arc(cx, G.py, r * .42, 0, Math.PI * 2); x.fillStyle = GROUND; x.fill(); x.stroke();
       x.beginPath(); x.arc(cx, G.py, r * .12, 0, Math.PI * 2); x.fillStyle = INK; x.fill();
     }
@@ -414,7 +404,7 @@
       x.globalAlpha = cl(Math.min(t * 8, (1 - t) * 6));
       x.save(); x.translate(cx, cy); x.scale(Math.max(.08, Math.abs(s)), 1);
       x.beginPath(); x.arc(0, 0, r * 1.15, 0, Math.PI * 2);
-      x.fillStyle = heads ? 'rgba(228,239,255,.28)' : 'rgba(255,156,134,.32)'; x.fill();
+      x.fillStyle = heads ? 'rgba(16,16,12,.2)' : 'rgba(179,32,26,.22)'; x.fill();
       x.strokeStyle = heads ? INK : CORAL; x.lineWidth = 1.4; x.stroke();
       x.beginPath(); x.arc(0, 0, r * .68, 0, Math.PI * 2); x.stroke();
       x.restore(); x.globalAlpha = 1;
@@ -429,7 +419,7 @@
     if (t > 0) {
       x.globalAlpha = cl(t * 3); x.strokeStyle = INK; x.lineWidth = 1.2; line(cx, G.floor + 4, cx, y + 5); x.globalAlpha = 1;
       const lab = t > .4 ? 'HALF' : '';
-      dim(cx - (cx - G.ol - 1) * t, cx - 1, y, lab, 'rgba(255,156,134,.9)', CORAL, 1);
+      dim(cx - (cx - G.ol - 1) * t, cx - 1, y, lab, 'rgba(179,32,26,.9)', CORAL, 1);
       dim(cx + 1, cx + (G.or - 1 - cx) * t, y, lab, INK, INK, 1);
     }
 

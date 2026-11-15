@@ -13,19 +13,19 @@
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
 #ctrl{display:flex;align-items:center;justify-content:space-between;gap:3cqw;flex-wrap:wrap}
 .sw{display:flex;align-items:center;gap:2.6cqw;border:0;background:none;padding:.4cqh 0;cursor:pointer;font:800 max(1.9cqh,13px)/1 var(--mono);letter-spacing:.08em;color:var(--k)}
-.track{width:max(6.6cqh,48px);height:max(3.5cqh,26px);border-radius:99px;background:#1c2729;position:relative;flex:none;transition:background .25s;box-shadow:inset 0 1px 0 rgba(0,0,0,.25)}
-.knob{position:absolute;top:3px;left:3px;width:calc(max(3.5cqh,26px) - 6px);height:calc(max(3.5cqh,26px) - 6px);border-radius:50%;background:#ece0c2;transition:transform .32s cubic-bezier(.34,1.56,.64,1),background .2s}
-.sw.on .track{background:#c63f2b}
-.sw.on .knob{transform:translateX(calc(max(6.6cqh,48px) - max(3.5cqh,26px)));background:#fff6e2}
+.track{width:max(6.6cqh,48px);height:max(3.5cqh,26px);border-radius:99px;background:var(--k);position:relative;flex:none;transition:background .25s;box-shadow:inset 0 1px 0 rgba(16,16,12,.25)}
+.knob{position:absolute;top:3px;left:3px;width:calc(max(3.5cqh,26px) - 6px);height:calc(max(3.5cqh,26px) - 6px);border-radius:50%;background:#fff;transition:transform .32s cubic-bezier(.34,1.56,.64,1),background .2s}
+.sw.on .track{background:#a3200a}
+.sw.on .knob{transform:translateX(calc(max(6.6cqh,48px) - max(3.5cqh,26px)));background:#fff}
 .sw.nudge .knob{animation:nudge 1.5s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateX(5px)}}
 .kit-calm .sw.nudge .knob{animation:none}
-.leg{display:flex;align-items:center;gap:1.6cqw;font:600 max(1.6cqh,12px)/1.2 var(--mono);color:#2f7a78;letter-spacing:.04em;white-space:nowrap}
-.leg i{display:block;width:max(4cqh,26px);border-top:2.5px dashed #2f7a78}
+.leg{display:flex;align-items:center;gap:1.6cqw;font:600 max(1.6cqh,12px)/1.2 var(--mono);color:var(--k);letter-spacing:.04em;white-space:nowrap}
+.leg i{display:block;width:max(4cqh,26px);border-top:2.5px dashed var(--k)}
 #why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{color:#c63f2b;font-size:clamp(22px,3.6cqh,34px);line-height:1.05}
+#why .big{color:#a3200a;font-size:clamp(22px,3.6cqh,34px);line-height:1.05}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Flip the switch · induction" style="--c:#ece0c2;--k:#1c2729;--edge:#b9a57a">
+<article class="card" id="card" data-topic="technology" data-kind="Flip the switch · induction">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">INDUCTION</span></div>
     <h2 class="q">How do new heated-tobacco sticks get hot from the inside?</h2>
@@ -47,7 +47,7 @@
   const P2D = typeof Physics2DPlugin !== 'undefined';
   if (P2D) gsap.registerPlugin(Physics2DPlugin);
   const svg = Kit.$('pic'), sw = Kit.$('sw'), swt = Kit.$('swt');
-  const INK = '#1c2729', PAPER = '#ece0c2', OCH = '#d39b3c', TEAL = '#2f7a78', RED = '#c63f2b', TOB = '#7b4b27';
+  const INK = '#10100c', PAPER = '#00A6FF', OCH = '#005e91', TEAL = '#10100c', RED = '#a3200a', TOB = '#005e91';
   const st = {heat: 0, field: 0};
   let on = false, done = false, D = {}, W = 0, H = 0, fs = 12, u = 30, emitCall = null;
   const R = (a, b) => a + Kit.rnd() * (b - a);
@@ -75,16 +75,16 @@
 
     const defs = Kit.mk('defs', {}, svg);
     pat(defs, 'htInk', Math.max(4, u * .16), Math.max(.9, u * .045), INK, .55);
-    pat(defs, 'htTob', Math.max(4, u * .14), Math.max(.8, u * .04), '#2a170a', .6, 30);
+    pat(defs, 'htTob', Math.max(4, u * .14), Math.max(.8, u * .04), '#10100c', .6, 30);
     pat(defs, 'htOch', Math.max(4, u * .15), Math.max(.9, u * .05), OCH, .9);
     pat(defs, 'htV', 4, 1.15, TEAL, .9);
     const fib = Kit.mk('pattern', {id: 'fib', width: 3, height: 10, patternUnits: 'userSpaceOnUse'}, defs);
-    Kit.mk('line', {x1: 1.5, y1: 0, x2: 1.5, y2: 10, stroke: '#b9a57a', 'stroke-width': .8}, fib);
+    Kit.mk('line', {x1: 1.5, y1: 0, x2: 1.5, y2: 10, stroke: '#005e91', 'stroke-width': .8}, fib);
     grad(defs, 'gShade', [[0, '#000'], [.55, '#555'], [1, '#fff']]);
-    grad(defs, 'gHeat', [[0, RED, 0], [.5, '#ff7a3d', .9], [1, RED, 0]]);
-    grad(defs, 'gFoil', [[0, '#7d8686'], [.5, '#e9eeec'], [1, '#6a7272']]);
-    grad(defs, 'gHot', [[0, RED], [.5, '#ffd27a'], [1, RED]]);
-    grad(defs, 'gCu', [[0, '#e48a5c'], [1, '#7a2f17']], 1, 1);
+    grad(defs, 'gHeat', [[0, '#fff', 0], [.5, '#fff', .9], [1, '#fff', 0]]);
+    grad(defs, 'gFoil', [[0, '#dfeeff'], [.5, '#fff'], [1, '#dfeeff']]);
+    grad(defs, 'gHot', [[0, RED], [.5, '#fff'], [1, RED]]);
+    grad(defs, 'gCu', [[0, RED], [1, RED]], 1, 1);
     const blur = Kit.mk('filter', {id: 'glow', x: '-200%', y: '-20%', width: '500%', height: '140%'}, defs);
     Kit.mk('feGaussianBlur', {stdDeviation: u * .35}, blur);
     const mask = Kit.mk('mask', {id: 'mShade'}, defs);
@@ -98,16 +98,16 @@
     Kit.mk('rect', {x: cx - bw2 + u * .2, y: yd + u * .2, width: bw2 * 2, height: yBot - yd, rx: u * .55, fill: TEAL, opacity: .85}, bodyG);
     Kit.mk('rect', {x: cx - bw2, y: yd, width: bw2 * 2, height: yBot - yd, rx: u * .55, fill: OCH}, bodyG);
     Kit.mk('rect', {x: cx - bw2, y: yd, width: bw2 * 2, height: yBot - yd, rx: u * .55, fill: 'url(#htInk)', mask: 'url(#mShade)'}, bodyG);
-    Kit.mk('path', {d: `M${cx - bw2 + u * .3},${yd + u * .25}L${cx - bw2 + u * .3},${yBot - u * .5}`, stroke: '#f6d996', 'stroke-width': Math.max(1.5, u * .08), 'stroke-linecap': 'round', opacity: .8}, bodyG);
+    Kit.mk('path', {d: `M${cx - bw2 + u * .3},${yd + u * .25}L${cx - bw2 + u * .3},${yBot - u * .5}`, stroke: '#fff', 'stroke-width': Math.max(1.5, u * .08), 'stroke-linecap': 'round', opacity: .8}, bodyG);
     Kit.mk('rect', {x: cx - bw2, y: yd, width: bw2 * 2, height: yBot - yd, rx: u * .55, fill: 'none', stroke: INK, 'stroke-width': 1.8}, bodyG);
-    Kit.mk('rect', {x: cx - sw2 - u * .14, y: yd - 1, width: (sw2 + u * .14) * 2, height: yb + u * .14 - yd, fill: '#3b2a1b', stroke: INK, 'stroke-width': 1.4}, bodyG);
+    Kit.mk('rect', {x: cx - sw2 - u * .14, y: yd - 1, width: (sw2 + u * .14) * 2, height: yb + u * .14 - yd, fill: '#10100c', stroke: INK, 'stroke-width': 1.4}, bodyG);
     Kit.mk('rect', {x: cx - sw2 - u * .32, y: yd - u * .08, width: (sw2 + u * .32) * 2, height: u * .16, rx: u * .08, fill: INK}, bodyG);
-    D.led = Kit.mk('circle', {cx: cx, cy: yBot - u * .45, r: u * .14, fill: '#7a2a1d', stroke: INK, 'stroke-width': 1}, bodyG);
+    D.led = Kit.mk('circle', {cx: cx, cy: yBot - u * .45, r: u * .14, fill: '#10100c', stroke: INK, 'stroke-width': 1}, bodyG);
 
     // the stick
     const sg = Kit.mk('g', {}, L.stick); D.stickG = sg;
-    Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yb - y0, fill: '#fbf5e6', stroke: INK, 'stroke-width': 1.6}, sg);
-    Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yF - y0, fill: '#f3e7c6'}, sg);
+    Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yb - y0, fill: '#fff', stroke: INK, 'stroke-width': 1.6}, sg);
+    Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yF - y0, fill: '#f4f9ff'}, sg);
     Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yF - y0, fill: 'url(#fib)'}, sg);
     Kit.mk('rect', {x: cx - sw2, y: yF, width: sw2 * 2, height: yT - yF, fill: 'url(#htOch)'}, sg);
     Kit.mk('rect', {x: cx - sw2, y: yT, width: sw2 * 2, height: yb - yT, fill: TOB}, sg);
@@ -121,12 +121,12 @@
 
     // the foil, with eddy loops that circle it once the field changes
     const fw = Math.max(2.5, u * .11), fy0 = yT + u * .15, fy1 = yb - u * .15;
-    D.foilGlow = Kit.mk('rect', {x: cx - fw * 2.5, y: fy0, width: fw * 5, height: fy1 - fy0, fill: '#ff6a2e', filter: 'url(#glow)', opacity: 0}, L.foil);
+    D.foilGlow = Kit.mk('rect', {x: cx - fw * 2.5, y: fy0, width: fw * 5, height: fy1 - fy0, fill: '#fff', filter: 'url(#glow)', opacity: 0}, L.foil);
     D.eddy = Kit.mk('g', {opacity: 0}, L.foil);
     const eddies = [];
     for (let i = 0; i < 4; i++) {
       const y = fy0 + (i + .5) * (fy1 - fy0) / 4;
-      eddies.push(Kit.mk('ellipse', {cx, cy: y, rx: sw2 * .62, ry: (fy1 - fy0) / 11, fill: 'none', stroke: '#ffd27a', 'stroke-width': 1.4, 'stroke-dasharray': '3 3.5', 'stroke-linecap': 'round'}, D.eddy));
+      eddies.push(Kit.mk('ellipse', {cx, cy: y, rx: sw2 * .62, ry: (fy1 - fy0) / 11, fill: 'none', stroke: '#fff', 'stroke-width': 1.4, 'stroke-dasharray': '3 3.5', 'stroke-linecap': 'round'}, D.eddy));
     }
     Kit.mk('rect', {x: cx - fw / 2, y: fy0, width: fw, height: fy1 - fy0, fill: 'url(#gFoil)', stroke: INK, 'stroke-width': .8}, L.foil);
     D.foilHot = Kit.mk('rect', {x: cx - fw / 2, y: fy0, width: fw, height: fy1 - fy0, fill: 'url(#gHot)', opacity: 0}, L.foil);
@@ -143,8 +143,8 @@
         const x = cx + s * ox, g = Kit.mk('g', {}, L.coil);
         D.halo.push(Kit.mk('circle', {cx: x, cy: y, r: cr * 1.9, fill: RED, opacity: 0, filter: 'url(#glow)'}, g));
         Kit.mk('circle', {cx: x, cy: y, r: cr, fill: 'url(#gCu)', stroke: INK, 'stroke-width': 1.3}, g);
-        if (s < 0) Kit.mk('path', {d: `M${x - cr * .42},${y - cr * .42}L${x + cr * .42},${y + cr * .42}M${x + cr * .42},${y - cr * .42}L${x - cr * .42},${y + cr * .42}`, stroke: '#fff2dc', 'stroke-width': 1.3, 'stroke-linecap': 'round'}, g);
-        else Kit.mk('circle', {cx: x, cy: y, r: cr * .22, fill: '#fff2dc'}, g);
+        if (s < 0) Kit.mk('path', {d: `M${x - cr * .42},${y - cr * .42}L${x + cr * .42},${y + cr * .42}M${x + cr * .42},${y - cr * .42}L${x - cr * .42},${y + cr * .42}`, stroke: '#fff', 'stroke-width': 1.3, 'stroke-linecap': 'round'}, g);
+        else Kit.mk('circle', {cx: x, cy: y, r: cr * .22, fill: '#fff'}, g);
         gsap.set(g, {transformOrigin: '50% 50%'});
         D.coils.push(g);
       });
@@ -173,7 +173,7 @@
       Kit.mk('circle', {cx: tx, cy: tyy, r: 2.6, fill: INK, stroke: PAPER, 'stroke-width': 1}, g);
       const chx = side ? x + fs * .7 : x - fs * .7;
       Kit.mk('circle', {cx: chx, cy, r: fs * .66, fill: RED, stroke: INK, 'stroke-width': 1}, g);
-      txt(g, chx, cy + fs * .33, String(n), {'text-anchor': 'middle', fill: '#fff6e2', stroke: 'none', 'font-size': fs * .85, 'font-weight': 800});
+      txt(g, chx, cy + fs * .33, String(n), {'text-anchor': 'middle', fill: '#fff', stroke: 'none', 'font-size': fs * .85, 'font-weight': 800});
       lines.forEach((t, j) => txt(g, side ? x + fs * 1.9 : x - fs * 1.9, ty + j * fs * 1.5, t, {'text-anchor': side ? 'start' : 'end', 'font-weight': j ? 600 : 800}));
       D.labels.push(g);
     };
@@ -213,7 +213,7 @@
     D.field.setAttribute('opacity', .18 + .82 * fl);
     D.eddy.setAttribute('opacity', fl * .9);
     D.halo.forEach(c => c.setAttribute('opacity', fl * .55));
-    D.led.setAttribute('fill', fl > .5 ? '#ff5a3a' : '#7a2a1d');
+    D.led.setAttribute('fill', fl > .5 ? '#fff' : '#10100c');
     D.bar.setAttribute('width', D.bw * h);
     D.num.textContent = h < .02 ? '—' : Math.round(h * 350) + ' °C';
     const ts = Kit.calm ? .0001 : Math.max(.0001, fl);
@@ -234,7 +234,7 @@
     gsap.to(c, {duration: dur, scale: R(1.4, 2.6), opacity: 0, ease: 'power2.in', onComplete: () => c.remove()});
   }
   function riseInside() {
-    const c = Kit.mk('circle', {cx: D.cx + R(-.7, .7) * D.sw2, cy: R(D.fy0, D.fy1), r: R(1, 2.2), fill: '#ffd9a8'}, D.vap);
+    const c = Kit.mk('circle', {cx: D.cx + R(-.7, .7) * D.sw2, cy: R(D.fy0, D.fy1), r: R(1, 2.2), fill: '#fff'}, D.vap);
     gsap.fromTo(c, {opacity: 0}, {opacity: .9, duration: .25, ease: 'power2.out'});
     gsap.to(c, {attr: {cy: '-=' + u * 1.4}, opacity: 0, duration: R(.8, 1.3), delay: .2, ease: 'power2.in', onComplete: () => c.remove()});
   }

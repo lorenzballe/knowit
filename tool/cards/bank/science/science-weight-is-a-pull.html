@@ -9,26 +9,25 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
 <style>
-#card{background-image:radial-gradient(color-mix(in srgb,var(--k) 7%,transparent) .7px,transparent 1.1px);background-size:7px 7px}
 #read{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
 #read>div{display:flex;flex-direction:column;gap:3px}
 #read>div:last-child{align-items:flex-end;text-align:right}
 #read small{font:700 12px/1.15 var(--mono);letter-spacing:.06em;opacity:.72}
 #read b{display:inline-block;font:800 max(2.7cqh,20px)/1 var(--display)}
-#rv{color:#c2412d;font-variant-numeric:tabular-nums}
-#mv{color:#1d4743}
+#rv{color:#a3151a;font-variant-numeric:tabular-nums}
+#mv{color:var(--k)}
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer;overflow:visible}
 #sw{display:flex;align-self:center;gap:.4cqw;padding:.5cqh;border-radius:99px;background:color-mix(in srgb,var(--k) 8%,transparent);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 22%,transparent)}
 #sw button{font:700 max(1.9cqh,13px)/1.1 var(--body);padding:1.2cqh 4.4cqw;border:0;border-radius:99px;background:transparent;color:var(--k);cursor:pointer;transition:background .18s,color .18s}
-#sw button.on{background:#2f6f6a;color:#f6efdc;box-shadow:0 .3cqh 0 #1d4743}
-#sw button i{font-style:normal;display:inline-block;width:1.1em;height:1.1em;border-radius:50%;vertical-align:-.18em;margin-right:.45em;background:radial-gradient(circle at 35% 30%,#f0c46a,#b07a22);box-shadow:inset 0 0 0 1.5px currentColor}
+#sw button.on{background:var(--k);color:#fff;box-shadow:0 .3cqh 0 var(--edge)}
+#sw button i{font-style:normal;display:inline-block;width:1.1em;height:1.1em;border-radius:50%;vertical-align:-.18em;margin-right:.45em;background:var(--edge);box-shadow:inset 0 0 0 1.5px currentColor}
 #sw button[data-v="0"] i{background:none;box-shadow:inset 0 0 0 1.5px currentColor}
 #why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{font:800 max(2.4cqh,16px)/1.15 var(--display);color:#9e3322;margin:0}
+#why .big{font:800 max(2.4cqh,16px)/1.15 var(--display);color:#a3151a;margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Flip a switch · two cases" style="--c:#efe4c8;--k:#1f2b2c;--edge:#cdbd96">
+<article class="card" id="card" data-topic="science" data-kind="Flip a switch · two cases">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">MASS VS WEIGHT</span></div>
     <h2 class="q">What is the fundamental definition of weight?</h2>
@@ -57,7 +56,7 @@
 (() => {
   if (window.Physics2DPlugin) gsap.registerPlugin(Physics2DPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), rv = Kit.$('rv');
-  const INK = '#1f2b2c', PAPER = '#f5edd6', OCH = '#d39a2e', TEAL = '#2f6f6a', TEALD = '#1d4743', RED = '#c2412d';
+  const INK = '#10100c', PAPER = '#ffffff', OCH = '#ffffff', TEAL = '#00835b', TEALD = '#10100c', RED = '#a3151a';
   const MONO = getComputedStyle(document.documentElement).getPropertyValue('--mono') || 'monospace';
   const st = {s: 1, w: 1, read: 5, th: 0, bob: 0};
   let earthOn = true, cycled = false, lastW = 0, lastH = 0;
@@ -80,9 +79,9 @@
 
     const defs = m('defs', {}, svg);
     const eg = m('radialGradient', {id: 'eg', cx: '.38', cy: '.32', r: '.75'}, defs);
-    [['0', '#f3cc78'], ['.55', OCH], ['1', '#97621a']].forEach(([o, c]) => m('stop', {offset: o, 'stop-color': c}, eg));
+    [['0', '#ffffff'], ['.55', OCH], ['1', '#ffffff']].forEach(([o, c]) => m('stop', {offset: o, 'stop-color': c}, eg));
     const bg = m('radialGradient', {id: 'bg', cx: '.35', cy: '.3', r: '.8'}, defs);
-    [['0', '#ec8a6c'], ['.5', RED], ['1', '#6f2013']].forEach(([o, c]) => m('stop', {offset: o, 'stop-color': c}, bg));
+    [['0', RED], ['.5', RED], ['1', RED]].forEach(([o, c]) => m('stop', {offset: o, 'stop-color': c}, bg));
     const pat = m('pattern', {id: 'ht', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(30)'}, defs);
     m('circle', {cx: 2.5, cy: 2.5, r: 1.25, fill: INK}, pat);
     const lp = m('pattern', {id: 'lt', width: 4, height: 4, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(-35)'}, defs);
@@ -143,7 +142,7 @@
       const outer = m('g', {transform: `translate(${cx + Math.sin(a) * (R + ps * .75)},${cy - Math.cos(a) * (R + ps * .75)})`}, svg);
       const inner = m('g', {}, outer);
       const arr = m('path', {fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, inner);
-      m('polygon', {points: p.pts.map((r, j) => { const t = j / 7 * Math.PI * 2; return `${(Math.cos(t) * r * ps).toFixed(1)},${(Math.sin(t) * r * ps * .8).toFixed(1)}`; }).join(' '), fill: i % 2 ? TEALD : '#6b4f22', stroke: INK, 'stroke-width': 1}, inner);
+      m('polygon', {points: p.pts.map((r, j) => { const t = j / 7 * Math.PI * 2; return `${(Math.cos(t) * r * ps).toFixed(1)},${(Math.sin(t) * r * ps * .8).toFixed(1)}`; }).join(' '), fill: i % 2 ? TEALD : TEAL, stroke: INK, 'stroke-width': 1}, inner);
       E.peb.push({inner, arr, a, ps});
     });
 
@@ -167,15 +166,15 @@
     m('ellipse', {cx: br * .15, cy: br * .2, rx: br * 1.02, ry: br * 1.02, fill: INK, opacity: .15}, E.ball);
     m('circle', {r: br, fill: 'url(#bg)', stroke: INK, 'stroke-width': 1.3}, E.ball);
     m('ellipse', {cx: -br * .35, cy: -br * .4, rx: br * .3, ry: br * .2, fill: '#fff', opacity: .55, transform: `rotate(-30 ${-br * .35} ${-br * .4})`}, E.ball);
-    E.aCase = m('path', {fill: 'none', stroke: PAPER, 'stroke-width': 6, 'stroke-linecap': 'round'}, G);
+    E.aCase = m('path', {fill: 'none', stroke: '#00E5A0', 'stroke-width': 6, 'stroke-linecap': 'round'}, G);
     E.aLine = m('path', {fill: 'none', stroke: RED, 'stroke-width': 2.8, 'stroke-linecap': 'round'}, G);
-    E.aHead = m('polygon', {fill: RED, stroke: PAPER, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, G);
+    E.aHead = m('polygon', {fill: RED, stroke: '#00E5A0', 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, G);
 
     // Labels that stay upright.
     E.fx = m('g', {}, svg);
     E.ring = m('circle', {cx, cy, r: 0, fill: 'none', stroke: RED, 'stroke-width': 2, opacity: 0}, E.fx);
     const L = m('g', {}, svg);
-    E.wLab = txt(L, 0, 0, 'WEIGHT', {fill: RED, 'font-weight': 800, 'dominant-baseline': 'middle', stroke: PAPER, 'stroke-width': 3, 'paint-order': 'stroke'});
+    E.wLab = txt(L, 0, 0, 'WEIGHT', {fill: RED, 'font-weight': 800, 'dominant-baseline': 'middle', stroke: '#00E5A0', 'stroke-width': 3, 'paint-order': 'stroke'});
     txt(L, cx, H - fs * .35, 'FIG. 5 · A BALL ON A SPRING SCALE', {'font-weight': 600, opacity: .7, 'text-anchor': 'middle'});
 
     if (!earthOn) {

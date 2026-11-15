@@ -31,7 +31,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const NS = 'http://www.w3.org/2000/svg';
-const RED = '#ff5a4e', GREEN = '#2fbf71';
+const RED = '#ffd23f', GREEN = 'var(--k)';
 const TINT = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 const S = {orbit: false, gap: 0, fixed: false, T: 0, offered: false, done: false};
 let G = null, drag = null;
@@ -69,7 +69,7 @@ function buildClock(parent, r, isSat) {
     o.wedge = mk('path', {fill: `color-mix(in srgb, ${RED} 30%, var(--k))`}, g);
     o.ghost = mk('line', {x1: 0, y1: 0, stroke: 'var(--c)', 'stroke-width': Math.max(2, r * .05), 'stroke-dasharray': '2 4', opacity: .55, 'stroke-linecap': 'round'}, g);
   }
-  o.hand = mk('line', {x1: 0, y1: 0, stroke: isSat ? RED : 'var(--c)', 'stroke-width': Math.max(3, r * .1), 'stroke-linecap': 'round'}, g);
+  o.hand = mk('line', {x1: 0, y1: 0, stroke: isSat ? 'var(--edge)' : 'var(--c)', 'stroke-width': Math.max(3, r * .1), 'stroke-linecap': 'round'}, g);
   mk('circle', {r: Math.max(3, r * .09), fill: 'var(--c)'}, g);
   o.r = r;
   return o;
@@ -99,11 +99,11 @@ Kit.onShow.card = () => {
   const sig = mk('line', {stroke: RED, 'stroke-width': 2.5, 'stroke-dasharray': '6 6', 'stroke-linecap': 'round', opacity: 0}, svg);
   // true position
   const ty = surf(trueX);
-  mk('line', {x1: trueX, y1: ty, x2: trueX, y2: ty - fs * 1.4, stroke: 'var(--c)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+  mk('line', {x1: trueX, y1: ty, x2: trueX, y2: ty - fs * 1.4, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
   mk('path', {d: `M${trueX},${ty - fs * 1.4} l${fs * .9},${fs * .32} l${-fs * .9},${fs * .38} Z`, fill: GREEN, 'stroke-linejoin': 'round'}, svg);
   mk('text', {x: trueX, y: ty + fs * 1.45, 'text-anchor': 'middle', fill: 'var(--c)', 'font-size': fs, class: 'lab'}, svg).textContent = 'You';
-  const fixDot = mk('circle', {r: fs * .45, fill: RED, stroke: 'var(--k)', 'stroke-width': 2, opacity: 0}, svg);
-  const fixLab = mk('text', {'text-anchor': 'middle', fill: RED, 'font-size': fs, class: 'lab', opacity: 0}, svg);
+  const fixDot = mk('circle', {r: fs * .45, fill: RED, stroke: 'var(--c)', 'stroke-width': 2, opacity: 0}, svg);
+  const fixLab = mk('text', {'text-anchor': 'middle', fill: 'var(--edge)', 'font-size': fs, class: 'lab', opacity: 0}, svg);
   fixLab.textContent = 'GPS fix';
 
   // ground clock on its post
@@ -189,7 +189,7 @@ function render() {
 
   if (S.fixed) {
     G.stepLab.textContent = 'In step ✓'; G.stepLab.setAttribute('fill', GREEN); G.stepLab.setAttribute('opacity', 1);
-    sat.ring.setAttribute('opacity', 1); sat.hand.setAttribute('stroke', GREEN);
+    sat.ring.setAttribute('opacity', 1); sat.hand.setAttribute('stroke', 'var(--c)');
     G.fixDot.setAttribute('fill', GREEN);
     G.sig.setAttribute('stroke', GREEN);
   } else if (S.orbit && S.gap > 4) {

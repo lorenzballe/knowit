@@ -42,7 +42,7 @@ let delays = new Array(N).fill(0), busy = false, G = null, done = false;
 const top0 = 'Fat Man · 3.25 m wide · 4.6 tonnes';
 const bot0 = '6.2 kg plutonium-239 · 32 charges';
 let topTxt = top0, botTxt = bot0;
-const lerpCol = gsap.utils.interpolate('#8e97a3', '#fff3b0');
+const lerpCol = gsap.utils.interpolate('#d8d2bc', '#ffffff');
 
 function build() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
@@ -52,21 +52,21 @@ function build() {
   const cx = W / 2, cy = H / 2;
   const Rin = R * .76, Rc = R * .3;
   const g = {W, H, fs, R, cx, cy, Rin, Rc, wedges: []};
-  Kit.mk('circle', {cx, cy, r: R + 3, fill: '#14161c'}, svg);
+  Kit.mk('circle', {cx, cy, r: R + 3, fill: '#10100c'}, svg);
   // shock gap
-  Kit.mk('circle', {cx, cy, r: Rin, fill: '#1f232c'}, svg);
+  Kit.mk('circle', {cx, cy, r: Rin, fill: '#2b2a20'}, svg);
   for (let i = 0; i < N; i++) {
     const a0 = (i / N) * Math.PI * 2 + .02, a1 = ((i + 1) / N) * Math.PI * 2 - .02;
     const p = (r, a) => `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
     const d = `M${p(Rin + 2, a0)} L${p(R, a0)} A${R},${R} 0 0 1 ${p(R, a1)} L${p(Rin + 2, a1)} A${Rin + 2},${Rin + 2} 0 0 0 ${p(Rin + 2, a0)}Z`;
-    g.wedges.push(Kit.mk('path', {d, fill: '#ff8a3d'}, svg));
+    g.wedges.push(Kit.mk('path', {d, fill: '#FFB000'}, svg));
   }
   g.front = Kit.mk('path', {fill: 'none', stroke: '#ffffff', 'stroke-width': Math.max(2, R * .025), 'stroke-linejoin': 'round', opacity: 0}, svg);
-  g.flash = Kit.mk('circle', {cx, cy, r: 0, fill: '#fff3b0', opacity: 0}, svg);
-  g.core = Kit.mk('path', {fill: '#8e97a3', stroke: '#d5dbe2', 'stroke-width': 1.5}, svg);
+  g.flash = Kit.mk('circle', {cx, cy, r: 0, fill: '#ffffff', opacity: 0}, svg);
+  g.core = Kit.mk('path', {fill: '#d8d2bc', stroke: '#ffffff', 'stroke-width': 1.5}, svg);
   g.dots = [];
   for (let i = 0; i < 24; i++) g.dots.push(Kit.mk('circle', {cx, cy, r: Math.max(2, R * .022), fill: '#fff', opacity: 0}, svg));
-  g.coreT = Kit.mk('text', {x: cx, y: cy + fs * .35, 'text-anchor': 'middle', fill: '#14161c', style: `font:700 ${fs}px var(--mono)`}, svg);
+  g.coreT = Kit.mk('text', {x: cx, y: cy + fs * .35, 'text-anchor': 'middle', fill: '#10100c', style: `font:700 ${fs}px var(--mono)`}, svg);
   g.coreT.textContent = 'Pu-239';
   g.top = Kit.mk('text', {x: cx, y: cy - R - fs * .8, 'text-anchor': 'middle', fill: 'var(--k)', style: `font:700 ${fs}px var(--body)`}, svg);
   g.bot = Kit.mk('text', {x: cx, y: cy + R + fs * 1.6, 'text-anchor': 'middle', fill: 'var(--k)', style: `font:600 ${fs}px var(--body)`}, svg);
@@ -79,7 +79,7 @@ function render() {
   g.top.textContent = topTxt; g.bot.textContent = botTxt;
   g.wedges.forEach((w, i) => {
     const d = delays[i];
-    const fill = S.mode === null || t < d ? '#ff8a3d' : (t - d < .08 ? '#ffffff' : '#5b3a2a');
+    const fill = S.mode === null || t < d ? '#FFB000' : (t - d < .08 ? '#ffffff' : '#a06c00');
     w.setAttribute('fill', fill);
   });
   const fr = [], cr = [];

@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A diagram of an artery with a Pb token to drag into the blood, asking how leaded gasoline causes heart disease. The artery wall moves with each heartbeat.",
-    "ground": "#f1e2cb"
+    "label": "A diagram of an artery with a Pb token to drag into the blood, asking how leaded gasoline causes heart disease. The artery wall moves with each heartbeat."
   },
   "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1139s",

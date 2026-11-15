@@ -14,16 +14,16 @@
 #pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;overflow:visible}
 .mono{font-family:var(--mono)}
 .disp{font-family:var(--display)}
-#hold{align-self:center;font:800 max(2cqh,14px)/1.1 var(--body);color:#1b0e04;background:#ff9a3c;border:0;border-radius:99px;padding:1.5cqh 6cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;
-  box-shadow:0 0 0 .3cqh rgba(255,154,60,.25),0 .6cqh 2.4cqh rgba(255,120,40,.35);transition:transform .12s cubic-bezier(.2,.8,.3,1.4),box-shadow .2s}
-#hold.on{transform:scale(.95);background:#ffb46a;box-shadow:0 0 0 .9cqh rgba(255,154,60,.22),0 0 4cqh rgba(255,150,60,.65)}
-#hold .dot{display:inline-block;width:1cqh;height:1cqh;min-width:7px;min-height:7px;border-radius:50%;background:#1b0e04;margin-right:2cqw;vertical-align:middle}
+#hold{align-self:center;font:800 max(2cqh,14px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.5cqh 6cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;
+  box-shadow:0 0 0 .3cqh rgba(16,16,12,.25);transition:transform .12s cubic-bezier(.2,.8,.3,1.4),box-shadow .2s}
+#hold.on{transform:scale(.95);background:#a31a0e;box-shadow:0 0 0 .9cqh rgba(16,16,12,.22)}
+#hold .dot{display:inline-block;width:1cqh;height:1cqh;min-width:7px;min-height:7px;border-radius:50%;background:var(--c);margin-right:2cqw;vertical-align:middle}
 #hold.on .dot{animation:blink .5s ease-in-out infinite alternate}
 @keyframes blink{to{opacity:.2}}
-.say b{color:#ff9a3c}
-.keep b{color:#ff9a3c}
+.say b{color:#a31a0e}
+.keep b{color:#a31a0e}
 </style>
-<article class="card" id="card" data-topic="history" data-kind="Hold · chain reaction" style="--c:#0f1415;--k:#efe9dc;--edge:#060909">
+<article class="card" id="card" data-topic="history" data-kind="Hold · chain reaction">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">THE EFFICIENCY GAP</span></div>
     <h2 class="q">Why was Little Boy so inefficient?</h2>
@@ -42,7 +42,7 @@
   gsap.registerPlugin(MotionPathPlugin);
   const svg = Kit.$('pic'), btn = Kit.$('hold'), say = Kit.$('say'), card = Kit.$('card');
   const N = 1000;                                   // 1,000 dots: one dot = 0.1% of the uranium
-  const ORANGE = '#ff9a3c', HOT = '#fff0d2', U = '#a9d38f', INK = '#efe9dc';
+  const ORANGE = '#a31a0e', HOT = '#10100c', U = '#10100c', INK = '#10100c';
   const SHAPES = [[40, 25], [50, 20], [25, 40]];    // the block reshapes to fit the phone, always 1,000 dots
   const GENS = [1, 2, 3, 4, 5];                     // 15 splits = 1.5%
   const HOP = .55;
@@ -100,12 +100,12 @@
   function defs() {
     const d = Kit.mk('defs', {}, svg);
     const gU = Kit.mk('radialGradient', {id: 'gU'}, d);
-    [[0, '#b6ec8e', .42], [.55, '#7fc46a', .14], [1, '#5aa04f', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gU));
+    [[0, '#10100c', 0], [.55, '#10100c', 0], [1, '#10100c', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gU));
     const gF = Kit.mk('radialGradient', {id: 'gF'}, d);
-    [[0, '#fff3dc', .95], [.22, '#ffb35c', .6], [.6, '#ff6a24', .18], [1, '#ff4a12', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gF));
+    [[0, '#a31a0e', .3], [.22, '#a31a0e', .3], [.6, '#a31a0e', .3], [1, '#a31a0e', .3]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gF));
     const hp = Kit.mk('pattern', {id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, d);
-    Kit.mk('rect', {width: 6, height: 6, fill: 'rgba(239,233,220,.12)'}, hp);
-    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: 'rgba(239,233,220,.32)', 'stroke-width': 2}, hp);
+    Kit.mk('rect', {width: 6, height: 6, fill: 'rgba(16,16,12,.12)'}, hp);
+    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: 'rgba(16,16,12,.32)', 'stroke-width': 2}, hp);
     const fl = Kit.mk('filter', {id: 'ng', x: '-200%', y: '-200%', width: '500%', height: '500%'}, d);
     Kit.mk('feGaussianBlur', {stdDeviation: Math.max(1.2, cell * .28), result: 'b'}, fl);
     const m = Kit.mk('feMerge', {}, fl); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);

@@ -30,8 +30,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "Oil clock: a timeline of dots, each a billion barrels still underground. The reader drags along the timeline to guess when oil runs out. The reveal says about 45 years at today's pace.",
-    "graded": false,
-    "ground": "#15110c"
+    "graded": false
   },
   "source": "Geopop, “INTORNO AL 2065. ECCO PERCHE'” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=UqszIsyl8-E&t=162s",

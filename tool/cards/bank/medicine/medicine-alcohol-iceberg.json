@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dark underwater scene with a lamp to drag down. Dragging it lights up what lies under the water, revealing the hidden causes of the 2.6 million alcohol deaths in 2019. A counter shows how many deaths are lit so far.",
-    "ground": "#06223a"
+    "label": "A dark underwater scene with a lamp to drag down. Dragging it lights up what lies under the water, revealing the hidden causes of the 2.6 million alcohol deaths in 2019. A counter shows how many deaths are lit so far."
   },
   "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=224s",

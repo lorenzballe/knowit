@@ -10,15 +10,14 @@
 <script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#card{background:radial-gradient(120% 60% at 50% -12%,#14608a 0%,rgba(20,96,138,0) 62%),linear-gradient(180deg,#0b3858 0%,#062440 46%,#020f1d 100%)}
 #stage{display:flex;flex-direction:column;flex:1;min-height:0}
 #read{display:flex;align-items:center;justify-content:center;gap:4cqw;padding:.4cqh 0 .2cqh}
-#num{font:800 max(6.2cqh,32px)/1 var(--display);color:#f4fbff;text-shadow:0 0 2.2cqh rgba(110,215,255,.6);font-variant-numeric:tabular-nums;min-width:4.2ch;text-align:right}
+#num{font:800 max(6.2cqh,32px)/1 var(--display);color:var(--k);font-variant-numeric:tabular-nums;min-width:4.2ch;text-align:right}
 #side{display:flex;flex-direction:column;gap:.3cqh}
-#form{font:600 max(1.75cqh,13px)/1.4 var(--mono);color:#a9def2}
+#form{font:600 max(1.75cqh,13px)/1.4 var(--mono);color:color-mix(in srgb,var(--k) 85%,var(--c))}
 #form sup{font-size:max(12px,.8em);line-height:0}
-#verdict{font:800 max(2.5cqh,15px)/1.15 var(--display);letter-spacing:.09em;color:#ffd27a;text-shadow:0 0 1.6cqh rgba(255,200,100,.55);perspective:300px}
-.fail #verdict{color:#ff8f7d;text-shadow:0 0 1.6cqh rgba(255,110,90,.5)}
+#verdict{font:800 max(2.5cqh,15px)/1.15 var(--display);letter-spacing:.09em;color:#ffee58;perspective:300px}
+.fail #verdict{color:var(--k)}
 #sea{flex:1;min-height:0;position:relative}
 #cv,#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
 #pic{touch-action:none;cursor:ew-resize}
@@ -26,7 +25,7 @@
 .done .q{font-size:max(2.5cqh,15px)}
 .done #num{font-size:max(5.2cqh,30px)}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Drag the pearl · divisors that fit" style="--c:#06243f;--k:#eaf7ff;--edge:#020c16">
+<article class="card" id="card" data-topic="maths" data-kind="Drag the pearl · divisors that fit">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE PEARL</span></div>
     <h2 class="q">Why is every even perfect number a power of two times a Mersenne prime?</h2>
@@ -58,22 +57,22 @@
   const ps = {x: 0}, visited = new Set(), dots = [];
   const sx = i => W * .14 + i * (W * .74) / 5;
 
-  const T = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: '#eaf7ff', 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 700}, a), parent); e.textContent = t; return e; };
+  const T = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: '#ffffff', 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 700}, a), parent); e.textContent = t; return e; };
   // shrink a label until it fits the given width, never below 12px
   const fit = (e, max) => { let s = +e.getAttribute('font-size'); while (e.getComputedTextLength() > max && s > 12) { s -= .5; e.setAttribute('font-size', s); } return e; };
 
   function defs() {
     const d = Kit.mk('defs', {}, svg);
     const lin = (id, stops, x2 = 0, y2 = 1) => { const g = Kit.mk('linearGradient', {id, x1: 0, y1: 0, x2, y2}, d); stops.forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a ?? 1}, g)); };
-    lin('gold', [[0, '#fff3c8'], [1, '#eaa63c']]);
-    lin('aqua', [[0, '#a6fbee'], [.55, '#36c9bb'], [1, '#137f86']]);
-    lin('coral', [[0, '#ffc0ae'], [1, '#e04f45']]);
-    lin('track', [[0, '#6fd6ff', .15], [.5, '#bff0ff', .8], [1, '#6fd6ff', .15]], 1, 0);
-    lin('sheen', [[0, '#fff', .28], [.35, '#fff', 0]]);
+    lin('gold', [[0, '#ffee58'], [1, '#ffee58']]);
+    lin('aqua', [[0, '#ffffff'], [.55, '#ffffff'], [1, '#ffffff']]);
+    lin('coral', [[0, '#085941'], [1, '#085941']]);
+    lin('track', [[0, '#ffffff', .6], [.5, '#ffffff', .6], [1, '#ffffff', .6]], 1, 0);
+    lin('sheen', [[0, '#ffffff', 0], [.35, '#ffffff', 0]]);
     const r = Kit.mk('radialGradient', {id: 'pearl', cx: .36, cy: .32, r: .78}, d);
-    [[0, '#ffffff'], [.35, '#f3eefa'], [.75, '#c9d6ec'], [1, '#8fa6c9']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, r));
+    [[0, '#ffffff'], [.35, '#ffffff'], [.75, '#ffffff'], [1, '#ffffff']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, r));
     const pool = Kit.mk('radialGradient', {id: 'pool'}, d);
-    [[0, '#7fe9ff', .35], [1, '#7fe9ff', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, pool));
+    [[0, '#085941', .35], [1, '#085941', .35]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, pool));
     const f = Kit.mk('filter', {id: 'glow', x: '-40%', y: '-40%', width: '180%', height: '180%'}, d);
     Kit.mk('feGaussianBlur', {stdDeviation: fs * .4, result: 'b'}, f);
     const m = Kit.mk('feMerge', {}, f); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
@@ -103,24 +102,24 @@
     const S = L.slider, y = G.trackY;
     Kit.mk('line', {x1: sx(0) - fs, x2: sx(5) + fs, y1: y, y2: y, stroke: 'url(#track)', 'stroke-width': fs * .5, 'stroke-linecap': 'round', opacity: .3}, S);
     Kit.mk('line', {x1: sx(0) - fs, x2: sx(5) + fs, y1: y, y2: y, stroke: 'url(#track)', 'stroke-width': 1.6, 'stroke-linecap': 'round'}, S);
-    T(S, sx(0) - fs * 1.9, G.pLabY, 'p', {style: 'font-family:var(--mono)', 'font-style': 'italic', fill: '#9fd3e8', 'text-anchor': 'middle'});
+    T(S, sx(0) - fs * 1.9, G.pLabY, 'p', {style: 'font-family:var(--mono)', 'font-style': 'italic', fill: '#ffffff', 'text-anchor': 'middle'});
     for (let i = 0; i < 6; i++) {
-      dots.push(Kit.mk('circle', {cx: sx(i), cy: y, r: fs * .3, fill: '#0a3150', stroke: '#9fe3ff', 'stroke-width': 1.2}, S));
-      T(S, sx(i), G.pLabY, String(i + 2), {style: 'font-family:var(--mono)', 'text-anchor': 'middle', fill: '#cfeefa'});
+      dots.push(Kit.mk('circle', {cx: sx(i), cy: y, r: fs * .3, fill: '#085941', stroke: '#ffffff', 'stroke-width': 1.2}, S));
+      T(S, sx(i), G.pLabY, String(i + 2), {style: 'font-family:var(--mono)', 'text-anchor': 'middle', fill: '#ffffff'});
     }
     paintDots();
     // outer group carries the position, inner group carries every scale animation
     pearlG = Kit.mk('g', {}, S);
     pearlIn = Kit.mk('g', {}, pearlG);
-    halo = Kit.mk('circle', {r: fs * 1.25, fill: '#bfeaff', opacity: .18, filter: 'url(#glow)'}, pearlIn);
-    body = Kit.mk('circle', {r: fs * .95, fill: 'url(#pearl)', stroke: '#ffffff', 'stroke-opacity': .7, 'stroke-width': 1}, pearlIn);
-    Kit.mk('ellipse', {cx: -fs * .3, cy: -fs * .34, rx: fs * .26, ry: fs * .16, fill: '#fff', opacity: .9}, pearlIn);
+    halo = Kit.mk('circle', {r: fs * 1.25, fill: '#ffffff', opacity: .18}, pearlIn);
+    body = Kit.mk('circle', {r: fs * .95, fill: 'url(#pearl)', stroke: '#085941', 'stroke-opacity': 1, 'stroke-width': 1}, pearlIn);
+    Kit.mk('ellipse', {cx: -fs * .3, cy: -fs * .34, rx: fs * .26, ry: fs * .16, fill: '#085941', opacity: .2}, pearlIn);
     ps.x = sx(p - 2); placePearl();
   }
   const placePearl = () => pearlG && pearlG.setAttribute('transform', `translate(${ps.x},${G.trackY})`);
   function paintDots() {
     dots.forEach((d, i) => { const q = 2 ** (i + 2) - 1, seen = visited.has(i + 2);
-      d.setAttribute('fill', !seen ? '#0a3150' : isPrime(q) ? '#ffd27a' : '#ff8f7d'); });
+      d.setAttribute('fill', !seen ? '#085941' : isPrime(q) ? '#ffee58' : '#ffffff'); });
   }
 
   function draw(np, anim, instant) {
@@ -146,7 +145,7 @@
     for (let i = 0; i < p; i++) {
       const hh = h * 2 ** i / q;
       Kit.mk('rect', {x: rx + gap / 2, y: yb - hh + Math.min(gap, hh * .2) / 2, width: Math.max(.8, cw - gap), height: Math.max(.6, hh - Math.min(gap, hh * .2)), fill: 'url(#gold)', 'fill-opacity': .55 + .45 * i / (p - 1), rx: Math.min(2, cw * .1)}, gold);
-      if (hh > fs * 1.3 && cw > fs * 1.8) T(gold, rx + cw / 2, yb - hh / 2 + fs * .36, String(2 ** i), {'text-anchor': 'middle', fill: '#3a2306', 'font-weight': 800});
+      if (hh > fs * 1.3 && cw > fs * 1.8) T(gold, rx + cw / 2, yb - hh / 2 + fs * .36, String(2 ** i), {'text-anchor': 'middle', fill: '#085941', 'font-weight': 800});
       yb -= hh;
     }
     // aqua: q, 2q, 4q … each taking as many strips as its multiplier
@@ -156,15 +155,15 @@
       Kit.mk('rect', {x: x + gap / 2, y: rt + gap / 2, width: Math.max(.8, w - gap), height: h - gap, fill: 'url(#aqua)', 'fill-opacity': 1 - k * .09, rx: Math.min(3, w * .1)}, g);
       Kit.mk('rect', {x: x + gap / 2, y: rt + gap / 2, width: Math.max(.8, w - gap), height: h - gap, fill: 'url(#sheen)', rx: Math.min(3, w * .1)}, g);
       const lab = String(v);
-      if (w > lab.length * fs * .62 + 8) T(g, x + w / 2, rt + h / 2 + fs * .36, lab, {'text-anchor': 'middle', fill: '#022a2c', 'font-weight': 800});
+      if (w > lab.length * fs * .62 + 8) T(g, x + w / 2, rt + h / 2 + fs * .36, lab, {'text-anchor': 'middle', fill: '#085941', 'font-weight': 800});
     }
     // the rectangle itself: area N
-    Kit.mk('rect', {x: rx, y: rt, width: wr, height: h, rx: 3, fill: 'none', stroke: '#9fe3ff', 'stroke-width': 3, opacity: .35, filter: 'url(#glow)'}, L.frame);
-    const frame = Kit.mk('rect', {x: rx, y: rt, width: wr, height: h, rx: 3, fill: 'none', stroke: '#eaf7ff', 'stroke-width': 1.6}, L.frame);
+    Kit.mk('rect', {x: rx, y: rt, width: wr, height: h, rx: 3, fill: 'none', stroke: '#ffffff', 'stroke-width': 3, opacity: .35}, L.frame);
+    const frame = Kit.mk('rect', {x: rx, y: rt, width: wr, height: h, rx: 3, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.6}, L.frame);
 
     // caption under the rectangle
     if (G.roomy) {
-      const cap = T(L.cap, rx, G.capY, prime ? `the divisors of ${N} tile it exactly` : `${q} = ${FAC[q]}: the divisors of ${N} spill over`, {fill: prime ? '#cfeefa' : '#ffc4b8', 'font-weight': 700});
+      const cap = T(L.cap, rx, G.capY, prime ? `the divisors of ${N} tile it exactly` : `${q} = ${FAC[q]}: the divisors of ${N} spill over`, {fill: '#ffffff', 'font-weight': 700});
       fit(cap, wr);
     }
 
@@ -172,7 +171,7 @@
     let note = null;
     if (prime) {
       const pw = p <= 4 ? Array.from({length: p}, (_, i) => 2 ** i).join('+') : `1+2+…+${C}`;
-      note = T(L.note, rx, rt - fs * .75, `↓ gold ${pw} = ${q}: one whole strip`, {style: 'font-family:var(--hand)', 'font-size': fs * 1.25, fill: '#ffd27a', 'font-weight': 700});
+      note = T(L.note, rx, rt - fs * .75, `↓ gold ${pw} = ${q}: one whole strip`, {style: 'font-family:var(--hand)', 'font-size': fs * 1.25, fill: '#ffee58', 'font-weight': 700});
       fit(note, wr);
     } else {
       // every other divisor, the ones that come from q's own factors
@@ -182,7 +181,7 @@
       let x = rx;
       ex.forEach(d => { const w = wr * d / tot;
         over.push(Kit.mk('rect', {x: x + .4, y: ob - oh, width: Math.max(.5, w - .8), height: oh, fill: 'url(#coral)', 'fill-opacity': .75 + .25 * (d / ex[ex.length - 1]), rx: Math.min(2, w * .15)}, L.over)); x += w; });
-      note = T(L.over, rx + wr / 2, ob - oh / 2 + fs * .4, `+${tot} more than ${N}`, {'text-anchor': 'middle', fill: '#2d0905', 'font-weight': 800, 'font-size': fs * 1.15});
+      note = T(L.over, rx + wr / 2, ob - oh / 2 + fs * .4, `+${tot} more than ${N}`, {'text-anchor': 'middle', fill: '#ffffff', 'font-weight': 800, 'font-size': fs * 1.15});
       fit(note, wr - 8);
     }
 
@@ -205,16 +204,16 @@
     gsap.from(note, {opacity: 0, y: 6, duration: .5, delay: .55, ease: 'power3.out'});
     if (prime) {
       // the wow: the gold strip flares, the rectangle closes, light sweeps across it, bubbles rise
-      const flare = Kit.mk('rect', {x: rx, y: rt, width: cw, height: h, rx: 2, fill: 'none', stroke: '#ffe39a', 'stroke-width': 2.4, filter: 'url(#glow)', opacity: 0}, L.fx);
+      const flare = Kit.mk('rect', {x: rx, y: rt, width: cw, height: h, rx: 2, fill: 'none', stroke: '#ffee58', 'stroke-width': 2.4, opacity: 0}, L.fx);
       gsap.to(flare, {opacity: 1, duration: .25, delay: .45, yoyo: true, repeat: 1, repeatDelay: .25, ease: 'power2.out'});
       // the light band lives in a moving gradient, so the shape itself never leaves the rectangle
       const sg = Kit.mk('linearGradient', {id: 'sweepMove', gradientUnits: 'userSpaceOnUse', x1: rx - wr * .45, x2: rx - wr * .05, y1: 0, y2: 0}, L.sweep);
       [[0, 0], [.5, .75], [1, 0]].forEach(([o, a]) => Kit.mk('stop', {offset: o, 'stop-color': '#fff', 'stop-opacity': a}, sg));
       Kit.mk('rect', {x: rx, y: rt, width: wr, height: h, fill: 'url(#sweepMove)', opacity: .8}, L.sweep);
       gsap.to(sg, {attr: {x1: rx + wr * 1.05, x2: rx + wr * 1.45}, duration: 1.1, delay: .7, ease: 'power2.inOut'});
-      gsap.fromTo(frame, {attr: {'stroke-width': 1.6}}, {attr: {'stroke-width': 4}, stroke: '#fff4cf', duration: .3, delay: .75, yoyo: true, repeat: 1, ease: 'power2.out'});
+      gsap.fromTo(frame, {attr: {'stroke-width': 1.6}}, {attr: {'stroke-width': 4}, stroke: '#ffee58', duration: .3, delay: .75, yoyo: true, repeat: 1, ease: 'power2.out'});
       for (let i = 0; i < 14; i++) {
-        const b = Kit.mk('circle', {cx: rx + Kit.rnd() * wr, cy: rt - 2, r: 1.2 + Kit.rnd() * fs * .22, fill: 'none', stroke: '#d8f6ff', 'stroke-width': 1, opacity: 0}, L.fx);
+        const b = Kit.mk('circle', {cx: rx + Kit.rnd() * wr, cy: rt - 2, r: 1.2 + Kit.rnd() * fs * .22, fill: 'none', stroke: '#ffffff', 'stroke-width': 1, opacity: 0}, L.fx);
         gsap.fromTo(b, {opacity: 0}, {opacity: .9, duration: .2, delay: .8 + i * .04});
         gsap.to(b, {attr: {cy: Math.max(6, rt - h * (.4 + Kit.rnd() * .5))}, opacity: 0, duration: 1.4 + Kit.rnd() * .6, delay: .9 + i * .04, ease: 'power1.out'});
       }
@@ -268,12 +267,12 @@
     cx.globalCompositeOperation = 'lighter';
     for (let i = 0; i < 4; i++) {           // light shafts from the surface
       const x = CW * (.15 + i * .24) + Math.sin(s * .3 + i) * CW * .05, w = CW * (.05 + .03 * (i % 2));
-      const g = cx.createLinearGradient(0, 0, 0, CH); g.addColorStop(0, 'rgba(150,225,255,.10)'); g.addColorStop(1, 'rgba(150,225,255,0)');
+      const g = cx.createLinearGradient(0, 0, 0, CH); g.addColorStop(0, 'rgba(255,255,255,.05)'); g.addColorStop(1, 'rgba(255,255,255,.05)');
       cx.fillStyle = g; cx.beginPath(); cx.moveTo(x, 0); cx.lineTo(x + w, 0); cx.lineTo(x + w * 2.6 + CW * .08, CH); cx.lineTo(x + w * .4 + CW * .08, CH); cx.closePath(); cx.fill();
     }
     cx.lineWidth = 1.4;                     // the caustic web
     for (let j = 0; j < 11; j++) {
-      cx.strokeStyle = `rgba(140,230,255,${.05 + .03 * (j % 3)})`; cx.beginPath();
+      cx.strokeStyle = `rgba(255,255,255,${.05 + .03 * (j % 3)})`; cx.beginPath();
       for (let x = 0; x <= CW; x += 8) {
         const y = CH * (j + .5) / 11 + Math.sin(x * .021 + s * .9 + j) * 9 + Math.sin(x * .047 - s * 1.3 + j * 2) * 5;
         x ? cx.lineTo(x, y) : cx.moveTo(x, y);
@@ -282,7 +281,7 @@
     }
     for (const m of motes) {                // drifting particles
       const y = ((m.y - s * m.v) % CH + CH) % CH, x = m.x + Math.sin(s * .6 + m.ph) * 6;
-      cx.fillStyle = `rgba(200,240,255,${m.a})`; cx.beginPath(); cx.arc(x, y, m.r, 0, 7); cx.fill();
+      cx.fillStyle = `rgba(255,255,255,${m.a})`; cx.beginPath(); cx.arc(x, y, m.r, 0, 7); cx.fill();
     }
     cx.globalCompositeOperation = 'destination-in';   // soft mask: the light fades into the card at every edge
     const g = cx.createRadialGradient(CW / 2, CH * .45, 0, CW / 2, CH * .45, Math.max(CW, CH) * .62);

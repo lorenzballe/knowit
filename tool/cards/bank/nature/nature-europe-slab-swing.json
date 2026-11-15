@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Quiz page: a slab of Europe swung 25 million years ago. Which way did it swing, clockwise or anticlockwise? A five-step diagram shows the crust tearing, the slab breaking off and swinging, the floor sinking, and the sea flooding in.",
-    "ground": "#070b18"
+    "label": "Quiz page: a slab of Europe swung 25 million years ago. Which way did it swing, clockwise or anticlockwise? A five-step diagram shows the crust tearing, the slab breaking off and swinging, the floor sinking, and the sea flooding in."
   },
   "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=DTOssDc8keo&t=777s",

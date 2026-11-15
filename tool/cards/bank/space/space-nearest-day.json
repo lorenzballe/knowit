@@ -30,8 +30,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "The Earth's orbit drawn to scale on a night sky, with the months around it. You drag the Earth to where you think it passes nearest the Sun; then it runs on to early January and the two distances appear.",
-    "ground": "#0b1026"
+    "label": "The Earth's orbit drawn to scale on a night sky, with the months around it. You drag the Earth to where you think it passes nearest the Sun; then it runs on to early January and the two distances appear."
   },
   "source": "NASA Earth fact sheet; U.S. Naval Observatory",
   "source_kind": "institution",

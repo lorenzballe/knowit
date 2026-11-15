@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A tower drawn beside a one-square-metre patch at 3,000 m depth, on the way to the Titanic at 3,800 m. The reader drags the tower up to show how much of its weight presses on that square metre.",
-    "ground": "#eef0ea"
+    "label": "A tower drawn beside a one-square-metre patch at 3,000 m depth, on the way to the Titanic at 3,800 m. The reader drags the tower up to show how much of its weight presses on that square metre."
   },
   "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=360s",

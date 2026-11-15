@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page: a capsule is drawn from launch, around the Moon, and home, with a water gauge to watch. It asks when Artemis II astronauts cannot add water to their food, and what they eat during those hours.",
-    "ground": "#0b1026"
+    "label": "Interactive page: a capsule is drawn from launch, around the Moon, and home, with a water gauge to watch. It asks when Artemis II astronauts cannot add water to their food, and what they eat during those hours."
   },
   "source": "Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=W7hfmLtz_As&t=62s",

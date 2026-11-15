@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A bouncing egg with a TAP TO FIZZ heading. It asks what causes the tiny bubbles that let the egg bounce, and says tapping React lets the shell and vinegar meet one step at a time.",
-    "ground": "#070b1c"
+    "label": "A bouncing egg with a TAP TO FIZZ heading. It asks what causes the tiny bubbles that let the egg bounce, and says tapping React lets the shell and vinegar meet one step at a time."
   },
   "source": "Geopop, “L'uovo che rimbalza!” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=CKE7qFWpADI&t=28s",

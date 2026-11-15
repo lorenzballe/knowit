@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A reader holds a pump button to push helium gas against a sheet of graphene that serves as the lid. The question asks: what is the most impermeable material known?",
-    "ground": "#f3e8d3"
+    "label": "A reader holds a pump button to push helium gas against a sheet of graphene that serves as the lid. The question asks: what is the most impermeable material known?"
   },
   "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=133s",

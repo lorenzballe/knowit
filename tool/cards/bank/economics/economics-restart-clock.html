@@ -10,20 +10,13 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/matter.min.js"></script>
 <style>
-#card{background-color:var(--c);background-image:
-  radial-gradient(120% 75% at 50% 38%,rgba(160,210,255,.10),transparent 62%),
-  linear-gradient(rgba(255,255,255,.065) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(255,255,255,.065) 1px,transparent 1px),
-  linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
-  background-size:100% 100%,40px 40px,40px 40px,8px 8px,8px 8px}
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
 #why{margin:0;font-size:15px;line-height:1.4}
-#why b{color:#ffd36b}
-.say b{color:#ffd36b}
+#why b{color:#b81f0a}
+.say b{color:#b81f0a}
 </style>
-<article class="card" id="card" data-topic="economics" data-kind="Guess, then run the clock" style="--c:#123d6a;--k:#eef6ff;--edge:#0a2647">
+<article class="card" id="card" data-topic="economics" data-kind="Guess, then run the clock">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">RESTART CLOCK</span></div>
     <h2 class="q">How long until a shut-down Qatar LNG plant is back at full output?</h2>
@@ -42,7 +35,7 @@
 (() => {
   const {Engine, Bodies, Composite, Body} = Matter;
   const cv = Kit.$('pic'), say = Kit.$('say');
-  const INK = '#eef6ff', CARD = '#123d6a', CY = '#8fe3ff', YEL = '#ffd36b', COR = '#ff9a7a';
+  const INK = '#10100c', CARD = '#FFE600', CY = '#10100c', YEL = '#b81f0a', COR = '#b81f0a';
   const OUT = [0, 0, .25, .6, 1];                  // output after each week (illustrative climb)
   const STAMP = [['SHUT DOWN', COR], ['RESTARTING', YEL], ['PARTIAL', YEL], ['PARTIAL', YEL], ['FULL CAPACITY', CY]];
   const engine = Engine.create(); engine.gravity.y = 1.1;
@@ -131,9 +124,7 @@
   function vessel(cx, base, w, h) {
     const r = w / 2, t = base - h;
     x.beginPath(); x.moveTo(cx - r, base); x.lineTo(cx - r, t + r); x.arc(cx, t + r, r, Math.PI, 0); x.lineTo(cx + r, base);
-    const g = x.createLinearGradient(cx - r, 0, cx + r, 0);
-    g.addColorStop(0, 'rgba(255,255,255,.12)'); g.addColorStop(.35, 'rgba(255,255,255,.03)'); g.addColorStop(1, 'rgba(0,10,30,.2)');
-    x.fillStyle = g; x.fill(); x.stroke();
+    x.fillStyle = 'rgba(16,16,12,.06)'; x.fill(); x.stroke();
     x.save(); x.globalAlpha *= .35; x.setLineDash([8, 3, 2, 3]); line(cx, t - 5, cx, base); x.restore();
     return t;
   }
@@ -177,10 +168,10 @@
     x.save(); x.globalAlpha *= .4; x.lineWidth = .9; line(fx, ft + ph * .15, fx + G.pw * .09, base); line(fx, ft + ph * .15, fx - G.pad * .6, base); x.restore();
     if (run > .01) {
       const fl = Math.min(ph * .24, 6 + 12 * run) * (1 + .12 * Math.sin(now / 70) + .08 * Math.sin(now / 37));
-      x.save(); x.shadowColor = YEL; x.shadowBlur = 14 * run; x.fillStyle = YEL; x.globalAlpha *= .9;
+      x.save(); x.fillStyle = YEL; x.globalAlpha *= .9;
       x.beginPath(); x.moveTo(fx - 3.5, ft); x.quadraticCurveTo(fx - 5, ft - fl * .5, fx + Math.sin(now / 90) * 2, ft - fl); x.quadraticCurveTo(fx + 5, ft - fl * .5, fx + 3.5, ft); x.fill(); x.restore();
     } else {
-      x.save(); x.fillStyle = COR; x.globalAlpha *= .45 + .55 * Math.max(0, Math.sin(now / 240)); x.shadowColor = COR; x.shadowBlur = 8;
+      x.save(); x.fillStyle = COR; x.globalAlpha *= .45 + .55 * Math.max(0, Math.sin(now / 240));
       x.beginPath(); x.arc(fx, ft - 3, 2.6, 0, 7); x.fill(); x.restore();
     }
     // column A with trays and platform
@@ -196,7 +187,7 @@
     // main cryogenic heat exchanger with its cold coil
     x.globalAlpha = vis(4);
     const mx = G.mx, mw = G.mw, mt = vessel(mx, base, mw, base - G.mt);
-    x.save(); x.strokeStyle = run > .01 ? CY : INK; x.globalAlpha *= .35 + .65 * run; if (run > .01) { x.shadowColor = CY; x.shadowBlur = 8 * run; }
+    x.save(); x.strokeStyle = run > .01 ? CY : INK; x.globalAlpha *= .35 + .65 * run;
     x.beginPath(); let s = 1; for (let y = base - 6; y > mt + mw * .6; y -= 6) { x.lineTo(mx + s * mw * .32, y); s = -s; } x.stroke(); x.restore();
     platform(mx, mw / 2, mt + (base - mt) * .55);
     // pipes between vessels, with valves
@@ -233,7 +224,7 @@
       const top = clamp((p.y - G.top - p.r) / (fs * 1.6), 0, 1);
       if (p.l <= 0 || top <= 0) { p.l = 0; continue; }
       x.globalAlpha = p.l * top * .42; x.beginPath(); x.arc(p.x, p.y, p.r, 0, 7);
-      x.fillStyle = 'rgba(238,246,255,.07)'; x.fill(); x.stroke();
+      x.fillStyle = 'rgba(16,16,12,.07)'; x.fill(); x.stroke();
     }
     puffs = puffs.filter(p => p.l > 0);
     x.restore();
@@ -252,7 +243,6 @@
   function drawDrops() {
     if (G.mode !== 'plant' || !drops.length) return;
     x.save(); x.fillStyle = CY; x.globalAlpha = .9;
-    if (st.flash > .01) { x.shadowColor = CY; x.shadowBlur = 16 * st.flash; }
     x.beginPath();
     for (const d of drops) { x.moveTo(d.position.x + G.dr, d.position.y); x.arc(d.position.x, d.position.y, G.dr, 0, 7); }
     x.fill(); x.restore();
@@ -264,7 +254,7 @@
     x.save(); x.globalAlpha = vis(6); x.translate(G.L + G.pw * .46, G.pb - G.ph * .32); x.rotate(-.1); x.scale(st.stampS, st.stampS);
     font(800, Math.max(12, Math.min(fs * 1.1, G.ph * .2))); x.textAlign = 'center'; x.textBaseline = 'middle';
     const tw = x.measureText(txt).width + fs * 1.1, th = fs * 1.85;
-    x.fillStyle = 'rgba(18,61,106,.9)'; x.fillRect(-tw / 2, -th / 2, tw, th);
+    x.fillStyle = 'rgba(255,230,0,.92)'; x.fillRect(-tw / 2, -th / 2, tw, th);
     x.strokeStyle = col; x.lineWidth = 2; x.strokeRect(-tw / 2, -th / 2, tw, th); x.lineWidth = .8; x.strokeRect(-tw / 2 + 3, -th / 2 + 3, tw - 6, th - 6);
     x.fillStyle = col; x.fillText(txt, 0, 1); x.restore();
   }
@@ -319,7 +309,7 @@
     // a scanner sweeping the axis while we wait for a guess
     if (st.guess < 0 && !Kit.calm) {
       const sx = G.x0 + ((now / 2600) % 1) * (G.x1 - G.x0);
-      x.save(); x.strokeStyle = YEL; x.shadowColor = YEL; x.shadowBlur = 10; x.lineWidth = 2.2; x.globalAlpha *= .85;
+      x.save(); x.strokeStyle = YEL; x.lineWidth = 2.2; x.globalAlpha *= .85;
       line(Math.max(G.x0, sx - 16), G.floor, Math.min(G.x1, sx + 16), G.floor);
       x.fillStyle = YEL; x.beginPath(); x.arc(sx, G.floor, 2.6, 0, 7); x.fill(); x.restore();
     }
@@ -340,20 +330,19 @@
       if (b.ghost) {
         x.setLineDash([4, 3]); x.strokeStyle = INK; x.lineWidth = 1.3; x.globalAlpha = a * .8; x.strokeRect(-w / 2, -h / 2, w, h); x.setLineDash([]);
       } else {
-        x.fillStyle = 'rgba(12,40,72,.92)'; x.fillRect(-w / 2, -h / 2, w, h);
+        x.fillStyle = 'rgba(255,230,0,.92)'; x.fillRect(-w / 2, -h / 2, w, h);
         const lvl = k >= 3 ? OUT[k] : 0;
         if (lvl > 0) {
-          const g = x.createLinearGradient(0, h / 2, 0, -h / 2); g.addColorStop(0, 'rgba(143,227,255,.75)'); g.addColorStop(1, 'rgba(143,227,255,.35)');
-          x.fillStyle = g; x.fillRect(-w / 2, h / 2 - h * lvl, w, h * lvl);
+          x.fillStyle = 'rgba(16,16,12,.5)'; x.fillRect(-w / 2, h / 2 - h * lvl, w, h * lvl);
         } else {
-          x.save(); x.beginPath(); x.rect(-w / 2, -h / 2, w, h); x.clip(); x.strokeStyle = 'rgba(255,154,122,.55)'; x.lineWidth = 1;
+          x.save(); x.beginPath(); x.rect(-w / 2, -h / 2, w, h); x.clip(); x.strokeStyle = 'rgba(184,31,10,.55)'; x.lineWidth = 1;
           for (let i = -h; i < w + h; i += 6) line(-w / 2 + i, h / 2, -w / 2 + i - h, -h / 2); x.restore();
         }
         x.strokeStyle = INK; x.lineWidth = 1.3; x.strokeRect(-w / 2, -h / 2, w, h);
       }
       font(800, fs); x.textAlign = 'center'; x.textBaseline = 'middle';
       const lab = pickLabel(['WK ' + k, String(k)], w - 4), tw = x.measureText(lab).width + 6;
-      x.fillStyle = 'rgba(12,40,72,.85)'; x.fillRect(-tw / 2, -fs * .62, tw, fs * 1.24);
+      x.fillStyle = 'rgba(255,230,0,.85)'; x.fillRect(-tw / 2, -fs * .62, tw, fs * 1.24);
       x.fillStyle = INK; x.fillText(lab, 0, 1);
       x.restore();
     }

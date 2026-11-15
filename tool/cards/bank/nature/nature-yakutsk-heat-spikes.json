@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A thermometer you drag upward from +20 °C toward +38 °C, set against a snow-covered city, asking what unusual summer temperatures Yakutsk has recorded.",
-    "ground": "#0a2234"
+    "label": "A thermometer you drag upward from +20 °C toward +38 °C, set against a snow-covered city, asking what unusual summer temperatures Yakutsk has recorded."
   },
   "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=332s",

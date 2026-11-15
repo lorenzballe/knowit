@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A picture of steel columns in a burning building. Drag across the picture to feed the fire with air, then watch the bare steel, which reaches 1,000°C and loses its load-bearing capacity.",
-    "ground": "#0b1026"
+    "label": "A picture of steel columns in a burning building. Drag across the picture to feed the fire with air, then watch the bare steel, which reaches 1,000°C and loses its load-bearing capacity."
   },
   "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=TS8CgfiGFEE&t=442s",

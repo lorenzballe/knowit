@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A question asks what happens to a tsunami's speed as it approaches the coast, with three choices: it speeds up, stays the same, or slows down. A wave replay control lets the reader watch the wave move into shallow water.",
-    "ground": "#060a14"
+    "label": "A question asks what happens to a tsunami's speed as it approaches the coast, with three choices: it speeds up, stays the same, or slows down. A wave replay control lets the reader watch the wave move into shallow water."
   },
   "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=893s",

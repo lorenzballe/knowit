@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A slider that turns a square adapter end into a round one. The question asks how Apollo 13 fit square CO2 filters into round LEM slots, with the answer about an improvised adapter.",
-    "ground": "#16349e"
+    "label": "A slider that turns a square adapter end into a round one. The question asks how Apollo 13 fit square CO2 filters into round LEM slots, with the answer about an improvised adapter."
   },
   "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=438s",

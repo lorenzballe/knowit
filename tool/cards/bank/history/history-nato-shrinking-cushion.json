@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A map animation of NATO's borders moving eastward over time, toward Russia. The question asks how NATO's growth after the USSR shrank the buffer Russia wants between itself and the US. Drag the timeline east to watch it happen.",
-    "ground": "#0b1020"
+    "label": "A map animation of NATO's borders moving eastward over time, toward Russia. The question asks how NATO's growth after the USSR shrank the buffer Russia wants between itself and the US. Drag the timeline east to watch it happen."
   },
   "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=BkJY93_hauY&t=128s",

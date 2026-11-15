@@ -14,12 +14,12 @@
 #stage{display:flex;flex:1;min-height:0}
 #map{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:hidden}
 .say{overflow-wrap:break-word}
-.say b{color:#ffc84a}
+.say b{color:var(--k)}
 .hint{animation:nudge 1.2s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(5px)}}
 .kit-calm .hint{animation:none}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Tap the gaps · drain the sea" style="--c:#1d1013;--k:#ffeef4;--edge:#090506">
+<article class="card" id="card" data-topic="nature" data-kind="Tap the gaps · drain the sea">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ICE AGE MAP</span></div>
     <h2 class="q">During the last ice age, which of Italy's sea gaps were land?</h2>
@@ -43,9 +43,9 @@
 
   const svg = Kit.$('map'), say = Kit.$('say'), card = Kit.$('card');
   // flat atlas colours: one sea, the card's ink and page, and amber for "land in the ice age"
-  const SEA = '#2f5468', AMBER = '#ffc84a', INK = '#ffeef4', DARK = '#1d1013';
-  const LAND = 'fill:color-mix(in srgb, var(--k) 80%, var(--c))';
-  const SEA_TINT = 'fill:color-mix(in srgb, var(--k) 35%, ' + SEA + ')';
+  const SEA = '#007a2f', AMBER = '#ffd23f', INK = '#ffffff', DARK = '#10100c';
+  const LAND = 'fill:color-mix(in srgb, #fff 88%, var(--c))';
+  const SEA_TINT = 'fill:color-mix(in srgb, #fff 35%, ' + SEA + ')';
 
   // ---- coastlines, [lon, lat]: today, and the same points at the ice age's low sea ----
   const M = {
@@ -283,7 +283,7 @@
       r.chk.setAttribute('stroke', mine ? DARK : INK);
       if (hasG) gsap.set(r.pop, {scale: 1, transformOrigin: '50% 50%'});
       if (g.land) {
-        r.o.setAttribute('stroke', DARK);
+        r.o.setAttribute('stroke', INK);
         if (instant || !hasG) { r.chk.setAttribute('opacity', 1); if (hasG) gsap.set(r.chk, {drawSVG: '100%'}); }
       } else if (instant || !hasG) r.at.setAttribute('opacity', .45);
     });

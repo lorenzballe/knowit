@@ -15,10 +15,10 @@
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
 #read{position:absolute;right:1cqw;top:.4cqh;text-align:right;pointer-events:none;color:var(--k)}
 #read .row{display:flex;align-items:flex-start;justify-content:flex-end;gap:.6cqw}
-#num{font:800 max(5.4cqh,28px)/1 var(--display);letter-spacing:-.01em;color:#2b7fb0;display:inline-block}
+#num{font:800 max(5.4cqh,28px)/1 var(--display);letter-spacing:-.01em;color:#10100c;display:inline-block}
 #unit{font:600 max(2.2cqh,13px)/1 var(--body);opacity:.8;margin-top:.5cqh}
 #cap{font:600 max(1.6cqh,12px)/1.25 var(--body);color:color-mix(in srgb, var(--k) 78%, var(--c));margin-top:.5cqh;margin-left:auto;max-width:46cqw;min-height:2.5em}
-#cap b{font-family:var(--body);font-weight:800;color:#c2441f}
+#cap b{font-family:var(--body);font-weight:800;color:#a8200f}
 #read.compact{display:flex;flex-direction:row-reverse;align-items:center;gap:8px}
 #read.compact #num{font-size:26px}
 #read.compact #unit{font-size:12px}
@@ -28,9 +28,9 @@
 @keyframes nudge{50%{transform:translateY(-5px)}}
 .kit-calm .hint{animation:none;opacity:.6}
 .answered .q{font-size:max(2.4cqh,15px)}
-.say b{color:#c2441f}
+.say b{color:#a8200f}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Drag the mercury · thawing ground" style="--c:#d9ecf3;--k:#0f2836;--edge:#a9cbd8">
+<article class="card" id="card" data-topic="nature" data-kind="Drag the mercury · thawing ground">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE MERCURY</span></div>
     <h2 class="q">What unusual summer temperatures have been recorded in Yakutsk?</h2>
@@ -53,8 +53,8 @@
   try { gsap.registerPlugin(SplitText, ScrambleTextPlugin); } catch (e) {}
   const svg = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say'), stage = Kit.$('stage'), read = Kit.$('read');
   const numEl = Kit.$('num'), capEl = Kit.$('cap');
-  const INK = '#0f2836', WARM = '#d8432a', ICE = '#ffffff', COLD = '#2b7fb0';
-  const THAW = '#c08a5c', WALL = '#4e6e80', PILE = '#3f5d6e';
+  const INK = '#10100c', WARM = '#a8200f', ICE = '#ffffff', COLD = '#10100c';
+  const THAW = '#007a2f', WALL = '#10100c', PILE = '#10100c';
   const S = {T: 20};
   let W, H, fs, GY, GB, D, sx0, tubeX, half, yT, yB, bulbY, bulbR, cx0, cw, hMax, compact = false, sw = 0, sh = 0;
   let el = {}, houses = [], ice = [], drips = [], steam = [], roofs = [], thawY = 0, wph = 0;
@@ -112,7 +112,7 @@
     // ---------- sky: just the sun, low over the roofs ----------
     const sky = el.sky = Kit.mk('g', {}, svg);
     const sunX = cx0 + cw * .38, sunR = clamp(hMax * .3, 6, H * .05), sunY = GY - hMax * .6;
-    el.sun = Kit.mk('circle', {cx: sunX, cy: sunY, r: sunR, fill: '#f2c14e'}, sky);
+    el.sun = Kit.mk('circle', {cx: sunX, cy: sunY, r: sunR, fill: '#ffffff'}, sky);
 
     // ---------- ground: a plain tint of ink on the card colour ----------
     const slab = el.slab = Kit.mk('g', {}, svg);
@@ -128,10 +128,10 @@
     el.thaw = Kit.mk('path', {fill: THAW, 'clip-path': 'url(#cSlab)'}, slab);
     // meltwater seeping down through the thawed layer
     const dg = Kit.mk('g', {'clip-path': 'url(#cSlab)'}, slab);
-    for (let i = 0; i < 6; i++) drips.push({e: Kit.mk('ellipse', {cx: 0, cy: 0, rx: 2, ry: 3.2, fill: COLD, opacity: 0}, dg), x: sx0 + fs * 2 + (i + .3 + R() * .4) / 6 * (W - sx0 - fs * 3), f: R(), v: .25 + R() * .35});
+    for (let i = 0; i < 6; i++) drips.push({e: Kit.mk('ellipse', {cx: 0, cy: 0, rx: 2, ry: 3.2, fill: '#ffffff', opacity: 0}, dg), x: sx0 + fs * 2 + (i + .3 + R() * .4) / 6 * (W - sx0 - fs * 3), f: R(), v: .25 + R() * .35});
     el.front = Kit.mk('path', {fill: 'none', stroke: COLD, 'stroke-width': 2, 'stroke-linejoin': 'round', 'clip-path': 'url(#cSlab)'}, slab);
     // surface: one plain line of tundra, browning with heat
-    el.moss = Kit.mk('path', {d: `M${sx0},${GY} L${W},${GY}`, stroke: '#6f9a6a', 'stroke-width': 3, fill: 'none'}, slab);
+    el.moss = Kit.mk('path', {d: `M${sx0},${GY} L${W},${GY}`, stroke: '#007a2f', 'stroke-width': 3, fill: 'none'}, slab);
     txt(slab, sx0 + fs * .9, GY + fs * 1.15, 'thaws in summer');
     txt(slab, sx0 + fs * .9, clamp(GY + D * .80, GY + fs * 2.6, GB - fs * 1.2), 'permafrost');
 
@@ -154,7 +154,7 @@
       const cwid = w / cols, rh = h * .8 / rows;
       for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
         const lit = (r + c + hi) % 3 === 0;
-        Kit.mk('rect', {x: x + c * cwid + cwid * .3, y: yb - h + h * .14 + r * rh + rh * .18, width: cwid * .4, height: rh * .5, fill: lit ? '#f2c14e' : '#9fb9c6'}, inner);
+        Kit.mk('rect', {x: x + c * cwid + cwid * .3, y: yb - h + h * .14 + r * rh + rh * .18, width: cwid * .4, height: rh * .5, fill: lit ? '#ffffff' : '#4a4a42'}, inner);
       }
       const ck = Kit.mk('path', {d: `M${x + w * (sign > 0 ? .7 : .3)},${yb - h} l${-fs * .3},${h * .25} l${fs * .35},${h * .15} l${-fs * .25},${h * .3}`, stroke: WARM, 'stroke-width': 2, fill: 'none', 'stroke-linejoin': 'round', opacity: 0}, inner);
       const hs = {outer, inner, cx: x + w / 2, pd, sign, tipY, tips, crack: ck, tilt: prevTilt[hi] || 0, target: 0, shown: -1};
@@ -162,7 +162,7 @@
     });
 
     // ---------- steam off the warming ground: a few wavy wisps ----------
-    const sg = Kit.mk('g', {fill: 'none', stroke: '#7d939e', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    const sg = Kit.mk('g', {fill: 'none', stroke: '#ffffff', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
     for (let i = 0; i < 4; i++) {
       const s = fs * (.7 + R() * .3);
       steam.push({e: Kit.mk('path', {d: `M0,0 q${s * .35},${-s * .4} 0,${-s * .8} q${-s * .35},${-s * .4} 0,${-s * .8}`, opacity: 0}, sg), x: sx0 + fs * 2 + (i + .5) / 4 * (W - sx0 - fs * 3), f: R(), v: .15 + R() * .2});
@@ -187,7 +187,7 @@
     const y35 = yOf(35), y38 = yOf(38);
     el.band = Kit.mk('g', {opacity: 0}, th);
     el.bracket = Kit.mk('path', {d: `M${mx + 5},${y38} H${mx} V${y35} H${mx + 5}`, stroke: WARM, 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, el.band);
-    if (!compact) txt(el.band, mx + fs * .7, (y35 + y38) / 2 + fs * .35, 'recent spikes', {fill: '#c2441f'});
+    if (!compact) txt(el.band, mx + fs * .7, (y35 + y38) / 2 + fs * .35, 'recent spikes', {fill: '#a8200f'});
     el.handle = Kit.mk('g', {}, th);
     Kit.mk('circle', {r: half * 1.5, style: 'fill:var(--c)', stroke: INK, 'stroke-width': 2.2}, el.handle);
     Kit.mk('circle', {r: half * .55, fill: INK}, el.handle);
@@ -218,8 +218,8 @@
     thawY = GY + thawFrac(T) * D;
     drawThaw();
     el.front.setAttribute('stroke', col(COLD, WARM, k));
-    el.sun.setAttribute('fill', col('#f2c14e', '#e2552f', k));
-    el.moss.setAttribute('stroke', col('#6f9a6a', '#a77a45', k));
+    el.sun.setAttribute('fill', col('#ffffff', WARM, k));
+    el.moss.setAttribute('stroke', col('#007a2f', WARM, k));
     roofs.forEach(r => r.setAttribute('fill', col('#ffffff', WALL, Math.min(1, k * 2.2))));
     el.band.setAttribute('opacity', revealed ? 1 : (clamp((T - 33) / 3, 0, 1) * .85).toFixed(3));
     houses.forEach(h => {
@@ -231,7 +231,6 @@
     if (!scrambling) numEl.textContent = '+' + Math.round(T);
     numEl.style.color = c;
     if (!revealed) capEl.textContent = T < 26 ? 'a usual summer high' : T < 35 ? 'hotter than usual' : 'into the recent spikes';
-    card.style.setProperty('--c', col('#d9ecf3', '#f5dccb', k * .9));
   }
 
   function applyHouse(h) {

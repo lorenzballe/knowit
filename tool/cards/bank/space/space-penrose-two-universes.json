@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A map of the simplest Einstein solution, with black holes, white holes and universes as nodes joined by edges. The reader taps each question mark to extend the map until every edge ends at a singularity or infinity.",
-    "ground": "#0b0b11"
+    "label": "A map of the simplest Einstein solution, with black holes, white holes and universes as nodes joined by edges. The reader taps each question mark to extend the map until every edge ends at a singularity or infinity."
   },
   "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M",

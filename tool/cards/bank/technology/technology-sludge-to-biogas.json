@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Four step tiles to put in order: sludge comes in, the sealed tank, biogas is collected, and the plant's own power. Tap them in the order the energy travels.",
-    "ground": "#ece2cb"
+    "label": "Four step tiles to put in order: sludge comes in, the sealed tank, biogas is collected, and the plant's own power. Tap them in the order the energy travels."
   },
   "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=vmwPachp1SE&t=352s",

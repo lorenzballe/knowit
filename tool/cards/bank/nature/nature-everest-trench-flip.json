@@ -29,8 +29,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "A drawing of Mount Everest flipped upside down and sunk into the Mariana Trench, with the empty water left above its peak. A draggable line asks the reader where Everest's peak will stop, then how sure they are.",
-    "graded": false,
-    "ground": "#0b2346"
+    "graded": false
   },
   "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=6rdDnFsCYSo",

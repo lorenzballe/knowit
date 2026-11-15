@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive card on freediving. It asks at what depth a breath-hold dive is most tiring, and the reader taps the depth they think is hardest. The reveal: the most tiring stretch is the climb back up, around 35 to 40 metres.",
-    "ground": "#0a2a52"
+    "label": "Interactive card on freediving. It asks at what depth a breath-hold dive is most tiring, and the reader taps the depth they think is hardest. The reveal: the most tiring stretch is the climb back up, around 35 to 40 metres."
   },
   "source": "Geopop, “Immergersi in apnea a 100 metri di profondità. Le tecniche del freediving con Antonio Mogavero” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=gFnFsXjqoHo&t=284s",

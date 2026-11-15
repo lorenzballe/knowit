@@ -30,8 +30,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "A horizontal scale with a draggable marker asks the reader to guess how many people lived in Kowloon Walled City, where each dot equals 100 people. Text links the walled city to Hong Kong's cage homes today.",
-    "graded": false,
-    "ground": "#efebe2"
+    "graded": false
   },
   "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=6fBSVSmYSaE&t=402s",

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Diagram of a rock layer cut by a fault. The question asks what happens to the red layer where the fault cuts it. Options: runs on unbroken; drops with a flat base; drops with a dipping base.",
-    "ground": "#eee4cf"
+    "label": "Diagram of a rock layer cut by a fault. The question asks what happens to the red layer where the fault cuts it. Options: runs on unbroken; drops with a flat base; drops with a dipping base."
   },
   "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=2956s",

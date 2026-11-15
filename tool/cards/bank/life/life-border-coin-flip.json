@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A drawing of four people running toward a border, with the question: what is the chance of being killed or caught when fleeing North Korea? Tap the drawing to watch where they land.",
-    "ground": "#0d3466"
+    "label": "A drawing of four people running toward a border, with the question: what is the chance of being killed or caught when fleeing North Korea? Tap the drawing to watch where they land."
   },
   "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=135s",

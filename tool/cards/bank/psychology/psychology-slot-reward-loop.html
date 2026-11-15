@@ -34,9 +34,9 @@
   const {Engine, Bodies, Composite, Body} = Matter;
   const cv = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
   // meaning colours: red = the house, gold = reward (coins, dopamine, money back). Everything else is the card's ink and colour.
-  let Q = {c: '#9b5cff', ink: '#1b1423', paper: '#fbf6ee', ink2: '#5a3d8c', ink3: '#3d2a63', soft: '#cdb0ff', line: '#6f6488', gfill: '#e2dbe6',
-    red: '#d9352b', red2: '#a8241f', gold: '#f2b33d', gold2: '#b67a14'};
-  let RGB = {ink: [27, 20, 35], paper: [251, 246, 238], gold: [242, 179, 61]};
+  let Q = {c: '#9b5cff', ink: '#391f67', paper: '#ffffff', ink2: '#653aac', ink3: '#7947ca', soft: '#d2b6ff', line: '#9284ab', gfill: '#e3dfe9',
+    red: '#5a2ea6', red2: '#7440ca', gold: '#f2b33d', gold2: '#5a2ea6'};
+  let RGB = {ink: [57, 31, 103], paper: [255, 255, 255], gold: [242, 179, 61]};
   const WINS = [0, 1, 2, 0, 1, 0, 2, 0], SPINS = WINS.length;   // 8 coins in, 6 back
   const LOSE = [[2, 1, 3], [1, 3, 2], [3, 2, 1], [2, 3, 1]];
   const BET = 33.5, BACK = 25;                                  // Italy 2022, € billions (Geopop)
@@ -63,13 +63,14 @@
   const css = a => `rgb(${a[0]},${a[1]},${a[2]})`;
   const lum = a => .299 * a[0] + .587 * a[1] + .114 * a[2];
   function palette(cs) {
-    const K = rgbOf(cs.getPropertyValue('--k').trim(), '#1b1423'), C = rgbOf(cs.getPropertyValue('--c').trim(), '#9b5cff');
-    const dark = lum(K) < lum(C) ? K : mixA([24, 16, 40], C, .8);
-    const light = lum(K) > lum(C) ? K : mixA([255, 251, 244], C, .92);
+    const K = rgbOf(cs.getPropertyValue('--k').trim(), '#ffffff'), C = rgbOf(cs.getPropertyValue('--c').trim(), '#9b5cff'),
+      E = rgbOf(cs.getPropertyValue('--edge').trim(), '#5a2ea6');
+    const dark = lum(K) < lum(C) ? K : mixA([24, 16, 40], E, .5);
+    const light = lum(K) > lum(C) ? K : mixA([255, 255, 255], C, .92);
     RGB = {ink: dark, paper: light, gold: [242, 179, 61]};
     Q = {c: css(C), ink: css(dark), paper: css(light), ink2: css(mixA(dark, C, .55)), ink3: css(mixA(dark, C, .35)),
       soft: css(mixA(light, C, .55)), line: css(mixA(dark, light, .55)), gfill: css(mixA(dark, light, .14)),
-      red: '#d9352b', red2: '#a8241f', gold: '#f2b33d', gold2: '#b67a14'};
+      red: css(E), red2: css(mixA(E, C, .6)), gold: '#f2b33d', gold2: css(E)};
   }
 
   // ---------- paper: flat, slightly torn edges, no shadow ----------

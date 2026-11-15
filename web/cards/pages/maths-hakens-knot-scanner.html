@@ -16,11 +16,11 @@
 #dial{flex:0 0 max(6.4cqh,44px);width:100%;display:block}
 #chart text,#dial text{font-family:var(--body);fill:var(--k)}
 #why .body{font:500 max(1.95cqh,13px)/1.35 var(--body);color:var(--k);margin:0}
-.say b{color:#b94f0c}
+.say b{color:#ffd23f}
 .answered .q{font-size:max(2.4cqh,15px)}
-.keep b{color:#b94f0c}
+.keep b{color:#ffd23f}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Turn the dial · sure but slow" style="--c:#efe3cc;--k:#1e1a2b;--edge:#000">
+<article class="card" id="card" data-topic="maths" data-kind="Turn the dial · sure but slow">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HAKEN 1961</span></div>
     <h2 class="q">What was the first algorithm to tell any knot from the unknot?</h2>
@@ -40,10 +40,10 @@
 (() => {
   const card = Kit.$('card'), cv = Kit.$('knot'), chart = Kit.$('chart'), dial = Kit.$('dial'), stage = Kit.$('stage');
   // paper, ink, and one meaning colour (orange = already checked / too long)
-  const GROUND = '#efe3cc', INK = '#1e1a2b', AMBER = '#b94f0c';
+  const GROUND = '#0E9A70', INK = '#ffffff', AMBER = '#ffd23f', EDGE = '#085941';
   const mix = d3.interpolateRgb(GROUND, INK);
   const MUTE = mix(.62), SOFT = mix(.3);
-  const WOOD = '#d9b07a', BODYP = '#e0a21c';
+  const WOOD = '#ffffff', BODYP = '#ffd23f';
 
   // Knots to feed in: torus knots, sorted by how many crossings they have.
   const gcd = (a, b) => b ? gcd(b, a % b) : a;
@@ -118,13 +118,13 @@
       // sharpened wood
       c.fillStyle = WOOD; c.beginPath(); c.moveTo(tip, sy); c.lineTo(tip - cone, sy - ph); c.lineTo(tip - cone, sy + ph); c.closePath(); c.fill();
       // graphite point
-      c.fillStyle = INK; c.beginPath(); c.moveTo(tip, sy); c.lineTo(tip - 2.8, sy - 1.45); c.lineTo(tip - 2.8, sy + 1.45); c.closePath(); c.fill();
+      c.fillStyle = EDGE; c.beginPath(); c.moveTo(tip, sy); c.lineTo(tip - 2.8, sy - 1.45); c.lineTo(tip - 2.8, sy + 1.45); c.closePath(); c.fill();
       // painted body
       c.fillStyle = BODYP; c.fillRect(tip - cone - bodyL, sy - ph, bodyL, ph * 2);
     }
 
     // the frame whites out at the reveal
-    if (flash.v > .001) { c.fillStyle = `rgba(255,252,246,${flash.v})`; c.fillRect(0, 0, W, H); }
+    if (flash.v > .001) { c.fillStyle = `rgba(255,255,255,${flash.v})`; c.fillRect(0, 0, W, H); }
 
     // captions
     const LF = `500 ${fs}px ${BODY}`;
@@ -190,7 +190,7 @@
     const xl = Kit.mk('text', {x: CW - mr, y: CH - cfs * .2, 'font-size': cfs, 'font-weight': 500, 'text-anchor': 'end', style: `fill:${MUTE}`}, chart); xl.textContent = 'Bigger knots →';
 
     const g = Kit.mk('g', {'clip-path': 'url(#cc)'}, chart);
-    areaP = Kit.mk('path', {style: 'fill:color-mix(in srgb, #b94f0c 20%, var(--c))'}, g);
+    areaP = Kit.mk('path', {style: 'fill:color-mix(in srgb, #ffd23f 25%, var(--c))'}, g);
     lineP = Kit.mk('path', {fill: 'none', stroke: AMBER, 'stroke-width': 2.6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
     uniL = Kit.mk('line', {x1: ml, x2: CW - mr, y1: -999, y2: -999, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '7 4'}, g);
     uniT = Kit.mk('text', {x: ml + 6, y: -999, 'font-size': cfs, 'font-weight': 700}, g);

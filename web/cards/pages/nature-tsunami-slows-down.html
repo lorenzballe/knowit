@@ -15,13 +15,13 @@
 .done #pic{cursor:ew-resize}
 #opts{display:flex;gap:2cqw}
 .opt{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 6%,var(--c));border:0;box-shadow:inset 0 0 0 max(.2cqh,1px) color-mix(in srgb,var(--k) 30%,var(--c));border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere;transition:background .15s,box-shadow .15s}
-.opt.on{background:#1f5f94;color:#fdf3d6;box-shadow:inset 0 0 0 max(.2cqh,1px) #1f5f94}
+.opt.on{background:var(--k);color:var(--c);box-shadow:inset 0 0 0 max(.2cqh,1px) var(--k)}
 #why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{color:#1f5f94;min-height:1.1em}
+#why .big{color:var(--k);min-height:1.1em}
 #why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);color:var(--k)}
-#why .body b,.say b{color:#1f5f94}
+#why .body b,.say b{color:#0b2f8a}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Bet · how sure · watch" style="--c:#f3d98e;--k:#1b1410;--edge:#dcbf6c">
+<article class="card" id="card" data-topic="nature" data-kind="Bet · how sure · watch">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TSUNAMI</span></div>
     <h2 class="q">What happens to a tsunami's speed as it approaches the coast?</h2>
@@ -47,7 +47,7 @@
   if (window.SplitText) gsap.registerPlugin(SplitText);
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), opts = Kit.$('opts');
   // flat colours on sand paper: deep blue (wave and speed), flat sea blue, red-orange (height), and tints of the card's ink
-  const CY = '#1f5f94', AM = '#d5532a', SEA = '#3b86c0', DOT = '#fdf3d6', INK = '#1b1410', MUTE = 'rgba(27,20,16,.72)';
+  const CY = '#10100c', AM = '#0b2f8a', SEA = '#007a2f', DOT = '#f4fff6', INK = '#10100c', MUTE = 'rgba(16,16,12,.72)';
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const RIGHT = 2;
   let pick = -1, phase = 'bet', tween = null, twinkles = [];

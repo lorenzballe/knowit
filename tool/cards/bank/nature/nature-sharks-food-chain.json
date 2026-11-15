@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question asking what happens to the fish that sharks eat if sharks are removed from the top of the ocean food chain. Three choices are offered: More, Fewer, or About the same. The reader picks one, and the page then reveals the answer.",
-    "ground": "#8fd0dc"
+    "label": "Question asking what happens to the fish that sharks eat if sharks are removed from the top of the ocean food chain. Three choices are offered: More, Fewer, or About the same. The reader picks one, and the page then reveals the answer."
   },
   "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=138s",

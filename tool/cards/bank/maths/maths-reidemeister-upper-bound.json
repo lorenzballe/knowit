@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A slider labelled crossings, from 1 upward, sets the number n of crossings in a knot. A marker shows how many Reidemeister moves the bound allows, which grows steeply as n increases.",
-    "ground": "#0d3c71"
+    "label": "A slider labelled crossings, from 1 upward, sets the number n of crossings in a knot. A marker shows how many Reidemeister moves the bound allows, which grows steeply as n increases."
   },
   "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=696s",

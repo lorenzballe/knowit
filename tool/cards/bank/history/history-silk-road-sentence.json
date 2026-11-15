@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A quiz asks what punishment Silk Road's founder received and when. Four answer choices appear, one marked as the correct answer, with a note to pick a sentence and then rate confidence.",
-    "ground": "#f3ecdf"
+    "label": "A quiz asks what punishment Silk Road's founder received and when. Four answer choices appear, one marked as the correct answer, with a note to pick a sentence and then rate confidence."
   },
   "source": "Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=vW8FrJywMhA&t=391s",

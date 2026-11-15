@@ -19,9 +19,9 @@
 #why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
 #why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0}
-.sun{color:#f4a640}.ice{color:#8fd0f2}
+.sun{color:var(--edge)}.ice{color:#2a78a8}
 </style>
-<article class="card" id="card" data-topic="life" data-kind="Pick one · how sure" style="--c:#0c1a21;--k:#eef7f9;--edge:#04090c">
+<article class="card" id="card" data-topic="life" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
     <h2 class="q">In 2019 an EU vote targeted summer time. What did it abolish?</h2>
@@ -47,8 +47,8 @@ const RIGHT = 1;
 let pick = -1;
 const svg = Kit.$('pic');
 // flat inks: card ink, card colour and their mixes; two meaning colours
-const INK = '#eef7f9', BG = '#0c1a21', T1 = '#1f2e35', T2 = '#455157', T3 = '#889498';
-const SUM = ['#f4a640', '#c9761f'], WIN = ['#8fd0f2', '#4a95c9'];
+const INK = 'var(--k)', BG = 'var(--c)', T1 = 'color-mix(in srgb, var(--k) 8%, var(--c))', T2 = 'color-mix(in srgb, var(--k) 25%, var(--c))', T3 = 'color-mix(in srgb, var(--k) 60%, var(--c))';
+const SUM = ['#a8714a', '#a8714a'], WIN = ['#2a78a8', '#2a78a8'];
 const S = {L: .45, R: .45, aL: .25, aR: .25, flow: 0, off: 0, revealed: false, t: 0};
 let G = null, slosh = null, prevL = .45;
 

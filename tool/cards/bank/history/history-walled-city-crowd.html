@@ -14,7 +14,7 @@
 #why .body{font:500 max(1.8cqh,13px)/1.33 var(--body);margin:0;overflow-wrap:break-word}
 .answered .q{font-size:max(2.3cqh,15px)}
 </style>
-<article class="card" id="card" data-topic="history" data-kind="Drag to aim · launch the crowd" style="--c:#efebe2;--k:#111111;--edge:#cfc8b8">
+<article class="card" id="card" data-topic="history" data-kind="Drag to aim · launch the crowd">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">AIM A GUESS</span></div>
     <h2 class="q">Before Hong Kong's cage homes, how many crammed into Kowloon Walled City?</h2>
@@ -32,13 +32,13 @@
 <script>
 (() => {
   const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say');
-  const ACC = [255, 45, 20], RED = 'rgb(255,45,20)';
+  const ACC = [212, 42, 20], RED = 'rgb(212,42,20)';
   const C = 30, PER = 100, MAXG = 80000, REAL = 50000, NREAL = REAL / PER, NOVER = (MAXG - REAL) / PER, OLV = 10, OEND = 3;
   const rnd = Kit.rnd;
   const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
   // Flat colours: the card's ink, the card's paper, and tints between them.
-  let KR = [17, 17, 17], CR = [239, 235, 226], INK = '#111111';
+  let KR = [16, 16, 12], CR = [255, 176, 0], INK = '#10100c';
   const hexRGB = s => { s = (s || '').trim(); if (/^#[0-9a-f]{3}$/i.test(s)) s = '#' + s.slice(1).split('').map(h => h + h).join(''); return /^#[0-9a-f]{6}$/i.test(s) ? [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16)) : null; };
   const mix = n => { const t = Math.max(0, Math.min(100, n)) / 100; return `rgb(${KR.map((v, i) => Math.round(v * t + CR[i] * (1 - t))).join(',')})`; };
   let CC = [];

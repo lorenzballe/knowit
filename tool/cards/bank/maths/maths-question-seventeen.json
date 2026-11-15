@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive card titled 'Roll the coin' asking why nobody answered question 17 correctly. It shows coin A, with a third of coin B's radius, rolling once around B, with a tap-to-roll control. The answer key said B: 3.",
-    "ground": "#16241f"
+    "label": "Interactive card titled 'Roll the coin' asking why nobody answered question 17 correctly. It shows coin A, with a third of coin B's radius, rolling once around B, with a tap-to-roll control. The answer key said B: 3."
   },
   "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=86s",

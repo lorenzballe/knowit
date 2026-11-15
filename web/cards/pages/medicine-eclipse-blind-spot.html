@@ -12,12 +12,12 @@
 <style>
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
-#pic text{font-family:var(--body);fill:#2a1e12}
+#pic text{font-family:var(--body);fill:var(--k)}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
 .q{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="medicine" data-kind="Drag a guess · the stare" style="--c:#efe6d2;--k:#2a1e12;--edge:#c9b68f">
+<article class="card" id="card" data-topic="medicine" data-kind="Drag a guess · the stare">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SOLAR RETINOPATHY</span></div>
     <h2 class="q">A 20-year-old stared at the 2017 eclipse. How long until permanent damage?</h2>
@@ -36,13 +36,13 @@
 (() => {
   if (typeof DrawSVGPlugin !== 'undefined') gsap.registerPlugin(DrawSVGPlugin);
   const svg = Kit.$('pic');
-  const INK = '#2a1e12', PAPER = '#efe6d2', RED = '#b3261e', YEL = '#eeb339';
+  const INK = '#ffffff', PAPER = '#FF3B30', EDGE = '#9e1c14', ACC = '#ffcc00', YEL = ACC;
   const mix = (a, b, p) => {
     const h = s => [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16));
     const A = h(a), B = h(b);
     return '#' + A.map((v, i) => Math.round(v * p + B[i] * (1 - p)).toString(16).padStart(2, '0')).join('');
   };
-  const WHITE = '#f9f5ec', TISSUE = mix(INK, PAPER, .28), IRIS = mix(INK, PAPER, .62);
+  const WHITE = '#ffffff', TISSUE = mix(EDGE, WHITE, .35), IRIS = mix(EDGE, WHITE, .62);
   const MAXT = 180, REAL = 6;
   const UMIN = Math.sqrt(1 / MAXT), U6 = Math.sqrt(REAL / MAXT);
   const PH = [0, 1, 2].map(() => Kit.rnd() * 6.283), PD = Array.from({length: 6}, () => (Kit.rnd() - .5) * .9);
@@ -103,14 +103,14 @@
 
     // ---------- the eye, in section ----------
     const eye = E.eye = Kit.mk('g', {}, map);
-    Kit.mk('rect', {x: f1(cx + R * .7), y: f1(cy - R * .09), width: f1(R * .55), height: f1(R * .18), rx: f1(R * .06), fill: TISSUE, stroke: INK, 'stroke-width': 2, transform: `rotate(18 ${f1(cx)} ${f1(cy)})`}, eye);
-    const ball = Kit.mk('circle', {cx, cy, r: R, fill: WHITE, stroke: INK, 'stroke-width': 2.2}, eye);
+    Kit.mk('rect', {x: f1(cx + R * .7), y: f1(cy - R * .09), width: f1(R * .55), height: f1(R * .18), rx: f1(R * .06), fill: TISSUE, stroke: EDGE, 'stroke-width': 2, transform: `rotate(18 ${f1(cx)} ${f1(cy)})`}, eye);
+    const ball = Kit.mk('circle', {cx, cy, r: R, fill: WHITE, stroke: EDGE, 'stroke-width': 2.2}, eye);
     const ch = R * .53, chx = cx - R * .848;
-    const cornea = Kit.mk('path', {d: `M${f1(chx)},${f1(cy - ch)} A${f1(R * .62)},${f1(R * .62)} 0 0 0 ${f1(chx)},${f1(cy + ch)}`, fill: WHITE, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, eye);
+    const cornea = Kit.mk('path', {d: `M${f1(chx)},${f1(cy - ch)} A${f1(R * .62)},${f1(R * .62)} 0 0 0 ${f1(chx)},${f1(cy + ch)}`, fill: WHITE, stroke: EDGE, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, eye);
     const rr = R * .92, ra = 66 * Math.PI / 180;
     Kit.mk('path', {d: `M${f1(cx + rr * Math.cos(ra))},${f1(cy - rr * Math.sin(ra))} A${f1(rr)},${f1(rr)} 0 0 1 ${f1(cx + rr * Math.cos(ra))},${f1(cy + rr * Math.sin(ra))}`, fill: 'none', stroke: TISSUE, 'stroke-width': f1(R * .08), 'stroke-linecap': 'round'}, eye);
     [-1, 1].forEach(s => Kit.mk('line', {x1: f1(cx - R * .8), y1: f1(cy + s * pup), x2: f1(cx - R * .8), y2: f1(cy + s * R * .52), stroke: IRIS, 'stroke-width': f1(R * .07), 'stroke-linecap': 'round'}, eye));
-    Kit.mk('ellipse', {cx: f1(lensX), cy, rx: f1(R * .1), ry: f1(R * .25), fill: PAPER, stroke: INK, 'stroke-width': 1.6}, eye);
+    Kit.mk('ellipse', {cx: f1(lensX), cy, rx: f1(R * .1), ry: f1(R * .25), fill: WHITE, stroke: EDGE, 'stroke-width': 1.6}, eye);
     E.lines = [ball, cornea];
 
     // the sunlight, focused by the lens onto one point
@@ -127,17 +127,17 @@
     const clip = Kit.mk('clipPath', {id: 'sunclip'}, defs);
     Kit.mk('circle', {cx: sx, cy: sy, r: rs}, clip);
     Kit.mk('circle', {cx: sx, cy: sy, r: rs, fill: YEL}, sun);
-    Kit.mk('circle', {cx: f1(sx + rs * .3), cy: f1(sy - rs * .1), r: f1(rs * .97), fill: INK, 'clip-path': 'url(#sunclip)'}, sun);
+    Kit.mk('circle', {cx: f1(sx + rs * .3), cy: f1(sy - rs * .1), r: f1(rs * .97), fill: EDGE, 'clip-path': 'url(#sunclip)'}, sun);
 
     // the focused light on the fovea, and the flash of the burn
     E.glare = Kit.mk('circle', {cx: fx, cy: fy, r: R * .2, fill: YEL, 'pointer-events': 'none'}, map);
-    E.flash = Kit.mk('circle', {cx: fx, cy: fy, r: R * .6, fill: '#fff3c4', opacity: 0, 'pointer-events': 'none'}, map);
+    E.flash = Kit.mk('circle', {cx: fx, cy: fy, r: R * .6, fill: YEL, opacity: 0, 'pointer-events': 'none'}, map);
 
     // the scotoma: a black burn on the fovea
     const pitG = E.pitG = Kit.mk('g', {}, map);
     const rc = Math.max(4, R * .085);
-    E.pit = Kit.mk('path', {d: closed(ringPts(0, rc, .16, 40, fx, fy)), fill: INK}, pitG);
-    E.rings = [Kit.mk('path', {d: closed(ringPts(1, rc * 1.55, .12, 48, fx, fy)), fill: 'none', stroke: RED, 'stroke-width': 1.8}, pitG)];
+    E.pit = Kit.mk('path', {d: closed(ringPts(0, rc, .16, 40, fx, fy)), fill: EDGE}, pitG);
+    E.rings = [Kit.mk('path', {d: closed(ringPts(1, rc * 1.55, .12, 48, fx, fy)), fill: 'none', stroke: EDGE, 'stroke-width': 1.8}, pitG)];
 
     // ---------- labels ----------
     const mkLab = (a, b, col) => {
@@ -147,7 +147,7 @@
       t1.style.fill = col;
       return {g, w: Math.max(t1.getComputedTextLength(), t2.getComputedTextLength())};
     };
-    const fo = mkLab('Fovea', 'where you look', INK), so = mkLab('Scotoma', 'a black spot for life', RED);
+    const fo = mkLab('Fovea', 'where you look', INK), so = mkLab('Scotoma', 'a black spot for life', INK);
     const lw = Math.max(fo.w, so.w), lx = W - 3 - lw;
     E.fovL = fo.g; E.scoL = so.g;
 
@@ -159,9 +159,9 @@
       const c2 = side ? [ex - (ex - from[0]) * .3, ey] : [ex, ey - (ey - from[1]) * .35];
       return `M${f1(from[0])},${f1(from[1])} C${f1(c1[0])},${f1(c1[1])} ${f1(c2[0])},${f1(c2[1])} ${f1(ex)},${f1(ey)}`;
     };
-    E.fovLead = Kit.mk('path', {d: lead([fx, fy + 3]), fill: 'none', stroke: INK, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, fo.g);
-    Kit.mk('circle', {cx: fx, cy: fy, r: 2.4, fill: INK}, fo.g);
-    E.scoLead = Kit.mk('path', {d: lead([fx + rc * 1.1, fy + rc * 1.2]), fill: 'none', stroke: RED, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, svg);
+    E.fovLead = Kit.mk('path', {d: lead([fx, fy + 3]), fill: 'none', stroke: EDGE, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, fo.g);
+    Kit.mk('circle', {cx: fx, cy: fy, r: 2.4, fill: EDGE}, fo.g);
+    E.scoLead = Kit.mk('path', {d: lead([fx + rc * 1.1, fy + rc * 1.2]), fill: 'none', stroke: EDGE, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, svg);
     svg.appendChild(E.scoL);
 
     // ---------- the time line ----------
@@ -175,18 +175,18 @@
     });
 
     // the stretch of line between your guess and hers
-    E.span = Kit.mk('path', {fill: 'none', stroke: RED, 'stroke-width': 3.4, 'stroke-linecap': 'round'}, svg);
+    E.span = Kit.mk('path', {fill: 'none', stroke: ACC, 'stroke-width': 3.4, 'stroke-linecap': 'round'}, svg);
 
     // the real answer: a red flag at 6 s, its chip on the same row as yours
     E.realG = Kit.mk('g', {}, svg);
-    E.pole = Kit.mk('path', {fill: 'none', stroke: RED, 'stroke-width': 2, 'stroke-linecap': 'round'}, E.realG);
-    E.dot = Kit.mk('circle', {r: fs * .3, fill: RED, stroke: PAPER, 'stroke-width': 1.5}, E.realG);
+    E.pole = Kit.mk('path', {fill: 'none', stroke: ACC, 'stroke-width': 2, 'stroke-linecap': 'round'}, E.realG);
+    E.dot = Kit.mk('circle', {r: fs * .3, fill: ACC, stroke: PAPER, 'stroke-width': 1.5}, E.realG);
     E.realChip = Kit.mk('g', {}, svg);
-    E.realLink = Kit.mk('path', {fill: 'none', stroke: RED, 'stroke-width': 2, 'stroke-linecap': 'round'}, E.realChip);
-    const rtx = text(E.realChip, 0, CY + fs * .36, 'her: 6 s', {'text-anchor': 'middle', 'font-weight': 700, fill: PAPER});
-    rtx.style.fill = PAPER;
+    E.realLink = Kit.mk('path', {fill: 'none', stroke: ACC, 'stroke-width': 2, 'stroke-linecap': 'round'}, E.realChip);
+    const rtx = text(E.realChip, 0, CY + fs * .36, 'her: 6 s', {'text-anchor': 'middle', 'font-weight': 700, fill: EDGE});
+    rtx.style.fill = EDGE;
     const rw = E.realChipW = rtx.getComputedTextLength() + fs * 1.1;
-    E.realChip.insertBefore(Kit.mk('rect', {x: -rw / 2, y: CY - fs * .68, width: rw, height: fs * 1.36, rx: fs * .68, fill: RED}), rtx);
+    E.realChip.insertBefore(Kit.mk('rect', {x: -rw / 2, y: CY - fs * .68, width: rw, height: fs * 1.36, rx: fs * .68, fill: ACC}), rtx);
 
     // your pin
     const pg = E.pinG = Kit.mk('g', {}, svg), s = fs * .44;

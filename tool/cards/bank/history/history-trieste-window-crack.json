@@ -30,8 +30,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "A dark sea-depth scale with a yellow marker the reader drags downward. The question asks how deep the bathyscaphe Trieste was when one outer plexiglas window pane cracked in 1960.",
-    "graded": false,
-    "ground": "#1f6fa8"
+    "graded": false
   },
   "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=CYUaD_ROqGM&t=461s",
