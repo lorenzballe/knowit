@@ -4760,4 +4760,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String shareDaySure(int n) {
     return 'pewność $n%';
   }
+
+  @override
+  String get shareDayHeadline => 'Dzisiejsza piątka';
 }

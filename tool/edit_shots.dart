@@ -117,13 +117,13 @@ Map<String, Object> _aMonthIn() {
   // Five cards that ask something, answered: four right, one wrong, so the
   // day's picture has a score to show.
   final List<Pill> deck = [
-    for (final topic in [
-      'Psychology',
-      'Space',
-      'History',
-      'Science',
-      'Language',
-    ])
+    // Three with pictures, as most of a day's five are now, and two without.
+    for (final topic in ['Space', 'History', 'Maths'])
+      ...PillBank.cards
+          .where((p) => p.topic == topic && CardThumb.has(p, CardSide.front))
+          .skip(4)
+          .take(1),
+    for (final topic in ['Psychology', 'Science'])
       ...PillBank.cards
           .where(
             (p) =>
@@ -208,9 +208,14 @@ void main() {
   });
 
   testWidgets('the day read, and seen again', (tester) async {
+    final Map<String, Object> prefs = _aMonthIn();
     // ignore: invalid_use_of_visible_for_testing_member
-    SharedPreferences.setMockInitialValues(_aMonthIn());
+    SharedPreferences.setMockInitialValues(prefs);
     await tester.pumpWidget(const AstutoApp());
+    await _precache(tester, [
+      for (final id in prefs['knowit.todayDeckIds']! as List<String>)
+        if (PillBank.byId(id) != null) PillBank.byId(id)!,
+    ]);
     await _settle(tester);
     await _shoot(tester, '1-today');
 

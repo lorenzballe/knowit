@@ -4421,4 +4421,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String shareDaySure(int n) {
     return '확신 $n%';
   }
+
+  @override
+  String get shareDayHeadline => '오늘의 다섯 장';
 }

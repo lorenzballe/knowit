@@ -1077,5 +1077,6 @@
   "shareDayTitle": "Deel je dag",
   "shareDayRead": "Vijf kaarten, gelezen",
   "shareDayTurn": "Vijf kaarten per dag. Jouw beurt.",
-  "shareDaySure": "{n}% zeker"
+  "shareDaySure": "{n}% zeker",
+  "shareDayHeadline": "De vijf van vandaag"
 }

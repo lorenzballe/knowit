@@ -4535,4 +4535,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String shareDaySure(int n) {
     return '%$n emin';
   }
+
+  @override
+  String get shareDayHeadline => 'Bugünün beşi';
 }

@@ -4471,4 +4471,8 @@ class RemoteLocalizations extends AppLocalizations {
   String shareDaySure(int n) =>
       _words.format('shareDaySure', localeName, {'n': n}) ??
       _base.shareDaySure(n);
+
+  @override
+  String get shareDayHeadline =>
+      _words.text('shareDayHeadline') ?? _base.shareDayHeadline;
 }

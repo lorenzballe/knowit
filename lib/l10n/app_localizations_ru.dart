@@ -4773,4 +4773,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String shareDaySure(int n) {
     return 'уверенность $n%';
   }
+
+  @override
+  String get shareDayHeadline => 'Пять карточек дня';
 }

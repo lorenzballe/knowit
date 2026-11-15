@@ -4626,4 +4626,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String shareDaySure(int n) {
     return 'sûr à $n %';
   }
+
+  @override
+  String get shareDayHeadline => 'Les cinq du jour';
 }

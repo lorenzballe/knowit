@@ -907,28 +907,23 @@ class AppState extends ChangeNotifier {
   /// what was asked or what was said.
   DaySummary get daySummary {
     final squares = StringBuffer();
-    final marks = <DayMark>[];
     var asked = 0;
     var right = 0;
     for (final p in todaysDeck.take(kPillsPerDay)) {
       if (!p.asksSomething) {
         squares.write(DaySummary.readSquare);
-        marks.add(DayMark.read);
         continue;
       }
       final Answer? given = answers[p.id];
       if (given == null) {
         squares.write(DaySummary.passedSquare);
-        marks.add(DayMark.passed);
       } else if (!p.isGraded) {
         squares.write(DaySummary.sidedSquare);
-        marks.add(DayMark.sided);
       } else {
         asked++;
         final bool ok = p.challenge.accepts(given.response);
         if (ok) right++;
         squares.write(ok ? DaySummary.rightSquare : DaySummary.wrongSquare);
-        marks.add(ok ? DayMark.right : DayMark.wrong);
       }
     }
     final todays = judgements.where((j) => j.on == dateKey(today)).toList();
@@ -938,7 +933,6 @@ class AppState extends ChangeNotifier {
     return DaySummary(
       edition: editionOf(today),
       squares: squares.toString(),
-      marks: marks,
       asked: asked,
       right: right,
       sure: sure,
@@ -3621,15 +3615,10 @@ class AppState extends ChangeNotifier {
 }
 
 /// A day, said without spoiling it.
-/// How one of the day's cards went, as the day sent to a friend shows it:
-/// read, got right, got wrong, a side taken, or passed.
-enum DayMark { read, right, wrong, sided, passed }
-
 class DaySummary {
   const DaySummary({
     required this.edition,
     required this.squares,
-    this.marks = const [],
     required this.asked,
     required this.right,
     required this.sure,
@@ -3645,9 +3634,6 @@ class DaySummary {
 
   final int edition;
   final String squares;
-
-  /// The same five, one mark a card, in the order they were dealt.
-  final List<DayMark> marks;
 
   /// Cards that could be marked and were answered, and how many went right.
   final int asked;

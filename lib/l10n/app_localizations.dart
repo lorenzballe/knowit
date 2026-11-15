@@ -6587,6 +6587,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n}% sure'**
   String shareDaySure(int n);
+
+  /// The picture of the day sent to a friend: its headline, over the five cards' questions.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s five'**
+  String get shareDayHeadline;
 }
 
 class _AppLocalizationsDelegate

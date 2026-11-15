@@ -3007,15 +3007,17 @@ void main() {
       await _settle(tester);
 
       // The day as a picture, and its words a tap away: they name the
-      // edition, say how it went, and quote no card.
+      // edition and the five that came out.
       expect(find.byType(DayPicture), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('share-day-copy')));
       await _settle(tester);
       final String text = copied!;
       expect(text, startsWith('Astute #${editionOf(DateTime.now())}'));
       expect(text, contains('Five cards a day. Your turn.'));
+      // The five questions go with it — they are what makes a friend want
+      // the app — and never an answer.
       for (final pill in _todaysFive) {
-        expect(text, isNot(contains(pill.question)));
+        expect(text, contains(pill.question));
         expect(text, isNot(contains(pill.answer)));
       }
       expect(text, contains('astutetheapp.com'));

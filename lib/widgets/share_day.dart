@@ -15,15 +15,18 @@ import '../utils/share_image.dart';
 import '../utils/share_link.dart';
 import 'subject_icon.dart';
 import 'ui.dart';
+import 'web/card_thumb.dart';
 
-/// The day, sent to a friend: a picture of the five, and a line under it.
+/// The day, sent to a friend: a picture of the five cards that came out, and
+/// a line under it.
 ///
-/// It used to be five emoji squares and a line of text, the way a word game
-/// is sent, which in a chat looked like every other app's. Now it is a
-/// picture made for the chat it lands in — the five as the cards they were,
-/// each in its subject's colour with its mark, and how each went; the score,
-/// the streak, and how to get the app. Nothing in it spoils a card: which
-/// subjects, and how they went, never what they asked.
+/// It used to be five emoji squares and a score, the way a word game is
+/// sent. But the day is not a match: most cards are read or argued rather
+/// than got right, and a score in a chat says "look how I did" when what
+/// makes a friend open the app is the cards themselves. So the picture is
+/// the five — each card in small with its drawing, and its question, never
+/// its answer — under the day's date, with how to get the app. The streak
+/// stays, small: it says the habit, not a result.
 class ShareDay extends StatelessWidget {
   const ShareDay({super.key, required this.app, required this.from});
 
@@ -43,19 +46,16 @@ class ShareDay extends StatelessWidget {
       shareCardImage(bytes, name, text);
 
   /// The words that go with the picture, and alone where a picture cannot
-  /// go: the edition, the streak, how the questions went, and the address.
-  /// The edition rather than the reader's day count, because the date is the
-  /// thing two readers have in common.
+  /// go: the edition and its five questions, and the address. The edition
+  /// rather than the reader's day count, because the date is the thing two
+  /// readers have in common.
   static String text(BuildContext context, AppState app) {
     final l = context.l10n;
     final d = app.daySummary;
-    final verdict = [
-      if (d.asked > 0) l.rightOfAsked(d.right, d.asked),
-      if (d.sure != null) l.saidSure(d.sure!.round()),
-    ].join(' · ');
     return [
-      'Astute #${d.edition}${d.streak > 0 ? ' · ${l.streakDays(d.streak)}' : ''}',
-      if (verdict.isNotEmpty) verdict,
+      'Astute #${d.edition} · ${l.shareDayHeadline}',
+      for (final Pill pill in app.todaysDeck.take(kPillsPerDay))
+        '· ${pill.question}',
       l.shareDayTurn,
       ShareRef.day.link,
     ].join('\n');
@@ -290,10 +290,11 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
 /// The picture of the day: four by five, the shape a chat and a story both
 /// show without cropping.
 ///
-/// The score leads, because a number is what makes a friend answer; the five
-/// stand under it as the cards they were — each subject's colour and mark,
-/// and how it went in a disc at its corner; the streak and how sure sit
-/// beside the score; the foot says what this is and where to get it.
+/// The five cards that came out, each in small with its drawing beside its
+/// question, in the order they were dealt: a friend reads five questions and
+/// wants the answers, which is the reason to send it. No answers, and no
+/// score. Over them the day's name and date; under them the streak, the line
+/// that says what this is, and where to get it.
 class DayPicture extends StatelessWidget {
   const DayPicture({
     super.key,
@@ -308,17 +309,15 @@ class DayPicture extends StatelessWidget {
 
   static const Color _ground = Color(0xFF0C0C0E);
   static const Color _ink = Color(0xFFF4F2EC);
-  static const Color _right = Color(0xFF2BD16B);
-  static const Color _wrong = Color(0xFFFF4D4F);
   static const Color _flame = Color(0xFFFF7A1A);
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final String date = DateFormat(
-      'd MMM',
+      'EEEE d MMMM',
       Localizations.localeOf(context).toString(),
-    ).format(day).replaceAll('.', '');
+    ).format(day);
     final Color glow = five.isEmpty ? _flame : five.first.color;
     return AspectRatio(
       aspectRatio: 4 / 5,
@@ -328,30 +327,30 @@ class DayPicture extends StatelessWidget {
           decoration: BoxDecoration(
             color: _ground,
             gradient: RadialGradient(
-              center: const Alignment(0.9, -1.0),
-              radius: 1.3,
-              colors: [glow.withValues(alpha: 0.30), _ground],
+              center: const Alignment(1.0, -1.0),
+              radius: 1.25,
+              colors: [glow.withValues(alpha: 0.28), _ground],
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 22, 24, 22),
+            padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
                   children: [
                     Text(
                       'Astute',
                       style: AppText.display(
-                        size: 21,
+                        size: 19,
                         weight: FontWeight.w700,
-                        spacing: -0.6,
+                        spacing: -0.5,
                         color: _ink,
                       ),
                     ),
                     const Spacer(),
                     Text(
-                      '#${summary.edition} · $date',
+                      '#${summary.edition}',
                       style: AppText.label(
                         size: 11,
                         weight: FontWeight.w700,
@@ -361,74 +360,78 @@ class DayPicture extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(flex: 2),
+                const SizedBox(height: 12),
                 Text(
-                  summary.asked > 0
-                      ? l.rightOfAsked(summary.right, summary.asked)
-                      : l.shareDayRead,
-                  maxLines: 2,
+                  l.shareDayHeadline,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppText.display(
-                    size: 40,
+                    size: 28,
                     weight: FontWeight.w700,
                     height: 1.0,
-                    spacing: -1.4,
+                    spacing: -1,
                     color: _ink,
                   ),
                 ),
-                const SizedBox(height: 12),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    if (summary.streak > 0)
-                      _Chip(
-                        icon: Icons.local_fire_department_rounded,
-                        iconColour: _flame,
-                        label: l.streakDays(summary.streak),
-                      ),
-                    if (summary.sure != null)
-                      _Chip(label: l.shareDaySure(summary.sure!.round())),
-                  ],
+                const SizedBox(height: 3),
+                Text(
+                  date,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.body(
+                    size: 12,
+                    weight: FontWeight.w500,
+                    color: _ink.withValues(alpha: 0.55),
+                  ),
                 ),
-                const Spacer(flex: 2),
+                const SizedBox(height: 12),
+                for (int i = 0; i < five.length; i++)
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: i == 0 ? 0 : 6),
+                      child: _Row(pill: five[i]),
+                    ),
+                  ),
+                const SizedBox(height: 12),
                 Row(
                   children: [
-                    for (int i = 0; i < five.length; i++) ...[
-                      if (i > 0) const SizedBox(width: 8),
-                      Expanded(
-                        child: _Tile(
-                          pill: five[i],
-                          mark: i < summary.marks.length
-                              ? summary.marks[i]
-                              : DayMark.read,
+                    if (summary.streak > 0) ...[
+                      const Icon(
+                        Icons.local_fire_department_rounded,
+                        size: 15,
+                        color: _flame,
+                      ),
+                      const SizedBox(width: 3),
+                      Text(
+                        l.streakDays(summary.streak),
+                        style: AppText.body(
+                          size: 11.5,
+                          weight: FontWeight.w700,
+                          color: _ink.withValues(alpha: 0.8),
                         ),
                       ),
+                      const SizedBox(width: 10),
                     ],
-                  ],
-                ),
-                const Spacer(flex: 2),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
                     Expanded(
                       child: Text(
                         l.shareDayTurn,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: AppText.body(
-                          size: 13,
+                          size: 11.5,
                           weight: FontWeight.w600,
-                          height: 1.25,
-                          color: _ink.withValues(alpha: 0.82),
+                          color: _ink.withValues(alpha: 0.8),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 8),
                     Text(
                       'astutetheapp.com',
                       style: AppText.label(
-                        size: 11,
+                        size: 10.5,
                         weight: FontWeight.w700,
-                        spacing: 0.4,
-                        color: _ink.withValues(alpha: 0.55),
+                        spacing: 0.3,
+                        color: _ink.withValues(alpha: 0.5),
                       ),
                     ),
                   ],
@@ -442,109 +445,58 @@ class DayPicture extends StatelessWidget {
   }
 }
 
-/// A fact beside the score: the streak, how sure.
-class _Chip extends StatelessWidget {
-  const _Chip({required this.label, this.icon, this.iconColour});
-
-  final String label;
-  final IconData? icon;
-  final Color? iconColour;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      padding: EdgeInsets.fromLTRB(icon == null ? 12 : 9, 0, 12, 0),
-      decoration: BoxDecoration(
-        color: DayPicture._ink.withValues(alpha: 0.09),
-        borderRadius: BorderRadius.circular(999),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, size: 16, color: iconColour),
-            const SizedBox(width: 5),
-          ],
-          Text(
-            label,
-            style: AppText.body(
-              size: 12.5,
-              weight: FontWeight.w700,
-              color: DayPicture._ink,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// One of the five: its subject's colour and mark, its subject's name, and
-/// how it went in a disc at its corner.
-class _Tile extends StatelessWidget {
-  const _Tile({required this.pill, required this.mark});
+/// One of the five: the card in small — its front, with its drawing, or its
+/// colour and mark where it has no picture — and its question beside it.
+class _Row extends StatelessWidget {
+  const _Row({required this.pill});
 
   final Pill pill;
-  final DayMark mark;
 
   @override
   Widget build(BuildContext context) {
-    final (IconData? icon, Color disc) = switch (mark) {
-      DayMark.right => (Icons.check_rounded, DayPicture._right),
-      DayMark.wrong => (Icons.close_rounded, DayPicture._wrong),
-      DayMark.sided => (Icons.balance_rounded, const Color(0xFFFFC23D)),
-      DayMark.passed => (Icons.remove_rounded, const Color(0xFF6B6B70)),
-      DayMark.read => (null, Colors.transparent),
-    };
-    return AspectRatio(
-      aspectRatio: 0.62,
-      child: Stack(
-        clipBehavior: Clip.none,
+    final Widget plain = ColoredBox(
+      color: pill.color,
+      child: Center(
+        child: SubjectIcon(subject: pill.topic, size: 16, ink: pill.ink),
+      ),
+    );
+    return Container(
+      padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
+      decoration: BoxDecoration(
+        color: DayPicture._ink.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
         children: [
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                color: pill.color,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              padding: const EdgeInsets.fromLTRB(5, 8, 5, 8),
-              child: Column(
-                children: [
-                  const Spacer(),
-                  SubjectIcon(subject: pill.topic, size: 24, ink: pill.ink),
-                  const Spacer(),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      context.l10n.subjectOf(pill.topic),
-                      maxLines: 1,
-                      style: AppText.body(
-                        size: 9.5,
-                        weight: FontWeight.w700,
-                        color: pill.ink,
-                      ),
-                    ),
-                  ),
-                ],
+          AspectRatio(
+            aspectRatio: WebThumbs.aspect,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: CardThumb.has(pill, CardSide.front)
+                  ? CardThumb(pill: pill, side: CardSide.front, fallback: plain)
+                  : plain,
+            ),
+          ),
+          const SizedBox(width: 10),
+          // The question alone: the card in small beside it already says
+          // the subject, by its colour and its mark.
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                pill.question,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.display(
+                  size: 13,
+                  weight: FontWeight.w600,
+                  height: 1.16,
+                  spacing: -0.2,
+                  color: DayPicture._ink,
+                ),
               ),
             ),
           ),
-          if (icon != null)
-            Positioned(
-              top: -7,
-              right: -7,
-              child: Container(
-                width: 22,
-                height: 22,
-                decoration: BoxDecoration(
-                  color: disc,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: DayPicture._ground, width: 2.5),
-                ),
-                child: Icon(icon, size: 13, color: Colors.white),
-              ),
-            ),
         ],
       ),
     );

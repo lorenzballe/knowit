@@ -4825,5 +4825,9 @@
     "type": "int"
    }
   }
+ },
+ "shareDayHeadline": "Today's five",
+ "@shareDayHeadline": {
+  "description": "The picture of the day sent to a friend: its headline, over the five cards' questions."
  }
 }

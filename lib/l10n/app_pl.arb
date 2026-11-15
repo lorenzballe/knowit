@@ -1077,5 +1077,6 @@
   "shareDayTitle": "Udostępnij swój dzień",
   "shareDayRead": "Pięć kart, przeczytane",
   "shareDayTurn": "Pięć kart dziennie. Twoja kolej.",
-  "shareDaySure": "pewność {n}%"
+  "shareDaySure": "pewność {n}%",
+  "shareDayHeadline": "Dzisiejsza piątka"
 }

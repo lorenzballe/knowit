@@ -4405,4 +4405,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String shareDaySure(int n) {
     return '把握 $n%';
   }
+
+  @override
+  String get shareDayHeadline => '今天的五张';
 }

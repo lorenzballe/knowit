@@ -4402,4 +4402,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String shareDaySure(int n) {
     return '確信度$n%';
   }
+
+  @override
+  String get shareDayHeadline => '今日の5枚';
 }
