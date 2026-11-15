@@ -11,6 +11,20 @@
 #why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
 #why .big{margin:0}
 .say{overflow-wrap:anywhere}
+/* flat, printed-book painting of the yard */
+#yard .lot{fill:none;stroke:color-mix(in srgb,var(--k) 28%,var(--c));stroke-width:2;stroke-linejoin:round}
+#yard .plate-lo{fill:color-mix(in srgb,var(--k) 82%,var(--c))}
+#yard .plate-hi{fill:color-mix(in srgb,var(--k) 52%,var(--c));stroke:var(--k);stroke-width:1.5;stroke-linejoin:round}
+#yard .crate-box{fill:#d9813a;stroke:var(--k);stroke-width:2;stroke-linejoin:round}
+#yard .crate-line{fill:none;stroke:var(--k);stroke-width:1.6;stroke-linecap:round}
+#yard .hull{fill:var(--k)}
+#yard .deck{fill:color-mix(in srgb,var(--k) 45%,var(--c))}
+#yard .lane{fill:none;stroke:color-mix(in srgb,var(--k) 22%,var(--c));stroke-linejoin:round;stroke-linecap:round}
+#yard #route{fill:none;stroke:var(--k);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+#yard .lbl{fill:var(--k);font-family:var(--body);font-weight:600}
+#yard .light{fill:#fff3b0;opacity:.6}
+#yard .body-r{fill:#ffc93c;stroke:var(--k);stroke-width:1.8;stroke-linejoin:round}
+#yard .ink{fill:var(--k)}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Try it · drop crates">
   <div class="in">
@@ -59,43 +73,42 @@ function draw(){
   const cs = Math.min((W-8)/C, (H-8)/R), ox = (W-cs*C)/2, oy = (H-cs*R)/2;
   G = {W,H,f,cs,ox,oy};
   const fs = Math.max(12, Math.min(f, cs*.3));
-  const defs = Kit.mk('defs',{},svg);
-  const rg = Kit.mk('radialGradient',{id:'beam'},defs);
-  Kit.mk('stop',{offset:'0','stop-color':'#fff3c4','stop-opacity':.8},rg);
-  Kit.mk('stop',{offset:'1','stop-color':'#fff3c4','stop-opacity':0},rg);
-  // floor grid
-  for (let i=0;i<=C;i++) Kit.mk('line',{x1:ox+i*cs,y1:oy,x2:ox+i*cs,y2:oy+R*cs,stroke:'#10100c','stroke-opacity':.22,'stroke-width':1},svg);
-  for (let j=0;j<=R;j++) Kit.mk('line',{x1:ox,y1:oy+j*cs,x2:ox+C*cs,y2:oy+j*cs,stroke:'#10100c','stroke-opacity':.22,'stroke-width':1},svg);
-  // steel stacks
+  // the yard floor: just its painted boundary line
+  Kit.mk('rect',{class:'lot',x:ox+1,y:oy+1,width:cs*C-2,height:cs*R-2,rx:cs*.12},svg);
+  // stacks of steel plates, seen from above
   for (const k of blocked){ const [x,y] = k.split(',').map(Number);
-    Kit.mk('rect',{x:ox+x*cs+cs*.08,y:oy+y*cs+cs*.08,width:cs*.84,height:cs*.84,rx:cs*.08,fill:'#1b2a4a',stroke:'#10100c','stroke-width':1.5},svg);
-    Kit.mk('line',{x1:ox+x*cs+cs*.2,y1:oy+y*cs+cs*.5,x2:ox+x*cs+cs*.8,y2:oy+y*cs+cs*.5,stroke:'#8fa0c8','stroke-width':1.5},svg);
+    const X = ox+x*cs, Y = oy+y*cs;
+    Kit.mk('rect',{class:'plate-lo',x:X+cs*.16,y:Y+cs*.18,width:cs*.74,height:cs*.7,rx:cs*.04},svg);
+    Kit.mk('rect',{class:'plate-hi',x:X+cs*.1,y:Y+cs*.12,width:cs*.74,height:cs*.68,rx:cs*.04,transform:`rotate(-4 ${X+cs*.47} ${Y+cs*.46})`},svg);
   }
-  // crates dropped by the reader
+  // wooden crates dropped by the reader
   for (const k of crates){ const [x,y] = k.split(',').map(Number);
+    const X = ox+x*cs, Y = oy+y*cs;
     const g = Kit.mk('g',{class:'crate','data-k':k},svg);
-    Kit.mk('rect',{x:ox+x*cs+cs*.1,y:oy+y*cs+cs*.1,width:cs*.8,height:cs*.8,rx:cs*.06,fill:'#c8553d',stroke:'#10100c','stroke-width':2},g);
-    Kit.mk('path',{d:`M${ox+x*cs+cs*.1} ${oy+y*cs+cs*.1}L${ox+x*cs+cs*.9} ${oy+y*cs+cs*.9}M${ox+x*cs+cs*.9} ${oy+y*cs+cs*.1}L${ox+x*cs+cs*.1} ${oy+y*cs+cs*.9}`,stroke:'#10100c','stroke-width':2},g);
+    Kit.mk('rect',{class:'crate-box',x:X+cs*.12,y:Y+cs*.12,width:cs*.76,height:cs*.76,rx:cs*.05},g);
+    Kit.mk('path',{class:'crate-line',d:`M${X+cs*.12} ${Y+cs*.37}H${X+cs*.88}M${X+cs*.12} ${Y+cs*.63}H${X+cs*.88}M${X+cs*.2} ${Y+cs*.8}L${X+cs*.8} ${Y+cs*.2}`},g);
   }
-  // goal: the ship block waiting
+  // goal: the ship block waiting to be built
   const gx = ox+GOAL.x*cs, gy = oy+GOAL.y*cs;
-  Kit.mk('rect',{x:gx+cs*.06,y:gy+cs*.06,width:cs*.88,height:cs*.88,rx:cs*.12,fill:'none',stroke:'#10100c','stroke-width':2.5,'stroke-dasharray':'5 4'},svg);
-  Kit.mk('path',{d:`M${gx+cs*.22} ${gy+cs*.42}h${cs*.56}l-${cs*.1} ${cs*.3}h-${cs*.36}z`,fill:'#10100c'},svg);
-  // path
+  Kit.mk('rect',{class:'deck',x:gx+cs*.38,y:gy+cs*.2,width:cs*.26,height:cs*.24,rx:cs*.03},svg);
+  Kit.mk('path',{class:'hull',d:`M${gx+cs*.1} ${gy+cs*.44}H${gx+cs*.9}L${gx+cs*.76} ${gy+cs*.78}H${gx+cs*.24}Z`},svg);
+  // path: a worn lane with the route drawn on it
   if (path.length){
     const pts = path.map(([x,y]) => `${ox+(x+.5)*cs},${oy+(y+.5)*cs}`).join(' ');
-    Kit.mk('polyline',{points:pts,fill:'none',stroke:'#ffffff','stroke-opacity':.3,'stroke-width':cs*.32,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
-    Kit.mk('polyline',{id:'route',points:pts,fill:'none',stroke:'#ffffff','stroke-width':2.5,'stroke-dasharray':'2 6','stroke-linecap':'round','stroke-linejoin':'round'},svg);
+    Kit.mk('polyline',{class:'lane',points:pts,'stroke-width':cs*.34},svg);
+    Kit.mk('polyline',{id:'route',points:pts,'stroke-dasharray':'7 6'},svg);
   }
-  // labels, far apart: top-left and bottom-right of the floor
-  const tx = Kit.mk('text',{x:ox+cs*.15,y:oy+cs*.5,'dominant-baseline':'middle',fill:'#10100c','font-family':'var(--mono)','font-size':fs,'font-weight':700},svg);
-  tx.textContent = 'NIGHT · ' + (path.length ? (path.length-1)+' STEPS' : '');
-  // rover
+  // label, top-left of the floor
+  const tx = Kit.mk('text',{class:'lbl',x:ox+cs*.15,y:oy+cs*.5,'dominant-baseline':'middle','font-size':fs},svg);
+  tx.textContent = 'Night · ' + (path.length ? (path.length-1)+' steps' : '');
+  // rover, headlight pointing forward (+x)
   const r = Kit.mk('g',{id:'rover'},svg);
-  Kit.mk('circle',{cx:cs*.55,cy:0,r:cs*.9,fill:'url(#beam)'},r);
-  Kit.mk('rect',{x:-cs*.32,y:-cs*.26,width:cs*.64,height:cs*.52,rx:cs*.1,fill:'#ffc93c',stroke:'#10100c','stroke-width':1.5},r);
-  Kit.mk('rect',{x:-cs*.2,y:-cs*.14,width:cs*.28,height:cs*.28,rx:cs*.04,fill:'#10100c'},r);
-  Kit.mk('circle',{cx:cs*.24,cy:0,r:cs*.06,fill:'#10100c'},r);
+  Kit.mk('path',{class:'light',d:`M${cs*.3} ${-cs*.12}L${cs*1.25} ${-cs*.42}L${cs*1.25} ${cs*.42}L${cs*.3} ${cs*.12}Z`},r);
+  for (const sx of [-.2,.2]) for (const sy of [-1,1])
+    Kit.mk('rect',{class:'ink',x:cs*(sx-.09),y:sy*cs*.26-cs*.06,width:cs*.18,height:cs*.12,rx:cs*.03},r);
+  Kit.mk('rect',{class:'body-r',x:-cs*.32,y:-cs*.24,width:cs*.64,height:cs*.48,rx:cs*.1},r);
+  Kit.mk('rect',{class:'ink',x:-cs*.2,y:-cs*.12,width:cs*.26,height:cs*.24,rx:cs*.04},r);
+  Kit.mk('circle',{class:'ink',cx:cs*.22,cy:0,r:cs*.06},r);
   placeRover();
 }
 function placeRover(){

@@ -46,6 +46,8 @@
 <script>
 (() => {
   const INK = '#ffffff', C = '#9B5CFF', DEEP = '#5a2ea6';
+  // Flat tints of the card colour (ink mixed into it), plus one meaning colour: the finger's E.
+  const SKIN = '#d2b6ff', JUMPER = '#af7dff', CURL = '#7a45d3', FAINT = '#b98dff', MARK = '#ff6b3d';
   const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go');
   // step: 0 pick, 1 the head turned round, 2 the study, 3 the reruns. self: the reader drew it for themselves.
   let step = 0, self = null, turned = 0;
@@ -56,27 +58,32 @@
   // ---- the head, from behind and, once turned, from the front ----
   let head = null;
   function drawHead(W, H) {
-    const rc = rough.svg(svg);
     const r = Math.min(H * .36, W * .3), cx = W / 2, cy = r * 1.06 + 4;
-    const o = (s, x) => Object.assign({stroke: INK, strokeWidth: Math.max(1.7, r * .03), roughness: 1, bowing: .8, seed: s}, x || {});
+    const sw = Math.max(2, r * .04), bot = Math.min(H, cy + r * 1.75);
+    const line = (d, p, w) => Kit.mk('path', {d, fill: 'none', stroke: DEEP, 'stroke-width': w || sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
     const g = Kit.mk('g', {}, svg);
-    // Neck and shoulders.
-    for (const s of [-1, 1]) g.appendChild(rc.path(`M${cx + s * r * .32},${cy + r * .9} L${cx + s * r * .34},${cy + r * 1.2} Q${cx + s * r * 1.05},${cy + r * 1.24} ${cx + s * r * 1.45},${Math.min(H, cy + r * 1.75)}`, o(1 + s)));
-    for (const s of [-1, 1]) g.appendChild(rc.ellipse(cx + s * r * .8, cy + r * .05, r * .26, r * .42, o(4 + s, {fill: C, fillStyle: 'solid'})));
-    g.appendChild(rc.ellipse(cx, cy, r * 1.6, r * 2, o(7, {fill: C, fillStyle: 'solid'})));
-    // From behind: hair over the whole head.
+    // Neck, then the shoulders in a plain jumper with a round neckline.
+    Kit.mk('rect', {x: cx - r * .3, y: cy + r * .7, width: r * .6, height: r * .62, fill: SKIN}, g);
+    Kit.mk('path', {d: `M${cx - r * 1.5},${bot} Q${cx - r * 1.32},${cy + r * 1.22} ${cx - r * .36},${cy + r * 1.16} Q${cx},${cy + r * 1.34} ${cx + r * .36},${cy + r * 1.16} Q${cx + r * 1.32},${cy + r * 1.22} ${cx + r * 1.5},${bot} Z`, fill: JUMPER}, g);
+    // Ears and head.
+    for (const s of [-1, 1]) {
+      Kit.mk('ellipse', {cx: cx + s * r * .8, cy: cy + r * .05, rx: r * .13, ry: r * .21, fill: SKIN}, g);
+      line(`M${cx + s * r * .77},${cy - r * .07} Q${cx + s * r * .87},${cy + r * .05} ${cx + s * r * .78},${cy + r * .17}`, g, sw * .8);
+    }
+    Kit.mk('ellipse', {cx, cy, rx: r * .8, ry: r, fill: SKIN}, g);
+    // From behind: hair over the whole head, with the curl at the crown.
     const back = Kit.mk('g', {}, g);
-    back.appendChild(rc.ellipse(cx, cy - r * .04, r * 1.48, r * 1.86, o(8, {stroke: 'none', fill: INK, fillStyle: 'hachure', hachureGap: Math.max(4, r * .085), hachureAngle: 70, fillWeight: Math.max(1, r * .02)})));
+    Kit.mk('path', {d: `M${cx - r * .82},${cy - r * .04} C${cx - r * .84},${cy - r * 1.36} ${cx + r * .84},${cy - r * 1.36} ${cx + r * .82},${cy - r * .04} C${cx + r * .8},${cy + r * .5} ${cx + r * .5},${cy + r * .9} ${cx + r * .3},${cy + r * .92} Q${cx},${cy + r * .84} ${cx - r * .3},${cy + r * .92} C${cx - r * .5},${cy + r * .9} ${cx - r * .8},${cy + r * .5} ${cx - r * .82},${cy - r * .04} Z`, fill: DEEP}, back);
+    Kit.mk('path', {d: `M${cx + r * .08},${cy - r * .62} q${r * .1},${-r * .06} ${r * .14},${r * .04} q${r * .02},${r * .14} ${-r * .16},${r * .14} q${-r * .2},${-r * .02} ${-r * .18},${-r * .22}`, fill: 'none', stroke: CURL, 'stroke-width': sw, 'stroke-linecap': 'round'}, back);
     // From the front: a fringe, brows, eyes, nose, mouth.
     const front = Kit.mk('g', {opacity: 0}, g);
-    front.appendChild(rc.path(`M${cx - r * .79},${cy - r * .2} C${cx - r * .9},${cy - r * 1.2} ${cx + r * .9},${cy - r * 1.2} ${cx + r * .79},${cy - r * .2} C${cx + r * .62},${cy - r * .72} ${cx - r * .62},${cy - r * .72} ${cx - r * .79},${cy - r * .2} Z`, o(9, {fill: INK, fillStyle: 'hachure', hachureGap: Math.max(4, r * .085), hachureAngle: -60, fillWeight: Math.max(1, r * .02)})));
+    Kit.mk('path', {d: `M${cx - r * .8},${cy - r * .2} C${cx - r * .9},${cy - r * 1.32} ${cx + r * .9},${cy - r * 1.32} ${cx + r * .8},${cy - r * .2} C${cx + r * .62},${cy - r * .72} ${cx - r * .62},${cy - r * .72} ${cx - r * .8},${cy - r * .2} Z`, fill: DEEP}, front);
     for (const s of [-1, 1]) {
-      front.appendChild(rc.line(cx + s * r * .52, cy - r * .02, cx + s * r * .2, cy - r * .06, o(10 + s)));
-      front.appendChild(rc.ellipse(cx + s * r * .34, cy + r * .14, r * .2, r * .13, o(13 + s)));
-      Kit.mk('circle', {cx: cx + s * r * .34, cy: cy + r * .15, r: Math.max(2.4, r * .05), fill: INK}, front);
+      line(`M${cx + s * r * .5},${cy - r * .02} Q${cx + s * r * .36},${cy - r * .09} ${cx + s * r * .2},${cy - r * .05}`, front, sw * 1.2);
+      Kit.mk('circle', {cx: cx + s * r * .34, cy: cy + r * .15, r: Math.max(2.6, r * .055), fill: DEEP}, front);
     }
-    front.appendChild(rc.curve([[cx + r * .03, cy + r * .12], [cx - r * .07, cy + r * .4], [cx + r * .07, cy + r * .44]], o(16)));
-    front.appendChild(rc.path(`M${cx - r * .22},${cy + r * .64} Q${cx},${cy + r * .72} ${cx + r * .22},${cy + r * .64}`, o(17)));
+    line(`M${cx + r * .03},${cy + r * .12} Q${cx - r * .1},${cy + r * .4} ${cx + r * .07},${cy + r * .44}`, front);
+    line(`M${cx - r * .22},${cy + r * .64} Q${cx},${cy + r * .74} ${cx + r * .22},${cy + r * .64}`, front);
     // The E, where a finger draws it: between the hairline and the brows.
     const eg = Kit.mk('g', {}, g);
     head = {g, back, front, eg, cx, cy, r};
@@ -89,9 +96,8 @@
     if (self === null) return;
     const {cx, cy, r, eg} = head, h = r * .32, dir = self ? 1 : -1, x = cx - dir * h * .36, y = cy - r * .5;
     const d = ePath(x, y, h, dir);
-    Kit.mk('path', {d, fill: 'none', stroke: DEEP, 'stroke-width': Math.max(7, r * .13), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, eg);
-    const p = Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': Math.max(3.4, r * .065), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, eg);
-    if (animate && !Kit.calm) { const L = p.getTotalLength(); gsap.fromTo(p, {attr: {'stroke-dasharray': L, 'stroke-dashoffset': L}}, {attr: {'stroke-dashoffset': 0}, duration: .7, ease: 'power1.inOut'}); gsap.from(eg.firstChild, {opacity: 0, duration: .5}); }
+    const p = Kit.mk('path', {d, fill: 'none', stroke: MARK, 'stroke-width': Math.max(4, r * .075), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, eg);
+    if (animate && !Kit.calm) { const L = p.getTotalLength(); gsap.fromTo(p, {attr: {'stroke-dasharray': L, 'stroke-dashoffset': L}}, {attr: {'stroke-dashoffset': 0}, duration: .7, ease: 'power1.inOut'}); }
   }
   // turned 0: from behind; 1: from the front. The flip itself mirrors the E, as turning a head does.
   function setTurn(t, now) {
@@ -105,7 +111,7 @@
 
   // ---- the study: 57 students as 57 tiny E's, as the person facing each of them saw it ----
   function drawStudy(W, H) {
-    const groups = [{name: 'FELT POWERFUL', n: 24, self: 8, pct: '33%'}, {name: 'FELT POWERLESS', n: 33, self: 4, pct: '12%'}];
+    const groups = [{name: 'Felt powerful', n: 24, self: 8, pct: '33%'}, {name: 'Felt powerless', n: 33, self: 4, pct: '12%'}];
     const gap = W * .08, bw = (W - gap) / 2, fp = Math.max(20, Math.min(28, H / 8)), head = 26 + fp;
     // As many columns as the height needs, then the size of an E from the room each one gets.
     let cols = 6, cell;
@@ -115,13 +121,13 @@
     const oy = Math.max(0, (H - head - 6 - Math.ceil(33 / cols) * cell * 1.25) / 2), top = oy + head;
     groups.forEach((gr, k) => {
       const x0 = k * (bw + gap), g = Kit.mk('g', {class: 'grp'}, svg);
-      txt(x0, oy + 12, gr.name, {'letter-spacing': '.1em', 'font-weight': 800, opacity: .8}, g);
+      txt(x0, oy + 12, gr.name, {}, g);
       txt(x0, oy + 17 + fp, gr.pct, {'font-family': 'Fraunces', 'font-size': fp, 'font-weight': 800}, g);
-      txt(x0 + bw, oy + 17 + fp, `${gr.self} of ${gr.n}`, {'text-anchor': 'end', opacity: .85}, g);
+      txt(x0 + bw, oy + 17 + fp, `${gr.self} of ${gr.n}`, {'text-anchor': 'end'}, g);
       for (let i = 0; i < gr.n; i++) {
         const c = i % cols, row = Math.floor(i / cols), h = cell * .62, own = i < gr.self;
         const x = x0 + c * cell + cell * .5 + (own ? h * .36 : -h * .36), y = top + row * cell * 1.25;
-        Kit.mk('path', {d: ePath(x, y, h, own ? -1 : 1), fill: 'none', stroke: INK, 'stroke-width': own ? Math.max(2.2, h * .2) : Math.max(1.4, h * .12), 'stroke-linecap': 'round', opacity: own ? 1 : .42, class: own ? 'own' : ''}, g);
+        Kit.mk('path', {d: ePath(x, y, h, own ? -1 : 1), fill: 'none', stroke: own ? INK : FAINT, 'stroke-width': own ? Math.max(2.2, h * .2) : Math.max(1.4, h * .12), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', class: own ? 'own' : ''}, g);
       }
     });
   }

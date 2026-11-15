@@ -13,6 +13,12 @@
 #why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
 .say{overflow-wrap:break-word}
 .hs{cursor:pointer}
+#pic text{font-family:var(--body)}
+#pic .ground{fill:color-mix(in srgb,var(--k) 60%,var(--c))}
+#pic .topsoil{fill:color-mix(in srgb,var(--k) 35%,var(--c))}
+#pic .ink{fill:var(--k)}
+#pic .inkline{stroke:var(--k)}
+#pic .lit rect,#pic .lit path,#pic .lit line{stroke:#e0502f;stroke-width:2.5}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Drag · tap the ruins">
   <div class="in">
@@ -37,6 +43,7 @@ const MSG = {
   mosaic: 'Mosaics: the decorated floors of Roman rooms, still lying on the seabed.',
   cols: 'Colonnades: rows of Roman columns, standing under the water.'
 };
+const SEA = '#3f7fa3', FOAM = '#cfe6ef', STONE = '#f6ead2', CREAM = '#fff6e6', MARK = '#e0502f', MAGMA = '#c93a22';
 
 function draw() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
@@ -44,74 +51,67 @@ function draw() {
   const m = H / 13.5, y0 = 4 * m, floorY = y0 + 8 * m, fs = Math.max(f * .85, 12);
   G = {W, H, m, y0, f: fs, floorY};
   const mk = (t, a, p) => Kit.mk(t, a, p);
-  const defs = mk('defs', {}, svg);
-  const sea = mk('linearGradient', {id: 'sea', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#1fa3b8', 'stop-opacity': .55}, sea);
-  mk('stop', {offset: 1, 'stop-color': '#08355a', 'stop-opacity': .82}, sea);
-  const rock = mk('linearGradient', {id: 'rock', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#c9a26a'}, rock); mk('stop', {offset: .15, 'stop-color': '#8a6438'}, rock); mk('stop', {offset: 1, 'stop-color': '#3a2414'}, rock);
 
-  mk('circle', {cx: W * .86, cy: y0 * .32, r: m * .7, fill: '#fff3c4', opacity: .95}, svg);
+  // the sea: one flat body of water, its top edge is the moving wave
+  G.wave = mk('path', {d: wave(W, y0, m, 0), fill: SEA, 'pointer-events': 'none'}, svg);
 
   // The land and the city on it: drawn at its final place, moved up by (MAX - s)
   const g = mk('g', {}, svg); G.g = g;
-  G.rock = mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: 'url(#rock)'}, g);
-  // magma glow deep below: the volcanic ground
-  mk('ellipse', {cx: W * .55, cy: floorY + .85 * m, rx: W * .35, ry: m * .55, fill: '#ff6a2a', opacity: .45}, g);
-  const marble = '#f3ead8', marbleEdge = '#7a5a34';
+  G.rock = mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, class: 'ground'}, g);
+  mk('rect', {x: 0, y: floorY, width: W, height: .35 * m, class: 'topsoil'}, g);
+  // the magma chamber below: the volcanic ground
+  mk('path', {d: `M${W * .2} ${floorY + .95 * m} C${W * .26} ${floorY + .3 * m} ${W * .5} ${floorY + .45 * m} ${W * .6} ${floorY + .4 * m} S${W * .88} ${floorY + .5 * m} ${W * .9} ${floorY + .95 * m} C${W * .8} ${floorY + 1.4 * m} ${W * .3} ${floorY + 1.45 * m} ${W * .2} ${floorY + .95 * m}Z`, fill: MAGMA}, g);
+
   // house walls
   const walls = mk('g', {}, g); G.walls = walls;
-  [.17, .27, .37].forEach((x, i) => mk('rect', {x: W * x, y: floorY - (i === 1 ? .9 : 1.4) * m, width: W * .022, height: (i === 1 ? .9 : 1.4) * m, fill: '#d9b98c', stroke: '#7a5a34', 'stroke-width': 1}, walls));
-  mk('rect', {x: W * .17, y: floorY - .25 * m, width: W * .222, height: .25 * m, fill: '#cfae80', stroke: '#7a5a34', 'stroke-width': 1}, walls);
+  [.17, .27, .37].forEach((x, i) => mk('rect', {x: W * x, y: floorY - (i === 1 ? .9 : 1.4) * m, width: W * .022, height: (i === 1 ? .9 : 1.4) * m, fill: STONE, class: 'inkline', 'stroke-width': 1.5}, walls));
+  mk('rect', {x: W * .17, y: floorY - .25 * m, width: W * .222, height: .25 * m, fill: STONE, class: 'inkline', 'stroke-width': 1.5}, walls);
   // mosaic floor
   const mos = mk('g', {}, g); G.mosaic = mos;
-  const mx0 = W * .41, mx1 = W * .61, n = 12, tw = (mx1 - mx0) / n, cols = ['#c0392b', '#f0c419', '#f3ead8', '#1b6f8a', '#2d2d2d'];
+  const mx0 = W * .41, mx1 = W * .61, n = 12, tw = (mx1 - mx0) / n, cols = [MARK, STONE, '#1d3b4f', '#e8b04a', STONE];
   for (let i = 0; i < n; i++) for (let j = 0; j < 2; j++)
-    mk('rect', {x: mx0 + i * tw, y: floorY - .4 * m + j * .2 * m, width: tw, height: .2 * m, fill: cols[(i + j * 2) % cols.length], stroke: '#00000033', 'stroke-width': .5}, mos);
+    mk('rect', {x: mx0 + i * tw, y: floorY - .4 * m + j * .2 * m, width: tw, height: .2 * m, fill: cols[(i + j * 2) % cols.length]}, mos);
+  mk('rect', {x: mx0, y: floorY - .4 * m, width: mx1 - mx0, height: .4 * m, fill: 'none', class: 'inkline', 'stroke-width': 1.5}, mos);
   // colonnade
   const col = mk('g', {}, g); G.cols = col;
   const cw = W * .036;
   [[.66, 2.7], [.74, 2.7], [.82, 1.8], [.90, 2.7]].forEach(([x, h]) => {
     const cx = W * x;
-    mk('rect', {x: cx - cw * .75, y: floorY - .25 * m, width: cw * 1.5, height: .25 * m, fill: marble, stroke: marbleEdge}, col);
-    mk('rect', {x: cx - cw / 2, y: floorY - h * m, width: cw, height: (h - .25) * m, fill: marble, stroke: marbleEdge}, col);
-    for (let k = 1; k < 3; k++) mk('line', {x1: cx - cw / 2 + k * cw / 3, y1: floorY - h * m + 2, x2: cx - cw / 2 + k * cw / 3, y2: floorY - .3 * m, stroke: marbleEdge, 'stroke-width': .8}, col);
-    if (h > 2) mk('rect', {x: cx - cw * .8, y: floorY - 3 * m, width: cw * 1.6, height: .3 * m, fill: marble, stroke: marbleEdge}, col);
-    else mk('path', {d: `M${cx - cw / 2} ${floorY - h * m} l${cw * .3} ${-.25 * m} l${cw * .3} ${.2 * m} l${cw * .4} ${-.15 * m} v${.2 * m}z`, fill: marble, stroke: marbleEdge}, col);
+    mk('rect', {x: cx - cw * .75, y: floorY - .25 * m, width: cw * 1.5, height: .25 * m, fill: STONE, class: 'inkline', 'stroke-width': 1.5}, col);
+    mk('rect', {x: cx - cw / 2, y: floorY - h * m, width: cw, height: (h - .25) * m, fill: STONE, class: 'inkline', 'stroke-width': 1.5}, col);
+    mk('line', {x1: cx, y1: floorY - h * m + 4, x2: cx, y2: floorY - .35 * m, class: 'inkline', 'stroke-width': 1}, col);
+    if (h > 2) mk('rect', {x: cx - cw * .8, y: floorY - 3 * m, width: cw * 1.6, height: .3 * m, fill: STONE, class: 'inkline', 'stroke-width': 1.5}, col);
+    else mk('path', {d: `M${cx - cw / 2} ${floorY - h * m} l${cw * .3} ${-.25 * m} l${cw * .3} ${.2 * m} l${cw * .4} ${-.15 * m} v${.2 * m}z`, fill: STONE, class: 'inkline', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, col);
   });
-
-  // the sea, drawn over the city
-  mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: 'url(#sea)', 'pointer-events': 'none'}, svg);
-  G.wave = mk('path', {d: wave(W, y0, m, 0), fill: 'none', stroke: '#ffffff', 'stroke-width': 2, opacity: .8}, svg);
-  for (let i = 0; i < 4; i++) mk('path', {d: `M${W * (.25 + i * .2)} ${y0} l${-W * .06} ${H}`, stroke: '#ffffff', 'stroke-width': W * .03, opacity: .05}, svg);
 
   // depth ruler
-  const rx = W * .11, ink = '#ffffff';
-  G.band = mk('rect', {x: rx - 3, y: y0 + 5 * m, width: 6, height: 3 * m, fill: '#ff7a59', rx: 3, opacity: finished ? 1 : 0}, svg);
-  mk('line', {x1: rx, y1: y0, x2: rx, y2: y0 + 8 * m, stroke: ink, 'stroke-width': 1.5}, svg);
+  const rx = W * .11, ink = CREAM;
+  G.band = mk('rect', {x: rx - 3, y: y0 + 5 * m, width: 6, height: 3 * m, fill: MARK, rx: 3, opacity: finished ? 1 : 0}, svg);
+  mk('line', {x1: rx, y1: y0, x2: rx, y2: y0 + 8 * m, stroke: ink, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
   [0, 2, 4, 6, 8].forEach(d => {
-    mk('line', {x1: rx - 6, y1: y0 + d * m, x2: rx, y2: y0 + d * m, stroke: ink, 'stroke-width': 1.5}, svg);
-    const t = mk('text', {x: rx - 9, y: y0 + d * m + fs * .35, 'text-anchor': 'end', fill: d === 0 ? '#10100c' : ink, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+    mk('line', {x1: rx - 6, y1: y0 + d * m, x2: rx, y2: y0 + d * m, stroke: ink, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    const t = mk('text', {x: rx - 9, y: y0 + d * m + fs * .35, 'text-anchor': 'end', fill: ink, 'font-size': fs, 'font-weight': 600}, svg);
     t.textContent = d === 0 ? '0 m' : d === 8 ? '8 m' : String(d);
   });
-  G.bandT = mk('text', {x: rx + 8, y: y0 + 6.5 * m + fs * .35, fill: '#ffd2c4', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, opacity: finished ? 1 : 0}, svg);
+  G.bandT = mk('text', {x: rx + 8, y: y0 + 6.5 * m + fs * .35, fill: CREAM, 'font-size': fs, 'font-weight': 800, opacity: finished ? 1 : 0}, svg);
   G.bandT.textContent = '5–8 m';
 
   // live readout
-  G.read = mk('text', {x: W * .15, y: y0 - 2 * m, fill: '#10100c', 'font-size': fs * 1.15, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+  G.read = mk('text', {x: W * .15, y: y0 - 2 * m, class: 'ink', 'font-size': fs * 1.15, 'font-weight': 700}, svg);
 
   // drag hint
   G.hint = mk('g', {opacity: done ? 0 : 1, 'pointer-events': 'none'}, svg);
   const hx = W * .51, hy = y0 - 2.2 * m;
-  mk('path', {d: `M${hx} ${hy - m * .8} v${m * 1.2} m${-m * .4} ${-m * .4} l${m * .4} ${m * .4} l${m * .4} ${-m * .4}`, fill: 'none', stroke: '#10100c', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
+  mk('path', {d: `M${hx} ${hy - m * .8} v${m * 1.2} m${-m * .4} ${-m * .4} l${m * .4} ${m * .4} l${m * .4} ${-m * .4}`, fill: 'none', class: 'inkline', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
 
   // hotspots (placed on the sunken ruins, shown once the land has sunk)
   const hs = mk('g', {opacity: done ? 1 : 0, 'pointer-events': done ? 'auto' : 'none'}, svg); G.hs = hs;
   const r = Math.max(m * .6, 18);
   [['walls', .28, 1.9], ['mosaic', .51, 1.2], ['cols', .78, 3.7]].forEach(([k, x, h]) => {
     const grp = mk('g', {class: 'hs', 'data-k': k}, hs);
-    const c = mk('circle', {cx: W * x, cy: floorY - h * m, r, fill: found.has(k) ? '#ff7a59' : '#ffffff33', stroke: '#ffffff', 'stroke-width': 2.5}, grp);
-    const t = mk('text', {x: W * x, y: floorY - h * m + fs * .38, 'text-anchor': 'middle', fill: '#fff', 'font-size': fs * 1.1, 'font-weight': 800, 'font-family': 'var(--body)'}, grp);
+    const c = mk('circle', {cx: W * x, cy: floorY - h * m, r, fill: found.has(k) ? MARK : CREAM, class: 'inkline', 'stroke-width': 2.5}, grp);
+    const t = mk('text', {x: W * x, y: floorY - h * m + fs * .38, 'text-anchor': 'middle', 'font-size': fs * 1.1, 'font-weight': 800}, grp);
+    if (found.has(k)) t.setAttribute('fill', CREAM); else t.setAttribute('class', 'ink');
     t.textContent = found.has(k) ? '✓' : '?';
     if (!found.has(k) && !Kit.calm) gsap.to(c, {attr: {r: r * 1.15}, repeat: -1, yoyo: true, duration: .7, ease: 'sine.inOut'});
     grp.addEventListener('click', e => { e.stopPropagation(); tapRuin(k); });
@@ -123,7 +123,8 @@ function draw() {
 function wave(W, y, m, p) {
   let d = `M0 ${y}`;
   for (let x = 0; x <= W; x += 8) d += ` L${x} ${y + Math.sin(x / (m * .9) + p) * m * .08}`;
-  return d;
+  const H = (G && G.H) || y + 10 * m;
+  return d + ` L${W} ${H} L0 ${H}Z`;
 }
 
 function apply() {
@@ -136,7 +137,7 @@ function apply() {
 
 function light(k, on) {
   const el = G[k]; if (!el) return;
-  el.style.filter = on ? 'drop-shadow(0 0 4px #fff) brightness(1.15)' : '';
+  el.classList.toggle('lit', on);
 }
 
 function sunk() {
@@ -160,7 +161,10 @@ function tapRuin(k) {
   if (!found.has(k)) {
     found.add(k);
     const grp = G.hs.querySelector(`[data-k="${k}"]`);
-    if (grp) { const c = grp.querySelector('circle'); gsap.killTweensOf(c); c.setAttribute('fill', '#ff7a59'); grp.querySelector('text').textContent = '✓'; }
+    if (grp) {
+      const c = grp.querySelector('circle'); gsap.killTweensOf(c); c.setAttribute('fill', MARK);
+      const t = grp.querySelector('text'); t.textContent = '✓'; t.removeAttribute('class'); t.setAttribute('fill', CREAM);
+    }
     light(k, true);
   }
   if (found.size === 3) setTimeout(finish, 1400);

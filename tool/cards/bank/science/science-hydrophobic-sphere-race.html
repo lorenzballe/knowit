@@ -67,32 +67,47 @@ Kit.onShow.card = () => {
   const x1 = W * .3, x2 = W * .7;
   const top = f * 2, bot = H - f * 2;
   const yT = top + r * 2.4, yB = bot - r * 1.5;
-  // lane divider
-  Kit.mk('line', {x1: W / 2, x2: W / 2, y1: top + f, y2: bot - f * .6, stroke: '#10100c', 'stroke-opacity': .3, 'stroke-dasharray': '3 5'}, svg);
+  const sw = Math.max(1.5, r * .13);
+
+  // the pool, seen in cross-section: water with a gently rippled surface, walls and floor
+  const xl = W * .1, xr = W * .9;
+  const ys = top + r * .7, yf = yB + r * 1.25;
+  let surf = `M${xl},${ys}`;
+  const n = 8, step = (xr - xl) / n;
+  for (let i = 0; i < n; i++) surf += ` q${step / 4},${-r * .22} ${step / 2},0 t${step / 2},0`;
+  Kit.mk('path', {d: `${surf} L${xr},${yf} L${xl},${yf} Z`, style: 'fill:color-mix(in srgb,var(--k) 11%,var(--c))'}, svg);
+  Kit.mk('path', {d: surf, fill: 'none', stroke: 'var(--k)', 'stroke-width': sw * .8, 'stroke-linecap': 'round', 'stroke-opacity': .55}, svg);
+  Kit.mk('path', {d: `M${xl},${ys - r * .5} L${xl},${yf} L${xr},${yf} L${xr},${ys - r * .5}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': sw * 1.4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+
+  // lane rope between the two lanes: a cord with floats
+  Kit.mk('line', {x1: W / 2, x2: W / 2, y1: ys, y2: yf - sw, stroke: 'var(--k)', 'stroke-opacity': .45, 'stroke-width': Math.max(1, sw * .5)}, svg);
+  Kit.mk('line', {x1: W / 2, x2: W / 2, y1: ys + r * .4, y2: yf - r * .4, stroke: 'var(--k)', 'stroke-opacity': .45, 'stroke-width': r * .32, 'stroke-linecap': 'round', 'stroke-dasharray': `${r * .3} ${r * .75}`}, svg);
+
   // lane titles
   const t1 = Kit.mk('text', {x: x1, y: f * 1.3, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); t1.textContent = 'Plain';
   const t2 = Kit.mk('text', {x: x2, y: f * 1.3, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); t2.textContent = 'Water-repelling';
-  // plain sphere with eddies behind
+
+  // plain sphere: water grips it and curls into eddies behind
   const plain = Kit.mk('g', {}, svg);
-  const eddy = Kit.mk('g', {fill: 'none', stroke: '#1c4a73', 'stroke-width': Math.max(1.5, r * .12), 'stroke-linecap': 'round'}, plain);
+  const eddy = Kit.mk('g', {fill: 'none', stroke: 'var(--k)', 'stroke-width': sw, 'stroke-linecap': 'round'}, plain);
   Kit.mk('path', {d: `M${-r * .9},${-r * .8} q${-r * .5},${-r * .7} ${r * .1},${-r * 1.2}`}, eddy);
   Kit.mk('path', {d: `M${r * .9},${-r * .8} q${r * .5},${-r * .7} ${-r * .1},${-r * 1.2}`}, eddy);
   Kit.mk('path', {d: `M${-r * .4},${-r * 1.9} q${r * .4},${-r * .5} ${r * .8},0`}, eddy);
-  Kit.mk('circle', {r, fill: '#f2b33d'}, plain);
-  Kit.mk('circle', {r: r * .28, cx: -r * .35, cy: -r * .35, fill: '#fff', opacity: .55}, plain);
-  // hydrophobic sphere with air shell and air wake
+  Kit.mk('circle', {r, fill: '#f2b33d', stroke: 'var(--k)', 'stroke-width': sw}, plain);
+
+  // water-repelling sphere: a skin of air around it and a pocket of air trailing behind
   const hydro = Kit.mk('g', {}, svg);
-  const wake = Kit.mk('ellipse', {cx: 0, cy: -r * 1.5, rx: r * .5, ry: r * 1.2, fill: '#ffffff', stroke: '#1c4a73', 'stroke-width': Math.max(1, r * .08), opacity: .85}, hydro);
-  Kit.mk('circle', {r: r * 1.2, fill: '#ffffff', 'fill-opacity': .45, stroke: '#1c4a73', 'stroke-width': Math.max(1.5, r * .12)}, hydro);
-  Kit.mk('circle', {r, fill: '#f2b33d'}, hydro);
-  Kit.mk('circle', {r: r * .28, cx: -r * .35, cy: -r * .35, fill: '#fff', opacity: .55}, hydro);
+  const wake = Kit.mk('path', {d: `M${-r * .75},${-r * .6} C${-r * .7},${-r * 1.6} ${-r * .2},${-r * 2.6} 0,${-r * 2.8} C${r * .2},${-r * 2.6} ${r * .7},${-r * 1.6} ${r * .75},${-r * .6} Z`, fill: '#ffffff', stroke: 'var(--k)', 'stroke-width': sw * .7, 'stroke-linejoin': 'round', opacity: .85}, hydro);
+  Kit.mk('circle', {r: r * 1.2, fill: '#ffffff', stroke: 'var(--k)', 'stroke-width': sw * .7}, hydro);
+  Kit.mk('circle', {r, fill: '#f2b33d', stroke: 'var(--k)', 'stroke-width': sw}, hydro);
+
   // marker: where plain is when the coated one lands
   const mark = Kit.mk('g', {opacity: 0}, svg);
-  const markLine = Kit.mk('line', {x1: x1 - r * 1.8, x2: x1 + r * 1.8, stroke: '#10100c', 'stroke-width': 2, 'stroke-dasharray': '4 4'}, mark);
-  const markText = Kit.mk('text', {x: W / 2, 'text-anchor': 'middle', fill: '#10100c', 'font-size': f * .9, 'font-weight': 700, 'font-family': 'var(--body)'}, mark);
+  const markLine = Kit.mk('line', {x1: x1 - r * 1.8, x2: x1 + r * 1.8, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-dasharray': '4 4'}, mark);
+  const markText = Kit.mk('text', {x: W / 2, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': f * .9, 'font-weight': 700, 'font-family': 'var(--body)'}, mark);
   markText.textContent = '¼ to go';
   // finish labels
-  const done = Kit.mk('g', {opacity: 0, 'font-size': f, 'font-weight': 800, 'font-family': 'var(--mono)', 'text-anchor': 'middle', fill: 'var(--k)'}, svg);
+  const done = Kit.mk('g', {opacity: 0, 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'middle', fill: 'var(--k)'}, svg);
   const d1 = Kit.mk('text', {x: x1, y: H - f * .5}, done); d1.textContent = 'speed 1×';
   const d2 = Kit.mk('text', {x: x2, y: H - f * .5}, done); d2.textContent = 'speed 1.33×';
   G = {x1, x2, yT, yB, r, f, plain, hydro, wake, eddy, mark, markLine, markText, done};

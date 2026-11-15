@@ -28,15 +28,23 @@ const cv = Kit.$('cv');
 const TAU = Math.PI * 2, OM = TAU / 1.2, hyp = Math.hypot;
 const SPEC = [[.80, .25, 0, 1], [.855, 0, .45, 1], [.91, 0, 1, .6], [.964, .3, 1, 0], [1.036, .95, 1, 0], [1.09, 1, .55, 0], [1.164, 1, 0, 0]]
   .map(s => [s[0], s[1] / 3.5, s[2] / 4, s[3] / 2.6]);
-const AMBER = '#ffb547', SKY = '#5cc8ff', N = 120;
+const AMBER = '#f0a640', SKY = '#62b6e8', SUN = '#f2c14e', SUNINK = '#2b1d05', N = 120;
 const seen = new Float32Array(N), lit = new Float32Array(N);
 const S = {px: -.68, t: 0, mix: 0, reveal: 0, ghost: 1, fieldA: .55, path: 1, read: 1, lab: 0, pulse: 2,
   touched: false, drag: false, done: false, pending: false, st: -1, buzz: 0};
 const G = {}, F = {};
 let ctx = null, W = 0, H = 0, fs = 13, body = 'system-ui,sans-serif', hand = 'cursive', ready = false, running = false, last = 0;
+let INK = [244, 241, 232], BG = [0, 0, 0];
 
 const sinc = z => Math.abs(z) < 1e-4 ? 1 : Math.sin(z) / z;
 const env = (s, lam) => sinc(Math.PI * G.a * s / lam);
+
+function rgbOf(s) {
+  const m = /^#?([0-9a-f]{6})$/i.exec((s || '').trim()); if (!m) return null;
+  const n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255];
+}
+const mixRGB = p => INK.map((v, i) => Math.round(v * p / 100 + BG[i] * (1 - p / 100)));
+const tint = (p, a) => { const m = mixRGB(p); return `rgba(${m[0]},${m[1]},${m[2]},${a == null ? 1 : a})`; };
 
 function trips(x) {
   const y = G.L, x1 = x + G.d / 2, x2 = x - G.d / 2, r1 = hyp(x1, y), r2 = hyp(x2, y), dl = r1 - r2, q = Math.abs(dl) / G.lam;
@@ -74,6 +82,7 @@ function layout() {
   fs = Math.max(13, Math.min(18, 1.9 * cq));
   body = cs.getPropertyValue('--body').trim() || body;
   hand = cs.getPropertyValue('--hand').trim() || body;
+  INK = rgbOf(cs.getPropertyValue('--k')) || INK; BG = rgbOf(cs.getPropertyValue('--c')) || BG;
   G.R = Math.max(10, 2 * cq); G.cx = W / 2;
   G.sunH = Math.max(14, Math.min(64, H * .11));
   G.cardT = Math.max(4, Math.min(9, H * .02));
@@ -89,41 +98,25 @@ function layout() {
   let lo = 0, hi = G.half;
   for (let i = 0; i < 40; i++) { const m = (lo + hi) / 2; if (hyp(m + G.d / 2, G.L) - hyp(m - G.d / 2, G.L) < G.lam) lo = m; else hi = m; }
   G.x1 = lo; G.x1n = lo / G.half;
+  G.bright = [];
+  const edge = hyp(G.half + G.d / 2, G.L) - hyp(G.half - G.d / 2, G.L);
+  for (let m = 0; m < 12 && m * G.lam <= edge; m++) {
+    let a = 0, b = G.half;
+    for (let i = 0; i < 40; i++) { const z = (a + b) / 2; if (hyp(z + G.d / 2, G.L) - hyp(z - G.d / 2, G.L) < m * G.lam) a = z; else b = z; }
+    G.bright.push(a);
+  }
   G.lamD = Math.max(12, Math.min(22, G.L * .055));
   G.amp = Math.max(2.4, Math.min(4.5, G.lamD * .2));
   G.lw = Math.max(1.6, Math.min(2.6, W * .006));
   G.thumbW = Math.max(16, W * .055);
   G.slitW = Math.max(3, Math.min(5, W * .011));
-  buildField(); buildScreen();
+  F.maxR = hyp(W / 2 + G.d, G.L);
+  F.ringR = Math.min(G.L * .32, G.lam * 6);
+  buildScreen();
   const P = trips(S.px * G.half); cv.setAttribute('aria-valuetext', `${line1(P)}. ${line2(P)}.`);
   draw();
 }
 
-function buildField() {
-  const sc = 3, fw = Math.max(8, Math.round(W / sc)), fh = Math.max(4, Math.round(G.L / sc));
-  if (!F.cv) F.cv = document.createElement('canvas');
-  F.cv.width = fw; F.cv.height = fh; F.x = F.cv.getContext('2d'); F.img = F.x.createImageData(fw, fh); F.w = fw; F.h = fh;
-  const n = fw * fh, sx = W / fw, sy = G.L / fh, kd = TAU / G.lamD, R0 = .22 * G.L;
-  F.sep = new Float32Array(n * 3); F.int = new Float32Array(n * 3);
-  F.cm = new Float32Array(n); F.sm = new Float32Array(n); F.rm = new Float32Array(n); F.maxR = hyp(W / 2, G.L);
-  for (let j = 0; j < fh; j++) {
-    const y = (j + .5) * sy;
-    for (let i = 0; i < fw; i++) {
-      const x = (i + .5) * sx - G.cx, k = j * fw + i, x1 = x + G.d / 2, x2 = x - G.d / 2;
-      const r1 = hyp(x1, y), r2 = hyp(x2, y), dl = r1 - r2, rm = hyp(x, y), s1 = x1 / r1, s2 = x2 / r2;
-      const g1 = 1 / Math.sqrt(1 + r1 / R0), g2 = 1 / Math.sqrt(1 + r2 / R0);
-      let a = 0, b = 0, c = 0, p = 0, q = 0, r = 0;
-      for (const [f, wr, wg, wb] of SPEC) {
-        const lam = G.lam * f, A1 = env(s1, lam) * g1, A2 = env(s2, lam) * g2;
-        const Is = (A1 * A1 + A2 * A2) / 4, Ii = Is + A1 * A2 * Math.cos(TAU * dl / lam) / 2;
-        a += wr * Is; b += wg * Is; c += wb * Is; p += wr * Ii; q += wg * Ii; r += wb * Ii;
-      }
-      F.sep[k * 3] = a; F.sep[k * 3 + 1] = b; F.sep[k * 3 + 2] = c;
-      F.int[k * 3] = p; F.int[k * 3 + 1] = q; F.int[k * 3 + 2] = r;
-      F.cm[k] = Math.cos(kd * rm); F.sm[k] = Math.sin(kd * rm); F.rm[k] = rm;
-    }
-  }
-}
 function screenRGB(x, out) {
   const y = G.L, x1 = x + G.d / 2, x2 = x - G.d / 2, r1 = hyp(x1, y), r2 = hyp(x2, y), dl = r1 - r2, s1 = x1 / r1, s2 = x2 / r2;
   out[0] = out[1] = out[2] = 0;
@@ -133,15 +126,14 @@ function screenRGB(x, out) {
   }
 }
 function buildScreen() {
-  const n = Math.max(32, Math.round((G.fx1 - G.fx0) / 2)), rows = 12, o = [0, 0, 0], K = 2.4, nrm = 1 - Math.exp(-K);
+  const n = Math.max(32, Math.round((G.fx1 - G.fx0) / 2)), o = [0, 0, 0], K = 2.4, nrm = 1 - Math.exp(-K);
   if (!F.scv) F.scv = document.createElement('canvas');
-  F.scv.width = n; F.scv.height = rows; F.sx = F.scv.getContext('2d'); F.simg = F.sx.createImageData(n, rows);
-  F.sw = n; F.rows = rows; F.scol = new Float32Array(n * 3); F.prof = [];
+  F.scv.width = n; F.scv.height = 1; F.sx = F.scv.getContext('2d'); F.simg = F.sx.createImageData(n, 1);
+  F.sw = n; F.scol = new Float32Array(n * 3);
   for (let i = 0; i < n; i++) {
     screenRGB(((i + .5) / n * 2 - 1) * G.half, o);
     for (let k = 0; k < 3; k++) F.scol[i * 3 + k] = (1 - Math.exp(-K * o[k])) / nrm;
   }
-  for (let r = 0; r < rows; r++) { const z = (r - (rows - 1) / 2) / (rows * .3); F.prof.push(Math.exp(-z * z)); }
 }
 function litAt(xn) {
   const f = (xn + 1) / 2 * (N - 1), i = Math.max(0, Math.min(N - 2, Math.floor(f))), u = Math.max(0, Math.min(1, f - i));
@@ -149,82 +141,79 @@ function litAt(xn) {
 }
 
 function draw() {
-  if (!ctx || !G.half || !F.img) return;
+  if (!ctx || !G.half || !F.scv) return;
   const c = ctx;
   c.save(); c.clearRect(0, 0, W, H);
   drawSun(); drawField(); drawSlits(); drawGhost(); drawFloor(); drawTrips(); drawThumb(); drawRead();
   c.restore();
 }
+/* The sun: a plain flat disc, with its name beside it; the slits are named above the card. */
 function drawSun() {
-  const c = ctx, h = G.sunH, g = c.createLinearGradient(0, 0, 0, h);
-  g.addColorStop(0, '#fff4c8'); g.addColorStop(1, '#ffb443');
-  c.fillStyle = g; c.fillRect(0, 0, W, h);
-  c.save(); c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 1.2; c.setLineDash([h * .3, h * .25]);
-  c.lineDashOffset = Kit.calm ? 0 : -S.t * h * 1.2;
-  for (let i = 0; i < 12; i++) { const x = (i + .5) * W / 12; c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke(); }
-  c.restore();
+  const c = ctx, h = G.sunH, R = Math.max(5, Math.min(h * .34, fs * .9)), y = h * .48, sx = G.fx0 + R;
+  c.fillStyle = SUN; c.beginPath(); c.arc(sx, y, R, 0, TAU); c.fill();
   if (h > fs * 1.7) {
-    const y = h * .5, col = '#5a3405';
-    txt('sunlight', G.fx0, y, fs * .85, 700, col);
-    txt('two narrow slits', G.cx, y, fs * .85, 700, col, 'center');
+    txt('sunlight', sx + R + Math.max(6, fs * .5), y, fs * .85, 500, tint(85));
+    txt('two narrow slits', G.cx, y, fs * .85, 500, tint(85), 'center');
   }
 }
+/* A few ripples spreading out of each slit, fading fast — just enough to say "waves". */
 function drawField() {
-  const d = F.img.data, n = F.w * F.h, m = S.mix, calm = Kit.calm, C = Math.cos(OM * S.t), Sn = Math.sin(OM * S.t);
-  const pr = S.pulse * F.maxR, pw = .08 * G.L, doP = S.pulse < 1.25, base = S.fieldA * 4.6, sep = F.sep, int = F.int;
-  for (let k = 0; k < n; k++) {
-    let mod = calm ? .8 : .62 + .38 * (F.cm[k] * C + F.sm[k] * Sn);
-    if (doP) { const z = (F.rm[k] - pr) / pw; mod += 1.1 * Math.exp(-z * z); }
-    const f = base * mod, k3 = k * 3, o = k * 4;
-    d[o] = 255 * (1 - Math.exp(-f * (sep[k3] + (int[k3] - sep[k3]) * m)));
-    d[o + 1] = 255 * (1 - Math.exp(-f * (sep[k3 + 1] + (int[k3 + 1] - sep[k3 + 1]) * m)));
-    d[o + 2] = 255 * (1 - Math.exp(-f * (sep[k3 + 2] + (int[k3 + 2] - sep[k3 + 2]) * m)));
-    d[o + 3] = 255;
+  const c = ctx, top = G.slitY, bot = G.floorY, sp = G.lam, R0 = F.ringR;
+  const fr = Kit.calm ? 0 : (S.t / 1.2) % 1, lim = S.pulse < 1.25 ? S.pulse * F.maxR : Infinity;
+  c.save(); c.beginPath(); c.rect(0, top, W, bot - top); c.clip();
+  c.lineWidth = Math.max(1, G.lw * .55); c.strokeStyle = tint(70);
+  for (const sg of [-1, 1]) {
+    const sx = G.cx + sg * G.d / 2;
+    for (let n = 0; n < 40; n++) {
+      const r = (n + fr) * sp;
+      if (r > R0 || r > lim) break;
+      if (r < 1) continue;
+      c.globalAlpha = S.fieldA * .8 * (1 - r / R0);
+      c.beginPath(); c.arc(sx, top, r, 0, Math.PI); c.stroke();
+    }
   }
-  F.x.putImageData(F.img, 0, 0);
-  const c = ctx; c.save(); c.globalCompositeOperation = 'lighter'; c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high';
-  c.drawImage(F.cv, 0, G.slitY, W, G.L); c.restore();
+  if (S.mix > .01) {
+    c.lineCap = 'round';
+    G.bright.forEach((xm, m) => {
+      for (const sg of m ? [-1, 1] : [1]) {
+        c.globalAlpha = S.mix * (m ? .5 : .95);
+        c.strokeStyle = m ? tint(70) : tint(100);
+        c.lineWidth = G.lw * (m ? 1 : 1.6);
+        c.beginPath(); c.moveTo(G.cx, top); c.lineTo(G.cx + sg * xm, bot); c.stroke();
+      }
+    });
+  }
+  c.restore();
 }
+/* The card with two slits: a strip of pale paper, two cuts where the sunlight shows through. */
 function drawSlits() {
   const c = ctx, y = G.sunH, t = G.cardT;
-  c.save(); c.globalCompositeOperation = 'lighter';
-  for (const sg of [-1, 1]) {
-    const x = G.cx + sg * G.d / 2, r = G.d * 1.2, g = c.createRadialGradient(x, G.slitY, 0, x, G.slitY, r);
-    g.addColorStop(0, 'rgba(255,248,225,.55)'); g.addColorStop(1, 'rgba(255,248,225,0)');
-    c.fillStyle = g; c.fillRect(x - r, G.slitY, r * 2, r);
-  }
-  c.restore();
-  c.fillStyle = '#16110c'; c.fillRect(0, y, W, t);
-  c.fillStyle = 'rgba(255,255,255,.3)'; c.fillRect(0, y, W, 1);
-  c.fillStyle = '#fff8dc';
+  c.fillStyle = tint(78); c.fillRect(G.fx0, y, G.fx1 - G.fx0, t);
+  c.fillStyle = SUN;
   for (const sg of [-1, 1]) c.fillRect(G.cx + sg * G.d / 2 - G.slitW / 2, y, G.slitW, t);
 }
 function drawGhost() {
   if (S.ghost < .01) return;
   const c = ctx; c.save(); c.globalAlpha = S.ghost;
-  c.setLineDash([3, 5]); c.strokeStyle = 'rgba(255,255,255,.42)'; c.lineWidth = 1.3;
+  c.setLineDash([4, 6]); c.strokeStyle = tint(50); c.lineWidth = 1.4;
   for (const sg of [-1, 1]) { const x = G.cx + sg * G.d / 2; c.beginPath(); c.moveTo(x, G.slitY + 3); c.lineTo(x, G.floorY - 3); c.stroke(); }
   c.setLineDash([]);
-  txt('two lines?', G.cx - G.d / 2 - 7, G.floorY - fs, fs * 1.1, 400, 'rgba(255,255,255,.82)', 'right', hand);
+  txt('two lines?', G.cx - G.d / 2 - 7, G.floorY - fs, fs * 1.1, 400, tint(90), 'right', hand);
   c.restore();
 }
+/* The screen: a plain flat wall; where you have looked, the light it catches appears on it. */
 function drawFloor() {
-  const c = ctx, w = G.fx1 - G.fx0;
-  rr(G.fx0, G.floorY, w, G.floorH, G.floorH / 2); c.fillStyle = '#161c2a'; c.fill();
-  const n = F.sw, rows = F.rows, d = F.simg.data;
+  const c = ctx, w = G.fx1 - G.fx0, base = mixRGB(16);
+  const n = F.sw, d = F.simg.data;
   for (let i = 0; i < n; i++) {
-    const v = 255 * Math.max(S.reveal, litAt((i + .5) / n * 2 - 1));
-    for (let r = 0; r < rows; r++) {
-      const p = v * F.prof[r], o = (r * n + i) * 4;
-      d[o] = p * F.scol[i * 3]; d[o + 1] = p * F.scol[i * 3 + 1]; d[o + 2] = p * F.scol[i * 3 + 2]; d[o + 3] = 255;
-    }
+    const v = 255 * Math.max(S.reveal, litAt((i + .5) / n * 2 - 1)), o = i * 4;
+    for (let k = 0; k < 3; k++) d[o + k] = Math.max(base[k], v * F.scol[i * 3 + k]);
+    d[o + 3] = 255;
   }
   F.sx.putImageData(F.simg, 0, 0);
-  c.save(); c.globalCompositeOperation = 'lighter'; c.imageSmoothingEnabled = true;
-  c.globalAlpha = .5; c.drawImage(F.scv, G.fx0, G.floorY - G.floorH, w, G.floorH * 3);
-  c.globalAlpha = 1; c.drawImage(F.scv, G.fx0, G.floorY, w, G.floorH);
-  c.restore();
-  txt('screen', G.fx1, G.floorY - fs * .75, fs * .8, 700, 'rgba(255,255,255,.55)', 'right');
+  c.imageSmoothingEnabled = true; c.drawImage(F.scv, G.fx0, G.floorY, w, G.floorH);
+  c.fillStyle = tint(78); c.fillRect(G.fx0, G.floorY - 1, w, 2);
+  txt('screen', G.fx1, G.floorY - fs * .75, fs * .85, 500, tint(60), 'right');
 }
 function drawTrips() {
   if (S.path < .01) return;
@@ -245,13 +234,12 @@ function drawTrips() {
   c.restore();
 }
 function drawThumb() {
-  const c = ctx, px = G.cx + S.px * G.half, tw = G.thumbW, cy = G.floorY + G.floorH / 2;
+  const c = ctx, px = G.cx + S.px * G.half, tw = G.thumbW, cy = G.floorY + G.floorH / 2, ink = tint(100);
   rr(px - tw / 2, G.floorY - 5, tw, G.floorH + 10, Math.min(8, tw / 2));
-  c.fillStyle = 'rgba(255,255,255,.07)'; c.fill(); c.lineWidth = 2; c.strokeStyle = '#fff'; c.stroke();
-  c.beginPath(); c.arc(px, G.floorY, 2.6, 0, TAU); c.fillStyle = '#fff'; c.fill();
+  c.lineWidth = 2; c.strokeStyle = ink; c.stroke();
   if (!S.touched) {
     const s = Math.max(5, G.floorH * .3), o = tw / 2 + 5 + (Kit.calm ? 0 : 2.5 * (1 + Math.sin(S.t * 4)));
-    c.save(); c.fillStyle = '#fff'; tri(px - o, cy, -1, s); tri(px + o, cy, 1, s); c.restore();
+    c.save(); c.fillStyle = ink; tri(px - o, cy, -1, s); tri(px + o, cy, 1, s); c.restore();
   }
 }
 function wave(x0, cy, w, amp, ph, tt, col, lw) {
@@ -267,29 +255,26 @@ function drawRead() {
     const ph = P.psi / 2, M = Math.sqrt(Math.max(0, P.A1 * P.A1 + P.A2 * P.A2 + 2 * P.A1 * P.A2 * Math.cos(P.psi)));
     const phs = Math.atan2((P.A1 - P.A2) * Math.sin(ph), (P.A1 + P.A2) * Math.cos(ph));
     c.save(); c.globalAlpha = S.read;
-    c.fillStyle = 'rgba(255,255,255,.14)'; c.fillRect(gx, cy - .5, gw, 1);
-    wave(gx, cy, gw, s * M, phs, tt, '#fff', Math.max(2.4, G.lw * 1.4));
     wave(gx, cy, gw, s * P.A1, ph, tt, AMBER, G.lw * .85);
     wave(gx, cy, gw, s * P.A2, -ph, tt, SKY, G.lw * .85);
+    wave(gx, cy, gw, s * M, phs, tt, tint(100), Math.max(2.4, G.lw * 1.4));
     const tx = gx + gw + Math.max(10, W * .04), mw = G.fx1 - tx, l1 = line1(P), l2 = line2(P);
-    txt(l1, tx, cy - fs * .62, fit(l1, fs * .85, 600, mw), 600, 'rgba(255,255,255,.65)');
-    txt(l2, tx, cy + fs * .6, fit(l2, fs, 800, mw), 800, '#fff');
+    txt(l1, tx, cy - fs * .62, fit(l1, fs * .9, 500, mw), 500, tint(65));
+    txt(l2, tx, cy + fs * .6, fit(l2, fs * .9, 700, mw), 700, tint(100));
     c.restore();
   }
   if (S.lab > .01) {
     c.save(); c.globalAlpha = S.lab;
-    const z = fs, z2 = fs * .82, y1 = cy - fs * .55, y2 = cy + fs * .62;
-    c.font = `600 ${z2}px ${body}`; const wS = c.measureText('strongest').width, wW = c.measureText('weaker').width;
-    c.font = `800 ${z}px ${body}`; const wR = c.measureText('rainbow').width, ws = Math.max(wR, wW);
+    const z = fs * .9, y1 = cy - fs * .55, y2 = cy + fs * .62;
+    c.font = `500 ${z}px ${body}`; const wS = c.measureText('strongest').width, wW = c.measureText('weaker').width;
+    c.font = `700 ${z}px ${body}`; const wR = c.measureText('rainbow').width, ws = Math.max(wR, wW);
     const xl = Math.min(W / 2 - ws / 2 - 4, Math.max(G.x1 * 1.04, wS / 2 + ws / 2 + 8));
-    txt('white', G.cx, y1, z, 800, '#fff', 'center');
-    txt('strongest', G.cx, y2, z2, 600, 'rgba(255,255,255,.65)', 'center');
-    const cols = ['#a08cff', '#56b6ff', '#4fe3a6', '#ffe169', '#ffa04a', '#ff5f5f'];
+    txt('white', G.cx, y1, z, 700, tint(100), 'center');
+    txt('strongest', G.cx, y2, z, 500, tint(65), 'center');
     for (const sg of [-1, 1]) {
-      const X = G.cx + sg * xl, g = c.createLinearGradient(X - sg * wR / 2, 0, X + sg * wR / 2, 0);
-      cols.forEach((col, i) => g.addColorStop(i / (cols.length - 1), col));
-      txt('rainbow', X, y1, z, 800, g, 'center');
-      txt('weaker', X, y2, z2, 600, 'rgba(255,255,255,.65)', 'center');
+      const X = G.cx + sg * xl;
+      txt('rainbow', X, y1, z, 700, tint(100), 'center');
+      txt('weaker', X, y2, z, 500, tint(65), 'center');
     }
     c.restore();
   }

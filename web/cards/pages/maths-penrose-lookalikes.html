@@ -1,43 +1,43 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: maths-penrose-lookalikes -->
-<!-- Look: a risograph print, two inks (fluorescent pink and a light mint ink) printed straight on the card, with plates slightly out of register. Two real Penrose tilings, stacked on roomy phones and side by side on short ones, and six patches cut from them are small printed discs with a dashed cut line.
-     Interaction: tap a patch to file it under A (it lifts toward A and takes A's pink ring), tap again for B (teal). The tiling you file into thumps on the press. Then check.
-     Wow: the press thumps, the discs drop back into one shared tray "in both", and the chosen patch stamps itself in dark overprint at every place it occurs in both tilings, rippling out from the disc. Tap any patch to see it everywhere. -->
+<!-- Look: two pieces of a real Penrose floor laid flat, with fewer, larger tiles. Fat and thin rhombs are two close, quiet tints of the card's ink on the card's colour, and the grout is the card's colour. Stacked on roomy phones and side by side on short ones. Six patches cut from them are small flat paper discs.
+     Interaction: tap a patch to file it under A (it lifts toward A and takes A's coral ring), tap again for B (navy). The floor you file into gives a small thump. Then check.
+     Wow: the floors thump, the discs drop back into one shared tray "in both", and the chosen patch lights up in solid ink at every place it occurs on both floors, rippling out from the disc. Tap any patch to see it everywhere. -->
 <title>Penrose look-alikes</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
 <style>
-#card{--chip:max(min(6.2cqh,11.6cqw),40px);--paper:#f6f0e4;--pink:#ff48b0;--teal:#0a9fae;--ink:#24206b}
+#card{--chip:max(min(6.2cqh,11.6cqw),40px);--ca:#ff6f61;--cb:#23206b}
 #stage{display:grid;flex:1;min-height:0;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"a" "m" "b";gap:1cqh 2.4cqw}
 #stage.side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"a b" "m m"}
 #wA{grid-area:a}#wB{grid-area:b}#mid{grid-area:m}
 .world{position:relative;min-height:0;min-width:0}
 .world canvas.tile{position:absolute;inset:0;width:100%;height:100%;display:block;background:none;border:0;box-shadow:none}
-.name{position:absolute;left:1.1cqh;top:1.1cqh;z-index:2;display:flex;align-items:center;gap:.55em;font:700 max(1.45cqh,12px)/1 var(--mono);letter-spacing:.08em;color:var(--ink);background:rgba(246,240,228,.93);padding:.3em .75em .3em .3em;border-radius:99px;box-shadow:.2cqh .3cqh 0 rgba(36,32,107,.35);pointer-events:none;white-space:nowrap}
-.name i{font-style:normal;display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--pink);color:#fff}
-#wB .name i{background:var(--teal)}
+.name{position:absolute;left:1.1cqh;top:1.1cqh;z-index:2;display:flex;align-items:center;gap:.5em;font:600 max(1.45cqh,12px)/1 var(--body);color:var(--k);background:var(--c);padding:.3em .8em .3em .3em;border-radius:99px;pointer-events:none;white-space:nowrap}
+.name i{font-style:normal;font-weight:700;display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--ca);color:#fff}
+#wB .name i{background:var(--cb)}
 .name em{font-style:normal}
 #stage:not(.side) #wB .name{top:auto;bottom:1.1cqh}
 #mid{display:flex;flex-direction:column;align-items:center;gap:.6cqh;min-width:0}
-#tray{display:flex;justify-content:center;align-items:center;gap:max(1.8cqw,7px);padding:.6cqh 2cqw;border-radius:99px;background:rgba(246,240,228,.12);box-shadow:inset 0 0 0 1px rgba(246,240,228,.28);transition:background .5s,box-shadow .5s,padding .45s}
+#tray{display:flex;justify-content:center;align-items:center;gap:max(1.8cqw,7px);padding:.6cqh 2cqw;border-radius:99px;background:transparent;transition:background .5s,padding .45s}
 #stage:not(.side) #tray{padding:calc(var(--chip)*.3) 2cqw}
 #stage:not(.side) #tray.both{padding:.6cqh 2cqw}
-#tray.both{background:rgba(246,240,228,.5);box-shadow:inset 0 0 0 .22cqh rgba(36,32,107,.35)}
-#lab{font:700 max(1.4cqh,12px)/1.2 var(--mono);letter-spacing:.06em;color:var(--k);opacity:.85;text-align:center;white-space:nowrap}
-.chip{width:var(--chip);height:var(--chip);flex:0 0 auto;border:0;padding:0;border-radius:50%;background:var(--paper);position:relative;cursor:pointer;translate:0 0;box-shadow:0 0 0 .26cqh var(--ink),.45cqh .55cqh 0 var(--teal);-webkit-tap-highlight-color:transparent;transition:translate .5s cubic-bezier(.3,1.6,.5,1),box-shadow .3s}
+#tray.both{background:color-mix(in srgb,var(--k) 14%,var(--c))}
+#lab{font:500 max(1.4cqh,12px)/1.2 var(--body);color:var(--k);opacity:.85;text-align:center;white-space:nowrap}
+.chip{width:var(--chip);height:var(--chip);flex:0 0 auto;border:0;padding:0;border-radius:50%;background:var(--c);position:relative;cursor:pointer;translate:0 0;box-shadow:0 0 0 .26cqh var(--k);-webkit-tap-highlight-color:transparent;transition:translate .5s cubic-bezier(.3,1.6,.5,1),box-shadow .3s}
 .chip canvas{width:100%;height:100%;display:block;border-radius:50%}
-.chip.fA{box-shadow:0 0 0 .5cqh var(--pink),.45cqh .55cqh 0 var(--ink)}
-.chip.fB{box-shadow:0 0 0 .5cqh var(--teal),.45cqh .55cqh 0 var(--ink)}
+.chip.fA{box-shadow:0 0 0 .5cqh var(--ca)}
+.chip.fB{box-shadow:0 0 0 .5cqh var(--cb)}
 #stage:not(.side) .chip.fA{translate:0 calc(var(--chip)*-.28)}
 #stage:not(.side) .chip.fB{translate:0 calc(var(--chip)*.28)}
-.chip.sel{box-shadow:0 0 0 .4cqh var(--paper),0 0 0 .85cqh var(--pink),.5cqh .7cqh 0 .5cqh var(--ink)}
-.chip[data-b]::after{content:attr(data-b);position:absolute;right:-5px;top:-5px;font:800 12px/1 var(--mono);padding:3px 4px;border-radius:7px;white-space:nowrap;pointer-events:none}
-.chip.fA::after{background:var(--pink);color:#fff}
-.chip.fB::after{background:var(--teal);color:#fff}
-.chip.ok::after{background:var(--ink);color:var(--paper)}
-.chip.no::after{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 2px var(--pink)}
+.chip.sel{box-shadow:0 0 0 .4cqh var(--c),0 0 0 .85cqh var(--k)}
+.chip[data-b]::after{content:attr(data-b);position:absolute;right:-5px;top:-5px;font:700 12px/1 var(--body);padding:3px 5px;border-radius:99px;white-space:nowrap;pointer-events:none}
+.chip.fA::after{background:var(--ca);color:#fff}
+.chip.fB::after{background:var(--cb);color:#fff}
+.chip.ok::after{background:var(--k);color:var(--c)}
+.chip.no::after{background:var(--c);color:var(--k);box-shadow:inset 0 0 0 2px var(--ca)}
 #check{align-self:flex-start;transition:opacity .35s}
 #check.wait{opacity:0;visibility:hidden;pointer-events:none}
 .say b{font-weight:800}
@@ -47,9 +47,9 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SORT THE PATCHES</span></div>
     <h2 class="q">How many different Penrose tilings are there, and could you tell them apart?</h2>
     <div class="stagebox" id="stage">
-      <div class="world" id="wA"><canvas class="tile" id="cA" role="img" aria-label="Penrose tiling A, printed in pink and mint"></canvas><span class="name"><i>A</i><em id="nA">TILING A</em></span></div>
-      <div id="mid"><div id="tray"></div><span id="lab">CUT FROM A OR FROM B?</span></div>
-      <div class="world" id="wB"><canvas class="tile" id="cB" role="img" aria-label="Penrose tiling B, a different tiling, printed in pink and mint"></canvas><span class="name"><i>B</i><em id="nB">TILING B</em></span></div>
+      <div class="world" id="wA"><canvas class="tile" id="cA" role="img" aria-label="Penrose tiling A, a floor of fat and thin rhombs"></canvas><span class="name"><i>A</i><em id="nA">Tiling A</em></span></div>
+      <div id="mid"><div id="tray"></div><span id="lab">Cut from A or from B?</span></div>
+      <div class="world" id="wB"><canvas class="tile" id="cB" role="img" aria-label="Penrose tiling B, a different floor of fat and thin rhombs"></canvas><span class="name"><i>B</i><em id="nB">Tiling B</em></span></div>
     </div>
     <p class="say" id="say">Two different Penrose tilings. Six small patches were cut from them. <b>Tap a patch to file it under A, tap again for B.</b></p>
     <button class="btn wait" id="check">Check my sorting</button>
@@ -61,7 +61,7 @@
 <script>
 (() => {
   gsap.registerPlugin(Flip);
-  const PHI = (1 + Math.sqrt(5)) / 2, PAPER = '#f6f0e4', PINK = '#ff48b0', TEAL = '#0a9fae', INK = '#24206b', LIGHT = '#e9fff4';
+  const PHI = (1 + Math.sqrt(5)) / 2;
   const dpr = Math.min(3, window.devicePixelRatio || 1);
   const clamp = v => v < 0 ? 0 : v > 1 ? 1 : v;
   const BACK = gsap.parseEase('back.out(2.2)');
@@ -70,7 +70,8 @@
   const A = {id: 'A', cv: Kit.$('cA'), name: Kit.$('nA'), occ: [], t: 0, o: 0};
   const B = {id: 'B', cv: Kit.$('cB'), name: Kit.$('nB'), occ: [], t: 0, o: 0};
   const stage = Kit.$('stage'), tray = Kit.$('tray'), lab = Kit.$('lab'), say = Kit.$('say'), btn = Kit.$('check');
-  let chips = [], revealed = false, sel = null, hlTween = null, grain = null, side = null;
+  let chips = [], revealed = false, sel = null, hlTween = null, side = null, COL = null;
+  const PAD = 14;
 
   // ---------- a real Penrose rhomb tiling: Robinson triangles, subdivided n times ----------
   function build(n) {
@@ -97,10 +98,7 @@
       const k = [key(t[2]), key(t[3])].sort().join('|') + t[0], o = half.get(k);
       if (!o) { half.set(k, t); continue; }
       const thin = t[0] === 0, P = [o[1], o[2], t[1], o[3]];
-      const deg = ((Math.atan2(t[1][1] - o[1][1], t[1][0] - o[1][0]) * 180 / Math.PI) + 360) % 180;
-      const ki = Math.round(deg / 18) % 10;
-      const a = thin ? [.5, .78, .62, .88, .55, .7, .82, .6, .74, .66][ki] : [.34, .6, .46, .72, .4, .56, .66, .38, .62, .5][ki];
-      rh.push({thin, P, ang: thin ? [36, 144, 36, 144] : [108, 72, 108, 72], a,
+      rh.push({thin, P, ang: thin ? [36, 144, 36, 144] : [108, 72, 108, 72],
         cx: (P[0][0] + P[1][0] + P[2][0] + P[3][0]) / 4, cy: (P[0][1] + P[1][1] + P[2][1] + P[3][1]) / 4});
     }
     const vm = new Map();
@@ -125,73 +123,70 @@
     return {rh, verts, bySig};
   }
 
-  // ---------- riso printing ----------
-  function makeGrain() {
-    const c = document.createElement('canvas'); c.width = c.height = 220;
-    const g = c.getContext('2d'), im = g.createImageData(220, 220), d = im.data;
-    for (let i = 0; i < d.length; i += 4) {
-      const r = Kit.rnd();
-      if (r < .07) { d[i] = 246; d[i + 1] = 240; d[i + 2] = 228; d[i + 3] = 110 + Kit.rnd() * 110; }
-      else if (r < .085) { d[i] = 36; d[i + 1] = 32; d[i + 2] = 107; d[i + 3] = 50; }
-    }
-    g.putImageData(im, 0, 0); return c;
+  // ---------- the card's own colours, flat ----------
+  function rgbOf(css, fb) {
+    const c = document.createElement('canvas'); c.width = c.height = 1;
+    const g = c.getContext('2d'); g.fillStyle = fb; g.fillStyle = css || fb; g.fillRect(0, 0, 1, 1);
+    const d = g.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2]];
   }
-  function pattern(g) {
-    const p = g.createPattern(grain, 'repeat');
-    try { p.setTransform(new DOMMatrix().scale(.6)); } catch (e) {}
-    return p;
+  function colours() {
+    const cs = getComputedStyle(Kit.$('card'));
+    const k = rgbOf(cs.getPropertyValue('--k').trim(), '#111111'), c = rgbOf(cs.getPropertyValue('--c').trim(), '#0e9a6a');
+    const mix = n => 'rgb(' + k.map((v, i) => Math.round(v * n + c[i] * (1 - n))).join(',') + ')';
+    // two close, quiet tints: the floor reads as one calm surface, fat and thin still tell apart
+    COL = {k: mix(1), c: mix(0), fat: mix(.2), thin: mix(.34)};
   }
+
+  // ---------- painting the floor ----------
   const trace = (g, r, f) => { const p = r.P.map(f); g.moveTo(p[0][0], p[0][1]); for (let k = 1; k < 4; k++) g.lineTo(p[k][0], p[k][1]); g.closePath(); };
-  function inkLayer(g, rs, f, ink, lw, fa = 1) {
-    const thinInk = ink === TEAL || ink === LIGHT;
-    g.fillStyle = ink;
-    for (const r of rs) { if (r.thin !== thinInk) continue; g.globalAlpha = r.a * fa; g.beginPath(); trace(g, r, f); g.fill(); }
-    g.globalAlpha = .95; g.strokeStyle = ink; g.lineWidth = lw; g.lineJoin = 'round';
-    g.beginPath(); for (const r of rs) trace(g, r, f); g.stroke(); g.globalAlpha = 1;
+  function tiles(g, rs, f, lw) {
+    g.fillStyle = COL.fat; g.beginPath(); for (const r of rs) if (!r.thin) trace(g, r, f); g.fill();
+    g.fillStyle = COL.thin; g.beginPath(); for (const r of rs) if (r.thin) trace(g, r, f); g.fill();
+    g.strokeStyle = COL.c; g.lineWidth = lw; g.lineJoin = 'round';
+    g.beginPath(); for (const r of rs) trace(g, r, f); g.stroke();
   }
-  function plate(w, ink) {
-    const c = document.createElement('canvas');
-    c.width = Math.max(1, Math.round(w.W * dpr)); c.height = Math.max(1, Math.round(w.H * dpr));
+  function plate(w) {
+    const c = document.createElement('canvas'), PW = w.W + PAD * 2, PH = w.H + PAD * 2;
+    c.width = Math.max(1, Math.round(PW * dpr)); c.height = Math.max(1, Math.round(PH * dpr));
     const g = c.getContext('2d'); g.scale(dpr, dpr);
-    const f = p => [w.W / 2 + p[0] * w.e, w.H / 2 + p[1] * w.e], m = w.e * 2;
+    const f = p => [PAD + w.W / 2 + p[0] * w.e, PAD + w.H / 2 + p[1] * w.e], m = w.e * 2 + PAD;
     const rs = w.data.rh.filter(r => { const x = w.W / 2 + r.cx * w.e, y = w.H / 2 + r.cy * w.e; return x > -m && x < w.W + m && y > -m && y < w.H + m; });
-    inkLayer(g, rs, f, ink, Math.max(1, w.e * .085), .28);
+    tiles(g, rs, f, Math.max(2, w.e * .09));
     return c;
   }
 
   function layoutWorld(w) {
     const r = Kit.fitCanvas(w.cv); w.x = r.x; w.W = r.W; w.H = r.H;
     if (!w.W || !w.H) return false;
-    w.e = Math.max(10, Math.min(w.W / 17, w.H / 8.5), w.W / 30);
+    // larger, fewer tiles: fewer small marks competing
+    w.e = Math.max(10, Math.min(w.W / 13, w.H / 6.5), w.W / 23);
     for (const v of w.data.verts) { v.sx = w.W / 2 + v.x * w.e; v.sy = w.H / 2 + v.y * w.e; }
-    w.teal = plate(w, LIGHT); w.pink = plate(w, PINK); w.grain = pattern(w.x);
+    w.floor = plate(w);
     return true;
   }
   const inView = (w, v, m) => v.sx > m && v.sx < w.W - m && v.sy > m && v.sy < w.H - m;
 
   function compose(w) {
-    const x = w.x; if (!x || !w.teal) return;
+    const x = w.x; if (!x || !w.floor) return;
     const {W, H, e} = w, o = anim.o + w.o;
     x.save();
-    x.globalCompositeOperation = 'source-over'; x.globalAlpha = 1;
+    x.globalAlpha = 1;
     x.clearRect(0, 0, W, H);
     if (anim.rv < 1) { x.beginPath(); x.arc(W / 2, H / 2, Math.max(.1, anim.rv * Math.hypot(W, H) / 2), 0, 7); x.clip(); }
-    x.globalCompositeOperation = 'source-over';
-    x.drawImage(w.teal, 1.1 + 10 * o, -.7 - 6 * o, W, H);
-    x.drawImage(w.pink, -.9 - 8 * o, .8 + 7 * o, W, H);
-    // The chosen patch, everywhere it occurs: dark overprint.
+    // the thump: the whole floor bumps down and settles
+    x.drawImage(w.floor, -PAD + 3 * o, -PAD + 9 * o, W + PAD * 2, H + PAD * 2);
+    // The chosen patch, everywhere it occurs: solid ink.
     for (const q of w.occ) {
       const p = clamp((w.t - q.d) / .35); if (p <= 0) continue;
       const s = BACK(p), v = q.v;
       const f = pt => [v.sx + (W / 2 + pt[0] * e - v.sx) * s, v.sy + (H / 2 + pt[1] * e - v.sy) * s];
-      x.globalCompositeOperation = 'source-over'; x.globalAlpha = Math.min(1, p * 2);
+      x.globalAlpha = Math.min(1, p * 2);
       x.beginPath(); for (const i of v.rh) trace(x, w.data.rh[i], f);
-      x.fillStyle = INK; x.fill();
-      x.strokeStyle = PAPER; x.lineWidth = Math.max(1, e * .07); x.globalAlpha = .85 * Math.min(1, p * 2); x.stroke();
+      x.fillStyle = COL.k; x.fill();
+      x.strokeStyle = COL.c; x.lineWidth = Math.max(2, e * .09); x.lineJoin = 'round'; x.stroke();
       if (p < 1) {
-        x.globalAlpha = Math.sin(p * Math.PI) * .9; x.lineWidth = 2;
-        x.strokeStyle = PINK; x.beginPath(); x.arc(v.sx, v.sy, e * (1 + 2.6 * p), 0, 7); x.stroke();
-        x.strokeStyle = LIGHT; x.beginPath(); x.arc(v.sx + 1.5, v.sy - 1, e * (1 + 2.6 * p), 0, 7); x.stroke();
+        x.globalAlpha = Math.sin(p * Math.PI) * .8; x.lineWidth = 2;
+        x.strokeStyle = COL.k; x.beginPath(); x.arc(v.sx, v.sy, e * (1 + 2.6 * p), 0, 7); x.stroke();
       }
     }
     x.restore();
@@ -219,28 +214,20 @@
       return ch;
     });
   }
-  // The disc is round, so its spin is printed inside the canvas: the button's box never grows.
+  // The disc is round, so its spin is painted inside the canvas: the button's box never grows.
   function drawChip(ch, refit = true) {
     if (refit || !ch.g) { const r = Kit.fitCanvas(ch.el.firstChild); ch.g = r.x; ch.S = r.W; }
     const g = ch.g, S = ch.S;
-    if (!S || !g) return;
+    if (!S || !g || !COL) return;
     const w = ch.src === 'A' ? A : B, sc = (S / 2 - 1.5) / 1.95, v = ch.v;
     const rs = v.rh.map(i => w.data.rh[i]), f = p => [S / 2 + (p[0] - v.x) * sc, S / 2 + (p[1] - v.y) * sc];
     g.save();
     g.clearRect(0, 0, S, S);
     g.beginPath(); g.arc(S / 2, S / 2, S / 2, 0, 7); g.clip();
-    g.fillStyle = PAPER; g.fillRect(0, 0, S, S);
+    g.fillStyle = COL.c; g.fillRect(0, 0, S, S);
     if (ch.rot) { g.translate(S / 2, S / 2); g.rotate(ch.rot * Math.PI / 180); g.translate(-S / 2, -S / 2); }
-    g.save();
-    g.globalCompositeOperation = 'multiply';
-    g.translate(.8, -.5); inkLayer(g, rs, f, TEAL, Math.max(1, sc * .08));
-    g.translate(-1.4, 1); inkLayer(g, rs, f, PINK, Math.max(1, sc * .08));
+    tiles(g, rs, f, Math.max(1.5, sc * .1));
     g.restore();
-    g.fillStyle = pattern(g); g.fillRect(-S, -S, S * 3, S * 3);
-    g.restore();
-    // the scissors' cut line
-    g.save(); g.strokeStyle = INK; g.globalAlpha = .55; g.lineWidth = 1; g.setLineDash([2.5, 2.5]);
-    g.beginPath(); g.arc(S / 2, S / 2, S / 2 - 3, 0, 7); g.stroke(); g.restore();
   }
   const spin = (ch, from, vars) => gsap.fromTo(ch, {rot: from}, Object.assign({rot: 0, onUpdate: () => drawChip(ch, false)}, vars));
 
@@ -271,8 +258,8 @@
   function status() {
     if (revealed) return;
     const left = chips.filter(c => !c.bin).length;
-    lab.textContent = !left ? 'ALL FILED · CHANGE ANY, OR CHECK'
-      : side ? `${left} TO FILE · TAP: A · AGAIN: B` : `${left} TO FILE · TAP: ▲A · AGAIN: ▼B`;
+    lab.textContent = !left ? 'All filed · change any, or check'
+      : side ? `${left} to file · tap: A · again: B` : `${left} to file · tap: ▲A · again: ▼B`;
     if (!left && chips.length) btn.classList.remove('wait');
   }
   function tap(ch) {
@@ -299,7 +286,7 @@
       c.el.dataset.b = (ok ? '✓' : '✗') + c.src;
     });
     tray.classList.add('both');
-    lab.textContent = 'EVERY PATCH IS IN BOTH · TAP ONE';
+    lab.textContent = 'Every patch is in both · tap one';
     say.innerHTML = `<b>${right} of 6 right: ${right === 3 ? 'a coin toss' : 'pure luck either way'}.</b> Any finite patch of one Penrose tiling appears, infinitely often, in every other one.`;
     Kit.show('keep'); Kit.haptic('success');
     if (Kit.calm) { select(chips[0]); return; }
@@ -321,7 +308,7 @@
     for (const w of [A, B]) {
       w.occ.forEach(q => q.d = q.d / max * .95);
       const n = w.occ.filter(q => inView(w, q.v, 0)).length;
-      w.name.textContent = `${n} ${n === 1 ? 'COPY' : 'COPIES'}`;
+      w.name.textContent = `${n} ${n === 1 ? 'copy' : 'copies'}`;
     }
   }
   function select(ch) {
@@ -338,7 +325,8 @@
 
   // ---------- frame hooks ----------
   Kit.onShow.card = () => {
-    if (!grain) { grain = makeGrain(); A.data = build(6); B.data = build(7); }
+    colours();
+    if (!A.data) { A.data = build(6); B.data = build(7); }
     decide();
     layoutWorld(A); layoutWorld(B);
     if (!chips.length && A.W && B.W) { makeChips(); status(); decide(); }

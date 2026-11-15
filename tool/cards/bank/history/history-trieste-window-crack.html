@@ -41,6 +41,10 @@ function txt(x, y, s, attrs, parent) {
   t.textContent = s; return t;
 }
 
+// flat sea bands, one per 2,000 m, darker as it gets deeper
+const BANDS = [[0, '#8ccbe8'], [2000, '#4f9fcf'], [4000, '#2f78ad'], [6000, '#1f5a8a'], [8000, '#143f66']];
+const YEL = '#ffd23f', RED = '#d8382c';
+
 function render() {
   if (!L) return;
   const {W, H} = L;
@@ -50,15 +54,21 @@ function render() {
   const top = fs * 1.5, bot = H - fs * 1.6;
   const yOf = d => top + d / D * (bot - top);
   geo = {top, bot, fs};
+  const ink = getComputedStyle(svg).color || '#111';
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+  const lightAt = y => y < yOf(2000);
 
   const defs = Kit.mk('defs', {}, svg);
-  const sea = Kit.mk('linearGradient', {id: 'sea', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  [['0', '#5fb8f0'], ['.25', '#1f6fa8'], ['.6', '#0b2f52'], ['1', '#020a14']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, sea));
-  const gl = Kit.mk('radialGradient', {id: 'glass', cx: '.4', cy: '.35', r: '.75'}, defs);
-  [['0', '#2a6a96'], ['.6', '#0c2c4a'], ['1', '#03101d']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, gl));
 
-  // depth column
-  Kit.mk('rect', {x: colL, y: top, width: colR - colL, height: bot - top, rx: fs * 0.5, fill: 'url(#sea)'}, svg);
+  // sea: a flat cross-section of the water, banded by depth
+  BANDS.forEach(([d, c], i) => {
+    const y0 = yOf(d), y1 = i < BANDS.length - 1 ? yOf(BANDS[i + 1][0]) : bot;
+    Kit.mk('rect', {x: colL, y: y0, width: colR - colL, height: y1 - y0 + 0.5, fill: c}, svg);
+  });
+  // the trench floor
+  Kit.mk('path', {d: `M${colL},${bot} L${colR},${bot} L${colR},${bot + fs * 0.55} L${colL},${bot + fs * 0.55}Z`, style: `fill:${tint(55)}`}, svg);
+  // surface line
+  Kit.mk('line', {x1: colL - fs * 0.2, x2: colR + fs * 0.2, y1: top, y2: top, stroke: ink, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
 
   const show = revealed ? TRUE : guess;
   const yg = yOf(guess), yt = yOf(TRUE);
@@ -66,54 +76,60 @@ function render() {
   const gBase = (revealed && deeper) ? yg + fs * 1.15 : yg - fs * 0.45;
   const tBase = deeper ? yt - fs * 0.45 : yt + fs * 1.15;
   const busy = [gBase]; if (revealed) busy.push(tBase);
-  const lab = {fill: '#fff', stroke: 'rgba(0,0,0,.55)', 'stroke-width': Math.max(2, fs * 0.2), 'paint-order': 'stroke',
-    'font-family': 'var(--mono)', 'font-size': fs * 0.85, 'font-weight': 600};
+  const LFS = fs * 0.85;
+  const lab = (fill, w) => ({fill, 'font-size': LFS, 'font-weight': w || 600, style: 'font-family:var(--body)'});
 
   const placed = [];
   [0, 2000, 4000, 6000, 8000, D].forEach(d => {
     const y = yOf(d), b = d === 0 ? y + fs * 1.05 : y - fs * 0.35;
-    Kit.mk('line', {x1: colL, x2: colL + fs * 0.55, y1: y, y2: y, stroke: '#fff', 'stroke-opacity': .6, 'stroke-width': 1.5}, svg);
+    const col = lightAt(b) ? ink : '#fff';
+    if (d > 0 && d < D) Kit.mk('line', {x1: colL, x2: colL + fs * 0.55, y1: y, y2: y, stroke: col, 'stroke-width': 1.5}, svg);
     if (busy.some(v => Math.abs(v - b) < fs * 1.35)) return;
     if (placed.some(v => Math.abs(v - b) < fs * 1.25)) return;
     placed.push(b);
-    txt(colL + fs * 0.75, b, d === 0 ? 'surface' : d === D ? '10,900 m floor' : fmt(d) + ' m', lab);
+    txt(colL + fs * 0.75, b, d === 0 ? 'surface' : d === D ? '10,900 m floor' : fmt(d) + ' m', lab(col), svg);
   });
 
   // true depth
   if (revealed) {
     const g = Kit.mk('g', {id: 'truth'}, svg);
-    Kit.mk('line', {x1: colL, x2: colR, y1: yt, y2: yt, stroke: '#ff5a5a', 'stroke-width': fs * 0.22}, g);
-    txt(colL + fs * 0.75, tBase, 'crack · 9,000 m', Object.assign({}, lab, {fill: '#ff8a8a', 'font-weight': 800}), g);
+    Kit.mk('line', {x1: colL, x2: colR, y1: yt, y2: yt, stroke: RED, 'stroke-width': fs * 0.22}, g);
+    Kit.mk('line', {x1: colL, x2: colR, y1: yt, y2: yt, stroke: '#fff', 'stroke-width': 1, 'stroke-dasharray': `${fs * 0.4} ${fs * 0.3}`, opacity: 0}, g);
+    txt(colL + fs * 0.75, tBase, 'crack · 9,000 m', lab('#ffb4a8', 700), g);
   }
 
-  // guess marker
+  // guess marker: the bathyscaphe itself, hanging at the chosen depth
   const gm = Kit.mk('g', {}, svg);
-  Kit.mk('line', {x1: colL, x2: colR, y1: yg, y2: yg, stroke: '#ffd23f', 'stroke-width': fs * 0.2}, gm);
-  txt(colR - fs * 1.1, gBase, (moved ? 'you · ' : '') + fmt(guess) + ' m', Object.assign({}, lab, {fill: '#ffd23f', 'text-anchor': 'end', 'font-weight': 800}), gm);
+  Kit.mk('line', {x1: colL, x2: colR, y1: yg, y2: yg, stroke: YEL, 'stroke-width': fs * 0.2}, gm);
+  txt(colR - fs * 1.1, gBase, (moved ? 'you · ' : '') + fmt(guess) + ' m', Object.assign(lab(lightAt(gBase) ? ink : YEL, 700), {'text-anchor': 'end'}), gm);
   const hd = Kit.mk('g', {id: 'handle'}, gm);
-  Kit.mk('circle', {cx: colR, cy: yg, r: fs * 0.85, fill: '#ffd23f', stroke: '#1a1a1a', 'stroke-width': 2}, hd);
-  [-1, 0, 1].forEach(k => Kit.mk('line', {x1: colR - fs * 0.38, x2: colR + fs * 0.38, y1: yg + k * fs * 0.22, y2: yg + k * fs * 0.22, stroke: '#1a1a1a', 'stroke-width': 1.5}, hd));
+  const fw = fs * 1.05, fh = fs * 0.42, fy = yg - fs * 0.22;
+  Kit.mk('path', {d: `M${colR - fw},${fy} Q${colR - fw},${fy - fh} ${colR - fw * 0.4},${fy - fh} L${colR + fw * 0.55},${fy - fh} Q${colR + fw},${fy - fh} ${colR + fw},${fy} Q${colR + fw},${fy + fh} ${colR + fw * 0.55},${fy + fh} L${colR - fw * 0.4},${fy + fh} Q${colR - fw},${fy + fh} ${colR - fw},${fy}Z`,
+    fill: YEL, stroke: ink, 'stroke-width': 2, 'stroke-linejoin': 'round'}, hd);
+  Kit.mk('rect', {x: colR - fs * 0.16, y: fy - fh - fs * 0.24, width: fs * 0.32, height: fs * 0.26, fill: YEL, stroke: ink, 'stroke-width': 2}, hd);
+  Kit.mk('circle', {cx: colR, cy: fy + fh + fs * 0.3, r: fs * 0.33, fill: YEL, stroke: ink, 'stroke-width': 2}, hd);
 
   // window
   const px0 = colR + fs * 1.3, pw = W - px0;
   const cx = px0 + pw / 2, cy = fs * 1.6 + (H - fs * 3.8) / 2;
   const r = Math.max(10, Math.min(pw / 2, (H - fs * 3.8) / 2) / 1.6);
-  const ink = getComputedStyle(svg).color || '#111';
-  txt(cx, fs * 1.05, revealed ? 'cracked!' : 'outer window', {fill: revealed ? '#e23b3b' : ink, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-size': fs * 0.95, 'font-weight': 800});
+  txt(cx, fs * 1.05, revealed ? 'cracked!' : 'outer window', Object.assign(lab(revealed ? RED : ink, 700), {'text-anchor': 'middle'}));
 
+  // the sea pushing in from every side: arrows grow with depth
   const Lr = r * (0.1 + 0.36 * show / D);
   for (let i = 0; i < 8; i++) {
     const a = i * Math.PI / 4 + Math.PI / 8, ca = Math.cos(a), sa = Math.sin(a);
     const e = r * 1.14, s = e + Lr;
-    Kit.mk('line', {x1: cx + ca * s, y1: cy + sa * s, x2: cx + ca * (e + fs * 0.3), y2: cy + sa * (e + fs * 0.3), stroke: ink, 'stroke-opacity': .7, 'stroke-width': Math.max(2, fs * 0.16), 'stroke-linecap': 'round'}, svg);
+    Kit.mk('line', {x1: cx + ca * s, y1: cy + sa * s, x2: cx + ca * (e + fs * 0.3), y2: cy + sa * (e + fs * 0.3), stroke: ink, 'stroke-width': Math.max(2, fs * 0.16), 'stroke-linecap': 'round'}, svg);
     const hw = fs * 0.28;
-    Kit.mk('path', {d: `M${cx + ca * e},${cy + sa * e} L${cx + ca * (e + fs * 0.45) - sa * hw},${cy + sa * (e + fs * 0.45) + ca * hw} L${cx + ca * (e + fs * 0.45) + sa * hw},${cy + sa * (e + fs * 0.45) - ca * hw}Z`, fill: ink, 'fill-opacity': .7}, svg);
+    Kit.mk('path', {d: `M${cx + ca * e},${cy + sa * e} L${cx + ca * (e + fs * 0.45) - sa * hw},${cy + sa * (e + fs * 0.45) + ca * hw} L${cx + ca * (e + fs * 0.45) + sa * hw},${cy + sa * (e + fs * 0.45) - ca * hw}Z`, fill: ink, 'stroke-linejoin': 'round'}, svg);
   }
+
+  // the pane: flat deep-water blue, warming to red as the stress builds
   const clip = Kit.mk('clipPath', {id: 'gclip'}, defs);
   Kit.mk('circle', {cx, cy, r: r * 0.98}, clip);
-  Kit.mk('circle', {cx, cy, r: r * 0.98, fill: 'url(#glass)'}, svg);
-  Kit.mk('circle', {cx, cy, r: r * 0.98, fill: '#ff2d2d', 'fill-opacity': 0.5 * Math.pow(show / D, 2)}, svg);
-  Kit.mk('path', {d: `M${cx - r * 0.62},${cy - r * 0.15} A${r * 0.65},${r * 0.65} 0 0 1 ${cx - r * 0.1},${cy - r * 0.64}`, fill: 'none', stroke: '#fff', 'stroke-opacity': .35, 'stroke-width': Math.max(2, r * 0.07), 'stroke-linecap': 'round'}, svg);
+  Kit.mk('circle', {cx, cy, r: r * 0.98, fill: '#1f5a8a'}, svg);
+  Kit.mk('circle', {cx, cy, r: r * 0.98, fill: RED, 'fill-opacity': 0.5 * Math.pow(show / D, 2)}, svg);
 
   if (revealed) {
     const sx = cx + r * 0.38, sy = cy - r * 0.34;
@@ -125,18 +141,21 @@ function render() {
         const aa = a + Math.sin(i * 7.1 + k * 3.3) * 0.45, st = r * len / 4;
         x += Math.cos(aa) * st; y += Math.sin(aa) * st; d += ` L${x},${y}`;
       }
-      Kit.mk('path', {d, fill: 'none', stroke: 'rgba(0,0,0,.6)', 'stroke-width': Math.max(3, fs * 0.25), 'stroke-linejoin': 'round', class: 'crk'}, cg);
-      Kit.mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1.6, fs * 0.12), 'stroke-linejoin': 'round', class: 'crk'}, cg);
+      Kit.mk('path', {d, fill: 'none', stroke: ink, 'stroke-width': Math.max(3, fs * 0.25), 'stroke-linejoin': 'round', 'stroke-linecap': 'round', class: 'crk'}, cg);
+      Kit.mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1.6, fs * 0.12), 'stroke-linejoin': 'round', 'stroke-linecap': 'round', class: 'crk'}, cg);
     });
-    Kit.mk('circle', {id: 'glow', cx: sx, cy: sy, r: r * 0.13, fill: '#ff3b3b', stroke: '#fff', 'stroke-width': 2}, svg);
+    Kit.mk('circle', {id: 'glow', cx: sx, cy: sy, r: r * 0.09, fill: '#fff', stroke: ink, 'stroke-width': 2}, svg);
   }
-  Kit.mk('circle', {cx, cy, r, fill: 'none', stroke: '#8d9aa6', 'stroke-width': r * 0.16}, svg);
-  Kit.mk('circle', {cx, cy, r: r * 1.08, fill: 'none', stroke: ink, 'stroke-width': 1.5}, svg);
+
+  // steel frame, flat, with its bolts
+  Kit.mk('circle', {cx, cy, r, fill: 'none', style: `stroke:${tint(40)}`, 'stroke-width': r * 0.16}, svg);
+  Kit.mk('circle', {cx, cy, r: r * 1.08, fill: 'none', stroke: ink, 'stroke-width': 2}, svg);
+  Kit.mk('circle', {cx, cy, r: r * 0.92, fill: 'none', stroke: ink, 'stroke-width': 1.5}, svg);
   for (let i = 0; i < 8; i++) {
     const a = i * Math.PI / 4;
-    Kit.mk('circle', {cx: cx + Math.cos(a) * r, cy: cy + Math.sin(a) * r, r: Math.max(1.5, r * 0.035), fill: '#3c4650'}, svg);
+    Kit.mk('circle', {cx: cx + Math.cos(a) * r, cy: cy + Math.sin(a) * r, r: Math.max(1.8, r * 0.04), fill: ink}, svg);
   }
-  txt(cx, H - fs * 0.5, revealed ? 'stress → crack' : 'water pressing in', {fill: ink, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-size': fs * 0.85, 'font-weight': 600, opacity: .8});
+  txt(cx, H - fs * 0.5, revealed ? 'stress → crack' : 'water pressing in', Object.assign(lab(ink), {'text-anchor': 'middle'}));
 }
 
 function setFromY(clientY) {

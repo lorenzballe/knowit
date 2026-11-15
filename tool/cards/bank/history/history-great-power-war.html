@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-great-power-war -->
-<!-- Look: a Swiss poster on warm paper: strict grid with registration marks, one huge numeral, two black squares for the great powers, one hot red for fire.
+<!-- Look: a printed-book diagram on warm paper. One huge numeral, two flat black squares for the great powers, Iran as a plain red ring with a pale red fill, thin dashed proxy lines between them. No grid, no shadows, no gradients.
      Interaction: drag from your power to aim, release to launch a swarm of hundreds of particles. Hit Iran and the fire splashes but stays inside the ring, while proxy pulses keep feeding it from both sides.
      Wow: aim at the other power and the swarm detonates: a direct red line cuts the sheet, shockwaves, a counter-strike, the ring breaks open and its fire escapes, embers across the whole sheet, the card flushes red and the "1" scrambles into "?". -->
 <title>The step from regional to great-power war</title>
@@ -35,14 +35,14 @@
   const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say'), stage = Kit.$('stage');
   const INK = '#0d0d0c', RED = '#ff2d17', PAPER = '#efebe2';
   let x = null, W = 0, H = 0, fs = 12, pad = 12, k = 1, laid = false;
-  let DISP = 'sans-serif', MONO = 'monospace';
+  let DISP = 'sans-serif', BODY = 'sans-serif';
   // Geometry lives in G so a resize can glide instead of jump.
   const G = {ax: 0, ay: 0, bx: 0, by: 0, rx: 0, ry: 0, rr: 40, s: 40, ns: 100};
   const A = {get x() { return G.ax; }, get y() { return G.ay; }};
   const B = {get x() { return G.bx; }, get y() { return G.by; }};
   const R = {get x() { return G.rx; }, get y() { return G.ry; }, get r() { return G.rr; }};
   let parts = [], rings = [], flight = null, aiming = false, aim = null, touched = false, over = false;
-  let numeral = '1', numColor = INK, cap = ['ONE REGION AT WAR'], paper = PAPER;
+  let numeral = '1', numColor = INK, cap = ['One region at war'], paper = PAPER;
   const fx = {flash: 0, numScale: 1, direct: 0};
   const I = {grid: 1, pA: 1, pB: 1, reg: 1, num: 1};
   const rnd = () => Kit.rnd();
@@ -55,11 +55,11 @@
     if (!W || !H) return;
     const cs = getComputedStyle(card);
     DISP = cs.getPropertyValue('--display').trim() || 'sans-serif';
-    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
     fs = clamp(W / 30, 12, 14); k = Math.max(.7, Math.min(W, H * 1.2) / 360);
     pad = Math.max(10, Math.min(W, H) * .045);
-    x.font = `700 ${fs}px ${MONO}`;
-    const capW = Math.max(...['ONE REGION AT WAR', 'CONSEQUENCES:', 'UNPREDICTABLE'].map(t => x.measureText(t).width));
+    x.font = `600 ${fs}px ${BODY}`;
+    const capW = Math.max(...['One region at war', 'Consequences:', 'unpredictable'].map(t => x.measureText(t).width));
     let T;
     if (H > W * .78) {
       // Tall sheet: numeral top-left, B top-right, A bottom-left, Iran low-centre.
@@ -180,7 +180,7 @@
     numColor = RED;
     if (Kit.calm) numeral = '?';
     else seq.forEach((c, i) => setTimeout(() => { numeral = c; if (c === '?') gsap.fromTo(fx, {numScale: 1.35}, {numScale: 1, duration: 1, ease: 'elastic.out(1,.3)'}); }, 90 * i));
-    cap = ['CONSEQUENCES:', 'UNPREDICTABLE'];
+    cap = ['Consequences:', 'unpredictable'];
     later(1200, reveal);
   }
 
@@ -219,75 +219,62 @@
   }
 
   // ---------- draw ----------
-  function txt(t, X, Y, font, col, align = 'left', halo = false) {
+  // Text sits on a thin paper edge only so it stays legible over the fire.
+  function txt(t, X, Y, font, col, align = 'left', edge = false) {
     x.font = font; x.textAlign = align;
-    if (halo) { x.lineJoin = 'round'; x.lineWidth = 5; x.strokeStyle = paper; x.strokeText(t, X, Y); }
+    if (edge) { x.lineJoin = 'round'; x.lineWidth = 4; x.strokeStyle = paper; x.strokeText(t, X, Y); }
     x.fillStyle = col; x.fillText(t, X, Y);
   }
+  const label = () => `600 ${fs}px ${BODY}`;
 
   function draw(now) {
     paper = getComputedStyle(card).getPropertyValue('--c').trim() || PAPER;
     const s = G.s;
     x.clearRect(0, 0, W, H);
     x.textBaseline = 'alphabetic';
-
-    // The grid: thin rules on a strict four-column sheet, registration crosses at the joints.
-    x.save(); x.globalAlpha = .1 * I.grid; x.strokeStyle = INK; x.lineWidth = 1;
-    for (let i = 1; i < 4; i++) { const gx = Math.round(W * i / 4) + .5; x.beginPath(); x.moveTo(gx, 0); x.lineTo(gx, H * I.grid); x.stroke(); }
-    for (let i = 1; i < 4; i++) { const gy = Math.round(H * i / 4) + .5; x.beginPath(); x.moveTo(0, gy); x.lineTo(W * I.grid, gy); x.stroke(); }
-    x.globalAlpha = .45 * I.grid; x.lineWidth = 1.2;
-    for (let i = 1; i < 4; i++) for (let j = 1; j < 4; j++) {
-      const gx = Math.round(W * i / 4) + .5, gy = Math.round(H * j / 4) + .5;
-      x.beginPath(); x.moveTo(gx - 4, gy); x.lineTo(gx + 4, gy); x.moveTo(gx, gy - 4); x.lineTo(gx, gy + 4); x.stroke();
-    }
-    x.restore();
-    x.fillStyle = RED; x.fillRect(pad, pad * .4, Math.min(W * .2, G.ns * .9) * I.grid, Math.max(4, H * .012));
+    x.lineCap = 'round';
 
     // The huge numeral: how many regions are at war.
     const ny = pad + G.ns * .78 + 6 + (1 - I.num) * 30;
     x.save(); x.globalAlpha = I.num;
     x.translate(pad, ny); x.scale(fx.numScale, fx.numScale);
-    txt(numeral, 0, 0, `900 ${G.ns}px ${DISP}`, numColor);
+    txt(numeral, 0, 0, `800 ${G.ns}px ${DISP}`, numColor);
     x.restore();
 
     // Proxy lines: each power reaches the region, not each other. Pulses keep feeding it.
     if (!over) {
-      x.save(); x.globalAlpha = .45 * I.reg; x.strokeStyle = INK; x.lineWidth = 1.4; x.setLineDash([3, 5]); x.lineDashOffset = -now / 60;
+      x.save(); x.globalAlpha = .5 * I.reg; x.strokeStyle = INK; x.lineWidth = 1.5; x.setLineDash([2, 6]); x.lineDashOffset = -now / 60;
       const segs = [A, B].map(P => {
         const dx = R.x - P.x, dy = R.y - P.y, d = Math.hypot(dx, dy) || 1;
-        return {x0: P.x + dx / d * s * .75, y0: P.y + dy / d * s * .75, x1: R.x - dx / d * R.r * 1.25, y1: R.y - dy / d * R.r * 1.25};
+        return {x0: P.x + dx / d * s * .75, y0: P.y + dy / d * s * .75, x1: R.x - dx / d * R.r * 1.15, y1: R.y - dy / d * R.r * 1.15};
       });
       for (const g of segs) { x.beginPath(); x.moveTo(g.x0, g.y0); x.lineTo(g.x1, g.y1); x.stroke(); }
       x.setLineDash([]); x.fillStyle = RED;
       if (!Kit.calm) for (const g of segs) for (let j = 0; j < 3; j++) {
         const t = ((now / 1600) + j / 3) % 1; x.globalAlpha = I.reg * Math.sin(t * Math.PI);
-        x.fillRect(g.x0 + (g.x1 - g.x0) * t - 2.5, g.y0 + (g.y1 - g.y0) * t - 2.5, 5, 5);
+        x.beginPath(); x.arc(g.x0 + (g.x1 - g.x0) * t, g.y0 + (g.y1 - g.y0) * t, 3, 0, 6.2832); x.fill();
       }
       x.restore();
     } else if (fx.direct > 0) {
       // The direct line: power to power, no region in between.
-      x.save(); x.strokeStyle = RED; x.lineWidth = 3; x.lineCap = 'round';
+      x.save(); x.strokeStyle = RED; x.lineWidth = 3;
       x.beginPath(); x.moveTo(A.x, A.y); x.lineTo(A.x + (B.x - A.x) * fx.direct, A.y + (B.y - A.y) * fx.direct); x.stroke();
       x.restore();
     }
 
-    // The region: Iran, a red ring.
-    const g = x.createRadialGradient(R.x, R.y - R.r * .3, R.r * .1, R.x, R.y, R.r);
-    g.addColorStop(0, `rgba(255,45,23,${.1 + fx.flash * .25})`); g.addColorStop(1, `rgba(255,45,23,${.22 + fx.flash * .3})`);
+    // The region: Iran, a red ring with a flat pale fill.
     x.save(); x.globalAlpha = I.reg;
-    x.beginPath(); x.moveTo(R.x, R.y); x.arc(R.x, R.y, R.r, -Math.PI / 2, -Math.PI / 2 + 6.2832 * I.reg); x.closePath(); x.fillStyle = g; x.fill();
+    x.beginPath(); x.moveTo(R.x, R.y); x.arc(R.x, R.y, R.r, -Math.PI / 2, -Math.PI / 2 + 6.2832 * I.reg); x.closePath();
+    x.fillStyle = `rgba(255,45,23,${.16 + fx.flash * .22})`; x.fill();
     if (over) x.setLineDash([R.r * .34, R.r * .16]); // containment broken
-    x.beginPath(); x.arc(R.x, R.y, R.r, -Math.PI / 2, -Math.PI / 2 + 6.2832 * I.reg); x.strokeStyle = RED; x.lineWidth = 2.4 + fx.flash * 6; x.stroke();
-    x.setLineDash([2, 6]); x.lineDashOffset = Kit.calm ? 0 : now / 90; x.lineWidth = 1; x.strokeStyle = INK; x.globalAlpha = .4 * I.reg;
-    x.beginPath(); x.arc(R.x, R.y, R.r * 1.22, 0, 6.2832); x.stroke(); x.setLineDash([]);
-    x.globalAlpha = .6 * I.reg; x.lineWidth = 1.2;
-    for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2; x.beginPath(); x.moveTo(R.x + Math.cos(a) * R.r * 1.1, R.y + Math.sin(a) * R.r * 1.1); x.lineTo(R.x + Math.cos(a) * R.r * 1.34, R.y + Math.sin(a) * R.r * 1.34); x.stroke(); }
+    x.beginPath(); x.arc(R.x, R.y, R.r, -Math.PI / 2, -Math.PI / 2 + 6.2832 * I.reg);
+    x.strokeStyle = RED; x.lineWidth = 3 + fx.flash * 5; x.stroke(); x.setLineDash([]);
     x.restore();
 
     // Shockwaves.
     for (const r of rings) { x.save(); x.globalAlpha = r.a; x.strokeStyle = RED; x.lineWidth = r.w * (.4 + r.a); x.beginPath(); x.arc(r.x, r.y, r.r, 0, 6.2832); x.stroke(); x.restore(); }
 
-    // Particles: streaks while fast, flickering squares at rest.
+    // Particles: streaks while fast, flickering embers at rest.
     for (const p of parts) {
       if (p.m === 'fly' && p.t < 0) continue;
       const sp = Math.hypot(p.x - p.px, p.y - p.py);
@@ -304,57 +291,51 @@
     }
     x.globalAlpha = 1;
 
-    // Words sit above the fire, each on a paper halo.
+    // Words.
     x.save(); x.globalAlpha = I.num;
-    cap.forEach((c, i) => txt(c, pad + 2, ny + fs * 1.7 + i * fs * 1.45, `700 ${fs}px ${MONO}`, i && over ? RED : INK, 'left', true));
+    cap.forEach((c, i) => txt(c, pad + 2, ny + fs * 1.7 + i * fs * 1.45, label(), i && over ? RED : INK, 'left', true));
     x.restore();
     x.save(); x.globalAlpha = I.reg;
-    txt('IRAN', R.x, R.y + R.r * .1, `900 ${Math.max(16, R.r * .4)}px ${DISP}`, INK, 'center', true);
-    txt(over ? 'NOT JUST REGIONAL' : 'REGIONAL WAR', R.x, R.y + R.r * .1 + fs * 1.6, `700 ${fs}px ${MONO}`, over ? RED : INK, 'center', true);
+    txt('Iran', R.x, R.y + R.r * .1, `800 ${Math.max(16, R.r * .4)}px ${DISP}`, INK, 'center', true);
+    txt(over ? 'Not just regional' : 'Regional war', R.x, R.y + R.r * .1 + fs * 1.6, label(), over ? RED : INK, 'center', true);
     x.restore();
 
-    // The two great powers: black squares, one hot letter each.
+    // The two great powers: plain black squares, one letter each.
     const power = (P, sc, L, lab, below) => {
       if (sc <= 0) return;
       x.save(); x.translate(P.x, P.y); x.scale(sc, sc);
-      x.fillStyle = 'rgba(13,13,12,.18)'; x.fillRect(-s / 2 + 4, -s / 2 + 5, s, s);
-      const lg = x.createLinearGradient(-s / 2, -s / 2, s / 2, s / 2); lg.addColorStop(0, '#2c2b28'); lg.addColorStop(1, '#000');
-      x.fillStyle = lg; x.fillRect(-s / 2, -s / 2, s, s);
-      x.fillStyle = RED; x.fillRect(-s / 2, s / 2 - s * .1, s, s * .1);
-      txt(L, 0, s * .2, `900 ${s * .6}px ${DISP}`, PAPER, 'center');
+      x.fillStyle = INK; x.beginPath();
+      if (x.roundRect) x.roundRect(-s / 2, -s / 2, s, s, Math.max(2, s * .06)); else x.rect(-s / 2, -s / 2, s, s);
+      x.fill();
+      txt(L, 0, s * .2, `800 ${s * .6}px ${DISP}`, PAPER, 'center');
       x.restore();
       x.save(); x.globalAlpha = sc;
-      if (below) txt(lab, P.x + s / 2, P.y + s / 2 + fs * 1.5, `700 ${fs}px ${MONO}`, INK, 'right', true);
-      else txt(lab, P.x - s / 2, P.y - s / 2 - fs * .8, `700 ${fs}px ${MONO}`, INK, 'left', true);
+      if (below) txt(lab, P.x + s / 2, P.y + s / 2 + fs * 1.5, label(), INK, 'right', true);
+      else txt(lab, P.x - s / 2, P.y - s / 2 - fs * .8, label(), INK, 'left', true);
       x.restore();
     };
-    power(A, I.pA, 'A', 'GREAT POWER A · YOU', false);
-    power(B, I.pB, 'B', 'GREAT POWER B', true);
+    power(A, I.pA, 'A', 'Great power A · you', false);
+    power(B, I.pB, 'B', 'Great power B', true);
 
-    // Hint: crop marks breathing around your square.
+    // Hint: a red outline breathing around your square.
     if (!touched && !Kit.calm) {
-      const o = Math.min(pad - 2, 5 + (Math.sin(now / 260) + 1) * 2.5), h = s / 2 + o, c = s * .26;
+      const o = Math.min(pad - 2, 5 + (Math.sin(now / 260) + 1) * 2.5), h = s / 2 + o;
       x.save(); x.strokeStyle = RED; x.lineWidth = 2.2; x.globalAlpha = .6 + Math.sin(now / 260) * .3;
       x.beginPath();
-      for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
-        const cx = A.x + sx * h, cy = A.y + sy * h;
-        x.moveTo(cx - sx * c, cy); x.lineTo(cx, cy); x.lineTo(cx, cy - sy * c);
-      }
+      if (x.roundRect) x.roundRect(A.x - h, A.y - h, h * 2, h * 2, Math.max(3, s * .1)); else x.rect(A.x - h, A.y - h, h * 2, h * 2);
       x.stroke(); x.restore();
     }
 
-    // The aim: dashed arc, reticle, and what it would hit.
+    // The aim: dashed arc, a small target circle, and what it would hit.
     if (aiming && aim) {
       const P0 = origin(), P1 = ctrl(P0, aim), z = zoneOf(aim), hot = z !== 'miss';
       x.save(); x.strokeStyle = hot ? RED : INK; x.lineWidth = 2; x.setLineDash([6, 6]); x.lineDashOffset = -now / 25;
       x.beginPath(); x.moveTo(P0.x, P0.y); x.quadraticCurveTo(P1.x, P1.y, aim.x, aim.y); x.stroke(); x.setLineDash([]);
-      x.beginPath(); x.arc(aim.x, aim.y, 12, 0, 6.2832); x.stroke();
-      x.beginPath(); x.moveTo(aim.x - 18, aim.y); x.lineTo(aim.x - 6, aim.y); x.moveTo(aim.x + 6, aim.y); x.lineTo(aim.x + 18, aim.y); x.moveTo(aim.x, aim.y - 18); x.lineTo(aim.x, aim.y - 6); x.moveTo(aim.x, aim.y + 6); x.lineTo(aim.x, aim.y + 18); x.stroke();
-      const lab = z === 'reg' ? 'VIA IRAN' : z === 'dir' ? 'DIRECT HIT' : 'NO TARGET';
-      x.font = `800 ${fs}px ${MONO}`; const tw = x.measureText(lab).width + 12;
-      const lx = Math.max(2, Math.min(W - tw - 2, aim.x - tw / 2)), ly = aim.y - 26 - fs < 2 ? aim.y + 26 : aim.y - 26 - fs;
-      x.fillStyle = hot ? RED : INK; x.fillRect(lx, ly, tw, fs + 8);
-      txt(lab, lx + tw / 2, ly + fs + 2, `800 ${fs}px ${MONO}`, PAPER, 'center');
+      x.beginPath(); x.arc(aim.x, aim.y, 10, 0, 6.2832); x.stroke();
+      const lab = z === 'reg' ? 'Via Iran' : z === 'dir' ? 'Direct hit' : 'No target';
+      x.font = label(); const tw = x.measureText(lab).width;
+      const lx = Math.max(2 + tw / 2, Math.min(W - tw / 2 - 2, aim.x)), ly = aim.y - 18 - fs < 2 ? aim.y + 18 + fs : aim.y - 18;
+      txt(lab, lx, ly, label(), hot ? RED : INK, 'center', true);
       x.restore();
     }
   }

@@ -12,6 +12,10 @@
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
 .keep{overflow-wrap:anywhere}
+#pic .ink{stroke:var(--k)}
+#pic .inkf{fill:var(--k)}
+#pic .slab{fill:color-mix(in srgb, var(--k) 14%, var(--c))}
+#pic .well{fill:color-mix(in srgb, var(--k) 78%, var(--c))}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag · see it work">
   <div class="in">
@@ -29,7 +33,8 @@
 const S = {ready:false, placed:false, on:false, done:false, heat:0, t:0, ph:0, eph:0, fo:0, steps:0, px:0, py:0};
 let G = {}, drag = null, lastW = 0, lastH = 0;
 const NS = 'http://www.w3.org/2000/svg';
-const COPPER = '#8f3f0a', FIELD = '#ffffff', EDDY = '#ffd447', HOT = '#ff5a1f';
+const COPPER = '#b4531a', FIELD = '#ffffff', EDDY = '#ffd447', HOT = '#ff5a1f';
+const STEEL = '#c3c7cd', STEEL_RIM = '#dfe2e6', COPPER_LIVE = '#e0813f';
 const STEPS = [
   [COPPER, 'Alternating current in the copper coil'],
   [FIELD,  '→ a magnetic field that keeps changing'],
@@ -38,6 +43,7 @@ const STEPS = [
 ];
 
 function el(tag, attrs, parent){ return Kit.mk(tag, attrs, parent); }
+function cls(node, c){ node.setAttribute('class', c); return node; }
 
 function draw(){
   const svg = Kit.$('pic');
@@ -59,56 +65,57 @@ function draw(){
   const coilY = glassY + h * .44;
   const bandH = potH * .3;
   const py0 = potH + ry + fs * .3;
+  const sw = Math.max(2, fs * .17);
   G = {W, H, fs, cx, glassY, h, rx, ry, potH, pw, coilY, bandH, py0};
 
-  const defs = el('defs', {}, svg);
-  const lg = el('linearGradient', {id:'steel', x1:0, x2:1, y1:0, y2:0}, defs);
-  [['0','#5d636c'],['.35','#c9ced6'],['.55','#eef1f5'],['1','#4b5058']].forEach(([o,c]) => el('stop', {offset:o, 'stop-color':c}, lg));
-  const rg = el('radialGradient', {id:'hotglow'}, defs);
-  el('stop', {offset:'0', 'stop-color':'#ff7a2a', 'stop-opacity':'.9'}, rg);
-  el('stop', {offset:'1', 'stop-color':'#ff7a2a', 'stop-opacity':'0'}, rg);
+  // The hob: a slim slab of glass, seen edge-on, with the coil underneath
+  const slabH = Math.max(6, fs * .45);
+  cls(el('rect', {x:fs * .5, y:glassY, width:W - fs, height:slabH, rx:slabH * .35, 'stroke-width':sw}, svg), 'slab ink');
+  const gl = el('text', {x:fs * .5, y:glassY + slabH + fs * 1.15}, svg);
+  gl.textContent = 'glass'; gl.style.font = `700 ${fs}px var(--body)`; gl.style.fill = 'var(--k)';
 
-  // The hob: glass surface line with the coil underneath (no panel behind)
-  el('line', {x1:fs * .5, x2:W - fs * .5, y1:glassY + 1, y2:glassY + 1, stroke:'#10100c', 'stroke-width':2, opacity:.8}, svg);
-  const gl = el('text', {x:fs * .5, y:glassY + fs * 1.25, 'font-size':fs * .9, fill:'#10100c', opacity:.75}, svg);
-  gl.textContent = 'glass'; gl.style.font = `600 ${fs * .9}px var(--body)`;
-
-  // Spiral coil seen at an angle
+  // Spiral coil seen at an angle: a copper wire with an ink edge
   const N = 5, steps = 260, r0 = rx * .16;
   let d = '';
   for (let k = 0; k <= steps; k++){
     const th = k / steps * N * 2 * Math.PI, r = r0 + (rx - r0) * k / steps;
     d += (k ? 'L' : 'M') + (cx + r * Math.cos(th)).toFixed(1) + ',' + (coilY + r * Math.sin(th) * (ry / rx)).toFixed(1);
   }
-  G.coilP = el('path', {d, fill:'none', stroke:COPPER, 'stroke-width':Math.max(2.5, fs * .3), 'stroke-linecap':'round'}, svg);
-  G.glow = el('path', {d, fill:'none', stroke:'#fff1c2', 'stroke-width':Math.max(1, fs * .1), opacity:0}, svg);
+  const wire = Math.max(2.5, fs * .3);
+  cls(el('path', {d, fill:'none', 'stroke-width':wire + sw * 1.2, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, svg), 'ink');
+  G.coilP = el('path', {d, fill:'none', stroke:COPPER, 'stroke-width':wire, 'stroke-linecap':'round'}, svg);
+  // When current flows, the wire turns a livelier copper
+  G.glow = el('path', {d, fill:'none', stroke:COPPER_LIVE, 'stroke-width':wire, 'stroke-linecap':'round', opacity:0}, svg);
   G.L = G.coilP.getTotalLength();
-  const cl = el('text', {x:cx, y:H - fs * .55, 'text-anchor':'middle', fill:'#10100c'}, svg);
-  cl.textContent = 'copper coil'; cl.style.font = `700 ${fs}px var(--body)`;
+  const cl = el('text', {x:cx, y:H - fs * .55, 'text-anchor':'middle'}, svg);
+  cl.textContent = 'copper coil'; cl.style.font = `700 ${fs}px var(--body)`; cl.style.fill = 'var(--k)';
   G.cdots = [];
   const cg = el('g', {}, svg);
-  for (let i = 0; i < 14; i++) G.cdots.push(el('circle', {r:Math.max(2, fs * .2), fill:'#fff1c2', opacity:0}, cg));
+  for (let i = 0; i < 14; i++) G.cdots.push(el('circle', {r:Math.max(2, fs * .17), fill:'#fff', opacity:0}, cg));
 
   // Drop target
-  G.target = el('ellipse', {cx, cy:glassY, rx:pw / 2, ry, fill:'none', stroke:'#10100c', 'stroke-width':2, 'stroke-dasharray':'6 6', opacity:S.placed ? 0 : .9}, svg);
+  G.target = el('ellipse', {cx, cy:glassY, rx:pw / 2, ry, fill:'none', 'stroke-width':2, 'stroke-dasharray':'6 6', opacity:S.placed ? 0 : .9}, svg);
+  cls(G.target, 'ink');
   if (!S.placed && !Kit.calm) gsap.to(G.target, {opacity:.3, repeat:-1, yoyo:true, duration:.8, ease:'sine.inOut'});
 
-  // Pot
+  // Pot: a plain steel pan, flat grey with an ink outline
   const pot = el('g', {}, svg); G.pot = pot; pot.style.cursor = 'grab';
-  G.hot = el('ellipse', {cx:0, cy:0, rx:pw * .62, ry:ry * 1.8, fill:'url(#hotglow)', opacity:0}, pot);
+  // Hot edge of the base, showing under the pot once the metal heats up
+  G.hot = el('path', {d:`M${-pw/2},0 A${pw/2},${ry} 0 0 0 ${pw/2},0`, fill:'none', stroke:HOT, 'stroke-width':sw * 2.6, 'stroke-linecap':'round', opacity:0}, pot);
   const hw = fs * 1.3, hy = -potH + fs * .4;
-  el('rect', {x:-pw / 2 - hw, y:hy, width:hw + 4, height:fs * .55, rx:fs * .27, fill:'#2d3138'}, pot);
-  el('rect', {x:pw / 2 - 4, y:hy, width:hw + 4, height:fs * .55, rx:fs * .27, fill:'#2d3138'}, pot);
-  el('path', {d:`M${-pw/2},${-potH} L${-pw/2},0 A${pw/2},${ry} 0 0 0 ${pw/2},0 L${pw/2},${-potH} Z`, fill:'url(#steel)'}, pot);
-  G.band = el('path', {d:`M${-pw/2},${-bandH} L${-pw/2},0 A${pw/2},${ry} 0 0 0 ${pw/2},0 L${pw/2},${-bandH} A${pw/2},${ry} 0 0 1 ${-pw/2},${-bandH} Z`, fill:'#8d939c', opacity:0}, pot);
-  el('ellipse', {cx:0, cy:-potH, rx:pw / 2, ry, fill:'#dfe3e8', stroke:'#6a7079', 'stroke-width':1.5}, pot);
-  el('ellipse', {cx:0, cy:-potH + 2, rx:pw / 2 - fs * .35, ry:ry * .78, fill:'#3a3f47'}, pot);
+  cls(el('rect', {x:-pw / 2 - hw, y:hy, width:hw + 4, height:fs * .55, rx:fs * .27}, pot), 'inkf');
+  cls(el('rect', {x:pw / 2 - 4, y:hy, width:hw + 4, height:fs * .55, rx:fs * .27}, pot), 'inkf');
+  cls(el('path', {d:`M${-pw/2},${-potH} L${-pw/2},0 A${pw/2},${ry} 0 0 0 ${pw/2},0 L${pw/2},${-potH} Z`, fill:STEEL, 'stroke-width':sw, 'stroke-linejoin':'round'}, pot), 'ink');
+  G.band = el('path', {d:`M${-pw/2},${-bandH} L${-pw/2},0 A${pw/2},${ry} 0 0 0 ${pw/2},0 L${pw/2},${-bandH} A${pw/2},${ry} 0 0 1 ${-pw/2},${-bandH} Z`, fill:STEEL, 'stroke-width':sw, 'stroke-linejoin':'round', opacity:0}, pot);
+  cls(G.band, 'ink');
+  cls(el('ellipse', {cx:0, cy:-potH, rx:pw / 2, ry, fill:STEEL_RIM, 'stroke-width':sw}, pot), 'ink');
+  cls(el('ellipse', {cx:0, cy:-potH + 2, rx:pw / 2 - fs * .35, ry:ry * .78}, pot), 'well');
   // The swirling current inside the pot bottom
   G.edd = el('g', {opacity:0}, pot);
   G.erx = pw * .36; G.ery = ry * .7; G.ey = -bandH * .45;
   el('ellipse', {cx:0, cy:G.ey, rx:G.erx, ry:G.ery, fill:'none', stroke:EDDY, 'stroke-width':Math.max(2, fs * .17)}, G.edd);
   G.edots = [];
-  for (let i = 0; i < 10; i++) G.edots.push(el('circle', {r:Math.max(2.2, fs * .22), fill:'#fffbe0'}, G.edd));
+  for (let i = 0; i < 10; i++) cls(G.edots[G.edots.push(el('circle', {r:Math.max(2.2, fs * .22), fill:EDDY, 'stroke-width':1.5}, G.edd)) - 1], 'ink');
 
   // Magnetic field loops, through the coil and the pot bottom
   G.field = el('g', {fill:'none', stroke:FIELD, 'stroke-width':Math.max(1.8, fs * .14), 'stroke-dasharray':`${fs * .55} ${fs * .45}`, 'stroke-linecap':'round', opacity:0}, svg);
@@ -123,7 +130,7 @@ function draw(){
   G.stepEls = STEPS.map(([col, txt], i) => {
     const g = el('g', {opacity:i < S.steps ? 1 : 0}, svg);
     const y = fs * 1.1 + i * fs * 1.45;
-    el('circle', {cx:fs * .7, cy:y - fs * .32, r:fs * .3, fill:col}, g);
+    cls(el('circle', {cx:fs * .7, cy:y - fs * .32, r:fs * .3, fill:col, 'stroke-width':1.5}, g), 'ink');
     const t = el('text', {x:fs * 1.4, y}, g);
     t.textContent = txt; t.style.font = `700 ${fs}px var(--body)`; t.style.fill = 'var(--k)';
     return g;
@@ -211,9 +218,9 @@ function update(){
     c.setAttribute('cx', G.erx * Math.cos(ang)); c.setAttribute('cy', G.ey + G.ery * sn);
     c.setAttribute('opacity', sn < 0 ? .45 : 1);
   });
-  G.band.setAttribute('fill', gsap.utils.interpolate('#9aa0a8', HOT, S.heat));
+  G.band.setAttribute('fill', gsap.utils.interpolate(STEEL, HOT, S.heat));
   G.band.setAttribute('opacity', Math.min(1, S.heat * 1.4).toFixed(2));
-  G.hot.setAttribute('opacity', (S.heat * .9).toFixed(2));
+  G.hot.setAttribute('opacity', Math.min(1, S.heat * 1.2).toFixed(2));
 }
 
 gsap.ticker.add(() => {

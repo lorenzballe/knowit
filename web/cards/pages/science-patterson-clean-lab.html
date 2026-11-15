@@ -7,8 +7,8 @@
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
 #lab{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation}
-#meter{font:700 max(1.9cqh,13px)/1.25 var(--mono);color:var(--k);text-align:center;overflow-wrap:anywhere}
-#meter b{font-size:1.25em}
+#meter{font:600 max(1.9cqh,13px)/1.25 var(--body);color:var(--k);text-align:center;overflow-wrap:anywhere}
+#meter b{font:700 1.25em/1 var(--display)}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
 .hit{cursor:pointer}
@@ -33,12 +33,17 @@ const fixed = [0,0,0,0];
 const OFF = ['Wall wiring','Outside air','Dust','People'];
 const ON = ['Cables torn out','Air blown out','Ammonia, daily','Bunny suit'];
 let count = 0, done = false, loop = null, G = null, pp = null, zirc = null, started = false;
-const INK = 'var(--k)', LEAD = '#4a4f5c';
+const INK = 'var(--k)', LEAD = '#5b5f68';
+const TINT = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 
 function left(){ return fixed.filter(v => !v).length; }
+function coat(){
+  if (G && G.coat) G.coat.setAttribute('opacity', done ? 0 : Math.min(.75, count * .03));
+}
 function meter(){
   Kit.$('cnt').textContent = count; Kit.$('left').textContent = left();
   if (done) Kit.$('meter').innerHTML = 'Lead sources left: <b>0</b> · the zircon stays clean';
+  coat();
 }
 
 function draw(){
@@ -52,83 +57,95 @@ function draw(){
   const floorY = H * .84, px = W * .8, ph = H * .36;
   const s = {x: W * .44, y: H * .6};
   G = {W, H, floorY, px, ph, s};
-  // room
-  m('rect', {x: W*.03, y: H*.03, width: W*.94, height: H*.95, rx: Math.min(W,H)*.03, fill: 'color-mix(in srgb,var(--k) 5%,transparent)', stroke: INK, 'stroke-width': 2});
-  m('line', {x1: W*.03, x2: W*.97, y1: floorY, y2: floorY, stroke: INK, 'stroke-width': 2});
+
+  // a curved arrow: the way lead travels to the zircon
+  const arrow = (x0, y0, qx, qy, x1, y1, col, sw) => {
+    const g = m('g', {stroke: col, 'stroke-width': sw || 3.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+    m('path', {d: `M${x0},${y0} Q${qx},${qy} ${x1},${y1}`}, g);
+    const a = Math.atan2(y1 - qy, x1 - qx), L = Math.max(9, Math.min(W, H) * .03);
+    m('path', {d: `M${x1 - L*Math.cos(a - .5)},${y1 - L*Math.sin(a - .5)} L${x1},${y1} L${x1 - L*Math.cos(a + .5)},${y1 - L*Math.sin(a + .5)}`}, g);
+    return g;
+  };
+
+  // the room, cut away: floor and two walls
+  m('rect', {x: W*.03, y: floorY, width: W*.94, height: H*.97 - floorY, fill: TINT(10)});
+  m('rect', {x: W*.03, y: H*.03, width: W*.1, height: floorY - H*.03, fill: TINT(10)});
+  m('rect', {x: W*.94, y: H*.03, width: W*.03, height: floorY - H*.03, fill: TINT(10)});
+  m('path', {d: `M${W*.13},${H*.03} L${W*.13},${floorY} L${W*.94},${floorY} L${W*.94},${H*.03} M${W*.03},${floorY} L${W*.13},${floorY} M${W*.94},${floorY} L${W*.97},${floorY}`, stroke: INK, 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+
   // bench
   const bx0 = W*.24, bx1 = W*.64, by = H*.64;
-  m('rect', {x: bx0, y: by, width: bx1-bx0, height: H*.025, fill: INK, rx: 2});
-  m('line', {x1: bx0+W*.03, x2: bx0+W*.03, y1: by, y2: floorY, stroke: INK, 'stroke-width': 3});
-  m('line', {x1: bx1-W*.03, x2: bx1-W*.03, y1: by, y2: floorY, stroke: INK, 'stroke-width': 3});
-  // zircon crystal
+  m('rect', {x: bx0, y: by, width: bx1-bx0, height: H*.025, fill: INK, rx: 3});
+  m('path', {d: `M${bx0+W*.03},${by} L${bx0+W*.035},${floorY} M${bx1-W*.03},${by} L${bx1-W*.035},${floorY}`, stroke: INK, 'stroke-width': 4, 'stroke-linecap': 'round'});
+
+  // zircon on a small dish; a grey film grows on it as lead lands
   const r = Math.min(W, H) * .045;
-  zirc = m('polygon', {points: `${s.x},${by-r*2.2} ${s.x+r*.7},${by-r*1.4} ${s.x+r*.7},${by-r*.5} ${s.x},${by} ${s.x-r*.7},${by-r*.5} ${s.x-r*.7},${by-r*1.4}`, fill: done ? '#f4c26b' : '#e39a54', stroke: INK, 'stroke-width': 1.5});
-  s.y = by - r * 1.2;
-  if (done) {
-    const glow = m('circle', {cx: s.x, cy: s.y, r: r*2.4, fill: 'none', stroke: '#f4c26b', 'stroke-width': 3});
-    if (!Kit.calm) gsap.fromTo(glow, {attr: {r: r*1.2}, opacity: 1}, {attr: {r: r*3}, opacity: 0, duration: 1.6, repeat: -1});
-  }
+  const pts = `${s.x},${by-r*2.4} ${s.x+r*.7},${by-r*1.6} ${s.x+r*.7},${by-r*.7} ${s.x},${by-r*.2} ${s.x-r*.7},${by-r*.7} ${s.x-r*.7},${by-r*1.6}`;
+  m('path', {d: `M${s.x-r*1.6},${by} Q${s.x},${by-r*.55} ${s.x+r*1.6},${by} Z`, fill: TINT(18), stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'});
+  zirc = m('polygon', {points: pts, fill: done ? '#f2c76e' : '#d9894a', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'});
+  G.coat = m('polygon', {points: pts, fill: LEAD, opacity: 0});
+  m('polygon', {points: pts, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'});
+  m('line', {x1: s.x, x2: s.x, y1: by-r*2.4, y2: by-r*.2, stroke: INK, 'stroke-width': 1.2});
+  s.y = by - r * 1.3;
+  coat();
   m('text', {x: s.x, y: by + H*.07, 'text-anchor': 'middle', fill: INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}).textContent = 'zircon';
 
-  // 0 wall wiring
-  const cx = W * .1;
+  // 0 wall wiring: one cable in the wall, joined with two lumps of lead solder
+  const cx = W * .08;
   if (!fixed[0]) {
-    m('path', {d: `M${cx},${H*.05} L${cx},${H*.78}`, stroke: INK, 'stroke-width': 3, fill: 'none'});
-    for (let i = 0; i < 5; i++) m('circle', {cx, cy: H*(.18 + i*.13), r: Math.max(4, W*.013), fill: LEAD, stroke: INK, 'stroke-width': 1});
+    m('path', {d: `M${cx},${H*.03} C${cx-W*.012},${H*.3} ${cx+W*.012},${H*.5} ${cx},${H*.78} L${cx+W*.05},${H*.78}`, stroke: INK, 'stroke-width': 3.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+    [H*.28, H*.56].forEach(y => {
+      const w = Math.max(10, W*.035), h = Math.max(14, H*.045);
+      m('rect', {x: cx - w/2, y: y - h/2, width: w, height: h, rx: w*.4, fill: LEAD, stroke: INK, 'stroke-width': 1.5});
+    });
+    arrow(W*.15, H*.3, W*.3, H*.3, s.x - r*.9, s.y - r*1.3, LEAD);
   } else {
-    m('path', {d: `M${cx},${H*.05} L${cx},${H*.78}`, stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '4 6', opacity: .35, fill: 'none'});
+    m('path', {d: `M${cx-W*.012},${H*.03} L${cx-W*.012},${H*.78} M${cx+W*.012},${H*.03} L${cx+W*.012},${H*.78}`, stroke: INK, 'stroke-width': 1.5, opacity: .3, fill: 'none'});
   }
-  // 1 air vent
-  const vx = W * .97, vy0 = H * .1, vy1 = H * .26;
-  m('rect', {x: vx - W*.025, y: vy0, width: W*.025, height: vy1 - vy0, fill: INK});
-  for (let i = 0; i < 3; i++) {
-    const y = vy0 + (vy1 - vy0) * (i + .5) / 3, a = vx - W*.04, b = vx - W*.15;
-    const tip = fixed[1] ? a : b, tail = fixed[1] ? b : a, dir = fixed[1] ? 1 : -1;
-    const ar = m('path', {d: `M${tail},${y} L${tip},${y} M${tip},${y} l${-dir*7},-5 M${tip},${y} l${-dir*7},5`, stroke: fixed[1] ? '#2f8f5b' : LEAD, 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round'});
-    if (!Kit.calm) gsap.fromTo(ar, {x: dir * -6}, {x: dir * 6, duration: .8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+
+  // 1 air vent in the right wall
+  const vx = W * .97, vy0 = H * .1, vy1 = H * .26, vm = (vy0 + vy1) / 2;
+  m('rect', {x: vx - W*.03, y: vy0, width: W*.03, height: vy1 - vy0, fill: INK, rx: 2});
+  if (!fixed[1]) {
+    arrow(W*.92, vm, W*.62, H*.18, s.x + r*.9, s.y - r*1.3, LEAD);
+  } else {
+    arrow(W*.76, vm, W*.84, vm, W*.91, vm, INK);
   }
-  // 2 dust
+
+  // 2 dust: two dust bunnies on the floor
   if (!fixed[2]) {
-    for (let i = 0; i < 22; i++) {
-      const onBench = i < 7;
-      m('circle', {cx: onBench ? bx0 + (bx1-bx0)*Kit.rnd() : W*(.06 + .58*Kit.rnd()), cy: onBench ? by - 2 : floorY + 3 + H*.04*Kit.rnd(), r: 2 + 2*Kit.rnd(), fill: LEAD, opacity: .8});
-    }
-  } else {
-    for (let i = 0; i < 4; i++) {
-      const x = W*(.1 + .14*i), y = floorY + H*.03;
-      m('path', {d: `M${x-5},${y} L${x+5},${y} M${x},${y-5} L${x},${y+5}`, stroke: '#2f8f5b', 'stroke-width': 2});
-    }
+    const bunny = (x, w) => {
+      const y = floorY, h = w * .7;
+      m('path', {d: `M${x-w},${y} C${x-w},${y-h} ${x-w*.3},${y-h*1.2} ${x},${y-h*.8} C${x+w*.4},${y-h*1.3} ${x+w},${y-h*.8} ${x+w},${y} Z`, fill: LEAD, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'});
+    };
+    bunny(W*.2, Math.max(10, W*.035));
+    bunny(W*.5, Math.max(8, W*.027));
+    arrow(W*.19, floorY - W*.04, W*.15, by - H*.12, s.x - r*1.4, s.y + r*.2, LEAD);
   }
+
   // 3 person
   const feet = floorY, head = feet - ph, hr = ph * .1;
   if (!fixed[3]) {
+    m('path', {d: `M${px-ph*.07},${feet-ph*.44} L${px-ph*.08},${feet} M${px+ph*.07},${feet-ph*.44} L${px+ph*.08},${feet}`, stroke: INK, 'stroke-width': 5, 'stroke-linecap': 'round'});
+    m('path', {d: `M${px-ph*.14},${feet-ph*.42} L${px-ph*.14},${head+hr*2.6} Q${px-ph*.14},${head+hr*2.2} ${px-ph*.09},${head+hr*2.2} L${px+ph*.09},${head+hr*2.2} Q${px+ph*.14},${head+hr*2.2} ${px+ph*.14},${head+hr*2.6} L${px+ph*.14},${feet-ph*.42} Z`, fill: '#7a6a8f', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'});
     m('circle', {cx: px, cy: head + hr, r: hr, fill: '#e8c4a0', stroke: INK, 'stroke-width': 2});
-    m('path', {d: `M${px-ph*.13},${head+hr*2.3} L${px+ph*.13},${head+hr*2.3} L${px+ph*.11},${feet-ph*.42} L${px-ph*.11},${feet-ph*.42}Z`, fill: '#7a6a8f', stroke: INK, 'stroke-width': 2});
-    m('path', {d: `M${px-ph*.07},${feet-ph*.42} L${px-ph*.08},${feet} M${px+ph*.07},${feet-ph*.42} L${px+ph*.08},${feet}`, stroke: INK, 'stroke-width': 4, 'stroke-linecap': 'round'});
+    arrow(px - ph*.2, feet - ph*.62, W*.62, H*.46, s.x + r*1.4, s.y + r*.2, LEAD);
   } else {
     m('rect', {x: px - ph*.16, y: head, width: ph*.32, height: ph, rx: ph*.14, fill: '#fff', stroke: INK, 'stroke-width': 2});
-    m('rect', {x: px - ph*.09, y: head + hr*.8, width: ph*.18, height: hr*1.1, rx: hr*.4, fill: '#9fd3f0', stroke: INK, 'stroke-width': 1.5});
+    m('rect', {x: px - ph*.09, y: head + hr*.8, width: ph*.18, height: hr*1.1, rx: hr*.4, fill: TINT(35), stroke: INK, 'stroke-width': 1.5});
     m('line', {x1: px, x2: px, y1: feet - ph*.4, y2: feet, stroke: INK, 'stroke-width': 1.5});
   }
 
   // labels
   const lab = (i, x, y, anchor) => {
-    const t = m('text', {x, y, 'text-anchor': anchor, fill: fixed[i] ? '#2f8f5b' : INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800});
+    const t = m('text', {x, y, 'text-anchor': anchor, fill: INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700});
     t.textContent = (fixed[i] ? '✓ ' : '') + (fixed[i] ? ON[i] : OFF[i]);
     return t;
   };
-  lab(0, W*.13, H*.1, 'start');
+  lab(0, W*.16, H*.1, 'start');
   lab(1, W*.92, Math.min(H*.33, head - fs*2.1), 'end');
   lab(2, W*.06, H*.95, 'start');
   lab(3, Math.min(px, W*.95 - fs*3.5), head - fs*.6, 'middle');
-
-  // tap rings
-  const ringAt = [[cx, H*.44], [W*.88, H*.18], [W*.34, floorY + H*.03], [px, head + ph*.45]];
-  ringAt.forEach(([x, y], i) => {
-    if (fixed[i] || done) return;
-    const c = m('circle', {cx: x, cy: y, r: Math.min(W,H)*.05, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '4 4'});
-    if (!Kit.calm) gsap.fromTo(c, {opacity: .9, scale: .8, transformOrigin: '50% 50%'}, {opacity: .2, scale: 1.2, duration: 1, repeat: -1, yoyo: true});
-  });
 
   pp = m('g', {});
   // hit areas (person on top of floor)
@@ -146,28 +163,15 @@ function draw(){
   if (started && !done) run();
 }
 
-function origin(i){
-  const {W, H, floorY, px, ph} = G;
-  if (i === 0) return [W*.1, H*(.15 + .6*Kit.rnd())];
-  if (i === 1) return [W*.92, H*(.12 + .13*Kit.rnd())];
-  if (i === 2) return [W*(.08 + .5*Kit.rnd()), floorY + 4];
-  return [px + (Kit.rnd()-.5)*ph*.25, floorY - ph*(.2 + .6*Kit.rnd())];
-}
-
 function spawn(){
   const act = [0,1,2,3].filter(i => !fixed[i]);
   if (!act.length || done) return;
   const i = act[Math.floor(Kit.rnd() * act.length)];
   if (Kit.calm) { count++; meter(); return; }
-  const [x, y] = origin(i), {s, W, H} = G;
-  const p = Kit.mk('circle', {cx: x, cy: y, r: Math.max(2.5, Math.min(W,H)*.009), fill: LEAD, 'data-s': i}, pp);
-  const mx = (x + s.x)/2 + (Kit.rnd()-.5)*W*.2, my = Math.min(y, s.y) - H*(.05 + .15*Kit.rnd());
+  // each speck travels along its source's arrow; it shows up as the grey film on the zircon
+  const p = Kit.mk('g', {'data-s': i}, pp);
   const o = {t: 0};
-  gsap.to(o, {t: 1, duration: 1.6 + Kit.rnd(), ease: 'sine.in', onUpdate(){
-    const t = o.t, u = 1 - t;
-    p.setAttribute('cx', u*u*x + 2*u*t*mx + t*t*(s.x + (Kit.rnd()-.5)*4));
-    p.setAttribute('cy', u*u*y + 2*u*t*my + t*t*s.y);
-  }, onComplete(){
+  gsap.to(o, {t: 1, duration: 1.6 + Kit.rnd(), ease: 'sine.in', onComplete(){
     p.remove(); if (fixed[i] || done) return;
     count++; meter();
     if (zirc) gsap.fromTo(zirc, {opacity: .55}, {opacity: 1, duration: .3});

@@ -32,7 +32,8 @@ let pct = 0, dragging = false, armed = false, done = false;
 const rev = {e: 0, g: 0};
 let lay = {cx: 0, cy: 0, rm: 0};
 const svg = Kit.$('pie');
-const ink = a => `color-mix(in srgb,var(--k) ${a}%,transparent)`;
+// flat tints of the ink on the card colour
+const ink = a => `color-mix(in srgb,var(--k) ${a}%,var(--c))`;
 
 function sect(cx, cy, a0, a1, r0, r1) {
   a1 = Math.min(a1, 99.99);
@@ -52,32 +53,26 @@ function draw() {
   const cx = W / 2, cy = avail / 2;
   const r0 = R * .82, r1 = R, rm = (r0 + r1) / 2;
   lay = {cx, cy, rm};
-  // 2025 bill: the inner ring
-  const rb = R * .66, wb = R * .2;
-  Kit.mk('circle', {cx, cy, r: rb, fill: 'none', style: `stroke:${ink(22)};stroke-width:${wb}`}, svg);
-  // outer track
-  Kit.mk('circle', {cx, cy, r: rm, fill: 'none', style: `stroke:${ink(8)};stroke-width:${r1 - r0}`}, svg);
-  // ticks every 10%
-  for (let i = 0; i < 10; i++) {
-    const t = i / 10 * 2 * Math.PI - Math.PI / 2;
-    Kit.mk('line', {x1: cx + (r1 + 2) * Math.cos(t), y1: cy + (r1 + 2) * Math.sin(t), x2: cx + (r1 + fs * .5) * Math.cos(t), y2: cy + (r1 + fs * .5) * Math.sin(t), style: `stroke:${ink(40)};stroke-width:1.5`}, svg);
-  }
+  const rb = R * .66;
+  // 2025 bill: one plain flat disc
+  Kit.mk('circle', {cx, cy, r: R * .74, style: `fill:${ink(16)};stroke:var(--k);stroke-width:2.5`}, svg);
+  // the path the extra grows along: one thin line
+  Kit.mk('circle', {cx, cy, r: rm, fill: 'none', style: `stroke:${ink(30)};stroke-width:2;stroke-dasharray:2 6;stroke-linecap:round`}, svg);
   // guess
   const gd = sect(cx, cy, 0, pct, r0, r1);
-  if (gd) Kit.mk('path', {d: gd, style: done ? `fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:5 4` : `fill:${ink(70)}`}, svg);
+  if (gd) Kit.mk('path', {d: gd, style: done ? `fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:5 4` : `fill:${ink(62)};stroke:var(--k);stroke-width:2;stroke-linejoin:round`}, svg);
   // reveal
   if (done) {
     const ed = sect(cx, cy, 0, rev.e, r0 - 3, r1 + 3);
-    if (ed) Kit.mk('path', {d: ed, style: 'fill:var(--k)'}, svg);
+    if (ed) Kit.mk('path', {d: ed, style: 'fill:var(--k);stroke:var(--k);stroke-width:2;stroke-linejoin:round'}, svg);
     const gd2 = sect(cx, cy, rev.e, rev.e + rev.g, r0 - 3, r1 + 3);
-    if (gd2) Kit.mk('path', {d: gd2, style: `fill:${ink(45)};stroke:var(--k);stroke-width:1.5`}, svg);
+    if (gd2) Kit.mk('path', {d: gd2, style: `fill:${ink(45)};stroke:var(--k);stroke-width:2;stroke-linejoin:round`}, svg);
   }
   // knob
   if (!done) {
     const t = pct / 100 * 2 * Math.PI - Math.PI / 2;
     const kx = cx + rm * Math.cos(t), ky = cy + rm * Math.sin(t);
     Kit.mk('circle', {cx: kx, cy: ky, r: Math.max(R * .11, 14), style: 'fill:var(--c);stroke:var(--k);stroke-width:3', class: 'knob'}, svg);
-    Kit.mk('circle', {cx: kx, cy: ky, r: Math.max(R * .03, 4), style: 'fill:var(--k)'}, svg);
   }
   // centre text
   const big = done ? `+${(rev.e + rev.g).toFixed(1)}%` : `+${Math.round(pct)}%`;
@@ -88,12 +83,12 @@ function draw() {
   // legend
   const rows = done
     ? [['var(--k)', 'Electricity  +€7.2 bn', ''], [ink(45), 'Gas  +€2.6 bn', 'var(--k)']]
-    : [[ink(22), '2025 energy bill = full ring', ''], [ink(70), 'Your guess: the 2026 extra', '']];
+    : [[ink(16), '2025 energy bill = full ring', 'var(--k)'], [ink(62), 'Your guess: the 2026 extra', 'var(--k)']];
   const lx = Math.max(fs * .5, cx - R);
   rows.forEach((r, i) => {
     const y = avail + fs * .3 + lh * i + lh * .5;
-    Kit.mk('rect', {x: lx, y: y - fs * .45, width: fs * .9, height: fs * .9, rx: fs * .2, style: `fill:${r[0]};${r[2] ? 'stroke:' + r[2] + ';stroke-width:1.5' : ''}`}, svg);
-    const tx = Kit.mk('text', {x: lx + fs * 1.4, y: y + fs * .35, style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg); tx.textContent = r[1];
+    Kit.mk('circle', {cx: lx + fs * .45, cy: y, r: fs * .45, style: `fill:${r[0]};${r[2] ? 'stroke:' + r[2] + ';stroke-width:1.5' : ''}`}, svg);
+    const tx = Kit.mk('text', {x: lx + fs * 1.4, y: y + fs * .35, style: `font:600 ${fs}px var(--body);fill:var(--k)`}, svg); tx.textContent = r[1];
   });
 }
 

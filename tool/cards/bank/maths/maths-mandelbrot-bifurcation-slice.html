@@ -8,9 +8,9 @@
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
 #read{display:flex;flex-direction:column;gap:.5cqh;min-height:max(6cqh,40px)}
-#seq{font:500 max(1.8cqh,12px)/1.25 var(--mono);color:var(--k);opacity:.8;overflow-wrap:anywhere}
+#seq{font:500 max(1.8cqh,12px)/1.25 var(--body);color:var(--k);opacity:.8;overflow-wrap:anywhere}
 #stat{font:700 max(2.1cqh,13px)/1.2 var(--body);color:var(--k)}
-#plot{position:relative;flex:1;min-height:0}
+#plot{position:relative;flex:1 1 auto;min-height:0;margin:auto 0}
 #cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:ew-resize;display:block}
 #why{font:500 max(1.9cqh,12px)/1.3 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
 </style>
@@ -32,7 +32,7 @@
 <script>
 const R0 = -2.15, R1 = 1.15, PAD = 6;
 const st = {c: 1};
-let G = null, mImg = null, bImg = null, ink = '#111', bg = '#fff', inkRGB = [17,17,17];
+let G = null, mImg = null, bImg = null, ink = '#111', bg = '#fff', inkRGB = [17,17,17], bgRGB = [255,255,255];
 const visited = new Set();
 let done = false, drag = false;
 
@@ -45,6 +45,10 @@ function rgbOf(col){
   const x = t.getContext('2d'); x.fillStyle = col; x.fillRect(0,0,1,1);
   const d = x.getImageData(0,0,1,1).data; return [d[0],d[1],d[2]];
 }
+function mix(p){ // flat tint: p of ink over the card colour
+  return inkRGB.map((v, i) => Math.round(v * p + bgRGB[i] * (1 - p)));
+}
+function css(a){ return `rgb(${a[0]},${a[1]},${a[2]})`; }
 
 function orbit(c){
   let z = 0; const first = [0];
@@ -63,9 +67,13 @@ function fmt(v){
   return (r === 0 ? 0 : r).toString().replace('-', '−');
 }
 
+function fontOf(name, fb){
+  return (getComputedStyle(Kit.$('card')).getPropertyValue(name) || '').trim() || fb;
+}
+
 function build(){
   const r = Math.min(window.devicePixelRatio || 1, 2);
-  // Mandelbrot panel
+  // Mandelbrot set: one flat silhouette in ink
   const mw = Math.round(G.W * r), mh = Math.round(G.Hm * r);
   const mc = document.createElement('canvas'); mc.width = mw; mc.height = mh;
   const mx = mc.getContext('2d'), id = mx.createImageData(mw, mh), d = id.data;
@@ -78,11 +86,12 @@ function build(){
       for (; n < 90; n++){ const a2 = a*a, b2 = b*b; if (a2 + b2 > 4) break; b = 2*a*b + im; a = a2 - b2 + re; }
       const o = (py*mw + px) * 4;
       d[o] = inkRGB[0]; d[o+1] = inkRGB[1]; d[o+2] = inkRGB[2];
-      d[o+3] = n >= 90 ? 235 : Math.min(70, n * 5);
+      d[o+3] = n >= 90 ? 255 : 0;
     }
   }
   mx.putImageData(id, 0, 0); mImg = mc;
-  // Bifurcation panel
+  // Bifurcation diagram: flat ink where often visited, a flat tint where rarely visited
+  const soft = mix(0.55);
   const bw = Math.round(G.W * r), bh = Math.round(G.bh * r);
   const bc = document.createElement('canvas'); bc.width = bw; bc.height = bh;
   const bx = bc.getContext('2d'), bd = bx.createImageData(bw, bh), cnt = new Float32Array(bw*bh);
@@ -97,8 +106,9 @@ function build(){
     }
   }
   for (let i = 0; i < cnt.length; i++){
-    const o = i*4; bd.data[o] = inkRGB[0]; bd.data[o+1] = inkRGB[1]; bd.data[o+2] = inkRGB[2];
-    bd.data[o+3] = cnt[i] ? Math.min(150, 25 + cnt[i] * 18) : 0;
+    const o = i*4, col = cnt[i] > 2 ? inkRGB : soft;
+    bd.data[o] = col[0]; bd.data[o+1] = col[1]; bd.data[o+2] = col[2];
+    bd.data[o+3] = cnt[i] ? 255 : 0;
   }
   bx.putImageData(bd, 0, 0); bImg = bc;
 }
@@ -106,38 +116,39 @@ function build(){
 function render(){
   if (!G) return;
   const x = G.x, W = G.W, c = st.c, o = orbit(c), hx = X(c), ay = G.Hm/2;
+  const body = fontOf('--body', 'sans-serif');
   x.clearRect(0, 0, W, G.H);
   x.imageSmoothingEnabled = true;
   x.drawImage(mImg, 0, 0, W, G.Hm);
   x.drawImage(bImg, 0, G.bt, W, G.bh);
-  // real axis + separator
-  x.globalAlpha = .45; x.strokeStyle = ink; x.lineWidth = 1;
+  // the set's middle line + the matching line below, in flat tints
+  x.lineCap = 'round';
+  x.strokeStyle = css(mix(0.6)); x.lineWidth = 1.5;
   x.beginPath(); x.moveTo(0, ay); x.lineTo(W, ay); x.stroke();
+  x.strokeStyle = css(mix(0.3)); x.lineWidth = 1;
   x.beginPath(); x.moveTo(0, G.bt + G.bh/2); x.lineTo(W, G.bt + G.bh/2); x.stroke();
-  x.globalAlpha = 1;
   // labels
   const f = Math.max(12, G.H * 0.03);
-  x.font = `700 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.font = `600 ${f}px ${body}`;
   x.fillStyle = ink; x.textBaseline = 'top'; x.textAlign = 'left';
   x.fillText('Mandelbrot set', 4, 4);
   x.textAlign = 'right';
   x.fillText('Where the orbit lands', W - 4, G.bt + 4);
-  // ticks
-  x.textAlign = 'center'; x.textBaseline = 'bottom'; x.globalAlpha = .75;
-  x.font = `600 ${Math.max(12, f*.9)}px ${getComputedStyle(document.body).getPropertyValue('--mono') || 'monospace'}`;
+  // c values along the bottom
+  x.textAlign = 'center'; x.textBaseline = 'bottom';
+  x.fillStyle = css(mix(0.8));
   [[-2,'c = −2'],[0,'0'],[1,'1']].forEach(([v,t]) => {
     const tx = Math.max(24, Math.min(W - 10, X(v)));
     x.fillText(t, tx, G.H - 1);
-    x.fillRect(X(v) - .5, G.H - f*1.35, 1, 4);
   });
-  x.globalAlpha = 1;
-  // guide
-  x.setLineDash([4, 4]); x.strokeStyle = ink; x.lineWidth = 1.5;
-  x.beginPath(); x.moveTo(hx, ay); x.lineTo(hx, G.bt + G.bh); x.stroke(); x.setLineDash([]);
+  x.fillStyle = ink;
+  // plumb line from the dot down to the orbit
+  x.strokeStyle = css(mix(0.75)); x.lineWidth = 1.5;
+  x.beginPath(); x.moveTo(hx, ay); x.lineTo(hx, G.bt + G.bh); x.stroke();
   // orbit
   if (o.esc){
     x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'top';
-    x.font = `800 ${f*1.4}px sans-serif`;
+    x.font = `800 ${f*1.4}px ${body}`;
     const ex = Math.max(20, Math.min(W - 20, hx));
     x.fillText('↑ ∞', ex, G.bt + f*1.6);
   } else {
@@ -146,7 +157,7 @@ function render(){
       x.fillStyle = ink; x.fill(); x.lineWidth = 2; x.strokeStyle = bg; x.stroke();
     });
   }
-  // handle
+  // handle: a plain bead on the line
   const R = Math.max(10, W * 0.028);
   x.beginPath(); x.arc(hx, ay, R + 3, 0, Math.PI*2); x.fillStyle = bg; x.fill();
   x.beginPath(); x.arc(hx, ay, R, 0, Math.PI*2);
@@ -172,6 +183,19 @@ function reveal(){
   requestAnimationFrame(() => Kit.onShow.card());
 }
 
+// Give the drawing one steady size: the room it will have once the explanation is shown,
+// so it never shrinks when the card ends.
+function lockPlot(){
+  const plot = Kit.$('plot'), els = [Kit.$('why'), Kit.$('keep'), Kit.$('say')];
+  const was = els.map(e => e.classList.contains('gone'));
+  plot.style.flex = '1 1 auto'; plot.style.height = '';
+  els[0].classList.remove('gone'); els[1].classList.remove('gone'); els[2].classList.add('gone');
+  const h = plot.getBoundingClientRect().height;
+  els.forEach((e, i) => e.classList.toggle('gone', was[i]));
+  plot.style.flex = '0 0 auto';
+  plot.style.height = Math.max(60, Math.floor(h)) + 'px';
+}
+
 const cv = Kit.$('cv');
 function setFrom(e){
   const r = cv.getBoundingClientRect();
@@ -186,15 +210,34 @@ const up = () => { if (!drag) return; drag = false; reveal(); };
 cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
 
 Kit.onShow.card = () => {
+  lockPlot();
   const fit = Kit.fitCanvas(cv);
   const W = fit.W, H = fit.H, f = Math.max(12, H * 0.03);
   const Hm = Math.round(H * 0.44), bt = Hm + 6, bh = H - bt - f * 1.5;
   ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
   bg = getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#fff';
-  inkRGB = rgbOf(ink);
+  inkRGB = rgbOf(ink); bgRGB = rgbOf(bg);
   G = {x: fit.x, W, H, Hm, bt, bh};
   build(); render();
 };
+// keep the drawing fitted to its box whenever the layout changes
+(() => {
+  const plot = Kit.$('plot'); let lw = 0, lh = 0, raf = 0;
+  if (window.ResizeObserver){
+    new ResizeObserver(() => {
+      const w = Math.round(plot.clientWidth), h = Math.round(plot.clientHeight);
+      if (!G || (w === lw && h === lh)) { lw = w; lh = h; return; }
+      lw = w; lh = h;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => Kit.onShow.card());
+    }).observe(plot);
+  }
+  window.addEventListener('resize', () => {
+    if (!G) return;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => Kit.onShow.card());
+  });
+})();
 Kit.onEnter.card = () => {
   if (Kit.calm) return;
   gsap.fromTo(st, {c: 1}, {c: 0.45, duration: .9, yoyo: true, repeat: 1, delay: .3, ease: 'sine.inOut', onUpdate: render});

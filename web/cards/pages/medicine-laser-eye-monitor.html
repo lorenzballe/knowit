@@ -32,22 +32,25 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-let mode = 0, t = 0, G = null, done = false, seenOn = false;
+let mode = 0, t = 0, G = null, done = false, seenOn = false, lastSz = '';
 const hist = [], N = 140, EMAX = 1.6, THR = 0.45;
-const RED = '#ffe066', GREEN = '#b6ffd0', DARK = '#7d0c06';
+const OFF = '#ffd447', OK = 'var(--k)', DARK = '#5e0a05';
+const SKIN = '#f6efe2', IRIS = '#4f7f99', PUPIL = '#1f2328', CLOUD = '#e2ded2';
 let L = null; // laser point offset from eye centre (in units of drift amplitude)
 
 function draw() {
   const svg = Kit.$('pic');
   const {W, H, f} = Kit.fitSvg(svg);
+  const r0 = svg.getBoundingClientRect(); lastSz = Math.round(r0.width) + 'x' + Math.round(r0.height);
   svg.innerHTML = '';
   const fs = Math.max(12, f * 0.78), pad = Math.max(8, W * 0.035);
   const h1 = H * 0.6, y2 = H * 0.63;
+  const sw = Math.max(2, fs * 0.14);
   const s = (tag, a, p) => Kit.mk(tag, a, p || svg);
-  const lab = (x, y, txt, anchor, col) => { const e = s('text', {x, y, 'text-anchor': anchor || 'start', style: `font:700 ${fs}px var(--mono);fill:${col || 'var(--k)'};letter-spacing:.04em`}); e.textContent = txt; return e; };
-  lab(pad, pad + fs, 'THE EYE');
+  const lab = (x, y, txt, anchor, col) => { const e = s('text', {x, y, 'text-anchor': anchor || 'start', style: `font:600 ${fs}px var(--body);fill:${col || 'var(--k)'}`}); e.textContent = txt; return e; };
+  lab(pad, pad + fs, 'The eye');
   const status = lab(W - pad, pad + fs, '', 'end');
-  // eye
+  // eye, drawn flat like a picture-book eye
   const cx = W / 2, top = pad + fs * 2.2;
   const cy = top + (h1 - top) * 0.55;
   const a = Math.min(W * 0.36, (h1 - top) * 0.9), b = Math.min(a * 0.5, (h1 - top) * 0.4);
@@ -55,32 +58,43 @@ function draw() {
   const cp = s('clipPath', {id: 'eyeclip'}, defs);
   const almond = `M${cx - a},${cy} Q${cx},${cy - b * 2} ${cx + a},${cy} Q${cx},${cy + b * 2} ${cx - a},${cy}Z`;
   s('path', {d: almond}, cp);
-  s('path', {d: almond, style: 'fill:#f4f1ea'});
+  // a few lashes on the upper lid, with a gap where the laser comes down
+  for (let i = 1; i <= 7; i++) {
+    const u = i / 8, x = (1 - u) * (1 - u) * (cx - a) + 2 * u * (1 - u) * cx + u * u * (cx + a);
+    const y = (1 - u) * (1 - u) * cy + 2 * u * (1 - u) * (cy - b * 2) + u * u * cy;
+    const lean = (u - 0.5) * 1.4, len = b * 0.3;
+    if (Math.abs(u - 0.5) < 0.1) continue;
+    s('path', {d: `M${x},${y} Q${x + lean * len * 0.3},${y - len * 0.7} ${x + lean * len},${y - len}`, style: `fill:none;stroke:${DARK};stroke-width:${sw};stroke-linecap:round`});
+  }
+  s('path', {d: almond, style: `fill:${SKIN}`});
   const g = s('g', {'clip-path': 'url(#eyeclip)'});
   const iris = s('g', {}, g);
   const ir = b * 0.82;
-  s('circle', {cx: 0, cy: 0, r: ir, style: 'fill:#3c6e8f'}, iris);
-  s('circle', {cx: 0, cy: 0, r: ir * 0.72, style: 'fill:none;stroke:#2a5370;stroke-width:' + ir * 0.12}, iris);
-  s('circle', {cx: 0, cy: 0, r: ir * 0.45, style: 'fill:#d9dcdc;opacity:.92'}, iris); // cloudy lens
-  s('path', {d: almond, style: 'fill:none;stroke:var(--k);stroke-width:' + Math.max(2, fs * 0.15)});
-  // laser
-  const beam0 = s('line', {style: `stroke:${DARK};stroke-width:${Math.max(2, fs * .2) + 3.5};opacity:.9;stroke-linecap:round`});
-  const beam = s('line', {style: `stroke:${RED};stroke-width:${Math.max(2, fs * .2)};opacity:.95`});
-  const glow = s('circle', {r: ir * 0.32, style: `fill:${RED};opacity:.25`});
-  const ring0 = s('circle', {r: ir * 0.22, style: `fill:none;stroke:${DARK};stroke-width:${Math.max(2, fs * .16) + 3.5};opacity:.9`});
-  const ring = s('circle', {r: ir * 0.22, style: `fill:none;stroke:${RED};stroke-width:${Math.max(2, fs * .16)}`});
-  const head = s('rect', {width: fs * 2.6, height: fs * 0.9, rx: fs * 0.25, style: 'fill:#9aa3a8'});
+  s('circle', {cx: 0, cy: 0, r: ir, style: `fill:${IRIS}`}, iris);
+  s('circle', {cx: 0, cy: 0, r: ir * 0.5, style: `fill:${PUPIL}`}, iris);
+  // the clouded lens (the cataract) sitting behind the pupil
+  s('path', {d: `M${-ir * .42},${ir * .02} C${-ir * .4},${-ir * .34} ${ir * .1},${-ir * .46} ${ir * .36},${-ir * .2} C${ir * .5},${ir * .04} ${ir * .3},${ir * .4} ${-ir * .02},${ir * .4} C${-ir * .28},${ir * .4} ${-ir * .43},${ir * .26} ${-ir * .42},${ir * .02}Z`, style: `fill:${CLOUD}`}, iris);
+  s('path', {d: almond, style: `fill:none;stroke:${DARK};stroke-width:${sw};stroke-linejoin:round`});
+  // laser: a plain beam and the spot where it lands
+  const beamW = Math.max(2, fs * .18);
+  const beam0 = s('line', {style: `stroke:${DARK};stroke-width:${beamW + 3};stroke-linecap:round`});
+  const beam = s('line', {style: `stroke:${OFF};stroke-width:${beamW};stroke-linecap:round`});
+  const spot = s('circle', {r: Math.max(4, ir * 0.12), style: `fill:${OFF};stroke:${DARK};stroke-width:${Math.max(1.5, sw * .8)}`});
+  // the instrument's head: a body and a tapered nozzle
+  const head = s('g', {});
+  s('path', {d: `M${-fs * .45},${-fs * .05} L${fs * .45},${-fs * .05} L${fs * .16},${fs * .65} L${-fs * .16},${fs * .65}Z`, style: `fill:color-mix(in srgb,var(--k) 75%,var(--c));stroke:${DARK};stroke-width:${sw};stroke-linejoin:round`}, head);
+  s('rect', {x: -fs * 1.2, y: -fs * 0.9, width: fs * 2.4, height: fs * 0.88, rx: fs * 0.18, style: `fill:var(--k);stroke:${DARK};stroke-width:${sw}`}, head);
   // chart
-  lab(pad, y2 + pad + fs, 'EYE PARAMETERS · LIVE');
+  lab(pad, y2 + pad + fs, 'Eye parameters · live');
   const px0 = pad, px1 = W - pad, py1 = H - pad;
   const py0 = Math.min(y2 + pad + fs * 2, py1 - Math.max(4, fs * 0.5));
   const Y = e => py1 - Math.min(e, EMAX) / EMAX * (py1 - py0);
-  s('rect', {x: px0, y: Y(THR), width: Math.max(0, px1 - px0), height: Math.max(0, py1 - Y(THR)), style: `fill:${GREEN};opacity:.28`});
-  s('line', {x1: px0, x2: px1, y1: Y(THR), y2: Y(THR), style: `stroke:${GREEN};stroke-width:2;stroke-dasharray:6 5`});
-  lab(px1 - fs * .3, py1 - fs * .35, 'SAFE ZONE', 'end', GREEN);
+  s('rect', {x: px0, y: Y(THR), width: Math.max(0, px1 - px0), height: Math.max(0, py1 - Y(THR)), style: 'fill:color-mix(in srgb,var(--k) 20%,var(--c))'});
+  s('line', {x1: px0, x2: px1, y1: Y(THR), y2: Y(THR), style: `stroke:var(--k);stroke-width:2;stroke-linecap:round`});
+  lab(px1 - fs * .4, py1 - fs * .35, 'Safe zone', 'end');
   const line = s('polyline', {style: `fill:none;stroke-width:${Math.max(2.5, fs * .2)};stroke-linejoin:round;stroke-linecap:round`});
-  const dot = s('circle', {r: Math.max(4, fs * .3)});
-  G = {W, H, fs, cx, cy, b, A: b * 0.38, ir, iris, beam, beam0, glow, ring, ring0, head, line, dot, status, px0, px1, Y, top};
+  const dot = s('circle', {r: Math.max(4, fs * .3), style: `stroke:${DARK};stroke-width:${Math.max(1.5, sw * .8)}`});
+  G = {W, H, fs, cx, cy, b, A: b * 0.38, ir, iris, beam, beam0, spot, head, line, dot, status, px0, px1, Y, top};
   if (!L) L = {x: 0, y: 0};
 }
 
@@ -97,15 +111,14 @@ function tick(time, dt) {
   const {cx, cy, A, fs} = G;
   G.iris.setAttribute('transform', `translate(${cx + dx * A * 1.6},${cy + dy * A * 1.6})`);
   const lx = cx + L.x * A * 1.6, ly = cy + L.y * A * 1.6;
-  for (const r of [G.ring, G.ring0]) { r.setAttribute('cx', lx); r.setAttribute('cy', ly); }
-  G.glow.setAttribute('cx', lx); G.glow.setAttribute('cy', ly);
-  G.head.setAttribute('x', lx - fs * 1.3); G.head.setAttribute('y', G.top - fs * 0.4);
+  G.spot.setAttribute('cx', lx); G.spot.setAttribute('cy', ly);
+  G.head.setAttribute('transform', `translate(${lx},${G.top + fs * 0.5})`);
   for (const bm of [G.beam, G.beam0]) {
-    bm.setAttribute('x1', lx); bm.setAttribute('y1', G.top + fs * 0.5);
+    bm.setAttribute('x1', lx); bm.setAttribute('y1', G.top + fs * 1.15);
     bm.setAttribute('x2', lx); bm.setAttribute('y2', ly);
   }
-  const ok = err < THR, col = ok ? GREEN : RED;
-  G.status.textContent = ok ? '● IN SAFE LIMITS' : '● OFF TARGET';
+  const ok = err < THR, col = ok ? OK : OFF;
+  G.status.textContent = ok ? 'In safe limits' : 'Off target';
   G.status.style.fill = col;
   const step = (G.px1 - G.px0) / (N - 1), off = N - hist.length;
   G.line.setAttribute('points', hist.map((e, i) => `${(G.px0 + (i + off) * step).toFixed(1)},${G.Y(e).toFixed(1)}`).join(' '));
@@ -117,7 +130,19 @@ function finish() {
   if (done) return; done = true;
   Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
   requestAnimationFrame(draw);
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  setTimeout(draw, 450); setTimeout(draw, 900); // repaint once the text below has settled
+  // only the explanation fades in here; the kit brings in the keep box itself
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+}
+
+// redraw whenever the drawing's box changes size, so it always fills its space
+if (window.ResizeObserver) {
+  new ResizeObserver(() => {
+    if (!G) return;
+    const r = Kit.$('pic').getBoundingClientRect();
+    const sz = Math.round(r.width) + 'x' + Math.round(r.height);
+    if (sz !== lastSz && r.height > 0) draw();
+  }).observe(Kit.$('pic'));
 }
 
 Kit.$('sw').addEventListener('click', e => {

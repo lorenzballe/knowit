@@ -9,9 +9,9 @@
 #stage{flex:1;min-height:0;position:relative;display:flex}
 #pic{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
 #pic text{font-family:var(--body);fill:var(--k)}
-#pic .read{font-family:var(--mono);font-weight:700}
+#pic .read{font-family:var(--display);font-weight:800}
 #pic .nm{font-weight:800}
-#pic .val{font-family:var(--mono);font-weight:600}
+#pic .val{font-weight:500}
 #why{display:flex;flex-direction:column;gap:.8cqh;margin-top:.6cqh}
 #why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
@@ -36,8 +36,8 @@
 const svg = Kit.$('pic'), stage = Kit.$('stage');
 const TMIN = 1600, TMAX = 3000;
 const M = [
-  {n:'Manganese', v:'boils 2,000°C', mark:2000, bp:2000, c:'#9b30ff'},
-  {n:'Aluminum', v:'boils ≈2,500°C', mark:2500, bp:2500, c:'#1d5fe0'},
+  {n:'Manganese', v:'boils 2,000°C', mark:2000, bp:2000, c:'#7a3aa6'},
+  {n:'Aluminum', v:'boils ≈2,500°C', mark:2500, bp:2500, c:'#2c5cb0'},
   {n:'Iron', v:'boils above 2,800°C', mark:2800, bp:2820, c:'#3b2414'}
 ];
 let G = null, T = 1700, bubbles = [], puffs = [], acc = [0,0,0], crossed = [false,false,false];
@@ -62,33 +62,28 @@ function draw(){
   const tx = W*0.56, r = Math.max(7, Math.min(W,H)*0.03), ty0 = H*0.07, ty1 = H*0.82;
   const rb = r*1.5, by = ty1 + rb*0.9;
   const yOf = t => ty1 - (t-TMIN)/(TMAX-TMIN)*(ty1-ty0);
+  const ink = 'var(--k)', sw = 2.4;
+  const clay = 'color-mix(in srgb, var(--k) 72%, var(--c))';
 
-  // gradients
-  const glow = mk('radialGradient',{id:'gl'},defs);
-  const g1 = mk('stop',{offset:'0','stop-color':'#ffd24a','stop-opacity':'.9'},glow);
-  mk('stop',{offset:'1','stop-color':'#ff7a00','stop-opacity':'0'},glow);
-  const mg = mk('linearGradient',{id:'mg',x1:0,y1:0,x2:0,y2:1},defs);
-  const s1 = mk('stop',{offset:'0'},mg), s2 = mk('stop',{offset:'1'},mg);
   const clip = mk('clipPath',{id:'mc'},defs);
   const clipPath = mk('path',{},clip);
 
-  // glow
-  const glowEl = mk('ellipse',{cx, cy:sY, rx:Math.min(hwT*1.9, cx*0.98), ry:Math.min((cB-cT)*0.7, sY*0.98, (H-sY)*0.98), fill:'url(#gl)'});
-  // readout
+  // the temperature, written large
   const rfs = Math.min(fs*2.3, H*0.1);
   const read = mk('text',{x:cx, y:H*0.15, 'text-anchor':'middle', class:'read', 'font-size':rfs});
-  mk('text',{x:cx, y:H*0.15 + rfs*0.35 + fs*1.1, 'text-anchor':'middle', 'font-size':fs, opacity:.75}).textContent = 'the melt';
-  // crucible body
-  mk('path',{d:`M${cx-hwT},${cT} L${cx+hwT},${cT} L${cx+hwB},${cB} Q${cx},${cB+wall*1.4} ${cx-hwB},${cB} Z`, fill:'#2a2a31', stroke:'#111', 'stroke-width':2});
-  mk('rect',{x:cx-hwT-wall*0.6, y:cT-wall*0.6, width:2*hwT+wall*1.2, height:wall*1.2, rx:wall*0.5, fill:'#3d3d46'});
-  const melt = mk('path',{fill:'url(#mg)'});
+  mk('text',{x:cx, y:H*0.15 + rfs*0.35 + fs*1.1, 'text-anchor':'middle', 'font-size':fs}).textContent = 'the melt';
+
+  // crucible: a plain clay pot with a thick lip
+  mk('path',{d:`M${cx-hwT},${cT} L${cx+hwT},${cT} L${cx+hwB},${cB} Q${cx},${cB+wall*1.4} ${cx-hwB},${cB} Z`, fill:clay, stroke:ink, 'stroke-width':sw, 'stroke-linejoin':'round'});
+  const melt = mk('path',{stroke:ink, 'stroke-width':1.6, 'stroke-linejoin':'round'});
   const gB = mk('g',{'clip-path':'url(#mc)'});
+  mk('rect',{x:cx-hwT-wall*0.6, y:cT-wall*0.6, width:2*hwT+wall*1.2, height:wall*1.2, rx:wall*0.4, fill:clay, stroke:ink, 'stroke-width':sw});
   const gP = mk('g',{});
 
-  // thermometer
-  mk('rect',{x:tx-r, y:ty0-r, width:2*r, height:by-ty0+r, rx:r, fill:'#fff', stroke:'var(--k)', 'stroke-width':2});
-  mk('circle',{cx:tx, cy:by, r:rb, fill:'#e0301e', stroke:'var(--k)', 'stroke-width':2});
-  const merc = mk('rect',{x:tx-r*0.5, width:r, rx:r*0.5, fill:'#e0301e'});
+  // thermometer: a plain tube and bulb
+  mk('rect',{x:tx-r, y:ty0-r, width:2*r, height:by-ty0+r, rx:r, fill:'color-mix(in srgb, #fff 82%, var(--c))', stroke:ink, 'stroke-width':sw});
+  mk('circle',{cx:tx, cy:by, r:rb, fill:'#d8432a', stroke:ink, 'stroke-width':sw});
+  const merc = mk('rect',{x:tx-r*0.5, width:r, rx:r*0.5, fill:'#d8432a'});
   const lh = fs*1.22, labs = [];
   // label block centres, pushed apart so blocks never overlap
   const gap = lh*2.7, ycs = M.map(m => yOf(m.mark));
@@ -103,10 +98,11 @@ function draw(){
     const y = yOf(m.mark), yc = ycs[i];
     mk('line',{x1:tx-r*1.6, x2:tx+r*1.6, y1:y, y2:y, stroke:m.c, 'stroke-width':3, 'stroke-linecap':'round'});
     const g = mk('g',{opacity:.4});
-    const lx = tx + r*2.2;
-    mk('circle',{cx:lx+fs*0.42, cy:yc-lh*0.5-fs*0.32, r:fs*0.38, fill:'rgba(255,255,255,.6)', stroke:m.c, 'stroke-width':2.2}, g);
+    const lx = tx + r*2.2, dy = yc-lh*0.5-fs*0.32;
+    // a dot in the metal's colour: its bubbles look like this
+    mk('circle',{cx:lx+fs*0.42, cy:dy, r:fs*0.36, fill:m.c}, g);
     const a = mk('text',{x:lx+fs*1.1, y:yc-lh*0.5, class:'nm', 'font-size':fs}, g); a.textContent = m.n;
-    const b = mk('text',{x:lx, y:yc+lh*0.6, class:'val', 'font-size':Math.max(12,fs*0.88)}, g); b.textContent = m.v;
+    const b = mk('text',{x:lx, y:yc+lh*0.6, class:'val', 'font-size':fs}, g); b.textContent = m.v;
     labs.push(g);
   });
   // hint arrow
@@ -114,10 +110,10 @@ function draw(){
   if (!dragged) {
     hint = mk('g',{opacity:.85});
     const hx = tx - r*3.2, hy = H*0.6, s = fs*0.8;
-    mk('path',{d:`M${hx-s},${hy} L${hx},${hy-s} L${hx+s},${hy} M${hx},${hy-s} L${hx},${hy+s*1.6}`, fill:'none', stroke:'var(--k)', 'stroke-width':2.6, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, hint);
+    mk('path',{d:`M${hx-s},${hy} L${hx},${hy-s} L${hx+s},${hy} M${hx},${hy-s} L${hx},${hy+s*1.6}`, fill:'none', stroke:ink, 'stroke-width':2.6, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, hint);
     if (!Kit.calm) gsap.to(hint,{y:-fs*0.9, duration:.7, yoyo:true, repeat:-1, ease:'sine.inOut'});
   }
-  G = {W,H,fs,cx,sY,bY,inner,yOf,by,rb,ty0,ty1,read,merc,s1,s2,g1,glowEl,melt,clipPath,gB,gP,labs,hint,br:Math.max(3,W*0.016)};
+  G = {W,H,fs,cx,sY,bY,inner,yOf,by,rb,ty0,ty1,read,merc,melt,clipPath,gB,gP,labs,hint,br:Math.max(3,W*0.016)};
   bubbles.forEach(b => b.el = null); puffs.forEach(p => p.el = null);
   setT(T, true); shape();
 }
@@ -128,9 +124,8 @@ function setT(t, quiet){
   const k = (T-TMIN)/(TMAX-TMIN);
   G.read.textContent = (Math.round(T/10)*10).toLocaleString('en-US') + '°C';
   G.merc.setAttribute('y', G.yOf(T)); G.merc.setAttribute('height', G.by - G.yOf(T));
-  G.s1.setAttribute('stop-color', mix('#ff8a00','#fff6c8',k));
-  G.s2.setAttribute('stop-color', mix('#b52300','#ffb000',k));
-  G.glowEl.setAttribute('opacity', .25 + .75*k);
+  // the melt's colour is its heat: deep orange when cooler, pale yellow when hottest
+  G.melt.setAttribute('fill', mix('#c8400e','#ffe684',k));
   M.forEach((m,i) => {
     const on = T >= m.bp;
     G.labs[i].setAttribute('opacity', on ? 1 : .4);
@@ -182,9 +177,8 @@ gsap.ticker.add((time, dms) => {
       if (puffs.length < 40) puffs.push({x, y:sY, r:rr, life:0, m:b.m, dx:(Kit.rnd()-.5)*br*2, el:null});
       continue;
     }
-    if (!b.el) b.el = Kit.mk('circle',{fill:'rgba(255,255,255,.4)', stroke:M[b.m].c}, G.gB);
+    if (!b.el) b.el = Kit.mk('circle',{fill:M[b.m].c}, G.gB);
     b.el.setAttribute('cx',x); b.el.setAttribute('cy',y); b.el.setAttribute('r',rr);
-    b.el.setAttribute('stroke-width', Math.max(1.4, rr*0.3));
   }
   for (let j = puffs.length-1; j >= 0; j--) {
     const p = puffs[j]; p.life += dt;
@@ -192,7 +186,7 @@ gsap.ticker.add((time, dms) => {
     if (t >= 1) { if (p.el) p.el.remove(); puffs.splice(j,1); continue; }
     if (!p.el) p.el = Kit.mk('circle',{fill:M[p.m].c}, G.gP);
     p.el.setAttribute('cx', p.x + p.dx*t); p.el.setAttribute('cy', p.y - G.H*0.12*t);
-    p.el.setAttribute('r', p.r*(1 + t*2.2)); p.el.setAttribute('opacity', 0.45*(1-t));
+    p.el.setAttribute('r', p.r*(1 + t*2.2)); p.el.setAttribute('opacity', 0.5*(1-t));
   }
   shape();
 });

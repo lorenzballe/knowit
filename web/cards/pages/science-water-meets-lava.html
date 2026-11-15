@@ -36,53 +36,73 @@ const BUBS = [
 ];
 const ISTEAM = [{x:.22,r:.8},{x:.5,r:1},{x:.78,r:.7}];
 
+const INK = '#10100c', LAVA = '#e4521d', SEAM = '#ffa53a', CRUST = '#4a2418', STEAM = '#ffffff';
+
 function T(x, y, txt, anchor, parent, onCard){
-  const st = onCard
-    ? `font:700 ${fs}px var(--body);fill:#10100c;stroke:none`
-    : `font:700 ${fs}px var(--body);fill:#fff;stroke:#17110f;stroke-width:${fs*.3}px;paint-order:stroke;stroke-linejoin:round`;
+  const st = `font:600 ${fs}px var(--body);fill:${INK};stroke:none`;
   const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle', style: st}, parent);
   t.textContent = txt; return t;
 }
 function kill(){ tw.forEach(t => t.kill()); tw = []; }
+
+// a lava body with a gently rolling top edge
+function lavaBody(y0, bottom, parent){
+  const n = 6, sw = W / n, a = f * .28;
+  let d = `M0 ${bottom} L0 ${y0}`;
+  for (let i = 0; i < n; i++){
+    const x1 = sw*(i + .5), x2 = sw*(i + 1);
+    d += ` Q ${x1} ${y0 + (i % 2 ? a : -a)} ${x2} ${y0}`;
+  }
+  d += ` L${W} ${bottom} Z`;
+  return Kit.mk('path', {d, fill:LAVA, stroke:INK, 'stroke-width':f*.12, 'stroke-linejoin':'round'}, parent);
+}
+// ropy flow lines inside the molten rock
+function flowLine(x, y, w, parent){
+  return Kit.mk('path', {d:`M${x - w/2} ${y} q ${w*.25} ${-f*.5} ${w*.5} 0 t ${w*.5} 0`, fill:'none', stroke:SEAM, 'stroke-width':f*.18, 'stroke-linecap':'round'}, parent);
+}
+// a dark slab of cooled crust floating on the surface
+function crust(cx, cy, w, parent){
+  const h = f*.55;
+  return Kit.mk('path', {d:`M${cx - w/2} ${cy} q ${w*.1} ${-h} ${w*.45} ${-h*.9} q ${w*.4} ${-h*.2} ${w*.55} ${h*.6} q ${-w*.3} ${h*.7} ${-w} ${h*.3} Z`, fill:CRUST}, parent);
+}
 
 function draw(){
   const svg = Kit.$('pic'); kill(); svg.innerHTML = '';
   ({W, H, f} = Kit.fitSvg(svg)); fs = Math.max(f, 13);
   surfY = H*.62; iy = H*.3;
   const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id:'lg', x1:0, y1:0, x2:0, y2:1}, defs);
-  [['0','#ffe27a'],['.22','#ff8a1a'],['.7','#d8340f'],['1','#7a1608']].forEach(([o,c]) => Kit.mk('stop', {offset:o, 'stop-color':c}, lg));
   const cp = Kit.mk('clipPath', {id:'cp'}, defs);
   Kit.mk('rect', {x:0, y:0, width:W, height:H}, cp);
   const root = Kit.mk('g', {'clip-path':'url(#cp)'}, svg);
 
   // ---- the everyday scale: a drop above a lava flow
   const scene = el.scene = Kit.mk('g', {}, root);
-  Kit.mk('rect', {x:0, y:surfY, width:W, height:H-surfY, fill:'url(#lg)'}, scene);
-  Kit.mk('rect', {x:0, y:surfY-f*.15, width:W, height:f*.3, fill:'#fff3b0', opacity:.55}, scene);
-  for (let i = 0; i < 5; i++){
-    const cx = W*(.1 + i*.2), cy = surfY + (H-surfY)*(.25 + (i%2)*.35);
-    Kit.mk('ellipse', {cx, cy, rx:f*2.4, ry:f*.6, fill:'#4a1a0a', opacity:.45}, scene);
-  }
-  T(W/2, surfY + (H-surfY)*.62, 'molten lava', 'middle', scene);
+  lavaBody(surfY, H + f, scene);
+  const D = H - surfY;
+  flowLine(W*.2, surfY + D*.32, f*5, scene);
+  flowLine(W*.8, surfY + D*.36, f*5, scene);
+  flowLine(W*.5, surfY + D*.88, f*6, scene);
+  [.1, .3, .72, .92].forEach((x, i) => crust(W*x, surfY + f*(i % 2 ? .15 : .05), f*(2.6 + (i % 3)*.5), scene));
+  T(W/2, surfY + D*.62, 'molten lava', 'middle', scene);
   const s = f*1.3, dx0 = W/2, dy0 = H*.16;
   const dropG = el.drop = Kit.mk('g', {}, scene);
-  Kit.mk('path', {d:`M${dx0} ${dy0-s} C ${dx0+s*.5} ${dy0-s*.4} ${dx0+s*.8} ${dy0} ${dx0+s*.8} ${dy0+s*.35} A ${s*.8} ${s*.8} 0 0 1 ${dx0-s*.8} ${dy0+s*.35} C ${dx0-s*.8} ${dy0} ${dx0-s*.5} ${dy0-s*.4} ${dx0} ${dy0-s} Z`, fill:'#4fb3ff', stroke:'#10100c', 'stroke-width':f*.12}, dropG);
+  Kit.mk('path', {d:`M${dx0} ${dy0-s} C ${dx0+s*.5} ${dy0-s*.4} ${dx0+s*.8} ${dy0} ${dx0+s*.8} ${dy0+s*.35} A ${s*.8} ${s*.8} 0 0 1 ${dx0-s*.8} ${dy0+s*.35} C ${dx0-s*.8} ${dy0} ${dx0-s*.5} ${dy0-s*.4} ${dx0} ${dy0-s} Z`, fill:'#4fa6ea', stroke:INK, 'stroke-width':f*.12, 'stroke-linejoin':'round'}, dropG);
   el.dropLabel = T(dx0 + s*1.5, dy0 + fs*.35, 'a drop of water', 'start', scene, true);
   const steam = el.steam = Kit.mk('g', {}, scene);
-  el.puffs = PUFFS.map(p => Kit.mk('circle', {cx: W/2 + p.dx*3*f, cy: surfY - (.8 + p.dy*3)*f, r:(1.2 + p.r*1.2)*f, fill:'#ffffff', stroke:'#10100c', 'stroke-width':f*.1, opacity:.92}, steam));
-  el.small = SMALL.map(p => Kit.mk('circle', {cx: W/2 + p.dx*2*f, cy: surfY + (.8 + p.dy*1.4)*f, r:(.35 + p.r*.35)*f, fill:'#fff6e6', stroke:'#ffd36b', 'stroke-width':f*.08}, steam));
+  el.puffs = PUFFS.map(p => Kit.mk('circle', {cx: W/2 + p.dx*3*f, cy: surfY - (.8 + p.dy*3)*f, r:(1.2 + p.r*1.2)*f, fill:STEAM, stroke:INK, 'stroke-width':f*.1}, steam));
+  el.small = SMALL.map(p => Kit.mk('circle', {cx: W/2 + p.dx*2*f, cy: surfY + (.8 + p.dy*1.4)*f, r:(.35 + p.r*.35)*f, fill:STEAM, stroke:INK, 'stroke-width':f*.08}, steam));
   el.steamLabel = T(W/2, Math.max(fs*1.4, surfY - f*7.6), 'instantly: steam!', 'middle', scene, true);
-  el.flash = Kit.mk('circle', {cx:W/2, cy:surfY, r:f*2.5, fill:'#fffbe0', opacity:0}, scene);
+  el.flash = Kit.mk('circle', {cx:W/2, cy:surfY, r:f*2.5, fill:STEAM, opacity:0}, scene);
 
   // ---- zoomed in: inside the molten rock
   const inner = el.inner = Kit.mk('g', {}, root);
-  ISTEAM.forEach(p => Kit.mk('circle', {cx:W*p.x, cy:iy - f*1.1, r:(1 + p.r)*f, fill:'#ffffff', stroke:'#10100c', 'stroke-width':f*.1, opacity:.7}, inner));
+  ISTEAM.forEach(p => Kit.mk('circle', {cx:W*p.x, cy:iy - f*1.1, r:(1 + p.r)*f, fill:STEAM, stroke:INK, 'stroke-width':f*.1}, inner));
   const il = el.ilava = Kit.mk('g', {}, inner);
-  Kit.mk('rect', {x:0, y:iy, width:W, height:H - iy + f*3, fill:'url(#lg)'}, il);
-  Kit.mk('rect', {x:0, y:iy - f*.15, width:W, height:f*.3, fill:'#fff3b0', opacity:.6}, il);
+  lavaBody(iy, H + f*3, il);
   const L = H - iy;
-  el.bubs = BUBS.map(b => Kit.mk('circle', {cx:W*b.x, cy: iy + L*(b.row ? .83 : .27), r:Math.min((1 + b.r*.8)*f, L*.11), fill:'#fff6e6', stroke:'#ffd36b', 'stroke-width':f*.12, opacity:.95}, il));
+  flowLine(W*.3, iy + L*.42, f*5, il);
+  flowLine(W*.72, iy + L*.68, f*5, il);
+  el.bubs = BUBS.map(b => Kit.mk('circle', {cx:W*b.x, cy: iy + L*(b.row ? .83 : .27), r:Math.min((1 + b.r*.8)*f, L*.11), fill:STEAM, stroke:INK, 'stroke-width':f*.12}, il));
   el.bubLabel = T(W/2, iy + L*.55 + fs*.35, 'steam swells into bubbles', 'middle', inner);
   el.topLabel = T(f, Math.max(fs*1.4, iy - f*3), S >= 3 ? 'the lava seems to breathe' : 'zoomed into the lava', 'start', inner, true);
 

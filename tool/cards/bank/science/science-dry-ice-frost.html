@@ -5,19 +5,18 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
 #cv{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
-#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh;position:absolute;left:5%;top:0;width:63%;margin:0;pointer-events:none}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere;margin:0}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Drag · watch">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRY ICE</span></div>
     <h2 class="q">Why does CO₂ solidify on the water surface?</h2>
-    <div class="stagebox" id="stage"><canvas id="cv"></canvas></div>
+    <div class="stagebox" id="stage"><canvas id="cv"></canvas><div id="why" class="gone"><p class="big">The surface got colder than –78 °C.</p><p class="body">That is CO₂’s sublimation point. Below it, CO₂ gas from the air skips the liquid stage and deposits straight onto the surface as solid dry ice.</p></div></div>
     <p class="say" id="say">Drag the thermometer down: pour in solid nitrogen and chill the surface.</p>
-    <div id="why" class="gone"><p class="big">The surface got colder than –78 °C.</p><p class="body">That is CO₂’s sublimation point. Below it, CO₂ gas from the air skips the liquid stage and deposits straight onto the surface as solid dry ice.</p></div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Make a surface cold enough and the air itself turns to frost on it.</div>
     <div class="foot"><span class="src">Source · Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)</span></div>
   </div>
@@ -26,7 +25,9 @@
 <script>
 const cv = Kit.$('cv');
 const T_TOP = 20, T_BOT = -120, SUB = -78, GOAL = 60, NB = 26;
-const INK = '#10100c';
+let INK = '#10100c', CARD = '#00e5a0', BODY = 'sans-serif', GAS = '#0b7a58';
+const PAPER = '#fbfaf3', RED = '#d8432c', BLUE = '#2f6fd0';
+const WARM_W = [47, 111, 208], COLD_W = [222, 236, 248];
 let ctx = null, W = 0, H = 0, G = {};
 let T = T_TOP, target = T_TOP, below = false, count = 0, done = false, flash = 0;
 const bins = new Array(NB).fill(0);
@@ -37,71 +38,142 @@ function geom() {
   const fs = Math.max(12, Math.min(H * .045, W * .05));
   const thX = W * .88, tubeT = H * .14, tubeB = H * .86;
   G = {fs, thX, tubeT, tubeB, tw: Math.max(10, W * .045),
-    bx0: W * .05, bx1: W * .74, sy: H * .62, by: H * .93, ay: H * .1};
+    bx0: W * .05, bx1: W * .68, sy: H * .62, by: H * .93, ay: H * .1};
 }
 function yOfT(t) { return G.tubeT + (T_TOP - t) / (T_TOP - T_BOT) * (G.tubeB - G.tubeT); }
 function tOfY(y) { const f = Math.min(1, Math.max(0, (y - G.tubeT) / (G.tubeB - G.tubeT))); return T_TOP - f * (T_TOP - T_BOT); }
 
-function flake(x, y, r, a) {
-  ctx.save(); ctx.translate(x, y); ctx.rotate(a);
-  ctx.lineCap = 'round';
-  for (const pass of [0, 1]) {
-    ctx.strokeStyle = pass ? '#ffffff' : INK;
-    ctx.lineWidth = Math.max(1.2, r * .28) + (pass ? 0 : 2);
-    ctx.beginPath();
-    for (let k = 0; k < 6; k++) { const q = k * Math.PI / 3; ctx.moveTo(0, 0); ctx.lineTo(Math.cos(q) * r, Math.sin(q) * r); }
-    ctx.stroke();
+// a flat tint of the ink on the card colour (same as color-mix(in srgb, var(--k) p%, var(--c)))
+function rgbOf(s) {
+  s = s.trim();
+  if (s[0] === '#') {
+    if (s.length === 4) s = '#' + s[1] + s[1] + s[2] + s[2] + s[3] + s[3];
+    const n = parseInt(s.slice(1, 7), 16);
+    return isNaN(n) ? null : [n >> 16 & 255, n >> 8 & 255, n & 255];
   }
-  ctx.restore();
+  const m = s.match(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/);
+  return m ? [+m[1], +m[2], +m[3]] : null;
+}
+function tint(p) {
+  const a = rgbOf(INK), b = rgbOf(CARD);
+  if (!a || !b) return INK;
+  const f = p / 100, m = a.map((v, i) => Math.round(v * f + b[i] * (1 - f)));
+  return `rgb(${m[0]},${m[1]},${m[2]})`;
+}
+
+function readColours() {
+  const css = getComputedStyle(Kit.$('card'));
+  BODY = css.getPropertyValue('--body').trim() || 'sans-serif';
+  const k = css.getPropertyValue('--k').trim(), c = css.getPropertyValue('--c').trim();
+  if (k) INK = k;
+  if (c) CARD = c;
+  GAS = tint(45);
+}
+
+// where the surface sits: at the end it moves down below the explanation
+function surfaceY() {
+  if (!done) return G.sy;
+  const wy = Kit.$('why');
+  if (!wy || wy.classList.contains('gone')) return G.sy;
+  const bw = (G.bx1 - G.bx0) / NB, r = Math.min(bw * .5, G.fs * .45);
+  const bottom = wy.offsetTop + wy.offsetHeight - cv.offsetTop;
+  return Math.min(H * .8, Math.max(G.sy, bottom + r * 8.5 + G.fs * .4));
+}
+
+// the frost: one white crust that thickens where gas lands
+function frost(sy, bx0, bx1, r, lw) {
+  if (count <= 0) return;
+  const bw = (bx1 - bx0) / NB;
+  const pts = bins.map((b, i) => [bx0 + bw * (i + .5), sy - (b ? r * (.6 + b * 1.5) : 0)]);
+  ctx.beginPath();
+  ctx.moveTo(bx0, sy); ctx.lineTo(bx0, pts[0][1]);
+  for (let i = 0; i < NB - 1; i++) {
+    const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2;
+    ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
+  }
+  ctx.lineTo(pts[NB - 1][0], pts[NB - 1][1]); ctx.lineTo(bx1, pts[NB - 1][1]); ctx.lineTo(bx1, sy);
+  ctx.closePath();
+  ctx.fillStyle = '#ffffff'; ctx.fill();
+  ctx.strokeStyle = INK; ctx.lineWidth = lw * .6; ctx.stroke();
 }
 
 function draw() {
   if (!ctx) return;
-  const css = getComputedStyle(Kit.$('card'));
-  const body = css.getPropertyValue('--body').trim() || 'sans-serif';
-  const {fs, thX, tubeT, tubeB, tw, bx0, bx1, sy, by, ay} = G;
+  const body = BODY;
+  const {fs, thX, tubeT, tubeB, tw, bx0, bx1, by, ay} = G;
+  const sy = surfaceY();
   const cold = Math.min(1, Math.max(0, (T_TOP - T) / (T_TOP - SUB)));
+  const lw = Math.max(2, fs * .15);
   ctx.clearRect(0, 0, W, H);
-  // air label
-  ctx.fillStyle = INK; ctx.font = `600 ${fs}px ${body}`; ctx.textBaseline = 'middle';
-  ctx.fillText('CO₂ in the air', bx0, ay);
-  // water bath
-  const g = ctx.createLinearGradient(0, sy, 0, by);
-  const top = `rgb(${43 + 180 * cold},${123 + 110 * cold},${217 + 30 * cold})`;
-  g.addColorStop(0, top); g.addColorStop(1, `rgb(${20 + 60 * cold},${60 + 70 * cold},${120 + 60 * cold})`);
-  ctx.fillStyle = g; ctx.beginPath(); ctx.roundRect(bx0, sy, bx1 - bx0, by - sy, fs * .4); ctx.fill();
-  ctx.strokeStyle = below ? '#ffffff' : '#7fb6e6'; ctx.lineWidth = Math.max(2, fs * .15);
-  ctx.beginPath(); ctx.moveTo(bx0, sy); ctx.lineTo(bx1, sy); ctx.stroke();
-  ctx.fillStyle = cold > .6 ? '#0d1b2a' : '#e8f3ff';
-  ctx.font = `600 ${fs * .95}px ${body}`;
-  ctx.fillText(count > 0 ? `dry ice: ${count} crystals` : 'water bath', bx0 + fs * .6, sy + fs * 1.4);
-  // crystals
-  const bw = (bx1 - bx0) / NB, r = Math.min(bw * .5, fs * .45);
-  for (let i = 0; i < NB; i++) for (let k = 0; k < bins[i]; k++)
-    flake(bx0 + bw * (i + .5) + ((k % 2) ? r * .4 : -r * .3), sy - r * (1 + k * 1.5), r, i + k);
-  // molecules
-  for (const p of parts) {
-    const x = bx0 + p.u * (bx1 - bx0), y = ay + fs + p.v * (sy - ay - fs - 2), d = Math.max(2.4, fs * .2);
-    ctx.save(); ctx.translate(x, y); ctx.rotate(p.a);
-    ctx.fillStyle = '#d62f1f'; ctx.beginPath(); ctx.arc(-d * 1.6, 0, d, 0, 7); ctx.arc(d * 1.6, 0, d, 0, 7); ctx.fill();
-    ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(0, 0, d * .9, 0, 7); ctx.fill();
-    ctx.restore();
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+  // air label (the explanation takes its place at the end)
+  if (!done) {
+    ctx.fillStyle = INK; ctx.font = `600 ${fs}px ${body}`;
+    ctx.fillText('CO₂ in the air', bx0, ay);
   }
-  // thermometer
+  // molecules: a few quiet O=C=O shapes in one flat tint (all frozen out by the end)
+  if (!done) {
+    const d = Math.max(3, fs * .24);
+    ctx.fillStyle = GAS;
+    for (let n = 0; n < parts.length; n += 2) {
+      const p = parts[n];
+      const x = bx0 + p.u * (bx1 - bx0), y = ay + fs + p.v * (sy - ay - fs - 2);
+      ctx.save(); ctx.translate(x, y); ctx.rotate(p.a);
+      ctx.beginPath();
+      ctx.arc(-d * 1.5, 0, d, 0, 7); ctx.moveTo(d * 2.5, 0); ctx.arc(d * 1.5, 0, d, 0, 7);
+      ctx.moveTo(d * .85, 0); ctx.arc(0, 0, d * .85, 0, 7);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+  // water: one flat colour that pales as the surface chills
+  const wc = WARM_W.map((v, i) => Math.round(v + (COLD_W[i] - v) * cold));
+  const rr = fs * .6;
+  ctx.fillStyle = `rgb(${wc[0]},${wc[1]},${wc[2]})`;
+  ctx.beginPath(); ctx.roundRect(bx0, sy, bx1 - bx0, by - sy, [0, 0, rr, rr]); ctx.fill();
+  // surface line: turns white once it is cold enough
+  ctx.strokeStyle = below ? '#ffffff' : INK; ctx.lineWidth = lw * (below ? 1.6 : .7);
+  ctx.beginPath(); ctx.moveTo(bx0, sy); ctx.lineTo(bx1, sy); ctx.stroke();
+  // frost growing on the surface
+  const bw = (bx1 - bx0) / NB, r = Math.min(bw * .5, fs * .45);
+  frost(sy, bx0, bx1, r, lw);
+  // the tub around it
+  const lip = fs * .9;
+  ctx.strokeStyle = INK; ctx.lineWidth = lw;
+  ctx.beginPath();
+  ctx.moveTo(bx0, sy - lip); ctx.lineTo(bx0, by - rr); ctx.quadraticCurveTo(bx0, by, bx0 + rr, by);
+  ctx.lineTo(bx1 - rr, by); ctx.quadraticCurveTo(bx1, by, bx1, by - rr); ctx.lineTo(bx1, sy - lip);
+  ctx.stroke();
+  ctx.fillStyle = cold > .6 ? INK : '#ffffff';
+  ctx.font = `600 ${fs * .95}px ${body}`;
+  const ly0 = Math.min(sy + fs * 1.4, (sy + by) / 2);
+  ctx.fillText(count > 0 ? `dry ice: ${count} crystals` : 'water bath', bx0 + fs * .6, ly0);
+  // thermometer: a plain stem and bulb
   const ly = yOfT(SUB), ty = yOfT(T);
-  ctx.fillStyle = '#1e3248'; ctx.beginPath(); ctx.roundRect(thX - tw / 2, tubeT, tw, tubeB - tubeT, tw / 2); ctx.fill();
-  ctx.fillStyle = below ? '#7fd4ff' : '#ff6b5a';
-  ctx.beginPath(); ctx.roundRect(thX - tw * .3, ty, tw * .6, tubeB - ty, tw * .3); ctx.fill();
-  ctx.strokeStyle = flash > 0 ? '#ffffff' : INK; ctx.lineWidth = Math.max(2, fs * .14); ctx.setLineDash([fs * .35, fs * .25]);
-  ctx.beginPath(); ctx.moveTo(thX - tw * 1.2, ly); ctx.lineTo(thX + tw * .8, ly); ctx.stroke(); ctx.setLineDash([]);
-  ctx.fillStyle = INK; ctx.font = `700 ${fs}px ${body}`; ctx.textAlign = 'right';
+  const hw = tw / 2, R = tw * .95, cy = tubeB + tw * .3, dy = Math.sqrt(R * R - hw * hw);
+  ctx.beginPath();
+  ctx.moveTo(thX - hw, cy - dy); ctx.lineTo(thX - hw, tubeT + hw);
+  ctx.arc(thX, tubeT + hw, hw, Math.PI, 0);
+  ctx.lineTo(thX + hw, cy - dy);
+  ctx.arc(thX, cy, R, Math.atan2(-dy, hw), Math.atan2(-dy, -hw) + Math.PI * 2);
+  ctx.closePath();
+  ctx.fillStyle = PAPER; ctx.fill();
+  ctx.strokeStyle = INK; ctx.lineWidth = Math.max(2, fs * .13); ctx.stroke();
+  ctx.fillStyle = below ? BLUE : RED;
+  ctx.fillRect(thX - tw * .22, ty, tw * .44, cy - ty);
+  ctx.beginPath(); ctx.arc(thX, cy, R - tw * .28, 0, 7); ctx.fill();
+  // the –78 °C mark
+  ctx.strokeStyle = flash > 0 ? BLUE : INK; ctx.lineWidth = Math.max(2, fs * .14);
+  ctx.beginPath(); ctx.moveTo(thX - tw * 1.2, ly); ctx.lineTo(thX + tw * .8, ly); ctx.stroke();
+  ctx.fillStyle = INK; ctx.font = `600 ${fs}px ${body}`; ctx.textAlign = 'right';
   ctx.fillText('–78 °C', thX - tw * 1.4, ly);
-  // handle
-  ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(thX, ty, tw * .85, 0, 7); ctx.fill();
-  ctx.strokeStyle = '#0d1b2a'; ctx.lineWidth = 2; ctx.beginPath();
+  // handle: a plain ink knob with an arrow pointing down
+  ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(thX, ty, tw * .85, 0, 7); ctx.fill();
+  ctx.strokeStyle = CARD; ctx.lineWidth = 2; ctx.beginPath();
   ctx.moveTo(thX - tw * .35, ty - tw * .1); ctx.lineTo(thX, ty + tw * .3); ctx.lineTo(thX + tw * .35, ty - tw * .1); ctx.stroke();
-  // readout
-  ctx.textAlign = 'center'; ctx.fillStyle = below ? '#0a5d8f' : INK; ctx.font = `700 ${fs}px ${body}`;
+  // reading
+  ctx.textAlign = 'center'; ctx.fillStyle = below ? BLUE : INK; ctx.font = `600 ${fs}px ${body}`;
   ctx.fillText(`${Math.round(T)} °C`, thX - tw * .4, tubeT - fs * .9);
   ctx.textAlign = 'left';
 }
@@ -145,7 +217,14 @@ cv.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
 cv.addEventListener('pointerup', () => dragging = false);
 cv.addEventListener('pointercancel', () => dragging = false);
 
-Kit.onShow.card = () => { const r = Kit.fitCanvas(cv); ctx = r.x; W = r.W; H = r.H; geom(); draw(); };
+Kit.onShow.card = () => { const r = Kit.fitCanvas(cv); ctx = r.x; W = r.W; H = r.H; readColours(); geom(); draw(); };
+// refit when the stage changes size (the closing text swaps in below)
+let lastW = 0, lastH = 0;
+if (window.ResizeObserver) new ResizeObserver(() => {
+  const w = cv.clientWidth, h = cv.clientHeight;
+  if (!ctx || !w || !h || (Math.abs(w - lastW) < 1 && Math.abs(h - lastH) < 1)) return;
+  lastW = w; lastH = h; Kit.onShow.card();
+}).observe(Kit.$('stage'));
 Kit.onEnter.card = () => {
   if (Kit.calm || !G.thX) return;
   // a little nudge on the handle to show it can be dragged

@@ -36,7 +36,8 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const svg = Kit.$('pic');
-const N0 = 60, STEP = 7, HOURS = 4, CMIN = .45, CMAX = 1.1;
+// fewer, bigger salt grains: 3 of 25 lost per hour is the same 12% as S
+const N0 = 25, STEP = 3, HOURS = 4, CMIN = .45, CMAX = 1.1;
 const RICH = [43,123,214], PALE = [222,236,248];
 let D = Kit.calm ? .02 : 1;
 let dots = []; for (let i = 0; i < N0; i++) dots.push({u: Kit.rnd(), v: Kit.rnd(), o: 1});
@@ -49,55 +50,72 @@ function fluidCol(c){
   const m = PALE.map((p, i) => Math.round(p + (RICH[i] - p) * t));
   return `rgb(${m.join(',')})`;
 }
-function zoneCol(c){ return c < .7 ? '#d64545' : c < .9 ? '#e9a32c' : '#3aa76d'; }
+function zoneCol(c){ return 'var(--k)'; }
 
 function draw(){
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, Math.min(f, W * .042));
-  const tx = W * .05, tw = W * .58, ty = fs * 2.4, tb = H - fs * 4.4;
-  const r = Math.min(tw, tb - ty) * .18;
+  const sw = Math.max(2, fs * .16);
+  const tx = W * .05, tw = W * .58, top = fs * 2.4, tb = H - fs * 4.4;
   const gx = W * .05, gw = W * .9, gy = H - fs * 3.0, gh = fs * .75;
-  const d = `M${tx},${ty} L${tx},${tb-r} Q${tx},${tb} ${tx+r},${tb} L${tx+tw-r},${tb} Q${tx+tw},${tb} ${tx+tw},${tb-r} L${tx+tw},${ty}`;
+  // the runner, drawn as a plain bust: head, neck, shoulders
+  const hr = Math.min(tw * .16, (tb - top) * .13);
+  const hx = tx + tw / 2, hy = top + hr;
+  const nw = hr * .45, tt = hy + hr + hr * .45;
+  const rs = tw * .2, ins = tw * .04;
+  const ny = hy + Math.sqrt(hr * hr - nw * nw);
+  const d = `M${tx+ins},${tb} L${tx},${tt+rs} Q${tx},${tt} ${tx+rs},${tt} L${hx-nw},${tt} L${hx-nw},${ny} A${hr},${hr} 0 1 1 ${hx+nw},${ny} L${hx+nw},${tt} L${tx+tw-rs},${tt} Q${tx+tw},${tt} ${tx+tw},${tt+rs} L${tx+tw-ins},${tb}`;
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id: 'tk'}, defs);
   Kit.mk('path', {d: d + 'Z'}, cp);
-  Kit.mk('path', {d: d + 'Z', fill: '#ffffff', 'fill-opacity': .92}, svg);
+  const hc = Kit.mk('clipPath', {id: 'hd'}, defs);
+  Kit.mk('circle', {cx: hx, cy: hy, r: hr}, hc);
+  Kit.mk('path', {d: d + 'Z', fill: 'color-mix(in srgb, var(--k) 82%, var(--c))'}, svg);
   const fluid = Kit.mk('rect', {x: tx, width: tw, 'clip-path': 'url(#tk)'}, svg);
   const dotG = Kit.mk('g', {'clip-path': 'url(#tk)'}, svg);
-  const sx = tx + tw * .72, sTop = ty - fs * .9;
+  // headband, one solid band with one tail
+  Kit.mk('rect', {x: hx - hr, y: hy - hr * .55, width: hr * 2, height: hr * .32, fill: 'var(--c)', 'clip-path': 'url(#hd)'}, svg);
+  Kit.mk('path', {d: `M${hx-hr*.92},${hy-hr*.4} L${hx-hr*1.5},${hy-hr*.05}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, hr * .16), 'stroke-linecap': 'round'}, svg);
+  // the drink goes down the throat
+  const sx = hx, sTop = hy + hr * .55;
   const stream = Kit.mk('rect', {x: sx - fs * .32, y: sTop, width: fs * .64, height: 0, rx: fs * .32, fill: '#2b7bd6'}, svg);
-  Kit.mk('path', {d, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, fs * .2), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
-  const title = Kit.mk('text', {x: tx, y: fs * 1.2, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg);
+  Kit.mk('path', {d, fill: 'none', stroke: 'var(--k)', 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  // a paper cup from the drink station, at the mouth while drinking
+  const ca = fs * .55, cb = fs * .75;
+  const cup = Kit.mk('g', {transform: `translate(${hx + hr * 1.25},${hy + hr * .15}) rotate(-55)`, opacity: 0}, svg);
+  Kit.mk('path', {d: `M${-ca},${-cb} L${ca},${-cb} L${ca*.72},${cb} L${-ca*.72},${cb}Z`, fill: 'var(--k)'}, cup);
+  const title = Kit.mk('text', {x: tx, y: fs * 1.2, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
   title.textContent = "Runner's body fluids";
   // side column
   const sideX = W * .68;
   const side = [0, 1, 2].map(i => {
-    const t = Kit.mk('text', {x: sideX, y: ty + fs * (1 + i * 1.45), fill: i ? 'var(--k)' : '#2b7bd6', 'font-family': 'var(--body)', 'font-weight': i ? 600 : 800, 'font-size': fs}, svg);
+    const t = Kit.mk('text', {x: sideX, y: top + fs * (1 + i * 1.45), fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': i ? 500 : 700, 'font-size': fs}, svg);
     return t;
   });
   const dropG = Kit.mk('g', {}, svg);
-  // gauge
+  // how salty the fluids are: the same blues as the body, one plain strip
   const cx = c => gx + gw * (Math.max(CMIN, Math.min(CMAX, c)) - CMIN) / (CMAX - CMIN);
-  [[CMIN, .7, '#d64545', 'Hyponatremia'], [.7, .9, '#e9a32c', 'Diluted'], [.9, CMAX, '#3aa76d', 'Balanced']].forEach(([a, b, col, lab], i) => {
+  [[CMIN, .7, fluidCol(.5), 'Hyponatremia'], [.7, .9, fluidCol(.8), 'Diluted'], [.9, CMAX, fluidCol(1), 'Balanced']].forEach(([a, b, col, lab], i) => {
     Kit.mk('rect', {x: cx(a), y: gy, width: cx(b) - cx(a), height: gh, fill: col}, svg);
-    const t = Kit.mk('text', {x: (cx(a) + cx(b)) / 2, y: gy + gh + fs * 1.35, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .92}, svg);
+    const t = Kit.mk('text', {x: (cx(a) + cx(b)) / 2, y: gy + gh + fs * 1.35, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs}, svg);
     t.textContent = lab;
   });
-  Kit.mk('rect', {x: gx, y: gy, width: gw, height: gh, fill: 'none', stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
   const marker = Kit.mk('path', {d: `M${-fs*.6},${-fs*.9} L${fs*.6},${-fs*.9} L0,${-fs*.1}Z`, fill: 'var(--k)'}, svg);
   marker.setAttribute('transform', `translate(0,${gy})`);
-  G = {W, H, fs, tx, tw, ty, tb, fluid, dotG, stream, sTop, sx, side, dropG, marker, gy, cx};
+  G = {W, H, fs, tx, tw, ty: tt, tb, fluid, dotG, stream, sTop, sx, side, dropG, marker, gy, cx, cup};
   dots.forEach(mkDot);
   setSide(...(G.lastSide || ['', '', '']));
   place();
 }
 function mkDot(dt){
-  const s = G.fs * .42;
-  dt.el = Kit.mk('rect', {width: s, height: s, x: -s / 2, y: -s / 2, fill: '#ffffff', stroke: '#14304f', 'stroke-width': 1.3, opacity: dt.o}, G.dotG);
+  // a salt grain: one flat white square, slightly turned
+  const s = G.fs * .72;
+  dt.el = Kit.mk('rect', {width: s, height: s, x: -s / 2, y: -s / 2, rx: s * .12, fill: 'var(--k)', opacity: dt.o}, G.dotG);
+  dt.rot = (dt.u * 997 % 1) * 40 - 20;
 }
 function dotPos(dt){
-  const pad = G.fs * .7, fh = fluidH();
+  const pad = G.fs * 1.0, fh = fluidH();
   return {x: G.tx + pad + dt.u * (G.tw - 2 * pad), y: G.tb - pad * .8 - dt.v * Math.max(0, fh - 2 * pad)};
 }
 function fluidH(){ return (G.tb - G.ty) * .86 * st.lev; }
@@ -106,8 +124,9 @@ function place(){
   const fh = fluidH(), top = G.tb - fh;
   G.fluid.setAttribute('y', top); G.fluid.setAttribute('height', fh + 4);
   G.fluid.setAttribute('fill', fluidCol(st.conc));
-  dots.forEach(dt => { const p = dotPos(dt); dt.el.setAttribute('transform', `translate(${p.x},${p.y})`); });
+  dots.forEach(dt => { const p = dotPos(dt); dt.el.setAttribute('transform', `translate(${p.x},${p.y}) rotate(${dt.rot || 0})`); });
   G.stream.setAttribute('height', Math.max(0, (top - G.sTop) * st.pour));
+  G.cup.setAttribute('opacity', Math.min(1, st.pour * 4));
   G.marker.setAttribute('transform', `translate(${G.cx(st.conc)},${G.gy})`);
   G.marker.setAttribute('fill', done ? zoneCol(st.conc) : 'var(--k)');
 }
@@ -118,7 +137,7 @@ function setSide(a, b, c){
 
 function sweat(){
   return new Promise(res => {
-    setSide('SWEAT', 'water', '+ salts');
+    setSide('Sweat', 'water', '+ salts');
     Kit.haptic('light');
     const out = [];
     for (let k = 0; k < STEP && dots.length; k++) out.push(dots.splice(Math.floor(Kit.rnd() * dots.length), 1)[0]);
@@ -132,9 +151,10 @@ function sweat(){
       const p = salty ? dotPos(out[i]) : {x: G.tx + G.tw * (.3 + .5 * Kit.rnd()), y: G.tb - fluidH() * .6};
       if (salty) out[i].el.remove();
       const g = Kit.mk('g', {}, G.dropG);
-      Kit.mk('path', {d: `M0,${-fs*.95} C${fs*.55},${-fs*.25} ${fs*.6},${fs*.55} 0,${fs*.6} C${-fs*.6},${fs*.55} ${-fs*.55},${-fs*.25} 0,${-fs*.95}Z`, fill: '#2b7bd6', stroke: '#ffffff', 'stroke-width': 1.2}, g);
-      if (salty) { const s = fs * .4; Kit.mk('rect', {x: -s / 2, y: -s / 2 + fs * .05, width: s, height: s, fill: '#fff', stroke: '#14304f', 'stroke-width': 1.2}, g); }
-      const ex = G.W * (.71 + .23 * Kit.rnd()), ey = G.ty + fs * 4.6 + (G.tb - G.ty - fs * 5) * Kit.rnd();
+      Kit.mk('path', {d: `M0,${-fs*.95} C${fs*.55},${-fs*.25} ${fs*.6},${fs*.55} 0,${fs*.6} C${-fs*.6},${fs*.55} ${-fs*.55},${-fs*.25} 0,${-fs*.95}Z`, fill: '#2b7bd6'}, g);
+      if (salty) { const s = fs * .4; Kit.mk('rect', {x: -s / 2, y: -s / 2 + fs * .05, width: s, height: s, fill: 'var(--k)'}, g); }
+      // drops leave the body in one tidy fall beside it
+      const ex = G.W * (.74 + .1 * (i % 2)), ey = Math.min(G.tb - fs, G.ty + fs * 4.6 + i * fs * 1.6);
       const t0 = .09 * i * D;
       tl.fromTo(g, {x: p.x, y: p.y}, {x: ex, y: ey, duration: .9 * D, ease: 'power2.inOut'}, t0);
       tl.to(g, {opacity: 0, duration: .4 * D}, t0 + 1.1 * D);
@@ -143,7 +163,7 @@ function sweat(){
 }
 function pour(salt){
   return new Promise(res => {
-    setSide('DRINK', 'water', salt ? '+ salts' : 'only');
+    setSide('Drink', 'water', salt ? '+ salts' : 'only');
     G.dropG.innerHTML = '';
     const tl = gsap.timeline({onComplete: res});
     tl.to(st, {pour: 1, duration: .35 * D, ease: 'power2.in', onUpdate: place});
