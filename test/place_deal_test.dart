@@ -352,7 +352,10 @@ void main() {
       ]) {
         expect(_ids(shelf), ['history-1']);
       }
-      expect(_ids(got.local), ['history-fixture-modena-1', 'history-fixture-italy-1']);
+      expect(_ids(got.local), [
+        'history-fixture-modena-1',
+        'history-fixture-italy-1',
+      ]);
     });
   });
 
@@ -457,7 +460,10 @@ void main() {
         picks.add(a!.id);
       }
       expect(picks.length, greaterThan(1));
-      expect(picks.every((id) => id.startsWith('history-fixture-modena-')), isTrue);
+      expect(
+        picks.every((id) => id.startsWith('history-fixture-modena-')),
+        isTrue,
+      );
     });
 
     test('a place with no card of its own takes its region\'s; one with '

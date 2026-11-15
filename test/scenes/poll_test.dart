@@ -109,8 +109,7 @@ void main() {
     'why':
         'A sure gain feels safe; a sure loss feels unbearable, so we gamble '
         'to dodge it.',
-    'same':
-        "You held steady. The crowd didn't: the sure plan fell from 72% to 22%.",
+    'same': "You held steady. The crowd didn't: the sure plan fell from 72% to 22%.",
     'switched':
         'You switched, like most people. A and C are the same plan; so are '
         'B and D.',
@@ -158,18 +157,43 @@ void main() {
       bad({...driver(), 'questions': []});
       bad({
         ...driver(),
-        'questions': [...driver()['questions'] as List, ...disease()['questions'] as List],
+        'questions': [
+          ...driver()['questions'] as List,
+          ...disease()['questions'] as List,
+        ],
       });
       bad(one([ok]));
       bad(one([ok, ok, ok, ok, ok]));
-      bad(one([ok, {'label': 'B', 'share': 30, 'mirror': 'm'}])); // 80%
-      bad(one([ok, {'label': 'B', 'share': 50}])); // no mirror
-      bad(one([ok, {'label': '', 'share': 50, 'mirror': 'm'}]));
-      bad(one([ok, {'label': 'B', 'share': '50', 'mirror': 'm'}]));
-      bad(one([
-        {'label': 'A', 'share': 150, 'mirror': 'm'},
-        {'label': 'B', 'share': -50, 'mirror': 'm'},
-      ]));
+      bad(
+        one([
+          ok,
+          {'label': 'B', 'share': 30, 'mirror': 'm'},
+        ]),
+      ); // 80%
+      bad(
+        one([
+          ok,
+          {'label': 'B', 'share': 50},
+        ]),
+      ); // no mirror
+      bad(
+        one([
+          ok,
+          {'label': '', 'share': 50, 'mirror': 'm'},
+        ]),
+      );
+      bad(
+        one([
+          ok,
+          {'label': 'B', 'share': '50', 'mirror': 'm'},
+        ]),
+      );
+      bad(
+        one([
+          {'label': 'A', 'share': 150, 'mirror': 'm'},
+          {'label': 'B', 'share': -50, 'mirror': 'm'},
+        ]),
+      );
       bad({...driver()}..remove('who'));
       bad({...driver()}..remove('why'));
       bad({...disease()}..remove('switched'));
@@ -204,11 +228,13 @@ void main() {
       });
       // Rounding in the paper is forgiven.
       expect(
-        () => parse(one([
-          {'label': 'A', 'share': 33, 'mirror': 'm'},
-          {'label': 'B', 'share': 33, 'mirror': 'm'},
-          {'label': 'C', 'share': 33, 'mirror': 'm'},
-        ])),
+        () => parse(
+          one([
+            {'label': 'A', 'share': 33, 'mirror': 'm'},
+            {'label': 'B', 'share': 33, 'mirror': 'm'},
+            {'label': 'C', 'share': 33, 'mirror': 'm'},
+          ]),
+        ),
         returnsNormally,
       );
     });
@@ -372,7 +398,10 @@ void main() {
       expect(find.text('93%'), findsOneWidget);
       expect(find.text('7%'), findsOneWidget);
       expect(find.text('Only 7% said this.'), findsOneWidget);
-      expect(find.text('We judge ourselves by our intentions.'), findsOneWidget);
+      expect(
+        find.text('We judge ourselves by our intentions.'),
+        findsOneWidget,
+      );
       await shot(tester, 'dark-after');
     });
 
@@ -436,10 +465,7 @@ void main() {
   });
 
   group('in the deck', () {
-    Future<int> deck(
-      WidgetTester tester,
-      Future<void> Function() play,
-    ) async {
+    Future<int> deck(WidgetTester tester, Future<void> Function() play) async {
       tester.view.physicalSize = const Size(360, 740) * 3;
       tester.view.devicePixelRatio = 3;
       addTearDown(tester.view.resetPhysicalSize);

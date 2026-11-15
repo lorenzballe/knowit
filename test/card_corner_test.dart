@@ -63,8 +63,7 @@ void main() {
   ) async {
     final List<Pill> picks = PillBank.live
         .where(
-          (p) =>
-              p.challenge is PickOne && p.scene == null && p.diagram == null,
+          (p) => p.challenge is PickOne && p.scene == null && p.diagram == null,
         )
         .toList();
     // economics-rent-9 is the card the audit caught; the rest a spread.
@@ -85,7 +84,8 @@ void main() {
             .first,
       );
       final Rect save = tester.getRect(find.bySemanticsLabel('Save this card'));
-      if (last.bottom > save.top) under.add('${pill.id} by ${last.bottom - save.top}');
+      if (last.bottom > save.top)
+        under.add('${pill.id} by ${last.bottom - save.top}');
     }
     expect(under, isEmpty);
   });

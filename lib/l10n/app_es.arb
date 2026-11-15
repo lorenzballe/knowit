@@ -1073,5 +1073,9 @@
   "tuneFresh": "Desliza un tema para ver más o menos de él.",
   "tuneHowMuch": "Cuánto de cada uno",
   "tuneInsideLine": "Las partes que más te gustaron van primero. Toca una para saltarla, mantenla pulsada para ver dentro.",
-  "tuneSave": "Guardar"
+  "tuneSave": "Guardar",
+  "shareDayTitle": "Comparte tu día",
+  "shareDayRead": "Cinco cartas, leídas",
+  "shareDayTurn": "Cinco cartas al día. Te toca.",
+  "shareDaySure": "{n}% seguro"
 }

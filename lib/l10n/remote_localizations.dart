@@ -4456,4 +4456,19 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get tuneSave => _words.text('tuneSave') ?? _base.tuneSave;
+
+  @override
+  String get shareDayTitle =>
+      _words.text('shareDayTitle') ?? _base.shareDayTitle;
+
+  @override
+  String get shareDayRead => _words.text('shareDayRead') ?? _base.shareDayRead;
+
+  @override
+  String get shareDayTurn => _words.text('shareDayTurn') ?? _base.shareDayTurn;
+
+  @override
+  String shareDaySure(int n) =>
+      _words.format('shareDaySure', localeName, {'n': n}) ??
+      _base.shareDaySure(n);
 }

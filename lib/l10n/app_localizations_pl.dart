@@ -4746,4 +4746,18 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get tuneSave => 'Zapisz';
+
+  @override
+  String get shareDayTitle => 'Udostępnij swój dzień';
+
+  @override
+  String get shareDayRead => 'Pięć kart, przeczytane';
+
+  @override
+  String get shareDayTurn => 'Pięć kart dziennie. Twoja kolej.';
+
+  @override
+  String shareDaySure(int n) {
+    return 'pewność $n%';
+  }
 }

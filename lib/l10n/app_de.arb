@@ -1073,5 +1073,9 @@
   "tuneFresh": "Schieb ein Fach, um mehr oder weniger davon zu sehen.",
   "tuneHowMuch": "Wie viel von jedem",
   "tuneInsideLine": "Die Teile, die dir am besten gefielen, stehen vorn. Tipp einen an, um ihn auszulassen, halt ihn gedrückt, um hineinzusehen.",
-  "tuneSave": "Speichern"
+  "tuneSave": "Speichern",
+  "shareDayTitle": "Teile deinen Tag",
+  "shareDayRead": "Fünf Karten, gelesen",
+  "shareDayTurn": "Fünf Karten am Tag. Du bist dran.",
+  "shareDaySure": "{n}% sicher"
 }

@@ -4759,4 +4759,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tuneSave => 'Сохранить';
+
+  @override
+  String get shareDayTitle => 'Поделись своим днём';
+
+  @override
+  String get shareDayRead => 'Пять карточек прочитано';
+
+  @override
+  String get shareDayTurn => 'Пять карточек в день. Твоя очередь.';
+
+  @override
+  String shareDaySure(int n) {
+    return 'уверенность $n%';
+  }
 }

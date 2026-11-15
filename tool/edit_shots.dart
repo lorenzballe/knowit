@@ -9,6 +9,7 @@
 // never runs it. The pictures land in tool/shots/edit/, to be looked at and
 // not kept. Cards with pictures are shown with the real ones, read from
 // web/cards/thumbs/.
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -113,6 +114,8 @@ Map<String, Object> _aMonthIn() {
     ..._plain('Sport', 3),
     ..._plain('Pop culture', 2),
   ];
+  // Five cards that ask something, answered: four right, one wrong, so the
+  // day's picture has a score to show.
   final List<Pill> deck = [
     for (final topic in [
       'Psychology',
@@ -121,8 +124,31 @@ Map<String, Object> _aMonthIn() {
       'Science',
       'Language',
     ])
-      ..._plain(topic, 1),
+      ...PillBank.cards
+          .where(
+            (p) =>
+                p.topic == topic &&
+                p.web == null &&
+                p.isGraded &&
+                p.challenge.accepts('0') != p.challenge.accepts('1'),
+          )
+          .take(1),
   ];
+  String? responseFor(Pill pill, {required bool right}) {
+    for (final String r in [
+      for (int i = 0; i < 6; i++) '$i',
+      for (int i = 0; i < 6; i++) '$i|x',
+    ]) {
+      if (pill.challenge.accepts(r) == right) return r;
+    }
+    return null;
+  }
+
+  final Map<String, Object> answers = {
+    for (int i = 0; i < deck.length; i++)
+      if (responseFor(deck[i], right: i != 2) case final String r)
+        deck[i].id: {'r': r, 'c': 80},
+  };
   final DateTime now = DateTime.now();
   return {
     'knowit.onboarded': true,
@@ -132,6 +158,7 @@ Map<String, Object> _aMonthIn() {
     'knowit.todayDate': dateKey(now),
     'knowit.todayDeckIds': [for (final p in deck) p.id],
     'knowit.todayIndex': 5,
+    'knowit.answersJson': jsonEncode(answers),
     'knowit.lastCompletionDate': dateKey(now),
     'knowit.completedDates': [
       for (var back = 0; back < 9; back++)
@@ -187,6 +214,12 @@ void main() {
     await _settle(tester);
     await _shoot(tester, '1-today');
 
+    await tester.tap(find.byKey(const ValueKey('shelf-share-day')));
+    await _settle(tester);
+    await _shoot(tester, '1b-share-day');
+    tester.state<NavigatorState>(find.byType(Navigator).first).pop();
+    await _settle(tester);
+
     await tester.tap(find.byKey(const ValueKey('shelf-see-again')));
     await _settle(tester);
     await _shoot(tester, '2-today-again');
@@ -240,15 +273,19 @@ void main() {
     await _settle(tester);
     await _shoot(tester, '8-saved');
 
+    await tester.tap(find.byKey(const ValueKey('saved-filter-space')));
+    await _settle(tester);
+    await _shoot(tester, '8b-saved-space');
+
     await tester.pumpWidget(
       _app(SavedScreen(app: app, onBackToToday: () {}, shelf: Shelf.liked)),
     );
     await _settle(tester);
     await _shoot(tester, '9-liked');
 
-    await tester.tap(find.byKey(const ValueKey('kept-block-space')));
+    await tester.tap(find.byKey(const ValueKey('saved-filter-history')));
     await _settle(tester);
-    await _shoot(tester, '10-liked-space');
+    await _shoot(tester, '10-liked-history');
 
     await tester.pumpWidget(_app(ArchiveScreen(app: app, onBack: () {})));
     await _precache(tester, [

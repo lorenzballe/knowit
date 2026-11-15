@@ -20,7 +20,6 @@ import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_link.dart';
-import 'package:astuto/utils/share_text.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -301,10 +300,6 @@ void main() {
     ) async {
       final said = _listen();
       final copied = _clipboard(tester);
-      // No share sheet under a test, and the desktop stand-in never
-      // returns: the day is copied instead.
-      ShareDay.share = (_) async => false;
-      addTearDown(() => ShareDay.share = shareText);
       SharedPreferences.setMockInitialValues(_free());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -337,10 +332,15 @@ void main() {
         greaterThan(tester.getCenter(send).dy),
       );
 
-      // No gate: it sends, on the free plan, and says from where.
+      // No gate: it opens the day as a picture, on the free plan, with the
+      // words that go with it a tap away, and says from where.
       await tester.tap(send);
       await _settle(tester);
       expect(find.byType(PaywallScreen), findsNothing);
+      expect(find.text('Share your day'), findsOneWidget);
+      expect(find.byType(DayPicture), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('share-day-copy')));
+      await _settle(tester);
       expect(copied, hasLength(1));
       expect(copied.single, startsWith('Astute #'));
       expect(copied.single, endsWith('\n${ShareRef.day.link}'));
@@ -348,6 +348,8 @@ void main() {
       expect(said.of('day shared').single['from'], 'done view');
       expect(said.of('day shared').single['as'], 'copied');
       expect(said.of('plus gate reached'), isEmpty);
+      Navigator.of(tester.element(find.byType(DayPicture))).pop();
+      await _settle(tester);
 
       // At the last card on the shelf, the one that sells, it is still the
       // row under the shelf: nothing of it lies on the offer.

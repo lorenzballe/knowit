@@ -4391,4 +4391,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tuneSave => '保存';
+
+  @override
+  String get shareDayTitle => '分享你的一天';
+
+  @override
+  String get shareDayRead => '五张卡片，读完了';
+
+  @override
+  String get shareDayTurn => '每天五张卡。轮到你了。';
+
+  @override
+  String shareDaySure(int n) {
+    return '把握 $n%';
+  }
 }

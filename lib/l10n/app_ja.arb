@@ -1073,5 +1073,9 @@
   "tuneFresh": "分野をスライドして、表示する量を調整できます。",
   "tuneHowMuch": "それぞれの量",
   "tuneInsideLine": "気に入った部分ほど先に並びます。タップで外し、長押しで中身を見られます。",
-  "tuneSave": "保存"
+  "tuneSave": "保存",
+  "shareDayTitle": "今日をシェア",
+  "shareDayRead": "5枚、読了",
+  "shareDayTurn": "1日5枚。次はあなたの番。",
+  "shareDaySure": "確信度{n}%"
 }

@@ -4600,4 +4600,18 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tuneSave => 'Guardar';
+
+  @override
+  String get shareDayTitle => 'Partilha o teu dia';
+
+  @override
+  String get shareDayRead => 'Cinco cartas, lidas';
+
+  @override
+  String get shareDayTurn => 'Cinco cartas por dia. É a tua vez.';
+
+  @override
+  String shareDaySure(int n) {
+    return '$n% de certeza';
+  }
 }

@@ -24,11 +24,9 @@ const _shots = bool.fromEnvironment('SHOTS');
 Map<String, Object?> _flock() => {
   'type': 'beauty',
   'piece': 'flock',
-  'caption':
-      "Each bird watches only its 7 nearest neighbours: stay close, match them, don't collide.",
+  'caption': "Each bird watches only its 7 nearest neighbours: stay close, match them, don't collide.",
   'hint': 'Touch to send a falcon',
-  'reveal':
-      'No bird sees the whole dive. The swerve passes from neighbour to neighbour.',
+  'reveal': 'No bird sees the whole dive. The swerve passes from neighbour to neighbour.',
   'params': {'birds': 240},
   'seed': 1986,
 };
@@ -36,8 +34,7 @@ Map<String, Object?> _flock() => {
 Map<String, Object?> _sunflower() => {
   'type': 'beauty',
   'piece': 'phyllotaxis',
-  'caption':
-      'Each new seed grows 137.5° round from the last. That one number is the whole rule.',
+  'caption': 'Each new seed grows 137.5° round from the last. That one number is the whole rule.',
   'hint': 'Drag sideways to change the turn',
   'reveal':
       'Off the golden angle, seeds stack into straight spokes and leave gaps.',
@@ -56,8 +53,7 @@ Map<String, Object?> _sunflower() => {
 Map<String, Object?> _venus() => {
   'type': 'beauty',
   'piece': 'orbits',
-  'caption':
-      'Venus circles the Sun 13 times while Earth circles it 8. A line joins them every 3 days.',
+  'caption': 'Venus circles the Sun 13 times while Earth circles it 8. A line joins them every 3 days.',
   'hint': "Drag to change Venus's year",
   'reveal': 'A few days off and the rose smears. Only 13 to 8 closes it.',
   'dial': {
@@ -80,8 +76,7 @@ Map<String, Object?> _venus() => {
 Map<String, Object?> _waves() => {
   'type': 'beauty',
   'piece': 'waves',
-  'caption':
-      'Where a crest meets a trough the water stays still. Those lanes never move.',
+  'caption': 'Where a crest meets a trough the water stays still. Those lanes never move.',
   'hint': 'Drag a source to move it',
   'reveal': 'Move the sources apart and more still lanes open between them.',
   'params': {'wavelength': 0.1, 'gap': 0.3},
@@ -91,7 +86,8 @@ Map<String, Object?> _waves() => {
 Map<String, Object?> _tree() => {
   'type': 'beauty',
   'piece': 'fractal',
-  'caption': 'One rule, done ten times: end each branch by splitting it in two.',
+  'caption':
+      'One rule, done ten times: end each branch by splitting it in two.',
   'hint': 'Drag sideways to change the fork',
   'dial': {
     'label': 'Turn at each fork',
@@ -113,8 +109,7 @@ Pill _card(String id, String topic, Map<String, Object?> scene) =>
       'id': id,
       'topic': topic,
       'kind': 'read',
-      'question':
-          'A sunflower turns each new seed 137.5° from the last. Why that angle and no other?',
+      'question': 'A sunflower turns each new seed 137.5° from the last. Why that angle and no other?',
       'answer': 'Because it never repeats.',
       'move': 'Perfect packing here comes from a turn that never repeats.',
       'source': 'Vogel, Mathematical Biosciences (1979)',
@@ -372,9 +367,7 @@ void main() {
       ('flock', 'nature', _flock()),
       ('waves', 'psychology', _waves()),
     ]) {
-      testWidgets('$id: a touch plays on a ${phone.key} phone', (
-        tester,
-      ) async {
+      testWidgets('$id: a touch plays on a ${phone.key} phone', (tester) async {
         final pill = _card('beauty-$id', topic, raw);
         final s = pill.scene! as BeautyScene;
         await _showCard(tester, pill, phone.value);
@@ -398,9 +391,7 @@ void main() {
     }
   }
 
-  testWidgets('the sunflower clicks back to the golden angle', (
-    tester,
-  ) async {
+  testWidgets('the sunflower clicks back to the golden angle', (tester) async {
     final s = _parse(_sunflower());
     await _showScene(tester, s, height: 480);
     await _run(tester, 0.5);
@@ -468,9 +459,7 @@ void main() {
     }
   });
 
-  testWidgets('stops asking for frames when it is not painted', (
-    tester,
-  ) async {
+  testWidgets('stops asking for frames when it is not painted', (tester) async {
     final s = _parse(_flock());
     Widget at(double opacity) => MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -481,11 +470,7 @@ void main() {
           child: SizedBox(
             width: 304,
             height: 420,
-            child: SceneView(
-              scene: s,
-              ink: Colors.black,
-              ground: Colors.white,
-            ),
+            child: SceneView(scene: s, ink: Colors.black, ground: Colors.white),
           ),
         ),
       ),

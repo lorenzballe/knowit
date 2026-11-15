@@ -178,7 +178,12 @@ class BeautyScene extends Scene {
   static BeautyScene parse(Map<String, Object?> raw, Object? id) {
     Never bad(String why) => throw FormatException('scene: $why', id);
 
-    String text(Map<String, Object?> m, String k, int most, {bool need = true}) {
+    String text(
+      Map<String, Object?> m,
+      String k,
+      int most, {
+      bool need = true,
+    }) {
       final v = m[k];
       if (v == null && !need) return '';
       if (v is! String || v.trim().isEmpty) bad('$k must be text');

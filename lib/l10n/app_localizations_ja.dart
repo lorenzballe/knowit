@@ -4388,4 +4388,18 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tuneSave => '保存';
+
+  @override
+  String get shareDayTitle => '今日をシェア';
+
+  @override
+  String get shareDayRead => '5枚、読了';
+
+  @override
+  String get shareDayTurn => '1日5枚。次はあなたの番。';
+
+  @override
+  String shareDaySure(int n) {
+    return '確信度$n%';
+  }
 }

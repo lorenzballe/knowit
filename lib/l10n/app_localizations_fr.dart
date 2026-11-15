@@ -4612,4 +4612,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tuneSave => 'Enregistrer';
+
+  @override
+  String get shareDayTitle => 'Partage ta journée';
+
+  @override
+  String get shareDayRead => 'Cinq cartes, lues';
+
+  @override
+  String get shareDayTurn => 'Cinq cartes par jour. À toi.';
+
+  @override
+  String shareDaySure(int n) {
+    return 'sûr à $n %';
+  }
 }

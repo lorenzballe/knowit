@@ -4599,4 +4599,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tuneSave => 'Guardar';
+
+  @override
+  String get shareDayTitle => 'Comparte tu día';
+
+  @override
+  String get shareDayRead => 'Cinco cartas, leídas';
+
+  @override
+  String get shareDayTurn => 'Cinco cartas al día. Te toca.';
+
+  @override
+  String shareDaySure(int n) {
+    return '$n% seguro';
+  }
 }

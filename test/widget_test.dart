@@ -39,7 +39,6 @@ import 'package:astuto/utils/widget_open.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
-import 'package:astuto/utils/share_text.dart';
 import 'package:astuto/widgets/chunky.dart';
 import 'package:astuto/widgets/magic_card.dart';
 import 'package:astuto/widgets/scaled_text.dart';
@@ -2991,9 +2990,6 @@ void main() {
           null,
         ),
       );
-      // No sheet under a test — and the desktop stand-in never returns.
-      ShareDay.share = (_) async => false;
-      addTearDown(() => ShareDay.share = shareText);
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       await finish(tester);
@@ -3010,12 +3006,14 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('share-day')));
       await _settle(tester);
 
-      // No share sheet under a test, so it is copied — and what is copied
-      // names the edition, shows five squares, and quotes no card.
+      // The day as a picture, and its words a tap away: they name the
+      // edition, say how it went, and quote no card.
+      expect(find.byType(DayPicture), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('share-day-copy')));
+      await _settle(tester);
       final String text = copied!;
       expect(text, startsWith('Astute #${editionOf(DateTime.now())}'));
-      final String squares = text.split('\n')[1];
-      expect(squares.runes.length, kPillsPerDay);
+      expect(text, contains('Five cards a day. Your turn.'));
       for (final pill in _todaysFive) {
         expect(text, isNot(contains(pill.question)));
         expect(text, isNot(contains(pill.answer)));

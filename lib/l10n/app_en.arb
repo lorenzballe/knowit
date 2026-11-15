@@ -4804,5 +4804,26 @@
  "tuneSave": "Save",
  "@tuneSave": {
   "description": "The fine-tuning screen: the button that keeps the bars and the parts as they are now."
+ },
+ "shareDayTitle": "Share your day",
+ "@shareDayTitle": {
+  "description": "The sheet that sends the day as a picture: its title."
+ },
+ "shareDayRead": "Five cards, read",
+ "@shareDayRead": {
+  "description": "The picture of the day sent to a friend: its headline when none of the five asked anything to be got right."
+ },
+ "shareDayTurn": "Five cards a day. Your turn.",
+ "@shareDayTurn": {
+  "description": "The picture of the day sent to a friend: the line at its foot, before the address."
+ },
+ "shareDaySure": "{n}% sure",
+ "@shareDaySure": {
+  "description": "The picture of the day sent to a friend: how sure the reader was of today's answers, on average.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
  }
 }

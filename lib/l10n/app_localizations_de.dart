@@ -4604,4 +4604,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tuneSave => 'Speichern';
+
+  @override
+  String get shareDayTitle => 'Teile deinen Tag';
+
+  @override
+  String get shareDayRead => 'Fünf Karten, gelesen';
+
+  @override
+  String get shareDayTurn => 'Fünf Karten am Tag. Du bist dran.';
+
+  @override
+  String shareDaySure(int n) {
+    return '$n% sicher';
+  }
 }

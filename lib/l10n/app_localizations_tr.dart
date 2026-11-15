@@ -4521,4 +4521,18 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tuneSave => 'Kaydet';
+
+  @override
+  String get shareDayTitle => 'Gününü paylaş';
+
+  @override
+  String get shareDayRead => 'Beş kart, okundu';
+
+  @override
+  String get shareDayTurn => 'Günde beş kart. Sıra sende.';
+
+  @override
+  String shareDaySure(int n) {
+    return '%$n emin';
+  }
 }

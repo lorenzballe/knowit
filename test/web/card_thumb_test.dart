@@ -351,8 +351,8 @@ void main() {
       );
     });
 
-    testWidgets('kept from several subjects, a block for each, the subject '
-        'kept from most recently first', (tester) async {
+    testWidgets('all of the shelf is in the order it was kept; a subject '
+        'picked is its cards under its mark', (tester) async {
       final Map<String, Pill> bySubject = {};
       for (final Pill p in pagedCards()) {
         bySubject.putIfAbsent(p.topic, () => p);
@@ -371,19 +371,30 @@ void main() {
         size: const Size(375, 1400),
       );
       expect(tester.takeException(), isNull);
-      final List<double> tops = [
-        for (final Pill p in kept)
-          tester
-              .getTopLeft(
-                find.byKey(
-                  ValueKey(
-                    'kept-block-${kTopics.entries.firstWhere((e) => e.value.name == p.topic).key}',
-                  ),
-                ),
-              )
-              .dy,
+      // All: one wall, no heads, the cards in the shelf's own order.
+      expect(
+        find.byWidgetPredicate(
+          (w) =>
+              w.key is ValueKey<String> &&
+              (w.key! as ValueKey<String>).value.startsWith('kept-block-'),
+        ),
+        findsNothing,
+      );
+      final List<double> lefts = [
+        for (final String id in app.savedIds)
+          tester.getTopLeft(find.byKey(ValueKey('kept-$id'))).dx,
       ];
-      expect(tops, orderedEquals([...tops]..sort()));
+      expect(lefts, orderedEquals([...lefts]..sort()));
+
+      // A subject picked: its head, its mark, its cards.
+      final String key = kTopics.entries
+          .firstWhere((e) => e.value.name == kept[1].topic)
+          .key;
+      await tester.tap(find.byKey(ValueKey('saved-filter-$key')));
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(find.byKey(ValueKey('kept-block-$key')), findsOneWidget);
+      expect(find.byKey(ValueKey('kept-${kept[1].id}')), findsOneWidget);
+      expect(find.byKey(ValueKey('kept-${kept[0].id}')), findsNothing);
       expect(find.byType(SubjectBadge), findsWidgets);
     });
   });

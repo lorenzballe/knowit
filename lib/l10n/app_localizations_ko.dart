@@ -4407,4 +4407,18 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tuneSave => '저장';
+
+  @override
+  String get shareDayTitle => '오늘을 공유하기';
+
+  @override
+  String get shareDayRead => '카드 5장, 다 읽음';
+
+  @override
+  String get shareDayTurn => '하루 다섯 장. 이제 당신 차례.';
+
+  @override
+  String shareDaySure(int n) {
+    return '확신 $n%';
+  }
 }

@@ -4601,4 +4601,18 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tuneSave => 'Opslaan';
+
+  @override
+  String get shareDayTitle => 'Deel je dag';
+
+  @override
+  String get shareDayRead => 'Vijf kaarten, gelezen';
+
+  @override
+  String get shareDayTurn => 'Vijf kaarten per dag. Jouw beurt.';
+
+  @override
+  String shareDaySure(int n) {
+    return '$n% zeker';
+  }
 }

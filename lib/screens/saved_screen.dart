@@ -184,12 +184,9 @@ class _SavedScreenState extends State<SavedScreen> {
                     ? (_liked
                           ? context.l10n.nothingLikedYet
                           : context.l10n.nothingKeptYet)
-                    : _topic == null
-                    ? context.l10n.nCards(all.length)
-                    : context.l10n.nInTopic(
-                        saved.length,
-                        kTopics[_topic]!.name,
-                      ),
+                    // The shelf's whole count, picked subject or not: the
+                    // subject's own count is in its head, over its cards.
+                    : context.l10n.nCards(all.length),
                 style: AppText.body(
                   size: 12.5,
                   height: 1.35,
@@ -296,60 +293,32 @@ class _SavedScreenState extends State<SavedScreen> {
   }
 
   /// The shelf as a wall of the cards themselves, small, with their
-  /// drawings — the way a feed's saved posts are a grid, not a list — and,
-  /// while it holds more than one subject and none is picked, in a block
-  /// per subject under the subject's mark and name: the subject the reader
-  /// kept a card from most recently first. A block shows two rows; its head
-  /// opens the subject whole, as its chip does.
+  /// drawings — the way a feed's saved posts are a grid, not a list. All of
+  /// it is the order the reader kept them in, the newest first: a shelf is
+  /// a record of what was kept when. Narrowed to a subject, the subject's
+  /// mark and name head its cards.
   Widget _shelf(
     BuildContext context,
     List<Pill> all,
     List<Pill> shown,
     List<String> present,
   ) {
-    if (_topic != null || present.length < 2) {
-      return CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.only(top: 10, bottom: 28),
-            sliver: _grid(context, shown),
-          ),
-        ],
-      );
-    }
+    final String? topic = _topic;
     return CustomScrollView(
       slivers: [
-        for (final String key in present)
-          ...() {
-            final List<Pill> cards = all
-                .where((p) => p.topic == kTopics[key]!.name)
-                .toList();
-            final bool more = cards.length > _perBlock;
-            return [
-              SliverToBoxAdapter(
-                child: _BlockHead(
-                  topicKey: key,
-                  count: cards.length,
-                  more: more,
-                  onTap: () {
-                    Analytics.capture('shelf filtered', {
-                      'subject': key,
-                      'from': 'block',
-                    });
-                    setState(() => _topic = key);
-                  },
-                ),
-              ),
-              _grid(context, cards.take(_perBlock).toList()),
-            ];
-          }(),
-        const SliverToBoxAdapter(child: SizedBox(height: 28)),
+        if (topic == null)
+          const SliverToBoxAdapter(child: SizedBox(height: 10))
+        else
+          SliverToBoxAdapter(
+            child: _BlockHead(topicKey: topic, count: shown.length),
+          ),
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 28),
+          sliver: _grid(context, shown),
+        ),
       ],
     );
   }
-
-  /// Two rows of three under each subject's head.
-  static const int _perBlock = 6;
 
   Widget _grid(BuildContext context, List<Pill> cards) => SliverGrid(
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -372,73 +341,53 @@ class _SavedScreenState extends State<SavedScreen> {
   );
 }
 
-/// A subject's block on the shelf: its mark on its colour, its name in the
-/// reader's language, and how many of its cards are kept.
+/// The head of a subject's cards on the shelf: its mark on its colour, its
+/// name in the reader's language, and how many of its cards are kept.
 class _BlockHead extends StatelessWidget {
-  const _BlockHead({
-    required this.topicKey,
-    required this.count,
-    required this.more,
-    required this.onTap,
-  });
+  const _BlockHead({required this.topicKey, required this.count});
 
   final String topicKey;
   final int count;
-
-  /// More cards than the block shows: the head says so, and opens them.
-  final bool more;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final style = kTopics[topicKey]!;
     return Semantics(
-      button: true,
       header: true,
-      child: GestureDetector(
+      child: Padding(
         key: ValueKey('kept-block-$topicKey'),
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 16, 0, 10),
-          child: Row(
-            children: [
-              SubjectBadge(
-                subject: style.name,
-                color: style.color,
-                ink: style.ink,
-                size: 26,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  context.l10n.subjectOf(style.name),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.body(
-                    size: 15.5,
-                    weight: FontWeight.w700,
-                    spacing: -0.2,
-                    color: context.p.ink,
-                  ),
-                ),
-              ),
-              Text(
-                context.l10n.nCards(count),
+        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+        child: Row(
+          children: [
+            SubjectBadge(
+              subject: style.name,
+              color: style.color,
+              ink: style.ink,
+              size: 26,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                context.l10n.subjectOf(style.name),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w500,
-                  color: context.p.inkFaint,
+                  size: 15.5,
+                  weight: FontWeight.w700,
+                  spacing: -0.2,
+                  color: context.p.ink,
                 ),
               ),
-              if (more)
-                Icon(
-                  Icons.chevron_right_rounded,
-                  size: 20,
-                  color: context.p.inkFaint,
-                ),
-            ],
-          ),
+            ),
+            Text(
+              context.l10n.nCards(count),
+              style: AppText.body(
+                size: 12,
+                weight: FontWeight.w500,
+                color: context.p.inkFaint,
+              ),
+            ),
+          ],
         ),
       ),
     );

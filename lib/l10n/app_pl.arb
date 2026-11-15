@@ -1073,5 +1073,9 @@
   "tuneFresh": "Przesuń temat, aby widzieć go więcej lub mniej.",
   "tuneHowMuch": "Ile każdego",
   "tuneInsideLine": "Części, które najbardziej Ci się podobały, są pierwsze. Stuknij, by pominąć, przytrzymaj, by zajrzeć do środka.",
-  "tuneSave": "Zapisz"
+  "tuneSave": "Zapisz",
+  "shareDayTitle": "Udostępnij swój dzień",
+  "shareDayRead": "Pięć kart, przeczytane",
+  "shareDayTurn": "Pięć kart dziennie. Twoja kolej.",
+  "shareDaySure": "pewność {n}%"
 }

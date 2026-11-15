@@ -6563,6 +6563,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get tuneSave;
+
+  /// The sheet that sends the day as a picture: its title.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your day'**
+  String get shareDayTitle;
+
+  /// The picture of the day sent to a friend: its headline when none of the five asked anything to be got right.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards, read'**
+  String get shareDayRead;
+
+  /// The picture of the day sent to a friend: the line at its foot, before the address.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day. Your turn.'**
+  String get shareDayTurn;
+
+  /// The picture of the day sent to a friend: how sure the reader was of today's answers, on average.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}% sure'**
+  String shareDaySure(int n);
 }
 
 class _AppLocalizationsDelegate

@@ -1073,5 +1073,9 @@
   "tuneFresh": "Fais glisser un sujet pour en voir plus ou moins.",
   "tuneHowMuch": "Combien de chacun",
   "tuneInsideLine": "Les parties que tu as le plus aimées viennent d'abord. Touche-en une pour la passer, maintiens-la pour voir dedans.",
-  "tuneSave": "Enregistrer"
+  "tuneSave": "Enregistrer",
+  "shareDayTitle": "Partage ta journée",
+  "shareDayRead": "Cinq cartes, lues",
+  "shareDayTurn": "Cinq cartes par jour. À toi.",
+  "shareDaySure": "sûr à {n} %"
 }
