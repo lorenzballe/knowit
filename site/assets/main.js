@@ -13,15 +13,14 @@
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const onChange = (mq, fn) => (mq.addEventListener ? mq.addEventListener('change', fn) : mq.addListener(fn));
 
-  // Download links go to the App Store on an iPhone or iPad. Astute is not on
-  // Google Play yet, so on Android they go to /get, which has both badges and
-  // says Android is coming; on a computer they go to the QR code at the foot
-  // of the landing page, to be scanned with the phone.
+  // Download links go to the App Store on an iPhone or iPad and to Google Play
+  // on Android; on a computer they go to the QR code at the foot of the
+  // landing page, to be scanned with the phone.
   const ua = navigator.userAgent;
   const android = /android/i.test(ua);
   const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
   $$('[data-store]').forEach(a => {
-    if (android) a.href = '/get';
+    if (android) a.href = 'https://play.google.com/store/apps/details?id=com.astuto.app';
     else if (!ios) a.href = '/#download';
   });
 

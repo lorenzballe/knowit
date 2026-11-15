@@ -32,11 +32,9 @@ the app's lib/data/subject_icons.dart, path for path, so a mark redrawn in
 the app is redrawn here the next time this runs, and --check fails until it
 has.
 
-Android is coming to Google Play. Until the listing is open to everybody
-(the closed test comes first), Google's badge stands beside Apple's marked
-"Coming soon" and leads nowhere: a link to a listing nobody can see yet is a
-Play Store page saying the app does not exist. The day it opens, set
-GOOGLE_PLAY_OPEN and the badge becomes the link.
+Astute is on Google Play too (since November 2026): with GOOGLE_PLAY_OPEN set,
+Google's badge stands beside Apple's and leads to the listing. Unset, it is
+marked "Coming soon" and leads nowhere.
 """
 import re
 import sys
@@ -48,7 +46,7 @@ BADGES = SITE / 'assets' / 'badges'
 SUBJECT_ICONS = ROOT / 'lib' / 'data' / 'subject_icons.dart'
 APP_STORE = 'https://apps.apple.com/app/id6806852300'
 GOOGLE_PLAY = 'https://play.google.com/store/apps/details?id=com.astuto.app'
-GOOGLE_PLAY_OPEN = False
+GOOGLE_PLAY_OPEN = True
 
 # Apple's campaign links carry the account's provider token (pt) beside the
 # campaign (ct). With it, App Store Connect counts what each campaign the site
@@ -173,7 +171,7 @@ def header(p, home):
       <a href="/support">Support</a>
     </div>
     <div class="menu-foot">
-      <p>Free on iPhone · Android coming soon · App in 13 languages · No ads</p>
+      <p>Free on iPhone and Android · App in 13 languages · No ads</p>
       <div class="stores small">{stores()}</div>
     </div>
   </div>
@@ -191,7 +189,7 @@ def footer(p, home):
           <img src="/assets/icon.webp" width="30" height="30" alt="" loading="lazy">
           <span>Astute</span>
         </a>
-        <p>Five cards a day. A little sharper. Free on iPhone and coming to Android, the app in thirteen languages, and no ads.</p>
+        <p>Five cards a day. A little sharper. Free on iPhone and Android, the app in thirteen languages, and no ads.</p>
         <div class="stores small">{stores()}</div>
       </div>
       <nav class="foot-cols" aria-label="Footer">
