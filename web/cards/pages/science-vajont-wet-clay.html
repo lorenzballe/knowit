@@ -346,7 +346,7 @@
     if (card.classList.contains('answered')) return;
     card.classList.add('answered');
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why .big', '#why .body', '#keep'], {opacity: 0, y: 12, stagger: .12, duration: .55, ease: 'power3.out'});
+    if (!Kit.calm) gsap.from(['#why .big', '#why .body'], {opacity: 0, y: 12, stagger: .12, duration: .55, ease: 'power3.out'});
   }
 
   svg.addEventListener('pointerdown', pour);

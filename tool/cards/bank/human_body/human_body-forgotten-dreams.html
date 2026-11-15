@@ -153,7 +153,6 @@ function finish(){
   Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   Kit.haptic('success');
   requestAnimationFrame(() => { Kit.onShow.card(); });
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 function press(e){
   if (done) return; if (e) e.preventDefault();

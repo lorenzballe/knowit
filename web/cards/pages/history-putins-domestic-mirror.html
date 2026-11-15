@@ -149,7 +149,7 @@
   function finish() {
     if (finished) return; finished = true;
     Kit.hide('scrub'); say.innerHTML = WHY; Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#say', '#keep'], {opacity: 0, y: 10, stagger: .14, duration: .6, ease: 'power3.out', clearProps: 'opacity,transform'});
+    if (!Kit.calm) gsap.from(['#say'], {opacity: 0, y: 10, stagger: .14, duration: .6, ease: 'power3.out', clearProps: 'opacity,transform'});
     // on short phones, the flowchart has done its job: give its room back to the diorama
     requestAnimationFrame(() => requestAnimationFrame(() => {
       if (box.clientHeight < Math.max(150, card.clientHeight * .24)) flow.style.display = 'none';

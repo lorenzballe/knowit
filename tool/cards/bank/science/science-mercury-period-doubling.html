@@ -121,7 +121,7 @@ function setLevel(i) {
   drawGuides(true);
   Kit.haptic('selection');
   if (i === 3) { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .5}); }
+    }
 }
 Kit.$('ctl').addEventListener('click', e => { const b = e.target.closest('.lv'); if (b) setLevel(+b.dataset.i); });
 

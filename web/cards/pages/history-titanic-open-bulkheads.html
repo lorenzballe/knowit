@@ -138,7 +138,6 @@ function finish() {
   S.done = true;
   gsap.to(S, {th: S.th + 0.1, d: S.d + 0.04, duration: dur(1.4), delay: dur(0.5), ease: 'power2.in', onUpdate: tick, onComplete: () => {
     Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
   }});
 }
 function tap() {

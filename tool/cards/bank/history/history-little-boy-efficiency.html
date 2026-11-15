@@ -330,7 +330,7 @@
       requestAnimationFrame(() => layout(false));
     };
     requestAnimationFrame(fit);
-    if (!Kit.calm) gsap.from(['#say', '#keep'], {opacity: 0, y: 8, duration: .5, stagger: .12, ease: 'power3.out'});
+    if (!Kit.calm) gsap.from(['#say'], {opacity: 0, y: 8, duration: .5, stagger: .12, ease: 'power3.out'});
   }
 
   // ---------- the hold ----------

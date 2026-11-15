@@ -202,7 +202,6 @@ const release = () => {
   if (target === MAXN && !st.done){
     st.done = true; Kit.haptic('success');
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4});
   }
 };
 cv.addEventListener('pointerup', release);

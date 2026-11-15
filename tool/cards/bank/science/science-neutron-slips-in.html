@@ -125,7 +125,6 @@ function tick(t, dtms) {
 function finish() {
   done = true; Kit.haptic('success');
   Kit.hide('say'); Kit.hide('ctrl'); Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4});
 }
 
 Kit.$('modes').addEventListener('click', e => {

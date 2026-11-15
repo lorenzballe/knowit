@@ -117,7 +117,6 @@ function finish(){
     .add(() => { g.top[0].classList.add('dim'); g.cap.textContent = '…all zeros: the sum is 0'; })
     .to(g.res[0], {opacity: 1, duration: .3 * d}, '<.3');
   Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 
 Kit.$('go').addEventListener('click', step);

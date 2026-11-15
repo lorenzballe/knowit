@@ -37,7 +37,7 @@
       </div>
     </div>
     <p class="say" id="say">Drag the pearl to change p. Do the number's divisors fill its rectangle exactly?</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Every even perfect number is 2<sup>p−1</sup> times a prime of the form 2<sup>p</sup>−1, and nothing else works.</div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Even perfect numbers are 2<sup>p−1</sup>×(2<sup>p</sup>−1), with 2<sup>p</sup>−1 prime.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)</span></div>
   </div>
 </article>
@@ -230,9 +230,9 @@
     if (ks.some(k => isPrime(2 ** k - 1)) && ks.some(k => !isPrime(2 ** k - 1))) {
       finished = true;
       setTimeout(() => {
-        say.innerHTML = 'The gold powers always sum to 2<sup>p</sup>−1, one strip; its multiples fill the rest. If 2<sup>p</sup>−1 is prime, nothing else divides the number: a perfect fit. Euler proved every even perfect number is built so.';
+        say.innerHTML = 'The gold powers sum to 2<sup>p</sup>−1, one strip. If 2<sup>p</sup>−1 is prime, nothing else divides: a perfect fit. Euler proved it.';
         card.classList.add('done'); Kit.show('keep');
-        if (!Kit.calm) gsap.from(['#say', '#keep'], {opacity: 0, y: 8, duration: .5, stagger: .1, ease: 'power3.out'});
+        if (!Kit.calm) gsap.from('#say', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'});
       }, Kit.calm ? 0 : 1300);
     }
   }

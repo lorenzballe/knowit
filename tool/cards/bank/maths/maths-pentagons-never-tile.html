@@ -124,7 +124,6 @@ function explain() {
   if (explained) return; explained = true;
   setTimeout(() => {
     Kit.hide('shapes'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
   }, fast ? 50 : 900);
 }
 

@@ -97,7 +97,6 @@ function finish() {
   done = true; Kit.haptic('success');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   requestAnimationFrame(draw);
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
 }
 
 const svg = Kit.$('pic');

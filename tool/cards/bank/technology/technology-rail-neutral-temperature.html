@@ -129,7 +129,6 @@ function setFromY(clientY) {
   if (!st.done && st.n >= .72 && st.moved > .2) {
     st.done = true; Kit.haptic('success');
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
   }
 }
 let drag = false;

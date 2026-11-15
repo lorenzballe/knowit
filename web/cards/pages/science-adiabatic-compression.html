@@ -270,7 +270,7 @@ function say(s) { const e = Kit.$('say'); e.textContent = s; if (!Kit.calm) gsap
 function reveal() {
   revealed = true;
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, duration: .45, stagger: .12, ease: 'power2.out'}); });
+  requestAnimationFrame(() => { draw(); });
 }
 function startBob() { if (bob) bob.kill(); bob = null; if (!g || !hintOn || Kit.calm) return; bob = gsap.to(g.hint, {y: g.fs * .5, duration: .6, repeat: -1, yoyo: true, ease: 'sine.inOut'}); }
 function hideHint() { if (!hintOn) return; hintOn = false; if (bob) bob.kill(); bob = null; gsap.to(g.hint, {opacity: 0, duration: .25}); }

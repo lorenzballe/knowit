@@ -39,7 +39,6 @@ const K='var(--k)', C='var(--c)';
 function reveal(){
   if(revealed) return; revealed=true;
   Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-  if(!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.12,duration:.45,ease:'power3.out'});
 }
 
 function renderTask(){

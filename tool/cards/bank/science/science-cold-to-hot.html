@@ -316,7 +316,6 @@ function reveal() {
   if (revealed) return; revealed = true;
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   Kit.haptic('success');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, duration: .5, stagger: .12, ease: 'power3.out', clearProps: 'opacity,transform'});
 }
 function hint() { if (touched || Kit.calm || !E.pin) return; hintTw = gsap.to(E.pin, {x: L.fs * .8, duration: .35, ease: 'sine.inOut', yoyo: true, repeat: 5, delay: 1.6}); }
 function killHint() { if (hintTw) { hintTw.kill(); hintTw = null; } if (E.pin) gsap.set(E.pin, {x: 0}); }

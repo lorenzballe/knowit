@@ -149,7 +149,6 @@ Kit.onShow.card = () => {
 function finish() {
   if (done) return; done = true;
   Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 Kit.$('gs').addEventListener('click', e => {
   const b = e.target.closest('.gb'); if (!b) return;

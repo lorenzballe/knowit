@@ -140,7 +140,6 @@ Kit.$('sw').addEventListener('click', e => {
   apply(m, true);
   if (seen.size === 2 && Kit.$('keep').classList.contains('gone')) {
     Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
   }
 });
 

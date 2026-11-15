@@ -136,7 +136,6 @@ function finish() {
   Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   Kit.haptic('success');
   requestAnimationFrame(() => Kit.onShow.card());
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .5, ease: 'power3.out'});
 }
 Kit.$('go').addEventListener('click', () => {
   if (busy || gen >= MAXG) return;

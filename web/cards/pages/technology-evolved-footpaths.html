@@ -159,7 +159,7 @@ function step(){if(!ready)layout();if(busy||done)return;while(gens.length<g+2)wo
     .to(C,{v:(from+2)*N,duration:.6,ease:'power1.out',onUpdate:()=>{$('tried').textContent=fmt(C.v)+' tried';}},'<');
   if(FAST)TL.timeScale(6);}
 function finish(){done=true;Kit.haptic('success');Kit.hide('go');Kit.hide('say');Kit.show('why');Kit.show('keep');
-  requestAnimationFrame(()=>{layout();if(!Kit.calm&&!FAST)gsap.from(['#why .body','#keep'],{opacity:0,y:10,stagger:.12,duration:.5,ease:'power3.out',clearProps:'opacity,transform'});});}
+  requestAnimationFrame(()=>{layout();if(!Kit.calm&&!FAST)gsap.from(['#why .body'],{opacity:0,y:10,stagger:.12,duration:.5,ease:'power3.out',clearProps:'opacity,transform'});});}
 $('go').addEventListener('click',step);pic.addEventListener('click',step);
 // Draw at the card's real size here: called once the fonts are in, and again on every resize.
 Kit.onShow.card=()=>layout();

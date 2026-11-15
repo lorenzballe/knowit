@@ -58,7 +58,6 @@ function finish(){
   if (done) return; done = true; day = DAYS; update();
   Kit.haptic('success');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
   if (!Kit.calm && G) gsap.fromTo(G.dot, {attr: {r: G.f * 1.6}}, {attr: {r: G.f * .7}, duration: .6, ease: 'elastic.out(1,.5)'});
 }
 

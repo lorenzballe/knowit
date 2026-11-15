@@ -202,7 +202,7 @@ function reveal() {
     .to(st, {aT: 1, duration: .5, ease: 'back.out(1.8)'}, 1.05)
     .call(() => { st.go = true; Kit.haptic('light'); }, null, 1.6)
     .to(st, {pw: 1, duration: .9, ease: 'power1.in'}, 1.6);
-  gsap.from(['#why', '#keep'], {opacity: 0, y: 8, duration: .5, stagger: .15, delay: .4, ease: 'power2.out'});
+  
 }
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {

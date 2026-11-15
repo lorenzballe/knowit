@@ -37,10 +37,10 @@
     </div>
     <div id="why" class="gone">
       <p class="big">Resistance to knocking</p>
-      <p class="body">Squeeze a fuel and air mix hard enough and it can ignite on its own, before the spark: that's knocking. Iso-octane takes far more squeezing than n-heptane, so it was simply set at 100 and n-heptane at 0. The number says how much squeeze a fuel can take, not how good it is.</p>
+      <p class="body">Squeeze fuel and air hard enough and it ignites before the spark: that's knocking. Iso-octane takes far more squeezing than n-heptane, so it was set at 100 and n-heptane at 0.</p>
     </div>
     <p class="say" id="say">Pick a fuel, then hold the button to squeeze the mix.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Octane measures resistance to knocking, not the quality of the fuel.</div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Octane is knock resistance, not fuel quality.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)</span></div>
   </div>
 </article>
@@ -206,7 +206,6 @@ function finish() {
   Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   Kit.haptic('success');
   requestAnimationFrame(draw);
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .1, duration: .4, ease: 'power3.out'});
 }
 
 Kit.$('fuels').addEventListener('click', e => {

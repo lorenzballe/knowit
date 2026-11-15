@@ -161,7 +161,13 @@ def check_page(card: dict, page: str | None, *, files: set[str] | None = None) -
             p.append("a slider is marked data-drag, so the app hands the page every drag that starts on it")
         break
 
-    # Nothing from anywhere but the kit.
+    # Kit.show already fades in what it shows: a gsap.from of its own on top catches it at opacity 0
+    # and leaves it there (what to keep turned into an empty band on 131 cards).
+    shown = set(re.findall(r"Kit\.show\('([\w-]+)'\)", page))
+    for arr in re.findall(r"gsap\.from\(\s*\[([^\]]*)\]", page):
+        if shown & set(re.findall(r"'#([\w-]+)'", arr)):
+            p.append("what Kit.show shows is not faded in again with gsap.from: the second fade leaves it invisible")
+            break
     for tag in LINK.findall(page):
         rel = (_attr(tag, "rel") or "").lower().split()
         href = _attr(tag, "href") or ""

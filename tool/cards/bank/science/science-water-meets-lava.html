@@ -159,7 +159,6 @@ function act(){
     breathe();
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
     Kit.haptic('success');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, duration:.45, stagger:.12, ease:'power3.out'});
   }
 }
 

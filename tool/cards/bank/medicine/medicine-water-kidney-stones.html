@@ -169,7 +169,6 @@ function drink() {
 
 function finish() {
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .45, ease: 'power3.out'});
   requestAnimationFrame(() => { if (G) draw(); });
 }
 
