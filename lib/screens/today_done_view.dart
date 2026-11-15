@@ -13,6 +13,7 @@ import '../state/app_state.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/card_edge.dart';
+import '../widgets/fit_text.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
 import 'deck_viewer_screen.dart';
@@ -82,11 +83,21 @@ class TodayDoneView extends StatefulWidget {
   final int at;
   final ValueChanged<int> onPick;
 
+  /// The day's own line, and the aside under it, at the head of the shelf
+  /// in place of its eyebrow: where the day got to, beside the shelf's two
+  /// buttons, on one row. The Today tab passes them. They used to be a row
+  /// of their own over the eyebrow's, and the eyebrow ("TODAY'S FIVE") said
+  /// again what the line had just said ("five read"), with an odd band of
+  /// air between the two. On its own the shelf heads itself with the
+  /// eyebrow.
+  final ({String line, String aside})? heading;
+
   const TodayDoneView({
     super.key,
     required this.app,
     required this.at,
     required this.onPick,
+    this.heading,
   });
 
   @override
@@ -328,9 +339,17 @@ class _TodayDoneViewState extends State<TodayDoneView>
         Padding(
           // Eight above rather than sixteen: the row is as tall as its two
           // buttons now, and the shelf under it keeps nearly all its room.
-          padding: const EdgeInsets.fromLTRB(24, 8, 18, 0),
+          // Headed by the day's line, the row is the screen's first, and
+          // sits where that line did.
+          padding: EdgeInsets.fromLTRB(
+            24,
+            widget.heading == null ? 8 : 0,
+            18,
+            0,
+          ),
           child: LayoutBuilder(
             builder: (context, box) {
+              final ({String line, String aside})? heading = widget.heading;
               final String eyebrow = context.l10n.shelfEyebrow(
                 context.l10n.countWord('${deck.length}').toUpperCase(),
               );
@@ -343,20 +362,40 @@ class _TodayDoneViewState extends State<TodayDoneView>
               // The heading is never cut for the buttons: where the two do
               // not fit on the line ("DIE FÜNF VON HEUTE" and "Nochmal
               // ansehen"), "See again" gives up its word and keeps its mark.
+              // The day's line gives a point or two first (it is set to
+              // shrink to fit), and only past that does "See again" give up
+              // its word: "Giorno 13 · cinque lette" and "Rivedi" share an
+              // SE's line with the line a size down.
+              final double lead = heading == null
+                  ? _width(context, eyebrow, eyebrowStyle)
+                  : _DayHeading.dotRoom +
+                        _width(
+                          context,
+                          heading.line,
+                          _DayHeading.lineStyle(ink, size: _DayHeading.least),
+                        );
               final bool compact =
-                  _width(context, eyebrow, eyebrowStyle) +
-                      12 +
-                      _DayTools.widthOf(context, app, compact: false) >
+                  lead + 12 + _DayTools.widthOf(context, app, compact: false) >
                   box.maxWidth;
               return Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      eyebrow,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: eyebrowStyle,
-                    ),
+                    child: heading == null
+                        ? Text(
+                            eyebrow,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: eyebrowStyle,
+                          )
+                        : _DayHeading(
+                            line: heading.line,
+                            aside: heading.aside,
+                            // The card at the front's colour; the offer's,
+                            // the spectrum's violet, as the glow takes.
+                            dot: at < deck.length
+                                ? deck[at].color
+                                : kSpectrum[9],
+                          ),
                   ),
                   const SizedBox(width: 12),
                   // Where the counter was: the dots under the shelf already say
@@ -1598,6 +1637,90 @@ class _Actions extends StatelessWidget {
 /// what a tap on the widget does; the shelf above only has them in small.
 /// The day is sent with no gate, on either plan, as it always was: a day in
 /// somebody's chat is how the app travels.
+/// The day's line at the head of the shelf — a dot in the front card's
+/// colour, which day this was — and under it, small, what the day has made
+/// (a card liked, the freeze spent, or how to like one).
+class _DayHeading extends StatelessWidget {
+  const _DayHeading({
+    required this.line,
+    required this.aside,
+    required this.dot,
+  });
+
+  final String line;
+  final String aside;
+  final Color dot;
+
+  /// The dot and the air after it.
+  static const double dotRoom = 18;
+
+  /// The size the line is set at, and the least it shrinks to before the
+  /// buttons beside it give up their words.
+  static const double size = 17;
+  static const double least = 15;
+
+  static TextStyle lineStyle(Color ink, {double size = size}) => AppText.body(
+    size: size,
+    weight: FontWeight.w600,
+    spacing: -0.2,
+    height: 1.2,
+    color: ink,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final bool still = MediaQuery.disableAnimationsOf(context);
+    final Color ink = context.p.ink;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          // On the line's middle: a line of 17 at 1.2 is 20.4 high.
+          padding: const EdgeInsets.only(top: 6.2),
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: still ? 0 : 500),
+            curve: Curves.easeOut,
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(color: dot, shape: BoxShape.circle),
+          ),
+        ),
+        const SizedBox(width: dotRoom - 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Semantics(
+                header: true,
+                child: FitText(
+                  line,
+                  maxLines: 1,
+                  minSize: 13,
+                  style: lineStyle(ink),
+                ),
+              ),
+              const SizedBox(height: 2),
+              FitText(
+                aside,
+                key: const ValueKey('shelf-aside'),
+                maxLines: 2,
+                minSize: 11,
+                style: AppText.body(
+                  size: 12,
+                  weight: FontWeight.w500,
+                  height: 1.25,
+                  color: ink.withValues(alpha: 0.42),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _DayTools extends StatelessWidget {
   const _DayTools({
     required this.app,

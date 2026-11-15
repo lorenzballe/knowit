@@ -5,6 +5,7 @@ import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/share_sheet.dart';
@@ -176,15 +177,27 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                         ),
                       ),
                     ),
+                    // The screen's name — Today, Explore, the subject —
+                    // as a title, at the size Today's own is set, not a
+                    // caption: at sixteen it read as small print over a
+                    // card twenty times its size. A long subject in a long
+                    // language gives way by a point or two, never cut.
                     Expanded(
-                      child: Text(
-                        widget.title,
-                        textAlign: TextAlign.center,
-                        style: AppText.display(
-                          size: 16,
-                          weight: FontWeight.w600,
-                          spacing: -0.3,
-                          color: context.p.ink,
+                      child: Semantics(
+                        header: true,
+                        child: FitText(
+                          widget.title,
+                          key: const ValueKey('viewer-title'),
+                          maxLines: 1,
+                          minSize: 16,
+                          textAlign: TextAlign.center,
+                          style: AppText.display(
+                            size: 25,
+                            weight: FontWeight.w600,
+                            spacing: -0.6,
+                            height: 1.1,
+                            color: context.p.ink,
+                          ),
                         ),
                       ),
                     ),
@@ -193,10 +206,16 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                       child: Text(
                         _atEnd ? '' : '${_index + 1}/$_total',
                         textAlign: TextAlign.right,
-                        style: AppText.label(
-                          size: 11.5,
-                          color: context.p.inkFaint,
-                        ),
+                        style:
+                            AppText.body(
+                              size: 13.5,
+                              weight: FontWeight.w600,
+                              color: context.p.inkMuted,
+                            ).copyWith(
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
                       ),
                     ),
                   ],

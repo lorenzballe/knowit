@@ -25,6 +25,7 @@ import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
 import 'package:astuto/screens/archive_screen.dart';
+import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/screens/saved_screen.dart';
@@ -479,5 +480,65 @@ void main() {
     await tester.drag(find.byType(ListView), const Offset(0, -600));
     await _settle(tester);
     await _shoot(tester, '20b-detail-drawn-below');
+  });
+
+  testWidgets('the day read, on a phone with its notch and its bar', (
+    tester,
+  ) async {
+    // A 16 Pro's insets, as the reader holds it: the day's head under the
+    // island, the tab bar over the home bar.
+    final view = tester.view;
+    view.padding = const FakeViewPadding(top: 62 * 3, bottom: 34 * 3);
+    view.viewPadding = view.padding;
+    addTearDown(view.resetPadding);
+    addTearDown(view.resetViewPadding);
+    for (final (String name, Locale locale) in const [
+      ('23-today-pro', Locale('en')),
+      ('23b-today-pro-it', Locale('it')),
+    ]) {
+      tester.platformDispatcher.localesTestValue = [locale];
+      tester.platformDispatcher.localeTestValue = locale;
+      final Map<String, Object> prefs = _aMonthIn();
+      // ignore: invalid_use_of_visible_for_testing_member
+      SharedPreferences.setMockInitialValues(prefs);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(const AstutoApp());
+      await _precache(tester, [
+        for (final id in prefs['knowit.todayDeckIds']! as List<String>)
+          if (PillBank.byId(id) != null) PillBank.byId(id)!,
+      ]);
+      await _settle(tester);
+      await _shoot(tester, name);
+      if (locale.languageCode == 'en') {
+        await tester.tap(find.byKey(const ValueKey('shelf-see-again')));
+        await _settle(tester);
+        await _shoot(tester, '24-today-again-pro');
+        tester.state<NavigatorState>(find.byType(Navigator).first).pop();
+        await _settle(tester);
+      }
+    }
+    tester.platformDispatcher.clearLocalesTestValue();
+    tester.platformDispatcher.clearLocaleTestValue();
+
+    // A card opened from Explore, as Explore opens it.
+    final AppState app = await readyApp(_aMonthIn());
+    final Pill drawn = PillBank.cards.firstWhere(
+      (p) =>
+          p.hasPage && CardThumb.has(p, CardSide.front) && p.topic == 'History',
+    );
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(
+      _app(
+        DeckViewerScreen(
+          app: app,
+          deck: [drawn],
+          title: 'Explore',
+          countsAsRead: true,
+          source: 'explore',
+        ),
+      ),
+    );
+    await _settle(tester);
+    await _shoot(tester, '25-explore-card-pro');
   });
 }

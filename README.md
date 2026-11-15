@@ -312,10 +312,13 @@ level, in `PathScreen`. The rung dates are written the moment a rung is
 cleared (`rungDates`, in the snapshot, earliest date winning in a merge)
 and never moved.
 
-The header is the same one line whether the day is running or done — a dot
-in the day's colour, "Day 6 · five read" (or "2 of 5 read"), and at the far
-end what has been liked — so finishing the day changes what the tab holds
-and not what it looks like.
+Once the day is done, its header is the shelf's first row: a dot in the
+front card's colour, "Day 6 · five read" and, small under it, what has been
+liked; at the far end the shelf's two buttons, See again and the day sent.
+It used to be a line of its own over an eyebrow ("TODAY'S FIVE") that said
+the five again, with a band of air between the two; one row gives the card
+that room. The line gives a point or two before See again gives up its
+word for its mark alone.
 
 ## Explore, and the archive
 
@@ -479,7 +482,7 @@ held there. Once the day is done the shelf slides like every other screen,
 and the carousel keeps the drags that land on it.
 
 What the shelf takes from the canvas and what it does not: the card is
-324 × 452 with its 28-point padding, the eyebrow, the dots and the two
+324 × 452 with its 28-point padding, the heading, the dots and the two
 lines under them sit at the canvas's own margins, and the button is the
 canvas's flat one rather than the app's chunky one — a door out of a
 finished screen is not a commitment. The type stays Fraunces, because the
