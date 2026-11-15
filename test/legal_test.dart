@@ -119,25 +119,24 @@ void main() {
     expect(deploy, contains('WIDGET_DAYS_OUT=_site/widget/days.json'));
   });
 
-  test('the site offers the App Store, says Android is coming, and names '
-      'the company', () {
-    // The landing page links the App Store listing with Apple's own badge.
+  test('the site offers the App Store and Google Play, and names the '
+      'company', () {
+    // The landing page links both listings with the stores' own badges.
     final String home = File('site/index.html').readAsStringSync();
     expect(home, contains('https://apps.apple.com/app/id6806852300'));
     for (final String badge in const [
       'site/assets/badges/app-store.svg',
+      'site/assets/badges/google-play.svg',
       // The code a computer's visitor scans, which leads to /get.
       'site/assets/qr-get.svg',
     ]) {
       expect(File(badge).existsSync(), isTrue, reason: badge);
     }
-    // Google's badge stands beside Apple's, marked as coming: the listing is
-    // not open to everybody yet (tool/site/chrome.py, GOOGLE_PLAY_OPEN).
-    expect(home, contains('store-google-play store-soon'));
-    // Every page is signed by TheBaleCompany. Astute is not on Google Play
-    // yet, so every page says Android is coming and none links a listing
-    // that is not there; the day it is, the badge becomes the link and this
-    // says so instead.
+    // Astute is on Google Play (tool/site/chrome.py, GOOGLE_PLAY_OPEN):
+    // Google's badge is a link, never marked as coming.
+    expect(home, isNot(contains('store-google-play store-soon')));
+    // Every page is signed by TheBaleCompany, says the app is free on both
+    // phones, and links the Play listing.
     for (final String page in const [
       'site/index.html',
       'site/privacy.html',
@@ -150,11 +149,13 @@ void main() {
     ]) {
       final String text = File(page).readAsStringSync();
       expect(text, contains('© 2026 TheBaleCompany'), reason: page);
-      expect(text, contains('Android coming soon'), reason: page);
-      expect(text, isNot(contains('iPhone and Android')), reason: page);
+      expect(text, contains('iPhone and Android'), reason: page);
+      expect(text, isNot(contains('Android coming soon')), reason: page);
       expect(
         text,
-        isNot(contains('play.google.com/store/apps/details')),
+        contains(
+          'https://play.google.com/store/apps/details?id=com.astuto.app',
+        ),
         reason: page,
       );
     }
