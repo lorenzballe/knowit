@@ -4639,4 +4639,76 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get challengeLine => 'Consegues acertar esta?';
+
+  @override
+  String pathFree(int n) {
+    return '$n grátis';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Mais $n neste percurso.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Cada percurso inteiro, da carta mais fácil à mais difícil, e uma fila nova todas as semanas.';
+
+  @override
+  String get pathMoreGo => 'Ler o percurso inteiro';
+
+  @override
+  String get paywallPathsTitle => 'Cada percurso, as dez.';
+
+  @override
+  String get paywallPathsMark => 'as dez.';
+
+  @override
+  String get paywallPathsLine =>
+      'Dez cartas sobre um tema, da mais fácil à mais difícil. Percursos novos todas as semanas, e as tuas cinco do dia ao teu nível.';
+
+  @override
+  String get widgetAskTitle =>
+      'A primeira carta de amanhã, no teu ecrã principal.';
+
+  @override
+  String get widgetAskLine =>
+      'Uma carta nova todas as manhãs sem abrir a app, e a tua sequência ao lado.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Toca sem soltar num espaço vazio do ecrã principal.';
+
+  @override
+  String get widgetAskStepAppleAdd =>
+      'Toca em Editar e depois em Adicionar widget.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Procura a Astute, escolhe um tamanho e toca em Adicionar widget.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Toca em Widgets.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Procura a Astute, toca sem soltar num widget e arrasta-o para o sítio.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'Também no ecrã bloqueado: toca sem soltar e depois em Personalizar.';
+
+  @override
+  String get widgetAskPin => 'Adicionar ao ecrã principal';
+
+  @override
+  String get widgetAskGotIt => 'Percebi';
+
+  @override
+  String get widgetAskNotNow => 'Agora não';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return 'Carta $n de $total';
+  }
 }

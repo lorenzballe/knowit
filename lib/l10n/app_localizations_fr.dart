@@ -4651,4 +4651,76 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get challengeLine => 'Tu trouves celle-ci ?';
+
+  @override
+  String pathFree(int n) {
+    return '$n offertes';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Encore $n dans ce parcours.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Chaque parcours en entier, de la carte la plus facile à la plus difficile, et une nouvelle série chaque semaine.';
+
+  @override
+  String get pathMoreGo => 'Lire tout le parcours';
+
+  @override
+  String get paywallPathsTitle => 'Chaque parcours, les dix cartes.';
+
+  @override
+  String get paywallPathsMark => 'les dix cartes.';
+
+  @override
+  String get paywallPathsLine =>
+      'Dix cartes sur un thème, de la plus facile à la plus difficile. De nouveaux parcours chaque semaine, et tes cinq du jour à ton niveau.';
+
+  @override
+  String get widgetAskTitle =>
+      'La première carte de demain, sur ton écran d\'accueil.';
+
+  @override
+  String get widgetAskLine =>
+      'Une nouvelle carte chaque matin sans ouvrir l\'app, et ta série à côté.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Maintiens le doigt sur un espace vide de l\'écran d\'accueil.';
+
+  @override
+  String get widgetAskStepAppleAdd =>
+      'Touche Modifier, puis Ajouter un widget.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Cherche Astute, choisis une taille et touche Ajouter un widget.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Touche Widgets.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Cherche Astute, puis maintiens un widget et fais-le glisser à sa place.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'Aussi sur l\'écran verrouillé : maintiens le doigt dessus, puis touche Personnaliser.';
+
+  @override
+  String get widgetAskPin => 'Ajouter à l\'écran d\'accueil';
+
+  @override
+  String get widgetAskGotIt => 'Compris';
+
+  @override
+  String get widgetAskNotNow => 'Pas maintenant';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return 'Carte $n sur $total';
+  }
 }

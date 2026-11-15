@@ -1,5 +1,7 @@
 package com.astuto.app
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -43,6 +45,10 @@ class MainActivity : FlutterActivity() {
         return true
     }
 
+    private fun canPinWidget(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            AppWidgetManager.getInstance(this).isRequestPinAppWidgetSupported
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         // The home-screen widgets cannot run Dart, so the app hands them what
@@ -64,6 +70,17 @@ class MainActivity : FlutterActivity() {
                     }
                 }
                 "installed" -> result.success(AstutWidget.installed(this))
+                // Whether the launcher puts a widget on the home screen when
+                // the app asks (Android 8 and later, where it says so), and
+                // the asking: the launcher's own dialog, with the card widget.
+                "canPin" -> result.success(canPinWidget())
+                "pin" -> result.success(
+                    canPinWidget() &&
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                        AppWidgetManager.getInstance(this).requestPinAppWidget(
+                            ComponentName(this, AstutWidget::class.java), null, null
+                        )
+                )
                 "takeOpenedFrom" -> {
                     result.success(widgetOpen)
                     widgetOpen = null

@@ -4785,4 +4785,74 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get challengeLine => 'Dasz radę z tą?';
+
+  @override
+  String pathFree(int n) {
+    return '$n za darmo';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Jeszcze $n na tej ścieżce.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Każda ścieżka w całości, od najłatwiejszej karty do najtrudniejszej, i co tydzień nowy rząd.';
+
+  @override
+  String get pathMoreGo => 'Czytaj całą ścieżkę';
+
+  @override
+  String get paywallPathsTitle => 'Każda ścieżka, wszystkie dziesięć.';
+
+  @override
+  String get paywallPathsMark => 'wszystkie dziesięć.';
+
+  @override
+  String get paywallPathsLine =>
+      'Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Co tydzień nowe ścieżki i twoje pięć na dziś na twoim poziomie.';
+
+  @override
+  String get widgetAskTitle => 'Pierwsza karta jutra na ekranie głównym.';
+
+  @override
+  String get widgetAskLine =>
+      'Co rano nowa karta bez otwierania aplikacji, a obok twoja seria.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Przytrzymaj puste miejsce na ekranie głównym.';
+
+  @override
+  String get widgetAskStepAppleAdd => 'Stuknij Edytuj, a potem Dodaj widżet.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Znajdź Astute, wybierz rozmiar i stuknij Dodaj widżet.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Stuknij Widżety.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Znajdź Astute, przytrzymaj widżet i przeciągnij go na miejsce.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'Także na ekranie blokady: przytrzymaj go i stuknij Dostosuj.';
+
+  @override
+  String get widgetAskPin => 'Dodaj do ekranu głównego';
+
+  @override
+  String get widgetAskGotIt => 'Jasne';
+
+  @override
+  String get widgetAskNotNow => 'Nie teraz';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return 'Karta $n z $total';
+  }
 }

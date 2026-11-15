@@ -6629,6 +6629,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Can you get this one?'**
   String get challengeLine;
+
+  /// On a path's tile in Explore, on the free plan: how many of its ten cards can be read without Astute+. Short, a chip beside the lock.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} free'**
+  String pathFree(int n);
+
+  /// The card after a path's free cards, on the free plan: how many of the path's cards are left, read with Astute+.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} more in this path.'**
+  String pathMoreTitle(int n);
+
+  /// Under pathMoreTitle: what Astute+ gives of the paths.
+  ///
+  /// In en, this message translates to:
+  /// **'Every path whole, from the easiest card to the hardest, and a new row of them every week.'**
+  String get pathMoreLine;
+
+  /// The button on the card after a path's free cards: opens the plans, then the rest of the path.
+  ///
+  /// In en, this message translates to:
+  /// **'Read the whole path'**
+  String get pathMoreGo;
+
+  /// The paywall's headline when it is opened from a path: every path, all ten cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Every path, all ten.'**
+  String get paywallPathsTitle;
+
+  /// The words of paywallPathsTitle painted in the lights: must be its exact ending, as written there.
+  ///
+  /// In en, this message translates to:
+  /// **'all ten.'**
+  String get paywallPathsMark;
+
+  /// Under paywallPathsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten cards on one theme, from the easiest to the hardest. A new row of paths every week, and your five of the day at your level.'**
+  String get paywallPathsLine;
+
+  /// The sheet that shows how to put Astute's widget on the home screen, once, after the second finished day: its headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow\'s first card, on your Home Screen.'**
+  String get widgetAskTitle;
+
+  /// Under widgetAskTitle: what the widget gives.
+  ///
+  /// In en, this message translates to:
+  /// **'A new card every morning without opening the app, and your streak beside it.'**
+  String get widgetAskLine;
+
+  /// The first step, on both phones: start editing the home screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Touch and hold an empty spot on your Home Screen.'**
+  String get widgetAskStepHold;
+
+  /// The second step on an iPhone, with the system's own button names: Edit, then Add Widget.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Edit, then Add Widget.'**
+  String get widgetAskStepAppleAdd;
+
+  /// The third step on an iPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Find Astute, choose a size and tap Add Widget.'**
+  String get widgetAskStepApplePick;
+
+  /// The second step on Android: the launcher's widgets list.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Widgets.'**
+  String get widgetAskStepAndroidAdd;
+
+  /// The third step on Android.
+  ///
+  /// In en, this message translates to:
+  /// **'Find Astute, then hold a widget and drag it into place.'**
+  String get widgetAskStepAndroidPick;
+
+  /// Under the steps on an iPhone: the Lock Screen widgets.
+  ///
+  /// In en, this message translates to:
+  /// **'On the Lock Screen too: touch and hold it, then tap Customize.'**
+  String get widgetAskLockScreen;
+
+  /// The sheet's button on an Android phone whose launcher can put the widget down itself.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Home Screen'**
+  String get widgetAskPin;
+
+  /// The sheet's button where the reader places the widget themselves: closes it.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get widgetAskGotIt;
+
+  /// The sheet's quiet button: not now.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get widgetAskNotNow;
+
+  /// Over the question of the next card of a path, on the card after its free ones: which card of the path it is. Short, set in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Card {n} of {total}'**
+  String pathCardOf(int n, int total);
 }
 
 class _AppLocalizationsDelegate

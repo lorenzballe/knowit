@@ -93,6 +93,9 @@ List<Pill> get _todaysFive {
     mix: const {},
     levels: untold.levelsUnder(const {}),
     own: _ownToday,
+    // The reader's first day, as the app counts it: the drawn cards lean
+    // hardest now.
+    day: 0,
   ).cards;
 }
 

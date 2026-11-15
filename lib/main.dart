@@ -42,6 +42,7 @@ import 'utils/upright.dart';
 import 'theme.dart';
 import 'widgets/consent.dart';
 import 'widgets/place_ask.dart';
+import 'widgets/widget_ask.dart';
 import 'remote/build_number.dart';
 import 'remote/gate.dart';
 import 'remote/knobs.dart';
@@ -419,6 +420,8 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// True while the place is being asked about: the sheet, the system's
   /// prompt behind it, and the read after.
   bool _askingForPlace = false;
+  bool _askingForWidget = false;
+  Timer? _widgetAskTimer;
   Timer? _placeAskTimer;
 
   /// True while an account is being offered after a finished day: the
@@ -487,6 +490,8 @@ class _AstutoRootState extends State<AstutoRoot> {
         Experiments.sittingEnded();
         _placeAskTimer?.cancel();
         _placeAskTimer = null;
+        _widgetAskTimer?.cancel();
+        _widgetAskTimer = null;
         _accountAskTimer?.cancel();
         _accountAskTimer = null;
         _consentAskTimer?.cancel();
@@ -529,6 +534,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         _considerConsentAsk();
         _considerAccountAsk();
         _considerPlaceAsk();
+        _considerWidgetAsk();
         _considerUpdateAsk();
       },
     );
@@ -793,6 +799,68 @@ class _AstutoRootState extends State<AstutoRoot> {
     });
   }
 
+  /// Why the widget sheet would rise now — after a finished day — or null
+  /// when this is not its moment (AppState.shouldAskForWidget says whether
+  /// it is due at all).
+  ///
+  /// The same moment as the place sheet's, and last of them all: it waits
+  /// while the reminder, the account, the consent or the place is due, and
+  /// for a sitting in which nothing else has been asked. Whether there is a
+  /// home screen to put it on, and nothing on it yet, the phone says when
+  /// it is offered (offerWidget).
+  String? _widgetAskReason() {
+    if (!_app.ready || _stage != _Stage.shell) return null;
+    if (!_onTop || _deckOnTable) return null;
+    if (_askingForPush || _askingForPlace || _askingForWidget) return null;
+    if (_askingForAccount || _askingForConsent || _askedThisSitting) {
+      return null;
+    }
+    if (_consentAskReason() != null || (_consentAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (_reminderAskReason() != null ||
+        (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (_accountAskReason() != null || (_accountAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (_placeAskReason() != null || (_placeAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (!_app.shouldAskForWidget) return null;
+    return 'day done';
+  }
+
+  /// Raises the widget sheet a beat after its moment arrives, as the others
+  /// rise, and only if the moment is still there then.
+  void _considerWidgetAsk() {
+    if (!mounted || _askingForWidget) return;
+    if (_widgetAskReason() == null) {
+      _widgetAskTimer?.cancel();
+      _widgetAskTimer = null;
+      return;
+    }
+    if (_widgetAskTimer?.isActive ?? false) return;
+    _widgetAskTimer = Timer(_kReminderAskBeat, () {
+      _widgetAskTimer = null;
+      if (!mounted || _widgetAskReason() == null) return;
+      _offerWidget();
+    });
+  }
+
+  Future<void> _offerWidget() async {
+    if (_askingForWidget) return;
+    _askingForWidget = true;
+    try {
+      // A phone with a widget placed, or nothing to ask, has had its turn
+      // without a sheet: the sitting is still free for anything else.
+      if (await offerWidget(context, _app)) _askedThisSitting = true;
+    } finally {
+      _askingForWidget = false;
+    }
+  }
+
   Future<void> _offerPlace() async {
     if (_askingForPlace) return;
     _askingForPlace = true;
@@ -830,6 +898,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
+    _considerWidgetAsk();
     _considerUpdateAsk();
   }
 
@@ -868,6 +937,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         _app.shouldAskForReview &&
         !_pushAskedThisSession &&
         !_placeAskedThisSitting &&
+        !_askingForWidget &&
         !_askingForPlace &&
         !_askingForAccount &&
         !_askingForConsent &&
@@ -882,11 +952,12 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
+    _considerWidgetAsk();
     _considerUpdateAsk();
   }
 
-  /// The store's own rating sheet, once, at the end of a seventh day in a
-  /// row (AppState.shouldAskForReview). Nothing of the app's is asked first:
+  /// The store's own rating sheet, at the end of a seventh day in a row and
+  /// later at thirty and a hundred days read (AppState.shouldAskForReview). Nothing of the app's is asked first:
   /// Google forbids a question before its sheet and Apple allows only its
   /// own. A moment after the day closes, so the shelf has landed first.
   Future<void> _askForReview() async {
@@ -902,6 +973,8 @@ class _AstutoRootState extends State<AstutoRoot> {
       final InAppReview review = InAppReview.instance;
       if (!await review.isAvailable()) return;
       Analytics.capture('rating prompt requested', {
+        'ask': _app.reviewAsks,
+        'days_read': _app.completedDates.length,
         'streak_days': _app.liveStreak,
         'is_plus': _app.isPlus,
       });
@@ -915,6 +988,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   void dispose() {
     _reminderAskTimer?.cancel();
     _placeAskTimer?.cancel();
+    _widgetAskTimer?.cancel();
     _accountAskTimer?.cancel();
     _consentAskTimer?.cancel();
     _updateAskTimer?.cancel();
@@ -953,6 +1027,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
+    _considerWidgetAsk();
     _considerUpdateAsk();
   }
 
@@ -1169,6 +1244,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
+    _considerWidgetAsk();
     _considerUpdateAsk();
   }
 
@@ -1295,6 +1371,7 @@ class _AstutoRootState extends State<AstutoRoot> {
             _considerConsentAsk();
             _considerAccountAsk();
             _considerPlaceAsk();
+            _considerWidgetAsk();
             _considerUpdateAsk();
           },
           onSignedOut: () {

@@ -4638,4 +4638,75 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get challengeLine => 'Riesci a indovinare questa?';
+
+  @override
+  String pathFree(int n) {
+    return '$n gratis';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Altre $n in questo percorso.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Ogni percorso intero, dalla carta più facile alla più difficile, e una fila nuova ogni settimana.';
+
+  @override
+  String get pathMoreGo => 'Leggi tutto il percorso';
+
+  @override
+  String get paywallPathsTitle => 'Ogni percorso, tutte e dieci.';
+
+  @override
+  String get paywallPathsMark => 'tutte e dieci.';
+
+  @override
+  String get paywallPathsLine =>
+      'Dieci carte su un tema, dalla più facile alla più difficile. Una fila nuova di percorsi ogni settimana, e le tue cinque del giorno al tuo livello.';
+
+  @override
+  String get widgetAskTitle =>
+      'La prima carta di domani, nella schermata Home.';
+
+  @override
+  String get widgetAskLine =>
+      'Una carta nuova ogni mattina senza aprire l\'app, e accanto la tua serie.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Tieni premuto un punto vuoto della schermata Home.';
+
+  @override
+  String get widgetAskStepAppleAdd => 'Tocca Modifica, poi Aggiungi widget.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Cerca Astute, scegli la misura e tocca Aggiungi widget.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Tocca Widget.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Cerca Astute, poi tieni premuto un widget e trascinalo dove vuoi.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'Anche nella schermata di blocco: tienila premuta, poi tocca Personalizza.';
+
+  @override
+  String get widgetAskPin => 'Aggiungi alla schermata Home';
+
+  @override
+  String get widgetAskGotIt => 'Ho capito';
+
+  @override
+  String get widgetAskNotNow => 'Non ora';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return 'Carta $n di $total';
+  }
 }

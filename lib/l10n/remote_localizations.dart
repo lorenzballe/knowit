@@ -4501,4 +4501,79 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get challengeLine =>
       _words.text('challengeLine') ?? _base.challengeLine;
+
+  @override
+  String pathFree(int n) =>
+      _words.format('pathFree', localeName, {'n': n}) ?? _base.pathFree(n);
+
+  @override
+  String pathMoreTitle(int n) =>
+      _words.format('pathMoreTitle', localeName, {'n': n}) ??
+      _base.pathMoreTitle(n);
+
+  @override
+  String get pathMoreLine => _words.text('pathMoreLine') ?? _base.pathMoreLine;
+
+  @override
+  String get pathMoreGo => _words.text('pathMoreGo') ?? _base.pathMoreGo;
+
+  @override
+  String get paywallPathsTitle =>
+      _words.text('paywallPathsTitle') ?? _base.paywallPathsTitle;
+
+  @override
+  String get paywallPathsMark =>
+      _words.text('paywallPathsMark') ?? _base.paywallPathsMark;
+
+  @override
+  String get paywallPathsLine =>
+      _words.text('paywallPathsLine') ?? _base.paywallPathsLine;
+
+  @override
+  String get widgetAskTitle =>
+      _words.text('widgetAskTitle') ?? _base.widgetAskTitle;
+
+  @override
+  String get widgetAskLine =>
+      _words.text('widgetAskLine') ?? _base.widgetAskLine;
+
+  @override
+  String get widgetAskStepHold =>
+      _words.text('widgetAskStepHold') ?? _base.widgetAskStepHold;
+
+  @override
+  String get widgetAskStepAppleAdd =>
+      _words.text('widgetAskStepAppleAdd') ?? _base.widgetAskStepAppleAdd;
+
+  @override
+  String get widgetAskStepApplePick =>
+      _words.text('widgetAskStepApplePick') ?? _base.widgetAskStepApplePick;
+
+  @override
+  String get widgetAskStepAndroidAdd =>
+      _words.text('widgetAskStepAndroidAdd') ?? _base.widgetAskStepAndroidAdd;
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      _words.text('widgetAskStepAndroidPick') ?? _base.widgetAskStepAndroidPick;
+
+  @override
+  String get widgetAskLockScreen =>
+      _words.text('widgetAskLockScreen') ?? _base.widgetAskLockScreen;
+
+  @override
+  String get widgetAskPin => _words.text('widgetAskPin') ?? _base.widgetAskPin;
+
+  @override
+  String get widgetAskGotIt =>
+      _words.text('widgetAskGotIt') ?? _base.widgetAskGotIt;
+
+  @override
+  String get widgetAskNotNow =>
+      _words.text('widgetAskNotNow') ?? _base.widgetAskNotNow;
+
+  @override
+  String pathCardOf(int n, int total) =>
+      _words.format('pathCardOf', localeName, {'n': n, 'total': total}) ??
+      _base.pathCardOf(n, total);
 }

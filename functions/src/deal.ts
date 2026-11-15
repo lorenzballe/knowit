@@ -113,6 +113,52 @@ export function fit(card: Card, level: number | undefined): number {
 export const RECENT_STRAND_WEIGHT = 0.5;
 
 /**
+ * A card with a drawing — its face a page made with the card kit, to be
+ * played — weighs this much more than one of words alone in its subject,
+ * every day: those are the app at its best, and dealt as often as the
+ * rest, only one day in two held one.
+ */
+export const DRAWN_WEIGHT = 2;
+
+/** The reader's first days, counted by the days finished before them: the first impression. */
+export const SHOWCASE_DAYS = 7;
+
+/**
+ * What a drawn card weighs in the reader's first [SHOWCASE_DAYS] instead:
+ * enough for about three of the five to be drawn where the mix has them.
+ * Dealt as on any other day, two readers in five met no drawing at all on
+ * their first morning.
+ */
+export const SHOWCASE_WEIGHT = 8;
+
+/** Whether a card's face is a page: a drawing, a game, a slider — not words alone. */
+export const drawn = (c: Card): boolean => !!c.web && !!(c.web.page || c.web.html);
+
+/**
+ * What each of [cards] weighs for being drawn or not, on the reader's [day]
+ * (0 for their first), in a race among those cards: a drawn card [DRAWN_WEIGHT]
+ * times one of words alone of its subject, [SHOWCASE_WEIGHT] times in the
+ * first week — with the subject's cards together weighing what they did,
+ * so the drawing is preferred inside a subject and the mix stays the
+ * reader's. A subject with more drawings is not dealt more for having them.
+ */
+export function drawnWeights(cards: Card[], day: number | undefined): (c: Card) => number {
+  const boost = (day ?? SHOWCASE_DAYS) < SHOWCASE_DAYS ? SHOWCASE_WEIGHT : DRAWN_WEIGHT;
+  const counts = new Map<string, { all: number; drawn: number }>();
+  for (const c of cards) {
+    const n = counts.get(c.topic) ?? { all: 0, drawn: 0 };
+    n.all++;
+    if (drawn(c)) n.drawn++;
+    counts.set(c.topic, n);
+  }
+  return (c: Card) => {
+    const n = counts.get(c.topic);
+    const share = n && n.all > 0 ? n.drawn / n.all : 0;
+    return (drawn(c) ? boost : 1) / (share * boost + 1 - share);
+  };
+}
+
+/**
  * How often one of the day's reads is an explorer: a card from a strand
  * the reader has never met, dealt on level alone with the taste set aside.
  * About every other day. A taste that only ever confirms itself narrows
@@ -134,6 +180,8 @@ export interface OwnOptions {
   date?: string;
   /** Debates the day already holds: a day has one at most, and the card about the reader's place may be it. */
   debates?: number;
+  /** Which of the reader's days this is, 0 for the first: a drawn card weighs most in the first week. */
+  day?: number;
 }
 
 /** Whether [date] is an explorer's day for the reader: the same coin on every server. */
@@ -175,9 +223,10 @@ export function dealOwn(bank: Bank, profile: Profile, weights: Record<string, nu
   for (const c of pool) tiers[tierOf(c)].push(c);
 
   const ordered = tiers.map((tier) => {
+    const drawing = drawnWeights(tier, o.day);
     const keyedCards = tier.map((c) => {
       const recent = c.strand && profile.recentStrands.has(c.strand) ? RECENT_STRAND_WEIGHT : 1;
-      const w = (weights[c.topic] ?? (Object.keys(weights).length === 0 ? 1 : 0)) * fit(c, profile.levels[c.topic]) * leanOf(c, profile.taste) * recent;
+      const w = (weights[c.topic] ?? (Object.keys(weights).length === 0 ? 1 : 0)) * fit(c, profile.levels[c.topic]) * leanOf(c, profile.taste) * recent * drawing(c);
       const weight = w <= 0 ? 1e-6 : w;
       const u = Math.max(1e-12, Math.min(1, next()));
       return { key: -Math.log(u) / weight, c };
@@ -317,6 +366,8 @@ export interface RandomOptions {
   strandsDealt: Set<string>;
   /** The day dealt, `yyyy-mm-dd`: a card past its expiry is left out. */
   date?: string;
+  /** Which of the reader's days this is, 0 for the first: a drawn card weighs most in the first week. */
+  day?: number;
 }
 
 /**
@@ -355,11 +406,15 @@ export function dealRandom(bank: Bank, profile: Profile, o: RandomOptions): Card
     if (onTopic(c)) return read + 2;
     return read + 3;
   };
-  // Inside a tier, the exponential race on the mix alone.
+  // Inside a tier, the exponential race on the mix alone — and inside a
+  // subject a drawn card ahead of words alone, which is the card, not the reader.
   const even = Object.keys(profile.mix).length === 0;
   const tiers: { key: number; c: Card }[][] = Array.from({ length: 8 }, () => []);
+  const tierCards: Card[][] = Array.from({ length: 8 }, () => []);
+  for (const c of pool) tierCards[tierOf(c)].push(c);
+  const drawing = tierCards.map((cards) => drawnWeights(cards, o.day));
   for (const c of pool) {
-    const w = even ? 1 : profile.mix[c.topic] ?? 0;
+    const w = (even ? 1 : profile.mix[c.topic] ?? 0) * drawing[tierOf(c)](c);
     const u = Math.max(1e-12, Math.min(1, next()));
     tiers[tierOf(c)].push({ key: -Math.log(u) / (w <= 0 ? 1e-6 : w), c });
   }
@@ -402,11 +457,11 @@ export function dealRandom(bank: Bank, profile: Profile, o: RandomOptions): Card
   return picked;
 }
 
-/** Gives a day a shape rather than a sort order: opens on a read, alternates, the hardest early, a debate to close. */
+/** Gives a day a shape rather than a sort order: opens on a read — a drawn one when there is one — alternates, the hardest early, a debate to close. */
 export function arrangeDay(cards: Card[]): Card[] {
   if (cards.length < 3) return cards;
   const ease = (c: Card) => ({ easy: 0, medium: 1, hard: 2 }[c.difficulty] ?? 1);
-  const reads = cards.filter((c) => !asks(c)).sort((a, b) => ease(a) - ease(b));
+  const reads = cards.filter((c) => !asks(c)).sort((a, b) => Number(drawn(b)) - Number(drawn(a)) || ease(a) - ease(b));
   const asking = cards.filter(asks).sort((a, b) => ease(a) - ease(b));
   let closer: Card | undefined;
   const debate = asking.findIndex(isDebate);
@@ -484,6 +539,7 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
     exclude: taken,
     strandsDealt: new Set([...reviews, ...(local ? [local] : [])].map((c) => c.strand ?? '').filter(Boolean)),
     debates: local && isDebate(local) ? 1 : 0,
+    day,
   });
   const mine = [...reviews, ...rest];
   const held = local ? [...mine, local] : mine;
@@ -497,6 +553,7 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
     exclude: new Set([...taken, ...held.map((c) => c.id)]),
     topicsDealt: new Set(held.map((c) => c.topic)),
     strandsDealt: new Set(held.map((c) => c.strand ?? '').filter(Boolean)),
+    day,
   });
   return {
     date,

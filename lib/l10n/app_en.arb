@@ -4863,5 +4863,99 @@
  "challengeLine": "Can you get this one?",
  "@challengeLine": {
   "description": "The words sent with a card to a friend, before its question and the link to play it."
+ },
+ "pathFree": "{n} free",
+ "@pathFree": {
+  "description": "On a path's tile in Explore, on the free plan: how many of its ten cards can be read without Astute+. Short, a chip beside the lock.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pathMoreTitle": "{n} more in this path.",
+ "@pathMoreTitle": {
+  "description": "The card after a path's free cards, on the free plan: how many of the path's cards are left, read with Astute+.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pathMoreLine": "Every path whole, from the easiest card to the hardest, and a new row of them every week.",
+ "@pathMoreLine": {
+  "description": "Under pathMoreTitle: what Astute+ gives of the paths."
+ },
+ "pathMoreGo": "Read the whole path",
+ "@pathMoreGo": {
+  "description": "The button on the card after a path's free cards: opens the plans, then the rest of the path."
+ },
+ "paywallPathsTitle": "Every path, all ten.",
+ "@paywallPathsTitle": {
+  "description": "The paywall's headline when it is opened from a path: every path, all ten cards."
+ },
+ "paywallPathsMark": "all ten.",
+ "@paywallPathsMark": {
+  "description": "The words of paywallPathsTitle painted in the lights: must be its exact ending, as written there."
+ },
+ "paywallPathsLine": "Ten cards on one theme, from the easiest to the hardest. A new row of paths every week, and your five of the day at your level.",
+ "@paywallPathsLine": {
+  "description": "Under paywallPathsTitle."
+ },
+ "widgetAskTitle": "Tomorrow's first card, on your Home Screen.",
+ "@widgetAskTitle": {
+  "description": "The sheet that shows how to put Astute's widget on the home screen, once, after the second finished day: its headline."
+ },
+ "widgetAskLine": "A new card every morning without opening the app, and your streak beside it.",
+ "@widgetAskLine": {
+  "description": "Under widgetAskTitle: what the widget gives."
+ },
+ "widgetAskStepHold": "Touch and hold an empty spot on your Home Screen.",
+ "@widgetAskStepHold": {
+  "description": "The first step, on both phones: start editing the home screen."
+ },
+ "widgetAskStepAppleAdd": "Tap Edit, then Add Widget.",
+ "@widgetAskStepAppleAdd": {
+  "description": "The second step on an iPhone, with the system's own button names: Edit, then Add Widget."
+ },
+ "widgetAskStepApplePick": "Find Astute, choose a size and tap Add Widget.",
+ "@widgetAskStepApplePick": {
+  "description": "The third step on an iPhone."
+ },
+ "widgetAskStepAndroidAdd": "Tap Widgets.",
+ "@widgetAskStepAndroidAdd": {
+  "description": "The second step on Android: the launcher's widgets list."
+ },
+ "widgetAskStepAndroidPick": "Find Astute, then hold a widget and drag it into place.",
+ "@widgetAskStepAndroidPick": {
+  "description": "The third step on Android."
+ },
+ "widgetAskLockScreen": "On the Lock Screen too: touch and hold it, then tap Customize.",
+ "@widgetAskLockScreen": {
+  "description": "Under the steps on an iPhone: the Lock Screen widgets."
+ },
+ "widgetAskPin": "Add to Home Screen",
+ "@widgetAskPin": {
+  "description": "The sheet's button on an Android phone whose launcher can put the widget down itself."
+ },
+ "widgetAskGotIt": "Got it",
+ "@widgetAskGotIt": {
+  "description": "The sheet's button where the reader places the widget themselves: closes it."
+ },
+ "widgetAskNotNow": "Not now",
+ "@widgetAskNotNow": {
+  "description": "The sheet's quiet button: not now."
+ },
+ "pathCardOf": "Card {n} of {total}",
+ "@pathCardOf": {
+  "description": "Over the question of the next card of a path, on the card after its free ones: which card of the path it is. Short, set in capitals.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
  }
 }

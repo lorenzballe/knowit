@@ -4427,4 +4427,69 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get challengeLine => 'これ、わかる？';
+
+  @override
+  String pathFree(int n) {
+    return '$n枚無料';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'このコースにはあと$n枚。';
+  }
+
+  @override
+  String get pathMoreLine => 'すべてのコースを最後まで。やさしいカードから難しいカードへ、毎週新しいコースも。';
+
+  @override
+  String get pathMoreGo => 'コースを最後まで読む';
+
+  @override
+  String get paywallPathsTitle => 'どのコースも、10枚すべて。';
+
+  @override
+  String get paywallPathsMark => '10枚すべて。';
+
+  @override
+  String get paywallPathsLine =>
+      'ひとつのテーマを10枚で、やさしいものから難しいものへ。毎週新しいコース、そして今日の5枚はあなたのレベルで。';
+
+  @override
+  String get widgetAskTitle => '明日の最初のカードを、ホーム画面に。';
+
+  @override
+  String get widgetAskLine => 'アプリを開かなくても毎朝新しいカード。連続日数もそのそばに。';
+
+  @override
+  String get widgetAskStepHold => 'ホーム画面の何もないところを長押しします。';
+
+  @override
+  String get widgetAskStepAppleAdd => '「編集」、「ウィジェットを追加」の順にタップします。';
+
+  @override
+  String get widgetAskStepApplePick => 'Astuteを探してサイズを選び、「ウィジェットを追加」をタップします。';
+
+  @override
+  String get widgetAskStepAndroidAdd => '「ウィジェット」をタップします。';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Astuteを探し、ウィジェットを長押しして置きたい場所へドラッグします。';
+
+  @override
+  String get widgetAskLockScreen => 'ロック画面にも置けます。ロック画面を長押しして「カスタマイズ」をタップします。';
+
+  @override
+  String get widgetAskPin => 'ホーム画面に追加';
+
+  @override
+  String get widgetAskGotIt => 'わかりました';
+
+  @override
+  String get widgetAskNotNow => '今はしない';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return '$total枚中$n枚目';
+  }
 }

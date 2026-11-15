@@ -4798,4 +4798,75 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get challengeLine => 'Ответишь на эту?';
+
+  @override
+  String pathFree(int n) {
+    return '$n бесплатно';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Ещё $n в этом маршруте.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Каждый маршрут целиком, от самой лёгкой карточки до самой трудной, и каждую неделю новые.';
+
+  @override
+  String get pathMoreGo => 'Читать весь маршрут';
+
+  @override
+  String get paywallPathsTitle => 'Каждый маршрут, все десять.';
+
+  @override
+  String get paywallPathsMark => 'все десять.';
+
+  @override
+  String get paywallPathsLine =>
+      'Десять карточек на одну тему, от самой лёгкой до самой трудной. Новые маршруты каждую неделю и твои пять на сегодня — по твоему уровню.';
+
+  @override
+  String get widgetAskTitle => 'Первая карточка завтра — на экране «Домой».';
+
+  @override
+  String get widgetAskLine =>
+      'Каждое утро новая карточка, не открывая приложения, и рядом твоя серия.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Нажми и удерживай пустое место на экране «Домой».';
+
+  @override
+  String get widgetAskStepAppleAdd =>
+      'Коснись «Изменить», затем «Добавить виджет».';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Найди Astute, выбери размер и коснись «Добавить виджет».';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Коснись «Виджеты».';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Найди Astute, удерживай виджет и перетащи его на место.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'И на экране блокировки: удерживай его и коснись «Настроить».';
+
+  @override
+  String get widgetAskPin => 'Добавить на экран «Домой»';
+
+  @override
+  String get widgetAskGotIt => 'Понятно';
+
+  @override
+  String get widgetAskNotNow => 'Не сейчас';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return 'Карточка $n из $total';
+  }
 }

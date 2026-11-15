@@ -370,13 +370,13 @@ is in its card facts.
 | `sign in ignored` | a press while another sign-in is still waiting | `method`, `from`, `busy_with`, `busy_since_ms` | P |
 | `sign in sheet shown`, `sign in sheet closed` | the sheet with Apple and Google, by its door | `from`, `signed_in` | P |
 | `comeback shown` | the come-back screen after missed days | `days_missed`, `streak_lost` | P |
-| `rating prompt requested` | the system's rating sheet is asked for | `streak_days`, `is_plus` | P |
+| `rating prompt requested` | the system's rating sheet is asked for: at a week in a row, then at 30 and 100 days read, a month apart at least | `ask` (1–3), `days_read`, `streak_days`, `is_plus` | P |
 
 ### 6.8 Astute+: paywall, store and plan
 
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
-| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `see the plans`, `manage plan`, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
+| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `paths`, `see the plans`, `manage plan`, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
 | `purchase started`, `purchase ended`, `purchase success shown`, `purchases restored` | buying | `source`, `plan`, `has_package`, `outcome` (`bought`, `cancelled`, `pending`, `failed`; for a restore `restored`, `nothing`, `unreachable`), `product`, `price`, `currency`, `trial`, `found` | P |
 | `store answered` | each time RevenueCat is asked for the offerings: at launch, then after 3 s, 10 s, 30 s and 2 min while nothing is on sale, on the paywall opening, on Try again and on a return to the app | `ms`, `try`, `offering`, `yearly_product`, `yearly_price`, `yearly_trial`, `monthly_product`, `monthly_price`, `currency`, `is_plus`, `error` | P |
 | `entitlement read`, `entitlement changed` | the subscription as the store holds it, at launch and on every change | `active`, `product`, `period_type`, `will_renew`, `store`, `sandbox`, `expires`, `unsubscribed`, `billing_issue` | P |
@@ -392,6 +392,8 @@ is in its card facts.
 | `reminder switched`, `reminder time set` | the reminder settings | `on`, `at` | P |
 | `push preprompt shown`, `push preprompt answered`, `push permission asked`, `push permission answered` | asking for notifications | `reason`, `starts_on` (the time the sheet starts on), `from_habit` (whether the reader's usual time chose it), `choice`, `granted` | P |
 | `app opened from widget` | a widget's tap (sets `entry` to `widget`) | `widget`, `pill_id`, `where` | P |
+| `widget asked` | the sheet that shows how to put the widget on the home screen is put: once, at the end of the second finished day or later, to a reader with none placed | `can_pin` (the launcher puts it down when asked: Android 8+), `apple` | P |
+| `widget answered` | that sheet closes | `choice` (`pin`, `got it`, `not now`, `dismissed`), `pin_asked` (the launcher's dialog was asked for) | P |
 | `widgets placed` | the set of placed widgets changed | `count`, `widgets`, `kinds` | P |
 
 ### 6.10 Settings and account

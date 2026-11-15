@@ -4446,4 +4446,71 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get challengeLine => '이거 맞힐 수 있어?';
+
+  @override
+  String pathFree(int n) {
+    return '$n장 무료';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return '이 코스에 $n장이 더 있어요.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      '모든 코스를 끝까지, 가장 쉬운 카드부터 가장 어려운 카드까지. 매주 새 코스도 열려요.';
+
+  @override
+  String get pathMoreGo => '코스 전체 읽기';
+
+  @override
+  String get paywallPathsTitle => '모든 코스, 열 장 전부.';
+
+  @override
+  String get paywallPathsMark => '열 장 전부.';
+
+  @override
+  String get paywallPathsLine =>
+      '한 주제를 열 장으로, 가장 쉬운 것부터 가장 어려운 것까지. 매주 새 코스, 그리고 오늘의 다섯 장은 당신의 수준에 맞게.';
+
+  @override
+  String get widgetAskTitle => '내일의 첫 카드를 홈 화면에.';
+
+  @override
+  String get widgetAskLine => '앱을 열지 않아도 매일 아침 새 카드, 그리고 옆에 연속 기록까지.';
+
+  @override
+  String get widgetAskStepHold => '홈 화면의 빈 곳을 길게 누르세요.';
+
+  @override
+  String get widgetAskStepAppleAdd => '편집을 누른 다음 위젯 추가를 누르세요.';
+
+  @override
+  String get widgetAskStepApplePick => 'Astute를 찾아 크기를 고르고 위젯 추가를 누르세요.';
+
+  @override
+  String get widgetAskStepAndroidAdd => '위젯을 누르세요.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Astute를 찾아 위젯을 길게 누른 채 원하는 곳으로 끌어다 놓으세요.';
+
+  @override
+  String get widgetAskLockScreen =>
+      '잠금 화면에도 둘 수 있어요. 잠금 화면을 길게 누른 다음 사용자화를 누르세요.';
+
+  @override
+  String get widgetAskPin => '홈 화면에 추가';
+
+  @override
+  String get widgetAskGotIt => '알겠어요';
+
+  @override
+  String get widgetAskNotNow => '나중에';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return '$total장 중 $n번째';
+  }
 }

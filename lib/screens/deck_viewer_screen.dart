@@ -44,6 +44,14 @@ class DeckViewerScreen extends StatefulWidget {
   /// `explore`, `came back`, `journey`, `widget`.
   final String source;
 
+  /// How many cards the set these are from holds, when it is more than
+  /// [deck]: a path's free cards are two of ten, and the count says so.
+  final int? of;
+
+  /// The card after the last one, in place of the one that says the deck
+  /// is done: a path's free cards end on the rest of the path.
+  final Widget? end;
+
   const DeckViewerScreen({
     super.key,
     required this.app,
@@ -53,6 +61,8 @@ class DeckViewerScreen extends StatefulWidget {
     this.answering = false,
     this.countsAsRead = false,
     this.source = 'viewer',
+    this.of,
+    this.end,
   });
 
   @override
@@ -77,7 +87,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   /// done; one card, thrown, is simply put down.
   void _advance() {
     _read(_index);
-    if (_atEnd || widget.deck.length == 1) {
+    if (_atEnd || (widget.deck.length == 1 && widget.end == null)) {
       // Past everything the deck holds, so the table stays empty while the
       // screen goes, rather than the thrown card coming back to wave.
       setState(() => _index = widget.deck.length + 1);
@@ -102,9 +112,11 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
       ? ''
       : widget.deck.length == 1
       ? context.l10n.thatWasTheOnlyOne
-      : _index == widget.deck.length - 1
+      : _index == widget.deck.length - 1 && _total == widget.deck.length
       ? context.l10n.lastOne
       : context.l10n.swipeForTheNextOne;
+
+  int get _total => widget.of ?? widget.deck.length;
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +176,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     SizedBox(
                       width: 44,
                       child: Text(
-                        _atEnd ? '' : '${_index + 1}/${widget.deck.length}',
+                        _atEnd ? '' : '${_index + 1}/$_total',
                         textAlign: TextAlign.right,
                         style: AppText.label(
                           size: 11.5,
@@ -198,7 +210,9 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     readBefore: (id) => widget.app.seenIds.contains(id),
                     home: widget.app.place,
                     onAdvance: _advance,
-                    trailing: widget.deck.length > 1
+                    trailing: widget.end != null
+                        ? widget.end!
+                        : widget.deck.length > 1
                         ? DeckEnd(
                             key: const ValueKey('deck-end'),
                             deck: widget.deck,
