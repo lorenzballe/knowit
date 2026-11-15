@@ -4743,4 +4743,10 @@ class AppLocalizationsIt extends AppLocalizations {
     );
     return 'La sfida di oggi su Astute: $_temp0. Fai meglio?';
   }
+
+  @override
+  String get playTheCard => 'Gioca la carta';
+
+  @override
+  String get openTheCard => 'Apri la carta';
 }

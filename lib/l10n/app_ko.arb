@@ -1111,5 +1111,7 @@
   "shareWhichSide": "너는 어느 쪽이야?",
   "rereadRight": "처음엔 맞혔어요.",
   "rereadWrong": "처음엔 틀렸어요.",
-  "betsDayShareLine": "오늘의 Astute 도전: {off, plural, =0{정확히 맞혔어} other{{off}포인트 차이였어}}. 더 잘할 수 있어?"
+  "betsDayShareLine": "오늘의 Astute 도전: {off, plural, =0{정확히 맞혔어} other{{off}포인트 차이였어}}. 더 잘할 수 있어?",
+  "playTheCard": "카드 플레이",
+  "openTheCard": "카드 열기"
 }

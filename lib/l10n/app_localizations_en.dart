@@ -4705,4 +4705,10 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return 'Today\'s challenge on Astute: I was $_temp0. Can you do better?';
   }
+
+  @override
+  String get playTheCard => 'Play the card';
+
+  @override
+  String get openTheCard => 'Open the card';
 }

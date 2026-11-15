@@ -97,8 +97,11 @@ class WeekScreen extends StatelessWidget {
                     miss: miss,
                     onOpen: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) =>
-                            PillDetailScreen(pill: miss.pill, app: app),
+                        builder: (_) => PillDetailScreen(
+                          pill: miss.pill,
+                          app: app,
+                          among: [for (final m in week.misses.take(3)) m.pill],
+                        ),
                       ),
                     ),
                   ),

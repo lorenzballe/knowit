@@ -1111,5 +1111,7 @@
   "shareWhichSide": "Tu da che parte stai?",
   "rereadRight": "La prima volta l'hai indovinata.",
   "rereadWrong": "La prima volta l'hai sbagliata.",
-  "betsDayShareLine": "La sfida di oggi su Astute: {off, plural, =0{ho fatto centro} =1{ho sbagliato di 1 punto} other{ho sbagliato di {off} punti}}. Fai meglio?"
+  "betsDayShareLine": "La sfida di oggi su Astute: {off, plural, =0{ho fatto centro} =1{ho sbagliato di 1 punto} other{ho sbagliato di {off} punti}}. Fai meglio?",
+  "playTheCard": "Gioca la carta",
+  "openTheCard": "Apri la carta"
 }

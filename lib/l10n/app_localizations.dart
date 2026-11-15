@@ -6791,6 +6791,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today\'s challenge on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?'**
   String betsDayShareLine(int off);
+
+  /// On a drawn card opened from saved, liked or the archive: opens the card itself at full size, its drawing live, to play again.
+  ///
+  /// In en, this message translates to:
+  /// **'Play the card'**
+  String get playTheCard;
+
+  /// On a card in words opened from saved, liked or the archive: opens the card itself at full size, to turn over again.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the card'**
+  String get openTheCard;
 }
 
 class _AppLocalizationsDelegate

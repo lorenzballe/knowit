@@ -4994,5 +4994,13 @@
     "type": "int"
    }
   }
+ },
+ "playTheCard": "Play the card",
+ "@playTheCard": {
+  "description": "On a drawn card opened from saved, liked or the archive: opens the card itself at full size, its drawing live, to play again."
+ },
+ "openTheCard": "Open the card",
+ "@openTheCard": {
+  "description": "On a card in words opened from saved, liked or the archive: opens the card itself at full size, to turn over again."
  }
 }

@@ -4745,4 +4745,10 @@ class AppLocalizationsNl extends AppLocalizations {
     );
     return 'De uitdaging van vandaag op Astute: $_temp0. Kun jij het beter?';
   }
+
+  @override
+  String get playTheCard => 'Speel de kaart';
+
+  @override
+  String get openTheCard => 'Open de kaart';
 }
