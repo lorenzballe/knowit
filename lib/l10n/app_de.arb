@@ -1103,5 +1103,12 @@
   "widgetAskPin": "Zum Home-Bildschirm hinzufügen",
   "widgetAskGotIt": "Verstanden",
   "widgetAskNotNow": "Nicht jetzt",
-  "pathCardOf": "Karte {n} von {total}"
+  "pathCardOf": "Karte {n} von {total}",
+  "shareSendCard": "Karte senden",
+  "shareAsImage": "Als Bild",
+  "shareCopyLink": "Link kopieren",
+  "shareAnswerNote": "Deine Freundin oder dein Freund sieht zuerst die Frage. Die Antwort ist einen Tipp entfernt, auf der Seite der Karte.",
+  "shareWhichSide": "Auf welcher Seite stehst du?",
+  "rereadRight": "Beim ersten Mal hattest du es richtig.",
+  "rereadWrong": "Beim ersten Mal lagst du daneben."
 }

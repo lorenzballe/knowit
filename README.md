@@ -885,12 +885,26 @@ takes an asking slot before any fresh question does — one at most, so a
 day always has one question it has never asked. What came due and found
 no room waits after the five, on the finished day, on either plan.
 
-**Share my day.** Five squares — read, right, wrong, a side taken, passed —
-the edition, the streak, how the questions went and how sure the reader
-was, and the day's line. Nothing a friend could be spoiled by, because
-it names no card. On a phone it goes to the share sheet; in a browser it is
+**Share my day.** A picture of the day's five: each card's question beside
+its front, in the day's colours, as a post or a story — no score, and no
+answer, because it is sent to show the cards that came out, not how the
+reader did. On a phone it goes to the share sheet; in a browser it is
 copied. It is sent from the finished day, beside the journey's button, or
 from the foot of the journey, and `day shared` says which (`from`).
+
+**Share a card.** A card leaves as a line and a link, never as its answer:
+what is asked of the friend (answering it, or taking a side), its question,
+and its own page on the site, `/c/<id>.html`, written for every card when
+the site is put together (`tool/cards/challenge_pages.py`). A card with a
+drawing is played there in the browser; a card in words is drawn in its
+subject's colour, with its options to pick from or a tap to see the answer,
+then what to keep and the source, then the way to the app. A chat draws the
+link's preview from the page: the card's drawing, or its subject's picture
+(`tool/cards/og_images.py`, kept in `web/cards/og/`). The card can still go
+as a picture, for a story or a feed — its question, never its answer — or
+as its link alone. It used to go as a picture with the whole answer under
+it, the steps, the other side, the bar move and the source: in a chat, a
+wall of words that spoiled the one thing worth sending.
 
 The archive keeps what each day was actually dealt: the calendar is
 re-dealt from the start whenever the pool grows, and a day dealt again from

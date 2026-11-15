@@ -4630,4 +4630,26 @@ class AppLocalizationsTr extends AppLocalizations {
   String pathCardOf(int n, int total) {
     return '$total karttan $n.';
   }
+
+  @override
+  String get shareSendCard => 'Kartı gönder';
+
+  @override
+  String get shareAsImage => 'Görsel olarak';
+
+  @override
+  String get shareCopyLink => 'Bağlantıyı kopyala';
+
+  @override
+  String get shareAnswerNote =>
+      'Arkadaşın önce soruyu görür. Cevap, kartın sayfasında tek dokunuş uzakta.';
+
+  @override
+  String get shareWhichSide => 'Sen hangi taraftasın?';
+
+  @override
+  String get rereadRight => 'İlk seferde doğru bildin.';
+
+  @override
+  String get rereadWrong => 'İlk seferde yanıldın.';
 }

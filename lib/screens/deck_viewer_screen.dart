@@ -108,13 +108,28 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   /// Which face is showing now lives inside the deck, so the line under it
   /// no longer tries to say — it names the gesture the card does not already
   /// carry on its own face.
-  String get _hint => _atEnd
-      ? ''
-      : widget.deck.length == 1
-      ? context.l10n.thatWasTheOnlyOne
-      : _index == widget.deck.length - 1 && _total == widget.deck.length
-      ? context.l10n.lastOne
-      : context.l10n.swipeForTheNextOne;
+  ///
+  /// A card with a drawing, read again, starts as it started the first
+  /// time — its question, to be played again — and its page cannot say
+  /// what was answered then. So the line says it instead: right or wrong,
+  /// the first time. A card in words says it on its own back.
+  String get _hint {
+    if (_atEnd) return '';
+    final Pill pill = widget.deck[_index];
+    final Answer? given = widget.answering
+        ? null
+        : widget.app.answerFor(pill.id);
+    if (given != null && pill.hasPage && pill.isGraded) {
+      return pill.challenge.accepts(given.response)
+          ? context.l10n.rereadRight
+          : context.l10n.rereadWrong;
+    }
+    return widget.deck.length == 1
+        ? context.l10n.thatWasTheOnlyOne
+        : _index == widget.deck.length - 1 && _total == widget.deck.length
+        ? context.l10n.lastOne
+        : context.l10n.swipeForTheNextOne;
+  }
 
   int get _total => widget.of ?? widget.deck.length;
 

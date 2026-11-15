@@ -4576,4 +4576,29 @@ class RemoteLocalizations extends AppLocalizations {
   String pathCardOf(int n, int total) =>
       _words.format('pathCardOf', localeName, {'n': n, 'total': total}) ??
       _base.pathCardOf(n, total);
+
+  @override
+  String get shareSendCard =>
+      _words.text('shareSendCard') ?? _base.shareSendCard;
+
+  @override
+  String get shareAsImage => _words.text('shareAsImage') ?? _base.shareAsImage;
+
+  @override
+  String get shareCopyLink =>
+      _words.text('shareCopyLink') ?? _base.shareCopyLink;
+
+  @override
+  String get shareAnswerNote =>
+      _words.text('shareAnswerNote') ?? _base.shareAnswerNote;
+
+  @override
+  String get shareWhichSide =>
+      _words.text('shareWhichSide') ?? _base.shareWhichSide;
+
+  @override
+  String get rereadRight => _words.text('rereadRight') ?? _base.rereadRight;
+
+  @override
+  String get rereadWrong => _words.text('rereadWrong') ?? _base.rereadWrong;
 }

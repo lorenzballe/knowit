@@ -1103,5 +1103,12 @@
   "widgetAskPin": "Zet op beginscherm",
   "widgetAskGotIt": "Begrepen",
   "widgetAskNotNow": "Niet nu",
-  "pathCardOf": "Kaart {n} van {total}"
+  "pathCardOf": "Kaart {n} van {total}",
+  "shareSendCard": "Stuur de kaart",
+  "shareAsImage": "Als afbeelding",
+  "shareCopyLink": "Link kopiëren",
+  "shareAnswerNote": "Je vriend ziet eerst de vraag. Het antwoord is één tik verder, op de pagina van de kaart.",
+  "shareWhichSide": "Aan welke kant sta jij?",
+  "rereadRight": "De eerste keer had je het goed.",
+  "rereadWrong": "De eerste keer had je het mis."
 }

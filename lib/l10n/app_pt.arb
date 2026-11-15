@@ -1103,5 +1103,12 @@
   "widgetAskPin": "Adicionar ao ecrã principal",
   "widgetAskGotIt": "Percebi",
   "widgetAskNotNow": "Agora não",
-  "pathCardOf": "Carta {n} de {total}"
+  "pathCardOf": "Carta {n} de {total}",
+  "shareSendCard": "Enviar a carta",
+  "shareAsImage": "Como imagem",
+  "shareCopyLink": "Copiar link",
+  "shareAnswerNote": "O teu amigo vê primeiro a pergunta. A resposta está a um toque, na página da carta.",
+  "shareWhichSide": "De que lado estás?",
+  "rereadRight": "Da primeira vez acertaste.",
+  "rereadWrong": "Da primeira vez falhaste."
 }

@@ -1103,5 +1103,12 @@
   "widgetAskPin": "Ajouter à l'écran d'accueil",
   "widgetAskGotIt": "Compris",
   "widgetAskNotNow": "Pas maintenant",
-  "pathCardOf": "Carte {n} sur {total}"
+  "pathCardOf": "Carte {n} sur {total}",
+  "shareSendCard": "Envoyer la carte",
+  "shareAsImage": "En image",
+  "shareCopyLink": "Copier le lien",
+  "shareAnswerNote": "Ton ami voit d'abord la question. La réponse est à un geste, sur la page de la carte.",
+  "shareWhichSide": "Tu es de quel côté ?",
+  "rereadRight": "La première fois, tu avais juste.",
+  "rereadWrong": "La première fois, tu t'étais trompé."
 }

@@ -4492,4 +4492,25 @@ class AppLocalizationsJa extends AppLocalizations {
   String pathCardOf(int n, int total) {
     return '$total枚中$n枚目';
   }
+
+  @override
+  String get shareSendCard => 'カードを送る';
+
+  @override
+  String get shareAsImage => '画像で';
+
+  @override
+  String get shareCopyLink => 'リンクをコピー';
+
+  @override
+  String get shareAnswerNote => '友だちにはまず問いが届きます。答えはカードのページで、ワンタップ先に。';
+
+  @override
+  String get shareWhichSide => 'あなたはどっち派？';
+
+  @override
+  String get rereadRight => '最初は正解でした。';
+
+  @override
+  String get rereadWrong => '最初は不正解でした。';
 }

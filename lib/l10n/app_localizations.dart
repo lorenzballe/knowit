@@ -6743,6 +6743,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Card {n} of {total}'**
   String pathCardOf(int n, int total);
+
+  /// A card's share sheet: the main button. Sends its question and the link to its page, where a friend answers it before seeing the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Send the card'**
+  String get shareSendCard;
+
+  /// A card's share sheet: shares the card as a picture, for a story or a feed.
+  ///
+  /// In en, this message translates to:
+  /// **'As an image'**
+  String get shareAsImage;
+
+  /// A card's share sheet: copies the link to the card's page.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get shareCopyLink;
+
+  /// Under a card's share buttons: what the friend gets. The answer is never in the message.
+  ///
+  /// In en, this message translates to:
+  /// **'Your friend sees the question first. The answer is one tap away, on the card\'s page.'**
+  String get shareAnswerNote;
+
+  /// The first line of a debate card sent to a friend, before its question and the link.
+  ///
+  /// In en, this message translates to:
+  /// **'Which side are you on?'**
+  String get shareWhichSide;
+
+  /// Under a drawn card opened again from the archive, saved or liked: the reader got it right when it was dealt.
+  ///
+  /// In en, this message translates to:
+  /// **'You got it right the first time.'**
+  String get rereadRight;
+
+  /// Under a drawn card opened again from the archive, saved or liked: the reader missed it when it was dealt.
+  ///
+  /// In en, this message translates to:
+  /// **'You missed it the first time.'**
+  String get rereadWrong;
 }
 
 class _AppLocalizationsDelegate

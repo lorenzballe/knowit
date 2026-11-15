@@ -4493,4 +4493,25 @@ class AppLocalizationsZh extends AppLocalizations {
   String pathCardOf(int n, int total) {
     return '第$n张，共$total张';
   }
+
+  @override
+  String get shareSendCard => '发送卡片';
+
+  @override
+  String get shareAsImage => '以图片分享';
+
+  @override
+  String get shareCopyLink => '复制链接';
+
+  @override
+  String get shareAnswerNote => '朋友会先看到问题，答案在卡片页面上，点一下就能看到。';
+
+  @override
+  String get shareWhichSide => '你站哪一边？';
+
+  @override
+  String get rereadRight => '第一次你答对了。';
+
+  @override
+  String get rereadWrong => '第一次你答错了。';
 }

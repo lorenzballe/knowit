@@ -1103,5 +1103,12 @@
   "widgetAskPin": "Aggiungi alla schermata Home",
   "widgetAskGotIt": "Ho capito",
   "widgetAskNotNow": "Non ora",
-  "pathCardOf": "Carta {n} di {total}"
+  "pathCardOf": "Carta {n} di {total}",
+  "shareSendCard": "Manda la carta",
+  "shareAsImage": "Come immagine",
+  "shareCopyLink": "Copia link",
+  "shareAnswerNote": "Il tuo amico vede prima la domanda. La risposta è a un tocco, sulla pagina della carta.",
+  "shareWhichSide": "Tu da che parte stai?",
+  "rereadRight": "La prima volta l'hai indovinata.",
+  "rereadWrong": "La prima volta l'hai sbagliata."
 }

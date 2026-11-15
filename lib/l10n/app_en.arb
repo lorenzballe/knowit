@@ -4957,5 +4957,33 @@
     "type": "int"
    }
   }
+ },
+ "shareSendCard": "Send the card",
+ "@shareSendCard": {
+  "description": "A card's share sheet: the main button. Sends its question and the link to its page, where a friend answers it before seeing the answer."
+ },
+ "shareAsImage": "As an image",
+ "@shareAsImage": {
+  "description": "A card's share sheet: shares the card as a picture, for a story or a feed."
+ },
+ "shareCopyLink": "Copy link",
+ "@shareCopyLink": {
+  "description": "A card's share sheet: copies the link to the card's page."
+ },
+ "shareAnswerNote": "Your friend sees the question first. The answer is one tap away, on the card's page.",
+ "@shareAnswerNote": {
+  "description": "Under a card's share buttons: what the friend gets. The answer is never in the message."
+ },
+ "shareWhichSide": "Which side are you on?",
+ "@shareWhichSide": {
+  "description": "The first line of a debate card sent to a friend, before its question and the link."
+ },
+ "rereadRight": "You got it right the first time.",
+ "@rereadRight": {
+  "description": "Under a drawn card opened again from the archive, saved or liked: the reader got it right when it was dealt."
+ },
+ "rereadWrong": "You missed it the first time.",
+ "@rereadWrong": {
+  "description": "Under a drawn card opened again from the archive, saved or liked: the reader missed it when it was dealt."
  }
 }

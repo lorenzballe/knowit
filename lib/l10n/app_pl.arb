@@ -1103,5 +1103,12 @@
   "widgetAskPin": "Dodaj do ekranu głównego",
   "widgetAskGotIt": "Jasne",
   "widgetAskNotNow": "Nie teraz",
-  "pathCardOf": "Karta {n} z {total}"
+  "pathCardOf": "Karta {n} z {total}",
+  "shareSendCard": "Wyślij kartę",
+  "shareAsImage": "Jako obraz",
+  "shareCopyLink": "Kopiuj link",
+  "shareAnswerNote": "Twój znajomy najpierw widzi pytanie. Odpowiedź jest o jedno stuknięcie dalej, na stronie karty.",
+  "shareWhichSide": "Po której jesteś stronie?",
+  "rereadRight": "Za pierwszym razem trafiłeś.",
+  "rereadWrong": "Za pierwszym razem się pomyliłeś."
 }
