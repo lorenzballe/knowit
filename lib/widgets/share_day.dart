@@ -318,7 +318,10 @@ class DayPicture extends StatelessWidget {
       'EEEE d MMMM',
       Localizations.localeOf(context).toString(),
     ).format(day);
-    final Color glow = five.isEmpty ? _flame : five.first.color;
+    // The day's own colours: the first card's light from the top corner, the
+    // last card's from the bottom one, so no two days' pictures are alike.
+    final Color first = five.isEmpty ? _flame : five.first.color;
+    final Color last = five.length < 2 ? first : five.last.color;
     return AspectRatio(
       aspectRatio: 4 / 5,
       child: ClipRRect(
@@ -328,115 +331,125 @@ class DayPicture extends StatelessWidget {
             color: _ground,
             gradient: RadialGradient(
               center: const Alignment(1.0, -1.0),
-              radius: 1.25,
-              colors: [glow.withValues(alpha: 0.28), _ground],
+              radius: 1.2,
+              colors: [first.withValues(alpha: 0.32), _ground.withAlpha(0)],
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Astute',
-                      style: AppText.display(
-                        size: 19,
-                        weight: FontWeight.w700,
-                        spacing: -0.5,
-                        color: _ink,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      '#${summary.edition}',
-                      style: AppText.label(
-                        size: 11,
-                        weight: FontWeight.w700,
-                        spacing: 1.1,
-                        color: _ink.withValues(alpha: 0.55),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  l.shareDayHeadline,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.display(
-                    size: 28,
-                    weight: FontWeight.w700,
-                    height: 1.0,
-                    spacing: -1,
-                    color: _ink,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  date,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.body(
-                    size: 12,
-                    weight: FontWeight.w500,
-                    color: _ink.withValues(alpha: 0.55),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                for (int i = 0; i < five.length; i++)
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: i == 0 ? 0 : 6),
-                      child: _Row(pill: five[i]),
-                    ),
-                  ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    if (summary.streak > 0) ...[
-                      const Icon(
-                        Icons.local_fire_department_rounded,
-                        size: 15,
-                        color: _flame,
-                      ),
-                      const SizedBox(width: 3),
+          position: DecorationPosition.background,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: const Alignment(-1.0, 1.0),
+                radius: 1.1,
+                colors: [last.withValues(alpha: 0.24), _ground.withAlpha(0)],
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
                       Text(
-                        l.streakDays(summary.streak),
-                        style: AppText.body(
-                          size: 11.5,
+                        'Astute',
+                        style: AppText.display(
+                          size: 19,
                           weight: FontWeight.w700,
-                          color: _ink.withValues(alpha: 0.8),
+                          spacing: -0.5,
+                          color: _ink,
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const Spacer(),
+                      Text(
+                        '#${summary.edition}',
+                        style: AppText.label(
+                          size: 11,
+                          weight: FontWeight.w700,
+                          spacing: 1.1,
+                          color: _ink.withValues(alpha: 0.55),
+                        ),
+                      ),
                     ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    l.shareDayHeadline,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.display(
+                      size: 28,
+                      weight: FontWeight.w700,
+                      height: 1.0,
+                      spacing: -1,
+                      color: _ink,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    date,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 12,
+                      weight: FontWeight.w500,
+                      color: _ink.withValues(alpha: 0.55),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  for (int i = 0; i < five.length; i++)
                     Expanded(
-                      child: Text(
-                        l.shareDayTurn,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.body(
-                          size: 11.5,
-                          weight: FontWeight.w600,
-                          color: _ink.withValues(alpha: 0.8),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: i == 0 ? 0 : 6),
+                        child: _Row(pill: five[i]),
+                      ),
+                    ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      if (summary.streak > 0) ...[
+                        const Icon(
+                          Icons.local_fire_department_rounded,
+                          size: 15,
+                          color: _flame,
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          l.streakDays(summary.streak),
+                          style: AppText.body(
+                            size: 11.5,
+                            weight: FontWeight.w700,
+                            color: _ink.withValues(alpha: 0.8),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                      ],
+                      Expanded(
+                        child: Text(
+                          l.shareDayTurn,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.body(
+                            size: 11.5,
+                            weight: FontWeight.w600,
+                            color: _ink.withValues(alpha: 0.8),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'astutetheapp.com',
-                      style: AppText.label(
-                        size: 10.5,
-                        weight: FontWeight.w700,
-                        spacing: 0.3,
-                        color: _ink.withValues(alpha: 0.5),
+                      const SizedBox(width: 8),
+                      Text(
+                        'astutetheapp.com',
+                        style: AppText.label(
+                          size: 10.5,
+                          weight: FontWeight.w700,
+                          spacing: 0.3,
+                          color: _ink.withValues(alpha: 0.5),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
