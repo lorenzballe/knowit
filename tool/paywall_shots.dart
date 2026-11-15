@@ -33,18 +33,17 @@ Future<void> _settle(WidgetTester tester, [int frames = 30]) async {
 
 /// A reader who has said how sure they were [n] times, right [right] of
 /// them, at [sure] percent.
-Map<String, Object> _judged(int n, {required int sure, required int right}) =>
-    {
-      'knowit.judgements': jsonEncode([
-        for (var i = 0; i < n; i++)
-          {
-            'c': sure,
-            'k': i < right,
-            'p': PillBank.cards[i].id,
-            'd': dateKey(DateTime.now()),
-          },
-      ]),
-    };
+Map<String, Object> _judged(int n, {required int sure, required int right}) => {
+  'knowit.judgements': jsonEncode([
+    for (var i = 0; i < n; i++)
+      {
+        'c': sure,
+        'k': i < right,
+        'p': PillBank.cards[i].id,
+        'd': dateKey(DateTime.now()),
+      },
+  ]),
+};
 
 void main() {
   setUpAll(() async {
@@ -76,6 +75,7 @@ void main() {
     Brightness brightness = Brightness.dark,
     Map<String, Object> prefs = const {},
     Locale locale = const Locale('en'),
+    int frames = 30,
   }) async {
     final view = tester.view;
     view.physicalSize = phone.$2 * 3;
@@ -97,7 +97,7 @@ void main() {
         home: PaywallScreen(app: app, source: source),
       ),
     );
-    await _settle(tester);
+    await _settle(tester, frames);
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('$_out/$name-${phone.$1}.png'),
@@ -129,6 +129,14 @@ void main() {
         locale: const Locale('it'),
       );
     }
+    // The glint, caught crossing the button: early in its first pass.
+    await shoot(
+      tester,
+      '8-plans-glint',
+      source: 'see the plans',
+      phone: pro,
+      frames: 6,
+    );
     await shoot(
       tester,
       '6-plans-paper',

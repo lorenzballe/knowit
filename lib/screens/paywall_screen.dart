@@ -971,25 +971,34 @@ class _PaywallScreenState extends State<PaywallScreen> {
       // Sixty high on a five-point edge: the face and its edge together
       // are sixty-five — five less on a short phone, where the small print
       // under it needs the room.
-      ChunkyButton(
-        key: const ValueKey('paywall-buy'),
-        label: _cta,
-        height: short ? 60 : 65,
-        depth: 5,
+      // Now and then a glint crosses the button, in the headline's three
+      // colours: the one thing on the screen that moves on its own after
+      // the opening, and it moves on the thing to press.
+      _Sheen(
+        on: !(widget.app.isPlus || _buying),
+        face: (short ? 60 : 65) - 5,
         radius: 22,
-        labelSize: 16.5,
-        labelSpacing: 0.3,
-        fill: p.inverse,
-        ink: p.onInverse,
-        edge: dark ? const Color(0xFFA8A59D) : null,
-        shadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: dark ? 0.45 : 0.15),
-            blurRadius: 34,
-            offset: const Offset(0, 16),
-          ),
-        ],
-        onPressed: widget.app.isPlus || _buying ? null : _start,
+        colours: dark ? _perkHues : _perkHuesOnPaper,
+        child: ChunkyButton(
+          key: const ValueKey('paywall-buy'),
+          label: _cta,
+          height: short ? 60 : 65,
+          depth: 5,
+          radius: 22,
+          labelSize: 16.5,
+          labelSpacing: 0.3,
+          fill: p.inverse,
+          ink: p.onInverse,
+          edge: dark ? const Color(0xFFA8A59D) : null,
+          shadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: dark ? 0.45 : 0.15),
+              blurRadius: 34,
+              offset: const Offset(0, 16),
+            ),
+          ],
+          onPressed: widget.app.isPlus || _buying ? null : _start,
+        ),
       ),
       // A reader already on Astute+ is sent to the store's own place for
       // their plan. This used to say "Cancel the trial" and turn a flag off
@@ -1021,11 +1030,26 @@ class _PaywallScreenState extends State<PaywallScreen> {
         // here.
         Padding(
           padding: EdgeInsets.only(top: short ? 8 : 10),
-          child: Text(
-            l.cancelAnyTime,
-            key: const ValueKey('paywall-cancel'),
-            textAlign: TextAlign.center,
-            style: _smallPrintStyle(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ExcludeSemantics(
+                child: Icon(
+                  Icons.check_circle_rounded,
+                  size: 14,
+                  color: _smallPrintStyle(context).color,
+                ),
+              ),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  l.cancelAnyTime,
+                  key: const ValueKey('paywall-cancel'),
+                  textAlign: TextAlign.center,
+                  style: _smallPrintStyle(context),
+                ),
+              ),
+            ],
           ),
         ),
     ];
@@ -2044,109 +2068,134 @@ class _PlanTile extends StatelessWidget {
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            AnimatedContainer(
+            // The chosen plan's ring in the headline's three colours, the
+            // ones its word and the perks are in: one thread through the
+            // screen, from the word it leans on to the plan it ends on.
+            TweenAnimationBuilder<double>(
+              tween: Tween(end: selected ? 1 : 0),
               duration: const Duration(milliseconds: 220),
               curve: Curves.ease,
-              // The ring is half a point thicker on the chosen one and the
-              // padding half a point thinner, so nothing inside moves.
-              padding: selected
-                  ? const EdgeInsets.fromLTRB(16, 16, 16, 15)
-                  : const EdgeInsets.fromLTRB(16.5, 16.5, 16.5, 15.5),
-              decoration: BoxDecoration(
-                // 160°, top to bottom and a little across.
-                gradient: LinearGradient(
-                  begin: const Alignment(-0.33, -1.36),
-                  end: const Alignment(0.33, 1.36),
-                  colors: selected ? on : [off, off],
-                ),
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(
-                  color: selected ? p.inverse : p.ink.withValues(alpha: 0.09),
-                  width: selected ? 2 : 1.5,
-                ),
-                boxShadow: selected
-                    ? [
-                        BoxShadow(
-                          color: p.inverse.withValues(alpha: 0.07),
-                          spreadRadius: 4,
-                        ),
-                        BoxShadow(
-                          color: Colors.black.withValues(
-                            alpha: dark ? 0.5 : 0.12,
-                          ),
-                          blurRadius: 34,
-                          offset: const Offset(0, 14),
-                        ),
-                      ]
-                    : const [],
+              builder: (context, ring, child) => CustomPaint(
+                foregroundPainter: ring == 0
+                    ? null
+                    : _Ring(
+                        colours: dark ? _perkHues : _perkHuesOnPaper,
+                        width: 2,
+                        radius: 24,
+                        opacity: ring,
+                      ),
+                child: child,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: [
-                      _Radio(on: selected),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: FitText(
-                          label,
-                          maxLines: 1,
-                          minSize: 12,
-                          style: AppText.body(
-                            size: 16,
-                            weight: FontWeight.w600,
-                            height: 1,
-                            color: p.ink,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.ease,
+                // The ring is half a point thicker on the chosen one and the
+                // padding half a point thinner, so nothing inside moves.
+                padding: selected
+                    ? const EdgeInsets.fromLTRB(16, 16, 16, 15)
+                    : const EdgeInsets.fromLTRB(16.5, 16.5, 16.5, 15.5),
+                decoration: BoxDecoration(
+                  // 160°, top to bottom and a little across.
+                  gradient: LinearGradient(
+                    begin: const Alignment(-0.33, -1.36),
+                    end: const Alignment(0.33, 1.36),
+                    colors: selected ? on : [off, off],
+                  ),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    // Under the ring, on the chosen one.
+                    color: selected
+                        ? const Color(0x00000000)
+                        : p.ink.withValues(alpha: 0.09),
+                    width: selected ? 2 : 1.5,
+                  ),
+                  boxShadow: selected
+                      ? [
+                          // A faint glow of the ring's middle colour.
+                          BoxShadow(
+                            color: (dark ? _perkHues : _perkHuesOnPaper)[1]
+                                .withValues(alpha: dark ? 0.16 : 0.12),
+                            blurRadius: 22,
+                            spreadRadius: 1,
+                          ),
+                          BoxShadow(
+                            color: Colors.black.withValues(
+                              alpha: dark ? 0.5 : 0.12,
+                            ),
+                            blurRadius: 34,
+                            offset: const Offset(0, 14),
+                          ),
+                        ]
+                      : const [],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        _Radio(on: selected),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: FitText(
+                            label,
+                            maxLines: 1,
+                            minSize: 12,
+                            style: AppText.body(
+                              size: 16,
+                              weight: FontWeight.w600,
+                              height: 1,
+                              color: p.ink,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 9),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Flexible(
-                        child: FitText(
-                          price,
-                          maxLines: 1,
-                          minSize: 16,
-                          style: AppText.display(
-                            size: 27,
-                            weight: FontWeight.w600,
-                            height: 1,
-                            spacing: -0.8,
-                            color: p.ink,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        per,
-                        style: AppText.body(
-                          size: 13,
-                          weight: FontWeight.w500,
-                          height: 1,
-                          color: p.ink.withValues(alpha: 0.42),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 9),
-                  FitText(
-                    note,
-                    maxLines: 1,
-                    minSize: 10,
-                    style: AppText.body(
-                      size: 12.5,
-                      weight: FontWeight.w500,
-                      height: 1.2,
-                      color: p.ink.withValues(alpha: 0.52),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 9),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Flexible(
+                          child: FitText(
+                            price,
+                            maxLines: 1,
+                            minSize: 16,
+                            style: AppText.display(
+                              size: 27,
+                              weight: FontWeight.w600,
+                              height: 1,
+                              spacing: -0.8,
+                              color: p.ink,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          per,
+                          style: AppText.body(
+                            size: 13,
+                            weight: FontWeight.w500,
+                            height: 1,
+                            color: p.ink.withValues(alpha: 0.42),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 9),
+                    FitText(
+                      note,
+                      maxLines: 1,
+                      minSize: 10,
+                      style: AppText.body(
+                        size: 12.5,
+                        weight: FontWeight.w500,
+                        height: 1.2,
+                        color: p.ink.withValues(alpha: 0.52),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             // The saving rides the tile's top edge rather than taking a
@@ -2190,6 +2239,141 @@ class _PlanTile extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A glint that crosses [child] — a button whose face is [face] high, with
+/// corners of [radius] — every few seconds, in [colours], and rests between.
+/// Not at all while [on] is false, or for anyone who asked for less motion.
+class _Sheen extends StatelessWidget {
+  const _Sheen({
+    required this.on,
+    required this.face,
+    required this.radius,
+    required this.colours,
+    required this.child,
+  });
+
+  final bool on;
+  final double face;
+  final double radius;
+  final List<Color> colours;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!on) return child;
+    return Stack(
+      children: [
+        child,
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 0,
+          height: face,
+          child: IgnorePointer(
+            child: ExcludeSemantics(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(radius),
+                child: RepaintBoundary(
+                  child: AmbientLoop(
+                    period: const Duration(milliseconds: 6500),
+                    reverse: false,
+                    builder: (context, t) => CustomPaint(
+                      painter: _SheenPainter(t: t, colours: colours),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SheenPainter extends CustomPainter {
+  _SheenPainter({required this.t, required this.colours});
+
+  final double t;
+  final List<Color> colours;
+
+  /// The part of each cycle the glint takes to cross; the rest is rest.
+  static const double crossing = 0.21;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (t <= 0 || t >= crossing) return;
+    final double k = Curves.easeInOut.transform(t / crossing);
+    final double band = size.width * 0.42;
+    final double x = -band + k * (size.width + 2 * band);
+    // Leaning, as light across a curved face does.
+    final Offset from = Offset(x - band / 2, size.height);
+    final Offset to = Offset(x + band / 2, 0);
+    canvas.drawRect(
+      Offset.zero & size,
+      Paint()
+        ..blendMode = BlendMode.srcOver
+        ..shader = ui.Gradient.linear(
+          from,
+          to,
+          [
+            colours.first.withValues(alpha: 0),
+            colours[0].withValues(alpha: 0.24),
+            colours[1].withValues(alpha: 0.28),
+            colours[2].withValues(alpha: 0.24),
+            colours.last.withValues(alpha: 0),
+          ],
+          const [0, 0.3, 0.5, 0.7, 1],
+        ),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_SheenPainter old) => old.t != t || old.colours != colours;
+}
+
+/// A ring drawn on a tile's edge in a run of colours, corner to corner.
+class _Ring extends CustomPainter {
+  _Ring({
+    required this.colours,
+    required this.width,
+    required this.radius,
+    required this.opacity,
+  });
+
+  final List<Color> colours;
+  final double width;
+  final double radius;
+  final double opacity;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Rect r = Offset.zero & size;
+    final RRect ring = RRect.fromRectAndRadius(
+      r.deflate(width / 2),
+      Radius.circular(radius - width / 2),
+    );
+    canvas.drawRRect(
+      ring,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = width
+        ..shader = ui.Gradient.linear(
+          r.topLeft,
+          r.bottomRight,
+          [for (final Color c in colours) c.withValues(alpha: opacity)],
+          const [0, 0.55, 1],
+        ),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_Ring old) =>
+      old.opacity != opacity ||
+      old.colours != colours ||
+      old.width != width ||
+      old.radius != radius;
 }
 
 class _Radio extends StatelessWidget {
