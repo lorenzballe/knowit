@@ -7,6 +7,7 @@ name: Android bundle (unsigned for Play)
 # to Play.
 #
 # Started by hand from the Actions tab, or by pushing a change to this file.
+# (Re-run to pick up main as it is.)
 
 on:
   workflow_dispatch:
@@ -37,8 +38,12 @@ jobs:
           distribution: temurin
           java-version: "21"
 
+      # Pinned to the Flutter the bundle was last built with on the laptop.
+      # A newer stable asks for a newer Android Gradle Plugin than the
+      # project has, and refuses to build.
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: "3.47.6"
           channel: stable
           cache: true
 
