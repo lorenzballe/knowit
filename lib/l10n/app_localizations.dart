@@ -6525,7 +6525,7 @@ abstract class AppLocalizations {
   /// The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each.
   ///
   /// In en, this message translates to:
-  /// **'Fine-tune your mix'**
+  /// **'Tune your mix'**
   String get tuneTitle;
 
   /// The topics editor, under the title of the row that opens the fine-tuning.

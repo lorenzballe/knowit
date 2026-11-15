@@ -4541,7 +4541,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Today\'s cards again, full size, from the first';
 
   @override
-  String get tuneTitle => 'Fine-tune your mix';
+  String get tuneTitle => 'Tune your mix';
 
   @override
   String get tuneEntryLine => 'How much of each subject, and which parts of it';

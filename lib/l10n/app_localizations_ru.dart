@@ -4738,7 +4738,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Сегодняшние карточки снова, во весь экран, с первой';
 
   @override
-  String get tuneTitle => 'Тонкая настройка микса';
+  String get tuneTitle => 'Настрой свой микс';
 
   @override
   String get tuneEntryLine => 'Сколько каждой темы и какие её части';

@@ -4387,7 +4387,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get todaySeeAgainHint => '오늘의 카드를 처음부터 전체 화면으로 다시';
 
   @override
-  String get tuneTitle => '믹스 세부 조정';
+  String get tuneTitle => '믹스 조정';
 
   @override
   String get tuneEntryLine => '주제별로 얼마나, 그리고 어떤 부분을';

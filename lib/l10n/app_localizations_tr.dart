@@ -4499,7 +4499,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bugünün kartları yeniden, tam boyutta, ilkinden başlayarak';
 
   @override
-  String get tuneTitle => 'Karışımına ince ayar';
+  String get tuneTitle => 'Karışımını ayarla';
 
   @override
   String get tuneEntryLine => 'Her konudan ne kadar ve hangi kısımları';

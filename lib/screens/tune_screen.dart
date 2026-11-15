@@ -8,6 +8,7 @@ import '../data/genres.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
 import 'genres_screen.dart';
 import 'mix_screen.dart';
@@ -196,24 +197,35 @@ class _TuneScreenState extends State<TuneScreen> {
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: BackCircle(
-                        onPressed: () => Navigator.of(context).maybePop(),
-                      ),
+                    // The way back and the title on one line: the arrow
+                    // alone on a line of its own was a band of nothing over
+                    // the title.
+                    Row(
+                      children: [
+                        BackCircle(
+                          onPressed: () => Navigator.of(context).maybePop(),
+                        ),
+                        const SizedBox(width: 12),
+                        // As every screen with a way back sets its title:
+                        // one line, smaller where a language runs long.
+                        Expanded(
+                          child: FitText(
+                            l.tuneTitle,
+                            key: const ValueKey('tune-title'),
+                            maxLines: 1,
+                            minSize: 20,
+                            style: AppText.display(
+                              size: 27,
+                              weight: FontWeight.w600,
+                              height: 1,
+                              spacing: -0.8,
+                              color: p.ink,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 18),
-                    Text(
-                      l.tuneTitle,
-                      style: AppText.display(
-                        size: 29,
-                        weight: FontWeight.w600,
-                        height: 1.06,
-                        spacing: -1,
-                        color: p.ink,
-                      ),
-                    ),
-                    const SizedBox(height: 7),
+                    const SizedBox(height: 8),
                     Text(
                       _learned ? l.tuneLearned : l.tuneFresh,
                       style: AppText.body(

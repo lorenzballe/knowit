@@ -1067,7 +1067,7 @@
   "exploreBecauseSaved": "「{question}」を保存したから",
   "todaySeeAgain": "もう一度見る",
   "todaySeeAgainHint": "今日のカードをもう一度、全画面で最初から",
-  "tuneTitle": "ミックスを微調整",
+  "tuneTitle": "ミックスを調整",
   "tuneEntryLine": "各分野をどれくらい、そしてどの部分を",
   "tuneLearned": "気に入ったカードと捨てたカードで、すでに調整されています。スライドで変更できます。",
   "tuneFresh": "分野をスライドして、表示する量を調整できます。",

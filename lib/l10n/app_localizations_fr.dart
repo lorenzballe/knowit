@@ -4591,7 +4591,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les cartes du jour à nouveau, en grand, depuis la première';
 
   @override
-  String get tuneTitle => 'Affine ton mélange';
+  String get tuneTitle => 'Règle ton mélange';
 
   @override
   String get tuneEntryLine => 'Combien de chaque sujet, et quelles parties';

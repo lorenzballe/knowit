@@ -4369,7 +4369,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get todaySeeAgainHint => '今日のカードをもう一度、全画面で最初から';
 
   @override
-  String get tuneTitle => 'ミックスを微調整';
+  String get tuneTitle => 'ミックスを調整';
 
   @override
   String get tuneEntryLine => '各分野をどれくらい、そしてどの部分を';
