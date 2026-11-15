@@ -762,6 +762,7 @@ class AppState extends ChangeNotifier {
     reviews: isPlus ? reviews : const [],
     own: own,
     home: place,
+    day: dayNumberOf(date),
   );
 
   /// Deals a fresh day and records it, so a restart resumes the same deck.

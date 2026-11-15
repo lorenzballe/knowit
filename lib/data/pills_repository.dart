@@ -39,6 +39,45 @@ const int kPillsPerDay = 5;
 /// to open the app before coffee.
 const double kAskShare = 0.4;
 
+/// What a card with a drawing — its face a page made with the card kit, to
+/// be played — weighs against one of words alone of its subject, every
+/// day. Those are the app at its best, and dealt as often as the rest only
+/// one day in two held one. As the server deals (functions/src/deal.ts).
+const double kDrawnWeight = 2;
+
+/// The reader's first days, counted by the days finished before them: the
+/// first impression.
+const int kShowcaseDays = 7;
+
+/// What a drawn card weighs in the reader's first [kShowcaseDays] instead:
+/// enough for about three of the five to be drawn where the mix has them.
+/// Dealt as on any other day, two readers in five met no drawing at all on
+/// their first morning.
+const double kShowcaseWeight = 8;
+
+/// What each of [cards] weighs for being drawn or not on the reader's [day]
+/// (0 for their first), in a race among those cards: a drawn card
+/// [kDrawnWeight] times one of words alone of its subject, [kShowcaseWeight]
+/// times in the first week — with the subject's cards together weighing
+/// what they did, so the drawing is preferred inside a subject and the mix
+/// stays the reader's. A subject with more drawings is not dealt more for
+/// having them. Null [day] is a day past the first week.
+double Function(Pill) drawnWeights(List<Pill> cards, int? day) {
+  final double boost = (day ?? kShowcaseDays) < kShowcaseDays
+      ? kShowcaseWeight
+      : kDrawnWeight;
+  final Map<String, (int, int)> counts = {};
+  for (final Pill c in cards) {
+    final (int all, int drawn) = counts[c.topic] ?? (0, 0);
+    counts[c.topic] = (all + 1, drawn + (c.hasPage ? 1 : 0));
+  }
+  return (Pill c) {
+    final (int all, int drawn) = counts[c.topic] ?? (0, 0);
+    final double share = all > 0 ? drawn / all : 0;
+    return (c.hasPage ? boost : 1) / (share * boost + 1 - share);
+  };
+}
+
 /// Whether [p] may be dealt on [date]. A card about the news carries the
 /// last day it is current (see [NewsScene.expires]); from the day after,
 /// it is never dealt again, though it still answers by id.
@@ -96,6 +135,10 @@ List<Pill> pillsForDate(
   /// Debates already on the table today: one at most, and the card about
   /// the reader's place may be it.
   int debatesDealt = 0,
+
+  /// Which of the reader's days this is, 0 for the first: a drawn card
+  /// weighs most in their first week ([drawnWeights]).
+  int? day,
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
   final pool = PillBank.cards.where((p) => dealableOn(p, date)).toList();
@@ -160,6 +203,7 @@ List<Pill> pillsForDate(
               Random(seed),
               levels: levelByName,
               taste: taste,
+              day: day,
             ),
   ];
 
@@ -273,6 +317,10 @@ List<Pill> pillsAtRandom(
   /// carries and by strand id.
   Set<String> topicsDealt = const {},
   Set<String> strandsDealt = const {},
+
+  /// Which of the reader's days this is, 0 for the first: inside a
+  /// subject, a drawn card weighs most in their first week.
+  int? day,
 }) {
   if (count <= 0) return const [];
   // Summed rather than chained, so the order the history is held in
@@ -331,9 +379,18 @@ List<Pill> pillsAtRandom(
     for (final entry in kTopics.entries)
       entry.value.name: weights.isEmpty ? 1.0 : weights[entry.key] ?? 0.0,
   };
+  // And inside a subject a drawn card ahead of words alone, which is the
+  // card, not the reader.
+  final tierCards = List.generate(8, (_) => <Pill>[]);
+  for (final p in pool) {
+    tierCards[tierOf(p)].add(p);
+  }
+  final drawing = [for (final cards in tierCards) drawnWeights(cards, day)];
   final tiers = List.generate(8, (_) => <(double, Pill)>[]);
   for (final p in pool) {
-    final double w = mixByName[p.topic] ?? (weights.isEmpty ? 1.0 : 0.0);
+    final double w =
+        (mixByName[p.topic] ?? (weights.isEmpty ? 1.0 : 0.0)) *
+        drawing[tierOf(p)](p);
     final double u = rng.nextDouble().clamp(1e-12, 1.0);
     tiers[tierOf(p)].add((-math.log(u) / (w <= 0 ? 1e-6 : w), p));
   }
@@ -420,7 +477,13 @@ List<Pill> arrangeDay(List<Pill> cards) {
   int byEase(Pill a, Pill b) =>
       a.difficulty.index.compareTo(b.difficulty.index);
 
-  final reads = [...cards.where((c) => !c.asksSomething)]..sort(byEase);
+  // A drawn read before one of words alone, so the day opens on a drawing
+  // when it has one; then the easy before the hard.
+  final reads = [...cards.where((c) => !c.asksSomething)]
+    ..sort((a, b) {
+      final int byDrawing = (b.hasPage ? 1 : 0).compareTo(a.hasPage ? 1 : 0);
+      return byDrawing != 0 ? byDrawing : byEase(a, b);
+    });
   final asks = [...cards.where((c) => c.asksSomething)]..sort(byEase);
 
   Pill? closer;
@@ -502,14 +565,17 @@ List<Pill> _weightedOrder(
   Random rng, {
   Map<String, int> levels = const {},
   Map<String, double> taste = const {},
+  int? day,
 }) {
   if (pills.isEmpty) return pills;
+  final double Function(Pill) drawing = drawnWeights(pills, day);
   final keyed = <(double, Pill)>[];
   for (final pill in pills) {
     final w =
         (byName[pill.topic] ?? 0.0) *
         _fit(pill, levels[pill.topic]) *
-        leanOf(pill, taste);
+        leanOf(pill, taste) *
+        drawing(pill);
     // A subject pushed all the way in still exists — it just goes last,
     // which is what keeps a day full when the mix is narrow.
     final weight = w <= 0 ? 1e-6 : w;

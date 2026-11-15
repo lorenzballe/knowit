@@ -291,6 +291,10 @@ Deal dealDay({
   int count = kPillsPerDay,
   int own = kOwnCardsFree,
   Place? home,
+
+  /// Which of the reader's days this is, 0 for the first: in their first
+  /// week the day leans hard to the cards with a drawing ([drawnWeights]).
+  int? day,
 }) {
   final int asks = asksInADay(count);
   final int ownCount = own.clamp(0, count);
@@ -332,6 +336,7 @@ Deal dealDay({
     count: max(0, ownSlots - review.length),
     asking: max(0, ownAsks - review.length),
     debatesDealt: local?.challenge is TakeASide ? 1 : 0,
+    day: day,
   );
   final mine = [...review, ...rest];
   final held = [...mine, ?local];
@@ -350,6 +355,7 @@ Deal dealDay({
       for (final p in held)
         if (p.strand.isNotEmpty) p.strand,
     },
+    day: day,
   );
   return Deal(
     cards: arrangeDay([...held, ...chance]),

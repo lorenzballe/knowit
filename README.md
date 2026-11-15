@@ -1745,7 +1745,23 @@ date, the same on every server) one of the day's reads is an *explorer*: a
 card from a strand the reader has never met, chosen on level alone with
 the taste set aside, and named in the day (`explorer`), so the next
 morning's trace says whether it took. A taste that only confirms itself
-narrows to nothing; the server can only learn from what it showed. Every
+narrows to nothing; the server can only learn from what it showed.
+
+The cards with a drawing — a page made with the card kit, to be played —
+are the app at its best, and dealt like the rest they were rare: one day in
+two held none, and two new readers in five met no drawing on their first
+morning (a simulation of the server's own deal, 300 readers over a week).
+Inside each subject a drawn card now weighs twice one of words alone, and
+eight times in the reader's first seven days (`DRAWN_WEIGHT`,
+`SHOWCASE_WEIGHT`, `SHOWCASE_DAYS` in `functions/src/deal.ts`, the same in
+`lib/data/pills_repository.dart`) — with a subject's cards together
+weighing what they did, so the mix stays the reader's and a subject is not
+dealt more for having more drawings. A day opens on its drawn read when it
+has one. The first week then holds about two drawn cards a day, where it
+held fewer than one, and one new reader in twelve starts on a morning
+with none, where it was two in five. A subject without drawings stays as
+it was: art, cinema, language, music, philosophy, pop culture and sport
+have none yet. Every
 number in this is one line with its reason beside it — the dwell signals
 are trusted only from five timed cards, the taste never moves past 0.6 on
 one tag, the trace of the last three weeks with the second week at half —

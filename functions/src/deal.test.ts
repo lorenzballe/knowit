@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { Bank, asks, graded, editionOf, expiredOn, isSunday, localDate, localHour, shiftDate } from './bank.js';
 import { keyed, unit } from './rng.js';
 import { buildProfile, readOnboarding, readTrace, weightsOn, dayNumberOf, Event, Snapshot, TASTE_LEAN } from './profile.js';
-import { arrangeDay, commonOfEdition, dealDay, dealOwn, explorerDay, ownCardsFor, questionOfEdition, EXPLORER_SHARE, OWN_FREE, OWN_REWARDED, OWN_SUNDAY, PILLS_PER_DAY } from './deal.js';
+import { arrangeDay, commonOfEdition, dealDay, dealOwn, drawn, drawnWeights, explorerDay, ownCardsFor, questionOfEdition, DRAWN_WEIGHT, EXPLORER_SHARE, OWN_FREE, OWN_REWARDED, OWN_SUNDAY, PILLS_PER_DAY, SHOWCASE_DAYS, SHOWCASE_WEIGHT } from './deal.js';
 import { ALL_TIME_SEED, askingCards, buildGlobalExplore, buildPersonalExplore, pickedCards, popularity, topList } from './explore.js';
 import { search } from './search.js';
 import { askableDate, datesToPrepare } from './serve.js';
@@ -460,4 +460,64 @@ test('a free card is dealt like any card, its page marks it, and it is never the
   const thinking = { ...page, id: 'thinking-page-x', topic: 'thinking' };
   const shelf = new Bank({ version: 1, cards: [thinking, ...bank.cards.filter((c) => c.topic === 'thinking')], editions: {}, commons: {} });
   for (let e = 1; e <= 60; e++) assert.notEqual(questionOfEdition(shelf, e)?.kind, 'page', `edition ${e}`);
+});
+
+// ── Drawn cards: the app at its best, first ─────────────────────────────
+
+test('a drawn card weighs more inside its subject, and the subject no more than it did', () => {
+  const cards = bank.live.filter((c) => c.topic === 'science' || c.topic === 'music');
+  assert.ok(cards.some((c) => c.topic === 'science' && drawn(c)) && cards.some((c) => c.topic === 'science' && !drawn(c)));
+  for (const [day, boost] of [[0, SHOWCASE_WEIGHT], [SHOWCASE_DAYS - 1, SHOWCASE_WEIGHT], [SHOWCASE_DAYS, DRAWN_WEIGHT], [undefined, DRAWN_WEIGHT]] as const) {
+    const w = drawnWeights(cards, day);
+    for (const topic of ['science', 'music']) {
+      const own = cards.filter((c) => c.topic === topic);
+      const total = own.reduce((sum, c) => sum + w(c), 0);
+      assert.ok(Math.abs(total - own.length) < 1e-9, `${topic} on day ${day}: weighs ${total}, as its ${own.length} cards did`);
+    }
+    const d = cards.find((c) => c.topic === 'science' && drawn(c)) as typeof cards[0];
+    const plain = cards.find((c) => c.topic === 'science' && !drawn(c)) as typeof cards[0];
+    assert.ok(Math.abs(w(d) / w(plain) - boost) < 1e-9, `day ${day}: a drawing ${boost} times words alone`);
+  }
+});
+
+test('the first week leans to the drawn cards, and every day opens on a drawing when it holds one', () => {
+  const snapshot = { topicWeights: { science: 1, space: 0.8, history: 0.6 }, pickedTopics: ['science', 'space', 'history', 'thinking'] };
+  const drawnIn = (done: number) => {
+    let total = 0;
+    for (let r = 0; r < 30; r++) {
+      const completed = Array.from({ length: done }, (_, i) => shiftDate(DAY, i - done));
+      const d = dealDay(bank, profileOf({ ...snapshot, completedDates: completed }), DAY, `reader-${r}`);
+      assert.equal(d.day, done);
+      total += d.cards.filter(drawn).length;
+      const reads = d.cards.filter((c) => !asks(c));
+      if (reads.some(drawn)) assert.ok(drawn(d.cards[0]), `reader-${r} after ${done} days opens on a drawing: ${d.cards.map((c) => c.id).join(', ')}`);
+    }
+    return total / 30;
+  };
+  const first = drawnIn(0);
+  const later = drawnIn(SHOWCASE_DAYS);
+  assert.ok(first >= 2.5, `the first morning holds ${first} drawn cards on average`);
+  assert.ok(later >= 1 && later < first, `a week in, ${later} a day: fewer, still more than words alone would leave`);
+  // The mix is the reader's: a subject with no drawings is dealt as often in the first week as after it.
+  const mixed = { topicWeights: { science: 1, music: 1 }, pickedTopics: ['science', 'music', 'thinking'] };
+  const musicIn = (done: number) => {
+    let n = 0;
+    for (let r = 0; r < 40; r++) {
+      const completed = Array.from({ length: done }, (_, i) => shiftDate(DAY, i - done));
+      n += dealDay(bank, profileOf({ ...mixed, completedDates: completed }), DAY, `reader-${r}`).cards.filter((c) => c.topic === 'music').length;
+    }
+    return n;
+  };
+  const early = musicIn(0), past = musicIn(SHOWCASE_DAYS);
+  assert.ok(Math.abs(early - past) <= 10, `music cards: ${early} in the first week against ${past} after, of 200`);
+});
+
+test('a day is arranged with its drawn read first, then the easy before the hard', () => {
+  const reads = bank.live.filter((c) => !asks(c));
+  const plain = reads.find((c) => !drawn(c) && c.difficulty === 'easy') as typeof reads[0];
+  const drawing = reads.find(drawn) as typeof reads[0];
+  const question = bank.live.find((c) => asks(c) && c.kind !== 'debate') as typeof reads[0];
+  const day = arrangeDay([plain, question, drawing]);
+  assert.equal(day[0].id, drawing.id, 'opens on the drawing');
+  assert.equal(day[2].id, plain.id);
 });
