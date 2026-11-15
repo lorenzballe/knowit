@@ -1294,7 +1294,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get perkGapLine =>
-      'Your journey, week by week: how sure against how right, and the moves you keep missing.';
+      'Week by week: how sure against how right, and the moves you keep missing.';
 
   @override
   String get perkOwnFiveTitle => 'Five of your own cards';

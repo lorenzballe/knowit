@@ -1299,7 +1299,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get perkGapLine =>
-      'Il tuo viaggio, settimana per settimana: quanto sicuro contro quanto giusto, e le mosse che sbagli più spesso.';
+      'Ogni settimana: quanto sei sicuro contro quanto ci prendi, e cosa sbagli di più.';
 
   @override
   String get perkOwnFiveTitle => 'Le tue cinque carte';

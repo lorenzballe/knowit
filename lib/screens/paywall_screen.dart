@@ -53,20 +53,30 @@ int get kYearlySavingPercent {
 // is the one thing the free plan cannot show at all. Then the day made of
 // the reader's own cards, then the days to open again. Six perks read as a
 // list of features; three read as a reason.
-List<({IconData icon, String title, String sub})> _perks(AppLocalizations l) =>
-    [
-      (icon: Icons.insights_rounded, title: l.perkGapTitle, sub: l.perkGapLine),
-      (
-        icon: Icons.auto_awesome_rounded,
-        title: l.perkOwnFiveTitle,
-        sub: l.perkOwnFiveLine,
-      ),
-      (
-        icon: Icons.inventory_2_rounded,
-        title: l.perkReadTitle,
-        sub: l.perkReadLine,
-      ),
-    ];
+//
+// Each is drawn rather than marked with an icon: the gap closing on a
+// chart, five cards fanned, a month of days read. An icon on a faint square
+// said "feature"; the picture says which one, at a glance, and fills the
+// card it sits on.
+List<({_PerkArt art, String title, String sub})> _perks(AppLocalizations l) => [
+  (art: _PerkArt.gap, title: l.perkGapTitle, sub: l.perkGapLine),
+  (art: _PerkArt.five, title: l.perkOwnFiveTitle, sub: l.perkOwnFiveLine),
+  (art: _PerkArt.days, title: l.perkReadTitle, sub: l.perkReadLine),
+];
+
+/// The three perks' hues, the headline's three in its order — yellow, teal,
+/// violet — bright at night, and deepened on paper enough to draw a line
+/// in.
+const List<Color> _perkHues = [
+  Color(0xFFFFE14D),
+  Color(0xFF2DE0D2),
+  Color(0xFF8B6CFF),
+];
+const List<Color> _perkHuesOnPaper = [
+  Color(0xFFD9A300),
+  Color(0xFF00A99C),
+  Color(0xFF6E3AFF),
+];
 
 /// What the paywall opens on, by the door it was opened from.
 ///
@@ -804,12 +814,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         ...opener,
                         const SizedBox(height: 18),
                         for (final (int i, perk) in _perks(l).indexed) ...[
-                          if (i > 0) const SizedBox(height: _Perk.gap),
+                          if (i > 0) const SizedBox(height: _Perk.between),
                           _Perk(
-                            icon: perk.icon,
+                            art: perk.art,
                             title: perk.title,
                             sub: perk.sub,
-                            colour: kSpectrum[(i * 4) % kSpectrum.length],
+                            index: i,
                           ),
                         ],
                         const SizedBox(height: 6),
@@ -823,53 +833,59 @@ class _PaywallScreenState extends State<PaywallScreen> {
     );
   }
 
-  /// The three perks in the height the rest of the screen leaves them.
+  /// The three perks in the height the rest of the screen leaves them:
+  /// three cards sharing it, each as tall as a third of it allows, so the
+  /// room is filled by the three things rather than by the air between
+  /// them. Past [_Perk.most] a card grows no more, and the rest is spread
+  /// round the three. The three are set alike: their lines are shown on
+  /// all three, at one size, or on none.
   Widget _perksInRoom(AppLocalizations l) => LayoutBuilder(
     builder: (context, room) {
       final perks = _perks(l);
       // Never right up against the line above or the plans below, however
       // short the phone.
-      final double air = math.min(_Perk.leastAir, room.maxHeight / 2);
+      final double air = math.min(_Perk.air, room.maxHeight / 2);
       final double height = room.maxHeight - 2 * air;
-      final _PerkSize size = _PerkSize.values.firstWhere(
-        (s) => height >= _Perk.needs(s, perks.length),
-        orElse: () => _PerkSize.tight,
-      );
-      // A phone too short even for three small titles keeps as many as
+      final double each =
+          (height - (perks.length - 1) * _Perk.between) / perks.length;
+      // A phone too short even for three of the smallest keeps as many as
       // there is room for, in order, rather than overflow: the record first.
-      final int shown = height >= _Perk.needs(size, perks.length)
+      final int shown = each >= _Perk.least
           ? perks.length
           : math.max(
               0,
               math.min(
                 perks.length,
-                (height + _Perk.gapAt(size)) ~/
-                    (_Perk.heightAt(size) + _Perk.gapAt(size)),
+                (height + _Perk.between) ~/ (_Perk.least + _Perk.between),
               ),
             );
-      // Spread through the room rather than huddled in the middle of it:
-      // three things, each with air around it, is what three things looks
-      // like.
+      final double card = shown == perks.length
+          ? math.min(each, _Perk.most)
+          : _Perk.least;
+      final _PerkLayout layout = _PerkLayout.fit(
+        context,
+        width: room.maxWidth,
+        height: card,
+        titles: [for (final perk in perks.take(shown)) perk.title],
+        subs: [for (final perk in perks.take(shown)) perk.sub],
+      );
       return Padding(
         padding: EdgeInsets.symmetric(vertical: air),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (final (int i, perk) in perks.take(shown).indexed) ...[
-              if (i > 0 && size != _PerkSize.full)
-                SizedBox(height: _Perk.gapAt(size)),
+              if (i > 0) const SizedBox(height: _Perk.between),
               RiseIn.staggered(
                 i,
-                step: const Duration(milliseconds: 50),
+                step: const Duration(milliseconds: 60),
                 child: _Perk(
-                  icon: perk.icon,
+                  art: perk.art,
                   title: perk.title,
                   sub: perk.sub,
-                  // Three points, three hues off the wheel — the same
-                  // wheel the reader's own record is drawn in.
-                  colour: kSpectrum[(i * 4) % kSpectrum.length],
-                  size: size,
+                  index: i,
+                  layout: layout,
                 ),
               ),
             ],
@@ -1469,130 +1485,525 @@ class _Headline extends StatelessWidget {
   }
 }
 
-/// How much of a perk there is room for, most first.
-enum _PerkSize {
-  /// Its title and its line, beside its tile.
-  full,
+/// What a perk's picture shows.
+enum _PerkArt {
+  /// The record: how sure, dashed, and how right, rising to meet it, the
+  /// gap between them closing week by week.
+  gap,
 
-  /// Its title alone, beside its tile: most phones, once the door's line
-  /// and the trial's days have taken theirs.
-  compact,
+  /// The reader's own day: five cards, fanned, each its subject's colour.
+  five,
 
-  /// Its title alone, a size down, beside a smaller tile: a short phone's.
-  tight,
+  /// The days read: a month of them, filled in, the last one marked.
+  days,
 }
 
-class _Perk extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String sub;
-  final Color colour;
-  final _PerkSize size;
-
-  const _Perk({
-    required this.icon,
-    required this.title,
-    required this.sub,
-    required this.colour,
-    this.size = _PerkSize.full,
+/// How the three perk cards are set, alike, in the room they share: how
+/// tall, the picture's size, the title's, and the size of the line under
+/// it, or none when the three lines do not all fit whole.
+class _PerkLayout {
+  const _PerkLayout({
+    required this.height,
+    required this.pad,
+    required this.picture,
+    required this.titleSize,
+    required this.subSize,
   });
 
-  /// A title and three lines under it, which is what the longest line takes
-  /// at the smallest size the text is allowed to shrink to.
-  static const double fullHeight = 91;
-  static const double gap = 22;
+  final double height;
+  final double pad;
+  final double picture;
+  final double titleSize;
+  final double? subSize;
 
-  /// The title alone, beside its tile, which is the taller of the two.
-  static const double compactHeight = 46;
-  static const double leastGap = 6;
+  /// Between the picture and the words.
+  double get space => picture >= 56 ? 16 : 12;
 
-  /// The same, a size down.
-  static const double tightHeight = 26;
-  static const double tightGap = 4;
+  static double padFor(double h) => h >= 96
+      ? 14
+      : h >= 66
+      ? 11
+      : 7;
 
-  /// The least room kept above the first perk and below the last.
-  static const double leastAir = 4;
+  /// The set that [height] allows cards [width] wide, with [titles] and
+  /// [subs] in them.
+  static _PerkLayout fit(
+    BuildContext context, {
+    required double width,
+    required double height,
+    required List<String> titles,
+    required List<String> subs,
+  }) {
+    final double pad = padFor(height);
+    final double picture = (height - 2 * pad).clamp(30.0, 84.0).toDouble();
+    final double titleSize = height >= 76 ? 17.5 : (height >= 58 ? 16 : 15);
+    final double words =
+        width - 2 * (pad + 2) - picture - (picture >= 56 ? 16 : 12);
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextDirection direction = Directionality.of(context);
+    final TextStyle base = DefaultTextStyle.of(context).style;
+    double measure(String text, TextStyle style, int lines) {
+      final TextPainter painter = TextPainter(
+        text: TextSpan(text: text, style: base.merge(style)),
+        textDirection: direction,
+        textScaler: scaler,
+        maxLines: lines,
+      )..layout(maxWidth: math.max(0, words));
+      final double h = painter.didExceedMaxLines
+          ? double.infinity
+          : painter.height;
+      painter.dispose();
+      return h;
+    }
 
-  static double heightAt(_PerkSize size) => switch (size) {
-    _PerkSize.full => fullHeight,
-    _PerkSize.compact => compactHeight,
-    _PerkSize.tight => tightHeight,
-  };
+    double tallest(List<String> texts, TextStyle style, int lines) =>
+        texts.map((t) => measure(t, style, lines)).fold(0, math.max);
 
-  /// The least air between two perks at [size]; the room left over is
-  /// spread between them.
-  static double gapAt(_PerkSize size) => switch (size) {
-    _PerkSize.full => gap,
-    _PerkSize.compact => leastGap,
-    _PerkSize.tight => tightGap,
-  };
+    // A pixel or two kept back: what is measured and what is drawn can
+    // round apart.
+    final double left =
+        height -
+        2 * pad -
+        tallest(titles, _Perk.titleStyle(titleSize, null), 1) -
+        _Perk.under -
+        2;
+    double? subSize;
+    for (double s = 13.5; s >= 12; s -= 0.5) {
+      if (tallest(subs, _Perk.subStyle(s, null), 3) <= left) {
+        subSize = s;
+        break;
+      }
+    }
+    return _PerkLayout(
+      height: height,
+      pad: pad,
+      picture: picture,
+      titleSize: titleSize,
+      subSize: subSize,
+    );
+  }
+}
 
-  /// The height [n] perks need at [size].
-  static double needs(_PerkSize size, int n) =>
-      n * heightAt(size) + (n - 1) * gapAt(size);
+/// One of the three things, on a card of its own in its hue: its picture,
+/// its title, and its line where the cards have the room for it whole.
+///
+/// Given a [layout], the card is set by it — as tall as a third of the room
+/// allows, with the picture a square as tall as the card does. Without one
+/// — the page that scrolls, at the largest text sizes — it is as tall as
+/// its words.
+class _Perk extends StatelessWidget {
+  final _PerkArt art;
+  final String title;
+  final String sub;
+
+  /// Which of the three: its hue, and when its picture draws.
+  final int index;
+  final _PerkLayout? layout;
+
+  const _Perk({
+    required this.art,
+    required this.title,
+    required this.sub,
+    required this.index,
+    this.layout,
+  });
+
+  /// The least a card is: its picture and its title, a size down.
+  static const double least = 46;
+
+  /// The most it grows to.
+  static const double most = 128;
+
+  /// Between two cards, and above the first and below the last.
+  static const double between = 10;
+  static const double air = 8;
+
+  /// Between the title and its line.
+  static const double under = 4;
+
+  static TextStyle titleStyle(double size, Color? ink) => AppText.body(
+    size: size,
+    weight: FontWeight.w700,
+    height: 1.18,
+    spacing: -0.25,
+    color: ink,
+  );
+
+  static TextStyle subStyle(double size, Color? ink) =>
+      AppText.body(size: size, height: 1.36, color: ink);
 
   @override
   Widget build(BuildContext context) {
-    final bool full = size == _PerkSize.full;
-    final bool tight = size == _PerkSize.tight;
-    final double tile = tight ? tightHeight : compactHeight;
-    return Row(
-      crossAxisAlignment: full
-          ? CrossAxisAlignment.start
-          : CrossAxisAlignment.center,
-      children: [
-        // The tile is the app's own, as it was: the hue at a fifth for a
-        // ground and the glyph in the hue.
-        Container(
-          width: tile,
-          height: tile,
-          decoration: BoxDecoration(
-            color: colour.withValues(alpha: 0.18),
-            borderRadius: BorderRadius.circular(tight ? 8.5 : 15),
-          ),
-          alignment: Alignment.center,
-          child: Icon(icon, size: tight ? 14 : 23, color: colour),
+    final Palette p = context.p;
+    final bool dark = p.isDark;
+    final Color hue = (dark ? _perkHues : _perkHuesOnPaper)[index % 3];
+    final _PerkLayout? set = layout;
+    final double pad = set?.pad ?? 14;
+    final double picture = set?.picture ?? 64;
+    final double titleSize = set?.titleSize ?? 17.5;
+    final double? subSize = set == null ? 13.5 : set.subSize;
+    final Color subInk = p.ink.withValues(alpha: dark ? 0.62 : 0.66);
+
+    return Container(
+      key: ValueKey('paywall-perk-${art.name}'),
+      height: set?.height,
+      padding: EdgeInsets.symmetric(horizontal: pad + 2, vertical: pad),
+      decoration: BoxDecoration(
+        // The card's hue as a wash, stronger at the picture's side.
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Color.alphaBlend(
+              hue.withValues(alpha: dark ? 0.13 : 0.10),
+              dark ? p.surface : p.surfaceRaised,
+            ),
+            Color.alphaBlend(
+              hue.withValues(alpha: dark ? 0.04 : 0.03),
+              dark ? p.surface : p.surfaceRaised,
+            ),
+          ],
         ),
-        SizedBox(width: tight ? 12 : 18),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: full ? 3 : 0),
+        borderRadius: BorderRadius.circular(
+          set != null && set.height < 60 ? 16 : 22,
+        ),
+        border: Border.all(color: hue.withValues(alpha: dark ? 0.22 : 0.20)),
+      ),
+      child: Row(
+        children: [
+          _PerkPicture(art: art, hue: hue, size: picture, index: index),
+          SizedBox(width: set?.space ?? 16),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
                 FitText(
                   title,
                   maxLines: 1,
-                  minSize: tight ? 12 : 13,
-                  style: AppText.body(
-                    size: tight ? 15 : 18,
-                    weight: FontWeight.w600,
-                    height: 1.2,
-                    spacing: -0.2,
-                    color: context.p.ink,
-                  ),
+                  minSize: 12,
+                  style: titleStyle(titleSize, p.ink),
                 ),
-                if (full) ...[
-                  const SizedBox(height: 6),
-                  FitText(
+                if (subSize != null) ...[
+                  const SizedBox(height: under),
+                  Text(
                     sub,
-                    maxLines: 3,
-                    minSize: 11.5,
-                    style: AppText.body(
-                      size: 14,
-                      height: 1.42,
-                      color: context.p.ink.withValues(alpha: 0.56),
-                    ),
+                    maxLines: set == null ? null : 3,
+                    style: subStyle(subSize, subInk),
                   ),
                 ],
               ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+}
+
+/// A perk's picture: a square in its hue with the thing drawn in it, drawn
+/// in once as the paywall opens — the line rising, the cards fanning, the
+/// days filling — and still for anyone who asked for less motion.
+class _PerkPicture extends StatefulWidget {
+  const _PerkPicture({
+    required this.art,
+    required this.hue,
+    required this.size,
+    required this.index,
+  });
+
+  final _PerkArt art;
+  final Color hue;
+  final double size;
+  final int index;
+
+  @override
+  State<_PerkPicture> createState() => _PerkPictureState();
+}
+
+class _PerkPictureState extends State<_PerkPicture>
+    with SingleTickerProviderStateMixin {
+  // Each a little after the one above, as the cards rise in.
+  late final AnimationController _draw = AnimationController(
+    vsync: this,
+    duration: Duration(milliseconds: 1100 + 140 * widget.index),
+  );
+  late final Animation<double> _t = CurvedAnimation(
+    parent: _draw,
+    curve: Interval(
+      (140 * widget.index + 180) / (1100 + 140 * widget.index),
+      1,
+      curve: Curves.easeOutCubic,
+    ),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final bool still = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    if (still) {
+      _draw.value = 1;
+    } else if (!_draw.isAnimating && _draw.value == 0) {
+      _draw.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _draw.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool dark = context.p.isDark;
+    final double s = widget.size;
+    return ExcludeSemantics(
+      child: Container(
+        width: s,
+        height: s,
+        decoration: BoxDecoration(
+          color: widget.hue.withValues(alpha: dark ? 0.16 : 0.12),
+          borderRadius: BorderRadius.circular(s * 0.3),
+        ),
+        child: RepaintBoundary(
+          child: AnimatedBuilder(
+            animation: _t,
+            builder: (context, _) => CustomPaint(
+              size: Size.square(s),
+              painter: _PerkArtPainter(
+                art: widget.art,
+                t: _t.value,
+                hue: widget.hue,
+                ink: context.p.ink,
+                dark: dark,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PerkArtPainter extends CustomPainter {
+  _PerkArtPainter({
+    required this.art,
+    required this.t,
+    required this.hue,
+    required this.ink,
+    required this.dark,
+  });
+
+  final _PerkArt art;
+  final double t;
+  final Color hue;
+  final Color ink;
+  final bool dark;
+
+  @override
+  void paint(Canvas canvas, Size size) => switch (art) {
+    _PerkArt.gap => _gap(canvas, size.width),
+    _PerkArt.five => _five(canvas, size.width),
+    _PerkArt.days => _days(canvas, size.width),
+  };
+
+  /// Five weeks: how sure, dashed and level near the top, and how right,
+  /// rising from well under it and closing on it, fast and then slowly, as
+  /// a gap closes; the gap between the two shaded, each week a bead.
+  void _gap(Canvas canvas, double s) {
+    final Rect r = Rect.fromLTRB(s * 0.18, s * 0.25, s * 0.82, s * 0.78);
+    Offset at(double x, double y) =>
+        Offset(r.left + x * r.width, r.top + y * r.height);
+    const double sure = 0.0;
+    // How right, week by week: the gap halving, near enough.
+    double rightAt(double x) => sure + 0.96 * math.pow(0.16, x).toDouble();
+    const int steps = 48;
+    final double reach = t.clamp(0.0, 1.0);
+    final List<Offset> curve = [
+      for (int i = 0; i <= steps; i++)
+        if (i / steps <= reach + 1e-9) at(i / steps, rightAt(i / steps)),
+    ];
+    if (curve.isEmpty) return;
+    final double sureY = at(0, sure).dy;
+
+    // The gap, shaded between the two lines as far as the line has come.
+    final Path wedge = Path()..moveTo(curve.first.dx, sureY);
+    wedge.lineTo(curve.last.dx, sureY);
+    for (final Offset o in curve.reversed) {
+      wedge.lineTo(o.dx, o.dy);
+    }
+    wedge.close();
+    canvas.drawPath(
+      wedge,
+      Paint()
+        ..shader = ui.Gradient.linear(Offset(r.left, 0), Offset(r.right, 0), [
+          hue.withValues(alpha: dark ? 0.30 : 0.24),
+          hue.withValues(alpha: dark ? 0.10 : 0.08),
+        ]),
+    );
+
+    // How sure: dashed, the whole width from the start.
+    final Paint dash = Paint()
+      ..color = ink.withValues(alpha: dark ? 0.6 : 0.5)
+      ..strokeWidth = s * 0.032
+      ..strokeCap = StrokeCap.round;
+    for (double x = r.left; x < r.right - s * 0.01; x += s * 0.08) {
+      canvas.drawLine(
+        Offset(x, sureY),
+        Offset(math.min(x + s * 0.035, r.right), sureY),
+        dash,
+      );
+    }
+
+    // How right, closing on it.
+    final Path line = Path()..moveTo(curve.first.dx, curve.first.dy);
+    for (final Offset o in curve.skip(1)) {
+      line.lineTo(o.dx, o.dy);
+    }
+    canvas.drawPath(
+      line,
+      Paint()
+        ..color = hue
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = s * 0.055
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
+    );
+    // The weeks it has passed, as beads on it; the last ringed once the
+    // line has reached it.
+    for (int w = 0; w <= 4; w++) {
+      final double x = w / 4;
+      if (x > reach + 1e-9) break;
+      final Offset o = at(x, rightAt(x));
+      final bool last = w == 4;
+      canvas.drawCircle(o, s * (last ? 0.058 : 0.045), Paint()..color = hue);
+      canvas.drawCircle(
+        o,
+        s * (last ? 0.024 : 0.018),
+        Paint()..color = dark ? const Color(0xFF15140A) : Colors.white,
+      );
+      if (last) {
+        canvas.drawCircle(
+          o,
+          s * 0.1,
+          Paint()
+            ..color = hue.withValues(alpha: 0.35)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = s * 0.022,
+        );
+      }
+    }
+  }
+
+  /// Five cards, fanned open from one held at the foot, each in a subject's
+  /// colour, with two lines of words on each.
+  void _five(Canvas canvas, double s) {
+    const List<Color> cards = [
+      Color(0xFFFF3D7F),
+      Color(0xFFFF7A1A),
+      Color(0xFFFFE600),
+      Color(0xFF00D9D9),
+      Color(0xFF4C6FFF),
+    ];
+    final Offset pivot = Offset(s * 0.5, s * 0.86);
+    final double w = s * 0.27;
+    final double h = s * 0.40;
+    for (int i = 0; i < cards.length; i++) {
+      final double angle = (i - 2) * 17 * math.pi / 180 * t;
+      canvas.save();
+      canvas.translate(pivot.dx, pivot.dy);
+      canvas.rotate(angle);
+      final RRect card = RRect.fromRectAndRadius(
+        Rect.fromLTWH(-w / 2, -h - s * 0.06, w, h),
+        Radius.circular(s * 0.05),
+      );
+      canvas.drawRRect(
+        card.shift(Offset(0, s * 0.012)),
+        Paint()..color = Colors.black.withValues(alpha: dark ? 0.35 : 0.12),
+      );
+      canvas.drawRRect(card, Paint()..color = cards[i]);
+      final Color words = inkOn(cards[i]).withValues(alpha: 0.55);
+      final Paint stroke = Paint()
+        ..color = words
+        ..strokeWidth = s * 0.025
+        ..strokeCap = StrokeCap.round;
+      final double top = -h - s * 0.06 + s * 0.08;
+      canvas.drawLine(
+        Offset(-w / 2 + s * 0.05, top),
+        Offset(w / 2 - s * 0.05, top),
+        stroke,
+      );
+      canvas.drawLine(
+        Offset(-w / 2 + s * 0.05, top + s * 0.05),
+        Offset(w / 2 - s * 0.10, top + s * 0.05),
+        stroke,
+      );
+      canvas.restore();
+    }
+  }
+
+  /// A month of days, four weeks of five, filled in as read; the few
+  /// missed left empty, the last one ringed.
+  void _days(Canvas canvas, double s) {
+    const int cols = 5, rows = 4;
+    const Set<int> missed = {3, 9, 14};
+    final double cell = s * 0.105;
+    final double gap = s * 0.04;
+    final double width = cols * cell + (cols - 1) * gap;
+    final double height = rows * cell + (rows - 1) * gap;
+    final Offset origin = Offset((s - width) / 2, (s - height) / 2);
+    final int count = cols * rows;
+    for (int k = 0; k < count; k++) {
+      final int col = k % cols, row = k ~/ cols;
+      final Rect box = Rect.fromLTWH(
+        origin.dx + col * (cell + gap),
+        origin.dy + row * (cell + gap),
+        cell,
+        cell,
+      );
+      // Each day in turn, a little after the one before.
+      final double shown = ((t * (count + 4) - k) / 4).clamp(0.0, 1.0);
+      final bool read = !missed.contains(k);
+      final Paint empty = Paint()
+        ..color = ink.withValues(alpha: dark ? 0.12 : 0.10);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(box, Radius.circular(cell * 0.3)),
+        empty,
+      );
+      if (!read || shown == 0) continue;
+      final Rect filled = Rect.fromCenter(
+        center: box.center,
+        width: cell * shown,
+        height: cell * shown,
+      );
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(filled, Radius.circular(cell * 0.3 * shown)),
+        Paint()..color = hue.withValues(alpha: k == count - 1 ? 1 : 0.85),
+      );
+      if (k == count - 1 && t >= 0.999) {
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            box.inflate(s * 0.03),
+            Radius.circular(cell * 0.45),
+          ),
+          Paint()
+            ..color = hue.withValues(alpha: 0.45)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = s * 0.02,
+        );
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_PerkArtPainter old) =>
+      old.t != t ||
+      old.art != art ||
+      old.hue != hue ||
+      old.ink != ink ||
+      old.dark != dark;
 }
 
 class _PlanTile extends StatelessWidget {

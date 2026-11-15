@@ -64,3 +64,5 @@ tool/shots/draw/
 tool/shots/gallery/
 # The reader's own screens (tool/edit_shots.dart): looked at, not kept
 tool/shots/edit/
+# The paywall on three phones (tool/paywall_shots.dart): looked at, not kept
+tool/shots/paywall/

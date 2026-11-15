@@ -1911,7 +1911,7 @@ abstract class AppLocalizations {
   /// No description provided for @perkGapLine.
   ///
   /// In en, this message translates to:
-  /// **'Your journey, week by week: how sure against how right, and the moves you keep missing.'**
+  /// **'Week by week: how sure against how right, and the moves you keep missing.'**
   String get perkGapLine;
 
   /// No description provided for @perkOwnFiveTitle.
