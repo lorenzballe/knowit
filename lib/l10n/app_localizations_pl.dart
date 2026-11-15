@@ -4890,4 +4890,10 @@ class AppLocalizationsPl extends AppLocalizations {
     );
     return 'Dzisiejsze wyzwanie w Astute: $_temp0. Zrobisz to lepiej?';
   }
+
+  @override
+  String get playTheCard => 'Zagraj kartą';
+
+  @override
+  String get openTheCard => 'Otwórz kartę';
 }

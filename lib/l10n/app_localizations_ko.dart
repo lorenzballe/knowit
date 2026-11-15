@@ -4545,4 +4545,10 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '오늘의 Astute 도전: $_temp0. 더 잘할 수 있어?';
   }
+
+  @override
+  String get playTheCard => '카드 플레이';
+
+  @override
+  String get openTheCard => '카드 열기';
 }

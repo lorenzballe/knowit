@@ -1252,7 +1252,7 @@
   "description": "Under the paywall's headline when it was opened from the archive, which lists the days the reader finished, newest first."
  },
  "perkGapTitle": "Watch the gap close",
- "perkGapLine": "Your journey, week by week: how sure against how right, and the moves you keep missing.",
+ "perkGapLine": "Week by week: how sure against how right, and the moves you keep missing.",
  "perkOwnFiveTitle": "Five of your own cards",
  "perkOwnFiveLine": "Every day, at your level, with the ones you miss coming back.",
  "perkReadTitle": "What you've read",
@@ -4994,5 +4994,13 @@
     "type": "int"
    }
   }
+ },
+ "playTheCard": "Play the card",
+ "@playTheCard": {
+  "description": "On a drawn card opened from saved, liked or the archive: opens the card itself at full size, its drawing live, to play again."
+ },
+ "openTheCard": "Open the card",
+ "@openTheCard": {
+  "description": "On a card in words opened from saved, liked or the archive: opens the card itself at full size, to turn over again."
  }
 }

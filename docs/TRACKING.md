@@ -305,7 +305,7 @@ other ending.
 
 | Event | When | Properties | Why | Where |
 | --- | --- | --- | --- | --- |
-| `card closed` **new** | a stint ends without the day moving on: a card of the day left for a tab, a pushed screen or the background; every card read in the deck viewer, however it left | `ms_on_card` (in sight, this stint), card facts, `where` (`today`, or the screen the viewer was opened from: `explore`, `journey`, `came back`, `widget`, `story` — the card opened from a story's last screen; `viewer` when none was given), read facts | dwell and depth on cards read outside the day, and on cards of the day left half-read | P, T:`close` |
+| `card closed` **new** | a stint ends without the day moving on: a card of the day left for a tab, a pushed screen or the background; every card read in the deck viewer, however it left | `ms_on_card` (in sight, this stint), card facts, `where` (`today`, or the screen the viewer was opened from: `explore`, `journey`, `came back`, `widget`, `story` — the card opened from a story's last screen; `detail` — a kept card played again from its own page; `viewer` when none was given), read facts | dwell and depth on cards read outside the day, and on cards of the day left half-read | P, T:`close` |
 
 **Read facts**, on `card advanced` and `card closed`:
 
@@ -354,7 +354,7 @@ is in its card facts.
 | `pill saved`, `pill unsaved`, `pill unsave undone` | save | card facts, `shelf_size` | P, T:`save`/`unsave` |
 | `pill disliked`, `pill dislike undone` | less like this | card facts, `disliked_total` | P, T:`skip`/`unskip` |
 | `pill said` | the reader said a card to someone | card facts, `said_total` | P, T:`said` |
-| `pill opened` | a card opened on a page of its own: from Saved, Liked, the archive or a week of the journey (no deck, so no `card closed`) | card facts, `saved`, `liked`, `answered` | P, T:`open` |
+| `pill opened` | a card opened on a page of its own: from Saved, Liked, the archive or a week of the journey (no deck, so no `card closed`; played again from there, the viewer's `card closed` says `where: detail`) | card facts, `saved`, `liked`, `answered`, `swiped` (reached by a swipe from the card beside it, on a page opened among others: the shelf, the archive's day or search, the week's misses) | P, T:`open` |
 | `card reported` | a report is sent | `pill_id`, `topic`, `report_reason`, `with_note` (bool, never the note) | P, T:`rep` |
 | `share sheet opened`, `pill shared`, `day shared`, `record shared` | sharing. A card leaves as its question and its page on the site (`as`: `link`; `copied` where there was no sheet), as its picture (`image`, or `text` when the picture fell back to the words), or as its page alone (`link copied`); never as its answer | `kind`, `pill_id`, `topic`, `as`, `has_page`, `image`, `streak_days`, `edition`, `sheet`, `from` | P, T:`share` (cards) |
 | `shelf filtered`, `archive filtered` | a subject on Saved, Liked or the archive | `subject` | P |

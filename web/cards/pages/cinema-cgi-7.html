@@ -1,0 +1,271 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Design note.
+     Thought to carry: when the tool gets faster, the work grows to fill the same wait.
+     Front: two film frames, 1995 and 2013, each with the hours it waited under it; the 2013 one is empty
+     and its wait a question mark, with "computers: vastly faster" between them. Three answers in a row, then
+     how sure. The card turns over.
+     Back: the answer, then one frame and two bars. The reader slides the years from 1995 to 2013. The
+     computers' bar climbs out of sight; the frame fills with what the artists added (hair, then light that
+     bounces, then fine detail, drawn as generated strands on a sphere under a lamp); the bar of hours per frame
+     does not move. At 2013 it reads 29 hours, on some 24,000 cores. Nothing from any film is drawn: a sphere,
+     a lamp, a floor. One accent, warm yellow, for light. -->
+<title>The wait that never shrinks</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;gap:1.4cqh;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .75s}
+.kit-calm .turn,.kit-calm .turn.over>.front{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;position:relative}
+.stagebox svg,.stagebox canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#pic text,#pic2 text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic text.b,#pic2 text.b{font-family:var(--display);font-weight:800}
+#opts{display:flex;gap:1.6cqw}
+/* on taller cards the three answers stack, one to a line, and fill the room under the frames */
+@container (min-height:560px){#opts{flex-direction:column;gap:1cqh}#opts .opt{text-align:left;padding:max(1.4cqh,10px) 4.5cqw}}
+.opt{flex:1;font:800 max(1.8cqh,13px)/1.15 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh var(--k);border-radius:2.2cqh;padding:max(1.2cqh,9px) 1cqw;cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.opt:active{transform:scale(.97)}
+.opt.on{background:var(--k);color:var(--c)}
+.back .big{font:900 max(3.6cqh,22px)/1.05 var(--display);margin:0;letter-spacing:-.02em}
+.years{display:flex;align-items:center;gap:2.4cqw;font:800 max(1.7cqh,12px)/1 var(--body)}
+.years input{flex:1;-webkit-appearance:none;appearance:none;height:max(4.4cqh,30px);background:transparent;margin:0;touch-action:none}
+.years input::-webkit-slider-runnable-track{height:.5cqh;min-height:3px;border-radius:9px;background:color-mix(in srgb,var(--k) 40%,transparent)}
+.years input::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,24px);height:max(3.6cqh,24px);border-radius:50%;background:var(--k);margin-top:calc((max(.5cqh,3px) - max(3.6cqh,24px)) / 2);box-shadow:0 .3cqh .8cqh #0003}
+.years input::-moz-range-track{height:4px;border-radius:9px;background:color-mix(in srgb,var(--k) 40%,transparent)}
+.years input::-moz-range-thumb{width:24px;height:24px;border:0;border-radius:50%;background:var(--k)}
+.back .say{margin:0}
+.q,.say,.keep,.src{overflow-wrap:break-word}
+@container (max-height:520px){.more{display:none}}
+</style>
+<article class="card" id="card" data-topic="cinema" data-kind="Pick one · how sure · slide the years">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE WAIT</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Pixar's computers grew vastly faster between Toy Story, 1995, and Monsters University, 2013. What happened to render time per frame?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="Two film frames: 1995, rendered in hours a frame, and 2013, still blank, its wait a question mark. Between them: computers, vastly faster."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">It fell to minutes</button>
+          <button class="opt" data-i="1">It fell to seconds</button>
+          <button class="opt" data-i="2">It stayed at hours</button>
+        </div>
+        <div id="sure" class="gone"></div>
+        <p class="say" id="say">Pick one, then say how sure.</p>
+        <div class="foot"><span class="src">Source · GamesBeat on Monsters University, 2013</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It stayed at hours.</p>
+        <div class="stagebox"><canvas id="fur" aria-hidden="true"></canvas><svg id="pic2" role="img" aria-label="One frame, and two bars: computers and hours per frame. Slide the years from 1995 to 2013: the computers bar climbs, the frame fills with hair, bouncing light and detail, the hours per frame stay the same."></svg></div>
+        <label class="years"><span>1995</span><input id="year" type="range" min="1995" max="2013" step="1" value="1995" data-drag aria-label="Year, from 1995 to 2013"><span>2013</span></label>
+        <p class="say" id="why">Artists spent every gain on more hair, light bounces and detail<span class="more">. Graphics people call it Blinn’s law</span>: <b>the picture improves; the wait does not shrink.</b></p>
+        <div class="keep"><b>WHAT TO KEEP</b>Faster tools save time only if the ambitions stay where they were.</div>
+        <div class="foot"><span class="src">Source · GamesBeat on Monsters University, 2013</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const RIGHT = 2, LIGHT = '#ffd36a', SHADOW = '#c4b4fb', WARM = '#ffebbd';
+  // the strands of hair, spread evenly over the sphere (a golden-angle spiral), in a fixed shuffled order so
+  // that sliding the years adds strands and never moves one: x and y on screen, z toward the reader, length
+  const FUR = (() => {
+    const N = 700, ga = Math.PI * (3 - Math.sqrt(5)), out = [];
+    let s = 7; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    for (let i = 0; i < N; i++) { const z = 1 - 2 * (i + .5) / N, q = Math.sqrt(1 - z * z); out.push([Math.cos(i * ga) * q, Math.sin(i * ga) * q, z, rnd(), rnd()]); }
+    return out.sort((p, q) => p[4] - q[4]);
+  })();
+  const el = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+  let pick = -1, answered = false, turned = false, B = null;
+
+  // ---------- a film frame: a rounded box between two rows of sprocket holes ----------
+  function frame(p, x, y, w, h, fill) {
+    const g = el('g', {}, p), hole = Math.max(3, w * .05), n = 5;
+    el('rect', {x, y, width: w, height: h, rx: 6, style: `fill:${fill};stroke:var(--k)`, 'stroke-width': 2}, g);
+    for (let k = 0; k < n; k++) for (const yy of [y - hole * 1.7, y + h + hole * .7]) {
+      el('rect', {x: x + (k + .5) * w / n - hole * .7, y: yy, width: hole * 1.4, height: hole, rx: 1.5, style: 'fill:var(--k)', opacity: .8}, g);
+    }
+    return g;
+  }
+  // An hourglass, for "hours".
+  function hourglass(p, cx, cy, s) {
+    el('path', {d: `M${cx - s * .5},${cy - s * .6} H${cx + s * .5} M${cx - s * .5},${cy + s * .6} H${cx + s * .5} M${cx - s * .38},${cy - s * .6} C${cx - s * .38},${cy - s * .15} ${cx + s * .38},${cy + s * .15} ${cx + s * .38},${cy + s * .6} M${cx + s * .38},${cy - s * .6} C${cx + s * .38},${cy - s * .15} ${cx - s * .38},${cy + s * .15} ${cx - s * .38},${cy + s * .6}`, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, p);
+  }
+
+  // ---------- front: two frames, 1995 and 2013 ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.replaceChildren();
+    const {W, H} = Kit.fitSvg(svg); if (W < 60 || H < 50) return;
+    const fs = Math.max(12, Math.min(14, W / 24)), gap = Math.max(46, W * .24);
+    const fw = (W - gap - 2) / 2, hole = Math.max(3, fw * .05), head = fs * 1.35 + hole * 1.7 + 6;
+    const fh = Math.min(fw * .95, H - head - fs * 2.9), y = head + Math.max(0, (H - head - fs * 2.9 - fh) / 2);
+    const xs = [1, fw + gap + 1];
+    [['1995', 'hours a frame'], ['2013', '?']].forEach(([yr, wait], i) => {
+      txt(yr, {class: 'b', x: xs[i], y: y - hole * 1.7 - 6, 'font-size': fs * 1.15}, svg);
+      frame(svg, xs[i], y, fw, fh, i ? 'none' : 'color-mix(in srgb,var(--k) 16%,transparent)');
+      if (!i) { // a plain sphere under a lamp: what a frame could hold then
+        const r = Math.min(fw, fh) * .26, cx = xs[i] + fw * .55, cy = y + fh * .56;
+        el('circle', {cx, cy, r, style: 'fill:var(--k)'}, svg);
+        el('ellipse', {cx: cx - r * .35, cy: cy - r * .35, rx: r * .22, ry: r * .14, style: 'fill:var(--c)', opacity: .5}, svg);
+        el('circle', {cx: xs[i] + fw * .17, cy: y + fh * .22, r: Math.max(3, r * .22), fill: LIGHT}, svg);
+      } else txt('?', {class: 'b', x: xs[i] + fw / 2, y: y + fh / 2 + fs * .8, 'text-anchor': 'middle', 'font-size': Math.min(fh * .5, 40), opacity: .8}, svg);
+      const hy = y + fh + fs * 2.1;
+      hourglass(svg, xs[i] + fs * .5, hy - fs * .35, fs);
+      txt(wait, {x: xs[i] + fs * 1.4, y: hy, 'font-size': fs}, svg);
+    });
+    // between them: the machines got faster
+    const ax = fw + 6, aw = gap - 12, ay = y + fh * .5;
+    el('path', {d: `M${ax},${ay} H${ax + aw - 4} M${ax + aw - 10},${ay - 6} L${ax + aw - 3},${ay} L${ax + aw - 10},${ay + 6}`, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    // the words sit together above the arrow, so they read as one phrase
+    txt('18 years', {x: ax + aw / 2, y: ay - fs * 1.85, 'text-anchor': 'middle', 'font-size': fs * .92}, svg);
+    txt('later', {x: ax + aw / 2, y: ay - fs * .7, 'text-anchor': 'middle', 'font-size': fs * .92}, svg);
+  }
+
+  // ---------- back: one frame that fills with work, and two bars under it ----------
+  // t from 0 (1995) to 1 (2013): what the artists put in the frame grows with the machines.
+  function drawBack() {
+    const svg = Kit.$('pic2'), cv = Kit.$('fur');
+    svg.replaceChildren();
+    const {W, H} = Kit.fitSvg(svg); if (W < 60 || H < 50) { B = null; return; }
+    const {x: ctx} = Kit.fitCanvas(cv);
+    const fs = Math.max(12, Math.min(14, W / 24)), rowH = Math.max(18, fs * 1.45), gapR = Math.max(6, fs * .5);
+    const barsH = rowH * 2 + gapR + fs * 1.25 + 6, fh = Math.max(40, H - barsH - 10);
+    B = {W, H, fs, ctx, fx: 0, fy: 2, fw: W, fh, rowH, gapR, by: 2 + fh + 10, svg};
+    paintBack();
+  }
+  function paintBack() {
+    if (!B) return;
+    const t = (+Kit.$('year').value - 1995) / 18, {W, H, fs, ctx, fx, fy, fw, fh, rowH, gapR, by, svg} = B;
+    // the frame, generated: a sphere under a lamp on a floor, with more hair, more light bounces, finer detail as t grows
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    ctx.beginPath(); ctx.roundRect ? ctx.roundRect(fx + 1, fy + 1, fw - 2, fh - 2, 8) : ctx.rect(fx + 1, fy + 1, fw - 2, fh - 2); ctx.clip();
+    ctx.fillStyle = 'rgba(255,255,255,.1)'; ctx.fillRect(fx, fy, fw, fh);
+    const floorY = fy + fh * .8, r = Math.min(fw * .2, fh * .27), cx = fx + fw * .56, cy = floorY - r;
+    const lamp = [fx + fw * .9, fy + fh * .16];
+    ctx.fillStyle = 'rgba(255,255,255,.14)'; ctx.fillRect(fx, floorY, fw, fh);
+    // light: the direct ray always; bounces off the floor and walls as t grows
+    const bounces = Math.floor(t * 3.2);
+    ctx.strokeStyle = LIGHT; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+    const ray = pts => { ctx.beginPath(); pts.forEach(([a, b], i) => i ? ctx.lineTo(a, b) : ctx.moveTo(a, b)); ctx.stroke(); };
+    ray([lamp, [cx + r * .5, cy - r * .7]]);
+    if (bounces >= 1) ray([lamp, [fx + fw * .78, floorY], [cx + r * .6, cy + r * .7]]);
+    if (bounces >= 2) ray([lamp, [fx + fw * .3, floorY], [cx - r * .75, cy + r * .55]]);
+    if (bounces >= 3) ray([lamp, [fx + fw * .12, floorY], [fx + 3, fy + fh * .62], [cx - r * .95, cy + r * .05]]);
+    ctx.setLineDash([]);
+    ctx.fillStyle = `rgba(20,0,60,${.32 - t * .12})`; ctx.beginPath(); ctx.ellipse(cx - r * .3, floorY + 2, r * (1 + t * .3), r * .16, 0, 0, Math.PI * 2); ctx.fill();
+    // the sphere, lit by the lamp: white on the lamp's side, lilac on the side turned away. Hair grows out
+    // of it evenly, strand by strand, combed down by its weight; strands on the far side only show at the edge.
+    const lx = lamp[0] - cx, ly = lamp[1] - cy, ln = Math.hypot(lx, ly), ux = lx / ln * .8, uy = ly / ln * .8;
+    const hairs = Math.round(Math.pow(t, 1.3) * FUR.length), grow = r * (.6 + t * .8);
+    ctx.lineCap = 'round';
+    const strand = ([nx, ny, nz, k]) => {
+      const lit = nx * ux + ny * uy + nz * .6, L = grow * (.1 + k * .16);
+      const sx = cx + nx * r * .97, sy = cy + ny * r * .97, ex = sx + nx * L, ey = sy + ny * L + L * .4;
+      ctx.strokeStyle = bounces && ny > .72 ? WARM : lit > .45 ? '#ffffff' : lit > 0 ? '#e9e2ff' : SHADOW; ctx.lineWidth = .7 + k * .6;
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.quadraticCurveTo(sx + nx * L * .7, sy + ny * L * .7, ex, ey); ctx.stroke();
+    };
+    for (let i = 0; i < hairs; i++) if (FUR[i][2] < 0) strand(FUR[i]);
+    ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
+    ctx.fillStyle = SHADOW; ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    // once light bounces, the floor warms the sphere's underside, and the hair there
+    if (bounces >= 1) { ctx.fillStyle = WARM; ctx.beginPath(); ctx.arc(cx, cy + r * .5, r * .9, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(cx + ux * r * .3, cy + uy * r * .3, r * .97, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+    for (let i = 0; i < hairs; i++) if (FUR[i][2] >= 0) strand(FUR[i]);
+    // finer detail: the floor starts to reflect the sphere, faintly, in the last years
+    if (t >= .75) {
+      ctx.save(); ctx.globalAlpha = .16 + (t - .75) * .5; ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.ellipse(cx, floorY + r * .32, r * .82, r * .26, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    }
+    ctx.fillStyle = LIGHT; ctx.beginPath(); ctx.arc(lamp[0], lamp[1], Math.max(4, r * .14), 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    // the frame's edge, what the artists added, named; then the two bars
+    svg.replaceChildren();
+    el('rect', {x: fx + 1, y: fy + 1, width: fw - 2, height: fh - 2, rx: 8, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 2}, svg);
+    // what the artists added, named in the frame's top-left corner, where no ray of light passes
+    const added = [[.2, 'more hair'], [.45, 'light bounces'], [.75, 'finer detail']].filter(([k]) => t >= k).map(([, s]) => s);
+    added.forEach((s, i) => { if (fy + fs * 1.35 + i * fs * 1.3 < fy + fh * .5) txt(`+ ${s}`, {x: fx + 10, y: fy + fs * 1.35 + i * fs * 1.3, 'font-size': fs * .95}, svg); });
+    // computers: a bar that runs right out of the card; hours a frame: a bar that does not move
+    const lw = Math.max(fs * 6.6, W * .3), x0 = lw, span = W - x0, h = rowH - 4, end = t >= 1;
+    const comp = Math.min(1, .05 + Math.pow(t, 1.6) * 1.15), hours = .34;
+    const rows = [['computers', comp, '#ffffff'], ['hours a frame', hours, LIGHT]];
+    rows.forEach(([name, v, col], i) => {
+      const y = by + i * (rowH + gapR);
+      txt(name, {x: 0, y: y + h / 2 + fs * .35, 'font-size': fs * .95}, svg);
+      el('rect', {x: x0, y, width: Math.max(4, span * v), height: h, rx: h / 2, fill: col}, svg);
+    });
+    // what each bar says, inside the white one when it is long, after the yellow one
+    const yC = by + h / 2 + fs * .35, yH = by + rowH + gapR + h / 2 + fs * .35;
+    if (end) txt('24,000 cores', {class: 'b', x: W - 8, y: yC, 'text-anchor': 'end', 'font-size': fs * .95, style: 'fill:var(--c)'}, svg);
+    else if (comp > .45) txt('vastly faster', {x: x0 + span * comp - 8, y: yC, 'text-anchor': 'end', 'font-size': fs * .9, style: 'fill:var(--c)'}, svg);
+    txt(end ? '29 hours' : 'hours', {class: 'b', x: x0 + span * hours + 8, y: yH, 'font-size': fs * (end ? 1.05 : .95)}, svg);
+    // where each bar stood in 1995: the computers' far behind, the hours' exactly where it still is
+    if (t > .08) {
+      // a small mark on each bar where it stood in 1995, and one note saying so
+      const tri = (xx, yy) => el('path', {d: `M${xx - 5},${yy - 7} H${xx + 5} L${xx},${yy} Z`, style: 'fill:var(--k);stroke:var(--c)', 'stroke-width': 1.2}, svg);
+      tri(x0 + span * .05, by + 2); tri(x0 + span * hours, by + rowH + gapR + 2);
+      const ny = by + rowH * 2 + gapR + fs * 1.05;
+      tri(x0 + 5, ny - 2);
+      txt('where each bar stood in 1995', {x: x0 + 14, y: ny, 'font-size': fs * .8, opacity: .85}, svg);
+    }
+  }
+
+  // ---------- the answer ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered || pick < 0) return; answered = true;
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: String(pick), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), Kit.calm ? 0 : 900);
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    setTimeout(() => { Kit.hide('opts'); Kit.hide('say'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`); sure.on(); }, Kit.calm ? 0 : 240);
+  });
+  let auto = null;
+  const yours = () => { if (auto) { auto.kill(); auto = null; } };
+  Kit.$('year').addEventListener('pointerdown', yours);
+  Kit.$('year').addEventListener('input', () => { Kit.haptic('selection'); paintBack(); });
+  document.addEventListener('turned', () => {
+    turned = true; drawBack();
+    // the years run part of the way by themselves, to show the slider; the rest is the reader's
+    if (Kit.calm) return;
+    const y = {v: 1995}; auto = gsap.to(y, {v: 2003, duration: 1.4, delay: .8, ease: 'power1.inOut', onUpdate: () => { Kit.$('year').value = Math.round(y.v); paintBack(); }, onComplete: () => { auto = null; }});
+  });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(); };
+  let seen = '';
+  new ResizeObserver(() => { const b = document.querySelector('.back .stagebox').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && turned) { seen = k; drawBack(); } }).observe(document.querySelector('.back .stagebox'));
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#opts .opt', {opacity: 0, stagger: .07, duration: .35, ease: 'power2.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[0].click();
+    await wait(400);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 300 : 2400);
+    yours();
+    const yr = Kit.$('year'); yr.value = 2013; yr.dispatchEvent(new Event('input', {bubbles: true}));
+    await wait(300);
+  };
+  Kit.single();
+})();
+</script>
+</html>

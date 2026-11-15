@@ -1111,5 +1111,7 @@
   "shareWhichSide": "Auf welcher Seite stehst du?",
   "rereadRight": "Beim ersten Mal hattest du es richtig.",
   "rereadWrong": "Beim ersten Mal lagst du daneben.",
-  "betsDayShareLine": "Die heutige Herausforderung bei Astute: {off, plural, =0{genau getroffen} =1{1 Punkt daneben} other{{off} Punkte daneben}}. Schaffst du es besser?"
+  "betsDayShareLine": "Die heutige Herausforderung bei Astute: {off, plural, =0{genau getroffen} =1{1 Punkt daneben} other{{off} Punkte daneben}}. Schaffst du es besser?",
+  "playTheCard": "Karte spielen",
+  "openTheCard": "Karte öffnen"
 }

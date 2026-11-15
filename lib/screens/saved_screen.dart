@@ -223,11 +223,14 @@ class _SavedScreenState extends State<SavedScreen> {
     );
   }
 
-  void _open(BuildContext context, Pill pill) => Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (_) => PillDetailScreen(pill: pill, app: app),
-    ),
-  );
+  /// [pill] on its own page, the rest of the shelf as shown — [shown] —
+  /// a swipe either side of it.
+  void _open(BuildContext context, Pill pill, List<Pill> shown) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => PillDetailScreen(pill: pill, app: app, among: shown),
+        ),
+      );
 
   /// Held, a kept card offers what its row used to carry at its end:
   /// letting it go, and sending it.
@@ -332,7 +335,7 @@ class _SavedScreenState extends State<SavedScreen> {
         i,
         child: _KeptTile(
           pill: cards[i],
-          onOpen: () => _open(context, cards[i]),
+          onOpen: () => _open(context, cards[i], cards),
           onHold: () => _actions(context, cards[i]),
         ),
       ),

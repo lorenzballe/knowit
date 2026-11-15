@@ -1,0 +1,251 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Design note.
+     Thought to carry: what survived was not chosen to survive; ask what preserved the evidence.
+     Front: three tiles, one family of flat pictograms, one per answer: a palace on fire, a domed kiln, a tomb
+     door in a hillside. Tap one, then say how sure.
+     After: the tiles give way to one picture told in four scenes the reader taps through, the same shelf of
+     clay tablets in each: written on soft clay for a season; softened in water and used again; the palace
+     burns and that shelf bakes hard; and, three thousand years on, a strip of the palace's seasons where only
+     the last few are left. Colours of meaning only: cream for raw clay, terracotta for baked clay, orange for
+     fire. -->
+<title>Baked by the fire</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;color:var(--k);-webkit-user-select:none;user-select:none;outline:none}
+#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic .tile,#pic .next{cursor:pointer;outline:none}
+#pic .tile:focus-visible .frame{stroke-width:3}
+.answered .q{font-size:max(2.5cqh,15px)}
+.q,.say,.keep,.src{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="language" data-kind="Pick one · how sure · four scenes">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WHY THEY LASTED</span></div>
+    <h2 class="q">Why have thousands of Linear B clay tablets from Mycenaean palaces lasted more than 3,000 years?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" role="group" aria-label="Three answers to tap: palace fires baked them hard; scribes kiln-fired them as archives; dry tombs sealed them from damp."></svg></div>
+    <div id="sure" class="gone"></div>
+    <p class="say" id="say">Tap the answer you think is right. Then say how sure.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ask what preserved your evidence before asking what it represents.</div>
+    <div class="foot"><span class="src">Source · John Chadwick, The Decipherment of Linear B (Cambridge University Press, 1958)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const RIGHT = 0, NAMES = ['Palace fires baked them hard', 'Scribes kiln-fired them as archives', 'Dry tombs sealed them from damp'];
+  const RAW = '#f3ead8', BAKED = '#b9562b', FIRE = '#ff7a1a', FIRE2 = '#ffc23d';
+  const CAPTIONS = [
+    'The tablets were <b>unfired clay</b>: working records, meant to last a season.',
+    'Then they were <b>softened in water</b> and the clay used again.',
+    'When the palaces at Knossos and Pylos burned, the heat <b>turned that year’s paperwork into pottery</b>.',
+    'It was <b>the palace fires</b>. What survives is <b>a palace’s final months</b>, not an archive anyone chose to keep.'];
+  const svg = Kit.$('pic'), card = Kit.$('card');
+  const el = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+  let pick = -1, answered = false, scene = -1, G = null;
+
+  // ---------- one family of pictograms: 120 x 84, ground line at 84 ----------
+  const INK = 'fill:currentColor', LINE = 'stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none';
+  function flame(g, x, y, s, big) {
+    el('path', {d: `M${x},${y} C${x - 9 * s},${y - 2 * s} ${x - 9 * s},${y - 13 * s} ${x - 2 * s},${y - 20 * s} C${x - 1 * s},${y - 13 * s} ${x + 4 * s},${y - 13 * s} ${x + 3 * s},${y - 24 * s} C${x + 11 * s},${y - 16 * s} ${x + 10 * s},${y - 2 * s} ${x},${y} Z`, fill: FIRE}, g);
+    if (big) el('path', {d: `M${x},${y - 1 * s} C${x - 4 * s},${y - 2 * s} ${x - 4 * s},${y - 8 * s} ${x},${y - 12 * s} C${x + 4 * s},${y - 8 * s} ${x + 4 * s},${y - 2 * s} ${x},${y - 1 * s} Z`, fill: FIRE2}, g);
+  }
+  function icon(parent, i, x, y, k) {
+    const g = el('g', {transform: `translate(${x},${y}) scale(${k})`}, parent);
+    // each picture holds a clay tablet, so the three answers are about the same object
+    const slab = (x, y, fill) => { el('rect', {x, y, width: 14, height: 19, rx: 2, fill, stroke: 'currentColor', 'stroke-width': 1.6}, g); for (const r of [6, 10, 14]) el('line', {x1: x + 3, x2: x + 11, y1: y + r, y2: y + r, stroke: 'currentColor', 'stroke-width': 1.2}, g); };
+    if (i === 0) {            // a palace hall with Minoan columns, wider at the top, fire on the roof, tablets inside
+      flame(g, 34, 30, 1, true); flame(g, 60, 26, 1.25, true); flame(g, 86, 31, .9, true);
+      el('rect', {x: 6, y: 30, width: 108, height: 9, rx: 2, style: INK}, g);
+      for (const cx of [16, 104]) el('path', {d: `M${cx - 6},39 L${cx + 6},39 L${cx + 4},78 L${cx - 4},78 Z`, style: INK}, g);
+      slab(36, 58, RAW); slab(53, 58, RAW); slab(70, 58, RAW);
+      el('rect', {x: 2, y: 78, width: 116, height: 6, rx: 2, style: INK}, g);
+    } else if (i === 1) {     // a domed kiln, its firebox lit, a tablet set in to fire
+      el('path', {d: 'M20,84 V58 C20,24 100,24 100,58 V84 Z', style: INK}, g);
+      el('path', {d: 'M38,84 V66 C38,50 82,50 82,66 V84 Z', style: 'fill:var(--c)'}, g);
+      flame(g, 50, 84, .7, true); flame(g, 70, 84, .6, true);
+      slab(53, 58, RAW);
+      el('rect', {x: 54, y: 12, width: 12, height: 20, rx: 2, style: INK}, g);
+    } else {                  // a tomb: a dark doorway cut into a hillside, a tablet laid inside
+      el('path', {d: 'M0,84 C18,46 40,30 60,30 C80,30 102,46 120,84 Z', style: INK}, g);
+      el('rect', {x: 40, y: 50, width: 40, height: 34, rx: 3, style: 'fill:var(--c)'}, g);
+      el('rect', {x: 34, y: 44, width: 52, height: 7, rx: 2, style: INK}, g);
+      slab(53, 64, RAW);
+    }
+    return g;
+  }
+  // ---------- text helpers ----------
+  function wrap(text, maxW, size) {
+    const t = el('text', {style: `font:700 ${size}px var(--body)`}, svg);
+    const m = s => { t.textContent = s; return t.getComputedTextLength(); };
+    const out = []; let cur = '';
+    text.split(' ').forEach(w => { const nx = cur ? cur + ' ' + w : w; if (cur && m(nx) > maxW) { out.push(cur); cur = w; } else cur = nx; });
+    if (cur) out.push(cur); t.remove(); return out;
+  }
+  function lines(parent, arr, x, y, size, anchor) {
+    const t = el('text', {x, y, 'text-anchor': anchor, 'font-size': size}, parent);
+    arr.forEach((s, j) => { const sp = el('tspan', {x, dy: j ? Math.round(size * 1.22) : 0}, t); sp.textContent = s; });
+    return t;
+  }
+
+  // ---------- front: three answers, one row each, the picture on the left ----------
+  function drawTiles(W, H) {
+    const fs = Math.max(13, Math.min(15, W / 22)), gy = Math.max(8, H * .03), th = Math.min(92, (H - 2 * gy) / 3);
+    const k = Math.max(.3, (th - 18) / 84), iw = 120 * k, tx = 14 + iw + 14;
+    const ls = NAMES.map(t => wrap(t, W - tx - 12, fs)), lh = Math.round(fs * 1.22);
+    const y0 = Math.max(0, (H - 3 * th - 2 * gy) / 2);
+    G = {tiles: [], frames: []};
+    NAMES.forEach((name, i) => {
+      const y = y0 + i * (th + gy), g = el('g', {class: 'tile', tabindex: 0, role: 'button', 'aria-label': name}, svg);
+      G.frames[i] = el('rect', {class: 'frame', x: .75, y: y + .75, width: W - 1.5, height: th - 1.5, rx: 16, fill: pick === i ? 'rgba(16,16,12,.1)' : 'transparent', stroke: 'currentColor', 'stroke-width': pick === i ? 3 : 1.5, 'pointer-events': 'all'}, g);
+      icon(g, i, 14, y + (th - 84 * k) / 2, k);
+      lines(g, ls[i], tx, y + th / 2 - (ls[i].length - 1) * lh / 2 + fs * .35, fs, 'start');
+      g.addEventListener('click', () => choose(i));
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(i); } });
+      G.tiles[i] = g;
+    });
+    if (answered) G.tiles.forEach((g, i) => g.setAttribute('opacity', i === RIGHT ? 1 : .35));
+  }
+  function choose(i) {
+    if (answered) return;
+    const first = pick < 0; pick = i; Kit.haptic('selection');
+    G.frames.forEach((f, j) => { f.setAttribute('stroke-width', j === i ? 3 : 1.5); f.setAttribute('fill', j === i ? 'rgba(16,16,12,.1)' : 'transparent'); });
+    if (first) { Kit.hide('say'); Kit.show('sure'); sure.on(); }
+    sure.ask(`${NAMES[i]}: how sure are you?`);
+  }
+
+  // ---------- after: the same shelf in four scenes ----------
+  // A tablet: a small upright slab with lines of signs pressed into it.
+  function tablet(p, x, y, w, h, fill, signs) {
+    const g = el('g', {}, p);
+    el('rect', {x, y, width: w, height: h, rx: Math.min(3, w * .15), fill, stroke: 'currentColor', 'stroke-width': 1.5}, g);
+    for (let r = 0; r < signs; r++) el('line', {x1: x + w * .2, x2: x + w * (r % 2 ? .62 : .8), y1: y + h * (.25 + r * .2), y2: y + h * (.25 + r * .2), stroke: 'currentColor', 'stroke-width': 1.3, opacity: .7}, g);
+    return g;
+  }
+  function shelf(p, x, y, w, h, fill, n) {
+    const tw = Math.min(w / (n * 1.45), h * .5), th = tw * 1.45, gap = (w - n * tw) / (n + 1);
+    for (let r = 0; r < 2; r++) {
+      const py = y + (r + 1) * h / 2;
+      for (let i = 0; i < n; i++) tablet(p, x + gap + i * (tw + gap), py - th - 2, tw, th, fill, 3);
+      el('rect', {x, y: py - 2, width: w, height: 5, rx: 2, style: 'fill:currentColor'}, p);
+    }
+    el('rect', {x, y: y + h * .02, width: 4, height: h, style: 'fill:currentColor'}, p);
+    el('rect', {x: x + w - 4, y: y + h * .02, width: 4, height: h, style: 'fill:currentColor'}, p);
+  }
+  function drawScene(W, H) {
+    const fs = Math.max(12, Math.min(14, W / 24)), g = el('g', {}, svg);
+    // four dashes while the story runs: which scene this is, of four
+    if (scene < 3) for (let k = 0; k < 4; k++) el('rect', {x: k * 22, y: 0, width: 16, height: 4, rx: 2, style: 'fill:currentColor', opacity: k <= scene ? 1 : .25}, g);
+    const top = scene < 3 ? 14 : 0, h = H - top - 4, sx = 0, sw = Math.min(W * .56, h * 1.25), sh = Math.min(h * .9, sw * .85), sy = top + (h - sh) / 2;
+    if (scene <= 2) {
+      // the shelf, raw or baked
+      if (scene === 2) {
+        for (const [fx, s] of [[.12, 1.6], [.35, 2.1], [.6, 1.7], [.85, 1.3]]) flame(g, sx + sw * fx, sy + sh + 2, s * sh / 110, true);
+      }
+      shelf(g, sx, sy, sw, sh, scene === 2 ? BAKED : RAW, 4);
+      const rx = sw + Math.max(18, W * .06), rw = W - rx;
+      if (scene === 0) {
+        // a stylus pressing signs into a soft tablet
+        const tw = Math.min(rw * .5, sh * .55), th = tw * 1.45, tx = rx + (rw - tw) / 2, ty = sy + (sh - th) / 2;
+        const t = tablet(g, tx, ty, tw, th, RAW, 4);
+        el('line', {x1: tx + tw * .85, y1: ty + th * .62, x2: tx + tw * 1.25, y2: ty + th * .05, stroke: 'currentColor', 'stroke-width': Math.max(3, tw * .07), 'stroke-linecap': 'round'}, g);
+        txt('soft clay', {x: tx + tw / 2, y: ty + th + fs * 1.3, 'text-anchor': 'middle', 'font-size': fs}, g);
+        void t;
+      } else if (scene === 1) {
+        // a basin of water: the season's tablets go in, a lump of clay comes out
+        const bw = Math.min(rw * .9, sh * 1.1), bh = bw * .38, bx = rx + (rw - bw) / 2, by = sy + sh - bh;
+        el('path', {d: `M${bx},${by} H${bx + bw} L${bx + bw * .9},${by + bh} H${bx + bw * .1} Z`, style: 'fill:currentColor'}, g);
+        el('path', {d: `M${bx + bw * .06},${by + bh * .22} H${bx + bw * .94}`, stroke: '#7fe3e6', 'stroke-width': 3, 'stroke-linecap': 'round'}, g);
+        el('ellipse', {cx: bx + bw / 2, cy: by - bh * .25, rx: bw * .22, ry: bh * .32, fill: RAW, stroke: 'currentColor', 'stroke-width': 1.5}, g);
+        const ay = by - bh * 1.5;
+        el('path', {d: `M${bx + bw * .15},${ay} C${bx + bw * .15},${ay - bh * 1.2} ${sx + sw * .9},${ay - bh * 1.5} ${sx + sw + 4},${sy + sh * .25}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-dasharray': '5 4'}, g);
+        el('path', {d: `M${sx + sw + 12},${sy + sh * .25 - 6} L${sx + sw + 4},${sy + sh * .25} L${sx + sw + 13},${sy + sh * .25 + 4}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+        txt('used again', {x: bx + bw / 2, y: by + bh + fs * 1.3, 'text-anchor': 'middle', 'font-size': fs}, g);
+      } else {
+        const tw = Math.min(rw * .5, sh * .55), th = tw * 1.45, tx = rx + (rw - tw) / 2, ty = sy + (sh - th) / 2;
+        tablet(g, tx, ty, tw, th, BAKED, 4);
+        txt('baked hard', {x: tx + tw / 2, y: ty + th + fs * 1.3, 'text-anchor': 'middle', 'font-size': fs}, g);
+      }
+    } else {
+      // three thousand years on: the palace's records, a row a year, a square a month; only the last few were
+      // baked. Squares stay square: a short phone shows fewer years. The oldest row fades, as if more lie behind.
+      const cols = 12, labTop = fs * 1.5, labBot = fs * 2.4, gap = Math.max(2, W * .01), room = h - labTop - labBot;
+      const cw = (W - gap * (cols - 1)) / cols, rows = Math.max(2, Math.min(5, Math.floor((room + gap) / (cw + gap))));
+      const s = Math.max(4, Math.min(cw, (room - gap * (rows - 1)) / rows)), gw = cols * s + (cols - 1) * gap, gx = (W - gw) / 2;
+      const gy0 = top + labTop + Math.max(0, (room - rows * s - (rows - 1) * gap) / 2);
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+        const last = r === rows - 1 && c >= cols - 3, x = gx + c * (s + gap), y = gy0 + r * (s + gap);
+        el('rect', {x, y, width: s, height: s, rx: Math.min(3, s * .2), fill: last ? BAKED : 'none', stroke: 'currentColor', 'stroke-width': 1.3, 'stroke-dasharray': last ? 'none' : '3 3', opacity: last ? 1 : rows > 1 ? .1 + .55 * r / (rows - 1) : .6}, g);
+      }
+      const by = gy0 + rows * s + (rows - 1) * gap, lx = gx + (cols - 3) * (s + gap), rx2 = gx + gw;
+      el('path', {d: `M${lx},${by + 5} V${by + 10} H${rx2} V${by + 5}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.6}, g);
+      // what baked them: the palace fire, named, with its flame
+      const lab = txt('the final months, baked by the fire', {x: rx2, y: by + 10 + fs * 1.3, 'text-anchor': 'end', 'font-size': fs}, g);
+      let lw = fs * .55 * 34; try { lw = lab.getComputedTextLength() || lw; } catch (_) {}
+      flame(g, rx2 - lw - fs * .75, by + 10 + fs * 1.5, fs / 19, true);
+      txt('a square a month: softened and reused', {x: gx, y: gy0 - fs * .6, 'font-size': fs}, g);
+    }
+    // the way on: a round button at the bottom right, until the last scene
+    if (scene < 3) {
+      const r = Math.max(16, fs * 1.25), cx = W - r - 2, cy = H - r - 2, nx = el('g', {class: 'next', role: 'button', tabindex: 0, 'aria-label': 'Next scene'}, g);
+      el('circle', {cx, cy, r, style: 'fill:currentColor'}, nx);
+      el('path', {d: `M${cx - r * .2},${cy - r * .38} L${cx + r * .22},${cy} L${cx - r * .2},${cy + r * .38}`, fill: 'none', style: 'stroke:var(--c)', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, nx);
+      nx.addEventListener('click', e => { e.stopPropagation(); next(); });
+      nx.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); } });
+      G.next = nx;
+    }
+    return g;
+  }
+
+  function draw() {
+    svg.replaceChildren();
+    const {W, H} = Kit.fitSvg(svg);
+    if (W < 60 || H < 50) return;
+    if (scene < 0) drawTiles(W, H); else G = {scene: drawScene(W, H)};
+  }
+  function next() {
+    if (scene >= 3) return;
+    scene++; Kit.haptic('light');
+    say(CAPTIONS[scene]);
+    if (scene === 3) Kit.show('keep');
+    draw();
+    if (!Kit.calm && G.scene) gsap.from(G.scene, {opacity: 0, duration: .35, ease: 'power2.out'});
+  }
+  function say(h) { const e = Kit.$('say'); e.classList.remove('gone'); e.innerHTML = h; if (!Kit.calm) gsap.fromTo(e, {opacity: .3}, {opacity: 1, duration: .35}); }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered || pick < 0) return; answered = true;
+    const ok = pick === RIGHT;
+    Kit.answer({choice: String(pick), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
+    G.tiles.forEach((g, i) => Kit.calm ? g.setAttribute('opacity', i === RIGHT ? 1 : .35) : gsap.to(g, {opacity: i === RIGHT ? 1 : .35, duration: .35}));
+    // then the story, from the first scene
+    setTimeout(() => {
+      card.classList.add('answered');
+      svg.setAttribute('role', 'img');
+      svg.setAttribute('aria-label', 'Four scenes of one shelf of clay tablets: written on soft clay, softened and reused, baked by the palace fire, and a strip of seasons where only the last months survive.');
+      svg.style.cursor = 'pointer';
+      scene = -1; next();
+    }, Kit.calm ? 0 : 1100);
+  });
+  // a tap anywhere on a scene goes on too
+  svg.addEventListener('click', () => { if (scene >= 0 && scene < 3) next(); });
+
+  Kit.onShow.card = draw;
+  let seen = '';
+  new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen) { seen = k; draw(); } }).observe(Kit.$('stage'));
+  Kit.onEnter.card = () => { if (!Kit.calm && G && G.tiles) gsap.from(G.tiles, {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    G.tiles[1].dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="70"]').click();
+    await wait(Kit.calm ? 150 : 1500);
+    for (let k = 0; k < 3; k++) { svg.dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(Kit.calm ? 80 : 450); }
+  };
+  Kit.single();
+})();
+</script>
+</html>

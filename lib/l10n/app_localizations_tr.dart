@@ -4663,4 +4663,10 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return 'Astute\'ta bugünün meydan okuması: $_temp0. Daha iyisini yapabilir misin?';
   }
+
+  @override
+  String get playTheCard => 'Kartı oyna';
+
+  @override
+  String get openTheCard => 'Kartı aç';
 }

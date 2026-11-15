@@ -1111,5 +1111,7 @@
   "shareWhichSide": "あなたはどっち派？",
   "rereadRight": "最初は正解でした。",
   "rereadWrong": "最初は不正解でした。",
-  "betsDayShareLine": "今日のAstuteチャレンジ：{off, plural, =0{ぴったり正解} other{{off}ポイント差}}。もっと近づける？"
+  "betsDayShareLine": "今日のAstuteチャレンジ：{off, plural, =0{ぴったり正解} other{{off}ポイント差}}。もっと近づける？",
+  "playTheCard": "カードで遊ぶ",
+  "openTheCard": "カードを開く"
 }

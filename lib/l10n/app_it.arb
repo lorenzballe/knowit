@@ -298,7 +298,7 @@
   "paywallReadMark": "giorno per giorno.",
   "paywallReadLine": "Gli ultimi giorni che hai letto, dal più recente. Toccane uno per aprirne le cinque carte, e una carta per rileggerla.",
   "perkGapTitle": "Guarda il divario chiudersi",
-  "perkGapLine": "Il tuo viaggio, settimana per settimana: quanto sicuro contro quanto giusto, e le mosse che sbagli più spesso.",
+  "perkGapLine": "Ogni settimana: quanto sei sicuro contro quanto ci prendi, e cosa sbagli di più.",
   "perkOwnFiveTitle": "Le tue cinque carte",
   "perkOwnFiveLine": "Ogni giorno, al tuo livello, e quelle che sbagli tornano.",
   "perkReadTitle": "Quello che hai letto",
@@ -1111,5 +1111,7 @@
   "shareWhichSide": "Tu da che parte stai?",
   "rereadRight": "La prima volta l'hai indovinata.",
   "rereadWrong": "La prima volta l'hai sbagliata.",
-  "betsDayShareLine": "La sfida di oggi su Astute: {off, plural, =0{ho fatto centro} =1{ho sbagliato di 1 punto} other{ho sbagliato di {off} punti}}. Fai meglio?"
+  "betsDayShareLine": "La sfida di oggi su Astute: {off, plural, =0{ho fatto centro} =1{ho sbagliato di 1 punto} other{ho sbagliato di {off} punti}}. Fai meglio?",
+  "playTheCard": "Gioca la carta",
+  "openTheCard": "Apri la carta"
 }

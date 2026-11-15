@@ -246,6 +246,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                       builder: (_) => PillDetailScreen(
                                         pill: results[i],
                                         app: widget.app,
+                                        among: results,
                                       ),
                                     ),
                                   ),
@@ -276,6 +277,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                     builder: (_) => PillDetailScreen(
                                       pill: pill,
                                       app: widget.app,
+                                      among: _deckOf(day),
                                     ),
                                   ),
                                 ),

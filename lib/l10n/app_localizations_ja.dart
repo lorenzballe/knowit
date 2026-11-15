@@ -4524,4 +4524,10 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '今日のAstuteチャレンジ：$_temp0。もっと近づける？';
   }
+
+  @override
+  String get playTheCard => 'カードで遊ぶ';
+
+  @override
+  String get openTheCard => 'カードを開く';
 }

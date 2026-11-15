@@ -4904,4 +4904,10 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return 'Задание дня в Astute: $_temp0. Сможешь точнее?';
   }
+
+  @override
+  String get playTheCard => 'Сыграть карточку';
+
+  @override
+  String get openTheCard => 'Открыть карточку';
 }

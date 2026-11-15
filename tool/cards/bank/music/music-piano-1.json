@@ -27,6 +27,11 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two octaves to play on a piano, a textbook one exactly two to one and a tuner's one a little wider. Each plays as sound and draws its loudness as a ribbon: one wobbles, one is steady. Then a curve over the keyboard shows the stretch."
+  },
   "source": "Railsback, JASA, 1938",
   "source_kind": "paper",
   "reference": "Railsback, Scale temperament as applied to piano tuning, Journal of the Acoustical Society of America, 1938",

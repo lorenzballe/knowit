@@ -4606,4 +4606,10 @@ class RemoteLocalizations extends AppLocalizations {
   String betsDayShareLine(int off) =>
       _words.format('betsDayShareLine', localeName, {'off': off}) ??
       _base.betsDayShareLine(off);
+
+  @override
+  String get playTheCard => _words.text('playTheCard') ?? _base.playTheCard;
+
+  @override
+  String get openTheCard => _words.text('openTheCard') ?? _base.openTheCard;
 }

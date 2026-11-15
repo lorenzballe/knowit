@@ -1111,5 +1111,7 @@
   "shareWhichSide": "¿De qué lado estás?",
   "rereadRight": "La primera vez acertaste.",
   "rereadWrong": "La primera vez fallaste.",
-  "betsDayShareLine": "El reto de hoy en Astute: {off, plural, =0{di en el clavo} =1{me desvié 1 punto} other{me desvié {off} puntos}}. ¿Lo haces mejor?"
+  "betsDayShareLine": "El reto de hoy en Astute: {off, plural, =0{di en el clavo} =1{me desvié 1 punto} other{me desvié {off} puntos}}. ¿Lo haces mejor?",
+  "playTheCard": "Jugar la carta",
+  "openTheCard": "Abrir la carta"
 }

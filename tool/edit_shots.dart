@@ -26,6 +26,7 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
 import 'package:astuto/screens/archive_screen.dart';
 import 'package:astuto/screens/paywall_screen.dart';
+import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/screens/saved_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
@@ -423,5 +424,60 @@ void main() {
       await _settle(tester);
       await _shoot(tester, name);
     }
+  });
+
+  testWidgets('a kept card opened: its drawing, and its words', (tester) async {
+    // A card with a drawing, kept and answered wrong the first time, and
+    // one in words.
+    final Pill drawn = PillBank.cards.firstWhere(
+      (p) =>
+          p.hasPage &&
+          p.isGraded &&
+          p.challenge is PageJudged &&
+          CardThumb.has(p, CardSide.front) &&
+          p.topic == 'Space',
+    );
+    final Pill words = PillBank.cards.firstWhere(
+      (p) =>
+          p.web == null &&
+          p.isGraded &&
+          p.topic == 'Psychology' &&
+          p.question.length > 60,
+    );
+    final Map<String, Object> prefs = _aMonthIn();
+    final Map<String, Object?> answers = {
+      ...jsonDecode(prefs['knowit.answersJson']! as String) as Map,
+      drawn.id: {'r': PageJudged.encode('−5%', false), 'c': 70},
+      words.id: {'r': '0', 'c': 60},
+    };
+    final AppState app = await readyApp({
+      ...prefs,
+      'knowit.answersJson': jsonEncode(answers),
+      'knowit.savedIds': [drawn.id, words.id],
+    });
+    for (final (String name, Pill pill, Brightness b) in [
+      ('20-detail-drawn', drawn, Brightness.dark),
+      ('21-detail-drawn-paper', drawn, Brightness.light),
+      ('22-detail-words', words, Brightness.dark),
+    ]) {
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(
+        _app(
+          PillDetailScreen(pill: pill, app: app, among: [drawn, words]),
+          brightness: b,
+        ),
+      );
+      await _precache(tester, [pill]);
+      await _settle(tester);
+      await _shoot(tester, name);
+    }
+    // Under the card, what it said: as the page always had it.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(_app(PillDetailScreen(pill: drawn, app: app)));
+    await _precache(tester, [drawn]);
+    await _settle(tester);
+    await tester.drag(find.byType(ListView), const Offset(0, -600));
+    await _settle(tester);
+    await _shoot(tester, '20b-detail-drawn-below');
   });
 }

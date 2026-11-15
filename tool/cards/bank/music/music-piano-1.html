@@ -1,0 +1,247 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Design note.
+     Thought to carry: when the parts are not ideal, tune them to each other.
+     Two lanes to listen to, one octave each, played as a tuner plays it: A5 and A6 together, synthesised as
+     stiff strings (every overtone a little sharp: f_n = n·f·√(1+Bn²)/√(1+B), with B about what treble strings
+     of that length have). The textbook octave sets the top note at exactly twice the bottom one, so it beats
+     against the bottom string's sharp second overtone; the tuner's octave sets it on that overtone, and the
+     two blend. Sound only after a tap, and only when the phone plays sound; each lane draws what you hear as
+     a ribbon of loudness, wobbling or steady, with words under it, so it works silent too.
+     Then, over a keyboard of 88 keys, the curve of a tuned piano against the textbook: flat in the bass,
+     rising to tens of cents sharp at the top (the shape Railsback measured in 1938). One accent, amber, for
+     what is heard and where it lands. -->
+<title>The stretched octave</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;-webkit-user-select:none;user-select:none;outline:none}
+#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic text.b{font-weight:800}
+#pic .lane{cursor:pointer;outline:none}
+#pic .lane:focus-visible .btn{stroke-width:3}
+.q,.say,.keep,.src{overflow-wrap:break-word}
+@container (max-height:520px){.more{display:none}}
+</style>
+<article class="card" id="card" data-topic="music" data-kind="Listen · two octaves">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LISTEN</span></div>
+    <h2 class="q">Why is a well-tuned piano deliberately out of tune with the textbook octave?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" role="group" aria-label="Two octaves to play: the textbook octave, exactly two to one, and the tuner's octave, a little wider. Below, a piano keyboard."></svg></div>
+    <p class="say" id="say"><b>Play both octaves</b> and listen for a wobble. No sound? The ribbons show it.</p>
+    <p class="say gone" id="why"><b>Its strings are stiff,</b> so their overtones run slightly sharp of whole-number multiples, and tuners widen each octave to match. The stretch adds up<span class="more">: the top notes sit tens of cents sharp, a cent being a hundredth of a semitone</span>.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When the parts are imperfect, tune them to each other, not to the ideal.</div>
+    <div class="foot"><span class="src">Source · Railsback, Journal of the Acoustical Society of America (1938)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const AMBER = '#ffc94d', DARK = '#2a0a3d', DUR = 2.4;
+  const LANES = [
+    {name: 'Textbook octave', sub: 'exactly 2 : 1', heard: 'it beats: wah-wah', short: 'Textbook: beats', stretched: false},
+    {name: 'Tuner’s octave', sub: 'a little wider', heard: 'it blends', short: 'Tuner’s: blends', stretched: true}];
+  // The two strings, A5 and A6, stiff as treble strings are: each overtone a little sharp of n times the note.
+  const F1 = 880, B1 = .002, B2 = .006;
+  const low = n => n * F1 * Math.sqrt(1 + B1 * n * n) / Math.sqrt(1 + B1);
+  const BEAT = low(2) - 2 * F1;                                // what the textbook octave wobbles at, a second
+  // A tuned piano against the textbook, cents by key (A0 = 1 … C8 = 88): a Railsback-shaped stretch.
+  const STRETCH = [[1, -32], [8, -20], [16, -10], [25, -4], [36, -1], [49, 0], [56, 1.5], [61, 3.5], [67, 7], [73, 12], [79, 19], [84, 27], [88, 34]];
+  const svg = Kit.$('pic');
+  const el = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+  const S = {heard: [false, false], playing: -1, t: 0, revealed: false};
+  let G = null, ac = null, raf = 0, t0 = 0, seen = '';
+
+  // ---------- sound: only after a tap, and only when the app plays sound ----------
+  function sound(stretched) {
+    if (!Kit.sound) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (ac.state === 'suspended') ac.resume();
+      const at = ac.currentTime + .03, out = ac.createGain();
+      out.gain.value = .2; out.connect(ac.destination);
+      const hi1 = stretched ? low(2) : 2 * F1;
+      const high = n => n * hi1 * Math.sqrt(1 + B2 * n * n) / Math.sqrt(1 + B2);
+      const voice = (f, amp, tau) => {
+        const o = ac.createOscillator(), g = ac.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0, at); g.gain.linearRampToValueAtTime(amp, at + .006); g.gain.setTargetAtTime(0, at + .006, tau);
+        o.connect(g).connect(out); o.start(at); o.stop(at + DUR + .2);
+      };
+      [[1, 1], [2, .55], [3, .2], [4, .06]].forEach(([n, a]) => voice(low(n), a, 1.3 / Math.sqrt(n)));
+      [[1, .85], [2, .16], [3, .06]].forEach(([n, a]) => voice(high(n), a, 1.1 / Math.sqrt(n)));
+    } catch (e) { /* no sound here: the ribbon tells the same story */ }
+  }
+
+  // ---------- the drawing ----------
+  function draw(anim) {
+    svg.replaceChildren();
+    const {W, H} = Kit.fitSvg(svg);
+    const b = Kit.$('stage').getBoundingClientRect(); seen = `${Math.round(b.width)}x${Math.round(b.height)}`;
+    if (!(W > 80 && H > 80)) { G = null; return; }
+    const fs = Math.max(12, Math.min(14, W / 24));
+    // three bands: the two lanes, the curve, the keyboard. Until both octaves are heard, the curve's band holds
+    // only the textbook line and the question, and the lanes take the room; then the curve gets what it needs.
+    // On a short stage (the smallest phone, once the why is in) the two octaves share one row, so the curve fits.
+    const compact = H < 165, row = compact && S.revealed, need = S.revealed ? 150 : fs * 3.6;
+    const keyH = compact ? 20 : Math.max(22, Math.min(54, H * .17)), gap = compact ? 5 : Math.max(6, H * .03);
+    const laneH = row ? 26 : compact ? 28 : Math.max(34, Math.min(S.revealed ? 70 : 84, (H - keyH - Math.min(need, Math.max(70, H * .3)) - gap * 3) / 2));
+    // the curve's band never grows past what it needs; any height left over is shared above and below
+    const lanesH = row ? laneH : laneH * 2 + gap, room = H - keyH - gap - lanesH - gap;
+    const curveH = Math.min(room, need), off = (room - curveH) / 2;
+    const curveTop = off + lanesH + gap, keyTop = curveTop + curveH + gap;
+    G = {W, H, fs, compact, laneH, curveTop, curveH, keyTop, keyH, lanes: [], ribbons: []};
+    LANES.forEach((L, i) => row ? drawChip(i, off) : drawLane(i, off + i * (laneH + gap)));
+    drawCurve();
+    drawKeys();
+    paint(anim);
+  }
+  // On a short stage, once both are heard: each octave a button and what it did, side by side.
+  function drawChip(i, y) {
+    const {W, fs, laneH} = G, L = LANES[i], r = 10, x0 = i * W / 2, cx = x0 + r + 2, cy = y + laneH / 2;
+    const g = el('g', {class: 'lane', role: 'button', tabindex: 0, 'aria-label': `Play the ${L.name.toLowerCase()} again: ${L.heard}`}, svg);
+    el('rect', {x: x0, y, width: W / 2, height: laneH, fill: 'transparent'}, g);
+    el('circle', {class: 'btn', cx, cy, r, fill: '#fff', stroke: '#fff', 'stroke-width': 2}, g);
+    el('path', {d: `M${cx - r * .28},${cy - r * .42} L${cx + r * .45},${cy} L${cx - r * .28},${cy + r * .42} Z`, style: 'fill:var(--c)'}, g);
+    txt(L.short, {class: 'b', x: cx + r + 7, y: cy + fs * .35, 'font-size': fs * .95}, g);
+    g.addEventListener('click', () => play(i));
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(i); } });
+    G.lanes[i] = g;
+  }
+  function drawLane(i, y) {
+    const {W, fs, laneH} = G, L = LANES[i], r = G.compact ? 11 : Math.min(laneH * .36, 21), cx = r + 2, cy = y + laneH / 2;
+    const g = el('g', {class: 'lane', role: 'button', tabindex: 0, 'aria-label': `Play the ${L.name.toLowerCase()}: ${L.sub}`}, svg);
+    el('rect', {x: 0, y, width: W, height: laneH, fill: 'transparent'}, g);
+    el('circle', {class: 'btn', cx, cy, r, fill: '#fff', stroke: '#fff', 'stroke-width': 2}, g);
+    el('path', {d: `M${cx - r * .28},${cy - r * .42} L${cx + r * .45},${cy} L${cx - r * .28},${cy + r * .42} Z`, style: 'fill:var(--c)'}, g);
+    const tx = cx + r + 10, tw = Math.max(fs * 8.2, W * .36);
+    // the name, and under it what the octave is, then what it did once heard (one line on the smallest phone)
+    const name = txt(L.name, {class: 'b', x: tx, y: cy - (laneH > 44 ? fs * .2 : -fs * .35), 'font-size': fs}, g);
+    const sub = laneH > 44 ? txt(L.sub, {x: tx, y: cy + fs * 1.05, 'font-size': fs * .9, opacity: .85}, g) : null;
+    // the ribbon: how loud the two notes are over two and a half seconds
+    const rx = tx + tw, rw = W - rx, rib = el('g', {}, g);
+    el('line', {x1: rx, x2: W, y1: cy, y2: cy, stroke: '#fff', 'stroke-width': 1.2, opacity: .45}, rib);
+    const shape = el('path', {fill: '#fff', opacity: .92}, rib);
+    G.ribbons[i] = {rx, rw, cy, h: laneH * (G.compact ? .8 : .62), shape, name, sub};
+    g.addEventListener('click', () => play(i));
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(i); } });
+    G.lanes[i] = g;
+  }
+  // how loud, at time s into the note: a piano's fade, and for the textbook octave the beat on top
+  const loud = (i, s) => Math.exp(-s / 1.25) * (LANES[i].stretched ? 1 : .55 + .45 * Math.cos(2 * Math.PI * BEAT * s));
+  function ribbon(i, upTo) {
+    const R = G.ribbons[i]; if (!R) return;
+    if (upTo <= 0) { R.shape.setAttribute('d', ''); return; }
+    const n = 140, top = [], bot = [];
+    for (let k = 0; k <= n; k++) {
+      const s = DUR * k / n; if (s > upTo) break;
+      const a = Math.max(.02, loud(i, s)) * R.h / 2, x = R.rx + R.rw * k / n;
+      top.push(`${x.toFixed(1)},${(R.cy - a).toFixed(1)}`); bot.unshift(`${x.toFixed(1)},${(R.cy + a).toFixed(1)}`);
+    }
+    R.shape.setAttribute('d', `M${top.join(' L')} L${bot.join(' L')} Z`);
+  }
+  // the keyboard: 88 keys, the two that sound lit in amber
+  function drawKeys() {
+    const {W, keyTop, keyH} = G, whites = [], blacks = [];
+    const isBlack = k => [1, 4, 6, 9, 11].includes((k - 1) % 12);     // A0 is key 1; A# C# D# F# G# are black
+    let w = 0; for (let k = 1; k <= 88; k++) if (!isBlack(k)) w++;
+    const ww = W / w; let x = 0;
+    G.keyX = {};
+    for (let k = 1; k <= 88; k++) {
+      if (isBlack(k)) { blacks.push([k, x]); G.keyX[k] = x; }
+      else { whites.push([k, x]); G.keyX[k] = x + ww / 2; x += ww; }
+    }
+    const g = el('g', {}, svg);
+    G.keys = {};
+    for (const [k, kx] of whites) G.keys[k] = el('rect', {x: kx + .35, y: keyTop, width: ww - .7, height: keyH, rx: Math.min(2, ww * .3), fill: '#fff'}, g);
+    for (const [k, kx] of blacks) G.keys[k] = el('rect', {x: kx - ww * .32, y: keyTop, width: ww * .64, height: keyH * .6, rx: 1, fill: DARK}, g);
+    G.ww = ww;
+  }
+  // the stretch of a tuned piano, key by key, against the textbook
+  function centsAt(k) {
+    for (let i = 1; i < STRETCH.length; i++) if (k <= STRETCH[i][0]) { const [k0, c0] = STRETCH[i - 1], [k1, c1] = STRETCH[i], u = (k - k0) / (k1 - k0); return c0 + (c1 - c0) * (u * u * (3 - 2 * u)); }
+    return STRETCH[STRETCH.length - 1][1];
+  }
+  function drawCurve() {
+    // room above the curve's top for its label; the scale is set so the bass dip stays in the band
+    // before the curve is drawn, the band holds only the line, its label and the question
+    const {W, fs, curveTop, curveH} = G, per = Math.max(.3, (curveH - fs * 1.5 - 4) / 66);
+    const mid = S.revealed ? curveTop + fs * 1.5 + 34 * per : curveTop + fs * 1.3;
+    const g = G.curve = el('g', {}, svg);
+    el('line', {x1: 0, x2: W, y1: mid, y2: mid, stroke: '#fff', 'stroke-width': 1.5, 'stroke-dasharray': '5 4', opacity: .75}, g);
+    txt('textbook octaves', {x: 0, y: mid - 6, 'font-size': fs * .9, opacity: .85}, g);
+    // until both octaves are heard, the band says what will be drawn in it
+    if (!S.revealed && mid + fs * 2 < G.keyTop - 2) G.ask = txt('Where does a tuned piano sit, key by key?', {x: W / 2, y: mid + fs * 1.7, 'text-anchor': 'middle', 'font-size': fs * .88, opacity: .7}, g);
+    G.curveMid = mid; G.per = per;
+  }
+  function drawStretch(anim) {
+    if (G.stretched) return;
+    G.stretched = true;
+    if (G.ask) { G.ask.remove(); G.ask = null; }
+    const {W, fs} = G, mid = G.curveMid, per = G.per, pts = [];
+    for (let k = 1; k <= 88; k++) pts.push(`${(G.keyX[k]).toFixed(1)},${(mid - centsAt(k) * per).toFixed(1)}`);
+    const line = el('polyline', {points: pts.join(' '), fill: 'none', stroke: AMBER, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.curve);
+    const tR = txt('top notes: tens of cents sharp', {x: W, y: mid - 34 * per - 6, 'text-anchor': 'end', 'font-size': fs * .9}, G.curve);
+    const tL = null;
+    if (!anim || Kit.calm) return;
+    const len = line.getTotalLength ? line.getTotalLength() : 600;
+    gsap.fromTo(line, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: 1.3, ease: 'power2.inOut', onComplete: () => line.removeAttribute('stroke-dasharray')});
+    gsap.from([tR, tL].filter(Boolean), {opacity: 0, duration: .4, delay: 1.1});
+  }
+
+  // what is lit and drawn now
+  function paint(anim) {
+    if (!G) return;
+    for (let i = 0; i < 2; i++) {
+      const R = G.ribbons[i]; if (!R) continue;
+      ribbon(i, S.playing === i ? S.t : (S.heard[i] ? DUR : 0));
+      const heard = S.heard[i] || S.playing === i;
+      if (R.sub) R.sub.textContent = heard ? LANES[i].heard : LANES[i].sub;
+      else R.name.textContent = heard ? LANES[i].short : LANES[i].name;
+    }
+    for (const k of [61, 73]) if (G.keys[k]) G.keys[k].setAttribute('fill', S.playing >= 0 ? AMBER : '#fff');
+    if (S.revealed) drawStretch(anim);
+  }
+
+  // ---------- play ----------
+  function play(i) {
+    if (S.playing >= 0) return;
+    Kit.haptic('light');
+    sound(LANES[i].stretched);
+    S.playing = i; S.t = 0;
+    if (Kit.calm) { S.t = DUR; done(); return; }
+    t0 = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(frame);
+  }
+  function frame(ms) {
+    S.t = (ms - t0) / 1000;
+    if (S.t >= DUR) { done(); return; }
+    paint(); raf = requestAnimationFrame(frame);
+  }
+  function done() {
+    const i = S.playing; S.heard[i] = true; S.playing = -1; paint();
+    if (!S.revealed && S.heard[0] && S.heard[1]) reveal();
+    else if (!S.revealed) say(i === 0 ? 'Hear the wobble? Now play the <b>tuner’s octave</b>.' : 'Steady. Now play the <b>textbook octave</b>.');
+  }
+  function reveal() {
+    S.revealed = true;
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    svg.setAttribute('aria-label', 'Two octaves heard: the textbook one beats, the tuner’s one blends. Over the keyboard, a tuned piano’s curve against the textbook: flat in the bass, tens of cents sharp at the top.');
+    draw(true);                                  // the curve gets its band, and draws itself in
+  }
+  function say(h) { const e = Kit.$('say'); e.innerHTML = h; if (!Kit.calm) gsap.fromTo(e, {opacity: .3}, {opacity: 1, duration: .35}); }
+
+  Kit.onShow.card = () => draw();
+  new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; draw(); } }).observe(Kit.$('stage'));
+  Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.lanes, {opacity: 0, x: -8, stagger: .12, duration: .45, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    G.lanes[0].dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(Kit.calm ? 100 : DUR * 1000 + 250);
+    G.lanes[1].dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(Kit.calm ? 100 : DUR * 1000 + 300);
+  };
+  Kit.single();
+})();
+</script>
+</html>

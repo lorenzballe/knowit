@@ -4525,4 +4525,10 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '今天的 Astute 挑战：$_temp0。你能猜得更准吗？';
   }
+
+  @override
+  String get playTheCard => '玩这张卡片';
+
+  @override
+  String get openTheCard => '打开卡片';
 }

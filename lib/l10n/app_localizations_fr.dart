@@ -4757,4 +4757,10 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return 'Le défi du jour sur Astute : $_temp0. Tu fais mieux ?';
   }
+
+  @override
+  String get playTheCard => 'Jouer la carte';
+
+  @override
+  String get openTheCard => 'Ouvrir la carte';
 }

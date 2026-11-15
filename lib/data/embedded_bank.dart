@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611151635,
- "built": "2026-11-15T16:35:04Z",
+ "version": 202611152137,
+ "built": "2026-11-15T21:37:36Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -4481,6 +4481,17 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Brunelleschi's ox hoist for Florence's dome: a pair of oxen walk a ring round an upright shaft that turns a rope drum and lifts a stone up the dome's wall. The reader drags round the ring to walk the oxen, then taps the gear to reverse the drum.",
+    "page": "pages/art-florence-5.html?v=628a23b91063",
+    "bytes": 25100,
+    "thumbs": {
+     "front": "thumbs/art-florence-5-front.webp?v=628a23b91063",
+     "back": "thumbs/art-florence-5-back.webp?v=628a23b91063"
+    }
+   },
    "source": "King, Brunelleschi's Dome, 2000",
    "source_kind": "book",
    "reference": "Ross King, Brunelleschi's Dome: The Story of the Great Cathedral in Florence, Chatto & Windus, 2000",
@@ -11883,6 +11894,17 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two film frames, 1995 and 2013, with computers vastly faster between them: the reader picks what happened to render time per frame, then says how sure. After, a slider runs the years while the frame fills with hair and light and the hours per frame stay put.",
+    "page": "pages/cinema-cgi-7.html?v=a38b30981f28",
+    "bytes": 19840,
+    "thumbs": {
+     "front": "thumbs/cinema-cgi-7-front.webp?v=a38b30981f28",
+     "back": "thumbs/cinema-cgi-7-back.webp?v=a38b30981f28"
+    }
+   },
    "source": "GamesBeat on Monsters University, 2013",
    "source_kind": "news_archive",
    "reference": "https://gamesbeat.com/the-making-of-pixars-latest-technological-marvel-monsters-university/",
@@ -83226,6 +83248,17 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three drawn answers to why thousands of Linear B clay tablets lasted 3,000 years: palace fires, a kiln, dry tombs. The reader taps one and says how sure, then taps through four scenes of one shelf of tablets: written, reused, baked by fire, what survives.",
+    "page": "pages/language-lost-scripts-3.html?v=fcbdcd925e23",
+    "bytes": 17732,
+    "thumbs": {
+     "front": "thumbs/language-lost-scripts-3-front.webp?v=fcbdcd925e23",
+     "back": "thumbs/language-lost-scripts-3-back.webp?v=fcbdcd925e23"
+    }
+   },
    "source": "Chadwick, The Decipherment of Linear B, 1958",
    "source_kind": "book",
    "reference": "Chadwick, The Decipherment of Linear B, Cambridge University Press, 1958",
@@ -124560,6 +124593,17 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two octaves to play on a piano, a textbook one exactly two to one and a tuner's one a little wider. Each plays as sound and draws its loudness as a ribbon: one wobbles, one is steady. Then a curve over the keyboard shows the stretch.",
+    "page": "pages/music-piano-1.html?v=0d3ee43e7249",
+    "bytes": 16229,
+    "thumbs": {
+     "front": "thumbs/music-piano-1-front.webp?v=0d3ee43e7249",
+     "back": "thumbs/music-piano-1-back.webp?v=0d3ee43e7249"
+    }
+   },
    "source": "Railsback, JASA, 1938",
    "source_kind": "paper",
    "reference": "Railsback, Scale temperament as applied to piano tuning, Journal of the Acoustical Society of America, 1938",
@@ -155900,6 +155944,17 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "True or false: checking often enough on an atom poised to change state can stop it changing. A hundred ions sit as dots on their starting level. After the answer the reader runs the push with 1, 4, 16 or 64 looks and sees how many make the jump.",
+    "page": "pages/philosophy-zeno-4.html?v=2dcd7391a0b9",
+    "bytes": 12275,
+    "thumbs": {
+     "front": "thumbs/philosophy-zeno-4-front.webp?v=2dcd7391a0b9",
+     "back": "thumbs/philosophy-zeno-4-back.webp?v=2dcd7391a0b9"
+    }
+   },
    "source": "Itano et al., Physical Review A, 1990",
    "source_kind": "paper",
    "reference": "Itano, Heinzen, Bollinger & Wineland, Quantum Zeno effect, Physical Review A 41, 1990",
@@ -158153,6 +158208,17 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A skein of cotton yarn hangs from a stick into an indigo dye bath. The reader holds a finger down to lift it into the air: it comes out yellow-green, and a clock counts its time in the air while it turns blue.",
+    "page": "pages/pop_culture-denim-6.html?v=102a5d4d16ce",
+    "bytes": 16945,
+    "thumbs": {
+     "front": "thumbs/pop_culture-denim-6-front.webp?v=102a5d4d16ce",
+     "back": "thumbs/pop_culture-denim-6-back.webp?v=102a5d4d16ce"
+    }
+   },
    "source": "Balfour-Paul, Indigo, British Museum Press",
    "source_kind": "book",
    "reference": "Jenny Balfour-Paul, Indigo: Egyptian Mummies to Blue Jeans, British Museum Press, 2011",
@@ -222474,6 +222540,17 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A standing long jump drawn to scale: empty-handed, the jumper lands at 3 metres. Now he holds a weight in each hand. The reader taps the sand where they think he lands, then watches him jump, swinging the weights forward.",
+    "page": "pages/sport-ancient-2.html?v=a94469c1c34f",
+    "bytes": 19393,
+    "thumbs": {
+     "front": "thumbs/sport-ancient-2-front.webp?v=a94469c1c34f",
+     "back": "thumbs/sport-ancient-2-back.webp?v=a94469c1c34f"
+    }
+   },
    "source": "Minetti & Ardigò, Nature, 2002",
    "source_kind": "paper",
    "reference": "doi:10.1038/420141a",

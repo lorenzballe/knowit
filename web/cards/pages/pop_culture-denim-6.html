@@ -1,0 +1,229 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Design note.
+     Thought to carry: the blue of denim is made by the air, after the dye bath.
+     One scene, drawn flat: a hank of cotton yarn hangs from a dyer's stick into a dye bath, its lower part
+     under the surface. The reader holds a finger on the card to lift it out and keep it in the air. It comes
+     out yellow-green (the soluble leuco form), and while it is held a big clock counts its time in the air,
+     sped up thirty times, and the yarn turns green, then blue, within a minute and a half. Let go too soon
+     and it drops back in and comes out yellow-green again. Two colours of meaning only: yellow-green for the
+     dye as it is in the bath, indigo for the dye the air has fixed. -->
+<title>Blue from the air</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;outline:none}
+#pic text{font-family:var(--body);font-weight:700}
+#pic .big{font-family:var(--display);font-weight:800}
+.q,.say,.keep,.src{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="pop_culture" data-kind="Hold · watch the colour">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD IT UP</span></div>
+    <h2 class="q">What colour is denim yarn at the moment it comes out of the indigo dye bath?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" data-drag tabindex="0" role="button" aria-label="A hank of cotton yarn hangs from a stick into an indigo dye bath. Press and hold to lift it out into the air."></svg></div>
+    <p class="say" id="say"><b>Hold your finger on the picture</b> to lift the yarn out and keep it up. The clock runs thirty times fast.</p>
+    <p class="say gone" id="why"><b>Yellowish green.</b> Indigo won’t dissolve in water, so dyers change it into a soluble yellow-green form that soaks into the cotton. In the air it turns back to blue, locking the dye in.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Some finished colours exist only after the air has had its turn.</div>
+    <div class="foot"><span class="src">Source · Jenny Balfour-Paul, Indigo (British Museum Press, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic');
+  const el = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+  // Time in the air, in the yarn's own seconds; the clock runs thirty times faster than the reader's.
+  const SPEED = 30, BLUE = 90, STRANDS = 9;
+  // The yarn's colour by seconds in the air: the bath's yellow-green, through green and teal, to indigo.
+  const RAMP = [[0, [205, 220, 64]], [16, [150, 196, 76]], [36, [66, 146, 100]], [58, [40, 94, 134]], [90, [30, 44, 116]]];
+  // The vat as a dyer sees it: dark liquor under a blue-violet froth (the "flower"), giving nothing away.
+  const BATH = '#1f2343', FLOWER = '#5d4fa6', BUBBLE = '#8d7fd0', COTTON = [251, 248, 239], INK = '#2a2b10', WOOD = '#8a5a2b';
+  const lag = Array.from({length: STRANDS}, () => (Kit.rnd() - .5) * 14);   // each strand a little ahead or behind
+  const S = {lift: 0, t: 0, hold: false, done: false, tries: 0};
+  let G = null, raf = 0, last = 0;
+
+  const mix = (a, b, k) => a.map((v, i) => Math.round(v + (b[i] - v) * k));
+  function colourAt(t) {
+    t = Math.max(0, t);
+    for (let i = 1; i < RAMP.length; i++) if (t <= RAMP[i][0]) { const [t0, c0] = RAMP[i - 1], [t1, c1] = RAMP[i]; return mix(c0, c1, (t - t0) / (t1 - t0)); }
+    return RAMP[RAMP.length - 1][1];
+  }
+  const rgb = c => `rgb(${c[0]},${c[1]},${c[2]})`;
+  const name = t => t < 14 ? 'yellow-green' : t < 44 ? 'green' : t < 74 ? 'turning blue' : 'blue';
+  const clock = t => { const s = Math.min(BLUE, Math.floor(t)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
+
+  // ---------- the scene, at the stage's real size ----------
+  function draw() {
+    svg.replaceChildren();
+    const {W, H} = Kit.fitSvg(svg);
+    if (!(W > 60 && H > 60)) { G = null; return; }
+    const fs = Math.max(12, Math.min(14, W / 24)), big = Math.max(26, Math.min(58, W * .18, H * .22));
+    // The bath across the foot; the hank hangs from its stick on the left; the clock sits top right.
+    // The bath is the lower half and the hank goes in almost to its stick, so lifted it fills the upper half.
+    // Once the yarn is up for good the bath needs no depth: it sinks to a strip and the hank takes the room.
+    const vh = S.done ? Math.max(34, H * .25) : Math.max(44, H * .5), vy = H - vh, ly = vy + Math.min(12, vh * .12), depth = H - ly - 8;
+    const gap = Math.max(8, fs * .7);
+    const L = Math.max(40, Math.min(H * (S.done ? .7 : .55), ly - gap - 8)), dip = S.done ? L * .76 : Math.min(depth - 4, L * .72), dry = L - dip;
+    const sx = W * .27, hw = Math.max(15, Math.min(L * .2, W * .14, 50));
+    const yDown = ly - dry, yUp = yDown - dip - gap;
+    G = {W, H, fs, sx, hw, L, dry, dip, ly, yDown, yUp, strands: []};
+
+    // The vat, cut away: wooden walls that lean in towards the foot, a rim, iron hoops; the dark liquor inside.
+    const x0 = 3, x1 = W - 3, tp = Math.min(14, W * .045), yb = H - 1.5, rr = Math.min(12, vh * .3), wt = Math.max(5, W * .018);
+    const tub = (a, top, b) => `M${x0 + a},${top} H${x1 - a} L${x1 - tp - a},${b - rr} Q${x1 - tp - a},${b} ${x1 - tp - a - rr},${b} H${x0 + tp + a + rr} Q${x0 + tp + a},${b} ${x0 + tp + a},${b - rr} Z`;
+    el('path', {d: tub(0, vy, yb), fill: WOOD, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+    // The hank: a long loop of yarn, cream where it was never dipped, dyed below the tie.
+    G.hank = el('g', {}, svg);
+    // A hank is one long loop: hung over the stick it opens at the top and its strands gather at the foot.
+    const foot = L - hw * .2;
+    const outline = `M${sx - hw},0 C${sx - hw * 1.05},${L * .45} ${sx - hw * .95},${foot - hw * .9} ${sx - hw * .55},${foot - hw * .25} Q${sx},${foot + hw * .45} ${sx + hw * .55},${foot - hw * .25} C${sx + hw * .95},${foot - hw * .9} ${sx + hw * 1.05},${L * .45} ${sx + hw},0 Z`;
+    // where the loop opens over the stick, the back of the loop shows through, in shade
+    const od = Math.min(L * .32, dry * .9);
+    const opening = `M${sx - hw * .42},0 C${sx - hw * .36},${od * .38} ${sx - hw * .1},${od * .8} ${sx},${od} C${sx + hw * .1},${od * .8} ${sx + hw * .36},${od * .38} ${sx + hw * .42},0 Z`;
+    const clip = el('clipPath', {id: 'hk'}, el('defs', {}, svg));
+    el('path', {d: outline}, clip);
+    const body = el('g', {'clip-path': 'url(#hk)'}, G.hank);
+    el('rect', {x: sx - hw * 1.2, y: -2, width: hw * 2.4, height: dry + 2, fill: rgb(COTTON)}, body);
+    G.dyed = el('rect', {x: sx - hw * 1.2, y: dry, width: hw * 2.4, height: L - dry + hw, fill: rgb(colourAt(0))}, body);
+    for (let i = 0; i < STRANDS; i++) {
+      const k = (i + .5) / STRANDS * 2 - 1, x = sx + k * hw * .95, xb = sx + k * hw * .22;
+      el('path', {d: `M${x},0 L${x},${dry}`, stroke: '#d9d2bf', 'stroke-width': 1.4}, body);
+      const s = el('path', {d: `M${x},${dry} C${x},${L * .62} ${x - k * hw * .1},${foot - hw * .7} ${xb},${foot}`, fill: 'none', 'stroke-width': Math.max(1.8, hw * .08), 'stroke-linecap': 'round'}, body);
+      G.strands.push(s);
+    }
+    el('path', {d: opening, fill: '#d6ccb2', style: 'stroke:var(--k)', 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, G.hank);
+    el('path', {d: outline, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, G.hank);
+    el('rect', {x: sx - hw - 3, y: dry - 3, width: hw * 2 + 6, height: 6, rx: 3, fill: INK}, G.hank);        // the tie
+    el('rect', {x: sx - hw - 24, y: -6, width: hw * 2 + 48, height: 11, rx: 5.5, fill: '#8a5a2b', style: 'stroke:var(--k)', 'stroke-width': 2}, G.hank); // the dyer's stick
+
+    // The liquor over the dipped yarn: dark, so what colour the yarn is stays hidden until it comes out.
+    el('path', {d: tub(wt, ly, yb - wt), fill: BATH, opacity: .96}, svg);
+    // the froth on top, a band of small bubbles
+    const fh = Math.max(5, fs * .5);
+    el('rect', {x: x0 + wt, y: ly - fh * .5, width: x1 - x0 - wt * 2, height: fh, rx: fh / 2, fill: FLOWER}, svg);
+    for (let x = x0 + wt + 6, k = 0; x < x1 - wt - 6; x += fs * .9, k++) el('circle', {cx: x, cy: ly - fh * .55 + (k % 3) * 1.5, r: fh * (.32 + (k % 4) * .08), fill: BUBBLE}, svg);
+    // the hoops on the walls, and the rim across the front: the yarn hangs inside the vat
+    for (const f of [.42, .8]) {
+      const y = vy + (yb - vy) * f, xl = x0 + tp * Math.min(1, (y - vy) / (yb - rr - vy));
+      if (y < yb - rr * .6) for (const xa of [xl - 1, x1 - (xl - x0) - wt - 2]) el('rect', {x: xa, y: y - 2, width: wt + 3, height: 4, rx: 1, fill: INK}, svg);
+    }
+    el('rect', {x: x0 - 1, y: vy - 3, width: x1 - x0 + 2, height: 7, rx: 3.5, fill: WOOD, style: 'stroke:var(--k)', 'stroke-width': 1.6}, svg);
+    txt('indigo dye bath', {x: x1 - tp - wt - 8, y: yb - wt - fs * .7, 'text-anchor': 'end', 'font-size': fs, style: 'fill:#ffffff', opacity: .85}, svg);
+
+    // The clock, on the right: beside the stick before the lift, at the top once the yarn is up for good;
+    // and the yarn's colour by name beside the hank.
+    const shh = Math.max(9, fs * .75), gH = big * 1.08 + fs * 1.75 + shh, cy0 = S.done ? 0 : Math.max(0, ly - fh - 14 - gH);
+    G.time = txt('0:00', {class: 'big', x: W - 2, y: cy0 + big * .8, 'text-anchor': 'end', 'font-size': big, style: 'fill:var(--k)'}, svg);
+    txt('in the air', {x: W - 2, y: cy0 + big * .8 + big * .28 + fs * 1.1, 'text-anchor': 'end', 'font-size': fs, style: 'fill:var(--k)'}, svg);
+    G.clockLeft = W - 2 - Math.max(big * 2.1, (() => { try { return G.time.getComputedTextLength(); } catch (_) { return 0; } })());
+    G.clockTop = cy0 + big * .06;
+    // Under the clock, a strip that fills with every colour the yarn has been, from the bath to now.
+    const sy = cy0 + big * .8 + big * .28 + fs * 1.75, sw = W - 2 - G.clockLeft;
+    const grad = el('linearGradient', {id: 'ramp', gradientUnits: 'userSpaceOnUse', x1: G.clockLeft, x2: G.clockLeft + sw, y1: 0, y2: 0}, svg.querySelector('defs'));
+    RAMP.forEach(([t, c]) => el('stop', {offset: t / BLUE, 'stop-color': rgb(c)}, grad));
+    G.fill = el('rect', {x: G.clockLeft, y: sy, width: 0, height: shh, rx: shh / 2, fill: 'url(#ramp)'}, svg);
+    el('rect', {x: G.clockLeft, y: sy, width: sw, height: shh, rx: shh / 2, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.5}, svg);
+    G.stripW = sw;
+    G.clockBottom = sy + shh + 4;
+    G.tag = el('g', {}, svg);
+    G.lead = el('line', {style: 'stroke:var(--k)', 'stroke-width': 1.5}, G.tag);
+    G.chip = el('rect', {height: fs * 1.9, rx: fs * .95, style: 'stroke:var(--k)', 'stroke-width': 1.5}, G.tag);
+    G.chipT = txt('', {'font-size': fs, 'text-anchor': 'middle'}, G.tag);
+
+    // Before the first lift: two chevrons beside the stick say which way.
+    G.hint = el('g', {opacity: S.tries || S.done ? 0 : 1}, svg);
+    const hx = sx + hw + 40, hy = yDown - fs * .6;
+    for (let k = 0; k < 2; k++) el('path', {d: `M${hx - 9},${hy + k * 11 + 9} l9,-9 l9,9`, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 1 - k * .45}, G.hint);
+    if (!Kit.calm && !S.tries) gsap.to(G.hint, {y: -6, duration: .6, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    render();
+  }
+
+  // One frame from the state: where the hank hangs, its colour, the clock, the colour's name.
+  function render() {
+    if (!G) return;
+    const y = G.yDown + (G.yUp - G.yDown) * S.lift, out = S.lift > .55 || S.done, t = S.done ? BLUE : S.t;
+    G.hank.setAttribute('transform', `translate(0 ${y.toFixed(1)})`);
+    G.dyed.setAttribute('fill', rgb(colourAt(out ? t : 0)));
+    G.strands.forEach((s, i) => s.setAttribute('stroke', rgb(mix(colourAt(out ? t + lag[i] : 0), [20, 20, 40], .22))));
+    G.time.textContent = clock(S.t);
+    G.fill.setAttribute('width', (G.stripW * Math.min(1, (S.done ? BLUE : S.t) / BLUE)).toFixed(1));
+    G.tag.setAttribute('opacity', out ? 1 : 0);
+    if (!out) return;
+    const label = name(t), w = label.length * G.fs * .55 + G.fs * 1.5, h = G.fs * 1.9;
+    const x0 = G.sx + G.hw + 10, tx = Math.min(G.W - w - 2, x0 + 18);
+    let ty = y + G.dry + G.dip * .55;
+    // Clear of the clock: just above it or just below it, whichever is nearer and still beside the yarn.
+    if (tx + w > G.clockLeft - 4 && ty + h / 2 > G.clockTop - 3 && ty - h / 2 < G.clockBottom) {
+      const fits = v => v >= h / 2 + 1 && v <= G.ly - h / 2 - 3 && v >= y + 4 && v <= y + G.L - 4;
+      const ways = [G.clockTop - h / 2 - 4, G.clockBottom + h / 2 + 3].filter(fits).sort((a, b) => Math.abs(a - ty) - Math.abs(b - ty));
+      ty = ways.length ? ways[0] : Math.min(G.ly - h / 2 - 3, G.clockBottom + h / 2 + 3);
+    }
+    G.lead.setAttribute('x1', G.sx + G.hw * .6); G.lead.setAttribute('x2', tx); G.lead.setAttribute('y1', ty); G.lead.setAttribute('y2', ty);
+    G.chip.setAttribute('x', tx); G.chip.setAttribute('y', ty - h / 2); G.chip.setAttribute('width', w);
+    G.chip.setAttribute('fill', rgb(colourAt(t)));
+    G.chipT.textContent = label; G.chipT.setAttribute('x', tx + w / 2); G.chipT.setAttribute('y', ty + G.fs * .36);
+    G.chipT.setAttribute('style', `fill:${t < 30 ? INK : '#ffffff'}`);
+  }
+
+  // ---------- the hold ----------
+  function step(dt) {
+    const want = S.hold || S.done ? 1 : 0, rate = Kit.calm ? 99 : 2.6;
+    S.lift += Math.sign(want - S.lift) * Math.min(Math.abs(want - S.lift), dt * rate);
+    if (S.lift > .55 && !S.done && S.hold) S.t += dt * SPEED;
+    if (S.lift < .25 && !S.done) S.t = 0;                         // back in the bath: yellow-green again
+    if (!S.done && S.t >= BLUE) finish();
+  }
+  function frame(ms) {
+    const dt = Math.min(.05, Math.max(0, ms - last) / 1000); last = ms;
+    step(dt); render();
+    const still = !S.hold && (S.done ? S.lift >= 1 : S.lift <= 0);
+    raf = still ? 0 : requestAnimationFrame(frame);
+  }
+  const kick = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+
+  function press(e) {
+    if (S.done || !G) return;
+    if (e) { e.preventDefault(); try { svg.setPointerCapture(e.pointerId); } catch (_) {} }
+    S.hold = true; S.tries++;
+    if (G.hint) { gsap.killTweensOf(G.hint); G.hint.setAttribute('opacity', 0); }
+    Kit.haptic('light'); kick();
+  }
+  function release() {
+    if (!S.hold) return;
+    S.hold = false;
+    if (!S.done) say(S.t > 3 ? 'Too soon: back in the bath. <b>Hold it up longer.</b>' : '<b>Keep your finger down</b> to keep the yarn in the air.');
+    kick();
+  }
+  function finish() {
+    S.done = true; S.hold = false; S.t = BLUE; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    svg.setAttribute('aria-label', 'The hank held up in the air: it came out of the bath yellow-green and turned blue within a minute and a half.');
+    svg.style.cursor = 'default';
+    requestAnimationFrame(draw);
+  }
+  function say(h) { const e = Kit.$('say'); e.innerHTML = h; if (!Kit.calm) gsap.fromTo(e, {opacity: .3}, {opacity: 1, duration: .35}); }
+
+  svg.addEventListener('pointerdown', press);
+  addEventListener('pointerup', release); addEventListener('pointercancel', release);
+  svg.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); press(); } });
+  svg.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') release(); });
+
+  Kit.onShow.card = draw;
+  // The column moves when the why comes in: the scene is drawn again at its new size.
+  let seen = '';
+  new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; draw(); } }).observe(Kit.$('stage'));
+  Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.hank, {opacity: 0, duration: .5, ease: 'power2.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const r = svg.getBoundingClientRect(), x = r.left + r.width * .3, y = r.bottom - 20;
+    svg.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, cancelable: true, clientX: x, clientY: y, pointerId: 5, pointerType: 'touch', isPrimary: true}));
+    await wait(BLUE / SPEED * 1000 + 900);
+    dispatchEvent(new PointerEvent('pointerup', {bubbles: true, clientX: x, clientY: y, pointerId: 5, pointerType: 'touch', isPrimary: true}));
+    await wait(600);
+  };
+  Kit.single();
+})();
+</script>
+</html>

@@ -1111,5 +1111,7 @@
   "shareWhichSide": "Aan welke kant sta jij?",
   "rereadRight": "De eerste keer had je het goed.",
   "rereadWrong": "De eerste keer had je het mis.",
-  "betsDayShareLine": "De uitdaging van vandaag op Astute: {off, plural, =0{precies goed} =1{1 punt ernaast} other{{off} punten ernaast}}. Kun jij het beter?"
+  "betsDayShareLine": "De uitdaging van vandaag op Astute: {off, plural, =0{precies goed} =1{1 punt ernaast} other{{off} punten ernaast}}. Kun jij het beter?",
+  "playTheCard": "Speel de kaart",
+  "openTheCard": "Open de kaart"
 }
