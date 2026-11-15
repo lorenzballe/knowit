@@ -1064,5 +1064,14 @@
   "exploreSixtyFirst": "Zet je record neer",
   "exploreGameNone": "Hier valt nu niets te spelen. Kom morgen terug.",
   "exploreSubjectLevel": "{subject}, niveau {n}",
-  "exploreBecauseSaved": "Omdat je ‘{question}’ bewaarde"
+  "exploreBecauseSaved": "Omdat je ‘{question}’ bewaarde",
+  "todaySeeAgain": "Opnieuw zien",
+  "todaySeeAgainHint": "De kaarten van vandaag opnieuw, op volle grootte, vanaf de eerste",
+  "tuneTitle": "Je mix fijnstellen",
+  "tuneEntryLine": "Hoeveel van elk vak, en welke delen ervan",
+  "tuneLearned": "Al bijgesteld door de kaarten die je leuk vond en weggooide. Schuif om het te veranderen.",
+  "tuneFresh": "Schuif een vak om er meer of minder van te zien.",
+  "tuneHowMuch": "Hoeveel van elk",
+  "tuneInsideLine": "De delen die je het leukst vond staan vooraan. Tik er een aan om hem over te slaan, houd hem vast om erin te kijken.",
+  "tuneSave": "Opslaan"
 }

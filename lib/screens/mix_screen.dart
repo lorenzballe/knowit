@@ -246,7 +246,7 @@ class _MixGrid extends StatelessWidget {
           if (c > 0) const SizedBox(width: 8),
           Expanded(
             child: r * columns + c < kMixSubjects.length
-                ? _MixTile(
+                ? MixTile(
                     subject: kMixSubjects[r * columns + c],
                     value: value[kMixSubjects[r * columns + c].name]!,
                     index: r * columns + c,
@@ -333,18 +333,28 @@ class _MixHeading extends StatelessWidget {
   }
 }
 
-class _MixTile extends StatelessWidget {
-  const _MixTile({
+/// One subject's bar: dragged sideways, it says how much of the subject.
+/// The onboarding's grid is made of these, and so is the fine-tuning under
+/// the topics editor ([TuneScreen]).
+class MixTile extends StatelessWidget {
+  const MixTile({
+    super.key,
     required this.subject,
     required this.value,
     required this.index,
     required this.onDragAt,
+    this.mark,
   });
 
   final MixSubject subject;
   final int value;
   final int index;
   final void Function(MixSubject, double dx, double width) onDragAt;
+
+  /// Where the reader last set the bar themselves, 0 to 100, when the app
+  /// has since moved it: a thin line on the tile, so what was learned and
+  /// what was asked for can be told apart. Null where the two agree.
+  final int? mark;
 
   @override
   Widget build(BuildContext context) {
@@ -436,6 +446,32 @@ class _MixTile extends StatelessWidget {
                           ),
                         ),
                       ),
+                      // What the reader asked for, where the app has since
+                      // moved the bar away from it.
+                      // Two notches, at the tile's top and bottom edges,
+                      // rather than a line through it: a line crossed the
+                      // subject's name.
+                      if (mark != null)
+                        for (final bool top in const [true, false])
+                          Positioned(
+                            left: (mark! / 100 * box.maxWidth - 1.5).clamp(
+                              0.0,
+                              box.maxWidth - 3,
+                            ),
+                            top: top ? 0 : null,
+                            bottom: top ? null : 0,
+                            width: 3,
+                            height: 8,
+                            child: DecoratedBox(
+                              key: ValueKey(
+                                'mix-mark-${subject.key}-${top ? 'top' : 'bottom'}',
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.85),
+                                borderRadius: BorderRadius.circular(1.5),
+                              ),
+                            ),
+                          ),
                       // inset:0 — the row has to fill the tile, or an
                       // unpositioned Stack child takes only the height it needs
                       // and the label rides at the top instead of the middle.

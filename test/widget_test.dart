@@ -360,6 +360,14 @@ Future<void> _hold(WidgetTester tester, Finder card) async {
   await tester.pumpAndSettle();
 }
 
+/// The card at the front of the shelf once the day is read, as its dots say
+/// it: the dot of [n] of five is the one selected. The shelf's heading used
+/// to print it as "0n / 05"; the dots under the cards were already saying it.
+void _expectAtFront(WidgetTester tester, int n) => expect(
+  tester.getSemantics(find.bySemanticsLabel('Card $n of 5').last),
+  isSemantics(isSelected: true),
+);
+
 void main() {
   // The shelves played here stand where Explore had them before the
   // strategic Explore.
@@ -2012,7 +2020,7 @@ void main() {
     // The carousel keeps a drag that lands on it...
     await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
     await _settle(tester);
-    expect(find.text('02 / 05'), findsOneWidget);
+    _expectAtFront(tester, 2);
 
     // ...and the header, which wants nothing, hands it to the page.
     await tester.dragFrom(
@@ -2343,7 +2351,7 @@ void main() {
     expect(_todayTitle, findsNothing);
     expect(find.text('Hold a card you like'), findsOneWidget);
     expect(find.text("TODAY'S FIVE"), findsOneWidget);
-    expect(find.text('01 / 05'), findsOneWidget);
+    _expectAtFront(tester, 1);
 
     final front = _todaysFive.first;
     expect(find.text(front.question), findsOneWidget);
@@ -2544,7 +2552,7 @@ void main() {
       // again with its rim's turn starting over.
       await tester.fling(find.byType(TodayDoneView), const Offset(300, 0), 900);
       await _settle(tester);
-      expect(find.text('05 / 05'), findsOneWidget);
+      _expectAtFront(tester, 5);
       expect(tester.state(find.byType(MagicCard)), same(atTheFront));
       // And to the front again, still the same.
       await tester.fling(
@@ -2621,7 +2629,7 @@ void main() {
       // The sixth dot jumps to it, and the first dot back to the first.
       await tester.tap(find.bySemanticsLabel('Card 1 of 5'));
       await _settle(tester);
-      expect(find.text('01 / 05'), findsOneWidget);
+      _expectAtFront(tester, 1);
       await tester.tap(find.bySemanticsLabel('ASTUTE+'));
       await _settle(tester);
       expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
@@ -2634,10 +2642,10 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       await finish(tester);
-      expect(find.text('01 / 05'), findsOneWidget);
+      _expectAtFront(tester, 1);
       await toTheSixth(tester);
       // Past the fifth there is nothing: the shelf stops on it.
-      expect(find.text('05 / 05'), findsOneWidget);
+      _expectAtFront(tester, 5);
       expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
     });
 
@@ -2677,19 +2685,19 @@ void main() {
 
       await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
       await _settle(tester);
-      expect(find.text('02 / 05'), findsOneWidget);
+      _expectAtFront(tester, 2);
       expect(find.text(deck[1].question), findsOneWidget);
       // Turning a card over does not carry to the next one.
       expect(find.text(deck.first.answer), findsNothing);
 
       await tester.drag(find.byType(TodayDoneView), const Offset(200, 0));
       await _settle(tester);
-      expect(find.text('01 / 05'), findsOneWidget);
+      _expectAtFront(tester, 1);
 
       // The dots jump straight to a card.
       await tester.tap(find.bySemanticsLabel('Card 5 of 5'));
       await _settle(tester);
-      expect(find.text('05 / 05'), findsOneWidget);
+      _expectAtFront(tester, 5);
       expect(find.text(deck.last.question), findsOneWidget);
     });
 
@@ -3758,7 +3766,17 @@ void main() {
       await _openSetting(tester, 'Saved');
       expect(find.text('1 card'), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.bookmark_rounded).first);
+      // Held, the kept card offers to be let go of.
+      await tester.longPress(
+        find.byWidgetPredicate(
+          (w) =>
+              w.key is ValueKey<String> &&
+              (w.key! as ValueKey<String>).value.startsWith('kept-') &&
+              !(w.key! as ValueKey<String>).value.startsWith('kept-block-'),
+        ),
+      );
+      await _settle(tester);
+      await tester.tap(find.text('Remove from saved'));
       await _settle(tester);
       expect(find.text('Removed from saved.'), findsOneWidget);
       expect(find.text("Keep the ones you'll actually use"), findsOneWidget);
@@ -3799,7 +3817,14 @@ void main() {
       await _openSetting(tester, 'Liked');
       expect(find.text('Liked'), findsOneWidget);
       expect(find.text(liked.question), findsOneWidget);
-      expect(find.byTooltip('Remove from liked'), findsOneWidget);
+      // Held, the card offers to be let go of, and sent.
+      await tester.longPress(find.byKey(ValueKey('kept-${liked.id}')));
+      await _settle(tester);
+      expect(find.text('Remove from liked'), findsOneWidget);
+      expect(find.text('Share this card'), findsOneWidget);
+      await tester.tap(find.text('Remove from liked'));
+      await _settle(tester);
+      expect(find.byKey(ValueKey('kept-${liked.id}')), findsNothing);
       // Not the bookmarks: the two shelves are two different questions.
       expect(find.text('Saved'), findsNothing);
     });

@@ -29,6 +29,7 @@ import '../widgets/premium.dart';
 import '../widgets/profile_menu.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/sign_in_sheet.dart';
+import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'journey_screen.dart';
@@ -36,6 +37,7 @@ import 'saved_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
+import 'tune_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -100,6 +102,11 @@ class ProfileScreen extends StatelessWidget {
           initial: app.pickedTopics,
           isOnboarding: false,
           onBack: () => Navigator.of(routeContext).pop(),
+          onFineTune: (picked) => Navigator.of(routeContext).push<Set<String>>(
+            MaterialPageRoute(
+              builder: (_) => TuneScreen(app: app, picked: picked),
+            ),
+          ),
           onDone: (picked) async {
             await app.setTopics(picked);
             if (routeContext.mounted) Navigator.of(routeContext).pop();
@@ -376,26 +383,39 @@ class ProfileScreen extends StatelessWidget {
                     // anything else to turn on.
                     children: kMixSubjects.map((subject) {
                       final bool live = app.pickedTopics.contains(subject.key);
+                      final Color ink = live
+                          ? inkOn(subject.color)
+                          : context.p.ink.withValues(alpha: 0.34);
                       return Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 13,
-                          vertical: 9,
-                        ),
+                        padding: const EdgeInsets.fromLTRB(10, 9, 13, 9),
                         decoration: BoxDecoration(
                           color: live
                               ? subject.color
                               : context.p.inverse.withValues(alpha: 0.06),
                           borderRadius: BorderRadius.circular(999),
                         ),
-                        child: Text(
-                          context.l10n.subjectOf(subject.name),
-                          style: AppText.body(
-                            size: 12.5,
-                            weight: FontWeight.w500,
-                            color: live
-                                ? inkOn(subject.color)
-                                : context.p.ink.withValues(alpha: 0.34),
-                          ),
+                        // The subject's own mark before its name, as on the
+                        // mix it was chosen on: the colour says which one at
+                        // a glance, the mark says it to anyone who does not
+                        // remember the colours.
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SubjectIcon(
+                              subject: subject.name,
+                              size: 14,
+                              ink: ink,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              context.l10n.subjectOf(subject.name),
+                              style: AppText.body(
+                                size: 12.5,
+                                weight: FontWeight.w500,
+                                color: ink,
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     }).toList(),

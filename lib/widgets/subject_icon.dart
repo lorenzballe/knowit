@@ -39,3 +39,44 @@ class SubjectIcon extends StatelessWidget {
     );
   }
 }
+
+/// A subject at a glance: its mark on a disc of its own colour.
+///
+/// Where a list names a subject in passing — a kept card, a day in the
+/// archive, a chip to narrow a shelf — it used to be a square of colour, a
+/// few pixels that said "some subject" and left the reader to remember which
+/// colour was which. The mark says which. The disc keeps the colour, so the
+/// two ways of knowing a subject are on the same spot.
+class SubjectBadge extends StatelessWidget {
+  const SubjectBadge({
+    super.key,
+    required this.subject,
+    required this.color,
+    required this.ink,
+    this.size = 20,
+  });
+
+  /// The subject's name as the cards carry it ('Space', 'Weird facts').
+  final String subject;
+  final Color color;
+  final Color ink;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        // Thinking's near-white would vanish on paper without an edge.
+        border: color.computeLuminance() > 0.8
+            ? Border.all(color: ink.withValues(alpha: 0.16), width: 0.8)
+            : null,
+      ),
+      child: SubjectIcon(subject: subject, size: size * 0.6, ink: ink),
+    );
+  }
+}

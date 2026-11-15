@@ -4573,4 +4573,35 @@ class AppLocalizationsDe extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return 'Weil du „$question“ behalten hast';
   }
+
+  @override
+  String get todaySeeAgain => 'Nochmal ansehen';
+
+  @override
+  String get todaySeeAgainHint =>
+      'Die Karten von heute noch einmal, groß, ab der ersten';
+
+  @override
+  String get tuneTitle => 'Deinen Mix feinjustieren';
+
+  @override
+  String get tuneEntryLine => 'Wie viel von jedem Fach, und welche Teile davon';
+
+  @override
+  String get tuneLearned =>
+      'Schon verschoben durch die Karten, die dir gefielen, und die, die du weggeworfen hast. Schieb, um es zu ändern.';
+
+  @override
+  String get tuneFresh =>
+      'Schieb ein Fach, um mehr oder weniger davon zu sehen.';
+
+  @override
+  String get tuneHowMuch => 'Wie viel von jedem';
+
+  @override
+  String get tuneInsideLine =>
+      'Die Teile, die dir am besten gefielen, stehen vorn. Tipp einen an, um ihn auszulassen, halt ihn gedrückt, um hineinzusehen.';
+
+  @override
+  String get tuneSave => 'Speichern';
 }

@@ -21,6 +21,7 @@ import 'package:astuto/explore/blocks/core/your_day_block.dart';
 import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/served.dart';
@@ -112,6 +113,20 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('12 giorni'), findsOneWidget);
+      // Read, the five are the way back into them: the cards themselves at
+      // full size, not the tab where they sit in small.
+      expect(find.byKey(const ValueKey('your-day-see-again')), findsOneWidget);
+      expect(find.text('Rivedi'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('your-day')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(host.todays, 0);
+      expect(find.byType(DeckViewerScreen), findsOneWidget);
+      final DeckViewerScreen viewer = tester.widget(
+        find.byType(DeckViewerScreen),
+      );
+      expect(viewer.deck, hasLength(5));
+      expect(viewer.title, 'Oggi');
     });
 
     testWidgets('not there while Explore is narrowed to a subject, nor with '

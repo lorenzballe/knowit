@@ -1,7 +1,8 @@
 /// The reader's day, at the top of Explore: how many of today's five are
 /// read and how many are left, a bar for each of the five, the week from
 /// Monday to Sunday with the days finished lit, and the streak. A tap goes
-/// to Today, where the five are.
+/// to Today, where the five are; once all five are read, it opens them
+/// again at full size, the way they first came, as a tap on the widget does.
 ///
 /// Explore is where a reader goes once the day is read, or instead of
 /// reading it; the panel is what keeps the day in sight from there, so the
@@ -15,6 +16,8 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../../data/pills_repository.dart'
     show dateKey, dayShift, kPillsPerDay;
 import '../../../l10n/l10n.dart';
+import '../../../analytics.dart';
+import '../../../screens/deck_viewer_screen.dart';
 import '../../../state/app_state.dart';
 import '../../../theme.dart';
 import '../../explore_block.dart';
@@ -72,7 +75,24 @@ class YourDayBlock extends ExploreBlock with SectionLayout {
           streak: app.liveStreak,
           week: weekOf(app, app.today),
           today: app.today,
-          onTap: host.openToday,
+          // The five read, the panel is the way back into them: the cards
+          // themselves at full size, not the tab where they sit in small.
+          seeAgain: read >= kPillsPerDay,
+          onTap: read >= kPillsPerDay
+              ? () {
+                  Analytics.capture('today seen again', {'from': 'explore'});
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => DeckViewerScreen(
+                        app: app,
+                        deck: app.todaysDeck.take(kPillsPerDay).toList(),
+                        title: context.l10n.tabToday,
+                        source: 'explore day',
+                      ),
+                    ),
+                  );
+                }
+              : host.openToday,
         ),
       ),
     );
@@ -89,7 +109,12 @@ class DayPanel extends StatelessWidget {
     required this.week,
     required this.today,
     required this.onTap,
+    this.seeAgain = false,
   });
+
+  /// True once the day's cards are all read: the tap opens them again, and
+  /// the panel says so where its arrow was.
+  final bool seeAgain;
 
   /// How many of the day's cards are read, of how many.
   final int read;
@@ -113,7 +138,7 @@ class DayPanel extends StatelessWidget {
     final Color ink = context.p.ink;
     return Semantics(
       button: true,
-      hint: l.exploreDayOpen,
+      hint: seeAgain ? l.todaySeeAgainHint : l.exploreDayOpen,
       child: GestureDetector(
         key: const ValueKey('your-day'),
         behavior: HitTestBehavior.opaque,
@@ -156,11 +181,37 @@ class DayPanel extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 6),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    size: 20,
-                    color: ink.withValues(alpha: 0.35),
-                  ),
+                  if (seeAgain)
+                    Container(
+                      key: const ValueKey('your-day-see-again'),
+                      height: 28,
+                      padding: const EdgeInsets.fromLTRB(8, 0, 11, 0),
+                      decoration: BoxDecoration(
+                        color: ink.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.play_arrow_rounded, size: 16, color: ink),
+                          const SizedBox(width: 2),
+                          Text(
+                            l.todaySeeAgain,
+                            style: AppText.body(
+                              size: 12,
+                              weight: FontWeight.w700,
+                              color: ink,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      size: 20,
+                      color: ink.withValues(alpha: 0.35),
+                    ),
                 ],
               ),
               const SizedBox(height: 13),

@@ -4768,5 +4768,41 @@
     "type": "String"
    }
   }
+ },
+ "todaySeeAgain": "See again",
+ "@todaySeeAgain": {
+  "description": "Today, over the five once read, and Explore's panel of the day: opens today's cards again, full size, the way they first came."
+ },
+ "todaySeeAgainHint": "Today's cards again, full size, from the first",
+ "@todaySeeAgainHint": {
+  "description": "Said to a screen reader on the See again button: what it opens."
+ },
+ "tuneTitle": "Fine-tune your mix",
+ "@tuneTitle": {
+  "description": "The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each."
+ },
+ "tuneEntryLine": "How much of each subject, and which parts of it",
+ "@tuneEntryLine": {
+  "description": "The topics editor, under the title of the row that opens the fine-tuning."
+ },
+ "tuneLearned": "Already moved by the cards you liked and threw away. Slide to change it.",
+ "@tuneLearned": {
+  "description": "The fine-tuning screen, under its title, once the reader has liked or thrown away cards: the bars already show what the app learned."
+ },
+ "tuneFresh": "Slide a subject to see more or less of it.",
+ "@tuneFresh": {
+  "description": "The fine-tuning screen, under its title, before the reader has liked or thrown away anything."
+ },
+ "tuneHowMuch": "How much of each",
+ "@tuneHowMuch": {
+  "description": "The fine-tuning screen: the heading over the subjects' bars."
+ },
+ "tuneInsideLine": "The parts you liked most come first. Tap one to skip it, hold it to see inside.",
+ "@tuneInsideLine": {
+  "description": "The fine-tuning screen, under the heading of the parts of each subject, once the app has learned which the reader likes."
+ },
+ "tuneSave": "Save",
+ "@tuneSave": {
+  "description": "The fine-tuning screen: the button that keeps the bars and the parts as they are now."
  }
 }

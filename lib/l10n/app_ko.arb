@@ -1064,5 +1064,14 @@
   "exploreSixtyFirst": "기록을 세워 보세요",
   "exploreGameNone": "지금은 할 수 있는 게임이 없어요. 내일 다시 오세요.",
   "exploreSubjectLevel": "{subject}, 레벨 {n}",
-  "exploreBecauseSaved": "보관한 ‘{question}’ 때문에"
+  "exploreBecauseSaved": "보관한 ‘{question}’ 때문에",
+  "todaySeeAgain": "다시 보기",
+  "todaySeeAgainHint": "오늘의 카드를 처음부터 전체 화면으로 다시",
+  "tuneTitle": "믹스 세부 조정",
+  "tuneEntryLine": "주제별로 얼마나, 그리고 어떤 부분을",
+  "tuneLearned": "좋아한 카드와 버린 카드에 따라 이미 조정되었어요. 밀어서 바꿀 수 있어요.",
+  "tuneFresh": "주제를 밀어서 더 많이 또는 적게 볼 수 있어요.",
+  "tuneHowMuch": "각각 얼마나",
+  "tuneInsideLine": "가장 좋아한 부분이 먼저 나와요. 탭하면 건너뛰고, 길게 누르면 안을 볼 수 있어요.",
+  "tuneSave": "저장"
 }

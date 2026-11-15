@@ -10,6 +10,7 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/archive_screen.dart';
+import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/screens/paywall_screen.dart';
@@ -295,7 +296,7 @@ void main() {
   });
 
   group('The day is sent from where it was finished', () {
-    testWidgets('a free reader finds it on the shelf, beside the journey', (
+    testWidgets('a free reader finds it at the end of the shelf\'s heading', (
       tester,
     ) async {
       final said = _listen();
@@ -313,21 +314,27 @@ void main() {
       await _finishDay(tester);
       expect(find.byType(TodayDoneView), findsOneWidget);
       expect(send, findsOneWidget);
-      expect(find.text('Share day'), findsOneWidget);
+      expect(find.bySemanticsLabel('Share day'), findsOneWidget);
 
-      // On the journey's row, not one of its own: the shelf keeps all the
-      // room it had.
+      // A mark at the end of the shelf's heading, on its line, not a button
+      // of its own beside the journey: the journey has the row to itself
+      // and the shelf keeps its room.
+      final Finder heading = find.text("TODAY'S FIVE");
+      expect(
+        tester.getCenter(send).dy,
+        moreOrLessEquals(tester.getCenter(heading).dy, epsilon: 1),
+      );
+      expect(
+        tester.getRect(send).left,
+        greaterThan(tester.getRect(heading).right),
+      );
       final Finder journey = find.descendant(
         of: find.byType(TodayDoneView),
         matching: find.text('Your journey'),
       );
       expect(
-        tester.getCenter(send).dy,
-        moreOrLessEquals(tester.getCenter(journey).dy, epsilon: 0.5),
-      );
-      expect(
-        tester.getRect(send).left,
-        greaterThan(tester.getRect(journey).right),
+        tester.getCenter(journey).dy,
+        greaterThan(tester.getCenter(send).dy),
       );
 
       // No gate: it sends, on the free plan, and says from where.
@@ -352,6 +359,39 @@ void main() {
       expect(offer, findsOneWidget);
       expect(send, findsOneWidget);
       expect(tester.getRect(offer).overlaps(tester.getRect(send)), isFalse);
+    });
+
+    testWidgets('beside it, the five again at full size, as they came', (
+      tester,
+    ) async {
+      final said = _listen();
+      SharedPreferences.setMockInitialValues(_free());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      final Finder again = find.byKey(const ValueKey('shelf-see-again'));
+      expect(again, findsNothing);
+      await _finishDay(tester);
+      expect(again, findsOneWidget);
+      expect(find.text('See again'), findsOneWidget);
+
+      final AppState app = tester
+          .widget<TodayDoneView>(find.byType(TodayDoneView))
+          .app;
+      await tester.tap(again);
+      await _settle(tester);
+      // The cards themselves, the way a tap on the widget opens them: the
+      // day's five from the first, under Today.
+      expect(find.byType(DeckViewerScreen), findsOneWidget);
+      final DeckViewerScreen viewer = tester.widget(
+        find.byType(DeckViewerScreen),
+      );
+      expect(viewer.title, 'Today');
+      expect(
+        viewer.deck.map((p) => p.id),
+        orderedEquals(app.todaysDeck.map((p) => p.id)),
+      );
+      expect(viewer.initialIndex, 0);
+      expect(said.of('today seen again').single['from'], 'today');
     });
   });
 

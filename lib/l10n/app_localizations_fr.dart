@@ -4582,4 +4582,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return 'Parce que tu as gardé « $question »';
   }
+
+  @override
+  String get todaySeeAgain => 'Revoir';
+
+  @override
+  String get todaySeeAgainHint =>
+      'Les cartes du jour à nouveau, en grand, depuis la première';
+
+  @override
+  String get tuneTitle => 'Affine ton mélange';
+
+  @override
+  String get tuneEntryLine => 'Combien de chaque sujet, et quelles parties';
+
+  @override
+  String get tuneLearned =>
+      'Déjà ajusté par les cartes que tu as aimées et celles que tu as jetées. Fais glisser pour le changer.';
+
+  @override
+  String get tuneFresh => 'Fais glisser un sujet pour en voir plus ou moins.';
+
+  @override
+  String get tuneHowMuch => 'Combien de chacun';
+
+  @override
+  String get tuneInsideLine =>
+      'Les parties que tu as le plus aimées viennent d\'abord. Touche-en une pour la passer, maintiens-la pour voir dedans.';
+
+  @override
+  String get tuneSave => 'Enregistrer';
 }

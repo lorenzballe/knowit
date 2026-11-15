@@ -1064,5 +1064,14 @@
   "exploreSixtyFirst": "Stabilisci il tuo record",
   "exploreGameNone": "Per ora qui non c'è niente da giocare. Torna domani.",
   "exploreSubjectLevel": "{subject}, livello {n}",
-  "exploreBecauseSaved": "Perché hai salvato «{question}»"
+  "exploreBecauseSaved": "Perché hai salvato «{question}»",
+  "todaySeeAgain": "Rivedi",
+  "todaySeeAgainHint": "Le carte di oggi di nuovo, a schermo intero, dalla prima",
+  "tuneTitle": "Regola il tuo mix",
+  "tuneEntryLine": "Quanto di ogni materia, e quali parti",
+  "tuneLearned": "Già spostato dalle carte che ti sono piaciute e da quelle che hai scartato. Trascina per cambiarlo.",
+  "tuneFresh": "Trascina una materia per vederne di più o di meno.",
+  "tuneHowMuch": "Quanto di ognuna",
+  "tuneInsideLine": "Le parti che ti sono piaciute di più vengono prima. Tocca per toglierne una, tieni premuto per vedere dentro.",
+  "tuneSave": "Salva"
 }

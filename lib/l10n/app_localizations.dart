@@ -6509,6 +6509,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Because you saved “{question}”'**
   String exploreBecauseSaved(String question);
+
+  /// Today, over the five once read, and Explore's panel of the day: opens today's cards again, full size, the way they first came.
+  ///
+  /// In en, this message translates to:
+  /// **'See again'**
+  String get todaySeeAgain;
+
+  /// Said to a screen reader on the See again button: what it opens.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s cards again, full size, from the first'**
+  String get todaySeeAgainHint;
+
+  /// The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each.
+  ///
+  /// In en, this message translates to:
+  /// **'Fine-tune your mix'**
+  String get tuneTitle;
+
+  /// The topics editor, under the title of the row that opens the fine-tuning.
+  ///
+  /// In en, this message translates to:
+  /// **'How much of each subject, and which parts of it'**
+  String get tuneEntryLine;
+
+  /// The fine-tuning screen, under its title, once the reader has liked or thrown away cards: the bars already show what the app learned.
+  ///
+  /// In en, this message translates to:
+  /// **'Already moved by the cards you liked and threw away. Slide to change it.'**
+  String get tuneLearned;
+
+  /// The fine-tuning screen, under its title, before the reader has liked or thrown away anything.
+  ///
+  /// In en, this message translates to:
+  /// **'Slide a subject to see more or less of it.'**
+  String get tuneFresh;
+
+  /// The fine-tuning screen: the heading over the subjects' bars.
+  ///
+  /// In en, this message translates to:
+  /// **'How much of each'**
+  String get tuneHowMuch;
+
+  /// The fine-tuning screen, under the heading of the parts of each subject, once the app has learned which the reader likes.
+  ///
+  /// In en, this message translates to:
+  /// **'The parts you liked most come first. Tap one to skip it, hold it to see inside.'**
+  String get tuneInsideLine;
+
+  /// The fine-tuning screen: the button that keeps the bars and the parts as they are now.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get tuneSave;
 }
 
 class _AppLocalizationsDelegate

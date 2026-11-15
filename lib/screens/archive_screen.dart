@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../l10n/l10n.dart';
 
@@ -14,6 +15,9 @@ import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
 import '../analytics.dart';
 import '../widgets/card_edge.dart';
+import '../widgets/subject_icon.dart';
+import '../widgets/web/card_thumb.dart';
+import '../widgets/web/web_card_page.dart' show groundOf;
 
 /// How many days back the free plan's archive goes. A week: long enough
 /// to find the card from Tuesday, short enough that the day before it is
@@ -30,8 +34,14 @@ int _daysBefore(DateTime today, DateTime day) => DateTime.utc(
   today.day,
 ).difference(DateTime.utc(day.year, day.month, day.day)).inDays;
 
-/// Everything ever dealt — artboard 70e, with the search that was already
-/// here kept over it.
+/// Everything the reader has seen — artboard 70e, with the search that was
+/// already here kept over it.
+///
+/// Only what they have seen. It used to search the whole bank, so a reader
+/// looking for the card from Tuesday got thousands they had never been
+/// dealt, and a subject's chip opened every card of it: an archive of the
+/// app, not of the reader. Now it is theirs — the days they read, and in
+/// the search and the chips, the cards they read.
 ///
 /// Left alone it is the days: every one the reader has finished, most
 /// recent first, five cards each, and today at the top already open. Ask
@@ -70,8 +80,25 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
     super.dispose();
   }
 
+  /// Every card the reader has seen: read on a day, opened in Explore, or
+  /// shown on the days the archive lists.
+  late final Set<String> _seen = {
+    ...widget.app.seenIds,
+    for (final day in _days)
+      for (final pill in _deckOf(day)) pill.id,
+  };
+
+  /// The subjects of the cards seen, by name.
+  late final Set<String> _seenTopics = {
+    for (final pill in PillBank.cards)
+      if (_seen.contains(pill.id)) pill.topic,
+  };
+
   List<Pill> get _results {
-    var found = searchPills(_query, home: widget.app.place);
+    var found = searchPills(
+      _query,
+      home: widget.app.place,
+    ).where((p) => _seen.contains(p.id)).toList();
     if (_topicFilter != null) {
       final name = kTopics[_topicFilter]!.name;
       found = found.where((p) => p.topic == name).toList();
@@ -171,7 +198,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                     Text(
                       asking
                           ? context.l10n.results(results.length)
-                          : context.l10n.cardsTapADay(PillBank.cards.length),
+                          : context.l10n.cardsTapADay(_seen.length),
                       style: AppText.body(
                         size: 12.5,
                         height: 1.35,
@@ -179,8 +206,13 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       ),
                     ),
                     const SizedBox(height: 14),
+                    // Only the subjects of cards the reader has seen: a
+                    // chip that opens nothing is a chip to be let down by.
                     TopicFilterRow(
-                      topics: kTopicOrder,
+                      topics: [
+                        for (final key in kTopicOrder)
+                          if (_seenTopics.contains(kTopics[key]!.name)) key,
+                      ],
                       picked: _topicFilter,
                       onPick: (key) {
                         Analytics.capture('archive filtered', {
@@ -420,29 +452,17 @@ class _Day extends StatelessWidget {
   final VoidCallback onToggle;
   final ValueChanged<Pill> onOpen;
 
-  static const _weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  static const _months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-
-  String get _label {
+  /// Today, yesterday, or the day's short name in the reader's language:
+  /// "Sat 15 Nov", "sab 15 nov".
+  String _label(BuildContext context) {
     final now = DateTime.now();
     final gap = _daysBefore(now, day);
-    if (gap == 0) return 'Today';
-    if (gap == 1) return 'Yesterday';
-    return '${_weekdays[day.weekday - 1]} ${day.day} '
-        '${_months[day.month - 1]}';
+    if (gap == 0) return context.l10n.tabToday;
+    if (gap == 1) return context.l10n.yesterday;
+    return DateFormat(
+      'EEE d MMM',
+      Localizations.localeOf(context).toString(),
+    ).format(day).replaceAll('.', '');
   }
 
   @override
@@ -469,7 +489,7 @@ class _Day extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        _label,
+                        _label(context),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppText.body(
@@ -481,15 +501,17 @@ class _Day extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // The day's colours, which is what a day is at a
-                    // glance: five subjects, in the order they came.
+                    // The day's subjects, which is what a day is at a
+                    // glance: five marks on their colours, in the order the
+                    // cards came.
                     for (final pill in cards.take(5))
                       Padding(
-                        padding: const EdgeInsets.only(left: 4),
-                        child: Container(
-                          width: 8,
-                          height: 8,
-                          decoration: cardFace(context, pill.color, radius: 3),
+                        padding: const EdgeInsets.only(left: 3),
+                        child: SubjectBadge(
+                          subject: pill.topic,
+                          color: pill.color,
+                          ink: pill.ink,
+                          size: 18,
                         ),
                       ),
                     SizedBox(
@@ -535,7 +557,8 @@ class _Day extends StatelessWidget {
   }
 }
 
-/// A card inside an open day: a bar of its colour, and the question.
+/// A card inside an open day: the card in small with its drawing, its
+/// question, and its subject.
 class _DayCard extends StatelessWidget {
   const _DayCard({required this.pill, required this.onTap});
 
@@ -547,49 +570,83 @@ class _DayCard extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(14),
-        child: ColoredBox(
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
           color: context.p.ink.withValues(alpha: 0.05),
-          child: IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(width: 5, color: pill.color),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(13, 11, 13, 11),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          pill.question,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppText.body(
-                            size: 13,
-                            weight: FontWeight.w600,
-                            height: 1.28,
-                            color: context.p.ink.withValues(alpha: 0.92),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          pill.topic,
-                          style: AppText.body(
-                            size: 10.5,
-                            weight: FontWeight.w500,
-                            height: 1,
-                            color: context.p.ink.withValues(alpha: 0.36),
-                          ),
-                        ),
-                      ],
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          children: [
+            // As tall as the question's two lines and its subject: a day
+            // opened is no longer than it was when its cards were bars.
+            _Small(pill: pill, height: 54),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    pill.question,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w600,
+                      height: 1.28,
+                      color: context.p.ink.withValues(alpha: 0.92),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 5),
+                  Text(
+                    context.l10n.subjectOf(pill.topic),
+                    style: AppText.body(
+                      size: 10.5,
+                      weight: FontWeight.w500,
+                      height: 1,
+                      color: context.p.ink.withValues(alpha: 0.4),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A card in small: the picture of its back, with its drawing, or where
+/// there is none its colour and its mark.
+class _Small extends StatelessWidget {
+  const _Small({required this.pill, required this.height});
+
+  final Pill pill;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget plain = ColoredBox(
+      color: pill.color,
+      child: Center(
+        child: SubjectIcon(
+          subject: pill.topic,
+          size: height * 0.26,
+          ink: pill.ink,
+        ),
+      ),
+    );
+    return ExcludeSemantics(
+      child: Container(
+        width: height * WebThumbs.aspect,
+        height: height,
+        decoration: cardFace(context, groundOf(pill), radius: 7),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(7),
+          child: CardThumb.has(pill, CardSide.back)
+              ? CardThumb(pill: pill, side: CardSide.back, fallback: plain)
+              : plain,
         ),
       ),
     );
@@ -619,10 +676,7 @@ class _ResultRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: TopicDot(pill.color),
-            ),
+            _Small(pill: pill, height: 58),
             const SizedBox(width: 13),
             Expanded(
               child: Column(

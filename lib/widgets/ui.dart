@@ -8,6 +8,7 @@ import '../l10n/l10n.dart';
 import '../theme.dart';
 import 'card_edge.dart';
 import 'chunky.dart';
+import 'subject_icon.dart';
 
 // Every screen names itself by wrapping in a ScreenView, which lives with
 // the rest of what the app measures. It is a wrapper and not a mixin
@@ -479,7 +480,10 @@ class TopicFilterRow extends StatelessWidget {
               child: Container(
                 constraints: const BoxConstraints(minWidth: 44),
                 margin: const EdgeInsets.symmetric(vertical: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 13),
+                padding: EdgeInsets.only(
+                  left: style == null ? 13 : 8,
+                  right: 13,
+                ),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: on ? context.p.inverse : context.p.surfaceRaised,
@@ -491,12 +495,21 @@ class TopicFilterRow extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // The subject's mark on its colour, where a square of
+                    // the colour alone used to stand for it.
                     if (style != null) ...[
-                      TopicDot(style.color, size: 7),
+                      SubjectBadge(
+                        subject: style.name,
+                        color: style.color,
+                        ink: style.ink,
+                        size: 18,
+                      ),
                       const SizedBox(width: 7),
                     ],
                     Text(
-                      style?.name ?? context.l10n.all,
+                      style == null
+                          ? context.l10n.all
+                          : context.l10n.subjectOf(style.name),
                       style: AppText.body(
                         size: 12.5,
                         weight: FontWeight.w500,

@@ -4361,4 +4361,31 @@ class AppLocalizationsJa extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return '「$question」を保存したから';
   }
+
+  @override
+  String get todaySeeAgain => 'もう一度見る';
+
+  @override
+  String get todaySeeAgainHint => '今日のカードをもう一度、全画面で最初から';
+
+  @override
+  String get tuneTitle => 'ミックスを微調整';
+
+  @override
+  String get tuneEntryLine => '各分野をどれくらい、そしてどの部分を';
+
+  @override
+  String get tuneLearned => '気に入ったカードと捨てたカードで、すでに調整されています。スライドで変更できます。';
+
+  @override
+  String get tuneFresh => '分野をスライドして、表示する量を調整できます。';
+
+  @override
+  String get tuneHowMuch => 'それぞれの量';
+
+  @override
+  String get tuneInsideLine => '気に入った部分ほど先に並びます。タップで外し、長押しで中身を見られます。';
+
+  @override
+  String get tuneSave => '保存';
 }

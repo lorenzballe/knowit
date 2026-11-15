@@ -62,3 +62,5 @@ tool/shots/cards/
 tool/shots/scenes/
 tool/shots/draw/
 tool/shots/gallery/
+# The reader's own screens (tool/edit_shots.dart): looked at, not kept
+tool/shots/edit/

@@ -4729,4 +4729,34 @@ class AppLocalizationsRu extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return 'Похоже на сохранённое: «$question»';
   }
+
+  @override
+  String get todaySeeAgain => 'Смотреть снова';
+
+  @override
+  String get todaySeeAgainHint =>
+      'Сегодняшние карточки снова, во весь экран, с первой';
+
+  @override
+  String get tuneTitle => 'Тонкая настройка микса';
+
+  @override
+  String get tuneEntryLine => 'Сколько каждой темы и какие её части';
+
+  @override
+  String get tuneLearned =>
+      'Уже сдвинуто понравившимися и отброшенными карточками. Сдвинь, чтобы изменить.';
+
+  @override
+  String get tuneFresh => 'Сдвинь тему, чтобы видеть её чаще или реже.';
+
+  @override
+  String get tuneHowMuch => 'Сколько каждой';
+
+  @override
+  String get tuneInsideLine =>
+      'Части, которые понравились больше всего, идут первыми. Нажми, чтобы пропустить, удерживай, чтобы заглянуть внутрь.';
+
+  @override
+  String get tuneSave => 'Сохранить';
 }

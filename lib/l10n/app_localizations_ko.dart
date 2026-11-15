@@ -4379,4 +4379,32 @@ class AppLocalizationsKo extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return '보관한 ‘$question’ 때문에';
   }
+
+  @override
+  String get todaySeeAgain => '다시 보기';
+
+  @override
+  String get todaySeeAgainHint => '오늘의 카드를 처음부터 전체 화면으로 다시';
+
+  @override
+  String get tuneTitle => '믹스 세부 조정';
+
+  @override
+  String get tuneEntryLine => '주제별로 얼마나, 그리고 어떤 부분을';
+
+  @override
+  String get tuneLearned => '좋아한 카드와 버린 카드에 따라 이미 조정되었어요. 밀어서 바꿀 수 있어요.';
+
+  @override
+  String get tuneFresh => '주제를 밀어서 더 많이 또는 적게 볼 수 있어요.';
+
+  @override
+  String get tuneHowMuch => '각각 얼마나';
+
+  @override
+  String get tuneInsideLine =>
+      '가장 좋아한 부분이 먼저 나와요. 탭하면 건너뛰고, 길게 누르면 안을 볼 수 있어요.';
+
+  @override
+  String get tuneSave => '저장';
 }

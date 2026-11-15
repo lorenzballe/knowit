@@ -1064,5 +1064,14 @@
   "exploreSixtyFirst": "記録をつくろう",
   "exploreGameNone": "今は遊べるものがありません。また明日。",
   "exploreSubjectLevel": "{subject}、レベル{n}",
-  "exploreBecauseSaved": "「{question}」を保存したから"
+  "exploreBecauseSaved": "「{question}」を保存したから",
+  "todaySeeAgain": "もう一度見る",
+  "todaySeeAgainHint": "今日のカードをもう一度、全画面で最初から",
+  "tuneTitle": "ミックスを微調整",
+  "tuneEntryLine": "各分野をどれくらい、そしてどの部分を",
+  "tuneLearned": "気に入ったカードと捨てたカードで、すでに調整されています。スライドで変更できます。",
+  "tuneFresh": "分野をスライドして、表示する量を調整できます。",
+  "tuneHowMuch": "それぞれの量",
+  "tuneInsideLine": "気に入った部分ほど先に並びます。タップで外し、長押しで中身を見られます。",
+  "tuneSave": "保存"
 }
