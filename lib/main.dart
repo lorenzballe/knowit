@@ -885,8 +885,8 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerUpdateAsk();
   }
 
-  /// The store's own rating sheet, once, at the end of a seventh day in a
-  /// row (AppState.shouldAskForReview). Nothing of the app's is asked first:
+  /// The store's own rating sheet, at the end of a seventh day in a row and
+  /// later at thirty and a hundred days read (AppState.shouldAskForReview). Nothing of the app's is asked first:
   /// Google forbids a question before its sheet and Apple allows only its
   /// own. A moment after the day closes, so the shelf has landed first.
   Future<void> _askForReview() async {
@@ -902,6 +902,8 @@ class _AstutoRootState extends State<AstutoRoot> {
       final InAppReview review = InAppReview.instance;
       if (!await review.isAvailable()) return;
       Analytics.capture('rating prompt requested', {
+        'ask': _app.reviewAsks,
+        'days_read': _app.completedDates.length,
         'streak_days': _app.liveStreak,
         'is_plus': _app.isPlus,
       });

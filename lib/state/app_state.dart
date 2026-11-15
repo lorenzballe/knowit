@@ -122,6 +122,8 @@ class AppState extends ChangeNotifier {
   // last day finished before it.
   static const _kPushDeferredAfter = 'knowit.pushDeferredAfter';
   static const _kReviewAsked = 'knowit.reviewAsked';
+  static const _kReviewAsks = 'knowit.reviewAsks';
+  static const _kReviewAskedOn = 'knowit.reviewAskedOn';
   static const _kAccountOffered = 'knowit.accountOffered';
   static const _kPushTokens = 'knowit.pushTokens';
   static const _kTrialEnds = 'knowit.trialEnds';
@@ -290,10 +292,20 @@ class AppState extends ChangeNotifier {
   DateTime? _trialWarnedFor;
   DateTime? _trialWarnedAt;
 
-  /// Whether the store's rating prompt has been asked for, ever. Once is the
-  /// whole budget: Apple shows it at most three times a year whatever an
-  /// app asks, and a reader asked twice is a reader nagged.
-  bool reviewAsked = false;
+  /// How many times the store's rating prompt has been asked for: three at
+  /// the most, the budget Apple keeps for a year whatever an app asks — at
+  /// a week in a row, then at [kReviewLaterDays] days read in all, each at
+  /// least [kReviewGapDays] after the last. Only readers who keep coming
+  /// back are asked again, months apart: those are the stars an app at its
+  /// launch is short of, and the system shows nothing to a reader it
+  /// judges asked enough.
+  int reviewAsks = 0;
+
+  /// The day the prompt was last asked for, `yyyy-mm-dd`.
+  String? reviewAskedOn;
+
+  /// Whether the prompt has been asked for, ever.
+  bool get reviewAsked => reviewAsks > 0;
 
   /// Whether the sheet that offers an account after the first finished day
   /// has been put. Once: Profile keeps the row for anyone who wants it later.
@@ -492,7 +504,11 @@ class AppState extends ChangeNotifier {
     pushAsked = _prefs.getBool(_kPushAsked) ?? false;
     pushDeferrals = _prefs.getInt(_kPushDeferrals) ?? 0;
     pushDeferredOn = _prefs.getString(_kPushDeferredAfter);
-    reviewAsked = _prefs.getBool(_kReviewAsked) ?? false;
+    // A build that kept only whether it had asked counted one ask.
+    reviewAsks =
+        _prefs.getInt(_kReviewAsks) ??
+        ((_prefs.getBool(_kReviewAsked) ?? false) ? 1 : 0);
+    reviewAskedOn = _prefs.getString(_kReviewAskedOn);
     accountOffered = _prefs.getBool(_kAccountOffered) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
     place = Place.fromJson(_decodeJson(_prefs.getString(_kPlace)));
@@ -3052,7 +3068,8 @@ class AppState extends ChangeNotifier {
     trial = null;
     _trialWarnedFor = null;
     _trialWarnedAt = null;
-    reviewAsked = false;
+    reviewAsks = 0;
+    reviewAskedOn = null;
     accountOffered = false;
     pushTokens = [];
     place = null;
@@ -3171,26 +3188,44 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// True at the one moment worth asking the store for a rating: today's
-  /// five just read, a week of days in a row behind them, the question about
-  /// notifications answered on an earlier day and not waiting to be put
-  /// again, and never asked before. Answered is the system's prompt, a "Not
-  /// now" on the app's own sheet, or the nudge switched off. A reader who
-  /// kept seven days has decided the app is theirs; the stars that come in
-  /// the first week otherwise come mostly from those who left. The server
-  /// can ask for a longer run or a shorter one ([kReviewStreakKnob]), or
-  /// hold the prompt back ([kReviewAskFlag]); a question about
-  /// notifications it holds back is not waited for.
+  /// True at a moment worth asking the store for a rating: today's five
+  /// just read, the question about notifications answered on an earlier day
+  /// and not waiting to be put again, and one of the three moments due
+  /// ([_reviewMomentDue]). Answered is the system's prompt, a "Not now" on
+  /// the app's own sheet, or the nudge switched off. A reader who kept seven
+  /// days has decided the app is theirs; the stars that come in the first
+  /// week otherwise come mostly from those who left. The server can ask for
+  /// a longer run or a shorter one ([kReviewStreakKnob]), or hold the
+  /// prompt back ([kReviewAskFlag]); a question about notifications it
+  /// holds back is not waited for.
   bool get shouldAskForReview =>
-      !reviewAsked &&
+      _reviewMomentDue &&
       (pushAsked ||
           pushDeferrals > 0 ||
           !notificationsOn ||
           !kPushAskFlag.on(_here)) &&
       !shouldAskForPush &&
       dayClosed &&
-      liveStreak >= kReviewStreakKnob.value &&
       kReviewAskFlag.on(_here);
+
+  /// Which of the three moments has come: the first at a week of days in a
+  /// row ([kReviewStreakKnob]); the next two at [kReviewLaterDays] days read
+  /// in all, each at least [kReviewGapDays] after the ask before it.
+  bool get _reviewMomentDue {
+    if (reviewAsks == 0) return liveStreak >= kReviewStreakKnob.value;
+    if (reviewAsks > kReviewLaterDays.length) return false;
+    final DateTime? last = DateTime.tryParse(reviewAskedOn ?? '');
+    if (last != null && daysBetween(last, today) < kReviewGapDays) {
+      return false;
+    }
+    return completedDates.length >= kReviewLaterDays[reviewAsks - 1];
+  }
+
+  /// The days read in all at the second and the third ask.
+  static const List<int> kReviewLaterDays = [30, 100];
+
+  /// The least time between two asks.
+  static const int kReviewGapDays = 30;
 
   /// The days in a row that end in the rating prompt: a week, as built.
   static const int kReviewStreakDays = 7;
@@ -3215,7 +3250,10 @@ class AppState extends ChangeNotifier {
   /// Noted before the prompt is shown, so a failure to show it is not a
   /// reason to ask again.
   Future<void> notedReviewAsked() async {
-    reviewAsked = true;
+    reviewAsks += 1;
+    reviewAskedOn = dateKey(today);
+    await _prefs.setInt(_kReviewAsks, reviewAsks);
+    await _prefs.setString(_kReviewAskedOn, reviewAskedOn!);
     await _prefs.setBool(_kReviewAsked, true);
   }
 
