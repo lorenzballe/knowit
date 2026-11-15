@@ -1103,5 +1103,12 @@
   "widgetAskPin": "Добавить на экран «Домой»",
   "widgetAskGotIt": "Понятно",
   "widgetAskNotNow": "Не сейчас",
-  "pathCardOf": "Карточка {n} из {total}"
+  "pathCardOf": "Карточка {n} из {total}",
+  "shareSendCard": "Отправить карточку",
+  "shareAsImage": "Картинкой",
+  "shareCopyLink": "Копировать ссылку",
+  "shareAnswerNote": "Друг сначала видит вопрос. Ответ — в одном касании, на странице карточки.",
+  "shareWhichSide": "Ты на чьей стороне?",
+  "rereadRight": "В первый раз ты ответил верно.",
+  "rereadWrong": "В первый раз ты ошибся."
 }

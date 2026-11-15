@@ -408,11 +408,11 @@ void main() {
       );
     });
 
-    test('a card sent to a friend is its own page on the site', () {
+    test('a card leaves as its own page on the site', () {
       expect(
-        challengeLink('space-aerogel-comet-catch'),
+        cardLink('space-aerogel-comet-catch'),
         'https://astutetheapp.com/c/space-aerogel-comet-catch.html'
-        '?ref=challenge',
+        '?ref=share_card',
       );
     });
 
@@ -445,52 +445,17 @@ void main() {
       return copied.single;
     }
 
-    testWidgets('a card', (tester) async {
-      final Pill pill = PillBank.cards.first;
-      final String text = await copiedFrom(
-        tester,
-        (context) => showShareSheet(context, pill),
-      );
-      expect(text, endsWith('— Astute · ${ShareRef.card.link}'));
-    });
-
-    testWidgets('a card with a page, as a challenge: its question and where '
-        'to play it, never its answer', (tester) async {
-      final Pill pill = PillBank.cards.firstWhere((p) => p.hasPage);
-      final copied = _clipboard(tester);
-      // No share sheet under a test: the challenge is copied instead.
-      sendChallenge = (_) async => false;
-      addTearDown(() => sendChallenge = shareText);
-      await tester.pumpWidget(
-        _host(
-          Scaffold(
-            body: Builder(
-              builder: (context) => Center(
-                child: TextButton(
-                  onPressed: () => showShareSheet(context, pill),
-                  child: const Text('open'),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-      await tester.tap(find.text('open'));
-      await _settle(tester);
-      await tester.ensureVisible(find.byKey(const ValueKey('share-challenge')));
-      await tester.tap(find.byKey(const ValueKey('share-challenge')));
-      await _settle(tester);
-      expect(copied, hasLength(1));
-      expect(copied.single, startsWith('Can you get this one?\n'));
-      expect(copied.single, contains(pill.question));
-      expect(copied.single, isNot(contains(pill.answer)));
-      expect(copied.single, endsWith(challengeLink(pill.id)));
-    });
-
-    testWidgets('a card with no page has nothing to play, so no challenge', (
-      tester,
+    /// Opens a card's share sheet over a bare screen, taps [button] and
+    /// returns what reached the clipboard. No share sheet under a test: a
+    /// message is copied instead.
+    Future<List<String>> sentFrom(
+      WidgetTester tester,
+      Pill pill,
+      String button,
     ) async {
-      final Pill pill = PillBank.cards.firstWhere((p) => p.web == null);
+      final copied = _clipboard(tester);
+      sendCardText = (_) async => false;
+      addTearDown(() => sendCardText = shareText);
       await tester.pumpWidget(
         _host(
           Scaffold(
@@ -507,7 +472,80 @@ void main() {
       );
       await tester.tap(find.text('open'));
       await _settle(tester);
+      await tester.ensureVisible(find.byKey(ValueKey(button)));
+      await tester.tap(find.byKey(ValueKey(button)));
+      await _settle(tester);
+      return copied;
+    }
+
+    testWidgets('a card that asks: what is asked, its question and its page, '
+        'never its answer', (tester) async {
+      final Pill pill = PillBank.cards.firstWhere(
+        (p) => p.asksSomething && p.challenge is! TakeASide,
+      );
+      final List<String> copied = await sentFrom(tester, pill, 'share-send');
+      expect(copied, hasLength(1));
+      expect(
+        copied.single,
+        'Can you get this one?\n${pill.question}\n${cardLink(pill.id)}',
+      );
+      expect(copied.single, isNot(contains(pill.answer)));
+      expect(find.byKey(const ValueKey('share-note')), findsOneWidget);
+    });
+
+    testWidgets('a card that tells: its question and its page, and nothing '
+        'asked', (tester) async {
+      final Pill pill = PillBank.cards.firstWhere(
+        (p) => !p.asksSomething && p.web == null,
+      );
+      final List<String> copied = await sentFrom(tester, pill, 'share-send');
+      expect(copied.single, '${pill.question}\n${cardLink(pill.id)}');
+    });
+
+    testWidgets('a debate asks which side', (tester) async {
+      final Pill pill = PillBank.cards.firstWhere(
+        (p) => p.challenge is TakeASide,
+      );
+      final List<String> copied = await sentFrom(tester, pill, 'share-send');
+      expect(copied.single, startsWith('Which side are you on?\n'));
+    });
+
+    testWidgets('the link alone, copied', (tester) async {
+      final Pill pill = PillBank.cards.firstWhere((p) => p.hasPage);
+      final List<String> copied = await sentFrom(
+        tester,
+        pill,
+        'share-copy-link',
+      );
+      expect(copied.single, cardLink(pill.id));
+    });
+
+    testWidgets('the old long text is gone', (tester) async {
+      final Pill pill = PillBank.cards.firstWhere((p) => p.hasPage);
+      await tester.pumpWidget(
+        _host(
+          Scaffold(
+            body: Builder(
+              builder: (context) => Center(
+                child: TextButton(
+                  onPressed: () => showShareSheet(context, pill),
+                  child: const Text('open'),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('open'));
+      await _settle(tester);
+      // One way to send, one picture, one link: no challenge apart, no
+      // second button doing the same as the first.
       expect(find.byKey(const ValueKey('share-challenge')), findsNothing);
+      expect(find.byIcon(Icons.download_rounded), findsNothing);
+      expect(find.byKey(const ValueKey('share-image')), findsOneWidget);
+      // And the picture asks; it does not answer.
+      expect(find.text(pill.barMove), findsNothing);
+      expect(find.text(pill.answer), findsNothing);
     });
 
     testWidgets('the record', (tester) async {

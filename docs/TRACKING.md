@@ -356,7 +356,7 @@ is in its card facts.
 | `pill said` | the reader said a card to someone | card facts, `said_total` | P, T:`said` |
 | `pill opened` | a card opened on a page of its own: from Saved, Liked, the archive or a week of the journey (no deck, so no `card closed`) | card facts, `saved`, `liked`, `answered` | P, T:`open` |
 | `card reported` | a report is sent | `pill_id`, `topic`, `report_reason`, `with_note` (bool, never the note) | P, T:`rep` |
-| `share sheet opened`, `pill shared`, `day shared`, `record shared` | sharing | `kind`, `pill_id`, `topic`, `as`, `image`, `streak_days`, `edition`, `sheet`, `from` | P, T:`share` (cards) |
+| `share sheet opened`, `pill shared`, `day shared`, `record shared` | sharing. A card leaves as its question and its page on the site (`as`: `link`; `copied` where there was no sheet), as its picture (`image`, or `text` when the picture fell back to the words), or as its page alone (`link copied`); never as its answer | `kind`, `pill_id`, `topic`, `as`, `has_page`, `image`, `streak_days`, `edition`, `sheet`, `from` | P, T:`share` (cards) |
 | `shelf filtered`, `archive filtered` | a subject on Saved, Liked or the archive | `subject` | P |
 
 ### 6.7 First run and coming back

@@ -4513,4 +4513,25 @@ class AppLocalizationsKo extends AppLocalizations {
   String pathCardOf(int n, int total) {
     return '$total장 중 $n번째';
   }
+
+  @override
+  String get shareSendCard => '카드 보내기';
+
+  @override
+  String get shareAsImage => '이미지로';
+
+  @override
+  String get shareCopyLink => '링크 복사';
+
+  @override
+  String get shareAnswerNote => '친구는 먼저 질문을 봐요. 답은 카드 페이지에서 한 번만 누르면 나와요.';
+
+  @override
+  String get shareWhichSide => '너는 어느 쪽이야?';
+
+  @override
+  String get rereadRight => '처음엔 맞혔어요.';
+
+  @override
+  String get rereadWrong => '처음엔 틀렸어요.';
 }

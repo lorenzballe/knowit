@@ -13,14 +13,14 @@ enum ShareRef {
   /// The day as five squares (`ShareDay`).
   day('share_day'),
 
-  /// One card, from its share sheet.
+  /// One card, from its share sheet: its page on the site ([cardLink]).
   card('share_card'),
 
   /// The reader's record, from its share sheet.
   record('share_record'),
 
-  /// One card sent to a friend to play: its page on the site
-  /// (tool/cards/challenge_pages.py).
+  /// One card sent to a friend to play, as builds before the card's own
+  /// page sent it: links already in chats still carry it.
   challenge('challenge');
 
   const ShareRef(this.ref);
@@ -32,8 +32,9 @@ enum ShareRef {
   String get link => 'https://$kSiteHost/?ref=$ref';
 }
 
-/// Where a free card can be played by a friend, with or without the app:
-/// its page on the site, under a line saying a friend sent it
-/// (tool/cards/challenge_pages.py writes one for every card with a page).
-String challengeLink(String cardId) =>
-    'https://$kSiteHost/c/$cardId.html?ref=${ShareRef.challenge.ref}';
+/// Where a card is met by a friend, with or without the app: its page on
+/// the site, under a line saying a friend sent it. A card with a drawing is
+/// played there; a card in words asks its question, and shows its answer
+/// on a tap (tool/cards/challenge_pages.py writes one for every card).
+String cardLink(String cardId) =>
+    'https://$kSiteHost/c/$cardId.html?ref=${ShareRef.card.ref}';

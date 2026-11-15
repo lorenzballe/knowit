@@ -1103,5 +1103,12 @@
   "widgetAskPin": "ホーム画面に追加",
   "widgetAskGotIt": "わかりました",
   "widgetAskNotNow": "今はしない",
-  "pathCardOf": "{total}枚中{n}枚目"
+  "pathCardOf": "{total}枚中{n}枚目",
+  "shareSendCard": "カードを送る",
+  "shareAsImage": "画像で",
+  "shareCopyLink": "リンクをコピー",
+  "shareAnswerNote": "友だちにはまず問いが届きます。答えはカードのページで、ワンタップ先に。",
+  "shareWhichSide": "あなたはどっち派？",
+  "rereadRight": "最初は正解でした。",
+  "rereadWrong": "最初は不正解でした。"
 }

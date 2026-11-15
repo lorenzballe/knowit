@@ -4709,4 +4709,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String pathCardOf(int n, int total) {
     return 'Carta $n de $total';
   }
+
+  @override
+  String get shareSendCard => 'Enviar la carta';
+
+  @override
+  String get shareAsImage => 'Como imagen';
+
+  @override
+  String get shareCopyLink => 'Copiar enlace';
+
+  @override
+  String get shareAnswerNote =>
+      'Tu amigo ve primero la pregunta. La respuesta está a un toque, en la página de la carta.';
+
+  @override
+  String get shareWhichSide => '¿De qué lado estás?';
+
+  @override
+  String get rereadRight => 'La primera vez acertaste.';
+
+  @override
+  String get rereadWrong => 'La primera vez fallaste.';
 }

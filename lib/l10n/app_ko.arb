@@ -1103,5 +1103,12 @@
   "widgetAskPin": "홈 화면에 추가",
   "widgetAskGotIt": "알겠어요",
   "widgetAskNotNow": "나중에",
-  "pathCardOf": "{total}장 중 {n}번째"
+  "pathCardOf": "{total}장 중 {n}번째",
+  "shareSendCard": "카드 보내기",
+  "shareAsImage": "이미지로",
+  "shareCopyLink": "링크 복사",
+  "shareAnswerNote": "친구는 먼저 질문을 봐요. 답은 카드 페이지에서 한 번만 누르면 나와요.",
+  "shareWhichSide": "너는 어느 쪽이야?",
+  "rereadRight": "처음엔 맞혔어요.",
+  "rereadWrong": "처음엔 틀렸어요."
 }

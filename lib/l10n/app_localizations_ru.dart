@@ -4869,4 +4869,26 @@ class AppLocalizationsRu extends AppLocalizations {
   String pathCardOf(int n, int total) {
     return 'Карточка $n из $total';
   }
+
+  @override
+  String get shareSendCard => 'Отправить карточку';
+
+  @override
+  String get shareAsImage => 'Картинкой';
+
+  @override
+  String get shareCopyLink => 'Копировать ссылку';
+
+  @override
+  String get shareAnswerNote =>
+      'Друг сначала видит вопрос. Ответ — в одном касании, на странице карточки.';
+
+  @override
+  String get shareWhichSide => 'Ты на чьей стороне?';
+
+  @override
+  String get rereadRight => 'В первый раз ты ответил верно.';
+
+  @override
+  String get rereadWrong => 'В первый раз ты ошибся.';
 }

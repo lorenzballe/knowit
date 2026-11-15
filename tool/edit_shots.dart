@@ -29,6 +29,7 @@ import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/saved_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/share_sheet.dart';
 import 'package:astuto/widgets/web/card_thumb.dart';
 import 'package:astuto/widgets/widget_ask.dart';
 
@@ -384,6 +385,41 @@ void main() {
           ),
         ),
       );
+      await _settle(tester);
+      await _shoot(tester, name);
+    }
+  });
+
+  testWidgets('a card shared: the question and its page', (tester) async {
+    for (final (String name, Pill pill) in [
+      (
+        '18-share-asks',
+        PillBank.cards.firstWhere(
+          (p) => p.asksSomething && p.web == null && p.question.length > 70,
+        ),
+      ),
+      (
+        '19-share-tells',
+        PillBank.cards.firstWhere(
+          (p) => !p.asksSomething && p.web == null && p.question.length > 50,
+        ),
+      ),
+    ]) {
+      // A fresh app for each card: the last one's sheet goes with its own.
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(
+        _app(
+          Builder(
+            builder: (context) => Center(
+              child: TextButton(
+                onPressed: () => showShareSheet(context, pill),
+                child: const Text('open'),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('open'));
       await _settle(tester);
       await _shoot(tester, name);
     }

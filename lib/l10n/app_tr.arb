@@ -1103,5 +1103,12 @@
   "widgetAskPin": "Ana Ekrana Ekle",
   "widgetAskGotIt": "Anladım",
   "widgetAskNotNow": "Şimdi değil",
-  "pathCardOf": "{total} karttan {n}."
+  "pathCardOf": "{total} karttan {n}.",
+  "shareSendCard": "Kartı gönder",
+  "shareAsImage": "Görsel olarak",
+  "shareCopyLink": "Bağlantıyı kopyala",
+  "shareAnswerNote": "Arkadaşın önce soruyu görür. Cevap, kartın sayfasında tek dokunuş uzakta.",
+  "shareWhichSide": "Sen hangi taraftasın?",
+  "rereadRight": "İlk seferde doğru bildin.",
+  "rereadWrong": "İlk seferde yanıldın."
 }

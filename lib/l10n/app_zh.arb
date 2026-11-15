@@ -1103,5 +1103,12 @@
   "widgetAskPin": "添加到主屏幕",
   "widgetAskGotIt": "知道了",
   "widgetAskNotNow": "以后再说",
-  "pathCardOf": "第{n}张，共{total}张"
+  "pathCardOf": "第{n}张，共{total}张",
+  "shareSendCard": "发送卡片",
+  "shareAsImage": "以图片分享",
+  "shareCopyLink": "复制链接",
+  "shareAnswerNote": "朋友会先看到问题，答案在卡片页面上，点一下就能看到。",
+  "shareWhichSide": "你站哪一边？",
+  "rereadRight": "第一次你答对了。",
+  "rereadWrong": "第一次你答错了。"
 }
