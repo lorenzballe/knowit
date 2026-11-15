@@ -314,15 +314,20 @@ class _TodayScreenState extends State<TodayScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 15),
-              child: _ShelfHeader(app: app, colour: colour),
-            ),
             Expanded(
               child: TodayDoneView(
                 app: app,
                 at: at,
                 onPick: (k) => setState(() => _shelfAt = k),
+                // Which day this was, and what it made, on the shelf's own
+                // first row.
+                heading: (
+                  line: context.l10n.dayRead(
+                    app.dayNumber,
+                    context.l10n.countWord('${app.todaysDeck.length}'),
+                  ),
+                  aside: _shelfAside(context, app),
+                ),
               ),
             ),
           ],
@@ -608,74 +613,15 @@ class _Pool extends StatelessWidget {
   }
 }
 
-class _ShelfHeader extends StatelessWidget {
-  const _ShelfHeader({required this.app, required this.colour});
-
-  final AppState app;
-  final Color colour;
-
-  /// The freeze is said here and nowhere else, so it comes first on the day
-  /// it was spent. Otherwise, what the day has produced — and before it has
-  /// produced anything, the line names the gesture that fills it.
-  String _aside(BuildContext context) {
-    if (app.streakWasFrozen) return context.l10n.freezeKeptStreak;
-    final int liked = app.likedToday;
-    if (liked == 0) return context.l10n.holdACardYouLike;
-    return context.l10n.likedToday(liked);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bool still = MediaQuery.disableAnimationsOf(context);
-    return Row(
-      children: [
-        AnimatedContainer(
-          duration: Duration(milliseconds: still ? 0 : 500),
-          curve: Curves.easeOut,
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(color: colour, shape: BoxShape.circle),
-        ),
-        const SizedBox(width: 10),
-        // Side by side while they fit — the day's line at the left, the
-        // aside flush to the far edge — and in a language where they do
-        // not, the aside steps down under the day's line rather than
-        // either of them being cut. Polish spends twenty-six letters on
-        // "Day 1 · five read" and twenty-three on the aside; one line of a
-        // small phone holds one of those.
-        Expanded(
-          child: Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 12,
-            runSpacing: 3,
-            children: [
-              Text(
-                context.l10n.dayRead(
-                  app.dayNumber,
-                  context.l10n.countWord('${app.todaysDeck.length}'),
-                ),
-                style: AppText.body(
-                  size: 17,
-                  weight: FontWeight.w600,
-                  spacing: -0.2,
-                  color: context.p.ink,
-                ),
-              ),
-              Text(
-                _aside(context),
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w500,
-                  color: context.p.ink.withValues(alpha: 0.38),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+/// What the finished day has made, under its line. The freeze is said here
+/// and nowhere else, so it comes first on the day it was spent. Otherwise,
+/// what the day has produced — and before it has produced anything, the
+/// gesture that fills it.
+String _shelfAside(BuildContext context, AppState app) {
+  if (app.streakWasFrozen) return context.l10n.freezeKeptStreak;
+  final int liked = app.likedToday;
+  if (liked == 0) return context.l10n.holdACardYouLike;
+  return context.l10n.likedToday(liked);
 }
 
 class _ProgressBars extends StatelessWidget {

@@ -2346,13 +2346,19 @@ void main() {
 
     await _finishDay(tester);
 
-    // The header says where the day got to, the eyebrow says what the
-    // screen now is, and the first card is at the front, face up, with
-    // its line to bring it up with.
+    // The header says where the day got to, with the shelf's buttons on
+    // its row — no eyebrow saying "five" again under it — and the first
+    // card is at the front, face up, with its line to bring it up with.
     expect(find.text('Day 1 · five read'), findsOneWidget);
     expect(_todayTitle, findsNothing);
     expect(find.text('Hold a card you like'), findsOneWidget);
-    expect(find.text("TODAY'S FIVE"), findsOneWidget);
+    expect(find.text("TODAY'S FIVE"), findsNothing);
+    final Rect line = tester.getRect(find.text('Day 1 · five read'));
+    final Rect again = tester.getRect(
+      find.byKey(const ValueKey('shelf-see-again')),
+    );
+    expect(again.top, lessThan(line.bottom + 20));
+    expect(again.left, greaterThan(line.right));
     _expectAtFront(tester, 1);
 
     final front = _todaysFive.first;
@@ -5782,9 +5788,9 @@ void main() {
       await _settle(tester);
       await _finishDay(tester);
 
-      // The shelf opens on the first card, with the eyebrow over it and
+      // The shelf opens on the first card, with the day's line over it and
       // nothing about the week in the way.
-      expect(find.text("TODAY'S FIVE"), findsOneWidget);
+      expect(find.textContaining('five read'), findsOneWidget);
       expect(find.byKey(const ValueKey('week-reward')), findsNothing);
 
       // The last card on the shelf is the offer, and it says it there.

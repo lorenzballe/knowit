@@ -312,14 +312,15 @@ void main() {
       expect(send, findsOneWidget);
       expect(find.bySemanticsLabel('Share day'), findsOneWidget);
 
-      // A mark at the end of the shelf's heading, on its line, not a button
-      // of its own beside the journey: the journey has the row to itself
-      // and the shelf keeps its room.
-      final Finder heading = find.text("TODAY'S FIVE");
-      expect(
-        tester.getCenter(send).dy,
-        moreOrLessEquals(tester.getCenter(heading).dy, epsilon: 1),
-      );
+      // A mark at the end of the shelf's heading — the day's line and the
+      // aside under it — on its row, not a button of its own beside the
+      // journey: the journey has the row to itself and the shelf keeps its
+      // room.
+      final Finder heading = find.textContaining('five read');
+      final Finder aside = find.byKey(const ValueKey('shelf-aside'));
+      final double middle = tester.getCenter(send).dy;
+      expect(middle, greaterThan(tester.getRect(heading).top));
+      expect(middle, lessThan(tester.getRect(aside).bottom));
       expect(
         tester.getRect(send).left,
         greaterThan(tester.getRect(heading).right),
@@ -375,7 +376,9 @@ void main() {
       expect(again, findsNothing);
       await _finishDay(tester);
       expect(again, findsOneWidget);
-      expect(find.text('See again'), findsOneWidget);
+      // Named for everyone; its word is on the line wherever the line has
+      // room for it beside the day's, and its mark alone where it has not.
+      expect(find.bySemanticsLabel('See again'), findsOneWidget);
 
       final AppState app = tester
           .widget<TodayDoneView>(find.byType(TodayDoneView))

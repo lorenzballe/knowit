@@ -115,18 +115,24 @@ void main() {
     expect(find.byType(DeckViewerScreen), findsOneWidget);
   });
 
-  testWidgets('a drawing whose picture will not come: its words, and still '
-      'the way to play it', (tester) async {
-    final Pill first = pagedCards().first;
-    PillBank.adopt(bankWithPictures({first.id}));
-    final Pill pill = PillBank.byId(first.id)!;
-    // NoPicture: every picture fails, as with no network.
-    await _open(tester, await readyApp(), pill);
+  for (final double text in [1.0, 2.0]) {
+    testWidgets('a drawing whose picture will not come: its words, within '
+        'the card, and still the way to play it; at ${text}x', (tester) async {
+      // The longest question among the drawn cards: the one most likely to
+      // run past the card's foot at twice the text size.
+      final Pill longest = pagedCards().reduce(
+        (a, b) => a.question.length >= b.question.length ? a : b,
+      );
+      PillBank.adopt(bankWithPictures({longest.id}));
+      final Pill pill = PillBank.byId(longest.id)!;
+      // NoPicture: every picture fails, as with no network.
+      await _open(tester, await readyApp(), pill, text: text);
 
-    expect(tester.takeException(), isNull);
-    expect(find.text(pill.question), findsOneWidget);
-    expect(find.text('Play the card'), findsOneWidget);
-  });
+      expect(tester.takeException(), isNull);
+      expect(find.text(pill.question), findsOneWidget);
+      expect(find.text('Play the card'), findsOneWidget);
+    });
+  }
 
   for (final double text in [1.0, 2.0]) {
     testWidgets('a card in words: its question, opened to be turned over '
