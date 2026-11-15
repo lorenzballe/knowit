@@ -27,6 +27,11 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A skein of cotton yarn hangs from a stick into an indigo dye bath. The reader holds a finger down to lift it into the air: it comes out yellow-green, and a clock counts its time in the air while it turns blue."
+  },
   "source": "Balfour-Paul, Indigo, British Museum Press",
   "source_kind": "book",
   "reference": "Jenny Balfour-Paul, Indigo: Egyptian Mummies to Blue Jeans, British Museum Press, 2011",

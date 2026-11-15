@@ -34,6 +34,11 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three drawn answers to why thousands of Linear B clay tablets lasted 3,000 years: palace fires, a kiln, dry tombs. The reader taps one and says how sure, then taps through four scenes of one shelf of tablets: written, reused, baked by fire, what survives."
+  },
   "source": "Chadwick, The Decipherment of Linear B, 1958",
   "source_kind": "book",
   "reference": "Chadwick, The Decipherment of Linear B, Cambridge University Press, 1958",

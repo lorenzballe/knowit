@@ -1,0 +1,280 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Design note.
+     Thought to carry: carrying weight can make you jump farther; an old practice may simply work.
+     A side view at true scale: the take-off line, the sand, a tape in metres. The same jumper's empty-handed
+     standing jump is already there as a dashed arc landing at 3 m. He waits at the line with a stone haltere
+     in each hand (a callout shows one, where the sky has room). The reader taps the sand where they think he
+     lands; a marker on the tape keeps the guess. Then he jumps, swinging the weights forward at take-off,
+     with one exposure left at take-off, and lands 17 cm past the 3 m mark. Seventeen centimetres is a few
+     pixels at this scale, so a round close-up, set where the drawing leaves room, shows the two marks and
+     the gap, about 6% of the jump. Pictogram figures, ink on the subject's green, no other colour. -->
+<title>Weights for a longer jump</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;outline:none}
+#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic text.b{font-family:var(--display);font-weight:800}
+.q,.say,.keep,.src{overflow-wrap:break-word}
+/* On the smallest card the why keeps its first clause, so the jump keeps its room. */
+@container (max-height:520px){.more{display:none}}
+</style>
+<article class="card" id="card" data-topic="sport" data-kind="Tap your guess · watch the jump">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WHERE DOES HE LAND?</span></div>
+    <h2 class="q">Why did ancient Olympic long jumpers take off holding stone or lead weights in their hands?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" data-tap tabindex="0" role="button" aria-label="A standing long jump drawn to scale. Empty-handed, the jumper lands at 3 metres. Now he holds a weight in each hand: tap the sand where you think he lands."></svg></div>
+    <p class="say" id="say">Empty-handed he lands at 3 m. Now he holds 2 to 9 kg in each hand: <b>tap the sand where he lands</b>.</p>
+    <p class="say gone" id="why"><b>To jump farther.</b> Swung forward at take-off, weights of 2 to 9 kg add at least 17 cm to a 3 m standing jump<span class="more">, and the best mass in the tests matched weights dug up at ancient sites</span>.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Before calling an old practice a ritual, test whether it simply worked.</div>
+    <div class="foot"><span class="src">Source · Minetti &amp; Ardigò, Nature (2002)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic');
+  const el = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+  const EMPTY = 3.0, LOADED = 3.17, GAIN_CM = 17, SHOT = .18;
+  // The body in metres: torso, upper arm, forearm, thigh, shin, foot.
+  const LEN = {torso: .55, ua: .3, fa: .3, th: .45, sh: .45, ft: .2};
+  const rad = d => d * Math.PI / 180, lerp = (a, b, k) => a + (b - a) * k;
+  const S = {guess: null, jumped: false, tau: 0};
+  let G = null, tl = null;
+
+  // ---------- the jumper: a pictogram on a skeleton ----------
+  // Angles in degrees: a limb's from straight down, turning forward; the torso's from straight up.
+  // A planted pose names its ankle and the legs are solved to reach it (knees forward).
+  function legsTo(hip, ankle) {
+    const dx = ankle[0] - hip[0], dy = ankle[1] - hip[1], d = Math.min(Math.hypot(dx, dy), LEN.th + LEN.sh - 1e-4);
+    const a = Math.atan2(dx, -dy) * 180 / Math.PI, b = Math.acos(d / (LEN.th + LEN.sh)) * 180 / Math.PI;
+    return {th: a + b, sh: a - b};
+  }
+  // Keyframes along the jump: τ 0 the crouch (weights swung back), .18 take-off (weights forward), .5 the
+  // top, .82 legs reaching, 1 landing.
+  function keys(D) {
+    const crouchHip = [-.12, .64], offHip = [.5, .86], landHip = [D - .6, .42];
+    const crouch = Object.assign({hip: crouchHip, t: 36, ua: -58, fa: -38}, legsTo(crouchHip, [-.06, .08]));
+    const off = Object.assign({hip: offHip, t: 36, ua: 150, fa: 160}, legsTo(offHip, [.02, .1]));
+    const land = Object.assign({hip: landHip, t: 48, ua: 58, fa: 46}, legsTo(landHip, [D + .03, .075]));
+    return [[0, crouch], [.18, off], [.5, {hip: [0, 0], t: 16, ua: 100, fa: 106, th: 102, sh: 14}],
+      [.82, {hip: [0, 0], t: 38, ua: 74, fa: 64, th: 95, sh: 78}], [1, land]];
+  }
+  // The hip flies on a parabola from take-off to landing; the limbs ease between keyframes.
+  function poseAt(D, tau) {
+    const K = keys(D);
+    let i = 1; while (i < K.length - 1 && tau > K[i][0]) i++;
+    const [t0, a] = K[i - 1], [t1, b] = K[i], k = Math.max(0, Math.min(1, (tau - t0) / (t1 - t0))), e = k * k * (3 - 2 * k);
+    const p = {};
+    for (const key of ['t', 'ua', 'fa', 'th', 'sh']) p[key] = lerp(a[key], b[key], e);
+    if (tau <= .18) p.hip = [lerp(a.hip[0], b.hip[0], e), lerp(a.hip[1], b.hip[1], e)];
+    else {
+      const off = K[1][1].hip, land = K[4][1].hip, u = (tau - .18) / .82;
+      p.hip = [lerp(off[0], land[0], u), off[1] + (land[1] - off[1]) * u + 4 * .62 * u * (1 - u)];
+    }
+    return p;
+  }
+  function joints(p) {
+    const [hx, hy] = p.hip, dir = d => [Math.sin(rad(d)), -Math.cos(rad(d))];
+    const N = [hx + LEN.torso * Math.sin(rad(p.t)), hy + LEN.torso * Math.cos(rad(p.t))];
+    const head = [N[0] + .17 * Math.sin(rad(p.t)), N[1] + .17 * Math.cos(rad(p.t))];
+    const E = [N[0] + LEN.ua * dir(p.ua)[0], N[1] + LEN.ua * dir(p.ua)[1]];
+    const Hd = [E[0] + LEN.fa * dir(p.fa)[0], E[1] + LEN.fa * dir(p.fa)[1]];
+    const Kn = [hx + LEN.th * dir(p.th)[0], hy + LEN.th * dir(p.th)[1]];
+    const A = [Kn[0] + LEN.sh * dir(p.sh)[0], Kn[1] + LEN.sh * dir(p.sh)[1]];
+    const T = [A[0] + LEN.ft * Math.cos(rad(p.sh)), A[1] + LEN.ft * Math.sin(rad(p.sh))];
+    return {H: p.hip, N, head, E, Hd, Kn, A, T, fa: p.fa};
+  }
+  // One figure, holding a weight in each hand (seen side on, the two arms are one).
+  function figure(g, p) {
+    g.replaceChildren();
+    const j = joints(p), X = q => G.x(q[0]), Y = q => G.y(q[1]), s = G.s, w = Math.max(3, .1 * s);
+    const line = (pts, wd) => el('polyline', {points: pts.map(q => `${X(q).toFixed(1)},${Y(q).toFixed(1)}`).join(' '), fill: 'none', style: 'stroke:var(--k)', 'stroke-width': wd, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    line([j.H, j.Kn, j.A, j.T], w);
+    line([j.H, j.N], Math.max(4, .15 * s));
+    line([j.N, j.E, j.Hd], w * .9);
+    el('circle', {cx: X(j.head), cy: Y(j.head), r: .115 * s, style: 'fill:var(--k)'}, g);
+    // A haltere: a stone held across the palm, drawn along the forearm.
+    const ang = -(j.fa - 90);
+    el('ellipse', {cx: X(j.Hd), cy: Y(j.Hd), rx: Math.max(4.5, .11 * s), ry: Math.max(3, .068 * s), transform: `rotate(${ang.toFixed(1)} ${X(j.Hd).toFixed(1)} ${Y(j.Hd).toFixed(1)})`, style: 'fill:var(--k);stroke:var(--c)', 'stroke-width': 1.5}, g);
+    return g;
+  }
+  // A stone haltere, as the ones found at Olympia: a long block of stone, domed on top and flat below, with a
+  // slot cut through it for the fingers. w wide, .46 w high.
+  function haltere(p, x, y, w) {
+    const P = (u, v) => `${(x + u * w).toFixed(1)},${(y + v * w).toFixed(1)}`;
+    const stone = `M${P(.02, .46)} C${P(-.01, .3)} ${P(.04, .12)} ${P(.2, .06)} C${P(.38, 0)} ${P(.62, 0)} ${P(.8, .06)} C${P(.96, .12)} ${P(1.01, .3)} ${P(.98, .46)} Z`;
+    const slot = `M${P(.33, .2)} C${P(.33, .15)} ${P(.36, .14)} ${P(.4, .14)} L${P(.6, .14)} C${P(.64, .14)} ${P(.67, .15)} ${P(.67, .2)} L${P(.67, .27)} C${P(.67, .31)} ${P(.64, .32)} ${P(.6, .32)} L${P(.4, .32)} C${P(.36, .32)} ${P(.33, .31)} ${P(.33, .27)} Z`;
+    el('path', {d: `${stone} ${slot}`, 'fill-rule': 'evenodd', style: 'fill:var(--k)'}, p);
+    // the light along its curved back, and a few chisel marks: it is cut stone
+    el('path', {d: `M${P(.14, .14)} C${P(.3, .06)} ${P(.5, .05)} ${P(.62, .07)}`, fill: 'none', style: 'stroke:var(--c)', 'stroke-width': Math.max(1.5, w * .018), 'stroke-linecap': 'round', opacity: .55}, p);
+    for (const [u, v] of [[.12, .34], [.2, .4], [.8, .36], [.86, .28]]) el('path', {d: `M${P(u, v)} l${(w * .04).toFixed(1)},${(-w * .03).toFixed(1)}`, fill: 'none', style: 'stroke:var(--c)', 'stroke-width': 1.2, 'stroke-linecap': 'round', opacity: .4}, p);
+  }
+  // The flight drawn as one clean arc, from the take-off board to where the feet come down at distance D.
+  const flight = (D, u) => [lerp(.05, D, u), .8 * 4 * u * (1 - u)];
+
+  // ---------- the scene, at true scale ----------
+  function draw() {
+    if (tl) { tl.kill(); tl = null; }
+    svg.replaceChildren();
+    const {W, H} = Kit.fitSvg(svg);
+    if (!(W > 60 && H > 60)) { G = null; return; }
+    const fs = Math.max(12, Math.min(14, W / 24));
+    const left = .5, right = 3.5, sandH = 7, tapeH = sandH + fs * (S.guess != null ? 4 : 2.6);
+    // once he has landed, a column on the right is kept for the close-up of the two marks
+    const R = S.jumped ? Math.max(40, Math.min(58, (H - tapeH - 8) / 2, W * .17)) : 0;
+    const s = Math.min((W - 6 - (R ? 2 * R + 12 : 0)) / (left + right), (H - tapeH - 4) / 2.3);
+    const x0 = 3 + left * s;
+    // Before the jump, the weight he holds is shown large above him, and the whole picture is centred in
+    // the stage: what height is left over goes half above it and half below.
+    let yG = H - tapeH, hw = 0;
+    const room = yG - 1.75 * s - fs;
+    if (!S.jumped && room > fs * 6) {
+      hw = Math.min(W * .42, 150, room * 1.5);
+      yG -= Math.max(0, room - hw * .46 - fs * 1.6) / 2;
+    }
+    G = {W, H, fs, s, yG, sandH, R, x: m => x0 + m * s, y: m => yG - m * s};
+    const {x} = G, ty = yG + sandH + fs * .55;
+    // The sand pit, the take-off board and the tape.
+    el('rect', {x: x(.35), y: yG, width: x(right) - x(.35), height: sandH, rx: 3, style: 'fill:var(--edge)', opacity: .45}, svg);
+    el('line', {x1: x(-left), x2: x(right), y1: yG, y2: yG, style: 'stroke:var(--k)', 'stroke-width': 2}, svg);
+    el('rect', {x: x(-.2), y: yG - 1, width: .2 * s, height: 5, style: 'fill:var(--k)'}, svg);
+    el('line', {x1: x(0), x2: x(3.5), y1: ty, y2: ty, style: 'stroke:var(--k)', 'stroke-width': 1.1, opacity: .6}, svg);
+    for (let m = 0; m <= 3.5 + 1e-6; m += .5) {
+      const major = Math.abs(m - Math.round(m)) < 1e-6;
+      el('line', {x1: x(m), x2: x(m), y1: ty - (major ? 5 : 3), y2: ty + (major ? 5 : 3), style: 'stroke:var(--k)', 'stroke-width': major ? 1.6 : 1.1, opacity: major ? 1 : .6}, svg);
+      if (major && m > 0) txt(`${m} m`, {x: x(m), y: ty + fs * 1.5, 'text-anchor': 'middle', 'font-size': fs}, svg);
+    }
+    // Empty-handed, measured: a dashed mark at 3 m and, before the jump, the dashed arc of that jump landing on it.
+    // After the jump the marks are drawn down through the sand too, where the landed jumper cannot hide them.
+    if (S.jumped) el('line', {x1: x(EMPTY), x2: x(EMPTY), y1: yG - 5, y2: ty - 1, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-dasharray': '3 2', opacity: .7}, svg);
+    else el('line', {x1: x(EMPTY), x2: x(EMPTY), y1: yG - .3 * s, y2: yG + 5, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-dasharray': '4 3'}, svg);
+    if (!S.jumped) {
+      const arc = [];
+      for (let k = 0; k <= 40; k++) { const [m, h] = flight(EMPTY, k / 40); arc.push(`${x(m).toFixed(1)},${G.y(h).toFixed(1)}`); }
+      el('polyline', {points: arc.join(' '), fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.6, 'stroke-dasharray': '4 5', opacity: .6}, svg);
+      const top = flight(EMPTY, .5);
+      txt('empty-handed', {x: x(top[0]), y: G.y(top[1]) - fs * .7, 'text-anchor': 'middle', 'font-size': fs}, svg);
+      // the weight he holds, shown large above him, with a thin line to his hands
+      if (hw) {
+        const hh = hw * .46, hx = 2, hy = Math.max(2, G.y(1.75) - fs * 1.6 - hh);
+        haltere(svg, hx, hy, hw);
+        txt('a stone haltere,', {x: hx + hw + 10, y: hy + hh * .45, 'font-size': fs}, svg);
+        txt('2 to 9 kg', {x: hx + hw + 10, y: hy + hh * .45 + fs * 1.25, 'font-size': fs}, svg);
+        const hand = joints(poseAt(LOADED, 0)).Hd;
+        el('line', {x1: hx + hw * .5, y1: hy + hh + 3, x2: x(hand[0]), y2: G.y(hand[1]) - 6, style: 'stroke:var(--k)', 'stroke-width': 1.2, 'stroke-dasharray': '2 3'}, svg);
+      }
+    }
+    G.path = el('polyline', {fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.6, opacity: .55}, svg);
+    G.stamps = el('g', {}, svg);
+    G.man = el('g', {}, svg);
+    G.gain = el('g', {}, svg);
+    G.flag = el('g', {}, svg);
+    if (S.guess != null) drawGuess();
+    if (S.jumped) finalPicture(); else figure(G.man, poseAt(LOADED, S.tau));
+  }
+  // The hip's path so far, as one thin line.
+  function trace(upTo) {
+    const pts = [];
+    for (let k = 0; k <= 48; k++) { const t = .18 + .82 * k / 48; if (t > upTo) break; const [m, h] = flight(LOADED, k / 48); pts.push(`${G.x(m).toFixed(1)},${G.y(h).toFixed(1)}`); }
+    G.path.setAttribute('points', pts.join(' '));
+  }
+  // The guess lives under the tape, pointing up at it, where nothing of the jump can cover it.
+  function drawGuess() {
+    const {x, yG, fs, sandH} = G, gx = x(S.guess), ty = yG + sandH + fs * .55, s = fs * .4;
+    G.flag.replaceChildren();
+    el('path', {d: `M${gx},${ty + 1} L${gx + s},${ty + 1 + s * 1.5} L${gx - s},${ty + 1 + s * 1.5} Z`, style: 'fill:var(--k)'}, G.flag);
+    const lw = fs * 5.6, lx = Math.max(lw / 2, Math.min(G.W - lw / 2, gx));
+    txt('your guess', {x: lx, y: ty + fs * 2.95, 'text-anchor': 'middle', 'font-size': fs}, G.flag);
+  }
+  // The end: his path, the take-off exposure, the jumper landed, and a close-up of the two marks.
+  function finalPicture() {
+    trace(1);
+    G.stamps.replaceChildren();
+    figure(el('g', {opacity: .28}, G.stamps), poseAt(LOADED, SHOT));
+    figure(G.man, poseAt(LOADED, 1));
+    const {x, yG, fs, W, s} = G;
+    G.gain.replaceChildren();
+    el('line', {x1: x(LOADED), x2: x(LOADED), y1: yG - 5, y2: yG + G.sandH + fs * .55 - 1, style: 'stroke:var(--k)', 'stroke-width': 2.6}, G.gain);
+    // the close-up sits in the column kept for it, level with the landing
+    const R = G.R || 44, cx = W - R - 2, cy = Math.max(R + 2, yG - R - 6);
+    const lens = el('g', {}, G.gain), id = 'lens' + Math.round(R * 10);
+    el('circle', {cx, cy, r: R}, el('clipPath', {id}, el('defs', {}, lens)));
+    const inner = el('g', {'clip-path': `url(#${id})`}, lens);
+    el('circle', {cx, cy, r: R, style: 'fill:var(--c)'}, inner);
+    // inside, top to bottom: the number, its bracket, the two marks in the sand, and the share of the jump
+    const zoom = (2 * R - 26) / .3, X = m => cx + (m - 3.085) * zoom, gy = cy + R * .06;
+    el('rect', {x: cx - R, y: gy, width: 2 * R, height: R, style: 'fill:var(--edge)', opacity: .45}, inner);
+    el('line', {x1: cx - R, x2: cx + R, y1: gy, y2: gy, style: 'stroke:var(--k)', 'stroke-width': 2}, inner);
+    el('line', {x1: X(EMPTY), x2: X(EMPTY), y1: gy - R * .2, y2: gy + R * .08, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-dasharray': '4 3'}, inner);
+    el('line', {x1: X(LOADED), x2: X(LOADED), y1: gy - R * .2, y2: gy + R * .08, style: 'stroke:var(--k)', 'stroke-width': 2.8}, inner);
+    const by = gy - R * .24;
+    el('path', {d: `M${X(EMPTY)},${by + 4} V${by} H${X(LOADED)} V${by + 4}`, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.6}, inner);
+    const big = Math.max(fs, Math.min(R * .34, 20)), small = Math.max(9.5, fs * (R < 50 ? .76 : .82)), ly = cy + R * .5;
+    txt(`+${GAIN_CM} cm`, {class: 'b', x: cx, y: by - 5, 'text-anchor': 'middle', 'font-size': big}, inner);
+    // the share of the jump, in the sand under the marks, clear of them
+    txt('about 6%', {x: cx, y: ly, 'text-anchor': 'middle', 'font-size': small}, inner);
+    txt('farther', {x: cx, y: Math.min(ly + small * 1.3, cy + R - 5), 'text-anchor': 'middle', 'font-size': small}, inner);
+    el('circle', {cx, cy, r: R, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 2}, lens);
+    // a small ring on the spot the close-up shows
+    el('circle', {cx: x(3.085), cy: yG, r: Math.max(5, .14 * s), fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.2}, G.gain);
+  }
+
+  // ---------- the bet and the jump ----------
+  function guessAt(clientX) {
+    const r = svg.getBoundingClientRect(), px = (clientX - r.left) * G.W / (r.width || 1);
+    return Math.max(1.6, Math.min(3.45, (px - G.x(0)) / G.s));
+  }
+  function bet(m) {
+    if (S.guess != null || !G) return;
+    S.guess = Math.round(m * 100) / 100; Kit.haptic('selection');
+    draw();                                   // the tape makes room for the guess under it
+    if (!Kit.calm) gsap.from(G.flag, {opacity: 0, y: -6, duration: .3, ease: 'power2.out'});
+    say('He swings the weights forward as he takes off…');
+    jump();
+  }
+  function jump() {
+    if (Kit.calm) { S.tau = 1; land(); return; }
+    const st = {tau: 0}; let shot = false;
+    tl = gsap.timeline({onComplete: land});
+    tl.to(st, {tau: 1, duration: 1.9, ease: 'power1.inOut', delay: .35, onUpdate: () => {
+      S.tau = st.tau;
+      figure(G.man, poseAt(LOADED, st.tau));
+      trace(st.tau);
+      if (!shot && st.tau >= SHOT) { shot = true; figure(el('g', {opacity: .28}, G.stamps), poseAt(LOADED, SHOT)); }
+    }});
+  }
+  function land() {
+    tl = null;
+    S.jumped = true; S.tau = 1; Kit.haptic('success');
+    finalPicture();
+    if (!Kit.calm) gsap.from(G.gain, {opacity: 0, duration: .45, ease: 'power2.out'});
+    const off = Math.round((LOADED - S.guess) * 100);
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    svg.setAttribute('aria-label', `With a weight in each hand he lands at 3.17 metres, 17 centimetres past his empty-handed 3 metres. Your guess was ${Math.abs(off)} centimetres ${off >= 0 ? 'short' : 'long'}.`);
+    svg.style.cursor = 'default';
+  }
+  function say(h) { const e = Kit.$('say'); e.innerHTML = h; if (!Kit.calm) gsap.fromTo(e, {opacity: .3}, {opacity: 1, duration: .35}); }
+  svg.addEventListener('click', e => { if (G && S.guess == null) bet(guessAt(e.clientX)); });
+  svg.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && S.guess == null) { e.preventDefault(); bet(2.8); } });
+
+  Kit.onShow.card = draw;
+  // The column moves when the why comes in: the scene is drawn again at its new size.
+  let seen = '';
+  new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G && !tl) { seen = k; draw(); } }).observe(Kit.$('stage'));
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G) return;
+    gsap.from(G.man, {opacity: 0, x: -10, duration: .5, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const r = svg.getBoundingClientRect(), k = r.width / G.W;
+    svg.dispatchEvent(new MouseEvent('click', {bubbles: true, clientX: r.left + G.x(2.75) * k, clientY: r.top + G.yG * k}));
+    await wait(Kit.calm ? 200 : 2900);
+  };
+  Kit.single();
+})();
+</script>
+</html>

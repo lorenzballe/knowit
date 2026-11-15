@@ -35,6 +35,11 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "True or false: checking often enough on an atom poised to change state can stop it changing. A hundred ions sit as dots on their starting level. After the answer the reader runs the push with 1, 4, 16 or 64 looks and sees how many make the jump."
+  },
   "source": "Itano et al., Physical Review A, 1990",
   "source_kind": "paper",
   "reference": "Itano, Heinzen, Bollinger & Wineland, Quantum Zeno effect, Physical Review A 41, 1990",

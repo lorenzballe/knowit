@@ -34,6 +34,11 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two film frames, 1995 and 2013, with computers vastly faster between them: the reader picks what happened to render time per frame, then says how sure. After, a slider runs the years while the frame fills with hair and light and the hours per frame stay put."
+  },
   "source": "GamesBeat on Monsters University, 2013",
   "source_kind": "news_archive",
   "reference": "https://gamesbeat.com/the-making-of-pixars-latest-technological-marvel-monsters-university/",

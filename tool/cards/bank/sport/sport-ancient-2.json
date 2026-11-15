@@ -27,6 +27,11 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A standing long jump drawn to scale: empty-handed, the jumper lands at 3 metres. Now he holds a weight in each hand. The reader taps the sand where they think he lands, then watches him jump, swinging the weights forward."
+  },
   "source": "Minetti & Ardigò, Nature, 2002",
   "source_kind": "paper",
   "reference": "doi:10.1038/420141a",

@@ -1,0 +1,331 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Design note.
+     Thought to carry: the time saved was between the lifts, in not turning the team round.
+     One machine, drawn flat in white on the subject's magenta, seen a little from above: a pair of oxen
+     yoked to a beam walk a ring around an upright shaft. At the shaft's top two toothed wheels, one over the
+     other, sit either side of a small pinion on a level shaft that turns the rope drum. The rope runs over a
+     pulley to a stone at the foot of the dome's wall.
+     The reader drives it: drag round the ring and the oxen follow, forward only. The stone rises; at the top
+     it is set on the wall, which grows by a course. To bring the empty hook down the oxen cannot turn back,
+     so the reader taps the gear: the upright shaft slides so the other wheel meets the pinion, the drum turns
+     the other way, and the same forward walk lowers the hook. (The reversing gear as reconstructed from
+     drawings of the hoist; King, Brunelleschi's Dome.) -->
+<title>The hoist that reversed</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;outline:none}
+#pic:active{cursor:grabbing}
+#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic .gear{cursor:pointer}
+.q,.say,.keep,.src{overflow-wrap:break-word}
+@container (max-height:520px){.more{display:none}}
+</style>
+<article class="card" id="card" data-topic="art" data-kind="Drag round · shift the gear">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRIVE THE HOIST</span></div>
+    <h2 class="q">Why did the oxen lifting stone for Florence's cathedral dome never need turning round?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" data-drag tabindex="0" role="application" aria-label="Brunelleschi's ox hoist: a pair of oxen walk a ring round an upright shaft that turns a rope drum. The rope lifts a stone up the dome's wall. Drag round the ring to walk the oxen; tap the gear to reverse the drum."></svg></div>
+    <p class="say" id="say"><b>Drag round the ring</b> to walk the oxen and lift the stone.</p>
+    <p class="say gone" id="why"><b>Because the hoist could reverse.</b> Brunelleschi’s gearing could be shifted to wind the rope the other way, so oxen walking the same circle raised or lowered a load<span class="more">. Turning the team between lifts would have cost time on every load</span>.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Before speeding up the work, look at the time lost between jobs.</div>
+    <div class="foot"><span class="src">Source · Ross King, Brunelleschi’s Dome (Chatto &amp; Windus, 2000)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic');
+  const el = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+  const TAU = Math.PI * 2, LAPS = 1.5;                      // forward laps of the ring for one full lift
+  const STONE = '#ffe9f4', SHADE = 'var(--edge)';
+  // theta: where the outer ox stands on the ring; alpha: how far the upright shaft has turned; load: 0 at
+  // the foot of the wall, 1 at its top; shift: 0 the lifting wheel engaged, 1 the lowering one.
+  // The oxen start a little left of the shaft, so the pair and the shaft do not hide each other.
+  const S = {theta: Math.PI * .78, alpha: 0, drum: 0, load: 0, mode: 'lift', shift: 0, carrying: true, waiting: false, courses: 0, walk: 0, done: false, warned: false};
+  let G = null, drag = null, slide = null;
+
+  // ---------- the oxen, side on, facing +x, the hooves at (0,0), one unit the height of the back ----------
+  function ox(g, step, far) {
+    // the ox behind is drawn darker, so the yoked pair reads as two animals
+    const fill = far ? '#ffb3e0' : '#fff', line = fill;
+    const legs = [[-.78, 1], [-.62, -1], [.28, -1], [.42, 1]];
+    for (const [x, ph] of legs) {
+      const a = Math.sin(step * TAU) * .32 * ph;
+      el('line', {x1: x, y1: -.45, x2: x + Math.sin(a) * .42, y2: -.45 + Math.cos(a) * .45, stroke: line, 'stroke-width': .13, 'stroke-linecap': 'round'}, g);
+    }
+    el('path', {d: 'M-.98,-.5 C-1.02,-.86 -.8,-.97 -.4,-.95 L.22,-.98 C.32,-1.06 .44,-1.06 .52,-.97 C.62,-.88 .64,-.66 .56,-.52 C.5,-.44 .4,-.42 .3,-.42 L-.82,-.42 C-.92,-.42 -.97,-.45 -.98,-.5 Z', fill}, g);
+    el('path', {d: 'M.5,-.9 L.86,-.66 C.97,-.6 .98,-.46 .88,-.42 L.74,-.4 C.63,-.42 .54,-.52 .48,-.6 Z', fill}, g);       // the head, lowered to the yoke
+    el('path', {d: 'M.66,-.84 Q.7,-1.02 .86,-1.04', fill: 'none', stroke: line, 'stroke-width': .07, 'stroke-linecap': 'round'}, g); // horn
+    el('path', {d: 'M-.96,-.82 Q-1.1,-.66 -1.04,-.44', fill: 'none', stroke: line, 'stroke-width': .06, 'stroke-linecap': 'round'}, g); // tail
+    el('circle', {cx: .78, cy: -.6, r: .035, style: 'fill:var(--c)'}, g);                                                     // eye
+  }
+
+  // ---------- the machine, at the stage's real size ----------
+  function draw() {
+    svg.replaceChildren();
+    const {W, H} = Kit.fitSvg(svg);
+    if (!(W > 80 && H > 80)) { G = null; return; }
+    const fs = Math.max(12, Math.min(14, W / 24));
+    // The machine fills the stage's width; its height follows the stage, within reason.
+    // Across the whole width on every phone; heights follow the stage, sizes the smaller of the two.
+    const mw = W, mh = H, X = f => f * W, Y = f => f * H, u = Math.min(W, H * 1.15);
+    const rx = W * .36, ry = Math.min(rx * .3, H * .13), cx = X(.4), cyR = H - ry - Math.max(6, H * .04);    // the ring the oxen walk
+    const gw = Math.min(W * .13, H * .19), gry = gw * .3, T = Math.max(3, gw * .12);                      // the two toothed wheels
+    const yP = Math.max(H * .22, cyR - Math.min(H * .64, W * .55)), pr = Math.max(4, Math.min(H * .024, gw * .3)), dl = Math.max(2.5, H * .011);
+    const xD0 = X(.56), xD1 = X(.68), rD = Math.max(8, Math.min(W * .045, H * .07));                      // the rope drum
+    const xr = X(.82), pulY = Math.max(9, H * .04 + 6), pulR = Math.max(6, Math.min(W * .028, H * .05));  // the rope's fall and its pulley
+    const wall0 = X(.885), wallTop0 = Math.min(Y(.34), yP + H * .06), ground = H - 2, sw = W * .1, sh = Math.max(9, Math.min(W * .058, H * .09));
+    const oxH = Math.min(W * .105, H * .17);
+    G = {W, H, fs, mw, mh, X, Y, cx, cyR, rx, ry, gw, gry, T, yP, pr, dl, xD0, xD1, rD, xr, pulY, pulR, wall0, wallTop0, ground, sw, sh, oxH};
+
+    // The dome's wall, course on course; every stone the reader lifts is set on top.
+    G.wall = el('g', {}, svg);
+    // The ground under the ring, the ring itself, and which way the oxen go.
+    el('ellipse', {cx, cy: cyR, rx: rx * 1.08, ry: ry * 1.12, style: `fill:${SHADE}`, opacity: .45}, svg);
+    el('ellipse', {cx, cy: cyR, rx, ry, fill: 'none', stroke: '#fff', 'stroke-width': 1.6, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round'}, svg);
+    for (const a of [Math.PI * .7, Math.PI * .3]) {
+      const px = cx + rx * Math.cos(a), py = cyR + ry * Math.sin(a), tx = Math.sin(a), ty = -Math.cos(a) * ry / rx, n = Math.hypot(tx, ty);
+      const ux = tx / n, uy = ty / n, s = Math.max(5, fs * .45);
+      el('path', {d: `M${px - ux * s - uy * s * .7},${py - uy * s + ux * s * .7} L${px},${py} L${px - ux * s + uy * s * .7},${py - uy * s - ux * s * .7}`, fill: 'none', stroke: '#fff', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    }
+    G.back = el('g', {}, svg);          // the oxen and the beam when they are behind the shaft
+    G.shaft = el('g', {}, svg);         // the upright shaft and its two wheels (they slide when the gear shifts)
+    G.mid = el('g', {}, svg);           // pinion, level shaft, drum, rope, hook, stone
+    G.front = el('g', {}, svg);         // the oxen and the beam when they are in front
+
+    // The pulley's beam out from the wall, and the ground the stone waits on.
+    el('line', {x1: xr - pulR * 1.2, x2: W, y1: pulY - pulR - 3, y2: pulY - pulR - 3, stroke: '#fff', 'stroke-width': Math.max(4, mw * .016), 'stroke-linecap': 'round'}, svg);
+    el('line', {x1: xr - pulR, x2: xr - pulR, y1: pulY - pulR - 3, y2: pulY, stroke: '#fff', 'stroke-width': 2}, svg);
+    el('line', {x1: X(.66), x2: W, y1: ground, y2: ground, stroke: '#fff', 'stroke-width': 2}, svg);
+
+    // The gear: a pill over the wheels. Tap it to shift.
+    G.gear = el('g', {class: 'gear', role: 'button', tabindex: 0}, svg);
+    G.gear.addEventListener('pointerdown', e => e.stopPropagation());
+    G.gear.addEventListener('click', e => { e.stopPropagation(); shift(); });
+    G.gear.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); shift(); } });
+    G.label = txt('the dome', {x: 0, y: 0, 'font-size': fs, transform: `translate(${(W - (W - wall0) * .42).toFixed(1)} ${(ground - 8).toFixed(1)}) rotate(-90)`}, svg);
+    render();
+  }
+
+  // The gear pill: what the drum does now, and that it can be changed.
+  function drawGear() {
+    const {cx, gw, gry, T, yP, pr} = G, g = G.gear;
+    g.replaceChildren();
+    // over the wheels when there is room; else beside them, on the left, with the short word, a size down
+    const h0 = Math.max(26, Math.min(G.fs * 2.1, G.H * .2)), top = yP - pr - T - gry - h0 - Math.max(8, G.mh * .03) - 2 * G.dl;
+    const over = top >= 1, fs = over ? G.fs : Math.max(12, G.fs * .9), h = over ? h0 : Math.max(24, fs * 1.9);
+    const word = over ? (S.mode === 'lift' ? 'Gear: lifting' : 'Gear: lowering') : (S.mode === 'lift' ? 'Lifting' : 'Lowering');
+    const w = word.length * fs * .56 + fs * (over ? 2.6 : 2.3);
+    const x = over ? Math.max(2, Math.min(G.W - w - 2, cx - w / 2)) : 1, y = over ? top : Math.max(1, yP - h / 2);
+    el('rect', {x: x - 6, y: y - 8, width: w + 12, height: h + 16, fill: 'transparent'}, g);
+    el('rect', {x, y, width: w, height: h, rx: h / 2, fill: '#fff'}, g);
+    const ax = x + fs * 1.15, ay = y + h / 2, s = fs * .42, dir = S.mode === 'lift' ? -1 : 1;
+    el('path', {d: `M${ax},${ay - dir * s} V${ay + dir * s} M${ax - s * .75},${ay + dir * s * .25} L${ax},${ay + dir * s} L${ax + s * .75},${ay + dir * s * .25}`, fill: 'none', style: 'stroke:var(--c)', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    txt(word, {x: x + fs * 2.1, y: ay + fs * .36, 'font-size': fs, style: 'fill:var(--c);font-weight:800'}, g);
+    g.setAttribute('aria-label', `${word}. Tap to shift the gear.`);
+    // a thin line from the pill to the wheels it moves
+    if (over) el('line', {x1: cx, x2: cx, y1: y + h, y2: yP - pr - T - gry - 2 * G.dl, stroke: '#fff', 'stroke-width': 1.3, 'stroke-dasharray': '2 3'}, g);
+    else if (cx - gw - (x + w) > 6) el('line', {x1: x + w + 2, x2: cx - gw - 3, y1: yP, y2: yP, stroke: '#fff', 'stroke-width': 1.3, 'stroke-dasharray': '2 3'}, g);
+  }
+
+  // ---------- one frame from the state ----------
+  function render() {
+    if (!G) return;
+    const {cx, cyR, rx, ry, gw, gry, T, yP, pr, dl, xD0, xD1, rD, xr, pulY, pulR, wall0, ground, sw, sh, oxH, W} = G;
+    // The wall: its courses, and a stone on top for each one lifted.
+    const top = G.wallTop0 - S.courses * sh;
+    G.wall.replaceChildren();
+    // The dome in section, from outside: the upright drum it stands on, a ledge, then the shell, which
+    // curves inward as it rises, course on course. Dashed: the rest of its curve, still to be built.
+    const drumTop = ground - (ground - G.wallTop0) * .5, span = drumTop - G.wallTop0 + sh * 6;
+    const lean = (y) => y >= drumTop ? wall0 : wall0 + (W - wall0) * 1.1 * Math.pow((drumTop - y) / span, 2);
+    let d = `M${wall0},${ground}`;
+    for (let y = ground; y >= top; y -= 4) d += ` L${lean(y).toFixed(1)},${y.toFixed(1)}`;
+    d += ` L${lean(top).toFixed(1)},${top} H${W + 2} V${ground} Z`;
+    el('path', {d, style: `fill:${SHADE}`, stroke: '#fff', 'stroke-width': 2, 'stroke-linejoin': 'round'}, G.wall);
+    for (let y = drumTop - sh; y > top + sh * .5; y -= sh) el('line', {x1: lean(y), x2: W, y1: y, y2: y, stroke: '#fff', 'stroke-width': 1, opacity: .35}, G.wall);
+    el('rect', {x: wall0 + 1, y: drumTop, width: W - wall0, height: ground - drumTop - 1, fill: '#fff', opacity: .12}, G.wall);
+    el('line', {x1: wall0 - 5, x2: wall0 + 4, y1: drumTop, y2: drumTop, stroke: '#fff', 'stroke-width': 3, 'stroke-linecap': 'round'}, G.wall);
+    let ghost = `M${lean(top).toFixed(1)},${top.toFixed(1)}`;
+    for (let y = top - 4; y >= 2; y -= 4) { const x = lean(y); ghost += ` L${Math.min(x, W).toFixed(1)},${y.toFixed(1)}`; if (x > W) break; }
+    el('path', {d: ghost, fill: 'none', stroke: '#fff', 'stroke-width': 1.8, 'stroke-dasharray': '3 5', 'stroke-linecap': 'round'}, G.wall);
+    // the stones the reader has lifted, set on top as the newest courses
+    for (let c = 0; c < S.courses; c++) {
+      const y = G.wallTop0 - (c + 1) * sh;
+      el('rect', {x: Math.max(lean(y) + 2, W - G.sw - 3), y, width: G.sw, height: sh, rx: 2, fill: STONE, stroke: '#fff', 'stroke-width': 1.5}, G.wall);
+    }
+    G.wallTop = top; G.wallX = lean(top);
+
+    // The upright shaft and its two wheels, raised or lowered by the gear.
+    const lift = -2 * dl * S.shift;
+    const y1 = yP - pr - T + lift, y2 = yP + pr + T + 2 * dl + lift;
+    G.shaft.replaceChildren();
+    el('rect', {x: cx - Math.max(3, gw * .09), y: y1, width: Math.max(6, gw * .18), height: cyR - y1, rx: 2, fill: '#fff'}, G.shaft);
+    for (const [y, up, on] of [[y1, -1, S.shift < .5], [y2, 1, S.shift >= .5]]) {
+      // A crown wheel: a disc seen from a little above, its teeth along the near rim.
+      el('ellipse', {cx, cy: y, rx: gw, ry: gry, style: on ? 'fill:#fff' : 'fill:var(--c)', stroke: '#fff', 'stroke-width': 2}, G.shaft);
+      const n = 14;
+      for (let k = 0; k < n; k++) {
+        const a = S.alpha + k * TAU / n; if (Math.sin(a) < -.05) continue;
+        const px = cx + gw * Math.cos(a), py = y + gry * Math.sin(a);
+        el('line', {x1: px, x2: px, y1: py, y2: py - up * T, stroke: on ? '#fff' : 'rgba(255,255,255,.7)', 'stroke-width': Math.max(2.4, gw * .06), 'stroke-linecap': 'round'}, G.shaft);
+      }
+    }
+    // The oxen and their beam: behind the shaft on the far half of the ring, in front on the near half.
+    G.back.replaceChildren(); G.front.replaceChildren();
+    const near = Math.sin(S.theta) > 0, layer = near ? G.front : G.back;
+    const yoke = oxH * .9, at = (f) => [cx + rx * f * Math.cos(S.theta), cyR + ry * f * Math.sin(S.theta)];
+    const [ox1, oy1] = at(1), [ox2, oy2] = at(.58), face = near ? 1 : -1;
+    const persp = f => .82 + .18 * (Math.sin(S.theta) * f + 1) / 2;
+    const squash = Math.max(.32, Math.abs(Math.sin(S.theta)));
+    // the inner ox, nearer the shaft, is drawn a little behind the outer one so both show
+    const pair = near ? [[ox2, oy2, .62, true], [ox1, oy1, 1, false]] : [[ox1, oy1, 1, true], [ox2, oy2, .62, false]];
+    for (const [x, y, f, far] of pair) {
+      const k = oxH * persp(f), back = f < 1 ? -.42 : 0, g = el('g', {transform: `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${(face * k * squash).toFixed(3)} ${k.toFixed(3)}) translate(${(-.62 + back).toFixed(2)} 0)`}, layer);
+      ox(g, S.walk, far);
+    }
+    // the beam: from the shaft to the yoke on the outer ox's neck
+    const bx = ox1, byy = oy1 - yoke * persp(1);
+    el('line', {x1: cx, y1: cyR - yoke, x2: bx, y2: byy, stroke: '#fff', 'stroke-width': Math.max(4, oxH * .14), 'stroke-linecap': 'round'}, layer);
+
+    // The pinion between the wheels, the level shaft, the drum, the rope over the pulley, the hook, the stone.
+    G.mid.replaceChildren();
+    const xp = cx + gw;
+    el('line', {x1: xp, x2: xD0, y1: yP, y2: yP, stroke: '#fff', 'stroke-width': Math.max(4, pr * .7), 'stroke-linecap': 'round'}, G.mid);
+    el('rect', {x: xp - pr * .8, y: yP - pr, width: pr * 1.6, height: pr * 2, rx: 2, style: 'fill:var(--c)', stroke: '#fff', 'stroke-width': 2}, G.mid);
+    for (let k = 0; k < 3; k++) { const v = ((S.drum * 1.6 + k / 3) % 1 + 1) % 1, yy = yP - pr + v * pr * 2; el('line', {x1: xp - pr * .8, x2: xp + pr * .8, y1: yy, y2: yy, stroke: '#fff', 'stroke-width': 1.4}, G.mid); }
+    // the drum, with the rope wound round it
+    el('rect', {x: xD0, y: yP - rD, width: xD1 - xD0, height: rD * 2, rx: rD * .35, style: 'fill:var(--c)', stroke: '#fff', 'stroke-width': 2}, G.mid);
+    const turns = 7;
+    for (let k = 0; k < turns; k++) {
+      const v = ((S.drum + k / turns) % 1 + 1) % 1, xx = xD0 + 3 + v * (xD1 - xD0 - 6);
+      el('line', {x1: xx - rD * .35, x2: xx + rD * .35, y1: yP + rD - 2, y2: yP - rD + 2, stroke: '#fff', 'stroke-width': 1.6, opacity: .85}, G.mid);
+    }
+    // where the stone hangs: from the foot of the wall to its top
+    const yLow = ground - sh, yHigh = G.wallTop - sh - Math.max(4, sh * .3), ys = yLow + (yHigh - yLow) * S.load;
+    const hookY = ys - Math.max(6, sh * .5);
+    el('path', {d: `M${xD1 - rD * .6},${yP - rD} L${xr - pulR},${pulY}`, fill: 'none', stroke: '#fff', 'stroke-width': 2}, G.mid);
+    el('line', {x1: xr, x2: xr, y1: pulY, y2: hookY, stroke: '#fff', 'stroke-width': 2}, G.mid);
+    el('circle', {cx: xr - pulR * .0, cy: pulY, r: pulR, style: 'fill:var(--c)', stroke: '#fff', 'stroke-width': 2.5}, G.mid);
+    el('path', {d: `M${xr},${hookY} v${sh * .25} a${sh * .18},${sh * .18} 0 1 1 ${-sh * .36},0`, fill: 'none', stroke: '#fff', 'stroke-width': 2, 'stroke-linecap': 'round'}, G.mid);
+    if (S.waiting) {
+      // the hook is back down, empty; the next stone waits on the ground beside it
+      const sx = Math.max(xD1 + 4, xr - sw * 1.75), sy = ground - sh;
+      el('rect', {x: sx, y: sy, width: sw, height: sh, rx: 2, fill: STONE, stroke: '#fff', 'stroke-width': 1.5}, G.mid);
+      el('line', {x1: sx + sw * .55, x2: sx + sw * .55, y1: sy + 2, y2: sy + sh - 2, style: 'stroke:var(--edge)', 'stroke-width': 1, opacity: .5}, G.mid);
+    } else if (S.carrying || slide) {
+      const sx = slide ? slide.x : xr - sw / 2, sy = slide ? slide.y : ys;
+      el('path', {d: `M${xr},${hookY + sh * .1} L${sx + sw * .15},${sy} M${xr},${hookY + sh * .1} L${sx + sw * .85},${sy}`, stroke: '#fff', 'stroke-width': 1.3, opacity: slide ? 0 : 1}, G.mid);
+      el('rect', {x: sx, y: sy, width: sw, height: sh, rx: 2, fill: STONE, stroke: '#fff', 'stroke-width': 1.5}, G.mid);
+      el('line', {x1: sx + sw * .55, x2: sx + sw * .55, y1: sy + 2, y2: sy + sh - 2, style: 'stroke:var(--edge)', 'stroke-width': 1, opacity: .5}, G.mid);
+    }
+    drawGear();
+  }
+
+  // ---------- driving it ----------
+  const ringAngle = e => {
+    const r = svg.getBoundingClientRect(), k = G.W / (r.width || 1), x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k;
+    return Math.atan2((y - G.cyR) / G.ry, (x - G.cx) / G.rx);
+  };
+  function walk(d) {                                      // d > 0: forward, in radians of the ring
+    if (slide) return;                                    // the stone is being set on the wall
+    const k = 1 / (LAPS * TAU);
+    if (S.mode === 'lift') {
+      if (S.load >= 1) { blocked('The hook is at the top. <b>Tap the gear</b> to lower it; the oxen can only walk forward.'); return; }
+      S.waiting = false;                                  // the waiting stone goes on the hook
+      S.load = Math.min(1, S.load + d * k);
+    } else {
+      if (S.load <= 0) { blocked('The hook is down. <b>Tap the gear</b> to lift again.'); return; }
+      S.load = Math.max(0, S.load - d * k);
+    }
+    S.theta -= d; S.alpha += d * 1.3; S.drum += (S.mode === 'lift' ? 1 : -1) * d * .25; S.walk += d * 1.4;
+    if (S.mode === 'lift' && S.load >= 1 && S.carrying) deliver();
+    if (S.mode === 'lower' && S.load <= 0 && !S.carrying) hookOn();
+    render();
+  }
+  function blocked(h) { if (S.warned === h) return; S.warned = h; say(h); pulseGear(); }
+  function deliver() {
+    S.carrying = false; Kit.haptic('success');
+    say('The stone is up. Now send the empty hook down. <b>The oxen only walk forward.</b>');
+    // The stone swings onto the wall and becomes its newest course.
+    const {xr, sw, W, sh} = G, from = {x: xr - sw / 2, y: G.wallTop - sh - Math.max(4, sh * .3)};
+    const to = {x: Math.max(G.wallX + 2, W - sw - 3), y: G.wallTop - sh};
+    const done = () => { slide = null; S.courses++; render(); pulseGear(); };
+    if (Kit.calm) { done(); return; }
+    slide = {x: from.x, y: from.y};
+    gsap.to(slide, {x: to.x, y: to.y, duration: .6, ease: 'power2.inOut', onUpdate: render, onComplete: done});
+  }
+  // The empty hook is down: the next stone waits beside it and goes on when the reader lifts again.
+  function hookOn() {
+    S.carrying = true; S.waiting = true; Kit.haptic('light');
+    if (!S.done) reveal();
+    else say('The hook is down for the next stone. <b>Shift the gear</b> and lift it.');
+  }
+  function shift() {
+    S.mode = S.mode === 'lift' ? 'lower' : 'lift'; S.warned = false; Kit.haptic('selection');
+    stopPulse();
+    const to = S.mode === 'lower' ? 1 : 0;
+    if (Kit.calm) { S.shift = to; render(); }
+    else gsap.to(S, {shift: to, duration: .35, ease: 'power2.inOut', onUpdate: render});
+    if (!S.done) say(S.mode === 'lower' ? 'The drum turns the other way now. <b>Keep walking the same way.</b>' : '<b>Drag round the ring</b> to lift.');
+    render();
+  }
+  let pulse = null;
+  function pulseGear() { stopPulse(); if (!Kit.calm && G) pulse = gsap.to(G.gear, {scale: 1.06, transformOrigin: '50% 50%', duration: .45, repeat: 5, yoyo: true, ease: 'sine.inOut'}); }
+  function stopPulse() { if (pulse) { pulse.kill(); pulse = null; } if (G) gsap.set(G.gear, {scale: 1}); }
+  function reveal() {
+    S.done = true;
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    svg.setAttribute('aria-label', 'The oxen walked the same way round the ring the whole time: one gear lifted the stone onto the dome, the other lowered the empty hook.');
+  }
+  function say(h) { const e = Kit.$('say'); if (e.classList.contains('gone')) return; e.innerHTML = h; if (!Kit.calm) gsap.fromTo(e, {opacity: .3}, {opacity: 1, duration: .35}); }
+
+  svg.addEventListener('pointerdown', e => {
+    if (!G) return;
+    e.preventDefault();
+    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    drag = {a: ringAngle(e)};
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag || !G) return;
+    const a = ringAngle(e);
+    let d = drag.a - a;                          // forward is the angle going down
+    if (d > Math.PI) d -= TAU; if (d < -Math.PI) d += TAU;
+    drag.a = a;
+    if (d > 0) walk(Math.min(d, .5));
+    else if (d < -.15) blocked('Oxen walk forward only: <b>drag the other way round</b>.');
+  });
+  const up = () => { drag = null; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+  svg.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); walk(.4); } if (e.key === 'g') shift(); });
+
+  Kit.onShow.card = draw;
+  let seen = '';
+  new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; draw(); } }).observe(Kit.$('stage'));
+  Kit.onEnter.card = () => { if (!Kit.calm && G) { gsap.from([G.back, G.front], {opacity: 0, duration: .5}); pulseHint(); } };
+  // Before the first drag, the oxen take two steps by themselves, to show the way round.
+  function pulseHint() { const st = {d: 0}; let last = 0; gsap.to(st, {d: .5, duration: 1.1, delay: .4, ease: 'power1.inOut', onUpdate: () => { const step = st.d - last; last = st.d; if (S.load < .05 && !drag) { S.theta -= step; S.walk += step * 1.4; S.alpha += step * 1.3; render(); } }}); }
+
+  // Plays the card for the checker: round the ring until the stone is up, the gear, round again till the hook is down.
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const roundTheRing = async laps => {
+      const r = svg.getBoundingClientRect(), k = r.width / G.W;
+      const pt = a => ({clientX: r.left + (G.cx + G.rx * 1.05 * Math.cos(a)) * k, clientY: r.top + (G.cyR + G.ry * 1.6 * Math.sin(a)) * k});
+      const ev = (type, a) => svg.dispatchEvent(new PointerEvent(type, Object.assign({bubbles: true, cancelable: true, pointerId: 3, pointerType: 'touch', isPrimary: true}, pt(a))));
+      let a = Math.PI * .5; ev('pointerdown', a);
+      const n = Math.round(laps * 40);
+      for (let i = 0; i < n; i++) { a -= TAU / 40; ev('pointermove', a); if (i % 4 === 0) await wait(16); }
+      ev('pointerup', a);
+    };
+    await roundTheRing(LAPS + .3); await wait(900);
+    G.gear.dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(500);
+    await roundTheRing(LAPS + .3); await wait(500);
+  };
+  Kit.single();
+})();
+</script>
+</html>

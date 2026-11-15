@@ -1,0 +1,195 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Design note.
+     Thought to carry: looking can be part of what happens.
+     Four columns, side by side, the same push given four ways: looked at once, 4 times, 16 times, 64 times.
+     Each column holds 100 ions as dots, all white: not changed. True or False, then how sure; then the first
+     column runs by itself and the reader taps the others. Between two looks every dot tints a little towards
+     yellow, the chance of finding it changed (sin² of the push so far); at each look the column settles into
+     how many quantum mechanics predicts are found changed, (1 − cosᵏ(π/n))/2 after k of n looks, filled from
+     the top row in reading order so the count can be read off the rows. The counts are the predicted ones for
+     100 ions, and the card says so. The four results stand side by side as small multiples, each number in
+     yellow over the yellow dots it counts. One accent, yellow, means "changed". -->
+<title>The watched atom</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;-webkit-user-select:none;user-select:none}
+#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic .num{font-family:var(--display);font-weight:800}
+#pic .col{cursor:pointer;outline:none}
+#pic .col:focus-visible .frame{stroke-width:3}
+#pick{display:flex;gap:2.4cqw}
+.pb{flex:1;font:800 max(2.3cqh,15px)/1 var(--display);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .25cqh var(--k);border-radius:99px;padding:max(1.6cqh,12px) 0;cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.pb:active{transform:scale(.97)}
+.pb.on{background:var(--k);color:var(--c)}
+.answered .q{font-size:max(2.5cqh,15px)}
+.q,.say,.keep,.src{overflow-wrap:break-word}
+@container (max-height:520px){.more{display:none}}
+</style>
+<article class="card" id="card" data-topic="philosophy" data-kind="True or false · how sure · run it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WATCHED ATOMS</span></div>
+    <h2 class="q">True or false: checking often enough on an atom that is poised to change state can stop it from changing?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="Four columns of 100 ions each, drawn as dots, none changed yet. Each column is the same push towards another state, looked at 1, 4, 16 or 64 times."></svg></div>
+    <div id="pick"><button class="pb" data-i="0">True</button><button class="pb" data-i="1">False</button></div>
+    <div id="sure" class="gone"></div>
+    <p class="say" id="say">Pick one, then say how sure.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Check whether the act of checking is part of what you are measuring.</div>
+    <div class="foot"><span class="src">Source · Itano, Heinzen, Bollinger &amp; Wineland, Physical Review A (1990)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const RIGHT = 0, N = 100, LOOKS = [1, 4, 16, 64], PUSH = 2.4, JUMP = '#ffd84a';
+  // The share of ions found changed after the k-th of n looks spread through one push, as predicted.
+  const share = (n, k) => (1 - Math.cos(Math.PI / n) ** k) / 2;
+  const card = Kit.$('card'), svg = Kit.$('pic');
+  const el = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+  // Each column: how many ions were found changed at the last look, and how far every ion has drifted since.
+  const state = LOOKS.map(() => ({v: 0, q: 0}));
+  const result = {};
+  let pick = -1, answered = false, revealed = false, run = null, last = 0, G = null, pulse = null, seen = '';
+
+  // ---------- the drawing: a column of labels, then four blocks of 100 dots ----------
+  function draw() {
+    if (pulse) { pulse.kill(); pulse = null; }
+    svg.replaceChildren();
+    const {W, H} = Kit.fitSvg(svg);
+    const b = Kit.$('stage').getBoundingClientRect(); seen = `${Math.round(b.width)}x${Math.round(b.height)}`;
+    if (!(W > 60 && H > 50)) { G = null; return; }
+    const fs = Math.max(12, Math.min(14, W / 25)), lab = Math.max(fs * 5.8, W * .22), gap = Math.max(6, W * .025);
+    const cw = (W - lab - gap * 3) / 4, lh = fs * 1.1, head = lh * 3 + fs * .3, foot = fs * 2.7, body = H - head - foot;
+    // a block of 100 dots a column: ten to a row, or five to a row when that makes the dots bigger
+    const p5 = Math.min(cw / 5, body / 20.4), p10 = Math.min(cw / 10, body / 10.4), per = p5 > p10 ? 5 : 10, rows = N / per;
+    const p = Math.max(p5, p10), pv = Math.min(body / (rows + .6), p * 1.5), r = Math.max(1.4, p * .34);
+    const bw = per * p, bh = rows * pv, yTop = head + (body - bh) / 2;
+    G = {W, H, fs, cols: []};
+    // what the numbers count, and what the columns are
+    txt('changed', {x: 0, y: lh * .85, 'font-size': fs * .82, style: `fill:${JUMP}`}, svg);
+    txt('of 100 ions,', {x: 0, y: lh * 1.85, 'font-size': fs * .8, opacity: .85}, svg);
+    txt('as predicted', {x: 0, y: lh * 2.85, 'font-size': fs * .8, opacity: .85}, svg);
+    txt('times we', {x: 0, y: H - foot + fs * 1.2, 'font-size': fs * .9, opacity: .85}, svg);
+    txt('looked', {x: 0, y: H - foot + fs * 2.5, 'font-size': fs * .9, opacity: .85}, svg);
+    LOOKS.forEach((n, c) => {
+      const x0 = lab + c * (cw + gap), bx = x0 + (cw - bw) / 2;
+      const g = el('g', {class: 'col', role: 'button', tabindex: 0, 'aria-label': `Run the push looking ${n} time${n > 1 ? 's' : ''}`}, svg);
+      el('rect', {class: 'frame', x: x0 - gap / 2, y: 0, width: cw + gap, height: H, rx: 10, fill: 'transparent', stroke: 'var(--k)', 'stroke-width': 0, opacity: .6}, g);
+      // each ion: a white dot, and over it a yellow one that shows how likely it is to be found changed
+      const dots = [];
+      for (let i = 0; i < N; i++) {
+        const cx = (bx + (i % per + .5) * p).toFixed(2), cy = (yTop + (((i / per) | 0) + .5) * pv).toFixed(2);
+        el('circle', {cx, cy, r, fill: 'var(--k)', opacity: .9}, g);
+        dots.push(el('circle', {cx, cy, r, fill: JUMP, opacity: 0}, g));
+      }
+      const num = txt(result[n] != null ? String(result[n]) : '', {class: 'num', x: x0 + cw / 2, y: head - fs * .55, 'text-anchor': 'middle', 'font-size': fs * 1.35, style: `fill:${JUMP}`}, g);
+      txt(String(n), {class: 'num', x: x0 + cw / 2, y: H - foot + fs * 1.55, 'text-anchor': 'middle', 'font-size': fs * 1.2}, g);
+      g.addEventListener('click', () => go(c));
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(c); } });
+      G.cols[c] = {g, dots, num, frame: g.querySelector('.frame')};
+    });
+    paint();
+    markNext();
+  }
+  // The ions found changed fill the block from the top row; between looks every dot tints part way to the other side.
+  function paint() {
+    if (!G) return;
+    state.forEach((s, c) => G.cols[c].dots.forEach((d, i) => d.setAttribute('opacity', (i < s.v ? 1 - s.q : s.q).toFixed(3))));
+  }
+  // the column to try next is outlined until it has been run
+  function markNext() {
+    if (pulse) { pulse.kill(); pulse = null; }
+    if (!G || run || !answered) return;
+    const c = LOOKS.findIndex(n => result[n] == null); if (c < 0) return;
+    const f = G.cols[c].frame;
+    f.setAttribute('stroke-width', 2);
+    if (!Kit.calm) pulse = gsap.to(f, {attr: {opacity: .2}, duration: .6, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  }
+
+  // ---------- one push across one column, with n looks spread through it ----------
+  function go(c) {
+    if (!answered || run || !G) return;
+    const n = LOOKS[c];
+    Kit.$('say').classList.remove('gone');
+    Kit.haptic('selection');
+    state[c].v = 0; state[c].q = 0;
+    if (pulse) { pulse.kill(); pulse = null; }
+    G.cols.forEach(k => k.frame.setAttribute('stroke-width', 0));
+    G.cols[c].num.textContent = '';
+    run = {c, n, t: 0, k: 0};
+    say(`Pushing, and looking <b>${n === 1 ? 'once, at the end' : n + ' times'}</b>…`);
+    if (Kit.calm) { while (run.k < n) look(); end(); return; }
+    last = performance.now(); requestAnimationFrame(frame);
+  }
+  // a look: each ion is found on one side or the other; as many changed as predicted
+  function look() { run.k++; const s = state[run.c]; s.v = Math.round(N * share(run.n, run.k)); s.q = 0; }
+  function frame(ms) {
+    if (!run) return;
+    run.t += Math.min(.05, Math.max(0, ms - last) / 1000); last = ms;
+    const {n} = run, seg = PUSH / n;
+    while (run.k < n && run.t >= seg * (run.k + 1)) look();
+    if (run.k >= n) { end(); return; }
+    // between looks each ion turns towards the other side: drawn as how likely it is to be found there
+    state[run.c].q = Math.sin((run.t - seg * run.k) / seg * Math.PI / n / 2) ** 2;
+    paint();
+    requestAnimationFrame(frame);
+  }
+  function end() {
+    const {c, n} = run, v = state[c].v;
+    result[n] = v; run = null;
+    // the stage may have changed size while the column ran
+    const b = Kit.$('stage').getBoundingClientRect();
+    if (`${Math.round(b.width)}x${Math.round(b.height)}` !== seen) draw(); else paint();
+    if (!G) return;
+    G.cols[c].num.textContent = v;
+    if (!Kit.calm) gsap.from(G.cols[c].num, {opacity: 0, y: 6, duration: .35, ease: 'power2.out'});
+    const done = LOOKS.filter(k => result[k] != null).length;
+    if (!revealed && result[64] != null && done >= 3) { reveal(); return; }
+    if (revealed) say(`${n === 1 ? 'Looked at once' : 'Looked at ' + n + ' times'}: <b>${v} of 100</b> changed.`);
+    else if (n === 1) say(`Looked at once, at the end: <b>${v} of 100</b> changed. Now tap the column <b>4</b>.`);
+    else say(`Looked at ${n} times: <b>${v} of 100</b> changed. Look more often.`);
+    markNext();
+  }
+  function say(h) { const e = Kit.$('say'); e.innerHTML = h; if (!Kit.calm) gsap.fromTo(e, {opacity: .3}, {opacity: 1, duration: .35}); }
+  function reveal() {
+    revealed = true;
+    say('The quantum Zeno effect<span class="more">, named after Zeno’s arrow, motionless in every instant you look at it</span>: <b>the more often Itano’s team looked, the fewer ions changed</b>.');
+    Kit.show('keep');
+    markNext();
+  }
+
+  // ---------- the answer, then how sure, then the pushes ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered || pick < 0) return;
+    answered = true;
+    const ok = pick === RIGHT, said = Kit.$('pick').children[pick].textContent;
+    Kit.answer({choice: String(pick), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    card.classList.add('answered');
+    svg.setAttribute('aria-label', 'Four columns of 100 ions, the same push looked at 1, 4, 16 or 64 times; tap a column to run it and see how many are predicted to be found changed.');
+    draw();
+    setTimeout(() => go(0), Kit.calm ? 0 : 450);
+  });
+  Kit.$('pick').addEventListener('click', e => {
+    const b = e.target.closest('.pb'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    setTimeout(() => { Kit.hide('pick'); Kit.hide('say'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`); sure.on(); }, Kit.calm ? 0 : 240);
+  });
+
+  Kit.onShow.card = draw;
+  new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G && !run) draw(); }).observe(Kit.$('stage'));
+  Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.cols.map(c => c.g), {opacity: 0, stagger: .08, duration: .4, ease: 'power2.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('pick').children[0].click();
+    await wait(400);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 100 : 3300);
+    for (const c of [1, 2, 3]) { G.cols[c].g.dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(Kit.calm ? 100 : 2900); }
+  };
+  Kit.single();
+})();
+</script>
+</html>

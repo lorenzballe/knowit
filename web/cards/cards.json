@@ -1,7 +1,7 @@
 {
  "format": 1,
- "version": 202611151247,
- "built": "2026-11-15T12:47:48Z",
+ "version": 202611152137,
+ "built": "2026-11-15T21:37:36Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -4445,39 +4445,6 @@
    "source": "Meiss, Painting in Florence and Siena, 1951",
    "source_kind": "book",
    "reference": "Millard Meiss, Painting in Florence and Siena after the Black Death, Princeton University Press, 1951",
-   "written": "2026-09-26"
-  },
-  {
-   "id": "art-florence-5",
-   "topic": "art",
-   "genre": "art.renaissance",
-   "strand": "art.renaissance.florence",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why did the oxen lifting stone for Florence's cathedral dome never need turning round?",
-   "answer": "Because the hoist could reverse. Brunelleschi's hoist of about 1420 had gearing that could be shifted to wind the rope the other way, so animals walking the same circle could raise or lower a load. Turning a team between lifts would have cost time on every load. The dome rose at a steady walk.",
-   "move": "Before speeding up the work, look at the time lost between jobs.",
-   "ask": "Where does my time vanish in the gaps between tasks rather than inside them?",
-   "keywords": [
-    "filippo brunelleschi",
-    "florence cathedral dome",
-    "hoist",
-    "reverse gear"
-   ],
-   "era": "medieval",
-   "region": "europe",
-   "hook": "mechanism",
-   "mood": "wonder",
-   "numeracy": 0,
-   "abstraction": "concrete",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "figure": "none",
-   "source": "King, Brunelleschi's Dome, 2000",
-   "source_kind": "book",
-   "reference": "Ross King, Brunelleschi's Dome: The Story of the Great Cathedral in Florence, Chatto & Windus, 2000",
    "written": "2026-09-26"
   },
   {
@@ -11840,47 +11807,6 @@
    "reference": "Fisher, Escaping from Chains, American Cinematographer, October 2000",
    "written": "2026-09-27",
    "disabled": true
-  },
-  {
-   "id": "cinema-cgi-7",
-   "topic": "cinema",
-   "genre": "cinema.special_effects",
-   "strand": "cinema.special_effects.cgi",
-   "kind": "pickOne",
-   "difficulty": "hard",
-   "principle": "counterfactual",
-   "question": "Pixar's computers grew vastly faster between Toy Story, 1995, and Monsters University, 2013. What happened to render time per frame?",
-   "options": [
-    "It fell to minutes",
-    "It fell to seconds",
-    "It stayed at hours"
-   ],
-   "correct": 2,
-   "answer": "It stayed at hours. Monsters University took about 29 hours to render each frame, on a farm of some 24,000 cores, because artists spent every gain on more hair, light bounces and detail. Graphics people call this Blinn's law: render time holds steady as machines speed up. The picture improves; the wait does not shrink.",
-   "move": "Faster tools save time only if the ambitions stay where they were.",
-   "ask": "When a tool saves me time, do I use that time or just take on more?",
-   "trap": "Expecting faster machines to shorten the wait, as if the job stayed fixed.",
-   "keywords": [
-    "render farm",
-    "blinn's law",
-    "pixar",
-    "monsters university",
-    "render time"
-   ],
-   "era": "recent",
-   "region": "americas",
-   "hook": "paradox",
-   "mood": "wonder",
-   "numeracy": 2,
-   "abstraction": "mixed",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "figure": "none",
-   "source": "GamesBeat on Monsters University, 2013",
-   "source_kind": "news_archive",
-   "reference": "https://gamesbeat.com/the-making-of-pixars-latest-technological-marvel-monsters-university/",
-   "written": "2026-09-27"
   },
   {
    "id": "cinema-cgi-8",
@@ -75153,47 +75079,6 @@
    "written": "2026-09-26"
   },
   {
-   "id": "language-lost-scripts-3",
-   "topic": "language",
-   "genre": "language.writing_systems",
-   "strand": "language.writing_systems.lost_scripts",
-   "kind": "pickOne",
-   "difficulty": "medium",
-   "principle": "survivorship",
-   "question": "Why have thousands of Linear B clay tablets from Mycenaean palaces lasted more than 3,000 years?",
-   "options": [
-    "Palace fires baked them hard",
-    "Scribes kiln-fired them as archives",
-    "Dry tombs sealed them from damp"
-   ],
-   "correct": 0,
-   "answer": "Palace fires baked them hard. The tablets were unfired clay, working records meant to last a season before being softened and reused. When the palaces at Knossos and Pylos burned, the heat turned that year's paperwork into pottery. What survives is the administration of a palace's final months, not an archive anyone chose to keep.",
-   "move": "Ask what preserved your evidence before asking what it represents.",
-   "ask": "Before I trust my evidence, do I know why it survived and what did not?",
-   "trap": "Assuming that what lasted was made to last.",
-   "keywords": [
-    "linear b",
-    "clay tablets",
-    "knossos",
-    "pylos",
-    "mycenaean palaces"
-   ],
-   "era": "ancient",
-   "region": "europe",
-   "hook": "mechanism",
-   "mood": "sober",
-   "numeracy": 0,
-   "abstraction": "concrete",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "figure": "none",
-   "source": "Chadwick, The Decipherment of Linear B, 1958",
-   "source_kind": "book",
-   "reference": "Chadwick, The Decipherment of Linear B, Cambridge University Press, 1958",
-   "written": "2026-09-26"
-  },
-  {
    "id": "language-lost-scripts-4",
    "topic": "language",
    "genre": "language.writing_systems",
@@ -111720,40 +111605,6 @@
    "written": "2026-09-26"
   },
   {
-   "id": "music-piano-1",
-   "topic": "music",
-   "genre": "music.instruments",
-   "strand": "music.instruments.piano",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why is a well-tuned piano deliberately out of tune with the textbook octave?",
-   "answer": "Because its strings are stiff. A stiff string's overtones run slightly sharp of whole-number multiples, so tuners widen each octave to match them. The stretch adds up: the top notes sit tens of cents sharp of strict equal temperament, a cent being a hundredth of a semitone. An exactly mathematical piano sounds sour up top.",
-   "move": "When the parts are imperfect, tune them to each other, not to the ideal.",
-   "ask": "When the parts are not perfect, do I tune them to each other instead of to the ideal?",
-   "keywords": [
-    "stretch tuning",
-    "inharmonicity",
-    "piano strings",
-    "railsback curve",
-    "equal temperament"
-   ],
-   "era": "timeless",
-   "region": "none",
-   "hook": "paradox",
-   "mood": "wonder",
-   "numeracy": 1,
-   "abstraction": "mixed",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "figure": "none",
-   "source": "Railsback, JASA, 1938",
-   "source_kind": "paper",
-   "reference": "Railsback, Scale temperament as applied to piano tuning, Journal of the Acoustical Society of America, 1938",
-   "written": "2026-09-26"
-  },
-  {
    "id": "music-piano-2",
    "topic": "music",
    "genre": "music.instruments",
@@ -138841,48 +138692,6 @@
    "written": "2026-09-26"
   },
   {
-   "id": "philosophy-zeno-4",
-   "topic": "philosophy",
-   "genre": "philosophy.paradoxes",
-   "strand": "philosophy.paradoxes.zeno",
-   "also": [
-    "science.physics.quantum"
-   ],
-   "kind": "pickOne",
-   "difficulty": "medium",
-   "principle": "reflection",
-   "question": "True or false: checking often enough on an atom that is poised to change state can stop it from changing?",
-   "options": [
-    "True",
-    "False"
-   ],
-   "correct": 0,
-   "answer": "True. It is the quantum Zeno effect, predicted by Misra and Sudarshan in 1977. In 1990 Wayne Itano's team pushed beryllium ions from one energy level towards another while probing them with laser pulses: the more often they looked, the fewer ions made the jump. A watched pot, at this scale, does not boil.",
-   "move": "Check whether the act of checking is part of what you are measuring.",
-   "ask": "Where does my checking something change the very thing I am checking?",
-   "trap": "Assuming a measurement only records a change and cannot prevent it.",
-   "keywords": [
-    "quantum zeno effect",
-    "measurement",
-    "beryllium ions",
-    "wayne itano"
-   ],
-   "era": "twentieth",
-   "region": "americas",
-   "hook": "paradox",
-   "mood": "wonder",
-   "numeracy": 0,
-   "abstraction": "mixed",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "figure": "none",
-   "source": "Itano et al., Physical Review A, 1990",
-   "source_kind": "paper",
-   "reference": "Itano, Heinzen, Bollinger & Wineland, Quantum Zeno effect, Physical Review A 41, 1990",
-   "written": "2026-09-26"
-  },
-  {
    "id": "philosophy-zeno-5",
    "topic": "philosophy",
    "genre": "philosophy.paradoxes",
@@ -141100,40 +140909,6 @@
    "reference": "Graham Marsh & Paul Trynka, Denim: From Cowboys to Catwalks, Aurum Press, 2002",
    "written": "2026-09-26",
    "disabled": true
-  },
-  {
-   "id": "pop_culture-denim-6",
-   "topic": "pop_culture",
-   "genre": "pop_culture.fashion",
-   "strand": "pop_culture.fashion.denim",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What colour is denim yarn at the moment it comes out of the indigo dye bath?",
-   "answer": "Yellowish green. Indigo will not dissolve in water, so dyers chemically reduce it to leuco-indigo, a soluble pale yellow-green form that soaks into cotton. Lifted into the air, the yarn oxidises to blue within a minute or two, locking the dye in. Mills send it up over rollers between dips for air.",
-   "move": "Some finished colours exist only after the air has had its turn.",
-   "ask": "What in my life only shows its true colour after some time has passed?",
-   "keywords": [
-    "indigo",
-    "leuco-indigo",
-    "dyeing",
-    "oxidation",
-    "denim yarn"
-   ],
-   "era": "timeless",
-   "region": "none",
-   "hook": "mechanism",
-   "mood": "wonder",
-   "numeracy": 0,
-   "abstraction": "concrete",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "figure": "none",
-   "source": "Balfour-Paul, Indigo, British Museum Press",
-   "source_kind": "book",
-   "reference": "Jenny Balfour-Paul, Indigo: Egyptian Mummies to Blue Jeans, British Museum Press, 2011",
-   "written": "2026-09-27"
   },
   {
    "id": "pop_culture-denim-7",
@@ -190121,40 +189896,6 @@
    "disabled": true
   },
   {
-   "id": "sport-ancient-2",
-   "topic": "sport",
-   "genre": "sport.olympics",
-   "strand": "sport.olympics.ancient",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why did ancient Olympic long jumpers take off holding stone or lead weights in their hands?",
-   "answer": "To jump farther. Swung forward at take-off, hand weights of 2 to 9 kg add distance to a standing jump. Minetti and Ardigò's simulations and tests put the gain at no less than 17 cm on a 3 m jump, and the best mass they found matched weights excavated from ancient sites.",
-   "move": "Before calling an old practice a ritual, test whether it simply worked.",
-   "ask": "Which habit of mine do I write off as old-fashioned without checking whether it works?",
-   "keywords": [
-    "halteres",
-    "long jump",
-    "pentathlon",
-    "ancient olympics",
-    "biomechanics"
-   ],
-   "era": "ancient",
-   "region": "europe",
-   "hook": "mechanism",
-   "mood": "wonder",
-   "numeracy": 1,
-   "abstraction": "concrete",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "figure": "none",
-   "source": "Minetti & Ardigò, Nature, 2002",
-   "source_kind": "paper",
-   "reference": "doi:10.1038/420141a",
-   "written": "2026-09-26"
-  },
-  {
    "id": "sport-ancient-3",
    "topic": "sport",
    "genre": "sport.olympics",
@@ -223854,7 +223595,6 @@
   "50": [
    "pop_culture-music-5",
    "history-1848-3",
-   "sport-ancient-2",
    "economics-interest-8",
    "space-landing-sites-2",
    "human_body-grey-hair-1",
@@ -223973,7 +223713,6 @@
   ],
   "62": [
    "space-4",
-   "pop_culture-denim-6",
    "sport-sprint-8",
    "technology-2",
    "weird_facts-still-on-the-books-1",
@@ -224153,7 +223892,6 @@
   ],
   "80": [
    "science-cooking-reactions-4",
-   "music-piano-1",
    "sport-offside-1",
    "history-the-fall-9",
    "art-first-photos-10",
@@ -224834,7 +224572,6 @@
   "148": [
    "food-chilli-5",
    "language-1",
-   "art-florence-5",
    "life-spending-1",
    "science-absolute-zero-1",
    "human_body-healing-6",
@@ -225448,8 +225185,7 @@
    "technology-oled-6",
    "sport-balls-5",
    "weird_facts-axolotls-4",
-   "science-steel-1",
-   "music-piano-1"
+   "science-steel-1"
   ],
   "210": [
    "economics-digital-money-2",
@@ -225617,7 +225353,6 @@
    "history-ottoman-6",
    "technology-chatbots-4",
    "space-colours-of-stars-6",
-   "sport-ancient-2",
    "cinema-destroyed-3",
    "music-layering-5"
   ],
@@ -225806,7 +225541,6 @@
    "economics-charm-prices-2",
    "philosophy-ship-of-theseus-1",
    "technology-limits-8",
-   "pop_culture-denim-6",
    "human_body-gut-and-mood-10",
    "food-potatoes-7",
    "weird_facts-odd-fines-1"
@@ -225874,7 +225608,6 @@
   "252": [
    "music-folk-2",
    "psychology-false-memories-8",
-   "art-florence-5",
    "science-2",
    "economics-four-day-week-8",
    "technology-data-centres-6",
@@ -226532,7 +226265,6 @@
    "psychology-fear-6"
   ],
   "318": [
-   "music-piano-1",
    "human_body-plasticity-6",
    "economics-gig-work-5",
    "history-plague-5",
@@ -227158,7 +226890,6 @@
    "music-autotune-7",
    "technology-typewriters-6",
    "medicine-germ-theory-4",
-   "pop_culture-denim-6",
    "food-cheese-1"
   ],
   "381": [
