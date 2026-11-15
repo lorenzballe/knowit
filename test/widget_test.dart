@@ -5788,9 +5788,9 @@ void main() {
       await _settle(tester);
       await _finishDay(tester);
 
-      // The shelf opens on the first card, with the eyebrow over it and
+      // The shelf opens on the first card, with the day's line over it and
       // nothing about the week in the way.
-      expect(find.text("TODAY'S FIVE"), findsOneWidget);
+      expect(find.textContaining('five read'), findsOneWidget);
       expect(find.byKey(const ValueKey('week-reward')), findsNothing);
 
       // The last card on the shelf is the offer, and it says it there.

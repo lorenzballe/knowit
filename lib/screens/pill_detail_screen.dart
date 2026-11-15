@@ -274,8 +274,22 @@ class _CardHead extends StatelessWidget {
                     pill: pill,
                     side: CardSide.front,
                     // Where the picture will not come, the card's words,
-                    // its question at the head of its colour.
-                    fallback: _Words(pill: pill),
+                    // its question at the head of its colour — a size
+                    // down where the reader's text is set so large that
+                    // they would run past the card's foot.
+                    fallback: LayoutBuilder(
+                      builder: (context, box) => ColoredBox(
+                        color: pill.color,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.topCenter,
+                          child: SizedBox(
+                            width: box.maxWidth,
+                            child: _Words(pill: pill, face: false),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -292,17 +306,23 @@ class _CardHead extends StatelessWidget {
 /// A card's words on its colour: its subject and its question, and what
 /// goes at its foot.
 class _Words extends StatelessWidget {
-  const _Words({required this.pill, this.foot});
+  const _Words({required this.pill, this.foot, this.face = true});
 
   final Pill pill;
   final Widget? foot;
+
+  /// On a card face of its own; off, the words alone, on whatever card is
+  /// already under them.
+  final bool face;
 
   @override
   Widget build(BuildContext context) {
     final Color onCard = pill.ink;
     return Container(
       padding: EdgeInsets.fromLTRB(26, 26, 26, foot == null ? 26 : 20),
-      decoration: cardFace(context, pill.color, radius: 30, lift: 1),
+      decoration: face
+          ? cardFace(context, pill.color, radius: 30, lift: 1)
+          : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
