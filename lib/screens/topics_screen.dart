@@ -61,99 +61,139 @@ class _TopicsScreenState extends State<TopicsScreen> {
       child: Scaffold(
         backgroundColor: context.p.surface,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(22, 12, 22, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.isOnboarding)
-                  Row(
-                    children: List.generate(3, (i) {
-                      return Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(right: i == 2 ? 0 : 8),
-                          height: 3,
+          child: Column(
+            children: [
+              // One page, scrolled whole: the title, the subjects, the way
+              // into fine-tuning and the count, with only the button kept at
+              // the foot. The subjects used to scroll in a box of their own
+              // between a fixed title and a fixed row under them, and once
+              // that row came the box was shorter than the subjects: a chip
+              // was cut at its top or its foot on an ordinary phone.
+              Expanded(
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      key: const ValueKey('topics-page'),
+                      padding: const EdgeInsets.fromLTRB(22, 12, 22, 18),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (widget.isOnboarding)
+                            Row(
+                              children: List.generate(3, (i) {
+                                return Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      right: i == 2 ? 0 : 8,
+                                    ),
+                                    height: 3,
+                                    decoration: BoxDecoration(
+                                      color: i < 2
+                                          ? context.p.ink
+                                          : context.p.line,
+                                      borderRadius: BorderRadius.circular(9),
+                                    ),
+                                  ),
+                                );
+                              }),
+                            )
+                          else if (widget.onBack != null)
+                            BackCircle(onPressed: widget.onBack!),
+                          const SizedBox(height: 22),
+                          Text(
+                            context.l10n.whatShouldWeTalkAbout,
+                            style: AppText.display(
+                              size: 33,
+                              weight: FontWeight.w700,
+                              height: 1.06,
+                              spacing: -1.3,
+                              color: context.p.ink,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            context.l10n.fivePillsADayPick,
+                            style: AppText.body(
+                              size: 15,
+                              height: 1.5,
+                              color: context.p.inkMuted,
+                            ),
+                          ),
+                          const SizedBox(height: 22),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            // Every subject the onboarding offers, in its
+                            // order, and every one of them switchable. Editing
+                            // a mix while being shown a shorter list than the
+                            // one you were first given is how a setting starts
+                            // feeling like it lost something.
+                            children: kMixSubjects.map((subject) {
+                              final key = subject.key;
+                              final on = _picked.contains(key);
+                              return _TopicChip(
+                                label: context.l10n.subjectOf(subject.name),
+                                subject: subject.name,
+                                on: on,
+                                color: subject.color,
+                                onColor: inkOn(subject.color),
+                                onTap: () => setState(() {
+                                  if (on) {
+                                    _picked.remove(key);
+                                  } else {
+                                    _picked.add(key);
+                                  }
+                                }),
+                              );
+                            }).toList(),
+                          ),
+                          if (widget.onFineTune != null) ...[
+                            const SizedBox(height: 18),
+                            _FineTuneRow(onTap: _fineTune),
+                          ],
+                          const SizedBox(height: 14),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              context.l10n.nSelected(_count),
+                              textAlign: TextAlign.center,
+                              style: AppText.body(
+                                size: 12.5,
+                                color: context.p.inkFaint,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // What runs on under the button fades into the page
+                    // rather than stopping at a line.
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      height: 22,
+                      child: IgnorePointer(
+                        child: DecoratedBox(
                           decoration: BoxDecoration(
-                            color: i < 2 ? context.p.ink : context.p.line,
-                            borderRadius: BorderRadius.circular(9),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                context.p.surface.withValues(alpha: 0),
+                                context.p.surface,
+                              ],
+                            ),
                           ),
                         ),
-                      );
-                    }),
-                  )
-                else if (widget.onBack != null)
-                  BackCircle(onPressed: widget.onBack!),
-                const SizedBox(height: 22),
-                Text(
-                  context.l10n.whatShouldWeTalkAbout,
-                  style: AppText.display(
-                    size: 33,
-                    weight: FontWeight.w700,
-                    height: 1.06,
-                    spacing: -1.3,
-                    color: context.p.ink,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  context.l10n.fivePillsADayPick,
-                  style: AppText.body(
-                    size: 15,
-                    height: 1.5,
-                    color: context.p.inkMuted,
-                  ),
-                ),
-                const SizedBox(height: 22),
-                // All of them at once, no box to scroll inside: a mix is a
-                // thing you see whole or it is not a mix. The chips are cut
-                // to fit a phone; the scroll view under them is the net for
-                // a screen shorter than any phone sold in years, and on a
-                // phone it never moves.
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      // Every subject the onboarding offers, in its order, and
-                      // every one of them switchable. Editing a mix while being
-                      // shown a shorter list than the one you were first given
-                      // is how a setting starts feeling like it lost something.
-                      children: kMixSubjects.map((subject) {
-                        final key = subject.key;
-                        final on = _picked.contains(key);
-                        return _TopicChip(
-                          label: context.l10n.subjectOf(subject.name),
-                          subject: subject.name,
-                          on: on,
-                          color: subject.color,
-                          onColor: inkOn(subject.color),
-                          onTap: () => setState(() {
-                            if (on) {
-                              _picked.remove(key);
-                            } else {
-                              _picked.add(key);
-                            }
-                          }),
-                        );
-                      }).toList(),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                if (widget.onFineTune != null) ...[
-                  const SizedBox(height: 14),
-                  _FineTuneRow(onTap: _fineTune),
-                ],
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    context.l10n.nSelected(_count),
-                    textAlign: TextAlign.center,
-                    style: AppText.body(size: 12.5, color: context.p.inkFaint),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                PrimaryButton(
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(22, 6, 22, 20),
+                child: PrimaryButton(
                   label: _enough
                       ? (widget.isOnboarding
                             ? context.l10n.startWithNTopics(_count)
@@ -163,8 +203,8 @@ class _TopicsScreenState extends State<TopicsScreen> {
                   foreground: _enough ? null : context.p.inkFaint,
                   onPressed: _enough ? () => widget.onDone(_picked) : null,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

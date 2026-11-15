@@ -4372,7 +4372,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get todaySeeAgainHint => '从第一张开始，全屏重看今天的卡片';
 
   @override
-  String get tuneTitle => '微调你的组合';
+  String get tuneTitle => '调整你的组合';
 
   @override
   String get tuneEntryLine => '每个主题要多少，以及哪些部分';

@@ -4580,7 +4580,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'De kaarten van vandaag opnieuw, op volle grootte, vanaf de eerste';
 
   @override
-  String get tuneTitle => 'Je mix fijnstellen';
+  String get tuneTitle => 'Stel je mix af';
 
   @override
   String get tuneEntryLine => 'Hoeveel van elk vak, en welke delen ervan';

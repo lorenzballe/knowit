@@ -4777,7 +4777,7 @@
  "@todaySeeAgainHint": {
   "description": "Said to a screen reader on the See again button: what it opens."
  },
- "tuneTitle": "Fine-tune your mix",
+ "tuneTitle": "Tune your mix",
  "@tuneTitle": {
   "description": "The screen under the topics editor, and the row that opens it: how much of each subject, and which parts of each."
  },

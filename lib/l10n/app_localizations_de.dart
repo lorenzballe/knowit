@@ -4582,7 +4582,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Karten von heute noch einmal, groß, ab der ersten';
 
   @override
-  String get tuneTitle => 'Deinen Mix feinjustieren';
+  String get tuneTitle => 'Deinen Mix anpassen';
 
   @override
   String get tuneEntryLine => 'Wie viel von jedem Fach, und welche Teile davon';
