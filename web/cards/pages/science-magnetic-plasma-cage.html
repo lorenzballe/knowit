@@ -91,7 +91,7 @@ function draw(){
   x.clearRect(0,0,W,H);
   // vessel
   x.beginPath(); x.arc(cx,cy,Ro,0,Math.PI*2); x.arc(cx,cy,Ri,0,Math.PI*2,true);
-  x.fillStyle = '#0c1022'; x.fill();
+  x.fillStyle = 'rgba(16,16,12,0.12)'; x.fill();
   x.lineWidth = Math.max(2, hw*0.06); x.strokeStyle = ink;
   x.beginPath(); x.arc(cx,cy,Ro,0,Math.PI*2); x.stroke();
   x.beginPath(); x.arc(cx,cy,Ri,0,Math.PI*2); x.stroke();
@@ -99,14 +99,14 @@ function draw(){
   x.lineCap = 'butt'; x.lineWidth = hw*0.22;
   for (let i = 0; i < BINS; i++){
     const a0 = i/BINS*Math.PI*2, a1 = (i+1)/BINS*Math.PI*2;
-    if (heatO[i] > 0.03){ x.strokeStyle = `rgba(255,${Math.round(70+120*Math.min(1,heatO[i]-0.4))},40,${Math.min(1,heatO[i])})`; x.beginPath(); x.arc(cx,cy,Ro-hw*0.1,a0,a1); x.stroke(); }
-    if (heatI[i] > 0.03){ x.strokeStyle = `rgba(255,${Math.round(70+120*Math.min(1,heatI[i]-0.4))},40,${Math.min(1,heatI[i])})`; x.beginPath(); x.arc(cx,cy,Ri+hw*0.1,a0,a1); x.stroke(); }
+    if (heatO[i] > 0.03){ x.strokeStyle = `rgba(176,30,18,${Math.min(1,heatO[i])})`; x.beginPath(); x.arc(cx,cy,Ro-hw*0.1,a0,a1); x.stroke(); }
+    if (heatI[i] > 0.03){ x.strokeStyle = `rgba(176,30,18,${Math.min(1,heatI[i])})`; x.beginPath(); x.arc(cx,cy,Ri+hw*0.1,a0,a1); x.stroke(); }
   }
   // field lines (helices seen from above)
   if (fx.a > 0.01){
     x.lineWidth = Math.max(1.2, hw*0.035);
     for (let j = 0; j < 5; j++){
-      x.strokeStyle = `rgba(110,211,255,${0.55*fx.a})`;
+      x.strokeStyle = `rgba(16,16,12,${0.55*fx.a})`;
       x.beginPath();
       for (let s = 0; s <= 360; s++){
         const th = s/360*Math.PI*2, r = Rc + hw*0.78*Math.sin(10*th + j*Math.PI*2/5 - T*2.2);
@@ -117,11 +117,11 @@ function draw(){
     }
   }
   // plasma
-  x.globalCompositeOperation = 'lighter';
+  x.globalCompositeOperation = 'source-over';
   const rad = Math.max(2.2, hw*0.075);
   for (const p of P){
-    x.fillStyle = 'rgba(255,120,60,0.35)'; x.beginPath(); x.arc(p.x,p.y,rad*2.2,0,Math.PI*2); x.fill();
-    x.fillStyle = 'rgba(255,230,190,0.9)'; x.beginPath(); x.arc(p.x,p.y,rad*0.8,0,Math.PI*2); x.fill();
+    x.fillStyle = 'rgba(176,30,18,0.3)'; x.beginPath(); x.arc(p.x,p.y,rad*2.2,0,Math.PI*2); x.fill();
+    x.fillStyle = 'rgba(176,30,18,0.95)'; x.beginPath(); x.arc(p.x,p.y,rad*0.8,0,Math.PI*2); x.fill();
   }
   x.globalCompositeOperation = 'source-over';
   // coils
@@ -129,14 +129,14 @@ function draw(){
   for (let i = 0; i < 16; i++){
     const th = i/16*Math.PI*2, c = Math.cos(th), s = Math.sin(th);
     x.lineWidth = hw*0.16;
-    x.strokeStyle = fx.a > 0.01 ? `rgba(110,211,255,${0.25+0.6*fx.a})` : 'rgba(150,150,170,0.35)';
+    x.strokeStyle = fx.a > 0.01 ? `rgba(0,131,91,${0.25+0.6*fx.a})` : 'rgba(16,16,12,0.35)';
     x.beginPath(); x.moveTo(cx+(Ri-hw*0.25)*c, cy+(Ri-hw*0.25)*s); x.lineTo(cx+(Ro+hw*0.25)*c, cy+(Ro+hw*0.25)*s); x.stroke();
   }
   // hole text
   const fs = Math.max(12, Math.min(G.f, Ri*0.2));
   const L = mode === 0 ? ['PLASMA','millions of °C'] : mode === 1 ? ['THE WALL','is melting!'] : ['PLASMA','touches nothing'];
   x.textAlign = 'center'; x.textBaseline = 'middle';
-  x.fillStyle = mode === 1 ? '#e8452c' : ink;
+  x.fillStyle = mode === 1 ? '#b01e12' : ink;
   x.font = `800 ${fs*1.1}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
   x.fillText(L[0], cx, cy - fs*0.8);
   x.font = `600 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;

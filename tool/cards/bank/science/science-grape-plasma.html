@@ -20,7 +20,7 @@
 </style>
 <!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
      (in the app, in the reader's language). The id stays "card". -->
-<article class="card" id="card" data-topic="science" data-kind="Pull apart · layers" style="--c:#1b0d07;--k:#ffe9cc;--edge:#0e0705">
+<article class="card" id="card" data-topic="science" data-kind="Pull apart · layers">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PULL APART</span></div>
     <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
@@ -48,9 +48,9 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 
 // The three layers, top to bottom: name, two short lines, colour.
 const LBL = [
-  ['PLASMA', ['electrons ripped off,', 'so the gas conducts'], '#ffd479'],
-  ['ELECTRIC FIELD', ['from the microwave,', 'pouring in energy'], '#9fe9ff'],
-  ['GRAPE', ['cut almost in two,', 'gives off water vapor'], '#bfe783'],
+  ['PLASMA', ['electrons ripped off,', 'so the gas conducts'], '#6a1fd0'],
+  ['ELECTRIC FIELD', ['from the microwave,', 'pouring in energy'], '#10100c'],
+  ['GRAPE', ['cut almost in two,', 'gives off water vapor'], '#10100c'],
 ];
 // Water molecules of the vapor: x, y, tilt of the two hydrogens, angle the electron leaves at.
 const MOL = [[-60, -8, 20, 200], [-28, -38, -15, 250], [6, -10, 10, 320], [38, -42, -30, 290], [62, -6, 25, 20]];
@@ -67,8 +67,8 @@ function grad(defs, type, id, stops, a) {
 // A glass sheet seen at an angle, like the microwave's turntable: radius 100 by 32.
 function plate(g) {
   const p = el('g', {}, g);
-  el('path', {d: 'M -100 0 A 100 32 0 0 0 100 0 L 100 4 A 100 32 0 0 1 -100 4 Z', fill: '#ffffff', 'fill-opacity': .13}, p);
-  el('ellipse', {rx: 100, ry: 32, fill: 'url(#gp-plate)', stroke: '#ffe4c8', 'stroke-opacity': .5, 'stroke-width': 1.2}, p);
+  el('path', {d: 'M -100 0 A 100 32 0 0 0 100 0 L 100 4 A 100 32 0 0 1 -100 4 Z', fill: '#00835b', 'fill-opacity': .45}, p);
+  el('ellipse', {rx: 100, ry: 32, fill: 'url(#gp-plate)', stroke: '#10100c', 'stroke-opacity': .5, 'stroke-width': 1.2}, p);
   return p;
 }
 
@@ -83,11 +83,11 @@ function draw() {
   const svg = art;
 
   const defs = el('defs', {}, svg);
-  grad(defs, 'radialGradient', 'gp-plate', [[0, '#ffffff', .14], [1, '#ffffff', .03]]);
-  grad(defs, 'radialGradient', 'gp-bloom', [[0, '#ffb347', .8], [.45, '#ff7a1a', .38], [1, '#ff5a00', 0]]);
-  grad(defs, 'radialGradient', 'gp-core', [[0, '#ffffff', 1], [.3, '#fff3bd', .96], [.65, '#ffc44d', .6], [1, '#ff8a1f', 0]]);
-  grad(defs, 'radialGradient', 'gp-elec', [[0, '#c4f4ff', .95], [.5, '#4fd0ff', .45], [1, '#4fd0ff', 0]]);
-  grad(defs, 'linearGradient', 'gp-skin', [[0, '#b4e064'], [1, '#4a861b']], {x1: 0, y1: 0, x2: 1, y2: 1});
+  grad(defs, 'radialGradient', 'gp-plate', [[0, '#ffffff', .3], [1, '#ffffff', .3]]);
+  grad(defs, 'radialGradient', 'gp-bloom', [[0, '#6a1fd0', .2], [.45, '#6a1fd0', .2], [1, '#6a1fd0', .2]]);
+  grad(defs, 'radialGradient', 'gp-core', [[0, '#6a1fd0', 1], [.3, '#6a1fd0', 1], [.65, '#6a1fd0', 1], [1, '#6a1fd0', 1]]);
+  grad(defs, 'radialGradient', 'gp-elec', [[0, '#6a1fd0', .3], [.5, '#6a1fd0', .3], [1, '#6a1fd0', .3]]);
+  grad(defs, 'linearGradient', 'gp-skin', [[0, '#00835b'], [1, '#00835b']], {x1: 0, y1: 0, x2: 1, y2: 1});
 
   const pad = Math.max(8, Math.min(W, H) * .035);
   // Closed: one picture, the grape glowing on the turntable.
@@ -104,21 +104,21 @@ function draw() {
   const topH = (H - (110 * k1h + 6 + labH)) / 2 + 74 * k1h;
   const cyO = [0, 1, 2].map(i => horiz ? topH : pad + band * (i + .5) + off[i] * k1);
 
-  const guides = el('g', {fill: 'none', stroke: '#ffe2c4', 'stroke-opacity': .55, 'stroke-width': 1.2, 'stroke-dasharray': '3 4'}, svg);
+  const guides = el('g', {fill: 'none', stroke: '#10100c', 'stroke-opacity': .55, 'stroke-width': 1.2, 'stroke-dasharray': '3 4'}, svg);
   const gl = [0, 1, 2, 3].map(() => el('line', {}, guides));
   const root = el('g', {}, svg);
 
   // Bottom layer: the grape, cut almost in two, a strip of skin holding the halves.
   const lg = el('g', {}, root);
   plate(lg);
-  el('ellipse', {cx: 0, cy: 5, rx: 38, ry: 7.5, fill: '#000', 'fill-opacity': .4}, lg);
+  el('ellipse', {cx: 0, cy: 5, rx: 38, ry: 7.5, fill: '#10100c', 'fill-opacity': .25}, lg);
   const wisps = ['M -4 -47 C -12 -55 3 -61 -5 -71', 'M 4 -47 C 12 -56 -1 -64 8 -76', 'M 0 -46 C -4 -52 6 -58 1 -64']
-    .map(d => el('path', {d, fill: 'none', stroke: '#fff4e6', 'stroke-opacity': .55, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-dasharray': '5 6'}, lg));
-  el('path', {d: 'M -7 -44 A 25 25 0 0 0 -7 6 Z', fill: 'url(#gp-skin)', stroke: '#2e5710', 'stroke-width': 1}, lg);
-  el('path', {d: 'M 7 -44 A 25 25 0 0 1 7 6 Z', fill: 'url(#gp-skin)', stroke: '#2e5710', 'stroke-width': 1}, lg);
-  el('ellipse', {cx: -7, cy: -19, rx: 3.2, ry: 25, fill: '#e8f6b2', stroke: '#8fb944', 'stroke-width': .8}, lg);
-  el('ellipse', {cx: 7, cy: -19, rx: 3.2, ry: 25, fill: '#e8f6b2', stroke: '#8fb944', 'stroke-width': .8}, lg);
-  el('rect', {x: -9, y: 1.5, width: 18, height: 5, rx: 2.5, fill: '#4f8a1d', stroke: '#2e5710', 'stroke-width': .8}, lg);
+    .map(d => el('path', {d, fill: 'none', stroke: '#10100c', 'stroke-opacity': .55, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-dasharray': '5 6'}, lg));
+  el('path', {d: 'M -7 -44 A 25 25 0 0 0 -7 6 Z', fill: 'url(#gp-skin)', stroke: '#10100c', 'stroke-width': 1}, lg);
+  el('path', {d: 'M 7 -44 A 25 25 0 0 1 7 6 Z', fill: 'url(#gp-skin)', stroke: '#10100c', 'stroke-width': 1}, lg);
+  el('ellipse', {cx: -7, cy: -19, rx: 3.2, ry: 25, fill: '#ffffff', stroke: '#10100c', 'stroke-width': .8}, lg);
+  el('ellipse', {cx: 7, cy: -19, rx: 3.2, ry: 25, fill: '#ffffff', stroke: '#10100c', 'stroke-width': .8}, lg);
+  el('rect', {x: -9, y: 1.5, width: 18, height: 5, rx: 2.5, fill: '#10100c', stroke: '#10100c', 'stroke-width': .8}, lg);
   el('ellipse', {cx: -21, cy: -31, rx: 6, ry: 3.6, fill: '#fff', 'fill-opacity': .5, transform: 'rotate(-35 -21 -31)'}, lg);
   el('ellipse', {cx: 18, cy: -33, rx: 4.6, ry: 3, fill: '#fff', 'fill-opacity': .38, transform: 'rotate(30 18 -33)'}, lg);
 
@@ -129,8 +129,8 @@ function draw() {
   const dashes = [];
   [[-15, 70], [0, 82], [15, 70]].forEach(([y, h]) => {
     const d = `M ${-h} ${y} L ${h} ${y} M ${h - 8} ${y - 4.5} L ${h} ${y} L ${h - 8} ${y + 4.5} M ${-h + 8} ${y - 4.5} L ${-h} ${y} L ${-h + 8} ${y + 4.5}`;
-    el('path', {d, stroke: '#38c8ff', 'stroke-opacity': .3, 'stroke-width': 7}, fld);
-    el('path', {d, stroke: '#aef0ff', 'stroke-width': 2.2}, fld);
+    el('path', {d, stroke: '#00835b', 'stroke-opacity': .3, 'stroke-width': 7}, fld);
+    el('path', {d, stroke: '#10100c', 'stroke-width': 2.2}, fld);
     dashes.push(el('path', {d: `M ${-h + 10} ${y} L ${h - 10} ${y}`, stroke: '#ffffff', 'stroke-width': 2.6, 'stroke-dasharray': '2 12', 'stroke-opacity': .9}, fld));
   });
 
@@ -147,13 +147,13 @@ function draw() {
   const elec = [], plus = [];
   MOL.forEach(([x, y, tilt, ea]) => {
     const m = el('g', {transform: `translate(${x},${y})`}, mols);
-    [-52, 52].forEach(d => { const a = (90 + tilt + d) * Math.PI / 180; el('circle', {cx: f2(9.5 * Math.cos(a)), cy: f2(9.5 * Math.sin(a)), r: 4.6, fill: '#d4dceb', stroke: '#2a1608', 'stroke-width': 1}, m); });
-    el('circle', {r: 8, fill: '#f4f6fb', stroke: '#2a1608', 'stroke-width': 1.2}, m);
-    plus.push(el('path', {d: 'M -3.6 0 H 3.6 M 0 -3.6 V 3.6', stroke: '#b4410e', 'stroke-width': 1.9, 'stroke-linecap': 'round'}, m));
+    [-52, 52].forEach(d => { const a = (90 + tilt + d) * Math.PI / 180; el('circle', {cx: f2(9.5 * Math.cos(a)), cy: f2(9.5 * Math.sin(a)), r: 4.6, fill: '#00835b', stroke: '#10100c', 'stroke-width': 1}, m); });
+    el('circle', {r: 8, fill: '#ffffff', stroke: '#10100c', 'stroke-width': 1.2}, m);
+    plus.push(el('path', {d: 'M -3.6 0 H 3.6 M 0 -3.6 V 3.6', stroke: '#6a1fd0', 'stroke-width': 1.9, 'stroke-linecap': 'round'}, m));
     const a0 = ea * Math.PI / 180, a1 = (ea + 20) * Math.PI / 180;
     const g = el('g', {}, mols), jit = el('g', {}, g);
     el('circle', {r: 8.5, fill: 'url(#gp-elec)'}, jit);
-    el('circle', {r: 3.1, fill: '#effcff'}, jit);
+    el('circle', {r: 3.1, fill: '#6a1fd0'}, jit);
     elec.push({g, jit, bx: x + 11 * Math.cos(a0), by: y + 11 * Math.sin(a0), fx: x + 28 * Math.cos(a1), fy: y + 28 * Math.sin(a1)});
   });
 
@@ -166,7 +166,7 @@ function draw() {
     const g = el('g', {opacity: 0}, svg);
     const tt = el('text', {fill: col, 'text-anchor': anchor, style: `font-family:var(--display);font-weight:700;letter-spacing:.06em;font-size:${fT0}px`}, g);
     tt.textContent = title;
-    const st = SUB[i].map(s => { const e = el('text', {fill: '#f7eadb', 'text-anchor': anchor, style: `font-family:var(--body);font-weight:500;font-size:${fS0}px`}, g); e.textContent = s; return e; });
+    const st = SUB[i].map(s => { const e = el('text', {fill: '#10100c', 'text-anchor': anchor, style: `font-family:var(--body);font-weight:500;font-size:${fS0}px`}, g); e.textContent = s; return e; });
     let w = 0; try { [tt, ...st].forEach(e => { w = Math.max(w, e.getComputedTextLength() * 1.05); }); } catch (_) {}
     const sc = w > avail && avail > 20 ? Math.max(9.6 / Math.min(fT0, fS0), avail / w) : 1;
     return {g, tt, st, sc, w: w * sc};
@@ -185,7 +185,7 @@ function draw() {
 
   // A hint above the glow: it lifts.
   const hintG = el('g', {transform: `translate(${f2(cx0)},${f2(Math.max(pad + 18, cy0 - 112 * k0))})`}, svg);
-  const hint = el('g', {fill: 'none', stroke: '#ffe9cc', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hintG);
+  const hint = el('g', {fill: 'none', stroke: '#10100c', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hintG);
   el('path', {d: 'M -10 5 L 0 -5 L 10 5'}, hint);
   el('path', {d: 'M -10 -6 L 0 -16 L 10 -6', 'stroke-opacity': .5}, hint);
 

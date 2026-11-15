@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A ball sits on a spring scale that reads 5.0 kg, with a globe labelled Earth beside it that you can tap to move the scale. The question asks: what is the fundamental definition of weight?",
-    "ground": "#efe4c8"
+    "label": "A ball sits on a spring scale that reads 5.0 kg, with a globe labelled Earth beside it that you can tap to move the scale. The question asks: what is the fundamental definition of weight?"
   },
   "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
   "reference": "https://www.youtube.com/watch?v=_Z0X0yE8Ioc&t=23s",

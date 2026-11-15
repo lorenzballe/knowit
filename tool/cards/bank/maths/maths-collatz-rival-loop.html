@@ -15,16 +15,16 @@
 #pic{flex:1;min-height:0;width:100%;height:100%;display:block}
 #ctl{position:relative;padding:.4cqh 4cqw 1.2cqh;background:none}
 #len{-webkit-appearance:none;appearance:none;display:block;width:100%;height:max(4.4cqh,32px);background:transparent;margin:0;touch-action:none;cursor:ew-resize;--p:0%}
-#len::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:99px;background:linear-gradient(90deg,rgba(234,243,255,.7) var(--p),rgba(234,243,255,.12) var(--p));box-shadow:inset 0 0 0 1px rgba(234,243,255,.4)}
-#len::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#0a2a5e 0 18%,#eaf3ff 19%);border:2px solid #0a2a5e;box-shadow:0 0 0 1.5px #eaf3ff,0 0 16px rgba(160,210,255,.8);margin-top:calc((max(.9cqh,6px) - max(3.4cqh,26px))/2)}
-#len::-moz-range-track{height:max(.9cqh,6px);border-radius:99px;background:rgba(234,243,255,.12);box-shadow:inset 0 0 0 1px rgba(234,243,255,.4)}
-#len::-moz-range-progress{height:max(.9cqh,6px);border-radius:99px;background:rgba(234,243,255,.7)}
-#len::-moz-range-thumb{width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#0a2a5e 0 18%,#eaf3ff 19%);border:2px solid #0a2a5e;box-shadow:0 0 0 1.5px #eaf3ff,0 0 16px rgba(160,210,255,.8)}
+#len::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:99px;background:linear-gradient(90deg,rgba(255,255,255,.9) var(--p),rgba(255,255,255,.22) var(--p));box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
+#len::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#085941 0 18%,#ffffff 19%);border:2px solid #085941;box-shadow:0 0 0 1.5px #ffffff;margin-top:calc((max(.9cqh,6px) - max(3.4cqh,26px))/2)}
+#len::-moz-range-track{height:max(.9cqh,6px);border-radius:99px;background:rgba(255,255,255,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
+#len::-moz-range-progress{height:max(.9cqh,6px);border-radius:99px;background:rgba(255,255,255,.9)}
+#len::-moz-range-thumb{width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#085941 0 18%,#ffffff 19%);border:2px solid #085941;box-shadow:0 0 0 1.5px #ffffff}
 #marks{position:relative;height:max(1.9cqh,14px);margin:0 calc(max(3.4cqh,26px)/2)}
-#marks span{position:absolute;top:0;transform:translateX(-50%);font:600 max(1.5cqh,12px)/1 var(--mono);color:rgba(234,243,255,.55);letter-spacing:.04em;white-space:nowrap;transition:color .3s,text-shadow .3s}
-#marks span.on{color:rgba(234,243,255,.95);text-shadow:0 0 8px rgba(160,210,255,.6)}
-#marks span.end{color:rgba(255,217,138,.6)}
-#marks span.end.on{color:#ffd98a;text-shadow:0 0 10px rgba(255,217,138,.7)}
+#marks span{position:absolute;top:0;transform:translateX(-50%);font:600 max(1.5cqh,12px)/1 var(--mono);color:rgba(255,255,255,.72);letter-spacing:.04em;white-space:nowrap;transition:color .3s}
+#marks span.on{color:#ffffff}
+#marks span.end{color:#0a2a5e}
+#marks span.end.on{color:#0a2a5e}
 #why{display:flex;flex-direction:column;gap:.5cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.1 var(--display)}
 #why .body{font:500 max(1.75cqh,13px)/1.3 var(--body)}
@@ -33,7 +33,7 @@
 #pic .hand{font-family:var(--hand)}
 #pic .disp{font-family:var(--display)}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Drag the length · a proved bound" style="--c:#0a2a5e;--k:#eaf3ff;--edge:#061a40">
+<article class="card" id="card" data-topic="maths" data-kind="Drag the length · a proved bound">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">COLLATZ LOOPS</span></div>
     <h2 class="q">If Collatz had a second loop, how long would it have to be?</h2>
@@ -56,7 +56,7 @@
   gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin, ScrambleTextPlugin);
   const svg = Kit.$('pic'), len = Kit.$('len');
   const MAX = 186e9, L0 = Math.log10(3), L1 = Math.log10(MAX);
-  const INK = '#eaf3ff', GOLD = '#ffd98a', DEEP = '#0b2c62';
+  const INK = '#ffffff', GOLD = '#0a2a5e', DEEP = '#0E9A70';
   const CIRC = 'M100,0 A100,100 0 1,1 -100,0 A100,100 0 1,1 100,0';
   const st = {t: 0};
   let n = 3, r = 0, state = '', revealed = false, built = false, started = false, lastDec = 0;
@@ -105,10 +105,10 @@
     // ---- defs: grid, glow ----
     const d = Kit.mk('defs', {}, svg);
     const p1 = Kit.mk('pattern', {id: 'g1', width: 12, height: 12, patternUnits: 'userSpaceOnUse'}, d);
-    Kit.mk('path', {d: 'M12 0H0V12', fill: 'none', stroke: 'rgba(234,243,255,.07)', 'stroke-width': .6}, p1);
+    Kit.mk('path', {d: 'M12 0H0V12', fill: 'none', stroke: 'rgba(255,255,255,.1)', 'stroke-width': .6}, p1);
     const p2 = Kit.mk('pattern', {id: 'g2', width: 60, height: 60, patternUnits: 'userSpaceOnUse', x: cx % 60, y: cy % 60}, d);
     Kit.mk('rect', {width: 60, height: 60, fill: 'url(#g1)'}, p2);
-    Kit.mk('path', {d: 'M60 0H0V60', fill: 'none', stroke: 'rgba(234,243,255,.13)', 'stroke-width': .8}, p2);
+    Kit.mk('path', {d: 'M60 0H0V60', fill: 'none', stroke: 'rgba(255,255,255,.2)', 'stroke-width': .8}, p2);
     // the grid fades out toward the edges so it has no hard border
     const fg = Kit.mk('radialGradient', {id: 'fade', cx: '50%', cy: '50%', r: '70%'}, d);
     Kit.mk('stop', {offset: '0', 'stop-color': '#fff'}, fg);
@@ -167,9 +167,9 @@
     G.trail = Kit.mk('g', {}, svg);
     for (let i = 0; i < 12; i++) Kit.mk('circle', {r: f * .3 * (1 - i / 13), fill: INK, opacity: .5 * (1 - i / 12)}, G.trail);
     trail.length = 0;
-    G.tokBig = Kit.mk('circle', {r: f * .34, fill: '#ffffff', filter: 'url(#glow)'}, svg);
-    G.tok421 = Kit.mk('circle', {r: f * .3, fill: '#fff6dc', filter: 'url(#glow)'}, svg);
-    G.tokDet = Kit.mk('circle', {r: 3.4, fill: '#fff6dc', filter: 'url(#glow)'}, G.bub);
+    G.tokBig = Kit.mk('circle', {r: f * .34, fill: '#ffffff'}, svg);
+    G.tok421 = Kit.mk('circle', {r: f * .3, fill: '#ffffff'}, svg);
+    G.tokDet = Kit.mk('circle', {r: 3.4, fill: '#ffffff'}, G.bub);
 
     // readout, top left: label, count, drawing scale of the gold loop
     G.readG = Kit.mk('g', {}, svg);
@@ -221,7 +221,7 @@
     [G.st1, G.st2].forEach(e => e.setAttribute('fill', col));
     G.stR.setAttribute('stroke', col);
     G.stR.setAttribute('fill', s === 'open' ? 'rgba(255,255,255,.14)' : 'none');
-    G.stamp.setAttribute('filter', s === 'open' ? 'url(#glow)' : '');
+    G.stamp.setAttribute('filter', '');
     sizeStamp();
     if (!anim || Kit.calm) return;
     thump(1.22);

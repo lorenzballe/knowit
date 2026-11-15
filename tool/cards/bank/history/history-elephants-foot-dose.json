@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A radiation dial with a needle, beside a photo of the Elephant's Foot, the melted Chernobyl core turned solid. The question asks how strong the radiation under the melted core is today; the reader swings the needle to a guess.",
-    "ground": "#1d1214"
+    "label": "A radiation dial with a needle, beside a photo of the Elephant's Foot, the melted Chernobyl core turned solid. The question asks how strong the radiation under the melted core is today; the reader swings the needle to a guess."
   },
   "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=ksyOBogBKvc&t=1198s",

@@ -39,7 +39,7 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), card = Kit.$('card'), stage = Kit.$('stage');
-  const G = '#7dffb0', GL = '#ffffff', GD = '#8fa9ff', AMB = '#ffd24a', BLK = '#16349e';
+  const G = '#ffffff', GL = '#ffffff', GD = '#152f8f', AMB = '#ffd24a', BLK = '#152f8f';
   const hasG = typeof gsap !== 'undefined';
   const hasMorph = hasG && typeof MorphSVGPlugin !== 'undefined';
   if (hasMorph) gsap.registerPlugin(MorphSVGPlugin);
@@ -70,10 +70,6 @@
     const pad = Math.max(9, W * .032), sm = small();
     const defs = mk('defs', {}, svg);
     defs.innerHTML = `
-      <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <filter id="bloom" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
-      <radialGradient id="port" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#1b44d6"/><stop offset=".75" stop-color="#1536a8"/><stop offset="1" stop-color="#10298a"/></radialGradient>
-      <pattern id="scan" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#0a1a66" opacity=".16"/></pattern>
       <pattern id="pleat" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M3 0V6" stroke="${G}" stroke-width="1" opacity=".3"/></pattern>
       <pattern id="pleat2" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(90)"><path d="M2.5 0V5" stroke="${G}" stroke-width="1.1" opacity=".5"/></pattern>
       <pattern id="haz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="${AMB}" opacity=".16"/><path d="M0 0V8" stroke="${AMB}" stroke-width="2.6" opacity=".75"/></pattern>
@@ -115,14 +111,14 @@
     for (let j = 0; j <= 4; j++) { const y = g.ty0 + (g.ty1 - g.ty0) * j / 4; mk('line', {x1: g.sx + 4, x2: g.sx + g.sw - 4, y1: y, y2: y, stroke: GD, 'stroke-width': .8, 'stroke-dasharray': '1 3'}, sc); }
     mk('line', {x1: g.sx, x2: g.sx + g.sw, y1: g.sy + fs * 1.8, y2: g.sy + fs * 1.8, stroke: GD, 'stroke-width': 1}, sc);
     txt(sc, g.sx + fs * .6, g.sy + fs * 1.3, compact ? 'CO2 · LEM' : 'CO2 · LEM CABIN', {'font-weight': 700, fill: GL, 'font-size': sm});
-    E.status = txt(sc, g.sx + g.sw - fs * .6, g.sy + fs * 1.3, '', {'text-anchor': 'end', 'font-weight': 700, 'font-size': sm, filter: 'url(#glow)'});
+    E.status = txt(sc, g.sx + g.sw - fs * .6, g.sy + fs * 1.3, '', {'text-anchor': 'end', 'font-weight': 700, 'font-size': sm});
     setStatus(done ? '▼ FALLING' : '▲ RISING', done ? G : AMB);
     mk('line', {x1: g.sx + 2, x2: g.sx + g.sw - 2, y1: dy, y2: dy, stroke: AMB, 'stroke-width': 1.2, 'stroke-dasharray': '6 4', opacity: .85}, sc);
     if (g.ty1 - g.ty0 > fs * 3.4) txt(sc, g.sx + fs * .6, dy + fs * 1.15, 'TOO MUCH CO2', {fill: AMB, 'font-size': 12, opacity: .95});
     if (compact && g.showLog) mk('line', {x1: g.sx, x2: g.sx + g.sw, y1: g.ty1 + fs * .2, y2: g.ty1 + fs * .2, stroke: GD, 'stroke-width': 1}, sc);
-    E.traceGlow = mk('polyline', {fill: 'none', stroke: G, 'stroke-width': 5, opacity: .35, filter: 'url(#bloom)'}, sc);
-    E.trace = mk('polyline', {fill: 'none', stroke: G, 'stroke-width': 2, 'stroke-linejoin': 'round', filter: 'url(#glow)'}, sc);
-    E.head = mk('circle', {r: 3.4, fill: GL, filter: 'url(#glow)'}, sc);
+    E.traceGlow = mk('polyline', {fill: 'none', stroke: G, 'stroke-width': 5, opacity: 0}, sc);
+    E.trace = mk('polyline', {fill: 'none', stroke: G, 'stroke-width': 2, 'stroke-linejoin': 'round'}, sc);
+    E.head = mk('circle', {r: 3.4, fill: GL}, sc);
 
     // ---- the log ----
     E.log = mk('g', {}, world);
@@ -133,10 +129,10 @@
     mk('circle', {cx: W - pad - fs * .55, cy: g.trackY, r: ms * 1.08, fill: 'url(#pleat2)', stroke: G, 'stroke-width': 1.6}, sl);
     mk('line', {x1: g.tx0, x2: g.tx1, y1: g.trackY, y2: g.trackY, stroke: GD, 'stroke-width': 5, 'stroke-linecap': 'round', opacity: .55}, sl);
     if (!compact) for (let i = 0; i <= 10; i++) { const x = g.tx0 + (g.tx1 - g.tx0) * i / 10; mk('line', {x1: x, x2: x, y1: g.trackY + fs * .55, y2: g.trackY + fs * (i % 5 ? .8 : 1.05), stroke: GD, 'stroke-width': 1}, sl); }
-    E.fillLine = mk('line', {x1: g.tx0, x2: g.tx0, y1: g.trackY, y2: g.trackY, stroke: G, 'stroke-width': 5, 'stroke-linecap': 'round', filter: 'url(#glow)'}, sl);
+    E.fillLine = mk('line', {x1: g.tx0, x2: g.tx0, y1: g.trackY, y2: g.trackY, stroke: G, 'stroke-width': 5, 'stroke-linecap': 'round'}, sl);
     E.handle = mk('g', {}, sl);
     const hi = E.hint = mk('g', {class: touched || done ? '' : 'hint'}, E.handle);
-    mk('circle', {r: fs * .95, fill: BLK, stroke: G, 'stroke-width': 2.2, filter: 'url(#glow)'}, hi);
+    mk('circle', {r: fs * .95, fill: BLK, stroke: G, 'stroke-width': 2.2}, hi);
     mk('circle', {r: fs * .3, fill: GL}, hi);
     if (!compact) E.pct = txt(sl, W / 2, g.trackY - fs * 1.55, '', {'text-anchor': 'middle', 'font-weight': 700, fill: GL, 'font-size': sm});
 
@@ -144,24 +140,24 @@
     const {cx, cy, h} = g, s = h * 2;
     const dg = E.diag = mk('g', {}, world);
     mk('rect', {x: cx - h - 5, y: cy - h - 5, width: s + 10, height: s + 10, fill: 'none', stroke: GD, 'stroke-width': 1, 'stroke-dasharray': '2 3'}, dg);
-    mk('rect', {x: cx - h, y: cy - h, width: s, height: s, fill: '#1536a8', stroke: GD, 'stroke-width': 1.4}, dg);
+    mk('rect', {x: cx - h, y: cy - h, width: s, height: s, fill: BLK, stroke: GD, 'stroke-width': 1.4}, dg);
     mk('rect', {x: cx - h, y: cy - h, width: s, height: s, fill: 'url(#pleat)'}, dg);
     const rv = Math.max(1.6, h * .045);
     [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([a, b]) => mk('circle', {cx: cx + a * h * .86, cy: cy + b * h * .86, r: rv, fill: BLK, stroke: G, 'stroke-width': .6, opacity: .9}, dg));
     const sqD = `M${cx},${cy - h} H${cx + h} V${cy + h} H${cx - h} V${cy - h} Z`;
     const ciD = `M${cx},${cy - h} A${h},${h} 0 1 1 ${cx},${cy + h} A${h},${h} 0 1 1 ${cx},${cy - h} Z`;
     E.af = mk('path', {d: sqD, fill: 'url(#haz)'}, dg);
-    mk('circle', {cx, cy, r: h, fill: 'url(#port)'}, dg);
+    mk('circle', {cx, cy, r: h, fill: GD}, dg);
     E.media = mk('circle', {cx, cy, r: h * .8, fill: 'url(#pleat2)', opacity: done ? 1 : .5}, dg);
-    mk('circle', {cx, cy, r: h * .8, fill: 'none', stroke: GD, 'stroke-width': 1.2}, dg);
-    mk('circle', {cx, cy, r: h * .5, fill: 'none', stroke: GD, 'stroke-width': .8, 'stroke-dasharray': '2 3'}, dg);
+    mk('circle', {cx, cy, r: h * .8, fill: 'none', stroke: G, 'stroke-width': 1.2, opacity: .6}, dg);
+    mk('circle', {cx, cy, r: h * .5, fill: 'none', stroke: G, 'stroke-width': .8, 'stroke-dasharray': '2 3', opacity: .5}, dg);
     mk('circle', {cx, cy, r: h, fill: 'none', stroke: GL, 'stroke-width': 1.5, 'stroke-dasharray': '5 4', opacity: .75}, dg);
     const ch = Math.min(6, h * .15);
     mk('path', {d: `M${cx - ch},${cy} H${cx + ch} M${cx},${cy - ch} V${cy + ch}`, stroke: GL, 'stroke-width': 1, opacity: .6}, dg);
     E.flow = mk('g', {}, dg); E.dots = [];
     for (let i = 0; i < 16; i++) E.dots.push(mk('circle', {cx, cy, r: Math.max(1.4, h * .03), fill: GL, opacity: 0}, E.flow));
-    E.asGlow = mk('path', {d: sqD, fill: 'none', stroke: AMB, 'stroke-width': 7, opacity: .3, filter: 'url(#bloom)'}, dg);
-    E.as = mk('path', {d: sqD, fill: 'none', stroke: AMB, 'stroke-width': 2.6, 'stroke-linejoin': 'round', filter: 'url(#glow)'}, dg);
+    E.asGlow = mk('path', {d: sqD, fill: 'none', stroke: AMB, 'stroke-width': 7, opacity: 0}, dg);
+    E.as = mk('path', {d: sqD, fill: 'none', stroke: AMB, 'stroke-width': 2.6, 'stroke-linejoin': 'round'}, dg);
     // tape over the joint, once it fits
     E.tape = mk('g', {opacity: done ? 1 : 0}, dg);
     [45, 135, 225, 315].forEach(a => {
@@ -170,7 +166,7 @@
       mk('rect', {x: -tw / 2, y: -th / 2, width: tw, height: th, rx: 1, fill: GL, opacity: .75}, t);
       mk('path', {d: `M${-tw / 2 + 2},0 H${tw / 2 - 2}`, stroke: BLK, 'stroke-width': .7, opacity: .5, 'stroke-dasharray': '2 2'}, t);
     });
-    E.ring = mk('circle', {cx, cy, r: h, fill: 'none', stroke: GL, 'stroke-width': 3, opacity: 0, filter: 'url(#glow)'}, dg);
+    E.ring = mk('circle', {cx, cy, r: h, fill: 'none', stroke: GL, 'stroke-width': 3, opacity: 0}, dg);
     if (hasMorph) morphTw = gsap.to([E.af, E.as, E.asGlow], {morphSVG: {shape: ciD}, duration: 1, ease: 'none', paused: true});
 
     if (!compact) {
@@ -184,8 +180,7 @@
       if (rx - half - (cx + h + 8) > 6) { mk('line', {x1: cx + h + 3, x2: rx - half, y1: yl, y2: yl, stroke: GD, 'stroke-width': 1}, dg); mk('circle', {cx: cx + h * Math.cos(Math.asin(Math.min(1, (yl - cy) / h))), cy: yl, r: 1.8, fill: G}, dg); }
     }
 
-    mk('rect', {width: W, height: H, fill: 'url(#scan)', 'pointer-events': 'none'}, svg);
-    E.beam = mk('rect', {x: 0, y: -6, width: W, height: 3, fill: GL, opacity: 0, filter: 'url(#glow)', 'pointer-events': 'none'}, svg);
+    E.beam = mk('rect', {x: 0, y: -6, width: W, height: 3, fill: GL, opacity: 0, 'pointer-events': 'none'}, svg);
 
     setP(p); renderTrace(); drawLog(false);
   }
@@ -218,7 +213,7 @@
     for (let i = 0; i < N; i++) pts += (sx + 3 + (sw - 6) * i / (N - 1)).toFixed(1) + ',' + yOf(samples[i]).toFixed(1) + ' ';
     E.trace.setAttribute('points', pts); E.traceGlow.setAttribute('points', pts);
     const c = lvl > DANGER ? AMB : G;
-    E.trace.setAttribute('stroke', c); E.traceGlow.setAttribute('stroke', c); E.head.setAttribute('fill', lvl > DANGER ? '#fff0c4' : GL);
+    E.trace.setAttribute('stroke', c); E.traceGlow.setAttribute('stroke', c); E.head.setAttribute('fill', lvl > DANGER ? AMB : GL);
     E.head.setAttribute('cx', sx + sw - 3); E.head.setAttribute('cy', yOf(samples[N - 1]));
   }
 

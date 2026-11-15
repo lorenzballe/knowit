@@ -11,22 +11,21 @@
 <script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .08 0 0 0 0 .19 0 0 0 0 .23 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.26'/%3E%3C/svg%3E")}
-.q{text-shadow:2px 1.5px 0 rgba(255,61,151,.5)}
+.q{text-shadow:2px 1.5px 0 rgba(163,0,82,.5)}
 #stage{display:flex;flex-direction:column;gap:1.2cqh}
 #pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
 #opts{display:flex;flex-direction:column;gap:.9cqh;flex:none}
-.opt{display:flex;align-items:center;gap:3cqw;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:rgba(0,129,139,.06);border:0;border-radius:1cqh;padding:1.05cqh 3.4cqw;cursor:pointer;box-shadow:inset 0 0 0 2px #00818b,3px 3px 0 0 rgba(255,61,151,.7);transition:background .15s,box-shadow .15s;overflow-wrap:anywhere}
-.opt .n{flex:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;display:grid;place-items:center;font:700 max(1.7cqh,12px)/1 var(--body);box-shadow:inset 0 0 0 2px #00818b;color:var(--k)}
-.opt.picked{background:rgba(0,129,139,.16)}
-.opt.picked .n,.opt.ok .n{background:#00818b;color:#f5ecdc;box-shadow:2px 1.5px 0 #ff3d97}
-.opt.no .n{background:#ff3d97;color:#14303a;box-shadow:2px 1.5px 0 #00818b}
-.opt.now{background:rgba(255,61,151,.22);box-shadow:inset 0 0 0 2px #ff3d97,3px 3px 0 0 #00818b}
+.opt{display:flex;align-items:center;gap:3cqw;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:rgba(16,16,12,.06);border:0;border-radius:1cqh;padding:1.05cqh 3.4cqw;cursor:pointer;box-shadow:inset 0 0 0 2px var(--k),3px 3px 0 0 rgba(163,0,82,.7);transition:background .15s,box-shadow .15s;overflow-wrap:anywhere}
+.opt .n{flex:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;display:grid;place-items:center;font:700 max(1.7cqh,12px)/1 var(--body);box-shadow:inset 0 0 0 2px var(--k);color:var(--k)}
+.opt.picked{background:rgba(16,16,12,.14)}
+.opt.picked .n,.opt.ok .n{background:var(--k);color:#f4fff9;box-shadow:2px 1.5px 0 #a30052}
+.opt.no .n{background:#a30052;color:#f4fff9;box-shadow:2px 1.5px 0 var(--k)}
+.opt.now{background:rgba(163,0,82,.16);box-shadow:inset 0 0 0 2px #a30052,3px 3px 0 0 var(--k)}
 #why{display:flex;flex-direction:column;gap:.8cqh;flex:none;min-width:0}
-#why .big{color:var(--k);text-shadow:2px 1.5px 0 rgba(255,61,151,.6);font-size:max(min(3.9cqh,7.6cqw),18px);line-height:1.04;margin:0;overflow-wrap:anywhere}
+#why .big{color:var(--k);text-shadow:2px 1.5px 0 rgba(163,0,82,.6);font-size:max(min(3.9cqh,7.6cqw),18px);line-height:1.04;margin:0;overflow-wrap:anywhere}
 #why .body{font-size:max(1.75cqh,13px);line-height:1.38;margin:0}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Put in order · how sure" style="--c:#f5ecdc;--k:#14303a;--edge:#d8cbb2">
+<article class="card" id="card" data-topic="science" data-kind="Put in order · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
     <h2 class="q">How do CFCs destroy the ozone layer?</h2>
@@ -51,7 +50,7 @@
 gsap.registerPlugin(Flip, DrawSVGPlugin);
 (() => {
   const svg = Kit.$('pic'), box = Kit.$('opts'), say = Kit.$('say');
-  const PINK = '#ff3d97', TEAL = '#00818b', INK = '#14303a', PAPER = '#f5ecdc';
+  const PINK = '#a30052', TEAL = 'var(--edge)', INK = 'var(--k)', PAPER = '#f4fff9';
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const SHORT = ['rises', 'UV hits', 'Cl breaks free', 'ozone broken'];
   const TELL = [

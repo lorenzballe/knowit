@@ -12,11 +12,11 @@
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
 #why{display:flex;flex-direction:column;gap:4px}
-#why .big{color:#f6c650;font-size:clamp(22px,6.6cqw,30px);line-height:1.05;margin:0}
+#why .big{color:var(--k);font-size:clamp(22px,6.6cqw,30px);line-height:1.05;margin:0}
 #why .body{font-size:clamp(14px,3.9cqw,16px);line-height:1.4;margin:0}
-.say b,#why b{color:#f6c650}
+.say b,#why b{color:var(--k)}
 </style>
-<article class="card" id="card" data-topic="economics" data-kind="Scrub the timeline · follow the wealth" style="--c:#0d2326;--k:#eaf4ef;--edge:#061316">
+<article class="card" id="card" data-topic="economics" data-kind="Scrub the timeline · follow the wealth">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">RESOURCE CURSE</span></div>
     <h2 class="q">Why is the DRC poor despite being rich in gold and cobalt?</h2>
@@ -34,13 +34,13 @@
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say');
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
-  const GOLD = '#f6c650', RED = '#e8574a', INK = '#eaf4ef', DARK = '#0d2326';
+  const GOLD = '#9c8d00', RED = '#c4231a', INK = '#10100c', DARK = '#ffffff';
   const COLT = tint(38), COBT = tint(62), DIAT = tint(88);
   const BANDS = [
     {n: 'Coltan', w: .28, f: COLT, ink: INK},
     {n: 'Cobalt', w: .26, f: COBT, ink: DARK},
     {n: 'Diamonds', w: .2, f: DIAT, ink: DARK},
-    {n: 'Gold', w: .26, f: GOLD, ink: '#2a1b02'}
+    {n: 'Gold', w: .26, f: GOLD, ink: INK}
   ];
   const SAY = [
     "Under the soil of the DR Congo: gold, cobalt, diamonds, and about <b>80% of the world's coltan</b>. <b>Drag along the timeline.</b>",
@@ -137,7 +137,7 @@
     const gP = mk('g', {class: 'gl'}, svg);
     const pd = `M${jx - 3},${py} L${W + 6},${py}`, bt = fs * .42;
     mk('rect', {x: jx - 3, y: py - bt, width: W + 9 - jx, height: bt * 2, style: 'fill:var(--edge)'}, gP);
-    E.flow = [[GOLD, `${fs * .9} ${fs * 1.6}`, 0], [COBT, `${fs * .7} ${fs * 2.1}`, fs * .8], [COLT, `${fs * .5} ${fs * 2.4}`, fs * 1.7], [RED, `${fs * .35} ${fs * 1.3}`, fs * .4]].map(([c, da, o]) => ({o, e: mk('path', {d: pd, style: `stroke:${c}`, 'stroke-width': fs * .42, 'stroke-linecap': 'round', 'stroke-dasharray': da, fill: 'none', opacity: 0}, gP)}));
+    E.flow = [[INK, `${fs * .9} ${fs * 1.6}`, 0], [COBT, `${fs * .7} ${fs * 2.1}`, fs * .8], [COLT, `${fs * .5} ${fs * 2.4}`, fs * 1.7], [RED, `${fs * .35} ${fs * 1.3}`, fs * .4]].map(([c, da, o]) => ({o, e: mk('path', {d: pd, style: `stroke:${c}`, 'stroke-width': fs * .42, 'stroke-linecap': 'round', 'stroke-dasharray': da, fill: 'none', opacity: 0}, gP)}));
     for (const s of [-1, 1]) mk('line', {x1: jx - 2, x2: W + 6, y1: py + s * bt, y2: py + s * bt, stroke: INK, 'stroke-opacity': .8, 'stroke-width': 1.4}, gP);
     // rollers under the belt, outside the ground
     for (let x = ex1 + fs * 1.2; x < W - fs * .3; x += fs * 2.2) {
@@ -166,13 +166,13 @@
     const roomy = bh >= fs * 3.3;
     const peopleY = roomy ? bT + bh * .42 : bT + bh * .5 + 4;
     E.people = txt(gB, sx, peopleY, 'The people', {'text-anchor': 'middle'});
-    E.note = roomy ? txt(gB, sx, peopleY + fs * 1.35, 'all that stays', {'text-anchor': 'middle', fill: GOLD, 'font-weight': 400, 'font-size': Math.max(13, fs)}, 'hand') : null;
+    E.note = roomy ? txt(gB, sx, peopleY + fs * 1.35, 'all that stays', {'text-anchor': 'middle', fill: INK, 'font-weight': 400, 'font-size': Math.max(13, fs)}, 'hand') : null;
     E.drop = [0, 1].map(() => mk('circle', {cx: sx, r: fs * .2, fill: GOLD, opacity: 0}, gB));
 
     // ---- labels ----
     const gL = mk('g', {class: 'gl'}, svg);
     E.soil = txt(gL, X + nw + fs * .7, ny + fs * 1.1, 'Under the soil', {opacity: .9});
-    E.out = txt(gL, W - 3, py - fs * .95, 'Abroad →', {'text-anchor': 'end', fill: GOLD});
+    E.out = txt(gL, W - 3, py - fs * .95, 'Abroad →', {'text-anchor': 'end', fill: INK});
     const gPh = mk('g', {}, gL); E.phone = gPh;
     const smt = txt(gPh, W - 3, py - fs * 2.35, 'smartphones', {'text-anchor': 'end'});
     const tw = smt.getComputedTextLength();
@@ -191,10 +191,10 @@
       E.ticks.push(mk('circle', {cx: x, cy: trackY, r: fs * .18, fill: INK, opacity: .45}, gT));
       if (mode === 2) { const l = txt(gT, x, tickY, s, {'text-anchor': 'middle', opacity: .6}); fitX(l); E.tl.push(l); }
     });
-    E.breath = mk('circle', {cy: trackY, fill: 'none', stroke: GOLD, 'stroke-width': 1.5}, gT);
+    E.breath = mk('circle', {cy: trackY, fill: 'none', stroke: INK, 'stroke-width': 1.5}, gT);
     E.handle = mk('g', {}, gT);
     mk('circle', {cx: 0, cy: trackY, r: fs * .78, style: 'fill:var(--c)', stroke: INK, 'stroke-width': 2}, E.handle);
-    mk('circle', {cx: 0, cy: trackY, r: fs * .32, fill: GOLD}, E.handle);
+    mk('circle', {cx: 0, cy: trackY, r: fs * .32, fill: INK}, E.handle);
 
     // ---- labels never collide: keep in priority order, drop what overlaps or spills ----
     const placed = [];
@@ -245,8 +245,8 @@
     const hx = tx0 + (tx1 - tx0) * t / 4, idx = Math.round(t);
     E.tfill.setAttribute('x2', Math.max(tx0 + .1, hx));
     E.handle.setAttribute('transform', `translate(${hx.toFixed(1)},0)`);
-    E.ticks.forEach((c, i) => { const on = i <= t + .02; c.setAttribute('fill', on ? GOLD : INK); c.setAttribute('opacity', on ? 1 : .45); });
-    E.tl.forEach((l, i) => { l.setAttribute('fill', i === idx ? GOLD : INK); l.setAttribute('opacity', i === idx ? 1 : .55); });
+    E.ticks.forEach((c, i) => { const on = i <= t + .02; c.setAttribute('fill', INK); c.setAttribute('opacity', on ? 1 : .45); });
+    E.tl.forEach((l, i) => { l.setAttribute('fill', INK); l.setAttribute('opacity', i === idx ? 1 : .55); });
     const fr = Kit.calm ? .3 : (ph * .8) % 1;
     E.breath.setAttribute('cx', hx); E.breath.setAttribute('r', (fs * (1 + .9 * fr)).toFixed(1)); E.breath.setAttribute('opacity', touched ? 0 : ((1 - fr) * .8).toFixed(2));
   }

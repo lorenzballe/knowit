@@ -20,7 +20,7 @@
 .say{overflow-wrap:anywhere}
 .answered .q{font-size:max(2.5cqh,15px)}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Dive again · material fatigue" style="--c:#06192f;--k:#e8f2fb;--edge:#020c18">
+<article class="card" id="card" data-topic="technology" data-kind="Dive again · material fatigue">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">MATERIAL FATIGUE</span></div>
     <h2 class="q">What is the effect of repeated high-pressure cycles on the hull?</h2>
@@ -38,9 +38,9 @@
 (() => {
   const cv = Kit.$('cv'), say = Kit.$('say'), btn = Kit.$('dive'), card = Kit.$('card');
   const SLOTS = 5, D = .62, TW = -Math.PI * .28, LAYERS = 7, M = 112;   // D: the pressure at depth; TW: the weak spot
-  const AMBER = '#ffcf6e', RED = '#ff5b4a', TAU = Math.PI * 2;
+  const AMBER = '#10100c', RED = '#a8001a', TAU = Math.PI * 2;
   let x, W = 0, H = 0, fs = 12, cx = 0, cy = 0, R = 0, maxR = 1, BODY = 'sans-serif', DISP = 'serif', gb, px0, px1, py0, py1, ly1, ly2;
-  let K = [232, 242, 251], C = [6, 25, 47];
+  let K = [16, 16, 12], C = [0, 166, 255];
   let legRows = 1, legA = 'Hull strength', mode = 'v';
   let built = false, entered = false, fast = false, cur = null, resolveDive = null, finished = false, prevP = 0, dir = 0;
   const st = {p: 0, S: 1, dive: 0, busy: false, dead: false, flash: 0, shake: 0, t: 0, boom: 0, ta: 0, uDead: 0};

@@ -11,18 +11,16 @@
 <script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background-color:#1d0f0f}
 #stage{display:flex;flex:1;min-height:0;overflow:hidden}
 #neon{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;overflow:hidden}
 .hit{cursor:pointer}
-.q{text-shadow:0 0 2.4cqh rgba(255,70,95,.28)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-#why .r{color:#ff6b7e;font-weight:800}
-#why .i{color:#9fe9ff;font-weight:800}
+#why .r{color:#a3102a;font-weight:800}
+#why .i{color:var(--k);font-weight:800}
 .say{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="history" data-kind="Tap a sign · how sure" style="--c:#1d0f0f;--k:#f8ece6;--edge:#0b0505">
+<article class="card" id="card" data-topic="history" data-kind="Tap a sign · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SHIELD OR DOVE</span></div>
     <h2 class="q">Switzerland is neutral. Does that make it pacifist?</h2>
@@ -47,26 +45,8 @@
 
   const card = Kit.$('card'), svg = Kit.$('neon'), say = Kit.$('say');
 
-  // ---------- the brick wall: the whole card's ground ----------
-  let b = `<svg xmlns='http://www.w3.org/2000/svg' width='96' height='48'><rect width='96' height='48' fill='#0c0606'/>`;
-  const shade = () => { const r = 46 + Math.floor(Kit.rnd() * 14), g = 22 + Math.floor(Kit.rnd() * 8); return `rgb(${r},${g},${g - 3})`; };
-  [[1,1],[49,1],[-23,25],[25,25],[73,25]].forEach(([x,y]) => {
-    b += `<rect x='${x}' y='${y}' width='46' height='22' rx='1.5' fill='${shade()}'/>`;
-    b += `<rect x='${x+1}' y='${y}' width='44' height='2' fill='rgba(255,200,180,.06)'/>`;
-    b += `<rect x='${x+1}' y='${y+19}' width='44' height='3' fill='rgba(0,0,0,.25)'/>`;
-    for (let k = 0; k < 5; k++) b += `<circle cx='${x + 4 + Kit.rnd()*38}' cy='${y + 3 + Kit.rnd()*16}' r='${.4 + Kit.rnd()*.8}' fill='rgba(0,0,0,.3)'/>`;
-  });
-  b += `</svg>`;
-  card.style.backgroundImage = [
-    'radial-gradient(ellipse 70% 45% at 50% 40%, rgba(255,60,90,.13), transparent 70%)',
-    'radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(0,0,0,.72) 100%)',
-    'linear-gradient(rgba(14,6,6,.42), rgba(14,6,6,.42))',
-    `url("data:image/svg+xml,${encodeURIComponent(b)}")`
-  ].join(',');
-  card.style.backgroundSize = 'auto, auto, auto, 96px 48px';
-
   // ---------- the signs ----------
-  const C = {red: '#ff2e4d', white: '#fff3ee', ice: '#8fe6ff', amber: '#ffbf3c', violet: '#c77dff', glass: '#4d2d2a', cap: '#e2c2b8', unlit: '#7a4a44'};
+  const C = {red: '#a3102a', white: '#10100c', ice: '#10100c', amber: '#10100c', violet: '#10100c', glass: '#a06c00', cap: '#10100c', unlit: '#a06c00'};
   const SHIELD = 'M50,6 C64,14 78,16 90,16 C90,52 78,78 50,94 C22,78 10,52 10,16 C22,16 36,14 50,6 Z';
   const CROSS = 'M43,25 L57,25 L57,39 L71,39 L71,53 L57,53 L57,67 L43,67 L43,53 L29,53 L29,39 L43,39 Z';
   const DOVE = [
@@ -122,11 +102,11 @@
     Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: Math.max(1.5, fs * .22), result: 'a'}, fl);
     Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: Math.max(4, fs * .75), result: 'b'}, fl);
     const mg = Kit.mk('feMerge', {}, fl);
-    ['b', 'b', 'a', 'SourceGraphic'].forEach(n => Kit.mk('feMergeNode', {in: n}, mg));
+    ['SourceGraphic'].forEach(n => Kit.mk('feMergeNode', {in: n}, mg));
     [['sR', C.red], ['sI', C.ice], ['sA', C.amber]].forEach(([id, col]) => {
       const g = Kit.mk('radialGradient', {id}, defs);
-      Kit.mk('stop', {offset: 0, 'stop-color': col, 'stop-opacity': .3}, g);
-      Kit.mk('stop', {offset: .55, 'stop-color': col, 'stop-opacity': .08}, g);
+      Kit.mk('stop', {offset: 0, 'stop-color': col, 'stop-opacity': 0}, g);
+      Kit.mk('stop', {offset: .55, 'stop-color': col, 'stop-opacity': 0}, g);
       Kit.mk('stop', {offset: 1, 'stop-color': col, 'stop-opacity': 0}, g);
     });
 
@@ -136,10 +116,10 @@
     const pw = Math.min(W - 4, tw(pt) + fs * 1.6), pcy = y0 + plateH / 2;
     Kit.mk('ellipse', {cx: W / 2, cy: pcy, rx: Math.min(pw * .75, W / 2 - 1), ry: Math.max(2, Math.min(plateH * 1.4, pcy - 1, H - pcy - 1)), fill: 'url(#sA)'}, plate);
     plate.appendChild(pt);
-    [-1, 1].forEach(sg => Kit.mk('line', {x1: W / 2 + sg * pw * .38, x2: W / 2 + sg * pw * .42, y1: 0, y2: y0, stroke: '#6b4a44', 'stroke-width': 1.4, 'stroke-dasharray': '3 2'}, svg));
+    [-1, 1].forEach(sg => Kit.mk('line', {x1: W / 2 + sg * pw * .38, x2: W / 2 + sg * pw * .42, y1: 0, y2: y0, stroke: '#a06c00', 'stroke-width': 1.4, 'stroke-dasharray': '3 2'}, svg));
     Kit.mk('rect', {x: W / 2 - pw / 2, y: y0, width: pw, height: plateH, rx: fs * .5, fill: 'none', stroke: C.amber, 'stroke-width': 1.6, filter: 'url(#glow)'}, plate);
     // little screws on the plate
-    [-1, 1].forEach(sg => Kit.mk('circle', {cx: W / 2 + sg * (pw / 2 - fs * .45), cy: pcy, r: 1.4, fill: '#7a5a3a'}, plate));
+    [-1, 1].forEach(sg => Kit.mk('circle', {cx: W / 2 + sg * (pw / 2 - fs * .45), cy: pcy, r: 1.4, fill: '#a06c00'}, plate));
     el.plate = plate;
     el.arrow = Kit.mk('g', {}, svg);
     const ap = Kit.mk('g', {filter: 'url(#glow)'}, el.arrow);
@@ -151,7 +131,7 @@
     const sign = (i, paths, col, spillId, extras, mounts, label) => {
       const ghost = Kit.mk('g', {}, svg);
       paths.forEach(([d]) => Kit.mk('path', {d, fill: 'none', stroke: C.glass, 'stroke-width': w * 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .75}, ghost));
-      mounts.forEach(([x, y]) => Kit.mk('circle', {cx: x, cy: y, r: Math.max(1.8, s * .02), fill: '#140909', stroke: '#7a554e', 'stroke-width': 1}, ghost));
+      mounts.forEach(([x, y]) => Kit.mk('circle', {cx: x, cy: y, r: Math.max(1.8, s * .02), fill: '#10100c', stroke: '#a06c00', 'stroke-width': 1}, ghost));
       const on = Kit.mk('g', {}, svg), lit = Kit.mk('g', {}, on);
       const cy = top + s * .5, r = Math.max(4, Math.min(s * .95, cx[i] * .9, (W - cx[i]) * .9, cy * .95, (H - cy) * .95));
       el.spill[i] = Kit.mk('circle', {cx: cx[i], cy, r, fill: `url(#${spillId})`, opacity: .8}, lit);

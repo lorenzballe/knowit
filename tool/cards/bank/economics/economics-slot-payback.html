@@ -11,10 +11,6 @@
 <script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background-image:
-  radial-gradient(120% 80% at 20% 0%,rgba(255,255,255,.35),transparent 60%),
-  radial-gradient(90% 70% at 100% 100%,rgba(150,110,50,.10),transparent 70%),
-  repeating-linear-gradient(180deg,transparent 0 25px,rgba(70,110,160,.12) 25px 26px)}
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
 .hd{font-family:var(--hand)}
@@ -24,7 +20,7 @@
 #say{font:600 max(1.9cqh,13px)/1.3 var(--body)}
 #say b{font-weight:800}
 </style>
-<article class="card" id="card" data-topic="economics" data-kind="Drag to guess · how sure" style="--c:#f4ecd8;--k:#2b2418;--edge:#d6c6a0">
+<article class="card" id="card" data-topic="economics" data-kind="Drag to guess · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE PAYBACK</span></div>
     <h2 class="q">Italians bet €33.5 billion on slots in 2022. How much came back?</h2>
@@ -42,7 +38,7 @@
 (() => {
   gsap.registerPlugin(Physics2DPlugin, DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), keep = Kit.$('keep'), stage = Kit.$('stage');
-  const INK = '#2b2418', RED = '#a8392a', PAPER = '#f4ecd8', GD = '#2f5a22';
+  const INK = '#10100c', RED = '#a8281c', PAPER = '#fffdf0', GD = '#10100c', GROUND = '#FFE600', EDGE = '#9c8d00';
   const MAX = 35, BET = 33.5, BACK = 25, N = 25;
   const FINAL = 'Lights, music and small wins make slots feel generous. Yet the machines kept <b>€8.5 B</b>: only <b>74.6 %</b> came back.';
   let W, H, fs, sf, GY, PT, BW, X1, X2, AX;
@@ -59,10 +55,10 @@
 
   function defs() {
     const d = Kit.mk('defs', {}, svg);
-    const grad = (id, a, b) => { const g = Kit.mk('linearGradient', {id, x1: 0, y1: 0, x2: 0, y2: 1}, d); Kit.mk('stop', {offset: 0, 'stop-color': a, 'stop-opacity': .9}, g); Kit.mk('stop', {offset: 1, 'stop-color': b, 'stop-opacity': .8}, g); };
-    grad('gB', '#7fa2c9', '#3d6390'); grad('gG', '#9cc27a', '#4c7c3a');
+    const grad = (id, a, b, o) => { const g = Kit.mk('linearGradient', {id, x1: 0, y1: 0, x2: 0, y2: 1}, d); Kit.mk('stop', {offset: 0, 'stop-color': a, 'stop-opacity': o}, g); Kit.mk('stop', {offset: 1, 'stop-color': b, 'stop-opacity': o}, g); };
+    grad('gB', INK, INK, .22); grad('gG', INK, INK, 1);
     const gg = Kit.mk('radialGradient', {id: 'gC', cx: .35, cy: .3, r: .8}, d);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#fbe7a1'}, gg); Kit.mk('stop', {offset: .6, 'stop-color': '#d9a63c'}, gg); Kit.mk('stop', {offset: 1, 'stop-color': '#9a6b1c'}, gg);
+    Kit.mk('stop', {offset: 0, 'stop-color': EDGE}, gg); Kit.mk('stop', {offset: .6, 'stop-color': EDGE}, gg); Kit.mk('stop', {offset: 1, 'stop-color': EDGE}, gg);
     const hatch = (id, col, w, op, ang) => { const p = Kit.mk('pattern', {id, patternUnits: 'userSpaceOnUse', width: 5, height: 5, patternTransform: `rotate(${ang})`}, d); Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: col, 'stroke-width': w, opacity: op}, p); };
     hatch('hP', INK, .9, .55, 38); hatch('hR', RED, 1.5, .85, -40);
     const f = Kit.mk('filter', {id: 'wc', x: '-8%', y: '-8%', width: '116%', height: '116%'}, d);
@@ -96,8 +92,8 @@
 
     // coffee ring, top right
     const ring = Kit.mk('g', {filter: 'url(#wc)', opacity: .15}, L);
-    Kit.mk('circle', {cx: W - fs * 1.7, cy: fs * 1.4, r: fs * 1.25, fill: 'none', stroke: '#7a4e1e', 'stroke-width': 3}, ring);
-    Kit.mk('circle', {cx: W - fs * 1.6, cy: fs * 1.45, r: fs * 1.12, fill: 'none', stroke: '#7a4e1e', 'stroke-width': 1}, ring);
+    Kit.mk('circle', {cx: W - fs * 1.7, cy: fs * 1.4, r: fs * 1.25, fill: 'none', stroke: EDGE, 'stroke-width': 3}, ring);
+    Kit.mk('circle', {cx: W - fs * 1.6, cy: fs * 1.45, r: fs * 1.12, fill: 'none', stroke: EDGE, 'stroke-width': 1}, ring);
 
     // axis + grid
     E.axis = Kit.mk('path', {d: `M${AX + j()},${GY + 4} L${AX + j()},${PT - fs * .3}`, stroke: INK, 'stroke-width': 1.4, fill: 'none', 'stroke-linecap': 'round', opacity: .8}, L);
@@ -112,11 +108,11 @@
     T(L, 2, PT - fs * .85, '€ bn', {'font-size': sf, opacity: .7});
 
     // ground stains under the bars
-    for (const cx of [X1, X2]) Kit.mk('ellipse', {cx, cy: GY + 3, rx: BW * .62, ry: fs * .32, fill: '#7a5a2a', opacity: .16, filter: 'url(#bl)'}, L);
+    for (const cx of [X1, X2]) Kit.mk('ellipse', {cx, cy: GY + 3, rx: BW * .62, ry: fs * .32, fill: INK, opacity: .16, filter: 'url(#bl)'}, L);
     E.base = Kit.mk('path', {d: `M${AX - 6},${GY + j() * .5} Q${W / 2},${GY + 1.5} ${W - fs * .5},${GY + j() * .5}`, stroke: INK, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round'}, L);
 
     // bet bar, double pencil outline
-    E.setBet = bar(L, X1, 'gB', '#21456f');
+    E.setBet = bar(L, X1, 'gB', INK);
     E.betO = Kit.mk('path', {d: wob(X1 - BW / 2, y(BET), X1 + BW / 2, GY), stroke: INK, 'stroke-width': 1.4, fill: 'none', 'stroke-linejoin': 'round', opacity: .85}, L);
     E.betO2 = Kit.mk('path', {d: wob(X1 - BW / 2 + 1.5, y(BET) - 1, X1 + BW / 2 - 1, GY), stroke: INK, 'stroke-width': .8, fill: 'none', 'stroke-linejoin': 'round', opacity: .35}, L);
 
@@ -133,7 +129,7 @@
     Kit.mk('rect', {x: X2 - BW / 2 + 1, y: y(BET), width: BW - 2, height: y(BACK) - y(BET), fill: 'url(#hR)', opacity: .6}, E.keptR);
 
     // payback bar
-    E.setRetBar = bar(L, X2, 'gG', GD);
+    E.setRetBar = bar(L, X2, 'gG', EDGE);
     E.retO = Kit.mk('path', {d: wob(X2 - BW / 2, y(BACK), X2 + BW / 2, GY), stroke: INK, 'stroke-width': 1.4, fill: 'none', 'stroke-linejoin': 'round'}, L);
     E.links = Kit.mk('g', {}, L);
     Kit.mk('line', {x1: X1 + BW / 2 + 4, x2: X2 - BW / 2 - 4, y1: y(BET), y2: y(BET), stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: .5}, E.links);
@@ -147,7 +143,7 @@
 
     // labels
     E.betLab = T(L, X1, 0, '€33.5 B', {'text-anchor': 'middle', 'font-size': fs * 1.1, 'font-weight': 800});
-    const halo = {stroke: PAPER, 'stroke-width': 4, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
+    const halo = {stroke: GROUND, 'stroke-width': 4, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
     E.keptL = Kit.mk('g', {}, L);
     const gh = y(BACK) - y(BET), kf = Math.max(12, Math.min(fs, gh * .6, BW / 5.2));
     const inside = gh * .6 >= 12;
@@ -251,7 +247,7 @@
   }
 
   function spark(x, yy) {
-    const p = Kit.mk('path', {d: `M${x - 9},${yy - 3} l-5,-5 M${x},${yy - 6} l0,-7 M${x + 9},${yy - 3} l5,-5`, stroke: '#9a6b1c', 'stroke-width': 1.5, 'stroke-linecap': 'round', fill: 'none'}, E.coins);
+    const p = Kit.mk('path', {d: `M${x - 9},${yy - 3} l-5,-5 M${x},${yy - 6} l0,-7 M${x + 9},${yy - 3} l5,-5`, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round', fill: 'none'}, E.coins);
     gsap.fromTo(p, {opacity: 1, scale: .6, svgOrigin: `${x} ${yy}`}, {opacity: 0, scale: 1.3, duration: .4, ease: 'power2.out', onComplete: () => p.remove()});
   }
 
@@ -263,9 +259,9 @@
     const r = Math.max(5, Math.min(fs * .52, BW * .13)), grav = Math.max(900, H * 3), Tt = .72, st = {v: 0};
     for (let i = 0; i < N; i++) {
       const c = Kit.mk('g', {}, E.coins), s = Kit.mk('g', {}, c);
-      Kit.mk('circle', {r, fill: 'url(#gC)', stroke: '#5a3e10', 'stroke-width': 1.1}, s);
-      Kit.mk('circle', {r: r * .58, fill: 'none', stroke: '#5a3e10', 'stroke-width': .8, opacity: .6}, s);
-      Kit.mk('path', {d: `M${-r * .45},${-r * .35} q${r * .3},${-r * .35} ${r * .7},${-r * .25}`, stroke: '#fff8dc', 'stroke-width': 1.2, fill: 'none', opacity: .8}, s);
+      Kit.mk('circle', {r, fill: 'url(#gC)', stroke: INK, 'stroke-width': 1.1}, s);
+      Kit.mk('circle', {r: r * .58, fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .6}, s);
+      Kit.mk('path', {d: `M${-r * .45},${-r * .35} q${r * .3},${-r * .35} ${r * .7},${-r * .25}`, stroke: PAPER, 'stroke-width': 1.2, fill: 'none', opacity: .8}, s);
       const sx = X1 + (Kit.rnd() - .5) * BW * .5, sy = y(BACK - i - .5);
       const tx = X2 + (Kit.rnd() - .5) * BW * .4, ty = y(i + 1) - r;
       const vx = (tx - sx) / Tt, vy = (ty - sy - .5 * grav * Tt * Tt) / Tt;

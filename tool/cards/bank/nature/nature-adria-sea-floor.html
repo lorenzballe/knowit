@@ -18,19 +18,19 @@
 #pic{flex:1;min-height:0;width:100%;display:block;touch-action:pan-y;overflow:hidden}
 #steps{display:flex;flex-direction:column;gap:.85cqh;flex:none}
 #why{display:flex;flex-direction:column;gap:.9cqh;flex:none}
-.chip{display:flex;align-items:center;gap:3cqw;font:700 max(1.95cqh,13px)/1.15 var(--body);color:var(--k);background:#fbf6e9;border:0;border-radius:.5cqh;padding:1cqh 3.5cqw;text-align:left;cursor:pointer;box-shadow:0 .35cqh .9cqh rgba(80,52,12,.18),0 0 0 1px rgba(80,52,12,.07);overflow-wrap:anywhere;-webkit-tap-highlight-color:transparent}
-.chip .n{flex:none;width:max(3.3cqh,22px);height:max(3.3cqh,22px);border-radius:50%;display:grid;place-items:center;font:800 max(1.7cqh,12px)/1 var(--mono);border:2px dashed rgba(31,43,51,.35);color:var(--k);box-sizing:border-box}
-.chip.set .n{border:0;background:var(--k);color:#fbf6e9}
-.chip.ok .n{background:#3d7656;color:#fff}
-.chip.no .n{background:#a4472a;color:#fff}
+.chip{display:flex;align-items:center;gap:3cqw;font:700 max(1.95cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,var(--c));border:0;border-radius:.5cqh;padding:1cqh 3.5cqw;text-align:left;cursor:pointer;box-shadow:0 .35cqh 0 var(--edge),0 0 0 1px var(--edge);overflow-wrap:anywhere;-webkit-tap-highlight-color:transparent}
+.chip .n{flex:none;width:max(3.3cqh,22px);height:max(3.3cqh,22px);border-radius:50%;display:grid;place-items:center;font:800 max(1.7cqh,12px)/1 var(--mono);border:2px dashed color-mix(in srgb,var(--k) 45%,transparent);color:var(--k);box-sizing:border-box}
+.chip.set .n{border:0;background:var(--k);color:var(--c)}
+.chip.ok .n{background:var(--k);color:var(--c)}
+.chip.no .n{background:#6e1a52;color:#fff}
 .chip .t2{flex:1;min-width:0}
-.chip .was{flex:none;font:700 max(1.45cqh,12px)/1 var(--mono);color:#a4472a}
-.chip.now{box-shadow:0 0 0 .3cqh var(--k),0 .8cqh 1.6cqh rgba(80,52,12,.28)}
+.chip .was{flex:none;font:700 max(1.45cqh,12px)/1 var(--mono);color:#6e1a52}
+.chip.now{box-shadow:0 0 0 .3cqh var(--k)}
 .lb{font-family:var(--mono);font-weight:700;letter-spacing:.06em}
 #why .big{margin:0;font-size:max(4.2cqh,26px);line-height:1.02}
 #why .body{margin:0;font-size:max(1.85cqh,12.5px);line-height:1.36}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Put in order · how sure" style="--c:#efe5cf;--k:#1f2b33;--edge:#cdb98f">
+<article class="card" id="card" data-topic="nature" data-kind="Put in order · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
     <h2 class="q">What kind of place was the Adria microplate 220 million years ago?</h2>
@@ -50,11 +50,11 @@
 (() => {
   gsap.registerPlugin(MotionPathPlugin, Flip);
   const svg = Kit.$('pic'), stepsBox = Kit.$('steps'), say = Kit.$('say');
-  const INK = '#1f2b33';
+  const INK = '#10100c';
   const STEPS = ['Adria lies under the sea', 'Carbonate sediment piles up on it', 'The layers harden into rock', 'The rock now sits high in the Alps'];
   const SHOW = [2, 0, 3, 1];
-  const WET = ['#fbf3df', '#f0e3c4', '#f8edd3', '#ebdcba', '#f5ead0'];
-  const STONE = ['#dcd6c9', '#c5bdad', '#d4cdbe', '#bbb2a0', '#cfc8b8'];
+  const WET = ['#ffffff', '#f1fff5', '#e3fbec', '#f6fffa', '#e9fcf0'];
+  const STONE = ['#e6f2e9', '#d5e8da', '#dfeee3', '#cbe1d1', '#dbebdf'];
 
   // ---------- the slips ----------
   SHOW.forEach((s, i) => {
@@ -114,42 +114,42 @@
     const defs = Kit.mk('defs', {}, svg);
     const filt = (id, s, op) => `<filter id="${id}" x="-20%" y="-20%" width="140%" height="150%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="${s}"/><feOffset dx="${(s * .45).toFixed(1)}" dy="${s}" result="b"/>
-      <feFlood flood-color="#4a3210" flood-opacity="${op}"/><feComposite in2="b" operator="in" result="s"/>
+      <feFlood flood-color="#10100c" flood-opacity="${op}"/><feComposite in2="b" operator="in" result="s"/>
       <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4" result="n"/>
       <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  .3 0 0 0 -.08" result="na"/>
       <feComposite in="na" in2="SourceGraphic" operator="in" result="g"/>
       <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/><feMergeNode in="g"/></feMerge></filter>`;
     defs.innerHTML = filt('pp', sh, .34) + filt('pd', sh * 1.7, .38) + filt('ps', sh * .6, .2) + `
-      <linearGradient id="wgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd4cf"/><stop offset=".55" stop-color="#4fa3ad"/><stop offset="1" stop-color="#2b6f84"/></linearGradient>
-      <linearGradient id="wgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6fbf6" stop-opacity=".8"/><stop offset="1" stop-color="#9fdcd6" stop-opacity=".15"/></linearGradient>
-      <radialGradient id="sun" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffe7a3"/><stop offset="1" stop-color="#f0b84f"/></radialGradient>
-      <linearGradient id="mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7efe1"/><stop offset="1" stop-color="#d9cfbb"/></linearGradient>
-      <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2a98f" stop-opacity=".75"/><stop offset=".5" stop-color="#f2a98f" stop-opacity="0"/></linearGradient>
-      <linearGradient id="adr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9b7a58"/><stop offset="1" stop-color="#6f5440"/></linearGradient>`;
+      <linearGradient id="wgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#007a2f"/><stop offset=".55" stop-color="#007a2f"/><stop offset="1" stop-color="#007a2f"/></linearGradient>
+      <linearGradient id="wgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".22"/><stop offset="1" stop-color="#ffffff" stop-opacity=".22"/></linearGradient>
+      <radialGradient id="sun" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></radialGradient>
+      <linearGradient id="mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+      <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+      <linearGradient id="adr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10100c"/><stop offset="1" stop-color="#10100c"/></linearGradient>`;
 
     // sky: sun and two paper clouds
     const sky = layer('sky', .15, 'ps');
     const sr = Math.min(W, H) * .055, sx = W * .87, sy = Math.max(fs * 2.3, H * .1);
-    for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2; Kit.mk('polygon', {points: `${sx + Math.cos(a - .12) * sr * 1.2},${sy + Math.sin(a - .12) * sr * 1.2} ${sx + Math.cos(a) * sr * 1.65},${sy + Math.sin(a) * sr * 1.65} ${sx + Math.cos(a + .12) * sr * 1.2},${sy + Math.sin(a + .12) * sr * 1.2}`, fill: '#f0b84f'}, sky); }
+    for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2; Kit.mk('polygon', {points: `${sx + Math.cos(a - .12) * sr * 1.2},${sy + Math.sin(a - .12) * sr * 1.2} ${sx + Math.cos(a) * sr * 1.65},${sy + Math.sin(a) * sr * 1.65} ${sx + Math.cos(a + .12) * sr * 1.2},${sy + Math.sin(a + .12) * sr * 1.2}`, fill: '#10100c'}, sky); }
     Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: 'url(#sun)'}, sky);
-    const cloud = (cx, cy, s) => Kit.mk('path', {d: `M${cx - 2.2 * s},${cy} h${4.4 * s} a${s} ${s} 0 0 0 -${1.3 * s},-${1.1 * s} a${1.15 * s} ${1.15 * s} 0 0 0 -${1.9 * s},-${.5 * s} a${.9 * s} ${.9 * s} 0 0 0 -${1.2 * s},${1.6 * s}z`, fill: '#fffdf6'}, sky);
+    const cloud = (cx, cy, s) => Kit.mk('path', {d: `M${cx - 2.2 * s},${cy} h${4.4 * s} a${s} ${s} 0 0 0 -${1.3 * s},-${1.1 * s} a${1.15 * s} ${1.15 * s} 0 0 0 -${1.9 * s},-${.5 * s} a${.9 * s} ${.9 * s} 0 0 0 -${1.2 * s},${1.6 * s}z`, fill: '#ffffff'}, sky);
     cloud(W * .63, Math.max(fs * 2.6, H * .11), Math.min(W, H) * .028);
     cloud(W * .36, Math.max(fs * 3.2, H * .15), Math.min(W, H) * .022);
 
     // land: Europe and Africa as card flats
     const land = layer('land', .45, 'pp');
     const lt = Math.max(H * .14, fs * 2.9);
-    poly(land, [[-24, H + 4], [-24, lt], [W * .05, lt - fs * .5], [W * .1, lt + fs * .2], [W * .15, yS - fs * .4], [W * .2, yS + H * .05], [W * .19, yF], [W * .205, H + 4]], {fill: '#7f9c64'}, 1.4);
-    poly(land, [[-24, H + 4], [-24, H * .5], [W * .1, H * .48], [W * .2, H * .53], [W * .205, H + 4]], {fill: '#5f7b4b'}, 1.2);
-    poly(land, [[W + 24, H + 4], [W + 24, lt + fs * .3], [W * .94, lt - fs * .2], [W * .89, lt + fs * .5], [W * .85, yS - fs * .2], [W * .8, yS + H * .06], [W * .81, yF], [W * .795, H + 4]], {fill: '#d4a462'}, 1.2);
-    poly(land, [[W + 24, H + 4], [W + 24, H * .52], [W * .9, H * .5], [W * .8, H * .55], [W * .795, H + 4]], {fill: '#b0824a'}, 1.2);
+    poly(land, [[-24, H + 4], [-24, lt], [W * .05, lt - fs * .5], [W * .1, lt + fs * .2], [W * .15, yS - fs * .4], [W * .2, yS + H * .05], [W * .19, yF], [W * .205, H + 4]], {fill: '#007a2f'}, 1.4);
+    poly(land, [[-24, H + 4], [-24, H * .5], [W * .1, H * .48], [W * .2, H * .53], [W * .205, H + 4]], {fill: '#10100c', opacity: .5}, 1.2);
+    poly(land, [[W + 24, H + 4], [W + 24, lt + fs * .3], [W * .94, lt - fs * .2], [W * .89, lt + fs * .5], [W * .85, yS - fs * .2], [W * .8, yS + H * .06], [W * .81, yF], [W * .795, H + 4]], {fill: '#ffffff'}, 1.2);
+    poly(land, [[W + 24, H + 4], [W + 24, H * .52], [W * .9, H * .5], [W * .8, H * .55], [W * .795, H + 4]], {fill: '#10100c', opacity: .2}, 1.2);
     // little paper trees on Europe, a palm on Africa
-    for (let i = 0; i < 3; i++) { const tx = W * (.025 + i * .04), ty = lt + fs * (.2 + (i % 2) * .3) - (i === 1 ? fs * .5 : 0), s = fs * .55; Kit.mk('polygon', {points: `${tx},${ty - s * 1.8} ${tx + s * .6},${ty} ${tx - s * .6},${ty}`, fill: '#4e6b3c'}, land); }
-    { const tx = W * .95, ty = lt, s = fs * .5; Kit.mk('path', {d: `M${tx},${ty} q${s * .2},${-s * 1.2} ${-s * .1},${-s * 2.2}`, stroke: '#7a5530', 'stroke-width': 1.6, fill: 'none'}, land);
-      [[-1.3, -.2], [1.3, -.1], [-.9, .6], [1, .7]].forEach(([dx, dy]) => Kit.mk('path', {d: `M${tx - s * .1},${ty - s * 2.2} q${dx * s * .5},${-s * .6} ${dx * s},${dy * s}`, stroke: '#5f7b4b', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, land)); }
+    for (let i = 0; i < 3; i++) { const tx = W * (.025 + i * .04), ty = lt + fs * (.2 + (i % 2) * .3) - (i === 1 ? fs * .5 : 0), s = fs * .55; Kit.mk('polygon', {points: `${tx},${ty - s * 1.8} ${tx + s * .6},${ty} ${tx - s * .6},${ty}`, fill: '#10100c'}, land); }
+    { const tx = W * .95, ty = lt, s = fs * .5; Kit.mk('path', {d: `M${tx},${ty} q${s * .2},${-s * 1.2} ${-s * .1},${-s * 2.2}`, stroke: '#10100c', 'stroke-width': 1.6, fill: 'none'}, land);
+      [[-1.3, -.2], [1.3, -.1], [-.9, .6], [1, .7]].forEach(([dx, dy]) => Kit.mk('path', {d: `M${tx - s * .1},${ty - s * 2.2} q${dx * s * .5},${-s * .6} ${dx * s},${dy * s}`, stroke: '#007a2f', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, land)); }
     const lf = Math.max(12, Math.min(sm, W * .16 / 4.1)), ly = Math.max(lt, yS) + fs * 1.6;
-    txt(land, W * .085, ly, 'EUROPE', {'font-size': lf, fill: '#fbf6e9'});
-    txt(land, W * .915, ly, 'AFRICA', {'font-size': lf, fill: '#3b2a14'});
+    txt(land, W * .085, ly, 'EUROPE', {'font-size': lf, fill: '#ffffff'});
+    txt(land, W * .915, ly, 'AFRICA', {'font-size': lf, fill: '#10100c'});
 
     // the sea behind, its reef and its fish
     const wb = layer('wback', .6, 'ps');
@@ -157,23 +157,23 @@
     const top = []; for (let x = sxa; x <= sxb + .1; x += 7) top.push(`${x.toFixed(1)},${(yS + Math.sin(x * .09) * 2).toFixed(1)}`);
     Kit.mk('polygon', {points: `${top.join(' ')} ${sxb},${yF + 6} ${sxa},${yF + 6}`, fill: 'url(#wgB)', opacity: .93}, wb);
     // light shafts
-    for (let i = 0; i < 3; i++) { const x = xa + (xb - xa) * (.2 + i * .3); Kit.mk('polygon', {points: `${x},${yS + 3} ${x + W * .05},${yS + 3} ${x + W * .1},${yF - bandTotal * .4} ${x + W * .02},${yF - bandTotal * .4}`, fill: '#e9fffb', opacity: .12}, wb); }
+    for (let i = 0; i < 3; i++) { const x = xa + (xb - xa) * (.2 + i * .3); Kit.mk('polygon', {points: `${x},${yS + 3} ${x + W * .05},${yS + 3} ${x + W * .1},${yF - bandTotal * .4} ${x + W * .02},${yF - bandTotal * .4}`, fill: '#ffffff', opacity: .12}, wb); }
     G.reef = Kit.mk('g', {}, wb); G.weeds = []; G.vents = [];
     const rn = 7;
     for (let i = 0; i < rn; i++) {
       const x = xa + W * .09 + (i + .5) / rn * (xb - xa - W * .18) + (R() - .5) * W * .02;
       if (i % 2 === 0) {
         const r = bandTotal * (.2 + R() * .1);
-        Kit.mk('path', {d: `M${x - r * 1.4},${yF} q0,${-r * 1.6} ${r * 1.4},${-r * 1.6} q${r * 1.4},0 ${r * 1.4},${r * 1.6}z`, fill: ['#e58f73', '#f0b27a', '#d97d6a', '#eea27c'][i / 2 % 4]}, G.reef);
-        for (let k = 0; k < 3; k++) Kit.mk('circle', {cx: x + (k - 1) * r * .6, cy: yF - r * (.7 + (k % 2) * .4), r: r * .16, fill: '#fbe3c8', opacity: .75}, G.reef);
+        Kit.mk('path', {d: `M${x - r * 1.4},${yF} q0,${-r * 1.6} ${r * 1.4},${-r * 1.6} q${r * 1.4},0 ${r * 1.4},${r * 1.6}z`, fill: ['#ffffff', '#f1fff5', '#e3fbec', '#f6fffa'][i / 2 % 4]}, G.reef);
+        for (let k = 0; k < 3; k++) Kit.mk('circle', {cx: x + (k - 1) * r * .6, cy: yF - r * (.7 + (k % 2) * .4), r: r * .16, fill: '#10100c', opacity: .75}, G.reef);
         G.vents.push(x);
       } else {
         const h = bandTotal * (.55 + R() * .25);
-        const p = Kit.mk('path', {d: `M${x},${yF} c${-h * .3},${-h * .3} ${h * .3},${-h * .6} 0,${-h}`, fill: 'none', stroke: '#3e8a66', 'stroke-width': Math.max(1.8, fs * .17), 'stroke-linecap': 'round'}, G.reef);
+        const p = Kit.mk('path', {d: `M${x},${yF} c${-h * .3},${-h * .3} ${h * .3},${-h * .6} 0,${-h}`, fill: 'none', stroke: '#ffffff', 'stroke-width': Math.max(1.8, fs * .17), 'stroke-linecap': 'round'}, G.reef);
         G.weeds.push([p, x]);
       }
     }
-    G.fish = [['#ee7d4a', .45], ['#f6cf6a', .62]].map(([c, p]) => {
+    G.fish = [['#ffffff', .45], ['#eafff0', .62]].map(([c, p]) => {
       const g = Kit.mk('g', {opacity: 0}, wb), s = Math.max(5, fs * .45);
       Kit.mk('ellipse', {cx: 0, cy: 0, rx: s * 1.4, ry: s * .7, fill: c}, g);
       Kit.mk('polygon', {points: `${-s * 1.2},0 ${-s * 2.2},${-s * .7} ${-s * 2.2},${s * .7}`, fill: c}, g);
@@ -190,10 +190,10 @@
     Kit.mk('polygon', {points: pts}, clip);
     Kit.mk('polygon', {points: pts, fill: 'url(#mtn)'}, mt);
     const mg = Kit.mk('g', {'clip-path': 'url(#mc)'}, mt), bb = mh / 9;
-    for (let k = 0; k < 11; k++) Kit.mk('rect', {x: W * .05, y: yF - (k + 1) * bb, width: W * .9, height: Math.max(.5, bb * .55), fill: k % 2 ? '#cfc4ae' : '#e2d8c5', opacity: .8, transform: `rotate(-6 ${W / 2} ${yF - mh / 2})`}, mg);
-    for (let i = 1; i < pk.length - 1; i++) if (fr[i][1] > fr[i - 1][1] && fr[i][1] > fr[i + 1][1]) Kit.mk('polygon', {points: `${pk[i][0]},${pk[i][1]} ${pk[i + 1][0]},${pk[i + 1][1]} ${pk[i + 1][0]},${yF + 4} ${pk[i][0]},${yF + 4}`, fill: '#3b2a14', opacity: .13}, mg);
+    for (let k = 0; k < 11; k++) Kit.mk('rect', {x: W * .05, y: yF - (k + 1) * bb, width: W * .9, height: Math.max(.5, bb * .55), fill: k % 2 ? '#d5e8da' : '#e9f6ed', opacity: .8, transform: `rotate(-6 ${W / 2} ${yF - mh / 2})`}, mg);
+    for (let i = 1; i < pk.length - 1; i++) if (fr[i][1] > fr[i - 1][1] && fr[i][1] > fr[i + 1][1]) Kit.mk('polygon', {points: `${pk[i][0]},${pk[i][1]} ${pk[i + 1][0]},${pk[i + 1][1]} ${pk[i + 1][0]},${yF + 4} ${pk[i][0]},${yF + 4}`, fill: '#10100c', opacity: .13}, mg);
     // snow caps on the tallest peaks
-    [5, 3, 7].forEach(i => { const [x, y] = pk[i], d = mh * .1; Kit.mk('polygon', {points: `${x},${y} ${x + d * .9},${y + d} ${x + d * .3},${y + d * .75} ${x - d * .2},${y + d * 1.05} ${x - d * .8},${y + d}`, fill: '#fffdf8'}, mg); });
+    [5, 3, 7].forEach(i => { const [x, y] = pk[i], d = mh * .1; Kit.mk('polygon', {points: `${x},${y} ${x + d * .9},${y + d} ${x + d * .3},${y + d * .75} ${x - d * .2},${y + d * 1.05} ${x - d * .8},${y + d}`, fill: '#ffffff'}, mg); });
     Kit.mk('rect', {x: W * .18, y: yF - mh - 4, width: W * .64, height: mh + 8, fill: 'url(#glow)'}, mg);
     if (mh > fs * 5.2) {
       txt(mt, W / 2, yF - mh * .22, 'limestone · dolomite', {'font-size': sm});
@@ -206,10 +206,10 @@
     // Adria, the block in the middle
     const ad = layer('adria', .8, 'pd');
     poly(ad, [[xa, yF], [xb, yF], [xb + W * .012, yB], [xa - W * .012, yB]], {fill: 'url(#adr)'}, 1.6);
-    poly(ad, [[xa - W * .004, yF + (yB - yF) * .62], [xb + W * .004, yF + (yB - yF) * .58], [xb + W * .012, yB], [xa - W * .012, yB]], {fill: '#5e4635', opacity: .55}, 1.2);
+    poly(ad, [[xa - W * .004, yF + (yB - yF) * .62], [xb + W * .004, yF + (yB - yF) * .58], [xb + W * .012, yB], [xa - W * .012, yB]], {fill: '#007a2f', opacity: .55}, 1.2);
     const room = yB - yF > fs * 3.4;
-    txt(ad, W / 2, (yF + yB) / 2 + (room ? -fs * .2 : fs * .35), 'ADRIA', {'font-size': fs, fill: '#fbf6e9', 'letter-spacing': '.3em'});
-    if (room) txt(ad, W / 2, (yF + yB) / 2 + fs * 1.15, 'microplate', {'font-size': sm, fill: '#f1e3cc', opacity: .85});
+    txt(ad, W / 2, (yF + yB) / 2 + (room ? -fs * .2 : fs * .35), 'ADRIA', {'font-size': fs, fill: '#ffffff', 'letter-spacing': '.3em'});
+    if (room) txt(ad, W / 2, (yF + yB) / 2 + fs * 1.15, 'microplate', {'font-size': sm, fill: '#ffffff', opacity: .85});
 
     // the strata that the sea will lay down
     const st = layer('strata', .85, 'ps');
@@ -220,8 +220,8 @@
       b.dataset.yb = y1; return b;
     });
     G.cracks = Kit.mk('g', {opacity: 0}, st);
-    for (let i = 0; i < 9; i++) { const x = xa + W * .06 + R() * (xb - xa - W * .12), k = Math.floor(R() * 5), y = yF - (k + .5) * bh; Kit.mk('path', {d: `M${x},${y - bh * .4} l${(R() - .5) * 2},${bh * .8}`, stroke: '#6f6656', 'stroke-width': 1, opacity: .6}, G.cracks); }
-    for (let i = 0; i < 7; i++) { const x = xa + W * .07 + R() * (xb - xa - W * .14), y = yF - (Math.floor(R() * 5) + .5) * bh; Kit.mk('path', {d: `M${x - 3},${y} a3 2.4 0 0 1 6 0 z`, fill: '#8a816f', opacity: .55}, G.cracks); }
+    for (let i = 0; i < 9; i++) { const x = xa + W * .06 + R() * (xb - xa - W * .12), k = Math.floor(R() * 5), y = yF - (k + .5) * bh; Kit.mk('path', {d: `M${x},${y - bh * .4} l${(R() - .5) * 2},${bh * .8}`, stroke: '#10100c', 'stroke-width': 1, opacity: .6}, G.cracks); }
+    for (let i = 0; i < 7; i++) { const x = xa + W * .07 + R() * (xb - xa - W * .14), y = yF - (Math.floor(R() * 5) + .5) * bh; Kit.mk('path', {d: `M${x - 3},${y} a3 2.4 0 0 1 6 0 z`, fill: '#10100c', opacity: .55}, G.cracks); }
     G.slabel = txt(st, W / 2, yF - bandTotal / 2 + sm * .35, 'limestone · dolomite', {'font-size': sm});
     gsap.set(G.slabel, {autoAlpha: 0});
     L.flakes = Kit.mk('g', {}, svg);
@@ -231,12 +231,12 @@
     const crest = []; for (let x = sxa; x <= sxb + .1; x += 6) crest.push([x, yS + Math.sin(x * .09 + 1) * 2.4]);
     Kit.mk('polygon', {points: crest.map(p => p.join(',')).join(' ') + ` ${sxb},${yS + H * .08} ${sxa},${yS + H * .08}`, fill: 'url(#wgF)'}, wf);
     Kit.mk('polyline', {points: crest.map(p => p.join(',')).join(' '), fill: 'none', stroke: '#ffffff', 'stroke-width': 1.8, opacity: .9}, wf);
-    G.tethys = txt(wf, W / 2, yS + fs * 1.75, 'TETHYS SEA', {'font-size': fs, fill: '#174b5c', 'letter-spacing': '.22em'});
+    G.tethys = txt(wf, W / 2, yS + fs * 1.75, 'TETHYS SEA', {'font-size': fs, fill: '#ffffff', 'letter-spacing': '.22em'});
 
     // the time chip
     const ui = layer('ui', .1, 'ps');
     G.timeBox = Kit.mk('rect', {x: fs * .35, y: fs * .35, height: fs * 1.75, width: 10, rx: fs * .3, fill: INK}, ui);
-    G.time = txt(ui, fs * .95, fs * .35 + fs * 1.18, '', {'font-size': sm, fill: '#fbf6e9', 'text-anchor': 'start'});
+    G.time = txt(ui, fs * .95, fs * .35 + fs * 1.18, '', {'font-size': sm, fill: '#ffffff', 'text-anchor': 'start'});
     setTime(phase === 'end' ? 'TODAY' : '220 MILLION YEARS AGO');
 
     // state
@@ -263,7 +263,7 @@
     });
     G.weeds.forEach(([p, x], i) => idle.push(gsap.fromTo(p, {rotation: -8, svgOrigin: `${x} ${yF}`}, {rotation: 8, svgOrigin: `${x} ${yF}`, duration: 1.5 + i * .25, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
     G.vents.forEach((x, i) => {
-      const b = Kit.mk('circle', {cx: x, cy: yF - bandTotal * .3, r: Math.max(1.6, fs * .14), fill: 'none', stroke: '#e9fffb', 'stroke-width': 1, opacity: 0}, G.reef);
+      const b = Kit.mk('circle', {cx: x, cy: yF - bandTotal * .3, r: Math.max(1.6, fs * .14), fill: 'none', stroke: '#ffffff', 'stroke-width': 1, opacity: 0}, G.reef);
       idle.push(gsap.timeline({repeat: -1, delay: .6 + i * 1.1, repeatDelay: 1.4})
         .fromTo(b, {y: 0, x: 0, opacity: .9}, {y: -(yF - bandTotal * .3 - yS - 4), x: fs * .4, duration: 2.6, ease: 'sine.in'})
         .to(b, {opacity: 0, duration: .4}, 2.2));
@@ -336,8 +336,8 @@
     for (let i = 0; i < 30; i++) {
       const x0 = xa + R() * (xb - xa), y0 = yS + fs * .4, x1 = xa + W * .05 + R() * (xb - xa - W * .1), y1 = yF - R() * bandTotal * .7;
       const sw = (R() - .5) * W * .22, d = 1.2 + R() * .7, t0 = 1.35 + i * .055;
-      const fl = i % 4 ? Kit.mk('circle', {cx: 0, cy: 0, r: 1.4 + R() * 1.6, fill: '#fffbf0', opacity: 0}, L.flakes)
-                       : Kit.mk('path', {d: 'M-3,0 a3 2.4 0 0 1 6 0 z', fill: '#fff6e0', stroke: '#cdb98f', 'stroke-width': .6, opacity: 0}, L.flakes);
+      const fl = i % 4 ? Kit.mk('circle', {cx: 0, cy: 0, r: 1.4 + R() * 1.6, fill: '#ffffff', opacity: 0}, L.flakes)
+                       : Kit.mk('path', {d: 'M-3,0 a3 2.4 0 0 1 6 0 z', fill: '#ffffff', stroke: '#10100c', 'stroke-width': .6, opacity: 0}, L.flakes);
       tl.set(fl, {x: x0, y: y0}, t0)
         .to(fl, {opacity: 1, duration: .2}, t0)
         .to(fl, {motionPath: {path: [{x: x0, y: y0}, {x: x0 + sw, y: y0 + (y1 - y0) * .35}, {x: x1 - sw * .5, y: y0 + (y1 - y0) * .7}, {x: x1, y: y1}], curviness: 1.4}, rotation: (R() - .5) * 360, duration: d, ease: 'sine.inOut'}, t0)

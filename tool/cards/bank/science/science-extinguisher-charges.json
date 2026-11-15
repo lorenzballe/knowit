@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Quiz page asking why robbers put tiny explosive charges on fire extinguishers. Four options: blast open safe-deposit boxes, spray powder and foam, set off a false alarm, or bury traces. The reader picks one, then rates how sure they are.",
-    "ground": "#1b2a31"
+    "label": "Quiz page asking why robbers put tiny explosive charges on fire extinguishers. Four options: blast open safe-deposit boxes, spray powder and foam, set off a false alarm, or bury traces. The reader picks one, then rates how sure they are."
   },
   "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=aRTxjOeJRbY&t=735s",

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A map of Italy's sea gaps. The reader taps the gaps they think were dry land during the last ice age, then drags down to drain the sea and see which gaps were land.",
-    "ground": "#1d1013"
+    "label": "A map of Italy's sea gaps. The reader taps the gaps they think were dry land during the last ice age, then drags down to drain the sea and see which gaps were land."
   },
   "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=JM-n3IqZRCo",

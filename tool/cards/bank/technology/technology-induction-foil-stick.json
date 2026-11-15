@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Cross-section of a heated-tobacco stick with a coil around it. A switch runs current through the coil. The question asks how the stick heats from the inside. Flip the switch and watch the middle of the stick.",
-    "ground": "#ece0c2"
+    "label": "Cross-section of a heated-tobacco stick with a coil around it. A switch runs current through the coil. The question asks how the stick heats from the inside. Flip the switch and watch the middle of the stick."
   },
   "source": "Geopop, “Apriamo una sigaretta con tabacco riscaldato in laboratorio” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=B3VHnN4UzEg&t=316s",

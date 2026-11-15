@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dial labelled HAKEN 1961 that the reader drags to feed bigger knots to Haken's scanner, while a clock shows how long the run takes. Asks how long the knot check takes as knots grow.",
-    "ground": "#0c0716"
+    "label": "A dial labelled HAKEN 1961 that the reader drags to feed bigger knots to Haken's scanner, while a clock shows how long the run takes. Asks how long the knot check takes as knots grow."
   },
   "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=644s",

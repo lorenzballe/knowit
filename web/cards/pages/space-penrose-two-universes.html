@@ -20,25 +20,25 @@
 #why .body{margin:0;overflow-wrap:break-word}
 /* A flat paper-cut map: two pale universes, a solid black hole, a plain white hole. */
 #pd .uni{fill:color-mix(in srgb,var(--k) 16%,var(--c));stroke:var(--k);stroke-width:2.2;stroke-linejoin:round}
-#pd .bh{fill:#15151c;stroke:#15151c;stroke-width:2.2;stroke-linejoin:round}
-#pd .wh{fill:#fffdf7;stroke:#fffdf7;stroke-width:2.2;stroke-linejoin:round}
+#pd .bh{fill:var(--edge);stroke:var(--edge);stroke-width:2.2;stroke-linejoin:round}
+#pd .wh{fill:var(--k);stroke:var(--k);stroke-width:2.2;stroke-linejoin:round}
 #pd .hz{stroke:var(--k);stroke-width:2;stroke-linecap:round}
 #pd .hz.open{stroke-width:2.4;stroke-dasharray:7 6}
 #pd .inf{stroke:var(--k);stroke-width:2.6;stroke-linecap:round}
-#pd .sing{fill:none;stroke:#ff6a3d;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#pd .sing{fill:none;stroke:#ffd84a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 #pd text{font-family:var(--body);font-weight:700;text-anchor:middle;dominant-baseline:central;fill:var(--k);pointer-events:none}
 #pd text.note{font-weight:600}
 #pd text.inf8{font-weight:400}
-#pd text.onbh{fill:#fffdf7}
-#pd text.onwh{fill:#15151c}
+#pd text.onbh{fill:var(--k)}
+#pd text.onwh{fill:var(--edge)}
 #pd .ghost{cursor:pointer}
 #pd .gpoly{fill:color-mix(in srgb,var(--k) 5%,transparent);stroke:var(--k);stroke-opacity:.55;stroke-width:1.6;stroke-dasharray:2 6;stroke-linecap:round;stroke-linejoin:round}
 #pd .qbtn circle{fill:var(--k)}
 #pd .qbtn text{fill:var(--c)}
 #pd .slice{fill:none;stroke:var(--k);stroke-width:3.2;stroke-linecap:round}
-#pd .dot{fill:var(--c);stroke:#15151c;stroke-width:2.2}
-#pd .badge .lead{stroke:#15151c;stroke-width:1.6;stroke-linecap:round}
-#pd .badge text{fill:#15151c;font-weight:600}
+#pd .dot{fill:var(--c);stroke:var(--edge);stroke-width:2.2}
+#pd .badge .lead{stroke:var(--edge);stroke-width:1.6;stroke-linecap:round}
+#pd .badge text{fill:var(--edge);font-weight:600}
 </style>
 <!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
      (in the app, in the reader's language). The id stays "card". -->

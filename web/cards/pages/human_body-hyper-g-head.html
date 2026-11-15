@@ -16,13 +16,13 @@
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
 #up{align-self:flex-start}
 #why{margin:0;font:600 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
-.say b{color:#ffc56b}
+.say b{color:#ffd23f}
 .say{overflow-wrap:anywhere}
 .hintA{animation:nudge 1.3s ease-in-out infinite}
 @keyframes nudge{0%,100%{transform:translateX(-4px)}50%{transform:translateX(4px)}}
 .kit-calm .hintA{animation:none}
 </style>
-<article class="card" id="card" data-topic="human_body" data-kind="Drag the head · hyper-G" style="--c:#23324f;--k:#fbf1df;--edge:#141d33">
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the head · hyper-G">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TURN THE HEAD</span></div>
     <h2 class="q">Why are passengers told to keep their heads still in hyper-G?</h2>
@@ -41,9 +41,9 @@
 (() => {
   gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin, ScrambleTextPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), up = Kit.$('up');
-  const P = {paper:'#f7ecd6', paper2:'#e6d2ad', peach:'#f2bb92', peachD:'#d39068', terra:'#e2694b', terraL:'#ff9b7c',
-    mustard:'#f4c04f', teal:'#3f8f8a', tealL:'#55a69e', teal2:'#2b6466', ridge:'#3a5680', ink:'#1a2238',
-    sick:'#a9cf5b', canal:'#d4ecf5', wall:'#8fbfd4', fluid:'#2e7fb4', hair:'#3b2622'};
+  const P = {paper:'#ffffff', paper2:'#ffe3ea', peach:'#ffffff', peachD:'#ffd0dc', terra:'#9e1638', terraL:'#ffd23f',
+    mustard:'#ffd23f', teal:'#9e1638', tealL:'#c4204a', teal2:'#b01a42', ridge:'#d42453', ink:'#9e1638',
+    sick:'#ffd23f', canal:'#ffe3ea', wall:'#ff9db5', fluid:'#9e1638', hair:'#9e1638'};
   const MONO = 'font-family:var(--mono)';
   const HY = 'HYPER-G · pressed down', LV = '1 g · level flight';
   const S = {step:0, th:0, thPrev:0, rel:0, relv:0, meter:0, sick:0, hyper:0, travel:0, revealed:false, touched:false, t:0};
@@ -65,7 +65,7 @@
     <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  .5 0 0 0 -.17" result="g"/>
     <feComposite in="g" in2="SourceAlpha" operator="in" result="gi"/>
     <feGaussianBlur in="SourceAlpha" stdDeviation="${b}"/><feOffset dx="${dy * .4}" dy="${dy}" result="bo"/>
-    <feFlood flood-color="#090e1f" flood-opacity="${o}"/><feComposite in2="bo" operator="in" result="sh"/>
+    <feFlood flood-color="#9e1638" flood-opacity="${o}"/><feComposite in2="bo" operator="in" result="sh"/>
     <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/><feMergeNode in="gi"/></feMerge></filter>`;
   const layer = (name, f) => { const w = mk('g', {class: 'lay'}, svg); const i = mk('g', f ? {filter: `url(#${f})`} : {}, w); G[name] = i; G[name + 'W'] = w; return i; };
 
@@ -111,9 +111,9 @@
       if (!Kit.calm) twk.push(gsap.to(st, {opacity: .12, duration: 1.1 + hash(i) * 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: hash(i + 5)}));
     });
     const gSun = layer('sun', 'pff'), sr = Math.min(W * .07, rg * .2), sx = W * .9, sy = Math.max(sr * 1.6, t0 * .6);
-    mk('circle', {cx: sx, cy: sy, r: sr * 1.5, fill: P.mustard, opacity: .2}, gSun);
+    mk('circle', {cx: sx, cy: sy, r: sr * 1.5, fill: P.paper, opacity: .2}, gSun);
     mk('circle', {cx: sx, cy: sy, r: sr, fill: P.mustard}, gSun);
-    mk('circle', {cx: sx - sr * .22, cy: sy - sr * .22, r: sr * .55, fill: '#ffd97a'}, gSun);
+    mk('circle', {cx: sx - sr * .22, cy: sy - sr * .22, r: sr * .55, fill: '#ffffff'}, gSun);
     const gCl = layer('clouds', 'pff');
     const c1g = cloud(gCl, W * .1, t0 + rg * .3, Math.max(8, Math.min(W * .036, rg * .1)));
     const c2g = cloud(gCl, W * .51, t0 + rg * .68, Math.max(7, Math.min(W * .03, rg * .09)));
@@ -133,9 +133,9 @@
       `M${x5},${yb} L${xe},${yb}`];
     const sty = [
       {stroke: P.paper, 'stroke-width': fs * .14, 'stroke-dasharray': `${fs * .5} ${fs * .4}`, opacity: .55},
-      {stroke: P.terra, 'stroke-width': fs * .34, 'stroke-linecap': 'round'},
+      {stroke: P.mustard, 'stroke-width': fs * .34, 'stroke-linecap': 'round'},
       {stroke: P.paper, 'stroke-width': fs * .22, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${fs * .62}`},
-      {stroke: P.terra, 'stroke-width': fs * .34, 'stroke-linecap': 'round'},
+      {stroke: P.mustard, 'stroke-width': fs * .34, 'stroke-linecap': 'round'},
       {stroke: P.paper, 'stroke-width': fs * .14, 'stroke-dasharray': `${fs * .5} ${fs * .4}`, opacity: .55}];
     E.segs = segD.map((d, i) => mk('path', Object.assign({d, fill: 'none'}, sty[i]), gSky));
     E.fp = mk('path', {d: `M${x0},${yb} L${x1},${yb} C${c1} ${c2} ${ex1},${ya} C${ex1 + a},${ya - a * T} ${ex2 - a},${ya - a * T} ${ex2},${ya} C${m1} ${m2} ${x5},${yb} L${xe},${yb}`, fill: 'none', stroke: 'none'}, gSky);
@@ -178,7 +178,7 @@
     ridge(layer('ridge1', 'pff'), sky * .9, sky * .06, sky * 1.13, P.ridge, 3);
     const gR2 = layer('ridge2', 'pf'), yAt = ridge(gR2, sky * .99, sky * .05, sky * 1.2, P.teal2, 9);
     [.05, .09, .93, .965].forEach((p, i) => { const x = W * p, y = yAt(x) + 3, h = sky * (.13 + .04 * (i % 2)), w = h * .42;
-      mk('path', {d: `M${x},${y - h} L${x + w / 2},${y} L${x - w / 2},${y}Z`, fill: i % 2 ? '#24585a' : P.teal}, gR2); });
+      mk('path', {d: `M${x},${y - h} L${x + w / 2},${y} L${x - w / 2},${y}Z`, fill: i % 2 ? '#d42453' : P.teal}, gR2); });
 
     // ---- near: the passenger in a paper seat
     const top = sky * 1.04, bot = H - fs * 2.4, av = bot - top;
@@ -191,12 +191,12 @@
     const gHead = layer('head', 'pf');
     E.body = mk('g', {}, gHead);
     mk('rect', {x: hx - .27 * r, y: hy + .55 * r, width: .54 * r, height: .45 * r, fill: P.peachD}, E.body);
-    mk('path', {d: `M${hx - 1.42 * r},${hy + 1.97 * r} Q${hx - 1.36 * r},${hy + .92 * r} ${hx - .3 * r},${hy + .84 * r} L${hx + .3 * r},${hy + .84 * r} Q${hx + 1.36 * r},${hy + .92 * r} ${hx + 1.42 * r},${hy + 1.97 * r}Z`, fill: P.terra}, E.body);
-    mk('path', {d: `M${hx - .34 * r},${hy + .86 * r} L${hx},${hy + 1.22 * r} L${hx + .34 * r},${hy + .86 * r}`, fill: 'none', stroke: P.paper, 'stroke-width': r * .08, 'stroke-linejoin': 'round'}, E.body);
+    mk('path', {d: `M${hx - 1.42 * r},${hy + 1.97 * r} Q${hx - 1.36 * r},${hy + .92 * r} ${hx - .3 * r},${hy + .84 * r} L${hx + .3 * r},${hy + .84 * r} Q${hx + 1.36 * r},${hy + .92 * r} ${hx + 1.42 * r},${hy + 1.97 * r}Z`, fill: P.paper2}, E.body);
+    mk('path', {d: `M${hx - .34 * r},${hy + .86 * r} L${hx},${hy + 1.22 * r} L${hx + .34 * r},${hy + .86 * r}`, fill: 'none', stroke: P.terra, 'stroke-width': r * .08, 'stroke-linejoin': 'round'}, E.body);
     if (!S.touched) {
       E.hint = mk('g', {class: 'hintA'}, E.body);
       const ay = hy + 1.55 * r, aw = .55 * r, k = r * .13;
-      mk('path', {d: `M${hx - aw},${ay} H${hx + aw} M${hx - aw + k},${ay - k} L${hx - aw},${ay} L${hx - aw + k},${ay + k} M${hx + aw - k},${ay - k} L${hx + aw},${ay} L${hx + aw - k},${ay + k}`, fill: 'none', stroke: P.paper, 'stroke-width': Math.max(2, r * .07), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hint);
+      mk('path', {d: `M${hx - aw},${ay} H${hx + aw} M${hx - aw + k},${ay - k} L${hx - aw},${ay} L${hx - aw + k},${ay + k} M${hx + aw - k},${ay - k} L${hx + aw},${ay} L${hx + aw - k},${ay + k}`, fill: 'none', stroke: P.terra, 'stroke-width': Math.max(2, r * .07), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hint);
     }
     E.faceG = mk('g', {}, gHead);
     E.ears = mk('g', {}, E.faceG);
@@ -212,7 +212,7 @@
     [-1, 1].forEach(s => mk('path', {d: `M${hx + s * .48 * r},${hy - .1 * r} L${hx + s * .28 * r},${hy - .02 * r} L${hx + s * .48 * r},${hy + .06 * r}`, fill: 'none', stroke: P.ink, 'stroke-width': r * .07, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.squint));
     E.brows = mk('g', {}, E.feat);
     [-1, 1].forEach(s => mk('path', {d: `M${hx + s * .24 * r},${hy - .24 * r} Q${hx + s * .36 * r},${hy - .3 * r} ${hx + s * .48 * r},${hy - .24 * r}`, fill: 'none', stroke: P.hair, 'stroke-width': r * .06, 'stroke-linecap': 'round'}, E.brows));
-    mk('path', {d: `M${hx + .02 * r},${hy + .05 * r} q${.1 * r},${.15 * r} ${-.05 * r},${.2 * r}`, fill: 'none', stroke: P.peachD, 'stroke-width': r * .06, 'stroke-linecap': 'round'}, E.feat);
+    mk('path', {d: `M${hx + .02 * r},${hy + .05 * r} q${.1 * r},${.15 * r} ${-.05 * r},${.2 * r}`, fill: 'none', stroke: P.wall, 'stroke-width': r * .06, 'stroke-linecap': 'round'}, E.feat);
     E.mouth = mk('path', {fill: 'none', stroke: P.ink, 'stroke-width': r * .065, 'stroke-linecap': 'round'}, E.feat);
     E.smile = `M${hx - .22 * r},${hy + .42 * r} Q${hx},${hy + .58 * r} ${hx + .22 * r},${hy + .42 * r}`;
     E.wavy = `M${hx - .26 * r},${hy + .5 * r} q${.065 * r},${-.08 * r} ${.13 * r},0 t${.13 * r},0 t${.13 * r},0 t${.13 * r},0`;
@@ -227,19 +227,19 @@
     const gLens = layer('lens', 'pf');
     mk('line', {x1: hx + 1.2 * r, y1: hy + .05 * r, x2: cx - R * 1.02, y2: cy, stroke: P.paper, 'stroke-width': 1.6, 'stroke-dasharray': '4 4', opacity: .7}, gLens);
     mk('circle', {cx, cy, r: R, fill: P.paper, stroke: P.mustard, 'stroke-width': R * .07}, gLens);
-    mk('circle', {cx, cy, r: R * .36, fill: '#efdfbe'}, gLens);
+    mk('circle', {cx, cy, r: R * .36, fill: '#ffe3ea'}, gLens);
     E.canal = mk('g', {}, gLens);
     mk('circle', {cx, cy, r: R * .6, fill: 'none', stroke: P.wall, 'stroke-width': R * .3}, E.canal);
     mk('circle', {cx, cy, r: R * .6, fill: 'none', stroke: P.canal, 'stroke-width': R * .23}, E.canal);
     for (let i = 0; i < 16; i++) { const an = i / 16 * Math.PI * 2, c = Math.cos(an), s = Math.sin(an);
-      mk('line', {x1: cx + c * R * .72, y1: cy + s * R * .72, x2: cx + c * R * .76, y2: cy + s * R * .76, stroke: '#5f93ab', 'stroke-width': 1.4}, E.canal); }
+      mk('line', {x1: cx + c * R * .72, y1: cy + s * R * .72, x2: cx + c * R * .76, y2: cy + s * R * .76, stroke: '#9e1638', 'stroke-width': 1.4}, E.canal); }
     E.fluid = mk('g', {}, E.canal);
     for (let i = 0; i < 3; i++) { const a0 = i * 2.1 + .3;
       mk('path', {d: `M${cx + Math.cos(a0) * R * .6},${cy + Math.sin(a0) * R * .6} A${R * .6} ${R * .6} 0 0 1 ${cx + Math.cos(a0 + .7) * R * .6},${cy + Math.sin(a0 + .7) * R * .6}`, fill: 'none', stroke: P.fluid, 'stroke-width': R * .05, 'stroke-linecap': 'round', opacity: .35}, E.fluid); }
     for (let i = 0; i < 30; i++) { const an = i / 30 * Math.PI * 2 + (hash(i) - .5) * .18, rr = R * .6 + (hash(i + 40) - .5) * R * .15;
       mk('circle', {cx: cx + Math.cos(an) * rr, cy: cy + Math.sin(an) * rr, r: R * (.026 + hash(i + 80) * .02), fill: P.fluid, opacity: .5 + hash(i + 9) * .45}, E.fluid); }
     mk('ellipse', {cx, cy: cy - R * .47, rx: R * .08, ry: R * .035, fill: P.terra}, E.canal);
-    E.cup = mk('path', {fill: 'none', stroke: P.mustard, 'stroke-width': R * .075, 'stroke-linecap': 'round'}, E.canal);
+    E.cup = mk('path', {fill: 'none', stroke: P.terra, 'stroke-width': R * .075, 'stroke-linecap': 'round'}, E.canal);
     mk('path', {d: `M${cx - R * .62},${cy - R * .55} A${R * .83} ${R * .83} 0 0 1 ${cx - R * .1},${cy - R * .82}`, fill: 'none', stroke: '#fff', 'stroke-width': R * .06, 'stroke-linecap': 'round', opacity: .55}, gLens);
     keepIn(txt(gLens, cx, cy - R - fs * .6, 'vestibular system', {'text-anchor': 'middle', fill: P.mustard}));
     const ie = keepIn(txt(gLens, cx, cy + R + fs * 1.35, 'inside the inner ear', {'text-anchor': 'middle', 'font-weight': 600, opacity: .85}));
@@ -259,7 +259,7 @@
     E.stamp = mk('g', {opacity: S.revealed ? 1 : 0}, stW);
     const st = txt(E.stamp, 0, ss * .36, 'VOMIT COMET', {'text-anchor': 'middle', 'font-size': ss, 'font-weight': 800, fill: P.terra, style: 'font-family:var(--display);letter-spacing:.04em'});
     const sw = st.getComputedTextLength() + ss * 1.1, shh = ss * 1.7;
-    const back = mk('rect', {x: -sw / 2, y: -shh / 2, width: sw, height: shh, rx: 4, fill: '#fff4de', stroke: P.terra, 'stroke-width': 3}, E.stamp);
+    const back = mk('rect', {x: -sw / 2, y: -shh / 2, width: sw, height: shh, rx: 4, fill: '#ffffff', stroke: P.terra, 'stroke-width': 3}, E.stamp);
     mk('rect', {x: -sw / 2 + 4, y: -shh / 2 + 4, width: sw - 8, height: shh - 8, rx: 2, fill: 'none', stroke: P.terra, 'stroke-width': 1}, E.stamp);
     E.stamp.insertBefore(back, st); E.stamp.appendChild(st);
     gsap.set(E.stamp, {svgOrigin: '0 0', rotation: -6, scale: 1});
@@ -288,7 +288,7 @@
     const b = clamp(S.rel, -1.4, 1.4) * R * .26;
     E.cup.setAttribute('d', `M${cx},${cy - R * .47} Q${cx + b * .45},${cy - R * .6} ${cx + b},${cy - R * .73}`);
     E.mf.setAttribute('width', Math.max(0, E.mw * S.meter));
-    E.mf.setAttribute('fill', S.meter < .5 ? mix(P.mustard, P.terra, S.meter * 2) : mix(P.terra, P.sick, (S.meter - .5) * 2));
+    E.mf.setAttribute('fill', S.meter < .5 ? mix(P.mustard, P.mustard, S.meter * 2) : mix(P.mustard, P.sick, (S.meter - .5) * 2));
     const px = {stars: 1, sun: 2, clouds: 4, sky: 3, ridge1: 7, ridge2: 11};
     for (const k in px) if (G[k]) G[k].setAttribute('transform', `translate(${-th * px[k]} 0)`);
   }

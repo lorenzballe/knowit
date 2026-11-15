@@ -18,7 +18,7 @@
 .answered .q{font-size:max(2.5cqh,15px)}
 .say{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Drag to count · gaps that never repeat" style="--c:#1c2340;--k:#f4ecda;--edge:#10152b">
+<article class="card" id="card" data-topic="maths" data-kind="Drag to count · gaps that never repeat">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">COUNT THE GAPS</span></div>
     <h2 class="q">How do the gaps in a Penrose tiling hide the Fibonacci numbers?</h2>
@@ -36,7 +36,7 @@
   gsap.registerPlugin(DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
   const PHI = (1 + Math.sqrt(5)) / 2, N = 34;
-  const CREAM = '#f4ecda', GOLD = '#f2b54a', TEAL = '#6fd3c6', INKD = '#0b1022';
+  const CREAM = '#ffffff', GOLD = '#ffd84a', TEAL = '#ffffff', INKD = '#085941';
   // The gaps from the bottom up: long and short, never repeating (L → LS, S → L).
   let word = 'L';
   while (word.length < N) word = [...word].map(c => c === 'L' ? 'LS' : 'L').join('');
@@ -117,15 +117,15 @@
     const fr = `filterUnits="userSpaceOnUse" x="${-W}" y="${-H}" width="${3 * W}" height="${3 * H}"`;
     const defs = Kit.mk('defs', {}, svg);
     defs.innerHTML = `
-      <filter id="sh1" ${fr}><feDropShadow dx="0" dy="2.4" stdDeviation="1.7" flood-color="#03050d" flood-opacity=".75"/></filter>
-      <filter id="sh2" ${fr}><feDropShadow dx="0" dy="1" stdDeviation=".9" flood-color="#03050d" flood-opacity=".55"/></filter>
-      <filter id="glow" ${fr}><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="sh1" ${fr}><feDropShadow dx="0" dy="2.4" stdDeviation="1.7" flood-color="#085941" flood-opacity=".5"/></filter>
+      <filter id="sh2" ${fr}><feDropShadow dx="0" dy="1" stdDeviation=".9" flood-color="#085941" flood-opacity=".4"/></filter>
+      <filter id="glow" ${fr}><feMerge><feMergeNode in="SourceGraphic"/></feMerge></filter>
       <radialGradient id="fade" cx=".42" cy=".5" r=".62"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".8"/><stop offset=".85" stop-color="#fff" stop-opacity=".2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
       <mask id="tm" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="0" y="0" width="${W}" height="${H}" fill="url(#fade)"/></mask>
-      <linearGradient id="gL" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fbd27a"/><stop offset="1" stop-color="#d9962c"/></linearGradient>
-      <linearGradient id="gS" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9be6dc"/><stop offset="1" stop-color="#46aa9f"/></linearGradient>
-      <linearGradient id="shine" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff8e6" stop-opacity=".65"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <radialGradient id="kg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e2d6bd"/></radialGradient>`;
+      <linearGradient id="gL" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset="1" stop-color="#ffd84a"/></linearGradient>
+      <linearGradient id="gS" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#085941"/><stop offset="1" stop-color="#085941"/></linearGradient>
+      <linearGradient id="shine" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <radialGradient id="kg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></radialGradient>`;
 
     // ---- back plane: the tiling, melting softly into the card ----
     const pT = Kit.mk('g', {}, svg), gT = Kit.mk('g', {mask: 'url(#tm)'}, pT);
@@ -179,7 +179,7 @@
     els.bars = [];
     for (let i = 0; i <= N; i++) {
       const hit = MILES.includes(i) && i <= best;
-      els.bars.push(Kit.mk('line', {x1: x0, x2: x1, y1: yL[i], y2: yL[i], stroke: hit ? '#ffe2a3' : CREAM, 'stroke-width': hit ? sw * 1.3 : sw, 'stroke-linecap': 'round'}, gB));
+      els.bars.push(Kit.mk('line', {x1: x0, x2: x1, y1: yL[i], y2: yL[i], stroke: hit ? GOLD : CREAM, 'stroke-width': hit ? sw * 1.3 : sw, 'stroke-linecap': 'round'}, gB));
     }
     // The gold bracket, one piece for every Fibonacci stretch reached.
     const gG = Kit.mk('g', {filter: 'url(#glow)'}, pM);
@@ -190,7 +190,7 @@
       return p;
     });
     Kit.mk('path', {d: `M${x1 + sw},${yL[0]}H${bx}`, fill: 'none', stroke: GOLD, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .7}, gG);
-    els.final = Kit.mk('path', {d: `M${bx},${yL[0]}V${yL[N]}`, fill: 'none', stroke: '#ffd78a', 'stroke-width': 3.4, 'stroke-linecap': 'round'}, gG);
+    els.final = Kit.mk('path', {d: `M${bx},${yL[0]}V${yL[N]}`, fill: 'none', stroke: GOLD, 'stroke-width': 3.4, 'stroke-linecap': 'round'}, gG);
     gsap.set(els.final, {drawSVG: done ? '100%' : '0%'});
 
     // The counter the reader drags.
@@ -268,8 +268,8 @@
     els.lad.forEach((c, j) => {
       const isL = k > 0 && j === k, isS = k > 0 && j === k - 1;
       if (isL || isS) {
-        c.r.setAttribute('fill', isL ? GOLD : TEAL); c.r.setAttribute('stroke-opacity', 0);
-        c.t.setAttribute('fill', INKD); c.t.setAttribute('opacity', 1);
+        c.r.setAttribute('fill', isL ? GOLD : INKD); c.r.setAttribute('stroke-opacity', 0);
+        c.t.setAttribute('fill', isL ? INKD : CREAM); c.t.setAttribute('opacity', 1);
         if (anim && fresh && !Kit.calm) gsap.fromTo([c.r, c.t], {scale: 1.35}, {scale: 1, duration: .55, ease: 'back.out(3)', transformOrigin: '50% 50%'});
       } else {
         const seen = j <= litMax;
@@ -310,7 +310,7 @@
     MILES.forEach((ms, k) => {
       if (ms <= n && ms > best) {
         const bar = els.bars[ms];
-        bar.setAttribute('stroke', '#ffe2a3');
+        bar.setAttribute('stroke', GOLD);
         if (Kit.calm || !anim) { bar.setAttribute('stroke-width', sw * 1.3); gsap.set(els.seg[k], {drawSVG: '100%'}); }
         else {
           gsap.fromTo(bar, {attr: {'stroke-width': sw * 2.6}}, {attr: {'stroke-width': sw * 1.3}, duration: .7, ease: 'power3.out'});

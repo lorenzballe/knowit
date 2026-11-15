@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A tiling of shapes with long and short gaps between them. The reader drags up from the bottom of the page to count the gaps, asking how they reveal the Fibonacci numbers.",
-    "ground": "#1c2340"
+    "label": "A tiling of shapes with long and short gaps between them. The reader drags up from the bottom of the page to count the gaps, asking how they reveal the Fibonacci numbers."
   },
   "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=855s",

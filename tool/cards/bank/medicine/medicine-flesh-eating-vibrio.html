@@ -18,7 +18,7 @@
 .st{font:700 max(1.7cqh,12px)/1.15 var(--body);text-align:center;padding:1cqh 1cqw;border-radius:1.4cqh;color:var(--k);background:color-mix(in srgb,var(--k) 7%,transparent);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 22%,transparent);opacity:.45;transition:opacity .3s,background .3s,color .3s;overflow-wrap:anywhere}
 .st.on{opacity:1;background:var(--k);color:var(--c);box-shadow:none}
 #hold{font:800 max(2.2cqh,14px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:2.4cqh;padding:1.8cqh 4cqw;margin-top:1.2cqh;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;position:relative;overflow:hidden;width:100%}
-#hold .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#c0392b;opacity:.85}
+#hold .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:color-mix(in srgb,var(--c) 28%,var(--k));opacity:.85}
 #hold span{position:relative}
 #why{display:flex;flex-direction:column;gap:.6cqh;margin-top:1cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
@@ -64,10 +64,10 @@ function mix(c1, c2, k){
   return 'rgb(' + a.map((v, i) => Math.round(lerp(v, b[i], k))).join(',') + ')';
 }
 
-const OUT = '#2a1410';     // outline / dead tissue
-const WOUND = '#8a1f17';   // open ulcer
-const GERM = '#86c75f';    // the bacterium
-const SKIN = '#f1c4a0', DEAD = '#a89a92';
+const OUT = '#9e1c14';     // outline / dead tissue
+const WOUND = '#FF3B30';   // open ulcer
+const GERM = '#ffd60a';    // the bacterium
+const SKIN = '#fff3ea', DEAD = '#d9b8b2';
 
 function build(){
   const svg = Kit.$('pic');

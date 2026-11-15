@@ -11,7 +11,7 @@
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
 #stage{position:relative;flex:1;min-height:0;overflow:hidden;background:none;touch-action:none;cursor:pointer;user-select:none;-webkit-user-select:none;
-  --t0:color-mix(in srgb,var(--k) 6%,var(--c));--t1:color-mix(in srgb,var(--k) 16%,var(--c));--t3:color-mix(in srgb,var(--k) 58%,var(--c));--fire:#ff8a3a}
+  --t0:color-mix(in srgb,var(--k) 6%,var(--c));--t1:color-mix(in srgb,var(--k) 16%,var(--c));--t3:color-mix(in srgb,var(--k) 58%,var(--c));--fire:#c0300a}
 #sky{position:absolute;inset:0;width:100%;height:100%;display:block}
 #sky .lb{font-family:var(--body);font-weight:600}
 #sky .num{font-family:var(--display);font-weight:700}
@@ -21,7 +21,7 @@
 .bh.on{color:var(--fire)}
 .chip{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;font:700 max(1.9cqh,13px)/1.1 var(--body);color:var(--k);border-radius:max(.7cqh,5px);padding:2px 6px;background:var(--t0);border:1.5px dashed var(--t1);transition:background .5s,border-color .5s,color .5s}
 .chip span{filter:blur(4px);opacity:.4;transition:filter .7s,opacity .7s}
-.chip.lit{color:var(--k);background:color-mix(in srgb,#ff8a3a 16%,var(--c));border:1.5px solid var(--fire)}
+.chip.lit{color:var(--k);background:color-mix(in srgb,#c0300a 16%,var(--c));border:1.5px solid var(--fire)}
 .chip.lit span{filter:none;opacity:1}
 .flow{animation:flow .5s linear infinite;transition:opacity .25s}
 @keyframes flow{to{stroke-dashoffset:17}}
@@ -34,7 +34,7 @@
 #why{margin:0;font-size:max(2.1cqh,14px);line-height:1.36}
 #keep{padding:max(1.1cqh,8px) max(1.8cqh,12px);font-size:max(1.95cqh,13px);line-height:1.3}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Hold to draw · the heat at the tip" style="--c:#070b1d;--k:#dfe8ff;--edge:#02030a">
+<article class="card" id="card" data-topic="science" data-kind="Hold to draw · the heat at the tip">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO DRAW</span></div>
     <h2 class="q">What really happens at the tip when you draw on a cigarette?</h2>
@@ -62,7 +62,7 @@
   const NAMES = ['Pyrosynthesis', 'Pyrolysis', 'Thermal decomposition', 'Incomplete combustion'];
   const chips = [...grid.querySelectorAll('.chip')];
   const A0 = 190, A1 = 350, TMAX = 1000;
-  const INK = '#dfe8ff', FIRE = '#ff8a3a', HOT = '#ff5a1f', WHITEHOT = '#ffd27a';
+  const INK = '#10100c', FIRE = '#c0300a', HOT = '#c0300a', WHITEHOT = '#10100c';
   let W = 0, H = 0, cx = 0, cy = 0, R = 0, w = 10, fs = 12, mode = 'dial', bx0 = 0, bx1 = 0, by = 0, tipX = 0;
   let T = 20, peak = 20, held = false, boost = 1, out = 0, done = false, touched = false, emitClock = .24;
   let el = {}, shown = false, sizeKey = '', raf = 0;
@@ -182,11 +182,11 @@
     tipX = xT - w * .3;
     el.bloom = mk('circle', {cx: tipX, cy, r: w, fill: FIRE, opacity: .05}, svg);
     const cig = mk('g', {}, svg); el.cig = cig;
-    mk('rect', {x: xL, y: y0, width: fl, height: w, rx: w * .18, fill: '#d49a5e'}, cig);
-    for (let i = 0; i < 12; i++) mk('circle', {cx: xL + 3 + Kit.rnd() * (fl - 6), cy: y0 + 2 + Kit.rnd() * (w - 4), r: .8 + Kit.rnd() * .5, fill: '#9c5f2c'}, cig);
+    mk('rect', {x: xL, y: y0, width: fl, height: w, rx: w * .18, fill: '#00835b'}, cig);
+    for (let i = 0; i < 12; i++) mk('circle', {cx: xL + 3 + Kit.rnd() * (fl - 6), cy: y0 + 2 + Kit.rnd() * (w - 4), r: .8 + Kit.rnd() * .5, fill: '#10100c'}, cig);
     mk('rect', {x: xL + fl, y: y0, width: xT - w * .9 - xL - fl, height: w, style: 'fill:var(--k)'}, cig);
-    mk('rect', {x: xL + fl - w * .06, y: y0, width: w * .14, height: w, fill: '#b98a45'}, cig);
-    el.tip = mk('rect', {x: xT - w * .95, y: y0, width: w * .95, height: w, rx: w * .3, fill: '#4a3c3a'}, cig);
+    mk('rect', {x: xL + fl - w * .06, y: y0, width: w * .14, height: w, fill: '#c0300a'}, cig);
+    el.tip = mk('rect', {x: xT - w * .95, y: y0, width: w * .95, height: w, rx: w * .3, fill: '#5d6b64'}, cig);
     el.flow = mk('line', {x1: xT - w, y1: cy, x2: xL + 3, y2: cy, stroke: FIRE, 'stroke-width': w * .16, 'stroke-linecap': 'round', 'stroke-dasharray': '1.5 15.5', class: 'flow', opacity: 0}, cig);
     el.rings = mk('g', {}, svg);
     el.fx = mk('g', {}, svg);
@@ -219,7 +219,7 @@
       el.peakTick.setAttribute('opacity', 1);
     }
     const h = Math.max(0, Math.min(1, (T - 20) / 880)), fl = held ? .92 + .08 * Math.sin(time * 31) : 1;
-    el.tip.setAttribute('fill', h < .6 ? lerp('#4a3c3a', HOT, h / .6) : lerp(HOT, WHITEHOT, (h - .6) / .4));
+    el.tip.setAttribute('fill', h < .6 ? lerp('#5d6b64', HOT, h / .6) : lerp(HOT, WHITEHOT, (h - .6) / .4));
     el.bloom.setAttribute('r', w * (.6 + 1.9 * h) * fl);
     el.bloom.setAttribute('opacity', (.05 + .3 * h) * fl);
     el.flow.setAttribute('opacity', held ? 1 : 0);

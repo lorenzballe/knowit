@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Eleven bars are shown. The reader drags across them to count how many large-scale prison massacres happened in the two years. The question asks what happened in the first large-scale prison massacre in 2021.",
-    "ground": "#0b3e75"
+    "label": "Eleven bars are shown. The reader drags across them to count how many large-scale prison massacres happened in the two years. The question asks what happened in the first large-scale prison massacre in 2021."
   },
   "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=8-KoJBcxLek&t=409s",

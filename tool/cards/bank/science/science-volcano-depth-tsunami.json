@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A drag-to-guess page with a cross-section of an undersea volcano. The reader drags its top up or down to the depth where they think tsunami risk turns very low, then reads the reveal: 500–600 m.",
-    "ground": "#dcecea"
+    "label": "A drag-to-guess page with a cross-section of an undersea volcano. The reader drags its top up or down to the depth where they think tsunami risk turns very low, then reads the reveal: 500–600 m."
   },
   "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=563s",

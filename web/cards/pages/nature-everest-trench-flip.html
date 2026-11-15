@@ -68,16 +68,13 @@ function draw(){
   const tx = (x, y, str, style, p = svg, anchor = 'start') => {
     const t = g('text', {x, y, 'text-anchor': anchor, style}, p); t.textContent = str; return t;
   };
-  const halo = 'paint-order:stroke;stroke:#0b2346;stroke-width:3px;stroke-linejoin:round;';
+  const halo = 'paint-order:stroke;stroke:var(--k);stroke-width:3px;stroke-linejoin:round;';
 
   const defs = g('defs', {});
-  const lg = g('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  g('stop', {offset: '0', 'stop-color': '#3d8fe0'}, lg);
-  g('stop', {offset: '1', 'stop-color': '#08214a'}, lg);
 
-  g('rect', {x: 0, y: y0, width: W, height: H - y0, fill: 'url(#wg)'});
-  g('path', {d: `M0,${yr} L${cx - tw},${yr} L${cx - bw},${yb} L${cx + bw},${yb} L${cx + tw},${yr} L${W},${yr} L${W},${H} L0,${H} Z`, fill: '#1c1a22', stroke: '#4a4656', 'stroke-width': 1.5});
-  g('line', {x1: 0, x2: W, y1: y0, y2: y0, stroke: '#3d8fe0', 'stroke-width': 2.5});
+  g('rect', {x: 0, y: y0, width: W, height: H - y0, fill: 'var(--edge)'});
+  g('path', {d: `M0,${yr} L${cx - tw},${yr} L${cx - bw},${yb} L${cx + bw},${yb} L${cx + tw},${yr} L${W},${yr} L${W},${H} L0,${H} Z`, fill: 'var(--k)', stroke: 'var(--edge)', 'stroke-width': 1.5});
+  g('line', {x1: 0, x2: W, y1: y0, y2: y0, stroke: 'var(--k)', 'stroke-width': 2.5});
   tx(8, y0 - fs * .45, 'Sea level', `font:700 ${fs}px var(--body);fill:var(--k)`);
   tx(cx, yb + fs * 1.45, 'Deepest point · 10,994 m', `font:700 ${fs}px var(--body);fill:#fff`, svg, 'middle');
 
@@ -85,7 +82,7 @@ function draw(){
   const h = E * s;
   const ev = g('g', {});
   const P = [[-1, 0], [-.55, .45], [-.4, .42], [-.13, .86], [0, 1], [.2, .8], [.35, .6], [.44, .55], [1, 0]];
-  g('path', {d: 'M' + P.map(([a, b]) => `${cx + a * eb},${y0 - b * h}`).join(' L') + ' Z', fill: '#8c7b69', stroke: '#3b3229', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, ev);
+  g('path', {d: 'M' + P.map(([a, b]) => `${cx + a * eb},${y0 - b * h}`).join(' L') + ' Z', fill: 'var(--k)', stroke: 'var(--k)', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, ev);
   const S = [[-.13, .86], [0, 1], [.2, .8], [.08, .78], [-.02, .84]];
   g('path', {d: 'M' + S.map(([a, b]) => `${cx + a * eb},${y0 - b * h}`).join(' L') + ' Z', fill: '#fff'}, ev);
   const evLab = g('g', {});
@@ -95,15 +92,15 @@ function draw(){
   // the gap, once revealed
   const tipY = y0 + E * s;
   const gapG = g('g', {opacity: 0});
-  const gapLine = g('line', {x1: cx, x2: cx, y1: tipY, y2: yb, stroke: '#ffd84a', 'stroke-width': 3}, gapG);
-  g('line', {x1: cx - fs * .5, x2: cx + fs * .5, y1: yb, y2: yb, stroke: '#ffd84a', 'stroke-width': 3}, gapG);
+  const gapLine = g('line', {x1: cx, x2: cx, y1: tipY, y2: yb, stroke: '#fff', 'stroke-width': 3}, gapG);
+  g('line', {x1: cx - fs * .5, x2: cx + fs * .5, y1: yb, y2: yb, stroke: '#fff', 'stroke-width': 3}, gapG);
   const midY = (tipY + yb) / 2;
-  tx(8, midY, '≈ 2,000 m', `font:800 ${fs * 1.1}px var(--body);fill:#ffd84a`, gapG);
-  tx(8, midY + fs * 1.4, 'of water left', `font:700 ${fs}px var(--body);fill:#ffd84a`, gapG);
+  tx(8, midY, '≈ 2,000 m', `font:800 ${fs * 1.1}px var(--body);fill:#fff`, gapG);
+  tx(8, midY + fs * 1.4, 'of water left', `font:700 ${fs}px var(--body);fill:#fff`, gapG);
 
   // the guess
   els.gl = g('line', {stroke: '#fff', 'stroke-width': 2, 'stroke-dasharray': '6 5'});
-  els.mk = g('path', {fill: '#fff', stroke: '#0b2346', 'stroke-width': 1.5});
+  els.mk = g('path', {fill: '#fff', stroke: 'var(--k)', 'stroke-width': 1.5});
   els.gt = tx(W - 6, 0, '', `font:700 ${fs}px var(--body);fill:#fff;${halo}`, svg, 'end');
   els.g = svg; els.ev = ev; els.evLab = evLab; els.gapG = gapG; els.gapLine = gapLine;
   els.tipY = tipY;

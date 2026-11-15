@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A tap-to-heat dial asking how hot the Tsar Bomba's core gets compared with the Sun. Each tap multiplies the temperature by ten, ending at 100 million °C against the Sun's surface near 5,500 °C.",
-    "ground": "#1e1912"
+    "label": "A tap-to-heat dial asking how hot the Tsar Bomba's core gets compared with the Sun. Each tap multiplies the temperature by ten, ending at 100 million °C against the Sun's surface near 5,500 °C."
   },
   "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=tesv0xoNhCo&t=327s",

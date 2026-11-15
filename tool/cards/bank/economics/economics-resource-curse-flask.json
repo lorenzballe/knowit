@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A draggable timeline titled 'The resource curse', asking why the DR Congo is poor despite its gold and cobalt. It shows riches taken through exploitation and conflict, with the wealth flowing out past the people.",
-    "ground": "#0d2326"
+    "label": "A draggable timeline titled 'The resource curse', asking why the DR Congo is poor despite its gold and cobalt. It shows riches taken through exploitation and conflict, with the wealth flowing out past the people."
   },
   "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=I-MMteT9YTM&t=132s",

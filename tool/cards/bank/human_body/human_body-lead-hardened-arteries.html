@@ -14,7 +14,7 @@
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
 .say b{font-weight:800}
 </style>
-<article class="card" id="card" data-topic="human_body" data-kind="Drag the lead · watch the artery" style="--c:#f1e2cb;--k:#2b1714;--edge:#c9ab86">
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the lead · watch the artery">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HARDENED ARTERIES</span></div>
     <h2 class="q">How did leaded gasoline cause heart disease?</h2>
@@ -32,8 +32,9 @@
   const HAS_DRAW = typeof DrawSVGPlugin !== 'undefined';
   if (HAS_DRAW) gsap.registerPlugin(DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const INK = '#2b1714';
-  const RED = '#b8322f', LEAD = '#5d5650';
+  const INK = 'var(--k)';
+  const EDGE = '#9e1638';
+  const RED = '#ffffff', LEAD = '#2b1f3a';
   const TINT = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const S = {lead: 0, target: 0, t: 0, revealed: false, tagsShown: false, animTags: false, touched: false, step: 0, q: 0};
   const K = {v: 0};
@@ -127,27 +128,27 @@
 
     // ---------- the artery specimen, cut open lengthwise ----------
     E.cap = mk('ellipse', {stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1.4}, G.art);
-    E.lumen = mk('path', {fill: '#7a1d1e'}, G.art);
+    E.lumen = mk('path', {fill: EDGE}, G.art);
     const gc = mk('g', {}, G.art);
     const crx = Math.max(3.5, Math.min(fs * .62, r * .24)), cry = crx * .62;
     cells = [];
     const nc = Math.round(W / 20);
     for (let i = 0; i < nc; i++) {
       const g = mk('g', {}, gc);
-      mk('ellipse', {rx: crx, ry: cry, fill: '#d0453a'}, g);
-      mk('ellipse', {rx: crx * .45, ry: cry * .4, fill: '#a9302c'}, g);
+      mk('ellipse', {rx: crx, ry: cry, fill: INK}, g);
+      mk('ellipse', {rx: crx * .45, ry: cry * .4, fill: 'var(--c)'}, g);
       cells.push({el: g, x: x0 + rnd() * (x1 - x0), lane: (rnd() * 2 - 1) * .9, ph: rnd() * 6, sp: .85 + rnd() * .3, ry: cry, rx: crx});
     }
     const gs = mk('g', {}, G.art);
     specks = [];
-    for (let i = 0; i < 24; i++) specks.push({el: mk('circle', {r: Math.max(1.8, fs * .17), fill: '#9d968f'}, gs), x: x0 + rnd() * (x1 - x0), lane: (rnd() * 2 - 1) * .85, sp: 1 + rnd() * .3});
+    for (let i = 0; i < 24; i++) specks.push({el: mk('circle', {r: Math.max(1.8, fs * .17), fill: LEAD, stroke: INK, 'stroke-width': .8}, gs), x: x0 + rnd() * (x1 - x0), lane: (rnd() * 2 - 1) * .85, sp: 1 + rnd() * .3});
 
     const wall = mk('g', {}, G.art);
     E.adv = mk('path', {}, wall);
     E.med = mk('path', {}, wall);
-    E.fib = mk('path', {fill: 'none', stroke: '#f6d6c6', 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .85}, wall);
+    E.fib = mk('path', {fill: 'none', stroke: '#ffd9e2', 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .85}, wall);
     E.int = mk('path', {}, wall);
-    E.plaque = mk('path', {fill: '#c3bab0', stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1}, G.art);
+    E.plaque = mk('path', {fill: '#e9d3da', stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1}, G.art);
     const gd = mk('g', {}, G.art);
     deps = [];
     const nd = Math.round(W / 7);
@@ -158,7 +159,7 @@
     const face = mk('g', {}, G.art);
     E.f = {};
     ['adv', 'med', 'int', 'pl', 'lum', 'deep'].forEach(k => E.f[k] = mk('ellipse', {cx: x0, stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1}, face));
-    E.f.lum.setAttribute('fill', '#7a1d1e'); E.f.deep.setAttribute('fill', '#4a0f12'); E.f.deep.setAttribute('stroke', 'none');
+    E.f.lum.setAttribute('fill', EDGE); E.f.deep.setAttribute('fill', LEAD); E.f.deep.setAttribute('stroke', 'none');
 
     // ---------- the track and the lead token ----------
     E.trackLine = mk('line', {x1: G.tx0, x2: G.tx1, y1: trackY, y2: trackY, stroke: TINT(18), 'stroke-width': 5, 'stroke-linecap': 'round'}, G.track);
@@ -169,8 +170,8 @@
     }
     E.knobPos = mk('g', {}, G.track);
     E.knob = mk('g', {}, E.knobPos);
-    mk('circle', {r: kr, fill: '#6b645e', stroke: INK, 'stroke-width': 1.6}, E.knob);
-    txt(E.knob, 0, kr * .32, 'Pb', {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-size': Math.max(12, kr * .9), 'font-weight': 800, fill: '#fff'});
+    mk('circle', {r: kr, fill: LEAD, stroke: INK, 'stroke-width': 1.6}, E.knob);
+    txt(E.knob, 0, kr * .32, 'Pb', {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-size': Math.max(12, kr * .9), 'font-weight': 800, fill: INK});
 
     // gentle parallax, small enough to stay inside the margins
     const mkq = g => ({x: gsap.quickTo(g, 'x', {duration: .8, ease: 'power3.out'}), y: gsap.quickTo(g, 'y', {duration: .8, ease: 'power3.out'})});
@@ -210,9 +211,9 @@
     E.adv.setAttribute('d', band(r2, ro, -1) + band(r2, ro, 1));
     E.fib.setAttribute('d', line(rf, -1) + line(rf, 1));
     E.outline.setAttribute('d', line(ro, -1) + line(ro, 1));
-    const cMed = mix('#cf4a3e', '#8b7f77', L), cAdv = mix('#efcdb2', '#cbbcae', L), cInt = mix('#f8e2d6', '#d6cdc4', L);
+    const cMed = mix('#9e1638', '#2b1f3a', L), cAdv = mix('#ffd9e2', '#c9aab6', L), cInt = mix('#ffffff', '#d9ccd6', L);
     E.med.setAttribute('fill', cMed); E.adv.setAttribute('fill', cAdv); E.int.setAttribute('fill', cInt);
-    E.fib.setAttribute('stroke', mix('#f6d6c6', '#b5aca4', L));
+    E.fib.setAttribute('stroke', mix('#ffd9e2', '#c9aab6', L));
 
     // the rounded far end of the specimen
     E.cap.setAttribute('cx', f1(x1)); E.cap.setAttribute('cy', f1(cs[N])); E.cap.setAttribute('rx', f1((R + d) * kk)); E.cap.setAttribute('ry', f1(R + d));
@@ -221,7 +222,7 @@
     // the cut face
     const c0 = cs[0], ell = (el, cyy, ry, fill) => { el.setAttribute('cy', f1(cyy)); el.setAttribute('ry', f1(ry)); el.setAttribute('rx', f1(ry * kk)); if (fill) el.setAttribute('fill', fill); };
     ell(E.f.adv, c0, R + d, cAdv); ell(E.f.med, c0, r + .7 * T + d, cMed); ell(E.f.int, c0, r + .12 * T + d, cInt);
-    ell(E.f.pl, c0, r + d, L > .02 ? '#c3bab0' : cInt);
+    ell(E.f.pl, c0, r + d, L > .02 ? '#e9d3da' : cInt);
     const lc = c0 + (lb[0] - lt[0]) / 2, lr = (lt[0] + lb[0]) / 2;
     ell(E.f.lum, lc, lr); ell(E.f.deep, lc, lr * .72);
     E.f.deep.setAttribute('cx', f1(x0 + lr * kk * .25));
@@ -266,7 +267,7 @@
       E.trace.setAttribute('stroke', tc); E.head.setAttribute('fill', tc);
       E.head.setAttribute('cx', f1(W - G.m)); E.head.setAttribute('cy', f1(G.traceBase - trace[trace.length - 1] * amp));
       const st = L < .3 ? 'Soft' : L < .75 ? 'Stiffening' : 'Hard';
-      if (E.status.textContent !== st) { E.status.textContent = st; E.status.setAttribute('fill', L < .3 ? RED : L < .75 ? '#7c4a3e' : '#4f4843'); }
+      if (E.status.textContent !== st) { E.status.textContent = st; E.status.setAttribute('fill', L < .3 ? RED : L < .75 ? TINT(70) : LEAD); }
     }
 
     // the token
@@ -280,9 +281,9 @@
     G.tags.innerHTML = '';
     const m = G.m, {colW, tw, ns, cs, ty, th} = G.tag;
     const data = [
-      {n: 250000, fmt: v => Math.round(v).toLocaleString('en-US'), cap: ['heart deaths', 'a year, US'], col: RED},
-      {n: 25, fmt: v => Math.round(v) + 'M', cap: ['over a', 'century, US'], col: RED},
-      {n: 100, fmt: v => '~' + Math.round(v) + 'M', cap: ['worldwide,', 'maybe'], col: RED}
+      {n: 250000, fmt: v => Math.round(v).toLocaleString('en-US'), cap: ['heart deaths', 'a year, US'], col: EDGE},
+      {n: 25, fmt: v => Math.round(v) + 'M', cap: ['over a', 'century, US'], col: EDGE},
+      {n: 100, fmt: v => '~' + Math.round(v) + 'M', cap: ['worldwide,', 'maybe'], col: EDGE}
     ];
     const rots = [-2.2, 1.6, -1.1];
     const tl = anim ? gsap.timeline() : null;
@@ -291,7 +292,7 @@
       const pend = mk('g', {}, G.tags);
       const str = mk('line', {x1: cx, x2: cx, y1: 3, y2: ty + fs * .5, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, pend);
       const body = mk('g', {}, pend);
-      mk('rect', {x: cx - tw / 2, y: ty, width: tw, height: th, rx: 3, fill: '#fbf4e8', stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1.3}, body);
+      mk('rect', {x: cx - tw / 2, y: ty, width: tw, height: th, rx: 3, fill: '#fff5f7', stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1.3}, body);
       mk('rect', {x: cx - tw / 2 + .65, y: ty + th - fs * .3, width: tw - 1.3, height: fs * .3 - .65, fill: t.col}, body);
       mk('circle', {cx, cy: ty + fs * .5, r: fs * .18, fill: TINT(14), stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1}, body);
       const ny = ty + fs * .95 + ns * .8;
@@ -299,7 +300,7 @@
       try { const w = num.getComputedTextLength(); if (w > tw * .88) num.setAttribute('font-size', f1(Math.max(12, ns * tw * .88 / w))); } catch (e) {}
       if (anim) num.textContent = t.fmt(0);
       const c1 = ny + ns * .35 + cs * 1.2;
-      t.cap.forEach((c, j) => txt(body, cx, c1 + j * cs * 1.4, c, {'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-size': cs, 'font-weight': 700, fill: INK}));
+      t.cap.forEach((c, j) => txt(body, cx, c1 + j * cs * 1.4, c, {'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-size': cs, 'font-weight': 700, fill: LEAD}));
       if (!anim) { gsap.set(pend, {rotation: rots[i], svgOrigin: `${cx} 3`}); return; }
       const at = i * .28;
       gsap.set(body, {y: -(ty + th + 12), opacity: 0});

@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A ring-shaped reactor view with a button to release hot plasma into the ring and a switch to turn on the magnets. It asks how plasma is held without touching any wall, and invites you to watch the wall as the plasma is released.",
-    "ground": "#0c1022"
+    "label": "A ring-shaped reactor view with a button to release hot plasma into the ring and a switch to turn on the magnets. It asks how plasma is held without touching any wall, and invites you to watch the wall as the plasma is released."
   },
   "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=MFSwkFK7_ws&t=199s",

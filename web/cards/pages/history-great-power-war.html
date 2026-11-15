@@ -12,11 +12,11 @@
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
 .q{font-weight:800;letter-spacing:-.01em}
 #why{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-#why b{color:#e8260f}
+#why b{color:#9c1000}
 .say{overflow-wrap:anywhere}
-.say b{color:#e8260f}
+.say b{color:#9c1000}
 </style>
-<article class="card" id="card" data-topic="history" data-kind="Aim and launch · how wars spread" style="--c:#efebe2;--k:#0d0d0c;--edge:#c9c2b4">
+<article class="card" id="card" data-topic="history" data-kind="Aim and launch · how wars spread">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GREAT POWERS</span></div>
     <h2 class="q">What is the potential consequence if the conflict becomes direct?</h2>
@@ -33,7 +33,7 @@
 <script>
 (() => {
   const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say'), stage = Kit.$('stage');
-  const INK = '#0d0d0c', RED = '#ff2d17', PAPER = '#efebe2';
+  const INK = '#10100c', RED = '#9c1000', PAPER = '#FFB000';
   let x = null, W = 0, H = 0, fs = 12, pad = 12, k = 1, laid = false;
   let DISP = 'sans-serif', BODY = 'sans-serif';
   // Geometry lives in G so a resize can glide instead of jump.
@@ -172,8 +172,8 @@
       }
     });
     // The card itself takes the heat, edge to edge.
-    if (Kit.calm) card.style.setProperty('--c', '#f6ddd4');
-    else gsap.timeline().to(card, {'--c': '#ffc9ba', duration: .18, ease: 'power2.out'}).to(card, {'--c': '#f6ddd4', duration: 1.6, ease: 'power3.out'});
+    if (Kit.calm) card.style.setProperty('--c', '#FFB000');
+    else gsap.timeline().to(card, {'--c': '#ff9440', duration: .18, ease: 'power2.out'}).to(card, {'--c': '#FFB000', duration: 1.6, ease: 'power3.out'});
     if (!Kit.calm) gsap.fromTo(cv, {x: 12, y: -8}, {x: 0, y: 0, duration: 1.2, ease: 'elastic.out(1,.18)'});
     // The numeral loses count.
     const seq = ['2', '5', '3', '8', '4', '9', '?'];
@@ -265,7 +265,7 @@
     // The region: Iran, a red ring with a flat pale fill.
     x.save(); x.globalAlpha = I.reg;
     x.beginPath(); x.moveTo(R.x, R.y); x.arc(R.x, R.y, R.r, -Math.PI / 2, -Math.PI / 2 + 6.2832 * I.reg); x.closePath();
-    x.fillStyle = `rgba(255,45,23,${.16 + fx.flash * .22})`; x.fill();
+    x.fillStyle = `rgba(156,16,0,${.16 + fx.flash * .22})`; x.fill();
     if (over) x.setLineDash([R.r * .34, R.r * .16]); // containment broken
     x.beginPath(); x.arc(R.x, R.y, R.r, -Math.PI / 2, -Math.PI / 2 + 6.2832 * I.reg);
     x.strokeStyle = RED; x.lineWidth = 3 + fx.flash * 5; x.stroke(); x.setLineDash([]);

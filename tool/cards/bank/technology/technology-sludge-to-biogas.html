@@ -13,17 +13,17 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
 #opts{display:grid;grid-template-columns:1fr 1fr;gap:1.1cqh 2.6cqw}
-.chip{font:700 max(1.95cqh,13px)/1.15 var(--body);color:var(--k);background:#fbf6ea;border:1.5px solid color-mix(in srgb,var(--k) 22%,transparent);border-radius:.7cqh;padding:1.25cqh 2.6cqw;display:flex;align-items:center;gap:2.2cqw;text-align:left;cursor:pointer;overflow-wrap:anywhere;-webkit-tap-highlight-color:transparent}
+.chip{font:700 max(1.95cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--c) 18%,#fff);border:1.5px solid color-mix(in srgb,var(--k) 22%,transparent);border-radius:.7cqh;padding:1.25cqh 2.6cqw;display:flex;align-items:center;gap:2.2cqw;text-align:left;cursor:pointer;overflow-wrap:anywhere;-webkit-tap-highlight-color:transparent}
 .chip .n{flex:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;border:2px dashed color-mix(in srgb,var(--k) 40%,transparent);font:800 max(1.8cqh,12px)/1 var(--body);display:grid;place-items:center;transition:background .2s,color .2s,border-color .2s}
-.chip.set .n{background:var(--k);color:#fbf6ea;border:2px solid var(--k)}
-.chip.ok .n{background:#4f7d4a;border-color:#4f7d4a;color:#fff}
-.chip.no .n{background:#b4523a;border-color:#b4523a;color:#fff}
+.chip.set .n{background:var(--k);color:#fff;border:2px solid var(--k)}
+.chip.ok .n{background:#005e91;border-color:#005e91;color:#fff}
+.chip.no .n{background:#8f1d2c;border-color:#8f1d2c;color:#fff}
 #why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
 #why .big{font-family:var(--display);font-size:clamp(22px,min(4.2cqh,7cqw),44px);line-height:1.04;margin:0}
-#why .big i{font-style:normal;color:#b8742a}
-.say b{color:#8a3d22}
+#why .big i{font-style:normal;color:#8f1d2c}
+.say b{color:#8f1d2c}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Put in order · biogas" style="--c:#ece2cb;--k:#1f2a2c;--edge:#cdbf9f">
+<article class="card" id="card" data-topic="technology" data-kind="Put in order · biogas">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
     <h2 class="q">How does a sewage plant turn its sludge into its own energy?</h2>
@@ -47,7 +47,7 @@
 (() => {
   gsap.registerPlugin(MotionPathPlugin, Flip);
   const svg = Kit.$('pic'), opts = Kit.$('opts'), say = Kit.$('say'), stage = Kit.$('stage'), card = Kit.$('card');
-  const INK = '#1f2a2c', PAPER = '#fbf6ea', GOLD = '#f0a52c', SLUDGE = '#6e4f33', LIT = '#ffd166', RUST = '#9c4428';
+  const INK = '#10100c', PAPER = '#d9f1ff', GOLD = '#8f1d2c', SLUDGE = '#005e91', LIT = '#8f1d2c', RUST = '#8f1d2c';
   const tint = n => `color-mix(in srgb,var(--k) ${n}%,var(--c))`;
   let W = 0, H = 0, fs = 12, A = 0, GY = 0, S = null, loops = [], idle = [], revealed = false, locked = false, n = 0, entered = false, lastW = 0, lastH = 0;
   let doneResolve; const done = new Promise(r => doneResolve = r);
@@ -151,7 +151,7 @@
     mk('circle', {cx: wcx, cy: wcy, r: wr, fill: INK}, S.wheel);
     for (let i = 0; i < 3; i++) { const a = i * Math.PI / 3; mk('line', {x1: wcx - Math.cos(a) * wr * .8, y1: wcy - Math.sin(a) * wr * .8, x2: wcx + Math.cos(a) * wr * .8, y2: wcy + Math.sin(a) * wr * .8, stroke: PAPER, 'stroke-width': 2}, S.wheel); }
     S.wcx = wcx; S.wcy = wcy;
-    S.led = mk('circle', {cx: gx + gw * .3, cy: gy0 + gh * .3, r: Math.max(2, Math.min(fs * .22, gh * .12)), fill: '#6b5148'}, gg);
+    S.led = mk('circle', {cx: gx + gw * .3, cy: gy0 + gh * .3, r: Math.max(2, Math.min(fs * .22, gh * .12)), fill: INK}, gg);
 
     // the dial: the plant's energy needs, half-way mark only
     const gz = mk('g', {}, front);
@@ -219,7 +219,7 @@
   const loopGas1 = () => travel(S.dG1, S.p1, 1.9, 'sine.inOut', .45);
   const loopGas2 = () => travel(S.dG2, S.p2, 1.5, 'sine.inOut', .5);
   const loopSparks = () => travel(S.dSp, S.p3, 1.05, 'power2.in', .35);
-  const loopWheel = () => { loops.push(gsap.to(S.wheel, {rotation: 360, svgOrigin: `${S.wcx} ${S.wcy}`, duration: 1.1, ease: 'none', repeat: -1})); gsap.to(S.led, {attr: {fill: '#4f7d4a'}, duration: .2}); };
+  const loopWheel = () => { loops.push(gsap.to(S.wheel, {rotation: 360, svgOrigin: `${S.wcx} ${S.wcy}`, duration: 1.1, ease: 'none', repeat: -1})); gsap.to(S.led, {attr: {fill: PAPER}, duration: .2}); };
   const loopNeedle = () => loops.push(gsap.to(S.needle, {rotation: 3, svgOrigin: `${S.gcx} ${S.gcy}`, duration: .9, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .4}));
 
   function applyEnd() {
@@ -231,7 +231,7 @@
     S.arc.setAttribute('stroke-dashoffset', S.arcL / 2);
     S.read.textContent = 'up to 50%';
     fixRead();
-    S.led.setAttribute('fill', '#4f7d4a');
+    S.led.setAttribute('fill', PAPER);
     if (Kit.calm) return;
     loopSludge(); loopBubbles(); loopGas1(); loopGas2(); loopSparks(); loopWheel(); loopNeedle();
   }

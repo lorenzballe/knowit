@@ -45,11 +45,11 @@ function draw() {
   const fs = Math.max(12, f);
   const s = Math.min(W, H * 1.15);
   const cx = W / 2, sy = H * 0.58, rx = s * 0.40, ry = rx * 0.22;
-  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
-  const card = getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#fff';
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#10100c';
+  const card = getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#FF7A1A';
   const tint = n => `color-mix(in srgb, ${ink} ${n}%, ${card})`;
   const sw = Math.max(2, rx * .022);
-  const porcelain = '#f7f1e3', blue = '#2b4f96';
+  const porcelain = card, blue = '#1b2a6b';
   G = {W, H, fs, cx, sy, rx, ry};
 
   const defs = Kit.mk('defs', {}, svg);
@@ -72,7 +72,7 @@ function draw() {
   const fh = rx * 0.62, fb = cx + rx * 0.22;
   const fin = Kit.mk('path', {
     d: `M${fb - rx * .26},${sy + ry * .1} C${fb - rx * .12},${sy - fh * .5} ${fb - rx * .02},${sy - fh * .9} ${fb + rx * .08},${sy - fh} C${fb + rx * .04},${sy - fh * .6} ${fb + rx * .1},${sy - fh * .2} ${fb + rx * .22},${sy + ry * .1} Z`,
-    fill: '#66727c', stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'
+    fill: ink, stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'
   }, finG);
   G.fin = fin;
   gsap.set(fin, {y: found.has('fin') ? 0 : fh * 1.15});
@@ -90,13 +90,13 @@ function draw() {
   // soup surface
   const soup = Kit.mk('g', {class: 'hit', 'data-h': 'fin'}, svg);
   Kit.mk('ellipse', {cx, cy: sy, rx, ry, fill: porcelain, stroke: ink, 'stroke-width': sw}, soup);
-  Kit.mk('ellipse', {cx, cy: sy + ry * .08, rx: rx * .9, ry: ry * .78, fill: '#d29a3a'}, soup);
+  Kit.mk('ellipse', {cx, cy: sy + ry * .08, rx: rx * .9, ry: ry * .78, fill: 'var(--edge)'}, soup);
   // fin strands floating in the broth
   for (let i = 0; i < 14; i++) {
     const a = Kit.rnd() * Math.PI * 2, r = Kit.rnd() * .75;
     const x = cx + Math.cos(a) * rx * .8 * r, y = sy + ry * .08 + Math.sin(a) * ry * .6 * r;
     const L = rx * (.08 + Kit.rnd() * .1), t = Kit.rnd() * .6 - .3;
-    Kit.mk('line', {x1: x - L / 2, y1: y - L * t / 2, x2: x + L / 2, y2: y + L * t / 2, stroke: '#f3dc9e', 'stroke-width': Math.max(1.5, rx * .016), 'stroke-linecap': 'round'}, soup);
+    Kit.mk('line', {x1: x - L / 2, y1: y - L * t / 2, x2: x + L / 2, y2: y + L * t / 2, stroke: card, 'stroke-width': Math.max(1.5, rx * .016), 'stroke-linecap': 'round'}, soup);
   }
   // fin on top of the surface so it emerges from it
   svg.appendChild(finG);
@@ -105,7 +105,7 @@ function draw() {
   const tx = cx + rx * .62, ty = H * 0.06, tw = Math.max(fs * 4.6, rx * .5), th = fs * 2.4;
   const tag = Kit.mk('g', {class: 'hit', 'data-h': 'tag'}, svg);
   Kit.mk('path', {d: `M${cx + rx * .92},${sy - ry * .3} Q${tx + tw * .2},${ty + th * 1.6} ${tx + tw * .12},${ty + th / 2}`, fill: 'none', stroke: ink, 'stroke-width': Math.max(1.5, rx * .012), 'stroke-linecap': 'round'}, tag);
-  Kit.mk('path', {d: `M${tx},${ty + th / 2} L${tx + th * .35},${ty} L${tx + tw},${ty} L${tx + tw},${ty + th} L${tx + th * .35},${ty + th} Z`, fill: '#fbf6ea', stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'}, tag);
+  Kit.mk('path', {d: `M${tx},${ty + th / 2} L${tx + th * .35},${ty} L${tx + tw},${ty} L${tx + tw},${ty + th} L${tx + th * .35},${ty + th} Z`, fill: card, stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'}, tag);
   Kit.mk('circle', {cx: tx + th * .32, cy: ty + th / 2, r: fs * .22, fill: card, stroke: ink, 'stroke-width': Math.max(1.5, rx * .012)}, tag);
   const tt = Kit.mk('text', {x: tx + th * .35 + (tw - th * .35) / 2, y: ty + th / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: ink, style: 'font-family:var(--display);font-weight:800', 'font-size': fs * 1.25}, tag);
   tt.textContent = found.has('tag') ? '$' + Math.round(price.v || 300) : '$ ?';
@@ -121,7 +121,7 @@ function draw() {
   Object.entries(marks).forEach(([k, [x, y]]) => {
     const g = Kit.mk('g', {class: 'mk hit', 'data-h': k}, svg);
     const done = found.has(k);
-    Kit.mk('circle', {cx: x, cy: y, r: fs * .95, fill: done ? ink : '#c8361f', stroke: card, 'stroke-width': Math.max(2, fs * .15)}, g);
+    Kit.mk('circle', {cx: x, cy: y, r: fs * .95, fill: done ? ink : blue, stroke: card, 'stroke-width': Math.max(2, fs * .15)}, g);
     const t = Kit.mk('text', {x, y, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-size': fs}, g);
     t.textContent = done ? '✓' : '?';
     G.marks[k] = g;
@@ -145,7 +145,7 @@ function reveal(k) {
     gsap.to(price, {v: 300, duration: Kit.calm ? 0 : 1.2, ease: 'power2.out', onUpdate: () => { if (G.tagText) G.tagText.textContent = '$' + Math.round(price.v); }});
   }
   const g = G.marks[k];
-  if (g) { gsap.killTweensOf(g); gsap.set(g, {scale: 1}); g.querySelector('circle').setAttribute('fill', getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111'); g.querySelector('text').textContent = '✓'; }
+  if (g) { gsap.killTweensOf(g); gsap.set(g, {scale: 1}); g.querySelector('circle').setAttribute('fill', getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#10100c'); g.querySelector('text').textContent = '✓'; }
   if (found.size === 3) {
     Kit.haptic('success');
     Kit.hide('say');

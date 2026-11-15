@@ -14,8 +14,8 @@
 #art .wall{fill:color-mix(in srgb,var(--k) 62%,var(--c))}
 #art .hole{fill:var(--c)}
 #art .cap{fill:color-mix(in srgb,var(--k) 45%,var(--c))}
-#art .fo{fill:#f0893a}
-#art .fi{fill:#ffd66e}
+#art .fo{fill:#d9480f}
+#art .fi{fill:#fff}
 #art .ink{stroke:var(--k)}
 #art .tick{stroke:color-mix(in srgb,var(--k) 45%,var(--c))}
 #art .box{fill:color-mix(in srgb,var(--k) 28%,var(--c))}
@@ -27,7 +27,7 @@
 .opt{font:700 max(1.9cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 1.5cqw;min-height:max(6.4cqh,40px);cursor:pointer}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#14100d;--k:#f4efe6;--edge:#2b211a">
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">STANDING WAVES</span></div>
     <h2 class="q">Why do flames change height at different points in the tube?</h2>
@@ -79,7 +79,7 @@ function build() {
   };
   const pad = clamp(Math.min(W, H) * .045, 7, 16);
   const fs = clamp(Math.min(f || 14, H * .07), 12, 17);
-  let pb = {height: 0, y: 0}; const probe = txt(0, 0, 'Hg', fs, '#fff'); try { pb = probe.getBBox(); } catch (e) {} probe.remove();
+  let pb = {height: 0, y: 0}; const probe = txt(0, 0, 'Hg', fs, 'var(--k)'); try { pb = probe.getBBox(); } catch (e) {} probe.remove();
   const lineH = pb.height || fs * 1.3, asc = pb.height ? -pb.y : fs * .95;
   const two = H >= 190;
   const ih = clamp(H * .14, 16, 46), tw = Math.max(3, ih * .2), tubeH = ih + 2 * tw;

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Four options ask how sperm find the egg in a Fallopian tube. The reader picks one and rates their confidence, then watches a glowing egg send chemical signals that draw the surviving sperm toward it.",
-    "ground": "#0b1026"
+    "label": "Four options ask how sperm find the egg in a Fallopian tube. The reader picks one and rates their confidence, then watches a glowing egg send chemical signals that draw the surviving sperm toward it."
   },
   "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=vCWzf0yxik8&t=122s",

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "An Earth orbit diagram with distant stars behind it. Earth is dragged once round the Sun in a toy year of 4 days. The page asks why the stars see Earth spin 366.24 times a year, not 365.24, and has the reader count the spins two ways.",
-    "ground": "#14243a"
+    "label": "An Earth orbit diagram with distant stars behind it. Earth is dragged once round the Sun in a toy year of 4 days. The page asks why the stars see Earth spin 366.24 times a year, not 365.24, and has the reader count the spins two ways."
   },
   "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=691s",

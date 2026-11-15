@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page: drag a dumbbell up in three settings (on Earth, in orbit, and in orbit with an elastic band) and watch the load. It asks why lifting weights is useless for astronauts in zero-G.",
-    "ground": "#0b1026"
+    "label": "Interactive page: drag a dumbbell up in three settings (on Earth, in orbit, and in orbit with an elastic band) and watch the load. It asks why lifting weights is useless for astronauts in zero-G."
   },
   "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
   "reference": "https://www.youtube.com/watch?v=SAQ-iIJkLzA&t=114s",

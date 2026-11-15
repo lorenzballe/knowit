@@ -30,8 +30,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "A slot machine screen with a spin button. The heading asks why flashing lights and frequent small wins keep players playing. Tap the machine to spin; each spin costs one coin from your pocket.",
-    "graded": false,
-    "ground": "#1b1423"
+    "graded": false
   },
   "source": "Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=5x3OF3zIuAc",

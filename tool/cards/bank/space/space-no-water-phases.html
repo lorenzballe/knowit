@@ -30,7 +30,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const N = 240, RED = '#e5484d', BLUE = '#2f80ed';
+const N = 240, RED = '#ffd23f', BLUE = '#ffffff';
 let idx = 0, pts = [], G = {}, cur = '', dragging = false, done = false;
 const seen = {L: 0, F: 0, R: 0};
 let flash = null, halo = null, W = 0, H = 0;
@@ -92,10 +92,10 @@ Kit.onShow.card = () => {
   const line = (a, b, c, dash) => mk('polyline', {points: pts.slice(a, b + 1).map(p => `${p.x},${p.y}`).join(' '), fill: 'none', stroke: c, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-dasharray': dash || ''}, svg);
   line(k1, k2, BLUE); line(0, k1, RED, `${sw * 1.6} ${sw * 1.4}`); line(k2, N - 1, RED, `${sw * 1.6} ${sw * 1.4}`);
   // Earth and Moon
-  mk('circle', {cx: ex, cy: ey, r: er, fill: '#2f6fd0', class: 'stk', 'stroke-width': 2}, svg);
-  mk('path', {d: `M${ex - er * .55},${ey - er * .2} q${er * .3},${-er * .45} ${er * .6},${-er * .1} q${er * .2},${er * .4} ${-er * .1},${er * .55} q${-er * .4},${er * .1} ${-er * .5},${-er * .45}Z`, fill: '#4caf6a'}, svg);
-  mk('circle', {cx: mx, cy: my, r: mr, fill: '#d6d6d6', class: 'stk', 'stroke-width': 2}, svg);
-  mk('circle', {cx: mx - mr * .3, cy: my - mr * .2, r: mr * .22, fill: '#b5b5b5'}, svg);
+  mk('circle', {cx: ex, cy: ey, r: er, fill: '#152f8f', class: 'stk', 'stroke-width': 2}, svg);
+  mk('path', {d: `M${ex - er * .55},${ey - er * .2} q${er * .3},${-er * .45} ${er * .6},${-er * .1} q${er * .2},${er * .4} ${-er * .1},${er * .55} q${-er * .4},${er * .1} ${-er * .5},${-er * .45}Z`, fill: '#ffffff'}, svg);
+  mk('circle', {cx: mx, cy: my, r: mr, fill: '#ffffff', class: 'stk', 'stroke-width': 2}, svg);
+  mk('circle', {cx: mx - mr * .3, cy: my - mr * .2, r: mr * .22, fill: '#152f8f'}, svg);
   const lab = (x, y, t, anc, c) => { const e = mk('text', {x, y, 'text-anchor': anc, 'font-size': fs * .9, class: 'lab'}, svg); e.textContent = t; if (c) e.setAttribute('fill', c); return e; };
   lab(ex - er - fs * .5, ey + fs * .35, 'LAUNCH', 'end', RED);
   lab(ex + er + fs * .5, ey + fs * .35, 'RE-ENTRY', 'start', RED);
@@ -104,8 +104,8 @@ Kit.onShow.card = () => {
   const cs = Math.max(W * .032, 10);
   G.halo = mk('circle', {r: cs * 1.9, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, opacity: done ? 0 : .5}, svg);
   G.cap = mk('g', {}, svg);
-  mk('path', {d: `M${cs},0 L${-cs * .7},${-cs * .8} L${-cs * .7},${cs * .8} Z`, fill: '#f4f4f4', class: 'stk', 'stroke-width': 2, 'stroke-linejoin': 'round'}, G.cap);
-  mk('rect', {x: -cs * 1.15, y: -cs * .55, width: cs * .45, height: cs * 1.1, fill: '#555', rx: 2}, G.cap);
+  mk('path', {d: `M${cs},0 L${-cs * .7},${-cs * .8} L${-cs * .7},${cs * .8} Z`, fill: '#ffffff', class: 'stk', 'stroke-width': 2, 'stroke-linejoin': 'round'}, G.cap);
+  mk('rect', {x: -cs * 1.15, y: -cs * .55, width: cs * .45, height: cs * 1.1, fill: '#152f8f', rx: 2}, G.cap);
   // Panel
   const y0 = pH + fs * .5, bh = H - y0, gap = fs * .6, bw = (W - gap) / 2, rx = fs * .6;
   mk('rect', {x: 1, y: y0, width: bw - 2, height: bh - 1, rx, class: 'pbox', 'stroke-width': 1.5}, svg);
@@ -125,12 +125,12 @@ Kit.onShow.card = () => {
   G.stat.style.fontFamily = 'var(--display)';
   const fx = bw + gap + fs * .6 + s * 1.2;
   G.pouch = mk('g', {}, svg);
-  mk('rect', {x: fx - s * .7, y: iy - s, width: s * 1.4, height: s * 2, rx: s * .15, fill: '#e6e6e6', class: 'stk', 'stroke-width': 1.5}, G.pouch);
-  mk('rect', {x: fx - s * .7, y: iy - s * .55, width: s * 1.4, height: s * .3, fill: '#bbb'}, G.pouch);
+  mk('rect', {x: fx - s * .7, y: iy - s, width: s * 1.4, height: s * 2, rx: s * .15, fill: '#152f8f', class: 'stk', 'stroke-width': 1.5}, G.pouch);
+  mk('rect', {x: fx - s * .7, y: iy - s * .55, width: s * 1.4, height: s * .3, fill: '#2B5CFF'}, G.pouch);
   drop(fx + s * .45, iy + s * .55, s * .45, BLUE, G.pouch);
   G.tort = mk('g', {}, svg);
-  mk('circle', {cx: fx, cy: iy, r: s * 1.05, fill: '#efcf8a', stroke: '#a8732b', 'stroke-width': 2}, G.tort);
-  [[-.4, -.3, .14], [.35, -.45, .11], [.2, .3, .16], [-.3, .45, .1], [.55, .1, .09]].forEach(([a, b, r]) => mk('circle', {cx: fx + a * s, cy: iy + b * s, r: r * s, fill: '#b9792f'}, G.tort));
+  mk('circle', {cx: fx, cy: iy, r: s * 1.05, fill: '#ffffff', stroke: '#152f8f', 'stroke-width': 2}, G.tort);
+  [[-.4, -.3, .14], [.35, -.45, .11], [.2, .3, .16], [-.3, .45, .1], [.55, .1, .09]].forEach(([a, b, r]) => mk('circle', {cx: fx + a * s, cy: iy + b * s, r: r * s, fill: '#152f8f'}, G.tort));
   const tx = fx + s * 1.5;
   G.l1 = tt(tx, iy - fs * .35, '', 'txt', fs);
   G.l2 = tt(tx, iy + fs * 1.35, '', 'mut', Math.max(12, fs * .85));

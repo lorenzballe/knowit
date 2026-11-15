@@ -19,7 +19,7 @@ Wow: at 48 h the chalky, bumpy shell morphs (MorphSVG) into a smooth membrane. T
 @keyframes ping{from{transform:scale(.7);opacity:.8}to{transform:scale(2.1);opacity:0}}
 .kit-calm .ping{animation:none}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Drag through time · zoom in" style="--c:#f3dc9a;--k:#1c1810;--edge:#000">
+<article class="card" id="card" data-topic="science" data-kind="Drag through time · zoom in">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ACID VS SHELL</span></div>
     <h2 class="q">Why does an eggshell disappear when you soak it in vinegar?</h2>
@@ -39,7 +39,7 @@ Wow: at 48 h the chalky, bumpy shell morphs (MorphSVG) into a smooth membrane. T
   const HOURS = 48;
   // flat colours: ink, card tints, chalk shell, egg white, yolk
   const INK = 'var(--k)', LIQ = 'color-mix(in srgb,var(--k) 12%,var(--c))', SOFT = 'color-mix(in srgb,var(--k) 32%,var(--c))';
-  const CHALK = '#fffaf0', WHITE = '#fffdf7', YOLK = '#ec8a2c';
+  const CHALK = 'var(--c)', WHITE = 'color-mix(in srgb,var(--k) 5%,var(--c))', YOLK = '#b42318';
   const st = (fill, stroke) => `fill:${fill || 'none'};stroke:${stroke || 'none'}`;
   const hash = i => { const v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
   const MSG = [

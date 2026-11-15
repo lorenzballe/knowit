@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A rectangle split into two parts, a power of two and a Mersenne prime, with a draggable pearl that changes the exponent p. It asks whether the divisors of the perfect number 28 fill its rectangle exactly.",
-    "ground": "#06243f"
+    "label": "A rectangle split into two parts, a power of two and a Mersenne prime, with a draggable pearl that changes the exponent p. It asks whether the divisors of the perfect number 28 fill its rectangle exactly."
   },
   "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=779s",

@@ -14,7 +14,7 @@
 #steps i{width:max(1.1cqh,8px);height:max(1.1cqh,8px);border-radius:50%;background:color-mix(in srgb,var(--k) 22%,transparent);transition:background .3s}
 #steps i.on{background:var(--k)}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Layers · tap" style="--c:#0a2a45;--k:#e8f4ff;--edge:#041525">
+<article class="card" id="card" data-topic="nature" data-kind="Layers · tap">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEP SEA</span></div>
     <h2 class="q">How do animals survive in the deep, cold, food-poor trench?</h2>
@@ -38,7 +38,7 @@ function fish(parent, s, dir, col){
   const g = Kit.mk('g', {}, parent), inner = Kit.mk('g', {}, g);
   Kit.mk('path', {d:`M${-s*.9},0 L${-s*1.5},${-s*.45} L${-s*1.5},${s*.45} Z`, fill:col}, inner);
   Kit.mk('path', {d:`M${-s},0 C${-s*.4},${-s*.6} ${s*.5},${-s*.55} ${s},0 C${s*.5},${s*.55} ${-s*.4},${s*.6} ${-s},0 Z`, fill:col}, inner);
-  Kit.mk('circle', {cx:s*.55, cy:-s*.1, r:s*.1, fill:'#06121f'}, inner);
+  Kit.mk('circle', {cx:s*.55, cy:-s*.1, r:s*.1, fill:'#fff'}, inner);
   gsap.set(inner, {scaleX:dir});
   return {g, inner};
 }
@@ -57,35 +57,35 @@ function draw(){
   const cx = W/2, floor = H*.95, top = H*.8, fs = Math.max(f, 13);
   const defs = Kit.mk('defs', {}, svg);
   const gl = Kit.mk('radialGradient', {id:'glow'}, defs);
-  Kit.mk('stop', {offset:0, 'stop-color':'#ffb347', 'stop-opacity':.95}, gl);
-  Kit.mk('stop', {offset:.35, 'stop-color':'#ff6a2a', 'stop-opacity':.45}, gl);
-  Kit.mk('stop', {offset:1, 'stop-color':'#ff6a2a', 'stop-opacity':0}, gl);
+  Kit.mk('stop', {offset:0, 'stop-color':'#b32400', 'stop-opacity':.22}, gl);
+  Kit.mk('stop', {offset:.35, 'stop-color':'#b32400', 'stop-opacity':.22}, gl);
+  Kit.mk('stop', {offset:1, 'stop-color':'#b32400', 'stop-opacity':.22}, gl);
   const glow = Kit.mk('circle', {cx, cy:top, r:Math.max(W,H)*.42, fill:'url(#glow)', opacity:0}, svg);
   // trench walls
-  const rock = '#1a1512', rim = '#5a4636';
+  const rock = '#007a2f', rim = '#10100c';
   Kit.mk('path', {d:`M0,${H*.12} L${W*.12},${H*.3} L${W*.2},${H*.6} L${W*.29},${floor} L${W*.29},${H} L0,${H} Z`, fill:rock, stroke:rim, 'stroke-width':2}, svg);
   Kit.mk('path', {d:`M${W},${H*.12} L${W*.88},${H*.34} L${W*.8},${H*.62} L${W*.71},${floor} L${W*.71},${H} L${W},${H} Z`, fill:rock, stroke:rim, 'stroke-width':2}, svg);
   Kit.mk('rect', {x:W*.28, y:floor, width:W*.44, height:H-floor, fill:rock}, svg);
   // particles (material)
   const pg = Kit.mk('g', {opacity:0}, svg), parts = [];
-  for (let i = 0; i < 34; i++) parts.push(Kit.mk('circle', {cx, cy:top, r:Math.max(1.6, W*.007*(0.6+Kit.rnd())), fill:i%3 ? '#ffd36b' : '#9ff0c8'}, pg));
+  for (let i = 0; i < 34; i++) parts.push(Kit.mk('circle', {cx, cy:top, r:Math.max(1.6, W*.007*(0.6+Kit.rnd())), fill:i%3 ? '#b32400' : '#10100c'}, pg));
   // vent
-  Kit.mk('path', {d:`M${cx-W*.1},${floor} L${cx-W*.025},${top} L${cx+W*.025},${top} L${cx+W*.1},${floor} Z`, fill:'#2b201a', stroke:'#7a5840', 'stroke-width':2}, svg);
-  const lava = Kit.mk('ellipse', {cx, cy:top, rx:W*.028, ry:W*.01, fill:'#ff7b2e', opacity:.25}, svg);
-  const ring = Kit.mk('circle', {cx, cy:top, r:W*.04, fill:'none', stroke:'#fff', 'stroke-width':2, opacity:0}, svg);
+  Kit.mk('path', {d:`M${cx-W*.1},${floor} L${cx-W*.025},${top} L${cx+W*.025},${top} L${cx+W*.1},${floor} Z`, fill:'#10100c', stroke:'#fff', 'stroke-width':2}, svg);
+  const lava = Kit.mk('ellipse', {cx, cy:top, rx:W*.028, ry:W*.01, fill:'#b32400', opacity:.25}, svg);
+  const ring = Kit.mk('circle', {cx, cy:top, r:W*.04, fill:'none', stroke:'#10100c', 'stroke-width':2, opacity:0}, svg);
   // animals
   const s = Math.max(W*.045, 9), A = [];
   const F = [[-.22,.62,1],[.2,.54,-1],[-.1,.44,1],[.25,.7,-1]];
   F.forEach(([dx,y,d], i) => {
-    const a = fish(svg, s*(i%2 ? .9 : 1.1), d, '#7fd3e6');
+    const a = fish(svg, s*(i%2 ? .9 : 1.1), d, '#10100c');
     a.near = [cx+dx*W, H*y]; a.far = [cx+dx*W*1.7, H*(y-.18)]; A.push(a);
   });
-  [[-.14,'#f0a37a'],[.15,'#f0a37a']].forEach(([dx,c]) => {
+  [[-.14,'#b32400'],[.15,'#b32400']].forEach(([dx,c]) => {
     const a = crab(svg, s*.8, c);
     a.near = [cx+dx*W, floor-s*.1]; a.far = [cx+dx*W*1.25, floor-s*.1]; A.push(a);
   });
   A.forEach(a => gsap.set(a.g, {x:a.far[0], y:a.far[1], opacity:.18}));
-  const cap = Kit.mk('text', {x:cx, y:H*.07+fs, 'text-anchor':'middle', fill:'#fff', 'font-family':'var(--body)', 'font-weight':700, 'font-size':fs}, svg);
+  const cap = Kit.mk('text', {x:cx, y:H*.07+fs, 'text-anchor':'middle', fill:'#10100c', 'font-family':'var(--body)', 'font-weight':700, 'font-size':fs}, svg);
   G = {W, H, cx, top, s, glow, pg, parts, lava, ring, A, cap};
   T(gsap.fromTo(ring, {attr:{r:W*.03}, opacity:.8}, {attr:{r:W*.11}, opacity:0, duration:1.4, repeat:-1, ease:'power1.out'}));
   apply(step, true);

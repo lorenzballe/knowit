@@ -30,8 +30,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "Two hull drawings, a perfect sphere and a cylinder, shown under deep-sea pressure. The page asks the reader to tap the hull they think gives way first under deep-sea pressure.",
-    "graded": false,
-    "ground": "#0b1026"
+    "graded": false
   },
   "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=566s",

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A freediving card asking why the phase around 35 to 40 metres is the most dangerous. A KICK button: press and hold it to swim the diver up from 100 m.",
-    "ground": "#061a3a"
+    "label": "A freediving card asking why the phase around 35 to 40 metres is the most dangerous. A KICK button: press and hold it to swim the diver up from 100 m."
   },
   "source": "Geopop, “Immergersi in apnea a 100 metri di profondità. Le tecniche del freediving con Antonio Mogavero” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=gFnFsXjqoHo&t=284s",

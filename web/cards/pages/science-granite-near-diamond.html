@@ -14,12 +14,12 @@
 #pic{flex:1;min-height:0;width:100%;display:block;background:none}
 .lbl{font-family:var(--body)}
 #sw{position:relative;display:grid;grid-template-columns:1fr 1fr;flex:none;background:color-mix(in srgb, var(--k) 8%, var(--c));border-radius:99px;padding:.6cqh;outline:.3cqh solid color-mix(in srgb, var(--k) 35%, var(--c))}
-.sb{position:relative;z-index:1;font:700 max(2.2cqh,14px)/1 var(--body);color:#f6f3e8;background:none;border:0;padding:1.3cqh 0;cursor:pointer;opacity:.8;transition:color .2s,opacity .2s}
-.sb.on{opacity:1;color:#1b3229}
-#knob{position:absolute;top:.6cqh;bottom:.6cqh;left:.6cqh;width:calc(50% - .6cqh);border-radius:99px;background:#f6f3e8;opacity:0}
+.sb{position:relative;z-index:1;font:700 max(2.2cqh,14px)/1 var(--body);color:var(--k);background:none;border:0;padding:1.3cqh 0;cursor:pointer;opacity:.8;transition:color .2s,opacity .2s}
+.sb.on{opacity:1;color:#f6f3e8}
+#knob{position:absolute;top:.6cqh;bottom:.6cqh;left:.6cqh;width:calc(50% - .6cqh);border-radius:99px;background:var(--k);opacity:0}
 #say{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Flip the switch · compare" style="--c:#1f382e;--k:#f6f3e8;--edge:#0f1f18">
+<article class="card" id="card" data-topic="science" data-kind="Flip the switch · compare">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FLIP THE SWITCH</span></div>
     <h2 class="q">How does granite's hardness compare to diamond's?</h2>
@@ -42,15 +42,15 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), sw = Kit.$('sw'), knob = Kit.$('knob');
   const cs = getComputedStyle(Kit.$('card'));
-  const CH = (cs.getPropertyValue('--k').trim() || '#f6f3e8'), CC = (cs.getPropertyValue('--c').trim() || '#1f382e');
-  const PINK = '#f3a9b9', BLUE = '#a9dcf5';
+  const CH = (cs.getPropertyValue('--k').trim() || '#10100c'), CC = (cs.getPropertyValue('--c').trim() || '#00E5A0');
+  const PINK = CH, BLUE = '#1a4f8a';
   const hx = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); };
   const mix = (a, b, n) => { const A = hx(a), B = hx(b), t = n / 100; return '#' + A.map((v, i) => Math.round(v * t + B[i] * (1 - t)).toString(16).padStart(2, '0')).join(''); };
   const INK = CH;
-  const EDGE = mix('#000000', CC, 55);            // bold dark outline for the objects
-  const STONE = mix(CH, CC, 62), MICA = mix('#000000', CC, 45), FELD = '#e3a3a8';
+  const EDGE = CH;            // bold dark outline for the objects
+  const STONE = mix(CH, CC, 62), MICA = CH, FELD = mix('#ffffff', CC, 45);
   const TRACK = mix(CH, CC, 13);
-  const SPEC = {g: {n: 7, col: '#f7d3dc'}, d: {n: 10, col: BLUE}};
+  const SPEC = {g: {n: 7, col: CH}, d: {n: 10, col: BLUE}};
   const seen = {g: false, d: false}, want = {g: false, d: false};
   let revealed = false, hammered = false, S = null, loops = [], lastW = 0, lastH = 0;
   const rng = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
@@ -123,7 +123,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
       const cx = (R() - .5) * r * 2.1, cy = (R() - .5) * r * 2.1, s = r * (.1 + .12 * R()), t = R();
       const shape = []; const m = 4 + Math.floor(R() * 2);
       for (let j = 0; j < m; j++) { const a = j / m * Math.PI * 2 + R() * .6; shape.push([cx + Math.cos(a) * s * (.7 + R() * .4), cy + Math.sin(a) * s * (.7 + R() * .4)]); }
-      const fill = t < .4 ? CH : t < .72 ? FELD : MICA;
+      const fill = t < .4 ? '#ffffff' : t < .72 ? FELD : MICA;
       const e = mk('polygon', {points: pts(shape), fill}, inside);
       if (t < .4) quartz.push(e);
     }
@@ -140,7 +140,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const dIn = mk('g', {}, dG);
     const P = (x, y) => [x * r, y * r];
     const outline = [P(-.45, -.55), P(.45, -.55), P(.95, -.15), P(0, .85), P(-.95, -.15)];
-    const D_LINE = '#3f7fa3';
+    const D_LINE = '#ffffff';
     mk('polygon', {points: pts(outline), fill: BLUE}, dIn);
     const facets = [[-.45, -.55, 0, -.15], [0, -.15, .45, -.55], [-.45, -.55, -.48, -.15], [.45, -.55, .48, -.15], [-.95, -.15, .95, -.15], [-.48, -.15, 0, .85], [.48, -.15, 0, .85], [0, -.15, 0, .85]];
     const fg = mk('g', {stroke: D_LINE, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round'}, dIn);
@@ -162,11 +162,11 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
       return {path, head, start: [sxp, syp], end: [ex, ey]};
     };
     const bxG = sx - fs * 1.575, bxD = sx + fs * 1.575;
-    const aG = mkArrow(gx + r * .1, gy - r * .9, [gx, Math.max(8, yR(7) - step * 2.4)], [bxG, Math.max(8, yR(7) - step * 2.4)], bxG, yR(7) - fs * .35, '#f7d3dc');
+    const aG = mkArrow(gx + r * .1, gy - r * .9, [gx, Math.max(8, yR(7) - step * 2.4)], [bxG, Math.max(8, yR(7) - step * 2.4)], bxG, yR(7) - fs * .35, CH);
     const aD = mkArrow(dx - r * .05, gy - r * .7, [dx, Math.max(8, top - step * .2)], [bxD, Math.max(6, top - step * 1.5)], bxD, yR(10) - fs * .35, BLUE);
     const chip = (k, [x, y]) => {
       const g = mk('g', {opacity: 0}, root), s = fs * .5;
-      if (k === 'g') mk('polygon', {points: pts([[0, -s], [s * .87, -s * .5], [s * .87, s * .5], [0, s], [-s * .87, s * .5], [-s * .87, -s * .5]]), fill: CH, stroke: EDGE, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+      if (k === 'g') mk('polygon', {points: pts([[0, -s], [s * .87, -s * .5], [s * .87, s * .5], [0, s], [-s * .87, s * .5], [-s * .87, -s * .5]]), fill: '#ffffff', stroke: EDGE, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
       else mk('polygon', {points: pts([[0, -s * 1.1], [s * .8, 0], [0, s * 1.1], [-s * .8, 0]]), fill: BLUE, stroke: EDGE, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
       gsap.set(g, {x, y});
       return g;
@@ -209,7 +209,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
   function send(k, instant) {
     const e = S && S.el[k]; if (!e) return;
     gsap.killTweensOf([e.path, e.head, e.bar, e.ring, e.tr, e.num]);
-    const lit = () => { e.num.setAttribute('fill', k === 'g' ? '#f7d3dc' : BLUE); e.num.setAttribute('font-weight', 800); };
+    const lit = () => { e.num.setAttribute('fill', k === 'g' ? CH : BLUE); e.num.setAttribute('font-weight', 800); };
     if (instant || Kit.calm) {
       gsap.set(e.path, {drawSVG: '100%', opacity: 1}); gsap.set(e.head, {opacity: 1});
       gsap.set(e.bar, {scaleY: 1}); gsap.set(e.ring, {drawSVG: '100%', opacity: 1}); gsap.set(e.tr, {opacity: 0}); lit();
@@ -218,7 +218,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     }
     const tl = gsap.timeline();
     tl.set(e.bar, {scaleY: 0}).set(e.ring, {drawSVG: '0%', opacity: 1}).set(e.head, {opacity: 0});
-    if (k === 'g') tl.fromTo(e.quartz, {opacity: 1}, {opacity: 1, fill: '#f7d3dc', duration: .12, stagger: {each: .006, from: 'random'}, yoyo: true, repeat: 1}, 0);
+    if (k === 'g') tl.fromTo(e.quartz, {opacity: 1}, {opacity: 1, fill: BLUE, duration: .12, stagger: {each: .006, from: 'random'}, yoyo: true, repeat: 1}, 0);
     tl.fromTo(e.spec, {scale: 1, transformOrigin: '50% 60%'}, {scale: 1.07, duration: .14, ease: 'power2.out', yoyo: true, repeat: 1}, 0)
       .fromTo(e.path, {drawSVG: '0%', opacity: 1}, {drawSVG: '100%', duration: 1.05, ease: 'power2.inOut'}, .12)
       .fromTo(e.tr, {opacity: 1, scale: .4, transformOrigin: '50% 50%'}, {scale: 1, duration: .3, ease: 'back.out(3)'}, .12)
@@ -273,7 +273,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const k = b.dataset.k;
     sw.querySelectorAll('.sb').forEach(x => x.classList.toggle('on', x === b));
     Kit.haptic('selection');
-    gsap.to(knob, {xPercent: k === 'g' ? 0 : 100, opacity: 1, backgroundColor: k === 'g' ? '#f7d3dc' : BLUE, duration: Kit.calm ? 0 : .38, ease: 'back.out(1.6)'});
+    gsap.to(knob, {xPercent: k === 'g' ? 0 : 100, opacity: 1, backgroundColor: k === 'g' ? CH : BLUE, duration: Kit.calm ? 0 : .38, ease: 'back.out(1.6)'});
     want[k] = true;
     send(k, false);
   });

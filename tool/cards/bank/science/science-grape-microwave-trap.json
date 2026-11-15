@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two touching grapes sit in a microwave beam. The question asks what microwaves do once they get inside a grape. Options: A) pass straight through and out, B) get trapped, bouncing around inside, C) bounce off the skin and never get in.",
-    "ground": "#151a30"
+    "label": "Two touching grapes sit in a microwave beam. The question asks what microwaves do once they get inside a grape. Options: A) pass straight through and out, B) get trapped, bouncing around inside, C) bounce off the skin and never get in."
   },
   "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=194s",

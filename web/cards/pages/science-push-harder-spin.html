@@ -13,10 +13,10 @@
 #cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #cv:active{cursor:grabbing}
 #why{font:500 max(1.85cqh,12.5px)/1.35 var(--body);margin:0}
-#why b{color:#d42a10}
+#why b{color:#a81500}
 .answered .q{font-size:max(2.4cqh,15px)}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Wind up a push · τ = Iα" style="--c:#f1eee6;--k:#0e0e0e;--edge:#d6d0c2">
+<article class="card" id="card" data-topic="science" data-kind="Wind up a push · τ = Iα">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TORQUE</span></div>
     <h2 class="q">What happens to the globe’s acceleration when you increase the applied force?</h2>
@@ -33,8 +33,8 @@
 <script>
 (() => {
   const cv = Kit.$('cv'), say = Kit.$('say'), card = Kit.$('card');
-  const ACC = '#ff3b1f', WATER = '#3f7fc4';
-  let INK = '#0e0e0e', PAPER = '#f1eee6', STONE = '#9a978f', SEAM = '#5c5a55', FAINT = '#c4c0b6';
+  const ACC = '#a81500', WATER = '#ffffff';
+  let INK = '#10100c', PAPER = '#00E5A0', STONE = '#06986b', SEAM = '#0a6144', FAINT = '#04b67f';
   const K = 0.4, FMAX = 5, DUR = 0.9;     // α = K·F (illustrative units); push lasts DUR s
   let x = null, W = 0, H = 0, fs = 12, FONT = 'sans-serif', DISP = 'serif', G = null, Gt = null;
   let theta = 0, omega = 0, aimF = 0, drag = null, push = null, fly = null, busy = false, last = 0, looping = false;

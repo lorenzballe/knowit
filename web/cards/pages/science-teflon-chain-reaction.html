@@ -19,7 +19,7 @@
 .answered .q{font-size:max(2.3cqh,15px)}
 .answered .say{font-size:max(2.05cqh,14px)}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Turn the dial · chain reaction" style="--c:#b9a6ff;--k:#16121f;--edge:#000">
+<article class="card" id="card" data-topic="science" data-kind="Turn the dial · chain reaction">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PRESSURE DIAL</span></div>
     <h2 class="q">How did a cylinder of TFE gas turn into solid Teflon powder?</h2>
@@ -36,7 +36,7 @@
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
   const N = 30, COLS = 6, ROWS = 5, PI = Math.PI;
-  const INK = '#16121f', BG = '#b9a6ff', HOT = '#f0642d', WHITE = '#fbf8ff';
+  const INK = '#10100c', BG = '#00E5A0', HOT = '#b8290a', WHITE = '#00835b';
   const tint = d3.interpolateRgb(BG, INK);
   const toHot = d3.interpolateRgb(INK, HOT);
   const hotC = h => toHot(Math.max(0, Math.min(1, (h - .55) / .3)));

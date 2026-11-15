@@ -31,7 +31,7 @@ const S = {p: 0};
 let pick = null, armed = false, done = false, G = null;
 const svg = Kit.$('sv');
 const cs = () => getComputedStyle(Kit.$('card'));
-const RED = '#e5484d';
+const RED = '#7a0c14';
 
 function arrow(g, x1, y1, x2, y2, col, w) {
   const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L, h = Math.max(w * 2.6, 5);
@@ -90,7 +90,7 @@ function render() {
 
 Kit.onShow.card = () => {
   const {W, H, f} = Kit.fitSvg(svg), st = cs();
-  G = {W, H, f, k: st.getPropertyValue('--k').trim() || '#111', c: st.getPropertyValue('--c').trim() || '#fff'};
+  G = {W, H, f, k: st.getPropertyValue('--k').trim() || '#10100c', c: st.getPropertyValue('--c').trim() || '#00A6FF'};
   render();
 };
 new ResizeObserver(() => { if (G) Kit.onShow.card(); }).observe(svg);

@@ -19,7 +19,7 @@
 #rail{align-self:flex-start}
 .answered .q{font-size:max(2.4cqh,15px)}
 </style>
-<article class="card" id="card" data-topic="human_body" data-kind="Drag the night · road or rail" style="--c:#05040c;--k:#f3eaff;--edge:#020106">
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the night · road or rail">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ROAD OR RAIL</span></div>
     <h2 class="q">What physiological phenomenon discourages building a road tunnel under the Channel?</h2>
@@ -61,14 +61,14 @@
   };
   const mixc = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
   const rgb = (a, al = 1) => `rgba(${a[0] | 0},${a[1] | 0},${a[2] | 0},${al})`;
-  const AMBER = [236, 158, 64], RED = [226, 62, 62];
-  let CK = [243, 234, 255], CC = [5, 4, 12];
+  const AMBER = [255, 208, 72], RED = [255, 208, 72], EDGE = [158, 22, 56];
+  let CK = [255, 255, 255], CC = [255, 45, 95];
   let WALL, WALL_LIT, ROAD, ROAD_LIT, LAMP, LANE, RAIL, SLEEPER, TRACK;
   function palette() {
-    WALL = mixc(CC, CK, .14); WALL_LIT = mixc(CC, AMBER, .38);
-    ROAD = mixc(CC, CK, .08); ROAD_LIT = mixc(CC, AMBER, .24);
-    LAMP = mixc(AMBER, CK, .45); LANE = mixc(CC, CK, .88); RAIL = mixc(CC, CK, .62);
-    SLEEPER = mixc(CC, CK, .3); TRACK = mixc(CC, CK, .24);
+    WALL = mixc(CC, EDGE, .4); WALL_LIT = mixc(CC, EDGE, .15);
+    ROAD = mixc(CC, EDGE, .75); ROAD_LIT = mixc(EDGE, AMBER, .55);
+    LAMP = AMBER; LANE = CK; RAIL = mixc(CC, CK, .9);
+    SLEEPER = mixc(CC, EDGE, .55); TRACK = mixc(CC, EDGE, .55);
   }
   palette();
 
@@ -258,7 +258,7 @@
     if (showHood) {
       const hh = Math.min(H * .14, 72), top = H - hh;
       x.beginPath(); x.moveTo(0, H); x.lineTo(0, top + hh * .55); x.quadraticCurveTo(cx, top - hh * .25, W, top + hh * .55); x.lineTo(W, H); x.closePath();
-      x.fillStyle = rgb(mixc(CC, CK, .03)); x.fill();
+      x.fillStyle = rgb(EDGE); x.fill();
       x.strokeStyle = rgb(mixc(CC, CK, .3)); x.lineWidth = 1.5;
       x.beginPath(); x.moveTo(0, top + hh * .55); x.quadraticCurveTo(cx, top - hh * .25, W, top + hh * .55); x.stroke();
     }

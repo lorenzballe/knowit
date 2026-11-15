@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive diagram of a passenger's head with the inner ear shown. Drag sideways to turn the head in level flight at normal gravity, then pull up into hyper-G and turn it again. Asks why passengers are told to keep their heads still in hyper-G.",
-    "ground": "#23324f"
+    "label": "Interactive diagram of a passenger's head with the inner ear shown. Drag sideways to turn the head in level flight at normal gravity, then pull up into hyper-G and turn it again. Asks why passengers are told to keep their heads still in hyper-G."
   },
   "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
   "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=100s",

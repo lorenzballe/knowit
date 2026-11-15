@@ -13,11 +13,11 @@
 #ctl{display:flex;align-items:center;gap:3.5cqw}
 #ctl .say{flex:1;min-width:0;margin:0}
 #pump{flex:none;background:none;border:0;padding:0;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transform:rotate(-2.5deg)}
-#pump span{display:block;font:800 max(2cqh,13px)/1.1 var(--body);color:#fff7ea;background:#d9582b;border-radius:1cqh;padding:1.7cqh 4.6cqw 1.9cqh;white-space:nowrap}
+#pump span{display:block;font:800 max(2cqh,13px)/1.1 var(--body);color:#fff7ea;background:#b8321b;border-radius:1cqh;padding:1.7cqh 4.6cqw 1.9cqh;white-space:nowrap}
 #pump span small{display:block;font:600 max(1.5cqh,12px)/1.2 var(--body);opacity:.85}
 .say b{color:inherit}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Hold to pump · gas against a sheet" style="--c:#f3e8d3;--k:#1c1915;--edge:#d5c09a">
+<article class="card" id="card" data-topic="science" data-kind="Hold to pump · gas against a sheet">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO PUMP</span></div>
     <h2 class="q">What is the most impermeable material known?</h2>
@@ -36,7 +36,7 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), btn = Kit.$('pump'), say = Kit.$('say');
-  const INK = '#1c1915', ORANGE = '#e4683a', RED = '#b8321b';
+  const INK = '#10100c', ORANGE = '#b8321b', RED = '#b8321b';
   const TINT = 'color-mix(in srgb, var(--k) 8%, var(--c))';
   const PIPE = 'color-mix(in srgb, var(--k) 45%, var(--c))';
   const S = {p: 0, bulge: 0, pumping: false, done: false, boil: 1, touched: false};

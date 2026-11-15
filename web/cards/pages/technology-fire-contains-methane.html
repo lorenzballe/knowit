@@ -18,7 +18,7 @@
 .kit-calm #pic .ping{animation:none;opacity:.4}
 .say{font-size:max(1.9cqh,13px)}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Drag the match · leak or burn" style="--c:#efe5cf;--k:#2b2117;--edge:#c8b78e">
+<article class="card" id="card" data-topic="technology" data-kind="Drag the match · leak or burn">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO IGNITE</span></div>
     <h2 class="q">Why did engineers decide to ignite the gas after the blowout?</h2>
@@ -34,7 +34,7 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stageEl = Kit.$('stage');
-  const INK = '#2b2117', PAPER = '#efe5cf', OCHRE = '#b8894a', F1 = '#f4c552', F2 = '#d8552a';
+  const INK = '#10100c', PAPER = '#00A6FF', OCHRE = '#005e91', F1 = '#ffffff', F2 = '#b81d0a';
   const mk = Kit.mk;
   let W = 0, H = 0, fs = 12, gy = 0, cx = 0, rw = 0, cd = 0, fy = 0, yb = 0, rT = 0, sx0 = 0, sx1 = 0, sy = 0, maxH = 0, topY = 0;
   const st = {v: 0, flare: 1}; let target = 0, done = false, touched = false, stage = -1, lastStep = -1;
@@ -74,12 +74,12 @@
     const dp = mk('pattern', {id: 'dots', width: 6, height: 6, patternUnits: 'userSpaceOnUse'}, defs);
     mk('circle', {cx: 1.5, cy: 1.5, r: .85, fill: INK, opacity: .8}, dp); mk('circle', {cx: 4.5, cy: 4.4, r: .6, fill: INK, opacity: .6}, dp);
     const lg = (id, stops, a = {x1: 0, y1: 1, x2: 0, y2: 0}) => { const g = mk('linearGradient', Object.assign({id}, a), defs); stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); };
-    lg('fl', [[0, '#fff2bd'], [.3, F1], [.75, F2], [1, '#9c2f1a']]);
-    lg('fl2', [[0, '#fffbe6'], [.6, '#ffe38a'], [1, F1]]);
-    lg('pit', [[0, '#2e1f12'], [1, '#8a6538']]);
-    lg('sky', [[0, OCHRE, .28], [1, OCHRE, 0]]);
+    lg('fl', [[0, F2], [.3, F2], [.75, F2], [1, F2]]);
+    lg('fl2', [[0, '#fff8e8'], [.6, '#fff8e8'], [1, '#fff8e8']]);
+    lg('pit', [[0, OCHRE], [1, OCHRE]]);
+    lg('sky', [[0, OCHRE, .18], [1, OCHRE, .18]]);
     const rg = mk('radialGradient', {id: 'glow'}, defs);
-    mk('stop', {offset: 0, 'stop-color': F1, 'stop-opacity': .6}, rg); mk('stop', {offset: .55, 'stop-color': F2, 'stop-opacity': .18}, rg); mk('stop', {offset: 1, 'stop-color': F2, 'stop-opacity': 0}, rg);
+    mk('stop', {offset: 0, 'stop-color': F2, 'stop-opacity': .1}, rg); mk('stop', {offset: .55, 'stop-color': F2, 'stop-opacity': .1}, rg); mk('stop', {offset: 1, 'stop-color': F2, 'stop-opacity': .1}, rg);
 
     // ---- specimen corners and plate title (no frame: just the engraver's marks)
     const orn = mk('g', {class: 'orn', stroke: INK, 'stroke-width': 1, fill: 'none'}, svg), c = fs * 1.1;
@@ -192,7 +192,7 @@
     if (touched) E.ping.style.display = 'none';
     mk('circle', {r: kr, fill: PAPER, stroke: INK, 'stroke-width': 1.3}, E.knob);
     mk('line', {x1: -kr * .45, y1: kr * .45, x2: kr * .1, y2: -kr * .1, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, E.knob);
-    mk('circle', {cx: kr * .18, cy: -kr * .18, r: kr * .22, fill: '#8f2b18'}, E.knob);
+    mk('circle', {cx: kr * .18, cy: -kr * .18, r: kr * .22, fill: F2}, E.knob);
     E.kflame = mk('path', {d: `M${kr * .18} ${-kr * .05} C${-kr * .2} ${-kr * .3} ${kr * .1} ${-kr * .7} ${kr * .35} ${-kr * .85} C${kr * .3} ${-kr * .55} ${kr * .6} ${-kr * .35} ${kr * .18} ${-kr * .05}Z`, fill: F1, stroke: F2, 'stroke-width': .6, opacity: 0}, E.knob);
 
     if (done) drawRays(false);

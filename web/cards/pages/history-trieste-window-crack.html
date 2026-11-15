@@ -42,8 +42,8 @@ function txt(x, y, s, attrs, parent) {
 }
 
 // flat sea bands, one per 2,000 m, darker as it gets deeper
-const BANDS = [[0, '#8ccbe8'], [2000, '#4f9fcf'], [4000, '#2f78ad'], [6000, '#1f5a8a'], [8000, '#143f66']];
-const YEL = '#ffd23f', RED = '#d8382c';
+const BANDS = [[0, 'color-mix(in srgb, var(--k) 10%, var(--c))'], [2000, 'color-mix(in srgb, var(--k) 45%, var(--c))'], [4000, 'color-mix(in srgb, var(--k) 58%, var(--c))'], [6000, 'color-mix(in srgb, var(--k) 72%, var(--c))'], [8000, 'color-mix(in srgb, var(--k) 86%, var(--c))']];
+const YEL = '#ffffff', RED = '#a3160f';
 
 function render() {
   if (!L) return;
@@ -54,7 +54,7 @@ function render() {
   const top = fs * 1.5, bot = H - fs * 1.6;
   const yOf = d => top + d / D * (bot - top);
   geo = {top, bot, fs};
-  const ink = getComputedStyle(svg).color || '#111';
+  const ink = getComputedStyle(svg).color || '#10100c';
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const lightAt = y => y < yOf(2000);
 
@@ -63,10 +63,10 @@ function render() {
   // sea: a flat cross-section of the water, banded by depth
   BANDS.forEach(([d, c], i) => {
     const y0 = yOf(d), y1 = i < BANDS.length - 1 ? yOf(BANDS[i + 1][0]) : bot;
-    Kit.mk('rect', {x: colL, y: y0, width: colR - colL, height: y1 - y0 + 0.5, fill: c}, svg);
+    Kit.mk('rect', {x: colL, y: y0, width: colR - colL, height: y1 - y0 + 0.5, style: `fill:${c}`}, svg);
   });
   // the trench floor
-  Kit.mk('path', {d: `M${colL},${bot} L${colR},${bot} L${colR},${bot + fs * 0.55} L${colL},${bot + fs * 0.55}Z`, style: `fill:${tint(55)}`}, svg);
+  Kit.mk('path', {d: `M${colL},${bot} L${colR},${bot} L${colR},${bot + fs * 0.55} L${colL},${bot + fs * 0.55}Z`, style: `fill:var(--edge)`}, svg);
   // surface line
   Kit.mk('line', {x1: colL - fs * 0.2, x2: colR + fs * 0.2, y1: top, y2: top, stroke: ink, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
 
@@ -93,14 +93,14 @@ function render() {
   // true depth
   if (revealed) {
     const g = Kit.mk('g', {id: 'truth'}, svg);
-    Kit.mk('line', {x1: colL, x2: colR, y1: yt, y2: yt, stroke: RED, 'stroke-width': fs * 0.22}, g);
+    Kit.mk('line', {x1: colL, x2: colR, y1: yt, y2: yt, stroke: '#fff', 'stroke-width': fs * 0.22}, g);
     Kit.mk('line', {x1: colL, x2: colR, y1: yt, y2: yt, stroke: '#fff', 'stroke-width': 1, 'stroke-dasharray': `${fs * 0.4} ${fs * 0.3}`, opacity: 0}, g);
-    txt(colL + fs * 0.75, tBase, 'crack · 9,000 m', lab('#ffb4a8', 700), g);
+    txt(colL + fs * 0.75, tBase, 'crack · 9,000 m', lab('#fff', 700), g);
   }
 
   // guess marker: the bathyscaphe itself, hanging at the chosen depth
   const gm = Kit.mk('g', {}, svg);
-  Kit.mk('line', {x1: colL, x2: colR, y1: yg, y2: yg, stroke: YEL, 'stroke-width': fs * 0.2}, gm);
+  Kit.mk('line', {x1: colL, x2: colR, y1: yg, y2: yg, stroke: lightAt(yg) ? ink : YEL, 'stroke-width': fs * 0.2}, gm);
   txt(colR - fs * 1.1, gBase, (moved ? 'you · ' : '') + fmt(guess) + ' m', Object.assign(lab(lightAt(gBase) ? ink : YEL, 700), {'text-anchor': 'end'}), gm);
   const hd = Kit.mk('g', {id: 'handle'}, gm);
   const fw = fs * 1.05, fh = fs * 0.42, fy = yg - fs * 0.22;
@@ -125,10 +125,10 @@ function render() {
     Kit.mk('path', {d: `M${cx + ca * e},${cy + sa * e} L${cx + ca * (e + fs * 0.45) - sa * hw},${cy + sa * (e + fs * 0.45) + ca * hw} L${cx + ca * (e + fs * 0.45) + sa * hw},${cy + sa * (e + fs * 0.45) - ca * hw}Z`, fill: ink, 'stroke-linejoin': 'round'}, svg);
   }
 
-  // the pane: flat deep-water blue, warming to red as the stress builds
+  // the pane: flat dark ink, warming to red as the stress builds
   const clip = Kit.mk('clipPath', {id: 'gclip'}, defs);
   Kit.mk('circle', {cx, cy, r: r * 0.98}, clip);
-  Kit.mk('circle', {cx, cy, r: r * 0.98, fill: '#1f5a8a'}, svg);
+  Kit.mk('circle', {cx, cy, r: r * 0.98, fill: ink}, svg);
   Kit.mk('circle', {cx, cy, r: r * 0.98, fill: RED, 'fill-opacity': 0.5 * Math.pow(show / D, 2)}, svg);
 
   if (revealed) {

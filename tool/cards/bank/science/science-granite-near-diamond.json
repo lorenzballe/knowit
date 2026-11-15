@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two stones, granite and diamond, are shown on a hardness scale. A flip switch sends each stone up the scale. The question asks how granite's hardness compares to diamond's.",
-    "ground": "#1f382e"
+    "label": "Two stones, granite and diamond, are shown on a hardness scale. A flip switch sends each stone up the scale. The question asks how granite's hardness compares to diamond's."
   },
   "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
   "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=231s",

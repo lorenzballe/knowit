@@ -13,27 +13,19 @@ Wow: at full marks the gene is wound shut, rings burst out, and a scanner sweeps
 <script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background-color:var(--c);background-image:
-  radial-gradient(130% 75% at 50% 42%,rgba(120,185,255,.16),transparent 62%),
-  radial-gradient(140% 100% at 50% 50%,transparent 55%,rgba(2,14,30,.45)),
-  linear-gradient(rgba(238,246,255,.07) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(238,246,255,.07) 1px,transparent 1px),
-  linear-gradient(rgba(238,246,255,.03) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(238,246,255,.03) 1px,transparent 1px);
-  background-size:100% 100%,100% 100%,28px 28px,28px 28px,7px 7px,7px 7px}
 #stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:max(.6cqh,4px)}
 #pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
 .lbl{font-family:var(--mono);font-weight:600;letter-spacing:.05em;fill:var(--k)}
 #ctl{display:flex;align-items:center;gap:3cqw;font:700 max(1.5cqh,12px)/1 var(--mono);letter-spacing:.08em;color:color-mix(in srgb,var(--k) 80%,transparent)}
 #ctl span{white-space:nowrap}
 #sl{--p:0%;flex:1;min-width:0;-webkit-appearance:none;appearance:none;background:transparent;height:max(4.6cqh,32px);margin:0;cursor:pointer;touch-action:pan-y}
-#sl::-webkit-slider-runnable-track{height:3px;border-radius:3px;background:linear-gradient(90deg,#ffe08a var(--p),rgba(238,246,255,.3) var(--p))}
-#sl::-moz-range-track{height:3px;border-radius:3px;background:linear-gradient(90deg,#ffe08a var(--p),rgba(238,246,255,.3) var(--p))}
-#sl::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.2cqh,24px);height:max(3.2cqh,24px);margin-top:calc((3px - max(3.2cqh,24px))/2);border-radius:50%;background:radial-gradient(circle at 38% 34%,#fffaf0,#ffe08a 55%,#d9a93c);border:2px solid #fff;box-shadow:0 0 0 6px rgba(255,224,138,.16),0 0 18px rgba(255,224,138,.55)}
-#sl::-moz-range-thumb{width:max(3.2cqh,24px);height:max(3.2cqh,24px);border-radius:50%;background:radial-gradient(circle at 38% 34%,#fffaf0,#ffe08a 55%,#d9a93c);border:2px solid #fff;box-shadow:0 0 0 6px rgba(255,224,138,.16),0 0 18px rgba(255,224,138,.55)}
-.say b{color:#ffe08a}
+#sl::-webkit-slider-runnable-track{height:3px;border-radius:3px;background:linear-gradient(90deg,#ffffff var(--p),rgba(255,255,255,.35) var(--p))}
+#sl::-moz-range-track{height:3px;border-radius:3px;background:linear-gradient(90deg,#ffffff var(--p),rgba(255,255,255,.35) var(--p))}
+#sl::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.2cqh,24px);height:max(3.2cqh,24px);margin-top:calc((3px - max(3.2cqh,24px))/2);border-radius:50%;background:#ffffff;border:2px solid #9e1638;box-shadow:none}
+#sl::-moz-range-thumb{width:max(3.2cqh,24px);height:max(3.2cqh,24px);border-radius:50%;background:#ffffff;border:2px solid #9e1638;box-shadow:none}
+.say b{color:#ffffff}
 </style>
-<article class="card" id="card" data-topic="human_body" data-kind="Drag the slider · marks on a gene" style="--c:#0b3a63;--k:#eef6ff;--edge:#06233f">
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the slider · marks on a gene">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">EPIGENETICS</span></div>
     <h2 class="q">How can the way you live switch your genes on or off?</h2>
@@ -51,7 +43,7 @@ Wow: at full marks the gene is wound shut, rings burst out, and a scanner sweeps
 gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
 (() => {
   const svg = Kit.$('pic'), sl = Kit.$('sl'), say = Kit.$('say');
-  const MAX = 9, INK = '#eef6ff', MARK = '#ffe08a', RNA = '#8fe4ff', DEEP = '#0a3358';
+  const MAX = 9, INK = '#ffffff', MARK = '#9e1638', RNA = '#ffffff', DEEP = '#9e1638';
   const ORDER = [['t',2],['l',1],['t',1],['l',2],['t',3],['l',0],['t',0],['l',3],['t',4]];
   const SEQ = 'ATGGCCCTGTGGATGCGCCTCCTGCCCCTGCTGGCGCTGCTGGCC';
   const WHY = 'Marks on DNA and its histone spools dial a gene down or up, yet <b>its letters never change</b>.';
@@ -120,12 +112,12 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
 
     const defs = Kit.mk('defs', {}, svg);
     defs.innerHTML = `
-      <radialGradient id="hist" cx=".38" cy=".34" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#b4d7ff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></radialGradient>
-      <radialGradient id="aura"><stop offset="0" stop-color="${RNA}" stop-opacity=".5"/><stop offset=".6" stop-color="${RNA}" stop-opacity=".14"/><stop offset="1" stop-color="${RNA}" stop-opacity="0"/></radialGradient>
-      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#eef6ff" stroke-width="1.1"/></pattern>
-      <linearGradient id="mfill" x1="0" x2="1"><stop offset="0" stop-color="${RNA}" stop-opacity=".55"/><stop offset="1" stop-color="#fff"/></linearGradient>
-      <linearGradient id="scanG" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <filter id="glow" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="2.6"/></filter>
+      <radialGradient id="hist" cx=".38" cy=".34" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".45" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity=".16"/></radialGradient>
+      <radialGradient id="aura"><stop offset="0" stop-color="${RNA}" stop-opacity="0"/><stop offset=".6" stop-color="${RNA}" stop-opacity="0"/><stop offset="1" stop-color="${RNA}" stop-opacity="0"/></radialGradient>
+      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#ffffff" stroke-width="1.1"/></pattern>
+      <linearGradient id="mfill" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff"/></linearGradient>
+      <linearGradient id="scanG" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".5" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity=".3"/></linearGradient>
+      <filter id="glow" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="0"/></filter>
       <clipPath id="rv"><rect id="rvr" x="0" y="0" width="${W}" height="${H}"/></clipPath>`;
     rvr = defs.querySelector('#rvr');
     G.top = Kit.mk('g', {}, svg);
@@ -139,13 +131,13 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const rb = Math.min(W * .055, fs * 1.2, bh * .62), bxC = fs * .3 + rb * 1.12;
     const bw = Kit.mk('g', {transform: `translate(${bxC},${yB})`}, G.top); brainG = Kit.mk('g', {}, bw);
     Kit.mk('circle', {r: rb * 1.05, fill: RNA, opacity: .12}, brainG);
-    Kit.mk('path', {d: BRAIN, transform: `scale(${rb})`, fill: 'rgba(238,246,255,.1)', stroke: INK, 'stroke-width': 1.4, 'vector-effect': 'non-scaling-stroke', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, brainG);
+    Kit.mk('path', {d: BRAIN, transform: `scale(${rb})`, fill: 'rgba(255,255,255,.1)', stroke: INK, 'stroke-width': 1.4, 'vector-effect': 'non-scaling-stroke', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, brainG);
     if (!tight) txt(G.top, bxC, yCap, 'YOU', {'text-anchor': 'middle', 'font-weight': 700});
     const busY = P.busY, names = ['STRESS', 'DIET', 'HABITS'], px = [.37, .6, .83];
     const wires = Kit.mk('g', {}, G.top);
     names.forEach((t, i) => {
       const x = W * px[i], g = Kit.mk('g', {transform: `translate(${x},${yB})`}, G.top), inn = Kit.mk('g', {}, g);
-      const r = Kit.mk('rect', {y: -bh / 2, height: bh, rx: 2, fill: 'rgba(238,246,255,.07)', stroke: INK, 'stroke-width': 1}, inn);
+      const r = Kit.mk('rect', {y: -bh / 2, height: bh, rx: 2, fill: 'rgba(255,255,255,.1)', stroke: INK, 'stroke-width': 1}, inn);
       const tx = txt(inn, 0, fs * .36, t, {'text-anchor': 'middle', 'font-weight': 700});
       const w = tx.getComputedTextLength() + fs * 1.1; r.setAttribute('x', -w / 2); r.setAttribute('width', w);
       Kit.mk('path', {d: `M${-w / 2 + 3},${bh / 2 - 3}h4M${w / 2 - 3},${bh / 2 - 3}h-4`, stroke: INK, 'stroke-width': 1, opacity: .6}, inn);
@@ -200,13 +192,13 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
       txt(G.meter, mX0, ly2, 'GENE ACTIVITY', {'font-weight': 700});
       pctT = txt(G.meter, mX0 + mW, ly2, '100%', {'text-anchor': 'end', 'font-weight': 700, fill: RNA});
     }
-    Kit.mk('rect', {x: mX0, y: yM - mh / 2, width: mW, height: mh, rx: mh / 2, fill: 'rgba(238,246,255,.06)', stroke: INK, 'stroke-width': 1}, G.meter);
+    Kit.mk('rect', {x: mX0, y: yM - mh / 2, width: mW, height: mh, rx: mh / 2, fill: 'rgba(255,255,255,.08)', stroke: INK, 'stroke-width': 1}, G.meter);
     mFill = Kit.mk('rect', {x: mX0, y: yM - mh / 2, width: mW, height: mh, rx: mh / 2, fill: 'url(#mfill)'}, G.meter);
     if (!tight) { let tk = ''; for (let q = 0; q <= 4; q++) { const x = mX0 + mW * q / 4; tk += `M${x},${yM + mh / 2 + 1}v${fs * .3}`; } Kit.mk('path', {d: tk, stroke: INK, 'stroke-width': 1, opacity: .6}, G.meter); }
 
     // the sequence
     txt(G.seq, fs * .4, yL, 'DNA SEQUENCE', {'font-weight': 700});
-    chip = Kit.mk('rect', {fill: MARK, rx: 3, opacity: 0}, G.seq);
+    chip = Kit.mk('rect', {fill: INK, rx: 3, opacity: 0}, G.seq);
     readT = txt(G.seq, W - fs * .4, yL, 'LETTERS CHANGED: 0', {'text-anchor': 'end', 'font-weight': 700});
     const bb = readT.getBBox(); chip.setAttribute('x', bb.x - 5); chip.setAttribute('y', bb.y - 3); chip.setAttribute('width', bb.width + 10); chip.setAttribute('height', bb.height + 6);
     const N = Math.min(SEQ.length, Math.floor((W - fs * .8) / (fs * .95))), sp = (W - fs * .8) / N;
@@ -229,7 +221,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const g = Kit.mk('g', {}, G.marks), inn = Kit.mk('g', {}, g);
     Kit.mk('circle', {r: mr * 1.7, fill: MARK, opacity: .25, filter: 'url(#glow)'}, inn);
     Kit.mk('path', {d: hex(mr), fill: MARK, stroke: '#fff', 'stroke-width': 1}, inn);
-    Kit.mk('circle', {r: mr * .32, fill: DEEP}, inn);
+    Kit.mk('circle', {r: mr * .32, fill: INK}, inn);
     return {k, g, inn, st, state: 'fly'};
   }
   function land(m, quiet) {
@@ -247,7 +239,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     gsap.to(m.inn, {scale: 1, svgOrigin: '0 0', duration: .4, delay: d, ease: 'back.out(2)'});
     gsap.to(m.g, {motionPath: {path: [mid, {x: p.hx, y: p.hy}], curviness: 1.2}, duration: .85, delay: d, ease: 'power2.inOut', onComplete: () => land(m)});
     gsap.fromTo(s.inn, {scale: 1.14}, {scale: 1, svgOrigin: '0 0', duration: .45, delay: d, ease: 'power3.out'});
-    gsap.fromTo(s.r, {attr: {fill: 'rgba(255,224,138,.45)'}}, {attr: {fill: 'rgba(238,246,255,.07)'}, duration: .6, delay: d, ease: 'power2.out'});
+    gsap.fromTo(s.r, {attr: {fill: 'rgba(158,22,56,.45)'}}, {attr: {fill: 'rgba(255,255,255,.1)'}, duration: .6, delay: d, ease: 'power2.out'});
     gsap.fromTo(brainG, {scale: 1.08}, {scale: 1, svgOrigin: '0 0', duration: .4, delay: d, ease: 'power2.out'});
   }
   function dropMark(m, d) {

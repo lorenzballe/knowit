@@ -13,10 +13,10 @@
 #stage{display:flex;flex:1;min-height:0}
 #dial{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;overflow:hidden}
 #why{font:500 max(1.95cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
-#why b{color:#ffcf7a}
-.say b{color:#ffcf7a}
+#why b{color:var(--k)}
+.say b{color:var(--k)}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Tap to heat · pyrometer" style="--c:#1e1912;--k:#f3e6c6;--edge:#0c0906">
+<article class="card" id="card" data-topic="science" data-kind="Tap to heat · pyrometer">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO HEAT</span></div>
     <h2 class="q">How hot does the Tsar Bomba's core get, next to the Sun?</h2>
@@ -43,8 +43,8 @@
   let W = 0, H = 0, R = 0, cx = 0, cy = 0, fs = 13, E = {};
 
   // Flat palette: card ink, card colour, their tints, and two meaning colours (sun and fire).
-  const INK = '#1e1912';                       // = var(--c), as a literal for tweens
-  const SUN = '#f2b33d', FIRE = '#d9481f', BURST = '#f6c445', WARM = '#f2c79a';
+  const INK = '#10100c';                       // = var(--k), as a literal for tweens
+  const SUN = '#d9481f', FIRE = '#d9481f', BURST = '#fbf8ee', WARM = '#00E5A0', PAPER = '#fbf8ee';
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 
   const rad = a => a * Math.PI / 180;
@@ -56,8 +56,8 @@
     const i = Math.min(stops.length - 2, Math.floor(p)), f = p - i;
     return `rgb(${stops[i].map((c, j) => Math.round(c + (stops[i + 1][j] - c) * f)).join(',')})`;
   };
-  const HEAT = [[120, 130, 132], [196, 150, 70], [224, 110, 44], [217, 72, 31]];
-  const CORE = [[112, 116, 118], [160, 112, 84], [232, 120, 52]];
+  const HEAT = [[16, 16, 12], [100, 40, 20], [170, 60, 25], [217, 72, 31]];
+  const CORE = [[110, 114, 112], [165, 90, 60], [217, 72, 31]];
   const arc = (r, t0, t1) => {
     const [x0, y0] = P(r, t0), [x1, y1] = P(r, t1), large = (t1 - t0) / 8 * 270 > 180 ? 1 : 0;
     return `M${x0},${y0}A${r},${r} 0 ${large} 1 ${x1},${y1}`;
@@ -107,18 +107,18 @@
 
     const dial = E.dial = Kit.mk('g', {}, svg);
     // A plain printed dial: one flat cream disc, nothing around it.
-    Kit.mk('circle', {cx, cy, r: R, style: 'fill:var(--k)'}, dial);
+    Kit.mk('circle', {cx, cy, r: R, style: `fill:${PAPER}`}, dial);
     // When it blows, the face turns a flat warm colour.
     E.glow = Kit.mk('circle', {cx, cy, r: R, fill: WARM, opacity: 0}, dial);
 
     // The scale: one thin ink line; the stretch hotter than the Sun is a solid yellow band on it.
     E.zone = Kit.mk('path', {d: arc(R * .86, SUN_T, 8), fill: 'none', stroke: SUN, 'stroke-width': R * .06}, dial);
-    Kit.mk('path', {d: arc(R * .86, 0, 8), fill: 'none', 'stroke-width': Math.max(1.5, R * .01), style: 'stroke:var(--c)'}, dial);
+    Kit.mk('path', {d: arc(R * .86, 0, 8), fill: 'none', 'stroke-width': Math.max(1.5, R * .01), style: 'stroke:var(--k)'}, dial);
     // How hot it is now: a plain band that grows with the needle.
     E.heat = Kit.mk('path', {d: arc(R * .77, 0, .001), fill: 'none', stroke: lerpCol(HEAT, 0), 'stroke-width': R * .04, 'stroke-linecap': 'butt'}, dial);
 
     // One tick per decade: each mark is ten times the last.
-    const tk = E.ticks = Kit.mk('g', {'stroke-linecap': 'butt', style: 'stroke:var(--c)'}, dial);
+    const tk = E.ticks = Kit.mk('g', {'stroke-linecap': 'butt', style: 'stroke:var(--k)'}, dial);
     for (let d = 0; d <= 8; d++) {
       const [x0, y0] = P(R * .9, d), [x1, y1] = P(R * .82, d);
       Kit.mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, 'stroke-width': Math.max(2, R * .016), class: 'tk'}, tk);
@@ -130,22 +130,22 @@
     show.forEach(d => {
       const [x, y] = P(R * .6, d);
       const t = txt(lab, x, y + fs * .36, LABELS[d], {class: 'lb'});
-      t.setAttribute('style', d === 8 ? `fill:${FIRE}` : 'fill:var(--c)');
+      t.setAttribute('style', d === 8 ? `fill:${FIRE}` : 'fill:var(--k)');
     });
 
     // The Sun's mark on the scale: a small flat sun where the yellow stretch begins.
     const [sx, sy] = P(R * .86, SUN_T), sr = Math.max(3.5, R * .045);
     E.sunTri = Kit.mk('g', {}, dial);
-    Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: SUN, 'stroke-width': 1.5, style: 'stroke:var(--c)'}, E.sunTri);
+    Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: SUN, 'stroke-width': 1.5, style: 'stroke:var(--k)'}, E.sunTri);
 
     // A small note under the hub, only where there is room for it.
     if (R > 150) {
-      txt(dial, cx, cy + R * .26 + fs * .4, '°C · ×10 per mark', {'font-family': 'var(--body), sans-serif', 'font-size': fs, 'font-weight': 500, 'text-anchor': 'middle', style: `fill:${tint(35)}`});
+      txt(dial, cx, cy + R * .26 + fs * .4, '°C · ×10 per mark', {'font-family': 'var(--body), sans-serif', 'font-size': fs, 'font-weight': 500, 'text-anchor': 'middle', style: `fill:${tint(70)}`});
     }
 
     // Stop pin past 100M (under the readout, never on top of it).
     const [px, py] = P(R * .8, 8.38);
-    Kit.mk('circle', {cx: px, cy: py, r: Math.max(2.5, R * .024), style: 'fill:var(--c)'}, dial);
+    Kit.mk('circle', {cx: px, cy: py, r: Math.max(2.5, R * .024), style: 'fill:var(--k)'}, dial);
 
     // The temperature, printed large on the face: no box around it.
     const rs = Math.max(14, Math.min(fs * 1.9, R * .13)), wh = rs * 1.2;
@@ -156,7 +156,7 @@
     const w = Math.max(1.6, R * .02), L = R * .76, tail = R * .16;
     const nd = `M${-tail},${-w * 1.3}L${L - R * .03},${-w * .5}L${L},0L${L - R * .03},${w * .5}L${-tail},${w * 1.3}Z`;
     E.needle = Kit.mk('g', {}, dial);
-    Kit.mk('path', {d: nd, style: 'fill:var(--c)'}, E.needle);
+    Kit.mk('path', {d: nd, style: 'fill:var(--k)'}, E.needle);
     Kit.mk('path', {d: `M${L * .74},${-w * .66}L${L - R * .03},${-w * .5}L${L},0L${L - R * .03},${w * .5}L${L * .74},${w * .66}Z`, fill: FIRE}, E.needle);
 
     // The core: a flat plutonium ball that becomes a printed burst (orange star behind, yellow star in front, both inked).
@@ -173,7 +173,7 @@
     const gr = fs * .45, gx = Math.max(gr * 2 + 2, cx - lw / 2 - gr * 2.6);
     lt.setAttribute('x', Math.min(W - lw / 2 - 2, gx + gr * 2.2 + lw / 2));
     const [bx, by] = P(R * 1.0, SUN_T);
-    Kit.mk('path', {d: `M${gx},${ty + gr * 1.9}L${bx},${by - 2}`, 'stroke-width': 1.2, fill: 'none', 'stroke-linecap': 'round', style: `stroke:${tint(55)}`}, out);
+    Kit.mk('path', {d: `M${gx},${ty + gr * 1.9}L${bx},${by - 2}`, 'stroke-width': 1.2, fill: 'none', 'stroke-linecap': 'round', style: `stroke:${tint(70)}`}, out);
     E.sunGlyph = Kit.mk('g', {}, out);
     for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; Kit.mk('line', {x1: gx + Math.cos(a) * gr * 1.3, y1: ty + Math.sin(a) * gr * 1.3, x2: gx + Math.cos(a) * gr * 1.85, y2: ty + Math.sin(a) * gr * 1.85, stroke: SUN, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, E.sunGlyph); }
     Kit.mk('circle', {cx: gx, cy: ty, r: gr, fill: SUN}, E.sunGlyph);

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Three locks of smoking on a glass window with a rim of panes. The question asks why willpower alone fails for 96% of smokers. Tap each lobe to light a dependency: nicotine, habit, or belief. The four gold rim panes, out of 100 smokers, are the ones who quit alone.",
-    "ground": "#15111f"
+    "label": "Three locks of smoking on a glass window with a rim of panes. The question asks why willpower alone fails for 96% of smokers. Tap each lobe to light a dependency: nicotine, habit, or belief. The four gold rim panes, out of 100 smokers, are the ones who quit alone."
   },
   "source": "Geopop, “Il 96% delle persone non riesce a smettere di fumare da solo: perché e quali sono i metodi migliori” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=BqJhH7s_s74&t=9s",

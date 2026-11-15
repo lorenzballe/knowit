@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question: How did Fat Man achieve a supercritical mass? A plutonium sphere is shown being crushed from all sides by a glowing sphere of light. Two buttons compare firing out of step with firing all 32 charges in unison.",
-    "ground": "#14161c"
+    "label": "Question: How did Fat Man achieve a supercritical mass? A plutonium sphere is shown being crushed from all sides by a glowing sphere of light. Two buttons compare firing out of step with firing all 32 charges in unison."
   },
   "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=o47-tXGxpv8&t=264s",

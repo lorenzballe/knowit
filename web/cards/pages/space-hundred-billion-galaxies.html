@@ -21,7 +21,7 @@
 </style>
 <!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
      (in the app, in the reader's language). The id stays "card". -->
-<article class="card" id="card" data-topic="space" data-kind="Zoom out · how sure" style="--c:#070a1c;--k:#ffffff;--edge:#03040a">
+<article class="card" id="card" data-topic="space" data-kind="Zoom out · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ZOOM OUT</span></div>
     <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
@@ -44,7 +44,7 @@
 const TRUE = 11, ZMAX = 14, C1 = 1.65;
 const WORDS = ['1', '10', '100', '1,000', '10,000', '100,000', '1 million', '10 million', '100 million', '1 billion', '10 billion', '100 billion', '1 trillion', '10 trillion', '100 trillion'];
 const TICKS = [[0, '1'], [3, '1,000'], [6, '1 million'], [9, '1 billion'], [12, '1 trillion']];
-const TYPES = [[175, 202, 255], [238, 236, 248], [255, 212, 140], [255, 240, 222], [255, 178, 108]];
+const TYPES = [[255, 255, 255], [226, 236, 255], [255, 255, 255], [244, 248, 255], [243, 182, 63]];
 const SPEC = TYPES.map(c => [.22, .45, .7, .95].map(a => `rgba(${c[0]},${c[1]},${c[2]},${a})`));
 const S = {z: 0, zc: 0, guess: -1, touched: false, locked: false, bounded: false, outA: 1, ring: 0, pulse: 0, landed: false, spin: 0};
 const card = Kit.$('card'), cv = Kit.$('cv');
@@ -88,7 +88,7 @@ const fam = (v, fb) => (getComputedStyle(card).getPropertyValue(v) || '').trim()
 function spiralSprite(P, col, seed) {
   const c = document.createElement('canvas'); c.width = c.height = P; const x = c.getContext('2d'), m = P / 2, r = P / 2.5;
   const g = x.createRadialGradient(m, m, 0, m, m, r * 1.15);
-  g.addColorStop(0, 'rgba(255,246,228,1)'); g.addColorStop(.1, 'rgba(255,228,182,.8)'); g.addColorStop(.32, `rgba(${col},.24)`); g.addColorStop(1, `rgba(${col},0)`);
+  g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.1, 'rgba(255,255,255,.8)'); g.addColorStop(.32, `rgba(${col},.24)`); g.addColorStop(1, `rgba(${col},0)`);
   x.fillStyle = g; x.fillRect(0, 0, P, P);
   x.globalCompositeOperation = 'lighter'; _s = seed;
   for (let n = 0; n < 900; n++) {
@@ -101,7 +101,7 @@ function spiralSprite(P, col, seed) {
 function ellSprite(P, col) {
   const c = document.createElement('canvas'); c.width = c.height = P; const x = c.getContext('2d'), m = P / 2;
   const g = x.createRadialGradient(m, m, 0, m, m, m);
-  g.addColorStop(0, 'rgba(255,250,236,1)'); g.addColorStop(.1, `rgba(${col},.9)`); g.addColorStop(.35, `rgba(${col},.38)`); g.addColorStop(.7, `rgba(${col},.08)`); g.addColorStop(1, `rgba(${col},0)`);
+  g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.1, `rgba(${col},.9)`); g.addColorStop(.35, `rgba(${col},.38)`); g.addColorStop(.7, `rgba(${col},.08)`); g.addColorStop(1, `rgba(${col},0)`);
   x.fillStyle = g; x.fillRect(0, 0, P, P); return c;
 }
 // Our galaxy: a barred spiral of a few thousand dots (radius Rpx in CSS px).
@@ -109,7 +109,7 @@ function mwSprite(Rpx, dpr) {
   const r = Math.max(16, Math.min(440, Math.round(Rpx * dpr))), P = Math.ceil(r * 2.5);
   const c = document.createElement('canvas'); c.width = c.height = P; const x = c.getContext('2d'), m = P / 2;
   const g = x.createRadialGradient(m, m, 0, m, m, r * 1.1);
-  g.addColorStop(0, 'rgba(255,240,212,1)'); g.addColorStop(.06, 'rgba(255,224,172,.7)'); g.addColorStop(.2, 'rgba(236,210,190,.2)'); g.addColorStop(.55, 'rgba(140,165,255,.07)'); g.addColorStop(1, 'rgba(120,150,255,0)');
+  g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.06, 'rgba(255,255,255,.7)'); g.addColorStop(.2, 'rgba(244,248,255,.2)'); g.addColorStop(.55, 'rgba(255,255,255,.07)'); g.addColorStop(1, 'rgba(255,255,255,0)');
   x.fillStyle = g; x.fillRect(0, 0, P, P);
   x.globalCompositeOperation = 'lighter'; _s = 90173;
   const n = Math.round(clamp(Rpx * Rpx * .45, 250, 7000)), sz = Math.max(1, r / 120);
@@ -118,14 +118,14 @@ function mwSprite(Rpx, dpr) {
     if (u < .6) {
       const th = R() * 3.1 * Math.PI, rr = .1 * Math.exp(.235 * th), sc = .022 + .055 * rr, a = th + (i & 1) * Math.PI + .3, hot = R();
       px = Math.cos(a) * rr + N() * sc; py = Math.sin(a) * rr + N() * sc;
-      col = hot < .05 ? '255,150,195' : hot < .55 ? '170,198,255' : '236,238,255'; al = .25 + .6 * R(); if (hot < .05) s *= 1.7;
+      col = hot < .05 ? '243,182,63' : hot < .55 ? '255,255,255' : '244,248,255'; al = .25 + .6 * R(); if (hot < .05) s *= 1.7;
     } else if (u < .8) {
       const bar = R() < .5, gx = N() * (bar ? .17 : .07), gy = N() * (bar ? .045 : .065);
       px = gx * .955 - gy * .296; py = gx * .296 + gy * .955;
-      col = R() < .6 ? '255,220,165' : '255,240,214'; al = .3 + .5 * R();
+      col = R() < .6 ? '255,255,255' : '244,248,255'; al = .3 + .5 * R();
     } else {
       const rr = Math.min(1.05, -Math.log(1 - .97 * R()) * .3), a = R() * 6.2832;
-      px = Math.cos(a) * rr; py = Math.sin(a) * rr; col = '226,228,252'; al = .1 + .28 * R(); s *= .8;
+      px = Math.cos(a) * rr; py = Math.sin(a) * rr; col = '255,255,255'; al = .1 + .28 * R(); s *= .8;
     }
     x.fillStyle = `rgba(${col},${al.toFixed(3)})`; x.fillRect(m + px * r - s / 2, m + py * r - s / 2, s, s);
   }
@@ -165,7 +165,7 @@ function layout() {
   const U = Math.max(30, Math.min(W - 2 * pad, Hf));
   const cx = W / 2, cy = Math.min(Hw - U / 2 - 3, bandH + 3 + Hf / 2);
   const R0 = .46 * U, yL = Hw + gap + fs.lab * 1.15 + 5 + th, xr0 = Math.max(th + 3, pad), xr1 = W - xr0;
-  if (!SPR) SPR = [spiralSprite(96, '175,202,255', 11), spiralSprite(96, '238,236,248', 29), ellSprite(64, '255,212,140'), ellSprite(64, '255,240,222'), ellSprite(64, '255,178,108')];
+  if (!SPR) SPR = [spiralSprite(96, '255,255,255', 11), spiralSprite(96, '226,236,255', 29), ellSprite(64, '255,255,255'), ellSprite(64, '244,248,255'), ellSprite(64, '243,182,63')];
   const mk = Math.round(R0) + '|' + dpr;
   if (!MW || MW.key !== mk) MW = {key: mk, list: [mwSprite(Math.min(R0, 22), dpr), mwSprite(R0 / 3, dpr), mwSprite(R0, dpr)].sort((a, b) => a.r - b.r)};
   const T = Math.round(Math.max(W, Hw)), dk = T + '|' + dpr;
@@ -240,7 +240,7 @@ function field(x, g, z, k, RUw) {
 }
 function ours(x, g, z) {
   const rs = g.R0 * Math.pow(10, -z / 2);
-  if (rs * g.dpr < .8) { x.fillStyle = 'rgba(255,238,205,.9)'; x.fillRect(g.cx - .7, g.cy - .7, 1.4, 1.4); }
+  if (rs * g.dpr < .8) { x.fillStyle = 'rgba(255,255,255,.9)'; x.fillRect(g.cx - .7, g.cy - .7, 1.4, 1.4); }
   else {
     const need = rs * g.dpr * .85; let sp = MW.list[MW.list.length - 1];
     for (const m of MW.list) if (m.r >= need) { sp = m; break; }
@@ -255,20 +255,20 @@ function ours(x, g, z) {
     x.strokeStyle = 'rgba(255,255,255,.75)'; x.lineWidth = 1.2; x.setLineDash([3, 3]);
     x.beginPath(); x.arc(g.cx, g.cy, rr, 0, 6.2832); x.stroke(); x.setLineDash([]);
     x.font = `600 ${g.fs.tick}px ${g.font.body}`; x.fillStyle = '#fff'; x.textAlign = 'left'; x.textBaseline = 'middle';
-    x.shadowColor = 'rgba(0,0,0,.8)'; x.shadowBlur = 4;
+    x.shadowColor = 'rgba(21,47,143,.8)'; x.shadowBlur = 4;
     x.fillText('ours', g.cx + rr * .74 + 4, g.cy - rr * .74 - 3);
     x.restore();
   }
 }
 function counter(x, g, z) {
   const maxW = g.W - 2 * g.pad, num = count(z), cap = caption(z), yb = g.padT + g.fs.big * .8;
-  x.save(); x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.shadowColor = 'rgba(0,0,0,.85)'; x.shadowBlur = 8;
+  x.save(); x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.shadowColor = 'rgba(21,47,143,.85)'; x.shadowBlur = 8;
   let f = g.fs.big; x.font = `700 ${f}px ${g.font.mono}`;
   while (x.measureText(num).width > maxW && f > 12) { f -= 1; x.font = `700 ${f}px ${g.font.mono}`; }
-  x.fillStyle = '#f8f3e9'; x.fillText(num, g.pad, yb);
+  x.fillStyle = '#ffffff'; x.fillText(num, g.pad, yb);
   let fc = g.fs.cap; x.font = `500 ${fc}px ${g.font.body}`;
   while (x.measureText(cap).width > maxW && fc > 10) { fc -= .5; x.font = `500 ${fc}px ${g.font.body}`; }
-  x.fillStyle = 'rgba(248,243,233,.8)'; x.fillText(cap, g.pad, yb + 5 + g.fs.cap);
+  x.fillStyle = 'rgba(255,255,255,.8)'; x.fillText(cap, g.pad, yb + 5 + g.fs.cap);
   x.restore();
 }
 function label(x, g, t, at, y) {
@@ -331,7 +331,7 @@ function draw() {
   x.beginPath(); x.rect(0, 0, g.W, g.Hw); x.clip();
   if (ring > .01) {
     const gr = x.createRadialGradient(g.cx, g.cy, RUs * .5, g.cx, g.cy, RUs);
-    gr.addColorStop(0, 'rgba(255,206,140,0)'); gr.addColorStop(1, `rgba(255,206,140,${(.14 * ring).toFixed(3)})`);
+    gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(1, `rgba(255,255,255,${(.14 * ring).toFixed(3)})`);
     x.fillStyle = gr; x.beginPath(); x.arc(g.cx, g.cy, RUs, 0, 6.2832); x.fill();
   }
   const dA = smooth(1.5, 3.4, z) * .9;
@@ -346,8 +346,8 @@ function draw() {
   ours(x, g, z);
   if (ring > .01) {
     x.save();
-    x.strokeStyle = `rgba(255,228,180,${((.6 + .4 * S.pulse) * ring).toFixed(3)})`; x.lineWidth = 1.4 + 1.6 * S.pulse;
-    x.shadowColor = `rgba(255,196,110,${(.9 * ring).toFixed(3)})`; x.shadowBlur = 12;
+    x.strokeStyle = `rgba(255,255,255,${((.6 + .4 * S.pulse) * ring).toFixed(3)})`; x.lineWidth = 1.4 + 1.6 * S.pulse;
+    x.shadowColor = `rgba(21,47,143,${(.9 * ring).toFixed(3)})`; x.shadowBlur = 12;
     x.beginPath(); x.arc(g.cx, g.cy, RUs, 0, 6.2832); x.stroke();
     x.restore();
   }

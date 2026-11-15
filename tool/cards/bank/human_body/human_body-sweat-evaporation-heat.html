@@ -14,7 +14,7 @@
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;overflow:hidden}
 #pic.drag{cursor:grabbing}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{color:#8fe0ff;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-size:max(3.4cqh,20px);line-height:1.1;text-shadow:0 0 1.6cqh rgba(95,208,255,.55)}
+#why .big{color:var(--k);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-size:max(3.4cqh,20px);line-height:1.1}
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);color:var(--k)}
 .say{overflow-wrap:break-word}
 .pulse{animation:pulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
@@ -25,7 +25,7 @@
 @keyframes flow{to{stroke-dashoffset:-40}}
 .kit-calm .pulse,.kit-calm .ants,.kit-calm .flow{animation:none}
 </style>
-<article class="card" id="card" data-topic="human_body" data-kind="Drag the drop · where the heat goes" style="--c:#061c33;--k:#e6f5ff;--edge:#020c18">
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the drop · where the heat goes">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE DROP</span></div>
     <h2 class="q">Why does sweat cool you only when it evaporates?</h2>
@@ -44,7 +44,7 @@
   if (window.SplitText) gsap.registerPlugin(SplitText);
   if (window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const HOT = '#ff7a45', COOL = '#7fd6ff', INK = '#e6f5ff';
+  const HOT = '#ffffff', COOL = '#ffe45c', INK = '#ffffff';
   const N = 12;
   let G = {embers: []}, ctx = null, phase = 'idle', tl = null, revealed = false, dragging = false;
   const S = {heat: 1};
@@ -54,7 +54,7 @@
   const mix = (a, b, t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`; };
   const mk = (t, a, p) => Kit.mk(t, a, p);
   const label = (p, x, y, t, a = {}) => {
-    const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--mono), monospace', 'font-size': G.fs, 'font-weight': 700, stroke: '#04121f', 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'}, a), p);
+    const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--mono), monospace', 'font-size': G.fs, 'font-weight': 700, stroke: '#9e1638', 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'}, a), p);
     e.textContent = t;
     const w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
     const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
@@ -79,13 +79,13 @@
     defs.innerHTML = `
       <clipPath id="frame"><rect x="0" y="0" width="${W}" height="${H}"/></clipPath>
       <linearGradient id="skinG" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#ffbe95"/><stop offset=".1" stop-color="#ec835f"/>
-        <stop offset=".5" stop-color="#a8364a" stop-opacity=".95"/><stop offset="1" stop-color="#3a0f2a" stop-opacity="0"/></linearGradient>
+        <stop offset="0" stop-color="#9e1638"/><stop offset=".1" stop-color="#9e1638"/>
+        <stop offset=".5" stop-color="#9e1638"/><stop offset="1" stop-color="#9e1638"/></linearGradient>
       <radialGradient id="dropG" cx=".35" cy=".3" r=".8">
-        <stop offset="0" stop-color="#f2fdff"/><stop offset=".35" stop-color="#7fd8ff"/><stop offset="1" stop-color="#1371b5"/></radialGradient>
-      <radialGradient id="heatG"><stop offset="0" stop-color="${HOT}" stop-opacity=".7"/><stop offset="1" stop-color="${HOT}" stop-opacity="0"/></radialGradient>
-      <radialGradient id="causG"><stop offset="0" stop-color="#7fe0ff" stop-opacity=".5"/><stop offset="1" stop-color="#7fe0ff" stop-opacity="0"/></radialGradient>
-      <filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="${fs * .22}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></radialGradient>
+      <radialGradient id="heatG"><stop offset="0" stop-color="${HOT}" stop-opacity=".18"/><stop offset="1" stop-color="${HOT}" stop-opacity=".18"/></radialGradient>
+      <radialGradient id="causG"><stop offset="0" stop-color="#ffffff" stop-opacity=".12"/><stop offset="1" stop-color="#ffffff" stop-opacity=".12"/></radialGradient>
+      <filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="0" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${fs * .9}"/></filter>
       <filter id="thin"><feGaussianBlur stdDeviation="1.2"/></filter>`;
 
@@ -107,12 +107,12 @@
         const y0 = SY * (.24 + .17 * i);
         let d = `M0,${y0}`;
         for (let k = 1; k <= 5; k++) d += ` Q${W * (k - .5) / 5},${y0 + (k % 2 ? -1 : 1) * fs * 1.2} ${W * k / 5},${y0}`;
-        const p = mk('path', {d, fill: 'none', stroke: '#a6ecff', 'stroke-width': 1.4, opacity: .14, filter: 'url(#thin)', 'stroke-dasharray': `${W * .35} ${W * .12}`}, L.caus);
+        const p = mk('path', {d, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.4, opacity: .14, filter: 'url(#thin)', 'stroke-dasharray': `${W * .35} ${W * .12}`}, L.caus);
         if (!Kit.calm) gsap.to(p, {attr: {'stroke-dashoffset': (i % 2 ? 1 : -1) * W * .94}, duration: 9 + 2 * i, repeat: -1, ease: 'none'});
       }
       // Drifting motes.
       for (let i = 0; i < 30; i++) {
-        const c = mk('circle', {cx: fs * 2 + (W - fs * 4) * Kit.rnd(), cy: fs * 6.5 + (SY - fs * 7) * Kit.rnd(), r: .6 + 1.3 * Kit.rnd(), fill: '#d4f2ff', opacity: .15 + .35 * Kit.rnd()}, L.parts);
+        const c = mk('circle', {cx: fs * 2 + (W - fs * 4) * Kit.rnd(), cy: fs * 6.5 + (SY - fs * 7) * Kit.rnd(), r: .6 + 1.3 * Kit.rnd(), fill: '#ffffff', opacity: .15 + .35 * Kit.rnd()}, L.parts);
         if (!Kit.calm) gsap.to(c, {y: -fs * (2 + 4 * Kit.rnd()), x: (Kit.rnd() - .5) * fs * 3, duration: 5 + 6 * Kit.rnd(), repeat: -1, yoyo: true, ease: 'sine.inOut', delay: -6 * Kit.rnd()});
       }
     }, svg);
@@ -126,35 +126,35 @@
     d += ` L${W},${H} Z`;
     G.skinPath = d; G.topPath = top;
     mk('path', {d, fill: 'url(#skinG)'}, L.skin);
-    mk('path', {d: top, fill: 'none', stroke: '#ffe2cf', 'stroke-width': 1.6, opacity: .8}, L.skin);
+    mk('path', {d: top, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.6, opacity: .8}, L.skin);
     const ey = SY + (H - SY) * .2;
     let e2 = `M0,${ey}`;
     for (let k = 1; k <= 10; k++) e2 += ` Q${W * (k - .5) / 10},${ey + (k % 2 ? 1 : -1) * fs * .4} ${W * k / 10},${ey}`;
-    mk('path', {d: e2, fill: 'none', stroke: '#ffe0cc', 'stroke-width': 1.2, opacity: .35}, L.skin);
+    mk('path', {d: e2, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.2, opacity: .35}, L.skin);
     for (let i = 0; i < 22; i++) {
       const cx = W * (i + .5) / 22, cy = SY + (ey - SY) * (.45 + .2 * Kit.rnd());
-      mk('ellipse', {cx, cy, rx: W / 52, ry: (ey - SY) * .22, fill: 'none', stroke: '#fff0e6', 'stroke-width': .9, opacity: .28}, L.skin);
+      mk('ellipse', {cx, cy, rx: W / 52, ry: (ey - SY) * .22, fill: 'none', stroke: '#ffffff', 'stroke-width': .9, opacity: .28}, L.skin);
     }
     // Light ripples on the skin.
     for (let i = 0; i < 3; i++) {
       const y0 = SY + fs * (1 + i * .9);
       let r = `M0,${y0}`;
       for (let k = 1; k <= 6; k++) r += ` Q${W * (k - .5) / 6},${y0 + (k % 2 ? 1 : -1) * fs * .3} ${W * k / 6},${y0}`;
-      const p = mk('path', {d: r, fill: 'none', stroke: '#fff6ee', 'stroke-width': 1, opacity: .16, 'stroke-dasharray': `${W * .2} ${W * .08}`}, L.skin);
+      const p = mk('path', {d: r, fill: 'none', stroke: '#ffffff', 'stroke-width': 1, opacity: .16, 'stroke-dasharray': `${W * .2} ${W * .08}`}, L.skin);
       if (!Kit.calm) ctx.add(() => gsap.to(p, {attr: {'stroke-dashoffset': (i % 2 ? 1 : -1) * W * .56}, duration: 7 + i, repeat: -1, ease: 'none'}));
     }
     // A capillary loop carrying warm blood through the dermis.
     const cy0 = SY + (H - SY) * .82;
     const cap = `M0,${cy0} C${W * .2},${cy0 - fs * 1.4} ${W * .36},${cy0 + fs * 1.2} ${W * .55},${cy0 - fs * .2} S${W * .85},${cy0 - fs * 1.3} ${W},${cy0 - fs * .4}`;
-    mk('path', {d: cap, fill: 'none', stroke: '#c43a55', 'stroke-width': fs * .75, opacity: .45, 'stroke-linecap': 'round'}, L.skin);
-    mk('path', {d: cap, fill: 'none', stroke: '#ff8a7a', 'stroke-width': fs * .32, opacity: .6, 'stroke-dasharray': `${fs * .35} ${fs * .55}`, 'stroke-linecap': 'round', class: 'flow'}, L.skin);
+    mk('path', {d: cap, fill: 'none', stroke: '#ffffff', 'stroke-width': fs * .75, opacity: .45, 'stroke-linecap': 'round'}, L.skin);
+    mk('path', {d: cap, fill: 'none', stroke: '#ff2d5f', 'stroke-width': fs * .32, opacity: .9, 'stroke-dasharray': `${fs * .35} ${fs * .55}`, 'stroke-linecap': 'round', class: 'flow'}, L.skin);
     // The sweat gland and its duct up to the pore.
     const duct = `M${px},${gy - fs * .4} C${px - fs},${(gy + SY) / 2 + fs} ${px + fs},${(gy + SY) / 2 - fs} ${px},${SY + 2}`;
-    mk('path', {d: duct, fill: 'none', stroke: '#ffe6d8', 'stroke-width': fs * .7, opacity: .25, 'stroke-linecap': 'round'}, L.skin);
-    mk('path', {d: duct, fill: 'none', stroke: '#9fe3ff', 'stroke-width': fs * .22, opacity: .85, 'stroke-linecap': 'round'}, L.skin);
-    mk('path', {d: duct, fill: 'none', stroke: '#ffffff', 'stroke-width': fs * .16, opacity: .8, 'stroke-dasharray': `${fs * .2} ${fs * 1.1}`, 'stroke-linecap': 'round', class: 'flow'}, L.skin);
-    for (let k = 0; k < 5; k++) mk('ellipse', {cx: px + (k - 2) * fs * .42, cy: gy + Math.sin(k * 1.7) * fs * .25, rx: fs * .62, ry: fs * .45, fill: 'rgba(159,227,255,.12)', stroke: '#9fe3ff', 'stroke-width': 1.6, opacity: .8}, L.skin);
-    mk('ellipse', {cx: px, cy: SY + 1, rx: fs * .35, ry: fs * .14, fill: '#5a1a2a', opacity: .6}, L.skin);
+    mk('path', {d: duct, fill: 'none', stroke: '#ffffff', 'stroke-width': fs * .7, opacity: .25, 'stroke-linecap': 'round'}, L.skin);
+    mk('path', {d: duct, fill: 'none', stroke: '#ffffff', 'stroke-width': fs * .22, opacity: .85, 'stroke-linecap': 'round'}, L.skin);
+    mk('path', {d: duct, fill: 'none', stroke: '#ff2d5f', 'stroke-width': fs * .16, opacity: .8, 'stroke-dasharray': `${fs * .2} ${fs * 1.1}`, 'stroke-linecap': 'round', class: 'flow'}, L.skin);
+    for (let k = 0; k < 5; k++) mk('ellipse', {cx: px + (k - 2) * fs * .42, cy: gy + Math.sin(k * 1.7) * fs * .25, rx: fs * .62, ry: fs * .45, fill: 'rgba(255,255,255,.12)', stroke: '#ffffff', 'stroke-width': 1.6, opacity: .8}, L.skin);
+    mk('ellipse', {cx: px, cy: SY + 1, rx: fs * .35, ry: fs * .14, fill: '#ff2d5f', opacity: .6}, L.skin);
     label(L.labels, px + fs * 1.8, gy + fs * .35, 'sweat gland', {'font-weight': 600});
 
     // Embers of body heat.
@@ -172,25 +172,25 @@
     const tw = fs * .7, x0 = W * .05, t0 = fs * 2.3, t1 = SY - fs * 2.3, br = fs * .62;
     G.th = {t0, t1, x0, tw};
     label(L.thermo, x0 - 2, fs * 1.2, 'skin heat', {'font-weight': 700});
-    mk('rect', {x: x0, y: t0, width: tw, height: t1 - t0, rx: tw / 2, fill: 'rgba(255,255,255,.07)', stroke: 'rgba(230,245,255,.55)', 'stroke-width': 1.2}, L.thermo);
+    mk('rect', {x: x0, y: t0, width: tw, height: t1 - t0, rx: tw / 2, fill: 'rgba(255,255,255,.18)', stroke: 'rgba(255,255,255,.85)', 'stroke-width': 1.2}, L.thermo);
     G.thFill = mk('rect', {x: x0 + tw * .22, y: t0, width: tw * .56, height: t1 - t0, rx: tw * .28, fill: HOT, filter: 'url(#glow)'}, L.thermo);
-    G.thBulb = mk('circle', {cx: x0 + tw / 2, cy: t1 + br * .7, r: br, fill: HOT, stroke: 'rgba(230,245,255,.55)', 'stroke-width': 1.2, filter: 'url(#glow)'}, L.thermo);
-    mk('ellipse', {cx: x0 + tw / 2 - br * .3, cy: t1 + br * .4, rx: br * .22, ry: br * .3, fill: '#fff', opacity: .55}, L.thermo);
+    G.thBulb = mk('circle', {cx: x0 + tw / 2, cy: t1 + br * .7, r: br, fill: HOT, stroke: 'rgba(255,255,255,.85)', 'stroke-width': 1.2, filter: 'url(#glow)'}, L.thermo);
+    mk('ellipse', {cx: x0 + tw / 2 - br * .3, cy: t1 + br * .4, rx: br * .22, ry: br * .3, fill: '#ff2d5f', opacity: .35}, L.thermo);
     for (let k = 1; k < 5; k++) mk('line', {x1: x0 + tw, x2: x0 + tw + fs * .4, y1: t0 + (t1 - t0) * k / 5, y2: t0 + (t1 - t0) * k / 5, stroke: INK, opacity: .45}, L.thermo);
 
     // The target and the way there.
     G.hint = mk('g', {}, L.ui);
     mk('path', {d: `M${px + r0 * .6},${SY - r0 * 1.9} Q${(px + tx) / 2},${SY - fs * 5} ${tx - r0 * .6},${SY - r0 * 1.9}`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '3 6', 'stroke-linecap': 'round', opacity: .55, class: 'ants'}, G.hint);
-    mk('ellipse', {cx: tx, cy: SY, rx: r0 * 1.9, ry: r0 * .55, fill: 'rgba(127,214,255,.12)', stroke: COOL, 'stroke-width': 1.6, 'stroke-dasharray': '4 4', class: 'pulse'}, G.hint);
+    mk('ellipse', {cx: tx, cy: SY, rx: r0 * 1.9, ry: r0 * .55, fill: 'rgba(255,255,255,.12)', stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '4 4', class: 'pulse'}, G.hint);
     label(G.hint, tx, SY - fs * 5.6, 'drag it here', {'text-anchor': 'middle'});
 
     // The bead of sweat.
     G.drop = mk('g', {}, L.drop);
-    G.shadow = mk('ellipse', {cx: 0, cy: 1, rx: r0 * 1.05, ry: r0 * .22, fill: 'rgba(70,0,25,.45)'}, G.drop);
+    G.shadow = mk('ellipse', {cx: 0, cy: 1, rx: r0 * 1.05, ry: r0 * .22, fill: 'rgba(158,22,56,.45)'}, G.drop);
     const r = r0;
-    mk('path', {d: `M${-r},0 C${-r},${-r * 1.3} ${-r * .4},${-r * 1.6} 0,${-r * 1.6} C${r * .4},${-r * 1.6} ${r},${-r * 1.3} ${r},0 Z`, fill: 'url(#dropG)', stroke: 'rgba(240,252,255,.7)', 'stroke-width': 1.2}, G.drop);
-    mk('ellipse', {cx: -r * .36, cy: -r * 1.02, rx: r * .2, ry: r * .32, fill: '#fff', opacity: .85, transform: `rotate(-25 ${-r * .36} ${-r * 1.02})`}, G.drop);
-    mk('path', {d: `M${-r * .7},${-r * .22} Q0,${-r * .02} ${r * .7},${-r * .22}`, fill: 'none', stroke: '#e8fbff', 'stroke-width': 1, opacity: .6}, G.drop);
+    mk('path', {d: `M${-r},0 C${-r},${-r * 1.3} ${-r * .4},${-r * 1.6} 0,${-r * 1.6} C${r * .4},${-r * 1.6} ${r},${-r * 1.3} ${r},0 Z`, fill: 'url(#dropG)', stroke: '#ffffff', 'stroke-width': 1.2}, G.drop);
+    mk('ellipse', {cx: -r * .36, cy: -r * 1.02, rx: r * .2, ry: r * .32, fill: '#ff2d5f', opacity: .35, transform: `rotate(-25 ${-r * .36} ${-r * 1.02})`}, G.drop);
+    mk('path', {d: `M${-r * .7},${-r * .22} Q0,${-r * .02} ${r * .7},${-r * .22}`, fill: 'none', stroke: '#9e1638', 'stroke-width': 1, opacity: .6}, G.drop);
 
     if (phase === 'evap') { if (tl) tl.kill(); phase = 'done'; S.heat = .22; }
     if (phase === 'idle') { D.x = px; D.y = SY; D.s = .8; }
@@ -201,7 +201,7 @@
 
   function vapourLabel(now) {
     if (G.vlab) return;
-    G.vlab = label(G.labels, G.tx, G.fs * 1.2, 'vapour leaves with heat', {'text-anchor': 'middle', fill: '#a6ecff'});
+    G.vlab = label(G.labels, G.tx, G.fs * 1.2, 'vapour leaves with heat', {'text-anchor': 'middle', fill: '#ffffff'});
     if (!now && !Kit.calm) gsap.from(G.vlab, {opacity: 0, y: 8, duration: .6, ease: 'power3.out'});
   }
 
@@ -280,10 +280,10 @@
   function molecule() {
     const {fs, tx, SY, r0, W} = G;
     const g = mk('g', {}, G.mol);
-    mk('circle', {r: fs * .34, fill: '#c9f2ff', opacity: .9}, g);
-    mk('circle', {cx: fs * .3, cy: -fs * .2, r: fs * .17, fill: '#c9f2ff', opacity: .8}, g);
-    mk('circle', {cx: -fs * .3, cy: -fs * .2, r: fs * .17, fill: '#c9f2ff', opacity: .8}, g);
-    mk('circle', {r: fs * .16, fill: HOT, filter: 'url(#glow)'}, g);
+    mk('circle', {r: fs * .34, fill: '#ffffff', opacity: .9}, g);
+    mk('circle', {cx: fs * .3, cy: -fs * .2, r: fs * .17, fill: '#ffffff', opacity: .8}, g);
+    mk('circle', {cx: -fs * .3, cy: -fs * .2, r: fs * .17, fill: '#ffffff', opacity: .8}, g);
+    mk('circle', {r: fs * .16, fill: '#9e1638', filter: 'url(#glow)'}, g);
     const x1 = Math.max(fs * 2, Math.min(W - fs * 2, tx + (Kit.rnd() - .5) * W * .4));
     gsap.set(g, {x: tx, y: SY - r0 * 1.5 * Math.max(D.s, .3)});
     gsap.to(g, {x: x1, y: fs * 2.8 + Kit.rnd() * fs * 2, rotation: (Kit.rnd() - .5) * 200, duration: 2.6, ease: 'power2.out'});
@@ -307,7 +307,7 @@
       gsap.to(line, {opacity: 0, 'stroke-width': .5, duration: 1.6, ease: 'power2.out', onComplete: () => line.remove()});
       // …and two glints run outward along the surface.
       for (const to of [G.fs * .6, G.W - G.fs * .6]) {
-        const c = mk('circle', {cx: G.tx, cy: G.SY, r: G.fs * .35, fill: '#e8fbff', filter: 'url(#glow)'}, G.fx);
+        const c = mk('circle', {cx: G.tx, cy: G.SY, r: G.fs * .35, fill: '#ffffff', filter: 'url(#glow)'}, G.fx);
         gsap.to(c, {attr: {cx: to}, duration: 1, ease: 'power3.out'});
         gsap.to(c, {opacity: 0, duration: .5, delay: .7, onComplete: () => c.remove()});
       }

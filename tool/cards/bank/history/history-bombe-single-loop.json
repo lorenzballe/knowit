@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A circuit diagram of three rotors looping one letter's wire back into itself, with letter wires to tap. Tapping a guess for which letter R is plugged to shows one closed loop if right, or many live wires if wrong. The question asks which letter R is plugged to.",
-    "ground": "#0b1026"
+    "label": "A circuit diagram of three rotors looping one letter's wire back into itself, with letter wires to tap. Tapping a guess for which letter R is plugged to shows one closed loop if right, or many live wires if wrong. The question asks which letter R is plugged to."
   },
   "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=1974s",

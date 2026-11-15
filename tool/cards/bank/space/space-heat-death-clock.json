@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A question card asking when the universe will reach heat death. Answer choices are 1 year from now, 100 years, and more than 10 to the 100 years, with a tap button that adds ten zeros to the years. Revealed text says heat death waits for the last black hole to evaporate, and time no longer has a direction.",
-    "ground": "#1b1720"
+    "label": "A question card asking when the universe will reach heat death. Answer choices are 1 year from now, 100 years, and more than 10 to the 100 years, with a tap button that adds ten zeros to the years. Revealed text says heat death waits for the last black hole to evaporate, and time no longer has a direction."
   },
   "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=DxL2HoqLbyA",

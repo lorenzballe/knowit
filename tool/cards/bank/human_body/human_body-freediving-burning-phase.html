@@ -99,7 +99,7 @@ function draw() {
   Kit.mk('line', {x1: s * .3, y1: -s * 1.2, x2: s * .2, y2: -s * 2.7, stroke: 'var(--k)', 'stroke-width': s * .32, 'stroke-linecap': 'round'}, body);
   Kit.mk('rect', {x: -s * .45, y: -s * 1.2, width: s * .9, height: s * 2.1, rx: s * .4, fill: 'var(--k)'}, body);
   Kit.mk('circle', {cx: 0, cy: -s * 1.75, r: s * .48, fill: 'var(--k)'}, body);
-  Kit.mk('rect', {x: -s * .34, y: -s * 1.92, width: s * .68, height: s * .26, rx: s * .1, fill: O2C}, body);
+  Kit.mk('rect', {x: -s * .34, y: -s * 1.92, width: s * .68, height: s * .26, rx: s * .1, fill: 'var(--edge)'}, body);
   const legs = Kit.mk('g', {}, body);
   [-1, 1].forEach(k => {
     Kit.mk('line', {x1: k * s * .2, y1: s * .8, x2: k * s * .25, y2: s * 2.2, stroke: 'var(--k)', 'stroke-width': s * .35, 'stroke-linecap': 'round'}, legs);

@@ -35,8 +35,8 @@ const FULL = 360 + 360 / (RATIO - 1); // turn needed to face the Sun again
 let s = 0, state = 0, holding = false, fast = false;
 let G = null;
 const D = Math.PI / 180;
-const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
-const col = () => getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#fff';
+const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#ffffff';
+const col = () => getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#2B5CFF';
 
 function arcPath(cx, cy, r, a0, span) { // counter-clockwise on screen from a0 (deg) by span
   if (span <= 0.01) return '';
@@ -59,19 +59,19 @@ function build() {
   const g = {W, H, f, sx, sy, R, rs, rE};
   Kit.mk('path', {d: arcPath(sx, sy, R, 100, 40), style: `fill:none;stroke:${K};stroke-opacity:.25;stroke-width:1.5;stroke-dasharray:4 6`}, svg);
   g.trail = Kit.mk('path', {style: `fill:none;stroke:${K};stroke-opacity:.7;stroke-width:3;stroke-linecap:round`}, svg);
-  Kit.mk('circle', {cx: sx, cy: sy, r: rs * 1.35, style: 'fill:#ffb300;opacity:.25'}, svg);
+  Kit.mk('circle', {cx: sx, cy: sy, r: rs * 1.35, style: `fill:${K};opacity:.18`}, svg);
   Kit.mk('circle', {cx: sx, cy: sy, r: rs, style: `fill:#ffb300;stroke:${K};stroke-width:2`}, svg);
-  const st = Kit.mk('text', {x: sx, y: sy + f * 0.35, 'text-anchor': 'middle', style: `font:800 ${f}px var(--body);fill:#1a1200`}, svg);
+  const st = Kit.mk('text', {x: sx, y: sy + f * 0.35, 'text-anchor': 'middle', style: `font:800 ${f}px var(--body);fill:#152f8f`}, svg);
   st.textContent = 'Sun';
-  g.sunline = Kit.mk('line', {style: `stroke:#ff9800;stroke-width:2;stroke-dasharray:6 5`}, svg);
-  g.gap = Kit.mk('path', {style: 'fill:#e8452c;opacity:.28'}, svg);
+  g.sunline = Kit.mk('line', {style: `stroke:#ffb300;stroke-width:2;stroke-dasharray:6 5`}, svg);
+  g.gap = Kit.mk('path', {style: 'fill:#ffb300;opacity:.35'}, svg);
   g.ring = Kit.mk('path', {style: `fill:none;stroke:${K};stroke-width:${Math.max(3, rE * 0.12)};stroke-linecap:round`}, svg);
-  g.extra = Kit.mk('path', {style: `fill:none;stroke:#e8452c;stroke-width:${Math.max(5, rE * 0.2)};stroke-linecap:round`}, svg);
+  g.extra = Kit.mk('path', {style: `fill:none;stroke:#ffb300;stroke-width:${Math.max(5, rE * 0.2)};stroke-linecap:round`}, svg);
   g.ghost = Kit.mk('line', {style: `stroke:${K};stroke-opacity:.45;stroke-width:2;stroke-dasharray:3 4`}, svg);
-  g.night = Kit.mk('circle', {r: rE, style: `fill:#16304f;stroke:${K};stroke-width:2`}, svg);
-  g.day = Kit.mk('path', {style: 'fill:#3d8be8'}, svg);
+  g.night = Kit.mk('circle', {r: rE, style: `fill:#152f8f;stroke:${K};stroke-width:2`}, svg);
+  g.day = Kit.mk('path', {style: 'fill:#8fa9ff'}, svg);
   g.pin = Kit.mk('line', {style: `stroke:${K};stroke-width:${Math.max(3, rE * 0.1)};stroke-linecap:round`}, svg);
-  g.dot = Kit.mk('circle', {r: Math.max(4, rE * 0.16), style: `fill:#fff;stroke:${K};stroke-width:2`}, svg);
+  g.dot = Kit.mk('circle', {r: Math.max(4, rE * 0.16), style: `fill:${K};stroke:#152f8f;stroke-width:2`}, svg);
   g.you = Kit.mk('text', {'text-anchor': 'middle', style: `font:700 ${f * 0.85}px var(--body);fill:${K}`}, svg);
   g.you.textContent = 'you';
   const lab = Kit.mk('text', {x: W - 6, y: f * 1.1, 'text-anchor': 'end', style: `font:600 ${f * 0.85}px var(--body);fill:${K};opacity:.75`}, svg);

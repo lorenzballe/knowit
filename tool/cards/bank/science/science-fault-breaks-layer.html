@@ -15,34 +15,34 @@
 #pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
 #opts{display:flex;gap:2.6cqw;flex:none;padding:.8cqh 1cqw 0}
 .opt{position:relative;flex:1;min-width:0;border:0;background:none;padding:0;cursor:pointer;color:var(--k);
-  font:700 max(1.6cqh,12px)/1.15 var(--body);filter:drop-shadow(0 .45cqh .5cqh rgba(60,36,12,.32));
+  font:700 max(1.6cqh,12px)/1.15 var(--body);filter:drop-shadow(0 .45cqh .5cqh transparent);
   transition:transform .28s cubic-bezier(.3,1.7,.5,1)}
 .opt:nth-child(1){transform:rotate(-2.2deg)}
 .opt:nth-child(2){transform:rotate(1.4deg)}
 .opt:nth-child(3){transform:rotate(-.8deg)}
 .opt:active{transform:scale(.95)}
-.opt .p{display:flex;flex-direction:column;align-items:center;gap:.6cqh;padding:1.3cqh 2.2cqw 1.5cqh;background:#f8f2e4;
+.opt .p{display:flex;flex-direction:column;align-items:center;gap:.6cqh;padding:1.3cqh 2.2cqw 1.5cqh;background:#f6fffb;
   clip-path:polygon(0 5%,11% 0,29% 3%,50% 0,70% 4%,87% 1%,100% 6%,98% 31%,100% 63%,97% 100%,76% 96%,55% 100%,33% 97%,13% 100%,0 95%,2% 61%,0 32%);
   transition:background .2s,color .2s}
 .opt svg{width:100%;height:max(4.6cqh,28px);display:block}
 .opt .tx{overflow-wrap:anywhere;text-align:center}
 .opt.on{transform:translateY(-.9cqh) rotate(0) scale(1.05)}
-.opt.on .p{background:#1e1a15;color:#f8f2e4}
-.opt.on::after{content:"";position:absolute;top:-.8cqh;left:50%;width:42%;height:1.7cqh;background:rgba(222,75,50,.82);transform:translateX(-50%) rotate(-5deg)}
+.opt.on .p{background:var(--k);color:#f6fffb}
+.opt.on::after{content:"";position:absolute;top:-.8cqh;left:50%;width:42%;height:1.7cqh;background:#b3261e;transform:translateX(-50%) rotate(-5deg)}
 #why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
 #why .big{font-size:max(3.9cqh,22px);line-height:1.02}
 #why .body{font-size:max(1.6cqh,12px);line-height:1.38}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#eee4cf;--k:#1e1a15;--edge:#c8b693">
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
     <h2 class="q">What happens to a rock layer where a fault cuts it?</h2>
     <div class="stagebox" id="stage">
       <div id="art"><canvas id="pic" role="img" aria-label="A cross-section of tilted rock layers with a red unit, cut by a steep fault."></canvas></div>
       <div id="opts">
-        <button class="opt" data-i="0"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#de4b32"/><polygon points="34,18.8 64,24.8 64,31.8 34,25.8" fill="#de4b32"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Runs on, unbroken</span></span></button>
-        <button class="opt" data-i="1"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#de4b32"/><polygon points="35,28 64,28 64,35 35,35" fill="#de4b32"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Drops, base lies flat</span></span></button>
-        <button class="opt" data-i="2"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#de4b32"/><polygon points="35,28 64,33.8 64,40 35,35" fill="#de4b32"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Drops, base dips</span></span></button>
+        <button class="opt" data-i="0"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#b3261e"/><polygon points="34,18.8 64,24.8 64,31.8 34,25.8" fill="#b3261e"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Runs on, unbroken</span></span></button>
+        <button class="opt" data-i="1"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#b3261e"/><polygon points="35,28 64,28 64,35 35,35" fill="#b3261e"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Drops, base lies flat</span></span></button>
+        <button class="opt" data-i="2"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#b3261e"/><polygon points="35,28 64,33.8 64,40 35,35" fill="#b3261e"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Drops, base dips</span></span></button>
       </div>
       <div id="why" class="gone"><p class="big">It breaks, drops, and its base dips.</p><p class="body">The fault cuts the red unit in two and one side slides down it: the layer stops at the fault and carries on lower down. Beyond the fault its base still dips; it is not flat.</p></div>
     </div>
@@ -56,8 +56,8 @@
 <script>
 (() => {
   const cv = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say');
-  const INK = '#1e1a15', CORE = '#fbf6ea', CHIP = '#f8f2e4';
-  const UNITS = ['#d6bd8c', '#2f6b70', '#de4b32', '#e2a83c', '#3c4a78'];
+  const INK = '#10100c', CORE = '#f6fffb', CHIP = '#f6fffb';
+  const UNITS = ['#f6fffb', '#00835b', '#b3261e', '#bff5e0', '#10100c'];
   const A = [.07, .22, .38, .54];      // the contacts at the left edge, as a share of the depth
   const LABELS = ['Runs on, unbroken', 'Drops, base lies flat', 'Drops, base dips'];
   const RIGHT = 2;
@@ -110,12 +110,12 @@
   function grainPattern() {
     if (grain) return grain;
     const c = document.createElement('canvas'); c.width = c.height = 140; const g = c.getContext('2d');
-    for (let i = 0; i < 900; i++) { g.fillStyle = Math.random() < .5 ? 'rgba(30,20,10,.09)' : 'rgba(255,250,235,.12)'; g.fillRect(Math.random() * 140, Math.random() * 140, 1 + Math.random() * 1.6, 1 + Math.random() * 1.2); }
-    for (let i = 0; i < 26; i++) { g.strokeStyle = 'rgba(255,250,235,.1)'; g.lineWidth = .7; const x = Math.random() * 140, y = Math.random() * 140; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + 5, y + 2, x + 9 + Math.random() * 6, y + Math.random() * 4); g.stroke(); }
+    for (let i = 0; i < 900; i++) { g.fillStyle = Math.random() < .5 ? 'rgba(16,16,12,.09)' : 'rgba(255,255,255,.12)'; g.fillRect(Math.random() * 140, Math.random() * 140, 1 + Math.random() * 1.6, 1 + Math.random() * 1.2); }
+    for (let i = 0; i < 26; i++) { g.strokeStyle = 'rgba(255,255,255,.1)'; g.lineWidth = .7; const x = Math.random() * 140, y = Math.random() * 140; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + 5, y + 2, x + 9 + Math.random() * 6, y + Math.random() * 4); g.stroke(); }
     return (grain = ctx.createPattern(c, 'repeat'));
   }
   const step = (v, n) => Math.round(v * n) / n;      // stop-motion: motion in whole frames
-  const shadow = (b = 4, y = 2, a = .35) => { ctx.shadowColor = `rgba(45,25,8,${a})`; ctx.shadowBlur = b; ctx.shadowOffsetY = y; };
+  const shadow = (b = 4, y = 2, a = .35) => { ctx.shadowColor = 'transparent'; ctx.shadowBlur = b; ctx.shadowOffsetY = y; };
 
   // One block of the section: its sheets stacked, each torn sheet laid over the one beneath.
   function block(side, dx, dy, ph) {
@@ -137,13 +137,13 @@
       ctx.fillStyle = UNITS[i]; path(pts); ctx.fill();
       // laminae: fine lines that run with the bedding
       ctx.save(); path(pts); ctx.clip();
-      ctx.strokeStyle = i === 0 || i === 3 ? 'rgba(80,50,20,.18)' : 'rgba(255,248,230,.16)'; ctx.lineWidth = 1.1; ctx.setLineDash([7, 5]);
+      ctx.strokeStyle = i === 0 || i === 3 ? 'rgba(16,16,12,.18)' : 'rgba(255,255,255,.16)'; ctx.lineWidth = 1.1; ctx.setLineDash([7, 5]);
       for (const f of [.35, .7]) {
         const yA = x => i === 0 ? cy(0, x, dx, dy) - P.D * (.025 + .06 * f) : i === 4 ? cy(3, x, dx, dy) + P.D * .12 * f * 2 : cy(i - 1, x, dx, dy) + (cy(i, x, dx, dy) - cy(i - 1, x, dx, dy)) * f;
         ctx.beginPath(); ctx.moveTo(X0, yA(X0) - lift); ctx.lineTo(X1, yA(X1) - lift); ctx.stroke();
       }
-      if (i === 2) { ctx.setLineDash([]); ctx.fillStyle = 'rgba(255,230,210,.22)'; for (let s = 0; s < 70; s++) { const x = P.x0 + hash(s, 5 + side) * (P.x1 - P.x0), t = hash(s, 9 + side); const y = cy(1, x, dx, dy) + (cy(2, x, dx, dy) - cy(1, x, dx, dy)) * (.15 + t * .7) - lift; ctx.beginPath(); ctx.arc(x, y, 1.2, 0, 7); ctx.fill(); } }
-      if (i === 4) { ctx.setLineDash([]); ctx.fillStyle = 'rgba(255,248,230,.1)'; for (let s = 0; s < 40; s++) { const x = P.x0 + hash(s, 21 + side) * (P.x1 - P.x0), y = cy(3, x, dx, dy) + P.D * (.04 + hash(s, 23) * .4) - lift; ctx.beginPath(); ctx.arc(x, y, 1.6, 0, 7); ctx.fill(); } }
+      if (i === 2) { ctx.setLineDash([]); ctx.fillStyle = 'rgba(255,255,255,.22)'; for (let s = 0; s < 70; s++) { const x = P.x0 + hash(s, 5 + side) * (P.x1 - P.x0), t = hash(s, 9 + side); const y = cy(1, x, dx, dy) + (cy(2, x, dx, dy) - cy(1, x, dx, dy)) * (.15 + t * .7) - lift; ctx.beginPath(); ctx.arc(x, y, 1.2, 0, 7); ctx.fill(); } }
+      if (i === 4) { ctx.setLineDash([]); ctx.fillStyle = 'rgba(255,255,255,.1)'; for (let s = 0; s < 40; s++) { const x = P.x0 + hash(s, 21 + side) * (P.x1 - P.x0), y = cy(3, x, dx, dy) + P.D * (.04 + hash(s, 23) * .4) - lift; ctx.beginPath(); ctx.arc(x, y, 1.6, 0, 7); ctx.fill(); } }
       ctx.restore();
       ctx.globalAlpha = 1;
     }
@@ -151,9 +151,9 @@
     if (G.tree > .01) {
       const yS = P.yT + dy, th = Math.max(3, P.D * .028);
       ctx.globalAlpha = Math.min(1, G.tree);
-      ctx.save(); shadow(3, 1.5, .3); ctx.fillStyle = '#4c7f44';
+      ctx.save(); shadow(3, 1.5, .3); ctx.fillStyle = '#00835b';
       path([[X0, yS - 8], [X1, yS - 8], ...torn([[X1, yS + th], [X0, yS + th]], 60 + side * 3 + ph, 1.3, 5, false)]); ctx.fill(); ctx.restore();
-      ctx.fillStyle = '#6d9f56';
+      ctx.fillStyle = '#00E5A0';
       path([[X0, yS - 8], [X1, yS - 8], ...torn([[X1, yS + th * .4], [X0, yS + th * .4]], 66 + side * 3 + ph, 1, 5, false)]); ctx.fill();
       ctx.globalAlpha = 1;
     }
@@ -164,8 +164,8 @@
   function tree(x, y, h, seed, ph, rot) {
     const a = G.tree; if (a <= .01) return;
     ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(a, a); shadow();
-    ctx.fillStyle = '#6b4a2c'; path(torn([[-h * .05, 0], [h * .05, 0], [h * .05, -h * .3], [-h * .05, -h * .3]], seed + ph, .5, 5)); ctx.fill();
-    [['#2f5d3a', 1, .22], ['#467a44', .78, .5], ['#5d9150', .55, .74]].forEach(([c, s, y0], j) => {
+    ctx.fillStyle = '#10100c'; path(torn([[-h * .05, 0], [h * .05, 0], [h * .05, -h * .3], [-h * .05, -h * .3]], seed + ph, .5, 5)); ctx.fill();
+    [['#00835b', 1, .22], ['#10100c', .78, .5], ['#f6fffb', .55, .74]].forEach(([c, s, y0], j) => {
       ctx.fillStyle = c; path(torn([[-h * .26 * s, -h * y0], [h * .26 * s, -h * y0], [0, -h * (y0 + .42 * s + .1)]], seed + j * 3 + ph, .9, 5)); ctx.fill();
     });
     ctx.restore();
@@ -174,8 +174,8 @@
     const a = G.tree; if (a <= .01) return;
     ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(a, a); shadow();
     ctx.fillStyle = CORE; path(torn([[-h * .4, 0], [h * .4, 0], [h * .4, -h * .55], [-h * .4, -h * .55]], seed + ph, .8, 6)); ctx.fill();
-    ctx.fillStyle = '#b8452c'; path(torn([[-h * .5, -h * .5], [h * .5, -h * .5], [0, -h * .98]], seed + 4 + ph, .9, 6)); ctx.fill();
-    ctx.fillStyle = '#7a5a3a'; ctx.fillRect(h * .2, -h * .9, h * .1, h * .22);
+    ctx.fillStyle = '#b3261e'; path(torn([[-h * .5, -h * .5], [h * .5, -h * .5], [0, -h * .98]], seed + 4 + ph, .9, 6)); ctx.fill();
+    ctx.fillStyle = '#00835b'; ctx.fillRect(h * .2, -h * .9, h * .1, h * .22);
     ctx.shadowColor = 'transparent'; ctx.fillStyle = INK;
     ctx.fillRect(-h * .1, -h * .3, h * .2, h * .3); ctx.fillRect(h * .17, -h * .42, h * .14, h * .12); ctx.fillRect(-h * .31, -h * .42, h * .14, h * .12);
     ctx.restore();
@@ -186,9 +186,9 @@
     ctx.save(); ctx.globalAlpha = a;
     // a paper sun with slowly turning rays
     const sx = P.x0 + (P.x1 - P.x0) * .78, sy = P.yT * .42, turn = Kit.calm ? 0 : step(t * .00012 % 1, 24) * 6.283;
-    ctx.save(); ctx.translate(sx, sy); ctx.rotate(turn); shadow(3, 1.5, .25); ctx.fillStyle = '#e9b949';
+    ctx.save(); ctx.translate(sx, sy); ctx.rotate(turn); shadow(3, 1.5, .25); ctx.fillStyle = '#00835b';
     for (let i = 0; i < 9; i++) { const q = i / 9 * 6.283; path(torn([[Math.cos(q - .17) * r * 1.05, Math.sin(q - .17) * r * 1.05], [Math.cos(q) * r * 1.65, Math.sin(q) * r * 1.65], [Math.cos(q + .17) * r * 1.05, Math.sin(q + .17) * r * 1.05]], 200 + i + ph, .5, 4)); ctx.fill(); }
-    ctx.fillStyle = '#f3c650'; path(torn(circ(0, 0, r), 210 + ph, .7, 4)); ctx.fill(); ctx.restore();
+    ctx.fillStyle = '#f6fffb'; path(torn(circ(0, 0, r), 210 + ph, .7, 4)); ctx.fill(); ctx.restore();
     // a paper cloud drifting
     const cx = P.x0 + W * .1 + (Kit.calm ? 0 : Math.round(Math.sin(t * .0005) * 4) * W * .005), cyy = P.yT * .42;
     ctx.save(); shadow(4, 2, .25); ctx.fillStyle = CORE;
@@ -269,7 +269,7 @@
       ctx.save(); ctx.beginPath(); ctx.moveTo(fx(-60) + 3, -60); ctx.lineTo(W + 60, -60); ctx.lineTo(W + 60, H + 80); ctx.lineTo(fx(H + 80) + 3, H + 80); ctx.closePath(); ctx.clip();
       ctx.translate(0, -(1 - g) * fs * 2); ctx.globalAlpha = Math.min(1, g);
       const gp = ghostPoly(pick);
-      ctx.fillStyle = 'rgba(255,250,236,.3)'; path(gp); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.3)'; path(gp); ctx.fill();
       ctx.strokeStyle = INK; ctx.lineWidth = 2.2; ctx.setLineDash([6, 4]); ctx.lineDashOffset = -ph * 3; path(gp); ctx.stroke();
       ctx.restore();
     }
@@ -295,7 +295,7 @@
     // the dust puff at the foot of the new scarp
     if (G.dust < .999) {
       const d = step(G.dust, 10), bx = P.ftx + SX, by = P.yT + SY;
-      ctx.save(); ctx.globalAlpha = (1 - d) * .85; ctx.fillStyle = '#efe2c4'; shadow(3, 1, .2);
+      ctx.save(); ctx.globalAlpha = (1 - d) * .85; ctx.fillStyle = '#f6fffb'; shadow(3, 1, .2);
       for (let i = 0; i < 7; i++) { const q = -Math.PI * (.1 + i / 6 * .8); path(torn(circ(bx + Math.cos(q) * fs * 2.4 * d * (1 + i % 2 * .4), by - fs * .3 + Math.sin(q) * fs * 1.6 * d, fs * (.35 + d * .6), 9), 300 + i + ph, .8, 4)); ctx.fill(); }
       ctx.restore();
     }
@@ -311,7 +311,7 @@
     ctx.save(); ctx.font = `700 ${fs * 1.2}px ${hand}`; const ltw = ctx.measureText('red unit').width; ctx.restore();
     L.block({x: lx - ltw / 2, y: ly - fs * .75 - ltw * P.dip / 2, w: ltw, h: fs * 1.5 + ltw * P.dip});
     ctx.save(); ctx.translate(lx, ly); ctx.rotate(Math.atan(P.dip)); ctx.globalAlpha = step(B[2].v, 7);
-    ctx.font = `700 ${fs * 1.2}px ${hand}`; ctx.fillStyle = '#fff6ea'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = `700 ${fs * 1.2}px ${hand}`; ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText('red unit', 0, 0); ctx.restore();
 
     // the marks of the answer
@@ -374,7 +374,7 @@
     ]);
   }
   function spawn(settled) {
-    const cols = [UNITS[0], '#c9ab72', '#e4d1a6', '#b08c58', '#6d9f56', UNITS[0], '#8a6a43'];
+    const cols = [UNITS[0], '#00835b', '#bff5e0', '#10100c', '#00835b', UNITS[0], '#10100c'];
     for (let i = 0; i < 16; i++) {
       const b = Bodies.polygon(P.ftx + 3 + Kit.rnd() * fs * 1.2, P.yT - fs * .4 - Kit.rnd() * fs * 2.4, 3 + Math.floor(Kit.rnd() * 3), fs * (.22 + Kit.rnd() * .3),
         {restitution: .15, friction: .7, frictionAir: .015, angle: Kit.rnd() * 6});

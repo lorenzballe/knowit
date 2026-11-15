@@ -31,7 +31,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const NS='http://www.w3.org/2000/svg', ORANGE='#ff6a2b', BLUE='#3d7be0';
+const NS='http://www.w3.org/2000/svg', ORANGE='#ffb347', BLUE='#152f8f';
 const sv=Kit.$('sv');
 let hx=0,hy=0,state='aim',G=null,dragging=false,tw=null,gDyn,gPath,ship,shipTri;
 const add=(a,b)=>({x:a.x+b.x,y:a.y+b.y}), sub=(a,b)=>({x:a.x-b.x,y:a.y-b.y}), mul=(a,k)=>({x:a.x*k,y:a.y*k});
@@ -53,7 +53,7 @@ function draw(){
   const dir0=nrm(sub(add(M,mul(r0,1.6*M.r)),S)), d=len(sub(M,S)), Lv=.3*d, rb=.45*Lv, T0=add(S,mul(dir0,Lv));
   G={W,H,fs,m,E,M,S,dir0,d,Lv,rb,T0,sw:Math.max(2.2,m*.008)};
   const defs=mk('defs',{},sv);
-  [['mk',getComputedStyle(sv).color||'#111'],['mo',ORANGE]].forEach(([id,c])=>{
+  [['mk',getComputedStyle(sv).color||'#fff'],['mo',ORANGE]].forEach(([id,c])=>{
     const mm=mk('marker',{id,viewBox:'0 0 10 10',refX:7,refY:5,markerWidth:4,markerHeight:4,orient:'auto-start-reverse'},defs);
     mk('path',{d:'M0,0 L10,5 L0,10 z',style:id==='mk'?'fill:var(--k)':`fill:${ORANGE}`},mm);});
   // stars
@@ -62,8 +62,8 @@ function draw(){
   gPath=mk('g',{},sv);
   mk('circle',{cx:E.x,cy:E.y,r:E.r,fill:BLUE,style:'stroke:var(--k)','stroke-width':2},sv);
   label('Earth',{x:E.x,y:E.y},'middle','#fff',sv);
-  mk('circle',{cx:M.x,cy:M.y,r:M.r,fill:'#c9c9c9',style:'stroke:var(--k)','stroke-width':2},sv);
-  label('Moon',{x:M.x,y:M.y},'middle','#222',sv).setAttribute('font-size',Math.max(12,Math.min(fs,M.r*.62)));
+  mk('circle',{cx:M.x,cy:M.y,r:M.r,fill:'#ffffff',style:'stroke:var(--k)','stroke-width':2},sv);
+  label('Moon',{x:M.x,y:M.y},'middle','#152f8f',sv).setAttribute('font-size',Math.max(12,Math.min(fs,M.r*.62)));
   gDyn=mk('g',{},sv);
   ship=mk('g',{},sv);
   shipTri=mk('path',{d:`M${G.sw*4},0 L${-G.sw*2.6},${G.sw*2.4} L${-G.sw*1.6},0 L${-G.sw*2.6},${-G.sw*2.4}z`,style:'fill:var(--k)',stroke:'#fff','stroke-width':1},ship);

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Two clocks side by side: one on Earth and one on the right that you drag up into orbit. Watch both clocks run, then apply Einstein's correction to see whether they stay in step.",
-    "ground": "#0b1026"
+    "label": "Two clocks side by side: one on Earth and one on the right that you drag up into orbit. Watch both clocks run, then apply Einstein's correction to see whether they stay in step."
   },
   "source": "Geopop, “Sai come funziona il GPS? FIGO! NON LO SAPEVO!” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=ac5iJvjd2pI&t=264s",

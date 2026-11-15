@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Left: a smoky, spherical flame in zero gravity. Right: a clean flame in normal gravity. Asks why a candle smokes more without gravity, and invites the reader to drag gravity down to zero and watch the flame.",
-    "ground": "#0e1820"
+    "label": "Left: a smoky, spherical flame in zero gravity. Right: a clean flame in normal gravity. Asks why a candle smokes more without gravity, and invites the reader to drag gravity down to zero and watch the flame."
   },
   "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
   "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=285s",

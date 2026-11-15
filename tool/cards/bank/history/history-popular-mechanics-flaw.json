@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A dark window into Alcatraz with four numbered panes to tap. Tapping each pane lights it and reveals one part of how the escapers got the plans for their raft, from a DIY magazine the guards let in.",
-    "ground": "#100c14"
+    "label": "A dark window into Alcatraz with four numbered panes to tap. Tapping each pane lights it and reveals one part of how the escapers got the plans for their raft, from a DIY magazine the guards let in."
   },
   "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=Q8GEU8YQSiE&t=437s",

@@ -47,7 +47,7 @@
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   // flat palette: the card's ink and colour, their tints, and two meaning colours (ochre for the Sun, red for you)
   const P = {paper: 'var(--c)', ink: 'var(--k)', lead: tint(72), blue: 'var(--k)', blueW: tint(40),
-    ochre: '#ffd36b', sunA: '#ffd36b', sunB: '#ffd36b', red: '#ff9484', sea: tint(42), land: tint(85), path: tint(22)};
+    ochre: '#ffd36b', sunA: '#ffd36b', sunB: '#ffd36b', red: 'var(--k)', sea: tint(42), land: tint(85), path: tint(22)};
   const WHY = 'Going round the Sun is itself one turn. So each day Earth spins a little more than once to face the Sun again, and over a year those bits add up to one whole spin: <b>365.24 days</b> for us, <b>366.24 rotations</b> against the stars.';
   let W = 0, H = 0, fs = 13, cx = 0, cy = 0, R = 0, re = 10, ROWN = 0, ROWS = 0, xm = 0, gp = 8, trailLen = 0;
   const st = {t: 0};
