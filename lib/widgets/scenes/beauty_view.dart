@@ -167,8 +167,7 @@ class _BeautySceneViewState extends State<BeautySceneView>
     final next = dial.clamp(v);
     if (next == _value) return;
     // The truth is a detent: the phone clicks as the dial passes it.
-    if ((_value < dial.value) != (next < dial.value) ||
-        next == dial.value) {
+    if ((_value < dial.value) != (next < dial.value) || next == dial.value) {
       HapticFeedback.selectionClick();
     }
     _play();
@@ -259,7 +258,8 @@ class _BeautySceneViewState extends State<BeautySceneView>
             label: s.hint,
             value: '${(_world.spread * 100).round()}%',
             increasedValue: '${(_world.spread * 100).round() + 4}%',
-            decreasedValue: '${math.max(0, (_world.spread * 100).round() - 4)}%',
+            decreasedValue:
+                '${math.max(0, (_world.spread * 100).round() - 4)}%',
             onIncrease: () => _act(1),
             onDecrease: () => _act(-1),
             child: ExcludeSemantics(child: hand),
@@ -583,7 +583,11 @@ class _ScalePainter extends CustomPainter {
     }
     final tx = x(truth);
     canvas.drawLine(Offset(tx, y - 9), Offset(tx, y + 9), _true);
-    canvas.drawCircle(Offset(tx, y - 12.5), 2.2, _true..style = PaintingStyle.fill);
+    canvas.drawCircle(
+      Offset(tx, y - 12.5),
+      2.2,
+      _true..style = PaintingStyle.fill,
+    );
     _true.style = PaintingStyle.stroke;
 
     final c = Offset(x(now), y);
@@ -646,7 +650,8 @@ abstract class _World {
   bool calm = false;
 
   /// From 0 to 1 over the first moment, as the drawing comes in.
-  double get enter => calm ? 1 : Curves.easeOut.transform((t / 0.9).clamp(0, 1));
+  double get enter =>
+      calm ? 1 : Curves.easeOut.transform((t / 0.9).clamp(0, 1));
 
   /// For the waves' screen-reader slider: how far apart the sources are.
   double get spread => 0;
@@ -737,7 +742,6 @@ class _Flock extends _World {
   double fx = 0, fy = 0, fvx = 0, fvy = 0, falcon = 0;
   Offset? finger;
   double strike = -1;
-
 
   final List<_Batch> _layers = [_Batch(), _Batch(), _Batch()];
   final Paint _bird = Paint()..strokeCap = StrokeCap.round;
@@ -1140,8 +1144,7 @@ class _Orbits extends _World {
   void paint(Canvas canvas, _Look look) {
     final cx = size.width / 2, cy = size.height / 2;
     final e = enter;
-    final scale =
-        math.min(size.width, size.height) * 0.47 / scene.outerRadius;
+    final scale = math.min(size.width, size.height) * 0.47 / scene.outerRadius;
     final r1 = scene.innerRadius * scale, r2 = scene.outerRadius * scale;
     final p1 = value, p2 = scene.outer;
     final now = _days;
@@ -1230,8 +1233,10 @@ class _Waves extends _World {
       a = Offset(size.width / 2 - g, size.height * 0.5);
       b = Offset(size.width / 2 + g, size.height * 0.5);
     } else {
-      Offset sc(Offset p) =>
-          Offset(p.dx * size.width / old.width, p.dy * size.height / old.height);
+      Offset sc(Offset p) => Offset(
+        p.dx * size.width / old.width,
+        p.dy * size.height / old.height,
+      );
       a = sc(a);
       b = sc(b);
     }
@@ -1293,8 +1298,12 @@ class _Waves extends _World {
       final py = oy + r * g;
       for (var c = 0; c < cols; c++) {
         final px = ox + c * g;
-        final d1 = math.sqrt((px - a.dx) * (px - a.dx) + (py - a.dy) * (py - a.dy));
-        final d2 = math.sqrt((px - b.dx) * (px - b.dx) + (py - b.dy) * (py - b.dy));
+        final d1 = math.sqrt(
+          (px - a.dx) * (px - a.dx) + (py - a.dy) * (py - a.dy),
+        );
+        final d2 = math.sqrt(
+          (px - b.dx) * (px - b.dx) + (py - b.dy) * (py - b.dy),
+        );
         // The ripples weaken as they spread, gently, so the far field
         // still carries the pattern.
         final v =
@@ -1365,7 +1374,8 @@ class _Tree extends _World {
     _ends[3] = 1;
     for (var l = 1; l <= depth; l++) {
       final first = (1 << l) - 1, parents = (1 << (l - 1)) - 1;
-      final sway = math.sin(wind * 0.9 + l * 0.55) * 0.012 * l +
+      final sway =
+          math.sin(wind * 0.9 + l * 0.55) * 0.012 * l +
           math.sin(wind * 0.37) * 0.01;
       for (var i = 0; i < 1 << l; i++) {
         final p = (parents + (i >> 1)) * 4;
@@ -1445,7 +1455,9 @@ class _Tree extends _World {
     }
     _leaf
       ..strokeWidth = math.max(2.6, s * 0.012)
-      ..color = look.accent.withValues(alpha: 0.9 * (g - depth).clamp(0.0, 1.0));
+      ..color = look.accent.withValues(
+        alpha: 0.9 * (g - depth).clamp(0.0, 1.0),
+      );
     _tips.draw(canvas, PointMode.points, _leaf);
   }
 }

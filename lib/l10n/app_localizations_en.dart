@@ -4532,4 +4532,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return 'Because you saved “$question”';
   }
+
+  @override
+  String get todaySeeAgain => 'See again';
+
+  @override
+  String get todaySeeAgainHint =>
+      'Today\'s cards again, full size, from the first';
+
+  @override
+  String get tuneTitle => 'Fine-tune your mix';
+
+  @override
+  String get tuneEntryLine => 'How much of each subject, and which parts of it';
+
+  @override
+  String get tuneLearned =>
+      'Already moved by the cards you liked and threw away. Slide to change it.';
+
+  @override
+  String get tuneFresh => 'Slide a subject to see more or less of it.';
+
+  @override
+  String get tuneHowMuch => 'How much of each';
+
+  @override
+  String get tuneInsideLine =>
+      'The parts you liked most come first. Tap one to skip it, hold it to see inside.';
+
+  @override
+  String get tuneSave => 'Save';
+
+  @override
+  String get shareDayTitle => 'Share your day';
+
+  @override
+  String get shareDayRead => 'Five cards, read';
+
+  @override
+  String get shareDayTurn => 'Five cards a day. Your turn.';
+
+  @override
+  String shareDaySure(int n) {
+    return '$n% sure';
+  }
+
+  @override
+  String get shareDayHeadline => 'Today\'s five';
 }

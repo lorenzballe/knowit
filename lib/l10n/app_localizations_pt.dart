@@ -4570,4 +4570,51 @@ class AppLocalizationsPt extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return 'Porque guardaste “$question”';
   }
+
+  @override
+  String get todaySeeAgain => 'Ver de novo';
+
+  @override
+  String get todaySeeAgainHint =>
+      'As cartas de hoje outra vez, em grande, desde a primeira';
+
+  @override
+  String get tuneTitle => 'Afina a tua mistura';
+
+  @override
+  String get tuneEntryLine => 'Quanto de cada tema, e que partes';
+
+  @override
+  String get tuneLearned =>
+      'Já ajustado pelas cartas de que gostaste e que descartaste. Desliza para mudar.';
+
+  @override
+  String get tuneFresh => 'Desliza um tema para ver mais ou menos dele.';
+
+  @override
+  String get tuneHowMuch => 'Quanto de cada um';
+
+  @override
+  String get tuneInsideLine =>
+      'As partes de que mais gostaste vêm primeiro. Toca numa para a saltar, mantém premida para ver o que tem.';
+
+  @override
+  String get tuneSave => 'Guardar';
+
+  @override
+  String get shareDayTitle => 'Partilha o teu dia';
+
+  @override
+  String get shareDayRead => 'Cinco cartas, lidas';
+
+  @override
+  String get shareDayTurn => 'Cinco cartas por dia. É a tua vez.';
+
+  @override
+  String shareDaySure(int n) {
+    return '$n% de certeza';
+  }
+
+  @override
+  String get shareDayHeadline => 'As cinco de hoje';
 }

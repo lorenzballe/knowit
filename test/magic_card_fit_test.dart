@@ -28,8 +28,16 @@ void main() {
     }
   });
 
-  for (final Locale locale in const [Locale('en'), Locale('it'), Locale('de')]) {
-    for (final Size box in const [Size(268, 330), Size(300, 380), Size(339, 475)]) {
+  for (final Locale locale in const [
+    Locale('en'),
+    Locale('it'),
+    Locale('de'),
+  ]) {
+    for (final Size box in const [
+      Size(268, 330),
+      Size(300, 380),
+      Size(339, 475),
+    ]) {
       testWidgets('the offer fits a ${box.width.round()} by '
           '${box.height.round()} card in ${locale.languageCode}', (
         tester,

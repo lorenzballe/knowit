@@ -4490,4 +4490,52 @@ class AppLocalizationsTr extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return '“$question” kartını sakladığın için';
   }
+
+  @override
+  String get todaySeeAgain => 'Yeniden gör';
+
+  @override
+  String get todaySeeAgainHint =>
+      'Bugünün kartları yeniden, tam boyutta, ilkinden başlayarak';
+
+  @override
+  String get tuneTitle => 'Karışımına ince ayar';
+
+  @override
+  String get tuneEntryLine => 'Her konudan ne kadar ve hangi kısımları';
+
+  @override
+  String get tuneLearned =>
+      'Beğendiğin ve attığın kartlarla zaten ayarlandı. Değiştirmek için kaydır.';
+
+  @override
+  String get tuneFresh =>
+      'Bir konuyu daha çok ya da daha az görmek için kaydır.';
+
+  @override
+  String get tuneHowMuch => 'Her birinden ne kadar';
+
+  @override
+  String get tuneInsideLine =>
+      'En çok beğendiğin kısımlar önce gelir. Atlamak için dokun, içini görmek için basılı tut.';
+
+  @override
+  String get tuneSave => 'Kaydet';
+
+  @override
+  String get shareDayTitle => 'Gününü paylaş';
+
+  @override
+  String get shareDayRead => 'Beş kart, okundu';
+
+  @override
+  String get shareDayTurn => 'Günde beş kart. Sıra sende.';
+
+  @override
+  String shareDaySure(int n) {
+    return '%$n emin';
+  }
+
+  @override
+  String get shareDayHeadline => 'Bugünün beşi';
 }

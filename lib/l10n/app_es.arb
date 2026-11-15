@@ -1064,5 +1064,19 @@
   "exploreSixtyFirst": "Marca tu récord",
   "exploreGameNone": "Ahora mismo no hay nada que jugar aquí. Vuelve mañana.",
   "exploreSubjectLevel": "{subject}, nivel {n}",
-  "exploreBecauseSaved": "Porque guardaste «{question}»"
+  "exploreBecauseSaved": "Porque guardaste «{question}»",
+  "todaySeeAgain": "Volver a verlas",
+  "todaySeeAgainHint": "Las cartas de hoy otra vez, a tamaño completo, desde la primera",
+  "tuneTitle": "Ajusta tu mezcla",
+  "tuneEntryLine": "Cuánto de cada tema, y qué partes",
+  "tuneLearned": "Ya ajustado por las cartas que te gustaron y las que descartaste. Desliza para cambiarlo.",
+  "tuneFresh": "Desliza un tema para ver más o menos de él.",
+  "tuneHowMuch": "Cuánto de cada uno",
+  "tuneInsideLine": "Las partes que más te gustaron van primero. Toca una para saltarla, mantenla pulsada para ver dentro.",
+  "tuneSave": "Guardar",
+  "shareDayTitle": "Comparte tu día",
+  "shareDayRead": "Cinco cartas, leídas",
+  "shareDayTurn": "Cinco cartas al día. Te toca.",
+  "shareDaySure": "{n}% seguro",
+  "shareDayHeadline": "Las cinco de hoy"
 }

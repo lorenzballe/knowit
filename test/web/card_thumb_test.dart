@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:astuto/data/card_json.dart';
 import 'package:astuto/data/card_pages.dart';
 import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart' show dateKey;
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
@@ -22,7 +23,6 @@ import 'package:astuto/sync/served.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/explore/card_tiles.dart';
 import 'package:astuto/widgets/subject_icon.dart';
-import 'package:astuto/widgets/ui.dart' show TopicDot;
 import 'package:astuto/widgets/web/card_thumb.dart';
 
 import '../explore/core_harness.dart';
@@ -278,8 +278,8 @@ void main() {
   group('the reader\'s shelves', () {
     for (final Shelf shelf in Shelf.values) {
       for (final double text in [1.0, 2.0]) {
-        testWidgets('${shelf.name}: a card with pictures leads with its back, '
-            'small; one without with its dot; at ${text}x', (tester) async {
+        testWidgets('${shelf.name}: every kept card is the card in small, '
+            'its back where it has one; at ${text}x', (tester) async {
           final List<Pill> cards = pagedCards().take(3).toList();
           PillBank.adopt(bankWithPictures({cards[0].id, cards[2].id}));
           final List<String> ids = [for (final Pill p in cards) p.id];
@@ -291,25 +291,36 @@ void main() {
           await _pump(
             tester,
             SavedScreen(app: app, onBackToToday: () {}, shelf: shelf),
-            // Tall enough for the three rows at twice the text size.
             size: const Size(375, 1100),
             text: text,
           );
           expect(tester.takeException(), isNull);
-          for (final int i in [0, 2]) {
-            final Finder picture = find.byKey(
-              ValueKey('saved-picture-${ids[i]}'),
-            );
-            expect(picture, findsOneWidget);
-            final Size size = tester.getSize(picture);
+          // A wall of cards, three across, each in the card's proportion,
+          // whatever the text size: a picture does not grow with the text.
+          for (final String id in ids) {
+            final Finder tile = find.byKey(ValueKey('kept-$id'));
+            expect(tile, findsOneWidget);
+            final Size size = tester.getSize(tile);
             expect(size.width / size.height, closeTo(366 / 606, 0.01));
+            expect(size.width, lessThan(375 / 3));
+          }
+          for (final int i in [0, 2]) {
             expect(
               find.byKey(ValueKey('card-thumb-${ids[i]}-back')),
               findsOneWidget,
             );
           }
-          expect(find.byKey(ValueKey('saved-picture-${ids[1]}')), findsNothing);
-          expect(find.byType(TopicDot), findsOneWidget);
+          // The one with no picture is the card in small anyway: its mark
+          // and its question on its colour.
+          final Finder plain = find.byKey(ValueKey('kept-${ids[1]}'));
+          expect(
+            find.descendant(of: plain, matching: find.byType(SubjectIcon)),
+            findsOneWidget,
+          );
+          expect(
+            find.descendant(of: plain, matching: find.text(cards[1].question)),
+            findsOneWidget,
+          );
           // Nothing of the front, which is the card unanswered.
           expect(
             find.byWidgetPredicate(
@@ -323,7 +334,7 @@ void main() {
       }
     }
 
-    testWidgets('a picture that will not come keeps the row in line', (
+    testWidgets('a picture that will not come leaves the card in small', (
       tester,
     ) async {
       final Pill card = pagedCards().first;
@@ -331,14 +342,60 @@ void main() {
       final AppState app = await _dayDone([card], saved: [card.id]);
       await _pump(tester, SavedScreen(app: app, onBackToToday: () {}));
       expect(tester.takeException(), isNull);
-      final Finder slot = find.byKey(ValueKey('saved-picture-${card.id}'));
+      final Finder slot = find.byKey(ValueKey('kept-${card.id}'));
       expect(slot, findsOneWidget);
-      // The card in small, its subject's mark on its colour, where the
-      // picture would be.
+      // Its subject's mark on its colour, where the picture would be.
       expect(
         find.descendant(of: slot, matching: find.byType(SubjectIcon)),
         findsOneWidget,
       );
+    });
+
+    testWidgets('all of the shelf is in the order it was kept; a subject '
+        'picked is its cards under its mark', (tester) async {
+      final Map<String, Pill> bySubject = {};
+      for (final Pill p in pagedCards()) {
+        bySubject.putIfAbsent(p.topic, () => p);
+        if (bySubject.length == 3) break;
+      }
+      final List<Pill> kept = bySubject.values.toList();
+      PillBank.adopt(bankWithPictures({for (final p in kept) p.id}));
+      CardThumb.image = (url) => onePixel;
+      final AppState app = await _dayDone(
+        kept.take(1).toList(),
+        saved: [for (final p in kept) p.id],
+      );
+      await _pump(
+        tester,
+        SavedScreen(app: app, onBackToToday: () {}),
+        size: const Size(375, 1400),
+      );
+      expect(tester.takeException(), isNull);
+      // All: one wall, no heads, the cards in the shelf's own order.
+      expect(
+        find.byWidgetPredicate(
+          (w) =>
+              w.key is ValueKey<String> &&
+              (w.key! as ValueKey<String>).value.startsWith('kept-block-'),
+        ),
+        findsNothing,
+      );
+      final List<double> lefts = [
+        for (final String id in app.savedIds)
+          tester.getTopLeft(find.byKey(ValueKey('kept-$id'))).dx,
+      ];
+      expect(lefts, orderedEquals([...lefts]..sort()));
+
+      // A subject picked: its head, its mark, its cards.
+      final String key = kTopics.entries
+          .firstWhere((e) => e.value.name == kept[1].topic)
+          .key;
+      await tester.tap(find.byKey(ValueKey('saved-filter-$key')));
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(find.byKey(ValueKey('kept-block-$key')), findsOneWidget);
+      expect(find.byKey(ValueKey('kept-${kept[1].id}')), findsOneWidget);
+      expect(find.byKey(ValueKey('kept-${kept[0].id}')), findsNothing);
+      expect(find.byType(SubjectBadge), findsWidgets);
     });
   });
 

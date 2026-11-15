@@ -76,7 +76,8 @@ Map<String, Object?> _pie() => {
   'found': 'Yes: the slices add up to 193%.',
   'miss': 'The numbers are fine. Add them up.',
   'name': 'A pie past 100%',
-  'lesson': 'A pie is one whole. If its parts add to more, it is the wrong chart.',
+  'lesson':
+      'A pie is one whole. If its parts add to more, it is the wrong chart.',
 };
 
 Map<String, Object?> _flipped() => {
@@ -115,10 +116,9 @@ Map<String, Object?> _stretched() => {
   'lesson': 'A scale far wider than the data flattens any change.',
 };
 
-List<Map<String, Object?>> _samples() =>
-    (jsonDecode(File('tool/cards/samples/trick.json').readAsStringSync())
-            as List)
-        .cast<Map<String, Object?>>();
+List<Map<String, Object?>> _samples() => (jsonDecode(
+  File('tool/cards/samples/trick.json').readAsStringSync(),
+) as List).cast<Map<String, Object?>>();
 
 TrickScene _parse(Map<String, Object?> raw) =>
     Scene.fromJson(raw, id: 'test') as TrickScene;
@@ -399,15 +399,19 @@ void main() {
         // The bars: innocent, and they say why.
         await tester.tapAt(_part(tester, 'Now 35.0%, Jan 1, 2013 39.6%'));
         await _settle(tester);
-        expect(find.text("The numbers are right. It's the heights that lie."),
-            findsOneWidget);
+        expect(
+          find.text("The numbers are right. It's the heights that lie."),
+          findsOneWidget,
+        );
         expect(find.text('Show me'), findsOneWidget);
 
         // The years along the bottom: innocent too, with the general line.
         await tester.tapAt(_part(tester, 'Now – Jan 1, 2013'));
         await _settle(tester);
         expect(
-          find.text('That part tells the truth. Look at the bottom of the bars.'),
+          find.text(
+            'That part tells the truth. Look at the bottom of the bars.',
+          ),
           findsOneWidget,
         );
         expect(find.text('If Bush tax cuts expire'), findsOneWidget);
@@ -415,15 +419,19 @@ void main() {
         // The axis: found. The reader is told, then the chart is honest.
         await tester.tapAt(_part(tester, '34% – 42%'));
         await tester.pump(const Duration(milliseconds: 300));
-        expect(find.text('Yes: the axis starts at 34%, not at zero.'),
-            findsOneWidget);
+        expect(
+          find.text('Yes: the axis starts at 34%, not at zero.'),
+          findsOneWidget,
+        );
         await _settle(tester);
         expect(tester.takeException(), isNull);
         expect(find.text('Top tax rate: up 4.6 points'), findsOneWidget);
         expect(find.text('If Bush tax cuts expire'), findsNothing);
         expect(find.text('The cut-off axis'), findsOneWidget);
-        expect(find.text("A bar's length only means something from zero."),
-            findsOneWidget);
+        expect(
+          find.text("A bar's length only means something from zero."),
+          findsOneWidget,
+        );
         expect(find.text('Show me'), findsNothing);
         // The axis now runs from zero, and says so.
         expect(find.bySemanticsLabel('0% – 40%'), findsOneWidget);
@@ -433,10 +441,25 @@ void main() {
     }
 
     for (final (id, raw, spot, honest) in [
-      ('dual', _dual(), TrickSceneRegion.yaxis2, 'Screenings fell; abortions barely moved'),
+      (
+        'dual',
+        _dual(),
+        TrickSceneRegion.yaxis2,
+        'Screenings fell; abortions barely moved',
+      ),
       ('pie', _pie(), TrickSceneRegion.marks, 'Each name, out of 100%'),
-      ('flipped', _flipped(), TrickSceneRegion.yaxis, 'Deaths rose after the law'),
-      ('stretched', _stretched(), TrickSceneRegion.yaxis, 'Up more than a degree'),
+      (
+        'flipped',
+        _flipped(),
+        TrickSceneRegion.yaxis,
+        'Deaths rose after the law',
+      ),
+      (
+        'stretched',
+        _stretched(),
+        TrickSceneRegion.yaxis,
+        'Up more than a degree',
+      ),
     ]) {
       for (final (phone, size, height) in [
         ('small', const Size(360, 740), 300.0),
@@ -474,7 +497,10 @@ void main() {
       await tester.tap(find.text('Show me'));
       await _settle(tester);
       expect(find.text('The cut-off axis'), findsOneWidget);
-      expect(find.text('Yes: the axis starts at 34%, not at zero.'), findsNothing);
+      expect(
+        find.text('Yes: the axis starts at 34%, not at zero.'),
+        findsNothing,
+      );
       expect(find.text('Top tax rate: up 4.6 points'), findsOneWidget);
       handle.dispose();
     });
@@ -602,7 +628,10 @@ void main() {
           final raw = (c['scene']! as Map).cast<String, Object?>();
           final s = _parse(raw);
           final pill = cardFromJson(c);
-          final id = (c['id']! as String).replaceFirst(RegExp(r'^\w+-trick-'), '');
+          final id = (c['id']! as String).replaceFirst(
+            RegExp(r'^\w+-trick-'),
+            '',
+          );
           await _showCard(tester, pill, phone.value);
           await _settle(tester);
           expect(tester.takeException(), isNull);

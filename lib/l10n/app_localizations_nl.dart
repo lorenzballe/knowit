@@ -4571,4 +4571,51 @@ class AppLocalizationsNl extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return 'Omdat je ‘$question’ bewaarde';
   }
+
+  @override
+  String get todaySeeAgain => 'Opnieuw zien';
+
+  @override
+  String get todaySeeAgainHint =>
+      'De kaarten van vandaag opnieuw, op volle grootte, vanaf de eerste';
+
+  @override
+  String get tuneTitle => 'Je mix fijnstellen';
+
+  @override
+  String get tuneEntryLine => 'Hoeveel van elk vak, en welke delen ervan';
+
+  @override
+  String get tuneLearned =>
+      'Al bijgesteld door de kaarten die je leuk vond en weggooide. Schuif om het te veranderen.';
+
+  @override
+  String get tuneFresh => 'Schuif een vak om er meer of minder van te zien.';
+
+  @override
+  String get tuneHowMuch => 'Hoeveel van elk';
+
+  @override
+  String get tuneInsideLine =>
+      'De delen die je het leukst vond staan vooraan. Tik er een aan om hem over te slaan, houd hem vast om erin te kijken.';
+
+  @override
+  String get tuneSave => 'Opslaan';
+
+  @override
+  String get shareDayTitle => 'Deel je dag';
+
+  @override
+  String get shareDayRead => 'Vijf kaarten, gelezen';
+
+  @override
+  String get shareDayTurn => 'Vijf kaarten per dag. Jouw beurt.';
+
+  @override
+  String shareDaySure(int n) {
+    return '$n% zeker';
+  }
+
+  @override
+  String get shareDayHeadline => 'De vijf van vandaag';
 }

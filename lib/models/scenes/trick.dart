@@ -437,7 +437,8 @@ class TrickScene extends Scene {
         shown = (lo: 0, hi: 100);
         fair = shown;
     }
-    if (shown.hi <= shown.lo || fair.hi <= fair.lo) bad('to must be above from');
+    if (shown.hi <= shown.lo || fair.hi <= fair.lo)
+      bad('to must be above from');
     if (form != TrickSceneForm.pie) {
       final kept = values.sublist(first, last + 1);
       if (kept.any((v) => v < shown.lo - 1e-9 || v > shown.hi + 1e-9)) {

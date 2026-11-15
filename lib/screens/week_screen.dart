@@ -6,6 +6,7 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart';
 import '../theme.dart';
+import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
 import 'progress_text.dart';
@@ -265,8 +266,13 @@ class _MissRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 3),
-              child: TopicDot(pill.color),
+              padding: const EdgeInsets.only(top: 1),
+              child: SubjectBadge(
+                subject: pill.topic,
+                color: pill.color,
+                ink: pill.ink,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 11),
             Expanded(

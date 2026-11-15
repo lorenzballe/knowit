@@ -15,7 +15,9 @@ import '../theme.dart';
 import '../widgets/card_edge.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
+import 'deck_viewer_screen.dart';
 import 'journey_screen.dart';
+import '../analytics.dart';
 import '../widgets/motion.dart';
 import '../widgets/magic_card.dart';
 import '../widgets/premium.dart';
@@ -279,6 +281,38 @@ class _TodayDoneViewState extends State<TodayDoneView>
     }
   }
 
+  /// How wide [text] sets in [style] on one line, at the reader's text size.
+  static double _width(BuildContext context, String text, TextStyle style) {
+    final TextPainter painter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final double width = painter.width;
+    painter.dispose();
+    return width;
+  }
+
+  /// The day's cards again at full size, the way they first came, from the
+  /// one at the front of the shelf: the page a widget's tap opens. The
+  /// shelf shows them in small; this is the cards themselves.
+  void _seeAgain(BuildContext context, List<Pill> deck, int at) {
+    HapticFeedback.selectionClick();
+    Analytics.capture('today seen again', {'from': 'today', 'at': at});
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => DeckViewerScreen(
+          app: widget.app,
+          deck: deck,
+          title: context.l10n.tabToday,
+          initialIndex: at < deck.length ? at : 0,
+          source: 'today again',
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final app = widget.app;
@@ -292,39 +326,52 @@ class _TodayDoneViewState extends State<TodayDoneView>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Expanded(
-                child: Text(
-                  context.l10n.shelfEyebrow(
-                    context.l10n.countWord('${deck.length}').toUpperCase(),
+          // Eight above rather than sixteen: the row is as tall as its two
+          // buttons now, and the shelf under it keeps nearly all its room.
+          padding: const EdgeInsets.fromLTRB(24, 8, 18, 0),
+          child: LayoutBuilder(
+            builder: (context, box) {
+              final String eyebrow = context.l10n.shelfEyebrow(
+                context.l10n.countWord('${deck.length}').toUpperCase(),
+              );
+              final TextStyle eyebrowStyle = AppText.label(
+                size: 10.5,
+                weight: FontWeight.w700,
+                spacing: 1.6,
+                color: ink.withValues(alpha: 0.4),
+              );
+              // The heading is never cut for the buttons: where the two do
+              // not fit on the line ("DIE FÜNF VON HEUTE" and "Nochmal
+              // ansehen"), "See again" gives up its word and keeps its mark.
+              final bool compact =
+                  _width(context, eyebrow, eyebrowStyle) +
+                      12 +
+                      _DayTools.widthOf(context, app, compact: false) >
+                  box.maxWidth;
+              return Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      eyebrow,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: eyebrowStyle,
+                    ),
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.label(
-                    size: 10.5,
-                    weight: FontWeight.w700,
-                    spacing: 1.6,
-                    color: ink.withValues(alpha: 0.4),
+                  const SizedBox(width: 12),
+                  // Where the counter was: the dots under the shelf already say
+                  // which card is at the front, so the row's end is the day's
+                  // two ways on instead — the five again at full size, and the
+                  // day sent. Neither takes a line of its own: on a small phone
+                  // the shelf is what this screen is for.
+                  _DayTools(
+                    app: app,
+                    compact: compact,
+                    onSeeAgain: () => _seeAgain(context, deck, at),
                   ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                at < deck.length
-                    ? '${_two(at + 1)} / ${_two(deck.length)}'
-                    : context.l10n.plusNameCaps,
-                style: AppText.label(
-                  size: 10.5,
-                  weight: FontWeight.w700,
-                  spacing: 1.2,
-                  color: ink.withValues(alpha: 0.28),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
         Expanded(child: _shelf(context, deck, at)),
@@ -502,8 +549,6 @@ class _TodayDoneViewState extends State<TodayDoneView>
       ),
     );
   }
-
-  static String _two(int n) => n.toString().padLeft(2, '0');
 }
 
 /// A count as a word, for the labels that say "today's five".
@@ -1514,13 +1559,11 @@ class _JourneyButtonState extends State<_JourneyButton> {
   }
 }
 
-/// The way on: the journey, which is Astute+, and beside it the day sent as
-/// five squares, which is not. The day used to be sent only from the foot
-/// of the journey, so a reader on the free plan never found it, and a day
-/// in somebody's chat is how the app travels. Beside the journey rather
-/// than under it: a second row would come out of the shelf, and on a small
-/// phone the cards are what this screen is for. The offer stays the sixth
-/// card on the shelf; nothing in this row sells.
+/// The way on: the journey, which is Astute+, the whole width. The day sent
+/// as five squares used to stand beside it as a second button, which made
+/// the row two things to choose between; it is a mark at the end of the
+/// shelf's heading now ([_DayTools]), where it costs the shelf nothing. The
+/// offer stays the sixth card on the shelf; nothing in this row sells.
 class _Actions extends StatelessWidget {
   const _Actions({required this.app});
 
@@ -1544,88 +1587,130 @@ class _Actions extends StatelessWidget {
         source: 'journey',
       ),
     );
-    // Once the day is closed, the same test the journey's foot makes: the
-    // squares are the closed day's.
-    if (!app.dayClosed) return journey;
-    return Row(
-      children: [
-        Expanded(child: journey),
-        const SizedBox(width: 10),
-        _ShareDayButton(app: app),
-      ],
-    );
+    return journey;
   }
 }
 
-/// The day, sent from where it was finished: the journey's button again,
-/// outlined rather than filled because it is the second thing on the row,
-/// and as tall, so the two read as one row. No gate, on either plan.
-class _ShareDayButton extends StatefulWidget {
-  const _ShareDayButton({required this.app});
+/// The end of the shelf's heading: the day's five again at full size, and
+/// the day sent as five squares once it is closed.
+///
+/// "See again" opens the cards themselves, the way they first came, which is
+/// what a tap on the widget does; the shelf above only has them in small.
+/// The day is sent with no gate, on either plan, as it always was: a day in
+/// somebody's chat is how the app travels.
+class _DayTools extends StatelessWidget {
+  const _DayTools({
+    required this.app,
+    required this.onSeeAgain,
+    this.compact = false,
+  });
 
   final AppState app;
+  final VoidCallback onSeeAgain;
 
-  /// The widest it gets. Where a language's word or a large text size runs
-  /// long, this label gives way before the journey's does.
-  static const double maxWidth = 168;
+  /// The mark alone, without its word, where the line is short.
+  final bool compact;
 
-  @override
-  State<_ShareDayButton> createState() => _ShareDayButtonState();
-}
+  static TextStyle _labelStyle(Color ink) =>
+      AppText.body(size: 12.5, weight: FontWeight.w700, color: ink);
 
-class _ShareDayButtonState extends State<_ShareDayButton> {
-  bool _down = false;
+  /// How wide the two take on the line.
+  static double widthOf(
+    BuildContext context,
+    AppState app, {
+    required bool compact,
+  }) {
+    double width = compact ? 28 : 9 + 17 + 3 + 12;
+    if (!compact) {
+      width += _TodayDoneViewState._width(
+        context,
+        context.l10n.todaySeeAgain,
+        _labelStyle(context.p.ink),
+      );
+    }
+    if (app.dayClosed) width += 40;
+    return width;
+  }
 
   @override
   Widget build(BuildContext context) {
     final Color ink = context.p.ink;
-    return Semantics(
-      button: true,
-      label: context.l10n.shareMyDay,
-      child: GestureDetector(
-        key: const ValueKey('shelf-share-day'),
-        behavior: HitTestBehavior.opaque,
-        onTapDown: (_) => setState(() => _down = true),
-        onTapUp: (_) => setState(() => _down = false),
-        onTapCancel: () => setState(() => _down = false),
-        onTap: () => ShareDay.send(context, widget.app, from: 'done view'),
-        child: AnimatedScale(
-          scale: _down ? 0.98 : 1,
-          duration: const Duration(milliseconds: 90),
-          child: Container(
-            height: 52,
-            constraints: const BoxConstraints(
-              maxWidth: _ShareDayButton.maxWidth,
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: context.p.lineStrong),
-            ),
-            child: ExcludeSemantics(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.ios_share_rounded, size: 16, color: ink),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(
-                      context.l10n.shareMyDay,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.body(
-                        size: 14.5,
-                        weight: FontWeight.w700,
-                        color: ink,
-                      ),
-                    ),
+    final l = context.l10n;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Semantics(
+          button: true,
+          label: l.todaySeeAgain,
+          hint: l.todaySeeAgainHint,
+          excludeSemantics: true,
+          child: GestureDetector(
+            key: const ValueKey('shelf-see-again'),
+            behavior: HitTestBehavior.opaque,
+            onTap: onSeeAgain,
+            // 36 high to the finger, 28 to the eye.
+            child: SizedBox(
+              height: 36,
+              child: Center(
+                child: Container(
+                  height: 28,
+                  width: compact ? 28 : null,
+                  padding: compact
+                      ? EdgeInsets.zero
+                      : const EdgeInsets.fromLTRB(9, 0, 12, 0),
+                  decoration: BoxDecoration(
+                    color: ink.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(999),
                   ),
-                ],
+                  child: compact
+                      ? Icon(Icons.play_arrow_rounded, size: 17, color: ink)
+                      : Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.play_arrow_rounded,
+                              size: 17,
+                              color: ink,
+                            ),
+                            const SizedBox(width: 3),
+                            Text(l.todaySeeAgain, style: _labelStyle(ink)),
+                          ],
+                        ),
+                ),
               ),
             ),
           ),
         ),
-      ),
+        // Once the day is closed, the same test the journey's foot makes:
+        // the squares are the closed day's.
+        if (app.dayClosed)
+          Semantics(
+            button: true,
+            label: l.shareMyDay,
+            excludeSemantics: true,
+            child: GestureDetector(
+              key: const ValueKey('shelf-share-day'),
+              behavior: HitTestBehavior.opaque,
+              onTap: () => ShareDay.send(context, app, from: 'done view'),
+              child: SizedBox(
+                width: 40,
+                height: 36,
+                child: Center(
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: ink.withValues(alpha: 0.08),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.ios_share_rounded, size: 15, color: ink),
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

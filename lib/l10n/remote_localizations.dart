@@ -4425,4 +4425,54 @@ class RemoteLocalizations extends AppLocalizations {
         'question': question,
       }) ??
       _base.exploreBecauseSaved(question);
+
+  @override
+  String get todaySeeAgain =>
+      _words.text('todaySeeAgain') ?? _base.todaySeeAgain;
+
+  @override
+  String get todaySeeAgainHint =>
+      _words.text('todaySeeAgainHint') ?? _base.todaySeeAgainHint;
+
+  @override
+  String get tuneTitle => _words.text('tuneTitle') ?? _base.tuneTitle;
+
+  @override
+  String get tuneEntryLine =>
+      _words.text('tuneEntryLine') ?? _base.tuneEntryLine;
+
+  @override
+  String get tuneLearned => _words.text('tuneLearned') ?? _base.tuneLearned;
+
+  @override
+  String get tuneFresh => _words.text('tuneFresh') ?? _base.tuneFresh;
+
+  @override
+  String get tuneHowMuch => _words.text('tuneHowMuch') ?? _base.tuneHowMuch;
+
+  @override
+  String get tuneInsideLine =>
+      _words.text('tuneInsideLine') ?? _base.tuneInsideLine;
+
+  @override
+  String get tuneSave => _words.text('tuneSave') ?? _base.tuneSave;
+
+  @override
+  String get shareDayTitle =>
+      _words.text('shareDayTitle') ?? _base.shareDayTitle;
+
+  @override
+  String get shareDayRead => _words.text('shareDayRead') ?? _base.shareDayRead;
+
+  @override
+  String get shareDayTurn => _words.text('shareDayTurn') ?? _base.shareDayTurn;
+
+  @override
+  String shareDaySure(int n) =>
+      _words.format('shareDaySure', localeName, {'n': n}) ??
+      _base.shareDaySure(n);
+
+  @override
+  String get shareDayHeadline =>
+      _words.text('shareDayHeadline') ?? _base.shareDayHeadline;
 }

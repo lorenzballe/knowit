@@ -197,7 +197,7 @@ class _GenresScreenState extends State<GenresScreen> {
                       return Padding(
                         padding: EdgeInsets.only(top: i > 1 ? 20 : 0),
                         child: weight > 0
-                            ? _Subject(
+                            ? GenreSubject(
                                 topicKey: key,
                                 weight: weight,
                                 genresOff: _genresOff,
@@ -207,7 +207,7 @@ class _GenresScreenState extends State<GenresScreen> {
                                 onHoldGenre: _openGenre,
                                 onTapStrand: _toggleStrand,
                               )
-                            : _SubjectOff(topicKey: key),
+                            : GenreSubjectOff(topicKey: key),
                       );
                     },
                   ),
@@ -254,8 +254,9 @@ class _GenresScreenState extends State<GenresScreen> {
 }
 
 /// One subject in the mix: its planet, its six, and whatever is open under
-/// them.
-class _Subject extends StatelessWidget {
+/// them. The onboarding's list is made of these, and so is the
+/// fine-tuning's ([TuneScreen]), which hands it what the reader liked.
+class GenreSubject extends StatelessWidget {
   final String topicKey;
   final double weight;
   final Set<String> genresOff;
@@ -265,7 +266,8 @@ class _Subject extends StatelessWidget {
   final ValueChanged<Genre> onHoldGenre;
   final ValueChanged<Strand> onTapStrand;
 
-  const _Subject({
+  const GenreSubject({
+    super.key,
     required this.topicKey,
     required this.weight,
     required this.genresOff,
@@ -274,7 +276,25 @@ class _Subject extends StatelessWidget {
     required this.onTapGenre,
     required this.onHoldGenre,
     required this.onTapStrand,
+    this.taste = const {},
   });
+
+  /// The reader's lean on each trait ([AppState.taste]): the genres they
+  /// liked come first, and are marked. Empty, the six keep their order.
+  final Map<String, double> taste;
+
+  /// The six, the ones the reader leaned towards first. Ties keep the
+  /// order the subject lists them in.
+  List<Genre> _ordered(List<Genre> genres) {
+    if (taste.isEmpty) return genres;
+    double lean(Genre g) => taste['genre:${g.id}'] ?? 0;
+    final indexed = [for (var i = 0; i < genres.length; i++) (i, genres[i])];
+    indexed.sort((a, b) {
+      final int by = lean(b.$2).compareTo(lean(a.$2));
+      return by != 0 ? by : a.$1.compareTo(b.$1);
+    });
+    return [for (final e in indexed) e.$2];
+  }
 
   /// How much of the wheel this subject got, as one of five words.
   String _level(AppLocalizations l) =>
@@ -291,7 +311,7 @@ class _Subject extends StatelessWidget {
     final l = context.l10n;
     final Palette p = context.p;
     final TopicStyle style = kTopics[topicKey]!;
-    final List<Genre> genres = kGenres[topicKey]!;
+    final List<Genre> genres = _ordered(kGenres[topicKey]!);
 
     // A subject asked for more is drawn larger. It is the one thing on this
     // screen that carries the wheel's answer rather than asking a new
@@ -375,6 +395,7 @@ class _Subject extends StatelessWidget {
                       genre: genre,
                       colour: style.color,
                       ink: style.ink,
+                      liked: (taste['genre:${genre.id}'] ?? 0) > 0,
                       off: genresOff.contains(genre.id),
                       strandsOff: genre.strands
                           .where((s) => strandsOff.contains(s.id))
@@ -407,6 +428,10 @@ class _GenreChip extends StatelessWidget {
   final Color colour;
   final Color ink;
   final bool off;
+
+  /// The reader has liked cards of this genre: a small heart before its
+  /// name says why it came first.
+  final bool liked;
   final int strandsOff;
   final VoidCallback onTap;
   final VoidCallback onHold;
@@ -416,6 +441,7 @@ class _GenreChip extends StatelessWidget {
     required this.colour,
     required this.ink,
     required this.off,
+    this.liked = false,
     required this.strandsOff,
     required this.onTap,
     required this.onHold,
@@ -454,6 +480,10 @@ class _GenreChip extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (liked) ...[
+                Icon(Icons.favorite_rounded, size: 10, color: label),
+                const SizedBox(width: 5),
+              ],
               // Flexible, because a genre's name is written with the content
               // and the chip is not. Most are two words; "Where things come
               // from" is five, and on a narrow phone or at a large text size
@@ -630,10 +660,10 @@ class _StrandRow extends StatelessWidget {
 /// A subject the wheel left out. It keeps a line so the list is the whole
 /// wheel rather than the part of it that survived — a subject that vanishes
 /// reads as one the app does not have.
-class _SubjectOff extends StatelessWidget {
+class GenreSubjectOff extends StatelessWidget {
   final String topicKey;
 
-  const _SubjectOff({required this.topicKey});
+  const GenreSubjectOff({super.key, required this.topicKey});
 
   @override
   Widget build(BuildContext context) {
@@ -656,7 +686,7 @@ class _SubjectOff extends StatelessWidget {
         const SizedBox(width: 14),
         Expanded(
           child: Text(
-            '${kTopics[topicKey]!.name} · ${context.l10n.offInYourMix}',
+            '${context.l10n.subjectOf(kTopics[topicKey]!.name)} · ${context.l10n.offInYourMix}',
             style: AppText.body(size: 13, color: p.inkFaint),
           ),
         ),

@@ -1064,5 +1064,19 @@
   "exploreSixtyFirst": "Stell deinen Rekord auf",
   "exploreGameNone": "Gerade gibt es hier nichts zu spielen. Komm morgen wieder.",
   "exploreSubjectLevel": "{subject}, Stufe {n}",
-  "exploreBecauseSaved": "Weil du „{question}“ behalten hast"
+  "exploreBecauseSaved": "Weil du „{question}“ behalten hast",
+  "todaySeeAgain": "Nochmal ansehen",
+  "todaySeeAgainHint": "Die Karten von heute noch einmal, groß, ab der ersten",
+  "tuneTitle": "Deinen Mix feinjustieren",
+  "tuneEntryLine": "Wie viel von jedem Fach, und welche Teile davon",
+  "tuneLearned": "Schon verschoben durch die Karten, die dir gefielen, und die, die du weggeworfen hast. Schieb, um es zu ändern.",
+  "tuneFresh": "Schieb ein Fach, um mehr oder weniger davon zu sehen.",
+  "tuneHowMuch": "Wie viel von jedem",
+  "tuneInsideLine": "Die Teile, die dir am besten gefielen, stehen vorn. Tipp einen an, um ihn auszulassen, halt ihn gedrückt, um hineinzusehen.",
+  "tuneSave": "Speichern",
+  "shareDayTitle": "Teile deinen Tag",
+  "shareDayRead": "Fünf Karten, gelesen",
+  "shareDayTurn": "Fünf Karten am Tag. Du bist dran.",
+  "shareDaySure": "{n}% sicher",
+  "shareDayHeadline": "Die fünf von heute"
 }

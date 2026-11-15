@@ -4364,4 +4364,48 @@ class AppLocalizationsZh extends AppLocalizations {
   String exploreBecauseSaved(String question) {
     return '因为你收藏了“$question”';
   }
+
+  @override
+  String get todaySeeAgain => '再看一遍';
+
+  @override
+  String get todaySeeAgainHint => '从第一张开始，全屏重看今天的卡片';
+
+  @override
+  String get tuneTitle => '微调你的组合';
+
+  @override
+  String get tuneEntryLine => '每个主题要多少，以及哪些部分';
+
+  @override
+  String get tuneLearned => '已经根据你喜欢和丢掉的卡片做了调整。滑动即可更改。';
+
+  @override
+  String get tuneFresh => '滑动一个主题，看得更多或更少。';
+
+  @override
+  String get tuneHowMuch => '各要多少';
+
+  @override
+  String get tuneInsideLine => '你最喜欢的部分排在前面。轻点可跳过，长按可查看里面。';
+
+  @override
+  String get tuneSave => '保存';
+
+  @override
+  String get shareDayTitle => '分享你的一天';
+
+  @override
+  String get shareDayRead => '五张卡片，读完了';
+
+  @override
+  String get shareDayTurn => '每天五张卡。轮到你了。';
+
+  @override
+  String shareDaySure(int n) {
+    return '把握 $n%';
+  }
+
+  @override
+  String get shareDayHeadline => '今天的五张';
 }

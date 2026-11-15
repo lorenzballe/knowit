@@ -232,7 +232,8 @@ class _DrawSceneViewState extends State<DrawSceneView>
 
   static String _withUnit(String n, String unit) {
     if (unit.isEmpty) return n;
-    if (_prefix(unit)) return n.startsWith('−') ? '−$unit${n.substring(1)}' : '$unit$n';
+    if (_prefix(unit))
+      return n.startsWith('−') ? '−$unit${n.substring(1)}' : '$unit$n';
     if (unit == '%' || unit.startsWith('°')) return '$n$unit';
     return '$n $unit';
   }

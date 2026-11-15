@@ -83,7 +83,13 @@ void main() {
         }
       }
       expect(parse(biases()).order, [2, 0, 3, 1]);
-      expect(parse({...biases(), 'order': [3, 2, 1, 0]}).order, [3, 2, 1, 0]);
+      expect(
+        parse({
+          ...biases(),
+          'order': [3, 2, 1, 0],
+        }).order,
+        [3, 2, 1, 0],
+      );
     });
 
     test('the reveal opens on the missed pair, else the first wrong one', () {
@@ -130,9 +136,18 @@ void main() {
           {'left': 'Anchoring', 'right': 'r', 'note': 'n'},
         ],
       });
-      bad({...biases(), 'order': [0, 1, 2]});
-      bad({...biases(), 'order': [0, 1, 2, 2]});
-      bad({...biases(), 'order': [0, 1, 2, 4]});
+      bad({
+        ...biases(),
+        'order': [0, 1, 2],
+      });
+      bad({
+        ...biases(),
+        'order': [0, 1, 2, 2],
+      });
+      bad({
+        ...biases(),
+        'order': [0, 1, 2, 4],
+      });
       bad({...biases(), 'order': 'shuffled'});
     });
   });
@@ -362,12 +377,18 @@ void main() {
         'leftTitle': 'The trap',
         'rightTitle': 'The finding',
         'pairs': [
-          for (final w in ['Survivors only', 'Small samples', 'Back to average',
-              'A hidden cause', 'Base rates'])
+          for (final w in [
+            'Survivors only',
+            'Small samples',
+            'Back to average',
+            'A hidden cause',
+            'Base rates',
+          ])
             {
               'left': w,
               'right': 'Forty characters of right text for $w'.substring(0, 40),
-              'note': 'A note of about seventy characters, which is two '
+              'note':
+                  'A note of about seventy characters, which is two '
                   'lines under the ladder.',
             },
         ],
@@ -518,11 +539,9 @@ Future<void> _loadFonts() async {
 void _photographs() {
   group('photographs', () {
     final cards = [
-      for (final c
-          in jsonDecode(
-                File('tool/cards/samples/match.json').readAsStringSync(),
-              )
-              as List)
+      for (final c in jsonDecode(
+        File('tool/cards/samples/match.json').readAsStringSync(),
+      ) as List)
         (c as Map).cast<String, Object?>(),
     ];
 

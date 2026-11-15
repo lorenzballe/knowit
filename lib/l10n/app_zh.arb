@@ -1064,5 +1064,19 @@
   "exploreSixtyFirst": "创造你的纪录",
   "exploreGameNone": "现在这里没有可玩的。明天再来。",
   "exploreSubjectLevel": "{subject}，等级 {n}",
-  "exploreBecauseSaved": "因为你收藏了“{question}”"
+  "exploreBecauseSaved": "因为你收藏了“{question}”",
+  "todaySeeAgain": "再看一遍",
+  "todaySeeAgainHint": "从第一张开始，全屏重看今天的卡片",
+  "tuneTitle": "微调你的组合",
+  "tuneEntryLine": "每个主题要多少，以及哪些部分",
+  "tuneLearned": "已经根据你喜欢和丢掉的卡片做了调整。滑动即可更改。",
+  "tuneFresh": "滑动一个主题，看得更多或更少。",
+  "tuneHowMuch": "各要多少",
+  "tuneInsideLine": "你最喜欢的部分排在前面。轻点可跳过，长按可查看里面。",
+  "tuneSave": "保存",
+  "shareDayTitle": "分享你的一天",
+  "shareDayRead": "五张卡片，读完了",
+  "shareDayTurn": "每天五张卡。轮到你了。",
+  "shareDaySure": "把握 {n}%",
+  "shareDayHeadline": "今天的五张"
 }

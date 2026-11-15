@@ -324,8 +324,7 @@ class MusicScene extends Scene {
 
   /// The pitch the ear hears from these harmonics: the rate the wave
   /// repeats at, the fundamental times their greatest common divisor.
-  double pitchOf(Set<int> on) =>
-      on.isEmpty ? 0 : fundamental * on.reduce(_gcd);
+  double pitchOf(Set<int> on) => on.isEmpty ? 0 : fundamental * on.reduce(_gcd);
 
   /// How loud each harmonic is drawn and played: softer as they climb, as
   /// in most instruments.
@@ -421,9 +420,11 @@ class MusicScene extends Scene {
         for (final (set, name, t) in rawMoments) {
           if (set.isEmpty || set.length > 6) bad('moments: 1 to 6 notes');
           moments.add(
-            MusicSceneMoment({
-              for (final v in set) note(v, 'moments').midi,
-            }, name, t),
+            MusicSceneMoment(
+              {for (final v in set) note(v, 'moments').midi},
+              name,
+              t,
+            ),
           );
         }
         final tuning = MusicSceneTuning.values
@@ -470,9 +471,11 @@ class MusicScene extends Scene {
           stop: stop,
           moments: [
             for (final (set, name, t) in rawMoments)
-              MusicSceneMoment({
-                for (final v in set) harmonic(v, 'moments'),
-              }, name, t),
+              MusicSceneMoment(
+                {for (final v in set) harmonic(v, 'moments')},
+                name,
+                t,
+              ),
           ],
           readout: readout,
           fundamental: f0,
@@ -488,7 +491,9 @@ class MusicScene extends Scene {
         }
         if (steps * 15 / bpm > 8.0001) bad('the loop is over 8 seconds');
         final rawTracks = raw['tracks'];
-        if (rawTracks is! List || rawTracks.length < 2 || rawTracks.length > 5) {
+        if (rawTracks is! List ||
+            rawTracks.length < 2 ||
+            rawTracks.length > 5) {
           bad('tracks: 2 to 5');
         }
         final tracks = <MusicSceneTrack>[];
@@ -530,12 +535,16 @@ class MusicScene extends Scene {
           stop: stop,
           moments: [
             for (final (set, name, t) in rawMoments)
-              MusicSceneMoment({
-                for (final v in set)
-                  names.contains(v)
-                      ? names.indexOf(v as String)
-                      : bad('moments: $v is not a track'),
-              }, name, t),
+              MusicSceneMoment(
+                {
+                  for (final v in set)
+                    names.contains(v)
+                        ? names.indexOf(v as String)
+                        : bad('moments: $v is not a track'),
+                },
+                name,
+                t,
+              ),
           ],
           bpm: bpm,
           steps: steps,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../l10n/l10n.dart';
 
@@ -53,8 +54,10 @@ class _SavedScreenState extends State<SavedScreen> {
   AppState get app => widget.app;
   bool get _liked => widget.shelf == Shelf.liked;
 
-  /// Dropping a pill is undoable — the row comes back where it was.
-  Future<void> _unsave(BuildContext context, Pill pill, int at) async {
+  /// Dropping a pill is undoable — the card comes back where it was, in the
+  /// shelf as a whole and not only in the part of it on screen.
+  Future<void> _unsave(BuildContext context, Pill pill) async {
+    final int at = (_liked ? app.likedIds : app.savedIds).indexOf(pill.id);
     final messenger = ScaffoldMessenger.of(context);
     final l = context.l10n;
     if (_liked) {
@@ -88,10 +91,14 @@ class _SavedScreenState extends State<SavedScreen> {
     ];
     // Only the topics actually on the shelf: a filter offering twenty
     // subjects to a reader who has kept four cards is a list of things
-    // that do not exist.
-    final present = kTopicOrder
-        .where((key) => all.any((p) => p.topic == kTopics[key]!.name))
-        .toList();
+    // that do not exist. In the blocks' order, the subject kept from most
+    // recently first, so a chip and its block are in the same place.
+    final keyOf = {for (final e in kTopics.entries) e.value.name: e.key};
+    final List<String> present = [];
+    for (final pill in all) {
+      final String? key = keyOf[pill.topic];
+      if (key != null && !present.contains(key)) present.add(key);
+    }
     if (_topic != null && !present.contains(_topic)) _topic = null;
     final saved = _topic == null
         ? all
@@ -177,12 +184,9 @@ class _SavedScreenState extends State<SavedScreen> {
                     ? (_liked
                           ? context.l10n.nothingLikedYet
                           : context.l10n.nothingKeptYet)
-                    : _topic == null
-                    ? context.l10n.nCards(all.length)
-                    : context.l10n.nInTopic(
-                        saved.length,
-                        kTopics[_topic]!.name,
-                      ),
+                    // The shelf's whole count, picked subject or not: the
+                    // subject's own count is in its head, over its cards.
+                    : context.l10n.nCards(all.length),
                 style: AppText.body(
                   size: 12.5,
                   height: 1.35,
@@ -203,36 +207,187 @@ class _SavedScreenState extends State<SavedScreen> {
                   keyPrefix: 'saved-filter',
                 ),
               ],
-              const SizedBox(height: 16),
+              const SizedBox(height: 6),
               Expanded(
                 child: all.isEmpty
                     ? _EmptyState(
                         onBackToToday: widget.onBackToToday,
                         liked: _liked,
                       )
-                    : ListView.separated(
-                        padding: const EdgeInsets.only(bottom: 24),
-                        itemCount: saved.length,
-                        separatorBuilder: (_, _) => const SizedBox(height: 10),
-                        itemBuilder: (context, i) => RiseIn.staggered(
-                          i,
-                          child: _SavedRow(
-                            pill: saved[i],
-                            liked: _liked,
-                            onUnsave: () => _unsave(context, saved[i], i),
-                            onShare: () => showShareSheet(context, saved[i]),
-                            onOpen: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    PillDetailScreen(pill: saved[i], app: app),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    : _shelf(context, all, saved, present),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void _open(BuildContext context, Pill pill) => Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => PillDetailScreen(pill: pill, app: app),
+    ),
+  );
+
+  /// Held, a kept card offers what its row used to carry at its end:
+  /// letting it go, and sending it.
+  Future<void> _actions(BuildContext context, Pill pill) async {
+    HapticFeedback.mediumImpact();
+    final l = context.l10n;
+    final String? chosen = await showModalBottomSheet<String>(
+      context: context,
+      backgroundColor: context.p.surfaceRaised,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+      ),
+      builder: (sheet) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 16, 10, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(14, 0, 14, 8),
+                child: Text(
+                  pill.question,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.body(
+                    size: 13.5,
+                    weight: FontWeight.w600,
+                    height: 1.3,
+                    color: sheet.p.inkMuted,
+                  ),
+                ),
+              ),
+              ListTile(
+                key: const ValueKey('kept-remove'),
+                leading: Icon(
+                  _liked ? Icons.favorite_rounded : Icons.bookmark_rounded,
+                  color: sheet.p.ink,
+                ),
+                title: Text(
+                  _liked ? l.removeFromLiked : l.removeFromSaved,
+                  style: AppText.body(size: 15, color: sheet.p.ink),
+                ),
+                onTap: () => Navigator.of(sheet).pop('remove'),
+              ),
+              ListTile(
+                key: const ValueKey('kept-share'),
+                leading: Icon(Icons.ios_share_rounded, color: sheet.p.ink),
+                title: Text(
+                  l.shareThisPill,
+                  style: AppText.body(size: 15, color: sheet.p.ink),
+                ),
+                onTap: () => Navigator.of(sheet).pop('share'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (!context.mounted) return;
+    if (chosen == 'remove') await _unsave(context, pill);
+    if (chosen == 'share' && context.mounted) showShareSheet(context, pill);
+  }
+
+  /// The shelf as a wall of the cards themselves, small, with their
+  /// drawings — the way a feed's saved posts are a grid, not a list. All of
+  /// it is the order the reader kept them in, the newest first: a shelf is
+  /// a record of what was kept when. Narrowed to a subject, the subject's
+  /// mark and name head its cards.
+  Widget _shelf(
+    BuildContext context,
+    List<Pill> all,
+    List<Pill> shown,
+    List<String> present,
+  ) {
+    final String? topic = _topic;
+    return CustomScrollView(
+      slivers: [
+        if (topic == null)
+          const SliverToBoxAdapter(child: SizedBox(height: 10))
+        else
+          SliverToBoxAdapter(
+            child: _BlockHead(topicKey: topic, count: shown.length),
+          ),
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 28),
+          sliver: _grid(context, shown),
+        ),
+      ],
+    );
+  }
+
+  Widget _grid(BuildContext context, List<Pill> cards) => SliverGrid(
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 3,
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      childAspectRatio: WebThumbs.aspect,
+    ),
+    delegate: SliverChildBuilderDelegate(
+      (context, i) => RiseIn.staggered(
+        i,
+        child: _KeptTile(
+          pill: cards[i],
+          onOpen: () => _open(context, cards[i]),
+          onHold: () => _actions(context, cards[i]),
+        ),
+      ),
+      childCount: cards.length,
+    ),
+  );
+}
+
+/// The head of a subject's cards on the shelf: its mark on its colour, its
+/// name in the reader's language, and how many of its cards are kept.
+class _BlockHead extends StatelessWidget {
+  const _BlockHead({required this.topicKey, required this.count});
+
+  final String topicKey;
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = kTopics[topicKey]!;
+    return Semantics(
+      header: true,
+      child: Padding(
+        key: ValueKey('kept-block-$topicKey'),
+        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+        child: Row(
+          children: [
+            SubjectBadge(
+              subject: style.name,
+              color: style.color,
+              ink: style.ink,
+              size: 26,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                context.l10n.subjectOf(style.name),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.body(
+                  size: 15.5,
+                  weight: FontWeight.w700,
+                  spacing: -0.2,
+                  color: context.p.ink,
+                ),
+              ),
+            ),
+            Text(
+              context.l10n.nCards(count),
+              style: AppText.body(
+                size: 12,
+                weight: FontWeight.w500,
+                color: context.p.inkFaint,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -396,176 +551,78 @@ class _DashedBorderPainter extends CustomPainter {
       old.radius != radius || old.ink != ink;
 }
 
-class _SavedRow extends StatelessWidget {
-  final Pill pill;
-  final bool liked;
-  final VoidCallback onUnsave;
-  final VoidCallback onShare;
-  final VoidCallback onOpen;
-
-  const _SavedRow({
+/// A kept card in small: the picture of its back, since it was read — the
+/// whole card with its drawing — tapped to open, held for what can be done
+/// with it. A card with no picture is the same card in small anyway, its
+/// subject's colour, mark and question, so the wall stays a wall of cards.
+class _KeptTile extends StatelessWidget {
+  const _KeptTile({
     required this.pill,
-    required this.liked,
-    required this.onUnsave,
-    required this.onShare,
     required this.onOpen,
+    required this.onHold,
   });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onOpen,
-      child: PaperCard(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (CardThumb.has(pill, CardSide.back)) ...[
-              _RowPicture(pill: pill),
-              const SizedBox(width: 14),
-            ] else ...[
-              Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: TopicDot(pill.color),
-              ),
-              const SizedBox(width: 12),
-            ],
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.l10n.subjectOf(pill.topic).toUpperCase(),
-                    style: AppText.label(
-                      size: 10.5,
-                      spacing: 1.2,
-                      color: context.p.inkFaint,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    pill.question,
-                    style: AppText.body(
-                      size: 15,
-                      weight: FontWeight.w600,
-                      height: 1.3,
-                      color: context.p.ink,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // In ink, not the subject's colour: yellow and lime on a white
-            // row were 1.3 to 1 against it, under the 3 to 1 a mark that
-            // means something needs. The subject's colour is the dot.
-            Column(
-              children: [
-                _RowAction(
-                  label: liked
-                      ? context.l10n.removeFromLiked
-                      : context.l10n.removeFromSaved,
-                  icon: liked ? Icons.favorite_rounded : Icons.bookmark_rounded,
-                  size: 18,
-                  color: context.p.ink,
-                  onTap: onUnsave,
-                ),
-                _RowAction(
-                  label: context.l10n.shareThisPill,
-                  icon: Icons.ios_share_rounded,
-                  size: 17,
-                  color: context.p.inkMuted,
-                  onTap: onShare,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// A kept card in small at the head of its row: the picture of its back,
-/// since it was read, the whole card with its drawing at a glance.
-///
-/// As tall as the row's two marks at its end, so a row with a picture is as
-/// tall as one without, and as wide as the card's proportion makes it. A
-/// picture that will not come leaves the same card in small, its subject's
-/// colour and mark, so the rows stay in line.
-class _RowPicture extends StatelessWidget {
-  const _RowPicture({required this.pill});
 
   final Pill pill;
-
-  /// The two marks at the row's end, one over the other.
-  static const double height = 88;
-  static const double width = height * WebThumbs.aspect;
+  final VoidCallback onOpen;
+  final VoidCallback onHold;
 
   @override
   Widget build(BuildContext context) {
-    final Color ground = groundOf(pill);
-    return ExcludeSemantics(
-      // The question beside it says what the card is.
-      child: Container(
-        key: ValueKey('saved-picture-${pill.id}'),
-        width: width,
-        height: height,
-        decoration: cardFace(context, ground, radius: 9),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(9),
-          child: CardThumb(
-            pill: pill,
-            side: CardSide.back,
-            fallback: ColoredBox(
-              color: pill.color,
-              child: Center(
-                child: SubjectIcon(
-                  subject: pill.topic,
-                  size: 18,
-                  ink: pill.ink,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// A mark at the end of a kept card's row, in a target a finger finds.
-class _RowAction extends StatelessWidget {
-  const _RowAction({
-    required this.label,
-    required this.icon,
-    required this.size,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final double size;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
+    final Widget face = _MiniFace(pill: pill);
     return Semantics(
       button: true,
-      child: Tooltip(
-        message: label,
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onTap,
-          child: SizedBox(
-            width: 44,
-            height: 44,
-            child: Center(
-              child: Icon(icon, size: size, color: color),
-            ),
+      label: pill.question,
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: ValueKey('kept-${pill.id}'),
+        behavior: HitTestBehavior.opaque,
+        onTap: onOpen,
+        onLongPress: onHold,
+        child: Container(
+          decoration: cardFace(context, groundOf(pill), radius: 10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: CardThumb.has(pill, CardSide.back)
+                ? CardThumb(pill: pill, side: CardSide.back, fallback: face)
+                : face,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The card in small without a picture: its colour, its mark, its question.
+class _MiniFace extends StatelessWidget {
+  const _MiniFace({required this.pill});
+
+  final Pill pill;
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: pill.color,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(9, 10, 9, 9),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SubjectIcon(subject: pill.topic, size: 13, ink: pill.ink),
+            const SizedBox(height: 8),
+            Expanded(
+              child: Text(
+                pill.question,
+                overflow: TextOverflow.fade,
+                style: AppText.display(
+                  size: 11.5,
+                  weight: FontWeight.w700,
+                  height: 1.15,
+                  spacing: -0.2,
+                  color: pill.ink,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

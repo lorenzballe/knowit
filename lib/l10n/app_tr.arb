@@ -1064,5 +1064,19 @@
   "exploreSixtyFirst": "Rekorunu belirle",
   "exploreGameNone": "Şu an burada oynanacak bir şey yok. Yarın tekrar gel.",
   "exploreSubjectLevel": "{subject}, seviye {n}",
-  "exploreBecauseSaved": "“{question}” kartını sakladığın için"
+  "exploreBecauseSaved": "“{question}” kartını sakladığın için",
+  "todaySeeAgain": "Yeniden gör",
+  "todaySeeAgainHint": "Bugünün kartları yeniden, tam boyutta, ilkinden başlayarak",
+  "tuneTitle": "Karışımına ince ayar",
+  "tuneEntryLine": "Her konudan ne kadar ve hangi kısımları",
+  "tuneLearned": "Beğendiğin ve attığın kartlarla zaten ayarlandı. Değiştirmek için kaydır.",
+  "tuneFresh": "Bir konuyu daha çok ya da daha az görmek için kaydır.",
+  "tuneHowMuch": "Her birinden ne kadar",
+  "tuneInsideLine": "En çok beğendiğin kısımlar önce gelir. Atlamak için dokun, içini görmek için basılı tut.",
+  "tuneSave": "Kaydet",
+  "shareDayTitle": "Gününü paylaş",
+  "shareDayRead": "Beş kart, okundu",
+  "shareDayTurn": "Günde beş kart. Sıra sende.",
+  "shareDaySure": "%{n} emin",
+  "shareDayHeadline": "Bugünün beşi"
 }

@@ -1064,5 +1064,19 @@
   "exploreSixtyFirst": "Ustanów swój rekord",
   "exploreGameNone": "Na razie nie ma tu w co grać. Wróć jutro.",
   "exploreSubjectLevel": "{subject}, poziom {n}",
-  "exploreBecauseSaved": "Podobne do zachowanej: „{question}”"
+  "exploreBecauseSaved": "Podobne do zachowanej: „{question}”",
+  "todaySeeAgain": "Zobacz znowu",
+  "todaySeeAgainHint": "Dzisiejsze karty jeszcze raz, na pełnym ekranie, od pierwszej",
+  "tuneTitle": "Dostrój swój miks",
+  "tuneEntryLine": "Ile każdego tematu i które jego części",
+  "tuneLearned": "Już przesunięte przez polubione i odrzucone karty. Przesuń, aby to zmienić.",
+  "tuneFresh": "Przesuń temat, aby widzieć go więcej lub mniej.",
+  "tuneHowMuch": "Ile każdego",
+  "tuneInsideLine": "Części, które najbardziej Ci się podobały, są pierwsze. Stuknij, by pominąć, przytrzymaj, by zajrzeć do środka.",
+  "tuneSave": "Zapisz",
+  "shareDayTitle": "Udostępnij swój dzień",
+  "shareDayRead": "Pięć kart, przeczytane",
+  "shareDayTurn": "Pięć kart dziennie. Twoja kolej.",
+  "shareDaySure": "pewność {n}%",
+  "shareDayHeadline": "Dzisiejsza piątka"
 }

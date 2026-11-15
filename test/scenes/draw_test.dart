@@ -42,9 +42,9 @@ DrawScene _parse(Map<String, Object?> raw) =>
     Scene.fromJson(raw, id: 't') as DrawScene;
 
 List<Map<String, Object?>> _samples() => [
-  for (final c
-      in jsonDecode(File('tool/cards/samples/draw.json').readAsStringSync())
-          as List)
+  for (final c in jsonDecode(
+    File('tool/cards/samples/draw.json').readAsStringSync(),
+  ) as List)
     (c as Map).cast<String, Object?>(),
 ];
 
@@ -177,20 +177,31 @@ void main() {
     });
 
     test('a log chart measures in powers of ten', () {
-      final s = _parse({
-        ..._ai(),
-        'log': true,
-        'min': 1,
-        'max': 10000,
-      });
+      final s = _parse({..._ai(), 'log': true, 'min': 1, 'max': 10000});
       expect(s.share(100), closeTo(0.5, 1e-9));
       expect(s.fromShare(0.75), closeTo(1000, 1e-6));
     });
 
     for (final (why, patch) in <(String, Map<String, Object?>)>[
-      ('too few columns', {'columns': ['a', 'b'], 'values': [1, 2]}),
-      ('values do not match columns', {'values': [1, 2, 3]}),
-      ('a value is not a number', {'values': [1, 2, 'x', 4, 5, 6]}),
+      (
+        'too few columns',
+        {
+          'columns': ['a', 'b'],
+          'values': [1, 2],
+        },
+      ),
+      (
+        'values do not match columns',
+        {
+          'values': [1, 2, 3],
+        },
+      ),
+      (
+        'a value is not a number',
+        {
+          'values': [1, 2, 'x', 4, 5, 6],
+        },
+      ),
       ('given leaves nothing to draw', {'given': 5}),
       ('given is negative', {'given': -1}),
       ('max under min', {'min': 10, 'max': 5}),
@@ -198,11 +209,14 @@ void main() {
       ('log from zero', {'log': true}),
       ('judge on a given column', {'judge': 0}),
       ('decimals out of range', {'decimals': 4}),
-      ('a note off the chart', {
-        'notes': [
-          {'at': 9, 'text': 'x'},
-        ],
-      }),
+      (
+        'a note off the chart',
+        {
+          'notes': [
+            {'at': 9, 'text': 'x'},
+          ],
+        },
+      ),
     ]) {
       test('refuses: $why', () {
         expect(
@@ -340,10 +354,7 @@ void main() {
       expect(tester.getSemantics(chart).value, startsWith('Yr 5: ×'));
       await tester.tap(find.text('LOCK IT IN'));
       await tester.pump();
-      expect(
-        find.bySemanticsLabel(RegExp(r'TRUTH: ×1,845')),
-        findsOneWidget,
-      );
+      expect(find.bySemanticsLabel(RegExp(r'TRUTH: ×1,845')), findsOneWidget);
       handle.dispose();
     });
 
