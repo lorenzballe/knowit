@@ -116,7 +116,7 @@ function render(){
     s.rip.setAttribute('width',Math.max(s.bh,s.ripW*p));
   });
   Kit.$('fill').style.width=(t*100)+'%';
-  Kit.$('knob').style.left=(t*100)+'%';
+  Kit.$('knob').style.left=`calc(${t} * (100% - max(5cqh,34px)) + max(5cqh,34px) / 2)`;
 }
 function finish(){
   if(finished) return; finished=true;
