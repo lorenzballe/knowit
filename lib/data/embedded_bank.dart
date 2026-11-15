@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611151502,
- "built": "2026-11-15T15:02:09Z",
+ "version": 202611151529,
+ "built": "2026-11-15T15:29:25Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -144762,11 +144762,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A thermometer you drag upward from +20 °C toward +38 °C, set against a snow-covered city, asking what unusual summer temperatures Yakutsk has recorded.",
-    "page": "pages/nature-yakutsk-heat-spikes.html?v=b22ee0db9ef1",
-    "bytes": 21569,
+    "page": "pages/nature-yakutsk-heat-spikes.html?v=1b5fa5963baf",
+    "bytes": 21721,
     "thumbs": {
-     "front": "thumbs/nature-yakutsk-heat-spikes-front.webp?v=b22ee0db9ef1",
-     "back": "thumbs/nature-yakutsk-heat-spikes-back.webp?v=b22ee0db9ef1"
+     "front": "thumbs/nature-yakutsk-heat-spikes-front.webp?v=1b5fa5963baf",
+     "back": "thumbs/nature-yakutsk-heat-spikes-back.webp?v=1b5fa5963baf"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -191458,11 +191458,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page titled PULL APART asking why a grape in a microwave produces plasma. A glow covers the grape, and the reader drags up to pull the glow apart layer by layer to reveal the explanation.",
-    "page": "pages/science-grape-plasma.html?v=00e10517c1a5",
-    "bytes": 18453,
+    "page": "pages/science-grape-plasma.html?v=493f9c3cf41a",
+    "bytes": 19081,
     "thumbs": {
-     "front": "thumbs/science-grape-plasma-front.webp?v=00e10517c1a5",
-     "back": "thumbs/science-grape-plasma-back.webp?v=00e10517c1a5"
+     "front": "thumbs/science-grape-plasma-front.webp?v=493f9c3cf41a",
+     "back": "thumbs/science-grape-plasma-back.webp?v=493f9c3cf41a"
     }
    },
    "source": "Veritasium, “Make Plasma With Grapes In The Microwave!” (YouTube, 2011)",
