@@ -5,6 +5,12 @@ Future<void> pushHomeWidget(Map<String, Object?> data) async {}
 
 Future<List<String>> installedHomeWidgets() async => const [];
 
+Future<List<String>?> placedHomeWidgets() async => null;
+
+Future<bool> canPinHomeWidget() async => false;
+
+Future<bool> pinHomeWidget() async => false;
+
 Future<WidgetOpen?> takeWidgetOpen() async => null;
 
 void onWidgetOpened(void Function()? opened) {}

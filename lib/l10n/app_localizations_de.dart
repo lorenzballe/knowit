@@ -4670,4 +4670,44 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get paywallPathsLine =>
       'Zehn Karten zu einem Thema, von der leichtesten bis zur schwersten. Jede Woche neue Pfade und deine fünf des Tages auf deinem Niveau.';
+
+  @override
+  String get widgetAskTitle =>
+      'Die erste Karte von morgen, auf deinem Home-Bildschirm.';
+
+  @override
+  String get widgetAskLine =>
+      'Jeden Morgen eine neue Karte, ohne die App zu öffnen, und daneben deine Serie.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Halte eine freie Stelle auf dem Home-Bildschirm gedrückt.';
+
+  @override
+  String get widgetAskStepAppleAdd =>
+      'Tippe auf „Bearbeiten“ und dann auf „Widget hinzufügen“.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Suche Astute, wähle eine Größe und tippe auf „Widget hinzufügen“.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Tippe auf „Widgets“.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Suche Astute, halte ein Widget gedrückt und zieh es an seinen Platz.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'Auch auf dem Sperrbildschirm: halte ihn gedrückt und tippe auf „Anpassen“.';
+
+  @override
+  String get widgetAskPin => 'Zum Home-Bildschirm hinzufügen';
+
+  @override
+  String get widgetAskGotIt => 'Verstanden';
+
+  @override
+  String get widgetAskNotNow => 'Nicht jetzt';
 }

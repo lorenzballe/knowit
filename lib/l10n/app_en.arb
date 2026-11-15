@@ -4901,5 +4901,49 @@
  "paywallPathsLine": "Ten cards on one theme, from the easiest to the hardest. A new row of paths every week, and your five of the day at your level.",
  "@paywallPathsLine": {
   "description": "Under paywallPathsTitle."
+ },
+ "widgetAskTitle": "Tomorrow's first card, on your Home Screen.",
+ "@widgetAskTitle": {
+  "description": "The sheet that shows how to put Astute's widget on the home screen, once, after the second finished day: its headline."
+ },
+ "widgetAskLine": "A new card every morning without opening the app, and your streak beside it.",
+ "@widgetAskLine": {
+  "description": "Under widgetAskTitle: what the widget gives."
+ },
+ "widgetAskStepHold": "Touch and hold an empty spot on your Home Screen.",
+ "@widgetAskStepHold": {
+  "description": "The first step, on both phones: start editing the home screen."
+ },
+ "widgetAskStepAppleAdd": "Tap Edit, then Add Widget.",
+ "@widgetAskStepAppleAdd": {
+  "description": "The second step on an iPhone, with the system's own button names: Edit, then Add Widget."
+ },
+ "widgetAskStepApplePick": "Find Astute, choose a size and tap Add Widget.",
+ "@widgetAskStepApplePick": {
+  "description": "The third step on an iPhone."
+ },
+ "widgetAskStepAndroidAdd": "Tap Widgets.",
+ "@widgetAskStepAndroidAdd": {
+  "description": "The second step on Android: the launcher's widgets list."
+ },
+ "widgetAskStepAndroidPick": "Find Astute, then hold a widget and drag it into place.",
+ "@widgetAskStepAndroidPick": {
+  "description": "The third step on Android."
+ },
+ "widgetAskLockScreen": "On the Lock Screen too: touch and hold it, then tap Customize.",
+ "@widgetAskLockScreen": {
+  "description": "Under the steps on an iPhone: the Lock Screen widgets."
+ },
+ "widgetAskPin": "Add to Home Screen",
+ "@widgetAskPin": {
+  "description": "The sheet's button on an Android phone whose launcher can put the widget down itself."
+ },
+ "widgetAskGotIt": "Got it",
+ "@widgetAskGotIt": {
+  "description": "The sheet's button where the reader places the widget themselves: closes it."
+ },
+ "widgetAskNotNow": "Not now",
+ "@widgetAskNotNow": {
+  "description": "The sheet's quiet button: not now."
  }
 }

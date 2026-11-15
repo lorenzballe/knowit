@@ -1091,5 +1091,16 @@
   "pathMoreGo": "Ler o percurso inteiro",
   "paywallPathsTitle": "Cada percurso, as dez.",
   "paywallPathsMark": "as dez.",
-  "paywallPathsLine": "Dez cartas sobre um tema, da mais fácil à mais difícil. Percursos novos todas as semanas, e as tuas cinco do dia ao teu nível."
+  "paywallPathsLine": "Dez cartas sobre um tema, da mais fácil à mais difícil. Percursos novos todas as semanas, e as tuas cinco do dia ao teu nível.",
+  "widgetAskTitle": "A primeira carta de amanhã, no teu ecrã principal.",
+  "widgetAskLine": "Uma carta nova todas as manhãs sem abrir a app, e a tua sequência ao lado.",
+  "widgetAskStepHold": "Toca sem soltar num espaço vazio do ecrã principal.",
+  "widgetAskStepAppleAdd": "Toca em Editar e depois em Adicionar widget.",
+  "widgetAskStepApplePick": "Procura a Astute, escolhe um tamanho e toca em Adicionar widget.",
+  "widgetAskStepAndroidAdd": "Toca em Widgets.",
+  "widgetAskStepAndroidPick": "Procura a Astute, toca sem soltar num widget e arrasta-o para o sítio.",
+  "widgetAskLockScreen": "Também no ecrã bloqueado: toca sem soltar e depois em Personalizar.",
+  "widgetAskPin": "Adicionar ao ecrã principal",
+  "widgetAskGotIt": "Percebi",
+  "widgetAskNotNow": "Agora não"
 }

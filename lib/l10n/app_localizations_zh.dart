@@ -4455,4 +4455,37 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get paywallPathsLine => '一个主题十张卡片，从最简单到最难。每周都有新路线，今天的五张也按你的水平来。';
+
+  @override
+  String get widgetAskTitle => '明天的第一张卡片，放在主屏幕上。';
+
+  @override
+  String get widgetAskLine => '不用打开应用，每天早上一张新卡片，旁边还有你的连续天数。';
+
+  @override
+  String get widgetAskStepHold => '长按主屏幕上的空白处。';
+
+  @override
+  String get widgetAskStepAppleAdd => '轻点“编辑”，然后轻点“添加小组件”。';
+
+  @override
+  String get widgetAskStepApplePick => '找到 Astute，选择尺寸，然后轻点“添加小组件”。';
+
+  @override
+  String get widgetAskStepAndroidAdd => '轻点“小组件”。';
+
+  @override
+  String get widgetAskStepAndroidPick => '找到 Astute，按住一个小组件并拖到想放的位置。';
+
+  @override
+  String get widgetAskLockScreen => '锁定屏幕也可以：长按锁定屏幕，然后轻点“自定”。';
+
+  @override
+  String get widgetAskPin => '添加到主屏幕';
+
+  @override
+  String get widgetAskGotIt => '知道了';
+
+  @override
+  String get widgetAskNotNow => '以后再说';
 }

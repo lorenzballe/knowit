@@ -4587,4 +4587,42 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get paywallPathsLine =>
       'Tek konuda on kart, en kolayından en zoruna. Her hafta yeni yollar ve günün beşi senin seviyende.';
+
+  @override
+  String get widgetAskTitle => 'Yarının ilk kartı, ana ekranında.';
+
+  @override
+  String get widgetAskLine =>
+      'Uygulamayı açmadan her sabah yeni bir kart, yanında da serin.';
+
+  @override
+  String get widgetAskStepHold => 'Ana ekranda boş bir yere basılı tut.';
+
+  @override
+  String get widgetAskStepAppleAdd =>
+      'Düzenle\'ye, ardından Widget Ekle\'ye dokun.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Astute\'u bul, bir boyut seç ve Widget Ekle\'ye dokun.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Widget\'lar\'a dokun.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Astute\'u bul, bir widget\'a basılı tutup yerine sürükle.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'Kilit Ekranı\'nda da olur: basılı tut, sonra Özelleştir\'e dokun.';
+
+  @override
+  String get widgetAskPin => 'Ana Ekrana Ekle';
+
+  @override
+  String get widgetAskGotIt => 'Anladım';
+
+  @override
+  String get widgetAskNotNow => 'Şimdi değil';
 }

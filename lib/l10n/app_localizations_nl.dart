@@ -4667,4 +4667,43 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get paywallPathsLine =>
       'Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden, en je vijf van de dag op jouw niveau.';
+
+  @override
+  String get widgetAskTitle => 'De eerste kaart van morgen, op je beginscherm.';
+
+  @override
+  String get widgetAskLine =>
+      'Elke ochtend een nieuwe kaart zonder de app te openen, met je reeks ernaast.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Houd een lege plek op je beginscherm ingedrukt.';
+
+  @override
+  String get widgetAskStepAppleAdd =>
+      'Tik op Wijzig en dan op Voeg widget toe.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Zoek Astute, kies een formaat en tik op Voeg widget toe.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Tik op Widgets.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Zoek Astute, houd een widget vast en sleep hem naar zijn plek.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'Ook op het toegangsscherm: houd het ingedrukt en tik op Pas aan.';
+
+  @override
+  String get widgetAskPin => 'Zet op beginscherm';
+
+  @override
+  String get widgetAskGotIt => 'Begrepen';
+
+  @override
+  String get widgetAskNotNow => 'Niet nu';
 }

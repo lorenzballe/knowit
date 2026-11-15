@@ -1091,5 +1091,16 @@
   "pathMoreGo": "Czytaj całą ścieżkę",
   "paywallPathsTitle": "Każda ścieżka, wszystkie dziesięć.",
   "paywallPathsMark": "wszystkie dziesięć.",
-  "paywallPathsLine": "Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Co tydzień nowe ścieżki i twoje pięć na dziś na twoim poziomie."
+  "paywallPathsLine": "Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Co tydzień nowe ścieżki i twoje pięć na dziś na twoim poziomie.",
+  "widgetAskTitle": "Pierwsza karta jutra na ekranie głównym.",
+  "widgetAskLine": "Co rano nowa karta bez otwierania aplikacji, a obok twoja seria.",
+  "widgetAskStepHold": "Przytrzymaj puste miejsce na ekranie głównym.",
+  "widgetAskStepAppleAdd": "Stuknij Edytuj, a potem Dodaj widżet.",
+  "widgetAskStepApplePick": "Znajdź Astute, wybierz rozmiar i stuknij Dodaj widżet.",
+  "widgetAskStepAndroidAdd": "Stuknij Widżety.",
+  "widgetAskStepAndroidPick": "Znajdź Astute, przytrzymaj widżet i przeciągnij go na miejsce.",
+  "widgetAskLockScreen": "Także na ekranie blokady: przytrzymaj go i stuknij Dostosuj.",
+  "widgetAskPin": "Dodaj do ekranu głównego",
+  "widgetAskGotIt": "Jasne",
+  "widgetAskNotNow": "Nie teraz"
 }

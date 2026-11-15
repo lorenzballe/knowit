@@ -4628,4 +4628,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get paywallPathsLine =>
       'Ten cards on one theme, from the easiest to the hardest. A new row of paths every week, and your five of the day at your level.';
+
+  @override
+  String get widgetAskTitle => 'Tomorrow\'s first card, on your Home Screen.';
+
+  @override
+  String get widgetAskLine =>
+      'A new card every morning without opening the app, and your streak beside it.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Touch and hold an empty spot on your Home Screen.';
+
+  @override
+  String get widgetAskStepAppleAdd => 'Tap Edit, then Add Widget.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Find Astute, choose a size and tap Add Widget.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Tap Widgets.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Find Astute, then hold a widget and drag it into place.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'On the Lock Screen too: touch and hold it, then tap Customize.';
+
+  @override
+  String get widgetAskPin => 'Add to Home Screen';
+
+  @override
+  String get widgetAskGotIt => 'Got it';
+
+  @override
+  String get widgetAskNotNow => 'Not now';
 }

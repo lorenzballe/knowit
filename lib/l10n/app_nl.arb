@@ -1091,5 +1091,16 @@
   "pathMoreGo": "Lees het hele pad",
   "paywallPathsTitle": "Elk pad, alle tien.",
   "paywallPathsMark": "alle tien.",
-  "paywallPathsLine": "Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden, en je vijf van de dag op jouw niveau."
+  "paywallPathsLine": "Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden, en je vijf van de dag op jouw niveau.",
+  "widgetAskTitle": "De eerste kaart van morgen, op je beginscherm.",
+  "widgetAskLine": "Elke ochtend een nieuwe kaart zonder de app te openen, met je reeks ernaast.",
+  "widgetAskStepHold": "Houd een lege plek op je beginscherm ingedrukt.",
+  "widgetAskStepAppleAdd": "Tik op Wijzig en dan op Voeg widget toe.",
+  "widgetAskStepApplePick": "Zoek Astute, kies een formaat en tik op Voeg widget toe.",
+  "widgetAskStepAndroidAdd": "Tik op Widgets.",
+  "widgetAskStepAndroidPick": "Zoek Astute, houd een widget vast en sleep hem naar zijn plek.",
+  "widgetAskLockScreen": "Ook op het toegangsscherm: houd het ingedrukt en tik op Pas aan.",
+  "widgetAskPin": "Zet op beginscherm",
+  "widgetAskGotIt": "Begrepen",
+  "widgetAskNotNow": "Niet nu"
 }

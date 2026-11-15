@@ -37,6 +37,47 @@ Future<List<String>> installedHomeWidgets() async {
   }
 }
 
+/// The widgets placed, as [installedHomeWidgets] says them, or null where
+/// nothing answers: no widget behind the channel, which is a test or a
+/// desktop — not a phone with none placed.
+Future<List<String>?> placedHomeWidgets() async {
+  try {
+    final List<Object?>? found = await _channel.invokeMethod<List<Object?>>(
+      'installed',
+    );
+    return [for (final item in found ?? const []) '$item'];
+  } on MissingPluginException {
+    return null;
+  } on PlatformException {
+    return null;
+  }
+}
+
+/// Whether the phone puts a widget on the home screen when the app asks:
+/// Android 8 and later, where the launcher says so. An iPhone never does;
+/// the reader places it.
+Future<bool> canPinHomeWidget() async {
+  try {
+    return await _channel.invokeMethod<bool>('canPin') ?? false;
+  } on MissingPluginException {
+    return false;
+  } on PlatformException {
+    return false;
+  }
+}
+
+/// Asks the launcher to put the card widget on the home screen: its own
+/// dialog, which the reader answers. True when the dialog was asked for.
+Future<bool> pinHomeWidget() async {
+  try {
+    return await _channel.invokeMethod<bool>('pin') ?? false;
+  } on MissingPluginException {
+    return false;
+  } on PlatformException {
+    return false;
+  }
+}
+
 /// The widget whose tap opened the app, and the card it named, once:
 /// asking clears it. Null when the app was opened any other way.
 Future<WidgetOpen?> takeWidgetOpen() async {

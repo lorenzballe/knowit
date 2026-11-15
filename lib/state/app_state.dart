@@ -125,6 +125,7 @@ class AppState extends ChangeNotifier {
   static const _kReviewAsks = 'knowit.reviewAsks';
   static const _kReviewAskedOn = 'knowit.reviewAskedOn';
   static const _kAccountOffered = 'knowit.accountOffered';
+  static const _kWidgetAsked = 'knowit.widgetAsked';
   static const _kPushTokens = 'knowit.pushTokens';
   static const _kTrialEnds = 'knowit.trialEnds';
   static const _kTrialPrice = 'knowit.trialPrice';
@@ -310,6 +311,11 @@ class AppState extends ChangeNotifier {
   /// Whether the sheet that offers an account after the first finished day
   /// has been put. Once: Profile keeps the row for anyone who wants it later.
   bool accountOffered = false;
+
+  /// Whether the sheet that shows how to put Astute on the home screen has
+  /// been put. Once, and only to a reader with no widget placed
+  /// (lib/widgets/widget_ask.dart).
+  bool widgetAsked = false;
 
   /// Every address the account can be reached at, this phone's included.
   /// Kept whole rather than reduced to this device, so backing up does not
@@ -510,6 +516,7 @@ class AppState extends ChangeNotifier {
         ((_prefs.getBool(_kReviewAsked) ?? false) ? 1 : 0);
     reviewAskedOn = _prefs.getString(_kReviewAskedOn);
     accountOffered = _prefs.getBool(_kAccountOffered) ?? false;
+    widgetAsked = _prefs.getBool(_kWidgetAsked) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
     place = Place.fromJson(_decodeJson(_prefs.getString(_kPlace)));
     placeRemovedAt = _instantOf(_prefs.getString(_kPlaceRemovedAt));
@@ -3071,6 +3078,7 @@ class AppState extends ChangeNotifier {
     reviewAsks = 0;
     reviewAskedOn = null;
     accountOffered = false;
+    widgetAsked = false;
     pushTokens = [];
     place = null;
     placeRemovedAt = null;
@@ -3219,6 +3227,24 @@ class AppState extends ChangeNotifier {
       return false;
     }
     return completedDates.length >= kReviewLaterDays[reviewAsks - 1];
+  }
+
+  /// True when the home-screen widget is worth showing of the app's own
+  /// accord: a day just finished, the [kWidgetAskDays]th or later, and the
+  /// sheet never put. A widget on the home screen is the day's first card
+  /// seen without opening anything, every morning; built, and never
+  /// offered, it was found only by readers who went looking.
+  bool get shouldAskForWidget =>
+      !widgetAsked && dayClosed && completedDates.length >= kWidgetAskDays;
+
+  /// The days finished before the widget is offered: the second, once the
+  /// first day's own questions — the reminder, the account — have had theirs.
+  static const int kWidgetAskDays = 2;
+
+  /// Noted before the sheet is shown, so it is put once whatever happens.
+  Future<void> notedWidgetAsked() async {
+    widgetAsked = true;
+    await _prefs.setBool(_kWidgetAsked, true);
   }
 
   /// The days read in all at the second and the third ask.

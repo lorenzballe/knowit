@@ -1091,5 +1091,16 @@
   "pathMoreGo": "Yolun tamamını oku",
   "paywallPathsTitle": "Her yol, onu birden.",
   "paywallPathsMark": "onu birden.",
-  "paywallPathsLine": "Tek konuda on kart, en kolayından en zoruna. Her hafta yeni yollar ve günün beşi senin seviyende."
+  "paywallPathsLine": "Tek konuda on kart, en kolayından en zoruna. Her hafta yeni yollar ve günün beşi senin seviyende.",
+  "widgetAskTitle": "Yarının ilk kartı, ana ekranında.",
+  "widgetAskLine": "Uygulamayı açmadan her sabah yeni bir kart, yanında da serin.",
+  "widgetAskStepHold": "Ana ekranda boş bir yere basılı tut.",
+  "widgetAskStepAppleAdd": "Düzenle'ye, ardından Widget Ekle'ye dokun.",
+  "widgetAskStepApplePick": "Astute'u bul, bir boyut seç ve Widget Ekle'ye dokun.",
+  "widgetAskStepAndroidAdd": "Widget'lar'a dokun.",
+  "widgetAskStepAndroidPick": "Astute'u bul, bir widget'a basılı tutup yerine sürükle.",
+  "widgetAskLockScreen": "Kilit Ekranı'nda da olur: basılı tut, sonra Özelleştir'e dokun.",
+  "widgetAskPin": "Ana Ekrana Ekle",
+  "widgetAskGotIt": "Anladım",
+  "widgetAskNotNow": "Şimdi değil"
 }

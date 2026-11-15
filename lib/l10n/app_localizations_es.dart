@@ -4665,4 +4665,43 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get paywallPathsLine =>
       'Diez cartas sobre un tema, de la más fácil a la más difícil. Recorridos nuevos cada semana y tus cinco del día a tu nivel.';
+
+  @override
+  String get widgetAskTitle =>
+      'La primera carta de mañana, en tu pantalla de inicio.';
+
+  @override
+  String get widgetAskLine =>
+      'Una carta nueva cada mañana sin abrir la app, y a su lado tu racha.';
+
+  @override
+  String get widgetAskStepHold =>
+      'Mantén pulsado un espacio vacío de la pantalla de inicio.';
+
+  @override
+  String get widgetAskStepAppleAdd => 'Toca Editar y luego Añadir widget.';
+
+  @override
+  String get widgetAskStepApplePick =>
+      'Busca Astute, elige un tamaño y toca Añadir widget.';
+
+  @override
+  String get widgetAskStepAndroidAdd => 'Toca Widgets.';
+
+  @override
+  String get widgetAskStepAndroidPick =>
+      'Busca Astute, mantén pulsado un widget y arrástralo a su sitio.';
+
+  @override
+  String get widgetAskLockScreen =>
+      'También en la pantalla de bloqueo: mantenla pulsada y toca Personalizar.';
+
+  @override
+  String get widgetAskPin => 'Añadir a la pantalla de inicio';
+
+  @override
+  String get widgetAskGotIt => 'Entendido';
+
+  @override
+  String get widgetAskNotNow => 'Ahora no';
 }

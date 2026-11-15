@@ -392,6 +392,8 @@ is in its card facts.
 | `reminder switched`, `reminder time set` | the reminder settings | `on`, `at` | P |
 | `push preprompt shown`, `push preprompt answered`, `push permission asked`, `push permission answered` | asking for notifications | `reason`, `starts_on` (the time the sheet starts on), `from_habit` (whether the reader's usual time chose it), `choice`, `granted` | P |
 | `app opened from widget` | a widget's tap (sets `entry` to `widget`) | `widget`, `pill_id`, `where` | P |
+| `widget asked` | the sheet that shows how to put the widget on the home screen is put: once, at the end of the second finished day or later, to a reader with none placed | `can_pin` (the launcher puts it down when asked: Android 8+), `apple` | P |
+| `widget answered` | that sheet closes | `choice` (`pin`, `got it`, `not now`, `dismissed`), `pin_asked` (the launcher's dialog was asked for) | P |
 | `widgets placed` | the set of placed widgets changed | `count`, `widgets`, `kinds` | P |
 
 ### 6.10 Settings and account

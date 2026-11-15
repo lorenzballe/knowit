@@ -1091,5 +1091,16 @@
   "pathMoreGo": "Leer el recorrido entero",
   "paywallPathsTitle": "Cada recorrido, las diez.",
   "paywallPathsMark": "las diez.",
-  "paywallPathsLine": "Diez cartas sobre un tema, de la más fácil a la más difícil. Recorridos nuevos cada semana y tus cinco del día a tu nivel."
+  "paywallPathsLine": "Diez cartas sobre un tema, de la más fácil a la más difícil. Recorridos nuevos cada semana y tus cinco del día a tu nivel.",
+  "widgetAskTitle": "La primera carta de mañana, en tu pantalla de inicio.",
+  "widgetAskLine": "Una carta nueva cada mañana sin abrir la app, y a su lado tu racha.",
+  "widgetAskStepHold": "Mantén pulsado un espacio vacío de la pantalla de inicio.",
+  "widgetAskStepAppleAdd": "Toca Editar y luego Añadir widget.",
+  "widgetAskStepApplePick": "Busca Astute, elige un tamaño y toca Añadir widget.",
+  "widgetAskStepAndroidAdd": "Toca Widgets.",
+  "widgetAskStepAndroidPick": "Busca Astute, mantén pulsado un widget y arrástralo a su sitio.",
+  "widgetAskLockScreen": "También en la pantalla de bloqueo: mantenla pulsada y toca Personalizar.",
+  "widgetAskPin": "Añadir a la pantalla de inicio",
+  "widgetAskGotIt": "Entendido",
+  "widgetAskNotNow": "Ahora no"
 }
