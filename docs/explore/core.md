@@ -413,6 +413,25 @@ Fields: `title`, `subtitle`, `limit` (cards, 8 by default).
  "title": {"en": "More like what you saved", "it": "Altre come quelle che hai salvato"}}
 ```
 
+### `paths`
+
+Paths of ten cards on one theme, a row of them: each a genre of the bank
+(lib/data/genres.dart) with ten cards or more, its first ten easy before hard
+and a card with a drawing before one without. A tile is the subject's colour
+and mark, the genre's name, the subject's, and ten steps with the ones read
+filled. Astute+: on the free plan every tile carries a lock and the tap is the
+plans; on Astute+ the tap opens the ten at full size, a card at a time, each
+counted as read. The row turns over once a week, the same for every reader,
+and follows the subject Explore is narrowed to. With no genre of ten, there is
+no section.
+
+Fields: `title`, `subtitle`, `limit` (paths shown, 8 by default).
+
+```json
+{"id": "paths", "block": "paths",
+ "title": {"en": "Ten-card paths", "it": "Percorsi da 10 carte"}}
+```
+
 ## The shelves Explore always had
 
 Each draws its shelf exactly as Explore drew it, from the same reckoning

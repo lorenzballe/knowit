@@ -295,6 +295,29 @@ void main() {
     await _settle(tester);
     await _shoot(tester, '10-liked-history');
 
+    // Paths, on the free plan (locked) as most readers meet them.
+    final AppState free = await readyApp({
+      ..._aMonthIn(),
+      'knowit.plus': false,
+    });
+    await pumpSections(
+      tester,
+      CoreHost(free),
+      sectionsOf([
+        {
+          'id': 'paths',
+          'block': 'paths',
+          'title': {'en': 'Ten-card paths'},
+          'subtitle': {
+            'en': 'One theme, from the easiest card to the hardest.',
+          },
+        },
+      ]),
+      size: const Size(402, 400),
+    );
+    await _settle(tester);
+    await _shoot(tester, '3b-paths');
+
     await tester.pumpWidget(_app(ArchiveScreen(app: app, onBack: () {})));
     await _precache(tester, [
       for (final day in [0, 1, 2])
