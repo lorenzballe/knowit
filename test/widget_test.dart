@@ -3736,10 +3736,17 @@ void main() {
       await _openSetting(tester, 'Saved');
       expect(find.text('2 cards'), findsOneWidget);
 
-      // Narrowed to one subject, and back to all of them.
+      // Narrowed to one subject — its cards under its mark and its name —
+      // and back to all of them.
       await tester.tap(find.byKey(const ValueKey('saved-filter-science')));
       await _settle(tester);
-      expect(find.text('1 in Science'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('kept-block-science')),
+          matching: find.text('1 card'),
+        ),
+        findsOneWidget,
+      );
       await tester.tap(find.byKey(const ValueKey('saved-filter-all')));
       await _settle(tester);
       expect(find.text('2 cards'), findsOneWidget);
