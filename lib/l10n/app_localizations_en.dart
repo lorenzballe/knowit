@@ -4693,4 +4693,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rereadWrong => 'You missed it the first time.';
+
+  @override
+  String betsDayShareLine(int off) {
+    String _temp0 = intl.Intl.pluralLogic(
+      off,
+      locale: localeName,
+      other: '$off points off',
+      one: '1 point off',
+      zero: 'spot on',
+    );
+    return 'Today\'s challenge on Astute: I was $_temp0. Can you do better?';
+  }
 }

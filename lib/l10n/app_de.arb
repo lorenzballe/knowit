@@ -1110,5 +1110,6 @@
   "shareAnswerNote": "Deine Freundin oder dein Freund sieht zuerst die Frage. Die Antwort ist einen Tipp entfernt, auf der Seite der Karte.",
   "shareWhichSide": "Auf welcher Seite stehst du?",
   "rereadRight": "Beim ersten Mal hattest du es richtig.",
-  "rereadWrong": "Beim ersten Mal lagst du daneben."
+  "rereadWrong": "Beim ersten Mal lagst du daneben.",
+  "betsDayShareLine": "Die heutige Herausforderung bei Astute: {off, plural, =0{genau getroffen} =1{1 Punkt daneben} other{{off} Punkte daneben}}. Schaffst du es besser?"
 }

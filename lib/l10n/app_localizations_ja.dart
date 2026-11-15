@@ -4513,4 +4513,15 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get rereadWrong => '最初は不正解でした。';
+
+  @override
+  String betsDayShareLine(int off) {
+    String _temp0 = intl.Intl.pluralLogic(
+      off,
+      locale: localeName,
+      other: '$offポイント差',
+      zero: 'ぴったり正解',
+    );
+    return '今日のAstuteチャレンジ：$_temp0。もっと近づける？';
+  }
 }

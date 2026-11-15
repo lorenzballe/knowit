@@ -6785,6 +6785,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You missed it the first time.'**
   String get rereadWrong;
+
+  /// The first line of the day's challenge sent to a friend, before its question and the link: how far off the reader was, never the answer. Points are percentage points.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s challenge on Astute: I was {off, plural, =0{spot on} =1{1 point off} other{{off} points off}}. Can you do better?'**
+  String betsDayShareLine(int off);
 }
 
 class _AppLocalizationsDelegate

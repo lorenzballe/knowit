@@ -4534,4 +4534,15 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get rereadWrong => '처음엔 틀렸어요.';
+
+  @override
+  String betsDayShareLine(int off) {
+    String _temp0 = intl.Intl.pluralLogic(
+      off,
+      locale: localeName,
+      other: '$off포인트 차이였어',
+      zero: '정확히 맞혔어',
+    );
+    return '오늘의 Astute 도전: $_temp0. 더 잘할 수 있어?';
+  }
 }

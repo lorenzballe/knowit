@@ -108,7 +108,13 @@ header{width:100%;max-width:440px;display:flex;align-items:center;justify-conten
   background:#f4f2ec;color:#0c0c0e;font-weight:700;font-size:15px;text-decoration:none}
 .stores a.alt{background:transparent;color:#f4f2ec;border:1px solid rgba(244,242,236,.25)}
 .hint{font-size:14.5px;line-height:1.45;opacity:.8;margin:auto 0 14px}
-.hint+.reveal{margin-top:0}
+.hint+.reveal,.hint+.guess{margin-top:0}
+.guess{margin-top:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.guess input{all:unset;flex:1 1 120px;min-width:0;padding:14px 16px;border-radius:16px;font-size:17px;font-weight:650;background:color-mix(in srgb,var(--ink) 11%,transparent);color:var(--ink)}
+.guess input::placeholder{color:var(--ink);opacity:.55}
+.guess .unit{font-size:14px;font-weight:650;opacity:.75}
+.guess button{all:unset;cursor:pointer;padding:14px 18px;border-radius:16px;font-size:16px;font-weight:700;background:var(--ink);color:var(--c)}
+.guess.done{opacity:.6;pointer-events:none}
 .choices button.side{border-color:var(--ink);background:color-mix(in srgb,var(--ink) 20%,transparent)}
 .choices button.other-side{opacity:.6}
 """
@@ -177,6 +183,20 @@ SCRIPT = """(function () {
       open();
     });
   });
+  var guess = document.querySelector('.guess');
+  if (guess) guess.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var said = parseFloat(guess.querySelector('input').value);
+    if (isNaN(said)) return;
+    var value = parseFloat(guess.dataset.value), unit = guess.dataset.unit || '';
+    var factor = parseFloat(guess.dataset.factor || '');
+    var off = Math.abs(said - value), shown = Math.round(off * 100) / 100;
+    var close = factor > 0 && said > 0 && value > 0 && Math.max(said / value, value / said) <= factor;
+    if (verdict) verdict.textContent = off === 0 ? 'Spot on.' : (close ? 'Close enough: ' : 'You were ') + shown + (unit ? ' ' + unit : '') + ' off.';
+    guess.classList.add('done');
+    var h = document.querySelector('.hint'); if (h) h.remove();
+    open();
+  });
   var reveal = document.querySelector('.reveal');
   if (reveal) reveal.addEventListener('click', function () { reveal.remove(); var h = document.querySelector('.hint'); if (h) h.remove(); open(); });
 })();
@@ -212,13 +232,26 @@ def words_card(card: dict) -> str:
         for side in sides:
             out.append(f'    <button type="button" data-right="side">{_e(side)}</button>\n')
         out.append("  </div>\n")
+    elif kind in ("number", "estimate") and isinstance(card.get("value"), (int, float)):
+        # A number is guessed, not just shown: the friend locks a guess in
+        # and is told how far off it was, as the day's challenge tells the
+        # reader who sent it.
+        if card.get("hint"):
+            out.append(f'  <p class="hint">Hint · {_e(card["hint"])}</p>\n')
+        factor = card.get("withinFactor") if kind == "estimate" else None
+        out.append(f'  <form class="guess" data-value="{card["value"]}" data-unit="{_e(card.get("unit", ""))}"'
+                   f'{f" data-factor={chr(34)}{factor}{chr(34)}" if factor else ""}>\n'
+                   f'    <input type="number" inputmode="decimal" step="any" required placeholder="Your guess" aria-label="Your guess">\n'
+                   f'    <span class="unit">{_e(card.get("unit", ""))}</span>\n'
+                   f'    <button type="submit">Lock in</button>\n'
+                   f'  </form>\n')
     else:
         if kind in ("number", "estimate") and card.get("hint"):
             out.append(f'  <p class="hint">Hint · {_e(card["hint"])}</p>\n')
         label = "See both sides" if kind == "debate" else "Show the answer"
         out.append(f'  <button type="button" class="reveal">{label}</button>\n')
     out.append('  <section class="answer" hidden>\n')
-    if options or (sides and len(sides) == 2):
+    if options or (sides and len(sides) == 2) or kind in ("number", "estimate"):
         out.append('    <p class="verdict"></p>\n')
     out.append(f'    <p class="a">{_e(card.get("answer"))}</p>\n')
     steps = card.get("steps") or []

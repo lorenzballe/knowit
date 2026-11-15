@@ -4601,4 +4601,9 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get rereadWrong => _words.text('rereadWrong') ?? _base.rereadWrong;
+
+  @override
+  String betsDayShareLine(int off) =>
+      _words.format('betsDayShareLine', localeName, {'off': off}) ??
+      _base.betsDayShareLine(off);
 }

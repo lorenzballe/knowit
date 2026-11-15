@@ -1110,5 +1110,6 @@
   "shareAnswerNote": "Ton ami voit d'abord la question. La réponse est à un geste, sur la page de la carte.",
   "shareWhichSide": "Tu es de quel côté ?",
   "rereadRight": "La première fois, tu avais juste.",
-  "rereadWrong": "La première fois, tu t'étais trompé."
+  "rereadWrong": "La première fois, tu t'étais trompé.",
+  "betsDayShareLine": "Le défi du jour sur Astute : {off, plural, =0{dans le mille} =1{1 point d'écart} other{{off} points d'écart}}. Tu fais mieux ?"
 }

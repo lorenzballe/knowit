@@ -4514,4 +4514,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get rereadWrong => '第一次你答错了。';
+
+  @override
+  String betsDayShareLine(int off) {
+    String _temp0 = intl.Intl.pluralLogic(
+      off,
+      locale: localeName,
+      other: '我差了 $off 个百分点',
+      zero: '我正好猜中',
+    );
+    return '今天的 Astute 挑战：$_temp0。你能猜得更准吗？';
+  }
 }
