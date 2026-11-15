@@ -3913,9 +3913,10 @@ void main() {
       await tester.pumpWidget(box(wall, height: 160));
       await tester.pumpAndSettle();
 
-      // Nothing clipped away: it bottoms out at min and scrolls instead.
+      // Nothing clipped away: it bottoms out at three quarters of min, the
+      // last resort, and scrolls instead.
       expect(tester.takeException(), isNull);
-      expect(sizeOf(tester), 20);
+      expect(sizeOf(tester), 15);
       expect(find.byType(SingleChildScrollView), findsWidgets);
     });
   });
