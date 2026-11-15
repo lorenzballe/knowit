@@ -86,72 +86,95 @@ Kit.onShow.card = () => {
   const fs = Math.max(f * .9, 12);
   const mk = (t, a, p = svg) => Kit.mk(t, a, p);
   const ink = 'currentColor';
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+  const font = {'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs};
 
-  const rx0 = W * .14, rx1 = W * .86, ry0 = H * .25, ry1 = H * .72;
-  const cx = W / 2, meltTop = ry0 + (ry1 - ry0) * .38;
-  const r = Math.max(Math.min(W, H) * .032, 11);
+  const rx0 = W * .14, rx1 = W * .86, ry0 = H * .25, ry1 = H * .73;
+  const cx = W / 2, meltTop = ry0 + (ry1 - ry0) * .32;
   const pumpY = H * .04, pumpH = Math.max(H * .09, fs * 2);
+  const rr = Math.min((ry1 - ry0) * .22, W * .08); // round belly of the vessel
 
-  // pump
-  mk('rect', {x: cx - W * .16, y: pumpY, width: W * .32, height: pumpH, rx: 8, fill: ink});
-  const pt = mk('text', {x: cx, y: pumpY + pumpH / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: 'var(--c)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs});
-  pt.textContent = 'VACUUM PUMP';
-  // tube
-  const tw = r * 2.6;
-  mk('rect', {x: cx - tw / 2, y: pumpY + pumpH, width: tw, height: ry0 - pumpY - pumpH + 2, fill: 'color-mix(in srgb, currentColor 10%, transparent)', stroke: ink, 'stroke-width': 3});
-  // gauge
-  const gauge = mk('text', {x: cx + tw / 2 + W * .03, y: (pumpY + pumpH + ry0) / 2, 'dominant-baseline': 'central', fill: ink, 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': Math.max(f * 1.25, 15)});
-  // reactor
-  mk('rect', {x: rx0, y: ry0, width: rx1 - rx0, height: ry1 - ry0, rx: 14, fill: 'color-mix(in srgb, currentColor 6%, transparent)', stroke: ink, 'stroke-width': 4});
+  // bubble zone inside the melt, sized so letters never touch
+  const zTop = meltTop + 8, zBot = ry1 - fs * 1.7, zh = Math.max(zBot - zTop, 0);
+  const r = Math.max(9, Math.min(Math.max(Math.min(W, H) * .032, 11), zh / 4.6, (rx1 - rx0) / (7 * 2.6)));
+  const zMid = (zTop + zBot) / 2, rowGap = Math.max(zh * .46, r * 2.4);
+
+  // pipe from the lid up to the pump, with an arrow showing the pull
+  const tw = Math.max(r * 2.6, 26);
+  const pipeTop = pumpY + pumpH, pipeLen = ry0 - pipeTop;
+  mk('rect', {x: cx - tw / 2, y: pipeTop - 2, width: tw, height: pipeLen + 4, fill: tint(15), stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round'});
+  if (pipeLen > tw * .7) {
+    const my = pipeTop + pipeLen / 2, a = Math.min(tw * .22, pipeLen * .2);
+    mk('path', {d: `M${cx - a * 1.2},${my + a * .6} L${cx},${my - a * .6} L${cx + a * 1.2},${my + a * .6}`, fill: 'none', stroke: ink, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+  }
+  // pump: a plain motor body, outlined, with its name written on it
+  mk('rect', {x: cx - W * .16, y: pumpY, width: W * .32, height: pumpH, rx: pumpH * .3, fill: tint(22), stroke: ink, 'stroke-width': 3});
+  const pt = mk('text', {x: cx, y: pumpY + pumpH / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: ink, ...font});
+  pt.textContent = 'Vacuum pump';
+  // pressure reading, written beside the pipe
+  const gauge = mk('text', {x: cx + tw / 2 + W * .03, y: (pumpY + pumpH + ry0) / 2, 'dominant-baseline': 'central', fill: ink, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': Math.max(f * 1.25, 15)});
+
+  // vessel: straight sides, rounded belly, flat lid
+  const vessel = `M${rx0},${ry0} L${rx1},${ry0} L${rx1},${ry1 - rr} Q${rx1},${ry1} ${rx1 - rr},${ry1} L${rx0 + rr},${ry1} Q${rx0},${ry1} ${rx0},${ry1 - rr} Z`;
   const clipId = 'cl' + Math.round(W);
   const defs = mk('defs', {});
   const cp = mk('clipPath', {id: clipId}, defs);
-  mk('rect', {x: rx0, y: ry0, width: rx1 - rx0, height: ry1 - ry0, rx: 14}, cp);
-  const lg = mk('linearGradient', {id: 'mg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#f0a43a'}, lg);
-  mk('stop', {offset: 1, 'stop-color': '#b8641c'}, lg);
-  const wave = `M${rx0},${meltTop} ` + Array.from({length: 9}, (_, k) => {
-    const x = rx0 + (rx1 - rx0) * (k + 1) / 8; return `Q${x - (rx1 - rx0) / 16},${meltTop + (k % 2 ? -6 : 6)} ${x},${meltTop}`;
-  }).slice(0, 8).join(' ') + ` L${rx1},${ry1} L${rx0},${ry1} Z`;
-  mk('path', {d: wave, fill: 'url(#mg)', 'clip-path': `url(#${clipId})`});
-  mk('rect', {x: rx0, y: ry0, width: rx1 - rx0, height: ry1 - ry0, rx: 14, fill: 'none', stroke: ink, 'stroke-width': 4});
-  const ml = mk('text', {x: cx, y: ry1 - fs * .9, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs});
-  ml.textContent = 'molten plastic';
-  const left = mk('text', {x: cx, y: ry0 + (meltTop - ry0) * .62, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: ink, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs});
+  mk('path', {d: vessel}, cp);
+  mk('path', {d: vessel, fill: tint(8)});
+  // molten plastic, flat, with a lazy wavy surface
+  const wave = `M${rx0},${meltTop} ` + Array.from({length: 8}, (_, k) => {
+    const x = rx0 + (rx1 - rx0) * (k + 1) / 8; return `Q${x - (rx1 - rx0) / 16},${meltTop + (k % 2 ? -5 : 5)} ${x},${meltTop}`;
+  }).join(' ') + ` L${rx1},${ry1} L${rx0},${ry1} Z`;
+  mk('path', {d: wave, fill: tint(55), 'clip-path': `url(#${clipId})`});
+  mk('path', {d: vessel, fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linejoin': 'round'});
+  // lid
+  mk('rect', {x: rx0 - W * .025, y: ry0 - 5, width: rx1 - rx0 + W * .05, height: 10, rx: 4, fill: ink});
+  // two short feet
+  [rx0 + rr * 1.2, rx1 - rr * 1.2].forEach(x => mk('line', {x1: x, y1: ry1, x2: x, y2: ry1 + H * .022, stroke: ink, 'stroke-width': 5, 'stroke-linecap': 'round'}));
 
-  // bubbles
-  const col = {L: '#ffe066', B: '#ff5a5a'};
-  const by0 = meltTop + r * 1.6, by1 = ry1 - fs * 2.2;
+  const ml = mk('text', {x: cx, y: ry1 - fs * .55, 'text-anchor': 'middle', fill: 'var(--c)', ...font});
+  ml.textContent = 'molten plastic';
+  const left = mk('text', {x: cx, y: ry0 + (meltTop - ry0) * .55, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: ink, ...font});
+
+  // bubbles of gas caught in the melt
+  const col = {L: '#ffe7a0', B: '#e23b2e'};
+  const txt = {L: 'var(--k)', B: '#fff'};
   const nodes = bubbles.map(b => {
     if (b.out) return null;
     const g = mk('g', {});
-    mk('circle', {r, fill: col[b.kind], stroke: '#1a1a1a', 'stroke-width': 2}, g);
-    const t = mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#1a1a1a', 'font-family': 'var(--body)', 'font-weight': 900, 'font-size': Math.max(r * 1.1, 12)}, g);
+    mk('circle', {r, fill: col[b.kind], stroke: ink, 'stroke-width': 2.5}, g);
+    const t = mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', fill: txt[b.kind], 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': Math.max(r * 1.1, 12)}, g);
     t.textContent = b.kind;
-    gsap.set(g, {x: rx0 + r * 1.5 + (rx1 - rx0 - r * 3) * b.u, y: by0 + (by1 - by0) * b.v});
-    if (!Kit.calm) gsap.to(g, {y: '-=' + r * .5, duration: 1 + Kit.rnd(), yoyo: true, repeat: -1, ease: 'sine.inOut'});
+    gsap.set(g, {x: rx0 + r * 1.5 + (rx1 - rx0 - r * 3) * b.u, y: zMid + (b.v - .5) / .8 * rowGap});
     return g;
-  });
+  }).filter(Boolean);
+  // all bubbles simmer together, so their spacing never changes
+  const live = bubbles.map((b, i) => b.out ? null : null);
+  const idx = [];
+  let k = 0;
+  bubbles.forEach((b, i) => { idx[i] = b.out ? null : nodes[k++]; });
+  const liveNodes = idx.filter(Boolean);
+  if (!Kit.calm && liveNodes.length) gsap.to(liveNodes, {y: '-=' + r * .3, duration: 1.4, yoyo: true, repeat: -1, ease: 'sine.inOut'});
 
   // legend
   const ly = H * .79;
   [['L', 'limonene', W * .14], ['B', 'benzene', W * .56]].forEach(([k, name, x]) => {
-    mk('circle', {cx: x + r, cy: ly, r: r * .8, fill: col[k], stroke: '#1a1a1a', 'stroke-width': 2});
-    const t = mk('text', {x: x + r * 2.3, y: ly, 'dominant-baseline': 'central', fill: ink, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs});
+    mk('circle', {cx: x + r, cy: ly, r: r * .8, fill: col[k], stroke: ink, 'stroke-width': 2.5});
+    const t = mk('text', {x: x + r * 2.3, y: ly, 'dominant-baseline': 'central', fill: ink, ...font});
     t.textContent = name;
   });
 
   // pressure track
   const tx0 = W * .12, tx1 = W * .88, ty = H * .88;
-  mk('line', {x1: tx0, y1: ty, x2: tx1, y2: ty, stroke: 'color-mix(in srgb, currentColor 25%, transparent)', 'stroke-width': Math.max(H * .014, 7), 'stroke-linecap': 'round'});
+  mk('line', {x1: tx0, y1: ty, x2: tx1, y2: ty, stroke: tint(25), 'stroke-width': Math.max(H * .014, 7), 'stroke-linecap': 'round'});
   const fill = mk('line', {x1: tx0, y1: ty, x2: tx0, y2: ty, stroke: ink, 'stroke-width': Math.max(H * .014, 7), 'stroke-linecap': 'round'});
   const knob = mk('circle', {cx: tx0, cy: ty, r: Math.max(H * .028, 14), fill: 'var(--c)', stroke: ink, 'stroke-width': 4, style: 'cursor:grab'});
-  const a = mk('text', {x: tx0, y: ty + fs * 2, 'text-anchor': 'start', fill: ink, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs});
+  const a = mk('text', {x: tx0, y: ty + fs * 2, 'text-anchor': 'start', fill: ink, ...font});
   a.textContent = 'normal air';
-  const b2 = mk('text', {x: tx1, y: ty + fs * 2, 'text-anchor': 'end', fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs});
+  const b2 = mk('text', {x: tx1, y: ty + fs * 2, 'text-anchor': 'end', fill: ink, ...font});
   b2.textContent = '2 mbar';
 
-  G = {W, H, cx, ry0, r, pumpY: pumpY + pumpH * .5, gauge, left, knob, fill, tx0, tx1, ty, nodes, svg};
+  G = {W, H, cx, ry0, r, pumpY: pumpY + pumpH * .5, gauge, left, knob, fill, tx0, tx1, ty, nodes: idx, svg};
   update();
 };
 

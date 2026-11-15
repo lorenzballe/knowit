@@ -15,7 +15,7 @@
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font-size:max(2.8cqh,17px)}
 #why .body{font-size:max(1.9cqh,13px)}
-.cap{font:700 max(1.5cqh,12px)/1 var(--body);letter-spacing:.08em;fill:var(--k);opacity:.7}
+.cap{font:600 max(1.7cqh,12px)/1 var(--body);fill:var(--k)}
 </style>
 <article class="card" id="card" data-topic="psychology" data-kind="Tap to add · watch it grow">
   <div class="in">
@@ -44,29 +44,33 @@ let side = null, n = 0, busy = false, live = null, res = null, slots = [], cap3 
 const S = {a: 0.7};
 const facing = () => side === 'X' ? Math.PI : 0;
 
+// A plain cardboard roll, drawn flat: a tinted body, an even ink outline,
+// a few seam lines that roll round as it turns, and the open end on the right.
 function makeTube(parent, cx, cy, w, h, uid, opts = {}) {
   const g = Kit.mk('g', {}, parent);
   const defs = Kit.mk('defs', {}, g);
   const cp = Kit.mk('clipPath', {id: 'cp' + uid}, defs);
   const rx = h * 0.16;
+  const sw = Math.max(1.5, h * 0.035);
   Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx}, cp);
-  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx, style: 'fill:var(--c);stroke:none'}, g);
+  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx, style: 'fill:color-mix(in srgb,var(--k) 16%,var(--c));stroke:none'}, g);
   const inner = Kit.mk('g', {'clip-path': `url(#cp${uid})`}, g);
   const stripes = [];
-  for (let i = 0; i < 8; i++) stripes.push({phi: i * TAU / 8, el: Kit.mk('line', {x1: cx - w / 2, x2: cx + w / 2, style: 'stroke:var(--k);stroke-width:1'}, inner)});
+  for (let i = 0; i < 4; i++) stripes.push({phi: i * TAU / 4, el: Kit.mk('line', {x1: cx - w / 2, x2: cx + w / 2, style: `stroke:var(--k);stroke-width:${Math.max(1, h * 0.03)};stroke-linecap:round`}, inner)});
   const lg = Kit.mk('g', {}, inner);
   const labels = [['O', 0], ['X', Math.PI]].map(([s, phi]) => {
     const t = Kit.mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', style: `font:900 ${Math.max(12, h * 0.62)}px var(--display);fill:var(--k)`}, lg);
     t.textContent = s; return {s, phi, el: t};
   });
-  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, fill: 'url(#shd)'}, inner);
-  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx, style: `fill:none;stroke:var(--k);stroke-width:${Math.max(1.5, h * 0.035)}`}, g);
-  Kit.mk('ellipse', {cx: cx + w / 2 - h * 0.08, cy, rx: h * 0.08, ry: h / 2 - 1, style: `fill:color-mix(in srgb,var(--k) 18%,var(--c));stroke:var(--k);stroke-width:${Math.max(1.2, h * 0.025)}`}, g);
+  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx, style: `fill:none;stroke:var(--k);stroke-width:${sw}`}, g);
+  const erx = h * 0.08;
+  Kit.mk('ellipse', {cx: cx + w / 2 - erx, cy, rx: erx, ry: h / 2 - 1, style: `fill:color-mix(in srgb,var(--k) 40%,var(--c));stroke:var(--k);stroke-width:${Math.max(1.2, h * 0.025)}`}, g);
+  Kit.mk('ellipse', {cx: cx + w / 2 - erx, cy, rx: erx * 0.55, ry: (h / 2 - 1) * 0.8, style: 'fill:var(--c);stroke:none'}, g);
   const set = a => {
     stripes.forEach(s => {
       const c = Math.cos(a + s.phi), y = cy + (h / 2) * Math.sin(a + s.phi);
       s.el.setAttribute('y1', y); s.el.setAttribute('y2', y);
-      s.el.setAttribute('opacity', c > 0 ? 0.18 * c : 0);
+      s.el.setAttribute('opacity', c > 0 ? 0.3 * c : 0);
     });
     labels.forEach(l => {
       const c = Math.cos(a + l.phi), y = cy + (h / 2) * 0.92 * Math.sin(a + l.phi);
@@ -84,14 +88,11 @@ function draw() {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, f * 0.78);
-  const defs = Kit.mk('defs', {}, svg);
-  const gr = Kit.mk('linearGradient', {id: 'shd', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  [[0, .32], [.45, 0], [.6, 0], [1, .4]].forEach(([o, op]) => Kit.mk('stop', {offset: o, 'stop-color': '#000', 'stop-opacity': op}, gr));
   const cap = (y, txt) => { const t = Kit.mk('text', {x: W / 2, y, 'text-anchor': 'middle', class: 'cap'}, svg); t.textContent = txt; return t; };
 
   // Row 1: the tube
   const l1 = fs;
-  cap(l1, 'THE TUBE, SPINNING');
+  cap(l1, 'The tube, spinning');
   const t1 = l1 + fs * 0.9, b1 = H * 0.5;
   const th = Math.min(b1 - t1, W * 0.3), tw = Math.min(W * 0.86, th * 3.4);
   live = makeTube(svg, W / 2, (t1 + b1) / 2, tw, th * 0.9, 'L');
@@ -99,7 +100,7 @@ function draw() {
 
   // Row 2: frames
   const l2 = b1 + fs * 1.5;
-  cap(l2, 'FRAMES YOUR EYE CATCHES');
+  cap(l2, 'Frames your eye catches');
   const gap = W * 0.02, sw = (W * 0.94 - gap * (N - 1)) / N;
   const sh = Math.min(sw * 0.5, Math.max(H * 0.1, 18));
   const st = l2 + fs * 0.8;
@@ -107,7 +108,7 @@ function draw() {
   for (let i = 0; i < N; i++) {
     const x = W * 0.03 + i * (sw + gap);
     slots.push({cx: x + sw / 2, cy: st + sh / 2, w: sw * 0.94, h: sh});
-    Kit.mk('rect', {x, y: st, width: sw, height: sh, rx: sh * 0.16, style: 'fill:none;stroke:var(--k);stroke-opacity:.3;stroke-dasharray:3 3'}, svg);
+    Kit.mk('rect', {x, y: st, width: sw, height: sh, rx: sh * 0.16, style: 'fill:color-mix(in srgb,var(--k) 8%,var(--c));stroke:none'}, svg);
   }
   for (let i = 0; i < n; i++) addThumb(i, false);
 
@@ -121,7 +122,7 @@ function draw() {
   res.lg.setAttribute('opacity', n / N);
 }
 
-function capText() { return n ? `WHAT YOU SEE · ${n} FRAME${n > 1 ? 'S' : ''} STITCHED` : 'WHAT YOU SEE'; }
+function capText() { return n ? `What you see · ${n} frame${n > 1 ? 's' : ''} stitched` : 'What you see'; }
 
 function addThumb(i, anim) {
   const s = slots[i];

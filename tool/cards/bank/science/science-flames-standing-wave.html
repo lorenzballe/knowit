@@ -8,7 +8,20 @@
 #stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh}
 #art{position:relative;flex:1 1 0;min-height:0}
 #art svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-#art text{font-family:var(--hand)}
+#art text{font-family:var(--body)}
+#art .air{fill:color-mix(in srgb,var(--k) 10%,var(--c))}
+#art .env{fill:color-mix(in srgb,var(--k) 38%,var(--c))}
+#art .wall{fill:color-mix(in srgb,var(--k) 62%,var(--c))}
+#art .hole{fill:var(--c)}
+#art .cap{fill:color-mix(in srgb,var(--k) 45%,var(--c))}
+#art .fo{fill:#f0893a}
+#art .fi{fill:#ffd66e}
+#art .ink{stroke:var(--k)}
+#art .tick{stroke:color-mix(in srgb,var(--k) 45%,var(--c))}
+#art .box{fill:color-mix(in srgb,var(--k) 28%,var(--c))}
+#art .cone{fill:color-mix(in srgb,var(--k) 60%,var(--c))}
+#art .hub{fill:color-mix(in srgb,var(--k) 28%,var(--c))}
+#art .note{fill:var(--k);stroke:var(--k)}
 #opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 .opt{font:700 max(1.9cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 1.5cqw;min-height:max(6.4cqh,40px);cursor:pointer}
@@ -69,8 +82,8 @@ function build() {
   let pb = {height: 0, y: 0}; const probe = txt(0, 0, 'Hg', fs, '#fff'); try { pb = probe.getBBox(); } catch (e) {} probe.remove();
   const lineH = pb.height || fs * 1.3, asc = pb.height ? -pb.y : fs * .95;
   const two = H >= 190;
-  const ih = clamp(H * .11, 14, 40), tw = Math.max(3, ih * .2), tubeH = ih + 2 * tw;
-  const spW = clamp(W * .08, 20, 36), spH = tubeH * 1.6, over = (spH - tubeH) / 2, capW = tw * 1.5;
+  const ih = clamp(H * .14, 16, 46), tw = Math.max(3, ih * .2), tubeH = ih + 2 * tw;
+  const spW = clamp(W * .08, 20, 36), spH = tubeH * 1.5, over = (spH - tubeH) / 2, capW = tw * 1.5;
   const tick = Math.max(5, over + 1), labH = tick + (two ? 2 * lineH + 2 : lineH) + 1;
   const tubeTop = H - pad * .7 - labH - tubeH, tb = tubeTop + tubeH, cy = tubeTop + tubeH / 2, yb = tubeTop + 1;
   const band = pad + lineH + 2;
@@ -82,64 +95,43 @@ function build() {
   const X = u => hx0 + u * L;
 
   const defs = mk('defs', {}, svg);
-  const grad = (tag, id, at, stops) => { const g = mk(tag, Object.assign({id}, at), defs); for (const [o, c, a] of stops) mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a == null ? 1 : a}, g); };
-  const up = {x1: 0, y1: 1, x2: 0, y2: 0}, down = {x1: 0, y1: 0, x2: 0, y2: 1};
-  grad('linearGradient', 'ft-o', up, [[0, '#4f7fff', .95], [.14, '#a9c1ff', .9], [.25, '#ffd870'], [.56, '#ff8d24'], [.85, '#ff5016', .55], [1, '#ff3a00', 0]]);
-  grad('linearGradient', 'ft-i', up, [[0, '#d2defe', .9], [.24, '#fffdf2'], [.72, '#ffe594', .7], [1, '#ffd36b', 0]]);
-  grad('linearGradient', 'ft-mt', down, [[0, '#f1f3f6'], [1, '#9aa2ad']]);
-  grad('linearGradient', 'ft-mb', down, [[0, '#8f97a2'], [1, '#555b64']]);
-  grad('linearGradient', 'ft-cn', {x1: 0, y1: 0, x2: 1, y2: 0}, [[0, '#454c57'], [1, '#a9b2be']]);
-  grad('radialGradient', 'ft-g', {}, [[0, '#ff9a3c', .6], [1, '#ff6a00', 0]]);
-  grad('radialGradient', 'ft-a', {cx: (X(.5) / W).toFixed(3), cy: ((yb - Hmax * .35) / H).toFixed(3), r: .62}, [[0, '#ff7a1a', .34], [1, '#ff7a1a', 0]]);
   const clip = mk('clipPath', {id: 'ft-in'}, defs);
   mk('rect', {x: r1(tx0), y: r1(tubeTop + tw), width: r1(tx1 - tx0), height: r1(ih)}, clip);
 
-  const amb = mk('rect', {x: 0, y: 0, width: r1(W), height: r1(H), fill: 'url(#ft-a)', opacity: 0}, svg);
-  const glowG = mk('g', {}, svg);
-
-  mk('rect', {x: r1(tx0), y: r1(tubeTop + tw), width: r1(tx1 - tx0), height: r1(ih), fill: '#0a1222'}, svg);
+  // the air inside the pipe, seen in cut-away: wide where it shakes, pinched where it barely moves
+  mk('rect', {x: r1(tx0), y: r1(tubeTop + tw), width: r1(tx1 - tx0), height: r1(ih), class: 'air'}, svg);
   const inG = mk('g', {'clip-path': 'url(#ft-in)'}, svg);
-  const mid = tubeTop + tw + ih / 2, amp = ih / 2 - 1.5;
-  let d = '';
-  for (let k = 0; k <= 120; k++) d += `${k ? 'L' : 'M'}${r1(X(k / 120))} ${r1(mid - amp * vib(k / 120))}`;
-  for (let k = 120; k >= 0; k--) d += `L${r1(X(k / 120))} ${r1(mid + amp * vib(k / 120))}`;
-  mk('path', {d: d + 'Z', fill: '#4b7dff', 'fill-opacity': .22, stroke: '#8fb0ff', 'stroke-opacity': .55, 'stroke-width': 1}, inG);
-  const R = ih >= 30 ? 4 : 3, cs = s / 2, dr = clamp(ih * .055, 1.1, 2.4), A = cs * 1.05, dots = [];
-  for (let r = 0; r < R; r++) {
-    const y = tubeTop + tw + ih * (r + 1) / (R + 1);
-    for (let x = hx0 + (r % 2 ? cs / 2 : 0); x <= hx0 + L + .01; x += cs) {
-      const u = (x - hx0) / L;
-      dots.push({x, a: A * Math.sin(Math.PI * LOBES * u), el: mk('circle', {cx: r1(x), cy: r1(y), r: r1(dr), fill: '#d6e6ff', 'fill-opacity': r1(.3 + .7 * vib(u))}, inG)});
-    }
-  }
+  const mid = tubeTop + tw + ih / 2, amp = ih / 2 - 1;
+  const env = mk('path', {d: 'M0 0', class: 'env'}, inG);
 
-  mk('rect', {x: r1(tx0), y: r1(tubeTop), width: r1(tx1 - tx0), height: r1(tw), fill: 'url(#ft-mt)'}, svg);
-  mk('line', {x1: r1(tx0), x2: r1(tx1), y1: r1(tubeTop + tw * .28), y2: r1(tubeTop + tw * .28), stroke: '#fff', 'stroke-opacity': .55, 'stroke-width': r1(Math.max(.8, tw * .18))}, svg);
-  mk('rect', {x: r1(tx0), y: r1(tb - tw), width: r1(tx1 - tx0), height: r1(tw), fill: 'url(#ft-mb)'}, svg);
-  mk('rect', {x: r1(tx1), y: r1(tubeTop - tw * .2), width: r1(capW), height: r1(tubeH + tw * .4), rx: r1(capW * .35), fill: 'url(#ft-mb)'}, svg);
-  const hw = clamp(s * .22, 1.6, 3.4);
-  for (let i = 0; i < N; i++) mk('rect', {x: r1(X(i / (N - 1)) - hw / 2), y: r1(tubeTop), width: r1(hw), height: r1(tw * .7), fill: '#120c08'}, svg);
+  // pipe walls and end cap, flat, with one even outline; a row of small holes on top where the gas comes out
+  mk('rect', {x: r1(tx0), y: r1(tubeTop), width: r1(tx1 - tx0), height: r1(tw), class: 'wall'}, svg);
+  mk('rect', {x: r1(tx0), y: r1(tb - tw), width: r1(tx1 - tx0), height: r1(tw), class: 'wall'}, svg);
+  const hw = clamp(fw * .28, 1.6, 4);
+  for (let i = 0; i < N; i++) mk('rect', {x: r1(X(i / (N - 1)) - hw / 2), y: r1(tubeTop), width: r1(hw), height: r1(tw * .7), class: 'hole'}, svg);
+  const ow = r1(Math.max(1.4, fs * .1));
+  mk('rect', {x: r1(tx0), y: r1(tubeTop), width: r1(tx1 - tx0), height: r1(tubeH), fill: 'none', class: 'ink', 'stroke-width': ow, 'stroke-linejoin': 'round'}, svg);
+  mk('rect', {x: r1(tx1), y: r1(tubeTop - tw * .2), width: r1(capW), height: r1(tubeH + tw * .4), rx: r1(capW * .25), class: 'cap'}, svg);
 
   const flG = mk('g', {}, svg), fl = [];
   for (let i = 0; i < N; i++) {
     const u = i / (N - 1);
     fl.push({x: X(u), u, h: tall(u), p1: Kit.rnd() * TAU, p2: Kit.rnd() * TAU, p3: Kit.rnd() * TAU,
-      gw: mk('ellipse', {fill: 'url(#ft-g)', opacity: 0}, glowG),
-      o: mk('path', {d: 'M0 0', fill: 'url(#ft-o)'}, flG), c: mk('path', {d: 'M0 0', fill: 'url(#ft-i)'}, flG)});
+      o: mk('path', {d: 'M0 0', class: 'fo'}, flG), c: mk('path', {d: 'M0 0', class: 'fi'}, flG)});
   }
 
   const sw = r1(Math.max(1.6, fs * .13)), dash = `${r1(fs * .5)} ${r1(fs * .35)}`;
-  const gp = mk('path', {d: 'M0 0', fill: 'none', stroke: '#fff', 'stroke-width': sw, 'stroke-dasharray': dash, 'stroke-linecap': 'round', opacity: S.ghost}, svg);
+  const gp = mk('path', {d: 'M0 0', fill: 'none', class: 'ink', 'stroke-width': sw, 'stroke-dasharray': dash, 'stroke-linecap': 'round', opacity: S.ghost}, svg);
   const lg = mk('g', {opacity: S.ghost}, svg);
-  const lt = txt(W - pad, pad + asc, 'your guess', fs, '#ffffff', 'end', 0, lg);
+  const lt = txt(W - pad, pad + asc, 'your guess', fs, 'var(--k)', 'end', 0, lg);
   const ltw = lt.getComputedTextLength() || fs * 5, ly = pad + asc - fs * .33;
-  mk('line', {x1: r1(W - pad - ltw - fs * 2.3), x2: r1(W - pad - ltw - fs * .5), y1: r1(ly), y2: r1(ly), stroke: '#fff', 'stroke-width': sw, 'stroke-dasharray': dash, 'stroke-linecap': 'round'}, lg);
-  const hint = txt(pad, pad + asc, 'gas not lit yet', fs, '#aca39a');
+  mk('line', {x1: r1(W - pad - ltw - fs * 2.3), x2: r1(W - pad - ltw - fs * .5), y1: r1(ly), y2: r1(ly), class: 'ink', 'stroke-width': sw, 'stroke-dasharray': dash, 'stroke-linecap': 'round'}, lg);
+  const hint = txt(pad, pad + asc, 'gas not lit yet', fs, 'color-mix(in srgb,var(--k) 60%,var(--c))');
 
   const lab = (u, say, name) => {
     const x = X(u), y = tb + tick + asc;
-    mk('line', {x1: r1(x), y1: r1(tb + 1.5), x2: r1(x), y2: r1(tb + tick - 1), stroke: '#8f98a5', 'stroke-width': 1.2, 'stroke-linecap': 'round'}, svg);
-    const a = txt(x, y, say, fs, '#cdd3db', 'middle'), b = txt(x, two ? y + lineH + 2 : y, name, fs, '#ffffff', 'middle', 700);
+    mk('line', {x1: r1(x), y1: r1(tb + 2), x2: r1(x), y2: r1(tb + tick - 1), class: 'tick', 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
+    const a = txt(x, y, say, fs, 'color-mix(in srgb,var(--k) 72%,var(--c))', 'middle'), b = txt(x, two ? y + lineH + 2 : y, name, fs, 'var(--k)', 'middle', 700);
     return {x, a, b, w: Math.max(a.getComputedTextLength(), b.getComputedTextLength()) || fs * 7};
   };
   const la = lab(1 / (2 * LOBES), 'lots of vibration', 'antinode'), ln = lab(2 / LOBES, 'little vibration', 'node');
@@ -150,16 +142,17 @@ function build() {
     o.a.setAttribute('x', x); o.b.setAttribute('x', x);
   }
 
+  // a plain loudspeaker: box, cone, centre
   const spk = mk('g', {}, svg);
-  mk('rect', {x: r1(pad), y: r1(cy - spH / 2), width: r1(spW), height: r1(spH), rx: r1(spW * .2), fill: '#262a31', stroke: '#4c535d', 'stroke-width': 1}, spk);
+  mk('rect', {x: r1(pad), y: r1(cy - spH / 2), width: r1(spW), height: r1(spH), rx: r1(spW * .18), class: 'box'}, spk);
   const cone = mk('g', {}, spk);
-  mk('path', {d: `M${r1(pad + spW * .36)} ${r1(cy - spH * .16)}L${r1(tx0)} ${r1(cy - spH * .4)}V${r1(cy + spH * .4)}L${r1(pad + spW * .36)} ${r1(cy + spH * .16)}Z`, fill: 'url(#ft-cn)'}, cone);
-  mk('ellipse', {cx: r1(pad + spW * .4), cy: r1(cy), rx: r1(spW * .12), ry: r1(spH * .17), fill: '#353b44'}, cone);
+  mk('path', {d: `M${r1(pad + spW * .36)} ${r1(cy - spH * .16)}L${r1(tx0)} ${r1(cy - spH * .4)}V${r1(cy + spH * .4)}L${r1(pad + spW * .36)} ${r1(cy + spH * .16)}Z`, class: 'cone'}, cone);
+  mk('ellipse', {cx: r1(pad + spW * .4), cy: r1(cy), rx: r1(spW * .12), ry: r1(spH * .17), class: 'hub'}, cone);
   const note = mk('g', {}, svg), nx = pad + spW * .42, ny = cy - spH / 2 - fs * .6;
-  mk('ellipse', {cx: r1(nx), cy: r1(ny), rx: r1(fs * .34), ry: r1(fs * .25), transform: `rotate(-22 ${r1(nx)} ${r1(ny)})`, fill: '#ffd870'}, note);
-  mk('path', {d: `M${r1(nx + fs * .3)} ${r1(ny - fs * .06)}V${r1(ny - fs * 1.05)}q${r1(fs * .18)} ${r1(fs * .32)} ${r1(fs * .5)} ${r1(fs * .44)}`, fill: 'none', stroke: '#ffd870', 'stroke-width': r1(Math.max(1.4, fs * .11)), 'stroke-linecap': 'round'}, note);
+  mk('ellipse', {cx: r1(nx), cy: r1(ny), rx: r1(fs * .34), ry: r1(fs * .25), transform: `rotate(-22 ${r1(nx)} ${r1(ny)})`, class: 'note', 'stroke-width': 0}, note);
+  mk('path', {d: `M${r1(nx + fs * .3)} ${r1(ny - fs * .06)}V${r1(ny - fs * 1.05)}q${r1(fs * .18)} ${r1(fs * .32)} ${r1(fs * .5)} ${r1(fs * .44)}`, fill: 'none', class: 'ink', 'stroke-width': r1(Math.max(1.4, fs * .11)), 'stroke-linecap': 'round'}, note);
 
-  G = {W, dots, fl, cone, coneA: Math.min(2, spW * .07), note, fs, yb, Hmax, fw, s, X, amb, gp, lg, hint, two, terms: [la.b, ln.b], says: [la.a, ln.a]};
+  G = {W, env, mid, amp, cone, coneA: Math.min(2, spW * .07), note, fs, yb, Hmax, fw, s, X, gp, lg, hint, two, fl, terms: [la.b, ln.b], says: [la.a, ln.a]};
 }
 
 function setGhost() {
@@ -173,29 +166,34 @@ function frame(t) {
   lastT = t;
   if (!G) return;
   const c = Math.cos(TAU * 2.2 * t);
-  for (const d of G.dots) d.el.setAttribute('cx', r1(d.x + d.a * c));
+  // the air swells and shrinks with the sound: big at antinodes, almost still at nodes
+  const e = G.amp * (.62 + .38 * Math.abs(c));
+  let d = '';
+  for (let k = 0; k <= 90; k++) d += `${k ? 'L' : 'M'}${r1(G.X(k / 90))} ${r1(G.mid - e * vib(k / 90))}`;
+  for (let k = 90; k >= 0; k--) d += `L${r1(G.X(k / 90))} ${r1(G.mid + e * vib(k / 90))}`;
+  G.env.setAttribute('d', d + 'Z');
   G.cone.setAttribute('transform', `translate(${r1(G.coneA * c)} 0)`);
   G.note.setAttribute('transform', `translate(0 ${r1(-G.fs * .2 * (1 + Math.sin(t * 2.4)))})`);
   for (const q of G.fl) {
     let g = clamp(S.ign * 2.25 - q.u * 1.25, 0, 1);
     g = 1 - Math.pow(1 - g, 3);
-    if (g < .002) { q.o.setAttribute('d', 'M0 0'); q.c.setAttribute('d', 'M0 0'); q.gw.setAttribute('opacity', 0); continue; }
+    if (g < .002) { q.o.setAttribute('d', 'M0 0'); q.c.setAttribute('d', 'M0 0'); continue; }
     const k = 1 + .07 * Math.sin(11 * t + q.p1) + .05 * Math.sin(17.3 * t + q.p2);
     const h = G.Hmax * q.h * g * k, sw = G.fw * .38 * Math.sin(6.3 * t + q.p3) * g, w = G.fw * (.7 + .3 * q.h) * (.55 + .45 * g);
     q.o.setAttribute('d', flame(q.x, G.yb, w, h, sw));
     q.c.setAttribute('d', flame(q.x, G.yb, w * .5, h * .56, sw * .6));
-    const e = q.gw, ex = q.x + sw * .5, ey = G.yb - h * .42;
-    e.setAttribute('cx', r1(ex)); e.setAttribute('cy', r1(ey));
-    e.setAttribute('rx', r1(Math.min(Math.max(G.s * 1.15, w * 1.7), ex - 1, G.W - ex - 1)));
-    e.setAttribute('ry', r1(Math.min(h * .62 + G.s * .4, ey - 1)));
-    e.setAttribute('opacity', (.55 * g * q.h).toFixed(2));
   }
-  G.amb.setAttribute('opacity', (S.ign * .9).toFixed(3));
   G.gp.setAttribute('opacity', S.ghost.toFixed(3));
   G.lg.setAttribute('opacity', S.ghost.toFixed(3));
   G.hint.setAttribute('opacity', clamp(1 - S.ign * 3, 0, 1).toFixed(3));
-  for (const e of G.terms) e.setAttribute('opacity', S.lab.toFixed(3));
-  if (!G.two) for (const e of G.says) e.setAttribute('opacity', (1 - S.lab).toFixed(3));
+  for (const e of G.terms) {
+    e.setAttribute('opacity', S.lab.toFixed(3));
+    e.style.display = !G.two && S.lab <= 0 ? 'none' : '';
+  }
+  if (!G.two) for (const e of G.says) {
+    e.setAttribute('opacity', (1 - S.lab).toFixed(3));
+    e.style.display = S.lab >= 1 ? 'none' : '';
+  }
 }
 
 function light() {

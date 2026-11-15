@@ -8,13 +8,19 @@
 <style>
 #stage{flex:1;min-height:0;display:flex;align-items:stretch;justify-content:center;position:relative}
 #pic{width:100%;height:100%;display:block}
+#tail{display:grid;flex:none}
+#now,#endg{grid-area:1/1;min-width:0}
+#now{align-self:center}
+#endg{align-self:start}
+#endg>#why.gone{display:flex!important;visibility:hidden}
+#endg>#keep.gone{display:block!important;visibility:hidden}
 #steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4cqw;margin-top:1cqh}
 .st{font:700 max(1.7cqh,12px)/1.15 var(--body);text-align:center;padding:1cqh 1cqw;border-radius:1.4cqh;color:var(--k);background:color-mix(in srgb,var(--k) 7%,transparent);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 22%,transparent);opacity:.45;transition:opacity .3s,background .3s,color .3s;overflow-wrap:anywhere}
 .st.on{opacity:1;background:var(--k);color:var(--c);box-shadow:none}
 #hold{font:800 max(2.2cqh,14px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:2.4cqh;padding:1.8cqh 4cqw;margin-top:1.2cqh;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;position:relative;overflow:hidden;width:100%}
 #hold .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#c0392b;opacity:.85}
 #hold span{position:relative}
-#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1cqh}
+#why{display:flex;flex-direction:column;gap:.6cqh;margin-top:1cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
 #why .body{font:500 max(1.8cqh,12px)/1.3 var(--body)}
 </style>
@@ -23,19 +29,25 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FLESH-EATER</span></div>
     <h2 class="q">What can a flesh-eating bacterium from sea water do to you?</h2>
     <div class="stagebox" id="stage"><svg id="pic"></svg></div>
-    <div id="steps">
-      <div class="st" data-at=".12">Ulcers</div>
-      <div class="st" data-at=".42">Necrosis</div>
-      <div class="st" data-at=".7">Amputation</div>
-      <div class="st" data-at=".93">Death</div>
+    <div id="tail">
+      <div id="now">
+        <div id="steps">
+          <div class="st" data-at=".12">Ulcers</div>
+          <div class="st" data-at=".42">Necrosis</div>
+          <div class="st" data-at=".7">Amputation</div>
+          <div class="st" data-at=".93">Death</div>
+        </div>
+        <button id="hold"><i class="fill"></i><span>Hold to let it feed</span></button>
+        <p class="say" id="say">Hold the button and watch Vibrio vulnificus at work.</p>
+      </div>
+      <div id="endg">
+        <div id="why" class="gone">
+          <p class="big">Extremely rare, very dangerous</p>
+          <p class="body">Vibrio vulnificus is a flesh-eating bacterium that can live in sea water. Its ulcers and lesions can get so deep that the limb must be amputated, or the person dies.</p>
+        </div>
+        <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Rare, but it eats flesh: ulcers, necrosis, amputation, even death.</div>
+      </div>
     </div>
-    <button id="hold"><i class="fill"></i><span>Hold to let it feed</span></button>
-    <p class="say" id="say">Hold the button and watch Vibrio vulnificus at work.</p>
-    <div id="why" class="gone">
-      <p class="big">Extremely rare, very dangerous</p>
-      <p class="body">Vibrio vulnificus is a flesh-eating bacterium that can live in sea water. Its ulcers and lesions can get so deep that the limb must be amputated, or the person dies.</p>
-    </div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Rare, but it eats flesh: ulcers, necrosis, amputation, even death.</div>
     <div class="foot"><span class="src">Source · Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025).</span></div>
   </div>
 </article>
@@ -52,6 +64,11 @@ function mix(c1, c2, k){
   return 'rgb(' + a.map((v, i) => Math.round(lerp(v, b[i], k))).join(',') + ')';
 }
 
+const OUT = '#2a1410';     // outline / dead tissue
+const WOUND = '#8a1f17';   // open ulcer
+const GERM = '#86c75f';    // the bacterium
+const SKIN = '#f1c4a0', DEAD = '#a89a92';
+
 function build(){
   const svg = Kit.$('pic');
   svg.innerHTML = '';
@@ -65,13 +82,18 @@ function build(){
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id: 'legclip'}, defs);
   Kit.mk('path', {d: leg}, cp);
-  const gr = Kit.mk('linearGradient', {id: 'sea', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#3fa7d6', 'stop-opacity': .55}, gr);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#0b3d63', 'stop-opacity': .85}, gr);
 
   const sea = H * 0.3;
-  Kit.mk('rect', {x: 0, y: sea, width: W, height: H - sea, fill: '#0b3d63', opacity: .18}, svg);
-  const skin = Kit.mk('path', {d: leg, fill: '#f1c4a0', stroke: '#7a4a2e', 'stroke-width': Math.max(1.5, lw * .03)}, svg);
+  const sw = Math.max(2, lw * .035);
+  // the sea: a pale flat tint of the card colour, with a wavy surface
+  const water = Kit.mk('path', {style: 'fill:color-mix(in srgb,var(--k) 22%,var(--c))'}, svg);
+  // a few short wave strokes, like a printed book's sea
+  const ripples = Kit.mk('g', {fill: 'none', 'stroke-width': Math.max(1.6, H * .006), 'stroke-linecap': 'round', style: 'stroke:color-mix(in srgb,var(--k) 55%,var(--c))'}, svg);
+  [[.08,.62],[.7,.78],[.22,.97],[.68,.5]].forEach(([u, v]) => {
+    const x = W * u, y = H * v, r = Math.max(8, lw * .18);
+    Kit.mk('path', {d: `M${x},${y} q${r/2},${-r*.45} ${r},0 t${r},0`}, ripples);
+  });
+  const skin = Kit.mk('path', {d: leg, fill: SKIN, stroke: OUT, 'stroke-width': sw, 'stroke-linejoin': 'round'}, svg);
   const lx = cx + lw * 0.08, ly = H * 0.5;
   const lg = Kit.mk('g', {'clip-path': 'url(#legclip)'}, svg);
   const blobs = [];
@@ -79,46 +101,43 @@ function build(){
   for (let i = 0; i < 9; i++){
     const a = i / 9 * Math.PI * 2, d = i ? lw * (0.18 + 0.12 * ((i * 37) % 7) / 7) : 0;
     blobs.push({dx: Math.cos(a) * d, dy: Math.sin(a) * d * 1.6, k: 0.6 + ((i * 53) % 5) / 10,
-      ring: Kit.mk('circle', {cx: lx, cy: ly, r: 0, fill: '#d9443a'}, lg),
-      core: Kit.mk('circle', {cx: lx, cy: ly, r: 0, fill: '#2a1410'}, lg)});
+      ring: Kit.mk('circle', {cx: lx, cy: ly, r: 0, fill: WOUND}, lg),
+      core: Kit.mk('circle', {cx: lx, cy: ly, r: 0, fill: OUT}, lg)});
   }
-  Kit.mk('rect', {x: 0, y: sea, width: W, height: H - sea, fill: 'url(#sea)'}, svg);
-  const wave = Kit.mk('path', {fill: 'none', stroke: '#bfe6ff', 'stroke-width': Math.max(2, H * .006), 'stroke-linecap': 'round'}, svg);
+  // the waterline, crossing the leg
+  const wave = Kit.mk('path', {fill: 'none', 'stroke-width': Math.max(2, H * .007), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: 'stroke:var(--k)'}, svg);
 
   // amputation line
   const cutY = H * 0.17;
   const cut = Kit.mk('g', {opacity: 0}, svg);
-  Kit.mk('line', {x1: cx - lw * 0.95, y1: cutY, x2: cx + lw * 0.95, y2: cutY, stroke: '#ff3b30', 'stroke-width': Math.max(2.5, H * .008), 'stroke-dasharray': `${lw*.12} ${lw*.08}`}, cut);
-  const lab = Kit.mk('text', {x: cx + lw * 1.05, y: cutY + f * 0.35, fill: '#ff3b30', 'font-size': Math.max(12, f * .9), 'font-weight': 800, 'font-family': 'var(--body)'}, cut);
+  Kit.mk('line', {x1: cx - lw * 0.95, y1: cutY, x2: cx + lw * 0.95, y2: cutY, 'stroke-width': Math.max(2.5, H * .008), 'stroke-linecap': 'round', 'stroke-dasharray': `${lw*.12} ${lw*.08}`, style: 'stroke:var(--k)'}, cut);
+  const lab = Kit.mk('text', {x: cx + lw * 1.05, y: cutY + f * 0.35, 'font-size': Math.max(13, f * 1.05), style: 'fill:var(--k);font-family:var(--hand)'}, cut);
   lab.textContent = 'cut here';
 
-  // shark-like bacteria
+  // Vibrio: a curved comma-shaped rod with one whip-like tail
   const s = lw * 0.36, sharks = [];
   const homes = [[.1,.45],[.88,.42],[.12,.9],[.9,.95],[.82,.62]];
+  const body = `M${-s*.75},${s*.12} Q0,${-s*.42} ${s*.75},${s*.12}`;
   homes.forEach((h, i) => {
     const g = Kit.mk('g', {}, svg);
     const inner = Kit.mk('g', {}, g);
-    Kit.mk('path', {d: `M${-s*1.15},0 q${-s*.35},${-s*.25} ${-s*.6},${-s*.05} q${s*.3},${s*.1} 0,0 q${-s*.3},${s*.25} ${-s*.6},${s*.1}`, fill: 'none', stroke: '#7fd36b', 'stroke-width': Math.max(1.5, s * .07), 'stroke-linecap': 'round'}, inner);
-    Kit.mk('path', {d: `M${-s},0 L${-s*1.35},${-s*.4} L${-s*1.22},0 L${-s*1.35},${s*.4} Z`, fill: '#4f8f3f'}, inner);
-    Kit.mk('path', {d: `M${-s*.2},${-s*.3} L${s*.05},${-s*.75} L${s*.3},${-s*.3} Z`, fill: '#4f8f3f'}, inner);
-    Kit.mk('ellipse', {cx: 0, cy: 0, rx: s, ry: s * .36, fill: '#6cc04a', stroke: '#2f5d24', 'stroke-width': Math.max(1.2, s * .05)}, inner);
-    Kit.mk('path', {d: `M${s*.45},${s*.12} L${s*.98},${s*.04} L${s*.6},${s*.24} Z`, fill: '#2a1410'}, inner);
-    Kit.mk('path', {d: `M${s*.55},${s*.13} l${s*.06},${s*.08} l${s*.06},${-s*.08} l${s*.06},${s*.07} l${s*.06},${-s*.07} l${s*.06},${s*.06}`, fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1.2, s * .04), 'stroke-linejoin': 'round'}, inner);
-    Kit.mk('circle', {cx: s * .55, cy: -s * .08, r: s * .07, fill: '#111'}, inner);
+    Kit.mk('path', {d: `M${-s*1.0},${s*.14} q${-s*.2},${-s*.22} ${-s*.4},0 t${-s*.4},0 t${-s*.4},0`, fill: 'none', stroke: OUT, 'stroke-width': Math.max(1.5, s * .08), 'stroke-linecap': 'round'}, inner);
+    Kit.mk('path', {d: body, fill: 'none', stroke: OUT, 'stroke-width': s * .56, 'stroke-linecap': 'round'}, inner);
+    Kit.mk('path', {d: body, fill: 'none', stroke: GERM, 'stroke-width': s * .56 - Math.max(2.4, s * .1), 'stroke-linecap': 'round'}, inner);
     const a = i / homes.length * Math.PI * 2 + .4;
     sharks.push({g, inner, hx: W * h[0], hy: H * h[1], tx: lx + Math.cos(a) * lw * .55, ty: ly + Math.sin(a) * lw * .9, ph: i * 1.3});
   });
-  const dark = Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#120404', opacity: 0, 'pointer-events': 'none'}, svg);
-  G = {W, H, lw, lx, ly, sea, skin, blobs, wave, cut, sharks, dark};
+  G = {W, H, lw, lx, ly, sea, skin, blobs, wave, water, cut, sharks};
   render();
 }
 
 function render(){
   if (!G) return;
   const {W, H, lw, lx, ly, sea, blobs, sharks} = G;
-  let d = `M0,${sea}`;
-  for (let x = 0; x <= W; x += W / 24) d += ` L${x},${sea + Math.sin(x / W * 12 + t * 2) * H * .008}`;
+  let d = '';
+  for (let x = 0; x <= W + .1; x += W / 24) d += (d ? ' L' : 'M') + `${x},${sea + Math.sin(x / W * 12 + t * 2) * H * .008}`;
   G.wave.setAttribute('d', d);
+  G.water.setAttribute('d', d + ` L${W},${H} L0,${H} Z`);
   blobs.forEach(b => {
     const g = ease(p * 1.3) * b.k;
     const x = lx + b.dx * ease(p * 1.6), y = ly + b.dy * ease(p * 1.6);
@@ -127,9 +146,8 @@ function render(){
     b.ring.setAttribute('r', lw * .32 * g);
     b.core.setAttribute('r', lw * .32 * g * ease((p - .3) * 2.2) * .82);
   });
-  G.skin.setAttribute('fill', mix('#f1c4a0', '#9a8a80', ease((p - .6) * 2.5)));
+  G.skin.setAttribute('fill', mix(SKIN, DEAD, ease((p - .6) * 2.5)));
   G.cut.setAttribute('opacity', ease((p - .66) * 6));
-  G.dark.setAttribute('opacity', .55 * ease((p - .9) * 10));
   sharks.forEach(sh => {
     const k = ease(p * 3);
     const wig = Kit.calm ? 0 : Math.sin(t * 3 + sh.ph);
@@ -147,7 +165,7 @@ function render(){
 function finish(){
   if (done) return; done = true; holding = false; p = 1; render();
   Kit.haptic('success');
-  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.hide('steps'); Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 
@@ -167,6 +185,13 @@ const btn = Kit.$('hold');
 btn.addEventListener('pointerdown', e => { e.preventDefault(); if (done) return; holding = true; Kit.haptic('selection'); btn.querySelector('span').textContent = 'Keep holding…'; });
 ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, () => { holding = false; if (!done) btn.querySelector('span').textContent = 'Hold to let it feed'; }));
 btn.addEventListener('contextmenu', e => e.preventDefault());
+
+// keep the drawing filling its stage if the stage ever changes size
+let lastSize = '';
+if (window.ResizeObserver) new ResizeObserver(() => {
+  const r = Kit.$('stage').getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height);
+  if (k !== lastSize){ lastSize = k; if (G) build(); }
+}).observe(Kit.$('stage'));
 
 Kit.onShow.card = () => build();
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, scale: .96, transformOrigin: '50% 50%', duration: .6, ease: 'power3.out'}); };

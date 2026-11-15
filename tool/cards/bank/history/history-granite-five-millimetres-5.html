@@ -18,8 +18,8 @@
 .ink{fill:var(--k)}
 .inks{stroke:var(--k);fill:none}
 .lbl{fill:var(--k);font-family:var(--body);font-weight:700}
-.num{fill:var(--k);font-family:var(--mono);font-weight:600}
-.halo{paint-order:stroke;stroke:#fff;stroke-linejoin:round}
+.num{fill:var(--k);font-family:var(--body);font-weight:700}
+.halo{paint-order:stroke;stroke:#cfc1b4;stroke-linejoin:round}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Aim · time-lapse">
   <div class="in">
@@ -43,6 +43,7 @@
 const svg = Kit.$('pic');
 const S = {guess: null, d: 0, t: 0, lift: 1, phase: 'guess', res: ''};
 let G = null, E = {}, speed = 1;
+const GRANITE = '#cfc1b4', PINK = '#c4846f';
 
 function seeded(s){ return () => (s = (s * 16807) % 2147483647) / 2147483647; }
 
@@ -52,45 +53,59 @@ function draw(){
   const y0 = H * 0.42, bottom = H - f * 0.5, px = (bottom - y0) / 100;
   const rulerX = f * 3.4, cx = rulerX + (W - rulerX) * 0.56, tw = (W - rulerX) * 0.22;
   const u = y0 * 0.11;
+  const L = Math.max(f * .85, 11);
   G = {W, H, f, y0, px, rulerX, cx, tw, u};
   const m = (t, a, p = svg) => Kit.mk(t, a, p);
-  // granite
-  m('rect', {x: rulerX + 4, y: y0, width: W - rulerX - 4, height: H - y0, fill: '#c3b2a4'});
-  const r = seeded(7), cols = ['#3b3330', '#efe6dc', '#b9705c', '#7d726b'];
-  for (let i = 0; i < 260; i++) m('circle', {cx: rulerX + 4 + r() * (W - rulerX - 4), cy: y0 + 2 + r() * (H - y0 - 2), r: .6 + r() * f * .14, fill: cols[i % 4], opacity: .8});
-  m('line', {x1: rulerX + 4, x2: W, y1: y0, y2: y0, class: 'inks', 'stroke-width': Math.max(2, f * .14)});
-  // trench
-  E.tr = m('rect', {x: cx - tw / 2, y: y0, width: tw, height: 0, fill: '#3a2f2a'});
-  // ruler
-  const step = [10, 20, 25, 50].find(s => s * px >= f * 1.5) || 50;
-  for (let mm = 0; mm <= 100; mm += 5) {
-    const y = y0 + mm * px, big = mm % step === 0;
-    m('line', {x1: rulerX - (big ? f * .5 : f * .25), x2: rulerX + 2, y1: y, y2: y, class: 'inks', 'stroke-width': big ? 1.6 : 1});
-    if (big) { const t = m('text', {x: rulerX - f * .65, y: y + f * .35, 'text-anchor': 'end', 'font-size': Math.max(f * .85, 10), class: 'num'}); t.textContent = mm === 0 ? '0 mm' : mm; }
+  // granite block: one plain slab with a handful of big, soft feldspar patches
+  const gx = rulerX + 4, gw = W - rulerX - 4, gh = H - y0;
+  m('rect', {x: gx, y: y0, width: gw, height: gh, fill: GRANITE});
+  const r = seeded(7);
+  const patch = 'color-mix(in srgb, ' + PINK + ' 55%, ' + GRANITE + ')';
+  const cols = 3, rows = 2, cw = gw / cols, ch = gh / rows;
+  for (let i = 0; i < cols * rows; i++) {
+    const s = Math.min(cw, ch) * (.22 + r() * .1);
+    const ccx = gx + (i % cols + .5) * cw + (r() - .5) * cw * .35;
+    const ccy = y0 + (Math.floor(i / cols) + .5) * ch + (r() - .5) * ch * .3;
+    const k = 6, a0 = r() * 6.28, pts = [];
+    for (let j = 0; j < k; j++) {
+      const a = a0 + j * 6.28 / k + (r() - .5) * .4, rr = s * (.75 + r() * .3);
+      pts.push(`${(ccx + Math.cos(a) * rr).toFixed(1)},${(ccy + Math.sin(a) * rr).toFixed(1)}`);
+    }
+    m('polygon', {points: pts.join(' '), fill: patch, 'stroke-linejoin': 'round'});
   }
-  m('line', {x1: rulerX + 2, x2: rulerX + 2, y1: y0, y2: y0 + 100 * px, class: 'inks', 'stroke-width': 1.6});
+  m('line', {x1: gx, x2: W, y1: y0, y2: y0, class: 'inks', 'stroke-width': Math.max(2.5, f * .16), 'stroke-linecap': 'round'});
+  // trench
+  E.tr = m('rect', {x: cx - tw / 2, y: y0, width: tw, height: 0, fill: 'color-mix(in srgb, var(--k) 82%, ' + GRANITE + ')'});
+  // ruler: major marks only
+  const step = [10, 20, 25, 50].find(s => s * px >= f * 1.5) || 50;
+  for (let mm = 0; mm <= 100; mm += step) {
+    const y = y0 + mm * px;
+    m('line', {x1: rulerX - f * .45, x2: rulerX + 2, y1: y, y2: y, class: 'inks', 'stroke-width': 2, 'stroke-linecap': 'round'});
+    const t = m('text', {x: rulerX - f * .65, y: y + f * .32, 'text-anchor': 'end', 'font-size': L, class: 'num'}); t.textContent = mm === 0 ? '0 mm' : mm;
+  }
+  m('line', {x1: rulerX + 2, x2: rulerX + 2, y1: y0, y2: y0 + 100 * px, class: 'inks', 'stroke-width': 2, 'stroke-linecap': 'round'});
   // worker
-  const fx = cx - 2.4 * u, sw = Math.max(2.5, u * .32);
+  const fx = cx - 2.4 * u, sw = Math.max(3.5, u * .42);
   E.fx = fx;
-  m('circle', {cx: fx, cy: y0 - 6.5 * u, r: .8 * u, class: 'ink'});
-  m('line', {x1: fx, y1: y0 - 5.6 * u, x2: fx, y2: y0 - 3 * u, class: 'inks', 'stroke-width': sw, 'stroke-linecap': 'round'});
+  m('circle', {cx: fx, cy: y0 - 6.5 * u, r: .85 * u, class: 'ink'});
+  m('line', {x1: fx, y1: y0 - 5.5 * u, x2: fx, y2: y0 - 3 * u, class: 'inks', 'stroke-width': sw * 1.6, 'stroke-linecap': 'round'});
   m('polyline', {points: `${fx - u},${y0} ${fx},${y0 - 3 * u} ${fx + .9 * u},${y0}`, class: 'inks', 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
   E.arm = m('polyline', {class: 'inks', 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
   E.rb = u * .95;
-  E.ball = m('circle', {r: E.rb, fill: '#2b2b2e', stroke: '#111', 'stroke-width': 1});
+  E.ball = m('circle', {r: E.rb, fill: 'color-mix(in srgb, var(--k) 70%, #5a5f63)'});
   E.chips = m('g', {});
-  // clock
+  // clock: plain face, one hand
   const cr = f * 1.5, ccx = W - cr - 6, ccy = cr + 6;
-  m('circle', {cx: ccx, cy: ccy, r: cr, fill: '#fff', class: 'inks', 'stroke-width': 2});
-  for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; m('line', {x1: ccx + Math.sin(a) * cr * .78, y1: ccy - Math.cos(a) * cr * .78, x2: ccx + Math.sin(a) * cr * .92, y2: ccy - Math.cos(a) * cr * .92, class: 'inks', 'stroke-width': 1.2}); }
-  E.hand = m('line', {x1: ccx, y1: ccy, x2: ccx, y2: ccy - cr * .75, class: 'inks', 'stroke-width': 2.4, 'stroke-linecap': 'round'});
+  m('circle', {cx: ccx, cy: ccy, r: cr, fill: 'none', class: 'inks', 'stroke-width': 2.5});
+  E.hand = m('line', {x1: ccx, y1: ccy, x2: ccx, y2: ccy - cr * .72, class: 'inks', 'stroke-width': 3, 'stroke-linecap': 'round'});
+  m('circle', {cx: ccx, cy: ccy, r: 2.5, class: 'ink'});
   E.clock = [ccx, ccy];
-  E.hrs = m('text', {x: ccx, y: ccy + cr + f * 1.15, 'text-anchor': 'middle', 'font-size': f * .9, class: 'num'});
-  E.dep = m('text', {x: 6, y: f * 1.1, 'font-size': f * .95, class: 'num'});
+  E.hrs = m('text', {x: ccx, y: ccy + cr + f * 1.15, 'text-anchor': 'middle', 'font-size': L, class: 'num'});
+  E.dep = m('text', {x: 6, y: f * 1.1, 'font-size': L, class: 'num'});
   // guess
-  E.gl = m('line', {x1: rulerX + 4, x2: W, class: 'inks', 'stroke-width': 2, 'stroke-dasharray': '6 5'});
-  E.gt = m('text', {x: W - 6, 'text-anchor': 'end', 'font-size': f * .9, class: 'lbl halo', 'stroke-width': 4});
-  E.res = m('text', {x: cx - tw / 2 - 6, 'text-anchor': 'end', 'font-size': f, class: 'lbl halo', 'stroke-width': 4});
+  E.gl = m('line', {x1: gx, x2: W, class: 'inks', 'stroke-width': 2.5, 'stroke-dasharray': '7 5', 'stroke-linecap': 'round'});
+  E.gt = m('text', {x: W - 6, 'text-anchor': 'end', 'font-size': L, class: 'lbl halo', 'stroke-width': 4});
+  E.res = m('text', {x: cx - tw / 2 - 6, 'text-anchor': 'end', 'font-size': L, class: 'lbl halo', 'stroke-width': 4});
   update();
 }
 
@@ -123,9 +138,9 @@ function update(){
 function chips(){
   if (!G || Kit.calm) return;
   const {cx, y0, px, f} = G;
-  for (let i = 0; i < 6; i++) {
-    const c = Kit.mk('circle', {cx, cy: y0 + S.d * px, r: f * (.08 + Kit.rnd() * .12), fill: '#e9dccf'}, E.chips);
-    gsap.to(c, {attr: {cx: cx + (Kit.rnd() - .5) * f * 5, cy: y0 - f * (.5 + Kit.rnd() * 2)}, opacity: 0, duration: .5 * Math.max(speed, .3), ease: 'power2.out', onComplete: () => c.remove()});
+  for (let i = 0; i < 4; i++) {
+    const c = Kit.mk('circle', {cx, cy: y0 + S.d * px, r: f * (.1 + Kit.rnd() * .1), fill: i % 2 ? PINK : GRANITE}, E.chips);
+    gsap.to(c, {attr: {cx: cx + (Kit.rnd() - .5) * f * 4, cy: y0 - f * (.5 + Kit.rnd() * 1.5)}, opacity: 0, duration: .5 * Math.max(speed, .3), ease: 'power2.out', onComplete: () => c.remove()});
   }
 }
 

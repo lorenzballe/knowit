@@ -42,6 +42,7 @@ const INFO = [
 ];
 const SAY = ['Tap the gut: swallow the cough syrup.', 'Now tap the blood.', 'Now tap the liver.'];
 const st = (o) => Object.entries(o).map(([k, v]) => k + ':' + v).join(';');
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 
 function spot(i, where) {
   if (where < 3) { const n = G.nodes[where]; return [n.x + OFF[i][0] * G.r * .6, n.y + OFF[i][1] * G.r * .6]; }
@@ -51,12 +52,14 @@ function spot(i, where) {
   return [o.x + off[0] * o.r * .62, o.y + off[1] * o.r * .62];
 }
 
+// a plain ink arrow points at the organ to tap next, nudging toward it
 function pulse() {
-  G.rings.forEach((rg, j) => { gsap.killTweensOf(rg); gsap.set(rg, {opacity: 0}); });
+  G.rings.forEach(rg => { gsap.killTweensOf(rg); gsap.set(rg, {opacity: 0, x: 0}); });
   if (step < 3 && !Kit.calm) {
     const rg = G.rings[step];
-    gsap.fromTo(rg, {opacity: .9, attr: {r: G.r}}, {opacity: 0, attr: {r: G.r * 1.35}, duration: 1.2, repeat: -1, ease: 'power1.out'});
-  } else if (step < 3) gsap.set(G.rings[step], {opacity: .9});
+    gsap.set(rg, {opacity: 1});
+    gsap.fromTo(rg, {x: -G.r * .22}, {x: 0, duration: .6, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  } else if (step < 3) gsap.set(G.rings[step], {opacity: 1});
 }
 
 function showLabels(upTo) {
@@ -75,36 +78,55 @@ Kit.onShow.card = () => {
   const outs = [{x: W * .15, y: H * .76, r: r * .82}, {x: W * .6, y: H * .76, r: r * .62}];
   G = {W, H, f, r, nodes, outs, rings: [], subs: [], dots: []};
   const ink = 'var(--k)';
-  // links
-  const lk = (a, b, g) => Kit.mk('line', {x1: a.x, y1: a.y, x2: b.x, y2: b.y, style: st({stroke: ink, 'stroke-width': Math.max(2, r * .05), 'stroke-dasharray': `${r * .12} ${r * .12}`, opacity: .45})}, g || svg);
+  const sw = Math.max(2.5, r * .06);
+  // links: plain ink lines, like the route on a diagram in a book
+  const lk = (a, b, g) => Kit.mk('line', {x1: a.x, y1: a.y, x2: b.x, y2: b.y, style: st({stroke: ink, 'stroke-width': Math.max(2, r * .05), 'stroke-linecap': 'round'})}, g || svg);
   lk(nodes[0], nodes[1]); lk(nodes[1], nodes[2]);
   const og = Kit.mk('g', {}, svg); G.outGroup = og;
   lk(nodes[2], outs[0], og); lk(nodes[2], outs[1], og);
-  // outputs
+  // outputs: two flat heaps of molecules
   outs.forEach((o, j) => {
-    Kit.mk('circle', {cx: o.x, cy: o.y, r: o.r, style: st({fill: 'var(--c)', stroke: j ? PURPLE : ink, 'stroke-width': Math.max(2, r * .06)})}, og);
+    Kit.mk('circle', {cx: o.x, cy: o.y, r: o.r, style: st({fill: 'var(--c)', stroke: j ? PURPLE : ink, 'stroke-width': sw})}, og);
     const t1 = Kit.mk('text', {x: o.x, y: o.y + o.r + f * 1.15, 'text-anchor': 'middle', style: st({font: `700 ${f}px var(--body)`, fill: ink})}, og);
     t1.textContent = j ? 'Morphine' : 'Codeine';
     const t2 = Kit.mk('text', {x: o.x, y: o.y + o.r + f * 3.0, 'text-anchor': 'middle', style: st({font: `800 ${f * 1.2}px var(--display)`, fill: j ? PURPLE : ink})}, og);
     t2.textContent = j ? '≈ 10%' : '≈ 90%';
   });
-  // nodes
+  // organs, drawn flat with one solid fill and one ink outline each
   const names = ['Gut', 'Blood', 'Liver'], subs = ['absorbs it', 'carries it everywhere', 'codeine → morphine'];
-  const glyph = [
-    s => `M${-.5*s},${-.3*s} q${.25*s},${-.3*s} ${.5*s},0 t${.5*s},0 M${-.5*s},${.05*s} q${.25*s},${-.3*s} ${.5*s},0 t${.5*s},0 M${-.5*s},${.4*s} q${.25*s},${-.3*s} ${.5*s},0 t${.5*s},0`,
-    s => `M0,${-.55*s} C${.35*s},${-.1*s} ${.45*s},${.1*s} ${.45*s},${.25*s} A${.45*s},${.45*s} 0 0 1 ${-.45*s},${.25*s} C${-.45*s},${.1*s} ${-.35*s},${-.1*s} 0,${-.55*s}Z`,
-    s => `M${-.6*s},${-.1*s} C${-.5*s},${-.5*s} ${.4*s},${-.55*s} ${.62*s},${-.2*s} C${.5*s},${.2*s} ${-.1*s},${.55*s} ${-.45*s},${.3*s} C${-.6*s},${.2*s} ${-.62*s},${.05*s} ${-.6*s},${-.1*s}Z`
+  const s = r;
+  const organ = [
+    g => { // a coil of gut: one thick flat tube folded back and forth
+      const d = `M${-.62*s},${-.6*s} H${.48*s} A${.2*s},${.2*s} 0 0 1 ${.48*s},${-.2*s} H${-.48*s} A${.2*s},${.2*s} 0 0 0 ${-.48*s},${.2*s} H${.48*s} A${.2*s},${.2*s} 0 0 1 ${.48*s},${.6*s} H${-.62*s}`;
+      Kit.mk('path', {d, style: st({fill: 'none', stroke: ink, 'stroke-width': .34 * s, 'stroke-linecap': 'butt', 'stroke-linejoin': 'round'})}, g);
+      Kit.mk('path', {d, style: st({fill: 'none', stroke: tint(30), 'stroke-width': .34 * s - 2 * sw, 'stroke-linecap': 'butt', 'stroke-linejoin': 'round'})}, g);
+    },
+    g => { // a drop of blood
+      Kit.mk('path', {d: `M0,${-1.02*s} C${.5*s},${-.42*s} ${.78*s},${-.08*s} ${.78*s},${.3*s} A${.78*s},${.78*s} 0 0 1 ${-.78*s},${.3*s} C${-.78*s},${-.08*s} ${-.5*s},${-.42*s} 0,${-1.02*s}Z`,
+        style: st({fill: tint(30), stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'})}, g);
+    },
+    g => { // the liver: a big right lobe and a small left lobe
+      Kit.mk('path', {d: `M${-1.02*s},${-.3*s} C${-.9*s},${-.78*s} ${.55*s},${-.82*s} ${1.02*s},${-.4*s} C${.9*s},${.22*s} ${-.05*s},${.82*s} ${-.68*s},${.5*s} C${-.98*s},${.32*s} ${-1.06*s},${.02*s} ${-1.02*s},${-.3*s}Z`,
+        style: st({fill: tint(30), stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'})}, g);
+      Kit.mk('path', {d: `M${.08*s},${-.72*s} C${.02*s},${-.3*s} ${-.12*s},${.1*s} ${-.3*s},${.62*s}`,
+        style: st({fill: 'none', stroke: ink, 'stroke-width': Math.max(2, r * .045), 'stroke-linecap': 'round'})}, g);
+    }
   ];
   nodes.forEach((n, j) => {
     const g = Kit.mk('g', {class: 'node', 'data-i': j}, svg);
-    G.rings.push(Kit.mk('circle', {cx: n.x, cy: n.y, r: r, style: st({fill: 'none', stroke: ink, 'stroke-width': Math.max(2, r * .05), opacity: 0})}, g));
-    Kit.mk('circle', {cx: n.x, cy: n.y, r: r, style: st({fill: 'var(--c)', stroke: ink, 'stroke-width': Math.max(2.5, r * .07)})}, g);
-    Kit.mk('path', {d: glyph[j](r), transform: `translate(${n.x},${n.y})`, style: st({fill: j ? ink : 'none', stroke: ink, 'stroke-width': Math.max(2, r * .07), 'stroke-linecap': 'round', opacity: .18})}, g);
+    // "tap here" arrow on the left of the organ (kept in G.rings)
+    const tip = n.x - r * 1.2, aw = Math.max(2.5, r * .07);
+    const ar = Kit.mk('g', {style: 'opacity:0'}, g);
+    Kit.mk('path', {d: `M${tip - r * .55},${n.y} H${tip} M${tip - r * .2},${n.y - r * .18} L${tip},${n.y} L${tip - r * .2},${n.y + r * .18}`,
+      style: st({fill: 'none', stroke: ink, 'stroke-width': aw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'})}, ar);
+    G.rings.push(ar);
+    const og2 = Kit.mk('g', {transform: `translate(${n.x},${n.y})`}, g);
+    organ[j](og2);
     const lx = n.x + r + f * .7;
-    const t = Kit.mk('text', {x: lx, y: n.y - f * .1, style: st({font: `800 ${f * 1.15}px var(--display)`, fill: ink})}, g);
+    const t = Kit.mk('text', {x: lx, y: n.y - f * .1, style: st({font: `700 ${f}px var(--body)`, fill: ink})}, g);
     t.textContent = names[j];
-    const s = Kit.mk('text', {x: lx, y: n.y + f * 1.3, style: st({font: `600 ${Math.max(12, f * .85)}px var(--body)`, fill: ink, opacity: 0})}, g);
-    s.textContent = subs[j]; G.subs.push(s);
+    const sb = Kit.mk('text', {x: lx, y: n.y + f * 1.3, style: st({font: `500 ${f}px var(--body)`, fill: ink, opacity: 0})}, g);
+    sb.textContent = subs[j]; G.subs.push(sb);
     Kit.mk('rect', {x: n.x - r, y: n.y - r, width: W - (n.x - r), height: 2 * r, style: 'fill:transparent'}, g);
   });
   // molecules

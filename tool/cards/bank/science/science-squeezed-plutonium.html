@@ -42,19 +42,23 @@
 const RIGHT = 1;
 let pick = -1, answered = false;
 const N = 60, RH = 0.016, V = 0.8, SQ = 0.42, GOAL = 24;
-const S = {s:1, arrow:0, glow:0, nuc:[], neu:[], splits:0, top:'6 kg OF PLUTONIUM-239', sub:'normal density', count:false};
+const S = {s:1, arrow:0, glow:0, nuc:[], neu:[], splits:0, top:'6 kg of plutonium-239', sub:'normal density', count:false};
 let G = null, runId = 0;
 
-// nuclei spread evenly in a unit disk
+// nuclei packed in an orderly metal lattice inside a unit disk (the 60 nearest the centre)
 (function(){
-  let tries = 0;
-  while (S.nuc.length < N && tries < 20000) {
-    tries++;
-    const a = Kit.rnd()*Math.PI*2, r = Math.sqrt(Kit.rnd())*0.93;
-    const x = r*Math.cos(a), y = r*Math.sin(a);
-    if (S.nuc.every(p => Math.hypot(p.x-x, p.y-y) > 0.15)) S.nuc.push({x, y, f:0, fl:0});
+  const d = 0.21, h = d*Math.sqrt(3)/2, pts = [];
+  for (let j=-6;j<=6;j++) for (let i=-6;i<=6;i++){
+    const x = (i + (j & 1)*0.5)*d, y = j*h;
+    if (Math.hypot(x, y) <= 0.93) pts.push({x, y, f:0, fl:0});
   }
+  pts.sort((a,b) => Math.hypot(a.x,a.y) - Math.hypot(b.x,b.y));
+  S.nuc = pts.slice(0, N);
 })();
+
+// a slightly uneven outline for the blast and the explosive blocks
+const JAG = Array.from({length:14}, () => 0.9 + Kit.rnd()*0.16);
+const BLK = Array.from({length:10}, () => 0.92 + Kit.rnd()*0.16);
 
 function resetNuc(){ S.nuc.forEach(p => {p.f = 0; p.fl = 0;}); S.neu = []; S.splits = 0; }
 function fire(n){
@@ -93,51 +97,93 @@ function step(dt){
   S.nuc.forEach(p => { if (p.fl > 0) p.fl = Math.max(0, p.fl - dt*1.6); });
 }
 
+// flat colour mixing for the canvas (ink N% into the card colour)
+function toRGB(c){
+  c = (c||'').trim();
+  if (c[0] === '#'){
+    let h = c.slice(1); if (h.length === 3) h = h.split('').map(d => d+d).join('');
+    return [0,2,4].map(i => parseInt(h.slice(i,i+2),16));
+  }
+  const m = c.match(/[\d.]+/g); return m ? m.slice(0,3).map(Number) : [0,0,0];
+}
+function mix(a, b, t){ const A = toRGB(a), B = toRGB(b); return `rgb(${A.map((v,i) => Math.round(v*t + B[i]*(1-t))).join(',')})`; }
+
+const HOT = '#ff6b2c', HOT2 = '#ffc53d';
+
 function draw(){
   if (!G) return;
   const {x, W, H} = G, cs = getComputedStyle(Kit.$('card'));
   const ink = cs.getPropertyValue('--k').trim() || '#111', bg = cs.getPropertyValue('--c').trim() || '#fff';
+  const body = cs.getPropertyValue('--body') || 'sans-serif';
   const fs = Math.max(13, Math.min(W, H)*0.05);
   const cx = W/2, cy = H/2;
   const R0 = Math.max(30, Math.min(W*0.4, (H - 4.6*fs)/2/1.18));
   const R = R0*S.s;
+  const TAU = Math.PI*2;
+  const lw = Math.max(2, R0*0.025);
   x.clearRect(0,0,W,H);
+  x.lineCap = 'round'; x.lineJoin = 'round';
+
+  // the blast: one flat, lumpy patch of heat behind the ball
   if (S.glow > 0){
-    const g = x.createRadialGradient(cx,cy,R*0.3,cx,cy,R0*1.6);
-    g.addColorStop(0, `rgba(255,236,150,${S.glow})`); g.addColorStop(.45, `rgba(255,140,30,${.75*S.glow})`); g.addColorStop(1,'rgba(255,90,0,0)');
-    x.fillStyle = g; x.beginPath(); x.arc(cx,cy,R0*1.6,0,Math.PI*2); x.fill();
+    const blob = (rad, col) => {
+      const pt = i => { const k = (i+14)%14, a = k/14*TAU; return [cx+Math.cos(a)*rad*JAG[k], cy+Math.sin(a)*rad*JAG[k]]; };
+      x.fillStyle = col; x.beginPath();
+      let p0 = pt(0), p1 = pt(1);
+      x.moveTo((p0[0]+p1[0])/2, (p0[1]+p1[1])/2);
+      for (let i=1;i<=14;i++){
+        const a = pt(i), b = pt(i+1);
+        x.quadraticCurveTo(a[0], a[1], (a[0]+b[0])/2, (a[1]+b[1])/2);
+      }
+      x.closePath(); x.fill();
+    };
+    x.save(); x.globalAlpha = Math.min(1, S.glow);
+    blob(R0*(0.6 + 0.75*S.glow), HOT);
+    blob(R0*(0.45 + 0.45*S.glow), HOT2);
+    x.restore();
   }
+
+  // the explosive shell: ten blocks hugging the ball, pressing it inward
   if (S.arrow > 0){
-    x.save(); x.globalAlpha = S.arrow; x.strokeStyle = '#ff7a1a'; x.lineWidth = Math.max(3, R0*0.04); x.lineCap='round'; x.lineJoin='round';
+    x.save(); x.globalAlpha = S.arrow;
+    const gap = R0*0.05, th = R0*0.15, seg = TAU/10, cut = 0.07;
     for (let i=0;i<10;i++){
-      const a = i/10*Math.PI*2, rr = R + R0*0.16, d = R0*0.08;
-      const tx = cx+Math.cos(a)*rr, ty = cy+Math.sin(a)*rr;
-      const ox = Math.cos(a), oy = Math.sin(a), px = -oy, py = ox;
-      x.beginPath(); x.moveTo(tx+ox*d+px*d, ty+oy*d+py*d); x.lineTo(tx, ty); x.lineTo(tx+ox*d-px*d, ty+oy*d-py*d); x.stroke();
+      const a0 = i*seg + cut, a1 = (i+1)*seg - cut;
+      const r1 = R + gap, r2 = R + gap + th*BLK[i];
+      x.fillStyle = mix(ink, bg, 0.4);
+      x.beginPath(); x.arc(cx, cy, r2, a0, a1); x.arc(cx, cy, r1, a1, a0, true); x.closePath(); x.fill();
+      x.strokeStyle = ink; x.lineWidth = Math.max(1.5, R0*0.018); x.stroke();
     }
     x.restore();
   }
-  // the ball
-  x.fillStyle = ink; x.beginPath(); x.arc(cx,cy,R,0,Math.PI*2); x.fill();
-  const nr = Math.max(2.6, R0*0.032);
+
+  // the ball of plutonium: a pale disc with a firm ink outline
+  x.fillStyle = mix(ink, bg, 0.16); x.beginPath(); x.arc(cx,cy,R,0,TAU); x.fill();
+  x.strokeStyle = ink; x.lineWidth = lw; x.stroke();
+
+  // nuclei: a tidy lattice of ink beads; a split one turns orange
+  const nr = Math.max(3, R0*0.036);
   for (const p of S.nuc){
     const px = cx+p.x*R, py = cy+p.y*R;
-    if (!p.f){ x.fillStyle = bg; x.beginPath(); x.arc(px,py,nr,0,Math.PI*2); x.fill(); }
-    else {
-      x.strokeStyle = bg; x.globalAlpha = .35; x.lineWidth = 1; x.beginPath(); x.arc(px,py,nr*.7,0,Math.PI*2); x.stroke(); x.globalAlpha = 1;
-      if (p.fl > 0){ x.strokeStyle = `rgba(255,140,30,${p.fl})`; x.lineWidth = 2.5; x.beginPath(); x.arc(px,py,nr+(1-p.fl)*R0*0.14,0,Math.PI*2); x.stroke();
-        x.fillStyle = `rgba(255,200,60,${p.fl})`; x.beginPath(); x.arc(px,py,nr*1.3,0,Math.PI*2); x.fill(); }
-    }
+    x.fillStyle = !p.f ? ink : (p.fl > 0.3 ? HOT2 : HOT);
+    x.beginPath(); x.arc(px,py,nr,0,TAU); x.fill();
   }
+
+  // neutrons: orange heads with a short tail
+  const nrad = Math.max(2.6, R0*0.026);
   for (const n of S.neu){
     const px = cx+n.x*R0, py = cy+n.y*R0;
-    x.strokeStyle = 'rgba(255,224,102,.7)'; x.lineWidth = 2; x.beginPath(); x.moveTo(px,py); x.lineTo(px-n.dx*R0*0.09, py-n.dy*R0*0.09); x.stroke();
-    x.fillStyle = '#ffe066'; x.strokeStyle = ink; x.lineWidth = 1; x.beginPath(); x.arc(px,py,Math.max(2.4,R0*0.022),0,Math.PI*2); x.fill(); x.stroke();
+    x.strokeStyle = HOT; x.lineWidth = Math.max(1.5, nrad*0.8);
+    x.beginPath(); x.moveTo(px,py); x.lineTo(px-n.dx*R0*0.09, py-n.dy*R0*0.09); x.stroke();
+    x.fillStyle = HOT; x.beginPath(); x.arc(px,py,nrad,0,TAU); x.fill();
   }
+
+  // two plain captions, one size, body font
+  const lf = fs*0.92;
   x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'middle';
-  x.font = `800 ${fs}px ${cs.getPropertyValue('--display') || 'sans-serif'}`;
+  x.font = `700 ${lf}px ${body}`;
   x.fillText(S.top, cx, fs*0.9);
-  x.font = `600 ${fs*0.92}px ${cs.getPropertyValue('--body') || 'sans-serif'}`;
+  x.font = `500 ${lf}px ${body}`;
   x.fillText(S.count ? `${S.sub} · splits: ${S.splits}` : S.sub, cx, H - fs*0.9);
 }
 
@@ -150,31 +196,31 @@ function finalState(){
   S.s = SQ; S.arrow = 0; S.glow = 1; S.neu = [];
   S.nuc.forEach((p,i) => { p.f = i % 3 ? 1 : 0; p.fl = 0; });
   S.splits = S.nuc.filter(p => p.f).length; S.count = true;
-  S.top = 'SQUEEZED: CHAIN REACTION'; S.sub = 'same 6 kg';
+  S.top = 'Squeezed: chain reaction'; S.sub = 'same 6 kg';
 }
 async function sequence(){
   const id = ++runId;
   if (Kit.calm){ finalState(); return; }
   gsap.killTweensOf(S);
   resetNuc(); S.s = 1; S.arrow = 0; S.glow = 0; S.count = true;
-  S.top = 'NORMAL DENSITY · 6 kg'; S.sub = '3 stray neutrons';
+  S.top = 'Normal density · 6 kg'; S.sub = '3 stray neutrons';
   await wait(500); if (id !== runId) return;
   fire(3);
   await until(() => S.neu.length === 0, 5000); if (id !== runId) return;
-  S.top = 'NEUTRONS ESCAPE: FIZZLE'; S.sub = 'normal density';
+  S.top = 'Neutrons escape: fizzle'; S.sub = 'normal density';
   await wait(1300); if (id !== runId) return;
-  S.top = 'EXPLOSIVES SQUEEZE IT'; S.sub = 'same 6 kg';
+  S.top = 'Explosives squeeze it'; S.sub = 'same 6 kg';
   await gsap.to(S, {arrow:1, duration:.3});
   await gsap.to(S, {s:SQ, duration:1.3, ease:'power2.in'}); if (id !== runId) return;
   gsap.to(S, {arrow:0, duration:.4});
-  resetNuc(); S.top = 'SQUEEZED · SAME 6 kg'; S.sub = '3 stray neutrons';
+  resetNuc(); S.top = 'Squeezed · same 6 kg'; S.sub = '3 stray neutrons';
   await wait(300); if (id !== runId) return;
   fire(3);
   for (let k=0;k<5 && S.splits < GOAL; k++){
     await until(() => S.splits >= GOAL || S.neu.length === 0, 5000); if (id !== runId) return;
     if (S.splits < GOAL) fire(1);
   }
-  S.top = 'SQUEEZED: CHAIN REACTION'; S.sub = 'same 6 kg';
+  S.top = 'Squeezed: chain reaction'; S.sub = 'same 6 kg';
   Kit.haptic('success');
   gsap.to(S, {glow:1, duration:.8, ease:'power2.out'});
 }

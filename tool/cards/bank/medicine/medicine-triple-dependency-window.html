@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: medicine-triple-dependency-window -->
-<!-- Look: a night-lit rose window. Three overlapping lobes of jittered mosaic glass, lead cames, candle-flicker panes, a slow passing light, and a rim of 100 small panes.
-     Interaction: tap a lobe and its glass lights pane by pane, rippling out from your finger (nicotine, habits, beliefs). Overlaps only mix colour when both dependencies are lit. Dark lobes breathe softly to invite a tap.
-     Wow: with all three lit, the centre flares white-hot ("96%"). Then the rim lights pane by pane: 96 rose panes, and 4 gold ones for those who quit on willpower alone. -->
+<!-- Look: a rose window drawn flat, like a page in a printed book. Three overlapping round lobes in plain tints, leaded with thin lines of the card's colour, set in a plain stone frame holding 100 small panes.
+     Interaction: tap a lobe and its colour floods out from your finger (nicotine, habits, beliefs). An overlap only changes colour when both of its dependencies are lit. Dark lobes breathe softly to invite a tap.
+     Wow: with all three lit, the centre turns pale and shows "96%". Then the rim fills pane by pane: 96 rose panes, and 4 gold ones for those who quit on willpower alone. -->
 <title>Three locks of smoking</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -34,23 +34,29 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const LEAD = '#0a0812', DARK = '#17121f';
-  const COL = {1:'#ff4d6d', 2:'#ffb238', 4:'#3d8bff', 3:'#ff7a3a', 6:'#3fd48e', 5:'#a95cff', 7:'#fff3c4'};
   const DEP = [
     ['Physiological', 'nicotine', 'Body', 'Physiological: the body itself depends on <b>nicotine</b>.'],
     ['Behavioral', 'habits', 'Habit', 'Behavioral: the daily <b>habits</b> built around each cigarette.'],
     ['Psychological', 'beliefs', 'Mind', 'Psychological: the <b>beliefs</b> that pull you back to smoking.']
   ];
   let lit = [0, 0, 0], revealed = false, revealing = false;
-  let W, H, S, cx, cy, r, d, s, fs, compact, ext, C = [], tiles = [], ring = [], labs = [], halos = [], hints = [], beads = [], cHalo, cText, sweepTw = null, loops = [], fx;
+  let W, H, S, cx, cy, r, d, s, fs, compact, ext, box, C = [], regs = {}, regR = {}, regG = [], ring = [], labs = [], hov = [], hints = [], cText, loops = [];
 
   const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
   const mix = (a, b, t) => { const A = hex(a), B = hex(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
-  const vary = (c, v) => v > 0 ? mix(c, '#ffffff', v * .2) : mix(c, '#000000', -v * .24);
+  const cs = getComputedStyle(Kit.$('card'));
+  const okHex = v => /^#[0-9a-f]{6}$/i.test(v) ? v : null;
+  const K = okHex(cs.getPropertyValue('--k').trim()) || '#f6efe1';
+  const CC = okHex(cs.getPropertyValue('--c').trim()) || '#15111f';
+  const ROSE = '#e0476a', GOLD = '#ffd98a';
+  // Colour of a region by how many of its dependencies are lit: dark, rose, pale rose, cream.
+  const LV = [mix(CC, K, .12), ROSE, mix(ROSE, K, .45), K];
   const mask = () => lit[0] | lit[1] << 1 | lit[2] << 2;
-  const tileCol = t => { const mm = t.m & mask(); return vary(mm ? COL[mm] : mix(COL[t.m], DARK, .74), t.v); };
-  const ringCol = (i, on) => on ? vary(i < 4 ? '#ffd166' : '#e8456b', ((i * 37) % 11) / 11 - .5) : vary('#2c2440', ((i * 53) % 13) / 13 - .5);
-  let seed = 7; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  const pop = m => (m & 1) + (m >> 1 & 1) + (m >> 2 & 1);
+  const regCol = m => LV[pop(m & mask())];
+  const RIMDIM = mix(CC, K, .17);
+  const STONE = mix(CC, K, .07);
+  const ringCol = (i, on) => on ? (i < 4 ? GOLD : ROSE) : RIMDIM;
 
   function build() {
     loops.forEach(t => t.kill()); loops = []; hints = [];
@@ -65,124 +71,82 @@
     const NS = (t, a, p) => Kit.mk(t, a, p || svg);
 
     const defs = NS('defs', {});
-    const cp = NS('clipPath', {id: 'u'}, defs);
-    C.forEach(c => NS('circle', {cx: c.x, cy: c.y, r}, cp));
-    const fl = NS('filter', {id: 'bl', x: '-60%', y: '-60%', width: '220%', height: '220%'}, defs);
-    NS('feGaussianBlur', {stdDeviation: s * 1.3}, fl);
-    const band = S * .34;
-    const lg = NS('linearGradient', {id: 'sw', gradientUnits: 'userSpaceOnUse', x1: cx - ext - band, x2: cx - ext, y1: cy, y2: cy, gradientTransform: `rotate(-24 ${cx} ${cy})`}, defs);
-    [[0, 0], [.5, .4], [1, 0]].forEach(([o, a]) => NS('stop', {offset: o, 'stop-color': '#fffaf0', 'stop-opacity': a}, lg));
-    const rg = NS('radialGradient', {id: 'vg', cx: .5, cy: .5, r: .5}, defs);
-    [[0, 0], [.6, 0], [1, .45]].forEach(([o, a]) => NS('stop', {offset: o, 'stop-color': '#000', 'stop-opacity': a}, rg));
+    C.forEach((c, k) => { const cp = NS('clipPath', {id: 'lo' + k}, defs); NS('circle', {cx: c.x, cy: c.y, r}, cp); });
+    box = {x: cx - ext - 2, y: cy - ext - 2, width: ext * 2 + 4, height: ext * 2 + 4};
 
-    // The glow the lit glass throws onto the card.
-    halos = C.map((c, i) => NS('circle', {cx: c.x, cy: c.y, r: r * .9, fill: COL[1 << i], filter: 'url(#bl)', opacity: lit[i] ? .45 : 0}));
-    cHalo = NS('circle', {cx, cy, r: S * .13, fill: '#fff3c4', filter: 'url(#bl)', opacity: revealed ? .85 : 0});
+    // The stone frame of the window, a plain flat ring that holds the 100 panes.
+    const R0 = S * .425, R1 = S * .468, F0 = R0 - s * .3, F1 = Math.min(R1 + s * .3, S * .49);
+    NS('path', {d: `M${cx + F1},${cy}A${F1},${F1} 0 1 0 ${cx - F1},${cy}A${F1},${F1} 0 1 0 ${cx + F1},${cy}Z M${cx + F0},${cy}A${F0},${F0} 0 1 1 ${cx - F0},${cy}A${F0},${F0} 0 1 1 ${cx + F0},${cy}Z`, fill: STONE, 'fill-rule': 'evenodd'});
 
-    // The mosaic: a jittered lattice cut into Voronoi panes, bounded to the window.
-    seed = 7;
-    const pts = [], meta = [];
-    for (let y = cy - ext, row = 0; y <= cy + ext; y += s * .87, row++) {
-      for (let x = cx - ext + (row % 2) * s / 2; x <= cx + ext; x += s) {
-        const px = x + (rnd() - .5) * s * .7, py = y + (rnd() - .5) * s * .7;
-        const ds = C.map(c => Math.hypot(px - c.x, py - c.y));
-        if (Math.min(...ds) > r + s * .5) continue;
-        let m = ds.reduce((a, v, k) => a | (v < r ? 1 << k : 0), 0);
-        if (!m) m = 1 << ds.indexOf(Math.min(...ds));
-        pts.push([px, py]); meta.push({m, v: rnd() * 2 - 1});
-      }
+    // The seven pieces of the window: inside the lobes they belong to, outside the others.
+    regs = {}; regR = {}; regG = [];
+    for (let m = 1; m < 8; m++) {
+      const mk = NS('mask', Object.assign({id: 'ex' + m, maskUnits: 'userSpaceOnUse'}, box), defs);
+      NS('rect', Object.assign({fill: '#fff'}, box), mk);
+      [0, 1, 2].forEach(k => { if (!(m >> k & 1)) NS('circle', {cx: C[k].x, cy: C[k].y, r, fill: '#000'}, mk); });
+      let g = NS('g', {mask: `url(#ex${m})`});
+      regG.push(g);
+      [0, 1, 2].forEach(k => { if (m >> k & 1) g = NS('g', {'clip-path': `url(#lo${k})`}, g); });
+      regR[m] = NS('rect', Object.assign({fill: regCol(m)}, box), g);
+      regs[m] = g;
     }
-    const vor = d3.Delaunay.from(pts).voronoi([cx - ext, cy - ext, cx + ext, cy + ext]);
-    const glass = NS('g', {'clip-path': 'url(#u)'});
-    const groups = [0, 1, 2, 3].map(() => NS('g', {}, glass));
-    tiles = pts.map((p, i) => {
-      const t = Object.assign({x: p[0], y: p[1]}, meta[i]);
-      t.el = NS('path', {d: 'M' + vor.cellPolygon(i).join('L') + 'Z', fill: tileCol(t), stroke: LEAD, 'stroke-width': s * .17, 'stroke-linejoin': 'round'}, groups[i % 4]);
-      return t;
-    });
-    // Light passing across the glass (the gradient moves, the rect stays put), and a darker edge.
-    NS('rect', {x: cx - ext, y: cy - ext, width: ext * 2, height: ext * 2, fill: 'url(#sw)', style: 'mix-blend-mode:screen;pointer-events:none'}, glass);
-    NS('rect', {x: cx - ext, y: cy - ext, width: ext * 2, height: ext * 2, fill: 'url(#vg)', style: 'pointer-events:none'}, glass);
 
-    // Lead cames with a thin gilt edge.
-    C.forEach(c => {
-      NS('circle', {cx: c.x, cy: c.y, r, fill: 'none', stroke: LEAD, 'stroke-width': s * .42});
-      NS('circle', {cx: c.x, cy: c.y, r: r + s * .21, fill: 'none', stroke: 'rgba(255,226,170,.24)', 'stroke-width': 1});
-    });
+    // A soft breathing tint on dark lobes, inviting a tap.
+    hov = C.map(c => NS('circle', {cx: c.x, cy: c.y, r, fill: K, opacity: 0, style: 'pointer-events:none'}));
 
-    // Jewel beads between lobes and rim.
-    const RB = S * .405;
-    beads = [];
-    for (let i = 0; i < 24; i++) {
-      const a = (i * 15 - 90) * Math.PI / 180;
-      beads.push(NS('circle', {cx: cx + RB * Math.cos(a), cy: cy + RB * Math.sin(a), r: Math.max(1.4, s * .14), fill: revealed ? '#ffe7a8' : '#3a3150', stroke: LEAD, 'stroke-width': .8}));
-    }
+    // The lead between the pieces, in the card's colour.
+    C.forEach(c => NS('circle', {cx: c.x, cy: c.y, r, fill: 'none', stroke: CC, 'stroke-width': Math.max(2.5, s * .24)}));
 
     // The rim: 100 panes, one per smoker in 100. Kept fully inside the drawing.
-    const R0 = S * .425, R1 = S * .468, P = (a, rr) => [cx + rr * Math.cos(a), cy + rr * Math.sin(a)];
+    const P = (a, rr) => [cx + rr * Math.cos(a), cy + rr * Math.sin(a)];
     ring = [];
     for (let i = 0; i < 100; i++) {
-      const a0 = (-90 + (i - 2) * 3.6 + .35) * Math.PI / 180, a1 = (-90 + (i - 1) * 3.6 - .35) * Math.PI / 180;
+      const a0 = (-90 + (i - 2) * 3.6 + .55) * Math.PI / 180, a1 = (-90 + (i - 1) * 3.6 - .55) * Math.PI / 180;
       const [x0, y0] = P(a0, R1), [x1, y1] = P(a1, R1), [x2, y2] = P(a1, R0), [x3, y3] = P(a0, R0);
-      ring.push(NS('path', {d: `M${x0},${y0}A${R1},${R1} 0 0 1 ${x1},${y1}L${x2},${y2}A${R0},${R0} 0 0 0 ${x3},${y3}Z`, fill: ringCol(i, revealed), stroke: LEAD, 'stroke-width': s * .12}));
+      ring.push(NS('path', {d: `M${x0},${y0}A${R1},${R1} 0 0 1 ${x1},${y1}L${x2},${y2}A${R0},${R0} 0 0 0 ${x3},${y3}Z`, fill: ringCol(i, revealed)}));
     }
-    [R0 - s * .08, R1 + s * .08].forEach(rr => NS('circle', {cx, cy, r: rr, fill: 'none', stroke: LEAD, 'stroke-width': s * .18}));
-    NS('circle', {cx, cy, r: R1 + s * .26, fill: 'none', stroke: 'rgba(255,226,170,.22)', 'stroke-width': 1});
 
     // Names in the glass. On small windows: short names only, so nothing collides.
     labs = C.map((c, i) => {
       const ux = (c.x - cx) / d, uy = (c.y - cy) / d;
       const lx = c.x + ux * r * (compact ? .5 : .42), ly = c.y + uy * r * (compact ? .5 : .42) - (compact ? 0 : (i ? 0 : fs * .5)) + (compact ? fs * .35 : 0);
       const g = NS('g', {style: 'pointer-events:none'});
-      const n = NS('text', {x: lx, y: ly, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: '#fff', stroke: LEAD, 'stroke-width': fs * .32, 'paint-order': 'stroke', 'stroke-linejoin': 'round', style: 'font-family:var(--body);letter-spacing:.02em', opacity: lit[i] ? 1 : .62}, g);
+      const n = NS('text', {x: lx, y: ly, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, fill: K, style: 'font-family:var(--body)', opacity: lit[i] ? 1 : .6}, g);
       n.textContent = compact ? DEP[i][2] : DEP[i][0];
       let sb = null;
       if (!compact) {
-        sb = NS('text', {x: lx, y: ly + fs * 1.4, 'text-anchor': 'middle', 'font-size': fs * 1.15, 'font-weight': 700, fill: '#ffe7a8', stroke: LEAD, 'stroke-width': fs * .3, 'paint-order': 'stroke', 'stroke-linejoin': 'round', style: 'font-family:var(--hand)', opacity: lit[i] ? 1 : 0}, g);
+        sb = NS('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 500, fill: K, style: 'font-family:var(--body)', opacity: lit[i] ? 1 : 0}, g);
         sb.textContent = DEP[i][1];
       }
       return {n, sb};
     });
     const cfs = Math.max(12.5, fs * 1.05);
-    cText = NS('text', {x: cx, y: cy + cfs * .36, 'text-anchor': 'middle', 'font-size': cfs, 'font-weight': 900, fill: LEAD, stroke: '#fff3c4', 'stroke-width': cfs * .3, 'paint-order': 'stroke', 'stroke-linejoin': 'round', style: 'font-family:var(--body);pointer-events:none', opacity: revealed ? 1 : 0});
+    cText = NS('text', {x: cx, y: cy + cfs * .36, 'text-anchor': 'middle', 'font-size': cfs * 1.1, 'font-weight': 800, fill: CC, style: 'font-family:var(--display);pointer-events:none', opacity: revealed ? 1 : 0});
     cText.textContent = '96%';
-    fx = NS('g', {style: 'pointer-events:none'});
 
-    // Ambient: candle-flicker panes, a slow passing light, dark lobes breathing.
     if (!Kit.calm) {
-      groups.forEach((g, k) => loops.push(gsap.to(g, {opacity: .76, duration: 1.6 + k * .55, delay: k * .4, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
-      sweepTw = gsap.fromTo(lg, {attr: {x1: cx - ext - band - S * .3, x2: cx - ext - S * .3}}, {attr: {x1: cx + ext + S * .3, x2: cx + ext + band + S * .3}, duration: 5.5, ease: 'sine.inOut', repeat: -1, repeatDelay: 1.4});
-      loops.push(sweepTw);
-      halos.forEach((h, i) => { if (!lit[i] && !revealed) { const tw = gsap.to(h, {opacity: .16, duration: 1.4, delay: i * .45, yoyo: true, repeat: -1, ease: 'sine.inOut'}); hints[i] = tw; loops.push(tw); } });
-      loops.push(gsap.to(beads, {opacity: .55, duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut', stagger: {each: .08, repeat: -1, yoyo: true}}));
-    } else lg.setAttribute('x1', cx - S * 3), lg.setAttribute('x2', cx - S * 2.5);
-  }
-
-  function shock(x, y) {
-    if (Kit.calm) return;
-    const max = Math.min(r * 1.1, x, W - x, y, H - y) - 3;
-    if (max <= s) return;
-    const c = Kit.mk('circle', {cx: x, cy: y, r: s * .6, fill: 'none', stroke: '#fff7e0', 'stroke-width': 2.2, opacity: .9}, fx);
-    gsap.to(c, {attr: {r: max}, opacity: 0, duration: .75, ease: 'power2.out', onComplete: () => c.remove()});
-    if (sweepTw) sweepTw.restart();
+      hov.forEach((h, i) => { if (!lit[i] && !revealed) { const tw = gsap.to(h, {opacity: .08, duration: 1.4, delay: i * .45, yoyo: true, repeat: -1, ease: 'sine.inOut'}); hints[i] = tw; loops.push(tw); } });
+    }
   }
 
   function light(k, px, py) {
-    shock(px, py);
     if (lit[k]) { Kit.haptic('light'); return; }
     lit[k] = 1; Kit.haptic('selection');
     if (hints[k]) { hints[k].kill(); hints[k] = null; }
-    tiles.forEach(t => {
-      if (!(t.m & (1 << k))) return;
-      const col = tileCol(t);
-      if (Kit.calm) { t.el.setAttribute('fill', col); return; }
-      const delay = Math.hypot(t.x - px, t.y - py) / S * 1.1;
-      gsap.timeline({delay}).to(t.el, {attr: {fill: '#fffaf0'}, duration: .08, ease: 'power1.out'}).to(t.el, {attr: {fill: col}, duration: .45, ease: 'power3.out'});
-    });
+    if (Kit.calm) hov[k].setAttribute('opacity', 0); else gsap.to(hov[k], {opacity: 0, duration: .3});
+    // The colour floods out of the finger, piece by piece of this lobe; it only grows as far as the window's corners,
+    // then the piece takes the colour and the flood is removed.
+    const far = Math.max(...[[box.x, box.y], [box.x + box.width, box.y], [box.x, box.y + box.height], [box.x + box.width, box.y + box.height]].map(([x, y]) => Math.hypot(x - px, y - py)));
+    for (let m = 1; m < 8; m++) {
+      if (!(m & (1 << k))) continue;
+      const col = regCol(m), rect = regR[m];
+      if (Kit.calm) { rect.setAttribute('fill', col); continue; }
+      const c = Kit.mk('circle', {cx: px, cy: py, r: 0, fill: col}, regs[m]);
+      gsap.to(c, {attr: {r: far}, duration: 1.3 * Math.min(1, far / (S * 1.2)) + .2, ease: 'none', onComplete: () => { rect.setAttribute('fill', col); c.remove(); }});
+    }
     const L = labs[k];
-    if (Kit.calm) { halos[k].setAttribute('opacity', .45); L.n.setAttribute('opacity', 1); if (L.sb) L.sb.setAttribute('opacity', 1); }
+    if (Kit.calm) { L.n.setAttribute('opacity', 1); if (L.sb) L.sb.setAttribute('opacity', 1); }
     else {
-      gsap.to(halos[k], {opacity: .45, duration: 1, ease: 'power2.out'});
       gsap.to(L.n, {opacity: 1, duration: .3});
       if (L.sb) gsap.fromTo(L.sb, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .6, delay: .25, ease: 'back.out(2.5)'});
     }
@@ -194,16 +158,13 @@
   function reveal() {
     revealed = true;
     hints.forEach(t => t && t.kill()); hints = [];
+    hov.forEach(h => h.setAttribute('opacity', 0));
     const done = () => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); };
-    if (Kit.calm) { ring.forEach((p, i) => p.setAttribute('fill', ringCol(i, true))); beads.forEach(b => b.setAttribute('fill', '#ffe7a8')); cHalo.setAttribute('opacity', .85); cText.setAttribute('opacity', 1); done(); return; }
+    if (Kit.calm) { ring.forEach((p, i) => p.setAttribute('fill', ringCol(i, true))); cText.setAttribute('opacity', 1); done(); return; }
     const tl = gsap.timeline({onComplete: done});
-    tl.fromTo(cHalo, {opacity: 0, attr: {r: S * .03}}, {opacity: .95, attr: {r: S * .19}, duration: .9, ease: 'expo.out'})
-      .to(cHalo, {opacity: .8, attr: {r: S * .13}, duration: .8, ease: 'power2.inOut'}, '>-.1');
-    tiles.filter(t => t.m === 7).forEach(t => tl.fromTo(t.el, {attr: {fill: '#ffffff'}}, {attr: {fill: tileCol(t)}, duration: 1.2, ease: 'power2.out'}, 0));
     tl.fromTo(cText, {opacity: 0, scale: .2, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .7, ease: 'back.out(3)'}, .25);
-    tl.to(beads, {attr: {fill: '#ffe7a8'}, duration: .3, stagger: .04}, .5);
-    tl.to(ring.slice(4), {attr: {fill: (i) => ringCol(i + 4, true)}, duration: .25, ease: 'power2.out', stagger: .013}, .7);
-    tl.fromTo(ring.slice(0, 4), {attr: {fill: '#ffffff'}}, {attr: {fill: (i) => ringCol(i, true)}, duration: .9, ease: 'elastic.out(1,.4)', stagger: .09}, '>-.05');
+    tl.to(ring.slice(4), {attr: {fill: ROSE}, duration: .25, ease: 'power2.out', stagger: .013}, .7);
+    tl.fromTo(ring.slice(0, 4), {attr: {fill: K}}, {attr: {fill: GOLD}, duration: .9, ease: 'power2.out', stagger: .09}, '>-.05');
   }
 
   svg.addEventListener('pointerdown', e => {
@@ -219,9 +180,9 @@
 
   Kit.onShow.card = build;
   Kit.onEnter.card = () => {
-    if (Kit.calm || !tiles.length) return;
-    const sorted = tiles.slice().sort((a, b) => Math.hypot(a.x - cx, a.y - cy) - Math.hypot(b.x - cx, b.y - cy)).map(t => t.el);
-    gsap.from(sorted, {opacity: 0, duration: .5, ease: 'power2.out', stagger: {amount: 1.1}});
+    if (Kit.calm || !regG.length) return;
+    const order = [6, 0, 1, 3, 2, 4, 5].map(i => regG[i]);
+    gsap.from(order, {opacity: 0, duration: .5, ease: 'power2.out', stagger: {amount: 1.1}});
     gsap.from(ring, {opacity: 0, duration: .3, ease: 'power2.out', stagger: .008, delay: .3});
     gsap.from(labs.map(l => l.n), {opacity: 0, y: 8, duration: .6, ease: 'power3.out', stagger: .15, delay: 1});
   };

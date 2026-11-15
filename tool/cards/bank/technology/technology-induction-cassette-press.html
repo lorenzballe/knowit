@@ -12,17 +12,19 @@
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
 .fr{fill:var(--k)}
-.die{fill:color-mix(in srgb,var(--k) 78%,var(--c))}
-.dieline{fill:none;stroke:var(--k);stroke-width:2}
+.beam{fill:color-mix(in srgb,var(--k) 20%,var(--c));stroke:var(--k);stroke-width:3;stroke-linejoin:round}
+.die{fill:color-mix(in srgb,var(--k) 28%,var(--c))}
+.dieline{fill:none;stroke:var(--k);stroke-width:3;stroke-linejoin:round}
+.rod{fill:color-mix(in srgb,var(--k) 45%,var(--c));stroke:var(--k);stroke-width:3}
 .ink{fill:none;stroke:var(--k);stroke-linejoin:round;stroke-linecap:round}
-.steel{fill:none;stroke:#c9d3dc;stroke-linejoin:round;stroke-linecap:round}
-.rd{fill:var(--c);font-family:var(--mono);font-weight:700}
-.rdsm{fill:var(--c);font-family:var(--body);font-weight:700;opacity:.8}
-.cap{fill:var(--k);font-family:var(--body);font-weight:700}
-.copper{fill:#c8742c;stroke:var(--k);stroke-width:1.5}
-.cwire{stroke:#8a4a17;stroke-width:1.4}
-.punch{fill:color-mix(in srgb,var(--k) 88%,var(--c))}
-.pull{fill:var(--c);font-family:var(--body);font-weight:800}
+.steel{fill:none;stroke:#e4e8eb;stroke-linejoin:round;stroke-linecap:round}
+.rd{fill:var(--k);font-family:var(--display);font-weight:800}
+.rdsm{fill:var(--k);font-family:var(--body);font-weight:600}
+.cap{fill:var(--k);font-family:var(--body);font-weight:600}
+.copper{fill:#c8742c;stroke:var(--k);stroke-width:2}
+.cwire{stroke:#7a4114;stroke-width:1.6}
+.punch{fill:var(--k)}
+.pull{fill:var(--c);font-family:var(--body);font-weight:700}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag · see it form">
   <div class="in">
@@ -58,51 +60,52 @@ function draw() {
   const dieB = H * 0.79, baseB = H * 0.83;
   G = {W, H, f, sw, cx, w, s, sheetY, d, restPb, travel};
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const lab = Math.max(12, f * 0.8);
 
-  // columns and base
-  mk('rect', {class: 'fr', x: W * 0.05, y: beamT, width: W * 0.06, height: baseB - beamT, rx: 3});
-  mk('rect', {class: 'fr', x: W * 0.89, y: beamT, width: W * 0.06, height: baseB - beamT, rx: 3});
-  mk('rect', {class: 'fr', x: W * 0.03, y: dieB, width: W * 0.94, height: baseB - dieB, rx: 3});
+  // two iron columns and the floor slab
+  mk('rect', {class: 'fr', x: W * 0.05, y: beamT, width: W * 0.06, height: baseB - beamT, rx: 2});
+  mk('rect', {class: 'fr', x: W * 0.89, y: beamT, width: W * 0.06, height: baseB - beamT, rx: 2});
+  mk('rect', {class: 'fr', x: W * 0.03, y: dieB, width: W * 0.94, height: baseB - dieB, rx: 2});
 
-  // lower die with cavity
+  // lower die: a block with the cassette's hollow cut into it
   const L = W * 0.12, R = W * 0.88, top = sheetY + sw / 2;
   const dieP = `M${L},${top} L${cx - w / 2},${top} L${cx - w / 2 + s},${top + d} L${cx + w / 2 - s},${top + d} L${cx + w / 2},${top} L${R},${top} L${R},${dieB} L${L},${dieB} Z`;
   mk('path', {class: 'die', d: dieP});
   mk('path', {class: 'dieline', d: dieP});
 
-  // coil (drops into the formed cassette)
+  // copper coil (drops into the formed cassette)
   el.coil = mk('g', {});
   const cw = w - 2 * s - sw * 6, ch = Math.max(8, d * 0.22);
   const cy0 = sheetY + d - sw / 2 - ch;
   mk('rect', {class: 'copper', x: cx - cw / 2, y: cy0, width: cw, height: ch, rx: ch / 2}, el.coil);
-  const n = Math.floor(cw / 7);
+  const n = Math.floor(cw / 8);
   for (let i = 1; i < n; i++) {
     const x = cx - cw / 2 + i * cw / n;
-    mk('line', {class: 'cwire', x1: x, y1: cy0 + 2, x2: x, y2: cy0 + ch - 2}, el.coil);
+    mk('line', {class: 'cwire', x1: x, y1: cy0 + 3, x2: x, y2: cy0 + ch - 3}, el.coil);
   }
 
-  // sheet
-  el.sInk = mk('polyline', {class: 'ink', 'stroke-width': sw + 3});
+  // the steel sheet
+  el.sInk = mk('polyline', {class: 'ink', 'stroke-width': sw + 4});
   el.sSteel = mk('polyline', {class: 'steel', 'stroke-width': sw});
 
   // ram + punch (drawn at rest, moved by transform)
   el.ram = mk('g', {});
   const pt = restPb - d;
-  mk('rect', {class: 'fr', x: cx - w * 0.36, y: -H, width: w * 0.72, height: pt + H}, el.ram);
+  mk('rect', {class: 'rod', x: cx - w * 0.36, y: -H, width: w * 0.72, height: pt + H}, el.ram);
   const a = w / 2 - sw * 1.4, b = w / 2 - s - sw * 1.4;
-  mk('path', {class: 'punch', d: `M${cx - a},${pt} L${cx + a},${pt} L${cx + b},${restPb} L${cx - b},${restPb} Z`}, el.ram);
-  el.pull = mk('text', {class: 'pull', x: cx, y: pt + d * 0.62, 'text-anchor': 'middle', 'font-size': Math.max(13, f * 0.95)}, el.ram);
-  el.pull.textContent = 'PULL ↓';
+  mk('path', {class: 'punch', d: `M${cx - a},${pt} L${cx + a},${pt} L${cx + b},${restPb} L${cx - b},${restPb} Z`, 'stroke': 'var(--k)', 'stroke-width': 3, 'stroke-linejoin': 'round'}, el.ram);
+  el.pull = mk('text', {class: 'pull', x: cx, y: pt + d * 0.62, 'text-anchor': 'middle', 'font-size': lab}, el.ram);
+  el.pull.textContent = 'Pull ↓';
 
-  // top beam with tonnage readout (covers the ram's top)
-  mk('rect', {class: 'fr', x: W * 0.03, y: beamT, width: W * 0.94, height: beamB - beamT, rx: 4});
-  const fs = Math.max(16, (beamB - beamT) * 0.48);
-  el.rd = mk('text', {class: 'rd', x: cx, y: beamT + (beamB - beamT) * 0.62, 'text-anchor': 'middle', 'font-size': fs});
-  el.rdl = mk('text', {class: 'rdsm', x: W * 0.07, y: beamT + (beamB - beamT) * 0.6, 'font-size': Math.max(12, fs * 0.42)});
-  el.rdl.textContent = 'PRESS';
+  // top beam, with the force written on it (covers the ram's top)
+  mk('rect', {class: 'beam', x: W * 0.03, y: beamT, width: W * 0.94, height: beamB - beamT, rx: 3});
+  const fs = Math.max(16, (beamB - beamT) * 0.46);
+  el.rd = mk('text', {class: 'rd', x: cx, y: beamT + (beamB - beamT) * 0.66, 'text-anchor': 'middle', 'font-size': fs});
+  el.rdl = mk('text', {class: 'rdsm', x: W * 0.07, y: beamT + (beamB - beamT) * 0.6, 'font-size': lab});
+  el.rdl.textContent = 'Press';
 
   // caption under the press
-  el.cap = mk('text', {class: 'cap', x: cx, y: Math.min(H - 4, baseB + Math.max(18, f * 1.5)), 'text-anchor': 'middle', 'font-size': Math.max(12, f * 0.8)});
+  el.cap = mk('text', {class: 'cap', x: cx, y: Math.min(H - 4, baseB + Math.max(18, f * 1.5)), 'text-anchor': 'middle', 'font-size': lab});
 
   svg.classList.toggle('done', done);
   render();

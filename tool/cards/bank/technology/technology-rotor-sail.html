@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{position:relative;border-radius:2.6cqh;background:color-mix(in srgb,var(--k) 7%,transparent);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 10%,transparent);overflow:hidden;cursor:pointer}
+#stage{position:relative;border-radius:2.6cqh;overflow:hidden;cursor:pointer}
 #sea,#over{position:absolute;inset:0;width:100%;height:100%;display:block}
 #over{overflow:visible;pointer-events:none}
 #go{align-self:flex-start}
@@ -34,7 +34,23 @@
 <script>
 (() => {
   const stage = Kit.$('stage'), cv = Kit.$('sea'), over = Kit.$('over'), say = Kit.$('say'), go = Kit.$('go');
-  const INK = '#10100c', AIR = 'rgba(255,255,255,', GAMMA = 1.6 * 2 * Math.PI; // spin ratio 1.6: stagnation points stay on the surface
+  const GAMMA = 1.6 * 2 * Math.PI; // spin ratio 1.6: stagnation points stay on the surface
+  // The card's ink and colour, read from the page, and flat tints between them.
+  let INK = '#10100c', SEA = '#00A6FF', kRGB = [16, 16, 12], cRGB = [0, 166, 255];
+  const probe = document.createElement('canvas').getContext('2d');
+  function rgbOf(v, fb) {
+    probe.fillStyle = fb; try { if (v && v.trim()) probe.fillStyle = v.trim(); } catch (e) {}
+    const s = String(probe.fillStyle);
+    if (s[0] === '#') return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16));
+    const m = s.match(/[\d.]+/g); return m ? m.slice(0, 3).map(Number) : [0, 0, 0];
+  }
+  function readColours() {
+    const cs = getComputedStyle(Kit.$('card'));
+    kRGB = rgbOf(cs.getPropertyValue('--k'), '#10100c'); cRGB = rgbOf(cs.getPropertyValue('--c'), '#00A6FF');
+    INK = `rgb(${kRGB.join(',')})`; SEA = `rgb(${cRGB.join(',')})`;
+  }
+  const tint = p => `rgb(${kRGB.map((k, i) => Math.round(k * p + cRGB[i] * (1 - p))).join(',')})`;
+  const BODY = 'font-family:var(--body),Figtree,sans-serif';
   // The wind, as the direction it blows TOWARD (math angle, y up). It starts from the port side, blowing down.
   let alpha = -Math.PI / 2, alphaTo = alpha, g = 0, gTo = 0, spun = false, taps = 0, lastFrom = null, ended = false;
   let ctx = null, W = 0, H = 0, S = 1, cx = 0, cy = 0, lines = [], dirty = true, t0 = performance.now(), raf = 0;
@@ -50,10 +66,11 @@
     return [wx, -wy];
   }
   // Streamlines from a row of seeds upstream: equal spacing there means equal flow between lines.
+  // Few and far apart, so the drawing stays quiet; they still crowd where the air is fast.
   function trace() {
     lines = [];
     const a = alpha, d = [Math.cos(a), Math.sin(a)], n = [-d[1], d[0]];
-    const ext = Math.hypot(W, H) / 2 / S + .5, span = ext * .98, N = Math.max(15, Math.round(2 * span * S / 13));
+    const ext = Math.hypot(W, H) / 2 / S + .5, span = ext * .98, N = Math.max(7, Math.round(2 * span * S / 36));
     for (let i = 0; i < N; i++) {
       const s = -span + (2 * span) * (i + .5) / N;
       let x = -d[0] * ext + n[0] * s, y = -d[1] * ext + n[1] * s;
@@ -80,7 +97,7 @@
   const ahead = () => Math.max(0, push()[0]);
 
   function hull(c) {
-    // A long hull heading right, the rotor amidships.
+    // A long hull heading right, the rotor amidships: one flat shape, and the bridge at the stern.
     const L = Math.min(W * .44, S * 7.2), B = Math.min(H * .2, S * 1.85);
     c.beginPath();
     c.moveTo(cx - L, cy - B * .78);
@@ -90,13 +107,13 @@
     c.lineTo(cx - L, cy + B * .78);
     c.quadraticCurveTo(cx - L * 1.05, cy, cx - L, cy - B * .78);
     c.closePath();
-    c.fillStyle = 'rgba(16,16,12,.16)'; c.fill();
-    c.lineWidth = 1.5; c.strokeStyle = 'rgba(16,16,12,.38)'; c.stroke();
-    // the bridge at the stern, cargo hatches fore and aft of the rotor
-    c.fillStyle = 'rgba(16,16,12,.22)';
-    c.fillRect(cx - L * .93, cy - B * .62, L * .16, B * 1.24);
-    c.strokeStyle = 'rgba(16,16,12,.2)'; c.lineWidth = 1.2;
-    for (const [x0, x1] of [[-.7, -.42], [-.36, -.2], [.2, .36], [.42, .68]]) c.strokeRect(cx + L * x0, cy - B * .5, L * (x1 - x0), B);
+    c.fillStyle = tint(.24); c.fill();
+    // the bridge at the stern
+    c.fillStyle = tint(.6);
+    c.beginPath();
+    const bx = cx - L * .93, by = cy - B * .62, bw = L * .16, bh = B * 1.24, rr = Math.min(bw, bh) * .18;
+    if (c.roundRect) c.roundRect(bx, by, bw, bh, rr); else c.rect(bx, by, bw, bh);
+    c.fill();
   }
 
   function frame(now) {
@@ -111,12 +128,12 @@
     const c = ctx, t = (now - t0) / 1000;
     c.clearRect(0, 0, W, H);
     hull(c);
-    // the streamlines, faint
-    c.lineWidth = 1.2; c.strokeStyle = AIR + '.34)'; c.lineCap = 'round';
+    // the streamlines: a few even white lines
+    c.lineWidth = 2; c.strokeStyle = '#fff'; c.lineCap = 'round'; c.lineJoin = 'round';
     for (const pts of lines) { c.beginPath(); pts.forEach(([x, y], i) => { const [X, Y] = P(x, y); i ? c.lineTo(X, Y) : c.moveTo(X, Y); }); c.stroke(); }
-    // puffs riding them at the speed of the air there
-    const speed = Kit.calm ? 0 : 52 / S, gap = 34 / S, tail = 9 / S;
-    c.lineWidth = 2.6; c.strokeStyle = AIR + '.95)';
+    // one or two puffs on each line, riding at the speed of the air there
+    const speed = Kit.calm ? 0 : 52 / S, gap = 150 / S, tail = 18 / S;
+    c.lineWidth = 5; c.strokeStyle = '#fff';
     for (const pts of lines) {
       const end = pts[pts.length - 1][2];
       for (let tau = ((t * speed) % gap); tau < end; tau += gap) {
@@ -124,14 +141,13 @@
         c.beginPath(); c.moveTo(...P(...a)); c.lineTo(...P(...b)); c.stroke();
       }
     }
-    // the rotor: a white disc, its stripes turning with the spin
+    // the rotor: a white disc seen from the top, one bold bar across it turning with the spin
     const [X, Y] = P(0, 0), R = S;
-    c.beginPath(); c.arc(X, Y, R, 0, 7); c.fillStyle = '#fff'; c.fill(); c.lineWidth = 2; c.strokeStyle = INK; c.stroke();
+    c.beginPath(); c.arc(X, Y, R, 0, 7); c.fillStyle = '#fff'; c.fill(); c.lineWidth = 3; c.strokeStyle = INK; c.stroke();
     const turn = spinAngle(now);
     c.save(); c.translate(X, Y); c.rotate(turn);
-    c.strokeStyle = INK; c.lineWidth = 2.4; c.lineCap = 'round';
-    for (let i = 0; i < 3; i++) { const q = i * Math.PI * 2 / 3; c.beginPath(); c.arc(0, 0, R * .62, q, q + .7); c.stroke(); }
-    c.beginPath(); c.arc(0, 0, R * .16, 0, 7); c.fillStyle = INK; c.fill();
+    c.strokeStyle = INK; c.lineWidth = 3.2; c.lineCap = 'round';
+    c.beginPath(); c.moveTo(-R * .6, 0); c.lineTo(R * .6, 0); c.stroke();
     c.restore();
     spinArrow(c, X, Y, R);
     if (!Kit.calm) raf = requestAnimationFrame(frame);
@@ -147,11 +163,12 @@
   // The arrows and their words, drawn in SVG over the flow.
   function arrows() {
     over.innerHTML = '';
-    const fs = Math.max(11.5, Math.min(14, W / 26));
+    const fs = Math.max(12, Math.min(15, W / 25));
     const defs = Kit.mk('defs', {}, over);
     const mkTip = (id, col) => { const m = Kit.mk('marker', {id, viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 4.2, markerHeight: 4.2, orient: 'auto'}, defs); Kit.mk('path', {d: 'M0 0L10 5L0 10z', fill: col}, m); };
     mkTip('tipk', INK); mkTip('tipw', '#fff');
-    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: INK, 'letter-spacing': '.06em'}, a), over); e.textContent = s; return e; };
+    // words in the body font, sentence case, knocked out of the air lines with the sea's own colour
+    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, style: BODY, 'font-weight': 700, 'font-size': fs, fill: INK, stroke: SEA, 'stroke-width': fs * .38, 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, a), over); e.textContent = s; return e; };
     const clampX = x => Math.min(W - 8, Math.max(8, x)), clampY = y => Math.min(H - 8, Math.max(fs + 6, y));
     // Where the wind comes from: a white arrow near the upstream edge, its word beside it.
     const d = [Math.cos(alpha), Math.sin(alpha)], n = [-d[1], d[0]];
@@ -159,8 +176,8 @@
     const edge = Math.min(Math.abs(d[0]) > 1e-3 ? (W / 2) / Math.abs(d[0]) : 1e9, Math.abs(d[1]) > 1e-3 ? (H / 2) / Math.abs(d[1]) : 1e9);
     const from = Math.max(2.4, edge / S - .8), to = from - 1.35;
     const [wx0, wy0] = P(-d[0] * from, -d[1] * from), [wx1, wy1] = P(-d[0] * to, -d[1] * to);
-    Kit.mk('line', {x1: wx0, y1: wy0, x2: wx1, y2: wy1, stroke: '#fff', 'stroke-width': 4, 'stroke-linecap': 'round', 'marker-end': 'url(#tipw)'}, over);
-    // The word in a pill beside the arrow: the first place that stays in the box and clear of the
+    Kit.mk('line', {x1: wx0, y1: wy0, x2: wx1, y2: wy1, stroke: '#fff', 'stroke-width': 4.5, 'stroke-linecap': 'round', 'marker-end': 'url(#tipw)'}, over);
+    // The word beside the arrow: the first place that stays in the box and clear of the
     // arrow (its head included), trying both sides of its middle, then around its tail.
     { const pw = fs * 4.1, ph = fs * 1.75, pad = 5;
       const mid = [(wx0 + wx1) / 2, (wy0 + wy1) / 2], off = fs * 1.6;
@@ -175,31 +192,27 @@
         best = [x0, y0]; break;
       }
       if (!best) { const x0 = Math.min(W - pw - 6, Math.max(6, mid[0] - pw / 2)), y0 = Math.min(H - ph - 6, Math.max(6, mid[1] + off)); best = [x0, y0]; }
-      Kit.mk('rect', {x: best[0], y: best[1], width: pw, height: ph, rx: ph / 2, fill: INK}, over);
-      txt(best[0] + pw / 2, best[1] + ph / 2 + fs * .36, 'WIND', {fill: '#fff', 'text-anchor': 'middle'}); }
+      txt(best[0] + pw / 2, best[1] + ph / 2 + fs * .36, 'Wind', {'text-anchor': 'middle'}); }
     if (Math.abs(g) < .05) return;
-    // The push, at right angles to the wind, and its share along the hull (dashed).
+    // The push, at right angles to the wind, and its share along the hull (dotted).
     const f = push(), mag = Math.min(1, Math.abs(g) / GAMMA);
     const [px0, py0] = P(f[0] * 1.2, f[1] * 1.2);
     // as long as the box allows, the head (12 px) and a margin kept inside
     const room = Math.min(Math.abs(f[0]) > 1e-3 ? (f[0] > 0 ? W - px0 : px0) / Math.abs(f[0]) : 1e9, Math.abs(f[1]) > 1e-3 ? (f[1] > 0 ? py0 : H - py0) / Math.abs(f[1]) : 1e9) - 26;
     const len = Math.max(10, Math.min(Math.min(W, H) * .34, room)) * mag, px1 = px0 + f[0] * len, py1 = py0 - f[1] * len;
     const fw = Math.max(0, f[0]) * len;
-    if (fw > 6) Kit.mk('line', {x1: cx + S * 1.2, y1: cy, x2: cx + S * 1.2 + fw, y2: cy, stroke: INK, 'stroke-width': 3, 'stroke-dasharray': '1 6', 'stroke-linecap': 'round', opacity: .75, 'marker-end': 'url(#tipk)'}, over);
+    if (fw > 6) Kit.mk('line', {x1: cx + S * 1.2, y1: cy, x2: cx + S * 1.2 + fw, y2: cy, stroke: INK, 'stroke-width': 3, 'stroke-dasharray': '1 6', 'stroke-linecap': 'round', 'marker-end': 'url(#tipk)'}, over);
     Kit.mk('line', {x1: px0, y1: py0, x2: px1, y2: py1, stroke: INK, 'stroke-width': 5, 'stroke-linecap': 'round', 'marker-end': 'url(#tipk)'}, over);
-    // The readout: a chip in a free corner.
+    // How much of the push drives the ship ahead, written plainly in a free corner.
     const pct = Math.round(Math.max(0, f[0]) * mag * 100);
     // bottom left, unless the wind comes from there
     const chipY = (-d[1] < -.5 || (-d[0] < -.2 && -d[1] < .3)) ? fs * .6 : H - fs * 2.6;
-    const g2 = Kit.mk('g', {}, over);
-    const h = fs * 2, rect = Kit.mk('rect', {x: 8, y: chipY, height: h, rx: h / 2, fill: INK}, g2);
-    const t = Kit.mk('text', {x: 8 + fs * .9, y: chipY + h / 2 + fs * .36, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: '#00A6FF', 'letter-spacing': '.08em'}, g2);
-    t.textContent = `AHEAD ${pct}%`;
-    let tw = fs * 7; try { tw = t.getComputedTextLength() || tw; } catch (e) {}
-    rect.setAttribute('width', tw + fs * 1.8);
-    // The word PUSH: beyond the arrowhead if it fits, else beside the tip; never on the arrow,
-    // the chip or past the edge. The head runs about 12 px past the line's end.
-    const pw = fs * 3.5, chip = [8, chipY, 8 + tw + fs * 1.8, chipY + h];
+    const h = fs * 2;
+    const t = txt(10, chipY + h / 2 + fs * .36, `Ahead ${pct}%`);
+    let tw = fs * 6; try { tw = t.getComputedTextLength() || tw; } catch (e) {}
+    // The word Push: beyond the arrowhead if it fits, else beside the tip; never on the arrow,
+    // the readout or past the edge. The head runs about 12 px past the line's end.
+    const pw = fs * 3.2, chip = [6, chipY, 14 + tw, chipY + h];
     const tip = [px1 + f[0] * 12, py1 - f[1] * 12];
     const spots = [
       [tip[0] + f[0] * (fs * .4 + 6), tip[1] - f[1] * (fs * .9 + 4), f[0] > .3 ? 'start' : f[0] < -.3 ? 'end' : 'middle'],
@@ -210,14 +223,14 @@
     const meets = (A, B) => A[0] < B[2] && B[0] < A[2] && A[1] < B[3] && B[1] < A[3];
     const onArrow = bx => { for (let k = 0; k <= 14; k++) { const q = k / 14, x = px0 + (tip[0] - px0) * q, y = py0 + (tip[1] - py0) * q; if (x > bx[0] - 4 && x < bx[2] + 4 && y > bx[1] - 4 && y < bx[3] + 4) return true; } return false; };
     let spot = spots.find(([x, y, an]) => { const bx = boxOf(x, y, an); return bx[0] > 6 && bx[1] > 4 && bx[2] < W - 6 && bx[3] < H - 4 && !meets(bx, chip) && !onArrow(bx); }) || spots[1];
-    txt(spot[0], spot[1], 'PUSH', {'text-anchor': spot[2]});
+    txt(spot[0], spot[1], 'Push', {'text-anchor': spot[2]});
   }
 
   // The spin, as a curved arrow round the cylinder.
   function spinArrow(c, X, Y, R) {
     if (Math.abs(g) < .05) return;
     const cw = g > 0, r = R * 1.5, a0 = -Math.PI * .95, a1 = -Math.PI * .4;
-    c.save(); c.strokeStyle = INK; c.fillStyle = INK; c.lineWidth = 2.4; c.lineCap = 'round';
+    c.save(); c.strokeStyle = INK; c.fillStyle = INK; c.lineWidth = 3; c.lineCap = 'round';
     c.beginPath(); c.arc(X, Y, r, a0, a1); c.stroke();
     const e = cw ? a1 : a0, dir = cw ? 1 : -1;
     const ex = X + r * Math.cos(e), ey = Y + r * Math.sin(e), tx = -Math.sin(e) * dir, ty = Math.cos(e) * dir;
@@ -227,6 +240,7 @@
   }
 
   function draw() {
+    readColours();
     const fit = Kit.fitCanvas(cv); ctx = fit.x; W = fit.W; H = fit.H;
     Kit.fitSvg(over);
     S = Math.max(14, Math.min(W, H) * .085); cx = W / 2; cy = H / 2;

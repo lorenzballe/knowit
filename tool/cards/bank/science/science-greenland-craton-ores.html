@@ -7,6 +7,7 @@
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
 #cv{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+.slot{display:flex;flex-direction:column;flex:none}
 #hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;position:relative;overflow:hidden}
 #hold .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:color-mix(in srgb,var(--c) 30%,transparent);pointer-events:none}
 #hold span{position:relative}
@@ -19,11 +20,15 @@
     <h2 class="q">Why are Greenland's rocks such a big deal for mining?</h2>
     <div class="stagebox" id="stage">
       <canvas id="cv"></canvas>
-      <button id="hold"><i class="fill" id="fill"></i><span>Hold to run deep time</span></button>
-      <div id="why" class="gone"><p class="body">Greenland holds some of the planet's oldest rocks, part of the great North Atlantic cratons. Complex magmatic systems cross them, and they gather rare, strategic elements from thinly scattered to concentrated pockets worth mining.</p></div>
+      <div class="slot" id="slotA">
+        <button id="hold"><i class="fill" id="fill"></i><span>Hold to run deep time</span></button>
+        <div id="why" class="gone"><p class="body">Greenland holds some of the planet's oldest rocks, part of the great North Atlantic cratons. Complex magmatic systems cross them, and they gather rare, strategic elements from thinly scattered to concentrated pockets worth mining.</p></div>
+      </div>
     </div>
-    <p class="say" id="say">Hold the button and watch magma rise through the ancient crust.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ancient cratons plus magma gather rare elements into mineable pockets.</div>
+    <div class="slot" id="slotB">
+      <p class="say" id="say">Hold the button and watch magma rise through the ancient crust.</p>
+      <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ancient cratons plus magma gather rare elements into mineable pockets.</div>
+    </div>
     <div class="foot"><span class="src">Source · Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026).</span></div>
   </div>
 </article>
@@ -38,12 +43,48 @@ for (let j = 0; j < N; j++) {
   parts.push({x0: 0.04 + Kit.rnd() * 0.92, y0: 0.68 + Kit.rnd() * 0.28, d: Kit.rnd() * 0.55, c: j % 3,
     px: Math.cos(a) * r * 0.85, py: Math.sin(a) * r * 0.75});
 }
-const speck = [];
-for (let j = 0; j < 220; j++) speck.push({x: Kit.rnd(), y: Kit.rnd(), s: Kit.rnd()});
-let G = null;
+let G = null, P = null;
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const ease = t => t * t * (3 - 2 * t);
 const lerp = (a, b, t) => a + (b - a) * t;
+
+// keep the drawing the same height from start to end: each slot reserves room for the taller of its two states
+function natural(el) {
+  const g = el.classList.contains('gone');
+  if (g) el.classList.remove('gone');
+  const cs = getComputedStyle(el);
+  const h = el.offsetHeight + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+  if (g) el.classList.add('gone');
+  return h;
+}
+function reserve() {
+  Kit.$('slotA').style.minHeight = Math.ceil(Math.max(natural(Kit.$('hold')), natural(Kit.$('why')))) + 'px';
+  Kit.$('slotB').style.minHeight = Math.ceil(Math.max(natural(Kit.$('say')), natural(Kit.$('keep')))) + 'px';
+}
+
+// flat palette: card ink, card colour, their mixes, plus two meaning colours (molten rock, rare elements)
+function toRGB(s, fb) {
+  const c = document.createElement('canvas').getContext('2d');
+  c.fillStyle = fb; c.fillStyle = (s || '').trim() || fb;
+  const v = c.fillStyle;
+  if (v[0] === '#') return [1, 3, 5].map(i => parseInt(v.slice(i, i + 2), 16));
+  return v.match(/[\d.]+/g).slice(0, 3).map(Number);
+}
+const mix = (a, b, t) => `rgb(${a.map((v, i) => Math.round(lerp(b[i], v, t))).join(',')})`;
+function palette() {
+  const cs = getComputedStyle(Kit.$('card'));
+  const k = toRGB(cs.getPropertyValue('--k'), '#10100c'), c = toRGB(cs.getPropertyValue('--c'), '#00e6a0');
+  const gold = [255, 210, 63];
+  return {
+    k: mix(k, c, 1), c: mix(k, c, 0),
+    sed: mix(k, c, 0.5),
+    craton: mix(k, c, 0.2),
+    pocketRGB: k.map((v, i) => Math.round(lerp(c[i], v, 0.36))),
+    gold, goldS: 'rgb(255,210,63)',
+    magma: '#f07a2a', ice: '#f7f8f3',
+    font: getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'
+  };
+}
 
 function ch(i, s) {
   const {W, H} = G;
@@ -56,78 +97,92 @@ function pos(q) {
   const t = ease((u - 0.85) / 0.15), a = ch(q.c, 1);
   return [lerp(a[0], CX[q.c] * W + q.px * 0.07 * W, t), lerp(a[1], 0.27 * H + q.py * 0.035 * H, t), u >= 1 ? 2 : 1];
 }
-function tag(x, txt, X, Y, f, align, col, weight) {
-  x.font = `${weight || 700} ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+function label(x, txt, X, Y, f, align, col, weight) {
+  x.font = `${weight || 650} ${f}px ${P.font}`;
   x.textAlign = align; x.textBaseline = 'middle';
-  const w = x.measureText(txt).width, pad = f * 0.35;
-  const L = align === 'left' ? X : align === 'right' ? X - w : X - w / 2;
-  x.fillStyle = 'rgba(10,12,20,.62)';
-  x.beginPath(); x.roundRect(L - pad, Y - f * 0.68, w + pad * 2, f * 1.36, f * 0.3); x.fill();
   x.fillStyle = col; x.fillText(txt, X, Y);
+}
+function nugget(x, X, Y, r) {
+  // a small rounded lump of ore, not a perfect dot
+  x.beginPath();
+  for (let k = 0; k < 6; k++) {
+    const a = k / 6 * Math.PI * 2 + 0.3, rr = r * (k % 2 ? 0.86 : 1.08);
+    const px = X + Math.cos(a) * rr, py = Y + Math.sin(a) * rr;
+    k ? x.lineTo(px, py) : x.moveTo(px, py);
+  }
+  x.closePath(); x.fill(); x.stroke();
 }
 function draw() {
   if (!G) return;
-  const {x, W, H} = G, f = Math.max(12, Math.min(W * 0.042, H * 0.05));
+  if (!P) P = palette();
+  const {x, W, H} = G, f = Math.max(12, Math.min(W * 0.042, H * 0.05)), fs = f * 0.88;
+  const ink = Math.max(1.8, W * 0.005);
+  const L = 0.03 * W, R = 0.97 * W, TOP = 0.14 * H, SED = 0.2 * H;
+  const keel = i => 0.62 * H + Math.sin(i * 1.3) * 0.014 * H + 0.01 * H;
+  const kx = i => L + i / 20 * (R - L);
   x.clearRect(0, 0, W, H);
   x.save();
-  // mantle: speckled texture straight on the card, no panel
-  for (const s of speck) {
-    x.fillStyle = s.s > 0.5 ? 'rgba(150,40,20,.55)' : 'rgba(70,20,10,.55)';
-    x.fillRect(s.x * W, 0.65 * H + s.y * 0.34 * H, 2 + s.s * 4, 2 + s.s * 4);
-  }
-  // craton speckles
-  for (const s of speck) {
-    x.fillStyle = s.s > 0.5 ? 'rgba(255,255,255,.35)' : 'rgba(16,16,12,.28)';
-    x.fillRect(s.x * W, 0.18 * H + s.y * 0.42 * H, 2 + s.s * 3, 2 + s.s * 3);
-  }
-  // wavy craton bottom keel (a line, not a fill)
-  x.strokeStyle = 'rgba(16,16,12,.65)'; x.lineWidth = 2; x.beginPath();
-  for (let i = 0; i <= 20; i++) { const px = i / 20 * W, py = 0.62 * H + Math.sin(i * 1.3) * 0.012 * H + 0.01 * H; i ? x.lineTo(px, py) : x.moveTo(px, py); }
-  x.stroke();
-  // sediments
-  const bands = ['#8a6f4e', '#a58a62', '#7b6244', '#9c805a'];
-  for (let i = 0; i < 4; i++) { x.fillStyle = bands[i]; x.fillRect(0, (0.09 + i * 0.0225) * H, W, 0.0235 * H); }
-  // ice
-  x.fillStyle = '#ffffff'; x.beginPath(); x.moveTo(0, 0.09 * H);
-  x.quadraticCurveTo(W * 0.5, 0.055 * H, W, 0.09 * H); x.lineTo(W, 0.095 * H); x.lineTo(0, 0.095 * H); x.fill();
-  // magma
+  x.lineJoin = 'round'; x.lineCap = 'round';
+
+  // the old crust: one thick slab, cut like a slice of cake, resting on the open mantle
+  const crust = () => {
+    x.beginPath(); x.moveTo(L, TOP); x.lineTo(R, TOP);
+    for (let i = 20; i >= 0; i--) x.lineTo(kx(i), keel(i));
+    x.closePath();
+  };
+  x.fillStyle = P.craton; crust(); x.fill();
+  // sediments: one thin skin on top
+  x.fillStyle = P.sed; x.fillRect(L, TOP, R - L, SED - TOP);
+
+  // magma dikes: flat orange ribbons with an ink edge
   for (let i = 0; i < 3; i++) {
     const r = clamp(S.p * 1.5 - i * 0.08);
     if (r <= 0) continue;
-    x.save(); x.lineCap = 'round'; x.shadowColor = '#ff7a1a'; x.shadowBlur = W * 0.03;
-    x.strokeStyle = '#ff6a1a'; x.lineWidth = W * 0.026;
     x.beginPath();
     for (let k = 0; k <= 40; k++) { const s = k / 40 * r, p = ch(i, s); k ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1]); }
-    x.stroke(); x.shadowBlur = 0; x.strokeStyle = '#ffc04d'; x.lineWidth = W * 0.008; x.stroke(); x.restore();
+    x.strokeStyle = P.k; x.lineWidth = W * 0.03 + ink * 2; x.stroke();
+    x.strokeStyle = P.magma; x.lineWidth = W * 0.03; x.stroke();
   }
-  // pockets
+  // outline of the crust, drawn after the dikes so they read as cutting up through it
+  x.strokeStyle = P.k; x.lineWidth = ink; crust(); x.stroke();
+  x.beginPath(); x.moveTo(L, SED); x.lineTo(R, SED); x.stroke();
+
+  // pockets: empty hollows that turn gold as the elements arrive
   const arrived = [0, 0, 0];
   const pts = parts.map(q => { const p = pos(q); if (p[2] === 2) arrived[q.c]++; return p; });
   for (let i = 0; i < 3; i++) {
-    const a = arrived[i] / (N / 3);
-    x.save(); x.globalAlpha = 0.35 + a * 0.65;
-    x.strokeStyle = '#10100c'; x.lineWidth = Math.max(1.5, W * 0.005); x.setLineDash([W * 0.012, W * 0.01]);
-    x.fillStyle = `rgba(16,16,12,${0.06 + a * 0.2})`;
-    x.beginPath(); x.ellipse(CX[i] * W, 0.27 * H, 0.075 * W, 0.04 * H, 0, 0, Math.PI * 2); x.fill(); x.stroke(); x.restore();
+    const a = clamp(arrived[i] / (N / 3));
+    x.fillStyle = mix(P.gold, P.pocketRGB, a);
+    x.strokeStyle = P.k; x.lineWidth = ink;
+    x.beginPath(); x.ellipse(CX[i] * W, 0.27 * H, 0.08 * W, 0.042 * H, 0, 0, Math.PI * 2); x.fill(); x.stroke();
   }
-  // elements
-  const rr = Math.max(2, W * 0.007);
-  x.fillStyle = '#e6ff6b'; x.strokeStyle = '#10100c'; x.lineWidth = 1;
-  for (const p of pts) { x.beginPath(); x.arc(p[0], p[1], rr, 0, Math.PI * 2); x.fill(); x.stroke(); }
-  // labels
-  tag(x, 'SEDIMENTS', 0.03 * W, 0.135 * H, f * 0.85, 'left', '#fff3dc');
-  tag(x, 'ANCIENT CRATON', 0.03 * W, 0.44 * H, f, 'left', '#ffffff');
-  tag(x, 'among Earth\u2019s oldest rocks', 0.03 * W, 0.44 * H + f * 1.5, f * 0.85, 'left', '#cfd5e2', 500);
-  tag(x, 'MANTLE', 0.97 * W, 0.71 * H, f, 'right', '#ffd2c2');
-  tag(x, '\u25CF rare elements', 0.97 * W, 0.035 * H + f * 0.3, f * 0.85, 'right', '#e6ff6b');
+  // rare elements: a few big lumps stand for the many
+  const rr = Math.max(3.5, W * 0.013);
+  x.fillStyle = P.goldS; x.strokeStyle = P.k; x.lineWidth = Math.max(1.2, W * 0.003);
+  pts.forEach((p, j) => { if (j % 5 === 0 && p[2] !== 2) nugget(x, p[0], p[1], rr); });
+
+  // ice sheet: a plain white dome resting on top
+  x.fillStyle = P.ice; x.strokeStyle = P.k; x.lineWidth = ink;
+  x.beginPath(); x.moveTo(L, TOP);
+  x.bezierCurveTo(L + 0.12 * W, 0.075 * H, R - 0.2 * W, 0.06 * H, R, TOP);
+  x.closePath(); x.fill(); x.stroke();
+
+  // labels: few, plain, one size
+  label(x, 'Sediments', L + 0.025 * W, (TOP + SED) / 2, fs, 'left', P.c);
+  label(x, 'Ancient craton', L + 0.025 * W, 0.44 * H, fs, 'left', P.k);
+  label(x, 'among Earth\u2019s oldest rocks', L + 0.025 * W, 0.44 * H + fs * 1.35, fs, 'left', P.k, 500);
+  label(x, 'Mantle', R - 0.025 * W, 0.71 * H, fs, 'right', P.k);
+  // key for the lumps, in the open card above the ice
+  x.font = `650 ${fs}px ${P.font}`;
+  const kw = x.measureText('rare elements').width, ky = Math.max(fs * 0.6, 0.04 * H);
+  label(x, 'rare elements', R, ky, fs, 'right', P.k);
+  x.fillStyle = P.goldS; x.strokeStyle = P.k; x.lineWidth = Math.max(1.2, W * 0.003);
+  nugget(x, R - kw - rr * 1.8, ky, rr);
   const tot = arrived[0] + arrived[1] + arrived[2];
   if (tot > N * 0.4) {
     x.save(); x.globalAlpha = clamp((tot / N - 0.4) / 0.3);
-    tag(x, 'DEPOSIT', CX[1] * W, 0.355 * H, f * 0.85, 'center', '#e6ff6b'); x.restore();
+    label(x, 'Deposit', CX[1] * W, 0.355 * H, fs, 'center', P.k); x.restore();
   }
-  // time bar
-  x.fillStyle = 'rgba(16,16,12,.2)'; x.fillRect(0.03 * W, 0.03 * H, 0.35 * W, Math.max(3, H * 0.008));
-  x.fillStyle = '#10100c'; x.fillRect(0.03 * W, 0.03 * H, 0.35 * W * S.p, Math.max(3, H * 0.008));
   x.restore();
   Kit.$('fill').style.width = (S.p * 100) + '%';
 }
@@ -149,7 +204,7 @@ gsap.ticker.add((t, dt) => {
   draw();
   if (S.p >= 1) finish();
 });
-Kit.onShow.card = () => { G = Kit.fitCanvas(Kit.$('cv')); draw(); };
+Kit.onShow.card = () => { reserve(); G = Kit.fitCanvas(Kit.$('cv')); P = palette(); draw(); };
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cv', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   S.hold = true;
