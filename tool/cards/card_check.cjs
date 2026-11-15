@@ -199,6 +199,14 @@ async function single() {
           }
           return issues;
         }, [CORNER, CONTROLS]);
+        // A canvas drawn once for one size and then shown at another is stretched by the browser: a
+        // half circle turns into a flat dome. It happens when the page moves around it (the answer
+        // coming in takes room from the drawing) and the page does not draw again.
+        more.push(...(await p.evaluate(() => [...document.querySelectorAll('canvas')].filter(cv => {
+          const b = cv.getBoundingClientRect(); if (b.width < 40 || b.height < 40 || !cv.width || !cv.height) return false;
+          const st = getComputedStyle(cv); if (st.display === 'none' || st.visibility === 'hidden' || cv.closest('.gone')) return false;
+          return Math.abs((cv.width / cv.height) / (b.width / b.height) - 1) > 0.03;
+        }).map(cv => `the drawing is stretched: ${cv.id ? '#' + cv.id : 'a canvas'} was drawn for another size and not drawn again`))));
         // The photograph is the card as the app draws it: its corners rounded and the save and share
         // in theirs, so it can be looked at as a reader would see it.
         if (!process.env.BARE) await p.evaluate(controls => {

@@ -107,7 +107,10 @@ class ScaledText extends StatelessWidget {
     if (!width.isFinite || !height.isFinite || width <= 0 || height <= 0) {
       return min;
     }
-    final double floor = math.min(min, min * min / scaler.scale(min));
+    // The floor is [min] as the reader sees it, and as a last resort three
+    // quarters of it: a long question at the largest text sizes did not fit
+    // even at [min] and was cut, which no size should buy.
+    final double floor = math.min(min, min * min / scaler.scale(min)) * 0.75;
     final String longest = _longestWord(direction);
     bool fits(double size) =>
         _fits(size, width, height, scaler, direction, longest);

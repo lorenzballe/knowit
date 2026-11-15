@@ -1265,12 +1265,16 @@ class SingleBlock extends ExploreBlock with SectionLayout {
   String get name => 'single';
 
   /// The size of the deck's card on a screen of [screen]: the deck's width,
-  /// and at most the deck's own proportion, short of filling the screen.
+  /// and the deck's own height there (what the bars and the header leave,
+  /// 192 points on a phone; tool/cards/card_check.cjs measures the same),
+  /// never taller than the deck's proportion. Explore scrolls, so the card
+  /// need not fit the screen with room to spare: cut shorter than the deck,
+  /// a long question at large text no longer fit its face.
   static Size sizeFor(Size screen) {
     final double width = math.max(0, screen.width - kDeckMargin * 2);
     return Size(
       width,
-      math.max(0, math.min(width * 1.82, screen.height - 250)),
+      math.max(0, math.min(width * 1.82, screen.height - 192)),
     );
   }
 

@@ -156,3 +156,22 @@ setRatio(rf.value);
 Kit.single();
 </script>
 </html>
+<script data-redraw>
+// Draw again when a drawing changes size: the answer coming in can take room from it, and a canvas
+// left as it was would be stretched by the browser.
+(() => {
+  const seen = new WeakMap();
+  const ro = new ResizeObserver(entries => {
+    let moved = false;
+    for (const e of entries) {
+      const r = e.contentRect, was = seen.get(e.target);
+      if (was && (Math.abs(was[0] - r.width) > 1 || Math.abs(was[1] - r.height) > 1)) moved = true;
+      seen.set(e.target, [r.width, r.height]);
+    }
+    if (!moved) return;
+    const card = document.querySelector('.card');
+    requestAnimationFrame(() => { if (card && Kit.onShow[card.id]) Kit.onShow[card.id](); });
+  });
+  document.querySelectorAll('canvas').forEach(cv => ro.observe(cv));
+})();
+</script>
