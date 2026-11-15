@@ -4405,4 +4405,20 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get shareDayHeadline => '今日の5枚';
+
+  @override
+  String get shareFormatPost => '投稿';
+
+  @override
+  String get shareFormatStory => 'ストーリー';
+
+  @override
+  String crowdGotRight(int n) {
+    return '正解した読者は$n%';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return '読者の$n%も間違えました';
+  }
 }

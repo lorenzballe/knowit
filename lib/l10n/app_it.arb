@@ -1078,5 +1078,9 @@
   "shareDayRead": "Cinque carte, lette",
   "shareDayTurn": "Cinque carte al giorno. Tocca a te.",
   "shareDaySure": "sicuro al {n}%",
-  "shareDayHeadline": "Le cinque di oggi"
+  "shareDayHeadline": "Le cinque di oggi",
+  "shareFormatPost": "Post",
+  "shareFormatStory": "Storia",
+  "crowdGotRight": "L'ha azzeccata il {n}% dei lettori",
+  "crowdGotWrong": "Anche il {n}% dei lettori l'ha sbagliata"
 }

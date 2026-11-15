@@ -1078,5 +1078,9 @@
   "shareDayRead": "카드 5장, 다 읽음",
   "shareDayTurn": "하루 다섯 장. 이제 당신 차례.",
   "shareDaySure": "확신 {n}%",
-  "shareDayHeadline": "오늘의 다섯 장"
+  "shareDayHeadline": "오늘의 다섯 장",
+  "shareFormatPost": "게시물",
+  "shareFormatStory": "스토리",
+  "crowdGotRight": "독자의 {n}%가 맞혔어요",
+  "crowdGotWrong": "독자의 {n}%도 틀렸어요"
 }

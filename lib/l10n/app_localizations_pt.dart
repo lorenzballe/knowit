@@ -4617,4 +4617,20 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get shareDayHeadline => 'As cinco de hoje';
+
+  @override
+  String get shareFormatPost => 'Publicação';
+
+  @override
+  String get shareFormatStory => 'Story';
+
+  @override
+  String crowdGotRight(int n) {
+    return '$n% dos leitores acertaram';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return '$n% dos leitores também erraram';
+  }
 }

@@ -4776,4 +4776,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get shareDayHeadline => 'Пять карточек дня';
+
+  @override
+  String get shareFormatPost => 'Пост';
+
+  @override
+  String get shareFormatStory => 'История';
+
+  @override
+  String crowdGotRight(int n) {
+    return '$n% читателей ответили верно';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return '$n% читателей тоже ошиблись';
+  }
 }

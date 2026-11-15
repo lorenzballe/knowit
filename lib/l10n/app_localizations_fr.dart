@@ -4629,4 +4629,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get shareDayHeadline => 'Les cinq du jour';
+
+  @override
+  String get shareFormatPost => 'Publication';
+
+  @override
+  String get shareFormatStory => 'Story';
+
+  @override
+  String crowdGotRight(int n) {
+    return '$n % des lecteurs ont trouvé';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return '$n % des lecteurs se sont trompés aussi';
+  }
 }

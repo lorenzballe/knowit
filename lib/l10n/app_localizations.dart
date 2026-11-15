@@ -6593,6 +6593,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today\'s five'**
   String get shareDayHeadline;
+
+  /// The sheet that sends the day as a picture: the shape for a chat or a feed, four by five.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get shareFormatPost;
+
+  /// The sheet that sends the day as a picture: the tall shape for a story, nine by sixteen.
+  ///
+  /// In en, this message translates to:
+  /// **'Story'**
+  String get shareFormatStory;
+
+  /// Under a card just answered right: how many of all the readers who answered it got it right too, counted anonymously.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}% of readers got it right'**
+  String crowdGotRight(int n);
+
+  /// Under a card just answered wrong: how many of all the readers who answered it got it wrong too, counted anonymously. Said kindly: the reader is not alone.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}% of readers got it wrong too'**
+  String crowdGotWrong(int n);
 }
 
 class _AppLocalizationsDelegate

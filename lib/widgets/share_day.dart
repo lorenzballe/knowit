@@ -129,6 +129,9 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
   final GlobalKey _picture = GlobalKey();
   bool _busy = false;
 
+  /// The tall shape, for a story, rather than the one for a chat or a feed.
+  bool _story = false;
+
   AppState get app => widget.app;
 
   void _toast(ScaffoldMessengerState messenger, String message) {
@@ -143,6 +146,7 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
     'edition': app.daySummary.edition,
     'as': as,
     'from': widget.from,
+    'format': _story ? 'story' : 'post',
   });
 
   /// The picture at three times its size, so it is sharp at a story's.
@@ -228,7 +232,26 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
                 color: context.p.ink,
               ),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
+            // The two shapes a day goes out in: a chat or a feed's, and a
+            // story's.
+            Row(
+              children: [
+                for (final bool story in const [false, true]) ...[
+                  if (story) const SizedBox(width: 8),
+                  _Shape(
+                    key: ValueKey('share-day-${story ? 'story' : 'post'}'),
+                    label: story ? l.shareFormatStory : l.shareFormatPost,
+                    icon: story
+                        ? Icons.crop_portrait_rounded
+                        : Icons.crop_square_rounded,
+                    on: _story == story,
+                    onTap: () => setState(() => _story = story),
+                  ),
+                ],
+              ],
+            ),
+            const SizedBox(height: 14),
             RepaintBoundary(
               key: _picture,
               // A picture, not a screen: set at one size whatever the
@@ -241,6 +264,7 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
                   summary: app.daySummary,
                   five: app.todaysDeck.take(kPillsPerDay).toList(),
                   day: app.today,
+                  story: _story,
                 ),
               ),
             ),
@@ -301,11 +325,17 @@ class DayPicture extends StatelessWidget {
     required this.summary,
     required this.five,
     required this.day,
+    this.story = false,
   });
 
   final DaySummary summary;
   final List<Pill> five;
   final DateTime day;
+
+  /// Nine by sixteen, for a story, instead of four by five: the same
+  /// picture with the room a phone held upright gives it — the cards in
+  /// small taller, the type larger.
+  final bool story;
 
   static const Color _ground = Color(0xFF0C0C0E);
   static const Color _ink = Color(0xFFF4F2EC);
@@ -322,8 +352,9 @@ class DayPicture extends StatelessWidget {
     // last card's from the bottom one, so no two days' pictures are alike.
     final Color first = five.isEmpty ? _flame : five.first.color;
     final Color last = five.length < 2 ? first : five.last.color;
+    final double k = story ? 1.18 : 1.0;
     return AspectRatio(
-      aspectRatio: 4 / 5,
+      aspectRatio: story ? 9 / 16 : 4 / 5,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(26),
         child: DecoratedBox(
@@ -345,7 +376,9 @@ class DayPicture extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
+              padding: story
+                  ? const EdgeInsets.fromLTRB(22, 40, 22, 34)
+                  : const EdgeInsets.fromLTRB(20, 18, 20, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -378,7 +411,7 @@ class DayPicture extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.display(
-                      size: 28,
+                      size: 28 * k,
                       weight: FontWeight.w700,
                       height: 1.0,
                       spacing: -1,
@@ -396,15 +429,30 @@ class DayPicture extends StatelessWidget {
                       color: _ink.withValues(alpha: 0.55),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: story ? 24 : 12),
                   for (int i = 0; i < five.length; i++)
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(top: i == 0 ? 0 : 6),
-                        child: _Row(pill: five[i]),
+                        padding: EdgeInsets.only(top: i == 0 ? 0 : 6 * k),
+                        child: _Row(pill: five[i], scale: k),
                       ),
                     ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: story ? 22 : 12),
+                  // In a story the line has a row of its own, larger: there
+                  // is the room, and it is what the story asks of whoever
+                  // sees it.
+                  if (story) ...[
+                    Text(
+                      l.shareDayTurn,
+                      style: AppText.display(
+                        size: 19,
+                        weight: FontWeight.w600,
+                        spacing: -0.4,
+                        color: _ink,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
                   Row(
                     children: [
                       if (summary.streak > 0) ...[
@@ -425,16 +473,18 @@ class DayPicture extends StatelessWidget {
                         const SizedBox(width: 10),
                       ],
                       Expanded(
-                        child: Text(
-                          l.shareDayTurn,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppText.body(
-                            size: 11.5,
-                            weight: FontWeight.w600,
-                            color: _ink.withValues(alpha: 0.8),
-                          ),
-                        ),
+                        child: story
+                            ? const SizedBox.shrink()
+                            : Text(
+                                l.shareDayTurn,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppText.body(
+                                  size: 11.5,
+                                  weight: FontWeight.w600,
+                                  color: _ink.withValues(alpha: 0.8),
+                                ),
+                              ),
                       ),
                       const SizedBox(width: 8),
                       Text(
@@ -461,9 +511,12 @@ class DayPicture extends StatelessWidget {
 /// One of the five: the card in small — its front, with its drawing, or its
 /// colour and mark where it has no picture — and its question beside it.
 class _Row extends StatelessWidget {
-  const _Row({required this.pill});
+  const _Row({required this.pill, this.scale = 1});
 
   final Pill pill;
+
+  /// Larger in a story, where each row has more room.
+  final double scale;
 
   @override
   Widget build(BuildContext context) {
@@ -498,10 +551,10 @@ class _Row extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 pill.question,
-                maxLines: 2,
+                maxLines: scale > 1 ? 3 : 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.display(
-                  size: 13,
+                  size: 13 * scale,
                   weight: FontWeight.w600,
                   height: 1.16,
                   spacing: -0.2,
@@ -511,6 +564,59 @@ class _Row extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// One of the two shapes the day goes out in.
+class _Shape extends StatelessWidget {
+  const _Shape({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.on,
+    required this.onTap,
+  });
+
+  final String label;
+  final IconData icon;
+  final bool on;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    return Semantics(
+      button: true,
+      selected: on,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          height: 36,
+          padding: const EdgeInsets.fromLTRB(11, 0, 14, 0),
+          decoration: BoxDecoration(
+            color: on ? p.inverse : p.surfaceRaised,
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: on ? Colors.transparent : p.line),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 16, color: on ? p.onInverse : p.inkMuted),
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: AppText.body(
+                  size: 13,
+                  weight: FontWeight.w600,
+                  color: on ? p.onInverse : p.inkMuted,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

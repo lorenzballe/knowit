@@ -1078,5 +1078,9 @@
   "shareDayRead": "Pięć kart, przeczytane",
   "shareDayTurn": "Pięć kart dziennie. Twoja kolej.",
   "shareDaySure": "pewność {n}%",
-  "shareDayHeadline": "Dzisiejsza piątka"
+  "shareDayHeadline": "Dzisiejsza piątka",
+  "shareFormatPost": "Post",
+  "shareFormatStory": "Relacja",
+  "crowdGotRight": "{n}% czytelników odpowiedziało dobrze",
+  "crowdGotWrong": "{n}% czytelników też się pomyliło"
 }
