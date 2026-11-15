@@ -314,7 +314,7 @@ class _WidgetPreview extends StatelessWidget {
                       child: ScaledText(
                         text: c?.question ?? '',
                         min: 8,
-                        max: 14,
+                        max: 18,
                         alignment: Alignment.topLeft,
                         styleFor: (size) => AppText.display(
                           size: size,

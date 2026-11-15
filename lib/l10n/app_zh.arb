@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "锁定屏幕也可以：长按锁定屏幕，然后轻点“自定”。",
   "widgetAskPin": "添加到主屏幕",
   "widgetAskGotIt": "知道了",
-  "widgetAskNotNow": "以后再说"
+  "widgetAskNotNow": "以后再说",
+  "pathCardOf": "第{n}张，共{total}张"
 }

@@ -4706,4 +4706,9 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get widgetAskNotNow => 'Niet nu';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return 'Kaart $n van $total';
+  }
 }

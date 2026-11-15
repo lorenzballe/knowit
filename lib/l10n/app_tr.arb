@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "Kilit Ekranı'nda da olur: basılı tut, sonra Özelleştir'e dokun.",
   "widgetAskPin": "Ana Ekrana Ekle",
   "widgetAskGotIt": "Anladım",
-  "widgetAskNotNow": "Şimdi değil"
+  "widgetAskNotNow": "Şimdi değil",
+  "pathCardOf": "{total} karttan {n}."
 }

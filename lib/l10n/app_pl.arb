@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "Także na ekranie blokady: przytrzymaj go i stuknij Dostosuj.",
   "widgetAskPin": "Dodaj do ekranu głównego",
   "widgetAskGotIt": "Jasne",
-  "widgetAskNotNow": "Nie teraz"
+  "widgetAskNotNow": "Nie teraz",
+  "pathCardOf": "Karta {n} z {total}"
 }

@@ -4487,4 +4487,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get widgetAskNotNow => '今はしない';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return '$total枚中$n枚目';
+  }
 }

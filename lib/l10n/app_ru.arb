@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "И на экране блокировки: удерживай его и коснись «Настроить».",
   "widgetAskPin": "Добавить на экран «Домой»",
   "widgetAskGotIt": "Понятно",
-  "widgetAskNotNow": "Не сейчас"
+  "widgetAskNotNow": "Не сейчас",
+  "pathCardOf": "Карточка {n} из {total}"
 }

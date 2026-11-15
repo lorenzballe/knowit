@@ -4625,4 +4625,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get widgetAskNotNow => 'Şimdi değil';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return '$total karttan $n.';
+  }
 }

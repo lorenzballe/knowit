@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "잠금 화면에도 둘 수 있어요. 잠금 화면을 길게 누른 다음 사용자화를 누르세요.",
   "widgetAskPin": "홈 화면에 추가",
   "widgetAskGotIt": "알겠어요",
-  "widgetAskNotNow": "나중에"
+  "widgetAskNotNow": "나중에",
+  "pathCardOf": "{total}장 중 {n}번째"
 }

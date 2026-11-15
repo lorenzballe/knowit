@@ -4508,4 +4508,9 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get widgetAskNotNow => '나중에';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return '$total장 중 $n번째';
+  }
 }

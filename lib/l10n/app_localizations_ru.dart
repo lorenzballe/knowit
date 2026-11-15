@@ -4864,4 +4864,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get widgetAskNotNow => 'Не сейчас';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return 'Карточка $n из $total';
+  }
 }

@@ -6737,6 +6737,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not now'**
   String get widgetAskNotNow;
+
+  /// Over the question of the next card of a path, on the card after its free ones: which card of the path it is. Short, set in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Card {n} of {total}'**
+  String pathCardOf(int n, int total);
 }
 
 class _AppLocalizationsDelegate

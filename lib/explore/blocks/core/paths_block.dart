@@ -23,6 +23,7 @@ import '../../../screens/deck_viewer_screen.dart';
 import '../../../state/app_state.dart';
 import '../../../theme.dart';
 import '../../../widgets/premium.dart';
+import '../../../widgets/scaled_text.dart';
 import '../../../widgets/subject_icon.dart';
 import '../../explore_block.dart';
 import 'layout.dart';
@@ -214,7 +215,38 @@ class PathMore extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: 18),
+          // The next card's question: what the rest of the path is, put
+          // the way the card itself will put it.
+          Text(
+            context.l10n
+                .pathCardOf(kPathFree + 1, path.cards.length)
+                .toUpperCase(),
+            style: AppText.label(
+              size: 11,
+              weight: FontWeight.w700,
+              spacing: 1.2,
+              color: ink.withValues(alpha: 0.72),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: ScaledText(
+              key: const ValueKey('path-more-next'),
+              text: path.cards[kPathFree].question,
+              min: 18,
+              max: 46,
+              alignment: Alignment.topLeft,
+              styleFor: (size) => AppText.display(
+                size: size,
+                weight: FontWeight.w600,
+                height: 1.1,
+                spacing: -0.6,
+                color: ink,
+              ),
+            ),
+          ),
+          const SizedBox(height: 22),
           // The path: the two read, the rest still to come.
           ExcludeSemantics(
             child: Row(
@@ -234,7 +266,7 @@ class PathMore extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 18),
           Text(
             path.genre.label.toUpperCase(),
             maxLines: 1,
@@ -246,30 +278,30 @@ class PathMore extends StatelessWidget {
               color: ink.withValues(alpha: 0.72),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Semantics(
             header: true,
             child: Text(
               context.l10n.pathMoreTitle(left),
               style: AppText.display(
-                size: 30,
+                size: 24,
                 weight: FontWeight.w600,
-                height: 1.08,
-                spacing: -0.9,
+                height: 1.1,
+                spacing: -0.6,
                 color: ink,
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Text(
             context.l10n.pathMoreLine,
             style: AppText.body(
-              size: 15,
+              size: 14.5,
               height: 1.4,
               color: ink.withValues(alpha: 0.82),
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: 22),
           _InkButton(
             key: const ValueKey('path-more-go'),
             label: context.l10n.pathMoreGo,

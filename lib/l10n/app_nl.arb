@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "Ook op het toegangsscherm: houd het ingedrukt en tik op Pas aan.",
   "widgetAskPin": "Zet op beginscherm",
   "widgetAskGotIt": "Begrepen",
-  "widgetAskNotNow": "Niet nu"
+  "widgetAskNotNow": "Niet nu",
+  "pathCardOf": "Kaart {n} van {total}"
 }

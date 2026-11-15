@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "También en la pantalla de bloqueo: mantenla pulsada y toca Personalizar.",
   "widgetAskPin": "Añadir a la pantalla de inicio",
   "widgetAskGotIt": "Entendido",
-  "widgetAskNotNow": "Ahora no"
+  "widgetAskNotNow": "Ahora no",
+  "pathCardOf": "Carta {n} de {total}"
 }

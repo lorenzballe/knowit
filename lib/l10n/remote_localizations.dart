@@ -4571,4 +4571,9 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get widgetAskNotNow =>
       _words.text('widgetAskNotNow') ?? _base.widgetAskNotNow;
+
+  @override
+  String pathCardOf(int n, int total) =>
+      _words.format('pathCardOf', localeName, {'n': n, 'total': total}) ??
+      _base.pathCardOf(n, total);
 }

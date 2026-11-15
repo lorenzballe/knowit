@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "ロック画面にも置けます。ロック画面を長押しして「カスタマイズ」をタップします。",
   "widgetAskPin": "ホーム画面に追加",
   "widgetAskGotIt": "わかりました",
-  "widgetAskNotNow": "今はしない"
+  "widgetAskNotNow": "今はしない",
+  "pathCardOf": "{total}枚中{n}枚目"
 }

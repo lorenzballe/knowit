@@ -4945,5 +4945,17 @@
  "widgetAskNotNow": "Not now",
  "@widgetAskNotNow": {
   "description": "The sheet's quiet button: not now."
+ },
+ "pathCardOf": "Card {n} of {total}",
+ "@pathCardOf": {
+  "description": "Over the question of the next card of a path, on the card after its free ones: which card of the path it is. Short, set in capitals.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
  }
 }

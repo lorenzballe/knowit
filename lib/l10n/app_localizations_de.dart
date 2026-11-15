@@ -4710,4 +4710,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get widgetAskNotNow => 'Nicht jetzt';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return 'Karte $n von $total';
+  }
 }

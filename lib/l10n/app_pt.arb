@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "Também no ecrã bloqueado: toca sem soltar e depois em Personalizar.",
   "widgetAskPin": "Adicionar ao ecrã principal",
   "widgetAskGotIt": "Percebi",
-  "widgetAskNotNow": "Agora não"
+  "widgetAskNotNow": "Agora não",
+  "pathCardOf": "Carta {n} de {total}"
 }

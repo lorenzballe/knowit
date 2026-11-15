@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "Aussi sur l'écran verrouillé : maintiens le doigt dessus, puis touche Personnaliser.",
   "widgetAskPin": "Ajouter à l'écran d'accueil",
   "widgetAskGotIt": "Compris",
-  "widgetAskNotNow": "Pas maintenant"
+  "widgetAskNotNow": "Pas maintenant",
+  "pathCardOf": "Carte {n} sur {total}"
 }

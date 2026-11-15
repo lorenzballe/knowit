@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "Auch auf dem Sperrbildschirm: halte ihn gedrückt und tippe auf „Anpassen“.",
   "widgetAskPin": "Zum Home-Bildschirm hinzufügen",
   "widgetAskGotIt": "Verstanden",
-  "widgetAskNotNow": "Nicht jetzt"
+  "widgetAskNotNow": "Nicht jetzt",
+  "pathCardOf": "Karte {n} von {total}"
 }

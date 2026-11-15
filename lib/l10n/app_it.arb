@@ -1102,5 +1102,6 @@
   "widgetAskLockScreen": "Anche nella schermata di blocco: tienila premuta, poi tocca Personalizza.",
   "widgetAskPin": "Aggiungi alla schermata Home",
   "widgetAskGotIt": "Ho capito",
-  "widgetAskNotNow": "Non ora"
+  "widgetAskNotNow": "Non ora",
+  "pathCardOf": "Carta {n} di {total}"
 }

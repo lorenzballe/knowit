@@ -4488,4 +4488,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get widgetAskNotNow => '以后再说';
+
+  @override
+  String pathCardOf(int n, int total) {
+    return '第$n张，共$total张';
+  }
 }
