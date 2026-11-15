@@ -4440,4 +4440,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String crowdGotWrong(int n) {
     return '독자의 $n%도 틀렸어요';
   }
+
+  @override
+  String get challengeFriend => '친구에게 도전장';
+
+  @override
+  String get challengeLine => '이거 맞힐 수 있어?';
 }

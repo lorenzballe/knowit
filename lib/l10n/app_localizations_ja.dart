@@ -4421,4 +4421,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String crowdGotWrong(int n) {
     return '読者の$n%も間違えました';
   }
+
+  @override
+  String get challengeFriend => '友だちに挑戦状';
+
+  @override
+  String get challengeLine => 'これ、わかる？';
 }

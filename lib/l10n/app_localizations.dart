@@ -6617,6 +6617,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n}% of readers got it wrong too'**
   String crowdGotWrong(int n);
+
+  /// The share sheet of a card: the button that sends the card itself to a friend, to play in their browser, with or without the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge a friend'**
+  String get challengeFriend;
+
+  /// The words sent with a card to a friend, before its question and the link to play it.
+  ///
+  /// In en, this message translates to:
+  /// **'Can you get this one?'**
+  String get challengeLine;
 }
 
 class _AppLocalizationsDelegate

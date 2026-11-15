@@ -4595,4 +4595,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String crowdGotWrong(int n) {
     return '$n% of readers got it wrong too';
   }
+
+  @override
+  String get challengeFriend => 'Challenge a friend';
+
+  @override
+  String get challengeLine => 'Can you get this one?';
 }

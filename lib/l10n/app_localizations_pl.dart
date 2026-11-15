@@ -4779,4 +4779,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String crowdGotWrong(int n) {
     return '$n% czytelników też się pomyliło';
   }
+
+  @override
+  String get challengeFriend => 'Rzuć wyzwanie znajomemu';
+
+  @override
+  String get challengeLine => 'Dasz radę z tą?';
 }

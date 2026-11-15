@@ -1082,5 +1082,7 @@
   "shareFormatPost": "Bericht",
   "shareFormatStory": "Verhaal",
   "crowdGotRight": "{n}% van de lezers had het goed",
-  "crowdGotWrong": "Ook {n}% van de lezers had het fout"
+  "crowdGotWrong": "Ook {n}% van de lezers had het fout",
+  "challengeFriend": "Daag een vriend uit",
+  "challengeLine": "Weet jij deze?"
 }

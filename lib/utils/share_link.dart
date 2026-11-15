@@ -17,7 +17,11 @@ enum ShareRef {
   card('share_card'),
 
   /// The reader's record, from its share sheet.
-  record('share_record');
+  record('share_record'),
+
+  /// One card sent to a friend to play: its page on the site
+  /// (tool/cards/challenge_pages.py).
+  challenge('challenge');
 
   const ShareRef(this.ref);
 
@@ -27,3 +31,9 @@ enum ShareRef {
   /// The site, carrying [ref].
   String get link => 'https://$kSiteHost/?ref=$ref';
 }
+
+/// Where a free card can be played by a friend, with or without the app:
+/// its page on the site, under a line saying a friend sent it
+/// (tool/cards/challenge_pages.py writes one for every card with a page).
+String challengeLink(String cardId) =>
+    'https://$kSiteHost/c/$cardId.html?ref=${ShareRef.challenge.ref}';

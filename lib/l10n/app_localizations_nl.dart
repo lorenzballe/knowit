@@ -4634,4 +4634,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String crowdGotWrong(int n) {
     return 'Ook $n% van de lezers had het fout';
   }
+
+  @override
+  String get challengeFriend => 'Daag een vriend uit';
+
+  @override
+  String get challengeLine => 'Weet jij deze?';
 }

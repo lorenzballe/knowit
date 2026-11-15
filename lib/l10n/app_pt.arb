@@ -1082,5 +1082,7 @@
   "shareFormatPost": "Publicação",
   "shareFormatStory": "Story",
   "crowdGotRight": "{n}% dos leitores acertaram",
-  "crowdGotWrong": "{n}% dos leitores também erraram"
+  "crowdGotWrong": "{n}% dos leitores também erraram",
+  "challengeFriend": "Desafia um amigo",
+  "challengeLine": "Consegues acertar esta?"
 }

@@ -1082,5 +1082,7 @@
   "shareFormatPost": "帖子",
   "shareFormatStory": "快拍",
   "crowdGotRight": "{n}% 的读者答对了",
-  "crowdGotWrong": "也有 {n}% 的读者答错了"
+  "crowdGotWrong": "也有 {n}% 的读者答错了",
+  "challengeFriend": "挑战好友",
+  "challengeLine": "这道你能答对吗？"
 }

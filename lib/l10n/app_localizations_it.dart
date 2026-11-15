@@ -4632,4 +4632,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String crowdGotWrong(int n) {
     return 'Anche il $n% dei lettori l\'ha sbagliata';
   }
+
+  @override
+  String get challengeFriend => 'Sfida un amico';
+
+  @override
+  String get challengeLine => 'Riesci a indovinare questa?';
 }

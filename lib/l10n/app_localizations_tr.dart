@@ -4554,4 +4554,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String crowdGotWrong(int n) {
     return 'Okurların %$n kadarı da yanıldı';
   }
+
+  @override
+  String get challengeFriend => 'Bir arkadaşına meydan oku';
+
+  @override
+  String get challengeLine => 'Bunu bilebilir misin?';
 }

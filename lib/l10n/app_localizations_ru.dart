@@ -4792,4 +4792,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String crowdGotWrong(int n) {
     return '$n% читателей тоже ошиблись';
   }
+
+  @override
+  String get challengeFriend => 'Брось вызов другу';
+
+  @override
+  String get challengeLine => 'Ответишь на эту?';
 }

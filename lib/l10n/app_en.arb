@@ -4855,5 +4855,13 @@
     "type": "int"
    }
   }
+ },
+ "challengeFriend": "Challenge a friend",
+ "@challengeFriend": {
+  "description": "The share sheet of a card: the button that sends the card itself to a friend, to play in their browser, with or without the app."
+ },
+ "challengeLine": "Can you get this one?",
+ "@challengeLine": {
+  "description": "The words sent with a card to a friend, before its question and the link to play it."
  }
 }

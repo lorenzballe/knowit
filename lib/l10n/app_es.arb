@@ -1082,5 +1082,7 @@
   "shareFormatPost": "Publicación",
   "shareFormatStory": "Historia",
   "crowdGotRight": "El {n}% de los lectores acertó",
-  "crowdGotWrong": "El {n}% de los lectores también falló"
+  "crowdGotWrong": "El {n}% de los lectores también falló",
+  "challengeFriend": "Reta a un amigo",
+  "challengeLine": "¿Aciertas esta?"
 }

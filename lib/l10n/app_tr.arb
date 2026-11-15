@@ -1082,5 +1082,7 @@
   "shareFormatPost": "Gönderi",
   "shareFormatStory": "Hikâye",
   "crowdGotRight": "Okurların %{n} kadarı doğru bildi",
-  "crowdGotWrong": "Okurların %{n} kadarı da yanıldı"
+  "crowdGotWrong": "Okurların %{n} kadarı da yanıldı",
+  "challengeFriend": "Bir arkadaşına meydan oku",
+  "challengeLine": "Bunu bilebilir misin?"
 }

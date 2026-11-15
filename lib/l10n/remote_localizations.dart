@@ -4493,4 +4493,12 @@ class RemoteLocalizations extends AppLocalizations {
   String crowdGotWrong(int n) =>
       _words.format('crowdGotWrong', localeName, {'n': n}) ??
       _base.crowdGotWrong(n);
+
+  @override
+  String get challengeFriend =>
+      _words.text('challengeFriend') ?? _base.challengeFriend;
+
+  @override
+  String get challengeLine =>
+      _words.text('challengeLine') ?? _base.challengeLine;
 }

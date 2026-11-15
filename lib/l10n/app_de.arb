@@ -1082,5 +1082,7 @@
   "shareFormatPost": "Beitrag",
   "shareFormatStory": "Story",
   "crowdGotRight": "{n}% der Leser lagen richtig",
-  "crowdGotWrong": "Auch {n}% der Leser lagen falsch"
+  "crowdGotWrong": "Auch {n}% der Leser lagen falsch",
+  "challengeFriend": "Fordere jemanden heraus",
+  "challengeLine": "Kriegst du die raus?"
 }

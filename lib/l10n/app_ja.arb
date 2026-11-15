@@ -1082,5 +1082,7 @@
   "shareFormatPost": "投稿",
   "shareFormatStory": "ストーリー",
   "crowdGotRight": "正解した読者は{n}%",
-  "crowdGotWrong": "読者の{n}%も間違えました"
+  "crowdGotWrong": "読者の{n}%も間違えました",
+  "challengeFriend": "友だちに挑戦状",
+  "challengeLine": "これ、わかる？"
 }

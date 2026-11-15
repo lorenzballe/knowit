@@ -95,6 +95,11 @@ jobs:
           cp -r site/. _site/
           cp -r web/cards _site/cards
           cp -r web/remote _site/remote
+          # A free card's page loads its kit from beside it (kit/...): in the
+          # app the app hands it over; on the site it has to be there, for a
+          # friend sent a card to play it in a browser (/c/<id>.html).
+          cp -r docs/cards/kit _site/cards/pages/kit
+          python3 tool/cards/challenge_pages.py _site
           ls -la _site
 
       # The site's own stylesheets and script are asked for at the same URL

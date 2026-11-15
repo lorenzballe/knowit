@@ -1082,5 +1082,7 @@
   "shareFormatPost": "Post",
   "shareFormatStory": "Relacja",
   "crowdGotRight": "{n}% czytelników odpowiedziało dobrze",
-  "crowdGotWrong": "{n}% czytelników też się pomyliło"
+  "crowdGotWrong": "{n}% czytelników też się pomyliło",
+  "challengeFriend": "Rzuć wyzwanie znajomemu",
+  "challengeLine": "Dasz radę z tą?"
 }

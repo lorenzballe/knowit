@@ -1082,5 +1082,7 @@
   "shareFormatPost": "게시물",
   "shareFormatStory": "스토리",
   "crowdGotRight": "독자의 {n}%가 맞혔어요",
-  "crowdGotWrong": "독자의 {n}%도 틀렸어요"
+  "crowdGotWrong": "독자의 {n}%도 틀렸어요",
+  "challengeFriend": "친구에게 도전장",
+  "challengeLine": "이거 맞힐 수 있어?"
 }

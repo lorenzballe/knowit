@@ -1082,5 +1082,7 @@
   "shareFormatPost": "Пост",
   "shareFormatStory": "История",
   "crowdGotRight": "{n}% читателей ответили верно",
-  "crowdGotWrong": "{n}% читателей тоже ошиблись"
+  "crowdGotWrong": "{n}% читателей тоже ошиблись",
+  "challengeFriend": "Брось вызов другу",
+  "challengeLine": "Ответишь на эту?"
 }
