@@ -43,6 +43,9 @@ for (let i = 0; i < N; i++) P.push(spawn(Kit.rnd() * 7));
 const CARS = [{x: .05, c: '#e8b04a'}, {x: .4, c: '#5fb7e8'}, {x: .75, c: '#e86a5f'}];
 const ARROWS = [0, .17, .34, .51, .68, .85].map((x, i) => ({x, y: .3 + (i % 3) * .14}));
 let G = null;
+const INK = 'var(--k)', BG = 'var(--c)';
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+const EXITGREEN = '#0b6b3a';
 
 function spawn(age = 0) {
   return {x: .5 + (Kit.rnd() - .5) * .03, y: .82, vx: (Kit.rnd() - .5) * .06, vy: -.22 - Kit.rnd() * .1, r: .02 + Kit.rnd() * .02, age, life: 6 + Kit.rnd() * 2};
@@ -60,30 +63,33 @@ function step(dt) {
     p.r += .012 * dt;
   }
 }
-function car(parent, w, h, color) {
+// a flat, side-on car: one solid body, windows cut in the card colour
+function car(parent, w, h, body) {
   const g = Kit.mk('g', {}, parent);
-  Kit.mk('rect', {x: 0, y: -h * .62, width: w, height: h * .45, rx: h * .14, fill: color}, g);
-  Kit.mk('rect', {x: w * .22, y: -h, width: w * .5, height: h * .42, rx: h * .14, fill: color}, g);
-  Kit.mk('rect', {x: w * .28, y: -h * .92, width: w * .38, height: h * .26, rx: h * .06, fill: '#cfe3f2', opacity: .75}, g);
-  Kit.mk('circle', {cx: w * .22, cy: -h * .17, r: h * .17, fill: '#111'}, g);
-  Kit.mk('circle', {cx: w * .78, cy: -h * .17, r: h * .17, fill: '#111'}, g);
+  Kit.mk('path', {d: `M${w * .04} ${-h * .17}Q0 ${-h * .17} 0 ${-h * .3}V${-h * .5}Q0 ${-h * .62} ${w * .1} ${-h * .62}H${w * .2}L${w * .3} ${-h}H${w * .66}L${w * .8} ${-h * .62}H${w * .92}Q${w} ${-h * .62} ${w} ${-h * .48}V${-h * .3}Q${w} ${-h * .17} ${w * .96} ${-h * .17}Z`, fill: body}, g);
+  Kit.mk('path', {d: `M${w * .27} ${-h * .64}L${w * .34} ${-h * .88}H${w * .46}V${-h * .64}Z`, fill: BG}, g);
+  Kit.mk('path', {d: `M${w * .51} ${-h * .64}V${-h * .88}H${w * .63}L${w * .73} ${-h * .64}Z`, fill: BG}, g);
+  for (const cx of [w * .22, w * .78]) {
+    Kit.mk('circle', {cx, cy: -h * .17, r: h * .19, fill: INK, stroke: BG, 'stroke-width': h * .05}, g);
+  }
   return g;
 }
 function render() {
   if (!G) return;
-  const {W, top, road, cars, puffs, arrows, man, cw} = G;
+  const {W, top, road, cars, puffs, backs, arrows, man, cw, ol} = G;
   const yy = v => top + v * (road - top);
   CARS.forEach((c, i) => {
     const left = c.x * W - cw / 2;
     cars[i].setAttribute('transform', `translate(${left},${road - G.H * .02}) scale(.86)`);
     cars[i].style.display = (left < 0 || left + cw * .86 > W) ? 'none' : '';
   });
+  // smoke: one flat, solid cloud with an ink outline; puffs grow in and shrink out instead of fading
   P.forEach((p, i) => {
     const fade = Math.min(1, p.age / .6) * Math.max(0, 1 - p.age / p.life);
-    const e = puffs[i];
-    e.setAttribute('cx', p.x * W); e.setAttribute('cy', yy(p.y));
-    e.setAttribute('r', p.r * Math.min(W, G.H * 1.6));
-    e.setAttribute('opacity', (.55 * fade).toFixed(3));
+    const R = p.r * Math.min(W, G.H * 1.6) * Math.min(1, fade * 2.2);
+    const cx = p.x * W, cy = yy(p.y);
+    puffs[i].setAttribute('cx', cx); puffs[i].setAttribute('cy', cy); puffs[i].setAttribute('r', R);
+    backs[i].setAttribute('cx', cx); backs[i].setAttribute('cy', cy); backs[i].setAttribute('r', R > .5 ? R + ol : 0);
   });
   ARROWS.forEach((a, i) => {
     const ax = a.x * W;
@@ -102,38 +108,52 @@ Kit.onShow.card = () => {
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * .8, 12);
   const top = H * .14, road = H * .8, rx = Math.min(H * .1, W * .1);
-  Kit.mk('text', {x: W * .03, y: top - fs * .5, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: 'var(--k)'}, svg).textContent = 'TRAFFIC →';
-  // tunnel ceiling slab (no backdrop panel: the scene sits on the card)
-  Kit.mk('rect', {x: 0, y: top, width: W, height: H * .05, fill: '#10100c'}, svg);
-  Kit.mk('rect', {x: 0, y: road, width: W, height: H * .07, fill: '#10100c'}, svg);
-  Kit.mk('line', {x1: 0, x2: W, y1: road + H * .035, y2: road + H * .035, stroke: '#f2e6b8', 'stroke-width': Math.max(2, H * .006), 'stroke-dasharray': `${W * .05} ${W * .04}`}, svg);
-  for (let i = 1; i < 8; i++) Kit.mk('circle', {cx: W * i / 8, cy: top + H * .025, r: Math.max(2, H * .008), fill: '#ffd979', opacity: .9}, svg);
-  // exit
+  // the hill the tunnel is bored through: a flat tint with a lumpy skyline
+  const hy = H * .035;
+  Kit.mk('path', {d: `M0 ${top}V${hy + H * .03}C${W * .12} ${hy} ${W * .22} ${hy - H * .02} ${W * .36} ${hy + H * .005}S${W * .6} ${hy + H * .03} ${W * .72} ${hy - H * .01}S${W * .92} ${hy + H * .01} ${W} ${hy + H * .025}V${top}Z`, fill: tint(14)}, svg);
+  Kit.mk('text', {x: W * .03, y: top - fs * .5, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: INK}, svg).textContent = 'Traffic →';
+  // road
+  Kit.mk('rect', {x: 0, y: road, width: W, height: H * .07, fill: INK}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: road + H * .035, y2: road + H * .035, stroke: BG, 'stroke-width': Math.max(2, H * .006), 'stroke-dasharray': `${W * .05} ${W * .04}`}, svg);
+  // emergency exit: a green door with its sign
   const dh = (road - top) * .38, dw = W * .07, dx = W * .05;
-  Kit.mk('rect', {x: dx, y: road - dh, width: dw, height: dh, rx: 3, fill: '#0f3d24', stroke: '#10100c', 'stroke-width': Math.max(2, H * .006)}, svg);
+  Kit.mk('rect', {x: dx, y: road - dh, width: dw, height: dh, rx: 2, fill: EXITGREEN}, svg);
+  Kit.mk('circle', {cx: dx + dw * .78, cy: road - dh * .48, r: Math.max(1.5, dw * .07), fill: BG}, svg);
   const sw = Math.max(fs * 2.9, dw * 1.4);
-  Kit.mk('rect', {x: dx + dw / 2 - sw / 2, y: road - dh - fs * 1.9, width: sw, height: fs * 1.5, rx: 4, fill: '#10100c'}, svg);
-  Kit.mk('text', {x: dx + dw / 2, y: road - dh - fs * .8, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: '#00E5A0'}, svg).textContent = 'EXIT';
+  Kit.mk('rect', {x: dx + dw / 2 - sw / 2, y: road - dh - fs * 1.9, width: sw, height: fs * 1.5, rx: 3, fill: EXITGREEN}, svg);
+  Kit.mk('text', {x: dx + dw / 2, y: road - dh - fs * .8, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: BG}, svg).textContent = 'Exit';
   const cw = W * .13, ch = cw * .55;
-  const cars = CARS.map(c => { const g = car(svg, cw, ch, c.c); g.setAttribute('opacity', .95); return g; });
-  // crashed car
-  const crash = car(svg, cw, ch, '#6b7080');
+  const cars = CARS.map(() => car(svg, cw, ch, INK));
+  // crashed car, tipped over, with a flat flame on top
+  const crash = car(svg, cw, ch, tint(45));
   crash.setAttribute('transform', `translate(${W * .5 - cw / 2},${road + H * .03}) rotate(-12 ${cw / 2} 0)`);
-  Kit.mk('circle', {cx: W * .5, cy: road - ch * .5, r: ch * .32, fill: '#ff7a2f', opacity: .9}, svg);
-  Kit.mk('circle', {cx: W * .5, cy: road - ch * .55, r: ch * .16, fill: '#ffd25a'}, svg);
-  const puffs = P.map(() => Kit.mk('circle', {fill: '#4a4f5a'}, svg));
+  const fx = W * .5, fb = road - ch * .25, fh = ch * .85, fw = ch * .34;
+  Kit.mk('path', {d: `M${fx - fw} ${fb}C${fx - fw * 1.3} ${fb - fh * .45} ${fx - fw * .2} ${fb - fh * .55} ${fx - fw * .1} ${fb - fh}C${fx + fw * .5} ${fb - fh * .7} ${fx + fw * 1.4} ${fb - fh * .4} ${fx + fw} ${fb}Z`, fill: '#e8572a'}, svg);
+  Kit.mk('path', {d: `M${fx - fw * .45} ${fb}C${fx - fw * .6} ${fb - fh * .3} ${fx - fw * .1} ${fb - fh * .35} ${fx} ${fb - fh * .6}C${fx + fw * .3} ${fb - fh * .35} ${fx + fw * .7} ${fb - fh * .25} ${fx + fw * .45} ${fb}Z`, fill: '#f4c542'}, svg);
+  // smoke: a solid flat cloud, kept inside the tunnel
+  const defs = Kit.mk('defs', {}, svg);
+  const clip = Kit.mk('clipPath', {id: 'smokeclip'}, defs);
+  Kit.mk('rect', {x: 0, y: top, width: W, height: road - top}, clip);
+  const smoke = Kit.mk('g', {'clip-path': 'url(#smokeclip)'}, svg);
+  const backG = Kit.mk('g', {}, smoke), frontG = Kit.mk('g', {}, smoke);
+  const backs = P.map(() => Kit.mk('circle', {fill: INK, r: 0}, backG));
+  const puffs = P.map(() => Kit.mk('circle', {fill: tint(55), r: 0}, frontG));
+  const ol = Math.max(1.5, H * .006);
+  // tunnel roof, drawn over the smoke so the cloud sits under it
+  Kit.mk('rect', {x: 0, y: top, width: W, height: H * .05, fill: INK}, svg);
   const al = W * .06;
   const arrows = ARROWS.map(() => {
     const g = Kit.mk('g', {opacity: 0}, svg);
-    Kit.mk('path', {d: `M${-al} 0H0M${-al * .35} ${-al * .3}L0 0L${-al * .35} ${al * .3}`, fill: 'none', stroke: '#10100c', 'stroke-width': Math.max(2.5, H * .009), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    Kit.mk('path', {d: `M${-al} 0H0M${-al * .35} ${-al * .3}L0 0L${-al * .35} ${al * .3}`, fill: 'none', stroke: INK, 'stroke-width': Math.max(2.5, H * .009), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
     return g;
   });
+  // a person walking away from the smoke, toward the exit
   const m = Kit.mk('g', {opacity: 0}, svg), ms = (road - top) * .22;
-  Kit.mk('circle', {cx: 0, cy: -ms, r: ms * .14, fill: '#10100c'}, m);
-  Kit.mk('path', {d: `M0 ${-ms * .85}V${-ms * .4}M0 ${-ms * .4}L${-ms * .2} 0M0 ${-ms * .4}L${ms * .2} 0M0 ${-ms * .72}L${-ms * .25} ${-ms * .5}M0 ${-ms * .72}L${ms * .2} ${-ms * .55}`, stroke: '#10100c', 'stroke-width': Math.max(2, ms * .09), 'stroke-linecap': 'round', fill: 'none'}, m);
-  const airLbl = Kit.mk('text', {x: W * .97, y: H * .97, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: 'var(--k)', opacity: 0}, svg);
+  Kit.mk('circle', {cx: 0, cy: -ms, r: ms * .14, fill: INK}, m);
+  Kit.mk('path', {d: `M0 ${-ms * .85}V${-ms * .4}M0 ${-ms * .4}L${-ms * .2} 0M0 ${-ms * .4}L${ms * .2} 0M0 ${-ms * .72}L${-ms * .25} ${-ms * .5}M0 ${-ms * .72}L${ms * .2} ${-ms * .55}`, stroke: INK, 'stroke-width': Math.max(2, ms * .1), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'}, m);
+  const airLbl = Kit.mk('text', {x: W * .97, y: H * .97, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: INK, opacity: 0}, svg);
   airLbl.textContent = 'air pushed along by cars →';
-  G = {W, H, top, road, cars, puffs, arrows, man: m, cw, airLbl, al};
+  G = {W, H, top, road, cars, puffs, backs, ol, arrows, man: m, cw, airLbl, al};
   render();
 };
 

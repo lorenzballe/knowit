@@ -6,12 +6,19 @@
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh}
 #box{position:relative;flex:1 1 0;min-height:0}
-#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none;overflow:hidden}
 #pic text{font-family:var(--body);font-weight:700}
 #pic .num{font-family:var(--display);font-weight:800}
 #pic .ink{fill:var(--k)}
 #pic .soft{fill:var(--k);opacity:.72}
 #pic .chev{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
+#pic .water{fill:color-mix(in srgb, var(--k) 22%, var(--c))}
+#pic .front{fill:color-mix(in srgb, var(--k) 22%, var(--c));opacity:.38}
+#pic .air{fill:color-mix(in srgb, #fff 55%, var(--c))}
+#pic .surf{fill:none;stroke:var(--k);stroke-linecap:round}
+#pic .line{fill:none;stroke:var(--k)}
+#pic .skin{fill:#e9b48f}
+#pic .shirt{fill:#f27a5a}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Build it · drag">
@@ -52,60 +59,58 @@ Kit.onShow.card = () => {
   const {W, H, f} = Kit.fitSvg(svg);
   svg.textContent = '';
   const fs = Math.max(f * .78, 11), pad = Math.max(W * .04, 8);
-  const wy = H * .42, bh = H * .37, D = bh * .85, cx = W / 2;
+  const wy = H * .42, bh = H * .35, D = H * .37 * .85, cx = W / 2;
   const fy = n => wy + D * (1 - Math.min(n, GOAL) / GOAL);
   // Size the pile so all 264 balls fit above the floor at every step of the climb.
-  let A = Math.min(W * .46, W / 2 - 4), B = H - 3 - wy, r, pts;
-  for (let t = 0; t < 14; t++) {
+  let A = Math.min(W * .46, W / 2 - 4), B = H - 4 - wy, r, pts;
+  for (let t = 0; t < 24; t++) {
     r = Math.sqrt(.8 * Math.PI / 2 * A * B / (MAXN * 2 * Math.sqrt(3)));
     for (let u = 0; u < 60; u++) { pts = slots(A, B, r); if (pts.length >= MAXN) break; r *= .97; }
     let worst = 0, my = 0;
     for (let n = 1; n <= MAXN; n++) { my = Math.max(my, pts[n - 1].y); worst = Math.max(worst, fy(n) + my + r); }
-    if (worst <= H - 2) break;
+    if (worst <= H - 3) break;
     B *= .93;
   }
   const defs = mk('defs', {}, svg);
-  // Water fades into the card at the bottom and sides: no hard box edges.
-  const wg = mk('linearGradient', {id: 'wat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#43cbd9', 'stop-opacity': 1}, wg);
-  mk('stop', {offset: .5, 'stop-color': '#1f9fb8', 'stop-opacity': .75}, wg);
-  mk('stop', {offset: 1, 'stop-color': '#0a5a73', 'stop-opacity': 0}, wg);
-  const tg = mk('linearGradient', {id: 'tint', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#0b8aa0', 'stop-opacity': .4}, tg);
-  mk('stop', {offset: 1, 'stop-color': '#0b8aa0', 'stop-opacity': 0}, tg);
-  const hf = mk('linearGradient', {id: 'hf', x1: 0, y1: 0, x2: 1, y2: 0}, defs);
-  [[0, '#000'], [.08, '#fff'], [.92, '#fff'], [1, '#000']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, hf));
-  const fm = mk('mask', {id: 'fade', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
-  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#hf)'}, fm);
-  const bg = mk('radialGradient', {id: 'ball', cx: .36, cy: .32, r: .7}, defs);
-  [[0, '#7c8792'], [.4, '#2b3139'], [1, '#07090b']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, bg));
   const root = mk('g', {}, svg);
-  mk('rect', {y: wy, width: W, height: H - wy, fill: 'url(#wat)', mask: 'url(#fade)'}, root);
+  // The pool: one flat body of water below the surface.
+  mk('rect', {y: wy, width: W, height: H - wy, class: 'water'}, root);
   const rig = mk('g', {}, root), pile = mk('g', {}, rig), man = mk('g', {transform: `translate(${cx} 0)`}, rig);
-  const rr = r * .97, balls = pts.slice(0, MAXN).map(p => mk('circle', {cx: cx + p.x, cy: p.y, r: 0, fill: 'url(#ball)'}, pile));
-  for (let i = 0; i < shown; i++) balls[i].setAttribute('r', rr);
+  // Shade balls: plain black balls, drawn flat. Balls not yet trapped are left out entirely.
+  const rr = r * .94, balls = pts.slice(0, MAXN).map((p, i) => mk('circle', i < shown
+    ? {cx: cx + p.x, cy: p.y, r: rr, class: 'ink'}
+    : {cx: cx + p.x, cy: p.y, r: 0, class: 'ink', style: 'display:none'}, pile));
   gsap.set(rig, {y: fy(shown)});
-  // The swimmer, feet at 0.
-  const s = bh, me = mk('g', {}, man), SKIN = '#eab38c', SHIRT = '#ff7657', SHORTS = '#233f6e', OUT = '#16191d';
-  const ln = (x1, y1, x2, y2, w, c, p) => { mk('line', {x1, y1, x2, y2, stroke: OUT, 'stroke-width': w + 2.4, 'stroke-linecap': 'round'}, p); mk('line', {x1, y1, x2, y2, stroke: c, 'stroke-width': w, 'stroke-linecap': 'round'}, p); };
-  [-1, 1].forEach(k => ln(k * .055 * s, -.4 * s, k * .068 * s, -.025 * s, .078 * s, SKIN, me));
-  mk('rect', {x: -.135 * s, y: -.53 * s, width: .27 * s, height: .17 * s, rx: .03 * s, fill: SHORTS, stroke: OUT, 'stroke-width': 1.2}, me);
+  // The swimmer, feet at 0: flat shapes with an even ink outline.
+  const s = bh, me = mk('g', {}, man), sw = Math.max(s * .012, 1.4);
+  const ln = (x1, y1, x2, y2, w, cls, p) => {
+    mk('line', {x1, y1, x2, y2, class: 'line', 'stroke-width': w + sw * 2, 'stroke-linecap': 'round'}, p);
+    mk('line', {x1, y1, x2, y2, style: `stroke:${cls === 'skin' ? '#e9b48f' : '#f27a5a'}`, 'stroke-width': w, 'stroke-linecap': 'round'}, p);
+  };
+  [-1, 1].forEach(k => ln(k * .055 * s, -.4 * s, k * .068 * s, -.025 * s, .078 * s, 'skin', me));
+  mk('rect', {x: -.135 * s, y: -.53 * s, width: .27 * s, height: .17 * s, rx: .03 * s, class: 'ink'}, me);
   const arms = [-1, 1].map(k => {
     const g = mk('g', {}, me), sx = k * .1 * s, sy = -.76 * s;
-    ln(sx, sy, k * .21 * s, -.5 * s, .066 * s, SHIRT, g);
-    mk('circle', {cx: k * .215 * s, cy: -.49 * s, r: .036 * s, fill: SKIN, stroke: OUT, 'stroke-width': 1.2}, g);
+    ln(sx, sy, k * .21 * s, -.5 * s, .066 * s, 'shirt', g);
+    mk('circle', {cx: k * .215 * s, cy: -.49 * s, r: .036 * s, class: 'skin', style: 'stroke:var(--k)', 'stroke-width': sw}, g);
     return {g, k, sx, sy};
   });
-  mk('rect', {x: -.125 * s, y: -.81 * s, width: .25 * s, height: .33 * s, rx: .07 * s, fill: SHIRT, stroke: OUT, 'stroke-width': 1.2}, me);
-  mk('circle', {cx: 0, cy: -.89 * s, r: .085 * s, fill: SKIN, stroke: OUT, 'stroke-width': 1.2}, me);
-  mk('path', {d: `M${-.085 * s} ${-.9 * s}A${.085 * s} ${.085 * s} 0 0 1 ${.085 * s} ${-.9 * s}Q0 ${-.935 * s} ${-.085 * s} ${-.9 * s}Z`, fill: '#2b2420'}, me);
+  mk('rect', {x: -.125 * s, y: -.81 * s, width: .25 * s, height: .33 * s, rx: .07 * s, class: 'shirt', style: 'stroke:var(--k)', 'stroke-width': sw}, me);
+  mk('circle', {cx: 0, cy: -.89 * s, r: .085 * s, class: 'skin', style: 'stroke:var(--k)', 'stroke-width': sw}, me);
+  mk('path', {d: `M${-.085 * s} ${-.9 * s}A${.085 * s} ${.085 * s} 0 0 1 ${.085 * s} ${-.9 * s}Q0 ${-.935 * s} ${-.085 * s} ${-.9 * s}Z`, class: 'ink'}, me);
   const raise = a => arms.forEach(o => o.g.setAttribute('transform', `rotate(${-o.k * a} ${o.sx} ${o.sy})`));
   raise(done ? 140 : 0);
-  // Water in front: whatever is under the surface is tinted.
-  mk('rect', {y: wy, width: W, height: H - wy, fill: 'url(#tint)', mask: 'url(#fade)'}, root);
+  // The pool's own shade balls, bobbing half under the surface, parted around the swimmer.
+  const gap = .22 * s, step = rr * 2.05;
+  for (let x = rr + 1; x <= W - rr - 1; x += step) {
+    if (Math.abs(x - cx) < gap) continue;
+    mk('circle', {cx: x, cy: wy, r: rr, class: 'ink'}, root);
+  }
+  // Water in front: whatever is under the surface is a little washed over.
+  mk('rect', {y: wy, width: W, height: H - wy, class: 'front'}, root);
   let d = `M0 ${wy}`;
-  for (let x = 0, i = 0; x <= W + 13; x += 13, i++) d += `Q${x + 6.5} ${wy + (i % 2 ? 1.8 : -1.8)} ${x + 13} ${wy}`;
-  mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: .9, mask: 'url(#fade)'}, root);
+  for (let x = 0, i = 0; x < W; x += 16, i++) { const x2 = Math.min(x + 16, W); d += `Q${(x + x2) / 2} ${wy + (i % 2 ? 2.4 : -2.4)} ${x2} ${wy}`; }
+  mk('path', {d, class: 'surf', 'stroke-width': Math.max(f * .14, 2)}, root);
   let hint = null, hg = null;
   if (!hinted && !done) {
     hint = mk('g', {transform: `translate(${W - pad - f} ${H * .8})`}, root); hg = mk('g', {}, hint);
@@ -116,13 +121,13 @@ Kit.onShow.card = () => {
   const num = mk('text', {x: pad, y: ny, 'font-size': nsz, class: 'num ink'}, svg);
   mk('text', {x: pad, y: ly, 'font-size': fs, class: 'soft'}, svg).textContent = 'shade balls';
   const l2 = mk('text', {x: pad, y: ly + fs * 1.3, 'font-size': fs, class: 'ink'}, svg);
-  // One ball cut open, top right.
+  // One ball cut in half, top right: the lower part is water.
   const R = Math.max(Math.min(H * .075, W * .075), 14), ix = W - pad - R, iy = pad + R, wq = iy + R * .1;
   const inset = mk('g', {}, svg), icp = mk('clipPath', {id: 'inball'}, defs);
   mk('circle', {cx: ix, cy: iy, r: R}, icp);
-  mk('circle', {cx: ix, cy: iy, r: R, fill: '#eef8fa'}, inset);
-  mk('path', {d: `M${ix - R} ${wq}q${R / 2} ${-R * .12} ${R} 0t${R} 0V${iy + R}H${ix - R}Z`, fill: '#2bb5c8', 'clip-path': 'url(#inball)'}, inset);
-  mk('circle', {cx: ix, cy: iy, r: R, fill: 'none', stroke: '#111418', 'stroke-width': Math.max(R * .17, 2.5)}, inset);
+  mk('circle', {cx: ix, cy: iy, r: R, class: 'air'}, inset);
+  mk('path', {d: `M${ix - R} ${wq}q${R / 2} ${-R * .12} ${R} 0t${R} 0V${iy + R}H${ix - R}Z`, class: 'water', 'clip-path': 'url(#inball)'}, inset);
+  mk('circle', {cx: ix, cy: iy, r: R, class: 'line', 'stroke-width': Math.max(R * .17, 2.5)}, inset);
   mk('text', {x: W - pad, y: iy + R + fs * 1.45, 'font-size': fs, 'text-anchor': 'end', class: 'soft'}, inset).textContent = 'almost half water';
   mk('text', {x: W - pad, y: iy + R + fs * 2.7, 'font-size': fs, 'text-anchor': 'end', class: 'ink'}, inset).textContent = 'lifts only 300 g';
   S = {W, H, f, rr, balls, rig, me, fy, num, l2, raise, inset, hint, hg};
@@ -140,10 +145,11 @@ function setN(v) {
   const k = Math.round(N);
   if (!S || k === shown) return;
   for (let i = shown; i < k; i++) {
+    S.balls[i].style.display = '';
     if (Kit.calm) S.balls[i].setAttribute('r', S.rr);
     else gsap.fromTo(S.balls[i], {attr: {r: 0}}, {attr: {r: S.rr}, duration: .3, ease: 'back.out(2.5)', delay: Math.min(i - shown, 20) * .006});
   }
-  for (let i = k; i < shown; i++) { gsap.killTweensOf(S.balls[i]); S.balls[i].setAttribute('r', 0); }
+  for (let i = k; i < shown; i++) { gsap.killTweensOf(S.balls[i]); S.balls[i].setAttribute('r', 0); S.balls[i].style.display = 'none'; }
   if (Math.floor(k / 50) !== Math.floor(shown / 50)) Kit.haptic('light');
   shown = k;
   gsap.to(S.rig, {y: S.fy(k), duration: Kit.calm ? 0 : .35, ease: 'power2.out', overwrite: true});

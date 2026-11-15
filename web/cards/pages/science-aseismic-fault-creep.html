@@ -11,8 +11,7 @@
 #why{display:flex;flex-direction:column;gap:.8cqh;padding-top:.6cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
 #handle{cursor:grab}
-.lbl{font-family:var(--body);font-weight:700}
-.mono{font-family:var(--mono)}
+.lbl{font-family:var(--body);font-weight:600}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Drag · watch">
   <div class="in">
@@ -33,6 +32,15 @@ const st = {p: 0, s: 0, shake: 0, quake: 0};
 let G = null, snapped = false, dragging = false;
 const BLUE = '#2f6fe0', RED = '#e0412f';
 
+function house(x, y, s, parent) {
+  // a plain little house standing on the surface at (x, y)
+  const h = Kit.mk('g', {}, parent);
+  Kit.mk('rect', {x: x - s * .5, y: y - s * .7, width: s, height: s * .7, fill: 'var(--k)'}, h);
+  Kit.mk('path', {d: `M${x - s * .66},${y - s * .66} L${x},${y - s * 1.2} L${x + s * .66},${y - s * .66} Z`, fill: 'var(--k)', 'stroke-linejoin': 'round'}, h);
+  Kit.mk('rect', {x: x - s * .12, y: y - s * .34, width: s * .24, height: s * .34, fill: 'var(--c)'}, h);
+  return h;
+}
+
 function draw() {
   const svg = Kit.$('pic');
   svg.innerHTML = '';
@@ -41,48 +49,53 @@ function draw() {
   const A = {x: .04 * W, y: .94 * H}, B = {x: .62 * W, y: .52 * H}, D = {x: .8 * W, y: .13 * H};
   const sy = .12 * H;
   const g = Kit.mk('g', {}, svg);
-  // ground
-  Kit.mk('rect', {x: 0, y: sy, width: W, height: H - sy, rx: f * .6, fill: 'color-mix(in srgb,var(--k) 7%,transparent)'}, g);
-  Kit.mk('line', {x1: 0, y1: sy, x2: W, y2: sy, stroke: 'var(--k)', 'stroke-width': Math.max(2, f * .15), 'stroke-linecap': 'round'}, g);
-  // strata
-  const layers = [.2, .27, .34, .41].map(y => Kit.mk('path', {fill: 'none', stroke: 'color-mix(in srgb,var(--k) 55%,transparent)', 'stroke-width': Math.max(2, f * .16), 'stroke-linecap': 'round'}, g));
+  // ground in cross-section: upper rock, deeper rock below
+  Kit.mk('rect', {x: 0, y: sy, width: W, height: H - sy, fill: 'color-mix(in srgb,var(--k) 12%,var(--c))'}, g);
+  Kit.mk('path', {d: `M0,${.5 * H} C${.3 * W},${.47 * H} ${.6 * W},${.54 * H} ${W},${.5 * H} L${W},${H} L0,${H} Z`, fill: 'color-mix(in srgb,var(--k) 24%,var(--c))'}, g);
+  Kit.mk('line', {x1: 0, y1: sy, x2: W, y2: sy, stroke: 'var(--k)', 'stroke-width': Math.max(2.5, f * .2), 'stroke-linecap': 'round'}, g);
+  // houses on the surface, either side of the shallow fault
+  const hs = Math.max(f * 1.5, 18);
+  house(.66 * W, sy, hs, g);
+  house(.91 * W, sy, hs, g);
+  // rock layers
+  const layers = [.2, .27, .34, .41].map(y => Kit.mk('path', {fill: 'none', stroke: 'color-mix(in srgb,var(--k) 45%,var(--c))', 'stroke-width': Math.max(3, f * .26), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g));
   // faults
   const fw = Math.max(4, f * .38);
   Kit.mk('line', {x1: A.x, y1: A.y, x2: B.x, y2: B.y, stroke: BLUE, 'stroke-width': fw, 'stroke-linecap': 'round'}, g);
   Kit.mk('line', {x1: B.x, y1: B.y, x2: D.x, y2: D.y, stroke: RED, 'stroke-width': fw, 'stroke-linecap': 'round'}, g);
-  // ticks across deep fault
+  // slip marks across the deep fault
   const dx = B.x - A.x, dy = B.y - A.y, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, nx = uy, ny = -ux;
   const tl = f * 1.1, ticks = [];
   for (let t = .08; t < .95; t += .14) {
-    const lo = Kit.mk('line', {stroke: BLUE, 'stroke-width': Math.max(2, f * .14), 'stroke-linecap': 'round', opacity: .8}, g);
-    const up = Kit.mk('line', {stroke: BLUE, 'stroke-width': Math.max(2, f * .14), 'stroke-linecap': 'round', opacity: .8}, g);
+    const lo = Kit.mk('line', {stroke: BLUE, 'stroke-width': Math.max(2.5, f * .18), 'stroke-linecap': 'round'}, g);
+    const up = Kit.mk('line', {stroke: BLUE, 'stroke-width': Math.max(2.5, f * .18), 'stroke-linecap': 'round'}, g);
     ticks.push({t, lo, up});
   }
   // labels
-  Kit.mk('text', {x: .04 * W, y: .86 * H, fill: BLUE, 'font-size': fs, class: 'lbl'}, g).textContent = 'DEEP FAULT';
-  Kit.mk('text', {x: .04 * W, y: .86 * H + fs * 1.35, fill: 'var(--k)', 'font-size': fs, class: 'lbl', opacity: .75}, g).textContent = 'creeps slowly, no quakes';
-  Kit.mk('text', {x: .97 * W, y: .64 * H, fill: RED, 'font-size': fs, class: 'lbl', 'text-anchor': 'end'}, g).textContent = 'SHALLOW FAULT';
+  Kit.mk('text', {x: .36 * W, y: .86 * H, fill: 'var(--k)', 'font-size': fs, class: 'lbl'}, g).textContent = 'Deep fault';
+  Kit.mk('text', {x: .36 * W, y: .86 * H + fs * 1.35, fill: 'var(--k)', 'font-size': fs, class: 'lbl', opacity: .75}, g).textContent = 'creeps slowly, no quakes';
+  Kit.mk('text', {x: .97 * W, y: .64 * H, fill: 'var(--k)', 'font-size': fs, class: 'lbl', 'text-anchor': 'end'}, g).textContent = 'Shallow fault';
   const lockT = Kit.mk('text', {x: .97 * W, y: .64 * H + fs * 1.35, fill: 'var(--k)', 'font-size': fs, class: 'lbl', 'text-anchor': 'end', opacity: .75}, g);
   lockT.textContent = snapped ? 'snapped!' : 'stuck, bending';
-  // stress gauge
+  // stress bar
   const gx = .04 * W, gw = .34 * W;
   Kit.mk('text', {x: gx, y: .18 * H, fill: 'var(--k)', 'font-size': fs, class: 'lbl'}, g).textContent = 'Stress up top';
-  Kit.mk('rect', {x: gx, y: .18 * H + fs * .6, width: gw, height: fs * .9, rx: fs * .45, fill: 'none', stroke: 'var(--k)', 'stroke-width': 1.5}, g);
-  const bar = Kit.mk('rect', {x: gx, y: .18 * H + fs * .6, width: 0, height: fs * .9, rx: fs * .45, fill: RED}, g);
+  Kit.mk('rect', {x: gx, y: .18 * H + fs * .6, width: gw, height: fs * .9, rx: fs * .2, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': 2}, g);
+  const bar = Kit.mk('rect', {x: gx, y: .18 * H + fs * .6, width: 0, height: fs * .9, rx: fs * .2, fill: RED}, g);
   // seismograph
   const sgy = .18 * H + fs * 3.4;
   Kit.mk('text', {x: gx, y: sgy, fill: 'var(--k)', 'font-size': fs, class: 'lbl'}, g).textContent = 'Seismograph';
   const trY = sgy + fs * 1.9;
-  const trace = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f * .12), 'stroke-linejoin': 'round'}, g);
-  // rings host
+  const trace = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, f * .14), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
+  // shock waves host
   const rings = Kit.mk('g', {}, g);
   // handle
   const hr = Math.max(f * 1.4, 20);
   const handle = Kit.mk('g', {id: 'handle'}, svg);
-  const halo = Kit.mk('circle', {r: hr * 1.35, fill: BLUE, opacity: .2}, handle);
-  Kit.mk('circle', {r: hr, fill: BLUE, stroke: '#fff', 'stroke-width': Math.max(2, f * .15)}, handle);
+  const halo = Kit.mk('circle', {r: hr * 1.35, fill: 'none', stroke: BLUE, 'stroke-width': Math.max(2, f * .15), opacity: 0}, handle);
+  Kit.mk('circle', {r: hr, fill: BLUE, stroke: 'var(--k)', 'stroke-width': Math.max(2, f * .15)}, handle);
   const ang = Math.atan2(uy, ux) * 180 / Math.PI;
-  Kit.mk('path', {d: `M${-hr * .45},${-hr * .4} L${hr * .45},0 L${-hr * .45},${hr * .4} Z`, fill: '#fff', transform: `rotate(${ang})`}, handle);
+  Kit.mk('path', {d: `M${-hr * .45},${-hr * .4} L${hr * .45},0 L${-hr * .45},${hr * .4} Z`, fill: '#fff', 'stroke-linejoin': 'round', transform: `rotate(${ang})`}, handle);
   G = {svg, W, H, f, A, B, D, ux, uy, nx, ny, L, tl, ticks, layers, g, bar, gw, trace, trY, gx, rings, handle, halo, lockT, hr};
   handle.addEventListener('pointerdown', e => { if (snapped) return; dragging = true; handle.setPointerCapture?.(e.pointerId); Kit.haptic('selection'); e.preventDefault(); });
   render();
@@ -94,7 +107,7 @@ function render() {
   if (!G) return;
   const {W, H, f, A, ux, uy, nx, ny, L, tl, ticks, layers, g, bar, gw, trace, trY, gx, handle} = G;
   const p = st.p, s = st.s;
-  // strata: elastic bend while locked, step after snap
+  // rock layers: elastic bend while locked, step after snap
   const amp = .07 * H, w = .07 * W;
   [.2, .27, .34, .41].forEach((yy, i) => {
     const y0 = yy * H, xf = faultX(y0);
@@ -112,7 +125,7 @@ function render() {
     }
     layers[i].setAttribute('d', d);
   });
-  // ticks: offset grows smoothly along the deep fault
+  // slip marks: offset grows smoothly along the deep fault
   ticks.forEach(o => {
     const bx = A.x + ux * L * o.t, by = A.y + uy * L * o.t;
     o.lo.setAttribute('x1', bx); o.lo.setAttribute('y1', by);
@@ -125,7 +138,7 @@ function render() {
   const t = .2 + .5 * p;
   handle.setAttribute('transform', `translate(${A.x + ux * L * t},${A.y + uy * L * t})`);
   handle.style.opacity = snapped ? .35 : 1;
-  // gauge
+  // stress bar
   bar.setAttribute('width', Math.max(0, gw * p * (1 - s)));
   // seismograph
   let d = '';
@@ -174,7 +187,7 @@ window.addEventListener('pointerup', () => { dragging = false; });
 Kit.onShow.card = () => { draw(); };
 Kit.onEnter.card = () => {
   if (Kit.calm || !G) return;
-  gsap.fromTo(G.halo, {attr: {r: G.hr * 1.1}, opacity: .35}, {attr: {r: G.hr * 1.9}, opacity: 0, duration: 1.2, repeat: 3, ease: 'power2.out'});
+  gsap.fromTo(G.halo, {attr: {r: G.hr * 1.1}, opacity: .6}, {attr: {r: G.hr * 1.9}, opacity: 0, duration: 1.2, repeat: 3, ease: 'power2.out'});
 };
 Kit.play.card = async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));

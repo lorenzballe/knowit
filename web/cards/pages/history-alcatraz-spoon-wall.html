@@ -43,6 +43,13 @@ const CRACKS = Array.from({length: 6}, (_, i) => {
 });
 const CHIPS = Array.from({length: 12}, () => ({dx: (Kit.rnd() - .5) * 1.6, s: .5 + Kit.rnd() * .7, r: Kit.rnd() * 90}));
 
+// Flat palette: ink, card colour, concrete, sea, and green for the real answer.
+const CONC = 'color-mix(in srgb, var(--k) 16%, #f3eee3)';
+const CONC_D = 'color-mix(in srgb, var(--k) 34%, #f3eee3)';
+const SALTED = 'color-mix(in srgb, var(--k) 26%, #e6e2d2)';
+const SEA = '#2b6a8f';
+const OK = '#1aa36b';
+
 function draw() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f: f0} = Kit.fitSvg(svg), f = Math.max(f0, 12);
@@ -51,65 +58,75 @@ function draw() {
   const x0 = W * .13, x1 = W * .87, px = i => x0 + i * (x1 - x0) / 3;
   geo = {W, H, f, sy, x0, x1, px};
   const ink = 'fill:var(--k)';
+  const line = 'stroke:var(--k);stroke-linejoin:round;stroke-linecap:round';
 
-  // Sea
+  // Sea: a flat body of water with a soft wave on top, lapping at the wall
   const seaTop = wb * .34, sw = W * .25;
   let d = `M0 ${seaTop}`;
-  for (let x = 0; x <= sw; x += sw / 6) d += ` Q${x + sw / 12} ${seaTop - f * .5} ${x + sw / 6} ${seaTop}`;
+  for (let x = 0; x < sw - 1; x += sw / 4) d += ` q${sw / 16} ${-f * .55} ${sw / 8} 0 t${sw / 8} 0`;
   d += ` L${sw} ${wb} L0 ${wb}Z`;
-  const sea = m('path', {d, style: 'fill:#1f5f86'}, svg);
-  m('text', {x: sw / 2, y: seaTop - f * 1.1, 'text-anchor': 'middle', style: `${ink};font:700 ${f}px var(--body)`}, svg).textContent = 'salt water';
+  m('path', {d, style: `fill:${SEA}`}, svg);
+  m('text', {x: sw / 2, y: seaTop - f * 1.1, 'text-anchor': 'middle', style: `${ink};font:600 ${f}px var(--body)`}, svg).textContent = 'salt water';
 
-  // Wall
+  // Wall: a plain slab of concrete seen in section
   const wall = m('g', {}, svg);
-  m('rect', {x: wx, y: wy, width: ww, height: wh, rx: f * .3, style: 'fill:#cfc8b8;stroke:var(--k);stroke-width:2'}, wall);
-  AGG.forEach(a => m('circle', {cx: wx + a.x * ww, cy: wy + a.y * wh, r: a.r * f * .22, style: 'fill:#9d9686'}, wall));
-  m('rect', {x: wx, y: wb, width: W - wx, height: 2, style: 'fill:var(--k)'}, svg);
-  m('text', {x: wx + ww / 2, y: wy + f * 1.4, 'text-anchor': 'middle', style: `fill:#2a2620;font:800 ${f}px var(--body)`}, svg).textContent = 'concrete wall';
+  m('rect', {x: wx, y: wy, width: ww, height: wh, style: `fill:${CONC};${line};stroke-width:2.5`}, wall);
+  m('line', {x1: wx - f * .3, y1: wb, x2: W, y2: wb, style: `${line};stroke-width:2.5`}, svg);
+  m('text', {x: wx + ww / 2, y: wy + f * 1.5, 'text-anchor': 'middle', style: `${ink};font:600 ${f}px var(--body)`}, svg).textContent = 'concrete wall';
 
   const hx = wx + ww * .62, hy = wy + wh * .62, hrx = ww * .15, hry = wh * .16;
   const R = {};
   if (done) {
-    R.stain = m('rect', {x: wx, y: wy, width: ww * .6, height: wh, style: 'fill:#6f7f63;opacity:.38'}, svg);
+    // The salt soaks in from the sea side
+    R.stain = m('rect', {x: wx + 1.25, y: wy + 1.25, width: ww * .6, height: wh - 2.5, style: `fill:${SALTED}`}, svg);
     R.ions = IONS.map(o => {
-      const c = m('circle', {cx: wx + f * .6 + o.ex * ww * .55, cy: wy + f * 2.4 + o.ey * (wh - f * 3), r: f * .22, style: 'fill:#1aa36b;stroke:#fff;stroke-width:1'}, svg);
-      c._s = {x: o.sx * sw * .9 - (wx + f * .6 + o.ex * ww * .55), y: seaTop + o.sy * (wb - seaTop) * .9 - (wy + f * 2.4 + o.ey * (wh - f * 3))};
+      const cx = wx + f * .6 + o.ex * ww * .55, cy = wy + f * 2.4 + o.ey * (wh - f * 3), s = f * .34;
+      const c = m('rect', {x: cx - s / 2, y: cy - s / 2, width: s, height: s, style: 'fill:#fff;stroke:var(--k);stroke-width:1.2'}, svg);
+      c._s = {x: o.sx * sw * .9 - cx, y: seaTop + o.sy * (wb - seaTop) * .9 - cy};
       return c;
     });
-    m('text', {x: wx + f * .5, y: wy + f * 3.1, style: `fill:#0d4f33;font:800 ${f * .95}px var(--body)`}, svg).textContent = 'Cl⁻ + ions';
-    R.cracks = CRACKS.map(p => m('path', {d: 'M' + p.map(q => `${hx + q[0] * ww} ${hy + q[1] * wh}`).join(' L'), style: 'fill:none;stroke:#2a2620;stroke-width:1.6;stroke-linecap:round'}, svg));
-    R.hole = m('ellipse', {cx: hx, cy: hy, rx: hrx, ry: hry, style: 'fill:#1a1714;stroke:#5c5548;stroke-width:3'}, svg);
+    m('text', {x: wx + f * .5, y: wy + f * 3.1, style: `${ink};font:600 ${f}px var(--body)`}, svg).textContent = 'Cl⁻ + ions';
+  }
+
+  // The cell's air vent, where the digging happened
+  const vw = hrx * 1.1, vh = hry * 1.1;
+  m('rect', {x: hx - vw / 2, y: hy - vh / 2, width: vw, height: vh, style: `fill:${CONC_D};${line};stroke-width:2`}, svg);
+  for (let i = 1; i < 5; i++) m('line', {x1: hx - vw / 2 + i * vw / 5, y1: hy - vh / 2, x2: hx - vw / 2 + i * vw / 5, y2: hy + vh / 2, style: `${line};stroke-width:2`}, svg);
+
+  if (done) {
+    R.cracks = CRACKS.map(p => m('path', {d: 'M' + p.map(q => `${hx + q[0] * ww} ${hy + q[1] * wh}`).join(' L'), style: `fill:none;${line};stroke-width:1.8`}, svg));
+    R.hole = m('ellipse', {cx: hx, cy: hy, rx: hrx, ry: hry, style: 'fill:var(--k)'}, svg);
     R.chips = CHIPS.map(c => {
       const s = f * .35 * c.s, cx = hx + c.dx * hrx * 1.4, cy = wb - s;
-      const p = m('rect', {x: cx - s, y: cy - s, width: s * 2, height: s * 1.4, transform: `rotate(${c.r} ${cx} ${cy})`, style: 'fill:#b3ab99;stroke:#2a2620;stroke-width:1'}, svg);
+      const p = m('path', {d: `M${cx - s} ${cy + s * .4} L${cx - s * .6} ${cy - s * .7} L${cx + s} ${cy - s * .3} L${cx + s * .7} ${cy + s * .4}Z`, transform: `rotate(${c.r} ${cx} ${cy})`, style: `fill:${CONC};${line};stroke-width:1.2`}, svg);
       p._dy = hy - cy; return p;
     });
     const so = m('g', {transform: `translate(${hx + hrx * .55} ${hy - hry * .1}) rotate(-38)`}, svg);
     R.spoon = m('g', {}, so);
-    m('rect', {x: -f * .22, y: f * .6, width: f * .44, height: f * 4.6, rx: f * .22, style: 'fill:#d9dde2;stroke:#2a2620;stroke-width:1.5'}, R.spoon);
-    m('ellipse', {cx: 0, cy: 0, rx: f * .75, ry: f * 1.05, style: 'fill:#e9ecef;stroke:#2a2620;stroke-width:1.5'}, R.spoon);
+    m('path', {d: `M${-f * .16} ${f * .8} L${-f * .26} ${f * 5} Q0 ${f * 5.4} ${f * .26} ${f * 5} L${f * .16} ${f * .8}Z`, style: `fill:#fff;${line};stroke-width:2`}, R.spoon);
+    m('ellipse', {cx: 0, cy: 0, rx: f * .72, ry: f * 1.05, style: `fill:#fff;${line};stroke-width:2`}, R.spoon);
   }
 
   // Scale
-  m('line', {x1: x0, y1: sy, x2: x1, y2: sy, style: 'stroke:var(--k);stroke-width:3;stroke-linecap:round'}, svg);
+  m('line', {x1: x0, y1: sy, x2: x1, y2: sy, style: `${line};stroke-width:3`}, svg);
   TOOLS.forEach((n, i) => {
     const isR = done && i === RIGHT;
-    m('line', {x1: px(i), y1: sy - f * .35, x2: px(i), y2: sy + f * .35, style: 'stroke:var(--k);stroke-width:2'}, svg);
+    m('line', {x1: px(i), y1: sy - f * .35, x2: px(i), y2: sy + f * .35, style: `${line};stroke-width:2.5`}, svg);
     m('text', {x: px(i), y: sy + f * 1.75, 'text-anchor': 'middle', style: `${ink};font:${isR ? 800 : 600} ${f}px var(--body)`}, svg).textContent = n;
   });
   const mx = done ? px(g) : x0 + t * (x1 - x0);
   const mk = m('g', {}, svg);
   m('circle', {cx: mx, cy: sy, r: f * .75, style: `fill:${done ? 'transparent' : 'var(--k)'};stroke:var(--k);stroke-width:3`}, mk);
   if (!done) {
-    m('path', {d: `M${mx} ${sy - f * 1.1} l${-f * .5} ${-f * .8} h${f} z`, style: 'fill:var(--k)'}, mk);
+    m('path', {d: `M${mx} ${sy - f * 1.1} l${-f * .5} ${-f * .8} h${f} z`, style: 'fill:var(--k);stroke:var(--k);stroke-width:1.5;stroke-linejoin:round'}, mk);
   }
   R.marker = mk;
   if (done) {
     const rx = px(RIGHT);
     R.real = m('g', {}, svg);
-    m('circle', {cx: rx, cy: sy, r: f * .5, style: 'fill:#1aa36b'}, R.real);
-    m('text', {x: rx, y: sy - f * 1.1, 'text-anchor': 'middle', style: `fill:#1aa36b;font:800 ${f}px var(--body)`}, R.real).textContent = g === RIGHT ? 'yes!' : 'real';
-    if (g !== RIGHT) m('text', {x: px(g), y: sy - f * 1.1, 'text-anchor': 'middle', style: `${ink};font:700 ${f}px var(--body)`}, svg).textContent = 'you';
+    m('circle', {cx: rx, cy: sy, r: f * .5, style: `fill:${OK}`}, R.real);
+    m('text', {x: rx, y: sy - f * 1.1, 'text-anchor': 'middle', style: `fill:${OK};font:700 ${f}px var(--body)`}, R.real).textContent = g === RIGHT ? 'yes!' : 'real';
+    if (g !== RIGHT) m('text', {x: px(g), y: sy - f * 1.1, 'text-anchor': 'middle', style: `${ink};font:600 ${f}px var(--body)`}, svg).textContent = 'you';
   }
   geo.R = R;
 }

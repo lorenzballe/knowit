@@ -15,13 +15,14 @@
 .opt{font:700 max(1.85cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer;overflow-wrap:break-word}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 #tint{position:absolute;width:0;height:0;color:var(--k);background:var(--c)}
+#tint2{position:absolute;width:0;height:0;color:color-mix(in srgb,var(--k) 32%,var(--c));background:color-mix(in srgb,var(--k) 58%,var(--c))}
 </style>
 <article class="card" id="card" data-topic="human_body" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FERTILISATION</span></div>
     <h2 class="q">Sperm climb the uterus. How do they find the egg?</h2>
     <div class="stagebox" id="stage">
-      <div id="pic"><canvas id="cv"></canvas><i id="tint"></i></div>
+      <div id="pic"><canvas id="cv"></canvas><i id="tint"></i><i id="tint2"></i></div>
       <div id="opts">
         <button class="opt" data-i="0">They swim at random until one bumps into it</button>
         <button class="opt" data-i="1">The egg sends out chemical signals that pull them</button>
@@ -41,8 +42,8 @@ const RIGHT = 1;
 let pick = -1;
 const C = Kit.$('cv');
 let X = null, W = 1, H = 1, u = 1, ox = 0, oy = 0, fs = 12;
-let ink = '#111', bg = '#fff';
-const GOLD = '#f7b733';
+let ink = '#111', bg = '#fff', wall = '#ccc', ovr = '#ddd';
+const GOLD = '#f7b733', GOLD_D = '#c98410';
 const P = (a, b) => [ox + a * u, oy + b * u];
 // tube (right side) as a bezier in unit space
 const B = [[.3,.28],[.55,.1],[.8,.12],[.88,.4]];
@@ -106,55 +107,66 @@ function angd(a, b) { let d = a - b; while (d > Math.PI) d -= 2*Math.PI; while (
 function label(t, a, b, al = 'center') {
   const [x, y] = P(a, b);
   X.font = `600 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
-  X.textAlign = al; X.textBaseline = 'middle'; X.fillStyle = ink; X.globalAlpha = .75; X.fillText(t, x, y); X.globalAlpha = 1;
+  X.textAlign = al; X.textBaseline = 'middle'; X.fillStyle = ink; X.globalAlpha = 1; X.fillText(t, x, y);
+}
+function tubePath(sg) {
+  const q = B.map(p => P(sg*p[0], p[1]));
+  X.beginPath(); X.moveTo(...q[0]); X.bezierCurveTo(...q[1], ...q[2], ...q[3]);
 }
 function draw() {
   if (!X) return;
   X.clearRect(0, 0, W, H);
+  X.globalAlpha = 1;
   X.lineCap = 'round'; X.lineJoin = 'round';
-  // tubes + ovaries
+  // ovaries: plain flat ovals under the open ends of the tubes
   [-1, 1].forEach(sg => {
-    const q = B.map(p => P(sg*p[0], p[1]));
-    const path = () => { X.beginPath(); X.moveTo(...q[0]); X.bezierCurveTo(...q[1], ...q[2], ...q[3]); };
-    path(); X.strokeStyle = ink; X.globalAlpha = .35; X.lineWidth = .085*u; X.stroke();
-    path(); X.globalAlpha = 1; X.strokeStyle = bg; X.lineWidth = .045*u; X.stroke();
-    // fimbriae
-    X.strokeStyle = ink; X.globalAlpha = .35; X.lineWidth = Math.max(2, .012*u);
-    for (let k = -2; k <= 2; k++) {
-      const [ex, ey] = P(sg*.88, .4); X.beginPath(); X.moveTo(ex, ey);
-      X.lineTo(ex + sg*(.03 + Math.abs(k)*.005)*u + k*.012*u*sg, ey + (.06 - Math.abs(k)*.01)*u); X.stroke();
-    }
     const [vx, vy] = P(sg*.72, .56);
     X.beginPath(); X.ellipse(vx, vy, .1*u, .065*u, sg*.3, 0, Math.PI*2);
-    X.fillStyle = ink; X.globalAlpha = .22; X.fill(); X.globalAlpha = .5; X.lineWidth = 2; X.stroke(); X.globalAlpha = 1;
+    X.fillStyle = ovr; X.fill();
   });
-  // uterus
+  // tube walls + fringed open ends
+  X.strokeStyle = wall;
+  [-1, 1].forEach(sg => {
+    tubePath(sg); X.lineWidth = .085*u; X.stroke();
+    X.lineWidth = .026*u;
+    for (let k = -2; k <= 2; k++) {
+      const [ex, ey] = P(sg*.88, .4); X.beginPath(); X.moveTo(ex, ey);
+      X.lineTo(ex + sg*(.03 + Math.abs(k)*.005)*u + k*.016*u*sg, ey + (.07 - Math.abs(k)*.012)*u); X.stroke();
+    }
+  });
+  // uterus wall (solid)
   X.beginPath(); X.moveTo(...P(-.3,.26)); X.quadraticCurveTo(...P(0,.12), ...P(.3,.26));
   X.quadraticCurveTo(...P(.3,.7), ...P(.09,.92)); X.lineTo(...P(.09,1.17)); X.lineTo(...P(-.09,1.17));
   X.lineTo(...P(-.09,.92)); X.quadraticCurveTo(...P(-.3,.7), ...P(-.3,.26)); X.closePath();
-  X.fillStyle = ink; X.globalAlpha = .1; X.fill(); X.globalAlpha = .5; X.strokeStyle = ink; X.lineWidth = 2; X.stroke(); X.globalAlpha = 1;
+  X.fillStyle = wall; X.fill();
+  // inside: tube channels and the uterine cavity, in the card colour
+  X.strokeStyle = bg;
+  [-1, 1].forEach(sg => {
+    tubePath(sg); X.lineWidth = .04*u; X.stroke();
+    X.beginPath(); X.moveTo(...P(sg*.2, .31)); X.lineTo(...P(sg*.31, .275)); X.stroke();
+  });
+  X.beginPath(); X.moveTo(...P(-.22,.3)); X.quadraticCurveTo(...P(0,.24), ...P(.22,.3));
+  X.quadraticCurveTo(...P(.24,.72), ...P(.055,.93)); X.lineTo(...P(.055,1.17)); X.lineTo(...P(-.055,1.17));
+  X.lineTo(...P(-.055,.93)); X.quadraticCurveTo(...P(-.24,.72), ...P(-.22,.3)); X.closePath();
+  X.fillStyle = bg; X.fill();
   // labels
   label('Fallopian tube', -.58, -.02);
   label('ovary', -.72, .72);
   label('uterus', 0, .4);
-  // rings (chemical signal)
+  // chemical signal: plain rings spreading from the egg
   const [gx, gy] = P(egg.x, egg.y);
+  X.strokeStyle = GOLD; X.lineWidth = Math.max(2, .011*u);
   rings.forEach(r => {
     X.beginPath(); X.arc(gx, gy, (egg.r + r.p*.42)*u, 0, Math.PI*2);
-    X.strokeStyle = GOLD; X.globalAlpha = (1 - r.p) * .9; X.lineWidth = Math.max(2, .014*u*(1-r.p)+1); X.stroke();
+    X.globalAlpha = 1 - r.p; X.stroke();
   });
   X.globalAlpha = 1;
-  // egg glow
-  if (egg.on) {
-    const pulse = 1 + .12*Math.sin(egg.glow*4);
-    const g = X.createRadialGradient(gx, gy, 0, gx, gy, .16*u*pulse);
-    g.addColorStop(0, 'rgba(247,183,51,.75)'); g.addColorStop(1, 'rgba(247,183,51,0)');
-    X.fillStyle = g; X.beginPath(); X.arc(gx, gy, .16*u*pulse, 0, Math.PI*2); X.fill();
-    label('egg', EGG[0] + .02, EGG[1] - .16);
-  }
-  X.beginPath(); X.arc(gx, gy, egg.r*u, 0, Math.PI*2);
+  if (egg.on) label('egg', EGG[0] + .02, EGG[1] - .16);
+  // egg: flat gold cell with its nucleus
+  const er = egg.r * u * (egg.on ? 1 + .06*Math.sin(egg.glow*4) : 1);
+  X.beginPath(); X.arc(gx, gy, er, 0, Math.PI*2);
   X.fillStyle = GOLD; X.fill(); X.strokeStyle = ink; X.lineWidth = Math.max(1.5, .008*u); X.stroke();
-  X.beginPath(); X.arc(gx, gy, egg.r*u*.38, 0, Math.PI*2); X.fillStyle = ink; X.globalAlpha = .35; X.fill(); X.globalAlpha = 1;
+  X.beginPath(); X.arc(gx, gy, er*.38, 0, Math.PI*2); X.fillStyle = GOLD_D; X.fill();
   // sperm
   X.strokeStyle = ink; X.fillStyle = ink;
   S.forEach(s => {
@@ -197,6 +209,7 @@ Kit.onShow.card = () => {
   u = Math.min(W * .5, H / 1.3); ox = W / 2; oy = (H - 1.26*u) / 2 + .1*u;
   fs = Math.max(12, Math.min(16, u * .075));
   const t = getComputedStyle(Kit.$('tint')); ink = t.color || ink; bg = t.backgroundColor || bg;
+  const t2 = getComputedStyle(Kit.$('tint2')); wall = t2.color || wall; ovr = t2.backgroundColor || ovr;
   draw();
 };
 let started = false;

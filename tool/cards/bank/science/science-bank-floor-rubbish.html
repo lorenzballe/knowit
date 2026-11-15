@@ -38,12 +38,13 @@
 <script>
 const st = {p: 0};
 let G = null, done = false, tw = null, lastSpawn = 0;
-const PAL = ['#b5523b', '#d9c7a3', '#6d6a64', '#c98a5a', '#9c8f7a', '#e6dccb', '#8b3f2c'];
+// rubbish: brick, pale tile, terracotta shard
+const PAL = ['#b5523b', '#f1ead9', '#d08a52'];
+const TUFF = '#e2bd55', PALE = '#f1ead9';
 const chunks = [];
-for (let i = 0; i < 110; i++) chunks.push({x: Kit.rnd(), y: .06 + Kit.rnd() * .88, w: .015 + Kit.rnd() * .045, h: .012 + Kit.rnd() * .03, r: (Kit.rnd() - .5) * 70, c: PAL[Math.floor(Kit.rnd() * PAL.length)]});
-const dots = [];
-for (let i = 0; i < 90; i++) dots.push({x: Kit.rnd(), y: Kit.rnd(), r: .6 + Kit.rnd() * 1.4});
+for (let i = 0; i < 30; i++) chunks.push({x: Kit.rnd(), y: .1 + Kit.rnd() * .8, w: .04 + Kit.rnd() * .05, h: .022 + Kit.rnd() * .028, r: (Kit.rnd() - .5) * 50, c: PAL[Math.floor(Kit.rnd() * PAL.length)], shard: Kit.rnd() < .4});
 const clamp = v => Math.max(0, Math.min(1, v));
+const mix = (n, b) => `color-mix(in srgb, var(--k) ${n}%, ${b})`;
 
 function geo() {
   const {W, H} = G;
@@ -54,16 +55,6 @@ function geo() {
   const xf = p1 * (sx + sw / 2);
   const sTop = tT - p2 * (tT - (fl - 1));
   return {fl, sl, fT, fB, pB, ty, th, tT, tB, sx, sw, p1, p2, xf, sTop};
-}
-
-function pill(g, x, y, txt, size, weight, op) {
-  const grp = Kit.mk('g', {opacity: op}, g);
-  const r = Kit.mk('rect', {fill: 'rgba(255,252,246,.93)', rx: size * .45}, grp);
-  const t = Kit.mk('text', {x: x + size * .5, y, 'dominant-baseline': 'central', fill: '#1c1712', style: `font:${weight} ${size}px var(--body)`}, grp);
-  t.textContent = txt;
-  const b = t.getBBox();
-  r.setAttribute('x', x); r.setAttribute('y', y - size * .72);
-  r.setAttribute('width', b.width + size); r.setAttribute('height', size * 1.44);
 }
 
 function spreadLabels(L, H) {
@@ -87,66 +78,92 @@ function render() {
   let base = svg.querySelector('#base');
   if (!base) { base = Kit.mk('g', {id: 'base'}, svg); Kit.mk('g', {id: 'fx'}, svg); }
   base.innerHTML = '';
-  const m = (t, a) => Kit.mk(t, a, base);
+  const m = (t, a, p) => Kit.mk(t, a, p || base);
   const g = geo();
-  const fs = Math.max(12, f * .9), fsB = Math.max(13, f * 1.02);
+  const fs = Math.max(12, f * .9);
 
-  // bank interior: no backdrop, drawn on the card itself
-  const vx0 = .44 * W, vx1 = .84 * W, vy0 = .06 * H, vy1 = g.fl - .015 * H, cols = 5, rows = 3, gp = 3;
-  const bw = (vx1 - vx0 - gp * (cols - 1)) / cols, bh = (vy1 - vy0 - gp * (rows - 1)) / rows;
-  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-    const x = vx0 + c * (bw + gp), y = vy0 + r * (bh + gp);
-    m('rect', {x, y, width: bw, height: bh, rx: 2, fill: '#c5cad1', stroke: '#10100c', 'stroke-width': 1});
-    m('circle', {cx: x + bw / 2, cy: y + bh / 2, r: Math.max(1.5, bh * .08), fill: '#10100c'});
-  }
-  // layers
-  m('rect', {x: 0, y: g.fT, width: W, height: g.fB - g.fT, fill: '#7a5a3e'});
-  m('rect', {x: 0, y: g.fB, width: W, height: g.pB - g.fB, fill: '#a39b8f'});
-  m('rect', {x: 0, y: g.pB, width: W, height: H - g.pB, fill: '#d9b44a'});
-  dots.forEach(d => {
-    m('circle', {cx: d.x * W, cy: g.fB + 2 + d.y * (g.pB - g.fB - 4), r: d.r * .8, fill: '#6f685e'});
-    m('circle', {cx: (d.x * 1.7 % 1) * W, cy: g.pB + 3 + d.y * (H - g.pB - 6), r: d.r * 1.2, fill: '#b38a2c'});
-  });
-  // rubbish chunks
-  chunks.forEach(c => {
-    const cx = c.x * W, cy = g.fT + c.y * (g.fB - g.fT);
-    if (cx < g.xf + 3 && cy > g.tT - 5 && cy < g.tB + 5) return;
-    if (g.p2 > 0 && Math.abs(cx - g.sx) < g.sw / 2 + 3 && cy < g.tT && cy > g.sTop - 5) return;
-    const w = c.w * W, h = c.h * H;
-    m('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 1.5, fill: c.c, stroke: 'rgba(0,0,0,.25)', 'stroke-width': .8, transform: `rotate(${c.r} ${cx} ${cy})`});
-  });
-  // slab and foundation
-  m('rect', {x: 0, y: g.fl, width: W, height: g.sl, fill: '#10100c'});
-  m('rect', {x: .9 * W, y: g.fl, width: .06 * W, height: .86 * H - g.fl, fill: '#8a8d93', stroke: '#10100c', 'stroke-width': 1.2});
-  // tunnel
-  if (g.xf > 1) {
-    const r = Math.min(g.th / 2, g.xf);
-    m('path', {d: `M-2 ${g.tT} H${g.xf - r} Q${g.xf} ${g.tT} ${g.xf} ${g.ty} Q${g.xf} ${g.tB} ${g.xf - r} ${g.tB} H-2 Z`, fill: '#1e1611'});
-    for (let i = 0; i < 9; i++) {
-      const x = g.xf - r - (i * .013 * W) - 2, s = 3 + (i * 7 % 5);
-      if (x > 2) m('rect', {x, y: g.tB - s, width: s * 1.4, height: s, rx: 1, fill: PAL[i % PAL.length]});
-    }
-    if (!done) m('circle', {cx: Math.max(6, g.xf - r * .7), cy: g.ty, r: g.th * .17, fill: '#ffd36b', opacity: .95});
-  }
-  if (g.p2 > 0) m('rect', {x: g.sx - g.sw / 2, y: g.sTop, width: g.sw, height: g.tT - g.sTop + 2, fill: '#1e1611'});
-  if (g.p2 >= 1) m('rect', {x: g.sx - g.sw / 2 - 3, y: g.fl - 3, width: g.sw + 6, height: 3, fill: '#ffd36b'});
+  const gL = m('g', {}), gC = m('g', {}), gT = m('g', {}), gX = m('g', {});
 
-  // labels
+  // ground, cut like a slice of earth: light tints of the card, tuff in ochre, a hand-cut lower edge
+  m('rect', {x: 0, y: g.fT, width: W, height: g.fB - g.fT, style: `fill:${mix(14, 'var(--c)')}`}, gL);
+  m('rect', {x: 0, y: g.fB, width: W, height: g.pB - g.fB, style: `fill:${mix(30, 'var(--c)')}`}, gL);
+  const bot = .955 * H, n = 7;
+  let d = `M0 ${g.pB} H${W} V${bot}`;
+  for (let i = n; i > 0; i--) {
+    const x0 = i * W / n, x1 = (i - 1) * W / n, a = (i % 2 ? 1 : -1) * .012 * H;
+    d += ` Q${(x0 + x1) / 2} ${bot + a} ${x1} ${bot}`;
+  }
+  m('path', {d: d + ' Z', fill: TUFF}, gL);
+
+  // labels first, so the rubbish can leave room for them
   const lx = .035 * W;
-  const fsP = Math.max(12, fs * .85);
   const L = [
     {y: .14 * H, s: fs},
-    {y: g.fT + .075 * H, s: fsB},
+    {y: g.fT + .075 * H, s: fs},
     {y: (g.tB + g.fB) / 2, s: fs},
-    {y: (g.fB + g.pB) / 2, s: fsP},
+    {y: (g.fB + g.pB) / 2, s: fs},
     {y: .885 * H, s: fs}
   ];
   spreadLabels(L, H);
-  pill(base, lx, L[0].y, 'BANK VAULT', fs, 800, 1);
-  pill(base, lx, L[1].y, 'HISTORIC RUBBISH · metres deep', fsB, 800, 1);
-  pill(base, lx, L[2].y, 'loose like sand, full of chunks', fs, 600, clamp((st.p - .12) / .2));
-  pill(base, lx, L[3].y, 'PYROCLASTIC LAYER', fsP, 700, 1);
-  pill(base, lx, L[4].y, 'TUFF · solid rock', fs, 800, 1);
+  const boxes = [];
+  const lab = (i, txt, col, op) => {
+    const t = m('text', {x: lx, y: L[i].y, 'dominant-baseline': 'central', opacity: op, style: `fill:${col};font:600 ${fs}px var(--body)`}, gX);
+    t.textContent = txt;
+    const b = t.getBBox();
+    boxes.push({x0: b.x - 6, x1: b.x + b.width + 6, y0: b.y - 4, y1: b.y + b.height + 4});
+  };
+  lab(0, 'Bank vault', 'var(--k)', 1);
+  lab(1, 'Historic rubbish, metres deep', 'var(--k)', 1);
+  lab(2, 'loose like sand, full of chunks', 'var(--k)', clamp((st.p - .12) / .2));
+  lab(3, 'Pyroclastic layer', 'var(--k)', 1);
+  lab(4, 'Tuff, solid rock', 'var(--k)', 1);
+
+  // the rubbish: bricks, tiles and broken pots
+  chunks.forEach(c => {
+    const cx = c.x * W, cy = g.fT + c.y * (g.fB - g.fT);
+    const w = c.w * W, h = c.h * H, rr = Math.hypot(w, h) / 2;
+    if (cy - rr < g.fT || cy + rr > g.fB) return;
+    if (cx < g.xf + 3 && cy > g.tT - 5 && cy < g.tB + 5) return;
+    if (g.p2 > 0 && Math.abs(cx - g.sx) < g.sw / 2 + 3 && cy < g.tT && cy > g.sTop - 5) return;
+    if (boxes.some(b => cx + rr > b.x0 && cx - rr < b.x1 && cy + rr > b.y0 && cy - rr < b.y1)) return;
+    const sty = `fill:${c.c};stroke:var(--k);stroke-width:1.4;stroke-linejoin:round`;
+    const tr = `rotate(${c.r} ${cx} ${cy})`;
+    if (c.shard) {
+      const pts = [[-w / 2, h / 2], [w / 2, h * .25], [w * .1, -h / 2], [-w * .3, -h * .3]].map(p => `${cx + p[0]},${cy + p[1]}`).join(' ');
+      m('polygon', {points: pts, style: sty, transform: tr}, gC);
+    } else {
+      m('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 2, style: sty, transform: tr}, gC);
+    }
+  });
+
+  // floor slab and foundation
+  m('rect', {x: 0, y: g.fl, width: W, height: g.sl, fill: 'var(--k)'}, gT);
+  m('rect', {x: .9 * W, y: g.fl, width: .06 * W, height: .86 * H - g.fl, style: `fill:${PALE};stroke:var(--k);stroke-width:1.5`}, gT);
+
+  // the tunnel
+  if (g.xf > 1) {
+    const r = Math.min(g.th / 2, g.xf);
+    m('path', {d: `M-2 ${g.tT} H${g.xf - r} Q${g.xf} ${g.tT} ${g.xf} ${g.ty} Q${g.xf} ${g.tB} ${g.xf - r} ${g.tB} H-2 Z`, fill: 'var(--k)'}, gT);
+    for (let i = 0; i < 9; i++) {
+      const x = g.xf - r - (i * .013 * W) - 2, s = 3 + (i * 7 % 5);
+      if (x > 2) m('rect', {x, y: g.tB - s, width: s * 1.4, height: s, rx: 1, fill: PAL[i % PAL.length]}, gT);
+    }
+  }
+  if (g.p2 > 0) m('rect', {x: g.sx - g.sw / 2, y: g.sTop, width: g.sw, height: g.tT - g.sTop + 2, fill: 'var(--k)'}, gT);
+
+  // the vault: a round strongroom door standing on the slab
+  const vy0 = .06 * H, vy1 = g.fl - .015 * H;
+  const R = Math.min((vy1 - vy0) / 2, .19 * W), dx = .64 * W, dy = vy1 - R;
+  m('rect', {x: dx - R - R * .16, y: dy - R * .55, width: R * .2, height: R * .26, rx: 2, fill: 'var(--k)'}, gT);
+  m('rect', {x: dx - R - R * .16, y: dy + R * .29, width: R * .2, height: R * .26, rx: 2, fill: 'var(--k)'}, gT);
+  m('circle', {cx: dx, cy: dy, r: R, fill: 'var(--k)'}, gT);
+  m('circle', {cx: dx, cy: dy, r: R * .8, style: `fill:${mix(14, 'var(--c)')}`}, gT);
+  const sw = Math.max(2, R * .09);
+  for (let a = 0; a < 3; a++) {
+    const ang = a * Math.PI / 3 + Math.PI / 6, ex = Math.cos(ang) * R * .48, ey = Math.sin(ang) * R * .48;
+    m('line', {x1: dx - ex, y1: dy - ey, x2: dx + ex, y2: dy + ey, stroke: 'var(--k)', 'stroke-width': sw, 'stroke-linecap': 'round'}, gT);
+  }
+  m('circle', {cx: dx, cy: dy, r: R * .14, fill: 'var(--k)'}, gT);
 }
 
 function spawn() {

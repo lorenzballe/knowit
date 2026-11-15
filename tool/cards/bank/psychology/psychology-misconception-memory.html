@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: psychology-misconception-memory -->
-<!-- Look: a data-journalism chart printed straight on the card. The "video" is a clean chart of a thrown ball with a subtitle strip. Over it lies an orange layer: what the student already believed, with its own imagined ball that slows, stops at the top and drops.
+<!-- Look: a page from a psychology book, printed flat on the card's purple. The "video" is a simple outlined screen: a thrown ball's arc over the ground, gravity arrows, a subtitle strip and a play bar. Over it lies an orange layer: what the student already believed, with its own imagined ball that slows, stops at the top and drops.
      Interaction: one student's memory starts as a single fused picture. Drag (or tap) to pull its two layers apart: what was on screen, and what was already in their head.
-     Wow: as the layers part, the video frame retracts and the subtitle breaks into words. They fall under real Matter.js physics into the head, turn orange, then click back together into the sentence the student actually said. The video keeps an empty slot marked "never said in the video". -->
+     Wow: as the layers part, the screen shrinks and the subtitle breaks into words. They fall under real Matter.js physics into the thought bubble, turn orange, then click back together into the sentence the student actually said. The video keeps an empty slot marked "never said in the video". -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Misconception memory</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -35,8 +35,10 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#ffffff', GRID = 'rgba(255,255,255,.28)', OR = '#ffc15e', TO = '#d8461a', MUTE = 'rgba(255,255,255,.82)', CAP = 'rgba(16,18,26,.9)';
-  const ONC = '#ffffff', ONM = 'rgba(255,255,255,.85)', ONO = '#ffe2b8';
+  // flat colours, resolved from the card's own ink and colour
+  let INK = '#ffffff', CC = '#9B5CFF', MUTE = 'rgba(255,255,255,.8)', SOFT = 'rgba(255,255,255,.35)', CAP = '#ffffff';
+  const OR = '#ffc15e', TO = '#d8461a';
+  const css = v => { const s = document.createElement('span'); s.style.color = v; card.appendChild(s); const c = getComputedStyle(s).color; s.remove(); return c || '#ffffff'; };
   const WORDS = 'the ball is slowly decreasing in force so therefore it stops at one point'.split(' ');
   const WHY = 'Minutes later, students recalled not the video but the idea they walked in with, <b>as if the video had said it.</b>';
   let W = 0, H = 0, fs = 12, pd = 0, tabH = 0, cH = 0, HM = 0, HA = 0, y0 = 0, plot = {}, ready = false, entered = false, showHead = true;
@@ -46,10 +48,9 @@
   const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
   const mk = (t, a, p) => Kit.mk(t, a, p);
   function txt(p, x, y, s, a = {}, style = '') {
-    const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700}, a), p);
+    const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 600}, a), p);
     e.setAttribute('style', 'font-family:var(--body);' + style); if (s) e.textContent = s; return e;
   }
-  const HALO = 'paint-order:stroke;stroke:#9B5CFF;stroke-width:4px;stroke-linejoin:round;';
   const P = t => [plot.x0 + t * (plot.x1 - plot.x0), plot.yb - 4 * t * (1 - t) * (plot.yb - plot.yt)];
   const arrowD = (x, a, b) => { const s = b < a ? 1 : -1, hw = fs * .32; return `M${x},${a}L${x},${b}M${x - hw},${b + s * hw * 1.3}L${x},${b}L${x + hw},${b + s * hw * 1.3}`; };
 
@@ -57,13 +58,16 @@
     stopLoop();
     tiles.forEach(t => gsap.killTweensOf(t));
     svg.innerHTML = ''; G = {};
+    INK = css('var(--k)'); CC = css('var(--c)'); CAP = INK;
+    MUTE = css('color-mix(in srgb, var(--k) 78%, var(--c))');
+    SOFT = css('color-mix(in srgb, var(--k) 35%, var(--c))');
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     if (W < 40 || H < 110) { ready = false; return; }
     fs = Math.max(12, Math.min(14, W / 27)); pd = fs * .7; tabH = fs * 1.55;
     const gap = fs * .3, ch = fs * 1.4, wg = fs * .26, lg = fs * .22;
 
     // ---- measure the remembered subtitle and wrap it ----
-    const probe = txt(svg, 0, -50, '', {}, '');
+    const probe = txt(svg, 0, -50, '', {'font-weight': 700}, '');
     tiles = WORDS.map(w => { probe.textContent = w; return {word: w, w: Math.ceil(probe.getComputedTextLength() + fs * .66), h: ch}; });
     probe.remove();
     const maxW = W - 2 * pd - fs * .3, lines = [[]]; let lw = 0;
@@ -78,84 +82,69 @@
     // ---- chart geometry (same in both layers) ----
     const showTime = cH > fs * 5;
     plot.top = pd * .75; plot.yb = cH - (showTime ? fs * 1.45 : fs * .45);
-    const probe2 = txt(svg, 0, -50, 'height', {}, 'font-family:var(--mono)');
+    const probe2 = txt(svg, 0, -50, 'height', {}, '');
     const hlen = probe2.getComputedTextLength(); probe2.remove();
     const showH = plot.yb - plot.top > hlen + 8, showArrowH = plot.yb - plot.top > hlen + fs * 2;
     plot.x0 = showH ? pd + fs * 1.55 : pd + fs * .4; plot.x1 = W - pd - fs * .6;
     plot.yt = plot.top + Math.min(fs * .6, (plot.yb - plot.top) * .3);
     const R = plot.yb - plot.yt;
 
-    // ---- defs ----
-    const defs = mk('defs', {}, svg);
-    const bg = mk('radialGradient', {id: 'ballg', cx: '35%', cy: '30%', r: '70%'}, defs);
-    mk('stop', {offset: '0%', 'stop-color': '#ffffff'}, bg); mk('stop', {offset: '35%', 'stop-color': '#6f80b0'}, bg); mk('stop', {offset: '100%', 'stop-color': '#1c2233'}, bg);
-    const og = mk('radialGradient', {id: 'iballg', cx: '35%', cy: '30%', r: '70%'}, defs);
-    mk('stop', {offset: '0%', 'stop-color': '#fff1e6'}, og); mk('stop', {offset: '40%', 'stop-color': '#f07a45'}, og); mk('stop', {offset: '100%', 'stop-color': '#a8320f'}, og);
-    const sh2 = mk('filter', {id: 'sh2', x: '-20%', y: '-40%', width: '140%', height: '180%'}, defs);
-    mk('feDropShadow', {dx: 0, dy: 1.5, stdDeviation: 1.6, 'flood-color': '#1c2233', 'flood-opacity': .3}, sh2);
-
     // ---- merged-state header and hint ----
-    G.head = txt(svg, W / 2, y0 / 2 + fs * .35, "ONE STUDENT'S MEMORY OF THE VIDEO", {'text-anchor': 'middle', fill: ONM}, 'font-family:var(--mono);letter-spacing:.06em');
+    G.head = txt(svg, W / 2, y0 / 2 + fs * .35, "One student's memory of the video", {'text-anchor': 'middle', fill: MUTE}, '');
     G.hint = mk('g', {class: 'nudge'}, svg);
-    txt(G.hint, W / 2, y0 + HM + y0 / 2 + fs * .2, '⇕  pull the layers apart', {'text-anchor': 'middle', fill: ONC, 'font-weight': 800}, 'font-family:var(--mono)');
+    txt(G.hint, W / 2, y0 + HM + y0 / 2 + fs * .2, '⇕  pull the layers apart', {'text-anchor': 'middle', fill: INK, 'font-weight': 700}, '');
 
-    // ---- layer A: the video ----
+    // ---- layer A: the video, an outlined screen ----
     G.A = mk('g', {}, svg); G.Ai = mk('g', {}, G.A);
     const A = G.Ai;
-    G.Arect = mk('rect', {x: 1, y: 0, width: W - 2, height: HM, fill: 'none'}, A);
-    for (let i = 1; i <= 4; i++) {
-      const y = plot.yb - i * (plot.yb - plot.top) / 4;
-      mk('line', {x1: plot.x0, x2: plot.x1, y1: y, y2: y, stroke: GRID, 'stroke-width': 1}, A);
-      mk('line', {x1: plot.x0 - fs * .3, x2: plot.x0, y1: y, y2: y, stroke: INK, 'stroke-width': 1}, A);
-    }
-    mk('line', {x1: plot.x0, x2: plot.x0, y1: plot.top, y2: plot.yb, stroke: INK, 'stroke-width': 1.2}, A);
-    mk('line', {x1: plot.x0, x2: plot.x1, y1: plot.yb, y2: plot.yb, stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, A);
-    if (showH) txt(A, 0, 0, showArrowH ? 'height ↑' : 'height', {'text-anchor': 'middle', fill: MUTE, 'font-weight': 600, transform: `translate(${pd + fs * .5},${(plot.top + plot.yb) / 2}) rotate(-90)`}, 'font-family:var(--mono)');
-    if (showTime) txt(A, plot.x1, plot.yb + fs * 1.05, 'time →', {'text-anchor': 'end', fill: MUTE, 'font-weight': 600}, 'font-family:var(--mono)');
-    // video chrome: play glyph and progress bar on the bottom edge
+    G.Arect = mk('rect', {x: 1, y: 0, width: W - 2, height: HM, rx: fs * .5, fill: 'none', stroke: INK, 'stroke-width': 1.6}, A);
+    mk('line', {x1: plot.x0, x2: plot.x0, y1: plot.top, y2: plot.yb, stroke: SOFT, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, A);
+    mk('line', {x1: plot.x0, x2: plot.x1, y1: plot.yb, y2: plot.yb, stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, A);
+    if (showH) txt(A, 0, 0, showArrowH ? 'height ↑' : 'height', {'text-anchor': 'middle', fill: MUTE, transform: `translate(${pd + fs * .5},${(plot.top + plot.yb) / 2}) rotate(-90)`}, '');
+    if (showTime) txt(A, plot.x1, plot.yb + fs * 1.05, 'time →', {'text-anchor': 'end', fill: MUTE}, '');
+    // the video's own play button and progress bar along the bottom edge
     G.ptri = mk('path', {d: `M0,-3.4L5,0L0,3.4Z`, fill: INK}, A);
-    G.pbg = mk('rect', {x: fs * 1.25, width: W - fs * 1.85, height: 2.5, rx: 1.2, fill: GRID}, A);
+    G.pbg = mk('rect', {x: fs * 1.25, width: W - fs * 1.85, height: 2.5, rx: 1.2, fill: SOFT}, A);
     G.pfg = mk('rect', {x: fs * 1.25, width: (W - fs * 1.85) * .62, height: 2.5, rx: 1.2, fill: INK}, A);
     G.pdot = mk('circle', {cx: fs * 1.25 + (W - fs * 1.85) * .62, r: 3.2, fill: INK}, A);
     let d = ''; for (let i = 0; i <= 48; i++) { const [x, y] = P(i / 48); d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); }
-    mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '1.5 4.5', 'stroke-linecap': 'round', opacity: .6}, A);
-    G.shadow = mk('ellipse', {cx: 0, cy: plot.yb + 1, rx: fs * .5, ry: fs * .16, fill: '#1c2233', opacity: .25}, A);
+    mk('path', {d, fill: 'none', stroke: MUTE, 'stroke-width': 1.6, 'stroke-dasharray': '1.5 5', 'stroke-linecap': 'round'}, A);
+    G.shadow = mk('g', {}, A); // no shadow drawn: kept only so the ball code stays the same
     G.gArrows = [.2, .5, .8].map(t => {
       const [x, y] = P(t), a = y + fs * .5, b = Math.min(a + Math.max(R * .3, fs * .8), plot.yb - 3);
       return b - a > fs * .45 ? mk('path', {d: arrowD(x, a, b), fill: 'none', stroke: INK, 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, A) : null;
     }).filter(Boolean);
-    G.ball = mk('circle', {r: fs * .5, fill: 'url(#ballg)'}, A);
+    G.ball = mk('circle', {r: fs * .5, fill: INK}, A);
     // the empty slot: where the subtitle was
     G.ghost = mk('g', {opacity: 0}, A);
     const gy = cH + fs * .25;
-    mk('rect', {x: pd, y: gy, width: W - 2 * pd, height: ch, rx: fs * .35, fill: 'rgba(255,255,255,.08)', stroke: MUTE, 'stroke-width': 1.2, 'stroke-dasharray': '4 4'}, G.ghost);
-    txt(G.ghost, W / 2, gy + ch / 2, 'never said in the video', {'text-anchor': 'middle', 'dominant-baseline': 'central', fill: MUTE}, 'font-family:var(--mono)');
+    mk('rect', {x: pd, y: gy, width: W - 2 * pd, height: ch, rx: fs * .35, fill: 'none', stroke: MUTE, 'stroke-width': 1.3, 'stroke-dasharray': '4 4'}, G.ghost);
+    txt(G.ghost, W / 2, gy + ch / 2, 'never said in the video', {'text-anchor': 'middle', 'dominant-baseline': 'central', fill: MUTE}, '');
     G.tabA = txt(G.A, fs * .3 + 2, -fs * .5, '', {}, '');
-    tab(G.tabA, 'THE VIDEO', ONC, [' · gravity only, the same all the way', ' · gravity only, never fading', ' · gravity only', ''], W - fs * .8);
+    tab(G.tabA, 'The video', INK, [' · gravity only, the same all the way', ' · gravity only, never fading', ' · gravity only', ''], W - fs * .8);
 
-    // ---- layer B: what was already in the head ----
+    // ---- layer B: what was already in the head (a thought bubble once apart) ----
     G.B = mk('g', {}, svg);
     G.Bbg = mk('g', {opacity: 0}, G.B);
+    mk('rect', {x: 1, y: 0, width: W - 2, height: HM, rx: fs * 1.4, fill: 'none', stroke: OR, 'stroke-width': 2}, G.Bbg);
     G.Bi = mk('g', {}, G.B);
-    mk('path', {d, fill: 'none', stroke: OR, 'stroke-width': 1.3, 'stroke-dasharray': '1.5 4.5', 'stroke-linecap': 'round', opacity: .7}, G.Bi);
+    mk('path', {d, fill: 'none', stroke: OR, 'stroke-width': 1.6, 'stroke-dasharray': '1.5 5', 'stroke-linecap': 'round'}, G.Bi);
     G.bArrows = [];
     [[.12, .4], [.26, .25], [.39, .1]].forEach(([t, l]) => {
       const [x, y] = P(t), a = y - fs * .45, b = Math.max(a - Math.max(R * l, fs * .55), 2);
       if (a - b < fs * .4) return;
-      mk('path', {d: arrowD(x, a, b), fill: 'none', stroke: OR, 'stroke-width': 8, 'stroke-linecap': 'round', opacity: .22}, G.Bi);
       G.bArrows.push(mk('path', {d: arrowD(x, a, b), fill: 'none', stroke: OR, 'stroke-width': 2.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.Bi));
     });
     const [ax, ay] = P(.5);
-    mk('circle', {cx: ax, cy: ay - fs * .42, r: fs * .66, fill: 'none', stroke: OR, 'stroke-width': 2, 'stroke-dasharray': '3 2.5'}, G.Bi);
-    G.iball = mk('circle', {r: fs * .42, fill: 'url(#iballg)'}, G.Bi);
-    const ann = txt(G.Bi, ax + fs * 1.05, ay - fs * .42 + fs * .38, '', {fill: OR, 'font-weight': 800}, HALO);
+    G.iball = mk('circle', {r: fs * .42, fill: OR}, G.Bi);
+    const ann = txt(G.Bi, ax + fs * 1.05, ay - fs * .42 + fs * .38, '', {fill: OR, 'font-weight': 700}, '');
     for (const s of ['push runs out: it stops', 'push gone: stops', 'it stops']) { ann.textContent = s; if (ax + fs * 1.05 + ann.getComputedTextLength() < W - pd) break; }
     G.tabB = txt(G.B, fs * .3 + 2, -fs * .5, '', {}, '');
-    const tw = tab(G.tabB, 'IN THEIR HEAD', ONO, [' · a push that fades, then stops', ' · a fading push', ''], W - fs * 3.2);
+    const tw = tab(G.tabB, 'In their head', OR, [' · a push that fades, then stops', ' · a fading push', ''], W - fs * 3.2);
     G.bub = mk('g', {}, G.B);
     if (tw + fs * 3.4 < W) {
-      mk('circle', {cx: W - pd - fs * 1.4, cy: -fs * .5, r: fs * .3, fill: 'none', stroke: ONO, 'stroke-width': 1.4}, G.bub);
-      mk('circle', {cx: W - pd - fs * .5, cy: -fs * .95, r: fs * .18, fill: 'none', stroke: ONO, 'stroke-width': 1.2}, G.bub);
+      mk('circle', {cx: W - pd - fs * 1.4, cy: -fs * .5, r: fs * .3, fill: OR}, G.bub);
+      mk('circle', {cx: W - pd - fs * .5, cy: -fs * .95, r: fs * .18, fill: OR}, G.bub);
     }
 
     // ---- the remembered subtitle: slots in the strip under the chart ----
@@ -171,7 +160,8 @@
       t.g = mk('g', {}, G.cap);
       t.rect = mk('rect', {x: -t.w / 2, y: -t.h / 2, width: t.w, height: t.h, rx: t.h * .22}, t.g);
       t.rect.style.fill = CAP;
-      txt(t.g, 0, 0, t.word, {'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff'}, '');
+      t.label = txt(t.g, 0, 0, t.word, {'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-weight': 700}, '');
+      t.label.style.fill = CC;
     });
     render();
 
@@ -180,14 +170,14 @@
     placeBalls();
     if (phase === 'dropped') {
       G.free = true; G.cap.setAttribute('transform', '');
-      tiles.forEach(t => { t.rect.style.fill = TO; t.g.setAttribute('filter', 'url(#sh2)'); });
+      tiles.forEach(t => { t.rect.style.fill = TO; t.label.style.fill = '#ffffff'; });
       tidy(true); G.ghost.setAttribute('opacity', 1);
     }
   }
 
   function tab(el, strong, col, rest, lim) {
-    const a = mk('tspan', {fill: col, 'font-weight': 800}, el); a.textContent = strong; a.setAttribute('style', 'letter-spacing:.06em');
-    const b = mk('tspan', {fill: ONM, 'font-weight': 600}, el);
+    const a = mk('tspan', {fill: col, 'font-weight': 700}, el); a.textContent = strong;
+    const b = mk('tspan', {fill: MUTE, 'font-weight': 600}, el);
     for (const r of rest) { b.textContent = r; if (el.getComputedTextLength() < lim) break; }
     return el.getComputedTextLength();
   }
@@ -200,7 +190,7 @@
     G.A.setAttribute('transform', `translate(0,${yA})`);
     G.B.setAttribute('transform', `translate(0,${yB})`);
     if (!G.free) G.cap.setAttribute('transform', `translate(0,${yA})`);
-    const hA = HM + (HA - HM) * s, py = hA - 4.5;
+    const hA = HM + (HA - HM) * s, py = hA - 4.5 - fs * .25;
     G.Arect.setAttribute('height', hA);
     G.pbg.setAttribute('y', py); G.pfg.setAttribute('y', py); G.pdot.setAttribute('cy', py + 1.25);
     G.ptri.setAttribute('transform', `translate(${fs * .45},${py + 1.25})`);
@@ -223,8 +213,6 @@
     if (!ready || !G.ball) return;
     const t = Kit.calm ? .3 : Math.min(1, ballT), [x, y] = P(t), r = fs * .5;
     G.ball.setAttribute('cx', x); G.ball.setAttribute('cy', y - r);
-    const hgt = 4 * t * (1 - t);
-    G.shadow.setAttribute('cx', x); G.shadow.setAttribute('rx', r * (1.3 - .7 * hgt)); G.shadow.setAttribute('opacity', .3 - .2 * hgt);
     const ti = Kit.calm ? .5 : imagT(clock), [ix, iy] = P(ti);
     G.iball.setAttribute('cx', ix); G.iball.setAttribute('cy', iy - fs * .42);
   }
@@ -279,7 +267,7 @@
     G.free = true; G.cap.setAttribute('transform', '');
     const yA = G.yA;
     tiles.forEach((t, i) => { t.x = t.lx; t.y = t.ly + yA; t.a = 0; t.body = null; t.at = i * 3; });
-    if (instant) { tiles.forEach(t => { t.rect.style.fill = TO; }); tidy(true); return; }
+    if (instant) { tiles.forEach(t => { t.rect.style.fill = TO; t.label.style.fill = '#ffffff'; }); tidy(true); return; }
     const M = Matter;
     eng = M.Engine.create(); eng.gravity.y = 1.15; eng.positionIterations = 10; eng.velocityIterations = 8;
     M.Composite.add(eng.world, [
@@ -296,8 +284,8 @@
     M.Body.setVelocity(b, {x: (Kit.rnd() - .5) * 2.8, y: -1 - Kit.rnd() * 1.6});
     M.Body.setAngularVelocity(b, (Kit.rnd() - .5) * .12);
     M.Composite.add(eng.world, b); t.body = b;
-    t.g.setAttribute('filter', 'url(#sh2)');
     gsap.to(t.rect, {fill: TO, duration: .6, delay: .15, ease: 'power2.inOut'});
+    gsap.to(t.label, {fill: '#ffffff', duration: .6, delay: .15, ease: 'power2.inOut'});
   }
   function render() {
     tiles.forEach(t => t.g.setAttribute('transform', `translate(${t.x.toFixed(2)},${t.y.toFixed(2)}) rotate(${t.a.toFixed(2)})`));
@@ -331,7 +319,7 @@
     if (phase === 'split') drop();
     stopLoop(); gsap.killTweensOf(st); st.p = 1; st.s = 1; draw();
     if (!G.free) { G.free = true; G.cap.setAttribute('transform', ''); }
-    tiles.forEach(t => { gsap.killTweensOf(t.rect); t.rect.style.fill = TO; t.g.setAttribute('filter', 'url(#sh2)'); });
+    tiles.forEach(t => { gsap.killTweensOf(t.rect); gsap.killTweensOf(t.label); t.rect.style.fill = TO; t.label.style.fill = '#ffffff'; });
     tidy(true);
     gsap.killTweensOf(G.ghost); G.ghost.setAttribute('opacity', 1);
   }

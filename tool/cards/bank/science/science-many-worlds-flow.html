@@ -38,30 +38,70 @@
 const F = [0.28, 0.56, 0.84], GAP = 0.04, YOU = [1, 0, 1];
 const st = {X: 0.12, n: 0, phase: 0, fl: [{v:0},{v:0},{v:0}]};
 let x = null, W = 0, H = 0, K = '#111', C = '#fff', busy = false;
+let DISP = 'serif', BODY = 'sans-serif';
 const cv = Kit.$('cv');
 const sm = t => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };
+
+// flat tints of ink into card colour (same as color-mix(in srgb, K p, C))
+function rgbOf(s) {
+  s = (s || '').trim();
+  if (s[0] === '#') {
+    let h = s.slice(1); if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    const v = parseInt(h.slice(0, 6), 16); return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+  }
+  const m = s.match(/[\d.]+/g); return m && m.length >= 3 ? m.slice(0, 3).map(Number) : [0, 0, 0];
+}
+function mix(p) {
+  const a = rgbOf(K), b = rgbOf(C);
+  return `rgb(${a.map((v, i) => Math.round(v * p + b[i] * (1 - p))).join(',')})`;
+}
 
 function size() {
   const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
   const cs = getComputedStyle(Kit.$('card'));
   K = cs.getPropertyValue('--k').trim() || '#111';
   C = cs.getPropertyValue('--c').trim() || '#fff';
+  DISP = cs.getPropertyValue('--display').trim() || 'serif';
+  BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
   draw();
 }
 
-function band(u0, u1, ux, yc, wf) {
+// a stretch of river: flat water with two inked banks
+function band(u0, u1, ux, yc, wf, water) {
   if (u1 <= u0) return;
   const N = 40, top = [], bot = [];
   for (let i = 0; i <= N; i++) { const u = u0 + (u1 - u0) * i / N, w = wf(u) / 2; top.push([ux(u), yc - w]); bot.push([ux(u), yc + w]); }
   x.beginPath(); x.moveTo(top[0][0], top[0][1]);
-  top.forEach(p => x.lineTo(p[0], p[1])); bot.reverse().forEach(p => x.lineTo(p[0], p[1]));
-  x.closePath(); x.fillStyle = K; x.fill();
+  top.forEach(p => x.lineTo(p[0], p[1])); bot.slice().reverse().forEach(p => x.lineTo(p[0], p[1]));
+  x.closePath(); x.fillStyle = water; x.fill();
+  x.save(); x.strokeStyle = K; x.lineWidth = 2; x.lineJoin = 'round'; x.lineCap = 'round';
+  [top, bot].forEach(e => { x.beginPath(); e.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke(); });
+  x.restore();
 }
+// the current moving along the water
 function ripple(pts, lw, fs) {
   if (pts.length < 2) return;
-  x.save(); x.strokeStyle = C; x.globalAlpha = .7; x.lineWidth = Math.max(1, lw);
+  x.save(); x.strokeStyle = C; x.lineWidth = Math.max(1.5, lw); x.lineCap = 'round';
   x.setLineDash([fs * .5, fs * .7]); x.lineDashOffset = -st.phase * fs * 3;
   x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke(); x.restore();
+}
+// a branch of river drawn along a path: bank colour underneath, water on top
+function stream(pts, lw, water, bank) {
+  const path = () => { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); };
+  x.save(); x.lineCap = 'round'; x.lineJoin = 'round';
+  path(); x.strokeStyle = bank; x.lineWidth = lw + 4; x.stroke();
+  path(); x.strokeStyle = water; x.lineWidth = lw; x.stroke();
+  x.restore();
+}
+// a small paper boat: the observer riding one branch
+function boat(bx, by, fs) {
+  const w = fs * .85, h = fs * .3;
+  x.save(); x.fillStyle = K; x.lineJoin = 'round';
+  x.beginPath(); x.moveTo(bx - w / 2, by - h * .4); x.lineTo(bx + w / 2, by - h * .4);
+  x.lineTo(bx + w * .3, by + h * .6); x.lineTo(bx - w * .3, by + h * .6); x.closePath(); x.fill();
+  x.beginPath(); x.moveTo(bx - fs * .05, by - h * .4); x.lineTo(bx - fs * .05, by - fs * .95);
+  x.lineTo(bx + w * .38, by - h * .55); x.closePath(); x.fill();
+  x.restore();
 }
 
 function draw() {
@@ -70,41 +110,44 @@ function draw() {
   const fs = Math.max(12, Math.min(W * .045, H * .05)), fsS = Math.max(12, fs * .82);
   const xl = fs * .9, xr = W - fs * .9, ux = u => xl + u * (xr - xl);
   const X = st.X, n = st.n;
+  const water = mix(.3), waterFaint = mix(.14), bankFaint = mix(.4), soft = mix(.2);
   for (let L = 0; L < 2; L++) {
     const top = L * H / 2, at = top + fs * 3.4, ab = top + H / 2 - fs * (L === 0 ? 2 : .9);
     const yc = (at + ab) / 2, half = Math.max(fs, (ab - at) / 2);
     const wmax = Math.min(half * 1.2, fs * 1.5), wmin = fs * .25;
     // titles
-    x.fillStyle = K; x.textBaseline = 'middle'; x.globalAlpha = 1;
-    x.font = `800 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
-    x.textAlign = 'left'; x.fillText(L === 0 ? 'COPENHAGEN' : 'MANY-WORLDS', xl, top + fs * 1.1);
+    x.globalAlpha = 1; x.fillStyle = K; x.textBaseline = 'middle';
+    x.font = `800 ${fs}px ${DISP}`;
+    x.textAlign = 'left'; x.fillText(L === 0 ? 'Copenhagen' : 'Many-Worlds', xl, top + fs * 1.1);
+    x.font = `700 ${fsS}px ${BODY}`;
     x.textAlign = 'right'; x.fillText('stops ' + (L === 0 ? n : 0), xr, top + fs * 1.1);
-    x.font = `600 ${fsS}px sans-serif`; x.textAlign = 'left'; x.globalAlpha = .75;
+    x.font = `500 ${fsS}px ${BODY}`; x.textAlign = 'left'; x.fillStyle = mix(.72);
     x.fillText(L === 0 ? 'Schrödinger equation + collapse rule' : 'Schrödinger equation only', xl, top + fs * 2.45);
-    x.globalAlpha = 1;
-    // detectors
+    // where the measurements happen
     F.forEach((f, k) => {
-      x.save(); x.strokeStyle = K; x.globalAlpha = k < n ? .35 : .15; x.lineWidth = 1.5; x.setLineDash([3, 5]);
+      x.save(); x.strokeStyle = k < n ? mix(.38) : soft; x.lineWidth = 1.5; x.lineCap = 'round';
       x.beginPath(); x.moveTo(ux(f), at); x.lineTo(ux(f), ab); x.stroke(); x.restore();
     });
-    // source
+    // the spring the wave flows from
     x.beginPath(); x.arc(xl, yc, fs * .3, 0, 7); x.fillStyle = K; x.fill();
     if (L === 0) {
       for (let j = 0; j <= n; j++) {
         const s = j === 0 ? 0 : F[j - 1] + GAP, e = j < n ? F[j] : X;
         if (e <= s) continue;
         const wf = u => wmin + (wmax - wmin) * (1 - Math.exp(-(u - s) / .07));
-        band(s, e, ux, yc, wf);
+        band(s, e, ux, yc, wf, water);
         const pts = []; for (let i = 0; i <= 40; i++) { const u = s + (e - s) * i / 40; pts.push([ux(u), yc]); }
-        ripple(pts, wmax * .14, fs);
+        ripple(pts, wmax * .12, fs);
       }
+      // collapse: a dam that stops the river
       for (let k = 0; k < n; k++) {
-        const cx = ux(F[k] + GAP / 2), r = fs * .45 * (1 + st.fl[k].v * .7);
-        x.save(); x.strokeStyle = K; x.lineWidth = Math.max(2.5, fs * .2); x.lineCap = 'round';
-        x.beginPath(); x.moveTo(cx - r, yc - r); x.lineTo(cx + r, yc + r); x.moveTo(cx + r, yc - r); x.lineTo(cx - r, yc + r); x.stroke();
-        if (st.fl[k].v > 0) { x.globalAlpha = st.fl[k].v * .5; x.beginPath(); x.arc(cx, yc, r * 2, 0, 7); x.stroke(); }
-        x.restore();
-        x.fillStyle = K; x.font = `700 ${fsS}px sans-serif`; x.textAlign = 'center';
+        const cx = ux(F[k] + GAP / 2), v = st.fl[k].v;
+        const hh = (wmax / 2 + fs * .35) * (1 + v * .25), bw = fs * .32 * (1 + v * .5);
+        x.fillStyle = K;
+        x.beginPath();
+        if (x.roundRect) x.roundRect(cx - bw / 2, yc - hh, bw, hh * 2, bw * .25); else x.rect(cx - bw / 2, yc - hh, bw, hh * 2);
+        x.fill();
+        x.font = `700 ${fsS}px ${BODY}`; x.textAlign = 'center';
         x.fillText('collapse', cx, yc + wmax / 2 + fs * 1.1);
       }
     } else {
@@ -115,26 +158,26 @@ function draw() {
         const s = j === 0 ? 0 : F[j - 1], e = j < n ? F[j] : X;
         if (e <= s) continue;
         if (j === 0) {
-          band(s, e, ux, yc, u => wmin + (wmax - wmin) * (1 - Math.exp(-u / .07)));
+          band(s, e, ux, yc, u => wmin + (wmax - wmin) * (1 - Math.exp(-u / .07)), water);
           const pts = []; for (let i = 0; i <= 40; i++) pts.push([ux(s + (e - s) * i / 40), yc]);
-          ripple(pts, wmax * .14, fs); continue;
+          ripple(pts, wmax * .12, fs); continue;
         }
         const lw = Math.max(3, wmax * Math.pow(.66, j)), yb = youB(j);
         for (let pass = 0; pass < 2; pass++) for (let b = 0; b < (1 << j); b++) {
           const me = b === yb; if ((pass === 1) !== me) continue;
           const pts = []; for (let i = 0; i <= 40; i++) { const u = s + (e - s) * i / 40; pts.push([ux(u), yOf(u, b, j)]); }
-          x.save(); x.strokeStyle = K; x.globalAlpha = me ? 1 : .28; x.lineWidth = lw; x.lineCap = 'round';
-          x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke(); x.restore();
-          if (me) ripple(pts, lw * .2, fs);
+          stream(pts, lw, me ? water : waterFaint, me ? K : bankFaint);
+          if (me) ripple(pts, lw * .18, fs);
         }
       }
       if (n > 0) {
         const y = yOf(X, youB(n), n);
-        x.fillStyle = K; x.font = `800 ${fsS}px sans-serif`; x.textAlign = 'right';
-        x.fillText('you', ux(X) - fs * .5, y - Math.max(3, wmax * Math.pow(.66, n)) / 2 - fs * .7);
+        boat(ux(X) - fs * .2, y, fs);
+        x.fillStyle = K; x.font = `700 ${fsS}px ${BODY}`; x.textAlign = 'right';
+        x.fillText('you', ux(X) - fs * .8, y - Math.max(3, wmax * Math.pow(.66, n)) / 2 - fs * .5);
       }
     }
-    if (L === 0) { x.save(); x.globalAlpha = .2; x.fillStyle = K; x.fillRect(0, H / 2 - 1, W, 2); x.restore(); }
+    if (L === 0) { x.fillStyle = soft; x.fillRect(0, H / 2 - 1, W, 2); }
   }
 }
 

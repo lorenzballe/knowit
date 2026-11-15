@@ -47,23 +47,23 @@ function draw() {
   const cx = W / 2, sy = H * 0.58, rx = s * 0.40, ry = rx * 0.22;
   const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
   const card = getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#fff';
+  const tint = n => `color-mix(in srgb, ${ink} ${n}%, ${card})`;
+  const sw = Math.max(2, rx * .022);
+  const porcelain = '#f7f1e3', blue = '#2b4f96';
   G = {W, H, fs, cx, sy, rx, ry};
 
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id: 'above'}, defs);
   Kit.mk('rect', {x: 0, y: 0, width: W, height: sy + ry * 0.2}, cp);
 
-  // shadow
-  Kit.mk('ellipse', {cx, cy: sy + rx * 0.78, rx: rx * 0.7, ry: ry * 0.45, fill: ink, opacity: .12}, svg);
-
-  // steam
+  // steam: three loose hand-drawn wisps
   const steam = Kit.mk('g', {class: 'hit', 'data-h': 'steam'}, svg);
   const steamPaths = [];
   [-0.45, -0.18, 0.1].forEach((o, i) => {
     const x = cx + rx * o, y0 = sy - ry * 0.4, y1 = H * 0.14 + i * H * 0.03;
     const d = `M${x},${y0} C${x - rx * .12},${(y0 * 2 + y1) / 3} ${x + rx * .12},${(y0 + y1 * 2) / 3} ${x},${y1}`;
     Kit.mk('path', {d, fill: 'none', stroke: 'transparent', 'stroke-width': rx * 0.18}, steam);
-    steamPaths.push(Kit.mk('path', {d, fill: 'none', stroke: ink, 'stroke-width': Math.max(2, rx * 0.025), 'stroke-linecap': 'round', opacity: found.has('steam') ? .75 : .35}, steam));
+    steamPaths.push(Kit.mk('path', {d, fill: 'none', stroke: ink, 'stroke-width': Math.max(2.5, rx * 0.03), 'stroke-linecap': 'round', opacity: found.has('steam') ? .75 : .35}, steam));
   });
   G.steamPaths = steamPaths;
 
@@ -72,46 +72,46 @@ function draw() {
   const fh = rx * 0.62, fb = cx + rx * 0.22;
   const fin = Kit.mk('path', {
     d: `M${fb - rx * .26},${sy + ry * .1} C${fb - rx * .12},${sy - fh * .5} ${fb - rx * .02},${sy - fh * .9} ${fb + rx * .08},${sy - fh} C${fb + rx * .04},${sy - fh * .6} ${fb + rx * .1},${sy - fh * .2} ${fb + rx * .22},${sy + ry * .1} Z`,
-    fill: '#5d6b78', stroke: ink, 'stroke-width': Math.max(1.5, rx * .015)
+    fill: '#66727c', stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'
   }, finG);
   G.fin = fin;
   gsap.set(fin, {y: found.has('fin') ? 0 : fh * 1.15});
 
-  // bowl body
+  // bowl foot and body, flat porcelain
   const body = `M${cx - rx},${sy} C${cx - rx},${sy + rx * .9} ${cx + rx},${sy + rx * .9} ${cx + rx},${sy} Z`;
-  Kit.mk('path', {d: `M${cx - rx * .3},${sy + rx * .62} L${cx - rx * .34},${sy + rx * .75} L${cx + rx * .34},${sy + rx * .75} L${cx + rx * .3},${sy + rx * .62} Z`, fill: '#efe7d6', stroke: ink, 'stroke-width': Math.max(1.5, rx * .015)}, svg);
-  Kit.mk('path', {d: body, fill: '#fbf7ee', stroke: ink, 'stroke-width': Math.max(2, rx * .02)}, svg);
-  // blue band
-  Kit.mk('path', {d: `M${cx - rx * .93},${sy + rx * .2} C${cx - rx * .6},${sy + rx * .42} ${cx + rx * .6},${sy + rx * .42} ${cx + rx * .93},${sy + rx * .2}`, fill: 'none', stroke: '#2e5aa8', 'stroke-width': Math.max(3, rx * .05)}, svg);
+  Kit.mk('path', {d: `M${cx - rx * .3},${sy + rx * .62} L${cx - rx * .34},${sy + rx * .75} L${cx + rx * .34},${sy + rx * .75} L${cx + rx * .3},${sy + rx * .62} Z`, fill: porcelain, stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('path', {d: body, fill: porcelain, stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'}, svg);
+  // painted blue band, like a real rice bowl
+  Kit.mk('path', {d: `M${cx - rx * .93},${sy + rx * .2} C${cx - rx * .6},${sy + rx * .42} ${cx + rx * .6},${sy + rx * .42} ${cx + rx * .93},${sy + rx * .2}`, fill: 'none', stroke: blue, 'stroke-width': Math.max(3, rx * .05), 'stroke-linecap': 'round'}, svg);
   for (let i = -3; i <= 3; i++) {
     const x = cx + i * rx * .2;
-    Kit.mk('circle', {cx: x, cy: sy + rx * .42 + Math.abs(i) * -rx * .035 - (Math.abs(i) === 3 ? rx * .02 : 0), r: Math.max(2, rx * .025), fill: '#2e5aa8'}, svg);
+    Kit.mk('circle', {cx: x, cy: sy + rx * .42 + Math.abs(i) * -rx * .035 - (Math.abs(i) === 3 ? rx * .02 : 0), r: Math.max(2, rx * .025), fill: blue}, svg);
   }
-  // soup (behind fin base: drawn as the rim, fin clip at surface)
+  // soup surface
   const soup = Kit.mk('g', {class: 'hit', 'data-h': 'fin'}, svg);
-  Kit.mk('ellipse', {cx, cy: sy, rx, ry, fill: '#fbf7ee', stroke: ink, 'stroke-width': Math.max(2, rx * .02)}, soup);
-  Kit.mk('ellipse', {cx, cy: sy + ry * .08, rx: rx * .9, ry: ry * .78, fill: '#d9a441'}, soup);
-  // fin strands
+  Kit.mk('ellipse', {cx, cy: sy, rx, ry, fill: porcelain, stroke: ink, 'stroke-width': sw}, soup);
+  Kit.mk('ellipse', {cx, cy: sy + ry * .08, rx: rx * .9, ry: ry * .78, fill: '#d29a3a'}, soup);
+  // fin strands floating in the broth
   for (let i = 0; i < 14; i++) {
     const a = Kit.rnd() * Math.PI * 2, r = Kit.rnd() * .75;
     const x = cx + Math.cos(a) * rx * .8 * r, y = sy + ry * .08 + Math.sin(a) * ry * .6 * r;
     const L = rx * (.08 + Kit.rnd() * .1), t = Kit.rnd() * .6 - .3;
-    Kit.mk('line', {x1: x - L / 2, y1: y - L * t / 2, x2: x + L / 2, y2: y + L * t / 2, stroke: '#f6e2a8', 'stroke-width': Math.max(1.5, rx * .014), 'stroke-linecap': 'round'}, soup);
+    Kit.mk('line', {x1: x - L / 2, y1: y - L * t / 2, x2: x + L / 2, y2: y + L * t / 2, stroke: '#f3dc9e', 'stroke-width': Math.max(1.5, rx * .016), 'stroke-linecap': 'round'}, soup);
   }
-  // fin redraw on top of soup surface so it emerges from it
+  // fin on top of the surface so it emerges from it
   svg.appendChild(finG);
 
-  // price tag
+  // paper price tag on a string
   const tx = cx + rx * .62, ty = H * 0.06, tw = Math.max(fs * 4.6, rx * .5), th = fs * 2.4;
   const tag = Kit.mk('g', {class: 'hit', 'data-h': 'tag'}, svg);
-  Kit.mk('path', {d: `M${cx + rx * .92},${sy - ry * .3} Q${tx + tw * .2},${ty + th * 1.6} ${tx + tw * .12},${ty + th / 2}`, fill: 'none', stroke: ink, 'stroke-width': Math.max(1.5, rx * .012)}, tag);
-  Kit.mk('path', {d: `M${tx},${ty + th / 2} L${tx + th * .35},${ty} L${tx + tw},${ty} L${tx + tw},${ty + th} L${tx + th * .35},${ty + th} Z`, fill: ink}, tag);
-  Kit.mk('circle', {cx: tx + th * .32, cy: ty + th / 2, r: fs * .22, fill: card}, tag);
-  const tt = Kit.mk('text', {x: tx + th * .35 + (tw - th * .35) / 2, y: ty + th / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: card, 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': fs * 1.15}, tag);
+  Kit.mk('path', {d: `M${cx + rx * .92},${sy - ry * .3} Q${tx + tw * .2},${ty + th * 1.6} ${tx + tw * .12},${ty + th / 2}`, fill: 'none', stroke: ink, 'stroke-width': Math.max(1.5, rx * .012), 'stroke-linecap': 'round'}, tag);
+  Kit.mk('path', {d: `M${tx},${ty + th / 2} L${tx + th * .35},${ty} L${tx + tw},${ty} L${tx + tw},${ty + th} L${tx + th * .35},${ty + th} Z`, fill: '#fbf6ea', stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'}, tag);
+  Kit.mk('circle', {cx: tx + th * .32, cy: ty + th / 2, r: fs * .22, fill: card, stroke: ink, 'stroke-width': Math.max(1.5, rx * .012)}, tag);
+  const tt = Kit.mk('text', {x: tx + th * .35 + (tw - th * .35) / 2, y: ty + th / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: ink, style: 'font-family:var(--display);font-weight:800', 'font-size': fs * 1.25}, tag);
   tt.textContent = found.has('tag') ? '$' + Math.round(price.v || 300) : '$ ?';
   G.tagText = tt;
 
-  // markers
+  // markers: plain flat dots
   const marks = {
     fin: [cx - rx * .42, sy + ry * .05],
     steam: [cx - rx * .45, H * 0.14 - fs * .2],
@@ -121,11 +121,11 @@ function draw() {
   Object.entries(marks).forEach(([k, [x, y]]) => {
     const g = Kit.mk('g', {class: 'mk hit', 'data-h': k}, svg);
     const done = found.has(k);
-    Kit.mk('circle', {cx: x, cy: y, r: fs * .95, fill: done ? ink : '#ff5a3c', stroke: card, 'stroke-width': Math.max(2, fs * .15)}, g);
+    Kit.mk('circle', {cx: x, cy: y, r: fs * .95, fill: done ? ink : '#c8361f', stroke: card, 'stroke-width': Math.max(2, fs * .15)}, g);
     const t = Kit.mk('text', {x, y, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-size': fs}, g);
     t.textContent = done ? '✓' : '?';
     G.marks[k] = g;
-    if (!done && !Kit.calm) gsap.to(g, {scale: 1.15, transformOrigin: `${x}px ${y}px`, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+    if (!done && !Kit.calm) gsap.to(g, {scale: 1.12, transformOrigin: `${x}px ${y}px`, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'});
   });
 }
 

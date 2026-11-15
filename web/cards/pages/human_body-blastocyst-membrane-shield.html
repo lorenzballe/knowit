@@ -53,29 +53,34 @@ function build(){
   const top = fs * 2.2, bot = H - R * .6;
   const y = v => top + (bot - top) * v;
   const d = `M ${W*.1} ${y(.45)} C ${W*.35} ${y(.05)}, ${W*.6} ${y(1.05)}, ${W*.88} ${y(.5)}`;
-  const cav = Kit.mk('path', {d, fill:'none', 'stroke-linecap':'round', 'stroke-width':R*2.9, style:'stroke:color-mix(in srgb,var(--k) 9%,transparent)'}, svg);
-  Kit.mk('path', {d, fill:'none', 'stroke-dasharray':`${R*.25} ${R*.35}`, 'stroke-width':Math.max(1.5,R*.06), style:'stroke:color-mix(in srgb,var(--k) 22%,transparent)'}, svg);
+  const lw = Math.max(2, R*.1);
+  const pw = R*3.1;
+  // the uterine cavity drawn as a plain channel: two ink lines (the wall) with the open space between
+  Kit.mk('path', {d, fill:'none', 'stroke-linecap':'round', 'stroke-linejoin':'round', 'stroke-width':pw,
+    style:'stroke:color-mix(in srgb,var(--k) 55%,var(--c))'}, svg);
+  const cav = Kit.mk('path', {d, fill:'none', 'stroke-linecap':'round', 'stroke-linejoin':'round', 'stroke-width':pw - lw*2,
+    style:'stroke:var(--c)'}, svg);
   const L = cav.getTotalLength();
   const capBot = fs * 1.5;
   const zones = ZONES.map((z, i) => {
     const pt = cav.getPointAtLength(z.at * L);
-    const c = Kit.mk('circle', {cx:pt.x, cy:pt.y, r:R*1.35, fill: z.ok ? GREEN : 'none', 'fill-opacity': z.ok ? .3 : 1,
-      'stroke-width':Math.max(1.5,R*.07), 'stroke-dasharray': z.ok ? 'none' : `${R*.18} ${R*.14}`,
-      style: z.ok ? `stroke:${GREEN}` : 'stroke:color-mix(in srgb,var(--k) 40%,transparent)'}, svg);
-    let ly = pt.y - R*1.35 - fs*.45;
-    if (ly - fs < capBot) ly = pt.y + R*1.35 + fs*1.05;
+    const c = Kit.mk('circle', {cx:pt.x, cy:pt.y, r:R*1.3,
+      'stroke-width': z.ok ? 0 : lw*.8,
+      style: z.ok ? `fill:${GREEN}` : 'fill:none;stroke:color-mix(in srgb,var(--k) 40%,var(--c))'}, svg);
+    let ly = pt.y - R*1.55 - fs*.45;
+    if (ly - fs < capBot) ly = pt.y + R*1.55 + fs*1.05;
     const t = Kit.mk('text', {x:pt.x, y:ly, 'text-anchor':'middle',
-      style:`font:${z.ok?800:600} ${fs}px var(--body);fill:var(--k);opacity:${z.ok?1:.65}`}, svg);
+      style:`font:700 ${fs}px var(--body);fill:var(--k);opacity:${z.ok?1:.65}`}, svg);
     t.textContent = z.t;
     return {c, t};
   });
   const cap = Kit.mk('text', {x:W/2, y:fs*1.1, 'text-anchor':'middle', style:`font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
   const g = Kit.mk('g', {}, svg);
-  const fillC = Kit.mk('circle', {r:R, style:'fill:color-mix(in srgb,var(--k) 7%,transparent)'}, g);
+  const fillC = Kit.mk('circle', {r:R, style:'fill:color-mix(in srgb,var(--k) 25%,var(--c))'}, g);
   const cells = Kit.mk('g', {}, g);
-  const cellEls = CELLS.map(([cx, cy]) => Kit.mk('circle', {cx:cx*R, cy:cy*R, r:R*.21, 'stroke-width':Math.max(1,R*.04),
-    style:'fill:color-mix(in srgb,var(--c) 55%,#e86f7e);stroke:var(--k)'}, cells));
-  const sw = Math.max(2, R*.13);
+  const cellEls = CELLS.map(([cx, cy]) => Kit.mk('circle', {cx:cx*R, cy:cy*R, r:R*.2, 'stroke-width':Math.max(1.2,R*.05),
+    style:'fill:var(--k);stroke:color-mix(in srgb,var(--k) 25%,var(--c))'}, cells));
+  const sw = Math.max(2.5, R*.13);
   const mt = Kit.mk('path', {d:`M ${-R} 0 A ${R} ${R} 0 0 1 ${R} 0`, fill:'none', 'stroke-width':sw, 'stroke-linecap':'round', style:'stroke:var(--k)'}, g);
   const mb = Kit.mk('path', {d:`M ${R} 0 A ${R} ${R} 0 0 1 ${-R} 0`, fill:'none', 'stroke-width':sw, 'stroke-linecap':'round', style:'stroke:var(--k)'}, g);
   G = {cav, L, R, sw, zones, cap, g, fillC, cells, cellEls, mt, mb};
@@ -101,8 +106,7 @@ function render(){
   mt.style.opacity = mb.style.opacity = 1 - o*.55;
   fillC.style.opacity = 1 - o;
   zones.forEach((z, i) => {
-    if (ZONES[i].ok) z.c.setAttribute('fill-opacity', .3 + o*.4);
-    else z.t.style.opacity = st.hit === i ? 1 : .65;
+    if (!ZONES[i].ok) z.t.style.opacity = st.hit === i ? 1 : .65;
   });
   cap.textContent = st.cap;
 }

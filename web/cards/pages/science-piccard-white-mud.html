@@ -53,54 +53,54 @@ Kit.$('opts').addEventListener('click', e => {
 function draw(){
   const svg = Kit.$('pv'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const cx = W/2, cy = H/2, R = Math.min(W, H)/2*.94, r = R*.82;
   const fs = Math.max(f*1.05, 13);
+  // room under the porthole for one plain caption, so it never has to shrink
+  const capH = fs*1.9;
+  const cx = W/2, cy = Math.max((H - capH)/2, 12);
+  const R = Math.max(Math.min(W/2, (H - capH)/2)*.94, 12), r = R*.8;
+  const ink = 'var(--k)';
+  const frame = 'color-mix(in srgb, var(--k) 70%, var(--c))';
+  const lw = Math.max(2, R*.03);
   const defs = Kit.mk('defs', {}, svg);
-  const wg = Kit.mk('radialGradient', {id:'wg', cx:'50%', cy:'35%', r:'70%'}, defs);
-  Kit.mk('stop', {offset:'0', 'stop-color':'#2f8fb8'}, wg);
-  Kit.mk('stop', {offset:'1', 'stop-color':'#062436'}, wg);
-  const bg = Kit.mk('linearGradient', {id:'bg', x1:'0', y1:'0', x2:'0', y2:'1'}, defs);
-  Kit.mk('stop', {offset:'0', 'stop-color':'#fff', 'stop-opacity':'.55'}, bg);
-  Kit.mk('stop', {offset:'1', 'stop-color':'#fff', 'stop-opacity':'0'}, bg);
   const cp = Kit.mk('clipPath', {id:'cp'}, defs);
   Kit.mk('circle', {cx, cy, r}, cp);
 
   const g = Kit.mk('g', {'clip-path':'url(#cp)'}, svg);
-  Kit.mk('rect', {x:cx-r, y:cy-r, width:2*r, height:2*r, fill:'url(#wg)'}, g);
+  // clear deep water, flat
+  Kit.mk('rect', {x:cx-r, y:cy-r, width:2*r, height:2*r, fill:'#9fd0e0'}, g);
   // white mud floor
   const fy = cy + r*.42;
-  Kit.mk('path', {d:`M${cx-r} ${fy+r*.1} Q${cx-r*.5} ${fy-r*.08} ${cx} ${fy} T${cx+r} ${fy-r*.04} L${cx+r} ${cy+r} L${cx-r} ${cy+r}Z`, fill:'#eef1ec'}, g);
-  for (let i = 0; i < 9; i++){
-    Kit.mk('ellipse', {cx: cx - r*.8 + Kit.rnd()*r*1.6, cy: fy + r*.12 + Kit.rnd()*r*.4, rx: r*(.05+Kit.rnd()*.08), ry: r*.018, fill:'#d3d9d3'}, g);
+  Kit.mk('path', {d:`M${cx-r} ${fy+r*.1} Q${cx-r*.5} ${fy-r*.08} ${cx} ${fy} T${cx+r} ${fy-r*.04} L${cx+r} ${cy+r} L${cx-r} ${cy+r}Z`, fill:'#f4f2ea'}, g);
+  Kit.mk('path', {d:`M${cx-r} ${fy+r*.1} Q${cx-r*.5} ${fy-r*.08} ${cx} ${fy} T${cx+r} ${fy-r*.04}`, fill:'none', style:`stroke:${ink}`, 'stroke-width':lw*.7, 'stroke-linecap':'round'}, g);
+  for (let i = 0; i < 6; i++){
+    const x = cx - r*.7 + Kit.rnd()*r*1.4, y = fy + r*.16 + Kit.rnd()*r*.3, w = r*(.06+Kit.rnd()*.07);
+    Kit.mk('path', {d:`M${x-w} ${y} Q${x} ${y-r*.035} ${x+w} ${y}`, fill:'none', stroke:'#c9c6b8', 'stroke-width':lw*.6, 'stroke-linecap':'round'}, g);
   }
-  // light beams
+  // light from the lamps, flat
   el.beams = Kit.mk('g', {opacity:0}, g);
-  Kit.mk('polygon', {points:`${cx-r*.55},${cy-r} ${cx-r*.25},${cy-r} ${cx+r*.15},${fy+r*.2} ${cx-r*.95},${fy+r*.2}`, fill:'url(#bg)'}, el.beams);
-  Kit.mk('polygon', {points:`${cx+r*.25},${cy-r} ${cx+r*.55},${cy-r} ${cx+r*.95},${fy+r*.2} ${cx-r*.15},${fy+r*.2}`, fill:'url(#bg)'}, el.beams);
-  // specks drifting in clear water
+  Kit.mk('polygon', {points:`${cx-r*.55},${cy-r} ${cx-r*.25},${cy-r} ${cx+r*.15},${fy+r*.2} ${cx-r*.95},${fy+r*.2}`, fill:'#fff', 'fill-opacity':.3}, el.beams);
+  Kit.mk('polygon', {points:`${cx+r*.25},${cy-r} ${cx+r*.55},${cy-r} ${cx+r*.95},${fy+r*.2} ${cx-r*.15},${fy+r*.2}`, fill:'#fff', 'fill-opacity':.3}, el.beams);
+  // (kept for the script's drift animation; nothing decorative inside)
   el.specks = Kit.mk('g', {opacity:0}, g);
-  for (let i = 0; i < 16; i++){
-    Kit.mk('circle', {cx: cx - r*.8 + Kit.rnd()*r*1.6, cy: cy - r*.8 + Kit.rnd()*r*1.15, r: Math.max(1, r*.008), fill:'#fff', opacity:.7}, el.specks);
-  }
-  // darkness
-  el.dark = Kit.mk('rect', {x:cx-r, y:cy-r, width:2*r, height:2*r, fill:'#010508', opacity:.95}, g);
-  el.off = Kit.mk('text', {x:cx, y:cy, 'text-anchor':'middle', 'dominant-baseline':'middle', fill:'#7d8a92', 'font-family':'var(--mono)', 'font-size':fs*.9}, g);
-  el.off.textContent = '10,900 m · lights off';
+  // darkness: lights off — the window is simply black
+  el.dark = Kit.mk('rect', {x:cx-r, y:cy-r, width:2*r, height:2*r, style:`fill:${ink}`, opacity:1}, g);
   // labels
   el.lab = Kit.mk('g', {opacity:0}, g);
-  const t1 = Kit.mk('text', {x:cx, y:cy - r*.42, 'text-anchor':'middle', fill:'#fff', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs}, el.lab);
+  const t1 = Kit.mk('text', {x:cx, y:cy - r*.42, 'text-anchor':'middle', style:`fill:${ink}`, 'font-family':'var(--body)', 'font-weight':700, 'font-size':fs}, el.lab);
   t1.textContent = 'limpid water';
-  const t2 = Kit.mk('text', {x:cx, y:fy + r*.36, 'text-anchor':'middle', fill:'#17323f', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs}, el.lab);
+  const t2 = Kit.mk('text', {x:cx, y:fy + r*.36, 'text-anchor':'middle', style:`fill:${ink}`, 'font-family':'var(--body)', 'font-weight':700, 'font-size':fs}, el.lab);
   t2.textContent = 'white mud';
-  // glass glint + metal ring
-  Kit.mk('path', {d:`M${cx-r*.7} ${cy-r*.35} A${r*.8} ${r*.8} 0 0 1 ${cx-r*.2} ${cy-r*.78}`, stroke:'#fff', 'stroke-opacity':.18, 'stroke-width':r*.05, fill:'none', 'stroke-linecap':'round'}, svg);
-  Kit.mk('circle', {cx, cy, r:(R+r)/2, fill:'none', stroke:'#7b838b', 'stroke-width':R-r}, svg);
-  Kit.mk('circle', {cx, cy, r:R, fill:'none', stroke:'#3e454c', 'stroke-width':Math.max(2, R*.025)}, svg);
-  Kit.mk('circle', {cx, cy, r, fill:'none', stroke:'#2a3036', 'stroke-width':Math.max(2, R*.02)}, svg);
-  for (let i = 0; i < 12; i++){
-    const a = i/12*Math.PI*2;
-    Kit.mk('circle', {cx: cx + Math.cos(a)*(R+r)/2, cy: cy + Math.sin(a)*(R+r)/2, r: (R-r)*.18, fill:'#c9cfd4', stroke:'#4a5157'}, svg);
+  // porthole frame: one flat ring with plain bolts
+  Kit.mk('circle', {cx, cy, r:(R+r)/2, fill:'none', style:`stroke:${frame}`, 'stroke-width':R-r}, svg);
+  Kit.mk('circle', {cx, cy, r:R, fill:'none', style:`stroke:${ink}`, 'stroke-width':lw}, svg);
+  Kit.mk('circle', {cx, cy, r, fill:'none', style:`stroke:${ink}`, 'stroke-width':lw}, svg);
+  for (let i = 0; i < 10; i++){
+    const a = i/10*Math.PI*2 + .2;
+    Kit.mk('circle', {cx: cx + Math.cos(a)*(R+r)/2, cy: cy + Math.sin(a)*(R+r)/2, r: (R-r)*.16, style:`fill:${ink}`}, svg);
   }
+  // caption under the porthole, at the one label size
+  el.off = Kit.mk('text', {x:cx, y:cy + R + capH*.62, 'text-anchor':'middle', 'dominant-baseline':'middle', style:`fill:${ink}`, 'font-family':'var(--body)', 'font-weight':600, 'font-size':fs}, svg);
+  el.off.textContent = '10,900 m · lights off';
   if (lit){ el.dark.setAttribute('opacity', 0); el.off.setAttribute('opacity', 0); el.beams.setAttribute('opacity', 1); el.specks.setAttribute('opacity', 1); el.lab.setAttribute('opacity', 1); }
 }
 

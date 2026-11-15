@@ -25,7 +25,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const WARM = '#f4a06e', COLD = '#8db6e6', HEAT = '#ff6a1f';
+const WARM = '#f2bf98', COLD = '#9fc0e8', HEAT = '#e8552a';
 const done = {al: false, book: false};
 let busy = false, G = null;
 
@@ -37,9 +37,7 @@ function draw() {
   svg.innerHTML = '';
   const fs = Math.max(12, Math.min(f, H * 0.055));
   const lh = fs * 1.4;
-  const defs = mk('defs', {}, svg);
-  const g1 = mk('linearGradient', {id: 'alg', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
-  [['0', '#eef2f6'], ['.45', '#b9c2cc'], ['.55', '#d8dee5'], ['1', '#8d97a3']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g1));
+  const sw = Math.max(2, fs * 0.16);
 
   const bw = Math.min(W * 0.4, H * 0.62);
   const bh = Math.min(H * 0.2, bw * 0.55);
@@ -52,30 +50,37 @@ function draw() {
     style: `font:600 ${fs}px var(--body)`}, svg);
   head.textContent = 'Both sit at the same room temperature';
 
-  // blocks
+  // a plain thermometer, same reading on both
   function thermo(x, y, h, p) {
-    const w = Math.max(5, h * 0.14);
-    mk('rect', {x: x - w / 2, y, width: w, height: h, rx: w / 2, fill: '#fff', stroke: '#333', 'stroke-width': 1.2}, p);
-    mk('rect', {x: x - w / 4, y: y + h * 0.4, width: w / 2, height: h * 0.6, fill: '#e2382b'}, p);
-    mk('circle', {cx: x, cy: y + h, r: w * 0.85, fill: '#e2382b', stroke: '#333', 'stroke-width': 1.2}, p);
+    const w = Math.max(6, h * 0.16);
+    mk('rect', {x: x - w / 2, y, width: w, height: h, rx: w / 2, fill: '#fff', stroke: 'currentColor', 'stroke-width': sw * 0.8}, p);
+    mk('rect', {x: x - w / 4, y: y + h * 0.4, width: w / 2, height: h * 0.6, fill: HEAT}, p);
+    mk('circle', {cx: x, cy: y + h, r: w * 0.85, fill: HEAT, stroke: 'currentColor', 'stroke-width': sw * 0.8}, p);
   }
+
   for (const k of ['al', 'book']) {
     const g = mk('g', {class: 'hit'}, svg);
     const x0 = cx[k] - bw / 2;
     if (k === 'al') {
-      mk('rect', {x: x0, y: by, width: bw, height: bh, rx: 4, fill: 'url(#alg)', stroke: '#5d6670', 'stroke-width': 1.5}, g);
-      for (let i = 0; i < 4; i++) mk('line', {x1: x0 + bw * (0.1 + i * 0.12), y1: by + bh * 0.15, x2: x0 + bw * (0.02 + i * 0.12), y2: by + bh * 0.85, stroke: '#fff', 'stroke-width': 2, opacity: .5}, g);
+      // a thick slab of aluminium, flat grey, its edge a shade darker
+      mk('rect', {x: x0, y: by, width: bw, height: bh, rx: 6, fill: '#b4bbc2', stroke: 'currentColor', 'stroke-width': sw}, g);
+      mk('path', {d: `M${x0 + sw / 2} ${by + bh * 0.78} H${x0 + bw - sw / 2} V${by + bh - 6} Q${x0 + bw - sw / 2} ${by + bh - sw / 2} ${x0 + bw - 6} ${by + bh - sw / 2} H${x0 + 6} Q${x0 + sw / 2} ${by + bh - sw / 2} ${x0 + sw / 2} ${by + bh - 6} Z`,
+        fill: '#949ca4'}, g);
+      mk('line', {x1: x0, y1: by + bh * 0.78, x2: x0 + bw, y2: by + bh * 0.78, stroke: 'currentColor', 'stroke-width': sw * 0.8}, g);
     } else {
-      mk('rect', {x: x0, y: by, width: bw, height: bh, rx: 4, fill: '#f5ecd6', stroke: '#6b5a3a', 'stroke-width': 1.5}, g);
-      for (let i = 1; i < 6; i++) mk('line', {x1: x0 + 4, y1: by + bh * i / 6, x2: x0 + bw - 4, y2: by + bh * i / 6, stroke: '#c9b88f', 'stroke-width': 1}, g);
-      mk('rect', {x: x0, y: by, width: bw, height: bh * 0.16, rx: 3, fill: '#2f5d8a'}, g);
-      mk('rect', {x: x0, y: by + bh * 0.86, width: bw, height: bh * 0.14, rx: 3, fill: '#2f5d8a'}, g);
+      // a closed book lying flat: cloth cover, spine, page edge, title
+      mk('rect', {x: x0, y: by, width: bw, height: bh, rx: 6, fill: '#c0492f', stroke: 'currentColor', 'stroke-width': sw}, g);
+      mk('rect', {x: x0 + sw / 2, y: by + sw / 2, width: bw * 0.1, height: bh - sw, rx: 4, fill: '#8a3122'}, g);
+      mk('line', {x1: x0 + bw * 0.1 + sw / 2, y1: by, x2: x0 + bw * 0.1 + sw / 2, y2: by + bh, stroke: 'currentColor', 'stroke-width': sw * 0.8}, g);
+      mk('rect', {x: x0 + bw - bw * 0.05 - sw, y: by + bh * 0.1, width: bw * 0.05, height: bh * 0.8, fill: '#fbf5e8', stroke: 'currentColor', 'stroke-width': sw * 0.6}, g);
+      mk('rect', {x: x0 + bw * 0.3, y: by + bh * 0.3, width: bw * 0.36, height: Math.max(4, bh * 0.1), rx: 2, fill: '#ecc04a'}, g);
     }
-    thermo(x0 + bw * 0.86, by + bh * 0.2, bh * 0.48, g);
+    thermo(x0 + bw * (k === 'al' ? 0.86 : 0.8), by + bh * 0.16, bh * 0.44, g);
+
     const name = mk('text', {x: cx[k], y: by + bh + lh, 'text-anchor': 'middle', fill: 'currentColor', style: `font:800 ${fs * 1.05}px var(--body)`}, g);
     name.textContent = k === 'al' ? 'Aluminium' : 'Book';
     if (done[k]) {
-      const c = k === 'al' ? '#2a6fc0' : '#d0571b';
+      const c = k === 'al' ? '#1d5aa3' : '#b8441a';
       const a = mk('text', {x: cx[k], y: by + bh + lh * 2, 'text-anchor': 'middle', fill: c, style: `font:600 ${fs}px var(--body)`}, g);
       a.textContent = k === 'al' ? 'heat leaves fast' : 'heat leaves slowly';
       const b = mk('text', {x: cx[k], y: by + bh + lh * 3, 'text-anchor': 'middle', fill: c, style: `font:800 ${fs * 1.05}px var(--body)`}, g);
@@ -88,15 +93,16 @@ function draw() {
     g.addEventListener('click', () => touch(k));
   }
 
-  // hand (palm down, fingers toward the block); local box 100 x 120
+  // hand, palm down, seen from above the knuckles; local box 100 x 120
   const s = hs / 120;
   const hand = mk('g', {}, svg);
   const parts = [];
-  const P = (t, a) => parts.push(mk(t, Object.assign({fill: WARM, stroke: '#a85a32', 'stroke-width': 1.6 / s}, a), hand));
-  P('rect', {x: 26, y: 0, width: 48, height: 34, rx: 6});
-  P('rect', {x: 3, y: 34, width: 18, height: 44, rx: 9, transform: 'rotate(-18 12 56)'});
-  P('rect', {x: 12, y: 24, width: 76, height: 56, rx: 18});
-  [13, 32, 51, 70].forEach(x => P('rect', {x, y: 62, width: 17, height: x === 13 || x === 70 ? 50 : 58, rx: 8.5}));
+  const lw = sw / s;
+  const P = (t, a) => parts.push(mk(t, Object.assign({fill: WARM, stroke: 'currentColor', 'stroke-width': lw, 'stroke-linejoin': 'round'}, a), hand));
+  P('rect', {x: 28, y: -4, width: 44, height: 56, rx: 4});              // wrist
+  P('path', {d: 'M14 70 Q2 74 4 90 Q8 102 20 100 Z'});                   // thumb
+  P('rect', {x: 14, y: 40, width: 72, height: 78, rx: 20});              // back of the hand and fingers
+  [33, 50, 67].forEach(x => mk('line', {x1: x, y1: 92, x2: x, y2: 114, stroke: 'currentColor', 'stroke-width': lw * 0.7, 'stroke-linecap': 'round'}, hand));
   const rest = {x: W / 2 - 50 * s, y: fs * 2};
   const pos = {x: rest.x, y: rest.y};
   const place = () => hand.setAttribute('transform', `translate(${pos.x} ${pos.y}) scale(${s})`);
@@ -116,14 +122,20 @@ function touch(k) {
   let timer;
   tl.add(() => {
     timer = setInterval(() => {
-      const x = g.pos.x + (14 + Math.random() * 72) * g.s;
-      const c = mk('circle', {cx: x, cy: g.by + 2, r: Math.max(2.5, g.fs * 0.24), fill: HEAT}, g.svg);
-      gsap.to(c, {attr: {cy: g.by + g.bh * (al ? 0.9 : 0.3), cx: x + (Math.random() - .5) * g.bw * (al ? 0.5 : 0.1)},
+      // short strokes of heat leaving the hand and sinking into the block
+      const x = g.pos.x + (20 + Math.random() * 60) * g.s;
+      const len = g.fs * 0.6;
+      const y0 = g.by + 2;
+      const c = mk('line', {x1: x, y1: y0, x2: x, y2: y0 + len, stroke: HEAT,
+        'stroke-width': Math.max(2.5, g.fs * 0.2), 'stroke-linecap': 'round'}, g.svg);
+      const ty = g.by + g.bh * (al ? 0.9 : 0.3) - len;
+      const tx = x + (Math.random() - .5) * g.bw * (al ? 0.5 : 0.1);
+      gsap.to(c, {attr: {x1: tx, y1: ty, x2: tx, y2: ty + len},
         opacity: 0, duration: al ? .55 : 1.5, ease: 'none', onComplete: () => c.remove()});
     }, al ? 30 : 240);
   });
   const hc = {c: WARM};
-  tl.to(hc, {c: al ? COLD : '#eea47a', duration: 2, ease: 'none', onUpdate: () => color(hc.c)});
+  tl.to(hc, {c: al ? COLD : '#eeb48c', duration: 2, ease: 'none', onUpdate: () => color(hc.c)});
   tl.add(() => clearInterval(timer));
   tl.to(g.pos, {x: g.rest.x, y: g.rest.y, duration: .5, ease: 'power2.inOut', onUpdate: g.place}, '+=.25');
 }

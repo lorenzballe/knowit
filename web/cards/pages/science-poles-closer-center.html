@@ -12,7 +12,7 @@
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:700 max(2.4cqh,15px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0}
-.lbl{font-family:var(--body);font-weight:700;paint-order:stroke;stroke-linejoin:round}
+.lbl{font-family:var(--body);font-weight:700}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Drag · watch">
   <div class="in">
@@ -36,6 +36,12 @@ const svg = Kit.$('svg');
 let p = 0, done = false, drag = false, ang = 0;
 let G = null; // geometry and elements
 
+const INK = 'var(--k)';
+const LAND = 'color-mix(in srgb, var(--k) 16%, var(--c))';
+const TRACK = 'color-mix(in srgb, var(--k) 22%, var(--c))';
+const SEA = '#2f6fd0';
+const PUSH = '#d9432f';
+
 function geom(){
   const {W,H,f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 12);
@@ -55,46 +61,44 @@ function draw(){
   const g = geom(); G = g;
   const {W,fs,R,cx,cy,rx,ry,x0,x1,ty} = g;
   const mk = (t,a,par=svg) => Kit.mk(t,a,par);
+  const sw = Math.max(2, R*0.018);
   // legend
-  g.leg = mk('text',{x:8,y:fs*1.2,class:'lbl','font-size':fs,fill:'#e0412f',stroke:'none'});
+  g.leg = mk('text',{x:8,y:fs*1.2,class:'lbl','font-size':fs,fill:PUSH});
   g.leg.textContent = '→ centrifugal push';
-  // axis
+  // axle through the poles
   const top = cy - ry - R*0.13;
   g.ringY = top - fs*1.0;
-  mk('line',{x1:cx,y1:g.ringY - fs*0.5,x2:cx,y2:cy+ry+R*0.13+fs*1.0,stroke:'var(--k)','stroke-width':1.5,'stroke-dasharray':'4 4',opacity:.5});
+  mk('line',{x1:cx,y1:g.ringY - fs*0.5,x2:cx,y2:cy+ry+R*0.13+fs*0.4,stroke:INK,'stroke-width':sw,'stroke-linecap':'round'});
   // ocean
-  g.ocean = mk('path',{fill:'#2b7bd9'});
-  // land cross-section
-  mk('ellipse',{cx,cy,rx,ry,fill:'#7a4e2f'});
-  mk('ellipse',{cx,cy,rx:rx*0.9,ry:ry*0.9,fill:'#d8702f'});
-  mk('ellipse',{cx,cy,rx:rx*0.5,ry:ry*0.5,fill:'#f0a53a'});
-  mk('ellipse',{cx,cy,rx:rx*0.25,ry:ry*0.25,fill:'#ffd75a'});
+  g.ocean = mk('path',{fill:SEA,stroke:INK,'stroke-width':sw,'stroke-linejoin':'round'});
+  // the solid Earth
+  mk('ellipse',{cx,cy,rx,ry,fill:LAND,stroke:INK,'stroke-width':sw});
   // centrifugal arrows
-  g.arr = mk('g',{fill:'#e0412f',stroke:'#e0412f','stroke-width':Math.max(3,R*0.03),'stroke-linecap':'round'});
+  g.arr = mk('g',{fill:PUSH,stroke:PUSH,'stroke-width':Math.max(3,R*0.03),'stroke-linecap':'round'});
   // spin ring
   g.rr = R*0.2;
-  mk('ellipse',{cx,cy:g.ringY,rx:g.rr,ry:g.rr*0.3,fill:'none',stroke:'var(--k)','stroke-width':2,opacity:.6});
-  g.dot = mk('circle',{cx,cy:g.ringY,r:Math.max(4,R*0.04),fill:'var(--k)'});
+  mk('ellipse',{cx,cy:g.ringY,rx:g.rr,ry:g.rr*0.3,fill:'none',stroke:INK,'stroke-width':2});
+  g.dot = mk('circle',{cx,cy:g.ringY,r:Math.max(4,R*0.04),fill:INK});
   // pole labels
   const lx = cx + g.rr + fs*0.6;
-  const n = mk('text',{x:lx,y:g.ringY + fs*0.35,class:'lbl','font-size':fs,fill:'var(--k)',stroke:'none'}); n.textContent = 'North Pole';
-  const so = mk('text',{x:lx,y:cy+ry+R*0.13+fs*1.1,class:'lbl','font-size':fs,fill:'var(--k)',stroke:'none'}); so.textContent = 'South Pole';
-  const sp = mk('text',{x:cx - g.rr - fs*0.6,y:g.ringY + fs*0.35,'text-anchor':'end',class:'lbl','font-size':fs,fill:'var(--k)',stroke:'none'}); sp.textContent = 'spin';
+  const n = mk('text',{x:lx,y:g.ringY + fs*0.35,class:'lbl','font-size':fs,fill:INK}); n.textContent = 'North Pole';
+  const so = mk('text',{x:lx,y:cy+ry+R*0.13+fs*1.1,class:'lbl','font-size':fs,fill:INK}); so.textContent = 'South Pole';
+  const sp = mk('text',{x:cx - g.rr - fs*0.6,y:g.ringY + fs*0.35,'text-anchor':'end',class:'lbl','font-size':fs,fill:INK}); sp.textContent = 'spin';
   g.spinTxt = sp;
   // radii (shown at the end)
   g.rad = mk('g',{opacity: done?1:0});
-  mk('line',{x1:cx,y1:cy,x2:cx+rx,y2:cy,stroke:'#fff','stroke-width':3},g.rad);
-  mk('line',{x1:cx,y1:cy,x2:cx,y2:cy-ry,stroke:'#fff','stroke-width':3},g.rad);
-  mk('circle',{cx,cy,r:4,fill:'#fff'},g.rad);
-  const eq = mk('text',{x:cx+rx*0.55,y:cy + fs*1.2,'text-anchor':'middle',class:'lbl','font-size':fs,fill:'#fff',stroke:'#3a2414','stroke-width':3},g.rad); eq.textContent = 'equator';
-  const pl = mk('text',{x:cx+6,y:cy-ry*0.55,class:'lbl','font-size':fs,fill:'#fff',stroke:'#3a2414','stroke-width':3},g.rad); pl.textContent = '21 km shorter';
-  // track
-  mk('line',{x1:x0,y1:ty,x2:x1,y2:ty,stroke:'var(--k)','stroke-width':Math.max(4,fs*0.35),'stroke-linecap':'round',opacity:.25});
-  g.fill = mk('line',{x1:x0,y1:ty,x2:x0,y2:ty,stroke:'var(--k)','stroke-width':Math.max(4,fs*0.35),'stroke-linecap':'round'});
-  const t1 = mk('text',{x:x0,y:ty - fs*1.3,'text-anchor':'start',class:'lbl','font-size':fs,fill:'var(--k)',stroke:'none'}); t1.textContent = 'Spinning';
-  const t2 = mk('text',{x:x1,y:ty - fs*1.3,'text-anchor':'end',class:'lbl','font-size':fs,fill:'var(--k)',stroke:'none'}); t2.textContent = 'Stopped';
-  g.knob = mk('circle',{cx:x0,cy:ty,r:Math.max(fs*0.95,14),fill:'var(--k)',stroke:'var(--c)','stroke-width':3});
-  const nt = mk('text',{x:cx,y:cy+ry+R*0.13+fs*2.4,'text-anchor':'middle','font-size':Math.max(fs*0.85,12),fill:'var(--k)',opacity:.6,'font-family':'var(--body)'});
+  mk('line',{x1:cx,y1:cy,x2:cx+rx,y2:cy,stroke:INK,'stroke-width':sw*1.3,'stroke-linecap':'round'},g.rad);
+  mk('line',{x1:cx,y1:cy,x2:cx,y2:cy-ry,stroke:INK,'stroke-width':sw*1.3,'stroke-linecap':'round'},g.rad);
+  mk('circle',{cx,cy,r:Math.max(4,sw*2),fill:INK},g.rad);
+  const eq = mk('text',{x:cx+rx*0.55,y:cy + fs*1.2,'text-anchor':'middle',class:'lbl','font-size':fs,fill:INK},g.rad); eq.textContent = 'equator';
+  const pl = mk('text',{x:cx+fs*0.5,y:cy-ry*0.55,class:'lbl','font-size':fs,fill:INK},g.rad); pl.textContent = '21 km shorter';
+  // brake track
+  mk('line',{x1:x0,y1:ty,x2:x1,y2:ty,stroke:TRACK,'stroke-width':Math.max(4,fs*0.35),'stroke-linecap':'round'});
+  g.fill = mk('line',{x1:x0,y1:ty,x2:x0,y2:ty,stroke:INK,'stroke-width':Math.max(4,fs*0.35),'stroke-linecap':'round'});
+  const t1 = mk('text',{x:x0,y:ty - fs*1.3,'text-anchor':'start',class:'lbl','font-size':fs,fill:INK}); t1.textContent = 'Spinning';
+  const t2 = mk('text',{x:x1,y:ty - fs*1.3,'text-anchor':'end',class:'lbl','font-size':fs,fill:INK}); t2.textContent = 'Stopped';
+  g.knob = mk('circle',{cx:x0,cy:ty,r:Math.max(fs*0.95,14),fill:INK});
+  const nt = mk('text',{x:cx,y:cy+ry+R*0.13+fs*2.4,'text-anchor':'middle','font-size':Math.max(fs*0.85,12),fill:INK,'font-family':'var(--body)','font-weight':500});
   nt.textContent = 'squash exaggerated';
   if (cy+ry+R*0.13+fs*2.4 > ty - fs*2.4) nt.remove();
   update();

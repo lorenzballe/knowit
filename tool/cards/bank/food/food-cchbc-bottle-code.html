@@ -53,14 +53,17 @@ function S(v){ return G.hmax * Math.cbrt(v / VMAX) / 100; }
 function bottle(parent, ghost){
   const g = Kit.mk('g', {}, parent);
   if (ghost){
-    Kit.mk('path', {d: BODY, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-dasharray': '5 4', 'vector-effect': 'non-scaling-stroke', opacity: .7}, g);
+    Kit.mk('path', {d: BODY, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-dasharray': '5 4', 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round'}, g);
     return g;
   }
-  Kit.mk('path', {d: BODY, fill: '#2a120a', stroke: 'var(--k)', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke'}, g);
+  // the drink: one flat dark shape
+  Kit.mk('path', {d: BODY, fill: 'var(--k)', stroke: 'var(--k)', 'stroke-width': 1.5, 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, g);
+  // air at the top of the neck
+  Kit.mk('rect', {x: -6, y: -92, width: 12, height: 6, fill: 'color-mix(in srgb, var(--k) 35%, var(--c))'}, g);
+  // paper label
   Kit.mk('rect', {x: -20, y: -55, width: 40, height: 17, fill: RED}, g);
-  Kit.mk('path', {d: 'M -20 -45 C -10 -52 0 -40 20 -49', fill: 'none', stroke: '#fff', 'stroke-width': 2.2}, g);
-  Kit.mk('path', {d: 'M -14 -24 L -14 -10', stroke: '#fff', 'stroke-opacity': .25, 'stroke-width': 3, 'stroke-linecap': 'round'}, g);
-  Kit.mk('path', {d: 'M -13 -66 C -11 -70 -8 -73 -5 -76', fill: 'none', stroke: '#fff', 'stroke-opacity': .3, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, g);
+  Kit.mk('path', {d: 'M -20 -45 C -10 -51 2 -41 20 -48', fill: 'none', stroke: 'var(--c)', 'stroke-width': 2, 'stroke-linecap': 'round', 'vector-effect': 'non-scaling-stroke'}, g);
+  // cap
   Kit.mk('rect', {x: -7.5, y: -101, width: 15, height: 9, rx: 1.5, fill: RED}, g);
   return g;
 }
@@ -76,28 +79,27 @@ function draw(){
   G.top = H * .04;
   G.hmax = Math.max(40, Math.min(G.by - G.top - fs * .5, W * .95));
   G.bx = W * .5;
-  // axis
+  // the size scale
   Kit.mk('line', {x1: G.x0, x2: G.x1, y1: G.sy, y2: G.sy, stroke: 'var(--k)', 'stroke-width': 2.5, 'stroke-linecap': 'round'}, svg);
   for (let v = 0.5; v <= 3.001; v += 0.5){
-    Kit.mk('line', {x1: X(v), x2: X(v), y1: G.sy - fs * .35, y2: G.sy + fs * .35, stroke: 'var(--k)', 'stroke-width': 2}, svg);
-    const t = Kit.mk('text', {x: X(v), y: G.sy + fs * 1.7, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700}, svg);
+    Kit.mk('line', {x1: X(v), x2: X(v), y1: G.sy - fs * .35, y2: G.sy + fs * .35, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    const t = Kit.mk('text', {x: X(v), y: G.sy + fs * 1.7, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 600}, svg);
     t.textContent = v === 3 ? '3 L' : fmt(v);
   }
   G.ghost = bottle(svg, true);
   G.ghost.style.display = revealed ? '' : 'none';
   G.real = bottle(svg, false);
-  // callout with the code
+  // the code, written as it is printed on the bottle, with a line to the neck
   const cw = fs * 6.6, ch = fs * 1.9;
   G.cx = W * .96 - cw; G.cy = G.top;
-  G.lead = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
+  G.lead = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
   G.dot = Kit.mk('circle', {r: 3, fill: 'var(--k)'}, svg);
-  Kit.mk('rect', {x: G.cx, y: G.cy, width: cw, height: ch, rx: ch / 2, fill: 'var(--k)'}, svg);
-  const ct = Kit.mk('text', {x: G.cx + cw / 2, y: G.cy + ch * .66, 'text-anchor': 'middle', fill: 'var(--c)', 'font-family': 'var(--mono)', 'font-size': fs * 1.05, 'font-weight': 800}, svg);
+  const ct = Kit.mk('text', {x: G.cx + cw / 2, y: G.cy + ch * .66, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': fs * 1.05, 'font-weight': 700}, svg);
   ct.textContent = 'CCHBC 70';
-  // readout
-  G.r1 = Kit.mk('text', {x: W * .04, y: G.top + fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': fs * .9, 'font-weight': 700, 'letter-spacing': '.06em'}, svg);
+  // the guess, in words
+  G.r1 = Kit.mk('text', {x: W * .04, y: G.top + fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': fs * .9, 'font-weight': 600}, svg);
   G.r2 = Kit.mk('text', {x: W * .04, y: G.top + fs + Math.min(2.1 * fs, W * .08) * 1.15, fill: 'var(--k)', 'font-family': 'var(--display)', 'font-size': Math.min(2.1 * fs, W * .08), 'font-weight': 800}, svg);
-  G.r3 = Kit.mk('text', {x: W * .04, y: G.top + fs + Math.min(2.1 * fs, W * .08) * 1.15 + fs * 1.5, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': fs * .9, 'font-weight': 600, opacity: .8}, svg);
+  G.r3 = Kit.mk('text', {x: W * .04, y: G.top + fs + Math.min(2.1 * fs, W * .08) * 1.15 + fs * 1.5, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': fs * .9, 'font-weight': 600}, svg);
   // real marker and handle
   G.realMark = Kit.mk('line', {x1: X(REAL), x2: X(REAL), y1: G.sy - fs * .9, y2: G.sy + fs * .5, stroke: RED, 'stroke-width': 4, 'stroke-linecap': 'round'}, svg);
   G.realMark.style.display = revealed ? '' : 'none';
@@ -116,11 +118,11 @@ function update(){
   G.lead.setAttribute('x2', nx); G.lead.setAttribute('y2', ny);
   G.dot.setAttribute('cx', nx); G.dot.setAttribute('cy', ny);
   if (revealed){
-    G.r1.textContent = 'CCHBC 70 IS';
+    G.r1.textContent = 'CCHBC 70 is';
     G.r2.textContent = fmt(disp.v) + ' L';
     G.r3.textContent = 'you said ' + fmt(guess) + ' L';
   } else {
-    G.r1.textContent = 'YOUR GUESS';
+    G.r1.textContent = 'Your guess';
     G.r2.textContent = fmt(guess) + ' L';
     G.r3.textContent = '';
   }

@@ -31,6 +31,8 @@ const CH = [10, 40, 70, 100], RIGHT = 1;
 let pick = -1, revealed = false, tl = null;
 const st = {d: 3, asc: false, note: 0};
 const G = {};
+const K = 'var(--k)', C = 'var(--c)';
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = CH[pick] + ' m';
   Kit.answer({choice: said, correct: ok, sure: pct});
@@ -46,8 +48,8 @@ function yOf(d){ return G.yS + d / 100 * (G.yB - G.yS); }
 function paintPills(){
   (G.pills || []).forEach((p, i) => {
     const on = i === pick;
-    p.r.setAttribute('fill', on ? '#ffffff' : 'rgba(255,255,255,.14)');
-    p.t.setAttribute('fill', on ? '#0a2a52' : '#ffffff');
+    p.r.style.fill = on ? K : tint(10);
+    p.t.style.fill = on ? C : K;
     p.g.setAttribute('opacity', revealed ? 0 : 1);
   });
 }
@@ -56,37 +58,34 @@ function draw(){
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * .85, 12);
   Object.assign(G, {W, H, fs, yS: Math.max(H * .07, fs * 1.4), yB: H - fs * 1.4});
-  const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id: 'wat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#2f8fd8'}, lg);
-  Kit.mk('stop', {offset: .45, 'stop-color': '#0c3f80'}, lg);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#040f26'}, lg);
-  Kit.mk('rect', {x: 0, y: G.yS, width: W, height: H - G.yS, rx: Math.min(W, H) * .04, fill: 'url(#wat)'}, svg);
-  // surface wave
-  let dp = `M0 ${G.yS}`;
-  for (let x = 0; x <= W; x += 8) dp += ` L${x} ${G.yS + Math.sin(x / 14) * 2.5}`;
-  Kit.mk('path', {d: dp, stroke: '#bfe6ff', 'stroke-width': 2.5, fill: 'none'}, svg);
-  // red band 35-40
-  G.band = Kit.mk('rect', {x: 0, y: yOf(35), width: W, height: yOf(40) - yOf(35), fill: '#ff3b3b', opacity: revealed ? .35 : 0}, svg);
-  // depth ticks
+  // the sea: a flat tint below a gently wavy surface
+  let wv = `M0 ${G.yS}`;
+  for (let x = 0; x <= W + 8; x += 8) wv += ` L${x} ${G.yS + Math.sin(x / 14) * 2.5}`;
+  Kit.mk('path', {d: wv + ` L${W + 8} ${H} L0 ${H} Z`, style: `fill:${tint(12)}`}, svg);
+  Kit.mk('path', {d: wv, fill: 'none', 'stroke-width': 2.5, 'stroke-linejoin': 'round', style: `stroke:${K}`}, svg);
+  // hardest stretch 35-40 m
+  G.band = Kit.mk('rect', {x: 0, y: yOf(35), width: W, height: yOf(40) - yOf(35), opacity: revealed ? .35 : 0, style: `fill:${K}`}, svg);
+  // the dive line: a buoy, a rope with depth marks, a weight at the bottom
   const ax = Math.max(W * .2, fs * 3.4);
+  Kit.mk('line', {x1: ax, x2: ax, y1: G.yS, y2: G.yB, 'stroke-width': 2, style: `stroke:${tint(70)}`}, svg);
   for (let d = 0; d <= 100; d += 20) {
     const y = yOf(d);
-    Kit.mk('line', {x1: ax - 6, x2: ax + 6, y1: y, y2: y, stroke: 'rgba(255,255,255,.7)', 'stroke-width': 2}, svg);
-    const t = Kit.mk('text', {x: ax - 10, y: y + fs * .35, 'text-anchor': 'end', fill: d === 0 ? '#bfe6ff' : 'rgba(255,255,255,.85)', 'font-size': fs, 'font-family': 'var(--mono)'}, svg);
+    if (d > 0) Kit.mk('line', {x1: ax - 5, x2: ax + 5, y1: y, y2: y, 'stroke-width': 2.5, 'stroke-linecap': 'round', style: `stroke:${K}`}, svg);
+    const t = Kit.mk('text', {x: ax - 10 - (d === 0 ? fs * .2 : 0), y: y + fs * .35, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 600, style: `fill:${K}`}, svg);
     t.textContent = d + ' m';
   }
-  Kit.mk('line', {x1: ax, x2: ax, y1: G.yS, y2: G.yB, stroke: 'rgba(255,255,255,.35)', 'stroke-width': 1.5}, svg);
-  // red X at 40 m
+  Kit.mk('rect', {x: ax - fs * .45, y: G.yB, width: fs * .9, height: fs * .6, rx: fs * .12, style: `fill:${K}`}, svg);
+  Kit.mk('circle', {cx: ax, cy: G.yS - fs * .05, r: fs * .42, style: `fill:${K}`}, svg);
+  // mark at the hardest depth
   const xr = fs * .55, xx = ax + fs * 1.3, xy = yOf(37.5);
   G.X = Kit.mk('g', {opacity: revealed ? 1 : 0, transform: `translate(${xx},${xy})`}, svg);
-  Kit.mk('path', {d: `M${-xr} ${-xr} L${xr} ${xr} M${xr} ${-xr} L${-xr} ${xr}`, stroke: '#ff4545', 'stroke-width': Math.max(3, fs * .28), 'stroke-linecap': 'round'}, G.X);
+  Kit.mk('path', {d: `M${-xr} ${-xr} L${xr} ${xr} M${xr} ${-xr} L${-xr} ${xr}`, 'stroke-width': Math.max(3, fs * .28), 'stroke-linecap': 'round', style: `stroke:${K}`}, G.X);
   // choice pills
   G.pills = CH.map((d, i) => {
     const g = Kit.mk('g', {class: 'pill', 'data-i': i}, svg);
     const pw = fs * 4.2, ph = fs * 1.8, px = W - pw - fs * .6, py = yOf(d) - ph / 2;
     const cy = Math.min(Math.max(py, G.yS + 4), H - ph - 4);
-    const r = Kit.mk('rect', {x: px, y: cy, width: pw, height: ph, rx: ph / 2, 'stroke': '#fff', 'stroke-width': 1.5, 'data-i': i}, g);
+    const r = Kit.mk('rect', {x: px, y: cy, width: pw, height: ph, rx: ph / 2, 'stroke-width': 2, 'data-i': i, style: `stroke:${K}`}, g);
     const t = Kit.mk('text', {x: px + pw / 2, y: cy + ph / 2 + fs * .36, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)', 'data-i': i, 'pointer-events': 'none'}, g);
     t.textContent = d + ' m';
     return {g, r, t};
@@ -94,27 +93,25 @@ function draw(){
   // notes after reveal
   G.notes = Kit.mk('g', {opacity: st.note}, svg);
   const nx = W - fs * .6;
-  const n1 = Kit.mk('text', {x: nx, y: yOf(35) - fs * 1.7, 'text-anchor': 'end', fill: '#ffd0d0', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)'}, G.notes);
+  const n1 = Kit.mk('text', {x: nx, y: yOf(35) - fs * 1.7, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)', style: `fill:${K}`}, G.notes);
   n1.textContent = 'most tiring';
-  const n2 = Kit.mk('text', {x: nx, y: yOf(35) - fs * .45, 'text-anchor': 'end', fill: '#fff', 'font-size': fs, 'font-family': 'var(--body)'}, G.notes);
+  const n2 = Kit.mk('text', {x: nx, y: yOf(35) - fs * .45, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 500, 'font-family': 'var(--body)', style: `fill:${K}`}, G.notes);
   n2.textContent = '35–40 m';
-  const n3 = Kit.mk('text', {x: nx, y: yOf(40) + fs * 1.3, 'text-anchor': 'end', fill: 'rgba(255,255,255,.85)', 'font-size': fs, 'font-family': 'var(--body)'}, G.notes);
+  const n3 = Kit.mk('text', {x: nx, y: yOf(40) + fs * 1.3, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 500, 'font-family': 'var(--body)', style: `fill:${K}`}, G.notes);
   n3.textContent = 'water pulls';
-  const n4 = Kit.mk('text', {x: nx, y: yOf(40) + fs * 2.6, 'text-anchor': 'end', fill: 'rgba(255,255,255,.85)', 'font-size': fs, 'font-family': 'var(--body)'}, G.notes);
+  const n4 = Kit.mk('text', {x: nx, y: yOf(40) + fs * 2.6, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 500, 'font-family': 'var(--body)', style: `fill:${K}`}, G.notes);
   n4.textContent = 'you down ↓';
-  // diver
+  // diver: a flat silhouette with a monofin, arms stretched overhead
   const s = Math.max(Math.min(H * .085, W * .16), 26);
   G.s = s; G.dx = ax + (W - fs * 5 - ax) * .55;
   G.pull = Kit.mk('g', {opacity: 0}, svg);
-  Kit.mk('path', {d: `M0 ${s * .55} L0 ${s * 1.35} M${-s * .14} ${s * 1.18} L0 ${s * 1.38} L${s * .14} ${s * 1.18}`, stroke: '#ff5a5a', 'stroke-width': Math.max(3, s * .08), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.pull);
+  Kit.mk('path', {d: `M0 ${s * .85} L0 ${s * 1.35} M${-s * .14} ${s * 1.18} L0 ${s * 1.38} L${s * .14} ${s * 1.18}`, 'stroke-width': Math.max(3, s * .08), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: `stroke:${K}`}, G.pull);
   G.diver = Kit.mk('g', {}, svg);
-  const c = '#0b0f1a', e = '#e8f4ff';
-  Kit.mk('path', {d: `M${-s*.09} ${s*.42} L${-s*.22} ${s*.78} L${-s*.02} ${s*.62} Z M${s*.09} ${s*.42} L${s*.22} ${s*.78} L${s*.02} ${s*.62} Z`, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
-  Kit.mk('rect', {x: -s * .06, y: 0, width: s * .05, height: s * .46, rx: s * .02, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
-  Kit.mk('rect', {x: s * .01, y: 0, width: s * .05, height: s * .46, rx: s * .02, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
-  Kit.mk('ellipse', {cx: 0, cy: -s * .1, rx: s * .12, ry: s * .26, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
-  Kit.mk('path', {d: `M${-s*.1} ${-s*.25} L${-s*.08} ${-s*.62} M${s*.1} ${-s*.25} L${s*.08} ${-s*.62}`, stroke: c, 'stroke-width': s * .06, 'stroke-linecap': 'round'}, G.diver);
-  Kit.mk('circle', {cx: 0, cy: -s * .44, r: s * .1, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
+  Kit.mk('path', {d: `M${-s*.05} ${s*.42} L${-s*.22} ${s*.8} Q0 ${s*.7} ${s*.22} ${s*.8} L${s*.05} ${s*.42} Z`, style: `fill:${K}`}, G.diver);
+  Kit.mk('rect', {x: -s * .075, y: -s * .05, width: s * .15, height: s * .5, rx: s * .06, style: `fill:${K}`}, G.diver);
+  Kit.mk('ellipse', {cx: 0, cy: -s * .12, rx: s * .12, ry: s * .24, style: `fill:${K}`}, G.diver);
+  Kit.mk('path', {d: `M${-s*.09} ${-s*.26} L${-s*.06} ${-s*.66} M${s*.09} ${-s*.26} L${s*.06} ${-s*.66}`, 'stroke-width': s * .06, 'stroke-linecap': 'round', style: `stroke:${K}`}, G.diver);
+  Kit.mk('circle', {cx: 0, cy: -s * .44, r: s * .1, style: `fill:${K}`}, G.diver);
   paintPills(); place();
 }
 function place(){

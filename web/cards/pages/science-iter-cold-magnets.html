@@ -11,6 +11,13 @@
 #why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.85cqh,12.5px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
+#pic text{font-family:var(--body)}
+#pic .ink{fill:var(--k)}
+#pic .inkline{stroke:var(--k)}
+#pic .vessel{fill:color-mix(in srgb,var(--k) 12%,var(--c));stroke:var(--k)}
+#pic .track{stroke:color-mix(in srgb,var(--k) 28%,var(--c))}
+#pic .field{stroke:var(--k)}
+#pic .coil{stroke:var(--k)}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Guess a number · how sure">
   <div class="in">
@@ -46,40 +53,40 @@ function draw() {
   const ry = ch * 0.36, rx = Math.max(0, Math.min(ry * 0.9, W * 0.3));
   G = {W, H, fs, xa, xb, sy, cx, cy, rx, ry, compact, noRead};
   const pos = t => xa + (t - T1) / (T0 - T1) * (xb - xa); G.pos = pos;
-  const defs = Kit.mk('defs', {}, svg);
-  const rg = Kit.mk('radialGradient', {id: 'pg'}, defs);
-  [['0', '#ffffff'], ['.3', '#ffe08a'], ['.65', '#ff8a3d'], ['1', '#ff3d6e']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, rg));
-  const lg = Kit.mk('linearGradient', {id: 'tg'}, defs);
-  Kit.mk('stop', {offset: '0', 'stop-color': '#0b4a8f'}, lg); Kit.mk('stop', {offset: '1', 'stop-color': '#c4501a'}, lg);
-  if (!noRead) E.read = Kit.mk('text', {x: fs, y: fs * 1.6, fill: '#10100c', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700}, svg);
+  if (!noRead) E.read = Kit.mk('text', {x: fs, y: fs * 1.6, 'font-size': fs, 'font-weight': 700}, svg);
   E.coils = [];
   if (!compact) {
-    E.vessel = Kit.mk('ellipse', {cx, cy, rx, ry, fill: '#050818', 'stroke-width': fs * 0.25}, svg);
-    E.field = [.84, .68].map(k => Kit.mk('ellipse', {cx, cy, rx: rx * k * 0.82, ry: ry * k * 0.82, fill: 'none', stroke: '#8fe6ff', 'stroke-width': 2, 'stroke-dasharray': '6 5'}, svg));
-    E.plasma = Kit.mk('ellipse', {cx, cy, fill: 'url(#pg)'}, svg);
-    E.pl1 = Kit.mk('text', {x: cx, y: cy - fs * 0.15, 'text-anchor': 'middle', fill: '#2a0b00', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 800}, svg); E.pl1.textContent = '150 million';
-    E.pl2 = Kit.mk('text', {x: cx, y: cy + fs * 1.15, 'text-anchor': 'middle', fill: '#2a0b00', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 800}, svg); E.pl2.textContent = '°C';
+    // the vessel: a plain ring of steel seen from above
+    E.vessel = Kit.mk('ellipse', {cx, cy, rx, ry, class: 'vessel', 'stroke-width': Math.max(2.5, fs * 0.2)}, svg);
+    // field lines that keep the plasma off the wall (appear once revealed)
+    E.field = [.84, .68].map(k => Kit.mk('ellipse', {cx, cy, rx: rx * k * 0.82, ry: ry * k * 0.82, fill: 'none', class: 'field', 'stroke-width': 1.5, 'stroke-dasharray': '5 6', 'stroke-linecap': 'round'}, svg));
+    // the hot plasma: one flat warm shape
+    E.plasma = Kit.mk('ellipse', {cx, cy, fill: '#f08a4b'}, svg);
+    E.pl1 = Kit.mk('text', {x: cx, y: cy - fs * 0.15, 'text-anchor': 'middle', class: 'ink', 'font-size': fs, 'font-weight': 700}, svg); E.pl1.textContent = '150 million';
+    E.pl2 = Kit.mk('text', {x: cx, y: cy + fs * 1.15, 'text-anchor': 'middle', class: 'ink', 'font-size': fs, 'font-weight': 700}, svg); E.pl2.textContent = '°C';
+    // the magnet coils wrapped around the ring
     const cw = Math.max(rx, ry) * 0.2, chh = cw * 0.55;
     for (let i = 0; i < 10; i++) {
       const a = i / 10 * Math.PI * 2 + Math.PI / 10;
       const x = cx + rx * 1.24 * Math.cos(a), y = cy + ry * 1.2 * Math.sin(a);
       const ang = Math.atan2(ry * Math.cos(a), -rx * Math.sin(a)) * 180 / Math.PI;
-      E.coils.push(Kit.mk('rect', {x: x - cw / 2, y: y - chh / 2, width: cw, height: chh, rx: chh * 0.3, transform: `rotate(${ang} ${x} ${y})`}, svg));
+      E.coils.push(Kit.mk('rect', {x: x - cw / 2, y: y - chh / 2, width: cw, height: chh, rx: chh * 0.25, class: 'coil', 'stroke-width': 2, transform: `rotate(${ang} ${x} ${y})`}, svg));
     }
   }
-  Kit.mk('line', {x1: xa, y1: sy, x2: xb, y2: sy, stroke: 'url(#tg)', 'stroke-width': fs * 0.5, 'stroke-linecap': 'round'}, svg);
+  // the temperature scale: a plain ruled line
+  Kit.mk('line', {x1: xa, y1: sy, x2: xb, y2: sy, class: 'track', 'stroke-width': fs * 0.3, 'stroke-linecap': 'round'}, svg);
   [-273, -200, -100, 0].forEach(t => {
-    Kit.mk('line', {x1: pos(t), y1: sy + fs * 0.4, x2: pos(t), y2: sy + fs * 0.75, stroke: '#10100c', 'stroke-width': 1.5}, svg);
-    const tx = Kit.mk('text', {x: pos(t), y: sy + fs * 1.8, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--mono)', 'font-size': fs}, svg);
+    Kit.mk('line', {x1: pos(t), y1: sy + fs * 0.4, x2: pos(t), y2: sy + fs * 0.75, class: 'inkline', 'stroke-width': 1.5}, svg);
+    const tx = Kit.mk('text', {x: pos(t), y: sy + fs * 1.8, 'text-anchor': 'middle', class: 'ink', 'font-size': fs, 'font-weight': 500}, svg);
     tx.textContent = t === 0 ? '0 °C' : fmt(t);
   });
   E.real = Kit.mk('g', {}, svg);
   const rxp = pos(REAL);
   Kit.mk('path', {d: `M${rxp} ${sy - fs * 0.45}l${-fs * 0.45} ${-fs * 0.7}h${fs * 0.9}z`, fill: '#0b4a8f'}, E.real);
-  const rl = Kit.mk('text', {x: Math.max(fs * 0.6, rxp - fs * 0.6), y: sy - fs * 3.0, fill: '#0b4a8f', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 800}, E.real);
+  const rl = Kit.mk('text', {x: Math.max(fs * 0.6, rxp - fs * 0.6), y: sy - fs * 3.0, fill: '#0b4a8f', 'font-size': fs, 'font-weight': 700}, E.real);
   rl.textContent = 'real: −269 °C';
   E.hand = Kit.mk('circle', {cy: sy, r: fs * 0.8, fill: '#fff', 'stroke-width': 3}, svg);
-  E.glab = Kit.mk('text', {y: sy - fs * 1.4, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, svg);
+  E.glab = Kit.mk('text', {y: sy - fs * 1.4, 'text-anchor': 'middle', class: 'ink', 'font-size': fs, 'font-weight': 700}, svg);
   update();
 }
 
@@ -97,7 +104,6 @@ function update() {
     const wob = (1 - p) * S.w * 0.05;
     E.plasma.setAttribute('rx', Math.max(0, rx * (lerp(0.96, 0.6, p) + wob)));
     E.plasma.setAttribute('ry', Math.max(0, ry * (lerp(0.96, 0.6, p) - wob)));
-    E.vessel.setAttribute('stroke', gsap.utils.interpolate('#ff5a3d', '#4a5a8a', p));
     E.field.forEach(l => l.setAttribute('opacity', p));
   }
   E.real.setAttribute('opacity', p);

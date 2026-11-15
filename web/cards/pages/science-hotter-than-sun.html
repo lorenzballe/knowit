@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: science-hotter-than-sun -->
-<!-- Look: a vintage brass pyrometer printed straight onto a dark walnut card. Turned brass bezel, cream enamel face with grain, engraved log ticks, a blued-steel needle on a plutonium-grey hub.
+<!-- Look: a plain oven thermometer dial printed flat in cream on the card's dark brown, like a plate in an old science book. There is no rim, inner ring, bevel or halo: just one flat cream disc. One thin ink line carries the decade ticks. The part of that scale past the Sun is a solid sun-yellow band, and a small flat sun marks where it starts. A plain dark needle with a red tip comes out of a flat grey plutonium ball at the centre.
      Interaction: each tap makes it ten times hotter. The needle swings decade by decade, with a damped wobble, past the Sun's surface mark (≈5,500 °C) and on toward 100 million °C.
-     Wow: on the last tap the needle slams the stop pin, the hub sphere morphs (MorphSVG) into a fission starburst, sparks and shock rings leave the dial and the enamel glows. -->
+     Wow: on the last tap the needle hits the stop pin and the grey ball morphs (MorphSVG) into a flat two-colour burst outlined in ink, like a printed comic star. Sparks and plain shock lines leave the dial, and the face turns a flat warm colour. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Hotter than the Sun</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -16,12 +16,12 @@
 #why b{color:#ffcf7a}
 .say b{color:#ffcf7a}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Tap to heat · brass pyrometer" style="--c:#1e1912;--k:#f3e6c6;--edge:#0c0906">
+<article class="card" id="card" data-topic="science" data-kind="Tap to heat · pyrometer" style="--c:#1e1912;--k:#f3e6c6;--edge:#0c0906">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO HEAT</span></div>
     <h2 class="q">How hot does the Tsar Bomba's core get, next to the Sun?</h2>
     <div class="stagebox" id="stage">
-      <svg id="dial" role="img" aria-label="A brass pyrometer dial on a logarithmic scale from 1 to 100 million degrees Celsius, with the Sun's surface marked near 5,500 degrees."></svg>
+      <svg id="dial" role="img" aria-label="A pyrometer dial on a logarithmic scale from 1 to 100 million degrees Celsius, with the Sun's surface marked near 5,500 degrees."></svg>
     </div>
     <p class="say" id="say">Tap the dial. Each tap makes it <b>ten times</b> hotter.</p>
     <p class="gone" id="why">Huge pressure sets off fission in a small plutonium sphere, releasing an enormous amount of heat: up to <b>100 million °C</b>. The Sun's surface is about 5,500 °C, so that is roughly <b>18,000 times</b> hotter.</p>
@@ -42,18 +42,22 @@
   const val = {v: 0};
   let W = 0, H = 0, R = 0, cx = 0, cy = 0, fs = 13, E = {};
 
+  // Flat palette: card ink, card colour, their tints, and two meaning colours (sun and fire).
+  const INK = '#1e1912';                       // = var(--c), as a literal for tweens
+  const SUN = '#f2b33d', FIRE = '#d9481f', BURST = '#f6c445', WARM = '#f2c79a';
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+
   const rad = a => a * Math.PI / 180;
   const A = t => 135 + t / 8 * 270;           // decade -> dial angle (deg, clockwise from +x)
   const P = (r, t) => { const a = rad(A(t)); return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; };
-  const Q = (r, deg) => { const a = rad(deg); return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; };
   const fmt = v => Math.round(10 ** Math.min(Math.max(v, 0), 8)).toLocaleString('en-US');
   const lerpCol = (stops, p) => {
     p = Math.max(0, Math.min(1, p)) * (stops.length - 1);
     const i = Math.min(stops.length - 2, Math.floor(p)), f = p - i;
     return `rgb(${stops[i].map((c, j) => Math.round(c + (stops[i + 1][j] - c) * f)).join(',')})`;
   };
-  const HEAT = [[95, 138, 166], [201, 162, 74], [224, 102, 44], [255, 59, 31]];
-  const CORE = [[118, 124, 130], [170, 120, 90], [255, 154, 58]];
+  const HEAT = [[120, 130, 132], [196, 150, 70], [224, 110, 44], [217, 72, 31]];
+  const CORE = [[112, 116, 118], [160, 112, 84], [232, 120, 52]];
   const arc = (r, t0, t1) => {
     const [x0, y0] = P(r, t0), [x1, y1] = P(r, t1), large = (t1 - t0) / 8 * 270 > 180 ? 1 : 0;
     return `M${x0},${y0}A${r},${r} 0 ${large} 1 ${x1},${y1}`;
@@ -99,122 +103,83 @@
     cy = Math.max(0, (H - top - 2 * R) / 2) + top + R;
     const thin = R < 118;                       // small dial: label every other decade
 
-    svg.innerHTML = `<defs>
-      <linearGradient id="br" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#f7e2a0"/><stop offset=".22" stop-color="#b8892f"/><stop offset=".45" stop-color="#f3d78a"/>
-        <stop offset=".7" stop-color="#8a6420"/><stop offset="1" stop-color="#e3bf6a"/></linearGradient>
-      <linearGradient id="br2" x1="1" y1="1" x2="0" y2="0">
-        <stop offset="0" stop-color="#f1d27f"/><stop offset=".5" stop-color="#7b5719"/><stop offset="1" stop-color="#d9b25d"/></linearGradient>
-      <radialGradient id="en" cx=".42" cy=".36" r=".75">
-        <stop offset="0" stop-color="#fdf6e3"/><stop offset=".6" stop-color="#efe2c0"/><stop offset="1" stop-color="#cdb685"/></radialGradient>
-      <radialGradient id="gl" cx=".5" cy=".5" r=".5">
-        <stop offset="0" stop-color="#fff1b8" stop-opacity=".95"/><stop offset=".45" stop-color="#ff9a3a" stop-opacity=".55"/><stop offset="1" stop-color="#d23a12" stop-opacity="0"/></radialGradient>
-      <radialGradient id="sc" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fbe7a6"/><stop offset="1" stop-color="#6e4e17"/></radialGradient>
-      <linearGradient id="nd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a5868"/><stop offset=".5" stop-color="#1b232c"/><stop offset="1" stop-color="#0b0f13"/></linearGradient>
-      <linearGradient id="gs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <filter id="sh" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="${R * .05}" stdDeviation="${R * .06}" flood-color="#000" flood-opacity=".6"/></filter>
-      <filter id="nz" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/>
-        <feColorMatrix values="0 0 0 0 .32  0 0 0 0 .22  0 0 0 0 .08  0 0 0 .22 0"/></filter>
-      <filter id="bl" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="${R * .05}"/></filter>
-      <clipPath id="fc"><circle cx="${cx}" cy="${cy}" r="${R * .88}"/></clipPath>
-    </defs>`;
+    svg.innerHTML = '';
 
     const dial = E.dial = Kit.mk('g', {}, svg);
-    // Brass body: shadow, turned rings, knurled rim, screws.
-    Kit.mk('circle', {cx, cy, r: R, fill: 'url(#br)', filter: 'url(#sh)'}, dial);
-    Kit.mk('circle', {cx, cy, r: R - .75, fill: 'none', stroke: '#3d2a0b', 'stroke-width': 1.5}, dial);
-    for (let i = 0; i < 6; i++) Kit.mk('circle', {cx, cy, r: R * (.9 + i * .013), fill: 'none', stroke: i % 2 ? 'rgba(255,240,190,.35)' : 'rgba(70,45,10,.28)', 'stroke-width': .8}, dial);
-    const kn = Kit.mk('g', {stroke: 'rgba(55,35,8,.45)', 'stroke-width': 1}, dial);
-    for (let i = 0; i < 120; i++) { const a = i * 3, [x0, y0] = Q(R * .972, a), [x1, y1] = Q(R * .995, a); Kit.mk('line', {x1: x0, y1: y0, x2: x1, y2: y1}, kn); }
-    Kit.mk('circle', {cx, cy, r: R * .885, fill: 'none', stroke: 'url(#br2)', 'stroke-width': R * .03}, dial);
-    [45, 135, 225, 315].forEach((a, i) => {
-      const [x, y] = Q(R * .935, a), r = R * .026;
-      Kit.mk('circle', {cx: x, cy: y, r, fill: 'url(#sc)', stroke: '#4a3410', 'stroke-width': .8}, dial);
-      const s = rad(a * 1.7 + i * 40);
-      Kit.mk('line', {x1: x - r * .75 * Math.cos(s), y1: y - r * .75 * Math.sin(s), x2: x + r * .75 * Math.cos(s), y2: y + r * .75 * Math.sin(s), stroke: '#3b2908', 'stroke-width': 1.2}, dial);
-    });
+    // A plain printed dial: one flat cream disc, nothing around it.
+    Kit.mk('circle', {cx, cy, r: R, style: 'fill:var(--k)'}, dial);
+    // When it blows, the face turns a flat warm colour.
+    E.glow = Kit.mk('circle', {cx, cy, r: R, fill: WARM, opacity: 0}, dial);
 
-    // Enamel face with grain and the heat glow.
-    Kit.mk('circle', {cx, cy, r: R * .87, fill: 'url(#en)'}, dial);
-    Kit.mk('rect', {x: cx - R, y: cy - R, width: 2 * R, height: 2 * R, filter: 'url(#nz)', 'clip-path': 'url(#fc)'}, dial);
-    E.glow = Kit.mk('circle', {cx, cy, r: R * .87, fill: 'url(#gl)', opacity: 0}, dial);
+    // The scale: one thin ink line; the stretch hotter than the Sun is a solid yellow band on it.
+    E.zone = Kit.mk('path', {d: arc(R * .86, SUN_T, 8), fill: 'none', stroke: SUN, 'stroke-width': R * .06}, dial);
+    Kit.mk('path', {d: arc(R * .86, 0, 8), fill: 'none', 'stroke-width': Math.max(1.5, R * .01), style: 'stroke:var(--c)'}, dial);
+    // How hot it is now: a plain band that grows with the needle.
+    E.heat = Kit.mk('path', {d: arc(R * .77, 0, .001), fill: 'none', stroke: lerpCol(HEAT, 0), 'stroke-width': R * .04, 'stroke-linecap': 'butt'}, dial);
 
-    // Heat band (grows with the needle) and the engraved "hotter than the Sun" zone.
-    Kit.mk('path', {d: arc(R * .79, 0, 8), fill: 'none', stroke: 'rgba(60,40,15,.12)', 'stroke-width': R * .05}, dial);
-    E.heat = Kit.mk('path', {d: arc(R * .79, 0, .001), fill: 'none', stroke: lerpCol(HEAT, 0), 'stroke-width': R * .05}, dial);
-    E.zone = Kit.mk('path', {d: arc(R * .845, SUN_T, 8), fill: 'none', stroke: '#b3261a', 'stroke-width': 1.6, opacity: .85}, dial);
-
-    // Engraved log ticks.
-    const tk = E.ticks = Kit.mk('g', {stroke: '#2a2117', 'stroke-linecap': 'round'}, dial);
-    for (let d = 0; d <= 8; d++) for (let m = 1; m <= (d === 8 ? 1 : 9); m++) {
-      const t = d + Math.log10(m), len = m === 1 ? .1 : m === 5 ? .065 : .045;
-      const [x0, y0] = P(R * .84, t), [x1, y1] = P(R * (.84 - len), t);
-      Kit.mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, 'stroke-width': m === 1 ? 2 : 1, class: 'tk'}, tk);
+    // One tick per decade: each mark is ten times the last.
+    const tk = E.ticks = Kit.mk('g', {'stroke-linecap': 'butt', style: 'stroke:var(--c)'}, dial);
+    for (let d = 0; d <= 8; d++) {
+      const [x0, y0] = P(R * .9, d), [x1, y1] = P(R * .82, d);
+      Kit.mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, 'stroke-width': Math.max(2, R * .016), class: 'tk'}, tk);
     }
     // Decade numbers: only as many as fit without touching.
-    const lab = E.labels = Kit.mk('g', {fill: '#2a2117', 'font-family': 'var(--mono), monospace', 'font-size': fs, 'font-weight': 700, 'text-anchor': 'middle'}, dial);
+    const lab = E.labels = Kit.mk('g', {'font-family': 'var(--body), sans-serif', 'font-size': fs, 'font-weight': 600, 'text-anchor': 'middle'}, dial);
     let show = labelSet();
     if (thin) show = show.filter(d => d % 2 === 0).length ? show.filter(d => d % 2 === 0) : show;
     show.forEach(d => {
       const [x, y] = P(R * .6, d);
-      txt(lab, x, y + fs * .36, LABELS[d], {class: 'lb', fill: d === 8 ? '#9e1f12' : '#2a2117'});
+      const t = txt(lab, x, y + fs * .36, LABELS[d], {class: 'lb'});
+      t.setAttribute('style', d === 8 ? `fill:${FIRE}` : 'fill:var(--c)');
     });
 
-    // The Sun's mark on the scale.
-    const [sx, sy] = P(R * .865, SUN_T), sa = rad(A(SUN_T)), tw = Math.max(3, R * .028);
-    E.sunTri = Kit.mk('path', {d: `M${sx - Math.cos(sa) * tw},${sy - Math.sin(sa) * tw}L${sx + Math.cos(sa) * tw - Math.sin(sa) * tw},${sy + Math.sin(sa) * tw + Math.cos(sa) * tw}L${sx + Math.cos(sa) * tw + Math.sin(sa) * tw},${sy + Math.sin(sa) * tw - Math.cos(sa) * tw}Z`, fill: '#b3261a'}, dial);
+    // The Sun's mark on the scale: a small flat sun where the yellow stretch begins.
+    const [sx, sy] = P(R * .86, SUN_T), sr = Math.max(3.5, R * .045);
+    E.sunTri = Kit.mk('g', {}, dial);
+    Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: SUN, 'stroke-width': 1.5, style: 'stroke:var(--c)'}, E.sunTri);
 
-    // Engraving, below the hub, only where there is room for it.
-    if (R > 118) {
-      const eg = Kit.mk('g', {fill: '#5a4630', 'font-family': 'var(--mono), monospace', 'text-anchor': 'middle', 'font-size': Math.max(12, fs * .85)}, dial);
-      txt(eg, cx, cy + R * .26, 'PYROMETER', {'letter-spacing': '.18em', 'font-weight': 700});
-      if (R > 150) txt(eg, cx, cy + R * .26 + fs * 1.3, '°C · ×10 per mark', {});
+    // A small note under the hub, only where there is room for it.
+    if (R > 150) {
+      txt(dial, cx, cy + R * .26 + fs * .4, '°C · ×10 per mark', {'font-family': 'var(--body), sans-serif', 'font-size': fs, 'font-weight': 500, 'text-anchor': 'middle', style: `fill:${tint(35)}`});
     }
 
     // Stop pin past 100M (under the readout, never on top of it).
     const [px, py] = P(R * .8, 8.38);
-    Kit.mk('circle', {cx: px, cy: py, r: Math.max(2.5, R * .022), fill: 'url(#sc)', stroke: '#3d2a0b', 'stroke-width': .8}, dial);
+    Kit.mk('circle', {cx: px, cy: py, r: Math.max(2.5, R * .024), style: 'fill:var(--c)'}, dial);
 
-    // Readout window: always below the "1" and "100M" numbers.
-    const rs = Math.max(12, Math.min(fs * 1.3, R * .085)), ww = 11 * .6 * rs + rs * 1.2, wh = rs * 1.75;
+    // The temperature, printed large on the face: no box around it.
+    const rs = Math.max(14, Math.min(fs * 1.9, R * .13)), wh = rs * 1.2;
     const wy = cy + Math.max(R * .68, R * .424 + fs * .5 + wh / 2 + 6);
-    Kit.mk('rect', {x: cx - ww / 2 - 2, y: wy - wh / 2 - 2, width: ww + 4, height: wh + 4, rx: rs * .35, fill: 'url(#br2)'}, dial);
-    Kit.mk('rect', {x: cx - ww / 2, y: wy - wh / 2, width: ww, height: wh, rx: rs * .28, fill: '#17110b'}, dial);
-    E.read = txt(dial, cx, wy + rs * .36, '1', {fill: '#ffcf7a', 'font-family': 'var(--mono), monospace', 'font-size': rs, 'font-weight': 700, 'text-anchor': 'middle'});
+    E.read = txt(dial, cx, wy + rs * .36, '1', {fill: INK, 'font-family': 'var(--display), serif', 'font-size': rs, 'font-weight': 700, 'text-anchor': 'middle'});
 
-    // Needle: shadow, blued steel, red tip.
-    const w = Math.max(1.6, R * .022), L = R * .76, tail = R * .2;
-    const nd = `M${-tail},${-w * 1.7}L0,${-w}L${L - R * .02},${-w * .35}L${L},0L${L - R * .02},${w * .35}L0,${w}L${-tail},${w * 1.7}Z`;
-    E.nshadow = Kit.mk('path', {d: nd, fill: 'rgba(40,25,5,.28)'}, dial);
+    // Needle: one flat dark shape with a red tip.
+    const w = Math.max(1.6, R * .02), L = R * .76, tail = R * .16;
+    const nd = `M${-tail},${-w * 1.3}L${L - R * .03},${-w * .5}L${L},0L${L - R * .03},${w * .5}L${-tail},${w * 1.3}Z`;
     E.needle = Kit.mk('g', {}, dial);
-    Kit.mk('path', {d: nd, fill: 'url(#nd)'}, E.needle);
-    Kit.mk('path', {d: `M${L * .72},${-w * .55}L${L - R * .02},${-w * .35}L${L},0L${L - R * .02},${w * .35}L${L * .72},${w * .55}Z`, fill: '#c62d1c'}, E.needle);
+    Kit.mk('path', {d: nd, style: 'fill:var(--c)'}, E.needle);
+    Kit.mk('path', {d: `M${L * .74},${-w * .66}L${L - R * .03},${-w * .5}L${L},0L${L - R * .03},${w * .5}L${L * .74},${w * .66}Z`, fill: FIRE}, E.needle);
 
-    // The core: a plutonium sphere that becomes the burst.
-    const cr = R * .11;
-    E.coreGlow = Kit.mk('path', {d: done ? starD(cr) : circleD(cr), fill: '#ff8a2a', filter: 'url(#bl)', opacity: done ? .9 : 0}, dial);
-    E.core = Kit.mk('path', {d: done ? starD(cr) : circleD(cr), fill: done ? '#ffe08a' : lerpCol(CORE, 0), stroke: done ? '#ff7a2a' : '#3b3f44', 'stroke-width': 1.2}, dial);
-    E.spec = Kit.mk('ellipse', {cx: cx - cr * .35, cy: cy - cr * .38, rx: cr * .38, ry: cr * .24, fill: '#fff', opacity: done ? 0 : .45}, dial);
+    // The core: a flat plutonium ball that becomes a printed burst (orange star behind, yellow star in front, both inked).
+    const cr = R * .1;
+    E.coreGlow = Kit.mk('path', {d: done ? starD(cr) : circleD(cr), fill: FIRE, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round', opacity: done ? 1 : 0,
+      transform: `translate(${cx},${cy}) rotate(13) scale(1.3) translate(${-cx},${-cy})`}, dial);
+    E.core = Kit.mk('path', {d: done ? starD(cr) : circleD(cr), fill: done ? BURST : lerpCol(CORE, 0), stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, dial);
 
-    // Glass glint.
-    const [g0x, g0y] = Q(R * .84, 195), [g1x, g1y] = Q(R * .84, 290);
-    Kit.mk('path', {d: `M${g0x},${g0y}A${R * .84},${R * .84} 0 0 1 ${g1x},${g1y}Q${cx - R * .3},${cy - R * .5} ${g0x},${g0y}Z`, fill: 'url(#gs)', opacity: .35, 'pointer-events': 'none'}, dial);
-
-    // Outside the instrument, printed on the card: the Sun's label and its leader.
+    // Outside the dial, printed on the card: the Sun's label and its leader.
     const out = E.sun = Kit.mk('g', {}, svg);
     const ty = cy - R - fs * 1.2;
-    const lt = txt(out, cx, ty + fs * .36, "Sun's surface ≈ 5,500 °C", {fill: '#f3e6c6', 'font-family': 'var(--mono), monospace', 'font-size': fs, 'font-weight': 700, 'text-anchor': 'middle'});
+    const lt = txt(out, cx, ty + fs * .36, "Sun's surface ≈ 5,500 °C", {'font-family': 'var(--body), sans-serif', 'font-size': fs, 'font-weight': 600, 'text-anchor': 'middle', style: 'fill:var(--k)'});
     let lw = 150; try { lw = lt.getComputedTextLength() || lw; } catch (e) {}
     const gr = fs * .45, gx = Math.max(gr * 2 + 2, cx - lw / 2 - gr * 2.6);
     lt.setAttribute('x', Math.min(W - lw / 2 - 2, gx + gr * 2.2 + lw / 2));
     const [bx, by] = P(R * 1.0, SUN_T);
-    Kit.mk('path', {d: `M${gx},${ty + gr * 1.6}L${bx},${by - 2}`, stroke: 'rgba(243,230,198,.55)', 'stroke-width': 1, 'stroke-dasharray': '2 3', fill: 'none'}, out);
+    Kit.mk('path', {d: `M${gx},${ty + gr * 1.9}L${bx},${by - 2}`, 'stroke-width': 1.2, fill: 'none', 'stroke-linecap': 'round', style: `stroke:${tint(55)}`}, out);
     E.sunGlyph = Kit.mk('g', {}, out);
-    for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; Kit.mk('line', {x1: gx + Math.cos(a) * gr * 1.3, y1: ty + Math.sin(a) * gr * 1.3, x2: gx + Math.cos(a) * gr * 1.85, y2: ty + Math.sin(a) * gr * 1.85, stroke: '#f2b33d', 'stroke-width': 1.5, 'stroke-linecap': 'round'}, E.sunGlyph); }
-    Kit.mk('circle', {cx: gx, cy: ty, r: gr, fill: '#f2b33d'}, E.sunGlyph);
+    for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; Kit.mk('line', {x1: gx + Math.cos(a) * gr * 1.3, y1: ty + Math.sin(a) * gr * 1.3, x2: gx + Math.cos(a) * gr * 1.85, y2: ty + Math.sin(a) * gr * 1.85, stroke: SUN, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, E.sunGlyph); }
+    Kit.mk('circle', {cx: gx, cy: ty, r: gr, fill: SUN}, E.sunGlyph);
     E.sunG = [gx, ty];
     E.fx = Kit.mk('g', {'pointer-events': 'none'}, svg);
-    if (done) { E.glow.setAttribute('opacity', .55); E.sun.setAttribute('opacity', .55); }
+    if (done) { E.glow.setAttribute('opacity', 1); E.sun.setAttribute('opacity', .55); }
 
     upd(val.v);
   }
@@ -223,15 +188,10 @@
     if (!E.needle) return;
     const a = A(Math.min(v, 8.36));
     E.needle.setAttribute('transform', `translate(${cx},${cy}) rotate(${a})`);
-    E.nshadow.setAttribute('transform', `translate(${cx + R * .02},${cy + R * .035}) rotate(${a})`);
-    E.heat.setAttribute('d', arc(R * .79, 0, Math.max(.001, Math.min(v, 8))));
+    E.heat.setAttribute('d', arc(R * .77, 0, Math.max(.001, Math.min(v, 8))));
     E.heat.setAttribute('stroke', lerpCol(HEAT, v / 8));
     E.read.textContent = fmt(v);
-    if (!done) {
-      E.core.setAttribute('fill', lerpCol(CORE, v / 8));
-      E.coreGlow.setAttribute('opacity', Math.max(0, (v - 5) / 3) * .6);
-      E.glow.setAttribute('opacity', Math.max(0, (v - 5.5) / 2.5) * .25);
-    }
+    if (!done) E.core.setAttribute('fill', lerpCol(CORE, v / 8));
   }
 
   function message() {
@@ -250,21 +210,21 @@
     for (let i = 0; i < 22; i++) {
       const a = Math.random() * Math.PI * 2, d0 = cr * 1.2, d1 = R * (.45 + Math.random() * .4), l = R * (.03 + Math.random() * .04);
       const c = Math.cos(a), s = Math.sin(a);
-      const sp = Kit.mk('line', {x1: cx + c * d0, y1: cy + s * d0, x2: cx + c * (d0 + l), y2: cy + s * (d0 + l), stroke: i % 3 ? '#ffb347' : '#fff3c4', 'stroke-width': 1.6, 'stroke-linecap': 'round'}, E.fx);
+      const sp = Kit.mk('line', {x1: cx + c * d0, y1: cy + s * d0, x2: cx + c * (d0 + l), y2: cy + s * (d0 + l), stroke: i % 3 ? FIRE : INK, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, E.fx);
       gsap.to(sp, {attr: {x1: cx + c * d1, y1: cy + s * d1, x2: cx + c * (d1 + l * .4), y2: cy + s * (d1 + l * .4)}, opacity: 0, duration: .7 + Math.random() * .5, ease: 'expo.out', onComplete: () => sp.remove()});
     }
   }
 
   function finale() {
     done = true;
-    const cr = R * .11, star = starD(cr);
+    const cr = R * .1, star = starD(cr);
     const end = () => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); };
     if (Kit.calm) {
       val.v = 8; upd(8);
       E.core.setAttribute('d', star); E.coreGlow.setAttribute('d', star);
-      E.core.setAttribute('fill', '#ffe08a'); E.core.setAttribute('stroke', '#ff7a2a');
-      E.coreGlow.setAttribute('opacity', .9); E.spec.setAttribute('opacity', 0);
-      E.glow.setAttribute('opacity', .55); E.sun.setAttribute('opacity', .55);
+      E.core.setAttribute('fill', BURST);
+      E.coreGlow.setAttribute('opacity', 1);
+      E.glow.setAttribute('opacity', 1); E.sun.setAttribute('opacity', .55);
       end(); return;
     }
     const slam = () => {
@@ -274,20 +234,19 @@
         gsap.to(core, {morphSVG: star, duration: .8, ease: 'back.out(2.2)'});
         gsap.to(cg, {morphSVG: star, duration: .8, ease: 'back.out(2.2)'});
       } else { core.setAttribute('d', star); cg.setAttribute('d', star); }
-      gsap.to(core, {attr: {fill: '#ffe08a', stroke: '#ff7a2a'}, duration: .4, ease: 'power2.out'});
-      gsap.to(cg, {attr: {opacity: .95}, duration: .3, ease: 'power2.out'});
-      gsap.to(E.spec, {attr: {opacity: 0}, duration: .2});
-      gsap.fromTo(E.glow, {attr: {opacity: 1}}, {attr: {opacity: .55}, duration: 1.6, ease: 'expo.out'});
+      gsap.to(core, {attr: {fill: BURST}, duration: .3, ease: 'power2.out'});
+      cg.setAttribute('opacity', 1);
+      gsap.to(E.glow, {attr: {opacity: 1}, duration: .5, ease: 'power2.out'});
       gsap.to(E.sun, {attr: {opacity: .55}, duration: 1, ease: 'power2.out'});
       gsap.fromTo(E.dial, {x: -R * .025}, {x: 0, duration: .7, ease: 'elastic.out(1.2,.2)'});
-      gsap.fromTo(E.read, {attr: {fill: '#ffffff'}}, {attr: {fill: '#ffcf7a'}, duration: 1.2, ease: 'power2.out'});
+      gsap.fromTo(E.read, {attr: {fill: FIRE}}, {attr: {fill: INK}, duration: 1.2, ease: 'power2.out'});
       sparks(cr);
+      // Shock lines: plain inked rings that run out past the dial.
       for (let i = 0; i < 3; i++) {
-        const ring = Kit.mk('circle', {cx, cy, r: cr, fill: 'none', stroke: i ? '#ff9a3a' : '#ffe08a', 'stroke-width': R * .03}, E.fx);
-        gsap.to(ring, {attr: {r: R * (1.15 + i * .12), 'stroke-width': .5}, opacity: 0, duration: 1.3, delay: i * .13, ease: 'expo.out', onComplete: () => ring.remove()});
+        const ring = Kit.mk('circle', {cx, cy, r: cr, fill: 'none', stroke: i === 1 ? INK : FIRE, 'stroke-width': Math.max(2, R * .015)}, E.fx);
+        gsap.to(ring, {attr: {r: R * (1.15 + i * .12)}, opacity: 0, duration: 1.3, delay: i * .13, ease: 'expo.out', onComplete: () => ring.remove()});
       }
-      gsap.to(core, {scale: 1.08, svgOrigin: `${cx} ${cy}`, duration: .9, delay: .9, repeat: -1, yoyo: true, ease: 'sine.inOut'});
-      gsap.to(cg, {attr: {opacity: .6}, duration: .45, delay: 1, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+      gsap.to([core, cg], {scale: 1.06, svgOrigin: `${cx} ${cy}`, duration: .9, delay: .9, repeat: -1, yoyo: true, ease: 'sine.inOut'});
       gsap.delayedCall(.5, end);
     };
     gsap.timeline({onUpdate: () => upd(val.v)})

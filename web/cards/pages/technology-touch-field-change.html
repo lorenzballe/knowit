@@ -9,7 +9,7 @@
 #wrap{flex:1;min-height:0;position:relative}
 #cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:pointer;display:block}
 #tools{display:flex;gap:2.4cqw;justify-content:center}
-.tool{font:700 max(1.9cqh,13px)/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 4cqw;cursor:pointer}
+.tool{font:700 max(1.9cqh,13px)/1.1 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh var(--k);border-radius:1.6cqh;padding:1.1cqh 4cqw;cursor:pointer}
 .tool.on{background:var(--k);color:var(--c);box-shadow:none}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
@@ -35,9 +35,26 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const cv = Kit.$('cv');
-let G = null, scr = null, tool = 'finger', touch = null, done = false, triedPen = false;
+let G = null, scr = null, tool = 'finger', touch = null, done = false, triedPen = false, P = null;
 const S = {amp: 0, det: 0, tip: 0, t: 0};
-const mono = () => getComputedStyle(document.body).getPropertyValue('--mono') || 'monospace';
+const body = () => getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
+
+function resolve(v) {
+  const host = Kit.$('card'), d = document.createElement('i');
+  d.style.color = v; d.style.display = 'none'; host.appendChild(d);
+  const c = getComputedStyle(d).color; d.remove(); return c;
+}
+function palette() {
+  P = {
+    k: resolve('var(--k)'),
+    screen: resolve('color-mix(in srgb, var(--k) 12%, var(--c))'),
+    line: resolve('color-mix(in srgb, var(--k) 40%, var(--c))'),
+    band: resolve('color-mix(in srgb, var(--k) 22%, var(--c))'),
+    slot: resolve('color-mix(in srgb, var(--k) 70%, var(--c))'),
+    tipc: resolve('color-mix(in srgb, var(--k) 55%, var(--c))'),
+    warm: '#e2572b', skin: '#efc19c', nail: '#f8dcc8', pen: '#f2c230'
+  };
+}
 
 function fit() {
   const {x, W, H} = Kit.fitCanvas(cv);
@@ -46,6 +63,7 @@ function fit() {
   const px = (W - pw) / 2, py = (H - ph) / 2, b = pw * 0.045;
   G = {x, W, H, px, py, pw, ph, r: pw * 0.12};
   scr = {x: px + b, y: py + b * 1.6, w: pw - 2 * b, h: ph - b * 3.2, r: pw * 0.08};
+  palette();
 }
 function rr(x, X, Y, w, h, r) { x.beginPath(); x.roundRect(X, Y, w, h, r); }
 
@@ -56,66 +74,85 @@ function disp(p, q) {
   return [p + (tx - p) * g * 0.45, q + (ty - q) * g * 0.45, g];
 }
 
+function drawFinger(x, tx, ty, lw) {
+  const fw = scr.w * 0.17, L = scr.h * 0.6, slide = (1 - S.tip) * fw * 1.5;
+  x.save(); x.translate(tx, ty); x.rotate(-0.4); x.translate(0, slide); x.globalAlpha = S.tip;
+  x.lineJoin = 'round'; x.lineCap = 'round';
+  rr(x, -fw / 2, -fw * 0.06, fw, L, [fw / 2, fw / 2, 0, 0]);
+  x.fillStyle = P.skin; x.fill(); x.strokeStyle = P.k; x.lineWidth = lw * 1.8; x.stroke();
+  rr(x, -fw * 0.28, fw * 0.1, fw * 0.56, fw * 0.6, [fw * 0.26, fw * 0.26, fw * 0.12, fw * 0.12]);
+  x.fillStyle = P.nail; x.fill(); x.lineWidth = lw * 1.2; x.stroke();
+  x.beginPath();
+  for (const k of [-0.18, 0, 0.18]) { x.moveTo(fw * k, fw * 1.25); x.lineTo(fw * k, fw * 1.55); }
+  x.lineWidth = lw; x.stroke();
+  x.restore();
+}
+function drawPen(x, tx, ty, lw) {
+  const fw = scr.w * 0.09, L = scr.h * 0.62, slide = (1 - S.tip) * fw * 3;
+  x.save(); x.translate(tx, ty); x.rotate(-0.4); x.translate(0, slide); x.globalAlpha = S.tip;
+  x.lineJoin = 'round'; x.lineCap = 'round'; x.strokeStyle = P.k; x.lineWidth = lw * 1.6;
+  // plastic tip
+  x.beginPath(); x.moveTo(-fw * 0.16, 0); x.lineTo(fw * 0.16, 0); x.lineTo(fw / 2, fw * 1.3); x.lineTo(-fw / 2, fw * 1.3); x.closePath();
+  x.fillStyle = P.tipc; x.fill(); x.stroke();
+  // body
+  rr(x, -fw / 2, fw * 1.3, fw, L, 0); x.fillStyle = P.pen; x.fill(); x.stroke();
+  x.beginPath(); x.moveTo(-fw / 2, fw * 2.4); x.lineTo(fw / 2, fw * 2.4); x.lineWidth = lw; x.stroke();
+  x.restore();
+}
+
 function draw() {
-  if (!G) return;
+  if (!G || !P) return;
   const {x, W, H} = G;
   S.t += 1 / 60;
   x.clearRect(0, 0, W, H);
-  // phone body
-  rr(x, G.px, G.py, G.pw, G.ph, G.r); x.fillStyle = '#15171d'; x.fill();
-  x.lineWidth = Math.max(2, G.pw * 0.01); x.strokeStyle = '#3a3f4b'; x.stroke();
-  rr(x, scr.x, scr.y, scr.w, scr.h, scr.r); x.fillStyle = '#081024'; x.fill();
+  const lw = Math.max(1.2, scr.w * 0.007);
+  // phone body: flat ink, a plain screen, a speaker slot
+  rr(x, G.px, G.py, G.pw, G.ph, G.r); x.fillStyle = P.k; x.fill();
+  rr(x, G.px + G.pw * 0.4, G.py + (scr.y - G.py) * 0.38, G.pw * 0.2, (scr.y - G.py) * 0.24, 99);
+  x.fillStyle = P.slot; x.fill();
+  rr(x, scr.x, scr.y, scr.w, scr.h, scr.r); x.fillStyle = P.screen; x.fill();
   x.save(); rr(x, scr.x, scr.y, scr.w, scr.h, scr.r); x.clip();
-  // constant scan band: the phone checks the field all the time
+  // the phone checks the field all the time: one slow sweeping band
   const sy = scr.y + ((S.t * 0.35) % 1) * scr.h;
-  const gr = x.createLinearGradient(0, sy - scr.h * 0.08, 0, sy);
-  gr.addColorStop(0, 'rgba(90,170,255,0)'); gr.addColorStop(1, 'rgba(90,170,255,.16)');
-  x.fillStyle = gr; x.fillRect(scr.x, sy - scr.h * 0.08, scr.w, scr.h * 0.08);
-  // field grid
-  const rows = 12, cols = 7, seg = 36, lw = Math.max(1.2, scr.w * 0.007);
+  x.fillStyle = P.band; x.fillRect(scr.x, sy - lw * 2, scr.w, lw * 4);
+  // the field across the screen
+  const rows = 12, cols = 7, seg = 36;
+  x.lineCap = 'round';
   const line = (a) => {
     for (let i = 0; i < seg; i++) {
       const A = disp(...a(i / seg)), B = disp(...a((i + 1) / seg)), g = Math.min(1, (A[2] + B[2]) * 0.9);
       x.beginPath(); x.moveTo(A[0], A[1]); x.lineTo(B[0], B[1]);
-      x.strokeStyle = g > 0.02 ? `rgba(255,${Math.round(200 - 40 * g)},${Math.round(90 - 60 * g)},${0.35 + 0.65 * g})` : 'rgba(110,190,255,.38)';
+      x.strokeStyle = g > 0.05 ? P.warm : P.line;
       x.lineWidth = lw * (1 + 1.6 * g); x.stroke();
     }
   };
-  x.setLineDash([lw * 5, lw * 3]); x.lineDashOffset = -S.t * 30;
   for (let r = 1; r < rows; r++) { const q = scr.y + scr.h * r / rows; line(t => [scr.x + t * scr.w, q]); }
   for (let c = 1; c < cols; c++) { const p = scr.x + scr.w * c / cols; line(t => [p, scr.y + t * scr.h]); }
-  x.setLineDash([]);
-  // detection crosshair + finger / stylus
-  if (touch) {
+  // where the phone reads the touch
+  if (touch && S.det > 0) {
     const tx = scr.x + touch.u * scr.w, ty = scr.y + touch.v * scr.h;
-    if (S.det > 0) {
-      x.strokeStyle = `rgba(255,214,77,${0.85 * S.det})`; x.lineWidth = lw * 1.4;
-      x.beginPath(); x.moveTo(scr.x, ty); x.lineTo(scr.x + scr.w, ty); x.moveTo(tx, scr.y); x.lineTo(tx, scr.y + scr.h); x.stroke();
-      const rg = scr.w * (0.07 + 0.05 * Math.sin(S.t * 5) * 0.3);
-      x.beginPath(); x.arc(tx, ty, rg * (1 + (1 - S.det)), 0, 7); x.lineWidth = lw * 2; x.stroke();
-    }
-    if (S.tip > 0) {
-      x.globalAlpha = S.tip * 0.85;
-      if (touch.tool === 'finger') {
-        x.beginPath(); x.ellipse(tx, ty, scr.w * 0.075, scr.w * 0.09, 0, 0, 7);
-        x.fillStyle = 'rgba(255,190,160,.55)'; x.fill(); x.strokeStyle = '#ffd6c2'; x.lineWidth = lw; x.stroke();
-      } else {
-        x.beginPath(); x.arc(tx, ty, scr.w * 0.03, 0, 7); x.fillStyle = 'rgba(200,205,215,.8)'; x.fill();
-      }
-      x.globalAlpha = 1;
-    }
+    x.globalAlpha = S.det; x.strokeStyle = P.k; x.lineWidth = lw * 1.4;
+    x.beginPath(); x.moveTo(scr.x, ty); x.lineTo(scr.x + scr.w, ty); x.moveTo(tx, scr.y); x.lineTo(tx, scr.y + scr.h); x.stroke();
+    x.beginPath(); x.arc(tx, ty, scr.w * 0.08 * (1 + (1 - S.det)), 0, 7); x.lineWidth = lw * 2; x.stroke();
+    x.globalAlpha = 1;
   }
   x.restore();
-  // readout
-  const fs = Math.max(12, scr.h * 0.034), bh = fs * 2;
-  x.fillStyle = 'rgba(8,16,36,.88)'; x.fillRect(scr.x, scr.y + scr.h - bh - scr.r * 0.4, scr.w, bh);
-  x.font = `700 ${fs}px ${mono()}`; x.textAlign = 'center'; x.textBaseline = 'middle';
-  let txt = 'FIELD STEADY · CHECKING…', col = '#8cc8ff';
-  if (touch && touch.tool === 'finger' && S.det > 0.5) { txt = `CHANGE → TOUCH x${Math.round(touch.u * 390)} y${Math.round(touch.v * 844)}`; col = '#ffd64d'; }
-  else if (touch && touch.tool === 'pen' && S.tip > 0.5) { txt = 'NO CHANGE → NO TOUCH'; col = '#c9ced8'; }
-  x.fillStyle = col;
-  const maxw = scr.w * 0.94; let f2 = fs; while (x.measureText(txt).width > maxw && f2 > 12) { f2 -= 1; x.font = `700 ${f2}px ${mono()}`; }
-  x.fillText(txt, scr.x + scr.w / 2, scr.y + scr.h - bh / 2 - scr.r * 0.4);
+  // what the phone concludes, written plainly at the top of the screen
+  const fs = Math.max(12, scr.h * 0.036);
+  x.font = `600 ${fs}px ${body()}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+  let txt = 'Field steady · checking…', col = P.k;
+  if (touch && touch.tool === 'finger' && S.det > 0.5) { txt = `Change → touch at x ${Math.round(touch.u * 390)}, y ${Math.round(touch.v * 844)}`; col = P.k; }
+  else if (touch && touch.tool === 'pen' && S.tip > 0.5) { txt = 'No change → no touch'; col = P.k; }
+  const maxw = scr.w * 0.92; let f2 = fs; while (x.measureText(txt).width > maxw && f2 > 12) { f2 -= 1; x.font = `600 ${f2}px ${body()}`; }
+  const ly = scr.y + scr.h * 0.05;
+  const tw = x.measureText(txt).width;
+  x.fillStyle = P.screen; x.fillRect(scr.x + (scr.w - tw) / 2 - f2 * 0.5, ly - f2 * 0.75, tw + f2, f2 * 1.5);
+  x.fillStyle = col; x.fillText(txt, scr.x + scr.w / 2, ly);
+  // the finger or the stylus itself
+  if (touch && S.tip > 0) {
+    const tx = scr.x + touch.u * scr.w, ty = scr.y + touch.v * scr.h;
+    if (touch.tool === 'finger') drawFinger(x, tx, ty, lw); else drawPen(x, tx, ty, lw);
+  }
 }
 
 function tap(cx, cy) {

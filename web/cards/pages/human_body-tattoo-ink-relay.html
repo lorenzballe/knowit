@@ -11,7 +11,7 @@
 #opts{display:flex;flex-direction:column;gap:.9cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
 .opt{display:flex;align-items:center;gap:3cqw;font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 3.5cqw;cursor:pointer;overflow-wrap:anywhere}
-.opt .n{flex:none;display:grid;place-items:center;width:max(3.4cqh,22px);height:max(3.4cqh,22px);border-radius:50%;font:800 max(1.8cqh,12px)/1 var(--mono);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 40%,transparent)}
+.opt .n{flex:none;display:grid;place-items:center;width:max(3.4cqh,22px);height:max(3.4cqh,22px);border-radius:50%;font:800 max(1.8cqh,12px)/1 var(--body);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 40%,transparent)}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .opt.on .n{background:var(--c);color:var(--k);box-shadow:none}
 #why .big{margin:0}
@@ -45,7 +45,7 @@
 const order = [];
 let done = false, tl = null, idle = null;
 const CAPS = ['1 · A macrophage swallows the ink', '2 · It can\'t break it down: it keeps it', '3 · It dies and lets the ink go', '4 · A new one swallows it again'];
-// stable ink offsets (unit circle)
+// stable lobes for the ink blot (unit circle)
 const N = 11, OFF = [];
 for (let i = 0; i < N; i++) { const a = Kit.rnd() * Math.PI * 2, d = Math.sqrt(Kit.rnd()); OFF.push({a, d, s: .7 + Kit.rnd() * .6}); }
 
@@ -75,35 +75,51 @@ Kit.onShow.card = () => {
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, Math.min(f * 1.05, W / 21));
   const epi = H * .16;
-  // skin: only a thin dashed divider between epidermis and dermis, drawn on the card itself
-  Kit.mk('line', {x1: 0, y1: epi, x2: W, y2: epi, style: `stroke:var(--k);stroke-opacity:.4;stroke-width:${Math.max(1.5, fs * .12)};stroke-dasharray:${fs * .5} ${fs * .4};stroke-linecap:round`}, svg);
-  const lab = (t, y) => { const e = Kit.mk('text', {x: W * .04, y, style: `font:700 ${Math.max(12, fs * .8)}px var(--mono);fill:var(--k);opacity:.75`}, svg); e.textContent = t; };
+  // skin cross-section: the epidermis as a flat band on top, its lower edge rippling into the dermis
+  const amp = Math.min(epi * .18, fs * .35), waves = 6, wl = W / waves;
+  let sk = `M0,0 H${W} V${epi}`;
+  for (let i = 0; i < waves; i++) {
+    const x0 = W - i * wl, x1 = x0 - wl;
+    sk += ` Q${x0 - wl * .25},${epi + amp} ${x0 - wl * .5},${epi} Q${x0 - wl * .75},${epi - amp} ${x1},${epi}`;
+  }
+  Kit.mk('path', {d: sk + ' Z', style: 'fill:color-mix(in srgb,var(--k) 22%,var(--c))'}, svg);
+  const lab = (t, y) => { const e = Kit.mk('text', {x: W * .04, y, style: `font:600 ${Math.max(12, fs * .85)}px var(--body);fill:var(--k)`}, svg); e.textContent = t; };
   const capY = H - fs * .7;
-  lab('EPIDERMIS', epi * .62);
+  lab('Epidermis', epi * .62);
   const dermY = epi + fs * 1.4;
-  if (dermY + fs * .4 < capY - fs * 1.2) lab('DERMIS', dermY);
+  if (dermY + fs * .4 < capY - fs * 1.2) lab('Dermis', dermY);
   const cx = W / 2, cy = epi + (capY - fs * 1.2 - epi) / 2 + fs * .4;
   const r = Math.max(18, Math.min(W * .19, (capY - fs * 1.4 - epi) * .36));
-  // macrophages
+  // a smooth lumpy outline through points
+  const lumpy = pts => {
+    const n = pts.length;
+    let d = `M${(pts[0][0] + pts[n - 1][0]) / 2},${(pts[0][1] + pts[n - 1][1]) / 2}`;
+    for (let i = 0; i < n; i++) { const p = pts[i], q = pts[(i + 1) % n]; d += ` Q${p[0]},${p[1]} ${(p[0] + q[0]) / 2},${(p[1] + q[1]) / 2}`; }
+    return d + 'Z';
+  };
+  // macrophages: a pale, lumpy cell with a kidney-shaped nucleus, drawn flat
   const mkMac = () => {
     const g = Kit.mk('g', {}, svg);
     const pts = [];
-    for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2, rr = r * (1 + .1 * Math.sin(i * 2.3)); pts.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]); }
-    let d = `M${pts[0]}`; for (let i = 1; i <= 14; i++) { const p = pts[i % 14], q = pts[(i - 1) % 14]; d += ` Q${q[0]},${q[1]} ${(p[0] + q[0]) / 2},${(p[1] + q[1]) / 2}`; }
-    Kit.mk('path', {d: d + 'Z', style: `fill:rgba(255,255,255,.82);stroke:var(--k);stroke-width:${Math.max(2, r * .05)}`}, g);
-    Kit.mk('ellipse', {cx: cx + r * .35, cy: cy - r * .3, rx: r * .22, ry: r * .16, style: 'fill:#b58ab8;opacity:.8'}, g);
+    for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2, rr = r * (1 + .13 * Math.sin(i * 2.3)); pts.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]); }
+    Kit.mk('path', {d: lumpy(pts), style: 'fill:color-mix(in srgb,var(--k) 82%,var(--c))'}, g);
+    const nx = cx + r * .35, ny = cy - r * .3, nr = r * .22;
+    Kit.mk('path', {d: `M${nx - nr},${ny} C${nx - nr},${ny - nr * .9} ${nx + nr},${ny - nr * .9} ${nx + nr},${ny} C${nx + nr},${ny + nr * .8} ${nx + nr * .2},${ny + nr * .7} ${nx},${ny + nr * .25} C${nx - nr * .2},${ny + nr * .7} ${nx - nr},${ny + nr * .8} ${nx - nr},${ny} Z`, style: 'fill:color-mix(in srgb,var(--k) 45%,var(--c))'}, g);
     return g;
   };
   const A = mkMac(), B = mkMac();
   gsap.set([A, B], {transformOrigin: '50% 50%', opacity: 0});
-  // ink
-  const tight = OFF.map(o => ({x: cx - r * .1 + Math.cos(o.a) * o.d * r * .42, y: cy + r * .12 + Math.sin(o.a) * o.d * r * .42}));
-  const loose = OFF.map(o => ({x: cx + Math.cos(o.a) * (.5 + o.d) * r * 1.05, y: cy + Math.sin(o.a) * (.5 + o.d) * r * .8}));
-  const dots = OFF.map((o, i) => Kit.mk('circle', {cx: loose[i].x, cy: loose[i].y, r: Math.max(3, r * .085 * o.s), style: 'fill:#16204a'}, svg));
-  const cap = Kit.mk('text', {x: W / 2, y: capY, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--body);fill:var(--k)`}, svg);
+  // ink: one flat blot of tattoo ink — spread out in the dermis, squeezed small inside a cell
+  const R = r * .95, bpts = [];
+  for (let i = 0; i < N; i++) { const a = i / N * Math.PI * 2, rr = R * (.62 + .38 * OFF[i].s); bpts.push([Math.cos(a) * rr * 1.15, Math.sin(a) * rr * .72]); }
+  const ink = Kit.mk('path', {d: lumpy(bpts), style: 'fill:#16204a'}, svg);
+  const loose = {x: cx + r * .4, y: cy + r * .05, scale: 1};
+  const tight = {x: cx - r * .1, y: cy + r * .15, scale: .36};
+  gsap.set(ink, {transformOrigin: '50% 50%', ...loose});
+  const cap = Kit.mk('text', {x: W / 2, y: capY, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
   const setCap = t => { cap.textContent = t; };
-  const gather = (pos) => dots.forEach((d, i) => tl.to(d, {attr: {cx: tight[i].x, cy: tight[i].y}, duration: .7, ease: 'power2.inOut'}, pos));
-  const scatter = (pos) => dots.forEach((d, i) => tl.to(d, {attr: {cx: loose[i].x, cy: loose[i].y}, duration: .8, ease: 'power2.out'}, pos));
+  const gather = (pos) => tl.to(ink, {...tight, duration: .7, ease: 'power2.inOut'}, pos);
+  const scatter = (pos) => tl.to(ink, {...loose, duration: .8, ease: 'power2.out'}, pos);
 
   if (!done) {
     // before: ink sitting loose in the dermis, a macrophage waiting nearby
@@ -114,7 +130,7 @@ Kit.onShow.card = () => {
   }
   if (Kit.calm) {
     gsap.set(A, {opacity: 1});
-    dots.forEach((d, i) => d.setAttribute('cx', tight[i].x) || d.setAttribute('cy', tight[i].y));
+    gsap.set(ink, tight);
     setCap('Swallow → keep → die → release → again');
     return;
   }

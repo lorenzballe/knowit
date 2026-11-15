@@ -54,30 +54,35 @@ function draw(){
   const ex = W * 0.25, px = W * 0.75;
   const dw = rx * 1.05;
   const ink = 'var(--k)';
+  const sw = Math.max(2, fs * .16);
+  const red = '#d64545';
 
-  // eggshell
+  // the table both things sit on
+  Kit.mk('line', {x1: ex - rx * 1.4, y1: cy + ry, x2: px + dw * 1.3, y2: cy + ry,
+    style: `stroke:color-mix(in srgb, var(--k) 45%, var(--c));stroke-width:${sw};stroke-linecap:round`}, svg);
+
+  // eggshell: a plain egg, a touch narrower at the top
   const egg = Kit.mk('g', {}, svg);
-  Kit.mk('path', {d: `M ${ex} ${cy-ry} C ${ex+rx*1.05} ${cy-ry} ${ex+rx} ${cy+ry} ${ex} ${cy+ry} C ${ex-rx} ${cy+ry} ${ex-rx*1.05} ${cy-ry} ${ex} ${cy-ry} Z`,
-    style: `fill:#f4e4cc;stroke:${ink};stroke-width:${Math.max(2,fs*.16)}`}, egg);
-  Kit.mk('ellipse', {cx: ex - rx*.35, cy: cy - ry*.45, rx: rx*.16, ry: ry*.12, style: 'fill:#fff;opacity:.7'}, egg);
+  Kit.mk('path', {d: `M ${ex} ${cy-ry} C ${ex+rx*.74} ${cy-ry} ${ex+rx*1.3} ${cy+ry*.98} ${ex} ${cy+ry} C ${ex-rx*1.3} ${cy+ry*.98} ${ex-rx*.74} ${cy-ry} ${ex} ${cy-ry} Z`,
+    style: `fill:#f2dfc2;stroke:${ink};stroke-width:${sw};stroke-linejoin:round`}, egg);
 
-  // toothpaste dollop
+  // toothpaste dollop: three soft lobes, white with stripes in the card colour
   const paste = Kit.mk('g', {}, svg);
-  const base = cy + ry*0.72, sw = Math.max(2, fs*.16);
+  const base = cy + ry * 0.72;
   const layers = [[base, dw, ry*.28], [base - ry*.42, dw*.78, ry*.24], [base - ry*.8, dw*.52, ry*.2]];
   layers.forEach(([y, w, h]) => {
-    Kit.mk('ellipse', {cx: px, cy: y, rx: w, ry: h, style: `fill:#ffffff;stroke:${ink};stroke-width:${sw}`}, paste);
-    Kit.mk('path', {d: `M ${px-w*.7} ${y-h*.1} Q ${px} ${y+h*.5} ${px+w*.7} ${y-h*.1}`, style: `fill:none;stroke:#3fb6a8;stroke-width:${sw*1.6};stroke-linecap:round`}, paste);
+    Kit.mk('ellipse', {cx: px, cy: y, rx: w, ry: h, style: `fill:#fff;stroke:${ink};stroke-width:${sw}`}, paste);
+    Kit.mk('path', {d: `M ${px-w*.62} ${y+h*.05} Q ${px} ${y+h*.55} ${px+w*.62} ${y+h*.05}`,
+      style: `fill:none;stroke:color-mix(in srgb, var(--k) 15%, var(--c));stroke-width:${sw*1.5};stroke-linecap:round`}, paste);
   });
-  Kit.mk('path', {d: `M ${px-dw*.3} ${base-ry*.92} Q ${px} ${base-ry*1.35} ${px+dw*.12} ${base-ry*1.12}`, style: `fill:#fff;stroke:${ink};stroke-width:${sw}`}, paste);
+  Kit.mk('path', {d: `M ${px-dw*.3} ${base-ry*.92} Q ${px} ${base-ry*1.35} ${px+dw*.12} ${base-ry*1.12}`,
+    style: `fill:#fff;stroke:${ink};stroke-width:${sw};stroke-linejoin:round`}, paste);
 
-  // badges
+  // what each one is: a plain word written on the object
   const badge = (x, y, parent) => {
     const g = Kit.mk('g', {}, parent);
-    const bw = fs*4.2, bh = fs*1.6;
-    Kit.mk('rect', {x: x-bw/2, y: y-bh/2, width: bw, height: bh, rx: bh/2, style: `fill:var(--k)`}, g);
-    const t = Kit.mk('text', {x, y: y + fs*.36, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--mono);fill:var(--c);letter-spacing:.08em`}, g);
-    t.textContent = revealed ? 'BASE' : '?';
+    const t = Kit.mk('text', {x, y: y + fs*.36, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, g);
+    t.textContent = revealed ? 'base' : '?';
     return {g, t};
   };
   const be = badge(ex, cy + ry*.1, egg);
@@ -88,22 +93,22 @@ function draw(){
     const t = Kit.mk('text', {x, y, 'text-anchor': 'middle', style: `font:${w} ${s}px var(--body);fill:var(--k);opacity:${op}`}, svg);
     return t;
   };
-  const y1 = cy + ry + 1.5*fs, y2 = y1 + 1.45*fs;
-  lab(ex, y1, fs, 800, 1).textContent = 'Eggshell';
-  lab(ex, y2, fs*.9, 500, .75).textContent = 'calcium carbonate';
-  lab(px, y1, fs, 800, 1).textContent = 'Toothpaste';
-  lab(px, y2, fs*.9, 500, .75).textContent = 'the paste';
+  const y1 = cy + ry + 1.5*fs, y2 = y1 + 1.35*fs;
+  lab(ex, y1, fs, 700, 1).textContent = 'Eggshell';
+  lab(ex, y2, fs, 500, .7).textContent = 'calcium carbonate';
+  lab(px, y1, fs, 700, 1).textContent = 'Toothpaste';
+  lab(px, y2, fs, 500, .7).textContent = 'the paste';
 
   // the verdict in the middle
   const r = Math.max(fs*1.1, Math.min(W*0.07, ry*.42));
   const sym = Kit.mk('g', {}, svg);
-  Kit.mk('circle', {cx: W/2, cy, r, style: `fill:var(--c);stroke:${revealed ? '#d64545' : ink};stroke-width:${Math.max(3,fs*.24)}`}, sym);
+  Kit.mk('circle', {cx: W/2, cy, r, style: `fill:var(--c);stroke:${revealed ? red : ink};stroke-width:${Math.max(3,fs*.2)}`}, sym);
   const q = Kit.mk('text', {x: W/2, y: cy + fs*.45, 'text-anchor': 'middle', style: `font:800 ${fs*1.3}px var(--display);fill:var(--k)`}, sym);
   q.textContent = '?';
-  const slash = Kit.mk('line', {x1: W/2 - r*.7, y1: cy + r*.7, x2: W/2 + r*.7, y2: cy - r*.7, style: `stroke:#d64545;stroke-width:${Math.max(3,fs*.24)};stroke-linecap:round`}, sym);
-  const verdict = lab(W/2, Math.max(fs*1.1, cy - ry - 0.9*fs), fs*1.05, 800, 1);
-  verdict.textContent = 'NO ACID-BASE REACTION';
-  verdict.style.fill = '#d64545';
+  const slash = Kit.mk('line', {x1: W/2 - r*.7, y1: cy + r*.7, x2: W/2 + r*.7, y2: cy - r*.7, style: `stroke:${red};stroke-width:${Math.max(3,fs*.2)};stroke-linecap:round`}, sym);
+  const verdict = lab(W/2, Math.max(fs*1.1, cy - ry - 0.9*fs), fs, 700, 1);
+  verdict.textContent = 'No acid-base reaction';
+  verdict.style.fill = red;
 
   if (revealed) { q.style.opacity = 0; }
   else { slash.style.opacity = 0; verdict.style.opacity = 0; }
@@ -119,7 +124,7 @@ function reveal(){
   tl.to(g.sym, {opacity: 0, duration: .2})
     .to(g.paste, {x: -g.dist, duration: .7, ease: 'power2.in'})
     .to(g.egg, {rotation: -4, svgOrigin: `${g.ex} ${g.cy}`, duration: .08, yoyo: true, repeat: 3})
-    .add(() => { g.be.t.textContent = 'BASE'; g.bp.t.textContent = 'BASE'; Kit.haptic('light'); })
+    .add(() => { g.be.t.textContent = 'base'; g.bp.t.textContent = 'base'; Kit.haptic('light'); })
     .from([g.be.g, g.bp.g], {scale: 1.5, transformOrigin: '50% 50%', duration: .35, ease: 'back.out(3)'}, '<')
     .to(g.paste, {x: 0, duration: .8, ease: 'elastic.out(1,.5)'}, '+=.25')
     .add(() => { g.q.style.opacity = 0; g.circle.style.stroke = '#d64545'; g.slash.style.opacity = 1; }, '<')

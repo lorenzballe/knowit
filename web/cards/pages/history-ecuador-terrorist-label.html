@@ -38,7 +38,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RIGHT = 1, RED = '#d7263d', INK = '#1d1d1f', PAPER = '#fbf8f0', GREY = '#cfc9bb';
+const RIGHT = 1, RED = '#d7263d', INK = '#1d1d1f', PAPER = '#fbf8f0', GREY = '#d6d0c2', FOLD = '#e6dfcf';
 let pick = -1, revealed = false, els = null;
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
@@ -81,12 +81,15 @@ Kit.onShow.card = () => {
   const pw = Math.min(W * .92, Math.max(H * 1.1, 300)), ph = H * .96, x0 = (W - pw) / 2, y0 = H * .02;
   const fs = Math.max(12, Math.min(f * 1.05, pw / 17, H / 12));
   const fs2 = Math.max(12, fs * .78);
-  Kit.mk('rect', {x: x0 + 4, y: y0 + 5, width: pw, height: ph, rx: 8, fill: 'rgba(0,0,0,.18)'}, svg);
-  Kit.mk('rect', {x: x0, y: y0, width: pw, height: ph, rx: 8, fill: PAPER, stroke: INK, 'stroke-width': 1.5}, svg);
   const pad = pw * .07;
+  // the sheet of the decree: flat paper, one ink outline, a folded bottom-left corner
+  const fd = Math.min(pad * 1.1, ph * .1);
+  const x1 = x0 + pw, y1 = y0 + ph;
+  Kit.mk('path', {d: `M${x0} ${y0} H${x1} V${y1} H${x0 + fd} L${x0} ${y1 - fd} Z`, fill: PAPER, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('path', {d: `M${x0} ${y1 - fd} L${x0 + fd} ${y1 - fd} L${x0 + fd} ${y1} Z`, fill: FOLD, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
   const t1 = Kit.mk('text', {x: x0 + pad, y: y0 + fs * 1.5, fill: INK, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs}, svg);
-  t1.textContent = 'STATE OF EMERGENCY';
-  const t2 = Kit.mk('text', {x: x0 + pad, y: y0 + fs * 1.5 + fs2 * 1.5, fill: INK, opacity: .7, 'font-family': 'var(--mono)', 'font-size': fs2}, svg);
+  t1.textContent = 'State of emergency';
+  const t2 = Kit.mk('text', {x: x0 + pad, y: y0 + fs * 1.5 + fs2 * 1.5, fill: INK, opacity: .7, 'font-family': 'var(--body)', 'font-weight': 500, 'font-size': fs2}, svg);
   t2.textContent = 'Decree · organized-crime groups';
   const maxw2 = pw - pad * 2;
   try {
@@ -96,8 +99,8 @@ Kit.onShow.card = () => {
   const count = Kit.mk('text', {x: x0 + pw - pad, y: y0 + fs * 1.5, fill: RED, 'text-anchor': 'end', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs, opacity: 0}, svg);
   count.textContent = '22';
   const lt = y0 + fs * 1.5 + fs2 * 2.4;
-  Kit.mk('line', {x1: x0 + pad, x2: x0 + pw - pad, y1: lt - fs2 * .5, y2: lt - fs2 * .5, stroke: INK, 'stroke-width': 1, opacity: .4}, svg);
-  // bottom field
+  Kit.mk('line', {x1: x0 + pad, x2: x0 + pw - pad, y1: lt - fs2 * .5, y2: lt - fs2 * .5, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
+  // the 22 listed groups: one typed line each, in two columns
   const bottomH = Math.max(fs2 * 3.6, ph * .26);
   const lb = y0 + ph - bottomH;
   const colW = (pw - pad * 3) / 2, rows = 11, rh = Math.max(0, lb - lt) / rows;
@@ -107,23 +110,24 @@ Kit.onShow.card = () => {
     const c = Math.floor(i / rows), r = i % rows;
     const bx = x0 + pad + c * (colW + pad), by = lt + r * rh + rh * .25;
     const bh = Math.max(3, rh * .45);
-    Kit.mk('circle', {cx: bx + bh * .5, cy: by + bh / 2, r: bh * .32, fill: INK, opacity: .55}, svg);
+    Kit.mk('circle', {cx: bx + bh * .5, cy: by + bh / 2, r: bh * .3, fill: INK}, svg);
     const b = Kit.mk('rect', {x: bx + bh * 1.4, y: by, width: (colW - bh * 1.4) * (.55 + rnd() * .45), height: bh, rx: bh / 2, fill: revealed ? RED : GREY}, svg);
     bars.push(b);
   }
-  Kit.mk('line', {x1: x0 + pad, x2: x0 + pw - pad, y1: lb + fs2 * .2, y2: lb + fs2 * .2, stroke: INK, 'stroke-width': 1, opacity: .4}, svg);
+  Kit.mk('line', {x1: x0 + pad, x2: x0 + pw - pad, y1: lb + fs2 * .2, y2: lb + fs2 * .2, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
   const ly = lb + fs2 * 1.5;
-  const ls = Kit.mk('text', {x: x0 + pad, y: ly, fill: INK, 'font-family': 'var(--mono)', 'font-size': fs2, 'font-weight': 700}, svg);
-  ls.textContent = 'LEGAL STATUS:';
-  const blank = Kit.mk('text', {x: x0 + pw - pad, y: ly, fill: INK, opacity: revealed ? 0 : .35, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': fs * 1.1}, svg);
+  const ls = Kit.mk('text', {x: x0 + pad, y: ly, fill: INK, 'font-family': 'var(--body)', 'font-size': fs2, 'font-weight': 700}, svg);
+  ls.textContent = 'Legal status:';
+  const blank = Kit.mk('text', {x: x0 + pw - pad, y: ly, fill: INK, opacity: revealed ? 0 : .35, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * 1.1}, svg);
   blank.textContent = '? ? ?';
+  // the rubber-stamp mark: flat red ink, a plain frame and the word
   const sx = x0 + pw / 2, sy = lb + bottomH * .58;
   const sfs = Math.max(13, Math.min(fs * 1.35, pw / 9));
   const stamp = Kit.mk('g', {opacity: 0}, svg);
   stamp.dataset.o = `${sx} ${sy}`;
   const sw = sfs * 7.4, sh = sfs * 1.55;
-  Kit.mk('rect', {x: sx - sw / 2, y: sy - sh / 2, width: sw, height: sh, rx: 6, fill: 'none', stroke: RED, 'stroke-width': Math.max(2.5, sfs * .14)}, stamp);
-  const st = Kit.mk('text', {x: sx, y: sy + sfs * .36, fill: RED, 'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 900, 'font-size': sfs, 'letter-spacing': sfs * .08}, stamp);
+  Kit.mk('rect', {x: sx - sw / 2, y: sy - sh / 2, width: sw, height: sh, rx: 3, fill: 'none', stroke: RED, 'stroke-width': Math.max(2.5, sfs * .14)}, stamp);
+  const st = Kit.mk('text', {x: sx, y: sy + sfs * .36, fill: RED, 'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 900, 'font-size': sfs}, stamp);
   st.textContent = 'TERRORISTS';
   const neut = Kit.mk('text', {x: x0 + pw - pad, y: y0 + ph - fs2 * .7, fill: RED, opacity: 0, 'text-anchor': 'end', 'font-family': 'var(--hand)', 'font-size': fs2 * 1.15, 'font-weight': 700}, svg);
   neut.textContent = '→ to be neutralized';

@@ -39,9 +39,20 @@ const go = Kit.$('go'), say = Kit.$('say');
 const R = () => Kit.rnd();
 for (let i = 0; i < 16; i++) S.air.push({t:'a', r:'h', x:R(), y:R(), vx:(R()-.5)*.3, vy:(R()-.5)*.3});
 
-const INK = '#10100c';
+// flat palette: card ink, card colour, their tints, and a few meaning colours
+const P = {k:[16,16,12], c:[0,230,160]};
+const rgb = a => `rgb(${a.map(Math.round).join(',')})`;
+const mixA = (a,b,t) => a.map((v,i) => v + (b[i]-v)*t);
+const tint = n => rgb(mixA(P.c, P.k, n));          // = color-mix(in srgb, var(--k) n*100%, var(--c))
 const hex = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
-const mixC = (a,b,t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`; };
+const WATER = '#3a72d0', HYD = '#e58a00', HOT = '#e8462a', STEAM = '#ffffff';
+function readPalette(){
+  const card = Kit.$('card'), probe = document.createElement('i');
+  probe.style.display = 'none'; card.appendChild(probe);
+  const get = v => { probe.style.color = `var(${v})`; const m = getComputedStyle(probe).color.match(/[\d.]+/g); return m && m.length >= 3 ? m.slice(0,3).map(Number) : null; };
+  P.k = get('--k') || P.k; P.c = get('--c') || P.c;
+  probe.remove();
+}
 const lerp = (a,b,t) => a + (b-a)*t;
 
 function geo(W, H){
@@ -55,15 +66,6 @@ function geo(W, H){
     gx:W*.82, gw:Math.max(10,W*.04), gT:vT+f*1.6, gBot:vB, pw:Math.max(5,vw*.06)};
 }
 const waterY = () => G.vT + G.vh*(.32 + .1*S.tmp);
-function pos(q){
-  if (q.r === 'v'){ const gL=G.vL+G.vw*.18, gR=G.vR-G.vw*.18, gT=G.vT+G.vw*.2, gB=waterY()-8;
-    return [lerp(gL,gR,q.x), lerp(gT,gB,q.y)]; }
-  if (q.r === 'p'){ const k = Math.max(0,q.k), gL=G.vL+G.vw*.18, gR=G.vR-G.vw*.18, gT=G.vT+G.vw*.2, gB=waterY()-8;
-    const sx = lerp(gL,gR,q.x), sy = lerp(gT,gB,q.y);
-    if (k < .5){ const t = k*2; return [lerp(sx,G.cx,t), lerp(sy,G.vT,t)]; }
-    return [G.cx, lerp(G.vT, G.hallB, (k-.5)*2)]; }
-  return [lerp(G.hL,G.hR,q.x), lerp(G.hT,G.hB,q.y)];
-}
 
 function update(dt){
   if (S.phase === 0 && S.heat){ S.p = Math.min(1, S.p + dt/3.2); S.tmp = S.p; S.pr = S.p; go.style.setProperty('--p', S.p); if (S.p >= 1) ready(); }
@@ -88,104 +90,151 @@ function update(dt){
   S.parts = S.parts.filter(q => !(q.t === 's' && q.r === 'h' && q.age > 2.6));
 }
 
+// fixed jag of the blast outline, so it does not flicker
+const JAG = [1,.62,.92,.55,1.05,.66,.88,.5,1,.6,.95,.58,1.08,.64,.9,.54];
+
 function draw(now){
   if (!C) return;
   const {x} = C, {W,H,f} = G;
+  const INK = rgb(P.k), CARD = rgb(P.c);
+  const bodyFont = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
   x.clearRect(0,0,W,H);
-  x.font = `600 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
-  x.textBaseline = 'middle';
-  // legend
-  [['steam','#ffffff',.08],['hydrogen','#d97a00',.37],['air','#1747d6',.7]].forEach(([t,c,p]) => {
-    x.fillStyle = c; x.beginPath(); x.arc(W*p + f*.4, H*.065, f*.38, 0, 7); x.fill();
-    if (t === 'steam'){ x.strokeStyle = INK; x.lineWidth = 1.2; x.stroke(); }
-    x.fillStyle = INK; x.textAlign = 'left'; x.fillText(t, W*p + f*1.1, H*.065);
-  });
+  x.font = `600 ${f}px ${bodyFont}`;
+  x.textBaseline = 'middle'; x.lineJoin = 'round'; x.lineCap = 'round';
   const b = S.boom;
-  // hall
-  x.fillStyle = b > .2 ? 'rgba(255,130,30,.28)' : 'rgba(16,16,12,.08)'; x.fillRect(G.bx, G.by, G.bw, G.hallB-G.by);
-  x.strokeStyle = INK; x.lineWidth = 2.5; x.lineCap = 'round';
   const line = (a,c,d,e) => { x.beginPath(); x.moveTo(a,c); x.lineTo(d,e); x.stroke(); };
-  // lower walls and base
-  line(G.bx, G.hallB, G.bx, G.bB); line(G.bx+G.bw, G.hallB, G.bx+G.bw, G.bB); line(G.bx, G.bB, G.bx+G.bw, G.bB);
+
+  // one puffy cloud: a single flat shape with an ink outline only on its edge
+  const cloud = (cx, cy, w, h, col, edge) => {
+    if (w < 4 || h < 4) return;
+    const n = Math.max(2, Math.min(5, Math.round(w/h*1.6)));
+    const rb = Math.min(h*.36, w/n*.62), rt = Math.min(h*.44, w/n*.78);
+    x.beginPath();
+    for (let i = 0; i < n; i++){ const px = cx - w/2 + rb + (w-2*rb)*(n>1 ? i/(n-1) : .5), py = cy + h*.14; x.moveTo(px+rb,py); x.arc(px,py,rb,0,7); }
+    for (let i = 0; i < n-1; i++){ const px = cx - w/2 + w*(i+1)/n, py = cy - h*.08 - (i%2)*h*.06; x.moveTo(px+rt,py); x.arc(px,py,rt,0,7); }
+    x.rect(cx - w/2 + rb, cy - h*.05, w - 2*rb, rb + h*.19);
+    if (edge){ x.strokeStyle = INK; x.lineWidth = 4; x.stroke(); }
+    x.fillStyle = col; x.fill();
+  };
+
+  // where the gases are right now
+  let sv = 0, hv = 0, sPipe = 0, hPipe = 0, sh = 0, hh = 0;
+  for (const q of S.parts){
+    const inV = q.r === 'v' || (q.r === 'p' && q.k < .5), inP = q.r === 'p' && q.k >= .5;
+    if (q.t === 's'){ if (inV) sv++; else if (inP) sPipe++; else sh += Math.max(0, 1 - q.age/2.6); }
+    else { if (inV) hv++; else if (inP) hPipe++; else hh++; }
+  }
+
+  // ground
+  x.strokeStyle = INK; x.lineWidth = 3;
+  line(0, G.bB, W, G.bB);
+  // lower building: solid concrete block
+  x.fillStyle = tint(.14); x.fillRect(G.bx, G.hallB, G.bw, G.bB-G.hallB);
+  // upper hall: a room full of air while it still stands
+  if (b < .2){ x.fillStyle = tint(.06); x.fillRect(G.bx, G.by, G.bw, G.hallB-G.by); }
+
+  // gases that reached the hall
+  const hallH = G.hB - G.hT, hallMid = G.hT + hallH*.58;
+  if (sh > .3){ const s = Math.sqrt(Math.min(1, sh/28)); cloud(G.cx, G.hB - hallH*.3, G.bw*.42*s + f, hallH*.42*s + f*.5, STEAM, true); }
+  if (hh > 0){ const s = Math.sqrt(hh/14); cloud(G.cx + G.bw*.06, hallMid, G.bw*.78*s + f, hallH*.62*s + f*.5, HYD, true);
+    if (hh >= 3){ x.fillStyle = INK; x.textAlign = 'center'; x.fillText('hydrogen', G.cx + G.bw*.06, hallMid + hallH*.04); } }
+
+  x.strokeStyle = INK; x.lineWidth = 3;
+  // lower walls
+  line(G.bx, G.hallB, G.bx, G.bB); line(G.bx+G.bw, G.hallB, G.bx+G.bw, G.bB);
   // upper walls (fly out)
   const wd = b*G.W*.06;
-  x.save(); x.translate(-wd, -b*H*.03); line(G.bx, G.by, G.bx, G.hallB); x.restore();
-  x.save(); x.translate(wd, -b*H*.03); line(G.bx+G.bw, G.by, G.bx+G.bw, G.hallB); x.restore();
-  // roof in three pieces
+  x.save(); x.translate(-wd, -b*H*.03); x.rotate(-b*.12); line(G.bx, G.by, G.bx, G.hallB); x.restore();
+  x.save(); x.translate(wd, -b*H*.03); x.rotate(b*.12); line(G.bx+G.bw, G.by, G.bx+G.bw, G.hallB); x.restore();
+  // roof in three slabs
   for (let i = 0; i < 3; i++){
-    const a0 = G.bx + G.bw*i/3, a1 = G.bx + G.bw*(i+1)/3, mx = (a0+a1)/2;
+    const a0 = G.bx + G.bw*i/3, a1 = G.bx + G.bw*(i+1)/3, mx = (a0+a1)/2, th = Math.max(5, f*.38);
     x.save(); x.translate(mx + (i-1)*b*W*.09, G.by - b*H*.09*(1+.4*(i%2)));
-    x.rotate((i-1)*b*.7 + (i===1 ? b*.25 : 0)); x.lineWidth = 4; line(a0-mx, 0, a1-mx, 0); x.restore();
+    x.rotate((i-1)*b*.7 + (i===1 ? b*.25 : 0));
+    x.fillStyle = INK; x.fillRect(a0-mx-1.5, -th/2, a1-a0+3, th); x.restore();
   }
   // floor with pipe gap
-  x.lineWidth = 2.5; line(G.bx, G.hallB, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.hallB, G.bx+G.bw, G.hallB);
+  x.lineWidth = 3; line(G.bx, G.hallB, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.hallB, G.bx+G.bw, G.hallB);
   x.fillStyle = INK; x.textAlign = 'left'; x.fillText('upper building', G.hL+2, G.hT+f*.7);
-  // pipe and valve
-  x.strokeStyle = INK; line(G.cx-G.pw, G.vT+2, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.vT+2, G.cx+G.pw, G.hallB);
+  if (b < .2){ x.textAlign = 'right'; x.fillText('air', G.hR-2, G.hT+f*.7); }
+
+  // vent pipe and valve; the pipe fills with whatever is passing through it
+  x.fillStyle = hPipe ? HYD : sPipe ? STEAM : CARD;
+  x.fillRect(G.cx-G.pw, G.vT, G.pw*2, G.hallB-G.vT);
+  x.strokeStyle = INK; x.lineWidth = 2.5;
+  line(G.cx-G.pw, G.vT+2, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.vT+2, G.cx+G.pw, G.hallB);
   const vy = (G.vT+G.hallB)/2, vs = G.pw*1.4;
-  x.fillStyle = S.valve ? '#0a7a2a' : '#4a5260';
-  x.beginPath(); x.moveTo(G.cx-vs, vy-vs*.7); x.lineTo(G.cx+vs, vy+vs*.7); x.lineTo(G.cx+vs, vy-vs*.7); x.lineTo(G.cx-vs, vy+vs*.7); x.closePath(); x.fill();
+  x.beginPath(); x.moveTo(G.cx-vs, vy-vs*.7); x.lineTo(G.cx+vs, vy+vs*.7); x.lineTo(G.cx+vs, vy-vs*.7); x.lineTo(G.cx-vs, vy+vs*.7); x.closePath();
+  x.fillStyle = S.valve ? CARD : INK; x.fill(); x.lineWidth = 2; x.stroke();
   x.fillStyle = INK; x.textAlign = 'left'; x.fillText(S.valve ? 'vent open' : 'vent', G.cx+vs+6, vy);
-  // vessel
+
+  // reactor vessel: a plain capsule seen in cut
   const rr = G.vw*.38;
   x.beginPath(); x.roundRect(G.vL, G.vT, G.vw, G.vh, [rr,rr,10,10]);
-  x.fillStyle = '#1b2433'; x.fill();
+  x.fillStyle = CARD; x.fill();
   x.save(); x.clip();
   const wy = waterY();
-  x.fillStyle = '#2466c4'; x.fillRect(G.vL, wy, G.vw, G.vB-wy);
-  const nb = Math.round(S.tmp*16);
-  x.fillStyle = 'rgba(255,255,255,.55)';
-  for (let i = 0; i < nb; i++){
-    const bx = G.vL + G.vw*(((i*.37+.1)%.8)+.1), by = G.vB - ((now*.00025*(1+i%3)+i*.13)%1)*(G.vB-wy);
-    x.beginPath(); x.arc(bx, by, Math.max(1.5,f*.18), 0, 7); x.fill();
-  }
-  const fc = mixC('#8a8f98', '#ff5a2a', S.tmp);
-  x.shadowColor = '#ff7a2a'; x.shadowBlur = S.tmp*22;
+  // water with a surface that churns harder as it boils
+  const amp = S.tmp*f*.28, seg = 8;
+  x.fillStyle = WATER; x.beginPath(); x.moveTo(G.vL, G.vB);
+  for (let i = 0; i <= seg; i++){ const px = G.vL + G.vw*i/seg; x.lineTo(px, wy + Math.sin(i*1.7 + now*.006)*amp*(i%2 ? 1 : -.6)); }
+  x.lineTo(G.vR, G.vB); x.closePath(); x.fill();
+  x.strokeStyle = INK; x.lineWidth = 2; x.stroke();
+  // fuel rods turn from dull grey to hot orange
+  const fc = rgb(mixA(mixA(P.c, P.k, .5), hex(HOT), S.tmp));
   for (let i = 0; i < 4; i++){
     const rx = G.vL + G.vw*(.22 + i*.18), rw = G.vw*.08;
     x.fillStyle = fc; x.beginPath(); x.roundRect(rx, G.vT+G.vh*.56, rw, G.vh*.38, rw*.4); x.fill();
+    x.strokeStyle = INK; x.lineWidth = 1.5; x.stroke();
   }
+  // steam and hydrogen gather above the water
+  const gT = G.vT + G.vw*.1, gB = wy - amp - 3, gh = Math.max(0, gB - gT);
+  const sS = Math.sqrt(sv/28), sH = Math.sqrt(hv/14);
+  const yS = gT + gh*.7, yH = gT + gh*.3;
+  if (sv) cloud(G.cx, yS, G.vw*.82*sS, gh*.5*sS + 4, STEAM, true);
+  if (hv) cloud(G.cx, yH, G.vw*.6*sH, gh*.44*sH + 4, HYD, true);
   x.restore();
-  x.strokeStyle = INK; x.lineWidth = 3;
+  x.strokeStyle = INK; x.lineWidth = 3.5;
   x.beginPath(); x.roundRect(G.vL, G.vT, G.vw, G.vh, [rr,rr,10,10]); x.stroke();
   x.fillStyle = INK; x.textAlign = 'right';
-  x.fillText('water', G.vL-8, wy + f*.2);
+  x.fillText('water', G.vL-8, wy + f*.6);
   x.fillText('fuel', G.vL-8, G.vT+G.vh*.76);
-  // particles
-  for (const q of S.air.concat(S.parts)){
-    if (q.r === 'p' && q.k < 0) { const [px,py] = pos({...q, r:'v'}); dot(q, px, py); continue; }
-    const [px,py] = pos(q); dot(q, px, py);
-  }
-  function dot(q, px, py){
-    let a = 1, r = f*.3, c = '#1747d6';
-    if (q.t === 's'){ c = '#ffffff'; r = f*.42; a = .9*(q.r==='h' ? Math.max(0,1-q.age/2.6) : 1); }
-    if (q.t === 'h'){ c = '#d97a00'; r = f*.34; }
-    x.globalAlpha = a; x.fillStyle = c; x.beginPath(); x.arc(px, py, r, 0, 7); x.fill();
-    if (q.t === 's'){ x.strokeStyle = INK; x.lineWidth = 1; x.stroke(); }
-    x.globalAlpha = 1;
-  }
-  // gauge
+  if (sv >= 3) x.fillText('steam', G.vL-8, yS);
+  if (hv >= 2) x.fillText('hydrogen', G.vL-8, Math.min(yH, yS - f*1.1));
+
+  // pressure gauge: a plain round dial with a needle
   x.fillStyle = INK; x.textAlign = 'center'; x.fillText('pressure', G.gx, G.vT + f*.3);
-  const gh = G.gBot - G.gT;
-  x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.roundRect(G.gx-G.gw/2, G.gT, G.gw, gh, G.gw/2); x.stroke();
-  x.fillStyle = mixC('#0b7a3b', '#d4200f', S.pr);
-  if (S.pr > .01){ x.beginPath(); x.roundRect(G.gx-G.gw/2+2, G.gT+2+(gh-4)*(1-S.pr), G.gw-4, (gh-4)*S.pr, (G.gw-4)/2); x.fill(); }
+  const gr = Math.max(f*1.2, Math.min(W*.075, G.vh*.2)), gcy = G.gT + gr + f*.2;
+  const a0 = Math.PI*.75, a1 = a0 + Math.PI*1.5*S.pr;
+  x.fillStyle = CARD; x.beginPath(); x.arc(G.gx, gcy, gr, 0, 7); x.fill();
+  if (S.pr > .01){
+    x.fillStyle = HOT;
+    x.beginPath(); x.moveTo(G.gx, gcy); x.arc(G.gx, gcy, gr*.82, a0, a1); x.closePath(); x.fill();
+  }
+  x.strokeStyle = INK; x.lineWidth = 3; x.beginPath(); x.arc(G.gx, gcy, gr, 0, 7); x.stroke();
+  x.lineWidth = 2.5; line(G.gx, gcy, G.gx + Math.cos(a1)*gr*.78, gcy + Math.sin(a1)*gr*.78);
+  x.fillStyle = INK; x.beginPath(); x.arc(G.gx, gcy, Math.max(2.5, gr*.1), 0, 7); x.fill();
+  // stand
+  x.lineWidth = 2.5; line(G.gx, gcy+gr, G.gx, G.vB);
+
   // explosion
   if (b > 0){
     const cxh = W*.5, cyh = (G.hT+G.hB)/2;
     if (b < 1){
       const a = Math.sin(b*Math.PI), r = W*(.15 + .75*b);
-      const g = x.createRadialGradient(cxh, cyh, 0, cxh, cyh, r);
-      g.addColorStop(0, `rgba(255,245,190,${a})`); g.addColorStop(.45, `rgba(255,130,30,${a*.75})`); g.addColorStop(1, 'rgba(255,80,20,0)');
-      x.fillStyle = g; x.fillRect(0, 0, W, H);
+      const burst = (rad, col) => {
+        x.fillStyle = col; x.beginPath();
+        JAG.forEach((m,i) => { const t = i/JAG.length*Math.PI*2 + .2; const px = cxh + Math.cos(t)*rad*m, py = cyh + Math.sin(t)*rad*m*.7;
+          i ? x.lineTo(px,py) : x.moveTo(px,py); });
+        x.closePath(); x.fill();
+      };
+      x.globalAlpha = a; burst(r, HOT); burst(r*.55, HYD); x.globalAlpha = 1;
     }
-    x.fillStyle = 'rgba(16,16,12,.35)';
-    for (let i = 0; i < 9; i++){
-      const sx = G.bx + G.bw*(.1 + i*.1), sy = G.by - b*H*(.03 + (i%3)*.025);
-      x.globalAlpha = Math.min(1, b*1.5)*.6; x.beginPath(); x.arc(sx, sy, f*(.8 + (i%2)*.5)*b, 0, 7); x.fill();
-    }
+    // one cloud of dust where the roof was
+    x.globalAlpha = Math.min(1, b*1.5);
+    cloud(G.bx + G.bw/2, G.by - b*H*.05, G.bw*.9*b, f*2.4*b, tint(.4), false);
     x.globalAlpha = 1;
-    if (b >= 1){ x.fillStyle = INK; x.textAlign = 'center'; x.font = `800 ${f*1.1}px sans-serif`; x.fillText('hydrogen + air exploded', cxh, cyh + f*.6); }
+    if (b >= 1){ x.fillStyle = INK; x.textAlign = 'center'; x.font = `700 ${f}px ${bodyFont}`; x.fillText('hydrogen + air exploded', cxh, cyh + f*.6); }
   }
 }
 
@@ -218,7 +267,7 @@ go.addEventListener('keydown', e => { if ((e.key===' '||e.key==='Enter') && S.ph
 go.addEventListener('keyup', () => { S.heat = false; });
 go.addEventListener('click', () => { if (S.phase === 1 && !ventP) ventP = vent(); });
 
-Kit.onShow.card = () => { const cv = Kit.$('cv'); C = Kit.fitCanvas(cv); G = geo(C.W, C.H); draw(performance.now()); };
+Kit.onShow.card = () => { readPalette(); const cv = Kit.$('cv'); C = Kit.fitCanvas(cv); G = geo(C.W, C.H); draw(performance.now()); };
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity:0, y:10, duration:.45, ease:'power3.out'}); };
 Kit.play.card = async () => {
   const w = ms => new Promise(r => setTimeout(r, ms));

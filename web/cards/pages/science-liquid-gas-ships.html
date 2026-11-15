@@ -33,7 +33,7 @@
 const N = 600, COLS = 30, ROWS = 20, FLY = .12;
 const st = {p: 0};
 let G = null, done = false;
-// Order in which the small ships hand over their gas: shuffled once.
+// Order in which the gas of the 600 ships is handed over: shuffled once.
 const order = Array.from({length: N}, (_, i) => i);
 for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
 const tStart = new Array(N);
@@ -43,10 +43,48 @@ function css(v){ return getComputedStyle(Kit.$('card')).getPropertyValue(v).trim
 function fit(){ G = Kit.fitCanvas(Kit.$('cv')); draw(); }
 function ease(t){ return t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
 
+// Flat tints: mix of ink and card colour (same as color-mix(in srgb, ink N%, card)).
+const _pc = document.createElement('canvas').getContext('2d');
+function rgb(c){
+  _pc.fillStyle = '#000'; _pc.fillStyle = c; const s = _pc.fillStyle;
+  if (s[0] === '#') return [1,3,5].map(i => parseInt(s.slice(i, i+2), 16));
+  const m = s.match(/[\d.]+/g) || [0,0,0]; return m.slice(0,3).map(Number);
+}
+function mix(ink, bg, n){
+  const a = rgb(ink), b = rgb(bg);
+  return `rgb(${a.map((v, i) => Math.round(v * n + b[i] * (1 - n))).join(',')})`;
+}
+
+// One big flat cloud: all the gas, still bulky. (cx, by) is the middle of its flat base; u is half its width.
+function cloud(x, cx, by, u){
+  const cy = by - .45 * u;
+  x.beginPath();
+  x.arc(cx - .6*u, cy + .1*u, .4*u, 0, 7);
+  x.moveTo(cx + .4*u, cy - .2*u);
+  x.arc(cx - .15*u, cy - .2*u, .55*u, 0, 7);
+  x.moveTo(cx + .85*u, cy - .1*u);
+  x.arc(cx + .35*u, cy - .1*u, .5*u, 0, 7);
+  x.moveTo(cx + 1.02*u, cy + .15*u);
+  x.arc(cx + .72*u, cy + .15*u, .3*u, 0, 7);
+  x.rect(cx - .6*u, cy, 1.32*u, .45*u);
+  x.fill();
+}
+
+// A falling drop of liquid gas.
+function drop(x, px, py, s){
+  x.beginPath();
+  x.moveTo(px, py - s * 1.9);
+  x.quadraticCurveTo(px + s * .35, py - s * .9, px + s, py);
+  x.arc(px, py, s, 0, Math.PI);
+  x.quadraticCurveTo(px - s * .35, py - s * .9, px, py - s * 1.9);
+  x.fill();
+}
+
 function draw(){
   if (!G) return;
   const {x, W, H} = G, p = st.p, ink = css('--k') || '#111', bg = css('--c') || '#fff';
   const disp = css('--display') || 'system-ui', body = css('--body') || 'system-ui';
+  const t25 = mix(ink, bg, .25), t75 = mix(ink, bg, .78), t12 = mix(ink, bg, .12);
   x.clearRect(0, 0, W, H);
   const fs = Math.max(12, Math.min(H * .045, W * .045));
   const m = W * .03;
@@ -59,70 +97,75 @@ function draw(){
   const need = Math.max(1, N - emptied);
   x.textAlign = 'right'; x.font = `800 ${fs * 1.25}px ${disp}`;
   x.fillText(`${need} ${need === 1 ? 'ship' : 'ships'}`, W - m, fs * 1.15);
-  // Grid of small gas ships
-  const gy0 = fs * 1.7, gy1 = H * .58;
-  const cw = (W - 2*m) / COLS, ch = (gy1 - gy0) / ROWS;
-  const hw = cw * .78, hh = Math.min(ch * .32, cw * .3);
+
+  // The gas: one big cloud that shrinks as its gas is handed over
+  const gy0 = fs * 1.9, gy1 = H * .58;
+  const u0 = Math.min(W * .42, (gy1 - gy0) * .92 / 1.2);
+  const base = (gy0 + gy1) / 2 + u0 * .6;
+  const left = (N - emptied) / N;
+  if (p < 1 && left > 0) {
+    x.fillStyle = t25;
+    cloud(x, W / 2, base, u0 * Math.sqrt(left));
+  }
+
   // Big LNG carrier geometry
   const bx0 = W * .07, bx1 = W * .93, bw = bx1 - bx0;
   const deck = H * .83, hullH = Math.min(H * .07, bw * .08);
   const r = Math.min(bw / 11, (deck - H * .64) * .95);
   const domes = [0,1,2,3].map(k => ({cx: bx0 + bw * (.22 + k * .19), cy: deck}));
-  // Small ships
-  for (let i = 0; i < N; i++) {
-    const c = i % COLS, rr = Math.floor(i / COLS);
-    const sx = m + c * cw + cw/2, sy = gy0 + rr * ch + ch * .62;
-    const t0 = tStart[i];
-    let a = 1;
-    if (p > t0) a = Math.max(0, 1 - (p - t0) / FLY);
-    if (a <= 0) continue;
-    x.globalAlpha = .2 + .8 * a;
-    x.fillStyle = ink;
-    x.beginPath();
-    x.moveTo(sx - hw/2, sy); x.lineTo(sx + hw/2, sy);
-    x.lineTo(sx + hw*.36, sy + hh); x.lineTo(sx - hw*.36, sy + hh); x.closePath(); x.fill();
-    // its gas: a puffy cloud on deck
-    x.beginPath(); x.arc(sx, sy - hh*.55, Math.min(cw, ch) * .22 * a + .5, 0, 7); x.fill();
-  }
-  x.globalAlpha = 1;
+
   // Middle label
   const midY = gy1 + (H * .64 - gy1) * .5 + fs * .35 + fs * .4;
   x.font = `700 ${fs}px ${body}`; x.textAlign = 'left'; x.fillStyle = ink;
   x.fillText('Liquefied', m, midY);
-  // LNG hull
+
+  // Sea: one calm swell under the carrier
+  const wl = deck + hullH * .72;
+  x.strokeStyle = t25; x.lineWidth = Math.max(2, hullH * .12); x.lineCap = 'round';
+  {
+    const amp = hullH * .1, step = bw / 9, xs = bx0 - bw * .05;
+    x.beginPath();
+    for (let xx = xs; xx <= bx1 + bw * .06; xx += 2) {
+      const yv = wl + Math.sin((xx - bx0) / step * Math.PI) * amp;
+      xx === xs ? x.moveTo(xx, yv) : x.lineTo(xx, yv);
+    }
+    x.stroke();
+  }
+  // bridge and funnel at the stern
+  x.fillStyle = ink;
+  x.fillRect(bx0 + bw*.02, deck - r*.9, bw*.07, r*.9);
+  x.fillRect(bx0 + bw*.035, deck - r*1.18, bw*.025, r*.3);
+  // domes: round tanks, filling with liquid
+  domes.forEach(d => {
+    x.save();
+    x.beginPath(); x.arc(d.cx, d.cy, r, Math.PI, 0); x.closePath();
+    x.fillStyle = t12; x.fill();
+    x.clip();
+    const lvl = d.cy - r * ease(Math.min(1, p));
+    x.fillStyle = t75;
+    x.fillRect(d.cx - r, lvl, 2*r, d.cy - lvl + 1);
+    x.restore();
+    x.beginPath(); x.arc(d.cx, d.cy, r, Math.PI, 0);
+    x.lineWidth = Math.max(2, r * .09); x.strokeStyle = ink; x.stroke();
+  });
+  // LNG hull, drawn over the foot of the tanks
   x.fillStyle = ink;
   x.beginPath();
   x.moveTo(bx0, deck); x.lineTo(bx1 + bw*.02, deck - hullH*.25);
   x.lineTo(bx1 - bw*.05, deck + hullH); x.lineTo(bx0 + bw*.03, deck + hullH); x.closePath(); x.fill();
-  // bridge
-  x.fillRect(bx0 + bw*.02, deck - r*.9, bw*.07, r*.9);
-  // domes: outline + liquid level
-  domes.forEach(d => {
-    x.save();
-    x.beginPath(); x.arc(d.cx, d.cy, r, Math.PI, 0); x.closePath();
-    x.fillStyle = bg; x.fill();
-    x.lineWidth = Math.max(2, r * .09); x.strokeStyle = ink; x.stroke();
-    x.clip();
-    const lvl = d.cy - r * ease(Math.min(1, p));
-    x.fillStyle = ink; x.globalAlpha = .85;
-    x.fillRect(d.cx - r, lvl, 2*r, d.cy - lvl + 1);
-    x.restore();
-  });
-  // flying drops of liquid
-  for (let i = 0; i < N; i++) {
-    const t0 = tStart[i];
-    if (p <= t0 || p >= t0 + FLY) continue;
-    const u = ease((p - t0) / FLY);
-    const c = i % COLS, rr = Math.floor(i / COLS);
-    const sx = m + c * cw + cw/2, sy = gy0 + rr * ch + ch * .62 - hh*.55;
-    const d = domes[i % 4];
-    const tx = d.cx + (((i * 37) % 11) - 5) / 6 * r * .5, ty = d.cy - r * .4;
-    const px = sx + (tx - sx) * u, py = sy + (ty - sy) * u - Math.sin(u * Math.PI) * H * .04;
-    const rad = Math.max(1.2, Math.min(cw, ch) * .22 * (1 - u * .7));
-    x.globalAlpha = 1 - u * .3; x.fillStyle = ink;
-    x.beginPath(); x.arc(px, py, rad, 0, 7); x.fill();
+
+  // Liquid falling from the cloud into the tanks: one drop per tank at a time
+  if (p > 0 && p < 1) {
+    const sy = base - u0 * .05;
+    x.fillStyle = t75;
+    domes.forEach((d, k) => {
+      const u = (p * 9 + k * .25) % 1;
+      const sx = W / 2 + (k - 1.5) * u0 * .12 * Math.sqrt(left);
+      const px = sx + (d.cx - sx) * u, py = sy + (d.cy - r * 1.1 - sy) * u * u;
+      drop(x, px, py, Math.max(3, r * .16));
+    });
   }
-  x.globalAlpha = 1;
+
   // bottom label
   x.font = `600 ${fs * .95}px ${body}`; x.textAlign = 'center'; x.fillStyle = ink;
   const bl = H - fs * .35;

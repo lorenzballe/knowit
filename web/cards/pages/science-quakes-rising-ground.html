@@ -10,7 +10,7 @@
 #sw{display:flex;gap:2.5cqw}
 .sb{flex:1;text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 3.5cqw;cursor:pointer;transition:background .25s,color .25s}
 .sb .h{display:block;font:700 max(2.1cqh,14px)/1.15 var(--body);overflow-wrap:anywhere}
-.sb .n{display:block;font:600 max(1.6cqh,12px)/1.2 var(--mono);opacity:.8;margin-top:.5cqh}
+.sb .n{display:block;font:600 max(1.6cqh,12px)/1.2 var(--body);opacity:.8;margin-top:.5cqh}
 .sb.up.on{background:#d62828;color:#fff;box-shadow:none}
 .sb.down.on{background:var(--k);color:var(--c);box-shadow:none}
 #why{display:flex;flex-direction:column;gap:1cqh}
@@ -42,6 +42,9 @@ const counts = {up: 0, down: 0}, done = {up: false, down: false};
 const N = 90;
 for (let i = 0; i < N; i++) trace.push(0);
 
+const RED = '#d62828', MAGMA = '#e8590c';
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+
 function surf(x){ return G.y0 - S.u * G.B * Math.exp(-Math.pow((x - G.cx) / (G.W * .26), 2)); }
 
 Kit.onShow.card = () => {
@@ -51,26 +54,20 @@ Kit.onShow.card = () => {
   G = {W, H, f, fs, cx: W / 2, sh: Math.max(H * .2, fs * 3.4)};
   G.y0 = G.sh + H * .27; G.B = H * .13;
   G.cy = H * .84;
-  const defs = Kit.mk('defs', {}, svg);
-  const rg = Kit.mk('radialGradient', {id: 'mg', cx: '50%', cy: '45%', r: '60%'}, defs);
-  Kit.mk('stop', {offset: '0%', 'stop-color': '#ffd166'}, rg);
-  Kit.mk('stop', {offset: '55%', 'stop-color': '#f3722c'}, rg);
-  Kit.mk('stop', {offset: '100%', 'stop-color': '#9d0208'}, rg);
-  // seismograph strip
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: G.sh, rx: Math.min(14, H * .03), fill: '#111', opacity: .9}, svg);
-  const lab = Kit.mk('text', {x: 10, y: fs * 1.3, fill: '#bbb', 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 600}, svg);
-  lab.textContent = 'SEISMOGRAPH';
-  G.state = Kit.mk('text', {x: W - 10, y: fs * 1.3, fill: '#bbb', 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700, 'text-anchor': 'end'}, svg);
-  G.trace = Kit.mk('path', {fill: 'none', stroke: '#7CFC9A', 'stroke-width': Math.max(1.6, H * .004), 'stroke-linejoin': 'round'}, svg);
-  // ground
+  // seismograph: just the pen line, written on the page
+  const lab = Kit.mk('text', {x: 2, y: fs * 1.3, 'font-size': fs, style: 'fill:var(--k);font-family:var(--body);font-weight:600'}, svg);
+  lab.textContent = 'Seismograph';
+  G.state = Kit.mk('text', {x: W - 2, y: fs * 1.3, 'font-size': fs, 'text-anchor': 'end', style: 'fill:var(--k);font-family:var(--body);font-weight:700'}, svg);
+  G.trace = Kit.mk('path', {fill: 'none', 'stroke-width': Math.max(2, H * .005), 'stroke-linejoin': 'round', 'stroke-linecap': 'round', style: 'stroke:var(--k)'}, svg);
+  // ground: three flat layers of rock that bulge together
   G.gnd = Kit.mk('g', {}, svg);
-  G.ground = Kit.mk('path', {fill: '#8a6a4d'}, G.gnd);
-  G.l1 = Kit.mk('path', {fill: 'none', stroke: '#5e4633', 'stroke-width': 2, 'stroke-dasharray': '7 5'}, G.gnd);
-  G.l2 = Kit.mk('path', {fill: 'none', stroke: '#5e4633', 'stroke-width': 2, 'stroke-dasharray': '7 5'}, G.gnd);
-  G.top = Kit.mk('path', {fill: 'none', stroke: '#4a7c3a', 'stroke-width': Math.max(4, H * .012), 'stroke-linecap': 'round'}, G.gnd);
-  G.houses = Kit.mk('path', {fill: '#f4f1ea', stroke: '#333', 'stroke-width': 1.2}, G.gnd);
-  G.ch = Kit.mk('ellipse', {fill: 'url(#mg)'}, G.gnd);
-  G.mt = Kit.mk('text', {fill: '#4a0000', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, G.gnd);
+  G.ground = Kit.mk('path', {style: `fill:${tint(30)}`}, G.gnd);
+  G.l1 = Kit.mk('path', {style: `fill:${tint(42)}`}, G.gnd);
+  G.l2 = Kit.mk('path', {style: `fill:${tint(54)}`}, G.gnd);
+  G.top = Kit.mk('path', {fill: 'none', 'stroke-width': Math.max(2.5, H * .007), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: 'stroke:var(--k)'}, G.gnd);
+  G.houses = Kit.mk('path', {style: 'fill:var(--k)'}, G.gnd);
+  G.ch = Kit.mk('ellipse', {style: `fill:${MAGMA}`}, G.gnd);
+  G.mt = Kit.mk('text', {'font-size': fs, 'text-anchor': 'middle', style: 'fill:var(--k);font-family:var(--body);font-weight:700'}, G.gnd);
   G.mt.textContent = 'magma';
   G.q = Kit.mk('g', {}, G.gnd);
   render(); drawTrace(); setState();
@@ -87,10 +84,11 @@ function render(){
   }
   G.top.setAttribute('d', d);
   G.ground.setAttribute('d', d + `L${W},${H}L0,${H}Z`);
-  G.l1.setAttribute('d', d1); G.l2.setAttribute('d', d2);
+  G.l1.setAttribute('d', d1 + `L${W},${H}L0,${H}Z`);
+  G.l2.setAttribute('d', d2 + `L${W},${H}L0,${H}Z`);
   let hd = ''; const hw = Math.min(W * .045, H * .05), hh = hw * .8;
   for (let i = -2; i <= 2; i++){
-    const x = G.cx + i * W * .085, y = surf(x) - 2;
+    const x = G.cx + i * W * .085, y = surf(x) + 1;
     hd += `M${x - hw / 2},${y}L${x - hw / 2},${y - hh}L${x},${y - hh - hw * .5}L${x + hw / 2},${y - hh}L${x + hw / 2},${y}Z`;
   }
   G.houses.setAttribute('d', hd);
@@ -102,7 +100,7 @@ function render(){
 
 function drawTrace(){
   if (!G) return;
-  const {W, sh} = G, x0 = 10, x1 = W - 10, mid = sh * .62, A = sh * .28;
+  const {W, sh} = G, x0 = 2, x1 = W - 2, mid = sh * .62, A = sh * .28;
   let d = '';
   trace.forEach((v, i) => { d += (i ? 'L' : 'M') + (x0 + (x1 - x0) * i / (N - 1)).toFixed(1) + ',' + (mid + v * A).toFixed(1); });
   G.trace.setAttribute('d', d);
@@ -110,8 +108,8 @@ function drawTrace(){
 
 function setState(){
   if (!G) return;
-  const t = dir === 'up' ? ['SHAKING', '#ff5a5a'] : dir === 'down' ? ['QUIET', '#7CFC9A'] : ['STILL', '#bbb'];
-  G.state.textContent = t[0]; G.state.setAttribute('fill', t[1]);
+  const t = dir === 'up' ? ['Shaking', RED] : dir === 'down' ? ['Quiet', 'var(--k)'] : ['Still', 'var(--k)'];
+  G.state.textContent = t[0]; G.state.style.fill = t[1];
 }
 
 function spawn(){
@@ -119,7 +117,7 @@ function spawn(){
   const x = G.cx + (Kit.rnd() - .5) * W * .5;
   const yt = surf(x) + H * .04, yb = G.cy - H * .08;
   const y = yt + Kit.rnd() * Math.max(10, yb - yt);
-  const c = Kit.mk('circle', {cx: x, cy: y, r: 3, fill: '#ff2d2d', stroke: '#ff2d2d', 'stroke-width': 2, 'fill-opacity': .9}, G.q);
+  const c = Kit.mk('circle', {cx: x, cy: y, r: 3, fill: RED, stroke: RED, 'stroke-width': 2.5, 'fill-opacity': 1}, G.q);
   gsap.to(c, {attr: {r: G.f * 1.4}, 'fill-opacity': 0, opacity: 0, duration: fast ? .5 : 1, ease: 'power2.out', onComplete: () => c.remove()});
   counts.up++; Kit.$('nUp').textContent = counts.up + ' quakes';
   amp = Math.min(1, amp + .55);

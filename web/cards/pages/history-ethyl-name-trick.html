@@ -28,7 +28,10 @@
 <script>
 const RIGHT = 0, NAMES = ['“Ethyl”', '“Ethyl alcohol”'];
 const S = {pick: -1, done: false};
-const RED = '#c4232b', LIQ = '#e0a43a', INK = '#16120e';
+const RED = '#c4232b', INK = 'var(--k)', PAPER = '#fbf7ee';
+const GLASS = 'color-mix(in srgb, var(--k) 7%, var(--c))';
+const LIQ = 'color-mix(in srgb, var(--k) 22%, var(--c))';
+const SOFT = 'color-mix(in srgb, var(--k) 55%, var(--c))';
 let G = {};
 
 function draw() {
@@ -49,28 +52,35 @@ function draw() {
     const cp = Kit.mk('clipPath', {id: 'cl' + i}, defs); Kit.mk('path', {d}, cp);
     const g = Kit.mk('g', {class: 'b', 'data-i': i}, svg);
     const inner = Kit.mk('g', {}, g);
-    Kit.mk('path', {d, fill: 'rgba(255,255,255,.35)'}, inner);
-    Kit.mk('rect', {x: x0, y: y0 + bh * 0.26, width: bw, height: bh, fill: LIQ, 'clip-path': `url(#cl${i})`}, inner);
-    Kit.mk('rect', {x: x0 + bw * 0.12, y: yB, width: bw * 0.07, height: bh * 0.5, rx: bw * 0.035, fill: 'rgba(255,255,255,.45)', 'clip-path': `url(#cl${i})`}, inner);
-    const ring = Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': Math.max(2, bw * 0.025), 'stroke-linejoin': 'round'}, inner);
-    Kit.mk('rect', {x: nx0 - bw * 0.04, y: y0 - bh * 0.07, width: nw + bw * 0.08, height: bh * 0.08, rx: bw * 0.03, fill: INK}, inner);
-    // label
+    const sw = Math.max(2, bw * 0.025);
+    // bottle: flat glass, flat liquid with a slightly uneven surface, one ink outline
+    Kit.mk('path', {d, fill: GLASS}, inner);
+    const ls = y0 + bh * 0.26;
+    const wave = `M${x0 - 2},${ls} Q${x0 + bw * 0.25},${ls - bh * 0.012} ${cx},${ls} T${x1 + 2},${ls} L${x1 + 2},${yE + 2} L${x0 - 2},${yE + 2} Z`;
+    Kit.mk('path', {d: wave, fill: LIQ, 'clip-path': `url(#cl${i})`}, inner);
+    Kit.mk('path', {d: `M${x0 - 2},${ls} Q${x0 + bw * 0.25},${ls - bh * 0.012} ${cx},${ls} T${x1 + 2},${ls}`, fill: 'none', stroke: INK, 'stroke-width': sw * 0.6, 'clip-path': `url(#cl${i})`}, inner);
+    const ring = Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, inner);
+    // cork-style cap, flat ink
+    Kit.mk('rect', {x: nx0 - bw * 0.04, y: y0 - bh * 0.07, width: nw + bw * 0.08, height: bh * 0.08, rx: bw * 0.02, fill: INK}, inner);
+    // paper label, slightly askew like a hand-pasted sticker
     const lx = x0 + bw * 0.09, lw = bw * 0.82, ly = yB + bh * 0.05, lh = yE - ly - bh * 0.08;
-    Kit.mk('rect', {x: lx, y: ly, width: lw, height: lh, rx: bw * 0.04, fill: '#fbf7ee', stroke: INK, 'stroke-width': 1.5}, inner);
-    const fs = Math.max(12, Math.min(f * 1.35, lw / 5.2, lh / 4.4));
-    const t = (txt, y, col, w, op, parent) => { const e = Kit.mk('text', {x: cx, y, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: col, 'font-family': 'var(--display)', 'font-weight': w, 'font-size': fs, opacity: op}, parent); e.textContent = txt; return e; };
     const mid = ly + lh / 2;
-    const before = Kit.mk('g', {opacity: S.done ? 0 : 1}, inner), after = Kit.mk('g', {opacity: S.done ? 1 : 0}, inner);
+    const lab = Kit.mk('g', {transform: `rotate(${i ? 1.2 : -1.2} ${cx} ${mid})`}, inner);
+    Kit.mk('rect', {x: lx, y: ly, width: lw, height: lh, rx: bw * 0.02, fill: PAPER, stroke: INK, 'stroke-width': 1.5}, lab);
+    const fs = Math.max(12, Math.min(f * 1.35, lw / 4.6, lh / 4.6));
+    const t = (txt, y, col, w, op, parent, fam, size) => { const e = Kit.mk('text', {x: cx, y, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: col, 'font-family': fam || 'var(--display)', 'font-weight': w, 'font-size': size || fs, opacity: op}, parent); e.textContent = txt; return e; };
+    const before = Kit.mk('g', {opacity: S.done ? 0 : 1}, lab), after = Kit.mk('g', {opacity: S.done ? 1 : 0}, lab);
     if (i === 0) {
-      t('ETHYL', mid, INK, 800, 1, before);
-      t('TETRA', mid - fs * 1.35, '#9a9187', 700, 1, after);
-      t('ETHYL', mid, INK, 800, 1, after);
-      t('LEAD', mid + fs * 1.35, RED, 900, 1, after);
+      t('Ethyl', mid, INK, 800, 1, before);
+      t('tetra', mid - fs * 1.4, SOFT, 600, 1, after, 'var(--body)', fs * 0.8);
+      t('Ethyl', mid, INK, 800, 1, after);
+      t('lead', mid + fs * 1.4, RED, 800, 1, after, 'var(--body)', fs * 0.95);
     } else {
-      t('ETHYL', mid - fs * 0.68, INK, 800, 1, before); t('ALCOHOL', mid + fs * 0.68, INK, 800, 1, before);
-      t('ETHYL', mid - fs * 0.68, INK, 800, 1, after); t('ALCOHOL', mid + fs * 0.68, INK, 800, 1, after);
+      const gap = fs * 0.85;
+      t('Ethyl', mid - gap, INK, 800, 1, before); t('alcohol', mid + gap, INK, 800, 1, before);
+      t('Ethyl', mid - gap, INK, 800, 1, after); t('alcohol', mid + gap, INK, 800, 1, after);
     }
-    const cap = Kit.mk('text', {x: cx, y: yE + capSpace * 0.55, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: i === 0 ? RED : 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': cs, opacity: S.done ? 1 : 0}, svg);
+    const cap = Kit.mk('text', {x: cx, y: yE + capSpace * 0.55, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: i === 0 ? RED : 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': cs, opacity: S.done ? 1 : 0}, svg);
     cap.textContent = i === 0 ? 'toxic lead' : 'no lead';
     if (S.pick === i) ring.setAttribute('stroke-width', Math.max(4, bw * 0.05));
     G[i] = {inner, ring, before, after, cap, bw};
