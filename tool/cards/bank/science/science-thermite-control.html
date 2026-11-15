@@ -11,10 +11,15 @@ Wow: crossing the explosive's moment, the dial pins and turns red, the lid flies
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#stage{display:block;position:relative;flex:1;min-height:0}
+#pic{position:absolute;left:0;top:0;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
 #pic .fade{transition:opacity .45s ease}
-.say{overflow-wrap:break-word}
+.q{margin-bottom:0}
+.say{overflow-wrap:break-word;line-height:1.15;margin-top:0;margin-bottom:0}
+.keep{margin-top:1px;margin-bottom:0;padding-top:2px;padding-bottom:2px;line-height:1.12}
+.keep b{margin-top:0;margin-bottom:0;line-height:1.1}
+.foot{margin-top:0;padding-top:0}
+.foot .src{line-height:1.15;overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Scrub the timeline · gas or liquid">
   <div class="in">
@@ -33,6 +38,7 @@ Wow: crossing the explosive's moment, the dial pins and turns red, the lid flies
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say');
   const TXT = '#10100c', EXC = '#b3200f', THC = '#00835b';
+  const FINAL = 'The explosive becomes <b>gas</b>, which swells and shoves everything at once. Thermite gives only <b>solids and liquids</b>, so its energy stays under control.';
   // flat tints of the card's ink on the card's colour, and of the two meaning colours
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const mixC = (col, n) => `color-mix(in srgb, ${col} ${n}%, var(--c))`;
@@ -171,7 +177,23 @@ Wow: crossing the explosive's moment, the dial pins and turns red, the lid flies
     }
   }
 
+  // reserve the stage height it will have once the why and the keep line are shown,
+  // so the drawing keeps its size when the reader answers
+  function reserve() {
+    if (done) return;
+    const st = Kit.$('stage'), keep = Kit.$('keep');
+    const prevSay = say.innerHTML, hadGone = keep.classList.contains('gone');
+    st.style.flex = '1'; st.style.height = ''; st.style.minHeight = '0';
+    say.innerHTML = FINAL;
+    keep.classList.remove('gone');
+    const h = st.getBoundingClientRect().height;
+    say.innerHTML = prevSay;
+    if (hadGone) keep.classList.add('gone');
+    if (h > 40) { st.style.flex = 'none'; st.style.height = Math.floor(h) + 'px'; }
+  }
+
   function layout() {
+    reserve();
     svg.innerHTML = '';
     const f = Kit.fitSvg(svg);
     W = f.W; H = f.H;
@@ -188,7 +210,7 @@ Wow: crossing the explosive's moment, the dial pins and turns red, the lid flies
     G.gh = cl(H * .27, fs * 3.7, fs * 7);
     G.gb = H - fs * .8; G.gt = G.gb - G.gh;
     G.statY = G.gt - fs * .6;
-    const fb = Math.round(G.statY - fs * 1.55), fh = fb - top;
+    const fb = Math.round(G.statY - fs * 1.55), fh = Math.max(10, fb - top);
     const bw = Math.min(W * .36, fh * 1.1);
     E.L = {cx: W * .28, top, fb, fh, bw};
     E.R = {cx: W * .72, top, fb, fh, bw};
@@ -266,8 +288,9 @@ Wow: crossing the explosive's moment, the dial pins and turns red, the lid flies
     L.smokeG.setAttribute('opacity', s > 0 ? .75 * (1 - s * .55) : 0);
     L.smoke.forEach((c, i) => {
       const dist = s * L.bw * (.35 + .25 * c._k), rad = fs * (.6 + s * (1.2 + c._k));
-      c.setAttribute('cx', cl(c._x + Math.cos(c._a) * dist + Math.sin(ph * .5 + i) * fs * .3 * s, rad, W - rad));
-      c.setAttribute('cy', cl(c._y + Math.sin(c._a) * dist - s * fs * 1.5, rad, H - rad));
+      const lo = rad, hx = Math.max(rad, W - rad), hy = Math.max(rad, H - rad);
+      c.setAttribute('cx', cl(c._x + Math.cos(c._a) * dist + Math.sin(ph * .5 + i) * fs * .3 * s, lo, hx));
+      c.setAttribute('cy', cl(c._y + Math.sin(c._a) * dist - s * fs * 1.5, lo, hy));
       c.setAttribute('r', rad);
       c.setAttribute('opacity', s > 0 ? 1 : 0);
     });
@@ -335,7 +358,7 @@ Wow: crossing the explosive's moment, the dial pins and turns red, the lid flies
 
   function finish() {
     done = true;
-    say.innerHTML = 'The explosive becomes <b>gas</b>, which swells and shoves everything at once. Thermite gives only <b>solids and liquids</b>, so its energy stays under control.';
+    say.innerHTML = FINAL;
     Kit.show('keep');
     Kit.haptic('light');
     if (!Kit.calm) {
@@ -368,7 +391,7 @@ Wow: crossing the explosive's moment, the dial pins and turns red, the lid flies
   svg.addEventListener('pointerup', end);
   svg.addEventListener('pointercancel', end);
 
-  // when the text below grows, redraw at the new size instead of shrinking the picture
+  // when the stage box changes, redraw at the new size
   let rz = 0;
   if (window.ResizeObserver) new ResizeObserver(() => {
     if (!built) return;

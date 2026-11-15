@@ -11,23 +11,25 @@
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;background:none;border:0;box-shadow:none}
-#pic{flex:1;min-height:0;width:100%;height:100%;display:block}
-#ctl{position:relative;padding:.4cqh 4cqw 1.2cqh;background:none}
-#len{-webkit-appearance:none;appearance:none;display:block;width:100%;height:max(4.4cqh,32px);background:transparent;margin:0;touch-action:none;cursor:ew-resize;--p:0%}
+#stage{display:flex;flex-direction:column;flex:1 1 0;min-height:0;background:none;border:0;box-shadow:none}
+#pic{flex:1 1 0;min-height:0;width:100%;height:auto;display:block}
+#ctl{position:relative;padding:0 4cqw .2cqh;background:none;flex:0 0 auto}
+#len{-webkit-appearance:none;appearance:none;display:block;width:100%;height:max(4.2cqh,32px);background:transparent;margin:0;touch-action:none;cursor:ew-resize;--p:0%}
 #len::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:99px;background:linear-gradient(90deg,rgba(255,255,255,.9) var(--p),rgba(255,255,255,.22) var(--p));box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
 #len::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#085941 0 18%,#ffffff 19%);border:2px solid #085941;box-shadow:0 0 0 1.5px #ffffff;margin-top:calc((max(.9cqh,6px) - max(3.4cqh,26px))/2)}
 #len::-moz-range-track{height:max(.9cqh,6px);border-radius:99px;background:rgba(255,255,255,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
 #len::-moz-range-progress{height:max(.9cqh,6px);border-radius:99px;background:rgba(255,255,255,.9)}
 #len::-moz-range-thumb{width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#085941 0 18%,#ffffff 19%);border:2px solid #085941;box-shadow:0 0 0 1.5px #ffffff}
-#marks{position:relative;height:max(1.9cqh,14px);margin:0 calc(max(3.4cqh,26px)/2)}
+#marks{position:relative;height:max(1.7cqh,14px);margin:0;flex:0 0 auto}
 #marks span{position:absolute;top:0;transform:translateX(-50%);font:600 max(1.5cqh,12px)/1 var(--mono);color:rgba(255,255,255,.72);letter-spacing:.04em;white-space:nowrap;transition:color .3s}
 #marks span.on{color:#ffffff}
-#marks span.end{color:#0a2a5e}
+#marks span.end{color:#0a2a5e;transform:translateX(-100%)}
 #marks span.end.on{color:#0a2a5e}
-#why{display:flex;flex-direction:column;gap:.5cqh}
-#why .big{font:800 max(2.6cqh,16px)/1.1 var(--display)}
-#why .body{font:500 max(1.75cqh,13px)/1.3 var(--body)}
+#why{display:flex;flex-direction:column;gap:0;margin:0}
+#why p{margin:0}
+#why .big{font:800 max(2.1cqh,15px)/1.05 var(--display)}
+#why .body{font:500 max(1.45cqh,12px)/1.15 var(--body)}
+#keep{margin-top:.2cqh;margin-bottom:0;padding-top:.4cqh;padding-bottom:.4cqh;line-height:1.15}
 .say{font:600 max(1.9cqh,13px)/1.3 var(--body)}
 #pic .mono{font-family:var(--mono)}
 #pic .hand{font-family:var(--hand)}
@@ -60,7 +62,7 @@
   const CIRC = 'M100,0 A100,100 0 1,1 -100,0 A100,100 0 1,1 100,0';
   const st = {t: 0};
   let n = 3, r = 0, state = '', revealed = false, built = false, started = false, lastDec = 0;
-  let W = 0, H = 0, f = 13, cx = 0, cy = 0, R = 0, bR = 0, bx = 0, by = 0, bigTw = null, lastW = 0, lastH = 0;
+  let W = 0, H = 0, f = 13, cx = 0, cy = 0, R = 0, bR = 0, bx = 0, by = 0, bigTw = null, lastW = 0, lastH = 0, dimFs = 12;
   const G = {}, trail = [];
   const pBig = {x: 0, y: -100}, p421 = {x: 0, y: -100};
 
@@ -81,8 +83,9 @@
   // The ruler under the slider.
   const marks = Kit.$('marks'), markEls = [];
   [[3, '3'], [1e3, '1K'], [1e6, '1M'], [1e9, '1B'], [MAX, '186B']].forEach(([v, s]) => {
-    const e = document.createElement('span'); e.textContent = s; e.style.left = (posOf(v) * 100) + '%';
-    if (v === MAX) e.className = 'end';
+    const e = document.createElement('span'); e.textContent = s;
+    if (v === MAX) { e.className = 'end'; e.style.left = '100%'; }
+    else e.style.left = 'calc(max(3.4cqh,26px)/2 + (100% - max(3.4cqh,26px)) * ' + posOf(v) + ')';
     marks.appendChild(e); markEls.push([posOf(v), e]);
   });
   const lightMarks = t => markEls.forEach(([p, e]) => e.classList.toggle('on', t >= p - .002));
@@ -93,13 +96,13 @@
     const fit = Kit.fitSvg(svg); W = fit.W; H = fit.H;
     const bb = svg.getBoundingClientRect(); lastW = bb.width; lastH = bb.height;
     f = Math.max(12, Math.min(16, fit.f || 13));
-    R = Math.max(36, Math.min(W * .29, (H - 7.8 * f) / 2));
-    cx = W / 2; cy = 4.2 * f + R;
+    R = Math.max(16, Math.min(W * .29, (H - 8.6 * f) / 2));
+    cx = W / 2; cy = 5.2 * f + R;
     const free = H - (cy + R + 3.3 * f); if (free > 0) cy += free * .45;
     // DETAIL A sits on the left, always below the readout block.
     bR = Math.max(24, Math.min(3 * f, (cx - R - 24) / 2));
     bx = 17 + bR;
-    const topY = 5.8 * f;
+    const topY = 6 * f;
     by = Math.max(topY + 12 + .5 * f + bR, cy - R * .38);
 
     // ---- defs: grid, glow ----
@@ -136,14 +139,15 @@
     G.pulse = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-width': 2, opacity: 0}, svg);
 
     // dimension
-    const yd = cy + R + 1.2 * f;
+    const yd = cy + R + 1.1 * f;
     G.dimG = Kit.mk('g', {}, svg);
     const dg = Kit.mk('g', {stroke: INK, 'stroke-width': .8, opacity: .75}, G.dimG);
     Kit.mk('line', {x1: cx - R, x2: cx - R, y1: cy + .4 * f, y2: yd + .45 * f}, dg);
     Kit.mk('line', {x1: cx + R, x2: cx + R, y1: cy + .4 * f, y2: yd + .45 * f}, dg);
     Kit.mk('line', {x1: cx - R, x2: cx + R, y1: yd, y2: yd, 'stroke-width': 1}, dg);
     Kit.mk('path', {d: `M${cx - R + 9},${yd - 3.5} L${cx - R},${yd} L${cx - R + 9},${yd + 3.5}Z M${cx + R - 9},${yd - 3.5} L${cx + R},${yd} L${cx + R - 9},${yd + 3.5}Z`, fill: INK, stroke: 'none'}, G.dimG);
-    G.dimT = T(G.dimG, cx, yd + 1.5 * f, '', 'mono', {'text-anchor': 'middle', 'font-size': Math.max(12, f * .92), 'font-weight': 700, 'letter-spacing': '.06em'});
+    dimFs = Math.max(12, f * .92);
+    G.dimT = T(G.dimG, cx, yd + 1.4 * f, '', 'mono', {'text-anchor': 'middle', 'font-size': dimFs, 'font-weight': 700, 'letter-spacing': '.06em'});
 
     G.dyn = Kit.mk('g', {}, svg);
 
@@ -173,9 +177,9 @@
 
     // readout, top left: label, count, drawing scale of the gold loop
     G.readG = Kit.mk('g', {}, svg);
-    T(G.readG, 14, 1.5 * f, 'RIVAL LOOP', 'mono', {'font-size': 12, 'font-weight': 600, 'letter-spacing': '.08em', opacity: .8});
-    G.readBig = T(G.readG, 14, 3.25 * f, '3', 'disp', {'font-size': f * 1.55, 'font-weight': 800});
-    G.scaleT = T(G.readG, 14, 4.65 * f, '', 'mono', {'font-size': 12, 'font-weight': 600, 'letter-spacing': '.04em', fill: GOLD});
+    T(G.readG, 14, 1.2 * f, 'RIVAL LOOP', 'mono', {'font-size': 12, 'font-weight': 600, 'letter-spacing': '.08em', opacity: .8});
+    G.readBig = T(G.readG, 14, 3.3 * f, '3', 'disp', {'font-size': f * 1.45, 'font-weight': 800});
+    G.scaleT = T(G.readG, 14, 4.8 * f, '', 'mono', {'font-size': 12, 'font-weight': 600, 'letter-spacing': '.04em', fill: GOLD});
 
     // the stamp, top right
     G.stamp = Kit.mk('g', {}, svg);
@@ -229,6 +233,13 @@
   }
   const thump = k => gsap.fromTo(G.stampIn, {scale: k, transformOrigin: '50% 50%'}, {scale: 1, duration: .45, ease: 'back.out(3)', overwrite: true});
 
+  function fitDim() {
+    // keep the dimension text inside the sheet
+    G.dimT.setAttribute('font-size', dimFs);
+    const bw = G.dimT.getBBox().width, room = W - 16;
+    if (bw > room && bw > 0) G.dimT.setAttribute('font-size', Math.max(8, dimFs * room / bw * .97));
+  }
+
   function render() {
     if (!built) return;
     n = nOf(st.t); r = R * 3 / n;
@@ -272,6 +283,7 @@
     G.readBig.textContent = fmt(n);
     G.scaleT.textContent = 'GOLD SCALE 1 : ' + fmtS(n / 3);
     G.dimT.textContent = n === 3 ? '3 NUMBERS: 4, 2, 1' : n >= MAX ? 'AT LEAST 186 BILLION NUMBERS' : fmt(n).toUpperCase() + ' NUMBERS';
+    fitDim();
     const s = n === 3 ? 'self' : n >= MAX ? 'open' : 'out';
     if (s !== state) { const had = state !== ''; state = s; setStamp(s, had); if (s === 'open' && !revealed) reveal(); }
     else fitStamp();

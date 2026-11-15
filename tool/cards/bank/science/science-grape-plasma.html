@@ -13,10 +13,14 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 /* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
-#stage{position:relative;min-height:0}
+#stage{position:relative;flex:0 0 30cqh !important;height:30cqh !important;min-height:30cqh !important;max-height:none !important;margin-top:0;margin-bottom:0;contain:size layout}
+#card.ended #stage{flex:0 0 36cqh !important;height:36cqh !important;min-height:36cqh !important}
 #art{position:absolute;left:0;top:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 #art:active{cursor:grabbing}
-#why .body{margin:0}
+#why{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;flex-shrink:0}
+#why .body{margin:0;line-height:1.12;font-size:.78em}
+#keep{margin-top:1px;margin-bottom:0;padding-top:1px;padding-bottom:1px;flex-shrink:0;line-height:1.12;font-size:.9em}
+.foot{margin-top:1px;padding-top:0;flex-shrink:0}
 </style>
 <!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
      (in the app, in the reader's language). The id stays "card". -->
@@ -231,10 +235,12 @@ function setT(t) {
 function finish() {
   if (done) return;
   done = true;
+  Kit.$('card').classList.add('ended');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   Kit.haptic('success');
   if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, duration: .5, stagger: .12, ease: 'power2.out'});
   requestAnimationFrame(() => requestAnimationFrame(draw));
+  setTimeout(() => { if (R && sizeKey() !== size) draw(); }, 700);
 }
 
 function go(to) {

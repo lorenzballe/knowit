@@ -10,14 +10,19 @@
 <script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#stage{position:relative;display:flex;flex:1;min-height:0;overflow:hidden;background:none;border:0;border-radius:0;box-shadow:none}
-#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#stage{position:relative;display:flex;flex:1 1 0;min-height:27cqh;overflow:hidden;background:none;border:0;border-radius:0;box-shadow:none}
+#cv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
 #word{position:absolute;left:50%;top:33%;transform:translate(-50%,-50%);font:700 max(2.5cqh,15px)/1.1 var(--display);letter-spacing:0;color:var(--k);background:var(--c);padding:.12em .4em;border-radius:.18em;white-space:nowrap;pointer-events:none;opacity:0;max-width:none}
 #word.rail{color:var(--k)}
-#why{margin:0}
+#why{margin:0;flex:none}
 #why .body{margin:0;font-size:max(2.15cqh,14px);line-height:1.42}
+.answered #why .body{font-size:max(1.5cqh,11px);line-height:1.15}
+.answered #keep{margin-top:.1em;padding-top:.3em;padding-bottom:.3em;font-size:max(1.4cqh,10.5px);line-height:1.15}
+.answered #keep b{margin-bottom:.1em}
+.answered .in{gap:.3em}
+.answered .foot{margin-top:0;padding-top:0}
+.answered .foot .src{font-size:max(1.2cqh,9px);line-height:1.12}
 #rail{align-self:flex-start}
-.answered .q{font-size:max(2.4cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="human_body" data-kind="Drag the night · road or rail">
   <div class="in">
@@ -91,7 +96,6 @@
     if (!W || !H) return;
     word.style.fontSize = '';
     const base = parseFloat(getComputedStyle(word).fontSize) || 15;
-    // 16 glyphs (longest phrase) at ~0.62em + .14em spacing, with room for the elastic overshoot
     const maxW = Math.max(40, W - fs * 2), est = 16 * .76 * base * 1.12;
     const size = est > maxW ? base * maxW / est : base;
     word.style.fontSize = size + 'px';
@@ -136,7 +140,6 @@
 
   function quad(a, b, c, d) { x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.lineTo(c[0], c[1]); x.lineTo(d[0], d[1]); x.closePath(); x.fill(); }
   function ring(z) { PROF.forEach((p, j) => { const q = proj(p[0], p[1], z); j ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1]); }); x.closePath(); }
-  // every span [z0, z0+len) along the tunnel, wrapped around the loop and clipped at the windscreen
   function spans(z0, len, fn) {
     const z = wrapZ(z0);
     for (const zz of z > RANGE - len ? [z, z - RANGE] : [z]) {
@@ -145,7 +148,6 @@
     }
   }
 
-  // the tunnel: bands of wall, lit in turn by a lamp above, each with its pool of light on the road
   function tunnel() {
     const bands = [];
     for (let i = 0; i < RANGE / 1.5; i++) spans(i * 1.5, 1.5, (zs, ze, z) => bands.push([zs, ze, z, i % 2 === 0]));
@@ -166,7 +168,6 @@
     }
   }
 
-  // lane lines, which slide in and become rails on sleepers under a wire
   function track(m, danger, iv) {
     if (m > .01) {
       x.globalAlpha = iv * clamp(m * 1.5);
@@ -204,7 +205,6 @@
     }
   }
 
-  // the driver's gaze: a scan path that roams the scene, then shrinks onto the lane line
   function scanPath(kLock, m, iv, dt) {
     for (const g of gaze) {
       const dart = (1 - kLock) * (1 + m * .3);
@@ -217,12 +217,10 @@
     }
     const ink = rgb(CK), r = Math.max(3, fs * .3);
     x.lineCap = 'round'; x.lineJoin = 'round';
-    // the path between fixations, outlined in card colour so it reads over the lamps
     x.globalAlpha = .85 * iv;
     x.beginPath(); gaze.forEach((g, i) => i ? x.lineTo(g.px, g.py) : x.moveTo(g.px, g.py));
     x.strokeStyle = rgb(CC); x.lineWidth = 4.5; x.stroke();
     x.strokeStyle = ink; x.lineWidth = 2; x.stroke();
-    // the fixations; the last one is where the eye is now
     x.globalAlpha = iv;
     gaze.forEach((g, i) => {
       const now = i === gaze.length - 1, rr = now ? r * 1.7 : r;
@@ -266,7 +264,6 @@
       x.fillStyle = rgb(RED, .7 * danger);
       x.fillRect(camX > 0 ? W - fs * .45 : 0, 0, fs * .45, H);
     }
-    // heavy eyelids closing in
     const lid = H * .17 * h * h * (.75 + .25 * Math.sin(time * .9)) * (1 - m * .7);
     if (lid > .5) {
       const side = lid * 1.5, mid = lid * .8, ctrl = 2 * mid - side;
@@ -317,7 +314,6 @@
     x.beginPath(); x.moveTo(a, y); x.lineTo(b, y); x.stroke();
     x.strokeStyle = rgb(CK); x.lineWidth = 2.5;
     x.beginPath(); x.moveTo(a, y); x.lineTo(hx, y); x.stroke();
-    // the moon rising through the night
     x.beginPath(); x.arc(hx, y, fs * .42, 0, 6.283); x.fillStyle = rgb(CK); x.fill();
     x.beginPath(); x.arc(hx + fs * .16, y - fs * .08, fs * .34, 0, 6.283); x.fillStyle = rgb(CC); x.fill();
     if (!touched) {
@@ -344,10 +340,12 @@
   }
   function toRail() {
     if (mode === 'rail') return;
+    // keep the drawing area from collapsing once the answer takes room
+    const h0 = stage.getBoundingClientRect().height;
+    if (h0 > 0) stage.style.minHeight = Math.round(h0 * .95) + 'px';
     mode = 'rail'; t = 1; Kit.hide('rail'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
     card.classList.add('answered'); Kit.haptic('success');
     word.classList.add('rail'); word.style.opacity = 1; scramble('THE RAILS STEER');
-    // the stage shrinks once the answer appears: re-fit everything to it
     requestAnimationFrame(() => layout());
     if (Kit.calm) { M.m = 1; return; }
     gsap.to(M, {m: 1, duration: 2.4, ease: 'power3.inOut'});

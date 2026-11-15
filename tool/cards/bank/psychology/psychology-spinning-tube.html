@@ -62,11 +62,12 @@ function pal(){
   return PAL;
 }
 
-function rr(x, X, Y, w, h, r){ r = Math.max(0, Math.min(r, w/2, h/2)); x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+w,Y,X+w,Y+h,r); x.arcTo(X+w,Y+h,X,Y+h,r); x.arcTo(X,Y+h,X,Y,r); x.arcTo(X,Y,X+w,Y,r); x.closePath(); }
+function rr(x, X, Y, w, h, r){ w = Math.max(0, w); h = Math.max(0, h); r = Math.max(0, Math.min(r, w/2, h/2)); x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+w,Y,X+w,Y+h,r); x.arcTo(X+w,Y+h,X,Y+h,r); x.arcTo(X,Y+h,X,Y,r); x.arcTo(X,Y,X+w,Y,r); x.closePath(); }
 
 // a plain cardboard tube seen from the side, open end facing right: flat fills, one outline
 function body(x, cx, cy, w, h){
-  const P = pal(), e = h*.17, L = cx - w/2 + e, R = cx + w/2 - e, T = cy - h/2, B = cy + h/2;
+  if (!(w > 1) || !(h > 1)) return;
+  const P = pal(), e = Math.max(0.5, h*.17), L = cx - w/2 + e, R = cx + w/2 - e, T = cy - h/2, B = cy + h/2;
   const lw = Math.max(1.4, h*.035);
   x.save();
   x.lineJoin = 'round'; x.lineCap = 'round'; x.lineWidth = lw; x.strokeStyle = P.line;
@@ -88,6 +89,7 @@ function body(x, cx, cy, w, h){
 }
 
 function letter(x, L, t, cx, cy, h, a){
+  if (!(h > 1)) return;
   const p = t + OFF[L], c = Math.cos(p); if (c <= 0.02) return;
   x.save(); x.globalAlpha = Math.min(1, a);
   x.translate(cx, cy + Math.sin(p)*h*.42); x.scale(1, c);
@@ -98,7 +100,7 @@ function letter(x, L, t, cx, cy, h, a){
 
 // the stitched picture: each letter drawn flat and face-on, as strong as the share of time it faced you
 function stitched(x, L, share, cx, cy, h){
-  if (share < .03) return;
+  if (share < .03 || !(h > 1)) return;
   x.save(); x.globalAlpha = Math.min(1, share);
   x.fillStyle = COL[L]; x.font = `900 ${h*.72}px ${pal().display}`;
   x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(L, cx, cy + h*.02);
@@ -108,7 +110,7 @@ function stitched(x, L, share, cx, cy, h){
 // a fingertip coming down from above, nail towards the viewer
 function finger(x, fx, y0, y1, fw){
   const skin = '#eebf9c', nail = '#f6d3bc', edge = '#6e4230';
-  const h = y1 - y0; if (h < fw*.8) return;
+  const h = y1 - y0; if (!(fw > 1) || h < fw*.8) return;
   x.save(); x.lineJoin = 'round'; x.lineCap = 'round';
   x.lineWidth = Math.max(1.5, fw*.06); x.strokeStyle = edge;
   x.beginPath();
@@ -132,12 +134,13 @@ function finger(x, fx, y0, y1, fw){
 function draw(){
   if (!S) return;
   const {x, W, H} = S, P = pal(), ink = P.ink;
+  if (!(W > 2) || !(H > 2)) return;
   x.clearRect(0, 0, W, H);
   const f = Math.max(12, Math.min(W*.042, H*.05)), FONT = `600 ${f}px ${P.body}`;
   x.font = FONT; x.textBaseline = 'alphabetic'; x.textAlign = 'left';
   // snapshots: one small picture per instant, laid out like frames on a page
   x.fillStyle = P.soft; x.fillText('Each instant, one image', 0, f);
-  const n = 8, gap = W*.015, tw = (W - gap*(n-1))/n, thh = Math.min(tw*.55, H*.1), sy = f*1.6 + thh/2 + 2;
+  const n = 8, gap = W*.015, tw = (W - gap*(n-1))/n, thh = Math.max(1, Math.min(tw*.55, H*.1)), sy = f*1.6 + thh/2 + 2;
   for (let i = 0; i < n; i++){
     const cx = i*(tw+gap) + tw/2, t = strip.length ? strip[Math.max(0, strip.length - n + i)] ?? th : th;
     body(x, cx, sy, tw*.9, thh*.9);
@@ -149,7 +152,7 @@ function draw(){
   // big view
   const barsH = f*3.6, top = sy + thh/2 + f*2.2, bot = H - barsH - f*.6;
   x.font = FONT; x.textAlign = 'left'; x.fillStyle = P.soft; x.fillText('What your brain stitches', 0, top - f*.5);
-  const reg = bot - top, bh = Math.min(reg*.5, W*.3), bw = Math.min(W*.86, bh*2.6), cx = W/2, cy = top + reg*.62;
+  const reg = Math.max(0, bot - top), bh = Math.max(0, Math.min(reg*.5, W*.3)), bw = Math.max(0, Math.min(W*.86, bh*2.6)), cx = W/2, cy = top + reg*.62;
   body(x, cx, cy, bw, bh);
   if (!pressed) { letter(x,'O',th,cx,cy,bh,1); letter(x,'X',th,cx,cy,bh,1); }
   else {
@@ -165,7 +168,7 @@ function draw(){
     x.fillText('finger on ' + pressed, fx - fw*.8, top + f*1.4); x.textAlign = 'left';
   }
   // bars
-  const lw = f*4.6, bx = lw, bwid = W - lw - f*3.4;
+  const lw = f*4.6, bx = lw, bwid = Math.max(0, W - lw - f*3.4);
   [['O', po], ['X', px]].forEach(([L, p], i) => {
     const y = H - barsH + i*f*1.8 + f*.3;
     x.fillStyle = ink; x.font = FONT; x.textAlign = 'left'; x.fillText(L + ' seen', 0, y + f*.85);
@@ -201,7 +204,10 @@ Kit.$('ctl').addEventListener('click', e => {
   if (Kit.calm) for (let i = 0; i < 60; i++) step(1/60);
 });
 
-Kit.onShow.card = () => { PAL = null; S = Kit.fitCanvas(Kit.$('cv')); draw(); };
+function layout(){ S = Kit.fitCanvas(Kit.$('cv')); draw(); }
+new ResizeObserver(() => layout()).observe(Kit.$('cv'));
+
+Kit.onShow.card = () => { PAL = null; layout(); };
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   Kit.$('ctl').children[0].click(); await new Promise(r => setTimeout(r, 900));

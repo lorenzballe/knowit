@@ -22,6 +22,11 @@
 @keyframes blink{to{opacity:.2}}
 .say b{color:#a31a0e}
 .keep b{color:#a31a0e}
+.foot{flex:none;height:auto;min-height:0;max-width:100%;overflow:visible}
+.foot .src{display:block;max-width:100%;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.2}
+.answered .say{margin-top:0;margin-bottom:0;line-height:1.2}
+.answered .keep{margin-top:.2cqh;margin-bottom:0;padding-top:.2cqh;padding-bottom:.2cqh;line-height:1.2}
+.answered .foot{margin-top:.1cqh}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Hold · chain reaction">
   <div class="in">
@@ -40,7 +45,7 @@
 <script>
 (() => {
   gsap.registerPlugin(MotionPathPlugin);
-  const svg = Kit.$('pic'), btn = Kit.$('hold'), say = Kit.$('say'), card = Kit.$('card');
+  const svg = Kit.$('pic'), btn = Kit.$('hold'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
   const N = 1000;                                   // 1,000 dots: one dot = 0.1% of the uranium
   const ORANGE = '#a31a0e', HOT = '#10100c', U = '#10100c', INK = '#10100c';
   const SHAPES = [[40, 25], [50, 20], [25, 40]];    // the block reshapes to fit the phone, always 1,000 dots
@@ -90,6 +95,7 @@
 
   // ---------- drawing ----------
   let W = 0, H = 0, C = 40, R = 25, cell = 8, gx0 = 0, gy0 = 0, rad = 3, mark = 6;
+  let bnd = {x0: 0, x1: 1, y0: 0, y1: 1};
   let chain = makeChain(40, 25), inChain = new Set();
   let dots = [], tl = null, rv = null, done = false, holding = false, started = false, told = false, idle = [];
   let E = {};
@@ -131,7 +137,7 @@
     const showCap = zoneBot - zoneTop > 160;
     const areaTop = zoneTop + 2, areaBot = showCap ? zoneBot - 22 : zoneBot;
     mark = 7;
-    const avW = W - mark * 2 - 6, avH = Math.max(20, areaBot - areaTop - mark * 2);
+    const avW = Math.max(20, W - mark * 2 - 6), avH = Math.max(20, areaBot - areaTop - mark * 2);
     let best = SHAPES[0], bc = 0;
     SHAPES.forEach(s => { const c = Math.min(avW / s[0], avH / s[1]); if (c > bc + .05) { bc = c; best = s; } });
     [C, R] = best; cell = Math.max(2.4, Math.min(16, bc));
@@ -144,10 +150,11 @@
     const cp = Kit.mk('clipPath', {id: 'zone'}, d);
     const blockBot = gy0 + gh + mark + 2;
     const clipBot = showCap ? blockBot : Math.max(zoneBot + 4, blockBot);
-    Kit.mk('rect', {x: -30, y: zoneTop - 4, width: W + 60, height: Math.max(1, clipBot - zoneTop + 4)}, cp);
+    Kit.mk('rect', {x: 0, y: zoneTop - 4, width: W, height: Math.max(1, clipBot - zoneTop + 4)}, cp);
+    bnd = {x0: rad + 1, x1: W - rad - 1, y0: zoneTop + rad, y1: clipBot - rad};
 
     // glows behind the block
-    E.glowU = Kit.mk('ellipse', {cx: W / 2, cy: gy0 + gh / 2, rx: gw * .62, ry: gh * .78, fill: 'url(#gU)', opacity: .85}, svg);
+    E.glowU = Kit.mk('ellipse', {cx: W / 2, cy: gy0 + gh / 2, rx: Math.max(1, Math.min(gw * .62, W / 2 - 1)), ry: gh * .78, fill: 'url(#gU)', opacity: .85}, svg);
     E.glowF = Kit.mk('circle', {cx: ctr.x, cy: ctr.y, r: cell * 9, fill: 'url(#gF)', opacity: 0}, svg);
 
     // crop marks at the block's corners
@@ -210,16 +217,19 @@
   function buildChain() {
     tl = gsap.timeline({paused: true, onUpdate: readout, onComplete: () => reveal(false)});
     tl.to({}, {duration: .3}, 0);
+    const cl = p => ({x: Math.min(W - 2, Math.max(2, p.x)), y: Math.min(H - 2, Math.max(2, p.y))});
     chain.forEach((n, i) => {
       const e = P(n), tf = n.t, t0 = tf - HOP;
       const s = n.p < 0 ? {x: gx0 - mark, y: gy0 - mark} : P(chain[n.p]);
       const dx = e.x - s.x, dy = e.y - s.y, len = Math.hypot(dx, dy) || 1, px = -dy / len, py = dx / len, b = n.bend * len;
-      const c1 = {x: s.x + dx * .3 + px * b, y: s.y + dy * .3 + py * b}, c2 = {x: s.x + dx * .72 + px * b, y: s.y + dy * .72 + py * b};
+      const c1 = cl({x: s.x + dx * .3 + px * b, y: s.y + dy * .3 + py * b}), c2 = cl({x: s.x + dx * .72 + px * b, y: s.y + dy * .72 + py * b});
       const tr = Kit.mk('path', {d: `M${s.x},${s.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${e.x},${e.y}`, fill: 'none', stroke: ORANGE, 'stroke-width': Math.max(1.2, cell * .14), 'stroke-linecap': 'round', opacity: 0}, E.trails);
       const tlen = tr.getTotalLength(); tr.setAttribute('stroke-dasharray', tlen); tr.setAttribute('stroke-dashoffset', tlen);
       const nu = Kit.mk('circle', {cx: 0, cy: 0, r: Math.max(2, cell * .24), fill: HOT, filter: 'url(#ng)', opacity: 0}, E.neut);
       const ring = Kit.mk('circle', {cx: e.x, cy: e.y, r: rad, fill: 'none', stroke: ORANGE, 'stroke-width': Math.max(1, cell * .16), opacity: 0}, E.rings);
       const fl = Kit.mk('circle', {cx: e.x, cy: e.y, r: cell * 1.6, fill: 'url(#gF)', opacity: 0}, E.rings);
+      const room = Math.max(rad, Math.min(e.x - 2, W - e.x - 2));
+      const ringR = Math.max(rad, Math.min(cell * 2.8, room)), flR = Math.max(1, Math.min(cell * 2.4, room));
       const dot = dots[n.i];
       tl.set(nu, {x: s.x, y: s.y, opacity: 1}, t0)
         .to(nu, {motionPath: {path: [s, c1, c2, e], type: 'cubic'}, duration: HOP, ease: 'power2.in'}, t0)
@@ -227,8 +237,8 @@
         .to(nu, {opacity: 0, duration: .06}, tf)
         .to(tr, {opacity: 0, duration: .7, ease: 'power2.out'}, tf + .05)
         .to(dot, {fill: ORANGE, opacity: 1, attr: {r: rad * 1.3}, duration: .45, ease: 'back.out(3)'}, tf)
-        .fromTo(ring, {attr: {r: rad}, opacity: .95}, {attr: {r: cell * 2.8}, opacity: 0, duration: .9, ease: 'expo.out', immediateRender: false}, tf)
-        .fromTo(fl, {opacity: 1, attr: {r: cell * .6}}, {opacity: 0, attr: {r: cell * 2.4}, duration: .6, ease: 'power3.out', immediateRender: false}, tf)
+        .fromTo(ring, {attr: {r: rad}, opacity: .95}, {attr: {r: ringR}, opacity: 0, duration: .9, ease: 'expo.out', immediateRender: false}, tf)
+        .fromTo(fl, {opacity: 1, attr: {r: Math.min(cell * .6, flR)}}, {opacity: 0, attr: {r: flR}, duration: .6, ease: 'power3.out', immediateRender: false}, tf)
         .to(E.glowF, {opacity: .25 + .6 * (i + 1) / chain.length, attr: {r: cell * (5 + 6 * (i + 1) / chain.length)}, duration: .5, ease: 'power2.out'}, tf)
         .to(E.sliver, {attr: {width: Math.max(1.5, W * .015) * (i + 1) / chain.length}, duration: .35, ease: 'power3.out'}, tf)
         .call(() => Kit.haptic('light'), null, tf);
@@ -236,7 +246,7 @@
   }
 
   function readout() {
-    if (!tl) return;
+    if (!tl || !E.pct) return;
     const t = tl.time(), n = chain.filter(c => t >= c.t - 1e-4).length;
     E.pct.textContent = (n * .1).toFixed(1) + '%';
     E.kt.textContent = Math.round(n / chain.length * 16) + ' kt';
@@ -244,6 +254,7 @@
 
   // ---------- the reveal: the block flies apart ----------
   function reveal(instant) {
+    if (!E.call || !dots.length) { done = true; showWhy(); return; }
     done = true; holding = false; btn.classList.remove('on');
     killIdle(); gsap.set(E.aim, {opacity: 0});
     const ctr = P(chain[0]);
@@ -253,7 +264,9 @@
       if (inChain.has(i)) continue;
       const d = dots[i], x = +d.getAttribute('cx'), y = +d.getAttribute('cy');
       const dx = x - ctr.x, dy = y - ctr.y, L = Math.hypot(dx, dy) || 1, a = Math.atan2(dy, dx) + scat[i].j * .5;
-      others.push(d); ox.push(Math.cos(a) * cell * scat[i].d); oy.push(Math.sin(a) * cell * scat[i].d * .8); oo.push(scat[i].o); od.push(L / (cell * Math.max(C, R)));
+      const tx = Math.min(Math.max(bnd.x0, bnd.x1), Math.max(Math.min(bnd.x0, x), x + Math.cos(a) * cell * scat[i].d));
+      const ty = Math.min(Math.max(bnd.y0, bnd.y1), Math.max(Math.min(bnd.y0, y), y + Math.sin(a) * cell * scat[i].d * .8));
+      others.push(d); ox.push(tx - x); oy.push(ty - y); oo.push(scat[i].o); od.push(L / (cell * Math.max(C, R)));
     }
     E.call.textContent = '1.5% split → 16,000 tonnes of TNT';
     E.call.setAttribute('fill', ORANGE); E.call.setAttribute('fill-opacity', 1);
@@ -274,7 +287,7 @@
 
   // the 15 split atoms keep smouldering; the scattered dust drifts
   function afterglow() {
-    if (Kit.calm) return;
+    if (Kit.calm || !E.glowF) return;
     killIdle();
     idle.push(gsap.to(E.glowF, {opacity: .35, attr: {r: cell * 7.5}, duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1}));
     chain.forEach((n, i) => idle.push(gsap.to(dots[n.i], {opacity: .55, duration: .8 + (i % 5) * .22, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .07})));
@@ -282,10 +295,41 @@
 
   function showWhy() {
     if (told) return; told = true;
+    // the why takes the room the button leaves; the drawing shrinks only as much as the overflow requires
+    const h0 = stage.getBoundingClientRect().height;
     Kit.hide('hold');
     card.classList.add('answered');
     say.innerHTML = 'Only <b>1.5%</b> of the uranium split. The other <b>98.5%</b> never reacted and was scattered as radioactive material. Yet that 1.5% released <b>16 kilotons</b>: 16,000 tonnes of TNT.';
     Kit.show('keep');
+    const foot = card.querySelector('.foot');
+    const overflow = () => {
+      const inn = card.querySelector('.in') || card;
+      const cs = getComputedStyle(inn);
+      const ir = inn.getBoundingClientRect();
+      let limit = ir.bottom - (parseFloat(cs.paddingBottom) || 0);
+      // the save/share bar, if the kit draws one over the card
+      document.querySelectorAll('[class*="share"],[class*="save"],[id*="share"],[id*="save"]').forEach(el => {
+        if (card.contains(el) && !el.contains(card)) return;
+        const r = el.getBoundingClientRect();
+        if (r.height > 4 && r.width > 40 && r.top > ir.top + ir.height * .5 && r.top < limit) limit = r.top;
+      });
+      const bottom = Math.max(foot ? foot.getBoundingClientRect().bottom : 0, Kit.$('keep').getBoundingClientRect().bottom);
+      return Math.max(bottom - limit + 4, inn.scrollHeight - inn.clientHeight);
+    };
+    const fit = () => {
+      if (!(h0 > 20)) return;
+      stage.style.flex = '0 0 auto';
+      stage.style.height = h0 + 'px';
+      let h = h0;
+      for (let k = 0; k < 8; k++) {
+        const over = overflow();
+        if (over <= 0) break;
+        h = Math.max(h0 * .4, h - over);
+        stage.style.height = h + 'px';
+      }
+      requestAnimationFrame(() => layout(false));
+    };
+    requestAnimationFrame(fit);
     if (!Kit.calm) gsap.from(['#say', '#keep'], {opacity: 0, y: 8, duration: .5, stagger: .12, ease: 'power3.out'});
   }
 
@@ -330,6 +374,7 @@
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!dots.length) layout(true);
     btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
     await wait(300);
     if (tl && !done) tl.progress(1);

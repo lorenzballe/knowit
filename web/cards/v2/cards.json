@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611151247,
- "built": "2026-11-15T12:47:48Z",
+ "version": 202611151529,
+ "built": "2026-11-15T15:29:25Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -34241,11 +34241,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "A draggable timeline titled 'The resource curse', asking why the DR Congo is poor despite its gold and cobalt. It shows riches taken through exploitation and conflict, with the wealth flowing out past the people.",
-    "page": "pages/economics-resource-curse-flask.html?v=e97983cd65eb",
-    "bytes": 22726,
+    "page": "pages/economics-resource-curse-flask.html?v=43e4f3b47980",
+    "bytes": 24566,
     "thumbs": {
-     "front": "thumbs/economics-resource-curse-flask-front.webp?v=e97983cd65eb",
-     "back": "thumbs/economics-resource-curse-flask-back.webp?v=e97983cd65eb"
+     "front": "thumbs/economics-resource-curse-flask-front.webp?v=43e4f3b47980",
+     "back": "thumbs/economics-resource-curse-flask-back.webp?v=43e4f3b47980"
     }
    },
    "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
@@ -55775,11 +55775,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page. A grid of dots stands for uranium, each dot 0.1% of the bomb's uranium. Holding the button runs a chain reaction, showing how many dots split. Asks why Little Boy was so inefficient.",
-    "page": "pages/history-little-boy-efficiency.html?v=287428ba3179",
-    "bytes": 22231,
+    "page": "pages/history-little-boy-efficiency.html?v=aa71a68abfcd",
+    "bytes": 24910,
     "thumbs": {
-     "front": "thumbs/history-little-boy-efficiency-front.webp?v=287428ba3179",
-     "back": "thumbs/history-little-boy-efficiency-back.webp?v=287428ba3179"
+     "front": "thumbs/history-little-boy-efficiency-front.webp?v=aa71a68abfcd",
+     "back": "thumbs/history-little-boy-efficiency-back.webp?v=aa71a68abfcd"
     }
    },
    "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
@@ -57000,11 +57000,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "A map animation of NATO's borders moving eastward over time, toward Russia. The question asks how NATO's growth after the USSR shrank the buffer Russia wants between itself and the US. Drag the timeline east to watch it happen.",
-    "page": "pages/history-nato-shrinking-cushion.html?v=d4ae1dfb4974",
-    "bytes": 19933,
+    "page": "pages/history-nato-shrinking-cushion.html?v=f81bc577b91b",
+    "bytes": 20636,
     "thumbs": {
-     "front": "thumbs/history-nato-shrinking-cushion-front.webp?v=d4ae1dfb4974",
-     "back": "thumbs/history-nato-shrinking-cushion-back.webp?v=d4ae1dfb4974"
+     "front": "thumbs/history-nato-shrinking-cushion-front.webp?v=f81bc577b91b",
+     "back": "thumbs/history-nato-shrinking-cushion-back.webp?v=f81bc577b91b"
     }
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
@@ -69271,11 +69271,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "Page titled Road or Rail. A road tunnel is drawn across the page; the reader drags it from left to right to drive on into the night, then is told to put it on rails. The question asks what physiological phenomenon discourages building a road tunnel under the Channel.",
-    "page": "pages/human_body-highway-hypnosis.html?v=123bf29b8c7f",
-    "bytes": 21484,
+    "page": "pages/human_body-highway-hypnosis.html?v=0ec664d77b6b",
+    "bytes": 21264,
     "thumbs": {
-     "front": "thumbs/human_body-highway-hypnosis-front.webp?v=123bf29b8c7f",
-     "back": "thumbs/human_body-highway-hypnosis-back.webp?v=123bf29b8c7f"
+     "front": "thumbs/human_body-highway-hypnosis-front.webp?v=0ec664d77b6b",
+     "back": "thumbs/human_body-highway-hypnosis-back.webp?v=0ec664d77b6b"
     }
    },
    "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
@@ -75230,11 +75230,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "Drag-and-drop page asking why sweat cools you only when it evaporates. A bead of sweat sits in a pore; the reader drags it onto warm skin to show how evaporation carries heat away.",
-    "page": "pages/human_body-sweat-evaporation-heat.html?v=524183ce4489",
-    "bytes": 23030,
+    "page": "pages/human_body-sweat-evaporation-heat.html?v=2cd269b189f8",
+    "bytes": 24291,
     "thumbs": {
-     "front": "thumbs/human_body-sweat-evaporation-heat-front.webp?v=524183ce4489",
-     "back": "thumbs/human_body-sweat-evaporation-heat-back.webp?v=524183ce4489"
+     "front": "thumbs/human_body-sweat-evaporation-heat-front.webp?v=2cd269b189f8",
+     "back": "thumbs/human_body-sweat-evaporation-heat-back.webp?v=2cd269b189f8"
     }
    },
    "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",
@@ -88306,11 +88306,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "A crowd of figures on a slider. Drag sideways to guess how many homicides a year occur per 100,000 Ecuadorians. The headline reads 'One in 2,500'.",
-    "page": "pages/life-ecuador-murder-rate.html?v=7a8872f13b0e",
-    "bytes": 14685,
+    "page": "pages/life-ecuador-murder-rate.html?v=c6a120de4b41",
+    "bytes": 15008,
     "thumbs": {
-     "front": "thumbs/life-ecuador-murder-rate-front.webp?v=7a8872f13b0e",
-     "back": "thumbs/life-ecuador-murder-rate-back.webp?v=7a8872f13b0e"
+     "front": "thumbs/life-ecuador-murder-rate-front.webp?v=c6a120de4b41",
+     "back": "thumbs/life-ecuador-murder-rate-back.webp?v=c6a120de4b41"
     }
    },
    "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
@@ -96728,11 +96728,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "A loop diagram that grows as the reader drags it, asking how long a rival Collatz loop would have to be before nobody has ruled it out. It is compared with the short 4, 2, 1 loop and reaches 186 billion numbers.",
-    "page": "pages/maths-collatz-rival-loop.html?v=ec65cf96122c",
-    "bytes": 22432,
+    "page": "pages/maths-collatz-rival-loop.html?v=bf79b499a036",
+    "bytes": 22989,
     "thumbs": {
-     "front": "thumbs/maths-collatz-rival-loop-front.webp?v=ec65cf96122c",
-     "back": "thumbs/maths-collatz-rival-loop-back.webp?v=ec65cf96122c"
+     "front": "thumbs/maths-collatz-rival-loop-front.webp?v=bf79b499a036",
+     "back": "thumbs/maths-collatz-rival-loop-back.webp?v=bf79b499a036"
     }
    },
    "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
@@ -144756,11 +144756,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "A thermometer you drag upward from +20 °C toward +38 °C, set against a snow-covered city, asking what unusual summer temperatures Yakutsk has recorded.",
-    "page": "pages/nature-yakutsk-heat-spikes.html?v=b22ee0db9ef1",
-    "bytes": 21569,
+    "page": "pages/nature-yakutsk-heat-spikes.html?v=1b5fa5963baf",
+    "bytes": 21721,
     "thumbs": {
-     "front": "thumbs/nature-yakutsk-heat-spikes-front.webp?v=b22ee0db9ef1",
-     "back": "thumbs/nature-yakutsk-heat-spikes-back.webp?v=b22ee0db9ef1"
+     "front": "thumbs/nature-yakutsk-heat-spikes-front.webp?v=1b5fa5963baf",
+     "back": "thumbs/nature-yakutsk-heat-spikes-back.webp?v=1b5fa5963baf"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -179121,11 +179121,11 @@
     "kit": 1,
     "touch": "taps",
     "label": "A labelled tube shown spinning, with two buttons, Press the O and Press the X. The question asks why you only see the side you press.",
-    "page": "pages/psychology-spinning-tube.html?v=b301603cd869",
-    "bytes": 10595,
+    "page": "pages/psychology-spinning-tube.html?v=29df30011f4a",
+    "bytes": 10926,
     "thumbs": {
-     "front": "thumbs/psychology-spinning-tube-front.webp?v=b301603cd869",
-     "back": "thumbs/psychology-spinning-tube-back.webp?v=b301603cd869"
+     "front": "thumbs/psychology-spinning-tube-front.webp?v=29df30011f4a",
+     "back": "thumbs/psychology-spinning-tube-back.webp?v=29df30011f4a"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
@@ -191409,11 +191409,11 @@
     "kit": 1,
     "touch": "taps",
     "label": "Two touching grapes sit in a microwave beam. The question asks what microwaves do once they get inside a grape. Options: A) pass straight through and out, B) get trapped, bouncing around inside, C) bounce off the skin and never get in.",
-    "page": "pages/science-grape-microwave-trap.html?v=828f99c88c9e",
-    "bytes": 17835,
+    "page": "pages/science-grape-microwave-trap.html?v=dd1bb250b6cf",
+    "bytes": 17921,
     "thumbs": {
-     "front": "thumbs/science-grape-microwave-trap-front.webp?v=828f99c88c9e",
-     "back": "thumbs/science-grape-microwave-trap-back.webp?v=828f99c88c9e"
+     "front": "thumbs/science-grape-microwave-trap-front.webp?v=dd1bb250b6cf",
+     "back": "thumbs/science-grape-microwave-trap-back.webp?v=dd1bb250b6cf"
     }
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
@@ -191452,11 +191452,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page titled PULL APART asking why a grape in a microwave produces plasma. A glow covers the grape, and the reader drags up to pull the glow apart layer by layer to reveal the explanation.",
-    "page": "pages/science-grape-plasma.html?v=00e10517c1a5",
-    "bytes": 18453,
+    "page": "pages/science-grape-plasma.html?v=493f9c3cf41a",
+    "bytes": 19081,
     "thumbs": {
-     "front": "thumbs/science-grape-plasma-front.webp?v=00e10517c1a5",
-     "back": "thumbs/science-grape-plasma-back.webp?v=00e10517c1a5"
+     "front": "thumbs/science-grape-plasma-front.webp?v=493f9c3cf41a",
+     "back": "thumbs/science-grape-plasma-back.webp?v=493f9c3cf41a"
     }
    },
    "source": "Veritasium, “Make Plasma With Grapes In The Microwave!” (YouTube, 2011)",
@@ -194633,11 +194633,11 @@
     "kit": 1,
     "touch": "taps",
     "label": "Multiple-choice question asking where a snowflake's six sides come from, before atoms were known. Options: cold air shaping each flake six ways, tiny water units stacking together, or pure chance. The reader picks one and rates how sure they are.",
-    "page": "pages/science-kepler-water-units.html?v=8d67b6431273",
-    "bytes": 21556,
+    "page": "pages/science-kepler-water-units.html?v=69d3cd81aba6",
+    "bytes": 22236,
     "thumbs": {
-     "front": "thumbs/science-kepler-water-units-front.webp?v=8d67b6431273",
-     "back": "thumbs/science-kepler-water-units-back.webp?v=8d67b6431273"
+     "front": "thumbs/science-kepler-water-units-front.webp?v=69d3cd81aba6",
+     "back": "thumbs/science-kepler-water-units-back.webp?v=69d3cd81aba6"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -195780,11 +195780,11 @@
     "kit": 1,
     "touch": "taps",
     "label": "A ring-shaped reactor view with a button to release hot plasma into the ring and a switch to turn on the magnets. It asks how plasma is held without touching any wall, and invites you to watch the wall as the plasma is released.",
-    "page": "pages/science-magnetic-plasma-cage.html?v=5ecad5d86beb",
-    "bytes": 9792,
+    "page": "pages/science-magnetic-plasma-cage.html?v=cee7ab70421d",
+    "bytes": 9903,
     "thumbs": {
-     "front": "thumbs/science-magnetic-plasma-cage-front.webp?v=5ecad5d86beb",
-     "back": "thumbs/science-magnetic-plasma-cage-back.webp?v=5ecad5d86beb"
+     "front": "thumbs/science-magnetic-plasma-cage-front.webp?v=cee7ab70421d",
+     "back": "thumbs/science-magnetic-plasma-cage-back.webp?v=cee7ab70421d"
     }
    },
    "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
@@ -201718,11 +201718,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "A time-lapse illustration of a continent breaking apart, with sea water flooding the gap between the halves. A brass dial lets the reader run time forward through millions of years.",
-    "page": "pages/science-rift-to-ocean.html?v=5b7806e0c3e2",
-    "bytes": 31208,
+    "page": "pages/science-rift-to-ocean.html?v=9838f5e644a1",
+    "bytes": 31657,
     "thumbs": {
-     "front": "thumbs/science-rift-to-ocean-front.webp?v=5b7806e0c3e2",
-     "back": "thumbs/science-rift-to-ocean-back.webp?v=5b7806e0c3e2"
+     "front": "thumbs/science-rift-to-ocean-front.webp?v=9838f5e644a1",
+     "back": "thumbs/science-rift-to-ocean-back.webp?v=9838f5e644a1"
     }
    },
    "source": "Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)",
@@ -205197,11 +205197,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "A scrubbable picture comparing thermite and explosives over time, with both starting as a solid powder. It asks why thermite is controllable when explosives are not.",
-    "page": "pages/science-thermite-control.html?v=2efa980ddd93",
-    "bytes": 22093,
+    "page": "pages/science-thermite-control.html?v=710f4870d6a6",
+    "bytes": 23187,
     "thumbs": {
-     "front": "thumbs/science-thermite-control-front.webp?v=2efa980ddd93",
-     "back": "thumbs/science-thermite-control-back.webp?v=2efa980ddd93"
+     "front": "thumbs/science-thermite-control-front.webp?v=710f4870d6a6",
+     "back": "thumbs/science-thermite-control-back.webp?v=710f4870d6a6"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -205498,11 +205498,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "Earth and the Moon, shown pulling on each other with equal force. A draggable control makes Earth heavier while its wobble is shown. Asks: why does Earth barely wobble?",
-    "page": "pages/science-tiny-earth-wobble.html?v=a83abf0a32cd",
-    "bytes": 13261,
+    "page": "pages/science-tiny-earth-wobble.html?v=226780dd8d0c",
+    "bytes": 13925,
     "thumbs": {
-     "front": "thumbs/science-tiny-earth-wobble-front.webp?v=a83abf0a32cd",
-     "back": "thumbs/science-tiny-earth-wobble-back.webp?v=a83abf0a32cd"
+     "front": "thumbs/science-tiny-earth-wobble-front.webp?v=226780dd8d0c",
+     "back": "thumbs/science-tiny-earth-wobble-back.webp?v=226780dd8d0c"
     }
    },
    "source": "Veritasium, “Best Film on Newton's Third Law. Ever.” (YouTube, 2011)",
@@ -218845,11 +218845,11 @@
     "kit": 1,
     "touch": "drags",
     "label": "Animated globe orbiting the Sun. Hold the button to run one solar day and watch a 'you' marker on the globe turn back toward the Sun, past one full rotation.",
-    "page": "pages/space-solar-day-spin.html?v=4d6c2deef680",
-    "bytes": 9766,
+    "page": "pages/space-solar-day-spin.html?v=6f9e387fcf7d",
+    "bytes": 10368,
     "thumbs": {
-     "front": "thumbs/space-solar-day-spin-front.webp?v=4d6c2deef680",
-     "back": "thumbs/space-solar-day-spin-back.webp?v=4d6c2deef680"
+     "front": "thumbs/space-solar-day-spin-front.webp?v=6f9e387fcf7d",
+     "back": "thumbs/space-solar-day-spin-back.webp?v=6f9e387fcf7d"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
@@ -241419,11 +241419,11 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive page titled Material fatigue, asking what repeated high-pressure cycles do to a hull. A Dive button sends a submersible down to crushing pressure and back up while a gold line is watched.",
-    "page": "pages/technology-material-fatigue.html?v=ae8bbc545382",
-    "bytes": 23019,
+    "page": "pages/technology-material-fatigue.html?v=1b88395b8ddd",
+    "bytes": 23666,
     "thumbs": {
-     "front": "thumbs/technology-material-fatigue-front.webp?v=ae8bbc545382",
-     "back": "thumbs/technology-material-fatigue-back.webp?v=ae8bbc545382"
+     "front": "thumbs/technology-material-fatigue-front.webp?v=1b88395b8ddd",
+     "back": "thumbs/technology-material-fatigue-back.webp?v=1b88395b8ddd"
     }
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",

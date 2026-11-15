@@ -11,7 +11,7 @@
 <script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#stage{position:relative;display:flex;flex:1;min-height:0}
+#stage{position:relative;display:flex;flex:1 1 0;min-height:20cqh;max-height:none}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
 #read{position:absolute;right:1cqw;top:.4cqh;text-align:right;pointer-events:none;color:var(--k)}
 #read .row{display:flex;align-items:flex-start;justify-content:flex-end;gap:.6cqw}
@@ -27,7 +27,11 @@
 .hint{animation:nudge 1.3s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(-5px)}}
 .kit-calm .hint{animation:none;opacity:.6}
-.answered .q{font-size:max(2.4cqh,15px)}
+.answered .say{line-height:1.02;margin-top:0;margin-bottom:0;font-size:.72em}
+.answered .keep{margin-top:0;margin-bottom:0;line-height:1.02;font-size:.72em;padding-top:0;padding-bottom:0}
+.answered .q{margin-bottom:0;line-height:1.05;font-size:.92em}
+.answered .foot{margin-top:0}
+.answered .label{margin-bottom:0}
 .say b{color:#a8200f}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Drag the mercury · thawing ground">
@@ -56,7 +60,7 @@
   const INK = '#10100c', WARM = '#a8200f', ICE = '#ffffff', COLD = '#10100c';
   const THAW = '#007a2f', WALL = '#10100c', PILE = '#10100c';
   const S = {T: 20};
-  let W, H, fs, GY, GB, D, sx0, tubeX, half, yT, yB, bulbY, bulbR, cx0, cw, hMax, compact = false, sw = 0, sh = 0;
+  let W, H, fs, GY, GB, D, sx0, tubeX, half, yT, yB, bulbY, bulbR, cx0, cw, hMax, compact = false, sw = 0, sh = 0, initH = 0;
   let el = {}, houses = [], ice = [], drips = [], steam = [], roofs = [], thawY = 0, wph = 0;
   let built = false, revealed = false, touched = false, scrambling = false, saidMid = false, said35 = false, looping = false;
 
@@ -72,6 +76,7 @@
   function layout() {
     const prevTilt = houses.map(h => h.tilt);
     sw = stage.clientWidth; sh = stage.clientHeight;
+    if (!revealed && sh > 0) initH = sh;
     svg.innerHTML = ''; el = {}; houses = []; ice = []; drips = []; steam = []; roofs = [];
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     compact = H < 250;
@@ -95,7 +100,6 @@
 
     // ---------- defs ----------
     const defs = Kit.mk('defs', {}, svg);
-    // a lump of earth cut open: sloping left bank and a ragged underside, so it never reads as a box
     const bankW = fs * 1.6;
     let sp = `M${W},${GY} L${sx0},${GY}`;
     let bx = sx0;
@@ -114,10 +118,9 @@
     const sunX = cx0 + cw * .38, sunR = clamp(hMax * .3, 6, H * .05), sunY = GY - hMax * .6;
     el.sun = Kit.mk('circle', {cx: sunX, cy: sunY, r: sunR, fill: '#ffffff'}, sky);
 
-    // ---------- ground: a plain tint of ink on the card colour ----------
+    // ---------- ground ----------
     const slab = el.slab = Kit.mk('g', {}, svg);
     Kit.mk('path', {d: sp, style: 'fill:color-mix(in srgb, var(--k) 20%, var(--c))'}, slab);
-    // ice lenses in the frozen ground: they vanish as the thaw reaches them
     const lenses = Kit.mk('g', {'clip-path': 'url(#cSlab)'}, slab);
     const lensAt = [[.30, .24], [.62, .38], [.18, .58], [.50, .72], [.80, .62]];
     lensAt.forEach(([fx, fy]) => {
@@ -126,11 +129,9 @@
       ice.push({e, y, o: 1});
     });
     el.thaw = Kit.mk('path', {fill: THAW, 'clip-path': 'url(#cSlab)'}, slab);
-    // meltwater seeping down through the thawed layer
     const dg = Kit.mk('g', {'clip-path': 'url(#cSlab)'}, slab);
     for (let i = 0; i < 6; i++) drips.push({e: Kit.mk('ellipse', {cx: 0, cy: 0, rx: 2, ry: 3.2, fill: '#ffffff', opacity: 0}, dg), x: sx0 + fs * 2 + (i + .3 + R() * .4) / 6 * (W - sx0 - fs * 3), f: R(), v: .25 + R() * .35});
     el.front = Kit.mk('path', {fill: 'none', stroke: COLD, 'stroke-width': 2, 'stroke-linejoin': 'round', 'clip-path': 'url(#cSlab)'}, slab);
-    // surface: one plain line of tundra, browning with heat
     el.moss = Kit.mk('path', {d: `M${sx0},${GY} L${W},${GY}`, stroke: '#007a2f', 'stroke-width': 3, fill: 'none'}, slab);
     txt(slab, sx0 + fs * .9, GY + fs * 1.15, 'thaws in summer');
     txt(slab, sx0 + fs * .9, clamp(GY + D * .80, GY + fs * 2.6, GB - fs * 1.2), 'permafrost');
@@ -149,7 +150,6 @@
       }
       Kit.mk('rect', {x, y: yb - h, width: w, height: h, fill: WALL}, inner);
       roofs.push(Kit.mk('rect', {x: x - 2, y: yb - h - 5, width: w + 4, height: 6, rx: 1.5, fill: '#ffffff'}, inner));
-      // a few plain windows, so the blocks read as homes
       const cols = 2, rows = Math.max(1, Math.min(2, Math.floor(h / (fs * 1.6))));
       const cwid = w / cols, rh = h * .8 / rows;
       for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
@@ -161,14 +161,14 @@
       houses.push(hs);
     });
 
-    // ---------- steam off the warming ground: a few wavy wisps ----------
+    // ---------- steam ----------
     const sg = Kit.mk('g', {fill: 'none', stroke: '#ffffff', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
     for (let i = 0; i < 4; i++) {
       const s = fs * (.7 + R() * .3);
       steam.push({e: Kit.mk('path', {d: `M0,0 q${s * .35},${-s * .4} 0,${-s * .8} q${-s * .35},${-s * .4} 0,${-s * .8}`, opacity: 0}, sg), x: sx0 + fs * 2 + (i + .5) / 4 * (W - sx0 - fs * 3), f: R(), v: .15 + R() * .2});
     }
 
-    // ---------- thermometer: a plain outlined tube ----------
+    // ---------- thermometer ----------
     const th = el.th = Kit.mk('g', {}, svg);
     for (let t = 10; t <= 40; t += 10) {
       const y = yOf(t);
@@ -297,7 +297,12 @@
     say.innerHTML = 'A Yakutsk summer usually peaks near <b>+20 °C</b>. Lately it has spiked to <b>+35, even +38 °C</b>, never seen there before. That thaws the permafrost deeper, so building on it gets riskier.';
     card.classList.add('answered'); Kit.show('keep');
     capEl.innerHTML = '<b>+35 to +38 °C</b><br>never seen before';
-    layout(); // the stage just changed size: redraw to fit it
+    // keep the drawing (nearly) its starting size; the tightened text gives it the room
+    stage.style.minHeight = initH ? Math.round(initH * .94) + 'px' : '';
+    layout();
+    [60, 250, 700, 1400].forEach(ms => setTimeout(() => {
+      if (stage.clientWidth !== sw || stage.clientHeight !== sh) layout();
+    }, ms));
     if (Kit.calm || !hasG) { S.T = 38; render(); numEl.textContent = '+38'; return; }
     gsap.to(S, {T: 38, duration: 1.2, ease: 'elastic.out(1,.45)', overwrite: true, onUpdate: render});
     gsap.fromTo(el.bracket, {strokeDasharray: 400, strokeDashoffset: 400}, {strokeDashoffset: 0, duration: .9, ease: 'power3.out'});

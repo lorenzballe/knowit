@@ -13,10 +13,13 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 /* A toy Earth and Moon circling their balance point, the same pull on each; the reader sets Earth's mass. */
-#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#stage{display:flex;flex-direction:column;gap:.4cqh;min-height:0}
 #sky{display:block;flex:1 1 0;min-height:0;width:100%;overflow:visible}
 #ctl{display:flex;flex-direction:column;gap:1cqh}
-#why{display:flex;flex-direction:column;gap:1.2cqh}
+#why{display:flex;flex-direction:column;gap:.2cqh;flex:none}
+#why p{margin:0}
+#why .big{font-size:max(2.2cqh,14px);line-height:1.08;margin:0}
+#why .body{font-size:max(1.6cqh,11px);line-height:1.18;margin:0}
 .m-cap{font:600 max(1.45cqh,10px)/1.1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 #chips{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw}
 .m-chip{display:flex;flex-direction:column;align-items:center;gap:.6cqh;padding:1cqh 1cqw;border-radius:1.6cqh;box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 28%,transparent)}
@@ -125,11 +128,11 @@ function draw() {
 
 function render() {
   if (!G) return;
-  const {cx, cy, d, rm, L, gap, lwE, lwM, lh} = G, n = S.nn, ux = Math.cos(S.th), uy = Math.sin(S.th);
+  const {cx, cy, d, rm, L, gap, lwE, lwM, lh} = G, n = Math.max(1, S.nn), ux = Math.cos(S.th), uy = Math.sin(S.th);
   const rb = d / (n + 1), rs = d * n / (n + 1), re = rm * Math.sqrt(n), g = d * .025;   // Earth's circle, the Moon's, Earth's size
   const ex = cx - ux * rb, ey = cy - uy * rb, mx = cx + ux * rs, my = cy + uy * rs;
-  E.pm.setAttribute('r', rs); E.pe.setAttribute('r', rb);
-  set(E.ea, {cx: ex, cy: ey, r: re}); set(E.ed, {cx: ex, cy: ey}); set(E.mo, {cx: mx, cy: my});
+  E.pm.setAttribute('r', Math.max(0, rs)); E.pe.setAttribute('r', Math.max(0, rb));
+  set(E.ea, {cx: ex, cy: ey, r: Math.max(0, re)}); set(E.ed, {cx: ex, cy: ey}); set(E.mo, {cx: mx, cy: my});
   arrow(E.ae, ex + ux * (re + g), ey + uy * (re + g), ux, uy, L);      // the Moon's pull on Earth
   arrow(E.am, mx - ux * (rm + g), my - uy * (rm + g), -ux, -uy, L);    // Earth's pull on the Moon: the same
   const a0 = S.th + 1;
@@ -139,7 +142,7 @@ function render() {
   set(E.le, {x: ex - ux * oe, y: ey - uy * oe}); set(E.lm, {x: mx + ux * om, y: my + uy * om});
 }
 
-function tick(t, dt) { S.th -= SPIN * Math.min(dt, 64) / 1000; render(); }
+function tick(t, dt) { S.th -= SPIN * Math.min(Math.max(dt, 0), 64) / 1000; render(); }
 
 function place(p) { thumb.style.left = fill.style.width = p * 100 + '%'; }
 function setN(n) {
@@ -161,6 +164,7 @@ function maybeEnd() { clearTimeout(endT); if (S.n === NMAX && !S.ended) endT = s
 function end() {
   if (S.ended || S.n !== NMAX) return;
   S.ended = true;
+  // the why takes the controls' room; the drawing keeps whatever the layout leaves it, and is drawn again
   Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
   requestAnimationFrame(draw);
   if (!Kit.calm) gsap.from('#why .big, #why .body, #keep', {opacity: 0, y: 10, stagger: .1, duration: .45, ease: 'power3.out'});
@@ -180,6 +184,17 @@ track.addEventListener('keydown', e => {
   e.preventDefault(); setN(n); place((S.n - 1) / (NMAX - 1)); maybeEnd();
 });
 place(0);
+
+// Draw again whenever the drawing's box changes size.
+if (window.ResizeObserver) {
+  let lw = 0, lh0 = 0;
+  new ResizeObserver(() => {
+    const r = svg.getBoundingClientRect();
+    if (Math.abs(r.width - lw) < .5 && Math.abs(r.height - lh0) < .5) return;
+    lw = r.width; lh0 = r.height;
+    draw();
+  }).observe(svg);
+}
 
 Kit.onShow.card = draw;
 // Motion the reader should see starts here: in the app the card is drawn before it comes up.
