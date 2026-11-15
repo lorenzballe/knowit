@@ -97,6 +97,9 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
             : PageView.builder(
                 key: const ValueKey('detail-pages'),
                 controller: _pages,
+                // The cards either side built ahead, their pictures with
+                // them, so a swipe brings a card already drawn.
+                allowImplicitScrolling: true,
                 itemCount: _cards.length,
                 onPageChanged: (i) {
                   setState(() => _at = i);
