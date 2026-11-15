@@ -19,15 +19,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/topics.dart';
+import 'package:astuto/explore/blocks/core/paths_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/remote/remote.dart';
 import 'package:astuto/screens/archive_screen.dart';
+import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/saved_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/web/card_thumb.dart';
+import 'package:astuto/widgets/widget_ask.dart';
 
 import '../test/explore/core_harness.dart';
 
@@ -334,5 +337,55 @@ void main() {
     );
     await _settle(tester);
     await _shoot(tester, '12-saved-paper');
+  });
+
+  testWidgets('paths begun free, and the widget offered', (tester) async {
+    final AppState free = await readyApp({
+      ..._aMonthIn(),
+      'knowit.plus': false,
+    });
+    final CardPath path = pathsOf(PillBank.live, today: DateTime.now()).first;
+
+    // The card after a path's two free ones, at the size a card is dealt.
+    await tester.pumpWidget(
+      _app(
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 60, 18, 70),
+            child: PathMore(app: free, path: path),
+          ),
+        ),
+      ),
+    );
+    await _settle(tester);
+    await _shoot(tester, '14-path-more');
+
+    // The plans, opened from a path.
+    await tester.pumpWidget(_app(PaywallScreen(app: free, source: 'paths')));
+    await _settle(tester, 30);
+    await _shoot(tester, '15-paywall-paths');
+
+    // The widget sheet, over the finished day, on both phones.
+    final Pill lead =
+        free.tomorrowsDeck.firstOrNull ??
+        PillBank.live.firstWhere((p) => p.hasPage);
+    for (final (String name, bool apple, bool canPin) in [
+      ('16-widget-iphone', true, false),
+      ('17-widget-android', false, true),
+    ]) {
+      await tester.pumpWidget(
+        _app(
+          ColoredBox(
+            color: const Color(0x8C141416),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: WidgetAsk(card: lead, canPin: canPin, apple: apple),
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+      await _shoot(tester, name);
+    }
   });
 }
