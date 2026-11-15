@@ -158,7 +158,6 @@ function frame(dt) {
     Kit.haptic('success');
     Kit.$('say').textContent = 'Now slow down: the arms spring back and let go.';
     Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
   }
 }
 

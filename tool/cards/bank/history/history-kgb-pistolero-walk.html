@@ -160,7 +160,7 @@ function finish() {
   }
   Kit.haptic('success');
   if (tries === 1) { Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'}); }
+    }
 }
 
 gsap.ticker.add(() => {

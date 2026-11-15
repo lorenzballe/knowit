@@ -151,7 +151,6 @@ function fly(k, btn){
 }
 function finish(){
   Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 Kit.$('routes').addEventListener('click', e => { const b = e.target.closest('.rt'); if (b) fly(b.dataset.k, b); });
 Kit.onShow.card = () => draw();

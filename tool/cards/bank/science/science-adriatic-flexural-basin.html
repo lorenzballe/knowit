@@ -106,7 +106,6 @@ Kit.$('stage').addEventListener('click', () => {
     gsap.to(st,{water:1, duration:Kit.calm?0:1.2, delay:d, ease:'power1.inOut', onUpdate:draw, onComplete:() => {
       draw(); Kit.haptic('success');
       Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-      if (!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.12,duration:.4});
     }});
   }
 });

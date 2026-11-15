@@ -136,7 +136,6 @@ function finish(){
   Kit.$('card').classList.add('done');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   build();
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 slider.addEventListener('input', () => {
   t = +slider.value; draw();

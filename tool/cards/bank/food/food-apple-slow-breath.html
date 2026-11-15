@@ -121,7 +121,6 @@ function render(){
 function finish(){
   if(finished) return; finished=true;
   Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-  if(!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.1,duration:.4,ease:'power3.out'});
 }
 const track=Kit.$('track'); let drag=false, lastStep=0;
 function setFrom(e){

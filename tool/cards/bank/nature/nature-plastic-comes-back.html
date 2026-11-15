@@ -125,7 +125,6 @@ function finish() {
   if (ST.finished) return; ST.finished = true;
   Kit.haptic('success');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .15, duration: .5});
 }
 
 Kit.$('pic').addEventListener('pointerdown', e => {

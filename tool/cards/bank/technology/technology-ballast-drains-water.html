@@ -187,7 +187,6 @@ Kit.$('btns').addEventListener('click', e => {
     b.classList.add('done');
     if (done.stones && done.soil && Kit.$('why').classList.contains('gone')) {
       Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
     }
   });
 });

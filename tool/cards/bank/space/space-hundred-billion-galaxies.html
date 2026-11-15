@@ -29,11 +29,11 @@
     <div class="stagebox" id="stage">
       <div id="viz"><canvas id="cv" tabindex="0" role="slider" aria-label="Your guess: how many galaxies there are" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" aria-valuetext="1 galaxy"></canvas></div>
       <!-- The why joins the picture once the zoom has landed. -->
-      <div id="why" class="gone"><p class="body">Our galaxy holds about 100 billion stars. As far as we know, there are about as many galaxies, each with billions of stars of its own.</p></div>
+      <div id="why" class="gone"><p class="body">About as many galaxies as our galaxy has stars, each with billions of its own.</p></div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Drag to zoom out until you think you see every galaxy.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>About 100 billion galaxies: as many as the stars in our galaxy.</div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>About 100 billion galaxies.</div>
     <div class="foot"><span class="src">Source · Veritasium, “How Far Away is the Moon? (The Scale of the Universe)” (YouTube, 2011)</span></div>
   </div>
 </article>
@@ -428,7 +428,6 @@ function land(g, ok, pct) {
   Kit.haptic(ok ? 'success' : 'light');
   if (!Kit.calm) {
     gsap.fromTo(S, {pulse: 1}, {pulse: 0, duration: 1.4, ease: 'power2.out'});
-    gsap.from(['#why', '#keep'], {opacity: 0, y: 8, duration: .45, stagger: .12, ease: 'power3.out'});
   }
   layoutSoon();
   if (onLand) { const f = onLand; onLand = null; setTimeout(f, 60); }

@@ -207,6 +207,13 @@ async function single() {
           const st = getComputedStyle(cv); if (st.display === 'none' || st.visibility === 'hidden' || cv.closest('.gone')) return false;
           return Math.abs((cv.width / cv.height) / (b.width / b.height) - 1) > 0.03;
         }).map(cv => `the drawing is stretched: ${cv.id ? '#' + cv.id : 'a canvas'} was drawn for another size and not drawn again`))));
+        // What to keep, once shown, must be seen: a page that fades it in with its own gsap.from on
+        // top of Kit.show's fade catches it at opacity 0 and leaves it there, an empty band at the end.
+        if (stage === 'end') more.push(...(await p.evaluate(() => [...document.querySelectorAll('.keep')].filter(el => {
+          if (el.closest('.gone')) return false;
+          for (let e = el; e && e !== document.body; e = e.parentElement) if (+getComputedStyle(e).opacity < .5) return true;
+          return false;
+        }).map(() => 'what to keep is shown but invisible (a second fade left it at opacity 0)'))));
         // The photograph is the card as the app draws it: its corners rounded and the save and share
         // in theirs, so it can be looked at as a reader would see it.
         if (!process.env.BARE) await p.evaluate(controls => {

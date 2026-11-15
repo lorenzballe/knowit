@@ -114,7 +114,6 @@ function setText(i){
 function finish(){
   Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   Kit.haptic('success');
-  if (!Kit.calm && !FAST) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
 }
 
 Kit.$('go').addEventListener('click', () => {

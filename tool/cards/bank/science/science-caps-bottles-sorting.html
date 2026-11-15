@@ -140,7 +140,6 @@ function drop(i) {
 function finish() {
   phase = 'done';
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
 }
 
 Kit.onShow.card = draw;

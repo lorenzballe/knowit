@@ -108,7 +108,6 @@ rng.addEventListener('change', () => {
   Kit.haptic('selection');
   if (done) return; done = true;
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 });
 
 Kit.onShow.card = () => { dims = Kit.fitSvg(svg); draw(); };
