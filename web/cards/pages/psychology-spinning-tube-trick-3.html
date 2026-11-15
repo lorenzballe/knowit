@@ -50,8 +50,22 @@
 <script>
 const RIGHT = 0;
 let pick = -1;
-let x = null, W = 0, H = 0, INK = '#111';
+let x = null, W = 0, H = 0, INK = '#111', COL = '#fff', BODY = 'sans-serif', DISP = 'serif';
 const st = {mode: 'idle', L: 'O', th: 0, fill: 0, stitch: 0};
+
+// flat colours only: the card's ink, the card's colour, their tints, and one skin colour
+const SKIN = '#f1c29c';
+let TUBE = '#fff', LINE = '#888', HOLE = '#aaa', SEAM = '#ccc', FAINT = '#999';
+
+function rgbOf(c) {
+  const t = document.createElement('canvas').getContext('2d');
+  t.fillStyle = '#000'; t.fillStyle = c; t.fillRect(0, 0, 1, 1);
+  const d = t.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2]];
+}
+function mix(p) { // like color-mix(in srgb, ink p%, colour)
+  const a = rgbOf(INK), b = rgbOf(COL), f = p / 100;
+  return `rgb(${a.map((v, i) => Math.round(v * f + b[i] * (1 - f))).join(',')})`;
+}
 
 function rr(x0, y0, w, h, r) {
   x.beginPath(); x.moveTo(x0 + r, y0); x.arcTo(x0 + w, y0, x0 + w, y0 + h, r); x.arcTo(x0 + w, y0 + h, x0, y0 + h, r);
@@ -67,55 +81,68 @@ function draw() {
   const L = Math.min(W * 0.6, r * 4.4);
   const cx = W / 2, cy = tH * 0.58;
   const spin = st.mode === 'spin';
+  const lw = Math.max(2, r * 0.055);
+  const label = `600 ${fs}px ${BODY}`;
+  x.lineJoin = 'round'; x.lineCap = 'round';
 
-  // left end (only its outer half shows)
-  x.fillStyle = '#d9bd8c'; x.strokeStyle = '#3a2a18'; x.lineWidth = Math.max(1.5, r * 0.04);
-  x.beginPath(); x.ellipse(cx - L / 2, cy, r * 0.3, r, 0, 0, Math.PI * 2); x.fill(); x.stroke();
-  // body
-  const g = x.createLinearGradient(0, cy - r, 0, cy + r);
-  g.addColorStop(0, '#b8925c'); g.addColorStop(.45, '#f6e8c8'); g.addColorStop(1, '#a8834f');
-  x.fillStyle = g; x.fillRect(cx - L / 2, cy - r, L, 2 * r);
-  x.beginPath(); x.moveTo(cx - L / 2, cy - r); x.lineTo(cx + L / 2, cy - r); x.moveTo(cx - L / 2, cy + r); x.lineTo(cx + L / 2, cy + r); x.stroke();
+  // the tube: one plain paper silhouette, flat
+  x.fillStyle = TUBE;
+  x.beginPath(); x.ellipse(cx - L / 2, cy, r * 0.3, r, 0, 0, Math.PI * 2); x.fill();
+  x.fillRect(cx - L / 2, cy - r, L, 2 * r);
+  x.beginPath(); x.ellipse(cx + L / 2, cy, r * 0.3, r, 0, 0, Math.PI * 2); x.fill();
 
   // surface
   x.save(); x.beginPath(); x.rect(cx - L / 2, cy - r, L, 2 * r); x.clip();
   if (spin) {
+    // motion lines running along the tube
+    x.strokeStyle = SEAM; x.lineWidth = Math.max(1.5, r * 0.045);
     for (let k = 0; k < 7; k++) {
       const a = st.th * 1.3 + k * 0.9, c = Math.cos(a);
-      if (c <= 0) continue;
-      x.strokeStyle = `rgba(58,42,24,${0.12 + 0.18 * c})`; x.lineWidth = r * 0.05;
-      x.beginPath(); x.moveTo(cx - L / 2, cy + r * Math.sin(a)); x.lineTo(cx + L / 2, cy + r * Math.sin(a)); x.stroke();
+      if (c <= 0.25) continue;
+      const yy = cy + r * Math.sin(a);
+      x.beginPath(); x.moveTo(cx - L / 2 + r * 0.25, yy); x.lineTo(cx + L / 2 - r * 0.45, yy); x.stroke();
     }
-    x.globalAlpha = 0.85 + 0.15 * Math.sin(st.th * 3);
-    x.fillStyle = '#1a1208'; x.font = `900 ${r * 1.15}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+    x.fillStyle = LINE; x.font = `800 ${r * 1.15}px ${DISP}`;
     x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(st.L, cx - L * 0.08, cy);
-    x.globalAlpha = 1;
   } else {
+    // the paper-roll seam, so it reads as a cardboard tube
+    x.strokeStyle = SEAM; x.lineWidth = Math.max(1.5, r * 0.04);
+    x.beginPath(); x.moveTo(cx - L * 0.42, cy + r); x.lineTo(cx - L * 0.02, cy - r);
+    x.moveTo(cx + L * 0.1, cy + r); x.lineTo(cx + L * 0.5, cy - r); x.stroke();
     [['X', 0], ['O', Math.PI]].forEach(([ch, ph]) => {
       const a = ph + st.th, c = Math.cos(a);
-      if (c <= 0.02) return;
+      if (c <= 0.05) return;
       x.save(); x.translate(cx - L * 0.08, cy + r * Math.sin(a)); x.scale(1, c);
-      x.globalAlpha = 0.35 + 0.65 * c; x.fillStyle = '#1a1208';
-      x.font = `900 ${r * 1.15}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.fillStyle = LINE; x.font = `800 ${r * 1.15}px ${DISP}`; x.textAlign = 'center'; x.textBaseline = 'middle';
       x.fillText(ch, 0, 0); x.restore();
     });
   }
   x.restore();
 
-  // right end, open
-  x.fillStyle = '#e6cfa3'; x.strokeStyle = '#3a2a18'; x.lineWidth = Math.max(1.5, r * 0.04);
-  x.beginPath(); x.ellipse(cx + L / 2, cy, r * 0.3, r, 0, 0, Math.PI * 2); x.fill(); x.stroke();
-  x.fillStyle = '#3a2a18'; x.beginPath(); x.ellipse(cx + L / 2, cy, r * 0.22, r * 0.82, 0, 0, Math.PI * 2); x.fill();
+  // outline: top and bottom edges, the back curve of the left end
+  x.strokeStyle = LINE; x.lineWidth = lw;
+  x.beginPath();
+  x.moveTo(cx - L / 2, cy - r); x.lineTo(cx + L / 2, cy - r);
+  x.moveTo(cx - L / 2, cy + r); x.lineTo(cx + L / 2, cy + r);
+  x.stroke();
+  x.beginPath(); x.ellipse(cx - L / 2, cy, r * 0.3, r, 0, Math.PI / 2, Math.PI * 1.5); x.stroke();
 
-  x.fillStyle = INK; x.textBaseline = 'alphabetic';
-  x.font = `700 ${fs}px sans-serif`;
+  // right end, open: a plain rim and the hole
+  x.beginPath(); x.ellipse(cx + L / 2, cy, r * 0.3, r, 0, 0, Math.PI * 2); x.stroke();
+  x.fillStyle = HOLE; x.beginPath(); x.ellipse(cx + L / 2, cy, r * 0.2, r * 0.8, 0, 0, Math.PI * 2); x.fill();
+
+  x.fillStyle = INK; x.textBaseline = 'alphabetic'; x.font = label;
   if (spin) {
     // finger pressing the front side
     const fx = cx + L * 0.24, fw = r * 0.42, top = Math.max(0, cy - r * 2.2);
-    x.fillStyle = '#efc19c'; x.strokeStyle = '#7a4a2a'; x.lineWidth = Math.max(1.5, r * 0.035);
-    rr(fx - fw / 2, top, fw, cy + r * 0.15 - top, fw / 2); x.fill(); x.stroke();
-    x.fillStyle = '#fbe3d0'; rr(fx - fw * 0.3, cy - r * 0.35, fw * 0.6, r * 0.42, fw * 0.25); x.fill();
-    x.fillStyle = INK; x.textAlign = 'right';
+    x.fillStyle = SKIN; x.strokeStyle = LINE; x.lineWidth = lw;
+    rr(fx - fw / 2, top - fw, fw, cy + r * 0.15 - top + fw, fw / 2); x.fill(); x.stroke();
+    // nail and knuckle creases, plain lines
+    x.lineWidth = Math.max(1.2, lw * 0.6);
+    rr(fx - fw * 0.28, cy - r * 0.3, fw * 0.56, r * 0.36, fw * 0.22); x.stroke();
+    x.beginPath(); x.moveTo(fx - fw * 0.2, cy - r * 0.75); x.lineTo(fx + fw * 0.2, cy - r * 0.75);
+    x.moveTo(fx - fw * 0.2, cy - r * 0.88); x.lineTo(fx + fw * 0.2, cy - r * 0.88); x.stroke();
+    x.fillStyle = INK; x.textAlign = 'right'; x.font = label;
     x.fillText(`finger on the ${st.L}`, fx - fw * 0.8, cy - r - fs * 0.6);
     // spin arrow around the left end
     x.strokeStyle = INK; x.lineWidth = Math.max(2, r * 0.06);
@@ -128,29 +155,34 @@ function draw() {
     x.fillText('X on one side, O on the other', cx, Math.max(fs, cy - r - fs * 0.6));
   }
 
-  // snapshots strip
+  // snapshots: a row of little paper slips
   const n = 6, gap = W * 0.02;
   const s = Math.min((W * 0.9 - gap * (n - 1)) / n, H * 0.15);
   const rowW = n * s + (n - 1) * gap, x0 = (W - rowW) / 2;
   const tY = tH + fs * 1.3, rowY = tY + fs * 0.5;
-  x.fillStyle = INK; x.textAlign = 'center'; x.font = `700 ${fs}px sans-serif`;
+  x.fillStyle = INK; x.textAlign = 'center'; x.font = label;
   x.fillText(spin ? 'Snapshots your eyes catch' : 'Snapshots: make your bet first', W / 2, tY);
   for (let i = 0; i < n; i++) {
     const fx = x0 + i * (s + gap);
-    x.strokeStyle = INK; x.lineWidth = Math.max(1.5, s * 0.04); x.globalAlpha = 0.5;
-    rr(fx, rowY, s, s, s * 0.15); x.stroke(); x.globalAlpha = 1;
     const a = spin ? Math.max(0, Math.min(1, st.fill - i)) : 0;
+    x.lineWidth = Math.max(1.5, s * 0.04);
     if (a > 0) {
-      x.globalAlpha = a; x.fillStyle = '#f6e8c8'; rr(fx, rowY, s, s, s * 0.15); x.fill();
-      x.fillStyle = '#1a1208'; x.font = `900 ${s * 0.62}px sans-serif`; x.textBaseline = 'middle';
-      x.fillText(st.L, fx + s / 2, rowY + s / 2); x.textBaseline = 'alphabetic'; x.globalAlpha = 1;
-    } else if (!spin) {
-      x.globalAlpha = 0.45; x.fillStyle = INK; x.font = `700 ${s * 0.45}px sans-serif`; x.textBaseline = 'middle';
-      x.fillText('?', fx + s / 2, rowY + s / 2); x.textBaseline = 'alphabetic'; x.globalAlpha = 1;
+      x.globalAlpha = a;
+      x.fillStyle = TUBE; rr(fx, rowY, s, s, s * 0.08); x.fill();
+      x.fillStyle = LINE; x.font = `800 ${s * 0.62}px ${DISP}`; x.textBaseline = 'middle';
+      x.fillText(st.L, fx + s / 2, rowY + s / 2); x.textBaseline = 'alphabetic';
+      x.globalAlpha = 1;
+    } else {
+      x.strokeStyle = FAINT; x.setLineDash([s * 0.1, s * 0.08]);
+      rr(fx, rowY, s, s, s * 0.08); x.stroke(); x.setLineDash([]);
+      if (!spin) {
+        x.fillStyle = FAINT; x.font = `600 ${s * 0.45}px ${BODY}`; x.textBaseline = 'middle';
+        x.fillText('?', fx + s / 2, rowY + s / 2); x.textBaseline = 'alphabetic';
+      }
     }
   }
   if (spin && st.stitch > 0) {
-    x.globalAlpha = st.stitch; x.fillStyle = INK; x.font = `700 ${fs}px sans-serif`;
+    x.globalAlpha = st.stitch; x.fillStyle = INK; x.font = label;
     x.fillText(`Brain stitches them: one steady ${st.L}`, W / 2, Math.min(H - fs * 0.3, rowY + s + fs * 1.4));
     x.globalAlpha = 1;
   }
@@ -182,7 +214,16 @@ Kit.$('again').addEventListener('click', () => { Kit.haptic('light'); startSpin(
 Kit.onShow.card = () => {
   const c = Kit.fitCanvas(Kit.$('cv'));
   x = c.x; W = c.W; H = c.H;
-  INK = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const cs = getComputedStyle(Kit.$('card'));
+  INK = cs.getPropertyValue('--k').trim() || '#111';
+  COL = cs.getPropertyValue('--c').trim() || '#fff';
+  BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
+  DISP = cs.getPropertyValue('--display').trim() || 'serif';
+  TUBE = INK;          // the tube is a plain sheet in the card's ink
+  LINE = COL;          // lines and letters on it in the card's colour
+  SEAM = mix(72);
+  HOLE = mix(45);
+  FAINT = mix(50);
   draw();
 };
 gsap.ticker.add(() => {

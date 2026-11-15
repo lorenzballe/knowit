@@ -15,7 +15,13 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.6cqh;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible;color:var(--k)}
+#pic .stand{fill:color-mix(in srgb,var(--k) 62%,var(--c))}
+#pic .si{fill:color-mix(in srgb,var(--k) 7%,#fff)}
+#pic .mirror{fill:color-mix(in srgb,var(--k) 28%,var(--c))}
+#pic .paper{fill:color-mix(in srgb,var(--c) 16%,#fff)}
+#pic .atom{fill:color-mix(in srgb,var(--k) 36%,#fff)}
+#pic .atom.lit{fill:var(--k)}
 #opts{display:flex;gap:2.2cqw}
 .opt{flex:1;font:800 max(2.6cqh,16px)/1 var(--display);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 0 1.3cqh;cursor:pointer;font-variant-numeric:lining-nums}
 .opt sup{font-size:.62em;vertical-align:.62em;line-height:0;margin-left:.04em}
@@ -65,7 +71,7 @@
 <script>
 (() => {
   const RIGHT = 2, SAID = ['10¹⁵', '10²⁰', '10²⁵', '10³⁰'];
-  const svg = Kit.$('pic'), INK = '#10100c', RED = '#e8352b';
+  const svg = Kit.$('pic'), INK = 'currentColor', RED = '#e8352b';
   let pick = -1, phase = 0, building = false;
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const txt = (x, y, s, a, parent = svg) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-weight': 700}, a), parent); e.textContent = s; return e; };
@@ -108,12 +114,8 @@
     }
     const need = R * 2.34 + (caps ? fs * 2.4 : 2) + 4, cy = R * 1.17 + 2 + Math.max(0, (H - need) / 2), my = cy;
     const defs = Kit.mk('defs', {}, svg);
-    const g1 = Kit.mk('radialGradient', {id: 'chrome', cx: '36%', cy: '28%', r: '80%'}, defs);
-    [['0', '#ffffff'], ['.25', '#eef3f2'], ['.52', '#aab7b4'], ['.8', '#55625f'], ['1', '#2b3331']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, g1));
-    const g2 = Kit.mk('linearGradient', {id: 'floor', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    [['0', '#0c3f30'], ['.55', '#1f7a5d'], ['1', '#5fcaa5']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, g2));
-    const clip = Kit.mk('clipPath', {id: 'ball'}, defs); Kit.mk('circle', {cx, cy, r: R}, clip);
-    const clipM = Kit.mk('clipPath', {id: 'lens'}, defs); Kit.mk('circle', {cx: mx, cy: my, r: Math.max(1, mr - 1.5)}, clipM);
+    const clip = Kit.mk('clipPath', {id: 'ballclip'}, defs); Kit.mk('circle', {cx, cy, r: R}, clip);
+    const clipM = Kit.mk('clipPath', {id: 'lensclip'}, defs); Kit.mk('circle', {cx: mx, cy: my, r: Math.max(1, mr - 1.5)}, clipM);
 
     // The box round the ball (phase 2), behind the ball.
     const box = Kit.mk('g', {id: 'box', opacity: phase >= 2 ? (phase >= 3 ? .35 : 1) : 0}, svg);
@@ -124,28 +126,24 @@
     for (let i = 0; i < 4; i++) { line(B[i], B[(i + 1) % 4], true); line(F[i], B[i], i === 3); }
     for (let i = 0; i < 4; i++) line(F[i], F[(i + 1) % 4], false);
 
-    // The ball: polished silicon, the green room reflected in its lower half.
+    // The ball: a flat pale sphere on its little stand, the floor mirrored in its lower part.
     const ball = Kit.mk('g', {id: 'ballg'}, svg);
-    Kit.mk('ellipse', {cx, cy: cy + R * .98, rx: R * .52, ry: R * .1, fill: 'none', stroke: INK, 'stroke-width': 2, opacity: .55}, ball);
-    Kit.mk('circle', {cx, cy, r: R, fill: 'url(#chrome)'}, ball);
-    const refl = Kit.mk('g', {'clip-path': 'url(#ball)'}, ball);
-    Kit.mk('path', {d: `M${cx - R} ${cy + R * .08} Q${cx} ${cy - R * .1} ${cx + R} ${cy + R * .08} L${cx + R} ${cy + R} L${cx - R} ${cy + R}Z`, fill: 'url(#floor)', opacity: .95}, refl);
-    Kit.mk('ellipse', {cx, cy: cy + R * .62, rx: R * .7, ry: R * .16, fill: '#10100c', opacity: .12}, refl);
-    Kit.mk('rect', {x: cx - R * .62, y: cy - R * .62, width: R * .26, height: R * .34, rx: R * .05, fill: '#fff', opacity: .8, transform: `rotate(-14 ${cx} ${cy})`}, refl);
-    Kit.mk('rect', {x: cx - R * .3, y: cy - R * .7, width: R * .18, height: R * .3, rx: R * .04, fill: '#fff', opacity: .55, transform: `rotate(-6 ${cx} ${cy})`}, refl);
-    Kit.mk('circle', {cx, cy, r: R - .7, fill: 'none', stroke: '#ffffff', 'stroke-opacity': .35, 'stroke-width': 1.4}, ball);
-    Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-opacity': .25, 'stroke-width': 1}, ball);
+    Kit.mk('path', {class: 'stand', d: `M${cx - R * .34} ${cy + R * .9} L${cx + R * .34} ${cy + R * .9} L${cx + R * .46} ${cy + R * 1.1} L${cx - R * .46} ${cy + R * 1.1}Z`, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, ball);
+    Kit.mk('circle', {class: 'si', cx, cy, r: R}, ball);
+    const refl = Kit.mk('g', {'clip-path': 'url(#ballclip)'}, ball);
+    Kit.mk('path', {class: 'mirror', d: `M${cx - R} ${cy + R * .22} Q${cx} ${cy + R * .08} ${cx + R} ${cy + R * .22} L${cx + R} ${cy + R} L${cx - R} ${cy + R}Z`}, refl);
+    Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-width': 2.4}, ball);
     // The ball's share of the box (phase 3).
     if (phase >= 3) Kit.mk('circle', {id: 'share', cx, cy, r: R + 2.5, fill: 'none', stroke: INK, 'stroke-width': 2.4}, svg);
 
     // The laser across the ball and the width it reads (phase 1).
     const laser = Kit.mk('g', {id: 'laser', opacity: phase >= 1 ? 1 : 0}, svg);
-    Kit.mk('line', {x1: cx - R, y1: cy, x2: cx + R, y2: cy, stroke: RED, 'stroke-width': 2, 'stroke-linecap': 'round'}, laser);
+    Kit.mk('line', {x1: cx - R, y1: cy, x2: cx + R, y2: cy, stroke: RED, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, laser);
     [cx - R, cx + R].forEach(x => Kit.mk('circle', {cx: x, cy, r: 3, fill: RED}, laser));
     const dimY = cy + R * 1.17 + fs * .55;
     if (caps) {
-      Kit.mk('line', {x1: cx - R, y1: dimY, x2: cx + R, y2: dimY, stroke: INK, 'stroke-width': 1.4}, laser);
-      [cx - R, cx + R].forEach(x => Kit.mk('line', {x1: x, y1: dimY - fs * .35, x2: x, y2: dimY + fs * .35, stroke: INK, 'stroke-width': 1.4}, laser));
+      Kit.mk('line', {x1: cx - R, y1: dimY, x2: cx + R, y2: dimY, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, laser);
+      [cx - R, cx + R].forEach(x => Kit.mk('line', {x1: x, y1: dimY - fs * .35, x2: x, y2: dimY + fs * .35, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, laser));
       txt(cx, dimY + fs * 1.35, phase >= 1 ? '93.7 mm, by laser' : '1 kg of silicon-28', {'font-size': fs, 'text-anchor': 'middle', id: 'balltxt'});
     } else if (phase >= 1) {
       // no room under the drawing: the bare number beside the box, next to the laser's end
@@ -155,13 +153,13 @@
     last = {cx, cy, R};
     if (phase === 0) return;
 
-    // The magnifier on the crystal.
+    // The magnifier on the crystal: a plain paper circle with one cell drawn in it.
     const lens = Kit.mk('g', {id: 'lens'}, svg);
     const a0 = -.62, sx = cx + R * Math.cos(a0), sy = cy + R * Math.sin(a0), ss = Math.max(3.5, R * .09);
-    Kit.mk('rect', {x: sx - ss, y: sy - ss, width: ss * 2, height: ss * 2, fill: 'none', stroke: INK, 'stroke-width': 1.4}, lens);
-    [[sx + ss, sy - ss, -1], [sx + ss, sy + ss, 1]].forEach(([x, y, sg]) => { const t = Math.PI + sg * 1.25; Kit.mk('line', {x1: x, y1: y, x2: mx + mr * Math.cos(t), y2: my + mr * Math.sin(t), stroke: INK, 'stroke-width': 1.1, opacity: .55}, lens); });
-    Kit.mk('circle', {cx: mx, cy: my, r: mr, fill: '#fbfbf6', stroke: INK, 'stroke-width': 2.4}, lens);
-    const cell = Kit.mk('g', {'clip-path': 'url(#lens)'}, lens);
+    [[sx + ss, sy - ss, -1], [sx + ss, sy + ss, 1]].forEach(([x, y, sg]) => { const t = Math.PI + sg * 1.25; Kit.mk('line', {x1: x, y1: y, x2: mx + mr * Math.cos(t), y2: my + mr * Math.sin(t), stroke: INK, 'stroke-width': 1.4, opacity: .5, 'stroke-linecap': 'round'}, lens); });
+    Kit.mk('rect', {x: sx - ss, y: sy - ss, width: ss * 2, height: ss * 2, fill: 'none', stroke: INK, 'stroke-width': 1.6}, lens);
+    Kit.mk('circle', {class: 'paper', cx: mx, cy: my, r: mr, stroke: INK, 'stroke-width': 2.4}, lens);
+    const cell = Kit.mk('g', {'clip-path': 'url(#lensclip)'}, lens);
     // One cell of the crystal, seen a little from above and to the side so that all 8 atoms show.
     const q = DIAMOND.q, c = q + .5, psi = 20 * Math.PI / 180, phi = 18 * Math.PI / 180;
     const rot = p => { const x = p[0] - c, y = p[1] - c, z = p[2] - c; const x1 = x * Math.cos(psi) - y * Math.sin(psi), y1 = x * Math.sin(psi) + y * Math.cos(psi); return [x1, -(y1 * Math.sin(phi) + z * Math.cos(phi)), -(y1 * Math.cos(phi) - z * Math.sin(phi))]; };
@@ -175,20 +173,20 @@
       if (n !== 1 || c1.join() > c2.join()) continue;
       const hidden = c1.join() === far.join() || c2.join() === far.join();
       const p1 = P(c1), p2 = P(c2);
-      Kit.mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: INK, 'stroke-width': 1.2, opacity: hidden ? .3 : .55, 'stroke-dasharray': hidden ? '3 3' : 'none'}, cell);
+      Kit.mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: INK, 'stroke-width': 1.3, opacity: hidden ? .3 : .55, 'stroke-dasharray': hidden ? '3 3' : 'none', 'stroke-linecap': 'round'}, cell);
     }
     const near = p => rot(p)[2];
     const items = [...DIAMOND.bonds.map(b => ({z: (near(b[0]) + near(b[1])) / 2 - .01, b})), ...DIAMOND.atoms.map(a => ({z: near(a), a}))].sort((u, v) => u.z - v.z);
     const ar = Math.max(1.9, s * .075), lit = phase >= 4;
     for (const it of items) {
       if (it.b) { const [a, b, f] = it.b, p1 = P(a), p2 = P([a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f]); Kit.mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: INK, 'stroke-width': Math.max(1.2, ar * .5), opacity: f < 1 ? .35 : .7, 'stroke-linecap': 'round'}, cell); }
-      else { const p = P(it.a); Kit.mk('circle', {cx: p[0], cy: p[1], r: lit ? ar * 1.12 : ar, fill: lit ? INK : '#8b9296', class: 'atom'}, cell); if (lit) Kit.mk('circle', {cx: p[0] - ar * .32, cy: p[1] - ar * .36, r: ar * .32, fill: '#fff', opacity: .7, class: 'atom'}, cell); }
+      else { const p = P(it.a); Kit.mk('circle', {cx: p[0], cy: p[1], r: lit ? ar * 1.12 : ar, stroke: INK, 'stroke-width': 1.2, class: lit ? 'atom lit' : 'atom'}, cell); }
     }
     // the cell's edge, measured by X-rays
     const front = corners.filter(k => k.join() !== far.join()).sort((u, v) => P(v)[1] - P(u)[1]);
     const lowest = front[0], nb = corners.filter(k => k.filter((v, i) => Math.abs(v - lowest[i]) > .5).length === 1 && k.join() !== far.join()).sort((u, v) => P(u)[0] - P(v)[0])[0];
     const e1 = P(lowest), e2 = P(nb);
-    Kit.mk('line', {x1: e1[0], y1: e1[1], x2: e2[0], y2: e2[1], stroke: RED, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, cell);
+    Kit.mk('line', {x1: e1[0], y1: e1[1], x2: e2[0], y2: e2[1], stroke: RED, 'stroke-width': 2.6, 'stroke-linecap': 'round'}, cell);
     if (caps) {
       const t = txt(mx, my + mr + fs * 1.3, '', {'font-size': fs, 'text-anchor': 'middle', id: 'celltxt'});
       Kit.mk('tspan', {x: mx}, t).textContent = '0.543 nm,';

@@ -91,43 +91,60 @@ Kit.onShow.card = () => {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const defs = Kit.mk('defs', {}, svg);
-  const g = Kit.mk('linearGradient', {id: 'gem', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#d6f0ff'}, g);
-  Kit.mk('stop', {offset: .55, 'stop-color': '#6fb6ec'}, g);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#2f6fb3'}, g);
-  const fl = Kit.mk('filter', {id: 'blur', x: '-20%', y: '-20%', width: '140%', height: '140%'}, defs);
-  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(2, f * .25)}, fl);
+
+  // flat stone colours: a pale ice tone and two slightly deeper facets
+  const ICE = '#e6f4f6', ICE2 = '#c4e2e8', ICE3 = '#a3cfd9';
+  const FOG = '#f4f6f6', DROP = '#cfd8da';
 
   const lab = Math.max(f, 13);
   const r = Math.min(W * .2, (H - lab * 4) / 1.6);
   const cy = Math.max(r * .55, (H - lab * 3.4 - r * 1.25) / 2 + r * .5);
+  const sw = Math.max(2, r * .03);
+  const line = `stroke:var(--k);stroke-width:${sw};stroke-linejoin:round;stroke-linecap:round`;
   parts = [];
   [0, 1].forEach(i => {
     const cx = W * (i ? .73 : .27);
     const st = Kit.mk('g', {class: 'stone'}, svg);
     const gy = cy, ty = cy - .42 * r, by = cy + .78 * r;
+    const P = (x, y) => `${cx + x * r},${y}`;
     const pts = [[cx - .55 * r, ty], [cx + .55 * r, ty], [cx + r, gy], [cx, by], [cx - r, gy]];
     const poly = pts.map(p => p.join(',')).join(' ');
     const cp = Kit.mk('clipPath', {id: 'cp' + i}, defs);
     Kit.mk('polygon', {points: poly}, cp);
-    Kit.mk('ellipse', {cx, cy: by + r * .12, rx: r * .7, ry: r * .07, style: 'fill:var(--k);opacity:.15'}, st);
-    Kit.mk('polygon', {points: poly, fill: 'url(#gem)', style: 'stroke:var(--k);stroke-width:' + Math.max(1.5, r * .025) + ';stroke-linejoin:round'}, st);
-    const fac = Kit.mk('g', {style: 'stroke:var(--k);stroke-opacity:.45;stroke-width:' + Math.max(1, r * .012) + ';fill:none'}, st);
-    Kit.mk('line', {x1: cx - r, y1: gy, x2: cx + r, y2: gy}, fac);
-    [[-.55, -.3], [.55, .3], [-.18, -.3], [.18, .3]].forEach(([a, b]) => Kit.mk('line', {x1: cx + a * r, y1: ty, x2: cx + b * r * 2.2, y2: gy}, fac));
-    [-.66, -.33, .33, .66].forEach(a => Kit.mk('line', {x1: cx + a * r, y1: gy, x2: cx, y2: by}, fac));
-    Kit.mk('polygon', {points: `${cx - .3 * r},${ty + r * .06} ${cx - .05 * r},${ty + r * .06} ${cx - .35 * r},${gy - r * .06}`, fill: '#fff', opacity: .55}, st);
-    // fog layer
+
+    // the stone, cut as flat facets
+    Kit.mk('polygon', {points: poly, fill: ICE}, st);
+    // crown facets
+    const crown = [[-.55, -.18, -.4, -1], [-.18, .18, .4, -.4], [.18, .55, 1, .4]];
+    crown.forEach(([a, b, c, d], k) => Kit.mk('polygon', {
+      points: `${P(a, ty)} ${P(b, ty)} ${P(c, gy)} ${P(d, gy)}`,
+      fill: k === 1 ? ICE : ICE2, style: line}, st));
+    // pavilion facets
+    const gx = [-1, -.66, -.33, .33, .66, 1];
+    for (let k = 0; k < gx.length - 1; k++){
+      Kit.mk('polygon', {
+        points: `${P(gx[k], gy)} ${P(gx[k + 1], gy)} ${P(0, by)}`,
+        fill: [ICE3, ICE2, ICE, ICE2, ICE3][k], style: line}, st);
+    }
+    Kit.mk('polygon', {points: poly, fill: 'none', style: line}, st);
+
+    // fog layer: a milky film with fine droplets
     const fogG = Kit.mk('g', {'clip-path': `url(#cp${i})`}, st);
-    const fog = Kit.mk('polygon', {points: poly, fill: '#f3f6f9', filter: 'url(#blur)', opacity: 0}, fogG);
+    const fog = Kit.mk('polygon', {points: poly, fill: FOG, opacity: 0}, fogG);
     const drops = Kit.mk('g', {opacity: 0}, fogG);
     for (let k = 0; k < 28; k++){
       const x = cx + (Kit.rnd() * 2 - 1) * r * .9, y = ty + Kit.rnd() * (by - ty) * .8;
-      Kit.mk('circle', {cx: x, cy: y, r: r * (.015 + Kit.rnd() * .025), fill: '#c9d6e2'}, drops);
+      Kit.mk('circle', {cx: x, cy: y, r: r * (.015 + Kit.rnd() * .025), fill: DROP}, drops);
     }
-    const puff = Kit.mk('ellipse', {cx, cy: by - r * .2, rx: r * .9, ry: r * .45, fill: '#fff', opacity: 0, filter: 'url(#blur)'}, st);
-    Kit.mk('text', {x: cx, y: by + r * .12 + lab * 1.9, 'text-anchor': 'middle', style: `font:800 ${lab * 1.1}px var(--display);fill:var(--k)`}, st).textContent = i ? 'Stone B' : 'Stone A';
-    const timer = Kit.mk('text', {x: cx, y: by + r * .12 + lab * 3.5, 'text-anchor': 'middle', style: `font:600 ${lab * .9}px var(--mono);fill:var(--k);opacity:.8`}, st);
+
+    // the puff of breath: a plain little cloud
+    const puff = Kit.mk('g', {opacity: 0}, st);
+    const pc = by - r * .2;
+    [[-.45, .05, .32], [0, -.08, .42], [.45, .05, .32], [-.2, .15, .3], [.22, .15, .3]].forEach(([dx, dy, rr]) =>
+      Kit.mk('circle', {cx: cx + dx * r, cy: pc + dy * r, r: rr * r, fill: FOG}, puff));
+
+    Kit.mk('text', {x: cx, y: by + r * .12 + lab * 1.9, 'text-anchor': 'middle', style: `font:700 ${lab * 1.1}px var(--body);fill:var(--k)`}, st).textContent = i ? 'Stone B' : 'Stone A';
+    const timer = Kit.mk('text', {x: cx, y: by + r * .12 + lab * 3.5, 'text-anchor': 'middle', style: `font:500 ${lab * 1.1}px var(--body);fill:var(--k);opacity:.75`}, st);
     Kit.mk('rect', {x: cx - r * 1.05, y: ty - r * .15, width: r * 2.1, height: by - ty + r * .2 + lab * 3.8, fill: 'transparent'}, st);
     parts[i] = {fog, drops, puff, timer};
     timer.textContent = timerText(i);

@@ -34,6 +34,17 @@
 const svg = Kit.$('svg');
 let gapFrac = 1, done = false, pulse = 1, G = null, dragging = false, dragOff = 0;
 const pulseObj = {v: 1};
+const INK = '#10100c', GRAPE = '#5e2b6e', HOT = '#ff6a1a', CORE = '#ffd23a';
+
+// a flat, slightly uneven spark of radius ~1 (scaled later)
+function sparkPath(scale) {
+  const radii = [1, .46, .86, .5, 1.04, .44, .82, .52, .96, .47, .88, .5];
+  const n = radii.length;
+  return radii.map((rr, i) => {
+    const a = -Math.PI / 2 + i * 2 * Math.PI / n;
+    return (i ? 'L' : 'M') + (Math.cos(a) * rr * scale).toFixed(3) + ' ' + (Math.sin(a) * rr * scale).toFixed(3);
+  }).join(' ') + ' Z';
+}
 
 function draw() {
   const {W, H, f} = Kit.fitSvg(svg);
@@ -45,65 +56,69 @@ function draw() {
   const r = Math.max(6, Math.min(W * 0.17, H * 0.3, (H - top - fs * 2.6) / 2 - 2));
   const cy = Math.min(Math.max(H * 0.56, top + fs * 2.6 + r), H - r - 2);
   const ax = W * 0.27, bMin = ax + 2 * r, bMax = Math.min(W * 0.81, W - r - 6);
-  const defs = Kit.mk('defs', {}, svg);
-  const gg = Kit.mk('radialGradient', {id: 'grapeG', cx: '38%', cy: '35%', r: '70%'}, defs);
-  Kit.mk('stop', {offset: '0%', 'stop-color': '#d6f58a'}, gg);
-  Kit.mk('stop', {offset: '55%', 'stop-color': '#7fbf3a'}, gg);
-  Kit.mk('stop', {offset: '100%', 'stop-color': '#3f7a1e'}, gg);
-  const gl = Kit.mk('radialGradient', {id: 'glowG'}, defs);
-  [['0%', '#ffffff', 1], ['18%', '#ffe14a', .95], ['45%', '#ff6a1a', .7], ['75%', '#b0149e', .28], ['100%', '#b0149e', 0]]
-    .forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gl));
-  const bl = Kit.mk('radialGradient', {id: 'warmG'}, defs);
-  Kit.mk('stop', {offset: '0%', 'stop-color': '#ff6a1a', 'stop-opacity': .4}, bl);
-  Kit.mk('stop', {offset: '100%', 'stop-color': '#ff6a1a', 'stop-opacity': 0}, bl);
+  const sw = Math.max(r * 0.035, 2.5);
 
   // meter
-  const mLab = Kit.mk('text', {x: mx, y: fs * 1.4, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
+  const mLab = Kit.mk('text', {x: mx, y: fs * 1.4, fill: INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
   mLab.textContent = 'Field between the grapes';
-  Kit.mk('rect', {x: mx, y: my, width: mw, height: mh, rx: mh / 2, fill: '#10100c', 'fill-opacity': .2}, svg);
-  const mBar = Kit.mk('rect', {x: mx, y: my, width: 0, height: mh, rx: mh / 2, fill: '#10100c'}, svg);
+  Kit.mk('rect', {x: mx, y: my, width: mw, height: mh, rx: mh / 2, fill: INK, 'fill-opacity': .2}, svg);
+  const mBar = Kit.mk('rect', {x: mx, y: my, width: 0, height: mh, rx: mh / 2, fill: INK}, svg);
 
-  const warmA = Kit.mk('circle', {cx: ax, cy, r: r * 1.25, fill: 'url(#warmG)'}, svg);
-  const warmB = Kit.mk('circle', {cy, r: r * 1.25, fill: 'url(#warmG)'}, svg);
-  const mkGrape = (x) => {
+  // kept for the script's bookkeeping; drawn as nothing
+  const warmA = Kit.mk('g', {}, svg);
+  const warmB = Kit.mk('g', {}, svg);
+
+  const mkGrape = (x, flip) => {
     const g = Kit.mk('g', {}, svg);
-    Kit.mk('circle', {cx: 0, cy: 0, r, fill: 'url(#grapeG)', stroke: '#1f4a0c', 'stroke-width': Math.max(r * 0.04, 2)}, g);
-    Kit.mk('ellipse', {cx: -r * 0.35, cy: -r * 0.4, rx: r * 0.22, ry: r * 0.13, fill: '#fff', opacity: .55, transform: 'rotate(-30)'}, g);
+    // stem stub
+    Kit.mk('path', {
+      d: `M ${flip * r * 0.04} ${-r * 0.92} Q ${flip * r * 0.02} ${-r * 1.12} ${flip * r * 0.16} ${-r * 1.24}`,
+      fill: 'none', stroke: INK, 'stroke-width': sw * 1.3, 'stroke-linecap': 'round'
+    }, g);
+    Kit.mk('circle', {cx: 0, cy: 0, r, fill: GRAPE, stroke: INK, 'stroke-width': sw}, g);
+    // the little scar where the stem joins
+    Kit.mk('circle', {cx: flip * r * 0.04, cy: -r * 0.86, r: Math.max(r * 0.06, 2), fill: INK}, g);
     g.setAttribute('transform', `translate(${x},${cy})`);
     return g;
   };
-  mkGrape(ax);
-  const gB = mkGrape(bMin + gapFrac * (bMax - bMin));
+  mkGrape(ax, -1);
+  const gB = mkGrape(bMin + gapFrac * (bMax - bMin), 1);
   gB.classList.add('grab');
-  const glow = Kit.mk('circle', {cy, r: 1, fill: 'url(#glowG)', 'pointer-events': 'none'}, svg);
+
+  // the hot spot: a flat spark of plasma, drawn on top at the meeting point
+  const glow = Kit.mk('g', {'pointer-events': 'none'}, svg);
+  const sparkScale = Kit.mk('g', {}, glow);
+  Kit.mk('path', {d: sparkPath(1), fill: HOT, stroke: INK, 'stroke-width': 0, 'stroke-linejoin': 'round'}, sparkScale);
+  Kit.mk('circle', {cx: 0, cy: 0, r: .34, fill: CORE}, sparkScale);
+
   const lab = Kit.mk('g', {opacity: 0, 'pointer-events': 'none'}, svg);
   const ly = cy - r - fs * 1.6;
-  const line = Kit.mk('line', {y1: ly + fs * 0.4, y2: cy - r * 0.18, stroke: '#10100c', 'stroke-width': 2}, lab);
-  const lt = Kit.mk('text', {y: ly, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, lab);
+  const line = Kit.mk('line', {y1: ly + fs * 0.4, y2: cy - r * 0.18, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, lab);
+  const lt = Kit.mk('text', {y: ly, fill: INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, lab);
   lt.textContent = 'contact point: hottest';
-  const hint = Kit.mk('text', {y: cy + r + fs * 1.6, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'text-anchor': 'middle', 'pointer-events': 'none'}, svg);
+  const hint = Kit.mk('text', {y: cy + r + fs * 1.6, fill: INK, 'font-size': fs, 'font-family': 'var(--body)', 'text-anchor': 'middle', 'pointer-events': 'none'}, svg);
   hint.textContent = '← drag';
-  G = {W, H, r, cy, ax, bMin, bMax, gB, glow, warmB, warmA, mBar, mw, lab, line, lt, hint};
+  G = {W, H, r, cy, ax, bMin, bMax, gB, glow, sparkScale, warmB, warmA, mBar, mw, lab, line, lt, hint};
   gB.addEventListener('pointerdown', down);
   update();
 }
 
 function update() {
   if (!G) return;
-  const {r, cy, ax, bMin, bMax, gB, glow, warmB, warmA, mBar, mw, lab, line, lt, hint, W} = G;
+  const {r, cy, ax, bMin, bMax, gB, glow, sparkScale, mBar, mw, lab, line, lt, hint, W} = G;
   const bx = bMin + gapFrac * (bMax - bMin);
   gB.setAttribute('transform', `translate(${bx},${cy})`);
-  warmB.setAttribute('cx', bx);
   hint.setAttribute('x', bx); hint.setAttribute('opacity', done ? 0 : 1);
   const t = 1 - gapFrac, k = Math.pow(t, 3);
   const mid = (ax + r + bx - r) / 2;
-  glow.setAttribute('cx', mid);
-  glow.setAttribute('r', (r * 0.12 + r * 0.75 * k) * (done ? pulseObj.v : 1 + (pulseObj.v - 1) * k));
-  glow.setAttribute('opacity', 0.05 + 0.95 * k);
-  const wa = 0.5 + 0.3 * t; warmA.setAttribute('opacity', wa); warmB.setAttribute('opacity', wa);
+  const s = (r * 0.12 + r * 0.55 * k) * (done ? pulseObj.v : 1 + (pulseObj.v - 1) * k);
+  glow.setAttribute('transform', `translate(${mid},${cy})`);
+  sparkScale.setAttribute('transform', `scale(${Math.max(s, 0.01)})`);
+  glow.setAttribute('opacity', k < 0.02 ? 0 : Math.min(1, 0.2 + 0.8 * k / 0.6));
   mBar.setAttribute('width', Math.max(0.04, 0.04 + 0.96 * k) * mw);
   const lx = Math.min(Math.max(mid, W * 0.28), W * 0.72);
   line.setAttribute('x1', lx); line.setAttribute('x2', mid); lt.setAttribute('x', lx);
+  line.setAttribute('y2', cy - Math.max(s * 1.1, r * 0.18));
   lab.setAttribute('opacity', done ? 1 : 0);
 }
 

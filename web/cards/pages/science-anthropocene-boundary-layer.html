@@ -12,6 +12,18 @@
 #col text{font-family:var(--body);font-weight:700}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+/* flat tints of the card ink over the card colour */
+#col .t05{fill:color-mix(in srgb,var(--k) 5%,var(--c))}
+#col .t12{fill:color-mix(in srgb,var(--k) 12%,var(--c))}
+#col .t20{fill:color-mix(in srgb,var(--k) 20%,var(--c))}
+#col .t28{fill:color-mix(in srgb,var(--k) 28%,var(--c))}
+#col .t36{fill:color-mix(in srgb,var(--k) 36%,var(--c))}
+#col .t48{fill:color-mix(in srgb,var(--k) 48%,var(--c))}
+#col .t62{fill:color-mix(in srgb,var(--k) 62%,var(--c))}
+#col .t78{fill:color-mix(in srgb,var(--k) 78%,var(--c))}
+#col .ink{fill:var(--k)}
+#col .hot{fill:#e4572e}
+#col .edge{fill:none;stroke:var(--k);stroke-width:2;stroke-linejoin:round}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Pull apart">
   <div class="in">
@@ -33,6 +45,19 @@ let g = null, done = false, drag = null;
 const clamp = v => Math.max(0, Math.min(1, v));
 const NS = 'http://www.w3.org/2000/svg';
 
+// a gently uneven line across a column, as a list of points
+function wobble(x, w, y, amp, n = 6) {
+  const pts = [];
+  for (let j = 0; j <= n; j++) pts.push([x + w * j / n, y + (j === 0 || j === n ? (Kit.rnd() - .5) * amp : (Kit.rnd() - .5) * 2 * amp)]);
+  return pts;
+}
+// filled shape between two uneven lines
+function between(top, bot) {
+  let d = 'M' + top.map(p => p[0] + ' ' + p[1]).join('L');
+  d += 'L' + bot.slice().reverse().map(p => p[0] + ' ' + p[1]).join('L') + 'Z';
+  return d;
+}
+
 function draw() {
   const svg = Kit.$('col');
   const fit = Kit.fitSvg(svg), W = fit.W, H = fit.H;
@@ -44,35 +69,43 @@ function draw() {
   const xs = [0, 1, 2].map(i => cx0 + i * (cw + gap));
   const FH = b0 + G, sh = FH / 3;
   const ink = 'currentColor';
+  const amp = Math.min(f * .18, h * .03);
 
   // site names
-  xs.forEach((x, i) => Kit.mk('text', {x: x + cw / 2, y: f * 1.05, 'text-anchor': 'middle', 'font-size': f * 0.9, fill: ink, opacity: .7}, svg).textContent = 'Site ' + 'ABC'[i]);
+  xs.forEach((x, i) => Kit.mk('text', {x: x + cw / 2, y: f * 1.05, 'text-anchor': 'middle', 'font-size': f, fill: ink, opacity: .7}, svg).textContent = 'Site ' + 'ABC'[i]);
 
   const gTop = Kit.mk('g', {}, svg), gBot = Kit.mk('g', {}, svg), gBand = Kit.mk('g', {}, svg), gSub = Kit.mk('g', {}, svg);
 
-  // top: Anthropocene
+  // top: Anthropocene — today's ground, with an uneven surface
   xs.forEach(x => {
-    Kit.mk('rect', {x, y: y0, width: cw, height: a, fill: '#a7adb4', stroke: ink, 'stroke-width': 1.5}, gTop);
-    for (let k = 0; k < 6; k++) Kit.mk('circle', {cx: x + Kit.rnd() * cw, cy: y0 + 3 + Kit.rnd() * (a - 6), r: f * .1, fill: '#6b7178'}, gTop);
+    const surf = wobble(x, cw, y0 + amp, amp * 1.4);
+    surf[0][1] = surf[surf.length - 1][1] = y0 + amp;
+    const base = [[x, y0 + a], [x + cw, y0 + a]];
+    const d = between(surf, base);
+    Kit.mk('path', {d, class: 't48'}, gTop);
+    Kit.mk('path', {d, class: 'edge'}, gTop);
   });
   const aY = y0 + a / 2 + f * .35;
   Kit.mk('text', {x: lx, y: aY, 'font-size': f, fill: ink}, gTop).textContent = 'Anthropocene';
 
-  // bottom: Holocene + older rock
+  // bottom: Holocene layers + older rock
   const yh = y0 + a + b0;
-  const tans = ['#d9b98a', '#c99d68', '#e6cfa6', '#b98a57', '#d4ad7a'];
+  const tints = ['t12', 't28', 't05', 't36', 't20'];
   xs.forEach((x, i) => {
-    let y = yh, k = i;
+    let prev = [[x, yh], [x + cw, yh]], y = yh, k = i;
     while (y < yh + h - 1) {
       const t = Math.min(h * (0.08 + Kit.rnd() * 0.16), yh + h - y);
-      Kit.mk('rect', {x, y, width: cw, height: t + .5, fill: tans[k++ % tans.length]}, gBot);
       y += t;
+      const last = y >= yh + h - 1;
+      const next = last ? [[x, yh + h], [x + cw, yh + h]] : wobble(x, cw, y, amp);
+      Kit.mk('path', {d: between(prev, next), class: tints[k++ % tints.length]}, gBot);
+      prev = next;
     }
-    Kit.mk('rect', {x, y: yh, width: cw, height: h, fill: 'none', stroke: ink, 'stroke-width': 1.5}, gBot);
-    Kit.mk('rect', {x, y: yh + h, width: cw, height: old, fill: '#6e5a4b', stroke: ink, 'stroke-width': 1.5}, gBot);
-    for (let k2 = 0; k2 < 5; k2++) Kit.mk('rect', {x: x + Kit.rnd() * (cw - f * .6), y: yh + h + 3 + Kit.rnd() * Math.max(1, old - f * .5), width: f * .6, height: f * .25, rx: f * .1, fill: '#5a4a3e'}, gBot);
+    Kit.mk('rect', {x, y: yh, width: cw, height: h, class: 'edge'}, gBot);
+    Kit.mk('rect', {x, y: yh + h, width: cw, height: old, class: 't62'}, gBot);
+    Kit.mk('rect', {x, y: yh + h, width: cw, height: old, class: 'edge'}, gBot);
   });
-  const bl = Kit.mk('text', {x: lx, y: yh + f * 1.15, 'font-size': f * .9, fill: '#e4572e'}, gBot);
+  const bl = Kit.mk('text', {x: lx, y: yh + f * 1.15, 'font-size': f, fill: '#e4572e'}, gBot);
   bl.textContent = '◂ the boundary';
   const holY = yh + h * .62 + f * .35, oldY = yh + h + old / 2 + f * .35;
   const holT = Kit.mk('text', {x: lx, y: holY, 'font-size': f, fill: ink}, gBot);
@@ -82,28 +115,26 @@ function draw() {
 
   // the boundary band, drawn at full size, squeezed by scale
   const bandIn = Kit.mk('g', {}, gBand);
-  const cols = ['#e63946', '#1d8fe1', '#f4b400', '#2a9d8f', '#9b5de5'];
   xs.forEach(x => {
-    Kit.mk('rect', {x, y: 0, width: cw, height: sh, fill: '#16241a'}, bandIn);
-    for (let k = 0; k < 9; k++) {
-      const cx = x + f * .4 + Kit.rnd() * (cw - f * .8), cy = sh * .2 + Kit.rnd() * sh * .6;
-      Kit.mk('circle', {cx, cy, r: f * .38, fill: '#c6f432', opacity: .22}, bandIn);
-      Kit.mk('circle', {cx, cy, r: f * .17, fill: '#d9ff4a'}, bandIn);
+    // radionuclides: dark clay with small particles
+    Kit.mk('rect', {x, y: 0, width: cw, height: sh, class: 't78'}, bandIn);
+    for (let k = 0; k < 7; k++) {
+      const cx = x + f * .4 + Kit.rnd() * (cw - f * .8), cy = sh * .25 + Kit.rnd() * sh * .5;
+      Kit.mk('circle', {cx, cy, r: f * .16, class: 'hot'}, bandIn);
     }
-    Kit.mk('rect', {x, y: sh, width: cw, height: sh, fill: '#f3eee4'}, bandIn);
-    for (let k = 0; k < 10; k++) {
-      const px = x + f * .3 + Kit.rnd() * (cw - f * .9), py = sh * 1.15 + Kit.rnd() * sh * .65;
-      Kit.mk('rect', {x: px, y: py, width: f * (.35 + Kit.rnd() * .4), height: f * .22, rx: f * .06, fill: cols[k % cols.length], transform: `rotate(${(Kit.rnd() - .5) * 70} ${px} ${py})`}, bandIn);
+    // plastics: pale silt with broken bits of plastic
+    Kit.mk('rect', {x, y: sh, width: cw, height: sh, class: 't05'}, bandIn);
+    for (let k = 0; k < 8; k++) {
+      const px = x + f * .3 + Kit.rnd() * (cw - f * .9), py = sh * 1.2 + Kit.rnd() * sh * .6;
+      Kit.mk('rect', {x: px, y: py, width: f * (.35 + Kit.rnd() * .4), height: f * .2, rx: f * .05, class: k % 2 ? 'hot' : 'ink', transform: `rotate(${(Kit.rnd() - .5) * 70} ${px} ${py})`}, bandIn);
     }
-    Kit.mk('rect', {x, y: 2 * sh, width: cw, height: sh, fill: '#2b1e17'}, bandIn);
-    let d = '';
-    for (let j = 0; j <= 12; j++) { const px = x + cw * j / 12, py = 2.5 * sh + Math.sin(j * 1.3) * sh * .25; d += (j ? 'L' : 'M') + px + ' ' + py; }
-    Kit.mk('path', {d, fill: 'none', stroke: '#ff9f4a', 'stroke-width': f * .2, 'stroke-linejoin': 'round'}, bandIn);
+    // carbon & nitrogen: black, soot-rich layer
+    Kit.mk('rect', {x, y: 2 * sh, width: cw, height: sh, class: 'ink'}, bandIn);
     Kit.mk('rect', {x, y: 0, width: cw, height: FH, fill: 'none', stroke: '#e4572e', 'stroke-width': 2}, bandIn);
   });
 
   const subs = [['Radionuclides'], ['Plastics'], ['Carbon &', 'nitrogen']].map(lines => {
-    const t = Kit.mk('text', {x: lx, 'font-size': f * .95, fill: ink}, gSub);
+    const t = Kit.mk('text', {x: lx, 'font-size': f, fill: ink}, gSub);
     lines.forEach((s, i) => { const ts = document.createElementNS(NS, 'tspan'); ts.setAttribute('x', lx); ts.setAttribute('dy', i ? f * 1.15 : 0); ts.textContent = s; t.appendChild(ts); });
     return {t, n: lines.length};
   });
@@ -111,8 +142,8 @@ function draw() {
   // handle
   const hx = xs[1] + cw / 2;
   const handle = Kit.mk('g', {}, svg);
-  Kit.mk('circle', {cx: 0, cy: 0, r: f * 1.1, fill: '#e4572e', stroke: '#fff', 'stroke-width': 2}, handle);
-  Kit.mk('path', {d: `M${-f * .4} ${-f * .2}L0 ${-f * .6}L${f * .4} ${-f * .2}M${-f * .4} ${f * .2}L0 ${f * .6}L${f * .4} ${f * .2}`, fill: 'none', stroke: '#fff', 'stroke-width': f * .16, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, handle);
+  Kit.mk('circle', {cx: 0, cy: 0, r: f * 1.1, fill: '#e4572e', stroke: ink, 'stroke-width': 2}, handle);
+  Kit.mk('path', {d: `M${-f * .4} ${-f * .2}L0 ${-f * .6}L${f * .4} ${-f * .2}M${-f * .4} ${f * .2}L0 ${f * .6}L${f * .4} ${f * .2}`, fill: 'none', stroke: ink, 'stroke-width': f * .16, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, handle);
 
   g = {G, b0, FH, yb0: y0 + a, gTop, gBot, gBand, subs, bl, handle, hx, f, aY, holT, oldT, holY, oldY};
   render();

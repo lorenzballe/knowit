@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: maths-question-seventeen -->
-<!-- Look: a vintage brass instrument on bottle-green leather. Big coin B is the dial face, engraved with a guilloché rosette. Small coin A rolls around its rim, and a blued-steel needle counts A's turns. Beside the dial, the test's five answers appear as pencil bubbles on an answer sheet.
-     Interaction: each tap rolls coin A a quarter of the way around B. At every quarter, A leaves a faint stamp of itself with its arrow pointing straight up again, so each quarter is one full turn. The window counts the turns, and the needle swings to them with a damped wobble. Gold flags on the scale mark the five answers, and the key's B is red.
-     Wow moment: after the last tap the needle settles on 4, between the flags. The flags morph into red X's, a pencil X is struck through every bubble, and a red ring is drawn around the 4 that no one could choose. -->
+<!-- Look: two plain coins drawn flat on the card's dark green, like a figure in a printed maths book. Big coin B is a flat cream coin with a thin rim; the count of A's turns is printed big in its middle, and a short number line from 0 to 9 is printed beneath it, like the line on a ruler. Small gold coin A rolls around B's edge, with a dark arrow on it. Below the coins, the test's five answers appear as pencil bubbles on an answer sheet.
+     Interaction: each tap rolls coin A a quarter of the way around B. At every quarter, A leaves a faint gold print of itself with its arrow pointing straight up again, so each quarter is one full turn. The big number on B counts the turns, and a small pointer slides along the number line to them with a damped wobble. Small flags on the line mark the five answers, and the key's B is red.
+     Wow moment: after the last tap the pointer settles on 4, between the flags. The flags morph into red X's, a pencil X is struck through every bubble, and a red ring is drawn around the 4 that no one could choose. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Question 17</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -29,7 +29,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ROLL THE COIN</span></div>
     <h2 class="q">Why did nobody answer question 17 correctly?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A brass dial: coin B is the dial face, small coin A rolls around its rim, and a needle counts how many times coin A turns. The test's five answers, A to E, are shown as answer bubbles and as flags on the scale."></svg>
+      <svg id="pic" role="img" aria-label="Two coins: small coin A rolls around the edge of big coin B, and the number printed on coin B counts how many times coin A turns, with a pointer on a number line from 0 to 9. The test's five answers, A to E, are shown as answer bubbles and as flags on the number line."></svg>
     </div>
     <p class="say" id="say">Q17: coin A has a third of coin B's radius and rolls once around B. How many times does A turn? The key said <b>B: 3</b>. <b>Tap to roll.</b></p>
     <button class="btn" id="roll">Roll A a quarter of the way</button>
@@ -46,15 +46,15 @@
 (() => {
   if (window.MorphSVGPlugin) gsap.registerPlugin(MorphSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), roll = Kit.$('roll'), card = Kit.$('card');
-  const RED = '#e2483a', INK = '#2a2116', CREAM = '#f3e7c9', STEEL = '#1b2531', GOLD = '#f4c862', PINK = '#ff7b6b', FLAG = '#2c6e55';
+  const RED = '#e2483a', INK = '#16241f', CREAM = '#f3e7c9', GOLD = '#f4c862', PINK = '#ff7b6b';
+  const cm = p => `color-mix(in srgb, var(--k) ${p}%, var(--c))`;
+  const PRINT = 'color-mix(in srgb, #f4c862 26%, var(--c))';
+  const PRINTARROW = 'color-mix(in srgb, #f4c862 60%, var(--c))';
   const OPTS = [[1.5, 'A', '3/2'], [3, 'B', '3'], [4.5, 'C', '9/2'], [6, 'D', '6'], [9, 'E', '9']];
   const st = {theta: 0, needle: 0};
   let n = 0, revealed = false, xDone = false, built = false, sayLocked = false;
   let W = 0, H = 0, fs, R, r, cx, cy, mode, E = {};
 
-  const rad = d => d * Math.PI / 180;
-  const ang = v => -135 + v * 30;
-  const pt = (rr, deg) => [cx + rr * Math.sin(rad(deg)), cy - rr * Math.cos(rad(deg))];
   const xD = (x, y, q) => {
     const s = q * 1.3, a = q * .26, P = [[-a, -s], [a, -s], [a, -a], [s, -a], [s, a], [a, a], [a, s], [-a, s], [-a, a], [-s, a], [-s, -a], [-a, -a]];
     const c = Math.SQRT1_2;
@@ -81,9 +81,9 @@
   function addStamp(k, anim) {
     const th = k * Math.PI / 2, x = cx + (R + r) * Math.sin(th), y = cy - (R + r) * Math.cos(th);
     const g = Kit.mk('g', {transform: `translate(${x},${y})`}, E.stampG);
-    const inner = Kit.mk('g', {opacity: .6}, g);
-    Kit.mk('circle', {r: r * .97, fill: CREAM, 'fill-opacity': .05, stroke: CREAM, 'stroke-opacity': .55, 'stroke-width': 1, 'stroke-dasharray': '3 3'}, inner);
-    Kit.mk('path', {d: arrowD(r), fill: GOLD}, inner);
+    const inner = Kit.mk('g', {}, g);
+    Kit.mk('circle', {r: r * .97, style: `fill:${PRINT}`}, inner);
+    Kit.mk('path', {d: arrowD(r), style: `fill:${PRINTARROW}`}, inner);
     if (anim && !Kit.calm) gsap.from(inner, {opacity: 0, scale: .6, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(2)'});
   }
 
@@ -95,7 +95,7 @@
     W = f.W; H = f.H;
     fs = Math.max(12, Math.min(14, W / 26));
 
-    // Pick the composition that gives the biggest dial: answer sheet below, or beside.
+    // Pick the composition that gives the biggest coins: answer sheet below, or beside.
     const rowH = fs * 2.2, capS = rowH + fs * 1.9;
     const R1 = .3 * Math.min(W - 8, H - capS - 6);
     const PW = Math.max(96, fs * 8), rows = Math.max(17, fs * 1.4);
@@ -108,129 +108,68 @@
     if (mode === 'stack') { const top = Math.max(2, (H - D - capS) / 2); cx = W / 2; cy = top + 5 * R / 3; }
     else { const left = Math.max(2, (W - D - fs - PW) / 2); cx = left + 5 * R / 3; cy = H / 2; px0 = left + D + fs; }
 
-    // ---------- materials ----------
-    const defs = Kit.mk('defs', {}, svg);
-    const grad = (type, id, a, stops) => { const g = Kit.mk(type, Object.assign({id}, a), defs); stops.forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g)); return g; };
-    grad('radialGradient', 'brass', {cx: '38%', cy: '30%', r: '75%'}, [[0, '#fff1b8'], [.25, '#e9c46a'], [.6, '#b8862f'], [1, '#5e3f12']]);
-    grad('linearGradient', 'brassRim', {x1: 0, y1: 0, x2: 1, y2: 1}, [[0, '#ffe9a3'], [.45, '#c99a3d'], [.55, '#8a6122'], [1, '#e8c26a']]);
-    grad('radialGradient', 'enamel', {cx: '42%', cy: '35%', r: '70%'}, [[0, '#fffaea'], [.6, '#f1e5c4'], [1, '#d2bd8b']]);
-    grad('radialGradient', 'silver', {cx: '35%', cy: '30%', r: '80%'}, [[0, '#ffffff'], [.35, '#dfe3e6'], [.75, '#9aa3aa'], [1, '#5b636a']]);
-    grad('radialGradient', 'glass', {cx: '30%', cy: '20%', r: '90%'}, [[0, '#ffffff', .55], [.4, '#ffffff', .08], [1, '#ffffff', 0]]);
-    grad('radialGradient', 'halo', {cx: '50%', cy: '50%', r: '50%'}, [[.55, GOLD, .10], [1, GOLD, 0]]);
-    const sh = Kit.mk('filter', {id: 'shadow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
-    Kit.mk('feDropShadow', {dx: 0, dy: R * .05, stdDeviation: R * .06, 'flood-color': '#000', 'flood-opacity': .55}, sh);
-    const sh2 = Kit.mk('filter', {id: 'nshadow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-    Kit.mk('feDropShadow', {dx: R * .02, dy: R * .03, stdDeviation: R * .012, 'flood-color': '#000', 'flood-opacity': .4}, sh2);
-
     const world = E.world = Kit.mk('g', {}, svg);
 
-    // soft lamp-light pooled around the instrument, the path A's centre follows, and how far it has gone
-    Kit.mk('circle', {cx, cy, r: R * 1.75, fill: 'url(#halo)'}, world);
+    // the path A's centre follows, and how far A has gone
     const L = E.L = 2 * Math.PI * (R + r);
-    Kit.mk('circle', {cx, cy, r: R + r, fill: 'none', stroke: CREAM, 'stroke-opacity': .22, 'stroke-width': 1.2, 'stroke-dasharray': '2 6'}, world);
-    for (let k = 0; k < 4; k++) {
-      const [x1, y1] = pt(R + r - 4, k * 90), [x2, y2] = pt(R + r + 4, k * 90);
-      Kit.mk('line', {x1, y1, x2, y2, stroke: CREAM, 'stroke-opacity': .4, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, world);
-    }
-    E.trail = Kit.mk('circle', {cx, cy, r: R + r, fill: 'none', stroke: GOLD, 'stroke-width': 2.4, 'stroke-linecap': 'round', transform: `rotate(-90 ${cx} ${cy})`, 'stroke-dasharray': `0 ${L}`, opacity: .85}, world);
+    Kit.mk('circle', {cx, cy, r: R + r, fill: 'none', style: `stroke:${cm(22)}`, 'stroke-width': 1.2}, world);
+    E.trail = Kit.mk('circle', {cx, cy, r: R + r, fill: 'none', stroke: GOLD, 'stroke-width': 2.6, 'stroke-linecap': 'round', transform: `rotate(-90 ${cx} ${cy})`, 'stroke-dasharray': `0 ${L}`}, world);
     E.stampG = Kit.mk('g', {}, world);
     E.stamped = 0;
 
-    // ---------- coin B: the dial ----------
+    // ---------- coin B: a flat cream coin with a thin rim ----------
     const dial = E.dial = Kit.mk('g', {}, world);
-    Kit.mk('circle', {cx, cy, r: R, fill: 'url(#brass)', filter: 'url(#shadow)'}, dial);
-    Kit.mk('circle', {cx, cy, r: R * .985, fill: 'none', stroke: 'url(#brassRim)', 'stroke-width': R * .05}, dial);
-    for (let i = 0; i < 144; i++) {
-      const a = i * 2.5, [x1, y1] = pt(R * .945, a), [x2, y2] = pt(R * .995, a);
-      Kit.mk('line', {x1, y1, x2, y2, stroke: '#3b270b', 'stroke-opacity': .45, 'stroke-width': .9}, dial);
-    }
-    Kit.mk('circle', {cx, cy, r: R * .925, fill: 'none', stroke: '#4a3210', 'stroke-width': 1.2, 'stroke-opacity': .7}, dial);
-    Kit.mk('circle', {cx, cy, r: R * .9, fill: 'url(#enamel)'}, dial);
-    // guilloché rosette engraved in the enamel
-    const ros = Kit.mk('g', {opacity: .9}, dial);
-    for (let i = 0; i < 18; i++) Kit.mk('ellipse', {cx, cy, rx: R * .52, ry: R * .17, fill: 'none', stroke: '#6b5326', 'stroke-opacity': .07, 'stroke-width': .8, transform: `rotate(${i * 10} ${cx} ${cy})`}, ros);
-    for (let k = 1; k < 9; k++) Kit.mk('circle', {cx, cy, r: R * k * .1, fill: 'none', stroke: '#6b5326', 'stroke-opacity': .045, 'stroke-width': 1}, dial);
-    Kit.mk('circle', {cx, cy, r: R * .88, fill: 'none', stroke: INK, 'stroke-opacity': .35, 'stroke-width': .8}, dial);
-    Kit.mk('path', {d: `M${cx - R * .035},${cy - R * .99} L${cx + R * .035},${cy - R * .99} L${cx},${cy - R * .9}Z`, fill: RED}, dial);
+    Kit.mk('circle', {cx, cy, r: R, style: `fill:${cm(90)}`}, dial);
+    Kit.mk('circle', {cx, cy, r: R * .92, fill: 'none', style: `stroke:${cm(60)}`, 'stroke-width': Math.max(1.2, R * .012)}, dial);
 
-    // engraved scale, 0 to 9 turns
+    // the coin's own letter
+    if (R >= 50) txt(dial, cx, cy - R * .58, 'B', {dy: '.36em', style: `fill:${cm(55)};font-family:var(--display)`, 'font-size': Math.max(12, R * .18), 'font-weight': 700});
+
+    // the count of turns, printed big in the middle
+    E.read = null;
+    if (R >= 36) E.read = txt(dial, cx, cy - R * .1, '0.0', {dy: '.36em', fill: INK, 'font-size': Math.max(14, R * .36), 'font-weight': 700, style: 'font-family:var(--display)'});
+
+    // a short number line, 0 to 9 whole turns
+    const lf = Math.max(11, Math.min(fs, R * .17));
+    const ly = cy + R * .3, lx0 = cx - R * .66, stepX = R * 1.32 / 9;
+    E.lx0 = lx0; E.stepX = stepX;
     const ticks = E.ticks = Kit.mk('g', {}, dial);
-    const [ax0, ay0] = pt(R * .86, ang(0)), [ax1, ay1] = pt(R * .86, ang(9));
-    Kit.mk('path', {d: `M${ax0},${ay0} A${R * .86},${R * .86} 0 1 1 ${ax1},${ay1}`, fill: 'none', stroke: INK, 'stroke-width': 1.3, class: 'tick'}, ticks);
-    for (let i = 0; i <= 90; i++) {
-      const v = i / 10, major = i % 10 === 0, half = i % 5 === 0;
-      const [x1, y1] = pt(R * (major ? .7 : half ? .76 : .81), ang(v)), [x2, y2] = pt(R * .86, ang(v));
-      Kit.mk('line', {x1, y1, x2, y2, stroke: INK, 'stroke-width': major ? 2.2 : half ? 1.3 : .7, 'stroke-opacity': major || half ? 1 : .55, 'stroke-linecap': 'round', class: 'tick'}, ticks);
+    Kit.mk('line', {x1: lx0 - 3, y1: ly, x2: lx0 + 9 * stepX + 3, y2: ly, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', class: 'tick'}, ticks);
+    for (let v = 0; v <= 9; v++) {
+      const x = lx0 + v * stepX;
+      Kit.mk('line', {x1: x, y1: ly, x2: x, y2: ly - Math.max(3, R * .035), stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round', class: 'tick'}, ticks);
     }
-    const lf = Math.max(12, Math.min(fs, R * .2));
-    const nr = Math.max(0, Math.min(R * .6, R * .7 - lf * .62));
-    let stepN = 1;
-    while (stepN < 4 && 2 * nr * Math.sin(rad(15 * stepN)) < lf * 1.35) stepN *= 2;
-    let vals = [];
-    for (let v = 0; v <= 9; v += stepN) vals.push(v);
-    if (2 * nr * Math.sin(rad(15 * stepN)) < lf * 1.35) vals = [4];
-    const LB = [];
+    const mh = Math.max(6, R * .09), numY = ly + mh + lf * .72;
+    const vals = stepX >= lf * .95 ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] : [0, 4, 9];
     vals.forEach(v => {
-      const [x, y] = pt(nr, ang(v));
-      const t = txt(ticks, x, y, v, {dy: '.36em', fill: INK, 'font-size': lf, 'font-weight': 700, style: 'font-family:var(--mono)', class: 'tick'});
-      LB.push({x, y, w: String(v).length * lf * .62, h: lf * 1.2});
+      const t = txt(ticks, lx0 + v * stepX, numY, v, {dy: '.36em', fill: INK, 'font-size': lf, 'font-weight': 700, style: 'font-family:var(--body)', class: 'tick'});
       if (v === 4) E.four = t;
     });
-    const [fx, fy] = pt(nr, ang(4)), rr = fs * .92, ringLen = 2 * Math.PI * rr * 1.08;
-    E.ring4 = Kit.mk('circle', {cx: fx, cy: fy, r: rr, fill: 'none', stroke: RED, 'stroke-width': 2.4, transform: `rotate(-100 ${fx} ${fy})`, 'stroke-dasharray': `${ringLen} 999`, 'stroke-dashoffset': xDone ? 0 : ringLen, 'stroke-linecap': 'round'}, dial);
+    const fx = lx0 + 4 * stepX, rr = lf * .9, ringLen = 2 * Math.PI * rr * 1.08;
+    E.ring4 = Kit.mk('circle', {cx: fx, cy: numY, r: rr, fill: 'none', stroke: RED, 'stroke-width': 2.4, transform: `rotate(-100 ${fx} ${numY})`, 'stroke-dasharray': `${ringLen} 999`, 'stroke-dashoffset': xDone ? 0 : ringLen, 'stroke-linecap': 'round'}, dial);
 
-    // the five answers as flags on the scale (the key's B in red)
-    const fw = Math.max(3.5, R * .045), fh = Math.max(7, R * .1), fr = R * .855;
+    // the five answers as flags on the line (the key's B in red)
+    const fw = Math.max(3.5, R * .045), fh = Math.max(7, R * .1);
     E.marks = [];
     OPTS.forEach(([v, l]) => {
-      const a = ang(v), u = [Math.sin(rad(a)), -Math.cos(rad(a))], p = [Math.cos(rad(a)), Math.sin(rad(a))];
-      const [tx, ty] = pt(fr, a), [bx, by] = pt(fr - fh, a), [mx, my] = pt(fr - fh * .5, a);
-      const tri = `M${tx},${ty} L${bx + p[0] * fw},${by + p[1] * fw} L${bx - p[0] * fw},${by - p[1] * fw}Z`;
-      const m = Kit.mk('path', {d: xDone ? xD(mx, my, fw * 1.15) : tri, fill: xDone ? RED : (l === 'B' ? RED : FLAG), stroke: xDone ? 'none' : '#f3e7c9', 'stroke-width': .8, 'stroke-linejoin': 'round'}, dial);
-      m.dataset.x = mx; m.dataset.y = my; m.dataset.q = fw * 1.15;
+      const x = lx0 + v * stepX, ty = ly - 2, by = ty - fh, my = ty - fh * .5;
+      const tri = `M${x},${ty} L${x + fw},${by} L${x - fw},${by}Z`;
+      const m = Kit.mk('path', {d: xDone ? xD(x, my, fw * 1.15) : tri, fill: xDone ? RED : (l === 'B' ? RED : INK), stroke: 'none', 'stroke-linejoin': 'round'}, dial);
+      m.dataset.x = x; m.dataset.y = my; m.dataset.q = fw * 1.15;
       E.marks.push(m);
     });
 
-    // readout window
-    const wh = fs * 1.45, ww = Math.max(R * .5, fs * 2.8), wy = cy + R * .82 - wh;
-    const zc = nr * Math.SQRT1_2;
-    const clear = !vals.includes(0) || (zc - lf * .4 > ww / 2 + 2) || (zc + lf * .45 < wy - cy - 1);
-    E.read = null;
-    if (wy - cy >= R * .28 && clear) {
-      Kit.mk('rect', {x: cx - ww / 2 - 2, y: wy - 2, width: ww + 4, height: wh + 4, rx: 4, fill: 'url(#brassRim)'}, dial);
-      Kit.mk('rect', {x: cx - ww / 2, y: wy, width: ww, height: wh, rx: 3, fill: '#120e09'}, dial);
-      E.read = txt(dial, cx, wy + wh / 2, '0.0', {dy: '.36em', fill: GOLD, 'font-size': Math.max(12, wh * .62), 'font-weight': 700, style: 'font-family:var(--mono)'});
-      Kit.mk('rect', {x: cx - ww / 2, y: wy, width: ww, height: wh * .45, rx: 3, fill: '#fff', opacity: .07}, dial);
-      if (R >= 80) {
-        const cw = 10 * (12 * .66 + .96) + 6, ch = 16;
-        const cands = [cy + R * .25, cy + R * .075 + ch / 2 + 3, wy - ch / 2 - 5, cy - R * .3];
-        const ok = ty => ty + ch / 2 + 2 <= wy && ty - ch / 2 >= cy - R * .8 &&
-          LB.every(b => Math.abs(b.x - cx) > (b.w + cw) / 2 + 2 || Math.abs(b.y - ty) > (b.h + ch) / 2 + 2);
-        const ty = cands.find(ok);
-        if (ty != null) txt(dial, cx, ty, 'TURNS OF A', {dy: '.36em', fill: '#6b5326', 'fill-opacity': .75, 'font-size': 12, 'font-weight': 700, 'letter-spacing': '.08em', style: 'font-family:var(--mono)'});
-      }
-    }
+    // the pointer that slides along the line
+    const ng = E.needle = Kit.mk('g', {}, dial);
+    Kit.mk('path', {d: `M0,${ly + 1.5} L${mh * .62},${ly + mh} L${-mh * .62},${ly + mh}Z`, fill: INK, 'stroke-linejoin': 'round'}, ng);
 
-    // needle
-    const ng = E.needle = Kit.mk('g', {}, dial), nl = R * .78, nw = R * .032;
-    Kit.mk('path', {d: `M${-nw},${R * .14} L${nw},${R * .14} L${nw * .35},${-nl} L${-nw * .35},${-nl}Z`, fill: STEEL, filter: 'url(#nshadow)'}, ng);
-    Kit.mk('path', {d: `M${-nw * .55},${-nl * .78} L${nw * .55},${-nl * .78} L${nw * .35},${-nl} L${-nw * .35},${-nl}Z`, fill: RED}, ng);
-    Kit.mk('circle', {r: R * .075, fill: 'url(#brass)', stroke: '#4a3210', 'stroke-width': 1}, ng);
-    Kit.mk('circle', {r: R * .025, fill: STEEL}, ng);
-    Kit.mk('circle', {cx, cy, r: R * .9, fill: 'url(#glass)', 'pointer-events': 'none'}, dial);
-
-    // ---------- coin A ----------
+    // ---------- coin A: a small flat gold coin ----------
     E.coinWrap = Kit.mk('g', {}, world);
     E.coin = Kit.mk('g', {}, E.coinWrap);
-    Kit.mk('circle', {r, fill: 'url(#silver)', filter: 'url(#shadow)'}, E.coin);
+    Kit.mk('circle', {r, fill: GOLD}, E.coin);
     E.spin = Kit.mk('g', {}, E.coin);
-    for (let i = 0; i < 60; i++) {
-      const a = rad(i * 6);
-      Kit.mk('line', {x1: Math.sin(a) * r * .9, y1: -Math.cos(a) * r * .9, x2: Math.sin(a) * r * .99, y2: -Math.cos(a) * r * .99, stroke: '#3c4248', 'stroke-opacity': .45, 'stroke-width': .8}, E.spin);
-    }
-    Kit.mk('circle', {r: r * .86, fill: 'none', stroke: '#3c4248', 'stroke-opacity': .5, 'stroke-width': 1}, E.spin);
-    Kit.mk('path', {d: arrowD(r), fill: RED}, E.spin);
-    txt(E.spin, 0, r >= 22 ? r * .45 : r * .22, 'A', {dy: '.36em', fill: '#2a2f36', 'font-size': Math.max(12, r * .42), 'font-weight': 800, style: 'font-family:var(--mono)'});
+    Kit.mk('path', {d: arrowD(r), fill: INK}, E.spin);
+    txt(E.spin, 0, r >= 22 ? r * .45 : r * .22, 'A', {dy: '.36em', fill: INK, 'font-size': Math.max(12, r * .42), 'font-weight': 800, style: 'font-family:var(--body)'});
 
     // ---------- the answer sheet ----------
     E.bubG = Kit.mk('g', {}, svg);
@@ -239,8 +178,8 @@
     const bubble = (bx, by, l, val, isKey, vx, anchor) => {
       const g = Kit.mk('g', {}, E.bubG);
       Kit.mk('ellipse', {cx: bx, cy: by, rx: brx, ry: bry, fill: isKey ? CREAM : 'none', stroke: CREAM, 'stroke-opacity': isKey ? 1 : .65, 'stroke-width': 1.3}, g);
-      txt(g, bx, by, l, {dy: '.36em', fill: isKey ? INK : CREAM, 'font-size': 12, 'font-weight': 800, style: 'font-family:var(--mono)'});
-      txt(g, vx, by, val, {dy: '.36em', 'text-anchor': anchor, fill: CREAM, 'fill-opacity': .85, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--mono)'});
+      txt(g, bx, by, l, {dy: '.36em', fill: isKey ? INK : CREAM, 'font-size': 12, 'font-weight': 800, style: 'font-family:var(--body)'});
+      txt(g, vx, by, val, {dy: '.36em', 'text-anchor': anchor, fill: CREAM, 'fill-opacity': .85, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body)'});
       if (isKey && mode === 'stack') {
         E.key = Kit.mk('ellipse', {cx: bx, cy: by, rx: brx + 4, ry: bry + 4, fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-dasharray': `${(brx + bry + 8) * 2.6} 99`, transform: `rotate(-20 ${bx} ${by})`, 'stroke-linecap': 'round'}, g);
       }
@@ -282,7 +221,7 @@
     E.coin.setAttribute('transform', `translate(${x},${y})`);
     E.spin.setAttribute('transform', `rotate(${4 * th * 180 / Math.PI})`);
     E.trail.setAttribute('stroke-dasharray', `${E.L * th / (2 * Math.PI)} ${E.L}`);
-    E.needle.setAttribute('transform', `translate(${cx},${cy}) rotate(${ang(st.needle)})`);
+    E.needle.setAttribute('transform', `translate(${E.lx0 + st.needle * E.stepX},0)`);
     if (E.read) E.read.textContent = (th / (Math.PI / 2)).toFixed(1);
     const q = Math.min(4, Math.floor(th / (Math.PI / 2) + 1e-4));
     while (E.stamped < q) addStamp(++E.stamped, quiet !== true);
@@ -344,7 +283,7 @@
     if (Kit.calm || !built || n) return;
     const tl = gsap.timeline();
     tl.from(E.dial, {scale: .86, opacity: 0, duration: .8, ease: 'expo.out', svgOrigin: `${cx} ${cy}`})
-      .from(E.ticks.querySelectorAll('.tick'), {opacity: 0, duration: .25, stagger: .004}, '-=.5')
+      .from(E.ticks.querySelectorAll('.tick'), {opacity: 0, duration: .25, stagger: .012}, '-=.5')
       .from(E.marks, {opacity: 0, scale: 0, transformOrigin: '50% 100%', duration: .4, stagger: .06, ease: 'back.out(2.5)'}, '-=.3')
       .from(E.bubs, {opacity: 0, y: 6, duration: .4, stagger: .06, ease: 'power3.out'}, '-=.35')
       .from(E.coinWrap, {y: -R * .6, opacity: 0, duration: .8, ease: 'bounce.out'}, '-=.8')

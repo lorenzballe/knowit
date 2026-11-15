@@ -1,9 +1,9 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-push-harder-spin -->
-<!-- Look: a Swiss poster on warm paper: strict ruled grid, huge bold numerals for FORCE and SPIN-UP α, one hot red accent, a granite globe of 620 dot-particles on a black plinth.
-     Interaction: drag back to wind up a push. Hundreds of red particles swirl into a charge that grows with the force. Let go: they hit the globe's edge, it spins up (dots smear, a red spin ring wraps it), and a dot flies to land on the force/α graph.
-     Layout: on tall stages the poster stacks (readouts / globe / graph); when the stage gets short it glides into a two-column grid (globe | graph), so nothing ever overlaps.
-     Wow moment: after three pushes the dots snap onto one straight line through zero, drawn in red from a pulsing origin, τ = Iα appears and the globe flares. -->
+<!-- Look: a page from a printed science book on warm paper. The drawing is a granite ball fountain, a stone globe with painted meridians sitting in its black stone cup. A thin flat blue sheet of water runs over the cup's lip. Big plain numerals give force and spin-up, with one hot red accent.
+     Interaction: drag back to wind up a push. The arrow grows with the force. When you let go, the red arrow pushes the globe's edge and the globe spins up: its meridians turn and a red curved arrow round its front grows with the speed. A red dot then flies to land on the force/α graph.
+     Layout: on tall stages the page stacks (readouts / globe / graph). When the stage gets short it glides into two columns (globe | graph), so nothing ever overlaps.
+     Payoff: after three pushes, one straight red line runs through zero and all three dots, and τ = Iα appears. -->
 <title>Push harder, spin faster</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -21,7 +21,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TORQUE</span></div>
     <h2 class="q">What happens to the globe’s acceleration when you increase the applied force?</h2>
     <div class="stagebox" id="stage">
-      <canvas id="cv" role="img" aria-label="A stone globe floating on a thin film of water, a push arrow at its edge, big readouts of force and spin-up, and a graph of force against angular acceleration."></canvas>
+      <canvas id="cv" role="img" aria-label="A stone globe floating on a thin film of water in its stone cup, a push arrow at its edge, big readouts of force and spin-up, and a graph of force against angular acceleration."></canvas>
     </div>
     <p class="say" id="say">Drag back from the globe to wind up a push, then <b>let go</b>. Try three different forces.</p>
     <p class="gone" id="why"><b>Your push at the edge is a torque.</b> The globe floats on water, so friction is tiny, and its resistance to spinning, I, never changes. So α = τ ÷ I: twice the push, twice the spin-up.</p>
@@ -33,22 +33,20 @@
 <script>
 (() => {
   const cv = Kit.$('cv'), say = Kit.$('say'), card = Kit.$('card');
-  const ACC = '#ff3b1f', INK = '#0e0e0e';
+  const ACC = '#ff3b1f', WATER = '#3f7fc4';
+  let INK = '#0e0e0e', PAPER = '#f1eee6', STONE = '#9a978f', SEAM = '#5c5a55', FAINT = '#c4c0b6';
   const K = 0.4, FMAX = 5, DUR = 0.9;     // α = K·F (illustrative units); push lasts DUR s
-  let x = null, W = 0, H = 0, fs = 12, FONT = 'sans-serif', MONO = 'monospace', G = null, Gt = null;
+  let x = null, W = 0, H = 0, fs = 12, FONT = 'sans-serif', DISP = 'serif', G = null, Gt = null;
   let theta = 0, omega = 0, aimF = 0, drag = null, push = null, fly = null, busy = false, last = 0, looping = false;
-  const pushes = [], parts = [], rv = {line: 0, label: 0, o: 0}, intro = {p: 1}, disp = {F: 0, a: 0};
-  let flare = 0, revealed = false;
+  const pushes = [], rv = {line: 0, label: 0}, intro = {p: 1}, disp = {F: 0, a: 0};
+  let revealed = false;
   const cb = Math.cos(.34), sb = Math.sin(.34);
   const LK = ['m','N','lab','bandB','rule1','split','R','cx','cy','gx0','gx1','gy0','gy1','tickY','divX','sideK','lawX','lawY','lawS'];
 
-  // The globe: 620 dots on a sphere (Fibonacci), some "land", one red meridian to see it turn.
-  const pts = [];
-  for (let i = 0, n = 620; i < n; i++) {
-    const y = 1 - 2 * (i + .5) / n, lon = i * 2.399963;
-    const land = Math.sin(3 * lon) * Math.cos(5 * y) + .6 * Math.sin(5 * lon + 5.2 * y) > .45;
-    const mer = Math.abs(Math.atan2(Math.sin(lon), Math.cos(lon))) < .12;
-    pts.push({y, lon, r: Math.sqrt(1 - y * y), land, mer});
+  const hex = /^#[0-9a-f]{6}$/i;
+  function mix(a, b, t) {   // t of a, the rest b (flat tints of ink on paper)
+    const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)), A = p(a), B = p(b);
+    return `rgb(${A.map((v, i) => Math.round(v * t + B[i] * (1 - t))).join(',')})`;
   }
 
   const pX = F => G.gx0 + F / FMAX * (G.gx1 - G.gx0) * .94;
@@ -70,7 +68,7 @@
     const m = Math.max(6, W * .03), T = {m};
     const N0 = Math.max(30, Math.min(W * .15, H * .1)), r0 = fs * 2.4 + N0 * .92;
     T.side = H - r0 < fs * 18;
-    if (!T.side) {                                   // tall: poster stacks
+    if (!T.side) {                                   // tall: page stacks
       T.N = N0; T.lab = fs * 1.1; T.bandB = fs * 1.5 + N0 * .92; T.rule1 = r0;
       const rest = H - r0, gh = Math.max(fs * 7.5, rest * .44), scene = rest - gh;
       T.split = r0 + scene; T.R = Math.max(24, Math.min(W * .2, scene * .36));
@@ -105,54 +103,20 @@
     const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
     const cs = getComputedStyle(card);
     FONT = cs.getPropertyValue('--body').trim() || 'sans-serif';
-    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    DISP = cs.getPropertyValue('--display').trim() || FONT;
+    const k = cs.getPropertyValue('--k').trim(), c = cs.getPropertyValue('--c').trim();
+    if (hex.test(k)) INK = k; if (hex.test(c)) PAPER = c;
+    STONE = mix(INK, PAPER, .36); SEAM = mix(INK, PAPER, .62); FAINT = mix(INK, PAPER, .22);
     Gt = compute(); syncG(G ? .02 : 0);
     if (!looping) { looping = true; requestAnimationFrame(frame); }
-  }
-
-  // ---------- particles ----------
-  const add = p => { if (parts.length < 1400) parts.push(p); };
-  function burst(px, py, n, sp, col) {
-    for (let i = 0; i < n; i++) { const a = Math.random() * 6.283, v = sp * (.3 + Math.random());
-      add({mode: 'free', x: px, y: py, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, dec: .9 + Math.random() * .8, s: 1 + Math.random() * 2, col}); }
   }
 
   function step(dt) {
     const drift = (pushes.length || push) ? 0 : .12;            // a slow idle drift on the water film
     theta += (omega + drift) * dt; omega -= omega * .02 * dt;   // tiny friction: the water film
-    flare = Math.max(0, flare - dt * .6);
-    const sc = Math.max(.45, Math.min(1.2, G.R / 60));
     if (push) {
       push.t += dt; omega += K * push.F * dt;
-      const n = Math.round(push.F * 2.2);
-      for (let i = 0; i < n; i++) add({mode: 'free', x: G.C.x, y: G.C.y + (Math.random() - .5) * 6,
-        vx: (90 + push.F * 45) * sc * (.5 + Math.random()), vy: ((Math.random() - .5) * 90 - 20) * sc, life: 1, dec: 1.6 + Math.random(), s: 1 + Math.random() * 1.8, col: ACC});
       if (push.t >= DUR) { const F = push.F; push = null; startFly(F); }
-    }
-    if (drag) {
-      const want = Math.round(40 + aimF * 52), T = tail(aimF);
-      let have = 0; for (const p of parts) if (p.mode === 'charge') have++;
-      for (; have < want; have++) add({mode: 'charge', x: T.x, y: T.y, a: Math.random() * 6.283, k: .25 + Math.random() * .9, w: (Math.random() < .5 ? 1 : -1) * (1.5 + Math.random() * 2), s: .8 + Math.random() * 1.8, life: 1});
-    }
-    if (fly) for (let i = 0; i < 3; i++) add({mode: 'free', x: fly.px + (Math.random() - .5) * 5, y: fly.py + (Math.random() - .5) * 5, vx: 0, vy: 0, life: 1, dec: 2.2, s: 1 + Math.random() * 1.6, col: ACC});
-    // water seeping out from under the globe
-    if (Math.random() < .5) { const sd = Math.random() < .5 ? -1 : 1;
-      add({mode: 'free', x: G.cx + sd * G.R * .44, y: G.cy + G.R * .87, vx: (sd * (6 + Math.random() * 10) + omega * 6) * sc, vy: (4 + Math.random() * 8) * sc, life: 1, dec: 1.4, s: 1 + Math.random(), col: 'rgba(14,14,14,.45)', g: 60 * sc}); }
-
-    const T = tail(aimF);
-    for (let i = parts.length - 1; i >= 0; i--) {
-      const p = parts[i];
-      if (p.mode === 'charge') {
-        p.a += dt * p.w * (1 + aimF * .5);
-        const rr = p.k * (8 + aimF * 7) * Math.max(.7, sc), tx = T.x + Math.cos(p.a) * rr, ty = T.y + Math.sin(p.a) * rr * .6;
-        p.x += (tx - p.x) * Math.min(1, dt * 14); p.y += (ty - p.y) * Math.min(1, dt * 14);
-      } else if (p.mode === 'shot') {
-        p.x += (G.C.x - p.x) * Math.min(1, dt * p.sp); p.y += (G.C.y - p.y) * Math.min(1, dt * p.sp);
-        if (Math.hypot(G.C.x - p.x, G.C.y - p.y) < Math.max(3, G.R * .1)) { p.mode = 'free'; p.vx = (80 + p.F * 50) * sc * (.4 + Math.random()); p.vy = (Math.random() - .5) * 140 * sc; p.life = 1; p.dec = 1.5 + Math.random(); p.col = ACC; }
-      } else {
-        p.vy += (p.g || 0) * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.vx *= .97; p.vy *= .97;
-        p.life -= dt * p.dec; if (p.life <= 0) parts.splice(i, 1);
-      }
     }
   }
 
@@ -162,75 +126,67 @@
   }
   function tw(t, size, w, font) { x.font = `${w} ${size}px ${font || FONT}`; return x.measureText(t).width; }
   function drawPoster() {
-    const {m, N, lab, bandB, rule1, split, divX, sideK} = G, s = intro.p;
+    const {m, N, lab, bandB} = G, s = intro.p;
     x.globalAlpha = s;
-    text('FORCE', m, lab, fs, 800, INK);
-    text('SPIN-UP  α', W * .5, lab, fs, 800, INK);
-    text((drag ? aimF : disp.F).toFixed(1), m, bandB, N, 800, INK);
-    text(disp.a.toFixed(2), W * .5, bandB, N, 800, ACC);
-    // pushes counted as three squares, top right
-    const q = fs * .7;
-    for (let i = 0; i < 3; i++) { const qx = W - m - (3 - i) * q * 1.5 + q * .5; x.fillStyle = i < pushes.length ? ACC : 'rgba(14,14,14,.18)'; x.fillRect(qx, fs * .25, q, q); }
-    x.fillStyle = INK;
-    x.fillRect(W * .5 - fs * .9, fs * .2, 2, rule1 - fs * .6);
-    x.fillRect(0, rule1, W * s, 2.5);
-    x.globalAlpha = s * (1 - sideK); x.fillRect(0, split, W * s, 2.5);
-    x.globalAlpha = s * sideK; x.fillRect(divX - 1, rule1, 2, (H - rule1) * s);
+    text('Force', m, lab, fs, 700, INK);
+    text('Spin-up α', W * .5, lab, fs, 700, INK);
+    text((drag ? aimF : disp.F).toFixed(1), m, bandB, N, 700, INK, DISP);
+    text(disp.a.toFixed(2), W * .5, bandB, N, 700, ACC, DISP);
+    // the three pushes, as three small circles top right
+    const q = fs * .34;
+    for (let i = 0; i < 3; i++) {
+      const qx = W - m - q - (2 - i) * q * 2.8, qy = fs * .2 + q;
+      x.beginPath(); x.arc(qx, qy, q, 0, 7);
+      if (i < pushes.length) { x.fillStyle = ACC; x.fill(); }
+      else { x.strokeStyle = FAINT; x.lineWidth = 1.6; x.stroke(); }
+    }
     x.globalAlpha = 1;
+  }
+  // one painted line on the turning sphere: a meridian (lon0) or the equator
+  function seam(lon0, eq, col, w, cx, cy, r) {
+    x.strokeStyle = col; x.lineWidth = w; x.beginPath(); let on = false;
+    for (let i = 0; i <= 48; i++) {
+      const t = i / 48, y = eq ? 0 : -1 + 2 * t, lon = (eq ? t * 6.2832 : lon0) - theta;
+      const rr = Math.sqrt(Math.max(0, 1 - y * y)), px = rr * Math.cos(lon), pz = rr * Math.sin(lon);
+      const yy = y * cb - pz * sb, z = y * sb + pz * cb;
+      if (z < -.02) { on = false; continue; }
+      const sx = cx + px * r, sy = cy - yy * r;
+      if (on) x.lineTo(sx, sy); else x.moveTo(sx, sy); on = true;
+    }
+    x.stroke();
   }
   function drawGlobe() {
     const {cx, cy, R} = G, s = intro.p; if (s <= .01) return;
     const r = R * (.6 + .4 * s);
-    x.globalAlpha = s;
-    // soft shadow on the ground
-    x.save(); x.translate(cx, cy + R * 1.04); x.scale(1, .15);
-    let g = x.createRadialGradient(0, 0, 0, 0, 0, R * 1.1); g.addColorStop(0, 'rgba(14,14,14,.4)'); g.addColorStop(1, 'rgba(14,14,14,0)');
-    x.fillStyle = g; x.beginPath(); x.arc(0, 0, R * 1.1, 0, 7); x.fill(); x.restore();
-    // plinth
-    x.fillStyle = INK; x.beginPath(); x.moveTo(cx - R * .42, cy + R * .86); x.lineTo(cx + R * .42, cy + R * .86); x.lineTo(cx + R * .6, cy + R * 1.04); x.lineTo(cx - R * .6, cy + R * 1.04); x.closePath(); x.fill();
-    // stone body
-    g = x.createRadialGradient(cx - r * .38, cy - r * .42, r * .05, cx, cy, r);
-    g.addColorStop(0, '#9a9690'); g.addColorStop(.45, '#45433f'); g.addColorStop(1, '#111');
-    x.fillStyle = g; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
-    // the dots, turning (they smear sideways once it spins fast)
-    const ds = Math.max(.8, R / 80), w = omega + ((pushes.length || push) ? 0 : .12);
-    for (const p of pts) {
-      const lon = p.lon - theta, sl = Math.sin(lon), px = p.r * Math.cos(lon), pz = p.r * sl;
-      const yy = p.y * cb - pz * sb, z = p.y * sb + pz * cb; if (z < 0) continue;
-      const sx = cx + px * r, sy = cy - yy * r, k = .55 + .45 * z;
-      const vx = r * p.r * sl * w, L = Math.min(R * .22, Math.abs(vx) * .03), dir = vx > 0 ? -1 : 1;
-      if (p.mer) {
-        x.fillStyle = ACC; x.beginPath(); x.arc(sx, sy, 1.7 * ds * k, 0, 7); x.fill();
-        if (L > 1) { x.globalAlpha = s * .5; x.fillRect(Math.min(sx, sx + dir * L * 1.4), sy - ds * .8 * k, L * 1.4, 1.6 * ds * k); x.globalAlpha = s; }
-        continue;
-      }
-      const a = p.land ? .35 + .6 * z + flare * .5 : .1 + .12 * z + flare * .3;
-      const sz = (p.land ? 2.1 : 1.1) * ds * k, ll = p.land ? L : L * .5;
-      x.fillStyle = `rgba(241,238,230,${Math.min(1, a)})`;
-      x.fillRect(sx - sz / 2 + (dir < 0 ? -ll : 0), sy - sz / 2, sz + ll, sz);
-    }
-    // gloss and rim
-    g = x.createRadialGradient(cx - r * .42, cy - r * .5, 0, cx - r * .42, cy - r * .5, r * .5);
-    g.addColorStop(0, 'rgba(255,255,255,.22)'); g.addColorStop(1, 'rgba(255,255,255,0)');
-    x.fillStyle = g; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
-    x.strokeStyle = INK; x.lineWidth = 1.6; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.stroke();
-    // the water film, a bright sliver where stone meets plinth
-    x.strokeStyle = 'rgba(241,238,230,.75)'; x.lineWidth = 1.4; x.beginPath(); x.ellipse(cx, cy + R * .87, R * .4, R * .035, 0, 0, Math.PI); x.stroke();
-    // the spin ring: a dashed red band wrapping the front, running with the surface
-    const sa = Math.min(.85, Math.abs(omega) * .32) * s;
-    if (sa > .02) {
-      const ey = cy + r * .12, ex = r * 1.2, ez = r * .34;
-      x.globalAlpha = sa; x.strokeStyle = ACC; x.fillStyle = ACC; x.lineWidth = Math.max(1.6, R * .045); x.lineCap = 'butt';
-      x.setLineDash([R * .14, R * .09]); x.lineDashOffset = theta * R * .9;
-      x.beginPath(); x.ellipse(cx, ey, ex, ez, 0, 2.7, .5, true); x.stroke(); x.setLineDash([]);
+    x.globalAlpha = s; x.lineCap = 'round'; x.lineJoin = 'round';
+    // the stone ball, flat, with painted meridians that turn with it
+    x.fillStyle = STONE; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
+    x.save(); x.beginPath(); x.arc(cx, cy, r, 0, 7); x.clip();
+    const sw = Math.max(1.2, R * .022);
+    for (let k = 1; k < 8; k++) seam(k * Math.PI / 4, false, SEAM, sw, cx, cy, r);
+    seam(0, true, SEAM, sw, cx, cy, r);
+    seam(0, false, ACC, Math.max(2.4, R * .055), cx, cy, r);
+    x.restore();
+    x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.stroke();
+    // the stone cup it sits in, and the sheet of water running over its lip
+    const ly = cy + R * .78, by = cy + R * 1.04, tw0 = R * .66, bw = R * .54;
+    x.fillStyle = INK; x.beginPath();
+    x.moveTo(cx - tw0, ly); x.lineTo(cx + tw0, ly); x.lineTo(cx + bw, by); x.lineTo(cx - bw, by); x.closePath(); x.fill();
+    x.strokeStyle = WATER; x.lineWidth = Math.max(2, R * .045); x.beginPath();
+    x.moveTo(cx - bw - 1, by - 1); x.lineTo(cx - tw0, ly); x.lineTo(cx + tw0, ly); x.lineTo(cx + bw + 1, by - 1); x.stroke();
+    x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.moveTo(cx - R * 1.15, by); x.lineTo(cx + R * 1.15, by); x.stroke();
+    // how fast it turns: a red arrow round its front that grows with the spin
+    const sp = Math.abs(omega);
+    if (sp > .05) {
+      const span = Math.min(2.4, .35 + sp * .7), ey = cy + r * .12, ex = r * 1.2, ez = r * .34;
+      x.strokeStyle = ACC; x.fillStyle = ACC; x.lineWidth = Math.max(2, R * .05); x.lineCap = 'butt';
+      x.beginPath(); x.ellipse(cx, ey, ex, ez, 0, .5 + span, .5, true); x.stroke();
       const ha = .5, hx = cx + ex * Math.cos(ha), hy = ey + ez * Math.sin(ha);
       let dx = ex * Math.sin(ha), dy = -ez * Math.cos(ha); const dl = Math.hypot(dx, dy); dx /= dl; dy /= dl;
-      const hs = Math.max(6, R * .14);
+      const hs = Math.max(7, R * .15);
       x.beginPath(); x.moveTo(hx + dx * hs * .6, hy + dy * hs * .6); x.lineTo(hx - dx * hs * .5 - dy * hs * .5, hy - dy * hs * .5 + dx * hs * .5); x.lineTo(hx - dx * hs * .5 + dy * hs * .5, hy - dy * hs * .5 - dx * hs * .5); x.closePath(); x.fill();
     }
-    x.globalAlpha = s;
-    if (flare > 0) { x.strokeStyle = `rgba(255,59,31,${flare})`; x.lineWidth = 3; x.beginPath(); x.arc(cx, cy, r + 6 + (1 - flare) * 18, 0, 7); x.stroke(); }
-    x.globalAlpha = 1;
+    x.globalAlpha = 1; x.lineCap = 'butt';
   }
   function arrow(x0, x1, y, w, col) {
     x.strokeStyle = col; x.fillStyle = col; x.lineWidth = w; x.lineCap = 'round';
@@ -242,50 +198,37 @@
     if (drag) { const T = tail(aimF); arrow(T.x, C.x - 3, C.y, 2 + aimF * .7, INK); }
     else if (push) { const k = 1 - push.t / DUR; arrow(C.x - fs * (1.2 + k * 2), C.x - 2, C.y, 2 + push.F * .7, ACC); }
     else if (!pushes.length && !busy && intro.p > .9) {
-      // a ghost finger that drags back from the globe's edge, again and again
+      // a ghost fingertip that drags back from the globe's edge, again and again
       const t = (performance.now() / 1000) % 1.9, k = Math.min(1, t / 1.15), e = 1 - Math.pow(1 - k, 3);
       const fade = t < 1.15 ? Math.min(1, t * 6) : Math.max(0, 1 - (t - 1.15) / .6);
       const fx = C.x - fs * 1.2 - e * Math.max(fs * 1.5, Math.min(fs * 4, C.x - G.m - fs * 1.8));
-      arrow(fx, C.x - 3, C.y, 2.2, `rgba(14,14,14,${.55 * fade})`);
-      x.fillStyle = `rgba(255,59,31,${.12 * fade})`; x.strokeStyle = `rgba(14,14,14,${.5 * fade})`; x.lineWidth = 1.5;
-      x.beginPath(); x.arc(fx, C.y, fs * .75, 0, 7); x.fill(); x.stroke();
-      const hs = Math.max(12, fs * .85), lh = hs * 1.35;
+      x.globalAlpha = .6 * fade; arrow(fx, C.x - 3, C.y, 2.2, INK);
+      x.strokeStyle = INK; x.lineWidth = 1.6; x.beginPath(); x.arc(fx, C.y, fs * .75, 0, 7); x.stroke();
+      x.globalAlpha = 1;
+      const hs = fs, lh = hs * 1.35;
       if (G.side) {
         const h = G.gy0 - G.gy1, y0 = G.gy1 + h * .5 - lh * .35;
-        text('← DRAG BACK FROM', G.gx0 + fs * .6, y0, hs, 700, INK, MONO);
-        text('THE GLOBE, LET GO', G.gx0 + fs * .6, y0 + lh, hs, 700, INK, MONO);
+        text('← Drag back from', G.gx0 + fs * .6, y0, hs, 600, INK);
+        text('the globe, let go', G.gx0 + fs * .6, y0 + lh, hs, 600, INK);
       } else {
-        const room = G.cx - G.R * 1.25 - G.m, one = '← DRAG BACK, LET GO';
-        const lines = tw(one, hs, 700, MONO) <= room ? [one] : ['← DRAG BACK,', 'LET GO'];
+        const room = G.cx - G.R * 1.25 - G.m, one = '← Drag back, let go';
+        const lines = tw(one, hs, 600) <= room ? [one] : ['← Drag back,', 'let go'];
         let y0 = Math.max(G.rule1 + hs * 1.5, C.y - fs * 1.8 - (lines.length - 1) * lh);
-        lines.forEach((l, i) => text(l, G.m, y0 + i * lh, hs, 700, INK, MONO));
+        lines.forEach((l, i) => text(l, G.m, y0 + i * lh, hs, 600, INK));
       }
     }
   }
-  function drawParts() {
-    for (const p of parts) {
-      const a = p.mode === 'free' ? Math.max(0, p.life) : 1;
-      x.globalAlpha = a; x.fillStyle = p.col || ACC;
-      const s = p.s * (p.mode === 'free' ? .5 + .5 * a : 1);
-      x.fillRect(p.x - s / 2, p.y - s / 2, s, s);
-    }
-    x.globalAlpha = 1;
-  }
   function drawGraph() {
     const {gx0, gx1, gy0, gy1} = G, s = intro.p;
-    // grid
-    x.strokeStyle = 'rgba(14,14,14,.1)'; x.lineWidth = 1;
-    for (let F = 1; F <= FMAX; F++) { const px = pX(F); x.beginPath(); x.moveTo(px, gy0); x.lineTo(px, gy0 - (gy0 - gy1) * s); x.stroke(); }
-    for (let i = 1; i <= 4; i++) { const py = pY(K * FMAX * i / 4); x.beginPath(); x.moveTo(gx0, py); x.lineTo(gx0 + (gx1 - gx0) * s, py); x.stroke(); }
     // axes
     x.strokeStyle = INK; x.lineWidth = 2.5; x.lineCap = 'square';
     x.beginPath(); x.moveTo(gx0, gy0 - (gy0 - gy1) * s); x.lineTo(gx0, gy0); x.lineTo(gx0 + (gx1 - gx0) * s, gy0); x.stroke();
     const tsz = Math.max(12, fs * .85);
     x.globalAlpha = s;
-    for (let F = 1; F <= FMAX; F++) text(String(F), pX(F), G.tickY, tsz, 700, INK, MONO, 'center');
-    text('0', gx0, G.tickY, tsz, 700, INK, MONO, 'center');
-    text('SPIN-UP α ↑', gx0 + 6, gy1 - fs * .55, fs, 800, INK);
-    text('FORCE →', gx1, gy0 - fs * .6, fs, 800, INK, FONT, 'right');
+    for (let F = 1; F <= FMAX; F++) text(String(F), pX(F), G.tickY, tsz, 600, INK, FONT, 'center');
+    text('0', gx0, G.tickY, tsz, 600, INK, FONT, 'center');
+    text('Spin-up α', gx0 + 6, gy1 - fs * .55, fs, 700, INK);
+    text('Force', gx1, gy0 - fs * .6, fs, 700, INK, FONT, 'right');
     x.globalAlpha = 1;
     // aim guide: the force you are winding up
     if (drag) {
@@ -293,24 +236,16 @@
       x.beginPath(); x.moveTo(px, gy0); x.lineTo(px, gy1); x.stroke(); x.setLineDash([]);
       x.fillStyle = ACC; x.beginPath(); x.moveTo(px, gy0 - 2); x.lineTo(px - 6, gy0 - 11); x.lineTo(px + 6, gy0 - 11); x.closePath(); x.fill();
     }
-    // the law, once three points are in: a pulse at the origin, then one red line out of it
-    if (rv.o > 0 && rv.o < 1) {
-      x.strokeStyle = `rgba(255,59,31,${1 - rv.o})`; x.lineWidth = 2.5;
-      x.beginPath(); x.arc(gx0, gy0, fs * .3 + rv.o * fs * 2.4, 0, 7); x.stroke();
-    }
+    // the law, once three points are in: one red line out of zero
     if (rv.line > 0) {
       const F = FMAX * rv.line;
-      x.lineCap = 'round';
-      x.strokeStyle = 'rgba(255,59,31,.18)'; x.lineWidth = 9;
-      x.beginPath(); x.moveTo(gx0, gy0); x.lineTo(pX(F), pY(K * F)); x.stroke();
-      x.strokeStyle = ACC; x.lineWidth = 3;
+      x.lineCap = 'round'; x.strokeStyle = ACC; x.lineWidth = 3;
       x.beginPath(); x.moveTo(gx0, gy0); x.lineTo(pX(F), pY(K * F)); x.stroke();
       x.fillStyle = ACC; x.beginPath(); x.arc(gx0, gy0, 4, 0, 7); x.fill();
     }
     // landed pushes
     for (const p of pushes) {
       const px = pX(p.F), py = pY(p.a), r = fs * .48 * p.pop;
-      if (p.ring < 1) { x.strokeStyle = `rgba(255,59,31,${1 - p.ring})`; x.lineWidth = 2; x.beginPath(); x.arc(px, py, fs * .5 + p.ring * fs * 2.2, 0, 7); x.stroke(); }
       x.fillStyle = ACC; x.beginPath(); x.arc(px, py, Math.max(0, r), 0, 7); x.fill();
       x.strokeStyle = INK; x.lineWidth = 2; x.stroke();
     }
@@ -320,7 +255,7 @@
     if (rv.label <= 0) return;
     x.globalAlpha = rv.label;
     const yy = G.lawY - (1 - rv.label) * 10;
-    text('τ = Iα', G.lawX, yy, G.lawS, 800, INK);
+    text('τ = Iα', G.lawX, yy, G.lawS, 700, INK, DISP);
     if (G.tagOK) {
       text('one straight line', G.lawX, yy + fs * 1.5, fs, 700, ACC);
       text('through zero', G.lawX, yy + fs * 2.85, fs, 700, ACC);
@@ -330,7 +265,7 @@
   function draw() {
     if (!x || !G) return;
     x.clearRect(0, 0, W, H);
-    drawPoster(); drawGraph(); drawLaw(); drawGlobe(); drawPush(); drawParts();
+    drawPoster(); drawGraph(); drawLaw(); drawGlobe(); drawPush();
   }
   function frame(now) {
     const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
@@ -349,7 +284,6 @@
   function launch(F) {
     if (busy) return; busy = true; F = Math.max(.5, Math.min(FMAX, F));
     disp.F = F; Kit.haptic('light');
-    for (const p of parts) if (p.mode === 'charge') { p.mode = 'shot'; p.sp = 5 + F * 1.6 + Math.random() * 4; p.F = F; }
     const a = K * F;
     if (Kit.calm) { omega += a * DUR; disp.a = a; startFly(F); return; }
     gsap.to(disp, {a, duration: .35, ease: 'power3.out'});
@@ -363,9 +297,9 @@
   }
   function land() {
     const f = fly; fly = null;
-    const p = {F: f.F, a: f.a, pop: Kit.calm ? 1 : 0, ring: Kit.calm ? 1 : 0};
+    const p = {F: f.F, a: f.a, pop: Kit.calm ? 1 : 0};
     pushes.push(p);
-    if (!Kit.calm) { gsap.to(p, {pop: 1, duration: .8, ease: 'elastic.out(1,.4)'}); gsap.to(p, {ring: 1, duration: .8, ease: 'power2.out'}); burst(pX(p.F), pY(p.a), 70, 120 * Math.max(.5, Math.min(1, G.R / 60)), ACC); }
+    if (!Kit.calm) gsap.to(p, {pop: 1, duration: .8, ease: 'elastic.out(1,.4)'});
     Kit.haptic('selection'); busy = false;
     const n = pushes.length;
     if (n === 1) say.innerHTML = 'It spun up, and the dot landed where its force and spin-up meet. Now push <b>harder</b>, or softer.';
@@ -375,11 +309,8 @@
   function reveal() {
     revealed = true; Kit.haptic('success'); card.classList.add('answered');
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (Kit.calm) { rv.line = 1; rv.label = 1; rv.o = 1; return; }
-    flare = 1;
-    gsap.fromTo(rv, {o: 0}, {o: 1, duration: .9, ease: 'power2.out'});
-    gsap.to(rv, {line: 1, duration: 1.4, delay: .15, ease: 'expo.out', onUpdate: () => {
-      const F = FMAX * rv.line; burst(pX(F), pY(K * F), 6, 50, ACC); }});
+    if (Kit.calm) { rv.line = 1; rv.label = 1; return; }
+    gsap.to(rv, {line: 1, duration: 1.4, delay: .15, ease: 'expo.out'});
     gsap.to(rv, {label: 1, duration: .8, delay: .55, ease: 'back.out(1.6)'});
     for (const p of pushes) gsap.fromTo(p, {pop: 1.8}, {pop: 1, duration: .9, delay: .3, ease: 'elastic.out(1,.35)'});
   }

@@ -1,28 +1,27 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-silk-road-sentence -->
-<!-- Look: a risograph print on cream stock. A teal plate and a fluorescent-pink plate overprint in multiply, with speckled grain, halftone dots and a pink plate that sits slightly off register. The navy key plate is knocked out of the paper, so labels stay crisp over strings and beams.
-     Interaction: you bet on the founder's sentence. Your choice drops weights onto the right pan of the scales of justice, and the scales swing with real weight and keep breathing while they wait. Then you say how sure you are.
-     Wow moment (two acts): first two LIFE slabs slam onto the pan in a puff of pink dust and the beam tips all the way. Then the answer arrives, the print re-composes to fit, the plates jolt out of register and snap back, a TWO LIFE SENTENCES banner unrolls, and a d3 timeline zooms from two decades down to 2011→2013, with a bracket drawn across: two years.
-     Layout: the drawing re-fits itself to any stage. Scale + timeline when there is room, scale only on short screens before the answer, and a banner + timeline strip at the end on short screens. -->
+<!-- Look: a page from a printed history book. One plain pair of scales of justice is drawn flat in the card's navy ink on cream paper. Brown parcels tied with string stand for the market on the left pan. The sentence is shown as brick-red stone slabs on the right pan. Under the scales runs a simple ruled timeline. Labels are few, in Figtree, sentence case.
+     Interaction: you bet on the founder's sentence. Your choice drops slabs onto the right pan of the scales, and the scales swing with real weight and keep breathing while they wait. Then you say how sure you are.
+     Wow moment (two acts): first two Life slabs slam onto the pan in a puff of dust and the beam tips all the way. Then the answer arrives, the drawing re-composes to fit, a "Two life sentences" strip unrolls, and a d3 timeline zooms from two decades down to 2011→2013, with a bracket drawn across: two years.
+     Layout: the drawing re-fits itself to any stage. Scale + timeline when there is room, scale only on short screens before the answer, and a strip + timeline at the end on short screens. -->
 <title>Two lives for Silk Road</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/d3.min.js"></script>
 <style>
-.card{background-image:radial-gradient(rgba(31,34,64,.075) .6px,transparent .9px),radial-gradient(rgba(255,79,168,.09) .7px,transparent 1px);background-size:5px 5px,7px 7px;background-position:0 0,2px 3px}
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
-.m{font-family:var(--mono);font-weight:700;letter-spacing:.02em}
+.lb{font-family:var(--body);font-weight:600}
 #opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.4cqw;padding:0 4px 4px 0}
-.opt{min-width:0;font:800 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:#f7f1e6;border:0;border-radius:.7cqh;padding:1.1cqh 2cqw;text-align:left;cursor:pointer;box-shadow:inset 0 0 0 2px #00a3b4,3px 3px 0 #ff4fa8;transition:transform .12s cubic-bezier(.2,.8,.3,1),box-shadow .12s,opacity .2s;overflow-wrap:normal;hyphens:none}
-.opt small{display:block;font:700 max(1.5cqh,12px)/1.2 var(--mono);opacity:.75;margin-top:.5cqh}
-.opt:active{transform:translate(2px,2px);box-shadow:inset 0 0 0 2px #00a3b4,1px 1px 0 #ff4fa8}
-.opt.on{background:#007d8a;color:#fff;box-shadow:3px 3px 0 #ff4fa8}
+.opt{min-width:0;font:800 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 6%,var(--c));border:0;border-radius:.9cqh;padding:1.1cqh 2cqw;text-align:left;cursor:pointer;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 30%,var(--c));transition:transform .12s cubic-bezier(.2,.8,.3,1),background .12s,opacity .2s;overflow-wrap:normal;hyphens:none}
+.opt small{display:block;font:600 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.5cqh}
+.opt:active{transform:translateY(1px)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .opt.dim{opacity:.42}
 #why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{color:var(--k);text-shadow:2px 1px 0 rgba(255,79,168,.75);font-size:clamp(22px,4.3cqh,40px);line-height:1.05}
-.keep b{color:#007d8a}
+#why .big{color:var(--k);font-size:clamp(22px,4.3cqh,40px);line-height:1.05}
+.keep b{color:var(--k)}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Bet · how sure" style="--c:#f3ecdf;--k:#1f2240;--edge:#d6c9b0">
   <div class="in">
@@ -49,22 +48,24 @@ const RIGHT = 2;
 const NAMES = ['20 years, in 2017', 'One life term, in 2011', 'Two life terms, in 2013'];
 let pick = -1;
 
-const INK = {T: '#00a3b4', P: '#ff4fa8', K: '#1f2240'}, PAPER = '#f3ecdf';
+// flat inks: the card's navy, its cream, a grey tint of the two, and two meaning colours
+const PAPER = '#f3ecdf', NAVY = '#1f2240', TINT = '#949197', RED = '#b8442f', KRAFT = '#c99a5b';
+const INK = {T: TINT, P: RED, K: NAVY};
 const ANG = [-2, 7, 16], NONE = -10, SN = Math.sin(16 * Math.PI / 180);
 const svg = Kit.$('pic');
 let W, H, fs, cx, pivotY, L, S, pw, baseY, axisY, bannerY, mode = 'A', hasBanner = false, scTop = 0;
 let lay = {}, blockEls = [], bannerEls = [], late = [], tl = {}, askEls = [];
 let st = {a: NONE}, sway = 0, shown = -1, revealed = false, endMode = false, busy = false;
-let z = {v: 0}, reg = {x: 1.6, y: -1.2}, lastSize = '';
+let z = {v: 0}, reg = {x: 0, y: 0}, lastSize = '';
 const xs = d3.scaleLinear();
 const dom = v => [2004 + (2010.2 - 2004) * v, 2024 + (2013.8 - 2024) * v];
-const KO = {stroke: PAPER, 'stroke-width': 3.5, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
 
 const fix = (a, k) => { const o = {}; for (const n in a) o[n] = a[n] === '@' ? INK[k] : a[n]; return o; };
 const add = (ks, g, tag, a) => ks.split('').map(k => Kit.mk(tag, fix(a, k), lay[k][g]));
-const txt = (ks, g, x, y, s, a = {}) => add(ks, g, 'text', Object.assign({x, y, class: 'm', fill: '@', 'font-size': fs}, a)).map(e => { e.textContent = s; return e; });
+const txt = (ks, g, x, y, s, a = {}) => add(ks, g, 'text', Object.assign({x, y, class: 'lb', fill: '@', 'font-size': fs}, a)).map(e => { e.textContent = s; return e; });
 
-function setReg() { if (lay.P) lay.P.outer.setAttribute('transform', `translate(${reg.x} ${reg.y})`); }
+// the drawing is flat and in register: nothing to offset
+function setReg() {}
 
 function pose() {
   if (!lay.T || mode === 'C') return;
@@ -77,13 +78,13 @@ function pose() {
   }
 }
 
-// how big can the scales be inside a band of height Z?
+// how big can the scales be inside a band of height Z? (room left under each pan for its caption)
 function fitScale(Z, force) {
   let l = Math.min(W * .34, fs * 10), p, s, top, need;
   for (;;) {
     p = Math.min(W * .27, l * .8);
     top = Math.max(fs * 1.7, SN * l + fs * .6);
-    const rest = top + SN * l + p * .2 + fs * .3;
+    const rest = top + SN * l + p * .2 + fs * 1.6;
     s = Math.max(fs * 3.1, Math.min(fs * 5.4, Z - rest));
     need = rest + s;
     if ((need <= Z && (s >= fs * 4 || l <= fs * 6)) || l <= fs * 3.6) break;
@@ -127,21 +128,11 @@ function build() {
   }
   if (mode !== 'C') { baseY = pivotY + SN * L + S + pw * .17; bannerY = pivotY - scTop - fs * 1.35; }
 
-  // inks: grain that eats the plates, halftone screens
-  const defs = Kit.mk('defs', {}, svg);
-  [['T', 3], ['P', 11]].forEach(([k, seed]) => {
-    const fl = Kit.mk('filter', {id: 'gr' + k, x: '-5%', y: '-5%', width: '110%', height: '110%'}, defs);
-    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.9', numOctaves: 2, seed, result: 'n'}, fl);
-    Kit.mk('feColorMatrix', {in: 'n', type: 'matrix', values: '0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -3.2 2.35', result: 'm'}, fl);
-    Kit.mk('feComposite', {in: 'SourceGraphic', in2: 'm', operator: 'in'}, fl);
-    const p = Kit.mk('pattern', {id: 'dots' + k, width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(' + (k === 'T' ? 15 : 45) + ')'}, defs);
-    Kit.mk('circle', {cx: 2.5, cy: 2.5, r: 1.25, fill: INK[k]}, p);
-  });
-
+  // three stacked layers: under (T), middle (P), top (K)
   lay = {};
   for (const k of ['T', 'P', 'K']) {
-    const outer = Kit.mk('g', {style: k === 'K' ? '' : 'mix-blend-mode:multiply'}, svg);
-    const inner = Kit.mk('g', k === 'K' ? {} : {filter: `url(#gr${k})`, opacity: .95}, outer);
+    const outer = Kit.mk('g', {}, svg);
+    const inner = Kit.mk('g', {}, outer);
     const o = {outer, inner};
     for (const n of ['tl', 'base', 'panL', 'panR', 'beam', 'banner']) o[n] = Kit.mk('g', {}, inner);
     o.blocks = Kit.mk('g', {}, o.panR);
@@ -158,38 +149,32 @@ function build() {
 function drawScale() {
   const hb = Math.max(fs * 1.3, Math.min(fs * 3, L * .96 - pw / 2 - fs * .5));
   const bt = Math.min(fs * 1.2, (baseY - pivotY) * .25);
-  // the stand
-  add('P', 'base', 'ellipse', {cx, cy: baseY + fs * .15, rx: hb * 1.3, ry: fs * .42, fill: 'url(#dotsP)'});
-  add('T', 'base', 'rect', {x: cx - fs * .36, y: pivotY, width: fs * .72, height: Math.max(0, baseY - pivotY), fill: '@'});
-  add('P', 'base', 'rect', {x: cx - fs * .12, y: pivotY + fs * .8, width: fs * .26, height: Math.max(0, baseY - pivotY - bt - fs * 1.2), fill: '@'});
-  add('T', 'base', 'path', {d: `M${cx - hb},${baseY} L${cx + hb},${baseY} L${cx + hb * .38},${baseY - bt} L${cx - hb * .38},${baseY - bt}Z`, fill: '@'});
-  add('P', 'base', 'path', {d: `M${cx - hb * .72},${baseY - bt * .3} H${cx + hb * .72}`, stroke: '@', 'stroke-width': 2.4});
-  add('P', 'base', 'circle', {cx, cy: pivotY - fs * 1.05, r: fs * .42, fill: '@'});
-  add('T', 'base', 'path', {d: `M${cx},${pivotY - fs * .6} V${pivotY}`, stroke: '@', 'stroke-width': 3});
+  // the stand: a post on a plain foot, a knob on top
+  add('K', 'base', 'rect', {x: cx - fs * .26, y: pivotY - fs * .9, width: fs * .52, height: Math.max(0, baseY - pivotY + fs * .9), fill: NAVY});
+  add('K', 'base', 'path', {d: `M${cx - hb * .9},${baseY} L${cx + hb * .9},${baseY} L${cx + hb * .32},${baseY - bt} L${cx - hb * .32},${baseY - bt}Z`, fill: NAVY});
+  add('K', 'base', 'rect', {x: cx - hb, y: baseY - 1, width: 2 * hb, height: fs * .34, rx: fs * .17, fill: NAVY});
+  add('K', 'base', 'circle', {cx, cy: pivotY - fs * 1.05, r: fs * .4, fill: NAVY});
 
   // the beam (rotated about the pivot)
-  add('P', 'beam', 'rect', {x: cx - L, y: pivotY - fs * .3, width: 2 * L, height: fs * .6, rx: fs * .3, fill: '@'});
-  for (let i = -4; i <= 4; i++) if (i) add('T', 'beam', 'path', {d: `M${cx + i * L / 4.6},${pivotY - fs * .22} v${fs * .44}`, stroke: '@', 'stroke-width': 1.6});
-  add('T', 'beam', 'circle', {cx, cy: pivotY, r: fs * .62, fill: '@'});
-  add('P', 'beam', 'circle', {cx, cy: pivotY, r: fs * .95, fill: 'none', stroke: '@', 'stroke-width': 2.2});
-  [-1, 1].forEach(s => add('T', 'beam', 'circle', {cx: cx + s * L, cy: pivotY, r: fs * .34, fill: '@'}));
+  add('K', 'beam', 'rect', {x: cx - L, y: pivotY - fs * .22, width: 2 * L, height: fs * .44, rx: fs * .22, fill: NAVY});
+  add('K', 'beam', 'circle', {cx, cy: pivotY, r: fs * .5, fill: NAVY});
+  add('K', 'beam', 'circle', {cx, cy: pivotY, r: fs * .18, fill: PAPER});
+  [-1, 1].forEach(s => add('K', 'beam', 'circle', {cx: cx + s * L, cy: pivotY, r: fs * .3, fill: NAVY}));
 
-  // the pans
+  // the pans: three cords and a shallow dish
   for (const g of ['panL', 'panR']) {
-    add('T', g, 'path', {d: `M0,0 L${-pw / 2},${S} M0,0 L${pw / 2},${S}`, stroke: '@', 'stroke-width': 1.4, fill: 'none'});
-    const dish = `M${-pw / 2},${S} Q0,${S + pw * .34} ${pw / 2},${S}Z`;
-    add('T', g, 'path', {d: dish, fill: '@'});
-    add('P', g, 'path', {d: dish, fill: 'url(#dotsP)', stroke: '@', 'stroke-width': 2});
+    add('K', g, 'path', {d: `M0,0 L${-pw / 2},${S} M0,0 L0,${S + pw * .17} M0,0 L${pw / 2},${S}`, stroke: NAVY, 'stroke-width': 1.3, fill: 'none'});
+    add('K', g, 'path', {d: `M${-pw / 2 - 2},${S} Q0,${S + pw * .34} ${pw / 2 + 2},${S}Z`, fill: NAVY});
   }
-  // left pan: the marketplace, crates of goods
+  // left pan: the marketplace, parcels tied with string
   const ch = Math.min(fs * 1.1, S * .22), cw = pw * .3, cy0 = S - ch - 1;
   [[-cw - 1, cy0], [1, cy0], [-cw / 2, cy0 - ch - 1]].forEach(([x, y]) => {
-    add('P', 'panL', 'rect', {x, y, width: cw, height: ch, fill: '@'});
-    add('T', 'panL', 'path', {d: `M${x + 2},${y + 2} L${x + cw - 2},${y + ch - 2} M${x + cw - 2},${y + 2} L${x + 2},${y + ch - 2}`, stroke: '@', 'stroke-width': 1.3});
-    add('T', 'panL', 'rect', {x: x + 1, y: y + 1, width: cw - 2, height: ch - 2, fill: 'none', stroke: '@', 'stroke-width': 1.2});
+    add('K', 'panL', 'rect', {x, y, width: cw, height: ch, rx: 1.5, fill: KRAFT, stroke: NAVY, 'stroke-width': 1.5});
+    add('K', 'panL', 'path', {d: `M${x + cw / 2},${y} V${y + ch} M${x},${y + ch / 2} H${x + cw}`, stroke: NAVY, 'stroke-width': 1.1});
   });
-  txt('K', 'panL', 0, cy0 - ch - fs * .5, 'SILK ROAD', Object.assign({'text-anchor': 'middle'}, KO));
-  askEls = txt('K', 'panR', 0, S - fs * .55, 'SENTENCE?', Object.assign({'text-anchor': 'middle', opacity: .85, display: shown < 0 ? 'inline' : 'none'}, KO));
+  const capY = S + pw * .17 + fs * 1.15;
+  txt('K', 'panL', 0, capY, 'Silk Road', {'text-anchor': 'middle'});
+  askEls = txt('K', 'panR', 0, capY, 'Sentence?', {'text-anchor': 'middle', opacity: .85, display: shown < 0 ? 'inline' : 'none'});
 
   drawBlocks(shown, false);
 }
@@ -197,15 +182,15 @@ function drawScale() {
 function drawTL() {
   xs.range([fs * 1.4, W - fs * 1.4]);
   const vis = revealed ? 'inline' : 'none';
-  tl.band = add('T', 'tl', 'line', {y1: axisY, y2: axisY, stroke: '@', 'stroke-width': fs * .38, 'stroke-linecap': 'round', opacity: .7})[0];
-  tl.axis = Kit.mk('g', {transform: `translate(0,${axisY})`, style: `color:${INK.K}`}, lay.K.tl);
-  tl.br = add('T', 'tl', 'path', {fill: 'none', stroke: '@', 'stroke-width': 2, display: vis})[0];
-  tl.l1 = add('P', 'tl', 'circle', {cy: axisY - 1.2, r: fs * .45, fill: '@'})[0];
-  tl.a1 = add('T', 'tl', 'circle', {cy: axisY, r: fs * .58, fill: 'none', stroke: '@', 'stroke-width': 2.6, display: vis})[0];
-  tl.a2 = add('P', 'tl', 'circle', {cy: axisY - 1.2, r: fs * .3, fill: '@', display: vis})[0];
-  tl.l1t = txt('K', 'tl', 0, 0, 'OPENS 2011', KO)[0];
-  tl.a1t = txt('K', 'tl', 0, 0, 'ARREST', Object.assign({'text-anchor': 'start', display: vis}, KO))[0];
-  tl.bt = txt('K', 'tl', 0, 0, 'TWO YEARS', Object.assign({'text-anchor': 'middle', display: vis}, KO))[0];
+  tl.band = add('K', 'tl', 'line', {y1: axisY, y2: axisY, stroke: NAVY, 'stroke-width': 2})[0];
+  tl.axis = Kit.mk('g', {transform: `translate(0,${axisY})`, style: `color:${NAVY}`}, lay.K.tl);
+  tl.br = add('K', 'tl', 'path', {fill: 'none', stroke: NAVY, 'stroke-width': 1.6, 'stroke-linejoin': 'round', display: vis})[0];
+  tl.l1 = add('K', 'tl', 'circle', {cy: axisY, r: fs * .4, fill: NAVY})[0];
+  tl.a1 = add('P', 'tl', 'circle', {cy: axisY, r: fs * .58, fill: 'none', stroke: RED, 'stroke-width': 2, display: vis})[0];
+  tl.a2 = add('P', 'tl', 'circle', {cy: axisY, r: fs * .32, fill: RED, display: vis})[0];
+  tl.l1t = txt('K', 'tl', 0, 0, 'Opens 2011')[0];
+  tl.a1t = txt('K', 'tl', 0, 0, 'Arrest', {'text-anchor': 'start', display: vis})[0];
+  tl.bt = txt('K', 'tl', 0, 0, 'Two years', {'text-anchor': 'middle', display: vis})[0];
   late = [tl.a1, tl.a2, tl.a1t, tl.br, tl.bt];
   placeTL();
 }
@@ -215,40 +200,36 @@ function placeTL() {
   xs.domain(dom(z.v));
   const [a, b] = xs.domain(), span = b - a, step = span > 14 ? 4 : span > 7 ? 2 : 1;
   const vals = d3.range(Math.ceil(a / step) * step, b + 1e-9, step);
-  d3.select(tl.axis).call(d3.axisBottom(xs).tickValues(vals).tickFormat(d3.format('d')).tickSize(fs * .45).tickPadding(fs * .3));
-  d3.select(tl.axis).select('.domain').attr('stroke-width', 1.4);
-  d3.select(tl.axis).selectAll('text').attr('class', 'm').attr('font-size', Math.max(12, fs * .9));
+  d3.select(tl.axis).call(d3.axisBottom(xs).tickValues(vals).tickFormat(d3.format('d')).tickSize(fs * .45).tickSizeOuter(0).tickPadding(fs * .3));
+  d3.select(tl.axis).select('.domain').attr('stroke', 'none');
+  d3.select(tl.axis).selectAll('line').attr('stroke-width', 1.4);
+  d3.select(tl.axis).selectAll('text').attr('class', 'lb').attr('font-size', fs);
   const [x0, x1] = xs.range(), p1 = xs(2011), p3 = xs(2013), yb = axisY - fs * 1.5;
   tl.band.setAttribute('x1', x0); tl.band.setAttribute('x2', x1);
-  tl.l1.setAttribute('cx', p1 + 1.6);
-  tl.a1.setAttribute('cx', p3); tl.a2.setAttribute('cx', p3 + 1.6);
+  tl.l1.setAttribute('cx', p1);
+  tl.a1.setAttribute('cx', p3); tl.a2.setAttribute('cx', p3);
   if (z.v < .5) {
-    tl.l1t.textContent = 'OPENS 2011';
+    tl.l1t.textContent = 'Opens 2011';
     tl.l1t.setAttribute('text-anchor', 'middle');
     tl.l1t.setAttribute('x', Math.max(fs * 3.4, p1)); tl.l1t.setAttribute('y', axisY - fs * .95);
   } else {
-    tl.l1t.textContent = 'OPENS';
+    tl.l1t.textContent = 'Opens';
     tl.l1t.setAttribute('text-anchor', 'end');
     tl.l1t.setAttribute('x', p1 - fs * .6); tl.l1t.setAttribute('y', yb + fs * .36);
   }
   tl.a1t.setAttribute('x', p3 + fs * .6); tl.a1t.setAttribute('y', yb + fs * .36);
   tl.br.setAttribute('d', `M${p1},${axisY - fs * .65} V${yb} H${p3} V${axisY - fs * .65}`);
-  tl.bt.setAttribute('x', (p1 + p3) / 2); tl.bt.setAttribute('y', yb + fs * .36);
+  tl.bt.setAttribute('x', (p1 + p3) / 2); tl.bt.setAttribute('y', yb - fs * .45);
 }
 
 function drawBanner() {
   let bf = fs * 1.1;
-  const bt = txt('K', 'banner', cx, bannerY + bf * .36, 'TWO LIFE SENTENCES', {'text-anchor': 'middle', 'font-size': bf, 'font-weight': 800})[0];
+  const bt = txt('K', 'banner', cx, bannerY + bf * .36, 'Two life sentences', {'text-anchor': 'middle', 'font-size': bf, fill: PAPER, style: 'font-weight:800'})[0];
   let tw = bt.getComputedTextLength() || 18 * .62 * bf;
   const maxTw = W - fs * 6.5;
   if (tw > maxTw) { const k = Math.max(12 / bf, maxTw / tw); bf *= k; tw *= k; bt.setAttribute('font-size', bf); bt.setAttribute('y', bannerY + bf * .36); }
   const bw = tw / 2 + fs * .9, bh = fs * 1.05;
-  add('P', 'banner', 'path', {d: `M${cx - bw},${bannerY - bh} H${cx + bw} V${bannerY + bh} H${cx - bw}Z`, fill: '@'});
-  add('T', 'banner', 'path', {d: `M${cx - bw + 3},${bannerY - bh + 3} H${cx + bw - 3} V${bannerY + bh - 3} H${cx - bw + 3}Z`, fill: 'none', stroke: '@', 'stroke-width': 1.2});
-  [-1, 1].forEach(s => {
-    const x = cx + s * bw;
-    add('T', 'banner', 'path', {d: `M${x},${bannerY - bh * .6} L${x + s * fs * 1.5},${bannerY - bh * .6} L${x + s * fs * .9},${bannerY + bh * .2} L${x + s * fs * 1.5},${bannerY + bh * 1.05} L${x},${bannerY + bh * 1.05}Z`, fill: '@'});
-  });
+  add('P', 'banner', 'rect', {x: cx - bw, y: bannerY - bh, width: 2 * bw, height: 2 * bh, rx: 3, fill: RED});
   bannerEls = [lay.T.banner, lay.P.banner, lay.K.banner];
   gsap.set(bannerEls, {scaleX: revealed ? 1 : 0, opacity: revealed ? 1 : 0, svgOrigin: `${cx} ${bannerY}`});
 }
@@ -256,7 +237,7 @@ function drawBanner() {
 function dust(y, w) {
   for (let i = 0; i < 6; i++) {
     const s = i < 3 ? -1 : 1, a = ((i % 3) * 28 + 12) * Math.PI / 180, x = s * (w / 2 + 2);
-    const ln = Kit.mk('path', {d: `M${x},${y} l${s * fs * .9 * Math.cos(a)},${-fs * .9 * Math.sin(a)}`, stroke: INK.P, 'stroke-width': 2, 'stroke-linecap': 'round'}, lay.P.panR);
+    const ln = Kit.mk('path', {d: `M${x},${y} l${s * fs * .9 * Math.cos(a)},${-fs * .9 * Math.sin(a)}`, stroke: TINT, 'stroke-width': 2, 'stroke-linecap': 'round'}, lay.P.panR);
     gsap.fromTo(ln, {opacity: 1, scale: .3, svgOrigin: `${x} ${y}`}, {opacity: 0, scale: 1.4, duration: .5, ease: 'power2.out', onComplete: () => ln.remove()});
   }
 }
@@ -266,17 +247,16 @@ function drawBlocks(kind, anim) {
   blockEls = []; shown = kind;
   askEls.forEach(e => e.setAttribute('display', kind < 0 ? 'inline' : 'none'));
   if (kind < 0 || mode === 'C' || !lay.T) return;
-  const spec = kind === 0 ? [{w: .6, t: '20 YRS'}] : kind === 1 ? [{w: .82, t: 'LIFE'}] : [{w: .82, t: 'LIFE'}, {w: .66, t: 'LIFE'}];
+  const spec = kind === 0 ? [{w: .6, t: '20 yrs'}] : kind === 1 ? [{w: .82, t: 'Life'}] : [{w: .82, t: 'Life'}, {w: .66, t: 'Life'}];
   const bh = Math.max(fs * 1.3, Math.min(fs * 1.6, S * .34));
   let y = S - 1;
   spec.forEach((b, i) => {
     const bw = Math.max(pw * b.w, fs * (b.t.length * .62 + 1.4));
     y -= bh + (i ? 3 : 0);
     const g = add('PTK', 'blocks', 'g', {});
-    Kit.mk('rect', {x: -bw / 2, y, width: bw, height: bh, rx: 2, fill: INK.P}, g[0]);
-    Kit.mk('rect', {x: -bw / 2 + 2.5, y: y + 2.5, width: bw, height: bh, rx: 2, fill: 'url(#dotsT)', opacity: .5}, g[1]);
-    Kit.mk('rect', {x: -bw / 2 + 3, y: y + 3, width: bw - 6, height: bh - 6, rx: 1, fill: 'none', stroke: INK.T, 'stroke-width': 1.2}, g[1]);
-    const t = Kit.mk('text', {x: 0, y: y + bh / 2 + fs * .36, 'text-anchor': 'middle', class: 'm', fill: INK.K, 'font-size': fs, 'font-weight': 800}, g[2]);
+    // a heavy stone slab, flat red with a navy edge
+    Kit.mk('rect', {x: -bw / 2, y, width: bw, height: bh, rx: 2, fill: RED, stroke: NAVY, 'stroke-width': 1.5}, g[0]);
+    const t = Kit.mk('text', {x: 0, y: y + bh / 2 + fs * .36, 'text-anchor': 'middle', fill: PAPER, 'font-size': fs, style: 'font-family:var(--body);font-weight:800'}, g[2]);
     t.textContent = b.t;
     blockEls.push({g, y: y + bh, w: bw});
   });
@@ -298,8 +278,6 @@ function checkSize() {
 
 function finale() {
   Kit.haptic('success');
-  gsap.killTweensOf(reg);
-  gsap.fromTo(reg, {x: 10, y: -7}, {x: 1.6, y: -1.2, duration: 1.1, ease: 'elastic.out(1,.35)', onUpdate: setReg});
   if (bannerEls.length) gsap.to(bannerEls, {scaleX: 1, opacity: 1, duration: .8, ease: 'back.out(1.7)', svgOrigin: `${cx} ${bannerY}`});
   if (mode === 'A') gsap.fromTo(st, {a: ANG[2] + 6}, {a: ANG[2], duration: 1.2, ease: 'elastic.out(1,.3)', onUpdate: pose});
   const done = ms => setTimeout(() => { busy = false; checkSize(); }, ms);
@@ -320,7 +298,7 @@ function finale() {
 
 function showText() { Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }
 
-// act two: the answer arrives, the print re-composes to fit, then the timeline zooms
+// act two: the answer arrives, the drawing re-composes to fit, then the timeline zooms
 function act2() {
   gsap.to(svg, {opacity: 0, duration: .2, ease: 'power1.in', onComplete: () => {
     gsap.killTweensOf(st); st.a = ANG[2]; shown = 2; endMode = true;
@@ -332,7 +310,7 @@ function act2() {
 }
 
 function reveal() {
-  if (Kit.calm) { showText(); endMode = true; revealed = true; shown = 2; z.v = 1; st.a = ANG[2]; reg = {x: 1.6, y: -1.2}; build(); return; }
+  if (Kit.calm) { showText(); endMode = true; revealed = true; shown = 2; z.v = 1; st.a = ANG[2]; build(); return; }
   busy = true;
   Kit.$('say').textContent = 'Weighing it…';
   const t = gsap.timeline();
@@ -375,7 +353,6 @@ Kit.onEnter.card = () => {
   gsap.from('.opt', {opacity: 0, stagger: .08, duration: .5, ease: 'power2.out', delay: .4});
   if (!lay.T) return;
   gsap.from([lay.T.inner, lay.P.inner, lay.K.inner], {opacity: 0, duration: .6, stagger: .18, ease: 'power2.out'});
-  gsap.fromTo(reg, {x: 14, y: -10}, {x: 1.6, y: -1.2, duration: 1.4, ease: 'power3.out', onUpdate: setReg});
   if (shown < 0) gsap.fromTo(st, {a: 8}, {a: NONE, duration: 2, ease: 'elastic.out(1,.3)', delay: .3, onUpdate: pose});
 };
 Kit.play.card = async () => {

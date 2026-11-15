@@ -9,15 +9,26 @@
 #cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+/* the text under the drawing: the prompt and the closing text share one slot,
+   so the drawing keeps the same size from the first move to the last */
+.tail{display:grid;flex:none;min-height:0}
+.tail > *{grid-area:1/1;align-self:start;margin-top:0}
+.tail .end{display:flex;flex-direction:column;gap:1.2cqh;min-width:0}
+.tail #why.gone{display:flex!important;visibility:hidden}
+.tail #keep.gone{display:block!important;visibility:hidden}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag · watch it grow">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">MICROMOUSE</span></div>
     <h2 class="q">How did diagonals change the maze's complexity?</h2>
     <div class="stagebox" id="stage"><canvas id="cv"></canvas></div>
-    <p class="say" id="say">Drag the mouse right to give it more moves, up to 6.</p>
-    <div id="why" class="gone"><p class="body">On square hallways a mouse has few choices at each step. Diagonals add new headings, so every move offers more turns, and each extra move multiplies them: the total opens up exponentially. More paths to weigh, but runs become one fluid, snaking motion.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A few extra options per step multiply into an explosion of paths.</div>
+    <div class="tail">
+      <p class="say" id="say">Drag the mouse right to give it more moves, up to 6.</p>
+      <div class="end">
+        <div id="why" class="gone"><p class="body">On square hallways a mouse has few choices at each step. Diagonals add new headings, so every move offers more turns, and each extra move multiplies them: the total opens up exponentially. More paths to weigh, but runs become one fluid, snaking motion.</p></div>
+        <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A few extra options per step multiply into an explosion of paths.</div>
+      </div>
+    </div>
     <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
   </div>
 </article>
@@ -44,14 +55,27 @@ function build(turns){
 const SQ = build([0,-2,2]), DG = build([0,-1,1,-2,2]);
 const B = {sq:3, dg:5};
 const st = {t:1, grow:1, n:1, done:false, drag:false};
-let L = null, ink = '#111', bg = '#fff';
+let L = null, ink = '#111', bg = '#fff', mid = '#888', soft = '#ccc', faint = '#ddd';
 const cv = Kit.$('cv');
 const fmt = v => Math.round(v).toLocaleString('en-US');
+
+// flat tints of ink on the card colour, like color-mix(in srgb, var(--k) N%, var(--c))
+function rgb(c){
+  const t = document.createElement('canvas').getContext('2d');
+  t.fillStyle = '#000'; t.fillStyle = c; const s = t.fillStyle;
+  if (s[0] === '#') return [1,3,5].map(i => parseInt(s.slice(i, i+2), 16));
+  return (s.match(/[\d.]+/g) || [0,0,0]).slice(0,3).map(Number);
+}
+function mix(a, b, p){
+  const A = rgb(a), Bc = rgb(b);
+  return 'rgb(' + A.map((v, i) => Math.round(v*p + Bc[i]*(1-p))).join(',') + ')';
+}
 
 function layout(){
   const r = Kit.fitCanvas(cv); if (!r || !r.W) return;
   const cs = getComputedStyle(Kit.$('card'));
   ink = (cs.getPropertyValue('--k') || '#111').trim(); bg = (cs.getPropertyValue('--c') || '#fff').trim();
+  mid = mix(ink, bg, 0.55); soft = mix(ink, bg, 0.3); faint = mix(ink, bg, 0.14);
   const {x, W, H} = r;
   const f = Math.max(12, Math.min(W*0.045, H*0.042));
   const pad = Math.max(6, W*0.02);
@@ -64,25 +88,37 @@ function layout(){
   draw();
 }
 
-function panel(px, py, pw, ph, levels, alpha, title, count){
+const fam = v => getComputedStyle(document.body).getPropertyValue(v) || 'sans-serif';
+
+// a mouse seen from above, nose pointing up the maze
+function topMouse(cx, cy, s){
+  const x = L.x;
+  x.strokeStyle = ink; x.lineCap = 'round'; x.lineWidth = Math.max(1.2, s*0.14);
+  x.beginPath(); x.moveTo(cx, cy + s*0.9); x.bezierCurveTo(cx + s*0.7, cy + s*1.3, cx - s*0.5, cy + s*1.6, cx + s*0.2, cy + s*2.0); x.stroke();
+  x.fillStyle = ink;
+  x.beginPath(); x.ellipse(cx, cy + s*0.25, s*0.6, s*0.8, 0, 0, 7); x.fill();
+  x.beginPath(); x.moveTo(cx - s*0.45, cy - s*0.25); x.quadraticCurveTo(cx, cy - s*1.4, cx + s*0.45, cy - s*0.25); x.fill();
+  x.beginPath(); x.arc(cx - s*0.48, cy - s*0.35, s*0.32, 0, 7); x.arc(cx + s*0.48, cy - s*0.35, s*0.32, 0, 7); x.fill();
+}
+
+// one maze floor seen from above: the trails the mouse could have run
+function panel(px, py, pw, ph, levels, strong, title, count){
   const {x, f} = L;
-  x.textAlign = 'center'; x.fillStyle = ink;
-  x.globalAlpha = 0.75; x.font = `700 ${f*0.85}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.textAlign = 'center'; x.fillStyle = ink; x.globalAlpha = 1;
+  x.font = `600 ${f*0.8}px ${fam('--body')}`;
   x.fillText(title, px + pw/2, f*1.0);
-  x.globalAlpha = alpha; x.font = `800 ${f*1.55}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+  x.fillStyle = strong ? ink : mid;
+  x.font = `800 ${f*1.55}px ${fam('--display')}`;
   x.fillText(count, px + pw/2, f*2.75);
-  x.globalAlpha = 1;
-  // box
   x.save();
-  x.beginPath(); x.roundRect(px, py, pw, ph, f*0.6); x.globalAlpha = 0.06; x.fill(); x.globalAlpha = 0.25; x.lineWidth = 1; x.strokeStyle = ink; x.stroke(); x.clip();
+  x.beginPath(); x.rect(px, py, pw, ph); x.clip();
   const cell = Math.min(pw, ph)/13.5, cx = px + pw/2, cy = py + ph/2 + cell*0.8;
-  // grid of posts
-  x.globalAlpha = 0.22; x.fillStyle = ink;
-  for (let i = -8; i <= 8; i++) for (let j = -8; j <= 8; j++){ x.beginPath(); x.arc(cx + i*cell, cy + j*cell, Math.max(1, cell*0.07), 0, 7); x.fill(); }
-  x.strokeStyle = ink; x.lineCap = 'round'; x.lineWidth = Math.max(1.4, cell*0.16);
+  x.lineCap = 'round'; x.lineJoin = 'round';
+  // older moves: thin, pale trails; the newest move: bold
   for (let d = 1; d <= st.n; d++){
-    const p = d === st.n ? st.grow : 1;
-    x.globalAlpha = alpha * (d === st.n ? 1 : 0.55);
+    const last = d === st.n, p = last ? st.grow : 1;
+    x.strokeStyle = last ? (strong ? ink : mid) : (strong ? soft : faint);
+    x.lineWidth = last ? Math.max(1.4, cell*0.16) : Math.max(1, cell*0.1);
     x.beginPath();
     for (const [a,b,c,e] of levels[d]){
       x.moveTo(cx + a*cell, cy + b*cell);
@@ -90,51 +126,53 @@ function panel(px, py, pw, ph, levels, alpha, title, count){
     }
     x.stroke();
   }
-  x.globalAlpha = 1; x.fillStyle = ink; x.beginPath(); x.arc(cx, cy, cell*0.32, 0, 7); x.fill();
+  topMouse(cx, cy + cell*0.15, cell*0.45);
   x.restore();
 }
 
+// the drag handle: a small mouse, side on, sitting on the axis and facing right
 function mouse(cx, cy, r){
-  const x = L.x; x.fillStyle = ink; x.globalAlpha = 1;
-  x.beginPath(); x.arc(cx - r*0.62, cy - r*0.7, r*0.45, 0, 7); x.arc(cx + r*0.62, cy - r*0.7, r*0.45, 0, 7); x.fill();
-  x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
-  x.fillStyle = bg; x.beginPath(); x.arc(cx - r*0.35, cy - r*0.1, r*0.14, 0, 7); x.arc(cx + r*0.35, cy - r*0.1, r*0.14, 0, 7); x.fill();
+  const x = L.x;
+  x.strokeStyle = ink; x.lineCap = 'round'; x.lineWidth = Math.max(1.5, r*0.16);
+  x.beginPath(); x.moveTo(cx - r*0.9, cy - r*0.35); x.bezierCurveTo(cx - r*1.6, cy - r*0.2, cx - r*1.3, cy - r*1.1, cx - r*2.0, cy - r*0.9); x.stroke();
+  x.fillStyle = ink;
+  x.beginPath(); x.moveTo(cx - r*1.0, cy);
+  x.bezierCurveTo(cx - r*1.05, cy - r*1.25, cx + r*0.6, cy - r*1.3, cx + r*1.45, cy - r*0.2);
+  x.lineTo(cx + r*1.45, cy); x.closePath(); x.fill();
+  x.beginPath(); x.arc(cx + r*0.45, cy - r*1.0, r*0.36, 0, 7); x.fill();
+  x.fillStyle = bg; x.beginPath(); x.arc(cx + r*0.85, cy - r*0.55, r*0.11, 0, 7); x.fill();
 }
 
 function draw(){
   if (!L) return;
   const {x, W, H, f, pad, head, ph, pw, gx0, gx1, gy0, gy1} = L;
-  x.clearRect(0, 0, W, H);
-  const n = st.n, body = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
-  panel(pad, head, pw, ph, SQ, 0.55, 'SQUARE HALLWAYS', fmt(Math.pow(B.sq, n)));
-  panel(pad*2 + pw, head, pw, ph, DG, 1, 'WITH DIAGONALS', fmt(Math.pow(B.dg, n)));
+  x.clearRect(0, 0, W, H); x.globalAlpha = 1;
+  const n = st.n, body = fam('--body');
+  panel(pad, head, pw, ph, SQ, false, 'Square hallways', fmt(Math.pow(B.sq, n)));
+  panel(pad*2 + pw, head, pw, ph, DG, true, 'With diagonals', fmt(Math.pow(B.dg, n)));
   // graph
   const max = Math.pow(B.dg, MAXN);
   const X = t => gx0 + (t/MAXN)*(gx1 - gx0), Y = v => gy1 - (v/max)*(gy1 - gy0);
-  x.fillStyle = ink; x.globalAlpha = 0.75; x.textAlign = 'left'; x.font = `600 ${f*0.8}px ${body}`;
+  x.fillStyle = ink; x.textAlign = 'left'; x.font = `600 ${f*0.8}px ${body}`;
   x.fillText(`Possible paths after ${n} move${n>1?'s':''} (toy count)`, gx0, gy0 - f*0.55);
-  x.globalAlpha = 0.35; x.strokeStyle = ink; x.lineWidth = 1;
-  x.beginPath(); x.moveTo(gx0, gy0); x.lineTo(gx0, gy1); x.lineTo(gx1, gy1); x.stroke();
-  x.textAlign = 'center'; x.globalAlpha = 0.7; x.font = `600 ${f*0.8}px ${body}`;
+  x.strokeStyle = ink; x.lineWidth = Math.max(1.5, f*0.1); x.lineCap = 'round';
+  x.beginPath(); x.moveTo(gx0, gy1); x.lineTo(gx1, gy1); x.stroke();
+  x.textAlign = 'center'; x.fillStyle = ink; x.font = `500 ${f*0.8}px ${body}`;
   for (let i = 0; i <= MAXN; i++) x.fillText(i, X(i), H - f*0.35);
-  const curve = (b, a, w, upto, dash) => {
-    x.globalAlpha = a; x.lineWidth = w; x.setLineDash(dash); x.beginPath();
+  const curve = (b, col, w, upto) => {
+    x.strokeStyle = col; x.lineWidth = w; x.lineJoin = 'round'; x.lineCap = 'round'; x.beginPath();
     for (let t = 0; t <= upto + 1e-6; t += 0.05){ const px = X(t), py = Y(Math.pow(b, t)); t === 0 ? x.moveTo(px, py) : x.lineTo(px, py); }
-    x.stroke(); x.setLineDash([]);
+    x.stroke();
   };
-  curve(B.dg, 0.15, Math.max(1.5, f*0.12), MAXN, [f*0.3, f*0.3]);
-  curve(B.sq, 0.5, Math.max(2, f*0.2), st.t, []);
-  curve(B.dg, 1, Math.max(2.5, f*0.24), st.t, []);
-  // marker
+  curve(B.dg, faint, Math.max(1.5, f*0.12), MAXN);
+  curve(B.sq, mid, Math.max(2, f*0.2), st.t);
+  curve(B.dg, ink, Math.max(2.5, f*0.24), st.t);
   const kx = X(st.t);
-  x.globalAlpha = 0.35; x.setLineDash([3, 4]); x.beginPath(); x.moveTo(kx, gy1); x.lineTo(kx, Y(Math.pow(B.dg, st.t))); x.stroke(); x.setLineDash([]);
-  x.fillStyle = ink;
-  x.globalAlpha = 1; x.beginPath(); x.arc(kx, Y(Math.pow(B.dg, st.t)), f*0.28, 0, 7); x.fill();
-  x.globalAlpha = 0.55; x.beginPath(); x.arc(kx, Y(Math.pow(B.sq, st.t)), f*0.24, 0, 7); x.fill();
+  x.fillStyle = ink; x.beginPath(); x.arc(kx, Y(Math.pow(B.dg, st.t)), f*0.28, 0, 7); x.fill();
   // curve labels, kept apart
-  x.font = `700 ${f*0.8}px ${body}`; x.textAlign = 'left';
-  x.globalAlpha = 1; x.fillText('diagonals', gx0 + f*0.4, gy0 + f*0.9);
-  x.globalAlpha = 0.55; x.fillText('square only', gx0 + f*0.4, gy0 + f*2.1);
+  x.font = `600 ${f*0.8}px ${body}`; x.textAlign = 'left';
+  x.fillStyle = ink; x.fillText('diagonals', gx0 + f*0.4, gy0 + f*0.9);
+  x.fillStyle = mid; x.fillText('square only', gx0 + f*0.4, gy0 + f*2.1);
   mouse(kx, gy1, f*0.6);
 }
 

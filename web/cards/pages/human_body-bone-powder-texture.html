@@ -35,40 +35,55 @@
 const cv = Kit.$('cv'), card = Kit.$('card');
 const st = {z: 0}; let level = 0, geom = null, T = 0;
 const R = Kit.rnd;
-function poly(n, j){ const a=[]; for(let i=0;i<n;i++) a.push(1-j+j*R()*2*.5+ j*.5*R()); return a; }
-// particle data in normalized panel coordinates
-const D = {wood:{s0:[],s1:[],s2:[]}, bone:{s0:[],s1:[],s2:[]}};
-for(let i=0;i<260;i++) D.wood.s0.push({u:R()*2-1,v:R(),r:.003+R()*.004,c:R()<.5?'#d9d5cd':'#fbfaf6'});
-for(let i=0;i<170;i++) D.bone.s0.push({u:R()*2-1,v:R(),r:.008+R()*.02,c:['#a9a298','#6f6a63','#b9b2a6'][i%3]});
-for(let i=0;i<900;i++) D.wood.s1.push({u:R(),v:R(),r:.003+R()*.006,a:.35+R()*.6});
-for(let i=0;i<22;i++)for(let j=0;j<22;j++) D.bone.s1.push({u:(i+.5+(R()-.5)*.8)/22,v:(j+.5+(R()-.5)*.8)/22,r:.028+R()*.018,c:['#9a948a','#857f76','#b2ab9f','#746f68'][(i*7+j*3)%4],p:poly(7,.35)});
-for(let i=0;i<55;i++) D.wood.s2.push({u:R(),v:R(),r:.012+R()*.03,p:poly(5,.6),rot:R()*6.3,ph:R()*6.3,a:.6+R()*.4});
-for(let i=0;i<8;i++)for(let j=0;j<8;j++) D.bone.s2.push({u:(i+.5+(R()-.5)*.6)/8,v:(j+.5+(R()-.5)*.6)/8,r:.09+R()*.04,c:['#9d978d','#8a847b','#b0a99d','#7a756d'][(i+2*j)%4],p:poly(9,.3),rot:R()*6.3});
+function poly(n, j){ const a=[]; for(let i=0;i<n;i++) a.push(1-j/2+R()*j); return a; }
+// flat paint: ash white, two bone greys, one dark outline
+const ASH='#f2eee6', BONE='#8e887f', BONE2='#7a756d', LINE='#2e2a28';
+// shape data
+const J = []; for(let i=0;i<600;i++) J.push({a:R()-.5,b:R()-.5,p:poly(7,.3),q:poly(6,.25)});
+const FLAKES = []; for(let i=0;i<3;i++)for(let j=0;j<4;j++) FLAKES.push({u:(i+.5+(R()-.5)*.5)/3,v:(j+.5+(R()-.5)*.4)/4,r:.075+R()*.025,p:poly(8,.35),rot:R()*6.3,ph:R()*6.3});
+const CLUMPS = []; for(let i=0;i<5;i++)for(let j=0;j<6;j++) CLUMPS.push({u:(i+.5+(R()-.5)*.3)/5,v:(j+.5+(R()-.5)*.3)/6,r:.15+R()*.03,c:(i+j)%2?BONE:BONE2,p:poly(9,.25),rot:R()*6.3});
 const CAP = [
   [['pale, soft','heap'],['grey, compact','heap']],
   [['fine dust,','air between'],['coarse grains,','tightly packed']],
   [['light, loose','flakes'],['dense, pasty','clumps']]
 ];
-function blob(x,px,py,r,p,rot){ x.beginPath(); const n=p.length; for(let i=0;i<=n;i++){const a=rot+i/n*6.283, rr=r*p[i%n]; const X=px+Math.cos(a)*rr, Y=py+Math.sin(a)*rr; i?x.lineTo(X,Y):x.moveTo(X,Y);} x.closePath(); }
+function blob(x,px,py,r,p,rot,sq){ sq=sq||1; x.beginPath(); const n=p.length, c=Math.cos(rot), s=Math.sin(rot);
+  for(let i=0;i<=n;i++){const a=i/n*6.283, rr=r*p[i%n]; const ex=Math.cos(a)*rr, ey=Math.sin(a)*rr*sq; const X=px+ex*c-ey*s, Y=py+ex*s+ey*c; i?x.lineTo(X,Y):x.moveTo(X,Y);} x.closePath(); }
+function heap(x,r,wood){
+  const cx=r.x+r.w/2, base=r.y+r.h*.8, hw=r.w*.42, hh=r.h*.5;
+  const top=u=>base-hh*Math.pow(Math.max(0,1-u*u),wood?1.6:1.1)*(wood?1:(1+.07*Math.sin(u*9)));
+  x.beginPath(); x.moveTo(cx-hw,base); for(let i=0;i<=48;i++){const u=-1+2*i/48; x.lineTo(cx+u*hw,top(u));} x.closePath();
+  return {cx,base,hw,hh};
+}
 function scene(x,k,side,r,s,al){
-  const cx=r.x+r.w/2, cy=r.y+r.h/2, m=Math.min(r.w,r.h), d=D[side];
+  const cx=r.x+r.w/2, cy=r.y+r.h/2, m=Math.min(r.w,r.h), wood=side==='wood';
   x.save(); x.globalAlpha=al; x.translate(cx,cy); x.scale(s,s); x.translate(-cx,-cy);
+  x.lineJoin='round'; x.lineCap='round'; x.strokeStyle=LINE;
   if(k===0){
-    const base=r.y+r.h*.8, hw=r.w*.42, hh=r.h*.5, wood=side==='wood';
-    const top=u=>base-hh*Math.pow(Math.max(0,1-u*u),wood?1.6:1.1)*(wood?1:(1+.07*Math.sin(u*9)));
-    x.fillStyle='rgba(90,0,20,.35)'; x.beginPath(); x.ellipse(cx,base,hw*1.05,r.h*.04,0,0,6.283); x.fill();
-    x.beginPath(); x.moveTo(cx-hw,base); for(let i=0;i<=48;i++){const u=-1+2*i/48; x.lineTo(cx+u*hw,top(u));} x.closePath();
-    x.fillStyle=wood?'#efece6':'#8e887f'; x.fill(); x.save(); x.clip();
-    for(const p of d.s0){x.fillStyle=p.c; x.beginPath(); x.arc(cx+p.u*hw,base-p.v*hh,p.r*m,0,6.283); x.fill();}
-    x.restore();
+    // two plain heaps standing on the floor
+    const h=heap(x,r,wood); x.fillStyle=wood?ASH:BONE; x.fill();
+    x.lineWidth=Math.max(1.5,m*.012); x.stroke();
+    x.beginPath(); x.moveTo(r.x+r.w*.02,h.base); x.lineTo(r.x+r.w*.98,h.base); x.stroke();
   } else if(k===1){
-    if(side==='wood'){ for(const p of d.s1){x.fillStyle=`rgba(242,238,230,${p.a})`; x.beginPath(); x.arc(r.x+p.u*r.w,r.y+p.v*r.h,p.r*m,0,6.283); x.fill();} }
-    else { for(const p of d.s1){x.fillStyle=p.c; blob(x,r.x+p.u*r.w,r.y+p.v*r.h,p.r*m,p.p,0); x.fill();} }
+    // the same heap cut open: what it is made of
+    const h=heap(x,r,wood);
+    x.save(); x.clip();
+    if(!wood){ x.fillStyle=BONE2; x.fillRect(r.x,r.y,r.w,r.h); }
+    const sp=m*(wood?.085:.08), cols=Math.ceil(2*h.hw/sp)+2, rows=Math.ceil(h.hh/sp)+2;
+    x.lineWidth=Math.max(1,m*.005); let n=0;
+    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
+      const q=J[(n++)%J.length], off=(j%2)*sp/2;
+      const X=h.cx-h.hw-sp+i*sp+off, Y=h.base-j*sp*.88;
+      if(wood){ x.fillStyle=ASH; blob(x,X+q.a*sp*.35,Y+q.b*sp*.35,m*.017,q.q,q.a*6); x.fill(); x.stroke(); }
+      else { x.fillStyle=(i+j)%2?BONE:'#a39d92'; blob(x,X+q.a*sp*.12,Y+q.b*sp*.12,sp*.62,q.p,q.b*6); x.fill(); x.stroke(); }
+    }
+    x.restore();
+    heap(x,r,wood); x.lineWidth=Math.max(1.5,m*.012); x.stroke();
+    x.beginPath(); x.moveTo(r.x+r.w*.02,h.base); x.lineTo(r.x+r.w*.98,h.base); x.stroke();
   } else {
-    if(side==='wood'){ for(const p of d.s2){const dx=Math.sin(T*.6+p.ph)*.012*m, dy=Math.cos(T*.5+p.ph)*.012*m; x.fillStyle=`rgba(246,243,236,${p.a})`; blob(x,r.x+p.u*r.w+dx,r.y+p.v*r.h+dy,p.r*m,p.p,p.rot+T*.2); x.fill();} }
-    else { x.strokeStyle='rgba(60,0,15,.35)'; x.lineWidth=Math.max(1,m*.006);
-      for(const p of d.s2){const X=r.x+p.u*r.w, Y=r.y+p.v*r.h; x.fillStyle=p.c; blob(x,X,Y,p.r*m,p.p,p.rot); x.fill(); x.stroke();
-        x.fillStyle='rgba(255,255,255,.12)'; x.beginPath(); x.arc(X-p.r*m*.3,Y-p.r*m*.3,p.r*m*.3,0,6.283); x.fill();} }
+    x.lineWidth=Math.max(1.2,m*.008);
+    if(wood){ x.fillStyle=ASH; for(const p of FLAKES){const dx=Math.sin(T*.6+p.ph)*.015*m, dy=Math.cos(T*.5+p.ph)*.015*m; blob(x,r.x+p.u*r.w+dx,r.y+p.v*r.h+dy,p.r*m,p.p,p.rot+Math.sin(T*.3+p.ph)*.3,.42); x.fill(); x.stroke();} }
+    else { x.fillStyle=BONE2; x.fillRect(r.x,r.y,r.w,r.h); for(const p of CLUMPS){x.fillStyle=p.c; blob(x,r.x+p.u*r.w,r.y+p.v*r.h,p.r*m,p.p,p.rot); x.fill(); x.stroke();} }
   }
   x.restore();
 }
@@ -80,13 +95,13 @@ function draw(){
   ['wood','bone'].forEach((side,i)=>{
     const r={x:i*(pw+pad),y:top,w:pw,h:ph};
     x.fillStyle=ink; x.textAlign='center'; x.textBaseline='middle';
-    x.font=`800 ${fs}px ${font}`; x.fillText(side==='wood'?'WOOD ASH':'BONE POWDER',r.x+pw/2,lh*.6);
+    x.font=`700 ${fs}px ${font}`; x.fillText(side==='wood'?'Wood ash':'Bone powder',r.x+pw/2,lh*.6);
     x.save(); x.beginPath(); x.rect(r.x,r.y,r.w,r.h); x.clip();
     const z=st.z, k=Math.min(1,Math.floor(z)), f=z-k;
     if(z>=2) scene(x,2,side,r,1,1);
     else { scene(x,k,side,r,1+3*f,1-f); if(f>0) scene(x,k+1,side,r,.4+.6*f,f); }
     x.restore();
-    x.font=`600 ${fs}px ${font}`; x.fillStyle=ink;
+    x.font=`500 ${fs}px ${font}`; x.fillStyle=ink;
     CAP[L][i].forEach((t,j)=>x.fillText(t,r.x+pw/2,top+ph+fs*.7+lh*(j+.5)));
   });
 }

@@ -8,7 +8,7 @@
 #stage{display:flex;flex-direction:column;flex:1;min-height:0}
 #sea{flex:1;min-height:0;width:100%;display:block;touch-action:none}
 #ctl{display:flex;flex-direction:column;align-items:center;gap:1cqh}
-#kick{font:800 max(2.3cqh,15px)/1 var(--body);letter-spacing:.08em;color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.7cqh 9cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .08s}
+#kick{font:800 max(2.3cqh,15px)/1 var(--body);letter-spacing:.02em;color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.7cqh 9cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .08s}
 #kick.on{transform:scale(.94)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.85cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
@@ -32,7 +32,10 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RED = '#ff4d4f', O2C = '#3fd0ea';
+// flat palette: ink for danger, white for the air left in the lungs, tints of ink on the card colour for the sea
+const RED = 'var(--k)', O2C = '#fff';
+const SEA = 'color-mix(in srgb, var(--k) 16%, var(--c))';
+const BED = 'color-mix(in srgb, var(--k) 45%, var(--c))';
 const S = {d: 100, o2: 1, hold: false, done: false, fast: 1, trail: {}, warned: false};
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const smooth = t => t * t * (3 - 2 * t);
@@ -48,55 +51,64 @@ function draw() {
   const svg = Kit.$('sea');
   const {W, H, f} = Kit.fitSvg(svg);
   svg.innerHTML = '';
-  const fs = Math.max(f, 12), pad = fs * .4;
+  const fs = Math.max(f, 12), pad = fs * .4, ls = fs * .85;
   const colX = W * .2, colW = W * .4, trX = W * .64, trW = W * .2, gX = W * .89, gW = Math.min(W * .07, 26);
   const y0 = pad + fs * 3.1, y1 = H - pad;
   const Y = d => y0 + (y1 - y0) * d / 100;
-  const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id: 'wat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#2b8fd6'}, lg);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#061a3a'}, lg);
-  Kit.mk('rect', {x: colX, y: y0, width: colW, height: y1 - y0, rx: fs * .4, fill: 'url(#wat)'}, svg);
-  // ruler
+  // the sea, seen in cross-section: a flat body of water with a wavy surface
+  const n = 6, wl = colW / n, amp = fs * .18;
+  let p = `M${colX},${y0}`;
+  for (let i = 0; i < n; i++) p += ` q${wl / 2},${i % 2 ? amp : -amp} ${wl},0`;
+  p += ` L${colX + colW},${y1} L${colX},${y1} Z`;
+  Kit.mk('path', {d: p, fill: SEA}, svg);
+  // the sea floor at 100 m
+  const bh = fs * .45;
+  Kit.mk('path', {d: `M${colX},${y1} L${colX},${y1 - bh * .6} q${colW * .2},${-bh * .7} ${colW * .4},${-bh * .2} t${colW * .35},${-bh * .1} q${colW * .15},${-bh * .2} ${colW * .25},${bh * .1} L${colX + colW},${y1} Z`, fill: BED}, svg);
+  // the guide line the diver follows, with a float at the surface and a weight at the bottom
+  const rx = colX + colW * .62;
+  Kit.mk('line', {x1: rx, x2: rx, y1: y0, y2: y1 - bh * .5, stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
+  Kit.mk('rect', {x: rx - fs * .25, y: y1 - bh * .5 - fs * .5, width: fs * .5, height: fs * .5, rx: fs * .08, fill: 'var(--k)'}, svg);
+  Kit.mk('path', {d: `M${rx - fs * .55},${y0} a${fs * .55},${fs * .55} 0 0 1 ${fs * 1.1},0 Z`, fill: '#fff', stroke: 'var(--k)', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, svg);
+  // depth marks
   for (let d = 0; d <= 100; d += 20) {
     Kit.mk('line', {x1: colX - fs * .35, x2: colX, y1: Y(d), y2: Y(d), stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
-    const t = Kit.mk('text', {x: colX - fs * .5, y: Y(d) + fs * .35, 'text-anchor': 'end', fill: 'var(--k)', 'font-family': 'var(--mono)', 'font-size': fs * .85}, svg);
+    const t = Kit.mk('text', {x: colX - fs * .5, y: Y(d) + fs * .32, 'text-anchor': 'end', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': ls}, svg);
     t.textContent = d + ' m';
   }
   // headers
   const st = Kit.mk('text', {x: colX - fs * 3, y: pad + fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg);
-  const h1 = Kit.mk('text', {x: trX, y: pad + fs * 2.4, fill: RED, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * .85}, svg);
+  const h1 = Kit.mk('text', {x: trX, y: pad + fs * 2.4, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': ls}, svg);
   h1.textContent = 'danger';
-  const h2 = Kit.mk('text', {x: gX + gW / 2, y: pad + fs * 2.4, 'text-anchor': 'middle', fill: O2C, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * .85}, svg);
+  const h2 = Kit.mk('text', {x: gX + gW / 2, y: pad + fs * 2.4, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': ls}, svg);
   h2.textContent = 'O₂';
-  Kit.mk('line', {x1: trX, x2: trX, y1: y0, y2: y1, stroke: 'var(--k)', 'stroke-opacity': .3, 'stroke-width': 1.5}, svg);
-  // oxygen gauge
-  Kit.mk('rect', {x: gX, y: y0, width: gW, height: y1 - y0, rx: gW / 2, fill: 'none', stroke: 'var(--k)', 'stroke-opacity': .4, 'stroke-width': 1.5}, svg);
+  Kit.mk('line', {x1: trX, x2: trX, y1: y0, y2: y1, stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
+  // oxygen left: a plain bar that empties
+  Kit.mk('rect', {x: gX, y: y0, width: gW, height: y1 - y0, rx: gW / 2, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2}, svg);
   const gFill = Kit.mk('rect', {x: gX + 3, width: gW - 6, rx: (gW - 6) / 2, fill: O2C}, svg);
   const trailG = Kit.mk('g', {}, svg);
   // band (revealed at the end)
   const band = Kit.mk('g', {opacity: S.done ? 1 : 0}, svg);
-  Kit.mk('rect', {x: colX, y: Y(35), width: trX + trW - colX, height: Y(40) - Y(35), fill: RED, 'fill-opacity': .25, stroke: RED, 'stroke-width': 2, 'stroke-dasharray': '6 4'}, band);
-  const bt = Kit.mk('text', {x: colX + fs * .4, y: Y(35) - fs * .45, fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * .9}, band);
+  Kit.mk('rect', {x: colX, y: Y(35), width: trX + trW - colX, height: Y(40) - Y(35), fill: RED, 'fill-opacity': .18, stroke: RED, 'stroke-width': 2, 'stroke-dasharray': '6 4'}, band);
+  const bt = Kit.mk('text', {x: colX + fs * .4, y: Y(35) - fs * .45, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * .9}, band);
   bt.textContent = 'burning phase';
-  // diver
+  // diver: a flat silhouette, arms stretched overhead, long fins
   const s = Math.min(colW * .09, (y1 - y0) * .035);
   const dv = Kit.mk('g', {}, svg);
   const body = Kit.mk('g', {}, dv);
-  Kit.mk('line', {x1: -s * .3, y1: -s * 1.2, x2: -s * .25, y2: -s * 2.6, stroke: '#ffd166', 'stroke-width': s * .35, 'stroke-linecap': 'round'}, body);
-  Kit.mk('line', {x1: s * .3, y1: -s * 1.2, x2: s * .25, y2: -s * 2.6, stroke: '#ffd166', 'stroke-width': s * .35, 'stroke-linecap': 'round'}, body);
-  Kit.mk('rect', {x: -s * .45, y: -s * 1.2, width: s * .9, height: s * 2.1, rx: s * .4, fill: '#111'}, body);
-  Kit.mk('circle', {cx: 0, cy: -s * 1.75, r: s * .48, fill: '#111'}, body);
-  Kit.mk('rect', {x: -s * .38, y: -s * 1.95, width: s * .76, height: s * .3, rx: s * .12, fill: O2C}, body);
+  Kit.mk('line', {x1: -s * .3, y1: -s * 1.2, x2: -s * .2, y2: -s * 2.7, stroke: 'var(--k)', 'stroke-width': s * .32, 'stroke-linecap': 'round'}, body);
+  Kit.mk('line', {x1: s * .3, y1: -s * 1.2, x2: s * .2, y2: -s * 2.7, stroke: 'var(--k)', 'stroke-width': s * .32, 'stroke-linecap': 'round'}, body);
+  Kit.mk('rect', {x: -s * .45, y: -s * 1.2, width: s * .9, height: s * 2.1, rx: s * .4, fill: 'var(--k)'}, body);
+  Kit.mk('circle', {cx: 0, cy: -s * 1.75, r: s * .48, fill: 'var(--k)'}, body);
+  Kit.mk('rect', {x: -s * .34, y: -s * 1.92, width: s * .68, height: s * .26, rx: s * .1, fill: O2C}, body);
   const legs = Kit.mk('g', {}, body);
   [-1, 1].forEach(k => {
-    Kit.mk('line', {x1: k * s * .2, y1: s * .8, x2: k * s * .25, y2: s * 2.2, stroke: '#111', 'stroke-width': s * .35, 'stroke-linecap': 'round'}, legs);
-    Kit.mk('path', {d: `M${k * s * .1},${s * 2.1} L${k * s * .45},${s * 2.1} L${k * s * .3},${s * 3.3} Z`, fill: '#ffd166'}, legs);
+    Kit.mk('line', {x1: k * s * .2, y1: s * .8, x2: k * s * .25, y2: s * 2.2, stroke: 'var(--k)', 'stroke-width': s * .35, 'stroke-linecap': 'round'}, legs);
+    Kit.mk('path', {d: `M${k * s * .08},${s * 2.05} L${k * s * .45},${s * 2.05} L${k * s * .38},${s * 3.4} L${k * s * .12},${s * 3.3} Z`, fill: 'var(--k)', stroke: 'var(--k)', 'stroke-width': 1, 'stroke-linejoin': 'round'}, legs);
   });
   const warn = Kit.mk('g', {opacity: 0}, dv);
   const ws = Math.max(s, 10);
-  Kit.mk('path', {d: `M${s * 1.2},${-s * .2} l${ws * .9},${-ws * 1.6} l${ws * .9},${ws * 1.6} Z`, fill: RED, stroke: '#fff', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, warn);
-  const wt = Kit.mk('text', {x: s * 1.2 + ws * .9, y: -s * .2 - ws * .2, 'text-anchor': 'middle', fill: '#fff', 'font-weight': 900, 'font-family': 'var(--body)', 'font-size': ws * 1.2}, warn);
+  Kit.mk('path', {d: `M${s * 1.2},${-s * .2} l${ws * .9},${-ws * 1.6} l${ws * .9},${ws * 1.6} Z`, fill: 'var(--k)', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linejoin': 'round'}, warn);
+  const wt = Kit.mk('text', {x: s * 1.2 + ws * .9, y: -s * .2 - ws * .2, 'text-anchor': 'middle', fill: 'var(--c)', 'font-weight': 900, 'font-family': 'var(--body)', 'font-size': ws * 1.2}, warn);
   wt.textContent = '!';
   G = {svg, Y, colX, colW, trX, trW, y0, y1, gFill, trailG, band, dv, body, legs, warn, st, fs, s};
   Object.keys(S.trail).forEach(k => addBar(+k));

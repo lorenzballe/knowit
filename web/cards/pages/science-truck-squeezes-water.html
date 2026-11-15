@@ -39,7 +39,9 @@
 const RIGHT = 2;
 let pick = -1, done = false, busy = false;
 const S = {tx: .2, lab: 0, wear: 0};
-let G = null, pts = null;
+let G = null;
+
+const SOIL = '#a8744a', WATER = '#2f7fd8';
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
@@ -59,9 +61,7 @@ function setLabels(){
   if (!G) return;
   const after = S.lab > .5;
   G.l1.textContent = after ? 'Soil: squeezed by the weight' : 'Soil';
-  G.l2.innerHTML = '';
-  const dot = Kit.mk('tspan', {fill: '#5cc0ff', stroke: 'none'}, G.l2); dot.textContent = '● ';
-  const t = Kit.mk('tspan', {}, G.l2); t.textContent = after ? 'Water: won’t squeeze, forces crack open' : 'Water in an old crack';
+  G.l2.textContent = after ? 'Water: won’t squeeze, forces crack open' : 'Water in an old crack';
 }
 
 function reveal(){
@@ -87,33 +87,24 @@ Kit.$('pic').addEventListener('click', () => {
 function draw(){
   if (!G) return;
   const {W, H} = G;
-  const gy = H * .4, a = H * .055, cx = W * .55, soilTop = gy + a, cd = H * .28;
+  const gy = H * .4, a = H * .055, cx = W * .55, cd = H * .28;
   const tw = Math.min(W * .36, H * .62), th = tw * .32, r = th * .27;
   const cxT = S.tx * W, amp = H * .03;
   const dip = x => amp * Math.exp(-(((x - cxT) / (tw * .55)) ** 2));
   let d = Math.abs(cxT - cx) / (W * .2), p = Math.max(0, 1 - d); p = p * p * (3 - 2 * p);
   const w0 = W * .014, hw = w0 * (1 + S.wear * .5 + 1.5 * p);
 
-  // asphalt
+  // road surface (dips under the truck)
   let top = '', bot = '';
   const n = 48;
   for (let i = 0; i <= n; i++){ const x = -10 + (W + 20) * i / n; top += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (gy + dip(x)).toFixed(1); }
   for (let i = n; i >= 0; i--){ const x = -10 + (W + 20) * i / n; bot += 'L' + x.toFixed(1) + ',' + (gy + a + dip(x) * .8).toFixed(1); }
   G.road.setAttribute('d', top + bot + 'Z');
 
-  // soil grains: pressed down under the truck, pushed sideways by the water
-  pts.forEach((q, i) => {
-    const x0 = q.u * W, y0 = soilTop + q.v * (H - soilTop);
-    const frac = (y0 - soilTop) / (H - soilTop);
-    let x = x0, y = y0 + dip(x0) * .8 * (1 - frac);
-    if (y0 < soilTop + cd * 1.2){
-      const dF = 1 - (y0 - soilTop) / (cd * 1.2);
-      x += Math.sign(x0 - cx) * (hw - w0) * 1.1 * dF * Math.exp(-Math.abs(x0 - cx) / (W * .1));
-    }
-    const c = G.grains[i];
-    c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1));
-    c.setAttribute('r', (q.s * H).toFixed(1));
-  });
+  // soil: one flat fill whose top follows the road down under the truck
+  let st = '';
+  for (let i = 0; i <= n; i++){ const x = -10 + (W + 20) * i / n; st += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (gy + a * .5 + dip(x) * .8).toFixed(1); }
+  G.soil.setAttribute('d', st + `L${W + 10},${H + 10}L-10,${H + 10}Z`);
 
   // the crack with its water
   const ty = gy + dip(cx);
@@ -131,47 +122,39 @@ function draw(){
   const yb = gy + dip(cxT);
   const by = yb - r * 1.7;
   const set = (el, o) => { for (const k in o) el.setAttribute(k, typeof o[k] === 'number' ? o[k].toFixed(1) : o[k]); };
-  set(G.trailer, {x: cxT - tw / 2, y: by - th, width: tw * .7, height: th, rx: th * .08});
+  set(G.trailer, {x: cxT - tw / 2, y: by - th, width: tw * .7, height: th, rx: th * .06});
   const cxx = cxT - tw / 2 + tw * .73, cw = tw * .27, ch = th * .78;
   set(G.cab, {x: cxx, y: by - ch, width: cw, height: ch, rx: th * .1});
   set(G.win, {x: cxx + cw * .45, y: by - ch + th * .12, width: cw * .42, height: th * .28, rx: th * .04});
   set(G.chassis, {x: cxT - tw / 2, y: by - th * .04, width: tw, height: th * .12});
   [-.36, -.18, .36].forEach((k, i) => {
     set(G.wheels[i], {cx: cxT + tw * k, cy: yb - r, r: r});
-    set(G.hubs[i], {cx: cxT + tw * k, cy: yb - r, r: r * .38});
+    set(G.hubs[i], {cx: cxT + tw * k, cy: yb - r, r: r * .34});
   });
 }
 
 Kit.onShow.card = () => {
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  if (!pts){ pts = []; for (let i = 0; i < 150; i++) pts.push({u: Kit.rnd(), v: Kit.rnd(), s: .007 + .008 * Kit.rnd(), k: Kit.rnd()}); }
-  const cx = W * .55, w0 = W * .014, cd = H * .28, soilTop = H * .4 + H * .055;
+  const sw = Math.max(1.5, H * .007);
   const root = Kit.mk('g', {}, svg);
-  Kit.mk('rect', {x: 0, y: H * .4, width: W, height: H * .6, fill: '#7a4b28'}, root);
-  const gg = Kit.mk('g', {}, root);
-  const grains = [];
-  pts.forEach(q => {
-    const x0 = q.u * W, y0 = soilTop + q.v * (H - soilTop);
-    const near = Math.abs(x0 - cx) < w0 * 4.5 && y0 < soilTop + cd * 1.1;
-    grains.push(Kit.mk('circle', {fill: q.k < .5 ? '#b0794a' : '#5e3818', opacity: near ? 0 : 1}, gg));
-  });
-  const road = Kit.mk('path', {fill: '#2a2a30'}, root);
-  const crack = Kit.mk('path', {fill: '#3aa6ff', stroke: '#0c4f96', 'stroke-width': Math.max(1, H * .006), 'stroke-linejoin': 'round'}, root);
-  const arrows = Kit.mk('g', {fill: '#ffd23a', stroke: '#2a1a08', 'stroke-width': 1.5}, root);
+  const soil = Kit.mk('path', {style: `fill:${SOIL}`}, root);
+  const road = Kit.mk('path', {style: 'fill:var(--k)'}, root);
+  const crack = Kit.mk('path', {style: `fill:${WATER};stroke:var(--k);stroke-width:${sw}px;stroke-linejoin:round`}, root);
+  const arrows = Kit.mk('g', {style: 'fill:var(--k)'}, root);
   const aL = Kit.mk('path', {}, arrows), aR = Kit.mk('path', {}, arrows);
   const tg = Kit.mk('g', {}, root);
-  const chassis = Kit.mk('rect', {fill: '#333'}, tg);
-  const trailer = Kit.mk('rect', {fill: '#e2482a', stroke: '#7c1f0e', 'stroke-width': 1.5}, tg);
-  const cab = Kit.mk('rect', {fill: '#f4b81c', stroke: '#8a6200', 'stroke-width': 1.5}, tg);
-  const win = Kit.mk('rect', {fill: '#bfe3ff'}, tg);
+  const chassis = Kit.mk('rect', {style: 'fill:var(--k)'}, tg);
+  const trailer = Kit.mk('rect', {style: `fill:color-mix(in srgb,var(--k) 12%,#fff);stroke:var(--k);stroke-width:${sw}px`}, tg);
+  const cab = Kit.mk('rect', {style: 'fill:var(--k)'}, tg);
+  const win = Kit.mk('rect', {style: 'fill:var(--c)'}, tg);
   const wheels = [], hubs = [];
-  for (let i = 0; i < 3; i++){ wheels.push(Kit.mk('circle', {fill: '#111'}, tg)); hubs.push(Kit.mk('circle', {fill: '#aaa'}, tg)); }
+  for (let i = 0; i < 3; i++){ wheels.push(Kit.mk('circle', {style: 'fill:var(--k)'}, tg)); hubs.push(Kit.mk('circle', {style: 'fill:var(--c)'}, tg)); }
   const fs = Math.max(12, Math.min(f * .85, W / 25));
   const y2 = H - fs * .8, y1 = y2 - fs * 1.45;
-  const lab = {x: W * .04, 'font-size': fs, 'font-weight': 700, fill: '#fff', stroke: '#4a2a10', 'stroke-width': 3, 'paint-order': 'stroke', 'font-family': 'var(--body)'};
+  const lab = {x: W * .04, 'font-size': fs, style: 'fill:var(--k);font-family:var(--body);font-weight:600'};
   const l1 = Kit.mk('text', {...lab, y: y1}, root), l2 = Kit.mk('text', {...lab, y: y2}, root);
-  G = {W, H, road, crack, grains, arrows, aL, aR, trailer, cab, win, chassis, wheels, hubs, l1, l2};
+  G = {W, H, road, soil, crack, arrows, aL, aR, trailer, cab, win, chassis, wheels, hubs, l1, l2};
   setLabels(); draw();
 };
 

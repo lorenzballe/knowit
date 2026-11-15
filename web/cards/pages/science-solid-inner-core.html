@@ -8,6 +8,12 @@
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
 #pic{flex:1;min-height:0;width:100%;display:block}
+#low{display:grid}
+#low>*{grid-area:1/1;align-self:start}
+#low>.gone{display:flex!important;visibility:hidden!important}
+#tail{display:grid}
+#tail>*{grid-area:1/1;align-self:start}
+#tail>.gone{display:block!important;visibility:hidden!important}
 #ctl{display:flex;flex-direction:column;gap:1cqh}
 #cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:2.6em;margin:0;overflow-wrap:anywhere}
 #go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:flex-start}
@@ -21,16 +27,20 @@
     <h2 class="q">How do we know Earth's inner core is solid?</h2>
     <div class="stagebox" id="stage">
       <svg id="pic"></svg>
-      <div id="ctl">
-        <p id="cap">A P-wave from an earthquake waits at the surface.</p>
-        <button id="go">Send it deeper ↓</button>
-      </div>
-      <div id="why" class="gone">
-        <p class="body">In the liquid outer core, P-waves slow down. At about 5,100 km deep they suddenly speed up again, which means they have entered something denser and solid: the inner core.</p>
+      <div id="low">
+        <div id="ctl">
+          <p id="cap">A P-wave from an earthquake waits at the surface.</p>
+          <button id="go">Send it deeper ↓</button>
+        </div>
+        <div id="why" class="gone">
+          <p class="body">In the liquid outer core, P-waves slow down. At about 5,100 km deep they suddenly speed up again, which means they have entered something denser and solid: the inner core.</p>
+        </div>
       </div>
     </div>
-    <p class="say" id="say">Tap to send the P-wave one layer deeper.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A sudden jump in wave speed at ~5,100 km reveals the solid inner core.</div>
+    <div id="tail">
+      <p class="say" id="say">Tap to send the P-wave one layer deeper.</p>
+      <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A sudden jump in wave speed at ~5,100 km reveals the solid inner core.</div>
+    </div>
     <div class="foot"><span class="src">Source · Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)</span></div>
   </div>
 </article>
@@ -47,7 +57,7 @@ const CAPS = [
   'At about 5,100 km it suddenly speeds up again!'
 ];
 const st = {t:0, step:0};
-let G = null, busy = false;
+let G = null, busy = false, lastW = 0, lastH = 0;
 
 function at(t){
   t = Math.max(0, Math.min(CUM[5], t));
@@ -59,6 +69,7 @@ function at(t){
 Kit.onShow.card = () => {
   const svg = Kit.$('pic');
   svg.innerHTML = '';
+  const r0 = svg.getBoundingClientRect(); lastW = r0.width; lastH = r0.height;
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, f*0.9), fsS = Math.max(12, f*0.8);
   const y0 = fs*2.0, y1 = H - fs*1.7;
@@ -66,42 +77,73 @@ Kit.onShow.card = () => {
   const Y = d => y0 + d*(y1-y0), X = v => gx0 + v*(gx1-gx0);
   G = {Y, X, sx0, sx1, gx0, gx1, y0, y1, fs};
   const ink = 'var(--k)';
-  // Layers
-  const lay = [[0,.012,'#5a3e2b'],[.012,.455,'#c4513a'],[.455,.79,'#f0a03c'],[.79,1,'#ffe28a']];
-  const clip = Kit.mk('clipPath',{id:'cl'},Kit.mk('defs',{},svg));
-  Kit.mk('rect',{x:sx0,y:y0,width:sx1-sx0,height:y1-y0,rx:fs*0.8},clip);
-  const gL = Kit.mk('g',{'clip-path':'url(#cl)'},svg);
-  lay.forEach(([a,b,c])=>Kit.mk('rect',{x:sx0,y:Y(a),width:sx1-sx0,height:Y(b)-Y(a)+0.5,fill:c},gL));
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const cx = (sx0+sx1)/2;
-  const lab = (txt,y,w)=>{const e=Kit.mk('text',{x:cx,y,'text-anchor':'middle',fill:'#2a160b','font-size':fs,'font-weight':w||700,'font-family':'var(--body)'},svg);e.textContent=txt;return e;};
-  const mantleLab = lab('Mantle', Y(.2)); mantleLab.setAttribute('fill','#fff');
-  lab('solid', Y(.2)+fs*1.35, 500).setAttribute('fill','#fff');
-  lab('Outer core', Y(.6));
-  lab('liquid', Y(.6)+fs*1.35, 500);
-  lab('Inner core', Y(.87));
-  G.icLab = lab('?', Y(.87)+fs*1.35, 800);
+  // A slice cut out of the globe: curved surface on top, layers below
+  const b = fs*0.5;
+  const top = `M${sx0},${y0+b}Q${cx},${y0-b} ${sx1},${y0+b}`;
+  const shape = `${top}L${sx1},${y1}L${sx0},${y1}Z`;
+  const clip = Kit.mk('clipPath',{id:'cl'},Kit.mk('defs',{},svg));
+  Kit.mk('path',{d:shape},clip);
+  const gL = Kit.mk('g',{'clip-path':'url(#cl)'},svg);
+  // mantle: solid rock · outer core: molten · inner core: solid and dense
+  const lay = [[y0-b,Y(.455),tint(28)],[Y(.455),Y(.79),'#ee9a3a'],[Y(.79),y1,tint(72)]];
+  lay.forEach(([a,c,col])=>Kit.mk('rect',{x:sx0,y:a,width:sx1-sx0,height:c-a+0.5,fill:col},gL));
+  // slow ripples: the outer core is liquid
+  const rip = y => { let d=`M${sx0+fs*0.6},${y}`; const n=4, w=(sx1-sx0-fs*1.2)/n;
+    for(let k=0;k<n;k++) d+=`q${w/4},${-fs*0.22} ${w/2},0t${w/2},0`; return d; };
+  [Y(.49),Y(.75)].forEach(y=>Kit.mk('path',{d:rip(y),fill:'none',stroke:'#b8661c','stroke-width':1.8,'stroke-linecap':'round'},gL));
+  // layer edges, thin crust along the curved surface, and an even outline
+  [Y(.455),Y(.79)].forEach(y=>Kit.mk('line',{x1:sx0,y1:y,x2:sx1,y2:y,stroke:ink,'stroke-width':2},gL));
+  Kit.mk('path',{d:top,fill:'none',stroke:ink,'stroke-width':Math.max(3,fs*0.3)},gL);
+  Kit.mk('path',{d:shape,fill:'none',stroke:ink,'stroke-width':2.5,'stroke-linejoin':'round'},svg);
+  // Each layer gets one label: name (bold) + state. Two lines when the layer is tall
+  // enough, otherwise one line, always centred inside its own layer so they never collide.
+  const lab = (name,state,a,c,col)=>{
+    const mid = (a+c)/2, two = (c-a) >= fsS*3.2;
+    const e = Kit.mk('text',{x:cx,y: two ? mid-fsS*0.25 : mid+fsS*0.35,'text-anchor':'middle',fill:col||ink,'font-size':fsS,'font-family':'var(--body)'},svg);
+    const n = Kit.mk('tspan',{'font-weight':700},e); n.textContent = name;
+    const s = two ? Kit.mk('tspan',{x:cx,dy:fsS*1.3,'font-weight':500},e)
+                  : Kit.mk('tspan',{dx:fsS*0.4,'font-weight':500},e);
+    s.textContent = state;
+    return s;
+  };
+  lab('Mantle','solid', y0+b, Y(.455));
+  lab('Outer core','liquid', Y(.455), Y(.79));
+  G.icLab = lab('Inner core','?', Y(.79), y1, 'var(--c)');
   // top/bottom labels
   const t1 = Kit.mk('text',{x:sx0,y:y0-fs*0.6,fill:ink,'font-size':fsS,'font-family':'var(--body)','font-weight':600},svg); t1.textContent='surface ↓';
   const t2 = Kit.mk('text',{x:sx0,y:y1+fs*1.25,fill:ink,'font-size':fsS,'font-family':'var(--body)','font-weight':600},svg); t2.textContent='centre';
   const t3 = Kit.mk('text',{x:gx0,y:y0-fs*0.6,fill:ink,'font-size':fsS,'font-family':'var(--body)','font-weight':700},svg); t3.textContent='P-wave speed →';
   const t4 = Kit.mk('text',{x:gx0,y:y1+fs*1.25,fill:ink,'font-size':fsS,'font-family':'var(--body)',opacity:.7},svg); t4.textContent='slow';
   const t5 = Kit.mk('text',{x:gx1,y:y1+fs*1.25,'text-anchor':'end',fill:ink,'font-size':fsS,'font-family':'var(--body)',opacity:.7},svg); t5.textContent='fast';
-  // graph frame
-  Kit.mk('line',{x1:gx0,y1:y0,x2:gx0,y2:y1,stroke:ink,'stroke-width':1.5,opacity:.5},svg);
-  Kit.mk('line',{x1:gx0,y1:y1,x2:gx1,y2:y1,stroke:ink,'stroke-width':1.5,opacity:.5},svg);
-  // boundary guides
-  Kit.mk('line',{x1:sx1,y1:Y(.455),x2:gx1,y2:Y(.455),stroke:ink,'stroke-width':1,'stroke-dasharray':'3 4',opacity:.3},svg);
-  G.b2 = Kit.mk('line',{x1:sx0,y1:Y(.79),x2:gx1,y2:Y(.79),stroke:ink,'stroke-width':2,'stroke-dasharray':'5 4',opacity:0},svg);
-  G.b2t = Kit.mk('text',{x:gx0+fs*0.4,y:Y(.79)-fs*0.5,fill:ink,'font-size':fs,'font-weight':800,'font-family':'var(--body)',opacity:0},svg);
+  // graph axes
+  Kit.mk('path',{d:`M${gx0},${y0}L${gx0},${y1}L${gx1},${y1}`,fill:'none',stroke:ink,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round',opacity:.6},svg);
+  // boundary guides: carry each layer edge across to the graph
+  Kit.mk('line',{x1:sx1,y1:Y(.455),x2:gx1,y2:Y(.455),stroke:ink,'stroke-width':1.5,'stroke-dasharray':'3 5','stroke-linecap':'round',opacity:.35},svg);
+  G.b2 = Kit.mk('line',{x1:sx1,y1:Y(.79),x2:gx1,y2:Y(.79),stroke:ink,'stroke-width':2,'stroke-linecap':'round',opacity:0},svg);
+  G.b2t = Kit.mk('text',{x:gx0+fs*0.4,y:Y(.79)-fs*0.5,fill:ink,'font-size':fsS,'font-weight':800,'font-family':'var(--body)',opacity:0},svg);
   G.b2t.textContent='~5,100 km';
-  // curve and pulse
+  // curve, its pen tip, and the wave travelling down the slice
   G.path = Kit.mk('path',{fill:'none',stroke:ink,'stroke-width':Math.max(3,fs*0.28),'stroke-linecap':'round','stroke-linejoin':'round'},svg);
   G.head = Kit.mk('circle',{r:fs*0.42,fill:ink},svg);
-  G.ring = Kit.mk('circle',{r:fs*0.6,fill:'none',stroke:'#fff','stroke-width':2.5},svg);
-  G.dot = Kit.mk('circle',{r:fs*0.5,fill:'#fff',stroke:'#2a160b','stroke-width':2},svg);
+  G.dot = Kit.mk('circle',{r:fs*0.5,fill:'var(--c)',stroke:ink,'stroke-width':2.5},svg);
   render();
-  if (!Kit.calm) { gsap.killTweensOf(G.ring); gsap.fromTo(G.ring,{attr:{r:fs*0.5},opacity:1},{attr:{r:fs*1.6},opacity:0,duration:1.1,repeat:-1,ease:'power1.out'}); }
 };
+
+// Redraw whenever the drawing's box changes size, so it always fills it
+if (window.ResizeObserver) {
+  let pend = false;
+  new ResizeObserver(() => {
+    if (!G || pend) return;
+    pend = true;
+    requestAnimationFrame(() => {
+      pend = false;
+      const r = Kit.$('pic').getBoundingClientRect();
+      if (r.width > 0 && r.height > 0 && (Math.abs(r.width-lastW) > 1 || Math.abs(r.height-lastH) > 1)) Kit.onShow.card();
+    });
+  }).observe(Kit.$('pic'));
+}
 
 function render(){
   if (!G) return;
@@ -113,7 +155,7 @@ function render(){
   const hy = G.Y(p.d);
   G.head.setAttribute('cx', G.X(p.v)); G.head.setAttribute('cy', hy);
   const cx = (G.sx0+G.sx1)/2;
-  [G.dot,G.ring].forEach(c=>{c.setAttribute('cx',cx);c.setAttribute('cy',hy);});
+  G.dot.setAttribute('cx',cx); G.dot.setAttribute('cy',hy);
   const show = st.t > CUM[3]+0.05 ? 1 : 0;
   G.b2.setAttribute('opacity', show*0.8); G.b2t.setAttribute('opacity', show);
   G.icLab.textContent = st.t >= CUM[5]-0.01 ? 'solid' : '?';
