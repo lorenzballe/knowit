@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611151611,
- "built": "2026-11-15T16:11:49Z",
+ "version": 202611151635,
+ "built": "2026-11-15T16:35:04Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -238116,11 +238116,11 @@
     "kit": 1,
     "touch": "taps",
     "label": "Astute free card, tap to evolve. Asks why Jansen evolved his Strandbeest legs instead of testing every design. Shows generation 1 with 1,500 tried, next to a testing-them-all option of trillions. Tap to breed generation 2.",
-    "page": "pages/technology-evolved-footpaths.html?v=f03546327fba",
-    "bytes": 16296,
+    "page": "pages/technology-evolved-footpaths.html?v=9698980a7055",
+    "bytes": 16449,
     "thumbs": {
-     "front": "thumbs/technology-evolved-footpaths-front.webp?v=f03546327fba",
-     "back": "thumbs/technology-evolved-footpaths-back.webp?v=f03546327fba"
+     "front": "thumbs/technology-evolved-footpaths-front.webp?v=9698980a7055",
+     "back": "thumbs/technology-evolved-footpaths-back.webp?v=9698980a7055"
     }
    },
    "source": "Veritasium, “34 Years Of Strandbeest Evolution” (YouTube, 2024)",

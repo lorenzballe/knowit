@@ -100,7 +100,7 @@ function build(){svg.textContent='';const mk=(t,a,p)=>Kit.mk(t,a,p||svg);
   mk('stop',{offset:o1,'stop-color':'#000'},lg);mk('stop',{offset:Math.min(.97,o1+.3),'stop-color':'#fff'},lg);
   const m=mk('mask',{id:'p09mask',maskUnits:'userSpaceOnUse',x:0,y:0,width:W,height:H},defs);mk('rect',{x:0,y:0,width:W,height:H,fill:'url(#p09fade)'},m);
   mk('rect',{x:0,y:gy,width:W,height:H-gy,class:'band'});
-  const leg=mk('g',{mask:'url(#p09mask)'});
+  const leg=E.leg=mk('g',{mask:'url(#p09mask)'});
   E.plates=[mk('path',{class:'plate'},leg),mk('path',{class:'plate'},leg)];
   E.tubes=[];E.cores=[];for(const t of TUBES){E.tubes.push(mk('line',{class:'tube','stroke-width':tw},leg));E.cores.push(mk('line',{class:'core','stroke-width':tw*.36},leg));}
   E.pins=['O','B'].map(()=>mk('circle',{class:'pin',r:tw*.95},leg));
@@ -115,7 +115,9 @@ function build(){svg.textContent='';const mk=(t,a,p)=>Kit.mk(t,a,p||svg);
   E.cloudT=mk('text',{class:'lab','text-anchor':'end','font-size':fs.toFixed(1),x:(W-2).toFixed(1),y:Math.max(hudH+fs*1.8,gy-36*sc).toFixed(1)});E.cloudT.textContent='1,500 footpaths';
   E.dot=mk('circle',{class:'dot',r:Math.max(4,tw*1.3).toFixed(1),'stroke-width':2});}
 const P=new Float64Array(13);
-function drawLeg(){if(!shown||!E.tubes)return;const a=shown.a,b=shown.b,u=shown.u;for(let k=0;k<13;k++)P[k]=a.p[k]+(b.p[k]-a.p[k])*u;
+function drawLeg(){if(!shown||!E.tubes)return;
+  // Once the flattest footpath is found the leg has done its part: it goes, and the foot stays on its path.
+  E.leg.style.display=done?'none':'';const a=shown.a,b=shown.b,u=shown.u;for(let k=0;k<13;k++)P[k]=a.p[k]+(b.p[k]-a.p[k])*u;
   const oa=off(a),ob=off(b);let ox=oa[0]+(ob[0]-oa[0])*u,oy=oa[1]+(ob[1]-oa[1])*u;const t=running?th:mid(b);
   if(!pose(P,Math.cos(t),Math.sin(t))){if(!pose(b.p,Math.cos(t),Math.sin(t)))return;ox=ob[0];oy=ob[1];}
   const sx=q=>(cx+(q[0]+ox)*sc).toFixed(1),sy=q=>(gy-(q[1]+oy)*sc).toFixed(1);
