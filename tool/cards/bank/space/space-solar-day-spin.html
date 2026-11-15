@@ -5,14 +5,14 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#sky{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#stage{display:flex;flex-direction:column;gap:.6cqh;flex:1;min-height:0}
+#sky{flex:0 1 auto;height:27cqh;min-height:20cqh;width:100%;display:block;touch-action:none}
 #ctrl{display:flex;justify-content:center}
 #hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 7cqw;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;transition:transform .12s}
 #hold.down{transform:scale(.96)}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
-#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.2cqh;flex:0 0 auto;min-height:0}
+#why .big{font:800 max(2.4cqh,16px)/1.05 var(--display);margin:0}
+#why .body{font:500 max(1.7cqh,12px)/1.18 var(--body);margin:0;overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="space" data-kind="Hold · watch">
   <div class="in">
@@ -72,9 +72,9 @@ function build() {
   g.day = Kit.mk('path', {style: 'fill:#8fa9ff'}, svg);
   g.pin = Kit.mk('line', {style: `stroke:${K};stroke-width:${Math.max(3, rE * 0.1)};stroke-linecap:round`}, svg);
   g.dot = Kit.mk('circle', {r: Math.max(4, rE * 0.16), style: `fill:${K};stroke:#152f8f;stroke-width:2`}, svg);
-  g.you = Kit.mk('text', {'text-anchor': 'middle', style: `font:700 ${f * 0.85}px var(--body);fill:${K}`}, svg);
+  g.you = Kit.mk('text', {'text-anchor': 'middle', style: `font:700 ${Math.max(12, f * 0.85)}px var(--body);fill:${K}`}, svg);
   g.you.textContent = 'you';
-  const lab = Kit.mk('text', {x: W - 6, y: f * 1.1, 'text-anchor': 'end', style: `font:600 ${f * 0.85}px var(--body);fill:${K};opacity:.75`}, svg);
+  const lab = Kit.mk('text', {x: W - 6, y: f * 1.1, 'text-anchor': 'end', style: `font:600 ${Math.max(12, f * 0.85)}px var(--body);fill:${K};opacity:.75`}, svg);
   lab.textContent = 'Earth has turned';
   g.num = Kit.mk('text', {x: W - 6, y: f * 1.1 + f * 3.1, 'text-anchor': 'end', style: `font:800 ${f * 2.3}px var(--mono);fill:${K}`}, svg);
   const note = Kit.mk('text', {x: 6, y: H - 6, style: `font:500 ${Math.max(12, f * 0.75)}px var(--body);fill:${K};opacity:.6`}, svg);
@@ -94,7 +94,7 @@ function render() {
   const r = g.rE, p1 = [ex + r * Math.cos((a - 90) * D), ey + r * Math.sin((a - 90) * D)], p2 = [ex + r * Math.cos((a + 90) * D), ey + r * Math.sin((a + 90) * D)];
   g.night.setAttribute('cx', ex); g.night.setAttribute('cy', ey);
   g.day.setAttribute('d', `M${p1}A${r},${r} 0 0 1 ${p2}Z`);
-  const dS = Math.hypot(g.sx - ex, g.sy - ey) - g.rs * 1.1;
+  const dS = Math.max(0, Math.hypot(g.sx - ex, g.sy - ey) - g.rs * 1.1);
   g.sunline.setAttribute('x1', ex); g.sunline.setAttribute('y1', ey);
   g.sunline.setAttribute('x2', ex + dS * Math.cos(a * D)); g.sunline.setAttribute('y2', ey + dS * Math.sin(a * D));
   const rr = r * 1.55;
@@ -148,7 +148,19 @@ hb.addEventListener('pointerdown', press);
 hb.addEventListener('contextmenu', e => e.preventDefault());
 gsap.ticker.add(tick);
 
-Kit.onShow.card = () => build();
+// redraw whenever the drawing's box changes
+let lastW = 0, lastH = 0;
+if (typeof ResizeObserver !== 'undefined') {
+  new ResizeObserver(() => {
+    const r = Kit.$('sky').getBoundingClientRect();
+    const w = Math.round(r.width), h = Math.round(r.height);
+    if (!G || w < 2 || h < 2 || (w === lastW && h === lastH)) return;
+    lastW = w; lastH = h;
+    build();
+  }).observe(Kit.$('sky'));
+}
+
+Kit.onShow.card = () => { const r = Kit.$('sky').getBoundingClientRect(); lastW = Math.round(r.width); lastH = Math.round(r.height); build(); };
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));

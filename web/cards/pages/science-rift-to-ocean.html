@@ -9,13 +9,18 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{position:relative;flex:1;min-height:0}
+#stage{position:relative;flex:1 1 0;min-height:0;max-height:none;height:auto}
+.answered #stage{min-height:0;max-height:none;height:auto;flex:1 1 0}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #cv:active{cursor:grabbing}
-#why{display:flex;flex-direction:column;gap:.7cqh}
-#why .wbig{margin:0;font:800 max(2.5cqh,15px)/1.15 var(--display);color:var(--k);overflow-wrap:anywhere}
-#why .wbody{margin:0;font:500 max(1.8cqh,12.5px)/1.34 var(--body);color:var(--k);opacity:.92;overflow-wrap:anywhere}
-.answered .q{font-size:max(2.4cqh,15px)}
+#why{display:flex;flex-direction:column;gap:0;flex:0 0 auto;margin:0}
+#why .wbig{margin:0;font:800 max(1.8cqh,12.5px)/1.05 var(--display);color:var(--k);overflow-wrap:anywhere}
+#why .wbody{margin:0;font:500 max(1.25cqh,10px)/1.12 var(--body);color:var(--k);opacity:.92;overflow-wrap:anywhere}
+.answered .in{gap:max(.4cqh,2px);justify-content:flex-start}
+.answered .q{font-size:max(1.9cqh,13.5px);line-height:1.1;margin-block:0}
+.answered .keep{margin:0;padding-block:max(.4cqh,2px);line-height:1.12}
+.answered .foot{margin-top:0;padding-top:0;line-height:1.1}
+.answered .src{display:block;overflow-wrap:anywhere}
 .say b{color:#8f1d12}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Turn the dial · millions of years">
@@ -90,11 +95,11 @@
 
   // ---------- particles: seawater and lava ----------
   const P = [], L = [];
-  function seaP(p) { p.m = 0; p.x = Math.random() * G.mw; p.y = 3 + Math.random() * (G.coast - 8); p.ph = Math.random() * 6.28; p.s = .6 + Math.random() * 1.2; return p; }
+  function seaP(p) { p.m = 0; p.x = Math.random() * G.mw; p.y = 3 + Math.random() * Math.max(1, G.coast - 8); p.ph = Math.random() * 6.28; p.s = .6 + Math.random() * 1.2; return p; }
   function initParticles() { P.length = 0; L.length = 0; for (let i = 0; i < 520; i++) P.push(seaP({})); }
   function spawnLava(n, hot) {
     for (let i = 0; i < n && L.length < 320; i++) {
-      const y = G.top + 6 + Math.random() * (G.bot - G.top - 10), sp = (hot ? 40 : 14) * (.4 + Math.random());
+      const y = G.top + 6 + Math.random() * Math.max(1, G.bot - G.top - 10), sp = (hot ? 40 : 14) * (.4 + Math.random());
       const a = Math.random() * 6.28;
       L.push({x: mid(y), y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * .5, life: 1, max: .5 + Math.random() * .8});
     }
@@ -113,7 +118,7 @@
         p.x += dx * pull * dt * .7;
         p.y += ((G.top - 4) - p.y) * pull * dt * .5 + Math.sin(p.ph) * .15;
         if (p.x > MW + 4) p.x = -4; if (p.x < -4) p.x = MW + 4;
-        p.y = clamp(p.y, 2, G.coast - 2);
+        p.y = clamp(p.y, 2, Math.max(2, G.coast - 2));
         if (flooded && Math.abs(dx) < d * .9 && p.y > G.top - 16 && inRift < 380 && Math.random() < dt * 7 * boost) {
           p.m = 1; inRift++; p.u = clamp(-dx / d, -.9, .9); p.y = G.top; p.ty = G.top + (F - G.top) * Math.sqrt(Math.random());
         }
@@ -308,7 +313,7 @@
       if (S.flare > .01) { splitLine(0); x.strokeStyle = `rgba(255,255,255,${.5 * S.flare})`; x.lineWidth = 4 + 16 * S.flare; x.stroke(); }
       for (let y = G.top + 10, i = 0; y < G.bot; y += 15, i++) {
         const mx = mid(y), fl = .55 + .45 * Math.sin(now * .005 + i * 1.7), r = (4 + 7 * S.flare) * (.7 + .3 * fl);
-        x.beginPath(); x.arc(mx, y, r * .8, 0, 6.29);
+        x.beginPath(); x.arc(mx, y, Math.max(0, r * .8), 0, 6.29);
         x.fillStyle = `rgba(255,255,255,${vol * (.6 + .4 * fl)})`; x.fill();
       }
     }

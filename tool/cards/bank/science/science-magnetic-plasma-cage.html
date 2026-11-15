@@ -5,15 +5,15 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.4cqh}
-.cvbox{flex:1;min-height:0;position:relative}
+#stage{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;gap:.3cqh}
+.cvbox{flex:0 0 auto;height:26cqh;position:relative}
 .cvbox canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #btns{display:flex;flex-direction:column;gap:1cqh}
-#why{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:0;flex:0 0 auto;min-height:min-content}
 .opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.alt{color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent)}
-#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-#why .big{margin:0}
+#why .body{font:500 max(1.4cqh,11px)/1.12 var(--body);margin:0;overflow-wrap:anywhere}
+#why .big{margin:0;line-height:1;font-size:max(2.2cqh,15px);overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Try it · experiment">
   <div class="in">

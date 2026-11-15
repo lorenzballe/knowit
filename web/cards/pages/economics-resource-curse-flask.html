@@ -11,10 +11,23 @@
 <style>
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-#why{display:flex;flex-direction:column;gap:4px}
-#why .big{color:var(--k);font-size:clamp(22px,6.6cqw,30px);line-height:1.05;margin:0}
-#why .body{font-size:clamp(14px,3.9cqw,16px);line-height:1.4;margin:0}
+#why{display:flex;flex-direction:column;gap:0;flex-shrink:0}
+#why .big{color:var(--k);font-size:clamp(18px,5cqw,24px);line-height:1;margin:0}
+#why .body{font-size:clamp(12px,3.2cqw,14px);line-height:1.2;margin:0}
 .say b,#why b{color:var(--k)}
+#keep{line-height:1.2;margin-top:2px;flex-shrink:0}
+.foot{margin-top:2px;height:auto;min-height:0;overflow:visible;flex-shrink:0}
+.foot .src{display:block;white-space:normal;overflow:visible;text-overflow:clip;height:auto;max-height:none;line-height:1.2}
+/* progressively tighter spacing once the why appears, so the drawing keeps its size */
+.t1 #why .body{font-size:12px;line-height:1.15}
+.t1 #keep{margin-top:0;line-height:1.15}
+.t1 .foot{margin-top:0}
+.t2 .in{gap:3px}
+.t2 #why .big{font-size:16px}
+.t2 .foot .src{font-size:10px;line-height:1.1}
+.t3 #why .body{font-size:11.5px;line-height:1.1}
+.t3 #keep{font-size:11px;line-height:1.1}
+.t3 .foot .src{font-size:9.5px;line-height:1.05}
 </style>
 <article class="card" id="card" data-topic="economics" data-kind="Scrub the timeline · follow the wealth">
   <div class="in">
@@ -86,7 +99,7 @@
     R = Math.max(22, R);
     const need = Math.max((neckK + 1) * R + fs * .7, (neckK + .12) * R + gap + bhMin + fs * .5);
     const ny = top + Math.max(0, (A - need) * .5);
-    const bx = Math.max(R + 6, W * .3), nw = R * .24, by = ny + neckK * R, py = by + R * .12, jx = bx + Math.sqrt(R * R - (R * .12) ** 2);
+    const bx = Math.max(R + 6, W * .3), nw = R * .24, by = ny + neckK * R, py = by + R * .12, jx = bx + Math.sqrt(Math.max(0, R * R - (R * .12) ** 2));
     const bRt = W - fs * 1.1;
     const bw = Math.max(fs * 4, Math.min(W * .33, fs * 9, bRt - (bx + R + fs * .6))), sx = bRt - bw / 2;
     const bT = py + gap, bB = Math.min(sceneB - fs * .45, Math.max(by + R, bT + bhMin)), bh = bB - bT;
@@ -136,7 +149,7 @@
     // ---- the conveyor out ----
     const gP = mk('g', {class: 'gl'}, svg);
     const pd = `M${jx - 3},${py} L${W + 6},${py}`, bt = fs * .42;
-    mk('rect', {x: jx - 3, y: py - bt, width: W + 9 - jx, height: bt * 2, style: 'fill:var(--edge)'}, gP);
+    mk('rect', {x: jx - 3, y: py - bt, width: Math.max(0, W + 9 - jx), height: bt * 2, style: 'fill:var(--edge)'}, gP);
     E.flow = [[INK, `${fs * .9} ${fs * 1.6}`, 0], [COBT, `${fs * .7} ${fs * 2.1}`, fs * .8], [COLT, `${fs * .5} ${fs * 2.4}`, fs * 1.7], [RED, `${fs * .35} ${fs * 1.3}`, fs * .4]].map(([c, da, o]) => ({o, e: mk('path', {d: pd, style: `stroke:${c}`, 'stroke-width': fs * .42, 'stroke-linecap': 'round', 'stroke-dasharray': da, fill: 'none', opacity: 0}, gP)}));
     for (const s of [-1, 1]) mk('line', {x1: jx - 2, x2: W + 6, y1: py + s * bt, y2: py + s * bt, stroke: INK, 'stroke-opacity': .8, 'stroke-width': 1.4}, gP);
     // rollers under the belt, outside the ground
@@ -278,7 +291,32 @@
 
   function reveal() {
     if (revealed) return; revealed = true;
+    // keep the drawing at its size when the why takes the say's place:
+    // tighten the spacing of the text blocks step by step until everything fits
+    const sb = Kit.$('stage'), card = Kit.$('card'), col = sb.parentElement, h0 = sb.getBoundingClientRect().height;
     Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (h0 > 0) {
+      const foot = col.querySelector('.foot') || col.lastElementChild;
+      const cs = getComputedStyle(col);
+      const overflow = () => {
+        const cb = col.getBoundingClientRect().bottom - (parseFloat(cs.paddingBottom) || 0);
+        const fb = foot.getBoundingClientRect().bottom;
+        return Math.max(fb - cb, col.scrollHeight - col.clientHeight);
+      };
+      let h = h0;
+      sb.style.minHeight = h.toFixed(1) + 'px';
+      for (let lv = 0; lv <= 3; lv++) {
+        if (lv) card.classList.add('t' + lv);
+        if (overflow() <= 0.5) break;
+      }
+      // last resort: give back only what is really missing
+      for (let i = 0; i < 3; i++) {
+        const over = overflow();
+        if (over <= 0.5) break;
+        h = Math.max(0, h - over);
+        sb.style.minHeight = h.toFixed(1) + 'px';
+      }
+    }
     if (Kit.calm) { st.wow = 1; render(); return; }
     gsap.timeline()
       .to(st, {sweep: 1, duration: 1.1, ease: 'power2.inOut'}, .1)

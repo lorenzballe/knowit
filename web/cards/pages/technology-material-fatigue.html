@@ -11,14 +11,17 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0;background:none;border:0;border-radius:0;box-shadow:none}
+#stage{display:flex;flex:1 1 auto;min-height:25cqh;background:none;border:0;border-radius:0;box-shadow:none}
 #cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
 #dive{align-self:flex-start;font:800 max(2.1cqh,14px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.4cqh 5.5cqw;cursor:pointer;display:inline-flex;align-items:center;gap:1.6cqw;transition:opacity .2s,transform .15s}
 #dive:active{transform:scale(.96)}
 #dive.busy{opacity:.4;pointer-events:none}
 #dive .n{font:700 max(1.6cqh,12px)/1 var(--body);opacity:.75}
 .say{overflow-wrap:anywhere}
-.answered .q{font-size:max(2.5cqh,15px)}
+.answered .q{font-size:max(2.2cqh,14px);margin-bottom:0}
+.answered .say{line-height:1.22;margin-top:.6cqh;margin-bottom:0}
+.answered .keep{margin-top:.6cqh;padding-top:.8cqh;padding-bottom:.8cqh;line-height:1.22}
+.answered .foot{margin-top:.6cqh}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Dive again · material fatigue">
   <div class="in">
@@ -95,15 +98,15 @@
     } else {
       // Short stage: the hull on the left, the chart on the right.
       mode = 'h'; const rw = Math.min(H * 1.05, W * .42);
-      gb = {x: rw, y: pad, w: W - rw - pad, h: H - 2 * pad};
-      cx = rw / 2 + pad * .25; cy = H / 2; R = Math.min(rw * .38, H * .36);
+      gb = {x: rw, y: pad, w: Math.max(10, W - rw - pad), h: Math.max(10, H - 2 * pad)};
+      cx = rw / 2 + pad * .25; cy = H / 2; R = Math.max(1, Math.min(rw * .38, H * .36));
     }
-    px0 = gb.x + fs * 1.1; px1 = gb.x + gb.w - fs * 1.1;
+    px0 = gb.x + fs * 1.1; px1 = Math.max(px0 + 10, gb.x + gb.w - fs * 1.1);
     const avail = px1 - px0;
     legA = fs * 1.6 + mw('Hull strength') <= avail ? 'Hull strength' : 'Strength';
     legRows = legNeed(legA) <= avail ? 1 : 2;
     ly1 = gb.y + fs * 1.3; ly2 = legRows === 2 ? ly1 + fs * 1.45 : ly1;
-    py0 = ly2 + fs * 1.4; py1 = gb.y + gb.h - fs * 2;
+    py0 = ly2 + fs * 1.4; py1 = Math.max(py0 + 10, gb.y + gb.h - fs * 2);
     maxR = Math.hypot(W, H) * .6;
     if (!built) build();
     else if (oR) {
@@ -421,7 +424,15 @@
   btn.addEventListener('click', () => dive());
   cv.addEventListener('click', () => dive());
 
-  new ResizeObserver(() => { if (built) layout(); }).observe(Kit.$('stage'));
+  // Redraw on any box change, but never inside the observer callback itself:
+  // fitCanvas resizes the canvas, which would otherwise re-trigger the observer in the same frame.
+  let roRaf = 0;
+  const relayout = () => {
+    if (!built || roRaf) return;
+    roRaf = requestAnimationFrame(() => { roRaf = 0; layout(); });
+  };
+  new ResizeObserver(relayout).observe(cv);
+  new ResizeObserver(relayout).observe(Kit.$('stage'));
   Kit.onShow.card = layout;
   let started = false;
   const start = () => { entered = true; if (!started) { started = true; requestAnimationFrame(loop); } };

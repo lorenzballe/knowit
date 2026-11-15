@@ -209,11 +209,15 @@ const Turn = {
     const shown = Math.round(st.t * TRUTH);
     for (let i = 0; i < shown; i++) mark(x, G, i, RED);
   }
+  const redrawAll = () => { drawFront(); drawBack(); };
   document.addEventListener('turned', () => {
     turned = true;
     Kit.$('kg').textContent = `Your guess: ${N.toLocaleString('en-US')} in 100,000`;
     Kit.$('cap').textContent = caption();
     drawBack();
+    // the flip foreshortens the faces while it runs: draw both again once it has settled
+    setTimeout(redrawAll, 900);
+    setTimeout(redrawAll, 1500);
     if (Kit.calm) { Object.assign(st, {t: 1, g: 1}); paintBack(); return; }
     gsap.set(['#cap'], {opacity: 0});
     gsap.timeline({delay: .55, onUpdate: paintBack, onComplete: paintBack})
@@ -221,6 +225,10 @@ const Turn = {
       .to(st, {t: 1, duration: 1.6, ease: 'power1.inOut'}, '+=.2')
       .to('#cap', {opacity: 1, duration: .5, ease: 'power2.out'}, '-=.2');
   });
+  document.querySelector('.turn').addEventListener('transitionend', e => {
+    if (e.target === e.currentTarget) redrawAll();
+  });
+  window.addEventListener('resize', redrawAll);
 
   const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
     if (done) return; done = true;
@@ -230,7 +238,7 @@ const Turn = {
     setTimeout(() => { drawFront(); Turn.over(); }, 700);
   });
 
-  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(); };
+  Kit.onShow.card = () => { drawFront(); drawBack(); };
   Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .6, ease: 'power3.out'}); };
   Kit.play.card = async () => {
     const w = ms => new Promise(r => setTimeout(r, ms));
@@ -240,10 +248,10 @@ const Turn = {
     await w(Kit.calm ? 1000 : 4200);
   };
   if (window.ResizeObserver) {
-    let raf = 0;
-    new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (F) drawFront(); if (turned) drawBack(); }); })
-      .observe(cv.parentNode);
+    new ResizeObserver(() => drawFront()).observe(cv);
+    new ResizeObserver(() => drawBack()).observe(cv2);
   }
+  drawFront(); drawBack();
 })();
 Kit.single();
 </script>
