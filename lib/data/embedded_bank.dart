@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611081802,
- "built": "2026-11-08T18:02:40Z",
+ "version": 202611151005,
+ "built": "2026-11-15T10:05:40Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -61618,11 +61618,11 @@ const String kEmbeddedBank = r'''
     "label": "A horizontal scale with a draggable marker asks the reader to guess how many people lived in Kowloon Walled City, where each dot equals 100 people. Text links the walled city to Hong Kong's cage homes today.",
     "graded": false,
     "ground": "#efebe2",
-    "page": "pages/history-walled-city-crowd.html?v=a68f148e1697",
-    "bytes": 18477,
+    "page": "pages/history-walled-city-crowd.html?v=b7e2c80a7bd4",
+    "bytes": 19259,
     "thumbs": {
-     "front": "thumbs/history-walled-city-crowd-front.webp?v=a68f148e1697",
-     "back": "thumbs/history-walled-city-crowd-back.webp?v=a68f148e1697"
+     "front": "thumbs/history-walled-city-crowd-front.webp?v=b7e2c80a7bd4",
+     "back": "thumbs/history-walled-city-crowd-back.webp?v=b7e2c80a7bd4"
     }
    },
    "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
@@ -66589,11 +66589,11 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Four options ask how sperm find the egg in a Fallopian tube. The reader picks one and rates their confidence, then watches a glowing egg send chemical signals that draw the surviving sperm toward it.",
     "ground": "#0b1026",
-    "page": "pages/human_body-egg-chemical-call.html?v=2cd49a578203",
-    "bytes": 10531,
+    "page": "pages/human_body-egg-chemical-call.html?v=edd0ff196f6c",
+    "bytes": 11313,
     "thumbs": {
-     "front": "thumbs/human_body-egg-chemical-call-front.webp?v=2cd49a578203",
-     "back": "thumbs/human_body-egg-chemical-call-back.webp?v=2cd49a578203"
+     "front": "thumbs/human_body-egg-chemical-call-front.webp?v=edd0ff196f6c",
+     "back": "thumbs/human_body-egg-chemical-call-back.webp?v=edd0ff196f6c"
     }
    },
    "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
@@ -69344,11 +69344,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card titled 'Astute free card SWEAT' asks how high humidity stops sweat from cooling us. A humidity dial runs from Dry (40%) to Muggy, showing sweat evaporating in dry air and sweat staying liquid on skin in muggy air, with heat trapped in the body.",
-    "page": "pages/human_body-humidity-traps-sweat.html?v=6d1eed00c624",
-    "bytes": 8396,
+    "page": "pages/human_body-humidity-traps-sweat.html?v=ac57caebec75",
+    "bytes": 9178,
     "thumbs": {
-     "front": "thumbs/human_body-humidity-traps-sweat-front.webp?v=6d1eed00c624",
-     "back": "thumbs/human_body-humidity-traps-sweat-back.webp?v=6d1eed00c624"
+     "front": "thumbs/human_body-humidity-traps-sweat-front.webp?v=ac57caebec75",
+     "back": "thumbs/human_body-humidity-traps-sweat-back.webp?v=ac57caebec75"
     }
    },
    "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",
@@ -74745,11 +74745,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Diagram of a growing embryo made of cells. Tap each cell to see it randomly shut down either Mum's or Dad's X chromosome. The patches that result form stripes across the tissue. The page asks why some tissues look stripy.",
-    "page": "pages/human_body-stripy-x-mosaic.html?v=28965564530f",
-    "bytes": 8360,
+    "page": "pages/human_body-stripy-x-mosaic.html?v=a71861d8c3b0",
+    "bytes": 9142,
     "thumbs": {
-     "front": "thumbs/human_body-stripy-x-mosaic-front.webp?v=28965564530f",
-     "back": "thumbs/human_body-stripy-x-mosaic-back.webp?v=28965564530f"
+     "front": "thumbs/human_body-stripy-x-mosaic-front.webp?v=a71861d8c3b0",
+     "back": "thumbs/human_body-stripy-x-mosaic-back.webp?v=a71861d8c3b0"
     }
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
@@ -88340,11 +88340,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A crowd of figures on a slider. Drag sideways to guess how many homicides a year occur per 100,000 Ecuadorians. The headline reads 'One in 2,500'.",
-    "page": "pages/life-ecuador-murder-rate.html?v=a0e1263de71b",
-    "bytes": 13903,
+    "page": "pages/life-ecuador-murder-rate.html?v=7a8872f13b0e",
+    "bytes": 14685,
     "thumbs": {
-     "front": "thumbs/life-ecuador-murder-rate-front.webp?v=a0e1263de71b",
-     "back": "thumbs/life-ecuador-murder-rate-back.webp?v=a0e1263de71b"
+     "front": "thumbs/life-ecuador-murder-rate-front.webp?v=7a8872f13b0e",
+     "back": "thumbs/life-ecuador-murder-rate-back.webp?v=7a8872f13b0e"
     }
    },
    "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
@@ -98827,11 +98827,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page asking how the logistic map's bifurcation diagram relates to the Mandelbrot set. Drag a dot left along the set's middle line to watch the orbit of z squared plus c.",
-    "page": "pages/maths-mandelbrot-bifurcation-slice.html?v=662e4e0a5e70",
-    "bytes": 10089,
+    "page": "pages/maths-mandelbrot-bifurcation-slice.html?v=66bc2ce32b9f",
+    "bytes": 10871,
     "thumbs": {
-     "front": "thumbs/maths-mandelbrot-bifurcation-slice-front.webp?v=662e4e0a5e70",
-     "back": "thumbs/maths-mandelbrot-bifurcation-slice-back.webp?v=662e4e0a5e70"
+     "front": "thumbs/maths-mandelbrot-bifurcation-slice-front.webp?v=66bc2ce32b9f",
+     "back": "thumbs/maths-mandelbrot-bifurcation-slice-back.webp?v=66bc2ce32b9f"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -99420,11 +99420,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Text card asking how big an odd perfect number must be if one exists. A Raise the bound control steps through results; the reveal says it must exceed 10 to the power 2,200, with more than 2,200 digits.",
-    "page": "pages/maths-odd-perfect-bound.html?v=8340c8bb8bd3",
-    "bytes": 6972,
+    "page": "pages/maths-odd-perfect-bound.html?v=9bdfd66cffb9",
+    "bytes": 7754,
     "thumbs": {
-     "front": "thumbs/maths-odd-perfect-bound-front.webp?v=8340c8bb8bd3",
-     "back": "thumbs/maths-odd-perfect-bound-back.webp?v=8340c8bb8bd3"
+     "front": "thumbs/maths-odd-perfect-bound-front.webp?v=9bdfd66cffb9",
+     "back": "thumbs/maths-odd-perfect-bound-back.webp?v=9bdfd66cffb9"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -100250,11 +100250,11 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Question: how does the logistic map move from regular cycles to chaos as R rises? Shows cycles doubling 1, 2, 4, 8, 16 until chaos. Tap each growth rate R to sort it into settles-into-a-cycle or never-repeats, and tap again to switch sides.",
     "graded": false,
-    "page": "pages/maths-period-doubling-chaos.html?v=b16ac243d692",
-    "bytes": 9054,
+    "page": "pages/maths-period-doubling-chaos.html?v=b72ec6d13789",
+    "bytes": 9836,
     "thumbs": {
-     "front": "thumbs/maths-period-doubling-chaos-front.webp?v=b16ac243d692",
-     "back": "thumbs/maths-period-doubling-chaos-back.webp?v=b16ac243d692"
+     "front": "thumbs/maths-period-doubling-chaos-front.webp?v=b72ec6d13789",
+     "back": "thumbs/maths-period-doubling-chaos-back.webp?v=b72ec6d13789"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -109244,11 +109244,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A grid of squares, each one equal to Earth's magnetic field, asks how much stronger an MRI's magnetic field is than Earth's. A ×10 button multiplies the field, and the squares grow to show the increase.",
-    "page": "pages/medicine-mri-field-strength.html?v=3cb5f071089e",
-    "bytes": 5870,
+    "page": "pages/medicine-mri-field-strength.html?v=2af44b69e4f0",
+    "bytes": 6652,
     "thumbs": {
-     "front": "thumbs/medicine-mri-field-strength-front.webp?v=3cb5f071089e",
-     "back": "thumbs/medicine-mri-field-strength-back.webp?v=3cb5f071089e"
+     "front": "thumbs/medicine-mri-field-strength-front.webp?v=2af44b69e4f0",
+     "back": "thumbs/medicine-mri-field-strength-back.webp?v=2af44b69e4f0"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -111715,11 +111715,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Card asks what protons in the body do once an MRI magnetic field switches on. Four choices are offered: line up and stay still, trace a cone around the field, spin off at random, or draw a cone. A weak-to-strong field control is shown below.",
     "graded": false,
-    "page": "pages/medicine-proton-precession-cone.html?v=24d6a35c16ef",
-    "bytes": 8509,
+    "page": "pages/medicine-proton-precession-cone.html?v=e63d83adcfdd",
+    "bytes": 9291,
     "thumbs": {
-     "front": "thumbs/medicine-proton-precession-cone-front.webp?v=24d6a35c16ef",
-     "back": "thumbs/medicine-proton-precession-cone-back.webp?v=24d6a35c16ef"
+     "front": "thumbs/medicine-proton-precession-cone-front.webp?v=e63d83adcfdd",
+     "back": "thumbs/medicine-proton-precession-cone-back.webp?v=e63d83adcfdd"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -112550,11 +112550,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Asks how an MRI machine excites protons. Shows three radio-wave timings against a proton's spinning cone: too slow, too fast, or matching its rhythm. A slider tunes the radio wave until the proton tips over.",
-    "page": "pages/medicine-resonance-radio-push.html?v=1af62dcbceec",
-    "bytes": 8529,
+    "page": "pages/medicine-resonance-radio-push.html?v=fd3a7f46b9cb",
+    "bytes": 9311,
     "thumbs": {
-     "front": "thumbs/medicine-resonance-radio-push-front.webp?v=1af62dcbceec",
-     "back": "thumbs/medicine-resonance-radio-push-back.webp?v=1af62dcbceec"
+     "front": "thumbs/medicine-resonance-radio-push-front.webp?v=fd3a7f46b9cb",
+     "back": "thumbs/medicine-resonance-radio-push-back.webp?v=fd3a7f46b9cb"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -173481,11 +173481,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Titled The road that climbs downhill, an optical illusion page asks why a downhill road looks uphill. A swing-the-needle control asks whether the road's middle stretch is going up or down, with a short explanation about judging slope against nearby road when no horizon is visible.",
     "ground": "#17231d",
-    "page": "pages/psychology-gravity-hill.html?v=d892b73dae35",
-    "bytes": 22838,
+    "page": "pages/psychology-gravity-hill.html?v=7b87aebc6d4a",
+    "bytes": 23620,
     "thumbs": {
-     "front": "thumbs/psychology-gravity-hill-front.webp?v=d892b73dae35",
-     "back": "thumbs/psychology-gravity-hill-back.webp?v=d892b73dae35"
+     "front": "thumbs/psychology-gravity-hill-front.webp?v=7b87aebc6d4a",
+     "back": "thumbs/psychology-gravity-hill-back.webp?v=7b87aebc6d4a"
     }
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
@@ -179003,11 +179003,11 @@ const String kEmbeddedBank = r'''
     "label": "A slot machine screen with a spin button. The heading asks why flashing lights and frequent small wins keep players playing. Tap the machine to spin; each spin costs one coin from your pocket.",
     "graded": false,
     "ground": "#1b1423",
-    "page": "pages/psychology-slot-reward-loop.html?v=86d355087cba",
-    "bytes": 29832,
+    "page": "pages/psychology-slot-reward-loop.html?v=081de3b071ce",
+    "bytes": 30614,
     "thumbs": {
-     "front": "thumbs/psychology-slot-reward-loop-front.webp?v=86d355087cba",
-     "back": "thumbs/psychology-slot-reward-loop-back.webp?v=86d355087cba"
+     "front": "thumbs/psychology-slot-reward-loop-front.webp?v=081de3b071ce",
+     "back": "thumbs/psychology-slot-reward-loop-back.webp?v=081de3b071ce"
     }
    },
    "source": "Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)",
@@ -179267,11 +179267,11 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "A spinning tube marked X on one side and O on the other, with a finger pressing the O side. The page asks what you see: only O's, only X's, or X and O flickering in turn. It then asks you to make a bet and say how sure you are.",
     "graded": false,
-    "page": "pages/psychology-spinning-tube-trick-3.html?v=7ccaee784cdd",
-    "bytes": 10082,
+    "page": "pages/psychology-spinning-tube-trick-3.html?v=f65159f5c53c",
+    "bytes": 10864,
     "thumbs": {
-     "front": "thumbs/psychology-spinning-tube-trick-3-front.webp?v=7ccaee784cdd",
-     "back": "thumbs/psychology-spinning-tube-trick-3-back.webp?v=7ccaee784cdd"
+     "front": "thumbs/psychology-spinning-tube-trick-3-front.webp?v=f65159f5c53c",
+     "back": "thumbs/psychology-spinning-tube-trick-3-back.webp?v=f65159f5c53c"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
@@ -184629,11 +184629,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Drag to aim a puff of smelly air, then release to fire it at a magnified grain of activated carbon. The grain is full of branching pores that trap the smell molecules.",
-    "page": "pages/science-carbon-filter-pores.html?v=c7bfe4fe21e9",
-    "bytes": 13000,
+    "page": "pages/science-carbon-filter-pores.html?v=6282b8292f21",
+    "bytes": 13782,
     "thumbs": {
-     "front": "thumbs/science-carbon-filter-pores-front.webp?v=c7bfe4fe21e9",
-     "back": "thumbs/science-carbon-filter-pores-back.webp?v=c7bfe4fe21e9"
+     "front": "thumbs/science-carbon-filter-pores-front.webp?v=6282b8292f21",
+     "back": "thumbs/science-carbon-filter-pores-back.webp?v=6282b8292f21"
     }
    },
    "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
@@ -187278,11 +187278,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A diagram of an airplane at an adjustable altitude above the ground, with a band of air overhead acting as a shield and falling particles from space. Drag the slider to fly higher and watch how many cosmic particles reach the plane.",
-    "page": "pages/science-cosmic-rays-planes.html?v=21c5adfc8ed8",
-    "bytes": 8873,
+    "page": "pages/science-cosmic-rays-planes.html?v=10cd5baa1e6d",
+    "bytes": 9655,
     "thumbs": {
-     "front": "thumbs/science-cosmic-rays-planes-front.webp?v=21c5adfc8ed8",
-     "back": "thumbs/science-cosmic-rays-planes-back.webp?v=21c5adfc8ed8"
+     "front": "thumbs/science-cosmic-rays-planes-front.webp?v=10cd5baa1e6d",
+     "back": "thumbs/science-cosmic-rays-planes-back.webp?v=10cd5baa1e6d"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -187793,11 +187793,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Close-up of dry-ice crystals forming on a frosty water surface. The question asks why CO₂ solidifies on the water surface. A thermometer can be dragged down to chill the surface with solid nitrogen.",
-    "page": "pages/science-dry-ice-frost.html?v=74a1ada03f5c",
-    "bytes": 8868,
+    "page": "pages/science-dry-ice-frost.html?v=2505a2fbd102",
+    "bytes": 9650,
     "thumbs": {
-     "front": "thumbs/science-dry-ice-frost-front.webp?v=74a1ada03f5c",
-     "back": "thumbs/science-dry-ice-frost-back.webp?v=74a1ada03f5c"
+     "front": "thumbs/science-dry-ice-frost-front.webp?v=2505a2fbd102",
+     "back": "thumbs/science-dry-ice-frost-back.webp?v=2505a2fbd102"
     }
    },
    "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
@@ -188468,11 +188468,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Cards titled Volcano Drills. Three DRILL switches show a small group of volunteers leaving on schedule with assisted buses. Flipping each switch to real shows everyone leaving at once. The question asks why a calm drill cannot test a real Campi Flegrei escape.",
-    "page": "pages/science-evacuation-drill-chaos.html?v=86239239745e",
-    "bytes": 10287,
+    "page": "pages/science-evacuation-drill-chaos.html?v=7e34dd3a59d8",
+    "bytes": 11069,
     "thumbs": {
-     "front": "thumbs/science-evacuation-drill-chaos-front.webp?v=86239239745e",
-     "back": "thumbs/science-evacuation-drill-chaos-back.webp?v=86239239745e"
+     "front": "thumbs/science-evacuation-drill-chaos-front.webp?v=7e34dd3a59d8",
+     "back": "thumbs/science-evacuation-drill-chaos-back.webp?v=7e34dd3a59d8"
     }
    },
    "source": "Geopop, “RISCHIO VULCANICO CAMPI FLEGREI: LA SIMULAZIONE D'EVACUAZIONE FUNZIONERA? Considerazioni e dubbi” (YouTube, 2019)",
@@ -189856,11 +189856,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A gauge showing a candle flame beside a slider for gravity, running from 0 g (float) through 1 g (Earth) to 2 g. The reader slides gravity until the flame matches a mystery flame, then checks their guess.",
-    "page": "pages/science-flame-gravity-meter.html?v=64e7c8e41ce0",
-    "bytes": 10154,
+    "page": "pages/science-flame-gravity-meter.html?v=3bab381af4a4",
+    "bytes": 10936,
     "thumbs": {
-     "front": "thumbs/science-flame-gravity-meter-front.webp?v=64e7c8e41ce0",
-     "back": "thumbs/science-flame-gravity-meter-back.webp?v=64e7c8e41ce0"
+     "front": "thumbs/science-flame-gravity-meter-front.webp?v=3bab381af4a4",
+     "back": "thumbs/science-flame-gravity-meter-back.webp?v=3bab381af4a4"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -189942,11 +189942,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A flame shown under three gravity settings: zero-g, 1 g and hyper-g. The page asks why flames on Earth have a teardrop shape. Switch gravity to watch the flame change from a ball to a teardrop.",
-    "page": "pages/science-flame-shape-gravity.html?v=9c4121f4a690",
-    "bytes": 8499,
+    "page": "pages/science-flame-shape-gravity.html?v=1a1fdaaffe62",
+    "bytes": 9281,
     "thumbs": {
-     "front": "thumbs/science-flame-shape-gravity-front.webp?v=9c4121f4a690",
-     "back": "thumbs/science-flame-shape-gravity-back.webp?v=9c4121f4a690"
+     "front": "thumbs/science-flame-shape-gravity-front.webp?v=1a1fdaaffe62",
+     "back": "thumbs/science-flame-shape-gravity-back.webp?v=1a1fdaaffe62"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -190500,11 +190500,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Shows a 106 m cube for the 1.2 million m³ tank, with a slider that zooms in toward the tritium. Asks how much tritium the water holds, and reveals about 23 g.",
-    "page": "pages/science-fukushima-tritium-grams.html?v=b6827d2d661e",
-    "bytes": 6659,
+    "page": "pages/science-fukushima-tritium-grams.html?v=2250623292bf",
+    "bytes": 7441,
     "thumbs": {
-     "front": "thumbs/science-fukushima-tritium-grams-front.webp?v=b6827d2d661e",
-     "back": "thumbs/science-fukushima-tritium-grams-back.webp?v=b6827d2d661e"
+     "front": "thumbs/science-fukushima-tritium-grams-front.webp?v=2250623292bf",
+     "back": "thumbs/science-fukushima-tritium-grams-back.webp?v=2250623292bf"
     }
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
@@ -191085,11 +191085,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A close-up of a piece of obsidian showing its smooth, glassy surface. The page asks: what is glass, scientifically? It explains that molten rock cooled slowly forms crystal minerals, while rock plunged into water freezes into a disordered amorphous structure.",
-    "page": "pages/science-glass-fused-rock.html?v=60ea1b1242f6",
-    "bytes": 7101,
+    "page": "pages/science-glass-fused-rock.html?v=f50513dd81e0",
+    "bytes": 7883,
     "thumbs": {
-     "front": "thumbs/science-glass-fused-rock-front.webp?v=60ea1b1242f6",
-     "back": "thumbs/science-glass-fused-rock-back.webp?v=60ea1b1242f6"
+     "front": "thumbs/science-glass-fused-rock-front.webp?v=f50513dd81e0",
+     "back": "thumbs/science-glass-fused-rock-back.webp?v=f50513dd81e0"
     }
    },
    "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
@@ -191563,11 +191563,11 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Card asking how a strong electric field turns air into glowing plasma. Two gaps are offered, a weak field and a strong field, and the reader must pick which gap makes plasma first.",
     "graded": false,
-    "page": "pages/science-grape-plasma-ions.html?v=0ed477b44e22",
-    "bytes": 11288,
+    "page": "pages/science-grape-plasma-ions.html?v=9c9492bef948",
+    "bytes": 12070,
     "thumbs": {
-     "front": "thumbs/science-grape-plasma-ions-front.webp?v=0ed477b44e22",
-     "back": "thumbs/science-grape-plasma-ions-back.webp?v=0ed477b44e22"
+     "front": "thumbs/science-grape-plasma-ions-front.webp?v=9c9492bef948",
+     "back": "thumbs/science-grape-plasma-ions-back.webp?v=9c9492bef948"
     }
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
@@ -192323,11 +192323,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card asking why Greenland's rocks matter for mining. A button is held to animate magma rising through ancient crust, showing rare elements gathering into mineable pockets.",
-    "page": "pages/science-greenland-craton-ores.html?v=c8f5e0397a21",
-    "bytes": 8844,
+    "page": "pages/science-greenland-craton-ores.html?v=431d4a4e3718",
+    "bytes": 9626,
     "thumbs": {
-     "front": "thumbs/science-greenland-craton-ores-front.webp?v=c8f5e0397a21",
-     "back": "thumbs/science-greenland-craton-ores-back.webp?v=c8f5e0397a21"
+     "front": "thumbs/science-greenland-craton-ores-front.webp?v=431d4a4e3718",
+     "back": "thumbs/science-greenland-craton-ores-back.webp?v=431d4a4e3718"
     }
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
@@ -194704,11 +194704,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Multiple-choice question asking where a snowflake's six sides come from, before atoms were known. Options: cold air shaping each flake six ways, tiny water units stacking together, or pure chance. The reader picks one and rates how sure they are.",
-    "page": "pages/science-kepler-water-units.html?v=9948bc7334a7",
-    "bytes": 20774,
+    "page": "pages/science-kepler-water-units.html?v=8d67b6431273",
+    "bytes": 21556,
     "thumbs": {
-     "front": "thumbs/science-kepler-water-units-front.webp?v=9948bc7334a7",
-     "back": "thumbs/science-kepler-water-units-back.webp?v=9948bc7334a7"
+     "front": "thumbs/science-kepler-water-units-front.webp?v=8d67b6431273",
+     "back": "thumbs/science-kepler-water-units-back.webp?v=8d67b6431273"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -195852,11 +195852,11 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "A ring-shaped reactor view with a button to release hot plasma into the ring and a switch to turn on the magnets. It asks how plasma is held without touching any wall, and invites you to watch the wall as the plasma is released.",
     "ground": "#0c1022",
-    "page": "pages/science-magnetic-plasma-cage.html?v=358906b379d7",
-    "bytes": 9094,
+    "page": "pages/science-magnetic-plasma-cage.html?v=c8619bb83be7",
+    "bytes": 9876,
     "thumbs": {
-     "front": "thumbs/science-magnetic-plasma-cage-front.webp?v=358906b379d7",
-     "back": "thumbs/science-magnetic-plasma-cage-back.webp?v=358906b379d7"
+     "front": "thumbs/science-magnetic-plasma-cage-front.webp?v=c8619bb83be7",
+     "back": "thumbs/science-magnetic-plasma-cage-back.webp?v=c8619bb83be7"
     }
    },
    "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
@@ -195938,11 +195938,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive diagram of the ocean floor shown as dark and light stripes. Drag sideways to pull the seafloor apart, and tap a compass to flip Earth's magnetic field. The page asks what the dark and light stripes record.",
-    "page": "pages/science-magnetic-stripes.html?v=93248a3bd964",
-    "bytes": 21921,
+    "page": "pages/science-magnetic-stripes.html?v=3182ddf68ada",
+    "bytes": 22703,
     "thumbs": {
-     "front": "thumbs/science-magnetic-stripes-front.webp?v=93248a3bd964",
-     "back": "thumbs/science-magnetic-stripes-back.webp?v=93248a3bd964"
+     "front": "thumbs/science-magnetic-stripes-front.webp?v=3182ddf68ada",
+     "back": "thumbs/science-magnetic-stripes-back.webp?v=3182ddf68ada"
     }
    },
    "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
@@ -198427,11 +198427,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A depth dial runs from 0 to 3,500 metres beside readouts for depth, pressure in atmospheres, and load in tons per square metre. Dragging it down shows cars piling onto one square metre, reaching about 2,000 cars at 3,500 metres.",
-    "page": "pages/science-pressure-in-tons.html?v=d1d5d8b71585",
-    "bytes": 7303,
+    "page": "pages/science-pressure-in-tons.html?v=48c19a1fce33",
+    "bytes": 8085,
     "thumbs": {
-     "front": "thumbs/science-pressure-in-tons-front.webp?v=d1d5d8b71585",
-     "back": "thumbs/science-pressure-in-tons-back.webp?v=d1d5d8b71585"
+     "front": "thumbs/science-pressure-in-tons-front.webp?v=48c19a1fce33",
+     "back": "thumbs/science-pressure-in-tons-back.webp?v=48c19a1fce33"
     }
    },
    "source": "Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023)",
@@ -201794,11 +201794,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A time-lapse illustration of a continent breaking apart, with sea water flooding the gap between the halves. A brass dial lets the reader run time forward through millions of years.",
     "ground": "#15252a",
-    "page": "pages/science-rift-to-ocean.html?v=5f7c9c2a0746",
-    "bytes": 32052,
+    "page": "pages/science-rift-to-ocean.html?v=53a6b8211cc9",
+    "bytes": 32834,
     "thumbs": {
-     "front": "thumbs/science-rift-to-ocean-front.webp?v=5f7c9c2a0746",
-     "back": "thumbs/science-rift-to-ocean-back.webp?v=5f7c9c2a0746"
+     "front": "thumbs/science-rift-to-ocean-front.webp?v=53a6b8211cc9",
+     "back": "thumbs/science-rift-to-ocean-back.webp?v=53a6b8211cc9"
     }
    },
    "source": "Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)",
@@ -203810,11 +203810,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An animated hydrogen atom with its proton drawn as a spinning top that gives off a magnetic field. A draggable magnet moves around the proton, and dragging it makes the proton turn. The page asks why hydrogen protons act like magnets in an MRI.",
-    "page": "pages/science-spinning-proton-magnets.html?v=d304884fc87c",
-    "bytes": 8743,
+    "page": "pages/science-spinning-proton-magnets.html?v=ef7e6aee4233",
+    "bytes": 9525,
     "thumbs": {
-     "front": "thumbs/science-spinning-proton-magnets-front.webp?v=d304884fc87c",
-     "back": "thumbs/science-spinning-proton-magnets-back.webp?v=d304884fc87c"
+     "front": "thumbs/science-spinning-proton-magnets-front.webp?v=ef7e6aee4233",
+     "back": "thumbs/science-spinning-proton-magnets-back.webp?v=ef7e6aee4233"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -204068,11 +204068,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive reactor core: hold the button to boil the core's water into steam and watch the power climb. Asks why the core's power rises as steam forms.",
-    "page": "pages/science-steam-feeds-power.html?v=b1a404f9105f",
-    "bytes": 25311,
+    "page": "pages/science-steam-feeds-power.html?v=9c951e516b6e",
+    "bytes": 26093,
     "thumbs": {
-     "front": "thumbs/science-steam-feeds-power-front.webp?v=b1a404f9105f",
-     "back": "thumbs/science-steam-feeds-power-back.webp?v=b1a404f9105f"
+     "front": "thumbs/science-steam-feeds-power-front.webp?v=9c951e516b6e",
+     "back": "thumbs/science-steam-feeds-power-back.webp?v=9c951e516b6e"
     }
    },
    "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
@@ -205320,11 +205320,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A cross-section of a crucible in a thermite reaction. The question asks which liquid sinks to the bottom: liquid iron or aluminum oxide slag. The reader taps one answer.",
-    "page": "pages/science-thermite-density-separation.html?v=45877e496895",
-    "bytes": 8473,
+    "page": "pages/science-thermite-density-separation.html?v=701cd84d6748",
+    "bytes": 9255,
     "thumbs": {
-     "front": "thumbs/science-thermite-density-separation-front.webp?v=45877e496895",
-     "back": "thumbs/science-thermite-density-separation-back.webp?v=45877e496895"
+     "front": "thumbs/science-thermite-density-separation-front.webp?v=701cd84d6748",
+     "back": "thumbs/science-thermite-density-separation-back.webp?v=701cd84d6748"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -213600,11 +213600,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A grid drawn as warped spacetime, with a light path. Drag right to pack more mass into less space and watch the light bend until no path leads back out. Asks what a black hole's gravity really is.",
-    "page": "pages/space-gravity-curved-spacetime.html?v=e0e9ab1f9ad5",
-    "bytes": 7995,
+    "page": "pages/space-gravity-curved-spacetime.html?v=fba8c769dc22",
+    "bytes": 8777,
     "thumbs": {
-     "front": "thumbs/space-gravity-curved-spacetime-front.webp?v=e0e9ab1f9ad5",
-     "back": "thumbs/space-gravity-curved-spacetime-back.webp?v=e0e9ab1f9ad5"
+     "front": "thumbs/space-gravity-curved-spacetime-front.webp?v=fba8c769dc22",
+     "back": "thumbs/space-gravity-curved-spacetime-back.webp?v=fba8c769dc22"
     }
    },
    "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
@@ -216899,11 +216899,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Shows a flag on a pole with two timers, Moon (no air) and Earth (air), each reading seconds. Asks the reader to plant the pole on the Moon and time how long the flag keeps moving.",
-    "page": "pages/space-moon-flag-wave.html?v=4872aaef031a",
-    "bytes": 10567,
+    "page": "pages/space-moon-flag-wave.html?v=eb042e2082ae",
+    "bytes": 11349,
     "thumbs": {
-     "front": "thumbs/space-moon-flag-wave-front.webp?v=4872aaef031a",
-     "back": "thumbs/space-moon-flag-wave-back.webp?v=4872aaef031a"
+     "front": "thumbs/space-moon-flag-wave-front.webp?v=eb042e2082ae",
+     "back": "thumbs/space-moon-flag-wave-back.webp?v=eb042e2082ae"
     }
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
@@ -219152,11 +219152,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An interactive page asking why a stopped Earth would wipe out all life. A slider labelled Earth's spin, at 100%, shows a magnetic shield around the planet. Dragging the spin to zero makes the shield disappear.",
-    "page": "pages/space-spin-magnetic-shield.html?v=344550e6c528",
-    "bytes": 10419,
+    "page": "pages/space-spin-magnetic-shield.html?v=fc933cfb9b0e",
+    "bytes": 11201,
     "thumbs": {
-     "front": "thumbs/space-spin-magnetic-shield-front.webp?v=344550e6c528",
-     "back": "thumbs/space-spin-magnetic-shield-back.webp?v=344550e6c528"
+     "front": "thumbs/space-spin-magnetic-shield-front.webp?v=fc933cfb9b0e",
+     "back": "thumbs/space-spin-magnetic-shield-back.webp?v=fc933cfb9b0e"
     }
    },
    "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
@@ -236790,11 +236790,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card titled Steel & Fire asks how hot the fire got around the Twin Towers' core columns. Two choices are shown, insulated steel or bare steel, with fresh air. Holding the button lets air in, and the card reveals a peak of up to 1,000 degrees.",
-    "page": "pages/technology-core-fire-temperature.html?v=2814e45bd128",
-    "bytes": 11816,
+    "page": "pages/technology-core-fire-temperature.html?v=a820f93d586a",
+    "bytes": 12598,
     "thumbs": {
-     "front": "thumbs/technology-core-fire-temperature-front.webp?v=2814e45bd128",
-     "back": "thumbs/technology-core-fire-temperature-back.webp?v=2814e45bd128"
+     "front": "thumbs/technology-core-fire-temperature-front.webp?v=a820f93d586a",
+     "back": "thumbs/technology-core-fire-temperature-back.webp?v=a820f93d586a"
     }
    },
    "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
@@ -238932,11 +238932,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Two paths in a maze from a black corner to a red square: one shorter, one with fewer turns. Asks which route a Micromouse robot would bet on racing.",
     "graded": false,
-    "page": "pages/technology-fastest-not-shortest.html?v=97d00b42e960",
-    "bytes": 25769,
+    "page": "pages/technology-fastest-not-shortest.html?v=f6ccd7575de6",
+    "bytes": 26551,
     "thumbs": {
-     "front": "thumbs/technology-fastest-not-shortest-front.webp?v=97d00b42e960",
-     "back": "thumbs/technology-fastest-not-shortest-back.webp?v=97d00b42e960"
+     "front": "thumbs/technology-fastest-not-shortest-front.webp?v=f6ccd7575de6",
+     "back": "thumbs/technology-fastest-not-shortest-back.webp?v=f6ccd7575de6"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -239361,11 +239361,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card titled CLEAN WATER asks how graphene can purify water, with small labels for water and salt ions. Four answer choices describe a graphene oxide membrane's effect on seawater; the reader picks one.",
-    "page": "pages/technology-graphene-desalination.html?v=fa0835373ca6",
-    "bytes": 8529,
+    "page": "pages/technology-graphene-desalination.html?v=5d0d39a98ccd",
+    "bytes": 9311,
     "thumbs": {
-     "front": "thumbs/technology-graphene-desalination-front.webp?v=fa0835373ca6",
-     "back": "thumbs/technology-graphene-desalination-back.webp?v=fa0835373ca6"
+     "front": "thumbs/technology-graphene-desalination-front.webp?v=5d0d39a98ccd",
+     "back": "thumbs/technology-graphene-desalination-back.webp?v=5d0d39a98ccd"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -245359,11 +245359,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card titled Heavy Oil asking why Venezuela's extra-heavy oil needs steam to come out of the ground. A pump is shown running with nothing coming up, and a slider lets the reader move the steam from OFF to on.",
-    "page": "pages/technology-steam-heavy-oil.html?v=e38ea6e31131",
-    "bytes": 14625,
+    "page": "pages/technology-steam-heavy-oil.html?v=7c87908d3ac3",
+    "bytes": 15407,
     "thumbs": {
-     "front": "thumbs/technology-steam-heavy-oil-front.webp?v=e38ea6e31131",
-     "back": "thumbs/technology-steam-heavy-oil-back.webp?v=e38ea6e31131"
+     "front": "thumbs/technology-steam-heavy-oil-front.webp?v=7c87908d3ac3",
+     "back": "thumbs/technology-steam-heavy-oil-back.webp?v=7c87908d3ac3"
     }
    },
    "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
@@ -247747,11 +247747,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card titled TUNNEL SAFETY asking why tunnel smoke doesn't flow into the emergency escape passage. A Hold button switches on the fans, and the smoke at the doorway is shown being pushed back by the air flowing out of the passage.",
-    "page": "pages/technology-tunnel-pressure-barrier-5.html?v=b3135e10a732",
-    "bytes": 11163,
+    "page": "pages/technology-tunnel-pressure-barrier-5.html?v=7da3867bc630",
+    "bytes": 11945,
     "thumbs": {
-     "front": "thumbs/technology-tunnel-pressure-barrier-5-front.webp?v=b3135e10a732",
-     "back": "thumbs/technology-tunnel-pressure-barrier-5-back.webp?v=b3135e10a732"
+     "front": "thumbs/technology-tunnel-pressure-barrier-5-front.webp?v=7da3867bc630",
+     "back": "thumbs/technology-tunnel-pressure-barrier-5-back.webp?v=7da3867bc630"
     }
    },
    "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
@@ -248459,11 +248459,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Soft Robots asks how a growing robot pushes through sand, showing two cases: growing with no air, and growing with an air jet at the tip. The reveal says the air loosens the sand so the tip can extend through.",
-    "page": "pages/technology-vine-robot-sand.html?v=af6beafaf127",
-    "bytes": 9672,
+    "page": "pages/technology-vine-robot-sand.html?v=f2a2edce26b3",
+    "bytes": 10454,
     "thumbs": {
-     "front": "thumbs/technology-vine-robot-sand-front.webp?v=af6beafaf127",
-     "back": "thumbs/technology-vine-robot-sand-back.webp?v=af6beafaf127"
+     "front": "thumbs/technology-vine-robot-sand-front.webp?v=f2a2edce26b3",
+     "back": "thumbs/technology-vine-robot-sand-back.webp?v=f2a2edce26b3"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -250588,11 +250588,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Card asks how many people died directly from radiation at Fukushima. The reader drags to guess, and each dot on the display stands for one person. The reveal gives the answer: one death from radiation, while the tsunami killed over 15,000.",
     "graded": false,
-    "page": "pages/thinking-fukushima-radiation-toll.html?v=f44a95165f01",
-    "bytes": 7095,
+    "page": "pages/thinking-fukushima-radiation-toll.html?v=9dacd5613dfb",
+    "bytes": 7877,
     "thumbs": {
-     "front": "thumbs/thinking-fukushima-radiation-toll-front.webp?v=f44a95165f01",
-     "back": "thumbs/thinking-fukushima-radiation-toll-back.webp?v=f44a95165f01"
+     "front": "thumbs/thinking-fukushima-radiation-toll-front.webp?v=9dacd5613dfb",
+     "back": "thumbs/thinking-fukushima-radiation-toll-back.webp?v=9dacd5613dfb"
     }
    },
    "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
@@ -252832,11 +252832,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A crowd of 300,000 SAT test takers beside a tiny stack of three letters. The page asks how many of them wrote to the College Board about an error in the test. The reader drags a letter to guess the number.",
     "graded": false,
-    "page": "pages/thinking-three-letters.html?v=c5bc6a203de5",
-    "bytes": 10691,
+    "page": "pages/thinking-three-letters.html?v=27328adcf735",
+    "bytes": 11473,
     "thumbs": {
-     "front": "thumbs/thinking-three-letters-front.webp?v=c5bc6a203de5",
-     "back": "thumbs/thinking-three-letters-back.webp?v=c5bc6a203de5"
+     "front": "thumbs/thinking-three-letters-front.webp?v=27328adcf735",
+     "back": "thumbs/thinking-three-letters-back.webp?v=27328adcf735"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
