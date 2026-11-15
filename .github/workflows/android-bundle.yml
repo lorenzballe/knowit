@@ -1,0 +1,62 @@
+name: Android bundle (unsigned for Play)
+
+# Builds the release AAB on GitHub's machines, for when a laptop has no room
+# to. The upload key never comes here: the bundle is built with the debug
+# key (build.gradle.kts falls back to it without key.properties) and is
+# re-signed with the real upload key on the owner's computer before it goes
+# to Play.
+#
+# Started by hand from the Actions tab, or by pushing a change to this file.
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_name:
+        description: Version name (e.g. 1.0.1)
+        default: "1.0.1"
+      build_number:
+        description: Version code — higher than any already on Play
+        default: "2"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/android-bundle.yml"
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      BUILD_NAME: ${{ inputs.build_name || '1.0.1' }}
+      BUILD_NUMBER: ${{ inputs.build_number || '2' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      # The same keys Codemagic's iOS build carries (public by design).
+      - name: Build the release bundle
+        run: |
+          flutter build appbundle --release \
+            --build-name="$BUILD_NAME" \
+            --build-number="$BUILD_NUMBER" \
+            --dart-define=REVENUECAT_ANDROID_KEY=goog_YaeEfHnlTfzLXeDDjfmQcgCVpKl \
+            --dart-define=POSTHOG_KEY=phc_tEhSptLL46d7zJTJqMDssKzBSySEFF6XQ3rYwETEPaFF \
+            --dart-define=POSTHOG_HOST=https://eu.i.posthog.com \
+            --dart-define=DEBUG_TOOLS=false
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astute-aab-${{ env.BUILD_NAME }}-${{ env.BUILD_NUMBER }}
+          path: build/app/outputs/bundle/release/app-release.aab
+          retention-days: 7
