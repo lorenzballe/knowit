@@ -10,6 +10,7 @@ import '../analytics.dart';
 import '../measure/card_read.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
+import '../sync/served.dart';
 import '../theme.dart';
 import 'card_edge.dart';
 import 'hold_to_keep.dart';
@@ -717,15 +718,30 @@ class _Verdict extends StatelessWidget {
     };
   }
 
-  /// What runs on after the verdict: what was said, and how sure.
+  /// How the readers who answered this card did, counted on the server
+  /// and nothing about who (functions/src/scorecard.ts, crowdOf): the share
+  /// who got it right, beside a right answer, or wrong too, beside a wrong
+  /// one. Null where too few have answered for the number to mean anything.
+  String? _crowd(BuildContext context) {
+    final double? wrong = Served.instance.lastExplore?.wrongShare(pill.id);
+    if (wrong == null) return null;
+    return right
+        ? context.l10n.crowdGotRight(((1 - wrong) * 100).round())
+        : context.l10n.crowdGotWrong((wrong * 100).round());
+  }
+
+  /// What runs on after the verdict: what was said, how sure, and how the
+  /// other readers did.
   String? _detail(BuildContext context) {
     if (room == _Room.verdictOnly) return null;
     final String? said = _said(context);
     final int? sure = room == _Room.all ? confidence : null;
-    if (said == null) {
-      return sure == null ? null : context.l10n.verdictSure(sure);
-    }
-    return sure == null ? said : context.l10n.lineYouSaidSure(said, sure);
+    final String? own = said == null
+        ? (sure == null ? null : context.l10n.verdictSure(sure))
+        : (sure == null ? said : context.l10n.lineYouSaidSure(said, sure));
+    final String? crowd = room == _Room.all ? _crowd(context) : null;
+    if (crowd == null) return own;
+    return own == null ? crowd : '$own · $crowd';
   }
 
   InlineSpan _span(BuildContext context) {

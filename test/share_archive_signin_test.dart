@@ -20,6 +20,7 @@ import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_link.dart';
+import 'package:astuto/utils/share_text.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -407,6 +408,14 @@ void main() {
       );
     });
 
+    test('a card sent to a friend is its own page on the site', () {
+      expect(
+        challengeLink('space-aerogel-comet-catch'),
+        'https://astutetheapp.com/c/space-aerogel-comet-catch.html'
+        '?ref=challenge',
+      );
+    });
+
     /// Opens a share sheet over a bare screen and copies what it would
     /// send, with the copy button at the end of its row.
     Future<String> copiedFrom(
@@ -443,6 +452,62 @@ void main() {
         (context) => showShareSheet(context, pill),
       );
       expect(text, endsWith('— Astute · ${ShareRef.card.link}'));
+    });
+
+    testWidgets('a card with a page, as a challenge: its question and where '
+        'to play it, never its answer', (tester) async {
+      final Pill pill = PillBank.cards.firstWhere((p) => p.hasPage);
+      final copied = _clipboard(tester);
+      // No share sheet under a test: the challenge is copied instead.
+      sendChallenge = (_) async => false;
+      addTearDown(() => sendChallenge = shareText);
+      await tester.pumpWidget(
+        _host(
+          Scaffold(
+            body: Builder(
+              builder: (context) => Center(
+                child: TextButton(
+                  onPressed: () => showShareSheet(context, pill),
+                  child: const Text('open'),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('open'));
+      await _settle(tester);
+      await tester.ensureVisible(find.byKey(const ValueKey('share-challenge')));
+      await tester.tap(find.byKey(const ValueKey('share-challenge')));
+      await _settle(tester);
+      expect(copied, hasLength(1));
+      expect(copied.single, startsWith('Can you get this one?\n'));
+      expect(copied.single, contains(pill.question));
+      expect(copied.single, isNot(contains(pill.answer)));
+      expect(copied.single, endsWith(challengeLink(pill.id)));
+    });
+
+    testWidgets('a card with no page has nothing to play, so no challenge', (
+      tester,
+    ) async {
+      final Pill pill = PillBank.cards.firstWhere((p) => p.web == null);
+      await tester.pumpWidget(
+        _host(
+          Scaffold(
+            body: Builder(
+              builder: (context) => Center(
+                child: TextButton(
+                  onPressed: () => showShareSheet(context, pill),
+                  child: const Text('open'),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('open'));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('share-challenge')), findsNothing);
     });
 
     testWidgets('the record', (tester) async {

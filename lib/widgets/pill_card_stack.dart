@@ -14,6 +14,7 @@ import '../measure/screens.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
 import '../state/music_sound.dart';
+import '../sync/served.dart';
 import '../sync/trace.dart';
 import '../theme.dart';
 import 'card_edge.dart';
@@ -428,6 +429,37 @@ class _PillCardStackState extends State<PillCardStack>
     );
     setState(() => _answeredHere = true);
     _hintIn(_hintAfterBack);
+    if (pill.isGraded) _sayCrowd(pill, pill.challenge.accepts(response));
+  }
+
+  /// How the other readers did on the card just answered on its page, said
+  /// for a moment under it: the page draws its own verdict, so the count of
+  /// everybody else comes from the app. Counted on the server, never about
+  /// who; nothing where too few have answered.
+  void _sayCrowd(Pill pill, bool right) {
+    final double? wrong = Served.instance.lastExplore?.wrongShare(pill.id);
+    if (wrong == null || !mounted) return;
+    final l = context.l10n;
+    final String line = right
+        ? l.crowdGotRight(((1 - wrong) * 100).round())
+        : l.crowdGotWrong((wrong * 100).round());
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    if (messenger == null) return;
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          key: const ValueKey('crowd-line'),
+          duration: const Duration(seconds: 4),
+          content: Row(
+            children: [
+              Icon(Icons.groups_rounded, size: 18, color: context.p.onInverse),
+              const SizedBox(width: 10),
+              Expanded(child: Text(line)),
+            ],
+          ),
+        ),
+      );
   }
 
   /// A free card's page is finished with it: it goes on as a throw sends

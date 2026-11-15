@@ -13,8 +13,15 @@ import '../theme.dart';
 import '../utils/share_image.dart';
 import '../utils/share_link.dart';
 import '../utils/share_origin.dart';
+import '../utils/share_text.dart';
 import 'ui.dart';
 import 'scaled_text.dart';
+
+/// How a challenge is handed over: the platform's sheet. Under a test,
+/// which has no sheet (and whose desktop stand-in never returns), whatever
+/// the test puts here.
+@visibleForTesting
+Future<bool> Function(String text) sendChallenge = shareText;
 
 /// Opens the share sheet for [pill] — the square export preview plus the
 /// three actions under it.
@@ -129,6 +136,26 @@ class _ShareSheetState extends State<_ShareSheet> {
     }
   }
 
+  /// The card itself, to a friend: its question and the link where they
+  /// can play it, drawing and all, in their browser. No answer, and no
+  /// picture: the card is what they open.
+  Future<void> _challenge() async {
+    final l = context.l10n;
+    final String text =
+        '${l.challengeLine}\n${widget.pill.question}\n'
+        '${challengeLink(widget.pill.id)}';
+    final bool shared = await sendChallenge(text);
+    Analytics.capture('card challenged', {
+      'pill_id': widget.pill.id,
+      'topic': widget.pill.topic,
+      'as': shared ? 'sheet' : 'copied',
+    });
+    if (!shared) {
+      await Clipboard.setData(ClipboardData(text: text));
+      _toast(l.copiedToClipboard);
+    }
+  }
+
   Future<void> _copyText() async {
     final l = context.l10n;
     await Clipboard.setData(ClipboardData(text: _shareText));
@@ -211,6 +238,42 @@ class _ShareSheetState extends State<_ShareSheet> {
                 _CircleAction(icon: Icons.copy_rounded, onTap: _copyText),
               ],
             ),
+            // A card with a page can be played by a friend in a browser:
+            // sent as itself, a challenge, rather than as a picture of it.
+            if (pill.hasPage) ...[
+              const SizedBox(height: 10),
+              GestureDetector(
+                key: const ValueKey('share-challenge'),
+                behavior: HitTestBehavior.opaque,
+                onTap: _challenge,
+                child: Container(
+                  height: 52,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: context.p.lineStrong),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.sports_esports_rounded,
+                        size: 19,
+                        color: context.p.ink,
+                      ),
+                      const SizedBox(width: 9),
+                      Text(
+                        context.l10n.challengeFriend,
+                        style: AppText.body(
+                          size: 15,
+                          weight: FontWeight.w700,
+                          color: context.p.ink,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
             const SizedBox(height: 16),
             Center(
               child: Text(

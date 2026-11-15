@@ -4616,4 +4616,26 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get shareDayHeadline => 'Las cinco de hoy';
+
+  @override
+  String get shareFormatPost => 'Publicación';
+
+  @override
+  String get shareFormatStory => 'Historia';
+
+  @override
+  String crowdGotRight(int n) {
+    return 'El $n% de los lectores acertó';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return 'El $n% de los lectores también falló';
+  }
+
+  @override
+  String get challengeFriend => 'Reta a un amigo';
+
+  @override
+  String get challengeLine => '¿Aciertas esta?';
 }

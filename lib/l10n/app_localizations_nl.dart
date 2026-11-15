@@ -4618,4 +4618,26 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get shareDayHeadline => 'De vijf van vandaag';
+
+  @override
+  String get shareFormatPost => 'Bericht';
+
+  @override
+  String get shareFormatStory => 'Verhaal';
+
+  @override
+  String crowdGotRight(int n) {
+    return '$n% van de lezers had het goed';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return 'Ook $n% van de lezers had het fout';
+  }
+
+  @override
+  String get challengeFriend => 'Daag een vriend uit';
+
+  @override
+  String get challengeLine => 'Weet jij deze?';
 }

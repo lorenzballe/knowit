@@ -14,6 +14,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/explore/blocks/bets/bets_day.dart';
 import 'package:astuto/explore/blocks/core/like_saved_block.dart';
+import 'package:astuto/explore/blocks/core/paths_block.dart';
 import 'package:astuto/explore/blocks/core/quick_games_block.dart';
 import 'package:astuto/explore/blocks/core/shelves.dart';
 import 'package:astuto/explore/blocks/core/subject_levels_block.dart';
@@ -552,6 +553,64 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('explore-streak')));
       expect(todays, 1);
     });
+  });
+  group('paths', () {
+    test('ten cards of one genre, easy before hard, turning over weekly', () {
+      final List<CardPath> week = pathsOf(
+        PillBank.live,
+        today: DateTime(2026, 11, 16),
+      );
+      expect(week, isNotEmpty);
+      for (final CardPath path in week) {
+        expect(path.cards, hasLength(kPathLength));
+        expect(path.cards.map((p) => p.genre).toSet(), {path.genre.id});
+        final List<int> levels = [
+          for (final p in path.cards) p.difficulty.index,
+        ];
+        expect(levels, orderedEquals([...levels]..sort()));
+      }
+      final List<CardPath> next = pathsOf(
+        PillBank.live,
+        today: DateTime(2026, 11, 23),
+      );
+      expect(
+        next.first.genre.id,
+        isNot(week.first.genre.id),
+        reason: 'a new week, a new row',
+      );
+    });
+
+    test('narrowed to a subject, only its paths', () {
+      final List<CardPath> space = pathsOf(
+        PillBank.live,
+        today: DateTime(2026, 11, 16),
+        subject: 'Space',
+      );
+      expect(space, isNotEmpty);
+      expect(space.every((p) => p.topicKey == 'space'), isTrue);
+    });
+
+    testWidgets(
+      'on the free plan each path is locked and the tap is the plans',
+      (tester) async {
+        final AppState app = await readyApp();
+        final CoreHost host = CoreHost(app);
+        await pumpSections(tester, host, [_section('paths')]);
+        expect(tester.takeException(), isNull);
+        expect(find.byIcon(Icons.lock_rounded), findsWidgets);
+        await tester.tap(
+          find
+              .byWidgetPredicate(
+                (w) =>
+                    w.key is ValueKey<String> &&
+                    (w.key! as ValueKey<String>).value.startsWith('path-'),
+              )
+              .first,
+        );
+        await tester.pump(const Duration(milliseconds: 400));
+        expect(find.byType(DeckViewerScreen), findsNothing);
+      },
+    );
   });
 }
 

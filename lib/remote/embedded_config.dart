@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "ad367cf1b6788699",
+ "hash": "90543cab432f0791",
  "app": {
   "gate": null,
   "flags": {},
@@ -1956,6 +1956,40 @@ const String kEmbeddedRemote = r'''
        ]
       }
      ]
+    }
+   },
+   {
+    "id": "paths",
+    "block": "paths",
+    "title": {
+     "en": "Ten-card paths",
+     "it": "Percorsi da 10 carte",
+     "de": "Pfade aus zehn Karten",
+     "es": "Recorridos de 10 cartas",
+     "fr": "Parcours de 10 cartes",
+     "ja": "10枚のコース",
+     "ko": "10장 코스",
+     "nl": "Paden van tien kaarten",
+     "pl": "Ścieżki z 10 kart",
+     "pt": "Percursos de 10 cartas",
+     "ru": "Маршруты из 10 карточек",
+     "tr": "10 kartlık yollar",
+     "zh": "十张卡片之路"
+    },
+    "subtitle": {
+     "en": "One theme, from the easiest card to the hardest.",
+     "it": "Un tema, dalla carta più facile alla più difficile.",
+     "de": "Ein Thema, von der leichtesten Karte bis zur schwersten.",
+     "es": "Un tema, de la carta más fácil a la más difícil.",
+     "fr": "Un thème, de la carte la plus facile à la plus difficile.",
+     "ja": "ひとつのテーマを、やさしいカードから難しいカードへ。",
+     "ko": "하나의 주제를 가장 쉬운 카드부터 가장 어려운 카드까지.",
+     "nl": "Eén thema, van de makkelijkste kaart tot de moeilijkste.",
+     "pl": "Jeden temat, od najłatwiejszej karty do najtrudniejszej.",
+     "pt": "Um tema, da carta mais fácil à mais difícil.",
+     "ru": "Одна тема — от самой лёгкой карточки до самой трудной.",
+     "tr": "Tek bir konu, en kolay karttan en zoruna.",
+     "zh": "一个主题，从最简单的卡片到最难的。"
     }
    },
    {

@@ -1078,5 +1078,11 @@
   "shareDayRead": "Fünf Karten, gelesen",
   "shareDayTurn": "Fünf Karten am Tag. Du bist dran.",
   "shareDaySure": "{n}% sicher",
-  "shareDayHeadline": "Die fünf von heute"
+  "shareDayHeadline": "Die fünf von heute",
+  "shareFormatPost": "Beitrag",
+  "shareFormatStory": "Story",
+  "crowdGotRight": "{n}% der Leser lagen richtig",
+  "crowdGotWrong": "Auch {n}% der Leser lagen falsch",
+  "challengeFriend": "Fordere jemanden heraus",
+  "challengeLine": "Kriegst du die raus?"
 }

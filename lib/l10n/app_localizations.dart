@@ -6593,6 +6593,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today\'s five'**
   String get shareDayHeadline;
+
+  /// The sheet that sends the day as a picture: the shape for a chat or a feed, four by five.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get shareFormatPost;
+
+  /// The sheet that sends the day as a picture: the tall shape for a story, nine by sixteen.
+  ///
+  /// In en, this message translates to:
+  /// **'Story'**
+  String get shareFormatStory;
+
+  /// Under a card just answered right: how many of all the readers who answered it got it right too, counted anonymously.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}% of readers got it right'**
+  String crowdGotRight(int n);
+
+  /// Under a card just answered wrong: how many of all the readers who answered it got it wrong too, counted anonymously. Said kindly: the reader is not alone.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}% of readers got it wrong too'**
+  String crowdGotWrong(int n);
+
+  /// The share sheet of a card: the button that sends the card itself to a friend, to play in their browser, with or without the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge a friend'**
+  String get challengeFriend;
+
+  /// The words sent with a card to a friend, before its question and the link to play it.
+  ///
+  /// In en, this message translates to:
+  /// **'Can you get this one?'**
+  String get challengeLine;
 }
 
 class _AppLocalizationsDelegate

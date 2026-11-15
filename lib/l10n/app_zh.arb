@@ -1078,5 +1078,11 @@
   "shareDayRead": "五张卡片，读完了",
   "shareDayTurn": "每天五张卡。轮到你了。",
   "shareDaySure": "把握 {n}%",
-  "shareDayHeadline": "今天的五张"
+  "shareDayHeadline": "今天的五张",
+  "shareFormatPost": "帖子",
+  "shareFormatStory": "快拍",
+  "crowdGotRight": "{n}% 的读者答对了",
+  "crowdGotWrong": "也有 {n}% 的读者答错了",
+  "challengeFriend": "挑战好友",
+  "challengeLine": "这道你能答对吗？"
 }

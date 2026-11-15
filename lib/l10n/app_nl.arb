@@ -1078,5 +1078,11 @@
   "shareDayRead": "Vijf kaarten, gelezen",
   "shareDayTurn": "Vijf kaarten per dag. Jouw beurt.",
   "shareDaySure": "{n}% zeker",
-  "shareDayHeadline": "De vijf van vandaag"
+  "shareDayHeadline": "De vijf van vandaag",
+  "shareFormatPost": "Bericht",
+  "shareFormatStory": "Verhaal",
+  "crowdGotRight": "{n}% van de lezers had het goed",
+  "crowdGotWrong": "Ook {n}% van de lezers had het fout",
+  "challengeFriend": "Daag een vriend uit",
+  "challengeLine": "Weet jij deze?"
 }

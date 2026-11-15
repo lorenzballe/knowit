@@ -4538,4 +4538,26 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get shareDayHeadline => 'Bugünün beşi';
+
+  @override
+  String get shareFormatPost => 'Gönderi';
+
+  @override
+  String get shareFormatStory => 'Hikâye';
+
+  @override
+  String crowdGotRight(int n) {
+    return 'Okurların %$n kadarı doğru bildi';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return 'Okurların %$n kadarı da yanıldı';
+  }
+
+  @override
+  String get challengeFriend => 'Bir arkadaşına meydan oku';
+
+  @override
+  String get challengeLine => 'Bunu bilebilir misin?';
 }

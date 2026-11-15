@@ -222,6 +222,9 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('shelf-share-day')));
     await _settle(tester);
     await _shoot(tester, '1b-share-day');
+    await tester.tap(find.byKey(const ValueKey('share-day-story')));
+    await _settle(tester);
+    await _shoot(tester, '1c-share-story');
     tester.state<NavigatorState>(find.byType(Navigator).first).pop();
     await _settle(tester);
 
@@ -291,6 +294,29 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('saved-filter-history')));
     await _settle(tester);
     await _shoot(tester, '10-liked-history');
+
+    // Paths, on the free plan (locked) as most readers meet them.
+    final AppState free = await readyApp({
+      ..._aMonthIn(),
+      'knowit.plus': false,
+    });
+    await pumpSections(
+      tester,
+      CoreHost(free),
+      sectionsOf([
+        {
+          'id': 'paths',
+          'block': 'paths',
+          'title': {'en': 'Ten-card paths'},
+          'subtitle': {
+            'en': 'One theme, from the easiest card to the hardest.',
+          },
+        },
+      ]),
+      size: const Size(402, 400),
+    );
+    await _settle(tester);
+    await _shoot(tester, '3b-paths');
 
     await tester.pumpWidget(_app(ArchiveScreen(app: app, onBack: () {})));
     await _precache(tester, [

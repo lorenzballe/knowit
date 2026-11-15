@@ -4475,4 +4475,30 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get shareDayHeadline =>
       _words.text('shareDayHeadline') ?? _base.shareDayHeadline;
+
+  @override
+  String get shareFormatPost =>
+      _words.text('shareFormatPost') ?? _base.shareFormatPost;
+
+  @override
+  String get shareFormatStory =>
+      _words.text('shareFormatStory') ?? _base.shareFormatStory;
+
+  @override
+  String crowdGotRight(int n) =>
+      _words.format('crowdGotRight', localeName, {'n': n}) ??
+      _base.crowdGotRight(n);
+
+  @override
+  String crowdGotWrong(int n) =>
+      _words.format('crowdGotWrong', localeName, {'n': n}) ??
+      _base.crowdGotWrong(n);
+
+  @override
+  String get challengeFriend =>
+      _words.text('challengeFriend') ?? _base.challengeFriend;
+
+  @override
+  String get challengeLine =>
+      _words.text('challengeLine') ?? _base.challengeLine;
 }

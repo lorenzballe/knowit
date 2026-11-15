@@ -1078,5 +1078,11 @@
   "shareDayRead": "5枚、読了",
   "shareDayTurn": "1日5枚。次はあなたの番。",
   "shareDaySure": "確信度{n}%",
-  "shareDayHeadline": "今日の5枚"
+  "shareDayHeadline": "今日の5枚",
+  "shareFormatPost": "投稿",
+  "shareFormatStory": "ストーリー",
+  "crowdGotRight": "正解した読者は{n}%",
+  "crowdGotWrong": "読者の{n}%も間違えました",
+  "challengeFriend": "友だちに挑戦状",
+  "challengeLine": "これ、わかる？"
 }

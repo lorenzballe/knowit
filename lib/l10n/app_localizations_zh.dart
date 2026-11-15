@@ -4408,4 +4408,26 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get shareDayHeadline => '今天的五张';
+
+  @override
+  String get shareFormatPost => '帖子';
+
+  @override
+  String get shareFormatStory => '快拍';
+
+  @override
+  String crowdGotRight(int n) {
+    return '$n% 的读者答对了';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return '也有 $n% 的读者答错了';
+  }
+
+  @override
+  String get challengeFriend => '挑战好友';
+
+  @override
+  String get challengeLine => '这道你能答对吗？';
 }

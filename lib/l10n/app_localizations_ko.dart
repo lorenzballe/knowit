@@ -4424,4 +4424,26 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get shareDayHeadline => '오늘의 다섯 장';
+
+  @override
+  String get shareFormatPost => '게시물';
+
+  @override
+  String get shareFormatStory => '스토리';
+
+  @override
+  String crowdGotRight(int n) {
+    return '독자의 $n%가 맞혔어요';
+  }
+
+  @override
+  String crowdGotWrong(int n) {
+    return '독자의 $n%도 틀렸어요';
+  }
+
+  @override
+  String get challengeFriend => '친구에게 도전장';
+
+  @override
+  String get challengeLine => '이거 맞힐 수 있어?';
 }
