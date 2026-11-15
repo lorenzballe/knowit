@@ -1084,5 +1084,12 @@
   "crowdGotRight": "{n}% dos leitores acertaram",
   "crowdGotWrong": "{n}% dos leitores também erraram",
   "challengeFriend": "Desafia um amigo",
-  "challengeLine": "Consegues acertar esta?"
+  "challengeLine": "Consegues acertar esta?",
+  "pathFree": "{n} grátis",
+  "pathMoreTitle": "Mais {n} neste percurso.",
+  "pathMoreLine": "Cada percurso inteiro, da carta mais fácil à mais difícil, e uma fila nova todas as semanas.",
+  "pathMoreGo": "Ler o percurso inteiro",
+  "paywallPathsTitle": "Cada percurso, as dez.",
+  "paywallPathsMark": "as dez.",
+  "paywallPathsLine": "Dez cartas sobre um tema, da mais fácil à mais difícil. Percursos novos todas as semanas, e as tuas cinco do dia ao teu nível."
 }

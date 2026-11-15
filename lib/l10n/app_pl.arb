@@ -1084,5 +1084,12 @@
   "crowdGotRight": "{n}% czytelników odpowiedziało dobrze",
   "crowdGotWrong": "{n}% czytelników też się pomyliło",
   "challengeFriend": "Rzuć wyzwanie znajomemu",
-  "challengeLine": "Dasz radę z tą?"
+  "challengeLine": "Dasz radę z tą?",
+  "pathFree": "{n} za darmo",
+  "pathMoreTitle": "Jeszcze {n} na tej ścieżce.",
+  "pathMoreLine": "Każda ścieżka w całości, od najłatwiejszej karty do najtrudniejszej, i co tydzień nowy rząd.",
+  "pathMoreGo": "Czytaj całą ścieżkę",
+  "paywallPathsTitle": "Każda ścieżka, wszystkie dziesięć.",
+  "paywallPathsMark": "wszystkie dziesięć.",
+  "paywallPathsLine": "Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Co tydzień nowe ścieżki i twoje pięć na dziś na twoim poziomie."
 }

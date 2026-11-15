@@ -1,6 +1,8 @@
 /// Paths: ten cards on one theme, from the easiest to the hardest, a row of
-/// them. Astute+: a reader on the free plan sees every path, with a lock,
-/// and the tap is the plans.
+/// them. Astute+, with a way in: a reader on the free plan opens any path
+/// and reads its first two cards, and the card after them is the rest of
+/// the path, with the plans behind it. A path begun is wanted whole in a
+/// way a lock is not.
 ///
 /// A path is a genre of the bank (lib/data/genres.dart) with ten cards or
 /// more: its first ten, easy before hard, a card with a drawing before one
@@ -27,6 +29,9 @@ import 'layout.dart';
 
 /// How many cards a path holds.
 const int kPathLength = 10;
+
+/// How many of a path's cards the free plan reads: the way in.
+const int kPathFree = 2;
 
 /// One path: a genre, its subject's key, and its ten.
 class CardPath {
@@ -141,21 +146,184 @@ class PathsBlock extends ExploreBlock with SectionLayout {
                 .where((p) => app.seenIds.contains(p.id))
                 .length,
             locked: !app.isPlus,
-            onTap: () => requirePlus(
-              context,
-              app,
-              () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => DeckViewerScreen(
-                    app: app,
-                    deck: paths[i].cards,
-                    title: paths[i].genre.label,
-                    countsAsRead: true,
-                    source: 'path',
-                  ),
-                ),
+            onTap: () => openPath(context, app, paths[i]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Opens [path] at full size, a card at a time, counted as read as they go:
+/// all ten on Astute+, from [from]; on the free plan its first [kPathFree],
+/// then the card that offers the rest.
+Future<void> openPath(
+  BuildContext context,
+  AppState app,
+  CardPath path, {
+  int from = 0,
+}) {
+  final bool whole = app.isPlus;
+  return Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => DeckViewerScreen(
+        app: app,
+        deck: whole ? path.cards : path.cards.take(kPathFree).toList(),
+        title: path.genre.label,
+        initialIndex: whole ? from : 0,
+        countsAsRead: true,
+        source: 'path',
+        of: path.cards.length,
+        end: whole ? null : PathMore(app: app, path: path),
+      ),
+    ),
+  );
+}
+
+/// The card after a path's free cards: how many are left, and the way to
+/// them. Through the plans, and on with the path where it was left.
+class PathMore extends StatelessWidget {
+  const PathMore({super.key, required this.app, required this.path});
+
+  final AppState app;
+  final CardPath path;
+
+  @override
+  Widget build(BuildContext context) {
+    final TopicStyle style = kTopics[path.topicKey]!;
+    final Color ink = style.ink;
+    final int left = path.cards.length - kPathFree;
+    return Container(
+      key: const ValueKey('path-more'),
+      decoration: BoxDecoration(
+        color: style.color,
+        borderRadius: BorderRadius.circular(34),
+      ),
+      padding: const EdgeInsets.fromLTRB(28, 28, 28, 22),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SubjectIcon(subject: style.name, size: 22, ink: ink),
+              const Spacer(),
+              Icon(
+                Icons.lock_rounded,
+                size: 18,
+                color: ink.withValues(alpha: 0.7),
               ),
-              source: 'paths',
+            ],
+          ),
+          const Spacer(),
+          // The path: the two read, the rest still to come.
+          ExcludeSemantics(
+            child: Row(
+              children: [
+                for (int i = 0; i < path.cards.length; i++) ...[
+                  if (i > 0) const SizedBox(width: 4),
+                  Expanded(
+                    child: Container(
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: ink.withValues(alpha: i < kPathFree ? 0.9 : 0.2),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: 22),
+          Text(
+            path.genre.label.toUpperCase(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppText.label(
+              size: 11,
+              weight: FontWeight.w700,
+              spacing: 1.2,
+              color: ink.withValues(alpha: 0.72),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Semantics(
+            header: true,
+            child: Text(
+              context.l10n.pathMoreTitle(left),
+              style: AppText.display(
+                size: 30,
+                weight: FontWeight.w600,
+                height: 1.08,
+                spacing: -0.9,
+                color: ink,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            context.l10n.pathMoreLine,
+            style: AppText.body(
+              size: 15,
+              height: 1.4,
+              color: ink.withValues(alpha: 0.82),
+            ),
+          ),
+          const Spacer(),
+          _InkButton(
+            key: const ValueKey('path-more-go'),
+            label: context.l10n.pathMoreGo,
+            ink: ink,
+            ground: style.color,
+            onTap: () => requirePlus(context, app, () {
+              // Back through the plans with Astute+: the rest of the path,
+              // where the free cards left it.
+              final NavigatorState nav = Navigator.of(context);
+              nav.pop();
+              openPath(nav.context, app, path, from: kPathFree);
+            }, source: 'paths'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A full-width button in the subject's ink on its colour.
+class _InkButton extends StatelessWidget {
+  const _InkButton({
+    super.key,
+    required this.label,
+    required this.ink,
+    required this.ground,
+    required this.onTap,
+  });
+
+  final String label;
+  final Color ink;
+  final Color ground;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          height: 54,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: ink,
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: Text(
+            label,
+            style: AppText.body(
+              size: 16,
+              weight: FontWeight.w700,
+              color: ground,
             ),
           ),
         ),
@@ -188,7 +356,11 @@ class _PathTile extends StatelessWidget {
     final Color ink = style.ink;
     return Semantics(
       button: true,
-      label: '${path.genre.label}, ${context.l10n.nCards(path.cards.length)}',
+      label: [
+        path.genre.label,
+        context.l10n.nCards(path.cards.length),
+        if (locked) context.l10n.pathFree(kPathFree),
+      ].join(', '),
       child: GestureDetector(
         key: ValueKey('path-${path.genre.id}'),
         behavior: HitTestBehavior.opaque,
@@ -208,12 +380,32 @@ class _PathTile extends StatelessWidget {
                 children: [
                   SubjectIcon(subject: style.name, size: 18, ink: ink),
                   const Spacer(),
-                  if (locked)
+                  if (locked) ...[
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 7,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: ink.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(99),
+                      ),
+                      child: Text(
+                        context.l10n.pathFree(kPathFree),
+                        style: AppText.label(
+                          size: 9.5,
+                          weight: FontWeight.w700,
+                          color: ink,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
                     Icon(
                       Icons.lock_rounded,
                       size: 15,
                       color: ink.withValues(alpha: 0.7),
                     ),
+                  ],
                 ],
               ),
               const Spacer(),
@@ -251,7 +443,13 @@ class _PathTile extends StatelessWidget {
                       child: Container(
                         height: 4,
                         decoration: BoxDecoration(
-                          color: ink.withValues(alpha: i < read ? 0.9 : 0.22),
+                          color: ink.withValues(
+                            alpha: i < read
+                                ? 0.9
+                                : locked && i >= kPathFree
+                                ? 0.12
+                                : 0.22,
+                          ),
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),

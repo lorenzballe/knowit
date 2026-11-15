@@ -4446,4 +4446,31 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get challengeLine => '이거 맞힐 수 있어?';
+
+  @override
+  String pathFree(int n) {
+    return '$n장 무료';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return '이 코스에 $n장이 더 있어요.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      '모든 코스를 끝까지, 가장 쉬운 카드부터 가장 어려운 카드까지. 매주 새 코스도 열려요.';
+
+  @override
+  String get pathMoreGo => '코스 전체 읽기';
+
+  @override
+  String get paywallPathsTitle => '모든 코스, 열 장 전부.';
+
+  @override
+  String get paywallPathsMark => '열 장 전부.';
+
+  @override
+  String get paywallPathsLine =>
+      '한 주제를 열 장으로, 가장 쉬운 것부터 가장 어려운 것까지. 매주 새 코스, 그리고 오늘의 다섯 장은 당신의 수준에 맞게.';
 }

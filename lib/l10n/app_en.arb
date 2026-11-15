@@ -4863,5 +4863,43 @@
  "challengeLine": "Can you get this one?",
  "@challengeLine": {
   "description": "The words sent with a card to a friend, before its question and the link to play it."
+ },
+ "pathFree": "{n} free",
+ "@pathFree": {
+  "description": "On a path's tile in Explore, on the free plan: how many of its ten cards can be read without Astute+. Short, a chip beside the lock.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pathMoreTitle": "{n} more in this path.",
+ "@pathMoreTitle": {
+  "description": "The card after a path's free cards, on the free plan: how many of the path's cards are left, read with Astute+.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pathMoreLine": "Every path whole, from the easiest card to the hardest, and a new row of them every week.",
+ "@pathMoreLine": {
+  "description": "Under pathMoreTitle: what Astute+ gives of the paths."
+ },
+ "pathMoreGo": "Read the whole path",
+ "@pathMoreGo": {
+  "description": "The button on the card after a path's free cards: opens the plans, then the rest of the path."
+ },
+ "paywallPathsTitle": "Every path, all ten.",
+ "@paywallPathsTitle": {
+  "description": "The paywall's headline when it is opened from a path: every path, all ten cards."
+ },
+ "paywallPathsMark": "all ten.",
+ "@paywallPathsMark": {
+  "description": "The words of paywallPathsTitle painted in the lights: must be its exact ending, as written there."
+ },
+ "paywallPathsLine": "Ten cards on one theme, from the easiest to the hardest. A new row of paths every week, and your five of the day at your level.",
+ "@paywallPathsLine": {
+  "description": "Under paywallPathsTitle."
  }
 }

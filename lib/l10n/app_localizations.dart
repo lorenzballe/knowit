@@ -6629,6 +6629,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Can you get this one?'**
   String get challengeLine;
+
+  /// On a path's tile in Explore, on the free plan: how many of its ten cards can be read without Astute+. Short, a chip beside the lock.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} free'**
+  String pathFree(int n);
+
+  /// The card after a path's free cards, on the free plan: how many of the path's cards are left, read with Astute+.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} more in this path.'**
+  String pathMoreTitle(int n);
+
+  /// Under pathMoreTitle: what Astute+ gives of the paths.
+  ///
+  /// In en, this message translates to:
+  /// **'Every path whole, from the easiest card to the hardest, and a new row of them every week.'**
+  String get pathMoreLine;
+
+  /// The button on the card after a path's free cards: opens the plans, then the rest of the path.
+  ///
+  /// In en, this message translates to:
+  /// **'Read the whole path'**
+  String get pathMoreGo;
+
+  /// The paywall's headline when it is opened from a path: every path, all ten cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Every path, all ten.'**
+  String get paywallPathsTitle;
+
+  /// The words of paywallPathsTitle painted in the lights: must be its exact ending, as written there.
+  ///
+  /// In en, this message translates to:
+  /// **'all ten.'**
+  String get paywallPathsMark;
+
+  /// Under paywallPathsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten cards on one theme, from the easiest to the hardest. A new row of paths every week, and your five of the day at your level.'**
+  String get paywallPathsLine;
 }
 
 class _AppLocalizationsDelegate

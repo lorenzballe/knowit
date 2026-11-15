@@ -4638,4 +4638,31 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get challengeLine => 'Riesci a indovinare questa?';
+
+  @override
+  String pathFree(int n) {
+    return '$n gratis';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Altre $n in questo percorso.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Ogni percorso intero, dalla carta più facile alla più difficile, e una fila nuova ogni settimana.';
+
+  @override
+  String get pathMoreGo => 'Leggi tutto il percorso';
+
+  @override
+  String get paywallPathsTitle => 'Ogni percorso, tutte e dieci.';
+
+  @override
+  String get paywallPathsMark => 'tutte e dieci.';
+
+  @override
+  String get paywallPathsLine =>
+      'Dieci carte su un tema, dalla più facile alla più difficile. Una fila nuova di percorsi ogni settimana, e le tue cinque del giorno al tuo livello.';
 }

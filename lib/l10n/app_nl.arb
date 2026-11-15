@@ -1084,5 +1084,12 @@
   "crowdGotRight": "{n}% van de lezers had het goed",
   "crowdGotWrong": "Ook {n}% van de lezers had het fout",
   "challengeFriend": "Daag een vriend uit",
-  "challengeLine": "Weet jij deze?"
+  "challengeLine": "Weet jij deze?",
+  "pathFree": "{n} gratis",
+  "pathMoreTitle": "Nog {n} in dit pad.",
+  "pathMoreLine": "Elk pad helemaal, van de makkelijkste kaart tot de moeilijkste, en elke week een nieuwe rij.",
+  "pathMoreGo": "Lees het hele pad",
+  "paywallPathsTitle": "Elk pad, alle tien.",
+  "paywallPathsMark": "alle tien.",
+  "paywallPathsLine": "Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden, en je vijf van de dag op jouw niveau."
 }

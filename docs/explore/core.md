@@ -419,9 +419,12 @@ Paths of ten cards on one theme, a row of them: each a genre of the bank
 (lib/data/genres.dart) with ten cards or more, its first ten easy before hard
 and a card with a drawing before one without. A tile is the subject's colour
 and mark, the genre's name, the subject's, and ten steps with the ones read
-filled. Astute+: on the free plan every tile carries a lock and the tap is the
-plans; on Astute+ the tap opens the ten at full size, a card at a time, each
-counted as read. The row turns over once a week, the same for every reader,
+filled. Astute+, with a way in: on the free plan a tile carries a lock and
+"2 free", and the tap opens the path's first two cards; the card after them
+says how many are left and opens the plans, which speak of paths (paywall
+variant `E`), and with Astute+ goes on with the path from its third card. On
+Astute+ the tap opens the ten at full size, a card at a time, each counted as
+read. The row turns over once a week, the same for every reader,
 and follows the subject Explore is narrowed to. With no genre of ten, there is
 no section.
 

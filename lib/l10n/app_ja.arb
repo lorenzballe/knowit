@@ -1084,5 +1084,12 @@
   "crowdGotRight": "正解した読者は{n}%",
   "crowdGotWrong": "読者の{n}%も間違えました",
   "challengeFriend": "友だちに挑戦状",
-  "challengeLine": "これ、わかる？"
+  "challengeLine": "これ、わかる？",
+  "pathFree": "{n}枚無料",
+  "pathMoreTitle": "このコースにはあと{n}枚。",
+  "pathMoreLine": "すべてのコースを最後まで。やさしいカードから難しいカードへ、毎週新しいコースも。",
+  "pathMoreGo": "コースを最後まで読む",
+  "paywallPathsTitle": "どのコースも、10枚すべて。",
+  "paywallPathsMark": "10枚すべて。",
+  "paywallPathsLine": "ひとつのテーマを10枚で、やさしいものから難しいものへ。毎週新しいコース、そして今日の5枚はあなたのレベルで。"
 }

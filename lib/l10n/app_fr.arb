@@ -1084,5 +1084,12 @@
   "crowdGotRight": "{n} % des lecteurs ont trouvé",
   "crowdGotWrong": "{n} % des lecteurs se sont trompés aussi",
   "challengeFriend": "Défie un ami",
-  "challengeLine": "Tu trouves celle-ci ?"
+  "challengeLine": "Tu trouves celle-ci ?",
+  "pathFree": "{n} offertes",
+  "pathMoreTitle": "Encore {n} dans ce parcours.",
+  "pathMoreLine": "Chaque parcours en entier, de la carte la plus facile à la plus difficile, et une nouvelle série chaque semaine.",
+  "pathMoreGo": "Lire tout le parcours",
+  "paywallPathsTitle": "Chaque parcours, les dix cartes.",
+  "paywallPathsMark": "les dix cartes.",
+  "paywallPathsLine": "Dix cartes sur un thème, de la plus facile à la plus difficile. De nouveaux parcours chaque semaine, et tes cinq du jour à ton niveau."
 }

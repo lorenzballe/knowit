@@ -1084,5 +1084,12 @@
   "crowdGotRight": "{n}% der Leser lagen richtig",
   "crowdGotWrong": "Auch {n}% der Leser lagen falsch",
   "challengeFriend": "Fordere jemanden heraus",
-  "challengeLine": "Kriegst du die raus?"
+  "challengeLine": "Kriegst du die raus?",
+  "pathFree": "{n} gratis",
+  "pathMoreTitle": "Noch {n} in diesem Pfad.",
+  "pathMoreLine": "Jeder Pfad ganz, von der leichtesten Karte bis zur schwersten, und jede Woche eine neue Reihe.",
+  "pathMoreGo": "Den ganzen Pfad lesen",
+  "paywallPathsTitle": "Jeder Pfad, alle zehn.",
+  "paywallPathsMark": "alle zehn.",
+  "paywallPathsLine": "Zehn Karten zu einem Thema, von der leichtesten bis zur schwersten. Jede Woche neue Pfade und deine fünf des Tages auf deinem Niveau."
 }

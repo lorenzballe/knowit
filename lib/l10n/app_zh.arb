@@ -1084,5 +1084,12 @@
   "crowdGotRight": "{n}% 的读者答对了",
   "crowdGotWrong": "也有 {n}% 的读者答错了",
   "challengeFriend": "挑战好友",
-  "challengeLine": "这道你能答对吗？"
+  "challengeLine": "这道你能答对吗？",
+  "pathFree": "{n}张免费",
+  "pathMoreTitle": "这条路线还有{n}张。",
+  "pathMoreLine": "每条路线完整解锁，从最简单的卡片到最难的，每周还有一排新路线。",
+  "pathMoreGo": "读完整条路线",
+  "paywallPathsTitle": "每条路线，十张全看。",
+  "paywallPathsMark": "十张全看。",
+  "paywallPathsLine": "一个主题十张卡片，从最简单到最难。每周都有新路线，今天的五张也按你的水平来。"
 }

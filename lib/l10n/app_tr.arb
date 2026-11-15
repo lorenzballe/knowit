@@ -1084,5 +1084,12 @@
   "crowdGotRight": "Okurların %{n} kadarı doğru bildi",
   "crowdGotWrong": "Okurların %{n} kadarı da yanıldı",
   "challengeFriend": "Bir arkadaşına meydan oku",
-  "challengeLine": "Bunu bilebilir misin?"
+  "challengeLine": "Bunu bilebilir misin?",
+  "pathFree": "{n} ücretsiz",
+  "pathMoreTitle": "Bu yolda {n} kart daha var.",
+  "pathMoreLine": "Her yol baştan sona, en kolay karttan en zoruna; her hafta da yeni bir sıra.",
+  "pathMoreGo": "Yolun tamamını oku",
+  "paywallPathsTitle": "Her yol, onu birden.",
+  "paywallPathsMark": "onu birden.",
+  "paywallPathsLine": "Tek konuda on kart, en kolayından en zoruna. Her hafta yeni yollar ve günün beşi senin seviyende."
 }

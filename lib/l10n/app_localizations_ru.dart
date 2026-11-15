@@ -4798,4 +4798,31 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get challengeLine => 'Ответишь на эту?';
+
+  @override
+  String pathFree(int n) {
+    return '$n бесплатно';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Ещё $n в этом маршруте.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Каждый маршрут целиком, от самой лёгкой карточки до самой трудной, и каждую неделю новые.';
+
+  @override
+  String get pathMoreGo => 'Читать весь маршрут';
+
+  @override
+  String get paywallPathsTitle => 'Каждый маршрут, все десять.';
+
+  @override
+  String get paywallPathsMark => 'все десять.';
+
+  @override
+  String get paywallPathsLine =>
+      'Десять карточек на одну тему, от самой лёгкой до самой трудной. Новые маршруты каждую неделю и твои пять на сегодня — по твоему уровню.';
 }

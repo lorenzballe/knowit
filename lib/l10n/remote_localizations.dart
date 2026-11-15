@@ -4501,4 +4501,31 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get challengeLine =>
       _words.text('challengeLine') ?? _base.challengeLine;
+
+  @override
+  String pathFree(int n) =>
+      _words.format('pathFree', localeName, {'n': n}) ?? _base.pathFree(n);
+
+  @override
+  String pathMoreTitle(int n) =>
+      _words.format('pathMoreTitle', localeName, {'n': n}) ??
+      _base.pathMoreTitle(n);
+
+  @override
+  String get pathMoreLine => _words.text('pathMoreLine') ?? _base.pathMoreLine;
+
+  @override
+  String get pathMoreGo => _words.text('pathMoreGo') ?? _base.pathMoreGo;
+
+  @override
+  String get paywallPathsTitle =>
+      _words.text('paywallPathsTitle') ?? _base.paywallPathsTitle;
+
+  @override
+  String get paywallPathsMark =>
+      _words.text('paywallPathsMark') ?? _base.paywallPathsMark;
+
+  @override
+  String get paywallPathsLine =>
+      _words.text('paywallPathsLine') ?? _base.paywallPathsLine;
 }

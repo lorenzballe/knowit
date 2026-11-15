@@ -4640,4 +4640,31 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get challengeLine => 'Weet jij deze?';
+
+  @override
+  String pathFree(int n) {
+    return '$n gratis';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Nog $n in dit pad.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Elk pad helemaal, van de makkelijkste kaart tot de moeilijkste, en elke week een nieuwe rij.';
+
+  @override
+  String get pathMoreGo => 'Lees het hele pad';
+
+  @override
+  String get paywallPathsTitle => 'Elk pad, alle tien.';
+
+  @override
+  String get paywallPathsMark => 'alle tien.';
+
+  @override
+  String get paywallPathsLine =>
+      'Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden, en je vijf van de dag op jouw niveau.';
 }

@@ -4427,4 +4427,30 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get challengeLine => 'これ、わかる？';
+
+  @override
+  String pathFree(int n) {
+    return '$n枚無料';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'このコースにはあと$n枚。';
+  }
+
+  @override
+  String get pathMoreLine => 'すべてのコースを最後まで。やさしいカードから難しいカードへ、毎週新しいコースも。';
+
+  @override
+  String get pathMoreGo => 'コースを最後まで読む';
+
+  @override
+  String get paywallPathsTitle => 'どのコースも、10枚すべて。';
+
+  @override
+  String get paywallPathsMark => '10枚すべて。';
+
+  @override
+  String get paywallPathsLine =>
+      'ひとつのテーマを10枚で、やさしいものから難しいものへ。毎週新しいコース、そして今日の5枚はあなたのレベルで。';
 }

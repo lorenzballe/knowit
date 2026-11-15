@@ -4560,4 +4560,31 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get challengeLine => 'Bunu bilebilir misin?';
+
+  @override
+  String pathFree(int n) {
+    return '$n ücretsiz';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return 'Bu yolda $n kart daha var.';
+  }
+
+  @override
+  String get pathMoreLine =>
+      'Her yol baştan sona, en kolay karttan en zoruna; her hafta da yeni bir sıra.';
+
+  @override
+  String get pathMoreGo => 'Yolun tamamını oku';
+
+  @override
+  String get paywallPathsTitle => 'Her yol, onu birden.';
+
+  @override
+  String get paywallPathsMark => 'onu birden.';
+
+  @override
+  String get paywallPathsLine =>
+      'Tek konuda on kart, en kolayından en zoruna. Her hafta yeni yollar ve günün beşi senin seviyende.';
 }

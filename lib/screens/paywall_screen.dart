@@ -87,7 +87,10 @@ enum PaywallVariant {
   five('C'),
 
   /// The days read, to open again: the archive.
-  read('D');
+  read('D'),
+
+  /// Every path whole: a path's free cards read, or its tile.
+  paths('E');
 
   const PaywallVariant(this.letter);
 
@@ -101,6 +104,7 @@ enum PaywallVariant {
     'journey' || 'calibration' => record,
     'sixth card' => five,
     'archive' => read,
+    'paths' => paths,
     _ => outcome,
   };
 }
@@ -159,6 +163,11 @@ enum PaywallVariant {
     title: l.paywallReadTitle,
     mark: l.paywallReadMark,
     line: l.paywallReadLine,
+  ),
+  PaywallVariant.paths => (
+    title: l.paywallPathsTitle,
+    mark: l.paywallPathsMark,
+    line: l.paywallPathsLine,
   ),
 };
 

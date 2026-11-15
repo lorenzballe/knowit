@@ -4430,4 +4430,29 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get challengeLine => '这道你能答对吗？';
+
+  @override
+  String pathFree(int n) {
+    return '$n张免费';
+  }
+
+  @override
+  String pathMoreTitle(int n) {
+    return '这条路线还有$n张。';
+  }
+
+  @override
+  String get pathMoreLine => '每条路线完整解锁，从最简单的卡片到最难的，每周还有一排新路线。';
+
+  @override
+  String get pathMoreGo => '读完整条路线';
+
+  @override
+  String get paywallPathsTitle => '每条路线，十张全看。';
+
+  @override
+  String get paywallPathsMark => '十张全看。';
+
+  @override
+  String get paywallPathsLine => '一个主题十张卡片，从最简单到最难。每周都有新路线，今天的五张也按你的水平来。';
 }

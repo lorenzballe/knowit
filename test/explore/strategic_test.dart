@@ -24,6 +24,7 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/explore_screen.dart';
+import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/served.dart';
 import 'package:astuto/theme.dart';
@@ -591,13 +592,15 @@ void main() {
     });
 
     testWidgets(
-      'on the free plan each path is locked and the tap is the plans',
+      'on the free plan a path opens on its first two cards, then the rest '
+      'is the plans, and the paywall speaks of paths',
       (tester) async {
         final AppState app = await readyApp();
         final CoreHost host = CoreHost(app);
         await pumpSections(tester, host, [_section('paths')]);
         expect(tester.takeException(), isNull);
         expect(find.byIcon(Icons.lock_rounded), findsWidgets);
+        expect(find.text('$kPathFree free'), findsWidgets);
         await tester.tap(
           find
               .byWidgetPredicate(
@@ -608,9 +611,52 @@ void main() {
               .first,
         );
         await tester.pump(const Duration(milliseconds: 400));
-        expect(find.byType(DeckViewerScreen), findsNothing);
+        await tester.pump(const Duration(milliseconds: 400));
+        final DeckViewerScreen viewer = tester.widget(
+          find.byType(DeckViewerScreen),
+        );
+        expect(viewer.deck, hasLength(kPathFree));
+        expect(viewer.of, kPathLength);
+        expect(viewer.end, isA<PathMore>());
+        expect(find.text('1/$kPathLength'), findsOneWidget);
+        expect(PaywallVariant.of('paths'), PaywallVariant.paths);
       },
     );
+
+    testWidgets('the card after the free ones offers the rest, through the '
+        'plans', (tester) async {
+      final AppState app = await readyApp();
+      final CardPath path = pathsOf(
+        PillBank.live,
+        today: DateTime(2026, 11, 16),
+      ).first;
+      tester.view.physicalSize = const Size(375, 667) * 3;
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.all(20),
+              child: PathMore(app: app, path: path),
+            ),
+          ),
+        ),
+      );
+      expect(tester.takeException(), isNull);
+      expect(
+        find.text('${kPathLength - kPathFree} more in this path.'),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const ValueKey('path-more-go')));
+      await tester.pump(const Duration(milliseconds: 400));
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(find.byType(PaywallScreen), findsOneWidget);
+    });
   });
 }
 
