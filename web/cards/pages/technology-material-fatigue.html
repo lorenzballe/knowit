@@ -417,7 +417,7 @@
     card.classList.add('answered');
     say.innerHTML = 'That\u2019s <b>fatigue</b>. Every trip down and back up left micro-deformations in the carbon fibre, and each one took away a little of its resistance. The pressure never changed. The hull did.';
     Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#say', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .5, ease: 'power3.out'});
+    if (!Kit.calm) gsap.from(['#say'], {opacity: 0, y: 10, stagger: .12, duration: .5, ease: 'power3.out'});
     if (resolveDive) { resolveDive(); resolveDive = null; }
   }
 

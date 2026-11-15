@@ -104,7 +104,6 @@ function next(){
 }
 function finish(){
   Kit.hide('cap'); Kit.show('why'); Kit.hide('say'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, stagger:.12, duration:.4});
 }
 Kit.$('stage').addEventListener('click', next);
 Kit.onShow.card = () => draw();

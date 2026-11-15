@@ -145,7 +145,6 @@ function check() {
   done = true; Kit.haptic('success');
   Kit.hide('btns'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   render();
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4});
 }
 
 Kit.$('bYes').addEventListener('click', () => {

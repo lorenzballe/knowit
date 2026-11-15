@@ -285,7 +285,7 @@
     card.classList.add('answered');
     Kit.show('keep');
     if (el.blip) el.blip.setAttribute('opacity', Kit.calm ? 1 : 0);
-    if (!Kit.calm) { gsap.from(['#say', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .6, ease: 'power3.out'}); jitter(); }
+    if (!Kit.calm) { gsap.from(['#say'], {opacity: 0, y: 10, stagger: .12, duration: .6, ease: 'power3.out'}); jitter(); }
   }
   function reveal() {
     if (revealed || !guessed) return;

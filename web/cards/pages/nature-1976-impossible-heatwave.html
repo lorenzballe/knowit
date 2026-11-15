@@ -141,7 +141,6 @@ function finish() {
   curves(true);
   Kit.haptic('success');
   Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .15, duration: .45, ease: 'power3.out'});
 }
 
 function run(step) {

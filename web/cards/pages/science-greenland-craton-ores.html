@@ -191,7 +191,6 @@ function finish() {
   S.done = true; S.p = 1; draw();
   Kit.haptic('success');
   Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 const btn = Kit.$('hold');
 btn.addEventListener('pointerdown', e => { if (S.done) return; S.hold = true; try { btn.setPointerCapture(e.pointerId); } catch (_) {} Kit.haptic('light'); gsap.to(btn, {scale: .97, duration: .15}); });

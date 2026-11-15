@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611151529,
- "built": "2026-11-15T15:29:25Z",
+ "version": 202611151611,
+ "built": "2026-11-15T16:11:49Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -36928,11 +36928,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two apples on a time slider running from Harvest to Later, with a slider to drag. Dragging it lets time pass for both apples, one kept in a cool, dark store. Asks how cool, dark storage slows an apple's ripening.",
-    "page": "pages/food-apple-slow-breath.html?v=188be1126815",
-    "bytes": 9346,
+    "page": "pages/food-apple-slow-breath.html?v=1f73c9595b08",
+    "bytes": 9292,
     "thumbs": {
-     "front": "thumbs/food-apple-slow-breath-front.webp?v=188be1126815",
-     "back": "thumbs/food-apple-slow-breath-back.webp?v=188be1126815"
+     "front": "thumbs/food-apple-slow-breath-front.webp?v=1f73c9595b08",
+     "back": "thumbs/food-apple-slow-breath-back.webp?v=1f73c9595b08"
     }
    },
    "source": "Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026)",
@@ -49628,11 +49628,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A picture of air containing hydrogen, water vapor and nitrogen, marked as not to scale. The question asks what scientists feared one bomb could do to Earth's atmosphere. Tap the picture to set off one bomb.",
-    "page": "pages/history-atmosphere-fusion-fire.html?v=66aa7bafd0ee",
-    "bytes": 10728,
+    "page": "pages/history-atmosphere-fusion-fire.html?v=149e313b0703",
+    "bytes": 10614,
     "thumbs": {
-     "front": "thumbs/history-atmosphere-fusion-fire-front.webp?v=66aa7bafd0ee",
-     "back": "thumbs/history-atmosphere-fusion-fire-back.webp?v=66aa7bafd0ee"
+     "front": "thumbs/history-atmosphere-fusion-fire-front.webp?v=149e313b0703",
+     "back": "thumbs/history-atmosphere-fusion-fire-back.webp?v=149e313b0703"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -49800,11 +49800,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A question asks what Cesare Beccaria's main argument against the death penalty was. A switch toggles between crime figures without and with the death penalty, labeled Cruel and it doesn't work, next to a portrait of Beccaria.",
-    "page": "pages/history-beccaria-deterrence.html?v=b902ad366572",
-    "bytes": 6944,
+    "page": "pages/history-beccaria-deterrence.html?v=02d8dc044622",
+    "bytes": 6824,
     "thumbs": {
-     "front": "thumbs/history-beccaria-deterrence-front.webp?v=b902ad366572",
-     "back": "thumbs/history-beccaria-deterrence-back.webp?v=b902ad366572"
+     "front": "thumbs/history-beccaria-deterrence-front.webp?v=02d8dc044622",
+     "back": "thumbs/history-beccaria-deterrence-back.webp?v=02d8dc044622"
     }
    },
    "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
@@ -51658,11 +51658,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A timeline of Crimea's administrative status with a draggable marker. The question asks why Russia called Crimea 'theirs' after giving it away in 1954. The view of Crimea changes as the marker moves along the years.",
-    "page": "pages/history-crimea-1954-gift.html?v=f286d26b3a95",
-    "bytes": 10094,
+    "page": "pages/history-crimea-1954-gift.html?v=e28d809ebf16",
+    "bytes": 9987,
     "thumbs": {
-     "front": "thumbs/history-crimea-1954-gift-front.webp?v=f286d26b3a95",
-     "back": "thumbs/history-crimea-1954-gift-back.webp?v=f286d26b3a95"
+     "front": "thumbs/history-crimea-1954-gift-front.webp?v=e28d809ebf16",
+     "back": "thumbs/history-crimea-1954-gift-back.webp?v=e28d809ebf16"
     }
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
@@ -52310,11 +52310,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A radiation dial with a needle, beside a photo of the Elephant's Foot, the melted Chernobyl core turned solid. The question asks how strong the radiation under the melted core is today; the reader swings the needle to a guess.",
-    "page": "pages/history-elephants-foot-dose.html?v=64039bbb827d",
-    "bytes": 21786,
+    "page": "pages/history-elephants-foot-dose.html?v=777826e26e86",
+    "bytes": 21777,
     "thumbs": {
-     "front": "thumbs/history-elephants-foot-dose-front.webp?v=64039bbb827d",
-     "back": "thumbs/history-elephants-foot-dose-back.webp?v=64039bbb827d"
+     "front": "thumbs/history-elephants-foot-dose-front.webp?v=777826e26e86",
+     "back": "thumbs/history-elephants-foot-dose-back.webp?v=777826e26e86"
     }
    },
    "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
@@ -52526,11 +52526,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Question asks what the world's first plastic recycling centre was. Tap each material (plastic, aluminium, glass) to see why it was recycled. Shows a historic photo of the Plastic Waste Recycling Mill with a banner reading First Plastic Recycling Plant.",
-    "page": "pages/history-first-plastic-plant.html?v=29e9e4a6b6f6",
-    "bytes": 10724,
+    "page": "pages/history-first-plastic-plant.html?v=eb918b5f2607",
+    "bytes": 10616,
     "thumbs": {
-     "front": "thumbs/history-first-plastic-plant-front.webp?v=29e9e4a6b6f6",
-     "back": "thumbs/history-first-plastic-plant-back.webp?v=29e9e4a6b6f6"
+     "front": "thumbs/history-first-plastic-plant-front.webp?v=eb918b5f2607",
+     "back": "thumbs/history-first-plastic-plant-back.webp?v=eb918b5f2607"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -55564,11 +55564,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two walking figures side by side: a normal walk on the left and the Pistolero Walk on the right. A DRAW! button can be tapped at any moment. The question asks who gets the pistol out first.",
-    "page": "pages/history-kgb-pistolero-walk.html?v=fb065967cadf",
-    "bytes": 10505,
+    "page": "pages/history-kgb-pistolero-walk.html?v=5441aae0706d",
+    "bytes": 10393,
     "thumbs": {
-     "front": "thumbs/history-kgb-pistolero-walk-front.webp?v=fb065967cadf",
-     "back": "thumbs/history-kgb-pistolero-walk-back.webp?v=fb065967cadf"
+     "front": "thumbs/history-kgb-pistolero-walk-front.webp?v=5441aae0706d",
+     "back": "thumbs/history-kgb-pistolero-walk-back.webp?v=5441aae0706d"
     }
    },
    "source": "Geopop, “Perché Putin cammina come un pistolero? La vita di Vladimir tra risse, servizi segreti e politica” (YouTube, 2023)",
@@ -55781,11 +55781,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page. A grid of dots stands for uranium, each dot 0.1% of the bomb's uranium. Holding the button runs a chain reaction, showing how many dots split. Asks why Little Boy was so inefficient.",
-    "page": "pages/history-little-boy-efficiency.html?v=aa71a68abfcd",
-    "bytes": 24910,
+    "page": "pages/history-little-boy-efficiency.html?v=fc23b48b9a1b",
+    "bytes": 24901,
     "thumbs": {
-     "front": "thumbs/history-little-boy-efficiency-front.webp?v=aa71a68abfcd",
-     "back": "thumbs/history-little-boy-efficiency-back.webp?v=aa71a68abfcd"
+     "front": "thumbs/history-little-boy-efficiency-front.webp?v=fc23b48b9a1b",
+     "back": "thumbs/history-little-boy-efficiency-back.webp?v=fc23b48b9a1b"
     }
    },
    "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
@@ -58762,11 +58762,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A slider labeled Western support in Ukraine, set at 0%, with a flow: Ukraine thrives, Russians want the same, unrest threatens Putin. Asks why a Western-leaning Ukraine threatens Putin's power at home.",
-    "page": "pages/history-putins-domestic-mirror.html?v=c951377bded6",
-    "bytes": 28408,
+    "page": "pages/history-putins-domestic-mirror.html?v=91ca143763d6",
+    "bytes": 28399,
     "thumbs": {
-     "front": "thumbs/history-putins-domestic-mirror-front.webp?v=c951377bded6",
-     "back": "thumbs/history-putins-domestic-mirror-back.webp?v=c951377bded6"
+     "front": "thumbs/history-putins-domestic-mirror-front.webp?v=91ca143763d6",
+     "back": "thumbs/history-putins-domestic-mirror-back.webp?v=91ca143763d6"
     }
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
@@ -58933,11 +58933,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A timeline with a draggable dot. Dragging the dot shows old rags turning into paper, from the 150 AD Chinese parchment onward. The page asks: what is the oldest known example of recycled paper?",
-    "page": "pages/history-rag-paper-scroll.html?v=e28564ce8d2a",
-    "bytes": 9592,
+    "page": "pages/history-rag-paper-scroll.html?v=471ef1f70487",
+    "bytes": 9476,
     "thumbs": {
-     "front": "thumbs/history-rag-paper-scroll-front.webp?v=e28564ce8d2a",
-     "back": "thumbs/history-rag-paper-scroll-back.webp?v=e28564ce8d2a"
+     "front": "thumbs/history-rag-paper-scroll-front.webp?v=471ef1f70487",
+     "back": "thumbs/history-rag-paper-scroll-back.webp?v=471ef1f70487"
     }
    },
    "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
@@ -59560,11 +59560,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card titled 'San Marino in court' showing a neighbouring lord's tax bill that claims the land is under his control. Below it, a draggable slider asks the reader to take the case to ever higher judges, from the local lord up to higher courts.",
-    "page": "pages/history-san-marino-appeals.html?v=db807718f407",
-    "bytes": 11878,
+    "page": "pages/history-san-marino-appeals.html?v=3bbc42ce96ac",
+    "bytes": 11764,
     "thumbs": {
-     "front": "thumbs/history-san-marino-appeals-front.webp?v=db807718f407",
-     "back": "thumbs/history-san-marino-appeals-back.webp?v=db807718f407"
+     "front": "thumbs/history-san-marino-appeals-front.webp?v=3bbc42ce96ac",
+     "back": "thumbs/history-san-marino-appeals-back.webp?v=3bbc42ce96ac"
     }
    },
    "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
@@ -59688,11 +59688,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Question: what specific part of the car killed Ayrton Senna at Imola? Shows Senna's car hitting a wall, with a Zoom in control to follow the crash step by step.",
-    "page": "pages/history-senna-suspension-fragment.html?v=77102a55b35d",
-    "bytes": 9809,
+    "page": "pages/history-senna-suspension-fragment.html?v=3edf09c78d19",
+    "bytes": 9715,
     "thumbs": {
-     "front": "thumbs/history-senna-suspension-fragment-front.webp?v=77102a55b35d",
-     "back": "thumbs/history-senna-suspension-fragment-back.webp?v=77102a55b35d"
+     "front": "thumbs/history-senna-suspension-fragment-front.webp?v=3edf09c78d19",
+     "back": "thumbs/history-senna-suspension-fragment-back.webp?v=3edf09c78d19"
     }
    },
    "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
@@ -59818,11 +59818,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A ring-sort interactive for 54 countries that still have the death penalty in law. Tapping the ring sorts them one step at a time. Counters show 0 executed in 2025 and 0 executed no one. The question asks how many countries keep the death penalty but executed no one in 2025.",
-    "page": "pages/history-silent-death-penalty.html?v=b9b15d69850d",
-    "bytes": 5992,
+    "page": "pages/history-silent-death-penalty.html?v=da3427a725c4",
+    "bytes": 5894,
     "thumbs": {
-     "front": "thumbs/history-silent-death-penalty-front.webp?v=b9b15d69850d",
-     "back": "thumbs/history-silent-death-penalty-back.webp?v=b9b15d69850d"
+     "front": "thumbs/history-silent-death-penalty-front.webp?v=da3427a725c4",
+     "back": "thumbs/history-silent-death-penalty-back.webp?v=da3427a725c4"
     }
    },
    "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
@@ -59904,11 +59904,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A timeline with a draggable nuclear blast marker. Decay curves for Cerium-141 and Yttrium-91 fall toward zero over about one to two months. Drag the blast along the timeline to see when its traces reach the air and rain sample.",
-    "page": "pages/history-soviet-bomb-isotopes.html?v=fa584c5f3550",
-    "bytes": 8790,
+    "page": "pages/history-soviet-bomb-isotopes.html?v=61e57ca3d16a",
+    "bytes": 8674,
     "thumbs": {
-     "front": "thumbs/history-soviet-bomb-isotopes-front.webp?v=fa584c5f3550",
-     "back": "thumbs/history-soviet-bomb-isotopes-back.webp?v=fa584c5f3550"
+     "front": "thumbs/history-soviet-bomb-isotopes-front.webp?v=61e57ca3d16a",
+     "back": "thumbs/history-soviet-bomb-isotopes-back.webp?v=61e57ca3d16a"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -61079,11 +61079,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Side view of a ship divided into 16 compartments by open-topped vertical walls. A red sea line rises as the bow tips lower, showing water spilling over one wall into the next. Caption asks why the ship did not stay afloat. Tap the ship to tip it further.",
-    "page": "pages/history-titanic-open-bulkheads.html?v=3234aab3d655",
-    "bytes": 8294,
+    "page": "pages/history-titanic-open-bulkheads.html?v=5e090af0e92b",
+    "bytes": 8176,
     "thumbs": {
-     "front": "thumbs/history-titanic-open-bulkheads-front.webp?v=3234aab3d655",
-     "back": "thumbs/history-titanic-open-bulkheads-back.webp?v=3234aab3d655"
+     "front": "thumbs/history-titanic-open-bulkheads-front.webp?v=5e090af0e92b",
+     "back": "thumbs/history-titanic-open-bulkheads-back.webp?v=5e090af0e92b"
     }
    },
    "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
@@ -61730,11 +61730,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Question card asking how wetting sand helped Egyptians drag huge stones on sleds. Text says wet sand in front of a sled halves the pulling force, so the same stone needs half the crew. Asks the reader to drag a water jar onto the sand in front of the lower sled.",
-    "page": "pages/history-wet-sand-sled.html?v=4cb25a0ab808",
-    "bytes": 11283,
+    "page": "pages/history-wet-sand-sled.html?v=55cd0eac70c0",
+    "bytes": 11167,
     "thumbs": {
-     "front": "thumbs/history-wet-sand-sled-front.webp?v=4cb25a0ab808",
-     "back": "thumbs/history-wet-sand-sled-back.webp?v=4cb25a0ab808"
+     "front": "thumbs/history-wet-sand-sled-front.webp?v=55cd0eac70c0",
+     "back": "thumbs/history-wet-sand-sled-back.webp?v=55cd0eac70c0"
     }
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
@@ -64994,11 +64994,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A slider labeled from No coffee to Lots. Sliding to pour in caffeine shows which molecules take the seats on a receptor, and the page asks how caffeine stops you feeling tired.",
-    "page": "pages/human_body-caffeine-steals-seat.html?v=6cc028e87856",
-    "bytes": 7795,
+    "page": "pages/human_body-caffeine-steals-seat.html?v=08d47358b1e3",
+    "bytes": 7701,
     "thumbs": {
-     "front": "thumbs/human_body-caffeine-steals-seat-front.webp?v=6cc028e87856",
-     "back": "thumbs/human_body-caffeine-steals-seat-back.webp?v=6cc028e87856"
+     "front": "thumbs/human_body-caffeine-steals-seat-front.webp?v=08d47358b1e3",
+     "back": "thumbs/human_body-caffeine-steals-seat-back.webp?v=08d47358b1e3"
     }
    },
    "source": "Geopop, “Ho bevuto 4 caffè tutti insieme: gli effetti della caffeina sul corpo umano e sul cervello” (YouTube, 2024)",
@@ -67253,11 +67253,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Page titled 'Why we forget our dreams' with a 'Hold to fall asleep' button. Holding it lowers the noradrenaline level, and the reader watches which dream memories get saved.",
-    "page": "pages/human_body-forgotten-dreams.html?v=ac66007d332f",
-    "bytes": 10914,
+    "page": "pages/human_body-forgotten-dreams.html?v=042120f5447f",
+    "bytes": 10798,
     "thumbs": {
-     "front": "thumbs/human_body-forgotten-dreams-front.webp?v=ac66007d332f",
-     "back": "thumbs/human_body-forgotten-dreams-back.webp?v=ac66007d332f"
+     "front": "thumbs/human_body-forgotten-dreams-front.webp?v=042120f5447f",
+     "back": "thumbs/human_body-forgotten-dreams-back.webp?v=042120f5447f"
     }
    },
    "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
@@ -68194,11 +68194,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card titled HANGOVER asks how less vasopressin causes the morning-after headache. It explains that alcohol lowers vasopressin, the body dries out, and the brain shrinks, pulling on its painful membranes.",
-    "page": "pages/human_body-hangover-headache-dehydration.html?v=dbd22dfb9a70",
-    "bytes": 8527,
+    "page": "pages/human_body-hangover-headache-dehydration.html?v=e7e890c7c09d",
+    "bytes": 8409,
     "thumbs": {
-     "front": "thumbs/human_body-hangover-headache-dehydration-front.webp?v=dbd22dfb9a70",
-     "back": "thumbs/human_body-hangover-headache-dehydration-back.webp?v=dbd22dfb9a70"
+     "front": "thumbs/human_body-hangover-headache-dehydration-front.webp?v=e7e890c7c09d",
+     "back": "thumbs/human_body-hangover-headache-dehydration-back.webp?v=e7e890c7c09d"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
@@ -69320,11 +69320,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card titled 'Astute free card SWEAT' asks how high humidity stops sweat from cooling us. A humidity dial runs from Dry (40%) to Muggy, showing sweat evaporating in dry air and sweat staying liquid on skin in muggy air, with heat trapped in the body.",
-    "page": "pages/human_body-humidity-traps-sweat.html?v=ac57caebec75",
-    "bytes": 9178,
+    "page": "pages/human_body-humidity-traps-sweat.html?v=88a60baf57b0",
+    "bytes": 9062,
     "thumbs": {
-     "front": "thumbs/human_body-humidity-traps-sweat-front.webp?v=ac57caebec75",
-     "back": "thumbs/human_body-humidity-traps-sweat-back.webp?v=ac57caebec75"
+     "front": "thumbs/human_body-humidity-traps-sweat-front.webp?v=88a60baf57b0",
+     "back": "thumbs/human_body-humidity-traps-sweat-back.webp?v=88a60baf57b0"
     }
    },
    "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",
@@ -69478,11 +69478,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An interactive page with a plane and a draggable slider up to 1.8g, beside a figure whose blood level shifts from head to feet. The page asks why 1.8g makes you dizzy and hard to stand.",
-    "page": "pages/human_body-hyper-g-dizziness.html?v=74df5f29dcbf",
-    "bytes": 8504,
+    "page": "pages/human_body-hyper-g-dizziness.html?v=22018b198192",
+    "bytes": 8393,
     "thumbs": {
-     "front": "thumbs/human_body-hyper-g-dizziness-front.webp?v=74df5f29dcbf",
-     "back": "thumbs/human_body-hyper-g-dizziness-back.webp?v=74df5f29dcbf"
+     "front": "thumbs/human_body-hyper-g-dizziness-front.webp?v=22018b198192",
+     "back": "thumbs/human_body-hyper-g-dizziness-back.webp?v=22018b198192"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -72544,11 +72544,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A blood level counter starts at 0 parts per billion beside a glass of tap water. Tapping keeps drinking water with 4 parts per trillion of PFOA, and blood rises toward 2 parts per billion. Asks how trace PFAS in tap water can lead to high blood levels.",
-    "page": "pages/human_body-pfas-builds-up.html?v=92f91ac4d657",
-    "bytes": 6404,
+    "page": "pages/human_body-pfas-builds-up.html?v=5271fa706a97",
+    "bytes": 6311,
     "thumbs": {
-     "front": "thumbs/human_body-pfas-builds-up-front.webp?v=92f91ac4d657",
-     "back": "thumbs/human_body-pfas-builds-up-back.webp?v=92f91ac4d657"
+     "front": "thumbs/human_body-pfas-builds-up-front.webp?v=5271fa706a97",
+     "back": "thumbs/human_body-pfas-builds-up-back.webp?v=5271fa706a97"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -73312,11 +73312,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive DNA strand. Press and hold to send radiation into it. Each hit snaps a strand or changes a letter. Counters track hits, strand breaks and changed letters, out of 8 hits.",
-    "page": "pages/human_body-radiation-breaks-dna.html?v=d6644fcfb2cd",
-    "bytes": 10015,
+    "page": "pages/human_body-radiation-breaks-dna.html?v=88c91e9f1d0c",
+    "bytes": 9898,
     "thumbs": {
-     "front": "thumbs/human_body-radiation-breaks-dna-front.webp?v=d6644fcfb2cd",
-     "back": "thumbs/human_body-radiation-breaks-dna-back.webp?v=d6644fcfb2cd"
+     "front": "thumbs/human_body-radiation-breaks-dna-front.webp?v=88c91e9f1d0c",
+     "back": "thumbs/human_body-radiation-breaks-dna-back.webp?v=88c91e9f1d0c"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -73355,11 +73355,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A glowing radioactive atom sits outside a body outline. The reader drags it down, past the skin and into a cell, to see how close range changes where its radiation lands.",
-    "page": "pages/human_body-radioactive-atom-inside.html?v=705ae12a0969",
-    "bytes": 9774,
+    "page": "pages/human_body-radioactive-atom-inside.html?v=9b10ba34874f",
+    "bytes": 9679,
     "thumbs": {
-     "front": "thumbs/human_body-radioactive-atom-inside-front.webp?v=705ae12a0969",
-     "back": "thumbs/human_body-radioactive-atom-inside-back.webp?v=705ae12a0969"
+     "front": "thumbs/human_body-radioactive-atom-inside-front.webp?v=9b10ba34874f",
+     "back": "thumbs/human_body-radioactive-atom-inside-back.webp?v=9b10ba34874f"
     }
    },
    "source": "Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)",
@@ -73510,11 +73510,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Question card: Why might a light sweater use a salt-free deodorant? A slider runs from 'I sweat a little' to 'I sweat a lot'. Drag it to a light sweater to reveal that aluminum salts plug sweat pores, so with little sweat their action is wasted.",
-    "page": "pages/human_body-salt-free-deodorant.html?v=dd0047215dcf",
-    "bytes": 7612,
+    "page": "pages/human_body-salt-free-deodorant.html?v=87aea0d7de53",
+    "bytes": 7518,
     "thumbs": {
-     "front": "thumbs/human_body-salt-free-deodorant-front.webp?v=dd0047215dcf",
-     "back": "thumbs/human_body-salt-free-deodorant-back.webp?v=dd0047215dcf"
+     "front": "thumbs/human_body-salt-free-deodorant-front.webp?v=87aea0d7de53",
+     "back": "thumbs/human_body-salt-free-deodorant-back.webp?v=87aea0d7de53"
     }
    },
    "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
@@ -90933,11 +90933,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Slider comparing a bag of gold alone with gold plus skills, know-how and mindset. Drag it to see the same bag of gold with more skill and mindset. The page asks why counting on money or looks for success is a mistake.",
-    "page": "pages/life-material-trap.html?v=11dc693cace3",
-    "bytes": 8461,
+    "page": "pages/life-material-trap.html?v=4e718bd40e3d",
+    "bytes": 8345,
     "thumbs": {
-     "front": "thumbs/life-material-trap-front.webp?v=11dc693cace3",
-     "back": "thumbs/life-material-trap-back.webp?v=11dc693cace3"
+     "front": "thumbs/life-material-trap-front.webp?v=4e718bd40e3d",
+     "back": "thumbs/life-material-trap-back.webp?v=4e718bd40e3d"
     }
    },
    "source": "Diventare Strong, “Mentalità D'Acciaio: 7 Pensieri da Eliminare dalla Tua Mente (Atteggiamento Mentale Vincente Strong)” (YouTube, 2020)",
@@ -95549,11 +95549,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Astute free card: 10-adic numbers asks how an endless string of 9s can equal –1. It shows adding 1 to …99999999 with tap-to-carry steps that turn every digit to 0, plus an algebra line giving m = –1.",
-    "page": "pages/maths-all-nines-minus-one.html?v=6f4075ae953f",
-    "bytes": 7075,
+    "page": "pages/maths-all-nines-minus-one.html?v=bda54d03469c",
+    "bytes": 6959,
     "thumbs": {
-     "front": "thumbs/maths-all-nines-minus-one-front.webp?v=6f4075ae953f",
-     "back": "thumbs/maths-all-nines-minus-one-back.webp?v=6f4075ae953f"
+     "front": "thumbs/maths-all-nines-minus-one-front.webp?v=bda54d03469c",
+     "back": "thumbs/maths-all-nines-minus-one-back.webp?v=bda54d03469c"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -97298,11 +97298,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two bifurcation diagrams, one for the logistic map and one for the sine map, with a slider that zooms into the forks. The reader is asked to drag the slider and compare the two maps.",
-    "page": "pages/maths-feigenbaum-universality.html?v=c9e678311bad",
-    "bytes": 6937,
+    "page": "pages/maths-feigenbaum-universality.html?v=7947c345a9e3",
+    "bytes": 6825,
     "thumbs": {
-     "front": "thumbs/maths-feigenbaum-universality-front.webp?v=c9e678311bad",
-     "back": "thumbs/maths-feigenbaum-universality-back.webp?v=c9e678311bad"
+     "front": "thumbs/maths-feigenbaum-universality-front.webp?v=7947c345a9e3",
+     "back": "thumbs/maths-feigenbaum-universality-back.webp?v=7947c345a9e3"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -98117,11 +98117,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Astute free card on the law of large numbers. It asks: what is the probability of losing money in 100 favorable bets? Each bet is a coin flip that wins $20 or loses $10. A draggable coin lets you run 100 bets.",
-    "page": "pages/maths-hundred-bets-safety.html?v=c0e24f992338",
-    "bytes": 8180,
+    "page": "pages/maths-hundred-bets-safety.html?v=c59aead40709",
+    "bytes": 8065,
     "thumbs": {
-     "front": "thumbs/maths-hundred-bets-safety-front.webp?v=c0e24f992338",
-     "back": "thumbs/maths-hundred-bets-safety-back.webp?v=c0e24f992338"
+     "front": "thumbs/maths-hundred-bets-safety-front.webp?v=c59aead40709",
+     "back": "thumbs/maths-hundred-bets-safety-back.webp?v=c59aead40709"
     }
    },
    "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
@@ -98795,11 +98795,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page asking how the logistic map's bifurcation diagram relates to the Mandelbrot set. Drag a dot left along the set's middle line to watch the orbit of z squared plus c.",
-    "page": "pages/maths-mandelbrot-bifurcation-slice.html?v=c3f92851fca5",
-    "bytes": 12610,
+    "page": "pages/maths-mandelbrot-bifurcation-slice.html?v=6bd7968dee50",
+    "bytes": 12494,
     "thumbs": {
-     "front": "thumbs/maths-mandelbrot-bifurcation-slice-front.webp?v=c3f92851fca5",
-     "back": "thumbs/maths-mandelbrot-bifurcation-slice-back.webp?v=c3f92851fca5"
+     "front": "thumbs/maths-mandelbrot-bifurcation-slice-front.webp?v=6bd7968dee50",
+     "back": "thumbs/maths-mandelbrot-bifurcation-slice-back.webp?v=6bd7968dee50"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -98838,11 +98838,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A world map on the Mercator projection with Greenland drawn very large near the top. Asks why Greenland looks so huge, and invites the reader to drag Greenland down to the equator to see its real size.",
-    "page": "pages/maths-mercator-greenland.html?v=48c7a99e3de6",
-    "bytes": 7818,
+    "page": "pages/maths-mercator-greenland.html?v=66a77755f790",
+    "bytes": 7704,
     "thumbs": {
-     "front": "thumbs/maths-mercator-greenland-front.webp?v=48c7a99e3de6",
-     "back": "thumbs/maths-mercator-greenland-back.webp?v=48c7a99e3de6"
+     "front": "thumbs/maths-mercator-greenland-front.webp?v=66a77755f790",
+     "back": "thumbs/maths-mercator-greenland-back.webp?v=66a77755f790"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -98924,11 +98924,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive map card: drag Wyoming north toward the pole and watch the latitude lines spread apart on a Mercator map. It asks why countries near the poles look so huge.",
-    "page": "pages/maths-mercator-stretch.html?v=5ab1d84f0718",
-    "bytes": 7408,
+    "page": "pages/maths-mercator-stretch.html?v=22c2ecfbfee8",
+    "bytes": 7298,
     "thumbs": {
-     "front": "thumbs/maths-mercator-stretch-front.webp?v=5ab1d84f0718",
-     "back": "thumbs/maths-mercator-stretch-back.webp?v=5ab1d84f0718"
+     "front": "thumbs/maths-mercator-stretch-front.webp?v=22c2ecfbfee8",
+     "back": "thumbs/maths-mercator-stretch-back.webp?v=22c2ecfbfee8"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -99388,11 +99388,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Text card asking how big an odd perfect number must be if one exists. A Raise the bound control steps through results; the reveal says it must exceed 10 to the power 2,200, with more than 2,200 digits.",
-    "page": "pages/maths-odd-perfect-bound.html?v=9bdfd66cffb9",
-    "bytes": 7754,
+    "page": "pages/maths-odd-perfect-bound.html?v=4f6a9acd7afe",
+    "bytes": 7651,
     "thumbs": {
-     "front": "thumbs/maths-odd-perfect-bound-front.webp?v=9bdfd66cffb9",
-     "back": "thumbs/maths-odd-perfect-bound-back.webp?v=9bdfd66cffb9"
+     "front": "thumbs/maths-odd-perfect-bound-front.webp?v=4f6a9acd7afe",
+     "back": "thumbs/maths-odd-perfect-bound-back.webp?v=4f6a9acd7afe"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -99518,11 +99518,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two digit grids, one in base 10 and one in base 7, with arrows showing where each last digit lands when squared. Tap a base to see which digits stay the same after squaring.",
-    "page": "pages/maths-padic-own-squares.html?v=55443863bc81",
-    "bytes": 7602,
+    "page": "pages/maths-padic-own-squares.html?v=1786fee23cb2",
+    "bytes": 7488,
     "thumbs": {
-     "front": "thumbs/maths-padic-own-squares-front.webp?v=55443863bc81",
-     "back": "thumbs/maths-padic-own-squares-back.webp?v=55443863bc81"
+     "front": "thumbs/maths-padic-own-squares-front.webp?v=1786fee23cb2",
+     "back": "thumbs/maths-padic-own-squares-back.webp?v=1786fee23cb2"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -99793,11 +99793,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Penrose kite and dart tiles. A counter shows kites 5 and darts 0, with a Split button and 0 of 5 splits done. It asks what number kites divided by darts approaches.",
-    "page": "pages/maths-penrose-golden-ratio.html?v=059dbad683d5",
-    "bytes": 8666,
+    "page": "pages/maths-penrose-golden-ratio.html?v=ee30ccac5a34",
+    "bytes": 8551,
     "thumbs": {
-     "front": "thumbs/maths-penrose-golden-ratio-front.webp?v=059dbad683d5",
-     "back": "thumbs/maths-penrose-golden-ratio-back.webp?v=059dbad683d5"
+     "front": "thumbs/maths-penrose-golden-ratio-front.webp?v=ee30ccac5a34",
+     "back": "thumbs/maths-penrose-golden-ratio-back.webp?v=ee30ccac5a34"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -99879,11 +99879,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "The page shows one point on a floor with 360° around it, and four shapes to tap: triangle, square, pentagon and hexagon. It asks whether copies of a shape can close around one corner.",
-    "page": "pages/maths-pentagons-never-tile.html?v=ce3e509471bf",
-    "bytes": 7858,
+    "page": "pages/maths-pentagons-never-tile.html?v=bbc885556653",
+    "bytes": 7762,
     "thumbs": {
-     "front": "thumbs/maths-pentagons-never-tile-front.webp?v=ce3e509471bf",
-     "back": "thumbs/maths-pentagons-never-tile-back.webp?v=ce3e509471bf"
+     "front": "thumbs/maths-pentagons-never-tile-front.webp?v=bbc885556653",
+     "back": "thumbs/maths-pentagons-never-tile-back.webp?v=bbc885556653"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -100130,11 +100130,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A rectangle split into two parts, a power of two and a Mersenne prime, with a draggable pearl that changes the exponent p. It asks whether the divisors of the perfect number 28 fill its rectangle exactly.",
-    "page": "pages/maths-perfect-tiling.html?v=0e742977dfc5",
-    "bytes": 21013,
+    "page": "pages/maths-perfect-tiling.html?v=0274005efdfe",
+    "bytes": 20886,
     "thumbs": {
-     "front": "thumbs/maths-perfect-tiling-front.webp?v=0e742977dfc5",
-     "back": "thumbs/maths-perfect-tiling-back.webp?v=0e742977dfc5"
+     "front": "thumbs/maths-perfect-tiling-front.webp?v=0274005efdfe",
+     "back": "thumbs/maths-perfect-tiling-back.webp?v=0274005efdfe"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -100173,11 +100173,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A dot grid where you drag a dot right to stack rows into a triangle. The page asks why perfect numbers are also triangles and stacks of odd cubes, and shows the triangle with 2^p−1 rows holding the perfect-number formula.",
-    "page": "pages/maths-perfect-triangle-cubes.html?v=7d79e8ca1eb1",
-    "bytes": 7845,
+    "page": "pages/maths-perfect-triangle-cubes.html?v=589d5adc8d9c",
+    "bytes": 8523,
     "thumbs": {
-     "front": "thumbs/maths-perfect-triangle-cubes-front.webp?v=7d79e8ca1eb1",
-     "back": "thumbs/maths-perfect-triangle-cubes-back.webp?v=7d79e8ca1eb1"
+     "front": "thumbs/maths-perfect-triangle-cubes-front.webp?v=589d5adc8d9c",
+     "back": "thumbs/maths-perfect-triangle-cubes-back.webp?v=589d5adc8d9c"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -101793,11 +101793,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card titled 3-ADIC. Squares of side 1/2, 1/4 and 1/16 are dragged into a frame and their tiles counted: 64, 16 and 1 tiles of 1/256, totalling 81, which forms a square of side 9/16.",
-    "page": "pages/maths-three-adic-squares.html?v=a465adbcdb51",
-    "bytes": 8716,
+    "page": "pages/maths-three-adic-squares.html?v=da0fbff8e630",
+    "bytes": 8605,
     "thumbs": {
-     "front": "thumbs/maths-three-adic-squares-front.webp?v=a465adbcdb51",
-     "back": "thumbs/maths-three-adic-squares-back.webp?v=a465adbcdb51"
+     "front": "thumbs/maths-three-adic-squares-front.webp?v=da0fbff8e630",
+     "back": "thumbs/maths-three-adic-squares-back.webp?v=da0fbff8e630"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -102217,11 +102217,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two tiling patterns side by side, one repeating and one that never repeats. A see-through copy of a tile can be dragged over the pattern to check whether it lands exactly on itself again.",
-    "page": "pages/maths-wang-never-repeats.html?v=653aaa2a4d44",
-    "bytes": 10846,
+    "page": "pages/maths-wang-never-repeats.html?v=2c9b913cddc9",
+    "bytes": 10732,
     "thumbs": {
-     "front": "thumbs/maths-wang-never-repeats-front.webp?v=653aaa2a4d44",
-     "back": "thumbs/maths-wang-never-repeats-back.webp?v=653aaa2a4d44"
+     "front": "thumbs/maths-wang-never-repeats-front.webp?v=2c9b913cddc9",
+     "back": "thumbs/maths-wang-never-repeats-back.webp?v=2c9b913cddc9"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -102302,11 +102302,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A Mercator world map with a draggable outline of Wyoming, drawn at latitude 43°N. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow. The page asks what happens to Wyoming's size there and why.",
-    "page": "pages/maths-wyoming-mercator-pole.html?v=fc4226bc62e2",
-    "bytes": 7440,
+    "page": "pages/maths-wyoming-mercator-pole.html?v=0f4868d4d14e",
+    "bytes": 7322,
     "thumbs": {
-     "front": "thumbs/maths-wyoming-mercator-pole-front.webp?v=fc4226bc62e2",
-     "back": "thumbs/maths-wyoming-mercator-pole-back.webp?v=fc4226bc62e2"
+     "front": "thumbs/maths-wyoming-mercator-pole-front.webp?v=0f4868d4d14e",
+     "back": "thumbs/maths-wyoming-mercator-pole-back.webp?v=0f4868d4d14e"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -104525,11 +104525,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Asks what a cigarette filter actually stops. Three items: loose tobacco bits are stopped, big smoke particles are mostly trapped, and toxic gases almost all get through.",
-    "page": "pages/medicine-cigarette-filter-myth.html?v=3cca2a844a5b",
-    "bytes": 8028,
+    "page": "pages/medicine-cigarette-filter-myth.html?v=cff627cbf751",
+    "bytes": 7915,
     "thumbs": {
-     "front": "thumbs/medicine-cigarette-filter-myth-front.webp?v=3cca2a844a5b",
-     "back": "thumbs/medicine-cigarette-filter-myth-back.webp?v=3cca2a844a5b"
+     "front": "thumbs/medicine-cigarette-filter-myth-front.webp?v=cff627cbf751",
+     "back": "thumbs/medicine-cigarette-filter-myth-back.webp?v=cff627cbf751"
     }
    },
    "source": "Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)",
@@ -106663,11 +106663,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Four outcomes of Vibrio vulnificus infection are listed: ulcers, necrosis, amputation, death. A hold button lets the reader watch the bacterium feed. The reveal says it lives in sea water and is extremely rare but very dangerous.",
-    "page": "pages/medicine-flesh-eating-vibrio.html?v=de7e1f404a64",
-    "bytes": 11327,
+    "page": "pages/medicine-flesh-eating-vibrio.html?v=43a43fa61563",
+    "bytes": 11211,
     "thumbs": {
-     "front": "thumbs/medicine-flesh-eating-vibrio-front.webp?v=de7e1f404a64",
-     "back": "thumbs/medicine-flesh-eating-vibrio-back.webp?v=de7e1f404a64"
+     "front": "thumbs/medicine-flesh-eating-vibrio-front.webp?v=43a43fa61563",
+     "back": "thumbs/medicine-flesh-eating-vibrio-back.webp?v=43a43fa61563"
     }
    },
    "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
@@ -111944,11 +111944,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A cell is drawn on the page beneath the question 'What is a major consequence of radiation exposure?' Tapping the cell hits its DNA with radiation. The reveal says radiation can cause cancer by mutating cells.",
-    "page": "pages/medicine-radiation-cancer.html?v=f65d3737a6ce",
-    "bytes": 8863,
+    "page": "pages/medicine-radiation-cancer.html?v=3197e16655a7",
+    "bytes": 8735,
     "thumbs": {
-     "front": "thumbs/medicine-radiation-cancer-front.webp?v=f65d3737a6ce",
-     "back": "thumbs/medicine-radiation-cancer-back.webp?v=f65d3737a6ce"
+     "front": "thumbs/medicine-radiation-cancer-front.webp?v=3197e16655a7",
+     "back": "thumbs/medicine-radiation-cancer-back.webp?v=3197e16655a7"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -115098,11 +115098,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A growing robot inside a model of the human throat, with a soft side branch. Tap Grow to lengthen the robot one step at a time and watch the branch bend along the wall into the tube opening. Question: how does the robot find the right tube?",
-    "page": "pages/medicine-soft-robot-throat.html?v=4642a1caf434",
-    "bytes": 11760,
+    "page": "pages/medicine-soft-robot-throat.html?v=225d7ffa19c7",
+    "bytes": 11646,
     "thumbs": {
-     "front": "thumbs/medicine-soft-robot-throat-front.webp?v=4642a1caf434",
-     "back": "thumbs/medicine-soft-robot-throat-back.webp?v=4642a1caf434"
+     "front": "thumbs/medicine-soft-robot-throat-front.webp?v=225d7ffa19c7",
+     "back": "thumbs/medicine-soft-robot-throat-back.webp?v=225d7ffa19c7"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -116228,11 +116228,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "The page asks whether drinking water causes kidney stones and shows a kidney. A glass of water can be dragged onto the kidney to reveal the answer.",
-    "page": "pages/medicine-water-kidney-stones.html?v=134b86ac2821",
-    "bytes": 9742,
+    "page": "pages/medicine-water-kidney-stones.html?v=2916ca5c5a28",
+    "bytes": 9625,
     "thumbs": {
-     "front": "thumbs/medicine-water-kidney-stones-front.webp?v=134b86ac2821",
-     "back": "thumbs/medicine-water-kidney-stones-back.webp?v=134b86ac2821"
+     "front": "thumbs/medicine-water-kidney-stones-front.webp?v=2916ca5c5a28",
+     "back": "thumbs/medicine-water-kidney-stones-back.webp?v=2916ca5c5a28"
     }
    },
    "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
@@ -128420,11 +128420,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Titled 'The 1976 impossibility', the page asks how much more likely a heatwave as hot as 1976's is today than 50 years ago. Press play to see 50 summers in each world, one dot per summer, with red dots marking summers as hot as this heatwave, as the dots move from impossible to normal.",
-    "page": "pages/nature-1976-impossible-heatwave.html?v=391d3ac4819e",
-    "bytes": 7969,
+    "page": "pages/nature-1976-impossible-heatwave.html?v=d4f171a09fe2",
+    "bytes": 7853,
     "thumbs": {
-     "front": "thumbs/nature-1976-impossible-heatwave-front.webp?v=391d3ac4819e",
-     "back": "thumbs/nature-1976-impossible-heatwave-back.webp?v=391d3ac4819e"
+     "front": "thumbs/nature-1976-impossible-heatwave-front.webp?v=d4f171a09fe2",
+     "back": "thumbs/nature-1976-impossible-heatwave-back.webp?v=d4f171a09fe2"
     }
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
@@ -130068,11 +130068,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Top-down view of a bay at low tide, shown as open sand. Tap the bay to bring the tide in one step at a time, watching the water rise as the shores close in toward the Mont.",
-    "page": "pages/nature-bay-funnel-tide.html?v=dbdd26d5ef07",
-    "bytes": 7208,
+    "page": "pages/nature-bay-funnel-tide.html?v=6dd3c724a99f",
+    "bytes": 7117,
     "thumbs": {
-     "front": "thumbs/nature-bay-funnel-tide-front.webp?v=dbdd26d5ef07",
-     "back": "thumbs/nature-bay-funnel-tide-back.webp?v=dbdd26d5ef07"
+     "front": "thumbs/nature-bay-funnel-tide-front.webp?v=6dd3c724a99f",
+     "back": "thumbs/nature-bay-funnel-tide-back.webp?v=6dd3c724a99f"
     }
    },
    "source": "Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)",
@@ -130914,11 +130914,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two paths for a plastic bottle, one burning it for energy and one recycling it back into plastic. Tap to advance both paths and watch a pile of oil grow, to see which path spends more fossil fuel.",
-    "page": "pages/nature-burning-plastic-waste.html?v=314d526f1b4b",
-    "bytes": 7895,
+    "page": "pages/nature-burning-plastic-waste.html?v=9ef4e266e9bd",
+    "bytes": 7797,
     "thumbs": {
-     "front": "thumbs/nature-burning-plastic-waste-front.webp?v=314d526f1b4b",
-     "back": "thumbs/nature-burning-plastic-waste-back.webp?v=314d526f1b4b"
+     "front": "thumbs/nature-burning-plastic-waste-front.webp?v=9ef4e266e9bd",
+     "back": "thumbs/nature-burning-plastic-waste-back.webp?v=9ef4e266e9bd"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -132202,11 +132202,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Question: why is the collapse of the eruptive column the most dangerous moment? A side view shows a tall volcanic column rising from a volcano. Tapping the column loads it with heavy ash and rock until it falls.",
-    "page": "pages/nature-column-collapse-flows.html?v=00464bb399c3",
-    "bytes": 9932,
+    "page": "pages/nature-column-collapse-flows.html?v=e05546022139",
+    "bytes": 9821,
     "thumbs": {
-     "front": "thumbs/nature-column-collapse-flows-front.webp?v=00464bb399c3",
-     "back": "thumbs/nature-column-collapse-flows-back.webp?v=00464bb399c3"
+     "front": "thumbs/nature-column-collapse-flows-front.webp?v=e05546022139",
+     "back": "thumbs/nature-column-collapse-flows-back.webp?v=e05546022139"
     }
    },
    "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
@@ -136126,11 +136126,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive page asking how thick Greenland's ice sheet is. A Coast/Interior toggle switches the view. Blocks show 300 m towers stacked for scale, with the interior reaching about 3 km, ten towers high.",
-    "page": "pages/nature-greenland-ice-thickness.html?v=7d18ecfb672c",
-    "bytes": 7788,
+    "page": "pages/nature-greenland-ice-thickness.html?v=1f63fbfc3983",
+    "bytes": 7692,
     "thumbs": {
-     "front": "thumbs/nature-greenland-ice-thickness-front.webp?v=7d18ecfb672c",
-     "back": "thumbs/nature-greenland-ice-thickness-back.webp?v=7d18ecfb672c"
+     "front": "thumbs/nature-greenland-ice-thickness-front.webp?v=1f63fbfc3983",
+     "back": "thumbs/nature-greenland-ice-thickness-back.webp?v=1f63fbfc3983"
     }
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
@@ -136811,11 +136811,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A timeline slider from 0 seconds to 10 years. A rockfall breaks loose and comes down fast, while a slide like Niscemi's has not visibly moved. The reader drags the slider to see both slopes over time and asks how fast a landslide moves.",
-    "page": "pages/nature-landslide-speed-range.html?v=fd06924d47fd",
-    "bytes": 8865,
+    "page": "pages/nature-landslide-speed-range.html?v=7e66f52fb5d5",
+    "bytes": 8757,
     "thumbs": {
-     "front": "thumbs/nature-landslide-speed-range-front.webp?v=fd06924d47fd",
-     "back": "thumbs/nature-landslide-speed-range-back.webp?v=fd06924d47fd"
+     "front": "thumbs/nature-landslide-speed-range-front.webp?v=7e66f52fb5d5",
+     "back": "thumbs/nature-landslide-speed-range-back.webp?v=7e66f52fb5d5"
     }
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
@@ -137581,11 +137581,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card titled Undersea Volcano asks how an explosive eruption of Marsili would lose its energy. A timeline sits below the text. Dragging it sets off an eruption 500 m down in the sea, with energy arrows spreading through the water column.",
-    "page": "pages/nature-marsili-water-shield.html?v=9853c431a017",
-    "bytes": 11142,
+    "page": "pages/nature-marsili-water-shield.html?v=fa0b87d92dc0",
+    "bytes": 11028,
     "thumbs": {
-     "front": "thumbs/nature-marsili-water-shield-front.webp?v=9853c431a017",
-     "back": "thumbs/nature-marsili-water-shield-back.webp?v=9853c431a017"
+     "front": "thumbs/nature-marsili-water-shield-front.webp?v=fa0b87d92dc0",
+     "back": "thumbs/nature-marsili-water-shield-back.webp?v=fa0b87d92dc0"
     }
    },
    "source": "Geopop, “Marsili: cosa accadrebbe in caso di eruzione del vulcano più grande d'Europa?” (YouTube, 2021)",
@@ -138214,11 +138214,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A year-long timeline from JAN to DEC with a draggable marker and a counter reading 0 deaths so far on day 0. Dragging through the year fills up the mosquito's toll. The page asks why the mosquito is the most lethal animal in the world.",
-    "page": "pages/nature-mosquito-deadly-year.html?v=c4e2c46dc898",
-    "bytes": 5540,
+    "page": "pages/nature-mosquito-deadly-year.html?v=a7920cf131d9",
+    "bytes": 5424,
     "thumbs": {
-     "front": "thumbs/nature-mosquito-deadly-year-front.webp?v=c4e2c46dc898",
-     "back": "thumbs/nature-mosquito-deadly-year-back.webp?v=c4e2c46dc898"
+     "front": "thumbs/nature-mosquito-deadly-year-front.webp?v=a7920cf131d9",
+     "back": "thumbs/nature-mosquito-deadly-year-back.webp?v=a7920cf131d9"
     }
    },
    "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",
@@ -139609,11 +139609,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Titled Oyster Reefs, the page asks how much water a single oyster can filter in one day. A hold-to-feed button fills a grid of squares, each one litre of murky sea water, to show the scale.",
-    "page": "pages/nature-oyster-water-filter.html?v=2fd252f4f60e",
-    "bytes": 8964,
+    "page": "pages/nature-oyster-water-filter.html?v=ec8ae909b242",
+    "bytes": 8850,
     "thumbs": {
-     "front": "thumbs/nature-oyster-water-filter-front.webp?v=2fd252f4f60e",
-     "back": "thumbs/nature-oyster-water-filter-back.webp?v=2fd252f4f60e"
+     "front": "thumbs/nature-oyster-water-filter-front.webp?v=ec8ae909b242",
+     "back": "thumbs/nature-oyster-water-filter-back.webp?v=ec8ae909b242"
     }
    },
    "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
@@ -139897,11 +139897,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Global map with rain clouds labeled with PFAS counts. Drag the cloud over a place and let it rain. The page asks what 'planetary saturation' means for PFAS.",
-    "page": "pages/nature-pfas-everywhere-rain.html?v=cd79675457da",
-    "bytes": 9429,
+    "page": "pages/nature-pfas-everywhere-rain.html?v=4c5b2d294e85",
+    "bytes": 9317,
     "thumbs": {
-     "front": "thumbs/nature-pfas-everywhere-rain-front.webp?v=cd79675457da",
-     "back": "thumbs/nature-pfas-everywhere-rain-back.webp?v=cd79675457da"
+     "front": "thumbs/nature-pfas-everywhere-rain-front.webp?v=4c5b2d294e85",
+     "back": "thumbs/nature-pfas-everywhere-rain-back.webp?v=4c5b2d294e85"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -140168,11 +140168,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "An open ocean scene. Tap the ocean three times to drop plastic and follow where it travels: into the Pacific gyre, then back to fishing coasts and up the food chain. Asks why the Pacific plastic island is a problem on your own plate.",
-    "page": "pages/nature-plastic-comes-back.html?v=fcb115538203",
-    "bytes": 9287,
+    "page": "pages/nature-plastic-comes-back.html?v=9a7deeb6a14f",
+    "bytes": 9192,
     "thumbs": {
-     "front": "thumbs/nature-plastic-comes-back-front.webp?v=fcb115538203",
-     "back": "thumbs/nature-plastic-comes-back-back.webp?v=fcb115538203"
+     "front": "thumbs/nature-plastic-comes-back-front.webp?v=9a7deeb6a14f",
+     "back": "thumbs/nature-plastic-comes-back-back.webp?v=9a7deeb6a14f"
     }
    },
    "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
@@ -141938,11 +141938,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A vertical sea-level scale with a 0 m line for today's sea level and a level 120 m below it. The question asks how much lower the sea was 20,000 years ago. Tapping locks 20 m of sea water into ice at a time, showing the sea dropping.",
-    "page": "pages/nature-sea-level-drop.html?v=7f54f2df7dc3",
-    "bytes": 7629,
+    "page": "pages/nature-sea-level-drop.html?v=ec81f45b9fe5",
+    "bytes": 7513,
     "thumbs": {
-     "front": "thumbs/nature-sea-level-drop-front.webp?v=7f54f2df7dc3",
-     "back": "thumbs/nature-sea-level-drop-back.webp?v=7f54f2df7dc3"
+     "front": "thumbs/nature-sea-level-drop-front.webp?v=ec81f45b9fe5",
+     "back": "thumbs/nature-sea-level-drop-back.webp?v=ec81f45b9fe5"
     }
    },
    "source": "Geopop, “LE ERE GLACIALI - VI SPIEGO COME, QUANDO E PERCHÉ AVVENGONO” (YouTube, 2020)",
@@ -143564,11 +143564,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A calm beach scene with a slider for watching the sea in the minutes before a tsunami wave. The question asks what the main early warning sign of a tsunami is, with choices: Calm, Sea retreats, or Wave.",
-    "page": "pages/nature-tsunami-sea-retreat.html?v=ab15b442ff5e",
-    "bytes": 10081,
+    "page": "pages/nature-tsunami-sea-retreat.html?v=2eeab565a60b",
+    "bytes": 9972,
     "thumbs": {
-     "front": "thumbs/nature-tsunami-sea-retreat-front.webp?v=ab15b442ff5e",
-     "back": "thumbs/nature-tsunami-sea-retreat-back.webp?v=ab15b442ff5e"
+     "front": "thumbs/nature-tsunami-sea-retreat-front.webp?v=2eeab565a60b",
+     "back": "thumbs/nature-tsunami-sea-retreat-back.webp?v=2eeab565a60b"
     }
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
@@ -144081,11 +144081,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A drag-apart drawing of Vesuvius. Lifting the surface shows the 1906 and 1944 eruptions as one shared magma process beneath. Asks why 1944 is seen as a continuation of 1906, not a new start.",
-    "page": "pages/nature-vesuvius-one-eruption.html?v=544d7427253c",
-    "bytes": 8425,
+    "page": "pages/nature-vesuvius-one-eruption.html?v=13ca48d346dc",
+    "bytes": 8309,
     "thumbs": {
-     "front": "thumbs/nature-vesuvius-one-eruption-front.webp?v=544d7427253c",
-     "back": "thumbs/nature-vesuvius-one-eruption-back.webp?v=544d7427253c"
+     "front": "thumbs/nature-vesuvius-one-eruption-front.webp?v=13ca48d346dc",
+     "back": "thumbs/nature-vesuvius-one-eruption-back.webp?v=13ca48d346dc"
     }
    },
    "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
@@ -144167,11 +144167,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Asks how plain water carves caves out of solid rock. Shows rain sinking through cracks in limestone, widening them into passages, and redepositing rock to form stalactites and stalagmites.",
-    "page": "pages/nature-water-carves-caves.html?v=79b329504eba",
-    "bytes": 10038,
+    "page": "pages/nature-water-carves-caves.html?v=084a9cbbf1f6",
+    "bytes": 9923,
     "thumbs": {
-     "front": "thumbs/nature-water-carves-caves-front.webp?v=79b329504eba",
-     "back": "thumbs/nature-water-carves-caves-back.webp?v=79b329504eba"
+     "front": "thumbs/nature-water-carves-caves-front.webp?v=084a9cbbf1f6",
+     "back": "thumbs/nature-water-carves-caves-back.webp?v=084a9cbbf1f6"
     }
    },
    "source": "Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)",
@@ -169898,11 +169898,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A slider moves from awake to asleep while a logic filter labeled prefrontal cortex dims from 100%, letting surreal images pass through. Asks: why do absurd dream events seem normal?",
-    "page": "pages/psychology-dream-logic-filter.html?v=17142ede2396",
-    "bytes": 7211,
+    "page": "pages/psychology-dream-logic-filter.html?v=090f8c51d077",
+    "bytes": 7095,
     "thumbs": {
-     "front": "thumbs/psychology-dream-logic-filter-front.webp?v=17142ede2396",
-     "back": "thumbs/psychology-dream-logic-filter-back.webp?v=17142ede2396"
+     "front": "thumbs/psychology-dream-logic-filter-front.webp?v=090f8c51d077",
+     "back": "thumbs/psychology-dream-logic-filter-back.webp?v=090f8c51d077"
     }
    },
    "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
@@ -176622,11 +176622,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card titled Astute free card, with a slider the reader drags to let a quiet person show what they know to a group. It asks why knowing one thing deeply makes bullies back off, and says to show expertise early.",
-    "page": "pages/psychology-niche-expertise-respect.html?v=b47f919d5edc",
-    "bytes": 9266,
+    "page": "pages/psychology-niche-expertise-respect.html?v=cb1ff978802e",
+    "bytes": 9151,
     "thumbs": {
-     "front": "thumbs/psychology-niche-expertise-respect-front.webp?v=b47f919d5edc",
-     "back": "thumbs/psychology-niche-expertise-respect-back.webp?v=b47f919d5edc"
+     "front": "thumbs/psychology-niche-expertise-respect-front.webp?v=cb1ff978802e",
+     "back": "thumbs/psychology-niche-expertise-respect-back.webp?v=cb1ff978802e"
     }
    },
    "source": "Diventare Strong, “FATTI RISPETTARE! 7 Trucchi Psicologici Scientifici” (YouTube, 2021)",
@@ -182648,11 +182648,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card titled Fire Syringe asks what adiabatic compression is and why it can set cotton on fire. It says fast compression traps heat, and tells the reader to push the plunger slowly, then slam it.",
-    "page": "pages/science-adiabatic-compression.html?v=3e7b1062b209",
-    "bytes": 22716,
+    "page": "pages/science-adiabatic-compression.html?v=29d123959955",
+    "bytes": 22602,
     "thumbs": {
-     "front": "thumbs/science-adiabatic-compression-front.webp?v=3e7b1062b209",
-     "back": "thumbs/science-adiabatic-compression-back.webp?v=3e7b1062b209"
+     "front": "thumbs/science-adiabatic-compression-front.webp?v=29d123959955",
+     "back": "thumbs/science-adiabatic-compression-back.webp?v=29d123959955"
     }
    },
    "source": "Veritasium, “Fire Syringe” (YouTube, 2011)",
@@ -182691,11 +182691,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Cross-section of the Apennine mountains. Tap the picture to add weight to the chain and see the crust bend downward in front of it. Asks: why is the Adriatic Sea considered a flexural basin?",
-    "page": "pages/science-adriatic-flexural-basin.html?v=a5c74f7064ac",
-    "bytes": 7169,
+    "page": "pages/science-adriatic-flexural-basin.html?v=0f20dc5beafd",
+    "bytes": 7079,
     "thumbs": {
-     "front": "thumbs/science-adriatic-flexural-basin-front.webp?v=a5c74f7064ac",
-     "back": "thumbs/science-adriatic-flexural-basin-back.webp?v=a5c74f7064ac"
+     "front": "thumbs/science-adriatic-flexural-basin-front.webp?v=0f20dc5beafd",
+     "back": "thumbs/science-adriatic-flexural-basin-back.webp?v=0f20dc5beafd"
     }
    },
    "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
@@ -182906,11 +182906,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive diagram: two plates, one aluminium and one plastic, each with ice, both at room temperature. Drag time forward to see where heat flows. Asks why ice melts faster on aluminium.",
-    "page": "pages/science-aluminium-ice-melt.html?v=e35940060fe0",
-    "bytes": 8083,
+    "page": "pages/science-aluminium-ice-melt.html?v=0ce392ba5c5f",
+    "bytes": 7965,
     "thumbs": {
-     "front": "thumbs/science-aluminium-ice-melt-front.webp?v=e35940060fe0",
-     "back": "thumbs/science-aluminium-ice-melt-back.webp?v=e35940060fe0"
+     "front": "thumbs/science-aluminium-ice-melt-front.webp?v=0ce392ba5c5f",
+     "back": "thumbs/science-aluminium-ice-melt-back.webp?v=0ce392ba5c5f"
     }
    },
    "source": "Veritasium, “Misconceptions About Temperature” (YouTube, 2012)",
@@ -182949,11 +182949,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Cross-section diagram of Antarctica with the ice sheet lifted away, showing an ancient craton under younger layers. The reader is asked to drag a drill bit down through East Antarctica to see how old its rocks are.",
-    "page": "pages/science-antarctica-ancient-craton.html?v=6ddecb6e0a92",
-    "bytes": 8803,
+    "page": "pages/science-antarctica-ancient-craton.html?v=785e7199d81b",
+    "bytes": 8718,
     "thumbs": {
-     "front": "thumbs/science-antarctica-ancient-craton-front.webp?v=6ddecb6e0a92",
-     "back": "thumbs/science-antarctica-ancient-craton-back.webp?v=6ddecb6e0a92"
+     "front": "thumbs/science-antarctica-ancient-craton-front.webp?v=785e7199d81b",
+     "back": "thumbs/science-antarctica-ancient-craton-back.webp?v=785e7199d81b"
     }
    },
    "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
@@ -183078,11 +183078,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A geological cross-section showing a tilted rock layer, with a draggable control that turns the section away from the layer's strike. The page asks what apparent dip is and how geologists find it.",
-    "page": "pages/science-apparent-dip.html?v=0df989b405c8",
-    "bytes": 7942,
+    "page": "pages/science-apparent-dip.html?v=1add19a0851f",
+    "bytes": 7826,
     "thumbs": {
-     "front": "thumbs/science-apparent-dip-front.webp?v=0df989b405c8",
-     "back": "thumbs/science-apparent-dip-back.webp?v=0df989b405c8"
+     "front": "thumbs/science-apparent-dip-front.webp?v=1add19a0851f",
+     "back": "thumbs/science-apparent-dip-back.webp?v=1add19a0851f"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -183633,11 +183633,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card titled Belt Friction Equation asks what equation gives the tension a coiled rope can hold. It shows T ship = T you times e to the μθ, with μ = 0.3, a rope wrapped around a bollard, a ship pulling 10,000 and a slider that adds turns.",
-    "page": "pages/science-belt-friction-equation.html?v=dc2d2b66b406",
-    "bytes": 8817,
+    "page": "pages/science-belt-friction-equation.html?v=4a3ae71eb51f",
+    "bytes": 8701,
     "thumbs": {
-     "front": "thumbs/science-belt-friction-equation-front.webp?v=dc2d2b66b406",
-     "back": "thumbs/science-belt-friction-equation-back.webp?v=dc2d2b66b406"
+     "front": "thumbs/science-belt-friction-equation-front.webp?v=4a3ae71eb51f",
+     "back": "thumbs/science-belt-friction-equation-back.webp?v=4a3ae71eb51f"
     }
    },
    "source": "Veritasium, “Stringless Yo-Yo!” (YouTube, 2016)",
@@ -184144,11 +184144,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Drag across a coastal picture to run the centuries from then to today and watch the ground rise and sink. The page asks what bradyseism is and why some ancient towns lie underwater.",
-    "page": "pages/science-bradyseism-breathing-ground.html?v=4f4e197ac7f7",
-    "bytes": 9013,
+    "page": "pages/science-bradyseism-breathing-ground.html?v=c0839d4dc3b3",
+    "bytes": 8918,
     "thumbs": {
-     "front": "thumbs/science-bradyseism-breathing-ground-front.webp?v=4f4e197ac7f7",
-     "back": "thumbs/science-bradyseism-breathing-ground-back.webp?v=4f4e197ac7f7"
+     "front": "thumbs/science-bradyseism-breathing-ground-front.webp?v=c0839d4dc3b3",
+     "back": "thumbs/science-bradyseism-breathing-ground-back.webp?v=c0839d4dc3b3"
     }
    },
    "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
@@ -184532,11 +184532,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card asks why caps and bottles are sorted apart when both are PET. The reader drags a cap flake into the bottle bin. Text says caps may hold additives like aluminium or glass fillers that would contaminate recycled bottle plastic.",
-    "page": "pages/science-caps-bottles-sorting.html?v=76e509f36756",
-    "bytes": 9694,
+    "page": "pages/science-caps-bottles-sorting.html?v=295abd057c98",
+    "bytes": 9600,
     "thumbs": {
-     "front": "thumbs/science-caps-bottles-sorting-front.webp?v=76e509f36756",
-     "back": "thumbs/science-caps-bottles-sorting-back.webp?v=76e509f36756"
+     "front": "thumbs/science-caps-bottles-sorting-front.webp?v=295abd057c98",
+     "back": "thumbs/science-caps-bottles-sorting-back.webp?v=295abd057c98"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -184747,11 +184747,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Four step cards describing how CFCs destroy ozone, to be tapped in the order they happen: a chlorine atom breaks free, the CFC drifts up to the stratosphere, the chlorine breaks an ozone molecule, a UV photon hits the CFC.",
-    "page": "pages/science-cfc-ozone-hole.html?v=99e3716cf866",
-    "bytes": 18499,
+    "page": "pages/science-cfc-ozone-hole.html?v=6f6606071c84",
+    "bytes": 18490,
     "thumbs": {
-     "front": "thumbs/science-cfc-ozone-hole-front.webp?v=99e3716cf866",
-     "back": "thumbs/science-cfc-ozone-hole-back.webp?v=99e3716cf866"
+     "front": "thumbs/science-cfc-ozone-hole-front.webp?v=6f6606071c84",
+     "back": "thumbs/science-cfc-ozone-hole-back.webp?v=6f6606071c84"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -184918,11 +184918,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Before and after diagrams of Reactor 4, whose core is sealed by a huge lid. A slider plays the explosion in slow motion. The question asks what massive object the explosion blew off.",
-    "page": "pages/science-chernobyl-reactor-lid.html?v=778bd0ad89f5",
-    "bytes": 11818,
+    "page": "pages/science-chernobyl-reactor-lid.html?v=beb40029026f",
+    "bytes": 11702,
     "thumbs": {
-     "front": "thumbs/science-chernobyl-reactor-lid-front.webp?v=778bd0ad89f5",
-     "back": "thumbs/science-chernobyl-reactor-lid-back.webp?v=778bd0ad89f5"
+     "front": "thumbs/science-chernobyl-reactor-lid-front.webp?v=beb40029026f",
+     "back": "thumbs/science-chernobyl-reactor-lid-back.webp?v=beb40029026f"
     }
    },
    "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
@@ -186059,11 +186059,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Question: why does a deodorant spray feel cold? Three glowing spots can be tapped: the can, the nozzle, and the mist. Tapping each one reveals how propane gas expands and pulls in heat.",
-    "page": "pages/science-cold-deodorant-spray.html?v=0db8b60a6ad1",
-    "bytes": 8515,
+    "page": "pages/science-cold-deodorant-spray.html?v=d466df9dd337",
+    "bytes": 8395,
     "thumbs": {
-     "front": "thumbs/science-cold-deodorant-spray-front.webp?v=0db8b60a6ad1",
-     "back": "thumbs/science-cold-deodorant-spray-back.webp?v=0db8b60a6ad1"
+     "front": "thumbs/science-cold-deodorant-spray-front.webp?v=d466df9dd337",
+     "back": "thumbs/science-cold-deodorant-spray-back.webp?v=d466df9dd337"
     }
    },
    "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
@@ -186296,11 +186296,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two bars, one hot and one cold, with a slider that adds atoms to each bar. Random energy hops mostly land on even splits. The page asks how likely a spontaneous cold-to-hot energy transfer is.",
-    "page": "pages/science-cold-to-hot.html?v=13d130eb6819",
-    "bytes": 24271,
+    "page": "pages/science-cold-to-hot.html?v=1291bd581024",
+    "bytes": 24122,
     "thumbs": {
-     "front": "thumbs/science-cold-to-hot-front.webp?v=13d130eb6819",
-     "back": "thumbs/science-cold-to-hot-back.webp?v=13d130eb6819"
+     "front": "thumbs/science-cold-to-hot-front.webp?v=1291bd581024",
+     "back": "thumbs/science-cold-to-hot-back.webp?v=1291bd581024"
     }
    },
    "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
@@ -187223,11 +187223,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A diagram of an airplane at an adjustable altitude above the ground, with a band of air overhead acting as a shield and falling particles from space. Drag the slider to fly higher and watch how many cosmic particles reach the plane.",
-    "page": "pages/science-cosmic-rays-planes.html?v=10cd5baa1e6d",
-    "bytes": 9655,
+    "page": "pages/science-cosmic-rays-planes.html?v=507ccee771cb",
+    "bytes": 9557,
     "thumbs": {
-     "front": "thumbs/science-cosmic-rays-planes-front.webp?v=10cd5baa1e6d",
-     "back": "thumbs/science-cosmic-rays-planes-back.webp?v=10cd5baa1e6d"
+     "front": "thumbs/science-cosmic-rays-planes-front.webp?v=507ccee771cb",
+     "back": "thumbs/science-cosmic-rays-planes-back.webp?v=507ccee771cb"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -187396,11 +187396,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page asking how DEET stops a mosquito from smelling you. A slider reading 'Slide to spray DEET' moves from 'No DEET' to 'Full spray', showing a mosquito antenna's pores being corked.",
-    "page": "pages/science-deet-plugs-pores.html?v=a4b50805903c",
-    "bytes": 9647,
+    "page": "pages/science-deet-plugs-pores.html?v=50a99d7c4b8e",
+    "bytes": 9531,
     "thumbs": {
-     "front": "thumbs/science-deet-plugs-pores-front.webp?v=a4b50805903c",
-     "back": "thumbs/science-deet-plugs-pores-back.webp?v=a4b50805903c"
+     "front": "thumbs/science-deet-plugs-pores-front.webp?v=50a99d7c4b8e",
+     "back": "thumbs/science-deet-plugs-pores-back.webp?v=50a99d7c4b8e"
     }
    },
    "source": "Geopop, “Quali antizanzare funzionano meglio? Zampironi, spray: analizziamoli dal punto di vista chimico” (YouTube, 2024)",
@@ -187524,11 +187524,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two stones, one labelled real diamond and one fake stone, being dragged back and forth across a sheet of sandpaper. The question asks what happens when a real diamond is rubbed on sandpaper.",
-    "page": "pages/science-diamond-sandpaper-test.html?v=5e663bddc7c0",
-    "bytes": 10928,
+    "page": "pages/science-diamond-sandpaper-test.html?v=21781db22f00",
+    "bytes": 10812,
     "thumbs": {
-     "front": "thumbs/science-diamond-sandpaper-test-front.webp?v=5e663bddc7c0",
-     "back": "thumbs/science-diamond-sandpaper-test-back.webp?v=5e663bddc7c0"
+     "front": "thumbs/science-diamond-sandpaper-test-front.webp?v=21781db22f00",
+     "back": "thumbs/science-diamond-sandpaper-test-back.webp?v=21781db22f00"
     }
    },
    "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
@@ -187738,11 +187738,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Close-up of dry-ice crystals forming on a frosty water surface. The question asks why CO₂ solidifies on the water surface. A thermometer can be dragged down to chill the surface with solid nitrogen.",
-    "page": "pages/science-dry-ice-frost.html?v=8f50e4e768ba",
-    "bytes": 12854,
+    "page": "pages/science-dry-ice-frost.html?v=d888fc32db62",
+    "bytes": 12737,
     "thumbs": {
-     "front": "thumbs/science-dry-ice-frost-front.webp?v=8f50e4e768ba",
-     "back": "thumbs/science-dry-ice-frost-back.webp?v=8f50e4e768ba"
+     "front": "thumbs/science-dry-ice-frost-front.webp?v=d888fc32db62",
+     "back": "thumbs/science-dry-ice-frost-back.webp?v=d888fc32db62"
     }
    },
    "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
@@ -187823,11 +187823,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Question card asking what convention Einstein adopted for clock synchronization, with two choices: equal halves or fast out, slow back. A diagram shows a light flip between clocks A and B, with the same 10 ticks at A either way.",
-    "page": "pages/science-einstein-synchronization.html?v=f137fea11894",
-    "bytes": 6961,
+    "page": "pages/science-einstein-synchronization.html?v=293d8cdfa8e4",
+    "bytes": 6845,
     "thumbs": {
-     "front": "thumbs/science-einstein-synchronization-front.webp?v=f137fea11894",
-     "back": "thumbs/science-einstein-synchronization-back.webp?v=f137fea11894"
+     "front": "thumbs/science-einstein-synchronization-front.webp?v=293d8cdfa8e4",
+     "back": "thumbs/science-einstein-synchronization-back.webp?v=293d8cdfa8e4"
     }
    },
    "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
@@ -189102,11 +189102,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An interactive chart of fallout radiation decaying from 100 % at day 0 toward about 1 % by day 14. Drag across it to move forward day by day. The question asks what fraction of the initial radiation remains after about two weeks.",
-    "page": "pages/science-fallout-two-weeks.html?v=f35c69bcddc9",
-    "bytes": 7639,
+    "page": "pages/science-fallout-two-weeks.html?v=f3bc25613041",
+    "bytes": 7523,
     "thumbs": {
-     "front": "thumbs/science-fallout-two-weeks-front.webp?v=f35c69bcddc9",
-     "back": "thumbs/science-fallout-two-weeks-back.webp?v=f35c69bcddc9"
+     "front": "thumbs/science-fallout-two-weeks-front.webp?v=f3bc25613041",
+     "back": "thumbs/science-fallout-two-weeks-back.webp?v=f3bc25613041"
     }
    },
    "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
@@ -189885,11 +189885,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A flame shown under three gravity settings: zero-g, 1 g and hyper-g. The page asks why flames on Earth have a teardrop shape. Switch gravity to watch the flame change from a ball to a teardrop.",
-    "page": "pages/science-flame-shape-gravity.html?v=1a1fdaaffe62",
-    "bytes": 9281,
+    "page": "pages/science-flame-shape-gravity.html?v=a7da43bd3af0",
+    "bytes": 9165,
     "thumbs": {
-     "front": "thumbs/science-flame-shape-gravity-front.webp?v=1a1fdaaffe62",
-     "back": "thumbs/science-flame-shape-gravity-back.webp?v=1a1fdaaffe62"
+     "front": "thumbs/science-flame-shape-gravity-front.webp?v=a7da43bd3af0",
+     "back": "thumbs/science-flame-shape-gravity-back.webp?v=a7da43bd3af0"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -190142,11 +190142,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Asks why firefighting planes use foam on fires above 1000°C. Two tappable sides each drop a load, plain water or foaming agent, onto a fire so the reader can compare them.",
-    "page": "pages/science-foam-fire-water.html?v=e23d90d3bc05",
-    "bytes": 9550,
+    "page": "pages/science-foam-fire-water.html?v=2821eb14dff8",
+    "bytes": 9455,
     "thumbs": {
-     "front": "thumbs/science-foam-fire-water-front.webp?v=e23d90d3bc05",
-     "back": "thumbs/science-foam-fire-water-back.webp?v=e23d90d3bc05"
+     "front": "thumbs/science-foam-fire-water-front.webp?v=2821eb14dff8",
+     "back": "thumbs/science-foam-fire-water-back.webp?v=2821eb14dff8"
     }
    },
    "source": "Geopop, “Come funziona il Canadair e quando interviene nelle missioni antincendio?” (YouTube, 2022)",
@@ -191156,11 +191156,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive page titled 'The glass that breaks'. It asks what happens when a voice breaks a glass, and offers a tap-to-sing control that makes a glass wobble in slow motion until it shatters.",
-    "page": "pages/science-glass-shatters-voice.html?v=7fd891c69988",
-    "bytes": 10702,
+    "page": "pages/science-glass-shatters-voice.html?v=071cbc71dc3d",
+    "bytes": 10588,
     "thumbs": {
-     "front": "thumbs/science-glass-shatters-voice-front.webp?v=7fd891c69988",
-     "back": "thumbs/science-glass-shatters-voice-back.webp?v=7fd891c69988"
+     "front": "thumbs/science-glass-shatters-voice-front.webp?v=071cbc71dc3d",
+     "back": "thumbs/science-glass-shatters-voice-back.webp?v=071cbc71dc3d"
     }
    },
    "source": "Geopop, “Si può rompere un calice di vetro solo con la voce?” (YouTube, 2026)",
@@ -192260,11 +192260,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card asking why Greenland's rocks matter for mining. A button is held to animate magma rising through ancient crust, showing rare elements gathering into mineable pockets.",
-    "page": "pages/science-greenland-craton-ores.html?v=e7ab9e97f0bd",
-    "bytes": 11445,
+    "page": "pages/science-greenland-craton-ores.html?v=58639da637db",
+    "bytes": 11329,
     "thumbs": {
-     "front": "thumbs/science-greenland-craton-ores-front.webp?v=e7ab9e97f0bd",
-     "back": "thumbs/science-greenland-craton-ores-back.webp?v=e7ab9e97f0bd"
+     "front": "thumbs/science-greenland-craton-ores-front.webp?v=58639da637db",
+     "back": "thumbs/science-greenland-craton-ores-back.webp?v=58639da637db"
     }
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
@@ -192347,11 +192347,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A diagram of a spinning wheel hanging from one end of its axle, with a spin arrow and a weight's twist arrow at right angles to it. The reader is asked to drag an arrow to show where the wheel goes once let go.",
     "graded": false,
-    "page": "pages/science-hanging-wheel-precession.html?v=6e77a8d0f7c3",
-    "bytes": 16124,
+    "page": "pages/science-hanging-wheel-precession.html?v=c9a3125846a5",
+    "bytes": 16016,
     "thumbs": {
-     "front": "thumbs/science-hanging-wheel-precession-front.webp?v=6e77a8d0f7c3",
-     "back": "thumbs/science-hanging-wheel-precession-back.webp?v=6e77a8d0f7c3"
+     "front": "thumbs/science-hanging-wheel-precession-front.webp?v=c9a3125846a5",
+     "back": "thumbs/science-hanging-wheel-precession-back.webp?v=c9a3125846a5"
     }
    },
    "source": "Veritasium, “Gyroscopic Precession” (YouTube, 2012)",
@@ -192620,11 +192620,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page with a slider labelled 'Feed the fire' and a diagram showing heat going into walls and furniture while air temperature rises slowly, then runs away. Asks why the temperature in a room fire suddenly rises out of control.",
-    "page": "pages/science-heat-runaway-loop.html?v=399d2026152b",
-    "bytes": 11191,
+    "page": "pages/science-heat-runaway-loop.html?v=f94b36bbe86f",
+    "bytes": 11085,
     "thumbs": {
-     "front": "thumbs/science-heat-runaway-loop-front.webp?v=399d2026152b",
-     "back": "thumbs/science-heat-runaway-loop-back.webp?v=399d2026152b"
+     "front": "thumbs/science-heat-runaway-loop-front.webp?v=f94b36bbe86f",
+     "back": "thumbs/science-heat-runaway-loop-back.webp?v=f94b36bbe86f"
     }
    },
    "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
@@ -193125,11 +193125,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Animated cross-section of the crust: drag India north into Eurasia and watch the rock crumple and rise into the Himalaya. Asks what collision built the Himalaya and why it is the tallest chain.",
-    "page": "pages/science-india-hits-eurasia.html?v=20e4b6642e21",
-    "bytes": 7225,
+    "page": "pages/science-india-hits-eurasia.html?v=5622a0a95674",
+    "bytes": 7110,
     "thumbs": {
-     "front": "thumbs/science-india-hits-eurasia-front.webp?v=20e4b6642e21",
-     "back": "thumbs/science-india-hits-eurasia-back.webp?v=20e4b6642e21"
+     "front": "thumbs/science-india-hits-eurasia-front.webp?v=5622a0a95674",
+     "back": "thumbs/science-india-hits-eurasia-back.webp?v=5622a0a95674"
     }
    },
    "source": "Geopop, “Vi mostro cosa è sepolto sotto lo Stretto di Messina - la geologia tra Calabria e Sicilia” (YouTube, 2025)",
@@ -193211,11 +193211,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card asking why a parked car is so hard to push on a level road. It has a HOLD TO PUSH control and a note that swapping the car for a cart gives the same push, but the car barely creeps.",
-    "page": "pages/science-inertia-car-push.html?v=b3c54cbd867b",
-    "bytes": 11508,
+    "page": "pages/science-inertia-car-push.html?v=c9917594aafe",
+    "bytes": 11412,
     "thumbs": {
-     "front": "thumbs/science-inertia-car-push-front.webp?v=b3c54cbd867b",
-     "back": "thumbs/science-inertia-car-push-back.webp?v=b3c54cbd867b"
+     "front": "thumbs/science-inertia-car-push-front.webp?v=c9917594aafe",
+     "back": "thumbs/science-inertia-car-push-back.webp?v=c9917594aafe"
     }
    },
    "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
@@ -195786,11 +195786,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A ring-shaped reactor view with a button to release hot plasma into the ring and a switch to turn on the magnets. It asks how plasma is held without touching any wall, and invites you to watch the wall as the plasma is released.",
-    "page": "pages/science-magnetic-plasma-cage.html?v=cee7ab70421d",
-    "bytes": 9903,
+    "page": "pages/science-magnetic-plasma-cage.html?v=0e5457752646",
+    "bytes": 9793,
     "thumbs": {
-     "front": "thumbs/science-magnetic-plasma-cage-front.webp?v=cee7ab70421d",
-     "back": "thumbs/science-magnetic-plasma-cage-back.webp?v=cee7ab70421d"
+     "front": "thumbs/science-magnetic-plasma-cage-front.webp?v=0e5457752646",
+     "back": "thumbs/science-magnetic-plasma-cage-back.webp?v=0e5457752646"
     }
    },
    "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
@@ -196217,11 +196217,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A diagram of a heated mercury box with rolling convection cylinders that split from two patterns into four. The page asks which physical experiment first confirmed period-doubling in the logistic map.",
-    "page": "pages/science-mercury-period-doubling.html?v=6de19279e451",
-    "bytes": 8992,
+    "page": "pages/science-mercury-period-doubling.html?v=5d9f41cc7af6",
+    "bytes": 8899,
     "thumbs": {
-     "front": "thumbs/science-mercury-period-doubling-front.webp?v=6de19279e451",
-     "back": "thumbs/science-mercury-period-doubling-back.webp?v=6de19279e451"
+     "front": "thumbs/science-mercury-period-doubling-front.webp?v=5d9f41cc7af6",
+     "back": "thumbs/science-mercury-period-doubling-back.webp?v=5d9f41cc7af6"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -196558,11 +196558,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two buttons select a proton (+) or a neutron (0) to fire at a positive nucleus. Hold the button to fire, and count how many of each get in. The page asks why discovering the neutron in 1932 changed nuclear research.",
-    "page": "pages/science-neutron-slips-in.html?v=21d118787f34",
-    "bytes": 8673,
+    "page": "pages/science-neutron-slips-in.html?v=21ef783af5cb",
+    "bytes": 8578,
     "thumbs": {
-     "front": "thumbs/science-neutron-slips-in-front.webp?v=21d118787f34",
-     "back": "thumbs/science-neutron-slips-in-back.webp?v=21d118787f34"
+     "front": "thumbs/science-neutron-slips-in-front.webp?v=21ef783af5cb",
+     "back": "thumbs/science-neutron-slips-in-back.webp?v=21ef783af5cb"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -196955,11 +196955,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A slider labelled Recycling cycles starts at 0. Dragging it sends paper and plastic through recycling again and again. The page asks how many times plastic can be recycled compared with paper.",
-    "page": "pages/science-paper-plastic-cycles.html?v=259304af3c99",
-    "bytes": 9839,
+    "page": "pages/science-paper-plastic-cycles.html?v=36516bf6aefd",
+    "bytes": 9723,
     "thumbs": {
-     "front": "thumbs/science-paper-plastic-cycles-front.webp?v=259304af3c99",
-     "back": "thumbs/science-paper-plastic-cycles-back.webp?v=259304af3c99"
+     "front": "thumbs/science-paper-plastic-cycles-front.webp?v=36516bf6aefd",
+     "back": "thumbs/science-paper-plastic-cycles-back.webp?v=36516bf6aefd"
     }
    },
    "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
@@ -197729,11 +197729,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A glass beaker of clear liquid sits on a lab bench, with a piece of mandarin shown beside it, ready to drop in. The question asks: what is the most corrosive substance for organic matter? Tap the beaker to drop the fruit in.",
-    "page": "pages/science-piranha-solution.html?v=d33a77e6da58",
-    "bytes": 7526,
+    "page": "pages/science-piranha-solution.html?v=f59a16428227",
+    "bytes": 7437,
     "thumbs": {
-     "front": "thumbs/science-piranha-solution-front.webp?v=d33a77e6da58",
-     "back": "thumbs/science-piranha-solution-back.webp?v=d33a77e6da58"
+     "front": "thumbs/science-piranha-solution-front.webp?v=f59a16428227",
+     "back": "thumbs/science-piranha-solution-back.webp?v=f59a16428227"
     }
    },
    "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
@@ -198359,11 +198359,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A depth dial runs from 0 to 3,500 metres beside readouts for depth, pressure in atmospheres, and load in tons per square metre. Dragging it down shows cars piling onto one square metre, reaching about 2,000 cars at 3,500 metres.",
-    "page": "pages/science-pressure-in-tons.html?v=48c19a1fce33",
-    "bytes": 8085,
+    "page": "pages/science-pressure-in-tons.html?v=25d6a0970a37",
+    "bytes": 7973,
     "thumbs": {
-     "front": "thumbs/science-pressure-in-tons-front.webp?v=48c19a1fce33",
-     "back": "thumbs/science-pressure-in-tons-back.webp?v=48c19a1fce33"
+     "front": "thumbs/science-pressure-in-tons-front.webp?v=25d6a0970a37",
+     "back": "thumbs/science-pressure-in-tons-back.webp?v=25d6a0970a37"
     }
    },
    "source": "Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023)",
@@ -200254,11 +200254,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A rail drawn beside a slider running from +0 °C to +40 °C. Question: how much does a 12 m rail grow when it warms 40 °C? Drag the slider to heat the rail from winter to summer.",
-    "page": "pages/science-rail-heat-growth.html?v=2f73868346f4",
-    "bytes": 9434,
+    "page": "pages/science-rail-heat-growth.html?v=69837bd9b9f2",
+    "bytes": 9320,
     "thumbs": {
-     "front": "thumbs/science-rail-heat-growth-front.webp?v=2f73868346f4",
-     "back": "thumbs/science-rail-heat-growth-back.webp?v=2f73868346f4"
+     "front": "thumbs/science-rail-heat-growth-front.webp?v=69837bd9b9f2",
+     "back": "thumbs/science-rail-heat-growth-back.webp?v=69837bd9b9f2"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -202544,11 +202544,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Animated diagram of Earth's interior. The reader sends an S-wave or a P-wave down from a quake and watches what happens at 2,900 km depth, where the S-wave stops.",
-    "page": "pages/science-s-waves-vanish.html?v=e2f99df5581f",
-    "bytes": 8555,
+    "page": "pages/science-s-waves-vanish.html?v=fa0ddbc6d64e",
+    "bytes": 8445,
     "thumbs": {
-     "front": "thumbs/science-s-waves-vanish-front.webp?v=e2f99df5581f",
-     "back": "thumbs/science-s-waves-vanish-back.webp?v=e2f99df5581f"
+     "front": "thumbs/science-s-waves-vanish-front.webp?v=fa0ddbc6d64e",
+     "back": "thumbs/science-s-waves-vanish-back.webp?v=fa0ddbc6d64e"
     }
    },
    "source": "Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)",
@@ -202880,11 +202880,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A diagram of Sardinia and Corsica as a block beside France. Drag Sardinia's tip east to swing the block off France, then the page asks what that push built.",
-    "page": "pages/science-sardinia-corsica-door.html?v=35369166ba4a",
-    "bytes": 9171,
+    "page": "pages/science-sardinia-corsica-door.html?v=7d0cc243d4ca",
+    "bytes": 9055,
     "thumbs": {
-     "front": "thumbs/science-sardinia-corsica-door-front.webp?v=35369166ba4a",
-     "back": "thumbs/science-sardinia-corsica-door-back.webp?v=35369166ba4a"
+     "front": "thumbs/science-sardinia-corsica-door-front.webp?v=7d0cc243d4ca",
+     "back": "thumbs/science-sardinia-corsica-door-back.webp?v=7d0cc243d4ca"
     }
    },
    "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
@@ -202923,11 +202923,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two underground views: the Apennines in Italy, an active zone with faults that shake when they slip, and Sardinia, a stable block with no active faults. A switch flips between them, asking why Sardinia barely shakes.",
-    "page": "pages/science-sardinia-stable-block.html?v=d63b23c5ceee",
-    "bytes": 9692,
+    "page": "pages/science-sardinia-stable-block.html?v=facccd319c60",
+    "bytes": 9576,
     "thumbs": {
-     "front": "thumbs/science-sardinia-stable-block-front.webp?v=d63b23c5ceee",
-     "back": "thumbs/science-sardinia-stable-block-back.webp?v=d63b23c5ceee"
+     "front": "thumbs/science-sardinia-stable-block-front.webp?v=facccd319c60",
+     "back": "thumbs/science-sardinia-stable-block-back.webp?v=facccd319c60"
     }
    },
    "source": "Geopop, “PERCHÉ CI SONO POCHISSIMI TERREMOTI IN SARDEGNA? Geologia POP” (YouTube, 2020)",
@@ -203739,11 +203739,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An animated hydrogen atom with its proton drawn as a spinning top that gives off a magnetic field. A draggable magnet moves around the proton, and dragging it makes the proton turn. The page asks why hydrogen protons act like magnets in an MRI.",
-    "page": "pages/science-spinning-proton-magnets.html?v=ef7e6aee4233",
-    "bytes": 9525,
+    "page": "pages/science-spinning-proton-magnets.html?v=b96417e873ce",
+    "bytes": 9409,
     "thumbs": {
-     "front": "thumbs/science-spinning-proton-magnets-front.webp?v=ef7e6aee4233",
-     "back": "thumbs/science-spinning-proton-magnets-back.webp?v=ef7e6aee4233"
+     "front": "thumbs/science-spinning-proton-magnets-front.webp?v=b96417e873ce",
+     "back": "thumbs/science-spinning-proton-magnets-back.webp?v=b96417e873ce"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -204516,11 +204516,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two volcano cross-sections, a shield volcano and a stratovolcano, each with magma inside. Drag a gas bubble into each volcano's magma. Asks why stratovolcanoes are more explosive than shield volcanoes.",
-    "page": "pages/science-stratovolcano-explosivity.html?v=b16f728a1b24",
-    "bytes": 13067,
+    "page": "pages/science-stratovolcano-explosivity.html?v=e4ba9b430f95",
+    "bytes": 12949,
     "thumbs": {
-     "front": "thumbs/science-stratovolcano-explosivity-front.webp?v=b16f728a1b24",
-     "back": "thumbs/science-stratovolcano-explosivity-back.webp?v=b16f728a1b24"
+     "front": "thumbs/science-stratovolcano-explosivity-front.webp?v=e4ba9b430f95",
+     "back": "thumbs/science-stratovolcano-explosivity-back.webp?v=e4ba9b430f95"
     }
    },
    "source": "Geopop, “Vulcani: i tipi di vulcani, come si formano” (YouTube, 2021)",
@@ -206345,11 +206345,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card titled Underground Crystals asking what natural process fills cavities in rocks with crystals. A drag control loads underground water with salt, going from none to too much.",
-    "page": "pages/science-underground-crystal-cavities.html?v=aeada6e579ab",
-    "bytes": 8931,
+    "page": "pages/science-underground-crystal-cavities.html?v=099745bae190",
+    "bytes": 8813,
     "thumbs": {
-     "front": "thumbs/science-underground-crystal-cavities-front.webp?v=aeada6e579ab",
-     "back": "thumbs/science-underground-crystal-cavities-back.webp?v=aeada6e579ab"
+     "front": "thumbs/science-underground-crystal-cavities-front.webp?v=099745bae190",
+     "back": "thumbs/science-underground-crystal-cavities-back.webp?v=099745bae190"
     }
    },
    "source": "Geopop, “Come creare i cristalli fatti in casa? Esperimento facile” (YouTube, 2018)",
@@ -206475,11 +206475,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A cross-section of a valley with a dam and a lake. A glass tap fills the lake as water rises toward an orange clay layer. The reader is asked to watch that layer as the lake reaches it.",
-    "page": "pages/science-vajont-wet-clay.html?v=9730c4b8c494",
-    "bytes": 23829,
+    "page": "pages/science-vajont-wet-clay.html?v=c182cc5246b7",
+    "bytes": 23820,
     "thumbs": {
-     "front": "thumbs/science-vajont-wet-clay-front.webp?v=9730c4b8c494",
-     "back": "thumbs/science-vajont-wet-clay-back.webp?v=9730c4b8c494"
+     "front": "thumbs/science-vajont-wet-clay-front.webp?v=c182cc5246b7",
+     "back": "thumbs/science-vajont-wet-clay-back.webp?v=c182cc5246b7"
     }
    },
    "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
@@ -206861,11 +206861,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A picture of lava with a prompt asking what happens to water the instant it touches lava. Tapping the picture drops water onto the lava, which then reveals the reaction.",
-    "page": "pages/science-water-meets-lava.html?v=f3af61787852",
-    "bytes": 9609,
+    "page": "pages/science-water-meets-lava.html?v=0c8f0c09921c",
+    "bytes": 9496,
     "thumbs": {
-     "front": "thumbs/science-water-meets-lava-front.webp?v=f3af61787852",
-     "back": "thumbs/science-water-meets-lava-back.webp?v=f3af61787852"
+     "front": "thumbs/science-water-meets-lava-front.webp?v=0c8f0c09921c",
+     "back": "thumbs/science-water-meets-lava-back.webp?v=0c8f0c09921c"
     }
    },
    "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
@@ -214045,11 +214045,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Asks how many galaxies exist in the observable universe. You drag to zoom out across a space view until you think you see every galaxy.",
     "graded": false,
-    "page": "pages/space-hundred-billion-galaxies.html?v=fbbd640c60e0",
-    "bytes": 27710,
+    "page": "pages/space-hundred-billion-galaxies.html?v=2d32b05cb894",
+    "bytes": 27515,
     "thumbs": {
-     "front": "thumbs/space-hundred-billion-galaxies-front.webp?v=fbbd640c60e0",
-     "back": "thumbs/space-hundred-billion-galaxies-back.webp?v=fbbd640c60e0"
+     "front": "thumbs/space-hundred-billion-galaxies-front.webp?v=2d32b05cb894",
+     "back": "thumbs/space-hundred-billion-galaxies-back.webp?v=2d32b05cb894"
     }
    },
    "source": "Veritasium, “How Far Away is the Moon? (The Scale of the Universe)” (YouTube, 2011)",
@@ -218851,11 +218851,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Animated globe orbiting the Sun. Hold the button to run one solar day and watch a 'you' marker on the globe turn back toward the Sun, past one full rotation.",
-    "page": "pages/space-solar-day-spin.html?v=6f9e387fcf7d",
-    "bytes": 10368,
+    "page": "pages/space-solar-day-spin.html?v=f13073bc04e5",
+    "bytes": 10252,
     "thumbs": {
-     "front": "thumbs/space-solar-day-spin-front.webp?v=6f9e387fcf7d",
-     "back": "thumbs/space-solar-day-spin-back.webp?v=6f9e387fcf7d"
+     "front": "thumbs/space-solar-day-spin-front.webp?v=f13073bc04e5",
+     "back": "thumbs/space-solar-day-spin-back.webp?v=f13073bc04e5"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
@@ -219016,11 +219016,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two panels of a head, labelled On Earth and In orbit, with fluid drifting up into the nose. The page asks the reader to flip from Earth to orbit, watch the nose, then add spice.",
-    "page": "pages/space-spice-stuffy-nose.html?v=1b91e6b305e1",
-    "bytes": 11829,
+    "page": "pages/space-spice-stuffy-nose.html?v=55c301e32822",
+    "bytes": 11730,
     "thumbs": {
-     "front": "thumbs/space-spice-stuffy-nose-front.webp?v=1b91e6b305e1",
-     "back": "thumbs/space-spice-stuffy-nose-back.webp?v=1b91e6b305e1"
+     "front": "thumbs/space-spice-stuffy-nose-front.webp?v=55c301e32822",
+     "back": "thumbs/space-spice-stuffy-nose-back.webp?v=55c301e32822"
     }
    },
    "source": "Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026)",
@@ -221025,11 +221025,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A 3D diagram of Earth with two donut-shaped radiation belts around its middle and a spacecraft path skimming the thin outer edge. Tap a route to fly it and watch its radiation bar fill.",
-    "page": "pages/space-van-allen-donut.html?v=12c33c25a20c",
-    "bytes": 9802,
+    "page": "pages/space-van-allen-donut.html?v=cfdeaba2923c",
+    "bytes": 9686,
     "thumbs": {
-     "front": "thumbs/space-van-allen-donut-front.webp?v=12c33c25a20c",
-     "back": "thumbs/space-van-allen-donut-back.webp?v=12c33c25a20c"
+     "front": "thumbs/space-van-allen-donut-front.webp?v=cfdeaba2923c",
+     "back": "thumbs/space-van-allen-donut-back.webp?v=cfdeaba2923c"
     }
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
@@ -234067,11 +234067,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A diagram of a bridge tunnel under a draggable sea level. The reader drags the sea up until the tunnel is fully underwater, then reads how the displaced water pushes back on the structure.",
-    "page": "pages/technology-archimedes-bridge-buoyancy.html?v=6a1b5c25cd86",
-    "bytes": 9578,
+    "page": "pages/technology-archimedes-bridge-buoyancy.html?v=4755484c1727",
+    "bytes": 9462,
     "thumbs": {
-     "front": "thumbs/technology-archimedes-bridge-buoyancy-front.webp?v=6a1b5c25cd86",
-     "back": "thumbs/technology-archimedes-bridge-buoyancy-back.webp?v=6a1b5c25cd86"
+     "front": "thumbs/technology-archimedes-bridge-buoyancy-front.webp?v=4755484c1727",
+     "back": "thumbs/technology-archimedes-bridge-buoyancy-back.webp?v=4755484c1727"
     }
    },
    "source": "Geopop, “Ponte sullo Stretto di Messina: il progetto costruttivo ufficiale e le altre alternative” (YouTube, 2021)",
@@ -234195,11 +234195,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two side-by-side panels compare rain on a track bed. In the left panel rain falls on the stones and drains through the gaps, away from the track. In the right panel rain falls on bare soil and pools, turning to mud. The question asked is why there are stones under train tracks.",
-    "page": "pages/technology-ballast-drains-water.html?v=2f2146e4d84b",
-    "bytes": 10352,
+    "page": "pages/technology-ballast-drains-water.html?v=09f36f6aaf02",
+    "bytes": 10254,
     "thumbs": {
-     "front": "thumbs/technology-ballast-drains-water-front.webp?v=2f2146e4d84b",
-     "back": "thumbs/technology-ballast-drains-water-back.webp?v=2f2146e4d84b"
+     "front": "thumbs/technology-ballast-drains-water-front.webp?v=09f36f6aaf02",
+     "back": "thumbs/technology-ballast-drains-water-back.webp?v=09f36f6aaf02"
     }
    },
    "source": "Geopop, “A cosa servono le pietre sui binari?” (YouTube, 2021)",
@@ -234315,11 +234315,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An interactive card with a draggable knob. Dragging it bends a solid titanium bar, with no hinge visible, from full left to full right. The page asks the reader to bend it all the way left, then all the way right.",
-    "page": "pages/technology-bending-solid-titanium.html?v=9d42a3118e4c",
-    "bytes": 9200,
+    "page": "pages/technology-bending-solid-titanium.html?v=7d028b589a86",
+    "bytes": 9082,
     "thumbs": {
-     "front": "thumbs/technology-bending-solid-titanium-front.webp?v=9d42a3118e4c",
-     "back": "thumbs/technology-bending-solid-titanium-back.webp?v=9d42a3118e4c"
+     "front": "thumbs/technology-bending-solid-titanium-front.webp?v=7d028b589a86",
+     "back": "thumbs/technology-bending-solid-titanium-back.webp?v=7d028b589a86"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -235046,11 +235046,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A bent plastic part spins on a slider-controlled speed, and its heavy outer arms swing outward until they press a drum. The reader drags the speed slider and watches the gap to the drum close, asking how a bending part can act as a clutch that engages only at speed.",
-    "page": "pages/technology-centrifugal-clutch.html?v=a12b761f4d5c",
-    "bytes": 9563,
+    "page": "pages/technology-centrifugal-clutch.html?v=78b854e2af0a",
+    "bytes": 9445,
     "thumbs": {
-     "front": "thumbs/technology-centrifugal-clutch-front.webp?v=a12b761f4d5c",
-     "back": "thumbs/technology-centrifugal-clutch-back.webp?v=a12b761f4d5c"
+     "front": "thumbs/technology-centrifugal-clutch-front.webp?v=78b854e2af0a",
+     "back": "thumbs/technology-centrifugal-clutch-back.webp?v=78b854e2af0a"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -236740,11 +236740,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A tower with diagonal braces and a wind arrow you drag around it. Question: why does wind hitting the corner strain the braces more than wind head-on? The force splits into two pushes that add to about 1.41 times the head-on load.",
-    "page": "pages/technology-corner-wind-braces.html?v=10c624bac1e9",
-    "bytes": 7876,
+    "page": "pages/technology-corner-wind-braces.html?v=bf49ab8f1cd1",
+    "bytes": 7758,
     "thumbs": {
-     "front": "thumbs/technology-corner-wind-braces-front.webp?v=10c624bac1e9",
-     "back": "thumbs/technology-corner-wind-braces-back.webp?v=10c624bac1e9"
+     "front": "thumbs/technology-corner-wind-braces-front.webp?v=bf49ab8f1cd1",
+     "back": "thumbs/technology-corner-wind-braces-back.webp?v=bf49ab8f1cd1"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -237479,11 +237479,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Question card asking how diagonals changed a maze's complexity. A draggable mouse lets the reader give it more moves, up to 6, to show how the number of possible turns grows.",
-    "page": "pages/technology-diagonal-turn-explosion.html?v=7c4fd613ebd9",
-    "bytes": 11044,
+    "page": "pages/technology-diagonal-turn-explosion.html?v=004dbcf7841b",
+    "bytes": 10947,
     "thumbs": {
-     "front": "thumbs/technology-diagonal-turn-explosion-front.webp?v=7c4fd613ebd9",
-     "back": "thumbs/technology-diagonal-turn-explosion-back.webp?v=7c4fd613ebd9"
+     "front": "thumbs/technology-diagonal-turn-explosion-front.webp?v=004dbcf7841b",
+     "back": "thumbs/technology-diagonal-turn-explosion-back.webp?v=004dbcf7841b"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -238122,11 +238122,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Astute free card, tap to evolve. Asks why Jansen evolved his Strandbeest legs instead of testing every design. Shows generation 1 with 1,500 tried, next to a testing-them-all option of trillions. Tap to breed generation 2.",
-    "page": "pages/technology-evolved-footpaths.html?v=091ab930df3c",
-    "bytes": 16304,
+    "page": "pages/technology-evolved-footpaths.html?v=f03546327fba",
+    "bytes": 16296,
     "thumbs": {
-     "front": "thumbs/technology-evolved-footpaths-front.webp?v=091ab930df3c",
-     "back": "thumbs/technology-evolved-footpaths-back.webp?v=091ab930df3c"
+     "front": "thumbs/technology-evolved-footpaths-front.webp?v=f03546327fba",
+     "back": "thumbs/technology-evolved-footpaths-back.webp?v=f03546327fba"
     }
    },
    "source": "Veritasium, “34 Years Of Strandbeest Evolution” (YouTube, 2024)",
@@ -238968,11 +238968,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card titled FLIP SHIP asks how a toilet still works on a ship that flips upright. Readers can drag to tip the ship upright, then lock the pivots and try again.",
-    "page": "pages/technology-flip-pivoting-fixtures.html?v=82ae9e0890d4",
-    "bytes": 8132,
+    "page": "pages/technology-flip-pivoting-fixtures.html?v=77e52237836c",
+    "bytes": 8016,
     "thumbs": {
-     "front": "thumbs/technology-flip-pivoting-fixtures-front.webp?v=82ae9e0890d4",
-     "back": "thumbs/technology-flip-pivoting-fixtures-back.webp?v=82ae9e0890d4"
+     "front": "thumbs/technology-flip-pivoting-fixtures-front.webp?v=77e52237836c",
+     "back": "thumbs/technology-flip-pivoting-fixtures-back.webp?v=77e52237836c"
     }
    },
    "source": "Geopop, “Come funziona la manovra della FLIP, la \"nave\" che si immergeva in verticale sul mare” (YouTube, 2024)",
@@ -239224,11 +239224,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card asking how graphene will improve prosthetic limbs. A draggable dot travels from brain to hand through four stages: think, nerve, sensor, move. The reader drags it to follow one command.",
-    "page": "pages/technology-graphene-bionic-limbs.html?v=ad2c2c79a685",
-    "bytes": 12998,
+    "page": "pages/technology-graphene-bionic-limbs.html?v=782653c285b2",
+    "bytes": 12883,
     "thumbs": {
-     "front": "thumbs/technology-graphene-bionic-limbs-front.webp?v=ad2c2c79a685",
-     "back": "thumbs/technology-graphene-bionic-limbs-back.webp?v=ad2c2c79a685"
+     "front": "thumbs/technology-graphene-bionic-limbs-front.webp?v=782653c285b2",
+     "back": "thumbs/technology-graphene-bionic-limbs-back.webp?v=782653c285b2"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -239352,11 +239352,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive timeline from 2013 to 2023 with a draggable slider. Each year adds one hexagon as the euro total of the EU's Graphene Flagship grows toward 1 billion euros.",
-    "page": "pages/technology-graphene-flagship-billion.html?v=8e77cfe9faee",
-    "bytes": 5607,
+    "page": "pages/technology-graphene-flagship-billion.html?v=64241fa27045",
+    "bytes": 5493,
     "thumbs": {
-     "front": "thumbs/technology-graphene-flagship-billion-front.webp?v=8e77cfe9faee",
-     "back": "thumbs/technology-graphene-flagship-billion-back.webp?v=8e77cfe9faee"
+     "front": "thumbs/technology-graphene-flagship-billion-front.webp?v=64241fa27045",
+     "back": "thumbs/technology-graphene-flagship-billion-back.webp?v=64241fa27045"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -239395,11 +239395,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Split-screen slide with a slider to move forward a century on both sides, from today to +100 years. It asks how to think about the future of graphene. One side shows a person from 1919 holding a piece of plastic, the other a person from 2019 holding a graphene sheet.",
-    "page": "pages/technology-graphene-plastic-century.html?v=2e5c1343677d",
-    "bytes": 8657,
+    "page": "pages/technology-graphene-plastic-century.html?v=d1d0bf944fad",
+    "bytes": 8539,
     "thumbs": {
-     "front": "thumbs/technology-graphene-plastic-century-front.webp?v=2e5c1343677d",
-     "back": "thumbs/technology-graphene-plastic-century-back.webp?v=2e5c1343677d"
+     "front": "thumbs/technology-graphene-plastic-century-front.webp?v=d1d0bf944fad",
+     "back": "thumbs/technology-graphene-plastic-century-back.webp?v=d1d0bf944fad"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -241425,11 +241425,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive page titled Material fatigue, asking what repeated high-pressure cycles do to a hull. A Dive button sends a submersible down to crushing pressure and back up while a gold line is watched.",
-    "page": "pages/technology-material-fatigue.html?v=1b88395b8ddd",
-    "bytes": 23666,
+    "page": "pages/technology-material-fatigue.html?v=60ce31a881b2",
+    "bytes": 23657,
     "thumbs": {
-     "front": "thumbs/technology-material-fatigue-front.webp?v=1b88395b8ddd",
-     "back": "thumbs/technology-material-fatigue-back.webp?v=1b88395b8ddd"
+     "front": "thumbs/technology-material-fatigue-front.webp?v=60ce31a881b2",
+     "back": "thumbs/technology-material-fatigue-back.webp?v=60ce31a881b2"
     }
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
@@ -241683,11 +241683,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page: a Micromouse robot drives a maze route. Sliders set speed (30%) and sharp turns, and a Launch button starts the run. Text says finding the route is easy and driving it fast is hard, and asks the reader to set the speed, pick the turns and launch.",
-    "page": "pages/technology-micromouse-navigation-speed.html?v=3b1b8bbe72d3",
-    "bytes": 12425,
+    "page": "pages/technology-micromouse-navigation-speed.html?v=38f53627963a",
+    "bytes": 12309,
     "thumbs": {
-     "front": "thumbs/technology-micromouse-navigation-speed-front.webp?v=3b1b8bbe72d3",
-     "back": "thumbs/technology-micromouse-navigation-speed-back.webp?v=3b1b8bbe72d3"
+     "front": "thumbs/technology-micromouse-navigation-speed-front.webp?v=38f53627963a",
+     "back": "thumbs/technology-micromouse-navigation-speed-back.webp?v=38f53627963a"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -241812,11 +241812,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card asking how much road a MotoGP rider gets to brake from 350 km/h. A horizontal track marker runs from 0 m to 200 m. The user drags a bike from the brake point to the corner to see the braking distance.",
-    "page": "pages/technology-motogp-braking-distance.html?v=513910f2841a",
-    "bytes": 8638,
+    "page": "pages/technology-motogp-braking-distance.html?v=632a1dc3edf9",
+    "bytes": 8520,
     "thumbs": {
-     "front": "thumbs/technology-motogp-braking-distance-front.webp?v=513910f2841a",
-     "back": "thumbs/technology-motogp-braking-distance-back.webp?v=513910f2841a"
+     "front": "thumbs/technology-motogp-braking-distance-front.webp?v=632a1dc3edf9",
+     "back": "thumbs/technology-motogp-braking-distance-back.webp?v=632a1dc3edf9"
     }
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
@@ -242155,11 +242155,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An interactive page shows two fuels, n-heptane (octane 0) and iso-octane (octane 100), with a hold-to-compress button that squeezes a fuel-air mix until it knocks. It asks what an octane rating actually measures.",
-    "page": "pages/technology-octane-knock-resistance.html?v=77d0b982dc24",
-    "bytes": 13630,
+    "page": "pages/technology-octane-knock-resistance.html?v=4cfa4d5e858c",
+    "bytes": 13394,
     "thumbs": {
-     "front": "thumbs/technology-octane-knock-resistance-front.webp?v=77d0b982dc24",
-     "back": "thumbs/technology-octane-knock-resistance-back.webp?v=77d0b982dc24"
+     "front": "thumbs/technology-octane-knock-resistance-front.webp?v=4cfa4d5e858c",
+     "back": "thumbs/technology-octane-knock-resistance-back.webp?v=4cfa4d5e858c"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -242904,11 +242904,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Astute free card on micro machines. It asks how bending machines are made at microscopic size. It shows a tiny, complex mechanism that looks like a circuit board, on silicon with a film that reacts to light.",
-    "page": "pages/technology-printed-micro-machines.html?v=7c3dc10b5a9d",
-    "bytes": 8713,
+    "page": "pages/technology-printed-micro-machines.html?v=19ee2ce74c64",
+    "bytes": 8609,
     "thumbs": {
-     "front": "thumbs/technology-printed-micro-machines-front.webp?v=7c3dc10b5a9d",
-     "back": "thumbs/technology-printed-micro-machines-back.webp?v=7c3dc10b5a9d"
+     "front": "thumbs/technology-printed-micro-machines-front.webp?v=19ee2ce74c64",
+     "back": "thumbs/technology-printed-micro-machines-back.webp?v=19ee2ce74c64"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -243031,11 +243031,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two runners on a track, one classical and one quantum, step at the same pace as a dial sets the problem size. The quantum runner needs far fewer steps to reach the result.",
-    "page": "pages/technology-quantum-fewer-steps.html?v=0e828845b03e",
-    "bytes": 8569,
+    "page": "pages/technology-quantum-fewer-steps.html?v=0fa3322faf10",
+    "bytes": 8449,
     "thumbs": {
-     "front": "thumbs/technology-quantum-fewer-steps-front.webp?v=0e828845b03e",
-     "back": "thumbs/technology-quantum-fewer-steps-back.webp?v=0e828845b03e"
+     "front": "thumbs/technology-quantum-fewer-steps-front.webp?v=0fa3322faf10",
+     "back": "thumbs/technology-quantum-fewer-steps-back.webp?v=0fa3322faf10"
     }
    },
    "source": "Veritasium, “How Does a Quantum Computer Work?” (YouTube, 2013)",
@@ -243117,11 +243117,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A draggable slider for the welding temperature of a railway rail, showing two risks: summer buckling and winter cracking. Drag the welding line up and down to see how the two risks trade off.",
-    "page": "pages/technology-rail-neutral-temperature.html?v=19e6e78e8ca4",
-    "bytes": 9440,
+    "page": "pages/technology-rail-neutral-temperature.html?v=3d02a57c0cb1",
+    "bytes": 9322,
     "thumbs": {
-     "front": "thumbs/technology-rail-neutral-temperature-front.webp?v=19e6e78e8ca4",
-     "back": "thumbs/technology-rail-neutral-temperature-back.webp?v=19e6e78e8ca4"
+     "front": "thumbs/technology-rail-neutral-temperature-front.webp?v=3d02a57c0cb1",
+     "back": "thumbs/technology-rail-neutral-temperature-back.webp?v=3d02a57c0cb1"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -243634,11 +243634,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card asking why Chernobyl's reactor had no strong containment dome. Two choices: Stop to refuel, or Refuel while running. A slider lets the reader slide right to let the reactor swap fuel without stopping.",
-    "page": "pages/technology-rbmk-crane-dome.html?v=47f371196f2b",
-    "bytes": 10056,
+    "page": "pages/technology-rbmk-crane-dome.html?v=7355b314e6c5",
+    "bytes": 9940,
     "thumbs": {
-     "front": "thumbs/technology-rbmk-crane-dome-front.webp?v=47f371196f2b",
-     "back": "thumbs/technology-rbmk-crane-dome-back.webp?v=47f371196f2b"
+     "front": "thumbs/technology-rbmk-crane-dome-front.webp?v=7355b314e6c5",
+     "back": "thumbs/technology-rbmk-crane-dome-back.webp?v=7355b314e6c5"
     }
    },
    "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
@@ -248359,11 +248359,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Soft Robots asks how a growing robot pushes through sand, showing two cases: growing with no air, and growing with an air jet at the tip. The reveal says the air loosens the sand so the tip can extend through.",
-    "page": "pages/technology-vine-robot-sand.html?v=f2a2edce26b3",
-    "bytes": 10454,
+    "page": "pages/technology-vine-robot-sand.html?v=dc4481297771",
+    "bytes": 10358,
     "thumbs": {
-     "front": "thumbs/technology-vine-robot-sand-front.webp?v=f2a2edce26b3",
-     "back": "thumbs/technology-vine-robot-sand-back.webp?v=f2a2edce26b3"
+     "front": "thumbs/technology-vine-robot-sand-front.webp?v=dc4481297771",
+     "back": "thumbs/technology-vine-robot-sand-back.webp?v=dc4481297771"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -248402,11 +248402,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A cross-section of a V-shaped record groove with a needle tip touching both walls, which slope at 45 degrees. Three buttons play Left only, Right only, or Both at once, and the reader watches how the needle moves.",
-    "page": "pages/technology-vinyl-stereo-groove.html?v=06ef2ab9e03f",
-    "bytes": 9588,
+    "page": "pages/technology-vinyl-stereo-groove.html?v=bf1c7243fecd",
+    "bytes": 9475,
     "thumbs": {
-     "front": "thumbs/technology-vinyl-stereo-groove-front.webp?v=06ef2ab9e03f",
-     "back": "thumbs/technology-vinyl-stereo-groove-back.webp?v=06ef2ab9e03f"
+     "front": "thumbs/technology-vinyl-stereo-groove-front.webp?v=bf1c7243fecd",
+     "back": "thumbs/technology-vinyl-stereo-groove-back.webp?v=bf1c7243fecd"
     }
    },
    "source": "Geopop, “Come è fatto un vinile e come funziona? Figo! Non lo sapevo” (YouTube, 2021)",
@@ -250218,11 +250218,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Shows a body with an eye, skin and heart, with two buttons, Rest and Add Three. Choosing Add Three makes the heart beat faster, sweat rise and pupils widen; Rest makes them settle.",
-    "page": "pages/thinking-effort-body-signs.html?v=5905cb5ecc3f",
-    "bytes": 9227,
+    "page": "pages/thinking-effort-body-signs.html?v=11e581829b36",
+    "bytes": 9123,
     "thumbs": {
-     "front": "thumbs/thinking-effort-body-signs-front.webp?v=5905cb5ecc3f",
-     "back": "thumbs/thinking-effort-body-signs-back.webp?v=5905cb5ecc3f"
+     "front": "thumbs/thinking-effort-body-signs-front.webp?v=11e581829b36",
+     "back": "thumbs/thinking-effort-body-signs-back.webp?v=11e581829b36"
     }
    },
    "source": "Veritasium, “The Science of Thinking” (YouTube, 2017)",
@@ -252962,11 +252962,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A balance scale weighing yeses against a no. Each case that fits is a light yes, while surviving an attempt to disprove the theory is heavy. The reader can pile up yeses and watch the scale, then try to break the theory.",
-    "page": "pages/thinking-weight-of-disproof.html?v=a2e5eb5cd4da",
-    "bytes": 9033,
+    "page": "pages/thinking-weight-of-disproof.html?v=05791d086c8e",
+    "bytes": 8938,
     "thumbs": {
-     "front": "thumbs/thinking-weight-of-disproof-front.webp?v=a2e5eb5cd4da",
-     "back": "thumbs/thinking-weight-of-disproof-back.webp?v=a2e5eb5cd4da"
+     "front": "thumbs/thinking-weight-of-disproof-front.webp?v=05791d086c8e",
+     "back": "thumbs/thinking-weight-of-disproof-back.webp?v=05791d086c8e"
     }
    },
    "source": "Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)",

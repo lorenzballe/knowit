@@ -128,7 +128,6 @@ function flash(x, y, cls, r, keep) {
 function finish() {
   if (done) return; done = true;
   Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4});
 }
 
 gsap.ticker.add((time, dtms) => {

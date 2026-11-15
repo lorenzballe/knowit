@@ -159,7 +159,6 @@ function go(){
     gsap.delayedCall(1.5*d, () => {
       Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
       Kit.haptic('success');
-      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, stagger:.1, duration:.4});
     });
   }
 }

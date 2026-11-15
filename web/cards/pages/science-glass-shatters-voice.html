@@ -165,7 +165,7 @@ function breakIt() {
   hideWhole(); shatter(false);
   Kit.hide('say');
   setTimeout(() => { Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .5, ease: 'power3.out'}); }, Kit.calm ? 0 : 900);
+    }, Kit.calm ? 0 : 900);
 }
 
 Kit.$('stage').addEventListener('pointerdown', () => {

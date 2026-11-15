@@ -120,7 +120,6 @@ function finish() {
   st.done = true; Kit.haptic('success');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   requestAnimationFrame(layout);
-  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
 }
 Kit.onEnter.card = () => {
   if (Kit.calm || st.touched) return;

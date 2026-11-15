@@ -114,7 +114,6 @@ function next(){
     gsap.to(G.gas,{opacity:1, duration:.6*d, delay:.6*d, onComplete:()=>{
       busy=false; Kit.haptic('success');
       Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-      if (!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.1,duration:.4});
     }});
   }
 }

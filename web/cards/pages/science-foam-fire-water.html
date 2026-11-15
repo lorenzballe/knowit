@@ -148,7 +148,6 @@ function drop(side) {
     if (S[0] === 2 && S[1] === 2 && !ended) {
       ended = true; Kit.haptic('success');
       Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-      if (!calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4});
     } else Kit.$('say').textContent = side ? 'Now try plain water on the left.' : 'Now try foam on the right.';
   }, wait);
 }

@@ -119,7 +119,6 @@ slide.addEventListener('input', () => {
   if (d >= D && !done) {
     done = true; Kit.haptic('success');
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
     if (!Kit.calm && G) gsap.fromTo(G.big, {scale: 1.25, transformOrigin: '100% 50%'}, {scale: 1, duration: .5, ease: 'back.out(3)'});
   }
 });
