@@ -2742,7 +2742,17 @@ void main() {
       // The whole card is the button.
       final card = find.byType(HoldToKeep).first;
       await _hold(tester, card);
-      expect(find.text('1 liked today'), findsOneWidget);
+      // The card says it itself, with a heart in its corner; the line that
+      // taught the gesture has gone, and no count takes its place.
+      expect(
+        find.descendant(
+          of: card,
+          matching: find.byKey(const ValueKey('liked-heart')),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Hold a card you like'), findsNothing);
+      expect(find.textContaining('liked today'), findsNothing);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getStringList('knowit.likedIds'), [_todaysFive.first.id]);
@@ -2751,6 +2761,7 @@ void main() {
 
       await _hold(tester, card);
       expect(find.text('Hold a card you like'), findsOneWidget);
+      expect(find.byKey(const ValueKey('liked-heart')), findsNothing);
       expect(prefs.getStringList('knowit.likedIds'), isEmpty);
     });
 
