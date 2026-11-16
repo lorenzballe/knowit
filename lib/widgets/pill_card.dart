@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/topics.dart' show inkOn;
 import '../measure/card_read.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
@@ -14,6 +15,7 @@ import '../sync/served.dart';
 import '../theme.dart';
 import 'card_edge.dart';
 import 'hold_to_keep.dart';
+import 'liked_mark.dart';
 import 'motion.dart';
 import 'place_it.dart';
 import 'place_line.dart';
@@ -159,16 +161,36 @@ class PillCard extends StatelessWidget {
         decoration: cardFace(context, groundOf(pill), radius: 34, lift: 1),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(34),
-          child: WebCardFace(
-            pill: pill,
-            page: page,
-            onMessage: onPageMessage,
-            chip: isReview
-                ? context.l10n.againChip
-                : isOwn
-                ? context.l10n.forYouChip
-                : null,
-            note: placeLineOf(context, pill.place, home) ?? note,
+          // One shape liked or not, so the page keeps its element.
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              WebCardFace(
+                pill: pill,
+                page: page,
+                onMessage: onPageMessage,
+                chip: isReview
+                    ? context.l10n.againChip
+                    : isOwn
+                    ? context.l10n.forYouChip
+                    : null,
+                note: placeLineOf(context, pill.place, home) ?? note,
+              ),
+              // Liked, the heart stands in the page's head on the right,
+              // before the tag it prints there.
+              if (liked)
+                Positioned(
+                  top: CardTags.headMiddle - LikedMark.size / 2,
+                  right: CardTags.heartRight(CardTags.of(pill.id)),
+                  child: IgnorePointer(
+                    child: LikedMark(
+                      ink: pill.web?.ground == null
+                          ? pill.ink
+                          : inkOn(groundOf(pill)),
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
       );
@@ -223,13 +245,20 @@ class PillCard extends StatelessWidget {
                   ],
                 ],
               ),
-              if (indexLabel != null)
-                Text(
-                  indexLabel!,
-                  style: AppText.label(
-                    size: 11,
-                    color: pill.ink.withValues(alpha: 0.55),
-                  ),
+              if (liked || indexLabel != null)
+                Row(
+                  children: [
+                    if (liked) LikedMark(ink: pill.ink),
+                    if (liked && indexLabel != null) const SizedBox(width: 8),
+                    if (indexLabel != null)
+                      Text(
+                        indexLabel!,
+                        style: AppText.label(
+                          size: 11,
+                          color: pill.ink.withValues(alpha: 0.55),
+                        ),
+                      ),
+                  ],
                 ),
             ],
           ),

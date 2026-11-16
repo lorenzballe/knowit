@@ -13,6 +13,7 @@ import '../../models/pill.dart';
 import 'card_kit.dart';
 import 'page_messages.dart';
 import 'web_surface.dart';
+import '../liked_mark.dart';
 
 /// The colour a free card is drawn on: its page's own ground, or its
 /// subject's.
@@ -138,6 +139,7 @@ class WebCardPage extends ChangeNotifier {
       // signal, never met) draws the card natively, as a page that breaks.
       _fetched = !CardPages.instance.inHand(pill.web!);
       final String source = await CardPages.instance.html(pill.web!);
+      CardTags.remember(pill.id, source);
       if (_gone) return;
       // Built as things stand once the page is in hand: a card put on top
       // while it came is built shown, so its entrance starts with its first
