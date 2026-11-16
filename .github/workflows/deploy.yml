@@ -94,6 +94,10 @@ jobs:
           cp -r build/web/. _site/app/
           cp -r site/. _site/
           cp -r web/cards _site/cards
+          # The free cards' own pages, played right on the site (the phone on the first screen),
+          # read their kit from beside them, as the app serves it.
+          mkdir -p _site/cards/pages/kit
+          cp -r docs/cards/kit/fonts docs/cards/kit/vendor docs/cards/kit/fonts.css docs/cards/kit/astute-card.css docs/cards/kit/astute-card.js _site/cards/pages/kit/
           cp -r web/remote _site/remote
           ls -la _site
 
