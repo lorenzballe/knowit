@@ -5248,5 +5248,18 @@
  "storySeePath": "See the path",
  "@storySeePath": {
   "description": "Your journey as a story (the version on trial under the tiles): storySeePath"
+ },
+ "exploreFreshCards": "{n, plural, =1{1 new card at the top} other{{n} new cards at the top}}",
+ "@exploreFreshCards": {
+  "description": "Explore, after a pull at the top: how many of the first cards the feed now lays were not on screen before.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "exploreUpToDate": "You're up to date: nothing new for now.",
+ "@exploreUpToDate": {
+  "description": "Explore, after a pull at the top, when nothing at the top of the feed is new to the reader."
  }
 }

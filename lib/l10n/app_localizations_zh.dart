@@ -4731,4 +4731,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get storySeePath => '查看路径';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '顶部有 $n 张新卡片',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => '你已看完：暂时没有新内容。';
 }

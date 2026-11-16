@@ -1152,5 +1152,7 @@
   "storyBestStreak": "{n, plural, one{Лучшая серия: {n} день} few{Лучшая серия: {n} дня} many{Лучшая серия: {n} дней} other{Лучшая серия: {n} дня}}",
   "storyCardsRead": "{n, plural, one{{n} карточка прочитана} few{{n} карточки прочитаны} many{{n} карточек прочитано} other{{n} карточки прочитано}}",
   "storyToday": "Сегодня",
-  "storySeePath": "Смотреть путь"
+  "storySeePath": "Смотреть путь",
+  "exploreFreshCards": "{n, plural, one{{n} новая карточка сверху} few{{n} новые карточки сверху} many{{n} новых карточек сверху} other{{n} новой карточки сверху}}",
+  "exploreUpToDate": "Всё просмотрено: пока ничего нового."
 }

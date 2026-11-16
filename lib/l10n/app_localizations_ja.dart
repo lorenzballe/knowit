@@ -4731,4 +4731,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get storySeePath => '道のりを見る';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '上に新しいカードが$n枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'すべて見ました。今は新しいものはありません。';
 }

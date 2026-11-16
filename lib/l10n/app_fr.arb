@@ -1152,5 +1152,7 @@
   "storyBestStreak": "{n, plural, =1{Meilleure série : 1 jour} other{Meilleure série : {n} jours}}",
   "storyCardsRead": "{n, plural, =1{1 carte lue} other{{n} cartes lues}}",
   "storyToday": "Aujourd'hui",
-  "storySeePath": "Voir le parcours"
+  "storySeePath": "Voir le parcours",
+  "exploreFreshCards": "{n, plural, =1{1 nouvelle carte en haut} other{{n} nouvelles cartes en haut}}",
+  "exploreUpToDate": "Tu es à jour : rien de neuf pour l'instant."
 }

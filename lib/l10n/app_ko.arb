@@ -1152,5 +1152,7 @@
   "storyBestStreak": "{n, plural, other{최고 연속: {n}일}}",
   "storyCardsRead": "{n, plural, other{카드 {n}장 읽음}}",
   "storyToday": "오늘",
-  "storySeePath": "길 보기"
+  "storySeePath": "길 보기",
+  "exploreFreshCards": "{n, plural, other{위에 새 카드 {n}장}}",
+  "exploreUpToDate": "모두 봤어요. 지금은 새로운 게 없어요."
 }

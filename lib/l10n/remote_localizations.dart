@@ -4787,4 +4787,13 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get storySeePath => _words.text('storySeePath') ?? _base.storySeePath;
+
+  @override
+  String exploreFreshCards(int n) =>
+      _words.format('exploreFreshCards', localeName, {'n': n}) ??
+      _base.exploreFreshCards(n);
+
+  @override
+  String get exploreUpToDate =>
+      _words.text('exploreUpToDate') ?? _base.exploreUpToDate;
 }

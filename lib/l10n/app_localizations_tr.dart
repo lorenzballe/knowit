@@ -4869,4 +4869,17 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get storySeePath => 'Yolu gör';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Üstte $n yeni kart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'Her şeyi gördün: şimdilik yeni bir şey yok.';
 }

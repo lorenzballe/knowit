@@ -4960,4 +4960,18 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get storySeePath => 'Bekijk het pad';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n nieuwe kaarten bovenaan',
+      one: '1 nieuwe kaart bovenaan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'Je bent bij: voorlopig niets nieuws.';
 }

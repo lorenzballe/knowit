@@ -132,11 +132,52 @@ class ExploreScreenState extends State<ExploreScreen>
     // The tick a pull-to-refresh lands with, as a feed's does: the pull was
     // far enough, and the page is coming again.
     HapticFeedback.mediumImpact();
-    Analytics.capture('explore refreshed', {});
+    final Set<String> shownBefore = {
+      for (final String s in _shown) s.substring(s.indexOf(':') + 1),
+    };
     await Future.wait([
       Served.instance.explore(force: true),
       Tallies.instance.refresh(force: true),
     ]);
+    if (!mounted) return;
+    // A new round: the shelves that turn with the day turn again, and the
+    // feed is laid in another order, what was read left out.
+    shelves.nextRound();
+    final int fresh = _freshInFeed(shownBefore);
+    Analytics.capture('explore refreshed', {
+      'round': shelves.round,
+      'fresh': fresh,
+    });
+    setState(() {});
+    final l = context.l10n;
+    ScaffoldMessenger.maybeOf(context)
+      ?..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          key: const ValueKey('explore-fresh'),
+          content: Text(
+            fresh == 0 ? l.exploreUpToDate : l.exploreFreshCards(fresh),
+          ),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+  }
+
+  /// How many of the first cards the feed now lays were not on screen
+  /// before the pull: what the reader will find new at the top of it. Said,
+  /// not invented: a reader who has seen them all is told so.
+  int _freshInFeed(Set<String> shownBefore) {
+    final ExploreSection? feed = exploreSections(Remote.config)
+        .where((s) => s.block == 'feed')
+        .firstOrNull;
+    if (feed == null) return 0;
+    shelves.begin(subject: _subject);
+    return shelves
+        .cardsFor(feed)
+        .where((p) => !isRead(p) && reachesReader(p, widget.app.place))
+        .take(12)
+        .where((p) => !shownBefore.contains(p.id))
+        .length;
   }
 
   /// What the server found for the query being typed, and for which query,

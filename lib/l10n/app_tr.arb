@@ -1152,5 +1152,7 @@
   "storyBestStreak": "{n, plural, other{En iyi seri: {n} gün}}",
   "storyCardsRead": "{n, plural, other{{n} kart okundu}}",
   "storyToday": "Bugün",
-  "storySeePath": "Yolu gör"
+  "storySeePath": "Yolu gör",
+  "exploreFreshCards": "{n, plural, other{Üstte {n} yeni kart}}",
+  "exploreUpToDate": "Her şeyi gördün: şimdilik yeni bir şey yok."
 }

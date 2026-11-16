@@ -127,15 +127,36 @@ class ExploreShelves {
   Set<String> _readWhenDealt = const {};
   String? _dealtOn;
 
-  /// The day the shelves were dealt on, as a seed.
-  String? get dealtOn => _dealtOn;
+  /// The pulls at the top of the page since the day was dealt ([nextRound]).
+  int get round => _round;
+  int _round = 0;
+
+  /// The day the shelves were dealt on, and the round, as a seed: every
+  /// block that turns with the day turns with a pull as well.
+  String? get dealtOn => _round == 0 ? _dealtOn : '$_dealtOn#$_round';
 
   void _dealToday() {
     final String today = daySeed(_clock());
     if (_dealtOn != today) {
       _dealtOn = today;
+      _round = 0;
       _readWhenDealt = {...app.seenIds};
     }
+  }
+
+  /// A new round of the day's deal, for a pull at the top of the page: the
+  /// shelves that turn with the day are dealt again in another order, and
+  /// what has been read since leaves the ones for finding things. What keeps
+  /// its place (the server's shelves, the reader's own, the week's and the
+  /// fixed ones) keeps it. A pull used to read the server again and draw the
+  /// same day's page, so it moved nothing a reader could see.
+  void nextRound() {
+    _dealToday();
+    _round++;
+    _readWhenDealt = {...app.seenIds};
+    _queries.clear();
+    _cards.clear();
+    _mix = null;
   }
 
   /// Whether [pill] was not read when the shelves were dealt: a find.
@@ -399,7 +420,7 @@ class ExploreShelves {
     // the phone before: the mix follows it once, when it arrives.
     final String source = _served == null ? 'phone' : 'served';
     final String key =
-        '$day|${_subject ?? ''}|$_dealtOn|${PillBank.version}|$source';
+        '$day|${_subject ?? ''}|$dealtOn|${PillBank.version}|$source';
     if (_mix != null && key == _mixKey) return _mix!;
     _mixKey = key;
     moodMemo.clear();
@@ -413,7 +434,9 @@ class ExploreShelves {
       pool: only(PillBank.cards)
           .where((p) => unread(p) && !above.contains(p.id))
           .toList(),
-      day: day,
+      // A pull deals the themed shelves of another day: other themes, other
+      // cards, the same rules.
+      day: day + _round * 31,
       on: _clock(),
     );
   }
@@ -479,8 +502,9 @@ class ExploreShelves {
   ///   `limit`, and `seed`, `day` (the default), `week` or `fixed`, which
   ///   decides when the pick turns over. The same pick on every phone for
   ///   the same seed, apart from what each reader has read.
-  /// * `{"mine": "saved" | "liked" | "due"}` — the reader's own: what they
-  ///   saved and liked, newest first, and what came back to be answered.
+  /// * `{"mine": "saved" | "liked" | "due" | "forYou"}` — the reader's own:
+  ///   what they saved and liked, newest first, what came back to be
+  ///   answered, and what leans toward their taste, picked on the phone.
   List<Pill> cardsFor(ExploreSection section, {int? limit}) {
     final Object? source = section.source;
     final int? most = limit ?? section.limit;
@@ -503,7 +527,7 @@ class ExploreShelves {
       // for two halves, a theme for a set — and a section that wants
       // other cards says which.
       final String key =
-          '${section.id}|*|${_subject ?? ''}|$_dealtOn|${PillBank.version}';
+          '${section.id}|*|${_subject ?? ''}|$dealtOn|${PillBank.version}';
       if (_queries.length > 200) _queries.clear();
       final List<Pill> pool = _queries[key] ??= _pool(section);
       return pool.take(most ?? pool.length).toList();
@@ -521,7 +545,7 @@ class ExploreShelves {
       // deal or the bank changes: kept across builds, where the other
       // sources are worked out again on every one.
       final String key =
-          '${section.id}|${_keyOf(query)}|${_subject ?? ''}|$_dealtOn|'
+          '${section.id}|${_keyOf(query)}|${_subject ?? ''}|$dealtOn|'
           '${PillBank.version}';
       if (_queries.length > 200) _queries.clear();
       found = _queries[key] ??= _query(section, query);
@@ -594,7 +618,9 @@ class ExploreShelves {
   /// view, in an order that turns with the day and is the same on every
   /// phone that day.
   List<Pill> _pool(ExploreSection section) {
-    final String salt = 'pool:${section.id}:${themeDay(_clock())}';
+    final String salt =
+        'pool:${section.id}:${themeDay(_clock())}'
+        '${_round == 0 ? '' : ':r$_round'}';
     final List<Pill> cards = only(PillBank.cards).toList();
     final Map<String, int> rank = {
       for (final Pill p in cards) p.id: shelfHash('$salt:${p.id}'),
@@ -623,7 +649,7 @@ class ExploreShelves {
     final String salt = switch (query['seed']) {
       'week' => 'week:${now.year}:${section.id}',
       'fixed' => 'fixed:${section.id}',
-      _ => 'day:${section.id}',
+      _ => 'day:${section.id}${_round == 0 ? '' : ':r$_round'}',
     };
     final Iterable<Pill> fits = only(PillBank.cards).where(
       (p) =>
@@ -642,11 +668,41 @@ class ExploreShelves {
     );
   }
 
+  /// For you, worked out on the phone: the cards not read yet that lean
+  /// most toward what the reader held, liked and kept (their taste, see
+  /// [leanOf]), two to a subject at most, a little stirred by the day and the
+  /// round so a pull brings others. Nothing until there is a taste to lean
+  /// on: a shelf called "for you" that is not is worse than none.
+  List<Pill> _forYou() {
+    final Map<String, double> taste = app.taste;
+    if (taste.isEmpty) return const [];
+    final String key =
+        'forYou|$dealtOn|${PillBank.version}|${app.likedIds.length}|'
+        '${app.dislikedIds.length}|${app.readingLog.length}';
+    return _queries[key] ??= () {
+      final String salt = 'forYou:$dealtOn';
+      final List<(Pill, double)> scored = [
+        for (final Pill p in PillBank.cards)
+          if (!isRead(p) && reachesReader(p, app.place))
+            (p, leanOf(p, taste) + shelfHash('$salt:${p.id}') % 1000 / 5000),
+      ]..sort((a, b) => b.$2.compareTo(a.$2));
+      final Map<String, int> perSubject = {};
+      final List<Pill> out = [];
+      for (final (Pill p, double _) in scored) {
+        final int n = perSubject[p.topic] = (perSubject[p.topic] ?? 0) + 1;
+        if (n <= 2) out.add(p);
+        if (out.length >= 20) break;
+      }
+      return out;
+    }();
+  }
+
   List<Pill> _readers(String which) {
     final List<Pill> cards = switch (which) {
       'saved' => [for (final id in app.savedIds) ?pillById(id)],
       'liked' => [for (final id in app.likedIds) ?pillById(id)],
       'due' => [for (final r in app.reviewsWaitingWithAnswers) r.card],
+      'forYou' => _forYou(),
       _ => const <Pill>[],
     };
     return only([

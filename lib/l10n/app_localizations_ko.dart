@@ -4752,4 +4752,17 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get storySeePath => '길 보기';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '위에 새 카드 $n장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => '모두 봤어요. 지금은 새로운 게 없어요.';
 }

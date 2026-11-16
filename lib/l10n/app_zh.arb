@@ -1152,5 +1152,7 @@
   "storyBestStreak": "{n, plural, other{最佳连续：{n} 天}}",
   "storyCardsRead": "{n, plural, other{已读 {n} 张卡片}}",
   "storyToday": "今天",
-  "storySeePath": "查看路径"
+  "storySeePath": "查看路径",
+  "exploreFreshCards": "{n, plural, other{顶部有 {n} 张新卡片}}",
+  "exploreUpToDate": "你已看完：暂时没有新内容。"
 }

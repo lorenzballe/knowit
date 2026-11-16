@@ -1152,5 +1152,7 @@
   "storyBestStreak": "{n, plural, =1{Beste reeks: 1 dag} other{Beste reeks: {n} dagen}}",
   "storyCardsRead": "{n, plural, =1{1 kaart gelezen} other{{n} kaarten gelezen}}",
   "storyToday": "Vandaag",
-  "storySeePath": "Bekijk het pad"
+  "storySeePath": "Bekijk het pad",
+  "exploreFreshCards": "{n, plural, =1{1 nieuwe kaart bovenaan} other{{n} nieuwe kaarten bovenaan}}",
+  "exploreUpToDate": "Je bent bij: voorlopig niets nieuws."
 }

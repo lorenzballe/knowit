@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "eadf57435d6bed14",
+ "hash": "a960cc72674e84af",
  "app": {
   "gate": null,
   "flags": {},
@@ -2068,6 +2068,44 @@ const String kEmbeddedRemote = r'''
    {
     "id": "moving",
     "block": "purpose.moving"
+   },
+   {
+    "id": "for-you",
+    "block": "carousel",
+    "size": "m",
+    "title": {
+     "en": "For you",
+     "it": "Per te",
+     "de": "Für dich",
+     "es": "Para ti",
+     "fr": "Pour toi",
+     "ja": "あなたへ",
+     "ko": "당신을 위해",
+     "nl": "Voor jou",
+     "pl": "Dla ciebie",
+     "pt": "Para ti",
+     "ru": "Для тебя",
+     "tr": "Senin için",
+     "zh": "为你推荐"
+    },
+    "subtitle": {
+     "en": "Picked on your phone from what you read and like.",
+     "it": "Scelte sul tuo telefono da quello che leggi e ti piace.",
+     "de": "Auf deinem Handy ausgewählt, nach dem, was du liest und magst.",
+     "es": "Elegidas en tu teléfono según lo que lees y te gusta.",
+     "fr": "Choisies sur ton téléphone d'après ce que tu lis et aimes.",
+     "ja": "あなたが読んで気に入ったものから、端末上で選んでいます。",
+     "ko": "읽고 좋아한 것을 바탕으로 휴대폰에서 골랐어요.",
+     "nl": "Op je telefoon gekozen uit wat je leest en leuk vindt.",
+     "pl": "Wybrane na twoim telefonie na podstawie tego, co czytasz i lubisz.",
+     "pt": "Escolhidas no teu telemóvel a partir do que lês e gostas.",
+     "ru": "Подобрано на твоём телефоне по тому, что ты читаешь и любишь.",
+     "tr": "Okuduklarına ve beğendiklerine göre telefonunda seçildi.",
+     "zh": "根据你读过和喜欢的内容，在手机上为你挑选。"
+    },
+    "source": {
+     "mine": "forYou"
+    }
    },
    {
     "id": "month",

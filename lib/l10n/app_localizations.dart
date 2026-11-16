@@ -7037,6 +7037,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See the path'**
   String get storySeePath;
+
+  /// Explore, after a pull at the top: how many of the first cards the feed now lays were not on screen before.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 new card at the top} other{{n} new cards at the top}}'**
+  String exploreFreshCards(int n);
+
+  /// Explore, after a pull at the top, when nothing at the top of the feed is new to the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re up to date: nothing new for now.'**
+  String get exploreUpToDate;
 }
 
 class _AppLocalizationsDelegate

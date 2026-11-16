@@ -77,7 +77,7 @@ class ThePage(unittest.TestCase):
 
     def test_what_the_app_needs_from_the_face(self):
         self.assertTrue(any("web.label" in p for p in self.problems(web={"kit": 1})))
-        self.assertTrue(any("no build could show it" in p for p in self.problems(web=dict(page_card()["web"], kit=2))))
+        self.assertTrue(any("no build could show it" in p for p in self.problems(web=dict(page_card()["web"], kit=pages.KIT_VERSION + 1))))
         self.assertTrue(any("taps or drags" in p for p in self.problems(web=dict(page_card()["web"], touch="all"))))
 
     def test_one_card_in_the_kit_s_single_mode_played_through(self):

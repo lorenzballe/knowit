@@ -34,6 +34,65 @@ void main() {
       ExploreShelves(app, clock: on == null ? null : () => on)
         ..begin(subject: subject);
 
+  group('a pull at the top deals a new round', () {
+    test('the day\'s shelves come in another order, the fixed and the '
+        'week\'s stay, and the seed the blocks turn with turns', () async {
+      final AppState app = await readyApp();
+      final DateTime monday = DateTime(2026, 10, 19, 9);
+      final ExploreShelves shelves = shelvesFor(app, on: monday);
+      final ExploreSection day = _section({
+        'query': {
+          'subjects': ['space', 'history'],
+        },
+      }, id: 'day');
+      final ExploreSection fixed = _section({
+        'query': {'seed': 'fixed'},
+      }, id: 'fixed');
+      final ExploreSection all = _section(null, id: 'feed');
+      final List<String> dayBefore = _ids(shelves.cardsFor(day));
+      final List<String> fixedBefore = _ids(shelves.cardsFor(fixed));
+      final List<String> allBefore = _ids(shelves.cardsFor(all))
+          .take(20)
+          .toList();
+      final String? seed = shelves.dealtOn;
+
+      shelves.nextRound();
+      shelves.begin();
+      expect(shelves.round, 1);
+      expect(shelves.dealtOn, isNot(seed));
+      expect(_ids(shelves.cardsFor(day)), isNot(dayBefore));
+      expect(_ids(shelves.cardsFor(fixed)), fixedBefore);
+      expect(_ids(shelves.cardsFor(all)).take(20).toList(), isNot(allBefore));
+    });
+  });
+
+  group('for you, picked on the phone', () {
+    test('nothing until there is a taste to lean on', () async {
+      final AppState app = await readyApp();
+      expect(shelvesFor(app).cardsFor(_section({'mine': 'forYou'})), isEmpty);
+    });
+
+    test('the unread cards that lean toward what was liked, two to a '
+        'subject at most', () async {
+      final AppState app = await readyApp();
+      final List<Pill> liked = PillBank.cards
+          .where((p) => p.traits.isNotEmpty)
+          .take(6)
+          .toList();
+      app.likedIds = [for (final p in liked) p.id];
+      app.seenIds = {for (final p in liked) p.id};
+      final List<Pill> picked = shelvesFor(app)
+          .cardsFor(_section({'mine': 'forYou'}));
+      expect(picked, isNotEmpty);
+      expect(picked.any((p) => app.seenIds.contains(p.id)), isFalse);
+      final Map<String, int> perSubject = {};
+      for (final Pill p in picked) {
+        perSubject[p.topic] = (perSubject[p.topic] ?? 0) + 1;
+      }
+      expect(perSubject.values.every((n) => n <= 2), isTrue);
+    });
+  });
+
   group('a query of the bank', () {
     test('is the same pick on every phone for the same seed and section, '
         'another for another section, another the next day', () async {

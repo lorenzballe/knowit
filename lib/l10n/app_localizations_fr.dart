@@ -4975,4 +4975,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get storySeePath => 'Voir le parcours';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n nouvelles cartes en haut',
+      one: '1 nouvelle carte en haut',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'Tu es à jour : rien de neuf pour l\'instant.';
 }

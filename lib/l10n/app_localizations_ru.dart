@@ -5139,4 +5139,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get storySeePath => 'Смотреть путь';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n новой карточки сверху',
+      many: '$n новых карточек сверху',
+      few: '$n новые карточки сверху',
+      one: '$n новая карточка сверху',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'Всё просмотрено: пока ничего нового.';
 }
