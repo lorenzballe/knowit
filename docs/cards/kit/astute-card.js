@@ -22,6 +22,12 @@ const Kit = (() => {
       e.style.visibility = '';
       if (!gsap.isTweening(e)) gsap.fromTo(e, {opacity: 0, y: 12}, {opacity: 1, y: 0, duration: .5, ease: 'power2.out'});
     });
+    // Whatever fades meet on it, it ends in sight: a card whose own fade starts a frame or two
+    // later (requestAnimationFrame(() => gsap.from('#keep', ...))) still took the kit's opacity 0
+    // as where to end.
+    setTimeout(() => {
+      if (!e.classList.contains('gone') && !gsap.isTweening(e) && +getComputedStyle(e).opacity < .05) gsap.to(e, {opacity: 1, y: 0, duration: .3, ease: 'power2.out'});
+    }, 1000);
   };
   const hide = id => $(id).classList.add('gone');
   // A canvas or an SVG sized to its real box, so drawings and text never stretch.
