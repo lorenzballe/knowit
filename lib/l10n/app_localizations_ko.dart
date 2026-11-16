@@ -4765,4 +4765,58 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get exploreUpToDate => '모두 봤어요. 지금은 새로운 게 없어요.';
+
+  @override
+  String get deeperTitle => '더 깊이';
+
+  @override
+  String get deeperSimple => '쉽게 설명해 줘';
+
+  @override
+  String get deeperWhy => '왜 중요한가';
+
+  @override
+  String get deeperSides => '양쪽 입장';
+
+  @override
+  String get deeperYourTake => '내 생각, 분석';
+
+  @override
+  String get deeperYourTakeHint => '어떻게 생각하는지 적어 보세요…';
+
+  @override
+  String get deeperAnalyse => '분석하기';
+
+  @override
+  String get deeperAsk => '이 카드에 대해 묻기';
+
+  @override
+  String get deeperAskHint => '질문…';
+
+  @override
+  String get deeperSend => '묻기';
+
+  @override
+  String get deeperSource => '출처';
+
+  @override
+  String get deeperOpenSource => '원문 열기';
+
+  @override
+  String get deeperAiNote => 'AI가 답해요. 틀릴 수도 있어요.';
+
+  @override
+  String get deeperBusy => '생각 중…';
+
+  @override
+  String get deeperTomorrow => '오늘은 여기까지. 내일 또.';
+
+  @override
+  String get deeperTryAgain => '전달되지 않았어요. 잠시 후 다시 시도하세요.';
+
+  @override
+  String get deeperDeclined => '이건 답할 수 없어요.';
+
+  @override
+  String get deeperPlusOnly => 'Astute+로';
 }

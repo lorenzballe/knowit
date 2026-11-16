@@ -5134,4 +5134,58 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get exploreUpToDate => 'Jesteś na bieżąco: na razie nic nowego.';
+
+  @override
+  String get deeperTitle => 'Zgłęb temat';
+
+  @override
+  String get deeperSimple => 'Wyjaśnij prosto';
+
+  @override
+  String get deeperWhy => 'Dlaczego to ważne';
+
+  @override
+  String get deeperSides => 'Obie strony';
+
+  @override
+  String get deeperYourTake => 'Twoja myśl pod lupą';
+
+  @override
+  String get deeperYourTakeHint => 'Napisz, co o tym myślisz…';
+
+  @override
+  String get deeperAnalyse => 'Przeanalizuj';
+
+  @override
+  String get deeperAsk => 'Zapytaj o tę kartę';
+
+  @override
+  String get deeperAskHint => 'Twoje pytanie…';
+
+  @override
+  String get deeperSend => 'Zapytaj';
+
+  @override
+  String get deeperSource => 'Źródło';
+
+  @override
+  String get deeperOpenSource => 'Otwórz oryginał';
+
+  @override
+  String get deeperAiNote => 'Odpowiada AI: może się mylić.';
+
+  @override
+  String get deeperBusy => 'Myślę…';
+
+  @override
+  String get deeperTomorrow => 'Na dziś wystarczy: jutro więcej.';
+
+  @override
+  String get deeperTryAgain => 'Nie dotarło. Spróbuj za chwilę.';
+
+  @override
+  String get deeperDeclined => 'Na to nie może odpowiedzieć.';
+
+  @override
+  String get deeperPlusOnly => 'Z Astute+';
 }

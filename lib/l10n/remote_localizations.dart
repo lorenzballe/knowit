@@ -4796,4 +4796,67 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get exploreUpToDate =>
       _words.text('exploreUpToDate') ?? _base.exploreUpToDate;
+
+  @override
+  String get deeperTitle => _words.text('deeperTitle') ?? _base.deeperTitle;
+
+  @override
+  String get deeperSimple => _words.text('deeperSimple') ?? _base.deeperSimple;
+
+  @override
+  String get deeperWhy => _words.text('deeperWhy') ?? _base.deeperWhy;
+
+  @override
+  String get deeperSides => _words.text('deeperSides') ?? _base.deeperSides;
+
+  @override
+  String get deeperYourTake =>
+      _words.text('deeperYourTake') ?? _base.deeperYourTake;
+
+  @override
+  String get deeperYourTakeHint =>
+      _words.text('deeperYourTakeHint') ?? _base.deeperYourTakeHint;
+
+  @override
+  String get deeperAnalyse =>
+      _words.text('deeperAnalyse') ?? _base.deeperAnalyse;
+
+  @override
+  String get deeperAsk => _words.text('deeperAsk') ?? _base.deeperAsk;
+
+  @override
+  String get deeperAskHint =>
+      _words.text('deeperAskHint') ?? _base.deeperAskHint;
+
+  @override
+  String get deeperSend => _words.text('deeperSend') ?? _base.deeperSend;
+
+  @override
+  String get deeperSource => _words.text('deeperSource') ?? _base.deeperSource;
+
+  @override
+  String get deeperOpenSource =>
+      _words.text('deeperOpenSource') ?? _base.deeperOpenSource;
+
+  @override
+  String get deeperAiNote => _words.text('deeperAiNote') ?? _base.deeperAiNote;
+
+  @override
+  String get deeperBusy => _words.text('deeperBusy') ?? _base.deeperBusy;
+
+  @override
+  String get deeperTomorrow =>
+      _words.text('deeperTomorrow') ?? _base.deeperTomorrow;
+
+  @override
+  String get deeperTryAgain =>
+      _words.text('deeperTryAgain') ?? _base.deeperTryAgain;
+
+  @override
+  String get deeperDeclined =>
+      _words.text('deeperDeclined') ?? _base.deeperDeclined;
+
+  @override
+  String get deeperPlusOnly =>
+      _words.text('deeperPlusOnly') ?? _base.deeperPlusOnly;
 }

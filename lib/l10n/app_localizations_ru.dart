@@ -5155,4 +5155,58 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get exploreUpToDate => 'Всё просмотрено: пока ничего нового.';
+
+  @override
+  String get deeperTitle => 'Глубже';
+
+  @override
+  String get deeperSimple => 'Объясни просто';
+
+  @override
+  String get deeperWhy => 'Почему это важно';
+
+  @override
+  String get deeperSides => 'Обе стороны';
+
+  @override
+  String get deeperYourTake => 'Твоя мысль под лупой';
+
+  @override
+  String get deeperYourTakeHint => 'Напиши, что ты об этом думаешь…';
+
+  @override
+  String get deeperAnalyse => 'Разобрать';
+
+  @override
+  String get deeperAsk => 'Спроси об этой карточке';
+
+  @override
+  String get deeperAskHint => 'Твой вопрос…';
+
+  @override
+  String get deeperSend => 'Спросить';
+
+  @override
+  String get deeperSource => 'Источник';
+
+  @override
+  String get deeperOpenSource => 'Открыть оригинал';
+
+  @override
+  String get deeperAiNote => 'Отвечает ИИ: он может ошибаться.';
+
+  @override
+  String get deeperBusy => 'Думаю…';
+
+  @override
+  String get deeperTomorrow => 'На сегодня хватит: завтра ещё.';
+
+  @override
+  String get deeperTryAgain => 'Не дошло. Попробуй через минуту.';
+
+  @override
+  String get deeperDeclined => 'На это ИИ ответить не может.';
+
+  @override
+  String get deeperPlusOnly => 'С Astute+';
 }

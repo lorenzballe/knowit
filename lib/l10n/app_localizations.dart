@@ -7049,6 +7049,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You\'re up to date: nothing new for now.'**
   String get exploreUpToDate;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Go deeper'**
+  String get deeperTitle;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperSimple
+  ///
+  /// In en, this message translates to:
+  /// **'Explain it simply'**
+  String get deeperSimple;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperWhy
+  ///
+  /// In en, this message translates to:
+  /// **'Why it matters'**
+  String get deeperWhy;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperSides
+  ///
+  /// In en, this message translates to:
+  /// **'Both sides'**
+  String get deeperSides;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperYourTake
+  ///
+  /// In en, this message translates to:
+  /// **'Your take, looked at'**
+  String get deeperYourTake;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperYourTakeHint
+  ///
+  /// In en, this message translates to:
+  /// **'Write what you think about it…'**
+  String get deeperYourTakeHint;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperAnalyse
+  ///
+  /// In en, this message translates to:
+  /// **'Look at it'**
+  String get deeperAnalyse;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperAsk
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about this card'**
+  String get deeperAsk;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperAskHint
+  ///
+  /// In en, this message translates to:
+  /// **'Your question…'**
+  String get deeperAskHint;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperSend
+  ///
+  /// In en, this message translates to:
+  /// **'Ask'**
+  String get deeperSend;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperSource
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get deeperSource;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperOpenSource
+  ///
+  /// In en, this message translates to:
+  /// **'Open the original'**
+  String get deeperOpenSource;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperAiNote
+  ///
+  /// In en, this message translates to:
+  /// **'Answered by AI: it can be wrong.'**
+  String get deeperAiNote;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperBusy
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking…'**
+  String get deeperBusy;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperTomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s enough for today: more tomorrow.'**
+  String get deeperTomorrow;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperTryAgain
+  ///
+  /// In en, this message translates to:
+  /// **'It didn\'t come through. Try again in a moment.'**
+  String get deeperTryAgain;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperDeclined
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s one it can\'t answer.'**
+  String get deeperDeclined;
+
+  /// Go deeper, the sheet a tap on a card's source opens: deeperPlusOnly
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+'**
+  String get deeperPlusOnly;
 }
 
 class _AppLocalizationsDelegate
