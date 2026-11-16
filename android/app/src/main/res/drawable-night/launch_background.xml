@@ -3,5 +3,5 @@
      Light phones: the dark tile on the app's paper. Dark phones (drawable-night): the light tile on black. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/launch_ground" />
-    <item android:width="120dp" android:height="120dp" android:gravity="center" android:drawable="@drawable/splash_tile_dark" />
+    <item android:width="96dp" android:height="96dp" android:gravity="center" android:drawable="@drawable/splash_tile_dark" />
 </layer-list>
