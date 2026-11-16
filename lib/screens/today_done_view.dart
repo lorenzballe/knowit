@@ -449,18 +449,16 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // a wider card is the same card, bigger; the extra height beyond
         // the canvas's proportion is air inside the card, and is capped
         // before the card turns into a column.
-        // Every card in the proportion a drawn card's picture is taken in
-        // (WebThumbs.aspect, the deck's own card): the picture then fills
-        // its card edge to edge, with the margins and the head a card set
-        // in words has, and the two read as one card — a picture fitted
-        // into a squatter card stood in a band of its own ground, its
-        // margins half again a word card's. Where the room is shorter, the
-        // card narrows to keep the proportion.
+        // (Taking the drawn cards' pictures' taller proportion instead made
+        // every card narrower and its words smaller on a phone short of
+        // room, and the owner liked the shelf less: the shape stays.)
         final double room = math.max(0, box.maxHeight - _air * 2);
-        const double tall = 1 / WebThumbs.aspect;
-        final double width = math.min(box.maxWidth - _side * 2, room / tall);
+        final double width = math.min(
+          box.maxWidth - _side * 2,
+          room * _artWidth / _artHeight,
+        );
         _cardWidth = width;
-        _cardHeight = width * tall;
+        _cardHeight = math.min(room, width * _artHeight / _artWidth * 1.25);
         _learnTags(deck);
         final Size stage = Size(box.maxWidth, box.maxHeight);
 
