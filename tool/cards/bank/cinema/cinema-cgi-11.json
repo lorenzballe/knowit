@@ -40,6 +40,6 @@
   },
   "source": "Reynolds, SIGGRAPH, 1987",
   "source_kind": "paper",
-  "reference": "Reynolds, Flocks, herds and schools: a distributed behavioral model, Computer Graphics 21(4):25-34 (SIGGRAPH 1987); https://www.red3d.com/cwr/boids/",
+  "reference": "Reynolds, Flocks, herds and schools: a distributed behavioral model, Computer Graphics 21(4):25-34 (SIGGRAPH 1987); https://www.red3d.com/cwr/boids/, doi:10.1145/37402.37406",
   "written": "2026-10-07"
 }

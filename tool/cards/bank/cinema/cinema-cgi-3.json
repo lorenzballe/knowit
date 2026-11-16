@@ -28,6 +28,6 @@
   "figure": "none",
   "source": "Jensen et al., SIGGRAPH, 2001",
   "source_kind": "paper",
-  "reference": "Jensen, Marschner, Levoy & Hanrahan, A Practical Model for Subsurface Light Transport, SIGGRAPH, 2001",
+  "reference": "Jensen, Marschner, Levoy & Hanrahan, A Practical Model for Subsurface Light Transport, SIGGRAPH, 2001, doi:10.1145/383259.383319",
   "written": "2026-09-26"
 }

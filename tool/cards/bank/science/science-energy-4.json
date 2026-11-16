@@ -27,7 +27,7 @@
   "figure": "bars",
   "source": "Markandya & Wilkinson, Lancet, 2007; Our World in Data",
   "source_kind": "paper",
-  "reference": "Markandya, A. & Wilkinson, P. (2007) Electricity generation and health, The Lancet 370: 979-990; Ritchie, H. (2020) What are the safest and cleanest sources of energy? Our World in Data",
+  "reference": "Markandya, A. & Wilkinson, P. (2007) Electricity generation and health, The Lancet 370: 979-990; Ritchie, H. (2020) What are the safest and cleanest sources of energy? Our World in Data, doi:10.1016/s0140-6736(07)61253-7",
   "written": "2026-10-07",
   "ask": "Which energy source frightens me most, and how many deaths per unit of power does it cause?",
   "scene": {

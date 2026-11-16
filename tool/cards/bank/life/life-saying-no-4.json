@@ -77,6 +77,6 @@
   },
   "source": "Kleinrock, Queueing Systems, 1975",
   "source_kind": "book",
-  "reference": "Kleinrock, Queueing Systems, Volume 1: Theory, Wiley, 1975 (M/M/1 queue: mean wait in line = utilisation/(1 - utilisation) service times)",
+  "reference": "Kleinrock, Queueing Systems, Volume 1: Theory, Wiley, 1975 (M/M/1 queue: mean wait in line = utilisation/(1 - utilisation) service times), https://openlibrary.org/works/OL2979617W",
   "written": "2026-10-07"
 }

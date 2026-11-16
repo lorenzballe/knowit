@@ -33,5 +33,5 @@
   "figure": "dots",
   "source": "Precision and recall on rare events",
   "source_kind": "paper",
-  "reference": "Saito & Rehmsmeier, The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets, PLOS ONE, 2015"
+  "reference": "Saito & Rehmsmeier, The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets, PLOS ONE, 2015, doi:10.1371/journal.pone.0118432"
 }

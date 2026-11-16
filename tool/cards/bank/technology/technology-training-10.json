@@ -58,6 +58,6 @@
   },
   "source": "Lee et al., ACL, 2022",
   "source_kind": "paper",
-  "reference": "Lee et al., Deduplicating Training Data Makes Language Models Better, ACL 2022: https://aclanthology.org/2022.acl-long.577",
+  "reference": "Lee et al., Deduplicating Training Data Makes Language Models Better, ACL 2022: https://aclanthology.org/2022.acl-long.577, doi:10.18653/v1/2022.acl-long.577",
   "written": "2026-10-06"
 }

@@ -29,6 +29,6 @@
   "figure": "bars",
   "source": "Petrov et al., NeurIPS, 2023",
   "source_kind": "paper",
-  "reference": "Petrov, La Malfa, Torr & Bibi, Language Model Tokenizers Introduce Unfairness Between Languages, NeurIPS, 2023",
+  "reference": "Petrov, La Malfa, Torr & Bibi, Language Model Tokenizers Introduce Unfairness Between Languages, NeurIPS, 2023, doi:10.52202/075280-1608",
   "written": "2026-09-27"
 }

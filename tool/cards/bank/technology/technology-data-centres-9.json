@@ -35,6 +35,6 @@
   "figure": "none",
   "source": "Schroeder, Pinheiro & Weber, ACM SIGMETRICS, 2009",
   "source_kind": "paper",
-  "reference": "Schroeder, Pinheiro & Weber, DRAM Errors in the Wild: A Large-Scale Field Study, ACM SIGMETRICS, 2009",
+  "reference": "Schroeder, Pinheiro & Weber, DRAM Errors in the Wild: A Large-Scale Field Study, ACM SIGMETRICS, 2009, doi:10.1145/2492101.1555372",
   "written": "2026-09-27"
 }
