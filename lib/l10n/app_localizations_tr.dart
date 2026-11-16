@@ -4882,4 +4882,58 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get exploreUpToDate => 'Her şeyi gördün: şimdilik yeni bir şey yok.';
+
+  @override
+  String get deeperTitle => 'Derinleş';
+
+  @override
+  String get deeperSimple => 'Basitçe anlat';
+
+  @override
+  String get deeperWhy => 'Neden önemli';
+
+  @override
+  String get deeperSides => 'İki taraf';
+
+  @override
+  String get deeperYourTake => 'Fikrin, incelendi';
+
+  @override
+  String get deeperYourTakeHint => 'Ne düşündüğünü yaz…';
+
+  @override
+  String get deeperAnalyse => 'İncele';
+
+  @override
+  String get deeperAsk => 'Bu kart hakkında sor';
+
+  @override
+  String get deeperAskHint => 'Sorun…';
+
+  @override
+  String get deeperSend => 'Sor';
+
+  @override
+  String get deeperSource => 'Kaynak';
+
+  @override
+  String get deeperOpenSource => 'Orijinali aç';
+
+  @override
+  String get deeperAiNote => 'Bir yapay zekâ yanıtlıyor: yanılabilir.';
+
+  @override
+  String get deeperBusy => 'Düşünüyorum…';
+
+  @override
+  String get deeperTomorrow => 'Bugünlük bu kadar: yarın devam.';
+
+  @override
+  String get deeperTryAgain => 'Ulaşmadı. Birazdan tekrar dene.';
+
+  @override
+  String get deeperDeclined => 'Buna yanıt veremiyor.';
+
+  @override
+  String get deeperPlusOnly => 'Astute+ ile';
 }

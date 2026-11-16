@@ -5261,5 +5261,77 @@
  "exploreUpToDate": "You're up to date: nothing new for now.",
  "@exploreUpToDate": {
   "description": "Explore, after a pull at the top, when nothing at the top of the feed is new to the reader."
+ },
+ "deeperTitle": "Go deeper",
+ "@deeperTitle": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperTitle"
+ },
+ "deeperSimple": "Explain it simply",
+ "@deeperSimple": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperSimple"
+ },
+ "deeperWhy": "Why it matters",
+ "@deeperWhy": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperWhy"
+ },
+ "deeperSides": "Both sides",
+ "@deeperSides": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperSides"
+ },
+ "deeperYourTake": "Your take, looked at",
+ "@deeperYourTake": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperYourTake"
+ },
+ "deeperYourTakeHint": "Write what you think about it…",
+ "@deeperYourTakeHint": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperYourTakeHint"
+ },
+ "deeperAnalyse": "Look at it",
+ "@deeperAnalyse": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperAnalyse"
+ },
+ "deeperAsk": "Ask about this card",
+ "@deeperAsk": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperAsk"
+ },
+ "deeperAskHint": "Your question…",
+ "@deeperAskHint": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperAskHint"
+ },
+ "deeperSend": "Ask",
+ "@deeperSend": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperSend"
+ },
+ "deeperSource": "Source",
+ "@deeperSource": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperSource"
+ },
+ "deeperOpenSource": "Open the original",
+ "@deeperOpenSource": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperOpenSource"
+ },
+ "deeperAiNote": "Answered by AI: it can be wrong.",
+ "@deeperAiNote": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperAiNote"
+ },
+ "deeperBusy": "Thinking…",
+ "@deeperBusy": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperBusy"
+ },
+ "deeperTomorrow": "That's enough for today: more tomorrow.",
+ "@deeperTomorrow": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperTomorrow"
+ },
+ "deeperTryAgain": "It didn't come through. Try again in a moment.",
+ "@deeperTryAgain": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperTryAgain"
+ },
+ "deeperDeclined": "That's one it can't answer.",
+ "@deeperDeclined": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperDeclined"
+ },
+ "deeperPlusOnly": "With Astute+",
+ "@deeperPlusOnly": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperPlusOnly"
  }
 }

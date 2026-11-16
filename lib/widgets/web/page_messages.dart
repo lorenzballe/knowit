@@ -41,6 +41,8 @@ sealed class PageMessage {
           correct: correct is bool ? correct : null,
           sure: sure is num ? sure.round() : null,
         );
+      case 'deeper':
+        return const PageDeeper();
       case 'react':
         final Reaction? reaction = Reaction.of(raw['value']);
         return reaction == null ? null : PageReact(reaction);
@@ -138,6 +140,11 @@ class PageAnswer extends PageMessage {
   final int? sure;
 
   const PageAnswer({required this.choice, this.correct, this.sure});
+}
+
+/// The reader tapped the card's source: Go deeper (deeper_sheet.dart).
+class PageDeeper extends PageMessage {
+  const PageDeeper();
 }
 
 /// The reader said what the card did for them (see [Pill.reacts]).

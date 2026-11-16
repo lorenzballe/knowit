@@ -4744,4 +4744,58 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get exploreUpToDate => '你已看完：暂时没有新内容。';
+
+  @override
+  String get deeperTitle => '深入了解';
+
+  @override
+  String get deeperSimple => '简单解释一下';
+
+  @override
+  String get deeperWhy => '为什么重要';
+
+  @override
+  String get deeperSides => '正反两面';
+
+  @override
+  String get deeperYourTake => '你的想法，分析一下';
+
+  @override
+  String get deeperYourTakeHint => '写下你的看法…';
+
+  @override
+  String get deeperAnalyse => '分析';
+
+  @override
+  String get deeperAsk => '就这张卡片提问';
+
+  @override
+  String get deeperAskHint => '你的问题…';
+
+  @override
+  String get deeperSend => '提问';
+
+  @override
+  String get deeperSource => '来源';
+
+  @override
+  String get deeperOpenSource => '打开原文';
+
+  @override
+  String get deeperAiNote => '由 AI 回答：可能出错。';
+
+  @override
+  String get deeperBusy => '思考中…';
+
+  @override
+  String get deeperTomorrow => '今天就到这里：明天继续。';
+
+  @override
+  String get deeperTryAgain => '没有送达。请稍后再试。';
+
+  @override
+  String get deeperDeclined => '这个问题无法回答。';
+
+  @override
+  String get deeperPlusOnly => '使用 Astute+';
 }

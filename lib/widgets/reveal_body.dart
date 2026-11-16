@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
@@ -7,6 +8,7 @@ import '../measure/screens.dart' show seenOf;
 import '../models/pill.dart';
 import '../sync/reports.dart';
 import '../theme.dart';
+import 'deeper_sheet.dart';
 import 'diagram_view.dart';
 import 'motion.dart';
 import 'report_sheet.dart';
@@ -160,11 +162,19 @@ class _RevealBodyState extends State<RevealBody> {
           ),
         ],
         const SizedBox(height: 13),
-        Text(
-          context.l10n.sourceLabel(pill.source),
-          style: AppText.body(
-            size: 11.5,
-            color: widget.ink.withValues(alpha: 0.6),
+        _SourceTap(
+          pill: pill,
+          child: Text(
+            context.l10n.sourceLabel(pill.source),
+            style:
+                AppText.body(
+                  size: 11.5,
+                  color: widget.ink.withValues(alpha: 0.6),
+                ).copyWith(
+                  decoration: TextDecoration.underline,
+                  decorationStyle: TextDecorationStyle.dotted,
+                  decorationColor: widget.ink.withValues(alpha: 0.35),
+                ),
           ),
         ),
         const SizedBox(height: 16),
@@ -903,6 +913,19 @@ class CardReveal extends StatefulWidget {
 enum _Aside { none, scene, picture, working, simply, counter }
 
 class _CardRevealState extends State<CardReveal> {
+  /// A tap on the source: Go deeper (deeper_sheet.dart).
+  late final TapGestureRecognizer _sourceTap = TapGestureRecognizer()
+    ..onTap = () {
+      CardRead.of(context)?.opened('deeper');
+      GoDeeper.open?.call(context, widget.pill);
+    };
+
+  @override
+  void dispose() {
+    _sourceTap.dispose();
+    super.dispose();
+  }
+
   /// What is open in the answer's place. A retelling or the other side's
   /// case is read instead of the answer, not under it: under it, a card
   /// that fitted would run off the screen the moment it was opened.
@@ -1253,7 +1276,17 @@ class _CardRevealState extends State<CardReveal> {
           child: Text.rich(
             TextSpan(
               children: [
-                TextSpan(text: source),
+                // The source, a door to Go deeper: underlined in dots, so it
+                // reads as one without taking a line of the card.
+                TextSpan(
+                  text: source,
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationStyle: TextDecorationStyle.dotted,
+                    decorationColor: ink.withValues(alpha: 0.35),
+                  ),
+                  recognizer: _sourceTap,
+                ),
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: _ReportFlag(pill: pill, ink: ink, size: f.source),
@@ -1529,4 +1562,21 @@ class _CardRevealState extends State<CardReveal> {
       },
     );
   }
+}
+
+/// A tap on a card's source: Go deeper (deeper_sheet.dart), where the app
+/// has said where that goes.
+class _SourceTap extends StatelessWidget {
+  const _SourceTap({required this.pill, required this.child});
+
+  final Pill pill;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+    key: ValueKey('card-source-${pill.id}'),
+    behavior: HitTestBehavior.opaque,
+    onTap: () => GoDeeper.open?.call(context, pill),
+    child: child,
+  );
 }

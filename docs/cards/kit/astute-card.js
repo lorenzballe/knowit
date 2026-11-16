@@ -283,6 +283,14 @@ const Kit = (() => {
     return {get value() { return Kit.reacted ?? null; }};
   }
 
+  // A tap on the source opens Go deeper in the app (the source, the way to the original, what the card file
+  // adds), as on a native card; standing alone, the source stays as the page drew it. From November 2026.
+  document.addEventListener('click', e => {
+    const src = e.target && e.target.closest ? e.target.closest('.foot .src') : null;
+    if (!src || !bridge() || !bridge().deeper) return;
+    e.preventDefault(); e.stopPropagation(); haptic('selection'); bridge().deeper();
+  }, true);
+
   // What the card tells the app. Standing alone they are kept on Kit, for the checker to read.
   // answer: {choice: what the reader said, in a few words (or the option's index on a card whose
   // kind is pickOne or debate); correct: true, false, or null where nothing is right or wrong;

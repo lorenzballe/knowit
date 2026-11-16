@@ -40,6 +40,7 @@ import 'utils/home_widget.dart';
 import 'utils/reminders.dart' show remindersSupported;
 import 'utils/upright.dart';
 import 'theme.dart';
+import 'widgets/deeper_sheet.dart';
 import 'widgets/consent.dart';
 import 'widgets/place_ask.dart';
 import 'widgets/widget_ask.dart';
@@ -244,6 +245,8 @@ class _AstutoAppState extends State<AstutoApp> {
   @override
   void initState() {
     super.initState();
+    // A tap on a card's source opens Go deeper, wherever the card is.
+    GoDeeper.open = (context, pill) => showDeeperSheet(context, _app, pill);
     _app.addListener(_onChanged);
     // A newer remote document redraws the whole app, as a change of state
     // does: its words, its Explore and its looks are everywhere.

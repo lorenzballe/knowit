@@ -4972,4 +4972,58 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get exploreUpToDate => 'Estás al día: por ahora nada nuevo.';
+
+  @override
+  String get deeperTitle => 'Profundiza';
+
+  @override
+  String get deeperSimple => 'Explícamelo fácil';
+
+  @override
+  String get deeperWhy => 'Por qué importa';
+
+  @override
+  String get deeperSides => 'Las dos partes';
+
+  @override
+  String get deeperYourTake => 'Tu idea, analizada';
+
+  @override
+  String get deeperYourTakeHint => 'Escribe lo que piensas…';
+
+  @override
+  String get deeperAnalyse => 'Analizar';
+
+  @override
+  String get deeperAsk => 'Pregunta sobre esta tarjeta';
+
+  @override
+  String get deeperAskHint => 'Tu pregunta…';
+
+  @override
+  String get deeperSend => 'Preguntar';
+
+  @override
+  String get deeperSource => 'Fuente';
+
+  @override
+  String get deeperOpenSource => 'Abrir el original';
+
+  @override
+  String get deeperAiNote => 'Responde una IA: puede equivocarse.';
+
+  @override
+  String get deeperBusy => 'Pensando…';
+
+  @override
+  String get deeperTomorrow => 'Por hoy basta: mañana más.';
+
+  @override
+  String get deeperTryAgain => 'No llegó. Inténtalo de nuevo en un momento.';
+
+  @override
+  String get deeperDeclined => 'A esta no puede responder.';
+
+  @override
+  String get deeperPlusOnly => 'Con Astute+';
 }

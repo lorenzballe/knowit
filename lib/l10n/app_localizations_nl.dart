@@ -4974,4 +4974,58 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get exploreUpToDate => 'Je bent bij: voorlopig niets nieuws.';
+
+  @override
+  String get deeperTitle => 'Verdiepen';
+
+  @override
+  String get deeperSimple => 'Leg het simpel uit';
+
+  @override
+  String get deeperWhy => 'Waarom het ertoe doet';
+
+  @override
+  String get deeperSides => 'Beide kanten';
+
+  @override
+  String get deeperYourTake => 'Jouw idee, bekeken';
+
+  @override
+  String get deeperYourTakeHint => 'Schrijf wat je ervan vindt…';
+
+  @override
+  String get deeperAnalyse => 'Bekijk het';
+
+  @override
+  String get deeperAsk => 'Vraag iets over deze kaart';
+
+  @override
+  String get deeperAskHint => 'Je vraag…';
+
+  @override
+  String get deeperSend => 'Vragen';
+
+  @override
+  String get deeperSource => 'Bron';
+
+  @override
+  String get deeperOpenSource => 'Open het origineel';
+
+  @override
+  String get deeperAiNote => 'Beantwoord door AI: die kan zich vergissen.';
+
+  @override
+  String get deeperBusy => 'Even denken…';
+
+  @override
+  String get deeperTomorrow => 'Genoeg voor vandaag: morgen meer.';
+
+  @override
+  String get deeperTryAgain => 'Het kwam niet door. Probeer het zo opnieuw.';
+
+  @override
+  String get deeperDeclined => 'Hierop kan ze geen antwoord geven.';
+
+  @override
+  String get deeperPlusOnly => 'Met Astute+';
 }

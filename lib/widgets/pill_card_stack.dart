@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../data/card_pages.dart';
+import 'deeper_sheet.dart';
 import '../data/subject_icons.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
@@ -391,6 +392,9 @@ class _PillCardStackState extends State<PillCardStack>
       // The page has felt the tap under the finger already (Kit.haptic).
       case PageReact(:final reaction):
         widget.onReact?.call(pill.id, reaction);
+      case PageDeeper():
+        _read?.opened('deeper');
+        GoDeeper.open?.call(context, pill);
       case PageTap():
         break;
       case PageDone():

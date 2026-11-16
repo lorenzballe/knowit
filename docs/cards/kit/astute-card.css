@@ -81,6 +81,8 @@ canvas.full,svg.full{position:absolute;inset:0;width:100%;height:100%;user-selec
 .kit-app .sure .sq{font-size:max(1.85cqh,13px)}
 .kit-app .sure .sb{font-size:max(1.9cqh,13.5px);padding:max(1.55cqh,12px) 0}
 .kit-app .grade{font-size:max(1.95cqh,13.5px)}
+/* In the app the source is a door to Go deeper: dotted, as on a native card. */
+.kit-app .foot .src{text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-underline-offset:.25em;cursor:pointer}
 .kit-app .react .rb{font-size:max(1.7cqh,12.5px);padding:max(1.2cqh,10px) max(3.2cqw,12px)}
 .kit-app .grade i{width:max(3.3cqh,22px);height:max(3.3cqh,22px)}
 /* The corner the native save and share sit in: the foot keeps it, so the source wraps before it. */

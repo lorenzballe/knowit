@@ -4744,4 +4744,58 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get exploreUpToDate => 'すべて見ました。今は新しいものはありません。';
+
+  @override
+  String get deeperTitle => 'もっと深く';
+
+  @override
+  String get deeperSimple => 'やさしく説明して';
+
+  @override
+  String get deeperWhy => 'なぜ大事か';
+
+  @override
+  String get deeperSides => '両方の立場';
+
+  @override
+  String get deeperYourTake => 'あなたの考えを分析';
+
+  @override
+  String get deeperYourTakeHint => 'どう思うか書いてください…';
+
+  @override
+  String get deeperAnalyse => '分析する';
+
+  @override
+  String get deeperAsk => 'このカードについて質問';
+
+  @override
+  String get deeperAskHint => '質問を入力…';
+
+  @override
+  String get deeperSend => '質問する';
+
+  @override
+  String get deeperSource => '出典';
+
+  @override
+  String get deeperOpenSource => '原文を開く';
+
+  @override
+  String get deeperAiNote => 'AIが答えます。間違えることもあります。';
+
+  @override
+  String get deeperBusy => '考えています…';
+
+  @override
+  String get deeperTomorrow => '今日はここまで。また明日。';
+
+  @override
+  String get deeperTryAgain => '届きませんでした。少ししてからもう一度。';
+
+  @override
+  String get deeperDeclined => 'これには答えられません。';
+
+  @override
+  String get deeperPlusOnly => 'Astute+ で';
 }
