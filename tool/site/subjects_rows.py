@@ -1,20 +1,29 @@
 """Writes the two rows of cards under "Twenty subjects" on the site's first page.
 
-Every subject is in each row once, so all twenty colours run past. The order comes from
-the colour wheel the subject chips below the rows are laid out on: the top row steps 7
-places round the wheel from one card to the next, the bottom row 9 places, from the other
-side. Seven and nine share nothing with twenty, so each row meets every subject once and
-two cards side by side are always far apart in colour; and as the rows run in opposite
-directions, the pairs they make never repeat. Each subject has two real questions from
-the bank, one for each row; the page's script picks which goes where, and where each row
-starts, every time it opens, so the rows look different on every visit and are never
-out of order.
+Every subject is in each row once, so all twenty colours run past. The order is chosen for
+the eye, measured in OKLab (a colour space spaced the way people see), not left to chance:
+
+- one card light, the next dark, as far as twenty colours allow: the rhythm the eye reads
+  as the rows run, and the cards' ink (dark on the light ones, white on the dark) keeps it;
+- no two near-identical colours side by side (two blues, two reds), nor one card apart;
+- no pair of opposite colours at the same lightness side by side (a red on a green as
+  light as it): saturated complements of one lightness vibrate where they touch;
+- the bottom row makes none of the pairs the top row makes, so the two read as two.
+
+`--search` runs that score over shuffles (simulated annealing, fixed seeds) and prints the
+best two rows; they are kept below as ROWS, so the page only changes when they are changed
+on purpose. Each subject has two real questions from the bank, one for each row. The page's
+script starts each row at a random card and swaps which question goes in which row, every
+time it opens: the rows look new on every visit, and the order round them never breaks.
 
     python3 tool/site/subjects_rows.py            # rewrites site/index.html in place
     python3 tool/site/subjects_rows.py --check    # fails if the page is not what it writes
+    python3 tool/site/subjects_rows.py --search   # scores the colours afresh, prints two rows
 """
 import html
 import json
+import math
+import random
 import re
 import sys
 from pathlib import Path
@@ -44,9 +53,79 @@ QUESTIONS = {
     'History': ('What shape were the pyramids meant to stand for?', 'How did Japanese smiths learn to make such fine swords?'),
     'Life': ('How does your kitchen scale know what a kilogram is?', 'When choosing work, should you follow a passion you already have?'),
 }
-STEPS = ((7, 0), (9, 5))  # (step round the wheel, where on it the row starts)
+# The two rows, as --search found them. The bottom one starts half way round, so that
+# without the script the two rows do not open on the same colour.
+ROWS = (
+    ['Economics', 'Weird facts', 'Food', 'Cinema', 'Science', 'Medicine', 'Philosophy', 'History', 'Music', 'Language',
+     'Art', 'Sport', 'Psychology', 'Life', 'Maths', 'Technology', 'Human body', 'Nature', 'Space', 'Pop culture'],
+    ['Language', 'Human body', 'Philosophy', 'Life', 'Music', 'Maths', 'Food', 'Psychology', 'Science', 'Art',
+     'Economics', 'Technology', 'Pop culture', 'Sport', 'Weird facts', 'History', 'Cinema', 'Nature', 'Medicine', 'Space'],
+)
 CHIP = re.compile(r'<li class="chip"[^>]*--c:(#[0-9A-Fa-f]{6}); --ink:([0-9 ]+)"><svg class="mark" aria-hidden="true"><use href="#(subject-[a-z-]+)"/></svg>([^<]+)</li>')
-ROWS = re.compile(r'(  <div class="marquee-mask">\n).*?(\n  </div>\n  <ul class="chips")', re.S)
+BLOCK = re.compile(r'(  <div class="marquee-mask">\n).*?(\n  </div>\n  <ul class="chips")', re.S)
+
+
+def oklab(hexc):
+    """Lightness, chroma and hue (degrees) of an sRGB colour, in OKLab."""
+    r, g, b = (int(hexc[i:i + 2], 16) / 255 for i in (1, 3, 5))
+    lin = lambda c: c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = lin(r), lin(g), lin(b)
+    l = (0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b) ** (1 / 3)
+    m = (0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b) ** (1 / 3)
+    s = (0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b) ** (1 / 3)
+    L = 0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s
+    A = 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s
+    B = 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
+    return L, math.hypot(A, B), math.degrees(math.atan2(B, A)) % 360
+
+
+def score(order, colours, other=None):
+    """How well a row (read round, as it loops) reads to the eye: higher is better."""
+    P = {n: oklab(colours[n]) for n in order}
+    mid = sorted(p[0] for p in P.values())[len(P) // 2]
+    hue = lambda a, b: min(abs(P[a][2] - P[b][2]) % 360, 360 - abs(P[a][2] - P[b][2]) % 360)
+    n, s = len(order), 0.0
+    for k in range(n):
+        a, b, c = order[k], order[(k + 1) % n], order[(k + 2) % n]
+        h, dl = hue(a, b), abs(P[a][0] - P[b][0])
+        if h < 45: s -= 6                                                    # near-identical neighbours
+        if h > 150 and dl < 0.10 and P[a][1] > 0.12 and P[b][1] > 0.12: s -= 3  # complements that vibrate
+        s += min(dl, 0.25) * 8 + min(h, 120) / 120                           # a step in light, a turn in hue
+        if hue(a, c) < 35: s -= 2                                            # the same family one card later
+        if (P[a][0] > mid) == (P[b][0] > mid) == (P[c][0] > mid): s -= 1.5   # three lights or darks running
+    if other is not None:
+        pairs = lambda q: {frozenset((q[k], q[(k + 1) % len(q)])) for k in range(len(q))}
+        s -= 2 * len(pairs(order) & pairs(other))                            # the other row's pairs again
+    return s
+
+
+def search(colours):
+    names = list(colours)
+
+    def anneal(seed, other=None, steps=60000):
+        rnd = random.Random(seed)
+        o = names[:]
+        rnd.shuffle(o)
+        cur = score(o, colours, other)
+        best = (cur, o[:])
+        for t in range(steps):
+            temp = 2.0 * (1 - t / steps) + 0.01
+            i, j = rnd.sample(range(len(o)), 2)
+            o[i], o[j] = o[j], o[i]
+            s = score(o, colours, other)
+            if s >= cur or rnd.random() < math.exp((s - cur) / temp):
+                cur = s
+            else:
+                o[i], o[j] = o[j], o[i]
+            if cur > best[0]:
+                best = (cur, o[:])
+        return best
+
+    top = max((anneal(s) for s in range(12)), key=lambda x: x[0])
+    bottom = max((anneal(100 + s, top[1]) for s in range(12)), key=lambda x: x[0])
+    for name, (s, o) in (('top', top), ('bottom', bottom)):
+        k = o.index('Economics')
+        print(f'{name} ({s:.1f}):', json.dumps(o[k:] + o[:k]))
 
 
 def size(q: str) -> str:
@@ -61,14 +140,10 @@ def card(subject, colour, ink, mark, qs, row):
             f'<p class="deck-q" style="--fs:{size(q)}" data-fit-w="206" data-fit="18 30"><span>{html.escape(q)}</span></p></article>')
 
 
-def rows(page: str) -> str:
-    wheel = CHIP.findall(page)
-    names = [w[3] for w in wheel]
-    assert len(wheel) == 20 and set(names) == set(QUESTIONS), f'the chips name {names}'
+def rows(chips) -> str:
     out = []
-    for r, (step, start) in enumerate(STEPS):
-        order = [wheel[(start + step * k) % 20] for k in range(20)]
-        track = '\n'.join(card(n, c, ink, m, QUESTIONS[n], r) for c, ink, m, n in order)
+    for r, order in enumerate(ROWS):
+        track = '\n'.join(card(n, chips[n][0], chips[n][1], chips[n][2], QUESTIONS[n], r) for n in order)
         cls = 'marquee' + (' reverse' if r else '')
         out.append(f'    <div class="{cls}" aria-hidden="true" data-row="{r}">\n'
                    + ''.join(f'      <div class="marquee-track">\n{track}\n      </div>\n' for _ in range(2))
@@ -78,8 +153,14 @@ def rows(page: str) -> str:
 
 def main():
     page = PAGE.read_text(encoding='utf-8')
-    new = ROWS.sub(lambda m: m.group(1) + rows(page) + m.group(2), page, count=1)
-    assert new != page or '--check' in sys.argv or ROWS.search(page), 'the rows were not found'
+    chips = {n: (c, ink, m) for c, ink, m, n in CHIP.findall(page)}
+    assert len(chips) == 20 and set(chips) == set(QUESTIONS), f'the chips name {sorted(chips)}'
+    assert all(sorted(r) == sorted(chips) for r in ROWS), 'each row must hold every subject once'
+    if '--search' in sys.argv:
+        search({n: v[0] for n, v in chips.items()})
+        return
+    assert BLOCK.search(page), 'the rows were not found on the page'
+    new = BLOCK.sub(lambda m: m.group(1) + rows(chips) + m.group(2), page, count=1)
     if '--check' in sys.argv:
         if new != page:
             sys.exit('site/index.html: the subject rows are not what tool/site/subjects_rows.py writes; run it')
