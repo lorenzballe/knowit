@@ -1,0 +1,145 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/debug_flags.dart';
+import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/journey_screen.dart';
+import 'package:astuto/state/app_state.dart';
+import 'package:astuto/theme.dart';
+
+Future<AppState> _app(Map<String, Object> prefs) async {
+  SharedPreferences.setMockInitialValues({'knowit.onboarded': true, ...prefs});
+  final app = AppState();
+  await app.init();
+  return app;
+}
+
+/// Judgements on the cards of one subject: so many said at [sure], the
+/// first [right] of them right, [daysAgo] days back.
+List<Map<String, Object>> _said(
+  String topic,
+  int count, {
+  required int sure,
+  required int right,
+  int daysAgo = 0,
+  int skip = 0,
+}) {
+  final List<Pill> cards = PillBank.live
+      .where((p) => p.topic == topic)
+      .skip(skip)
+      .take(count)
+      .toList();
+  final String on = dateKey(DateTime.now().subtract(Duration(days: daysAgo)));
+  return [
+    for (var i = 0; i < cards.length; i++)
+      {'c': sure, 'k': i < right, 'p': cards[i].id, 'd': on},
+  ];
+}
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  final String topic = PillBank.live.first.topic;
+
+  group('what the week says, in one sentence', () {
+    test('how often they were right when sure, once five such answers are '
+        'in, in tens; and against last week when it says something', () async {
+      final app = await _app({
+        'knowit.judgements': jsonEncode([
+          // Last Friday: inside last week whatever day today is.
+          ..._said(
+            topic,
+            6,
+            sure: 80,
+            right: 3,
+            daysAgo: DateTime.now().weekday - 1 + 3,
+          ),
+          ..._said(topic, 5, sure: 90, right: 4, skip: 6),
+        ]),
+      });
+      final StoryHeadline h = storyHeadline(app);
+      expect(h.kind, StoryHeadlineKind.sure);
+      expect(h.n, 8);
+      // Last week was 3 in 6; this week 4 in 5: better.
+      expect(h.better, isTrue);
+    });
+
+    test('then a run of days, then the strongest subject, then what was '
+        'read', () async {
+      final streak = await _app({
+        'knowit.streak': 4,
+        'knowit.lastCompletionDate': dateKey(DateTime.now()),
+      });
+      expect(storyHeadline(streak).kind, StoryHeadlineKind.streak);
+
+      final strong = await _app({
+        'knowit.judgements': jsonEncode(_said(topic, 6, sure: 60, right: 5)),
+      });
+      expect(storyHeadline(strong).kind, StoryHeadlineKind.strong);
+
+      final fresh = await _app({});
+      expect(storyHeadline(fresh).kind, StoryHeadlineKind.read);
+      expect(storyHeadline(fresh).n, 0);
+    });
+  });
+
+  test('where the reader trusts themselves too much: the subject whose said '
+      'confidence runs furthest past its accuracy, once six are in', () async {
+    final app = await _app({
+      'knowit.judgements': jsonEncode([
+        // Said 90, right half the time: forty points over.
+        ..._said(topic, 6, sure: 90, right: 3),
+      ]),
+    });
+    final over = overconfidentIn(app);
+    expect(over, isNotNull);
+    expect(over!.points, 40);
+
+    final calibrated = await _app({
+      'knowit.judgements': jsonEncode(_said(topic, 6, sure: 50, right: 3)),
+    });
+    expect(overconfidentIn(calibrated), isNull);
+  });
+
+  testWidgets('the story draws every chapter, and on the free plan the line '
+      'Astute+ shows sits behind glass with the way through', (tester) async {
+    tester.view.physicalSize = const Size(402, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final app = await _app({
+      'knowit.judgements': jsonEncode([
+        ..._said(topic, 6, sure: 90, right: 3),
+        ..._said(PillBank.live.last.topic, 6, sure: 70, right: 6),
+      ]),
+      'knowit.reactions': jsonEncode({PillBank.live.first.id: 'changed'}),
+    });
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        home: Scaffold(
+          body: SingleChildScrollView(child: JourneyStory(app: app)),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+    expect(find.text('5  ·  YOUR STORY'), findsOneWidget);
+    expect(find.text('See it with Astute+'), findsOneWidget);
+    expect(find.byKey(const ValueKey('story-practice-misses')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('story-practice-changed')),
+      findsOneWidget,
+    );
+  });
+
+  test('the story is on trial: off wherever the developer tools are', () {
+    expect(debugToolsOn, isFalse);
+  });
+}

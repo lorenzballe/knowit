@@ -4604,4 +4604,152 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyLabTitle => '나의 여정, 하나의 이야기로';
+
+  @override
+  String get storyLabNote => '새 버전 · 테스트 중, TestFlight 전용';
+
+  @override
+  String get storyChapterWeek => '이번 주';
+
+  @override
+  String get storyChapterWhere => '지금 위치';
+
+  @override
+  String get storyChapterReason => '생각하는 방식';
+
+  @override
+  String get storyChapterPractice => '연습';
+
+  @override
+  String get storyChapterStory => '나의 이야기';
+
+  @override
+  String storyHeadlineSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신을 갖고 답했을 때 10번 중 $n번 맞혔어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyBetter => '지난주보다 나아졌어요.';
+
+  @override
+  String get storyWorse => '지난주보다 조금 낮아졌어요.';
+
+  @override
+  String storyHeadlineStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 연속이에요. 흐름을 이어가세요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) {
+    return '$subject에서는 $pct 맞히고 있어요.';
+  }
+
+  @override
+  String storyHeadlineRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '카드 $n장을 읽었어요. 여정은 여기서 시작돼요.',
+      zero: '첫 카드가 기다리고 있어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storySaidRight(String sure, String right) {
+    return '확신은 $sure, 정답률은 $right예요.';
+  }
+
+  @override
+  String storySaidRightToGo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신 정도를 함께 고른 답이 $n개 더 있으면 측정돼요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyOverconfident(String subject, int points) {
+    return '너무 확신하는 분야: $subject, $points점 차이';
+  }
+
+  @override
+  String get storyUnlock => 'Astute+로 보기';
+
+  @override
+  String storyPracticeMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신했는데 틀린 $n장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeChanged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '생각을 바꾼 $n장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeBlind(String subject) {
+    return '$subject 새 카드 5장';
+  }
+
+  @override
+  String get storyPracticeNone => '아직 연습할 게 없어요. 카드 몇 장에 답하면 생겨요.';
+
+  @override
+  String get storyFirstCard => '첫 카드';
+
+  @override
+  String storyReached(String level) {
+    return '달성: $level';
+  }
+
+  @override
+  String storyBestStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '최고 연속: $n일',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyCardsRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '카드 $n장 읽음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyToday => '오늘';
+
+  @override
+  String get storySeePath => '길 보기';
 }

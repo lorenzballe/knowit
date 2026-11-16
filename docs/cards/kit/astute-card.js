@@ -267,7 +267,7 @@ const Kit = (() => {
   const REACT_WORDS = {
     en: ['New to me', 'Changed my mind', 'Knew it'], it: ['Nuovo per me', 'Mi ha fatto cambiare idea', 'Lo sapevo già'],
     de: ['Neu für mich', 'Hat meine Meinung geändert', 'Wusste ich schon'], es: ['Nuevo para mí', 'Me hizo cambiar de idea', 'Ya lo sabía'],
-    fr: ['Nouveau pour moi', "M'a fait changer d'avis", 'Je le savais'], pt: ['Novo para mim', 'Me fez mudar de ideia', 'Já sabia'],
+    fr: ['Nouveau pour moi', "M'a fait changer d'avis", 'Je le savais'], pt: ['Novo para mim', 'Fez-me mudar de ideias', 'Já sabia'],
     nl: ['Nieuw voor mij', 'Ik ben van mening veranderd', 'Wist ik al'], pl: ['Nowość dla mnie', 'Zmienia moje zdanie', 'To już znam'],
     ru: ['Новое для меня', 'Изменило моё мнение', 'Уже знакомо'], tr: ['Benim için yeni', 'Fikrimi değiştirdi', 'Zaten biliyordum'],
     ja: ['初めて知った', '考えが変わった', '知っていた'], ko: ['처음 알았어요', '생각이 바뀌었어요', '이미 알았어요'], zh: ['对我是新知', '改变了我的看法', '我早就知道']};

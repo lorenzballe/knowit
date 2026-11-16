@@ -5066,5 +5066,187 @@
     "type": "int"
    }
   }
+ },
+ "storyLabTitle": "Your journey, as a story",
+ "@storyLabTitle": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyLabTitle"
+ },
+ "storyLabNote": "New version · on trial, TestFlight only",
+ "@storyLabNote": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyLabNote"
+ },
+ "storyChapterWeek": "This week",
+ "@storyChapterWeek": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyChapterWeek"
+ },
+ "storyChapterWhere": "Where you are",
+ "@storyChapterWhere": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyChapterWhere"
+ },
+ "storyChapterReason": "How you reason",
+ "@storyChapterReason": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyChapterReason"
+ },
+ "storyChapterPractice": "Practise",
+ "@storyChapterPractice": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyChapterPractice"
+ },
+ "storyChapterStory": "Your story",
+ "@storyChapterStory": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyChapterStory"
+ },
+ "storyHeadlineSure": "{n, plural, =1{In the answers you gave with confidence, you were right 1 time in 10.} other{In the answers you gave with confidence, you were right {n} times in 10.}}",
+ "@storyHeadlineSure": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineSure",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyBetter": "Better than last week.",
+ "@storyBetter": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyBetter"
+ },
+ "storyWorse": "A little less than last week.",
+ "@storyWorse": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyWorse"
+ },
+ "storyHeadlineStreak": "{n} days in a row. Keep the thread.",
+ "@storyHeadlineStreak": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineStreak",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyHeadlineStrong": "In {subject} you are right {pct} of the time.",
+ "@storyHeadlineStrong": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineStrong",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   },
+   "pct": {
+    "type": "String"
+   }
+  }
+ },
+ "storyHeadlineRead": "{n, plural, =0{Your first card is waiting.} =1{One card read. The journey starts here.} other{{n} cards read. The journey starts here.}}",
+ "@storyHeadlineRead": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineRead",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storySaidRight": "Your confidence: {sure}. You are right {right} of the time.",
+ "@storySaidRight": {
+  "description": "Your journey as a story (the version on trial under the tiles): storySaidRight",
+  "placeholders": {
+   "sure": {
+    "type": "String"
+   },
+   "right": {
+    "type": "String"
+   }
+  }
+ },
+ "storySaidRightToGo": "{n, plural, =1{One more answer saying how sure, and this gets measured.} other{{n} more answers saying how sure, and this gets measured.}}",
+ "@storySaidRightToGo": {
+  "description": "Your journey as a story (the version on trial under the tiles): storySaidRightToGo",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyOverconfident": "Where you trust yourself too much: {subject}, by {points} points.",
+ "@storyOverconfident": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyOverconfident",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   },
+   "points": {
+    "type": "int"
+   }
+  }
+ },
+ "storyUnlock": "See it with Astute+",
+ "@storyUnlock": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyUnlock"
+ },
+ "storyPracticeMisses": "{n, plural, =1{The one you got wrong with confidence} other{The {n} you got wrong with confidence}}",
+ "@storyPracticeMisses": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyPracticeMisses",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyPracticeChanged": "{n, plural, =1{The card that changed your mind} other{The {n} that changed your mind}}",
+ "@storyPracticeChanged": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyPracticeChanged",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyPracticeBlind": "5 new cards in {subject}",
+ "@storyPracticeBlind": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyPracticeBlind",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "storyPracticeNone": "Nothing to practise yet: answer a few cards and it comes.",
+ "@storyPracticeNone": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyPracticeNone"
+ },
+ "storyFirstCard": "First card",
+ "@storyFirstCard": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyFirstCard"
+ },
+ "storyReached": "Reached {level}",
+ "@storyReached": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyReached",
+  "placeholders": {
+   "level": {
+    "type": "String"
+   }
+  }
+ },
+ "storyBestStreak": "{n, plural, =1{Best run: 1 day} other{Best run: {n} days}}",
+ "@storyBestStreak": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyBestStreak",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyCardsRead": "{n, plural, =1{1 card read} other{{n} cards read}}",
+ "@storyCardsRead": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyCardsRead",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "storyToday": "Today",
+ "@storyToday": {
+  "description": "Your journey as a story (the version on trial under the tiles): storyToday"
+ },
+ "storySeePath": "See the path",
+ "@storySeePath": {
+  "description": "Your journey as a story (the version on trial under the tiles): storySeePath"
  }
 }

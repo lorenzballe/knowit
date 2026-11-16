@@ -6875,6 +6875,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{1 you knew already} other{{n} you knew already}}'**
   String journeyKnewAlready(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storyLabTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Your journey, as a story'**
+  String get storyLabTitle;
+
+  /// Your journey as a story (the version on trial under the tiles): storyLabNote
+  ///
+  /// In en, this message translates to:
+  /// **'New version · on trial, TestFlight only'**
+  String get storyLabNote;
+
+  /// Your journey as a story (the version on trial under the tiles): storyChapterWeek
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get storyChapterWeek;
+
+  /// Your journey as a story (the version on trial under the tiles): storyChapterWhere
+  ///
+  /// In en, this message translates to:
+  /// **'Where you are'**
+  String get storyChapterWhere;
+
+  /// Your journey as a story (the version on trial under the tiles): storyChapterReason
+  ///
+  /// In en, this message translates to:
+  /// **'How you reason'**
+  String get storyChapterReason;
+
+  /// Your journey as a story (the version on trial under the tiles): storyChapterPractice
+  ///
+  /// In en, this message translates to:
+  /// **'Practise'**
+  String get storyChapterPractice;
+
+  /// Your journey as a story (the version on trial under the tiles): storyChapterStory
+  ///
+  /// In en, this message translates to:
+  /// **'Your story'**
+  String get storyChapterStory;
+
+  /// Your journey as a story (the version on trial under the tiles): storyHeadlineSure
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{In the answers you gave with confidence, you were right 1 time in 10.} other{In the answers you gave with confidence, you were right {n} times in 10.}}'**
+  String storyHeadlineSure(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storyBetter
+  ///
+  /// In en, this message translates to:
+  /// **'Better than last week.'**
+  String get storyBetter;
+
+  /// Your journey as a story (the version on trial under the tiles): storyWorse
+  ///
+  /// In en, this message translates to:
+  /// **'A little less than last week.'**
+  String get storyWorse;
+
+  /// Your journey as a story (the version on trial under the tiles): storyHeadlineStreak
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days in a row. Keep the thread.'**
+  String storyHeadlineStreak(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storyHeadlineStrong
+  ///
+  /// In en, this message translates to:
+  /// **'In {subject} you are right {pct} of the time.'**
+  String storyHeadlineStrong(String subject, String pct);
+
+  /// Your journey as a story (the version on trial under the tiles): storyHeadlineRead
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Your first card is waiting.} =1{One card read. The journey starts here.} other{{n} cards read. The journey starts here.}}'**
+  String storyHeadlineRead(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storySaidRight
+  ///
+  /// In en, this message translates to:
+  /// **'Your confidence: {sure}. You are right {right} of the time.'**
+  String storySaidRight(String sure, String right);
+
+  /// Your journey as a story (the version on trial under the tiles): storySaidRightToGo
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One more answer saying how sure, and this gets measured.} other{{n} more answers saying how sure, and this gets measured.}}'**
+  String storySaidRightToGo(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storyOverconfident
+  ///
+  /// In en, this message translates to:
+  /// **'Where you trust yourself too much: {subject}, by {points} points.'**
+  String storyOverconfident(String subject, int points);
+
+  /// Your journey as a story (the version on trial under the tiles): storyUnlock
+  ///
+  /// In en, this message translates to:
+  /// **'See it with Astute+'**
+  String get storyUnlock;
+
+  /// Your journey as a story (the version on trial under the tiles): storyPracticeMisses
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{The one you got wrong with confidence} other{The {n} you got wrong with confidence}}'**
+  String storyPracticeMisses(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storyPracticeChanged
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{The card that changed your mind} other{The {n} that changed your mind}}'**
+  String storyPracticeChanged(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storyPracticeBlind
+  ///
+  /// In en, this message translates to:
+  /// **'5 new cards in {subject}'**
+  String storyPracticeBlind(String subject);
+
+  /// Your journey as a story (the version on trial under the tiles): storyPracticeNone
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to practise yet: answer a few cards and it comes.'**
+  String get storyPracticeNone;
+
+  /// Your journey as a story (the version on trial under the tiles): storyFirstCard
+  ///
+  /// In en, this message translates to:
+  /// **'First card'**
+  String get storyFirstCard;
+
+  /// Your journey as a story (the version on trial under the tiles): storyReached
+  ///
+  /// In en, this message translates to:
+  /// **'Reached {level}'**
+  String storyReached(String level);
+
+  /// Your journey as a story (the version on trial under the tiles): storyBestStreak
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Best run: 1 day} other{Best run: {n} days}}'**
+  String storyBestStreak(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storyCardsRead
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card read} other{{n} cards read}}'**
+  String storyCardsRead(int n);
+
+  /// Your journey as a story (the version on trial under the tiles): storyToday
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get storyToday;
+
+  /// Your journey as a story (the version on trial under the tiles): storySeePath
+  ///
+  /// In en, this message translates to:
+  /// **'See the path'**
+  String get storySeePath;
 }
 
 class _AppLocalizationsDelegate

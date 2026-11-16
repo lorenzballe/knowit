@@ -4583,4 +4583,152 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyLabTitle => '你的旅程，像一个故事';
+
+  @override
+  String get storyLabNote => '新版本 · 测试中，仅限 TestFlight';
+
+  @override
+  String get storyChapterWeek => '本周';
+
+  @override
+  String get storyChapterWhere => '你在哪里';
+
+  @override
+  String get storyChapterReason => '你如何推理';
+
+  @override
+  String get storyChapterPractice => '练习';
+
+  @override
+  String get storyChapterStory => '你的故事';
+
+  @override
+  String storyHeadlineSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '在你有把握的回答里，10 次有 $n 次是对的。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyBetter => '比上周更好。';
+
+  @override
+  String get storyWorse => '比上周略低。';
+
+  @override
+  String storyHeadlineStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '连续 $n 天。别断了这条线。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) {
+    return '在$subject方面，你的正确率是 $pct。';
+  }
+
+  @override
+  String storyHeadlineRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已读 $n 张卡片。旅程从这里开始。',
+      zero: '你的第一张卡片在等你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storySaidRight(String sure, String right) {
+    return '你的把握：$sure。你的正确率：$right。';
+  }
+
+  @override
+  String storySaidRightToGo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '再有 $n 个附带把握度的回答，就能测量了。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyOverconfident(String subject, int points) {
+    return '你过于自信的地方：$subject，高出 $points 分。';
+  }
+
+  @override
+  String get storyUnlock => '用 Astute+ 查看';
+
+  @override
+  String storyPracticeMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '有把握却答错的 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeChanged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '改变了你看法的 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeBlind(String subject) {
+    return '$subject的 5 张新卡片';
+  }
+
+  @override
+  String get storyPracticeNone => '暂时没有可练习的：回答几张卡片后就会出现。';
+
+  @override
+  String get storyFirstCard => '第一张卡片';
+
+  @override
+  String storyReached(String level) {
+    return '达成：$level';
+  }
+
+  @override
+  String storyBestStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '最佳连续：$n 天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyCardsRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已读 $n 张卡片',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyToday => '今天';
+
+  @override
+  String get storySeePath => '查看路径';
 }

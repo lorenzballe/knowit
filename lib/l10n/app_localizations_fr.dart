@@ -4820,4 +4820,159 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyLabTitle => 'Ton parcours, comme une histoire';
+
+  @override
+  String get storyLabNote =>
+      'Nouvelle version · à l\'essai, TestFlight seulement';
+
+  @override
+  String get storyChapterWeek => 'Cette semaine';
+
+  @override
+  String get storyChapterWhere => 'Où tu en es';
+
+  @override
+  String get storyChapterReason => 'Comment tu raisonnes';
+
+  @override
+  String get storyChapterPractice => 'Entraîne-toi';
+
+  @override
+  String get storyChapterStory => 'Ton histoire';
+
+  @override
+  String storyHeadlineSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Dans tes réponses données avec assurance, tu avais raison $n fois sur 10.',
+      one:
+          'Dans tes réponses données avec assurance, tu avais raison $n fois sur 10.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyBetter => 'Mieux que la semaine dernière.';
+
+  @override
+  String get storyWorse => 'Un peu moins que la semaine dernière.';
+
+  @override
+  String storyHeadlineStreak(int n) {
+    return '$n jours d\'affilée. Garde le fil.';
+  }
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) {
+    return 'En $subject, tu as raison $pct du temps.';
+  }
+
+  @override
+  String storyHeadlineRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartes lues. Le parcours commence ici.',
+      one: 'Une carte lue. Le parcours commence ici.',
+      zero: 'Ta première carte t\'attend.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storySaidRight(String sure, String right) {
+    return 'Ton assurance : $sure. Tu as raison $right du temps.';
+  }
+
+  @override
+  String storySaidRightToGo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Encore $n réponses avec ton degré de certitude, et c\'est mesuré.',
+      one: 'Encore une réponse avec ton degré de certitude, et c\'est mesuré.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyOverconfident(String subject, int points) {
+    return 'Là où tu te fies trop : $subject, de $points points.';
+  }
+
+  @override
+  String get storyUnlock => 'Le voir avec Astute+';
+
+  @override
+  String storyPracticeMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Les $n que tu as ratées avec assurance',
+      one: 'Celle que tu as ratée avec assurance',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeChanged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Les $n qui t\'ont fait changer d\'avis',
+      one: 'La carte qui t\'a fait changer d\'avis',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeBlind(String subject) {
+    return '5 nouvelles cartes en $subject';
+  }
+
+  @override
+  String get storyPracticeNone =>
+      'Rien à travailler pour l\'instant : réponds à quelques cartes et ça viendra.';
+
+  @override
+  String get storyFirstCard => 'Première carte';
+
+  @override
+  String storyReached(String level) {
+    return 'Atteint : $level';
+  }
+
+  @override
+  String storyBestStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Meilleure série : $n jours',
+      one: 'Meilleure série : 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyCardsRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartes lues',
+      one: '1 carte lue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyToday => 'Aujourd\'hui';
+
+  @override
+  String get storySeePath => 'Voir le parcours';
 }

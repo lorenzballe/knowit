@@ -4583,4 +4583,152 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyLabTitle => 'あなたの歩み、ひとつの物語として';
+
+  @override
+  String get storyLabNote => '新バージョン · 試験中、TestFlight のみ';
+
+  @override
+  String get storyChapterWeek => '今週';
+
+  @override
+  String get storyChapterWhere => 'いまの位置';
+
+  @override
+  String get storyChapterReason => '考え方';
+
+  @override
+  String get storyChapterPractice => '練習';
+
+  @override
+  String get storyChapterStory => 'あなたの物語';
+
+  @override
+  String storyHeadlineSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '自信を持って答えたとき、10回中$n回正解でした。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyBetter => '先週より良くなりました。';
+
+  @override
+  String get storyWorse => '先週より少し下がりました。';
+
+  @override
+  String storyHeadlineStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日連続。この流れを続けよう。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) {
+    return '$subjectでは$pctの確率で正解しています。';
+  }
+
+  @override
+  String storyHeadlineRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚のカードを読みました。ここから始まります。',
+      zero: '最初のカードが待っています。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storySaidRight(String sure, String right) {
+    return '自信は$sure、正解率は$rightです。';
+  }
+
+  @override
+  String storySaidRightToGo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '自信の度合いを添えた回答があと$n件で測定できます。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyOverconfident(String subject, int points) {
+    return '自信過剰な分野：$subject（$pointsポイント）';
+  }
+
+  @override
+  String get storyUnlock => 'Astute+ で見る';
+
+  @override
+  String storyPracticeMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '自信があったのに間違えた$n枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeChanged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '考えが変わった$n枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeBlind(String subject) {
+    return '$subjectの新しいカード5枚';
+  }
+
+  @override
+  String get storyPracticeNone => 'まだ練習するものはありません。いくつかカードに答えると出てきます。';
+
+  @override
+  String get storyFirstCard => '最初のカード';
+
+  @override
+  String storyReached(String level) {
+    return '到達：$level';
+  }
+
+  @override
+  String storyBestStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '最高記録：$n日',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyCardsRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚読了',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyToday => '今日';
+
+  @override
+  String get storySeePath => '道のりを見る';
 }
