@@ -108,6 +108,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     _SubjectsTile(app: app, record: record),
                     gap,
                     _Pair(
+                      _SpotTile(app: app, strongest: true),
+                      _SpotTile(app: app, strongest: false),
+                    ),
+                    gap,
+                    _Pair(
                       _HowHardTile(record: record),
                       _ReadingTimeTile(record: record),
                     ),
@@ -2274,6 +2279,102 @@ class _Bar extends StatelessWidget {
       ),
     ),
   );
+}
+
+// ── Strongest and most missed ─────────────────────────────────────────────
+
+/// Answers in a subject before it is measured, and how many of its latest
+/// are counted: a level is what the reader knows now, not what they knew
+/// the first week.
+const int _spotFloor = 6;
+const int _spotSample = 20;
+
+/// How the reader does in each subject they are measured in: of their
+/// latest answers in it, how often right, and of how many.
+@visibleForTesting
+List<({String key, double share, int of})> subjectShares(AppState app) {
+  final Map<String, String> keyOf = {
+    for (final e in kTopics.entries) e.value.name: e.key,
+  };
+  final Map<String, List<bool>> byKey = {};
+  for (final Judgement j in app.judgements) {
+    final String? id = j.pillId;
+    final String? key = id == null ? null : keyOf[PillBank.byId(id)?.topic];
+    if (key == null) continue;
+    byKey.putIfAbsent(key, () => []).add(j.correct);
+  }
+  return [
+    for (final MapEntry<String, List<bool>> e in byKey.entries)
+      if (e.value.length >= _spotFloor)
+        (
+          key: e.key,
+          share:
+              e.value.reversed.take(_spotSample).where((c) => c).length /
+              math.min(e.value.length, _spotSample),
+          of: math.min(e.value.length, _spotSample),
+        ),
+  ];
+}
+
+/// The subject the reader is strongest in, or the one they miss most — a
+/// different one, once two are measured: its name, how often right, and
+/// that share as a bar in its colour.
+class _SpotTile extends StatelessWidget {
+  const _SpotTile({required this.app, required this.strongest});
+
+  final AppState app;
+  final bool strongest;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final shares = subjectShares(app);
+    // The more answers break a tie: the surer of the two.
+    bool better(
+      ({String key, double share, int of}) a,
+      ({String key, double share, int of}) b,
+    ) => a.share != b.share ? a.share > b.share : a.of > b.of;
+    bool worse(
+      ({String key, double share, int of}) a,
+      ({String key, double share, int of}) b,
+    ) => a.share != b.share ? a.share < b.share : a.of > b.of;
+    final spot = shares.isEmpty
+        ? null
+        : strongest
+        ? shares.reduce((a, b) => better(b, a) ? b : a)
+        : shares.length < 2
+        ? null
+        : shares.reduce((a, b) => worse(b, a) ? b : a);
+    final TopicStyle? style = spot == null ? null : kTopics[spot.key];
+    return _Half(
+      label: strongest ? l.journeyStrongest : l.journeyMostMissed,
+      value: style == null ? '—' : l.subjectOf(style.name),
+      size: 24,
+      sub: spot == null
+          ? l.journeySubjectsNotYet
+          : l.journeyRightShare(_percent(context, spot.share)),
+      foot: spot == null || style == null
+          ? null
+          : ClipRRect(
+              key: ValueKey('journey-spot-${spot.key}'),
+              borderRadius: BorderRadius.circular(99),
+              child: SizedBox(
+                height: 6,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ColoredBox(color: context.p.line),
+                    FractionallySizedBox(
+                      alignment: AlignmentDirectional.centerStart,
+                      widthFactor: spot.share.clamp(0.0, 1.0),
+                      child: ColoredBox(color: style.color),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+    );
+  }
 }
 
 // ── The days ──────────────────────────────────────────────────────────────

@@ -4765,4 +4765,19 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get perkPathsLine =>
       'Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden.';
+
+  @override
+  String get journeyStrongest => 'Sterkst';
+
+  @override
+  String get journeyMostMissed => 'Vaakst gemist';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '$pct goed';
+  }
+
+  @override
+  String get journeySubjectsNotYet =>
+      'Zes antwoorden in een vak, en het wordt gemeten.';
 }

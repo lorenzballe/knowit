@@ -6827,6 +6827,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ten cards on one theme, from the easiest to the hardest. New paths every week.'**
   String get perkPathsLine;
+
+  /// Your journey: the label over the subject the reader gets right most often (of those with six answers or more).
+  ///
+  /// In en, this message translates to:
+  /// **'Strongest'**
+  String get journeyStrongest;
+
+  /// Your journey: the label over the subject the reader gets wrong most often.
+  ///
+  /// In en, this message translates to:
+  /// **'Most missed'**
+  String get journeyMostMissed;
+
+  /// Your journey: how often the reader is right in that subject; pct is a percentage already formatted, e.g. 82%.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct} right'**
+  String journeyRightShare(String pct);
+
+  /// Your journey: shown under the two subject tiles before any subject has six answers.
+  ///
+  /// In en, this message translates to:
+  /// **'Six answers in a subject, and it is measured.'**
+  String get journeySubjectsNotYet;
 }
 
 class _AppLocalizationsDelegate

@@ -5018,5 +5018,27 @@
  "perkPathsLine": "Ten cards on one theme, from the easiest to the hardest. New paths every week.",
  "@perkPathsLine": {
   "description": "Under the paths perk on the paywall: what a path is."
+ },
+ "journeyStrongest": "Strongest",
+ "@journeyStrongest": {
+  "description": "Your journey: the label over the subject the reader gets right most often (of those with six answers or more)."
+ },
+ "journeyMostMissed": "Most missed",
+ "@journeyMostMissed": {
+  "description": "Your journey: the label over the subject the reader gets wrong most often."
+ },
+ "journeyRightShare": "{pct} right",
+ "@journeyRightShare": {
+  "description": "Your journey: how often the reader is right in that subject; pct is a percentage already formatted, e.g. 82%.",
+  "placeholders": {
+   "pct": {
+    "type": "String",
+    "example": "82%"
+   }
+  }
+ },
+ "journeySubjectsNotYet": "Six answers in a subject, and it is measured.",
+ "@journeySubjectsNotYet": {
+  "description": "Your journey: shown under the two subject tiles before any subject has six answers."
  }
 }

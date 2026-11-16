@@ -4564,4 +4564,18 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get perkPathsLine => '한 주제의 카드 10장, 쉬운 것부터 어려운 것까지. 매주 새로운 경로.';
+
+  @override
+  String get journeyStrongest => '강한 분야';
+
+  @override
+  String get journeyMostMissed => '약한 분야';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '정답률 $pct';
+  }
+
+  @override
+  String get journeySubjectsNotYet => '한 분야에서 6번 답하면 측정돼요.';
 }

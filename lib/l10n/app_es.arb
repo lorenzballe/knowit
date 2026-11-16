@@ -1117,5 +1117,9 @@
   "playTheCard": "Jugar la carta",
   "openTheCard": "Abrir la carta",
   "perkPathsTitle": "Cada ruta, entera",
-  "perkPathsLine": "Diez cartas sobre un tema, de la más fácil a la más difícil. Rutas nuevas cada semana."
+  "perkPathsLine": "Diez cartas sobre un tema, de la más fácil a la más difícil. Rutas nuevas cada semana.",
+  "journeyStrongest": "Tu punto fuerte",
+  "journeyMostMissed": "Lo que más fallas",
+  "journeyRightShare": "{pct} de aciertos",
+  "journeySubjectsNotYet": "Seis respuestas en una materia y queda medida."
 }

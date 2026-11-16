@@ -1117,5 +1117,9 @@
   "playTheCard": "Karte spielen",
   "openTheCard": "Karte öffnen",
   "perkPathsTitle": "Jeder Pfad, ganz",
-  "perkPathsLine": "Zehn Karten zu einem Thema, von der leichtesten zur schwersten. Jede Woche neue Pfade."
+  "perkPathsLine": "Zehn Karten zu einem Thema, von der leichtesten zur schwersten. Jede Woche neue Pfade.",
+  "journeyStrongest": "Am stärksten",
+  "journeyMostMissed": "Am häufigsten falsch",
+  "journeyRightShare": "{pct} richtig",
+  "journeySubjectsNotYet": "Sechs Antworten in einem Fach, dann wird es gemessen."
 }
