@@ -82,14 +82,20 @@ class _Host extends StatelessWidget {
     required this.onDeckTap,
     required this.onDeckPan,
     this.calm = false,
+    this.text = 1,
   });
+
+  /// The reader's text size, as a multiple of the standard one.
+  final double text;
 
   @override
   Widget build(BuildContext context) => MaterialApp(
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     home: MediaQuery(
-      data: MediaQuery.of(context).copyWith(disableAnimations: calm),
+      data: MediaQuery.of(
+        context,
+      ).copyWith(disableAnimations: calm, textScaler: TextScaler.linear(text)),
       child: Scaffold(
         backgroundColor: ground,
         body: GestureDetector(
@@ -231,6 +237,36 @@ void main() {
         expect(_parse((c['scene'] as Map).cast()), isA<DrawScene>());
       }
     });
+  });
+
+  group('a short box at the largest text', () {
+    // Explore's single tile gives a card's scene a short box, and at twice
+    // the text size its two readouts took all of it: the scene ran past its
+    // foot. The readouts give way a size; the chart keeps its strip.
+    for (final double height in [200.0, 240.0, 280.0]) {
+      testWidgets('$height high at 2x: whole, the chart still there', (
+        tester,
+      ) async {
+        tester.view.physicalSize = const Size(375, 667) * 3;
+        tester.view.devicePixelRatio = 3;
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          _Host(
+            scene: _parse(_ai()),
+            height: height,
+            text: 2,
+            onDeckTap: () {},
+            onDeckPan: () {},
+          ),
+        );
+        await tester.pump(const Duration(milliseconds: 500));
+        expect(tester.takeException(), isNull);
+        final Rect chart = tester.getRect(
+          find.byKey(const ValueKey('draw-chart')),
+        );
+        expect(chart.height, greaterThanOrEqualTo(39.5));
+      });
+    }
   });
 
   group('play', () {
