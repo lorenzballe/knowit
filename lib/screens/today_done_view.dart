@@ -16,6 +16,7 @@ import '../widgets/card_edge.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
+import '../widgets/liked_mark.dart';
 import 'deck_viewer_screen.dart';
 import 'journey_screen.dart';
 import '../analytics.dart';
@@ -448,13 +449,19 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // a wider card is the same card, bigger; the extra height beyond
         // the canvas's proportion is air inside the card, and is capped
         // before the card turns into a column.
+        // Every card in the proportion a drawn card's picture is taken in
+        // (WebThumbs.aspect, the deck's own card): the picture then fills
+        // its card edge to edge, with the margins and the head a card set
+        // in words has, and the two read as one card — a picture fitted
+        // into a squatter card stood in a band of its own ground, its
+        // margins half again a word card's. Where the room is shorter, the
+        // card narrows to keep the proportion.
         final double room = math.max(0, box.maxHeight - _air * 2);
-        final double width = math.min(
-          box.maxWidth - _side * 2,
-          room * _artWidth / _artHeight,
-        );
+        const double tall = 1 / WebThumbs.aspect;
+        final double width = math.min(box.maxWidth - _side * 2, room / tall);
         _cardWidth = width;
-        _cardHeight = math.min(room, width * _artHeight / _artWidth * 1.25);
+        _cardHeight = width * tall;
+        _learnTags(deck);
         final Size stage = Size(box.maxWidth, box.maxHeight);
 
         // Painted furthest-from-the-front first, so the front card is on
@@ -551,6 +558,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
       back: back,
       glow: glow,
       saved: saved,
+      liked: app.isLiked(pill.id),
       onSave: () {
         HapticFeedback.mediumImpact();
         app.toggleSaved(pill.id);
@@ -564,9 +572,20 @@ class _TodayDoneViewState extends State<TodayDoneView>
       ink: pill.ink,
       ground: pill.color,
       onToggle: () => app.toggleLiked(pill.id),
-      markScale: _cardWidth / _artWidth,
       child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
     );
+  }
+
+  /// Reads the tag of each liked drawn card on the shelf from its page, so
+  /// its heart stands before the tag; drawn again once it is known.
+  void _learnTags(List<Pill> deck) {
+    for (final Pill pill in deck) {
+      if (pill.web == null || CardTags.knows(pill.id)) continue;
+      if (!widget.app.isLiked(pill.id)) continue;
+      CardTags.learn(pill).then((_) {
+        if (mounted) setState(() {});
+      });
+    }
   }
 
   /// The card after the five: the same one that appears when the fifth is
@@ -660,12 +679,16 @@ class _CardFace extends StatelessWidget {
     required this.back,
     required this.glow,
     required this.saved,
+    this.liked = false,
     required this.onSave,
     required this.onShare,
   });
 
   final Pill pill;
   final int number;
+
+  /// Whether the reader liked the card: a heart in its head, on the right.
+  final bool liked;
 
   /// The deck's mark beside the subject, "For you" or "Again", when the
   /// card carried one.
@@ -723,6 +746,8 @@ class _CardFace extends StatelessWidget {
             fallback: ColoredBox(color: pill.color, child: words),
             foreground: _PictureControls(
               saved: saved,
+              liked: liked,
+              tag: CardTags.of(pill.id),
               ink: mark,
               fill: mark.withValues(alpha: 0.12),
               onSave: onSave,
@@ -830,6 +855,10 @@ class _CardFace extends StatelessWidget {
                 ],
               ),
             ),
+            if (liked) ...[
+              LikedMark(ink: ink, scale: s),
+              SizedBox(width: 8 * s),
+            ],
             Text(
               number.toString().padLeft(2, '0'),
               style: AppText.label(
@@ -890,6 +919,8 @@ class _CardFace extends StatelessWidget {
 class _PictureControls extends StatelessWidget {
   const _PictureControls({
     required this.saved,
+    this.liked = false,
+    this.tag,
     required this.ink,
     required this.fill,
     required this.onSave,
@@ -897,6 +928,11 @@ class _PictureControls extends StatelessWidget {
   });
 
   final bool saved;
+
+  /// Whether the card is liked, and the tag its picture prints on the right
+  /// of its head: the heart stands just before it, where the page puts it.
+  final bool liked;
+  final String? tag;
   final Color ink;
   final Color fill;
   final VoidCallback onSave;
@@ -917,6 +953,12 @@ class _PictureControls extends StatelessWidget {
         final double k = picture / 366;
         return Stack(
           children: [
+            if (liked)
+              Positioned(
+                top: (CardTags.headMiddle - LikedMark.size / 2) * k,
+                right: side + CardTags.heartRight(tag) * k,
+                child: LikedMark(ink: ink, scale: k),
+              ),
             Positioned(
               right: side + 17 * k,
               bottom: foot + 15 * k,
