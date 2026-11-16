@@ -75,6 +75,24 @@ void main() {
 
   test('a card carries the link to its source, a DOI made one', () {
     expect(_card().reference, 'https://doi.org/10.1000/xyz');
+    // A reference in words keeps its words and carries its link at the end.
+    expect(
+      referenceLink(
+        'Hole, Hirsch, Ball & Meads, Music as an aid for postoperative '
+        'recovery in adults, The Lancet, 2015, '
+        'doi:10.1016/S0140-6736(15)60169-6',
+      ),
+      'https://doi.org/10.1016/S0140-6736(15)60169-6',
+    );
+    expect(
+      referenceLink('WHO, Malaria fact sheet, 2023, https://www.who.int/x.'),
+      'https://www.who.int/x',
+    );
+    expect(referenceLink('Kahneman, Thinking, Fast and Slow, 2011'), '');
+    expect(
+      referenceLink('https://example.org/page'),
+      'https://example.org/page',
+    );
   });
 
   testWidgets('on Astute+, everything the card file adds, and the way to '

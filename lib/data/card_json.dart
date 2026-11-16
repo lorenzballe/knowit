@@ -235,6 +235,28 @@ WebFace? webFromJson(Object? raw, {Object? id}) {
   );
 }
 
+/// Where a card's claim can be checked, as a link: the reference itself when
+/// it is a page or a DOI, or the DOI or page a reference in words carries
+/// ("Tversky & Kahneman, Judgment under uncertainty, Science, 1974,
+/// doi:10.1126/science.185.4157.1124"). A DOI resolves at doi.org; words
+/// with neither are no link.
+String referenceLink(Object? raw) {
+  if (raw is! String) return '';
+  final String r = raw.trim();
+  if (r.startsWith('https://') && !r.contains(' ')) return r;
+  final Match? doi = RegExp(
+    r'(?:^|[\s,(;])doi:\s*(10\.\d{4,9}/\S+)',
+    caseSensitive: false,
+  ).firstMatch(r);
+  if (doi != null) {
+    return 'https://doi.org/${doi.group(1)!.replaceFirst(RegExp(r'[.,;]+$'), '')}';
+  }
+  final Match? page = RegExp(r'https://\S+').firstMatch(r);
+  return page == null
+      ? ''
+      : page.group(0)!.replaceFirst(RegExp(r'[.,;)]+$'), '');
+}
+
 /// A card from its JSON object. Throws [LaterCard] on a card written for a
 /// later build — an unknown topic, kind, principle or difficulty — and
 /// [FormatException] on anything else the app could not draw, a missing
@@ -378,13 +400,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
       _ => null,
     },
     reacts: raw['reacts'] == true,
-    reference: switch (raw['reference']) {
-      final String url when url.startsWith('https://') => url,
-      // A DOI resolves at doi.org; a reference given as words is no link.
-      final String doi when doi.startsWith('doi:10.') =>
-        'https://doi.org/${doi.substring(4).trim()}',
-      _ => '',
-    },
+    reference: referenceLink(raw['reference']),
     why: text('why'),
     book: PillBook.fromJson(raw['book']),
     views: switch (raw['views']) {
