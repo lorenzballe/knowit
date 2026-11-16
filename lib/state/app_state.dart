@@ -119,6 +119,8 @@ class AppState extends ChangeNotifier {
   static const _kJudgements = 'knowit.judgements';
   static const _kReadingLog = 'knowit.readingLog';
   static const _kTasteVariant = 'knowit.exp.tasteVariant';
+  static const _kReactions = 'knowit.reactions';
+  static const _kSureSeed = 'knowit.exp.sureSeed';
   static const _kTheme = 'knowit.theme';
   static const _kPushAsked = 'knowit.pushAsked';
   static const _kPushDeferrals = 'knowit.pushDeferrals';
@@ -241,10 +243,24 @@ class AppState extends ChangeNotifier {
   /// so this is appended to and never rewritten.
   List<Judgement> judgements = [];
 
+  /// The judgements made with a word on how sure the reader was: the ones
+  /// calibration is read from. Some cards ask only some of the time (see
+  /// [Pill.sureOdds]); their right or wrong is kept in [judgements] all the
+  /// same, for the levels and the subjects.
+  List<Judgement> get calibrated => [
+    for (final j in judgements)
+      if (j.confidence != null) j,
+  ];
+
   /// Every read of a card, the last [ReadingLog.keep]: how long its front
   /// and its back held the reader, the turns, the hint, how it left
   /// (reading_log.dart). Kept on the phone and in the account's backup.
   List<CardReadEntry> readingLog = [];
+
+  /// What the cards that ask ([Pill.reacts]) did for the reader, in their
+  /// own word: the card's id to the [Reaction]'s key. The latest word on a
+  /// card stands.
+  Map<String, String> reactions = {};
 
   /// How this install learns the reader's taste, for the experiment that
   /// weighs it: `implicit` reads how cards are read — a back read to its
@@ -547,6 +563,15 @@ class AppState extends ChangeNotifier {
     _trialWarnedAt = _instantOf(_prefs.getString(_kTrialWarnedAt));
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     readingLog = ReadingLog.decode(_prefs.getString(_kReadingLog));
+    reactions = _decodeReactions(_prefs.getString(_kReactions));
+    // The phone's own draw for the cards that ask how sure only some of the
+    // time (SureAsk): kept, so a card asks or not the same way all day.
+    String? sureSeed = _prefs.getString(_kSureSeed);
+    if (sureSeed == null) {
+      sureSeed = math.Random().nextInt(1 << 32).toRadixString(36);
+      _prefs.setString(_kSureSeed, sureSeed);
+    }
+    SureAsk.seed = sureSeed;
     final String? variant = _prefs.getString(_kTasteVariant);
     tasteVariant =
         variant ?? (math.Random().nextBool() ? 'implicit' : 'explicit');
@@ -973,10 +998,14 @@ class AppState extends ChangeNotifier {
         squares.write(ok ? DaySummary.rightSquare : DaySummary.wrongSquare);
       }
     }
-    final todays = judgements.where((j) => j.on == dateKey(today)).toList();
+    final String day = dateKey(today);
+    final todays = [
+      for (final j in calibrated)
+        if (j.on == day) j,
+    ];
     final double? sure = todays.isEmpty
         ? null
-        : todays.fold<int>(0, (a, j) => a + j.confidence) / todays.length;
+        : todays.fold<int>(0, (a, j) => a + j.confidence!) / todays.length;
     return DaySummary(
       edition: editionOf(today),
       squares: squares.toString(),
@@ -1153,6 +1182,45 @@ class AppState extends ChangeNotifier {
       CardReadEntry.fromFacts(id, facts, thrown: thrown),
     );
     _prefs.setString(_kReadingLog, ReadingLog.encode(readingLog));
+  }
+
+  /// The reader said what a card did for them: new to them, changed their
+  /// mind, or known already. Kept on the phone and in the backup, and said
+  /// to analytics with the card's facts, the reaction and nothing else.
+  Future<void> react(String id, Reaction reaction) async {
+    if (reactions[id] == reaction.key) return;
+    reactions = {...reactions, id: reaction.key};
+    notifyListeners();
+    Analytics.capture('card reacted', {
+      ...cardFacts(id),
+      'reaction': reaction.key,
+    });
+    await _prefs.setString(_kReactions, jsonEncode(reactions));
+  }
+
+  /// How many cards drew each reaction.
+  Map<Reaction, int> get reactionCounts {
+    final Map<Reaction, int> out = {for (final r in Reaction.values) r: 0};
+    for (final String key in reactions.values) {
+      final Reaction? r = Reaction.of(key);
+      if (r != null) out[r] = out[r]! + 1;
+    }
+    return out;
+  }
+
+  static Map<String, String> _decodeReactions(String? raw) {
+    if (raw == null || raw.isEmpty) return {};
+    try {
+      final Object? map = jsonDecode(raw);
+      if (map is! Map) return {};
+      return {
+        for (final e in map.entries)
+          if (e.key is String && Reaction.of(e.value) != null)
+            e.key as String: e.value as String,
+      };
+    } catch (_) {
+      return {};
+    }
   }
 
   /// What 'first card shown' says about the day it showed: how long the day
@@ -1507,7 +1575,7 @@ class AppState extends ChangeNotifier {
   Standing get standing => Standing(
     read: seenIds.length,
     answered: answers.length,
-    judged: judgements.length,
+    judged: calibratedAnswers,
     held: heldCards,
     gap: confidenceGap,
   );
@@ -1677,7 +1745,10 @@ class AppState extends ChangeNotifier {
       previous: existing,
     );
 
-    if (graded && confidence != null) {
+    // Right or wrong is kept for every graded card, said how sure or not:
+    // the levels and the subjects are read from it. Calibration reads only
+    // the ones with a confidence ([calibrated]).
+    if (graded) {
       judgements.add(
         Judgement(
           confidence,
@@ -1969,7 +2040,8 @@ class AppState extends ChangeNotifier {
     }
   }
 
-  int get calibratedAnswers => judgements.length;
+  int get calibratedAnswers =>
+      judgements.where((j) => j.confidence != null).length;
 
   /// How the gap between confidence and accuracy has moved across the run.
   ///
@@ -1979,10 +2051,11 @@ class AppState extends ChangeNotifier {
   /// just the last few answers wearing a serious word.
   Trend? get trend {
     const window = 10;
-    if (judgements.length < window * 2) return null;
+    final said = calibrated;
+    if (said.length < window * 2) return null;
     return Trend(
-      early: _gapOver(judgements.take(window)),
-      recent: _gapOver(judgements.skip(judgements.length - window)),
+      early: _gapOver(said.take(window)),
+      recent: _gapOver(said.skip(said.length - window)),
       window: window,
     );
   }
@@ -1992,7 +2065,7 @@ class AppState extends ChangeNotifier {
     var right = 0;
     var n = 0;
     for (final j in run) {
-      claimed += j.confidence;
+      claimed += j.confidence!;
       if (j.correct) right++;
       n++;
     }
@@ -2017,14 +2090,15 @@ class AppState extends ChangeNotifier {
   /// because "80% sure, right 62% of the time" is the reader's own and a
   /// gap of eighteen points is a statistic.
   ({double sure, double right})? get sureAgainstRight {
-    if (judgements.length < kCalibrationFloor) return null;
+    final said = calibrated;
+    if (said.length < kCalibrationFloor) return null;
     var claimed = 0.0;
     var right = 0;
-    for (final j in judgements) {
-      claimed += j.confidence;
+    for (final j in said) {
+      claimed += j.confidence!;
       if (j.correct) right++;
     }
-    final n = judgements.length;
+    final n = said.length;
     return (sure: claimed / n, right: right / n * 100);
   }
 
@@ -3101,8 +3175,9 @@ class AppState extends ChangeNotifier {
       'pills_read': pillsRead,
     });
     await _prefs.clear();
-    // The experiment's draw belongs to the phone, not to the account.
+    // The experiment's draws belong to the phone, not to the account.
     await _prefs.setString(_kTasteVariant, tasteVariant);
+    await _prefs.setString(_kSureSeed, SureAsk.seed);
     // The clear above took the reader's own answer to "measure this?" with
     // it. An opt-out a sign-out quietly undoes is not a choice, it is a
     // delay — so it goes back down before anything else is written.
@@ -3162,6 +3237,7 @@ class AppState extends ChangeNotifier {
     answers = {};
     judgements = [];
     readingLog = [];
+    reactions = {};
     topicWeights = {};
     topicLevels = {};
     genresOff = {};
@@ -3645,6 +3721,7 @@ class AppState extends ChangeNotifier {
     answers: Map<String, Answer>.from(answers),
     judgements: List<Judgement>.from(judgements),
     readingLog: List<CardReadEntry>.from(readingLog),
+    reactions: Map<String, String>.from(reactions),
     pickedTopics: pickedTopics.toList(),
     topicWeights: Map<String, double>.from(topicWeights),
     topicLevels: Map<String, int>.from(topicLevels),
@@ -3681,6 +3758,7 @@ class AppState extends ChangeNotifier {
     answers = Map<String, Answer>.from(s.answers);
     judgements = List<Judgement>.from(s.judgements);
     readingLog = List<CardReadEntry>.from(s.readingLog);
+    reactions = Map<String, String>.from(s.reactions);
     if (s.pickedTopics.isNotEmpty) pickedTopics = s.pickedTopics.toSet();
     topicWeights = Map<String, double>.from(s.topicWeights);
     topicLevels = Map<String, int>.from(s.topicLevels);
@@ -3716,6 +3794,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setString(_kReadDays, jsonEncode(readDays));
     await _prefs.setString(_kDayLog, jsonEncode(dayLog));
     await _prefs.setString(_kReadingLog, ReadingLog.encode(readingLog));
+    await _prefs.setString(_kReactions, jsonEncode(reactions));
     await _prefs.setStringList(_kSaidIds, saidIds);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);

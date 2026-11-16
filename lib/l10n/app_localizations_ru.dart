@@ -4938,4 +4938,32 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get journeySubjectsNotYet => 'Шесть ответов по теме — и она измерена.';
+
+  @override
+  String get journeyChangedMind => 'Изменили мнение';
+
+  @override
+  String get journeyNewToYou => 'Новое для вас';
+
+  @override
+  String journeyReactedOf(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'из $n карточек, которые спрашивали',
+      one: 'из 1 карточки, которая спрашивала',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyKnewAlready(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n уже знакомы',
+      one: '1 уже знакомо',
+    );
+    return '$_temp0';
+  }
 }

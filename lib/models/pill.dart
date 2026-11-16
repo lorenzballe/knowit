@@ -323,7 +323,10 @@ class Answer {
 /// same card again months later is another data point, not a correction of
 /// the first. So judgements are appended, never rewritten.
 class Judgement {
-  final int confidence;
+  /// How sure the reader said they were, 50 to 90; null where they were
+  /// not asked — how sure is asked on some cards, by chance, and right or
+  /// wrong is kept on every one, for the levels and the subjects.
+  final int? confidence;
   final bool correct;
 
   /// The card it was made on, and the day it was made, as a date key.
@@ -354,11 +357,13 @@ class Judgement {
     if (raw is! Map) return null;
     final confidence = raw['c'];
     final correct = raw['k'];
-    if (confidence is! int || correct is! bool) return null;
+    if ((confidence != null && confidence is! int) || correct is! bool) {
+      return null;
+    }
     final pill = raw['p'];
     final on = raw['d'];
     return Judgement(
-      confidence,
+      confidence as int?,
       correct: correct,
       pillId: pill is String ? pill : null,
       on: on is String ? on : null,
@@ -373,6 +378,60 @@ const List<int> kReviewLadder = [2, 7, 21];
 /// The confidence levels the app offers. Five is enough to see a pattern
 /// without turning every card into a form.
 const List<int> kConfidenceLevels = [50, 60, 70, 80, 90];
+
+/// Whether a card asks how sure the reader is, this time.
+///
+/// A card that gives no odds ([Pill.sureOdds] null) asks always, as every
+/// card did. One that gives odds asks that share of the time, drawn for this
+/// reader, this card and this day: the same all day however often the card
+/// is opened, and not the same for two readers, so the answers given with a
+/// confidence and the ones given without can be compared card by card.
+abstract final class SureAsk {
+  /// This install's own draw, set once the app has read it (AppState.init).
+  static String seed = '';
+
+  static bool of(Pill pill, {DateTime? on}) {
+    if (!pill.isGraded) return false;
+    final double? odds = pill.sureOdds;
+    if (odds == null || odds >= 1) return true;
+    if (odds <= 0) return false;
+    final DateTime d = on ?? DateTime.now();
+    return unit('$seed|${pill.id}|${d.year}-${d.month}-${d.day}') < odds;
+  }
+
+  /// A number from 0 up to 1 that [text] always gives. Kept under 2^53 at
+  /// every step, so the app on the web draws what the phone does.
+  static double unit(String text) {
+    const int prime = 4294967291;
+    var h = 2166136261;
+    for (final int c in text.codeUnits) {
+      h = (h * 131 + c) % prime;
+    }
+    h = (h * 2654435 + 1013904223) % prime;
+    return h / prime;
+  }
+}
+
+/// What a card did for the reader, in their own word, on a card that asks
+/// ([Pill.reacts]).
+enum Reaction {
+  /// Something they did not know.
+  fresh('new'),
+
+  /// It moved what they thought.
+  changed('changed'),
+
+  /// They knew it already.
+  knew('knew');
+
+  const Reaction(this.key);
+
+  /// How it is kept and said: in the backup, to analytics, from a page.
+  final String key;
+
+  static Reaction? of(Object? key) =>
+      values.where((r) => r.key == key).firstOrNull;
+}
 
 /// The level [sure] is nearest, for how sure a reader said they were
 /// somewhere the app did not draw the five: on a free card's page.
@@ -452,7 +511,7 @@ enum Principle {
 /// page made with a later kit may use what this one does not have, so it is
 /// never dealt here; a card that reaches the phone anyway — saved on
 /// another one, say — is drawn natively instead.
-const int kCardKit = 1;
+const int kCardKit = 2;
 
 /// How a free card's page shares the finger with the deck.
 enum WebTouch {
@@ -546,6 +605,10 @@ class WebThumbs {
 
   /// The proportion of every picture, width to height: the card's.
   static const double aspect = 366 / 606;
+
+  /// The finished day's shelf's pictures: taken on the 324 by 452 its cards
+  /// in words are drawn on (tool/cards/thumbs.cjs, thumbs/shelf/).
+  static const double shelfAspect = 324 / 452;
 
   @override
   bool operator ==(Object other) =>
@@ -686,6 +749,20 @@ class Pill {
   /// page is the front, and the back is the card's own, as on any card.
   final WebFace? web;
 
+  /// How often a graded card asks how sure the reader is, from 0 to 1, or
+  /// null on a card written before a card could ask only now and then: that
+  /// one asks every time, as it always did. A card that always asks teaches
+  /// the reader to answer the row of percentages instead of the question;
+  /// one that asks some of the time still says how calibrated they are,
+  /// from fewer answers ([SureAsk]).
+  final double? sureOdds;
+
+  /// Whether the card asks, once read, what it did for the reader: new to
+  /// them, changed their mind, or known already ([Reaction]). For a card
+  /// with nothing right or wrong in it, where that is the only word on how
+  /// it went, and the reader's own.
+  final bool reacts;
+
   const Pill({
     required this.id,
     required this.topic,
@@ -726,6 +803,8 @@ class Pill {
     this.scene,
     this.place,
     this.web,
+    this.sureOdds,
+    this.reacts = false,
   });
 
   /// Whether the card carries its tags. Every card in the bank does; a card

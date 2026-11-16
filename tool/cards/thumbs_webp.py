@@ -11,6 +11,12 @@ from PIL import Image
 SMALL = (458, 758)
 
 raw, out = Path(sys.argv[1]), Path(sys.argv[2])
+if "--one" in sys.argv[3:]:
+    # The shelf's pictures: one size, as taken, for the finished day's cards.
+    out.mkdir(parents=True, exist_ok=True)
+    for png in sorted(raw.glob("*.png")):
+        Image.open(png).convert("RGB").save(out / (png.stem + ".webp"), "WEBP", quality=62, method=6)
+    sys.exit(0)
 (out / "large").mkdir(parents=True, exist_ok=True)
 for png in sorted(raw.glob("*.png")):
     im = Image.open(png).convert("RGB")

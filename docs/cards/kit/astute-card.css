@@ -46,6 +46,12 @@ canvas.full,svg.full{position:absolute;inset:0;width:100%;height:100%;user-selec
 .sure .sb:active{transform:scale(.96)}
 .sure .sb.on{background:var(--k);color:var(--c);box-shadow:none}
 .sure.off{opacity:.38;pointer-events:none}
+.sure.skip{display:none}
+/* What the card did for the reader (Kit.react): three words, the reader's own, under what it taught. */
+.react{display:flex;flex-wrap:wrap;gap:1.4cqw}
+.react .rb{font:700 1.7cqh/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 34%,transparent);border-radius:99px;padding:1.2cqh 3.2cqw;cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.react .rb:active{transform:scale(.96)}
+.react .rb.on{background:var(--k);color:var(--c);box-shadow:none}
 .grade{display:flex;align-items:center;gap:2.4cqw;font:700 1.95cqh/1.25 var(--body)}
 .grade i{font-style:normal;flex:none;width:3.3cqh;height:3.3cqh;border-radius:50%;display:grid;place-items:center;background:var(--k);color:var(--c)}
 .grade.no i{background:transparent;color:var(--k);box-shadow:inset 0 0 0 .25cqh var(--k)}
@@ -75,6 +81,7 @@ canvas.full,svg.full{position:absolute;inset:0;width:100%;height:100%;user-selec
 .kit-app .sure .sq{font-size:max(1.85cqh,13px)}
 .kit-app .sure .sb{font-size:max(1.9cqh,13.5px);padding:max(1.55cqh,12px) 0}
 .kit-app .grade{font-size:max(1.95cqh,13.5px)}
+.kit-app .react .rb{font-size:max(1.7cqh,12.5px);padding:max(1.2cqh,10px) max(3.2cqw,12px)}
 .kit-app .grade i{width:max(3.3cqh,22px);height:max(3.3cqh,22px)}
 /* The corner the native save and share sit in: the foot keeps it, so the source wraps before it. */
 .kit-app .foot{min-height:var(--kit-corner-h,0px);padding-right:var(--kit-corner-w,0px);align-items:flex-end}

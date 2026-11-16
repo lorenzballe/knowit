@@ -1121,5 +1121,9 @@
   "journeyStrongest": "Сильнее всего",
   "journeyMostMissed": "Чаще всего мимо",
   "journeyRightShare": "{pct} верно",
-  "journeySubjectsNotYet": "Шесть ответов по теме — и она измерена."
+  "journeySubjectsNotYet": "Шесть ответов по теме — и она измерена.",
+  "journeyChangedMind": "Изменили мнение",
+  "journeyNewToYou": "Новое для вас",
+  "journeyReactedOf": "{n, plural, =1{из 1 карточки, которая спрашивала} other{из {n} карточек, которые спрашивали}}",
+  "journeyKnewAlready": "{n, plural, =1{1 уже знакомо} other{{n} уже знакомы}}"
 }

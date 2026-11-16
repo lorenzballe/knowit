@@ -34,6 +34,7 @@ class ReaderSnapshot {
     this.answers = const {},
     this.judgements = const [],
     this.readingLog = const [],
+    this.reactions = const {},
     this.pickedTopics = const [],
     this.topicWeights = const {},
     this.topicLevels = const {},
@@ -80,6 +81,11 @@ class ReaderSnapshot {
   /// Every read of a card, the last ReadingLog.keep (reading_log.dart): how
   /// the reader reads, which the app learns their taste from.
   final List<CardReadEntry> readingLog;
+
+  /// What the cards that ask did for the reader: a card's id to its
+  /// reaction's key (AppState.reactions). Strings only, so the backup holds
+  /// no array inside an array.
+  final Map<String, String> reactions;
   final List<String> pickedTopics;
   final Map<String, double> topicWeights;
 
@@ -114,6 +120,7 @@ class ReaderSnapshot {
       answers.isEmpty &&
       judgements.isEmpty &&
       readingLog.isEmpty &&
+      reactions.isEmpty &&
       savedIds.isEmpty &&
       completedDates.isEmpty;
 
@@ -139,6 +146,7 @@ class ReaderSnapshot {
     // SDK does not refuse one, it throws — the app closed on every backup
     // that carried a read (TestFlight build 63).
     'readingLog': ReadingLog.encode(readingLog),
+    'reactions': reactions,
     'pickedTopics': pickedTopics,
     'topicWeights': topicWeights,
     'topicLevels': topicLevels,
@@ -170,6 +178,14 @@ class ReaderSnapshot {
     final judgements = judgementsRaw is List
         ? judgementsRaw.map(Judgement.fromJson).whereType<Judgement>().toList()
         : <Judgement>[];
+
+    final reactionsRaw = raw['reactions'];
+    final Map<String, String> reactions = {
+      if (reactionsRaw is Map)
+        for (final e in reactionsRaw.entries)
+          if (e.key is String && Reaction.of(e.value) != null)
+            e.key as String: e.value as String,
+    };
 
     final readingRaw = raw['readingLog'];
     final readingLog = readingRaw is String
@@ -255,6 +271,7 @@ class ReaderSnapshot {
       pillsRead: raw['pillsRead'] is int ? raw['pillsRead'] as int : 0,
       answers: answers,
       judgements: judgements,
+      reactions: reactions,
       readingLog: readingLog,
       pickedTopics: strings(raw['pickedTopics']),
       topicWeights: weights,
@@ -426,6 +443,8 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     answers: answers,
     judgements: judgements,
     readingLog: readingLog,
+    // A card's latest word stands, and this phone's is the latest it knows.
+    reactions: {...remote.reactions, ...local.reactions},
     pickedTopics: localChoseMix
         ? local.pickedTopics
         : union(local.pickedTopics, remote.pickedTopics),

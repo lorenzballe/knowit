@@ -281,6 +281,7 @@ class _TodayScreenState extends State<TodayScreen> {
                 confidence: confidence,
                 reason: reason,
               ),
+              onReact: app.react,
             ),
           ),
         ],

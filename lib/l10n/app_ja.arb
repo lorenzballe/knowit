@@ -1121,5 +1121,9 @@
   "journeyStrongest": "得意",
   "journeyMostMissed": "苦手",
   "journeyRightShare": "正解率 {pct}",
-  "journeySubjectsNotYet": "1つの分野で6回答えると測れます。"
+  "journeySubjectsNotYet": "1つの分野で6回答えると測れます。",
+  "journeyChangedMind": "考えが変わった",
+  "journeyNewToYou": "初めて知った",
+  "journeyReactedOf": "{n, plural, other{たずねた{n}枚のうち}}",
+  "journeyKnewAlready": "{n, plural, other{{n}枚は知っていた}}"
 }

@@ -1121,5 +1121,9 @@
   "journeyStrongest": "Punto forte",
   "journeyMostMissed": "Punto cieco",
   "journeyRightShare": "{pct} giuste",
-  "journeySubjectsNotYet": "Sei risposte in una materia, e viene misurata."
+  "journeySubjectsNotYet": "Sei risposte in una materia, e viene misurata.",
+  "journeyChangedMind": "Hai cambiato idea",
+  "journeyNewToYou": "Nuove per te",
+  "journeyReactedOf": "{n, plural, =1{su 1 carta che lo chiedeva} other{su {n} carte che lo chiedevano}}",
+  "journeyKnewAlready": "{n, plural, =1{1 la sapevi già} other{{n} le sapevi già}}"
 }

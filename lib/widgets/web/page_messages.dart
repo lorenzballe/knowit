@@ -41,6 +41,9 @@ sealed class PageMessage {
           correct: correct is bool ? correct : null,
           sure: sure is num ? sure.round() : null,
         );
+      case 'react':
+        final Reaction? reaction = Reaction.of(raw['value']);
+        return reaction == null ? null : PageReact(reaction);
       case 'flip':
         return const PageFlip();
       case 'tap':
@@ -135,6 +138,12 @@ class PageAnswer extends PageMessage {
   final int? sure;
 
   const PageAnswer({required this.choice, this.correct, this.sure});
+}
+
+/// The reader said what the card did for them (see [Pill.reacts]).
+class PageReact extends PageMessage {
+  final Reaction reaction;
+  const PageReact(this.reaction);
 }
 
 /// The page asks for the card to be turned over.
@@ -265,6 +274,10 @@ class PageEnv {
   final String? note;
   final String? chip;
 
+  /// Whether the card asks how sure, this time ([SureAsk]): false tells the
+  /// kit's row of percentages to stand aside and hand the card no number.
+  final bool sure;
+
   const PageEnv({
     this.dark = true,
     this.language = 'en',
@@ -278,6 +291,7 @@ class PageEnv {
     this.subject,
     this.note,
     this.chip,
+    this.sure = true,
   });
 
   PageEnv copyWith({bool? shown, Size? size}) => PageEnv(
@@ -293,6 +307,7 @@ class PageEnv {
     subject: subject,
     note: note,
     chip: chip,
+    sure: sure,
   );
 
   Map<String, Object?> toJson() => {
@@ -312,6 +327,7 @@ class PageEnv {
     'subject': subject?.toJson(),
     'note': note,
     'chip': chip,
+    'sure': sure,
   };
 
   /// What changed from [old] that the page should be told, or null when

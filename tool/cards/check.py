@@ -72,6 +72,7 @@ KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
     "answer", "move", "ask", "end", "both", "trap", "hint", "steps", "simply", "counterpoint",
+    "why", "views", "sure", "reacts",
     *TAG_KEYS, "traits", "place", "builds_on", "figure", "diagram", "scene", "web",
     "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
 ]
@@ -242,6 +243,31 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
             problems.append("ask is a question, and ends with a question mark")
         elif len(ask.split()) > 25:
             problems.append("ask runs past 25 words")
+    # Go deeper (from November 2026): why it matters, short; the two views of
+    # a contested question, each with a label; a debate keeps its own.
+    why = (card.get("why") or "").strip()
+    if why and len(why.split()) > 60:
+        problems.append("why runs past 60 words")
+    if why and why == a:
+        problems.append("why says the answer again")
+    views = card.get("views")
+    if views is not None:
+        if kind == "debate":
+            problems.append("a debate has its counterpoint, not views")
+        elif any(": " not in v or len(v.split()) > 45 for v in views):
+            problems.append("each view is 'Label: one or two sentences', under 45 words")
+    # Asked how sure only now and then (`sure`, from November 2026): a graded
+    # card's, and its page hands on a missing number (Kit.sure's onPick gets
+    # null). Asked what it did for the reader (`reacts`): a card with nothing
+    # to mark, on a page that draws the three words (Kit.react, kit 2).
+    web = card.get("web") or {}
+    html = page or ""
+    if "sure" in card and kind in ("read", "debate"):
+        problems.append("sure is for a graded card: a read or a debate has nothing to be sure of")
+    if "Kit.react(" in html and (card.get("reacts") is not True or web.get("kit", 1) < 2):
+        problems.append("a page that calls Kit.react says reacts: true, and is made with kit 2")
+    if card.get("reacts") is True and "Kit.react(" not in html:
+        problems.append("reacts: true, but no page draws the words (Kit.react); a native card does not ask yet")
     # The box the back ends on: one, the stronger of the two for this card;
     # both only when the card truly needs them. Either way the question has
     # to be there to be shown.

@@ -231,27 +231,56 @@ const Kit = (() => {
   const LEVELS = [50, 60, 70, 80, 90];
   const MARK = {yes: '<svg viewBox="0 0 24 24" width="62%" height="62%" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     no: '<svg viewBox="0 0 24 24" width="56%" height="56%" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>'};
+  // A card whose file gives odds (`sure`, kit 2) is asked how sure only some of the time: the app says
+  // which (env.sure false). The row then never shows, on() hands the card no number (onPick(null)) and
+  // grade() says right or wrong alone, in the row's place. A card made for kit 2 handles a null pct.
   function sure(host, question, onPick, words = {}) {
     const w = Object.assign({right: 'Right', wrong: 'Wrong', said: n => `you said ${n}%`}, words);
+    const asks = () => env().sure !== false;
     // A row kept hidden until the answer is in (class gone) stays hidden when it is built.
-    const build = () => { host.className = 'sure off' + (host.classList.contains('gone') ? ' gone' : ''); host.innerHTML = `<span class="sq">${question}</span><div class="row">${LEVELS.map(v => `<button class="sb" data-v="${v}">${v}%</button>`).join('')}</div>`; };
+    const build = () => { host.className = 'sure off' + (host.classList.contains('gone') ? ' gone' : '') + (asks() ? '' : ' skip'); host.innerHTML = `<span class="sq">${question}</span><div class="row">${LEVELS.map(v => `<button class="sb" data-v="${v}">${v}%</button>`).join('')}</div>`; };
     build();
     host.addEventListener('click', e => {
       const b = e.target.closest('.sb'); if (!b || !host.classList.contains('sure') || host.classList.contains('off')) return;
       host.querySelectorAll('.sb').forEach(x => x.classList.toggle('on', x === b)); haptic('selection'); onPick(+b.dataset.v);
     });
     return {
-      on() { host.classList.remove('off'); },
+      get asks() { return asks(); },
+      on() { if (!asks()) { onPick(null); return; } host.classList.remove('off'); },
       ask(q) { const e = host.querySelector('.sq'); if (e) e.textContent = q; },
       reset: build,
       grade(ok, pct, note) {
         host.className = 'grade ' + (ok ? 'ok' : 'no');
-        host.innerHTML = `<i>${ok ? MARK.yes : MARK.no}</i><span>${note ? note + ' · ' : (ok ? w.right : w.wrong) + ' · '}${w.said(pct)}</span>`;
+        const verdict = note || (ok ? w.right : w.wrong);
+        host.innerHTML = `<i>${ok ? MARK.yes : MARK.no}</i><span>${pct == null ? verdict : verdict + ' · ' + w.said(pct)}</span>`;
         // A quick reader grades the row while it is still coming in: its own entrance gives way.
         if (has()) { gsap.killTweensOf(host); gsap.set(host, {opacity: 1, y: 0}); }
         if (has() && !calm()) gsap.from(host, {opacity: 0, y: 6, duration: .35, ease: 'power3.out'});
       }
     };
+  }
+
+  // What the card did for the reader, on a card with nothing right or wrong in it (`reacts: true` in its
+  // file, kit 2): three words, the reader's own, under what it taught: new to me, changed my mind, knew it.
+  // Told the app at each tap (the latest stands); kept on Kit.reacted standing alone. From November 2026.
+  const REACTIONS = ['new', 'changed', 'knew'];
+  const REACT_WORDS = {
+    en: ['New to me', 'Changed my mind', 'Knew it'], it: ['Nuovo per me', 'Mi ha fatto cambiare idea', 'Lo sapevo già'],
+    de: ['Neu für mich', 'Hat meine Meinung geändert', 'Wusste ich schon'], es: ['Nuevo para mí', 'Me hizo cambiar de idea', 'Ya lo sabía'],
+    fr: ['Nouveau pour moi', "M'a fait changer d'avis", 'Je le savais'], pt: ['Novo para mim', 'Me fez mudar de ideia', 'Já sabia'],
+    nl: ['Nieuw voor mij', 'Ik ben van mening veranderd', 'Wist ik al'], pl: ['Nowość dla mnie', 'Zmienia moje zdanie', 'To już znam'],
+    ru: ['Новое для меня', 'Изменило моё мнение', 'Уже знакомо'], tr: ['Benim için yeni', 'Fikrimi değiştirdi', 'Zaten biliyordum'],
+    ja: ['初めて知った', '考えが変わった', '知っていた'], ko: ['처음 알았어요', '생각이 바뀌었어요', '이미 알았어요'], zh: ['对我是新知', '改变了我的看法', '我早就知道']};
+  function react(host, words) {
+    const w = words || REACT_WORDS[String(env().lang || 'en').slice(0, 2)] || REACT_WORDS.en;
+    host.className = 'react';
+    host.innerHTML = REACTIONS.map((r, i) => `<button class="rb" data-r="${r}">${w[i]}</button>`).join('');
+    host.addEventListener('click', e => {
+      const b = e.target.closest('.rb'); if (!b) return;
+      host.querySelectorAll('.rb').forEach(x => x.classList.toggle('on', x === b)); haptic('selection');
+      Kit.reacted = b.dataset.r; if (bridge() && bridge().react) bridge().react(b.dataset.r);
+    });
+    return {get value() { return Kit.reacted ?? null; }};
   }
 
   // What the card tells the app. Standing alone they are kept on Kit, for the checker to read.
@@ -274,6 +303,6 @@ const Kit = (() => {
   }
   const base = (() => { const s = document.currentScript && document.currentScript.src; return s ? s.slice(0, s.lastIndexOf('/') + 1) : ''; })();
 
-  return {$, show, hide, fitCanvas, fitSvg, mk, rnd, gauss, onShow, onHide, onEnter, play, deck, single, sure, answer, flip, done, haptic, open, url, SUBJECTS, LEVELS,
+  return {$, show, hide, fitCanvas, fitSvg, mk, rnd, gauss, onShow, onHide, onEnter, play, deck, single, sure, react, answer, flip, done, haptic, open, url, SUBJECTS, LEVELS, REACTIONS,
     get app() { return !!bridge(); }, get env() { return env(); }, get calm() { return calm(); }, get sound() { return env().sound; }, get ready() { return isReady; }};
 })();

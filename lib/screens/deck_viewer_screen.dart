@@ -259,6 +259,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                         : const {},
                     answering: widget.answering,
                     answerFor: widget.app.answerFor,
+                    onReact: widget.app.react,
                     onAnswer: (id, response, confidence, reason) =>
                         widget.app.recordAnswer(
                           id,

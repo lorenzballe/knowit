@@ -52,11 +52,11 @@ class RecordSummary {
   });
 
   factory RecordSummary.of(AppState app) {
-    final judgements = app.judgements;
+    final judgements = app.calibrated;
     var claimed = 0.0;
     var right = 0;
     for (final j in judgements) {
-      claimed += j.confidence;
+      claimed += j.confidence!;
       if (j.correct) right++;
     }
     final n = judgements.length;

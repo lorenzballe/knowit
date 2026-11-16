@@ -112,6 +112,15 @@ class _JourneyScreenState extends State<JourneyScreen> {
                       _SpotTile(app: app, strongest: false),
                     ),
                     gap,
+                    // What the cards that ask did for the reader, in their
+                    // own word; nothing until one has asked and been told.
+                    if (app.reactions.isNotEmpty) ...[
+                      _Pair(
+                        _ReactionTile(app: app, changed: true),
+                        _ReactionTile(app: app, changed: false),
+                      ),
+                      gap,
+                    ],
                     _Pair(
                       _HowHardTile(record: record),
                       _ReadingTimeTile(record: record),
@@ -346,6 +355,7 @@ class _Unit extends StatelessWidget {
 /// the foot.
 class _Half extends StatelessWidget {
   const _Half({
+    super.key,
     required this.label,
     required this.value,
     this.unit,
@@ -1713,7 +1723,7 @@ class _PointsOffTile extends StatelessWidget {
     final int measured = weekly.whereType<double>().length;
     final Rung top = kRungs.last;
     final int sharp = (top.gap ?? 10).round();
-    final int toGo = kCalibrationFloor - app.judgements.length;
+    final int toGo = kCalibrationFloor - app.calibratedAnswers;
 
     return _Box(
       child: Column(
@@ -2373,6 +2383,32 @@ class _SpotTile extends StatelessWidget {
                 ),
               ),
             ),
+    );
+  }
+}
+
+/// What the cards that ask ([Pill.reacts]) did for the reader, in their own
+/// word: the times one changed their mind, of the cards that asked, and the
+/// things new to them, beside the ones they knew. The part of the record no
+/// right answer can make: what reading did to what they thought.
+class _ReactionTile extends StatelessWidget {
+  const _ReactionTile({required this.app, required this.changed});
+
+  final AppState app;
+  final bool changed;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Map<Reaction, int> n = app.reactionCounts;
+    final int told = n.values.fold(0, (a, b) => a + b);
+    return _Half(
+      key: ValueKey(changed ? 'journey-changed-mind' : 'journey-new-to-you'),
+      label: changed ? l.journeyChangedMind : l.journeyNewToYou,
+      value: '${changed ? n[Reaction.changed] : n[Reaction.fresh]}',
+      sub: changed
+          ? l.journeyReactedOf(told)
+          : l.journeyKnewAlready(n[Reaction.knew] ?? 0),
     );
   }
 }

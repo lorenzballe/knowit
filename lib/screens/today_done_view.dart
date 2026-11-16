@@ -736,10 +736,10 @@ class _CardFace extends StatelessWidget {
           child: CardThumb(
             pill: pill,
             side: side,
-            large: true,
-            // Whole, never cut: the shelf's card is a little wider than the
-            // picture, and the picture's own ground either side of it is
-            // the card's margin.
+            // Taken at the shelf's own size, so it fills the card's width as
+            // a card in words does; a card taller than the canvas has the
+            // picture's ground under it, as a card in words has air.
+            shelf: true,
             fit: BoxFit.contain,
             fallback: ColoredBox(color: pill.color, child: words),
             foreground: _PictureControls(
@@ -941,14 +941,16 @@ class _PictureControls extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) {
         // Where the picture lies in the card, drawn whole from the top.
-        const double aspect = WebThumbs.aspect;
+        const double aspect = WebThumbs.shelfAspect;
         final bool wide = box.maxWidth / box.maxHeight > aspect;
         final double picture = wide ? box.maxHeight * aspect : box.maxWidth;
         final double side = (box.maxWidth - picture) / 2;
-        final double foot = wide ? 0 : box.maxHeight - picture / aspect;
-        // The deck's card is 366 points across; its pair of 44 sits 17 in
+        // The pair sits at the card's foot, as on a card in words, under the
+        // picture's ground where the card is taller than the picture.
+        const double foot = 0;
+        // The page was taken 324 points across; its pair of 44 sits 17 in
         // from the side and 15 up from the foot, 4 apart (pill_card.dart).
-        final double k = picture / 366;
+        final double k = picture / 324;
         return Stack(
           children: [
             if (liked)

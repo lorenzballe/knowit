@@ -439,3 +439,54 @@ The critic opens the same page again.
 - **`also`.** Up to three other strands the card is genuinely about, in
   any subject, from the list of strands you are given. A card on tides is
   the Moon and also Gravity. Empty when it is about one thing.
+
+## 21. How sure, and what it did for you (every card from November 2026)
+
+Two things every new card says in its file. The cards written before
+leave both out and stay as they are.
+
+- **`sure`, on a graded card: how often it asks how sure.** A number from
+  0 to 1; **0.35 is the default** (about one time in three). The row of
+  percentages on every card taught readers to answer the row instead of the
+  question; asked now and then, it still measures how calibrated they are.
+  Give 1 only where the confidence is the point of the card (a card about
+  overconfidence), and 0 where a percentage would be silly.
+  On a page, `Kit.sure` does the rest: when the app says this time it does
+  not ask, the row never shows, `onPick` is called with `null`, and
+  `grade(ok, null)` says right or wrong alone. **A page must work with a
+  null pct**: never print it, never branch on it without a fallback.
+  Right or wrong is kept either way.
+- **`reacts: true`, on a card with nothing right or wrong in it** (a read,
+  a debate, a page that marks nothing): once read, it asks what it did for
+  the reader, in three words that are theirs: *New to me · Changed my mind ·
+  Knew it*. On a page, `Kit.react(host)` draws them, in the reader's
+  language, under what the card taught, usually on the back above the
+  source, and tells the app; the page says `"kit": 2`. The Journey counts
+  them (*Changed your mind 3 · New to you 12*), and they are the only word
+  on how such a card went, so every reasoning card asks. A native card
+  does not draw them yet: `reacts` goes on a card with a page.
+
+`tool/cards/check.py` refuses `sure` on a read or a debate, `Kit.react` on
+a page without `reacts: true` and kit 2, and `reacts: true` on a card whose
+page never draws the words.
+
+## 22. Go deeper (every card from November 2026)
+
+Tapping a card's source opens **Go deeper**: the source itself, with the
+link to the original (`reference`), and what the card file adds below.
+Every new card fills the first two; the third only where it belongs.
+
+- **`simply`: explain it like to a child.** The idea with short words and
+  one concrete image a ten-year-old would see. Not the answer made smaller:
+  a second way in. At most 50 words. Free for everyone.
+- **`why`: why it matters.** Two or three plain sentences on what the idea
+  changes in the reader's own world: a decision, a habit, a headline read
+  differently. Never the answer again. At most 60 words. Astute+.
+- **`views`: the two views, on a contested question only.** Politics,
+  policy, a live scientific dispute: each side at its strongest, written by
+  someone who holds it, as `"Label: one or two sentences"`, with its best
+  evidence. Never on settled science, never a straw man. A debate has its
+  `counterpoint` instead. Astute+.
+
+`tool/cards/check.py` holds `why` to 60 words and the answer's own words
+out of it, and `views` to two labelled views of under 45 words each.

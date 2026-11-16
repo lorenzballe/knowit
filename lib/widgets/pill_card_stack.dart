@@ -156,7 +156,12 @@ class PillCardStack extends StatefulWidget {
     this.home,
     this.swipeHint = false,
     this.onSwipeHint,
+    this.onReact,
   });
+
+  /// The reader said what a card did for them, on a card that asks
+  /// ([Pill.reacts]).
+  final void Function(String id, Reaction reaction)? onReact;
 
   @override
   State<PillCardStack> createState() => _PillCardStackState();
@@ -362,6 +367,7 @@ class _PillCardStackState extends State<PillCardStack>
         : widget.ownIds.contains(pill.id)
         ? context.l10n.forYouChip
         : null,
+    sure: SureAsk.of(pill),
   );
 
   /// Whether a free card has lost its page — a later kit, no WebView, a
@@ -382,6 +388,9 @@ class _PillCardStackState extends State<PillCardStack>
       // a page that asks to be turned (Kit.flip) is.
       case PageFlip():
         _turnOver();
+      // The page has felt the tap under the finger already (Kit.haptic).
+      case PageReact(:final reaction):
+        widget.onReact?.call(pill.id, reaction);
       case PageTap():
         break;
       case PageDone():

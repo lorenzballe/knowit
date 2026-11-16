@@ -28,7 +28,7 @@ KIT = HERE.parent.parent / "docs" / "cards" / "kit"
 
 # The kit this checker holds pages to; the app's own is kCardKit in
 # lib/models/pill.dart, and a test keeps the two equal.
-KIT_VERSION = 1
+KIT_VERSION = 2
 
 # The most a page may weigh. It travels in the bank, which every phone
 # downloads whole, and in the build: a picture belongs drawn, not pasted.

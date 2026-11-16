@@ -1121,5 +1121,9 @@
   "journeyStrongest": "Am stärksten",
   "journeyMostMissed": "Am häufigsten falsch",
   "journeyRightShare": "{pct} richtig",
-  "journeySubjectsNotYet": "Sechs Antworten in einem Fach, dann wird es gemessen."
+  "journeySubjectsNotYet": "Sechs Antworten in einem Fach, dann wird es gemessen.",
+  "journeyChangedMind": "Meinung geändert",
+  "journeyNewToYou": "Neu für dich",
+  "journeyReactedOf": "{n, plural, =1{von 1 Karte, die gefragt hat} other{von {n} Karten, die gefragt haben}}",
+  "journeyKnewAlready": "{n, plural, =1{1 wusstest du schon} other{{n} wusstest du schon}}"
 }

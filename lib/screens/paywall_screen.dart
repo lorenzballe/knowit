@@ -137,7 +137,7 @@ enum PaywallVariant {
 ({int sure, int right, double gap})? _readerNumbers(AppState app) {
   final double? gap = app.overconfidence;
   final said = app.sureAgainstRight;
-  if (app.judgements.length < kCalibrationFloor ||
+  if (app.calibratedAnswers < kCalibrationFloor ||
       gap == null ||
       said == null) {
     return null;

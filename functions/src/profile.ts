@@ -29,7 +29,7 @@ import { seedOf } from './rng.js';
 export interface AnswerJson { r: string; c?: number; w?: string; s?: number; d?: string }
 
 /** A judgement as backed up (Judgement.toJson): confidence, correct, card, day. */
-export interface JudgementJson { c: number; k: boolean; p?: string; d?: string }
+export interface JudgementJson { c: number | null; k: boolean; p?: string; d?: string }
 
 /** The backup, as far as the server reads it (lib/sync/reader_snapshot.dart). */
 export interface Snapshot {

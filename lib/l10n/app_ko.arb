@@ -1121,5 +1121,9 @@
   "journeyStrongest": "강한 분야",
   "journeyMostMissed": "약한 분야",
   "journeyRightShare": "정답률 {pct}",
-  "journeySubjectsNotYet": "한 분야에서 6번 답하면 측정돼요."
+  "journeySubjectsNotYet": "한 분야에서 6번 답하면 측정돼요.",
+  "journeyChangedMind": "생각이 바뀜",
+  "journeyNewToYou": "처음 알게 됨",
+  "journeyReactedOf": "{n, plural, other{물어본 카드 {n}장 중}}",
+  "journeyKnewAlready": "{n, plural, other{{n}장은 이미 알았음}}"
 }
