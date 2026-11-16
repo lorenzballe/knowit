@@ -578,10 +578,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
         // and the paywall says what it says without it.
         if (confirming != null && waited != null) {
           confirming.value = false;
-          await waited.timeout(
-            const Duration(seconds: 1),
-            onTimeout: () {},
-          );
+          await waited.timeout(const Duration(seconds: 1), onTimeout: () {});
           if (!mounted) return;
         }
     }

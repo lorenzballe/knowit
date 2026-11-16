@@ -1334,6 +1334,14 @@ class RemoteLocalizations extends AppLocalizations {
   String get oneMoment => _words.text('oneMoment') ?? _base.oneMoment;
 
   @override
+  String get purchaseConfirming =>
+      _words.text('purchaseConfirming') ?? _base.purchaseConfirming;
+
+  @override
+  String get purchaseConfirmingSlow =>
+      _words.text('purchaseConfirmingSlow') ?? _base.purchaseConfirmingSlow;
+
+  @override
   String get closeLabel => _words.text('closeLabel') ?? _base.closeLabel;
 
   @override

@@ -248,239 +248,249 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
     return PopScope(
       canPop: !_waiting,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: AnimatedBuilder(
-          animation: Listenable.merge([_t, _w]),
-          builder: (context, _) {
-            final double raw = _t.value;
-            final double now = _w.value;
-            // With motion turned off the screen opens on its last frame —
-            // once there is something to celebrate.
-            final double t = still ? (_waiting ? 0 : 8) : raw;
-            // The wait: whole while it lasts, fading as the take begins.
-            final double? from = _from;
-            final double wait = from == null
-                ? 1
-                : (still ? 0 : 1 - _c01((now - from) / _waitFade));
-            // Past [_slowAfter] the wait says it is long, and the button to
-            // go on comes up, as the take's own does.
-            final double slow = _waiting ? _c01((now - _slowAfter) / .6) : 0;
-            final double tButton = _waiting ? 3.45 + .7 * slow : t;
-            return LayoutBuilder(
-              builder: (context, box) {
-                // The hero is 340 on a 874-tall phone; a shorter one gives
-                // up some of it rather than scroll.
-                final double rest = _rest(context, box, pad);
-                final double hero = (box.maxHeight - rest).clamp(150.0, 340.0);
-                // The space above the plan: whatever the hero and everything
-                // under it leave over. Nothing flexes, so if a measurement is
-                // off the screen scrolls a little instead of overflowing.
-                final double room = math.max(0, box.maxHeight - rest - hero);
-                final double heroTop = math.max(pad.top, 20) + 16;
-                return Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    // The glow sits 50 below the hero's centre, as drawn.
-                    Positioned(
-                      left: box.maxWidth / 2 - 310,
-                      top: heroTop + hero / 2 - 190,
-                      width: 620,
-                      height: 480,
-                      child: IgnorePointer(child: _Bloom(t: t)),
-                    ),
-                    // One screen, no scrolling — unless a long language on a
-                    // short phone needs more than it has, which scrolls
-                    // rather than overflows.
-                    SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      padding: EdgeInsets.fromLTRB(
-                        22,
-                        math.max(pad.top, 20) + 6,
-                        22,
-                        math.max(pad.bottom, 12) + 8,
+        value: SystemUiOverlayStyle.light,
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: AnimatedBuilder(
+            animation: Listenable.merge([_t, _w]),
+            builder: (context, _) {
+              final double raw = _t.value;
+              final double now = _w.value;
+              // With motion turned off the screen opens on its last frame —
+              // once there is something to celebrate.
+              final double t = still ? (_waiting ? 0 : 8) : raw;
+              // The wait: whole while it lasts, fading as the take begins.
+              final double? from = _from;
+              final double wait = from == null
+                  ? 1
+                  : (still ? 0 : 1 - _c01((now - from) / _waitFade));
+              // Past [_slowAfter] the wait says it is long, and the button to
+              // go on comes up, as the take's own does.
+              final double slow = _waiting ? _c01((now - _slowAfter) / .6) : 0;
+              final double tButton = _waiting ? 3.45 + .7 * slow : t;
+              return LayoutBuilder(
+                builder: (context, box) {
+                  // The hero is 340 on a 874-tall phone; a shorter one gives
+                  // up some of it rather than scroll.
+                  final double rest = _rest(context, box, pad);
+                  final double hero = (box.maxHeight - rest).clamp(
+                    150.0,
+                    340.0,
+                  );
+                  // The space above the plan: whatever the hero and everything
+                  // under it leave over. Nothing flexes, so if a measurement is
+                  // off the screen scrolls a little instead of overflowing.
+                  final double room = math.max(0, box.maxHeight - rest - hero);
+                  final double heroTop = math.max(pad.top, 20) + 16;
+                  return Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      // The glow sits 50 below the hero's centre, as drawn.
+                      Positioned(
+                        left: box.maxWidth / 2 - 310,
+                        top: heroTop + hero / 2 - 190,
+                        width: 620,
+                        height: 480,
+                        child: IgnorePointer(child: _Bloom(t: t)),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const SizedBox(height: 10),
-                          SizedBox(
-                            height: hero,
-                            child: Center(
-                              child: FittedBox(
-                                clipBehavior: Clip.none,
-                                child: Stack(
+                      // One screen, no scrolling — unless a long language on a
+                      // short phone needs more than it has, which scrolls
+                      // rather than overflows.
+                      SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding: EdgeInsets.fromLTRB(
+                          22,
+                          math.max(pad.top, 20) + 6,
+                          22,
+                          math.max(pad.bottom, 12) + 8,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const SizedBox(height: 10),
+                            SizedBox(
+                              height: hero,
+                              child: Center(
+                                child: FittedBox(
                                   clipBehavior: Clip.none,
-                                  children: [
-                                    _Hero(
-                                      t: t,
-                                      imgA: _imgA,
-                                      imgM: _imgM,
-                                      confetti: _confetti,
-                                    ),
-                                    if (wait > 0)
-                                      Positioned.fill(
-                                        child: IgnorePointer(
-                                          child: Opacity(
-                                            opacity: wait,
-                                            child: CustomPaint(
-                                              painter: _WaitRingPainter(
-                                                still ? 0 : now,
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      _Hero(
+                                        t: t,
+                                        imgA: _imgA,
+                                        imgM: _imgM,
+                                        confetti: _confetti,
+                                      ),
+                                      if (wait > 0)
+                                        Positioned.fill(
+                                          child: IgnorePointer(
+                                            child: Opacity(
+                                              opacity: wait,
+                                              child: CustomPaint(
+                                                painter: _WaitRingPainter(
+                                                  still ? 0 : now,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 14),
-                          Stack(
-                            alignment: Alignment.topCenter,
-                            children: [
-                              _rise(
-                                t,
-                                1.15,
-                                .7,
-                                18,
-                                _up,
-                                Text(
-                                  widget.title,
-                                  textAlign: TextAlign.center,
-                                  style: AppText.display(
-                                    size: 40,
-                                    height: 1.04,
-                                    spacing: -1.5,
-                                    color: Colors.white,
+                                    ],
                                   ),
                                 ),
                               ),
-                              if (wait > 0)
-                                Opacity(
-                                  opacity: wait,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: ConstrainedBox(
-                                      constraints: const BoxConstraints(
-                                        maxWidth: 320,
-                                      ),
-                                      child: Text(
-                                        slow > 0
-                                            ? l.purchaseConfirmingSlow
-                                            : l.purchaseConfirming,
-                                        key: const ValueKey(
-                                          'purchase-confirming',
+                            ),
+                            const SizedBox(height: 14),
+                            Stack(
+                              alignment: Alignment.topCenter,
+                              children: [
+                                _rise(
+                                  t,
+                                  1.15,
+                                  .7,
+                                  18,
+                                  _up,
+                                  Text(
+                                    widget.title,
+                                    textAlign: TextAlign.center,
+                                    style: AppText.display(
+                                      size: 40,
+                                      height: 1.04,
+                                      spacing: -1.5,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                if (wait > 0)
+                                  Opacity(
+                                    opacity: wait,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: ConstrainedBox(
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 320,
                                         ),
-                                        textAlign: TextAlign.center,
-                                        style: AppText.body(
-                                          size: 17,
-                                          height: 1.45,
-                                          color: Colors.white.withValues(
-                                            alpha: .72,
+                                        child: Text(
+                                          slow > 0
+                                              ? l.purchaseConfirmingSlow
+                                              : l.purchaseConfirming,
+                                          key: const ValueKey(
+                                            'purchase-confirming',
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          style: AppText.body(
+                                            size: 17,
+                                            height: 1.45,
+                                            color: Colors.white.withValues(
+                                              alpha: .72,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          _rise(
-                            t,
-                            1.25,
-                            .7,
-                            18,
-                            _up,
-                            Center(
-                              child: ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                  maxWidth: 320,
-                                ),
-                                child: Text(
-                                  widget.welcome,
-                                  textAlign: TextAlign.center,
-                                  style: AppText.body(
-                                    size: 17,
-                                    height: 1.45,
-                                    color: Colors.white.withValues(alpha: .6),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            _rise(
+                              t,
+                              1.25,
+                              .7,
+                              18,
+                              _up,
+                              Center(
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 320,
+                                  ),
+                                  child: Text(
+                                    widget.welcome,
+                                    textAlign: TextAlign.center,
+                                    style: AppText.body(
+                                      size: 17,
+                                      height: 1.45,
+                                      color: Colors.white.withValues(alpha: .6),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _tile(
-                                t,
-                                2.95,
-                                const Color(0xFF00D9D9),
-                                l.successFiveCards,
+                            const SizedBox(height: 20),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _tile(
+                                  t,
+                                  2.95,
+                                  const Color(0xFF00D9D9),
+                                  l.successFiveCards,
+                                ),
+                                const SizedBox(width: 8),
+                                _tile(
+                                  t,
+                                  3.1,
+                                  const Color(0xFF00D451),
+                                  l.yourJourney,
+                                ),
+                                const SizedBox(width: 8),
+                                _tile(
+                                  t,
+                                  3.25,
+                                  const Color(0xFFFFE600),
+                                  l.successArchive,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: room),
+                            _rise(
+                              t,
+                              3.3,
+                              .8,
+                              80,
+                              const Cubic(.18, 1.2, .4, 1),
+                              _plan(l),
+                            ),
+                            const SizedBox(height: 14),
+                            // Not to be pressed before it is there: while the
+                            // answer is awaited it comes up only for a long
+                            // wait.
+                            IgnorePointer(
+                              ignoring: _waiting && slow < 1,
+                              child: _rise(
+                                tButton,
+                                3.45,
+                                .7,
+                                18,
+                                _up,
+                                _button(l),
                               ),
-                              const SizedBox(width: 8),
-                              _tile(
-                                t,
-                                3.1,
-                                const Color(0xFF00D451),
-                                l.yourJourney,
-                              ),
-                              const SizedBox(width: 8),
-                              _tile(
-                                t,
-                                3.25,
-                                const Color(0xFFFFE600),
-                                l.successArchive,
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: room),
-                          _rise(
-                            t,
-                            3.3,
-                            .8,
-                            80,
-                            const Cubic(.18, 1.2, .4, 1),
-                            _plan(l),
-                          ),
-                          const SizedBox(height: 14),
-                          // Not to be pressed before it is there: while the
-                          // answer is awaited it comes up only for a long
-                          // wait.
-                          IgnorePointer(
-                            ignoring: _waiting && slow < 1,
-                            child: _rise(tButton, 3.45, .7, 18, _up, _button(l)),
-                          ),
-                          Opacity(
-                            opacity: _easeOut.transform(_prog(t, 3.6, .7)),
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: Text(
-                                widget.foot,
-                                textAlign: TextAlign.center,
-                                style: AppText.body(
-                                  size: 12.5,
-                                  weight: FontWeight.w500,
-                                  height: 1.4,
-                                  color: Colors.white.withValues(alpha: .5),
+                            ),
+                            Opacity(
+                              opacity: _easeOut.transform(_prog(t, 3.6, .7)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: Text(
+                                  widget.foot,
+                                  textAlign: TextAlign.center,
+                                  style: AppText.body(
+                                    size: 12.5,
+                                    weight: FontWeight.w500,
+                                    height: 1.4,
+                                    color: Colors.white.withValues(alpha: .5),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ),
-      ),
       ),
     );
   }
