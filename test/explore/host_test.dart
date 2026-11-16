@@ -143,6 +143,37 @@ void main() {
     Remote.reset();
   });
 
+  testWidgets('pulled down from its top, Explore is read again from the '
+      'server, as a feed is', (tester) async {
+    final List<Pill> cards = PillBank.cards.sublist(10, 13);
+    final AppState app = await readyApp();
+    _adopt({
+      'sections': [
+        {
+          'id': 'picked',
+          'block': 'list',
+          'source': {
+            'ids': [for (final p in cards) p.id],
+          },
+        },
+      ],
+    });
+    await _pumpScreen(tester, app);
+    expect(find.byKey(const ValueKey('explore-refresh')), findsOneWidget);
+    expect(sink.last('explore refreshed'), isNull);
+
+    await tester.fling(
+      find.byType(CustomScrollView).first,
+      const Offset(0, 420),
+      1600,
+    );
+    for (int i = 0; i < 12; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(tester.takeException(), isNull);
+    expect(sink.last('explore refreshed'), isNotNull);
+  });
+
   testWidgets('a card opened from a section opens among the section\'s '
       'cards, as from any shelf, and counts as read', (tester) async {
     final List<Pill> cards = PillBank.cards.sublist(10, 13);
