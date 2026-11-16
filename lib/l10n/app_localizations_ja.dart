@@ -4557,4 +4557,30 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get journeySubjectsNotYet => '1つの分野で6回答えると測れます。';
+
+  @override
+  String get journeyChangedMind => '考えが変わった';
+
+  @override
+  String get journeyNewToYou => '初めて知った';
+
+  @override
+  String journeyReactedOf(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'たずねた$n枚のうち',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyKnewAlready(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚は知っていた',
+    );
+    return '$_temp0';
+  }
 }

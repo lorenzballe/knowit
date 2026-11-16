@@ -4578,4 +4578,30 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get journeySubjectsNotYet => '한 분야에서 6번 답하면 측정돼요.';
+
+  @override
+  String get journeyChangedMind => '생각이 바뀜';
+
+  @override
+  String get journeyNewToYou => '처음 알게 됨';
+
+  @override
+  String journeyReactedOf(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '물어본 카드 $n장 중',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyKnewAlready(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n장은 이미 알았음',
+    );
+    return '$_temp0';
+  }
 }

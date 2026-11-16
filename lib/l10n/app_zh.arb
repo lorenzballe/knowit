@@ -1121,5 +1121,9 @@
   "journeyStrongest": "最擅长",
   "journeyMostMissed": "最常答错",
   "journeyRightShare": "正确率 {pct}",
-  "journeySubjectsNotYet": "一个科目答满六题即可测出。"
+  "journeySubjectsNotYet": "一个科目答满六题即可测出。",
+  "journeyChangedMind": "改变了看法",
+  "journeyNewToYou": "新知",
+  "journeyReactedOf": "{n, plural, other{共{n}张询问过的卡片}}",
+  "journeyKnewAlready": "{n, plural, other{{n}张你早就知道}}"
 }

@@ -4645,4 +4645,22 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get journeySubjectsNotYet =>
       _words.text('journeySubjectsNotYet') ?? _base.journeySubjectsNotYet;
+
+  @override
+  String get journeyChangedMind =>
+      _words.text('journeyChangedMind') ?? _base.journeyChangedMind;
+
+  @override
+  String get journeyNewToYou =>
+      _words.text('journeyNewToYou') ?? _base.journeyNewToYou;
+
+  @override
+  String journeyReactedOf(int n) =>
+      _words.format('journeyReactedOf', localeName, {'n': n}) ??
+      _base.journeyReactedOf(n);
+
+  @override
+  String journeyKnewAlready(int n) =>
+      _words.format('journeyKnewAlready', localeName, {'n': n}) ??
+      _base.journeyKnewAlready(n);
 }

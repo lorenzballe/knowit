@@ -1093,7 +1093,7 @@ class _Calibration extends StatelessWidget {
           Text(
             gap == null
                 ? context.l10n.journeyOffNotYet(
-                    kCalibrationFloor - app.judgements.length,
+                    kCalibrationFloor - app.calibratedAnswers,
                   )
                 : context.l10n.acrossNAnswersHowSure(app.calibratedAnswers),
             style: AppText.body(

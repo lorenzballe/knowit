@@ -355,7 +355,7 @@ class JourneyRecord {
   /// How often the reader was right when they said they were sure, by the
   /// end of [day].
   Tally sureBy(String day) {
-    final sure = judgedBy(day).where((j) => j.confidence >= kSureFrom);
+    final sure = judgedBy(day).where((j) => (j.confidence ?? 0) >= kSureFrom);
     return Tally(sure.where((j) => j.correct).length, sure.length);
   }
 
@@ -364,7 +364,7 @@ class JourneyRecord {
   Tally sureBetween(String first, String last) {
     final sure = judgements.where(
       (j) =>
-          j.confidence >= kSureFrom &&
+          (j.confidence ?? 0) >= kSureFrom &&
           j.on != null &&
           j.on!.compareTo(first) >= 0 &&
           j.on!.compareTo(last) <= 0,

@@ -1121,5 +1121,9 @@
   "journeyStrongest": "Tu punto fuerte",
   "journeyMostMissed": "Lo que más fallas",
   "journeyRightShare": "{pct} de aciertos",
-  "journeySubjectsNotYet": "Seis respuestas en una materia y queda medida."
+  "journeySubjectsNotYet": "Seis respuestas en una materia y queda medida.",
+  "journeyChangedMind": "Cambiaste de idea",
+  "journeyNewToYou": "Nuevo para ti",
+  "journeyReactedOf": "{n, plural, =1{de 1 tarjeta que lo preguntó} other{de {n} tarjetas que lo preguntaron}}",
+  "journeyKnewAlready": "{n, plural, =1{1 ya la sabías} other{{n} ya las sabías}}"
 }

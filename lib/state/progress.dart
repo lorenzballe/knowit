@@ -223,11 +223,12 @@ List<Miss> missesFrom(Iterable<Judgement> judgements, {int from = 70}) {
   final byId = {for (final p in PillBank.live) p.id: p};
   final out = <Miss>[];
   for (final j in judgements.toList().reversed) {
-    if (j.correct || j.confidence < from) continue;
+    final int? sure = j.confidence;
+    if (j.correct || sure == null || sure < from) continue;
     final pill = j.pillId == null ? null : byId[j.pillId];
     if (pill == null) continue;
     if (out.any((m) => m.pill.id == pill.id)) continue;
-    out.add(Miss(pill, j.confidence));
+    out.add(Miss(pill, sure));
   }
   return out;
 }
@@ -320,13 +321,19 @@ String _key(DateTime d) =>
 /// The Monday of the week [today] falls in, at noon (see [dayShift]).
 DateTime mondayOf(DateTime today) => dayShift(today, 1 - today.weekday);
 
-double? _gapOf(List<Judgement> run) {
+double? _gapOf(List<Judgement> all) {
+  // Only the answers said with a confidence: the rest have no gap to show.
+  final run = [
+    for (final j in all)
+      if (j.confidence != null) j,
+  ];
   if (run.length < kWeekFloor) return null;
   final counts = <int, int>{};
   final right = <int, int>{};
   for (final j in run) {
-    counts[j.confidence] = (counts[j.confidence] ?? 0) + 1;
-    if (j.correct) right[j.confidence] = (right[j.confidence] ?? 0) + 1;
+    final int level = j.confidence!;
+    counts[level] = (counts[level] ?? 0) + 1;
+    if (j.correct) right[level] = (right[level] ?? 0) + 1;
   }
   var total = 0.0;
   for (final level in counts.keys) {

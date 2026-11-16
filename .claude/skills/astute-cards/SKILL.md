@@ -59,6 +59,13 @@ frame**, never instead of it.
 - Keep the Astute frame (subject colour, label, Fraunces and Figtree, source, no scroll).
 - Draw at the card's real size (`Kit.fitSvg`, `Kit.fitCanvas`): text must never stretch.
 - Register `Kit.play[cardId]` so the checker can play each card to its end state.
+- Every new card says how it tracks the reader (tool/cards/RULES.md §21): a graded one gives
+  `"sure": 0.35` and its page works when `Kit.sure`'s `onPick` gets `null` (asked only some of
+  the time); one with nothing right or wrong gives `"reacts": true`, calls `Kit.react(host)`
+  on its back (New to me · Changed my mind · Knew it) and says `"kit": 2`.
+- Every new card fills Go deeper (RULES.md §22): `simply` (explain it like to a child, ≤ 50
+  words) and `why` (why it matters, ≤ 60 words); a contested question adds `views`, two
+  labelled views at their strongest.
 
 ## 5. Check the graphics: never skip
 1. `node tool/cards/card_check.cjs <page.html> <screenshot-dir>`. Fix until it reports all clear.

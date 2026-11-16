@@ -1121,5 +1121,9 @@
   "journeyStrongest": "En güçlü",
   "journeyMostMissed": "En çok kaçan",
   "journeyRightShare": "{pct} doğru",
-  "journeySubjectsNotYet": "Bir konuda altı cevap, ve ölçülür."
+  "journeySubjectsNotYet": "Bir konuda altı cevap, ve ölçülür.",
+  "journeyChangedMind": "Fikrin değişti",
+  "journeyNewToYou": "Senin için yeni",
+  "journeyReactedOf": "{n, plural, =1{soran 1 karttan} other{soran {n} karttan}}",
+  "journeyKnewAlready": "{n, plural, =1{1 tanesini zaten biliyordun} other{{n} tanesini zaten biliyordun}}"
 }

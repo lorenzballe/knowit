@@ -4557,4 +4557,30 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journeySubjectsNotYet => '一个科目答满六题即可测出。';
+
+  @override
+  String get journeyChangedMind => '改变了看法';
+
+  @override
+  String get journeyNewToYou => '新知';
+
+  @override
+  String journeyReactedOf(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '共$n张询问过的卡片',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyKnewAlready(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n张你早就知道',
+    );
+    return '$_temp0';
+  }
 }

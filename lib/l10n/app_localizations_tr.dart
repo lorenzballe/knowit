@@ -4697,4 +4697,32 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get journeySubjectsNotYet => 'Bir konuda altı cevap, ve ölçülür.';
+
+  @override
+  String get journeyChangedMind => 'Fikrin değişti';
+
+  @override
+  String get journeyNewToYou => 'Senin için yeni';
+
+  @override
+  String journeyReactedOf(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'soran $n karttan',
+      one: 'soran 1 karttan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyKnewAlready(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tanesini zaten biliyordun',
+      one: '1 tanesini zaten biliyordun',
+    );
+    return '$_temp0';
+  }
 }

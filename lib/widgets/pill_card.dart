@@ -869,6 +869,12 @@ class _AskFaceState extends State<_AskFace> {
   String? _pending;
 
   void _commit(String response) {
+    // A graded card that does not ask how sure this time ([SureAsk]) is
+    // answered as it is committed: right or wrong is kept all the same.
+    if (widget.pill.isGraded && !SureAsk.of(widget.pill)) {
+      widget.onAnswer?.call(response, null, null);
+      return;
+    }
     setState(() => _pending = response);
   }
 

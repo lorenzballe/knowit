@@ -1121,5 +1121,9 @@
   "journeyStrongest": "Najmocniejsza",
   "journeyMostMissed": "Najczęściej mylona",
   "journeyRightShare": "{pct} dobrze",
-  "journeySubjectsNotYet": "Sześć odpowiedzi w dziedzinie i jest zmierzona."
+  "journeySubjectsNotYet": "Sześć odpowiedzi w dziedzinie i jest zmierzona.",
+  "journeyChangedMind": "Zmiana zdania",
+  "journeyNewToYou": "Nowe dla ciebie",
+  "journeyReactedOf": "{n, plural, =1{z 1 karty, która pytała} other{z {n} kart, które pytały}}",
+  "journeyKnewAlready": "{n, plural, =1{1 już znasz} other{{n} już znasz}}"
 }

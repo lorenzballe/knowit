@@ -368,5 +368,10 @@ Pill cardFromJson(Map<String, Object?> raw) {
     scene: Scene.fromJson(raw['scene'], id: id),
     place: place,
     web: web,
+    sureOdds: switch (raw['sure']) {
+      final num v when v.isFinite => v.toDouble().clamp(0.0, 1.0),
+      _ => null,
+    },
+    reacts: raw['reacts'] == true,
   );
 }

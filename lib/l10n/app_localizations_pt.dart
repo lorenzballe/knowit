@@ -4779,4 +4779,32 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get journeySubjectsNotYet => 'Seis respostas numa área e fica medida.';
+
+  @override
+  String get journeyChangedMind => 'Mudou de ideia';
+
+  @override
+  String get journeyNewToYou => 'Novo para você';
+
+  @override
+  String journeyReactedOf(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'de $n cartões que perguntaram',
+      one: 'de 1 cartão que perguntou',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyKnewAlready(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n você já sabia',
+      one: '1 você já sabia',
+    );
+    return '$_temp0';
+  }
 }

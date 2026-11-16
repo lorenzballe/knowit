@@ -6851,6 +6851,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Six answers in a subject, and it is measured.'**
   String get journeySubjectsNotYet;
+
+  /// Your journey: the label over how many cards changed the reader's mind, in the reader's own word on cards that ask what they did for them.
+  ///
+  /// In en, this message translates to:
+  /// **'Changed your mind'**
+  String get journeyChangedMind;
+
+  /// Your journey: the label over how many cards taught the reader something new, in their own word.
+  ///
+  /// In en, this message translates to:
+  /// **'New to you'**
+  String get journeyNewToYou;
+
+  /// Your journey: under the count of cards that changed the reader's mind, out of how many cards that asked they answered.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{of 1 card that asked} other{of {n} cards that asked}}'**
+  String journeyReactedOf(int n);
+
+  /// Your journey: under the count of cards new to the reader, how many they said they knew already.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 you knew already} other{{n} you knew already}}'**
+  String journeyKnewAlready(int n);
 }
 
 class _AppLocalizationsDelegate

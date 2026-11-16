@@ -1121,5 +1121,9 @@
   "journeyStrongest": "Sterkst",
   "journeyMostMissed": "Vaakst gemist",
   "journeyRightShare": "{pct} goed",
-  "journeySubjectsNotYet": "Zes antwoorden in een vak, en het wordt gemeten."
+  "journeySubjectsNotYet": "Zes antwoorden in een vak, en het wordt gemeten.",
+  "journeyChangedMind": "Van mening veranderd",
+  "journeyNewToYou": "Nieuw voor jou",
+  "journeyReactedOf": "{n, plural, =1{van 1 kaart die het vroeg} other{van {n} kaarten die het vroegen}}",
+  "journeyKnewAlready": "{n, plural, =1{1 wist je al} other{{n} wist je al}}"
 }
