@@ -1,0 +1,40 @@
+{
+  "id": "economics-book-nudge-5",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.hidden_incentives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did an airport etch a fly into its urinals?",
+  "answer": "To give men something to aim at. At Amsterdam's Schiphol airport the little fly was said to cut spillage by 80%. Thaler and Sunstein use it as the model nudge: cheap, easy to ignore, no rules or fines, and yet it changes what most people do.",
+  "move": "A good nudge makes the right thing easy and leaves you free to ignore it.",
+  "simply": "Give people a target and they aim for it. Nobody needs a sign saying 'please aim'.",
+  "why": "Small design changes often beat rules and lectures, at home, at work or in public policy.",
+  "book": {
+    "id": "nudge",
+    "title": "Nudge",
+    "author": "Richard Thaler and Cass Sunstein",
+    "year": 2008,
+    "part": 5
+  },
+  "keywords": [
+    "urinal fly",
+    "schiphol",
+    "nudge",
+    "design"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Thaler and Cass Sunstein, Nudge, 2008",
+  "source_kind": "book",
+  "reference": "Richard H. Thaler and Cass R. Sunstein, Nudge (Yale University Press, 2008), introduction",
+  "written": "2026-11-16"
+}

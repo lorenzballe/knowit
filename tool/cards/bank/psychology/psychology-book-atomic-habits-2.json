@@ -1,0 +1,40 @@
+{
+  "id": "psychology-book-atomic-habits-2",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What are the four steps every habit runs through?",
+  "answer": "Cue, craving, response, reward: a phone buzzes, you want to know who wrote, you pick it up, you find out. Clear turns the loop into four laws for building a habit (make it obvious, attractive, easy and satisfying) and inverts them to break one: make it invisible, unattractive, difficult and unsatisfying.",
+  "move": "To change a habit, change one of its four steps, not your willpower.",
+  "simply": "Smell of cookies (cue), you want one (craving), you take one (response), it's yummy (reward). Next time the smell comes, your hand moves on its own.",
+  "why": "Willpower runs out by the evening. Redesigning the cue or the reward works every day without asking anything of you.",
+  "book": {
+    "id": "atomic-habits",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "year": 2018,
+    "part": 2
+  },
+  "keywords": [
+    "habit loop",
+    "cue",
+    "reward",
+    "four laws"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James Clear, Atomic Habits, 2018",
+  "source_kind": "book",
+  "reference": "James Clear, Atomic Habits (Avery, 2018), ch. 3",
+  "written": "2026-11-16"
+}

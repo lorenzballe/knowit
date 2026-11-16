@@ -37,6 +37,19 @@
     "counterpoint": { "type": "string", "description": "On a debate, the strongest case against whichever side was taken." },
     "why": { "type": "string", "minLength": 1, "description": "Why it matters: two or three plain sentences on what the idea changes in the reader's own world. Shown when they tap the source (Go deeper). Every card from November 2026 has one." },
     "views": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 2, "maxItems": 2, "description": "On a contested question only, never settled science: the two views at their strongest, one each, as 'Label: one or two sentences', each with its best evidence. Shown under Go deeper. A debate has its counterpoint instead." },
+    "book": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "author", "year", "part"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "author": { "type": "string", "minLength": 1 },
+        "year": { "type": "integer", "minimum": 1500, "maximum": 2100 },
+        "part": { "type": "integer", "minimum": 1, "maximum": 8 }
+      },
+      "description": "Books in pills: the book this card is one big idea of, and which, in order. The cards of a book share its id, title, author and year and number their parts from 1 with no gap; four to eight of them. The words are the card's own, never the book's: an idea retold, a line quoted at most."
+    },
     "sure": { "type": "number", "minimum": 0, "maximum": 1, "description": "On a graded card, how often it asks how sure the reader is: 0.35 asks about one time in three. Absent asks every time, as every card written before November 2026 does; a new graded card gives odds, and its page handles the time it does not ask (Kit.sure's onPick gets null)." },
     "reacts": { "type": "boolean", "description": "Once read, the card asks what it did for the reader: new to me, changed my mind, knew it already (Kit.react). For a card with nothing right or wrong in it: a read, a debate, a page that marks nothing." },
     "options": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 2, "maxItems": 3 },

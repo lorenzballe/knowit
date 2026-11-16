@@ -1172,5 +1172,10 @@
   "deeperTomorrow": "Genoeg voor vandaag: morgen meer.",
   "deeperTryAgain": "Het kwam niet door. Probeer het zo opnieuw.",
   "deeperDeclined": "Hierop kan ze geen antwoord geven.",
-  "deeperPlusOnly": "Met Astute+"
+  "deeperPlusOnly": "Met Astute+",
+  "bookOfTheWeek": "Boek van de week",
+  "bookIdeas": "{n, plural, =1{1 idee} other{{n} ideeën}}",
+  "bookMoreTitle": "{n, plural, =1{Nog één idee uit dit boek} other{Nog {n} ideeën uit dit boek}}",
+  "bookMoreLine": "Het hele boek met Astute+, en elke week een gratis boek.",
+  "bookMoreGo": "Lees het hele boek"
 }

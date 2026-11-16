@@ -5027,4 +5027,36 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => 'Com o Astute+';
+
+  @override
+  String get bookOfTheWeek => 'Livro da semana';
+
+  @override
+  String bookIdeas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ideias',
+      one: '1 ideia',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookMoreTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Mais $n ideias deste livro',
+      one: 'Mais uma ideia deste livro',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bookMoreLine =>
+      'O livro inteiro com o Astute+, e todas as semanas um livro grátis.';
+
+  @override
+  String get bookMoreGo => 'Ler o livro inteiro';
 }

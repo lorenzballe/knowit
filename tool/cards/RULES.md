@@ -490,3 +490,24 @@ Every new card fills the first two; the third only where it belongs.
 
 `tool/cards/check.py` holds `why` to 60 words and the answer's own words
 out of it, and `views` to two labelled views of under 45 words each.
+
+## 23. Books in pills (`book`)
+
+A book's big ideas, a card each, read in a few minutes: four to eight
+cards, `book.part` 1 to n in the book's own order, the same `id`, `title`,
+`author` and `year` on every one. Explore shows them as a row of books;
+the free plan reads the first two ideas, and one book a week whole.
+
+- **The idea, never the pages.** Each card retells one idea in the app's
+  words: a question that makes the reader want it, the answer, the line to
+  keep. Quote a phrase of the book's own at most, and say whose it is.
+- **A card stands alone.** It is dealt on its own too, so it never says
+  "as we saw" or leans on the card before it.
+- **The book is the source.** `source` names author, title and year;
+  `reference` adds the publisher and the chapter; `source_kind` is `book`.
+- **Mix the kinds.** A book of five reads is a summary; two of them to
+  answer (`pickOne`, with `sure`) make it a workout.
+- **Go deeper on every one** (§22): `simply` and `why`.
+
+`tool/cards/check.py` holds a book's cards to the same book and to parts
+1 to n with no gap, four to eight of them.

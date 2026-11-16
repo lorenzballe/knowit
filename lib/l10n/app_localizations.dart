@@ -7157,6 +7157,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'With Astute+'**
   String get deeperPlusOnly;
+
+  /// Books in pills, the Explore row of books in a few cards: bookOfTheWeek
+  ///
+  /// In en, this message translates to:
+  /// **'Book of the week'**
+  String get bookOfTheWeek;
+
+  /// Books in pills, the Explore row of books in a few cards: bookIdeas
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 idea} other{{n} ideas}}'**
+  String bookIdeas(int n);
+
+  /// Books in pills, the Explore row of books in a few cards: bookMoreTitle
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One more idea from this book} other{{n} more ideas from this book}}'**
+  String bookMoreTitle(int n);
+
+  /// Books in pills, the Explore row of books in a few cards: bookMoreLine
+  ///
+  /// In en, this message translates to:
+  /// **'The whole book with Astute+, and a new book free every week.'**
+  String get bookMoreLine;
+
+  /// Books in pills: the button on the card after a book's free ideas, through the plans to the rest of the book.
+  ///
+  /// In en, this message translates to:
+  /// **'Read the whole book'**
+  String get bookMoreGo;
 }
 
 class _AppLocalizationsDelegate

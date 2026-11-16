@@ -1,0 +1,38 @@
+{
+  "id": "thinking-book-superforecasting-1",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How good were experts at predicting world events in Philip Tetlock's twenty-year study?",
+  "answer": "On average, little better than chance: the line people remember is that they did about as well as dart-throwing chimpanzees. But the average hid a split. 'Hedgehogs', who explained everything with one big idea, did worst; 'foxes', who drew on many small ideas and changed their minds, did clearly better.",
+  "move": "Trust the forecaster who uses many small ideas over the one with one big theory.",
+  "simply": "One friend always says 'it's the economy'. Another says 'it depends, let me look'. The second one is right more often.",
+  "why": "TV rewards confident hedgehogs. Knowing that foxes forecast better tells you whose predictions to take seriously.",
+  "book": {
+    "id": "superforecasting",
+    "title": "Superforecasting",
+    "author": "Philip Tetlock and Dan Gardner",
+    "year": 2015,
+    "part": 1
+  },
+  "keywords": [
+    "expert judgment",
+    "hedgehogs and foxes",
+    "forecasting",
+    "tetlock"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Philip Tetlock and Dan Gardner, Superforecasting, 2015",
+  "source_kind": "book",
+  "reference": "Philip Tetlock and Dan Gardner, Superforecasting (Crown, 2015), ch. 3",
+  "written": "2026-11-16"
+}

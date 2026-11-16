@@ -1,0 +1,40 @@
+{
+  "id": "economics-book-nudge-4",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.present_bias",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do you get people to save more without asking them to give anything up today?",
+  "answer": "Ask them to save out of future pay rises. In Thaler and Benartzi's 'Save More Tomorrow' plan, workers agreed now to save part of each future raise, so take-home pay never fell. At the first company to try it, average saving rates rose from 3.5% to 13.6% in under four years.",
+  "move": "Commit your future self to the sacrifice your present self won't make.",
+  "simply": "Promising to give away half of next birthday's money is much easier than giving away half of today's.",
+  "why": "It works for any change that hurts now and pays later, from savings to exercise: schedule the cost for a moment you won't feel it.",
+  "book": {
+    "id": "nudge",
+    "title": "Nudge",
+    "author": "Richard Thaler and Cass Sunstein",
+    "year": 2008,
+    "part": 4
+  },
+  "keywords": [
+    "save more tomorrow",
+    "retirement savings",
+    "commitment",
+    "behavioural economics"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Thaler and Cass Sunstein, Nudge, 2008",
+  "source_kind": "book",
+  "reference": "Richard H. Thaler and Cass R. Sunstein, Nudge (Yale University Press, 2008), ch. 6",
+  "written": "2026-11-16"
+}

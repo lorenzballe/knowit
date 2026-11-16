@@ -1172,5 +1172,10 @@
   "deeperTomorrow": "今天就到这里：明天继续。",
   "deeperTryAgain": "没有送达。请稍后再试。",
   "deeperDeclined": "这个问题无法回答。",
-  "deeperPlusOnly": "使用 Astute+"
+  "deeperPlusOnly": "使用 Astute+",
+  "bookOfTheWeek": "本周之书",
+  "bookIdeas": "{n, plural, other{{n} 个观点}}",
+  "bookMoreTitle": "{n, plural, other{这本书还有 {n} 个观点}}",
+  "bookMoreLine": "整本书在 Astute+ 中，每周还有一本免费。",
+  "bookMoreGo": "阅读整本书"
 }

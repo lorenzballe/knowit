@@ -1,0 +1,38 @@
+{
+  "id": "thinking-book-superforecasting-3",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who won a forecasting tournament run for US intelligence?",
+  "answer": "A team of volunteers, the Good Judgment Project, led by Tetlock: ordinary people who forecast world events in their spare time. Their best forecasters, the 'superforecasters', beat other university teams by wide margins and were reported to beat professional analysts who had access to classified information.",
+  "move": "How someone thinks predicts their accuracy better than what job title they hold.",
+  "simply": "A group of curious amateurs, careful with numbers, out-guessed the professionals who had secret information.",
+  "why": "Good judgement can be learned. The habits of superforecasters are open to anyone.",
+  "book": {
+    "id": "superforecasting",
+    "title": "Superforecasting",
+    "author": "Philip Tetlock and Dan Gardner",
+    "year": 2015,
+    "part": 3
+  },
+  "keywords": [
+    "good judgment project",
+    "superforecasters",
+    "iarpa",
+    "tournaments"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Philip Tetlock and Dan Gardner, Superforecasting, 2015",
+  "source_kind": "book",
+  "reference": "Philip Tetlock and Dan Gardner, Superforecasting (Crown, 2015), ch. 4",
+  "written": "2026-11-16"
+}

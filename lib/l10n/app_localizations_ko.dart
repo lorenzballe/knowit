@@ -4819,4 +4819,33 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => 'Astute+로';
+
+  @override
+  String get bookOfTheWeek => '이번 주의 책';
+
+  @override
+  String bookIdeas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '아이디어 $n개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookMoreTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '이 책의 아이디어 $n개 더',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bookMoreLine => '책 전체는 Astute+로. 매주 한 권은 무료예요.';
+
+  @override
+  String get bookMoreGo => '책 전체 읽기';
 }

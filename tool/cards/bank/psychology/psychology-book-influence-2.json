@@ -1,0 +1,40 @@
+{
+  "id": "psychology-book-influence-2",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.identity_and_beliefs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did researchers get homeowners to put up a big, ugly 'Drive Carefully' sign on their lawn?",
+  "answer": "By asking for something tiny first. Only 17% agreed to the billboard when asked directly. But among homeowners who, two weeks earlier, had agreed to display a small 'Be a safe driver' sign, 76% said yes. Once people see themselves as committed to a cause, they act to stay consistent with it.",
+  "move": "Small yeses build big ones: watch what your first 'yes' commits you to.",
+  "simply": "If you've already said you're someone who helps, saying no to the next favour feels like breaking a promise to yourself.",
+  "why": "Sign-ups, petitions and 'just answer one question' steps are built on this. A small commitment can quietly decide a big one.",
+  "book": {
+    "id": "influence",
+    "title": "Influence",
+    "author": "Robert Cialdini",
+    "year": 1984,
+    "part": 2
+  },
+  "keywords": [
+    "foot in the door",
+    "commitment",
+    "consistency",
+    "persuasion"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Robert Cialdini, Influence, 1984",
+  "source_kind": "book",
+  "reference": "Robert B. Cialdini, Influence: The Psychology of Persuasion (William Morrow, 1984), ch. 3",
+  "written": "2026-11-16"
+}

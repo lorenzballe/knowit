@@ -1,0 +1,40 @@
+{
+  "id": "psychology-book-thinking-fast-and-slow-5",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.gut_feelings",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does losing €100 sting more than winning €100 pleases?",
+  "answer": "Kahneman and Tversky called it loss aversion: losses loom larger than equal gains. Offered a coin toss that wins €150 or loses €100, most refuse, though it pays €25 a toss on average. Most want the gain at one and a half to two and a half times the loss before a bet feels fair.",
+  "move": "A loss hurts about twice as much as an equal gain pleases.",
+  "simply": "Finding €10 makes you a bit happy. Losing €10 makes you much more upset. Your heart counts losses double.",
+  "why": "It is why people keep bad investments, fear changing jobs and fall for 'don't miss out' offers: the possible loss shouts louder than the likely gain.",
+  "book": {
+    "id": "thinking-fast-and-slow",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "year": 2011,
+    "part": 5
+  },
+  "keywords": [
+    "loss aversion",
+    "prospect theory",
+    "gambles",
+    "risk"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Kahneman, Thinking, Fast and Slow, 2011",
+  "source_kind": "book",
+  "reference": "Daniel Kahneman, Thinking, Fast and Slow (Farrar, Straus and Giroux, 2011), ch. 26",
+  "written": "2026-11-16"
+}

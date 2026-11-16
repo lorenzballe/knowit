@@ -1,0 +1,40 @@
+{
+  "id": "economics-book-nudge-2",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.hidden_incentives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do about 99% of Austrians consent to organ donation, but only about 12% of Germans?",
+  "answer": "Not because Austrians are kinder. In Austria everyone is a donor unless they opt out; in Germany you have to opt in. Most people stick with whatever is already ticked. Thaler and Sunstein call such defaults the most powerful nudge there is.",
+  "move": "Whatever is already ticked is usually what most people end up choosing.",
+  "simply": "If your plate already has broccoli on it, you'll probably eat some. If you have to go and fetch it, you probably won't.",
+  "why": "Pension plans, privacy settings and subscriptions all run on defaults. Checking them is one of the highest-value five minutes you can spend.",
+  "book": {
+    "id": "nudge",
+    "title": "Nudge",
+    "author": "Richard Thaler and Cass Sunstein",
+    "year": 2008,
+    "part": 2
+  },
+  "keywords": [
+    "defaults",
+    "organ donation",
+    "opt out",
+    "nudge"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Thaler and Cass Sunstein, Nudge, 2008",
+  "source_kind": "book",
+  "reference": "Richard H. Thaler and Cass R. Sunstein, Nudge (Yale University Press, 2008), ch. 11",
+  "written": "2026-11-16"
+}

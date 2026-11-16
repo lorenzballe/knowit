@@ -381,6 +381,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
       _ => '',
     },
     why: text('why'),
+    book: PillBook.fromJson(raw['book']),
     views: switch (raw['views']) {
       final List<Object?> v when v.length == 2 && v.every((e) => e is String) =>
         v.cast<String>(),

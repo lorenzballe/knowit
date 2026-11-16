@@ -1,0 +1,40 @@
+{
+  "id": "psychology-book-atomic-habits-5",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.tiny_habits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the 'two-minute rule' for starting a habit?",
+  "answer": "Shrink the new habit until it takes two minutes: 'read before bed' becomes 'read one page', 'go running' becomes 'put on your running shoes'. Clear's argument is that a habit has to be established before it can be improved, and the hardest part is the start, so make the start almost too easy to skip.",
+  "move": "Make the first step so small you can't say no to it.",
+  "simply": "Don't promise to tidy your whole room. Promise to pick up one sock. Usually you'll keep going.",
+  "why": "Big plans fail on tired days. A two-minute version keeps the chain unbroken until it grows on its own.",
+  "book": {
+    "id": "atomic-habits",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "year": 2018,
+    "part": 5
+  },
+  "keywords": [
+    "two-minute rule",
+    "starting habits",
+    "procrastination",
+    "consistency"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James Clear, Atomic Habits, 2018",
+  "source_kind": "book",
+  "reference": "James Clear, Atomic Habits (Avery, 2018), ch. 13",
+  "written": "2026-11-16"
+}

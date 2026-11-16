@@ -5333,5 +5333,35 @@
  "deeperPlusOnly": "With Astute+",
  "@deeperPlusOnly": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperPlusOnly"
+ },
+ "bookOfTheWeek": "Book of the week",
+ "@bookOfTheWeek": {
+  "description": "Books in pills, the Explore row of books in a few cards: bookOfTheWeek"
+ },
+ "bookIdeas": "{n, plural, =1{1 idea} other{{n} ideas}}",
+ "@bookIdeas": {
+  "description": "Books in pills, the Explore row of books in a few cards: bookIdeas",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "bookMoreTitle": "{n, plural, =1{One more idea from this book} other{{n} more ideas from this book}}",
+ "@bookMoreTitle": {
+  "description": "Books in pills, the Explore row of books in a few cards: bookMoreTitle",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "bookMoreLine": "The whole book with Astute+, and a new book free every week.",
+ "@bookMoreLine": {
+  "description": "Books in pills, the Explore row of books in a few cards: bookMoreLine"
+ },
+ "bookMoreGo": "Read the whole book",
+ "@bookMoreGo": {
+  "description": "Books in pills: the button on the card after a book's free ideas, through the plans to the rest of the book."
  }
 }

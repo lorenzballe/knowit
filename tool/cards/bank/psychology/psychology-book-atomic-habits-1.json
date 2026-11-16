@@ -1,0 +1,48 @@
+{
+  "id": "psychology-book-atomic-habits-1",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Get 1% better at something every day for a year. How much better are you at the end?",
+  "options": [
+    "About 4 times better",
+    "About 37 times better",
+    "About 365 times better"
+  ],
+  "correct": 1,
+  "answer": "About 37 times: 1.01 multiplied by itself 365 times is roughly 37.8. Get 1% worse each day and you end near zero, about 0.03. James Clear's point is that habits compound like interest: a tiny change is invisible for weeks, then suddenly large.",
+  "move": "Small daily changes don't add up; they multiply.",
+  "trap": "About 4 times: it adds the gains instead of multiplying them.",
+  "simply": "Put one grain of rice on a square, two on the next, then four, and the board runs out of rice long before it runs out of squares. Little steps that build on each other grow huge.",
+  "why": "It explains why habits feel useless for weeks and then change everything, and why giving up after a week throws away the part that compounds.",
+  "sure": 0.35,
+  "book": {
+    "id": "atomic-habits",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "year": 2018,
+    "part": 1
+  },
+  "keywords": [
+    "compounding",
+    "habits",
+    "one percent",
+    "james clear"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James Clear, Atomic Habits, 2018",
+  "source_kind": "book",
+  "reference": "James Clear, Atomic Habits (Avery, 2018), ch. 1",
+  "written": "2026-11-16"
+}

@@ -4989,4 +4989,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => 'With Astute+';
+
+  @override
+  String get bookOfTheWeek => 'Book of the week';
+
+  @override
+  String bookIdeas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ideas',
+      one: '1 idea',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookMoreTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n more ideas from this book',
+      one: 'One more idea from this book',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bookMoreLine =>
+      'The whole book with Astute+, and a new book free every week.';
+
+  @override
+  String get bookMoreGo => 'Read the whole book';
 }

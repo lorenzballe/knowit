@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "a960cc72674e84af",
+ "hash": "9b57455abe558977",
  "app": {
   "gate": null,
   "flags": {},
@@ -2105,6 +2105,40 @@ const String kEmbeddedRemote = r'''
     },
     "source": {
      "mine": "forYou"
+    }
+   },
+   {
+    "id": "books",
+    "block": "books",
+    "title": {
+     "en": "Books in pills",
+     "it": "Libri in pillole",
+     "de": "Bücher in Häppchen",
+     "es": "Libros en píldoras",
+     "fr": "Livres en pilules",
+     "ja": "本をひとくちで",
+     "ko": "한입 책",
+     "nl": "Boeken in hapjes",
+     "pl": "Książki w pigułce",
+     "pt": "Livros em pílulas",
+     "ru": "Книги в двух словах",
+     "tr": "Kapsül kitaplar",
+     "zh": "一口读书"
+    },
+    "subtitle": {
+     "en": "A book's big ideas in five cards, a few minutes each.",
+     "it": "Le grandi idee di un libro in cinque carte, pochi minuti l'una.",
+     "de": "Die großen Ideen eines Buchs in fünf Karten, je ein paar Minuten.",
+     "es": "Las grandes ideas de un libro en cinco tarjetas, unos minutos cada una.",
+     "fr": "Les grandes idées d'un livre en cinq cartes, quelques minutes chacune.",
+     "ja": "本の大事なアイデアを5枚のカードで。1枚数分。",
+     "ko": "책의 핵심 아이디어를 카드 다섯 장에. 한 장에 몇 분.",
+     "nl": "De grote ideeën van een boek in vijf kaarten, een paar minuten per stuk.",
+     "pl": "Najważniejsze idee książki w pięciu kartach, po kilka minut każda.",
+     "pt": "As grandes ideias de um livro em cinco cartas, poucos minutos cada.",
+     "ru": "Главные идеи книги в пяти карточках, по паре минут каждая.",
+     "tr": "Bir kitabın büyük fikirleri beş kartta, her biri birkaç dakika.",
+     "zh": "一本书的核心观点，五张卡片，每张几分钟。"
     }
    },
    {

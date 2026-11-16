@@ -1,0 +1,40 @@
+{
+  "id": "psychology-book-influence-4",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.authority",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A caller claiming to be a doctor told nurses to give a patient twice a drug's maximum dose. How many started to?",
+  "answer": "In a 1966 study, 21 of 22 nurses went to give it, stopped by researchers on the way to the patient. The order broke three rules: it was phoned in, from an unknown doctor, for a dose over the limit. Cialdini uses it to show authority's pull: a title can switch off a professional's judgement.",
+  "move": "A title or a uniform is a reason to listen, not a reason to obey.",
+  "simply": "If someone sounds important enough, many people do what they say, even when a sign right in front of them says not to.",
+  "why": "Fake experts, official-looking letters and confident voices on screens borrow the same power. Asking 'is this right?' instead of 'is this person important?' takes it back.",
+  "book": {
+    "id": "influence",
+    "title": "Influence",
+    "author": "Robert Cialdini",
+    "year": 1984,
+    "part": 4
+  },
+  "keywords": [
+    "authority",
+    "obedience",
+    "nurses",
+    "hofling"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Robert Cialdini, Influence, 1984",
+  "source_kind": "book",
+  "reference": "Robert B. Cialdini, Influence: The Psychology of Persuasion (William Morrow, 1984), ch. 6",
+  "written": "2026-11-16"
+}

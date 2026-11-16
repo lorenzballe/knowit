@@ -5209,4 +5209,40 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => 'С Astute+';
+
+  @override
+  String get bookOfTheWeek => 'Книга недели';
+
+  @override
+  String bookIdeas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n идеи',
+      many: '$n идей',
+      few: '$n идеи',
+      one: '$n идея',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookMoreTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ещё $n идеи из этой книги',
+      many: 'Ещё $n идей из этой книги',
+      few: 'Ещё $n идеи из этой книги',
+      one: 'Ещё $n идея из этой книги',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bookMoreLine =>
+      'Вся книга с Astute+, а каждую неделю одна книга бесплатно.';
+
+  @override
+  String get bookMoreGo => 'Читать всю книгу';
 }

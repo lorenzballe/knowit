@@ -1,0 +1,46 @@
+{
+  "id": "thinking-book-factfulness-4",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "How many of the world's one-year-olds today have been vaccinated against some disease?",
+  "options": [
+    "20 percent",
+    "50 percent",
+    "80 percent"
+  ],
+  "correct": 2,
+  "answer": "About 80 percent. Rosling asked this across many countries, and most people guessed far lower. Vaccines need cold storage and working health systems, so a high number means most of the world has them, which is exactly what our picture of the world leaves out.",
+  "move": "The quiet systems that work rarely make the news, so you guess them too low.",
+  "trap": "20 percent: the picture of a world mostly without basic care.",
+  "simply": "Most babies in the world get their vaccine jabs. You just never see a news story saying 'baby gets jab, is fine'.",
+  "why": "Underrating what already works makes every problem look hopeless and every solution look pointless.",
+  "sure": 0.35,
+  "book": {
+    "id": "factfulness",
+    "title": "Factfulness",
+    "author": "Hans Rosling",
+    "year": 2018,
+    "part": 4
+  },
+  "keywords": [
+    "vaccination",
+    "global health",
+    "misconceptions",
+    "rosling"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Hans Rosling, Factfulness, 2018",
+  "source_kind": "book",
+  "reference": "Hans Rosling, Ola Rosling and Anna Rosling Rönnlund, Factfulness (Flatiron Books, 2018), introduction",
+  "written": "2026-11-16"
+}

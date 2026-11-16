@@ -1,0 +1,46 @@
+{
+  "id": "thinking-book-factfulness-1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Over the last twenty years, what has happened to the share of the world's people living in extreme poverty?",
+  "options": [
+    "almost doubled",
+    "stayed about the same",
+    "almost halved"
+  ],
+  "correct": 2,
+  "answer": "Almost halved. In Hans Rosling's surveys most people picked one of the other two, doing worse than chimpanzees would by picking at random. Sudden disasters make the news; a slow, steady improvement never does.",
+  "move": "Bad news is reported; slow improvement isn't. Ask what the trend says before the headline.",
+  "trap": "'Almost doubled': it matches every image of poverty you have seen.",
+  "simply": "If you only ever hear about the houses that burn down, you'd think the whole town is on fire, even while most houses are getting new roofs.",
+  "why": "What you think the world is like decides what you fear, give to and vote for. Getting the trend right changes all three.",
+  "sure": 0.35,
+  "book": {
+    "id": "factfulness",
+    "title": "Factfulness",
+    "author": "Hans Rosling",
+    "year": 2018,
+    "part": 1
+  },
+  "keywords": [
+    "extreme poverty",
+    "negativity instinct",
+    "rosling",
+    "global trends"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Hans Rosling, Factfulness, 2018",
+  "source_kind": "book",
+  "reference": "Hans Rosling, Ola Rosling and Anna Rosling Rönnlund, Factfulness (Flatiron Books, 2018), introduction",
+  "written": "2026-11-16"
+}

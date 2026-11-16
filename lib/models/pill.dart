@@ -412,6 +412,42 @@ abstract final class SureAsk {
   }
 }
 
+/// The book a card is one big idea of (Books in pills, explore/blocks/core/
+/// books_block.dart): which book, and which of its ideas, in order. The
+/// words are the card's own: an idea retold, never the book's pages.
+class PillBook {
+  const PillBook({
+    required this.id,
+    required this.title,
+    required this.author,
+    required this.year,
+    required this.part,
+  });
+
+  final String id;
+  final String title;
+  final String author;
+  final int year;
+
+  /// Which of the book's ideas, from 1.
+  final int part;
+
+  static PillBook? fromJson(Object? raw) {
+    if (raw is! Map) return null;
+    final Object? id = raw['id'], title = raw['title'], author = raw['author'];
+    final Object? year = raw['year'], part = raw['part'];
+    if (id is! String || title is! String || author is! String) return null;
+    if (year is! int || part is! int || part < 1) return null;
+    return PillBook(
+      id: id,
+      title: title,
+      author: author,
+      year: year,
+      part: part,
+    );
+  }
+}
+
 /// What a card did for the reader, in their own word, on a card that asks
 /// ([Pill.reacts]).
 enum Reaction {
@@ -688,6 +724,9 @@ class Pill {
   /// "Label: one or two sentences", under Go deeper. Empty everywhere else.
   final List<String> views;
 
+  /// The book this card is one big idea of (Books in pills), or null.
+  final PillBook? book;
+
   final Difficulty difficulty;
 
   /// What this card is an instance of. Cards sharing a principle are the
@@ -820,6 +859,7 @@ class Pill {
     this.reference = '',
     this.why = '',
     this.views = const [],
+    this.book,
   });
 
   /// Whether the card carries its tags. Every card in the bank does; a card

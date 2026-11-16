@@ -1,0 +1,40 @@
+{
+  "id": "psychology-book-thinking-fast-and-slow-2",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.fast_and_slow",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which of your two 'systems' is doing most of your thinking right now?",
+  "answer": "System 1: fast, automatic, always on. It reads these words, hears anger in a voice, answers 2 + 2 unasked. System 2, slow and effortful, steps in for 17 × 24 and mostly signs off what System 1 proposes. The trouble is less that System 1 errs than that System 2 rarely notices.",
+  "move": "Most of your thinking is done before you decide to think.",
+  "simply": "Imagine a quick, chatty driver and a careful, sleepy navigator. The driver steers almost all the time; the navigator only looks at the map when something feels odd.",
+  "why": "It explains why being smart does not stop you being fooled: the careful part of you has to be called in, and usually is not.",
+  "book": {
+    "id": "thinking-fast-and-slow",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "year": 2011,
+    "part": 2
+  },
+  "keywords": [
+    "system 1",
+    "system 2",
+    "dual process",
+    "kahneman"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Kahneman, Thinking, Fast and Slow, 2011",
+  "source_kind": "book",
+  "reference": "Daniel Kahneman, Thinking, Fast and Slow (Farrar, Straus and Giroux, 2011), ch. 1",
+  "written": "2026-11-16"
+}

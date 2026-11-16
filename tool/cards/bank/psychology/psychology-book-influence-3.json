@@ -1,0 +1,40 @@
+{
+  "id": "psychology-book-influence-3",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.social_proof",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do comedy shows play recorded laughter, when everyone knows it's fake?",
+  "answer": "Because it works anyway. Cialdini calls it social proof: when unsure, we judge what is right by what others do. Experiments found canned laughter makes audiences laugh longer and rate the material as funnier, even when they dislike the laugh track.",
+  "move": "'Everybody is doing it' is evidence about everybody, not about it.",
+  "simply": "If everyone in the room starts laughing, you laugh too, even before you know what the joke was.",
+  "why": "Reviews, queues and 'bestseller' labels tug the same way. They're worth a glance, not a decision.",
+  "book": {
+    "id": "influence",
+    "title": "Influence",
+    "author": "Robert Cialdini",
+    "year": 1984,
+    "part": 3
+  },
+  "keywords": [
+    "social proof",
+    "canned laughter",
+    "conformity",
+    "cialdini"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Robert Cialdini, Influence, 1984",
+  "source_kind": "book",
+  "reference": "Robert B. Cialdini, Influence: The Psychology of Persuasion (William Morrow, 1984), ch. 4",
+  "written": "2026-11-16"
+}

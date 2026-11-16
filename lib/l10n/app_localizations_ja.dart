@@ -4798,4 +4798,33 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => 'Astute+ で';
+
+  @override
+  String get bookOfTheWeek => '今週の本';
+
+  @override
+  String bookIdeas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$nつのアイデア',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookMoreTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'この本のアイデアはあと$nつ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bookMoreLine => '本はすべて Astute+ で。毎週1冊は無料です。';
+
+  @override
+  String get bookMoreGo => '本をすべて読む';
 }

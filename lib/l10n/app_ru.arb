@@ -1172,5 +1172,10 @@
   "deeperTomorrow": "На сегодня хватит: завтра ещё.",
   "deeperTryAgain": "Не дошло. Попробуй через минуту.",
   "deeperDeclined": "На это ИИ ответить не может.",
-  "deeperPlusOnly": "С Astute+"
+  "deeperPlusOnly": "С Astute+",
+  "bookOfTheWeek": "Книга недели",
+  "bookIdeas": "{n, plural, one{{n} идея} few{{n} идеи} many{{n} идей} other{{n} идеи}}",
+  "bookMoreTitle": "{n, plural, one{Ещё {n} идея из этой книги} few{Ещё {n} идеи из этой книги} many{Ещё {n} идей из этой книги} other{Ещё {n} идеи из этой книги}}",
+  "bookMoreLine": "Вся книга с Astute+, а каждую неделю одна книга бесплатно.",
+  "bookMoreGo": "Читать всю книгу"
 }

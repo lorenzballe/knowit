@@ -1172,5 +1172,10 @@
   "deeperTomorrow": "Por hoje chega: amanhã há mais.",
   "deeperTryAgain": "Não chegou. Tenta outra vez daqui a pouco.",
   "deeperDeclined": "A esta não consegue responder.",
-  "deeperPlusOnly": "Com o Astute+"
+  "deeperPlusOnly": "Com o Astute+",
+  "bookOfTheWeek": "Livro da semana",
+  "bookIdeas": "{n, plural, =1{1 ideia} other{{n} ideias}}",
+  "bookMoreTitle": "{n, plural, =1{Mais uma ideia deste livro} other{Mais {n} ideias deste livro}}",
+  "bookMoreLine": "O livro inteiro com o Astute+, e todas as semanas um livro grátis.",
+  "bookMoreGo": "Ler o livro inteiro"
 }

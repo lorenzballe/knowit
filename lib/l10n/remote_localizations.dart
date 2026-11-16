@@ -4859,4 +4859,23 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get deeperPlusOnly =>
       _words.text('deeperPlusOnly') ?? _base.deeperPlusOnly;
+
+  @override
+  String get bookOfTheWeek =>
+      _words.text('bookOfTheWeek') ?? _base.bookOfTheWeek;
+
+  @override
+  String bookIdeas(int n) =>
+      _words.format('bookIdeas', localeName, {'n': n}) ?? _base.bookIdeas(n);
+
+  @override
+  String bookMoreTitle(int n) =>
+      _words.format('bookMoreTitle', localeName, {'n': n}) ??
+      _base.bookMoreTitle(n);
+
+  @override
+  String get bookMoreLine => _words.text('bookMoreLine') ?? _base.bookMoreLine;
+
+  @override
+  String get bookMoreGo => _words.text('bookMoreGo') ?? _base.bookMoreGo;
 }

@@ -1,0 +1,38 @@
+{
+  "id": "thinking-book-factfulness-3",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "4.2 million babies died before their first birthday in 2016. How should you read that number?",
+  "answer": "It is terrible, and on its own it says almost nothing. Rosling puts it next to another: in 1950 the figure was 14.4 million, with far fewer babies born. A big number alone always looks big. Compared with the past, or divided per person, it can tell you the world is getting better or worse.",
+  "move": "A lonely number tells you nothing: put it next to another.",
+  "simply": "'I ate 3 cookies' means a lot or a little depending on whether there were 4 cookies or 400.",
+  "why": "Every news story with a big number invites fear or outrage. Asking 'compared with what?' tells you whether to feel them.",
+  "book": {
+    "id": "factfulness",
+    "title": "Factfulness",
+    "author": "Hans Rosling",
+    "year": 2018,
+    "part": 3
+  },
+  "keywords": [
+    "size instinct",
+    "child mortality",
+    "comparison",
+    "rates"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Hans Rosling, Factfulness, 2018",
+  "source_kind": "book",
+  "reference": "Hans Rosling, Ola Rosling and Anna Rosling Rönnlund, Factfulness (Flatiron Books, 2018), ch. 5",
+  "written": "2026-11-16"
+}

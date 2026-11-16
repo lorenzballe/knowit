@@ -1,0 +1,46 @@
+{
+  "id": "thinking-book-thinking-in-bets-2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A poker player goes all in with an 80% chance of winning the hand, and loses. Was going all in a mistake?",
+  "options": [
+    "Yes: the result shows it",
+    "No: it was a good bet that lost",
+    "Only if they lose the next one too"
+  ],
+  "correct": 1,
+  "answer": "No. Made a hundred times, that bet wins about eighty. A loss is what the other twenty look like. Duke's point is that most decisions are bets under uncertainty: the right question is not 'did it work?' but 'would I make it again, knowing what I knew?'",
+  "move": "A good bet can lose and a bad one win: judge the bet.",
+  "trap": "Reading the loss as proof the call was wrong.",
+  "simply": "If a weather app says 80% sun and it rains, the app was not necessarily wrong. One day in five, it should rain.",
+  "why": "It frees you from regret over good choices that went badly, and from pride over bad ones that got lucky.",
+  "sure": 0.35,
+  "book": {
+    "id": "thinking-in-bets",
+    "title": "Thinking in Bets",
+    "author": "Annie Duke",
+    "year": 2018,
+    "part": 2
+  },
+  "keywords": [
+    "poker",
+    "probability",
+    "decisions under uncertainty",
+    "luck"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Annie Duke, Thinking in Bets, 2018",
+  "source_kind": "book",
+  "reference": "Annie Duke, Thinking in Bets (Portfolio, 2018), ch. 1",
+  "written": "2026-11-16"
+}
