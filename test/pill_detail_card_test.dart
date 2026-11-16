@@ -8,6 +8,8 @@
 // at the standard text size or twice it.
 //
 //   flutter test test/pill_detail_card_test.dart
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -57,6 +59,24 @@ Future<void> _open(
   }
 }
 
+/// The picture a test's card shows: one pixel, through a provider of its
+/// own (a fresh copy of the bytes), so nothing a test before left in the
+/// image cache half decoded is what this one draws.
+ImageProvider _freshPixel() =>
+    MemoryImage(Uint8List.fromList((onePixel as MemoryImage).bytes));
+
+/// Waits, in real time, until [picture] is decoded, then lets the page draw
+/// it: whether a picture has come is not left to how fast the machine is.
+Future<void> _decoded(WidgetTester tester, ImageProvider picture) async {
+  await tester.runAsync(
+    () => precacheImage(
+      picture,
+      tester.element(find.byType(PillDetailScreen)),
+    ).timeout(const Duration(seconds: 10), onTimeout: () {}),
+  );
+  await tester.pump(const Duration(milliseconds: 300));
+}
+
 Future<void> _settle(WidgetTester tester) async {
   for (int i = 0; i < 8; i++) {
     await tester.pump(const Duration(milliseconds: 100));
@@ -65,7 +85,13 @@ Future<void> _settle(WidgetTester tester) async {
 
 void main() {
   setUpAll(loadFonts);
-  setUp(() => Served.useForTest(Served()));
+  setUp(() {
+    Served.useForTest(Served());
+    // A picture still being decoded when the test before ended is not left
+    // for this one to find.
+    imageCache.clear();
+    imageCache.clearLiveImages();
+  });
   tearDown(() {
     PillBank.reset();
     CardThumb.image = NoPicture.new;
@@ -76,12 +102,14 @@ void main() {
         'again at full size; at ${text}x', (tester) async {
       final Pill first = pagedCards().first;
       PillBank.adopt(bankWithPictures({first.id}));
-      CardThumb.image = (url) => onePixel;
+      final ImageProvider picture = _freshPixel();
+      CardThumb.image = (url) => picture;
       final Pill pill = PillBank.byId(first.id)!;
       final AppState app = await readyApp({
         'knowit.savedIds': [pill.id],
       });
       await _open(tester, app, pill, text: text);
+      await _decoded(tester, picture);
 
       expect(tester.takeException(), isNull);
       expect(
@@ -106,7 +134,8 @@ void main() {
   testWidgets('the picture itself plays the card too', (tester) async {
     final Pill first = pagedCards().first;
     PillBank.adopt(bankWithPictures({first.id}));
-    CardThumb.image = (url) => onePixel;
+    final ImageProvider picture = _freshPixel();
+    CardThumb.image = (url) => picture;
     final Pill pill = PillBank.byId(first.id)!;
     await _open(tester, await readyApp(), pill);
 

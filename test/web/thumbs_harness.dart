@@ -48,11 +48,16 @@ BankBundle bankWithPictures(Set<String> ids) {
 }
 
 /// A picture that comes at once, from memory: one pixel of green.
+///
+/// A real PNG, that decodes. The one here before had a broken data stream:
+/// a test that never let it finish decoding drew it as loading, one that
+/// did drew the card's fallback instead, and the same test passed on one
+/// machine and failed on another.
 final ImageProvider onePixel = MemoryImage(
   Uint8List.fromList(
     base64Decode(
-      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNg'
-      'MPj/HwADhAJ/7Wc0bwAAAABJRU5ErkJggg==',
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNg'
+      'OFHxHwAETAJAXeAKlwAAAABJRU5ErkJggg==',
     ),
   ),
 );
