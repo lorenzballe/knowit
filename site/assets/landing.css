@@ -844,7 +844,8 @@
 
 /* ── Subjects: the deck goes by, both ways ──────────────────────────── */
 
-.marquee-mask { margin-top: 48px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); display: flex; flex-direction: column; gap: 16px; }
+/* Room above the rows, inside the mask, for a card that lifts under the pointer: the mask cuts whatever leaves its box. */
+.marquee-mask { margin-top: 34px; padding-block: 14px;-webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); display: flex; flex-direction: column; gap: 16px; }
 .marquee { display: flex; width: max-content; animation: marquee 75s linear infinite; }
 .marquee.reverse { animation-direction: reverse; animation-duration: 85s; }
 .marquee:hover { animation-play-state: paused; }
