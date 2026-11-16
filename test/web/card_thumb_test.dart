@@ -401,8 +401,10 @@ void main() {
 
   group('the feed', () {
     for (final double text in [1.0, 2.0]) {
-      testWidgets('free cards by their fronts, in the boxes that show them, '
-          'never a back; at ${text}x', (tester) async {
+      testWidgets('every card in words, a drawn one too, with its picture in '
+          'the bank: the drawing is for the card opened; at ${text}x', (
+        tester,
+      ) async {
         PillBank.adopt(
           bankWithPictures({for (final Pill p in pagedCards()) p.id}),
         );
@@ -412,42 +414,15 @@ void main() {
         final ScrollPosition list = tester
             .state<ScrollableState>(find.byType(Scrollable).first)
             .position;
-        int pictures = 0;
-        int wideInWords = 0;
+        int tiles = 0;
         for (int i = 0; i < 12; i++) {
           expect(tester.takeException(), isNull);
-          for (final Element e in find.byType(BoxTile).evaluate()) {
-            final BoxTile tile = e.widget as BoxTile;
-            final bool shown = find
-                .descendant(
-                  of: find.byWidget(tile),
-                  matching: find.byKey(
-                    ValueKey('tile-picture-${tile.pill.id}'),
-                  ),
-                )
-                .evaluate()
-                .isNotEmpty;
-            if (shown) {
-              pictures++;
-              expect(pictureFits(tile.box), isTrue);
-            } else if (!pictureFits(tile.box)) {
-              wideInWords++;
-            }
-          }
+          tiles += find.byType(BoxTile).evaluate().length;
+          expect(find.byType(CardThumb), findsNothing);
           list.jumpTo(list.pixels + 500);
           await tester.pump();
         }
-        expect(pictures, greaterThan(10));
-        expect(wideInWords, greaterThan(0));
-        expect(
-          find.byWidgetPredicate(
-            (w) =>
-                w.key is ValueKey<String> &&
-                (w.key! as ValueKey<String>).value.startsWith('card-thumb-') &&
-                (w.key! as ValueKey<String>).value.endsWith('-back'),
-          ),
-          findsNothing,
-        );
+        expect(tiles, greaterThan(10));
       });
     }
 
