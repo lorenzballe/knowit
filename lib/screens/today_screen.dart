@@ -355,7 +355,9 @@ class TodaySkeleton extends StatelessWidget {
         children: [
           _ReadingHeader(streak: 0),
           SizedBox(height: 16),
-          _ProgressBars(total: kPillsPerDay, index: 0),
+          // None lit yet: nothing of the day has been read, and the first
+          // lights as its card lands.
+          _ProgressBars(total: kPillsPerDay, index: -1),
           SizedBox(height: 16),
           Expanded(child: DeckSkeleton()),
         ],

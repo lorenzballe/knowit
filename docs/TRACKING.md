@@ -265,6 +265,7 @@ background ends every visit; coming back starts a new one.
 | `$screen` | a visit begins | `$screen_name` | PostHog's screen views and paths | P |
 | `screen left` **new** | a visit ends | `screen`, `ms_on_screen` (in front only), `max_scroll_pct` (how far down its main list was seen, 0–100; absent when nothing scrolls), `scrolls` (finger drags that moved it), `taps`, `screens_opened` (full screens pushed over it), `from` (the screen before, `background` after a return, absent at launch), `left_to` (the next screen, or `background`) | dwell, depth and attention per screen, and the path between them | P |
 | `tab opened` | a tab is chosen | `tab`, `by` (`bar`, `swipe`, `widget`) | how the tabs are reached | P, T:`tab` |
+| `explore refreshed` **new** | Explore pulled down from its top: read again from the server, whatever its age | none | how often readers pull a feed for more | P |
 
 Every PostHog event carries `$screen_name`: the screen in front when it was
 sent, which after a return from a pushed screen is the screen returned to.

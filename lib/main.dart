@@ -1275,8 +1275,29 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_app.ready) return _Splash(today: _app.onboarded);
+    // The opening frame gives way to the app in a short fade, as a feed's
+    // outline does to its posts: its grey card stands where the day's first
+    // card lands, so the grey turns into the card rather than snapping to
+    // it. The frame stays whole under the app as the app comes in over it.
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 280),
+      switchInCurve: Curves.easeOut,
+      transitionBuilder: (child, animation) =>
+          child.key == const ValueKey('app-opening')
+          ? child
+          : FadeTransition(opacity: animation, child: child),
+      child: _app.ready
+          ? KeyedSubtree(
+              key: const ValueKey('app-ready'),
+              child: _stages(context),
+            )
+          : _Splash(key: const ValueKey('app-opening'), today: _app.onboarded),
+    );
+  }
 
+  /// The app once its stored state has loaded: the first run's steps, or
+  /// the tabs.
+  Widget _stages(BuildContext context) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 320),
       switchInCurve: Curves.easeOutCubic,
@@ -1391,7 +1412,7 @@ class _AstutoRootState extends State<AstutoRoot> {
 /// The opening frame: the wordmark on paper, so the app never shows a bare
 /// spinner while stored state loads.
 class _Splash extends StatelessWidget {
-  const _Splash({required this.today});
+  const _Splash({super.key, required this.today});
 
   /// Whether the reader has a Today to open on. A first open goes to the
   /// welcome, and shows nothing of a screen it will not see.
