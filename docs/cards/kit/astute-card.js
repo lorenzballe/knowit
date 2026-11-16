@@ -9,7 +9,26 @@ const Kit = (() => {
   const $ = id => document.getElementById(id);
   const has = () => typeof gsap !== 'undefined';
   // Reveal a hidden element (class "gone") with a short rise.
-  const show = id => { const e = $(id); if (!e.classList.contains('gone')) return; e.classList.remove('gone'); if (has() && !calm()) gsap.fromTo(e, {opacity: 0, y: 12}, {opacity: 1, y: 0, duration: .5, ease: 'power2.out'}); };
+  // Shows an element, with a fade. A card that fades the same element in itself, as it shows it
+  // (Kit.show('keep'); gsap.from('#keep', {opacity: 0})), used to meet this fade halfway: its
+  // gsap.from took the kit's opacity 0 as where to end, and the box stood in its place invisible,
+  // the drawing shrunk to make room for it — 154 cards of the bank. So the kit's own fade waits a
+  // frame, out of sight, and runs only if the card has not started one of its own.
+  const show = id => {
+    const e = $(id); if (!e.classList.contains('gone')) return; e.classList.remove('gone');
+    if (!has() || calm()) return;
+    e.style.visibility = 'hidden';
+    requestAnimationFrame(() => {
+      e.style.visibility = '';
+      if (!gsap.isTweening(e)) gsap.fromTo(e, {opacity: 0, y: 12}, {opacity: 1, y: 0, duration: .5, ease: 'power2.out'});
+    });
+    // Whatever fades meet on it, it ends in sight: a card whose own fade starts a frame or two
+    // later (requestAnimationFrame(() => gsap.from('#keep', ...))) still took the kit's opacity 0
+    // as where to end.
+    setTimeout(() => {
+      if (!e.classList.contains('gone') && !gsap.isTweening(e) && +getComputedStyle(e).opacity < .05) gsap.to(e, {opacity: 1, y: 0, duration: .3, ease: 'power2.out'});
+    }, 1000);
+  };
   const hide = id => $(id).classList.add('gone');
   // A canvas or an SVG sized to its real box, so drawings and text never stretch.
   const fitCanvas = cv => { const r = cv.getBoundingClientRect(), W = Math.max(1, r.width), H = Math.max(1, r.height); cv.width = W * devicePixelRatio; cv.height = H * devicePixelRatio; const x = cv.getContext('2d'); x.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); return {x, W, H}; };
