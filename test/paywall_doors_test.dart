@@ -590,6 +590,87 @@ void main() {
       expect(find.text('Purchase complete.'), findsOneWidget);
       expect(find.text('Free trial started.'), findsNothing);
     });
+
+    /// The store's sheet over the app, then gone: what the phone does while
+    /// the reader pays.
+    Future<void> sheetComesAndGoes(WidgetTester tester) async {
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      await tester.pump();
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pump();
+    }
+
+    final Finder confirming = find.byKey(const ValueKey('purchase-confirming'));
+
+    testWidgets('paid, and the store still confirming: the screen a purchase '
+        'ends on waits for it, with no way out, and the yes starts its take', (
+      tester,
+    ) async {
+      final _SlowApp app = _SlowApp();
+      await open(tester, 'sixth card', app: app);
+      await tester.tap(buy);
+      await tester.pump();
+      await sheetComesAndGoes(tester);
+      // Answered at once, it would never show: past that, the wait is up.
+      await tester.pump(const Duration(milliseconds: 450));
+      await tester.pump(const Duration(milliseconds: 160));
+      expect(find.byType(PurchaseSuccessScreen), findsOneWidget);
+      expect(find.text('Confirming your payment…'), findsOneWidget);
+      // No way back while it waits: the back gesture is held.
+      await tester.binding.handlePopRoute();
+      await frames(tester);
+      expect(find.byType(PurchaseSuccessScreen), findsOneWidget);
+      // Nor a start pressed before there is anything to start.
+      await tester.tap(find.text('Let’s start'), warnIfMissed: false);
+      await frames(tester);
+      expect(find.byType(PurchaseSuccessScreen), findsOneWidget);
+      // The store says yes: the wait fades and the take runs as drawn.
+      till.reply.complete(PurchaseOutcome.bought);
+      await frames(tester, 6);
+      expect(confirming, findsNothing);
+      expect(find.text('Free trial started.'), findsOneWidget);
+      await frames(tester, 30);
+      await tester.tap(find.text('Let’s start'));
+      await frames(tester);
+      expect(find.byType(PurchaseSuccessScreen), findsNothing);
+      app.gate.complete();
+      await frames(tester, 12);
+      expect(app.isPlus, isTrue);
+      expect(find.byType(PaywallScreen), findsNothing);
+      expect(sink.last('paywall closed')!['left_by'], 'bought');
+      expect(sink.last('purchase success shown')!['waiting'], isTrue);
+    });
+
+    testWidgets('a wait that ends in no closes with nothing celebrated', (
+      tester,
+    ) async {
+      await open(tester, 'sixth card');
+      await tester.tap(buy);
+      await tester.pump();
+      await sheetComesAndGoes(tester);
+      await tester.pump(const Duration(milliseconds: 450));
+      await tester.pump(const Duration(milliseconds: 160));
+      expect(confirming, findsOneWidget);
+      till.reply.complete(PurchaseOutcome.failed);
+      await frames(tester, 6);
+      expect(find.byType(PurchaseSuccessScreen), findsNothing);
+      expect(find.byType(PaywallScreen), findsOneWidget);
+      expect(find.text('That did not go through.'), findsOneWidget);
+      expect(find.text('Try 7 days free, then \$29.99/yr'), findsOneWidget);
+    });
+
+    testWidgets('backed out of the store’s sheet: answered at once, no wait '
+        'is ever shown', (tester) async {
+      await open(tester, 'sixth card');
+      await tester.tap(buy);
+      await tester.pump();
+      await sheetComesAndGoes(tester);
+      till.reply.complete(PurchaseOutcome.cancelled);
+      await tester.pump(const Duration(milliseconds: 600));
+      await frames(tester);
+      expect(find.byType(PurchaseSuccessScreen), findsNothing);
+      expect(find.text('Try 7 days free, then \$29.99/yr'), findsOneWidget);
+    });
   });
 }
 

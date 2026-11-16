@@ -1332,6 +1332,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get oneMoment => '少々お待ちください…';
 
   @override
+  String get purchaseConfirming => 'お支払いを確認しています…';
+
+  @override
+  String get purchaseConfirmingSlow =>
+      'いつもより時間がかかっています。お支払いは安全です。Astute+ は自動で使えるようになります。';
+
+  @override
   String get closeLabel => '閉じる';
 
   @override

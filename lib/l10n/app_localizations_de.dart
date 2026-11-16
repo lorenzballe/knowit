@@ -1383,6 +1383,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get oneMoment => 'Einen Moment …';
 
   @override
+  String get purchaseConfirming => 'Zahlung wird bestätigt …';
+
+  @override
+  String get purchaseConfirmingSlow =>
+      'Das dauert länger als sonst. Die Zahlung ist sicher: Astute+ wird von selbst freigeschaltet.';
+
+  @override
   String get closeLabel => 'Schließen';
 
   @override

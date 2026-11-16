@@ -316,6 +316,8 @@
   "tryAgain": "重试",
   "purchasePending": "等待批准。付款完成后，Astute+ 会立即开通。",
   "oneMoment": "请稍候…",
+  "purchaseConfirming": "正在确认付款…",
+  "purchaseConfirmingSlow": "比平时久一些。付款是安全的：Astute+ 会自动开通。",
   "closeLabel": "关闭",
   "thatDidNotGoThrough": "没有成功。",
   "plusIsBack": "Astute+ 回来了。",
