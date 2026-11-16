@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -47,6 +48,24 @@ class PurchaseSuccessScreen extends StatefulWidget {
   /// Where "Receipt" goes, if anywhere.
   final VoidCallback? onReceipt;
 
+  /// The store's answer, when it is still on its way: null while it is,
+  /// true once the purchase is confirmed, false when it did not go through.
+  ///
+  /// The store's sheet has gone, the reader has paid, and the confirmation
+  /// takes a few seconds more (the store's servers and RevenueCat's). The
+  /// screen opens on that wait rather than leave the reader on the paywall
+  /// with "One moment" and a cross to leave by: the ring turns, open, and one
+  /// line says the payment is being confirmed. Nothing is celebrated yet —
+  /// no check, no confetti, no title. The take starts from its first frame
+  /// the moment the answer is yes, exactly as drawn, so the confetti lands
+  /// on the real confirmation; an answer of no closes the screen with
+  /// nothing said. A wait that runs past [_slowAfter] says so, and lets the
+  /// reader go on: Astute+ turns on by itself when the answer comes.
+  ///
+  /// Without it the purchase is already confirmed and the take starts at
+  /// once.
+  final ValueListenable<bool?>? confirmed;
+
   const PurchaseSuccessScreen({
     super.key,
     required this.title,
@@ -55,6 +74,7 @@ class PurchaseSuccessScreen extends StatefulWidget {
     required this.planLine,
     required this.foot,
     this.onReceipt,
+    this.confirmed,
   });
 
   /// The two pictures the take draws, decoded ahead — the paywall asks for
@@ -97,6 +117,14 @@ const double kSuccessPace = 1.4;
 /// the take is over and keeps the wall's pace.
 double _wall(double t) => t / kSuccessPace;
 
+/// How long a wait for the store's confirmation may run, in the wall's
+/// seconds, before the screen says it is taking long and lets the reader go.
+const double _slowAfter = 20;
+
+/// How long the wait's ring and line take to fade once the answer is in,
+/// in the wall's seconds: the take's own ring draws itself meanwhile.
+const double _waitFade = .25;
+
 // The design's curves.
 const Curve _ease = Cubic(.25, .1, .25, 1);
 const Curve _easeOut = Cubic(0, 0, .58, 1);
@@ -128,18 +156,43 @@ double _keys(double p, List<List<double>> k, [Curve curve = Curves.linear]) {
 class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
     with SingleTickerProviderStateMixin {
   late final Ticker _ticker;
+
+  /// The take's clock, in the design's seconds: still at 0 while the store's
+  /// answer is awaited, running from the moment it is yes.
   final ValueNotifier<double> _t = ValueNotifier<double>(0);
+
+  /// The wall's seconds since the screen opened: what the wait turns by.
+  final ValueNotifier<double> _w = ValueNotifier<double>(0);
+
+  /// The wall's second the purchase was confirmed at; null while waiting.
+  double? _from;
   ui.Image? _imgA = PurchaseSuccessScreen._imageA;
   ui.Image? _imgM = PurchaseSuccessScreen._imageM;
   late final List<_Piece> _confetti = _Piece.burst(40);
   bool _pressed = false;
 
+  bool get _waiting => _from == null;
+
   @override
   void initState() {
     super.initState();
+    final ValueListenable<bool?>? confirmed = widget.confirmed;
+    if (confirmed == null || confirmed.value == true) {
+      _from = 0;
+    } else {
+      confirmed.addListener(_heard);
+    }
     _ticker = createTicker((elapsed) {
-      _t.value = elapsed.inMicroseconds / 1e6 * kSuccessPace;
+      final double now = elapsed.inMicroseconds / 1e6;
+      _w.value = now;
+      final double? from = _from;
+      if (from != null) _t.value = (now - from) * kSuccessPace;
     })..start();
+    // The answer may have come between the paywall asking for the screen
+    // and the screen being built.
+    if (confirmed != null && confirmed.value == false) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _heard());
+    }
     // Decoded already when the paywall opened it; only a screen opened some
     // other way waits for them, and the take draws itself meanwhile.
     if (_imgA == null || _imgM == null) {
@@ -155,9 +208,29 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
 
   @override
   void dispose() {
+    widget.confirmed?.removeListener(_heard);
     _ticker.dispose();
     _t.dispose();
+    _w.dispose();
     super.dispose();
+  }
+
+  /// The store has answered: the take starts from its first frame, or the
+  /// screen closes on a purchase that did not go through.
+  void _heard() {
+    if (!mounted) return;
+    final bool? answer = widget.confirmed?.value;
+    if (answer == true && _waiting) {
+      setState(() => _from = _w.value);
+    } else if (answer == false && _waiting) {
+      widget.confirmed?.removeListener(_heard);
+      final ModalRoute<Object?>? route = ModalRoute.of(context);
+      if (route == null || route.isCurrent) {
+        Navigator.of(context).pop();
+      } else {
+        Navigator.of(context).removeRoute(route);
+      }
+    }
   }
 
   void _start() => Navigator.of(context).pop();
@@ -170,15 +243,31 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
     final l = context.l10n;
     final bool still = MediaQuery.disableAnimationsOf(context);
     final EdgeInsets pad = MediaQuery.viewPaddingOf(context);
-    return AnnotatedRegion<SystemUiOverlayStyle>(
+    // While the store's answer is awaited there is no way back: the reader
+    // has paid, and leaving now would leave them without the answer.
+    return PopScope(
+      canPop: !_waiting,
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: ValueListenableBuilder<double>(
-          valueListenable: _t,
-          builder: (context, raw, _) {
-            // With motion turned off the screen opens on its last frame.
-            final double t = still ? 8 : raw;
+        body: AnimatedBuilder(
+          animation: Listenable.merge([_t, _w]),
+          builder: (context, _) {
+            final double raw = _t.value;
+            final double now = _w.value;
+            // With motion turned off the screen opens on its last frame —
+            // once there is something to celebrate.
+            final double t = still ? (_waiting ? 0 : 8) : raw;
+            // The wait: whole while it lasts, fading as the take begins.
+            final double? from = _from;
+            final double wait = from == null
+                ? 1
+                : (still ? 0 : 1 - _c01((now - from) / _waitFade));
+            // Past [_slowAfter] the wait says it is long, and the button to
+            // go on comes up, as the take's own does.
+            final double slow = _waiting ? _c01((now - _slowAfter) / .6) : 0;
+            final double tButton = _waiting ? 3.45 + .7 * slow : t;
             return LayoutBuilder(
               builder: (context, box) {
                 // The hero is 340 on a 874-tall phone; a shorter one gives
@@ -221,32 +310,83 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
                             child: Center(
                               child: FittedBox(
                                 clipBehavior: Clip.none,
-                                child: _Hero(
-                                  t: t,
-                                  imgA: _imgA,
-                                  imgM: _imgM,
-                                  confetti: _confetti,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    _Hero(
+                                      t: t,
+                                      imgA: _imgA,
+                                      imgM: _imgM,
+                                      confetti: _confetti,
+                                    ),
+                                    if (wait > 0)
+                                      Positioned.fill(
+                                        child: IgnorePointer(
+                                          child: Opacity(
+                                            opacity: wait,
+                                            child: CustomPaint(
+                                              painter: _WaitRingPainter(
+                                                still ? 0 : now,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 14),
-                          _rise(
-                            t,
-                            1.15,
-                            .7,
-                            18,
-                            _up,
-                            Text(
-                              widget.title,
-                              textAlign: TextAlign.center,
-                              style: AppText.display(
-                                size: 40,
-                                height: 1.04,
-                                spacing: -1.5,
-                                color: Colors.white,
+                          Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              _rise(
+                                t,
+                                1.15,
+                                .7,
+                                18,
+                                _up,
+                                Text(
+                                  widget.title,
+                                  textAlign: TextAlign.center,
+                                  style: AppText.display(
+                                    size: 40,
+                                    height: 1.04,
+                                    spacing: -1.5,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                            ),
+                              if (wait > 0)
+                                Opacity(
+                                  opacity: wait,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ConstrainedBox(
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 320,
+                                      ),
+                                      child: Text(
+                                        slow > 0
+                                            ? l.purchaseConfirmingSlow
+                                            : l.purchaseConfirming,
+                                        key: const ValueKey(
+                                          'purchase-confirming',
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        style: AppText.body(
+                                          size: 17,
+                                          height: 1.45,
+                                          color: Colors.white.withValues(
+                                            alpha: .72,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
                           const SizedBox(height: 12),
                           _rise(
@@ -308,7 +448,13 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
                             _plan(l),
                           ),
                           const SizedBox(height: 14),
-                          _rise(t, 3.45, .7, 18, _up, _button(l)),
+                          // Not to be pressed before it is there: while the
+                          // answer is awaited it comes up only for a long
+                          // wait.
+                          IgnorePointer(
+                            ignoring: _waiting && slow < 1,
+                            child: _rise(tButton, 3.45, .7, 18, _up, _button(l)),
+                          ),
                           Opacity(
                             opacity: _easeOut.transform(_prog(t, 3.6, .7)),
                             child: Padding(
@@ -334,6 +480,7 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
             );
           },
         ),
+      ),
       ),
     );
   }
@@ -809,6 +956,44 @@ class _RingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_RingPainter old) => old.t != t;
+}
+
+/// The ring while the store's answer is awaited: the take's own stroke, its
+/// colours and weight, but open — a third of the circle, breathing a little
+/// longer and shorter, turning once every 1.4 seconds of the wall's — on the
+/// track the take's ring leaves faint. It fades as the take's ring draws
+/// itself closed, so the one becomes the other.
+class _WaitRingPainter extends CustomPainter {
+  /// The wall's seconds the wait has lasted; 0 holds it still.
+  final double w;
+  _WaitRingPainter(this.w);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const Offset c = Offset(170, 170);
+    const Rect box = Rect.fromLTWH(-160, -160, 320, 320);
+    final double turn = (w / 1.4 % 1) * 2 * math.pi;
+    final double sweep =
+        2 * math.pi * (.3 + .08 * math.sin(w / 1.4 * 2 * math.pi));
+    final Paint stroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..strokeCap = StrokeCap.round
+      ..shader = const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFFFFE14D), Color(0xFF2DE0D2), Color(0xFF8B6CFF)],
+        stops: [0, .55, 1],
+      ).createShader(box);
+    canvas.save();
+    canvas.translate(c.dx, c.dy);
+    canvas.rotate(turn - math.pi / 2);
+    canvas.drawArc(box, 0, sweep, false, stroke);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(_WaitRingPainter old) => old.w != w;
 }
 
 /// The seal on the ring: it pops in with a turn, sends out one small

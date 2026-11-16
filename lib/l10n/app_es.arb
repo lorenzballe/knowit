@@ -316,6 +316,8 @@
   "tryAgain": "Reintentar",
   "purchasePending": "Esperando aprobación. Astute+ se abrirá en cuanto se complete el pago.",
   "oneMoment": "Un momento…",
+  "purchaseConfirming": "Confirmando el pago…",
+  "purchaseConfirmingSlow": "Está tardando más de lo normal. El pago está a salvo: Astute+ se activará solo.",
   "closeLabel": "Cerrar",
   "thatDidNotGoThrough": "Eso no se completó.",
   "plusIsBack": "Astute+ ha vuelto.",

@@ -1370,6 +1370,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get oneMoment => 'Bir saniye…';
 
   @override
+  String get purchaseConfirming => 'Ödeme onaylanıyor…';
+
+  @override
+  String get purchaseConfirmingSlow =>
+      'Bu, her zamankinden uzun sürüyor. Ödeme güvende: Astute+ kendiliğinden açılacak.';
+
+  @override
   String get closeLabel => 'Kapat';
 
   @override
