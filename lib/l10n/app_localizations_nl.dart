@@ -4808,4 +4808,170 @@ class AppLocalizationsNl extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyLabTitle => 'Jouw reis, als verhaal';
+
+  @override
+  String get storyLabNote => 'Nieuwe versie · op proef, alleen TestFlight';
+
+  @override
+  String get storyChapterWeek => 'Deze week';
+
+  @override
+  String get storyChapterWhere => 'Waar je staat';
+
+  @override
+  String get storyChapterReason => 'Hoe je redeneert';
+
+  @override
+  String get storyChapterPractice => 'Oefen';
+
+  @override
+  String get storyChapterStory => 'Jouw verhaal';
+
+  @override
+  String storyHeadlineSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Bij de antwoorden waar je zeker van was, had je $n op de 10 keer gelijk.',
+      one: 'Bij de antwoorden waar je zeker van was, had je 1 op de 10 keer gelijk.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyBetter => 'Beter dan vorige week.';
+
+  @override
+  String get storyWorse => 'Iets minder dan vorige week.';
+
+  @override
+  String storyHeadlineStreak(int n) {
+    return '$n dagen op rij. Hou de draad vast.';
+  }
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) {
+    return 'In $subject heb je in $pct van de gevallen gelijk.';
+  }
+
+  @override
+  String storyHeadlineRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten gelezen. Hier begint de reis.',
+      one: 'Eén kaart gelezen. Hier begint de reis.',
+      zero: 'Je eerste kaart wacht.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storySaidRight(String sure, String right) {
+    return 'Jouw zekerheid: $sure. Je hebt in $right van de gevallen gelijk.';
+  }
+
+  @override
+  String storySaidRightToGo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Nog $n antwoorden met hoe zeker, en het wordt gemeten.',
+      one: 'Nog één antwoord met hoe zeker, en het wordt gemeten.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyOverconfident(String subject, int points) {
+    return 'Waar je jezelf te veel vertrouwt: $subject, met $points punten.';
+  }
+
+  @override
+  String get storyUnlock => 'Bekijk het met Astute+';
+
+  @override
+  String storyPracticeMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'De $n die je fout had terwijl je zeker was',
+      one: 'Die ene die je fout had terwijl je zeker was',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeChanged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'De $n die je van mening deden veranderen',
+      one: 'De kaart die je van mening deed veranderen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeBlind(String subject) {
+    return '5 nieuwe kaarten in $subject';
+  }
+
+  @override
+  String get storyPracticeNone =>
+      'Nog niets te oefenen: beantwoord een paar kaarten en het komt.';
+
+  @override
+  String get storyFirstCard => 'Eerste kaart';
+
+  @override
+  String storyReached(String level) {
+    return 'Bereikt: $level';
+  }
+
+  @override
+  String storyBestStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Beste reeks: $n dagen',
+      one: 'Beste reeks: 1 dag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyCardsRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten gelezen',
+      one: '1 kaart gelezen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyToday => 'Vandaag';
+
+  @override
+  String get storySeePath => 'Bekijk het pad';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n nieuwe kaarten bovenaan',
+      one: '1 nieuwe kaart bovenaan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'Je bent bij: voorlopig niets nieuws.';
 }

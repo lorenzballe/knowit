@@ -4940,10 +4940,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get journeySubjectsNotYet => 'Шесть ответов по теме — и она измерена.';
 
   @override
-  String get journeyChangedMind => 'Изменили мнение';
+  String get journeyChangedMind => 'Смена мнения';
 
   @override
-  String get journeyNewToYou => 'Новое для вас';
+  String get journeyNewToYou => 'Новое для тебя';
 
   @override
   String journeyReactedOf(int n) {
@@ -4966,4 +4966,193 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyLabTitle => 'Твой путь как история';
+
+  @override
+  String get storyLabNote => 'Новая версия · в тесте, только TestFlight';
+
+  @override
+  String get storyChapterWeek => 'На этой неделе';
+
+  @override
+  String get storyChapterWhere => 'Где ты сейчас';
+
+  @override
+  String get storyChapterReason => 'Как ты рассуждаешь';
+
+  @override
+  String get storyChapterPractice => 'Тренировка';
+
+  @override
+  String get storyChapterStory => 'Твоя история';
+
+  @override
+  String storyHeadlineSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Из 10 уверенных ответов верны $n.',
+      many: 'Из 10 уверенных ответов верны $n.',
+      few: 'Из 10 уверенных ответов верны $n.',
+      one: 'Из 10 уверенных ответов верен $n.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyBetter => 'Лучше, чем на прошлой неделе.';
+
+  @override
+  String get storyWorse => 'Чуть хуже, чем на прошлой неделе.';
+
+  @override
+  String storyHeadlineStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня подряд. Не теряй нить.',
+      many: '$n дней подряд. Не теряй нить.',
+      few: '$n дня подряд. Не теряй нить.',
+      one: '$n день подряд. Не теряй нить.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) {
+    return 'В теме «$subject» верных ответов $pct.';
+  }
+
+  @override
+  String storyHeadlineRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки прочитано. Путь начинается здесь.',
+      many: '$n карточек прочитано. Путь начинается здесь.',
+      few: '$n карточки прочитаны. Путь начинается здесь.',
+      one: '$n карточка прочитана. Путь начинается здесь.',
+      zero: 'Твоя первая карточка ждёт.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storySaidRight(String sure, String right) {
+    return 'Твоя уверенность — $sure, верных ответов — $right.';
+  }
+
+  @override
+  String storySaidRightToGo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ещё $n ответа с уверенностью — и это будет измерено.',
+      many: 'Ещё $n ответов с уверенностью — и это будет измерено.',
+      few: 'Ещё $n ответа с уверенностью — и это будет измерено.',
+      one: 'Ещё $n ответ с уверенностью — и это будет измерено.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyOverconfident(String subject, int points) {
+    return 'Излишняя уверенность: $subject, на $points п.';
+  }
+
+  @override
+  String get storyUnlock => 'Смотреть с Astute+';
+
+  @override
+  String storyPracticeMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ошибки при уверенности',
+      many: '$n ошибок при уверенности',
+      few: '$n ошибки при уверенности',
+      one: '$n ошибка при уверенности',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeChanged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки, изменившие твоё мнение',
+      many: '$n карточек, изменивших твоё мнение',
+      few: '$n карточки, изменившие твоё мнение',
+      one: '$n карточка, изменившая твоё мнение',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeBlind(String subject) {
+    return '5 новых карточек: $subject';
+  }
+
+  @override
+  String get storyPracticeNone =>
+      'Пока нечего тренировать: ответь на несколько карточек, и всё появится.';
+
+  @override
+  String get storyFirstCard => 'Первая карточка';
+
+  @override
+  String storyReached(String level) {
+    return 'Достигнуто: $level';
+  }
+
+  @override
+  String storyBestStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Лучшая серия: $n дня',
+      many: 'Лучшая серия: $n дней',
+      few: 'Лучшая серия: $n дня',
+      one: 'Лучшая серия: $n день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyCardsRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки прочитано',
+      many: '$n карточек прочитано',
+      few: '$n карточки прочитаны',
+      one: '$n карточка прочитана',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyToday => 'Сегодня';
+
+  @override
+  String get storySeePath => 'Смотреть путь';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n новой карточки сверху',
+      many: '$n новых карточек сверху',
+      few: '$n новые карточки сверху',
+      one: '$n новая карточка сверху',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'Всё просмотрено: пока ничего нового.';
 }

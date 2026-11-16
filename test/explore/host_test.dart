@@ -172,6 +172,9 @@ void main() {
     }
     expect(tester.takeException(), isNull);
     expect(sink.last('explore refreshed'), isNotNull);
+    // A new round, said: with no feed to deal again, nothing is new.
+    expect(sink.last('explore refreshed')!['round'], 1);
+    expect(find.byKey(const ValueKey('explore-fresh')), findsOneWidget);
   });
 
   testWidgets('a card opened from a section opens among the section\'s '

@@ -373,5 +373,18 @@ Pill cardFromJson(Map<String, Object?> raw) {
       _ => null,
     },
     reacts: raw['reacts'] == true,
+    reference: switch (raw['reference']) {
+      final String url when url.startsWith('https://') => url,
+      // A DOI resolves at doi.org; a reference given as words is no link.
+      final String doi when doi.startsWith('doi:10.') =>
+        'https://doi.org/${doi.substring(4).trim()}',
+      _ => '',
+    },
+    why: text('why'),
+    views: switch (raw['views']) {
+      final List<Object?> v when v.length == 2 && v.every((e) => e is String) =>
+        v.cast<String>(),
+      _ => const [],
+    },
   );
 }

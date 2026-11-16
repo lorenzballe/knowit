@@ -4768,4 +4768,170 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyLabTitle => 'Your journey, as a story';
+
+  @override
+  String get storyLabNote => 'New version · on trial, TestFlight only';
+
+  @override
+  String get storyChapterWeek => 'This week';
+
+  @override
+  String get storyChapterWhere => 'Where you are';
+
+  @override
+  String get storyChapterReason => 'How you reason';
+
+  @override
+  String get storyChapterPractice => 'Practise';
+
+  @override
+  String get storyChapterStory => 'Your story';
+
+  @override
+  String storyHeadlineSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'In the answers you gave with confidence, you were right $n times in 10.',
+      one: 'In the answers you gave with confidence, you were right 1 time in 10.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyBetter => 'Better than last week.';
+
+  @override
+  String get storyWorse => 'A little less than last week.';
+
+  @override
+  String storyHeadlineStreak(int n) {
+    return '$n days in a row. Keep the thread.';
+  }
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) {
+    return 'In $subject you are right $pct of the time.';
+  }
+
+  @override
+  String storyHeadlineRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cards read. The journey starts here.',
+      one: 'One card read. The journey starts here.',
+      zero: 'Your first card is waiting.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storySaidRight(String sure, String right) {
+    return 'Your confidence: $sure. You are right $right of the time.';
+  }
+
+  @override
+  String storySaidRightToGo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n more answers saying how sure, and this gets measured.',
+      one: 'One more answer saying how sure, and this gets measured.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyOverconfident(String subject, int points) {
+    return 'Where you trust yourself too much: $subject, by $points points.';
+  }
+
+  @override
+  String get storyUnlock => 'See it with Astute+';
+
+  @override
+  String storyPracticeMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'The $n you got wrong with confidence',
+      one: 'The one you got wrong with confidence',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeChanged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'The $n that changed your mind',
+      one: 'The card that changed your mind',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeBlind(String subject) {
+    return '5 new cards in $subject';
+  }
+
+  @override
+  String get storyPracticeNone =>
+      'Nothing to practise yet: answer a few cards and it comes.';
+
+  @override
+  String get storyFirstCard => 'First card';
+
+  @override
+  String storyReached(String level) {
+    return 'Reached $level';
+  }
+
+  @override
+  String storyBestStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Best run: $n days',
+      one: 'Best run: 1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyCardsRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cards read',
+      one: '1 card read',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyToday => 'Today';
+
+  @override
+  String get storySeePath => 'See the path';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n new cards at the top',
+      one: '1 new card at the top',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'You\'re up to date: nothing new for now.';
 }

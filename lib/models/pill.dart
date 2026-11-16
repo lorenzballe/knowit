@@ -676,6 +676,18 @@ class Pill {
   /// Debate only: the strongest case against whichever side you took.
   final String counterpoint;
 
+  /// Where the source can be read: the page the card's facts came from.
+  /// Empty on a card that names a source without one.
+  final String reference;
+
+  /// Why it matters, under Go deeper: what the idea changes in the reader's
+  /// own world. Empty on a card written before November 2026.
+  final String why;
+
+  /// The two views of a contested question at their strongest, each as
+  /// "Label: one or two sentences", under Go deeper. Empty everywhere else.
+  final List<String> views;
+
   final Difficulty difficulty;
 
   /// What this card is an instance of. Cards sharing a principle are the
@@ -805,6 +817,9 @@ class Pill {
     this.web,
     this.sureOdds,
     this.reacts = false,
+    this.reference = '',
+    this.why = '',
+    this.views = const [],
   });
 
   /// Whether the card carries its tags. Every card in the bank does; a card
@@ -842,6 +857,13 @@ class Pill {
   bool get needsLaterKit => web != null && !web!.showable;
 
   bool get asksSomething => challenge is! NoChallenge;
+
+  /// Whether Go deeper has more than the source to show.
+  bool get goesDeeper =>
+      simply.isNotEmpty ||
+      why.isNotEmpty ||
+      views.length == 2 ||
+      counterpoint.isNotEmpty;
   bool get hasHint => hint.isNotEmpty;
   bool get hasTrap => trap.isNotEmpty;
 

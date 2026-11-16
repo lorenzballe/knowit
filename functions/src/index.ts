@@ -25,18 +25,24 @@
 //   deals around them until somebody has checked them.
 // - `cardStats` (HTTPS GET): the scorecard as JSON, numbers per card and
 //   nothing about who, for the tools that write and re-check cards.
+// - `askCard` (callable, Astute+): a question about a card answered by
+//   Claude (ask.ts): the card said simply, its two sides, the reader's own
+//   reasoning looked at, or their question answered; so many a day.
 //
 // The rules (firestore.rules) let no phone write a day, a profile or
 // Explore: what the server dealt is what the server dealt.
 
+import Anthropic from '@anthropic-ai/sdk';
 import { initializeApp } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
+import { FieldValue, getFirestore } from 'firebase-admin/firestore';
+import { defineSecret } from 'firebase-functions/params';
 import { setGlobalOptions } from 'firebase-functions/v2';
 import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 import { logger } from 'firebase-functions';
 
+import { ALL_PER_DAY, PER_DAY, answer as answerAsk, readAsk } from './ask.js';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import { search as searchBank } from './search.js';
@@ -81,6 +87,46 @@ export const dealDay = onCall({ enforceAppCheck: false }, async (request) => {
   logger.info('dealt', { uid, date, cards: (doc.cards as unknown[]).length, own: (doc.own as unknown[]).length });
   return doc;
 });
+
+// ── A question about a card, for Astute+ ─────────────────────────────────
+
+/** The key the answers are asked with, kept in Secret Manager. */
+const anthropicKey = defineSecret('ANTHROPIC_API_KEY');
+
+export const askCard = onCall(
+  { enforceAppCheck: false, secrets: [anthropicKey], maxInstances: 5, timeoutSeconds: 90 },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const ask = readAsk(request.data);
+    if (!ask) throw new HttpsError('invalid-argument', 'A card, and what to ask of it.');
+    // The plan as the phone last said it (presence): the counts below bound
+    // what a phone that lied about it could cost.
+    const presence = await db.collection('presence').doc(uid).get();
+    if (presence.get('plus') !== true) throw new HttpsError('permission-denied', 'Astute+ only.');
+    const card = (await dealingBank()).byId.get(ask.card);
+    if (!card) throw new HttpsError('not-found', 'No such card.');
+    const day = today(Date.now());
+    const mine = db.collection('readers').doc(uid).collection('ai').doc(day);
+    const everyone = db.collection('ai').doc(day);
+    const allowed = await db.runTransaction(async (t) => {
+      const [m, e] = await Promise.all([t.get(mine), t.get(everyone)]);
+      if ((m.get('n') ?? 0) >= PER_DAY || (e.get('n') ?? 0) >= ALL_PER_DAY) return false;
+      t.set(mine, { n: FieldValue.increment(1) }, { merge: true });
+      t.set(everyone, { n: FieldValue.increment(1) }, { merge: true });
+      return true;
+    });
+    if (!allowed) throw new HttpsError('resource-exhausted', 'Enough for today.');
+    try {
+      const out = await answerAsk(new Anthropic({ apiKey: anthropicKey.value() }), card, ask);
+      logger.info('asked', { card: ask.card, mode: ask.mode, lang: ask.lang, answered: 'text' in out });
+      return 'text' in out ? { text: out.text } : { none: out.none };
+    } catch (e) {
+      logger.error('ask failed', { card: ask.card, mode: ask.mode, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
+  },
+);
 
 // ── The pool, asked a question ───────────────────────────────────────────
 

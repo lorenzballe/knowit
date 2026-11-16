@@ -7,6 +7,11 @@
 # Cloud Scheduler Admin, Service Account User and Artifact Registry Writer
 # (Firebase console → Project settings → Service accounts → Generate new
 # private key gives one with enough, as the project's default account).
+#
+# The answers to Astute+ readers' questions (askCard, functions/src/ask.ts)
+# are asked of Claude with ANTHROPIC_API_KEY, the same Actions secret the
+# card factory uses: each deploy keeps it in Secret Manager, where the
+# function reads it, so the service account needs Secret Manager Admin too.
 name: Cloud deploy
 
 on:
@@ -38,8 +43,19 @@ jobs:
       - name: Deploy
         env:
           KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          ANTHROPIC: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           test -n "$KEY" || { echo "FIREBASE_SERVICE_ACCOUNT is not set"; exit 1; }
           printf '%s' "$KEY" > "$RUNNER_TEMP/sa.json"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          # The key askCard asks Claude with, kept in Secret Manager before the
+          # functions that read it are deployed. Without it the deploy stops
+          # here, saying why, rather than halfway through.
+          case "${{ inputs.only }}" in *functions*)
+            test -n "$ANTHROPIC" || { echo "ANTHROPIC_API_KEY is not set: add it under Settings → Secrets and variables → Actions"; exit 1; }
+            umask 077
+            printf '%s' "$ANTHROPIC" > "$RUNNER_TEMP/ak"
+            npx --yes firebase-tools@15 functions:secrets:set ANTHROPIC_API_KEY --data-file "$RUNNER_TEMP/ak" --project astuto-3d398 --non-interactive --force
+            rm -f "$RUNNER_TEMP/ak"
+          ;; esac
           npx --yes firebase-tools@15 deploy --only "${{ inputs.only }}" --project astuto-3d398 --non-interactive --force

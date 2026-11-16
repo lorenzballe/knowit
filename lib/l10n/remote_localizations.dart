@@ -4663,4 +4663,137 @@ class RemoteLocalizations extends AppLocalizations {
   String journeyKnewAlready(int n) =>
       _words.format('journeyKnewAlready', localeName, {'n': n}) ??
       _base.journeyKnewAlready(n);
+
+  @override
+  String get storyLabTitle =>
+      _words.text('storyLabTitle') ?? _base.storyLabTitle;
+
+  @override
+  String get storyLabNote => _words.text('storyLabNote') ?? _base.storyLabNote;
+
+  @override
+  String get storyChapterWeek =>
+      _words.text('storyChapterWeek') ?? _base.storyChapterWeek;
+
+  @override
+  String get storyChapterWhere =>
+      _words.text('storyChapterWhere') ?? _base.storyChapterWhere;
+
+  @override
+  String get storyChapterReason =>
+      _words.text('storyChapterReason') ?? _base.storyChapterReason;
+
+  @override
+  String get storyChapterPractice =>
+      _words.text('storyChapterPractice') ?? _base.storyChapterPractice;
+
+  @override
+  String get storyChapterStory =>
+      _words.text('storyChapterStory') ?? _base.storyChapterStory;
+
+  @override
+  String storyHeadlineSure(int n) =>
+      _words.format('storyHeadlineSure', localeName, {'n': n}) ??
+      _base.storyHeadlineSure(n);
+
+  @override
+  String get storyBetter => _words.text('storyBetter') ?? _base.storyBetter;
+
+  @override
+  String get storyWorse => _words.text('storyWorse') ?? _base.storyWorse;
+
+  @override
+  String storyHeadlineStreak(int n) =>
+      _words.format('storyHeadlineStreak', localeName, {'n': n}) ??
+      _base.storyHeadlineStreak(n);
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) =>
+      _words.format('storyHeadlineStrong', localeName, {
+        'subject': subject,
+        'pct': pct,
+      }) ??
+      _base.storyHeadlineStrong(subject, pct);
+
+  @override
+  String storyHeadlineRead(int n) =>
+      _words.format('storyHeadlineRead', localeName, {'n': n}) ??
+      _base.storyHeadlineRead(n);
+
+  @override
+  String storySaidRight(String sure, String right) =>
+      _words.format('storySaidRight', localeName, {
+        'sure': sure,
+        'right': right,
+      }) ??
+      _base.storySaidRight(sure, right);
+
+  @override
+  String storySaidRightToGo(int n) =>
+      _words.format('storySaidRightToGo', localeName, {'n': n}) ??
+      _base.storySaidRightToGo(n);
+
+  @override
+  String storyOverconfident(String subject, int points) =>
+      _words.format('storyOverconfident', localeName, {
+        'subject': subject,
+        'points': points,
+      }) ??
+      _base.storyOverconfident(subject, points);
+
+  @override
+  String get storyUnlock => _words.text('storyUnlock') ?? _base.storyUnlock;
+
+  @override
+  String storyPracticeMisses(int n) =>
+      _words.format('storyPracticeMisses', localeName, {'n': n}) ??
+      _base.storyPracticeMisses(n);
+
+  @override
+  String storyPracticeChanged(int n) =>
+      _words.format('storyPracticeChanged', localeName, {'n': n}) ??
+      _base.storyPracticeChanged(n);
+
+  @override
+  String storyPracticeBlind(String subject) =>
+      _words.format('storyPracticeBlind', localeName, {'subject': subject}) ??
+      _base.storyPracticeBlind(subject);
+
+  @override
+  String get storyPracticeNone =>
+      _words.text('storyPracticeNone') ?? _base.storyPracticeNone;
+
+  @override
+  String get storyFirstCard =>
+      _words.text('storyFirstCard') ?? _base.storyFirstCard;
+
+  @override
+  String storyReached(String level) =>
+      _words.format('storyReached', localeName, {'level': level}) ??
+      _base.storyReached(level);
+
+  @override
+  String storyBestStreak(int n) =>
+      _words.format('storyBestStreak', localeName, {'n': n}) ??
+      _base.storyBestStreak(n);
+
+  @override
+  String storyCardsRead(int n) =>
+      _words.format('storyCardsRead', localeName, {'n': n}) ??
+      _base.storyCardsRead(n);
+
+  @override
+  String get storyToday => _words.text('storyToday') ?? _base.storyToday;
+
+  @override
+  String get storySeePath => _words.text('storySeePath') ?? _base.storySeePath;
+
+  @override
+  String exploreFreshCards(int n) =>
+      _words.format('exploreFreshCards', localeName, {'n': n}) ??
+      _base.exploreFreshCards(n);
+
+  @override
+  String get exploreUpToDate =>
+      _words.text('exploreUpToDate') ?? _base.exploreUpToDate;
 }

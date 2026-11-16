@@ -4725,4 +4725,161 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get storyLabTitle => 'Yolculuğun, bir hikâye olarak';
+
+  @override
+  String get storyLabNote => 'Yeni sürüm · denemede, yalnızca TestFlight';
+
+  @override
+  String get storyChapterWeek => 'Bu hafta';
+
+  @override
+  String get storyChapterWhere => 'Neredesin';
+
+  @override
+  String get storyChapterReason => 'Nasıl akıl yürütüyorsun';
+
+  @override
+  String get storyChapterPractice => 'Pratik yap';
+
+  @override
+  String get storyChapterStory => 'Hikâyen';
+
+  @override
+  String storyHeadlineSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Emin olduğun cevaplarda 10\'da $n kez haklıydın.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyBetter => 'Geçen haftadan daha iyi.';
+
+  @override
+  String get storyWorse => 'Geçen haftadan biraz daha az.';
+
+  @override
+  String storyHeadlineStreak(int n) {
+    return '$n gün üst üste. İpi bırakma.';
+  }
+
+  @override
+  String storyHeadlineStrong(String subject, String pct) {
+    return '$subject alanında zamanın $pct kadarında haklısın.';
+  }
+
+  @override
+  String storyHeadlineRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kart okundu. Yolculuk burada başlıyor.',
+      zero: 'İlk kartın seni bekliyor.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storySaidRight(String sure, String right) {
+    return 'Eminliğin: $sure. Zamanın $right kadarında haklısın.';
+  }
+
+  @override
+  String storySaidRightToGo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ne kadar emin olduğunu söylediğin $n cevap daha, ve ölçülür.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyOverconfident(String subject, int points) {
+    return 'Kendine fazla güvendiğin yer: $subject, $points puan.';
+  }
+
+  @override
+  String get storyUnlock => 'Astute+ ile gör';
+
+  @override
+  String storyPracticeMisses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Emin olup yanıldığın $n kart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeChanged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Fikrini değiştiren $n kart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyPracticeBlind(String subject) {
+    return '$subject alanında 5 yeni kart';
+  }
+
+  @override
+  String get storyPracticeNone =>
+      'Henüz çalışacak bir şey yok: birkaç karta cevap ver, gelecek.';
+
+  @override
+  String get storyFirstCard => 'İlk kart';
+
+  @override
+  String storyReached(String level) {
+    return 'Ulaşıldı: $level';
+  }
+
+  @override
+  String storyBestStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'En iyi seri: $n gün',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String storyCardsRead(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kart okundu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get storyToday => 'Bugün';
+
+  @override
+  String get storySeePath => 'Yolu gör';
+
+  @override
+  String exploreFreshCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Üstte $n yeni kart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreUpToDate => 'Her şeyi gördün: şimdilik yeni bir şey yok.';
 }

@@ -1,10 +1,13 @@
 import 'dart:math' as math;
+import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart' hide Step;
 import 'package:intl/intl.dart' hide TextDirection;
 
 import '../data/pill_bank.dart';
-import '../data/pills_repository.dart' show dateKey, pillById;
+import '../analytics.dart';
+import '../data/pills_repository.dart' show dateKey, dayShift, pillById;
+import '../debug_flags.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
@@ -21,6 +24,9 @@ import 'path_screen.dart';
 import 'progress_text.dart';
 import 'week_screen.dart';
 import '../widgets/card_edge.dart';
+import '../widgets/premium.dart';
+
+part 'journey_story.dart';
 
 /// Your journey, as artboard 137a: tiles, two to a row.
 ///
@@ -160,6 +166,13 @@ class _JourneyScreenState extends State<JourneyScreen> {
                       Center(
                         child: ShareDay(app: app, from: 'journey'),
                       ),
+                    ],
+                    // The journey as a story, on trial under the tiles
+                    // (journey_story.dart): only where the developer tools
+                    // are, the TestFlight installs, until it is chosen.
+                    if (debugToolsOn) ...[
+                      const SizedBox(height: 40),
+                      JourneyStory(app: app),
                     ],
                   ],
                 ),
@@ -999,6 +1012,16 @@ class _RingPainter extends CustomPainter {
 /// The level by name, how far the next one is, and the ladder as seven bars
 /// that grow: the ones climbed, this one, and the next dashed. Tapping it
 /// opens the whole path.
+/// What the next step still asks for, in words.
+String _stepToGo(AppLocalizations l, Step step) => switch (step.kind) {
+  StepKind.read => l.journeyToGoCards(step.n),
+  StepKind.answer => l.journeyToGoAnswers(step.n),
+  StepKind.judge => l.journeyToGoSure(step.n),
+  StepKind.hold => l.journeyToGoHeld(step.n),
+  StepKind.gap => l.journeyToGoPoints(math.max(1, step.n - step.target)),
+  StepKind.beforeJudged => l.journeyToGoSure(step.n),
+};
+
 class _LevelTile extends StatelessWidget {
   const _LevelTile({required this.app});
 
@@ -1006,14 +1029,7 @@ class _LevelTile extends StatelessWidget {
 
   static const List<double> _heights = [14, 22, 30, 38, 46, 56, 70];
 
-  String _toGo(AppLocalizations l, Step step) => switch (step.kind) {
-    StepKind.read => l.journeyToGoCards(step.n),
-    StepKind.answer => l.journeyToGoAnswers(step.n),
-    StepKind.judge => l.journeyToGoSure(step.n),
-    StepKind.hold => l.journeyToGoHeld(step.n),
-    StepKind.gap => l.journeyToGoPoints(math.max(1, step.n - step.target)),
-    StepKind.beforeJudged => l.journeyToGoSure(step.n),
-  };
+  String _toGo(AppLocalizations l, Step step) => _stepToGo(l, step);
 
   @override
   Widget build(BuildContext context) {

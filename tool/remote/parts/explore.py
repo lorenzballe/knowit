@@ -39,7 +39,7 @@ COMMON = {"id", "block", "title", "subtitle", "source", "size", "style", "limit"
 
 # Where a section's cards can come from (ExploreHost.cardsFor).
 SHELVES = {"today", "asking", "topWeek", "topMonth", "loved", "mine", "forYou", "local"}
-MINE = {"saved", "liked", "due"}
+MINE = {"saved", "liked", "due", "forYou"}
 QUERY_KEYS = {"subjects", "formats", "difficulty", "unread", "perSubject", "limit", "seed"}
 SEEDS = {"day", "week", "fixed"}
 DIFFICULTY = {"easy", "medium", "hard"}
