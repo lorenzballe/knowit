@@ -316,8 +316,6 @@
   "tryAgain": "Попробовать снова",
   "purchasePending": "Ждём подтверждения. Astute+ откроется, как только платёж пройдёт.",
   "oneMoment": "Секунду…",
-  "purchaseConfirming": "Подтверждаем оплату…",
-  "purchaseConfirmingSlow": "Это дольше, чем обычно. Оплата в безопасности: Astute+ включится сам.",
   "closeLabel": "Закрыть",
   "thatDidNotGoThrough": "Не получилось.",
   "plusIsBack": "Astute+ снова с тобой.",

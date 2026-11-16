@@ -1383,13 +1383,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get oneMoment => 'Even geduld…';
 
   @override
-  String get purchaseConfirming => 'Betaling wordt bevestigd…';
-
-  @override
-  String get purchaseConfirmingSlow =>
-      'Dit duurt langer dan normaal. De betaling is veilig: Astute+ gaat vanzelf aan.';
-
-  @override
   String get closeLabel => 'Sluiten';
 
   @override

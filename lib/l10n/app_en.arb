@@ -1348,14 +1348,6 @@
  "@oneMoment": {
   "description": "The paywall's button while a purchase is under way."
  },
- "purchaseConfirming": "Confirming your payment…",
- "@purchaseConfirming": {
-  "description": "The line under the ring while the store confirms a purchase the reader has just paid for, before anything is celebrated."
- },
- "purchaseConfirmingSlow": "This is taking longer than usual. Your payment is safe: Astute+ turns on by itself.",
- "@purchaseConfirmingSlow": {
-  "description": "The same wait when it runs long (no network, a slow store): the payment is not lost, and Astute+ turns on by itself when the answer comes."
- },
  "closeLabel": "Close",
  "@closeLabel": {
   "description": "What a screen reader says for the cross that closes the paywall."

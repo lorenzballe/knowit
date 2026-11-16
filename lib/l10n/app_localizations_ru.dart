@@ -1434,13 +1434,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get oneMoment => 'Секунду…';
 
   @override
-  String get purchaseConfirming => 'Подтверждаем оплату…';
-
-  @override
-  String get purchaseConfirmingSlow =>
-      'Это дольше, чем обычно. Оплата в безопасности: Astute+ включится сам.';
-
-  @override
   String get closeLabel => 'Закрыть';
 
   @override

@@ -1323,13 +1323,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get oneMoment => '请稍候…';
 
   @override
-  String get purchaseConfirming => '正在确认付款…';
-
-  @override
-  String get purchaseConfirmingSlow =>
-      '比平时久一些。付款是安全的：Astute+ 会自动开通。';
-
-  @override
   String get closeLabel => '关闭';
 
   @override

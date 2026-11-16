@@ -316,8 +316,6 @@
   "tryAgain": "もう一度試す",
   "purchasePending": "承認待ちです。支払いが完了すると Astute+ が使えるようになります。",
   "oneMoment": "少々お待ちください…",
-  "purchaseConfirming": "お支払いを確認しています…",
-  "purchaseConfirmingSlow": "いつもより時間がかかっています。お支払いは安全です。Astute+ は自動で使えるようになります。",
   "closeLabel": "閉じる",
   "thatDidNotGoThrough": "処理できませんでした。",
   "plusIsBack": "Astute+が戻りました。",

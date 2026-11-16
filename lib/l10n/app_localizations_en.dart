@@ -1377,13 +1377,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get oneMoment => 'One moment…';
 
   @override
-  String get purchaseConfirming => 'Confirming your payment…';
-
-  @override
-  String get purchaseConfirmingSlow =>
-      'This is taking longer than usual. Your payment is safe: Astute+ turns on by itself.';
-
-  @override
   String get closeLabel => 'Close';
 
   @override

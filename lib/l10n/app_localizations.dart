@@ -2016,18 +2016,6 @@ abstract class AppLocalizations {
   /// **'One moment…'**
   String get oneMoment;
 
-  /// The line under the ring while the store confirms a purchase the reader has just paid for, before anything is celebrated.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirming your payment…'**
-  String get purchaseConfirming;
-
-  /// The same wait when it runs long (no network, a slow store): the payment is not lost, and Astute+ turns on by itself when the answer comes.
-  ///
-  /// In en, this message translates to:
-  /// **'This is taking longer than usual. Your payment is safe: Astute+ turns on by itself.'**
-  String get purchaseConfirmingSlow;
-
   /// What a screen reader says for the cross that closes the paywall.
   ///
   /// In en, this message translates to:
