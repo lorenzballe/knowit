@@ -4751,4 +4751,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get openTheCard => 'Open de kaart';
+
+  @override
+  String get perkPathsTitle => 'Elk pad, helemaal';
+
+  @override
+  String get perkPathsLine =>
+      'Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden.';
 }

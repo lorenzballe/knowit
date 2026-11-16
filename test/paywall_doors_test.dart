@@ -279,7 +279,7 @@ void main() {
       final double own = tester
           .getTopLeft(find.text('Five of your own cards'))
           .dy;
-      final double read = tester.getTopLeft(find.text("What you've read")).dy;
+      final double read = tester.getTopLeft(find.text('Every path, whole')).dy;
       expect(gap, lessThan(own));
       expect(own, lessThan(read));
       // Nothing the free plan already has, and nothing never delivered.
@@ -367,7 +367,7 @@ void main() {
           for (final String perk in [
             l.perkGapTitle,
             l.perkOwnFiveTitle,
-            l.perkReadTitle,
+            l.perkPathsTitle,
           ]) {
             expect(find.text(perk), findsOneWidget, reason: '$source $perk');
           }

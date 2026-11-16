@@ -1113,5 +1113,7 @@
   "rereadWrong": "La primera vez fallaste.",
   "betsDayShareLine": "El reto de hoy en Astute: {off, plural, =0{di en el clavo} =1{me desvié 1 punto} other{me desvié {off} puntos}}. ¿Lo haces mejor?",
   "playTheCard": "Jugar la carta",
-  "openTheCard": "Abrir la carta"
+  "openTheCard": "Abrir la carta",
+  "perkPathsTitle": "Cada ruta, entera",
+  "perkPathsLine": "Diez cartas sobre un tema, de la más fácil a la más difícil. Rutas nuevas cada semana."
 }

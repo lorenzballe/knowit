@@ -4669,4 +4669,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get openTheCard => 'Kartı aç';
+
+  @override
+  String get perkPathsTitle => 'Her yol, eksiksiz';
+
+  @override
+  String get perkPathsLine =>
+      'Tek bir konuda on kart, en kolaydan en zora. Her hafta yeni yollar.';
 }

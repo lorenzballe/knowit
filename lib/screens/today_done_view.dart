@@ -714,6 +714,7 @@ class _CardFace extends StatelessWidget {
           child: CardThumb(
             pill: pill,
             side: side,
+            large: true,
             // Whole, never cut: the shelf's card is a little wider than the
             // picture, and the picture's own ground either side of it is
             // the card's margin.

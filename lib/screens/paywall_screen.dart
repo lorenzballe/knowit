@@ -51,17 +51,27 @@ int get kYearlySavingPercent {
 // Three things, the record first: the free profile says how far off the
 // reader is today, and only the journey says whether that is closing, so it
 // is the one thing the free plan cannot show at all. Then the day made of
-// the reader's own cards, then the days to open again. Six perks read as a
-// list of features; three read as a reason.
+// the reader's own cards, then every path whole: the free plan opens a
+// path's first two cards, and the rest is here. (What you've read gave way
+// to the paths: the archive's own door already opens on it, and a path is
+// the thing a reader can see they are missing.) Six perks read as a list
+// of features; three read as a reason.
 //
 // Each is drawn rather than marked with an icon: the gap closing on a
 // chart, five cards fanned, a month of days read. An icon on a faint square
 // said "feature"; the picture says which one, at a glance, and fills the
 // card it sits on.
-List<({_PerkArt art, String title, String sub})> _perks(AppLocalizations l) => [
+List<({_PerkArt art, String title, String sub})> _perks(
+  AppLocalizations l, [
+  PaywallVariant? variant,
+]) => [
   (art: _PerkArt.gap, title: l.perkGapTitle, sub: l.perkGapLine),
   (art: _PerkArt.five, title: l.perkOwnFiveTitle, sub: l.perkOwnFiveLine),
-  (art: _PerkArt.days, title: l.perkReadTitle, sub: l.perkReadLine),
+  // On the paths' own door the headline says them already: what was read
+  // takes their place there.
+  variant == PaywallVariant.paths
+      ? (art: _PerkArt.days, title: l.perkReadTitle, sub: l.perkReadLine)
+      : (art: _PerkArt.paths, title: l.perkPathsTitle, sub: l.perkPathsLine),
 ];
 
 /// The three perks' hues, the headline's three in its order — yellow, teal,
@@ -813,7 +823,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         top,
                         ...opener,
                         const SizedBox(height: 18),
-                        for (final (int i, perk) in _perks(l).indexed) ...[
+                        for (final (int i, perk) in _perks(
+                          l,
+                          _variant,
+                        ).indexed) ...[
                           if (i > 0) const SizedBox(height: _Perk.between),
                           _Perk(
                             art: perk.art,
@@ -841,7 +854,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// all three, at one size, or on none.
   Widget _perksInRoom(AppLocalizations l) => LayoutBuilder(
     builder: (context, room) {
-      final perks = _perks(l);
+      final perks = _perks(l, _variant);
       // Never right up against the line above or the plans below, however
       // short the phone.
       final double air = math.min(_Perk.air, room.maxHeight / 2);
@@ -1520,6 +1533,10 @@ enum _PerkArt {
 
   /// The days read: a month of them, filled in, the last one marked.
   days,
+
+  /// A path: ten steps climbing from the easiest card to the hardest, each
+  /// a little larger and brighter than the last.
+  paths,
 }
 
 /// How the three perk cards are set, alike, in the room they share: how
@@ -1831,6 +1848,7 @@ class _PerkArtPainter extends CustomPainter {
     _PerkArt.gap => _gap(canvas, size.width),
     _PerkArt.five => _five(canvas, size.width),
     _PerkArt.days => _days(canvas, size.width),
+    _PerkArt.paths => _paths(canvas, size.width),
   };
 
   /// Five weeks: how sure, dashed and level near the top, and how right,
@@ -2018,6 +2036,47 @@ class _PerkArtPainter extends CustomPainter {
             ..strokeWidth = s * 0.02,
         );
       }
+    }
+  }
+
+  /// Ten steps on a rising line, drawn one after another; the last ringed
+  /// once it is reached.
+  void _paths(Canvas canvas, double s) {
+    Offset at(int i) => Offset(
+      s * (0.2 + 0.6 * i / 9),
+      s * (0.76 - 0.52 * math.pow(i / 9, 1.25)),
+    );
+    final int shown = (t * 10).ceil().clamp(0, 10);
+    if (shown == 0) return;
+    final Path line = Path()..moveTo(at(0).dx, at(0).dy);
+    for (int i = 1; i < shown; i++) {
+      line.lineTo(at(i).dx, at(i).dy);
+    }
+    canvas.drawPath(
+      line,
+      Paint()
+        ..color = hue.withValues(alpha: dark ? 0.45 : 0.4)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = s * 0.03
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
+    );
+    for (int i = 0; i < shown; i++) {
+      canvas.drawCircle(
+        at(i),
+        s * (0.032 + 0.026 * i / 9),
+        Paint()..color = hue.withValues(alpha: 0.55 + 0.45 * i / 9),
+      );
+    }
+    if (shown == 10 && t >= 0.999) {
+      canvas.drawCircle(
+        at(9),
+        s * 0.1,
+        Paint()
+          ..color = hue.withValues(alpha: 0.35)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = s * 0.022,
+      );
     }
   }
 

@@ -113,7 +113,7 @@ void main() {
 
       expect(tester.takeException(), isNull);
       expect(
-        find.byKey(ValueKey('card-thumb-${pill.id}-front')),
+        find.byKey(ValueKey('card-thumb-${pill.id}-front-large')),
         findsOneWidget,
       );
       // The question is on the picture, not printed over it again.

@@ -5002,5 +5002,13 @@
  "openTheCard": "Open the card",
  "@openTheCard": {
   "description": "On a card in words opened from saved, liked or the archive: opens the card itself at full size, to turn over again."
+ },
+ "perkPathsTitle": "Every path, whole",
+ "@perkPathsTitle": {
+  "description": "A perk on the paywall: Astute+ opens every ten-card path whole (the free plan opens the first two cards of each)."
+ },
+ "perkPathsLine": "Ten cards on one theme, from the easiest to the hardest. New paths every week.",
+ "@perkPathsLine": {
+  "description": "Under the paths perk on the paywall: what a path is."
  }
 }

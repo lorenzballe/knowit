@@ -4896,4 +4896,11 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get openTheCard => 'Otwórz kartę';
+
+  @override
+  String get perkPathsTitle => 'Każda ścieżka, w całości';
+
+  @override
+  String get perkPathsLine =>
+      'Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Nowe ścieżki co tydzień.';
 }

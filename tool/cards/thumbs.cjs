@@ -25,8 +25,10 @@ const executablePath = fs.existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-bro
 const local = url => { const base = url.split('?')[0].split('/').pop(); for (const d of [vendor, path.join(vendor, 'gsap-plugins')]) { const p = path.join(d, base); if (fs.existsSync(p)) return p; } return null; };
 const TYPES = {'.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.wasm': 'application/wasm', '.json': 'application/json', '.html': 'text/html', '.png': 'image/png', '.svg': 'image/svg+xml'};
 const typeOf = p => TYPES[path.extname(p)] || 'application/octet-stream';
-// The card on Today on a 402-wide phone (card_check.cjs, "medium"), photographed at twice its size.
-const SIZE = {width: 366, height: 606}, SCALE = 1.25;
+// The card on Today on a 402-wide phone (card_check.cjs, "medium"), photographed at two and a half
+// times its size: the large pictures, for the places that show a card at full width, are these as
+// taken; the small ones, for shelves and tiles, are made from them (thumbs_webp.py).
+const SIZE = {width: 366, height: 606}, SCALE = 2.5;
 const ORIGIN = 'https://card.astute/';
 const hashOf = html => crypto.createHash('sha256').update(html, 'utf8').digest('hex').slice(0, 12);
 
@@ -97,7 +99,7 @@ async function shoot(browser, card) {
   const index = fs.existsSync(INDEX) ? JSON.parse(fs.readFileSync(INDEX, 'utf8')) : {};
   const all = pages();
   const named = new Set(process.argv.slice(2));
-  const todo = all.filter(c => named.size ? named.has(c.id) : index[c.id] !== hashOf(c.html) || !fs.existsSync(path.join(OUT, `${c.id}-back.webp`)));
+  const todo = all.filter(c => named.size ? named.has(c.id) : index[c.id] !== hashOf(c.html) || !fs.existsSync(path.join(OUT, `${c.id}-back.webp`)) || !fs.existsSync(path.join(OUT, 'large', `${c.id}-back.webp`)));
   const browser = await pw.chromium.launch({executablePath});
   let done = 0, failed = [];
   const queue = [...todo];
@@ -113,11 +115,12 @@ async function shoot(browser, card) {
       if ((done + failed.length) % 20 === 0) { save(); console.log(`${done + failed.length} of ${todo.length}`); }
     }
   }
-  await Promise.all([worker(), worker(), worker()]);
+  // Three pages at once, or as many as THUMBS_WORKERS says: a page spends most of its time waiting.
+  await Promise.all(Array.from({length: Number(process.env.THUMBS_WORKERS) || 3}, worker));
   await browser.close();
   // Pictures of pages no longer in the bank go.
   const live = new Set(all.map(c => c.id));
-  for (const f of fs.readdirSync(OUT)) { const m = f.match(/^(.*)-(front|back)\.webp$/); if (m && !live.has(m[1])) fs.unlinkSync(path.join(OUT, f)); }
+  for (const dir of [OUT, path.join(OUT, 'large')]) { if (!fs.existsSync(dir)) continue; for (const f of fs.readdirSync(dir)) { const m = f.match(/^(.*)-(front|back)\.webp$/); if (m && !live.has(m[1])) fs.unlinkSync(path.join(dir, f)); } }
   const made = require('child_process').spawnSync('python3', [path.join(__dirname, 'thumbs_webp.py'), RAW, OUT], {stdio: 'inherit'});
   if (made.status !== 0) { console.error('the pictures could not be made small'); process.exit(1); }
   save();
