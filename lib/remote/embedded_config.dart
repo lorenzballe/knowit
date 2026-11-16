@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "90543cab432f0791",
+ "hash": "eadf57435d6bed14",
  "app": {
   "gate": null,
   "flags": {},
@@ -2064,6 +2064,10 @@ const String kEmbeddedRemote = r'''
    {
     "id": "where-you-live",
     "block": "where-you-live"
+   },
+   {
+    "id": "moving",
+    "block": "purpose.moving"
    },
    {
     "id": "month",
