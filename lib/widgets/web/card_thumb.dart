@@ -10,6 +10,8 @@
 /// before on a card that has none yet, or whose picture will not come.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../data/card_pages.dart';
@@ -106,11 +108,51 @@ class CardThumb extends StatelessWidget {
     if (small == null) return none;
     final String ref = large ? largeOf(small) : small;
     final bool still = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final ImageProvider source = image(urlOf(ref));
+    final double dpr = MediaQuery.maybeDevicePixelRatioOf(context) ?? 3;
+    return LayoutBuilder(
+      builder: (context, box) =>
+          _picture(context, still, none, _sized(source, box, dpr)),
+    );
+  }
+
+  /// The picture decoded at the size it is shown, not the size it was taken
+  /// at. Decoded whole, a picture taken at two and a half times the card
+  /// costs megabytes in a fifty-point slot, and a shelf of them is what an
+  /// iPhone closes an app for (a Jetsam report, from the owner's phone). The
+  /// width is rounded up to a step, so a box a point or two different reuses
+  /// the same decode rather than making another.
+  ImageProvider _sized(ImageProvider source, BoxConstraints box, double dpr) {
+    final double w = box.maxWidth, h = box.maxHeight;
+    if (!w.isFinite && !h.isFinite) return source;
+    const double aspect = WebThumbs.aspect;
+    final double shown = !h.isFinite
+        ? w
+        : !w.isFinite
+        ? h * aspect
+        : switch (fit) {
+            BoxFit.cover => math.max(w, h * aspect),
+            BoxFit.fitWidth => w,
+            BoxFit.fitHeight => h * aspect,
+            _ => math.min(w, h * aspect),
+          };
+    if (shown <= 0) return source;
+    const int step = 64;
+    final int px = ((shown * dpr) / step).ceil() * step;
+    return ResizeImage.resizeIfNeeded(px, null, source);
+  }
+
+  Widget _picture(
+    BuildContext context,
+    bool still,
+    Widget none,
+    ImageProvider provider,
+  ) {
     return Image(
       key: ValueKey(
         'card-thumb-${pill.id}-${side.name}${large ? '-large' : ''}',
       ),
-      image: image(urlOf(ref)),
+      image: provider,
       fit: fit,
       alignment: Alignment.topCenter,
       width: double.infinity,

@@ -112,6 +112,33 @@ void main() {
     ]);
   });
 
+  test('the backup holds no array inside an array: Firestore refuses one, '
+      'and on an iPhone the app closes over it', () {
+    final snapshot = ReaderSnapshot(
+      readingLog: [_read('a'), _read('b')],
+      dayLog: {
+        '2026-11-16': [3, 120, 1, 2, 0, 0],
+      },
+      readDays: {
+        '2026-11-16': ['a', 'b'],
+      },
+    );
+    void walk(Object? value, {bool inArray = false}) {
+      if (value is List) {
+        expect(inArray, isFalse, reason: 'an array inside an array');
+        for (final Object? e in value) {
+          walk(e, inArray: true);
+        }
+      } else if (value is Map) {
+        for (final Object? e in value.values) {
+          walk(e);
+        }
+      }
+    }
+
+    walk(snapshot.toJson());
+  });
+
   group("an install that learns from reads (the experiment's implicit "
       'side)', () {
     final Pill card = PillBank.live.firstWhere((p) => p.traits.isNotEmpty);
