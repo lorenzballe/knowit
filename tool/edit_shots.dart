@@ -29,6 +29,7 @@ import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/screens/saved_screen.dart';
+import 'package:astuto/screens/today_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/share_sheet.dart';
@@ -540,5 +541,45 @@ void main() {
     );
     await _settle(tester);
     await _shoot(tester, '25-explore-card-pro');
+  });
+
+  testWidgets('the day before it has come: the skeleton', (tester) async {
+    final view = tester.view;
+    view.padding = const FakeViewPadding(top: 62 * 3, bottom: 34 * 3);
+    view.viewPadding = view.padding;
+    addTearDown(view.resetPadding);
+    addTearDown(view.resetViewPadding);
+    for (final (String name, Brightness b) in const [
+      ('26-skeleton', Brightness.dark),
+      ('26b-skeleton-paper', Brightness.light),
+    ]) {
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildAstutoTheme(b),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Builder(
+            builder: (context) => Scaffold(
+              backgroundColor: context.p.surface,
+              body: SafeArea(
+                bottom: false,
+                minimum: const EdgeInsets.only(top: 12),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.paddingOf(context).bottom + 76,
+                  ),
+                  child: const TodaySkeleton(),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      // Partway through the light's pass.
+      await tester.pump(const Duration(milliseconds: 600));
+      await _shoot(tester, name);
+    }
   });
 }

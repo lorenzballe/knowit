@@ -125,6 +125,16 @@ class ExploreScreenState extends State<ExploreScreen>
     _stay.watch(ScreenPresence.maybeOf(context));
   }
 
+  /// Explore read again from the server, whatever its age: the pull at
+  /// the top of the page.
+  Future<void> _reload() async {
+    Analytics.capture('explore refreshed', {});
+    await Future.wait([
+      Served.instance.explore(force: true),
+      Tallies.instance.refresh(force: true),
+    ]);
+  }
+
   /// What the server found for the query being typed, and for which query,
   /// so a slow answer to an old query never lands under a new one.
   List<Pill>? _serverHits;
@@ -475,14 +485,25 @@ class ExploreScreenState extends State<ExploreScreen>
       children: [
         NotificationListener<ScrollNotification>(
           onNotification: _sight.scrolled,
-          child: CustomScrollView(
-            controller: _list,
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 30),
-                sliver: ExploreSliver(host: this, slots: slots),
-              ),
-            ],
+          // Pulled down from its top, Explore is read again from the
+          // server, as a feed is: the shelves the server assembled since,
+          // and the tallies under them.
+          child: RefreshIndicator(
+            key: const ValueKey('explore-refresh'),
+            color: context.p.ink,
+            backgroundColor: context.p.surfaceRaised,
+            onRefresh: _reload,
+            child: CustomScrollView(
+              controller: _list,
+              // Always pullable, however short the page.
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  sliver: ExploreSliver(host: this, slots: slots),
+                ),
+              ],
+            ),
           ),
         ),
         // The shelves run under the tab bar rather than stopping short of
