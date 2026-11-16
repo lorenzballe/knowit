@@ -1117,5 +1117,9 @@
   "playTheCard": "カードで遊ぶ",
   "openTheCard": "カードを開く",
   "perkPathsTitle": "すべてのパスを最後まで",
-  "perkPathsLine": "ひとつのテーマで10枚、やさしい順から難しい順へ。毎週新しいパス。"
+  "perkPathsLine": "ひとつのテーマで10枚、やさしい順から難しい順へ。毎週新しいパス。",
+  "journeyStrongest": "得意",
+  "journeyMostMissed": "苦手",
+  "journeyRightShare": "正解率 {pct}",
+  "journeySubjectsNotYet": "1つの分野で6回答えると測れます。"
 }

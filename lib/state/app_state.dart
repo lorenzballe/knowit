@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart'
     show Color, ThemeMode, basicLocaleListResolution;
@@ -38,6 +39,7 @@ import '../utils/reminders.dart';
 import 'journey_record.dart';
 import 'music_sound.dart';
 import 'progress.dart';
+import 'reading_log.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
 enum Plan { month, year }
@@ -115,6 +117,8 @@ class AppState extends ChangeNotifier {
   static const _kOwnIds = 'knowit.todayOwnIds';
   static const _kAnswers = 'knowit.answersJson';
   static const _kJudgements = 'knowit.judgements';
+  static const _kReadingLog = 'knowit.readingLog';
+  static const _kTasteVariant = 'knowit.exp.tasteVariant';
   static const _kTheme = 'knowit.theme';
   static const _kPushAsked = 'knowit.pushAsked';
   static const _kPushDeferrals = 'knowit.pushDeferrals';
@@ -236,6 +240,17 @@ class AppState extends ChangeNotifier {
   /// Every judgement ever made, oldest first. Calibration is a track record,
   /// so this is appended to and never rewritten.
   List<Judgement> judgements = [];
+
+  /// Every read of a card, the last [ReadingLog.keep]: how long its front
+  /// and its back held the reader, the turns, the hint, how it left
+  /// (reading_log.dart). Kept on the phone and in the account's backup.
+  List<CardReadEntry> readingLog = [];
+
+  /// How this install learns the reader's taste, for the experiment that
+  /// weighs it: `implicit` reads how cards are read — a back read to its
+  /// end, a card thrown on unturned — as well as what is liked and thrown
+  /// down; `explicit` only what is said. Drawn once at random, and kept.
+  String tasteVariant = 'explicit';
 
   bool onboarded = false;
   Set<String> pickedTopics = kTopicOrder.toSet();
@@ -531,6 +546,14 @@ class AppState extends ChangeNotifier {
     _trialWarnedFor = _instantOf(_prefs.getString(_kTrialWarnedFor));
     _trialWarnedAt = _instantOf(_prefs.getString(_kTrialWarnedAt));
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
+    readingLog = ReadingLog.decode(_prefs.getString(_kReadingLog));
+    final String? variant = _prefs.getString(_kTasteVariant);
+    tasteVariant =
+        variant ?? (math.Random().nextBool() ? 'implicit' : 'explicit');
+    if (variant == null) _prefs.setString(_kTasteVariant, tasteVariant);
+    // On every event, so the two ways can be told apart wherever they are
+    // measured.
+    Analytics.register('taste_variant', tasteVariant);
     deckHistory = _decodeHistory(_prefs.getString(_kDeckHistory));
     rungDates = _decodeDates(_prefs.getString(_kRungDates));
     readDays = _decodeHistory(_prefs.getString(_kReadDays));
@@ -1111,6 +1134,7 @@ class AppState extends ChangeNotifier {
   /// every card read in the viewer, however it left. [where] is where it was
   /// read — `today`, or the screen the viewer was opened from.
   void cardClosed(CardStint stint, {required String where}) {
+    _logRead(stint.pill.id, stint.facts, thrown: stint.thrown);
     Analytics.capture('card closed', {
       // In sight in this stint, first: the trace keeps one duration per
       // event, and for this one it is how long the card held the reader.
@@ -1119,6 +1143,16 @@ class AppState extends ChangeNotifier {
       'where': where,
       ...stint.facts,
     });
+  }
+
+  /// Writes a read down (reading_log.dart): on the phone now, and into the
+  /// account's backup with the rest.
+  void _logRead(String id, Map<String, Object?> facts, {required bool thrown}) {
+    readingLog = ReadingLog.added(
+      readingLog,
+      CardReadEntry.fromFacts(id, facts, thrown: thrown),
+    );
+    _prefs.setString(_kReadingLog, ReadingLog.encode(readingLog));
   }
 
   /// What 'first card shown' says about the day it showed: how long the day
@@ -1138,6 +1172,7 @@ class AppState extends ChangeNotifier {
     if (todayCompleted) return;
     final Pill card = todaysDeck[todayIndex];
     final DateTime? upAt = _cardUpAt;
+    _logRead(card.id, read, thrown: true);
     Analytics.capture('card advanced', {
       // Which of the day's cards this was, so the drop-off inside a day can
       // be read as a curve rather than as a single completion rate — and
@@ -1494,7 +1529,13 @@ class AppState extends ChangeNotifier {
   /// leaned by what they liked and threw down. The five of the day never
   /// look at this; the second set and the swaps do.
   Map<String, double> get leanedWeights {
-    if (likedIds.isEmpty && dislikedIds.isEmpty) return topicWeights;
+    final read = _readSignals;
+    if (likedIds.isEmpty &&
+        dislikedIds.isEmpty &&
+        read.held.isEmpty &&
+        read.skipped.isEmpty) {
+      return topicWeights;
+    }
     final keyOf = {for (final e in kTopics.entries) e.value.name: e.key};
     final byId = {for (final p in PillBank.live) p.id: p};
     final lean = <String, double>{};
@@ -1507,6 +1548,8 @@ class AppState extends ChangeNotifier {
 
     nudge(likedIds, kLean);
     nudge(dislikedIds, -kLean);
+    nudge(read.held, kReadLean);
+    nudge(read.skipped, -kReadLean);
     final base = topicWeights.isEmpty
         ? {for (final key in kTopicOrder) key: 1.0}
         : topicWeights;
@@ -1519,6 +1562,24 @@ class AppState extends ChangeNotifier {
   /// How much one like, or one throw, moves its subject's weight.
   static const double kLean = 0.15;
 
+  /// How much a card held, or passed over, moves its subject and its traits
+  /// (ReadingLog.signals): a third of a like's, as a read says less than a
+  /// like does.
+  static const double kReadLean = kLean / 3;
+  static const double kReadTasteLean = kTasteLean / 3;
+
+  /// What the reads say, for an install that learns from them
+  /// ([tasteVariant]): the cards held and passed over, less those liked or
+  /// thrown down, which have said so already.
+  ({Set<String> held, Set<String> skipped}) get _readSignals {
+    if (tasteVariant != 'implicit') {
+      return (held: const <String>{}, skipped: const <String>{});
+    }
+    final s = ReadingLog.signals(readingLog);
+    final Set<String> said = {...likedIds, ...dislikedIds};
+    return (held: s.held.difference(said), skipped: s.skipped.difference(said));
+  }
+
   /// How much one like, or one throw, moves each of a card's traits. A card
   /// carries about eight, so a card sharing everything with a liked one
   /// comes out at roughly kLean more than the like did for its subject.
@@ -1529,7 +1590,13 @@ class AppState extends ChangeNotifier {
   /// same for the strand, the era, the hook, the mood and the rest. The
   /// dealer reads it through [leanOf]; nothing here ever leaves the phone.
   Map<String, double> get taste {
-    if (likedIds.isEmpty && dislikedIds.isEmpty) return const {};
+    final read = _readSignals;
+    if (likedIds.isEmpty &&
+        dislikedIds.isEmpty &&
+        read.held.isEmpty &&
+        read.skipped.isEmpty) {
+      return const {};
+    }
     final lean = <String, double>{};
     void nudge(Iterable<String> ids, double by) {
       for (final id in ids) {
@@ -1541,6 +1608,8 @@ class AppState extends ChangeNotifier {
 
     nudge(likedIds, kTasteLean);
     nudge(dislikedIds, -kTasteLean);
+    nudge(read.held, kReadTasteLean);
+    nudge(read.skipped, -kReadTasteLean);
     return lean;
   }
 
@@ -3032,6 +3101,8 @@ class AppState extends ChangeNotifier {
       'pills_read': pillsRead,
     });
     await _prefs.clear();
+    // The experiment's draw belongs to the phone, not to the account.
+    await _prefs.setString(_kTasteVariant, tasteVariant);
     // The clear above took the reader's own answer to "measure this?" with
     // it. An opt-out a sign-out quietly undoes is not a choice, it is a
     // delay — so it goes back down before anything else is written.
@@ -3090,6 +3161,7 @@ class AppState extends ChangeNotifier {
     reviewIdsToday = {};
     answers = {};
     judgements = [];
+    readingLog = [];
     topicWeights = {};
     topicLevels = {};
     genresOff = {};
@@ -3572,6 +3644,7 @@ class AppState extends ChangeNotifier {
     pillsRead: pillsRead,
     answers: Map<String, Answer>.from(answers),
     judgements: List<Judgement>.from(judgements),
+    readingLog: List<CardReadEntry>.from(readingLog),
     pickedTopics: pickedTopics.toList(),
     topicWeights: Map<String, double>.from(topicWeights),
     topicLevels: Map<String, int>.from(topicLevels),
@@ -3607,6 +3680,7 @@ class AppState extends ChangeNotifier {
     pillsRead = s.pillsRead;
     answers = Map<String, Answer>.from(s.answers);
     judgements = List<Judgement>.from(s.judgements);
+    readingLog = List<CardReadEntry>.from(s.readingLog);
     if (s.pickedTopics.isNotEmpty) pickedTopics = s.pickedTopics.toSet();
     topicWeights = Map<String, double>.from(s.topicWeights);
     topicLevels = Map<String, int>.from(s.topicLevels);
@@ -3641,6 +3715,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setString(_kRungDates, jsonEncode(rungDates));
     await _prefs.setString(_kReadDays, jsonEncode(readDays));
     await _prefs.setString(_kDayLog, jsonEncode(dayLog));
+    await _prefs.setString(_kReadingLog, ReadingLog.encode(readingLog));
     await _prefs.setStringList(_kSaidIds, saidIds);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);

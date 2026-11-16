@@ -4543,4 +4543,18 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get perkPathsLine => 'ひとつのテーマで10枚、やさしい順から難しい順へ。毎週新しいパス。';
+
+  @override
+  String get journeyStrongest => '得意';
+
+  @override
+  String get journeyMostMissed => '苦手';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '正解率 $pct';
+  }
+
+  @override
+  String get journeySubjectsNotYet => '1つの分野で6回答えると測れます。';
 }

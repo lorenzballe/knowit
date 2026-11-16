@@ -4763,4 +4763,19 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get perkPathsLine =>
       'Diez cartas sobre un tema, de la más fácil a la más difícil. Rutas nuevas cada semana.';
+
+  @override
+  String get journeyStrongest => 'Tu punto fuerte';
+
+  @override
+  String get journeyMostMissed => 'Lo que más fallas';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '$pct de aciertos';
+  }
+
+  @override
+  String get journeySubjectsNotYet =>
+      'Seis respuestas en una materia y queda medida.';
 }

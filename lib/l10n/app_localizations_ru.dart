@@ -4924,4 +4924,18 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get perkPathsLine =>
       'Десять карточек на одну тему, от самой простой до самой сложной. Новые пути каждую неделю.';
+
+  @override
+  String get journeyStrongest => 'Сильнее всего';
+
+  @override
+  String get journeyMostMissed => 'Чаще всего мимо';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '$pct верно';
+  }
+
+  @override
+  String get journeySubjectsNotYet => 'Шесть ответов по теме — и она измерена.';
 }

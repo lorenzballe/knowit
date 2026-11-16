@@ -4777,4 +4777,19 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get perkPathsLine =>
       'Dix cartes sur un thème, de la plus facile à la plus difficile. De nouveaux parcours chaque semaine.';
+
+  @override
+  String get journeyStrongest => 'Point fort';
+
+  @override
+  String get journeyMostMissed => 'Le plus manqué';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '$pct de réussite';
+  }
+
+  @override
+  String get journeySubjectsNotYet =>
+      'Six réponses dans une matière, et elle est mesurée.';
 }

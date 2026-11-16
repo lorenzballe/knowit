@@ -1117,5 +1117,9 @@
   "playTheCard": "Speel de kaart",
   "openTheCard": "Open de kaart",
   "perkPathsTitle": "Elk pad, helemaal",
-  "perkPathsLine": "Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden."
+  "perkPathsLine": "Tien kaarten over één thema, van de makkelijkste tot de moeilijkste. Elke week nieuwe paden.",
+  "journeyStrongest": "Sterkst",
+  "journeyMostMissed": "Vaakst gemist",
+  "journeyRightShare": "{pct} goed",
+  "journeySubjectsNotYet": "Zes antwoorden in een vak, en het wordt gemeten."
 }

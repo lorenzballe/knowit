@@ -4628,4 +4628,21 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get perkPathsLine =>
       _words.text('perkPathsLine') ?? _base.perkPathsLine;
+
+  @override
+  String get journeyStrongest =>
+      _words.text('journeyStrongest') ?? _base.journeyStrongest;
+
+  @override
+  String get journeyMostMissed =>
+      _words.text('journeyMostMissed') ?? _base.journeyMostMissed;
+
+  @override
+  String journeyRightShare(String pct) =>
+      _words.format('journeyRightShare', localeName, {'pct': pct}) ??
+      _base.journeyRightShare(pct);
+
+  @override
+  String get journeySubjectsNotYet =>
+      _words.text('journeySubjectsNotYet') ?? _base.journeySubjectsNotYet;
 }

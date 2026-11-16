@@ -4910,4 +4910,19 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get perkPathsLine =>
       'Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Nowe ścieżki co tydzień.';
+
+  @override
+  String get journeyStrongest => 'Najmocniejsza';
+
+  @override
+  String get journeyMostMissed => 'Najczęściej mylona';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '$pct dobrze';
+  }
+
+  @override
+  String get journeySubjectsNotYet =>
+      'Sześć odpowiedzi w dziedzinie i jest zmierzona.';
 }

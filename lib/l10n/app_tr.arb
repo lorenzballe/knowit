@@ -1117,5 +1117,9 @@
   "playTheCard": "Kartı oyna",
   "openTheCard": "Kartı aç",
   "perkPathsTitle": "Her yol, eksiksiz",
-  "perkPathsLine": "Tek bir konuda on kart, en kolaydan en zora. Her hafta yeni yollar."
+  "perkPathsLine": "Tek bir konuda on kart, en kolaydan en zora. Her hafta yeni yollar.",
+  "journeyStrongest": "En güçlü",
+  "journeyMostMissed": "En çok kaçan",
+  "journeyRightShare": "{pct} doğru",
+  "journeySubjectsNotYet": "Bir konuda altı cevap, ve ölçülür."
 }

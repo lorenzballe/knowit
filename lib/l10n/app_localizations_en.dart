@@ -4725,4 +4725,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get perkPathsLine =>
       'Ten cards on one theme, from the easiest to the hardest. New paths every week.';
+
+  @override
+  String get journeyStrongest => 'Strongest';
+
+  @override
+  String get journeyMostMissed => 'Most missed';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '$pct right';
+  }
+
+  @override
+  String get journeySubjectsNotYet =>
+      'Six answers in a subject, and it is measured.';
 }

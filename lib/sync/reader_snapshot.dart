@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import '../models/pill.dart';
 import '../models/place.dart';
+import '../state/reading_log.dart';
 
 /// Everything about a reader that should survive a new phone.
 ///
@@ -32,6 +33,7 @@ class ReaderSnapshot {
     this.pillsRead = 0,
     this.answers = const {},
     this.judgements = const [],
+    this.readingLog = const [],
     this.pickedTopics = const [],
     this.topicWeights = const {},
     this.topicLevels = const {},
@@ -74,6 +76,10 @@ class ReaderSnapshot {
   final int pillsRead;
   final Map<String, Answer> answers;
   final List<Judgement> judgements;
+
+  /// Every read of a card, the last ReadingLog.keep (reading_log.dart): how
+  /// the reader reads, which the app learns their taste from.
+  final List<CardReadEntry> readingLog;
   final List<String> pickedTopics;
   final Map<String, double> topicWeights;
 
@@ -107,6 +113,7 @@ class ReaderSnapshot {
       pillsRead == 0 &&
       answers.isEmpty &&
       judgements.isEmpty &&
+      readingLog.isEmpty &&
       savedIds.isEmpty &&
       completedDates.isEmpty;
 
@@ -128,6 +135,7 @@ class ReaderSnapshot {
     'pillsRead': pillsRead,
     'answers': answers.map((k, v) => MapEntry(k, v.toJson())),
     'judgements': judgements.map((j) => j.toJson()).toList(),
+    'readingLog': ReadingLog.toJson(readingLog),
     'pickedTopics': pickedTopics,
     'topicWeights': topicWeights,
     'topicLevels': topicLevels,
@@ -159,6 +167,14 @@ class ReaderSnapshot {
     final judgements = judgementsRaw is List
         ? judgementsRaw.map(Judgement.fromJson).whereType<Judgement>().toList()
         : <Judgement>[];
+
+    final readingRaw = raw['readingLog'];
+    final readingLog = readingRaw is List
+        ? readingRaw
+              .map(CardReadEntry.fromJson)
+              .whereType<CardReadEntry>()
+              .toList()
+        : <CardReadEntry>[];
 
     final weightsRaw = raw['topicWeights'];
     final weights = <String, double>{};
@@ -234,6 +250,7 @@ class ReaderSnapshot {
       pillsRead: raw['pillsRead'] is int ? raw['pillsRead'] as int : 0,
       answers: answers,
       judgements: judgements,
+      readingLog: readingLog,
       pickedTopics: strings(raw['pickedTopics']),
       topicWeights: weights,
       topicLevels: levels,
@@ -320,6 +337,12 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
       local.judgements.length >= remote.judgements.length
       ? local.judgements
       : remote.judgements;
+  // The reads, the same way: each phone's log only grows (to its cap), so
+  // the longer is the fuller record.
+  final List<CardReadEntry> readingLog =
+      local.readingLog.length >= remote.readingLog.length
+      ? local.readingLog
+      : remote.readingLog;
 
   // A rung was first reached on whichever phone reached it first: the
   // earlier date is the true one.
@@ -397,6 +420,7 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     pillsRead: math.max(local.pillsRead, remote.pillsRead),
     answers: answers,
     judgements: judgements,
+    readingLog: readingLog,
     pickedTopics: localChoseMix
         ? local.pickedTopics
         : union(local.pickedTopics, remote.pickedTopics),

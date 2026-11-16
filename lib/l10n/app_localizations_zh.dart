@@ -4543,4 +4543,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get perkPathsLine => '同一主题的十张卡片，从最简单到最难。每周都有新路径。';
+
+  @override
+  String get journeyStrongest => '最擅长';
+
+  @override
+  String get journeyMostMissed => '最常答错';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '正确率 $pct';
+  }
+
+  @override
+  String get journeySubjectsNotYet => '一个科目答满六题即可测出。';
 }

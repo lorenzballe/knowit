@@ -1117,5 +1117,9 @@
   "playTheCard": "Zagraj kartą",
   "openTheCard": "Otwórz kartę",
   "perkPathsTitle": "Każda ścieżka, w całości",
-  "perkPathsLine": "Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Nowe ścieżki co tydzień."
+  "perkPathsLine": "Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Nowe ścieżki co tydzień.",
+  "journeyStrongest": "Najmocniejsza",
+  "journeyMostMissed": "Najczęściej mylona",
+  "journeyRightShare": "{pct} dobrze",
+  "journeySubjectsNotYet": "Sześć odpowiedzi w dziedzinie i jest zmierzona."
 }

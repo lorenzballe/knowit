@@ -4683,4 +4683,18 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get perkPathsLine =>
       'Tek bir konuda on kart, en kolaydan en zora. Her hafta yeni yollar.';
+
+  @override
+  String get journeyStrongest => 'En güçlü';
+
+  @override
+  String get journeyMostMissed => 'En çok kaçan';
+
+  @override
+  String journeyRightShare(String pct) {
+    return '$pct doğru';
+  }
+
+  @override
+  String get journeySubjectsNotYet => 'Bir konuda altı cevap, ve ölçülür.';
 }
