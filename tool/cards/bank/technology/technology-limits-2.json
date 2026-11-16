@@ -32,6 +32,6 @@
   "figure": "none",
   "source": "Greshake et al., AISec, 2023",
   "source_kind": "paper",
-  "reference": "Greshake, Abdelnabi, Mishra, Endres, Holz & Fritz, Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection, AISec, 2023",
+  "reference": "Greshake, Abdelnabi, Mishra, Endres, Holz & Fritz, Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection, AISec, 2023, doi:10.1145/3605764.3623985",
   "written": "2026-09-26"
 }

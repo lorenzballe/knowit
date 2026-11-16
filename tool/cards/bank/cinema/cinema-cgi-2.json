@@ -29,6 +29,6 @@
   "figure": "none",
   "source": "Cook, Porter & Carpenter, SIGGRAPH, 1984",
   "source_kind": "paper",
-  "reference": "Cook, Porter & Carpenter, Distributed Ray Tracing, Computer Graphics (SIGGRAPH) 18(3), 1984",
+  "reference": "Cook, Porter & Carpenter, Distributed Ray Tracing, Computer Graphics (SIGGRAPH) 18(3), 1984, doi:10.1145/964965.808590",
   "written": "2026-09-26"
 }

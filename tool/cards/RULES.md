@@ -69,7 +69,11 @@ The gate refuses a card outside these without reading it.
 6. `answer` and `counterpoint` on a `debate`: 40–60 words each.
 7. `steps`: 2–5 lines, one operation per line, the last line is the result.
 8. `source`: 2–8 words. `reference`: required, real, openable — a URL, a DOI,
-   an ISBN, or an author-and-year citation.
+   an ISBN, or an author-and-year citation. A citation in words ends with the
+   link that opens it: a study's DOI (`…, Science, 1974, doi:10.1126/…`), a
+   book's Open Library page (`…, 2011, https://openlibrary.org/works/…`). The
+   reader's Open the original follows it; a citation with no link is a card
+   nobody can check.
 9. No exclamation marks. No emoji. Never "Did you know".
 
 ## 3. The question

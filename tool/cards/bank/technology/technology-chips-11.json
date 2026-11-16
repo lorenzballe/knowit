@@ -75,6 +75,6 @@
   },
   "source": "Hennessy & Patterson, Computer Architecture, 2017",
   "source_kind": "book",
-  "reference": "Hennessy & Patterson, Computer Architecture: A Quantitative Approach, 6th edition, Morgan Kaufmann, 2017, chapter 1 (die yield); Poisson yield = e^(-defect density × area), defect density 0.1 per cm² assumed",
+  "reference": "Hennessy & Patterson, Computer Architecture: A Quantitative Approach, 6th edition, Morgan Kaufmann, 2017, chapter 1 (die yield); Poisson yield = e^(-defect density × area), defect density 0.1 per cm² assumed, https://openlibrary.org/works/OL2664271W",
   "written": "2026-10-07"
 }

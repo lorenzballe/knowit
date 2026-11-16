@@ -29,7 +29,7 @@
   "figure": "none",
   "source": "Haberle et al., 2001; US Standard Atmosphere",
   "source_kind": "paper",
-  "reference": "Haberle, McKay, Schaeffer et al., On the possibility of liquid water on present-day Mars, Journal of Geophysical Research: Planets 106(E10), 2001; U.S. Standard Atmosphere, 1976, NOAA, NASA and US Air Force",
+  "reference": "Haberle, McKay, Schaeffer et al., On the possibility of liquid water on present-day Mars, Journal of Geophysical Research: Planets 106(E10), 2001; U.S. Standard Atmosphere, 1976, NOAA, NASA and US Air Force, doi:10.1029/2000je001360",
   "written": "2026-09-26",
   "scene": {
     "type": "slider",
