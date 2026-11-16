@@ -135,7 +135,10 @@ class ReaderSnapshot {
     'pillsRead': pillsRead,
     'answers': answers.map((k, v) => MapEntry(k, v.toJson())),
     'judgements': judgements.map((j) => j.toJson()).toList(),
-    'readingLog': ReadingLog.toJson(readingLog),
+    // As one string: Firestore takes no array inside an array, and the iOS
+    // SDK does not refuse one, it throws — the app closed on every backup
+    // that carried a read (TestFlight build 63).
+    'readingLog': ReadingLog.encode(readingLog),
     'pickedTopics': pickedTopics,
     'topicWeights': topicWeights,
     'topicLevels': topicLevels,
@@ -169,7 +172,9 @@ class ReaderSnapshot {
         : <Judgement>[];
 
     final readingRaw = raw['readingLog'];
-    final readingLog = readingRaw is List
+    final readingLog = readingRaw is String
+        ? ReadingLog.decode(readingRaw)
+        : readingRaw is List
         ? readingRaw
               .map(CardReadEntry.fromJson)
               .whereType<CardReadEntry>()
