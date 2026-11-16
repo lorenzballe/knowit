@@ -615,15 +615,15 @@ class _Pool extends StatelessWidget {
   }
 }
 
-/// What the finished day has made, under its line. The freeze is said here
-/// and nowhere else, so it comes first on the day it was spent. Otherwise,
-/// what the day has produced — and before it has produced anything, the
-/// gesture that fills it.
-String _shelfAside(BuildContext context, AppState app) {
+/// The small line under the finished day's. The freeze is said here and
+/// nowhere else, so it comes first on the day it was spent. Otherwise the
+/// gesture that likes a card, until the reader has liked one: from then on
+/// they know it, a liked card says so itself with the heart in its corner,
+/// and there is no line.
+String? _shelfAside(BuildContext context, AppState app) {
   if (app.streakWasFrozen) return context.l10n.freezeKeptStreak;
-  final int liked = app.likedToday;
-  if (liked == 0) return context.l10n.holdACardYouLike;
-  return context.l10n.likedToday(liked);
+  if (app.likedIds.isEmpty) return context.l10n.holdACardYouLike;
+  return null;
 }
 
 class _ProgressBars extends StatelessWidget {

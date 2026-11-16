@@ -40,12 +40,22 @@ void main() {
     ),
   );
 
-  final heart = find.byWidgetPredicate(
-    (w) =>
-        w is Icon &&
-        (w.icon == Icons.favorite_border_rounded ||
-            w.icon == Icons.favorite_rounded),
-  );
+  // The hold's mark, in the middle of the card. The heart a liked card
+  // keeps in its corner is another thing, and stays.
+  final heart = find.byElementPredicate((e) {
+    final Widget w = e.widget;
+    if (w is! Icon ||
+        (w.icon != Icons.favorite_border_rounded &&
+            w.icon != Icons.favorite_rounded)) {
+      return false;
+    }
+    bool inCorner = false;
+    e.visitAncestorElements((a) {
+      inCorner = a.widget.key == const ValueKey('liked-heart');
+      return !inCorner;
+    });
+    return !inCorner;
+  });
 
   Future<void> turnOver(WidgetTester tester) async {
     await tester.tap(find.text('Tap to reveal'));
@@ -93,5 +103,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(liked, contains(fact.id));
     expect(heart, findsNothing);
+    // Liked, the card says so in its corner.
+    expect(find.byKey(const ValueKey('liked-heart')), findsOneWidget);
   });
 }

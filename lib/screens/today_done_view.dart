@@ -90,7 +90,7 @@ class TodayDoneView extends StatefulWidget {
   /// again what the line had just said ("five read"), with an odd band of
   /// air between the two. On its own the shelf heads itself with the
   /// eyebrow.
-  final ({String line, String aside})? heading;
+  final ({String line, String? aside})? heading;
 
   const TodayDoneView({
     super.key,
@@ -349,7 +349,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
           ),
           child: LayoutBuilder(
             builder: (context, box) {
-              final ({String line, String aside})? heading = widget.heading;
+              final ({String line, String? aside})? heading = widget.heading;
               final String eyebrow = context.l10n.shelfEyebrow(
                 context.l10n.countWord('${deck.length}').toUpperCase(),
               );
@@ -564,6 +564,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
       ink: pill.ink,
       ground: pill.color,
       onToggle: () => app.toggleLiked(pill.id),
+      markScale: _cardWidth / _artWidth,
       child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
     );
   }
@@ -1639,8 +1640,9 @@ class _Actions extends StatelessWidget {
 /// The day is sent with no gate, on either plan, as it always was: a day in
 /// somebody's chat is how the app travels.
 /// The day's line at the head of the shelf — a dot in the front card's
-/// colour, which day this was — and under it, small, what the day has made
-/// (a card liked, the freeze spent, or how to like one).
+/// colour, which day this was — and under it, small, the freeze spent or,
+/// until the reader has liked a card, how to. A liked card says so on
+/// itself, with the heart in its corner, rather than as a count here.
 class _DayHeading extends StatelessWidget {
   const _DayHeading({
     required this.line,
@@ -1649,7 +1651,7 @@ class _DayHeading extends StatelessWidget {
   });
 
   final String line;
-  final String aside;
+  final String? aside;
   final Color dot;
 
   /// The dot and the air after it.
@@ -1701,18 +1703,29 @@ class _DayHeading extends StatelessWidget {
                   style: lineStyle(ink),
                 ),
               ),
-              const SizedBox(height: 2),
-              FitText(
-                aside,
-                key: const ValueKey('shelf-aside'),
-                maxLines: 2,
-                minSize: 11,
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w500,
-                  height: 1.25,
-                  color: ink.withValues(alpha: 0.42),
-                ),
+              // The line under goes the moment the reader's first card is
+              // liked; the shelf under it closes up in a beat, not a jump.
+              AnimatedSize(
+                duration: Duration(milliseconds: still ? 0 : 260),
+                curve: Curves.easeOut,
+                alignment: Alignment.topLeft,
+                child: aside == null
+                    ? const SizedBox(width: double.infinity)
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: FitText(
+                          aside!,
+                          key: const ValueKey('shelf-aside'),
+                          maxLines: 2,
+                          minSize: 11,
+                          style: AppText.body(
+                            size: 12,
+                            weight: FontWeight.w500,
+                            height: 1.25,
+                            color: ink.withValues(alpha: 0.42),
+                          ),
+                        ),
+                      ),
               ),
             ],
           ),

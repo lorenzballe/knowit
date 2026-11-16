@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/l10n.dart';
+
 /// Hold a card to keep it.
 ///
 /// The heart in the corner is a small target on a big object, and nothing
@@ -18,10 +20,16 @@ class HoldToKeep extends StatefulWidget {
     required this.ground,
     required this.onToggle,
     required this.child,
+    this.markScale = 1,
   });
 
   /// Whether the card is already kept: a hold on a kept card lets it go.
+  /// A kept card says so in its top corner, with a small heart.
   final bool saved;
+
+  /// The card's size against the deck's own, for the corner's heart: 1 on
+  /// a card being read, less on the smaller cards of the finished day.
+  final double markScale;
 
   /// The card's own ink, so the mark is drawn in the card's colours rather
   /// than in the app's.
@@ -31,7 +39,10 @@ class HoldToKeep extends StatefulWidget {
   /// question printed behind it is a smudge, not a heart.
   final Color ground;
 
-  final VoidCallback onToggle;
+  /// What a completed hold does; null where the card cannot be liked yet
+  /// (the card waiting under the one being read), which is still built
+  /// round with this, so it keeps its element when it rises (PillCard).
+  final VoidCallback? onToggle;
   final Widget child;
 
   @override
@@ -83,7 +94,7 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
   void _fire() {
     setState(() => _letting = widget.saved);
     HapticFeedback.mediumImpact();
-    widget.onToggle();
+    widget.onToggle?.call();
     _hold.value = 0;
     _done.forward(from: 0);
   }
@@ -104,6 +115,7 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final bool still = MediaQuery.disableAnimationsOf(context);
     return Listener(
       behavior: HitTestBehavior.translucent,
       onPointerDown: (e) => _downAt = e.position,
@@ -117,14 +129,15 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
         // The card underneath keeps its tap and its throw: a quick tap never
         // reaches this, and a card dragged away takes the pointer with it.
         gestures: {
-          _KeepPress: GestureRecognizerFactoryWithHandlers<_KeepPress>(
-            () => _KeepPress(duration: _press, onLost: _hold.reverse),
-            (r) => r
-              ..onLongPressDown = ((_) => _hold.forward())
-              ..onLongPressCancel = (() => _hold.reverse())
-              ..onLongPressStart = ((_) => _fire())
-              ..onLongPressEnd = ((_) => _hold.reverse()),
-          ),
+          if (widget.onToggle != null)
+            _KeepPress: GestureRecognizerFactoryWithHandlers<_KeepPress>(
+              () => _KeepPress(duration: _press, onLost: _hold.reverse),
+              (r) => r
+                ..onLongPressDown = ((_) => _hold.forward())
+                ..onLongPressCancel = (() => _hold.reverse())
+                ..onLongPressStart = ((_) => _fire())
+                ..onLongPressEnd = ((_) => _hold.reverse()),
+            ),
         },
         child: AnimatedBuilder(
           animation: Listenable.merge([_hold, _done]),
@@ -134,12 +147,48 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
               ((_hold.value - _quiet) / (1 - _quiet)).clamp(0.0, 1.0),
             );
             final double done = _done.value;
+            // The corner's heart lands as the middle one goes, so there is
+            // only ever one heart on the card.
+            final bool liked = widget.saved && (done == 0 || done >= 0.5);
+            final double s = widget.markScale;
             return Transform.scale(
               scale: 1 - 0.02 * hold,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   child!,
+                  Positioned(
+                    top: _LikedHeart.inset * s,
+                    right: _LikedHeart.inset * s,
+                    child: IgnorePointer(
+                      child: AnimatedSwitcher(
+                        duration: Duration(milliseconds: still ? 0 : 300),
+                        transitionBuilder: (heart, a) => FadeTransition(
+                          opacity: CurvedAnimation(
+                            parent: a,
+                            curve: Curves.easeOut,
+                          ),
+                          child: ScaleTransition(
+                            scale: Tween<double>(begin: 0.4, end: 1).animate(
+                              CurvedAnimation(
+                                parent: a,
+                                curve: Curves.easeOutBack,
+                              ),
+                            ),
+                            child: heart,
+                          ),
+                        ),
+                        child: liked
+                            ? _LikedHeart(
+                                key: const ValueKey('liked-heart'),
+                                ink: widget.ink,
+                                ground: widget.ground,
+                                scale: s,
+                              )
+                            : const SizedBox.shrink(),
+                      ),
+                    ),
+                  ),
                   if (hold > 0 || done > 0)
                     IgnorePointer(
                       child: CustomPaint(
@@ -292,5 +341,45 @@ class _KeepPress extends LongPressGestureRecognizer {
   void rejectGesture(int pointer) {
     super.rejectGesture(pointer);
     onLost();
+  }
+}
+
+/// A liked card's mark: a heart in the card's own colour on a coin of its
+/// ink, the way the card kit sets a tag, so it reads on any card and over
+/// any drawing. It sits in the card's top corner, outside the words and
+/// inside the rounded edge.
+class _LikedHeart extends StatelessWidget {
+  const _LikedHeart({
+    super.key,
+    required this.ink,
+    required this.ground,
+    required this.scale,
+  });
+
+  /// How far the coin stands in from the card's top and right edges, at the
+  /// deck's size: on a corner of 34 a coin of 22 there clears the curve by
+  /// a few points, and the number or the tag the card prints under it.
+  static const double inset = 9;
+  static const double size = 22;
+
+  final Color ink;
+  final Color ground;
+  final double scale;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: context.l10n.liked,
+      child: Container(
+        width: size * scale,
+        height: size * scale,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: ink.withValues(alpha: 0.9),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(Icons.favorite_rounded, size: 13 * scale, color: ground),
+      ),
+    );
   }
 }

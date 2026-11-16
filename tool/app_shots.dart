@@ -337,6 +337,8 @@ void main() {
       'knowit.todayDeckIds': deck,
       'knowit.todayIndex': 5,
       'knowit.streak': 13,
+      // The card at the front liked, so its heart is in the picture.
+      'knowit.likedIds': [deck.first],
       'knowit.seenIds': PillBank.cards.take(46).map((pill) => pill.id).toList(),
       'knowit.completedDates': [
         for (var back = 0; back < 5; back++)
