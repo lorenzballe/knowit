@@ -547,6 +547,10 @@ class WebThumbs {
   /// The proportion of every picture, width to height: the card's.
   static const double aspect = 366 / 606;
 
+  /// The finished day's shelf's pictures: taken on the 324 by 452 its cards
+  /// in words are drawn on (tool/cards/thumbs.cjs, thumbs/shelf/).
+  static const double shelfAspect = 324 / 452;
+
   @override
   bool operator ==(Object other) =>
       other is WebThumbs && other.front == front && other.back == back;

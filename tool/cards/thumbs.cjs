@@ -20,6 +20,7 @@ const OUT = path.join(ROOT, 'web/cards/thumbs');
 const INDEX = path.join(OUT, 'index.json');
 // The photographs as taken, before tool/cards/thumbs_webp.py makes them small.
 const RAW = path.join(require('os').tmpdir(), 'astute-thumbs');
+const RAW_SHELF = RAW + '-shelf';
 const vendor = path.join(KIT, 'vendor');
 const executablePath = fs.existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined;
 const local = url => { const base = url.split('?')[0].split('/').pop(); for (const d of [vendor, path.join(vendor, 'gsap-plugins')]) { const p = path.join(d, base); if (fs.existsSync(p)) return p; } return null; };
@@ -29,6 +30,10 @@ const typeOf = p => TYPES[path.extname(p)] || 'application/octet-stream';
 // times its size: the large pictures, for the places that show a card at full width, are these as
 // taken; the small ones, for shelves and tiles, are made from them (thumbs_webp.py).
 const SIZE = {width: 366, height: 606}, SCALE = 2.5;
+// The finished day's shelf sets every card on the 324 by 452 its cards in words are drawn on: a picture
+// taken at the deck's 366 by 606 had to shrink into it, its words smaller and a band of ground either
+// side. So each page is also taken at the shelf's own size, into thumbs/shelf/.
+const SHELF = {width: 324, height: 452};
 const ORIGIN = 'https://card.astute/';
 const hashOf = html => crypto.createHash('sha256').update(html, 'utf8').digest('hex').slice(0, 12);
 
@@ -49,13 +54,13 @@ function pages() {
   return out;
 }
 
-async function shoot(browser, card) {
-  const page = await browser.newPage({viewport: SIZE, deviceScaleFactor: SCALE});
+async function shoot(browser, card, size = SIZE, raw = RAW) {
+  const page = await browser.newPage({viewport: size, deviceScaleFactor: SCALE});
   const heard = [];
   await page.exposeFunction('__astuteHeard', t => heard.push(JSON.parse(t)));
   const web = card.meta.web || {};
   const env = {mode: 'app', theme: 'dark', lang: 'en', calm: false, sound: false, touch: web.touch || 'taps', platform: 'ios', shown: true,
-    size: {w: SIZE.width, h: SIZE.height}, safe: {top: 0, right: 0, bottom: 0, left: 0}, corner: {w: 88, h: 37}, subject: {key: card.meta.topic}};
+    size: {w: size.width, h: size.height}, safe: {top: 0, right: 0, bottom: 0, left: 0}, corner: {w: 88, h: 37}, subject: {key: card.meta.topic}};
   const bridge = fs.readFileSync(path.join(KIT, 'astute-bridge.js'), 'utf8');
   await page.addInitScript(([e, b]) => { window.ASTUTE_ENV = e; window.ASTUTE_SEND = t => window.__astuteHeard(t); (0, eval)(b); }, [env, bridge]);
   await page.route('**/*', r => {
@@ -72,7 +77,7 @@ async function shoot(browser, card) {
     for (let t = 0; t < 60 && !heard.some(m => m.t === 'ready'); t++) await page.waitForTimeout(100);
     if (!heard.some(m => m.t === 'ready')) throw new Error('never ready');
     await page.waitForTimeout(1500);
-    await page.screenshot({path: path.join(RAW, `${card.id}-front.png`)});
+    await page.screenshot({path: path.join(raw, `${card.id}-front.png`)});
     const played = await page.evaluate(async () => { const f = typeof Kit !== 'undefined' && Kit.play && Kit.play[document.querySelector('.card')?.id]; if (!f) return false; await f(); return true; });
     if (!played) throw new Error('no Kit.play');
     await page.waitForTimeout(3200);
@@ -88,7 +93,7 @@ async function shoot(browser, card) {
       }
     });
     await page.waitForTimeout(100);
-    await page.screenshot({path: path.join(RAW, `${card.id}-back.png`)});
+    await page.screenshot({path: path.join(raw, `${card.id}-back.png`)});
   } finally {
     await page.close();
   }
@@ -96,10 +101,14 @@ async function shoot(browser, card) {
 
 (async () => {
   fs.mkdirSync(OUT, {recursive: true}); fs.rmSync(RAW, {recursive: true, force: true}); fs.mkdirSync(RAW, {recursive: true});
+  fs.rmSync(RAW_SHELF, {recursive: true, force: true}); fs.mkdirSync(RAW_SHELF, {recursive: true});
   const index = fs.existsSync(INDEX) ? JSON.parse(fs.readFileSync(INDEX, 'utf8')) : {};
   const all = pages();
-  const named = new Set(process.argv.slice(2));
-  const todo = all.filter(c => named.size ? named.has(c.id) : index[c.id] !== hashOf(c.html) || !fs.existsSync(path.join(OUT, `${c.id}-back.webp`)) || !fs.existsSync(path.join(OUT, 'large', `${c.id}-back.webp`)));
+  // --shelf-only takes the shelf's pictures and nothing else: for pages whose others are current.
+  const shelfOnly = process.argv.includes('--shelf-only');
+  const named = new Set(process.argv.slice(2).filter(a => !a.startsWith('--')));
+  const shelfMissing = c => !fs.existsSync(path.join(OUT, 'shelf', `${c.id}-back.webp`));
+  const todo = all.filter(c => named.size ? named.has(c.id) : shelfOnly ? shelfMissing(c) : index[c.id] !== hashOf(c.html) || !fs.existsSync(path.join(OUT, `${c.id}-back.webp`)) || !fs.existsSync(path.join(OUT, 'large', `${c.id}-back.webp`)) || shelfMissing(c));
   const browser = await pw.chromium.launch({executablePath});
   let done = 0, failed = [];
   const queue = [...todo];
@@ -110,7 +119,7 @@ async function shoot(browser, card) {
   };
   async function worker() {
     for (let c = queue.shift(); c; c = queue.shift()) {
-      try { await shoot(browser, c); index[c.id] = hashOf(c.html); done++; }
+      try { if (!shelfOnly) await shoot(browser, c); await shoot(browser, c, SHELF, RAW_SHELF); index[c.id] = hashOf(c.html); done++; }
       catch (e) { failed.push(`${c.id} (${e.message})`); delete index[c.id]; }
       if ((done + failed.length) % 20 === 0) { save(); console.log(`${done + failed.length} of ${todo.length}`); }
     }
@@ -120,9 +129,11 @@ async function shoot(browser, card) {
   await browser.close();
   // Pictures of pages no longer in the bank go.
   const live = new Set(all.map(c => c.id));
-  for (const dir of [OUT, path.join(OUT, 'large')]) { if (!fs.existsSync(dir)) continue; for (const f of fs.readdirSync(dir)) { const m = f.match(/^(.*)-(front|back)\.webp$/); if (m && !live.has(m[1])) fs.unlinkSync(path.join(dir, f)); } }
+  for (const dir of [OUT, path.join(OUT, 'large'), path.join(OUT, 'shelf')]) { if (!fs.existsSync(dir)) continue; for (const f of fs.readdirSync(dir)) { const m = f.match(/^(.*)-(front|back)\.webp$/); if (m && !live.has(m[1])) fs.unlinkSync(path.join(dir, f)); } }
   const made = require('child_process').spawnSync('python3', [path.join(__dirname, 'thumbs_webp.py'), RAW, OUT], {stdio: 'inherit'});
   if (made.status !== 0) { console.error('the pictures could not be made small'); process.exit(1); }
+  const shelf = require('child_process').spawnSync('python3', [path.join(__dirname, 'thumbs_webp.py'), RAW_SHELF, path.join(OUT, 'shelf'), '--one'], {stdio: 'inherit'});
+  if (shelf.status !== 0) { console.error("the shelf's pictures could not be made"); process.exit(1); }
   save();
   console.log(`${done} pages photographed, ${all.length - todo.length} already current${failed.length ? `; failed: ${failed.join(', ')}` : ''}`);
 })().catch(e => { console.error(e); process.exit(1); });

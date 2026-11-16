@@ -52,6 +52,7 @@ class CardThumb extends StatelessWidget {
     this.fallback,
     this.foreground,
     this.large = false,
+    this.shelf = false,
   });
 
   /// How the app fetches a picture: over the network, kept in the image
@@ -78,6 +79,11 @@ class CardThumb extends StatelessWidget {
   static String largeOf(String ref) =>
       ref.startsWith('thumbs/') ? 'thumbs/large/${ref.substring(7)}' : ref;
 
+  /// The picture taken at the shelf's size, beside the small one, the same
+  /// version: `thumbs/shelf/…` for `thumbs/…`.
+  static String shelfOf(String ref) =>
+      ref.startsWith('thumbs/') ? 'thumbs/shelf/${ref.substring(7)}' : ref;
+
   /// Whether [pill] has a picture of [side].
   static bool has(Pill pill, CardSide side) => refOf(pill, side) != null;
 
@@ -96,6 +102,12 @@ class CardThumb extends StatelessWidget {
   /// its own.
   final Widget? foreground;
 
+  /// The picture taken at the finished day's shelf's own size, 324 by 452
+  /// (tool/cards/thumbs.cjs), for the shelf's cards: one taken at the deck's
+  /// size had to shrink into them, its words smaller and a band of ground
+  /// either side. Where it will not come, the small one.
+  final bool shelf;
+
   /// The picture taken at two and a half times the card's size, for a
   /// place that shows the card at full width, where the small one, blown
   /// up, was soft. Where the large one will not come, the small one.
@@ -106,7 +118,11 @@ class CardThumb extends StatelessWidget {
     final String? small = refOf(pill, side);
     final Widget none = fallback ?? const SizedBox.shrink();
     if (small == null) return none;
-    final String ref = large ? largeOf(small) : small;
+    final String ref = shelf
+        ? shelfOf(small)
+        : large
+        ? largeOf(small)
+        : small;
     final bool still = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     final ImageProvider source = image(urlOf(ref));
     final double dpr = MediaQuery.maybeDevicePixelRatioOf(context) ?? 3;
@@ -125,7 +141,7 @@ class CardThumb extends StatelessWidget {
   ImageProvider _sized(ImageProvider source, BoxConstraints box, double dpr) {
     final double w = box.maxWidth, h = box.maxHeight;
     if (!w.isFinite && !h.isFinite) return source;
-    const double aspect = WebThumbs.aspect;
+    final double aspect = shelf ? WebThumbs.shelfAspect : WebThumbs.aspect;
     final double shown = !h.isFinite
         ? w
         : !w.isFinite
@@ -150,7 +166,11 @@ class CardThumb extends StatelessWidget {
   ) {
     return Image(
       key: ValueKey(
-        'card-thumb-${pill.id}-${side.name}${large ? '-large' : ''}',
+        'card-thumb-${pill.id}-${side.name}${shelf
+            ? '-shelf'
+            : large
+            ? '-large'
+            : ''}',
       ),
       image: provider,
       fit: fit,
@@ -183,7 +203,7 @@ class CardThumb extends StatelessWidget {
           ],
         );
       },
-      errorBuilder: (context, error, stack) => large
+      errorBuilder: (context, error, stack) => large || shelf
           ? CardThumb(
               pill: pill,
               side: side,
