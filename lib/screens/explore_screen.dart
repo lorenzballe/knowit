@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../l10n/l10n.dart';
 
@@ -128,6 +129,9 @@ class ExploreScreenState extends State<ExploreScreen>
   /// Explore read again from the server, whatever its age: the pull at
   /// the top of the page.
   Future<void> _reload() async {
+    // The tick a pull-to-refresh lands with, as a feed's does: the pull was
+    // far enough, and the page is coming again.
+    HapticFeedback.mediumImpact();
     Analytics.capture('explore refreshed', {});
     await Future.wait([
       Served.instance.explore(force: true),
