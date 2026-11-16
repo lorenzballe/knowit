@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611152137,
- "built": "2026-11-15T21:37:36Z",
+ "version": 202611161408,
+ "built": "2026-11-16T14:08:53Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -168881,11 +168881,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A draggable slider from one view to the other, with a jagged conflict line between two sides. It asks whether saying no hurts less than quietly putting up with it, and which of two costs you could undo in a year: the hard talk or the quiet yes.",
     "graded": false,
-    "page": "pages/psychology-conflict-two-addresses.html?v=4ef6e90698a9",
-    "bytes": 18600,
+    "page": "pages/psychology-conflict-two-addresses.html?v=8d17a0431dd2",
+    "bytes": 18825,
     "thumbs": {
-     "front": "thumbs/psychology-conflict-two-addresses-front.webp?v=4ef6e90698a9",
-     "back": "thumbs/psychology-conflict-two-addresses-back.webp?v=4ef6e90698a9"
+     "front": "thumbs/psychology-conflict-two-addresses-front.webp?v=8d17a0431dd2",
+     "back": "thumbs/psychology-conflict-two-addresses-back.webp?v=8d17a0431dd2"
     }
    },
    "source": "Diventare Strong, “Come Smettere di Essere Troppo Buoni” (YouTube, 2021)",
@@ -263136,7 +263136,8 @@ const String kEmbeddedBank = r'''
   "473": "thinking-f5",
   "474": "thinking-b2",
   "475": "thinking-z29",
-  "476": "thinking-z32"
+  "476": "thinking-z32",
+  "477": "thinking-h16"
  },
  "commons": {
   "1": [
@@ -267898,6 +267899,16 @@ const String kEmbeddedBank = r'''
    "life-saying-no-1",
    "philosophy-identity-1",
    "nature-what-one-person-can-do-4"
+  ],
+  "477": [
+   "science-blue-aerogel",
+   "thinking-random-end-cooperation",
+   "nature-yakutsk-heat-spikes",
+   "art-what-artists-hide-3",
+   "technology-steel-at-1000",
+   "human_body-recovery-2",
+   "maths-logic-7",
+   "space-deep-time-1"
   ]
  }
 }

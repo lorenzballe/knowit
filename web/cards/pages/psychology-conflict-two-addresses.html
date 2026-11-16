@@ -25,6 +25,9 @@
 .front .say{flex:none;margin:12px 0 0}
 #commit{align-self:flex-start;flex:none;margin-top:16px;font:700 max(2.1cqh,14px)/1.2 var(--body);background:#fff;color:var(--c);border:0;opacity:1;transition:background-color .25s,color .25s}
 #commit:disabled{opacity:1;background:rgba(255,255,255,.35);color:rgba(255,255,255,.7)}
+/* The back's foot keeps the corner for the app's two buttons itself (the kit's .foot), so the
+   face's own reserve under it was the same room twice: on a small phone the drawing gave it up. */
+.turn>.back{padding-bottom:0}
 .back .foot{flex:none}
 .back .big{flex:none;font-size:max(3.4cqh,19px)}
 .back .why{flex:none;margin:0;font-size:max(1.85cqh,12.5px);line-height:1.3}
