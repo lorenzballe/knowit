@@ -1115,5 +1115,7 @@
   "rereadWrong": "Za pierwszym razem się pomyliłeś.",
   "betsDayShareLine": "Dzisiejsze wyzwanie w Astute: {off, plural, =0{trafiłem w punkt} =1{pomyliłem się o 1 punkt} few{pomyliłem się o {off} punkty} other{pomyliłem się o {off} punktów}}. Zrobisz to lepiej?",
   "playTheCard": "Zagraj kartą",
-  "openTheCard": "Otwórz kartę"
+  "openTheCard": "Otwórz kartę",
+  "perkPathsTitle": "Każda ścieżka, w całości",
+  "perkPathsLine": "Dziesięć kart na jeden temat, od najłatwiejszej do najtrudniejszej. Nowe ścieżki co tydzień."
 }

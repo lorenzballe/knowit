@@ -1115,5 +1115,7 @@
   "rereadWrong": "La première fois, tu t'étais trompé.",
   "betsDayShareLine": "Le défi du jour sur Astute : {off, plural, =0{dans le mille} =1{1 point d'écart} other{{off} points d'écart}}. Tu fais mieux ?",
   "playTheCard": "Jouer la carte",
-  "openTheCard": "Ouvrir la carte"
+  "openTheCard": "Ouvrir la carte",
+  "perkPathsTitle": "Chaque parcours, en entier",
+  "perkPathsLine": "Dix cartes sur un thème, de la plus facile à la plus difficile. De nouveaux parcours chaque semaine."
 }

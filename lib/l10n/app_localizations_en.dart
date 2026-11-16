@@ -4718,4 +4718,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openTheCard => 'Open the card';
+
+  @override
+  String get perkPathsTitle => 'Every path, whole';
+
+  @override
+  String get perkPathsLine =>
+      'Ten cards on one theme, from the easiest to the hardest. New paths every week.';
 }

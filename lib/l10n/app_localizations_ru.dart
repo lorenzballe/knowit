@@ -4917,4 +4917,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get openTheCard => 'Открыть карточку';
+
+  @override
+  String get perkPathsTitle => 'Каждый путь целиком';
+
+  @override
+  String get perkPathsLine =>
+      'Десять карточек на одну тему, от самой простой до самой сложной. Новые пути каждую неделю.';
 }

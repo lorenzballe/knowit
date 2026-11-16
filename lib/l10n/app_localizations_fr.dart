@@ -4770,4 +4770,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get openTheCard => 'Ouvrir la carte';
+
+  @override
+  String get perkPathsTitle => 'Chaque parcours, en entier';
+
+  @override
+  String get perkPathsLine =>
+      'Dix cartes sur un thème, de la plus facile à la plus difficile. De nouveaux parcours chaque semaine.';
 }

@@ -49,6 +49,7 @@ class CardThumb extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.fallback,
     this.foreground,
+    this.large = false,
   });
 
   /// How the app fetches a picture: over the network, kept in the image
@@ -70,6 +71,11 @@ class CardThumb extends StatelessWidget {
     };
   }
 
+  /// Where the large picture of [side] is published, the small one's
+  /// beside it: `thumbs/large/…` for `thumbs/…`, the same version.
+  static String largeOf(String ref) =>
+      ref.startsWith('thumbs/') ? 'thumbs/large/${ref.substring(7)}' : ref;
+
   /// Whether [pill] has a picture of [side].
   static bool has(Pill pill, CardSide side) => refOf(pill, side) != null;
 
@@ -88,14 +94,22 @@ class CardThumb extends StatelessWidget {
   /// its own.
   final Widget? foreground;
 
+  /// The picture taken at two and a half times the card's size, for a
+  /// place that shows the card at full width, where the small one, blown
+  /// up, was soft. Where the large one will not come, the small one.
+  final bool large;
+
   @override
   Widget build(BuildContext context) {
-    final String? ref = refOf(pill, side);
+    final String? small = refOf(pill, side);
     final Widget none = fallback ?? const SizedBox.shrink();
-    if (ref == null) return none;
+    if (small == null) return none;
+    final String ref = large ? largeOf(small) : small;
     final bool still = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     return Image(
-      key: ValueKey('card-thumb-${pill.id}-${side.name}'),
+      key: ValueKey(
+        'card-thumb-${pill.id}-${side.name}${large ? '-large' : ''}',
+      ),
       image: image(urlOf(ref)),
       fit: fit,
       alignment: Alignment.topCenter,
@@ -127,7 +141,15 @@ class CardThumb extends StatelessWidget {
           ],
         );
       },
-      errorBuilder: (context, error, stack) => none,
+      errorBuilder: (context, error, stack) => large
+          ? CardThumb(
+              pill: pill,
+              side: side,
+              fit: fit,
+              fallback: fallback,
+              foreground: foreground,
+            )
+          : none,
     );
   }
 }

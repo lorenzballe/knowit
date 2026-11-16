@@ -1115,5 +1115,7 @@
   "rereadWrong": "La prima volta l'hai sbagliata.",
   "betsDayShareLine": "La sfida di oggi su Astute: {off, plural, =0{ho fatto centro} =1{ho sbagliato di 1 punto} other{ho sbagliato di {off} punti}}. Fai meglio?",
   "playTheCard": "Gioca la carta",
-  "openTheCard": "Apri la carta"
+  "openTheCard": "Apri la carta",
+  "perkPathsTitle": "Ogni percorso, intero",
+  "perkPathsLine": "Dieci carte su un tema, dalla più facile alla più difficile. Nuovi percorsi ogni settimana."
 }

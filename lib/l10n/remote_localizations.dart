@@ -4612,4 +4612,12 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get openTheCard => _words.text('openTheCard') ?? _base.openTheCard;
+
+  @override
+  String get perkPathsTitle =>
+      _words.text('perkPathsTitle') ?? _base.perkPathsTitle;
+
+  @override
+  String get perkPathsLine =>
+      _words.text('perkPathsLine') ?? _base.perkPathsLine;
 }

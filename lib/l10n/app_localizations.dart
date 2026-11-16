@@ -6815,6 +6815,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open the card'**
   String get openTheCard;
+
+  /// A perk on the paywall: Astute+ opens every ten-card path whole (the free plan opens the first two cards of each).
+  ///
+  /// In en, this message translates to:
+  /// **'Every path, whole'**
+  String get perkPathsTitle;
+
+  /// Under the paths perk on the paywall: what a path is.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten cards on one theme, from the easiest to the hardest. New paths every week.'**
+  String get perkPathsLine;
 }
 
 class _AppLocalizationsDelegate

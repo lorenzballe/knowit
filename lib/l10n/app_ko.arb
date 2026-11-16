@@ -1115,5 +1115,7 @@
   "rereadWrong": "처음엔 틀렸어요.",
   "betsDayShareLine": "오늘의 Astute 도전: {off, plural, =0{정확히 맞혔어} other{{off}포인트 차이였어}}. 더 잘할 수 있어?",
   "playTheCard": "카드 플레이",
-  "openTheCard": "카드 열기"
+  "openTheCard": "카드 열기",
+  "perkPathsTitle": "모든 경로를 끝까지",
+  "perkPathsLine": "한 주제의 카드 10장, 쉬운 것부터 어려운 것까지. 매주 새로운 경로."
 }

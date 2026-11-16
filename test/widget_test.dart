@@ -2130,7 +2130,7 @@ void main() {
     for (final perk in const [
       'Watch the gap close',
       'Five of your own cards',
-      "What you've read",
+      'Every path, whole',
     ]) {
       expect(find.text(perk), findsOneWidget);
     }
