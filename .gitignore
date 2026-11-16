@@ -66,3 +66,5 @@ tool/shots/gallery/
 tool/shots/edit/
 # The paywall on three phones (tool/paywall_shots.dart): looked at, not kept
 tool/shots/paywall/
+# The screen a purchase ends on, waiting and on yes (tool/purchase_shots.dart): looked at, not kept
+tool/shots/purchase/

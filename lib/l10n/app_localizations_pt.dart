@@ -1383,6 +1383,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get oneMoment => 'Um momento…';
 
   @override
+  String get purchaseConfirming => 'A confirmar o pagamento…';
+
+  @override
+  String get purchaseConfirmingSlow =>
+      'Está a demorar mais do que o habitual. O pagamento está seguro: o Astute+ ativa-se sozinho.';
+
+  @override
   String get closeLabel => 'Fechar';
 
   @override

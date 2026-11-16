@@ -316,6 +316,8 @@
   "tryAgain": "Tekrar dene",
   "purchasePending": "Onay bekleniyor. Ödeme tamamlanır tamamlanmaz Astute+ açılacak.",
   "oneMoment": "Bir saniye…",
+  "purchaseConfirming": "Ödeme onaylanıyor…",
+  "purchaseConfirmingSlow": "Bu, her zamankinden uzun sürüyor. Ödeme güvende: Astute+ kendiliğinden açılacak.",
   "closeLabel": "Kapat",
   "thatDidNotGoThrough": "Bu gerçekleşmedi.",
   "plusIsBack": "Astute+ geri döndü.",

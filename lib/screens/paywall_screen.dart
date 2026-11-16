@@ -1,8 +1,9 @@
-import 'dart:async' show unawaited;
+import 'dart:async' show Timer, unawaited;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb;
+import 'package:flutter/foundation.dart'
+    show ValueListenable, defaultTargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat, NumberFormat;
 
@@ -260,6 +261,7 @@ Future<void> showPurchaseSuccess(
   AppState app, {
   required String source,
   Plan? plan,
+  ValueListenable<bool?>? confirmed,
 }) async {
   final l = context.l10n;
   final Plan bought = plan ?? app.plan;
@@ -291,6 +293,7 @@ Future<void> showPurchaseSuccess(
     'source': source,
     'plan': bought.name,
     'trial': days != null,
+    'waiting': confirmed != null && confirmed.value != true,
   });
   // Asked for again here for a screen opened without the paywall — the
   // debug tools, the site — and already done when the paywall opened it.
@@ -317,6 +320,7 @@ Future<void> showPurchaseSuccess(
         onReceipt: () => openLink(
           iOS ? kAppStoreSubscriptionsUrl : kGooglePlaySubscriptionsUrl,
         ),
+        confirmed: confirmed,
       ),
       transitionsBuilder: (context, animation, _, child) =>
           FadeTransition(opacity: animation, child: child),
@@ -366,6 +370,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// the button says so and takes no second press. A second press used to
   /// start a second purchase, and one sandbox purchase was counted twice.
   bool _buying = false;
+
+  /// Whether the store has answered the purchase under way.
+  bool _answered = false;
+
+  /// The answer the screen a purchase ends on waits for, when it went up
+  /// before the store answered: null until it does, then yes or no.
+  ValueNotifier<bool?>? _confirming;
+
+  /// That screen, until it closes.
+  Future<void>? _waited;
 
   Subscription get _store => Subscription.instance;
 
@@ -520,7 +534,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
     }
 
     setState(() => _buying = true);
-    final outcome = await _store.buy(package);
+    final Future<PurchaseOutcome> asked = _store.buy(package);
+    _watchTheSheet(plan, asked);
+    final outcome = await asked;
+    _answered = true;
     Analytics.capture('purchase ended', {
       'source': widget.source,
       'plan': plan.name,
@@ -533,15 +550,40 @@ class _PaywallScreenState extends State<PaywallScreen> {
       'plan_changes': _planChanges,
     });
     if (!mounted) return;
+    final ValueNotifier<bool?>? confirming = _confirming;
+    final Future<void>? waited = _waited;
+    _confirming = null;
+    _waited = null;
     switch (outcome) {
       case PurchaseOutcome.bought:
         // The answer to the purchase comes at once: the screen it ends on is
         // pushed while the plan is still being written down, and the plan is
         // waited for only on the way out. Nothing on that screen reads it.
+        // When that screen is already up, waiting on the answer, the answer
+        // starts its take instead.
         final Future<void> applied = widget.app.applyEntitlement(true);
-        await _celebrate(plan);
+        if (confirming != null && waited != null) {
+          confirming.value = true;
+          await waited;
+        } else {
+          await _celebrate(plan);
+        }
         await applied;
         if (mounted) _leaveBy('bought');
+        return;
+      case PurchaseOutcome.cancelled:
+      case PurchaseOutcome.pending:
+      case PurchaseOutcome.failed:
+        // Nothing to celebrate: a screen waiting on the answer closes first,
+        // and the paywall says what it says without it.
+        if (confirming != null && waited != null) {
+          confirming.value = false;
+          await waited.timeout(const Duration(seconds: 1), onTimeout: () {});
+          if (!mounted) return;
+        }
+    }
+    switch (outcome) {
+      case PurchaseOutcome.bought:
         return;
       case PurchaseOutcome.cancelled:
         break;
@@ -565,6 +607,58 @@ class _PaywallScreenState extends State<PaywallScreen> {
     source: widget.source,
     plan: plan,
   );
+
+  /// The store's sheet sits over the app while the reader pays: the app is
+  /// away until it goes. When it has gone and the store has not answered
+  /// within [_answerSoon] — a reader who backed out is answered at once; one
+  /// who paid waits on the store's servers and RevenueCat's for a few
+  /// seconds more — the screen a purchase ends on goes up on that wait, with
+  /// no cross to leave by, and the answer, when it comes, starts its take or
+  /// closes it. A purchase answered sooner never shows the wait.
+  void _watchTheSheet(Plan plan, Future<PurchaseOutcome> answer) {
+    _answered = false;
+    bool away = false;
+    Timer? soon;
+    late final AppLifecycleListener watch;
+    void open() {
+      if (_answered || !mounted || _confirming != null) return;
+      final ValueNotifier<bool?> confirmed = ValueNotifier<bool?>(null);
+      _confirming = confirmed;
+      _waited = showPurchaseSuccess(
+        context,
+        widget.app,
+        source: widget.source,
+        plan: plan,
+        confirmed: confirmed,
+      );
+      // A wait that ran long, and the reader who went on from it: the
+      // paywall goes too. Astute+ turns on when the store's answer comes,
+      // with nobody waiting for it here (main.dart listens for it).
+      _waited!.then((_) {
+        if (!_answered && mounted) _leaveBy('went on while confirming');
+      });
+    }
+
+    watch = AppLifecycleListener(
+      onStateChange: (state) {
+        if (state != AppLifecycleState.resumed) {
+          away = true;
+          soon?.cancel();
+        } else if (away) {
+          soon?.cancel();
+          soon = Timer(_answerSoon, open);
+        }
+      },
+    );
+    answer.whenComplete(() {
+      soon?.cancel();
+      watch.dispose();
+    });
+  }
+
+  /// How long after the store's sheet has gone an answer still counts as
+  /// at once: a reader who backed out is answered well within it.
+  static const Duration _answerSoon = Duration(milliseconds: 400);
 
   /// Google Play's reviewers cannot pay, so they type the code Play Console
   /// gave them. In English, as Google asks, and shown to nobody else: the

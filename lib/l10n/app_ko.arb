@@ -316,6 +316,8 @@
   "tryAgain": "다시 시도",
   "purchasePending": "승인을 기다리고 있어요. 결제가 완료되면 바로 Astute+가 열려요.",
   "oneMoment": "잠시만요…",
+  "purchaseConfirming": "결제를 확인하고 있어요…",
+  "purchaseConfirmingSlow": "평소보다 오래 걸리고 있어요. 결제는 안전해요. Astute+는 자동으로 열려요.",
   "closeLabel": "닫기",
   "thatDidNotGoThrough": "처리되지 않았어요.",
   "plusIsBack": "Astute+가 돌아왔어요.",

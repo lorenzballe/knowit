@@ -1337,6 +1337,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get oneMoment => '잠시만요…';
 
   @override
+  String get purchaseConfirming => '결제를 확인하고 있어요…';
+
+  @override
+  String get purchaseConfirmingSlow =>
+      '평소보다 오래 걸리고 있어요. 결제는 안전해요. Astute+는 자동으로 열려요.';
+
+  @override
   String get closeLabel => '닫기';
 
   @override
