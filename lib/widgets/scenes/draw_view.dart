@@ -254,6 +254,9 @@ class _DrawSceneViewState extends State<DrawSceneView>
 
   // ---- build ----------------------------------------------------------
 
+  /// The least height the chart keeps, however short the box.
+  static const double _leastChart = 40;
+
   @override
   Widget build(BuildContext context) {
     final s = widget.scene;
@@ -269,21 +272,40 @@ class _DrawSceneViewState extends State<DrawSceneView>
             ? ''
             : s.verdictText(s.fromShare(_guess[s.judge]!));
 
+        // The readouts at their size wherever the scene has the room, and
+        // a size down where it has not — a short box at the largest text,
+        // as Explore's single tile is at twice it — so the chart under them
+        // always keeps a strip to be drawn on, rather than the scene
+        // running past its foot.
+        final double gaps = compact ? 16 : 24;
+        final double foot = compact ? 54 : 58;
+        final double readoutsRoom = box.maxHeight.isFinite
+            ? math.max(0, box.maxHeight - gaps - foot - _leastChart)
+            : double.infinity;
+        final Widget readouts = AnimatedBuilder(
+          animation: _tip,
+          builder: (context, _) => _Readouts(
+            scene: s,
+            ink: ink,
+            compact: compact,
+            you: _youNow(),
+            truth: _truthNow(),
+            youCaption:
+                '${l10n.sceneYou} · ${s.columns[_youCol()].toUpperCase()}',
+            truthCaption:
+                '${l10n.sceneTruth} · ${s.columns[s.judge].toUpperCase()}',
+          ),
+        );
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AnimatedBuilder(
-              animation: _tip,
-              builder: (context, _) => _Readouts(
-                scene: s,
-                ink: ink,
-                compact: compact,
-                you: _youNow(),
-                truth: _truthNow(),
-                youCaption:
-                    '${l10n.sceneYou} · ${s.columns[_youCol()].toUpperCase()}',
-                truthCaption:
-                    '${l10n.sceneTruth} · ${s.columns[s.judge].toUpperCase()}',
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: readoutsRoom),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.topLeft,
+                child: SizedBox(width: box.maxWidth, child: readouts),
               ),
             ),
             SizedBox(height: compact ? 8 : 12),
