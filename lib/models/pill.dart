@@ -422,6 +422,8 @@ class PillBook {
     required this.author,
     required this.year,
     required this.part,
+    this.isbn = '',
+    this.badge = '',
   });
 
   final String id;
@@ -432,18 +434,36 @@ class PillBook {
   /// Which of the book's ideas, from 1.
   final int part;
 
+  /// The edition the cover is of, and why the book is worth the reader's
+  /// minutes, as a fact anyone can check (a prize, a bestseller list).
+  final String isbn;
+  final String badge;
+
+  Map<String, Object?> toJson() => {
+    'id': id,
+    'title': title,
+    'author': author,
+    'year': year,
+    'part': part,
+    if (isbn.isNotEmpty) 'isbn': isbn,
+    if (badge.isNotEmpty) 'badge': badge,
+  };
+
   static PillBook? fromJson(Object? raw) {
     if (raw is! Map) return null;
     final Object? id = raw['id'], title = raw['title'], author = raw['author'];
     final Object? year = raw['year'], part = raw['part'];
     if (id is! String || title is! String || author is! String) return null;
     if (year is! int || part is! int || part < 1) return null;
+    final Object? isbn = raw['isbn'], badge = raw['badge'];
     return PillBook(
       id: id,
       title: title,
       author: author,
       year: year,
       part: part,
+      isbn: isbn is String ? isbn : '',
+      badge: badge is String ? badge : '',
     );
   }
 }

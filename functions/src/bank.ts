@@ -145,10 +145,12 @@ export class Bank {
    * never dealt again, and a card about a place is dealt only to the
    * readers who live there, from [local]. Everything that deals, lists or
    * searches for anyone reads this, so a card about Modena cannot reach a
-   * shelf for everybody by being forgotten somewhere.
+   * shelf for everybody by being forgotten somewhere. Nor is a card that is
+   * one idea of a book (`book`, Books in pills): a book is read whole, from
+   * its own row on the phone, never one idea at a time in a day.
    */
   get live(): Card[] {
-    return this.cards.filter((c) => !c.disabled && !isPlaceCard(c));
+    return this.cards.filter((c) => !c.disabled && !isPlaceCard(c) && !c.book);
   }
 
   /** The cards that may be dealt on [date]: live, and not past their expiry. */

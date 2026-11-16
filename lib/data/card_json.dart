@@ -99,6 +99,10 @@ Map<String, Object?> cardToJson(Pill p) {
   if (p.hasSteps) out['steps'] = p.steps;
   if (p.hasSimply) out['simply'] = p.simply;
   if (p.hasCounterpoint) out['counterpoint'] = p.counterpoint;
+  if (p.why.isNotEmpty) out['why'] = p.why;
+  if (p.views.length == 2) out['views'] = p.views;
+  if (p.sureOdds != null) out['sure'] = p.sureOdds;
+  if (p.reacts) out['reacts'] = true;
   if (p.genre.isNotEmpty) out['genre'] = p.genre;
   if (p.strand.isNotEmpty) out['strand'] = p.strand;
   if (p.also.isNotEmpty) out['also'] = p.also;
@@ -120,6 +124,7 @@ Map<String, Object?> cardToJson(Pill p) {
   if (p.diagram != null) out['diagram'] = p.diagram!.raw;
   if (p.scene != null) out['scene'] = p.scene!.raw;
   if (p.web != null) out['web'] = webToJson(p.web!, challenge: p.challenge);
+  if (p.book != null) out['book'] = p.book!.toJson();
   out['source'] = p.source;
   return out;
 }

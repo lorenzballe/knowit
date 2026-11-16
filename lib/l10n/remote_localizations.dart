@@ -4878,4 +4878,33 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get bookMoreGo => _words.text('bookMoreGo') ?? _base.bookMoreGo;
+
+  @override
+  String bookMinutes(int n) =>
+      _words.format('bookMinutes', localeName, {'n': n}) ??
+      _base.bookMinutes(n);
+
+  @override
+  String get bookStart => _words.text('bookStart') ?? _base.bookStart;
+
+  @override
+  String get bookContinue => _words.text('bookContinue') ?? _base.bookContinue;
+
+  @override
+  String get bookAgain => _words.text('bookAgain') ?? _base.bookAgain;
+
+  @override
+  String get bookTheIdeas => _words.text('bookTheIdeas') ?? _base.bookTheIdeas;
+
+  @override
+  String get bookFreeThisWeek =>
+      _words.text('bookFreeThisWeek') ?? _base.bookFreeThisWeek;
+
+  @override
+  String bookRetold(String title, String author) =>
+      _words.format('bookRetold', localeName, {
+        'title': title,
+        'author': author,
+      }) ??
+      _base.bookRetold(title, author);
 }

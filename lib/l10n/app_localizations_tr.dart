@@ -4966,4 +4966,29 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get bookMoreGo => 'Kitabın tamamını oku';
+
+  @override
+  String bookMinutes(int n) {
+    return '$n dk';
+  }
+
+  @override
+  String get bookStart => 'Okumaya başla';
+
+  @override
+  String get bookContinue => 'Devam et';
+
+  @override
+  String get bookAgain => 'Yeniden oku';
+
+  @override
+  String get bookTheIdeas => 'Fikirler';
+
+  @override
+  String get bookFreeThisWeek => 'Bu hafta ücretsiz';
+
+  @override
+  String bookRetold(String title, String author) {
+    return '$author imzalı $title kitabının fikirleri, Astute\'un kendi sözleriyle. Kitabın tamamı için kitapçına bak.';
+  }
 }

@@ -5363,5 +5363,46 @@
  "bookMoreGo": "Read the whole book",
  "@bookMoreGo": {
   "description": "Books in pills: the button on the card after a book's free ideas, through the plans to the rest of the book."
+ },
+ "bookMinutes": "{n} min",
+ "@bookMinutes": {
+  "description": "Books in pills, a book's own page: bookMinutes",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "bookStart": "Start reading",
+ "@bookStart": {
+  "description": "Books in pills, a book's own page: bookStart"
+ },
+ "bookContinue": "Continue",
+ "@bookContinue": {
+  "description": "Books in pills, a book's own page: bookContinue"
+ },
+ "bookAgain": "Read again",
+ "@bookAgain": {
+  "description": "Books in pills, a book's own page: bookAgain"
+ },
+ "bookTheIdeas": "The ideas",
+ "@bookTheIdeas": {
+  "description": "Books in pills, a book's own page: bookTheIdeas"
+ },
+ "bookFreeThisWeek": "Free this week",
+ "@bookFreeThisWeek": {
+  "description": "Books in pills, a book's own page: bookFreeThisWeek"
+ },
+ "bookRetold": "The ideas of {title} by {author}, retold in Astute's own words. To read the whole book, find it at your bookshop.",
+ "@bookRetold": {
+  "description": "Books in pills, a book's own page: bookRetold",
+  "placeholders": {
+   "title": {
+    "type": "String"
+   },
+   "author": {
+    "type": "String"
+   }
+  }
  }
 }

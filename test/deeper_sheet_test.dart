@@ -137,6 +137,33 @@ void main() {
     ));
   });
 
+  testWidgets('an idea of a book with no link of its own leads to the book '
+      'in the open library catalogue', (tester) async {
+    final Pill idea = cardFromJson({
+      'id': 'thinking-book-x-1',
+      'topic': 'thinking',
+      'kind': 'read',
+      'difficulty': 'easy',
+      'question': 'Why do we trust the first number we hear?',
+      'answer': 'Because it anchors.',
+      'move': 'Name your own number first.',
+      'source': 'Daniel Kahneman, Thinking, Fast and Slow, 2011',
+      'reference': 'Daniel Kahneman, Thinking, Fast and Slow (2011), ch. 11',
+      'book': {
+        'id': 'x',
+        'title': 'Thinking, Fast and Slow',
+        'author': 'Daniel Kahneman',
+        'year': 2011,
+        'part': 1,
+        'isbn': '9780374533557',
+        'badge': 'By a Nobel laureate in economics',
+      },
+    });
+    expect(idea.reference, isEmpty);
+    await _open(tester, await _app(plus: false), idea);
+    expect(find.byKey(const ValueKey('deeper-open-source')), findsOneWidget);
+  });
+
   test('what the server says back, read', () {
     expect(CardAsk.read({'text': ' Yes. '}), isA<AskAnswer>());
     expect(

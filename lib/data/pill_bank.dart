@@ -188,13 +188,17 @@ class PillBank {
   /// day, the edition's cards, the cards at random and the reader's own,
   /// every shelf of Explore — can never hand it to anybody else. Nor is a
   /// free card whose page needs a later kit than this build carries: an
-  /// older build skips what it does not know.
+  /// older build skips what it does not know. Nor is a card that is one
+  /// idea of a book (Books in pills): a book is read whole, in its order,
+  /// from its own row of Explore, which reads [live], not one idea at a time
+  /// among the day's five.
   static List<Pill> get cards => _dealable ??= List.unmodifiable(
     _bundle.cards.where(
       (p) =>
           !_bundle.retired.contains(p.id) &&
           !p.isAboutAPlace &&
-          !p.needsLaterKit,
+          !p.needsLaterKit &&
+          p.book == null,
     ),
   );
 

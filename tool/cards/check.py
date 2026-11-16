@@ -730,9 +730,10 @@ def check_books(cards: list[dict], against: list[dict] | None = None) -> list[st
             books.setdefault(b["id"], []).append(c)
     problems: list[str] = []
     for bid, its in sorted(books.items()):
-        names = {(c["book"].get("title"), c["book"].get("author"), c["book"].get("year")) for c in its}
+        names = {(c["book"].get("title"), c["book"].get("author"), c["book"].get("year"),
+                  c["book"].get("isbn"), c["book"].get("badge")) for c in its}
         if len(names) > 1:
-            problems.append(f"book {bid}: its cards disagree on its title, author or year")
+            problems.append(f"book {bid}: its cards disagree on its title, author, year, isbn or badge")
         parts = sorted(c["book"].get("part") for c in its)
         if parts != list(range(1, len(parts) + 1)):
             problems.append(f"book {bid}: parts {parts}, not 1 to {len(parts)} once each")

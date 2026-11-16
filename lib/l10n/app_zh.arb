@@ -1177,5 +1177,12 @@
   "bookIdeas": "{n, plural, other{{n} 个观点}}",
   "bookMoreTitle": "{n, plural, other{这本书还有 {n} 个观点}}",
   "bookMoreLine": "整本书在 Astute+ 中，每周还有一本免费。",
-  "bookMoreGo": "阅读整本书"
+  "bookMoreGo": "阅读整本书",
+  "bookMinutes": "{n} 分钟",
+  "bookStart": "开始阅读",
+  "bookContinue": "继续阅读",
+  "bookAgain": "再读一遍",
+  "bookTheIdeas": "观点",
+  "bookFreeThisWeek": "本周免费",
+  "bookRetold": "{author}《{title}》中的观点，由 Astute 用自己的话讲述。完整的书请到书店寻找。"
 }

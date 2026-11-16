@@ -178,17 +178,20 @@ void main() {
 
   group('the bank', () {
     test('keeps a card about a place out of everything dealt to everybody', () {
+      // Everything live is dealt to everybody, kept for a place, or one
+      // idea of a book (read from the book's own row).
+      int books() => PillBank.live.where((p) => p.book != null).length;
       expect(PillBank.cards.where((p) => p.isAboutAPlace), isEmpty);
       expect(_ids(PillBank.placeCards).toSet(), _localIds);
       expect(
         PillBank.live.length,
-        PillBank.cards.length + PillBank.placeCards.length,
+        PillBank.cards.length + PillBank.placeCards.length + books(),
       );
       // Still known by id: a deck dealt with one still opens.
       expect(PillBank.byId('history-fixture-modena-1')?.place?.city, 'Modena');
       PillBank.adopt(_plain);
       expect(PillBank.placeCards, isEmpty);
-      expect(PillBank.live.length, PillBank.cards.length);
+      expect(PillBank.live.length, PillBank.cards.length + books());
     });
 
     test('carries the place through JSON, and refuses one it cannot read', () {

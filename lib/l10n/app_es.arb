@@ -1177,5 +1177,12 @@
   "bookIdeas": "{n, plural, =1{1 idea} other{{n} ideas}}",
   "bookMoreTitle": "{n, plural, =1{Una idea más de este libro} other{{n} ideas más de este libro}}",
   "bookMoreLine": "El libro entero con Astute+, y cada semana un libro gratis.",
-  "bookMoreGo": "Leer el libro entero"
+  "bookMoreGo": "Leer el libro entero",
+  "bookMinutes": "{n} min",
+  "bookStart": "Empezar a leer",
+  "bookContinue": "Continuar",
+  "bookAgain": "Leer de nuevo",
+  "bookTheIdeas": "Las ideas",
+  "bookFreeThisWeek": "Gratis esta semana",
+  "bookRetold": "Las ideas de {title}, de {author}, contadas con palabras de Astute. Para el libro entero, búscalo en tu librería."
 }

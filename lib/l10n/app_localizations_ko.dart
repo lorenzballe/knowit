@@ -4848,4 +4848,29 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get bookMoreGo => '책 전체 읽기';
+
+  @override
+  String bookMinutes(int n) {
+    return '$n분';
+  }
+
+  @override
+  String get bookStart => '읽기 시작';
+
+  @override
+  String get bookContinue => '이어서 읽기';
+
+  @override
+  String get bookAgain => '다시 읽기';
+
+  @override
+  String get bookTheIdeas => '아이디어';
+
+  @override
+  String get bookFreeThisWeek => '이번 주 무료';
+
+  @override
+  String bookRetold(String title, String author) {
+    return '$author의 『$title』에 담긴 아이디어를 Astute의 말로 풀었어요. 책 전체는 서점에서 만나 보세요.';
+  }
 }

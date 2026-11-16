@@ -5058,4 +5058,29 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bookMoreGo => 'Leer el libro entero';
+
+  @override
+  String bookMinutes(int n) {
+    return '$n min';
+  }
+
+  @override
+  String get bookStart => 'Empezar a leer';
+
+  @override
+  String get bookContinue => 'Continuar';
+
+  @override
+  String get bookAgain => 'Leer de nuevo';
+
+  @override
+  String get bookTheIdeas => 'Las ideas';
+
+  @override
+  String get bookFreeThisWeek => 'Gratis esta semana';
+
+  @override
+  String bookRetold(String title, String author) {
+    return 'Las ideas de $title, de $author, contadas con palabras de Astute. Para el libro entero, búscalo en tu librería.';
+  }
 }

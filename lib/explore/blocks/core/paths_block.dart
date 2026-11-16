@@ -57,7 +57,9 @@ List<CardPath> pathsOf(
 }) {
   final Map<String, List<Pill>> byGenre = {};
   for (final Pill p in bank) {
-    if (p.genre.isEmpty) continue;
+    // A book's ideas are read in the book, in its order, not dealt into a
+    // path between other cards.
+    if (p.genre.isEmpty || p.book != null) continue;
     if (subject != null && p.topic != subject) continue;
     byGenre.putIfAbsent(p.genre, () => []).add(p);
   }

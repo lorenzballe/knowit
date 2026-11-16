@@ -4827,4 +4827,29 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get bookMoreGo => '阅读整本书';
+
+  @override
+  String bookMinutes(int n) {
+    return '$n 分钟';
+  }
+
+  @override
+  String get bookStart => '开始阅读';
+
+  @override
+  String get bookContinue => '继续阅读';
+
+  @override
+  String get bookAgain => '再读一遍';
+
+  @override
+  String get bookTheIdeas => '观点';
+
+  @override
+  String get bookFreeThisWeek => '本周免费';
+
+  @override
+  String bookRetold(String title, String author) {
+    return '$author《$title》中的观点，由 Astute 用自己的话讲述。完整的书请到书店寻找。';
+  }
 }

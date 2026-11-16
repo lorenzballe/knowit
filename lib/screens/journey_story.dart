@@ -519,7 +519,7 @@ class _Practice extends StatelessWidget {
         : shares.reduce((a, b) => b.share < a.share ? b : a);
     final List<Pill> fresh = weak == null
         ? const []
-        : PillBank.live
+        : PillBank.cards
               .where(
                 (p) =>
                     topicKeyForName(p.topic) == weak.key &&

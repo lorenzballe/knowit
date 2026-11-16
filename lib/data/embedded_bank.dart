@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611161903,
- "built": "2026-11-16T19:03:15Z",
+ "version": 202611161929,
+ "built": "2026-11-16T19:29:23Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -23329,7 +23329,9 @@ const String kEmbeddedBank = r'''
     "title": "Nudge",
     "author": "Richard Thaler and Cass Sunstein",
     "year": 2008,
-    "part": 1
+    "part": 1,
+    "isbn": "9780300122237",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "choice architecture",
@@ -23369,7 +23371,9 @@ const String kEmbeddedBank = r'''
     "title": "Nudge",
     "author": "Richard Thaler and Cass Sunstein",
     "year": 2008,
-    "part": 2
+    "part": 2,
+    "isbn": "9780300122237",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "defaults",
@@ -23417,7 +23421,9 @@ const String kEmbeddedBank = r'''
     "title": "Nudge",
     "author": "Richard Thaler and Cass Sunstein",
     "year": 2008,
-    "part": 3
+    "part": 3,
+    "isbn": "9780300122237",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "anchoring",
@@ -23457,7 +23463,9 @@ const String kEmbeddedBank = r'''
     "title": "Nudge",
     "author": "Richard Thaler and Cass Sunstein",
     "year": 2008,
-    "part": 4
+    "part": 4,
+    "isbn": "9780300122237",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "save more tomorrow",
@@ -23497,7 +23505,9 @@ const String kEmbeddedBank = r'''
     "title": "Nudge",
     "author": "Richard Thaler and Cass Sunstein",
     "year": 2008,
-    "part": 5
+    "part": 5,
+    "isbn": "9780300122237",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "urinal fly",
@@ -168167,7 +168177,9 @@ const String kEmbeddedBank = r'''
     "title": "Atomic Habits",
     "author": "James Clear",
     "year": 2018,
-    "part": 1
+    "part": 1,
+    "isbn": "9780735211292",
+    "badge": "A #1 New York Times bestseller"
    },
    "keywords": [
     "compounding",
@@ -168207,7 +168219,9 @@ const String kEmbeddedBank = r'''
     "title": "Atomic Habits",
     "author": "James Clear",
     "year": 2018,
-    "part": 2
+    "part": 2,
+    "isbn": "9780735211292",
+    "badge": "A #1 New York Times bestseller"
    },
    "keywords": [
     "habit loop",
@@ -168247,7 +168261,9 @@ const String kEmbeddedBank = r'''
     "title": "Atomic Habits",
     "author": "James Clear",
     "year": 2018,
-    "part": 3
+    "part": 3,
+    "isbn": "9780735211292",
+    "badge": "A #1 New York Times bestseller"
    },
    "keywords": [
     "identity-based habits",
@@ -168287,7 +168303,9 @@ const String kEmbeddedBank = r'''
     "title": "Atomic Habits",
     "author": "James Clear",
     "year": 2018,
-    "part": 4
+    "part": 4,
+    "isbn": "9780735211292",
+    "badge": "A #1 New York Times bestseller"
    },
    "keywords": [
     "environment design",
@@ -168327,7 +168345,9 @@ const String kEmbeddedBank = r'''
     "title": "Atomic Habits",
     "author": "James Clear",
     "year": 2018,
-    "part": 5
+    "part": 5,
+    "isbn": "9780735211292",
+    "badge": "A #1 New York Times bestseller"
    },
    "keywords": [
     "two-minute rule",
@@ -168367,7 +168387,9 @@ const String kEmbeddedBank = r'''
     "title": "Influence",
     "author": "Robert Cialdini",
     "year": 1984,
-    "part": 1
+    "part": 1,
+    "isbn": "9780061899874",
+    "badge": "Over 5 million copies sold"
    },
    "keywords": [
     "reciprocity",
@@ -168407,7 +168429,9 @@ const String kEmbeddedBank = r'''
     "title": "Influence",
     "author": "Robert Cialdini",
     "year": 1984,
-    "part": 2
+    "part": 2,
+    "isbn": "9780061899874",
+    "badge": "Over 5 million copies sold"
    },
    "keywords": [
     "foot in the door",
@@ -168447,7 +168471,9 @@ const String kEmbeddedBank = r'''
     "title": "Influence",
     "author": "Robert Cialdini",
     "year": 1984,
-    "part": 3
+    "part": 3,
+    "isbn": "9780061899874",
+    "badge": "Over 5 million copies sold"
    },
    "keywords": [
     "social proof",
@@ -168487,7 +168513,9 @@ const String kEmbeddedBank = r'''
     "title": "Influence",
     "author": "Robert Cialdini",
     "year": 1984,
-    "part": 4
+    "part": 4,
+    "isbn": "9780061899874",
+    "badge": "Over 5 million copies sold"
    },
    "keywords": [
     "authority",
@@ -168527,7 +168555,9 @@ const String kEmbeddedBank = r'''
     "title": "Influence",
     "author": "Robert Cialdini",
     "year": 1984,
-    "part": 5
+    "part": 5,
+    "isbn": "9780061899874",
+    "badge": "Over 5 million copies sold"
    },
    "keywords": [
     "scarcity",
@@ -168575,7 +168605,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking, Fast and Slow",
     "author": "Daniel Kahneman",
     "year": 2011,
-    "part": 1
+    "part": 1,
+    "isbn": "9780374533557",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "cognitive reflection",
@@ -168615,7 +168647,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking, Fast and Slow",
     "author": "Daniel Kahneman",
     "year": 2011,
-    "part": 2
+    "part": 2,
+    "isbn": "9780374533557",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "system 1",
@@ -168663,7 +168697,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking, Fast and Slow",
     "author": "Daniel Kahneman",
     "year": 2011,
-    "part": 3
+    "part": 3,
+    "isbn": "9780374533557",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "anchoring",
@@ -168703,7 +168739,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking, Fast and Slow",
     "author": "Daniel Kahneman",
     "year": 2011,
-    "part": 4
+    "part": 4,
+    "isbn": "9780374533557",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "wysiati",
@@ -168743,7 +168781,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking, Fast and Slow",
     "author": "Daniel Kahneman",
     "year": 2011,
-    "part": 5
+    "part": 5,
+    "isbn": "9780374533557",
+    "badge": "By a Nobel laureate in economics"
    },
    "keywords": [
     "loss aversion",
@@ -250621,7 +250661,9 @@ const String kEmbeddedBank = r'''
     "title": "Factfulness",
     "author": "Hans Rosling",
     "year": 2018,
-    "part": 1
+    "part": 1,
+    "isbn": "9781250107817",
+    "badge": "“One of the most important books I've ever read” — Bill Gates"
    },
    "keywords": [
     "extreme poverty",
@@ -250659,7 +250701,9 @@ const String kEmbeddedBank = r'''
     "title": "Factfulness",
     "author": "Hans Rosling",
     "year": 2018,
-    "part": 2
+    "part": 2,
+    "isbn": "9781250107817",
+    "badge": "“One of the most important books I've ever read” — Bill Gates"
    },
    "keywords": [
     "gap instinct",
@@ -250697,7 +250741,9 @@ const String kEmbeddedBank = r'''
     "title": "Factfulness",
     "author": "Hans Rosling",
     "year": 2018,
-    "part": 3
+    "part": 3,
+    "isbn": "9781250107817",
+    "badge": "“One of the most important books I've ever read” — Bill Gates"
    },
    "keywords": [
     "size instinct",
@@ -250743,7 +250789,9 @@ const String kEmbeddedBank = r'''
     "title": "Factfulness",
     "author": "Hans Rosling",
     "year": 2018,
-    "part": 4
+    "part": 4,
+    "isbn": "9781250107817",
+    "badge": "“One of the most important books I've ever read” — Bill Gates"
    },
    "keywords": [
     "vaccination",
@@ -250781,7 +250829,9 @@ const String kEmbeddedBank = r'''
     "title": "Factfulness",
     "author": "Hans Rosling",
     "year": 2018,
-    "part": 5
+    "part": 5,
+    "isbn": "9781250107817",
+    "badge": "“One of the most important books I've ever read” — Bill Gates"
    },
    "keywords": [
     "straight line instinct",
@@ -250819,7 +250869,9 @@ const String kEmbeddedBank = r'''
     "title": "Superforecasting",
     "author": "Philip Tetlock and Dan Gardner",
     "year": 2015,
-    "part": 1
+    "part": 1,
+    "isbn": "9780804136693",
+    "badge": "From the forecasting tournament run for US intelligence"
    },
    "keywords": [
     "expert judgment",
@@ -250865,7 +250917,9 @@ const String kEmbeddedBank = r'''
     "title": "Superforecasting",
     "author": "Philip Tetlock and Dan Gardner",
     "year": 2015,
-    "part": 2
+    "part": 2,
+    "isbn": "9780804136693",
+    "badge": "From the forecasting tournament run for US intelligence"
    },
    "keywords": [
     "calibration",
@@ -250903,7 +250957,9 @@ const String kEmbeddedBank = r'''
     "title": "Superforecasting",
     "author": "Philip Tetlock and Dan Gardner",
     "year": 2015,
-    "part": 3
+    "part": 3,
+    "isbn": "9780804136693",
+    "badge": "From the forecasting tournament run for US intelligence"
    },
    "keywords": [
     "good judgment project",
@@ -250949,7 +251005,9 @@ const String kEmbeddedBank = r'''
     "title": "Superforecasting",
     "author": "Philip Tetlock and Dan Gardner",
     "year": 2015,
-    "part": 4
+    "part": 4,
+    "isbn": "9780804136693",
+    "badge": "From the forecasting tournament run for US intelligence"
    },
    "keywords": [
     "outside view",
@@ -250987,7 +251045,9 @@ const String kEmbeddedBank = r'''
     "title": "Superforecasting",
     "author": "Philip Tetlock and Dan Gardner",
     "year": 2015,
-    "part": 5
+    "part": 5,
+    "isbn": "9780804136693",
+    "badge": "From the forecasting tournament run for US intelligence"
    },
    "keywords": [
     "perpetual beta",
@@ -251025,7 +251085,9 @@ const String kEmbeddedBank = r'''
     "title": "The Black Swan",
     "author": "Nassim Nicholas Taleb",
     "year": 2007,
-    "part": 1
+    "part": 1,
+    "isbn": "9781400063512",
+    "badge": "A New York Times bestseller"
    },
    "keywords": [
     "turkey problem",
@@ -251063,7 +251125,9 @@ const String kEmbeddedBank = r'''
     "title": "The Black Swan",
     "author": "Nassim Nicholas Taleb",
     "year": 2007,
-    "part": 2
+    "part": 2,
+    "isbn": "9781400063512",
+    "badge": "A New York Times bestseller"
    },
    "keywords": [
     "black swan",
@@ -251109,7 +251173,9 @@ const String kEmbeddedBank = r'''
     "title": "The Black Swan",
     "author": "Nassim Nicholas Taleb",
     "year": 2007,
-    "part": 3
+    "part": 3,
+    "isbn": "9781400063512",
+    "badge": "A New York Times bestseller"
    },
    "keywords": [
     "extremistan",
@@ -251147,7 +251213,9 @@ const String kEmbeddedBank = r'''
     "title": "The Black Swan",
     "author": "Nassim Nicholas Taleb",
     "year": 2007,
-    "part": 4
+    "part": 4,
+    "isbn": "9781400063512",
+    "badge": "A New York Times bestseller"
    },
    "keywords": [
     "narrative fallacy",
@@ -251193,7 +251261,9 @@ const String kEmbeddedBank = r'''
     "title": "The Black Swan",
     "author": "Nassim Nicholas Taleb",
     "year": 2007,
-    "part": 5
+    "part": 5,
+    "isbn": "9781400063512",
+    "badge": "A New York Times bestseller"
    },
    "keywords": [
     "silent evidence",
@@ -251231,7 +251301,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking in Bets",
     "author": "Annie Duke",
     "year": 2018,
-    "part": 1
+    "part": 1,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
    },
    "keywords": [
     "resulting",
@@ -251277,7 +251349,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking in Bets",
     "author": "Annie Duke",
     "year": 2018,
-    "part": 2
+    "part": 2,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
    },
    "keywords": [
     "poker",
@@ -251315,7 +251389,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking in Bets",
     "author": "Annie Duke",
     "year": 2018,
-    "part": 3
+    "part": 3,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
    },
    "keywords": [
     "beliefs as bets",
@@ -251353,7 +251429,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking in Bets",
     "author": "Annie Duke",
     "year": 2018,
-    "part": 4
+    "part": 4,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
    },
    "keywords": [
     "self-serving bias",
@@ -251391,7 +251469,9 @@ const String kEmbeddedBank = r'''
     "title": "Thinking in Bets",
     "author": "Annie Duke",
     "year": 2018,
-    "part": 5
+    "part": 5,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
    },
    "keywords": [
     "mertonian norms",

@@ -11,6 +11,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/explore/blocks/core/books_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 
@@ -95,6 +96,85 @@ void main() {
       find.text('${other.cards.length - kBookFree} more ideas from this book'),
       findsOneWidget,
     );
+  });
+
+  Future<void> page(WidgetTester tester, AppState app, CardBook book) async {
+    tester.view.physicalSize = const Size(420, 2000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.light),
+        home: BookScreen(
+          app: app,
+          book: book,
+          weekly: bookOfTheWeek(PillBank.live, app.today),
+        ),
+      ),
+    );
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+  }
+
+  testWidgets('a book\'s page: why it is worth the minutes, its ideas in '
+      'order, the free ones open and the rest for Astute+', (tester) async {
+    final AppState app = await _app();
+    final String? weekly = bookOfTheWeek(PillBank.live, app.today);
+    final CardBook other = booksOf(
+      PillBank.live,
+      today: app.today,
+    ).firstWhere((b) => b.id != weekly);
+    await page(tester, app, other);
+    expect(find.text(other.book.title), findsWidgets);
+    expect(find.text(other.book.badge), findsOneWidget);
+    expect(find.byKey(const ValueKey('book-go')), findsOneWidget);
+    for (var i = 0; i < other.cards.length; i++) {
+      expect(find.byKey(ValueKey('book-idea-$i')), findsOneWidget);
+    }
+    expect(
+      find.byIcon(Icons.lock_rounded),
+      findsNWidgets(other.cards.length - kBookFree),
+    );
+    // The idea past the free ones goes through the plans.
+    await tester.tap(find.byKey(ValueKey('book-idea-$kBookFree')));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(find.byType(PaywallScreen), findsOneWidget);
+    expect(
+      tester.widget<PaywallScreen>(find.byType(PaywallScreen)).source,
+      'book idea',
+    );
+  });
+
+  testWidgets('the book of the week, and every book on Astute+, open whole', (
+    tester,
+  ) async {
+    final AppState free = await _app();
+    final CardBook weekly = booksOf(PillBank.live, today: free.today).first;
+    await page(tester, free, weekly);
+    expect(find.byIcon(Icons.lock_rounded), findsNothing);
+
+    final AppState plus = await _app(plus: true);
+    final CardBook other = booksOf(PillBank.live, today: plus.today).last;
+    await page(tester, plus, other);
+    expect(find.byIcon(Icons.lock_rounded), findsNothing);
+  });
+
+  test('a book takes a few honest minutes, never under three', () {
+    for (final CardBook b in booksOf(PillBank.live, today: monday)) {
+      expect(bookMinutes(b), inInclusiveRange(3, 12));
+    }
+  });
+
+  test('every book says why it is worth reading, and names its edition', () {
+    for (final CardBook b in booksOf(PillBank.live, today: monday)) {
+      expect(b.book.badge, isNotEmpty);
+      expect(b.book.isbn, matches(RegExp(r'^97[89]\d{10}$')));
+    }
   });
 
   test('a book is read from the card file', () {

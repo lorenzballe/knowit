@@ -1177,5 +1177,12 @@
   "bookIdeas": "{n, plural, other{아이디어 {n}개}}",
   "bookMoreTitle": "{n, plural, other{이 책의 아이디어 {n}개 더}}",
   "bookMoreLine": "책 전체는 Astute+로. 매주 한 권은 무료예요.",
-  "bookMoreGo": "책 전체 읽기"
+  "bookMoreGo": "책 전체 읽기",
+  "bookMinutes": "{n}분",
+  "bookStart": "읽기 시작",
+  "bookContinue": "이어서 읽기",
+  "bookAgain": "다시 읽기",
+  "bookTheIdeas": "아이디어",
+  "bookFreeThisWeek": "이번 주 무료",
+  "bookRetold": "{author}의 『{title}』에 담긴 아이디어를 Astute의 말로 풀었어요. 책 전체는 서점에서 만나 보세요."
 }

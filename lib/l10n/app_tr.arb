@@ -1177,5 +1177,12 @@
   "bookIdeas": "{n, plural, other{{n} fikir}}",
   "bookMoreTitle": "{n, plural, other{Bu kitaptan {n} fikir daha}}",
   "bookMoreLine": "Kitabın tamamı Astute+ ile; her hafta bir kitap ücretsiz.",
-  "bookMoreGo": "Kitabın tamamını oku"
+  "bookMoreGo": "Kitabın tamamını oku",
+  "bookMinutes": "{n} dk",
+  "bookStart": "Okumaya başla",
+  "bookContinue": "Devam et",
+  "bookAgain": "Yeniden oku",
+  "bookTheIdeas": "Fikirler",
+  "bookFreeThisWeek": "Bu hafta ücretsiz",
+  "bookRetold": "{author} imzalı {title} kitabının fikirleri, Astute'un kendi sözleriyle. Kitabın tamamı için kitapçına bak."
 }

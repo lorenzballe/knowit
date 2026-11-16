@@ -5245,4 +5245,29 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get bookMoreGo => 'Читать всю книгу';
+
+  @override
+  String bookMinutes(int n) {
+    return '$n мин';
+  }
+
+  @override
+  String get bookStart => 'Начать читать';
+
+  @override
+  String get bookContinue => 'Продолжить';
+
+  @override
+  String get bookAgain => 'Перечитать';
+
+  @override
+  String get bookTheIdeas => 'Идеи';
+
+  @override
+  String get bookFreeThisWeek => 'Бесплатно на этой неделе';
+
+  @override
+  String bookRetold(String title, String author) {
+    return 'Идеи книги «$title» ($author), пересказанные словами Astute. Всю книгу ищи в книжном.';
+  }
 }
