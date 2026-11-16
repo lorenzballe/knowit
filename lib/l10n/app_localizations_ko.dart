@@ -4551,4 +4551,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get openTheCard => '카드 열기';
+
+  @override
+  String get perkPathsTitle => '모든 경로를 끝까지';
+
+  @override
+  String get perkPathsLine => '한 주제의 카드 10장, 쉬운 것부터 어려운 것까지. 매주 새로운 경로.';
 }

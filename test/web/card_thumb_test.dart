@@ -225,7 +225,7 @@ void main() {
         expect(tester.takeException(), isNull);
         expect(find.byKey(const ValueKey('shelf-picture')), findsWidgets);
         expect(
-          find.byKey(ValueKey('card-thumb-${five.first.id}-front')),
+          find.byKey(ValueKey('card-thumb-${five.first.id}-front-large')),
           findsOneWidget,
         );
         expect(find.bySemanticsLabel('Save this card'), findsWidgets);
@@ -236,7 +236,7 @@ void main() {
         }
         expect(tester.takeException(), isNull);
         expect(
-          find.byKey(ValueKey('card-thumb-${five.first.id}-back')),
+          find.byKey(ValueKey('card-thumb-${five.first.id}-back-large')),
           findsOneWidget,
         );
       });

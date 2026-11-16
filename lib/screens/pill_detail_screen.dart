@@ -273,6 +273,7 @@ class _CardHead extends StatelessWidget {
                   child: CardThumb(
                     pill: pill,
                     side: CardSide.front,
+                    large: true,
                     // Where the picture will not come, the card's words,
                     // its question at the head of its colour — a size
                     // down where the reader's text is set so large that

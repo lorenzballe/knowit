@@ -4531,4 +4531,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get openTheCard => '打开卡片';
+
+  @override
+  String get perkPathsTitle => '每条路径，完整开放';
+
+  @override
+  String get perkPathsLine => '同一主题的十张卡片，从最简单到最难。每周都有新路径。';
 }

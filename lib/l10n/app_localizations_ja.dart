@@ -4530,4 +4530,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get openTheCard => 'カードを開く';
+
+  @override
+  String get perkPathsTitle => 'すべてのパスを最後まで';
+
+  @override
+  String get perkPathsLine => 'ひとつのテーマで10枚、やさしい順から難しい順へ。毎週新しいパス。';
 }

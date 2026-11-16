@@ -1113,5 +1113,7 @@
   "rereadWrong": "İlk seferde yanıldın.",
   "betsDayShareLine": "Astute'ta bugünün meydan okuması: {off, plural, =0{tam isabet} other{{off} puan saptım}}. Daha iyisini yapabilir misin?",
   "playTheCard": "Kartı oyna",
-  "openTheCard": "Kartı aç"
+  "openTheCard": "Kartı aç",
+  "perkPathsTitle": "Her yol, eksiksiz",
+  "perkPathsLine": "Tek bir konuda on kart, en kolaydan en zora. Her hafta yeni yollar."
 }

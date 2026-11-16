@@ -1113,5 +1113,7 @@
   "rereadWrong": "第一次你答错了。",
   "betsDayShareLine": "今天的 Astute 挑战：{off, plural, =0{我正好猜中} other{我差了 {off} 个百分点}}。你能猜得更准吗？",
   "playTheCard": "玩这张卡片",
-  "openTheCard": "打开卡片"
+  "openTheCard": "打开卡片",
+  "perkPathsTitle": "每条路径，完整开放",
+  "perkPathsLine": "同一主题的十张卡片，从最简单到最难。每周都有新路径。"
 }

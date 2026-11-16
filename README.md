@@ -177,10 +177,11 @@ how sure; the card after the fifth on all five being theirs, against the
 free day's two; the archive on the days read, newest first; every other
 door on what the habit adds up to. 'paywall shown' carries the variant
 and whether the reader has those numbers. The perks lead with the record,
-which only the journey shows, then five of your own cards, then what
-you've read. Each is a card of its own in one of the headline's three hues,
+which only the journey shows, then five of your own cards, then every
+path whole (on the paths' own door, whose headline says them, what you've
+read instead). Each is a card of its own in one of the headline's three hues,
 with its thing drawn, not an icon: the gap closing on a chart, five cards
-fanned, a month of days filled in, drawn in once as the paywall opens. The
+fanned, ten steps climbing, drawn in once as the paywall opens. The
 three cards share the room the rest of the screen leaves them, each a third
 of it up to a limit, so the room is filled by the perks rather than by air;
 their lines are shown on all three, at one size, or on none. Under the button a trial is told as its days — today, the
