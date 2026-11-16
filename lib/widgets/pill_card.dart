@@ -136,13 +136,16 @@ class PillCard extends StatelessWidget {
           ),
       ],
     );
-    // Held, the whole card is the button.
-    if (onLike == null) return card;
+    // Held, the whole card is the button. Built round every card, the one
+    // waiting under the card being read too, which cannot be liked yet: a
+    // card given a new parent as it rises is built again from nothing, and a
+    // drawn card's page with it — the drawing gone for a frame, a flash, as
+    // the card came to the front.
     return HoldToKeep(
       saved: liked,
       ink: pill.ink,
       ground: pill.color,
-      onToggle: onLike!,
+      onToggle: onLike,
       child: card,
     );
   }

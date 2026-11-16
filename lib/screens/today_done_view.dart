@@ -1640,8 +1640,8 @@ class _Actions extends StatelessWidget {
 /// The day is sent with no gate, on either plan, as it always was: a day in
 /// somebody's chat is how the app travels.
 /// The day's line at the head of the shelf — a dot in the front card's
-/// colour, which day this was — and under it, small, the freeze spent or
-/// how to like a card, when there is either to say. A liked card says so on
+/// colour, which day this was — and under it, small, the freeze spent or,
+/// until the reader has liked a card, how to. A liked card says so on
 /// itself, with the heart in its corner, rather than as a count here.
 class _DayHeading extends StatelessWidget {
   const _DayHeading({
@@ -1703,8 +1703,8 @@ class _DayHeading extends StatelessWidget {
                   style: lineStyle(ink),
                 ),
               ),
-              // The line under goes the moment the first card is liked; the
-              // shelf under it closes up in a beat, not a jump.
+              // The line under goes the moment the reader's first card is
+              // liked; the shelf under it closes up in a beat, not a jump.
               AnimatedSize(
                 duration: Duration(milliseconds: still ? 0 : 260),
                 curve: Curves.easeOut,

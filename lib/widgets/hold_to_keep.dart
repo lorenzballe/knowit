@@ -39,7 +39,10 @@ class HoldToKeep extends StatefulWidget {
   /// question printed behind it is a smudge, not a heart.
   final Color ground;
 
-  final VoidCallback onToggle;
+  /// What a completed hold does; null where the card cannot be liked yet
+  /// (the card waiting under the one being read), which is still built
+  /// round with this, so it keeps its element when it rises (PillCard).
+  final VoidCallback? onToggle;
   final Widget child;
 
   @override
@@ -91,7 +94,7 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
   void _fire() {
     setState(() => _letting = widget.saved);
     HapticFeedback.mediumImpact();
-    widget.onToggle();
+    widget.onToggle?.call();
     _hold.value = 0;
     _done.forward(from: 0);
   }
@@ -126,14 +129,15 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
         // The card underneath keeps its tap and its throw: a quick tap never
         // reaches this, and a card dragged away takes the pointer with it.
         gestures: {
-          _KeepPress: GestureRecognizerFactoryWithHandlers<_KeepPress>(
-            () => _KeepPress(duration: _press, onLost: _hold.reverse),
-            (r) => r
-              ..onLongPressDown = ((_) => _hold.forward())
-              ..onLongPressCancel = (() => _hold.reverse())
-              ..onLongPressStart = ((_) => _fire())
-              ..onLongPressEnd = ((_) => _hold.reverse()),
-          ),
+          if (widget.onToggle != null)
+            _KeepPress: GestureRecognizerFactoryWithHandlers<_KeepPress>(
+              () => _KeepPress(duration: _press, onLost: _hold.reverse),
+              (r) => r
+                ..onLongPressDown = ((_) => _hold.forward())
+                ..onLongPressCancel = (() => _hold.reverse())
+                ..onLongPressStart = ((_) => _fire())
+                ..onLongPressEnd = ((_) => _hold.reverse()),
+            ),
         },
         child: AnimatedBuilder(
           animation: Listenable.merge([_hold, _done]),

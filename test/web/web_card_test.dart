@@ -79,12 +79,17 @@ class _Deck extends StatefulWidget {
     required this.answers,
     required this.stints,
     this.answering = true,
+    this.likes = false,
   });
 
   final List<Pill> deck;
   final List<(String, String, int?)> answers;
   final List<CardStint> stints;
   final bool answering;
+
+  /// Whether the deck's cards can be liked, as the app's are: a hold on the
+  /// card on top.
+  final bool likes;
 
   @override
   State<_Deck> createState() => _DeckState();
@@ -114,6 +119,8 @@ class _DeckState extends State<_Deck> {
         isSaved: (_) => false,
         onSave: (_) {},
         onShare: (_) {},
+        isLiked: widget.likes ? (_) => false : null,
+        onLike: widget.likes ? (_) {} : null,
       ),
     ),
   );
@@ -240,6 +247,34 @@ void main() {
     expect(_pageOpacity(tester), kWaitingOpacity);
     FakeWebSurface.made[1].say(const PageReady());
     await settle(tester);
+    expect(_pageOpacity(tester), 1);
+  });
+
+  testWidgets('a card that rises to the front keeps the page it drew '
+      'underneath, on a deck whose cards can be liked', (tester) async {
+    await tester.pumpWidget(
+      _Deck(
+        deck: [_card('a'), _card('b')],
+        answers: [],
+        stints: [],
+        likes: true,
+      ),
+    );
+    await settle(tester);
+    // The furthest back first: the page under the card on top.
+    final Element under = find
+        .byKey(const ValueKey('fake-page'))
+        .evaluate()
+        .first;
+
+    FakeWebSurface.made.first.say(const PageDone());
+    await settle(tester);
+    await settle(tester);
+
+    // The same page, not one built again from nothing as the card rose: a
+    // page built again is a drawing gone for a frame, which on a phone is a
+    // flash of the card without it.
+    expect(find.byKey(const ValueKey('fake-page')).evaluate(), contains(under));
     expect(_pageOpacity(tester), 1);
   });
 
