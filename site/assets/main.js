@@ -333,7 +333,7 @@
   // The phone holds a real card from the app, drawn and alive: the most beautiful ones, one after another.
   const live = demo && $('[data-live]', demo);
   if (live) {
-    const LIVE = ['space-apollo-slingshot', 'economics-gulf-idle-fleet', 'human_body-egg-breaks-spell', 'maths-mercator-russia', 'history-vajont-four-minutes', 'life-inch-of-pay'];
+    const LIVE = ['space-apollo-slingshot', 'economics-hormuz-pipeline-shortfall', 'human_body-egg-breaks-spell', 'maths-mercator-russia', 'history-vajont-four-minutes', 'life-inch-of-pay'];
     const frame = $('iframe', live), bars = $$('.app-bars i', demo), next = $('.phone-next');
     let at = 0;
     const show = k => {
