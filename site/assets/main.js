@@ -330,7 +330,22 @@
     demo.addEventListener('focusin', () => phone.classList.add('facing'));
     demo.addEventListener('focusout', e => { if (!demo.contains(e.relatedTarget) && !demo.matches(':hover')) phone.classList.remove('facing'); });
   }
-  if (demo) {
+  // The phone holds a real card from the app, drawn and alive: the most beautiful ones, one after another.
+  const live = demo && $('[data-live]', demo);
+  if (live) {
+    const LIVE = ['space-apollo-slingshot', 'science-slinky-breathing-mode', 'life-inch-of-pay', 'science-feeling-heat-flow', 'nature-column-collapse-flows-2', 'economics-gulf-idle-fleet'];
+    const frame = $('iframe', live), bars = $$('.app-bars i', demo), next = $('.phone-next');
+    let at = 0;
+    const show = k => {
+      at = (k + LIVE.length) % LIVE.length;
+      live.classList.add('turning');
+      setTimeout(() => { frame.src = '/cards/pages/' + LIVE[at] + '.html'; }, 180);
+      bars.forEach((b, j) => b.classList.toggle('on', j <= at % bars.length));
+    };
+    frame.addEventListener('load', () => live.classList.remove('turning'));
+    if (next) next.addEventListener('click', () => show(at + 1));
+  }
+  if (demo && $('[data-pill]', demo)) {
     const deck = $('.deck', demo);
     const cards = $$('.pill', demo);
     const bars = $$('.app-bars i', demo);
