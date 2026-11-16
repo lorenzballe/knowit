@@ -365,6 +365,40 @@ void main() {
       expect(tester.getRect(offer).overlaps(tester.getRect(send)), isFalse);
     });
 
+    testWidgets('as a story too, the whole sheet is on the screen, with a '
+        'way out beside its title', (tester) async {
+      SharedPreferences.setMockInitialValues(_free());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _finishDay(tester);
+      await tester.tap(find.byKey(const ValueKey('shelf-share-day')));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('share-day-story')));
+      await _settle(tester);
+
+      // Taller than the screen it used to scroll where it should close,
+      // with nothing left above it to tap.
+      final double screen =
+          tester.view.physicalSize.height / tester.view.devicePixelRatio;
+      final Rect close = tester.getRect(
+        find.byKey(const ValueKey('share-day-close')),
+      );
+      final Rect share = tester.getRect(
+        find.byKey(const ValueKey('share-day-send')),
+      );
+      expect(close.top, greaterThan(24));
+      expect(share.bottom, lessThanOrEqualTo(screen));
+      expect(
+        tester.getRect(find.byType(DayPicture)).bottom,
+        lessThan(share.top),
+      );
+      expect(find.byType(SingleChildScrollView), findsNothing);
+
+      await tester.tap(find.byKey(const ValueKey('share-day-close')));
+      await _settle(tester);
+      expect(find.byType(DayPicture), findsNothing);
+    });
+
     testWidgets('beside it, the five again at full size, as they came', (
       tester,
     ) async {

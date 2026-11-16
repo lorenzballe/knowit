@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -196,18 +197,21 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return Container(
-      decoration: BoxDecoration(
-        color: context.p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        22,
-        14,
-        22,
-        MediaQuery.paddingOf(context).bottom + 24,
-      ),
-      child: SingleChildScrollView(
+    final EdgeInsets safe = MediaQuery.paddingOf(context);
+    // Never taller than the screen, with some of the page left in sight
+    // above it to tap away on: a story's tall picture shrinks into the room
+    // left between the shapes and the buttons. Taller than the screen, the
+    // sheet used to scroll where it should have closed, with nothing above
+    // it to tap — a story was a sheet with no way out.
+    final double most = MediaQuery.sizeOf(context).height - safe.top - 24;
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: most),
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.p.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+        ),
+        padding: EdgeInsets.fromLTRB(22, 14, 22, safe.bottom + 24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -222,17 +226,24 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            Text(
-              l.shareDayTitle,
-              style: AppText.display(
-                size: 20,
-                weight: FontWeight.w600,
-                spacing: -0.6,
-                color: context.p.ink,
-              ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l.shareDayTitle,
+                    style: AppText.display(
+                      size: 20,
+                      weight: FontWeight.w600,
+                      spacing: -0.6,
+                      color: context.p.ink,
+                    ),
+                  ),
+                ),
+                _Close(onTap: () => Navigator.of(context).maybePop()),
+              ],
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
             // The two shapes a day goes out in: a chat or a feed's, and a
             // story's.
             Row(
@@ -242,9 +253,7 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
                   _Shape(
                     key: ValueKey('share-day-${story ? 'story' : 'post'}'),
                     label: story ? l.shareFormatStory : l.shareFormatPost,
-                    icon: story
-                        ? Icons.crop_portrait_rounded
-                        : Icons.crop_square_rounded,
+                    tall: story,
                     on: _story == story,
                     onTap: () => setState(() => _story = story),
                   ),
@@ -252,20 +261,52 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
               ],
             ),
             const SizedBox(height: 14),
-            RepaintBoundary(
-              key: _picture,
-              // A picture, not a screen: set at one size whatever the
-              // reader's text size, or a large setting would crop it for
-              // somebody else.
-              child: MediaQuery(
-                data: MediaQuery.of(context)
-                    .copyWith(textScaler: TextScaler.noScaling),
-                child: DayPicture(
-                  summary: app.daySummary,
-                  five: app.todaysDeck.take(kPillsPerDay).toList(),
-                  day: app.today,
-                  story: _story,
-                ),
+            // The picture is laid out at one size on every phone, so it is
+            // the same picture wherever it is made, and shown shrunk to the
+            // room there is.
+            Flexible(
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  const double w = DayPicture.width;
+                  final double h = w / (_story ? 9 / 16 : 4 / 5);
+                  final double fit = math.min(
+                    box.maxWidth / w,
+                    box.maxHeight / h,
+                  );
+                  // As tall as the picture, not as the room: the sheet ends
+                  // under the post's square as it does under the story.
+                  return Center(
+                    heightFactor: 1,
+                    child: SizedBox(
+                      width: w * fit,
+                      height: h * fit,
+                      child: FittedBox(
+                        child: SizedBox(
+                          width: w,
+                          height: h,
+                          child: RepaintBoundary(
+                            key: _picture,
+                            // A picture, not a screen: set at one size
+                            // whatever the reader's text size, or a large
+                            // setting would crop it for somebody else.
+                            child: MediaQuery(
+                              data: MediaQuery.of(context)
+                                  .copyWith(textScaler: TextScaler.noScaling),
+                              child: DayPicture(
+                                summary: app.daySummary,
+                                five: app.todaysDeck
+                                    .take(kPillsPerDay)
+                                    .toList(),
+                                day: app.today,
+                                story: _story,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 20),
@@ -282,7 +323,7 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
                 const SizedBox(width: 10),
                 Semantics(
                   button: true,
-                  label: l.copiedToClipboard,
+                  label: l.shareCopyLink,
                   child: GestureDetector(
                     key: const ValueKey('share-day-copy'),
                     behavior: HitTestBehavior.opaque,
@@ -305,6 +346,37 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The way out of the sheet, always in sight beside its title.
+class _Close extends StatelessWidget {
+  const _Close({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    return Semantics(
+      button: true,
+      label: MaterialLocalizations.of(context).closeButtonLabel,
+      child: GestureDetector(
+        key: const ValueKey('share-day-close'),
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: p.surfaceRaised,
+            shape: BoxShape.circle,
+            border: Border.all(color: p.line),
+          ),
+          child: Icon(Icons.close_rounded, size: 18, color: p.inkMuted),
         ),
       ),
     );
@@ -340,6 +412,10 @@ class DayPicture extends StatelessWidget {
   static const Color _ground = Color(0xFF0C0C0E);
   static const Color _ink = Color(0xFFF4F2EC);
   static const Color _flame = Color(0xFFFF7A1A);
+
+  /// The width the picture is laid out at on every phone; it is made at
+  /// three times this, 1080 across, and shown shrunk to the room there is.
+  static const double width = 360;
 
   @override
   Widget build(BuildContext context) {
@@ -574,13 +650,16 @@ class _Shape extends StatelessWidget {
   const _Shape({
     super.key,
     required this.label,
-    required this.icon,
+    required this.tall,
     required this.on,
     required this.onTap,
   });
 
   final String label;
-  final IconData icon;
+
+  /// The story's shape, nine by sixteen, rather than the post's four by
+  /// five.
+  final bool tall;
   final bool on;
   final VoidCallback onTap;
 
@@ -604,8 +683,21 @@ class _Shape extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 16, color: on ? p.onInverse : p.inkMuted),
-              const SizedBox(width: 6),
+              // The shape the picture goes out in, drawn as a frame in its
+              // own proportions: a crop icon at this size read as a stray
+              // mark rather than as either shape.
+              Container(
+                width: tall ? 9 : 12.8,
+                height: 16,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2.5),
+                  border: Border.all(
+                    color: on ? p.onInverse : p.inkMuted,
+                    width: 1.6,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
               Text(
                 label,
                 style: AppText.body(
