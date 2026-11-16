@@ -310,6 +310,28 @@
     el.style.setProperty('--fs', fitted.get(key) + 'px');
     el.classList.toggle('spill', !fits());
   };
+  // The two rows of twenty subjects (tool/site/subjects_rows.py) start somewhere new on
+  // every visit, and each subject shows one of its two questions in one row and the other
+  // in the other. The order round the colour wheel is kept, so neighbours stay apart.
+  const subjectRows = $$('.marquee[data-row]');
+  if (subjectRows.length) {
+    const swap = {};
+    subjectRows.forEach(row => {
+      const tracks = $$('.marquee-track', row);
+      const n = tracks[0] ? tracks[0].children.length : 0;
+      const turn = Math.floor(Math.random() * n);
+      tracks.forEach(t => { for (let k = 0; k < turn; k++) t.appendChild(t.firstElementChild); });
+      $$('.deck-card[data-qs]', row).forEach(card => {
+        const subject = $('.label span', card).textContent;
+        if (!(subject in swap)) swap[subject] = Math.random() < .5;
+        let qs = [];
+        try { qs = JSON.parse(card.dataset.qs); } catch (e) { return; }
+        const q = qs[(+row.dataset.row + (swap[subject] ? 1 : 0)) % 2];
+        const span = $('.deck-q span', card);
+        if (span && q) span.textContent = q;
+      });
+    });
+  }
   const fitQuestions = () => $$('[data-fit]').forEach(fitQuestion);
   // Measured with the fonts in; anything measured before they came is
   // measured again.

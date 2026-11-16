@@ -38,6 +38,7 @@ jobs:
           python3 -m unittest discover -s tool/places -p "test_*.py"
           python3 -m unittest discover -s tool/quality -p "test_*.py"
           python3 tool/site/chrome.py --check
+          python3 tool/site/subjects_rows.py --check
           python3 tool/remote/check.py
           python3 tool/remote/bundle.py --check
           python3 tool/remote/gen_strings.py --check
