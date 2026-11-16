@@ -204,7 +204,9 @@ _Index _indexOf(List<Pill> cards) {
 
 /// The cards that answer [question], best first: from every card still
 /// dealt (PillBank.live) unless [cards] says otherwise, kept to those that
-/// pass [keep] — the reader's place and subject — and at most [limit].
+/// pass [keep] — the reader's place and subject — and at most [limit]. A
+/// book's ideas are read in the book, from its row, so the whole bank's
+/// search leaves them out.
 ///
 /// A word few cards hold says more about which card is meant than a word
 /// half the bank holds: "onion" is a better clue than "make". So each word
@@ -242,6 +244,7 @@ List<Pill> askCards(
   final List<Pill> out = [];
   for (final int i in found) {
     final Pill p = index.cards[i];
+    if (cards == null && p.book != null) continue;
     if (keep != null && !keep(p)) continue;
     out.add(p);
     if (out.length >= limit) break;

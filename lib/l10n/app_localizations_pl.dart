@@ -5188,4 +5188,65 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => 'Z Astute+';
+
+  @override
+  String get bookOfTheWeek => 'Książka tygodnia';
+
+  @override
+  String bookIdeas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n idei',
+      many: '$n idei',
+      few: '$n idee',
+      one: '1 idea',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookMoreTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Jeszcze $n idei z tej książki',
+      many: 'Jeszcze $n idei z tej książki',
+      few: 'Jeszcze $n idee z tej książki',
+      one: 'Jeszcze jedna idea z tej książki',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bookMoreLine =>
+      'Cała książka z Astute+, a co tydzień jedna książka za darmo.';
+
+  @override
+  String get bookMoreGo => 'Przeczytaj całą książkę';
+
+  @override
+  String bookMinutes(int n) {
+    return '$n min';
+  }
+
+  @override
+  String get bookStart => 'Zacznij czytać';
+
+  @override
+  String get bookContinue => 'Czytaj dalej';
+
+  @override
+  String get bookAgain => 'Przeczytaj ponownie';
+
+  @override
+  String get bookTheIdeas => 'Idee';
+
+  @override
+  String get bookFreeThisWeek => 'Za darmo w tym tygodniu';
+
+  @override
+  String bookRetold(String title, String author) {
+    return 'Idee z książki $title ($author) opowiedziane słowami Astute. Całą książkę znajdziesz w księgarni.';
+  }
 }

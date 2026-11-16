@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-thinking-in-bets-3",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What changes when you have to bet money on what you believe?",
+  "answer": "Duke's test: once money rides on a belief, you think hard about how sure you are and what could prove you wrong. Holding beliefs as bets, at a percentage rather than yes or no, makes them easier to update: moving from 70% to 60% is a small step, not a defeat.",
+  "move": "Say how sure you are in percent: changing your mind becomes a step.",
+  "simply": "'I'm sure' leaves no room to move. 'I'm 70% sure' already says you might be wrong, so learning something new is just turning a dial.",
+  "why": "It is the habit behind this app's 'how sure are you': people who think in percentages update faster and argue less.",
+  "book": {
+    "id": "thinking-in-bets",
+    "title": "Thinking in Bets",
+    "author": "Annie Duke",
+    "year": 2018,
+    "part": 3,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
+  },
+  "keywords": [
+    "beliefs as bets",
+    "calibration",
+    "updating",
+    "uncertainty"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Annie Duke, Thinking in Bets, 2018",
+  "source_kind": "book",
+  "reference": "Annie Duke, Thinking in Bets (Portfolio, 2018), ch. 2",
+  "written": "2026-11-16"
+}

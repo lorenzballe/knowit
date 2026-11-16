@@ -6,6 +6,7 @@
 library;
 
 import '../explore_block.dart';
+import 'core/books_block.dart';
 import 'core/card_blocks.dart';
 import 'core/feed_block.dart';
 import 'core/like_saved_block.dart';
@@ -27,4 +28,5 @@ const List<ExploreBlock> blocks = [
   SubjectLevelsBlock(),
   LikeSavedBlock(),
   PathsBlock(),
+  BooksBlock(),
 ];

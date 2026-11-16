@@ -1,0 +1,50 @@
+{
+  "id": "economics-book-nudge-3",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Guessing Milwaukee's population, who guesses higher: people from Chicago (about three million people) or from Green Bay (about a hundred thousand)?",
+  "options": [
+    "People from Chicago",
+    "People from Green Bay",
+    "Neither: they guess about the same"
+  ],
+  "correct": 0,
+  "answer": "People from Chicago. Each group starts from the city it knows and adjusts, too little: Chicagoans adjust down from millions, Green Bay residents adjust up from a hundred thousand. Milwaukee had about 580,000 when Nudge was written. The starting number, the anchor, drags the guess toward it.",
+  "move": "The first number you hear pulls your guess toward it, even when it shouldn't.",
+  "trap": "'About the same': it feels unrelated to where you live.",
+  "simply": "If the first price you see for a jacket is €300, €150 feels cheap. If the first was €50, €150 feels expensive. Same jacket.",
+  "why": "Asking prices, salary offers and 'was €99, now €49' tags are anchors. Making your own estimate first protects you.",
+  "sure": 0.35,
+  "book": {
+    "id": "nudge",
+    "title": "Nudge",
+    "author": "Richard Thaler and Cass Sunstein",
+    "year": 2008,
+    "part": 3,
+    "isbn": "9780300122237",
+    "badge": "By a Nobel laureate in economics"
+  },
+  "keywords": [
+    "anchoring",
+    "estimation",
+    "milwaukee",
+    "adjustment"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Thaler and Cass Sunstein, Nudge, 2008",
+  "source_kind": "book",
+  "reference": "Richard H. Thaler and Cass R. Sunstein, Nudge (Yale University Press, 2008), ch. 1",
+  "written": "2026-11-16"
+}

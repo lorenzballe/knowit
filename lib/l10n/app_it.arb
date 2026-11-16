@@ -1172,5 +1172,17 @@
   "deeperTomorrow": "Per oggi basta: domani ancora.",
   "deeperTryAgain": "Non è arrivato. Riprova tra poco.",
   "deeperDeclined": "A questa non può rispondere.",
-  "deeperPlusOnly": "Con Astute+"
+  "deeperPlusOnly": "Con Astute+",
+  "bookOfTheWeek": "Libro della settimana",
+  "bookIdeas": "{n, plural, =1{1 idea} other{{n} idee}}",
+  "bookMoreTitle": "{n, plural, =1{Ancora un'idea da questo libro} other{Altre {n} idee da questo libro}}",
+  "bookMoreLine": "Il libro intero con Astute+, e ogni settimana un libro gratis.",
+  "bookMoreGo": "Leggi tutto il libro",
+  "bookMinutes": "{n} min",
+  "bookStart": "Inizia a leggere",
+  "bookContinue": "Continua",
+  "bookAgain": "Rileggi",
+  "bookTheIdeas": "Le idee",
+  "bookFreeThisWeek": "Gratis questa settimana",
+  "bookRetold": "Le idee di {title} di {author}, raccontate con parole di Astute. Per il libro intero, cercalo in libreria."
 }

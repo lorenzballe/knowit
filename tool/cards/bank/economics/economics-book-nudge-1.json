@@ -1,0 +1,42 @@
+{
+  "id": "economics-book-nudge-1",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.hidden_incentives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can moving food around a school canteen change what children eat?",
+  "answer": "Yes, a lot. Thaler and Sunstein open with a canteen director who, just by changing where dishes were placed and in what order, raised or lowered how much of many foods were eaten by as much as 25%. There is no neutral layout: every arrangement nudges. They call whoever arranges it a 'choice architect'.",
+  "move": "There is no neutral way to present a choice: someone is always arranging it.",
+  "simply": "Put the carrots at eye level and the chips at the back, and more children pick carrots. Nobody told them to.",
+  "why": "Supermarkets, apps and forms are arranged on purpose. Seeing the arrangement is the first step to choosing for yourself.",
+  "book": {
+    "id": "nudge",
+    "title": "Nudge",
+    "author": "Richard Thaler and Cass Sunstein",
+    "year": 2008,
+    "part": 1,
+    "isbn": "9780300122237",
+    "badge": "By a Nobel laureate in economics"
+  },
+  "keywords": [
+    "choice architecture",
+    "nudges",
+    "canteen",
+    "defaults"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Thaler and Cass Sunstein, Nudge, 2008",
+  "source_kind": "book",
+  "reference": "Richard H. Thaler and Cass R. Sunstein, Nudge (Yale University Press, 2008), introduction",
+  "written": "2026-11-16"
+}

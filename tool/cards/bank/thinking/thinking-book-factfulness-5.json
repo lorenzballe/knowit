@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-factfulness-5",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Will the world's population keep growing for ever?",
+  "answer": "Not by the UN's projections, which have it levelling off around ten or eleven billion by 2100. Rosling's reason: the number of children in the world has already stopped growing. Families have fewer children as they leave extreme poverty; the billions still to come are mostly adults living longer.",
+  "move": "Most lines bend: ask what will bend this one before you extend it.",
+  "simply": "A tree grows fast when it is young and slows down when it is big. Drawing a straight line from its first years would make it reach the clouds.",
+  "why": "Straight-line forecasts make every trend look like a crisis. Finding what bends a curve is how you plan for what will actually happen.",
+  "book": {
+    "id": "factfulness",
+    "title": "Factfulness",
+    "author": "Hans Rosling",
+    "year": 2018,
+    "part": 5,
+    "isbn": "9781250107817",
+    "badge": "“One of the most important books I've ever read” — Bill Gates"
+  },
+  "keywords": [
+    "straight line instinct",
+    "population",
+    "peak child",
+    "projections"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Hans Rosling, Factfulness, 2018",
+  "source_kind": "book",
+  "reference": "Hans Rosling, Ola Rosling and Anna Rosling Rönnlund, Factfulness (Flatiron Books, 2018), ch. 3",
+  "written": "2026-11-16"
+}

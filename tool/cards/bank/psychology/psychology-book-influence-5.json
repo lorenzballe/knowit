@@ -1,0 +1,42 @@
+{
+  "id": "psychology-book-influence-5",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.scarcity_tricks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Are cookies from a nearly empty jar tastier?",
+  "answer": "People rated them so. In a study, identical cookies were judged more desirable when they came from a jar holding two than from a jar holding ten, and more still when the jar had just gone from ten to two. Cialdini calls it scarcity: what is rare, or becoming rare, looks more valuable.",
+  "move": "'Only a few left' changes how much you want something, not how good it is.",
+  "simply": "The last biscuit always looks like the best biscuit. It isn't; it's just the last.",
+  "why": "Countdown timers, 'limited editions' and 'only 2 rooms left' are built on this. Ask whether you'd want it if there were plenty.",
+  "book": {
+    "id": "influence",
+    "title": "Influence",
+    "author": "Robert Cialdini",
+    "year": 1984,
+    "part": 5,
+    "isbn": "9780061899874",
+    "badge": "Over 5 million copies sold"
+  },
+  "keywords": [
+    "scarcity",
+    "cookie jar study",
+    "persuasion",
+    "value"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Robert Cialdini, Influence, 1984",
+  "source_kind": "book",
+  "reference": "Robert B. Cialdini, Influence: The Psychology of Persuasion (William Morrow, 1984), ch. 7",
+  "written": "2026-11-16"
+}

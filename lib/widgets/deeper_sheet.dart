@@ -83,7 +83,7 @@ class _DeeperSheetState extends State<DeeperSheet> {
       'has_simply': pill.simply.isNotEmpty,
       'has_why': pill.why.isNotEmpty,
       'has_views': pill.views.length == 2,
-      'has_link': pill.reference.isNotEmpty,
+      'has_link': _original.isNotEmpty,
       'ai': _aiOn,
       'is_plus': app.isPlus,
     });
@@ -135,8 +135,16 @@ class _DeeperSheetState extends State<DeeperSheet> {
     }, source: 'card ai ${mode.name}');
   }
 
+  /// Where the original is: the page or the DOI the card names, or, for an
+  /// idea of a book, the book's own entry in the open library catalogue.
+  String get _original => pill.reference.isNotEmpty
+      ? pill.reference
+      : (pill.book?.isbn.isNotEmpty ?? false)
+      ? 'https://openlibrary.org/isbn/${pill.book!.isbn}'
+      : '';
+
   Future<void> _openSource() async {
-    final Uri? url = Uri.tryParse(pill.reference);
+    final Uri? url = Uri.tryParse(_original);
     if (url == null) return;
     Analytics.capture('card source opened', app.cardFacts(pill.id));
     await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -239,7 +247,7 @@ class _DeeperSheetState extends State<DeeperSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _Body(pill.source),
-            if (pill.reference.isNotEmpty) ...[
+            if (_original.isNotEmpty) ...[
               const SizedBox(height: 10),
               TextButton.icon(
                 key: const ValueKey('deeper-open-source'),

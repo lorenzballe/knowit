@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-thinking-in-bets-4",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we call our wins skill and our losses bad luck?",
+  "answer": "Duke calls it self-serving bias: good outcomes feel earned, bad ones feel unlucky, and for other people we turn it round, their wins lucky and their losses deserved. Her fix is to ask of every outcome how much was skill and how much luck, the same way for ourselves as for anyone else.",
+  "move": "Grade your own luck the way you grade other people's.",
+  "simply": "When you get a good mark it was your hard work; when you get a bad one, the test was unfair. When a classmate gets a good mark, they were lucky.",
+  "why": "You only learn from what you are willing to call your own. Blaming luck for every loss throws the lesson away.",
+  "book": {
+    "id": "thinking-in-bets",
+    "title": "Thinking in Bets",
+    "author": "Annie Duke",
+    "year": 2018,
+    "part": 4,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
+  },
+  "keywords": [
+    "self-serving bias",
+    "attribution",
+    "skill and luck",
+    "learning"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Annie Duke, Thinking in Bets, 2018",
+  "source_kind": "book",
+  "reference": "Annie Duke, Thinking in Bets (Portfolio, 2018), ch. 3",
+  "written": "2026-11-16"
+}

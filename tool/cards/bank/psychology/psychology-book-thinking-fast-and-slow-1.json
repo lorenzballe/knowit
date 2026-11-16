@@ -1,0 +1,50 @@
+{
+  "id": "psychology-book-thinking-fast-and-slow-1",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.fast_and_slow",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A bat and a ball cost $1.10 together. The bat costs $1 more than the ball. How much is the ball?",
+  "options": [
+    "10 cents",
+    "5 cents",
+    "1 cent"
+  ],
+  "correct": 1,
+  "answer": "Five cents: the bat is $1.05, and together they make $1.10. Ten cents springs to mind first, and more than half of the students tested at Harvard, MIT and Princeton gave it. Kahneman's point: a fast system hands up the answer that feels right, and a slow one checks it only if it wakes up.",
+  "move": "When an answer arrives instantly, check it as if a stranger had said it.",
+  "trap": "Ten cents: it fits at a glance, so nothing checks it.",
+  "simply": "Your brain has a fast friend who shouts the first answer, and a slow friend who does sums. The fast one shouted 'ten cents' before the slow one even looked up.",
+  "why": "The same fast answer runs your first take on a price, a headline or a person. Knowing it is a guess is what lets you check it when it matters.",
+  "sure": 0.35,
+  "book": {
+    "id": "thinking-fast-and-slow",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "year": 2011,
+    "part": 1,
+    "isbn": "9780374533557",
+    "badge": "By a Nobel laureate in economics"
+  },
+  "keywords": [
+    "cognitive reflection",
+    "bat and ball",
+    "intuition",
+    "system 1"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Kahneman, Thinking, Fast and Slow, 2011",
+  "source_kind": "book",
+  "reference": "Daniel Kahneman, Thinking, Fast and Slow (Farrar, Straus and Giroux, 2011), ch. 3",
+  "written": "2026-11-16"
+}

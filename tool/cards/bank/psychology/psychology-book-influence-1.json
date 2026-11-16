@@ -1,0 +1,42 @@
+{
+  "id": "psychology-book-influence-1",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.reciprocity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did airport travellers give money after being handed a flower they never asked for?",
+  "answer": "Because of the rule of reciprocity: we feel obliged to repay what others give us, even an unwanted gift. Robert Cialdini describes members of the Hare Krishna movement pressing a flower into travellers' hands and then asking for a donation. Many gave, and many then threw the flower away.",
+  "move": "A gift you didn't ask for is often a debt someone wants repaid.",
+  "simply": "When a friend gives you a sweet, you feel you should give one back, even if you didn't want the first one.",
+  "why": "Free samples, 'free' consultations and small favours work the same way. Noticing the pull lets you decide on the request alone.",
+  "book": {
+    "id": "influence",
+    "title": "Influence",
+    "author": "Robert Cialdini",
+    "year": 1984,
+    "part": 1,
+    "isbn": "9780061899874",
+    "badge": "Over 5 million copies sold"
+  },
+  "keywords": [
+    "reciprocity",
+    "persuasion",
+    "free gifts",
+    "cialdini"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Robert Cialdini, Influence, 1984",
+  "source_kind": "book",
+  "reference": "Robert B. Cialdini, Influence: The Psychology of Persuasion (William Morrow, 1984), ch. 2",
+  "written": "2026-11-16"
+}

@@ -66,6 +66,8 @@ frame**, never instead of it.
 - Every new card fills Go deeper (RULES.md §22): `simply` (explain it like to a child, ≤ 50
   words) and `why` (why it matters, ≤ 60 words); a contested question adds `views`, two
   labelled views at their strongest.
+- A book in pills (RULES.md §23) is four to eight cards with the same `book` and parts 1 to n:
+  one idea each, in the app's own words, the book as the source.
 
 ## 5. Check the graphics: never skip
 1. `node tool/cards/card_check.cjs <page.html> <screenshot-dir>`. Fix until it reports all clear.

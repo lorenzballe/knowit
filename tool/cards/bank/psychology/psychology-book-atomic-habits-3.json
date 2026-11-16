@@ -1,0 +1,42 @@
+{
+  "id": "psychology-book-atomic-habits-3",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.goals_that_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does 'I'm trying to quit smoking' work less well than 'I'm not a smoker'?",
+  "answer": "The first is a goal; the second, an identity. Clear argues lasting change starts with who you want to be, not what you want to get: every action is a vote for the person you are becoming. A runner needn't decide to run; running is just what runners do.",
+  "move": "Decide who you want to be, then prove it with small wins.",
+  "simply": "'I want to read a book' is a chore. 'I'm a reader' means picking up a book is simply what you do.",
+  "why": "Goals end when you reach them or fail them; an identity keeps going. It is the difference between a diet and eating like a healthy person.",
+  "book": {
+    "id": "atomic-habits",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "year": 2018,
+    "part": 3,
+    "isbn": "9780735211292",
+    "badge": "A #1 New York Times bestseller"
+  },
+  "keywords": [
+    "identity-based habits",
+    "behaviour change",
+    "self-image",
+    "habits"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James Clear, Atomic Habits, 2018",
+  "source_kind": "book",
+  "reference": "James Clear, Atomic Habits (Avery, 2018), ch. 2",
+  "written": "2026-11-16"
+}

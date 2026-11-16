@@ -1,0 +1,48 @@
+{
+  "id": "thinking-book-superforecasting-4",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "Will this couple stay married for ten years? Where does a superforecaster start?",
+  "options": [
+    "With what they know about the couple",
+    "With how often marriages like it last",
+    "With a coin toss: fifty-fifty"
+  ],
+  "correct": 1,
+  "answer": "With the outside view: how often marriages like this one last, the base rate. Only then do they take the inside view, the couple's own story, and adjust. Starting from the story pulls you toward it; starting from the rate anchors you to how things usually go.",
+  "move": "Start from how often things like this happen, then adjust for what is special.",
+  "trap": "The couple's story: vivid, while the base rate is invisible.",
+  "simply": "Before guessing whether a new restaurant will survive, first ask how many new restaurants usually survive. Then think about this one.",
+  "why": "Plans, startups and renovations run over because we start from our own case. The outside view is the cheapest correction there is.",
+  "sure": 0.35,
+  "book": {
+    "id": "superforecasting",
+    "title": "Superforecasting",
+    "author": "Philip Tetlock and Dan Gardner",
+    "year": 2015,
+    "part": 4,
+    "isbn": "9780804136693",
+    "badge": "From the forecasting tournament run for US intelligence"
+  },
+  "keywords": [
+    "outside view",
+    "base rate",
+    "inside view",
+    "forecasting"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Philip Tetlock and Dan Gardner, Superforecasting, 2015",
+  "source_kind": "book",
+  "reference": "Philip Tetlock and Dan Gardner, Superforecasting (Crown, 2015), ch. 5",
+  "written": "2026-11-16"
+}

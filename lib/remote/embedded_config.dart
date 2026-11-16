@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "a960cc72674e84af",
+ "hash": "ebd71d96cbc9bba6",
  "app": {
   "gate": null,
   "flags": {},
@@ -2105,6 +2105,40 @@ const String kEmbeddedRemote = r'''
     },
     "source": {
      "mine": "forYou"
+    }
+   },
+   {
+    "id": "books",
+    "block": "books",
+    "title": {
+     "en": "Books in pills",
+     "it": "Libri in pillole",
+     "de": "Bücher in Häppchen",
+     "es": "Libros en píldoras",
+     "fr": "Livres en pilules",
+     "ja": "本をひとくちで",
+     "ko": "한입 책",
+     "nl": "Boeken in hapjes",
+     "pl": "Książki w pigułce",
+     "pt": "Livros em pílulas",
+     "ru": "Книги в двух словах",
+     "tr": "Kapsül kitaplar",
+     "zh": "一口读书"
+    },
+    "subtitle": {
+     "en": "The big ideas of bestsellers, five cards a book, a few minutes in all.",
+     "it": "Le grandi idee dei bestseller, cinque carte a libro, pochi minuti in tutto.",
+     "de": "Die großen Ideen von Bestsellern, fünf Karten pro Buch, ein paar Minuten insgesamt.",
+     "es": "Las grandes ideas de los bestsellers, cinco tarjetas por libro, unos minutos en total.",
+     "fr": "Les grandes idées des best-sellers, cinq cartes par livre, quelques minutes en tout.",
+     "ja": "ベストセラーの大事なアイデアを、1冊5枚のカードで。全部で数分。",
+     "ko": "베스트셀러의 핵심 아이디어를 책 한 권에 카드 다섯 장으로. 다 합쳐 몇 분.",
+     "nl": "De grote ideeën van bestsellers, vijf kaarten per boek, een paar minuten in totaal.",
+     "pl": "Najważniejsze idee bestsellerów, pięć kart na książkę, kilka minut w sumie.",
+     "pt": "As grandes ideias dos bestsellers, cinco cartas por livro, poucos minutos ao todo.",
+     "ru": "Главные идеи бестселлеров, пять карточек на книгу, несколько минут на всё.",
+     "tr": "Çok satan kitapların büyük fikirleri, kitap başına beş kart, toplamda birkaç dakika.",
+     "zh": "畅销书的核心观点，每本五张卡片，总共几分钟。"
     }
    },
    {

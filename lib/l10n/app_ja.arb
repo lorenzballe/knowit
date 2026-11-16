@@ -1172,5 +1172,17 @@
   "deeperTomorrow": "今日はここまで。また明日。",
   "deeperTryAgain": "届きませんでした。少ししてからもう一度。",
   "deeperDeclined": "これには答えられません。",
-  "deeperPlusOnly": "Astute+ で"
+  "deeperPlusOnly": "Astute+ で",
+  "bookOfTheWeek": "今週の本",
+  "bookIdeas": "{n, plural, other{{n}つのアイデア}}",
+  "bookMoreTitle": "{n, plural, other{この本のアイデアはあと{n}つ}}",
+  "bookMoreLine": "本はすべて Astute+ で。毎週1冊は無料です。",
+  "bookMoreGo": "本をすべて読む",
+  "bookMinutes": "{n}分",
+  "bookStart": "読み始める",
+  "bookContinue": "続きを読む",
+  "bookAgain": "もう一度読む",
+  "bookTheIdeas": "アイデア",
+  "bookFreeThisWeek": "今週は無料",
+  "bookRetold": "{author}『{title}』のアイデアを、Astute の言葉で紹介しています。本の全文は書店でどうぞ。"
 }

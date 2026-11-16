@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-thinking-in-bets-5",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What should a group that helps you think better agree on?",
+  "answer": "Duke borrows the sociologist Robert Merton's norms for science: share all the data, judge an idea apart from who says it, watch for conflicts of interest, and reward doubt. A group that praises being accurate over being agreed with makes every member better calibrated, and makes it safe to say 'I might be wrong'.",
+  "move": "Surround yourself with people who reward you for being accurate, not for being right.",
+  "simply": "Pick friends who will tell you that your plan has a hole in it, and thank them when they do.",
+  "why": "Alone we defend our beliefs; in a good group we test them. It is the cheapest way to get better decisions.",
+  "book": {
+    "id": "thinking-in-bets",
+    "title": "Thinking in Bets",
+    "author": "Annie Duke",
+    "year": 2018,
+    "part": 5,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
+  },
+  "keywords": [
+    "mertonian norms",
+    "truthseeking",
+    "feedback",
+    "groups"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Annie Duke, Thinking in Bets, 2018",
+  "source_kind": "book",
+  "reference": "Annie Duke, Thinking in Bets (Portfolio, 2018), ch. 4",
+  "written": "2026-11-16"
+}

@@ -72,7 +72,7 @@ KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
     "answer", "move", "ask", "end", "both", "trap", "hint", "steps", "simply", "counterpoint",
-    "why", "views", "sure", "reacts",
+    "why", "views", "sure", "reacts", "book",
     *TAG_KEYS, "traits", "place", "builds_on", "figure", "diagram", "scene", "web",
     "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
 ]
@@ -718,6 +718,30 @@ def check_commons(commons: dict, cards: list[dict]) -> list[str]:
     return problems
 
 
+def check_books(cards: list[dict], against: list[dict] | None = None) -> list[str]:
+    """Books in pills (`book`): a book's cards agree on what it is, and its
+    parts run from 1 with no gap, four to eight of them."""
+    books: dict[str, list[dict]] = {}
+    # A card checked against the bank it is already in counts once.
+    unique = {c.get("id"): c for c in [*(against or []), *cards]}
+    for c in unique.values():
+        b = c.get("book")
+        if isinstance(b, dict) and isinstance(b.get("id"), str):
+            books.setdefault(b["id"], []).append(c)
+    problems: list[str] = []
+    for bid, its in sorted(books.items()):
+        names = {(c["book"].get("title"), c["book"].get("author"), c["book"].get("year"),
+                  c["book"].get("isbn"), c["book"].get("badge")) for c in its}
+        if len(names) > 1:
+            problems.append(f"book {bid}: its cards disagree on its title, author, year, isbn or badge")
+        parts = sorted(c["book"].get("part") for c in its)
+        if parts != list(range(1, len(parts) + 1)):
+            problems.append(f"book {bid}: parts {parts}, not 1 to {len(parts)} once each")
+        if not 4 <= len(parts) <= 8:
+            problems.append(f"book {bid}: {len(parts)} cards, not four to eight")
+    return problems
+
+
 def check_bank(cards: list[dict], editions: dict | None = None, *, strict: bool = False, commons: dict | None = None) -> dict[str, list[str]]:
     """Every problem in the bank, keyed by card id (or '*' for the whole)."""
     schema = load_schema()
@@ -731,7 +755,7 @@ def check_bank(cards: list[dict], editions: dict | None = None, *, strict: bool 
         seen.add(c["id"])
         if problems:
             out[c["id"]] = problems
-    whole = check_twins(cards) + check_links(cards) + check_orphan_pages()
+    whole = check_twins(cards) + check_links(cards) + check_orphan_pages() + check_books(cards)
     if editions is not None:
         whole += check_editions(editions, cards)
     if commons is not None:
@@ -757,7 +781,7 @@ def main(argv: list[str] | None = None) -> int:
             for p in problems:
                 print(f"{path}: {p}")
             bad += bool(problems)
-        whole = check_twins(fresh, against=bank) + check_links(fresh, against=bank)
+        whole = check_twins(fresh, against=bank) + check_links(fresh, against=bank) + check_books(fresh, against=bank)
         if args.strict:
             whole += check_sources(fresh, against=bank)
         for p in whole:

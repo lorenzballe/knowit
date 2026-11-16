@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-thinking-in-bets-1",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Was the last play Seattle called in the 2015 Super Bowl a terrible decision?",
+  "answer": "With 26 seconds left and a yard to go, Seattle threw instead of running; the pass was intercepted and the game lost. Papers called it the worst call ever. Annie Duke, a poker champion, argues it was defensible: interceptions there are rare. Judging a choice by its outcome, 'resulting', confuses bad luck with bad thinking.",
+  "move": "Judge a decision by what was known then, not by how it turned out.",
+  "simply": "If you cross on a green light and a car runs the red, you were unlucky, not foolish. The light was green.",
+  "why": "Every review of a project, a hire or an investment is tempted to read the result as the verdict. Separating the two is how you learn from both wins and losses.",
+  "book": {
+    "id": "thinking-in-bets",
+    "title": "Thinking in Bets",
+    "author": "Annie Duke",
+    "year": 2018,
+    "part": 1,
+    "isbn": "9780735216358",
+    "badge": "A national bestseller by a poker champion"
+  },
+  "keywords": [
+    "resulting",
+    "outcome bias",
+    "super bowl",
+    "decision quality"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Annie Duke, Thinking in Bets, 2018",
+  "source_kind": "book",
+  "reference": "Annie Duke, Thinking in Bets (Portfolio, 2018), ch. 1",
+  "written": "2026-11-16"
+}

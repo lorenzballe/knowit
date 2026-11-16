@@ -1,0 +1,42 @@
+{
+  "id": "psychology-book-thinking-fast-and-slow-4",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.overconfidence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we often feel most sure when we know least?",
+  "answer": "Kahneman calls it 'what you see is all there is'. The fast mind builds the most coherent story it can from whatever is in front of it, and never counts what is missing. Less information means fewer facts that clash, so the story comes out neater, and a neat story feels true.",
+  "move": "Confidence measures how well a story hangs together, not how much you know.",
+  "simply": "If you only hear one side of a quarrel, it sounds perfectly clear who was wrong. The other side would have made it messy.",
+  "why": "Before a firm judgement on a person, a company or a news story, asking 'what would I need to know that I don't?' brings back the missing half.",
+  "book": {
+    "id": "thinking-fast-and-slow",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "year": 2011,
+    "part": 4,
+    "isbn": "9780374533557",
+    "badge": "By a Nobel laureate in economics"
+  },
+  "keywords": [
+    "wysiati",
+    "overconfidence",
+    "coherence",
+    "jumping to conclusions"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Kahneman, Thinking, Fast and Slow, 2011",
+  "source_kind": "book",
+  "reference": "Daniel Kahneman, Thinking, Fast and Slow (Farrar, Straus and Giroux, 2011), ch. 7",
+  "written": "2026-11-16"
+}

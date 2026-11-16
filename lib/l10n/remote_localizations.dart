@@ -4859,4 +4859,52 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get deeperPlusOnly =>
       _words.text('deeperPlusOnly') ?? _base.deeperPlusOnly;
+
+  @override
+  String get bookOfTheWeek =>
+      _words.text('bookOfTheWeek') ?? _base.bookOfTheWeek;
+
+  @override
+  String bookIdeas(int n) =>
+      _words.format('bookIdeas', localeName, {'n': n}) ?? _base.bookIdeas(n);
+
+  @override
+  String bookMoreTitle(int n) =>
+      _words.format('bookMoreTitle', localeName, {'n': n}) ??
+      _base.bookMoreTitle(n);
+
+  @override
+  String get bookMoreLine => _words.text('bookMoreLine') ?? _base.bookMoreLine;
+
+  @override
+  String get bookMoreGo => _words.text('bookMoreGo') ?? _base.bookMoreGo;
+
+  @override
+  String bookMinutes(int n) =>
+      _words.format('bookMinutes', localeName, {'n': n}) ??
+      _base.bookMinutes(n);
+
+  @override
+  String get bookStart => _words.text('bookStart') ?? _base.bookStart;
+
+  @override
+  String get bookContinue => _words.text('bookContinue') ?? _base.bookContinue;
+
+  @override
+  String get bookAgain => _words.text('bookAgain') ?? _base.bookAgain;
+
+  @override
+  String get bookTheIdeas => _words.text('bookTheIdeas') ?? _base.bookTheIdeas;
+
+  @override
+  String get bookFreeThisWeek =>
+      _words.text('bookFreeThisWeek') ?? _base.bookFreeThisWeek;
+
+  @override
+  String bookRetold(String title, String author) =>
+      _words.format('bookRetold', localeName, {
+        'title': title,
+        'author': author,
+      }) ??
+      _base.bookRetold(title, author);
 }

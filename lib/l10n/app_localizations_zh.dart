@@ -4798,4 +4798,58 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deeperPlusOnly => '使用 Astute+';
+
+  @override
+  String get bookOfTheWeek => '本周之书';
+
+  @override
+  String bookIdeas(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 个观点',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookMoreTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '这本书还有 $n 个观点',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bookMoreLine => '整本书在 Astute+ 中，每周还有一本免费。';
+
+  @override
+  String get bookMoreGo => '阅读整本书';
+
+  @override
+  String bookMinutes(int n) {
+    return '$n 分钟';
+  }
+
+  @override
+  String get bookStart => '开始阅读';
+
+  @override
+  String get bookContinue => '继续阅读';
+
+  @override
+  String get bookAgain => '再读一遍';
+
+  @override
+  String get bookTheIdeas => '观点';
+
+  @override
+  String get bookFreeThisWeek => '本周免费';
+
+  @override
+  String bookRetold(String title, String author) {
+    return '$author《$title》中的观点，由 Astute 用自己的话讲述。完整的书请到书店寻找。';
+  }
 }

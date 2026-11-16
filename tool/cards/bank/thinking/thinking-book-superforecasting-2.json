@@ -1,0 +1,48 @@
+{
+  "id": "thinking-book-superforecasting-2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "A forecaster says '70% chance of rain' on 100 different days. If they are perfectly calibrated, on how many of those days does it rain?",
+  "options": [
+    "On all 100",
+    "On about 70",
+    "On about 50"
+  ],
+  "correct": 1,
+  "answer": "On about 70. A calibrated forecaster's 70% comes true seven times in ten. Superforecasters are scored this way, with a measure called a Brier score that punishes both overconfidence and timidity. A single rainy or dry day says almost nothing about the forecaster; a hundred say a lot.",
+  "move": "A forecast is judged over many days, not on one.",
+  "trap": "All 100: reading 70% as 'it will rain'.",
+  "simply": "If you say 'I'm 7 out of 10 sure' about lots of things, you should be right about 7 of every 10 of them. Not more, not less.",
+  "why": "It is how this app measures you: saying 80% and being right 80% of the time is what being well calibrated means.",
+  "sure": 0.35,
+  "book": {
+    "id": "superforecasting",
+    "title": "Superforecasting",
+    "author": "Philip Tetlock and Dan Gardner",
+    "year": 2015,
+    "part": 2,
+    "isbn": "9780804136693",
+    "badge": "From the forecasting tournament run for US intelligence"
+  },
+  "keywords": [
+    "calibration",
+    "brier score",
+    "probability",
+    "weather forecasts"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Philip Tetlock and Dan Gardner, Superforecasting, 2015",
+  "source_kind": "book",
+  "reference": "Philip Tetlock and Dan Gardner, Superforecasting (Crown, 2015), ch. 3",
+  "written": "2026-11-16"
+}

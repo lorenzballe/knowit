@@ -542,8 +542,11 @@ List<Pill> _oneTopicFirst(List<Pill> pills) {
 /// with no place finds exactly what they always found.
 List<Pill> searchPills(String query, {Place? home}) {
   final q = query.trim().toLowerCase();
+  // A book's ideas are read in the book, from its row, not found one by one.
   final Iterable<Pill> pool = PillBank.live.where(
-    (p) => p.place == null || placeFit(p.place!, home) != PlaceFit.none,
+    (p) =>
+        p.book == null &&
+        (p.place == null || placeFit(p.place!, home) != PlaceFit.none),
   );
   if (q.isEmpty) return pool.toList();
   return pool.where((p) {

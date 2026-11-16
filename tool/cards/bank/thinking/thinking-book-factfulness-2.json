@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-factfulness-2",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is the world split into 'developing' and 'developed' countries?",
+  "answer": "Rosling says no. He sorts the world into four income levels, and when the book came out about five of its seven billion people lived on the two middle ones. The gap most people picture, rich few and poor many, has been closing for decades. The majority is in the middle.",
+  "move": "When you see two groups, look for the middle: most people are there.",
+  "simply": "Think of a staircase with four steps. Most people stand on the two middle steps, not at the very top or the very bottom.",
+  "why": "'Us and them' pictures of the world lead to bad charity, bad investment and bad politics. The middle is where things are changing.",
+  "book": {
+    "id": "factfulness",
+    "title": "Factfulness",
+    "author": "Hans Rosling",
+    "year": 2018,
+    "part": 2,
+    "isbn": "9781250107817",
+    "badge": "“One of the most important books I've ever read” — Bill Gates"
+  },
+  "keywords": [
+    "gap instinct",
+    "income levels",
+    "developing countries",
+    "middle income"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Hans Rosling, Factfulness, 2018",
+  "source_kind": "book",
+  "reference": "Hans Rosling, Ola Rosling and Anna Rosling Rönnlund, Factfulness (Flatiron Books, 2018), ch. 1",
+  "written": "2026-11-16"
+}

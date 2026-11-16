@@ -23,7 +23,6 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/state/app_state.dart';
-import 'package:astuto/state/journey_record.dart';
 import 'package:astuto/theme.dart';
 
 Future<void> _loadFonts() async {
@@ -233,22 +232,34 @@ void main() {
   setUpAll(_loadFonts);
 
   testWidgets('the journey as a story', (tester) async {
-    final Size phone = Size(402, double.tryParse(Platform.environment['TALL'] ?? '') ?? 1900);
+    final Size phone = Size(
+      402,
+      double.tryParse(Platform.environment['TALL'] ?? '') ?? 1900,
+    );
     tester.view.physicalSize = phone * 2;
     tester.view.devicePixelRatio = 2;
     addTearDown(tester.view.reset);
     final String out = Platform.environment['SHOTS'] ?? 'shots';
     final reader = _reader();
-    final List<String> seen = (reader.prefs['knowit.seenIds'] as List).cast<String>();
+    final List<String> seen = (reader.prefs['knowit.seenIds'] as List)
+        .cast<String>();
     final Map<String, Object> prefs = {
       ...reader.prefs,
       'knowit.plus': Platform.environment['PLUS'] == '1',
       'knowit.reactions': jsonEncode({
-        seen[3]: 'changed', seen[9]: 'changed', seen[14]: 'new', seen[20]: 'new',
-        seen[25]: 'new', seen[31]: 'knew', seen[40]: 'changed', seen[44]: 'new',
+        seen[3]: 'changed',
+        seen[9]: 'changed',
+        seen[14]: 'new',
+        seen[20]: 'new',
+        seen[25]: 'new',
+        seen[31]: 'knew',
+        seen[40]: 'changed',
+        seen[44]: 'new',
       }),
       'knowit.rungDates': jsonEncode({
-        'reading': _key(6), 'answering': _key(15), 'saying_how_sure': _key(31),
+        'reading': _key(6),
+        'answering': _key(15),
+        'saying_how_sure': _key(31),
         'calibrated': _key(58),
       }),
     };

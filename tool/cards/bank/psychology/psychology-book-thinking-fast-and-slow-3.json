@@ -1,0 +1,50 @@
+{
+  "id": "psychology-book-thinking-fast-and-slow-3",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.anchoring_bias",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Experienced German judges rolled dice loaded to land on 3 or 9, then sentenced a shoplifter. How did the ones who rolled 9 sentence?",
+  "options": [
+    "More harshly",
+    "More leniently",
+    "The same as the others"
+  ],
+  "correct": 0,
+  "answer": "More harshly: about eight months on average, against five for those who rolled 3. The judges knew the dice meant nothing. Kahneman tells the study to show anchoring: any number in the mind before a judgement pulls the judgement toward it, even one from a die.",
+  "move": "Any number you hear before deciding pulls the decision toward it, even a meaningless one.",
+  "trap": "'The same': surely professionals ignore a roll of the dice.",
+  "simply": "If someone says 'nine' just before you guess how many sweets are in a jar, you guess more. Your brain grabs the last number it heard.",
+  "why": "Prices, salaries, fines and bids all start from a first number. Setting your own number first is how you avoid borrowing someone else's.",
+  "sure": 0.35,
+  "book": {
+    "id": "thinking-fast-and-slow",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "year": 2011,
+    "part": 3,
+    "isbn": "9780374533557",
+    "badge": "By a Nobel laureate in economics"
+  },
+  "keywords": [
+    "anchoring",
+    "judges",
+    "sentencing",
+    "loaded dice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Kahneman, Thinking, Fast and Slow, 2011",
+  "source_kind": "book",
+  "reference": "Daniel Kahneman, Thinking, Fast and Slow (Farrar, Straus and Giroux, 2011), ch. 11",
+  "written": "2026-11-16"
+}

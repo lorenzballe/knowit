@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-black-swan-4",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we remember a story better than a list of facts?",
+  "answer": "Taleb calls it the narrative fallacy: we squeeze facts into a story with causes, because a story is easier to store. 'The king died and then the queen died' is two facts; 'the king died and the queen died of grief' is a story, and we remember it, whether or not grief was the cause.",
+  "move": "The neater the story, the more it may have left out.",
+  "simply": "Joining dots into a picture makes them easy to remember, but you might draw a horse where there was only a cloud.",
+  "why": "News, biographies and market commentary explain everything after the fact. A tidy 'because' deserves a second look.",
+  "book": {
+    "id": "the-black-swan",
+    "title": "The Black Swan",
+    "author": "Nassim Nicholas Taleb",
+    "year": 2007,
+    "part": 4,
+    "isbn": "9781400063512",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "narrative fallacy",
+    "stories",
+    "causation",
+    "memory"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nassim Nicholas Taleb, The Black Swan, 2007",
+  "source_kind": "book",
+  "reference": "Nassim Nicholas Taleb, The Black Swan (Random House, 2007), ch. 6",
+  "written": "2026-11-16"
+}

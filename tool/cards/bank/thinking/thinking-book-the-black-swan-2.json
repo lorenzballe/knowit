@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-black-swan-2",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes an event a 'black swan'?",
+  "answer": "Three things, in Taleb's definition: it lies outside what past experience suggests is possible; it has an extreme impact; and afterwards we make up explanations that make it look predictable. Europeans believed all swans were white until black ones were seen in Australia.",
+  "move": "If it was predictable only afterwards, it wasn't predicted.",
+  "simply": "Everyone was sure all swans were white, because every swan they'd seen was white. Then someone saw a black one, and the rule was gone.",
+  "why": "The events that shape lives and markets the most are the ones no model expected. Planning for being surprised beats pretending to predict.",
+  "book": {
+    "id": "the-black-swan",
+    "title": "The Black Swan",
+    "author": "Nassim Nicholas Taleb",
+    "year": 2007,
+    "part": 2,
+    "isbn": "9781400063512",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "black swan",
+    "rare events",
+    "hindsight",
+    "taleb"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nassim Nicholas Taleb, The Black Swan, 2007",
+  "source_kind": "book",
+  "reference": "Nassim Nicholas Taleb, The Black Swan (Random House, 2007), prologue",
+  "written": "2026-11-16"
+}

@@ -410,4 +410,5 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     "like-saved": shelf("limit"),
     # Ten cards on a theme, easy to hard, a row of them: Astute+.
     "paths": shelf("limit"),
+    "books": shelf(),
 }

@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-black-swan-1",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A turkey is fed every day for a thousand days. When does it feel safest?",
+  "answer": "On the last day. Each meal confirms that people are kind to turkeys, so its confidence peaks the afternoon before Thanksgiving. Nassim Taleb's point: a long run of calm can be evidence of nothing, and the past may be worst at telling you about the one day that matters.",
+  "move": "A long run of quiet tells you least just before it ends.",
+  "simply": "Every day the farmer brings food, so the turkey thinks he's a friend. The turkey has never seen Thanksgiving, so it can't imagine it.",
+  "why": "Banks, investors and whole countries have reasoned like the turkey: years without a crisis read as proof there won't be one.",
+  "book": {
+    "id": "the-black-swan",
+    "title": "The Black Swan",
+    "author": "Nassim Nicholas Taleb",
+    "year": 2007,
+    "part": 1,
+    "isbn": "9781400063512",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "turkey problem",
+    "induction",
+    "black swan",
+    "risk"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nassim Nicholas Taleb, The Black Swan, 2007",
+  "source_kind": "book",
+  "reference": "Nassim Nicholas Taleb, The Black Swan (Random House, 2007), ch. 4",
+  "written": "2026-11-16"
+}

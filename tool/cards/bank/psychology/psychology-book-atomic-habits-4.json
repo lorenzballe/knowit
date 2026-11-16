@@ -1,0 +1,42 @@
+{
+  "id": "psychology-book-atomic-habits-4",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.environment_design",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A hospital cafeteria wanted people to drink less fizzy pop. What worked without telling anyone anything?",
+  "answer": "Moving the water. In a study at Massachusetts General Hospital, the doctor Anne Thorndike added bottled water to the fridges by the tills and baskets of it around the room. Over three months soda sales fell by 11.4% and water sales rose by 25.8%. Clear's lesson: what is in sight gets chosen.",
+  "move": "Make good habits visible and bad ones hidden.",
+  "simply": "If biscuits are on the table you eat biscuits. If fruit is on the table you eat fruit. The table decides more than you think.",
+  "why": "Rearranging a kitchen, a desk or a phone's home screen changes behaviour more reliably than resolutions do.",
+  "book": {
+    "id": "atomic-habits",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "year": 2018,
+    "part": 4,
+    "isbn": "9780735211292",
+    "badge": "A #1 New York Times bestseller"
+  },
+  "keywords": [
+    "environment design",
+    "choice",
+    "cafeteria study",
+    "visibility"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James Clear, Atomic Habits, 2018",
+  "source_kind": "book",
+  "reference": "James Clear, Atomic Habits (Avery, 2018), ch. 6",
+  "written": "2026-11-16"
+}
