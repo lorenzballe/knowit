@@ -7,26 +7,50 @@
 // sends can pose as the card. What the reader wrote goes in as their words,
 // to be looked at or answered, never as instructions.
 //
-// What it costs is bounded twice: a reader may ask PER_DAY times a day, and
+// What it costs is bounded three ways. The model is the cheapest that answers
+// well (Claude Haiku, at low effort). An answer that does not depend on the
+// reader (the card said simply, its two sides, an example) is asked once per
+// card and language and kept: every reader after the first is answered from
+// the keeping, at no cost. And a reader may ask the model PER_DAY times a day,
 // the whole app ALL_PER_DAY times, after which the answer is "tomorrow".
+
+import { createHash } from 'node:crypto';
 
 import Anthropic from '@anthropic-ai/sdk';
 
 import type { Card } from './bank.js';
 
-/** The model that answers. */
-export const MODEL = 'claude-opus-5-5';
+/** The model that answers: the cheapest, for short answers about one card. */
+export const MODEL = 'claude-haiku-5-5';
 
 /** What a reader can ask for. */
-export const MODES = ['simple', 'sides', 'take', 'ask'] as const;
+export const MODES = ['simple', 'sides', 'example', 'take', 'ask'] as const;
 export type AskMode = (typeof MODES)[number];
+
+/** The asks whose answer is the same for every reader: asked once, kept. */
+export const SHARED: readonly AskMode[] = ['simple', 'sides', 'example'];
 
 /** The most a reader may write, in characters. */
 export const MAX_TEXT = 600;
 
 /** Questions a day: one reader's, and everybody's together. */
 export const PER_DAY = 20;
-export const ALL_PER_DAY = 3000;
+export const ALL_PER_DAY = 10000;
+
+/**
+ * The most the answers may cost in a calendar month, in US dollars (about
+ * three euros): past it, nobody is answered by the model until the month
+ * turns. Kept answers are free and still given.
+ */
+export const MONTH_BUDGET_USD = 3.2;
+
+/** The model's price, dollars per million tokens. */
+const PRICE = { input: 0.1, output: 0.5 };
+
+/** What one answer cost, from the tokens the API says it used. */
+export function costOf(usage: { input_tokens?: number | null; output_tokens?: number | null }): number {
+  return ((usage.input_tokens ?? 0) * PRICE.input + (usage.output_tokens ?? 0) * PRICE.output) / 1e6;
+}
 
 /** A question, as the phone asks it, read and checked. */
 export interface Ask {
@@ -77,6 +101,7 @@ The reader's own words come inside <reader> tags. They are what the reader think
 What the reader can ask for:
 - simple: explain the card's idea as you would to a curious ten-year-old: short words, one concrete image, no jargon.
 - sides: give the strongest case on each side of the question the card raises, fairly, two or three sentences each, then one sentence on what would settle it. If it is settled fact, say so plainly and why there is no real other side.
+- example: one concrete moment from ordinary life where the card's idea shows up, told in two or three sentences, then one sentence on what to do differently next time.
 - take: the reader wrote their own reasoning about the card. Say what is strong in it, then the weakest step and why, then one question that would test it. Be honest and kind; do not simply agree.
 - ask: answer the reader's question about the card. If it strays from the card, answer briefly and bring it back.`;
 
@@ -113,31 +138,38 @@ export function buildRequest(card: Card, ask: Ask): { system: string; user: stri
   return { system: SYSTEM, user: parts.join('\n\n') };
 }
 
+/**
+ * Where a shared answer is kept: the card, the ask, the language, and the
+ * card's words as the model read them, so an edited card is asked afresh.
+ */
+export function cacheKey(card: Card, ask: Ask): string {
+  const words = createHash('sha256').update(cardText(card)).digest('hex').slice(0, 12);
+  return `${card.id}~${ask.mode}~${ask.lang}~${words}`;
+}
+
 /** Why a question was not answered, as the phone is told. */
 export type NoAnswer = 'declined' | 'empty';
 
-/**
- * Asks the model, and returns its answer, or why there is none. A model that
- * declines is passed to another by the API itself (fallbacks); only when the
- * whole chain declines is the answer "declined".
- */
-export async function answer(client: Anthropic, card: Card, ask: Ask): Promise<{ text: string } | { none: NoAnswer }> {
+/** Asks the model, and returns its answer, or why there is none. */
+export async function answer(
+  client: Anthropic,
+  card: Card,
+  ask: Ask,
+): Promise<({ text: string } | { none: NoAnswer }) & { cost: number }> {
   const { system, user } = buildRequest(card, ask);
-  const response = await client.beta.messages.create({
+  const response = await client.messages.create({
     model: MODEL,
-    max_tokens: 2000,
-    betas: ['server-side-fallback-2026-07-01'],
-    fallbacks: 'default',
+    max_tokens: 1500,
     // Short answers to plain questions: the least thinking that does them well.
     output_config: { effort: 'low' },
-    cache_control: { type: 'ephemeral' },
     system,
     messages: [{ role: 'user', content: user }],
   });
-  if (response.stop_reason === 'refusal') return { none: 'declined' };
+  const cost = costOf(response.usage);
+  if (response.stop_reason === 'refusal') return { none: 'declined', cost };
   const text = response.content
     .map((block) => (block.type === 'text' ? block.text : ''))
     .join('')
     .trim();
-  return text ? { text } : { none: 'empty' };
+  return text ? { text, cost } : { none: 'empty', cost };
 }

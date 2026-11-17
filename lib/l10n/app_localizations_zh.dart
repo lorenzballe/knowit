@@ -4758,6 +4758,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deeperSides => '正反两面';
 
   @override
+  String get deeperExample => '一个日常例子';
+
+  @override
   String get deeperYourTake => '你的想法，分析一下';
 
   @override

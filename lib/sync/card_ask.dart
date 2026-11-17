@@ -18,6 +18,9 @@ enum AskMode {
   /// The strongest case on each side of the question the card raises.
   sides,
 
+  /// One moment from ordinary life where the card's idea shows up.
+  example,
+
   /// The reader's own reasoning about the card, looked at.
   take,
 

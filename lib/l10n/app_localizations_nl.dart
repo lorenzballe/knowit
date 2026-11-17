@@ -4988,6 +4988,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get deeperSides => 'Beide kanten';
 
   @override
+  String get deeperExample => 'Een voorbeeld uit het dagelijks leven';
+
+  @override
   String get deeperYourTake => 'Jouw idee, bekeken';
 
   @override

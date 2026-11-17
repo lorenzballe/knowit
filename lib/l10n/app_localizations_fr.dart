@@ -5003,6 +5003,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deeperSides => 'Les deux côtés';
 
   @override
+  String get deeperExample => 'Un exemple du quotidien';
+
+  @override
   String get deeperYourTake => 'Ton idée, analysée';
 
   @override

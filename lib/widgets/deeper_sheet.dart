@@ -216,6 +216,16 @@ class _DeeperSheetState extends State<DeeperSheet> {
           result: _results[AskMode.sides],
           onAsk: () => _askAi(AskMode.sides),
         ),
+      // The idea where the reader will meet it: asked for.
+      if (ai)
+        _AiPart(
+          key: const ValueKey('deeper-example-ai'),
+          title: l.deeperExample,
+          locked: !plus,
+          busy: _busy.contains(AskMode.example),
+          result: _results[AskMode.example],
+          onAsk: () => _askAi(AskMode.example),
+        ),
       if (ai)
         _WritePart(
           key: const ValueKey('deeper-take'),

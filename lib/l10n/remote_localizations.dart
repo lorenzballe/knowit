@@ -4810,6 +4810,10 @@ class RemoteLocalizations extends AppLocalizations {
   String get deeperSides => _words.text('deeperSides') ?? _base.deeperSides;
 
   @override
+  String get deeperExample =>
+      _words.text('deeperExample') ?? _base.deeperExample;
+
+  @override
   String get deeperYourTake =>
       _words.text('deeperYourTake') ?? _base.deeperYourTake;
 

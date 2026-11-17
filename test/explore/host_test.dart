@@ -143,6 +143,38 @@ void main() {
     Remote.reset();
   });
 
+  testWidgets('going down the shelves puts the head away, so the cards '
+      'have the screen; the least move back up brings it again', (
+    tester,
+  ) async {
+    final AppState app = await readyApp();
+    _adopt({
+      'sections': [
+        {
+          'id': 'picked',
+          'block': 'list',
+          'source': {
+            'ids': [for (final p in PillBank.cards.sublist(10, 40)) p.id],
+          },
+        },
+      ],
+    });
+    await _pumpScreen(tester, app);
+    double head() => tester
+        .widget<AnimatedAlign>(find.byKey(const ValueKey('explore-head')))
+        .heightFactor!;
+    expect(head(), 1);
+
+    final Finder list = find.byType(CustomScrollView).first;
+    await tester.drag(list, const Offset(0, -400));
+    await tester.pumpAndSettle(const Duration(milliseconds: 50));
+    expect(head(), 0);
+
+    await tester.drag(list, const Offset(0, 60));
+    await tester.pumpAndSettle(const Duration(milliseconds: 50));
+    expect(head(), 1);
+  });
+
   testWidgets('pulled down from its top, Explore is read again from the '
       'server, as a feed is', (tester) async {
     final List<Pill> cards = PillBank.cards.sublist(10, 13);

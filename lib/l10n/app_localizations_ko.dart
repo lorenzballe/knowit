@@ -4779,6 +4779,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deeperSides => '양쪽 입장';
 
   @override
+  String get deeperExample => '일상 속 예시';
+
+  @override
   String get deeperYourTake => '내 생각, 분석';
 
   @override

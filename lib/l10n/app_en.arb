@@ -5278,6 +5278,10 @@
  "@deeperSides": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperSides"
  },
+ "deeperExample": "An example from everyday life",
+ "@deeperExample": {
+  "description": "Go deeper, the sheet a tap on a card's source opens: deeperExample"
+ },
  "deeperYourTake": "Your take, looked at",
  "@deeperYourTake": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperYourTake"

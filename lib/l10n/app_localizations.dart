@@ -7074,6 +7074,12 @@ abstract class AppLocalizations {
   /// **'Both sides'**
   String get deeperSides;
 
+  /// Go deeper, the sheet a tap on a card's source opens: deeperExample
+  ///
+  /// In en, this message translates to:
+  /// **'An example from everyday life'**
+  String get deeperExample;
+
   /// Go deeper, the sheet a tap on a card's source opens: deeperYourTake
   ///
   /// In en, this message translates to:
