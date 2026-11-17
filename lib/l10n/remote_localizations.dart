@@ -4918,6 +4918,13 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('bookFreeThisWeek') ?? _base.bookFreeThisWeek;
 
   @override
+  String get booksSeeAll => _words.text('booksSeeAll') ?? _base.booksSeeAll;
+
+  @override
+  String get booksLibraryTitle =>
+      _words.text('booksLibraryTitle') ?? _base.booksLibraryTitle;
+
+  @override
   String get bookDoneTitle =>
       _words.text('bookDoneTitle') ?? _base.bookDoneTitle;
 

@@ -548,7 +548,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get howStep2Line =>
-      '每张卡片都注明事实的出处，你可以自己核对。大多数卡片还会由扮演批评者的第二个模型通读，它无法确认的内容会进入一份由人工核查的清单。这份清单目前还没有清空。';
+      '每张卡片都注明事实的来源，四张中有三张一点就能打开原文，你可以自己核对。大部分卡片由扮演批评者的第二个模型审读，它无法确认的内容会进入一份由人工核查的清单。这份清单还没有清空。';
 
   @override
   String get howStep3Title => '每天早上发五张';
@@ -4858,6 +4858,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => '本周免费';
+
+  @override
+  String get booksSeeAll => '查看全部';
+
+  @override
+  String get booksLibraryTitle => '全部书籍';
 
   @override
   String get bookDoneTitle => '读完了';

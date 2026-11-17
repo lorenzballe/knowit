@@ -552,7 +552,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get howStep2Line =>
-      'どのカードにも事実の出典があり、自分で確かめられます。ほとんどのカードは批評役の別のモデルが読み、確認できなかった点は人が確かめるリストに載ります。そのリストはまだ空ではありません。';
+      'どのカードも事実の出典を示し、4枚に3枚はワンタップで原典を開けるので、自分で確かめられます。ほとんどは批評役の別のモデルが読み、確認できなかったものは人が確認するリストに入ります。そのリストはまだ空ではありません。';
 
   @override
   String get howStep3Title => '毎朝、5枚を配る';
@@ -4858,6 +4858,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => '今週は無料';
+
+  @override
+  String get booksSeeAll => 'すべて見る';
+
+  @override
+  String get booksLibraryTitle => 'すべての本';
 
   @override
   String get bookDoneTitle => '読了';

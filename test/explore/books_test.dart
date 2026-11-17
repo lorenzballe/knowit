@@ -207,6 +207,29 @@ void main() {
     expect(find.textContaining(books[2].book.title), findsOneWidget);
   });
 
+  testWidgets('the library shows every book at once, the week\'s first', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(402, 2600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final AppState app = await _app();
+    final List<CardBook> books = booksOf(PillBank.live, today: app.today);
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        home: LibraryScreen(app: app, weekly: books.first.id),
+      ),
+    );
+    await tester.pump();
+    expect(find.text('All the books'), findsOneWidget);
+    for (final CardBook b in books) {
+      expect(find.byKey(ValueKey('book-${b.id}')), findsOneWidget);
+    }
+  });
+
   test('a book is read from the card file', () {
     final Pill card = PillBank.live.firstWhere((p) => p.book != null);
     expect(card.book!.part, greaterThanOrEqualTo(1));

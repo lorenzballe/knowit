@@ -894,10 +894,10 @@ abstract class AppLocalizations {
   /// **'Sourced, then read by a critic'**
   String get howStep2Title;
 
-  /// Step two, said as it is: every card names its sources; most, not all, are read by a second model as a critic; what it cannot confirm waits on a list for a person, and that list is not empty. Do not promise that every claim is confirmed.
+  /// Step two, said as it is: every card names its sources, and three in four link to the original (74% of the bank, November 2026); most, not all, are read by a second model as a critic; what it cannot confirm waits on a list for a person, and that list is not empty. Do not promise that every claim is confirmed.
   ///
   /// In en, this message translates to:
-  /// **'Every card names where its facts come from, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.'**
+  /// **'Every card names where its facts come from, and three in four link to the original, a tap away, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.'**
   String get howStep2Line;
 
   /// No description provided for @howStep3Title.
@@ -7241,6 +7241,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Free this week'**
   String get bookFreeThisWeek;
+
+  /// No description provided for @booksSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get booksSeeAll;
+
+  /// No description provided for @booksLibraryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All the books'**
+  String get booksLibraryTitle;
 
   /// No description provided for @bookDoneTitle.
   ///

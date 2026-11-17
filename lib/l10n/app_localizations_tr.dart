@@ -560,7 +560,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get howStep2Line =>
-      'Her kart bilgilerinin nereden geldiğini söyler, böylece kendin kontrol edebilirsin. Çoğunu eleştirmen rolündeki ikinci bir model okur; doğrulayamadığı şeyler bir insanın kontrol edeceği bir listeye girer. O liste henüz boş değil.';
+      'Her kart bilgilerinin nereden geldiğini söyler ve dörtte üçü tek dokunuşla asıl kaynağa götürür, böylece kendin kontrol edebilirsin. Çoğunu eleştirmen rolündeki ikinci bir model okur; doğrulayamadıkları, bir kişinin kontrol ettiği bir listeye girer. O liste henüz boş değil.';
 
   @override
   String get howStep3Title => 'Her sabah beş kart';
@@ -4997,6 +4997,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => 'Bu hafta ücretsiz';
+
+  @override
+  String get booksSeeAll => 'Tümünü gör';
+
+  @override
+  String get booksLibraryTitle => 'Tüm kitaplar';
 
   @override
   String get bookDoneTitle => 'Kitap bitti';

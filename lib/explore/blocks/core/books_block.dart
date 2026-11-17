@@ -57,6 +57,22 @@ class BooksBlock extends ExploreBlock with SectionLayout {
     return SectionFrame(
       title: section.title(host.language),
       line: section.subtitle(host.language),
+      // Every book at once, on a page of its own: the library.
+      trailing: books.length > 3
+          ? TextButton(
+              key: const ValueKey('books-see-all'),
+              onPressed: () => openLibrary(context, app, weekly: weekly),
+              style: TextButton.styleFrom(
+                foregroundColor: context.p.ink,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                visualDensity: VisualDensity.compact,
+              ),
+              child: Text(
+                context.l10n.booksSeeAll,
+                style: AppText.body(size: 13.5, weight: FontWeight.w700),
+              ),
+            )
+          : null,
       child: SizedBox(
         height: _BookTile.height,
         child: ListView.separated(
@@ -221,16 +237,23 @@ class _BookTile extends StatelessWidget {
     required this.weekly,
     required this.locked,
     required this.onTap,
+    this.width = rowWidth,
   });
 
-  static const double width = 124;
+  /// The tile's width in the row, and the row's height for it.
+  static const double rowWidth = 124;
   static const double height = 186 + 10 + 26 + 36 + 18 + 12;
+
+  /// The height a tile [width] wide needs: its cover, the week's line, two
+  /// lines of title, the author, and the dashes.
+  static double heightFor(double width) => width * 1.5 + 10 + 26 + 36 + 18 + 12;
 
   final CardBook book;
   final int read;
   final bool weekly;
   final bool locked;
   final VoidCallback onTap;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -949,6 +972,85 @@ class _BookDoneState extends State<BookDone> {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// Opens the library: every book, covers in a grid.
+Future<void> openLibrary(BuildContext context, AppState app, {String? weekly}) {
+  Analytics.capture('books library opened', {'is_plus': app.isPlus});
+  return Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => LibraryScreen(app: app, weekly: weekly),
+    ),
+  );
+}
+
+/// Every book in pills at once: the week's first, then the rest in their
+/// weekly turn, each with its cover, how far the reader has read, a tick
+/// when read whole and a lock where Astute+ opens it.
+class LibraryScreen extends StatelessWidget {
+  const LibraryScreen({super.key, required this.app, this.weekly});
+
+  final AppState app;
+  final String? weekly;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    return Scaffold(
+      backgroundColor: p.surface,
+      appBar: AppBar(
+        backgroundColor: p.surface,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: p.ink,
+        title: Text(
+          context.l10n.booksLibraryTitle,
+          style: AppText.body(size: 17, weight: FontWeight.w700, color: p.ink),
+        ),
+      ),
+      body: ListenableBuilder(
+        listenable: app,
+        builder: (context, _) {
+          final List<CardBook> books = booksOf(PillBank.live, today: app.today);
+          return LayoutBuilder(
+            builder: (context, box) {
+              const double side = 20, gap = 12;
+              final int across = box.maxWidth >= 600 ? 4 : 3;
+              final double width =
+                  (box.maxWidth - side * 2 - gap * (across - 1)) / across;
+              return GridView.builder(
+                key: const ValueKey('books-library'),
+                padding: EdgeInsets.fromLTRB(
+                  side,
+                  8,
+                  side,
+                  MediaQuery.paddingOf(context).bottom + 24,
+                ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: across,
+                  crossAxisSpacing: gap,
+                  mainAxisSpacing: 6,
+                  childAspectRatio: width / _BookTile.heightFor(width),
+                ),
+                itemCount: books.length,
+                itemBuilder: (context, i) => _BookTile(
+                  book: books[i],
+                  width: width,
+                  read: books[i].cards
+                      .where((c) => app.seenIds.contains(c.id))
+                      .length,
+                  weekly: books[i].id == weekly,
+                  locked: !app.isPlus && books[i].id != weekly,
+                  onTap: () =>
+                      openBookPage(context, app, books[i], weekly: weekly),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

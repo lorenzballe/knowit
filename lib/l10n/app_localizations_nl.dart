@@ -565,7 +565,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get howStep2Line =>
-      'Elke kaart zegt waar haar feiten vandaan komen, zodat je het zelf kunt nagaan. De meeste worden gelezen door een tweede model dat de criticus speelt, en wat het niet kan bevestigen, komt op een lijst die een mens nakijkt. Die lijst is nog niet leeg.';
+      'Elke kaart zegt waar de feiten vandaan komen, en drie op de vier leiden met één tik naar het origineel, zodat je het zelf kunt controleren. De meeste worden gelezen door een tweede model dat als criticus optreedt, en wat het niet kan bevestigen komt op een lijst die een mens nakijkt. Die lijst is nog niet leeg.';
 
   @override
   String get howStep3Title => 'Vijf, elke ochtend gedeeld';
@@ -5091,6 +5091,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => 'Gratis deze week';
+
+  @override
+  String get booksSeeAll => 'Alles bekijken';
+
+  @override
+  String get booksLibraryTitle => 'Alle boeken';
 
   @override
   String get bookDoneTitle => 'Boek uit';
