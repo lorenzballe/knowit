@@ -42,7 +42,7 @@ def draft_of(card: dict, **change) -> generate.Draft:
             values[name] = card[name]
         elif f.annotation in (str,):
             values[name] = ""
-        elif name in ("steps", "options", "sides", "also", "keywords", "builds_on"):
+        elif name in ("steps", "options", "sides", "also", "keywords", "builds_on", "views"):
             values[name] = []
         elif name in ("correct", "numeracy"):
             values[name] = 0
