@@ -5198,6 +5198,34 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deeperQuizWrong => 'Не совсем.';
 
   @override
+  String get mathsDailySolve => 'Решить';
+
+  @override
+  String get mathsDailySolved => 'Решено';
+
+  @override
+  String get mathsDailyMissed => 'Не в этот раз';
+
+  @override
+  String get mathsDailyTomorrow => 'Завтра будет новая';
+
+  @override
+  String get mathsDailyAnother => 'Ещё одну такую';
+
+  @override
+  String mathsDailyStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня подряд',
+      many: '$n дней подряд',
+      few: '$n дня подряд',
+      one: '$n день подряд',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deeperYourTake => 'Твоя мысль под лупой';
 
   @override

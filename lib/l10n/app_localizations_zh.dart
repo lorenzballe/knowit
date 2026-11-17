@@ -4787,6 +4787,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deeperQuizWrong => '不太对。';
 
   @override
+  String get mathsDailySolve => '去解题';
+
+  @override
+  String get mathsDailySolved => '已解出';
+
+  @override
+  String get mathsDailyMissed => '这次没答对';
+
+  @override
+  String get mathsDailyTomorrow => '明天还有新题';
+
+  @override
+  String get mathsDailyAnother => '再来一道类似的';
+
+  @override
+  String mathsDailyStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '连续$n天',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deeperYourTake => '你的想法，分析一下';
 
   @override

@@ -4808,6 +4808,31 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deeperQuizWrong => '조금 아쉬워요.';
 
   @override
+  String get mathsDailySolve => '풀어 보기';
+
+  @override
+  String get mathsDailySolved => '해결';
+
+  @override
+  String get mathsDailyMissed => '이번엔 아쉽게도';
+
+  @override
+  String get mathsDailyTomorrow => '내일 새 문제';
+
+  @override
+  String get mathsDailyAnother => '비슷한 문제 하나 더';
+
+  @override
+  String mathsDailyStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 연속',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deeperYourTake => '내 생각, 분석';
 
   @override

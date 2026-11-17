@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "ebd71d96cbc9bba6",
+ "hash": "4ece6d70e36c5ba0",
  "app": {
   "gate": null,
   "flags": {},
@@ -1765,6 +1765,40 @@ const String kEmbeddedRemote = r'''
        ]
       }
      ]
+    }
+   },
+   {
+    "id": "maths-daily",
+    "block": "maths-daily",
+    "title": {
+     "en": "Problem of the day",
+     "it": "Il problema del giorno",
+     "de": "Aufgabe des Tages",
+     "es": "El problema del día",
+     "fr": "Le problème du jour",
+     "pt": "O problema do dia",
+     "nl": "Opgave van de dag",
+     "pl": "Zadanie dnia",
+     "ru": "Задача дня",
+     "tr": "Günün problemi",
+     "ja": "今日の問題",
+     "ko": "오늘의 문제",
+     "zh": "每日一题"
+    },
+    "subtitle": {
+     "en": "A new one every day, the same for everyone.",
+     "it": "Uno nuovo ogni giorno, lo stesso per tutti.",
+     "de": "Jeden Tag eine neue, für alle dieselbe.",
+     "es": "Uno nuevo cada día, el mismo para todos.",
+     "fr": "Un nouveau chaque jour, le même pour tous.",
+     "pt": "Um novo todos os dias, o mesmo para todos.",
+     "nl": "Elke dag een nieuwe, voor iedereen dezelfde.",
+     "pl": "Codziennie nowe, dla wszystkich to samo.",
+     "ru": "Каждый день новая, одна на всех.",
+     "tr": "Her gün yenisi, herkes için aynısı.",
+     "ja": "毎日新しい問題。みんな同じ問題です。",
+     "ko": "매일 새로운 문제, 모두에게 같은 문제.",
+     "zh": "每天一道新题，人人相同。"
     }
    },
    {

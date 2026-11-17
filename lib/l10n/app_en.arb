@@ -5316,6 +5316,35 @@
  "@deeperQuizWrong": {
   "description": "Go deeper: said above the explanation when the reader picked a wrong option of the new question."
  },
+ "mathsDailySolve": "Solve it",
+ "@mathsDailySolve": {
+  "description": "Explore, on the Maths page: the button on the problem of the day that opens it to answer."
+ },
+ "mathsDailySolved": "Solved",
+ "@mathsDailySolved": {
+  "description": "Explore, the problem of the day: said once the reader answered today's problem right, and in the result they can send."
+ },
+ "mathsDailyMissed": "Not this time",
+ "@mathsDailyMissed": {
+  "description": "Explore, the problem of the day: said once the reader answered today's problem wrong, and in the result they can send."
+ },
+ "mathsDailyTomorrow": "A new one tomorrow",
+ "@mathsDailyTomorrow": {
+  "description": "Explore, the problem of the day: under the result, that another problem comes tomorrow."
+ },
+ "mathsDailyAnother": "Another like this",
+ "@mathsDailyAnother": {
+  "description": "Explore, the problem of the day, once answered: on Astute+ with the answers by Claude, opens Go deeper to ask for a new problem on the same idea."
+ },
+ "mathsDailyStreak": "{n, plural, =1{1 day in a row} other{{n} days in a row}}",
+ "@mathsDailyStreak": {
+  "description": "Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
  "deeperYourTake": "Your take, looked at",
  "@deeperYourTake": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperYourTake"

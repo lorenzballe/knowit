@@ -4787,6 +4787,31 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deeperQuizWrong => '惜しい。';
 
   @override
+  String get mathsDailySolve => '解いてみる';
+
+  @override
+  String get mathsDailySolved => '正解';
+
+  @override
+  String get mathsDailyMissed => '今回は残念';
+
+  @override
+  String get mathsDailyTomorrow => '明日また新しい問題';
+
+  @override
+  String get mathsDailyAnother => '似た問題をもう一問';
+
+  @override
+  String mathsDailyStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日連続',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deeperYourTake => 'あなたの考えを分析';
 
   @override

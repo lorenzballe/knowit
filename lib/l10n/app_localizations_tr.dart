@@ -4925,6 +4925,31 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deeperQuizWrong => 'Tam değil.';
 
   @override
+  String get mathsDailySolve => 'Çöz';
+
+  @override
+  String get mathsDailySolved => 'Çözüldü';
+
+  @override
+  String get mathsDailyMissed => 'Bu sefer olmadı';
+
+  @override
+  String get mathsDailyTomorrow => 'Yarın yenisi';
+
+  @override
+  String get mathsDailyAnother => 'Buna benzer bir tane daha';
+
+  @override
+  String mathsDailyStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n gün üst üste',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get deeperYourTake => 'Fikrin, incelendi';
 
   @override

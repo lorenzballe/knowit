@@ -4850,6 +4850,31 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('deeperQuizWrong') ?? _base.deeperQuizWrong;
 
   @override
+  String get mathsDailySolve =>
+      _words.text('mathsDailySolve') ?? _base.mathsDailySolve;
+
+  @override
+  String get mathsDailySolved =>
+      _words.text('mathsDailySolved') ?? _base.mathsDailySolved;
+
+  @override
+  String get mathsDailyMissed =>
+      _words.text('mathsDailyMissed') ?? _base.mathsDailyMissed;
+
+  @override
+  String get mathsDailyTomorrow =>
+      _words.text('mathsDailyTomorrow') ?? _base.mathsDailyTomorrow;
+
+  @override
+  String get mathsDailyAnother =>
+      _words.text('mathsDailyAnother') ?? _base.mathsDailyAnother;
+
+  @override
+  String mathsDailyStreak(int n) =>
+      _words.format('mathsDailyStreak', localeName, {'n': n}) ??
+      _base.mathsDailyStreak(n);
+
+  @override
   String get deeperYourTake =>
       _words.text('deeperYourTake') ?? _base.deeperYourTake;
 

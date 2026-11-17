@@ -7128,6 +7128,42 @@ abstract class AppLocalizations {
   /// **'Not quite.'**
   String get deeperQuizWrong;
 
+  /// Explore, on the Maths page: the button on the problem of the day that opens it to answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Solve it'**
+  String get mathsDailySolve;
+
+  /// Explore, the problem of the day: said once the reader answered today's problem right, and in the result they can send.
+  ///
+  /// In en, this message translates to:
+  /// **'Solved'**
+  String get mathsDailySolved;
+
+  /// Explore, the problem of the day: said once the reader answered today's problem wrong, and in the result they can send.
+  ///
+  /// In en, this message translates to:
+  /// **'Not this time'**
+  String get mathsDailyMissed;
+
+  /// Explore, the problem of the day: under the result, that another problem comes tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'A new one tomorrow'**
+  String get mathsDailyTomorrow;
+
+  /// Explore, the problem of the day, once answered: on Astute+ with the answers by Claude, opens Go deeper to ask for a new problem on the same idea.
+  ///
+  /// In en, this message translates to:
+  /// **'Another like this'**
+  String get mathsDailyAnother;
+
+  /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day in a row} other{{n} days in a row}}'**
+  String mathsDailyStreak(int n);
+
   /// Go deeper, the sheet a tap on a card's source opens: deeperYourTake
   ///
   /// In en, this message translates to:
