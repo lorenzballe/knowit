@@ -1,0 +1,42 @@
+{
+  "id": "nature-book-the-selfish-gene-3",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.survival_of_the_fittest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If genes are 'selfish', why are animals so often kind to each other?",
+  "answer": "Because a selfish gene can build a generous body. Dawkins' point is about which genes spread, not about how individuals feel. Helping kin, returning favours and cooperating with partners who cooperate back can all serve a gene's spread. The word 'selfish' describes the gene's success, not the animal's character.",
+  "move": "A selfish process at one level can produce generous behaviour at another.",
+  "simply": "A football team wants to win, and that makes players pass the ball to each other. Selfish genes can make animals help each other the same way.",
+  "why": "It clears up a common misreading: the book is not a licence for selfishness. Explaining what spreads differs from saying how anyone should act.",
+  "book": {
+    "id": "the-selfish-gene",
+    "title": "The Selfish Gene",
+    "author": "Richard Dawkins",
+    "year": 1976,
+    "part": 3,
+    "isbn": "9780198788607",
+    "badge": "Voted the most influential science book of all time"
+  },
+  "keywords": [
+    "selfish gene",
+    "altruism",
+    "cooperation",
+    "evolution"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Dawkins, The Selfish Gene, 1976",
+  "source_kind": "book",
+  "reference": "Richard Dawkins, The Selfish Gene (Oxford University Press, 1976), ch. 1",
+  "written": "2026-11-17"
+}

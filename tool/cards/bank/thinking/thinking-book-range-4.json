@@ -1,0 +1,48 @@
+{
+  "id": "thinking-book-range-4",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "On InnoCentive, companies post problems their own experts can't solve. Who often solves them?",
+  "options": [
+    "Outsiders from other fields",
+    "Experts from the same field",
+    "Nobody: they stay unsolved"
+  ],
+  "correct": 0,
+  "answer": "Outsiders, often from a different field entirely. Epstein recounts how, when the Oil Spill Recovery Institute posted a problem about oil freezing in Arctic water, a chemist who had worked in construction solved it with a trick for keeping concrete liquid. Distance from a field can be an advantage.",
+  "move": "When a problem is stuck, ask someone from a different field.",
+  "trap": "'Experts from the same field': they seem best placed, yet are stuck.",
+  "simply": "Sometimes a puzzle is solved by someone who's never done that kind of puzzle, because they try things the experts never think of.",
+  "why": "Teams stuck on a problem often ask more of the same experts. Inviting people with distant experience is a cheap way to find a fresh angle.",
+  "sure": 0.35,
+  "book": {
+    "id": "range",
+    "title": "Range",
+    "author": "David Epstein",
+    "year": 2019,
+    "part": 4,
+    "isbn": "9780735214484",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "innocentive",
+    "outsiders",
+    "problem solving",
+    "analogy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, Range, 2019",
+  "source_kind": "book",
+  "reference": "David Epstein, Range: Why Generalists Triumph in a Specialized World (Riverhead, 2019), ch. 8",
+  "written": "2026-11-17"
+}

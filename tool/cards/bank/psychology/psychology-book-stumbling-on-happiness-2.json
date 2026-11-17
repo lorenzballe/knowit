@@ -1,0 +1,50 @@
+{
+  "id": "psychology-book-stumbling-on-happiness-2",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.adaptation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Students printed two photos and kept one. Some could swap later; some couldn't. Who liked their photo more?",
+  "options": [
+    "Those who couldn't swap",
+    "Those who could swap",
+    "Both liked them the same"
+  ],
+  "correct": 0,
+  "answer": "Those whose choice was final. With no way back, their minds got busy finding reasons to like what they had. Those free to swap kept doubting. Yet most people, asked in advance, chose the option to swap. Gilbert's lesson: we overvalue keeping our options open.",
+  "move": "Some decisions feel better once you stop being able to undo them.",
+  "trap": "'Those who could swap': freedom to change feels like a bonus.",
+  "simply": "When you can't return a jumper, you start noticing how cosy it is. When you can return it, you keep wondering if the other one was better.",
+  "why": "Endless returns, open-ended choices and 'keeping options open' can quietly make you less satisfied. Committing is sometimes the happier move.",
+  "sure": 0.35,
+  "book": {
+    "id": "stumbling-on-happiness",
+    "title": "Stumbling on Happiness",
+    "author": "Daniel Gilbert",
+    "year": 2006,
+    "part": 2,
+    "isbn": "9781400077427",
+    "badge": "Winner of the Royal Society Prize for Science Books"
+  },
+  "keywords": [
+    "reversible choices",
+    "commitment",
+    "satisfaction",
+    "photographs"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Gilbert, Stumbling on Happiness, 2006",
+  "source_kind": "book",
+  "reference": "Daniel Gilbert, Stumbling on Happiness (Knopf, 2006), ch. 8",
+  "written": "2026-11-17"
+}

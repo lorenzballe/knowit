@@ -1,0 +1,50 @@
+{
+  "id": "economics-book-the-psychology-of-money-1",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.compound_interest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "How much of Warren Buffett's wealth came after his 65th birthday?",
+  "options": [
+    "About 96%",
+    "About 50%",
+    "About 10%"
+  ],
+  "correct": 0,
+  "answer": "About 96%: of his $84.5 billion in Housel's count, $81.5 billion came after 65. Buffett is a great investor, but the secret of the size is time: he began as a child and kept going for seven decades. Compounding rewards the long middle more than any brilliant moment.",
+  "move": "With compounding, staying in the game matters more than brilliance.",
+  "trap": "'About 50%': we picture wealth built steadily over a career.",
+  "simply": "A snowball rolling downhill grows slowly at first and then very fast. Buffett's money grew the same way; most of the snowball came at the end.",
+  "why": "It shifts the goal from finding the perfect investment to avoiding the mistakes that force you to stop: patience is the multiplier everyone can use.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-psychology-of-money",
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "year": 2020,
+    "part": 1,
+    "isbn": "9780857197689",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "compounding",
+    "warren buffett",
+    "time",
+    "investing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Morgan Housel, The Psychology of Money, 2020",
+  "source_kind": "book",
+  "reference": "Morgan Housel, The Psychology of Money (Harriman House, 2020), ch. 4",
+  "written": "2026-11-17"
+}

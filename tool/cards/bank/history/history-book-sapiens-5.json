@@ -1,0 +1,42 @@
+{
+  "id": "history-book-sapiens-5",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What, for Harari, set off the Scientific Revolution?",
+  "answer": "Admitting ignorance. Earlier traditions mostly held that everything important was already known to the gods or the ancients. Modern science began by saying 'we do not know', and went looking. Harari points to European maps of the 1500s that, unlike earlier ones, left blank spaces to be filled.",
+  "move": "Progress starts with the words 'we don't know'.",
+  "simply": "Old maps filled unknown places with monsters. Newer maps left them blank, which said 'nobody knows yet, let's go and see'.",
+  "why": "In any field, the people who say 'I don't know' are the ones who go and find out. Admitting a gap is the first step to filling it.",
+  "book": {
+    "id": "sapiens",
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "year": 2014,
+    "part": 5,
+    "isbn": "9780062316097",
+    "badge": "A #1 international bestseller"
+  },
+  "keywords": [
+    "scientific revolution",
+    "ignorance",
+    "maps",
+    "discovery"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Yuval Noah Harari, Sapiens, 2014",
+  "source_kind": "book",
+  "reference": "Yuval Noah Harari, Sapiens: A Brief History of Humankind (Harper, 2015), ch. 14",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "sport-book-moneyball-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.moneyball",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was wrong with the way scouts picked players, according to Lewis?",
+  "answer": "They trusted looks and impressions: a strong jaw, a good body, a 'great face'. Billy Beane himself had been a scout's dream who failed as a player. The A's front office preferred what players had actually done, measured over many games, to what they looked like they might do.",
+  "move": "Judge people by what they have done, not how they look.",
+  "simply": "Picking a goalkeeper because he looks tall and strong, instead of counting how many shots he actually saves, is the scouts' mistake.",
+  "why": "Interviews, first impressions and confident CVs pull the same way. Weighing a track record over a good impression improves hiring, voting and dating alike.",
+  "book": {
+    "id": "moneyball",
+    "title": "Moneyball",
+    "author": "Michael Lewis",
+    "year": 2003,
+    "part": 3,
+    "isbn": "9780393324815",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "scouting",
+    "first impressions",
+    "track record",
+    "billy beane"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Lewis, Moneyball, 2003",
+  "source_kind": "book",
+  "reference": "Michael Lewis, Moneyball: The Art of Winning an Unfair Game (W. W. Norton, 2003), ch. 1",
+  "written": "2026-11-17"
+}

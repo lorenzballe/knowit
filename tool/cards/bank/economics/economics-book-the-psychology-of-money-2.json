@@ -1,0 +1,42 @@
+{
+  "id": "economics-book-the-psychology-of-money-2",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.present_bias",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a janitor die richer than a Harvard-educated Merrill Lynch executive?",
+  "answer": "Ronald Read, a petrol station attendant and janitor, saved steadily, bought shares in big companies and held them for decades; he left $8 million. Richard Fuscone, a former executive with a Harvard MBA, borrowed heavily for a lavish life and went bankrupt. Housel's point: behaviour beats knowledge with money.",
+  "move": "With money, how you behave matters more than how much you know.",
+  "simply": "A tortoise who keeps walking can beat a hare who sprints and then naps. Read was the tortoise; Fuscone sprinted, borrowed and fell.",
+  "why": "It means you don't need special knowledge to do well with money: spending less than you earn and staying patient beats cleverness most of the time.",
+  "book": {
+    "id": "the-psychology-of-money",
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "year": 2020,
+    "part": 2,
+    "isbn": "9780857197689",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "ronald read",
+    "saving",
+    "behaviour",
+    "debt"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Morgan Housel, The Psychology of Money, 2020",
+  "source_kind": "book",
+  "reference": "Morgan Housel, The Psychology of Money (Harriman House, 2020), Introduction",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-signal-and-the-noise-2",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some TV weather forecasters predict rain more often than it actually falls?",
+  "answer": "Silver found that some TV forecasters add a 'wet bias': when they say 20% chance of rain, it rains less often than that. A forecast of sun that ends in a soaked picnic draws angry viewers; a wrong rain forecast is quietly forgiven. The government's own forecasts were far better calibrated.",
+  "move": "Ask what a forecaster is punished for, and expect the bias that follows.",
+  "simply": "If you got shouted at for forgetting an umbrella warning but never for an unneeded one, you'd warn about umbrellas a lot too.",
+  "why": "Doctors, analysts and advisers face the same pull: the costlier error to them shapes their forecast. Knowing their incentives tells you which way to adjust.",
+  "book": {
+    "id": "the-signal-and-the-noise",
+    "title": "The Signal and the Noise",
+    "author": "Nate Silver",
+    "year": 2012,
+    "part": 2,
+    "isbn": "9780143125082",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "weather forecasts",
+    "wet bias",
+    "calibration",
+    "incentives"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nate Silver, The Signal and the Noise, 2012",
+  "source_kind": "book",
+  "reference": "Nate Silver, The Signal and the Noise (Penguin Press, 2012), ch. 4",
+  "written": "2026-11-17"
+}

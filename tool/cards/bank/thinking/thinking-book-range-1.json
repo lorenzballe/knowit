@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-range-1",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Tiger Woods specialised in golf as a toddler. What did Roger Federer do as a child?",
+  "answer": "He tried everything: skiing, wrestling, swimming, skateboarding, basketball, handball, table tennis, badminton and football, and only focused on tennis in his teens. Epstein argues that this 'sampling period' is the norm among elite athletes, who usually specialise later than peers who plateau.",
+  "move": "Trying many things early can beat starting one thing first.",
+  "simply": "Instead of only doing tennis, Federer played lots of sports, like tasting every dish at a buffet before choosing a favourite. It made him a better player.",
+  "why": "Parents and students feel pressure to pick one path early. The evidence suggests sampling first often finds a better fit and builds broader skills.",
+  "book": {
+    "id": "range",
+    "title": "Range",
+    "author": "David Epstein",
+    "year": 2019,
+    "part": 1,
+    "isbn": "9780735214484",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "federer",
+    "specialisation",
+    "sampling period",
+    "sport"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, Range, 2019",
+  "source_kind": "book",
+  "reference": "David Epstein, Range: Why Generalists Triumph in a Specialized World (Riverhead, 2019), ch. 1",
+  "written": "2026-11-17"
+}

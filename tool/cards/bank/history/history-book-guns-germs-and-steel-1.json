@@ -1,0 +1,50 @@
+{
+  "id": "history-book-guns-germs-and-steel-1",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.colonialism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In 1532, how many Spaniards did Pizarro have when he captured the Inca emperor Atahuallpa?",
+  "options": [
+    "About 170",
+    "About 2,000",
+    "About 20,000"
+  ],
+  "correct": 0,
+  "answer": "About 168, against an army of some 80,000. Diamond asks why it went that way round and not the reverse. His answer is a chain of advantages: steel swords, guns and horses, a written account of earlier conquests, and an empire already weakened by smallpox that had arrived ahead of the Spaniards.",
+  "move": "Ask what chain of advantages lies behind a lopsided result.",
+  "trap": "'About 20,000': an empire seems to need an army to fall.",
+  "simply": "It's like a small team beating a huge one because they had better tools, a playbook, and the other team was already sick.",
+  "why": "When one side wins hugely, the tempting explanation is that its people were better. Tracing the chain of causes is a better tool for any lopsided outcome.",
+  "sure": 0.35,
+  "book": {
+    "id": "guns-germs-and-steel",
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "year": 1997,
+    "part": 1,
+    "isbn": "9780393354324",
+    "badge": "Winner of the Pulitzer Prize"
+  },
+  "keywords": [
+    "pizarro",
+    "cajamarca",
+    "inca",
+    "conquest"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jared Diamond, Guns, Germs, and Steel, 1997",
+  "source_kind": "book",
+  "reference": "Jared Diamond, Guns, Germs, and Steel (W. W. Norton, 1997), ch. 3",
+  "written": "2026-11-17"
+}

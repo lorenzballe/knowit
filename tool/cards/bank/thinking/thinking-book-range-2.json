@@ -1,0 +1,48 @@
+{
+  "id": "thinking-book-range-2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Psychologist Robin Hogarth contrasts 'kind' and 'wicked' learning environments. What makes one wicked?",
+  "options": [
+    "Feedback is late, rare or misleading",
+    "The rules are too easy",
+    "Nobody keeps score"
+  ],
+  "correct": 0,
+  "answer": "Feedback that is late, rare or misleading, so experience teaches the wrong lessons. Chess and golf are kind: clear rules, quick and accurate feedback, so practice makes perfect. Much of life, from medicine to business, is wicked, and there Epstein argues broad experience beats narrow repetition.",
+  "move": "Ask whether your experience gets quick, honest feedback before trusting it.",
+  "trap": "'Nobody keeps score': wicked worlds keep score, just unreliably.",
+  "simply": "In darts, you see right away if you hit the target, so you improve. In some jobs you never find out if you were right, so practice can teach you wrong.",
+  "why": "Long experience feels like expertise, but in fields with poor feedback it may just be confidence. Seeking honest, fast feedback is the remedy.",
+  "sure": 0.35,
+  "book": {
+    "id": "range",
+    "title": "Range",
+    "author": "David Epstein",
+    "year": 2019,
+    "part": 2,
+    "isbn": "9780735214484",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "kind and wicked environments",
+    "feedback",
+    "expertise",
+    "hogarth"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, Range, 2019",
+  "source_kind": "book",
+  "reference": "David Epstein, Range: Why Generalists Triumph in a Specialized World (Riverhead, 2019), ch. 1",
+  "written": "2026-11-17"
+}

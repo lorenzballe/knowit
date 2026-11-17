@@ -1,0 +1,42 @@
+{
+  "id": "economics-book-the-psychology-of-money-3",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.opportunity_cost",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When you see someone in a $100,000 car, what do you actually know about their wealth?",
+  "answer": "Only that they have $100,000 less than before, or a loan. Housel's point: wealth is what you don't see, the car not bought, the money not spent, invested quietly. Spending is visible, so we copy it; saving is invisible, so we underrate it.",
+  "move": "Spending shows; wealth hides. Don't judge riches by what you see.",
+  "simply": "Two kids get the same pocket money. One buys sweets everyone sees; the other saves it in a jar no one sees. Who's richer at the end of the year?",
+  "why": "Comparing yourself with what others visibly buy pushes you to spend. Remembering that real wealth is invisible makes saving easier to value.",
+  "book": {
+    "id": "the-psychology-of-money",
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "year": 2020,
+    "part": 3,
+    "isbn": "9780857197689",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "wealth",
+    "spending",
+    "status",
+    "saving"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Morgan Housel, The Psychology of Money, 2020",
+  "source_kind": "book",
+  "reference": "Morgan Housel, The Psychology of Money (Harriman House, 2020), ch. 9",
+  "written": "2026-11-17"
+}

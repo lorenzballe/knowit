@@ -1,0 +1,42 @@
+{
+  "id": "medicine-book-bad-science-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.detox",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A 'detox' foot bath turns brown while your feet soak. What does that show?",
+  "answer": "Nothing about your body. Goldacre ran the test without feet: the water turned brown anyway, because the bath's metal electrodes rust in salty water when current runs through it. A visible result is persuasive only if it would not happen without the thing being tested.",
+  "move": "Before trusting a result, check if it happens without the cause.",
+  "simply": "If a magic water turns brown even with a toy's feet in it, the brown isn't coming out of you. It's the machine.",
+  "why": "Many sales pitches show a dramatic effect. Asking 'what happens with no one in the bath?' is the control that exposes most of them.",
+  "book": {
+    "id": "bad-science",
+    "title": "Bad Science",
+    "author": "Ben Goldacre",
+    "year": 2008,
+    "part": 2,
+    "isbn": "9780865479180",
+    "badge": "By an NHS doctor and Guardian columnist"
+  },
+  "keywords": [
+    "detox",
+    "foot bath",
+    "electrolysis",
+    "controls"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Ben Goldacre, Bad Science, 2008",
+  "source_kind": "book",
+  "reference": "Ben Goldacre, Bad Science (Fourth Estate, 2008), ch. 1",
+  "written": "2026-11-17"
+}

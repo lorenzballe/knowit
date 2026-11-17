@@ -1,0 +1,50 @@
+{
+  "id": "space-book-a-brief-history-of-time-2",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Edwin Hubble found that the farther a galaxy is, the faster it moves away. What does that suggest?",
+  "options": [
+    "The universe is expanding",
+    "Our galaxy is at the centre",
+    "Distant galaxies are lighter"
+  ],
+  "correct": 0,
+  "answer": "That the universe is expanding: like dots on an inflating balloon, every galaxy recedes from every other, and the most distant fastest. Run the film backwards and everything was once crowded together. Hawking explains how this 1929 discovery turned the big bang from speculation into the starting point of modern cosmology.",
+  "move": "If everything moves apart, it was once together: run the film backwards.",
+  "trap": "'Our galaxy is at the centre': every galaxy sees the same.",
+  "simply": "Draw dots on a balloon and blow it up. Every dot moves away from every other dot, and the far ones move fastest. Space is doing that with galaxies.",
+  "why": "It is the clue that the universe had a beginning, and a lesson in reasoning: a pattern in the present can tell you what happened long ago.",
+  "sure": 0.35,
+  "book": {
+    "id": "a-brief-history-of-time",
+    "title": "A Brief History of Time",
+    "author": "Stephen Hawking",
+    "year": 1988,
+    "part": 2,
+    "isbn": "9780553380163",
+    "badge": "237 weeks on the Sunday Times bestseller list"
+  },
+  "keywords": [
+    "expanding universe",
+    "hubble",
+    "big bang",
+    "redshift"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Stephen Hawking, A Brief History of Time, 1988",
+  "source_kind": "book",
+  "reference": "Stephen Hawking, A Brief History of Time (Bantam, 1988), ch. 3",
+  "written": "2026-11-17"
+}

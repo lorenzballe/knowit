@@ -1,0 +1,42 @@
+{
+  "id": "sport-book-moneyball-2",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.analytics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Oakland value a walk almost as much as a hit?",
+  "answer": "Because the statistic that best predicted runs was how often a batter got on base, and walks count. Scouts and the market prized batting average and big swings, so patient hitters who walked a lot came cheap. Lewis tells how the A's built their lineup from them.",
+  "move": "Measure what actually produces the result, not what looks impressive.",
+  "simply": "In football, a player who quietly keeps the ball is worth a lot even if he rarely scores. Baseball's walks were that kind of quiet value.",
+  "why": "Every field has its batting average: a famous number that tracks the result loosely. Finding the number that really drives the outcome is a lasting edge.",
+  "book": {
+    "id": "moneyball",
+    "title": "Moneyball",
+    "author": "Michael Lewis",
+    "year": 2003,
+    "part": 2,
+    "isbn": "9780393324815",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "on-base percentage",
+    "walks",
+    "statistics",
+    "sabermetrics"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Lewis, Moneyball, 2003",
+  "source_kind": "book",
+  "reference": "Michael Lewis, Moneyball: The Art of Winning an Unfair Game (W. W. Norton, 2003)",
+  "written": "2026-11-17"
+}

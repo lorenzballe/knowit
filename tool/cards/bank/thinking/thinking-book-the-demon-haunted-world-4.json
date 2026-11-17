@@ -1,0 +1,48 @@
+{
+  "id": "thinking-book-the-demon-haunted-world-4",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What, according to Sagan, makes science more reliable than other ways of knowing?",
+  "options": [
+    "Built-in ways to catch its own errors",
+    "Scientists are smarter than other people",
+    "It is never wrong about anything"
+  ],
+  "correct": 0,
+  "answer": "Its error-correcting machinery. Science is done by people with the usual biases, but its claims must survive experiments that could prove them wrong and colleagues paid in reputation for finding mistakes. Sagan's point is that it is not certain, only self-correcting, which is rarer and more useful.",
+  "move": "Trust the methods that hunt for their own mistakes.",
+  "trap": "'Never wrong': science is wrong often, and admits it.",
+  "simply": "Science is like a group of friends whose favourite game is finding each other's mistakes. Whatever survives the game is probably right.",
+  "why": "It tells you what to trust: not the claim that sounds most certain, but the one checked hardest by people trying to break it.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-demon-haunted-world",
+    "title": "The Demon-Haunted World",
+    "author": "Carl Sagan",
+    "year": 1995,
+    "part": 4,
+    "isbn": "9780394535128",
+    "badge": "By a Pulitzer Prize-winning scientist"
+  },
+  "keywords": [
+    "self-correction",
+    "scientific method",
+    "peer review",
+    "error"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, The Demon-Haunted World, 1995",
+  "source_kind": "book",
+  "reference": "Carl Sagan, The Demon-Haunted World: Science as a Candle in the Dark (Random House, 1995), ch. 2",
+  "written": "2026-11-17"
+}

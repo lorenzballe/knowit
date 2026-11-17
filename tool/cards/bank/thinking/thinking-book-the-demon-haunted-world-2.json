@@ -1,0 +1,48 @@
+{
+  "id": "thinking-book-the-demon-haunted-world-2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In Sagan's 'baloney detection kit', what should you look for first when someone presents 'facts'?",
+  "options": [
+    "Independent confirmation",
+    "The speaker's credentials",
+    "How many people believe it"
+  ],
+  "correct": 0,
+  "answer": "Independent confirmation: someone with no stake in the claim checking the same facts. Sagan's kit adds that arguments from authority carry little weight, since experts have been wrong before, and that you should think up every other way the facts could be explained before settling on one.",
+  "move": "Before believing a fact, ask who checked it besides the person selling it.",
+  "trap": "'The speaker's credentials': a title feels like proof, but isn't.",
+  "simply": "If a kid says 'my dad says so', that's not proof. Proof is when someone who doesn't care who wins checks it too and gets the same answer.",
+  "why": "Headlines, adverts and viral posts arrive with confident 'facts'. One question, who else confirmed this, filters out most of the nonsense.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-demon-haunted-world",
+    "title": "The Demon-Haunted World",
+    "author": "Carl Sagan",
+    "year": 1995,
+    "part": 2,
+    "isbn": "9780394535128",
+    "badge": "By a Pulitzer Prize-winning scientist"
+  },
+  "keywords": [
+    "baloney detection kit",
+    "independent confirmation",
+    "authority",
+    "skepticism"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, The Demon-Haunted World, 1995",
+  "source_kind": "book",
+  "reference": "Carl Sagan, The Demon-Haunted World: Science as a Candle in the Dark (Random House, 1995), ch. 12",
+  "written": "2026-11-17"
+}

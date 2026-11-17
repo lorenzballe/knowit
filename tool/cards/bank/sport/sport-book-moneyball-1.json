@@ -1,0 +1,50 @@
+{
+  "id": "sport-book-moneyball-1",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.moneyball",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "In 2002 the Oakland A's spent about a third of what the Yankees did on players. How did they do?",
+  "options": [
+    "Won as many games as the Yankees",
+    "Finished near the bottom",
+    "Won the World Series"
+  ],
+  "correct": 0,
+  "answer": "They won 103 games, the same as the Yankees, on a payroll of about $40 million against roughly $125 million. Lewis shows how Oakland's general manager Billy Beane bought what the market undervalued, players who got on base, rather than what looked good to scouts.",
+  "move": "Look for what the market undervalues, not what everyone wants.",
+  "trap": "'Finished near the bottom': money usually buys wins.",
+  "simply": "It's like building a great football team from players other clubs ignored because they didn't look like stars, but who quietly kept doing the useful thing.",
+  "why": "Prices reflect what most people think matters. When you can measure what really matters better than they do, the bargains are yours, in sport, hiring or shopping.",
+  "sure": 0.35,
+  "book": {
+    "id": "moneyball",
+    "title": "Moneyball",
+    "author": "Michael Lewis",
+    "year": 2003,
+    "part": 1,
+    "isbn": "9780393324815",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "oakland athletics",
+    "billy beane",
+    "payroll",
+    "undervalued"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Lewis, Moneyball, 2003",
+  "source_kind": "book",
+  "reference": "Michael Lewis, Moneyball: The Art of Winning an Unfair Game (W. W. Norton, 2003)",
+  "written": "2026-11-17"
+}

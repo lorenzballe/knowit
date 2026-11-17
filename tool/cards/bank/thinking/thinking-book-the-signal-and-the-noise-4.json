@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-signal-and-the-noise-4",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How often were the TV pundits on The McLaughlin Group right in their predictions?",
+  "answer": "Silver checked hundreds of their forecasts: about as many came true as turned out false, roughly what coin flips would manage. Confident pundits who view everything through one big idea, Tetlock's 'hedgehogs', predicted worse than cautious 'foxes' who weigh many small ones.",
+  "move": "A confident forecaster is not the same as an accurate one.",
+  "simply": "Some people on TV sound very sure about the future. When someone counted their guesses, they were right about half the time, like flipping a coin.",
+  "why": "Sounding certain wins attention, not accuracy. Checking a commentator's past record, rather than their confidence, is the cheapest filter you have.",
+  "book": {
+    "id": "the-signal-and-the-noise",
+    "title": "The Signal and the Noise",
+    "author": "Nate Silver",
+    "year": 2012,
+    "part": 4,
+    "isbn": "9780143125082",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "pundits",
+    "predictions",
+    "hedgehogs and foxes",
+    "track record"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nate Silver, The Signal and the Noise, 2012",
+  "source_kind": "book",
+  "reference": "Nate Silver, The Signal and the Noise (Penguin Press, 2012), ch. 2",
+  "written": "2026-11-17"
+}

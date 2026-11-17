@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-range-5",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Vincent van Gogh tried five careers before painting. Was that wasted time?",
+  "answer": "Epstein argues not. Van Gogh worked as an art dealer, teacher, bookseller, trainee pastor and missionary before turning to art in his late twenties. People who switch paths are often finding better 'match quality', a fit between their talents and their work, and that fit is worth more than a head start.",
+  "move": "Changing course can be how you find where you fit best.",
+  "simply": "Trying on lots of shoes before buying feels slow, but you end up with the pair that fits. Careers can work the same way.",
+  "why": "It is a reassuring idea for anyone who feels behind: a winding path often builds the fit and breadth that a straight one misses.",
+  "book": {
+    "id": "range",
+    "title": "Range",
+    "author": "David Epstein",
+    "year": 2019,
+    "part": 5,
+    "isbn": "9780735214484",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "van gogh",
+    "match quality",
+    "career change",
+    "generalists"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, Range, 2019",
+  "source_kind": "book",
+  "reference": "David Epstein, Range: Why Generalists Triumph in a Specialized World (Riverhead, 2019), ch. 6",
+  "written": "2026-11-17"
+}

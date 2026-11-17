@@ -1,0 +1,42 @@
+{
+  "id": "nature-book-the-selfish-gene-5",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.natural_selection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does Dawkins mean by calling bodies 'survival machines'?",
+  "answer": "That over billions of years genes have built ever more elaborate vehicles to carry them into the next generation: bodies. A body lives a few decades; the genes in it may have lasted millions of years by passing through countless bodies. From the genes' point of view, we are temporary.",
+  "move": "Seen from the genes, a body is a temporary vehicle.",
+  "simply": "Think of a relay race: runners, the bodies, tire and stop, but the baton, the genes, keeps going, passed from runner to runner for millions of years.",
+  "why": "Looking at a question from an unusual point of view, here the gene's, can explain puzzles the obvious view cannot. It is a thinking tool worth borrowing.",
+  "book": {
+    "id": "the-selfish-gene",
+    "title": "The Selfish Gene",
+    "author": "Richard Dawkins",
+    "year": 1976,
+    "part": 5,
+    "isbn": "9780198788607",
+    "badge": "Voted the most influential science book of all time"
+  },
+  "keywords": [
+    "survival machines",
+    "genes",
+    "replication",
+    "point of view"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Dawkins, The Selfish Gene, 1976",
+  "source_kind": "book",
+  "reference": "Richard Dawkins, The Selfish Gene (Oxford University Press, 1976), ch. 2",
+  "written": "2026-11-17"
+}

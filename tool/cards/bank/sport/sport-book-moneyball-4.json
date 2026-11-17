@@ -1,0 +1,50 @@
+{
+  "id": "sport-book-moneyball-4",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.bad_stats",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Bill James found baseball's 'errors' statistic misleading. Why?",
+  "options": [
+    "It punishes fielders for reaching balls others miss",
+    "Errors are too rare to count",
+    "Umpires record them at random"
+  ],
+  "correct": 0,
+  "answer": "An error is charged only when a fielder touches a ball and fumbles it. A slow fielder who never gets near the ball is never charged one, so the statistic can make him look better than a fast one. Lewis tells how James questioned such numbers that everyone took for granted.",
+  "move": "Check whether a number punishes the people who try harder.",
+  "trap": "'Too rare to count': rarity isn't the flaw, the definition is.",
+  "simply": "If a school counted only wrong answers, the kid who never raises a hand would look perfect. 'Errors' counted baseball mistakes that way.",
+  "why": "Many workplace metrics do the same: count mistakes, and you reward people who avoid hard tasks. Ask what a number ignores before trusting it.",
+  "sure": 0.35,
+  "book": {
+    "id": "moneyball",
+    "title": "Moneyball",
+    "author": "Michael Lewis",
+    "year": 2003,
+    "part": 4,
+    "isbn": "9780393324815",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "bill james",
+    "fielding errors",
+    "misleading statistics",
+    "metrics"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Lewis, Moneyball, 2003",
+  "source_kind": "book",
+  "reference": "Michael Lewis, Moneyball: The Art of Winning an Unfair Game (W. W. Norton, 2003), ch. 4",
+  "written": "2026-11-17"
+}

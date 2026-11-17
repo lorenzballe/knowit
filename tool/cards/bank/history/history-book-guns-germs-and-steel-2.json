@@ -1,0 +1,42 @@
+{
+  "id": "history-book-guns-germs-and-steel-2",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were so few large wild animals ever domesticated?",
+  "answer": "Of the 148 big wild plant-eating mammals, only 14 were domesticated in ancient times, 13 of them in Eurasia. Diamond's 'Anna Karenina principle': a domestic animal needs everything to go right, from diet and growth to temper and breeding in captivity. Zebras bite and never let go; that one flaw is enough.",
+  "move": "Success often needs everything to go right; failure needs one flaw.",
+  "simply": "To be a farm animal you must pass a long exam: eat cheap food, grow fast, stay calm, breed in pens. Fail one question, like zebras with their bite, and you're out.",
+  "why": "The same logic explains why most start-ups, recipes and plans fail: success needs every condition met, failure only one. Checking for the single deal-breaker saves effort.",
+  "book": {
+    "id": "guns-germs-and-steel",
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "year": 1997,
+    "part": 2,
+    "isbn": "9780393354324",
+    "badge": "Winner of the Pulitzer Prize"
+  },
+  "keywords": [
+    "domestication",
+    "anna karenina principle",
+    "zebras",
+    "livestock"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jared Diamond, Guns, Germs, and Steel, 1997",
+  "source_kind": "book",
+  "reference": "Jared Diamond, Guns, Germs, and Steel (W. W. Norton, 1997), ch. 9",
+  "written": "2026-11-17"
+}

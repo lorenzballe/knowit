@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-demon-haunted-world-1",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Someone says an invisible, floating, heatless dragon lives in their garage. Why should you not believe it?",
+  "answer": "Sagan's point: every test you propose, flour on the floor, an infrared camera, paint, meets a new reason it cannot work. A claim that no possible observation could show false tells you nothing about the world. The burden is on whoever makes it, not on you to disprove it.",
+  "move": "If nothing could ever prove a claim wrong, it says nothing.",
+  "simply": "If a friend says there's a dragon you can't see, hear, touch or measure in any way, then there's no difference between that dragon and no dragon at all.",
+  "why": "Many claims, from miracle cures to conspiracy theories, protect themselves the same way. Asking 'what would show this is false?' sorts them in seconds.",
+  "book": {
+    "id": "the-demon-haunted-world",
+    "title": "The Demon-Haunted World",
+    "author": "Carl Sagan",
+    "year": 1995,
+    "part": 1,
+    "isbn": "9780394535128",
+    "badge": "By a Pulitzer Prize-winning scientist"
+  },
+  "keywords": [
+    "falsifiability",
+    "dragon in the garage",
+    "burden of proof",
+    "untestable claims"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, The Demon-Haunted World, 1995",
+  "source_kind": "book",
+  "reference": "Carl Sagan, The Demon-Haunted World: Science as a Candle in the Dark (Random House, 1995), ch. 10",
+  "written": "2026-11-17"
+}

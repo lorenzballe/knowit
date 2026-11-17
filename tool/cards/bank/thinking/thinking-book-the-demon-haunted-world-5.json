@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-demon-haunted-world-5",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Thousands report being abducted by aliens. What does Sagan think best explains their memories?",
+  "answer": "Sagan weighs the abduction stories against things known to happen: vivid dreams at the edge of sleep, a body briefly paralysed on waking, and memories reshaped by hypnosis and suggestion. Ordinary explanations that are known to occur beat an extraordinary one that has never been confirmed.",
+  "move": "Before an extraordinary explanation, rule out the ordinary ones known to happen.",
+  "simply": "If you hear a strange noise at night, it's much more likely to be the cat than a ghost. Cats are known to exist; ghosts haven't been shown to.",
+  "why": "Vivid memories feel like proof. Knowing how sleep and suggestion can manufacture them protects you from trusting a story just because someone sincerely remembers it.",
+  "book": {
+    "id": "the-demon-haunted-world",
+    "title": "The Demon-Haunted World",
+    "author": "Carl Sagan",
+    "year": 1995,
+    "part": 5,
+    "isbn": "9780394535128",
+    "badge": "By a Pulitzer Prize-winning scientist"
+  },
+  "keywords": [
+    "alien abduction",
+    "sleep paralysis",
+    "false memories",
+    "hypnosis"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, The Demon-Haunted World, 1995",
+  "source_kind": "book",
+  "reference": "Carl Sagan, The Demon-Haunted World: Science as a Candle in the Dark (Random House, 1995), ch. 6",
+  "written": "2026-11-17"
+}

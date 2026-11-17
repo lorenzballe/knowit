@@ -1,0 +1,50 @@
+{
+  "id": "medicine-book-bad-science-4",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.placebo_or_real",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Which gives the fairest test of whether a new treatment works?",
+  "options": [
+    "A placebo comparison, patients picked at random",
+    "Asking patients if they felt better",
+    "Comparing with people who refused it"
+  ],
+  "correct": 0,
+  "answer": "A randomised trial with a placebo. Random allocation makes the two groups alike in everything but the treatment, so a difference in outcome can be credited to it. Goldacre shows how unblinded or self-selected comparisons flatter treatments: people who choose a cure differ from those who don't.",
+  "move": "Only a fair comparison tells you what a treatment really does.",
+  "trap": "'Asking if they felt better': feelings include placebo and time.",
+  "simply": "To test if a new shoe makes you faster, give it to half the runners chosen by coin toss, and compare. Otherwise the fast runners might just pick the fancy shoe.",
+  "why": "When you read that a diet, pill or app 'works', the first question is: compared with what, and who chose who got it?",
+  "sure": 0.35,
+  "book": {
+    "id": "bad-science",
+    "title": "Bad Science",
+    "author": "Ben Goldacre",
+    "year": 2008,
+    "part": 4,
+    "isbn": "9780865479180",
+    "badge": "By an NHS doctor and Guardian columnist"
+  },
+  "keywords": [
+    "randomised trial",
+    "placebo control",
+    "fair test",
+    "blinding"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Ben Goldacre, Bad Science, 2008",
+  "source_kind": "book",
+  "reference": "Ben Goldacre, Bad Science (Fourth Estate, 2008), ch. 4",
+  "written": "2026-11-17"
+}

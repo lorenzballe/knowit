@@ -1,0 +1,48 @@
+{
+  "id": "thinking-book-the-signal-and-the-noise-1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "You find unfamiliar underwear in your partner's drawer. Before this, you put the chance they're cheating at 4%. Roughly what now?",
+  "options": [
+    "About 29%",
+    "About 50%",
+    "About 95%"
+  ],
+  "correct": 0,
+  "answer": "About 29%, in Silver's worked example. If cheating, say, half the time leaves such a clue, but innocent explanations produce it 5% of the time, the clue raises 4% to about 29%, not to certainty. Bayes' rule: weigh new evidence against how likely you thought it was before.",
+  "move": "New evidence moves a belief from where it was, not from zero.",
+  "trap": "'About 95%': the clue feels damning, so the start is forgotten.",
+  "simply": "Finding a clue is like hearing a smoke alarm: it could be fire, or toast. If fires are rare in your house, it's still probably toast.",
+  "why": "Every worrying sign, a test result, a rumour, a bad review, deserves the same treatment: start from how likely it was before, then let the evidence move you.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-signal-and-the-noise",
+    "title": "The Signal and the Noise",
+    "author": "Nate Silver",
+    "year": 2012,
+    "part": 1,
+    "isbn": "9780143125082",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "bayes",
+    "prior",
+    "evidence",
+    "probability"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nate Silver, The Signal and the Noise, 2012",
+  "source_kind": "book",
+  "reference": "Nate Silver, The Signal and the Noise (Penguin Press, 2012), ch. 8",
+  "written": "2026-11-17"
+}

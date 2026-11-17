@@ -1,0 +1,42 @@
+{
+  "id": "psychology-book-stumbling-on-happiness-4",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.expectations",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "You miss your train by one minute. Do you feel as bad as you expected to?",
+  "answer": "Usually not. In studies Gilbert describes, commuters predicted that a narrow miss would sting far more than it did. We expect strong regret, so we pay to avoid it, buying insurance and keeping options open, when in the moment we tend to shrug and blame bad luck.",
+  "move": "Regret is usually smaller in life than in imagination.",
+  "simply": "Before a game, you think losing by one point would be awful. When it happens, you mostly think 'bad luck' and get on with your day.",
+  "why": "Fear of regret makes people overpay for insurance, guarantees and options. Knowing regret fades fast lets you choose by what you want, not what you fear.",
+  "book": {
+    "id": "stumbling-on-happiness",
+    "title": "Stumbling on Happiness",
+    "author": "Daniel Gilbert",
+    "year": 2006,
+    "part": 4,
+    "isbn": "9781400077427",
+    "badge": "Winner of the Royal Society Prize for Science Books"
+  },
+  "keywords": [
+    "regret",
+    "missed train",
+    "insurance",
+    "prediction"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Gilbert, Stumbling on Happiness, 2006",
+  "source_kind": "book",
+  "reference": "Daniel Gilbert, Stumbling on Happiness (Knopf, 2006)",
+  "written": "2026-11-17"
+}

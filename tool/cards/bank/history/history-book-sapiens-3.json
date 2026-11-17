@@ -1,0 +1,42 @@
+{
+  "id": "history-book-sapiens-3",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Harari call money the most universal system of trust ever devised?",
+  "answer": "Because people who share no language, religion or king will still accept the same coins. Money lets strangers cooperate without trusting each other, only the currency. Harari notes that Christians and Muslims who fought crusades still traded happily in each other's gold.",
+  "move": "Money is trust you can carry in your pocket.",
+  "simply": "You don't need to trust the baker, and the baker doesn't need to trust you. You both trust the euro, so the bread changes hands.",
+  "why": "It explains why inflation and bank failures feel so frightening: they shake the one belief that lets millions of strangers deal with each other.",
+  "book": {
+    "id": "sapiens",
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "year": 2014,
+    "part": 3,
+    "isbn": "9780062316097",
+    "badge": "A #1 international bestseller"
+  },
+  "keywords": [
+    "money",
+    "trust",
+    "currency",
+    "crusades"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Yuval Noah Harari, Sapiens, 2014",
+  "source_kind": "book",
+  "reference": "Yuval Noah Harari, Sapiens: A Brief History of Humankind (Harper, 2015), ch. 10",
+  "written": "2026-11-17"
+}

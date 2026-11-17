@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-book-mans-search-for-meaning-2",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.meaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Frankl quotes Nietzsche: 'He who has a why to live can bear almost any how.' What did he mean?",
+  "answer": "That a reason to live makes hardship bearable. Frankl saw that prisoners who held on to a reason to live, a loved one to find, a book to finish, endured conditions that broke others. Purpose does not remove suffering; it gives a reason to endure it.",
+  "move": "A strong reason why makes almost any how bearable.",
+  "simply": "Training in the rain is miserable, unless you're training for a race you really care about. Then the rain is just part of the plan.",
+  "why": "When work or life gets hard, reconnecting with why you're doing it often helps more than making the hardship smaller.",
+  "book": {
+    "id": "mans-search-for-meaning",
+    "title": "Man's Search for Meaning",
+    "author": "Viktor E. Frankl",
+    "year": 1946,
+    "part": 2,
+    "isbn": "9780807014295",
+    "badge": "One of the ten most influential books in America"
+  },
+  "keywords": [
+    "nietzsche",
+    "purpose",
+    "meaning",
+    "endurance"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Viktor E. Frankl, Man's Search for Meaning, 1946",
+  "source_kind": "book",
+  "reference": "Viktor E. Frankl, Man's Search for Meaning (Beacon Press, 2006; first published 1946), Part One",
+  "written": "2026-11-17"
+}

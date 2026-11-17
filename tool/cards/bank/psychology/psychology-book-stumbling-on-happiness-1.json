@@ -1,0 +1,42 @@
+{
+  "id": "psychology-book-stumbling-on-happiness-1",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.expectations",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we expect a bad event to hurt longer than it actually does?",
+  "answer": "Gilbert calls it the impact bias: we imagine the event, a break-up, a lost election, a failed exam, and forget everything else that will fill our days. We also forget our 'psychological immune system', which quietly finds silver linings. Most people recover faster than they predicted.",
+  "move": "Bad news usually hurts less, and for less long, than you fear.",
+  "simply": "When you picture failing a test, you picture only the test. Real life after it has friends, food and football, which take up most of your attention.",
+  "why": "Fear of how bad we will feel stops people leaving bad jobs, ending bad relationships or taking good risks. Expecting to recover makes better choices possible.",
+  "book": {
+    "id": "stumbling-on-happiness",
+    "title": "Stumbling on Happiness",
+    "author": "Daniel Gilbert",
+    "year": 2006,
+    "part": 1,
+    "isbn": "9781400077427",
+    "badge": "Winner of the Royal Society Prize for Science Books"
+  },
+  "keywords": [
+    "impact bias",
+    "affective forecasting",
+    "psychological immune system",
+    "resilience"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Gilbert, Stumbling on Happiness, 2006",
+  "source_kind": "book",
+  "reference": "Daniel Gilbert, Stumbling on Happiness (Knopf, 2006), ch. 8",
+  "written": "2026-11-17"
+}

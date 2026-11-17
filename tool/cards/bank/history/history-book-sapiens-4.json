@@ -1,0 +1,50 @@
+{
+  "id": "history-book-sapiens-4",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.groupthink",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "About how many people can a group hold together through gossip and personal ties alone?",
+  "options": [
+    "About 150",
+    "About 1,500",
+    "About 15,000"
+  ],
+  "correct": 0,
+  "answer": "About 150, the figure researchers associate with Robin Dunbar. Below it, people can know each other and keep order through reputation. Above it, Harari argues, groups need shared myths, a god, a flag, a company brand, to make strangers cooperate. Armies, firms and cities rest on that trick.",
+  "move": "Past about 150 people, rules and stories must replace knowing each other.",
+  "trap": "'About 1,500': a village feels knowable, but it isn't.",
+  "simply": "You can keep track of who's kind and who cheats in your class. In a whole city you can't, so people use laws and shared stories instead.",
+  "why": "It is why small teams can run on trust while big organisations need rules and a story. Knowing the limit helps you see when a group has outgrown its habits.",
+  "sure": 0.35,
+  "book": {
+    "id": "sapiens",
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "year": 2014,
+    "part": 4,
+    "isbn": "9780062316097",
+    "badge": "A #1 international bestseller"
+  },
+  "keywords": [
+    "dunbar's number",
+    "gossip",
+    "group size",
+    "cooperation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Yuval Noah Harari, Sapiens, 2014",
+  "source_kind": "book",
+  "reference": "Yuval Noah Harari, Sapiens: A Brief History of Humankind (Harper, 2015), ch. 2",
+  "written": "2026-11-17"
+}

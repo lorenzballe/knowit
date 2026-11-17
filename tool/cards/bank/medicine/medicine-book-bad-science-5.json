@@ -1,0 +1,42 @@
+{
+  "id": "medicine-book-bad-science-5",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.doubt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a 1998 study of twelve children start a decade-long scare about the MMR vaccine?",
+  "answer": "Goldacre shows that the science was thin, a series of twelve cases, but the media ran the story for years, often presenting 'both sides' as equal. Vaccination fell and measles returned. The study was later retracted and its lead author struck off the medical register.",
+  "move": "Treating a weak claim and strong evidence as equal 'sides' misleads.",
+  "simply": "If the news gives one worried doctor the same time as thousands of studies, it looks like a fifty-fifty fight. It wasn't.",
+  "why": "Balance between people is not balance of evidence. When a story pits one dissenter against a field, ask how much evidence stands behind each side.",
+  "book": {
+    "id": "bad-science",
+    "title": "Bad Science",
+    "author": "Ben Goldacre",
+    "year": 2008,
+    "part": 5,
+    "isbn": "9780865479180",
+    "badge": "By an NHS doctor and Guardian columnist"
+  },
+  "keywords": [
+    "mmr",
+    "vaccines",
+    "false balance",
+    "media"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Ben Goldacre, Bad Science, 2008",
+  "source_kind": "book",
+  "reference": "Ben Goldacre, Bad Science (Fourth Estate, 2008), ch. 16",
+  "written": "2026-11-17"
+}
