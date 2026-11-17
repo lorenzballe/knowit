@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { MAX_TEXT, MODEL, SHARED, SYSTEM, buildRequest, cacheKey, cardText, readAsk } from './ask.js';
+import { MAX_TEXT, MODEL, MONTH_BUDGET_USD, SHARED, SYSTEM, buildRequest, cacheKey, cardText, costOf, readAsk } from './ask.js';
 import type { Card } from './bank.js';
 
 const card: Card = {
@@ -67,4 +67,14 @@ test('a kept answer is found by its card, ask and language, and lost when the ca
   assert.notEqual(cacheKey(card, { ...ask, lang: 'en' }), key);
   assert.notEqual(cacheKey(card, { ...ask, mode: 'sides' }), key);
   assert.notEqual(cacheKey({ ...card, answer: 'Edited.' }, ask), key);
+});
+
+test('an answer costs what its tokens cost, and the month stops near three euros', () => {
+  // A typical answer: about 800 tokens in, 400 out.
+  const one = costOf({ input_tokens: 800, output_tokens: 400 });
+  assert.ok(Math.abs(one - 0.00028) < 1e-9);
+  assert.ok(MONTH_BUDGET_USD <= 3.5);
+  // About eleven thousand such answers fit in the month.
+  assert.ok(MONTH_BUDGET_USD / one > 10000);
+  assert.equal(costOf({}), 0);
 });

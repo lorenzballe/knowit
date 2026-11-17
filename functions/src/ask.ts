@@ -37,6 +37,21 @@ export const MAX_TEXT = 600;
 export const PER_DAY = 20;
 export const ALL_PER_DAY = 10000;
 
+/**
+ * The most the answers may cost in a calendar month, in US dollars (about
+ * three euros): past it, nobody is answered by the model until the month
+ * turns. Kept answers are free and still given.
+ */
+export const MONTH_BUDGET_USD = 3.2;
+
+/** The model's price, dollars per million tokens. */
+const PRICE = { input: 0.1, output: 0.5 };
+
+/** What one answer cost, from the tokens the API says it used. */
+export function costOf(usage: { input_tokens?: number | null; output_tokens?: number | null }): number {
+  return ((usage.input_tokens ?? 0) * PRICE.input + (usage.output_tokens ?? 0) * PRICE.output) / 1e6;
+}
+
 /** A question, as the phone asks it, read and checked. */
 export interface Ask {
   card: string;
@@ -136,7 +151,11 @@ export function cacheKey(card: Card, ask: Ask): string {
 export type NoAnswer = 'declined' | 'empty';
 
 /** Asks the model, and returns its answer, or why there is none. */
-export async function answer(client: Anthropic, card: Card, ask: Ask): Promise<{ text: string } | { none: NoAnswer }> {
+export async function answer(
+  client: Anthropic,
+  card: Card,
+  ask: Ask,
+): Promise<({ text: string } | { none: NoAnswer }) & { cost: number }> {
   const { system, user } = buildRequest(card, ask);
   const response = await client.messages.create({
     model: MODEL,
@@ -146,10 +165,11 @@ export async function answer(client: Anthropic, card: Card, ask: Ask): Promise<{
     system,
     messages: [{ role: 'user', content: user }],
   });
-  if (response.stop_reason === 'refusal') return { none: 'declined' };
+  const cost = costOf(response.usage);
+  if (response.stop_reason === 'refusal') return { none: 'declined', cost };
   const text = response.content
     .map((block) => (block.type === 'text' ? block.text : ''))
     .join('')
     .trim();
-  return text ? { text } : { none: 'empty' };
+  return text ? { text, cost } : { none: 'empty', cost };
 }

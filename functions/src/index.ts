@@ -42,7 +42,7 @@ import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 import { logger } from 'firebase-functions';
 
-import { ALL_PER_DAY, MODEL, PER_DAY, SHARED, answer as answerAsk, cacheKey, readAsk } from './ask.js';
+import { ALL_PER_DAY, MODEL, MONTH_BUDGET_USD, PER_DAY, SHARED, answer as answerAsk, cacheKey, readAsk } from './ask.js';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import { search as searchBank } from './search.js';
@@ -119,8 +119,11 @@ export const askCard = onCall(
     const day = today(Date.now());
     const mine = db.collection('readers').doc(uid).collection('ai').doc(day);
     const everyone = db.collection('ai').doc(day);
+    // The month's spend, kept beside the days: past the budget, no model.
+    const month = db.collection('ai').doc(`month-${day.slice(0, 7)}`);
     const allowed = await db.runTransaction(async (t) => {
-      const [m, e] = await Promise.all([t.get(mine), t.get(everyone)]);
+      const [m, e, spent] = await Promise.all([t.get(mine), t.get(everyone), t.get(month)]);
+      if ((spent.get('usd') ?? 0) >= MONTH_BUDGET_USD) return false;
       if ((m.get('n') ?? 0) >= PER_DAY || (e.get('n') ?? 0) >= ALL_PER_DAY) return false;
       t.set(mine, { n: FieldValue.increment(1) }, { merge: true });
       t.set(everyone, { n: FieldValue.increment(1) }, { merge: true });
@@ -129,7 +132,8 @@ export const askCard = onCall(
     if (!allowed) throw new HttpsError('resource-exhausted', 'Enough for today.');
     try {
       const out = await answerAsk(new Anthropic({ apiKey: anthropicKey.value() }), card, ask);
-      logger.info('asked', { card: ask.card, mode: ask.mode, lang: ask.lang, answered: 'text' in out });
+      await month.set({ usd: FieldValue.increment(out.cost), n: FieldValue.increment(1) }, { merge: true });
+      logger.info('asked', { card: ask.card, mode: ask.mode, lang: ask.lang, answered: 'text' in out, cost: out.cost });
       if (kept && 'text' in out) {
         await kept.set({ text: out.text, model: MODEL, at: FieldValue.serverTimestamp() });
       }
