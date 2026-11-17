@@ -194,6 +194,8 @@ class Draft(Described):
     hint: str = Field(description="Number and estimate only; empty otherwise.")
     simply: str = Field(description="Empty unless there is a genuinely second way in.")
     counterpoint: str = Field(description="Debate only; empty otherwise.")
+    why: str = Field(description="Go deeper (§22): why it matters to the reader, one or two sentences, 15 to 40 words, on what the idea changes in their own decisions. Never the answer said again. Always written.")
+    views: list[str] = Field(description="Go deeper (§22): on a question informed people still dispute, exactly two views, each 'Label: one or two sentences', under 45 words. Empty on settled fact and on a debate, whose sides say it.")
     steps: list[str] = Field(description="Number and estimate only; empty otherwise.")
     options: list[str] = Field(description="pickOne only; empty otherwise.")
     correct: int = Field(description="Index into options; 0 when there are none.")
@@ -283,6 +285,13 @@ def to_card(draft: Draft) -> dict:
     for key in ("trap", "hint", "simply", "counterpoint"):
         if d[key].strip() and not (kind == "debate" and key == "trap") and not (kind == "read" and key in ("hint", "counterpoint")):
             card[key] = d[key].strip()
+    # Go deeper, written with the card, so the reader has it without a model
+    # being asked: why it matters, and the two views where there are two.
+    if d.get("why", "").strip():
+        card["why"] = d["why"].strip()
+    views = [v.strip() for v in d.get("views") or [] if v.strip()]
+    if kind != "debate" and len(views) == 2:
+        card["views"] = views
     if d["steps"] and kind in ("number", "estimate"):
         card["steps"] = [s.strip() for s in d["steps"] if s.strip()]
     card["source"] = d["source"].strip()
@@ -1215,7 +1224,7 @@ def canned(brief_text: str) -> Draft:
         question=f"Which {picked[0]} {picked[1]} {picked[2]} {picked[3]} {picked[4]} {picked[5]} was tried?",
         answer=" ".join(["The plumbing handed it a canned card, and the gate read it the same way it reads a real one:"] + ["word"] * 22) + ".",
         move=f"A canned card proves the pipes, never the water {stamp}.",
-        trap="", hint="", simply="", counterpoint="", steps=[], options=[], correct=0,
+        trap="", hint="", simply="", counterpoint="", why="", views=[], steps=[], options=[], correct=0,
         value=0, unit="", tolerance=0, withinFactor=0, sides=[],
         source="The plumbing test", reference=f"https://example{stamp}.org/plumbing/2026",
         source_kind="arithmetic" if topic == "thinking" else "institution", also=[],
