@@ -998,7 +998,11 @@ class _SubjectRow extends StatelessWidget {
                         const SizedBox(width: 8),
                       ],
                       Text(
-                        subject?.name ?? context.l10n.all,
+                        // In the reader's language: the name is the key,
+                        // never the label.
+                        subject == null
+                            ? context.l10n.all
+                            : context.l10n.subjectOf(subject.name),
                         style: AppText.body(
                           size: 12.5,
                           weight: FontWeight.w600,
