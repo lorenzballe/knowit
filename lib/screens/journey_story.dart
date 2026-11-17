@@ -382,8 +382,7 @@ Map<String, Object?> coachStats(BuildContext context, AppState app) {
   final List<String> missed = <String>{
     for (final Judgement j in app.judgements)
       if (!j.correct && (j.on ?? '').compareTo(now) >= 0)
-        if (pillById(j.pillId ?? '') case final Pill p
-            when p.principle.isReal)
+        if (pillById(j.pillId ?? '') case final Pill p when p.principle.isReal)
           p.principle.label,
   }.take(5).toList();
   return {
@@ -399,6 +398,7 @@ Map<String, Object?> coachStats(BuildContext context, AppState app) {
         .where((v) => v == Reaction.changed.key)
         .length,
     'level': rungName(context, app.standing.rung),
+    if (Goal.of(app.goal) case final Goal goal) 'goal': goalName(l, goal),
   };
 }
 
@@ -493,11 +493,7 @@ class _CoachState extends State<_Coach> {
         (_, AskAnswer(:final text)) => Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              Icons.auto_awesome_rounded,
-              size: 18,
-              color: _pink(context),
-            ),
+            Icon(Icons.auto_awesome_rounded, size: 18, color: _pink(context)),
             const SizedBox(width: 10),
             Expanded(
               child: Text(

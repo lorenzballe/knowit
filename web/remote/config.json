@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "hash": "42f90227956aa818",
+ "hash": "33579b5152560a53",
  "app": {
   "gate": null,
   "flags": {},
@@ -1827,6 +1827,40 @@
      "ja": "今日のニュースと、その理由。",
      "ko": "오늘의 이야기와 그 이유.",
      "zh": "今天的新闻，以及背后的原因。"
+    }
+   },
+   {
+    "id": "goal",
+    "block": "goal",
+    "title": {
+     "en": "What do you want to get better at?",
+     "it": "Su cosa vuoi migliorare?",
+     "de": "Worin willst du besser werden?",
+     "es": "¿En qué quieres mejorar?",
+     "fr": "Dans quoi veux-tu progresser ?",
+     "pt": "Em que queres melhorar?",
+     "nl": "Waarin wil je beter worden?",
+     "pl": "W czym chcesz być lepszy?",
+     "ru": "В чём ты хочешь стать лучше?",
+     "tr": "Neyde daha iyi olmak istersin?",
+     "ja": "何がうまくなりたい？",
+     "ko": "무엇을 더 잘하고 싶나요?",
+     "zh": "你想在哪方面变得更好？"
+    },
+    "subtitle": {
+     "en": "Pick one: Explore and your coach will lean that way.",
+     "it": "Scegline uno: Esplora e il tuo coach andranno in quella direzione.",
+     "de": "Wähle eins: Entdecken und dein Coach richten sich danach.",
+     "es": "Elige uno: Explorar y tu coach irán en esa dirección.",
+     "fr": "Choisis-en un : Explorer et ton coach iront dans ce sens.",
+     "pt": "Escolhe um: o Explorar e o teu coach vão nessa direção.",
+     "nl": "Kies er één: Ontdek en je coach gaan die kant op.",
+     "pl": "Wybierz jeden: Odkrywaj i twój coach pójdą w tę stronę.",
+     "ru": "Выбери одно: Обзор и твой коуч подстроятся под это.",
+     "tr": "Birini seç: Keşfet ve koçun o yöne yönelecek.",
+     "ja": "ひとつ選んでください。「探す」とコーチがその方向に合わせます。",
+     "ko": "하나를 고르세요. 탐색과 코치가 그쪽으로 맞춰 줘요.",
+     "zh": "选一个：探索页和你的教练会朝这个方向调整。"
     }
    },
    {

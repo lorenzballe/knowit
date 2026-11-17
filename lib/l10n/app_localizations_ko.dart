@@ -4839,6 +4839,41 @@ class AppLocalizationsKo extends AppLocalizations {
   String get newsRead => '읽음';
 
   @override
+  String goalShelf(String goal) {
+    return '나의 목표: $goal';
+  }
+
+  @override
+  String get goalShelfLine => '매일 새로운 카드.';
+
+  @override
+  String get goalChange => '변경';
+
+  @override
+  String get goalDecide => '더 잘 결정하기';
+
+  @override
+  String get goalPeople => '사람들과 대화하기';
+
+  @override
+  String get goalBusiness => '창업하기';
+
+  @override
+  String get goalMoney => '돈 관리하기';
+
+  @override
+  String get goalNonsense => '헛소리 가려내기';
+
+  @override
+  String get goalHealth => '잘 살기';
+
+  @override
+  String get goalCulture => '교양';
+
+  @override
+  String get goalWorld => '세상 이해하기';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

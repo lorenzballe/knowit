@@ -9,6 +9,7 @@ import '../explore_block.dart';
 import 'core/books_block.dart';
 import 'core/card_blocks.dart';
 import 'core/feed_block.dart';
+import 'core/goal_block.dart';
 import 'core/like_saved_block.dart';
 import 'core/maths_daily_block.dart';
 import 'core/news_block.dart';
@@ -33,4 +34,5 @@ const List<ExploreBlock> blocks = [
   BooksBlock(),
   MathsDailyBlock(),
   NewsBlock(),
+  GoalBlock(),
 ];

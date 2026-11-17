@@ -4817,6 +4817,41 @@ class AppLocalizationsZh extends AppLocalizations {
   String get newsRead => '已读';
 
   @override
+  String goalShelf(String goal) {
+    return '为了你的目标：$goal';
+  }
+
+  @override
+  String get goalShelfLine => '每天都有新卡片。';
+
+  @override
+  String get goalChange => '更改';
+
+  @override
+  String get goalDecide => '更好地做决定';
+
+  @override
+  String get goalPeople => '与人交流';
+
+  @override
+  String get goalBusiness => '创业';
+
+  @override
+  String get goalMoney => '理财';
+
+  @override
+  String get goalNonsense => '识破胡说';
+
+  @override
+  String get goalHealth => '好好生活';
+
+  @override
+  String get goalCulture => '常识';
+
+  @override
+  String get goalWorld => '理解世界';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

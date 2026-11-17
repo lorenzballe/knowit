@@ -5053,6 +5053,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String get newsRead => 'Gelesen';
 
   @override
+  String goalShelf(String goal) {
+    return 'Für dein Ziel: $goal';
+  }
+
+  @override
+  String get goalShelfLine => 'Jeden Tag neue Karten dafür.';
+
+  @override
+  String get goalChange => 'Ändern';
+
+  @override
+  String get goalDecide => 'Besser entscheiden';
+
+  @override
+  String get goalPeople => 'Mit Menschen reden';
+
+  @override
+  String get goalBusiness => 'Ein Unternehmen gründen';
+
+  @override
+  String get goalMoney => 'Mit Geld umgehen';
+
+  @override
+  String get goalNonsense => 'Unsinn erkennen';
+
+  @override
+  String get goalHealth => 'Gut leben';
+
+  @override
+  String get goalCulture => 'Allgemeinbildung';
+
+  @override
+  String get goalWorld => 'Die Welt verstehen';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

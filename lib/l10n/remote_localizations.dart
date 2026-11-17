@@ -4886,6 +4886,42 @@ class RemoteLocalizations extends AppLocalizations {
   String get newsRead => _words.text('newsRead') ?? _base.newsRead;
 
   @override
+  String goalShelf(String goal) =>
+      _words.format('goalShelf', localeName, {'goal': goal}) ??
+      _base.goalShelf(goal);
+
+  @override
+  String get goalShelfLine =>
+      _words.text('goalShelfLine') ?? _base.goalShelfLine;
+
+  @override
+  String get goalChange => _words.text('goalChange') ?? _base.goalChange;
+
+  @override
+  String get goalDecide => _words.text('goalDecide') ?? _base.goalDecide;
+
+  @override
+  String get goalPeople => _words.text('goalPeople') ?? _base.goalPeople;
+
+  @override
+  String get goalBusiness => _words.text('goalBusiness') ?? _base.goalBusiness;
+
+  @override
+  String get goalMoney => _words.text('goalMoney') ?? _base.goalMoney;
+
+  @override
+  String get goalNonsense => _words.text('goalNonsense') ?? _base.goalNonsense;
+
+  @override
+  String get goalHealth => _words.text('goalHealth') ?? _base.goalHealth;
+
+  @override
+  String get goalCulture => _words.text('goalCulture') ?? _base.goalCulture;
+
+  @override
+  String get goalWorld => _words.text('goalWorld') ?? _base.goalWorld;
+
+  @override
   String mathsDailyStreak(int n) =>
       _words.format('mathsDailyStreak', localeName, {'n': n}) ??
       _base.mathsDailyStreak(n);

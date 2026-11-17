@@ -5356,6 +5356,55 @@
  "@newsRead": {
   "description": "Explore, the news, reasoned: on a story already read, after a tick, in place of the button."
  },
+ "goalShelf": "For your goal: {goal}",
+ "@goalShelf": {
+  "description": "Explore, the reader's goal: the name of its shelf, with the goal the reader picked.",
+  "placeholders": {
+   "goal": {
+    "type": "String"
+   }
+  }
+ },
+ "goalShelfLine": "New cards for it every day.",
+ "@goalShelfLine": {
+  "description": "Explore, the reader's goal: the line under the shelf's name."
+ },
+ "goalChange": "Change",
+ "@goalChange": {
+  "description": "Explore, the reader's goal: beside the shelf's name, asks again what they want to get better at."
+ },
+ "goalDecide": "Deciding better",
+ "@goalDecide": {
+  "description": "A goal the reader can pick on Explore: making better decisions."
+ },
+ "goalPeople": "Talking with people",
+ "@goalPeople": {
+  "description": "A goal the reader can pick on Explore: being better at talking with and understanding people."
+ },
+ "goalBusiness": "Starting a business",
+ "@goalBusiness": {
+  "description": "A goal the reader can pick on Explore: entrepreneurship, starting and running a business."
+ },
+ "goalMoney": "Handling money",
+ "@goalMoney": {
+  "description": "A goal the reader can pick on Explore: handling money well."
+ },
+ "goalNonsense": "Spotting nonsense",
+ "@goalNonsense": {
+  "description": "A goal the reader can pick on Explore: not being fooled by bad claims and statistics."
+ },
+ "goalHealth": "Living well",
+ "@goalHealth": {
+  "description": "A goal the reader can pick on Explore: health, body and food."
+ },
+ "goalCulture": "General knowledge",
+ "@goalCulture": {
+  "description": "A goal the reader can pick on Explore: general culture, history and the arts."
+ },
+ "goalWorld": "Understanding the world",
+ "@goalWorld": {
+  "description": "A goal the reader can pick on Explore: understanding how the world works, science and nature."
+ },
  "mathsDailyStreak": "{n, plural, =1{1 day in a row} other{{n} days in a row}}",
  "@mathsDailyStreak": {
   "description": "Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.",
