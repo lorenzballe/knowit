@@ -4623,6 +4623,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get journeyChapterMemory => '你记住的';
 
   @override
+  String get journeyChapterCoach => '你的教练';
+
+  @override
+  String get coachTeaser => '每周，教练会就你的思考方式写一段话：哪里做得好，要留意的陷阱，接下来试试什么。';
+
+  @override
+  String get coachRead => '阅读本周的话';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -4785,6 +4794,37 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deeperQuizWrong => '不太对。';
+
+  @override
+  String get mathsDailySolve => '去解题';
+
+  @override
+  String get mathsDailySolved => '已解出';
+
+  @override
+  String get mathsDailyMissed => '这次没答对';
+
+  @override
+  String get mathsDailyTomorrow => '明天还有新题';
+
+  @override
+  String get mathsDailyAnother => '再来一道类似的';
+
+  @override
+  String get newsOpen => '为什么？';
+
+  @override
+  String get newsRead => '已读';
+
+  @override
+  String mathsDailyStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '连续$n天',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get deeperYourTake => '你的想法，分析一下';

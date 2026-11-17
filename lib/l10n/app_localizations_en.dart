@@ -4808,6 +4808,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journeyChapterMemory => 'What stays with you';
 
   @override
+  String get journeyChapterCoach => 'Your coach';
+
+  @override
+  String get coachTeaser =>
+      'Every week, a note from your coach on how you reason: what went well, the trap to watch, what to try next.';
+
+  @override
+  String get coachRead => 'Read this week\'s note';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -4975,6 +4985,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deeperQuizWrong => 'Not quite.';
+
+  @override
+  String get mathsDailySolve => 'Solve it';
+
+  @override
+  String get mathsDailySolved => 'Solved';
+
+  @override
+  String get mathsDailyMissed => 'Not this time';
+
+  @override
+  String get mathsDailyTomorrow => 'A new one tomorrow';
+
+  @override
+  String get mathsDailyAnother => 'Another like this';
+
+  @override
+  String get newsOpen => 'Why?';
+
+  @override
+  String get newsRead => 'Read';
+
+  @override
+  String mathsDailyStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n days in a row',
+      one: '1 day in a row',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get deeperYourTake => 'Your take, looked at';

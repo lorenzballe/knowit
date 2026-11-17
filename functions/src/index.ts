@@ -44,7 +44,9 @@ import { logger } from 'firebase-functions';
 
 import { ALL_PER_DAY, MODEL, MONTH_BUDGET_USD, PER_DAY, SHARED, answer as answerAsk, cacheKey, readAsk } from './ask.js';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
+import { coachNote, readCoach } from './coach.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
+import { NEWS_MODEL, NEWS_MONTH_BUDGET_USD, askModel, fetchText, makePaper } from './news.js';
 import { search as searchBank } from './search.js';
 import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, pruneReader, readPlace, readReader, serveDay, serveExplore } from './serve.js';
 import { currentWithheld, runScorecard, withheld } from './scorecard.js';
@@ -144,6 +146,113 @@ export const askCard = onCall(
     }
   },
 );
+
+// ── The coach's note, for Astute+ ────────────────────────────────────────
+
+export const coachWeek = onCall(
+  { enforceAppCheck: false, secrets: [anthropicKey], maxInstances: 5, timeoutSeconds: 60 },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const ask = readCoach(request.data);
+    if (!ask) throw new HttpsError('invalid-argument', 'A week, and its numbers.');
+    const presence = await db.collection('presence').doc(uid).get();
+    if (presence.get('plus') !== true) throw new HttpsError('permission-denied', 'Astute+ only.');
+    // Written once a week, then given again as it was.
+    const kept = db.collection('readers').doc(uid).collection('coach').doc(`${ask.week}~${ask.lang}`);
+    const before = (await kept.get()).get('text');
+    if (typeof before === 'string' && before) return { text: before };
+    const day = today(Date.now());
+    const mine = db.collection('readers').doc(uid).collection('ai').doc(day);
+    const everyone = db.collection('ai').doc(day);
+    const month = db.collection('ai').doc(`month-${day.slice(0, 7)}`);
+    const allowed = await db.runTransaction(async (t) => {
+      const [m, e, spent] = await Promise.all([t.get(mine), t.get(everyone), t.get(month)]);
+      if ((spent.get('usd') ?? 0) >= MONTH_BUDGET_USD) return false;
+      if ((m.get('n') ?? 0) >= PER_DAY || (e.get('n') ?? 0) >= ALL_PER_DAY) return false;
+      t.set(mine, { n: FieldValue.increment(1) }, { merge: true });
+      t.set(everyone, { n: FieldValue.increment(1) }, { merge: true });
+      return true;
+    });
+    if (!allowed) throw new HttpsError('resource-exhausted', 'Enough for today.');
+    try {
+      const out = await coachNote(new Anthropic({ apiKey: anthropicKey.value() }), ask);
+      await month.set({ usd: FieldValue.increment(out.cost), n: FieldValue.increment(1) }, { merge: true });
+      logger.info('coached', { week: ask.week, lang: ask.lang, answered: 'text' in out, cost: out.cost });
+      if ('text' in out) {
+        await kept.set({ text: out.text, model: MODEL, at: FieldValue.serverTimestamp() });
+        return { text: out.text };
+      }
+      return { none: out.none };
+    } catch (e) {
+      logger.error('coach failed', { week: ask.week, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
+  },
+);
+
+// ── The news, reasoned ───────────────────────────────────────────────────
+
+/** The day and the hour in Rome, where most readers are: the paper is that
+ * morning's. */
+function romeNow(nowMs: number): { day: string; hour: number } {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Rome',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(new Date(nowMs));
+  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? '';
+  return { day: `${part('year')}-${part('month')}-${part('day')}`, hour: Number(part('hour')) };
+}
+
+// Every hour from six in the morning, Rome time, until the day has its paper
+// (news.ts): the first run after six makes it, and a run that fails or
+// finds nothing to keep is tried again the next hour, three times at most.
+// A day's paper is made once, whatever the hour.
+export const newsMorning = onSchedule(
+  { schedule: 'every 60 minutes', timeoutSeconds: 540, memory: '512MiB', maxInstances: 1, secrets: [anthropicKey] },
+  async () => {
+    const now = Date.now();
+    const { day, hour } = romeNow(now);
+    if (hour < 6) return;
+    const paper = db.collection('news').doc(day);
+    const before = await paper.get();
+    const made = before.get('cards');
+    if ((Array.isArray(made) && made.length > 0) || (before.get('tries') ?? 0) >= 3) return;
+    const month = db.collection('ai').doc(`news-${day.slice(0, 7)}`);
+    if (((await month.get()).get('usd') ?? 0) >= NEWS_MONTH_BUDGET_USD) {
+      logger.warn('news: the month is spent', { day });
+      return;
+    }
+    await paper.set({ date: day, tries: FieldValue.increment(1) }, { merge: true });
+    try {
+      const out = await makePaper(askModel(new Anthropic({ apiKey: anthropicKey.value() })), fetchText, now, day);
+      await month.set({ usd: FieldValue.increment(out.cost), n: FieldValue.increment(1) }, { merge: true });
+      await paper.set(
+        { cards: out.cards, model: NEWS_MODEL, cost: FieldValue.increment(out.cost), log: out.log, at: FieldValue.serverTimestamp() },
+        { merge: true },
+      );
+      logger.info('news', { day, cards: out.cards.length, cost: out.cost, log: out.log });
+    } catch (e) {
+      logger.error('news failed', { day, error: String(e) });
+    }
+  },
+);
+
+/** The newest paper with something in it, for the phone: its day and its
+ * cards, in the bank's own shape. Open to every reader. */
+export const newsToday = onCall({ enforceAppCheck: false, maxInstances: 10, memory: '256MiB' }, async () => {
+  const recent = await db.collection('news').orderBy('date', 'desc').limit(4).get();
+  const doc = recent.docs.find((d) => {
+    const cards = d.get('cards');
+    return Array.isArray(cards) && cards.length > 0;
+  });
+  if (!doc) return { date: null, cards: [] };
+  return { date: doc.get('date') ?? null, cards: doc.get('cards') };
+});
 
 // ── The pool, asked a question ───────────────────────────────────────────
 

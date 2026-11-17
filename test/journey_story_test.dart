@@ -6,10 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/debug_flags.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/sync/card_ask.dart';
+import 'package:astuto/sync/coach.dart';
 import 'package:astuto/theme.dart';
 
 Future<AppState> _app(Map<String, Object> prefs) async {
@@ -103,6 +106,51 @@ void main() {
       'knowit.judgements': jsonEncode(_said(topic, 6, sure: 50, right: 3)),
     });
     expect(overconfidentIn(calibrated), isNull);
+  });
+
+  testWidgets('with the answers by Claude on, the coach is the second '
+      'chapter: on Astute+ the week\'s note a tap away, sent as numbers; on '
+      'the free plan, what it is behind the lock', (tester) async {
+    tester.view.physicalSize = const Size(402, 9000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    debugToolsOn = true;
+    addTearDown(() => debugToolsOn = false);
+    Coach.kept.clear();
+    Map<String, Object?>? sent;
+    Coach.call = (week, language, stats) async {
+      sent = stats;
+      return const AskAnswer('A good week: 8 in 10 right when sure.');
+    };
+    addTearDown(
+      () => Coach.call = (w, l, s) async => const AskNone(AskWhyNot.later),
+    );
+    Future<void> show(AppState app) => tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        home: JourneyScreen(app: app, onBack: () {}),
+      ),
+    );
+    final plus = await _app({
+      'knowit.plus': true,
+      'knowit.judgements': jsonEncode(_said(topic, 6, sure: 90, right: 5)),
+    });
+    await show(plus);
+    await tester.pump();
+    expect(find.text('2  ·  YOUR COACH'), findsOneWidget);
+    expect(find.text('3  ·  PRACTISE'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('journey-coach-ask')));
+    await tester.pumpAndSettle();
+    expect(find.text('A good week: 8 in 10 right when sure.'), findsOneWidget);
+    expect(sent?['sure'], 8);
+    expect(sent!.keys, containsAll(['read', 'days', 'streak', 'missed']));
+
+    final free = await _app({});
+    await show(free);
+    await tester.pump();
+    expect(find.byKey(const ValueKey('journey-coach-locked')), findsOneWidget);
   });
 
   testWidgets('the journey reads in eight chapters: the week and what to '

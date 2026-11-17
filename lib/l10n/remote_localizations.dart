@@ -4717,6 +4717,16 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('journeyChapterMemory') ?? _base.journeyChapterMemory;
 
   @override
+  String get journeyChapterCoach =>
+      _words.text('journeyChapterCoach') ?? _base.journeyChapterCoach;
+
+  @override
+  String get coachTeaser => _words.text('coachTeaser') ?? _base.coachTeaser;
+
+  @override
+  String get coachRead => _words.text('coachRead') ?? _base.coachRead;
+
+  @override
   String storyHeadlineSure(int n) =>
       _words.format('storyHeadlineSure', localeName, {'n': n}) ??
       _base.storyHeadlineSure(n);
@@ -4848,6 +4858,37 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get deeperQuizWrong =>
       _words.text('deeperQuizWrong') ?? _base.deeperQuizWrong;
+
+  @override
+  String get mathsDailySolve =>
+      _words.text('mathsDailySolve') ?? _base.mathsDailySolve;
+
+  @override
+  String get mathsDailySolved =>
+      _words.text('mathsDailySolved') ?? _base.mathsDailySolved;
+
+  @override
+  String get mathsDailyMissed =>
+      _words.text('mathsDailyMissed') ?? _base.mathsDailyMissed;
+
+  @override
+  String get mathsDailyTomorrow =>
+      _words.text('mathsDailyTomorrow') ?? _base.mathsDailyTomorrow;
+
+  @override
+  String get mathsDailyAnother =>
+      _words.text('mathsDailyAnother') ?? _base.mathsDailyAnother;
+
+  @override
+  String get newsOpen => _words.text('newsOpen') ?? _base.newsOpen;
+
+  @override
+  String get newsRead => _words.text('newsRead') ?? _base.newsRead;
+
+  @override
+  String mathsDailyStreak(int n) =>
+      _words.format('mathsDailyStreak', localeName, {'n': n}) ??
+      _base.mathsDailyStreak(n);
 
   @override
   String get deeperYourTake =>

@@ -53,9 +53,31 @@ jobs:
           # here, saying why, rather than halfway through.
           case "${{ inputs.only }}" in *functions*)
             test -n "$ANTHROPIC" || { echo "ANTHROPIC_API_KEY is not set: add it under Settings → Secrets and variables → Actions"; exit 1; }
-            umask 077
-            printf '%s' "$ANTHROPIC" > "$RUNNER_TEMP/ak"
-            npx --yes firebase-tools@15 functions:secrets:set ANTHROPIC_API_KEY --data-file "$RUNNER_TEMP/ak" --project astuto-3d398 --non-interactive --force
-            rm -f "$RUNNER_TEMP/ak"
+            # Only a key the API takes is kept: one it turns away (revoked,
+            # mistyped, an account out of credit) would be kept all the same,
+            # and every answer by Claude would fail. One question of one
+            # token says which; turned away, the key the functions already
+            # have stays, and the summary says what to do.
+            reply="$(curl -s -w '\n%{http_code}' https://api.anthropic.com/v1/messages \
+              -H "x-api-key: $ANTHROPIC" -H 'anthropic-version: 2023-06-01' -H 'content-type: application/json' \
+              -d '{"model":"claude-haiku-5-5","max_tokens":1,"messages":[{"role":"user","content":"ok"}]}' || true)"
+            code="$(printf '%s' "$reply" | tail -n 1)"
+            if [ "$code" = "200" ]; then
+              echo "The Anthropic API takes the key."
+              umask 077
+              printf '%s' "$ANTHROPIC" > "$RUNNER_TEMP/ak"
+              npx --yes firebase-tools@15 functions:secrets:set ANTHROPIC_API_KEY --data-file "$RUNNER_TEMP/ak" --project astuto-3d398 --non-interactive --force
+              rm -f "$RUNNER_TEMP/ak"
+            else
+              why="$(printf '%s' "$reply" | sed '$d' | python3 -c 'import sys, json; print(json.load(sys.stdin).get("error", {}).get("message", ""))' 2>/dev/null || true)"
+              echo "::warning::The Anthropic API turned the ANTHROPIC_API_KEY secret away (HTTP $code: $why). The key the functions already have is kept."
+              {
+                echo "### The Anthropic API turned the key away (HTTP $code)"
+                echo
+                echo "$why"
+                echo
+                echo "Make a new key at console.anthropic.com → API keys, and put it in GitHub under Settings → Environments → production → ANTHROPIC_API_KEY, then deploy again. Until then the functions keep the key they have."
+              } >> "$GITHUB_STEP_SUMMARY"
+            fi
           ;; esac
           npx --yes firebase-tools@15 deploy --only "${{ inputs.only }}" --project astuto-3d398 --non-interactive --force

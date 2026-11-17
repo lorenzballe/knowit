@@ -519,6 +519,8 @@ class _AstutoRootState extends State<AstutoRoot> {
         unawaited(Subscription.instance.reloadOffering());
         // And the server, for whatever it now says about the app.
         if (_app.ready) unawaited(_app.refreshRemote());
+        // And the morning's paper, if it is time to ask again.
+        if (_app.ready) unawaited(_app.refreshNews());
         // Where the reader lives, read again once a week for a reader who
         // allowed it, and never with a prompt.
         if (_app.ready) _app.refreshPlaceIfDue();

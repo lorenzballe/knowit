@@ -4644,6 +4644,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get journeyChapterMemory => '기억에 남은 것';
 
   @override
+  String get journeyChapterCoach => '나의 코치';
+
+  @override
+  String get coachTeaser =>
+      '매주 코치가 당신의 생각 방식에 대해 메모를 남겨요. 잘한 점, 조심할 함정, 다음에 해볼 것.';
+
+  @override
+  String get coachRead => '이번 주 메모 읽기';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -4806,6 +4816,37 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deeperQuizWrong => '조금 아쉬워요.';
+
+  @override
+  String get mathsDailySolve => '풀어 보기';
+
+  @override
+  String get mathsDailySolved => '해결';
+
+  @override
+  String get mathsDailyMissed => '이번엔 아쉽게도';
+
+  @override
+  String get mathsDailyTomorrow => '내일 새 문제';
+
+  @override
+  String get mathsDailyAnother => '비슷한 문제 하나 더';
+
+  @override
+  String get newsOpen => '왜?';
+
+  @override
+  String get newsRead => '읽음';
+
+  @override
+  String mathsDailyStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 연속',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get deeperYourTake => '내 생각, 분석';

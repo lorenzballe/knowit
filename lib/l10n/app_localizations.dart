@@ -6948,6 +6948,24 @@ abstract class AppLocalizations {
   /// **'What stays with you'**
   String get journeyChapterMemory;
 
+  /// A chapter of Your journey, in small capitals, on Astute+ with the answers by Claude: the coach's note on the week.
+  ///
+  /// In en, this message translates to:
+  /// **'Your coach'**
+  String get journeyChapterCoach;
+
+  /// Your journey, the coach's chapter: what the note is, before it is asked for, and behind the lock on the free plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Every week, a note from your coach on how you reason: what went well, the trap to watch, what to try next.'**
+  String get coachTeaser;
+
+  /// Your journey, the coach's chapter: the button that asks for this week's note.
+  ///
+  /// In en, this message translates to:
+  /// **'Read this week\'s note'**
+  String get coachRead;
+
   /// Your journey as a story (the version on trial under the tiles): storyHeadlineSure
   ///
   /// In en, this message translates to:
@@ -7127,6 +7145,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not quite.'**
   String get deeperQuizWrong;
+
+  /// Explore, on the Maths page: the button on the problem of the day that opens it to answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Solve it'**
+  String get mathsDailySolve;
+
+  /// Explore, the problem of the day: said once the reader answered today's problem right, and in the result they can send.
+  ///
+  /// In en, this message translates to:
+  /// **'Solved'**
+  String get mathsDailySolved;
+
+  /// Explore, the problem of the day: said once the reader answered today's problem wrong, and in the result they can send.
+  ///
+  /// In en, this message translates to:
+  /// **'Not this time'**
+  String get mathsDailyMissed;
+
+  /// Explore, the problem of the day: under the result, that another problem comes tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'A new one tomorrow'**
+  String get mathsDailyTomorrow;
+
+  /// Explore, the problem of the day, once answered: on Astute+ with the answers by Claude, opens Go deeper to ask for a new problem on the same idea.
+  ///
+  /// In en, this message translates to:
+  /// **'Another like this'**
+  String get mathsDailyAnother;
+
+  /// Explore, the news, reasoned: the button on a story's clipping that opens its card, whose next step is why it happened.
+  ///
+  /// In en, this message translates to:
+  /// **'Why?'**
+  String get newsOpen;
+
+  /// Explore, the news, reasoned: on a story already read, after a tick, in place of the button.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get newsRead;
+
+  /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day in a row} other{{n} days in a row}}'**
+  String mathsDailyStreak(int n);
 
   /// Go deeper, the sheet a tap on a card's source opens: deeperYourTake
   ///

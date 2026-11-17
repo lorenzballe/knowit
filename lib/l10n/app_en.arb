@@ -5117,6 +5117,18 @@
  "@journeyChapterMemory": {
   "description": "A chapter of Your journey, in small capitals: how many cards the reader still remembers after days and weeks."
  },
+ "journeyChapterCoach": "Your coach",
+ "@journeyChapterCoach": {
+  "description": "A chapter of Your journey, in small capitals, on Astute+ with the answers by Claude: the coach's note on the week."
+ },
+ "coachTeaser": "Every week, a note from your coach on how you reason: what went well, the trap to watch, what to try next.",
+ "@coachTeaser": {
+  "description": "Your journey, the coach's chapter: what the note is, before it is asked for, and behind the lock on the free plan."
+ },
+ "coachRead": "Read this week's note",
+ "@coachRead": {
+  "description": "Your journey, the coach's chapter: the button that asks for this week's note."
+ },
  "storyHeadlineSure": "{n, plural, =1{In the answers you gave with confidence, you were right 1 time in 10.} other{In the answers you gave with confidence, you were right {n} times in 10.}}",
  "@storyHeadlineSure": {
   "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineSure",
@@ -5315,6 +5327,43 @@
  "deeperQuizWrong": "Not quite.",
  "@deeperQuizWrong": {
   "description": "Go deeper: said above the explanation when the reader picked a wrong option of the new question."
+ },
+ "mathsDailySolve": "Solve it",
+ "@mathsDailySolve": {
+  "description": "Explore, on the Maths page: the button on the problem of the day that opens it to answer."
+ },
+ "mathsDailySolved": "Solved",
+ "@mathsDailySolved": {
+  "description": "Explore, the problem of the day: said once the reader answered today's problem right, and in the result they can send."
+ },
+ "mathsDailyMissed": "Not this time",
+ "@mathsDailyMissed": {
+  "description": "Explore, the problem of the day: said once the reader answered today's problem wrong, and in the result they can send."
+ },
+ "mathsDailyTomorrow": "A new one tomorrow",
+ "@mathsDailyTomorrow": {
+  "description": "Explore, the problem of the day: under the result, that another problem comes tomorrow."
+ },
+ "mathsDailyAnother": "Another like this",
+ "@mathsDailyAnother": {
+  "description": "Explore, the problem of the day, once answered: on Astute+ with the answers by Claude, opens Go deeper to ask for a new problem on the same idea."
+ },
+ "newsOpen": "Why?",
+ "@newsOpen": {
+  "description": "Explore, the news, reasoned: the button on a story's clipping that opens its card, whose next step is why it happened."
+ },
+ "newsRead": "Read",
+ "@newsRead": {
+  "description": "Explore, the news, reasoned: on a story already read, after a tick, in place of the button."
+ },
+ "mathsDailyStreak": "{n, plural, =1{1 day in a row} other{{n} days in a row}}",
+ "@mathsDailyStreak": {
+  "description": "Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
  },
  "deeperYourTake": "Your take, looked at",
  "@deeperYourTake": {
