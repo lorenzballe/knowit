@@ -4811,6 +4811,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mathsDailyAnother => '再来一道类似的';
 
   @override
+  String get newsOpen => '为什么？';
+
+  @override
+  String get newsRead => '已读';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

@@ -24,6 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/pill.dart';
 import 'card_json.dart';
+import 'news_paper.dart';
 import 'embedded_bank.dart';
 
 import '../analytics.dart';
@@ -235,9 +236,11 @@ class PillBank {
   /// nowhere yet.
   static String get built => _bundle.built;
 
-  /// A card by id, retired or not.
+  /// A card by id, retired or not; or one of the morning's paper
+  /// (lib/data/news_paper.dart), while the paper holds it.
   static Pill? byId(String id) =>
-      (_index ??= {for (final p in _bundle.cards) p.id: p})[id];
+      (_index ??= {for (final p in _bundle.cards) p.id: p})[id] ??
+      NewsPaper.byId(id);
 
   /// The bundle in use. The calendar keys its cache on this, so a swap
   /// re-deals the questions of the day from what the new bundle froze.

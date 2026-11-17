@@ -4950,6 +4950,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get mathsDailyAnother => 'Buna benzer bir tane daha';
 
   @override
+  String get newsOpen => 'Neden?';
+
+  @override
+  String get newsRead => 'Okundu';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

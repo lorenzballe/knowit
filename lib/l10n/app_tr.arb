@@ -1176,6 +1176,8 @@
   "mathsDailyMissed": "Bu sefer olmadı",
   "mathsDailyTomorrow": "Yarın yenisi",
   "mathsDailyAnother": "Buna benzer bir tane daha",
+  "newsOpen": "Neden?",
+  "newsRead": "Okundu",
   "mathsDailyStreak": "{n, plural, other{{n} gün üst üste}}",
   "deeperYourTake": "Fikrin, incelendi",
   "deeperYourTakeHint": "Ne düşündüğünü yaz…",

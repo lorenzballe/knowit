@@ -1176,6 +1176,8 @@
   "mathsDailyMissed": "Deze keer niet",
   "mathsDailyTomorrow": "Morgen een nieuwe",
   "mathsDailyAnother": "Nog een zoals deze",
+  "newsOpen": "Waarom?",
+  "newsRead": "Gelezen",
   "mathsDailyStreak": "{n, plural, =1{1 dag op rij} other{{n} dagen op rij}}",
   "deeperYourTake": "Jouw idee, bekeken",
   "deeperYourTakeHint": "Schrijf wat je ervan vindt…",

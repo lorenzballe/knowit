@@ -5057,6 +5057,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mathsDailyAnother => 'Un autre comme celui-ci';
 
   @override
+  String get newsOpen => 'Pourquoi ?';
+
+  @override
+  String get newsRead => 'Lue';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

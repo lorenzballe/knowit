@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "4ece6d70e36c5ba0",
+ "hash": "42f90227956aa818",
  "app": {
   "gate": null,
   "flags": {},
@@ -1799,6 +1799,40 @@ const String kEmbeddedRemote = r'''
      "ja": "毎日新しい問題。みんな同じ問題です。",
      "ko": "매일 새로운 문제, 모두에게 같은 문제.",
      "zh": "每天一道新题，人人相同。"
+    }
+   },
+   {
+    "id": "news-today",
+    "block": "news-today",
+    "title": {
+     "en": "The news, reasoned",
+     "it": "Notizie ragionate",
+     "de": "Nachrichten, durchdacht",
+     "es": "Noticias razonadas",
+     "fr": "L'actualité, raisonnée",
+     "pt": "Notícias pensadas",
+     "nl": "Het nieuws, doordacht",
+     "pl": "Wiadomości z namysłem",
+     "ru": "Новости с объяснением",
+     "tr": "Düşünülmüş haberler",
+     "ja": "考えるニュース",
+     "ko": "생각하는 뉴스",
+     "zh": "讲道理的新闻"
+    },
+    "subtitle": {
+     "en": "Today's stories, and the why behind each.",
+     "it": "Le storie di oggi, e il perché di ognuna.",
+     "de": "Die Geschichten von heute und das Warum dahinter.",
+     "es": "Las historias de hoy y el porqué de cada una.",
+     "fr": "Les histoires du jour, et le pourquoi de chacune.",
+     "pt": "As histórias de hoje e o porquê de cada uma.",
+     "nl": "De verhalen van vandaag, en het waarom erachter.",
+     "pl": "Dzisiejsze historie i to, dlaczego się wydarzyły.",
+     "ru": "Сегодняшние истории и то, почему они случились.",
+     "tr": "Bugünün haberleri ve her birinin nedeni.",
+     "ja": "今日のニュースと、その理由。",
+     "ko": "오늘의 이야기와 그 이유.",
+     "zh": "今天的新闻，以及背后的原因。"
     }
    },
    {

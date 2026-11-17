@@ -7176,6 +7176,18 @@ abstract class AppLocalizations {
   /// **'Another like this'**
   String get mathsDailyAnother;
 
+  /// Explore, the news, reasoned: the button on a story's clipping that opens its card, whose next step is why it happened.
+  ///
+  /// In en, this message translates to:
+  /// **'Why?'**
+  String get newsOpen;
+
+  /// Explore, the news, reasoned: on a story already read, after a tick, in place of the button.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get newsRead;
+
   /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.
   ///
   /// In en, this message translates to:

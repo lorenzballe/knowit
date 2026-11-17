@@ -1176,6 +1176,8 @@
   "mathsDailyMissed": "Diesmal nicht",
   "mathsDailyTomorrow": "Morgen ein neues",
   "mathsDailyAnother": "Noch eine wie diese",
+  "newsOpen": "Warum?",
+  "newsRead": "Gelesen",
   "mathsDailyStreak": "{n, plural, =1{1 Tag in Folge} other{{n} Tage in Folge}}",
   "deeperYourTake": "Deine Sicht, geprüft",
   "deeperYourTakeHint": "Schreib, was du darüber denkst…",

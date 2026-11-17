@@ -1176,6 +1176,8 @@
   "mathsDailyMissed": "Не в этот раз",
   "mathsDailyTomorrow": "Завтра будет новая",
   "mathsDailyAnother": "Ещё одну такую",
+  "newsOpen": "Почему?",
+  "newsRead": "Прочитано",
   "mathsDailyStreak": "{n, plural, one{{n} день подряд} few{{n} дня подряд} many{{n} дней подряд} other{{n} дня подряд}}",
   "deeperYourTake": "Твоя мысль под лупой",
   "deeperYourTakeHint": "Напиши, что ты об этом думаешь…",

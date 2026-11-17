@@ -5223,6 +5223,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mathsDailyAnother => 'Ещё одну такую';
 
   @override
+  String get newsOpen => 'Почему?';
+
+  @override
+  String get newsRead => 'Прочитано';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

@@ -4833,6 +4833,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get mathsDailyAnother => '비슷한 문제 하나 더';
 
   @override
+  String get newsOpen => '왜?';
+
+  @override
+  String get newsRead => '읽음';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

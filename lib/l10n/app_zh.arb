@@ -1176,6 +1176,8 @@
   "mathsDailyMissed": "这次没答对",
   "mathsDailyTomorrow": "明天还有新题",
   "mathsDailyAnother": "再来一道类似的",
+  "newsOpen": "为什么？",
+  "newsRead": "已读",
   "mathsDailyStreak": "{n, plural, other{连续{n}天}}",
   "deeperYourTake": "你的想法，分析一下",
   "deeperYourTakeHint": "写下你的看法…",

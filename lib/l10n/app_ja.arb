@@ -1176,6 +1176,8 @@
   "mathsDailyMissed": "今回は残念",
   "mathsDailyTomorrow": "明日また新しい問題",
   "mathsDailyAnother": "似た問題をもう一問",
+  "newsOpen": "なぜ？",
+  "newsRead": "読んだ",
   "mathsDailyStreak": "{n, plural, other{{n}日連続}}",
   "deeperYourTake": "あなたの考えを分析",
   "deeperYourTakeHint": "どう思うか書いてください…",

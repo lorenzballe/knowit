@@ -5348,6 +5348,14 @@
  "@mathsDailyAnother": {
   "description": "Explore, the problem of the day, once answered: on Astute+ with the answers by Claude, opens Go deeper to ask for a new problem on the same idea."
  },
+ "newsOpen": "Why?",
+ "@newsOpen": {
+  "description": "Explore, the news, reasoned: the button on a story's clipping that opens its card, whose next step is why it happened."
+ },
+ "newsRead": "Read",
+ "@newsRead": {
+  "description": "Explore, the news, reasoned: on a story already read, after a tick, in place of the button."
+ },
  "mathsDailyStreak": "{n, plural, =1{1 day in a row} other{{n} days in a row}}",
  "@mathsDailyStreak": {
   "description": "Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.",

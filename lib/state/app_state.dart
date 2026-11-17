@@ -17,6 +17,7 @@ import '../data/daily.dart';
 import '../data/genres.dart';
 import '../data/local_cards.dart';
 import '../data/books.dart';
+import '../data/news_paper.dart';
 import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/reader_profile.dart';
@@ -420,6 +421,7 @@ class AppState extends ChangeNotifier {
     // The newest bank the last run downloaded, before a card is dealt from
     // the one built in. Adopting later, mid-day, would re-deal the table.
     PillBank.restore(_prefs);
+    NewsPaper.restore(_prefs);
     // And the remote document: what the server last said about the app,
     // before anything reads a part of it.
     Remote.restore(_prefs);
@@ -452,6 +454,8 @@ class AppState extends ChangeNotifier {
     unawaited(refreshPlaceIfDue());
     // Nor on the bank: whatever it downloads is for tomorrow's start.
     unawaited(PillBank.refresh(_prefs));
+    // Nor on the morning's paper, which is on Explore the moment it arrives.
+    unawaited(refreshNews());
     // Nor on the server's word about the app, taken up when it arrives.
     unawaited(Remote.refresh(_prefs));
   }
@@ -459,6 +463,14 @@ class AppState extends ChangeNotifier {
   /// Asks the server for a newer remote document (lib/remote/remote.dart):
   /// at every return to the app, never more than twice a minute.
   Future<bool> refreshRemote() => Remote.refresh(_prefs);
+
+  /// Asks for the morning's paper (lib/data/news_paper.dart), at most every
+  /// two hours, and shows a new one the moment it arrives.
+  Future<bool> refreshNews() async {
+    final bool changed = await NewsPaper.refresh(_prefs);
+    if (changed) notifyListeners();
+    return changed;
+  }
 
   /// Who is looking, for the audience of whatever the remote document
   /// aims at somebody: a shelf, a look, a switch.

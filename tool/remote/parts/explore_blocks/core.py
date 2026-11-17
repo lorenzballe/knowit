@@ -413,4 +413,5 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     "books": shelf(),
     # The problem of the day, on the Maths page only: it picks its own.
     "maths-daily": shelf(),
+    "news-today": shelf(),
 }

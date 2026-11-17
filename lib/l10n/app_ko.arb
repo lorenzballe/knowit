@@ -1176,6 +1176,8 @@
   "mathsDailyMissed": "이번엔 아쉽게도",
   "mathsDailyTomorrow": "내일 새 문제",
   "mathsDailyAnother": "비슷한 문제 하나 더",
+  "newsOpen": "왜?",
+  "newsRead": "읽음",
   "mathsDailyStreak": "{n, plural, other{{n}일 연속}}",
   "deeperYourTake": "내 생각, 분석",
   "deeperYourTakeHint": "어떻게 생각하는지 적어 보세요…",

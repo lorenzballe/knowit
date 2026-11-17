@@ -4812,6 +4812,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get mathsDailyAnother => '似た問題をもう一問';
 
   @override
+  String get newsOpen => 'なぜ？';
+
+  @override
+  String get newsRead => '読んだ';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

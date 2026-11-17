@@ -4880,6 +4880,12 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('mathsDailyAnother') ?? _base.mathsDailyAnother;
 
   @override
+  String get newsOpen => _words.text('newsOpen') ?? _base.newsOpen;
+
+  @override
+  String get newsRead => _words.text('newsRead') ?? _base.newsRead;
+
+  @override
   String mathsDailyStreak(int n) =>
       _words.format('mathsDailyStreak', localeName, {'n': n}) ??
       _base.mathsDailyStreak(n);
