@@ -17,6 +17,7 @@ import '../data/daily.dart';
 import '../data/genres.dart';
 import '../data/local_cards.dart';
 import '../data/books.dart';
+import '../data/goals.dart';
 import '../data/news_paper.dart';
 import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
@@ -93,6 +94,7 @@ class AppState extends ChangeNotifier {
   static const _kOnboarded = 'knowit.onboarded';
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
+  static const _kGoal = 'knowit.goal';
   static const _kTopicLevels = 'knowit.topicLevels';
   static const _kGenresOff = 'knowit.genresOff';
   static const _kStrandsOff = 'knowit.strandsOff';
@@ -276,6 +278,10 @@ class AppState extends ChangeNotifier {
   /// How much of each subject the reader asked for, 0..1 by topic key. Empty
   /// means they never said, and every subject is dealt evenly.
   Map<String, double> topicWeights = {};
+
+  /// What the reader wants to get better at (lib/data/goals.dart), by key;
+  /// null until they say.
+  String? goal;
 
   /// What the reader says they already know of each subject: 0 curious,
   /// 1 some, 2 solid, by topic key. Only the subjects they were asked about
@@ -464,6 +470,18 @@ class AppState extends ChangeNotifier {
   /// at every return to the app, never more than twice a minute.
   Future<bool> refreshRemote() => Remote.refresh(_prefs);
 
+  /// Says what the reader wants to get better at, or, with null, that they
+  /// will say again.
+  Future<void> setGoal(String? key) async {
+    goal = Goal.of(key)?.key;
+    if (goal == null) {
+      await _prefs.remove(_kGoal);
+    } else {
+      await _prefs.setString(_kGoal, goal!);
+    }
+    notifyListeners();
+  }
+
   /// Asks for the morning's paper (lib/data/news_paper.dart), at most every
   /// two hours, and shows a new one the moment it arrives.
   Future<bool> refreshNews() async {
@@ -534,6 +552,7 @@ class AppState extends ChangeNotifier {
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
     topicWeights = _decodeWeights(_prefs.getString(_kTopicWeights));
+    goal = Goal.of(_prefs.getString(_kGoal))?.key;
     topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
     genresOff = (_prefs.getStringList(_kGenresOff) ?? []).toSet();
     strandsOff = (_prefs.getStringList(_kStrandsOff) ?? []).toSet();
@@ -1610,6 +1629,23 @@ class AppState extends ChangeNotifier {
   /// leaned by what they liked and threw down. The five of the day never
   /// look at this; the second set and the swaps do.
   Map<String, double> get leanedWeights {
+    final Map<String, double> leaned = _leanedByReading;
+    final Goal? aim = Goal.of(goal);
+    if (aim == null) return leaned;
+    // What the reader wants to get better at counts half again.
+    final base = leaned.isEmpty
+        ? {for (final key in kTopicOrder) key: 1.0}
+        : leaned;
+    return {
+      for (final e in base.entries)
+        e.key: aim.topics.contains(e.key)
+            ? (e.value * kGoalLean).clamp(0.05, 3.0)
+            : e.value,
+    };
+  }
+
+  /// The mix leaned by what the reader liked, threw down, held and skipped.
+  Map<String, double> get _leanedByReading {
     final read = _readSignals;
     if (likedIds.isEmpty &&
         dislikedIds.isEmpty &&
@@ -1647,6 +1683,9 @@ class AppState extends ChangeNotifier {
   /// (ReadingLog.signals): a third of a like's, as a read says less than a
   /// like does.
   static const double kReadLean = kLean / 3;
+
+  /// How much more a subject of the reader's goal is dealt.
+  static const double kGoalLean = 1.5;
   static const double kReadTasteLean = kTasteLean / 3;
 
   /// What the reads say, for an install that learns from them

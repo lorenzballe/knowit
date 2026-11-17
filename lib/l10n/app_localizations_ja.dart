@@ -4818,6 +4818,41 @@ class AppLocalizationsJa extends AppLocalizations {
   String get newsRead => '読んだ';
 
   @override
+  String goalShelf(String goal) {
+    return 'あなたの目標：$goal';
+  }
+
+  @override
+  String get goalShelfLine => '毎日新しいカード。';
+
+  @override
+  String get goalChange => '変更';
+
+  @override
+  String get goalDecide => 'よりよく決める';
+
+  @override
+  String get goalPeople => '人と話す';
+
+  @override
+  String get goalBusiness => '起業する';
+
+  @override
+  String get goalMoney => 'お金を扱う';
+
+  @override
+  String get goalNonsense => 'でたらめを見抜く';
+
+  @override
+  String get goalHealth => 'よく生きる';
+
+  @override
+  String get goalCulture => '一般教養';
+
+  @override
+  String get goalWorld => '世界を理解する';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

@@ -4956,6 +4956,41 @@ class AppLocalizationsTr extends AppLocalizations {
   String get newsRead => 'Okundu';
 
   @override
+  String goalShelf(String goal) {
+    return 'Hedefin için: $goal';
+  }
+
+  @override
+  String get goalShelfLine => 'Her gün yeni kartlar.';
+
+  @override
+  String get goalChange => 'Değiştir';
+
+  @override
+  String get goalDecide => 'Daha iyi karar vermek';
+
+  @override
+  String get goalPeople => 'İnsanlarla konuşmak';
+
+  @override
+  String get goalBusiness => 'Girişimcilik';
+
+  @override
+  String get goalMoney => 'Parayı yönetmek';
+
+  @override
+  String get goalNonsense => 'Saçmalığı fark etmek';
+
+  @override
+  String get goalHealth => 'İyi yaşamak';
+
+  @override
+  String get goalCulture => 'Genel kültür';
+
+  @override
+  String get goalWorld => 'Dünyayı anlamak';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

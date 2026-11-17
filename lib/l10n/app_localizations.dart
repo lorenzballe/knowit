@@ -7188,6 +7188,72 @@ abstract class AppLocalizations {
   /// **'Read'**
   String get newsRead;
 
+  /// Explore, the reader's goal: the name of its shelf, with the goal the reader picked.
+  ///
+  /// In en, this message translates to:
+  /// **'For your goal: {goal}'**
+  String goalShelf(String goal);
+
+  /// Explore, the reader's goal: the line under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'New cards for it every day.'**
+  String get goalShelfLine;
+
+  /// Explore, the reader's goal: beside the shelf's name, asks again what they want to get better at.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get goalChange;
+
+  /// A goal the reader can pick on Explore: making better decisions.
+  ///
+  /// In en, this message translates to:
+  /// **'Deciding better'**
+  String get goalDecide;
+
+  /// A goal the reader can pick on Explore: being better at talking with and understanding people.
+  ///
+  /// In en, this message translates to:
+  /// **'Talking with people'**
+  String get goalPeople;
+
+  /// A goal the reader can pick on Explore: entrepreneurship, starting and running a business.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting a business'**
+  String get goalBusiness;
+
+  /// A goal the reader can pick on Explore: handling money well.
+  ///
+  /// In en, this message translates to:
+  /// **'Handling money'**
+  String get goalMoney;
+
+  /// A goal the reader can pick on Explore: not being fooled by bad claims and statistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Spotting nonsense'**
+  String get goalNonsense;
+
+  /// A goal the reader can pick on Explore: health, body and food.
+  ///
+  /// In en, this message translates to:
+  /// **'Living well'**
+  String get goalHealth;
+
+  /// A goal the reader can pick on Explore: general culture, history and the arts.
+  ///
+  /// In en, this message translates to:
+  /// **'General knowledge'**
+  String get goalCulture;
+
+  /// A goal the reader can pick on Explore: understanding how the world works, science and nature.
+  ///
+  /// In en, this message translates to:
+  /// **'Understanding the world'**
+  String get goalWorld;
+
   /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.
   ///
   /// In en, this message translates to:

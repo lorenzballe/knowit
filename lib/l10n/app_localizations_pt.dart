@@ -5047,6 +5047,41 @@ class AppLocalizationsPt extends AppLocalizations {
   String get newsRead => 'Lida';
 
   @override
+  String goalShelf(String goal) {
+    return 'Para o teu objetivo: $goal';
+  }
+
+  @override
+  String get goalShelfLine => 'Cartas novas todos os dias.';
+
+  @override
+  String get goalChange => 'Mudar';
+
+  @override
+  String get goalDecide => 'Decidir melhor';
+
+  @override
+  String get goalPeople => 'Falar com as pessoas';
+
+  @override
+  String get goalBusiness => 'Empreender';
+
+  @override
+  String get goalMoney => 'Gerir o dinheiro';
+
+  @override
+  String get goalNonsense => 'Detetar disparates';
+
+  @override
+  String get goalHealth => 'Viver bem';
+
+  @override
+  String get goalCulture => 'Cultura geral';
+
+  @override
+  String get goalWorld => 'Entender o mundo';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

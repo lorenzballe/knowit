@@ -5229,6 +5229,41 @@ class AppLocalizationsRu extends AppLocalizations {
   String get newsRead => 'Прочитано';
 
   @override
+  String goalShelf(String goal) {
+    return 'Для твоей цели: $goal';
+  }
+
+  @override
+  String get goalShelfLine => 'Каждый день новые карточки.';
+
+  @override
+  String get goalChange => 'Изменить';
+
+  @override
+  String get goalDecide => 'Лучше решать';
+
+  @override
+  String get goalPeople => 'Говорить с людьми';
+
+  @override
+  String get goalBusiness => 'Предпринимательство';
+
+  @override
+  String get goalMoney => 'Обращаться с деньгами';
+
+  @override
+  String get goalNonsense => 'Распознавать чушь';
+
+  @override
+  String get goalHealth => 'Жить хорошо';
+
+  @override
+  String get goalCulture => 'Общая эрудиция';
+
+  @override
+  String get goalWorld => 'Понимать мир';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

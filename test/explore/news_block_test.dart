@@ -12,6 +12,7 @@ import 'package:astuto/data/news_paper.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/utils/share_link.dart';
 
 import 'core_harness.dart';
 
@@ -131,6 +132,12 @@ void main() {
     );
     expect(PillBank.byId('news-2026-01-01-old'), isNotNull);
     expect(PillBank.byId('broken'), isNull);
+    // Sent to a friend, a card of the paper is the site: it has no page.
+    expect(cardLink('news-2026-11-16-eggs'), ShareRef.card.link);
+    expect(
+      cardLink('economics-1'),
+      'https://$kSiteHost/c/economics-1.html?ref=${ShareRef.card.ref}',
+    );
 
     // Asked again within the two hours: not asked.
     expect(

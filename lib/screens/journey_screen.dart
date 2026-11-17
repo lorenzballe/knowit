@@ -4,11 +4,13 @@ import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart' hide Step;
 import 'package:intl/intl.dart' hide TextDirection;
 
+import '../data/goals.dart';
 import '../data/pill_bank.dart';
 import '../debug_flags.dart';
 import '../analytics.dart';
 import '../data/pills_repository.dart' show dateKey, dayShift, pillById;
 import '../data/topics.dart';
+import '../explore/blocks/core/goal_block.dart' show goalName;
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
