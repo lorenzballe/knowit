@@ -43,6 +43,9 @@ enum ShareRef {
 /// Where a card is met by a friend, with or without the app: its page on
 /// the site, under a line saying a friend sent it. A card with a drawing is
 /// played there; a card in words asks its question, and shows its answer
-/// on a tap (tool/cards/challenge_pages.py writes one for every card).
-String cardLink(String cardId) =>
-    'https://$kSiteHost/c/$cardId.html?ref=${ShareRef.card.ref}';
+/// on a tap (tool/cards/challenge_pages.py writes one for every card). A
+/// card of the morning's paper (lib/data/news_paper.dart, ids `news-…`) has
+/// no page of its own, so it sends the site, under the same line.
+String cardLink(String cardId) => cardId.startsWith('news-')
+    ? ShareRef.card.link
+    : 'https://$kSiteHost/c/$cardId.html?ref=${ShareRef.card.ref}';
