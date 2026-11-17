@@ -86,6 +86,26 @@ class ExploreScreenState extends State<ExploreScreen>
   bool _searching = false;
   String _query = '';
 
+  /// Whether the head (title, streak, search, subjects) is in view. Going
+  /// down the shelves puts it away, so the cards have the whole screen; the
+  /// least move back up brings it again, as a feed's bar does.
+  bool _headShown = true;
+
+  bool _headFollows(ScrollNotification n) {
+    if (n is ScrollUpdateNotification &&
+        n.depth == 0 &&
+        n.metrics.axis == Axis.vertical) {
+      final double by = n.scrollDelta ?? 0;
+      final bool show = n.metrics.pixels <= 24 || by < -4
+          ? true
+          : by > 4
+          ? false
+          : _headShown;
+      if (show != _headShown) setState(() => _headShown = show);
+    }
+    return _sight.scrolled(n);
+  }
+
   /// What the shelves put in front of the reader in each stay on the tab.
   final ShelfSight _sight = ShelfSight();
   late final ShelfStay _stay = ShelfStay(
@@ -436,52 +456,70 @@ class ExploreScreenState extends State<ExploreScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Searching, the head stays: the field is what the reader is using.
+    final bool shown = _headShown || _searching;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // The streak by the title follows the day as it is finished.
-        ListenableBuilder(
-          listenable: widget.app,
-          builder: (context, _) => Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
-            child: _Head(
-              streak: widget.app.liveStreak,
-              onStreak: widget.onToday == null ? null : openToday,
-              searching: _searching,
-              field: _field,
-              focus: _focus,
-              onOpenSearch: () {
-                Analytics.capture('explore search opened');
-                // What is opened from the search was not opened from a shelf.
-                _sight.forgetTouch();
-                setState(() => _searching = true);
-                _focus.requestFocus();
-              },
-              onCloseSearch: () {
-                Analytics.capture('explore search closed', {
-                  'had_query': _query.trim().isNotEmpty,
-                });
-                _field.clear();
-                setState(() {
-                  _searching = false;
-                  _query = '';
-                });
-              },
-              onChanged: _typed,
+        ClipRect(
+          child: AnimatedAlign(
+            key: const ValueKey('explore-head'),
+            alignment: Alignment.bottomCenter,
+            heightFactor: shown ? 1 : 0,
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // The streak by the title follows the day as it is finished.
+                ListenableBuilder(
+                  listenable: widget.app,
+                  builder: (context, _) => Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+                    child: _Head(
+                      streak: widget.app.liveStreak,
+                      onStreak: widget.onToday == null ? null : openToday,
+                      searching: _searching,
+                      field: _field,
+                      focus: _focus,
+                      onOpenSearch: () {
+                        Analytics.capture('explore search opened');
+                        // What is opened from the search was not opened from a shelf.
+                        _sight.forgetTouch();
+                        setState(() => _searching = true);
+                        _focus.requestFocus();
+                      },
+                      onCloseSearch: () {
+                        Analytics.capture('explore search closed', {
+                          'had_query': _query.trim().isNotEmpty,
+                        });
+                        _field.clear();
+                        setState(() {
+                          _searching = false;
+                          _query = '';
+                        });
+                      },
+                      onChanged: _typed,
+                    ),
+                  ),
+                ),
+                if (!_searching)
+                  _SubjectRow(
+                    selected: _subject,
+                    // A subject, All, or the lit subject again — the last two both
+                    // clear it, so the way back is whichever the finger finds first.
+                    onPick: (name) {
+                      final String? next = name == _subject ? null : name;
+                      Analytics.capture('explore filtered', {
+                        'subject': next ?? 'all',
+                      });
+                      setState(() => _subject = next);
+                    },
+                  ),
+              ],
             ),
           ),
         ),
-        if (!_searching)
-          _SubjectRow(
-            selected: _subject,
-            // A subject, All, or the lit subject again — the last two both
-            // clear it, so the way back is whichever the finger finds first.
-            onPick: (name) {
-              final String? next = name == _subject ? null : name;
-              Analytics.capture('explore filtered', {'subject': next ?? 'all'});
-              setState(() => _subject = next);
-            },
-          ),
         Expanded(
           child: _searching
               ? _found(context)
@@ -529,7 +567,7 @@ class ExploreScreenState extends State<ExploreScreen>
     return Stack(
       children: [
         NotificationListener<ScrollNotification>(
-          onNotification: _sight.scrolled,
+          onNotification: _headFollows,
           // Pulled down from its top, Explore is read again from the
           // server, as a feed is: the shelves the server assembled since,
           // and the tallies under them.
