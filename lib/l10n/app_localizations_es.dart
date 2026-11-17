@@ -4986,6 +4986,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deeperSides => 'Las dos partes';
 
   @override
+  String get deeperExample => 'Un ejemplo de la vida diaria';
+
+  @override
   String get deeperYourTake => 'Tu idea, analizada';
 
   @override

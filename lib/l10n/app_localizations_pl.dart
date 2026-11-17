@@ -5148,6 +5148,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get deeperSides => 'Obie strony';
 
   @override
+  String get deeperExample => 'Przykład z codziennego życia';
+
+  @override
   String get deeperYourTake => 'Twoja myśl pod lupą';
 
   @override

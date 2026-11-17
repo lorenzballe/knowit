@@ -5169,6 +5169,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deeperSides => 'Обе стороны';
 
   @override
+  String get deeperExample => 'Пример из обычной жизни';
+
+  @override
   String get deeperYourTake => 'Твоя мысль под лупой';
 
   @override

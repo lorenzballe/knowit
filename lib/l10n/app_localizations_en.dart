@@ -4948,6 +4948,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deeperSides => 'Both sides';
 
   @override
+  String get deeperExample => 'An example from everyday life';
+
+  @override
   String get deeperYourTake => 'Your take, looked at';
 
   @override

@@ -4896,6 +4896,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deeperSides => 'İki taraf';
 
   @override
+  String get deeperExample => 'Günlük hayattan bir örnek';
+
+  @override
   String get deeperYourTake => 'Fikrin, incelendi';
 
   @override

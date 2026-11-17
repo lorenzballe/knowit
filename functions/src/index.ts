@@ -42,7 +42,7 @@ import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 import { logger } from 'firebase-functions';
 
-import { ALL_PER_DAY, PER_DAY, answer as answerAsk, readAsk } from './ask.js';
+import { ALL_PER_DAY, MODEL, PER_DAY, SHARED, answer as answerAsk, cacheKey, readAsk } from './ask.js';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import { search as searchBank } from './search.js';
@@ -106,6 +106,16 @@ export const askCard = onCall(
     if (presence.get('plus') !== true) throw new HttpsError('permission-denied', 'Astute+ only.');
     const card = (await dealingBank()).byId.get(ask.card);
     if (!card) throw new HttpsError('not-found', 'No such card.');
+    // An answer every reader would get alike, asked before: given again, at
+    // no cost and outside the day's counts.
+    const kept = SHARED.includes(ask.mode) ? db.collection('askCache').doc(cacheKey(card, ask)) : null;
+    if (kept) {
+      const before = (await kept.get()).get('text');
+      if (typeof before === 'string' && before) {
+        logger.info('asked', { card: ask.card, mode: ask.mode, lang: ask.lang, answered: 'kept' });
+        return { text: before };
+      }
+    }
     const day = today(Date.now());
     const mine = db.collection('readers').doc(uid).collection('ai').doc(day);
     const everyone = db.collection('ai').doc(day);
@@ -120,6 +130,9 @@ export const askCard = onCall(
     try {
       const out = await answerAsk(new Anthropic({ apiKey: anthropicKey.value() }), card, ask);
       logger.info('asked', { card: ask.card, mode: ask.mode, lang: ask.lang, answered: 'text' in out });
+      if (kept && 'text' in out) {
+        await kept.set({ text: out.text, model: MODEL, at: FieldValue.serverTimestamp() });
+      }
       return 'text' in out ? { text: out.text } : { none: out.none };
     } catch (e) {
       logger.error('ask failed', { card: ask.card, mode: ask.mode, error: String(e) });

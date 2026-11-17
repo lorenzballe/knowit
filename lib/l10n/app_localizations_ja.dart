@@ -4758,6 +4758,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deeperSides => '両方の立場';
 
   @override
+  String get deeperExample => '日常の例';
+
+  @override
   String get deeperYourTake => 'あなたの考えを分析';
 
   @override

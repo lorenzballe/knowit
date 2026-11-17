@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { MAX_TEXT, SYSTEM, buildRequest, cardText, readAsk } from './ask.js';
+import { MAX_TEXT, MODEL, SHARED, SYSTEM, buildRequest, cacheKey, cardText, readAsk } from './ask.js';
 import type { Card } from './bank.js';
 
 const card: Card = {
@@ -47,4 +47,24 @@ test('the card goes in as the bank has it; the reader as their words, '
   assert.ok(user.includes('Answer in Italian.'));
   assert.equal(user.split('</reader>').length, 2);
   assert.ok(cardText(card).includes('line to keep: Ask how common it is first.'));
+});
+
+test('an example needs nothing written; the answers alike for every reader are kept', () => {
+  const example = readAsk({ card: 'thinking-base-rate', mode: 'example', lang: 'it' });
+  assert.equal(example?.mode, 'example');
+  assert.deepEqual([...SHARED].sort(), ['example', 'sides', 'simple']);
+  assert.ok(SYSTEM.includes('- example:'));
+  // The cheapest model answers.
+  assert.match(MODEL, /haiku/);
+});
+
+test('a kept answer is found by its card, ask and language, and lost when the card changes', () => {
+  const ask = readAsk({ card: card.id, mode: 'simple', lang: 'it' })!;
+  const key = cacheKey(card, ask);
+  assert.equal(cacheKey(card, ask), key);
+  assert.ok(!key.includes('/'));
+  assert.ok(key.startsWith(`${card.id}~simple~it~`));
+  assert.notEqual(cacheKey(card, { ...ask, lang: 'en' }), key);
+  assert.notEqual(cacheKey(card, { ...ask, mode: 'sides' }), key);
+  assert.notEqual(cacheKey({ ...card, answer: 'Edited.' }, ask), key);
 });
