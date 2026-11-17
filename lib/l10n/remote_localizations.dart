@@ -4705,6 +4705,18 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('storyChapterStory') ?? _base.storyChapterStory;
 
   @override
+  String get journeyChapterKnow =>
+      _words.text('journeyChapterKnow') ?? _base.journeyChapterKnow;
+
+  @override
+  String get journeyChapterHabits =>
+      _words.text('journeyChapterHabits') ?? _base.journeyChapterHabits;
+
+  @override
+  String get journeyChapterMemory =>
+      _words.text('journeyChapterMemory') ?? _base.journeyChapterMemory;
+
+  @override
   String storyHeadlineSure(int n) =>
       _words.format('storyHeadlineSure', localeName, {'n': n}) ??
       _base.storyHeadlineSure(n);
@@ -4825,6 +4837,17 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get deeperExample =>
       _words.text('deeperExample') ?? _base.deeperExample;
+
+  @override
+  String get deeperQuiz => _words.text('deeperQuiz') ?? _base.deeperQuiz;
+
+  @override
+  String get deeperQuizRight =>
+      _words.text('deeperQuizRight') ?? _base.deeperQuizRight;
+
+  @override
+  String get deeperQuizWrong =>
+      _words.text('deeperQuizWrong') ?? _base.deeperQuizWrong;
 
   @override
   String get deeperYourTake =>

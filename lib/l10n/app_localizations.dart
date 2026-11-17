@@ -6930,6 +6930,24 @@ abstract class AppLocalizations {
   /// **'Your story'**
   String get storyChapterStory;
 
+  /// A chapter of Your journey, in small capitals: the subjects, places, times, topics and words the reader has met.
+  ///
+  /// In en, this message translates to:
+  /// **'What you know'**
+  String get journeyChapterKnow;
+
+  /// A chapter of Your journey, in small capitals: days in a row, reading time, the calendar of days read and how hard the cards are.
+  ///
+  /// In en, this message translates to:
+  /// **'Your habits'**
+  String get journeyChapterHabits;
+
+  /// A chapter of Your journey, in small capitals: how many cards the reader still remembers after days and weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'What stays with you'**
+  String get journeyChapterMemory;
+
   /// Your journey as a story (the version on trial under the tiles): storyHeadlineSure
   ///
   /// In en, this message translates to:
@@ -7091,6 +7109,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An example from everyday life'**
   String get deeperExample;
+
+  /// Go deeper, Astute+: the part, and its button, that asks for a new multiple-choice question on the card's idea, set in a case the card does not mention.
+  ///
+  /// In en, this message translates to:
+  /// **'Test me on a new case'**
+  String get deeperQuiz;
+
+  /// Go deeper: said above the explanation when the reader picked the right option of the new question.
+  ///
+  /// In en, this message translates to:
+  /// **'Right.'**
+  String get deeperQuizRight;
+
+  /// Go deeper: said above the explanation when the reader picked a wrong option of the new question.
+  ///
+  /// In en, this message translates to:
+  /// **'Not quite.'**
+  String get deeperQuizWrong;
 
   /// Go deeper, the sheet a tap on a card's source opens: deeperYourTake
   ///

@@ -5105,6 +5105,18 @@
  "@storyChapterStory": {
   "description": "Your journey as a story (the version on trial under the tiles): storyChapterStory"
  },
+ "journeyChapterKnow": "What you know",
+ "@journeyChapterKnow": {
+  "description": "A chapter of Your journey, in small capitals: the subjects, places, times, topics and words the reader has met."
+ },
+ "journeyChapterHabits": "Your habits",
+ "@journeyChapterHabits": {
+  "description": "A chapter of Your journey, in small capitals: days in a row, reading time, the calendar of days read and how hard the cards are."
+ },
+ "journeyChapterMemory": "What stays with you",
+ "@journeyChapterMemory": {
+  "description": "A chapter of Your journey, in small capitals: how many cards the reader still remembers after days and weeks."
+ },
  "storyHeadlineSure": "{n, plural, =1{In the answers you gave with confidence, you were right 1 time in 10.} other{In the answers you gave with confidence, you were right {n} times in 10.}}",
  "@storyHeadlineSure": {
   "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineSure",
@@ -5291,6 +5303,18 @@
  "deeperExample": "An example from everyday life",
  "@deeperExample": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperExample"
+ },
+ "deeperQuiz": "Test me on a new case",
+ "@deeperQuiz": {
+  "description": "Go deeper, Astute+: the part, and its button, that asks for a new multiple-choice question on the card's idea, set in a case the card does not mention."
+ },
+ "deeperQuizRight": "Right.",
+ "@deeperQuizRight": {
+  "description": "Go deeper: said above the explanation when the reader picked the right option of the new question."
+ },
+ "deeperQuizWrong": "Not quite.",
+ "@deeperQuizWrong": {
+  "description": "Go deeper: said above the explanation when the reader picked a wrong option of the new question."
  },
  "deeperYourTake": "Your take, looked at",
  "@deeperYourTake": {

@@ -24,11 +24,11 @@ import type { Card } from './bank.js';
 export const MODEL = 'claude-haiku-5-5';
 
 /** What a reader can ask for. */
-export const MODES = ['simple', 'sides', 'example', 'take', 'ask'] as const;
+export const MODES = ['simple', 'sides', 'example', 'quiz', 'take', 'ask'] as const;
 export type AskMode = (typeof MODES)[number];
 
 /** The asks whose answer is the same for every reader: asked once, kept. */
-export const SHARED: readonly AskMode[] = ['simple', 'sides', 'example'];
+export const SHARED: readonly AskMode[] = ['simple', 'sides', 'example', 'quiz'];
 
 /** The most a reader may write, in characters. */
 export const MAX_TEXT = 600;
@@ -102,6 +102,13 @@ What the reader can ask for:
 - simple: explain the card's idea as you would to a curious ten-year-old: short words, one concrete image, no jargon.
 - sides: give the strongest case on each side of the question the card raises, fairly, two or three sentences each, then one sentence on what would settle it. If it is settled fact, say so plainly and why there is no real other side.
 - example: one concrete moment from ordinary life where the card's idea shows up, told in two or three sentences, then one sentence on what to do differently next time.
+- quiz: write one new multiple-choice question that tests the card's idea in a different everyday situation the card does not mention, so the reader has to carry the idea over rather than remember the card. Three options, exactly one right; make one wrong option tempting for the very reason people get this wrong. Keep these English labels exactly, and write everything after them in the reader's language:
+Q: the question, at most 30 words
+A) an option, at most 12 words
+B) an option, at most 12 words
+C) an option, at most 12 words
+RIGHT: the letter of the right option
+WHY: two sentences: why it is right, and why the tempting wrong one tempts
 - take: the reader wrote their own reasoning about the card. Say what is strong in it, then the weakest step and why, then one question that would test it. Be honest and kind; do not simply agree.
 - ask: answer the reader's question about the card. If it strays from the card, answer briefly and bring it back.`;
 
@@ -147,6 +154,49 @@ export function cacheKey(card: Card, ask: Ask): string {
   return `${card.id}~${ask.mode}~${ask.lang}~${words}`;
 }
 
+/** A question to carry a card's idea over, as the model writes it. */
+export interface Quiz {
+  question: string;
+  options: [string, string, string];
+  right: number;
+  why: string;
+}
+
+/**
+ * The quiz in [text], or null when it is not one: a question, three options,
+ * the right one named, and why. Bold and stray spaces are forgiven.
+ */
+export function readQuiz(text: string): Quiz | null {
+  const lines = text.replaceAll('**', '').split('\n').map((l) => l.trim()).filter(Boolean);
+  const pick = (re: RegExp) => {
+    for (const l of lines) {
+      const m = re.exec(l);
+      if (m) return m[1].trim();
+    }
+    return null;
+  };
+  const question = pick(/^Q\s*[:.)]\s*(.+)$/i);
+  const a = pick(/^A\s*[).:]\s*(.+)$/);
+  const b = pick(/^B\s*[).:]\s*(.+)$/);
+  const c = pick(/^C\s*[).:]\s*(.+)$/);
+  const right = pick(/^RIGHT\s*:\s*\(?([ABC])\b/i);
+  const why = pick(/^WHY\s*:\s*(.+)$/i);
+  if (!question || !a || !b || !c || !right || !why) return null;
+  return { question, options: [a, b, c], right: 'ABC'.indexOf(right.toUpperCase()), why };
+}
+
+/** A quiz written the one way the phone reads it, and the cache keeps it. */
+export function quizText(q: Quiz): string {
+  return [
+    `Q: ${q.question}`,
+    `A) ${q.options[0]}`,
+    `B) ${q.options[1]}`,
+    `C) ${q.options[2]}`,
+    `RIGHT: ${'ABC'[q.right]}`,
+    `WHY: ${q.why}`,
+  ].join('\n');
+}
+
 /** Why a question was not answered, as the phone is told. */
 export type NoAnswer = 'declined' | 'empty';
 
@@ -171,5 +221,11 @@ export async function answer(
     .map((block) => (block.type === 'text' ? block.text : ''))
     .join('')
     .trim();
-  return text ? { text, cost } : { none: 'empty', cost };
+  if (!text) return { none: 'empty', cost };
+  if (ask.mode === 'quiz') {
+    // Kept and shown only as a question the phone can play.
+    const quiz = readQuiz(text);
+    return quiz ? { text: quizText(quiz), cost } : { none: 'empty', cost };
+  }
+  return { text, cost };
 }

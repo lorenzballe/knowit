@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { MAX_TEXT, MODEL, MONTH_BUDGET_USD, SHARED, SYSTEM, buildRequest, cacheKey, cardText, costOf, readAsk } from './ask.js';
+import { MAX_TEXT, MODEL, MONTH_BUDGET_USD, SHARED, SYSTEM, buildRequest, cacheKey, cardText, costOf, quizText, readAsk, readQuiz } from './ask.js';
 import type { Card } from './bank.js';
 
 const card: Card = {
@@ -52,7 +52,7 @@ test('the card goes in as the bank has it; the reader as their words, '
 test('an example needs nothing written; the answers alike for every reader are kept', () => {
   const example = readAsk({ card: 'thinking-base-rate', mode: 'example', lang: 'it' });
   assert.equal(example?.mode, 'example');
-  assert.deepEqual([...SHARED].sort(), ['example', 'sides', 'simple']);
+  assert.deepEqual([...SHARED].sort(), ['example', 'quiz', 'sides', 'simple']);
   assert.ok(SYSTEM.includes('- example:'));
   // The cheapest model answers.
   assert.match(MODEL, /haiku/);
@@ -77,4 +77,33 @@ test('an answer costs what its tokens cost, and the month stops near three euros
   // About eleven thousand such answers fit in the month.
   assert.ok(MONTH_BUDGET_USD / one > 10000);
   assert.equal(costOf({}), 0);
+});
+
+test('a quiz is a question the phone can play: three options, the right one named, '
+  + 'why; anything else is no quiz', () => {
+  assert.ok(SYSTEM.includes('- quiz:'));
+  const quiz = readQuiz(
+    '**Q:** Una clinica dice che il suo test e accurato al 99%. Sei malato?\n'
+    + 'A) Quasi certamente si\n'
+    + 'B)  Dipende da quanto e comune la malattia \n'
+    + 'C) No, mai\n'
+    + 'RIGHT: B\n'
+    + 'WHY: Conta prima quanto e rara. Il 99% tenta perche sembra la risposta.',
+  );
+  assert.deepEqual(quiz, {
+    question: 'Una clinica dice che il suo test e accurato al 99%. Sei malato?',
+    options: ['Quasi certamente si', 'Dipende da quanto e comune la malattia', 'No, mai'],
+    right: 1,
+    why: 'Conta prima quanto e rara. Il 99% tenta perche sembra la risposta.',
+  });
+  // Written back the one way, and read back the same.
+  assert.deepEqual(readQuiz(quizText(quiz!)), quiz);
+  assert.ok(quizText(quiz!).startsWith('Q: '));
+  // No right answer, or a missing option: not a quiz.
+  assert.equal(readQuiz('Q: Why?\nA) x\nB) y\nC) z\nWHY: because'), null);
+  assert.equal(readQuiz('Q: Why?\nA) x\nB) y\nRIGHT: A\nWHY: because'), null);
+  assert.equal(readQuiz('Just some prose about the card.'), null);
+  // A quiz is asked alike by everyone, so it is kept.
+  assert.ok(SHARED.includes('quiz'));
+  assert.equal(readAsk({ card: 'thinking-base-rate', mode: 'quiz', lang: 'it' })?.mode, 'quiz');
 });

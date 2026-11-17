@@ -4614,6 +4614,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get storyChapterStory => '你的故事';
 
   @override
+  String get journeyChapterKnow => '你知道的';
+
+  @override
+  String get journeyChapterHabits => '你的习惯';
+
+  @override
+  String get journeyChapterMemory => '你记住的';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -4767,6 +4776,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deeperExample => '一个日常例子';
+
+  @override
+  String get deeperQuiz => '用一个新情境考考我';
+
+  @override
+  String get deeperQuizRight => '答对了。';
+
+  @override
+  String get deeperQuizWrong => '不太对。';
 
   @override
   String get deeperYourTake => '你的想法，分析一下';

@@ -1,63 +1,11 @@
 part of 'journey_screen.dart';
 
-/// The journey told as a story, in five chapters, under the tiles: what the
-/// week says about the reader, in one sentence; where they stand, and the one
-/// step next; how they reason; what to practise, as decks a tap away; and
-/// their story so far, with its dates.
-///
-/// A version to try before it replaces anything: shown only where the
-/// developer tools are (debug_flags.dart, the TestFlight installs), under a
-/// line that says so. Everything on it is counted from what the app already
-/// writes down; nothing is invented, and a chapter with nothing true to say
-/// says what would make it.
-class JourneyStory extends StatelessWidget {
-  const JourneyStory({super.key, required this.app});
-
-  final AppState app;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    const chapterGap = SizedBox(height: 26);
-    return Column(
-      key: const ValueKey('journey-story'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _LabLine(title: l.storyLabTitle, note: l.storyLabNote),
-        const SizedBox(height: 22),
-        _Chapter(
-          n: 1,
-          title: l.storyChapterWeek,
-          child: _Headline(app: app),
-        ),
-        chapterGap,
-        _Chapter(
-          n: 2,
-          title: l.storyChapterWhere,
-          child: _WhereYouAre(app: app),
-        ),
-        chapterGap,
-        _Chapter(
-          n: 3,
-          title: l.storyChapterReason,
-          child: _HowYouReason(app: app),
-        ),
-        chapterGap,
-        _Chapter(
-          n: 4,
-          title: l.storyChapterPractice,
-          child: _Practice(app: app),
-        ),
-        chapterGap,
-        _Chapter(
-          n: 5,
-          title: l.storyChapterStory,
-          child: _YourStory(app: app),
-        ),
-      ],
-    );
-  }
-}
+// The journey's chapters that tell rather than count (journey_screen.dart
+// puts them round the tiles): what the week says about the reader, in one
+// sentence; what to practise, as decks a tap away; how they reason, in four
+// lines; and their story so far, with its dates. Everything on them is
+// counted from what the app already writes down; nothing is invented, and a
+// chapter with nothing true to say says what would make it.
 
 // ── What the week says ────────────────────────────────────────────────────
 
@@ -203,92 +151,6 @@ class _Headline extends StatelessWidget {
           ),
         ],
       ],
-    );
-  }
-}
-
-// ── Where you are ─────────────────────────────────────────────────────────
-
-class _WhereYouAre extends StatelessWidget {
-  const _WhereYouAre({required this.app});
-
-  final AppState app;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final Standing standing = app.standing;
-    final Rung? next = standing.next;
-    final Step? step = standing.step;
-    final String toward = next == null
-        ? l.topLevel
-        : step == null
-        ? l.nextRung(rungName(context, next))
-        : l.journeyStepFrom(_stepToGo(l, step), rungName(context, next));
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (routeContext) => PathScreen(
-            app: app,
-            onBack: () => Navigator.of(routeContext).pop(),
-          ),
-        ),
-      ),
-      child: _Box(
-        padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _Kicker(l.journeyLevelOf(standing.at + 1, kRungs.length)),
-            const SizedBox(height: 8),
-            _Big(rungName(context, standing.rung), size: 34),
-            const SizedBox(height: 16),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(99),
-              child: SizedBox(
-                height: 8,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    ColoredBox(color: context.p.line),
-                    FractionallySizedBox(
-                      alignment: AlignmentDirectional.centerStart,
-                      widthFactor: standing.toNext,
-                      child: ColoredBox(color: _green(context)),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    toward,
-                    style: AppText.body(
-                      size: 14,
-                      weight: FontWeight.w600,
-                      height: 1.3,
-                      color: context.p.ink.withValues(alpha: 0.75),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  l.storySeePath,
-                  style: AppText.body(
-                    size: 13,
-                    weight: FontWeight.w700,
-                    color: context.p.link,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -777,53 +639,6 @@ class _YourStory extends StatelessWidget {
 }
 
 // ── The frame ─────────────────────────────────────────────────────────────
-
-/// The line the story starts under: what it is, and that it is on trial.
-class _LabLine extends StatelessWidget {
-  const _LabLine({required this.title, required this.note});
-
-  final String title;
-  final String note;
-
-  @override
-  Widget build(BuildContext context) {
-    final Color ink = context.p.ink;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(height: 1, color: ink.withValues(alpha: 0.14)),
-        const SizedBox(height: 26),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            color: _pink(context).withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(99),
-          ),
-          child: Text(
-            _upper(context, note),
-            style: AppText.body(
-              size: 10,
-              weight: FontWeight.w800,
-              spacing: 1.1,
-              color: _pink(context),
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          title,
-          style: AppText.display(
-            size: 27,
-            weight: FontWeight.w600,
-            height: 1.1,
-            spacing: -0.8,
-            color: ink,
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 /// A chapter: its number and name in small capitals, then what it says.
 class _Chapter extends StatelessWidget {

@@ -255,6 +255,27 @@ class Trace extends ChangeNotifier {
       uidOverride ??
       (Cloud.ready ? FirebaseAuth.instance.currentUser?.uid : null);
 
+  /// Tells the server the reader's plan and clock now, without waiting for
+  /// something to send. The plan decides what the server answers (askCard
+  /// reads it), so a reader who has just turned Astute+ on is not told the
+  /// answers are for Astute+ only. False when there is nowhere to write.
+  Future<bool> sayPresence() async {
+    final TraceStore? store = _store;
+    final String? uid = _uid;
+    if (store == null || uid == null) return false;
+    try {
+      await store.presence(uid, {
+        'tz': _clock().timeZoneOffset.inMinutes,
+        'lastSeen': _clock().millisecondsSinceEpoch,
+        'plus': plus,
+      });
+      return true;
+    } catch (error) {
+      debugPrint('Could not write the presence: $error');
+      return false;
+    }
+  }
+
   /// Writes what is waiting, now. Two flushes in a row share one trip.
   Future<void> flush() =>
       _flushing ??= _flush().whenComplete(() => _flushing = null);

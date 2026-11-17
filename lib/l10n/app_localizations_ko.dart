@@ -4635,6 +4635,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get storyChapterStory => '나의 이야기';
 
   @override
+  String get journeyChapterKnow => '알고 있는 것';
+
+  @override
+  String get journeyChapterHabits => '나의 습관';
+
+  @override
+  String get journeyChapterMemory => '기억에 남은 것';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -4788,6 +4797,15 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deeperExample => '일상 속 예시';
+
+  @override
+  String get deeperQuiz => '새로운 상황으로 시험해 보기';
+
+  @override
+  String get deeperQuizRight => '정답이에요.';
+
+  @override
+  String get deeperQuizWrong => '조금 아쉬워요.';
 
   @override
   String get deeperYourTake => '내 생각, 분석';

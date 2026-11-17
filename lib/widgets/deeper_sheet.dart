@@ -226,6 +226,22 @@ class _DeeperSheetState extends State<DeeperSheet> {
           result: _results[AskMode.example],
           onAsk: () => _askAi(AskMode.example),
         ),
+      // The idea carried to a case the card does not mention: a question
+      // to answer there and then, the best way to keep an idea.
+      if (ai)
+        _QuizPart(
+          key: const ValueKey('deeper-quiz-ai'),
+          title: l.deeperQuiz,
+          locked: !plus,
+          busy: _busy.contains(AskMode.quiz),
+          result: _results[AskMode.quiz],
+          onAsk: () => _askAi(AskMode.quiz),
+          seed: pill.id.codeUnits.fold(0, (a, b) => a + b),
+          onAnswered: (right) => Analytics.capture('card quiz answered', {
+            ...app.cardFacts(pill.id),
+            'right': right,
+          }),
+        ),
       if (ai)
         _WritePart(
           key: const ValueKey('deeper-take'),
@@ -487,9 +503,185 @@ class _AiPart extends StatelessWidget {
       child: switch ((busy, result)) {
         (true, _) => const _Busy(),
         (_, final AskAnswer answer) => _Body(answer.text),
-        (_, final AskNone none) => _WhyNot(none.why, onRetry: onAsk),
+        (_, final AskNone none) => _WhyNot(none, onRetry: onAsk),
         _ => _AskButton(label: title, locked: locked, onPressed: onAsk),
       },
+    );
+  }
+}
+
+/// A new question on the card's idea: asked for, then answered on the spot,
+/// the right option shown and why. Text that is not a quiz is shown as it
+/// came.
+class _QuizPart extends StatefulWidget {
+  const _QuizPart({
+    super.key,
+    required this.title,
+    required this.locked,
+    required this.busy,
+    required this.result,
+    required this.onAsk,
+    required this.seed,
+    required this.onAnswered,
+  });
+
+  final String title;
+  final bool locked;
+  final bool busy;
+  final AskResult? result;
+  final VoidCallback onAsk;
+
+  /// Picks the order the options are shown in, the same for a card each
+  /// time, so the right one is not always where the model put it.
+  final int seed;
+  final ValueChanged<bool> onAnswered;
+
+  @override
+  State<_QuizPart> createState() => _QuizPartState();
+}
+
+/// The six ways three options can stand.
+const List<List<int>> _orders = [
+  [0, 1, 2],
+  [1, 2, 0],
+  [2, 0, 1],
+  [0, 2, 1],
+  [2, 1, 0],
+  [1, 0, 2],
+];
+
+class _QuizPartState extends State<_QuizPart> {
+  /// The place tapped, once one is.
+  int? _chosen;
+
+  @override
+  void didUpdateWidget(covariant _QuizPart old) {
+    super.didUpdateWidget(old);
+    if (old.result != widget.result) _chosen = null;
+  }
+
+  @override
+  Widget build(BuildContext context) => _Part(
+    title: widget.title,
+    child: switch ((widget.busy, widget.result)) {
+      (true, _) => const _Busy(),
+      (_, final AskAnswer answer) => _quiz(context, answer.text),
+      (_, final AskNone none) => _WhyNot(none, onRetry: widget.onAsk),
+      _ => _AskButton(
+        label: widget.title,
+        locked: widget.locked,
+        onPressed: widget.onAsk,
+      ),
+    },
+  );
+
+  Widget _quiz(BuildContext context, String text) {
+    final CardQuiz? quiz = CardQuiz.parse(text);
+    if (quiz == null) return _Body(text);
+    final l = context.l10n;
+    final Palette p = context.p;
+    final List<int> order = _orders[widget.seed % _orders.length];
+    final int? chosen = _chosen;
+    final bool? right = chosen == null ? null : order[chosen] == quiz.right;
+    final Color green = Theme.of(context).brightness == Brightness.dark
+        ? const Color(0xFF3BE07A)
+        : const Color(0xFF0E8A3E);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          quiz.question,
+          style: AppText.body(
+            size: 15.5,
+            weight: FontWeight.w700,
+            height: 1.35,
+            color: p.ink,
+          ),
+        ),
+        const SizedBox(height: 12),
+        for (var i = 0; i < order.length; i++) ...[
+          if (i > 0) const SizedBox(height: 8),
+          _QuizOption(
+            key: ValueKey('deeper-quiz-option-$i'),
+            label: quiz.options[order[i]],
+            // Once answered: the right one green, a wrong pick red.
+            mark: chosen == null
+                ? null
+                : order[i] == quiz.right
+                ? green
+                : i == chosen
+                ? p.alert
+                : null,
+            onTap: chosen != null
+                ? null
+                : () {
+                    setState(() => _chosen = i);
+                    widget.onAnswered(order[i] == quiz.right);
+                  },
+          ),
+        ],
+        if (right != null) ...[
+          const SizedBox(height: 14),
+          Text(
+            right ? l.deeperQuizRight : l.deeperQuizWrong,
+            key: const ValueKey('deeper-quiz-verdict'),
+            style: AppText.body(
+              size: 15,
+              weight: FontWeight.w800,
+              color: right ? green : p.alert,
+            ),
+          ),
+          const SizedBox(height: 6),
+          _Body(quiz.why),
+        ],
+      ],
+    );
+  }
+}
+
+class _QuizOption extends StatelessWidget {
+  const _QuizOption({
+    super.key,
+    required this.label,
+    required this.mark,
+    required this.onTap,
+  });
+
+  final String label;
+  final Color? mark;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final Color? m = mark;
+    return Semantics(
+      button: onTap != null,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            color: m == null ? p.surfaceRaised : m.withValues(alpha: 0.14),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: m ?? p.line,
+              width: m == null ? 1 : 1.6,
+            ),
+          ),
+          child: Text(
+            label,
+            style: AppText.body(
+              size: 14.5,
+              weight: FontWeight.w600,
+              height: 1.3,
+              color: p.ink,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -573,7 +765,7 @@ class _WritePartState extends State<_WritePart> {
               _Body(answer.text),
             ] else if (widget.result case final AskNone none) ...[
               const SizedBox(height: 12),
-              _WhyNot(none.why, onRetry: () => widget.onAsk(text)),
+              _WhyNot(none, onRetry: () => widget.onAsk(text)),
             ],
           ],
         ],
@@ -643,26 +835,43 @@ class _Busy extends StatelessWidget {
 }
 
 class _WhyNot extends StatelessWidget {
-  const _WhyNot(this.why, {required this.onRetry});
+  const _WhyNot(this.none, {required this.onRetry});
 
-  final AskWhyNot why;
+  final AskNone none;
   final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final AskWhyNot why = none.why;
     final String line = switch (why) {
       AskWhyNot.tomorrow => l.deeperTomorrow,
       AskWhyNot.declined => l.deeperDeclined,
       AskWhyNot.plus => l.deeperPlusOnly,
       AskWhyNot.later => l.deeperTryAgain,
     };
+    final String? detail = debugToolsOn ? none.detail : null;
     return Row(
       children: [
         Expanded(
-          child: Text(
-            line,
-            style: AppText.body(size: 14, color: context.p.inkMuted),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                line,
+                style: AppText.body(size: 14, color: context.p.inkMuted),
+              ),
+              // The server's own words, for the TestFlight installs only.
+              if (detail != null && detail.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    detail,
+                    key: const ValueKey('deeper-why-not-detail'),
+                    style: AppText.body(size: 11, color: context.p.inkFaint),
+                  ),
+                ),
+            ],
           ),
         ),
         if (why == AskWhyNot.later)

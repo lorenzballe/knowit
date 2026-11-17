@@ -3148,6 +3148,9 @@ class AppState extends ChangeNotifier {
     isPlus = true;
     Trace.instance.plus = true;
     await _prefs.setBool(_kPlus, true);
+    // Said to the server now, not with the next things read: it is what
+    // the answers by Claude are given on.
+    unawaited(Trace.instance.sayPresence());
     Analytics.capture('trial started');
     Analytics.register('is_plus', true);
     notifyListeners();
@@ -3162,6 +3165,9 @@ class AppState extends ChangeNotifier {
     isPlus = active;
     Trace.instance.plus = active;
     await _prefs.setBool(_kPlus, active);
+    // Said to the server now, not with the next things read: it is what
+    // the answers by Claude are given on.
+    unawaited(Trace.instance.sayPresence());
     // What the store said, not what a screen hoped: this is the one place
     // the plan actually changes, so it is the one place it is counted —
     // and the one place the profile is told at once, beside the store's
@@ -3177,6 +3183,9 @@ class AppState extends ChangeNotifier {
     Trace.instance.plus = false;
     await _prefs.setBool(_kPlus, false);
     Analytics.register('is_plus', false);
+    // Said to the server now, not with the next things read: it is what
+    // the answers by Claude are given on.
+    unawaited(Trace.instance.sayPresence());
     notifyListeners();
   }
 

@@ -297,7 +297,7 @@ void main() {
     );
 
     Future<void> pump(WidgetTester tester, AppState app) async {
-      tester.view.physicalSize = const Size(402, 3200);
+      tester.view.physicalSize = const Size(402, 6000);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
       await tester.pumpWidget(host(app));

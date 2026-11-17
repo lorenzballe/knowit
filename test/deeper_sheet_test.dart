@@ -155,6 +155,63 @@ void main() {
     ));
   });
 
+  testWidgets('a new case to answer on the spot: the question, three options, '
+      'and after a pick the verdict and why', (tester) async {
+    debugToolsOn = true;
+    CardAsk.call = (card, mode, {text = '', required language}) async =>
+        mode == AskMode.quiz
+        ? const AskAnswer(
+            'Q: A shop says 9 in 10 buyers love its blender. What do you ask?\n'
+            'A) How many buyers it asked\n'
+            'B) Which colour it comes in\n'
+            'C) Nothing: 9 in 10 is plenty\n'
+            'RIGHT: A\n'
+            'WHY: Ten buyers or ten thousand make a different claim. The big '
+            'number tempts because it sounds settled.',
+          )
+        : const AskNone(AskWhyNot.later);
+    addTearDown(
+      () =>
+          CardAsk.call = (c, m, {text = '', required language}) async =>
+              const AskNone(AskWhyNot.later),
+    );
+    await _open(tester, await _app(plus: true), _card(full: false));
+
+    final Finder button = find.text('Test me on a new case').last;
+    await tester.ensureVisible(button);
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+    expect(
+      find.text(
+        'A shop says 9 in 10 buyers love its blender. What do you ask?',
+      ),
+      findsOneWidget,
+    );
+    // A wrong pick: not quite, and why.
+    await tester.ensureVisible(find.text('Nothing: 9 in 10 is plenty'));
+    await tester.tap(find.text('Nothing: 9 in 10 is plenty'));
+    await tester.pumpAndSettle();
+    expect(find.text('Not quite.'), findsOneWidget);
+    expect(find.textContaining('Ten buyers or ten thousand'), findsOneWidget);
+    // Answered once: another tap changes nothing.
+    await tester.tap(find.text('How many buyers it asked'));
+    await tester.pumpAndSettle();
+    expect(find.text('Right.'), findsNothing);
+  });
+
+  test('a quiz is read from the one shape the server writes, and nothing '
+      'else is one', () {
+    final CardQuiz? quiz = CardQuiz.parse(
+      '**Q:** Why?\nA) x\nB)  y \nC) z\nRIGHT: C\nWHY: because.',
+    );
+    expect(quiz?.question, 'Why?');
+    expect(quiz?.options, ['x', 'y', 'z']);
+    expect(quiz?.right, 2);
+    expect(quiz?.why, 'because.');
+    expect(CardQuiz.parse('Q: Why?\nA) x\nB) y\nWHY: because'), isNull);
+    expect(CardQuiz.parse('Some words about the card.'), isNull);
+  });
+
   testWidgets('an idea of a book with no link of its own leads to the book '
       'in the open library catalogue', (tester) async {
     final Pill idea = cardFromJson({

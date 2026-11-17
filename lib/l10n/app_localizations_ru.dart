@@ -4997,6 +4997,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get storyChapterStory => 'Твоя история';
 
   @override
+  String get journeyChapterKnow => 'Что ты знаешь';
+
+  @override
+  String get journeyChapterHabits => 'Твои привычки';
+
+  @override
+  String get journeyChapterMemory => 'Что остаётся с тобой';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -5178,6 +5187,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get deeperExample => 'Пример из обычной жизни';
+
+  @override
+  String get deeperQuiz => 'Проверь меня на новом примере';
+
+  @override
+  String get deeperQuizRight => 'Верно.';
+
+  @override
+  String get deeperQuizWrong => 'Не совсем.';
 
   @override
   String get deeperYourTake => 'Твоя мысль под лупой';

@@ -4838,6 +4838,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get storyChapterStory => 'A tua história';
 
   @override
+  String get journeyChapterKnow => 'O que sabes';
+
+  @override
+  String get journeyChapterHabits => 'Os teus hábitos';
+
+  @override
+  String get journeyChapterMemory => 'O que te fica';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -4996,6 +5005,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deeperExample => 'Um exemplo do dia a dia';
+
+  @override
+  String get deeperQuiz => 'Põe-me à prova com um caso novo';
+
+  @override
+  String get deeperQuizRight => 'Certo.';
+
+  @override
+  String get deeperQuizWrong => 'Não exatamente.';
 
   @override
   String get deeperYourTake => 'A tua ideia, analisada';
