@@ -1,0 +1,42 @@
+{
+  "id": "nature-book-silent-spring-5",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.what_one_person_can_do",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the chemical industry respond to Silent Spring when it came out in 1962?",
+  "answer": "With fierce attacks. Companies threatened lawsuits, and some critics dismissed Carson as an alarmist or a hysterical woman rather than engaging with her evidence. President Kennedy's science advisers reviewed her claims, and their 1963 report largely backed her, calling for more careful use of pesticides.",
+  "move": "When critics attack the person rather than the evidence, look closer.",
+  "simply": "Big chemical companies called Carson hysterical and threatened to sue. Then the president's scientists checked her work, and mostly agreed with her.",
+  "why": "Attacks on someone's character instead of their evidence are a warning sign in any debate. Independent review is how such disputes get settled.",
+  "book": {
+    "id": "silent-spring",
+    "title": "Silent Spring",
+    "author": "Rachel Carson",
+    "year": 1962,
+    "part": 5,
+    "isbn": "9780618249060",
+    "badge": "Credited with starting the modern environmental movement"
+  },
+  "keywords": [
+    "chemical industry",
+    "ad hominem",
+    "kennedy science advisory committee",
+    "rachel carson"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Rachel Carson, Silent Spring, 1962",
+  "source_kind": "book",
+  "reference": "Rachel Carson, Silent Spring (Houghton Mifflin, 1962)",
+  "written": "2026-11-17"
+}

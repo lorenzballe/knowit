@@ -1,0 +1,50 @@
+{
+  "id": "music-book-this-is-your-brain-on-music-5",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.taste_and_status",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The psychologist Steven Pinker called music 'auditory cheesecake'. What did he mean?",
+  "options": [
+    "A pleasant by-product of other abilities",
+    "The highest of the arts",
+    "Best enjoyed in small doses"
+  ],
+  "correct": 0,
+  "answer": "That music may be a pleasant by-product of abilities evolved for other things, such as language, rather than an adaptation in itself, as cheesecake exploits a taste for fat and sugar. Levitin disagrees: he argues music likely helped our ancestors bond and attract mates, signalling health and skill.",
+  "move": "Ask whether a trait evolved for its own job or borrowed another's.",
+  "trap": "'Best enjoyed in small doses': dessert suggests a little at a time.",
+  "simply": "Pinker said music is like cheesecake: we love it, but it's a happy accident of tastes evolved for other things. Levitin thinks music mattered for survival.",
+  "why": "Whichever side is right, the debate offers a useful question for any trait or habit: did it arise for this job, or borrow parts built for another?",
+  "sure": 0.35,
+  "book": {
+    "id": "this-is-your-brain-on-music",
+    "title": "This Is Your Brain on Music",
+    "author": "Daniel J. Levitin",
+    "year": 2006,
+    "part": 5,
+    "isbn": "9780452288522",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "auditory cheesecake",
+    "steven pinker",
+    "evolution of music",
+    "sexual selection"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel J. Levitin, This Is Your Brain on Music, 2006",
+  "source_kind": "book",
+  "reference": "Daniel J. Levitin, This Is Your Brain on Music (Dutton, 2006), ch. 9",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "language-book-because-internet-2",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.internet_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do many older people fill their messages with ellipses, in McCulloch's account?",
+  "answer": "Because they learned informal writing before the internet, on postcards and notes, where dots simply separated thoughts. McCulloch finds that for many people who came online later, an ellipsis is a neutral pause, while younger readers hear it as trailing off or hinting at something unsaid. Same dots, different generations, different tones.",
+  "move": "Read punctuation through the writer's habits, not only through your own.",
+  "simply": "Grandma's '...' usually just means 'and another thing'. A teenager reads it as 'something's wrong'. Same dots, different meaning.",
+  "why": "Before taking offence at a message, consider the sender's age and habits. Many online misunderstandings are tone lost between generations, not hostility.",
+  "book": {
+    "id": "because-internet",
+    "title": "Because Internet",
+    "author": "Gretchen McCulloch",
+    "year": 2019,
+    "part": 2,
+    "isbn": "9780735210936",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "ellipsis",
+    "punctuation",
+    "generations",
+    "texting"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Gretchen McCulloch, Because Internet, 2019",
+  "source_kind": "book",
+  "reference": "Gretchen McCulloch, Because Internet: Understanding the New Rules of Language (Riverhead, 2019)",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-book-hit-makers-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.trends",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we often come to like a song after hearing it a few times?",
+  "answer": "Thompson calls it fluency: things we've met before are easier to process, and that ease feels like liking. Psychologists call it the mere-exposure effect. It's why radio repeats the same songs, and why a song you shrugged at can grow on you.",
+  "move": "Familiarity feels like quality; check which one you're responding to.",
+  "simply": "The first time you hear a song it's just okay. By the tenth time you're singing along. Your brain likes what it already knows.",
+  "why": "Repetition shapes your taste in music, brands and even opinions. Knowing that helps you ask whether you like something, or are just used to it.",
+  "book": {
+    "id": "hit-makers",
+    "title": "Hit Makers",
+    "author": "Derek Thompson",
+    "year": 2017,
+    "part": 2,
+    "isbn": "9781101980323",
+    "badge": "By a senior editor at The Atlantic"
+  },
+  "keywords": [
+    "mere exposure",
+    "fluency",
+    "repetition",
+    "taste"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Derek Thompson, Hit Makers, 2017",
+  "source_kind": "book",
+  "reference": "Derek Thompson, Hit Makers: The Science of Popularity in an Age of Distraction (Penguin Press, 2017), ch. 1",
+  "written": "2026-11-17"
+}

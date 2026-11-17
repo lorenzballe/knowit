@@ -1,0 +1,50 @@
+{
+  "id": "art-book-ways-of-seeing-2",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.symbols",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Berger printed a Van Gogh painting of a wheatfield, then printed it again with a caption. What did the caption change?",
+  "options": [
+    "How readers saw the same picture",
+    "Nothing about the picture",
+    "Only its price"
+  ],
+  "correct": 0,
+  "answer": "How readers saw it. Berger asked readers to look at the painting, then turned the page to the same image captioned as the last picture Van Gogh painted before he killed himself. The paint is unchanged, yet the image now seems to illustrate the sentence. Words beside a picture steer what we see in it.",
+  "move": "Notice what a caption tells you to see before you look.",
+  "trap": "'Nothing about the picture': the paint on the canvas hasn't changed.",
+  "simply": "A painting of a field looks peaceful. Add a caption saying the painter died soon after, and suddenly the crows look ominous.",
+  "why": "News photos, memes and ads all come with words that tell you what to see. Covering the caption for a moment is a simple way to look for yourself.",
+  "sure": 0.35,
+  "book": {
+    "id": "ways-of-seeing",
+    "title": "Ways of Seeing",
+    "author": "John Berger",
+    "year": 1972,
+    "part": 2,
+    "isbn": "9780141035796",
+    "badge": "Based on the 1972 BBC television series"
+  },
+  "keywords": [
+    "van gogh",
+    "captions",
+    "framing",
+    "images"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Berger, Ways of Seeing, 1972",
+  "source_kind": "book",
+  "reference": "John Berger, Ways of Seeing (BBC and Penguin, 1972), ch. 1",
+  "written": "2026-11-17"
+}

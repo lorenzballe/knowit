@@ -1,0 +1,50 @@
+{
+  "id": "technology-book-weapons-of-math-destruction-2",
+  "topic": "technology",
+  "genre": "technology.tech_and_society",
+  "strand": "technology.tech_and_society.jobs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A Washington teacher praised by parents and her principal was fired in 2011. What decided it?",
+  "options": [
+    "A score from a statistical model",
+    "Complaints from parents",
+    "A bad inspection"
+  ],
+  "correct": 0,
+  "answer": "A score from IMPACT, a model rating teachers on their students' test results. Sarah Wysocki's score was low, so she was fired, though the model was hard to question and her students' earlier scores may have been inflated. O'Neil uses her case to show a number overruling people who knew better.",
+  "move": "When a number overrules everyone who knows the case, question the number.",
+  "trap": "'Complaints from parents': firing usually starts with people.",
+  "simply": "It's like a referee who watches one minute of replay, then sends off the player everyone saw playing well.",
+  "why": "At work, at school or at the bank, decisions by score are spreading. Asking how the score was built, and how noisy it is, is a fair question anyone can raise.",
+  "sure": 0.35,
+  "book": {
+    "id": "weapons-of-math-destruction",
+    "title": "Weapons of Math Destruction",
+    "author": "Cathy O'Neil",
+    "year": 2016,
+    "part": 2,
+    "isbn": "9780553418835",
+    "badge": "Longlisted for the National Book Award"
+  },
+  "keywords": [
+    "teacher evaluation",
+    "value-added models",
+    "impact",
+    "scores"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cathy O'Neil, Weapons of Math Destruction, 2016",
+  "source_kind": "book",
+  "reference": "Cathy O'Neil, Weapons of Math Destruction (Crown, 2016), Introduction",
+  "written": "2026-11-17"
+}

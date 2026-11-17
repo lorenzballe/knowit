@@ -1,0 +1,42 @@
+{
+  "id": "science-book-the-double-helix-3",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Watson learn from an X-ray photo of DNA taken in Rosalind Franklin's lab?",
+  "answer": "That DNA was a helix. Maurice Wilkins showed Watson the image, now called Photo 51, in January 1953 without Franklin's knowledge, and its cross-shaped pattern made the helix obvious to him. Watson's memoir describes his racing pulse; critics note it gives too little credit to Franklin's careful data.",
+  "move": "Ask whose work a famous breakthrough quietly depended on.",
+  "simply": "A photo from Rosalind Franklin's lab showed an X-shaped pattern that meant 'spiral'. Watson saw it without her knowing, and it helped him win the race.",
+  "why": "Big discoveries usually rest on many people's work. Asking who did the measuring, not just who announced the result, gives a truer picture of science.",
+  "book": {
+    "id": "the-double-helix",
+    "title": "The Double Helix",
+    "author": "James D. Watson",
+    "year": 1968,
+    "part": 3,
+    "isbn": "9780743216302",
+    "badge": "On the Modern Library's list of the 100 best nonfiction books"
+  },
+  "keywords": [
+    "photo 51",
+    "rosalind franklin",
+    "x-ray crystallography",
+    "credit"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James D. Watson, The Double Helix, 1968",
+  "source_kind": "book",
+  "reference": "James D. Watson, The Double Helix (Atheneum, 1968)",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "pop_culture-book-amusing-ourselves-to-death-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.binge_watching",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "In 1854 Lincoln and Douglas debated in Peoria, Illinois. How long did the audience listen?",
+  "options": [
+    "About seven hours",
+    "About one hour",
+    "Twenty minutes"
+  ],
+  "correct": 0,
+  "answer": "About seven hours: Douglas spoke for three, the crowd broke for dinner, then heard Lincoln for as long again and Douglas for one more. Postman uses it to show how print shaped attention: audiences raised on reading could follow long, complex arguments that television would cut into soundbites.",
+  "move": "Notice how the medium sets how long you can follow an argument.",
+  "trap": "'About one hour': it's what we'd sit through now.",
+  "simply": "People in 1854 sat through seven hours of speeches. Today a TV debate gives each answer a minute. What we're used to shapes what we can follow.",
+  "why": "When a complex issue arrives as a ten-second clip, it's worth asking what the format had to leave out.",
+  "sure": 0.35,
+  "book": {
+    "id": "amusing-ourselves-to-death",
+    "title": "Amusing Ourselves to Death",
+    "author": "Neil Postman",
+    "year": 1985,
+    "part": 2,
+    "isbn": "9780140094381",
+    "badge": "A classic of media criticism, in print since 1985"
+  },
+  "keywords": [
+    "lincoln",
+    "douglas",
+    "debates",
+    "attention span"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Neil Postman, Amusing Ourselves to Death, 1985",
+  "source_kind": "book",
+  "reference": "Neil Postman, Amusing Ourselves to Death (Viking, 1985), ch. 4",
+  "written": "2026-11-17"
+}

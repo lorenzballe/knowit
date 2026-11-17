@@ -1,0 +1,42 @@
+{
+  "id": "technology-book-the-shallows-4",
+  "topic": "technology",
+  "genre": "technology.your_digital_life",
+  "strand": "technology.your_digital_life.digital_detox",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does the way we use tools like maps change our brains?",
+  "answer": "Carr cites research on London taxi drivers, whose hippocampus, a region used for spatial memory, was larger than average, and larger the longer they had driven. If learning a city can reshape the brain, leaning on GPS can too: skills handed to a tool fade with disuse.",
+  "move": "Skills you hand to a tool can fade from lack of use.",
+  "simply": "Your brain is like a muscle for what you practise. Taxi drivers' map muscle grew. If GPS does all the work, yours gets lazy.",
+  "why": "It's not a reason to ditch tools, but to keep practising the skills you care about, from mental maths to finding your way.",
+  "book": {
+    "id": "the-shallows",
+    "title": "The Shallows",
+    "author": "Nicholas Carr",
+    "year": 2010,
+    "part": 4,
+    "isbn": "9780393339758",
+    "badge": "A finalist for the Pulitzer Prize"
+  },
+  "keywords": [
+    "taxi drivers",
+    "hippocampus",
+    "gps",
+    "plasticity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nicholas Carr, The Shallows, 2010",
+  "source_kind": "book",
+  "reference": "Nicholas Carr, The Shallows: What the Internet Is Doing to Our Brains (W. W. Norton, 2010), ch. 2",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "sport-book-the-sports-gene-2",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.talent_or_practice",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Donald Thomas win the 2007 world high-jump title after so little training?",
+  "answer": "With a body suited to jumping: long legs and an unusually long, stiff Achilles tendon that stores energy like a spring. Thomas had trained for only about eight months when he won the world championship. Epstein uses his story to argue that bodies differ in how much, and how fast, they respond to training.",
+  "move": "People differ in how much they gain from the same training.",
+  "simply": "A college basketball player tried the high jump for a bet and, within a year, became world champion. His legs were built like springs.",
+  "why": "If two people train the same way and one improves faster, it may be biology, not effort. Finding the sport or method that suits your body helps.",
+  "book": {
+    "id": "the-sports-gene",
+    "title": "The Sports Gene",
+    "author": "David Epstein",
+    "year": 2013,
+    "part": 2,
+    "isbn": "9781617230127",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "donald thomas",
+    "high jump",
+    "achilles tendon",
+    "talent"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, The Sports Gene, 2013",
+  "source_kind": "book",
+  "reference": "David Epstein, The Sports Gene: Inside the Science of Extraordinary Athletic Performance (Current, 2013), ch. 2",
+  "written": "2026-11-17"
+}

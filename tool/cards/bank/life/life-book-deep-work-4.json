@@ -1,0 +1,42 @@
+{
+  "id": "life-book-deep-work-4",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.priorities",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Newport end each workday with a 'shutdown ritual'?",
+  "answer": "To stop work properly so the mind can rest. He reviews his tasks, plans the next day, then says a set phrase: 'Schedule shutdown, complete.' Newport cites research suggesting that unfinished tasks nag at the mind until there is a plan for them, so a clear plan lets evenings bring real recovery.",
+  "move": "End work with a plan, so unfinished tasks stop nagging you.",
+  "simply": "At the end of the day Newport checks his list, plans tomorrow and says 'shutdown complete'. Then his brain can let work go.",
+  "why": "Rest is what makes the next day's focus possible. A two-minute ritual can stop work from leaking into your evening.",
+  "book": {
+    "id": "deep-work",
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "year": 2016,
+    "part": 4,
+    "isbn": "9781455586691",
+    "badge": "By a Georgetown computer science professor"
+  },
+  "keywords": [
+    "shutdown ritual",
+    "rest",
+    "planning",
+    "work-life balance"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cal Newport, Deep Work, 2016",
+  "source_kind": "book",
+  "reference": "Cal Newport, Deep Work: Rules for Focused Success in a Distracted World (Grand Central, 2016), Rule 1",
+  "written": "2026-11-17"
+}

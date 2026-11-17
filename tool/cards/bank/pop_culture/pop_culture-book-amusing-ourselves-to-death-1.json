@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-book-amusing-ourselves-to-death-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.binge_watching",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Orwell or Huxley: whose future did Neil Postman think we were heading for?",
+  "answer": "Huxley's. Orwell feared that books would be banned and truth concealed; Huxley feared there would be no reason to ban a book, because no one would want to read one, and truth would drown in irrelevance. Postman argued that television was bringing Huxley's version, through entertainment rather than force.",
+  "move": "Censorship hides the truth; endless entertainment can bury it.",
+  "simply": "One way to stop people knowing things is to hide them. Another is to keep everyone so entertained they never look.",
+  "why": "It's a useful lens for any feed or news app: the risk isn't only what is hidden, but what is never noticed among the fun.",
+  "book": {
+    "id": "amusing-ourselves-to-death",
+    "title": "Amusing Ourselves to Death",
+    "author": "Neil Postman",
+    "year": 1985,
+    "part": 1,
+    "isbn": "9780140094381",
+    "badge": "A classic of media criticism, in print since 1985"
+  },
+  "keywords": [
+    "postman",
+    "huxley",
+    "orwell",
+    "television"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Neil Postman, Amusing Ourselves to Death, 1985",
+  "source_kind": "book",
+  "reference": "Neil Postman, Amusing Ourselves to Death (Viking, 1985), Foreword",
+  "written": "2026-11-17"
+}

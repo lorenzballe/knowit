@@ -1,0 +1,50 @@
+{
+  "id": "food-book-the-omnivores-dilemma-2",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.processed_food",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Pollan had a fast-food meal tested for its carbon. Which crop turned out to be in most of it?",
+  "options": [
+    "Corn",
+    "Wheat",
+    "Potatoes"
+  ],
+  "correct": 0,
+  "answer": "Corn. A scientist tested the meal for the distinctive carbon that corn leaves in food, and found it throughout: in the soda, the milkshake, the nuggets and much of the burger. Fed to cattle and chickens, and turned into syrups, starches and oils, corn is hidden in much of the industrial diet.",
+  "move": "Trace food back to what it was grown from, not how it looks.",
+  "trap": "'Potatoes': the fries are the meal's most visible crop.",
+  "simply": "A burger, fries and a cola look like beef, potato and sugar. Test them, and much of it turns out to be corn in disguise.",
+  "why": "Reading labels for corn syrup, starch and oils shows how much of a modern diet traces back to one crop, which matters for farming, health and prices.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-omnivores-dilemma",
+    "title": "The Omnivore's Dilemma",
+    "author": "Michael Pollan",
+    "year": 2006,
+    "part": 2,
+    "isbn": "9780143038580",
+    "badge": "Named one of the ten best books of 2006 by The New York Times"
+  },
+  "keywords": [
+    "corn",
+    "industrial food",
+    "fast food",
+    "carbon isotopes"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Pollan, The Omnivore's Dilemma, 2006",
+  "source_kind": "book",
+  "reference": "Michael Pollan, The Omnivore's Dilemma (Penguin Press, 2006), ch. 7",
+  "written": "2026-11-17"
+}

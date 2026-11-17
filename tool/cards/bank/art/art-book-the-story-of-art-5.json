@@ -1,0 +1,50 @@
+{
+  "id": "art-book-the-story-of-art-5",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.my_kid_could_do_that",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Where does the name 'Impressionism' come from?",
+  "options": [
+    "A critic mocking a Monet title",
+    "The painters' own manifesto",
+    "A Paris gallery's sign"
+  ],
+  "correct": 0,
+  "answer": "From a critic's mockery. At an 1874 exhibition, Monet showed a harbour scene titled 'Impression, Sunrise', and a journalist sneered at the whole group as Impressionists. Gombrich tells how these painters, trying to capture light and the fleeting look of things, were long dismissed as makers of unfinished daubs.",
+  "move": "Names given in mockery can become badges of honour.",
+  "trap": "'The painters' own manifesto': movements usually name themselves.",
+  "simply": "A critic laughed at a Monet painting called 'Impression, Sunrise' and called the painters Impressionists. The insult stuck, and became famous.",
+  "why": "Many movements were named by their mockers. It's a reminder that early ridicule says little about lasting worth.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-story-of-art",
+    "title": "The Story of Art",
+    "author": "E. H. Gombrich",
+    "year": 1950,
+    "part": 5,
+    "isbn": "9780714832470",
+    "badge": "In print since 1950, now in its sixteenth edition"
+  },
+  "keywords": [
+    "impressionism",
+    "monet",
+    "critics",
+    "modern art"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "E. H. Gombrich, The Story of Art, 1950",
+  "source_kind": "book",
+  "reference": "E. H. Gombrich, The Story of Art (Phaidon, 1950; 16th ed., 1995), ch. 25",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-book-justice-1",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.punishment",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1884, shipwrecked sailors killed and ate the cabin boy to survive. Why does Sandel retell the case?",
+  "answer": "To test utilitarian thinking. The crew of the Mignonette, adrift for weeks, killed the sick 17-year-old Richard Parker, and three men lived. A court convicted two of murder. Sandel asks whether saving three lives justified taking one, or whether some acts are wrong whatever their benefits, as many people feel.",
+  "move": "Test a principle on a hard case before trusting it on easy ones.",
+  "simply": "Starving sailors killed the weakest boy so the rest could live. Was it right to save three by killing one? Most people feel it wasn't.",
+  "why": "Hard cases show what we really believe. Asking 'would I accept this rule in the worst case?' is a quick test for any moral or policy argument.",
+  "book": {
+    "id": "justice",
+    "title": "Justice",
+    "author": "Michael J. Sandel",
+    "year": 2009,
+    "part": 1,
+    "isbn": "9780374532505",
+    "badge": "From Michael Sandel's famous Harvard course on justice"
+  },
+  "keywords": [
+    "mignonette",
+    "utilitarianism",
+    "dudley and stephens",
+    "moral dilemmas"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael J. Sandel, Justice, 2009",
+  "source_kind": "book",
+  "reference": "Michael J. Sandel, Justice: What's the Right Thing to Do? (Farrar, Straus and Giroux, 2009), ch. 2",
+  "written": "2026-11-17"
+}

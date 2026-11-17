@@ -1,0 +1,50 @@
+{
+  "id": "human_body-book-the-man-who-mistook-his-wife-for-a-hat-4",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Patients who could no longer understand words laughed at a president's speech on television. Why, in Sacks's account?",
+  "options": [
+    "They heard falseness in his tone",
+    "They found the words funny",
+    "They were laughing at something else"
+  ],
+  "correct": 0,
+  "answer": "Because, unable to follow words, they had grown acutely sensitive to tone, expression and gesture, and these rang false. One can lie with words, Sacks noted, but it is hard to fake the music of speech. A woman with the opposite problem, hearing words without tone, was unmoved too.",
+  "move": "Listen to how something is said, not only to the words.",
+  "trap": "'They found the words funny': laughter usually answers words.",
+  "simply": "People who had lost the meaning of words could still hear the tune of a voice, and the president's tune sounded fake to them.",
+  "why": "Tone, face and gesture carry much of what people mean. Paying attention to them helps you notice when words and feelings don't match.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-man-who-mistook-his-wife-for-a-hat",
+    "title": "The Man Who Mistook His Wife for a Hat",
+    "author": "Oliver Sacks",
+    "year": 1985,
+    "part": 4,
+    "isbn": "9780684853949",
+    "badge": "Adapted into an opera by Michael Nyman"
+  },
+  "keywords": [
+    "aphasia",
+    "tone of voice",
+    "communication",
+    "persuasion"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, The Man Who Mistook His Wife for a Hat, 1985",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, The Man Who Mistook His Wife for a Hat (Summit Books, 1985), ch. 9",
+  "written": "2026-11-17"
+}

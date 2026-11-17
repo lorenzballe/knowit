@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-book-the-disappearing-spoon-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.weird_but_useful",
+  "strand": "weird_facts.weird_but_useful.odd_tricks_that_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a spoon made of gallium vanish when you stir a cup of hot tea with it?",
+  "answer": "Because gallium melts at about 30 degrees Celsius, just above room temperature. It looks like aluminium on the table, then melts into a silvery puddle at the bottom of a hot cup. Chemists have long used gallium spoons as a prank, and Kean took his title from it.",
+  "move": "A material's behaviour depends on its temperature, not just on what it looks like.",
+  "simply": "Gallium is a metal that melts at a little warmer than room temperature. Make a spoon from it, put it in hot tea, and it melts away.",
+  "why": "It's a vivid reminder that 'solid' and 'liquid' are not fixed qualities but states that depend on conditions, true of metals, chocolate and much else.",
+  "book": {
+    "id": "the-disappearing-spoon",
+    "title": "The Disappearing Spoon",
+    "author": "Sam Kean",
+    "year": 2010,
+    "part": 1,
+    "isbn": "9780316051637",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "gallium",
+    "melting point",
+    "metals",
+    "chemistry pranks"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Sam Kean, The Disappearing Spoon, 2010",
+  "source_kind": "book",
+  "reference": "Sam Kean, The Disappearing Spoon (Little, Brown, 2010)",
+  "written": "2026-11-17"
+}

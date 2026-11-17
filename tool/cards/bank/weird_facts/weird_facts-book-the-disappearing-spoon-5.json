@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-book-the-disappearing-spoon-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.weird_but_useful",
+  "strand": "weird_facts.weird_but_useful.strange_but_true",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the Japanese 'itai-itai' disease, and which element caused it?",
+  "answer": "A disease of brittle, painful bones among people near Japan's Jinzu river in the twentieth century, named for the cry 'itai-itai', 'ouch-ouch'. The cause was cadmium, washed from a mine upstream into rice fields. Kean uses it to show how an element dug from a mine can end up as a poison in food.",
+  "move": "Trace a strange illness upstream: the cause may be far away.",
+  "simply": "A mine upriver leaked a metal called cadmium into the water used for rice. People who ate the rice got bones so fragile they broke and hurt terribly.",
+  "why": "Pollution often harms far from its source, and slowly. It's why tracing where water, food and waste go matters for everyone's health.",
+  "book": {
+    "id": "the-disappearing-spoon",
+    "title": "The Disappearing Spoon",
+    "author": "Sam Kean",
+    "year": 2010,
+    "part": 5,
+    "isbn": "9780316051637",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "cadmium",
+    "itai-itai disease",
+    "pollution",
+    "japan"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Sam Kean, The Disappearing Spoon, 2010",
+  "source_kind": "book",
+  "reference": "Sam Kean, The Disappearing Spoon (Little, Brown, 2010), ch. 9",
+  "written": "2026-11-17"
+}

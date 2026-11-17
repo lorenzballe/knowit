@@ -1,0 +1,42 @@
+{
+  "id": "music-book-this-is-your-brain-on-music-2",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.chills",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes music pleasurable, in the neuroscientist Daniel Levitin's account?",
+  "answer": "Playing with expectation. As we listen, the brain keeps predicting the next note and beat; composers satisfy some predictions and delay or break others. Levitin describes brain scans in which music people love engaged reward circuits, including areas tied to dopamine, much as food and other pleasures do.",
+  "move": "Pleasure in music comes from predictions, kept and broken.",
+  "simply": "Your brain keeps guessing the next note. Good music lets it guess right sometimes, and surprises it just enough the rest of the time.",
+  "why": "The same balance of familiar and surprising runs through good stories, jokes and design, which is why some songs grip you and others don't.",
+  "book": {
+    "id": "this-is-your-brain-on-music",
+    "title": "This Is Your Brain on Music",
+    "author": "Daniel J. Levitin",
+    "year": 2006,
+    "part": 2,
+    "isbn": "9780452288522",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "expectation",
+    "dopamine",
+    "reward",
+    "music and the brain"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel J. Levitin, This Is Your Brain on Music, 2006",
+  "source_kind": "book",
+  "reference": "Daniel J. Levitin, This Is Your Brain on Music (Dutton, 2006), ch. 4",
+  "written": "2026-11-17"
+}

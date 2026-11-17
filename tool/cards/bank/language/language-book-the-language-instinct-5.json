@@ -1,0 +1,42 @@
+{
+  "id": "language-book-the-language-instinct-5",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.words_and_thought",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do we think in words, according to Pinker?",
+  "answer": "Mostly not. Pinker argues we think in 'mentalese', a language of thought beneath any spoken tongue. Babies and animals reason without words, and we often know what we mean before finding the phrase. Words are how we share thoughts, he says, not what thoughts are made of.",
+  "move": "Struggling to find a word is proof the thought came first.",
+  "simply": "Ever known exactly what you mean but couldn't find the word? The thought was already there; the word was just late.",
+  "why": "It sharpens a common debate: language can colour thinking, but having no word for something doesn't stop you understanding it.",
+  "book": {
+    "id": "the-language-instinct",
+    "title": "The Language Instinct",
+    "author": "Steven Pinker",
+    "year": 1994,
+    "part": 5,
+    "isbn": "9780060958336",
+    "badge": "By a two-time Pulitzer Prize finalist"
+  },
+  "keywords": [
+    "mentalese",
+    "thought",
+    "language and thought",
+    "pinker"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Steven Pinker, The Language Instinct, 1994",
+  "source_kind": "book",
+  "reference": "Steven Pinker, The Language Instinct (William Morrow, 1994), ch. 3",
+  "written": "2026-11-17"
+}

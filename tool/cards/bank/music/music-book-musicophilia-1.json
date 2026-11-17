@@ -1,0 +1,42 @@
+{
+  "id": "music-book-musicophilia-1",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to the surgeon Tony Cicoria after he was struck by lightning?",
+  "answer": "Cicoria, who had little interest in music, was struck by lightning from a payphone in 1994 and soon recovered. Weeks later he developed an insatiable hunger for piano music, taught himself to play and began composing. Oliver Sacks uses his case to ask how a brain can change so suddenly.",
+  "move": "A brain can change suddenly, opening interests nobody expected.",
+  "simply": "A doctor who barely cared about music was hit by lightning. Afterwards he couldn't stop listening to piano music, and taught himself to play.",
+  "why": "It hints at how much ability lies dormant in a brain, and why sudden changes in personality after an injury deserve a doctor's attention.",
+  "book": {
+    "id": "musicophilia",
+    "title": "Musicophilia",
+    "author": "Oliver Sacks",
+    "year": 2007,
+    "part": 1,
+    "isbn": "9781400033539",
+    "badge": "By the neurologist behind Awakenings"
+  },
+  "keywords": [
+    "tony cicoria",
+    "lightning",
+    "piano",
+    "sudden musicality"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, Musicophilia, 2007",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, Musicophilia: Tales of Music and the Brain (Knopf, 2007), ch. 1",
+  "written": "2026-11-17"
+}

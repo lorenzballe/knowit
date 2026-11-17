@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-book-hit-makers-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.hype_and_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did 'Rock Around the Clock' sell little in 1954 and top the charts in 1955?",
+  "answer": "The record barely sold at first. A year later it played over the opening of the film 'Blackboard Jungle', and teenagers who heard it in cinemas made it a number one. Thompson's point: a hit needs distribution as much as quality; the same song can fail or triumph depending on who hears it.",
+  "move": "Quality alone rarely makes a hit; ask who got to hear it.",
+  "simply": "A great song nobody hears is like a great joke told in an empty room. Put it in a film everyone sees, and suddenly it's a hit.",
+  "why": "For your own work too: reaching the right audience can matter as much as making the thing better.",
+  "book": {
+    "id": "hit-makers",
+    "title": "Hit Makers",
+    "author": "Derek Thompson",
+    "year": 2017,
+    "part": 4,
+    "isbn": "9781101980323",
+    "badge": "By a senior editor at The Atlantic"
+  },
+  "keywords": [
+    "rock around the clock",
+    "distribution",
+    "bill haley",
+    "hits"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Derek Thompson, Hit Makers, 2017",
+  "source_kind": "book",
+  "reference": "Derek Thompson, Hit Makers: The Science of Popularity in an Age of Distraction (Penguin Press, 2017)",
+  "written": "2026-11-17"
+}

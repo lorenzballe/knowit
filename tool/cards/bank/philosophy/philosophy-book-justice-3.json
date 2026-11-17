@@ -1,0 +1,50 @@
+{
+  "id": "philosophy-book-justice-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.lying",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A murderer asks where your friend is hiding. Must you tell the truth, according to Kant?",
+  "options": [
+    "Yes, Kant held lying is always wrong",
+    "No, lying is fine to save a life",
+    "Kant never discussed it"
+  ],
+  "correct": 0,
+  "answer": "Yes: Kant held that lying is always wrong, even to a murderer at the door, since you can't will a world where everyone lies when convenient. Sandel adds that, on Kant's view, a misleading but true answer is not a lie. Many readers find the conclusion too harsh, which makes it a good test.",
+  "move": "Follow a principle to its hardest case to see what it demands.",
+  "trap": "'No, lying is fine to save a life': it's what most people feel.",
+  "simply": "Kant said you must never lie, even to protect a friend from a murderer. Most people disagree, and that's why the example is famous.",
+  "why": "It shows the strength and the risk of firm rules: they protect against excuses, but can demand terrible things. Weighing both is moral thinking in practice.",
+  "sure": 0.35,
+  "book": {
+    "id": "justice",
+    "title": "Justice",
+    "author": "Michael J. Sandel",
+    "year": 2009,
+    "part": 3,
+    "isbn": "9780374532505",
+    "badge": "From Michael Sandel's famous Harvard course on justice"
+  },
+  "keywords": [
+    "kant",
+    "lying",
+    "categorical imperative",
+    "murderer at the door"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael J. Sandel, Justice, 2009",
+  "source_kind": "book",
+  "reference": "Michael J. Sandel, Justice: What's the Right Thing to Do? (Farrar, Straus and Giroux, 2009), ch. 5",
+  "written": "2026-11-17"
+}

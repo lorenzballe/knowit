@@ -1,0 +1,42 @@
+{
+  "id": "medicine-book-the-immortal-life-of-henrietta-lacks-5",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.shared_decisions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did doctors break the law by taking Henrietta Lacks's cells without asking her in 1951?",
+  "answer": "No. At the time no rule required consent to use tissue taken during treatment, and it was common practice. Skloot shows the question is still open: in 1990 California's Supreme Court ruled, in John Moore's case, that patients do not own cells removed from their bodies, even when those cells earn others money.",
+  "move": "Legal and right are different questions; ask both.",
+  "simply": "Taking her cells without asking was allowed back then. Even today, courts have said patients don't own the cells taken from them.",
+  "why": "Hospital consent forms often allow research on leftover samples. Reading them, and asking what 'research use' means, is entirely reasonable.",
+  "book": {
+    "id": "the-immortal-life-of-henrietta-lacks",
+    "title": "The Immortal Life of Henrietta Lacks",
+    "author": "Rebecca Skloot",
+    "year": 2010,
+    "part": 5,
+    "isbn": "9781400052172",
+    "badge": "Made into a 2017 film with Oprah Winfrey"
+  },
+  "keywords": [
+    "informed consent",
+    "john moore",
+    "tissue rights",
+    "medical law"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Rebecca Skloot, The Immortal Life of Henrietta Lacks, 2010",
+  "source_kind": "book",
+  "reference": "Rebecca Skloot, The Immortal Life of Henrietta Lacks (Crown, 2010)",
+  "written": "2026-11-17"
+}

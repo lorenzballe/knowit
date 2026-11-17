@@ -1,0 +1,42 @@
+{
+  "id": "food-book-the-omnivores-dilemma-4",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.meat",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does Joel Salatin's Polyface Farm, in Pollan's book, raise its animals?",
+  "answer": "In a rotation that copies nature. Cattle graze a pasture and are moved on daily; a few days later chickens follow in mobile coops, scratching through cow pats for grubs and spreading the manure. Each animal does what comes naturally, and together they feed the grass, with little need for bought fertiliser.",
+  "move": "Design systems so one part's waste becomes another's food.",
+  "simply": "Cows eat the grass and move on. A few days later chickens follow, eat the bugs in the cow pats and fertilise the field. Nothing is wasted.",
+  "why": "It's a vivid example of systems thinking: when parts are arranged to help each other, the whole needs fewer inputs, on farms and far beyond.",
+  "book": {
+    "id": "the-omnivores-dilemma",
+    "title": "The Omnivore's Dilemma",
+    "author": "Michael Pollan",
+    "year": 2006,
+    "part": 4,
+    "isbn": "9780143038580",
+    "badge": "Named one of the ten best books of 2006 by The New York Times"
+  },
+  "keywords": [
+    "polyface farm",
+    "joel salatin",
+    "grazing",
+    "regenerative farming"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Pollan, The Omnivore's Dilemma, 2006",
+  "source_kind": "book",
+  "reference": "Michael Pollan, The Omnivore's Dilemma (Penguin Press, 2006), ch. 11",
+  "written": "2026-11-17"
+}

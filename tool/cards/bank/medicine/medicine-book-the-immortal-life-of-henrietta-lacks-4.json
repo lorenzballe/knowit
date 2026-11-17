@@ -1,0 +1,50 @@
+{
+  "id": "medicine-book-the-immortal-life-of-henrietta-lacks-4",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.doctors_who_were_right",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In 1966 a geneticist found that many cell lines labelled as other tissues were not what labs thought. What were they?",
+  "options": [
+    "HeLa cells in disguise",
+    "Animal cells",
+    "Dead cells"
+  ],
+  "correct": 0,
+  "answer": "HeLa cells in disguise. Stanley Gartler found that HeLa had contaminated many other human cell cultures, carried on hands, pipettes or in the air, and then outgrew them. Skloot recounts how researchers resisted the news, since it meant years of experiments may have studied the wrong cells.",
+  "move": "Check that your sample is what its label says.",
+  "trap": "'Animal cells': mixing species seems the obvious lab error.",
+  "simply": "HeLa cells grew so strongly that they sneaked into other labs' cultures and took over. Many scientists were studying HeLa without knowing.",
+  "why": "Labels can be wrong. In research, food and medicine alike, testing that something is what it claims to be is a basic safeguard worth keeping.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-immortal-life-of-henrietta-lacks",
+    "title": "The Immortal Life of Henrietta Lacks",
+    "author": "Rebecca Skloot",
+    "year": 2010,
+    "part": 4,
+    "isbn": "9781400052172",
+    "badge": "Made into a 2017 film with Oprah Winfrey"
+  },
+  "keywords": [
+    "cell line contamination",
+    "stanley gartler",
+    "hela",
+    "lab errors"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Rebecca Skloot, The Immortal Life of Henrietta Lacks, 2010",
+  "source_kind": "book",
+  "reference": "Rebecca Skloot, The Immortal Life of Henrietta Lacks (Crown, 2010)",
+  "written": "2026-11-17"
+}

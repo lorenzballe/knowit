@@ -1,0 +1,50 @@
+{
+  "id": "sport-book-the-sports-gene-1",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.confidence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why can top baseball batters hit a fastball they can't actually track all the way to the bat?",
+  "options": [
+    "They predict from the pitcher's body",
+    "Their eyes are much faster",
+    "They swing at random"
+  ],
+  "correct": 0,
+  "answer": "They predict it. A fastball reaches the plate faster than eye and brain can follow, so expert hitters read cues from the pitcher's body before the ball is released. Epstein shows how major-league stars struck out against the softball pitcher Jennie Finch: her unfamiliar motion gave them nothing to read.",
+  "move": "Expertise is often faster prediction, not faster senses.",
+  "trap": "'Their eyes are much faster': top athletes seem to have superhuman senses.",
+  "simply": "A fastball is too quick to watch. Great hitters guess where it will go from how the pitcher moves, which is why a new kind of pitcher can fool them.",
+  "why": "Much expertise works like this: experts read early signs others miss. It's why skills transfer less than we think when the cues change.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-sports-gene",
+    "title": "The Sports Gene",
+    "author": "David Epstein",
+    "year": 2013,
+    "part": 1,
+    "isbn": "9781617230127",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "anticipation",
+    "baseball",
+    "jennie finch",
+    "perceptual expertise"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, The Sports Gene, 2013",
+  "source_kind": "book",
+  "reference": "David Epstein, The Sports Gene: Inside the Science of Extraordinary Athletic Performance (Current, 2013), ch. 1",
+  "written": "2026-11-17"
+}

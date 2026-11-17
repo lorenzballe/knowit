@@ -1,0 +1,50 @@
+{
+  "id": "life-book-deep-work-3",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.deep_focus",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "You stop answering emails to start a hard task. What does research on 'attention residue' predict?",
+  "options": [
+    "Part of your mind stays on the emails",
+    "You focus fully at once",
+    "The task gets easier"
+  ],
+  "correct": 0,
+  "answer": "That part of your attention stays behind. Newport cites research by Sophie Leroy showing that after switching tasks, people keep thinking about the previous one and perform worse on the next. Even a quick glance at an inbox can leave residue, which is why he batches shallow work into set times.",
+  "move": "Every switch leaves a residue; batch small tasks together.",
+  "trap": "'You focus fully at once': switching feels instant.",
+  "simply": "When you jump from emails to a hard task, part of your brain is still in the inbox. That makes the hard task harder.",
+  "why": "Checking messages 'just quickly' has a hidden cost. Grouping them into a few set times a day protects the hours that matter.",
+  "sure": 0.35,
+  "book": {
+    "id": "deep-work",
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "year": 2016,
+    "part": 3,
+    "isbn": "9781455586691",
+    "badge": "By a Georgetown computer science professor"
+  },
+  "keywords": [
+    "attention residue",
+    "task switching",
+    "sophie leroy",
+    "email"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cal Newport, Deep Work, 2016",
+  "source_kind": "book",
+  "reference": "Cal Newport, Deep Work: Rules for Focused Success in a Distracted World (Grand Central, 2016), ch. 2",
+  "written": "2026-11-17"
+}

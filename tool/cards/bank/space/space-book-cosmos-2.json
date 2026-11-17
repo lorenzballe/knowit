@@ -1,0 +1,42 @@
+{
+  "id": "space-book-cosmos-2",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Carl Sagan mean when he said we are 'made of star-stuff'?",
+  "answer": "That the atoms in our bodies, the carbon, nitrogen, oxygen and iron, were forged inside stars that lived and died before the Sun, and were scattered into space when they exploded. Sagan wrote that we are a way for the cosmos to know itself, since its matter has become conscious in us.",
+  "move": "Trace your own atoms back far enough, and you reach the stars.",
+  "simply": "The iron in your blood and the calcium in your bones were made inside old stars that blew up long before the Earth formed.",
+  "why": "It's a fact that changes how the night sky feels, and a vivid way to understand that chemistry, astronomy and biology are one connected story.",
+  "book": {
+    "id": "cosmos",
+    "title": "Cosmos",
+    "author": "Carl Sagan",
+    "year": 1980,
+    "part": 2,
+    "isbn": "9780345539434",
+    "badge": "Written alongside Sagan's 1980 television series"
+  },
+  "keywords": [
+    "star-stuff",
+    "nucleosynthesis",
+    "atoms",
+    "supernovae"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, Cosmos, 1980",
+  "source_kind": "book",
+  "reference": "Carl Sagan, Cosmos (Random House, 1980), ch. 9",
+  "written": "2026-11-17"
+}

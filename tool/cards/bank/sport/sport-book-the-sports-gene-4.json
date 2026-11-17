@@ -1,0 +1,42 @@
+{
+  "id": "sport-book-the-sports-gene-4",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.doping",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Finnish skier Eero Mantyranta have unusually high levels of red blood cells?",
+  "answer": "A rare genetic mutation in his receptor for EPO, the hormone that drives red blood cell production. The Olympic champion of the 1960s naturally had levels well above most athletes, boosting how much oxygen his blood carried. Epstein uses him to show that what looks like doping can sometimes be inherited.",
+  "move": "Natural variation can mimic what a test is designed to catch.",
+  "simply": "A skier's genes made his blood carry far more oxygen than normal, like a natural version of the doping drug EPO.",
+  "why": "It raises hard questions about fairness in sport, and shows why tests should account for natural variation before accusing anyone.",
+  "book": {
+    "id": "the-sports-gene",
+    "title": "The Sports Gene",
+    "author": "David Epstein",
+    "year": 2013,
+    "part": 4,
+    "isbn": "9781617230127",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "eero mantyranta",
+    "epo",
+    "red blood cells",
+    "genetics"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, The Sports Gene, 2013",
+  "source_kind": "book",
+  "reference": "David Epstein, The Sports Gene: Inside the Science of Extraordinary Athletic Performance (Current, 2013), ch. 15",
+  "written": "2026-11-17"
+}

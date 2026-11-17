@@ -1,0 +1,42 @@
+{
+  "id": "life-book-quiet-2",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.values",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the 'culture of personality' replace, according to Cain?",
+  "answer": "A culture of character. Around 1900, Cain argues, Americans moving to cities and offices had to impress strangers, so advice shifted from being honourable and disciplined to being magnetic and likeable. Dale Carnegie's courses in public speaking captured the change, and the Extrovert Ideal grew from it.",
+  "move": "Ideals of personality are made by history, and can change.",
+  "simply": "A century ago, being a good person mattered most. Then, in big cities full of strangers, being charming started to matter more.",
+  "why": "Knowing that today's ideal of the confident talker is recent makes it easier to value other strengths, in yourself and in others.",
+  "book": {
+    "id": "quiet",
+    "title": "Quiet",
+    "author": "Susan Cain",
+    "year": 2012,
+    "part": 2,
+    "isbn": "9780307352156",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "culture of character",
+    "dale carnegie",
+    "charisma",
+    "history"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Susan Cain, Quiet, 2012",
+  "source_kind": "book",
+  "reference": "Susan Cain, Quiet: The Power of Introverts in a World That Can't Stop Talking (Crown, 2012), ch. 1",
+  "written": "2026-11-17"
+}

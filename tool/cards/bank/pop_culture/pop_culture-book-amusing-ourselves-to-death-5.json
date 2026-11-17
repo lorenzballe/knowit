@@ -1,0 +1,50 @@
+{
+  "id": "pop_culture-book-amusing-ourselves-to-death-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.algorithms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Postman adapted McLuhan's 'the medium is the message'. What was his version?",
+  "options": [
+    "The medium is the metaphor",
+    "The message is the medium",
+    "The medium is neutral"
+  ],
+  "correct": 0,
+  "answer": "'The medium is the metaphor.' Each medium, he argued, shapes what a culture can say and even think: smoke signals cannot carry philosophy, and television cannot carry a long argument. A medium is never a neutral pipe; it quietly defines what counts as intelligent, true or important.",
+  "move": "Ask what a format can't carry before trusting what it does.",
+  "trap": "'The medium is neutral': a pipe seems not to change the water.",
+  "simply": "You can't explain a hard idea with smoke signals. Postman said every medium, TV included, decides what kinds of ideas fit.",
+  "why": "Choosing the right medium matters: some ideas need a long read or a real conversation, and a slide or a clip will flatten them.",
+  "sure": 0.35,
+  "book": {
+    "id": "amusing-ourselves-to-death",
+    "title": "Amusing Ourselves to Death",
+    "author": "Neil Postman",
+    "year": 1985,
+    "part": 5,
+    "isbn": "9780140094381",
+    "badge": "A classic of media criticism, in print since 1985"
+  },
+  "keywords": [
+    "mcluhan",
+    "media",
+    "medium is the metaphor",
+    "communication"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Neil Postman, Amusing Ourselves to Death, 1985",
+  "source_kind": "book",
+  "reference": "Neil Postman, Amusing Ourselves to Death (Viking, 1985), ch. 1",
+  "written": "2026-11-17"
+}

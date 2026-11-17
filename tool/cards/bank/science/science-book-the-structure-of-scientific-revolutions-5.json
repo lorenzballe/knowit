@@ -1,0 +1,50 @@
+{
+  "id": "science-book-the-structure-of-scientific-revolutions-5",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.experts_disagree",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Kuhn quoted the physicist Max Planck on how new scientific truths finally win. What did Planck say?",
+  "options": [
+    "Their opponents eventually die",
+    "The best argument wins quickly",
+    "Experiments settle it at once"
+  ],
+  "correct": 0,
+  "answer": "That a new truth triumphs not by convincing its opponents but because they eventually die, and a new generation grows up familiar with it. Kuhn used the remark to argue that changing paradigms is partly a matter of persuasion and generations, not of evidence alone, though he noted that many scientists do change their minds.",
+  "move": "Evidence persuades slowly; habits of mind often change by generation.",
+  "trap": "'The best argument wins quickly': that's how we picture science.",
+  "simply": "Planck said new ideas often win when the old professors retire or die, and young scientists grow up with the new ideas.",
+  "why": "Expect resistance to new ideas, even good ones, and don't take slow acceptance as proof an idea is wrong.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-structure-of-scientific-revolutions",
+    "title": "The Structure of Scientific Revolutions",
+    "author": "Thomas S. Kuhn",
+    "year": 1962,
+    "part": 5,
+    "isbn": "9780226458120",
+    "badge": "The book that gave us the phrase 'paradigm shift'"
+  },
+  "keywords": [
+    "max planck",
+    "generational change",
+    "persuasion",
+    "scientific consensus"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Thomas S. Kuhn, The Structure of Scientific Revolutions, 1962",
+  "source_kind": "book",
+  "reference": "Thomas S. Kuhn, The Structure of Scientific Revolutions (University of Chicago Press, 1962), ch. 12",
+  "written": "2026-11-17"
+}

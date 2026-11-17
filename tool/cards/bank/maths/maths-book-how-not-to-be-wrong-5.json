@@ -1,0 +1,50 @@
+{
+  "id": "maths-book-how-not-to-be-wrong-5",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Very tall parents tend to have tall children, but less extremely tall. What did Francis Galton call this?",
+  "options": [
+    "Regression to the mean",
+    "Genetic decline",
+    "Bad luck"
+  ],
+  "correct": 0,
+  "answer": "Regression to the mean. Galton noticed that children of very tall parents were tall but, on average, less so than their parents, and children of very short parents less short. Ellenberg explains it is no force pulling people to the average: extreme results mix genes or skill with luck, and luck rarely repeats.",
+  "move": "Expect extremes to be followed by something more ordinary.",
+  "trap": "'Genetic decline': it sounds like families weakening.",
+  "simply": "Very tall parents usually have tall kids, just not quite as tall. Extremes include some luck, and luck doesn't run in families.",
+  "why": "It explains why a star's second season disappoints and why a remedy can look good after a bad week. Before crediting a change, ask whether things would have drifted back anyway.",
+  "sure": 0.35,
+  "book": {
+    "id": "how-not-to-be-wrong",
+    "title": "How Not to Be Wrong",
+    "author": "Jordan Ellenberg",
+    "year": 2014,
+    "part": 5,
+    "isbn": "9780143127536",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "regression to the mean",
+    "francis galton",
+    "heredity",
+    "averages"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jordan Ellenberg, How Not to Be Wrong, 2014",
+  "source_kind": "book",
+  "reference": "Jordan Ellenberg, How Not to Be Wrong: The Power of Mathematical Thinking (Penguin Press, 2014)",
+  "written": "2026-11-17"
+}

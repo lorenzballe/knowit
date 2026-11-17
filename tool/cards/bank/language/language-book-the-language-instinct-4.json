@@ -1,0 +1,50 @@
+{
+  "id": "language-book-the-language-instinct-4",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Pinker argues that a double negative, as in 'I can't get no satisfaction', isn't illogical. Why?",
+  "options": [
+    "Many languages use it as emphasis",
+    "Two negatives make a positive",
+    "It is only slang"
+  ],
+  "correct": 0,
+  "answer": "Because language isn't arithmetic. In Italian, French, Spanish and many English dialects, a second negative reinforces the first. Chaucer used them freely. Pinker argues that rules like 'never use a double negative' are style conventions, not laws of logic, and that speakers who break them are not thinking badly.",
+  "move": "In grammar, 'correct' often means 'conventional', not 'more logical'.",
+  "trap": "'Two negatives make a positive': maths rules feel like language rules.",
+  "simply": "In Italian you say 'non ho visto nessuno', 'I didn't see nobody', and it means 'nobody'. Two negatives can just mean a stronger no.",
+  "why": "It makes you slower to judge people by grammar rules that are fashion, not logic, and clearer about which rules really matter for being understood.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-language-instinct",
+    "title": "The Language Instinct",
+    "author": "Steven Pinker",
+    "year": 1994,
+    "part": 4,
+    "isbn": "9780060958336",
+    "badge": "By a two-time Pulitzer Prize finalist"
+  },
+  "keywords": [
+    "double negative",
+    "prescriptivism",
+    "dialects",
+    "grammar rules"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Steven Pinker, The Language Instinct, 1994",
+  "source_kind": "book",
+  "reference": "Steven Pinker, The Language Instinct (William Morrow, 1994), ch. 12",
+  "written": "2026-11-17"
+}

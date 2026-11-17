@@ -1,0 +1,42 @@
+{
+  "id": "science-book-the-structure-of-scientific-revolutions-4",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.uncertainty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why, according to Kuhn, do science textbooks make progress look smooth?",
+  "answer": "Because they are rewritten after each revolution, presenting the current paradigm as the natural end of steady progress. Earlier ideas appear as mere errors, and the disputes vanish. Kuhn argued that this hides how science really changes, by upheavals, and gives students a misleading sense of its history.",
+  "move": "Ask what a tidy story of progress might have left out.",
+  "simply": "Textbooks tell science as a straight road to today's answers. The real story had wrong turns, fights and sudden switches.",
+  "why": "History written by the winners looks inevitable. Knowing that helps you read any success story, in science or business, more carefully.",
+  "book": {
+    "id": "the-structure-of-scientific-revolutions",
+    "title": "The Structure of Scientific Revolutions",
+    "author": "Thomas S. Kuhn",
+    "year": 1962,
+    "part": 4,
+    "isbn": "9780226458120",
+    "badge": "The book that gave us the phrase 'paradigm shift'"
+  },
+  "keywords": [
+    "textbooks",
+    "history of science",
+    "progress",
+    "revolutions"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Thomas S. Kuhn, The Structure of Scientific Revolutions, 1962",
+  "source_kind": "book",
+  "reference": "Thomas S. Kuhn, The Structure of Scientific Revolutions (University of Chicago Press, 1962), ch. 11",
+  "written": "2026-11-17"
+}

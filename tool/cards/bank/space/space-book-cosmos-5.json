@@ -1,0 +1,42 @@
+{
+  "id": "space-book-cosmos-5",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.what_we_do_not_know",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does Sagan say was lost with the Library of Alexandria?",
+  "answer": "Much of the ancient world's written knowledge. The library, founded in the third century BC, held hundreds of thousands of scrolls, of which only a small fraction survives. Sagan describes its scholars, including Eratosthenes and later Hypatia, and its slow decline, asking what discoveries might have come sooner had it lasted.",
+  "move": "Knowledge survives only if someone keeps and copies it.",
+  "simply": "A great ancient library held much of what people knew. Over centuries it was neglected and destroyed, and most of its books are gone forever.",
+  "why": "Knowledge needs looking after: libraries, archives and backups are how ideas outlive their authors. Their loss is often slow and unnoticed until too late.",
+  "book": {
+    "id": "cosmos",
+    "title": "Cosmos",
+    "author": "Carl Sagan",
+    "year": 1980,
+    "part": 5,
+    "isbn": "9780345539434",
+    "badge": "Written alongside Sagan's 1980 television series"
+  },
+  "keywords": [
+    "library of alexandria",
+    "hypatia",
+    "lost knowledge",
+    "ancient science"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, Cosmos, 1980",
+  "source_kind": "book",
+  "reference": "Carl Sagan, Cosmos (Random House, 1980), ch. 13",
+  "written": "2026-11-17"
+}

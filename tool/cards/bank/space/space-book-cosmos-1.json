@@ -1,0 +1,50 @@
+{
+  "id": "space-book-cosmos-1",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.sizes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Around 240 BC, how did Eratosthenes measure the size of the Earth?",
+  "options": [
+    "By comparing shadows in two cities",
+    "By sailing around the world",
+    "By watching ships vanish"
+  ],
+  "correct": 0,
+  "answer": "By comparing shadows. At noon on the summer solstice the Sun shone straight down a well in Syene, but in Alexandria a stick cast a shadow of about seven degrees, a fiftieth of a circle. Knowing the distance between the cities, he multiplied by fifty and got close to the true circumference.",
+  "move": "A clever measurement can turn shadows into the size of a planet.",
+  "trap": "'By sailing around the world': measuring seems to need the whole trip.",
+  "simply": "Sun straight overhead in one city, a small shadow in another. From the angle and the distance between them, he worked out the size of the whole Earth.",
+  "why": "It's a lovely example of reasoning from small, careful observations to something huge, the same way scientists today measure what they can't reach.",
+  "sure": 0.35,
+  "book": {
+    "id": "cosmos",
+    "title": "Cosmos",
+    "author": "Carl Sagan",
+    "year": 1980,
+    "part": 1,
+    "isbn": "9780345539434",
+    "badge": "Written alongside Sagan's 1980 television series"
+  },
+  "keywords": [
+    "eratosthenes",
+    "earth's circumference",
+    "shadows",
+    "ancient science"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, Cosmos, 1980",
+  "source_kind": "book",
+  "reference": "Carl Sagan, Cosmos (Random House, 1980), ch. 1",
+  "written": "2026-11-17"
+}

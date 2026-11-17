@@ -1,0 +1,42 @@
+{
+  "id": "language-book-because-internet-3",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.language_change",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is the internet ruining language, as people often fear?",
+  "answer": "McCulloch argues the opposite: informal writing online is a new kind of language, written but conversational, and people use it with great skill. Every generation has feared new forms, from novels to telegrams. Change is how a living language adapts, not a sign of decline.",
+  "move": "New forms of language are adaptations, not decay.",
+  "simply": "People once worried that the telephone would ruin conversation. Texting is just a new way of talking, and people are clever at it.",
+  "why": "It helps you judge language by whether it communicates, and makes you curious about change rather than alarmed.",
+  "book": {
+    "id": "because-internet",
+    "title": "Because Internet",
+    "author": "Gretchen McCulloch",
+    "year": 2019,
+    "part": 3,
+    "isbn": "9780735210936",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "language change",
+    "informal writing",
+    "internet",
+    "linguistics"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Gretchen McCulloch, Because Internet, 2019",
+  "source_kind": "book",
+  "reference": "Gretchen McCulloch, Because Internet: Understanding the New Rules of Language (Riverhead, 2019)",
+  "written": "2026-11-17"
+}

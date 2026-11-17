@@ -1,0 +1,42 @@
+{
+  "id": "maths-book-humble-pi-1",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did London's Millennium Bridge start to sway when it opened in 2000?",
+  "answer": "Because of its walkers. A slight sideways sway made people adjust their steps to keep their balance, and their steps pushed the bridge further, in time with the sway: a feedback loop the engineers had not modelled. The bridge closed two days after opening, and dampers were fitted before it reopened in 2002.",
+  "move": "When people respond to a system, they can amplify it.",
+  "simply": "The bridge wobbled a little; people walked in step to keep their balance; their steps made it wobble more. It shut two days after opening.",
+  "why": "Feedback loops like this turn up in traffic, markets and crowds: people reacting to a change can make it bigger. Spotting them helps predict surprises.",
+  "book": {
+    "id": "humble-pi",
+    "title": "Humble Pi",
+    "author": "Matt Parker",
+    "year": 2019,
+    "part": 1,
+    "isbn": "9780141989143",
+    "badge": "A Sunday Times number one bestseller"
+  },
+  "keywords": [
+    "millennium bridge",
+    "feedback",
+    "engineering",
+    "resonance"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Matt Parker, Humble Pi, 2019",
+  "source_kind": "book",
+  "reference": "Matt Parker, Humble Pi: A Comedy of Maths Errors (Allen Lane, 2019)",
+  "written": "2026-11-17"
+}

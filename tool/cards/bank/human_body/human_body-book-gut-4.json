@@ -1,0 +1,50 @@
+{
+  "id": "human_body-book-gut-4",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Children who grow up on farms tend to have fewer allergies. What does Enders think explains it?",
+  "options": [
+    "Early contact with many microbes",
+    "Fresh air alone",
+    "Eating more vegetables"
+  ],
+  "correct": 0,
+  "answer": "Early contact with a wide range of microbes, from animals, soil and the farm itself, which seems to train a young immune system to tell friend from foe. Enders cautions against scrubbing every surface with disinfectant: most microbes at home are harmless, and an immune system needs something to learn from.",
+  "move": "When two groups differ, list every difference before naming the cause.",
+  "trap": "'Fresh air alone': it's the most obvious difference from city life.",
+  "simply": "Farm kids meet lots of germs early, and their immune systems learn what's harmless. Too-clean homes may give the immune system less to learn from.",
+  "why": "Ordinary soap and water are enough for most homes. Saving disinfectants for real risks, like raw meat, protects the useful microbes too.",
+  "sure": 0.35,
+  "book": {
+    "id": "gut",
+    "title": "Gut",
+    "author": "Giulia Enders",
+    "year": 2015,
+    "part": 4,
+    "isbn": "9781771641494",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "hygiene hypothesis",
+    "allergies",
+    "farm effect",
+    "immune system"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Giulia Enders, Gut, 2015",
+  "source_kind": "book",
+  "reference": "Giulia Enders, Gut: The Inside Story of Our Body's Most Underrated Organ (Greystone Books, 2015), ch. 3",
+  "written": "2026-11-17"
+}

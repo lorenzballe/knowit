@@ -1,0 +1,50 @@
+{
+  "id": "food-book-salt-fat-acid-heat-5",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why does Nosrat warn against crowding a pan when you brown meat?",
+  "options": [
+    "Crowded meat steams instead of browning",
+    "The pan may crack",
+    "It wastes oil"
+  ],
+  "correct": 0,
+  "answer": "Because crowded pieces release more water than the pan can drive off, so the meat steams in its own juices and turns grey instead of brown. Browning, the reactions that build savoury flavour, needs dry surfaces far hotter than boiling water. Nosrat's advice: cook in batches and leave space.",
+  "move": "Browning needs dry heat; give food room to lose its water.",
+  "trap": "'It wastes oil': a full pan feels more efficient.",
+  "simply": "Too much meat in a pan makes a puddle, and meat in a puddle boils. Leave gaps, and it browns and tastes much better.",
+  "why": "A small habit with a big payoff in flavour, and a nice example of a fix that seems slower but gets a better result.",
+  "sure": 0.35,
+  "book": {
+    "id": "salt-fat-acid-heat",
+    "title": "Salt, Fat, Acid, Heat",
+    "author": "Samin Nosrat",
+    "year": 2017,
+    "part": 5,
+    "isbn": "9781476753836",
+    "badge": "A James Beard Award winner, made into a Netflix series"
+  },
+  "keywords": [
+    "browning",
+    "maillard reaction",
+    "searing",
+    "pan"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Samin Nosrat, Salt, Fat, Acid, Heat, 2017",
+  "source_kind": "book",
+  "reference": "Samin Nosrat, Salt, Fat, Acid, Heat (Simon & Schuster, 2017)",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "weird_facts-book-a-short-history-of-nearly-everything-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.weird_but_useful",
+  "strand": "weird_facts.weird_but_useful.lucky_accidents",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How did the geochemist Clair Patterson first measure the age of the Earth?",
+  "options": [
+    "From lead in meteorites",
+    "From the saltiness of the sea",
+    "From layers of rock"
+  ],
+  "correct": 0,
+  "answer": "From lead in meteorites, which formed with the solar system: their uranium-to-lead ratios gave about 4.55 billion years. Along the way Patterson found lead pollution everywhere, from leaded petrol, and spent years fighting the industry until it was banned. Bryson tells both stories together.",
+  "move": "Careful measurement can expose problems nobody was looking for.",
+  "trap": "'From layers of rock': rocks seem the obvious clock.",
+  "simply": "To date the Earth, Patterson measured lead in space rocks, and noticed lead from petrol was everywhere, so he fought to get it banned.",
+  "why": "One careful scientist both dated the planet and helped remove a poison from the air, a reminder that rigorous checking pays twice.",
+  "sure": 0.35,
+  "book": {
+    "id": "a-short-history-of-nearly-everything",
+    "title": "A Short History of Nearly Everything",
+    "author": "Bill Bryson",
+    "year": 2003,
+    "part": 4,
+    "isbn": "9780767908184",
+    "badge": "Winner of the Aventis Prize for Science Books"
+  },
+  "keywords": [
+    "clair patterson",
+    "age of the earth",
+    "leaded petrol",
+    "meteorites"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Bill Bryson, A Short History of Nearly Everything, 2003",
+  "source_kind": "book",
+  "reference": "Bill Bryson, A Short History of Nearly Everything (Broadway Books, 2003), ch. 10",
+  "written": "2026-11-17"
+}

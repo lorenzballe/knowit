@@ -1,0 +1,42 @@
+{
+  "id": "technology-book-the-shallows-3",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to Nietzsche's writing when he switched to a typewriter?",
+  "answer": "A friend noticed that Nietzsche's prose had grown terser, more like aphorisms, after failing eyesight pushed him onto a typewriter in 1882. Nietzsche agreed: 'Our writing equipment takes part in the forming of our thoughts.' Carr uses the story to show that tools shape the minds that use them.",
+  "move": "The tools you think with quietly reshape how you think.",
+  "simply": "If you only ever write short texts with emojis, your writing slowly gets shorter and jumpier. Nietzsche's typewriter did that to him.",
+  "why": "It invites a fair question about your own tools, phone, feed, autocomplete: what habits of thought are they building in you?",
+  "book": {
+    "id": "the-shallows",
+    "title": "The Shallows",
+    "author": "Nicholas Carr",
+    "year": 2010,
+    "part": 3,
+    "isbn": "9780393339758",
+    "badge": "A finalist for the Pulitzer Prize"
+  },
+  "keywords": [
+    "nietzsche",
+    "typewriter",
+    "tools and thought",
+    "writing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nicholas Carr, The Shallows, 2010",
+  "source_kind": "book",
+  "reference": "Nicholas Carr, The Shallows: What the Internet Is Doing to Our Brains (W. W. Norton, 2010), ch. 2",
+  "written": "2026-11-17"
+}

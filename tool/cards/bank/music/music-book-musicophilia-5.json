@@ -1,0 +1,42 @@
+{
+  "id": "music-book-musicophilia-5",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.rhythm_in_the_body",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can music do for some people with Parkinson's disease, in Sacks's account?",
+  "answer": "Help them move. Patients who were frozen, unable to start walking, could often move fluidly with music, walk to a beat or even dance, and froze again when the music stopped. Sacks had first seen this decades earlier, in the patients with similar symptoms he described in Awakenings.",
+  "move": "Rhythm can start movement that the will alone cannot.",
+  "simply": "Some people with Parkinson's get stuck, unable to take a step. Play music with a strong beat, and they can walk or even dance.",
+  "why": "Music therapy is used for movement and memory problems; knowing why it works makes it easier to try for someone you care about.",
+  "book": {
+    "id": "musicophilia",
+    "title": "Musicophilia",
+    "author": "Oliver Sacks",
+    "year": 2007,
+    "part": 5,
+    "isbn": "9781400033539",
+    "badge": "By the neurologist behind Awakenings"
+  },
+  "keywords": [
+    "parkinson's disease",
+    "rhythm",
+    "music therapy",
+    "movement"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, Musicophilia, 2007",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, Musicophilia: Tales of Music and the Brain (Knopf, 2007), ch. 20",
+  "written": "2026-11-17"
+}

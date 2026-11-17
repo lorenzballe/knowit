@@ -1,0 +1,42 @@
+{
+  "id": "medicine-book-the-immortal-life-of-henrietta-lacks-1",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who was Henrietta Lacks, and why are her cells famous?",
+  "answer": "A Black tobacco farmer and mother of five who was treated for cervical cancer at Johns Hopkins in 1951. Doctors took a sample of her tumour without asking her, and its cells, named HeLa, became the first human cells to keep dividing in a lab. She died that year, aged 31.",
+  "move": "Behind every famous sample or statistic is a person with a name.",
+  "simply": "A young mother's cancer cells were taken without her knowing. They never stopped growing, and scientists everywhere still use them.",
+  "why": "It's a reminder that medical research depends on patients, and that how their tissue and data are used is a question of consent, not only of science.",
+  "book": {
+    "id": "the-immortal-life-of-henrietta-lacks",
+    "title": "The Immortal Life of Henrietta Lacks",
+    "author": "Rebecca Skloot",
+    "year": 2010,
+    "part": 1,
+    "isbn": "9781400052172",
+    "badge": "Made into a 2017 film with Oprah Winfrey"
+  },
+  "keywords": [
+    "henrietta lacks",
+    "hela cells",
+    "johns hopkins",
+    "consent"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Rebecca Skloot, The Immortal Life of Henrietta Lacks, 2010",
+  "source_kind": "book",
+  "reference": "Rebecca Skloot, The Immortal Life of Henrietta Lacks (Crown, 2010)",
+  "written": "2026-11-17"
+}

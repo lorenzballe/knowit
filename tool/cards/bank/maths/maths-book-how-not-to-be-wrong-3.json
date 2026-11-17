@@ -1,0 +1,50 @@
+{
+  "id": "maths-book-how-not-to-be-wrong-3",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.charts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "Researchers scanned a dead salmon shown photos of people, and found 'brain activity'. What explains it?",
+  "options": [
+    "Testing thousands of spots finds chance hits",
+    "Fish brains stay active after death",
+    "The scanner was broken"
+  ],
+  "correct": 0,
+  "answer": "Testing thousands of small spots in the scan at once: some will light up by chance, as some of thousands of coin-tossers will get long streaks. The 2009 dead-salmon study, which Ellenberg describes, was a joke with a serious point: without correcting for many comparisons, brain scans can find signals in noise.",
+  "move": "Test enough things at once, and something will look significant.",
+  "trap": "'Fish brains stay active after death': the scan seemed to show it.",
+  "simply": "Check thousands of tiny spots in a brain scan, and a few will 'light up' just by luck, even in a dead fish.",
+  "why": "Whenever a study tests many things at once, be wary of one striking finding: chance alone guarantees a few.",
+  "sure": 0.35,
+  "book": {
+    "id": "how-not-to-be-wrong",
+    "title": "How Not to Be Wrong",
+    "author": "Jordan Ellenberg",
+    "year": 2014,
+    "part": 3,
+    "isbn": "9780143127536",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "dead salmon",
+    "fmri",
+    "false positives",
+    "multiple comparisons"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jordan Ellenberg, How Not to Be Wrong, 2014",
+  "source_kind": "book",
+  "reference": "Jordan Ellenberg, How Not to Be Wrong: The Power of Mathematical Thinking (Penguin Press, 2014), ch. 7",
+  "written": "2026-11-17"
+}

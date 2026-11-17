@@ -1,0 +1,50 @@
+{
+  "id": "life-book-quiet-3",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.deep_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In the research Cain cites, who produces more good ideas: people brainstorming in groups, or the same number working alone?",
+  "options": [
+    "People working alone",
+    "Groups brainstorming together",
+    "There is no difference"
+  ],
+  "correct": 0,
+  "answer": "People working alone, once their ideas are pooled. Decades of studies found that individuals produce more, and often better, ideas than the same number brainstorming in a group, where people wait their turn, defer to the loudest and fear judgement. Cain's advice: think alone first, then share.",
+  "move": "Think alone first, then share; groups can drown out ideas.",
+  "trap": "'Groups brainstorming together': more heads sound like more ideas.",
+  "simply": "In a brainstorm, people wait, copy the loudest and hold back. Let them think alone first, and you get more ideas.",
+  "why": "Next time you run a meeting, give people a few minutes to write ideas alone before discussing. It's a small change backed by decades of research.",
+  "sure": 0.35,
+  "book": {
+    "id": "quiet",
+    "title": "Quiet",
+    "author": "Susan Cain",
+    "year": 2012,
+    "part": 3,
+    "isbn": "9780307352156",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "brainstorming",
+    "groupthink",
+    "creativity",
+    "meetings"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Susan Cain, Quiet, 2012",
+  "source_kind": "book",
+  "reference": "Susan Cain, Quiet: The Power of Introverts in a World That Can't Stop Talking (Crown, 2012), ch. 3",
+  "written": "2026-11-17"
+}

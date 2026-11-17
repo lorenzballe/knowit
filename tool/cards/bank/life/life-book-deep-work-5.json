@@ -1,0 +1,50 @@
+{
+  "id": "life-book-deep-work-5",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.screens",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Newport suggests a test for deciding whether to quit a social media service. What is it?",
+  "options": [
+    "Quit for thirty days, then judge",
+    "Delete every account at once",
+    "Halve your daily use"
+  ],
+  "correct": 0,
+  "answer": "Quit for thirty days without announcing it, then ask: would the past month have been notably better with the service, and did anyone care that you were gone? If both answers are no, Newport suggests quitting for good; if yes, return, now knowing what it gives you.",
+  "move": "Test a habit's value by going without it for a while.",
+  "trap": "'Delete every account at once': bold moves feel more serious.",
+  "simply": "Stop using an app for a month without telling anyone. Then ask: did I miss it, and did anyone miss me? That tells you if you need it.",
+  "why": "It's a fair test for any habit or subscription: going without for a while shows what it really adds, better than guessing.",
+  "sure": 0.35,
+  "book": {
+    "id": "deep-work",
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "year": 2016,
+    "part": 5,
+    "isbn": "9781455586691",
+    "badge": "By a Georgetown computer science professor"
+  },
+  "keywords": [
+    "social media",
+    "digital minimalism",
+    "habits",
+    "experiment"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cal Newport, Deep Work, 2016",
+  "source_kind": "book",
+  "reference": "Cal Newport, Deep Work: Rules for Focused Success in a Distracted World (Grand Central, 2016), Rule 3",
+  "written": "2026-11-17"
+}

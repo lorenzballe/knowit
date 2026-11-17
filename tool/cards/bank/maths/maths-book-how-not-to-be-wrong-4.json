@@ -1,0 +1,42 @@
+{
+  "id": "maths-book-how-not-to-be-wrong-4",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a group of MIT students make money from a Massachusetts lottery called Cash WinFall?",
+  "answer": "By spotting a flaw in its rules. When the jackpot passed two million dollars without a winner, the prize money rolled down to smaller prizes, and in those weeks a ticket was worth more than it cost. Buying hundreds of thousands of tickets in those weeks, the students made a steady, legal profit.",
+  "move": "Work out the expected value before calling any bet a bad one.",
+  "simply": "Lottery tickets normally lose money. But in special weeks this lottery paid out more than it took in, and the students bought huge numbers of tickets.",
+  "why": "Expected value is the right way to judge any bet, insurance or deal: what you'd get on average, not just whether you might win.",
+  "book": {
+    "id": "how-not-to-be-wrong",
+    "title": "How Not to Be Wrong",
+    "author": "Jordan Ellenberg",
+    "year": 2014,
+    "part": 4,
+    "isbn": "9780143127536",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "expected value",
+    "lotteries",
+    "cash winfall",
+    "probability"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jordan Ellenberg, How Not to Be Wrong, 2014",
+  "source_kind": "book",
+  "reference": "Jordan Ellenberg, How Not to Be Wrong: The Power of Mathematical Thinking (Penguin Press, 2014)",
+  "written": "2026-11-17"
+}

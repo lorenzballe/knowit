@@ -1,0 +1,42 @@
+{
+  "id": "food-book-the-omnivores-dilemma-5",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.local_or_not",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Pollan end his book by hunting, gathering and cooking one meal himself?",
+  "answer": "To know exactly where every part of a meal came from. He shot a wild pig, foraged mushrooms and gathered sea salt, and found the meal slow and costly, no model for daily life. Its value, he argued, was the awareness: seeing the full cost of food, including the taking of a life.",
+  "move": "Knowing the full cost of something changes how you value it.",
+  "simply": "Pollan cooked one meal from scratch: he shot the pig, picked the mushrooms, even gathered the salt. It showed him how much hides behind any meal.",
+  "why": "You don't need to hunt, but tracing one meal back to its sources, even in thought, makes food choices more conscious.",
+  "book": {
+    "id": "the-omnivores-dilemma",
+    "title": "The Omnivore's Dilemma",
+    "author": "Michael Pollan",
+    "year": 2006,
+    "part": 5,
+    "isbn": "9780143038580",
+    "badge": "Named one of the ten best books of 2006 by The New York Times"
+  },
+  "keywords": [
+    "hunting",
+    "foraging",
+    "michael pollan",
+    "where food comes from"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Pollan, The Omnivore's Dilemma, 2006",
+  "source_kind": "book",
+  "reference": "Michael Pollan, The Omnivore's Dilemma (Penguin Press, 2006), ch. 20",
+  "written": "2026-11-17"
+}

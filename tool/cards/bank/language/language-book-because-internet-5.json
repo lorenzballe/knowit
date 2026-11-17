@@ -1,0 +1,42 @@
+{
+  "id": "language-book-because-internet-5",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.who_invents_words",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who spreads new internet words fastest, according to linguists McCulloch cites?",
+  "answer": "People with many weak ties: acquaintances across different circles, rather than tight groups of close friends. Studies of Twitter showed that new words spread through such loose networks. McCulloch argues that the internet gave everyone more weak ties, which is why slang now travels so fast.",
+  "move": "New ideas spread through acquaintances more than through close friends.",
+  "simply": "A new word is like a cold: it spreads fastest through people who know lots of different groups, not through one cosy group of friends.",
+  "why": "The same pattern governs how jobs, rumours and opportunities spread: loose connections bring news that close friends don't have.",
+  "book": {
+    "id": "because-internet",
+    "title": "Because Internet",
+    "author": "Gretchen McCulloch",
+    "year": 2019,
+    "part": 5,
+    "isbn": "9780735210936",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "weak ties",
+    "language spread",
+    "social networks",
+    "slang"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Gretchen McCulloch, Because Internet, 2019",
+  "source_kind": "book",
+  "reference": "Gretchen McCulloch, Because Internet: Understanding the New Rules of Language (Riverhead, 2019)",
+  "written": "2026-11-17"
+}

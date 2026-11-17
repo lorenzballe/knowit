@@ -1,0 +1,50 @@
+{
+  "id": "maths-book-humble-pi-4",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "By late 1983 the Vancouver Stock Exchange index had nearly halved, though share prices hadn't. Why?",
+  "options": [
+    "It cut off decimals instead of rounding",
+    "A hacker changed it",
+    "Inflation"
+  ],
+  "correct": 0,
+  "answer": "It truncated instead of rounding. Recalculated thousands of times a day, the index kept three decimal places and simply dropped the rest, losing a sliver each time. Launched at 1,000 in 1982, it read about 520 by late 1983; recalculated properly, it was above 1,000. Small errors, repeated, compound.",
+  "move": "Tiny errors repeated thousands of times become big ones.",
+  "trap": "'A hacker changed it': a fall that big seems deliberate.",
+  "simply": "Each update chopped a sliver off a decimal. Thousands of slivers a day, for almost two years, cut the index in half.",
+  "why": "It's a warning for anything repeated many times, from rounding in spreadsheets to small daily expenses: tiny amounts add up.",
+  "sure": 0.35,
+  "book": {
+    "id": "humble-pi",
+    "title": "Humble Pi",
+    "author": "Matt Parker",
+    "year": 2019,
+    "part": 4,
+    "isbn": "9780141989143",
+    "badge": "A Sunday Times number one bestseller"
+  },
+  "keywords": [
+    "rounding",
+    "truncation",
+    "vancouver stock exchange",
+    "errors"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Matt Parker, Humble Pi, 2019",
+  "source_kind": "book",
+  "reference": "Matt Parker, Humble Pi: A Comedy of Maths Errors (Allen Lane, 2019)",
+  "written": "2026-11-17"
+}

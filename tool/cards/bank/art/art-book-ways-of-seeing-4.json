@@ -1,0 +1,50 @@
+{
+  "id": "art-book-ways-of-seeing-4",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.patrons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In Berger's reading, what was oil painting especially good at celebrating for the people who paid for it?",
+  "options": [
+    "What they owned",
+    "God alone",
+    "The beauty of nature"
+  ],
+  "correct": 0,
+  "answer": "What they owned. Oil paint could render cloth, fruit, silver and land as if you could touch them, and its buyers were wealthy owners. Berger argued that many oil paintings, from still lifes to Gainsborough's Mr and Mrs Andrews posed before their own land, were in part celebrations of property.",
+  "move": "Ask who paid for an image, and what it shows them owning.",
+  "trap": "'God alone': old art seems mostly religious.",
+  "simply": "Rich people paid painters to show off their silk, silver and land. Oil paint made those things look so real you could almost touch them.",
+  "why": "Today's version is the post that shows off a holiday or a new car. Asking what an image shows off, and for whom, travels well.",
+  "sure": 0.35,
+  "book": {
+    "id": "ways-of-seeing",
+    "title": "Ways of Seeing",
+    "author": "John Berger",
+    "year": 1972,
+    "part": 4,
+    "isbn": "9780141035796",
+    "badge": "Based on the 1972 BBC television series"
+  },
+  "keywords": [
+    "oil painting",
+    "property",
+    "gainsborough",
+    "patrons"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Berger, Ways of Seeing, 1972",
+  "source_kind": "book",
+  "reference": "John Berger, Ways of Seeing (BBC and Penguin, 1972), ch. 5",
+  "written": "2026-11-17"
+}

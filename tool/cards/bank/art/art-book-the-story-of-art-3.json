@@ -1,0 +1,42 @@
+{
+  "id": "art-book-the-story-of-art-3",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.florence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the painter Giotto change art around 1300, in Gombrich's account?",
+  "answer": "He brought back the illusion of depth and of real feeling. Breaking with the flat, symbolic style inherited from Byzantium, Giotto painted solid figures, seen from the side and even from behind, reacting to events like real people. Gombrich calls it the rediscovery of the art of creating depth on a flat surface.",
+  "move": "Small changes in how figures are drawn can change what art can say.",
+  "simply": "Before Giotto, painted saints looked flat, like symbols. He made them look heavy, real and sad, as if you were standing in the scene.",
+  "why": "Technique serves feeling: making figures believable let painters tell stories that moved people, a lesson film-makers and game designers still use.",
+  "book": {
+    "id": "the-story-of-art",
+    "title": "The Story of Art",
+    "author": "E. H. Gombrich",
+    "year": 1950,
+    "part": 3,
+    "isbn": "9780714832470",
+    "badge": "In print since 1950, now in its sixteenth edition"
+  },
+  "keywords": [
+    "giotto",
+    "byzantine art",
+    "depth",
+    "medieval painting"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "E. H. Gombrich, The Story of Art, 1950",
+  "source_kind": "book",
+  "reference": "E. H. Gombrich, The Story of Art (Phaidon, 1950; 16th ed., 1995), ch. 10",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "maths-book-how-not-to-be-wrong-1",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.percentages",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the mathematician Jordan Ellenberg warn that not every curve is a straight line?",
+  "answer": "Because many relationships rise, then fall. His example is the Laffer curve: a tax rate of zero raises no money, and nor does a rate of 100 percent, so revenue peaks somewhere between. Whether raising a tax raises revenue depends on where you are on the curve, so both sides can have a point.",
+  "move": "More of a good thing isn't always better; look for the peak.",
+  "simply": "A tax of zero raises nothing, and a tax of 100 percent raises nothing too, since nobody bothers working. The best rate lies somewhere in between.",
+  "why": "Exercise, sleep, spending and medicine often work the same way: some helps, too much harms. Asking where the peak is beats arguing more versus less.",
+  "book": {
+    "id": "how-not-to-be-wrong",
+    "title": "How Not to Be Wrong",
+    "author": "Jordan Ellenberg",
+    "year": 2014,
+    "part": 1,
+    "isbn": "9780143127536",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "laffer curve",
+    "nonlinearity",
+    "taxes",
+    "jordan ellenberg"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jordan Ellenberg, How Not to Be Wrong, 2014",
+  "source_kind": "book",
+  "reference": "Jordan Ellenberg, How Not to Be Wrong: The Power of Mathematical Thinking (Penguin Press, 2014), ch. 1",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-book-the-disappearing-spoon-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.weird_but_useful",
+  "strand": "weird_facts.weird_but_useful.strange_but_true",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Marie Curie name the element polonium after Poland?",
+  "answer": "To make a point. In 1898 Poland, where she was born, did not exist as a country: it had been divided between Russia, Prussia and Austria. Naming a new element after it was a protest, and polonium became the first element named to make a political point.",
+  "move": "Even scientific names can carry a political message.",
+  "simply": "Marie Curie's country had been wiped off the map by its neighbours. She named a new element after it so the world would remember Poland.",
+  "why": "Names shape memory. Noticing who chose a name, and why, often reveals history hiding in plain sight, in streets, places and even elements.",
+  "book": {
+    "id": "the-disappearing-spoon",
+    "title": "The Disappearing Spoon",
+    "author": "Sam Kean",
+    "year": 2010,
+    "part": 4,
+    "isbn": "9780316051637",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "polonium",
+    "marie curie",
+    "poland",
+    "element names"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Sam Kean, The Disappearing Spoon, 2010",
+  "source_kind": "book",
+  "reference": "Sam Kean, The Disappearing Spoon (Little, Brown, 2010), ch. 12",
+  "written": "2026-11-17"
+}

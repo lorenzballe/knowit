@@ -1,0 +1,42 @@
+{
+  "id": "cinema-book-adventures-in-the-screen-trade-1",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the screenwriter William Goldman mean by 'Nobody knows anything'?",
+  "answer": "That in Hollywood not one person knows for certain which film will succeed. Goldman called it the single most important fact about the film business: studio heads, stars and writers are all guessing, which is why proven formulas flop and turned-down scripts become hits.",
+  "move": "When experts can't predict success, beware anyone who claims they can.",
+  "simply": "Even the bosses of Hollywood can't tell which films will be hits. They're guessing, like everyone else.",
+  "why": "The same holds for books, apps and start-ups. Knowing that success is hard to predict makes failure less personal and luck easier to see.",
+  "book": {
+    "id": "adventures-in-the-screen-trade",
+    "title": "Adventures in the Screen Trade",
+    "author": "William Goldman",
+    "year": 1983,
+    "part": 1,
+    "isbn": "9780446391177",
+    "badge": "By the Oscar-winning writer of Butch Cassidy and the Sundance Kid"
+  },
+  "keywords": [
+    "william goldman",
+    "hollywood",
+    "prediction",
+    "box office"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "William Goldman, Adventures in the Screen Trade, 1983",
+  "source_kind": "book",
+  "reference": "William Goldman, Adventures in the Screen Trade (Warner Books, 1983)",
+  "written": "2026-11-17"
+}

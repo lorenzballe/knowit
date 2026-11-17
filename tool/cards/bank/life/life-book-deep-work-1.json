@@ -1,0 +1,42 @@
+{
+  "id": "life-book-deep-work-1",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.routines",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the psychiatrist Carl Jung build a stone tower in the village of Bollingen?",
+  "answer": "To have a retreat for deep thinking. Cal Newport opens his book with the tower Jung built on the shore of Lake Zurich, at first without electricity, where he went to write, away from his busy practice. Newport argues that great thinkers often create places and rituals for concentration rather than waiting for it.",
+  "move": "Design places and rituals for focus instead of waiting for it.",
+  "simply": "Jung built himself a quiet stone tower by a lake to think and write. He didn't wait for focus; he built a place for it.",
+  "why": "You don't need a tower: a fixed place and time for focused work, a library desk or an early hour, turns concentration into a habit.",
+  "book": {
+    "id": "deep-work",
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "year": 2016,
+    "part": 1,
+    "isbn": "9781455586691",
+    "badge": "By a Georgetown computer science professor"
+  },
+  "keywords": [
+    "carl jung",
+    "bollingen tower",
+    "focus",
+    "rituals"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cal Newport, Deep Work, 2016",
+  "source_kind": "book",
+  "reference": "Cal Newport, Deep Work: Rules for Focused Success in a Distracted World (Grand Central, 2016), Introduction",
+  "written": "2026-11-17"
+}

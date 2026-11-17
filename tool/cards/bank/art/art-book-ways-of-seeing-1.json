@@ -1,0 +1,42 @@
+{
+  "id": "art-book-ways-of-seeing-1",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.seeing_for_yourself",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the critic John Berger mean by 'seeing comes before words'?",
+  "answer": "That a child looks and recognises before it can speak, and that what we see is never fully explained in words. Berger argued that how we see is shaped by what we know and believe: in the Middle Ages, when people believed in hell, the sight of fire meant something different from today.",
+  "move": "What you know and believe shapes what you see.",
+  "simply": "Babies see before they talk. And grown-ups see through what they believe: fire once made people think of hell; now it means a cosy hearth.",
+  "why": "Asking what you bring to a picture, an ad or a news photo helps you notice how much of seeing is interpreting.",
+  "book": {
+    "id": "ways-of-seeing",
+    "title": "Ways of Seeing",
+    "author": "John Berger",
+    "year": 1972,
+    "part": 1,
+    "isbn": "9780141035796",
+    "badge": "Based on the 1972 BBC television series"
+  },
+  "keywords": [
+    "john berger",
+    "perception",
+    "art criticism",
+    "belief"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Berger, Ways of Seeing, 1972",
+  "source_kind": "book",
+  "reference": "John Berger, Ways of Seeing (BBC and Penguin, 1972), ch. 1",
+  "written": "2026-11-17"
+}

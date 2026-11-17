@@ -1,0 +1,50 @@
+{
+  "id": "food-book-the-omnivores-dilemma-3",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.organic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Pollan visited big 'industrial organic' farms. What did he find?",
+  "options": [
+    "Many resembled conventional farms",
+    "All were small family plots",
+    "They used no machines"
+  ],
+  "correct": 0,
+  "answer": "That many resembled conventional farms: huge single-crop fields, long-distance shipping and, for some 'free-range' chickens, a small door to a patch of grass that few birds used. Pollan concluded that an organic label guarantees how food is grown, not the pastoral scene printed on the packaging.",
+  "move": "A label promises specific rules, not the picture on the box.",
+  "trap": "'All were small family plots': the packaging often pictures one.",
+  "simply": "Organic means no synthetic pesticides, not a small farm. Some organic chickens had a door to the outside that hardly any of them used.",
+  "why": "Food labels are worth reading for what they legally mean. That way you pay for what matters to you, not for a pretty picture.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-omnivores-dilemma",
+    "title": "The Omnivore's Dilemma",
+    "author": "Michael Pollan",
+    "year": 2006,
+    "part": 3,
+    "isbn": "9780143038580",
+    "badge": "Named one of the ten best books of 2006 by The New York Times"
+  },
+  "keywords": [
+    "organic food",
+    "free-range",
+    "labels",
+    "industrial farming"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Pollan, The Omnivore's Dilemma, 2006",
+  "source_kind": "book",
+  "reference": "Michael Pollan, The Omnivore's Dilemma (Penguin Press, 2006), ch. 9",
+  "written": "2026-11-17"
+}

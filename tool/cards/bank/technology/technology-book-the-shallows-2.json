@@ -1,0 +1,50 @@
+{
+  "id": "technology-book-the-shallows-2",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.attention_economy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Readers got the same text with or without links. Who understood it better?",
+  "options": [
+    "Those reading without links",
+    "Those reading with links",
+    "No difference"
+  ],
+  "correct": 0,
+  "answer": "Those without links. Carr reviews studies in which hypertext readers understood and remembered less, because each link is a small decision that pulls attention away from the meaning. The web's greatest convenience, one more click away, is also a constant interruption.",
+  "move": "Every link you see is a small decision that costs some attention.",
+  "trap": "'Those reading with links': more information seems more help.",
+  "simply": "Reading with links is like doing homework while someone keeps tapping your shoulder. You finish, but you remember less.",
+  "why": "For anything you want to understand, a quiet, link-free version, a printout, a book, reader mode, makes a measurable difference.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-shallows",
+    "title": "The Shallows",
+    "author": "Nicholas Carr",
+    "year": 2010,
+    "part": 2,
+    "isbn": "9780393339758",
+    "badge": "A finalist for the Pulitzer Prize"
+  },
+  "keywords": [
+    "hypertext",
+    "comprehension",
+    "links",
+    "distraction"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nicholas Carr, The Shallows, 2010",
+  "source_kind": "book",
+  "reference": "Nicholas Carr, The Shallows: What the Internet Is Doing to Our Brains (W. W. Norton, 2010), ch. 7",
+  "written": "2026-11-17"
+}
