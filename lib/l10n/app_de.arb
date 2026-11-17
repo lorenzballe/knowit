@@ -404,6 +404,8 @@
   "holdToLikeLandsHere": "Halte eine Karte, die dir gefällt, und sie landet hier — und die App gibt dir mehr davon.",
   "tapTheBookmarkLandsHere": "Tippe auf das Lesezeichen einer Karte und sie landet hier — die, die dein Denken verändert haben, behalten.",
   "nudgeTitle": "Deine fünf sind bereit",
+  "nudgeBookTitle": "Das Gratis-Buch dieser Woche",
+  "nudgeBookBody": "{title} von {author}: die großen Ideen in {minutes} Minuten.",
   "nudgeFreezeTitle": "Deine Serie ist geschützt",
   "nudgeFreezeBody": "Gestern hat dein Joker übernommen. Heute: {question}",
   "nudgeSureTitle": "Bei dieser warst du sicher",
@@ -1185,5 +1187,10 @@
   "bookAgain": "Noch einmal lesen",
   "bookTheIdeas": "Die Ideen",
   "bookFreeThisWeek": "Diese Woche gratis",
+  "bookDoneTitle": "Buch beendet",
+  "bookDoneLine": "{ideas} große Ideen, in {minutes} Minuten.",
+  "bookDoneCount": "Gelesene Bücher: {count}",
+  "bookDoneNext": "Nächstes Buch",
+  "bookDoneGo": "Öffnen",
   "bookRetold": "Die Ideen aus {title} von {author}, in Astutes eigenen Worten erzählt. Das ganze Buch findest du im Buchhandel."
 }

@@ -404,6 +404,8 @@
   "holdToLikeLandsHere": "Mantén pulsada una tarjeta que te guste y aterriza aquí — y la app te da más así.",
   "tapTheBookmarkLandsHere": "Toca el marcador en cualquier tarjeta y aterriza aquí — las que cambiaron tu forma de pensar, guardadas.",
   "nudgeTitle": "Tus cinco están listas",
+  "nudgeBookTitle": "El libro gratis de esta semana",
+  "nudgeBookBody": "{title}, de {author}: las grandes ideas en {minutes} minutos.",
   "nudgeFreezeTitle": "Tu racha sigue a salvo",
   "nudgeFreezeBody": "Ayer te cubrió un comodín. Hoy: {question}",
   "nudgeSureTitle": "De esta estabas seguro",
@@ -1185,5 +1187,10 @@
   "bookAgain": "Leer de nuevo",
   "bookTheIdeas": "Las ideas",
   "bookFreeThisWeek": "Gratis esta semana",
+  "bookDoneTitle": "Libro terminado",
+  "bookDoneLine": "{ideas} grandes ideas, en {minutes} minutos.",
+  "bookDoneCount": "Libros terminados: {count}",
+  "bookDoneNext": "Siguiente libro",
+  "bookDoneGo": "Ábrelo",
   "bookRetold": "Las ideas de {title}, de {author}, contadas con palabras de Astute. Para el libro entero, búscalo en tu librería."
 }

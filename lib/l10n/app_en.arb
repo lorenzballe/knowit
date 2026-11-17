@@ -1656,6 +1656,16 @@
  "holdToLikeLandsHere": "Hold any card you like and it lands here — and the app deals you more of the same.",
  "tapTheBookmarkLandsHere": "Tap the bookmark on any card and it lands here — the ones that changed how you think, kept.",
  "nudgeTitle": "Your five are ready",
+ "nudgeBookTitle": "This week's free book",
+ "nudgeBookBody": "{title}, by {author}: the big ideas in {minutes} minutes.",
+ "@nudgeBookBody": {
+  "description": "The Monday reminder: the week's free book, its author, and how long its big ideas take.",
+  "placeholders": {
+   "title": {"type": "String"},
+   "author": {"type": "String"},
+   "minutes": {"type": "int"}
+  }
+ },
  "nudgeFreezeTitle": "Your freeze is holding",
  "nudgeFreezeBody": "Yesterday is covered. Today: {question}",
  "@nudgeFreezeBody": {
@@ -5397,6 +5407,23 @@
  "@bookFreeThisWeek": {
   "description": "Books in pills, a book's own page: bookFreeThisWeek"
  },
+ "bookDoneTitle": "Book finished",
+ "bookDoneLine": "{ideas} big ideas, in {minutes} minutes.",
+ "@bookDoneLine": {
+  "description": "The card at the end of a book read whole: how many ideas, how long.",
+  "placeholders": {
+   "ideas": {"type": "int"},
+   "minutes": {"type": "int"}
+  }
+ },
+ "bookDoneCount": "Books finished: {count}",
+ "@bookDoneCount": {
+  "placeholders": {
+   "count": {"type": "int"}
+  }
+ },
+ "bookDoneNext": "Next book",
+ "bookDoneGo": "Open it",
  "bookRetold": "The ideas of {title} by {author}, retold in Astute's own words. To read the whole book, find it at your bookshop.",
  "@bookRetold": {
   "description": "Books in pills, a book's own page: bookRetold",

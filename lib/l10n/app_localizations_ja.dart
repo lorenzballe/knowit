@@ -1660,6 +1660,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get nudgeTitle => '今日の5枚が届いています';
 
   @override
+  String get nudgeBookTitle => '今週の無料の本';
+
+  @override
+  String nudgeBookBody(String title, String author, int minutes) {
+    return '$author『$title』の大事なアイデアを$minutes分で。';
+  }
+
+  @override
   String get nudgeFreezeTitle => 'フリーズが効いています';
 
   @override
@@ -4850,6 +4858,25 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => '今週は無料';
+
+  @override
+  String get bookDoneTitle => '読了';
+
+  @override
+  String bookDoneLine(int ideas, int minutes) {
+    return '$ideasつの大事なアイデアを$minutes分で。';
+  }
+
+  @override
+  String bookDoneCount(int count) {
+    return '読み終えた本：$count冊';
+  }
+
+  @override
+  String get bookDoneNext => '次の本';
+
+  @override
+  String get bookDoneGo => '開く';
 
   @override
   String bookRetold(String title, String author) {

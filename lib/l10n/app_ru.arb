@@ -404,6 +404,8 @@
   "holdToLikeLandsHere": "Удержите карточку, которая вам понравилась, и она окажется здесь — а приложение даст больше таких.",
   "tapTheBookmarkLandsHere": "Нажмите на закладку на карточке, и она окажется здесь — те, что изменили ваше мышление, сохранены.",
   "nudgeTitle": "Ваши пять готовы",
+  "nudgeBookTitle": "Бесплатная книга этой недели",
+  "nudgeBookBody": "«{title}», {author}: главные идеи за {minutes} мин.",
   "nudgeFreezeTitle": "Ваша заморозка держится",
   "nudgeFreezeBody": "Вчера закрыто. Сегодня: {question}",
   "nudgeSureTitle": "В этой вы были уверены",
@@ -1185,5 +1187,10 @@
   "bookAgain": "Перечитать",
   "bookTheIdeas": "Идеи",
   "bookFreeThisWeek": "Бесплатно на этой неделе",
+  "bookDoneTitle": "Книга прочитана",
+  "bookDoneLine": "Главных идей: {ideas}, за {minutes} мин.",
+  "bookDoneCount": "Прочитано книг: {count}",
+  "bookDoneNext": "Следующая книга",
+  "bookDoneGo": "Открыть",
   "bookRetold": "Идеи книги «{title}» ({author}), пересказанные словами Astute. Всю книгу ищи в книжном."
 }

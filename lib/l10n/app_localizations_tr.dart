@@ -1703,6 +1703,14 @@ class AppLocalizationsTr extends AppLocalizations {
   String get nudgeTitle => 'Beşin hazır';
 
   @override
+  String get nudgeBookTitle => 'Bu haftanın ücretsiz kitabı';
+
+  @override
+  String nudgeBookBody(String title, String author, int minutes) {
+    return '$title, $author: büyük fikirler $minutes dakikada.';
+  }
+
+  @override
   String get nudgeFreezeTitle => 'Dondurman tutuyor';
 
   @override
@@ -4989,6 +4997,25 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => 'Bu hafta ücretsiz';
+
+  @override
+  String get bookDoneTitle => 'Kitap bitti';
+
+  @override
+  String bookDoneLine(int ideas, int minutes) {
+    return '$ideas büyük fikir, $minutes dakikada.';
+  }
+
+  @override
+  String bookDoneCount(int count) {
+    return 'Biten kitaplar: $count';
+  }
+
+  @override
+  String get bookDoneNext => 'Sıradaki kitap';
+
+  @override
+  String get bookDoneGo => 'Aç';
 
   @override
   String bookRetold(String title, String author) {

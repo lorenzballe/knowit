@@ -1702,6 +1702,19 @@ class RemoteLocalizations extends AppLocalizations {
   String get nudgeTitle => _words.text('nudgeTitle') ?? _base.nudgeTitle;
 
   @override
+  String get nudgeBookTitle =>
+      _words.text('nudgeBookTitle') ?? _base.nudgeBookTitle;
+
+  @override
+  String nudgeBookBody(String title, String author, int minutes) =>
+      _words.format('nudgeBookBody', localeName, {
+        'title': title,
+        'author': author,
+        'minutes': minutes,
+      }) ??
+      _base.nudgeBookBody(title, author, minutes);
+
+  @override
   String get nudgeFreezeTitle =>
       _words.text('nudgeFreezeTitle') ?? _base.nudgeFreezeTitle;
 
@@ -4903,6 +4916,29 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get bookFreeThisWeek =>
       _words.text('bookFreeThisWeek') ?? _base.bookFreeThisWeek;
+
+  @override
+  String get bookDoneTitle =>
+      _words.text('bookDoneTitle') ?? _base.bookDoneTitle;
+
+  @override
+  String bookDoneLine(int ideas, int minutes) =>
+      _words.format('bookDoneLine', localeName, {
+        'ideas': ideas,
+        'minutes': minutes,
+      }) ??
+      _base.bookDoneLine(ideas, minutes);
+
+  @override
+  String bookDoneCount(int count) =>
+      _words.format('bookDoneCount', localeName, {'count': count}) ??
+      _base.bookDoneCount(count);
+
+  @override
+  String get bookDoneNext => _words.text('bookDoneNext') ?? _base.bookDoneNext;
+
+  @override
+  String get bookDoneGo => _words.text('bookDoneGo') ?? _base.bookDoneGo;
 
   @override
   String bookRetold(String title, String author) =>

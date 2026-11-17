@@ -1649,6 +1649,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nudgeTitle => '今天的五张已就绪';
 
   @override
+  String get nudgeBookTitle => '本周免费书';
+
+  @override
+  String nudgeBookBody(String title, String author, int minutes) {
+    return '$author《$title》的核心观点，$minutes分钟读完。';
+  }
+
+  @override
   String get nudgeFreezeTitle => '你的冻结还在生效';
 
   @override
@@ -4850,6 +4858,25 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => '本周免费';
+
+  @override
+  String get bookDoneTitle => '读完了';
+
+  @override
+  String bookDoneLine(int ideas, int minutes) {
+    return '$ideas个核心观点，$minutes分钟。';
+  }
+
+  @override
+  String bookDoneCount(int count) {
+    return '已读完：$count本';
+  }
+
+  @override
+  String get bookDoneNext => '下一本书';
+
+  @override
+  String get bookDoneGo => '打开';
 
   @override
   String bookRetold(String title, String author) {

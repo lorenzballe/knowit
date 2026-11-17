@@ -404,6 +404,8 @@
   "holdToLikeLandsHere": "気に入ったカードを長押しするとここに集まり、同じようなカードが増えます。",
   "tapTheBookmarkLandsHere": "カードのブックマークを押すとここに集まります — 考え方を変えたカードを、手元に。",
   "nudgeTitle": "今日の5枚が届いています",
+  "nudgeBookTitle": "今週の無料の本",
+  "nudgeBookBody": "{author}『{title}』の大事なアイデアを{minutes}分で。",
   "nudgeFreezeTitle": "フリーズが効いています",
   "nudgeFreezeBody": "昨日はカバーされました。今日：{question}",
   "nudgeSureTitle": "これには自信がありましたね",
@@ -1185,5 +1187,10 @@
   "bookAgain": "もう一度読む",
   "bookTheIdeas": "アイデア",
   "bookFreeThisWeek": "今週は無料",
+  "bookDoneTitle": "読了",
+  "bookDoneLine": "{ideas}つの大事なアイデアを{minutes}分で。",
+  "bookDoneCount": "読み終えた本：{count}冊",
+  "bookDoneNext": "次の本",
+  "bookDoneGo": "開く",
   "bookRetold": "{author}『{title}』のアイデアを、Astute の言葉で紹介しています。本の全文は書店でどうぞ。"
 }
