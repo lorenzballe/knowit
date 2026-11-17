@@ -4837,6 +4837,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get storyChapterStory => 'Tu historia';
 
   @override
+  String get journeyChapterKnow => 'Lo que sabes';
+
+  @override
+  String get journeyChapterHabits => 'Tus hábitos';
+
+  @override
+  String get journeyChapterMemory => 'Lo que te queda';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

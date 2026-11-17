@@ -5105,6 +5105,18 @@
  "@storyChapterStory": {
   "description": "Your journey as a story (the version on trial under the tiles): storyChapterStory"
  },
+ "journeyChapterKnow": "What you know",
+ "@journeyChapterKnow": {
+  "description": "A chapter of Your journey, in small capitals: the subjects, places, times, topics and words the reader has met."
+ },
+ "journeyChapterHabits": "Your habits",
+ "@journeyChapterHabits": {
+  "description": "A chapter of Your journey, in small capitals: days in a row, reading time, the calendar of days read and how hard the cards are."
+ },
+ "journeyChapterMemory": "What stays with you",
+ "@journeyChapterMemory": {
+  "description": "A chapter of Your journey, in small capitals: how many cards the reader still remembers after days and weeks."
+ },
  "storyHeadlineSure": "{n, plural, =1{In the answers you gave with confidence, you were right 1 time in 10.} other{In the answers you gave with confidence, you were right {n} times in 10.}}",
  "@storyHeadlineSure": {
   "description": "Your journey as a story (the version on trial under the tiles): storyHeadlineSure",

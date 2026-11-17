@@ -2905,8 +2905,21 @@ void main() {
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
 
-      // Artboard 137a: the score first — five cards read is five points,
-      // all of it this week — then the level, then the tiles.
+      // The journey opens on what the week says and what to practise; the
+      // score comes next — five cards read is five points, all of it this
+      // week — then the level, then the tiles.
+      expect(find.text('1  ·  THIS WEEK'), findsOneWidget);
+      expect(find.text('2  ·  PRACTISE'), findsOneWidget);
+      final Finder list = find.descendant(
+        of: find.byType(JourneyScreen),
+        matching: find.byType(Scrollable),
+      );
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-score')),
+        200,
+        scrollable: list,
+      );
+      await _settle(tester);
       expect(find.text('YOUR SCORE'), findsOneWidget);
       expect(
         (tester.widget(
@@ -2923,25 +2936,6 @@ void main() {
       expect(find.text('Day one'), findsOneWidget);
       expect(find.text('15 cards\nfrom Reading'), findsOneWidget);
       expect(find.text('5 cards'), findsWidgets);
-      expect(find.text('45 to the first book'), findsOneWidget);
-      final Finder list = find.descendant(
-        of: find.byType(JourneyScreen),
-        matching: find.byType(Scrollable),
-      );
-      // The days in a row open the week in full.
-      await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('journey-week')),
-        200,
-        scrollable: list,
-      );
-      await _settle(tester);
-      expect(find.text('1 day'), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('journey-week')));
-      await _settle(tester);
-      expect(find.text('Your week'), findsOneWidget);
-      expect(find.text('WHERE THIS IS GOING'), findsOneWidget);
-      await tester.tap(find.byType(BackCircle));
-      await _settle(tester);
       // How sure against how right is not measured yet: a dash, and how
       // many more answers it takes.
       await tester.scrollUntilVisible(
@@ -2958,6 +2952,33 @@ void main() {
         find.textContaining('12 more answers with how sure'),
         findsOneWidget,
       );
+      // The days in a row open the week in full.
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-week')),
+        200,
+        scrollable: list,
+      );
+      await _settle(tester);
+      expect(find.text('1 day'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('45 to the first book'),
+        200,
+        scrollable: list,
+      );
+      await _settle(tester);
+      expect(find.text('45 to the first book'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-week')),
+        -200,
+        scrollable: list,
+      );
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('journey-week')));
+      await _settle(tester);
+      expect(find.text('Your week'), findsOneWidget);
+      expect(find.text('WHERE THIS IS GOING'), findsOneWidget);
+      await tester.tap(find.byType(BackCircle));
+      await _settle(tester);
       await tester.scrollUntilVisible(
         find.byKey(const ValueKey('journey-level')),
         -200,
@@ -2991,6 +3012,15 @@ void main() {
       await finish(tester);
 
       await tester.tap(find.text('Your journey'));
+      await _settle(tester);
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-level')),
+        200,
+        scrollable: find.descendant(
+          of: find.byType(JourneyScreen),
+          matching: find.byType(Scrollable),
+        ),
+      );
       await _settle(tester);
       expect(find.text('LEVEL 2 OF 7'), findsOneWidget);
       expect(find.text('Reading'), findsOneWidget);

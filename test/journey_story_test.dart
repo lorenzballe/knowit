@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
-import 'package:astuto/debug_flags.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/journey_screen.dart';
@@ -106,9 +105,10 @@ void main() {
     expect(overconfidentIn(calibrated), isNull);
   });
 
-  testWidgets('the story draws every chapter, and on the free plan the line '
-      'Astute+ shows sits behind glass with the way through', (tester) async {
-    tester.view.physicalSize = const Size(402, 2400);
+  testWidgets('the journey reads in eight chapters: the week and what to '
+      'practise first, the story last; on the free plan the line Astute+ '
+      'shows sits behind glass with the way through', (tester) async {
+    tester.view.physicalSize = const Size(402, 9000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final app = await _app({
@@ -123,23 +123,38 @@ void main() {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
-        home: Scaffold(
-          body: SingleChildScrollView(child: JourneyStory(app: app)),
-        ),
+        home: JourneyScreen(app: app, onBack: () {}),
       ),
     );
     await tester.pump();
     expect(tester.takeException(), isNull);
-    expect(find.text('5  ·  YOUR STORY'), findsOneWidget);
+    final List<String> chapters = [
+      '1  ·  THIS WEEK',
+      '2  ·  PRACTISE',
+      '3  ·  WHERE YOU ARE',
+      '4  ·  HOW YOU REASON',
+      '5  ·  WHAT YOU KNOW',
+      '6  ·  YOUR HABITS',
+      '7  ·  WHAT STAYS WITH YOU',
+      '8  ·  YOUR STORY',
+    ];
+    double last = -1;
+    for (final String c in chapters) {
+      expect(find.text(c), findsOneWidget, reason: c);
+      final double y = tester.getTopLeft(find.text(c)).dy;
+      expect(y, greaterThan(last), reason: '$c comes after the one before');
+      last = y;
+    }
+    // The score is in the third chapter, under what to practise.
+    expect(
+      tester.getTopLeft(find.byKey(const ValueKey('journey-score'))).dy,
+      greaterThan(tester.getTopLeft(find.text('3  ·  WHERE YOU ARE')).dy),
+    );
     expect(find.text('See it with Astute+'), findsOneWidget);
     expect(find.byKey(const ValueKey('story-practice-misses')), findsOneWidget);
     expect(
       find.byKey(const ValueKey('story-practice-changed')),
       findsOneWidget,
     );
-  });
-
-  test('the story is on trial: off wherever the developer tools are', () {
-    expect(debugToolsOn, isFalse);
   });
 }

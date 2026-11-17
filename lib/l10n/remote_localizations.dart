@@ -4705,6 +4705,18 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('storyChapterStory') ?? _base.storyChapterStory;
 
   @override
+  String get journeyChapterKnow =>
+      _words.text('journeyChapterKnow') ?? _base.journeyChapterKnow;
+
+  @override
+  String get journeyChapterHabits =>
+      _words.text('journeyChapterHabits') ?? _base.journeyChapterHabits;
+
+  @override
+  String get journeyChapterMemory =>
+      _words.text('journeyChapterMemory') ?? _base.journeyChapterMemory;
+
+  @override
   String storyHeadlineSure(int n) =>
       _words.format('storyHeadlineSure', localeName, {'n': n}) ??
       _base.storyHeadlineSure(n);

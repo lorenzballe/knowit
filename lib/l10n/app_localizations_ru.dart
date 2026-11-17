@@ -4997,6 +4997,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get storyChapterStory => 'Твоя история';
 
   @override
+  String get journeyChapterKnow => 'Что ты знаешь';
+
+  @override
+  String get journeyChapterHabits => 'Твои привычки';
+
+  @override
+  String get journeyChapterMemory => 'Что остаётся с тобой';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

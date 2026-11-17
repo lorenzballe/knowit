@@ -6930,6 +6930,24 @@ abstract class AppLocalizations {
   /// **'Your story'**
   String get storyChapterStory;
 
+  /// A chapter of Your journey, in small capitals: the subjects, places, times, topics and words the reader has met.
+  ///
+  /// In en, this message translates to:
+  /// **'What you know'**
+  String get journeyChapterKnow;
+
+  /// A chapter of Your journey, in small capitals: days in a row, reading time, the calendar of days read and how hard the cards are.
+  ///
+  /// In en, this message translates to:
+  /// **'Your habits'**
+  String get journeyChapterHabits;
+
+  /// A chapter of Your journey, in small capitals: how many cards the reader still remembers after days and weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'What stays with you'**
+  String get journeyChapterMemory;
+
   /// Your journey as a story (the version on trial under the tiles): storyHeadlineSure
   ///
   /// In en, this message translates to:

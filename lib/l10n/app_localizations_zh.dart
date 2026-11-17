@@ -4614,6 +4614,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get storyChapterStory => '你的故事';
 
   @override
+  String get journeyChapterKnow => '你知道的';
+
+  @override
+  String get journeyChapterHabits => '你的习惯';
+
+  @override
+  String get journeyChapterMemory => '你记住的';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

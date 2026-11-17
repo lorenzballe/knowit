@@ -7,7 +7,6 @@ import 'package:intl/intl.dart' hide TextDirection;
 import '../data/pill_bank.dart';
 import '../analytics.dart';
 import '../data/pills_repository.dart' show dateKey, dayShift, pillById;
-import '../debug_flags.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
@@ -60,7 +59,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
     final l = context.l10n;
     final AppState app = widget.app;
     final JourneyRecord record = app.record;
-    const gap = SizedBox(height: 8);
+    const chapterGap = SizedBox(height: 28);
 
     return ScreenView(
       name: 'journey',
@@ -96,83 +95,115 @@ class _JourneyScreenState extends State<JourneyScreen> {
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 30),
+                  // The journey in chapters: what the week says and what to
+                  // practise first, then the numbers behind them, grouped
+                  // by what they are about, and the story so far at the end.
                   children: [
-                    _ScoreTile(
-                      app: app,
-                      record: record,
-                      chosen: _week,
-                      onChoose: (i) => setState(() => _week = i),
+                    _Chapter(
+                      n: 1,
+                      title: l.storyChapterWeek,
+                      child: _Headline(app: app),
                     ),
-                    gap,
-                    _LevelTile(app: app),
-                    gap,
-                    _Pair(
-                      _WorthTile(app: app),
-                      _InARowTile(app: app, record: record),
+                    chapterGap,
+                    _Chapter(
+                      n: 2,
+                      title: l.storyChapterPractice,
+                      child: _Practice(app: app),
                     ),
-                    gap,
-                    _SubjectsTile(app: app, record: record),
-                    gap,
-                    _Pair(
-                      _SpotTile(app: app, strongest: true),
-                      _SpotTile(app: app, strongest: false),
+                    chapterGap,
+                    _Chapter(
+                      n: 3,
+                      title: l.storyChapterWhere,
+                      child: _Stack([
+                        _ScoreTile(
+                          app: app,
+                          record: record,
+                          chosen: _week,
+                          onChoose: (i) => setState(() => _week = i),
+                        ),
+                        _LevelTile(app: app),
+                      ]),
                     ),
-                    gap,
-                    // What the cards that ask did for the reader, in their
-                    // own word; nothing until one has asked and been told.
-                    if (app.reactions.isNotEmpty) ...[
-                      _Pair(
-                        _ReactionTile(app: app, changed: true),
-                        _ReactionTile(app: app, changed: false),
-                      ),
-                      gap,
-                    ],
-                    _Pair(
-                      _HowHardTile(record: record),
-                      _ReadingTimeTile(record: record),
+                    chapterGap,
+                    _Chapter(
+                      n: 4,
+                      title: l.storyChapterReason,
+                      child: _Stack([
+                        _HowYouReason(app: app),
+                        _PointsOffTile(app: app, record: record),
+                        _Pair(
+                          _SureTile(record: record),
+                          _MovesTile(app: app, record: record),
+                        ),
+                        if (_MissingTile.missed(app).isNotEmpty)
+                          _MissingTile(app: app),
+                        // What the cards that ask did for the reader, in
+                        // their own word; nothing until one has asked.
+                        if (app.reactions.isNotEmpty)
+                          _Pair(
+                            _ReactionTile(app: app, changed: true),
+                            _ReactionTile(app: app, changed: false),
+                          ),
+                      ]),
                     ),
-                    gap,
-                    _PointsOffTile(app: app, record: record),
-                    gap,
-                    _Pair(
-                      _SureTile(record: record),
-                      _MovesTile(app: app, record: record),
+                    chapterGap,
+                    _Chapter(
+                      n: 5,
+                      title: l.journeyChapterKnow,
+                      child: _Stack([
+                        _SubjectsTile(app: app, record: record),
+                        _Pair(
+                          _SpotTile(app: app, strongest: true),
+                          _SpotTile(app: app, strongest: false),
+                        ),
+                        _Pair(_InTimeTile(app: app), _InPlaceTile(app: app)),
+                        _Pair(
+                          _TopicsTile(app: app),
+                          _WordsTile(app: app, record: record),
+                        ),
+                      ]),
                     ),
-                    if (_MissingTile.missed(app).isNotEmpty) ...[
-                      gap,
-                      _MissingTile(app: app),
-                    ],
-                    gap,
-                    _MemoryTile(app: app, record: record),
-                    gap,
-                    _DaysTile(record: record),
-                    gap,
-                    _Pair(_InTimeTile(app: app), _InPlaceTile(app: app)),
-                    gap,
-                    _Pair(
-                      _TopicsTile(app: app),
-                      _WordsTile(app: app, record: record),
+                    chapterGap,
+                    _Chapter(
+                      n: 6,
+                      title: l.journeyChapterHabits,
+                      child: _Stack([
+                        _Pair(
+                          _InARowTile(app: app, record: record),
+                          _ReadingTimeTile(record: record),
+                        ),
+                        _DaysTile(record: record),
+                        _Pair(
+                          _WorthTile(app: app),
+                          _HowHardTile(record: record),
+                        ),
+                      ]),
                     ),
-                    if (_WeekAsksTile.asksOf(app, record.today)
-                        case final List<Pill> asks when asks.isNotEmpty) ...[
-                      gap,
-                      _WeekAsksTile(app: app, asks: asks),
-                    ],
+                    chapterGap,
+                    _Chapter(
+                      n: 7,
+                      title: l.journeyChapterMemory,
+                      child: _Stack([
+                        _MemoryTile(app: app, record: record),
+                        if (_WeekAsksTile.asksOf(app, record.today)
+                            case final List<Pill> asks when asks.isNotEmpty)
+                          _WeekAsksTile(app: app, asks: asks),
+                      ]),
+                    ),
+                    chapterGap,
+                    _Chapter(
+                      n: 8,
+                      title: l.storyChapterStory,
+                      child: _YourStory(app: app),
+                    ),
                     // The day, sent as five squares, once it is done: the
-                    // way the app travels, kept at the foot of the tiles.
+                    // way the app travels, kept at the foot of the journey.
                     // The finished day sends it too, on either plan.
                     if (app.dayClosed) ...[
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 22),
                       Center(
                         child: ShareDay(app: app, from: 'journey'),
                       ),
-                    ],
-                    // The journey as a story, on trial under the tiles
-                    // (journey_story.dart): only where the developer tools
-                    // are, the TestFlight installs, until it is chosen.
-                    if (debugToolsOn) ...[
-                      const SizedBox(height: 40),
-                      JourneyStory(app: app),
                     ],
                   ],
                 ),
@@ -278,6 +309,24 @@ class _Box extends StatelessWidget {
 }
 
 /// Two tiles side by side, as tall as the taller.
+/// The tiles of a chapter, one under another, the usual gap between.
+class _Stack extends StatelessWidget {
+  const _Stack(this.children);
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      for (var i = 0; i < children.length; i++) ...[
+        if (i > 0) const SizedBox(height: 8),
+        children[i],
+      ],
+    ],
+  );
+}
+
 class _Pair extends StatelessWidget {
   const _Pair(this.left, this.right);
 
@@ -353,7 +402,7 @@ class _Unit extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text(
     text,
-    maxLines: 2,
+    maxLines: 3,
     overflow: TextOverflow.ellipsis,
     style: AppText.body(
       size: size,
@@ -391,9 +440,11 @@ class _Half extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Two lines where a language runs long (Russian, German),
+          // rather than cut.
           Text(
             label,
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppText.body(
               size: 11.5,

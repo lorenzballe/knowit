@@ -4756,6 +4756,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get storyChapterStory => 'Hikâyen';
 
   @override
+  String get journeyChapterKnow => 'Neler biliyorsun';
+
+  @override
+  String get journeyChapterHabits => 'Alışkanlıkların';
+
+  @override
+  String get journeyChapterMemory => 'Aklında kalanlar';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
