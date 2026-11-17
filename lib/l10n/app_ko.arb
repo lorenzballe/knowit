@@ -404,6 +404,8 @@
   "holdToLikeLandsHere": "마음에 드는 카드를 길게 누르면 여기에 모이고, 앱이 비슷한 카드를 더 보여줘요.",
   "tapTheBookmarkLandsHere": "카드의 북마크를 누르면 여기에 모여요 — 생각을 바꾼 카드를 간직하세요.",
   "nudgeTitle": "오늘의 다섯 장이 준비됐어요",
+  "nudgeBookTitle": "이번 주 무료 책",
+  "nudgeBookBody": "{author}의 『{title}』 핵심 아이디어를 {minutes}분에.",
   "nudgeFreezeTitle": "프리즈가 버티고 있어요",
   "nudgeFreezeBody": "어제는 보호됐어요. 오늘: {question}",
   "nudgeSureTitle": "이건 확신했었죠",
@@ -1185,5 +1187,10 @@
   "bookAgain": "다시 읽기",
   "bookTheIdeas": "아이디어",
   "bookFreeThisWeek": "이번 주 무료",
+  "bookDoneTitle": "완독",
+  "bookDoneLine": "핵심 아이디어 {ideas}개, {minutes}분.",
+  "bookDoneCount": "다 읽은 책: {count}권",
+  "bookDoneNext": "다음 책",
+  "bookDoneGo": "열기",
   "bookRetold": "{author}의 『{title}』에 담긴 아이디어를 Astute의 말로 풀었어요. 책 전체는 서점에서 만나 보세요."
 }

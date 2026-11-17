@@ -177,6 +177,36 @@ void main() {
     }
   });
 
+  testWidgets('a book read whole ends on the card that says so, counts the '
+      'books finished and offers the next', (tester) async {
+    tester.view.physicalSize = const Size(420, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final AppState app = await _app(plus: true);
+    final List<CardBook> books = booksOf(PillBank.live, today: app.today);
+    // One book already read before this one.
+    app.seenIds = {for (final p in books[1].cards) p.id};
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        home: Scaffold(
+          body: SizedBox(
+            height: 700,
+            child: BookDone(app: app, book: books[0]),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(find.text('Book finished'), findsOneWidget);
+    expect(find.text('Books finished: 2'), findsOneWidget);
+    // The next is the first not yet read, never the one just finished.
+    expect(find.byKey(const ValueKey('book-done-next')), findsOneWidget);
+    expect(find.textContaining(books[2].book.title), findsOneWidget);
+  });
+
   test('a book is read from the card file', () {
     final Pill card = PillBank.live.firstWhere((p) => p.book != null);
     expect(card.book!.part, greaterThanOrEqualTo(1));

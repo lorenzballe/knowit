@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-demon-haunted-world-3",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we see faces in clouds, rocks and electrical sockets?",
+  "answer": "Sagan explains that babies are born ready to spot faces, because recognising a parent mattered for survival. A brain tuned that finely errs on the side of seeing faces where there are none. He traces the 'face on Mars' and the 'man in the moon' to the same reflex.",
+  "move": "Seeing a pattern is not evidence that someone put it there.",
+  "simply": "Your brain is a face detector switched to 'very sensitive'. It would rather mistake a socket for a face than miss a real face.",
+  "why": "The same reflex makes us see intentions behind coincidences and plots behind accidents. Knowing it is a reflex helps you ask whether the pattern is really there.",
+  "book": {
+    "id": "the-demon-haunted-world",
+    "title": "The Demon-Haunted World",
+    "author": "Carl Sagan",
+    "year": 1995,
+    "part": 3,
+    "isbn": "9780394535128",
+    "badge": "By a Pulitzer Prize-winning scientist"
+  },
+  "keywords": [
+    "pareidolia",
+    "face on mars",
+    "pattern seeking",
+    "perception"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, The Demon-Haunted World, 1995",
+  "source_kind": "book",
+  "reference": "Carl Sagan, The Demon-Haunted World: Science as a Candle in the Dark (Random House, 1995), ch. 3",
+  "written": "2026-11-17"
+}

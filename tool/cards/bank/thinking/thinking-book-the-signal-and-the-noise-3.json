@@ -1,0 +1,48 @@
+{
+  "id": "thinking-book-the-signal-and-the-noise-3",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "multipleComparisons",
+  "question": "A model fits every past earthquake in a region perfectly. Why might it predict the next one worse than a simple model?",
+  "options": [
+    "It learned the noise, not just the pattern",
+    "Earthquakes cannot be measured",
+    "Simple models always win"
+  ],
+  "correct": 0,
+  "answer": "Because it overfits: bending to every quirk of past data, it mistakes random noise for a real pattern, and the noise will not repeat. Silver shows how such curves can badly misjudge how often big quakes come. A model that explains the past too perfectly is often the worse guide to the future.",
+  "move": "Distrust a model that explains the past perfectly.",
+  "trap": "'Simple models always win': here, yes, but not as a rule.",
+  "simply": "If you memorise last year's test answers, you ace last year's test and fail this year's. A model can memorise the past in the same way.",
+  "why": "From stock tips to diet plans, explanations that fit every past case are tempting. Fewer, sturdier rules usually predict better than a perfect story of the past.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-signal-and-the-noise",
+    "title": "The Signal and the Noise",
+    "author": "Nate Silver",
+    "year": 2012,
+    "part": 3,
+    "isbn": "9780143125082",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "overfitting",
+    "earthquakes",
+    "models",
+    "noise"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nate Silver, The Signal and the Noise, 2012",
+  "source_kind": "book",
+  "reference": "Nate Silver, The Signal and the Noise (Penguin Press, 2012), ch. 5",
+  "written": "2026-11-17"
+}

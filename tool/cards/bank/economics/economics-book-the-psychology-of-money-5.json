@@ -1,0 +1,42 @@
+{
+  "id": "economics-book-the-psychology-of-money-5",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.risk_and_reward",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Housel say the most important part of a financial plan is planning for it not to go to plan?",
+  "answer": "Because the future surprises everyone. Savings you don't plan to touch, a budget you can beat and debts you could carry through a job loss let you survive bad luck without being forced to sell. Housel's room for error keeps you in the game long enough for compounding to work.",
+  "move": "Plan for your plan to go wrong: leave room for error.",
+  "simply": "Leaving a bit early for the bus means a small delay doesn't make you miss it. Room for error with money works the same way.",
+  "why": "Most money disasters come not from bad average choices but from one surprise you couldn't absorb. A buffer turns a disaster into an inconvenience.",
+  "book": {
+    "id": "the-psychology-of-money",
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "year": 2020,
+    "part": 5,
+    "isbn": "9780857197689",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "margin of safety",
+    "room for error",
+    "savings",
+    "planning"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Morgan Housel, The Psychology of Money, 2020",
+  "source_kind": "book",
+  "reference": "Morgan Housel, The Psychology of Money (Harriman House, 2020), ch. 13",
+  "written": "2026-11-17"
+}

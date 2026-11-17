@@ -1,0 +1,42 @@
+{
+  "id": "history-book-guns-germs-and-steel-4",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.colonialism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What killed most Native Americans after 1492?",
+  "answer": "Mostly not swords but germs. Diseases like smallpox and measles had jumped to Eurasians from their livestock over thousands of years, and survivors built some immunity. The Americas had few domestic animals and so few such diseases. Diamond estimates epidemics killed up to 95% of the native population.",
+  "move": "The deadliest weapon in a conquest may be one nobody aimed.",
+  "simply": "Living next to farm animals for ages gave Europeans germs and partial protection. Native Americans had never met those germs, so they had no protection at all.",
+  "why": "It shows how a hidden factor can decide an outcome everyone credits to visible ones, and why pandemics still follow the paths where humans and animals meet.",
+  "book": {
+    "id": "guns-germs-and-steel",
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "year": 1997,
+    "part": 4,
+    "isbn": "9780393354324",
+    "badge": "Winner of the Pulitzer Prize"
+  },
+  "keywords": [
+    "smallpox",
+    "epidemics",
+    "native americans",
+    "zoonoses"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jared Diamond, Guns, Germs, and Steel, 1997",
+  "source_kind": "book",
+  "reference": "Jared Diamond, Guns, Germs, and Steel (W. W. Norton, 1997), ch. 11",
+  "written": "2026-11-17"
+}

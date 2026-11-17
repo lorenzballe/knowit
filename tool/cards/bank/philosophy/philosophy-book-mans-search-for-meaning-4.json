@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-book-mans-search-for-meaning-4",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.meaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does Frankl say people find meaning in life?",
+  "answer": "In three places: in work or a deed, something we create or do; in love, experiencing something or encountering someone; and in the attitude we take toward suffering we cannot avoid. Frankl's therapy, logotherapy, starts from the idea that the search for meaning is our main drive, not pleasure or power.",
+  "move": "Meaning comes from what you give, whom you love, and how you suffer.",
+  "simply": "Meaning can come from making something, like a drawing; from loving someone, like your grandma; or from being brave when something hard happens.",
+  "why": "When one source runs dry, a lost job, an empty house, knowing there are others helps people rebuild instead of feeling their life has emptied.",
+  "book": {
+    "id": "mans-search-for-meaning",
+    "title": "Man's Search for Meaning",
+    "author": "Viktor E. Frankl",
+    "year": 1946,
+    "part": 4,
+    "isbn": "9780807014295",
+    "badge": "One of the ten most influential books in America"
+  },
+  "keywords": [
+    "logotherapy",
+    "meaning",
+    "work and love",
+    "suffering"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Viktor E. Frankl, Man's Search for Meaning, 1946",
+  "source_kind": "book",
+  "reference": "Viktor E. Frankl, Man's Search for Meaning (Beacon Press, 2006; first published 1946), Part Two",
+  "written": "2026-11-17"
+}

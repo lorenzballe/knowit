@@ -1,0 +1,50 @@
+{
+  "id": "economics-book-the-psychology-of-money-4",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.survivor_stories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Art collector Heinz Berggruen bought hundreds of works. Why did his collection become so valuable?",
+  "options": [
+    "A handful soared and outweighed the rest",
+    "Every work rose steadily in value",
+    "He only ever bought famous pieces"
+  ],
+  "correct": 0,
+  "answer": "Because a few works, Picassos, Klees, Matisses, became immensely valuable and paid for all the ones that went nowhere. Housel calls it 'tails, you win': in investing, business and careers, a small number of events drive most results, so you can be wrong often and still do very well.",
+  "move": "A few big wins can outweigh many small losses.",
+  "trap": "'Every work rose': we imagine good collectors pick only winners.",
+  "simply": "If you plant twenty seeds and only two grow into huge trees, those two can still give you more fruit than a whole garden of small plants.",
+  "why": "It makes failures easier to bear: in many fields, the goal is not to avoid every miss but to stay in the game long enough to catch the few big hits.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-psychology-of-money",
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "year": 2020,
+    "part": 4,
+    "isbn": "9780857197689",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "long tail",
+    "berggruen",
+    "investing",
+    "outliers"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Morgan Housel, The Psychology of Money, 2020",
+  "source_kind": "book",
+  "reference": "Morgan Housel, The Psychology of Money (Harriman House, 2020), ch. 6",
+  "written": "2026-11-17"
+}

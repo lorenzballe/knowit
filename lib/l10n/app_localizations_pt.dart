@@ -1717,6 +1717,14 @@ class AppLocalizationsPt extends AppLocalizations {
   String get nudgeTitle => 'As tuas cinco estão prontas';
 
   @override
+  String get nudgeBookTitle => 'O livro grátis desta semana';
+
+  @override
+  String nudgeBookBody(String title, String author, int minutes) {
+    return '$title, de $author: as grandes ideias em $minutes minutos.';
+  }
+
+  @override
   String get nudgeFreezeTitle => 'A tua sequência está protegida';
 
   @override
@@ -5082,6 +5090,25 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => 'Grátis esta semana';
+
+  @override
+  String get bookDoneTitle => 'Livro terminado';
+
+  @override
+  String bookDoneLine(int ideas, int minutes) {
+    return '$ideas grandes ideias, em $minutes minutos.';
+  }
+
+  @override
+  String bookDoneCount(int count) {
+    return 'Livros terminados: $count';
+  }
+
+  @override
+  String get bookDoneNext => 'Próximo livro';
+
+  @override
+  String get bookDoneGo => 'Abrir';
 
   @override
   String bookRetold(String title, String author) {

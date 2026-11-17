@@ -1,0 +1,42 @@
+{
+  "id": "nature-book-the-selfish-gene-1",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.natural_selection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why would an animal risk its life for its relatives?",
+  "answer": "Because relatives carry copies of the same genes. A gene that makes you save two brothers, each sharing half your genes, or eight cousins, each sharing an eighth, can spread even if you die. Dawkins retells J. B. S. Haldane's quip that he would lay down his life for exactly that.",
+  "move": "Helping relatives can be a gene's way of helping its own copies.",
+  "simply": "Your brother has half of the same recipe cards as you. Saving two brothers saves as many recipe cards as saving yourself.",
+  "why": "It explains why families are so often the basis of cooperation, and why favouritism toward kin runs deep, from inheritance to hiring relatives.",
+  "book": {
+    "id": "the-selfish-gene",
+    "title": "The Selfish Gene",
+    "author": "Richard Dawkins",
+    "year": 1976,
+    "part": 1,
+    "isbn": "9780198788607",
+    "badge": "Voted the most influential science book of all time"
+  },
+  "keywords": [
+    "kin selection",
+    "haldane",
+    "altruism",
+    "relatedness"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Dawkins, The Selfish Gene, 1976",
+  "source_kind": "book",
+  "reference": "Richard Dawkins, The Selfish Gene (Oxford University Press, 1976), ch. 6",
+  "written": "2026-11-17"
+}

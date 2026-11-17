@@ -1,0 +1,42 @@
+{
+  "id": "history-book-guns-germs-and-steel-5",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does Diamond think Europeans conquered because they were smarter?",
+  "answer": "No, and it is the book's central argument. Diamond, who worked for decades in New Guinea, found people there at least as capable as Europeans. Differences between continents came from their environments, which plants and animals they had, how ideas could spread, not from differences in the people.",
+  "move": "Explain differences between groups by their circumstances before their nature.",
+  "simply": "If one runner starts halfway down the track, winning doesn't make them faster. Diamond says whole continents started at different places on the track.",
+  "why": "It is a habit worth keeping when comparing countries, companies or classmates: look at the starting line before deciding who is better.",
+  "book": {
+    "id": "guns-germs-and-steel",
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "year": 1997,
+    "part": 5,
+    "isbn": "9780393354324",
+    "badge": "Winner of the Pulitzer Prize"
+  },
+  "keywords": [
+    "geography",
+    "inequality between nations",
+    "new guinea",
+    "environment"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jared Diamond, Guns, Germs, and Steel, 1997",
+  "source_kind": "book",
+  "reference": "Jared Diamond, Guns, Germs, and Steel (W. W. Norton, 1997), Prologue",
+  "written": "2026-11-17"
+}

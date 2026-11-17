@@ -1,0 +1,50 @@
+{
+  "id": "history-book-guns-germs-and-steel-3",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Why, according to Diamond, did crops spread faster across Eurasia than across the Americas?",
+  "options": [
+    "Eurasia runs east to west",
+    "Eurasians were better farmers",
+    "The Americas had poorer soil"
+  ],
+  "correct": 0,
+  "answer": "Eurasia's main axis runs east to west, so a crop could travel thousands of kilometres while staying at the same latitude, with similar seasons and day lengths. The Americas and Africa run north to south, through deserts and tropics that stopped crops and animals. Geography, not ability, set the pace.",
+  "move": "Before crediting people for an advantage, check what the map handed them.",
+  "trap": "'Better farmers': the gap looks like skill, not maps.",
+  "simply": "Moving a plant east or west is like moving house in the same town: same weather. Moving it north or south is like moving to another climate.",
+  "why": "It is a clear case of an advantage that looks like talent but comes from starting conditions, a check worth running on any success story.",
+  "sure": 0.35,
+  "book": {
+    "id": "guns-germs-and-steel",
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "year": 1997,
+    "part": 3,
+    "isbn": "9780393354324",
+    "badge": "Winner of the Pulitzer Prize"
+  },
+  "keywords": [
+    "continental axes",
+    "crops",
+    "geography",
+    "latitude"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jared Diamond, Guns, Germs, and Steel, 1997",
+  "source_kind": "book",
+  "reference": "Jared Diamond, Guns, Germs, and Steel (W. W. Norton, 1997), ch. 10",
+  "written": "2026-11-17"
+}

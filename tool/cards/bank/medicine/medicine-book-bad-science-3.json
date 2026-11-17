@@ -1,0 +1,42 @@
+{
+  "id": "medicine-book-bad-science-3",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.placebo_or_real",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do people often feel better after trying a remedy, even a useless one?",
+  "answer": "Partly regression to the mean: people try a new remedy when their symptoms are at their worst, and most illnesses ease from their worst on their own. Add the placebo effect, and almost anything looks like it worked. Goldacre's remedy: compare with similar people who didn't take it.",
+  "move": "Things often get better on their own: compare before giving credit.",
+  "simply": "If you take a sweet every time you have a cold, you'll always get better afterwards. Colds get better by themselves; the sweet just happened to be there.",
+  "why": "From cures to new managers to lucky socks, credit goes to whatever came just before improvement. A comparison group is how you find out what really did it.",
+  "book": {
+    "id": "bad-science",
+    "title": "Bad Science",
+    "author": "Ben Goldacre",
+    "year": 2008,
+    "part": 3,
+    "isbn": "9780865479180",
+    "badge": "By an NHS doctor and Guardian columnist"
+  },
+  "keywords": [
+    "regression to the mean",
+    "remedies",
+    "natural course",
+    "placebo"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Ben Goldacre, Bad Science, 2008",
+  "source_kind": "book",
+  "reference": "Ben Goldacre, Bad Science (Fourth Estate, 2008), ch. 13",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "history-book-sapiens-1",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can millions of strangers cooperate when chimpanzees can't manage more than a few dozen?",
+  "answer": "Harari's answer: shared stories. Nations, money, laws and companies exist only because millions of people believe in them together. A chimp cannot be persuaded to give you a banana for a promise of bananas in heaven; humans trade, obey and fight for such shared fictions every day.",
+  "move": "Much of what you obey exists because everyone agrees it does.",
+  "simply": "A banknote is just paper. It works because everyone believes everyone else will accept it. Harari says nations and companies work the same way.",
+  "why": "Seeing which things are shared agreements, money, borders, brands, helps you understand why they can change fast when belief changes.",
+  "book": {
+    "id": "sapiens",
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "year": 2014,
+    "part": 1,
+    "isbn": "9780062316097",
+    "badge": "A #1 international bestseller"
+  },
+  "keywords": [
+    "shared myths",
+    "cooperation",
+    "fiction",
+    "nations"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Yuval Noah Harari, Sapiens, 2014",
+  "source_kind": "book",
+  "reference": "Yuval Noah Harari, Sapiens: A Brief History of Humankind (Harper, 2015), ch. 2",
+  "written": "2026-11-17"
+}

@@ -1718,6 +1718,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get nudgeTitle => 'Tes cinq sont prêtes';
 
   @override
+  String get nudgeBookTitle => 'Le livre gratuit de la semaine';
+
+  @override
+  String nudgeBookBody(String title, String author, int minutes) {
+    return '$title, de $author : les grandes idées en $minutes minutes.';
+  }
+
+  @override
   String get nudgeFreezeTitle => 'Ta série est protégée';
 
   @override
@@ -5099,6 +5107,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => 'Gratuit cette semaine';
+
+  @override
+  String get bookDoneTitle => 'Livre terminé';
+
+  @override
+  String bookDoneLine(int ideas, int minutes) {
+    return '$ideas grandes idées, en $minutes minutes.';
+  }
+
+  @override
+  String bookDoneCount(int count) {
+    return 'Livres terminés : $count';
+  }
+
+  @override
+  String get bookDoneNext => 'Livre suivant';
+
+  @override
+  String get bookDoneGo => 'L\'ouvrir';
 
   @override
   String bookRetold(String title, String author) {

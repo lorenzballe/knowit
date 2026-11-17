@@ -1,0 +1,42 @@
+{
+  "id": "space-book-a-brief-history-of-time-5",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.gps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do two identical clocks, one at the top of a tower and one at the bottom, keep the same time?",
+  "answer": "No. General relativity predicts that time runs slower where gravity is stronger, so the lower clock falls slightly behind. Hawking describes the 1962 test with very accurate clocks at the top and bottom of a water tower: the bottom one ran slower, by exactly the amount predicted.",
+  "move": "Time is not the same everywhere: gravity slows it down.",
+  "simply": "Time is a bit like a river that flows slower near a heavy rock. The Earth is the rock, so clocks closer to it tick a tiny bit slower.",
+  "why": "It sounds like philosophy but it is engineering: satellite navigation has to correct for it, or your phone's map would drift by kilometres a day.",
+  "book": {
+    "id": "a-brief-history-of-time",
+    "title": "A Brief History of Time",
+    "author": "Stephen Hawking",
+    "year": 1988,
+    "part": 5,
+    "isbn": "9780553380163",
+    "badge": "237 weeks on the Sunday Times bestseller list"
+  },
+  "keywords": [
+    "relativity",
+    "time dilation",
+    "gravity",
+    "clocks"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Stephen Hawking, A Brief History of Time, 1988",
+  "source_kind": "book",
+  "reference": "Stephen Hawking, A Brief History of Time (Bantam, 1988), ch. 2",
+  "written": "2026-11-17"
+}

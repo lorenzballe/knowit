@@ -1,0 +1,50 @@
+{
+  "id": "space-book-a-brief-history-of-time-4",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Hawking's best-known discovery was about black holes. What did he show they do?",
+  "options": [
+    "Slowly leak radiation and shrink",
+    "Grow forever without limit",
+    "Turn into new galaxies"
+  ],
+  "correct": 0,
+  "answer": "They are not completely black: quantum effects near the horizon make them give off faint radiation, now called Hawking radiation, so they slowly lose mass and could one day vanish. For a black hole as heavy as the Sun this would take far longer than the age of the universe.",
+  "move": "Nothing escapes a black hole, yet it still slowly loses mass.",
+  "trap": "'Grow forever': swallowing everything seems all they can do.",
+  "simply": "Picture a sealed bucket that still loses a drop now and then through its walls. Black holes, Hawking found, do the same with energy, extremely slowly.",
+  "why": "It joined gravity and quantum physics in one result for the first time, and shows how one careful calculation can overturn something everyone was sure of.",
+  "sure": 0.35,
+  "book": {
+    "id": "a-brief-history-of-time",
+    "title": "A Brief History of Time",
+    "author": "Stephen Hawking",
+    "year": 1988,
+    "part": 4,
+    "isbn": "9780553380163",
+    "badge": "237 weeks on the Sunday Times bestseller list"
+  },
+  "keywords": [
+    "hawking radiation",
+    "black holes",
+    "quantum",
+    "evaporation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Stephen Hawking, A Brief History of Time, 1988",
+  "source_kind": "book",
+  "reference": "Stephen Hawking, A Brief History of Time (Bantam, 1988), ch. 7",
+  "written": "2026-11-17"
+}

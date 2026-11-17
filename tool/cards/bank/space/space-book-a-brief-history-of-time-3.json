@@ -1,0 +1,42 @@
+{
+  "id": "space-book-a-brief-history-of-time-3",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can nothing, not even light, escape from a black hole?",
+  "answer": "Because inside a certain distance, the event horizon, escaping would need a speed faster than light. A star much heavier than the Sun can collapse until its gravity is that strong. Hawking calls the horizon a one-way membrane: things fall in, and no signal can come back out.",
+  "move": "Past a black hole's edge, even light lacks the speed to escape.",
+  "simply": "Throw a ball up and it falls back. Throw it fast enough and it escapes. Near a black hole, even the fastest thing there is, light, is too slow.",
+  "why": "Black holes are where our best theories meet their limits, and the idea of an escape speed explains everyday things too, from rockets to why the Moon has no air.",
+  "book": {
+    "id": "a-brief-history-of-time",
+    "title": "A Brief History of Time",
+    "author": "Stephen Hawking",
+    "year": 1988,
+    "part": 3,
+    "isbn": "9780553380163",
+    "badge": "237 weeks on the Sunday Times bestseller list"
+  },
+  "keywords": [
+    "black holes",
+    "event horizon",
+    "escape velocity",
+    "gravity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Stephen Hawking, A Brief History of Time, 1988",
+  "source_kind": "book",
+  "reference": "Stephen Hawking, A Brief History of Time (Bantam, 1988), ch. 6",
+  "written": "2026-11-17"
+}

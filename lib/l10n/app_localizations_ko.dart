@@ -1666,6 +1666,14 @@ class AppLocalizationsKo extends AppLocalizations {
   String get nudgeTitle => '오늘의 다섯 장이 준비됐어요';
 
   @override
+  String get nudgeBookTitle => '이번 주 무료 책';
+
+  @override
+  String nudgeBookBody(String title, String author, int minutes) {
+    return '$author의 『$title』 핵심 아이디어를 $minutes분에.';
+  }
+
+  @override
   String get nudgeFreezeTitle => '프리즈가 버티고 있어요';
 
   @override
@@ -4871,6 +4879,25 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => '이번 주 무료';
+
+  @override
+  String get bookDoneTitle => '완독';
+
+  @override
+  String bookDoneLine(int ideas, int minutes) {
+    return '핵심 아이디어 $ideas개, $minutes분.';
+  }
+
+  @override
+  String bookDoneCount(int count) {
+    return '다 읽은 책: $count권';
+  }
+
+  @override
+  String get bookDoneNext => '다음 책';
+
+  @override
+  String get bookDoneGo => '열기';
 
   @override
   String bookRetold(String title, String author) {

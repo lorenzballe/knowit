@@ -1,0 +1,42 @@
+{
+  "id": "space-book-a-brief-history-of-time-1",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.looking_back_in_time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When you look at a star tonight, what are you actually seeing?",
+  "answer": "The star as it was when the light left it. Light travels fast but not instantly: sunlight is about eight minutes old when it reaches you, and light from distant galaxies set off millions of years ago. Hawking uses this to show that looking far out in space means looking back in time.",
+  "move": "The farther away something is, the older the news it sends.",
+  "simply": "A star's light is like a letter that took years to arrive. You are reading what the star was like when it posted the letter, not what it is doing now.",
+  "why": "It changes what 'now' means: every sight, from the Sun to a distant galaxy, is a report from the past, and the farther the report travelled, the older it is.",
+  "book": {
+    "id": "a-brief-history-of-time",
+    "title": "A Brief History of Time",
+    "author": "Stephen Hawking",
+    "year": 1988,
+    "part": 1,
+    "isbn": "9780553380163",
+    "badge": "237 weeks on the Sunday Times bestseller list"
+  },
+  "keywords": [
+    "speed of light",
+    "light years",
+    "looking back in time",
+    "stars"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Stephen Hawking, A Brief History of Time, 1988",
+  "source_kind": "book",
+  "reference": "Stephen Hawking, A Brief History of Time (Bantam, 1988), ch. 2",
+  "written": "2026-11-17"
+}

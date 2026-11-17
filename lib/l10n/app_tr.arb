@@ -404,6 +404,8 @@
   "holdToLikeLandsHere": "Beğendiğin bir karta basılı tut, buraya gelir — uygulama da sana bunun gibilerinden daha çok verir.",
   "tapTheBookmarkLandsHere": "Bir kartın yer imine dokun, buraya gelir — düşünme şeklini değiştirenler, saklanır.",
   "nudgeTitle": "Beşin hazır",
+  "nudgeBookTitle": "Bu haftanın ücretsiz kitabı",
+  "nudgeBookBody": "{title}, {author}: büyük fikirler {minutes} dakikada.",
   "nudgeFreezeTitle": "Dondurman tutuyor",
   "nudgeFreezeBody": "Dün kapandı. Bugün: {question}",
   "nudgeSureTitle": "Bundan emindin",
@@ -1185,5 +1187,10 @@
   "bookAgain": "Yeniden oku",
   "bookTheIdeas": "Fikirler",
   "bookFreeThisWeek": "Bu hafta ücretsiz",
+  "bookDoneTitle": "Kitap bitti",
+  "bookDoneLine": "{ideas} büyük fikir, {minutes} dakikada.",
+  "bookDoneCount": "Biten kitaplar: {count}",
+  "bookDoneNext": "Sıradaki kitap",
+  "bookDoneGo": "Aç",
   "bookRetold": "{author} imzalı {title} kitabının fikirleri, Astute'un kendi sözleriyle. Kitabın tamamı için kitapçına bak."
 }

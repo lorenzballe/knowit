@@ -1,0 +1,50 @@
+{
+  "id": "medicine-book-bad-science-1",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "In trials of ulcer treatments, which worked better as a placebo?",
+  "options": [
+    "Four sugar pills a day",
+    "Two sugar pills a day",
+    "They worked the same"
+  ],
+  "correct": 0,
+  "answer": "Four. Goldacre describes a review of ulcer trials in which four placebo pills a day healed more ulcers than two. Colour, price and form matter too: injections beat pills, and branded fake pills beat plain ones. What a treatment looks like changes how much it seems to work.",
+  "move": "How a treatment is presented can change how well it seems to work.",
+  "trap": "'They worked the same': a sugar pill is a sugar pill.",
+  "simply": "Your body can feel better just because it expects to. More pills, or a fancy box, make the expectation bigger, so even fake pills 'work' more.",
+  "why": "It is why any treatment needs a fair comparison with a placebo before you believe it, and why expensive packaging is not evidence.",
+  "sure": 0.35,
+  "book": {
+    "id": "bad-science",
+    "title": "Bad Science",
+    "author": "Ben Goldacre",
+    "year": 2008,
+    "part": 1,
+    "isbn": "9780865479180",
+    "badge": "By an NHS doctor and Guardian columnist"
+  },
+  "keywords": [
+    "placebo",
+    "ulcers",
+    "sugar pills",
+    "expectation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Ben Goldacre, Bad Science, 2008",
+  "source_kind": "book",
+  "reference": "Ben Goldacre, Bad Science (Fourth Estate, 2008), ch. 5",
+  "written": "2026-11-17"
+}

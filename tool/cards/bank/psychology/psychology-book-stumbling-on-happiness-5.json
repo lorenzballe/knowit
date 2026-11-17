@@ -1,0 +1,50 @@
+{
+  "id": "psychology-book-stumbling-on-happiness-5",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.money_and_happiness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Compared with earning $100,000 a year, how much happier are Americans who earn $5 million?",
+  "options": [
+    "Not much happier",
+    "About fifty times happier",
+    "Twice as happy"
+  ],
+  "correct": 0,
+  "answer": "Not much happier. Gilbert notes that going from $10,000 to $50,000 a year makes a big difference to happiness, because it pays for food, shelter and safety, but beyond the comfortable middle, more money buys little extra joy. We keep chasing it partly because we forget how quickly we adapt.",
+  "move": "Past comfort, extra money buys less happiness than you expect.",
+  "trap": "'Fifty times happier': fifty times the money feels like it should be.",
+  "simply": "Your first bike changes your life. Your fifth bike barely does. Money works a bit like that: the first bits matter most.",
+  "why": "It helps weigh a higher salary against longer hours or a long commute: past a point, time and people matter more than the extra money.",
+  "sure": 0.35,
+  "book": {
+    "id": "stumbling-on-happiness",
+    "title": "Stumbling on Happiness",
+    "author": "Daniel Gilbert",
+    "year": 2006,
+    "part": 5,
+    "isbn": "9781400077427",
+    "badge": "Winner of the Royal Society Prize for Science Books"
+  },
+  "keywords": [
+    "money and happiness",
+    "income",
+    "adaptation",
+    "wealth"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Gilbert, Stumbling on Happiness, 2006",
+  "source_kind": "book",
+  "reference": "Daniel Gilbert, Stumbling on Happiness (Knopf, 2006)",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-book-mans-search-for-meaning-1",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What, according to Frankl, can never be taken from a person?",
+  "answer": "The freedom to choose one's attitude in any set of circumstances. Frankl, a psychiatrist who survived Auschwitz and Dachau, saw prisoners who gave away their last piece of bread. Everything else could be taken from them; that last freedom, he wrote, could not.",
+  "move": "When you can't change a situation, you still choose how to meet it.",
+  "simply": "You can't always choose what happens to you, like rain on your birthday. You can still choose whether to sulk or to dance in it.",
+  "why": "In illness, loss or a bad job, the space between what happens and how you respond is often the only freedom left, and it matters more than it seems.",
+  "book": {
+    "id": "mans-search-for-meaning",
+    "title": "Man's Search for Meaning",
+    "author": "Viktor E. Frankl",
+    "year": 1946,
+    "part": 1,
+    "isbn": "9780807014295",
+    "badge": "One of the ten most influential books in America"
+  },
+  "keywords": [
+    "frankl",
+    "freedom",
+    "attitude",
+    "concentration camps"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Viktor E. Frankl, Man's Search for Meaning, 1946",
+  "source_kind": "book",
+  "reference": "Viktor E. Frankl, Man's Search for Meaning (Beacon Press, 2006; first published 1946), Part One",
+  "written": "2026-11-17"
+}

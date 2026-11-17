@@ -16,6 +16,7 @@ import '../data/card_json.dart';
 import '../data/daily.dart';
 import '../data/genres.dart';
 import '../data/local_cards.dart';
+import '../data/books.dart';
 import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/reader_profile.dart';
@@ -2482,6 +2483,19 @@ class AppState extends ChangeNotifier {
           body = off == null
               ? l.nudgeTwoWeeksBodyNoGap(answers.length, lead.question)
               : l.nudgeTwoWeeksBody(off.round(), lead.question);
+        } else if (day.weekday == DateTime.monday && gap < 2) {
+          // On Mondays a reader who keeps coming is told the week's free
+          // book: something new to open, once a week.
+          final List<CardBook> books = booksOf(PillBank.live, today: day);
+          if (books.isNotEmpty) {
+            final CardBook book = books.first;
+            title = l.nudgeBookTitle;
+            body = l.nudgeBookBody(
+              book.book.title,
+              book.book.author,
+              bookMinutes(book),
+            );
+          }
         }
         plan.add(Reminder(id: i + 1, when: at, title: title, body: body));
       }

@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
 import 'package:astuto/data/daily.dart';
+import 'package:astuto/data/books.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
@@ -1152,9 +1153,31 @@ void main() {
           reason: 'entry $i',
         );
       }
-      final third = DateTime.now().add(const Duration(days: 3));
-      expect(plan[3].body, t.app.leadOn(third).question);
+      // A day that is not a Monday opens with its card (Mondays name the
+      // week's book).
+      final int k = [3, 4].firstWhere(
+        (d) => DateTime.now().add(Duration(days: d)).weekday != DateTime.monday,
+      );
+      final DateTime day = DateTime.now().add(Duration(days: k));
+      expect(plan[k].body, t.app.leadOn(day).question);
       expect(plan.map((r) => r.body).toSet().length, greaterThan(10));
+    });
+
+    test('on Mondays a reader who keeps coming is told the week\'s free '
+        'book', () async {
+      final t = build(granted: true);
+      await t.app.init();
+      final plan = t.app.reminderPlan(
+        now: DateTime.now().subtract(const Duration(days: 1)),
+      );
+      final int monday = List.generate(plan.length, (i) => i).firstWhere(
+        (i) => DateTime.now().add(Duration(days: i)).weekday == DateTime.monday,
+      );
+      final DateTime day = DateTime.now().add(Duration(days: monday));
+      final CardBook book = booksOf(PillBank.live, today: day).first;
+      expect(plan[monday].title, "This week's free book");
+      expect(plan[monday].body, contains(book.book.title));
+      expect(plan[monday].body, contains(book.book.author));
     });
 
     test('the days a lapse reaches say something about the reader', () async {

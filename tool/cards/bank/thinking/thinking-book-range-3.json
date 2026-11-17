@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-range-3",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Students practised maths problems either one type at a time or mixed up. Which group did better on the test?",
+  "answer": "The mixed group, by a wide margin, even though they found practice harder and scored worse during it. Epstein describes this 'interleaving': mixing problem types forces you to work out which strategy fits, rather than repeating one. Learning that feels slow and difficult often sticks best.",
+  "move": "Practice that feels harder in the moment often teaches you more.",
+  "simply": "Doing ten of the same sum in a row is easy but shallow. Mixing different sums makes you think 'which kind is this?', and that's the real skill.",
+  "why": "When studying anything, shuffling topics and testing yourself beats rereading one chapter. The struggle is a sign it's working, not that it isn't.",
+  "book": {
+    "id": "range",
+    "title": "Range",
+    "author": "David Epstein",
+    "year": 2019,
+    "part": 3,
+    "isbn": "9780735214484",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "interleaving",
+    "desirable difficulties",
+    "learning",
+    "practice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, Range, 2019",
+  "source_kind": "book",
+  "reference": "David Epstein, Range: Why Generalists Triumph in a Specialized World (Riverhead, 2019), ch. 4",
+  "written": "2026-11-17"
+}

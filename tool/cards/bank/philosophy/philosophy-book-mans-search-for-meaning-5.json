@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-book-mans-search-for-meaning-5",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.happiness",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Frankl warns against aiming directly at success and happiness. Why?",
+  "answer": "Because, he wrote, success, like happiness, cannot be pursued; it must ensue, as the side effect of dedication to a cause greater than oneself or love for another person. Aiming straight at them tends to push them away; aiming at something worth doing brings them along.",
+  "move": "Aim at something worth doing; happiness tends to follow as a side effect.",
+  "simply": "If you try hard to fall asleep, you stay awake. If you read a good book, sleep comes on its own. Happiness is a bit like sleep.",
+  "why": "Chasing happiness directly, by checking how happy you are, often backfires. Absorbing work and people you care about tend to deliver it on the way.",
+  "book": {
+    "id": "mans-search-for-meaning",
+    "title": "Man's Search for Meaning",
+    "author": "Viktor E. Frankl",
+    "year": 1946,
+    "part": 5,
+    "isbn": "9780807014295",
+    "badge": "One of the ten most influential books in America"
+  },
+  "keywords": [
+    "happiness",
+    "success",
+    "purpose",
+    "side effect"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Viktor E. Frankl, Man's Search for Meaning, 1946",
+  "source_kind": "book",
+  "reference": "Viktor E. Frankl, Man's Search for Meaning (Beacon Press, 2006; first published 1946), Preface",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "psychology-book-stumbling-on-happiness-3",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.blind_spots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we imagine our future selves will want what we want now?",
+  "answer": "Gilbert calls it presentism: we build the future from the materials of the present. Shoppers who arrive hungry buy more food than those who have just eaten, as if the week will be one long hunger. How we feel now quietly leaks into every forecast we make.",
+  "move": "Your mood today is a poor guide to what you'll want tomorrow.",
+  "simply": "If you choose tomorrow's lunch right after a huge meal, you'll pick something tiny, and be hungry tomorrow. Today's tummy is choosing for tomorrow's.",
+  "why": "Big decisions made in a strong mood, angry emails, holiday bookings, career moves, carry today's feeling into a future that won't share it. Waiting a day helps.",
+  "book": {
+    "id": "stumbling-on-happiness",
+    "title": "Stumbling on Happiness",
+    "author": "Daniel Gilbert",
+    "year": 2006,
+    "part": 3,
+    "isbn": "9781400077427",
+    "badge": "Winner of the Royal Society Prize for Science Books"
+  },
+  "keywords": [
+    "presentism",
+    "forecasting feelings",
+    "hunger",
+    "mood"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel Gilbert, Stumbling on Happiness, 2006",
+  "source_kind": "book",
+  "reference": "Daniel Gilbert, Stumbling on Happiness (Knopf, 2006), ch. 6",
+  "written": "2026-11-17"
+}

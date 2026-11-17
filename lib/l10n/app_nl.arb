@@ -404,6 +404,8 @@
   "holdToLikeLandsHere": "Houd een kaart vast die je goed vindt en hij komt hier — en de app geeft je er meer van.",
   "tapTheBookmarkLandsHere": "Tik op de bladwijzer van een kaart en hij komt hier — de kaarten die je denken veranderden, bewaard.",
   "nudgeTitle": "Je vijf staan klaar",
+  "nudgeBookTitle": "Het gratis boek van deze week",
+  "nudgeBookBody": "{title} van {author}: de grote ideeën in {minutes} minuten.",
   "nudgeFreezeTitle": "Je freeze houdt stand",
   "nudgeFreezeBody": "Gisteren is gedekt. Vandaag: {question}",
   "nudgeSureTitle": "Hier was je zeker van",
@@ -1185,5 +1187,10 @@
   "bookAgain": "Opnieuw lezen",
   "bookTheIdeas": "De ideeën",
   "bookFreeThisWeek": "Gratis deze week",
+  "bookDoneTitle": "Boek uit",
+  "bookDoneLine": "{ideas} grote ideeën, in {minutes} minuten.",
+  "bookDoneCount": "Boeken uit: {count}",
+  "bookDoneNext": "Volgend boek",
+  "bookDoneGo": "Openen",
   "bookRetold": "De ideeën uit {title} van {author}, in Astutes eigen woorden. Het hele boek vind je in de boekhandel."
 }

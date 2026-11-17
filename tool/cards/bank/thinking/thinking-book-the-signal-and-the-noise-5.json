@@ -1,0 +1,40 @@
+{
+  "id": "thinking-book-the-signal-and-the-noise-5",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When economists say they're 90% sure growth will land in a range, how often are they right?",
+  "answer": "Silver found that when economists gave a range they were 90% sure of for next year's growth, the actual figure fell outside it far more often than 1 time in 10. Their ranges were too narrow: they underrated how much they did not know.",
+  "move": "When you feel 90% sure, widen the range: you're probably overconfident.",
+  "simply": "It's like saying 'I'll be home between six and ten past, I'm sure', then arriving at seven half the time. The window was too small.",
+  "why": "Plans, budgets and deadlines suffer from the same narrow ranges. Making your 'sure' range wider than feels natural is a simple fix for overconfidence.",
+  "book": {
+    "id": "the-signal-and-the-noise",
+    "title": "The Signal and the Noise",
+    "author": "Nate Silver",
+    "year": 2012,
+    "part": 5,
+    "isbn": "9780143125082",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "economic forecasts",
+    "confidence intervals",
+    "overconfidence",
+    "gdp"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nate Silver, The Signal and the Noise, 2012",
+  "source_kind": "book",
+  "reference": "Nate Silver, The Signal and the Noise (Penguin Press, 2012), ch. 6",
+  "written": "2026-11-17"
+}

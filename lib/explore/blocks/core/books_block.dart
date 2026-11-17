@@ -16,11 +16,12 @@
 /// next one; a book stopped at two of five, a reason to see the plans.
 library;
 
-import 'dart:math' as math;
+export '../../../data/books.dart';
 
 import 'package:flutter/material.dart';
 
 import '../../../analytics.dart';
+import '../../../data/books.dart';
 import '../../../data/pill_bank.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
@@ -31,68 +32,6 @@ import '../../../widgets/premium.dart';
 import '../../../widgets/web/card_thumb.dart';
 import '../../explore_block.dart';
 import 'layout.dart';
-
-/// How many of a book's ideas the free plan reads: the way in.
-const int kBookFree = 2;
-
-/// One book: what it is, and its ideas in order.
-class CardBook {
-  const CardBook(this.book, this.cards);
-
-  /// The book, as its first card names it.
-  final PillBook book;
-
-  /// Its ideas, part 1 first.
-  final List<Pill> cards;
-
-  String get id => book.id;
-  Pill get first => cards.first;
-}
-
-/// The books of [bank], whole ones only (four ideas or more), the book of
-/// the week first, the rest in a weekly turn: the same for every reader.
-/// Narrowed to [subject] (a subject's name) when there is one.
-List<CardBook> booksOf(
-  List<Pill> bank, {
-  required DateTime today,
-  String? subject,
-}) {
-  final Map<String, List<Pill>> byBook = {};
-  for (final Pill p in bank) {
-    final PillBook? b = p.book;
-    if (b == null) continue;
-    byBook.putIfAbsent(b.id, () => []).add(p);
-  }
-  final List<CardBook> all = [
-    for (final MapEntry<String, List<Pill>> e in byBook.entries)
-      if (e.value.length >= 4)
-        CardBook(
-          (e.value..sort((a, b) => a.book!.part.compareTo(b.book!.part)))
-              .first
-              .book!,
-          e.value,
-        ),
-  ]..sort((a, b) => a.id.compareTo(b.id));
-  if (all.isEmpty) return const [];
-  final int week = today.difference(DateTime(2026)).inDays ~/ 7;
-  final int start = week % all.length;
-  final List<CardBook> turned = [
-    for (int i = 0; i < all.length; i++) all[(start + i) % all.length],
-  ];
-  return subject == null
-      ? turned
-      : [
-          for (final CardBook b in turned)
-            if (b.first.topic == subject) b,
-        ];
-}
-
-/// The book every reader reads whole this week: the first of [booksOf]
-/// for the whole bank, whatever subject is in view.
-String? bookOfTheWeek(List<Pill> bank, DateTime today) {
-  final List<CardBook> books = booksOf(bank, today: today);
-  return books.isEmpty ? null : books.first.id;
-}
 
 /// The block: see the library's own words.
 class BooksBlock extends ExploreBlock with SectionLayout {
@@ -162,7 +101,9 @@ Future<void> openBook(
         answering: true,
         source: 'book',
         of: book.cards.length,
-        end: whole ? null : BookMore(app: app, book: book),
+        end: whole
+            ? BookDone(app: app, book: book, weekly: weekly)
+            : BookMore(app: app, book: book),
       ),
     ),
   );
@@ -171,16 +112,6 @@ Future<void> openBook(
 /// Where a book's cover is published: beside the cards, by the book's id
 /// (web/cards/covers/<id>.jpg, the edition its `isbn` names).
 Uri bookCoverUrl(PillBook book) => CardThumb.urlOf('covers/${book.id}.jpg');
-
-/// About how long a book takes: its words at an unhurried reading pace, and
-/// half a minute an idea to think and answer; never under three minutes.
-int bookMinutes(CardBook book) {
-  int words = 0;
-  for (final Pill p in book.cards) {
-    words += '${p.question} ${p.answer} ${p.barMove}'.split(' ').length;
-  }
-  return math.max(3, (words / 120 + book.cards.length * 0.5).round());
-}
 
 /// A book's cover: the edition's own, fetched like a card's picture, and
 /// while it comes or where it will not, one drawn in the subject's colour
@@ -321,7 +252,27 @@ class _BookTile extends StatelessWidget {
                 clipBehavior: Clip.none,
                 children: [
                   BookCover(book: book, width: width),
-                  if (locked)
+                  // A book read whole says so, where a locked one shows
+                  // its lock.
+                  if (read >= book.cards.length)
+                    Positioned(
+                      right: 6,
+                      top: 6,
+                      child: Container(
+                        key: ValueKey('book-read-${book.id}'),
+                        padding: const EdgeInsets.all(3),
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF22C55E),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.check_rounded,
+                          size: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  else if (locked)
                     Positioned(
                       right: 6,
                       top: 6,
@@ -816,6 +767,187 @@ class BookMore extends StatelessWidget {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Whether the reader has read every idea of [book].
+bool bookRead(AppState app, CardBook book) =>
+    book.cards.every((p) => app.seenIds.contains(p.id));
+
+/// The card after the last idea of a book read whole: the book finished,
+/// how many ideas in how long, how many books the reader has finished, and
+/// the next book to open.
+class BookDone extends StatefulWidget {
+  const BookDone({
+    super.key,
+    required this.app,
+    required this.book,
+    this.weekly,
+  });
+
+  final AppState app;
+  final CardBook book;
+  final String? weekly;
+
+  @override
+  State<BookDone> createState() => _BookDoneState();
+}
+
+class _BookDoneState extends State<BookDone> {
+  late final List<CardBook> _all = booksOf(
+    PillBank.live,
+    today: widget.app.today,
+  );
+
+  /// The books finished, this one counted: its last idea may still be on
+  /// its way to being marked read.
+  int get _finished => _all
+      .where((b) => b.id == widget.book.id || bookRead(widget.app, b))
+      .length;
+
+  CardBook? get _next => _all
+      .where((b) => b.id != widget.book.id && !bookRead(widget.app, b))
+      .firstOrNull;
+
+  @override
+  void initState() {
+    super.initState();
+    Analytics.capture('book finished', {
+      'book': widget.book.id,
+      'finished': _finished,
+      'is_plus': widget.app.isPlus,
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final CardBook book = widget.book;
+    final Pill first = book.first;
+    final Color ink = first.ink;
+    final CardBook? next = _next;
+    return Container(
+      key: const ValueKey('book-done'),
+      decoration: BoxDecoration(
+        color: first.color,
+        borderRadius: BorderRadius.circular(34),
+      ),
+      padding: const EdgeInsets.fromLTRB(28, 28, 28, 22),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${book.book.title} · ${book.book.author}'.toUpperCase(),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.label(
+                    size: 11,
+                    weight: FontWeight.w700,
+                    spacing: 1.1,
+                    color: ink.withValues(alpha: 0.72),
+                  ),
+                ),
+              ),
+              Icon(
+                Icons.check_circle_rounded,
+                size: 20,
+                color: ink.withValues(alpha: 0.8),
+              ),
+            ],
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l.bookDoneTitle,
+                  style: AppText.display(
+                    size: 36,
+                    weight: FontWeight.w600,
+                    height: 1.05,
+                    spacing: -0.8,
+                    color: ink,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  l.bookDoneLine(book.cards.length, bookMinutes(book)),
+                  style: AppText.body(
+                    size: 16,
+                    height: 1.4,
+                    color: ink.withValues(alpha: 0.85),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  l.bookDoneCount(_finished),
+                  key: const ValueKey('book-done-count'),
+                  style: AppText.body(
+                    size: 14,
+                    weight: FontWeight.w800,
+                    color: ink,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (next != null) ...[
+            Text(
+              l.bookDoneNext.toUpperCase(),
+              style: AppText.label(
+                size: 11,
+                weight: FontWeight.w700,
+                spacing: 1.1,
+                color: ink.withValues(alpha: 0.72),
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              '${next.book.title} · ${next.book.author}',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.display(
+                size: 20,
+                weight: FontWeight.w600,
+                height: 1.15,
+                color: ink,
+              ),
+            ),
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: FilledButton(
+                key: const ValueKey('book-done-next'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: ink,
+                  foregroundColor: first.color,
+                  shape: const StadiumBorder(),
+                ),
+                onPressed: () {
+                  final NavigatorState nav = Navigator.of(context);
+                  nav.pop();
+                  openBookPage(
+                    nav.context,
+                    widget.app,
+                    next,
+                    weekly: widget.weekly,
+                  );
+                },
+                child: Text(
+                  l.bookDoneGo,
+                  style: AppText.body(size: 16, weight: FontWeight.w700),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );

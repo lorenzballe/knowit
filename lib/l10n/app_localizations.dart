@@ -2544,6 +2544,18 @@ abstract class AppLocalizations {
   /// **'Your five are ready'**
   String get nudgeTitle;
 
+  /// No description provided for @nudgeBookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This week\'s free book'**
+  String get nudgeBookTitle;
+
+  /// The Monday reminder: the week's free book, its author, and how long its big ideas take.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}, by {author}: the big ideas in {minutes} minutes.'**
+  String nudgeBookBody(String title, String author, int minutes);
+
   /// No description provided for @nudgeFreezeTitle.
   ///
   /// In en, this message translates to:
@@ -7229,6 +7241,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Free this week'**
   String get bookFreeThisWeek;
+
+  /// No description provided for @bookDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Book finished'**
+  String get bookDoneTitle;
+
+  /// The card at the end of a book read whole: how many ideas, how long.
+  ///
+  /// In en, this message translates to:
+  /// **'{ideas} big ideas, in {minutes} minutes.'**
+  String bookDoneLine(int ideas, int minutes);
+
+  /// No description provided for @bookDoneCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Books finished: {count}'**
+  String bookDoneCount(int count);
+
+  /// No description provided for @bookDoneNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next book'**
+  String get bookDoneNext;
+
+  /// No description provided for @bookDoneGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Open it'**
+  String get bookDoneGo;
 
   /// Books in pills, a book's own page: bookRetold
   ///

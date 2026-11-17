@@ -1,0 +1,42 @@
+{
+  "id": "nature-book-the-selfish-gene-2",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.natural_selection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which word did Richard Dawkins invent in The Selfish Gene?",
+  "answer": "Meme: a unit of culture, a tune, a catchphrase, a fashion, that copies itself from mind to mind the way genes copy themselves from body to body. Dawkins coined it in 1976 to show that evolution by selection can work on anything that replicates, not only on DNA.",
+  "move": "Ideas spread by being copied, not by being true.",
+  "simply": "A catchy song gets stuck in your head and you hum it, so others catch it. Dawkins called these catching ideas memes.",
+  "why": "It explains why some ideas spread faster than true ones: catchiness, not accuracy, decides what gets copied. Worth remembering before sharing anything viral.",
+  "book": {
+    "id": "the-selfish-gene",
+    "title": "The Selfish Gene",
+    "author": "Richard Dawkins",
+    "year": 1976,
+    "part": 2,
+    "isbn": "9780198788607",
+    "badge": "Voted the most influential science book of all time"
+  },
+  "keywords": [
+    "meme",
+    "culture",
+    "replicators",
+    "dawkins"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Dawkins, The Selfish Gene, 1976",
+  "source_kind": "book",
+  "reference": "Richard Dawkins, The Selfish Gene (Oxford University Press, 1976), ch. 11",
+  "written": "2026-11-17"
+}

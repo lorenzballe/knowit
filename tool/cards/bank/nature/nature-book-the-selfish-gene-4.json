@@ -1,0 +1,50 @@
+{
+  "id": "nature-book-the-selfish-gene-4",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.natural_selection",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "simpson",
+  "question": "In Robert Axelrod's computer tournaments, described by Dawkins, which strategy won?",
+  "options": [
+    "Tit for tat: cooperate first, then copy",
+    "Always betray",
+    "Betray at random"
+  ],
+  "correct": 0,
+  "answer": "Tit for tat: cooperate on the first move, then do whatever the other player did last. It never beat any opponent head to head, yet it scored best overall, because it was nice, retaliated at once and forgave at once. Dawkins added the chapter 'Nice guys finish first' to later editions.",
+  "move": "Be nice first, hit back at once, and forgive at once.",
+  "trap": "'Always betray': it cannot lose a single round, so seems strongest.",
+  "simply": "Be friendly to a new classmate. If they're mean, be cool next time. If they're nice again, be nice again. That simple rule won.",
+  "why": "It is a practical recipe for repeated dealings with colleagues, neighbours or suppliers: start trusting, respond to how you're treated, and don't hold grudges.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-selfish-gene",
+    "title": "The Selfish Gene",
+    "author": "Richard Dawkins",
+    "year": 1976,
+    "part": 4,
+    "isbn": "9780198788607",
+    "badge": "Voted the most influential science book of all time"
+  },
+  "keywords": [
+    "tit for tat",
+    "axelrod",
+    "prisoner's dilemma",
+    "cooperation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Richard Dawkins, The Selfish Gene, 1976",
+  "source_kind": "book",
+  "reference": "Richard Dawkins, The Selfish Gene (Oxford University Press, 1976), ch. 12",
+  "written": "2026-11-17"
+}

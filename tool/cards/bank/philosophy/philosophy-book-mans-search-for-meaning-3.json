@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-book-mans-search-for-meaning-3",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.meaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the camp's death rate rise after Christmas 1944, according to Frankl?",
+  "answer": "The camp doctor told Frankl that more prisoners died in the week between Christmas and New Year than at any time before. Many had hoped to be home by Christmas. When the date passed with no release, they lost hope, and with it, Frankl believed, their power to resist illness.",
+  "move": "Hope tied to a fixed date can break when the date passes.",
+  "simply": "If you count on a holiday and it's cancelled at the last minute, it hurts more than not hoping at all. For the prisoners, that blow was deadly.",
+  "why": "It is a caution about hope pinned to deadlines: a purpose that does not depend on one date or outcome is sturdier, in hard times and in long projects.",
+  "book": {
+    "id": "mans-search-for-meaning",
+    "title": "Man's Search for Meaning",
+    "author": "Viktor E. Frankl",
+    "year": 1946,
+    "part": 3,
+    "isbn": "9780807014295",
+    "badge": "One of the ten most influential books in America"
+  },
+  "keywords": [
+    "hope",
+    "christmas 1944",
+    "despair",
+    "resilience"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Viktor E. Frankl, Man's Search for Meaning, 1946",
+  "source_kind": "book",
+  "reference": "Viktor E. Frankl, Man's Search for Meaning (Beacon Press, 2006; first published 1946), Part One",
+  "written": "2026-11-17"
+}
