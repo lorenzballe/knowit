@@ -4839,6 +4839,17 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('deeperExample') ?? _base.deeperExample;
 
   @override
+  String get deeperQuiz => _words.text('deeperQuiz') ?? _base.deeperQuiz;
+
+  @override
+  String get deeperQuizRight =>
+      _words.text('deeperQuizRight') ?? _base.deeperQuizRight;
+
+  @override
+  String get deeperQuizWrong =>
+      _words.text('deeperQuizWrong') ?? _base.deeperQuizWrong;
+
+  @override
   String get deeperYourTake =>
       _words.text('deeperYourTake') ?? _base.deeperYourTake;
 

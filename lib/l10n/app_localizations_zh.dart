@@ -4778,6 +4778,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deeperExample => '一个日常例子';
 
   @override
+  String get deeperQuiz => '用一个新情境考考我';
+
+  @override
+  String get deeperQuizRight => '答对了。';
+
+  @override
+  String get deeperQuizWrong => '不太对。';
+
+  @override
   String get deeperYourTake => '你的想法，分析一下';
 
   @override

@@ -4799,6 +4799,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deeperExample => '일상 속 예시';
 
   @override
+  String get deeperQuiz => '새로운 상황으로 시험해 보기';
+
+  @override
+  String get deeperQuizRight => '정답이에요.';
+
+  @override
+  String get deeperQuizWrong => '조금 아쉬워요.';
+
+  @override
   String get deeperYourTake => '내 생각, 분석';
 
   @override

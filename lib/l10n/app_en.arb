@@ -5304,6 +5304,18 @@
  "@deeperExample": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperExample"
  },
+ "deeperQuiz": "Test me on a new case",
+ "@deeperQuiz": {
+  "description": "Go deeper, Astute+: the part, and its button, that asks for a new multiple-choice question on the card's idea, set in a case the card does not mention."
+ },
+ "deeperQuizRight": "Right.",
+ "@deeperQuizRight": {
+  "description": "Go deeper: said above the explanation when the reader picked the right option of the new question."
+ },
+ "deeperQuizWrong": "Not quite.",
+ "@deeperQuizWrong": {
+  "description": "Go deeper: said above the explanation when the reader picked a wrong option of the new question."
+ },
  "deeperYourTake": "Your take, looked at",
  "@deeperYourTake": {
   "description": "Go deeper, the sheet a tap on a card's source opens: deeperYourTake"

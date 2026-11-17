@@ -4916,6 +4916,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deeperExample => 'Günlük hayattan bir örnek';
 
   @override
+  String get deeperQuiz => 'Beni yeni bir örnekle sına';
+
+  @override
+  String get deeperQuizRight => 'Doğru.';
+
+  @override
+  String get deeperQuizWrong => 'Tam değil.';
+
+  @override
   String get deeperYourTake => 'Fikrin, incelendi';
 
   @override

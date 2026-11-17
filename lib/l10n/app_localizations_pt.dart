@@ -5007,6 +5007,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get deeperExample => 'Um exemplo do dia a dia';
 
   @override
+  String get deeperQuiz => 'Põe-me à prova com um caso novo';
+
+  @override
+  String get deeperQuizRight => 'Certo.';
+
+  @override
+  String get deeperQuizWrong => 'Não exatamente.';
+
+  @override
   String get deeperYourTake => 'A tua ideia, analisada';
 
   @override

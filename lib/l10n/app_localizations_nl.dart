@@ -5008,6 +5008,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String get deeperExample => 'Een voorbeeld uit het dagelijks leven';
 
   @override
+  String get deeperQuiz => 'Test me met een nieuw geval';
+
+  @override
+  String get deeperQuizRight => 'Goed.';
+
+  @override
+  String get deeperQuizWrong => 'Niet helemaal.';
+
+  @override
   String get deeperYourTake => 'Jouw idee, bekeken';
 
   @override

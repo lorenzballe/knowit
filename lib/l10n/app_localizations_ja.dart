@@ -4778,6 +4778,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deeperExample => '日常の例';
 
   @override
+  String get deeperQuiz => '新しい場面で試してみる';
+
+  @override
+  String get deeperQuizRight => '正解。';
+
+  @override
+  String get deeperQuizWrong => '惜しい。';
+
+  @override
   String get deeperYourTake => 'あなたの考えを分析';
 
   @override

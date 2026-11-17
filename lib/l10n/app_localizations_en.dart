@@ -4968,6 +4968,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deeperExample => 'An example from everyday life';
 
   @override
+  String get deeperQuiz => 'Test me on a new case';
+
+  @override
+  String get deeperQuizRight => 'Right.';
+
+  @override
+  String get deeperQuizWrong => 'Not quite.';
+
+  @override
   String get deeperYourTake => 'Your take, looked at';
 
   @override

@@ -7110,6 +7110,24 @@ abstract class AppLocalizations {
   /// **'An example from everyday life'**
   String get deeperExample;
 
+  /// Go deeper, Astute+: the part, and its button, that asks for a new multiple-choice question on the card's idea, set in a case the card does not mention.
+  ///
+  /// In en, this message translates to:
+  /// **'Test me on a new case'**
+  String get deeperQuiz;
+
+  /// Go deeper: said above the explanation when the reader picked the right option of the new question.
+  ///
+  /// In en, this message translates to:
+  /// **'Right.'**
+  String get deeperQuizRight;
+
+  /// Go deeper: said above the explanation when the reader picked a wrong option of the new question.
+  ///
+  /// In en, this message translates to:
+  /// **'Not quite.'**
+  String get deeperQuizWrong;
+
   /// Go deeper, the sheet a tap on a card's source opens: deeperYourTake
   ///
   /// In en, this message translates to:

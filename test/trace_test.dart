@@ -44,6 +44,27 @@ void main() {
     expect(trace.waiting, 7);
   });
 
+  test('the plan is said to the server at once, with nothing read: the '
+      'answers by Claude are given on it', () async {
+    final MemoryTraceStore store = MemoryTraceStore();
+    final Trace trace = Trace(
+      storeOverride: store,
+      uidOverride: 'me',
+      clock: () => now,
+    )..plus = true;
+    expect(trace.waiting, 0);
+    expect(await trace.sayPresence(), isTrue);
+    expect(store.presences['me']?['plus'], isTrue);
+    expect(store.appends, 0);
+    // Offline: nothing written, and the caller is told.
+    store.refusing = true;
+    trace.plus = false;
+    expect(await trace.sayPresence(), isFalse);
+    expect(store.presences['me']?['plus'], isTrue);
+    // With nowhere to write, quietly nothing.
+    expect(await Trace(clock: () => now).sayPresence(), isFalse);
+  });
+
   test('flushes after the batch, or when the app leaves, by UTC day, and '
       'notes the reader was here', () {
     fakeAsync((async) {

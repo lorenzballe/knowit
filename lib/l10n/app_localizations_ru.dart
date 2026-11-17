@@ -5189,6 +5189,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deeperExample => 'Пример из обычной жизни';
 
   @override
+  String get deeperQuiz => 'Проверь меня на новом примере';
+
+  @override
+  String get deeperQuizRight => 'Верно.';
+
+  @override
+  String get deeperQuizWrong => 'Не совсем.';
+
+  @override
   String get deeperYourTake => 'Твоя мысль под лупой';
 
   @override

@@ -5013,6 +5013,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deeperExample => 'Ein Beispiel aus dem Alltag';
 
   @override
+  String get deeperQuiz => 'Teste mich an einem neuen Fall';
+
+  @override
+  String get deeperQuizRight => 'Richtig.';
+
+  @override
+  String get deeperQuizWrong => 'Nicht ganz.';
+
+  @override
   String get deeperYourTake => 'Deine Sicht, geprüft';
 
   @override
