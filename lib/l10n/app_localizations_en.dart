@@ -562,7 +562,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get howStep2Line =>
-      'Every card names where its facts come from, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.';
+      'Every card names where its facts come from, and three in four link to the original, a tap away, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.';
 
   @override
   String get howStep3Title => 'Five, dealt each morning';
@@ -5052,6 +5052,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => 'Free this week';
+
+  @override
+  String get booksSeeAll => 'See all';
+
+  @override
+  String get booksLibraryTitle => 'All the books';
 
   @override
   String get bookDoneTitle => 'Book finished';

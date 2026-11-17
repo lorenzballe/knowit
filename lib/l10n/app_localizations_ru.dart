@@ -579,7 +579,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get howStep2Line =>
-      'Каждая карточка называет, откуда её факты, чтобы ты мог проверить сам. Большинство читает вторая модель в роли критика, а то, что она не может подтвердить, попадает в список, который проверяет человек. Этот список пока не пуст.';
+      'Каждая карточка называет, откуда её факты, и три из четырёх одним касанием ведут к первоисточнику: всё можно проверить самостоятельно. Большинство читает вторая модель в роли критика, а то, что она не может подтвердить, попадает в список, который проверяет человек. Этот список пока не пуст.';
 
   @override
   String get howStep3Title => 'Пять, каждое утро';
@@ -5276,6 +5276,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => 'Бесплатно на этой неделе';
+
+  @override
+  String get booksSeeAll => 'Смотреть все';
+
+  @override
+  String get booksLibraryTitle => 'Все книги';
 
   @override
   String get bookDoneTitle => 'Книга прочитана';

@@ -511,9 +511,9 @@
  "@howStep2Title": {
   "description": "How cards are written, step two: every card names its sources, and a second model reads most of them as a critic."
  },
- "howStep2Line": "Every card names where its facts come from, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.",
+ "howStep2Line": "Every card names where its facts come from, and three in four link to the original, a tap away, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.",
  "@howStep2Line": {
-  "description": "Step two, said as it is: every card names its sources; most, not all, are read by a second model as a critic; what it cannot confirm waits on a list for a person, and that list is not empty. Do not promise that every claim is confirmed."
+  "description": "Step two, said as it is: every card names its sources, and three in four link to the original (74% of the bank, November 2026); most, not all, are read by a second model as a critic; what it cannot confirm waits on a list for a person, and that list is not empty. Do not promise that every claim is confirmed."
  },
  "howStep3Title": "Five, dealt each morning",
  "howStep3Line": "From the subjects you picked, cards you haven’t read yet. One you got right comes back later, to see if it stuck.",
@@ -5407,6 +5407,8 @@
  "@bookFreeThisWeek": {
   "description": "Books in pills, a book's own page: bookFreeThisWeek"
  },
+ "booksSeeAll": "See all",
+ "booksLibraryTitle": "All the books",
  "bookDoneTitle": "Book finished",
  "bookDoneLine": "{ideas} big ideas, in {minutes} minutes.",
  "@bookDoneLine": {

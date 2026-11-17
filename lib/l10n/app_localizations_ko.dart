@@ -554,7 +554,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get howStep2Line =>
-      '모든 카드는 사실의 출처를 밝혀서 직접 확인할 수 있어요. 대부분은 비평가 역할을 하는 두 번째 모델이 읽고, 확인하지 못한 내용은 사람이 검토하는 목록에 올라가요. 그 목록은 아직 비어 있지 않아요.';
+      '모든 카드는 사실의 출처를 밝히고, 네 장 중 세 장은 한 번 탭으로 원문을 열 수 있어 직접 확인할 수 있어요. 대부분은 비평가 역할을 하는 두 번째 모델이 읽고, 확인하지 못한 것은 사람이 검토하는 목록에 올라가요. 그 목록은 아직 비어 있지 않아요.';
 
   @override
   String get howStep3Title => '매일 아침 다섯 장';
@@ -4879,6 +4879,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => '이번 주 무료';
+
+  @override
+  String get booksSeeAll => '모두 보기';
+
+  @override
+  String get booksLibraryTitle => '모든 책';
 
   @override
   String get bookDoneTitle => '완독';

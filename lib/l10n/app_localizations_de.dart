@@ -566,7 +566,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get howStep2Line =>
-      'Jede Karte nennt, woher ihre Fakten stammen, damit du sie selbst prüfen kannst. Die meisten liest ein zweites Modell als Kritiker, und was es nicht bestätigen kann, kommt auf eine Liste, die ein Mensch prüft. Diese Liste ist noch nicht leer.';
+      'Jede Karte nennt, woher ihre Fakten stammen, und drei von vier führen mit einem Tippen zum Original, damit du selbst nachprüfen kannst. Die meisten liest ein zweites Modell als Kritiker, und was es nicht bestätigen kann, kommt auf eine Liste, die ein Mensch prüft. Diese Liste ist noch nicht leer.';
 
   @override
   String get howStep3Title => 'Fünf, jeden Morgen ausgeteilt';
@@ -5097,6 +5097,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bookFreeThisWeek => 'Diese Woche gratis';
+
+  @override
+  String get booksSeeAll => 'Alle ansehen';
+
+  @override
+  String get booksLibraryTitle => 'Alle Bücher';
 
   @override
   String get bookDoneTitle => 'Buch beendet';

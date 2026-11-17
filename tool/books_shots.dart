@@ -124,5 +124,36 @@ void main() {
       find.byType(BookScreen),
       matchesGoldenFile('$out/book-page.png'),
     );
+
+    // The library: every book at once.
+    tester.view.physicalSize = const Size(402, 874) * 3;
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: locale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        debugShowCheckedModeBanner: false,
+        home: LibraryScreen(
+          app: app,
+          weekly: bookOfTheWeek(PillBank.live, app.today),
+        ),
+      ),
+    );
+    for (final Element e in find.byType(Image).evaluate().toList()) {
+      await tester.runAsync(
+        () => precacheImage(
+          (e.widget as Image).image,
+          e,
+        ).timeout(const Duration(seconds: 10), onTimeout: () {}),
+      );
+    }
+    for (int f = 0; f < 6; f++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    await expectLater(
+      find.byType(LibraryScreen),
+      matchesGoldenFile('$out/books-library.png'),
+    );
   });
 }
