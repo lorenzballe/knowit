@@ -237,7 +237,14 @@ export const newsMorning = onSchedule(
       );
       logger.info('news', { day, cards: out.cards.length, cost: out.cost, log: out.log });
     } catch (e) {
-      logger.error('news failed', { day, error: String(e) });
+      // A key the API turns away spends nothing and says nothing about the
+      // day: the hour is not counted, so a key put right makes the day's
+      // paper at the next run.
+      const status = (e as { status?: unknown }).status;
+      if (status === 401 || status === 403) {
+        await paper.set({ tries: FieldValue.increment(-1) }, { merge: true });
+      }
+      logger.error('news failed', { day, status, error: String(e) });
     }
   },
 );
