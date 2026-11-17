@@ -338,6 +338,245 @@ class _Locked extends StatelessWidget {
   }
 }
 
+// ── Your coach ────────────────────────────────────────────────────────────
+
+/// The week as the coach is told it: numbers and a few names, in the
+/// reader's language, and nothing the reader wrote. The server clamps them
+/// again (functions/src/coach.ts).
+Map<String, Object?> coachStats(BuildContext context, AppState app) {
+  final l = context.l10n;
+  final DateTime monday = mondayOf(app.today);
+  final String now = dateKey(monday);
+  final String before = dateKey(dayShift(monday, -7));
+  var read = 0;
+  var days = 0;
+  for (final MapEntry<String, List<String>> e in app.readDays.entries) {
+    if (e.key.compareTo(now) >= 0 && e.value.isNotEmpty) {
+      read += e.value.length;
+      days++;
+    }
+  }
+  final week = <Judgement>[];
+  final last = <Judgement>[];
+  for (final Judgement j in app.calibrated) {
+    final String? on = j.on;
+    if (on == null || j.confidence! < kSureFrom) continue;
+    if (on.compareTo(now) >= 0) {
+      week.add(j);
+    } else if (on.compareTo(before) >= 0) {
+      last.add(j);
+    }
+  }
+  int? tens(List<Judgement> run) => run.length < 5
+      ? null
+      : (run.where((j) => j.correct).length * 10 / run.length).round();
+  final shares = subjectShares(app);
+  String? subject(String? key) =>
+      key == null ? null : l.subjectOf(kTopics[key]?.name ?? '');
+  final best = shares.isEmpty
+      ? null
+      : shares.reduce((a, b) => b.share > a.share ? b : a);
+  final worst = shares.length < 2
+      ? null
+      : shares.reduce((a, b) => b.share < a.share ? b : a);
+  final List<String> missed = <String>{
+    for (final Judgement j in app.judgements)
+      if (!j.correct && (j.on ?? '').compareTo(now) >= 0)
+        if (pillById(j.pillId ?? '') case final Pill p
+            when p.principle.isReal)
+          p.principle.label,
+  }.take(5).toList();
+  return {
+    'read': read,
+    'days': days,
+    'streak': app.liveStreak,
+    'sure': tens(week),
+    'sureBefore': tens(last),
+    'strong': subject(best?.key),
+    'weak': subject(worst?.key),
+    'missed': missed,
+    'changed': app.reactions.values
+        .where((v) => v == Reaction.changed.key)
+        .length,
+    'level': rungName(context, app.standing.rung),
+  };
+}
+
+/// The coach's note on the week, for Astute+: asked for with a tap, written
+/// once a week by the server, and shown here. On the free plan, what it is,
+/// behind the lock.
+class _Coach extends StatefulWidget {
+  const _Coach({required this.app});
+
+  final AppState app;
+
+  @override
+  State<_Coach> createState() => _CoachState();
+}
+
+class _CoachState extends State<_Coach> {
+  bool _busy = false;
+  AskResult? _result;
+
+  String get _week => dateKey(mondayOf(widget.app.today));
+
+  String get _key => '$_week~${Localizations.localeOf(context).languageCode}';
+
+  Future<void> _ask() async {
+    if (_busy) return;
+    final String language = Localizations.localeOf(context).languageCode;
+    final Map<String, Object?> stats = coachStats(context, widget.app);
+    final String key = _key;
+    setState(() {
+      _busy = true;
+      _result = null;
+    });
+    Analytics.capture('coach asked', {'week': _week});
+    final AskResult result = await Coach.call(_week, language, stats);
+    if (result case AskAnswer(:final text)) Coach.kept[key] = text;
+    Analytics.capture('coach answered', {
+      'ok': result is AskAnswer,
+      if (result case AskNone(:final why)) 'why_not': why.name,
+    });
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _result = result;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final AppState app = widget.app;
+    final Color ink = context.p.ink;
+    final TextStyle line = AppText.body(
+      size: 14.5,
+      height: 1.4,
+      color: ink.withValues(alpha: 0.75),
+    );
+    if (!app.isPlus) {
+      return GestureDetector(
+        key: const ValueKey('journey-coach-locked'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => requirePlus(context, app, () {}, source: 'journey coach'),
+        child: _Box(
+          child: Row(
+            children: [
+              Expanded(child: Text(l.coachTeaser, style: line)),
+              const SizedBox(width: 10),
+              const PlusLock(locked: true),
+            ],
+          ),
+        ),
+      );
+    }
+    final String? kept = Coach.kept[_key];
+    final AskResult? result = kept != null ? AskAnswer(kept) : _result;
+    return _Box(
+      key: const ValueKey('journey-coach'),
+      child: switch ((_busy, result)) {
+        (true, _) => Row(
+          children: [
+            SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: ink.withValues(alpha: 0.6),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Text(l.deeperBusy, style: line),
+          ],
+        ),
+        (_, AskAnswer(:final text)) => Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.auto_awesome_rounded,
+              size: 18,
+              color: _pink(context),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                text,
+                key: const ValueKey('journey-coach-note'),
+                style: AppText.body(
+                  size: 15.5,
+                  weight: FontWeight.w500,
+                  height: 1.45,
+                  color: ink,
+                ),
+              ),
+            ),
+          ],
+        ),
+        (_, final AskNone none) => Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(switch (none.why) {
+                    AskWhyNot.tomorrow => l.deeperTomorrow,
+                    AskWhyNot.declined => l.deeperDeclined,
+                    AskWhyNot.plus => l.deeperPlusOnly,
+                    AskWhyNot.later => l.deeperTryAgain,
+                  }, style: line),
+                  if (debugToolsOn && (none.detail ?? '').isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        none.detail!,
+                        style: AppText.body(
+                          size: 11,
+                          color: ink.withValues(alpha: 0.45),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            if (none.why == AskWhyNot.later)
+              IconButton(
+                onPressed: _ask,
+                icon: const Icon(Icons.refresh_rounded),
+                color: ink,
+              ),
+          ],
+        ),
+        _ => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l.coachTeaser, style: line),
+            const SizedBox(height: 12),
+            FilledButton.icon(
+              key: const ValueKey('journey-coach-ask'),
+              onPressed: _ask,
+              style: FilledButton.styleFrom(
+                backgroundColor: context.p.inverse,
+                foregroundColor: context.p.onInverse,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 11,
+                ),
+                shape: const StadiumBorder(),
+              ),
+              icon: const Icon(Icons.auto_awesome_rounded, size: 16),
+              label: Text(
+                l.coachRead,
+                style: AppText.body(size: 14, weight: FontWeight.w700),
+              ),
+            ),
+          ],
+        ),
+      },
+    );
+  }
+}
+
 // ── Practise ──────────────────────────────────────────────────────────────
 
 class _Practice extends StatelessWidget {

@@ -4623,6 +4623,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get journeyChapterMemory => '記憶に残ったこと';
 
   @override
+  String get journeyChapterCoach => 'あなたのコーチ';
+
+  @override
+  String get coachTeaser =>
+      '毎週、コーチがあなたの考え方についてメモを書きます。うまくいったこと、気をつけたい落とし穴、次に試すこと。';
+
+  @override
+  String get coachRead => '今週のメモを読む';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

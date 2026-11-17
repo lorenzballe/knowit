@@ -4765,6 +4765,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get journeyChapterMemory => 'Aklında kalanlar';
 
   @override
+  String get journeyChapterCoach => 'Koçun';
+
+  @override
+  String get coachTeaser =>
+      'Her hafta koçundan nasıl akıl yürüttüğüne dair bir not: neyin iyi gittiği, dikkat etmen gereken tuzak ve sırada ne deneyeceğin.';
+
+  @override
+  String get coachRead => 'Bu haftanın notunu oku';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

@@ -5006,6 +5006,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get journeyChapterMemory => 'Что остаётся с тобой';
 
   @override
+  String get journeyChapterCoach => 'Твой коуч';
+
+  @override
+  String get coachTeaser =>
+      'Каждую неделю — заметка коуча о том, как ты рассуждаешь: что получилось, какой ловушки остерегаться и что попробовать дальше.';
+
+  @override
+  String get coachRead => 'Прочитать заметку недели';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

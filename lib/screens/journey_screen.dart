@@ -5,6 +5,7 @@ import 'package:flutter/material.dart' hide Step;
 import 'package:intl/intl.dart' hide TextDirection;
 
 import '../data/pill_bank.dart';
+import '../debug_flags.dart';
 import '../analytics.dart';
 import '../data/pills_repository.dart' show dateKey, dayShift, pillById;
 import '../data/topics.dart';
@@ -14,6 +15,9 @@ import '../state/app_state.dart';
 import '../state/journey_record.dart';
 import '../state/progress.dart';
 import '../theme.dart';
+import '../sync/card_ask.dart';
+import '../sync/coach.dart';
+import '../widgets/deeper_sheet.dart' show cardAiOn;
 import '../widgets/share_day.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
@@ -60,6 +64,10 @@ class _JourneyScreenState extends State<JourneyScreen> {
     final AppState app = widget.app;
     final JourneyRecord record = app.record;
     const chapterGap = SizedBox(height: 28);
+    // Numbered as they come: the coach's chapter is there only where the
+    // answers by Claude are on.
+    var n = 0;
+    final String language = Localizations.localeOf(context).languageCode;
 
     return ScreenView(
       name: 'journey',
@@ -100,19 +108,27 @@ class _JourneyScreenState extends State<JourneyScreen> {
                   // by what they are about, and the story so far at the end.
                   children: [
                     _Chapter(
-                      n: 1,
+                      n: ++n,
                       title: l.storyChapterWeek,
                       child: _Headline(app: app),
                     ),
+                    if (cardAiOn(app, language)) ...[
+                      chapterGap,
+                      _Chapter(
+                        n: ++n,
+                        title: l.journeyChapterCoach,
+                        child: _Coach(app: app),
+                      ),
+                    ],
                     chapterGap,
                     _Chapter(
-                      n: 2,
+                      n: ++n,
                       title: l.storyChapterPractice,
                       child: _Practice(app: app),
                     ),
                     chapterGap,
                     _Chapter(
-                      n: 3,
+                      n: ++n,
                       title: l.storyChapterWhere,
                       child: _Stack([
                         _ScoreTile(
@@ -126,7 +142,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     ),
                     chapterGap,
                     _Chapter(
-                      n: 4,
+                      n: ++n,
                       title: l.storyChapterReason,
                       child: _Stack([
                         _HowYouReason(app: app),
@@ -148,7 +164,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     ),
                     chapterGap,
                     _Chapter(
-                      n: 5,
+                      n: ++n,
                       title: l.journeyChapterKnow,
                       child: _Stack([
                         _SubjectsTile(app: app, record: record),
@@ -165,7 +181,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     ),
                     chapterGap,
                     _Chapter(
-                      n: 6,
+                      n: ++n,
                       title: l.journeyChapterHabits,
                       child: _Stack([
                         _Pair(
@@ -181,7 +197,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     ),
                     chapterGap,
                     _Chapter(
-                      n: 7,
+                      n: ++n,
                       title: l.journeyChapterMemory,
                       child: _Stack([
                         _MemoryTile(app: app, record: record),
@@ -192,7 +208,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     ),
                     chapterGap,
                     _Chapter(
-                      n: 8,
+                      n: ++n,
                       title: l.storyChapterStory,
                       child: _YourStory(app: app),
                     ),

@@ -4848,6 +4848,16 @@ class AppLocalizationsNl extends AppLocalizations {
   String get journeyChapterMemory => 'Wat je bijblijft';
 
   @override
+  String get journeyChapterCoach => 'Je coach';
+
+  @override
+  String get coachTeaser =>
+      'Elke week een notitie van je coach over hoe je redeneert: wat goed ging, op welke valkuil je moet letten, wat je hierna probeert.';
+
+  @override
+  String get coachRead => 'Lees de notitie van deze week';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

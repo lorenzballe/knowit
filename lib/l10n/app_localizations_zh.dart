@@ -4623,6 +4623,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get journeyChapterMemory => '你记住的';
 
   @override
+  String get journeyChapterCoach => '你的教练';
+
+  @override
+  String get coachTeaser => '每周，教练会就你的思考方式写一段话：哪里做得好，要留意的陷阱，接下来试试什么。';
+
+  @override
+  String get coachRead => '阅读本周的话';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

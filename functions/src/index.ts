@@ -44,6 +44,7 @@ import { logger } from 'firebase-functions';
 
 import { ALL_PER_DAY, MODEL, MONTH_BUDGET_USD, PER_DAY, SHARED, answer as answerAsk, cacheKey, readAsk } from './ask.js';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
+import { coachNote, readCoach } from './coach.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import { search as searchBank } from './search.js';
 import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, pruneReader, readPlace, readReader, serveDay, serveExplore } from './serve.js';
@@ -140,6 +141,50 @@ export const askCard = onCall(
       return 'text' in out ? { text: out.text } : { none: out.none };
     } catch (e) {
       logger.error('ask failed', { card: ask.card, mode: ask.mode, error: String(e) });
+      throw new HttpsError('unavailable', 'Try again in a moment.');
+    }
+  },
+);
+
+// ── The coach's note, for Astute+ ────────────────────────────────────────
+
+export const coachWeek = onCall(
+  { enforceAppCheck: false, secrets: [anthropicKey], maxInstances: 5, timeoutSeconds: 60 },
+  async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+    const ask = readCoach(request.data);
+    if (!ask) throw new HttpsError('invalid-argument', 'A week, and its numbers.');
+    const presence = await db.collection('presence').doc(uid).get();
+    if (presence.get('plus') !== true) throw new HttpsError('permission-denied', 'Astute+ only.');
+    // Written once a week, then given again as it was.
+    const kept = db.collection('readers').doc(uid).collection('coach').doc(`${ask.week}~${ask.lang}`);
+    const before = (await kept.get()).get('text');
+    if (typeof before === 'string' && before) return { text: before };
+    const day = today(Date.now());
+    const mine = db.collection('readers').doc(uid).collection('ai').doc(day);
+    const everyone = db.collection('ai').doc(day);
+    const month = db.collection('ai').doc(`month-${day.slice(0, 7)}`);
+    const allowed = await db.runTransaction(async (t) => {
+      const [m, e, spent] = await Promise.all([t.get(mine), t.get(everyone), t.get(month)]);
+      if ((spent.get('usd') ?? 0) >= MONTH_BUDGET_USD) return false;
+      if ((m.get('n') ?? 0) >= PER_DAY || (e.get('n') ?? 0) >= ALL_PER_DAY) return false;
+      t.set(mine, { n: FieldValue.increment(1) }, { merge: true });
+      t.set(everyone, { n: FieldValue.increment(1) }, { merge: true });
+      return true;
+    });
+    if (!allowed) throw new HttpsError('resource-exhausted', 'Enough for today.');
+    try {
+      const out = await coachNote(new Anthropic({ apiKey: anthropicKey.value() }), ask);
+      await month.set({ usd: FieldValue.increment(out.cost), n: FieldValue.increment(1) }, { merge: true });
+      logger.info('coached', { week: ask.week, lang: ask.lang, answered: 'text' in out, cost: out.cost });
+      if ('text' in out) {
+        await kept.set({ text: out.text, model: MODEL, at: FieldValue.serverTimestamp() });
+        return { text: out.text };
+      }
+      return { none: out.none };
+    } catch (e) {
+      logger.error('coach failed', { week: ask.week, error: String(e) });
       throw new HttpsError('unavailable', 'Try again in a moment.');
     }
   },

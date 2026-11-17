@@ -4861,6 +4861,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get journeyChapterMemory => 'Ce qui te reste';
 
   @override
+  String get journeyChapterCoach => 'Ton coach';
+
+  @override
+  String get coachTeaser =>
+      'Chaque semaine, un mot de ton coach sur ta façon de raisonner : ce qui a marché, le piège à surveiller, quoi essayer ensuite.';
+
+  @override
+  String get coachRead => 'Lire le mot de la semaine';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

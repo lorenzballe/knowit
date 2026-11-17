@@ -4644,6 +4644,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get journeyChapterMemory => '기억에 남은 것';
 
   @override
+  String get journeyChapterCoach => '나의 코치';
+
+  @override
+  String get coachTeaser =>
+      '매주 코치가 당신의 생각 방식에 대해 메모를 남겨요. 잘한 점, 조심할 함정, 다음에 해볼 것.';
+
+  @override
+  String get coachRead => '이번 주 메모 읽기';
+
+  @override
   String storyHeadlineSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

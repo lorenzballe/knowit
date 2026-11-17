@@ -6948,6 +6948,24 @@ abstract class AppLocalizations {
   /// **'What stays with you'**
   String get journeyChapterMemory;
 
+  /// A chapter of Your journey, in small capitals, on Astute+ with the answers by Claude: the coach's note on the week.
+  ///
+  /// In en, this message translates to:
+  /// **'Your coach'**
+  String get journeyChapterCoach;
+
+  /// Your journey, the coach's chapter: what the note is, before it is asked for, and behind the lock on the free plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Every week, a note from your coach on how you reason: what went well, the trap to watch, what to try next.'**
+  String get coachTeaser;
+
+  /// Your journey, the coach's chapter: the button that asks for this week's note.
+  ///
+  /// In en, this message translates to:
+  /// **'Read this week\'s note'**
+  String get coachRead;
+
   /// Your journey as a story (the version on trial under the tiles): storyHeadlineSure
   ///
   /// In en, this message translates to:
