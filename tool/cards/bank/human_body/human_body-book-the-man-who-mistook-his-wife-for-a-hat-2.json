@@ -1,0 +1,42 @@
+{
+  "id": "human_body-book-the-man-who-mistook-his-wife-for-a-hat-2",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Jimmie G., in Sacks's 'The Lost Mariner', believed it was still 1945. Why?",
+  "answer": "Korsakoff's syndrome, brain damage from heavy drinking, had destroyed his ability to form new memories and wiped out years before it. Jimmie was nearly fifty, yet felt nineteen, and forgot each conversation within minutes. Sacks found that he still came alive in moments of absorption, in music, art or at Mass.",
+  "move": "Memory builds the self, but absorption can still hold a person whole.",
+  "simply": "A man's brain stopped saving new memories. Every few minutes the world reset, and he thought he was a young sailor in 1945.",
+  "why": "It shows how much of who we are rests on memory, and why people with dementia can still respond deeply to music, ritual and company.",
+  "book": {
+    "id": "the-man-who-mistook-his-wife-for-a-hat",
+    "title": "The Man Who Mistook His Wife for a Hat",
+    "author": "Oliver Sacks",
+    "year": 1985,
+    "part": 2,
+    "isbn": "9780684853949",
+    "badge": "Adapted into an opera by Michael Nyman"
+  },
+  "keywords": [
+    "amnesia",
+    "korsakoff's syndrome",
+    "memory",
+    "identity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, The Man Who Mistook His Wife for a Hat, 1985",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, The Man Who Mistook His Wife for a Hat (Summit Books, 1985), ch. 2",
+  "written": "2026-11-17"
+}

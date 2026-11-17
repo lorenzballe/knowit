@@ -1,0 +1,50 @@
+{
+  "id": "life-book-quiet-1",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.conversation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Roughly what share of people are introverts, by the studies Susan Cain cites?",
+  "options": [
+    "A third to a half",
+    "About one in twenty",
+    "Nine in ten"
+  ],
+  "correct": 0,
+  "answer": "A third to a half. Cain's point is that introverts are no small minority, yet many schools and workplaces are built around an Extrovert Ideal that rewards speaking up fast and thinking aloud. Many introverts learn to pass as extroverts, she argues, so their real number is easy to overlook.",
+  "move": "The loudest voices in a room are rarely its majority.",
+  "trap": "'About one in twenty': noisy rooms make quiet people look rare.",
+  "simply": "Up to half of people prefer quiet to noise. They just don't make much noise about it.",
+  "why": "In a meeting or a classroom, the people talking least may be half the room. Giving them time to think first often brings out better ideas.",
+  "sure": 0.35,
+  "book": {
+    "id": "quiet",
+    "title": "Quiet",
+    "author": "Susan Cain",
+    "year": 2012,
+    "part": 1,
+    "isbn": "9780307352156",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "introverts",
+    "extrovert ideal",
+    "personality",
+    "susan cain"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Susan Cain, Quiet, 2012",
+  "source_kind": "book",
+  "reference": "Susan Cain, Quiet: The Power of Introverts in a World That Can't Stop Talking (Crown, 2012), Introduction",
+  "written": "2026-11-17"
+}

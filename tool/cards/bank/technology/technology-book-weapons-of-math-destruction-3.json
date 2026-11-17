@@ -1,0 +1,42 @@
+{
+  "id": "technology-book-weapons-of-math-destruction-3",
+  "topic": "technology",
+  "genre": "technology.truth_online",
+  "strand": "technology.truth_online.algorithms_and_bubbles",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a predictive policing model make a neighbourhood look more criminal than it is?",
+  "answer": "Because it learns from arrest data, and arrests happen where police already patrol. The model sends more patrols there, which find more minor offences, which feed the model again. O'Neil calls this a pernicious feedback loop: the prediction creates the evidence that seems to confirm it.",
+  "move": "Check whether a prediction is creating the data that proves it.",
+  "simply": "If you only look for lost keys under one lamp, you'll only find keys there, and conclude that's where keys get lost.",
+  "why": "Feedback loops hide in recommendation feeds, hiring and credit too. Spotting them stops you mistaking a system's own echo for the truth.",
+  "book": {
+    "id": "weapons-of-math-destruction",
+    "title": "Weapons of Math Destruction",
+    "author": "Cathy O'Neil",
+    "year": 2016,
+    "part": 3,
+    "isbn": "9780553418835",
+    "badge": "Longlisted for the National Book Award"
+  },
+  "keywords": [
+    "predictive policing",
+    "feedback loops",
+    "data",
+    "bias"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cathy O'Neil, Weapons of Math Destruction, 2016",
+  "source_kind": "book",
+  "reference": "Cathy O'Neil, Weapons of Math Destruction (Crown, 2016), ch. 5",
+  "written": "2026-11-17"
+}

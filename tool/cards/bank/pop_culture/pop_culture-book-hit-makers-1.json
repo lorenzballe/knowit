@@ -1,0 +1,50 @@
+{
+  "id": "pop_culture-book-hit-makers-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.trends",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "The designer Raymond Loewy had a rule for what people like, MAYA. What does it stand for?",
+  "options": [
+    "Most Advanced Yet Acceptable",
+    "Make All Your Art",
+    "More Appeal, Yes Always"
+  ],
+  "correct": 0,
+  "answer": "Most Advanced Yet Acceptable. Thompson builds his book on Loewy's rule: people are drawn to the new, but wary of what is too new. Lasting hits offer something familiar with an unexpected twist, a new song on old chords, a new phone shaped like the last one.",
+  "move": "To be liked, be new enough to notice and familiar enough to trust.",
+  "trap": "'More Appeal, Yes Always': it sounds like a marketing slogan.",
+  "simply": "A new song that sounds a little like songs you know feels great. One that sounds like nothing you know feels weird. Hits sit in between.",
+  "why": "It's a useful rule for any idea you want accepted, a product, a pitch, a change at work: lead with what's familiar, then add the new.",
+  "sure": 0.35,
+  "book": {
+    "id": "hit-makers",
+    "title": "Hit Makers",
+    "author": "Derek Thompson",
+    "year": 2017,
+    "part": 1,
+    "isbn": "9781101980323",
+    "badge": "By a senior editor at The Atlantic"
+  },
+  "keywords": [
+    "maya principle",
+    "raymond loewy",
+    "familiarity",
+    "design"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Derek Thompson, Hit Makers, 2017",
+  "source_kind": "book",
+  "reference": "Derek Thompson, Hit Makers: The Science of Popularity in an Age of Distraction (Penguin Press, 2017), ch. 2",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "weird_facts-book-a-short-history-of-nearly-everything-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.weird_but_useful",
+  "strand": "weird_facts.weird_but_useful.strange_but_true",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Where have the atoms in your body been before you, according to Bryson?",
+  "options": [
+    "Through several stars",
+    "Nowhere: only in you",
+    "Nowhere: atoms are new"
+  ],
+  "correct": 0,
+  "answer": "Through several stars, and countless living things: the heavier atoms in you were forged in stars that exploded long before the Sun. Bryson adds that your atoms are so long-lived that some were very likely once part of Shakespeare, Buddha or Genghis Khan.",
+  "move": "You are made of very old, very well-travelled matter.",
+  "trap": "'Only in you': your atoms feel like they started with you.",
+  "simply": "The atoms in your hand are older than the Sun and have been part of stars, plants and other people before they were part of you.",
+  "why": "It's a mind-stretching fact with a sober point: matter is recycled endlessly, and so, in a sense, are we.",
+  "sure": 0.35,
+  "book": {
+    "id": "a-short-history-of-nearly-everything",
+    "title": "A Short History of Nearly Everything",
+    "author": "Bill Bryson",
+    "year": 2003,
+    "part": 2,
+    "isbn": "9780767908184",
+    "badge": "Winner of the Aventis Prize for Science Books"
+  },
+  "keywords": [
+    "atoms",
+    "stardust",
+    "recycling",
+    "bryson"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Bill Bryson, A Short History of Nearly Everything, 2003",
+  "source_kind": "book",
+  "reference": "Bill Bryson, A Short History of Nearly Everything (Broadway Books, 2003), ch. 9",
+  "written": "2026-11-17"
+}

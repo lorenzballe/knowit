@@ -1,0 +1,42 @@
+{
+  "id": "technology-book-weapons-of-math-destruction-5",
+  "topic": "technology",
+  "genre": "technology.your_digital_life",
+  "strand": "technology.your_digital_life.data_you_give_away",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did some for-profit colleges aim their online ads at people in hard times?",
+  "answer": "O'Neil describes colleges whose recruiters targeted people their data marked as vulnerable, recently divorced, short of money or grieving, because they were likeliest to sign up and borrow. The same targeting that sells shoes can find people at their weakest moment.",
+  "move": "When an ad finds you at a low moment, ask why it chose you.",
+  "simply": "A shop that waits for you when you're sad and tired, to sell you something expensive, isn't being kind. Some ads do that online.",
+  "why": "Knowing that ads can target emotional states helps you pause before big purchases or loans offered right when you feel worst.",
+  "book": {
+    "id": "weapons-of-math-destruction",
+    "title": "Weapons of Math Destruction",
+    "author": "Cathy O'Neil",
+    "year": 2016,
+    "part": 5,
+    "isbn": "9780553418835",
+    "badge": "Longlisted for the National Book Award"
+  },
+  "keywords": [
+    "targeted ads",
+    "for-profit colleges",
+    "vulnerability",
+    "data"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cathy O'Neil, Weapons of Math Destruction, 2016",
+  "source_kind": "book",
+  "reference": "Cathy O'Neil, Weapons of Math Destruction (Crown, 2016), ch. 4",
+  "written": "2026-11-17"
+}

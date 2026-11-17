@@ -1,0 +1,50 @@
+{
+  "id": "art-book-the-story-of-art-2",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.composition",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why did ancient Egyptian painters show people with the face in profile but the eye and shoulders from the front?",
+  "options": [
+    "They drew what they knew, not saw",
+    "They could not draw well",
+    "One pharaoh's fashion"
+  ],
+  "correct": 0,
+  "answer": "Because they painted what they knew to be there, not what is seen from one spot. Gombrich explains that each part was shown from its most characteristic angle, to make the figure complete and lasting, often for a tomb. Their rules held for nearly three thousand years, and their skill was considerable.",
+  "move": "Strange-looking styles usually follow rules; find the rule before judging.",
+  "trap": "'They could not draw well': the poses look awkward to us.",
+  "simply": "Egyptian artists showed each body part from its clearest side: a face from the side, an eye from the front. They were being complete, not clumsy.",
+  "why": "When a style looks wrong, ask what rule it follows. It works for art, for other cultures' customs and for unfamiliar ideas too.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-story-of-art",
+    "title": "The Story of Art",
+    "author": "E. H. Gombrich",
+    "year": 1950,
+    "part": 2,
+    "isbn": "9780714832470",
+    "badge": "In print since 1950, now in its sixteenth edition"
+  },
+  "keywords": [
+    "egyptian art",
+    "conventions",
+    "drawing",
+    "tombs"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "E. H. Gombrich, The Story of Art, 1950",
+  "source_kind": "book",
+  "reference": "E. H. Gombrich, The Story of Art (Phaidon, 1950; 16th ed., 1995), ch. 2",
+  "written": "2026-11-17"
+}

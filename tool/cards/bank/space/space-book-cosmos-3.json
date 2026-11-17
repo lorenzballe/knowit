@@ -1,0 +1,42 @@
+{
+  "id": "space-book-cosmos-3",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.astrology_or_astronomy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Johannes Kepler spent years defending someone in a witchcraft trial. Who was it?",
+  "answer": "His own mother. In 1615 Katharina Kepler, an elderly herbalist, was accused of witchcraft by neighbours, and Kepler, already a famous astronomer, spent years on her defence. She was imprisoned and threatened with torture, but finally freed. Sagan tells the story to show how close superstition sat to the birth of modern science.",
+  "move": "Science grew up alongside superstition, not after it.",
+  "simply": "The astronomer who worked out how planets move also had to save his mum from being burned as a witch.",
+  "why": "It's a reminder that reason and superstition have long coexisted, even in the same family, and that defending evidence sometimes takes courage.",
+  "book": {
+    "id": "cosmos",
+    "title": "Cosmos",
+    "author": "Carl Sagan",
+    "year": 1980,
+    "part": 3,
+    "isbn": "9780345539434",
+    "badge": "Written alongside Sagan's 1980 television series"
+  },
+  "keywords": [
+    "johannes kepler",
+    "witch trials",
+    "katharina kepler",
+    "superstition"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, Cosmos, 1980",
+  "source_kind": "book",
+  "reference": "Carl Sagan, Cosmos (Random House, 1980), ch. 3",
+  "written": "2026-11-17"
+}

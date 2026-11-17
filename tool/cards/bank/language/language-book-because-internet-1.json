@@ -1,0 +1,42 @@
+{
+  "id": "language-book-because-internet-1",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.internet_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can ending a text message with a full stop sound cold or angry?",
+  "answer": "In chat, a line break already ends the message, so a full stop is extra, and extra signals meaning. McCulloch, a linguist, explains that it came to mark finality or seriousness, the way a flat tone does in speech. 'Ok.' reads differently from 'ok'.",
+  "move": "In text, punctuation has become tone of voice.",
+  "simply": "Sending 'ok.' with a dot is like saying 'ok' with a flat face. The dot isn't needed, so people read it as a mood.",
+  "why": "Knowing how others read your punctuation avoids sounding cross by accident, and avoids reading anger into a friend's 'fine.'",
+  "book": {
+    "id": "because-internet",
+    "title": "Because Internet",
+    "author": "Gretchen McCulloch",
+    "year": 2019,
+    "part": 1,
+    "isbn": "9780735210936",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "punctuation",
+    "texting",
+    "tone",
+    "full stop"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Gretchen McCulloch, Because Internet, 2019",
+  "source_kind": "book",
+  "reference": "Gretchen McCulloch, Because Internet: Understanding the New Rules of Language (Riverhead, 2019)",
+  "written": "2026-11-17"
+}

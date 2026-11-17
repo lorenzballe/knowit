@@ -1,0 +1,42 @@
+{
+  "id": "music-book-this-is-your-brain-on-music-3",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.rhythm_in_the_body",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we tap our feet to music without deciding to?",
+  "answer": "Because listening to rhythm recruits the brain's movement systems. Levitin describes scans in which music engaged the cerebellum, an ancient region long thought to handle only movement and timing, alongside areas for emotion. Our brains seem to track a beat partly by preparing to move to it.",
+  "move": "Rhythm is felt through the brain's movement circuits.",
+  "simply": "Your brain listens to a beat with the parts it uses to move, so your foot starts tapping before you've decided to.",
+  "why": "It's part of why music helps people exercise, march or work in time, and why it's used in therapy for movement problems.",
+  "book": {
+    "id": "this-is-your-brain-on-music",
+    "title": "This Is Your Brain on Music",
+    "author": "Daniel J. Levitin",
+    "year": 2006,
+    "part": 3,
+    "isbn": "9780452288522",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "rhythm",
+    "cerebellum",
+    "movement",
+    "beat"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel J. Levitin, This Is Your Brain on Music, 2006",
+  "source_kind": "book",
+  "reference": "Daniel J. Levitin, This Is Your Brain on Music (Dutton, 2006), ch. 6",
+  "written": "2026-11-17"
+}

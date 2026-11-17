@@ -1,0 +1,42 @@
+{
+  "id": "music-book-this-is-your-brain-on-music-4",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_memory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the songs we heard as teenagers stay with us so strongly, in Levitin's view?",
+  "answer": "Because the teenage years are a time of intense emotion and of forming an identity, and the brain tags memories made then as important. Levitin argues that the music of those years becomes woven into our sense of who we are, which is why it can sound better than anything since.",
+  "move": "Music sticks hardest when it arrives with strong feelings.",
+  "simply": "As a teenager everything feels huge, and the brain saves those moments carefully, along with the songs playing at the time.",
+  "why": "It explains why arguments about the 'best' music often come down to age, and why old favourites can comfort people with memory loss.",
+  "book": {
+    "id": "this-is-your-brain-on-music",
+    "title": "This Is Your Brain on Music",
+    "author": "Daniel J. Levitin",
+    "year": 2006,
+    "part": 4,
+    "isbn": "9780452288522",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "musical taste",
+    "adolescence",
+    "memory",
+    "identity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel J. Levitin, This Is Your Brain on Music, 2006",
+  "source_kind": "book",
+  "reference": "Daniel J. Levitin, This Is Your Brain on Music (Dutton, 2006), ch. 8",
+  "written": "2026-11-17"
+}

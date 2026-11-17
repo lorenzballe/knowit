@@ -1,0 +1,42 @@
+{
+  "id": "science-book-the-structure-of-scientific-revolutions-3",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.falsification",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What causes a scientific revolution, in Kuhn's account?",
+  "answer": "Anomalies that won't go away. When results the paradigm can't explain pile up, science enters a crisis, and a rival framework that explains them can take over, as Copernicus's sun-centred system replaced Ptolemy's. Kuhn called this a paradigm shift: not just new facts, but a new way of seeing the old ones.",
+  "move": "Unexplained results that pile up can bring down a whole theory.",
+  "simply": "A theory works until odd results keep turning up. Eventually someone offers a new picture that explains them, and the field switches.",
+  "why": "In any field, a growing pile of exceptions is a signal. Taking them seriously early spares you from defending a crumbling idea.",
+  "book": {
+    "id": "the-structure-of-scientific-revolutions",
+    "title": "The Structure of Scientific Revolutions",
+    "author": "Thomas S. Kuhn",
+    "year": 1962,
+    "part": 3,
+    "isbn": "9780226458120",
+    "badge": "The book that gave us the phrase 'paradigm shift'"
+  },
+  "keywords": [
+    "paradigm shift",
+    "copernicus",
+    "anomalies",
+    "scientific revolution"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Thomas S. Kuhn, The Structure of Scientific Revolutions, 1962",
+  "source_kind": "book",
+  "reference": "Thomas S. Kuhn, The Structure of Scientific Revolutions (University of Chicago Press, 1962), ch. 7",
+  "written": "2026-11-17"
+}

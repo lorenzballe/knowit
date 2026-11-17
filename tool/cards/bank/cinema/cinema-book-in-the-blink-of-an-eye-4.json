@@ -1,0 +1,50 @@
+{
+  "id": "cinema-book-in-the-blink-of-an-eye-4",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "Walter Murch prefers not to visit the set of a film he is editing. What is he guarding against?",
+  "options": [
+    "Valuing shots for how hard they were",
+    "Annoying the director",
+    "Spoiling the plot for himself"
+  ],
+  "correct": 0,
+  "answer": "Valuing shots for the effort behind them. If he knew how hard a shot was to get, or what everyone hoped it would do, he might keep it out of loyalty. Away from the set, he judges only what is on the screen, which is all an audience will ever have.",
+  "move": "Judge the result as its audience will, not as its makers did.",
+  "trap": "'Annoying the director': it sounds like simple tact.",
+  "simply": "If you know how hard something was to make, you love it more than it deserves. Murch stays away so he can judge it fairly.",
+  "why": "Effort makes us overvalue our own work. Asking how it looks to someone who saw none of the effort is a good check before you keep or cut anything.",
+  "sure": 0.35,
+  "book": {
+    "id": "in-the-blink-of-an-eye",
+    "title": "In the Blink of an Eye",
+    "author": "Walter Murch",
+    "year": 1995,
+    "part": 4,
+    "isbn": "9781879505629",
+    "badge": "By three-time Oscar winner Walter Murch"
+  },
+  "keywords": [
+    "sunk costs",
+    "film editing",
+    "objectivity",
+    "audience"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Walter Murch, In the Blink of an Eye, 1995",
+  "source_kind": "book",
+  "reference": "Walter Murch, In the Blink of an Eye (Silman-James Press, 2nd ed., 2001)",
+  "written": "2026-11-17"
+}

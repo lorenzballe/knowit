@@ -1,0 +1,50 @@
+{
+  "id": "pop_culture-book-hit-makers-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.going_viral",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Most things that 'go viral' online mainly spread in which way?",
+  "options": [
+    "From a few big broadcasts",
+    "Person to person, like a virus",
+    "At random"
+  ],
+  "correct": 0,
+  "answer": "Mostly from a few big broadcasts: a celebrity, a big account or a news site shares it, and many people see it at once. Thompson cites research on millions of online cascades showing that long chains of person-to-person sharing are rare. Popularity usually has a megaphone behind it.",
+  "move": "Behind most 'viral' hits, look for the megaphone.",
+  "trap": "'Person to person': the word 'viral' makes us picture contagion.",
+  "simply": "We imagine a video spreads friend to friend, like a cold. Usually one famous account shares it and millions see it at once.",
+  "why": "It changes how you read online popularity: a trend is often a few big accounts' choice, not the crowd's.",
+  "sure": 0.35,
+  "book": {
+    "id": "hit-makers",
+    "title": "Hit Makers",
+    "author": "Derek Thompson",
+    "year": 2017,
+    "part": 3,
+    "isbn": "9781101980323",
+    "badge": "By a senior editor at The Atlantic"
+  },
+  "keywords": [
+    "virality",
+    "cascades",
+    "broadcast",
+    "social media"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Derek Thompson, Hit Makers, 2017",
+  "source_kind": "book",
+  "reference": "Derek Thompson, Hit Makers: The Science of Popularity in an Age of Distraction (Penguin Press, 2017), ch. 7",
+  "written": "2026-11-17"
+}

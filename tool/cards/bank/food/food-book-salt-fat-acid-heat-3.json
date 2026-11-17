@@ -1,0 +1,42 @@
+{
+  "id": "food-book-salt-fat-acid-heat-3",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does fat do in cooking, beyond making food rich, according to Nosrat?",
+  "answer": "It carries flavour and creates texture. Many aroma compounds dissolve in fat rather than water, so fat helps flavours reach us, while the choice of fat, butter, olive oil or lard, decides whether food turns out crisp, flaky or tender. Nosrat suggests choosing a dish's fat with its cuisine in mind.",
+  "move": "Choose a fat for the flavour and texture it brings.",
+  "simply": "Fat is how many flavours travel to your tongue. Butter, olive oil or lard each make food taste and feel different.",
+  "why": "Understanding what an ingredient does, not just how much to add, lets you swap and adapt recipes with confidence.",
+  "book": {
+    "id": "salt-fat-acid-heat",
+    "title": "Salt, Fat, Acid, Heat",
+    "author": "Samin Nosrat",
+    "year": 2017,
+    "part": 3,
+    "isbn": "9781476753836",
+    "badge": "A James Beard Award winner, made into a Netflix series"
+  },
+  "keywords": [
+    "fat",
+    "flavour",
+    "texture",
+    "olive oil"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Samin Nosrat, Salt, Fat, Acid, Heat, 2017",
+  "source_kind": "book",
+  "reference": "Samin Nosrat, Salt, Fat, Acid, Heat (Simon & Schuster, 2017)",
+  "written": "2026-11-17"
+}

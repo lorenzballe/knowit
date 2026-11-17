@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-book-a-short-history-of-nearly-everything-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If you squeezed Earth's history into a single day, when would humans appear?",
+  "answer": "In the last minute or so before midnight. Bryson uses the clock to show how recent we are: life appears early in the morning, complex animals only in the evening, dinosaurs late at night, and all of recorded history in the final few seconds.",
+  "move": "On the scale of deep time, all of human history is seconds.",
+  "simply": "If the Earth's whole life were one day, people would show up just before midnight, after the dinosaurs had come and gone.",
+  "why": "Scaling huge numbers to a day is a tool worth borrowing for any vast quantity: it turns the unimaginable into something you can feel.",
+  "book": {
+    "id": "a-short-history-of-nearly-everything",
+    "title": "A Short History of Nearly Everything",
+    "author": "Bill Bryson",
+    "year": 2003,
+    "part": 1,
+    "isbn": "9780767908184",
+    "badge": "Winner of the Aventis Prize for Science Books"
+  },
+  "keywords": [
+    "deep time",
+    "earth's history",
+    "geological clock",
+    "humans"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Bill Bryson, A Short History of Nearly Everything, 2003",
+  "source_kind": "book",
+  "reference": "Bill Bryson, A Short History of Nearly Everything (Broadway Books, 2003)",
+  "written": "2026-11-17"
+}

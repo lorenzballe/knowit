@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-book-amusing-ourselves-to-death-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.algorithms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Postman think 'Now... this' was the most revealing phrase on television news?",
+  "answer": "Because it lets a newsreader jump from a massacre to a weather forecast to an advert with no link between them. Postman argued that the phrase admits there is no connection to make: each item is meant to be felt for a moment and then dropped, which trains viewers not to connect anything.",
+  "move": "When news jumps between topics, the connections are yours to make.",
+  "simply": "A newsreader says something terrible happened, then 'now, this: sunny tomorrow'. Postman said that teaches us to feel for a second and forget.",
+  "why": "Feeds do the same at higher speed. Pausing to ask what a story means, before scrolling on, is the habit 'Now... this' wears away.",
+  "book": {
+    "id": "amusing-ourselves-to-death",
+    "title": "Amusing Ourselves to Death",
+    "author": "Neil Postman",
+    "year": 1985,
+    "part": 3,
+    "isbn": "9780140094381",
+    "badge": "A classic of media criticism, in print since 1985"
+  },
+  "keywords": [
+    "television news",
+    "now this",
+    "fragmentation",
+    "attention"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Neil Postman, Amusing Ourselves to Death, 1985",
+  "source_kind": "book",
+  "reference": "Neil Postman, Amusing Ourselves to Death (Viking, 1985), ch. 7",
+  "written": "2026-11-17"
+}

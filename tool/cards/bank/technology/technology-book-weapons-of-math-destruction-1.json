@@ -1,0 +1,42 @@
+{
+  "id": "technology-book-weapons-of-math-destruction-1",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.bias_in_ai",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes an algorithm a 'weapon of math destruction', in Cathy O'Neil's phrase?",
+  "answer": "Three things together: it is opaque, so those it scores cannot see how; it works at scale, deciding for millions; and it does damage, often to people least able to push back. O'Neil, a former Wall Street quant, argues such models can turn old prejudices into rules nobody questions.",
+  "move": "Ask who a scoring system judges, and whether they can see how.",
+  "simply": "Imagine a secret rulebook that decides who gets a job, and nobody may read it. If the rules are unfair, nobody can even prove it.",
+  "why": "Credit scores, job filters and insurance prices increasingly come from models. Asking what they measure, and whether you can appeal, protects you from errors you would never see.",
+  "book": {
+    "id": "weapons-of-math-destruction",
+    "title": "Weapons of Math Destruction",
+    "author": "Cathy O'Neil",
+    "year": 2016,
+    "part": 1,
+    "isbn": "9780553418835",
+    "badge": "Longlisted for the National Book Award"
+  },
+  "keywords": [
+    "algorithms",
+    "bias",
+    "scoring",
+    "accountability"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cathy O'Neil, Weapons of Math Destruction, 2016",
+  "source_kind": "book",
+  "reference": "Cathy O'Neil, Weapons of Math Destruction (Crown, 2016), Introduction",
+  "written": "2026-11-17"
+}

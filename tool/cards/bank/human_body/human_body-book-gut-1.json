@@ -1,0 +1,42 @@
+{
+  "id": "human_body-book-gut-1",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Giulia Enders say squatting suits the gut better than sitting on a toilet?",
+  "answer": "Because of a muscle, the puborectalis, which loops round the end of the gut and kinks it to help keep us continent. Sitting relaxes it only partly, so the kink remains; squatting straightens the passage. Enders notes that much of the world squats, and a footstool brings a sitter closer to that angle.",
+  "move": "Posture changes how the body's plumbing works, not only how it looks.",
+  "simply": "A muscle wraps round the end of your gut like a hand bending a hose. Squatting lets go of the bend; sitting only half does.",
+  "why": "A small footstool in the bathroom is a cheap, harmless change many people find helps, and a reminder that the body was shaped long before chairs.",
+  "book": {
+    "id": "gut",
+    "title": "Gut",
+    "author": "Giulia Enders",
+    "year": 2015,
+    "part": 1,
+    "isbn": "9781771641494",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "squatting",
+    "puborectalis",
+    "digestion",
+    "toilet posture"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Giulia Enders, Gut, 2015",
+  "source_kind": "book",
+  "reference": "Giulia Enders, Gut: The Inside Story of Our Body's Most Underrated Organ (Greystone Books, 2015), ch. 1",
+  "written": "2026-11-17"
+}

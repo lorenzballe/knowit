@@ -1,0 +1,50 @@
+{
+  "id": "music-book-musicophilia-2",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.hearing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "An elderly woman losing her hearing starts hearing old songs that aren't playing. What is the likeliest cause, in Sacks's account?",
+  "options": [
+    "The brain filling in for lost sound",
+    "A serious mental illness",
+    "A neighbour's radio"
+  ],
+  "correct": 0,
+  "answer": "The brain filling in for lost sound. Sacks describes many older people, most with hearing loss and no mental illness, whose brains produced vivid music, often songs from youth. Deprived of input, the hearing areas seem to make their own. Knowing this can spare people the fear that they are going mad.",
+  "move": "Before assuming the rare, frightening cause, check the common one.",
+  "trap": "'A serious mental illness': hearing what isn't there sounds alarming.",
+  "simply": "When the ears stop sending sound, the brain can make its own music, often old songs. It's usually a hearing problem, not madness.",
+  "why": "If you or a parent starts hearing phantom music, see a doctor, but know it's commonly linked to hearing loss and rarely a sign of psychosis.",
+  "sure": 0.35,
+  "book": {
+    "id": "musicophilia",
+    "title": "Musicophilia",
+    "author": "Oliver Sacks",
+    "year": 2007,
+    "part": 2,
+    "isbn": "9781400033539",
+    "badge": "By the neurologist behind Awakenings"
+  },
+  "keywords": [
+    "musical hallucinations",
+    "hearing loss",
+    "ageing",
+    "the brain"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, Musicophilia, 2007",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, Musicophilia: Tales of Music and the Brain (Knopf, 2007), ch. 6",
+  "written": "2026-11-17"
+}

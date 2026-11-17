@@ -1,0 +1,42 @@
+{
+  "id": "food-book-the-omnivores-dilemma-1",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.diet_studies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the 'omnivore's dilemma' of Michael Pollan's title?",
+  "answer": "The problem every omnivore faces: with so many possible foods, which are safe and good to eat? The phrase comes from the psychologist Paul Rozin. Pollan argues that culture once answered it through cuisine and tradition, but supermarket abundance and shifting diet advice have brought the anxiety back.",
+  "move": "Too much choice can make deciding what to eat harder.",
+  "simply": "Koalas just eat eucalyptus. Humans can eat almost anything, which means we always have to work out what's good for us.",
+  "why": "It explains why food fads spread so fast: without a trusted tradition, every new claim about what to eat finds an anxious audience.",
+  "book": {
+    "id": "the-omnivores-dilemma",
+    "title": "The Omnivore's Dilemma",
+    "author": "Michael Pollan",
+    "year": 2006,
+    "part": 1,
+    "isbn": "9780143038580",
+    "badge": "Named one of the ten best books of 2006 by The New York Times"
+  },
+  "keywords": [
+    "omnivore's dilemma",
+    "paul rozin",
+    "diet",
+    "food culture"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael Pollan, The Omnivore's Dilemma, 2006",
+  "source_kind": "book",
+  "reference": "Michael Pollan, The Omnivore's Dilemma (Penguin Press, 2006), Introduction",
+  "written": "2026-11-17"
+}

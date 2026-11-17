@@ -1,0 +1,50 @@
+{
+  "id": "maths-book-how-not-to-be-wrong-2",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "A stranger emails you a correct stock tip ten weeks in a row. What should you suspect?",
+  "options": [
+    "Many others got different tips",
+    "They have inside knowledge",
+    "A lucky streak"
+  ],
+  "correct": 0,
+  "answer": "That thousands of people got tips, half saying a stock would rise and half that it would fall, and that each week only those who got the right call were sent another. After ten weeks a few people have seen ten correct calls. Ellenberg's Baltimore stockbroker shows how a perfect record can be manufactured.",
+  "move": "Ask how many people got the failed predictions you never saw.",
+  "trap": "'They have inside knowledge': ten in a row seems impossible by chance.",
+  "simply": "Tell half of 10,000 people 'up' and half 'down'. Keep going with the winners. After ten weeks, ten people think you're a genius.",
+  "why": "Some tipsters and gurus look brilliant this way: you see only the streak sent to you. Asking how many others got the misses protects your money.",
+  "sure": 0.35,
+  "book": {
+    "id": "how-not-to-be-wrong",
+    "title": "How Not to Be Wrong",
+    "author": "Jordan Ellenberg",
+    "year": 2014,
+    "part": 2,
+    "isbn": "9780143127536",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "stock tips",
+    "scams",
+    "selection",
+    "baltimore stockbroker"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Jordan Ellenberg, How Not to Be Wrong, 2014",
+  "source_kind": "book",
+  "reference": "Jordan Ellenberg, How Not to Be Wrong: The Power of Mathematical Thinking (Penguin Press, 2014), ch. 6",
+  "written": "2026-11-17"
+}

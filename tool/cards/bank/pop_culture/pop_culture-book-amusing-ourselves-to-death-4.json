@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-book-amusing-ourselves-to-death-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Was Postman against entertainment on television?",
+  "answer": "No. He said television is at its best serving junk entertainment, and at its worst when it presents serious matters, news, politics, religion, education, as entertainment. The danger, Postman wrote, is not that television entertains, but that it makes entertainment the natural form of everything.",
+  "move": "Fun is fine; trouble starts when serious things must be fun.",
+  "simply": "A comedy show being funny is great. A news show trying to be a comedy show is the problem.",
+  "why": "It's a good test for apps, lessons and news: is the fun serving the content, or has the content been bent to be fun?",
+  "book": {
+    "id": "amusing-ourselves-to-death",
+    "title": "Amusing Ourselves to Death",
+    "author": "Neil Postman",
+    "year": 1985,
+    "part": 4,
+    "isbn": "9780140094381",
+    "badge": "A classic of media criticism, in print since 1985"
+  },
+  "keywords": [
+    "entertainment",
+    "seriousness",
+    "television",
+    "education"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Neil Postman, Amusing Ourselves to Death, 1985",
+  "source_kind": "book",
+  "reference": "Neil Postman, Amusing Ourselves to Death (Viking, 1985), ch. 6",
+  "written": "2026-11-17"
+}

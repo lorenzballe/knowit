@@ -1,0 +1,50 @@
+{
+  "id": "science-book-the-double-helix-2",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.peer_review",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In early 1953 Linus Pauling, the world's leading chemist, proposed a structure for DNA. What was wrong with it?",
+  "options": [
+    "A basic chemistry mistake",
+    "Nothing: it was right",
+    "It was copied"
+  ],
+  "correct": 0,
+  "answer": "A basic chemical mistake. Pauling's three-chain model left the phosphate groups without their charge, so his molecule was not even an acid, as Watson spotted with glee. Watson and Crick toasted the error at their local pub, knowing they had only weeks before Pauling saw it and tried again.",
+  "move": "Check the basics, whoever's name is on the work.",
+  "trap": "'Nothing: it was right': Pauling seemed too great to slip.",
+  "simply": "The world's top chemist made a beginner's mistake: his DNA wasn't even an acid. That slip gave his rivals time to win.",
+  "why": "Reputation doesn't replace checking. Experts are usually right in their field, and when they err, it's often in basics nobody double-checks.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-double-helix",
+    "title": "The Double Helix",
+    "author": "James D. Watson",
+    "year": 1968,
+    "part": 2,
+    "isbn": "9780743216302",
+    "badge": "On the Modern Library's list of the 100 best nonfiction books"
+  },
+  "keywords": [
+    "linus pauling",
+    "dna",
+    "chemistry",
+    "experts"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James D. Watson, The Double Helix, 1968",
+  "source_kind": "book",
+  "reference": "James D. Watson, The Double Helix (Atheneum, 1968)",
+  "written": "2026-11-17"
+}

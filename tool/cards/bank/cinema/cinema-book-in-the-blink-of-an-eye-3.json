@@ -1,0 +1,42 @@
+{
+  "id": "cinema-book-in-the-blink-of-an-eye-3",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.shots_and_angles",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is 'eye-trace', one of Murch's considerations when cutting between shots?",
+  "answer": "Where the viewer's eye is looking on the screen at the moment of a cut. If the next shot puts something important in the same area, the cut feels smooth; if it makes the eye leap across the frame, it can jar. Murch shows how editors steer an audience's gaze from shot to shot.",
+  "move": "Good cuts lead the eye to where it is already looking.",
+  "simply": "Watch where your eyes go at a cut. Good editors place the next important thing right where you're already looking.",
+  "why": "Designers use the same idea in apps and web pages: put the next thing where the eye lands. Noticing it shows you when you're being guided.",
+  "book": {
+    "id": "in-the-blink-of-an-eye",
+    "title": "In the Blink of an Eye",
+    "author": "Walter Murch",
+    "year": 1995,
+    "part": 3,
+    "isbn": "9781879505629",
+    "badge": "By three-time Oscar winner Walter Murch"
+  },
+  "keywords": [
+    "eye-trace",
+    "film editing",
+    "attention",
+    "visual design"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Walter Murch, In the Blink of an Eye, 1995",
+  "source_kind": "book",
+  "reference": "Walter Murch, In the Blink of an Eye (Silman-James Press, 2nd ed., 2001)",
+  "written": "2026-11-17"
+}

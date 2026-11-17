@@ -1,0 +1,50 @@
+{
+  "id": "music-book-musicophilia-4",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.music_therapy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "After a stroke, some people can no longer speak a sentence. What can many of them still do, Sacks reports?",
+  "options": [
+    "Sing the words of familiar songs",
+    "Write perfect letters",
+    "Nothing involving words"
+  ],
+  "correct": 0,
+  "answer": "Sing the words of familiar songs. Many people with aphasia can sing lyrics they cannot say. Sacks describes melodic intonation therapy, which uses singing to help some patients recover phrases of speech, and explains it by music's wide spread across both sides of the brain.",
+  "move": "Words carried by a song can survive damage that silences speech.",
+  "trap": "'Nothing involving words': losing speech seems to mean losing all words.",
+  "simply": "After a stroke, some people can't say 'good morning', but they can sing 'Happy Birthday' with every word. Singing uses more of the brain.",
+  "why": "It's why speech therapists sometimes use song with stroke patients, and a reminder that the brain often has more than one route to a skill.",
+  "sure": 0.35,
+  "book": {
+    "id": "musicophilia",
+    "title": "Musicophilia",
+    "author": "Oliver Sacks",
+    "year": 2007,
+    "part": 4,
+    "isbn": "9781400033539",
+    "badge": "By the neurologist behind Awakenings"
+  },
+  "keywords": [
+    "aphasia",
+    "stroke",
+    "melodic intonation therapy",
+    "singing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, Musicophilia, 2007",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, Musicophilia: Tales of Music and the Brain (Knopf, 2007), ch. 16",
+  "written": "2026-11-17"
+}

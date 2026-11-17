@@ -1,0 +1,42 @@
+{
+  "id": "science-book-the-double-helix-5",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.experts_disagree",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does Watson's memoir portray Rosalind Franklin, and why is it criticised?",
+  "answer": "Mostly dismissively: Watson calls her Rosy, a nickname used behind her back, and mocks her looks and temper. Critics point out that her measurements were essential, and that she died in 1958, four years before the Nobel Prize, which is not given after death. In an epilogue, Watson admits he misjudged her.",
+  "move": "Read a memoir as one side of a story, then find the others.",
+  "simply": "Watson's book calls Franklin 'Rosy' and belittles her. In fact her measurements were key, and she died before she could share the Nobel.",
+  "why": "First-person accounts are vivid but partial. Checking how others saw the same events gives a fairer picture, in science and in life.",
+  "book": {
+    "id": "the-double-helix",
+    "title": "The Double Helix",
+    "author": "James D. Watson",
+    "year": 1968,
+    "part": 5,
+    "isbn": "9780743216302",
+    "badge": "On the Modern Library's list of the 100 best nonfiction books"
+  },
+  "keywords": [
+    "rosalind franklin",
+    "nobel prize",
+    "memoir",
+    "sexism in science"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James D. Watson, The Double Helix, 1968",
+  "source_kind": "book",
+  "reference": "James D. Watson, The Double Helix (Atheneum, 1968), Epilogue",
+  "written": "2026-11-17"
+}

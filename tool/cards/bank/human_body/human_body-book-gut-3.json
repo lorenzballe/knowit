@@ -1,0 +1,42 @@
+{
+  "id": "human_body-book-gut-3",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does Enders think the appendix might be good for?",
+  "answer": "A safe house for gut bacteria. The appendix is packed with immune tissue and may hold a reserve of helpful microbes that can resettle the gut after a bout of diarrhoea flushes it out. Enders presents this as a likely job rather than a proven one, but the appendix is no longer seen as useless.",
+  "move": "Organs called useless often turn out to have jobs we hadn't found.",
+  "simply": "Your appendix may be a backup store of good gut bacteria, ready to restock the gut after a bad stomach bug.",
+  "why": "It's a good caution against calling any part of the body pointless: 'we don't know what it does' and 'it does nothing' are different claims.",
+  "book": {
+    "id": "gut",
+    "title": "Gut",
+    "author": "Giulia Enders",
+    "year": 2015,
+    "part": 3,
+    "isbn": "9781771641494",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "appendix",
+    "gut bacteria",
+    "immune system",
+    "microbiome"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Giulia Enders, Gut, 2015",
+  "source_kind": "book",
+  "reference": "Giulia Enders, Gut: The Inside Story of Our Body's Most Underrated Organ (Greystone Books, 2015), ch. 3",
+  "written": "2026-11-17"
+}

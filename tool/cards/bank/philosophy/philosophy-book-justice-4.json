@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-book-justice-4",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.equality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who should get the best flutes? How does Aristotle answer, in Sandel's account?",
+  "answer": "The best flute players, because that is what flutes are for. Aristotle reasoned that justice means giving things to those who fit their purpose, so to decide who deserves something, we must ask what it is for. Sandel shows how this still shapes debates, from university places to golf carts in professional sport.",
+  "move": "To decide who deserves something, first ask what it's for.",
+  "simply": "Give the best flutes to the best players, not to the richest or best-looking, because flutes are for making good music.",
+  "why": "Many arguments about who should get a job, a prize or a place come down to what it's for. Agreeing on the purpose first makes them easier.",
+  "book": {
+    "id": "justice",
+    "title": "Justice",
+    "author": "Michael J. Sandel",
+    "year": 2009,
+    "part": 4,
+    "isbn": "9780374532505",
+    "badge": "From Michael Sandel's famous Harvard course on justice"
+  },
+  "keywords": [
+    "aristotle",
+    "telos",
+    "desert",
+    "flutes"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael J. Sandel, Justice, 2009",
+  "source_kind": "book",
+  "reference": "Michael J. Sandel, Justice: What's the Right Thing to Do? (Farrar, Straus and Giroux, 2009), ch. 8",
+  "written": "2026-11-17"
+}

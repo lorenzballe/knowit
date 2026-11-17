@@ -1,0 +1,42 @@
+{
+  "id": "cinema-book-in-the-blink-of-an-eye-5",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Murch think editors might lose when they moved from cutting film to digital editing?",
+  "answer": "Some happy accidents. Winding through reels of film to find a shot, editors passed footage they weren't looking for, and sometimes found a better moment. Digital systems jump straight to any clip, which is far faster, so Murch warned that the speed could cost the chance encounters that improve a film.",
+  "move": "Faster tools can remove the detours where good surprises hide.",
+  "simply": "With film reels, searching for one shot meant passing many others, and sometimes spotting a better one. Digital editing skips the search, and the surprises.",
+  "why": "Search engines and streaming do the same: they give us what we ask for, not what we'd stumble on. Leaving room for browsing can be worth the time.",
+  "book": {
+    "id": "in-the-blink-of-an-eye",
+    "title": "In the Blink of an Eye",
+    "author": "Walter Murch",
+    "year": 1995,
+    "part": 5,
+    "isbn": "9781879505629",
+    "badge": "By three-time Oscar winner Walter Murch"
+  },
+  "keywords": [
+    "digital editing",
+    "serendipity",
+    "film",
+    "technology"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Walter Murch, In the Blink of an Eye, 1995",
+  "source_kind": "book",
+  "reference": "Walter Murch, In the Blink of an Eye (Silman-James Press, 2nd ed., 2001), Afterword",
+  "written": "2026-11-17"
+}

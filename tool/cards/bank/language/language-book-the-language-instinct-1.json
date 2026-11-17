@@ -1,0 +1,42 @@
+{
+  "id": "language-book-the-language-instinct-1",
+  "topic": "language",
+  "genre": "language.learning_languages",
+  "strand": "language.learning_languages.kids_and_adults",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is language something children learn like reading, or something they grow, like walking?",
+  "answer": "Pinker argues it is an instinct, closer to walking. Every normal child, in every culture, builds complex grammar in a few years without lessons, while reading must be taught. Children even say things they never heard, like 'he goed', applying rules nobody explained to them.",
+  "move": "Children's mistakes reveal the rules they are working out.",
+  "simply": "Nobody gives a toddler grammar lessons, yet by four they speak in full sentences. Pinker says the brain comes ready to grow language, like legs come ready to walk.",
+  "why": "It changes how you hear a child's 'mistakes': 'goed' is a sign of a mind finding rules, not of bad teaching.",
+  "book": {
+    "id": "the-language-instinct",
+    "title": "The Language Instinct",
+    "author": "Steven Pinker",
+    "year": 1994,
+    "part": 1,
+    "isbn": "9780060958336",
+    "badge": "By a two-time Pulitzer Prize finalist"
+  },
+  "keywords": [
+    "language acquisition",
+    "instinct",
+    "children",
+    "grammar"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Steven Pinker, The Language Instinct, 1994",
+  "source_kind": "book",
+  "reference": "Steven Pinker, The Language Instinct (William Morrow, 1994), ch. 1",
+  "written": "2026-11-17"
+}

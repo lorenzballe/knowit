@@ -1,0 +1,42 @@
+{
+  "id": "nature-book-silent-spring-4",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.pests",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did Rachel Carson call for a total ban on pesticides?",
+  "answer": "No. She argued against spraying chemicals indiscriminately, often from the air and with little testing, and for careful use alongside biological controls such as natural predators. Critics have claimed she wanted all pesticides banned, but she wrote that she did not; DDT's use in US farming was banned in 1972, after her death.",
+  "move": "Check what a famous writer actually argued before judging them.",
+  "simply": "Carson didn't say 'ban every pesticide'. She said 'stop spraying them everywhere without thinking, and use smarter methods too'.",
+  "why": "Famous arguments often get remembered in extreme versions. Reading what someone actually said is the fairest, and often the most surprising, thing you can do.",
+  "book": {
+    "id": "silent-spring",
+    "title": "Silent Spring",
+    "author": "Rachel Carson",
+    "year": 1962,
+    "part": 4,
+    "isbn": "9780618249060",
+    "badge": "Credited with starting the modern environmental movement"
+  },
+  "keywords": [
+    "ddt ban",
+    "pesticide policy",
+    "biological control",
+    "misquotation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Rachel Carson, Silent Spring, 1962",
+  "source_kind": "book",
+  "reference": "Rachel Carson, Silent Spring (Houghton Mifflin, 1962)",
+  "written": "2026-11-17"
+}

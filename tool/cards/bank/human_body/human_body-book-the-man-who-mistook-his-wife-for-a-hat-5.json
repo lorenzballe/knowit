@@ -1,0 +1,42 @@
+{
+  "id": "human_body-book-the-man-who-mistook-his-wife-for-a-hat-5",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_and_habits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Ray, a jazz drummer with Tourette's, found a drug that quietened his tics. How did he use it?",
+  "answer": "Only on weekdays. On the drug, haloperidol, he was calm but slower and flatter, and his drumming lost its wild flair; off it, at weekends, his tics returned along with his speed and improvisation. Sacks presents Ray's choice as a way of keeping both selves rather than curing one away.",
+  "move": "A cure that removes a symptom can also remove a strength.",
+  "simply": "Ray's tics made him a brilliant, wild drummer. Medicine calmed them but made him dull, so he took it on workdays and played free at weekends.",
+  "why": "Treatments trade benefits for costs, and only the person living with them can weigh both: a good model for any decision about one's own health.",
+  "book": {
+    "id": "the-man-who-mistook-his-wife-for-a-hat",
+    "title": "The Man Who Mistook His Wife for a Hat",
+    "author": "Oliver Sacks",
+    "year": 1985,
+    "part": 5,
+    "isbn": "9780684853949",
+    "badge": "Adapted into an opera by Michael Nyman"
+  },
+  "keywords": [
+    "tourette's syndrome",
+    "medication",
+    "creativity",
+    "identity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, The Man Who Mistook His Wife for a Hat, 1985",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, The Man Who Mistook His Wife for a Hat (Summit Books, 1985), ch. 10",
+  "written": "2026-11-17"
+}

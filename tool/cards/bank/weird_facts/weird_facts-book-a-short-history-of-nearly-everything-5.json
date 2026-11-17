@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-book-a-short-history-of-nearly-everything-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.weird_but_useful",
+  "strand": "weird_facts.weird_but_useful.counterintuitive",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much of the universe can we actually see, by Bryson's account?",
+  "answer": "Very little. Ordinary matter, the stuff of stars, planets and people, is only a small part of the universe; most of it is dark matter and dark energy, detected only by their pull and push. Bryson's point: after centuries of science, most of what exists remains unknown.",
+  "move": "Most of what exists is still unknown, even to science.",
+  "simply": "Everything you can see, stars, planets, you, is a small part of the universe. The rest is invisible stuff we know is there only from its pull.",
+  "why": "It's a good antidote to overconfidence: even our best science maps only a small part of what's out there.",
+  "book": {
+    "id": "a-short-history-of-nearly-everything",
+    "title": "A Short History of Nearly Everything",
+    "author": "Bill Bryson",
+    "year": 2003,
+    "part": 5,
+    "isbn": "9780767908184",
+    "badge": "Winner of the Aventis Prize for Science Books"
+  },
+  "keywords": [
+    "dark matter",
+    "dark energy",
+    "the unknown",
+    "universe"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Bill Bryson, A Short History of Nearly Everything, 2003",
+  "source_kind": "book",
+  "reference": "Bill Bryson, A Short History of Nearly Everything (Broadway Books, 2003)",
+  "written": "2026-11-17"
+}

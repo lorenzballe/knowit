@@ -1,0 +1,50 @@
+{
+  "id": "life-book-quiet-5",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.rest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The psychologist Brian Little, a self-described introvert, gives lively, popular lectures. How does Cain explain it?",
+  "options": [
+    "He stretches for work he loves",
+    "He is secretly an extrovert",
+    "Introversion is a myth"
+  ],
+  "correct": 0,
+  "answer": "Free trait theory: people can act out of character for core projects they care about, such as teaching. Little lectures with energy, then recharges alone; he once hid in a bathroom between talks to escape small talk. Cain's advice: stretch for what matters, but build in time to recover.",
+  "move": "You can stretch for what matters, if you plan time to recover.",
+  "trap": "'He is secretly an extrovert': lively behaviour seems to reveal true nature.",
+  "simply": "A shy professor can be a great speaker when he cares about the topic. He just needs quiet time afterwards to recharge.",
+  "why": "It gives introverts a practical rule: choose where to stretch, and protect recovery time, rather than trying to change who you are.",
+  "sure": 0.35,
+  "book": {
+    "id": "quiet",
+    "title": "Quiet",
+    "author": "Susan Cain",
+    "year": 2012,
+    "part": 5,
+    "isbn": "9780307352156",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "free trait theory",
+    "brian little",
+    "introverts",
+    "public speaking"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Susan Cain, Quiet, 2012",
+  "source_kind": "book",
+  "reference": "Susan Cain, Quiet: The Power of Introverts in a World That Can't Stop Talking (Crown, 2012), ch. 9",
+  "written": "2026-11-17"
+}

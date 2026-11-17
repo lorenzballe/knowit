@@ -1,0 +1,42 @@
+{
+  "id": "nature-book-silent-spring-1",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.why_species_vanish",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does Rachel Carson open Silent Spring?",
+  "answer": "With 'A Fable for Tomorrow': an American town where, one spring, the birds no longer sing, livestock sicken and orchards bear no fruit, all because of a white powder that fell from the sky. Carson explained that no single town had suffered every harm, but each had happened somewhere.",
+  "move": "A vivid story can make scattered evidence impossible to ignore.",
+  "simply": "Carson started with an imaginary town where spring is silent because the birds have died. Every disaster in it had really happened somewhere.",
+  "why": "Gathering scattered harms into one picture is how many problems first get noticed. Carson said plainly that her town was imaginary: good advocacy marks where fact ends.",
+  "book": {
+    "id": "silent-spring",
+    "title": "Silent Spring",
+    "author": "Rachel Carson",
+    "year": 1962,
+    "part": 1,
+    "isbn": "9780618249060",
+    "badge": "Credited with starting the modern environmental movement"
+  },
+  "keywords": [
+    "rachel carson",
+    "silent spring",
+    "pesticides",
+    "birds"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Rachel Carson, Silent Spring, 1962",
+  "source_kind": "book",
+  "reference": "Rachel Carson, Silent Spring (Houghton Mifflin, 1962), ch. 1",
+  "written": "2026-11-17"
+}

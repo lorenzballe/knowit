@@ -1,0 +1,50 @@
+{
+  "id": "cinema-book-adventures-in-the-screen-trade-2",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Raiders of the Lost Ark was the biggest hit of 1981. How many studios had turned it down?",
+  "options": [
+    "Every studio but Paramount",
+    "None: it was an easy sell",
+    "Just one"
+  ],
+  "correct": 0,
+  "answer": "Every studio but Paramount, though it came from George Lucas and Steven Spielberg, the makers of Star Wars and Jaws. Goldman uses it to show that in Hollywood even a sure thing doesn't look sure in advance; the success that seems obvious afterwards was anything but at the time.",
+  "move": "Hits look obvious only afterwards; beforehand, everyone is guessing.",
+  "trap": "'An easy sell': the famous names make it look like a sure thing.",
+  "simply": "Every studio but one said no to the film that became the year's biggest hit. Afterwards, everyone said it was obviously a winner.",
+  "why": "Hindsight makes success look inevitable. Remembering the rejections helps when your own idea is turned down, and when you judge other people's.",
+  "sure": 0.35,
+  "book": {
+    "id": "adventures-in-the-screen-trade",
+    "title": "Adventures in the Screen Trade",
+    "author": "William Goldman",
+    "year": 1983,
+    "part": 2,
+    "isbn": "9780446391177",
+    "badge": "By the Oscar-winning writer of Butch Cassidy and the Sundance Kid"
+  },
+  "keywords": [
+    "raiders",
+    "hindsight",
+    "studios",
+    "rejection"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "William Goldman, Adventures in the Screen Trade, 1983",
+  "source_kind": "book",
+  "reference": "William Goldman, Adventures in the Screen Trade (Warner Books, 1983)",
+  "written": "2026-11-17"
+}

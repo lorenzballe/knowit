@@ -1,0 +1,42 @@
+{
+  "id": "language-book-the-language-instinct-3",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.correct_or_not",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is 'Colorless green ideas sleep furiously' a correct English sentence?",
+  "answer": "Grammatically, yes, though it means nothing. Chomsky's famous example, which Pinker discusses, shows that grammar is a separate system from meaning: we can tell a well-formed sentence from a jumble even when it describes nothing possible, as with 'furiously sleep ideas green colorless'.",
+  "move": "Grammar and meaning are separate: a sentence can be correct and senseless.",
+  "simply": "'Colourless green ideas sleep furiously' sounds like English but means nothing. Mix the words up and it stops even sounding like English.",
+  "why": "It helps spot a common trick: fluent, well-formed language can carry no meaning at all, in speeches, adverts and machine-written text alike.",
+  "book": {
+    "id": "the-language-instinct",
+    "title": "The Language Instinct",
+    "author": "Steven Pinker",
+    "year": 1994,
+    "part": 3,
+    "isbn": "9780060958336",
+    "badge": "By a two-time Pulitzer Prize finalist"
+  },
+  "keywords": [
+    "chomsky",
+    "syntax",
+    "meaning",
+    "grammar"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Steven Pinker, The Language Instinct, 1994",
+  "source_kind": "book",
+  "reference": "Steven Pinker, The Language Instinct (William Morrow, 1994), ch. 4",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "art-book-ways-of-seeing-5",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.art_and_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How, in Berger's view, does advertising work on the people who see it?",
+  "answer": "By selling envy of ourselves. An advert shows a future self, transformed by a product and envied by others, and so makes us dissatisfied with our present life. Berger called this publicity, and argued that it borrowed the language of oil painting: the same gleaming surfaces, now promising a life we don't yet have.",
+  "move": "Notice when an ad sells a better you rather than a thing.",
+  "simply": "Ads don't just sell shampoo; they show a happier, envied you. To get there, they first make you feel your life isn't quite enough.",
+  "why": "Spotting the future you in an ad weakens its pull, and helps you decide whether you want the thing or the feeling it promises.",
+  "book": {
+    "id": "ways-of-seeing",
+    "title": "Ways of Seeing",
+    "author": "John Berger",
+    "year": 1972,
+    "part": 5,
+    "isbn": "9780141035796",
+    "badge": "Based on the 1972 BBC television series"
+  },
+  "keywords": [
+    "advertising",
+    "envy",
+    "publicity",
+    "consumerism"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Berger, Ways of Seeing, 1972",
+  "source_kind": "book",
+  "reference": "John Berger, Ways of Seeing (BBC and Penguin, 1972), ch. 7",
+  "written": "2026-11-17"
+}

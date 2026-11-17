@@ -1,0 +1,42 @@
+{
+  "id": "human_body-book-the-man-who-mistook-his-wife-for-a-hat-1",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.senses_fooled",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Dr P, the man in Oliver Sacks's title, actually mistake for a hat?",
+  "answer": "His wife's head. Dr P, a gifted music teacher, had visual agnosia: his eyes worked, but his brain could no longer put features together into faces or things. He described a glove as 'a continuous surface, infolded on itself' without seeing that it was a glove, yet he could still sing and teach.",
+  "move": "Seeing happens in the brain; the eyes only collect the light.",
+  "simply": "His eyes were fine, but his brain couldn't turn what they saw into things. A glove was a strange shape; his wife's head looked like his hat.",
+  "why": "It shows that seeing is an act of interpretation, which is why illusions work and why two people can look at one scene and see different things.",
+  "book": {
+    "id": "the-man-who-mistook-his-wife-for-a-hat",
+    "title": "The Man Who Mistook His Wife for a Hat",
+    "author": "Oliver Sacks",
+    "year": 1985,
+    "part": 1,
+    "isbn": "9780684853949",
+    "badge": "Adapted into an opera by Michael Nyman"
+  },
+  "keywords": [
+    "visual agnosia",
+    "perception",
+    "oliver sacks",
+    "neurology"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, The Man Who Mistook His Wife for a Hat, 1985",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, The Man Who Mistook His Wife for a Hat (Summit Books, 1985), ch. 1",
+  "written": "2026-11-17"
+}

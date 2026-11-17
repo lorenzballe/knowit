@@ -1,0 +1,50 @@
+{
+  "id": "technology-book-weapons-of-math-destruction-4",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "What, according to O'Neil, is a good test of whether a scoring model is fair?",
+  "options": [
+    "People can see and contest it",
+    "It uses lots of data",
+    "It decides quickly"
+  ],
+  "correct": 0,
+  "answer": "Whether the people it judges can see how it works and contest its mistakes, and whether its makers check its outcomes. O'Neil argues that a model without feedback never learns when it is wrong, while one open to appeal can be corrected. More data alone fixes nothing if the data is biased.",
+  "move": "A fair model is one its subjects can question and its makers check.",
+  "trap": "'Lots of data': more data sounds more objective.",
+  "simply": "A good teacher shows you how a test was marked so you can point out a mistake. A fair algorithm should do the same.",
+  "why": "When an app or a company scores you, asking 'can I see why, and appeal?' is the most useful question you have.",
+  "sure": 0.35,
+  "book": {
+    "id": "weapons-of-math-destruction",
+    "title": "Weapons of Math Destruction",
+    "author": "Cathy O'Neil",
+    "year": 2016,
+    "part": 4,
+    "isbn": "9780553418835",
+    "badge": "Longlisted for the National Book Award"
+  },
+  "keywords": [
+    "fairness",
+    "transparency",
+    "appeals",
+    "models"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cathy O'Neil, Weapons of Math Destruction, 2016",
+  "source_kind": "book",
+  "reference": "Cathy O'Neil, Weapons of Math Destruction (Crown, 2016), Conclusion",
+  "written": "2026-11-17"
+}

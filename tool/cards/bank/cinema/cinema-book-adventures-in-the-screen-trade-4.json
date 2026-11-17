@@ -1,0 +1,42 @@
+{
+  "id": "cinema-book-adventures-in-the-screen-trade-4",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.biopics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What problem did Goldman face in turning the real Butch Cassidy and Sundance into film heroes?",
+  "answer": "That the real outlaws ran away. Western heroes stand and fight, but Butch and the Sundance Kid fled a posse all the way to South America. Goldman kept the flight and built the film around two charming men whose time was over, which made it fresher than a standard Western and a hit in 1969.",
+  "move": "A story's awkward truth can be what makes it memorable.",
+  "simply": "Cowboy heroes are supposed to fight to the end. The real Butch and Sundance ran away. Goldman made the running part of the charm.",
+  "why": "When a fact doesn't fit the usual story, it's often the most interesting thing about it, in films and in real life.",
+  "book": {
+    "id": "adventures-in-the-screen-trade",
+    "title": "Adventures in the Screen Trade",
+    "author": "William Goldman",
+    "year": 1983,
+    "part": 4,
+    "isbn": "9780446391177",
+    "badge": "By the Oscar-winning writer of Butch Cassidy and the Sundance Kid"
+  },
+  "keywords": [
+    "butch cassidy",
+    "westerns",
+    "screenwriting",
+    "true stories"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "William Goldman, Adventures in the Screen Trade, 1983",
+  "source_kind": "book",
+  "reference": "William Goldman, Adventures in the Screen Trade (Warner Books, 1983)",
+  "written": "2026-11-17"
+}

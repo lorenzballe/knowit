@@ -1,0 +1,42 @@
+{
+  "id": "life-book-deep-work-2",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.deep_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does Cal Newport mean by 'deep work', and what is its opposite?",
+  "answer": "Work done in distraction-free concentration that pushes your thinking to its limit, creating new value and improving skill. Its opposite is shallow work: email, meetings and admin, which are easy to copy. Newport argues that deep work is growing both rarer and more valuable, so those who cultivate it will thrive.",
+  "move": "Hard, focused work is rare, which makes it valuable.",
+  "simply": "Deep work is concentrating hard on one difficult thing, with no interruptions. Answering email is the opposite.",
+  "why": "Most jobs fill up with shallow tasks by default. Protecting even an hour a day for deep work is often the biggest lever on what you produce.",
+  "book": {
+    "id": "deep-work",
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "year": 2016,
+    "part": 2,
+    "isbn": "9781455586691",
+    "badge": "By a Georgetown computer science professor"
+  },
+  "keywords": [
+    "deep work",
+    "shallow work",
+    "concentration",
+    "productivity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Cal Newport, Deep Work, 2016",
+  "source_kind": "book",
+  "reference": "Cal Newport, Deep Work: Rules for Focused Success in a Distracted World (Grand Central, 2016), Introduction",
+  "written": "2026-11-17"
+}

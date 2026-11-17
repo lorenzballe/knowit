@@ -1,0 +1,42 @@
+{
+  "id": "art-book-the-story-of-art-1",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.seeing_for_yourself",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Gombrich's history of art begins: 'There really is no such thing as Art.' What did he mean?",
+  "answer": "That there are only artists: people who, in different times and places, made pictures and statues for many reasons. Gombrich warned that Art with a capital A can become a bogey and a fetish; better to look at each work and ask what its makers were trying to do.",
+  "move": "Look at what each maker was trying to do, not at labels.",
+  "simply": "Gombrich said Art isn't one big thing. There are just people who made things, for all kinds of reasons, each worth looking at on its own terms.",
+  "why": "It frees you to enjoy art without a rulebook or permission: look closely, and ask what the maker wanted.",
+  "book": {
+    "id": "the-story-of-art",
+    "title": "The Story of Art",
+    "author": "E. H. Gombrich",
+    "year": 1950,
+    "part": 1,
+    "isbn": "9780714832470",
+    "badge": "In print since 1950, now in its sixteenth edition"
+  },
+  "keywords": [
+    "gombrich",
+    "art history",
+    "artists",
+    "looking at art"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "E. H. Gombrich, The Story of Art, 1950",
+  "source_kind": "book",
+  "reference": "E. H. Gombrich, The Story of Art (Phaidon, 1950; 16th ed., 1995), Introduction",
+  "written": "2026-11-17"
+}

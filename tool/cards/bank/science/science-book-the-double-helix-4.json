@@ -1,0 +1,42 @@
+{
+  "id": "science-book-the-double-helix-4",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.testable_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Watson find the way DNA's bases pair up?",
+  "answer": "With cardboard. In February 1953, after a colleague, Jerry Donohue, told him textbooks showed the wrong forms of the bases, Watson cut out new shapes and moved them around until adenine paired with thymine and guanine with cytosine, each pair the same shape. It explained Chargaff's rule that these come in equal amounts.",
+  "move": "Physical models can reveal patterns that equations hide.",
+  "simply": "Watson cut DNA's four building blocks out of cardboard and shuffled them about. Suddenly he saw they fit in pairs, like puzzle pieces.",
+  "why": "Making ideas physical, with paper, blocks or sketches, is a powerful way to think. Many breakthroughs come from fiddling, not only from calculating.",
+  "book": {
+    "id": "the-double-helix",
+    "title": "The Double Helix",
+    "author": "James D. Watson",
+    "year": 1968,
+    "part": 4,
+    "isbn": "9780743216302",
+    "badge": "On the Modern Library's list of the 100 best nonfiction books"
+  },
+  "keywords": [
+    "base pairing",
+    "cardboard models",
+    "jerry donohue",
+    "chargaff"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James D. Watson, The Double Helix, 1968",
+  "source_kind": "book",
+  "reference": "James D. Watson, The Double Helix (Atheneum, 1968)",
+  "written": "2026-11-17"
+}

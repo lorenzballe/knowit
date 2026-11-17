@@ -1,0 +1,42 @@
+{
+  "id": "life-book-quiet-4",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.limits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the psychologist Jerome Kagan find about babies who reacted strongly to new things?",
+  "answer": "That these high-reactive infants, who cried and kicked at new sights and sounds, were more likely to grow into careful, quiet children and teenagers. Cain explains that a sensitive nervous system can make people more alert to detail and risk, a temperament with real strengths rather than a flaw to fix.",
+  "move": "Sensitivity is a temperament with strengths, not something to cure.",
+  "simply": "Some babies react strongly to anything new. Many grow into thoughtful, careful people who notice things others miss.",
+  "why": "If you or your child is sensitive to noise and novelty, it's a trait with advantages. Arranging life around it beats trying to change it.",
+  "book": {
+    "id": "quiet",
+    "title": "Quiet",
+    "author": "Susan Cain",
+    "year": 2012,
+    "part": 4,
+    "isbn": "9780307352156",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "jerome kagan",
+    "temperament",
+    "sensitivity",
+    "childhood"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Susan Cain, Quiet, 2012",
+  "source_kind": "book",
+  "reference": "Susan Cain, Quiet: The Power of Introverts in a World That Can't Stop Talking (Crown, 2012), ch. 4",
+  "written": "2026-11-17"
+}

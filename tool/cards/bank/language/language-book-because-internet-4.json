@@ -1,0 +1,42 @@
+{
+  "id": "language-book-because-internet-4",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.emoji",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do people mostly use emoji, according to McCulloch's analysis?",
+  "answer": "Like gestures. Emoji rarely replace words; they sit beside them the way a shrug, a wink or a thumbs-up accompanies speech, adding tone. That is why strings of emoji are hard to read alone, but easy to read next to the words they accompany.",
+  "move": "Emoji work like gestures: they add tone, not meaning.",
+  "simply": "A wink while you talk changes what your words mean. Emoji are winks and shrugs for typing.",
+  "why": "It makes digital conversations easier to read and write: tone that the voice used to carry now travels in small pictures.",
+  "book": {
+    "id": "because-internet",
+    "title": "Because Internet",
+    "author": "Gretchen McCulloch",
+    "year": 2019,
+    "part": 4,
+    "isbn": "9780735210936",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "emoji",
+    "gesture",
+    "digital communication",
+    "tone"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Gretchen McCulloch, Because Internet, 2019",
+  "source_kind": "book",
+  "reference": "Gretchen McCulloch, Because Internet: Understanding the New Rules of Language (Riverhead, 2019)",
+  "written": "2026-11-17"
+}

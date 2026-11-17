@@ -1,0 +1,50 @@
+{
+  "id": "cinema-book-in-the-blink-of-an-eye-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In Walter Murch's 'Rule of Six' for film editors, what matters most when choosing where to cut?",
+  "options": [
+    "Emotion",
+    "Story",
+    "Matching the action"
+  ],
+  "correct": 0,
+  "answer": "Emotion, which he weighted at 51 percent. Story came next at 23, then rhythm at 10 and the viewer's eye-trace at 7, while keeping positions consistent on screen and in space counted for just 9. If a cut feels right, Murch argues, audiences forgive a glass that jumps hands.",
+  "move": "Get the feeling right first; small technical flaws matter far less.",
+  "trap": "'Matching the action': continuity seems like an editor's main job.",
+  "simply": "A film editor's top rule: cut where it feels right. If the feeling is right, nobody notices a glass jumping from one hand to the other.",
+  "why": "It's a useful priority list beyond film: in a talk, an email or a design, getting the feeling and the point right matters more than polishing details.",
+  "sure": 0.35,
+  "book": {
+    "id": "in-the-blink-of-an-eye",
+    "title": "In the Blink of an Eye",
+    "author": "Walter Murch",
+    "year": 1995,
+    "part": 2,
+    "isbn": "9781879505629",
+    "badge": "By three-time Oscar winner Walter Murch"
+  },
+  "keywords": [
+    "rule of six",
+    "film editing",
+    "emotion",
+    "continuity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Walter Murch, In the Blink of an Eye, 1995",
+  "source_kind": "book",
+  "reference": "Walter Murch, In the Blink of an Eye (Silman-James Press, 2nd ed., 2001)",
+  "written": "2026-11-17"
+}

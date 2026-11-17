@@ -1,0 +1,42 @@
+{
+  "id": "human_body-book-the-man-who-mistook-his-wife-for-a-hat-3",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to the woman Sacks called 'the disembodied lady'?",
+  "answer": "Christina, 27, lost proprioception, the sense of where the body is, after an inflammation destroyed the nerves that carry it. She felt disembodied and at first could not stand or hold a cup. She learned to move again by watching her limbs with her eyes, but the sense itself never returned.",
+  "move": "We rely on senses we never notice until they are gone.",
+  "simply": "A hidden sense tells you where your arms and legs are. Christina lost it, and had to watch her body every second to move it.",
+  "why": "Much of what the body does runs below notice. It's why balance and coordination can be trained, and why they deserve care as we age.",
+  "book": {
+    "id": "the-man-who-mistook-his-wife-for-a-hat",
+    "title": "The Man Who Mistook His Wife for a Hat",
+    "author": "Oliver Sacks",
+    "year": 1985,
+    "part": 3,
+    "isbn": "9780684853949",
+    "badge": "Adapted into an opera by Michael Nyman"
+  },
+  "keywords": [
+    "proprioception",
+    "body sense",
+    "neuropathy",
+    "movement"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, The Man Who Mistook His Wife for a Hat, 1985",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, The Man Who Mistook His Wife for a Hat (Summit Books, 1985), ch. 3",
+  "written": "2026-11-17"
+}

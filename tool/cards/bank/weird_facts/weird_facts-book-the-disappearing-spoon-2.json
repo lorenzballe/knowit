@@ -1,0 +1,50 @@
+{
+  "id": "weird_facts-book-the-disappearing-spoon-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How many chemical elements are named after Ytterby, a small village near Stockholm?",
+  "options": [
+    "Four",
+    "One",
+    "Two"
+  ],
+  "correct": 0,
+  "answer": "Four: yttrium, ytterbium, terbium and erbium all take their names from Ytterby, whose quarry produced unusual rocks that chemists kept splitting into new elements. Kean calls it the Galapagos of the periodic table: one small place that taught chemists a great deal about a whole family of elements.",
+  "move": "Small places can matter enormously; check before assuming fame follows size.",
+  "trap": "'One': it seems generous for any village to get even one.",
+  "simply": "One Swedish village had a quarry full of strange rocks. Four elements found in them are named after it.",
+  "why": "It shows how discovery clusters: one rich source, studied closely, can yield far more than its size suggests.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-disappearing-spoon",
+    "title": "The Disappearing Spoon",
+    "author": "Sam Kean",
+    "year": 2010,
+    "part": 2,
+    "isbn": "9780316051637",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "ytterby",
+    "rare earth elements",
+    "yttrium",
+    "sweden"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Sam Kean, The Disappearing Spoon, 2010",
+  "source_kind": "book",
+  "reference": "Sam Kean, The Disappearing Spoon (Little, Brown, 2010), ch. 3",
+  "written": "2026-11-17"
+}

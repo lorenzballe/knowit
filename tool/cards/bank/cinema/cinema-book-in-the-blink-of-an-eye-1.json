@@ -1,0 +1,42 @@
+{
+  "id": "cinema-book-in-the-blink-of-an-eye-1",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.spot_the_trick",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do audiences accept cuts in a film, when nothing in life jumps like that, according to Walter Murch?",
+  "answer": "Because our minds already cut. Murch noticed that people tend to blink at the moment a thought changes, separating one idea from the next, much as a film cut does. Following the director John Huston, he suggests a good cut falls where a viewer would naturally blink, so the jump feels like thinking.",
+  "move": "Watch where people blink: it marks where one thought ends.",
+  "simply": "When you switch what you're thinking about, you often blink. A good film cut lands right there, so it feels natural.",
+  "why": "Next time you watch a film, notice the cuts: the good ones are almost invisible. It's a small way to see how much craft hides in what feels effortless.",
+  "book": {
+    "id": "in-the-blink-of-an-eye",
+    "title": "In the Blink of an Eye",
+    "author": "Walter Murch",
+    "year": 1995,
+    "part": 1,
+    "isbn": "9781879505629",
+    "badge": "By three-time Oscar winner Walter Murch"
+  },
+  "keywords": [
+    "film editing",
+    "blinking",
+    "walter murch",
+    "attention"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Walter Murch, In the Blink of an Eye, 1995",
+  "source_kind": "book",
+  "reference": "Walter Murch, In the Blink of an Eye (Silman-James Press, 2nd ed., 2001)",
+  "written": "2026-11-17"
+}

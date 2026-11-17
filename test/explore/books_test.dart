@@ -210,11 +210,12 @@ void main() {
   testWidgets('the library shows every book at once, the week\'s first', (
     tester,
   ) async {
-    tester.view.physicalSize = const Size(402, 2600);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
     final AppState app = await _app();
     final List<CardBook> books = booksOf(PillBank.live, today: app.today);
+    // Tall enough for every row of covers, so the grid builds them all.
+    tester.view.physicalSize = Size(402, 320.0 * ((books.length + 2) ~/ 3) + 400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await tester.pumpWidget(
       MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,

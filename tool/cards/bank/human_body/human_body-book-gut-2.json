@@ -1,0 +1,50 @@
+{
+  "id": "human_body-book-gut-2",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Roughly how many nerve cells line the human gut?",
+  "options": [
+    "Hundreds of millions",
+    "A few thousand",
+    "About a hundred billion"
+  ],
+  "correct": 0,
+  "answer": "Hundreds of millions, more than in the spinal cord, forming the enteric nervous system, which runs digestion largely on its own. Enders calls it a gut brain: it signals to the brain in the head through the vagus nerve, one reason worry and digestion so often travel together.",
+  "move": "Digestion runs on its own nervous system, which talks to your brain.",
+  "trap": "'A few thousand': a tube seems to need little wiring.",
+  "simply": "Your gut has its own web of nerves, bigger than the one in your spine. It runs digestion and talks to your brain all day.",
+  "why": "It helps explain why stress upsets the stomach and a bad stomach can sour the mood: the two are wired together, so caring for one often helps the other.",
+  "sure": 0.35,
+  "book": {
+    "id": "gut",
+    "title": "Gut",
+    "author": "Giulia Enders",
+    "year": 2015,
+    "part": 2,
+    "isbn": "9781771641494",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "enteric nervous system",
+    "gut brain",
+    "vagus nerve",
+    "neurons"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Giulia Enders, Gut, 2015",
+  "source_kind": "book",
+  "reference": "Giulia Enders, Gut: The Inside Story of Our Body's Most Underrated Organ (Greystone Books, 2015), ch. 2",
+  "written": "2026-11-17"
+}

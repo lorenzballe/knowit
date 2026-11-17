@@ -1,0 +1,42 @@
+{
+  "id": "technology-book-the-shallows-1",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.attention_economy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Nicholas Carr find he could no longer settle into a long book?",
+  "answer": "After years online, his mind wanted information the way the web gives it: in quick bursts, with links calling. Carr argues that the brain adapts to the tools it uses, and that hours of skimming train skimming, at the cost of the deep, patient reading a book needs.",
+  "move": "What you practise, your brain gets better at, skimming included.",
+  "simply": "If you only ever sprint, you get good at sprints and bad at long walks. Reading in little bits online is sprinting.",
+  "why": "It explains why focus can feel harder than it used to, and suggests a remedy: regular long reading rebuilds what skimming wears down.",
+  "book": {
+    "id": "the-shallows",
+    "title": "The Shallows",
+    "author": "Nicholas Carr",
+    "year": 2010,
+    "part": 1,
+    "isbn": "9780393339758",
+    "badge": "A finalist for the Pulitzer Prize"
+  },
+  "keywords": [
+    "attention",
+    "deep reading",
+    "internet",
+    "neuroplasticity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nicholas Carr, The Shallows, 2010",
+  "source_kind": "book",
+  "reference": "Nicholas Carr, The Shallows: What the Internet Is Doing to Our Brains (W. W. Norton, 2010), ch. 1",
+  "written": "2026-11-17"
+}

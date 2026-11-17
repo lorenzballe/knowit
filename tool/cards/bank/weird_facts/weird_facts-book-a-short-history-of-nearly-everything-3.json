@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-book-a-short-history-of-nearly-everything-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.numbers_that_surprise",
+  "strand": "weird_facts.numbers_that_surprise.small_odds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Bryson say we are lucky to exist at all?",
+  "answer": "Because our existence depends on a long chain of improbable events: a planet at the right distance from a stable star, a large moon steadying its tilt, a Jupiter shielding it from comets, and an unbroken line of ancestors, each surviving long enough to reproduce, for nearly four billion years.",
+  "move": "Every survivor stands at the end of a long line of lucky breaks.",
+  "simply": "For you to be here, every ancestor, back to the first tiny creatures, had to survive long enough to have children. Not one link could break.",
+  "why": "It's a humbling frame for daily worries, and a reminder that improbable chains happen all the time when you look back from the end.",
+  "book": {
+    "id": "a-short-history-of-nearly-everything",
+    "title": "A Short History of Nearly Everything",
+    "author": "Bill Bryson",
+    "year": 2003,
+    "part": 3,
+    "isbn": "9780767908184",
+    "badge": "Winner of the Aventis Prize for Science Books"
+  },
+  "keywords": [
+    "luck",
+    "ancestry",
+    "improbability",
+    "existence"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Bill Bryson, A Short History of Nearly Everything, 2003",
+  "source_kind": "book",
+  "reference": "Bill Bryson, A Short History of Nearly Everything (Broadway Books, 2003), Introduction",
+  "written": "2026-11-17"
+}

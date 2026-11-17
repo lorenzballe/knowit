@@ -1,0 +1,42 @@
+{
+  "id": "food-book-salt-fat-acid-heat-4",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.taste_and_smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Nosrat say a squeeze of lemon can rescue a dull dish?",
+  "answer": "Because acid balances flavour. A dish that tastes flat, heavy or too sweet often needs acid rather than more salt; a little lemon juice or vinegar makes the other flavours stand out. Nosrat suggests tasting and asking, before reaching for salt, whether the food would be brighter with something sour.",
+  "move": "When food tastes flat, try something sour before adding salt.",
+  "simply": "If your soup tastes boring, a squeeze of lemon can wake it up. Sour makes the other flavours stand out.",
+  "why": "It's a fix many home cooks never try, and a lesson in diagnosis: the obvious remedy, more salt, isn't always what's missing.",
+  "book": {
+    "id": "salt-fat-acid-heat",
+    "title": "Salt, Fat, Acid, Heat",
+    "author": "Samin Nosrat",
+    "year": 2017,
+    "part": 4,
+    "isbn": "9781476753836",
+    "badge": "A James Beard Award winner, made into a Netflix series"
+  },
+  "keywords": [
+    "acid",
+    "lemon",
+    "vinegar",
+    "balancing flavour"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Samin Nosrat, Salt, Fat, Acid, Heat, 2017",
+  "source_kind": "book",
+  "reference": "Samin Nosrat, Salt, Fat, Acid, Heat (Simon & Schuster, 2017)",
+  "written": "2026-11-17"
+}

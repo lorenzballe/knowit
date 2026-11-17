@@ -1,0 +1,42 @@
+{
+  "id": "science-book-the-structure-of-scientific-revolutions-1",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the historian Thomas Kuhn mean by 'normal science'?",
+  "answer": "The everyday work of scientists solving puzzles within an accepted framework, which he called a paradigm. Most science, Kuhn argued, extends theories rather than overturning them, and scientists trained in a paradigm take its assumptions for granted, which makes them productive, and also slow to see its flaws.",
+  "move": "Shared assumptions make progress possible, and hide their own flaws.",
+  "simply": "Most scientists spend their days solving puzzles inside a big accepted theory. They don't question the theory itself, until it starts to crack.",
+  "why": "Every field, office and family has its normal science: rules nobody questions. Noticing yours helps you see what you might be missing.",
+  "book": {
+    "id": "the-structure-of-scientific-revolutions",
+    "title": "The Structure of Scientific Revolutions",
+    "author": "Thomas S. Kuhn",
+    "year": 1962,
+    "part": 1,
+    "isbn": "9780226458120",
+    "badge": "The book that gave us the phrase 'paradigm shift'"
+  },
+  "keywords": [
+    "thomas kuhn",
+    "paradigm",
+    "normal science",
+    "philosophy of science"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Thomas S. Kuhn, The Structure of Scientific Revolutions, 1962",
+  "source_kind": "book",
+  "reference": "Thomas S. Kuhn, The Structure of Scientific Revolutions (University of Chicago Press, 1962), ch. 2",
+  "written": "2026-11-17"
+}

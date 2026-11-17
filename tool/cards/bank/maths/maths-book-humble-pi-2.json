@@ -1,0 +1,50 @@
+{
+  "id": "maths-book-humble-pi-2",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A famous economics paper linked high government debt to slow growth. What was later found in its spreadsheet?",
+  "options": [
+    "A formula that skipped several countries",
+    "Nothing: it was flawless",
+    "Faked data"
+  ],
+  "correct": 0,
+  "answer": "A formula that left out several countries. In 2013 a graduate student, Thomas Herndon, found that Reinhart and Rogoff's spreadsheet averaged only some of its rows. Fixing that, and other choices, weakened their headline result, which had already been cited in debates over austerity. Parker's moral: check the spreadsheet.",
+  "move": "Before trusting a big claim, check how its numbers were added up.",
+  "trap": "'Faked data': an error that big suggests bad faith.",
+  "simply": "A famous study had a spreadsheet mistake that left out some countries. A student found it, and the main finding shrank.",
+  "why": "Spreadsheets run budgets, research and businesses. Asking to see the workings, and checking ranges and formulas, catches errors everyone else missed.",
+  "sure": 0.35,
+  "book": {
+    "id": "humble-pi",
+    "title": "Humble Pi",
+    "author": "Matt Parker",
+    "year": 2019,
+    "part": 2,
+    "isbn": "9780141989143",
+    "badge": "A Sunday Times number one bestseller"
+  },
+  "keywords": [
+    "spreadsheet errors",
+    "reinhart and rogoff",
+    "austerity",
+    "excel"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Matt Parker, Humble Pi, 2019",
+  "source_kind": "book",
+  "reference": "Matt Parker, Humble Pi: A Comedy of Maths Errors (Allen Lane, 2019)",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "space-book-cosmos-4",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.fermi_paradox",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "The Drake equation estimates how many civilisations might be signalling in our galaxy. What does it do?",
+  "options": [
+    "Multiplies a chain of uncertain factors",
+    "Adds up known alien signals",
+    "Counts visible planets"
+  ],
+  "correct": 0,
+  "answer": "It multiplies a chain of factors: the rate stars form, the share with planets, the share where life arises, then intelligence, technology, and how long civilisations last. Sagan worked through it and found the answer hangs on the last factor most. Each term is uncertain, so the result ranges from one to millions.",
+  "move": "When a chain of guesses is multiplied, uncertainty multiplies too.",
+  "trap": "'Adds up known alien signals': it sounds like a count of data.",
+  "simply": "The Drake equation multiplies several guesses together: how many stars, planets, life, intelligence. Change one guess a little, and the answer changes enormously.",
+  "why": "Any estimate built from a chain of guesses, business forecasts included, is only as firm as its weakest link. Knowing which factor dominates shows where to look.",
+  "sure": 0.35,
+  "book": {
+    "id": "cosmos",
+    "title": "Cosmos",
+    "author": "Carl Sagan",
+    "year": 1980,
+    "part": 4,
+    "isbn": "9780345539434",
+    "badge": "Written alongside Sagan's 1980 television series"
+  },
+  "keywords": [
+    "drake equation",
+    "seti",
+    "extraterrestrial life",
+    "estimation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Carl Sagan, Cosmos, 1980",
+  "source_kind": "book",
+  "reference": "Carl Sagan, Cosmos (Random House, 1980), ch. 12",
+  "written": "2026-11-17"
+}

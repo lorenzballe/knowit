@@ -1,0 +1,50 @@
+{
+  "id": "maths-book-humble-pi-3",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In 2014 the 'Gangnam Style' video forced YouTube to change its view counter. Why?",
+  "options": [
+    "Views neared the counter's maximum",
+    "Too many fake views",
+    "A legal dispute"
+  ],
+  "correct": 0,
+  "answer": "Its views were approaching 2,147,483,647, the largest number a 32-bit signed counter can hold. YouTube had never imagined a video passing it, so it moved to a 64-bit counter. Parker uses the case to show that computers store numbers in fixed sizes, and that limits which seem huge can be reached.",
+  "move": "Every stored number has a limit; check it before it matters.",
+  "trap": "'Too many fake views': spam seems the likeliest trouble.",
+  "simply": "YouTube's counter could only count to about 2.1 billion. When one video got close, they had to give it a much bigger counter.",
+  "why": "The same kind of limit has caused real failures in planes, clocks and games. Asking 'what's the biggest number this can hold?' is a cheap check.",
+  "sure": 0.35,
+  "book": {
+    "id": "humble-pi",
+    "title": "Humble Pi",
+    "author": "Matt Parker",
+    "year": 2019,
+    "part": 3,
+    "isbn": "9780141989143",
+    "badge": "A Sunday Times number one bestseller"
+  },
+  "keywords": [
+    "integer overflow",
+    "gangnam style",
+    "youtube",
+    "binary"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Matt Parker, Humble Pi, 2019",
+  "source_kind": "book",
+  "reference": "Matt Parker, Humble Pi: A Comedy of Maths Errors (Allen Lane, 2019)",
+  "written": "2026-11-17"
+}

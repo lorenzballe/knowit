@@ -1,0 +1,42 @@
+{
+  "id": "science-book-the-double-helix-1",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.being_wrong",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when Watson and Crick showed their first model of DNA, in 1951?",
+  "answer": "It was wrong, and Rosalind Franklin saw it at once. Their three-chain model put the backbone inside and held far too little water to fit her measurements. The embarrassment led Lawrence Bragg, head of their Cambridge lab, to tell them to stop working on DNA. They returned to it in 1953.",
+  "move": "A public failure can be the first step to getting it right.",
+  "simply": "Their first model of DNA was so wrong that the boss told them to give up. About a year later they tried again, and got it right.",
+  "why": "Even famous breakthroughs began with embarrassing mistakes. Being wrong in public is survivable, and often useful, if you learn from it.",
+  "book": {
+    "id": "the-double-helix",
+    "title": "The Double Helix",
+    "author": "James D. Watson",
+    "year": 1968,
+    "part": 1,
+    "isbn": "9780743216302",
+    "badge": "On the Modern Library's list of the 100 best nonfiction books"
+  },
+  "keywords": [
+    "dna",
+    "watson and crick",
+    "rosalind franklin",
+    "failure"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "James D. Watson, The Double Helix, 1968",
+  "source_kind": "book",
+  "reference": "James D. Watson, The Double Helix (Atheneum, 1968)",
+  "written": "2026-11-17"
+}

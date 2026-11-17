@@ -1,0 +1,50 @@
+{
+  "id": "philosophy-book-justice-2",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.fairness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Imagine choosing society's rules without knowing whether you'd be rich or poor. What did John Rawls think you would choose?",
+  "options": [
+    "Rules that protect the worst-off",
+    "Rules that reward the rich most",
+    "No rules at all"
+  ],
+  "correct": 0,
+  "answer": "Rules that protect the worst-off. Behind this 'veil of ignorance', Rawls argued, people would secure equal basic liberties and allow inequalities only if they benefit the least advantaged, since anyone might end up there. Sandel presents it as a way to test whether a rule is fair, though critics dispute what people would really choose.",
+  "move": "Judge a rule by whether you'd accept it from any position.",
+  "trap": "'Rules that reward the rich most': people often hope they'll be lucky.",
+  "simply": "If you didn't know whether you'd be born rich or poor, you'd want rules that look after the poor, just in case it's you.",
+  "why": "It's a handy fairness test for any rule at work, at home or in politics: would you still agree if you didn't know which side you'd be on?",
+  "sure": 0.35,
+  "book": {
+    "id": "justice",
+    "title": "Justice",
+    "author": "Michael J. Sandel",
+    "year": 2009,
+    "part": 2,
+    "isbn": "9780374532505",
+    "badge": "From Michael Sandel's famous Harvard course on justice"
+  },
+  "keywords": [
+    "john rawls",
+    "veil of ignorance",
+    "fairness",
+    "social contract"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael J. Sandel, Justice, 2009",
+  "source_kind": "book",
+  "reference": "Michael J. Sandel, Justice: What's the Right Thing to Do? (Farrar, Straus and Giroux, 2009), ch. 6",
+  "written": "2026-11-17"
+}

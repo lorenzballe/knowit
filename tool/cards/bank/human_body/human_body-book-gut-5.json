@@ -1,0 +1,42 @@
+{
+  "id": "human_body-book-gut-5",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to the gut's helpful bacteria during a course of antibiotics?",
+  "answer": "Many are killed along with the harmful ones, and the gut's community can take weeks or longer to recover, sometimes not completely. Enders stresses that antibiotics save lives and should be taken when needed, but they do nothing against colds and other viral infections, where they only cause harm.",
+  "move": "A strong cure has side effects; use it when it's needed.",
+  "simply": "Antibiotics are like weedkiller that also kills the flowers. Worth it for a real infection, pointless for a cold.",
+  "why": "Asking a doctor 'is this infection bacterial?' before taking antibiotics protects your gut, and slows the spread of resistant bacteria for everyone.",
+  "book": {
+    "id": "gut",
+    "title": "Gut",
+    "author": "Giulia Enders",
+    "year": 2015,
+    "part": 5,
+    "isbn": "9781771641494",
+    "badge": "An international bestseller"
+  },
+  "keywords": [
+    "antibiotics",
+    "gut bacteria",
+    "microbiome",
+    "viral infections"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Giulia Enders, Gut, 2015",
+  "source_kind": "book",
+  "reference": "Giulia Enders, Gut: The Inside Story of Our Body's Most Underrated Organ (Greystone Books, 2015), ch. 3",
+  "written": "2026-11-17"
+}

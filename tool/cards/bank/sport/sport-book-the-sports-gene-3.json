@@ -1,0 +1,50 @@
+{
+  "id": "sport-book-the-sports-gene-3",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.why_records_fall",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Elite athletes' bodies became far more varied during the twentieth century. Why, according to Epstein?",
+  "options": [
+    "Each sport selected its ideal body",
+    "Diet made everyone taller",
+    "Sports became easier"
+  ],
+  "correct": 0,
+  "answer": "Because each sport began to select its ideal body. Early in the century, the average shot-putter and high jumper looked alike; as sport grew professional and global, tall, long-armed people gravitated to swimming and basketball, and small ones to gymnastics. Epstein calls it the Big Bang of body types.",
+  "move": "When selection gets tougher, the people selected grow more extreme.",
+  "trap": "'Diet made everyone taller': people did grow, so it seems enough.",
+  "simply": "A hundred years ago, athletes in different sports looked similar. Now each sport picks people built for it: tall swimmers, tiny gymnasts.",
+  "why": "Extreme results at the top often say more about who was selected than about what training did, a useful check on any 'secret of champions'.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-sports-gene",
+    "title": "The Sports Gene",
+    "author": "David Epstein",
+    "year": 2013,
+    "part": 3,
+    "isbn": "9781617230127",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "body types",
+    "selection",
+    "sports science",
+    "athlete physiques"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, The Sports Gene, 2013",
+  "source_kind": "book",
+  "reference": "David Epstein, The Sports Gene: Inside the Science of Extraordinary Athletic Performance (Current, 2013), ch. 7",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "cinema-book-adventures-in-the-screen-trade-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In Goldman's account, what most often decided whether a Hollywood film got made?",
+  "options": [
+    "Whether a star agreed to it",
+    "The quality of the script",
+    "The director's record"
+  ],
+  "correct": 0,
+  "answer": "Whether a star agreed to it. Goldman wrote that a bankable star could get a film financed when the best script in town could not, so scripts were often rewritten to please stars, who rarely wanted to look weak on screen. In his view, this made many films blander than the scripts they came from.",
+  "move": "Find who holds the power to say yes; it shapes the result.",
+  "trap": "'The quality of the script': it's what a writer would hope.",
+  "simply": "In Hollywood, a big star saying yes was often all a film needed. So scripts got changed to keep stars happy.",
+  "why": "In many fields, whoever holds the veto shapes the work. Knowing who that is explains a lot about why products, policies and films turn out as they do.",
+  "sure": 0.35,
+  "book": {
+    "id": "adventures-in-the-screen-trade",
+    "title": "Adventures in the Screen Trade",
+    "author": "William Goldman",
+    "year": 1983,
+    "part": 3,
+    "isbn": "9780446391177",
+    "badge": "By the Oscar-winning writer of Butch Cassidy and the Sundance Kid"
+  },
+  "keywords": [
+    "movie stars",
+    "film finance",
+    "hollywood",
+    "power"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "William Goldman, Adventures in the Screen Trade, 1983",
+  "source_kind": "book",
+  "reference": "William Goldman, Adventures in the Screen Trade (Warner Books, 1983)",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "music-book-musicophilia-3",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_memory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Clive Wearing could remember almost nothing for more than a few seconds. What could he still do?",
+  "answer": "Play the piano, sing and conduct. A brain infection in 1985 left the British musician with one of the most severe amnesias ever recorded, yet once a piece began, he could carry it through to the end. Sacks argues that music, once learned, is held in a kind of memory that amnesia spares.",
+  "move": "Different kinds of memory can survive when others are lost.",
+  "simply": "A man forgot everything after a few seconds, but he could still play a whole piece on the piano. Music lives in a different kind of memory.",
+  "why": "It's why music can reach people with dementia: songs learned long ago can stay when names and faces are gone.",
+  "book": {
+    "id": "musicophilia",
+    "title": "Musicophilia",
+    "author": "Oliver Sacks",
+    "year": 2007,
+    "part": 3,
+    "isbn": "9781400033539",
+    "badge": "By the neurologist behind Awakenings"
+  },
+  "keywords": [
+    "clive wearing",
+    "amnesia",
+    "musical memory",
+    "dementia"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Oliver Sacks, Musicophilia, 2007",
+  "source_kind": "book",
+  "reference": "Oliver Sacks, Musicophilia: Tales of Music and the Brain (Knopf, 2007), ch. 15",
+  "written": "2026-11-17"
+}

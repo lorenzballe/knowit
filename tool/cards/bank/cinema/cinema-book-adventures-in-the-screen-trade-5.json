@@ -1,0 +1,42 @@
+{
+  "id": "cinema-book-adventures-in-the-screen-trade-5",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.screenwriting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Goldman wrote that 'screenplays are structure'. What did he mean?",
+  "answer": "That a script's strength lies less in its dialogue than in its construction: which scenes are included, in what order, and where the story turns. Goldman argued that a writer's real work is choosing and ordering scenes, and that fine lines cannot rescue a story told in the wrong shape.",
+  "move": "Order and selection shape a story more than fine sentences do.",
+  "simply": "A film script is like a skeleton: if the bones are in the wrong place, nice words can't make it stand up.",
+  "why": "The same goes for a talk, an essay or a pitch: decide what goes in, and in what order, before polishing the words.",
+  "book": {
+    "id": "adventures-in-the-screen-trade",
+    "title": "Adventures in the Screen Trade",
+    "author": "William Goldman",
+    "year": 1983,
+    "part": 5,
+    "isbn": "9780446391177",
+    "badge": "By the Oscar-winning writer of Butch Cassidy and the Sundance Kid"
+  },
+  "keywords": [
+    "screenwriting",
+    "structure",
+    "storytelling",
+    "william goldman"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "William Goldman, Adventures in the Screen Trade, 1983",
+  "source_kind": "book",
+  "reference": "William Goldman, Adventures in the Screen Trade (Warner Books, 1983)",
+  "written": "2026-11-17"
+}

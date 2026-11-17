@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-book-hit-makers-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.heroes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do so many blockbusters follow the same story shape?",
+  "answer": "Thompson traces it to the hero's journey, the pattern Joseph Campbell found in myths and George Lucas used for Star Wars: an ordinary hero is called, refuses, crosses into danger, is transformed and returns. A familiar structure lets audiences relax into a story while the details stay new.",
+  "move": "A familiar shape lets new details feel safe to enjoy.",
+  "simply": "Most adventure films follow the same recipe: normal hero, big call, scary journey, comes back changed. The recipe is old; the toppings change.",
+  "why": "Noticing the pattern makes you a sharper viewer, and a better storyteller: give people a shape they know, then surprise them inside it.",
+  "book": {
+    "id": "hit-makers",
+    "title": "Hit Makers",
+    "author": "Derek Thompson",
+    "year": 2017,
+    "part": 5,
+    "isbn": "9781101980323",
+    "badge": "By a senior editor at The Atlantic"
+  },
+  "keywords": [
+    "hero's journey",
+    "joseph campbell",
+    "star wars",
+    "storytelling"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Derek Thompson, Hit Makers, 2017",
+  "source_kind": "book",
+  "reference": "Derek Thompson, Hit Makers: The Science of Popularity in an Age of Distraction (Penguin Press, 2017)",
+  "written": "2026-11-17"
+}

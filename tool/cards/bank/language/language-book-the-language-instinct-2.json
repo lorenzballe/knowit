@@ -1,0 +1,50 @@
+{
+  "id": "language-book-the-language-instinct-2",
+  "topic": "language",
+  "genre": "language.learning_languages",
+  "strand": "language.learning_languages.kids_and_adults",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Deaf children in Nicaragua, brought together in new schools in the 1980s, did what with their improvised signs?",
+  "options": [
+    "Turned them into a full new language",
+    "Forgot them for Spanish",
+    "Kept simple gestures only"
+  ],
+  "correct": 0,
+  "answer": "They built a full sign language, with grammar richer than the gestures they started with, and the youngest children used it most fluently. Pinker tells the story as near-direct evidence of the instinct: children do not just learn a language, they can create one.",
+  "move": "Given each other, children don't only learn language: they invent it.",
+  "trap": "'Kept simple gestures': without teachers, nothing complex seems possible.",
+  "simply": "A group of kids with no shared language made up their own, with real grammar, and the youngest spoke it best. That's how strong the language instinct is.",
+  "why": "It is a rare look at a language being born, and a reminder of what young brains can do when they share a need to talk.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-language-instinct",
+    "title": "The Language Instinct",
+    "author": "Steven Pinker",
+    "year": 1994,
+    "part": 2,
+    "isbn": "9780060958336",
+    "badge": "By a two-time Pulitzer Prize finalist"
+  },
+  "keywords": [
+    "nicaraguan sign language",
+    "deaf children",
+    "creole",
+    "grammar"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Steven Pinker, The Language Instinct, 1994",
+  "source_kind": "book",
+  "reference": "Steven Pinker, The Language Instinct (William Morrow, 1994), ch. 2",
+  "written": "2026-11-17"
+}

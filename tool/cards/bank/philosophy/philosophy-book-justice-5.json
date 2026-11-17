@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-book-justice-5",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a cost-benefit analysis of the Ford Pinto's fuel tank cause outrage?",
+  "answer": "Because it priced lives. Ford weighed the cost of fixing a fuel tank that could explode in rear crashes, about $11 a car, against a money value for the deaths and injuries it would prevent, and judged the fix not worth it. Sandel asks whether some things should never be priced.",
+  "move": "Ask whether some things lose value when they are given a price.",
+  "simply": "A car company did the sums and decided it was cheaper to pay for deaths than to fix a dangerous fuel tank. People were furious.",
+  "why": "Cost-benefit thinking is useful, but treating everything as a price can hide what matters. Noticing when a number is standing in for a life is worth the pause.",
+  "book": {
+    "id": "justice",
+    "title": "Justice",
+    "author": "Michael J. Sandel",
+    "year": 2009,
+    "part": 5,
+    "isbn": "9780374532505",
+    "badge": "From Michael Sandel's famous Harvard course on justice"
+  },
+  "keywords": [
+    "ford pinto",
+    "cost-benefit analysis",
+    "value of life",
+    "utilitarianism"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Michael J. Sandel, Justice, 2009",
+  "source_kind": "book",
+  "reference": "Michael J. Sandel, Justice: What's the Right Thing to Do? (Farrar, Straus and Giroux, 2009), ch. 2",
+  "written": "2026-11-17"
+}

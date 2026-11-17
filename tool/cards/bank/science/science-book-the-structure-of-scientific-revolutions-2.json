@@ -1,0 +1,50 @@
+{
+  "id": "science-book-the-structure-of-scientific-revolutions-2",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.being_wrong",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In a 1949 experiment, people were briefly shown odd playing cards, such as a red six of spades. What did most report?",
+  "options": [
+    "An ordinary card",
+    "A trick card",
+    "Nothing at all"
+  ],
+  "correct": 0,
+  "answer": "An ordinary card, a six of hearts or of spades. Shown only briefly, people fitted the odd card into the categories they expected; only with longer looks did many notice something was wrong, and some grew distressed. Kuhn used this experiment by Bruner and Postman to show how expectation shapes what scientists see.",
+  "move": "We see what we expect until the evidence forces another look.",
+  "trap": "'A trick card': we assume we'd spot something so odd.",
+  "simply": "Flash someone a red spade and they'll say it's a normal card. The mind quietly fixes it to match what it expects.",
+  "why": "It's why surprising results get ignored in labs, offices and newsrooms. When something doesn't fit, look again before filing it away.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-structure-of-scientific-revolutions",
+    "title": "The Structure of Scientific Revolutions",
+    "author": "Thomas S. Kuhn",
+    "year": 1962,
+    "part": 2,
+    "isbn": "9780226458120",
+    "badge": "The book that gave us the phrase 'paradigm shift'"
+  },
+  "keywords": [
+    "perception",
+    "expectation",
+    "anomalies",
+    "bruner and postman"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Thomas S. Kuhn, The Structure of Scientific Revolutions, 1962",
+  "source_kind": "book",
+  "reference": "Thomas S. Kuhn, The Structure of Scientific Revolutions (University of Chicago Press, 1962), ch. 6",
+  "written": "2026-11-17"
+}

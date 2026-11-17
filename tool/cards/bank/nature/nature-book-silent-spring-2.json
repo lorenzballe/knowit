@@ -1,0 +1,50 @@
+{
+  "id": "nature-book-silent-spring-2",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "DDT was sprayed in small doses. Why did it reach harmful levels in birds such as eagles?",
+  "options": [
+    "It built up along the food chain",
+    "Birds were sprayed directly",
+    "Birds digest it more slowly"
+  ],
+  "correct": 0,
+  "answer": "Because it built up along the food chain. DDT lingers in fatty tissue, so small amounts in water and plankton become larger in the fish that eat them, and larger still in the birds that eat the fish. Carson documented this concentration; birds of prey later suffered thinning eggshells and fell sharply in number.",
+  "move": "Follow a substance up the food chain; small doses can multiply.",
+  "trap": "'Birds were sprayed directly': harm seems to need direct contact.",
+  "simply": "A tiny bit of poison in the water gets stored in fish, and a fish-eating bird eats many fish. The poison piles up at the top.",
+  "why": "Biomagnification explains why top predators, including people who eat certain fish, can carry the most of a pollutant. It's why mercury advice targets big fish.",
+  "sure": 0.35,
+  "book": {
+    "id": "silent-spring",
+    "title": "Silent Spring",
+    "author": "Rachel Carson",
+    "year": 1962,
+    "part": 2,
+    "isbn": "9780618249060",
+    "badge": "Credited with starting the modern environmental movement"
+  },
+  "keywords": [
+    "ddt",
+    "biomagnification",
+    "food chain",
+    "birds of prey"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Rachel Carson, Silent Spring, 1962",
+  "source_kind": "book",
+  "reference": "Rachel Carson, Silent Spring (Houghton Mifflin, 1962)",
+  "written": "2026-11-17"
+}

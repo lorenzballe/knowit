@@ -1,0 +1,50 @@
+{
+  "id": "food-book-salt-fat-acid-heat-2",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When does Nosrat recommend salting a chicken you plan to roast?",
+  "options": [
+    "A day ahead, if you can",
+    "Just before serving",
+    "Only at the table"
+  ],
+  "correct": 0,
+  "answer": "Ideally a day ahead, or at least a few hours. Given time, salt dissolves and spreads through the meat, seasoning it evenly and helping its proteins hold on to moisture, so it comes out juicier. Nosrat's rule: salt meat early, rather than relying on salt sprinkled at the end.",
+  "move": "Seasoning works with time; salt early and let it spread.",
+  "trap": "'Just before serving': salt seems to dry meat out.",
+  "simply": "Salt a chicken the night before, and the salt has time to soak in, so the meat tastes seasoned all through and stays juicier.",
+  "why": "One change in timing makes a big difference. In cooking, as elsewhere, when you do something can matter as much as what you do.",
+  "sure": 0.35,
+  "book": {
+    "id": "salt-fat-acid-heat",
+    "title": "Salt, Fat, Acid, Heat",
+    "author": "Samin Nosrat",
+    "year": 2017,
+    "part": 2,
+    "isbn": "9781476753836",
+    "badge": "A James Beard Award winner, made into a Netflix series"
+  },
+  "keywords": [
+    "salting meat",
+    "dry brining",
+    "roast chicken",
+    "seasoning"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Samin Nosrat, Salt, Fat, Acid, Heat, 2017",
+  "source_kind": "book",
+  "reference": "Samin Nosrat, Salt, Fat, Acid, Heat (Simon & Schuster, 2017)",
+  "written": "2026-11-17"
+}

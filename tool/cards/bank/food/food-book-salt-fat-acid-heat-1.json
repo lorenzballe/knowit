@@ -1,0 +1,42 @@
+{
+  "id": "food-book-salt-fat-acid-heat-1",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.taste_and_smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What are the four elements the chef Samin Nosrat says every good cook controls?",
+  "answer": "Salt, fat, acid and heat: salt enhances flavour, fat carries it and shapes texture, acid balances and brightens, and heat sets the final texture of food. Nosrat argues that once you understand these four, you can cook well without recipes, fixing any dish by asking which one it needs.",
+  "move": "Learn a few principles, and recipes become optional.",
+  "simply": "Good cooking comes down to four things: enough salt, the right fat, a bit of sour, and the right heat. Taste, and ask which one is missing.",
+  "why": "It's a model for learning anything: master the few principles behind the many cases, and you can handle situations no manual covers.",
+  "book": {
+    "id": "salt-fat-acid-heat",
+    "title": "Salt, Fat, Acid, Heat",
+    "author": "Samin Nosrat",
+    "year": 2017,
+    "part": 1,
+    "isbn": "9781476753836",
+    "badge": "A James Beard Award winner, made into a Netflix series"
+  },
+  "keywords": [
+    "cooking",
+    "seasoning",
+    "samin nosrat",
+    "flavour"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Samin Nosrat, Salt, Fat, Acid, Heat, 2017",
+  "source_kind": "book",
+  "reference": "Samin Nosrat, Salt, Fat, Acid, Heat (Simon & Schuster, 2017), Introduction",
+  "written": "2026-11-17"
+}

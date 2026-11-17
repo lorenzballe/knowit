@@ -1,0 +1,42 @@
+{
+  "id": "maths-book-humble-pi-5",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.units",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did NASA lose its Mars Climate Orbiter in 1999?",
+  "answer": "Because of a mix-up of units. Software from one team gave thrust in pound-force seconds, while NASA's navigation software expected newton-seconds, so each small correction was misjudged by a factor of about 4.45. The spacecraft flew far too close to Mars and was lost. Parker's lesson: always state the units.",
+  "move": "A number without its unit is an accident waiting to happen.",
+  "simply": "One team measured push in pounds, the other expected metric units. The numbers looked fine, but the probe flew too low and was lost.",
+  "why": "Whenever you share numbers, in recipes, medicine doses or budgets, say the unit. It's the cheapest error check there is.",
+  "book": {
+    "id": "humble-pi",
+    "title": "Humble Pi",
+    "author": "Matt Parker",
+    "year": 2019,
+    "part": 5,
+    "isbn": "9780141989143",
+    "badge": "A Sunday Times number one bestseller"
+  },
+  "keywords": [
+    "mars climate orbiter",
+    "units",
+    "nasa",
+    "metric"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Matt Parker, Humble Pi, 2019",
+  "source_kind": "book",
+  "reference": "Matt Parker, Humble Pi: A Comedy of Maths Errors (Allen Lane, 2019)",
+  "written": "2026-11-17"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "medicine-book-the-immortal-life-of-henrietta-lacks-2",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "HeLa cells were among the first human cells to grow endlessly in a lab. What did they help scientists do in the 1950s?",
+  "options": [
+    "Test the polio vaccine",
+    "Discover penicillin",
+    "Map the whole human genome"
+  ],
+  "correct": 0,
+  "answer": "Test the polio vaccine. HeLa cells grew so readily that a lab was set up to mass-produce them, and they were shipped across the US to test Jonas Salk's vaccine. Skloot describes how they went on to help research into cancer, viruses, cloning and gene mapping, and are still used today.",
+  "move": "One resource, shared widely, can power thousands of discoveries.",
+  "trap": "'Discover penicillin': it's the most famous medical breakthrough of the era.",
+  "simply": "Her cells grew so well that labs shipped them around the country to check whether the new polio vaccine worked.",
+  "why": "Shared research tools speed up science enormously. Knowing where they come from, and who should share in the benefits, is part of medicine's ethics.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-immortal-life-of-henrietta-lacks",
+    "title": "The Immortal Life of Henrietta Lacks",
+    "author": "Rebecca Skloot",
+    "year": 2010,
+    "part": 2,
+    "isbn": "9781400052172",
+    "badge": "Made into a 2017 film with Oprah Winfrey"
+  },
+  "keywords": [
+    "hela cells",
+    "polio vaccine",
+    "jonas salk",
+    "cell culture"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Rebecca Skloot, The Immortal Life of Henrietta Lacks, 2010",
+  "source_kind": "book",
+  "reference": "Rebecca Skloot, The Immortal Life of Henrietta Lacks (Crown, 2010)",
+  "written": "2026-11-17"
+}

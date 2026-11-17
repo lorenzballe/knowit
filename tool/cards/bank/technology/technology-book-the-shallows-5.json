@@ -1,0 +1,50 @@
+{
+  "id": "technology-book-the-shallows-5",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.attention_economy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Carr argues the web encourages one way of reading above others. Which?",
+  "options": [
+    "Skimming and scanning",
+    "Slow, careful study",
+    "Reading aloud"
+  ],
+  "correct": 0,
+  "answer": "Skimming and scanning. Eye-tracking studies he cites found that many web readers move in an F-shaped pattern: across the top lines, then down the left edge, rarely reading a page through. That suits finding facts fast, Carr says, but not the sustained attention that builds understanding.",
+  "move": "Decide whether you need to find a fact or understand an idea.",
+  "trap": "'Slow, careful study': the web holds great writing too.",
+  "simply": "Online, our eyes do a quick F: read the top, slide down the left side, and move on. Fine for a phone number, not for a big idea.",
+  "why": "Knowing your default online is skimming helps you switch modes on purpose when something deserves real reading.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-shallows",
+    "title": "The Shallows",
+    "author": "Nicholas Carr",
+    "year": 2010,
+    "part": 5,
+    "isbn": "9780393339758",
+    "badge": "A finalist for the Pulitzer Prize"
+  },
+  "keywords": [
+    "skimming",
+    "f-pattern",
+    "eye tracking",
+    "reading online"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Nicholas Carr, The Shallows, 2010",
+  "source_kind": "book",
+  "reference": "Nicholas Carr, The Shallows: What the Internet Is Doing to Our Brains (W. W. Norton, 2010), ch. 7",
+  "written": "2026-11-17"
+}

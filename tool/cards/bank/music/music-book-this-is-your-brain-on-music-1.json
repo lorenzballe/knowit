@@ -1,0 +1,50 @@
+{
+  "id": "music-book-this-is-your-brain-on-music-1",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "If you cut the first instant off a recorded note, what happens to listeners' ability to name the instrument?",
+  "options": [
+    "It drops sharply",
+    "Nothing changes",
+    "It gets easier"
+  ],
+  "correct": 0,
+  "answer": "It drops sharply. The French composer Pierre Schaeffer cut the attack, the first instant of a note, from tape recordings, and listeners struggled to tell instruments apart. Levitin uses the experiment to show that timbre, an instrument's sound colour, depends heavily on how a note begins.",
+  "move": "The first instant of a sound tells us most about its source.",
+  "trap": "'Nothing changes': the rest of the note sounds just the same.",
+  "simply": "A violin and a trumpet can play the same note. Your ear tells them apart mostly from the first split second, when the sound starts.",
+  "why": "It explains why the start of a voice, a word or a song carries so much, and why sound engineers fuss over how notes begin.",
+  "sure": 0.35,
+  "book": {
+    "id": "this-is-your-brain-on-music",
+    "title": "This Is Your Brain on Music",
+    "author": "Daniel J. Levitin",
+    "year": 2006,
+    "part": 1,
+    "isbn": "9780452288522",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "timbre",
+    "pierre schaeffer",
+    "acoustics",
+    "instruments"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Daniel J. Levitin, This Is Your Brain on Music, 2006",
+  "source_kind": "book",
+  "reference": "Daniel J. Levitin, This Is Your Brain on Music (Dutton, 2006), ch. 1",
+  "written": "2026-11-17"
+}

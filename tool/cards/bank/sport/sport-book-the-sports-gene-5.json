@@ -1,0 +1,42 @@
+{
+  "id": "sport-book-the-sports-gene-5",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are so many of the world's best distance runners from a few highland areas of Kenya and Ethiopia?",
+  "answer": "A mix of factors, Epstein argues: living and training at altitude, slender builds with thin lower legs that are cheaper to swing, a strong running culture, and for some, running long distances as children. No single gene explains it, and he warns against both genetic determinism and denying that biology plays a part.",
+  "move": "Big differences usually have several causes; beware single explanations.",
+  "simply": "Great Kenyan and Ethiopian runners come from high places, often have thin legs, run a lot as kids, and grow up surrounded by runners. It all adds up.",
+  "why": "When a group excels at something, the honest answer usually combines geography, culture and biology. Single-cause stories are tempting and usually wrong.",
+  "book": {
+    "id": "the-sports-gene",
+    "title": "The Sports Gene",
+    "author": "David Epstein",
+    "year": 2013,
+    "part": 5,
+    "isbn": "9781617230127",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "kalenjin runners",
+    "altitude",
+    "distance running",
+    "ethiopia"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "David Epstein, The Sports Gene, 2013",
+  "source_kind": "book",
+  "reference": "David Epstein, The Sports Gene: Inside the Science of Extraordinary Athletic Performance (Current, 2013), ch. 12",
+  "written": "2026-11-17"
+}

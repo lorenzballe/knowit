@@ -1,0 +1,50 @@
+{
+  "id": "weird_facts-book-the-disappearing-spoon-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.weird_but_useful",
+  "strand": "weird_facts.weird_but_useful.counterintuitive",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which metal did France's Emperor Napoleon III save for his most honoured guests' cutlery?",
+  "options": [
+    "Aluminium",
+    "Gold",
+    "Silver"
+  ],
+  "correct": 0,
+  "answer": "Aluminium, then harder to extract than gold and so more prized. Lesser guests made do with gold. Once an electrical method for refining aluminium was found in 1886, its price collapsed and it became the stuff of drinks cans. Kean uses the story to show how much a metal's value depends on extraction.",
+  "move": "Price reflects scarcity and effort, which can change overnight.",
+  "trap": "'Gold': today it's the obvious emperor's metal.",
+  "simply": "Aluminium was once so hard to make that an emperor saved it for VIPs. Then a cheap way to make it was found, and it became foil.",
+  "why": "It's a useful lesson for anything priced on scarcity: when a new method makes something easy, its value can fall to nearly nothing.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-disappearing-spoon",
+    "title": "The Disappearing Spoon",
+    "author": "Sam Kean",
+    "year": 2010,
+    "part": 3,
+    "isbn": "9780316051637",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "aluminium",
+    "napoleon iii",
+    "value",
+    "scarcity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Sam Kean, The Disappearing Spoon, 2010",
+  "source_kind": "book",
+  "reference": "Sam Kean, The Disappearing Spoon (Little, Brown, 2010), ch. 13",
+  "written": "2026-11-17"
+}
