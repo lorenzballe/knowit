@@ -2021,13 +2021,15 @@ class _AstutoTabBar extends StatelessWidget {
                   1 => context.l10n.tabExplore,
                   _ => context.l10n.tabProfile,
                 };
-                // On glass the tabs not lit are a step darker than on solid
-                // ground: what passes under the bar is never the same twice.
-                final Color tint = Color.lerp(
-                  glassOn ? context.p.inkMuted : context.p.inkFaint,
-                  context.p.onInverse,
-                  on,
-                )!;
+                // On glass the tabs not lit are drawn nearer the ink than on
+                // solid ground, each with its halo: what passes under the
+                // bar is never the same twice.
+                final Color idle = !glassOn
+                    ? context.p.inkFaint
+                    : context.p.ink.withValues(
+                        alpha: context.p.isDark ? 0.9 : 0.66,
+                      );
+                final Color tint = Color.lerp(idle, context.p.onInverse, on)!;
 
                 // The lit tab is the one with a word in it, so it is the
                 // one that gets the room: three equal thirds fit "Today" and
@@ -2056,7 +2058,12 @@ class _AstutoTabBar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(tab.icon, size: 19, color: tint),
+                              Icon(
+                                tab.icon,
+                                size: 19,
+                                color: tint,
+                                shadows: on < 0.5 ? glassHalo(context) : null,
+                              ),
                               // The label belongs to the tab you are on, and
                               // unfurls as you arrive rather than appearing
                               // once you have. Three of them side by side is
