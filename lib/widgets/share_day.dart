@@ -17,6 +17,7 @@ import '../utils/share_link.dart';
 import 'subject_icon.dart';
 import 'ui.dart';
 import 'web/card_thumb.dart';
+import 'liquid_glass.dart';
 
 /// The day, sent to a friend: a picture of the five cards that came out, and
 /// a line under it.
@@ -206,146 +207,147 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
     final double most = MediaQuery.sizeOf(context).height - safe.top - 24;
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: most),
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.p.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-        ),
-        padding: EdgeInsets.fromLTRB(22, 14, 22, safe.bottom + 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Center(
-              child: Container(
-                width: 38,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: context.p.lineStrong,
-                  borderRadius: BorderRadius.circular(9),
+      child: GlassSheet(
+        child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          ),
+          padding: EdgeInsets.fromLTRB(22, 14, 22, safe.bottom + 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Container(
+                  width: 38,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: context.p.lineStrong,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    l.shareDayTitle,
-                    style: AppText.display(
-                      size: 20,
-                      weight: FontWeight.w600,
-                      spacing: -0.6,
-                      color: context.p.ink,
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      l.shareDayTitle,
+                      style: AppText.display(
+                        size: 20,
+                        weight: FontWeight.w600,
+                        spacing: -0.6,
+                        color: context.p.ink,
+                      ),
                     ),
                   ),
-                ),
-                _Close(onTap: () => Navigator.of(context).maybePop()),
-              ],
-            ),
-            const SizedBox(height: 12),
-            // The two shapes a day goes out in: a chat or a feed's, and a
-            // story's.
-            Row(
-              children: [
-                for (final bool story in const [false, true]) ...[
-                  if (story) const SizedBox(width: 8),
-                  _Shape(
-                    key: ValueKey('share-day-${story ? 'story' : 'post'}'),
-                    label: story ? l.shareFormatStory : l.shareFormatPost,
-                    tall: story,
-                    on: _story == story,
-                    onTap: () => setState(() => _story = story),
-                  ),
+                  _Close(onTap: () => Navigator.of(context).maybePop()),
                 ],
-              ],
-            ),
-            const SizedBox(height: 14),
-            // The picture is laid out at one size on every phone, so it is
-            // the same picture wherever it is made, and shown shrunk to the
-            // room there is.
-            Flexible(
-              child: LayoutBuilder(
-                builder: (context, box) {
-                  const double w = DayPicture.width;
-                  final double h = w / (_story ? 9 / 16 : 4 / 5);
-                  final double fit = math.min(
-                    box.maxWidth / w,
-                    box.maxHeight / h,
-                  );
-                  // As tall as the picture, not as the room: the sheet ends
-                  // under the post's square as it does under the story.
-                  return Center(
-                    heightFactor: 1,
-                    child: SizedBox(
-                      width: w * fit,
-                      height: h * fit,
-                      child: FittedBox(
-                        child: SizedBox(
-                          width: w,
-                          height: h,
-                          child: RepaintBoundary(
-                            key: _picture,
-                            // A picture, not a screen: set at one size
-                            // whatever the reader's text size, or a large
-                            // setting would crop it for somebody else.
-                            child: MediaQuery(
-                              data: MediaQuery.of(context)
-                                  .copyWith(textScaler: TextScaler.noScaling),
-                              child: DayPicture(
-                                summary: app.daySummary,
-                                five: app.todaysDeck
-                                    .take(kPillsPerDay)
-                                    .toList(),
-                                day: app.today,
-                                story: _story,
+              ),
+              const SizedBox(height: 12),
+              // The two shapes a day goes out in: a chat or a feed's, and a
+              // story's.
+              Row(
+                children: [
+                  for (final bool story in const [false, true]) ...[
+                    if (story) const SizedBox(width: 8),
+                    _Shape(
+                      key: ValueKey('share-day-${story ? 'story' : 'post'}'),
+                      label: story ? l.shareFormatStory : l.shareFormatPost,
+                      tall: story,
+                      on: _story == story,
+                      onTap: () => setState(() => _story = story),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(height: 14),
+              // The picture is laid out at one size on every phone, so it is
+              // the same picture wherever it is made, and shown shrunk to the
+              // room there is.
+              Flexible(
+                child: LayoutBuilder(
+                  builder: (context, box) {
+                    const double w = DayPicture.width;
+                    final double h = w / (_story ? 9 / 16 : 4 / 5);
+                    final double fit = math.min(
+                      box.maxWidth / w,
+                      box.maxHeight / h,
+                    );
+                    // As tall as the picture, not as the room: the sheet ends
+                    // under the post's square as it does under the story.
+                    return Center(
+                      heightFactor: 1,
+                      child: SizedBox(
+                        width: w * fit,
+                        height: h * fit,
+                        child: FittedBox(
+                          child: SizedBox(
+                            width: w,
+                            height: h,
+                            child: RepaintBoundary(
+                              key: _picture,
+                              // A picture, not a screen: set at one size
+                              // whatever the reader's text size, or a large
+                              // setting would crop it for somebody else.
+                              child: MediaQuery(
+                                data: MediaQuery.of(context)
+                                    .copyWith(textScaler: TextScaler.noScaling),
+                                child: DayPicture(
+                                  summary: app.daySummary,
+                                  five: app.todaysDeck
+                                      .take(kPillsPerDay)
+                                      .toList(),
+                                  day: app.today,
+                                  story: _story,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: PrimaryButton(
-                    key: const ValueKey('share-day-send'),
-                    label: _busy ? l.rendering : l.share,
-                    height: 52,
-                    onPressed: _busy ? null : _share,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Semantics(
-                  button: true,
-                  label: l.shareCopyLink,
-                  child: GestureDetector(
-                    key: const ValueKey('share-day-copy'),
-                    behavior: HitTestBehavior.opaque,
-                    onTap: _copy,
-                    child: Container(
-                      width: 52,
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: PrimaryButton(
+                      key: const ValueKey('share-day-send'),
+                      label: _busy ? l.rendering : l.share,
                       height: 52,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: context.p.lineStrong),
-                      ),
-                      child: Icon(
-                        Icons.copy_rounded,
-                        size: 20,
-                        color: context.p.ink,
+                      onPressed: _busy ? null : _share,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Semantics(
+                    button: true,
+                    label: l.shareCopyLink,
+                    child: GestureDetector(
+                      key: const ValueKey('share-day-copy'),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: _copy,
+                      child: Container(
+                        width: 52,
+                        height: 52,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: context.p.lineStrong),
+                        ),
+                        child: Icon(
+                          Icons.copy_rounded,
+                          size: 20,
+                          color: context.p.ink,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

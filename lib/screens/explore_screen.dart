@@ -33,6 +33,7 @@ import 'mix_screen.dart';
 import '../analytics.dart';
 import '../measure/screens.dart';
 import '../measure/shelves.dart';
+import '../widgets/liquid_glass.dart';
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -582,32 +583,12 @@ class ExploreScreenState extends State<ExploreScreen>
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverPadding(
-                  padding: const EdgeInsets.only(bottom: 30),
+                  padding: EdgeInsets.only(
+                    bottom: 30 + MediaQuery.paddingOf(context).bottom,
+                  ),
                   sliver: ExploreSliver(host: this, slots: slots),
                 ),
               ],
-            ),
-          ),
-        ),
-        // The shelves run under the tab bar rather than stopping short of
-        // it, so the last one has to say it is not the end.
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: 40,
-          child: IgnorePointer(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    context.p.surface.withValues(alpha: 0),
-                    context.p.surface,
-                  ],
-                ),
-              ),
             ),
           ),
         ),
@@ -907,18 +888,20 @@ class _Head extends StatelessWidget {
               height: 44,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Container(
+                child: SizedBox(
                   width: 38,
                   height: 38,
-                  decoration: BoxDecoration(
-                    color: context.p.ink.withValues(alpha: 0.07),
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Icons.search_rounded,
-                    size: 16,
-                    color: context.p.ink.withValues(alpha: 0.6),
+                  child: LiquidGlass(
+                    circle: true,
+                    shadow: false,
+                    blur: 16,
+                    child: Center(
+                      child: Icon(
+                        Icons.search_rounded,
+                        size: 16,
+                        color: context.p.ink.withValues(alpha: 0.7),
+                      ),
+                    ),
                   ),
                 ),
               ),

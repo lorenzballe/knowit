@@ -54,6 +54,7 @@ import 'screens/gate_screen.dart';
 import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
+import 'widgets/liquid_glass.dart';
 
 /// The seeded crowd for Explore's top list: the live bank, tilted to what
 /// readers keep — a question over a fact, a debate over both, the hard ones,
@@ -1855,15 +1856,22 @@ class _AstutoShellState extends State<AstutoShell>
                   // query the Scaffold hands a body it has extended. The
                   // page is taller than the screen it draws; the screens
                   // are exactly where they were.
-                  for (final screen in tabs)
+                  for (int i = 0; i < tabs.length; i++)
                     ClipRect(
                       child: _KeepAlive(
                         child: Builder(
+                          // Today keeps the bar's room: its card is the
+                          // whole screen and nothing may cover it. Explore
+                          // and the profile scroll on under the glass bar,
+                          // and pad their own foot so the last row can
+                          // still be lifted clear of it.
                           builder: (context) => Padding(
                             padding: EdgeInsets.only(
-                              bottom: MediaQuery.paddingOf(context).bottom,
+                              bottom: i == 0
+                                  ? MediaQuery.paddingOf(context).bottom
+                                  : 0,
                             ),
-                            child: screen,
+                            child: tabs[i],
                           ),
                         ),
                       ),
@@ -1978,123 +1986,112 @@ class _AstutoTabBar extends StatelessWidget {
         18,
         MediaQuery.of(context).padding.bottom + 8,
       ),
-      child: Container(
-        height: 58,
-        decoration: BoxDecoration(
-          color: context.p.surfaceRaised,
-          // A little less round than a pill: 26 on the bar and 16 on the lit
-          // tab, the pair chosen on the tab-bar sheet (107b). Only the
-          // corners changed; every size, weight and icon is as it was.
-          borderRadius: BorderRadius.circular(26),
-          border: Border.all(color: context.p.line),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(
-                alpha: context.p.isDark ? 0.5 : 0.1,
-              ),
-              blurRadius: 24,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        // Only the row of tabs is rebuilt as a move runs. The bar itself —
-        // its ground, its ring, its shadow — is built once and held.
-        child: ValueListenableBuilder<List<double>>(
-          valueListenable: lit,
-          builder: (context, lit, _) => Row(
-            children: List.generate(tabs.length, (i) {
-              final double on = lit[i].clamp(0.0, 1.0);
-              final tab = tabs[i];
-              final String label = switch (i) {
-                0 => context.l10n.tabToday,
-                1 => context.l10n.tabExplore,
-                _ => context.l10n.tabProfile,
-              };
-              final Color tint = Color.lerp(
-                context.p.inkFaint,
-                context.p.onInverse,
-                on,
-              )!;
+      child: LiquidGlass(
+        // Glass, as the bar is on iOS 26: the shelves run under it and
+        // show through, softened, rather than stopping at its top. The lit
+        // tab stays solid ink, so where you are is never in doubt.
+        radius: 26,
+        child: SizedBox(
+          height: 58,
+          // Only the row of tabs is rebuilt as a move runs. The bar itself —
+          // its ground, its ring, its shadow — is built once and held.
+          child: ValueListenableBuilder<List<double>>(
+            valueListenable: lit,
+            builder: (context, lit, _) => Row(
+              children: List.generate(tabs.length, (i) {
+                final double on = lit[i].clamp(0.0, 1.0);
+                final tab = tabs[i];
+                final String label = switch (i) {
+                  0 => context.l10n.tabToday,
+                  1 => context.l10n.tabExplore,
+                  _ => context.l10n.tabProfile,
+                };
+                final Color tint = Color.lerp(
+                  context.p.inkFaint,
+                  context.p.onInverse,
+                  on,
+                )!;
 
-              // The lit tab is the one with a word in it, so it is the
-              // one that gets the room: three equal thirds fit "Today" and
-              // not "Aujourd'hui". The extra is taken back as the light
-              // moves on, so the bar rebalances with it.
-              return Expanded(
-                flex: 100 + (60 * on).round(),
-                child: Semantics(
-                  key: ValueKey('tab-${tab.label}'),
-                  button: true,
-                  selected: on > 0.5,
-                  label: tab.label,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => onChanged(i),
-                    child: Center(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10 + 4 * on,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: context.p.inverse.withValues(alpha: on),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(tab.icon, size: 19, color: tint),
-                            // The label belongs to the tab you are on, and
-                            // unfurls as you arrive rather than appearing
-                            // once you have. Three of them side by side is
-                            // a legend nobody reads.
-                            //
-                            // It has to be able to take less than it asks
-                            // for: a third of the bar is not much, and it
-                            // is narrower still while the pill grows.
-                            Flexible(
-                              child: ClipRect(
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  widthFactor: on,
-                                  // Width only. Left to size itself, an
-                                  // Align takes all the height it is
-                                  // offered, which stretched the pill from
-                                  // the height of its own contents to the
-                                  // height of the whole bar — a pill with
-                                  // its ends against both edges, which is
-                                  // what a bar looks like when it has got
-                                  // fat without a single number changing.
-                                  heightFactor: 1,
-                                  // The fade is in the colour rather than
-                                  // in an Opacity: three of those is three
-                                  // saved layers on every frame of a move,
-                                  // for text that is only ever one colour.
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 7),
-                                    child: Text(
-                                      label,
-                                      maxLines: 1,
-                                      softWrap: false,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppText.body(
-                                        size: 13,
-                                        weight: FontWeight.w700,
-                                        color: tint.withValues(alpha: on),
+                // The lit tab is the one with a word in it, so it is the
+                // one that gets the room: three equal thirds fit "Today" and
+                // not "Aujourd'hui". The extra is taken back as the light
+                // moves on, so the bar rebalances with it.
+                return Expanded(
+                  flex: 100 + (60 * on).round(),
+                  child: Semantics(
+                    key: ValueKey('tab-${tab.label}'),
+                    button: true,
+                    selected: on > 0.5,
+                    label: tab.label,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => onChanged(i),
+                      child: Center(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10 + 4 * on,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: context.p.inverse.withValues(alpha: on),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(tab.icon, size: 19, color: tint),
+                              // The label belongs to the tab you are on, and
+                              // unfurls as you arrive rather than appearing
+                              // once you have. Three of them side by side is
+                              // a legend nobody reads.
+                              //
+                              // It has to be able to take less than it asks
+                              // for: a third of the bar is not much, and it
+                              // is narrower still while the pill grows.
+                              Flexible(
+                                child: ClipRect(
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    widthFactor: on,
+                                    // Width only. Left to size itself, an
+                                    // Align takes all the height it is
+                                    // offered, which stretched the pill from
+                                    // the height of its own contents to the
+                                    // height of the whole bar — a pill with
+                                    // its ends against both edges, which is
+                                    // what a bar looks like when it has got
+                                    // fat without a single number changing.
+                                    heightFactor: 1,
+                                    // The fade is in the colour rather than
+                                    // in an Opacity: three of those is three
+                                    // saved layers on every frame of a move,
+                                    // for text that is only ever one colour.
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 7),
+                                      child: Text(
+                                        label,
+                                        maxLines: 1,
+                                        softWrap: false,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppText.body(
+                                          size: 13,
+                                          weight: FontWeight.w700,
+                                          color: tint.withValues(alpha: on),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+            ),
           ),
         ),
       ),

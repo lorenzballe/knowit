@@ -40,6 +40,7 @@ import 'topics_screen.dart';
 import 'tune_screen.dart';
 import '../data/goals.dart';
 import 'goal_screen.dart';
+import '../widgets/liquid_glass.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -307,7 +308,13 @@ class ProfileScreen extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),
+        // The foot clears the glass tab bar the list runs under.
+        padding: EdgeInsets.fromLTRB(
+          22,
+          8,
+          22,
+          24 + MediaQuery.paddingOf(context).bottom,
+        ),
         children: [
           // The record, not an identity. This screen used to open with a
           // circle of initials nobody typed, a name nobody set, and four
@@ -1230,51 +1237,56 @@ class _ThemePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PaperCard(
-      padding: const EdgeInsets.all(6),
+    // A segmented control in glass, as iOS 26 draws one: the track is
+    // glass, the chosen segment solid.
+    return LiquidGlass(
       radius: 18,
-      child: Row(
-        children: _options.map((option) {
-          final selected = app.themeMode == option.mode;
-          return Expanded(
-            child: Semantics(
-              button: true,
-              selected: selected,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  if (selected) return;
-                  HapticFeedback.selectionClick();
-                  app.setThemeMode(option.mode);
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  constraints: const BoxConstraints(minHeight: 44),
-                  padding: const EdgeInsets.symmetric(vertical: 11),
-                  decoration: BoxDecoration(
-                    color: selected ? context.p.inverse : Colors.transparent,
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    switch (option.mode) {
-                      ThemeMode.light => context.l10n.themeLight,
-                      ThemeMode.dark => context.l10n.themeDark,
-                      _ => context.l10n.themeSystem,
-                    },
-                    style: AppText.body(
-                      size: 13.5,
-                      weight: FontWeight.w600,
-                      color: selected
-                          ? context.p.onInverse
-                          : context.p.inkMuted,
+      shadow: false,
+      child: Padding(
+        padding: const EdgeInsets.all(6),
+        child: Row(
+          children: _options.map((option) {
+            final selected = app.themeMode == option.mode;
+            return Expanded(
+              child: Semantics(
+                button: true,
+                selected: selected,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    if (selected) return;
+                    HapticFeedback.selectionClick();
+                    app.setThemeMode(option.mode);
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    constraints: const BoxConstraints(minHeight: 44),
+                    padding: const EdgeInsets.symmetric(vertical: 11),
+                    decoration: BoxDecoration(
+                      color: selected ? context.p.inverse : Colors.transparent,
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      switch (option.mode) {
+                        ThemeMode.light => context.l10n.themeLight,
+                        ThemeMode.dark => context.l10n.themeDark,
+                        _ => context.l10n.themeSystem,
+                      },
+                      style: AppText.body(
+                        size: 13.5,
+                        weight: FontWeight.w600,
+                        color: selected
+                            ? context.p.onInverse
+                            : context.p.inkMuted,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        }).toList(),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

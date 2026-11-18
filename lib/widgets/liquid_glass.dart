@@ -92,7 +92,10 @@ class LiquidGlass extends StatelessWidget {
     // The tint: on paper a milk glass, at night a smoked one; a coloured
     // tint takes the place of either, as thin.
     final Color top = tint != null
-        ? Color.alphaBlend(Colors.white.withValues(alpha: 0.22), tint!).withValues(alpha: 0.34 * k)
+        ? Color.alphaBlend(
+            Colors.white.withValues(alpha: 0.22),
+            tint!,
+          ).withValues(alpha: 0.34 * k)
         : dark
         ? Colors.white.withValues(alpha: 0.13 * k)
         : Colors.white.withValues(alpha: 0.62 * k);
