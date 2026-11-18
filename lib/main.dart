@@ -2027,7 +2027,7 @@ class _AstutoTabBar extends StatelessWidget {
                 final Color idle = !glassOn
                     ? context.p.inkFaint
                     : context.p.ink.withValues(
-                        alpha: context.p.isDark ? 0.9 : 0.66,
+                        alpha: context.p.isDark ? 0.92 : 0.72,
                       );
                 final Color tint = Color.lerp(idle, context.p.onInverse, on)!;
 
