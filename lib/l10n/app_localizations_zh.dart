@@ -4863,7 +4863,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String goalShelf(String goal) {
-    return '为了你的目标：$goal';
+    return '用得上：$goal';
   }
 
   @override
@@ -4873,88 +4873,64 @@ class AppLocalizationsZh extends AppLocalizations {
   String get goalChange => '更改';
 
   @override
-  String get goalDecide => '更好地做决定';
+  String get goalDecide => '日常决定';
 
   @override
-  String get goalPeople => '与人交流';
+  String get goalPeople => '与人相处';
 
   @override
-  String get goalBusiness => '创业';
+  String get goalBusiness => '工作与商业';
 
   @override
-  String get goalMoney => '理财';
+  String get goalMoney => '金钱与购物';
 
   @override
-  String get goalNonsense => '识破胡说';
+  String get goalHealth => '健康';
 
   @override
-  String get goalHealth => '好好生活';
+  String get goalAsk => '你想在哪些方面看得更清楚？';
 
   @override
-  String get goalCulture => '常识';
-
-  @override
-  String get goalWorld => '理解世界';
-
-  @override
-  String get goalAsk => '你想在哪方面变得更好？';
-
-  @override
-  String get goalAskLine => '最多选三个：每天的卡片都会为它们训练你。随时可以更改。';
+  String get goalAskLine => '最多选三个：卡片会在这些方面训练你。随时可以更改。';
 
   @override
   String get goalSave => '保存';
 
   @override
-  String get goalEyebrow => '你的目标';
+  String get goalEyebrow => '你的领域';
 
   @override
   String get goalPick => '选择';
 
   @override
-  String get goalNone => '还没有目标';
+  String get goalNone => '还没有选择';
 
   @override
   String get goalNotNow => '以后再说';
 
   @override
-  String get goalDecideLine => '用对的数字做选择，而不是凭感觉。';
+  String get goalDecideLine => '选择、风险与概率，不凭直觉。';
 
   @override
-  String get goalPeopleLine => '别人怎么想，以及怎样让人听懂。';
+  String get goalNews => '新闻与社交媒体';
 
   @override
-  String get goalBusinessLine => '激励、风险，以及一个想法背后的数字。';
+  String get goalNewsLine => '标题、统计和帖子：哪些站得住脚。';
 
   @override
-  String get goalMoneyLine => '利息、价格和优惠里的陷阱。';
+  String get goalPeopleLine => '谁在试图说服你，以及如何让别人理解你。';
 
   @override
-  String get goalNonsenseLine => '研究、统计和标题：什么站得住脚。';
+  String get goalBusinessLine => '谈判、激励，以及点子背后的数字。';
 
   @override
-  String get goalHealthLine => '身体、饮食和睡眠：科学怎么说。';
+  String get goalMoneyLine => '价格、优惠、利息：交易里的陷阱。';
 
   @override
-  String get goalCultureLine => '值得了解的历史、艺术、电影和音乐。';
+  String get goalHealthLine => '饮食、疗法与研究：证据怎么说。';
 
   @override
-  String get goalWorldLine => '把科学、太空和自然讲明白。';
-
-  @override
-  String get goalStress => '应对压力';
-
-  @override
-  String get goalLearn => '学得更快';
-
-  @override
-  String get goalStressLine => '挫折、担忧，以及真正由你掌控的事。';
-
-  @override
-  String get goalLearnLine => '记忆、专注，以及真正有效的练习。';
-
-  @override
-  String get goalEyebrowMany => '你的目标';
+  String get goalEyebrowMany => '你的领域';
 
   @override
   String mathsDailyStreak(int n) {

@@ -7,41 +7,28 @@ import 'topics.dart';
 /// real aims, few enough that each still has its shelf and its lean.
 const int kMostGoals = 3;
 
-/// What a reader wants to get better at, as a person: the goals they pick on
-/// the first run (screens/goal_screen.dart), up to [kMostGoals], and can
-/// change in Profile. Each gives Explore a shelf of its own, leans the mix
-/// of the deals towards its subjects, and is what the coach writes towards.
+/// Where a reader wants to be sharper: the places in a life where being
+/// astute pays, picked on the first run (screens/goal_screen.dart), up to
+/// [kMostGoals], and changed in Profile. Not what they want to improve:
+/// they came to Astute to be sharper, and that is every card. Where is what
+/// the app could not know: money, work, people, the news, health, the
+/// day's decisions.
 ///
-/// A goal is the genres that are about it (Life's People, Decisions, Work
-/// and career; Science's Spot bad science), the reasoning moves it trains,
+/// Each gives Explore a shelf of its own, leans the mix of the deals towards
+/// its subjects, is what the coach writes towards, and names itself on the
+/// back of a card that belongs to it ("Useful for: Money and shopping").
+///
+/// An area is the genres that are about it (Life's People, Economics' Spot
+/// a bad deal, Science's Spot bad science), the reasoning moves it trains,
 /// and the subjects around it. A card counts for it when it is in one of
 /// those genres, trains one of those moves or is about one of those
 /// subjects, and is shown in that order: the genres first, as the closest
 /// fit, then the moves, then the rest, each in an order of the day's own,
 /// so the shelf is new every day.
 ///
-/// The order is the order the goals are offered in: the aims a person
-/// comes to an app like this with first (people, a business, money,
-/// decisions), the wider ones after.
+/// The order is the order they are offered in: where being fooled costs the
+/// most first.
 enum Goal {
-  people(
-    'people',
-    {'life.people', 'life.relationships', 'life.ask_better_questions'},
-    {Principle.confirmation, Principle.availability, Principle.anchoring},
-    {'psychology', 'language', 'philosophy'},
-  ),
-  business(
-    'business',
-    {
-      'life.work_and_career',
-      'economics.think_in_incentives',
-      'economics.pricing_tricks',
-      'economics.markets_and_hype',
-      'economics.work_and_wages',
-    },
-    {Principle.survivorship, Principle.exponential, Principle.sunkCost},
-    {'economics', 'technology'},
-  ),
   money(
     'money',
     {
@@ -55,6 +42,54 @@ enum Goal {
     {Principle.exponential, Principle.regression, Principle.independence},
     {'economics', 'maths'},
   ),
+  business(
+    'business',
+    {
+      'life.work_and_career',
+      'economics.think_in_incentives',
+      'economics.pricing_tricks',
+      'economics.markets_and_hype',
+      'economics.work_and_wages',
+    },
+    {Principle.survivorship, Principle.exponential, Principle.sunkCost},
+    {'economics', 'technology'},
+  ),
+  people(
+    'people',
+    {'life.people', 'life.relationships', 'life.ask_better_questions'},
+    {Principle.confirmation, Principle.availability, Principle.anchoring},
+    {'psychology', 'language', 'philosophy'},
+  ),
+  news(
+    'news',
+    {
+      'science.spot_bad_science',
+      'science.read_a_study',
+      'science.numbers_and_chance',
+      'science.how_science_knows',
+      'economics.read_money_news',
+    },
+    {
+      Principle.sampling,
+      Principle.confounding,
+      Principle.multipleComparisons,
+      Principle.coincidence,
+      Principle.simpson,
+    },
+    {'science', 'technology'},
+  ),
+  health(
+    'health',
+    {
+      'life.habits',
+      'food.food_claims',
+      'food.eat_smarter',
+      'medicine.judge_a_treatment',
+      'medicine.medical_myths',
+    },
+    {},
+    {'human_body', 'medicine', 'food', 'sport'},
+  ),
   decide(
     'decide',
     {'life.decisions', 'life.clear_thinking', 'economics.your_money_decisions'},
@@ -67,55 +102,7 @@ enum Goal {
       Principle.reflection,
     },
     {'thinking', 'psychology'},
-  ),
-  stress(
-    'stress',
-    {'life.handle_setbacks', 'life.meaning'},
-    // A bad run tends back to the usual (regression), and what comes to
-    // mind first is not what is likely (availability): the two moves that
-    // take the most worry out of a week.
-    {Principle.regression, Principle.availability},
-    {'psychology', 'philosophy'},
-  ),
-  learn(
-    'learn',
-    {'life.learn_anything', 'life.time_and_attention', 'life.growth'},
-    {},
-    {'psychology', 'language'},
-  ),
-  nonsense(
-    'nonsense',
-    {
-      'science.spot_bad_science',
-      'science.read_a_study',
-      'science.how_science_knows',
-      'science.numbers_and_chance',
-      'life.clear_thinking',
-    },
-    {
-      Principle.sampling,
-      Principle.confounding,
-      Principle.multipleComparisons,
-      Principle.survivorship,
-      Principle.coincidence,
-      Principle.simpson,
-    },
-    {'science', 'medicine'},
-  ),
-  health(
-    'health',
-    {'life.habits'},
-    {},
-    {'human_body', 'medicine', 'food', 'sport'},
-  ),
-  culture('culture', {}, {}, {
-    'history',
-    'art',
-    'cinema',
-    'music',
-    'philosophy',
-  }),
-  world('world', {}, {}, {'science', 'space', 'nature', 'weird_facts'});
+  );
 
   const Goal(this.key, this.genres, this.moves, this.topics);
 
@@ -131,12 +118,33 @@ enum Goal {
   /// The subjects around it, by key (lib/data/topics.dart).
   final Set<String> topics;
 
-  /// The goal kept under [key], or null.
+  /// The area kept under [key], or null. Spotting nonsense, a goal a
+  /// build before offered, is the news; the others it offered (general
+  /// knowledge, the world, calm, learning) are no area of this one.
   static Goal? of(String? key) {
+    final String? k = key == 'nonsense' ? 'news' : key;
     for (final Goal g in Goal.values) {
-      if (g.key == key) return g;
+      if (g.key == k) return g;
     }
     return null;
+  }
+
+  /// The area [p] pays off in, when it is one of the area's own (in its
+  /// genres, or training one of its moves): the closest, and of two as
+  /// close the first offered. A card that is only about one of an area's
+  /// subjects is not named for it.
+  static Goal? bestFor(Pill p) {
+    Goal? best;
+    int bestFit = 2;
+    for (final Goal g in Goal.values) {
+      final int? fit = g.fitOf(p);
+      if (fit != null && fit < bestFit) {
+        best = g;
+        bestFit = fit;
+        if (fit == 0) break;
+      }
+    }
+    return best;
   }
 
   /// The names of its subjects, as the cards carry them.

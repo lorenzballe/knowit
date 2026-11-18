@@ -5094,7 +5094,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String goalShelf(String goal) {
-    return 'Voor je doel: $goal';
+    return 'Handig voor: $goal';
   }
 
   @override
@@ -5104,95 +5104,70 @@ class AppLocalizationsNl extends AppLocalizations {
   String get goalChange => 'Wijzigen';
 
   @override
-  String get goalDecide => 'Beter beslissen';
+  String get goalDecide => 'Dagelijkse beslissingen';
 
   @override
-  String get goalPeople => 'Praten met mensen';
+  String get goalPeople => 'Mensen';
 
   @override
-  String get goalBusiness => 'Ondernemen';
+  String get goalBusiness => 'Werk en zaken';
 
   @override
-  String get goalMoney => 'Omgaan met geld';
+  String get goalMoney => 'Geld en aankopen';
 
   @override
-  String get goalNonsense => 'Onzin doorzien';
+  String get goalHealth => 'Gezondheid';
 
   @override
-  String get goalHealth => 'Goed leven';
-
-  @override
-  String get goalCulture => 'Algemene kennis';
-
-  @override
-  String get goalWorld => 'De wereld begrijpen';
-
-  @override
-  String get goalAsk => 'Waarin wil je beter worden?';
+  String get goalAsk => 'Waar wil je scherper zijn?';
 
   @override
   String get goalAskLine =>
-      'Kies er maximaal drie: elke dag trainen je kaarten je ervoor. Je kunt ze altijd wijzigen.';
+      'Kies er maximaal drie: je kaarten trainen je precies daar. Je kunt ze altijd wijzigen.';
 
   @override
   String get goalSave => 'Opslaan';
 
   @override
-  String get goalEyebrow => 'JOUW DOEL';
+  String get goalEyebrow => 'JOUW TERREIN';
 
   @override
   String get goalPick => 'Kiezen';
 
   @override
-  String get goalNone => 'Nog geen doel';
+  String get goalNone => 'Nog geen gekozen';
 
   @override
   String get goalNotNow => 'Niet nu';
 
   @override
-  String get goalDecideLine => 'Kiezen met de juiste cijfers, niet op gevoel.';
+  String get goalDecideLine =>
+      'Keuzes, risico’s en kansen, zonder onderbuikgevoel.';
 
   @override
-  String get goalPeopleLine => 'Hoe anderen denken, en hoe je begrepen wordt.';
+  String get goalNews => 'Nieuws en sociale media';
+
+  @override
+  String get goalNewsLine =>
+      'Koppen, statistieken en posts: wat overeind blijft.';
+
+  @override
+  String get goalPeopleLine =>
+      'Wie je wil overtuigen, en hoe je begrepen wordt.';
 
   @override
   String get goalBusinessLine =>
-      'Prikkels, risico en de cijfers achter een idee.';
+      'Onderhandelingen, prikkels en de cijfers achter een idee.';
 
   @override
   String get goalMoneyLine =>
-      'Rente, prijzen en de valkuilen van een aanbieding.';
+      'Prijzen, aanbiedingen, rente: de valkuilen van een deal.';
 
   @override
-  String get goalNonsenseLine =>
-      'Studies, statistieken en koppen: wat houdt stand.';
+  String get goalHealthLine => 'Diëten, kuren en studies: wat het bewijs zegt.';
 
   @override
-  String get goalHealthLine =>
-      'Lichaam, eten en slaap: wat de wetenschap zegt.';
-
-  @override
-  String get goalCultureLine =>
-      'Geschiedenis, kunst, film en muziek die het weten waard zijn.';
-
-  @override
-  String get goalWorldLine => 'Wetenschap, ruimte en natuur, uitgelegd.';
-
-  @override
-  String get goalStress => 'Omgaan met stress';
-
-  @override
-  String get goalLearn => 'Sneller leren';
-
-  @override
-  String get goalStressLine =>
-      'Tegenslagen, zorgen en wat echt in je macht ligt.';
-
-  @override
-  String get goalLearnLine => 'Geheugen, focus en oefenen dat echt werkt.';
-
-  @override
-  String get goalEyebrowMany => 'JOUW DOELEN';
+  String get goalEyebrowMany => 'JOUW TERREINEN';
 
   @override
   String mathsDailyStreak(int n) {

@@ -417,7 +417,7 @@ void main() {
     expect(find.byType(SnackBar), findsNothing);
 
     // What the reader wants to get better at, passed over here.
-    expect(find.text('What do you want to get better at?'), findsOneWidget);
+    expect(find.text('Where do you want to be sharper?'), findsOneWidget);
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
@@ -2084,7 +2084,7 @@ void main() {
 
     // Two: what the reader wants to get better at, the why before the
     // what. Picked, it is kept.
-    expect(find.text('What do you want to get better at?'), findsOneWidget);
+    expect(find.text('Where do you want to be sharper?'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('goal-tile-people')));
     await tester.pump();
     await tester.tap(find.byKey(const ValueKey('goal-next')));
