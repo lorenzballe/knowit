@@ -4852,6 +4852,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get newsRead => '已读';
 
   @override
+  String newsOutlets(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 家媒体报道',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String goalShelf(String goal) {
     return '为了你的目标：$goal';
   }
@@ -4890,7 +4900,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get goalAsk => '你想在哪方面变得更好？';
 
   @override
-  String get goalAskLine => '选一个目标：每天的卡片都会为它训练你。随时可以更改。';
+  String get goalAskLine => '最多选三个：每天的卡片都会为它们训练你。随时可以更改。';
 
   @override
   String get goalSave => '保存';
@@ -4930,6 +4940,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get goalWorldLine => '把科学、太空和自然讲明白。';
+
+  @override
+  String get goalStress => '应对压力';
+
+  @override
+  String get goalLearn => '学得更快';
+
+  @override
+  String get goalStressLine => '挫折、担忧，以及真正由你掌控的事。';
+
+  @override
+  String get goalLearnLine => '记忆、专注，以及真正有效的练习。';
+
+  @override
+  String get goalEyebrowMany => '你的目标';
 
   @override
   String mathsDailyStreak(int n) {

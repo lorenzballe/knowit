@@ -3,10 +3,14 @@ import 'pill_bank.dart';
 import 'pills_repository.dart' show dealableOn;
 import 'topics.dart';
 
-/// What a reader wants to get better at, as a person: the goal they pick on
-/// the first run (screens/goal_screen.dart) and can change in Profile. It
-/// gives Explore a shelf of its own, leans the mix of the deals towards its
-/// subjects, and is what the coach writes towards.
+/// How many goals a reader can hold at once: enough for a person's few
+/// real aims, few enough that each still has its shelf and its lean.
+const int kMostGoals = 3;
+
+/// What a reader wants to get better at, as a person: the goals they pick on
+/// the first run (screens/goal_screen.dart), up to [kMostGoals], and can
+/// change in Profile. Each gives Explore a shelf of its own, leans the mix
+/// of the deals towards its subjects, and is what the coach writes towards.
 ///
 /// A goal is the genres that are about it (Life's People, Decisions, Work
 /// and career; Science's Spot bad science), the reasoning moves it trains,
@@ -15,20 +19,11 @@ import 'topics.dart';
 /// subjects, and is shown in that order: the genres first, as the closest
 /// fit, then the moves, then the rest, each in an order of the day's own,
 /// so the shelf is new every day.
+///
+/// The order is the order the goals are offered in: the aims a person
+/// comes to an app like this with first (people, a business, money,
+/// decisions), the wider ones after.
 enum Goal {
-  decide(
-    'decide',
-    {'life.decisions', 'life.clear_thinking', 'economics.your_money_decisions'},
-    {
-      Principle.sunkCost,
-      Principle.baseRate,
-      Principle.anchoring,
-      Principle.conjunction,
-      Principle.counterfactual,
-      Principle.reflection,
-    },
-    {'thinking', 'psychology'},
-  ),
   people(
     'people',
     {'life.people', 'life.relationships', 'life.ask_better_questions'},
@@ -59,6 +54,34 @@ enum Goal {
     },
     {Principle.exponential, Principle.regression, Principle.independence},
     {'economics', 'maths'},
+  ),
+  decide(
+    'decide',
+    {'life.decisions', 'life.clear_thinking', 'economics.your_money_decisions'},
+    {
+      Principle.sunkCost,
+      Principle.baseRate,
+      Principle.anchoring,
+      Principle.conjunction,
+      Principle.counterfactual,
+      Principle.reflection,
+    },
+    {'thinking', 'psychology'},
+  ),
+  stress(
+    'stress',
+    {'life.handle_setbacks', 'life.meaning'},
+    // A bad run tends back to the usual (regression), and what comes to
+    // mind first is not what is likely (availability): the two moves that
+    // take the most worry out of a week.
+    {Principle.regression, Principle.availability},
+    {'psychology', 'philosophy'},
+  ),
+  learn(
+    'learn',
+    {'life.learn_anything', 'life.time_and_attention', 'life.growth'},
+    {},
+    {'psychology', 'language'},
   ),
   nonsense(
     'nonsense',

@@ -5408,6 +5408,15 @@
  "@newsRead": {
   "description": "Explore, the news, reasoned: on a story already read, after a tick, in place of the button."
  },
+ "newsOutlets": "{count, plural, other{Reported by {count} outlets}}",
+ "@newsOutlets": {
+  "description": "Explore, a news clipping: how many outlets carry the story, before their names (always two or more).",
+  "placeholders": {
+   "count": {
+    "type": "int"
+   }
+  }
+ },
  "goalShelf": "For your goal: {goal}",
  "@goalShelf": {
   "description": "Explore, the reader's goal: the name of its shelf, with the goal the reader picked.",
@@ -5461,7 +5470,7 @@
  "@goalAsk": {
   "description": "The first run's second step, and Explore's prompt: the question of what the reader wants to get better at."
  },
- "goalAskLine": "Pick a goal: every day your cards train you for it. You can change it any time.",
+ "goalAskLine": "Pick up to three: every day your cards train you for them. You can change them any time.",
  "@goalAskLine": {
   "description": "Under that question: what a goal does, and that it can be changed."
  },
@@ -5516,6 +5525,26 @@
  "goalWorldLine": "Science, space and nature, explained.",
  "@goalWorldLine": {
   "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalStress": "Staying calm",
+ "@goalStress": {
+  "description": "The goal screen: a goal, keeping one's head when things go wrong or press."
+ },
+ "goalLearn": "Learning faster",
+ "@goalLearn": {
+  "description": "The goal screen: a goal, learning anything faster and remembering it."
+ },
+ "goalStressLine": "Setbacks, worry and what is really in your control.",
+ "@goalStressLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalLearnLine": "Memory, focus and practice that actually works.",
+ "@goalLearnLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalEyebrowMany": "YOUR GOALS",
+ "@goalEyebrowMany": {
+  "description": "Profile: the eyebrow over the goals, when there is more than one."
  },
  "mathsDailyStreak": "{n, plural, =1{1 day in a row} other{{n} days in a row}}",
  "@mathsDailyStreak": {

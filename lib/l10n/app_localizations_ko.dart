@@ -4874,6 +4874,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get newsRead => '읽음';
 
   @override
+  String newsOutlets(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count개 매체 보도',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String goalShelf(String goal) {
     return '나의 목표: $goal';
   }
@@ -4913,7 +4923,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get goalAskLine =>
-      '목표를 하나 고르세요. 매일 카드가 그 목표를 위해 훈련해 줘요. 언제든 바꿀 수 있어요.';
+      '최대 세 개까지 고르세요. 매일 카드가 그 목표를 위해 훈련해 줘요. 언제든 바꿀 수 있어요.';
 
   @override
   String get goalSave => '저장';
@@ -4953,6 +4963,21 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get goalWorldLine => '과학, 우주, 자연을 쉽게.';
+
+  @override
+  String get goalStress => '스트레스 다루기';
+
+  @override
+  String get goalLearn => '더 빨리 배우기';
+
+  @override
+  String get goalStressLine => '좌절, 걱정, 그리고 정말로 내가 바꿀 수 있는 것.';
+
+  @override
+  String get goalLearnLine => '기억, 집중, 그리고 정말 효과 있는 연습.';
+
+  @override
+  String get goalEyebrowMany => '나의 목표';
 
   @override
   String mathsDailyStreak(int n) {

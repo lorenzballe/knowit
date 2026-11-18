@@ -201,6 +201,31 @@ class _Story extends StatelessWidget {
                   ),
                 ],
               ),
+              // How many papers carry it, and which: one story, read across
+              // the outlets that report it.
+              if ((news?.reported.length ?? 0) >= 2) ...[
+                const SizedBox(height: 12),
+                Row(
+                  key: ValueKey('news-outlets-${pill.id}'),
+                  children: [
+                    Icon(Icons.layers_rounded, size: 14, color: p.inkFaint),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        '${l.newsOutlets(news!.reported.length)} · '
+                        '${news.reported.join(', ')}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.body(
+                          size: 12,
+                          weight: FontWeight.w600,
+                          color: p.inkFaint,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
               const SizedBox(height: 14),
               Row(
                 children: [

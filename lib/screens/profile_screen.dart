@@ -1709,11 +1709,15 @@ class _GoalRow extends StatelessWidget {
         fullscreenDialog: true,
         builder: (routeContext) => GoalScreen(
           editing: true,
-          initial: app.goal,
+          initial: app.goals,
           onSkip: () => Navigator.of(routeContext).pop(),
-          onDone: (key) async {
-            Analytics.capture('goal picked', {'goal': key, 'from': 'profile'});
-            await app.setGoal(key);
+          onDone: (keys) async {
+            Analytics.capture('goal picked', {
+              'goal': keys.join(','),
+              'goals': keys.length,
+              'from': 'profile',
+            });
+            await app.setGoals(keys);
             if (routeContext.mounted) Navigator.of(routeContext).pop();
           },
         ),
@@ -1725,7 +1729,10 @@ class _GoalRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final p = context.p;
-    final Goal? goal = Goal.of(app.goal);
+    final List<Goal> aims = [
+      for (final String k in app.goals)
+        if (Goal.of(k) case final Goal g) g,
+    ];
     return Semantics(
       button: true,
       child: GestureDetector(
@@ -1738,9 +1745,9 @@ class _GoalRow extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Eyebrow(l.goalEyebrow),
+                Eyebrow(aims.length > 1 ? l.goalEyebrowMany : l.goalEyebrow),
                 Text(
-                  goal == null ? l.goalPick : l.goalChange,
+                  aims.isEmpty ? l.goalPick : l.goalChange,
                   style: AppText.body(
                     size: 12.5,
                     weight: FontWeight.w500,
@@ -1750,36 +1757,67 @@ class _GoalRow extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 11),
-            Row(
-              children: [
-                Container(
-                  width: 34,
-                  height: 34,
-                  decoration: BoxDecoration(
-                    color: goal == null
-                        ? p.inverse.withValues(alpha: 0.06)
-                        : goalHue(goal),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    goal == null ? Icons.flag_rounded : goalIcon(goal),
-                    size: 18,
-                    color: goal == null ? p.inkMuted : inkOn(goalHue(goal)),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    goal == null ? l.goalNone : goalName(l, goal),
-                    style: AppText.body(
-                      size: 15,
-                      weight: FontWeight.w700,
-                      color: goal == null ? p.inkMuted : p.ink,
+            if (aims.isEmpty)
+              Row(
+                children: [
+                  Container(
+                    width: 34,
+                    height: 34,
+                    decoration: BoxDecoration(
+                      color: p.inverse.withValues(alpha: 0.06),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.flag_rounded,
+                      size: 18,
+                      color: p.inkMuted,
                     ),
                   ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      l.goalNone,
+                      style: AppText.body(
+                        size: 15,
+                        weight: FontWeight.w700,
+                        color: p.inkMuted,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            else
+              for (int i = 0; i < aims.length; i++) ...[
+                if (i > 0) const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Container(
+                      width: 34,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        color: goalHue(aims[i]),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        goalIcon(aims[i]),
+                        size: 18,
+                        color: inkOn(goalHue(aims[i])),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        goalName(l, aims[i]),
+                        style: AppText.body(
+                          size: 15,
+                          weight: FontWeight.w700,
+                          color: p.ink,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
           ],
         ),
       ),

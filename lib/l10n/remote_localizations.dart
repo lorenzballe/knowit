@@ -4934,6 +4934,11 @@ class RemoteLocalizations extends AppLocalizations {
   String get newsRead => _words.text('newsRead') ?? _base.newsRead;
 
   @override
+  String newsOutlets(int count) =>
+      _words.format('newsOutlets', localeName, {'count': count}) ??
+      _base.newsOutlets(count);
+
+  @override
   String goalShelf(String goal) =>
       _words.format('goalShelf', localeName, {'goal': goal}) ??
       _base.goalShelf(goal);
@@ -5021,6 +5026,24 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get goalWorldLine =>
       _words.text('goalWorldLine') ?? _base.goalWorldLine;
+
+  @override
+  String get goalStress => _words.text('goalStress') ?? _base.goalStress;
+
+  @override
+  String get goalLearn => _words.text('goalLearn') ?? _base.goalLearn;
+
+  @override
+  String get goalStressLine =>
+      _words.text('goalStressLine') ?? _base.goalStressLine;
+
+  @override
+  String get goalLearnLine =>
+      _words.text('goalLearnLine') ?? _base.goalLearnLine;
+
+  @override
+  String get goalEyebrowMany =>
+      _words.text('goalEyebrowMany') ?? _base.goalEyebrowMany;
 
   @override
   String mathsDailyStreak(int n) =>

@@ -2107,7 +2107,7 @@ void main() {
     expect(find.byType(PillCardStack), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
-    expect(prefs.getString('knowit.goal'), 'people');
+    expect(prefs.getStringList('knowit.goals'), ['people']);
   });
 
   testWidgets('setting the genres ends on the first day too', (tester) async {
@@ -2153,7 +2153,7 @@ void main() {
     // And the first run is not asked again, nor the goal.
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
-    expect(prefs.getString('knowit.goal'), isNull);
+    expect(prefs.getStringList('knowit.goals'), isNull);
     expect(prefs.getBool('knowit.goalAsked'), isTrue);
   });
 

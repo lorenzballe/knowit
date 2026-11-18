@@ -1352,13 +1352,14 @@ class _AstutoRootState extends State<AstutoRoot> {
       // over, the mix comes next.
       case _Stage.goal:
         return GoalScreen(
-          initial: _app.goal,
-          onDone: (key) async {
+          initial: _app.goals,
+          onDone: (keys) async {
             Analytics.capture('goal picked', {
-              'goal': key,
+              'goal': keys.join(','),
+              'goals': keys.length,
               'from': 'onboarding',
             });
-            await _app.setGoal(key);
+            await _app.setGoals(keys);
             if (mounted) _go(_Stage.subjects);
           },
           onSkip: () async {

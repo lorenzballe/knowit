@@ -7254,6 +7254,12 @@ abstract class AppLocalizations {
   /// **'Read'**
   String get newsRead;
 
+  /// Explore, a news clipping: how many outlets carry the story, before their names (always two or more).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{Reported by {count} outlets}}'**
+  String newsOutlets(int count);
+
   /// Explore, the reader's goal: the name of its shelf, with the goal the reader picked.
   ///
   /// In en, this message translates to:
@@ -7329,7 +7335,7 @@ abstract class AppLocalizations {
   /// Under that question: what a goal does, and that it can be changed.
   ///
   /// In en, this message translates to:
-  /// **'Pick a goal: every day your cards train you for it. You can change it any time.'**
+  /// **'Pick up to three: every day your cards train you for them. You can change them any time.'**
   String get goalAskLine;
 
   /// The goal screen opened from Profile: its button, which keeps the goal picked.
@@ -7409,6 +7415,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Science, space and nature, explained.'**
   String get goalWorldLine;
+
+  /// The goal screen: a goal, keeping one's head when things go wrong or press.
+  ///
+  /// In en, this message translates to:
+  /// **'Staying calm'**
+  String get goalStress;
+
+  /// The goal screen: a goal, learning anything faster and remembering it.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning faster'**
+  String get goalLearn;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Setbacks, worry and what is really in your control.'**
+  String get goalStressLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory, focus and practice that actually works.'**
+  String get goalLearnLine;
+
+  /// Profile: the eyebrow over the goals, when there is more than one.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR GOALS'**
+  String get goalEyebrowMany;
 
   /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.
   ///

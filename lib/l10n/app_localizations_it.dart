@@ -5080,6 +5080,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get newsRead => 'Letta';
 
   @override
+  String newsOutlets(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ne parlano $count testate',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String goalShelf(String goal) {
     return 'Per il tuo obiettivo: $goal';
   }
@@ -5119,7 +5129,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get goalAskLine =>
-      'Scegli un obiettivo: ogni giorno le tue carte ti allenano lì. Puoi cambiarlo quando vuoi.';
+      'Scegline fino a tre: ogni giorno le tue carte ti allenano lì. Puoi cambiarli quando vuoi.';
 
   @override
   String get goalSave => 'Salva';
@@ -5161,6 +5171,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get goalWorldLine => 'Scienza, spazio e natura, spiegati.';
+
+  @override
+  String get goalStress => 'Gestire lo stress';
+
+  @override
+  String get goalLearn => 'Imparare più in fretta';
+
+  @override
+  String get goalStressLine =>
+      'Imprevisti, ansia e cosa dipende davvero da te.';
+
+  @override
+  String get goalLearnLine =>
+      'Memoria, concentrazione e un esercizio che funziona davvero.';
+
+  @override
+  String get goalEyebrowMany => 'I TUOI OBIETTIVI';
 
   @override
   String mathsDailyStreak(int n) {

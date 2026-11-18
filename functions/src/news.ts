@@ -566,6 +566,8 @@ export interface NewsCard {
     type: 'news';
     headline: string;
     outlet: string;
+    /** Every outlet that carries the story, in the order the editor gave. */
+    reported: string[];
     date: string;
     panels: NewsPanel[];
     then?: NewsThen;
@@ -646,6 +648,7 @@ export function toCard(text: string, story: Story, articles: Article[], date: st
       type: 'news',
       headline,
       outlet: tidy(w.outlet, 60) || articles[0]?.outlet || story.items[0].outlet,
+      reported: [...new Set(story.items.map((it) => it.outlet))].slice(0, 8),
       date,
       panels,
       ...(then ? { then } : {}),

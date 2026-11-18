@@ -14,8 +14,8 @@ import '../../explore_block.dart';
 import 'layout.dart';
 
 /// What the reader wants to get better at (lib/data/goals.dart), on Explore
-/// for every subject: a shelf of the goal's cards for the day, new every
-/// day, with the goal's mark and a way to change it.
+/// for every subject: a shelf of each goal's cards for the day, new every
+/// day, and a way to change them.
 ///
 /// The first run asks the question (screens/goal_screen.dart). A reader who
 /// came before it did is asked here instead, once, by a card that opens the
@@ -35,53 +35,79 @@ class GoalBlock extends ExploreBlock with SectionLayout {
     if (host.subject != null) return null;
     final AppState app = host.app;
     final l = context.l10n;
-    final Goal? goal = Goal.of(app.goal);
-    if (goal == null) {
+    final List<Goal> aims = [
+      for (final String k in app.goals)
+        if (Goal.of(k) case final Goal g) g,
+    ];
+    if (aims.isEmpty) {
       if (app.goalAsked) return null;
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: _Ask(app: app),
       );
     }
-    final List<Pill> cards = goal.cardsFor(app.today, app.seenIds);
-    if (cards.isEmpty) return null;
-    return ShelfFrame(
-      title: l.goalShelf(goalName(l, goal)),
-      line: goalLine(l, goal),
-      trailing: GestureDetector(
-        key: const ValueKey('goal-change'),
-        behavior: HitTestBehavior.opaque,
-        onTap: () => openGoalScreen(context, app, from: 'explore'),
-        child: Padding(
-          padding: const EdgeInsets.all(6),
-          child: Text(
-            l.goalChange,
-            style: AppText.body(
-              size: 13.5,
-              weight: FontWeight.w700,
-              color: context.p.inkMuted,
-            ),
+    // A shelf for each goal, in the order they were picked; a card on one
+    // shelf is not on the next, where two goals share a subject.
+    final Set<String> taken = {...app.seenIds};
+    final List<Widget> shelves = [];
+    for (final Goal goal in aims) {
+      final List<Pill> cards = goal.cardsFor(app.today, taken);
+      if (cards.isEmpty) continue;
+      taken.addAll([for (final Pill p in cards) p.id]);
+      shelves.add(
+        ShelfFrame(
+          title: l.goalShelf(goalName(l, goal)),
+          line: goalLine(l, goal),
+          // The way to change them, once, on the first shelf.
+          trailing: shelves.isEmpty
+              ? GestureDetector(
+                  key: const ValueKey('goal-change'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => openGoalScreen(context, app, from: 'explore'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: Text(
+                      l.goalChange,
+                      style: AppText.body(
+                        size: 13.5,
+                        weight: FontWeight.w700,
+                        color: context.p.inkMuted,
+                      ),
+                    ),
+                  ),
+                )
+              : null,
+          child: TileRow(
+            size: TileSize.m,
+            pills: cards,
+            isRead: host.isRead,
+            onShown: (pill) => host.seen(section, pill),
+            onOpen: (shelf, pill) {
+              Analytics.capture('goal opened', {
+                'goal': goal.key,
+                'rank': shelf.indexOf(pill) + 1,
+              });
+              host.open(section, shelf, pill);
+            },
           ),
         ),
-      ),
-      child: TileRow(
-        size: TileSize.m,
-        pills: cards,
-        isRead: host.isRead,
-        onShown: (pill) => host.seen(section, pill),
-        onOpen: (shelf, pill) {
-          Analytics.capture('goal opened', {
-            'goal': goal.key,
-            'rank': shelf.indexOf(pill) + 1,
-          });
-          host.open(section, shelf, pill);
-        },
-      ),
+      );
+    }
+    if (shelves.isEmpty) return null;
+    if (shelves.length == 1) return shelves.single;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (int i = 0; i < shelves.length; i++) ...[
+          if (i > 0) const SizedBox(height: kSectionGap),
+          shelves[i],
+        ],
+      ],
     );
   }
 }
 
-/// Opens the goals, to pick one or change it, as a page of its own.
+/// Opens the goals, to pick them or change them, as a page of its own.
 Future<void> openGoalScreen(
   BuildContext context,
   AppState app, {
@@ -91,11 +117,15 @@ Future<void> openGoalScreen(
     fullscreenDialog: true,
     builder: (routeContext) => GoalScreen(
       editing: true,
-      initial: app.goal,
+      initial: app.goals,
       onSkip: () => Navigator.of(routeContext).pop(),
-      onDone: (key) async {
-        Analytics.capture('goal picked', {'goal': key, 'from': from});
-        await app.setGoal(key);
+      onDone: (keys) async {
+        Analytics.capture('goal picked', {
+          'goal': keys.join(','),
+          'goals': keys.length,
+          'from': from,
+        });
+        await app.setGoals(keys);
         if (routeContext.mounted) Navigator.of(routeContext).pop();
       },
     ),
@@ -124,26 +154,33 @@ class _Ask extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              for (final Goal g in Goal.values)
-                Padding(
-                  padding: const EdgeInsets.only(right: 6),
-                  child: Container(
-                    width: 26,
-                    height: 26,
-                    decoration: BoxDecoration(
-                      color: goalHue(g),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      goalIcon(g),
-                      size: 14,
-                      color: inkOn(goalHue(g)),
+          // The goals' marks, overlapping as a row of faces does, each
+          // ringed in the card's own ground so the next one sits clear.
+          SizedBox(
+            height: 28,
+            width: 28 + (Goal.values.length - 1) * 19,
+            child: Stack(
+              children: [
+                for (int i = 0; i < Goal.values.length; i++)
+                  Positioned(
+                    left: i * 19.0,
+                    child: Container(
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: goalHue(Goal.values[i]),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: p.surfaceRaised, width: 2),
+                      ),
+                      child: Icon(
+                        goalIcon(Goal.values[i]),
+                        size: 13,
+                        color: inkOn(goalHue(Goal.values[i])),
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 14),
           Text(

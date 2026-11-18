@@ -4991,6 +4991,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get newsRead => 'Okundu';
 
   @override
+  String newsOutlets(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count yayın bildirdi',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String goalShelf(String goal) {
     return 'Hedefin için: $goal';
   }
@@ -5030,7 +5040,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get goalAskLine =>
-      'Bir hedef seç: kartların her gün seni ona hazırlar. İstediğin zaman değiştirebilirsin.';
+      'En fazla üç tane seç: kartların her gün seni onlara hazırlar. İstediğin zaman değiştirebilirsin.';
 
   @override
   String get goalSave => 'Kaydet';
@@ -5072,6 +5082,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get goalWorldLine => 'Bilim, uzay ve doğa, anlaşılır biçimde.';
+
+  @override
+  String get goalStress => 'Stresle başa çıkmak';
+
+  @override
+  String get goalLearn => 'Daha hızlı öğrenmek';
+
+  @override
+  String get goalStressLine =>
+      'Aksilikler, kaygılar ve gerçekten senin elinde olanlar.';
+
+  @override
+  String get goalLearnLine => 'Hafıza, odak ve gerçekten işe yarayan pratik.';
+
+  @override
+  String get goalEyebrowMany => 'HEDEFLERİN';
 
   @override
   String mathsDailyStreak(int n) {
