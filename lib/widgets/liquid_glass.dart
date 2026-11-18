@@ -36,7 +36,7 @@ class LiquidGlass extends StatelessWidget {
     required this.child,
     this.radius = 26,
     this.circle = false,
-    this.blur = 11,
+    this.blur = 24,
     this.shadow = true,
     this.tint,
     this.strength = 1,
@@ -109,12 +109,14 @@ class LiquidGlass extends StatelessWidget {
     }
 
     final double k = strength.clamp(0.5, 2.0);
-    // The ground under the tint, thin: what passes under the glass shows
-    // through in its own colours, as through iOS's, and what sits on it
-    // keeps its contrast by its halo (glassHalo), not by a heavier glass.
+    // What passes under the glass shows through in its own colour, whole:
+    // the glass is the colour of the card under it, as on iOS. At night a
+    // thin smoke under the tint, so over the black page the glass is still
+    // glass and not a hole; on paper nothing. What sits on the glass keeps
+    // its contrast by its halo (glassHalo), not by a duller glass.
     final Color ground = dark
-        ? const Color(0xFF2E2E34).withValues(alpha: 0.20)
-        : Colors.white.withValues(alpha: 0.12);
+        ? const Color(0xFF3A3A40).withValues(alpha: 0.30)
+        : Colors.transparent;
     // The tint: on paper a milk glass, at night a smoked one; a coloured
     // tint takes the place of either, as thin.
     final Color sheenTop = tint != null
@@ -123,13 +125,13 @@ class LiquidGlass extends StatelessWidget {
             tint!,
           ).withValues(alpha: 0.34 * k)
         : dark
-        ? Colors.white.withValues(alpha: 0.08 * k)
-        : Colors.white.withValues(alpha: 0.30 * k);
+        ? Colors.white.withValues(alpha: 0.14 * k)
+        : Colors.white.withValues(alpha: 0.62 * k);
     final Color sheenBottom = tint != null
         ? tint!.withValues(alpha: 0.22 * k)
         : dark
-        ? Colors.white.withValues(alpha: 0.03 * k)
-        : Colors.white.withValues(alpha: 0.14 * k);
+        ? Colors.white.withValues(alpha: 0.07 * k)
+        : Colors.white.withValues(alpha: 0.42 * k);
     final Color top = Color.alphaBlend(sheenTop, ground);
     final Color bottom = Color.alphaBlend(sheenBottom, ground);
 
@@ -138,7 +140,7 @@ class LiquidGlass extends StatelessWidget {
       child: ClipPath(
         clipper: ShapeBorderClipper(shape: shape),
         child: BackdropFilter(
-          filter: _frost(blur, dark),
+          filter: ui.ImageFilter.blur(sigmaX: blur, sigmaY: blur),
           child: CustomPaint(
             foregroundPainter: _Rim(circle: circle, radius: radius, dark: dark),
             child: DecoratedBox(
@@ -157,39 +159,6 @@ class LiquidGlass extends StatelessWidget {
       ),
     );
   }
-}
-
-/// The backdrop as the glass bends it: a tenth of its colour drained, then
-/// blurred, and toned towards the ground, dimmer at night and lifted on
-/// paper. Glass on iOS does the same, so a card passing under a bar shows
-/// through in its own colour without drowning what is on the glass.
-ui.ImageFilter _frost(double sigma, bool dark) {
-  // How much colour is left, and the tone: a gain on every channel, and a
-  // lift, in the 0 to 255 of a colour matrix's last column.
-  const double keep = 0.9;
-  final double gain = dark ? 0.72 : 1.0;
-  final double lift = 255 * (dark ? 0.03 : 0.04);
-  const double r = 0.2126, g = 0.7152, b = 0.0722;
-  List<double> row(double rr, double gg, double bb) => [
-    rr * gain,
-    gg * gain,
-    bb * gain,
-    0,
-    lift,
-  ];
-  return ui.ImageFilter.compose(
-    outer: ui.ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
-    inner: ui.ColorFilter.matrix([
-      ...row(r * (1 - keep) + keep, g * (1 - keep), b * (1 - keep)),
-      ...row(r * (1 - keep), g * (1 - keep) + keep, b * (1 - keep)),
-      ...row(r * (1 - keep), g * (1 - keep), b * (1 - keep) + keep),
-      0,
-      0,
-      0,
-      1,
-      0,
-    ]),
-  );
 }
 
 /// The edge of the glass: a hairline brighter where the light falls, and a
@@ -304,7 +273,7 @@ class GlassSheet extends StatelessWidget {
     return ClipRRect(
       borderRadius: corners,
       child: BackdropFilter(
-        filter: _frost(34, dark),
+        filter: ui.ImageFilter.blur(sigmaX: 34, sigmaY: 34),
         child: CustomPaint(
           foregroundPainter: _SheetEdge(radius: radius, dark: dark),
           child: DecoratedBox(
