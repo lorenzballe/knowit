@@ -5096,12 +5096,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get goalShelfLine => 'Tarjetas nuevas cada día.';
-
-  @override
-  String get goalChange => 'Cambiar';
-
-  @override
   String get goalDecide => 'Decisiones del día a día';
 
   @override
@@ -5115,28 +5109,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get goalHealth => 'Salud';
-
-  @override
-  String get goalAsk => '¿Dónde quieres ver más claro?';
-
-  @override
-  String get goalAskLine =>
-      'Elige hasta tres: tus tarjetas te entrenarán justo ahí. Puedes cambiarlos cuando quieras.';
-
-  @override
-  String get goalSave => 'Guardar';
-
-  @override
-  String get goalEyebrow => 'TU ÁMBITO';
-
-  @override
-  String get goalPick => 'Elegir';
-
-  @override
-  String get goalNone => 'Aún ninguno';
-
-  @override
-  String get goalNotNow => 'Ahora no';
 
   @override
   String get goalDecideLine =>
@@ -5164,9 +5136,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get goalHealthLine =>
       'Dietas, curas y estudios: lo que dicen las pruebas.';
-
-  @override
-  String get goalEyebrowMany => 'TUS ÁMBITOS';
 
   @override
   String mathsDailyStreak(int n) {

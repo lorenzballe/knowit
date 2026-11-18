@@ -6,7 +6,7 @@ import '../models/pill.dart';
 import '../sync/reports.dart';
 import '../theme.dart';
 import 'ui.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// Opens "what's wrong with this card?" for [pill]. True when a report
 /// was sent.
@@ -76,7 +76,7 @@ class _ReportSheetState extends State<ReportSheet> {
       for (final ReportReason r in ReportReason.values)
         if (r != ReportReason.answer || widget.pill.isGraded) r,
     ];
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(30)),

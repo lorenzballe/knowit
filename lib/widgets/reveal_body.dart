@@ -9,7 +9,7 @@ import '../measure/screens.dart' show seenOf;
 import '../models/pill.dart';
 import '../sync/reports.dart';
 import '../theme.dart';
-import '../screens/goal_screen.dart' show goalIcon, goalName;
+import 'area_marks.dart' show goalIcon, goalName;
 import 'deeper_sheet.dart';
 import 'diagram_view.dart';
 import 'motion.dart';

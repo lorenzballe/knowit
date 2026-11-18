@@ -9,7 +9,7 @@ import '../state/app_state.dart';
 import '../sync/place_finder.dart';
 import '../theme.dart';
 import 'ui.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// The place as a reader would name it: the city, or, where the phone gave
 /// none, the region, and failing that the country.
@@ -233,7 +233,7 @@ class PlaceAsk extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         key: const ValueKey('place-ask'),
         decoration: const BoxDecoration(
@@ -419,7 +419,7 @@ class PlaceOptions extends StatelessWidget {
             placeName(place),
             if (region != null && region != placeName(place)) region,
           ].join(' · ');
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         key: const ValueKey('place-options'),
         decoration: const BoxDecoration(

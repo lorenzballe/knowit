@@ -4867,12 +4867,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get goalShelfLine => '每天都有新卡片。';
-
-  @override
-  String get goalChange => '更改';
-
-  @override
   String get goalDecide => '日常决定';
 
   @override
@@ -4886,27 +4880,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get goalHealth => '健康';
-
-  @override
-  String get goalAsk => '你想在哪些方面看得更清楚？';
-
-  @override
-  String get goalAskLine => '最多选三个：卡片会在这些方面训练你。随时可以更改。';
-
-  @override
-  String get goalSave => '保存';
-
-  @override
-  String get goalEyebrow => '你的领域';
-
-  @override
-  String get goalPick => '选择';
-
-  @override
-  String get goalNone => '还没有选择';
-
-  @override
-  String get goalNotNow => '以后再说';
 
   @override
   String get goalDecideLine => '选择、风险与概率，不凭直觉。';
@@ -4928,9 +4901,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get goalHealthLine => '饮食、疗法与研究：证据怎么说。';
-
-  @override
-  String get goalEyebrowMany => '你的领域';
 
   @override
   String mathsDailyStreak(int n) {

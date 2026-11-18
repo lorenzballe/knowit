@@ -416,11 +416,6 @@ void main() {
     await _settle(tester);
     expect(find.byType(SnackBar), findsNothing);
 
-    // What the reader wants to get better at, passed over here.
-    expect(find.text('Where do you want to be sharper?'), findsOneWidget);
-    await tester.tap(find.text('Skip'));
-    await _settle(tester);
-
     // The mix opens with everything in, so the reader turns things down
     // rather than building a deck from nothing.
     expect(find.text('Science'), findsOneWidget);
@@ -2082,20 +2077,12 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Two: what the reader wants to get better at, the why before the
-    // what. Picked, it is kept.
-    expect(find.text('Where do you want to be sharper?'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('goal-tile-people')));
-    await tester.pump();
-    await tester.tap(find.byKey(const ValueKey('goal-next')));
-    await _settle(tester);
-
-    // Three: the mix.
+    // Two: the mix.
     expect(find.text('Science'), findsOneWidget);
     await tester.tap(find.text('Next'));
     await _settle(tester);
 
-    // Four: the genres under it, which can be walked past.
+    // Three: the genres under it, which can be walked past.
     expect(find.text('Which parts?'), findsOneWidget);
     await tester.tap(find.text('Skip'));
     await _settle(tester);
@@ -2107,16 +2094,12 @@ void main() {
     expect(find.byType(PillCardStack), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
-    expect(prefs.getStringList('knowit.goals'), ['people']);
   });
 
   testWidgets('setting the genres ends on the first day too', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
-    await tester.tap(find.text('Skip'));
-    await _settle(tester);
-    // The goal passed over: asked, and not asked again.
     await tester.tap(find.text('Skip'));
     await _settle(tester);
     await tester.tap(find.text('Next'));
@@ -2139,9 +2122,6 @@ void main() {
     await _settle(tester);
     await tester.tap(find.text('Skip'));
     await _settle(tester);
-    // The goal's Skip.
-    await tester.tap(find.text('Skip'));
-    await _settle(tester);
     // The mix's own Skip, in its heading's row.
     await tester.tap(find.text('Skip'));
     await _settle(tester);
@@ -2150,11 +2130,9 @@ void main() {
     expect(find.text('Your mix'), findsNothing);
     expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
-    // And the first run is not asked again, nor the goal.
+    // And the first run is not asked again.
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
-    expect(prefs.getStringList('knowit.goals'), isNull);
-    expect(prefs.getBool('knowit.goalAsked'), isTrue);
   });
 
   testWidgets('the paywall sells only what it delivers', (tester) async {

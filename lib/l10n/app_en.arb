@@ -5426,14 +5426,6 @@
    }
   }
  },
- "goalShelfLine": "New cards for it every day.",
- "@goalShelfLine": {
-  "description": "Explore, the reader's goal: the line under the shelf's name."
- },
- "goalChange": "Change",
- "@goalChange": {
-  "description": "Explore, the reader's goal: beside the shelf's name, asks again what they want to get better at."
- },
  "goalDecide": "Everyday decisions",
  "@goalDecide": {
   "description": "A goal the reader can pick on Explore: making better decisions."
@@ -5453,34 +5445,6 @@
  "goalHealth": "Health",
  "@goalHealth": {
   "description": "A goal the reader can pick on Explore: health, body and food."
- },
- "goalAsk": "Where do you want to be sharper?",
- "@goalAsk": {
-  "description": "The first run's second step, and Explore's prompt: the question of what the reader wants to get better at."
- },
- "goalAskLine": "Pick up to three: your cards will train you right there. You can change them any time.",
- "@goalAskLine": {
-  "description": "Under that question: what a goal does, and that it can be changed."
- },
- "goalSave": "Save",
- "@goalSave": {
-  "description": "The goal screen opened from Profile: its button, which keeps the goal picked."
- },
- "goalEyebrow": "YOUR AREA",
- "@goalEyebrow": {
-  "description": "Profile, the reader's goal: the eyebrow over it, in small capitals."
- },
- "goalPick": "Choose",
- "@goalPick": {
-  "description": "Profile, the reader's goal: the link that opens the goals when none is picked."
- },
- "goalNone": "None picked yet",
- "@goalNone": {
-  "description": "Profile, the reader's goal: what stands in its place when none is picked."
- },
- "goalNotNow": "Not now",
- "@goalNotNow": {
-  "description": "Explore, the prompt to pick a goal: puts it away for good (Profile still has it)."
  },
  "goalDecideLine": "Choices, risks and odds, without the hunch.",
  "@goalDecideLine": {
@@ -5509,10 +5473,6 @@
  "goalHealthLine": "Diets, cures and studies: what the evidence says.",
  "@goalHealthLine": {
   "description": "The goal screen: under a goal's name, what it trains, in a line."
- },
- "goalEyebrowMany": "YOUR AREAS",
- "@goalEyebrowMany": {
-  "description": "Profile: the eyebrow over the goals, when there is more than one."
  },
  "mathsDailyStreak": "{n, plural, =1{1 day in a row} other{{n} days in a row}}",
  "@mathsDailyStreak": {

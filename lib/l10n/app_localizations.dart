@@ -7266,18 +7266,6 @@ abstract class AppLocalizations {
   /// **'Useful for: {goal}'**
   String goalShelf(String goal);
 
-  /// Explore, the reader's goal: the line under the shelf's name.
-  ///
-  /// In en, this message translates to:
-  /// **'New cards for it every day.'**
-  String get goalShelfLine;
-
-  /// Explore, the reader's goal: beside the shelf's name, asks again what they want to get better at.
-  ///
-  /// In en, this message translates to:
-  /// **'Change'**
-  String get goalChange;
-
   /// A goal the reader can pick on Explore: making better decisions.
   ///
   /// In en, this message translates to:
@@ -7307,48 +7295,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Health'**
   String get goalHealth;
-
-  /// The first run's second step, and Explore's prompt: the question of what the reader wants to get better at.
-  ///
-  /// In en, this message translates to:
-  /// **'Where do you want to be sharper?'**
-  String get goalAsk;
-
-  /// Under that question: what a goal does, and that it can be changed.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick up to three: your cards will train you right there. You can change them any time.'**
-  String get goalAskLine;
-
-  /// The goal screen opened from Profile: its button, which keeps the goal picked.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get goalSave;
-
-  /// Profile, the reader's goal: the eyebrow over it, in small capitals.
-  ///
-  /// In en, this message translates to:
-  /// **'YOUR AREA'**
-  String get goalEyebrow;
-
-  /// Profile, the reader's goal: the link that opens the goals when none is picked.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose'**
-  String get goalPick;
-
-  /// Profile, the reader's goal: what stands in its place when none is picked.
-  ///
-  /// In en, this message translates to:
-  /// **'None picked yet'**
-  String get goalNone;
-
-  /// Explore, the prompt to pick a goal: puts it away for good (Profile still has it).
-  ///
-  /// In en, this message translates to:
-  /// **'Not now'**
-  String get goalNotNow;
 
   /// The goal screen: under a goal's name, what it trains, in a line.
   ///
@@ -7391,12 +7337,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Diets, cures and studies: what the evidence says.'**
   String get goalHealthLine;
-
-  /// Profile: the eyebrow over the goals, when there is more than one.
-  ///
-  /// In en, this message translates to:
-  /// **'YOUR AREAS'**
-  String get goalEyebrowMany;
 
   /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.
   ///

@@ -5282,12 +5282,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get goalShelfLine => 'Каждый день новые карточки.';
-
-  @override
-  String get goalChange => 'Изменить';
-
-  @override
   String get goalDecide => 'Решения на каждый день';
 
   @override
@@ -5301,28 +5295,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get goalHealth => 'Здоровье';
-
-  @override
-  String get goalAsk => 'Где ты хочешь видеть яснее?';
-
-  @override
-  String get goalAskLine =>
-      'Выбери до трёх: карточки будут тренировать тебя именно там. Их можно сменить в любой момент.';
-
-  @override
-  String get goalSave => 'Сохранить';
-
-  @override
-  String get goalEyebrow => 'ТВОЯ ОБЛАСТЬ';
-
-  @override
-  String get goalPick => 'Выбрать';
-
-  @override
-  String get goalNone => 'Пока не выбрано';
-
-  @override
-  String get goalNotNow => 'Не сейчас';
 
   @override
   String get goalDecideLine => 'Выбор, риски и вероятности без догадок.';
@@ -5346,9 +5318,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get goalHealthLine =>
       'Диеты, лекарства и исследования: что говорят факты.';
-
-  @override
-  String get goalEyebrowMany => 'ТВОИ ОБЛАСТИ';
 
   @override
   String mathsDailyStreak(int n) {

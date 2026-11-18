@@ -1,8 +1,7 @@
-// Where the reader wants to be sharper (lib/data/goals.dart,
-// screens/goal_screen.dart, explore/blocks/core/goal_block.dart): up to
-// three of six areas, asked on the first run, kept, a shelf each on
-// Explore, the mix leaned to them, a line for the coach, named on the back
-// of their cards; asked once on Explore of a reader who came before.
+// Where a card pays off in a life (lib/data/goals.dart,
+// explore/blocks/core/goal_block.dart): six areas, each named on the back
+// of its cards and a shelf on Explore a day each; and the areas a build
+// before let a reader pick, still kept, leaning the mix, told the coach.
 //
 //   flutter test test/explore/goal_block_test.dart
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ import 'package:astuto/data/goals.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
-import 'package:astuto/screens/goal_screen.dart';
+import 'package:astuto/widgets/area_marks.dart';
 import 'package:astuto/screens/journey_screen.dart' show coachStats;
 import 'package:astuto/state/app_state.dart';
 
@@ -155,140 +154,31 @@ void main() {
     expect((await _app({'knowit.goal': 'nonsense'})).goals, ['news']);
   });
 
-  testWidgets('the screen: six areas, ticked up to three, Next only with '
-      'one ticked, and the ones held ticked when it opens', (tester) async {
-    List<String>? done;
-    var skipped = false;
-    Future<void> pump({
-      List<String> initial = const [],
-      bool editing = false,
-    }) => tester.pumpWidget(
-      MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: GoalScreen(
-          initial: initial,
-          editing: editing,
-          onDone: (keys) => done = keys,
-          onSkip: () => skipped = true,
-        ),
-      ),
-    );
-    Future<void> tick(String key) async {
-      final Finder tile = find.byKey(ValueKey('goal-tile-$key'));
-      // Back to the top of the list, then down to the goal.
-      await tester.drag(find.byType(ListView), const Offset(0, 3000));
-      await tester.pump();
-      await tester.scrollUntilVisible(tile, 100);
-      // All of it on screen, so the tap lands on it and not past the list.
-      await tester.ensureVisible(tile);
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(tile);
-      await tester.pump(const Duration(milliseconds: 200));
-    }
-
-    expect(Goal.values, hasLength(6));
-    await pump();
-    expect(find.text('Where do you want to be sharper?'), findsOneWidget);
-    expect(find.textContaining('up to three'), findsOneWidget);
-    expect(find.text('Next'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('goal-next')));
-    expect(done, isNull);
-    await tick('money');
-    await tick('people');
-    await tick('news');
-    // A fourth takes no tick.
-    await tick('health');
-    // A tick taken away, and another in its place.
-    await tick('people');
-    await tick('decide');
-    await tester.pump(const Duration(seconds: 1));
-    await tester.tap(find.byKey(const ValueKey('goal-next')));
-    expect(done, ['money', 'news', 'decide']);
-    await tester.tap(find.text('Skip'));
-    expect(skipped, isTrue);
-
-    // From Profile: it opens on the goals held, closes, and saves.
-    done = null;
-    await pump(initial: ['health', 'business'], editing: true);
-    expect(find.text('Save'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('goal-next')));
-    expect(done, ['health', 'business']);
-    await tick('business');
-    await tester.tap(find.byKey(const ValueKey('goal-next')));
-    expect(done, ['health']);
-  });
-
-  testWidgets('on Explore: a reader never asked gets the question once, as a '
-      'card; picked, the goal is a shelf with a way to change it', (
-    tester,
-  ) async {
+  testWidgets("on Explore: the area of the day, for everybody, a day each, "
+      "under the words its cards carry; nothing asked, and not on a "
+      "subject's page", (tester) async {
     final app = await _app({});
+    final Goal area = Goal.ofDay(app.today);
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
     await pumpSections(tester, CoreHost(app), sections);
-    expect(find.byKey(const ValueKey('goal-ask')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('goal-ask-open')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('goal-tile-business')));
-    await tester.pump();
-    await tester.tap(find.byKey(const ValueKey('goal-next')));
-    await tester.pumpAndSettle();
-    expect(app.goals, ['business']);
-
-    await pumpSections(tester, CoreHost(app), sections);
-    expect(find.text('Useful for: Work and business'), findsOneWidget);
-    expect(
-      find.text('Negotiations, incentives and the numbers behind an idea.'),
-      findsOneWidget,
-    );
+    expect(find.text(l.goalShelf(goalName(l, area))), findsOneWidget);
+    expect(find.text(goalLine(l, area)), findsOneWidget);
     expect(find.byKey(const ValueKey('goal-ask')), findsNothing);
-    expect(find.byKey(const ValueKey('goal-change')), findsOneWidget);
-
+    expect(find.byKey(const ValueKey('goal-change')), findsNothing);
+    // Each area in turn, a day each.
+    final DateTime day = DateTime(2026, 11, 18);
+    expect({
+      for (var d = 0; d < Goal.values.length; d++)
+        Goal.ofDay(day.add(Duration(days: d))),
+    }, Goal.values.toSet());
+    expect(Goal.ofDay(day), Goal.ofDay(day.add(const Duration(hours: 20))));
     // Not on a subject's page.
     await pumpSections(
       tester,
       CoreHost(app, subject: kTopics['economics']!.name),
       sections,
     );
-    expect(find.text('Useful for: Work and business'), findsNothing);
-
-    // Two goals: a shelf each, in the order picked, one way to change
-    // them, and no card on both.
-    await app.setGoals(['business', 'money']);
-    await pumpSections(tester, CoreHost(app), sections);
-    expect(find.text('Useful for: Work and business'), findsOneWidget);
-    expect(find.text('Useful for: Money and shopping'), findsOneWidget);
-    expect(find.byKey(const ValueKey('goal-change')), findsOneWidget);
-    final List<String> business = [
-      for (final p in Goal.business.cardsFor(app.today, app.seenIds)) p.id,
-    ];
-    final List<String> money = [
-      for (final p in Goal.money.cardsFor(app.today, {
-        ...app.seenIds,
-        ...business,
-      }))
-        p.id,
-    ];
-    expect(money.toSet().intersection(business.toSet()), isEmpty);
-    expect(
-      tester.getTopLeft(find.text('Useful for: Work and business')).dy,
-      lessThan(
-        tester.getTopLeft(find.text('Useful for: Money and shopping')).dy,
-      ),
-    );
-  });
-
-  testWidgets('put away, or asked on the first run, the question is not on '
-      'Explore', (tester) async {
-    final app = await _app({});
-    await pumpSections(tester, CoreHost(app), sections);
-    await tester.tap(find.byKey(const ValueKey('goal-ask-later')));
-    await tester.pump();
-    expect(app.goalAsked, isTrue);
-    await pumpSections(tester, CoreHost(app), sections);
-    expect(find.byKey(const ValueKey('goal-ask')), findsNothing);
-    final asked = await _app({'knowit.goalAsked': true});
-    await pumpSections(tester, CoreHost(asked), sections);
-    expect(find.byKey(const ValueKey('goal-ask')), findsNothing);
+    expect(find.text(l.goalShelf(goalName(l, area))), findsNothing);
   });
 
   testWidgets('the coach is told the goal, in the reader\'s words', (

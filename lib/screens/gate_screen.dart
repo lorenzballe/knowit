@@ -16,7 +16,7 @@ import '../widgets/balanced_text.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/chunky.dart' show chunkyEdge;
 import '../widgets/ui.dart';
-import '../widgets/liquid_glass.dart';
+import '../widgets/grounds.dart';
 
 /// Keeps the app behind the update gate (lib/remote/gate.dart): the screen
 /// that asks for an update, or the one that says the app is paused, in
@@ -527,7 +527,7 @@ class UpdateSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         key: const ValueKey('update-sheet'),
         decoration: const BoxDecoration(

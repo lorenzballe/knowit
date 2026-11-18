@@ -4889,12 +4889,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get goalShelfLine => '매일 새로운 카드.';
-
-  @override
-  String get goalChange => '변경';
-
-  @override
   String get goalDecide => '일상의 결정';
 
   @override
@@ -4908,27 +4902,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get goalHealth => '건강';
-
-  @override
-  String get goalAsk => '어디에서 더 날카로워지고 싶나요?';
-
-  @override
-  String get goalAskLine => '최대 세 개까지 고르세요. 카드가 바로 그곳을 훈련해 줘요. 언제든 바꿀 수 있어요.';
-
-  @override
-  String get goalSave => '저장';
-
-  @override
-  String get goalEyebrow => '나의 분야';
-
-  @override
-  String get goalPick => '고르기';
-
-  @override
-  String get goalNone => '아직 없음';
-
-  @override
-  String get goalNotNow => '나중에';
 
   @override
   String get goalDecideLine => '선택, 위험, 확률을 감이 아닌 근거로.';
@@ -4950,9 +4923,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get goalHealthLine => '다이어트, 치료법, 연구: 근거가 말하는 것.';
-
-  @override
-  String get goalEyebrowMany => '나의 분야';
 
   @override
   String mathsDailyStreak(int n) {

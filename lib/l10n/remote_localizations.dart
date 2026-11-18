@@ -4944,13 +4944,6 @@ class RemoteLocalizations extends AppLocalizations {
       _base.goalShelf(goal);
 
   @override
-  String get goalShelfLine =>
-      _words.text('goalShelfLine') ?? _base.goalShelfLine;
-
-  @override
-  String get goalChange => _words.text('goalChange') ?? _base.goalChange;
-
-  @override
   String get goalDecide => _words.text('goalDecide') ?? _base.goalDecide;
 
   @override
@@ -4964,27 +4957,6 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get goalHealth => _words.text('goalHealth') ?? _base.goalHealth;
-
-  @override
-  String get goalAsk => _words.text('goalAsk') ?? _base.goalAsk;
-
-  @override
-  String get goalAskLine => _words.text('goalAskLine') ?? _base.goalAskLine;
-
-  @override
-  String get goalSave => _words.text('goalSave') ?? _base.goalSave;
-
-  @override
-  String get goalEyebrow => _words.text('goalEyebrow') ?? _base.goalEyebrow;
-
-  @override
-  String get goalPick => _words.text('goalPick') ?? _base.goalPick;
-
-  @override
-  String get goalNone => _words.text('goalNone') ?? _base.goalNone;
-
-  @override
-  String get goalNotNow => _words.text('goalNotNow') ?? _base.goalNotNow;
 
   @override
   String get goalDecideLine =>
@@ -5011,10 +4983,6 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get goalHealthLine =>
       _words.text('goalHealthLine') ?? _base.goalHealthLine;
-
-  @override
-  String get goalEyebrowMany =>
-      _words.text('goalEyebrowMany') ?? _base.goalEyebrowMany;
 
   @override
   String mathsDailyStreak(int n) =>

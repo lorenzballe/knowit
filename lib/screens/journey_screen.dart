@@ -29,7 +29,7 @@ import 'progress_text.dart';
 import 'week_screen.dart';
 import '../widgets/card_edge.dart';
 import '../widgets/premium.dart';
-import 'goal_screen.dart' show goalName;
+import '../widgets/area_marks.dart' show goalName;
 
 part 'journey_story.dart';
 

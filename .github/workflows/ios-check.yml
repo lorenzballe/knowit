@@ -27,6 +27,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The newest Xcode on the runner, 26 or later: the tab bar is Apple's
+      # own Liquid Glass (native_liquid_glass), which compiles only against
+      # the iOS 26 SDK, as Codemagic's latest Xcode builds the release.
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
