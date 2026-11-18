@@ -36,7 +36,7 @@ class LiquidGlass extends StatelessWidget {
     required this.child,
     this.radius = 26,
     this.circle = false,
-    this.blur = 16,
+    this.blur = 11,
     this.shadow = true,
     this.tint,
     this.strength = 1,
@@ -113,8 +113,8 @@ class LiquidGlass extends StatelessWidget {
     // through in its own colours, as through iOS's, and what sits on it
     // keeps its contrast by its halo (glassHalo), not by a heavier glass.
     final Color ground = dark
-        ? const Color(0xFF2E2E34).withValues(alpha: 0.34)
-        : Colors.white.withValues(alpha: 0.22);
+        ? const Color(0xFF2E2E34).withValues(alpha: 0.20)
+        : Colors.white.withValues(alpha: 0.12);
     // The tint: on paper a milk glass, at night a smoked one; a coloured
     // tint takes the place of either, as thin.
     final Color sheenTop = tint != null
@@ -123,13 +123,13 @@ class LiquidGlass extends StatelessWidget {
             tint!,
           ).withValues(alpha: 0.34 * k)
         : dark
-        ? Colors.white.withValues(alpha: 0.10 * k)
-        : Colors.white.withValues(alpha: 0.42 * k);
+        ? Colors.white.withValues(alpha: 0.08 * k)
+        : Colors.white.withValues(alpha: 0.30 * k);
     final Color sheenBottom = tint != null
         ? tint!.withValues(alpha: 0.22 * k)
         : dark
-        ? Colors.white.withValues(alpha: 0.05 * k)
-        : Colors.white.withValues(alpha: 0.24 * k);
+        ? Colors.white.withValues(alpha: 0.03 * k)
+        : Colors.white.withValues(alpha: 0.14 * k);
     final Color top = Color.alphaBlend(sheenTop, ground);
     final Color bottom = Color.alphaBlend(sheenBottom, ground);
 
@@ -159,16 +159,16 @@ class LiquidGlass extends StatelessWidget {
   }
 }
 
-/// The backdrop as the glass bends it: a fifth of its colour drained, then
+/// The backdrop as the glass bends it: a tenth of its colour drained, then
 /// blurred, and toned towards the ground, dimmer at night and lifted on
-/// paper. Glass on iOS does the same, so a saturated card passing under a
-/// bar shows through in its colour without drowning what is on the glass.
+/// paper. Glass on iOS does the same, so a card passing under a bar shows
+/// through in its own colour without drowning what is on the glass.
 ui.ImageFilter _frost(double sigma, bool dark) {
   // How much colour is left, and the tone: a gain on every channel, and a
   // lift, in the 0 to 255 of a colour matrix's last column.
-  const double keep = 0.8;
-  final double gain = dark ? 0.62 : 1.0;
-  final double lift = 255 * (dark ? 0.04 : 0.05);
+  const double keep = 0.9;
+  final double gain = dark ? 0.72 : 1.0;
+  final double lift = 255 * (dark ? 0.03 : 0.04);
   const double r = 0.2126, g = 0.7152, b = 0.0722;
   List<double> row(double rr, double gg, double bb) => [
     rr * gain,
@@ -237,7 +237,7 @@ class _Rim extends CustomPainter {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.white.withValues(alpha: dark ? 0.42 : 0.95),
+            Colors.white.withValues(alpha: dark ? 0.5 : 0.95),
             Colors.white.withValues(alpha: dark ? 0.08 : 0.35),
             Colors.white.withValues(alpha: dark ? 0.06 : 0.25),
             Colors.white.withValues(alpha: dark ? 0.26 : 0.70),
@@ -253,7 +253,7 @@ class _Rim extends CustomPainter {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = 0.6
-          ..color = Colors.black.withValues(alpha: 0.06),
+          ..color = Colors.black.withValues(alpha: 0.08),
       );
     }
   }
@@ -271,9 +271,9 @@ List<Shadow>? glassHalo(BuildContext context) {
   return [
     Shadow(
       color: context.p.isDark
-          ? Colors.black.withValues(alpha: 0.45)
-          : Colors.white.withValues(alpha: 0.55),
-      blurRadius: 8,
+          ? Colors.black.withValues(alpha: 0.55)
+          : Colors.white.withValues(alpha: 0.65),
+      blurRadius: 9,
     ),
   ];
 }
