@@ -4852,6 +4852,51 @@ class AppLocalizationsZh extends AppLocalizations {
   String get goalWorld => '理解世界';
 
   @override
+  String get goalAsk => '你想在哪方面变得更好？';
+
+  @override
+  String get goalAskLine => '选一个目标：每天的卡片都会为它训练你。随时可以更改。';
+
+  @override
+  String get goalSave => '保存';
+
+  @override
+  String get goalEyebrow => '你的目标';
+
+  @override
+  String get goalPick => '选一个';
+
+  @override
+  String get goalNone => '还没有目标';
+
+  @override
+  String get goalNotNow => '以后再说';
+
+  @override
+  String get goalDecideLine => '用对的数字做选择，而不是凭感觉。';
+
+  @override
+  String get goalPeopleLine => '别人怎么想，以及怎样让人听懂。';
+
+  @override
+  String get goalBusinessLine => '激励、风险，以及一个想法背后的数字。';
+
+  @override
+  String get goalMoneyLine => '利息、价格和优惠里的陷阱。';
+
+  @override
+  String get goalNonsenseLine => '研究、统计和标题：什么站得住脚。';
+
+  @override
+  String get goalHealthLine => '身体、饮食和睡眠：科学怎么说。';
+
+  @override
+  String get goalCultureLine => '值得了解的历史、艺术、电影和音乐。';
+
+  @override
+  String get goalWorldLine => '把科学、太空和自然讲明白。';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

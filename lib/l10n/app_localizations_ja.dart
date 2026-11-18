@@ -4853,6 +4853,51 @@ class AppLocalizationsJa extends AppLocalizations {
   String get goalWorld => '世界を理解する';
 
   @override
+  String get goalAsk => '何がうまくなりたい？';
+
+  @override
+  String get goalAskLine => '目標をひとつ選んでください。毎日のカードがそのために鍛えます。いつでも変更できます。';
+
+  @override
+  String get goalSave => '保存';
+
+  @override
+  String get goalEyebrow => 'あなたの目標';
+
+  @override
+  String get goalPick => 'ひとつ選ぶ';
+
+  @override
+  String get goalNone => 'まだ目標なし';
+
+  @override
+  String get goalNotNow => '今はしない';
+
+  @override
+  String get goalDecideLine => '勘ではなく、正しい数字で選ぶ。';
+
+  @override
+  String get goalPeopleLine => '人がどう考えるか、どう伝わるか。';
+
+  @override
+  String get goalBusinessLine => 'インセンティブ、リスク、アイデアの裏の数字。';
+
+  @override
+  String get goalMoneyLine => '金利、価格、お得な話の落とし穴。';
+
+  @override
+  String get goalNonsenseLine => '研究、統計、見出し：本当に確かなのはどれか。';
+
+  @override
+  String get goalHealthLine => '体、食事、睡眠：科学が言うこと。';
+
+  @override
+  String get goalCultureLine => '知っておきたい歴史、芸術、映画、音楽。';
+
+  @override
+  String get goalWorldLine => '科学、宇宙、自然をわかりやすく。';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

@@ -4922,6 +4922,59 @@ class RemoteLocalizations extends AppLocalizations {
   String get goalWorld => _words.text('goalWorld') ?? _base.goalWorld;
 
   @override
+  String get goalAsk => _words.text('goalAsk') ?? _base.goalAsk;
+
+  @override
+  String get goalAskLine => _words.text('goalAskLine') ?? _base.goalAskLine;
+
+  @override
+  String get goalSave => _words.text('goalSave') ?? _base.goalSave;
+
+  @override
+  String get goalEyebrow => _words.text('goalEyebrow') ?? _base.goalEyebrow;
+
+  @override
+  String get goalPick => _words.text('goalPick') ?? _base.goalPick;
+
+  @override
+  String get goalNone => _words.text('goalNone') ?? _base.goalNone;
+
+  @override
+  String get goalNotNow => _words.text('goalNotNow') ?? _base.goalNotNow;
+
+  @override
+  String get goalDecideLine =>
+      _words.text('goalDecideLine') ?? _base.goalDecideLine;
+
+  @override
+  String get goalPeopleLine =>
+      _words.text('goalPeopleLine') ?? _base.goalPeopleLine;
+
+  @override
+  String get goalBusinessLine =>
+      _words.text('goalBusinessLine') ?? _base.goalBusinessLine;
+
+  @override
+  String get goalMoneyLine =>
+      _words.text('goalMoneyLine') ?? _base.goalMoneyLine;
+
+  @override
+  String get goalNonsenseLine =>
+      _words.text('goalNonsenseLine') ?? _base.goalNonsenseLine;
+
+  @override
+  String get goalHealthLine =>
+      _words.text('goalHealthLine') ?? _base.goalHealthLine;
+
+  @override
+  String get goalCultureLine =>
+      _words.text('goalCultureLine') ?? _base.goalCultureLine;
+
+  @override
+  String get goalWorldLine =>
+      _words.text('goalWorldLine') ?? _base.goalWorldLine;
+
+  @override
   String mathsDailyStreak(int n) =>
       _words.format('mathsDailyStreak', localeName, {'n': n}) ??
       _base.mathsDailyStreak(n);

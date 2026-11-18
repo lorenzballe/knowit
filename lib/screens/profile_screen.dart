@@ -38,6 +38,8 @@ import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
+import '../data/goals.dart';
+import 'goal_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -337,6 +339,8 @@ class ProfileScreen extends StatelessWidget {
           Eyebrow(context.l10n.appearance),
           const SizedBox(height: 11),
           _ThemePicker(app: app),
+          const SizedBox(height: 22),
+          _GoalRow(app: app),
           const SizedBox(height: 22),
           // The mix is everybody's: it is what the free day's cards are
           // dealt from, the reader's own and the ones at random, so gating
@@ -1671,6 +1675,97 @@ class _JourneyButton extends StatelessWidget {
                 ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// What the reader wants to get better at (lib/data/goals.dart): its mark,
+/// its name and the way to change it, or the way to pick one.
+class _GoalRow extends StatelessWidget {
+  const _GoalRow({required this.app});
+
+  final AppState app;
+
+  Future<void> _open(BuildContext context) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (routeContext) => GoalScreen(
+          editing: true,
+          initial: app.goal,
+          onSkip: () => Navigator.of(routeContext).pop(),
+          onDone: (key) async {
+            Analytics.capture('goal picked', {'goal': key, 'from': 'profile'});
+            await app.setGoal(key);
+            if (routeContext.mounted) Navigator.of(routeContext).pop();
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.p;
+    final Goal? goal = Goal.of(app.goal);
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        key: const ValueKey('profile-goal'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _open(context),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Eyebrow(l.goalEyebrow),
+                Text(
+                  goal == null ? l.goalPick : l.goalChange,
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    color: p.link,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 11),
+            Row(
+              children: [
+                Container(
+                  width: 34,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    color: goal == null
+                        ? p.inverse.withValues(alpha: 0.06)
+                        : goalHue(goal),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    goal == null ? Icons.flag_rounded : goalIcon(goal),
+                    size: 18,
+                    color: goal == null ? p.inkMuted : inkOn(goalHue(goal)),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    goal == null ? l.goalNone : goalName(l, goal),
+                    style: AppText.body(
+                      size: 15,
+                      weight: FontWeight.w700,
+                      color: goal == null ? p.inkMuted : p.ink,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

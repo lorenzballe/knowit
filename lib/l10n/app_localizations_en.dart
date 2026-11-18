@@ -5043,6 +5043,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goalWorld => 'Understanding the world';
 
   @override
+  String get goalAsk => 'What do you want to get better at?';
+
+  @override
+  String get goalAskLine =>
+      'Pick a goal: every day your cards train you for it. You can change it any time.';
+
+  @override
+  String get goalSave => 'Save';
+
+  @override
+  String get goalEyebrow => 'YOUR GOAL';
+
+  @override
+  String get goalPick => 'Pick one';
+
+  @override
+  String get goalNone => 'No goal yet';
+
+  @override
+  String get goalNotNow => 'Not now';
+
+  @override
+  String get goalDecideLine =>
+      'Choosing with the right numbers, not on a hunch.';
+
+  @override
+  String get goalPeopleLine => 'How others think, and how to be understood.';
+
+  @override
+  String get goalBusinessLine =>
+      'Incentives, risk and the numbers behind an idea.';
+
+  @override
+  String get goalMoneyLine => 'Interest, prices and the traps in a deal.';
+
+  @override
+  String get goalNonsenseLine =>
+      'Studies, statistics and headlines: what holds up.';
+
+  @override
+  String get goalHealthLine => 'Body, food and sleep: what the science says.';
+
+  @override
+  String get goalCultureLine => 'History, art, cinema and music worth knowing.';
+
+  @override
+  String get goalWorldLine => 'Science, space and nature, explained.';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

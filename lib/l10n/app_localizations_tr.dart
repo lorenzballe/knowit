@@ -4991,6 +4991,54 @@ class AppLocalizationsTr extends AppLocalizations {
   String get goalWorld => 'Dünyayı anlamak';
 
   @override
+  String get goalAsk => 'Neyde daha iyi olmak istersin?';
+
+  @override
+  String get goalAskLine =>
+      'Bir hedef seç: kartların her gün seni ona hazırlar. İstediğin zaman değiştirebilirsin.';
+
+  @override
+  String get goalSave => 'Kaydet';
+
+  @override
+  String get goalEyebrow => 'HEDEFİN';
+
+  @override
+  String get goalPick => 'Birini seç';
+
+  @override
+  String get goalNone => 'Henüz hedef yok';
+
+  @override
+  String get goalNotNow => 'Şimdi değil';
+
+  @override
+  String get goalDecideLine => 'Doğru sayılarla seçmek, içgüdüyle değil.';
+
+  @override
+  String get goalPeopleLine => 'Başkaları nasıl düşünür ve nasıl anlaşılırsın.';
+
+  @override
+  String get goalBusinessLine =>
+      'Teşvikler, risk ve bir fikrin arkasındaki sayılar.';
+
+  @override
+  String get goalMoneyLine => 'Faiz, fiyatlar ve tekliflerdeki tuzaklar.';
+
+  @override
+  String get goalNonsenseLine =>
+      'Araştırmalar, istatistikler ve manşetler: ne ayakta kalır.';
+
+  @override
+  String get goalHealthLine => 'Beden, yemek ve uyku: bilim ne diyor.';
+
+  @override
+  String get goalCultureLine => 'Bilmeye değer tarih, sanat, sinema ve müzik.';
+
+  @override
+  String get goalWorldLine => 'Bilim, uzay ve doğa, anlaşılır biçimde.';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

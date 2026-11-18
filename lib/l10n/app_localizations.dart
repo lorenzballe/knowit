@@ -7254,6 +7254,96 @@ abstract class AppLocalizations {
   /// **'Understanding the world'**
   String get goalWorld;
 
+  /// The first run's second step, and Explore's prompt: the question of what the reader wants to get better at.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to get better at?'**
+  String get goalAsk;
+
+  /// Under that question: what a goal does, and that it can be changed.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a goal: every day your cards train you for it. You can change it any time.'**
+  String get goalAskLine;
+
+  /// The goal screen opened from Profile: its button, which keeps the goal picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get goalSave;
+
+  /// Profile, the reader's goal: the eyebrow over it, in small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR GOAL'**
+  String get goalEyebrow;
+
+  /// Profile, the reader's goal: the link that opens the goals when none is picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one'**
+  String get goalPick;
+
+  /// Profile, the reader's goal: what stands in its place when none is picked.
+  ///
+  /// In en, this message translates to:
+  /// **'No goal yet'**
+  String get goalNone;
+
+  /// Explore, the prompt to pick a goal: puts it away for good (Profile still has it).
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get goalNotNow;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing with the right numbers, not on a hunch.'**
+  String get goalDecideLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'How others think, and how to be understood.'**
+  String get goalPeopleLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Incentives, risk and the numbers behind an idea.'**
+  String get goalBusinessLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Interest, prices and the traps in a deal.'**
+  String get goalMoneyLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Studies, statistics and headlines: what holds up.'**
+  String get goalNonsenseLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Body, food and sleep: what the science says.'**
+  String get goalHealthLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'History, art, cinema and music worth knowing.'**
+  String get goalCultureLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Science, space and nature, explained.'**
+  String get goalWorldLine;
+
   /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.
   ///
   /// In en, this message translates to:

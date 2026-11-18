@@ -5264,6 +5264,54 @@ class AppLocalizationsRu extends AppLocalizations {
   String get goalWorld => 'Понимать мир';
 
   @override
+  String get goalAsk => 'В чём ты хочешь стать лучше?';
+
+  @override
+  String get goalAskLine =>
+      'Выбери цель: каждый день карточки тренируют тебя для неё. Её можно сменить в любой момент.';
+
+  @override
+  String get goalSave => 'Сохранить';
+
+  @override
+  String get goalEyebrow => 'ТВОЯ ЦЕЛЬ';
+
+  @override
+  String get goalPick => 'Выбери одну';
+
+  @override
+  String get goalNone => 'Цели пока нет';
+
+  @override
+  String get goalNotNow => 'Не сейчас';
+
+  @override
+  String get goalDecideLine => 'Выбирать по верным цифрам, а не наугад.';
+
+  @override
+  String get goalPeopleLine => 'Как думают другие и как быть понятым.';
+
+  @override
+  String get goalBusinessLine => 'Стимулы, риск и цифры за идеей.';
+
+  @override
+  String get goalMoneyLine => 'Проценты, цены и ловушки в предложениях.';
+
+  @override
+  String get goalNonsenseLine =>
+      'Исследования, статистика и заголовки: что выдерживает проверку.';
+
+  @override
+  String get goalHealthLine => 'Тело, еда и сон: что говорит наука.';
+
+  @override
+  String get goalCultureLine =>
+      'История, искусство, кино и музыка, которые стоит знать.';
+
+  @override
+  String get goalWorldLine => 'Наука, космос и природа простыми словами.';
+
+  @override
   String mathsDailyStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

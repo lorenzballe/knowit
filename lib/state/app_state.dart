@@ -95,6 +95,7 @@ class AppState extends ChangeNotifier {
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
   static const _kGoal = 'knowit.goal';
+  static const _kGoalAsked = 'knowit.goalAsked';
   static const _kTopicLevels = 'knowit.topicLevels';
   static const _kGenresOff = 'knowit.genresOff';
   static const _kStrandsOff = 'knowit.strandsOff';
@@ -282,6 +283,12 @@ class AppState extends ChangeNotifier {
   /// What the reader wants to get better at (lib/data/goals.dart), by key;
   /// null until they say.
   String? goal;
+
+  /// Whether the reader has been asked what they want to get better at: on
+  /// the first run, or once on Explore for a reader who came before the
+  /// question did. Asked and passed over, they are not asked again; Profile
+  /// still has it.
+  bool goalAsked = false;
 
   /// What the reader says they already know of each subject: 0 curious,
   /// 1 some, 2 solid, by topic key. Only the subjects they were asked about
@@ -479,6 +486,14 @@ class AppState extends ChangeNotifier {
     } else {
       await _prefs.setString(_kGoal, goal!);
     }
+    await markGoalAsked();
+  }
+
+  /// Notes that the reader was asked what they want to get better at,
+  /// whatever they answered.
+  Future<void> markGoalAsked() async {
+    goalAsked = true;
+    await _prefs.setBool(_kGoalAsked, true);
     notifyListeners();
   }
 
@@ -553,6 +568,7 @@ class AppState extends ChangeNotifier {
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
     topicWeights = _decodeWeights(_prefs.getString(_kTopicWeights));
     goal = Goal.of(_prefs.getString(_kGoal))?.key;
+    goalAsked = goal != null || (_prefs.getBool(_kGoalAsked) ?? false);
     topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
     genresOff = (_prefs.getStringList(_kGenresOff) ?? []).toSet();
     strandsOff = (_prefs.getStringList(_kStrandsOff) ?? []).toSet();

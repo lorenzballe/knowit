@@ -21,6 +21,7 @@ import 'measure/screens.dart';
 import 'measure/session.dart';
 import 'models/pill.dart';
 import 'screens/genres_screen.dart';
+import 'screens/goal_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
@@ -339,6 +340,7 @@ class _PhoneFrame extends StatelessWidget {
 /// and at the features it opens, once the reader has seen what it adds to.
 enum _Stage {
   intro,
+  goal,
   subjects,
   genres,
   comeback,
@@ -349,6 +351,7 @@ enum _Stage {
   /// reader can be lost before they have seen a single card.
   String get screen => switch (this) {
     _Stage.intro => 'intro',
+    _Stage.goal => 'onboarding goal',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
     _Stage.comeback => 'comeback',
@@ -1334,13 +1337,34 @@ class _AstutoRootState extends State<AstutoRoot> {
         return IntroScreen(
           askConsent: Analytics.canAsk && !Analytics.answered,
           onConsent: (yes) => _answerConsent(yes, from: 'intro'),
-          onContinue: () => _go(_Stage.subjects),
+          onContinue: () => _go(_Stage.goal),
           onSignIn: (context) => showSignInSheet(
             context,
             account: _account,
             app: _app,
             door: SignInDoor.intro,
           ),
+        );
+
+      // What the reader wants to get better at: the why before the what,
+      // asked before the subjects they like to read. Answered or passed
+      // over, the mix comes next.
+      case _Stage.goal:
+        return GoalScreen(
+          initial: _app.goal,
+          onDone: (key) async {
+            Analytics.capture('goal picked', {
+              'goal': key,
+              'from': 'onboarding',
+            });
+            await _app.setGoal(key);
+            if (mounted) _go(_Stage.subjects);
+          },
+          onSkip: () async {
+            _noteSkipped(_Stage.goal);
+            await _app.markGoalAsked();
+            if (mounted) _go(_Stage.subjects);
+          },
         );
 
       case _Stage.subjects:
