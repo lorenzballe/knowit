@@ -12,7 +12,7 @@ import '../utils/home_widget.dart';
 import 'scaled_text.dart';
 import 'subject_icon.dart';
 import 'ui.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// Shows how to put Astute on the home screen, once, at the app's own
 /// moment: a day just finished, the second or later
@@ -106,7 +106,7 @@ class WidgetAsk extends StatelessWidget {
             l.widgetAskStepAndroidAdd,
             l.widgetAskStepAndroidPick,
           ];
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         key: const ValueKey('widget-ask'),
         decoration: const BoxDecoration(

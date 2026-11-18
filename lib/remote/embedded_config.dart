@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "e3869020f0bcf525",
+ "hash": "0d33a80eeb568def",
  "app": {
   "gate": null,
   "flags": {},
@@ -115,19 +115,8 @@ const String kEmbeddedRemote = r'''
     "id": "goal",
     "block": "goal",
     "title": {
-     "en": "Where do you want to be sharper?",
-     "it": "Dove vuoi vederci più chiaro?",
-     "de": "Wo willst du klarer sehen?",
-     "es": "¿Dónde quieres ver más claro?",
-     "fr": "Où veux-tu y voir plus clair ?",
-     "ja": "どこでもっと見抜けるようになりたい？",
-     "ko": "어디에서 더 날카로워지고 싶나요?",
-     "nl": "Waar wil je scherper zijn?",
-     "pl": "Gdzie chcesz widzieć jaśniej?",
-     "pt": "Onde queres ver mais claro?",
-     "ru": "Где ты хочешь видеть яснее?",
-     "tr": "Nerede daha net görmek istersin?",
-     "zh": "你想在哪些方面看得更清楚？"
+     "en": "Useful for",
+     "it": "Ti serve per"
     },
     "subtitle": {
      "en": "Pick one: Explore and your coach will lean that way.",

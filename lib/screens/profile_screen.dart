@@ -38,9 +38,7 @@ import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
-import '../data/goals.dart';
-import 'goal_screen.dart';
-import '../widgets/liquid_glass.dart';
+import '../widgets/grounds.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -313,7 +311,7 @@ class ProfileScreen extends StatelessWidget {
           22,
           8,
           22,
-          24 + (glassOn ? MediaQuery.paddingOf(context).bottom : 0),
+          24 + (appleGlass ? MediaQuery.paddingOf(context).bottom : 0),
         ),
         children: [
           // The record, not an identity. This screen used to open with a
@@ -346,8 +344,6 @@ class ProfileScreen extends StatelessWidget {
           Eyebrow(context.l10n.appearance),
           const SizedBox(height: 11),
           _ThemePicker(app: app),
-          const SizedBox(height: 22),
-          _GoalRow(app: app),
           const SizedBox(height: 22),
           // The mix is everybody's: it is what the free day's cards are
           // dealt from, the reader's own and the ones at random, so gating
@@ -1280,18 +1276,7 @@ class _ThemePicker extends StatelessWidget {
         );
       }).toList(),
     );
-    if (!glassOn) {
-      return PaperCard(
-        padding: const EdgeInsets.all(6),
-        radius: 18,
-        child: row,
-      );
-    }
-    return LiquidGlass(
-      radius: 18,
-      shadow: false,
-      child: Padding(padding: const EdgeInsets.all(6), child: row),
-    );
+    return PaperCard(padding: const EdgeInsets.all(6), radius: 18, child: row);
   }
 }
 
@@ -1690,135 +1675,6 @@ class _JourneyButton extends StatelessWidget {
                 ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// What the reader wants to get better at (lib/data/goals.dart): its mark,
-/// its name and the way to change it, or the way to pick one.
-class _GoalRow extends StatelessWidget {
-  const _GoalRow({required this.app});
-
-  final AppState app;
-
-  Future<void> _open(BuildContext context) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (routeContext) => GoalScreen(
-          editing: true,
-          initial: app.goals,
-          onSkip: () => Navigator.of(routeContext).pop(),
-          onDone: (keys) async {
-            Analytics.capture('goal picked', {
-              'goal': keys.join(','),
-              'goals': keys.length,
-              'from': 'profile',
-            });
-            await app.setGoals(keys);
-            if (routeContext.mounted) Navigator.of(routeContext).pop();
-          },
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final p = context.p;
-    final List<Goal> aims = [
-      for (final String k in app.goals)
-        if (Goal.of(k) case final Goal g) g,
-    ];
-    return Semantics(
-      button: true,
-      child: GestureDetector(
-        key: const ValueKey('profile-goal'),
-        behavior: HitTestBehavior.opaque,
-        onTap: () => _open(context),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Eyebrow(aims.length > 1 ? l.goalEyebrowMany : l.goalEyebrow),
-                Text(
-                  aims.isEmpty ? l.goalPick : l.goalChange,
-                  style: AppText.body(
-                    size: 12.5,
-                    weight: FontWeight.w500,
-                    color: p.link,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 11),
-            if (aims.isEmpty)
-              Row(
-                children: [
-                  Container(
-                    width: 34,
-                    height: 34,
-                    decoration: BoxDecoration(
-                      color: p.inverse.withValues(alpha: 0.06),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.flag_rounded,
-                      size: 18,
-                      color: p.inkMuted,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      l.goalNone,
-                      style: AppText.body(
-                        size: 15,
-                        weight: FontWeight.w700,
-                        color: p.inkMuted,
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            else
-              for (int i = 0; i < aims.length; i++) ...[
-                if (i > 0) const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Container(
-                      width: 34,
-                      height: 34,
-                      decoration: BoxDecoration(
-                        color: goalHue(aims[i]),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        goalIcon(aims[i]),
-                        size: 18,
-                        color: inkOn(goalHue(aims[i])),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        goalName(l, aims[i]),
-                        style: AppText.body(
-                          size: 15,
-                          weight: FontWeight.w700,
-                          color: p.ink,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-          ],
         ),
       ),
     );

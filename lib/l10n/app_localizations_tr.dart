@@ -5006,12 +5006,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get goalShelfLine => 'Her gün yeni kartlar.';
-
-  @override
-  String get goalChange => 'Değiştir';
-
-  @override
   String get goalDecide => 'Günlük kararlar';
 
   @override
@@ -5025,28 +5019,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get goalHealth => 'Sağlık';
-
-  @override
-  String get goalAsk => 'Nerede daha net görmek istersin?';
-
-  @override
-  String get goalAskLine =>
-      'En fazla üç tane seç: kartların seni tam orada çalıştıracak. İstediğin zaman değiştirebilirsin.';
-
-  @override
-  String get goalSave => 'Kaydet';
-
-  @override
-  String get goalEyebrow => 'ALANIN';
-
-  @override
-  String get goalPick => 'Seç';
-
-  @override
-  String get goalNone => 'Henüz seçilmedi';
-
-  @override
-  String get goalNotNow => 'Şimdi değil';
 
   @override
   String get goalDecideLine =>
@@ -5074,9 +5046,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get goalHealthLine =>
       'Diyetler, tedaviler ve araştırmalar: kanıtlar ne diyor.';
-
-  @override
-  String get goalEyebrowMany => 'ALANLARIN';
 
   @override
   String mathsDailyStreak(int n) {

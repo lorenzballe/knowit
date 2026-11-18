@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart'
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:in_app_review/in_app_review.dart';
 import 'package:flutter/material.dart';
+import 'package:native_liquid_glass/native_liquid_glass.dart'
+    show LiquidGlassTabBar, LiquidGlassTabItem, NativeLiquidGlassIcon;
 import 'package:flutter/services.dart';
 import 'package:posthog_flutter/posthog_flutter.dart' show PostHogWidget;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +23,6 @@ import 'measure/screens.dart';
 import 'measure/session.dart';
 import 'models/pill.dart';
 import 'screens/genres_screen.dart';
-import 'screens/goal_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
@@ -54,7 +55,7 @@ import 'screens/gate_screen.dart';
 import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
-import 'widgets/liquid_glass.dart';
+import 'widgets/grounds.dart';
 
 /// The seeded crowd for Explore's top list: the live bank, tilted to what
 /// readers keep — a question over a fact, a debate over both, the hard ones,
@@ -341,7 +342,6 @@ class _PhoneFrame extends StatelessWidget {
 /// and at the features it opens, once the reader has seen what it adds to.
 enum _Stage {
   intro,
-  goal,
   subjects,
   genres,
   comeback,
@@ -352,7 +352,6 @@ enum _Stage {
   /// reader can be lost before they have seen a single card.
   String get screen => switch (this) {
     _Stage.intro => 'intro',
-    _Stage.goal => 'onboarding goal',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
     _Stage.comeback => 'comeback',
@@ -1338,35 +1337,13 @@ class _AstutoRootState extends State<AstutoRoot> {
         return IntroScreen(
           askConsent: Analytics.canAsk && !Analytics.answered,
           onConsent: (yes) => _answerConsent(yes, from: 'intro'),
-          onContinue: () => _go(_Stage.goal),
+          onContinue: () => _go(_Stage.subjects),
           onSignIn: (context) => showSignInSheet(
             context,
             account: _account,
             app: _app,
             door: SignInDoor.intro,
           ),
-        );
-
-      // What the reader wants to get better at: the why before the what,
-      // asked before the subjects they like to read. Answered or passed
-      // over, the mix comes next.
-      case _Stage.goal:
-        return GoalScreen(
-          initial: _app.goals,
-          onDone: (keys) async {
-            Analytics.capture('goal picked', {
-              'goal': keys.join(','),
-              'goals': keys.length,
-              'from': 'onboarding',
-            });
-            await _app.setGoals(keys);
-            if (mounted) _go(_Stage.subjects);
-          },
-          onSkip: () async {
-            _noteSkipped(_Stage.goal);
-            await _app.markGoalAsked();
-            if (mounted) _go(_Stage.subjects);
-          },
         );
 
       case _Stage.subjects:
@@ -1868,7 +1845,7 @@ class _AstutoShellState extends State<AstutoShell>
                           // still be lifted clear of it.
                           builder: (context) => Padding(
                             padding: EdgeInsets.only(
-                              bottom: i == 0 || !glassOn
+                              bottom: i == 0 || !appleGlass
                                   ? MediaQuery.paddingOf(context).bottom
                                   : 0,
                             ),
@@ -1979,7 +1956,58 @@ class _AstutoTabBar extends StatelessWidget {
     );
   }
 
+  /// Apple's own tab bar, on iOS 26 and later: Liquid Glass as the system
+  /// draws it, the system's symbols and motion, the lit tab in the ink.
+  /// Nothing of it is ours but the three tabs and their names.
+  Widget _appleBar(BuildContext context) {
+    final l = context.l10n;
+    return SafeArea(
+      top: false,
+      minimum: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: ValueListenableBuilder<List<double>>(
+        valueListenable: lit,
+        builder: (context, lit, _) {
+          // The tab most lit is the one the bar shows: Apple's bar lights
+          // one tab at a time, and moves its light itself.
+          var at = 0;
+          for (var i = 1; i < lit.length; i++) {
+            if (lit[i] > lit[at]) at = i;
+          }
+          return LiquidGlassTabBar(
+            currentIndex: at,
+            onTabSelected: onChanged,
+            selectedItemColor: context.p.ink,
+            items: [
+              LiquidGlassTabItem(
+                label: l.tabToday,
+                icon: const NativeLiquidGlassIcon.sfSymbol('sun.max'),
+                selectedIcon: const NativeLiquidGlassIcon.sfSymbol(
+                  'sun.max.fill',
+                ),
+              ),
+              LiquidGlassTabItem(
+                label: l.tabExplore,
+                icon: const NativeLiquidGlassIcon.sfSymbol('safari'),
+                selectedIcon: const NativeLiquidGlassIcon.sfSymbol(
+                  'safari.fill',
+                ),
+              ),
+              LiquidGlassTabItem(
+                label: l.tabProfile,
+                icon: const NativeLiquidGlassIcon.sfSymbol('person'),
+                selectedIcon: const NativeLiquidGlassIcon.sfSymbol(
+                  'person.fill',
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
   Widget _bar(BuildContext context) {
+    if (appleGlass) return _appleBar(context);
     return Padding(
       padding: EdgeInsets.fromLTRB(
         18,
@@ -1987,12 +2015,8 @@ class _AstutoTabBar extends StatelessWidget {
         18,
         MediaQuery.of(context).padding.bottom + 8,
       ),
-      child: LiquidGlass(
-        // Glass, as the bar is on iOS 26: the shelves run under it and
-        // show through, softened, rather than stopping at its top. The lit
-        // tab stays solid ink, so where you are is never in doubt.
-        radius: 26,
-        solid: BoxDecoration(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
           color: context.p.surfaceRaised,
           borderRadius: BorderRadius.circular(26),
           border: Border.all(color: context.p.line),
@@ -2021,15 +2045,11 @@ class _AstutoTabBar extends StatelessWidget {
                   1 => context.l10n.tabExplore,
                   _ => context.l10n.tabProfile,
                 };
-                // On glass the tabs not lit are drawn nearer the ink than on
-                // solid ground, each with its halo: what passes under the
-                // bar is never the same twice.
-                final Color idle = !glassOn
-                    ? context.p.inkFaint
-                    : context.p.ink.withValues(
-                        alpha: context.p.isDark ? 0.92 : 0.72,
-                      );
-                final Color tint = Color.lerp(idle, context.p.onInverse, on)!;
+                final Color tint = Color.lerp(
+                  context.p.inkFaint,
+                  context.p.onInverse,
+                  on,
+                )!;
 
                 // The lit tab is the one with a word in it, so it is the
                 // one that gets the room: three equal thirds fit "Today" and
@@ -2058,12 +2078,7 @@ class _AstutoTabBar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
-                                tab.icon,
-                                size: 19,
-                                color: tint,
-                                shadows: on < 0.5 ? glassHalo(context) : null,
-                              ),
+                              Icon(tab.icon, size: 19, color: tint),
                               // The label belongs to the tab you are on, and
                               // unfurls as you arrive rather than appearing
                               // once you have. Three of them side by side is

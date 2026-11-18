@@ -6,7 +6,7 @@ import '../remote/knobs.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import 'ui.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// The times the sheet offers, in the order a day runs: before the first
 /// coffee, at lunch, and the evening, when most days are read.
@@ -154,7 +154,7 @@ class _ReminderAskState extends State<ReminderAsk> {
       (_times[1], l.reminderAskLunch),
       (_times[2], l.reminderAskEvening),
     ];
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         key: const ValueKey('reminder-ask'),
         decoration: const BoxDecoration(

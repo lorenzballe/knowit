@@ -4868,12 +4868,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get goalShelfLine => '毎日新しいカード。';
-
-  @override
-  String get goalChange => '変更';
-
-  @override
   String get goalDecide => '日々の決断';
 
   @override
@@ -4887,27 +4881,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get goalHealth => '健康';
-
-  @override
-  String get goalAsk => 'どこでもっと見抜けるようになりたい？';
-
-  @override
-  String get goalAskLine => '3つまで選んでください。カードがまさにそこを鍛えます。いつでも変更できます。';
-
-  @override
-  String get goalSave => '保存';
-
-  @override
-  String get goalEyebrow => 'あなたの分野';
-
-  @override
-  String get goalPick => '選ぶ';
-
-  @override
-  String get goalNone => 'まだ選んでいません';
-
-  @override
-  String get goalNotNow => '今はしない';
 
   @override
   String get goalDecideLine => '選択、リスク、確率を、勘に頼らずに。';
@@ -4929,9 +4902,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get goalHealthLine => 'ダイエット、治療、研究：根拠が示すこと。';
-
-  @override
-  String get goalEyebrowMany => 'あなたの分野';
 
   @override
   String mathsDailyStreak(int n) {

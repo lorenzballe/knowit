@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 import '../theme.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// Whether Astute may measure how the app is used, asked before anything is
 /// measured, with its two answers side by side and the same size: saying no
@@ -90,7 +90,7 @@ class ConsentSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         key: const ValueKey('consent-sheet'),
         decoration: const BoxDecoration(

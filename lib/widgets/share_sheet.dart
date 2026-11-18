@@ -15,7 +15,7 @@ import '../utils/share_link.dart';
 import '../utils/share_origin.dart';
 import 'ui.dart';
 import 'scaled_text.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// Opens the share sheet for [pill]: the card as it leaves, and the ways it
 /// can go.
@@ -161,7 +161,7 @@ class _ShareSheetState extends State<_ShareSheet> {
   Widget build(BuildContext context) {
     final pill = widget.pill;
 
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(30)),

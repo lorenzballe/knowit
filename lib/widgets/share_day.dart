@@ -17,7 +17,7 @@ import '../utils/share_link.dart';
 import 'subject_icon.dart';
 import 'ui.dart';
 import 'web/card_thumb.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// The day, sent to a friend: a picture of the five cards that came out, and
 /// a line under it.
@@ -207,7 +207,7 @@ class _ShareDaySheetState extends State<_ShareDaySheet> {
     final double most = MediaQuery.sizeOf(context).height - safe.top - 24;
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: most),
-      child: GlassSheet(
+      child: SheetGround(
         child: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.vertical(top: Radius.circular(30)),

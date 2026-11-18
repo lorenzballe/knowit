@@ -11,7 +11,6 @@ import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/archive_screen.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
-import 'package:astuto/screens/goal_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/screens/paywall_screen.dart';
@@ -649,9 +648,7 @@ void main() {
       expect(continued, 2);
     });
 
-    testWidgets('in the app it lands on the goal, then the subjects', (
-      tester,
-    ) async {
+    testWidgets('in the app it lands on the subjects', (tester) async {
       SharedPreferences.setMockInitialValues({});
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -659,9 +656,6 @@ void main() {
       await tester.tap(find.text('Start reading'));
       await _settle(tester);
       expect(find.byType(IntroScreen), findsNothing);
-      expect(find.byType(GoalScreen), findsOneWidget);
-      await tester.tap(find.text('Skip'));
-      await _settle(tester);
       expect(find.byType(MixScreen), findsOneWidget);
       expect(find.text('20 of 20 subjects in the mix'), findsOneWidget);
       expect(find.byType(SnackBar), findsNothing);

@@ -7,16 +7,16 @@ import 'topics.dart';
 /// real aims, few enough that each still has its shelf and its lean.
 const int kMostGoals = 3;
 
-/// Where a reader wants to be sharper: the places in a life where being
-/// astute pays, picked on the first run (screens/goal_screen.dart), up to
-/// [kMostGoals], and changed in Profile. Not what they want to improve:
-/// they came to Astute to be sharper, and that is every card. Where is what
-/// the app could not know: money, work, people, the news, health, the
-/// day's decisions.
+/// The places in a life where being astute pays: money, work, people, the
+/// news, health, the day's decisions. Not something a reader is asked: they
+/// came to Astute to be sharper, and that is every card. Where a card pays
+/// off is something the card can say for itself.
 ///
-/// Each gives Explore a shelf of its own, leans the mix of the deals towards
-/// its subjects, is what the coach writes towards, and names itself on the
-/// back of a card that belongs to it ("Useful for: Money and shopping").
+/// A card that belongs to an area names it on its back ("Useful for: Money
+/// and shopping"), and Explore has a shelf of one area a day, each in turn
+/// ([ofDay]). Areas a build before let a reader pick are still kept
+/// (AppState.goals): they lean the mix of the deals towards their subjects
+/// and are what the coach writes towards.
 ///
 /// An area is the genres that are about it (Life's People, Economics' Spot
 /// a bad deal, Science's Spot bad science), the reasoning moves it trains,
@@ -128,6 +128,16 @@ enum Goal {
     }
     return null;
   }
+
+  /// The area Explore shows on [day]: each in turn, a day each, the same
+  /// for everybody.
+  static Goal ofDay(DateTime day) =>
+      Goal.values[DateTime(
+            day.year,
+            day.month,
+            day.day,
+          ).difference(DateTime(2026)).inDays %
+          Goal.values.length];
 
   /// The area [p] pays off in, when it is one of the area's own (in its
   /// genres, or training one of its moves): the closest, and of two as

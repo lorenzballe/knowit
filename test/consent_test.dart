@@ -9,8 +9,8 @@ import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
-import 'package:astuto/screens/goal_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
+import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/consent.dart';
 
@@ -166,8 +166,7 @@ void main() {
       // The intro goes on as before, unmeasured.
       await tester.tap(find.text('Start reading'));
       await _settle(tester);
-      // The first run goes on: the goal is its next step.
-      expect(find.byType(GoalScreen), findsOneWidget);
+      expect(find.byType(MixScreen), findsOneWidget);
       expect(said.events, isEmpty);
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.analytics'), isFalse);
@@ -179,8 +178,7 @@ void main() {
       await firstLaunch(tester);
       await tester.tap(find.text('Start reading'));
       await _settle(tester);
-      // The first run goes on: the goal is its next step.
-      expect(find.byType(GoalScreen), findsOneWidget);
+      expect(find.byType(MixScreen), findsOneWidget);
       expect(Analytics.answered, isFalse);
       expect(Analytics.ready, isFalse);
       expect(said.events, isEmpty);

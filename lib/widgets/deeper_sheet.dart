@@ -27,7 +27,7 @@ import '../state/app_state.dart';
 import '../sync/card_ask.dart';
 import '../theme.dart';
 import 'premium.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// Where a tap on a card's source goes: set once by the app (main.dart), so
 /// a card's back, a page's source and the detail screen all open the same
@@ -299,7 +299,7 @@ class _DeeperSheetState extends State<DeeperSheet> {
       initialChildSize: 0.72,
       minChildSize: 0.4,
       maxChildSize: 0.95,
-      builder: (context, scroll) => GlassSheet(
+      builder: (context, scroll) => SheetGround(
         child: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.vertical(top: Radius.circular(30)),

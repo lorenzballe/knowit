@@ -27,7 +27,7 @@ import '../widgets/ambient.dart';
 import '../widgets/motion.dart';
 import '../widgets/ui.dart' show ScreenView;
 import 'purchase_success_screen.dart';
-import '../widgets/liquid_glass.dart';
+import '../widgets/grounds.dart';
 
 /// What Astute+ costs, in cents, so the saving can be worked out rather than
 /// asserted. A hardcoded "save 37%" is a number that quietly stops being true
@@ -784,11 +784,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 child: SizedBox(
                   width: 34,
                   height: 34,
-                  child: LiquidGlass(
-                    circle: true,
-                    shadow: false,
-                    blur: 16,
-                    solid: BoxDecoration(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: p.ink.withValues(alpha: 0.06),
                     ),

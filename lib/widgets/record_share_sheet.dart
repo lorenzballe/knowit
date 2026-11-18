@@ -12,7 +12,7 @@ import '../utils/share_image.dart';
 import '../utils/share_link.dart';
 import '../utils/share_origin.dart';
 import 'ui.dart';
-import 'liquid_glass.dart';
+import 'grounds.dart';
 
 /// Opens the share sheet for the reader's own track record.
 ///
@@ -173,7 +173,7 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return GlassSheet(
+    return SheetGround(
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
