@@ -398,7 +398,14 @@ Map<String, Object?> coachStats(BuildContext context, AppState app) {
         .where((v) => v == Reaction.changed.key)
         .length,
     'level': rungName(context, app.standing.rung),
+    // The first goal alone for a server that reads one; all of them for
+    // one that reads them all.
     if (Goal.of(app.goal) case final Goal goal) 'goal': goalName(l, goal),
+    if (app.goals.isNotEmpty)
+      'goals': [
+        for (final String k in app.goals)
+          if (Goal.of(k) case final Goal g) goalName(l, g),
+      ],
   };
 }
 

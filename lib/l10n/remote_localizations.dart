@@ -1159,6 +1159,54 @@ class RemoteLocalizations extends AppLocalizations {
       _base.sourceLabel(source);
 
   @override
+  String sourceLabelKind(String kind, String source) =>
+      _words.format('sourceLabelKind', localeName, {
+        'kind': kind,
+        'source': source,
+      }) ??
+      _base.sourceLabelKind(kind, source);
+
+  @override
+  String get sourceKindPaper =>
+      _words.text('sourceKindPaper') ?? _base.sourceKindPaper;
+
+  @override
+  String get sourceKindBook =>
+      _words.text('sourceKindBook') ?? _base.sourceKindBook;
+
+  @override
+  String get sourceKindInstitution =>
+      _words.text('sourceKindInstitution') ?? _base.sourceKindInstitution;
+
+  @override
+  String get sourceKindDocument =>
+      _words.text('sourceKindDocument') ?? _base.sourceKindDocument;
+
+  @override
+  String get sourceKindData =>
+      _words.text('sourceKindData') ?? _base.sourceKindData;
+
+  @override
+  String get sourceKindReference =>
+      _words.text('sourceKindReference') ?? _base.sourceKindReference;
+
+  @override
+  String get sourceKindNews =>
+      _words.text('sourceKindNews') ?? _base.sourceKindNews;
+
+  @override
+  String get sourceKindCompany =>
+      _words.text('sourceKindCompany') ?? _base.sourceKindCompany;
+
+  @override
+  String get sourceKindStandard =>
+      _words.text('sourceKindStandard') ?? _base.sourceKindStandard;
+
+  @override
+  String get sourceKindArithmetic =>
+      _words.text('sourceKindArithmetic') ?? _base.sourceKindArithmetic;
+
+  @override
   String get plusIsActive => _words.text('plusIsActive') ?? _base.plusIsActive;
 
   @override
@@ -4886,6 +4934,11 @@ class RemoteLocalizations extends AppLocalizations {
   String get newsRead => _words.text('newsRead') ?? _base.newsRead;
 
   @override
+  String newsOutlets(int count) =>
+      _words.format('newsOutlets', localeName, {'count': count}) ??
+      _base.newsOutlets(count);
+
+  @override
   String goalShelf(String goal) =>
       _words.format('goalShelf', localeName, {'goal': goal}) ??
       _base.goalShelf(goal);
@@ -4920,6 +4973,77 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get goalWorld => _words.text('goalWorld') ?? _base.goalWorld;
+
+  @override
+  String get goalAsk => _words.text('goalAsk') ?? _base.goalAsk;
+
+  @override
+  String get goalAskLine => _words.text('goalAskLine') ?? _base.goalAskLine;
+
+  @override
+  String get goalSave => _words.text('goalSave') ?? _base.goalSave;
+
+  @override
+  String get goalEyebrow => _words.text('goalEyebrow') ?? _base.goalEyebrow;
+
+  @override
+  String get goalPick => _words.text('goalPick') ?? _base.goalPick;
+
+  @override
+  String get goalNone => _words.text('goalNone') ?? _base.goalNone;
+
+  @override
+  String get goalNotNow => _words.text('goalNotNow') ?? _base.goalNotNow;
+
+  @override
+  String get goalDecideLine =>
+      _words.text('goalDecideLine') ?? _base.goalDecideLine;
+
+  @override
+  String get goalPeopleLine =>
+      _words.text('goalPeopleLine') ?? _base.goalPeopleLine;
+
+  @override
+  String get goalBusinessLine =>
+      _words.text('goalBusinessLine') ?? _base.goalBusinessLine;
+
+  @override
+  String get goalMoneyLine =>
+      _words.text('goalMoneyLine') ?? _base.goalMoneyLine;
+
+  @override
+  String get goalNonsenseLine =>
+      _words.text('goalNonsenseLine') ?? _base.goalNonsenseLine;
+
+  @override
+  String get goalHealthLine =>
+      _words.text('goalHealthLine') ?? _base.goalHealthLine;
+
+  @override
+  String get goalCultureLine =>
+      _words.text('goalCultureLine') ?? _base.goalCultureLine;
+
+  @override
+  String get goalWorldLine =>
+      _words.text('goalWorldLine') ?? _base.goalWorldLine;
+
+  @override
+  String get goalStress => _words.text('goalStress') ?? _base.goalStress;
+
+  @override
+  String get goalLearn => _words.text('goalLearn') ?? _base.goalLearn;
+
+  @override
+  String get goalStressLine =>
+      _words.text('goalStressLine') ?? _base.goalStressLine;
+
+  @override
+  String get goalLearnLine =>
+      _words.text('goalLearnLine') ?? _base.goalLearnLine;
+
+  @override
+  String get goalEyebrowMany =>
+      _words.text('goalEyebrowMany') ?? _base.goalEyebrowMany;
 
   @override
   String mathsDailyStreak(int n) =>

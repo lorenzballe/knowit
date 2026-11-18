@@ -1228,6 +1228,41 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind · $source';
+  }
+
+  @override
+  String get sourceKindPaper => 'Estudo';
+
+  @override
+  String get sourceKindBook => 'Livro';
+
+  @override
+  String get sourceKindInstitution => 'Instituição';
+
+  @override
+  String get sourceKindDocument => 'Documento';
+
+  @override
+  String get sourceKindData => 'Dados';
+
+  @override
+  String get sourceKindReference => 'Obra de referência';
+
+  @override
+  String get sourceKindNews => 'Jornal';
+
+  @override
+  String get sourceKindCompany => 'Fonte da empresa';
+
+  @override
+  String get sourceKindStandard => 'Norma técnica';
+
+  @override
+  String get sourceKindArithmetic => 'Cálculo';
+
+  @override
   String get plusIsActive => 'ASTUTE+ ESTÁ ATIVO';
 
   @override
@@ -5047,6 +5082,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get newsRead => 'Lida';
 
   @override
+  String newsOutlets(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Noticiado por $count meios',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String goalShelf(String goal) {
     return 'Para o teu objetivo: $goal';
   }
@@ -5080,6 +5125,73 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get goalWorld => 'Entender o mundo';
+
+  @override
+  String get goalAsk => 'Em que queres melhorar?';
+
+  @override
+  String get goalAskLine =>
+      'Escolhe até três: todos os dias as tuas cartas treinam-te para eles. Podes mudá-los quando quiseres.';
+
+  @override
+  String get goalSave => 'Guardar';
+
+  @override
+  String get goalEyebrow => 'O TEU OBJETIVO';
+
+  @override
+  String get goalPick => 'Escolhe um';
+
+  @override
+  String get goalNone => 'Ainda sem objetivo';
+
+  @override
+  String get goalNotNow => 'Agora não';
+
+  @override
+  String get goalDecideLine =>
+      'Escolher com os números certos, não por palpite.';
+
+  @override
+  String get goalPeopleLine =>
+      'Como pensam os outros, e como fazer-se entender.';
+
+  @override
+  String get goalBusinessLine =>
+      'Incentivos, risco e os números por trás de uma ideia.';
+
+  @override
+  String get goalMoneyLine => 'Juros, preços e as armadilhas de uma oferta.';
+
+  @override
+  String get goalNonsenseLine =>
+      'Estudos, estatísticas e manchetes: o que se aguenta.';
+
+  @override
+  String get goalHealthLine => 'Corpo, comida e sono: o que diz a ciência.';
+
+  @override
+  String get goalCultureLine =>
+      'História, arte, cinema e música que vale a pena saber.';
+
+  @override
+  String get goalWorldLine => 'Ciência, espaço e natureza, explicados.';
+
+  @override
+  String get goalStress => 'Lidar com o stress';
+
+  @override
+  String get goalLearn => 'Aprender mais depressa';
+
+  @override
+  String get goalStressLine =>
+      'Contratempos, preocupações e o que depende mesmo de ti.';
+
+  @override
+  String get goalLearnLine => 'Memória, foco e uma prática que funciona mesmo.';
+
+  @override
+  String get goalEyebrowMany => 'OS TEUS OBJETIVOS';
 
   @override
   String mathsDailyStreak(int n) {

@@ -1186,6 +1186,41 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind・$source';
+  }
+
+  @override
+  String get sourceKindPaper => '研究';
+
+  @override
+  String get sourceKindBook => '書籍';
+
+  @override
+  String get sourceKindInstitution => '機関';
+
+  @override
+  String get sourceKindDocument => '原資料';
+
+  @override
+  String get sourceKindData => 'データ';
+
+  @override
+  String get sourceKindReference => '参考図書';
+
+  @override
+  String get sourceKindNews => '新聞';
+
+  @override
+  String get sourceKindCompany => '企業資料';
+
+  @override
+  String get sourceKindStandard => '規格';
+
+  @override
+  String get sourceKindArithmetic => '計算';
+
+  @override
   String get plusIsActive => 'ASTUTE+ 有効';
 
   @override
@@ -4818,6 +4853,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get newsRead => '読んだ';
 
   @override
+  String newsOutlets(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count社が報道',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String goalShelf(String goal) {
     return 'あなたの目標：$goal';
   }
@@ -4851,6 +4896,66 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get goalWorld => '世界を理解する';
+
+  @override
+  String get goalAsk => '何がうまくなりたい？';
+
+  @override
+  String get goalAskLine => '3つまで選んでください。毎日のカードがそのために鍛えます。いつでも変更できます。';
+
+  @override
+  String get goalSave => '保存';
+
+  @override
+  String get goalEyebrow => 'あなたの目標';
+
+  @override
+  String get goalPick => 'ひとつ選ぶ';
+
+  @override
+  String get goalNone => 'まだ目標なし';
+
+  @override
+  String get goalNotNow => '今はしない';
+
+  @override
+  String get goalDecideLine => '勘ではなく、正しい数字で選ぶ。';
+
+  @override
+  String get goalPeopleLine => '人がどう考えるか、どう伝わるか。';
+
+  @override
+  String get goalBusinessLine => 'インセンティブ、リスク、アイデアの裏の数字。';
+
+  @override
+  String get goalMoneyLine => '金利、価格、お得な話の落とし穴。';
+
+  @override
+  String get goalNonsenseLine => '研究、統計、見出し：本当に確かなのはどれか。';
+
+  @override
+  String get goalHealthLine => '体、食事、睡眠：科学が言うこと。';
+
+  @override
+  String get goalCultureLine => '知っておきたい歴史、芸術、映画、音楽。';
+
+  @override
+  String get goalWorldLine => '科学、宇宙、自然をわかりやすく。';
+
+  @override
+  String get goalStress => 'ストレスと付き合う';
+
+  @override
+  String get goalLearn => 'より速く学ぶ';
+
+  @override
+  String get goalStressLine => '挫折、不安、そして本当に自分で変えられること。';
+
+  @override
+  String get goalLearnLine => '記憶、集中、そして本当に効く練習法。';
+
+  @override
+  String get goalEyebrowMany => 'あなたの目標';
 
   @override
   String mathsDailyStreak(int n) {

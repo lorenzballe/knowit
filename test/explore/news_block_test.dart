@@ -46,6 +46,7 @@ Map<String, Object?> _card(
     'type': 'news',
     'headline': 'Egg prices hit a record as bird flu empties henhouses',
     'outlet': 'BBC News',
+    'reported': ['BBC News', 'The Guardian', 'DW'],
     'date': date,
     'panels': [
       {
@@ -184,6 +185,11 @@ void main() {
     );
     expect(find.text(r'$6.23'), findsOneWidget);
     expect(find.text('Why?  →'), findsOneWidget);
+    // How many papers carry it, and which.
+    expect(
+      find.text('Reported by 3 outlets · BBC News, The Guardian, DW'),
+      findsOneWidget,
+    );
     await tester.tap(find.byKey(const ValueKey('news-news-2026-11-16-eggs')));
     expect(host.opened.single, ('news-today', 'news-2026-11-16-eggs'));
 

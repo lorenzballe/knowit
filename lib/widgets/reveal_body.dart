@@ -12,6 +12,7 @@ import 'deeper_sheet.dart';
 import 'diagram_view.dart';
 import 'motion.dart';
 import 'report_sheet.dart';
+import '../l10n/app_localizations.dart';
 
 /// Everything a card says once it is turned over: the reasoning, the trap,
 /// the plain-words retelling and the other side of a debate.
@@ -1263,7 +1264,13 @@ class _CardRevealState extends State<CardReveal> {
       );
     }
     gap(10);
-    final source = l10n.sourceLabel(pill.source);
+    // What kind of source it is, where the card says: a study, a book, an
+    // institution, the data itself. A reader weighs "Study · Nature" and
+    // "Book · Kahneman" differently, and should be able to.
+    final String? kind = sourceKindName(l10n, pill.sourceKind);
+    final source = kind == null
+        ? l10n.sourceLabel(pill.source)
+        : l10n.sourceLabelKind(kind, pill.source);
     final sourceStyle = _Type.source(ink, f.source);
     // The flag to report the card rides at the end of the source it would be
     // checked against, so it costs the card no line of its own. Measured as a
@@ -1580,3 +1587,19 @@ class _SourceTap extends StatelessWidget {
     child: child,
   );
 }
+
+/// The kind of a card's source as the reader reads it, or null when the
+/// card does not say or says what this build does not know.
+String? sourceKindName(AppLocalizations l, String kind) => switch (kind) {
+  'paper' => l.sourceKindPaper,
+  'book' => l.sourceKindBook,
+  'institution' => l.sourceKindInstitution,
+  'primary_document' => l.sourceKindDocument,
+  'statistics' => l.sourceKindData,
+  'reference_work' => l.sourceKindReference,
+  'news_archive' => l.sourceKindNews,
+  'company' => l.sourceKindCompany,
+  'standard' => l.sourceKindStandard,
+  'arithmetic' => l.sourceKindArithmetic,
+  _ => null,
+};

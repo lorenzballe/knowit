@@ -95,6 +95,8 @@ class AppState extends ChangeNotifier {
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
   static const _kGoal = 'knowit.goal';
+  static const _kGoals = 'knowit.goals';
+  static const _kGoalAsked = 'knowit.goalAsked';
   static const _kTopicLevels = 'knowit.topicLevels';
   static const _kGenresOff = 'knowit.genresOff';
   static const _kStrandsOff = 'knowit.strandsOff';
@@ -279,9 +281,18 @@ class AppState extends ChangeNotifier {
   /// means they never said, and every subject is dealt evenly.
   Map<String, double> topicWeights = {};
 
-  /// What the reader wants to get better at (lib/data/goals.dart), by key;
-  /// null until they say.
-  String? goal;
+  /// What the reader wants to get better at (lib/data/goals.dart), by key,
+  /// in the order they picked: up to [kMostGoals], none until they say.
+  List<String> goals = const [];
+
+  /// The first of [goals], or null.
+  String? get goal => goals.isEmpty ? null : goals.first;
+
+  /// Whether the reader has been asked what they want to get better at: on
+  /// the first run, or once on Explore for a reader who came before the
+  /// question did. Asked and passed over, they are not asked again; Profile
+  /// still has it.
+  bool goalAsked = false;
 
   /// What the reader says they already know of each subject: 0 curious,
   /// 1 some, 2 solid, by topic key. Only the subjects they were asked about
@@ -472,13 +483,29 @@ class AppState extends ChangeNotifier {
 
   /// Says what the reader wants to get better at, or, with null, that they
   /// will say again.
-  Future<void> setGoal(String? key) async {
-    goal = Goal.of(key)?.key;
-    if (goal == null) {
-      await _prefs.remove(_kGoal);
-    } else {
-      await _prefs.setString(_kGoal, goal!);
-    }
+  Future<void> setGoal(String? key) => setGoals([?key]);
+
+  /// Says what the reader wants to get better at: the goals this build
+  /// knows, each once, [kMostGoals] at most, in the order given.
+  Future<void> setGoals(List<String> keys) async {
+    goals = _keptGoals(keys);
+    await _prefs.setStringList(_kGoals, goals);
+    await _prefs.remove(_kGoal);
+    await markGoalAsked();
+  }
+
+  static List<String> _keptGoals(List<String> keys) => List.unmodifiable(
+    <String>{
+      for (final String k in keys)
+        if (Goal.of(k) case final Goal g) g.key,
+    }.take(kMostGoals),
+  );
+
+  /// Notes that the reader was asked what they want to get better at,
+  /// whatever they answered.
+  Future<void> markGoalAsked() async {
+    goalAsked = true;
+    await _prefs.setBool(_kGoalAsked, true);
     notifyListeners();
   }
 
@@ -552,7 +579,11 @@ class AppState extends ChangeNotifier {
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
     topicWeights = _decodeWeights(_prefs.getString(_kTopicWeights));
-    goal = Goal.of(_prefs.getString(_kGoal))?.key;
+    // One goal was all a build before kept, under a key of its own.
+    goals = _keptGoals(
+      _prefs.getStringList(_kGoals) ?? [?_prefs.getString(_kGoal)],
+    );
+    goalAsked = goals.isNotEmpty || (_prefs.getBool(_kGoalAsked) ?? false);
     topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
     genresOff = (_prefs.getStringList(_kGenresOff) ?? []).toSet();
     strandsOff = (_prefs.getStringList(_kStrandsOff) ?? []).toSet();
@@ -1630,15 +1661,17 @@ class AppState extends ChangeNotifier {
   /// look at this; the second set and the swaps do.
   Map<String, double> get leanedWeights {
     final Map<String, double> leaned = _leanedByReading;
-    final Goal? aim = Goal.of(goal);
-    if (aim == null) return leaned;
+    final Set<String> aimed = {
+      for (final String k in goals) ...?Goal.of(k)?.topics,
+    };
+    if (aimed.isEmpty) return leaned;
     // What the reader wants to get better at counts half again.
     final base = leaned.isEmpty
         ? {for (final key in kTopicOrder) key: 1.0}
         : leaned;
     return {
       for (final e in base.entries)
-        e.key: aim.topics.contains(e.key)
+        e.key: aimed.contains(e.key)
             ? (e.value * kGoalLean).clamp(0.05, 3.0)
             : e.value,
     };

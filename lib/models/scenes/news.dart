@@ -96,6 +96,11 @@ class NewsScene extends Scene {
   final String headline;
   final String outlet;
 
+  /// Every outlet that carries the story, when the card says: the news
+  /// cards written each morning do (functions/src/news.ts), the bank's do
+  /// not.
+  final List<String> reported;
+
   /// The day it was reported.
   final DateTime date;
 
@@ -112,6 +117,7 @@ class NewsScene extends Scene {
     super.raw, {
     required this.headline,
     required this.outlet,
+    this.reported = const [],
     required this.date,
     required this.panels,
     required this.then,
@@ -200,6 +206,11 @@ class NewsScene extends Scene {
       raw,
       headline: need(raw, 'headline', ''),
       outlet: need(raw, 'outlet', ''),
+      reported: [
+        if (raw['reported'] case final List list)
+          for (final Object? o in list)
+            if (o is String && o.trim().isNotEmpty) o.trim(),
+      ],
       date: day('date'),
       panels: panels,
       then: then,

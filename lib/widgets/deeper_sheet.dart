@@ -27,6 +27,7 @@ import '../state/app_state.dart';
 import '../sync/card_ask.dart';
 import '../theme.dart';
 import 'premium.dart';
+import 'liquid_glass.dart';
 
 /// Where a tap on a card's source goes: set once by the app (main.dart), so
 /// a card's back, a page's source and the detail screen all open the same
@@ -298,63 +299,64 @@ class _DeeperSheetState extends State<DeeperSheet> {
       initialChildSize: 0.72,
       minChildSize: 0.4,
       maxChildSize: 0.95,
-      builder: (context, scroll) => Container(
-        decoration: BoxDecoration(
-          color: p.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-        ),
-        child: ListView(
-          controller: scroll,
-          padding: EdgeInsets.fromLTRB(
-            22,
-            14,
-            22,
-            MediaQuery.paddingOf(context).bottom +
-                MediaQuery.viewInsetsOf(context).bottom +
-                24,
+      builder: (context, scroll) => GlassSheet(
+        child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
           ),
-          children: [
-            Center(
-              child: Container(
-                width: 38,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: p.lineStrong,
-                  borderRadius: BorderRadius.circular(9),
+          child: ListView(
+            controller: scroll,
+            padding: EdgeInsets.fromLTRB(
+              22,
+              14,
+              22,
+              MediaQuery.paddingOf(context).bottom +
+                  MediaQuery.viewInsetsOf(context).bottom +
+                  24,
+            ),
+            children: [
+              Center(
+                child: Container(
+                  width: 38,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: p.lineStrong,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              l.deeperTitle,
-              style: AppText.display(
-                size: 24,
-                weight: FontWeight.w600,
-                spacing: -0.6,
-                color: p.ink,
+              const SizedBox(height: 20),
+              Text(
+                l.deeperTitle,
+                style: AppText.display(
+                  size: 24,
+                  weight: FontWeight.w600,
+                  spacing: -0.6,
+                  color: p.ink,
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              pill.question,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.body(size: 14, height: 1.35, color: p.inkMuted),
-            ),
-            const SizedBox(height: 18),
-            for (final Widget part in parts) ...[
-              part,
-              const SizedBox(height: 12),
+              const SizedBox(height: 6),
+              Text(
+                pill.question,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.body(size: 14, height: 1.35, color: p.inkMuted),
+              ),
+              const SizedBox(height: 18),
+              for (final Widget part in parts) ...[
+                part,
+                const SizedBox(height: 12),
+              ],
+              if (ai)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    l.deeperAiNote,
+                    style: AppText.body(size: 12, color: p.inkFaint),
+                  ),
+                ),
             ],
-            if (ai)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  l.deeperAiNote,
-                  style: AppText.body(size: 12, color: p.inkFaint),
-                ),
-              ),
-          ],
+          ),
         ),
       ),
     );
@@ -666,10 +668,7 @@ class _QuizOption extends StatelessWidget {
           decoration: BoxDecoration(
             color: m == null ? p.surfaceRaised : m.withValues(alpha: 0.14),
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: m ?? p.line,
-              width: m == null ? 1 : 1.6,
-            ),
+            border: Border.all(color: m ?? p.line, width: m == null ? 1 : 1.6),
           ),
           child: Text(
             label,

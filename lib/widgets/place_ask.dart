@@ -9,6 +9,7 @@ import '../state/app_state.dart';
 import '../sync/place_finder.dart';
 import '../theme.dart';
 import 'ui.dart';
+import 'liquid_glass.dart';
 
 /// The place as a reader would name it: the city, or, where the phone gave
 /// none, the region, and failing that the country.
@@ -232,66 +233,67 @@ class PlaceAsk extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    return Container(
-      key: const ValueKey('place-ask'),
-      decoration: BoxDecoration(
-        color: p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        22,
-        14,
-        22,
-        MediaQuery.paddingOf(context).bottom + 18,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const _Handle(),
-            const SizedBox(height: 20),
-            Text(
-              l.placeAskTitle,
-              style: AppText.display(
-                size: 20,
-                weight: FontWeight.w600,
-                spacing: -0.6,
-                color: p.ink,
+    return GlassSheet(
+      child: Container(
+        key: const ValueKey('place-ask'),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        ),
+        padding: EdgeInsets.fromLTRB(
+          22,
+          14,
+          22,
+          MediaQuery.paddingOf(context).bottom + 18,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _Handle(),
+              const SizedBox(height: 20),
+              Text(
+                l.placeAskTitle,
+                style: AppText.display(
+                  size: 20,
+                  weight: FontWeight.w600,
+                  spacing: -0.6,
+                  color: p.ink,
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              l.placeAskLine,
-              style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
-            ),
-            const SizedBox(height: 16),
-            const _PlacePreview(),
-            const SizedBox(height: 16),
-            Text(
-              l.placeOnlyCity,
-              key: const ValueKey('place-ask-promise'),
-              style: AppText.body(
-                size: 13.5,
-                weight: FontWeight.w500,
-                height: 1.4,
-                color: p.ink,
+              const SizedBox(height: 6),
+              Text(
+                l.placeAskLine,
+                style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
               ),
-            ),
-            const SizedBox(height: 18),
-            PrimaryButton(
-              key: const ValueKey('place-yes'),
-              label: l.placeAskYes,
-              height: 52,
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-            const SizedBox(height: 4),
-            QuietButton(
-              key: const ValueKey('place-not-now'),
-              label: l.placeAskNotNow,
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+              const SizedBox(height: 16),
+              const _PlacePreview(),
+              const SizedBox(height: 16),
+              Text(
+                l.placeOnlyCity,
+                key: const ValueKey('place-ask-promise'),
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w500,
+                  height: 1.4,
+                  color: p.ink,
+                ),
+              ),
+              const SizedBox(height: 18),
+              PrimaryButton(
+                key: const ValueKey('place-yes'),
+                label: l.placeAskYes,
+                height: 52,
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+              const SizedBox(height: 4),
+              QuietButton(
+                key: const ValueKey('place-not-now'),
+                label: l.placeAskNotNow,
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -417,78 +419,79 @@ class PlaceOptions extends StatelessWidget {
             placeName(place),
             if (region != null && region != placeName(place)) region,
           ].join(' · ');
-    return Container(
-      key: const ValueKey('place-options'),
-      decoration: BoxDecoration(
-        color: p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        22,
-        14,
-        22,
-        MediaQuery.paddingOf(context).bottom + 18,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const _Handle(),
-            const SizedBox(height: 20),
-            Eyebrow(l.placeRowTitle),
-            const SizedBox(height: 8),
-            Text(
-              where,
-              style: AppText.display(
-                size: 20,
-                weight: FontWeight.w600,
-                spacing: -0.6,
-                color: p.ink,
+    return GlassSheet(
+      child: Container(
+        key: const ValueKey('place-options'),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        ),
+        padding: EdgeInsets.fromLTRB(
+          22,
+          14,
+          22,
+          MediaQuery.paddingOf(context).bottom + 18,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _Handle(),
+              const SizedBox(height: 20),
+              Eyebrow(l.placeRowTitle),
+              const SizedBox(height: 8),
+              Text(
+                where,
+                style: AppText.display(
+                  size: 20,
+                  weight: FontWeight.w600,
+                  spacing: -0.6,
+                  color: p.ink,
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              l.placeOnlyCity,
-              style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
-            ),
-            const SizedBox(height: 18),
-            PrimaryButton(
-              key: const ValueKey('place-use-now'),
-              label: l.placeUseNow,
-              height: 52,
-              onPressed: () => Navigator.of(context).pop('now'),
-            ),
-            const SizedBox(height: 4),
-            Semantics(
-              button: true,
-              child: GestureDetector(
-                key: const ValueKey('place-remove'),
-                behavior: HitTestBehavior.opaque,
-                onTap: () => Navigator.of(context).pop('remove'),
-                child: Container(
-                  width: double.infinity,
-                  constraints: const BoxConstraints(minHeight: 44),
-                  alignment: Alignment.center,
-                  child: Text(
-                    l.placeRemove,
-                    style: AppText.body(
-                      size: 14,
-                      weight: FontWeight.w600,
-                      color: p.alert,
+              const SizedBox(height: 6),
+              Text(
+                l.placeOnlyCity,
+                style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
+              ),
+              const SizedBox(height: 18),
+              PrimaryButton(
+                key: const ValueKey('place-use-now'),
+                label: l.placeUseNow,
+                height: 52,
+                onPressed: () => Navigator.of(context).pop('now'),
+              ),
+              const SizedBox(height: 4),
+              Semantics(
+                button: true,
+                child: GestureDetector(
+                  key: const ValueKey('place-remove'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => Navigator.of(context).pop('remove'),
+                  child: Container(
+                    width: double.infinity,
+                    constraints: const BoxConstraints(minHeight: 44),
+                    alignment: Alignment.center,
+                    child: Text(
+                      l.placeRemove,
+                      style: AppText.body(
+                        size: 14,
+                        weight: FontWeight.w600,
+                        color: p.alert,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            // What the policy says of it, in full, for whoever wants more
-            // than the one line above.
-            QuietButton(
-              key: const ValueKey('place-policy'),
-              label: l.privacyPolicy,
-              onPressed: () => openLink(placePolicyUrl(l.localeName)),
-            ),
-          ],
+              // What the policy says of it, in full, for whoever wants more
+              // than the one line above.
+              QuietButton(
+                key: const ValueKey('place-policy'),
+                label: l.privacyPolicy,
+                onPressed: () => openLink(placePolicyUrl(l.localeName)),
+              ),
+            ],
+          ),
         ),
       ),
     );

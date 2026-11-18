@@ -1794,6 +1794,72 @@ abstract class AppLocalizations {
   /// **'Source · {source}'**
   String sourceLabel(String source);
 
+  /// A card's source line, with what kind of source it is first: "Study · Nature, 2019".
+  ///
+  /// In en, this message translates to:
+  /// **'{kind} · {source}'**
+  String sourceLabelKind(String kind, String source);
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Study'**
+  String get sourceKindPaper;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Book'**
+  String get sourceKindBook;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Institution'**
+  String get sourceKindInstitution;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Document'**
+  String get sourceKindDocument;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get sourceKindData;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get sourceKindReference;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Newspaper'**
+  String get sourceKindNews;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get sourceKindCompany;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get sourceKindStandard;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Worked out'**
+  String get sourceKindArithmetic;
+
   /// No description provided for @plusIsActive.
   ///
   /// In en, this message translates to:
@@ -7188,6 +7254,12 @@ abstract class AppLocalizations {
   /// **'Read'**
   String get newsRead;
 
+  /// Explore, a news clipping: how many outlets carry the story, before their names (always two or more).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{Reported by {count} outlets}}'**
+  String newsOutlets(int count);
+
   /// Explore, the reader's goal: the name of its shelf, with the goal the reader picked.
   ///
   /// In en, this message translates to:
@@ -7253,6 +7325,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Understanding the world'**
   String get goalWorld;
+
+  /// The first run's second step, and Explore's prompt: the question of what the reader wants to get better at.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to get better at?'**
+  String get goalAsk;
+
+  /// Under that question: what a goal does, and that it can be changed.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up to three: every day your cards train you for them. You can change them any time.'**
+  String get goalAskLine;
+
+  /// The goal screen opened from Profile: its button, which keeps the goal picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get goalSave;
+
+  /// Profile, the reader's goal: the eyebrow over it, in small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR GOAL'**
+  String get goalEyebrow;
+
+  /// Profile, the reader's goal: the link that opens the goals when none is picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one'**
+  String get goalPick;
+
+  /// Profile, the reader's goal: what stands in its place when none is picked.
+  ///
+  /// In en, this message translates to:
+  /// **'No goal yet'**
+  String get goalNone;
+
+  /// Explore, the prompt to pick a goal: puts it away for good (Profile still has it).
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get goalNotNow;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing with the right numbers, not on a hunch.'**
+  String get goalDecideLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'How others think, and how to be understood.'**
+  String get goalPeopleLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Incentives, risk and the numbers behind an idea.'**
+  String get goalBusinessLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Interest, prices and the traps in a deal.'**
+  String get goalMoneyLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Studies, statistics and headlines: what holds up.'**
+  String get goalNonsenseLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Body, food and sleep: what the science says.'**
+  String get goalHealthLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'History, art, cinema and music worth knowing.'**
+  String get goalCultureLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Science, space and nature, explained.'**
+  String get goalWorldLine;
+
+  /// The goal screen: a goal, keeping one's head when things go wrong or press.
+  ///
+  /// In en, this message translates to:
+  /// **'Staying calm'**
+  String get goalStress;
+
+  /// The goal screen: a goal, learning anything faster and remembering it.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning faster'**
+  String get goalLearn;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Setbacks, worry and what is really in your control.'**
+  String get goalStressLine;
+
+  /// The goal screen: under a goal's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory, focus and practice that actually works.'**
+  String get goalLearnLine;
+
+  /// Profile: the eyebrow over the goals, when there is more than one.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR GOALS'**
+  String get goalEyebrowMany;
 
   /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.
   ///

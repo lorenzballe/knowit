@@ -24,6 +24,15 @@ What it does with each verdict:
 Nothing here is merged by itself: the run opens a pull request a person
 reads, as they would read any change to cards that are already out.
 
+With --sources it takes instead the cards whose only source is a retelling
+(a video, a post) and asks the critic for the primary source behind them:
+the study, the institution, the data. A correction that changes nothing but
+the source goes into the bank (the pull request still shows it); one that
+would change what the card says waits for a person, as every correction
+does; a claim the critic doubts is listed for a person and never retired
+here. A card for which nothing better was found is stamped checked, and
+asked about again only after half a year.
+
     python3 tool/quality/recheck.py --limit 20 --batch --report recheck.md
 """
 from __future__ import annotations
@@ -32,6 +41,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 import sys
 import urllib.request
 from dataclasses import dataclass
@@ -46,6 +56,29 @@ INTERVAL_DAYS = {"months": 90, "years": 365}
 # A card readers flagged is not checked again within this many days of the
 # last check, so one stubborn flag cannot cost a check every month.
 FLAG_REST_DAYS = 30
+
+# A source that is a retelling rather than the thing itself: the claim may
+# well be right, but the reader is sent to a video about the study instead
+# of the study.
+WEAK_SOURCE = re.compile(r"youtube|youtu\.be|geopop|tiktok|instagram|facebook|reddit", re.I)
+
+# A card whose source was looked for and not bettered rests this long.
+SOURCE_REST_DAYS = 180
+
+# What a correction may touch and still go straight in: the citation only.
+CITATION = {"source", "reference", "source_kind", "checked", "quote"}
+
+SOURCES = """This card's only source is a retelling: {source}. Find the primary
+source its claims come from (the paper, the institution's own page, the
+official statistics, the book) and open it with the fetch tool.
+- If a page you opened states every claim and figure on the card, the
+  verdict is fix: the same card, word for word, with only `source` (author or
+  body, title, year), `reference` (the address you opened) and `source_kind`
+  changed. Change nothing else.
+- If the claims hold but you could not open a primary source that states
+  them, the verdict is pass.
+- If a claim does not hold, the verdict is reject, and the reason says which
+  claim and what the source says instead."""
 
 RECHECK = """This card is already live: readers have been reading it since {written}{checked}. You
 are checking that it still holds today, not judging it as a new card.
@@ -121,7 +154,23 @@ def due(bank: list[dict], stats: dict | None, today: dt.date, limit: int) -> lis
     return out[:limit]
 
 
-def brief(d: Due) -> str:
+def due_sources(bank: list[dict], today: dt.date, limit: int) -> list[Due]:
+    """The cards whose only source is a retelling, not looked at in the last
+    half year, at most [limit], in the order of their ids."""
+    out: list[Due] = []
+    for card in bank:
+        if card.get("disabled"):
+            continue
+        if not WEAK_SOURCE.search(f"{card.get('source', '')} {card.get('reference', '')}"):
+            continue
+        if card.get("checked") and (today - last_checked(card)).days < SOURCE_REST_DAYS:
+            continue
+        out.append(Due(card, "its only source is a video or a post, not the study, the institution or the data behind it", 4))
+    out.sort(key=lambda d: d.card["id"])
+    return out[:limit]
+
+
+def brief(d: Due, *, sources: bool = False) -> str:
     import generate
 
     card = d.card
@@ -129,8 +178,17 @@ def brief(d: Due) -> str:
     if card.get("quote"):
         reading = generate.Reading(supported=True, quote=card["quote"], figures="", note="")
     checked = f", and it was last checked {card['checked']}" if card.get("checked") else ""
-    return generate.critic_brief(card, reading) + "\n\n" + RECHECK.format(
+    text = generate.critic_brief(card, reading) + "\n\n" + RECHECK.format(
         written=card.get("written", "before the records began"), checked=checked, why=d.why)
+    if sources:
+        text += "\n\n" + SOURCES.format(source=card.get("source", ""))
+    return text
+
+
+def only_citation(original: dict, proposal: dict) -> bool:
+    """Whether [proposal] differs from [original] in the citation alone."""
+    keys = (set(original) | set(proposal)) - CITATION - {k for k in set(original) | set(proposal) if k.startswith("_")}
+    return all(original.get(k) == proposal.get(k) for k in keys)
 
 
 @dataclass
@@ -159,8 +217,10 @@ def corrected(original: dict, fixed: dict, today: dt.date) -> dict:
 
 
 def apply(verdicts: list[tuple[Due, object]], *, today: dt.date, bank_root: Path = common.BANK,
-          review: Path = common.REVIEW) -> list[Result]:
-    """Does what each verdict says, to the files."""
+          review: Path = common.REVIEW, sources: bool = False) -> list[Result]:
+    """Does what each verdict says, to the files. Looking for sources, a
+    correction to the citation alone goes straight in, and a doubt is left
+    for a person rather than retired."""
     import check
     import generate
 
@@ -183,6 +243,17 @@ def apply(verdicts: list[tuple[Due, object]], *, today: dt.date, bank_root: Path
         elif verdict.verdict == "fix" and verdict.fixed is not None:
             proposal = corrected(card, generate.to_card(verdict.fixed), today)
             problems = check.check_card(proposal, strict=True, schema=schema, banned=banned)
+            # A new citation and nothing else goes straight in, so long as
+            # it brings the card no problem it did not have: an old card
+            # held to a rule written after it is no reason to keep citing a
+            # video.
+            if sources and only_citation(card, proposal) and proposal.get("reference") and not WEAK_SOURCE.search(
+                    f"{proposal.get('source', '')} {proposal.get('reference', '')}"):
+                before = set(check.check_card(card, strict=True, schema=schema, banned=banned))
+                if set(problems) <= before:
+                    common.write_card(proposal, path)
+                    out.append(Result(card["id"], "source", verdict.reason, f"now cites {proposal.get('source', '')}"))
+                    continue
             if problems:
                 out.append(Result(card["id"], "fix", verdict.reason, "the correction did not pass the gate, so the card is left for a person: " + "; ".join(problems)))
                 continue
@@ -193,6 +264,8 @@ def apply(verdicts: list[tuple[Due, object]], *, today: dt.date, bank_root: Path
                 "since": today.isoformat(), "from": "recheck",
             }]
             out.append(Result(card["id"], "fix", verdict.reason, "a correction waits for a person in the review issue"))
+        elif verdict.verdict == "reject" and sources:
+            out.append(Result(card["id"], "doubt", verdict.reason, "left live, for a person to look at"))
         elif verdict.verdict == "reject":
             card["disabled"] = True
             common.write_card(card, path)
@@ -206,7 +279,8 @@ def apply(verdicts: list[tuple[Due, object]], *, today: dt.date, bank_root: Path
 def report(results: list[Result], due_cards: list[Due], receipt: str, today: dt.date) -> str:
     why = {d.card["id"]: d.why for d in due_cards}
     lines = [f"## The re-check · {today:%-d %B %Y}", "", f"{len(results)} card{'s' if len(results) != 1 else ''} checked again.", ""]
-    for heading, verdict in (("Still true", "pass"), ("A correction proposed", "fix"), ("Retired", "reject"), ("No verdict", "none")):
+    for heading, verdict in (("A primary source found", "source"), ("Still true", "pass"), ("A correction proposed", "fix"),
+                             ("Doubted, for a person", "doubt"), ("Retired", "reject"), ("No verdict", "none")):
         some = [r for r in results if r.verdict == verdict]
         if not some:
             continue
@@ -220,11 +294,11 @@ def report(results: list[Result], due_cards: list[Due], receipt: str, today: dt.
     return "\n".join(lines) + "\n"
 
 
-def run(due_cards: list[Due], model) -> list[tuple[Due, object]]:
+def run(due_cards: list[Due], model, *, sources: bool = False) -> list[tuple[Due, object]]:
     import generate
 
     rules = generate.RULES.read_text(encoding="utf-8")
-    specs = [generate.Spec(generate.critic_system(rules), [{"role": "user", "content": brief(d)}], generate.Verdict,
+    specs = [generate.Spec(generate.critic_system(rules), [{"role": "user", "content": brief(d, sources=sources)}], generate.Verdict,
                            tools=[generate._web_search(generate.CRITIC_SEARCHES), generate._web_fetch(2)]) for d in due_cards]
     return list(zip(due_cards, generate.calls(model, specs, "recheck")))
 
@@ -242,12 +316,16 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--stats", help="a scorecard JSON file instead of the server's")
     ap.add_argument("--dry-run", action="store_true", help="say which cards are due; call nothing")
     ap.add_argument("--report", type=Path)
+    ap.add_argument("--sources", action="store_true", help="the cards whose only source is a video or a post: find the primary one")
     args = ap.parse_args(argv)
 
     today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
-    stats = json.loads(Path(args.stats).read_text(encoding="utf-8")) if args.stats else fetch_stats()
     bank = check.load_bank()
-    due_cards = due(bank, stats, today, args.limit)
+    if args.sources:
+        due_cards = due_sources(bank, today, args.limit)
+    else:
+        stats = json.loads(Path(args.stats).read_text(encoding="utf-8")) if args.stats else fetch_stats()
+        due_cards = due(bank, stats, today, args.limit)
     if args.dry_run or not due_cards:
         print(f"{len(due_cards)} card{'s' if len(due_cards) != 1 else ''} due:")
         for d in due_cards:
@@ -260,7 +338,7 @@ def main(argv: list[str] | None = None) -> int:
             print("ANTHROPIC_API_KEY is not set; nothing was checked. Use --dry-run to see what is due.", file=sys.stderr)
             return 2
         model = generate.Claude(args.model, batch=args.batch)
-    results = apply(run(due_cards, model), today=today)
+    results = apply(run(due_cards, model, sources=args.sources), today=today, sources=args.sources)
     text = report(results, due_cards, model.receipt(), today)
     if args.report:
         args.report.write_text(text, encoding="utf-8")

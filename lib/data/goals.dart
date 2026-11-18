@@ -3,19 +3,61 @@ import 'pill_bank.dart';
 import 'pills_repository.dart' show dealableOn;
 import 'topics.dart';
 
-/// What a reader wants to get better at, as a person: the goal they pick on
-/// Explore ("What do you want to get better at?"). It gives Explore a shelf
-/// of its own, leans the mix of the deals towards its subjects, and is what
-/// the coach writes towards.
+/// How many goals a reader can hold at once: enough for a person's few
+/// real aims, few enough that each still has its shelf and its lean.
+const int kMostGoals = 3;
+
+/// What a reader wants to get better at, as a person: the goals they pick on
+/// the first run (screens/goal_screen.dart), up to [kMostGoals], and can
+/// change in Profile. Each gives Explore a shelf of its own, leans the mix
+/// of the deals towards its subjects, and is what the coach writes towards.
 ///
-/// A goal is a few subjects and a few reasoning moves: a card counts for it
-/// when it is about one of its subjects or trains one of its moves. The
-/// cards that train a move come first, then the rest, each in an order of
-/// the day's own, so the shelf is new every day.
+/// A goal is the genres that are about it (Life's People, Decisions, Work
+/// and career; Science's Spot bad science), the reasoning moves it trains,
+/// and the subjects around it. A card counts for it when it is in one of
+/// those genres, trains one of those moves or is about one of those
+/// subjects, and is shown in that order: the genres first, as the closest
+/// fit, then the moves, then the rest, each in an order of the day's own,
+/// so the shelf is new every day.
+///
+/// The order is the order the goals are offered in: the aims a person
+/// comes to an app like this with first (people, a business, money,
+/// decisions), the wider ones after.
 enum Goal {
+  people(
+    'people',
+    {'life.people', 'life.relationships', 'life.ask_better_questions'},
+    {Principle.confirmation, Principle.availability, Principle.anchoring},
+    {'psychology', 'language', 'philosophy'},
+  ),
+  business(
+    'business',
+    {
+      'life.work_and_career',
+      'economics.think_in_incentives',
+      'economics.pricing_tricks',
+      'economics.markets_and_hype',
+      'economics.work_and_wages',
+    },
+    {Principle.survivorship, Principle.exponential, Principle.sunkCost},
+    {'economics', 'technology'},
+  ),
+  money(
+    'money',
+    {
+      'life.money_and_time',
+      'economics.your_money_decisions',
+      'economics.spot_a_bad_deal',
+      'economics.money_and_banks',
+      'economics.everyday_costs',
+      'economics.read_money_news',
+    },
+    {Principle.exponential, Principle.regression, Principle.independence},
+    {'economics', 'maths'},
+  ),
   decide(
     'decide',
-    {'thinking', 'psychology'},
+    {'life.decisions', 'life.clear_thinking', 'economics.your_money_decisions'},
     {
       Principle.sunkCost,
       Principle.baseRate,
@@ -24,25 +66,32 @@ enum Goal {
       Principle.counterfactual,
       Principle.reflection,
     },
+    {'thinking', 'psychology'},
   ),
-  people(
-    'people',
-    {'psychology', 'language', 'philosophy'},
-    {Principle.confirmation, Principle.availability, Principle.anchoring},
+  stress(
+    'stress',
+    {'life.handle_setbacks', 'life.meaning'},
+    // A bad run tends back to the usual (regression), and what comes to
+    // mind first is not what is likely (availability): the two moves that
+    // take the most worry out of a week.
+    {Principle.regression, Principle.availability},
+    {'psychology', 'philosophy'},
   ),
-  business(
-    'business',
-    {'economics', 'technology'},
-    {Principle.survivorship, Principle.exponential, Principle.sunkCost},
-  ),
-  money(
-    'money',
-    {'economics', 'maths'},
-    {Principle.exponential, Principle.regression, Principle.independence},
+  learn(
+    'learn',
+    {'life.learn_anything', 'life.time_and_attention', 'life.growth'},
+    {},
+    {'psychology', 'language'},
   ),
   nonsense(
     'nonsense',
-    {'science', 'medicine'},
+    {
+      'science.spot_bad_science',
+      'science.read_a_study',
+      'science.how_science_knows',
+      'science.numbers_and_chance',
+      'life.clear_thinking',
+    },
     {
       Principle.sampling,
       Principle.confounding,
@@ -51,21 +100,36 @@ enum Goal {
       Principle.coincidence,
       Principle.simpson,
     },
+    {'science', 'medicine'},
   ),
-  health('health', {'human_body', 'medicine', 'food', 'sport'}, {}),
-  culture('culture', {'history', 'art', 'cinema', 'music', 'philosophy'}, {}),
-  world('world', {'science', 'space', 'nature', 'weird_facts'}, {});
+  health(
+    'health',
+    {'life.habits'},
+    {},
+    {'human_body', 'medicine', 'food', 'sport'},
+  ),
+  culture('culture', {}, {}, {
+    'history',
+    'art',
+    'cinema',
+    'music',
+    'philosophy',
+  }),
+  world('world', {}, {}, {'science', 'space', 'nature', 'weird_facts'});
 
-  const Goal(this.key, this.topics, this.moves);
+  const Goal(this.key, this.genres, this.moves, this.topics);
 
   /// How the goal is kept and sent: never changes.
   final String key;
 
-  /// The subjects it is about, by key (lib/data/topics.dart).
-  final Set<String> topics;
+  /// The genres about it, by id (lib/data/genres.dart).
+  final Set<String> genres;
 
   /// The reasoning moves it trains.
   final Set<Principle> moves;
+
+  /// The subjects around it, by key (lib/data/topics.dart).
+  final Set<String> topics;
 
   /// The goal kept under [key], or null.
   static Goal? of(String? key) {
@@ -81,13 +145,20 @@ enum Goal {
       if (kTopics[t] case final style?) style.name,
   };
 
-  /// Whether [p] counts for the goal.
-  bool fits(Pill p) =>
-      moves.contains(p.principle) || topicNames.contains(p.topic);
+  /// How close [p] comes to the goal: 0 in one of its genres, 1 training
+  /// one of its moves, 2 about one of its subjects, null not at all.
+  int? fitOf(Pill p) {
+    if (genres.contains(p.genre)) return 0;
+    if (moves.contains(p.principle)) return 1;
+    if (topicNames.contains(p.topic)) return 2;
+    return null;
+  }
 
-  /// The goal's cards for [day] that [read] does not hold: those that train
-  /// one of its moves first, then the rest, each in the day's own order;
-  /// [count] at most.
+  /// Whether [p] counts for the goal.
+  bool fits(Pill p) => fitOf(p) != null;
+
+  /// The goal's cards for [day] that [read] does not hold, the closest
+  /// first, each kind in the day's own order; [count] at most.
   List<Pill> cardsFor(DateTime day, Set<String> read, {int count = 10}) {
     final int seed = DateTime(
       day.year,
@@ -103,16 +174,12 @@ enum Goal {
       return h;
     }
 
-    final List<Pill> pool = [
+    final List<(int, int, Pill)> pool = [
       for (final Pill p in PillBank.cards)
-        if (fits(p) && !read.contains(p.id) && dealableOn(p, day)) p,
+        if (!read.contains(p.id) && dealableOn(p, day))
+          if (fitOf(p) case final int fit) (fit, mix(p.id), p),
     ];
-    pool.sort((a, b) {
-      final int byMove =
-          (moves.contains(a.principle) ? 0 : 1) -
-          (moves.contains(b.principle) ? 0 : 1);
-      return byMove != 0 ? byMove : mix(a.id).compareTo(mix(b.id));
-    });
-    return pool.take(count).toList();
+    pool.sort((a, b) => a.$1 != b.$1 ? a.$1 - b.$1 : a.$2.compareTo(b.$2));
+    return [for (final (_, _, p) in pool.take(count)) p];
   }
 }

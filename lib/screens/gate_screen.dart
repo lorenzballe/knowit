@@ -16,6 +16,7 @@ import '../widgets/balanced_text.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/chunky.dart' show chunkyEdge;
 import '../widgets/ui.dart';
+import '../widgets/liquid_glass.dart';
 
 /// Keeps the app behind the update gate (lib/remote/gate.dart): the screen
 /// that asks for an update, or the one that says the app is paused, in
@@ -526,75 +527,80 @@ class UpdateSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    return Container(
-      key: const ValueKey('update-sheet'),
-      decoration: BoxDecoration(
-        color: p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        22,
-        14,
-        22,
-        MediaQuery.paddingOf(context).bottom + 18,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 38,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: p.lineStrong,
-                  borderRadius: BorderRadius.circular(9),
+    return GlassSheet(
+      child: Container(
+        key: const ValueKey('update-sheet'),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        ),
+        padding: EdgeInsets.fromLTRB(
+          22,
+          14,
+          22,
+          MediaQuery.paddingOf(context).bottom + 18,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 38,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: p.lineStrong,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 22),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const GateMark(kind: GateKind.update, size: 50, glow: false),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: BalancedText(
-                      l.gateSoftTitle,
-                      style: AppText.display(
-                        size: 20,
-                        weight: FontWeight.w600,
-                        height: 1.2,
-                        spacing: -0.6,
-                        color: p.ink,
+              const SizedBox(height: 22),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const GateMark(kind: GateKind.update, size: 50, glow: false),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: BalancedText(
+                        l.gateSoftTitle,
+                        style: AppText.display(
+                          size: 20,
+                          weight: FontWeight.w600,
+                          height: 1.2,
+                          spacing: -0.6,
+                          color: p.ink,
+                        ),
                       ),
                     ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              BalancedText(
+                message ?? l.gateSoftLine(storeWordFor(platform)),
+                style: AppText.body(
+                  size: 13.5,
+                  height: 1.45,
+                  color: p.inkMuted,
                 ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            BalancedText(
-              message ?? l.gateSoftLine(storeWordFor(platform)),
-              style: AppText.body(size: 13.5, height: 1.45, color: p.inkMuted),
-            ),
-            const SizedBox(height: 20),
-            PrimaryButton(
-              key: const ValueKey('update-yes'),
-              label: l.gateUpdateButton,
-              height: 52,
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-            const SizedBox(height: 4),
-            QuietButton(
-              key: const ValueKey('update-later'),
-              label: l.gateSoftLater,
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-          ],
+              ),
+              const SizedBox(height: 20),
+              PrimaryButton(
+                key: const ValueKey('update-yes'),
+                label: l.gateUpdateButton,
+                height: 52,
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+              const SizedBox(height: 4),
+              QuietButton(
+                key: const ValueKey('update-later'),
+                label: l.gateSoftLater,
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+            ],
+          ),
         ),
       ),
     );

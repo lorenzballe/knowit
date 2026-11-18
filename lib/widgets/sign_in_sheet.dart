@@ -9,6 +9,7 @@ import '../sync/subscription.dart';
 import '../theme.dart';
 import 'profile_menu.dart' show GoogleMark;
 import 'ui.dart';
+import 'liquid_glass.dart';
 
 /// Where an account is offered from. Each door says it in its own words,
 /// and the funnel counts them apart.
@@ -258,108 +259,109 @@ class _SignInSheetState extends State<SignInSheet> {
     final String? detail = _detail;
     final String? waiting = _running ?? widget.account.busyWith;
     final bool free = _running == null && !widget.account.busy;
-    return Container(
-      key: const ValueKey('sign-in-sheet'),
-      decoration: BoxDecoration(
-        color: p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        22,
-        14,
-        22,
-        MediaQuery.paddingOf(context).bottom + 18,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Center(
-              child: Container(
-                width: 38,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: p.lineStrong,
-                  borderRadius: BorderRadius.circular(9),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              title,
-              style: AppText.display(
-                size: 20,
-                weight: FontWeight.w600,
-                spacing: -0.6,
-                color: p.ink,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              line,
-              style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
-            ),
-            const SizedBox(height: 20),
-            _ProviderButton(
-              key: const ValueKey('sign-in-apple'),
-              label: waiting == 'Apple'
-                  ? l.signingIn
-                  : back
-                  ? l.continueWithApple
-                  : l.signInWithApple,
-              leading: (ink) => Icon(Icons.apple, size: 21, color: ink),
-              enabled: free,
-              onTap: () => _go('Apple'),
-            ),
-            const SizedBox(height: 10),
-            _ProviderButton(
-              key: const ValueKey('sign-in-google'),
-              label: waiting == 'Google'
-                  ? l.signingIn
-                  : back
-                  ? l.continueWithGoogle
-                  : l.signInWithGoogle,
-              leading: (_) => const GoogleMark(size: 19),
-              enabled: free,
-              onTap: () => _go('Google'),
-            ),
-            // Said where the reader is looking, and read out as it changes.
-            if (note != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 14),
-                child: Semantics(
-                  liveRegion: true,
-                  child: Text(
-                    note,
-                    key: const ValueKey('sign-in-note'),
-                    textAlign: TextAlign.center,
-                    style: AppText.body(
-                      size: 13.5,
-                      weight: FontWeight.w500,
-                      height: 1.4,
-                      color: p.alert,
-                    ),
+    return GlassSheet(
+      child: Container(
+        key: const ValueKey('sign-in-sheet'),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        ),
+        padding: EdgeInsets.fromLTRB(
+          22,
+          14,
+          22,
+          MediaQuery.paddingOf(context).bottom + 18,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Container(
+                  width: 38,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: p.lineStrong,
+                    borderRadius: BorderRadius.circular(9),
                   ),
                 ),
               ),
-            if (detail != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: SelectableText(
-                  detail,
-                  key: const ValueKey('sign-in-detail'),
-                  textAlign: TextAlign.center,
-                  style: AppText.body(size: 11.5, color: p.inkFaint),
+              const SizedBox(height: 20),
+              Text(
+                title,
+                style: AppText.display(
+                  size: 20,
+                  weight: FontWeight.w600,
+                  spacing: -0.6,
+                  color: p.ink,
                 ),
               ),
-            const SizedBox(height: 6),
-            QuietButton(
-              key: const ValueKey('sign-in-not-now'),
-              label: l.signInNotNow,
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-          ],
+              const SizedBox(height: 6),
+              Text(
+                line,
+                style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
+              ),
+              const SizedBox(height: 20),
+              _ProviderButton(
+                key: const ValueKey('sign-in-apple'),
+                label: waiting == 'Apple'
+                    ? l.signingIn
+                    : back
+                    ? l.continueWithApple
+                    : l.signInWithApple,
+                leading: (ink) => Icon(Icons.apple, size: 21, color: ink),
+                enabled: free,
+                onTap: () => _go('Apple'),
+              ),
+              const SizedBox(height: 10),
+              _ProviderButton(
+                key: const ValueKey('sign-in-google'),
+                label: waiting == 'Google'
+                    ? l.signingIn
+                    : back
+                    ? l.continueWithGoogle
+                    : l.signInWithGoogle,
+                leading: (_) => const GoogleMark(size: 19),
+                enabled: free,
+                onTap: () => _go('Google'),
+              ),
+              // Said where the reader is looking, and read out as it changes.
+              if (note != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 14),
+                  child: Semantics(
+                    liveRegion: true,
+                    child: Text(
+                      note,
+                      key: const ValueKey('sign-in-note'),
+                      textAlign: TextAlign.center,
+                      style: AppText.body(
+                        size: 13.5,
+                        weight: FontWeight.w500,
+                        height: 1.4,
+                        color: p.alert,
+                      ),
+                    ),
+                  ),
+                ),
+              if (detail != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: SelectableText(
+                    detail,
+                    key: const ValueKey('sign-in-detail'),
+                    textAlign: TextAlign.center,
+                    style: AppText.body(size: 11.5, color: p.inkFaint),
+                  ),
+                ),
+              const SizedBox(height: 6),
+              QuietButton(
+                key: const ValueKey('sign-in-not-now'),
+                label: l.signInNotNow,
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+            ],
+          ),
         ),
       ),
     );

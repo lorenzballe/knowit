@@ -1190,6 +1190,41 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind · $source';
+  }
+
+  @override
+  String get sourceKindPaper => '연구';
+
+  @override
+  String get sourceKindBook => '책';
+
+  @override
+  String get sourceKindInstitution => '기관';
+
+  @override
+  String get sourceKindDocument => '원문 자료';
+
+  @override
+  String get sourceKindData => '데이터';
+
+  @override
+  String get sourceKindReference => '참고 문헌';
+
+  @override
+  String get sourceKindNews => '신문';
+
+  @override
+  String get sourceKindCompany => '기업 자료';
+
+  @override
+  String get sourceKindStandard => '표준';
+
+  @override
+  String get sourceKindArithmetic => '계산';
+
+  @override
   String get plusIsActive => 'ASTUTE+ 활성화됨';
 
   @override
@@ -4839,6 +4874,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get newsRead => '읽음';
 
   @override
+  String newsOutlets(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count개 매체 보도',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String goalShelf(String goal) {
     return '나의 목표: $goal';
   }
@@ -4872,6 +4917,67 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get goalWorld => '세상 이해하기';
+
+  @override
+  String get goalAsk => '무엇을 더 잘하고 싶나요?';
+
+  @override
+  String get goalAskLine =>
+      '최대 세 개까지 고르세요. 매일 카드가 그 목표를 위해 훈련해 줘요. 언제든 바꿀 수 있어요.';
+
+  @override
+  String get goalSave => '저장';
+
+  @override
+  String get goalEyebrow => '나의 목표';
+
+  @override
+  String get goalPick => '하나 고르기';
+
+  @override
+  String get goalNone => '아직 목표 없음';
+
+  @override
+  String get goalNotNow => '나중에';
+
+  @override
+  String get goalDecideLine => '감이 아니라 올바른 숫자로 고르기.';
+
+  @override
+  String get goalPeopleLine => '다른 사람이 어떻게 생각하는지, 어떻게 이해받는지.';
+
+  @override
+  String get goalBusinessLine => '인센티브, 위험, 아이디어 뒤의 숫자.';
+
+  @override
+  String get goalMoneyLine => '이자, 가격, 할인 속 함정.';
+
+  @override
+  String get goalNonsenseLine => '연구, 통계, 헤드라인: 무엇이 믿을 만한가.';
+
+  @override
+  String get goalHealthLine => '몸, 음식, 잠: 과학이 말하는 것.';
+
+  @override
+  String get goalCultureLine => '알아 둘 만한 역사, 예술, 영화, 음악.';
+
+  @override
+  String get goalWorldLine => '과학, 우주, 자연을 쉽게.';
+
+  @override
+  String get goalStress => '스트레스 다루기';
+
+  @override
+  String get goalLearn => '더 빨리 배우기';
+
+  @override
+  String get goalStressLine => '좌절, 걱정, 그리고 정말로 내가 바꿀 수 있는 것.';
+
+  @override
+  String get goalLearnLine => '기억, 집중, 그리고 정말 효과 있는 연습.';
+
+  @override
+  String get goalEyebrowMany => '나의 목표';
 
   @override
   String mathsDailyStreak(int n) {

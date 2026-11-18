@@ -12,6 +12,7 @@ import '../utils/home_widget.dart';
 import 'scaled_text.dart';
 import 'subject_icon.dart';
 import 'ui.dart';
+import 'liquid_glass.dart';
 
 /// Shows how to put Astute on the home screen, once, at the app's own
 /// moment: a day just finished, the second or later
@@ -105,84 +106,85 @@ class WidgetAsk extends StatelessWidget {
             l.widgetAskStepAndroidAdd,
             l.widgetAskStepAndroidPick,
           ];
-    return Container(
-      key: const ValueKey('widget-ask'),
-      decoration: BoxDecoration(
-        color: p.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      padding: EdgeInsets.fromLTRB(
-        22,
-        14,
-        22,
-        MediaQuery.paddingOf(context).bottom + 18,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 38,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: p.lineStrong,
-                  borderRadius: BorderRadius.circular(9),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              l.widgetAskTitle,
-              style: AppText.display(
-                size: 20,
-                weight: FontWeight.w600,
-                spacing: -0.6,
-                color: p.ink,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              l.widgetAskLine,
-              style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
-            ),
-            const SizedBox(height: 16),
-            _WidgetPreview(card: card),
-            const SizedBox(height: 16),
-            if (!canPin) ...[
-              for (int i = 0; i < steps.length; i++) ...[
-                if (i > 0) const SizedBox(height: 8),
-                _Step(number: i + 1, text: steps[i]),
-              ],
-              if (apple) ...[
-                const SizedBox(height: 10),
-                Text(
-                  l.widgetAskLockScreen,
-                  key: const ValueKey('widget-ask-lock'),
-                  style: AppText.body(
-                    size: 12.5,
-                    height: 1.4,
-                    color: p.inkMuted,
+    return GlassSheet(
+      child: Container(
+        key: const ValueKey('widget-ask'),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        ),
+        padding: EdgeInsets.fromLTRB(
+          22,
+          14,
+          22,
+          MediaQuery.paddingOf(context).bottom + 18,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 38,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: p.lineStrong,
+                    borderRadius: BorderRadius.circular(9),
                   ),
                 ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                l.widgetAskTitle,
+                style: AppText.display(
+                  size: 20,
+                  weight: FontWeight.w600,
+                  spacing: -0.6,
+                  color: p.ink,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                l.widgetAskLine,
+                style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
+              ),
+              const SizedBox(height: 16),
+              _WidgetPreview(card: card),
+              const SizedBox(height: 16),
+              if (!canPin) ...[
+                for (int i = 0; i < steps.length; i++) ...[
+                  if (i > 0) const SizedBox(height: 8),
+                  _Step(number: i + 1, text: steps[i]),
+                ],
+                if (apple) ...[
+                  const SizedBox(height: 10),
+                  Text(
+                    l.widgetAskLockScreen,
+                    key: const ValueKey('widget-ask-lock'),
+                    style: AppText.body(
+                      size: 12.5,
+                      height: 1.4,
+                      color: p.inkMuted,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 18),
               ],
-              const SizedBox(height: 18),
+              PrimaryButton(
+                key: const ValueKey('widget-yes'),
+                label: canPin ? l.widgetAskPin : l.widgetAskGotIt,
+                height: 52,
+                onPressed: () =>
+                    Navigator.of(context).pop(canPin ? 'pin' : 'got it'),
+              ),
+              const SizedBox(height: 4),
+              QuietButton(
+                key: const ValueKey('widget-not-now'),
+                label: l.widgetAskNotNow,
+                onPressed: () => Navigator.of(context).pop('not now'),
+              ),
             ],
-            PrimaryButton(
-              key: const ValueKey('widget-yes'),
-              label: canPin ? l.widgetAskPin : l.widgetAskGotIt,
-              height: 52,
-              onPressed: () =>
-                  Navigator.of(context).pop(canPin ? 'pin' : 'got it'),
-            ),
-            const SizedBox(height: 4),
-            QuietButton(
-              key: const ValueKey('widget-not-now'),
-              label: l.widgetAskNotNow,
-              onPressed: () => Navigator.of(context).pop('not now'),
-            ),
-          ],
+          ),
         ),
       ),
     );

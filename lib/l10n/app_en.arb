@@ -1158,6 +1158,58 @@
    }
   }
  },
+ "sourceLabelKind": "{kind} · {source}",
+ "@sourceLabelKind": {
+  "description": "A card's source line, with what kind of source it is first: \"Study · Nature, 2019\".",
+  "placeholders": {
+   "kind": {
+    "type": "String"
+   },
+   "source": {
+    "type": "String"
+   }
+  }
+ },
+ "sourceKindPaper": "Study",
+ "@sourceKindPaper": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindBook": "Book",
+ "@sourceKindBook": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindInstitution": "Institution",
+ "@sourceKindInstitution": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindDocument": "Document",
+ "@sourceKindDocument": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindData": "Data",
+ "@sourceKindData": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindReference": "Reference",
+ "@sourceKindReference": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindNews": "Newspaper",
+ "@sourceKindNews": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindCompany": "Company",
+ "@sourceKindCompany": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindStandard": "Standard",
+ "@sourceKindStandard": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindArithmetic": "Worked out",
+ "@sourceKindArithmetic": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
  "plusIsActive": "ASTUTE+ IS ACTIVE",
  "tryFreeThen": "Try {days} days free, then {price}{suffix}",
  "@tryFreeThen": {
@@ -5356,6 +5408,15 @@
  "@newsRead": {
   "description": "Explore, the news, reasoned: on a story already read, after a tick, in place of the button."
  },
+ "newsOutlets": "{count, plural, other{Reported by {count} outlets}}",
+ "@newsOutlets": {
+  "description": "Explore, a news clipping: how many outlets carry the story, before their names (always two or more).",
+  "placeholders": {
+   "count": {
+    "type": "int"
+   }
+  }
+ },
  "goalShelf": "For your goal: {goal}",
  "@goalShelf": {
   "description": "Explore, the reader's goal: the name of its shelf, with the goal the reader picked.",
@@ -5404,6 +5465,86 @@
  "goalWorld": "Understanding the world",
  "@goalWorld": {
   "description": "A goal the reader can pick on Explore: understanding how the world works, science and nature."
+ },
+ "goalAsk": "What do you want to get better at?",
+ "@goalAsk": {
+  "description": "The first run's second step, and Explore's prompt: the question of what the reader wants to get better at."
+ },
+ "goalAskLine": "Pick up to three: every day your cards train you for them. You can change them any time.",
+ "@goalAskLine": {
+  "description": "Under that question: what a goal does, and that it can be changed."
+ },
+ "goalSave": "Save",
+ "@goalSave": {
+  "description": "The goal screen opened from Profile: its button, which keeps the goal picked."
+ },
+ "goalEyebrow": "YOUR GOAL",
+ "@goalEyebrow": {
+  "description": "Profile, the reader's goal: the eyebrow over it, in small capitals."
+ },
+ "goalPick": "Pick one",
+ "@goalPick": {
+  "description": "Profile, the reader's goal: the link that opens the goals when none is picked."
+ },
+ "goalNone": "No goal yet",
+ "@goalNone": {
+  "description": "Profile, the reader's goal: what stands in its place when none is picked."
+ },
+ "goalNotNow": "Not now",
+ "@goalNotNow": {
+  "description": "Explore, the prompt to pick a goal: puts it away for good (Profile still has it)."
+ },
+ "goalDecideLine": "Choosing with the right numbers, not on a hunch.",
+ "@goalDecideLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalPeopleLine": "How others think, and how to be understood.",
+ "@goalPeopleLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalBusinessLine": "Incentives, risk and the numbers behind an idea.",
+ "@goalBusinessLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalMoneyLine": "Interest, prices and the traps in a deal.",
+ "@goalMoneyLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalNonsenseLine": "Studies, statistics and headlines: what holds up.",
+ "@goalNonsenseLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalHealthLine": "Body, food and sleep: what the science says.",
+ "@goalHealthLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalCultureLine": "History, art, cinema and music worth knowing.",
+ "@goalCultureLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalWorldLine": "Science, space and nature, explained.",
+ "@goalWorldLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalStress": "Staying calm",
+ "@goalStress": {
+  "description": "The goal screen: a goal, keeping one's head when things go wrong or press."
+ },
+ "goalLearn": "Learning faster",
+ "@goalLearn": {
+  "description": "The goal screen: a goal, learning anything faster and remembering it."
+ },
+ "goalStressLine": "Setbacks, worry and what is really in your control.",
+ "@goalStressLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalLearnLine": "Memory, focus and practice that actually works.",
+ "@goalLearnLine": {
+  "description": "The goal screen: under a goal's name, what it trains, in a line."
+ },
+ "goalEyebrowMany": "YOUR GOALS",
+ "@goalEyebrowMany": {
+  "description": "Profile: the eyebrow over the goals, when there is more than one."
  },
  "mathsDailyStreak": "{n, plural, =1{1 day in a row} other{{n} days in a row}}",
  "@mathsDailyStreak": {

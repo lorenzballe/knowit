@@ -38,6 +38,9 @@ import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
+import '../data/goals.dart';
+import 'goal_screen.dart';
+import '../widgets/liquid_glass.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -305,7 +308,13 @@ class ProfileScreen extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),
+        // The foot clears the glass tab bar the list runs under.
+        padding: EdgeInsets.fromLTRB(
+          22,
+          8,
+          22,
+          24 + (glassOn ? MediaQuery.paddingOf(context).bottom : 0),
+        ),
         children: [
           // The record, not an identity. This screen used to open with a
           // circle of initials nobody typed, a name nobody set, and four
@@ -337,6 +346,8 @@ class ProfileScreen extends StatelessWidget {
           Eyebrow(context.l10n.appearance),
           const SizedBox(height: 11),
           _ThemePicker(app: app),
+          const SizedBox(height: 22),
+          _GoalRow(app: app),
           const SizedBox(height: 22),
           // The mix is everybody's: it is what the free day's cards are
           // dealt from, the reader's own and the ones at random, so gating
@@ -1226,52 +1237,60 @@ class _ThemePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PaperCard(
-      padding: const EdgeInsets.all(6),
-      radius: 18,
-      child: Row(
-        children: _options.map((option) {
-          final selected = app.themeMode == option.mode;
-          return Expanded(
-            child: Semantics(
-              button: true,
-              selected: selected,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  if (selected) return;
-                  HapticFeedback.selectionClick();
-                  app.setThemeMode(option.mode);
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  constraints: const BoxConstraints(minHeight: 44),
-                  padding: const EdgeInsets.symmetric(vertical: 11),
-                  decoration: BoxDecoration(
-                    color: selected ? context.p.inverse : Colors.transparent,
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    switch (option.mode) {
-                      ThemeMode.light => context.l10n.themeLight,
-                      ThemeMode.dark => context.l10n.themeDark,
-                      _ => context.l10n.themeSystem,
-                    },
-                    style: AppText.body(
-                      size: 13.5,
-                      weight: FontWeight.w600,
-                      color: selected
-                          ? context.p.onInverse
-                          : context.p.inkMuted,
-                    ),
+    // A segmented control in glass, as iOS 26 draws one: the track is
+    // glass, the chosen segment solid.
+    final Widget row = Row(
+      children: _options.map((option) {
+        final selected = app.themeMode == option.mode;
+        return Expanded(
+          child: Semantics(
+            button: true,
+            selected: selected,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (selected) return;
+                HapticFeedback.selectionClick();
+                app.setThemeMode(option.mode);
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                constraints: const BoxConstraints(minHeight: 44),
+                padding: const EdgeInsets.symmetric(vertical: 11),
+                decoration: BoxDecoration(
+                  color: selected ? context.p.inverse : Colors.transparent,
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  switch (option.mode) {
+                    ThemeMode.light => context.l10n.themeLight,
+                    ThemeMode.dark => context.l10n.themeDark,
+                    _ => context.l10n.themeSystem,
+                  },
+                  style: AppText.body(
+                    size: 13.5,
+                    weight: FontWeight.w600,
+                    color: selected ? context.p.onInverse : context.p.inkMuted,
                   ),
                 ),
               ),
             ),
-          );
-        }).toList(),
-      ),
+          ),
+        );
+      }).toList(),
+    );
+    if (!glassOn) {
+      return PaperCard(
+        padding: const EdgeInsets.all(6),
+        radius: 18,
+        child: row,
+      );
+    }
+    return LiquidGlass(
+      radius: 18,
+      shadow: false,
+      child: Padding(padding: const EdgeInsets.all(6), child: row),
     );
   }
 }
@@ -1671,6 +1690,135 @@ class _JourneyButton extends StatelessWidget {
                 ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// What the reader wants to get better at (lib/data/goals.dart): its mark,
+/// its name and the way to change it, or the way to pick one.
+class _GoalRow extends StatelessWidget {
+  const _GoalRow({required this.app});
+
+  final AppState app;
+
+  Future<void> _open(BuildContext context) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (routeContext) => GoalScreen(
+          editing: true,
+          initial: app.goals,
+          onSkip: () => Navigator.of(routeContext).pop(),
+          onDone: (keys) async {
+            Analytics.capture('goal picked', {
+              'goal': keys.join(','),
+              'goals': keys.length,
+              'from': 'profile',
+            });
+            await app.setGoals(keys);
+            if (routeContext.mounted) Navigator.of(routeContext).pop();
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.p;
+    final List<Goal> aims = [
+      for (final String k in app.goals)
+        if (Goal.of(k) case final Goal g) g,
+    ];
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        key: const ValueKey('profile-goal'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _open(context),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Eyebrow(aims.length > 1 ? l.goalEyebrowMany : l.goalEyebrow),
+                Text(
+                  aims.isEmpty ? l.goalPick : l.goalChange,
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    color: p.link,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 11),
+            if (aims.isEmpty)
+              Row(
+                children: [
+                  Container(
+                    width: 34,
+                    height: 34,
+                    decoration: BoxDecoration(
+                      color: p.inverse.withValues(alpha: 0.06),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.flag_rounded,
+                      size: 18,
+                      color: p.inkMuted,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      l.goalNone,
+                      style: AppText.body(
+                        size: 15,
+                        weight: FontWeight.w700,
+                        color: p.inkMuted,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            else
+              for (int i = 0; i < aims.length; i++) ...[
+                if (i > 0) const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Container(
+                      width: 34,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        color: goalHue(aims[i]),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        goalIcon(aims[i]),
+                        size: 18,
+                        color: inkOn(goalHue(aims[i])),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        goalName(l, aims[i]),
+                        style: AppText.body(
+                          size: 15,
+                          weight: FontWeight.w700,
+                          color: p.ink,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+          ],
         ),
       ),
     );

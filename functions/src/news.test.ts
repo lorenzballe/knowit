@@ -164,6 +164,8 @@ test("the writer's card comes out in the bank's shape, dealt for three days afte
   assert.equal(card.topic, 'economics');
   assert.equal(card.kind, 'read');
   assert.equal(card.scene.type, 'news');
+  assert.deepEqual(card.scene.reported, [...new Set(STORY.items.map((it) => it.outlet))]);
+  assert.ok(card.scene.reported.length >= 2);
   assert.equal(card.scene.date, '2026-11-18');
   assert.equal(card.scene.expires, '2026-11-21');
   assert.equal(card.scene.then, undefined);
