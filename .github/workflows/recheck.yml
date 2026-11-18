@@ -25,6 +25,13 @@ on:
         description: A canned critic instead of the API — no key, no cost
         type: boolean
         default: false
+      sources:
+        description: Instead, the cards whose only source is a video or a post — find the study, the institution or the data behind them
+        type: boolean
+        default: false
+      model:
+        description: What the critic runs on (empty is the generator's own; claude-haiku-5-5 costs least)
+        default: ""
 
 permissions:
   contents: write
@@ -72,6 +79,8 @@ jobs:
         run: |
           python3 tool/quality/recheck.py --batch \
             --limit "${{ steps.go.outputs.limit }}" \
+            ${{ github.event.inputs.model && format('--model {0}', github.event.inputs.model) || '' }} \
+            ${{ inputs.sources == true && '--sources' || '' }} \
             ${{ inputs.fake == true && '--fake' || '' }} \
             --today "$(date -u +%F)" \
             --report recheck-report.md

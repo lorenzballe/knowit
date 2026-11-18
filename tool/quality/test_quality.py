@@ -346,6 +346,54 @@ class TheRecheck(unittest.TestCase):
             for heading in ("Still true (1)", "A correction proposed (1)", "Retired (1)", "No verdict (1)"):
                 self.assertIn(heading, text)
 
+    def test_a_retelling_for_a_source_is_due_and_rests_once_looked_at(self):
+        weak = [d.card["id"] for d in recheck.due_sources(BANK, dt.date(2027, 6, 1), limit=100000)]
+        self.assertGreater(len(weak), 100, "the bank cites videos for some of its cards")
+        card = next(c for c in LIVE if c["id"] == weak[0])
+        self.assertRegex(f"{card.get('source', '')} {card.get('reference', '')}", recheck.WEAK_SOURCE)
+        self.assertEqual(weak, sorted(weak))
+        rested = {**card, "checked": "2027-05-01"}
+        self.assertEqual(recheck.due_sources([rested], dt.date(2027, 6, 1), limit=5), [])
+        self.assertEqual(len(recheck.due_sources([rested], dt.date(2027, 12, 1), limit=5)), 1)
+        text = recheck.brief(recheck.Due(card, "its only source is a video", 4), sources=True)
+        self.assertIn("primary", text)
+        self.assertIn(card["source"][:20], text)
+
+    def test_looking_for_sources_a_new_citation_goes_in_and_nothing_is_retired(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bank, rev = root / "bank", root / "review"
+            pool = [check.public(c) for c in LIVE if c["kind"] == "read" and recheck.WEAK_SOURCE.search(c.get("source", ""))]
+            cited, reworded, doubted = pool[:3]
+            for c in (cited, reworded, doubted):
+                common.write_card(c, bank / c["topic"] / f"{c['id']}.json")
+            Verdict = generate.Verdict
+            better = draft_of(cited, source="Walker, Nature Reviews Neuroscience, 2009",
+                              reference="https://doi.org/10.1038/nrn2697", source_kind="paper")
+            changed = draft_of(reworded, source="An institute, a page, 2024",
+                               reference="https://example.org/page", source_kind="institution",
+                               answer=reworded["answer"] + " More.")
+            results = [
+                (recheck.Due(cited, "its only source is a video", 4),
+                 generate.Result(Verdict(verdict="fix", reason="the study behind the video", fixed=better), None, None)),
+                (recheck.Due(reworded, "its only source is a video", 4),
+                 generate.Result(Verdict(verdict="fix", reason="a figure was off", fixed=changed), None, None)),
+                (recheck.Due(doubted, "its only source is a video", 4),
+                 generate.Result(Verdict(verdict="reject", reason="the claim is stated nowhere", fixed=None), None, None)),
+            ]
+            done = recheck.apply(results, today=TODAY, bank_root=bank, review=rev, sources=True)
+            self.assertEqual([r.verdict for r in done], ["source", "fix", "doubt"])
+            path = lambda c: bank / c["topic"] / f"{c['id']}.json"  # noqa: E731
+            now = json.loads(path(cited).read_text())
+            self.assertEqual(now["source"], "Walker, Nature Reviews Neuroscience, 2009")
+            self.assertEqual(now["source_kind"], "paper")
+            self.assertEqual(now["answer"], cited["answer"])
+            self.assertEqual(json.loads(path(reworded).read_text()), reworded, "a change to what it says waits for a person")
+            self.assertNotIn("disabled", json.loads(path(doubted).read_text()))
+            text = recheck.report(done, [d for d, _ in results], "no tokens", TODAY)
+            for heading in ("A primary source found (1)", "A correction proposed (1)", "Doubted, for a person (1)"):
+                self.assertIn(heading, text)
+
     def test_the_critic_is_told_it_is_checking_a_live_card(self):
         card = {**first(lambda c: c["kind"] == "read"), "quote": "A passage copied from the page, word for word, by the reader."}
         text = recheck.brief(recheck.Due(card, "readers dispute it", 1))
