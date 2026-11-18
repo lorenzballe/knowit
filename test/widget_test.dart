@@ -416,6 +416,11 @@ void main() {
     await _settle(tester);
     expect(find.byType(SnackBar), findsNothing);
 
+    // What the reader wants to get better at, passed over here.
+    expect(find.text('What do you want to get better at?'), findsOneWidget);
+    await tester.tap(find.text('Skip'));
+    await _settle(tester);
+
     // The mix opens with everything in, so the reader turns things down
     // rather than building a deck from nothing.
     expect(find.text('Science'), findsOneWidget);
