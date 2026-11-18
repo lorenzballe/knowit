@@ -2021,8 +2021,10 @@ class _AstutoTabBar extends StatelessWidget {
                   1 => context.l10n.tabExplore,
                   _ => context.l10n.tabProfile,
                 };
+                // On glass the tabs not lit are a step darker than on solid
+                // ground: what passes under the bar is never the same twice.
                 final Color tint = Color.lerp(
-                  context.p.inkFaint,
+                  glassOn ? context.p.inkMuted : context.p.inkFaint,
                   context.p.onInverse,
                   on,
                 )!;

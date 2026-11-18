@@ -5156,7 +5156,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goalEyebrow => 'TON OBJECTIF';
 
   @override
-  String get goalPick => 'Choisis-en un';
+  String get goalPick => 'Choisir';
 
   @override
   String get goalNone => 'Pas encore d’objectif';

@@ -5049,7 +5049,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get goalEyebrow => 'HEDEFİN';
 
   @override
-  String get goalPick => 'Birini seç';
+  String get goalPick => 'Seç';
 
   @override
   String get goalNone => 'Henüz hedef yok';

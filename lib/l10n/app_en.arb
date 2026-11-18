@@ -5482,7 +5482,7 @@
  "@goalEyebrow": {
   "description": "Profile, the reader's goal: the eyebrow over it, in small capitals."
  },
- "goalPick": "Pick one",
+ "goalPick": "Choose",
  "@goalPick": {
   "description": "Profile, the reader's goal: the link that opens the goals when none is picked."
  },

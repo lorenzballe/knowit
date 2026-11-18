@@ -107,9 +107,15 @@ class LiquidGlass extends StatelessWidget {
     }
 
     final double k = strength.clamp(0.5, 2.0);
+    // The ground under the tint: a little of the screen's own surface, so a
+    // bright card passing under the glass colours it rather than paints it,
+    // and the tabs on it read over anything.
+    final Color ground = dark
+        ? p.surfaceRaised.withValues(alpha: 0.42)
+        : Colors.white.withValues(alpha: 0.34);
     // The tint: on paper a milk glass, at night a smoked one; a coloured
     // tint takes the place of either, as thin.
-    final Color top = tint != null
+    final Color sheenTop = tint != null
         ? Color.alphaBlend(
             Colors.white.withValues(alpha: 0.22),
             tint!,
@@ -117,18 +123,20 @@ class LiquidGlass extends StatelessWidget {
         : dark
         ? Colors.white.withValues(alpha: 0.13 * k)
         : Colors.white.withValues(alpha: 0.62 * k);
-    final Color bottom = tint != null
+    final Color sheenBottom = tint != null
         ? tint!.withValues(alpha: 0.22 * k)
         : dark
         ? Colors.white.withValues(alpha: 0.06 * k)
         : Colors.white.withValues(alpha: 0.42 * k);
+    final Color top = Color.alphaBlend(sheenTop, ground);
+    final Color bottom = Color.alphaBlend(sheenBottom, ground);
 
     return DecoratedBox(
       decoration: ShapeDecoration(shape: shape, shadows: shadows),
       child: ClipPath(
         clipper: ShapeBorderClipper(shape: shape),
         child: BackdropFilter(
-          filter: ui.ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+          filter: _frost(blur, dark),
           child: CustomPaint(
             foregroundPainter: _Rim(circle: circle, radius: radius, dark: dark),
             child: DecoratedBox(
@@ -147,6 +155,40 @@ class LiquidGlass extends StatelessWidget {
       ),
     );
   }
+}
+
+/// The backdrop as the glass bends it: its colour drained by half, then
+/// blurred, and toned a little towards the ground, darker at night and
+/// lighter on paper. Glass on iOS does the same, so that a saturated card
+/// passing under a bar tints it rather than floods it, and what is on the
+/// glass keeps its contrast.
+ui.ImageFilter _frost(double sigma, bool dark) {
+  // How much colour is left, and the tone: a gain on every channel, and at
+  // paper a lift, in the 0 to 255 of a colour matrix's last column.
+  const double keep = 0.5;
+  final double gain = dark ? 0.82 : 0.94;
+  final double lift = dark ? 0 : 255 * 0.08;
+  const double r = 0.2126, g = 0.7152, b = 0.0722;
+  List<double> row(double rr, double gg, double bb) => [
+    rr * gain,
+    gg * gain,
+    bb * gain,
+    0,
+    lift,
+  ];
+  return ui.ImageFilter.compose(
+    outer: ui.ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+    inner: ui.ColorFilter.matrix([
+      ...row(r * (1 - keep) + keep, g * (1 - keep), b * (1 - keep)),
+      ...row(r * (1 - keep), g * (1 - keep) + keep, b * (1 - keep)),
+      ...row(r * (1 - keep), g * (1 - keep), b * (1 - keep) + keep),
+      0,
+      0,
+      0,
+      1,
+      0,
+    ]),
+  );
 }
 
 /// The edge of the glass: a hairline brighter where the light falls, and a
@@ -246,7 +288,7 @@ class GlassSheet extends StatelessWidget {
     return ClipRRect(
       borderRadius: corners,
       child: BackdropFilter(
-        filter: ui.ImageFilter.blur(sigmaX: 34, sigmaY: 34),
+        filter: _frost(34, dark),
         child: CustomPaint(
           foregroundPainter: _SheetEdge(radius: radius, dark: dark),
           child: DecoratedBox(

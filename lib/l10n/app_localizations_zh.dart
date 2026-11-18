@@ -4909,7 +4909,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get goalEyebrow => '你的目标';
 
   @override
-  String get goalPick => '选一个';
+  String get goalPick => '选择';
 
   @override
   String get goalNone => '还没有目标';

@@ -7353,7 +7353,7 @@ abstract class AppLocalizations {
   /// Profile, the reader's goal: the link that opens the goals when none is picked.
   ///
   /// In en, this message translates to:
-  /// **'Pick one'**
+  /// **'Choose'**
   String get goalPick;
 
   /// Profile, the reader's goal: what stands in its place when none is picked.
