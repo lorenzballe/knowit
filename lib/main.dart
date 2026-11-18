@@ -56,6 +56,7 @@ import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
 import 'widgets/grounds.dart';
+import 'widgets/hand_glass.dart';
 
 /// The seeded crowd for Explore's top list: the live bank, tilted to what
 /// readers keep — a question over a fact, a debate over both, the hard ones,
@@ -1845,7 +1846,7 @@ class _AstutoShellState extends State<AstutoShell>
                           // still be lifted clear of it.
                           builder: (context) => Padding(
                             padding: EdgeInsets.only(
-                              bottom: i == 0 || !appleGlass
+                              bottom: i == 0 || !barGlass
                                   ? MediaQuery.paddingOf(context).bottom
                                   : 0,
                             ),
@@ -2015,8 +2016,11 @@ class _AstutoTabBar extends StatelessWidget {
         18,
         MediaQuery.of(context).padding.bottom + 8,
       ),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
+      // Glass drawn by hand on Apple's platforms where the system's is not
+      // there (handGlass), solid ground everywhere else.
+      child: LiquidGlass(
+        radius: 26,
+        solid: BoxDecoration(
           color: context.p.surfaceRaised,
           borderRadius: BorderRadius.circular(26),
           border: Border.all(color: context.p.line),
@@ -2045,11 +2049,15 @@ class _AstutoTabBar extends StatelessWidget {
                   1 => context.l10n.tabExplore,
                   _ => context.l10n.tabProfile,
                 };
-                final Color tint = Color.lerp(
-                  context.p.inkFaint,
-                  context.p.onInverse,
-                  on,
-                )!;
+                // On glass the tabs not lit are drawn nearer the ink than on
+                // solid ground, each with its halo: what passes under the
+                // bar is never the same twice.
+                final Color idle = !handGlass
+                    ? context.p.inkFaint
+                    : context.p.ink.withValues(
+                        alpha: context.p.isDark ? 0.92 : 0.72,
+                      );
+                final Color tint = Color.lerp(idle, context.p.onInverse, on)!;
 
                 // The lit tab is the one with a word in it, so it is the
                 // one that gets the room: three equal thirds fit "Today" and
@@ -2078,7 +2086,12 @@ class _AstutoTabBar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(tab.icon, size: 19, color: tint),
+                              Icon(
+                                tab.icon,
+                                size: 19,
+                                color: tint,
+                                shadows: on < 0.5 ? glassHalo(context) : null,
+                              ),
                               // The label belongs to the tab you are on, and
                               // unfurls as you arrive rather than appearing
                               // once you have. Three of them side by side is
