@@ -584,7 +584,9 @@ class ExploreScreenState extends State<ExploreScreen>
               slivers: [
                 SliverPadding(
                   padding: EdgeInsets.only(
-                    bottom: 30 + MediaQuery.paddingOf(context).bottom,
+                    bottom:
+                        30 +
+                        (glassOn ? MediaQuery.paddingOf(context).bottom : 0),
                   ),
                   sliver: ExploreSliver(host: this, slots: slots),
                 ),
@@ -592,6 +594,30 @@ class ExploreScreenState extends State<ExploreScreen>
             ),
           ),
         ),
+        // Off Apple the bar is solid and the shelves stop at it, so the
+        // last one has to say it is not the end. On Apple the glass bar
+        // says it: the shelves run on under it.
+        if (!glassOn)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 40,
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      context.p.surface.withValues(alpha: 0),
+                      context.p.surface,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -895,6 +921,10 @@ class _Head extends StatelessWidget {
                     circle: true,
                     shadow: false,
                     blur: 16,
+                    solid: BoxDecoration(
+                      color: context.p.ink.withValues(alpha: 0.07),
+                      borderRadius: BorderRadius.circular(13),
+                    ),
                     child: Center(
                       child: Icon(
                         Icons.search_rounded,

@@ -788,6 +788,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     circle: true,
                     shadow: false,
                     blur: 16,
+                    solid: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: p.ink.withValues(alpha: 0.06),
+                    ),
                     child: Center(
                       child: Icon(
                         Icons.close_rounded,

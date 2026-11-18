@@ -1,8 +1,18 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
+
+/// Whether the controls are glass: on Apple's own platforms, where Liquid
+/// Glass is the system's material and what a reader there expects. Android
+/// and the web keep the solid grounds they always had, which is what their
+/// own design asks for and what a phone of any power draws without effort.
+bool get glassOn =>
+    !kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS);
 
 /// Liquid Glass, the material of iOS 26, for the layer of controls that
 /// floats over the content: the tab bar, the round buttons laid on a screen,
@@ -30,6 +40,7 @@ class LiquidGlass extends StatelessWidget {
     this.shadow = true,
     this.tint,
     this.strength = 1,
+    this.solid,
   });
 
   final Widget child;
@@ -54,6 +65,10 @@ class LiquidGlass extends StatelessWidget {
   /// How much glass: 1 the standard, more for a sheet that carries text.
   final double strength;
 
+  /// What it is where there is no glass ([glassOn] false): the ground it
+  /// had before glass, so Android and the web look as they did.
+  final Decoration? solid;
+
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
@@ -72,7 +87,10 @@ class LiquidGlass extends StatelessWidget {
           ]
         : const [];
 
-    if (MediaQuery.highContrastOf(context)) {
+    if (!glassOn && solid != null) {
+      return DecoratedBox(decoration: solid!, child: child);
+    }
+    if (!glassOn || MediaQuery.highContrastOf(context)) {
       return DecoratedBox(
         decoration: ShapeDecoration(
           color: p.surfaceRaised,
@@ -219,7 +237,7 @@ class GlassSheet extends StatelessWidget {
     final BorderRadius corners = BorderRadius.vertical(
       top: Radius.circular(radius),
     );
-    if (MediaQuery.highContrastOf(context)) {
+    if (!glassOn || MediaQuery.highContrastOf(context)) {
       return DecoratedBox(
         decoration: BoxDecoration(color: p.surface, borderRadius: corners),
         child: child,

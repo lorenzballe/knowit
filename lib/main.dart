@@ -1867,7 +1867,7 @@ class _AstutoShellState extends State<AstutoShell>
                           // still be lifted clear of it.
                           builder: (context) => Padding(
                             padding: EdgeInsets.only(
-                              bottom: i == 0
+                              bottom: i == 0 || !glassOn
                                   ? MediaQuery.paddingOf(context).bottom
                                   : 0,
                             ),
@@ -1991,6 +1991,20 @@ class _AstutoTabBar extends StatelessWidget {
         // show through, softened, rather than stopping at its top. The lit
         // tab stays solid ink, so where you are is never in doubt.
         radius: 26,
+        solid: BoxDecoration(
+          color: context.p.surfaceRaised,
+          borderRadius: BorderRadius.circular(26),
+          border: Border.all(color: context.p.line),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(
+                alpha: context.p.isDark ? 0.5 : 0.1,
+              ),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
         child: SizedBox(
           height: 58,
           // Only the row of tabs is rebuilt as a move runs. The bar itself —

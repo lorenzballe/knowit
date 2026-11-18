@@ -313,7 +313,7 @@ class ProfileScreen extends StatelessWidget {
           22,
           8,
           22,
-          24 + MediaQuery.paddingOf(context).bottom,
+          24 + (glassOn ? MediaQuery.paddingOf(context).bottom : 0),
         ),
         children: [
           // The record, not an identity. This screen used to open with a
@@ -1239,55 +1239,58 @@ class _ThemePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     // A segmented control in glass, as iOS 26 draws one: the track is
     // glass, the chosen segment solid.
-    return LiquidGlass(
-      radius: 18,
-      shadow: false,
-      child: Padding(
-        padding: const EdgeInsets.all(6),
-        child: Row(
-          children: _options.map((option) {
-            final selected = app.themeMode == option.mode;
-            return Expanded(
-              child: Semantics(
-                button: true,
-                selected: selected,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    if (selected) return;
-                    HapticFeedback.selectionClick();
-                    app.setThemeMode(option.mode);
+    final Widget row = Row(
+      children: _options.map((option) {
+        final selected = app.themeMode == option.mode;
+        return Expanded(
+          child: Semantics(
+            button: true,
+            selected: selected,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (selected) return;
+                HapticFeedback.selectionClick();
+                app.setThemeMode(option.mode);
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                constraints: const BoxConstraints(minHeight: 44),
+                padding: const EdgeInsets.symmetric(vertical: 11),
+                decoration: BoxDecoration(
+                  color: selected ? context.p.inverse : Colors.transparent,
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  switch (option.mode) {
+                    ThemeMode.light => context.l10n.themeLight,
+                    ThemeMode.dark => context.l10n.themeDark,
+                    _ => context.l10n.themeSystem,
                   },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    constraints: const BoxConstraints(minHeight: 44),
-                    padding: const EdgeInsets.symmetric(vertical: 11),
-                    decoration: BoxDecoration(
-                      color: selected ? context.p.inverse : Colors.transparent,
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      switch (option.mode) {
-                        ThemeMode.light => context.l10n.themeLight,
-                        ThemeMode.dark => context.l10n.themeDark,
-                        _ => context.l10n.themeSystem,
-                      },
-                      style: AppText.body(
-                        size: 13.5,
-                        weight: FontWeight.w600,
-                        color: selected
-                            ? context.p.onInverse
-                            : context.p.inkMuted,
-                      ),
-                    ),
+                  style: AppText.body(
+                    size: 13.5,
+                    weight: FontWeight.w600,
+                    color: selected ? context.p.onInverse : context.p.inkMuted,
                   ),
                 ),
               ),
-            );
-          }).toList(),
-        ),
-      ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+    if (!glassOn) {
+      return PaperCard(
+        padding: const EdgeInsets.all(6),
+        radius: 18,
+        child: row,
+      );
+    }
+    return LiquidGlass(
+      radius: 18,
+      shadow: false,
+      child: Padding(padding: const EdgeInsets.all(6), child: row),
     );
   }
 }
