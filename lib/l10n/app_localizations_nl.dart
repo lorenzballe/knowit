@@ -5141,7 +5141,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get goalEyebrow => 'JOUW DOEL';
 
   @override
-  String get goalPick => 'Kies er een';
+  String get goalPick => 'Kiezen';
 
   @override
   String get goalNone => 'Nog geen doel';

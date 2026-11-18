@@ -48,10 +48,10 @@ class ShelfFrame extends StatelessWidget {
     final Widget name = Text(
       title,
       style: AppText.body(
-        size: 16,
-        weight: FontWeight.w600,
-        height: 1,
-        spacing: -0.2,
+        size: 19,
+        weight: FontWeight.w700,
+        height: 1.15,
+        spacing: -0.45,
         color: context.p.ink,
       ),
     );
@@ -79,15 +79,15 @@ class ShelfFrame extends StatelessWidget {
               BalancedText(
                 line,
                 style: AppText.body(
-                  size: 12,
+                  size: 13,
                   height: 1.3,
-                  color: context.p.ink.withValues(alpha: 0.42),
+                  color: context.p.ink.withValues(alpha: 0.5),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 11),
+        const SizedBox(height: 12),
         child,
       ],
     );

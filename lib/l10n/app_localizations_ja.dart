@@ -4910,7 +4910,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get goalEyebrow => 'あなたの目標';
 
   @override
-  String get goalPick => 'ひとつ選ぶ';
+  String get goalPick => '選ぶ';
 
   @override
   String get goalNone => 'まだ目標なし';

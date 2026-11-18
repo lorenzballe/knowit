@@ -11,9 +11,10 @@ import '../../../widgets/explore/first_shelves.dart';
 import '../../../theme.dart';
 import '../../explore_block.dart';
 
-/// The room above a section that names none, as between every two shelves
-/// Explore always had.
-const double kSectionGap = 24;
+/// The room above a section that names none: enough that each shelf reads
+/// as a section of its own, as a magazine's do, not as the tail of the one
+/// above.
+const double kSectionGap = 32;
 
 /// What a block says about its sections' place on the page.
 mixin SectionLayout on ExploreBlock {
@@ -80,10 +81,10 @@ class SectionFrame extends StatelessWidget {
         : Text(
             name,
             style: AppText.body(
-              size: 16,
-              weight: FontWeight.w600,
-              height: 1,
-              spacing: -0.2,
+              size: 19,
+              weight: FontWeight.w700,
+              height: 1.15,
+              spacing: -0.45,
               color: context.p.ink,
             ),
           );
@@ -110,16 +111,16 @@ class SectionFrame extends StatelessWidget {
                 BalancedText(
                   why,
                   style: AppText.body(
-                    size: 12,
+                    size: 13,
                     height: 1.3,
-                    color: context.p.ink.withValues(alpha: 0.42),
+                    color: context.p.ink.withValues(alpha: 0.5),
                   ),
                 ),
               ],
             ],
           ),
         ),
-        const SizedBox(height: 11),
+        const SizedBox(height: 12),
         child,
       ],
     );

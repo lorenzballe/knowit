@@ -4932,7 +4932,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get goalEyebrow => '나의 목표';
 
   @override
-  String get goalPick => '하나 고르기';
+  String get goalPick => '고르기';
 
   @override
   String get goalNone => '아직 목표 없음';

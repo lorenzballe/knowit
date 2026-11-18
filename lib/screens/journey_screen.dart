@@ -1028,6 +1028,30 @@ class _ScorePainter extends CustomPainter {
         line.lineTo(p.dx, p.dy);
       }
     }
+    // The ground under the line, lit from it and fading to the base: the
+    // climb reads as a shape, not only as a thread.
+    if (scores.length > 1) {
+      double crest = _ScoreGeometry.base;
+      for (final int s in scores) {
+        if (geo.y(s) < crest) crest = geo.y(s);
+      }
+      final Path area = Path.from(line)
+        ..lineTo(geo.x(scores.length - 1), _ScoreGeometry.base)
+        ..lineTo(geo.x(0), _ScoreGeometry.base)
+        ..close();
+      canvas.drawPath(
+        area,
+        Paint()
+          ..shader =
+              LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [ink.withValues(alpha: 0.16), ink.withValues(alpha: 0)],
+              ).createShader(
+                Rect.fromLTRB(0, crest, size.width, _ScoreGeometry.base),
+              ),
+      );
+    }
     canvas.drawPath(
       line,
       Paint()

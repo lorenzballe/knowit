@@ -5325,7 +5325,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get goalEyebrow => 'ТВОЯ ЦЕЛЬ';
 
   @override
-  String get goalPick => 'Выбери одну';
+  String get goalPick => 'Выбрать';
 
   @override
   String get goalNone => 'Цели пока нет';

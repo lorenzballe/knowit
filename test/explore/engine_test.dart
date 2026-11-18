@@ -11,6 +11,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:astuto/explore/blocks/core/layout.dart' show kSectionGap;
 import 'package:astuto/explore/blocks/core/own_explore.dart';
 import 'package:astuto/explore/catalogue.dart';
 import 'package:astuto/explore/explore_block.dart';
@@ -257,7 +258,8 @@ void main() {
       double top(String id) =>
           tester.getTopLeft(find.byKey(ValueKey('tall-$id'))).dy;
       expect(top('b') - top('a'), 100 + 40);
-      expect(top('c') - top('b'), 100 + 24);
+      // A section that names no gap stands the default one.
+      expect(top('c') - top('b'), 100 + kSectionGap);
     });
 
     testWidgets('the shelves are numbered as the reader meets them, and a '
