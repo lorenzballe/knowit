@@ -43,7 +43,7 @@ class LiquidGlass extends StatelessWidget {
     required this.child,
     this.radius = 26,
     this.circle = false,
-    this.blur = 24,
+    this.blur = 16,
     this.shadow = true,
     this.tint,
     this.strength = 1,
@@ -122,7 +122,7 @@ class LiquidGlass extends StatelessWidget {
     // glass and not a hole; on paper nothing. What sits on the glass keeps
     // its contrast by its halo (glassHalo), not by a duller glass.
     final Color ground = dark
-        ? const Color(0xFF3A3A40).withValues(alpha: 0.30)
+        ? const Color(0xFF3A3A40).withValues(alpha: 0.16)
         : Colors.transparent;
     // The tint: on paper a milk glass, at night a smoked one; a coloured
     // tint takes the place of either, as thin.
@@ -132,13 +132,13 @@ class LiquidGlass extends StatelessWidget {
             tint!,
           ).withValues(alpha: 0.34 * k)
         : dark
-        ? Colors.white.withValues(alpha: 0.14 * k)
-        : Colors.white.withValues(alpha: 0.62 * k);
+        ? Colors.white.withValues(alpha: 0.10 * k)
+        : Colors.white.withValues(alpha: 0.42 * k);
     final Color sheenBottom = tint != null
         ? tint!.withValues(alpha: 0.22 * k)
         : dark
-        ? Colors.white.withValues(alpha: 0.07 * k)
-        : Colors.white.withValues(alpha: 0.42 * k);
+        ? Colors.white.withValues(alpha: 0.04 * k)
+        : Colors.white.withValues(alpha: 0.24 * k);
     final Color top = Color.alphaBlend(sheenTop, ground);
     final Color bottom = Color.alphaBlend(sheenBottom, ground);
 
@@ -247,8 +247,8 @@ List<Shadow>? glassHalo(BuildContext context) {
   return [
     Shadow(
       color: context.p.isDark
-          ? Colors.black.withValues(alpha: 0.55)
-          : Colors.white.withValues(alpha: 0.65),
+          ? Colors.black.withValues(alpha: 0.62)
+          : Colors.white.withValues(alpha: 0.72),
       blurRadius: 9,
     ),
   ];
