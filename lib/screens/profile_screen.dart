@@ -39,6 +39,7 @@ import 'paywall_screen.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
 import '../widgets/grounds.dart';
+import '../widgets/hand_glass.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -311,7 +312,7 @@ class ProfileScreen extends StatelessWidget {
           22,
           8,
           22,
-          24 + (appleGlass ? MediaQuery.paddingOf(context).bottom : 0),
+          24 + (barGlass ? MediaQuery.paddingOf(context).bottom : 0),
         ),
         children: [
           // The record, not an identity. This screen used to open with a

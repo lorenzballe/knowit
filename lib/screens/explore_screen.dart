@@ -34,6 +34,7 @@ import '../analytics.dart';
 import '../measure/screens.dart';
 import '../measure/shelves.dart';
 import '../widgets/grounds.dart';
+import '../widgets/hand_glass.dart';
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -586,7 +587,7 @@ class ExploreScreenState extends State<ExploreScreen>
                   padding: EdgeInsets.only(
                     bottom:
                         30 +
-                        (appleGlass ? MediaQuery.paddingOf(context).bottom : 0),
+                        (barGlass ? MediaQuery.paddingOf(context).bottom : 0),
                   ),
                   sliver: ExploreSliver(host: this, slots: slots),
                 ),
@@ -597,7 +598,7 @@ class ExploreScreenState extends State<ExploreScreen>
         // Off Apple the bar is solid and the shelves stop at it, so the
         // last one has to say it is not the end. On Apple the glass bar
         // says it: the shelves run on under it.
-        if (!appleGlass)
+        if (!barGlass)
           Positioned(
             left: 0,
             right: 0,
