@@ -1222,6 +1222,41 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind · $source';
+  }
+
+  @override
+  String get sourceKindPaper => 'Study';
+
+  @override
+  String get sourceKindBook => 'Book';
+
+  @override
+  String get sourceKindInstitution => 'Institution';
+
+  @override
+  String get sourceKindDocument => 'Document';
+
+  @override
+  String get sourceKindData => 'Data';
+
+  @override
+  String get sourceKindReference => 'Reference';
+
+  @override
+  String get sourceKindNews => 'Newspaper';
+
+  @override
+  String get sourceKindCompany => 'Company';
+
+  @override
+  String get sourceKindStandard => 'Standard';
+
+  @override
+  String get sourceKindArithmetic => 'Worked out';
+
+  @override
   String get plusIsActive => 'ASTUTE+ IS ACTIVE';
 
   @override

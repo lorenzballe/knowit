@@ -401,6 +401,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
     },
     reacts: raw['reacts'] == true,
     reference: referenceLink(raw['reference']),
+    sourceKind: text('source_kind'),
     why: text('why'),
     book: PillBook.fromJson(raw['book']),
     views: switch (raw['views']) {

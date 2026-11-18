@@ -736,6 +736,12 @@ class Pill {
   /// Empty on a card that names a source without one.
   final String reference;
 
+  /// What kind of thing the source is, as the bank names it (source_kind in
+  /// tool/cards/schema.json): paper, book, institution, primary_document,
+  /// statistics, reference_work, news_archive, company, standard or
+  /// arithmetic. Empty when the card does not say.
+  final String sourceKind;
+
   /// Why it matters, under Go deeper: what the idea changes in the reader's
   /// own world. Empty on a card written before November 2026.
   final String why;
@@ -877,6 +883,7 @@ class Pill {
     this.sureOdds,
     this.reacts = false,
     this.reference = '',
+    this.sourceKind = '',
     this.why = '',
     this.views = const [],
     this.book,

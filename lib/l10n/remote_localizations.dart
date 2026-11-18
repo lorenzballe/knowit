@@ -1159,6 +1159,54 @@ class RemoteLocalizations extends AppLocalizations {
       _base.sourceLabel(source);
 
   @override
+  String sourceLabelKind(String kind, String source) =>
+      _words.format('sourceLabelKind', localeName, {
+        'kind': kind,
+        'source': source,
+      }) ??
+      _base.sourceLabelKind(kind, source);
+
+  @override
+  String get sourceKindPaper =>
+      _words.text('sourceKindPaper') ?? _base.sourceKindPaper;
+
+  @override
+  String get sourceKindBook =>
+      _words.text('sourceKindBook') ?? _base.sourceKindBook;
+
+  @override
+  String get sourceKindInstitution =>
+      _words.text('sourceKindInstitution') ?? _base.sourceKindInstitution;
+
+  @override
+  String get sourceKindDocument =>
+      _words.text('sourceKindDocument') ?? _base.sourceKindDocument;
+
+  @override
+  String get sourceKindData =>
+      _words.text('sourceKindData') ?? _base.sourceKindData;
+
+  @override
+  String get sourceKindReference =>
+      _words.text('sourceKindReference') ?? _base.sourceKindReference;
+
+  @override
+  String get sourceKindNews =>
+      _words.text('sourceKindNews') ?? _base.sourceKindNews;
+
+  @override
+  String get sourceKindCompany =>
+      _words.text('sourceKindCompany') ?? _base.sourceKindCompany;
+
+  @override
+  String get sourceKindStandard =>
+      _words.text('sourceKindStandard') ?? _base.sourceKindStandard;
+
+  @override
+  String get sourceKindArithmetic =>
+      _words.text('sourceKindArithmetic') ?? _base.sourceKindArithmetic;
+
+  @override
   String get plusIsActive => _words.text('plusIsActive') ?? _base.plusIsActive;
 
   @override

@@ -1158,6 +1158,58 @@
    }
   }
  },
+ "sourceLabelKind": "{kind} · {source}",
+ "@sourceLabelKind": {
+  "description": "A card's source line, with what kind of source it is first: \"Study · Nature, 2019\".",
+  "placeholders": {
+   "kind": {
+    "type": "String"
+   },
+   "source": {
+    "type": "String"
+   }
+  }
+ },
+ "sourceKindPaper": "Study",
+ "@sourceKindPaper": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindBook": "Book",
+ "@sourceKindBook": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindInstitution": "Institution",
+ "@sourceKindInstitution": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindDocument": "Document",
+ "@sourceKindDocument": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindData": "Data",
+ "@sourceKindData": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindReference": "Reference",
+ "@sourceKindReference": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindNews": "Newspaper",
+ "@sourceKindNews": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindCompany": "Company",
+ "@sourceKindCompany": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindStandard": "Standard",
+ "@sourceKindStandard": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
+ "sourceKindArithmetic": "Worked out",
+ "@sourceKindArithmetic": {
+  "description": "The kind of a card's source, before its name on the card's source line (source_kind in the bank)."
+ },
  "plusIsActive": "ASTUTE+ IS ACTIVE",
  "tryFreeThen": "Try {days} days free, then {price}{suffix}",
  "@tryFreeThen": {

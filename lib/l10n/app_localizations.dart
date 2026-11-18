@@ -1794,6 +1794,72 @@ abstract class AppLocalizations {
   /// **'Source · {source}'**
   String sourceLabel(String source);
 
+  /// A card's source line, with what kind of source it is first: "Study · Nature, 2019".
+  ///
+  /// In en, this message translates to:
+  /// **'{kind} · {source}'**
+  String sourceLabelKind(String kind, String source);
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Study'**
+  String get sourceKindPaper;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Book'**
+  String get sourceKindBook;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Institution'**
+  String get sourceKindInstitution;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Document'**
+  String get sourceKindDocument;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get sourceKindData;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get sourceKindReference;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Newspaper'**
+  String get sourceKindNews;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get sourceKindCompany;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get sourceKindStandard;
+
+  /// The kind of a card's source, before its name on the card's source line (source_kind in the bank).
+  ///
+  /// In en, this message translates to:
+  /// **'Worked out'**
+  String get sourceKindArithmetic;
+
   /// No description provided for @plusIsActive.
   ///
   /// In en, this message translates to:

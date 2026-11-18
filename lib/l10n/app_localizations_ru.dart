@@ -1271,6 +1271,41 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind · $source';
+  }
+
+  @override
+  String get sourceKindPaper => 'Исследование';
+
+  @override
+  String get sourceKindBook => 'Книга';
+
+  @override
+  String get sourceKindInstitution => 'Учреждение';
+
+  @override
+  String get sourceKindDocument => 'Документ';
+
+  @override
+  String get sourceKindData => 'Данные';
+
+  @override
+  String get sourceKindReference => 'Справочник';
+
+  @override
+  String get sourceKindNews => 'Газета';
+
+  @override
+  String get sourceKindCompany => 'Данные компании';
+
+  @override
+  String get sourceKindStandard => 'Стандарт';
+
+  @override
+  String get sourceKindArithmetic => 'Расчёт';
+
+  @override
   String get plusIsActive => 'ASTUTE+ АКТИВЕН';
 
   @override

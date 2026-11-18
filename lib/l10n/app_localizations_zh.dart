@@ -1179,6 +1179,41 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind · $source';
+  }
+
+  @override
+  String get sourceKindPaper => '研究';
+
+  @override
+  String get sourceKindBook => '书籍';
+
+  @override
+  String get sourceKindInstitution => '机构';
+
+  @override
+  String get sourceKindDocument => '原始文件';
+
+  @override
+  String get sourceKindData => '数据';
+
+  @override
+  String get sourceKindReference => '工具书';
+
+  @override
+  String get sourceKindNews => '报纸';
+
+  @override
+  String get sourceKindCompany => '企业资料';
+
+  @override
+  String get sourceKindStandard => '标准';
+
+  @override
+  String get sourceKindArithmetic => '计算';
+
+  @override
   String get plusIsActive => 'ASTUTE+ 已激活';
 
   @override

@@ -1186,6 +1186,41 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind・$source';
+  }
+
+  @override
+  String get sourceKindPaper => '研究';
+
+  @override
+  String get sourceKindBook => '書籍';
+
+  @override
+  String get sourceKindInstitution => '機関';
+
+  @override
+  String get sourceKindDocument => '原資料';
+
+  @override
+  String get sourceKindData => 'データ';
+
+  @override
+  String get sourceKindReference => '参考図書';
+
+  @override
+  String get sourceKindNews => '新聞';
+
+  @override
+  String get sourceKindCompany => '企業資料';
+
+  @override
+  String get sourceKindStandard => '規格';
+
+  @override
+  String get sourceKindArithmetic => '計算';
+
+  @override
   String get plusIsActive => 'ASTUTE+ 有効';
 
   @override

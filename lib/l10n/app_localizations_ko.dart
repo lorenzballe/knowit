@@ -1190,6 +1190,41 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind · $source';
+  }
+
+  @override
+  String get sourceKindPaper => '연구';
+
+  @override
+  String get sourceKindBook => '책';
+
+  @override
+  String get sourceKindInstitution => '기관';
+
+  @override
+  String get sourceKindDocument => '원문 자료';
+
+  @override
+  String get sourceKindData => '데이터';
+
+  @override
+  String get sourceKindReference => '참고 문헌';
+
+  @override
+  String get sourceKindNews => '신문';
+
+  @override
+  String get sourceKindCompany => '기업 자료';
+
+  @override
+  String get sourceKindStandard => '표준';
+
+  @override
+  String get sourceKindArithmetic => '계산';
+
+  @override
   String get plusIsActive => 'ASTUTE+ 활성화됨';
 
   @override

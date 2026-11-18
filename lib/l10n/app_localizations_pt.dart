@@ -1228,6 +1228,41 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String sourceLabelKind(String kind, String source) {
+    return '$kind · $source';
+  }
+
+  @override
+  String get sourceKindPaper => 'Estudo';
+
+  @override
+  String get sourceKindBook => 'Livro';
+
+  @override
+  String get sourceKindInstitution => 'Instituição';
+
+  @override
+  String get sourceKindDocument => 'Documento';
+
+  @override
+  String get sourceKindData => 'Dados';
+
+  @override
+  String get sourceKindReference => 'Obra de referência';
+
+  @override
+  String get sourceKindNews => 'Jornal';
+
+  @override
+  String get sourceKindCompany => 'Fonte da empresa';
+
+  @override
+  String get sourceKindStandard => 'Norma técnica';
+
+  @override
+  String get sourceKindArithmetic => 'Cálculo';
+
+  @override
   String get plusIsActive => 'ASTUTE+ ESTÁ ATIVO';
 
   @override
