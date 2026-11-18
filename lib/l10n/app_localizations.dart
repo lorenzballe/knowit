@@ -7263,7 +7263,7 @@ abstract class AppLocalizations {
   /// Explore, the reader's goal: the name of its shelf, with the goal the reader picked.
   ///
   /// In en, this message translates to:
-  /// **'For your goal: {goal}'**
+  /// **'Useful for: {goal}'**
   String goalShelf(String goal);
 
   /// Explore, the reader's goal: the line under the shelf's name.
@@ -7281,61 +7281,43 @@ abstract class AppLocalizations {
   /// A goal the reader can pick on Explore: making better decisions.
   ///
   /// In en, this message translates to:
-  /// **'Deciding better'**
+  /// **'Everyday decisions'**
   String get goalDecide;
 
   /// A goal the reader can pick on Explore: being better at talking with and understanding people.
   ///
   /// In en, this message translates to:
-  /// **'Talking with people'**
+  /// **'People'**
   String get goalPeople;
 
   /// A goal the reader can pick on Explore: entrepreneurship, starting and running a business.
   ///
   /// In en, this message translates to:
-  /// **'Starting a business'**
+  /// **'Work and business'**
   String get goalBusiness;
 
   /// A goal the reader can pick on Explore: handling money well.
   ///
   /// In en, this message translates to:
-  /// **'Handling money'**
+  /// **'Money and shopping'**
   String get goalMoney;
-
-  /// A goal the reader can pick on Explore: not being fooled by bad claims and statistics.
-  ///
-  /// In en, this message translates to:
-  /// **'Spotting nonsense'**
-  String get goalNonsense;
 
   /// A goal the reader can pick on Explore: health, body and food.
   ///
   /// In en, this message translates to:
-  /// **'Living well'**
+  /// **'Health'**
   String get goalHealth;
-
-  /// A goal the reader can pick on Explore: general culture, history and the arts.
-  ///
-  /// In en, this message translates to:
-  /// **'General knowledge'**
-  String get goalCulture;
-
-  /// A goal the reader can pick on Explore: understanding how the world works, science and nature.
-  ///
-  /// In en, this message translates to:
-  /// **'Understanding the world'**
-  String get goalWorld;
 
   /// The first run's second step, and Explore's prompt: the question of what the reader wants to get better at.
   ///
   /// In en, this message translates to:
-  /// **'What do you want to get better at?'**
+  /// **'Where do you want to be sharper?'**
   String get goalAsk;
 
   /// Under that question: what a goal does, and that it can be changed.
   ///
   /// In en, this message translates to:
-  /// **'Pick up to three: every day your cards train you for them. You can change them any time.'**
+  /// **'Pick up to three: your cards will train you right there. You can change them any time.'**
   String get goalAskLine;
 
   /// The goal screen opened from Profile: its button, which keeps the goal picked.
@@ -7347,7 +7329,7 @@ abstract class AppLocalizations {
   /// Profile, the reader's goal: the eyebrow over it, in small capitals.
   ///
   /// In en, this message translates to:
-  /// **'YOUR GOAL'**
+  /// **'YOUR AREA'**
   String get goalEyebrow;
 
   /// Profile, the reader's goal: the link that opens the goals when none is picked.
@@ -7359,7 +7341,7 @@ abstract class AppLocalizations {
   /// Profile, the reader's goal: what stands in its place when none is picked.
   ///
   /// In en, this message translates to:
-  /// **'No goal yet'**
+  /// **'None picked yet'**
   String get goalNone;
 
   /// Explore, the prompt to pick a goal: puts it away for good (Profile still has it).
@@ -7371,79 +7353,49 @@ abstract class AppLocalizations {
   /// The goal screen: under a goal's name, what it trains, in a line.
   ///
   /// In en, this message translates to:
-  /// **'Choosing with the right numbers, not on a hunch.'**
+  /// **'Choices, risks and odds, without the hunch.'**
   String get goalDecideLine;
+
+  /// The goal screen: an area, the news, headlines and posts.
+  ///
+  /// In en, this message translates to:
+  /// **'News and social media'**
+  String get goalNews;
+
+  /// The goal screen: under an area's name, what it trains, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Headlines, statistics and posts: what holds up.'**
+  String get goalNewsLine;
 
   /// The goal screen: under a goal's name, what it trains, in a line.
   ///
   /// In en, this message translates to:
-  /// **'How others think, and how to be understood.'**
+  /// **'Who is trying to convince you, and how to be understood.'**
   String get goalPeopleLine;
 
   /// The goal screen: under a goal's name, what it trains, in a line.
   ///
   /// In en, this message translates to:
-  /// **'Incentives, risk and the numbers behind an idea.'**
+  /// **'Negotiations, incentives and the numbers behind an idea.'**
   String get goalBusinessLine;
 
   /// The goal screen: under a goal's name, what it trains, in a line.
   ///
   /// In en, this message translates to:
-  /// **'Interest, prices and the traps in a deal.'**
+  /// **'Prices, offers, interest: the traps in a deal.'**
   String get goalMoneyLine;
 
   /// The goal screen: under a goal's name, what it trains, in a line.
   ///
   /// In en, this message translates to:
-  /// **'Studies, statistics and headlines: what holds up.'**
-  String get goalNonsenseLine;
-
-  /// The goal screen: under a goal's name, what it trains, in a line.
-  ///
-  /// In en, this message translates to:
-  /// **'Body, food and sleep: what the science says.'**
+  /// **'Diets, cures and studies: what the evidence says.'**
   String get goalHealthLine;
-
-  /// The goal screen: under a goal's name, what it trains, in a line.
-  ///
-  /// In en, this message translates to:
-  /// **'History, art, cinema and music worth knowing.'**
-  String get goalCultureLine;
-
-  /// The goal screen: under a goal's name, what it trains, in a line.
-  ///
-  /// In en, this message translates to:
-  /// **'Science, space and nature, explained.'**
-  String get goalWorldLine;
-
-  /// The goal screen: a goal, keeping one's head when things go wrong or press.
-  ///
-  /// In en, this message translates to:
-  /// **'Staying calm'**
-  String get goalStress;
-
-  /// The goal screen: a goal, learning anything faster and remembering it.
-  ///
-  /// In en, this message translates to:
-  /// **'Learning faster'**
-  String get goalLearn;
-
-  /// The goal screen: under a goal's name, what it trains, in a line.
-  ///
-  /// In en, this message translates to:
-  /// **'Setbacks, worry and what is really in your control.'**
-  String get goalStressLine;
-
-  /// The goal screen: under a goal's name, what it trains, in a line.
-  ///
-  /// In en, this message translates to:
-  /// **'Memory, focus and practice that actually works.'**
-  String get goalLearnLine;
 
   /// Profile: the eyebrow over the goals, when there is more than one.
   ///
   /// In en, this message translates to:
-  /// **'YOUR GOALS'**
+  /// **'YOUR AREAS'**
   String get goalEyebrowMany;
 
   /// Explore, the problem of the day: how many days in a row the reader has answered it, with a flame before it.

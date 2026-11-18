@@ -5002,7 +5002,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String goalShelf(String goal) {
-    return 'Hedefin için: $goal';
+    return 'İşine yarar: $goal';
   }
 
   @override
@@ -5012,92 +5012,71 @@ class AppLocalizationsTr extends AppLocalizations {
   String get goalChange => 'Değiştir';
 
   @override
-  String get goalDecide => 'Daha iyi karar vermek';
+  String get goalDecide => 'Günlük kararlar';
 
   @override
-  String get goalPeople => 'İnsanlarla konuşmak';
+  String get goalPeople => 'İnsanlar';
 
   @override
-  String get goalBusiness => 'Girişimcilik';
+  String get goalBusiness => 'İş ve girişim';
 
   @override
-  String get goalMoney => 'Parayı yönetmek';
+  String get goalMoney => 'Para ve alışveriş';
 
   @override
-  String get goalNonsense => 'Saçmalığı fark etmek';
+  String get goalHealth => 'Sağlık';
 
   @override
-  String get goalHealth => 'İyi yaşamak';
-
-  @override
-  String get goalCulture => 'Genel kültür';
-
-  @override
-  String get goalWorld => 'Dünyayı anlamak';
-
-  @override
-  String get goalAsk => 'Neyde daha iyi olmak istersin?';
+  String get goalAsk => 'Nerede daha net görmek istersin?';
 
   @override
   String get goalAskLine =>
-      'En fazla üç tane seç: kartların her gün seni onlara hazırlar. İstediğin zaman değiştirebilirsin.';
+      'En fazla üç tane seç: kartların seni tam orada çalıştıracak. İstediğin zaman değiştirebilirsin.';
 
   @override
   String get goalSave => 'Kaydet';
 
   @override
-  String get goalEyebrow => 'HEDEFİN';
+  String get goalEyebrow => 'ALANIN';
 
   @override
   String get goalPick => 'Seç';
 
   @override
-  String get goalNone => 'Henüz hedef yok';
+  String get goalNone => 'Henüz seçilmedi';
 
   @override
   String get goalNotNow => 'Şimdi değil';
 
   @override
-  String get goalDecideLine => 'Doğru sayılarla seçmek, içgüdüyle değil.';
+  String get goalDecideLine =>
+      'Seçimler, riskler ve olasılıklar, sezgiye kapılmadan.';
 
   @override
-  String get goalPeopleLine => 'Başkaları nasıl düşünür ve nasıl anlaşılırsın.';
+  String get goalNews => 'Haberler ve sosyal medya';
+
+  @override
+  String get goalNewsLine =>
+      'Manşetler, istatistikler ve paylaşımlar: hangisi gerçekten tutarlı.';
+
+  @override
+  String get goalPeopleLine =>
+      'Seni kim ikna etmeye çalışıyor ve nasıl anlaşılırsın.';
 
   @override
   String get goalBusinessLine =>
-      'Teşvikler, risk ve bir fikrin arkasındaki sayılar.';
+      'Pazarlıklar, teşvikler ve bir fikrin ardındaki rakamlar.';
 
   @override
-  String get goalMoneyLine => 'Faiz, fiyatlar ve tekliflerdeki tuzaklar.';
+  String get goalMoneyLine =>
+      'Fiyatlar, indirimler, faiz: bir anlaşmadaki tuzaklar.';
 
   @override
-  String get goalNonsenseLine =>
-      'Araştırmalar, istatistikler ve manşetler: ne ayakta kalır.';
+  String get goalHealthLine =>
+      'Diyetler, tedaviler ve araştırmalar: kanıtlar ne diyor.';
 
   @override
-  String get goalHealthLine => 'Beden, yemek ve uyku: bilim ne diyor.';
-
-  @override
-  String get goalCultureLine => 'Bilmeye değer tarih, sanat, sinema ve müzik.';
-
-  @override
-  String get goalWorldLine => 'Bilim, uzay ve doğa, anlaşılır biçimde.';
-
-  @override
-  String get goalStress => 'Stresle başa çıkmak';
-
-  @override
-  String get goalLearn => 'Daha hızlı öğrenmek';
-
-  @override
-  String get goalStressLine =>
-      'Aksilikler, kaygılar ve gerçekten senin elinde olanlar.';
-
-  @override
-  String get goalLearnLine => 'Hafıza, odak ve gerçekten işe yarayan pratik.';
-
-  @override
-  String get goalEyebrowMany => 'HEDEFLERİN';
+  String get goalEyebrowMany => 'ALANLARIN';
 
   @override
   String mathsDailyStreak(int n) {

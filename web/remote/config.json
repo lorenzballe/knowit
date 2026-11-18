@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "hash": "a2d46968dede1601",
+ "hash": "e3869020f0bcf525",
  "app": {
   "gate": null,
   "flags": {},
@@ -109,19 +109,19 @@
     "id": "goal",
     "block": "goal",
     "title": {
-     "en": "What do you want to get better at?",
-     "it": "Su cosa vuoi migliorare?",
-     "de": "Worin willst du besser werden?",
-     "es": "¿En qué quieres mejorar?",
-     "fr": "Dans quoi veux-tu progresser ?",
-     "pt": "Em que queres melhorar?",
-     "nl": "Waarin wil je beter worden?",
-     "pl": "W czym chcesz być lepszy?",
-     "ru": "В чём ты хочешь стать лучше?",
-     "tr": "Neyde daha iyi olmak istersin?",
-     "ja": "何がうまくなりたい？",
-     "ko": "무엇을 더 잘하고 싶나요?",
-     "zh": "你想在哪方面变得更好？"
+     "en": "Where do you want to be sharper?",
+     "it": "Dove vuoi vederci più chiaro?",
+     "de": "Wo willst du klarer sehen?",
+     "es": "¿Dónde quieres ver más claro?",
+     "fr": "Où veux-tu y voir plus clair ?",
+     "ja": "どこでもっと見抜けるようになりたい？",
+     "ko": "어디에서 더 날카로워지고 싶나요?",
+     "nl": "Waar wil je scherper zijn?",
+     "pl": "Gdzie chcesz widzieć jaśniej?",
+     "pt": "Onde queres ver mais claro?",
+     "ru": "Где ты хочешь видеть яснее?",
+     "tr": "Nerede daha net görmek istersin?",
+     "zh": "你想在哪些方面看得更清楚？"
     },
     "subtitle": {
      "en": "Pick one: Explore and your coach will lean that way.",

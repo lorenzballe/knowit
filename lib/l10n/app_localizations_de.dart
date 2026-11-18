@@ -5099,7 +5099,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String goalShelf(String goal) {
-    return 'Für dein Ziel: $goal';
+    return 'Hilft dir bei: $goal';
   }
 
   @override
@@ -5109,95 +5109,71 @@ class AppLocalizationsDe extends AppLocalizations {
   String get goalChange => 'Ändern';
 
   @override
-  String get goalDecide => 'Besser entscheiden';
+  String get goalDecide => 'Alltagsentscheidungen';
 
   @override
-  String get goalPeople => 'Mit Menschen reden';
+  String get goalPeople => 'Menschen';
 
   @override
-  String get goalBusiness => 'Ein Unternehmen gründen';
+  String get goalBusiness => 'Arbeit und Business';
 
   @override
-  String get goalMoney => 'Mit Geld umgehen';
+  String get goalMoney => 'Geld und Einkaufen';
 
   @override
-  String get goalNonsense => 'Unsinn erkennen';
+  String get goalHealth => 'Gesundheit';
 
   @override
-  String get goalHealth => 'Gut leben';
-
-  @override
-  String get goalCulture => 'Allgemeinbildung';
-
-  @override
-  String get goalWorld => 'Die Welt verstehen';
-
-  @override
-  String get goalAsk => 'Worin willst du besser werden?';
+  String get goalAsk => 'Wo willst du klarer sehen?';
 
   @override
   String get goalAskLine =>
-      'Wähle bis zu drei: Jeden Tag trainieren dich deine Karten dafür. Du kannst sie jederzeit ändern.';
+      'Wähle bis zu drei: Deine Karten trainieren dich genau dort. Du kannst sie jederzeit ändern.';
 
   @override
   String get goalSave => 'Speichern';
 
   @override
-  String get goalEyebrow => 'DEIN ZIEL';
+  String get goalEyebrow => 'DEIN BEREICH';
 
   @override
   String get goalPick => 'Auswählen';
 
   @override
-  String get goalNone => 'Noch kein Ziel';
+  String get goalNone => 'Noch keiner gewählt';
 
   @override
   String get goalNotNow => 'Nicht jetzt';
 
   @override
   String get goalDecideLine =>
-      'Mit den richtigen Zahlen wählen, nicht aus dem Bauch.';
+      'Entscheidungen, Risiken und Wahrscheinlichkeiten, ohne Bauchgefühl.';
 
   @override
-  String get goalPeopleLine => 'Wie andere denken und wie man verstanden wird.';
+  String get goalNews => 'Nachrichten und Social Media';
+
+  @override
+  String get goalNewsLine =>
+      'Schlagzeilen, Statistiken und Posts: was standhält.';
+
+  @override
+  String get goalPeopleLine =>
+      'Wer dich überzeugen will, und wie du verstanden wirst.';
 
   @override
   String get goalBusinessLine =>
-      'Anreize, Risiko und die Zahlen hinter einer Idee.';
+      'Verhandlungen, Anreize und die Zahlen hinter einer Idee.';
 
   @override
-  String get goalMoneyLine => 'Zinsen, Preise und die Fallen in einem Angebot.';
-
-  @override
-  String get goalNonsenseLine =>
-      'Studien, Statistiken und Schlagzeilen: was hält.';
+  String get goalMoneyLine =>
+      'Preise, Angebote, Zinsen: die Fallen eines Deals.';
 
   @override
   String get goalHealthLine =>
-      'Körper, Essen und Schlaf: was die Wissenschaft sagt.';
+      'Diäten, Heilmittel und Studien: was die Belege sagen.';
 
   @override
-  String get goalCultureLine =>
-      'Geschichte, Kunst, Kino und Musik, die man kennen sollte.';
-
-  @override
-  String get goalWorldLine => 'Wissenschaft, Weltraum und Natur, erklärt.';
-
-  @override
-  String get goalStress => 'Mit Stress umgehen';
-
-  @override
-  String get goalLearn => 'Schneller lernen';
-
-  @override
-  String get goalStressLine =>
-      'Rückschläge, Sorgen und was wirklich in deiner Hand liegt.';
-
-  @override
-  String get goalLearnLine => 'Gedächtnis, Fokus und Üben, das wirklich wirkt.';
-
-  @override
-  String get goalEyebrowMany => 'DEINE ZIELE';
+  String get goalEyebrowMany => 'DEINE BEREICHE';
 
   @override
   String mathsDailyStreak(int n) {

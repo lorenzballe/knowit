@@ -4885,7 +4885,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String goalShelf(String goal) {
-    return '나의 목표: $goal';
+    return '도움이 되는 곳: $goal';
   }
 
   @override
@@ -4895,89 +4895,64 @@ class AppLocalizationsKo extends AppLocalizations {
   String get goalChange => '변경';
 
   @override
-  String get goalDecide => '더 잘 결정하기';
+  String get goalDecide => '일상의 결정';
 
   @override
-  String get goalPeople => '사람들과 대화하기';
+  String get goalPeople => '사람들';
 
   @override
-  String get goalBusiness => '창업하기';
+  String get goalBusiness => '일과 비즈니스';
 
   @override
-  String get goalMoney => '돈 관리하기';
+  String get goalMoney => '돈과 쇼핑';
 
   @override
-  String get goalNonsense => '헛소리 가려내기';
+  String get goalHealth => '건강';
 
   @override
-  String get goalHealth => '잘 살기';
+  String get goalAsk => '어디에서 더 날카로워지고 싶나요?';
 
   @override
-  String get goalCulture => '교양';
-
-  @override
-  String get goalWorld => '세상 이해하기';
-
-  @override
-  String get goalAsk => '무엇을 더 잘하고 싶나요?';
-
-  @override
-  String get goalAskLine =>
-      '최대 세 개까지 고르세요. 매일 카드가 그 목표를 위해 훈련해 줘요. 언제든 바꿀 수 있어요.';
+  String get goalAskLine => '최대 세 개까지 고르세요. 카드가 바로 그곳을 훈련해 줘요. 언제든 바꿀 수 있어요.';
 
   @override
   String get goalSave => '저장';
 
   @override
-  String get goalEyebrow => '나의 목표';
+  String get goalEyebrow => '나의 분야';
 
   @override
   String get goalPick => '고르기';
 
   @override
-  String get goalNone => '아직 목표 없음';
+  String get goalNone => '아직 없음';
 
   @override
   String get goalNotNow => '나중에';
 
   @override
-  String get goalDecideLine => '감이 아니라 올바른 숫자로 고르기.';
+  String get goalDecideLine => '선택, 위험, 확률을 감이 아닌 근거로.';
 
   @override
-  String get goalPeopleLine => '다른 사람이 어떻게 생각하는지, 어떻게 이해받는지.';
+  String get goalNews => '뉴스와 SNS';
 
   @override
-  String get goalBusinessLine => '인센티브, 위험, 아이디어 뒤의 숫자.';
+  String get goalNewsLine => '헤드라인, 통계, 게시물: 무엇이 진짜인지.';
 
   @override
-  String get goalMoneyLine => '이자, 가격, 할인 속 함정.';
+  String get goalPeopleLine => '누가 나를 설득하려 하는지, 그리고 이해받는 법.';
 
   @override
-  String get goalNonsenseLine => '연구, 통계, 헤드라인: 무엇이 믿을 만한가.';
+  String get goalBusinessLine => '협상, 인센티브, 아이디어 뒤의 숫자.';
 
   @override
-  String get goalHealthLine => '몸, 음식, 잠: 과학이 말하는 것.';
+  String get goalMoneyLine => '가격, 할인, 이자: 거래 속 함정.';
 
   @override
-  String get goalCultureLine => '알아 둘 만한 역사, 예술, 영화, 음악.';
+  String get goalHealthLine => '다이어트, 치료법, 연구: 근거가 말하는 것.';
 
   @override
-  String get goalWorldLine => '과학, 우주, 자연을 쉽게.';
-
-  @override
-  String get goalStress => '스트레스 다루기';
-
-  @override
-  String get goalLearn => '더 빨리 배우기';
-
-  @override
-  String get goalStressLine => '좌절, 걱정, 그리고 정말로 내가 바꿀 수 있는 것.';
-
-  @override
-  String get goalLearnLine => '기억, 집중, 그리고 정말 효과 있는 연습.';
-
-  @override
-  String get goalEyebrowMany => '나의 목표';
+  String get goalEyebrowMany => '나의 분야';
 
   @override
   String mathsDailyStreak(int n) {

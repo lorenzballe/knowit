@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 
+import '../data/goals.dart';
 import '../measure/card_read.dart';
 import '../measure/screens.dart' show seenOf;
 import '../models/pill.dart';
 import '../sync/reports.dart';
 import '../theme.dart';
+import '../screens/goal_screen.dart' show goalIcon, goalName;
 import 'deeper_sheet.dart';
 import 'diagram_view.dart';
 import 'motion.dart';
@@ -244,6 +246,14 @@ abstract final class _Type {
 
   static TextStyle source(Color ink, double size) =>
       AppText.body(size: size, height: 1.35, color: ink.withValues(alpha: 0.6));
+
+  /// Where a card pays off: the source's size, a voice firmer than it.
+  static TextStyle useful(Color ink, double size) => AppText.body(
+    size: size,
+    height: 1.35,
+    weight: FontWeight.w700,
+    color: ink.withValues(alpha: 0.78),
+  );
 
   static TextStyle nextStep(Color ground) =>
       AppText.body(size: 13.5, weight: FontWeight.w700, color: ground);
@@ -1214,6 +1224,40 @@ class _CardRevealState extends State<CardReveal> {
 
     // The give, then the box the card ends on, pinned to the foot.
     out.add(_Block(16 * g));
+    // Where in a life the card pays off, when it is one of an area's own
+    // (data/goals.dart): "Useful for: Money and shopping", over the box to
+    // keep, so the thing to keep has its place to be used. With the answer
+    // only, and the first thing to give on a card short of room.
+    final Goal? area = aside == _Aside.none && !f.tight
+        ? Goal.bestFor(pill)
+        : null;
+    if (area != null) {
+      final String use = l10n.goalShelf(goalName(l10n, area));
+      final TextStyle style = _Type.useful(ink, f.source);
+      final double mark = f.source + 2;
+      out.add(
+        _Block(
+          m.height(use, style, width - mark - 6),
+          Row(
+            key: const ValueKey('card-useful'),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 1),
+                child: Icon(
+                  goalIcon(area),
+                  size: mark,
+                  color: ink.withValues(alpha: 0.7),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Expanded(child: Text(use, style: style)),
+            ],
+          ),
+        ),
+      );
+      gap(8);
+    }
     final keep = _Type.keep(ink, f.keep);
     if (pill.showsMove) {
       out.add(

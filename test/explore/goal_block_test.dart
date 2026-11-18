@@ -1,8 +1,8 @@
-// What the reader wants to get better at (lib/data/goals.dart,
+// Where the reader wants to be sharper (lib/data/goals.dart,
 // screens/goal_screen.dart, explore/blocks/core/goal_block.dart): up to
-// three goals, asked on the first run, kept, a shelf each on Explore, the
-// mix leaned to them, a line for the coach; asked once on Explore of a
-// reader who came before.
+// three of six areas, asked on the first run, kept, a shelf each on
+// Explore, the mix leaned to them, a line for the coach, named on the back
+// of their cards; asked once on Explore of a reader who came before.
 //
 //   flutter test test/explore/goal_block_test.dart
 import 'package:flutter/material.dart';
@@ -59,9 +59,9 @@ void main() {
       isNot(contains(people.first.id)),
     );
     expect(
-      [for (final p in Goal.world.cardsFor(day, const {})) p.id],
+      [for (final p in Goal.news.cardsFor(day, const {})) p.id],
       isNot([
-        for (final p in Goal.world.cardsFor(
+        for (final p in Goal.news.cardsFor(
           day.add(const Duration(days: 1)),
           const {},
         ))
@@ -70,6 +70,13 @@ void main() {
     );
     expect(Goal.of('money'), Goal.money);
     expect(Goal.of('nope'), isNull);
+    // What a build before offered: spotting nonsense is the news now; the
+    // goals that were no place in a life are no area.
+    expect(Goal.of('nonsense'), Goal.news);
+    expect(Goal.of('culture'), isNull);
+    // A card of an area's own names it; one only about its subjects not.
+    final Pill bad = Goal.news.cardsFor(day, const {}).first;
+    expect(Goal.bestFor(bad), isNotNull);
   });
 
   test('the goal is kept, asked once, and the mix leans half again to its '
@@ -106,27 +113,31 @@ void main() {
     final Map<String, double> before = app.leanedWeights;
     await app.setGoals([
       'money',
-      'stress',
+      'news',
       'money',
       'flying',
-      'learn',
-      'world',
+      'culture',
+      'health',
+      'people',
     ]);
-    expect(app.goals, ['money', 'stress', 'learn']);
+    expect(app.goals, ['money', 'news', 'health']);
     expect(app.goal, 'money');
     final Map<String, double> after = app.leanedWeights;
-    // Money's economics and maths, calm's philosophy, learning's language;
-    // psychology is in two and still counts half again, not twice.
-    for (final String t in ['economics', 'maths', 'philosophy', 'language']) {
+    // Money's economics and maths, the news's science and technology,
+    // health's body, medicine, food and sport.
+    for (final String t in [
+      'economics',
+      'maths',
+      'science',
+      'technology',
+      'human_body',
+      'food',
+    ]) {
       expect(after[t], closeTo((before[t] ?? 1.0) * 1.5, 1e-9), reason: t);
     }
-    expect(
-      after['psychology'],
-      closeTo((before['psychology'] ?? 1.0) * 1.5, 1e-9),
-    );
     expect(after['space'], before['space'] ?? 1.0);
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getStringList('knowit.goals'), ['money', 'stress', 'learn']);
+    expect(prefs.getStringList('knowit.goals'), ['money', 'news', 'health']);
     // None at all: no goal, and asked.
     await app.setGoals([]);
     expect(app.goals, isEmpty);
@@ -140,9 +151,11 @@ void main() {
     final kept = await SharedPreferences.getInstance();
     expect(kept.getString('knowit.goal'), isNull);
     expect(kept.getStringList('knowit.goals'), ['people', 'business']);
+    // Spotting nonsense, kept by a build before, comes back as the news.
+    expect((await _app({'knowit.goal': 'nonsense'})).goals, ['news']);
   });
 
-  testWidgets('the screen: ten goals, ticked up to three, Next only with '
+  testWidgets('the screen: six areas, ticked up to three, Next only with '
       'one ticked, and the ones held ticked when it opens', (tester) async {
     List<String>? done;
     var skipped = false;
@@ -167,38 +180,41 @@ void main() {
       await tester.drag(find.byType(ListView), const Offset(0, 3000));
       await tester.pump();
       await tester.scrollUntilVisible(tile, 100);
+      // All of it on screen, so the tap lands on it and not past the list.
+      await tester.ensureVisible(tile);
+      await tester.pump(const Duration(milliseconds: 300));
       await tester.tap(tile);
       await tester.pump(const Duration(milliseconds: 200));
     }
 
-    expect(Goal.values, hasLength(10));
+    expect(Goal.values, hasLength(6));
     await pump();
-    expect(find.text('What do you want to get better at?'), findsOneWidget);
+    expect(find.text('Where do you want to be sharper?'), findsOneWidget);
     expect(find.textContaining('up to three'), findsOneWidget);
     expect(find.text('Next'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('goal-next')));
     expect(done, isNull);
     await tick('money');
     await tick('people');
-    await tick('stress');
+    await tick('news');
     // A fourth takes no tick.
-    await tick('world');
+    await tick('health');
     // A tick taken away, and another in its place.
     await tick('people');
-    await tick('learn');
+    await tick('decide');
     await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('goal-next')));
-    expect(done, ['money', 'stress', 'learn']);
+    expect(done, ['money', 'news', 'decide']);
     await tester.tap(find.text('Skip'));
     expect(skipped, isTrue);
 
     // From Profile: it opens on the goals held, closes, and saves.
     done = null;
-    await pump(initial: ['health', 'culture'], editing: true);
+    await pump(initial: ['health', 'business'], editing: true);
     expect(find.text('Save'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('goal-next')));
-    expect(done, ['health', 'culture']);
-    await tick('culture');
+    expect(done, ['health', 'business']);
+    await tick('business');
     await tester.tap(find.byKey(const ValueKey('goal-next')));
     expect(done, ['health']);
   });
@@ -219,9 +235,9 @@ void main() {
     expect(app.goals, ['business']);
 
     await pumpSections(tester, CoreHost(app), sections);
-    expect(find.text('For your goal: Starting a business'), findsOneWidget);
+    expect(find.text('Useful for: Work and business'), findsOneWidget);
     expect(
-      find.text('Incentives, risk and the numbers behind an idea.'),
+      find.text('Negotiations, incentives and the numbers behind an idea.'),
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('goal-ask')), findsNothing);
@@ -233,14 +249,14 @@ void main() {
       CoreHost(app, subject: kTopics['economics']!.name),
       sections,
     );
-    expect(find.text('For your goal: Starting a business'), findsNothing);
+    expect(find.text('Useful for: Work and business'), findsNothing);
 
     // Two goals: a shelf each, in the order picked, one way to change
     // them, and no card on both.
     await app.setGoals(['business', 'money']);
     await pumpSections(tester, CoreHost(app), sections);
-    expect(find.text('For your goal: Starting a business'), findsOneWidget);
-    expect(find.text('For your goal: Handling money'), findsOneWidget);
+    expect(find.text('Useful for: Work and business'), findsOneWidget);
+    expect(find.text('Useful for: Money and shopping'), findsOneWidget);
     expect(find.byKey(const ValueKey('goal-change')), findsOneWidget);
     final List<String> business = [
       for (final p in Goal.business.cardsFor(app.today, app.seenIds)) p.id,
@@ -254,9 +270,9 @@ void main() {
     ];
     expect(money.toSet().intersection(business.toSet()), isEmpty);
     expect(
-      tester.getTopLeft(find.text('For your goal: Starting a business')).dy,
+      tester.getTopLeft(find.text('Useful for: Work and business')).dy,
       lessThan(
-        tester.getTopLeft(find.text('For your goal: Handling money')).dy,
+        tester.getTopLeft(find.text('Useful for: Money and shopping')).dy,
       ),
     );
   });
@@ -294,12 +310,12 @@ void main() {
       ),
     );
     await pump(const Locale('it'));
-    expect(stats['goal'], 'Parlare con le persone');
-    expect(stats['goals'], ['Parlare con le persone']);
-    await app.setGoals(['people', 'stress']);
+    expect(stats['goal'], 'Le persone');
+    expect(stats['goals'], ['Le persone']);
+    await app.setGoals(['people', 'health']);
     await pump(const Locale('it'));
-    expect(stats['goal'], 'Parlare con le persone');
-    expect(stats['goals'], ['Parlare con le persone', 'Gestire lo stress']);
+    expect(stats['goal'], 'Le persone');
+    expect(stats['goals'], ['Le persone', 'Salute']);
     await app.setGoal(null);
     await pump(const Locale('en'));
     expect(stats.containsKey('goal'), isFalse);

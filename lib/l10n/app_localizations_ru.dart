@@ -5278,7 +5278,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String goalShelf(String goal) {
-    return 'Для твоей цели: $goal';
+    return 'Пригодится: $goal';
   }
 
   @override
@@ -5288,93 +5288,67 @@ class AppLocalizationsRu extends AppLocalizations {
   String get goalChange => 'Изменить';
 
   @override
-  String get goalDecide => 'Лучше решать';
+  String get goalDecide => 'Решения на каждый день';
 
   @override
-  String get goalPeople => 'Говорить с людьми';
+  String get goalPeople => 'Люди';
 
   @override
-  String get goalBusiness => 'Предпринимательство';
+  String get goalBusiness => 'Работа и бизнес';
 
   @override
-  String get goalMoney => 'Обращаться с деньгами';
+  String get goalMoney => 'Деньги и покупки';
 
   @override
-  String get goalNonsense => 'Распознавать чушь';
+  String get goalHealth => 'Здоровье';
 
   @override
-  String get goalHealth => 'Жить хорошо';
-
-  @override
-  String get goalCulture => 'Общая эрудиция';
-
-  @override
-  String get goalWorld => 'Понимать мир';
-
-  @override
-  String get goalAsk => 'В чём ты хочешь стать лучше?';
+  String get goalAsk => 'Где ты хочешь видеть яснее?';
 
   @override
   String get goalAskLine =>
-      'Выбери до трёх: каждый день карточки тренируют тебя для них. Их можно сменить в любой момент.';
+      'Выбери до трёх: карточки будут тренировать тебя именно там. Их можно сменить в любой момент.';
 
   @override
   String get goalSave => 'Сохранить';
 
   @override
-  String get goalEyebrow => 'ТВОЯ ЦЕЛЬ';
+  String get goalEyebrow => 'ТВОЯ ОБЛАСТЬ';
 
   @override
   String get goalPick => 'Выбрать';
 
   @override
-  String get goalNone => 'Цели пока нет';
+  String get goalNone => 'Пока не выбрано';
 
   @override
   String get goalNotNow => 'Не сейчас';
 
   @override
-  String get goalDecideLine => 'Выбирать по верным цифрам, а не наугад.';
+  String get goalDecideLine => 'Выбор, риски и вероятности без догадок.';
 
   @override
-  String get goalPeopleLine => 'Как думают другие и как быть понятым.';
+  String get goalNews => 'Новости и соцсети';
 
   @override
-  String get goalBusinessLine => 'Стимулы, риск и цифры за идеей.';
+  String get goalNewsLine =>
+      'Заголовки, статистика и посты: чему можно верить.';
 
   @override
-  String get goalMoneyLine => 'Проценты, цены и ловушки в предложениях.';
+  String get goalPeopleLine => 'Кто пытается тебя убедить и как быть понятым.';
 
   @override
-  String get goalNonsenseLine =>
-      'Исследования, статистика и заголовки: что выдерживает проверку.';
+  String get goalBusinessLine => 'Переговоры, стимулы и цифры за любой идеей.';
 
   @override
-  String get goalHealthLine => 'Тело, еда и сон: что говорит наука.';
+  String get goalMoneyLine => 'Цены, скидки, проценты: ловушки в любой сделке.';
 
   @override
-  String get goalCultureLine =>
-      'История, искусство, кино и музыка, которые стоит знать.';
+  String get goalHealthLine =>
+      'Диеты, лекарства и исследования: что говорят факты.';
 
   @override
-  String get goalWorldLine => 'Наука, космос и природа простыми словами.';
-
-  @override
-  String get goalStress => 'Справляться со стрессом';
-
-  @override
-  String get goalLearn => 'Учиться быстрее';
-
-  @override
-  String get goalStressLine =>
-      'Неудачи, тревоги и то, что правда зависит от тебя.';
-
-  @override
-  String get goalLearnLine =>
-      'Память, внимание и практика, которая правда работает.';
-
-  @override
-  String get goalEyebrowMany => 'ТВОИ ЦЕЛИ';
+  String get goalEyebrowMany => 'ТВОИ ОБЛАСТИ';
 
   @override
   String mathsDailyStreak(int n) {

@@ -8,16 +8,17 @@ import '../l10n/l10n.dart';
 import '../theme.dart';
 import '../widgets/ui.dart';
 
-/// The second step of the first run, after the intro: what the reader wants
-/// to get better at, as a person (lib/data/goals.dart). Each tap ticks a
-/// goal or takes its tick away, up to [kMostGoals]; Next takes them; Skip
-/// goes on without any.
+/// The second step of the first run, after the intro: where the reader
+/// wants to be sharper (lib/data/goals.dart). Each tap ticks an area or
+/// takes its tick away, up to [kMostGoals]; Next takes them; Skip goes on
+/// without any.
 ///
 /// It is asked before the mix because it is the why before the what: the
-/// subjects say what a reader likes to read, the goals what they want the
-/// reading for. From here on each is a shelf of its own on Explore, a lean
-/// in the deals, and what the coach writes towards. Profile opens the same
-/// screen to change them ([editing]).
+/// subjects say what a reader likes to read, the areas where they mean to
+/// use it. From here on each is a shelf of its own on Explore, a lean in
+/// the deals, what the coach writes towards, and a line on the back of the
+/// cards that belong to it. Profile opens the same screen to change them
+/// ([editing]).
 class GoalScreen extends StatefulWidget {
   const GoalScreen({
     super.key,
@@ -340,61 +341,45 @@ class _GoButton extends StatelessWidget {
   }
 }
 
-/// A goal as the reader reads it.
+/// An area as the reader reads it.
 String goalName(AppLocalizations l, Goal g) => switch (g) {
-  Goal.decide => l.goalDecide,
-  Goal.stress => l.goalStress,
-  Goal.learn => l.goalLearn,
-  Goal.people => l.goalPeople,
-  Goal.business => l.goalBusiness,
   Goal.money => l.goalMoney,
-  Goal.nonsense => l.goalNonsense,
+  Goal.business => l.goalBusiness,
+  Goal.people => l.goalPeople,
+  Goal.news => l.goalNews,
   Goal.health => l.goalHealth,
-  Goal.culture => l.goalCulture,
-  Goal.world => l.goalWorld,
+  Goal.decide => l.goalDecide,
 };
 
-/// What a goal trains, in a line.
+/// What an area trains, in a line.
 String goalLine(AppLocalizations l, Goal g) => switch (g) {
-  Goal.decide => l.goalDecideLine,
-  Goal.stress => l.goalStressLine,
-  Goal.learn => l.goalLearnLine,
-  Goal.people => l.goalPeopleLine,
-  Goal.business => l.goalBusinessLine,
   Goal.money => l.goalMoneyLine,
-  Goal.nonsense => l.goalNonsenseLine,
+  Goal.business => l.goalBusinessLine,
+  Goal.people => l.goalPeopleLine,
+  Goal.news => l.goalNewsLine,
   Goal.health => l.goalHealthLine,
-  Goal.culture => l.goalCultureLine,
-  Goal.world => l.goalWorldLine,
+  Goal.decide => l.goalDecideLine,
 };
 
-/// A goal's mark.
+/// An area's mark.
 IconData goalIcon(Goal g) => switch (g) {
-  Goal.decide => Icons.alt_route_rounded,
-  Goal.stress => Icons.self_improvement_rounded,
-  Goal.learn => Icons.school_rounded,
-  Goal.people => Icons.forum_rounded,
-  Goal.business => Icons.rocket_launch_rounded,
   Goal.money => Icons.savings_rounded,
-  Goal.nonsense => Icons.fact_check_rounded,
-  Goal.health => Icons.spa_rounded,
-  Goal.culture => Icons.theater_comedy_rounded,
-  Goal.world => Icons.public_rounded,
+  Goal.business => Icons.work_rounded,
+  Goal.people => Icons.forum_rounded,
+  Goal.news => Icons.newspaper_rounded,
+  Goal.health => Icons.favorite_rounded,
+  Goal.decide => Icons.alt_route_rounded,
 };
 
-/// A goal's colour: the colour of the subject it leans on most.
+/// An area's colour: the colour of the subject it leans on most.
 Color goalHue(Goal g) {
   final String key = switch (g) {
-    Goal.decide => 'psychology',
-    Goal.stress => 'philosophy',
-    Goal.learn => 'language',
-    Goal.people => 'life',
-    Goal.business => 'technology',
     Goal.money => 'economics',
-    Goal.nonsense => 'science',
+    Goal.business => 'technology',
+    Goal.people => 'life',
+    Goal.news => 'science',
     Goal.health => 'medicine',
-    Goal.culture => 'art',
-    Goal.world => 'space',
+    Goal.decide => 'psychology',
   };
   return kTopics[key]?.color ?? Colors.white;
 }

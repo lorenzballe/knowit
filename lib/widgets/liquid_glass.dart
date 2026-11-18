@@ -36,7 +36,7 @@ class LiquidGlass extends StatelessWidget {
     required this.child,
     this.radius = 26,
     this.circle = false,
-    this.blur = 24,
+    this.blur = 16,
     this.shadow = true,
     this.tint,
     this.strength = 1,
@@ -79,10 +79,12 @@ class LiquidGlass extends StatelessWidget {
         : RoundedRectangleBorder(borderRadius: corners);
     final List<BoxShadow> shadows = shadow
         ? [
+            // Soft and close: glass floats a little above the page, it does
+            // not stand on a ledge.
             BoxShadow(
-              color: Colors.black.withValues(alpha: dark ? 0.42 : 0.12),
-              blurRadius: 28,
-              offset: const Offset(0, 10),
+              color: Colors.black.withValues(alpha: dark ? 0.32 : 0.07),
+              blurRadius: 22,
+              offset: const Offset(0, 6),
             ),
           ]
         : const [];
@@ -107,12 +109,12 @@ class LiquidGlass extends StatelessWidget {
     }
 
     final double k = strength.clamp(0.5, 2.0);
-    // The ground under the tint: a little of the screen's own surface, so a
-    // bright card passing under the glass colours it rather than paints it,
-    // and the tabs on it read over anything.
+    // The ground under the tint, thin: what passes under the glass shows
+    // through in its own colours, as through iOS's, and what sits on it
+    // keeps its contrast by its halo (glassHalo), not by a heavier glass.
     final Color ground = dark
-        ? p.surfaceRaised.withValues(alpha: 0.42)
-        : Colors.white.withValues(alpha: 0.34);
+        ? const Color(0xFF2E2E34).withValues(alpha: 0.34)
+        : Colors.white.withValues(alpha: 0.22);
     // The tint: on paper a milk glass, at night a smoked one; a coloured
     // tint takes the place of either, as thin.
     final Color sheenTop = tint != null
@@ -121,13 +123,13 @@ class LiquidGlass extends StatelessWidget {
             tint!,
           ).withValues(alpha: 0.34 * k)
         : dark
-        ? Colors.white.withValues(alpha: 0.13 * k)
-        : Colors.white.withValues(alpha: 0.62 * k);
+        ? Colors.white.withValues(alpha: 0.10 * k)
+        : Colors.white.withValues(alpha: 0.42 * k);
     final Color sheenBottom = tint != null
         ? tint!.withValues(alpha: 0.22 * k)
         : dark
-        ? Colors.white.withValues(alpha: 0.06 * k)
-        : Colors.white.withValues(alpha: 0.42 * k);
+        ? Colors.white.withValues(alpha: 0.05 * k)
+        : Colors.white.withValues(alpha: 0.24 * k);
     final Color top = Color.alphaBlend(sheenTop, ground);
     final Color bottom = Color.alphaBlend(sheenBottom, ground);
 
@@ -157,17 +159,16 @@ class LiquidGlass extends StatelessWidget {
   }
 }
 
-/// The backdrop as the glass bends it: its colour drained by half, then
-/// blurred, and toned a little towards the ground, darker at night and
-/// lighter on paper. Glass on iOS does the same, so that a saturated card
-/// passing under a bar tints it rather than floods it, and what is on the
-/// glass keeps its contrast.
+/// The backdrop as the glass bends it: a fifth of its colour drained, then
+/// blurred, and toned towards the ground, dimmer at night and lifted on
+/// paper. Glass on iOS does the same, so a saturated card passing under a
+/// bar shows through in its colour without drowning what is on the glass.
 ui.ImageFilter _frost(double sigma, bool dark) {
-  // How much colour is left, and the tone: a gain on every channel, and at
-  // paper a lift, in the 0 to 255 of a colour matrix's last column.
-  const double keep = 0.5;
-  final double gain = dark ? 0.82 : 0.94;
-  final double lift = dark ? 0 : 255 * 0.08;
+  // How much colour is left, and the tone: a gain on every channel, and a
+  // lift, in the 0 to 255 of a colour matrix's last column.
+  const double keep = 0.8;
+  final double gain = dark ? 0.62 : 1.0;
+  final double lift = 255 * (dark ? 0.04 : 0.05);
   const double r = 0.2126, g = 0.7152, b = 0.0722;
   List<double> row(double rr, double gg, double bb) => [
     rr * gain,
@@ -260,6 +261,21 @@ class _Rim extends CustomPainter {
   @override
   bool shouldRepaint(_Rim old) =>
       old.circle != circle || old.radius != radius || old.dark != dark;
+}
+
+/// The halo that keeps a mark on glass readable over whatever passes under
+/// it, as iOS keeps its own: a soft shade around a light mark at night, a
+/// soft light around a dark one on paper. None where there is no glass.
+List<Shadow>? glassHalo(BuildContext context) {
+  if (!glassOn || MediaQuery.highContrastOf(context)) return null;
+  return [
+    Shadow(
+      color: context.p.isDark
+          ? Colors.black.withValues(alpha: 0.45)
+          : Colors.white.withValues(alpha: 0.55),
+      blurRadius: 8,
+    ),
+  ];
 }
 
 /// The ground of a sheet that rises from the foot of the screen, in glass:
