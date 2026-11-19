@@ -63,15 +63,19 @@ jobs:
       - name: Walk the app and photograph it
         run: |
           mkdir -p shots
-          # Through a terminal of its own (script -F flushes each write), so a
-          # SHOT line is in walk.log the moment it is said: written to a plain
-          # file, the output came all at once at the end of each test, and every
-          # picture was named by the last screen of the test before.
-          script -q -F walk.log flutter test integration_test/glass_shots_test.dart -d "$UDID" > /dev/null 2>&1 &
+          flutter test integration_test/glass_shots_test.dart -d "$UDID" > walk.log 2>&1 &
           PID=$!
           i=0
           while kill -0 "$PID" 2>/dev/null; do
-            NAME=$(grep -o 'SHOT [a-z0-9-]*' walk.log 2>/dev/null | tail -1 | cut -d' ' -f2 || true)
+            # The screen that is up, as the app writes it to its own tmp
+            # folder, which on a simulator is a folder of the Mac's: the
+            # test's printed SHOT lines reach walk.log only as each test
+            # ends, too late to name a picture by.
+            DATA=$(xcrun simctl get_app_container "$UDID" com.astuto.app data 2>/dev/null || true)
+            NAME=""
+            if [ -n "$DATA" ] && [ -f "$DATA/tmp/glass_shot.txt" ]; then
+              NAME=$(tr -cd 'a-z0-9-' < "$DATA/tmp/glass_shot.txt")
+            fi
             if [ -n "$NAME" ]; then
               xcrun simctl io "$UDID" screenshot "shots/$(printf %04d $i)-$NAME.png" >/dev/null 2>&1 || true
               i=$((i+1))
