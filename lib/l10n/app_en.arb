@@ -1593,6 +1593,225 @@
  "@whyTune": {
   "description": "Link at the foot of the sheet: opens the page where the reader tunes their mix of subjects."
  },
+ "searchTry": "Try",
+ "@searchTry": {
+  "description": "Search, before anything is typed: a few words to try. One short word, shown in capitals."
+ },
+ "searchByNeed": "By need",
+ "@searchByNeed": {
+  "description": "Search, before anything is typed: the areas of life cards help with. Shown in capitals."
+ },
+ "searchByKind": "By kind",
+ "@searchByKind": {
+  "description": "Search, before anything is typed: kinds of card (to play, quizzes...). Shown in capitals."
+ },
+ "kindName": "{kind, select, play{To play} quiz{Quizzes} estimate{Estimates} debate{Debates} quick{Quick reads} other{Cards}}",
+ "@kindName": {
+  "description": "A kind of card, by how it is played. play: an interactive page; quiz: pick one of a few answers; estimate: put a number on something; debate: take a side; quick: read in a breath.",
+  "placeholders": {
+   "kind": {
+    "type": "String"
+   }
+  }
+ },
+ "kindCards": "{n, plural, =1{1 card} other{{n} cards}}",
+ "@kindCards": {
+  "description": "How many cards a kind has, above its list.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "areaUsefulFor": "Useful for",
+ "@areaUsefulFor": {
+  "description": "Over an area's page: the area of life its cards help with. Shown in capitals, before the area's name below it."
+ },
+ "areaPaths": "{n, plural, =1{One path · ten cards} other{{n} paths · ten cards each}}",
+ "@areaPaths": {
+  "description": "On an area's page, over its paths (ten cards on one theme). Shown in capitals.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "areaMoves": "The moves you train here",
+ "@areaMoves": {
+  "description": "On an area's page: title over the reasoning moves the area trains."
+ },
+ "areaMoreCards": "More cards for it",
+ "@areaMoreCards": {
+  "description": "On an area's page: title over more cards for that area."
+ },
+ "pathKicker": "Path",
+ "@pathKicker": {
+  "description": "Over a path's own page: the word for a path (ten cards on one theme, easy to hard). Shown in capitals."
+ },
+ "pathMeta": "{subject} · {n} cards · about {minutes} min",
+ "@pathMeta": {
+  "description": "In a path's head, in capitals: its subject, how many cards, about how many minutes.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   },
+   "n": {
+    "type": "int"
+   },
+   "minutes": {
+    "type": "int"
+   }
+  }
+ },
+ "pathPartOf": "Part {part} of {parts}",
+ "@pathPartOf": {
+  "description": "A theme with many cards goes on in parts of ten: which part this is.",
+  "placeholders": {
+   "part": {
+    "type": "int"
+   },
+   "parts": {
+    "type": "int"
+   }
+  }
+ },
+ "pathTrains": "Trains: {moves}",
+ "@pathTrains": {
+  "description": "In a path's head: the reasoning moves its cards train.",
+  "placeholders": {
+   "moves": {
+    "type": "String"
+   }
+  }
+ },
+ "pathReadOf": "{n} of {total} read",
+ "@pathReadOf": {
+  "description": "In a path's head: how many of its cards are read.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "pathFreeTag": "Free",
+ "@pathFreeTag": {
+  "description": "A small tag on a card of a path that the free plan opens. One short word, shown in capitals."
+ },
+ "pathStart": "Start the path",
+ "@pathStart": {
+  "description": "Button on a path's page, nothing read yet."
+ },
+ "pathContinueAt": "Go on · card {n}",
+ "@pathContinueAt": {
+  "description": "Button on a path's page: go on from card n.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pathContinue": "Continue",
+ "@pathContinue": {
+  "description": "Beside a path begun, on an area's page. One short word."
+ },
+ "pathUnlock": "Unlock every path",
+ "@pathUnlock": {
+  "description": "Button on a path's page on the free plan, its free cards read: opens Astute+."
+ },
+ "pathFreeLine": "The first two cards of every path are free.",
+ "@pathFreeLine": {
+  "description": "Under that button."
+ },
+ "pathNextPart": "Part {n}: go deeper",
+ "@pathNextPart": {
+  "description": "Button or row: the next part of the same theme, deeper.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pathDeeperLine": "{n} more cards on the same theme, harder.",
+ "@pathDeeperLine": {
+  "description": "Under the next part's name.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pathAgain": "Read it again",
+ "@pathAgain": {
+  "description": "Button on a path's page, every card read: read it again."
+ },
+ "subjectKicker": "Subject",
+ "@subjectKicker": {
+  "description": "Over a subject's own page in Your journey. Shown in capitals."
+ },
+ "subjectReadOf": "{n} of {total} cards read",
+ "@subjectReadOf": {
+  "description": "In a subject's head: its cards read, of all its cards.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "subjectRight": "{right} right of {answered} answered",
+ "@subjectRight": {
+  "description": "In a subject's head: answers right, of those answered.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "answered": {
+    "type": "int"
+   }
+  }
+ },
+ "subjectToNext": "{n, plural, =1{One right answer from level {level}} other{{n} right answers from level {level}}}",
+ "@subjectToNext": {
+  "description": "In a subject's head: how many right answers (on new cards) the next level is away.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "level": {
+    "type": "int"
+   }
+  }
+ },
+ "subjectLevel": "Level",
+ "@subjectLevel": {
+  "description": "Under the number in the level's ring. One short word, shown in capitals."
+ },
+ "subjectNext": "Next for you",
+ "@subjectNext": {
+  "description": "On a subject's page: title over the card to read next."
+ },
+ "subjectNextLine": "One step above where you are.",
+ "@subjectNextLine": {
+  "description": "Under that title."
+ },
+ "subjectInside": "Inside {subject}",
+ "@subjectInside": {
+  "description": "On a subject's page: title over its themes.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "journeySubjectsTap": "Tap a subject for its own page.",
+ "@journeySubjectsTap": {
+  "description": "Under the wheel of subjects in Your journey: a tap on one opens its page."
+ },
  "moveName": "{move, select, baseRate{Base rates} survivorship{Survivorship} regression{Regression to the mean} confirmation{Confirmation} anchoring{Anchoring} sampling{Sampling} confounding{Confounding} counterfactual{Compared to what} multipleComparisons{Multiple looks} availability{Availability} sunkCost{Sunk cost} conjunction{Conjunction} conditional{Conditional odds} independence{Independence} coincidence{Coincidence} exponential{Exponential growth} reflection{The quick answer} simpson{Aggregates} estimation{Estimation} computation{Working it out} other{Reasoning}}",
  "@moveName": {
   "description": "The name of a reasoning move a card trains, as short as the English. The key is the move.",

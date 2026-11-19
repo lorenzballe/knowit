@@ -22,6 +22,7 @@ import 'package:astuto/explore/blocks/core/your_day_block.dart';
 import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/card_path_screen.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/screens/paywall_screen.dart';
@@ -624,6 +625,11 @@ void main() {
               )
               .first,
         );
+        await tester.pump(const Duration(milliseconds: 400));
+        await tester.pump(const Duration(milliseconds: 400));
+        // The path's own page first, its ten in order; then its first card.
+        expect(find.byType(CardPathScreen), findsOneWidget);
+        await tester.tap(find.byKey(const ValueKey('path-go')));
         await tester.pump(const Duration(milliseconds: 400));
         await tester.pump(const Duration(milliseconds: 400));
         final DeckViewerScreen viewer = tester.widget(

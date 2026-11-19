@@ -438,17 +438,30 @@ Fields: `title`, `subtitle`, `limit` (cards, 8 by default).
 ### `paths`
 
 Paths of ten cards on one theme, a row of them: each a genre of the bank
-(lib/data/genres.dart) with ten cards or more, its first ten easy before hard
-and a card with a drawing before one without. A tile is the subject's colour
-and mark, the genre's name, the subject's, and ten steps with the ones read
-filled. Astute+, with a way in: on the free plan a tile carries a lock and
-"2 free", and the tap opens the path's first two cards; the card after them
-says how many are left and opens the plans, which speak of paths (paywall
-variant `E`), and with Astute+ goes on with the path from its third card. On
-Astute+ the tap opens the ten at full size, a card at a time, each counted as
-read. The row turns over once a week, the same for every reader,
-and follows the subject Explore is narrowed to. With no genre of ten, there is
-no section.
+(lib/data/genres.dart) with ten cards or more, its cards easy before hard and
+a card with a drawing before one without. A theme with twenty cards or more
+goes on, deeper, in a second part of ten, and with thirty in a third
+(`partsOf`, three parts at most): the row shows each theme at the part the
+reader has got to, the first not read through, and the tile says which
+(`ECONOMICS · 2/3`). A tile is the subject's colour and mark, the genre's
+name, the subject's, and ten steps with the ones read filled.
+
+A tap opens the path's own page (lib/screens/card_path_screen.dart): its
+subject, ten cards and about fifteen minutes; its name and part; the moves
+its cards train; how far along; the ten in order, read ones ticked, the one
+to go on with set apart; and at the foot, always in sight, the way on: start,
+go on from card N, the next part, or read it again. Astute+, with a way in:
+on the free plan the first two cards of every part are marked free and the
+rest locked; the foot says so, and a locked card or "Unlock every path"
+opens the plans, which speak of paths (paywall variant `E`). In the viewer,
+the card after the two free ones says how many are left and opens the plans
+too. The row turns over once a week, the same for every reader, and follows
+the subject Explore is narrowed to. With no genre of ten, there is no section.
+
+A path is also reached from an area's own page (lib/screens/area_screen.dart:
+the paths of its themes, the moves it trains, more of its cards; opened from
+the search before anything is typed and from the area's shelf) and from a
+subject's own home in Your journey (lib/screens/subject_home_screen.dart).
 
 Fields: `title`, `subtitle`, `limit` (paths shown, 8 by default).
 

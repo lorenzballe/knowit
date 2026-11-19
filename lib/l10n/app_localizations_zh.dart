@@ -1519,6 +1519,153 @@ class AppLocalizationsZh extends AppLocalizations {
   String get whyTune => '调整你的组合';
 
   @override
+  String get searchTry => '试试';
+
+  @override
+  String get searchByNeed => '按需求';
+
+  @override
+  String get searchByKind => '按类型';
+
+  @override
+  String kindName(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'play': '可互动',
+      'quiz': '选择题',
+      'estimate': '估算题',
+      'debate': '辩论',
+      'quick': '快速阅读',
+      'other': '卡片',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String kindCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 张卡片',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaUsefulFor => '用得上';
+
+  @override
+  String areaPaths(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 条路线 · 每条十张卡片',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaMoves => '在这里训练的思路';
+
+  @override
+  String get areaMoreCards => '更多相关卡片';
+
+  @override
+  String get pathKicker => '路线';
+
+  @override
+  String pathMeta(String subject, int n, int minutes) {
+    return '$subject · $n 张卡片 · 约 $minutes 分钟';
+  }
+
+  @override
+  String pathPartOf(int part, int parts) {
+    return '第 $part 部分，共 $parts 部分';
+  }
+
+  @override
+  String pathTrains(String moves) {
+    return '训练：$moves';
+  }
+
+  @override
+  String pathReadOf(int n, int total) {
+    return '已读 $n/$total';
+  }
+
+  @override
+  String get pathFreeTag => '免费';
+
+  @override
+  String get pathStart => '开始这条路线';
+
+  @override
+  String pathContinueAt(int n) {
+    return '继续 · 第 $n 张';
+  }
+
+  @override
+  String get pathContinue => '继续';
+
+  @override
+  String get pathUnlock => '解锁所有路线';
+
+  @override
+  String get pathFreeLine => '每条路线的前两张卡片免费。';
+
+  @override
+  String pathNextPart(int n) {
+    return '第 $n 部分：更深入';
+  }
+
+  @override
+  String pathDeeperLine(int n) {
+    return '同一主题再多 $n 张卡片，更难。';
+  }
+
+  @override
+  String get pathAgain => '再读一遍';
+
+  @override
+  String get subjectKicker => '科目';
+
+  @override
+  String subjectReadOf(int n, int total) {
+    return '已读 $n/$total 张卡片';
+  }
+
+  @override
+  String subjectRight(int right, int answered) {
+    return '答对 $right/$answered';
+  }
+
+  @override
+  String subjectToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '再答对 $n 题升到 $level 级',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subjectLevel => '级别';
+
+  @override
+  String get subjectNext => '下一张给你';
+
+  @override
+  String get subjectNextLine => '比你现在的水平高一级。';
+
+  @override
+  String subjectInside(String subject) {
+    return '$subject 里面';
+  }
+
+  @override
+  String get journeySubjectsTap => '点一个科目，打开它的页面。';
+
+  @override
   String moveName(String move) {
     String _temp0 = intl.Intl.selectLogic(move, {
       'baseRate': '基础比率',

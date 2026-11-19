@@ -1562,6 +1562,153 @@ class AppLocalizationsTr extends AppLocalizations {
   String get whyTune => 'Karışımını ayarla';
 
   @override
+  String get searchTry => 'Dene';
+
+  @override
+  String get searchByNeed => 'İhtiyaca göre';
+
+  @override
+  String get searchByKind => 'Türe göre';
+
+  @override
+  String kindName(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'play': 'Oynanabilir',
+      'quiz': 'Testler',
+      'estimate': 'Tahminler',
+      'debate': 'Tartışmalar',
+      'quick': 'Hızlı okumalar',
+      'other': 'Kartlar',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String kindCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaUsefulFor => 'İşine yarar';
+
+  @override
+  String areaPaths(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n yol · her biri on kart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaMoves => 'Burada çalıştığın adımlar';
+
+  @override
+  String get areaMoreCards => 'Bunun için daha fazla kart';
+
+  @override
+  String get pathKicker => 'Yol';
+
+  @override
+  String pathMeta(String subject, int n, int minutes) {
+    return '$subject · $n kart · yaklaşık $minutes dk';
+  }
+
+  @override
+  String pathPartOf(int part, int parts) {
+    return 'Bölüm $part / $parts';
+  }
+
+  @override
+  String pathTrains(String moves) {
+    return 'Çalıştırdığı adımlar: $moves';
+  }
+
+  @override
+  String pathReadOf(int n, int total) {
+    return '$total karttan $n tanesi okundu';
+  }
+
+  @override
+  String get pathFreeTag => 'Ücretsiz';
+
+  @override
+  String get pathStart => 'Yola başla';
+
+  @override
+  String pathContinueAt(int n) {
+    return 'Devam · $n. kart';
+  }
+
+  @override
+  String get pathContinue => 'Devam';
+
+  @override
+  String get pathUnlock => 'Tüm yolların kilidini aç';
+
+  @override
+  String get pathFreeLine => 'Her yolun ilk iki kartı ücretsizdir.';
+
+  @override
+  String pathNextPart(int n) {
+    return 'Bölüm $n: daha derine';
+  }
+
+  @override
+  String pathDeeperLine(int n) {
+    return 'Aynı temada $n kart daha, daha zor.';
+  }
+
+  @override
+  String get pathAgain => 'Yeniden oku';
+
+  @override
+  String get subjectKicker => 'Konu';
+
+  @override
+  String subjectReadOf(int n, int total) {
+    return '$total karttan $n tanesi okundu';
+  }
+
+  @override
+  String subjectRight(int right, int answered) {
+    return '$answered cevaptan $right doğru';
+  }
+
+  @override
+  String subjectToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Seviye $level için $n doğru cevap kaldı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subjectLevel => 'Seviye';
+
+  @override
+  String get subjectNext => 'Sıradaki senin için';
+
+  @override
+  String get subjectNextLine => 'Seviyenin bir basamak üstü.';
+
+  @override
+  String subjectInside(String subject) {
+    return '$subject içinde';
+  }
+
+  @override
+  String get journeySubjectsTap => 'Bir konuya dokun, kendi sayfası açılsın.';
+
+  @override
   String moveName(String move) {
     String _temp0 = intl.Intl.selectLogic(move, {
       'baseRate': 'Temel oranlar',

@@ -1495,6 +1495,140 @@ class RemoteLocalizations extends AppLocalizations {
   String get whyTune => _words.text('whyTune') ?? _base.whyTune;
 
   @override
+  String get searchTry => _words.text('searchTry') ?? _base.searchTry;
+
+  @override
+  String get searchByNeed => _words.text('searchByNeed') ?? _base.searchByNeed;
+
+  @override
+  String get searchByKind => _words.text('searchByKind') ?? _base.searchByKind;
+
+  @override
+  String kindName(String kind) =>
+      _words.format('kindName', localeName, {'kind': kind}) ??
+      _base.kindName(kind);
+
+  @override
+  String kindCards(int n) =>
+      _words.format('kindCards', localeName, {'n': n}) ?? _base.kindCards(n);
+
+  @override
+  String get areaUsefulFor =>
+      _words.text('areaUsefulFor') ?? _base.areaUsefulFor;
+
+  @override
+  String areaPaths(int n) =>
+      _words.format('areaPaths', localeName, {'n': n}) ?? _base.areaPaths(n);
+
+  @override
+  String get areaMoves => _words.text('areaMoves') ?? _base.areaMoves;
+
+  @override
+  String get areaMoreCards =>
+      _words.text('areaMoreCards') ?? _base.areaMoreCards;
+
+  @override
+  String get pathKicker => _words.text('pathKicker') ?? _base.pathKicker;
+
+  @override
+  String pathMeta(String subject, int n, int minutes) =>
+      _words.format('pathMeta', localeName, {
+        'subject': subject,
+        'n': n,
+        'minutes': minutes,
+      }) ??
+      _base.pathMeta(subject, n, minutes);
+
+  @override
+  String pathPartOf(int part, int parts) =>
+      _words.format('pathPartOf', localeName, {'part': part, 'parts': parts}) ??
+      _base.pathPartOf(part, parts);
+
+  @override
+  String pathTrains(String moves) =>
+      _words.format('pathTrains', localeName, {'moves': moves}) ??
+      _base.pathTrains(moves);
+
+  @override
+  String pathReadOf(int n, int total) =>
+      _words.format('pathReadOf', localeName, {'n': n, 'total': total}) ??
+      _base.pathReadOf(n, total);
+
+  @override
+  String get pathFreeTag => _words.text('pathFreeTag') ?? _base.pathFreeTag;
+
+  @override
+  String get pathStart => _words.text('pathStart') ?? _base.pathStart;
+
+  @override
+  String pathContinueAt(int n) =>
+      _words.format('pathContinueAt', localeName, {'n': n}) ??
+      _base.pathContinueAt(n);
+
+  @override
+  String get pathContinue => _words.text('pathContinue') ?? _base.pathContinue;
+
+  @override
+  String get pathUnlock => _words.text('pathUnlock') ?? _base.pathUnlock;
+
+  @override
+  String get pathFreeLine => _words.text('pathFreeLine') ?? _base.pathFreeLine;
+
+  @override
+  String pathNextPart(int n) =>
+      _words.format('pathNextPart', localeName, {'n': n}) ??
+      _base.pathNextPart(n);
+
+  @override
+  String pathDeeperLine(int n) =>
+      _words.format('pathDeeperLine', localeName, {'n': n}) ??
+      _base.pathDeeperLine(n);
+
+  @override
+  String get pathAgain => _words.text('pathAgain') ?? _base.pathAgain;
+
+  @override
+  String get subjectKicker =>
+      _words.text('subjectKicker') ?? _base.subjectKicker;
+
+  @override
+  String subjectReadOf(int n, int total) =>
+      _words.format('subjectReadOf', localeName, {'n': n, 'total': total}) ??
+      _base.subjectReadOf(n, total);
+
+  @override
+  String subjectRight(int right, int answered) =>
+      _words.format('subjectRight', localeName, {
+        'right': right,
+        'answered': answered,
+      }) ??
+      _base.subjectRight(right, answered);
+
+  @override
+  String subjectToNext(int n, int level) =>
+      _words.format('subjectToNext', localeName, {'n': n, 'level': level}) ??
+      _base.subjectToNext(n, level);
+
+  @override
+  String get subjectLevel => _words.text('subjectLevel') ?? _base.subjectLevel;
+
+  @override
+  String get subjectNext => _words.text('subjectNext') ?? _base.subjectNext;
+
+  @override
+  String get subjectNextLine =>
+      _words.text('subjectNextLine') ?? _base.subjectNextLine;
+
+  @override
+  String subjectInside(String subject) =>
+      _words.format('subjectInside', localeName, {'subject': subject}) ??
+      _base.subjectInside(subject);
+
+  @override
+  String get journeySubjectsTap =>
+      _words.text('journeySubjectsTap') ?? _base.journeySubjectsTap;
+
+  @override
   String moveName(String move) =>
       _words.format('moveName', localeName, {'move': move}) ??
       _base.moveName(move);

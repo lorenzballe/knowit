@@ -1581,6 +1581,157 @@ class AppLocalizationsEs extends AppLocalizations {
   String get whyTune => 'Ajusta tu mezcla';
 
   @override
+  String get searchTry => 'Prueba';
+
+  @override
+  String get searchByNeed => 'Por necesidad';
+
+  @override
+  String get searchByKind => 'Por tipo';
+
+  @override
+  String kindName(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'play': 'Para jugar',
+      'quiz': 'Quiz',
+      'estimate': 'Estimaciones',
+      'debate': 'Debates',
+      'quick': 'Lecturas rápidas',
+      'other': 'Cartas',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String kindCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartas',
+      one: '1 carta',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaUsefulFor => 'Te sirve para';
+
+  @override
+  String areaPaths(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n recorridos · diez cartas cada uno',
+      one: 'Un recorrido · diez cartas',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaMoves => 'Los pasos que entrenas aquí';
+
+  @override
+  String get areaMoreCards => 'Más cartas para esto';
+
+  @override
+  String get pathKicker => 'Recorrido';
+
+  @override
+  String pathMeta(String subject, int n, int minutes) {
+    return '$subject · $n cartas · unos $minutes min';
+  }
+
+  @override
+  String pathPartOf(int part, int parts) {
+    return 'Parte $part de $parts';
+  }
+
+  @override
+  String pathTrains(String moves) {
+    return 'Entrena: $moves';
+  }
+
+  @override
+  String pathReadOf(int n, int total) {
+    return '$n de $total leídas';
+  }
+
+  @override
+  String get pathFreeTag => 'Gratis';
+
+  @override
+  String get pathStart => 'Empezar el recorrido';
+
+  @override
+  String pathContinueAt(int n) {
+    return 'Seguir · carta $n';
+  }
+
+  @override
+  String get pathContinue => 'Seguir';
+
+  @override
+  String get pathUnlock => 'Desbloquea todos los recorridos';
+
+  @override
+  String get pathFreeLine =>
+      'Las dos primeras cartas de cada recorrido son gratis.';
+
+  @override
+  String pathNextPart(int n) {
+    return 'Parte $n: más a fondo';
+  }
+
+  @override
+  String pathDeeperLine(int n) {
+    return '$n cartas más del mismo tema, más difíciles.';
+  }
+
+  @override
+  String get pathAgain => 'Leerlo otra vez';
+
+  @override
+  String get subjectKicker => 'Materia';
+
+  @override
+  String subjectReadOf(int n, int total) {
+    return '$n de $total cartas leídas';
+  }
+
+  @override
+  String subjectRight(int right, int answered) {
+    return '$right bien de $answered respondidas';
+  }
+
+  @override
+  String subjectToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n respuestas correctas para el nivel $level',
+      one: 'Una respuesta correcta para el nivel $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subjectLevel => 'Nivel';
+
+  @override
+  String get subjectNext => 'La siguiente para ti';
+
+  @override
+  String get subjectNextLine => 'Un escalón por encima de tu nivel.';
+
+  @override
+  String subjectInside(String subject) {
+    return 'Dentro de $subject';
+  }
+
+  @override
+  String get journeySubjectsTap => 'Toca una materia para ver su página.';
+
+  @override
   String moveName(String move) {
     String _temp0 = intl.Intl.selectLogic(move, {
       'baseRate': 'Tasas base',

@@ -628,9 +628,28 @@ void main() {
     expect(find.byKey(const ValueKey('subject-Economics-off')), findsOneWidget);
     expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsWidgets);
 
-    // And the lens opens a field over the whole pool.
+    // And the lens opens a field over the whole pool, with somewhere to go
+    // before anything is typed: words to try, the areas, the kinds.
     await tester.tap(find.byKey(const ValueKey('explore-search')));
     await _settle(tester);
+    expect(find.byKey(const ValueKey('search-start')), findsOneWidget);
+    expect(find.byKey(const ValueKey('search-need-money')), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('search-kind-quiz')),
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byKey(const ValueKey('search-start')),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await tester.tap(find.byKey(const ValueKey('search-kind-quiz')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('search-kind-list-quiz')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('search-kind-clear')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('search-start')), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'why');
     await _settle(tester);
     expect(find.textContaining('matching'), findsOneWidget);
