@@ -163,6 +163,10 @@ class BetsDay extends ChangeNotifier {
   /// Today, on the phone's calendar.
   String get today => dateKey(_clock());
 
+  /// The moment it is on the day's clock: today's three counts its days by
+  /// it, so a test's day is the same everywhere.
+  DateTime get now => _clock();
+
   /// Whether what was kept has been read.
   bool get loaded => _loaded;
 

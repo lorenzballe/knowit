@@ -2028,6 +2028,132 @@ abstract class AppLocalizations {
   /// **'NEW'**
   String get perkNew;
 
+  /// Today's three: three shares to estimate, the same for everyone that day. A name, short.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s three'**
+  String get threeTitle;
+
+  /// Which of today's three the reader is on: 1 of 3.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total}'**
+  String threeStep(int n, int total);
+
+  /// Under the Lock in button of today's three.
+  ///
+  /// In en, this message translates to:
+  /// **'The same three for everyone today. About a minute.'**
+  String get threeSame;
+
+  /// After a guess is locked in, after 'It is 9%.': what the reader said.
+  ///
+  /// In en, this message translates to:
+  /// **'You said {guess}.'**
+  String threeYouSaid(String guess);
+
+  /// Points a guess won, out of 100.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No points} =1{+1 point} other{+{n} points}}'**
+  String threePoints(int n);
+
+  /// Button: on to the next of today's three.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get threeNext;
+
+  /// Button after the third guess: the day's score.
+  ///
+  /// In en, this message translates to:
+  /// **'See your score'**
+  String get threeSeeScore;
+
+  /// Head of the result card of today's three.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s three · done'**
+  String get threeDone;
+
+  /// Days in a row today's three was played, on the result card.
+  ///
+  /// In en, this message translates to:
+  /// **'Day {n}'**
+  String threeDay(int n);
+
+  /// Beside the day's score in large figures: '200 of 300'.
+  ///
+  /// In en, this message translates to:
+  /// **'of 300'**
+  String get threeOf300;
+
+  /// Where the day's score stands among the readers who played today.
+  ///
+  /// In en, this message translates to:
+  /// **'Closer than {pct}% of today\'s readers.'**
+  String threeCloser(int pct);
+
+  /// When fewer than five readers have played today.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{The first to play today.} other{One of the first {n} to play today.}}'**
+  String threeFirst(int n);
+
+  /// On the result of today's three, when the score is in the lower half of today's readers: how many played.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 reader played today.} other{{n} readers played today.}}'**
+  String threeReaders(int n);
+
+  /// Under the bar of today's readers by score that holds the reader's own score. One short word.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get threeYou;
+
+  /// Days in a row today's three was played, beside this week's seven days: short, it shares a line with them.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day} other{{n} days}}'**
+  String threeStreak(int n);
+
+  /// Button: send the day's score to someone.
+  ///
+  /// In en, this message translates to:
+  /// **'Send it'**
+  String get threeSend;
+
+  /// Button: open the three cards, where each answer is explained.
+  ///
+  /// In en, this message translates to:
+  /// **'See the why'**
+  String get threeWhy;
+
+  /// Under the result: yesterday's score.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday\'s three: {score} of 300.'**
+  String threeYesterday(int score);
+
+  /// First line of the message the score is sent in.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute · Today\'s three · {date}'**
+  String threeShareHead(String date);
+
+  /// Second line of the message: the score and the days in a row.
+  ///
+  /// In en, this message translates to:
+  /// **'{score} of 300 · day {day}'**
+  String threeShareScore(int score, int day);
+
+  /// On the result, under each of the three: the guess and the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'You said {said}. It is {truth}.'**
+  String threeRowSaid(String said, String truth);
+
   /// Headline of the screen where the reader picks the skills they want to learn (Profile).
   ///
   /// In en, this message translates to:

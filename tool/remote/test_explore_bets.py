@@ -84,7 +84,7 @@ class TheBlocks(unittest.TestCase):
     def test_every_bets_block_is_one_the_app_can_draw(self):
         self.assertEqual(set(bets.BLOCKS), {
             "bets-range", "bets-slip", "bets-stake", "bets-friend", "bets-number",
-            "bets-bigger", "bets-closer", "bets-magnitude", "bets-day",
+            "bets-bigger", "bets-closer", "bets-magnitude", "bets-day", "three",
         })
         self.assertTrue(set(bets.BLOCKS) <= set(explore.blocks()))
 

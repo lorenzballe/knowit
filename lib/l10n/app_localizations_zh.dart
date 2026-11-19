@@ -1308,6 +1308,110 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkNew => '新';
 
   @override
+  String get threeTitle => '今日三题';
+
+  @override
+  String threeStep(int n, int total) {
+    return '$n / $total';
+  }
+
+  @override
+  String get threeSame => '今天大家都是同样三题，约一分钟。';
+
+  @override
+  String threeYouSaid(String guess) {
+    return '你猜的是 $guess。';
+  }
+
+  @override
+  String threePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '+$n 分',
+      zero: '没有得分',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeNext => '下一题';
+
+  @override
+  String get threeSeeScore => '查看得分';
+
+  @override
+  String get threeDone => '今日三题 · 完成';
+
+  @override
+  String threeDay(int n) {
+    return '第 $n 天';
+  }
+
+  @override
+  String get threeOf300 => '/ 300';
+
+  @override
+  String threeCloser(int pct) {
+    return '比今天 $pct% 的读者更接近。';
+  }
+
+  @override
+  String threeFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '你是今天最早的 $n 位玩家之一。',
+      one: '你是今天第一个玩的。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String threeReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天有 $n 位读者参与。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeYou => '你';
+
+  @override
+  String threeStreak(int n) {
+    return '$n 天';
+  }
+
+  @override
+  String get threeSend => '发送';
+
+  @override
+  String get threeWhy => '看看为什么';
+
+  @override
+  String threeYesterday(int score) {
+    return '昨天的三题：$score / 300。';
+  }
+
+  @override
+  String threeShareHead(String date) {
+    return 'Astute · 今日三题 · $date';
+  }
+
+  @override
+  String threeShareScore(int score, int day) {
+    return '$score / 300 · 第 $day 天';
+  }
+
+  @override
+  String threeRowSaid(String said, String truth) {
+    return '你猜 $said，答案 $truth。';
+  }
+
+  @override
   String get skillsTitle => '想学什么';
 
   @override

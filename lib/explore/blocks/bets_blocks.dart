@@ -20,6 +20,7 @@ import 'bets/number.dart';
 import 'bets/range.dart';
 import 'bets/slip.dart';
 import 'bets/stake.dart';
+import 'bets/three.dart';
 
 /// The blocks of this family, in the order the catalogue lists them.
 const List<ExploreBlock> blocks = [
@@ -32,4 +33,5 @@ const List<ExploreBlock> blocks = [
   CloserBlock(),
   MagnitudeBlock(),
   DayBlock(),
+  ThreeBlock(),
 ];

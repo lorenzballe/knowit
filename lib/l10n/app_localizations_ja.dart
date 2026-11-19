@@ -1317,6 +1317,110 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkNew => 'NEW';
 
   @override
+  String get threeTitle => '今日の3問';
+
+  @override
+  String threeStep(int n, int total) {
+    return '$n / $total';
+  }
+
+  @override
+  String get threeSame => '今日はみんな同じ3問。約1分。';
+
+  @override
+  String threeYouSaid(String guess) {
+    return 'あなたの答え: $guess';
+  }
+
+  @override
+  String threePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '+$n点',
+      zero: '得点なし',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeNext => '次へ';
+
+  @override
+  String get threeSeeScore => 'スコアを見る';
+
+  @override
+  String get threeDone => '今日の3問 · 完了';
+
+  @override
+  String threeDay(int n) {
+    return '$n日目';
+  }
+
+  @override
+  String get threeOf300 => '/ 300';
+
+  @override
+  String threeCloser(int pct) {
+    return '今日の読者の$pct%より正解に近い。';
+  }
+
+  @override
+  String threeFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日の最初の$n人のひとり。',
+      one: '今日いちばん乗り。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String threeReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日は$n人が挑戦しました。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeYou => 'あなた';
+
+  @override
+  String threeStreak(int n) {
+    return '$n日';
+  }
+
+  @override
+  String get threeSend => '送る';
+
+  @override
+  String get threeWhy => '理由を見る';
+
+  @override
+  String threeYesterday(int score) {
+    return '昨日の3問: $score / 300';
+  }
+
+  @override
+  String threeShareHead(String date) {
+    return 'Astute · 今日の3問 · $date';
+  }
+
+  @override
+  String threeShareScore(int score, int day) {
+    return '$score / 300 · $day日目';
+  }
+
+  @override
+  String threeRowSaid(String said, String truth) {
+    return 'あなた: $said · 正解: $truth';
+  }
+
+  @override
   String get skillsTitle => '学びたいこと';
 
   @override

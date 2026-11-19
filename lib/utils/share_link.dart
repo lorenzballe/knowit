@@ -29,7 +29,10 @@ enum ShareRef {
 
   /// One card sent to a friend to play, as builds before the card's own
   /// page sent it: links already in chats still carry it.
-  challenge('challenge');
+  challenge('challenge'),
+
+  /// Today's three: the day's score, a square a card, never the answers.
+  three('share_three');
 
   const ShareRef(this.ref);
 

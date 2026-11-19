@@ -22,6 +22,9 @@ const List<Map<String, Object?>> kOwnExploreJson = [
   // shelves that rank, place and sharpen, and the feed.
   {'id': 'nothing', 'block': 'nothing-here'},
   {'id': 'offline', 'block': 'offline'},
+  // Today's three: the day's puzzle, the same three for everyone, scored
+  // and set against today's other readers. It opens Explore.
+  {'id': 'three', 'block': 'three'},
   // The cover: the day's cards in a mosaic, two large and four small, a
   // subject each.
   {
@@ -33,44 +36,6 @@ const List<Map<String, Object?>> kOwnExploreJson = [
     },
   },
   // Today's five, the week and the streak, a tap from Today.
-  // One bet, alone and large, the same for every reader today. What others
-  // guessed is not shown: the phone has no such counts
-  // (docs/explore/bets.md).
-  {
-    'id': 'bets-day',
-    'block': 'bets-day',
-    'size': 'l',
-    'title': {
-      'en': 'The daily challenge',
-      'it': 'La sfida del giorno',
-      'de': 'Die Herausforderung des Tages',
-      'es': 'El reto del día',
-      'fr': 'Le défi du jour',
-      'ja': '今日のチャレンジ',
-      'ko': '오늘의 도전',
-      'nl': 'De uitdaging van de dag',
-      'pl': 'Wyzwanie dnia',
-      'pt': 'O desafio do dia',
-      'ru': 'Задание дня',
-      'tr': 'Günün meydan okuması',
-      'zh': '每日挑战',
-    },
-    'subtitle': {
-      'en': 'The same for everyone today. Lock in your guess, then see how far off you were.',
-      'it': 'Uguale per tutti, oggi. Blocca la tua stima, poi guarda di quanto hai sbagliato.',
-      'de': 'Heute für alle gleich. Leg dich fest, dann sieh, wie weit du danebenlagst.',
-      'es': 'Hoy, igual para todos. Fija tu estimación y luego mira cuánto te has desviado.',
-      'fr': 'Le même pour tout le monde aujourd\'hui. Valide ton estimation, puis découvre l\'écart.',
-      'ja': '今日は誰にとっても同じ。予想を確定して、どれだけ近かったか確かめよう。',
-      'ko': '오늘은 모두에게 같아요. 추측을 확정하고 얼마나 빗나갔는지 확인하세요.',
-      'nl': 'Vandaag voor iedereen hetzelfde. Leg je schatting vast en zie hoe ver je ernaast zat.',
-      'pl': 'Dziś dla wszystkich to samo. Zatwierdź swój typ i sprawdź, jak daleko był od prawdy.',
-      'pt': 'Hoje, igual para todos. Fixa o teu palpite e vê a que distância ficaste.',
-      'ru': 'Сегодня для всех одно и то же. Зафиксируй догадку и узнай, насколько она точна.',
-      'tr': 'Bugün herkes için aynı. Tahminini kilitle, sonra ne kadar yaklaştığını gör.',
-      'zh': '今天人人相同。锁定你的估计，再看看差了多少。',
-    },
-  },
   // The set the reader is filling: the week's theme, a card at a time.
   {'id': 'path', 'block': 'purpose.set'},
   // Four games, a tile each, each opening its game on a page of its own.
