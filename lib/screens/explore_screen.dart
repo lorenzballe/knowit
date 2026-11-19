@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -459,6 +460,10 @@ class ExploreScreenState extends State<ExploreScreen>
   Widget build(BuildContext context) {
     // Searching, the head stays: the field is what the reader is using.
     final bool shown = _headShown || _searching;
+    // The status bar's room, at least 12 where there is none (a browser).
+    // It goes away with the head, and the cards run on under the time and
+    // the battery, to the top of the screen, as Instagram's Explore does.
+    final double top = math.max(MediaQuery.paddingOf(context).top, 12);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -472,6 +477,7 @@ class ExploreScreenState extends State<ExploreScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                SizedBox(height: top),
                 // One row, as Instagram's Explore is: the lens that opens
                 // the search, then the subjects. The tab says where this is;
                 // a title said it again.
@@ -519,28 +525,37 @@ class ExploreScreenState extends State<ExploreScreen>
           ),
         ),
         Expanded(
-          child: _searching
-              ? _found(context)
-              : ListenableBuilder(
-                  // The counts, what the reader has read — a card read here
-                  // is marked where it sits as soon as the reader is back on
-                  // its shelf — and a newer remote document, whose sections
-                  // are drawn the moment it is taken up.
-                  listenable: Listenable.merge([
-                    Tallies.instance,
-                    Served.instance,
-                    widget.app,
-                    Remote.revision,
-                  ]),
-                  builder: (context, _) => _sections(context),
-                ),
+          // Below the head the status bar is not this list's to keep: it
+          // is in the head's room, or, the head put away, the cards' own.
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: _searching
+                ? _found(context)
+                : ListenableBuilder(
+                    // The counts, what the reader has read — a card read here
+                    // is marked where it sits as soon as the reader is back on
+                    // its shelf — and a newer remote document, whose sections
+                    // are drawn the moment it is taken up.
+                    listenable: Listenable.merge([
+                      Tallies.instance,
+                      Served.instance,
+                      widget.app,
+                      Remote.revision,
+                    ]),
+                    builder: (context, _) =>
+                        _sections(context, edge: shown ? 0 : top),
+                  ),
+          ),
         ),
       ],
     );
   }
 
-  /// The sections, and a fade where they run under the tab bar.
-  Widget _sections(BuildContext context) {
+  /// The sections, a fade where they run under the tab bar, and one at the
+  /// top of the screen [edge] tall while they run under the status bar, so
+  /// the time and the battery are read over a card as over the page.
+  Widget _sections(BuildContext context, {double edge = 0}) {
     // Every shelf is worked out afresh for this build, and looked at again
     // once laid out: counts arriving can move every one of them.
     shelves.begin(subject: _subject);
@@ -615,6 +630,36 @@ class ExploreScreenState extends State<ExploreScreen>
               ),
             ),
           ),
+        // Under the status bar, once the head is away: the page's own colour
+        // behind the time and the battery, thinning into the cards, as the
+        // edge of a list that runs under a bar is drawn on iOS 26.
+        Positioned(
+          key: const ValueKey('explore-top-edge'),
+          left: 0,
+          right: 0,
+          top: 0,
+          height: edge + 18,
+          child: IgnorePointer(
+            child: AnimatedOpacity(
+              opacity: edge > 0 ? 1 : 0,
+              duration: const Duration(milliseconds: 220),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      context.p.surface.withValues(alpha: 0.92),
+                      context.p.surface.withValues(alpha: 0.6),
+                      context.p.surface.withValues(alpha: 0),
+                    ],
+                    stops: const [0, 0.55, 1],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

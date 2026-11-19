@@ -1802,12 +1802,12 @@ class _AstutoShellState extends State<AstutoShell>
         // that has already faded out of its way. A card is the thing on
         // this screen: nothing should be able to cover it.
         extendBody: true,
+        // The status bar's room is each tab's own: Today and the profile
+        // keep it, Explore gives it to its cards once its head is put away
+        // (as Instagram's does), so the shell keeps none.
         body: SafeArea(
+          top: false,
           bottom: false,
-          // A browser has no status bar to sit under, so the page would
-          // otherwise start hard against the top edge. On a phone the real
-          // inset is larger and this does nothing.
-          minimum: const EdgeInsets.only(top: 12),
           // The tabs slide under the finger, the way they do in every app
           // with three of them side by side, and the bar is the other way
           // to the same place.
@@ -1862,7 +1862,18 @@ class _AstutoShellState extends State<AstutoShell>
                                   ? MediaQuery.paddingOf(context).bottom
                                   : 0,
                             ),
-                            child: tabs[i],
+                            child: i == 1
+                                ? tabs[i]
+                                : SafeArea(
+                                    bottom: false,
+                                    // A browser has no status bar to sit
+                                    // under, so the page would otherwise
+                                    // start hard against the top edge. On a
+                                    // phone the real inset is larger and
+                                    // this does nothing.
+                                    minimum: const EdgeInsets.only(top: 12),
+                                    child: tabs[i],
+                                  ),
                           ),
                         ),
                       ),
