@@ -54,6 +54,10 @@ class _TopicsScreenState extends State<TopicsScreen> {
     if (after != null && mounted) setState(() => _picked = {...after});
   }
 
+  /// Whether the page has a way back of its own: everywhere but the first
+  /// run, which has its steps instead.
+  bool get _backBar => !widget.isOnboarding && widget.onBack != null;
+
   @override
   Widget build(BuildContext context) {
     return ScreenView(
@@ -63,6 +67,17 @@ class _TopicsScreenState extends State<TopicsScreen> {
         body: SafeArea(
           child: Column(
             children: [
+              // The way back stays put above what scrolls: on iOS 26 it is
+              // Apple's own glass button, a native view, and one inside a
+              // scrolling page is drawn away from its place.
+              if (_backBar)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(22, 12, 22, 0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: BackCircle(onPressed: widget.onBack!),
+                  ),
+                ),
               // One page, scrolled whole: the title, the subjects, the way
               // into fine-tuning and the count, with only the button kept at
               // the foot. The subjects used to scroll in a box of their own
@@ -96,10 +111,8 @@ class _TopicsScreenState extends State<TopicsScreen> {
                                   ),
                                 );
                               }),
-                            )
-                          else if (widget.onBack != null)
-                            BackCircle(onPressed: widget.onBack!),
-                          const SizedBox(height: 22),
+                            ),
+                          SizedBox(height: _backBar ? 10 : 22),
                           Text(
                             context.l10n.whatShouldWeTalkAbout,
                             style: AppText.display(
