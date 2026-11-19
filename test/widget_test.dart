@@ -26,6 +26,7 @@ import 'package:astuto/models/reminder.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/paywall_screen.dart';
+import 'package:astuto/screens/subject_home_screen.dart';
 import 'package:astuto/screens/today_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/journey_screen.dart';
@@ -895,7 +896,8 @@ void main() {
       await _settle(tester);
       expect(find.byType(JourneyScreen), findsOneWidget);
 
-      // A subject's mark on the wheel opens the cards read of it.
+      // A subject's mark on the wheel opens its own home: how far into it,
+      // its level, the next card, its themes.
       final Finder list = find.descendant(
         of: find.byType(JourneyScreen),
         matching: find.byType(Scrollable),
@@ -908,8 +910,10 @@ void main() {
       await _settle(tester);
       await tester.tap(find.byKey(const ValueKey('subject-space')));
       await _settle(tester);
-      expect(find.byType(DeckViewerScreen), findsOneWidget);
-      expect(find.text(read.question), findsWidgets);
+      expect(find.byType(SubjectHomeScreen), findsOneWidget);
+      expect(find.byKey(const ValueKey('subject-ring')), findsOneWidget);
+      expect(find.textContaining('1 of '), findsWidgets);
+      expect(read.topic, 'Space');
     });
 
     testWidgets('the button after the day is the paywall on the free plan', (
