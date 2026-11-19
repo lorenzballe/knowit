@@ -193,39 +193,41 @@ class _TuneScreenState extends State<TuneScreen> {
           bottom: false,
           child: Column(
             children: [
+              // The way back stays put above what scrolls: on iOS 26 it is
+              // Apple's own glass button, a native view, and one inside a
+              // scrolling list is drawn away from its place.
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 8, 18, 0),
+                child: Row(
+                  children: [
+                    BackCircle(
+                      onPressed: () => Navigator.of(context).maybePop(),
+                    ),
+                    const SizedBox(width: 12),
+                    // As every screen with a way back sets its title:
+                    // one line, smaller where a language runs long.
+                    Expanded(
+                      child: FitText(
+                        l.tuneTitle,
+                        key: const ValueKey('tune-title'),
+                        maxLines: 1,
+                        minSize: 20,
+                        style: AppText.display(
+                          size: 27,
+                          weight: FontWeight.w600,
+                          height: 1,
+                          spacing: -0.8,
+                          color: p.ink,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
                   children: [
-                    // The way back and the title on one line: the arrow
-                    // alone on a line of its own was a band of nothing over
-                    // the title.
-                    Row(
-                      children: [
-                        BackCircle(
-                          onPressed: () => Navigator.of(context).maybePop(),
-                        ),
-                        const SizedBox(width: 12),
-                        // As every screen with a way back sets its title:
-                        // one line, smaller where a language runs long.
-                        Expanded(
-                          child: FitText(
-                            l.tuneTitle,
-                            key: const ValueKey('tune-title'),
-                            maxLines: 1,
-                            minSize: 20,
-                            style: AppText.display(
-                              size: 27,
-                              weight: FontWeight.w600,
-                              height: 1,
-                              spacing: -0.8,
-                              color: p.ink,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
                     Text(
                       _learned ? l.tuneLearned : l.tuneFresh,
                       style: AppText.body(
