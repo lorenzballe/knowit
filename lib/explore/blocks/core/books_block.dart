@@ -18,6 +18,8 @@ library;
 
 export '../../../data/books.dart';
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../analytics.dart';
@@ -200,16 +202,42 @@ class _DrawnCover extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Text(
-              book.book.title,
-              maxLines: 5,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.display(
-                size: 17 * k,
-                weight: FontWeight.w600,
-                height: 1.08,
-                color: ink,
-              ),
+            // A word is never broken across two lines ("Destructio / n"):
+            // the title comes down a size until its widest word fits the
+            // cover's width.
+            child: LayoutBuilder(
+              builder: (context, box) {
+                TextStyle style(double size) => AppText.display(
+                  size: size,
+                  weight: FontWeight.w600,
+                  height: 1.08,
+                  color: ink,
+                );
+                double size = 17 * k;
+                final TextScaler scaler = MediaQuery.textScalerOf(context);
+                double widest = 0;
+                for (final String word in book.book.title.split(
+                  RegExp(r'\s+'),
+                )) {
+                  final TextPainter painter = TextPainter(
+                    text: TextSpan(text: word, style: style(size)),
+                    textDirection: Directionality.of(context),
+                    textScaler: scaler,
+                    maxLines: 1,
+                  )..layout();
+                  widest = math.max(widest, painter.width);
+                  painter.dispose();
+                }
+                if (box.maxWidth.isFinite && widest > box.maxWidth) {
+                  size = math.max(11 * k, size * box.maxWidth / widest * 0.97);
+                }
+                return Text(
+                  book.book.title,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                  style: style(size),
+                );
+              },
             ),
           ),
           Text(

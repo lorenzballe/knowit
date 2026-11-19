@@ -1353,6 +1353,36 @@ class AppLocalizationsFr extends AppLocalizations {
       'Tes derniers jours, chacun avec ses cinq cartes, prêts à être rouverts.';
 
   @override
+  String get perkAskTitle => 'Ton assistant';
+
+  @override
+  String get perkAskLine => 'T\'explique chaque carte, puis te teste.';
+
+  @override
+  String get perkCoachTitle => 'Un coach chaque semaine';
+
+  @override
+  String get perkCoachLine => 'Où tu te trompes, et quoi travailler.';
+
+  @override
+  String get perkNew => 'NOUVEAU';
+
+  @override
+  String get perkFiveShort => 'Chaque jour, à ton niveau.';
+
+  @override
+  String get perkShelvesTitle => 'Chaque parcours et chaque livre';
+
+  @override
+  String get perkShelvesLine => 'En entier, et des nouveaux chaque semaine.';
+
+  @override
+  String get perkGapShort => 'Ta certitude face à tes bonnes réponses.';
+
+  @override
+  String get perkReadShort => 'Chaque jour lu, à rouvrir.';
+
+  @override
   String get trialToday => 'Aujourd\'hui · tout Astute+, gratuit';
 
   @override

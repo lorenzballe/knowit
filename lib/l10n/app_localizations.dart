@@ -2004,6 +2004,66 @@ abstract class AppLocalizations {
   /// **'Your recent days, each with its five cards, ready to open again.'**
   String get perkReadLine;
 
+  /// Paywall feature: the assistant on every card (Astute+).
+  ///
+  /// In en, this message translates to:
+  /// **'Your assistant'**
+  String get perkAskTitle;
+
+  /// Paywall feature line under perkAskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Explains any card, then tests you on it.'**
+  String get perkAskLine;
+
+  /// Paywall feature: the weekly AI coach (Astute+).
+  ///
+  /// In en, this message translates to:
+  /// **'A coach every week'**
+  String get perkCoachTitle;
+
+  /// Paywall feature line under perkCoachTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you slip, and what to practise next.'**
+  String get perkCoachLine;
+
+  /// Small tag beside a paywall feature that is new. Short, in capitals where the language has them.
+  ///
+  /// In en, this message translates to:
+  /// **'NEW'**
+  String get perkNew;
+
+  /// Paywall feature line under perkOwnFiveTitle: one short line.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day, at your level.'**
+  String get perkFiveShort;
+
+  /// Paywall feature: every path and every book in pills, whole (Astute+).
+  ///
+  /// In en, this message translates to:
+  /// **'Every path and every book'**
+  String get perkShelvesTitle;
+
+  /// Paywall feature line under perkShelvesTitle: one short line.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole, with new ones every week.'**
+  String get perkShelvesLine;
+
+  /// Paywall feature line under perkGapTitle: one short line.
+  ///
+  /// In en, this message translates to:
+  /// **'How sure against how right, week by week.'**
+  String get perkGapShort;
+
+  /// Paywall feature line under perkReadTitle: one short line.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day you read, to open again.'**
+  String get perkReadShort;
+
   /// First step of the trial timeline under the paywall's button.
   ///
   /// In en, this message translates to:

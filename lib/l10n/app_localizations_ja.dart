@@ -1307,6 +1307,36 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkReadLine => '最近の日々を、それぞれ5枚のカードとともに、もう一度開けます。';
 
   @override
+  String get perkAskTitle => 'あなたのアシスタント';
+
+  @override
+  String get perkAskLine => 'どのカードも解説して、腕試しも。';
+
+  @override
+  String get perkCoachTitle => '毎週のコーチ';
+
+  @override
+  String get perkCoachLine => 'つまずく所と、次に練習すること。';
+
+  @override
+  String get perkNew => 'NEW';
+
+  @override
+  String get perkFiveShort => '毎日、あなたのレベルで。';
+
+  @override
+  String get perkShelvesTitle => 'すべてのパスと本';
+
+  @override
+  String get perkShelvesLine => 'まるごと。毎週新しいものも。';
+
+  @override
+  String get perkGapShort => '自信と正解率を、週ごとに。';
+
+  @override
+  String get perkReadShort => '読んだ日を、いつでも開き直せる。';
+
+  @override
   String get trialToday => '今日 · Astute+のすべてを無料で';
 
   @override

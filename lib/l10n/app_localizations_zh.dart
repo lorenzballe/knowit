@@ -1298,6 +1298,36 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkReadLine => '你最近的每一天，各带五张卡片，可随时重新打开。';
 
   @override
+  String get perkAskTitle => '你的助手';
+
+  @override
+  String get perkAskLine => '讲解每张卡片，再考考你。';
+
+  @override
+  String get perkCoachTitle => '每周教练';
+
+  @override
+  String get perkCoachLine => '你在哪里出错，接下来练什么。';
+
+  @override
+  String get perkNew => '新';
+
+  @override
+  String get perkFiveShort => '每天，按你的水平。';
+
+  @override
+  String get perkShelvesTitle => '每条路径，每本书';
+
+  @override
+  String get perkShelvesLine => '完整开放，每周上新。';
+
+  @override
+  String get perkGapShort => '有多确定，对了多少，每周对比。';
+
+  @override
+  String get perkReadShort => '读过的每一天，随时重温。';
+
+  @override
   String get trialToday => '今天 · 免费使用全部 Astute+';
 
   @override

@@ -952,69 +952,53 @@ class MovingBlock extends ExploreBlock {
           height: size.height,
           decoration: cardFace(context, p.color, radius: 22),
           clipBehavior: Clip.antiAlias,
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                // A band of one line, as the canvas has it; a longer one,
-                // in a longer language or a larger text, takes two rather
-                // than being cut.
-                constraints: const BoxConstraints(minHeight: 30),
-                color: shade(p.color, 0.86),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
+              PurposeHead(
+                pill: p,
+                trailing: host.isRead(p) ? ReadMark(pill: p) : null,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: CardQuestion(
+                    text: p.question,
+                    color: p.ink,
+                    min: 11,
+                    max: size.width < 220 ? 15.5 : 17,
+                  ),
                 ),
+              ),
+              // When it was last brought up to date, or how soon it may
+              // change: said once, quietly, at the foot, as a card says
+              // where it is from. The shelf's name already says the rest.
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
                 child: Row(
                   children: [
-                    Container(
-                      width: 7,
-                      height: 7,
-                      decoration: BoxDecoration(
-                        color: p.ink,
-                        shape: BoxShape.circle,
-                      ),
+                    Icon(
+                      Icons.update_rounded,
+                      size: 14,
+                      color: p.ink.withValues(alpha: 0.72),
                     ),
-                    const SizedBox(width: 7),
+                    const SizedBox(width: 6),
                     Expanded(
                       child: Text(
-                        upper(context, band(p)),
+                        band(p),
                         key: ValueKey('moving-band-${p.id}'),
-                        style: AppText.label(
-                          size: 9,
-                          weight: FontWeight.w700,
-                          spacing: 1.2,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.body(
+                          size: 11.5,
+                          weight: FontWeight.w600,
                           height: 1.25,
-                          color: p.ink,
+                          color: p.ink.withValues(alpha: 0.72),
                         ),
                       ),
                     ),
                   ],
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PurposeHead(
-                        pill: p,
-                        trailing: host.isRead(p) ? ReadMark(pill: p) : null,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: CardQuestion(
-                            text: p.question,
-                            color: p.ink,
-                            min: 11,
-                            max: size.width < 220 ? 15.5 : 17,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
             ],

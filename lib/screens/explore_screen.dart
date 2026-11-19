@@ -10,7 +10,7 @@ import '../l10n/l10n.dart';
 import '../data/card_pages.dart';
 import '../data/local_cards.dart';
 import '../data/pills_repository.dart';
-import '../data/topics.dart' show inkOn;
+import '../data/topics.dart' show inkOn, kThinkingWhite;
 import '../explore/blocks/bets/bet_host.dart';
 import '../explore/blocks/core/shelves.dart';
 import '../explore/explore_block.dart';
@@ -989,6 +989,16 @@ class _SubjectRow extends StatelessWidget {
   /// Null clears the filter — the "All" at the head of the row.
   final ValueChanged<String?> onPick;
 
+  /// The row's subjects: Thinking first, then the mix's. Thinking is no
+  /// subject of the mix, which can never turn it off, but more than half
+  /// the deck is its cards, and a reader looking for them has a chip for
+  /// them like any subject's. Its card is white, so its chip is lit in the
+  /// page's inverse and its mark is drawn in the ink.
+  static const List<MixSubject> subjects = [
+    MixSubject('thinking', 'Thinking', kThinkingWhite),
+    ...kMixSubjects,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -998,18 +1008,24 @@ class _SubjectRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         // "All" first, so the way back to everything is a chip and not
         // the knowledge that tapping the lit one again clears it.
-        itemCount: kMixSubjects.length + 2,
+        itemCount: subjects.length + 2,
         separatorBuilder: (_, _) => const SizedBox(width: 7),
         itemBuilder: (context, i) {
           if (i == 0) return _Lens(onTap: onSearch);
           i -= 1;
-          final MixSubject? subject = i == 0 ? null : kMixSubjects[i - 1];
+          final MixSubject? subject = i == 0 ? null : subjects[i - 1];
           final bool on = subject == null
               ? selected == null
               : selected == subject.name;
+          // Thinking's white would vanish on paper: lit, it takes the
+          // page's inverse, and its mark the ink.
+          final bool white = subject?.key == 'thinking';
+          final Color lit = subject == null || white
+              ? context.p.inverse
+              : subject.color;
           final Color ink = subject == null
               ? (on ? context.p.onInverse : context.p.ink)
-              : (on ? inkOn(subject.color) : context.p.ink);
+              : (on ? inkOn(lit) : context.p.ink);
           return Semantics(
             // The key says which subject and whether it is chosen, so the
             // one thing this row does can be seen from outside it.
@@ -1029,9 +1045,7 @@ class _SubjectRow extends StatelessWidget {
                   constraints: const BoxConstraints(minWidth: 44),
                   padding: const EdgeInsets.symmetric(horizontal: 13),
                   decoration: BoxDecoration(
-                    color: on
-                        ? (subject?.color ?? context.p.inverse)
-                        : context.p.ink.withValues(alpha: 0.06),
+                    color: on ? lit : context.p.ink.withValues(alpha: 0.06),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -1041,7 +1055,9 @@ class _SubjectRow extends StatelessWidget {
                         SubjectIcon(
                           subject: subject.name,
                           size: 14,
-                          ink: on ? ink : subject.color,
+                          ink: on
+                              ? ink
+                              : (white ? context.p.ink : subject.color),
                         ),
                         const SizedBox(width: 8),
                       ],

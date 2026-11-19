@@ -1320,6 +1320,42 @@ class RemoteLocalizations extends AppLocalizations {
   String get perkReadLine => _words.text('perkReadLine') ?? _base.perkReadLine;
 
   @override
+  String get perkAskTitle => _words.text('perkAskTitle') ?? _base.perkAskTitle;
+
+  @override
+  String get perkAskLine => _words.text('perkAskLine') ?? _base.perkAskLine;
+
+  @override
+  String get perkCoachTitle =>
+      _words.text('perkCoachTitle') ?? _base.perkCoachTitle;
+
+  @override
+  String get perkCoachLine =>
+      _words.text('perkCoachLine') ?? _base.perkCoachLine;
+
+  @override
+  String get perkNew => _words.text('perkNew') ?? _base.perkNew;
+
+  @override
+  String get perkFiveShort =>
+      _words.text('perkFiveShort') ?? _base.perkFiveShort;
+
+  @override
+  String get perkShelvesTitle =>
+      _words.text('perkShelvesTitle') ?? _base.perkShelvesTitle;
+
+  @override
+  String get perkShelvesLine =>
+      _words.text('perkShelvesLine') ?? _base.perkShelvesLine;
+
+  @override
+  String get perkGapShort => _words.text('perkGapShort') ?? _base.perkGapShort;
+
+  @override
+  String get perkReadShort =>
+      _words.text('perkReadShort') ?? _base.perkReadShort;
+
+  @override
   String get trialToday => _words.text('trialToday') ?? _base.trialToday;
 
   @override
