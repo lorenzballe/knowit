@@ -1954,12 +1954,9 @@ class _AstutoTabBar extends StatelessWidget {
   });
 
   /// Icons here; the labels come from the strings, by tab.
+  /// Icons here; the labels come from the strings, by tab.
   static const tabs = [
-    (
-      icon: Icons.wb_sunny_outlined,
-      lit: Icons.wb_sunny_rounded,
-      label: 'Today',
-    ),
+    (icon: Icons.wb_sunny_rounded, label: 'Today'),
     // A compass, not a bookmark and not a lens: the middle tab stopped being
     // the reader's own shelf and became the one place with cards nobody
     // dealt them. Saved moved into the profile, where a list of your own
@@ -1969,16 +1966,8 @@ class _AstutoTabBar extends StatelessWidget {
     // Drawn in outline, like the lens it replaced. Filled, it is a solid
     // disc — the heaviest thing on the bar by some way, and enough on its
     // own to make a bar whose measurements never changed look fatter.
-    (
-      icon: Icons.explore_outlined,
-      lit: Icons.explore_rounded,
-      label: 'Explore',
-    ),
-    (
-      icon: Icons.person_outline_rounded,
-      lit: Icons.person_rounded,
-      label: 'Profile',
-    ),
+    (icon: Icons.explore_outlined, label: 'Explore'),
+    (icon: Icons.person_rounded, label: 'Profile'),
   ];
 
   @override
@@ -2043,89 +2032,18 @@ class _AstutoTabBar extends StatelessWidget {
   }
 
   Widget _bar(BuildContext context) {
-    final Palette p = context.p;
+    // Apple's own bar where the system draws its glass, set low, as iOS 26
+    // sets a bar, and a size smaller while a list is scrolled down, as
+    // Instagram's is. Everywhere else the solid bar it first was.
+    if (!appleGlass) return _solidBar(context);
     final double foot = MediaQuery.paddingOf(context).bottom;
-    // On iOS 26 and later, Apple's own bar ([_appleBar]). Elsewhere a
-    // capsule of glass drawn by hand, icons only, as Instagram's bar is on
-    // iOS 26: the lit tab under a lens of lighter glass that slides with
-    // the finger from one tab to the next, rather than a word that unfurls.
-    // Either is set as low, and made as much smaller as a list is scrolled
-    // down, below.
-    final Widget bar = appleGlass
-        ? _appleBar(context)
-        : LiquidGlass(
-            radius: 32,
-            solid: BoxDecoration(
-              color: p.surfaceRaised,
-              borderRadius: BorderRadius.circular(32),
-              border: Border.all(color: p.line),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: p.isDark ? 0.5 : 0.1),
-                  blurRadius: 24,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: SizedBox(
-              height: 64,
-              child: Padding(
-                padding: const EdgeInsets.all(6),
-                child: LayoutBuilder(
-                  builder: (context, box) {
-                    final double cell = box.maxWidth / tabs.length;
-                    // Only the lens and the icons are rebuilt as a move runs. The
-                    // bar itself — its glass, its rim, its shadow — is built once.
-                    return ValueListenableBuilder<List<double>>(
-                      valueListenable: lit,
-                      builder: (context, lit, _) {
-                        double at = 0, sum = 0;
-                        for (var i = 0; i < lit.length; i++) {
-                          at += i * lit[i];
-                          sum += lit[i];
-                        }
-                        at = sum > 0 ? at / sum : 0;
-                        return Stack(
-                          children: [
-                            Positioned(
-                              left: at * cell,
-                              top: 0,
-                              bottom: 0,
-                              width: cell,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: p.isDark
-                                      ? Colors.white.withValues(alpha: 0.16)
-                                      : Colors.black.withValues(alpha: 0.07),
-                                  borderRadius: BorderRadius.circular(26),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                for (var i = 0; i < tabs.length; i++)
-                                  Expanded(child: _tab(context, i, lit[i])),
-                              ],
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            ),
-          );
+    final Widget bar = _appleBar(context);
     return Padding(
-      // Low, as iOS 26 sets a bar: into the room the home indicator keeps,
-      // not a whole safe area above it.
       padding: EdgeInsets.fromLTRB(22, 4, 22, foot > 20 ? foot - 12 : 12),
       child: small == null
           ? bar
           : ValueListenableBuilder<bool>(
               valueListenable: small!,
-              // A size smaller while a list is scrolled down, as Instagram's
-              // bar is, and whole again the moment it is scrolled back.
               builder: (context, small, child) => AnimatedScale(
                 scale: small ? 0.86 : 1,
                 alignment: Alignment.bottomCenter,
@@ -2138,32 +2056,122 @@ class _AstutoTabBar extends StatelessWidget {
     );
   }
 
-  /// One tab: its mark, lit as far as the light is on it, with its halo on
-  /// glass. The name is for the screen reader; the eye has the mark.
-  Widget _tab(BuildContext context, int i, double lit) {
-    final double on = lit.clamp(0.0, 1.0);
-    final tab = tabs[i];
-    final String label = switch (i) {
-      0 => context.l10n.tabToday,
-      1 => context.l10n.tabExplore,
-      _ => context.l10n.tabProfile,
-    };
-    final Color ink = context.p.ink;
-    final Color idle = ink.withValues(alpha: context.p.isDark ? 0.82 : 0.66);
-    return Semantics(
-      key: ValueKey('tab-${tab.label}'),
-      button: true,
-      selected: on > 0.5,
-      label: label,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => onChanged(i),
-        child: Center(
-          child: Icon(
-            on > 0.5 ? tab.lit : tab.icon,
-            size: 26,
-            color: Color.lerp(idle, ink, on),
-            shadows: glassHalo(context),
+  /// The bar as it first was, where there is no system glass to draw it:
+  /// Android, the web, an iPhone before iOS 26, and the camera that
+  /// photographs the app. A solid floating bar; the lit tab a pill of the
+  /// inverse colour, its name unfurling in it as the reader arrives.
+  Widget _solidBar(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        18,
+        4,
+        18,
+        MediaQuery.of(context).padding.bottom + 8,
+      ),
+      child: Container(
+        height: 58,
+        decoration: BoxDecoration(
+          color: context.p.surfaceRaised,
+          // A little less round than a pill: 26 on the bar and 16 on the lit
+          // tab, the pair chosen on the tab-bar sheet (107b).
+          borderRadius: BorderRadius.circular(26),
+          border: Border.all(color: context.p.line),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(
+                alpha: context.p.isDark ? 0.5 : 0.1,
+              ),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        // Only the row of tabs is rebuilt as a move runs. The bar itself —
+        // its ground, its ring, its shadow — is built once and held.
+        child: ValueListenableBuilder<List<double>>(
+          valueListenable: lit,
+          builder: (context, lit, _) => Row(
+            children: List.generate(tabs.length, (i) {
+              final double on = lit[i].clamp(0.0, 1.0);
+              final tab = tabs[i];
+              final String label = switch (i) {
+                0 => context.l10n.tabToday,
+                1 => context.l10n.tabExplore,
+                _ => context.l10n.tabProfile,
+              };
+              final Color tint = Color.lerp(
+                context.p.inkFaint,
+                context.p.onInverse,
+                on,
+              )!;
+              // The lit tab is the one with a word in it, so it is the one
+              // that gets the room: three equal thirds fit "Today" and not
+              // "Aujourd'hui". The extra is taken back as the light moves on,
+              // so the bar rebalances with it.
+              return Expanded(
+                flex: 100 + (60 * on).round(),
+                child: Semantics(
+                  key: ValueKey('tab-${tab.label}'),
+                  button: true,
+                  selected: on > 0.5,
+                  label: label,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => onChanged(i),
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10 + 4 * on,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: context.p.inverse.withValues(alpha: on),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(tab.icon, size: 19, color: tint),
+                            // The label belongs to the tab you are on, and
+                            // unfurls as you arrive rather than appearing
+                            // once you have. It can take less than it asks
+                            // for: a third of the bar is not much.
+                            Flexible(
+                              child: ClipRect(
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  widthFactor: on,
+                                  // Width only: left to size itself, an
+                                  // Align takes all the height it is offered.
+                                  heightFactor: 1,
+                                  // The fade is in the colour rather than in
+                                  // an Opacity: three saved layers on every
+                                  // frame of a move, for one colour of text.
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 7),
+                                    child: Text(
+                                      label,
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppText.body(
+                                        size: 13,
+                                        weight: FontWeight.w700,
+                                        color: tint.withValues(alpha: on),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
           ),
         ),
       ),

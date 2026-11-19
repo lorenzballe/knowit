@@ -143,10 +143,9 @@ void main() {
     Remote.reset();
   });
 
-  testWidgets('going down the shelves puts the head away, so the cards '
-      'have the screen; the least move back up brings it again', (
-    tester,
-  ) async {
+  testWidgets('going down the shelves takes the head up with the cards, '
+      'at the finger\'s own speed, out of sight; the least move back up brings '
+      'it back as far as the finger goes', (tester) async {
     final AppState app = await readyApp();
     _adopt({
       'sections': [
@@ -160,19 +159,42 @@ void main() {
       ],
     });
     await _pumpScreen(tester, app);
-    double head() => tester
-        .widget<AnimatedAlign>(find.byKey(const ValueKey('explore-head')))
-        .heightFactor!;
-    expect(head(), 1);
+    final Finder head = find.byKey(const ValueKey('explore-head'));
+    final Finder cards = find.byKey(const ValueKey('section-picked'));
+    double topOf(Finder f) => tester.getTopLeft(f).dy;
+    final double rest = topOf(head);
+    final double height = tester.getSize(head).height;
 
+    // A little way down: the head goes up exactly as far as the cards do.
+    final double cardsAt = topOf(cards);
     final Finder list = find.byType(CustomScrollView).first;
-    await tester.drag(list, const Offset(0, -400));
-    await tester.pumpAndSettle(const Duration(milliseconds: 50));
-    expect(head(), 0);
+    await tester.drag(list, const Offset(0, -60));
+    await tester.pump();
+    final double moved = cardsAt - topOf(cards);
+    expect(moved, greaterThan(10));
+    expect(rest - topOf(head), closeTo(moved, 0.5));
 
-    await tester.drag(list, const Offset(0, 60));
+    // Far down, it is out of sight, and the cards have the screen.
+    await tester.drag(list, const Offset(0, -500));
     await tester.pumpAndSettle(const Duration(milliseconds: 50));
-    expect(head(), 1);
+    expect(head, findsNothing);
+
+    // A little back up, a finger drawn down a frame at a time as on a
+    // phone: it comes back as far as the finger went, no more.
+    final double cardsThen = topOf(cards);
+    final TestGesture finger = await tester.startGesture(
+      tester.getCenter(list),
+    );
+    for (int i = 0; i < 6; i++) {
+      await finger.moveBy(const Offset(0, 8));
+      await tester.pump(const Duration(milliseconds: 16));
+    }
+    final double came = topOf(cards) - cardsThen;
+    expect(came, greaterThan(5));
+    expect(tester.getBottomLeft(head).dy, closeTo(rest + came, 0.5));
+    await finger.up();
+    await tester.pumpAndSettle(const Duration(milliseconds: 50));
+    expect(height, greaterThan(40));
   });
 
   testWidgets('pulled down from its top, Explore is read again from the '
