@@ -1,10 +1,11 @@
 /// The build's own Explore: the sections Explore shows when the remote
 /// document says nothing of it, drawn by the same engine as any document's,
-/// so `explore: null` is that Explore to the pixel. Since the strategic
-/// Explore it opens on the reader's day, the day's challenge, the set they
-/// are filling, quick games, their subjects' levels and more like what they
-/// saved, keeps four of the shelves Explore always had, and ends on the
-/// feed; the other shelves are still blocks a document can place.
+/// so `explore: null` is that Explore to the pixel. It opens on its cover,
+/// the day's cards in a mosaic; then, as the strategic Explore laid it, the
+/// reader's day, the day's challenge, the set they are filling, quick games,
+/// their subjects' levels and more like what they saved; it keeps four of
+/// the shelves Explore always had, and ends on the feed. The other shelves
+/// are still blocks a document can place.
 ///
 /// remote/examples/explore-today.json is the same list as a document; a
 /// test keeps the two the same.
@@ -21,6 +22,16 @@ const List<Map<String, Object?>> kOwnExploreJson = [
   // shelves that rank, place and sharpen, and the feed.
   {'id': 'nothing', 'block': 'nothing-here'},
   {'id': 'offline', 'block': 'offline'},
+  // The cover: the day's cards in a mosaic, two large and four small, a
+  // subject each.
+  {
+    'id': 'cover',
+    'block': 'cover',
+    'gap': 6,
+    'source': {
+      'query': {'unread': true, 'perSubject': 1, 'limit': 40},
+    },
+  },
   // Today's five, the week and the streak, a tap from Today.
   // One bet, alone and large, the same for every reader today. What others
   // guessed is not shown: the phone has no such counts

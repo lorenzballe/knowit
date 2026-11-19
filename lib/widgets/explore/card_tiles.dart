@@ -124,6 +124,26 @@ class TileLook {
   /// as it needs; the tile Explore always had kept it to two.
   final int? footLines;
 
+  /// This look with another corner: a mosaic whose tiles are of several
+  /// sizes keeps one corner for all of them.
+  TileLook withRadius(double corner) => TileLook(
+    padding: padding,
+    radius: corner,
+    icon: icon,
+    tick: tick,
+    label: label,
+    labelSize: labelSize,
+    labelGap: labelGap,
+    questionGap: questionGap,
+    min: min,
+    max: max,
+    lineHeight: lineHeight,
+    spacing: spacing,
+    alignment: alignment,
+    foot: foot,
+    footLines: footLines,
+  );
+
   /// The step of a row of cards.
   static TileLook of(TileSize size) => switch (size) {
     TileSize.xs => TileLook(

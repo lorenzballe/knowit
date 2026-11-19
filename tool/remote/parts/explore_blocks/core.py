@@ -172,6 +172,10 @@ def carousel(section: dict) -> list[str]:
     )
 
 
+def cover(section: dict) -> list[str]:
+    return _fields(section, WORDS | {"source"}) + _needs_source(section)
+
+
 def grid(section: dict) -> list[str]:
     problems = _fields(section, WORDS | {"source", "columns", "shape", "limit"}) + _needs_source(section)
     columns = section.get("columns", 2)
@@ -399,6 +403,8 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     "spacer": spacer,
     "divider": divider,
     "web": web,
+    # The top of the page: the day's cards in a mosaic, two large and four small.
+    "cover": cover,
     # The whole bank in the day's order, for as long as the reader scrolls: it deals its own.
     "feed": shelf(),
     # The reader's own: their day, a minute's play, how far they have gone
