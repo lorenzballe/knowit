@@ -3,6 +3,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:native_liquid_glass/native_liquid_glass.dart'
+    show NativeLiquidGlassUtils;
+
 import '../theme.dart';
 
 /// Whether the tab bar is glass: on Apple's own platforms, where glass is
@@ -16,6 +19,13 @@ bool get handGlass =>
 /// Whether the tab bar is glass, so the screens that scroll run on under it
 /// rather than stopping above it.
 bool get barGlass => handGlass;
+
+/// Whether the tab bar is Apple's own: on iOS 26 and later, where the system
+/// draws Liquid Glass itself, the bar is the UIKit tab bar, as Instagram's
+/// is, and nothing of its glass is ours. Before iOS 26, on a Mac and under
+/// the camera that photographs the app, the glass is drawn by hand
+/// ([LiquidGlass]).
+bool get appleGlass => NativeLiquidGlassUtils.supportsLiquidGlass;
 
 /// Liquid Glass, the material of iOS 26, for the layer of controls that
 /// floats over the content: the tab bar, the round buttons laid on a screen,

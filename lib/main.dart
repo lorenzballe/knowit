@@ -6,6 +6,8 @@ import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:in_app_review/in_app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show ScrollDirection;
+import 'package:native_liquid_glass/native_liquid_glass.dart'
+    show LiquidGlassTabBar, LiquidGlassTabItem, NativeLiquidGlassIcon;
 import 'package:flutter/services.dart';
 import 'package:posthog_flutter/posthog_flutter.dart' show PostHogWidget;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1800,12 +1802,12 @@ class _AstutoShellState extends State<AstutoShell>
         // that has already faded out of its way. A card is the thing on
         // this screen: nothing should be able to cover it.
         extendBody: true,
+        // The status bar's room is each tab's own: Today and the profile
+        // keep it, Explore gives it to its cards once its head is put away
+        // (as Instagram's does), so the shell keeps none.
         body: SafeArea(
+          top: false,
           bottom: false,
-          // A browser has no status bar to sit under, so the page would
-          // otherwise start hard against the top edge. On a phone the real
-          // inset is larger and this does nothing.
-          minimum: const EdgeInsets.only(top: 12),
           // The tabs slide under the finger, the way they do in every app
           // with three of them side by side, and the bar is the other way
           // to the same place.
@@ -1860,7 +1862,18 @@ class _AstutoShellState extends State<AstutoShell>
                                   ? MediaQuery.paddingOf(context).bottom
                                   : 0,
                             ),
-                            child: tabs[i],
+                            child: i == 1
+                                ? tabs[i]
+                                : SafeArea(
+                                    bottom: false,
+                                    // A browser has no status bar to sit
+                                    // under, so the page would otherwise
+                                    // start hard against the top edge. On a
+                                    // phone the real inset is larger and
+                                    // this does nothing.
+                                    minimum: const EdgeInsets.only(top: 12),
+                                    child: tabs[i],
+                                  ),
                           ),
                         ),
                       ),
@@ -1984,75 +1997,125 @@ class _AstutoTabBar extends StatelessWidget {
     );
   }
 
+  /// Apple's own tab bar, on iOS 26 and later, as Instagram's is: the
+  /// UIKit tab bar, so its Liquid Glass, its lens and its motion are the
+  /// system's and follow iOS; its symbols filled when lit, icons only, the
+  /// lit one in the ink. Nothing of its glass is ours.
+  Widget _appleBar(BuildContext context) {
+    final l = context.l10n;
+    return ValueListenableBuilder<List<double>>(
+      valueListenable: lit,
+      builder: (context, lit, _) {
+        // The tab most lit is the one the bar shows: Apple's bar lights one
+        // tab at a time, and moves its lens itself.
+        var at = 0;
+        for (var i = 1; i < lit.length; i++) {
+          if (lit[i] > lit[at]) at = i;
+        }
+        return LiquidGlassTabBar(
+          currentIndex: at,
+          onTabSelected: onChanged,
+          height: 64,
+          showLabels: false,
+          selectedItemColor: context.p.ink,
+          items: [
+            LiquidGlassTabItem(
+              label: l.tabToday,
+              icon: const NativeLiquidGlassIcon.sfSymbol('sun.max'),
+              selectedIcon: const NativeLiquidGlassIcon.sfSymbol(
+                'sun.max.fill',
+              ),
+            ),
+            LiquidGlassTabItem(
+              label: l.tabExplore,
+              icon: const NativeLiquidGlassIcon.sfSymbol('safari'),
+              selectedIcon: const NativeLiquidGlassIcon.sfSymbol('safari.fill'),
+            ),
+            LiquidGlassTabItem(
+              label: l.tabProfile,
+              icon: const NativeLiquidGlassIcon.sfSymbol('person'),
+              selectedIcon: const NativeLiquidGlassIcon.sfSymbol('person.fill'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _bar(BuildContext context) {
     final Palette p = context.p;
     final double foot = MediaQuery.paddingOf(context).bottom;
-    // A capsule of glass, icons only, as Instagram's bar is on iOS 26: the
-    // lit tab under a lens of lighter glass that slides with the finger
-    // from one tab to the next, rather than a word that unfurls.
-    final Widget bar = LiquidGlass(
-      radius: 32,
-      solid: BoxDecoration(
-        color: p.surfaceRaised,
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: p.line),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: p.isDark ? 0.5 : 0.1),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: SizedBox(
-        height: 64,
-        child: Padding(
-          padding: const EdgeInsets.all(6),
-          child: LayoutBuilder(
-            builder: (context, box) {
-              final double cell = box.maxWidth / tabs.length;
-              // Only the lens and the icons are rebuilt as a move runs. The
-              // bar itself — its glass, its rim, its shadow — is built once.
-              return ValueListenableBuilder<List<double>>(
-                valueListenable: lit,
-                builder: (context, lit, _) {
-                  double at = 0, sum = 0;
-                  for (var i = 0; i < lit.length; i++) {
-                    at += i * lit[i];
-                    sum += lit[i];
-                  }
-                  at = sum > 0 ? at / sum : 0;
-                  return Stack(
-                    children: [
-                      Positioned(
-                        left: at * cell,
-                        top: 0,
-                        bottom: 0,
-                        width: cell,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: p.isDark
-                                ? Colors.white.withValues(alpha: 0.16)
-                                : Colors.black.withValues(alpha: 0.07),
-                            borderRadius: BorderRadius.circular(26),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          for (var i = 0; i < tabs.length; i++)
-                            Expanded(child: _tab(context, i, lit[i])),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
-        ),
-      ),
-    );
+    // On iOS 26 and later, Apple's own bar ([_appleBar]). Elsewhere a
+    // capsule of glass drawn by hand, icons only, as Instagram's bar is on
+    // iOS 26: the lit tab under a lens of lighter glass that slides with
+    // the finger from one tab to the next, rather than a word that unfurls.
+    // Either is set as low, and made as much smaller as a list is scrolled
+    // down, below.
+    final Widget bar = appleGlass
+        ? _appleBar(context)
+        : LiquidGlass(
+            radius: 32,
+            solid: BoxDecoration(
+              color: p.surfaceRaised,
+              borderRadius: BorderRadius.circular(32),
+              border: Border.all(color: p.line),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: p.isDark ? 0.5 : 0.1),
+                  blurRadius: 24,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: SizedBox(
+              height: 64,
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: LayoutBuilder(
+                  builder: (context, box) {
+                    final double cell = box.maxWidth / tabs.length;
+                    // Only the lens and the icons are rebuilt as a move runs. The
+                    // bar itself — its glass, its rim, its shadow — is built once.
+                    return ValueListenableBuilder<List<double>>(
+                      valueListenable: lit,
+                      builder: (context, lit, _) {
+                        double at = 0, sum = 0;
+                        for (var i = 0; i < lit.length; i++) {
+                          at += i * lit[i];
+                          sum += lit[i];
+                        }
+                        at = sum > 0 ? at / sum : 0;
+                        return Stack(
+                          children: [
+                            Positioned(
+                              left: at * cell,
+                              top: 0,
+                              bottom: 0,
+                              width: cell,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: p.isDark
+                                      ? Colors.white.withValues(alpha: 0.16)
+                                      : Colors.black.withValues(alpha: 0.07),
+                                  borderRadius: BorderRadius.circular(26),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                for (var i = 0; i < tabs.length; i++)
+                                  Expanded(child: _tab(context, i, lit[i])),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          );
     return Padding(
       // Low, as iOS 26 sets a bar: into the room the home indicator keeps,
       // not a whole safe area above it.
