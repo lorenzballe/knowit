@@ -74,30 +74,34 @@ class _SkillsScreenState extends State<SkillsScreen> {
           bottom: false,
           child: Column(
             children: [
+              // The way back stays put above what scrolls: on iOS 26 it is
+              // Apple's own glass button, a native view, and one inside a
+              // scrolling list is drawn away from its place.
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
+                child: Row(
+                  children: [
+                    BackCircle(
+                      onPressed: () => Navigator.of(context).maybePop(),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: _Headline(
+                          text: l.skillsTitle,
+                          mark: l.skillsTitleMark,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.fromLTRB(20, 6, 20, 16),
+                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
                   children: [
-                    // The way back and the title on one line.
-                    Row(
-                      children: [
-                        BackCircle(
-                          onPressed: () => Navigator.of(context).maybePop(),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            alignment: Alignment.centerLeft,
-                            child: _Headline(
-                              text: l.skillsTitle,
-                              mark: l.skillsTitleMark,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
                     Text(
                       l.skillsLine,
                       style: AppText.body(

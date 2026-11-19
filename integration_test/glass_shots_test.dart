@@ -12,16 +12,23 @@
 // start, and the reader is the camera's own, made up on the device.
 //
 //   flutter test integration_test/glass_shots_test.dart -d <simulator>
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/data/genres.dart';
 import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/explore/blocks/core/paths_block.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/remote/remote.dart';
+import 'package:astuto/screens/card_path_screen.dart';
 import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
+import 'package:astuto/screens/skills_screen.dart';
+import 'package:astuto/state/app_state.dart';
 
 /// Draws for [time], without waiting for everything to stop: Explore has
 /// rows that move on by themselves, and would never settle.
@@ -70,6 +77,28 @@ Future<void> _open(WidgetTester tester, String key, String name) async {
   await _run(tester, const Duration(milliseconds: 1200));
 }
 
+/// Opens [page] over what is up, holds it as [name], and comes back.
+Future<void> _push(WidgetTester tester, Widget page, String name) async {
+  final NavigatorState nav = Navigator.of(
+    tester.element(find.byType(Scaffold).last),
+  );
+  unawaited(nav.push(MaterialPageRoute<void>(builder: (_) => page)));
+  await _hold(tester, name, 5);
+  await nav.maybePop();
+  await _run(tester, const Duration(milliseconds: 1200));
+}
+
+/// The first part of the first theme with a path.
+CardPath _firstPath() {
+  for (final MapEntry<String, List<Genre>> s in kGenres.entries) {
+    for (final Genre g in s.value) {
+      final List<CardPath> parts = partsOf(g, s.key, PillBank.live);
+      if (parts.isNotEmpty) return parts.first;
+    }
+  }
+  throw StateError('no path');
+}
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -110,6 +139,20 @@ void main() {
       await _hold(tester, '$theme-profile', 4);
       await _open(tester, 'profile-saved', '$theme-back');
       await _open(tester, 'profile-plan', '$theme-close');
+
+      // A page whose way back stays put above its list (a path), and one
+      // whose way back scrolls with it (the skills): Apple's glass is drawn
+      // by iOS, and only here is it seen whether it sits where the page
+      // puts it.
+      final AppState app = tester
+          .widget<ProfileScreen>(find.byType(ProfileScreen))
+          .app;
+      await _push(
+        tester,
+        CardPathScreen(app: app, path: _firstPath()),
+        '$theme-path',
+      );
+      await _push(tester, SkillsScreen(app: app), '$theme-skills');
     });
   }
 }

@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "18bacdddbb90bea2",
+ "hash": "433af2428359788f",
  "app": {
   "gate": null,
   "flags": {},
@@ -15,7 +15,7 @@ const String kEmbeddedRemote = r'''
  },
  "strings": {},
  "explore": {
-  "_": "Explore as the owner and the app agreed it in November: what is new today (the cover, the day's challenge, the news), what is the reader's (for you, where you live), one surprise a day of the week (a different shelf each weekday), then the depth (paths, quick games, books, and after the books, every other day from the third, Astute+ for a reader on the free plan), the top list, what a card is useful for, and the endless feed. The day's challenge and the quick games are for Explore of every subject only; a subject's page is that subject's cards. Builds 54 and older keep the shelves they knew.",
+  "_": "Explore as the owner and the app agreed it in November: what is new today (the cover, the day's challenge, the news), what the reader started and left (Continue: a path read partway, a book stopped at an idea), what is the reader's (for you, where you live), one surprise a day of the week (a different shelf each weekday), then the depth (paths, quick games, books, and after the books, every other day from the third, Astute+ for a reader on the free plan), the top list, what a card is useful for, and the endless feed. The day's challenge and the quick games are for Explore of every subject only; a subject's page is that subject's cards. Builds 54 and older keep the shelves they knew.",
   "sections": [
    {
     "id": "nothing",
@@ -29,6 +29,26 @@ const String kEmbeddedRemote = r'''
     "id": "three",
     "block": "three",
     "gap": 6
+   },
+   {
+    "id": "continue",
+    "block": "continue",
+    "gap": 20,
+    "title": {
+     "en": "Continue",
+     "it": "Continua",
+     "de": "Weitermachen",
+     "es": "Continúa",
+     "fr": "Reprendre",
+     "pt": "Continuar",
+     "nl": "Verder",
+     "pl": "Kontynuuj",
+     "ru": "Продолжить",
+     "tr": "Devam et",
+     "ja": "続きから",
+     "ko": "이어서",
+     "zh": "继续"
+    }
    },
    {
     "id": "cover",

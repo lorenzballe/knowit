@@ -43,6 +43,7 @@ class CardPathScreen extends StatelessWidget {
     CardPath path, {
     required String from,
   }) {
+    app.notePathOpened(path.genre.id, path.topicKey, path.part);
     Analytics.capture('path page opened', {
       'genre': path.genre.id,
       'part': path.part,
@@ -159,28 +160,33 @@ class CardPathScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // The way back stays put above what scrolls: Apple's glass is a layer
+        // over the page, and a native button inside a scrolling list is drawn
+        // away from its place.
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+          child: Row(
+            children: [
+              BackCircle(onPressed: () => Navigator.of(context).maybePop()),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  l.pathKicker.toUpperCase(),
+                  style: AppText.label(
+                    size: 12,
+                    weight: FontWeight.w700,
+                    spacing: 1.4,
+                    color: p.inkMuted,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         Expanded(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
             children: [
-              Row(
-                children: [
-                  BackCircle(onPressed: () => Navigator.of(context).maybePop()),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      l.pathKicker.toUpperCase(),
-                      style: AppText.label(
-                        size: 12,
-                        weight: FontWeight.w700,
-                        spacing: 1.4,
-                        color: p.inkMuted,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
               _Head(path: path, style: style, read: read),
               const SizedBox(height: 14),
               for (int i = 0; i < path.cards.length; i++)

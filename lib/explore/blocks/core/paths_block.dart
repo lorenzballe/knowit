@@ -229,6 +229,7 @@ Future<void> openPath(
   CardPath path, {
   int from = 0,
 }) {
+  app.notePathOpened(path.genre.id, path.topicKey, path.part);
   final bool whole = app.isPlus;
   return Navigator.of(context).push(
     MaterialPageRoute(

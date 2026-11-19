@@ -435,6 +435,30 @@ Fields: `title`, `subtitle`, `limit` (cards, 8 by default).
  "title": {"en": "More like what you saved", "it": "Altre come quelle che hai salvato"}}
 ```
 
+### `continue`
+
+What the reader started and left, the latest first: a part of a path they
+opened and read partway, a book stopped at one of its ideas. Each is a tile
+with its mark (the subject's, or the book's cover), its name, a bar and
+"4 of 10 read", and the way on. A tap goes on at the first card not read.
+Where that card is past what the free plan opens (a path's third card, or a
+book's when it is not the book of the week), the tile shows a lock and
+opens the path's or the book's own page instead, where the way on is.
+
+A path counts once it has been opened (the phone keeps the last six opened)
+and one of its cards read; a book counts once one of its ideas is read.
+Either is gone once it is read whole. One tile fills the row; with more,
+the next one's edge stays in sight. Nothing started, no section: a new
+reader never sees it. Narrowed to a subject, it shows that subject's only.
+
+Fields: `title` ("Continue" by default, in the reader's language),
+`subtitle`, `limit` (tiles, 3 by default).
+
+```json
+{"id": "continue", "block": "continue", "gap": 20,
+ "title": {"en": "Continue", "it": "Continua"}}
+```
+
 ### `paths`
 
 Paths of ten cards on one theme, a row of them: each a genre of the bank

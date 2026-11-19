@@ -60,11 +60,15 @@ void main() {
     CardThumb.image = (url) => onePixel;
   });
 
-  testWidgets('today\'s three opens the build\'s own Explore, the cover '
-      'under it', (tester) async {
+  testWidgets('today\'s three opens the build\'s own Explore, what the '
+      'reader started under it, then the cover', (tester) async {
     expect(kOwnExplore.skip(2).first.id, 'three');
-    expect(kOwnExplore.skip(3).first.id, 'cover');
-    expect(kOwnExplore.skip(3).first.json['gap'], 6);
+    // Continue draws nothing until something is started, and then keeps
+    // room of its own under its row, so the cover sits as close to the
+    // three as before for a reader who has started nothing.
+    expect(kOwnExplore.skip(3).first.id, 'continue');
+    expect(kOwnExplore.skip(4).first.id, 'cover');
+    expect(kOwnExplore.skip(4).first.json['gap'], 6);
   });
 
   testWidgets('two groups of three: the large card on the left, then on the '

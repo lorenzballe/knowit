@@ -15,6 +15,11 @@
       "gap": 6
     },
     {
+      "id": "continue",
+      "block": "continue",
+      "gap": 20
+    },
+    {
       "id": "cover",
       "block": "cover",
       "gap": 6,

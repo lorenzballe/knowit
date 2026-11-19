@@ -121,82 +121,94 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
     final liked = widget.app.isLiked(pill.id);
     final answered = widget.app.answerFor(pill.id);
     return SafeArea(
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(22, 12, 22, 28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              BackCircle(onPressed: () => Navigator.of(context).pop()),
-              Expanded(
-                child: _cards.length == 1
-                    ? const SizedBox.shrink()
-                    : Semantics(
-                        label: context.l10n.cardOf(i + 1, _cards.length),
-                        excludeSemantics: true,
-                        child: Text(
-                          context.l10n.rungOfTotal(i + 1, _cards.length),
-                          key: const ValueKey('detail-position'),
-                          textAlign: TextAlign.center,
-                          style:
-                              AppText.body(
-                                size: 13,
-                                weight: FontWeight.w600,
-                                color: context.p.inkMuted,
-                              ).copyWith(
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
-                              ),
+          // The way back stays put above what scrolls: on iOS 26 it is
+          // Apple's own glass button, a native view, and one inside a
+          // scrolling list is drawn away from its place.
+          Padding(
+            padding: const EdgeInsets.fromLTRB(22, 12, 22, 0),
+            child: Row(
+              children: [
+                BackCircle(onPressed: () => Navigator.of(context).pop()),
+                Expanded(
+                  child: _cards.length == 1
+                      ? const SizedBox.shrink()
+                      : Semantics(
+                          label: context.l10n.cardOf(i + 1, _cards.length),
+                          excludeSemantics: true,
+                          child: Text(
+                            context.l10n.rungOfTotal(i + 1, _cards.length),
+                            key: const ValueKey('detail-position'),
+                            textAlign: TextAlign.center,
+                            style:
+                                AppText.body(
+                                  size: 13,
+                                  weight: FontWeight.w600,
+                                  color: context.p.inkMuted,
+                                ).copyWith(
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                          ),
                         ),
-                      ),
-              ),
-              _RoundAction(
-                label: liked
-                    ? context.l10n.removeFromLiked
-                    : context.l10n.likeThisPill,
-                icon: liked
-                    ? Icons.favorite_rounded
-                    : Icons.favorite_border_rounded,
-                color: liked ? pill.color : context.p.ink,
-                onTap: () async {
-                  await widget.app.toggleLiked(pill.id);
-                  if (mounted) setState(() {});
-                },
-              ),
-              const SizedBox(width: 8),
-              _RoundAction(
-                label: saved
-                    ? context.l10n.removeFromSaved
-                    : context.l10n.saveThisPill,
-                icon: saved
-                    ? Icons.bookmark_rounded
-                    : Icons.bookmark_border_rounded,
-                color: saved ? pill.color : context.p.ink,
-                onTap: () async {
-                  await widget.app.toggleSaved(pill.id);
-                  if (mounted) setState(() {});
-                },
-              ),
-              const SizedBox(width: 8),
-              _RoundAction(
-                label: context.l10n.shareThisPill,
-                icon: Icons.ios_share_rounded,
-                color: context.p.ink,
-                onTap: () => showShareSheet(context, pill),
-              ),
-            ],
+                ),
+                _RoundAction(
+                  label: liked
+                      ? context.l10n.removeFromLiked
+                      : context.l10n.likeThisPill,
+                  icon: liked
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_border_rounded,
+                  color: liked ? pill.color : context.p.ink,
+                  onTap: () async {
+                    await widget.app.toggleLiked(pill.id);
+                    if (mounted) setState(() {});
+                  },
+                ),
+                const SizedBox(width: 8),
+                _RoundAction(
+                  label: saved
+                      ? context.l10n.removeFromSaved
+                      : context.l10n.saveThisPill,
+                  icon: saved
+                      ? Icons.bookmark_rounded
+                      : Icons.bookmark_border_rounded,
+                  color: saved ? pill.color : context.p.ink,
+                  onTap: () async {
+                    await widget.app.toggleSaved(pill.id);
+                    if (mounted) setState(() {});
+                  },
+                ),
+                const SizedBox(width: 8),
+                _RoundAction(
+                  label: context.l10n.shareThisPill,
+                  icon: Icons.ios_share_rounded,
+                  color: context.p.ink,
+                  onTap: () => showShareSheet(context, pill),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 20),
-          _CardHead(pill: pill, onOpen: () => _openCard(context, pill)),
-          const SizedBox(height: 22),
-          if (answered != null) ...[
-            _AnsweredLine(pill: pill, given: answered),
-            const SizedBox(height: 16),
-          ],
-          // The same reveal the card shows. This used to print pill.answer
-          // alone, which on a worked problem is the last line of the
-          // solution and on a debate is one side of it.
-          RevealBody.onPage(pill, context.p),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(22, 20, 22, 28),
+              children: [
+                _CardHead(pill: pill, onOpen: () => _openCard(context, pill)),
+                const SizedBox(height: 22),
+                if (answered != null) ...[
+                  _AnsweredLine(pill: pill, given: answered),
+                  const SizedBox(height: 16),
+                ],
+                // The same reveal the card shows. This used to print
+                // pill.answer alone, which on a worked problem is the last
+                // line of the solution and on a debate is one side of it.
+                RevealBody.onPage(pill, context.p),
+              ],
+            ),
+          ),
         ],
       ),
     );
