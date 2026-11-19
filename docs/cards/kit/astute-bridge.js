@@ -89,6 +89,7 @@
     answer: a => send({t: 'answer', choice: String(a.choice ?? ''), correct: typeof a.correct === 'boolean' ? a.correct : null, sure: typeof a.sure === 'number' ? Math.round(a.sure) : null}),
     react: r => send({t: 'react', value: String(r)}),
     deeper: () => send({t: 'deeper'}),
+    why: () => send({t: 'why'}),
     flip: () => send({t: 'flip'}),
     tap: () => send({t: 'tap'}),
     done: () => send({t: 'done'}),

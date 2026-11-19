@@ -1415,6 +1415,202 @@
  "@threeYou": {
   "description": "Under the bar of today's readers by score that holds the reader's own score. One short word."
  },
+ "whyMissing": "A move you keep missing: {move}",
+ "@whyMissing": {
+  "description": "On one of today's cards, under its head: it trains a reasoning move the reader has got wrong more often than right.",
+  "placeholders": {
+   "move": {
+    "type": "String"
+   }
+  }
+ },
+ "whyMoveAgain": "{move}, back in a new case",
+ "@whyMoveAgain": {
+  "description": "On one of today's cards: a reasoning move met before, back in a different card.",
+  "placeholders": {
+   "move": {
+    "type": "String"
+   }
+  }
+ },
+ "whyAgain": "Back for a second look",
+ "@whyAgain": {
+  "description": "On one of today's cards: a card met before, come back on the review ladder."
+ },
+ "whyGoal": "For your goal: {goal}",
+ "@whyGoal": {
+  "description": "On one of today's cards: it is about one of the goals the reader picked.",
+  "placeholders": {
+   "goal": {
+    "type": "String"
+   }
+  }
+ },
+ "whyLiked": "{n, plural, =1{Like a card you liked} other{Like {n} cards you liked}}",
+ "@whyLiked": {
+  "description": "On one of today's cards: it is like cards the reader liked (same kind of card).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whyHard": "A hard one: you're strong in {subject}",
+ "@whyHard": {
+  "description": "On one of today's cards: a hard question, dealt because the reader is strong in its subject.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "whyLevel": "At your level in {subject}",
+ "@whyLevel": {
+  "description": "On one of today's cards: a question at the reader's level in its subject.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "whyGentle": "An easy way into {subject}",
+ "@whyGentle": {
+  "description": "On one of today's cards: an easy card, for a reader starting out in its subject.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "whyYourSubject": "From {subject}, one of your subjects",
+ "@whyYourSubject": {
+  "description": "On one of today's cards: from one of the subjects the reader picked.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "whyRandom": "Dealt at random from your subjects",
+ "@whyRandom": {
+  "description": "On one of today's cards, on the free plan: dealt at random from the reader's subjects."
+ },
+ "whyTitle": "Why this card",
+ "@whyTitle": {
+  "description": "Title of the sheet that says why a card was dealt to the reader today."
+ },
+ "whyTrains": "It trains {move}",
+ "@whyTrains": {
+  "description": "On the sheet: the reasoning move the card trains. Shown in capitals.",
+  "placeholders": {
+   "move": {
+    "type": "String"
+   }
+  }
+ },
+ "whyMet": "{n, plural, =1{You met it once.} other{You met it {n} times.}}",
+ "@whyMet": {
+  "description": "On the sheet: how many cards with this reasoning move the reader has answered.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whyRight": "{n, plural, =0{Not right yet.} =1{Right once.} other{Right {n} times.}}",
+ "@whyRight": {
+  "description": "On the sheet, after whyMet: how many of them were right.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whyLevelRow": "Your level in {subject}",
+ "@whyLevelRow": {
+  "description": "On the sheet, a row: the reader's level in the card's subject (the value is whyLevelWord).",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "whyLevelWord": "{level, select, starting{Starting out} some{Getting there} strong{Strong} other{Getting there}}",
+ "@whyLevelWord": {
+  "description": "The reader's level in a subject, as measured from their answers. One or two words.",
+  "placeholders": {
+   "level": {
+    "type": "String"
+   }
+  }
+ },
+ "whyLastMetRow": "You last met this move",
+ "@whyLastMetRow": {
+  "description": "On the sheet, a row: when the reader last met this reasoning move (the value is whyDaysAgo)."
+ },
+ "whyDaysAgo": "{n, plural, =0{Today} =1{Yesterday} other{{n} days ago}}",
+ "@whyDaysAgo": {
+  "description": "How long ago, in days. Short.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whyGoalRow": "Your goal",
+ "@whyGoalRow": {
+  "description": "On the sheet, a row: the reader's goal the card is about (the value is the goal's name)."
+ },
+ "whyLikedRow": "Cards like it you liked",
+ "@whyLikedRow": {
+  "description": "On the sheet, a row: how many cards like this one the reader liked (the value is a number)."
+ },
+ "whyRandomLine": "On the free plan, part of each day is dealt at random from the subjects you kept on.",
+ "@whyRandomLine": {
+  "description": "On the sheet of a card dealt at random, on the free plan."
+ },
+ "whyPlusLine": "With Astute+ all five are picked for you: at your level, leaning to what you like, with the moves you miss coming back.",
+ "@whyPlusLine": {
+  "description": "On the sheet of a card dealt at random: what Astute+ does instead."
+ },
+ "whyMakeMine": "Make all five mine",
+ "@whyMakeMine": {
+  "description": "Button on that sheet: opens Astute+."
+ },
+ "whyMore": "More like this",
+ "@whyMore": {
+  "description": "Button on the sheet: deal more cards like this one."
+ },
+ "whyMoreDone": "More like it, noted",
+ "@whyMoreDone": {
+  "description": "The same button once pressed."
+ },
+ "whyLess": "Less",
+ "@whyLess": {
+  "description": "Button on the sheet: deal fewer cards like this one. One short word."
+ },
+ "whyTune": "Tune your mix",
+ "@whyTune": {
+  "description": "Link at the foot of the sheet: opens the page where the reader tunes their mix of subjects."
+ },
+ "moveName": "{move, select, baseRate{Base rates} survivorship{Survivorship} regression{Regression to the mean} confirmation{Confirmation} anchoring{Anchoring} sampling{Sampling} confounding{Confounding} counterfactual{Compared to what} multipleComparisons{Multiple looks} availability{Availability} sunkCost{Sunk cost} conjunction{Conjunction} conditional{Conditional odds} independence{Independence} coincidence{Coincidence} exponential{Exponential growth} reflection{The quick answer} simpson{Aggregates} estimation{Estimation} computation{Working it out} other{Reasoning}}",
+ "@moveName": {
+  "description": "The name of a reasoning move a card trains, as short as the English. The key is the move.",
+  "placeholders": {
+   "move": {
+    "type": "String"
+   }
+  }
+ },
+ "moveLine": "{move, select, baseRate{How accurate a test is, is not how likely you are} survivorship{The data you have is the data that survived} regression{Extremes drift back on their own} confirmation{Looking for a yes is not a test} anchoring{The first number said moves every number after} sampling{Who ended up in the sample decides what it can say} confounding{Something else may be causing both} counterfactual{A change means nothing without a control} multipleComparisons{Test enough things and one will pass} availability{Easy to picture is not the same as common} sunkCost{Spent is spent; only what is left can be decided} conjunction{Detail makes a story likelier and less probable} conditional{What you were told changes the odds} independence{Chance has no memory} coincidence{Rare things are common when there are many tries} exponential{Nobody has intuition for doubling} reflection{The answer that arrives first is the one to check} simpson{A whole can lean the way no part of it does} estimation{Break the unanswerable into things you can guess} computation{A problem you can actually finish} other{Reasoning}}",
+ "@moveLine": {
+  "description": "The one line that names a reasoning move. The key is the move.",
+  "placeholders": {
+   "move": {
+    "type": "String"
+   }
+  }
+ },
  "threeStreak": "{n, plural, =1{1 day} other{{n} days}}",
  "@threeStreak": {
   "description": "Days in a row today's three was played, beside this week's seven days: short, it shares a line with them.",

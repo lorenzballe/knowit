@@ -1422,6 +1422,204 @@ class AppLocalizationsTr extends AppLocalizations {
   String get threeYou => 'Sen';
 
   @override
+  String whyMissing(String move) {
+    return 'Sık kaçırdığın bir düşünme adımı: $move';
+  }
+
+  @override
+  String whyMoveAgain(String move) {
+    return '$move, yeni bir örnekle yeniden';
+  }
+
+  @override
+  String get whyAgain => 'İkinci bir bakış için geri geldi';
+
+  @override
+  String whyGoal(String goal) {
+    return 'Hedefin için: $goal';
+  }
+
+  @override
+  String whyLiked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Beğendiğin $n karta benziyor',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyHard(String subject) {
+    return 'Zor bir kart: $subject konusunda güçlüsün';
+  }
+
+  @override
+  String whyLevel(String subject) {
+    return '$subject konusunda seviyene uygun';
+  }
+
+  @override
+  String whyGentle(String subject) {
+    return '$subject için kolay bir giriş';
+  }
+
+  @override
+  String whyYourSubject(String subject) {
+    return 'Konularından biri: $subject';
+  }
+
+  @override
+  String get whyRandom => 'Konularından rastgele seçildi';
+
+  @override
+  String get whyTitle => 'Neden bu kart';
+
+  @override
+  String whyTrains(String move) {
+    return 'Çalıştırdığı adım: $move';
+  }
+
+  @override
+  String whyMet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kez karşılaştın.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kez doğru.',
+      zero: 'Henüz hiç doğru değil.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyLevelRow(String subject) {
+    return '$subject seviyen';
+  }
+
+  @override
+  String whyLevelWord(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      'starting': 'Başlangıç',
+      'some': 'Yolda',
+      'strong': 'Güçlü',
+      'other': 'Yolda',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get whyLastMetRow => 'Bu adımla son karşılaşman';
+
+  @override
+  String whyDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n gün önce',
+      one: 'Dün',
+      zero: 'Bugün',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whyGoalRow => 'Hedefin';
+
+  @override
+  String get whyLikedRow => 'Beğendiğin benzer kartlar';
+
+  @override
+  String get whyRandomLine =>
+      'Ücretsiz planda her günün bir kısmı seçtiğin konulardan rastgele gelir.';
+
+  @override
+  String get whyPlusLine =>
+      'Astute+ ile beşi de senin için seçilir: seviyene göre, zevkine göre, kaçırdığın adımlar geri döner.';
+
+  @override
+  String get whyMakeMine => 'Beşi de benim olsun';
+
+  @override
+  String get whyMore => 'Bunun gibi daha çok';
+
+  @override
+  String get whyMoreDone => 'Not edildi: bunun gibi daha çok';
+
+  @override
+  String get whyLess => 'Daha az';
+
+  @override
+  String get whyTune => 'Karışımını ayarla';
+
+  @override
+  String moveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Temel oranlar',
+      'survivorship': 'Hayatta kalanlar',
+      'regression': 'Ortalamaya dönüş',
+      'confirmation': 'Doğrulama',
+      'anchoring': 'Çapalama',
+      'sampling': 'Örneklem',
+      'confounding': 'Karıştırıcı etkenler',
+      'counterfactual': 'Neye göre',
+      'multipleComparisons': 'Çok sayıda deneme',
+      'availability': 'Akla gelebilirlik',
+      'sunkCost': 'Batık maliyet',
+      'conjunction': 'Birleşim',
+      'conditional': 'Koşullu olasılık',
+      'independence': 'Bağımsızlık',
+      'coincidence': 'Tesadüfler',
+      'exponential': 'Üstel büyüme',
+      'reflection': 'Hızlı cevap',
+      'simpson': 'Toplamlar',
+      'estimation': 'Tahmin',
+      'computation': 'Hesaplamak',
+      'other': 'Akıl yürütme',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String moveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate':
+          'Bir testin ne kadar doğru olduğu, senin için olasılığı değildir',
+      'survivorship': 'Elindeki veri, hayatta kalan veridir',
+      'regression': 'Uç değerler kendiliğinden geri döner',
+      'confirmation': 'Bir evet aramak test etmek değildir',
+      'anchoring': 'Söylenen ilk sayı sonraki tüm sayıları kaydırır',
+      'sampling': 'Örnekleme kimin girdiği, neyi söyleyebileceğini belirler',
+      'confounding': 'Belki ikisine de başka bir şey yol açıyordur',
+      'counterfactual': 'Karşılaştırma olmadan bir değişim hiçbir şey söylemez',
+      'multipleComparisons': 'Yeterince şey dene, biri geçer',
+      'availability': 'Kolay hayal edilen, sık olan demek değildir',
+      'sunkCost': 'Harcanan harcandı; yalnızca kalana karar verilebilir',
+      'conjunction':
+          'Ayrıntı bir hikâyeyi daha inandırıcı ve daha az olası yapar',
+      'conditional': 'Öğrendiğin şey olasılıkları değiştirir',
+      'independence': 'Şansın hafızası yoktur',
+      'coincidence': 'Deneme çoksa nadir şeyler sık olur',
+      'exponential': 'Kimsenin ikiye katlanmaya sezgisi yoktur',
+      'reflection': 'İlk gelen cevap, kontrol edilmesi gereken cevaptır',
+      'simpson': 'Bütün, hiçbir parçanın eğilmediği yöne eğilebilir',
+      'estimation': 'Cevaplanamayanı tahmin edilebilir parçalara böl',
+      'computation': 'Gerçekten bitirebileceğin bir problem',
+      'other': 'Akıl yürütme',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String threeStreak(int n) {
     return '$n gün';
   }

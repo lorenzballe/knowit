@@ -77,6 +77,13 @@ class PillCardStack extends StatefulWidget {
   /// why it is in front of the reader today.
   final Map<String, String> notes;
 
+  /// The mark beside each line of [notes], by the card's id.
+  final Map<String, IconData> noteIcons;
+
+  /// A tap on the line of [notes] on the card in front, on a native card or
+  /// a free card's page alike: Why this card. Null, the line is only read.
+  final ValueChanged<Pill>? onNote;
+
   /// True while a card is under the finger, so the chrome can step out of
   /// the way of the gesture.
   final ValueChanged<bool>? onMotion;
@@ -143,6 +150,8 @@ class PillCardStack extends StatefulWidget {
     required this.reviewIds,
     this.ownIds = const {},
     this.notes = const {},
+    this.noteIcons = const {},
+    this.onNote,
     required this.isSaved,
     required this.onSave,
     required this.onShare,
@@ -395,6 +404,9 @@ class _PillCardStackState extends State<PillCardStack>
       case PageDeeper():
         _read?.opened('deeper');
         GoDeeper.open?.call(context, pill);
+      case PageWhy():
+        _read?.opened('why');
+        widget.onNote?.call(pill);
       case PageTap():
         break;
       case PageDone():
@@ -936,6 +948,13 @@ class _PillCardStackState extends State<PillCardStack>
                 isOwn: widget.ownIds.contains(pill.id),
                 home: widget.home,
                 note: widget.notes[pill.id],
+                noteIcon: widget.noteIcons[pill.id],
+                onNote: !controls || widget.onNote == null
+                    ? null
+                    : () {
+                        _read?.opened('why');
+                        widget.onNote!(pill);
+                      },
                 given: controls ? given : null,
                 saved: controls && widget.isSaved(pill.id),
                 onSave: controls ? () => widget.onSave(pill) : null,

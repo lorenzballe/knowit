@@ -1388,6 +1388,123 @@ class RemoteLocalizations extends AppLocalizations {
   String get threeYou => _words.text('threeYou') ?? _base.threeYou;
 
   @override
+  String whyMissing(String move) =>
+      _words.format('whyMissing', localeName, {'move': move}) ??
+      _base.whyMissing(move);
+
+  @override
+  String whyMoveAgain(String move) =>
+      _words.format('whyMoveAgain', localeName, {'move': move}) ??
+      _base.whyMoveAgain(move);
+
+  @override
+  String get whyAgain => _words.text('whyAgain') ?? _base.whyAgain;
+
+  @override
+  String whyGoal(String goal) =>
+      _words.format('whyGoal', localeName, {'goal': goal}) ??
+      _base.whyGoal(goal);
+
+  @override
+  String whyLiked(int n) =>
+      _words.format('whyLiked', localeName, {'n': n}) ?? _base.whyLiked(n);
+
+  @override
+  String whyHard(String subject) =>
+      _words.format('whyHard', localeName, {'subject': subject}) ??
+      _base.whyHard(subject);
+
+  @override
+  String whyLevel(String subject) =>
+      _words.format('whyLevel', localeName, {'subject': subject}) ??
+      _base.whyLevel(subject);
+
+  @override
+  String whyGentle(String subject) =>
+      _words.format('whyGentle', localeName, {'subject': subject}) ??
+      _base.whyGentle(subject);
+
+  @override
+  String whyYourSubject(String subject) =>
+      _words.format('whyYourSubject', localeName, {'subject': subject}) ??
+      _base.whyYourSubject(subject);
+
+  @override
+  String get whyRandom => _words.text('whyRandom') ?? _base.whyRandom;
+
+  @override
+  String get whyTitle => _words.text('whyTitle') ?? _base.whyTitle;
+
+  @override
+  String whyTrains(String move) =>
+      _words.format('whyTrains', localeName, {'move': move}) ??
+      _base.whyTrains(move);
+
+  @override
+  String whyMet(int n) =>
+      _words.format('whyMet', localeName, {'n': n}) ?? _base.whyMet(n);
+
+  @override
+  String whyRight(int n) =>
+      _words.format('whyRight', localeName, {'n': n}) ?? _base.whyRight(n);
+
+  @override
+  String whyLevelRow(String subject) =>
+      _words.format('whyLevelRow', localeName, {'subject': subject}) ??
+      _base.whyLevelRow(subject);
+
+  @override
+  String whyLevelWord(String level) =>
+      _words.format('whyLevelWord', localeName, {'level': level}) ??
+      _base.whyLevelWord(level);
+
+  @override
+  String get whyLastMetRow =>
+      _words.text('whyLastMetRow') ?? _base.whyLastMetRow;
+
+  @override
+  String whyDaysAgo(int n) =>
+      _words.format('whyDaysAgo', localeName, {'n': n}) ?? _base.whyDaysAgo(n);
+
+  @override
+  String get whyGoalRow => _words.text('whyGoalRow') ?? _base.whyGoalRow;
+
+  @override
+  String get whyLikedRow => _words.text('whyLikedRow') ?? _base.whyLikedRow;
+
+  @override
+  String get whyRandomLine =>
+      _words.text('whyRandomLine') ?? _base.whyRandomLine;
+
+  @override
+  String get whyPlusLine => _words.text('whyPlusLine') ?? _base.whyPlusLine;
+
+  @override
+  String get whyMakeMine => _words.text('whyMakeMine') ?? _base.whyMakeMine;
+
+  @override
+  String get whyMore => _words.text('whyMore') ?? _base.whyMore;
+
+  @override
+  String get whyMoreDone => _words.text('whyMoreDone') ?? _base.whyMoreDone;
+
+  @override
+  String get whyLess => _words.text('whyLess') ?? _base.whyLess;
+
+  @override
+  String get whyTune => _words.text('whyTune') ?? _base.whyTune;
+
+  @override
+  String moveName(String move) =>
+      _words.format('moveName', localeName, {'move': move}) ??
+      _base.moveName(move);
+
+  @override
+  String moveLine(String move) =>
+      _words.format('moveLine', localeName, {'move': move}) ??
+      _base.moveLine(move);
+
+  @override
   String threeStreak(int n) =>
       _words.format('threeStreak', localeName, {'n': n}) ??
       _base.threeStreak(n);

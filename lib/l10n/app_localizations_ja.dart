@@ -1390,6 +1390,201 @@ class AppLocalizationsJa extends AppLocalizations {
   String get threeYou => 'あなた';
 
   @override
+  String whyMissing(String move) {
+    return '見落としがちな考え方：$move';
+  }
+
+  @override
+  String whyMoveAgain(String move) {
+    return '$move、新しい場面でもう一度';
+  }
+
+  @override
+  String get whyAgain => 'もう一度見直すために';
+
+  @override
+  String whyGoal(String goal) {
+    return 'あなたの目標のために：$goal';
+  }
+
+  @override
+  String whyLiked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '気に入ったカード$n枚と似ています',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyHard(String subject) {
+    return '難しめ：$subjectが得意なあなたに';
+  }
+
+  @override
+  String whyLevel(String subject) {
+    return '$subjectのあなたのレベルに合わせて';
+  }
+
+  @override
+  String whyGentle(String subject) {
+    return '$subjectへのやさしい入り口';
+  }
+
+  @override
+  String whyYourSubject(String subject) {
+    return 'あなたの科目、$subjectから';
+  }
+
+  @override
+  String get whyRandom => 'あなたの科目からランダムに';
+
+  @override
+  String get whyTitle => 'このカードの理由';
+
+  @override
+  String whyTrains(String move) {
+    return '鍛える考え方：$move';
+  }
+
+  @override
+  String whyMet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'これまで$n回出会いました。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '正解$n回。',
+      zero: 'まだ正解なし。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyLevelRow(String subject) {
+    return '$subjectでのレベル';
+  }
+
+  @override
+  String whyLevelWord(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      'starting': 'はじめたばかり',
+      'some': '上達中',
+      'strong': '得意',
+      'other': '上達中',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get whyLastMetRow => 'この考え方に最後に出会ったのは';
+
+  @override
+  String whyDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日前',
+      one: '昨日',
+      zero: '今日',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whyGoalRow => 'あなたの目標';
+
+  @override
+  String get whyLikedRow => '気に入った似たカード';
+
+  @override
+  String get whyRandomLine => '無料プランでは、毎日の一部を選んだ科目からランダムに配ります。';
+
+  @override
+  String get whyPlusLine =>
+      'Astute+なら5枚すべてがあなたのために選ばれます。レベルに合わせ、好みに寄せ、見落としがちな考え方がまた出てきます。';
+
+  @override
+  String get whyMakeMine => '5枚すべてを自分用に';
+
+  @override
+  String get whyMore => 'これに似たものを増やす';
+
+  @override
+  String get whyMoreDone => '似たものを増やします';
+
+  @override
+  String get whyLess => '減らす';
+
+  @override
+  String get whyTune => '配分を調整する';
+
+  @override
+  String moveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '基準率',
+      'survivorship': '生存者バイアス',
+      'regression': '平均への回帰',
+      'confirmation': '確証バイアス',
+      'anchoring': 'アンカリング',
+      'sampling': 'サンプリング',
+      'confounding': '交絡',
+      'counterfactual': '何と比べて',
+      'multipleComparisons': '多重比較',
+      'availability': '利用可能性',
+      'sunkCost': 'サンクコスト',
+      'conjunction': '連言錯誤',
+      'conditional': '条件付き確率',
+      'independence': '独立性',
+      'coincidence': '偶然の一致',
+      'exponential': '指数関数的成長',
+      'reflection': 'すぐ浮かぶ答え',
+      'simpson': '集計の罠',
+      'estimation': '見積もり',
+      'computation': '計算してみる',
+      'other': '考え方',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String moveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '検査の精度は、あなたが当てはまる確率ではない',
+      'survivorship': '手元のデータは生き残ったデータだ',
+      'regression': '極端な値は自然と平均に戻る',
+      'confirmation': '「はい」を探すのは検証ではない',
+      'anchoring': '最初に出た数字がその後の数字をすべて動かす',
+      'sampling': '誰がサンプルに入るかで、言えることが決まる',
+      'confounding': '別の何かが両方の原因かもしれない',
+      'counterfactual': '比較がなければ変化は何も語らない',
+      'multipleComparisons': '十分たくさん試せば一つは通る',
+      'availability': '思い浮かべやすいことは、よくあることとは限らない',
+      'sunkCost': '使ったものは戻らない。決められるのは残りだけ',
+      'conjunction': '細部は話をもっともらしくし、確率を下げる',
+      'conditional': '知らされたことが確率を変える',
+      'independence': '偶然には記憶がない',
+      'coincidence': '試行が多ければ、まれなことも起こる',
+      'exponential': '倍々の増え方を直感できる人はいない',
+      'reflection': '最初に浮かんだ答えこそ確かめるべき答え',
+      'simpson': '全体は、どの部分とも違う向きに傾くことがある',
+      'estimation': '答えられない問いを、見積もれる部分に分ける',
+      'computation': '最後まで解ける問題',
+      'other': '考え方',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String threeStreak(int n) {
     return '$n日';
   }

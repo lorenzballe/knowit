@@ -1438,6 +1438,208 @@ class AppLocalizationsEs extends AppLocalizations {
   String get threeYou => 'Tú';
 
   @override
+  String whyMissing(String move) {
+    return 'Un paso que se te escapa: $move';
+  }
+
+  @override
+  String whyMoveAgain(String move) {
+    return '$move, de vuelta en un caso nuevo';
+  }
+
+  @override
+  String get whyAgain => 'Vuelve para una segunda mirada';
+
+  @override
+  String whyGoal(String goal) {
+    return 'Para tu objetivo: $goal';
+  }
+
+  @override
+  String whyLiked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Como $n cartas que te gustaron',
+      one: 'Como una carta que te gustó',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyHard(String subject) {
+    return 'Una difícil: en $subject eres fuerte';
+  }
+
+  @override
+  String whyLevel(String subject) {
+    return 'A tu nivel en $subject';
+  }
+
+  @override
+  String whyGentle(String subject) {
+    return 'Una entrada fácil a $subject';
+  }
+
+  @override
+  String whyYourSubject(String subject) {
+    return 'De $subject, una de tus materias';
+  }
+
+  @override
+  String get whyRandom => 'Sacada al azar de tus materias';
+
+  @override
+  String get whyTitle => 'Por qué esta carta';
+
+  @override
+  String whyTrains(String move) {
+    return 'Entrena: $move';
+  }
+
+  @override
+  String whyMet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Te lo encontraste $n veces.',
+      one: 'Te lo encontraste una vez.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bien $n veces.',
+      one: 'Bien una vez.',
+      zero: 'Aún ninguna bien.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyLevelRow(String subject) {
+    return 'Tu nivel en $subject';
+  }
+
+  @override
+  String whyLevelWord(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      'starting': 'Empezando',
+      'some': 'En camino',
+      'strong': 'Fuerte',
+      'other': 'En camino',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get whyLastMetRow => 'La última vez con este paso';
+
+  @override
+  String whyDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Hace $n días',
+      one: 'Ayer',
+      zero: 'Hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whyGoalRow => 'Tu objetivo';
+
+  @override
+  String get whyLikedRow => 'Cartas parecidas que te gustaron';
+
+  @override
+  String get whyRandomLine =>
+      'En el plan gratuito, parte de cada día se saca al azar de las materias que elegiste.';
+
+  @override
+  String get whyPlusLine =>
+      'Con Astute+ las cinco se eligen para ti: a tu nivel, según lo que te gusta, y vuelven los pasos que se te escapan.';
+
+  @override
+  String get whyMakeMine => 'Que las cinco sean mías';
+
+  @override
+  String get whyMore => 'Más como esta';
+
+  @override
+  String get whyMoreDone => 'Anotado: más como esta';
+
+  @override
+  String get whyLess => 'Menos';
+
+  @override
+  String get whyTune => 'Ajusta tu mezcla';
+
+  @override
+  String moveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Tasas base',
+      'survivorship': 'Supervivientes',
+      'regression': 'Regresión a la media',
+      'confirmation': 'Confirmación',
+      'anchoring': 'Anclaje',
+      'sampling': 'Muestra',
+      'confounding': 'Factores de confusión',
+      'counterfactual': 'Comparado con qué',
+      'multipleComparisons': 'Muchos intentos',
+      'availability': 'Disponibilidad',
+      'sunkCost': 'Costes hundidos',
+      'conjunction': 'Conjunción',
+      'conditional': 'Probabilidad condicionada',
+      'independence': 'Independencia',
+      'coincidence': 'Coincidencias',
+      'exponential': 'Crecimiento exponencial',
+      'reflection': 'La respuesta rápida',
+      'simpson': 'Agregados',
+      'estimation': 'Estimación',
+      'computation': 'Hacer la cuenta',
+      'other': 'Razonamiento',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String moveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate':
+          'Lo preciso que es un test no es lo probable que sea en tu caso',
+      'survivorship': 'Los datos que tienes son los que sobrevivieron',
+      'regression': 'Los extremos vuelven solos hacia la media',
+      'confirmation': 'Buscar un sí no es una prueba',
+      'anchoring': 'El primer número dicho mueve todos los que siguen',
+      'sampling': 'Quién entra en la muestra decide lo que puede decir',
+      'confounding': 'Quizá otra cosa causa las dos',
+      'counterfactual': 'Un cambio no dice nada sin un control',
+      'multipleComparisons': 'Prueba bastantes cosas y una pasará',
+      'availability': 'Fácil de imaginar no es lo mismo que frecuente',
+      'sunkCost': 'Lo gastado, gastado está: solo se decide lo que queda',
+      'conjunction':
+          'Los detalles hacen una historia más creíble y menos probable',
+      'conditional': 'Lo que te dicen cambia las probabilidades',
+      'independence': 'El azar no tiene memoria',
+      'coincidence': 'Lo raro es común cuando hay muchos intentos',
+      'exponential': 'Nadie tiene intuición para lo que se duplica',
+      'reflection': 'La respuesta que llega primero es la que hay que revisar',
+      'simpson':
+          'Un todo puede inclinarse hacia donde no se inclina ninguna parte',
+      'estimation': 'Divide lo imposible en cosas que puedes estimar',
+      'computation': 'Un problema que puedes terminar de verdad',
+      'other': 'Razonamiento',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String threeStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

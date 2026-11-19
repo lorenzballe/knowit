@@ -188,9 +188,24 @@ void main() {
         // Nothing over the deck any more.
         expect(find.byKey(const ValueKey('sunday-line')), findsNothing);
 
-        final Finder note = find.byKey(const ValueKey('card-note'));
+        // Every card says why it is here now; this one says it is the
+        // Sunday's one more.
+        final Finder note = find.descendant(
+          of: find.byWidgetPredicate(
+            (w) =>
+                w is PillCard &&
+                w.pill.id == app.todaysDeck[first].id &&
+                !w.flipped,
+          ),
+          matching: find.byKey(const ValueKey('card-note')),
+        );
         expect(note, findsOneWidget, reason: phone.key);
-        expect(find.text('Sunday: one more chosen for you'), findsOneWidget);
+        // Said as why the card is here, and opening the rest of why on a
+        // tap (lib/widgets/why_sheet.dart).
+        expect(
+          find.textContaining('Sunday: one more chosen for you'),
+          findsOneWidget,
+        );
         // On the card in front, under its head, inside its edges.
         final Finder card = find.byWidgetPredicate(
           (w) =>
@@ -206,9 +221,10 @@ void main() {
         expect(line.right, lessThanOrEqualTo(face.right), reason: phone.key);
 
         // One card says it: the first of the reader's own, and no other.
+        // The rest say why they are here in their own words.
         final List<PillCard> said = tester
             .widgetList<PillCard>(find.byType(PillCard))
-            .where((c) => c.note != null)
+            .where((c) => c.note == 'Sunday: one more chosen for you')
             .toList();
         expect(said.map((c) => c.pill.id).toSet(), {app.todaysDeck[first].id});
       }
@@ -216,18 +232,21 @@ void main() {
 
     testWidgets('nothing on a Saturday, nothing on Astute+', (tester) async {
       final Size phone = phones['small']!;
+      final Finder sunday = find.textContaining(
+        'Sunday: one more chosen for you',
+      );
       await pumpToday(
         tester,
         await _openedAt(DateTime(2026, 10, 10, 9)),
         phone,
       );
-      expect(find.byKey(const ValueKey('card-note')), findsNothing);
+      expect(sunday, findsNothing);
       await pumpToday(
         tester,
         await _openedAt(DateTime(2026, 10, 11, 9), plus: true),
         phone,
       );
-      expect(find.byKey(const ValueKey('card-note')), findsNothing);
+      expect(sunday, findsNothing);
       expect(find.byKey(const ValueKey('sunday-line')), findsNothing);
       expect(tester.takeException(), isNull);
       expect(_saturday.weekday, DateTime.saturday);

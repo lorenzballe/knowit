@@ -1438,6 +1438,209 @@ class AppLocalizationsNl extends AppLocalizations {
   String get threeYou => 'Jij';
 
   @override
+  String whyMissing(String move) {
+    return 'Een denkstap die je vaak mist: $move';
+  }
+
+  @override
+  String whyMoveAgain(String move) {
+    return '$move, terug in een nieuw geval';
+  }
+
+  @override
+  String get whyAgain => 'Terug voor een tweede blik';
+
+  @override
+  String whyGoal(String goal) {
+    return 'Voor je doel: $goal';
+  }
+
+  @override
+  String whyLiked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Zoals $n kaarten die je leuk vond',
+      one: 'Zoals een kaart die je leuk vond',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyHard(String subject) {
+    return 'Een moeilijke: in $subject ben je sterk';
+  }
+
+  @override
+  String whyLevel(String subject) {
+    return 'Op jouw niveau in $subject';
+  }
+
+  @override
+  String whyGentle(String subject) {
+    return 'Een makkelijke ingang tot $subject';
+  }
+
+  @override
+  String whyYourSubject(String subject) {
+    return 'Uit $subject, een van je vakken';
+  }
+
+  @override
+  String get whyRandom => 'Willekeurig gekozen uit je vakken';
+
+  @override
+  String get whyTitle => 'Waarom deze kaart';
+
+  @override
+  String whyTrains(String move) {
+    return 'Ze traint: $move';
+  }
+
+  @override
+  String whyMet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n keer tegengekomen.',
+      one: 'Eén keer tegengekomen.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n keer goed.',
+      one: 'Eén keer goed.',
+      zero: 'Nog nooit goed.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyLevelRow(String subject) {
+    return 'Jouw niveau in $subject';
+  }
+
+  @override
+  String whyLevelWord(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      'starting': 'Net begonnen',
+      'some': 'Op weg',
+      'strong': 'Sterk',
+      'other': 'Op weg',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get whyLastMetRow => 'Laatst met deze denkstap';
+
+  @override
+  String whyDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dagen geleden',
+      one: 'Gisteren',
+      zero: 'Vandaag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whyGoalRow => 'Je doel';
+
+  @override
+  String get whyLikedRow => 'Vergelijkbare kaarten die je leuk vond';
+
+  @override
+  String get whyRandomLine =>
+      'Bij het gratis abonnement wordt een deel van elke dag willekeurig gekozen uit de vakken die je hield.';
+
+  @override
+  String get whyPlusLine =>
+      'Met Astute+ worden alle vijf voor jou gekozen: op jouw niveau, naar je smaak, en de denkstappen die je mist komen terug.';
+
+  @override
+  String get whyMakeMine => 'Alle vijf voor mij';
+
+  @override
+  String get whyMore => 'Meer zoals deze';
+
+  @override
+  String get whyMoreDone => 'Genoteerd: meer zoals deze';
+
+  @override
+  String get whyLess => 'Minder';
+
+  @override
+  String get whyTune => 'Je mix afstellen';
+
+  @override
+  String moveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Basiskansen',
+      'survivorship': 'Overlevers',
+      'regression': 'Terug naar het gemiddelde',
+      'confirmation': 'Bevestiging',
+      'anchoring': 'Ankeren',
+      'sampling': 'Steekproef',
+      'confounding': 'Verstorende factoren',
+      'counterfactual': 'Vergeleken met wat',
+      'multipleComparisons': 'Veel pogingen',
+      'availability': 'Beschikbaarheid',
+      'sunkCost': 'Verzonken kosten',
+      'conjunction': 'Conjunctie',
+      'conditional': 'Voorwaardelijke kans',
+      'independence': 'Onafhankelijkheid',
+      'coincidence': 'Toeval',
+      'exponential': 'Exponentiële groei',
+      'reflection': 'Het snelle antwoord',
+      'simpson': 'Totalen',
+      'estimation': 'Schatten',
+      'computation': 'Uitrekenen',
+      'other': 'Redeneren',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String moveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Hoe nauwkeurig een test is, zegt niet hoe waarschijnlijk het voor jou is',
+      'survivorship': 'De data die je hebt, zijn de data die overleefden',
+      'regression': 'Uitschieters zakken vanzelf terug',
+      'confirmation': 'Zoeken naar een ja is geen test',
+      'anchoring': 'Het eerste getal dat valt, verschuift alle getallen erna',
+      'sampling': 'Wie in de steekproef zit, bepaalt wat die kan zeggen',
+      'confounding': 'Misschien veroorzaakt iets anders allebei',
+      'counterfactual': 'Een verandering zegt niets zonder vergelijking',
+      'multipleComparisons': 'Test genoeg dingen en één slaagt',
+      'availability': 'Makkelijk voor te stellen is niet hetzelfde als vaak',
+      'sunkCost':
+          'Uitgegeven is uitgegeven; alleen wat over is, valt te beslissen',
+      'conjunction':
+          'Details maken een verhaal geloofwaardiger en minder waarschijnlijk',
+      'conditional': 'Wat je hoort, verandert de kansen',
+      'independence': 'Toeval heeft geen geheugen',
+      'coincidence': 'Zeldzame dingen zijn gewoon als er veel pogingen zijn',
+      'exponential': 'Niemand heeft gevoel voor verdubbelen',
+      'reflection':
+          'Het antwoord dat eerst opkomt, is het antwoord om te checken',
+      'simpson': 'Een geheel kan overhellen waar geen enkel deel overhelt',
+      'estimation':
+          'Breek het onbeantwoordbare op in dingen die je kunt schatten',
+      'computation': 'Een probleem dat je echt kunt afmaken',
+      'other': 'Redeneren',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String threeStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

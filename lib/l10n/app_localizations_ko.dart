@@ -1394,6 +1394,201 @@ class AppLocalizationsKo extends AppLocalizations {
   String get threeYou => '나';
 
   @override
+  String whyMissing(String move) {
+    return '자주 놓치는 생각법: $move';
+  }
+
+  @override
+  String whyMoveAgain(String move) {
+    return '$move, 새로운 사례로 다시';
+  }
+
+  @override
+  String get whyAgain => '다시 한번 보기 위해';
+
+  @override
+  String whyGoal(String goal) {
+    return '당신의 목표를 위해: $goal';
+  }
+
+  @override
+  String whyLiked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '좋아한 카드 $n장과 비슷해요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyHard(String subject) {
+    return '어려운 카드: $subject에 강하니까요';
+  }
+
+  @override
+  String whyLevel(String subject) {
+    return '$subject에서 당신의 수준에 맞게';
+  }
+
+  @override
+  String whyGentle(String subject) {
+    return '$subject에 쉽게 들어가는 길';
+  }
+
+  @override
+  String whyYourSubject(String subject) {
+    return '당신의 과목, $subject에서';
+  }
+
+  @override
+  String get whyRandom => '당신의 과목에서 무작위로';
+
+  @override
+  String get whyTitle => '이 카드인 이유';
+
+  @override
+  String whyTrains(String move) {
+    return '훈련하는 생각법: $move';
+  }
+
+  @override
+  String whyMet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '지금까지 $n번 만났어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n번 맞혔어요.',
+      zero: '아직 맞힌 적 없어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyLevelRow(String subject) {
+    return '$subject 수준';
+  }
+
+  @override
+  String whyLevelWord(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      'starting': '시작 단계',
+      'some': '성장 중',
+      'strong': '강함',
+      'other': '성장 중',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get whyLastMetRow => '이 생각법을 마지막으로 만난 때';
+
+  @override
+  String whyDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 전',
+      one: '어제',
+      zero: '오늘',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whyGoalRow => '당신의 목표';
+
+  @override
+  String get whyLikedRow => '좋아한 비슷한 카드';
+
+  @override
+  String get whyRandomLine => '무료 플랜에서는 매일의 일부가 고른 과목에서 무작위로 나와요.';
+
+  @override
+  String get whyPlusLine =>
+      'Astute+에서는 다섯 장 모두 당신을 위해 골라요: 수준에 맞게, 취향에 맞게, 놓친 생각법은 다시 나와요.';
+
+  @override
+  String get whyMakeMine => '다섯 장 모두 내 것으로';
+
+  @override
+  String get whyMore => '이런 카드 더 보기';
+
+  @override
+  String get whyMoreDone => '이런 카드를 더 보여드릴게요';
+
+  @override
+  String get whyLess => '덜 보기';
+
+  @override
+  String get whyTune => '구성 조정하기';
+
+  @override
+  String moveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '기저율',
+      'survivorship': '생존자 편향',
+      'regression': '평균 회귀',
+      'confirmation': '확증 편향',
+      'anchoring': '앵커링',
+      'sampling': '표본',
+      'confounding': '교란 변수',
+      'counterfactual': '무엇과 비교해서',
+      'multipleComparisons': '다중 비교',
+      'availability': '가용성',
+      'sunkCost': '매몰 비용',
+      'conjunction': '결합 오류',
+      'conditional': '조건부 확률',
+      'independence': '독립성',
+      'coincidence': '우연의 일치',
+      'exponential': '기하급수적 성장',
+      'reflection': '빠른 답',
+      'simpson': '합계의 함정',
+      'estimation': '어림하기',
+      'computation': '직접 계산하기',
+      'other': '생각법',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String moveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '검사의 정확도가 당신에게 해당할 확률은 아니다',
+      'survivorship': '가진 데이터는 살아남은 데이터다',
+      'regression': '극단은 저절로 평균으로 돌아온다',
+      'confirmation': '“예”를 찾는 것은 검증이 아니다',
+      'anchoring': '처음 들은 숫자가 뒤의 모든 숫자를 움직인다',
+      'sampling': '누가 표본에 들어가느냐가 말할 수 있는 것을 정한다',
+      'confounding': '다른 무언가가 둘 다의 원인일 수 있다',
+      'counterfactual': '비교 대상 없는 변화는 아무 말도 하지 않는다',
+      'multipleComparisons': '충분히 많이 시험하면 하나는 통과한다',
+      'availability': '떠올리기 쉽다고 흔한 것은 아니다',
+      'sunkCost': '쓴 것은 쓴 것: 남은 것만 결정할 수 있다',
+      'conjunction': '세부가 이야기를 더 그럴듯하게, 덜 가능하게 만든다',
+      'conditional': '알게 된 것이 확률을 바꾼다',
+      'independence': '우연에는 기억이 없다',
+      'coincidence': '시도가 많으면 드문 일도 흔하다',
+      'exponential': '두 배씩 느는 것을 직감하는 사람은 없다',
+      'reflection': '먼저 떠오른 답이 확인해야 할 답이다',
+      'simpson': '전체는 어느 부분과도 다른 쪽으로 기울 수 있다',
+      'estimation': '답할 수 없는 것을 어림할 수 있는 것으로 나눈다',
+      'computation': '끝까지 풀 수 있는 문제',
+      'other': '생각법',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String threeStreak(int n) {
     return '$n일';
   }

@@ -1381,6 +1381,200 @@ class AppLocalizationsZh extends AppLocalizations {
   String get threeYou => '你';
 
   @override
+  String whyMissing(String move) {
+    return '你常错过的思路：$move';
+  }
+
+  @override
+  String whyMoveAgain(String move) {
+    return '$move，换个新情境再来';
+  }
+
+  @override
+  String get whyAgain => '再看一次';
+
+  @override
+  String whyGoal(String goal) {
+    return '为了你的目标：$goal';
+  }
+
+  @override
+  String whyLiked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '和你喜欢的 $n 张卡片相似',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyHard(String subject) {
+    return '难一点的：你在$subject上很强';
+  }
+
+  @override
+  String whyLevel(String subject) {
+    return '符合你在$subject的水平';
+  }
+
+  @override
+  String whyGentle(String subject) {
+    return '轻松进入$subject';
+  }
+
+  @override
+  String whyYourSubject(String subject) {
+    return '来自你的科目：$subject';
+  }
+
+  @override
+  String get whyRandom => '从你的科目中随机抽取';
+
+  @override
+  String get whyTitle => '为什么是这张卡片';
+
+  @override
+  String whyTrains(String move) {
+    return '训练的思路：$move';
+  }
+
+  @override
+  String whyMet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '你遇到过 $n 次。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '答对 $n 次。',
+      zero: '还没答对过。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyLevelRow(String subject) {
+    return '你在$subject的水平';
+  }
+
+  @override
+  String whyLevelWord(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      'starting': '刚起步',
+      'some': '在进步',
+      'strong': '很强',
+      'other': '在进步',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get whyLastMetRow => '上次遇到这个思路';
+
+  @override
+  String whyDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 天前',
+      one: '昨天',
+      zero: '今天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whyGoalRow => '你的目标';
+
+  @override
+  String get whyLikedRow => '你喜欢的相似卡片';
+
+  @override
+  String get whyRandomLine => '免费版中，每天有一部分卡片从你选的科目里随机抽取。';
+
+  @override
+  String get whyPlusLine => '有了 Astute+，五张都为你挑选：符合你的水平，贴合你的喜好，你常错过的思路会再出现。';
+
+  @override
+  String get whyMakeMine => '五张都为我挑选';
+
+  @override
+  String get whyMore => '多来点这样的';
+
+  @override
+  String get whyMoreDone => '已记下：多来点这样的';
+
+  @override
+  String get whyLess => '少一点';
+
+  @override
+  String get whyTune => '调整你的组合';
+
+  @override
+  String moveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '基础比率',
+      'survivorship': '幸存者偏差',
+      'regression': '回归均值',
+      'confirmation': '确认偏误',
+      'anchoring': '锚定',
+      'sampling': '抽样',
+      'confounding': '混杂因素',
+      'counterfactual': '和什么比',
+      'multipleComparisons': '多重比较',
+      'availability': '可得性',
+      'sunkCost': '沉没成本',
+      'conjunction': '合取谬误',
+      'conditional': '条件概率',
+      'independence': '独立性',
+      'coincidence': '巧合',
+      'exponential': '指数增长',
+      'reflection': '第一反应',
+      'simpson': '汇总陷阱',
+      'estimation': '估算',
+      'computation': '算一算',
+      'other': '思考',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String moveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '检测有多准，不等于你有多大可能中招',
+      'survivorship': '你手上的数据，是幸存下来的数据',
+      'regression': '极端值会自己回落',
+      'confirmation': '寻找“是”不等于检验',
+      'anchoring': '最先说出的数字会牵动之后所有数字',
+      'sampling': '谁进了样本，决定了样本能说明什么',
+      'confounding': '也许是别的东西同时导致了两者',
+      'counterfactual': '没有对照，变化说明不了什么',
+      'multipleComparisons': '试得够多，总有一个能过',
+      'availability': '容易想象不等于常见',
+      'sunkCost': '花掉的就花掉了，只有剩下的才能决定',
+      'conjunction': '细节让故事更可信，却更不可能',
+      'conditional': '你得知的信息会改变概率',
+      'independence': '随机没有记忆',
+      'coincidence': '尝试足够多时，罕见的事也很常见',
+      'exponential': '没人对翻倍有直觉',
+      'reflection': '最先冒出的答案正是要检查的答案',
+      'simpson': '整体可以偏向任何部分都不偏的方向',
+      'estimation': '把无法回答的问题拆成能估计的部分',
+      'computation': '一个你真能解完的问题',
+      'other': '思考',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String threeStreak(int n) {
     return '$n 天';
   }
