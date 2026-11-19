@@ -5,8 +5,6 @@ import 'package:flutter/foundation.dart'
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:in_app_review/in_app_review.dart';
 import 'package:flutter/material.dart';
-import 'package:native_liquid_glass/native_liquid_glass.dart'
-    show LiquidGlassTabBar, LiquidGlassTabItem, NativeLiquidGlassIcon;
 import 'package:flutter/services.dart';
 import 'package:posthog_flutter/posthog_flutter.dart' show PostHogWidget;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,8 +53,6 @@ import 'screens/gate_screen.dart';
 import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
-import 'widgets/grounds.dart';
-import 'widgets/hand_glass.dart';
 
 /// The seeded crowd for Explore's top list: the live bank, tilted to what
 /// readers keep — a question over a fact, a debate over both, the hard ones,
@@ -1835,22 +1831,15 @@ class _AstutoShellState extends State<AstutoShell>
                   // query the Scaffold hands a body it has extended. The
                   // page is taller than the screen it draws; the screens
                   // are exactly where they were.
-                  for (int i = 0; i < tabs.length; i++)
+                  for (final screen in tabs)
                     ClipRect(
                       child: _KeepAlive(
                         child: Builder(
-                          // Today keeps the bar's room: its card is the
-                          // whole screen and nothing may cover it. Explore
-                          // and the profile scroll on under the glass bar,
-                          // and pad their own foot so the last row can
-                          // still be lifted clear of it.
                           builder: (context) => Padding(
                             padding: EdgeInsets.only(
-                              bottom: i == 0 || !barGlass
-                                  ? MediaQuery.paddingOf(context).bottom
-                                  : 0,
+                              bottom: MediaQuery.paddingOf(context).bottom,
                             ),
-                            child: tabs[i],
+                            child: screen,
                           ),
                         ),
                       ),
@@ -1957,58 +1946,7 @@ class _AstutoTabBar extends StatelessWidget {
     );
   }
 
-  /// Apple's own tab bar, on iOS 26 and later: Liquid Glass as the system
-  /// draws it, the system's symbols and motion, the lit tab in the ink.
-  /// Nothing of it is ours but the three tabs and their names.
-  Widget _appleBar(BuildContext context) {
-    final l = context.l10n;
-    return SafeArea(
-      top: false,
-      minimum: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-      child: ValueListenableBuilder<List<double>>(
-        valueListenable: lit,
-        builder: (context, lit, _) {
-          // The tab most lit is the one the bar shows: Apple's bar lights
-          // one tab at a time, and moves its light itself.
-          var at = 0;
-          for (var i = 1; i < lit.length; i++) {
-            if (lit[i] > lit[at]) at = i;
-          }
-          return LiquidGlassTabBar(
-            currentIndex: at,
-            onTabSelected: onChanged,
-            selectedItemColor: context.p.ink,
-            items: [
-              LiquidGlassTabItem(
-                label: l.tabToday,
-                icon: const NativeLiquidGlassIcon.sfSymbol('sun.max'),
-                selectedIcon: const NativeLiquidGlassIcon.sfSymbol(
-                  'sun.max.fill',
-                ),
-              ),
-              LiquidGlassTabItem(
-                label: l.tabExplore,
-                icon: const NativeLiquidGlassIcon.sfSymbol('safari'),
-                selectedIcon: const NativeLiquidGlassIcon.sfSymbol(
-                  'safari.fill',
-                ),
-              ),
-              LiquidGlassTabItem(
-                label: l.tabProfile,
-                icon: const NativeLiquidGlassIcon.sfSymbol('person'),
-                selectedIcon: const NativeLiquidGlassIcon.sfSymbol(
-                  'person.fill',
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
   Widget _bar(BuildContext context) {
-    if (appleGlass) return _appleBar(context);
     return Padding(
       padding: EdgeInsets.fromLTRB(
         18,
@@ -2016,12 +1954,13 @@ class _AstutoTabBar extends StatelessWidget {
         18,
         MediaQuery.of(context).padding.bottom + 8,
       ),
-      // Glass drawn by hand on Apple's platforms where the system's is not
-      // there (handGlass), solid ground everywhere else.
-      child: LiquidGlass(
-        radius: 26,
-        solid: BoxDecoration(
+      child: Container(
+        height: 58,
+        decoration: BoxDecoration(
           color: context.p.surfaceRaised,
+          // A little less round than a pill: 26 on the bar and 16 on the lit
+          // tab, the pair chosen on the tab-bar sheet (107b). Only the
+          // corners changed; every size, weight and icon is as it was.
           borderRadius: BorderRadius.circular(26),
           border: Border.all(color: context.p.line),
           boxShadow: [
@@ -2034,116 +1973,104 @@ class _AstutoTabBar extends StatelessWidget {
             ),
           ],
         ),
-        child: SizedBox(
-          height: 58,
-          // Only the row of tabs is rebuilt as a move runs. The bar itself —
-          // its ground, its ring, its shadow — is built once and held.
-          child: ValueListenableBuilder<List<double>>(
-            valueListenable: lit,
-            builder: (context, lit, _) => Row(
-              children: List.generate(tabs.length, (i) {
-                final double on = lit[i].clamp(0.0, 1.0);
-                final tab = tabs[i];
-                final String label = switch (i) {
-                  0 => context.l10n.tabToday,
-                  1 => context.l10n.tabExplore,
-                  _ => context.l10n.tabProfile,
-                };
-                // On glass the tabs not lit are drawn nearer the ink than on
-                // solid ground, each with its halo: what passes under the
-                // bar is never the same twice.
-                final Color idle = !handGlass
-                    ? context.p.inkFaint
-                    : context.p.ink.withValues(
-                        alpha: context.p.isDark ? 0.95 : 0.78,
-                      );
-                final Color tint = Color.lerp(idle, context.p.onInverse, on)!;
+        // Only the row of tabs is rebuilt as a move runs. The bar itself —
+        // its ground, its ring, its shadow — is built once and held.
+        child: ValueListenableBuilder<List<double>>(
+          valueListenable: lit,
+          builder: (context, lit, _) => Row(
+            children: List.generate(tabs.length, (i) {
+              final double on = lit[i].clamp(0.0, 1.0);
+              final tab = tabs[i];
+              final String label = switch (i) {
+                0 => context.l10n.tabToday,
+                1 => context.l10n.tabExplore,
+                _ => context.l10n.tabProfile,
+              };
+              final Color tint = Color.lerp(
+                context.p.inkFaint,
+                context.p.onInverse,
+                on,
+              )!;
 
-                // The lit tab is the one with a word in it, so it is the
-                // one that gets the room: three equal thirds fit "Today" and
-                // not "Aujourd'hui". The extra is taken back as the light
-                // moves on, so the bar rebalances with it.
-                return Expanded(
-                  flex: 100 + (60 * on).round(),
-                  child: Semantics(
-                    key: ValueKey('tab-${tab.label}'),
-                    button: true,
-                    selected: on > 0.5,
-                    label: tab.label,
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => onChanged(i),
-                      child: Center(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 10 + 4 * on,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: context.p.inverse.withValues(alpha: on),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                tab.icon,
-                                size: 19,
-                                color: tint,
-                                shadows: on < 0.5 ? glassHalo(context) : null,
-                              ),
-                              // The label belongs to the tab you are on, and
-                              // unfurls as you arrive rather than appearing
-                              // once you have. Three of them side by side is
-                              // a legend nobody reads.
-                              //
-                              // It has to be able to take less than it asks
-                              // for: a third of the bar is not much, and it
-                              // is narrower still while the pill grows.
-                              Flexible(
-                                child: ClipRect(
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    widthFactor: on,
-                                    // Width only. Left to size itself, an
-                                    // Align takes all the height it is
-                                    // offered, which stretched the pill from
-                                    // the height of its own contents to the
-                                    // height of the whole bar — a pill with
-                                    // its ends against both edges, which is
-                                    // what a bar looks like when it has got
-                                    // fat without a single number changing.
-                                    heightFactor: 1,
-                                    // The fade is in the colour rather than
-                                    // in an Opacity: three of those is three
-                                    // saved layers on every frame of a move,
-                                    // for text that is only ever one colour.
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 7),
-                                      child: Text(
-                                        label,
-                                        maxLines: 1,
-                                        softWrap: false,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppText.body(
-                                          size: 13,
-                                          weight: FontWeight.w700,
-                                          color: tint.withValues(alpha: on),
-                                        ),
+              // The lit tab is the one with a word in it, so it is the
+              // one that gets the room: three equal thirds fit "Today" and
+              // not "Aujourd'hui". The extra is taken back as the light
+              // moves on, so the bar rebalances with it.
+              return Expanded(
+                flex: 100 + (60 * on).round(),
+                child: Semantics(
+                  key: ValueKey('tab-${tab.label}'),
+                  button: true,
+                  selected: on > 0.5,
+                  label: tab.label,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => onChanged(i),
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10 + 4 * on,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: context.p.inverse.withValues(alpha: on),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(tab.icon, size: 19, color: tint),
+                            // The label belongs to the tab you are on, and
+                            // unfurls as you arrive rather than appearing
+                            // once you have. Three of them side by side is
+                            // a legend nobody reads.
+                            //
+                            // It has to be able to take less than it asks
+                            // for: a third of the bar is not much, and it
+                            // is narrower still while the pill grows.
+                            Flexible(
+                              child: ClipRect(
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  widthFactor: on,
+                                  // Width only. Left to size itself, an
+                                  // Align takes all the height it is
+                                  // offered, which stretched the pill from
+                                  // the height of its own contents to the
+                                  // height of the whole bar — a pill with
+                                  // its ends against both edges, which is
+                                  // what a bar looks like when it has got
+                                  // fat without a single number changing.
+                                  heightFactor: 1,
+                                  // The fade is in the colour rather than
+                                  // in an Opacity: three of those is three
+                                  // saved layers on every frame of a move,
+                                  // for text that is only ever one colour.
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 7),
+                                    child: Text(
+                                      label,
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppText.body(
+                                        size: 13,
+                                        weight: FontWeight.w700,
+                                        color: tint.withValues(alpha: on),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                );
-              }),
-            ),
+                ),
+              );
+            }),
           ),
         ),
       ),

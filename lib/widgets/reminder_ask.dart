@@ -6,7 +6,6 @@ import '../remote/knobs.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import 'ui.dart';
-import 'grounds.dart';
 
 /// The times the sheet offers, in the order a day runs: before the first
 /// coffee, at lunch, and the evening, when most days are read.
@@ -154,100 +153,97 @@ class _ReminderAskState extends State<ReminderAsk> {
       (_times[1], l.reminderAskLunch),
       (_times[2], l.reminderAskEvening),
     ];
-    return SheetGround(
-      child: Container(
-        key: const ValueKey('reminder-ask'),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        ),
-        padding: EdgeInsets.fromLTRB(
-          22,
-          14,
-          22,
-          MediaQuery.paddingOf(context).bottom + 18,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 38,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: p.lineStrong,
-                    borderRadius: BorderRadius.circular(9),
-                  ),
+    return Container(
+      key: const ValueKey('reminder-ask'),
+      decoration: BoxDecoration(
+        color: p.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        22,
+        14,
+        22,
+        MediaQuery.paddingOf(context).bottom + 18,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 38,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: p.lineStrong,
+                  borderRadius: BorderRadius.circular(9),
                 ),
               ),
-              const SizedBox(height: 20),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              l.reminderAskTitle,
+              style: AppText.display(
+                size: 20,
+                weight: FontWeight.w600,
+                spacing: -0.6,
+                color: p.ink,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              l.reminderAskLine,
+              style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
+            ),
+            // Said only where it is true: a trial that will charge, with a
+            // warning still to come for it (AppState.trialWarning).
+            if (widget.app.warnsBeforeTrialEnds) ...[
+              const SizedBox(height: 6),
               Text(
-                l.reminderAskTitle,
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w600,
-                  spacing: -0.6,
+                l.reminderAskTrialLine,
+                key: const ValueKey('reminder-ask-trial'),
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w500,
+                  height: 1.4,
                   color: p.ink,
                 ),
               ),
-              const SizedBox(height: 6),
-              Text(
-                l.reminderAskLine,
-                style: AppText.body(size: 13.5, height: 1.4, color: p.inkMuted),
-              ),
-              // Said only where it is true: a trial that will charge, with a
-              // warning still to come for it (AppState.trialWarning).
-              if (widget.app.warnsBeforeTrialEnds) ...[
-                const SizedBox(height: 6),
-                Text(
-                  l.reminderAskTrialLine,
-                  key: const ValueKey('reminder-ask-trial'),
-                  style: AppText.body(
-                    size: 13.5,
-                    weight: FontWeight.w500,
-                    height: 1.4,
-                    color: p.ink,
-                  ),
-                ),
-              ],
-              const SizedBox(height: 16),
-              for (final (String at, String label) in times) ...[
-                _Choice(
-                  key: ValueKey('reminder-at-$at'),
-                  label: label,
-                  note: at == _usual ? l.reminderAskUsual : null,
-                  time: _shown(at),
-                  chosen: _at == at,
-                  onTap: () => _choose(at),
-                ),
-                const SizedBox(height: 8),
-              ],
-              _Choice(
-                key: const ValueKey('reminder-at-own'),
-                label: l.reminderAskOther,
-                note: own != null && own == _usual ? l.reminderAskUsual : null,
-                time: own == null ? null : _shown(own),
-                chosen: own != null && _at == own,
-                onTap: own == null || _at == own
-                    ? _pickOwn
-                    : () => _choose(own),
-              ),
-              const SizedBox(height: 18),
-              PrimaryButton(
-                key: const ValueKey('reminder-yes'),
-                label: l.reminderAskYes,
-                height: 52,
-                onPressed: () => Navigator.of(context).pop(_at),
-              ),
-              const SizedBox(height: 4),
-              QuietButton(
-                key: const ValueKey('reminder-not-now'),
-                label: l.reminderAskNotNow,
-                onPressed: () => Navigator.of(context).pop(),
-              ),
             ],
-          ),
+            const SizedBox(height: 16),
+            for (final (String at, String label) in times) ...[
+              _Choice(
+                key: ValueKey('reminder-at-$at'),
+                label: label,
+                note: at == _usual ? l.reminderAskUsual : null,
+                time: _shown(at),
+                chosen: _at == at,
+                onTap: () => _choose(at),
+              ),
+              const SizedBox(height: 8),
+            ],
+            _Choice(
+              key: const ValueKey('reminder-at-own'),
+              label: l.reminderAskOther,
+              note: own != null && own == _usual ? l.reminderAskUsual : null,
+              time: own == null ? null : _shown(own),
+              chosen: own != null && _at == own,
+              onTap: own == null || _at == own ? _pickOwn : () => _choose(own),
+            ),
+            const SizedBox(height: 18),
+            PrimaryButton(
+              key: const ValueKey('reminder-yes'),
+              label: l.reminderAskYes,
+              height: 52,
+              onPressed: () => Navigator.of(context).pop(_at),
+            ),
+            const SizedBox(height: 4),
+            QuietButton(
+              key: const ValueKey('reminder-not-now'),
+              label: l.reminderAskNotNow,
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
         ),
       ),
     );

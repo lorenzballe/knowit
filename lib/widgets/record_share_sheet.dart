@@ -12,7 +12,6 @@ import '../utils/share_image.dart';
 import '../utils/share_link.dart';
 import '../utils/share_origin.dart';
 import 'ui.dart';
-import 'grounds.dart';
 
 /// Opens the share sheet for the reader's own track record.
 ///
@@ -173,81 +172,80 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return SheetGround(
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        ),
-        padding: EdgeInsets.fromLTRB(
-          22,
-          14,
-          22,
-          MediaQuery.of(context).padding.bottom + 24,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 38,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: context.p.lineStrong,
-                    borderRadius: BorderRadius.circular(9),
+    return Container(
+      decoration: BoxDecoration(
+        color: context.p.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        22,
+        14,
+        22,
+        MediaQuery.of(context).padding.bottom + 24,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 38,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: context.p.lineStrong,
+                  borderRadius: BorderRadius.circular(9),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Share your record',
+              style: AppText.display(
+                size: 20,
+                weight: FontWeight.w600,
+                spacing: -0.6,
+                color: context.p.ink,
+              ),
+            ),
+            const SizedBox(height: 20),
+            RepaintBoundary(
+              key: _cardKey,
+              // An image, not a screen: one size whatever the reader's
+              // text size, so a large setting cannot push it off its card.
+              child: MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: TextScaler.noScaling),
+                child: RecordCard(summary: _summary),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: PrimaryButton(
+                    label: _busy ? 'Rendering…' : 'Share image',
+                    height: 52,
+                    onPressed: _busy ? null : _shareImage,
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Share your record',
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w600,
-                  spacing: -0.6,
-                  color: context.p.ink,
+                const SizedBox(width: 10),
+                _CircleAction(
+                  icon: Icons.download_rounded,
+                  onTap: _busy ? null : _shareImage,
                 ),
+                const SizedBox(width: 10),
+                _CircleAction(icon: Icons.copy_rounded, onTap: _copyText),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Center(
+              child: Text(
+                'Nobody else can see your answers',
+                style: AppText.body(size: 12, color: context.p.inkMuted),
               ),
-              const SizedBox(height: 20),
-              RepaintBoundary(
-                key: _cardKey,
-                // An image, not a screen: one size whatever the reader's
-                // text size, so a large setting cannot push it off its card.
-                child: MediaQuery(
-                  data: MediaQuery.of(context)
-                      .copyWith(textScaler: TextScaler.noScaling),
-                  child: RecordCard(summary: _summary),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: PrimaryButton(
-                      label: _busy ? 'Rendering…' : 'Share image',
-                      height: 52,
-                      onPressed: _busy ? null : _shareImage,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  _CircleAction(
-                    icon: Icons.download_rounded,
-                    onTap: _busy ? null : _shareImage,
-                  ),
-                  const SizedBox(width: 10),
-                  _CircleAction(icon: Icons.copy_rounded, onTap: _copyText),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: Text(
-                  'Nobody else can see your answers',
-                  style: AppText.body(size: 12, color: context.p.inkMuted),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -15,7 +15,6 @@ import '../utils/share_link.dart';
 import '../utils/share_origin.dart';
 import 'ui.dart';
 import 'scaled_text.dart';
-import 'grounds.dart';
 
 /// Opens the share sheet for [pill]: the card as it leaves, and the ways it
 /// can go.
@@ -161,100 +160,99 @@ class _ShareSheetState extends State<_ShareSheet> {
   Widget build(BuildContext context) {
     final pill = widget.pill;
 
-    return SheetGround(
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        ),
-        padding: EdgeInsets.fromLTRB(
-          22,
-          14,
-          22,
-          MediaQuery.of(context).padding.bottom + 24,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 38,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: context.p.lineStrong,
-                    borderRadius: BorderRadius.circular(9),
+    return Container(
+      decoration: BoxDecoration(
+        color: context.p.surface,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        22,
+        14,
+        22,
+        MediaQuery.of(context).padding.bottom + 24,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 38,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: context.p.lineStrong,
+                  borderRadius: BorderRadius.circular(9),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              context.l10n.shareThisCard,
+              style: AppText.display(
+                size: 20,
+                weight: FontWeight.w600,
+                spacing: -0.6,
+                color: context.p.ink,
+              ),
+            ),
+            const SizedBox(height: 20),
+            RepaintBoundary(
+              key: _cardKey,
+              // An image, not a screen: set at one size whatever the
+              // reader's text size, or a large setting crops the question
+              // off a picture somebody else will see at theirs.
+              child: MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: TextScaler.noScaling),
+                child: _ShareCard(pill: pill),
+              ),
+            ),
+            const SizedBox(height: 20),
+            PrimaryButton(
+              key: const ValueKey('share-send'),
+              label: context.l10n.shareSendCard,
+              height: 52,
+              onPressed: _busy ? null : _send,
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: _OutlineAction(
+                    key: const ValueKey('share-image'),
+                    icon: Icons.image_outlined,
+                    label: _busy
+                        ? context.l10n.rendering
+                        : context.l10n.shareAsImage,
+                    onTap: _busy ? null : _shareImage,
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                context.l10n.shareThisCard,
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w600,
-                  spacing: -0.6,
-                  color: context.p.ink,
-                ),
-              ),
-              const SizedBox(height: 20),
-              RepaintBoundary(
-                key: _cardKey,
-                // An image, not a screen: set at one size whatever the
-                // reader's text size, or a large setting crops the question
-                // off a picture somebody else will see at theirs.
-                child: MediaQuery(
-                  data: MediaQuery.of(context)
-                      .copyWith(textScaler: TextScaler.noScaling),
-                  child: _ShareCard(pill: pill),
-                ),
-              ),
-              const SizedBox(height: 20),
-              PrimaryButton(
-                key: const ValueKey('share-send'),
-                label: context.l10n.shareSendCard,
-                height: 52,
-                onPressed: _busy ? null : _send,
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: _OutlineAction(
-                      key: const ValueKey('share-image'),
-                      icon: Icons.image_outlined,
-                      label: _busy
-                          ? context.l10n.rendering
-                          : context.l10n.shareAsImage,
-                      onTap: _busy ? null : _shareImage,
-                    ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _OutlineAction(
+                    key: const ValueKey('share-copy-link'),
+                    icon: Icons.link_rounded,
+                    label: context.l10n.shareCopyLink,
+                    onTap: _copyLink,
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _OutlineAction(
-                      key: const ValueKey('share-copy-link'),
-                      icon: Icons.link_rounded,
-                      label: context.l10n.shareCopyLink,
-                      onTap: _copyLink,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Text(
-                context.l10n.shareAnswerNote,
-                key: const ValueKey('share-note'),
-                textAlign: TextAlign.center,
-                // The palette's, not black: on the night sheet black was not
-                // there to read.
-                style: AppText.body(
-                  size: 12,
-                  height: 1.4,
-                  color: context.p.inkMuted,
                 ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              context.l10n.shareAnswerNote,
+              key: const ValueKey('share-note'),
+              textAlign: TextAlign.center,
+              // The palette's, not black: on the night sheet black was not
+              // there to read.
+              style: AppText.body(
+                size: 12,
+                height: 1.4,
+                color: context.p.inkMuted,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
