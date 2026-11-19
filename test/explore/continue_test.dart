@@ -31,6 +31,20 @@ final DateTime _day = DateTime(2026, 11, 19, 9);
   throw StateError('no theme of ten cards');
 }
 
+/// A theme of exactly [parts] parts, or, with [atLeast], of that many or
+/// more.
+(Genre, String, List<CardPath>) _themeOf(int parts, {bool atLeast = false}) {
+  for (final MapEntry<String, List<Genre>> s in kGenres.entries) {
+    for (final Genre g in s.value) {
+      final List<CardPath> all = partsOf(g, s.key, PillBank.live);
+      if (atLeast ? all.length >= parts : all.length == parts) {
+        return (g, s.key, all);
+      }
+    }
+  }
+  throw StateError('no theme of $parts parts');
+}
+
 ExploreSection get _section =>
     ExploreSection.fromJson({'id': 'continue', 'block': 'continue'});
 
@@ -68,7 +82,8 @@ void main() {
   test('a path read partway goes on at its first card not read, and is '
       'gone once read whole', () async {
     final AppState app = await _app(null, plus: true);
-    final (Genre g, String key, CardPath path) = _theme();
+    final (Genre g, String key, List<CardPath> parts) = _themeOf(1);
+    final CardPath path = parts.single;
     await app.notePathOpened(g.id, key, 1);
     app.seenIds.addAll([path.cards[0].id, path.cards[1].id, path.cards[3].id]);
     final List<Started> started = startedOf(app);
@@ -78,6 +93,29 @@ void main() {
     expect(started.single.next, 2);
     app.seenIds.addAll(path.cards.map((c) => c.id));
     expect(startedOf(app), isEmpty);
+  });
+
+  test('a part read whole hands on to the next part, deeper', () async {
+    final AppState app = await _app(null, plus: true);
+    final (Genre g, String key, List<CardPath> parts) = _themeOf(
+      2,
+      atLeast: true,
+    );
+    await app.notePathOpened(g.id, key, 1);
+    app.seenIds.addAll(parts[0].cards.map((c) => c.id));
+    final List<Started> started = startedOf(app);
+    expect(started, hasLength(1));
+    expect(started.single.path!.part, 2);
+    expect(started.single.read, 0);
+    expect(started.single.next, 0);
+    // The next part opened from there and read whole too: the third,
+    // where the theme has one.
+    await app.notePathOpened(g.id, key, 2);
+    app.seenIds.addAll(parts[1].cards.map((c) => c.id));
+    expect(
+      startedOf(app).map((s) => s.path!.part),
+      parts.length > 2 ? [3] : isEmpty,
+    );
   });
 
   test(

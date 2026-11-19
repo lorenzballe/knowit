@@ -4,7 +4,8 @@
 ///
 /// A path counts once the reader has opened it (AppState.pathsOpened) and
 /// read a card of it; a book once one of its ideas is read; either until it
-/// is read whole. Where the next card is past what the free plan opens, the
+/// is read whole. A part of a path read whole hands on to the next part,
+/// deeper, while the theme has one. Where the next card is past what the free plan opens, the
 /// tile says so with a lock and opens the path's or the book's own page,
 /// where the way on is. Nothing started, no section: a new reader never
 /// sees it.
@@ -105,7 +106,27 @@ List<Started> startedOf(AppState app, {String? subject, int limit = 3}) {
     if (o.part < 1 || o.part > parts.length) continue;
     final CardPath path = parts[o.part - 1];
     final int read = path.cards.where((c) => seen.contains(c.id)).length;
-    if (read == 0 || read >= path.cards.length) continue;
+    if (read == 0) continue;
+    if (read >= path.cards.length) {
+      // A part read whole: the theme goes on, deeper, in the next one,
+      // unless that one is in hand already.
+      if (o.part >= parts.length ||
+          !kept.add('${o.genre}|${o.topicKey}|${o.part + 1}')) {
+        continue;
+      }
+      final CardPath deeper = parts[o.part];
+      final int done = deeper.cards.where((c) => seen.contains(c.id)).length;
+      if (done >= deeper.cards.length) continue;
+      out.add(
+        Started.path(
+          deeper,
+          read: done,
+          next: deeper.cards.indexWhere((c) => !seen.contains(c.id)),
+          at: latest(path.cards, o.at),
+        ),
+      );
+      continue;
+    }
     out.add(
       Started.path(
         path,
@@ -259,10 +280,14 @@ class StartedTile extends StatelessWidget {
         kTopics[path?.topicKey ?? topicKeyForName(started.topic)] ??
         kTopics.values.first;
     final String name = path != null ? l.themeOf(path.genre) : book!.book.title;
-    final String meta = [
-      if (path != null && path.parts > 1) l.pathPartOf(path.part, path.parts),
-      l.pathReadOf(started.read, started.cards.length),
-    ].join(' · ');
+    // A part not begun is the next of one read whole: it says so.
+    final String meta = path != null && started.read == 0
+        ? l.pathNextPart(path.part)
+        : [
+            if (path != null && path.parts > 1)
+              l.pathPartOf(path.part, path.parts),
+            l.pathReadOf(started.read, started.cards.length),
+          ].join(' · ');
     final Color tint = p.isDark ? style.color : style.ink;
     return Semantics(
       button: true,
