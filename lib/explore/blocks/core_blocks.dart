@@ -1,4 +1,4 @@
-/// The engine's own blocks: every shelf the app had before Explore came from the server, and the generic ones that show any cards at any size (carousels, grids, bento, hero, banner…), plus text, countdown, subjects, promo, spacer, divider and web; the feed; and the reader's own: their day, quick games, their subjects' levels, cards like the ones they saved, and paths of ten.
+/// The engine's own blocks: every shelf the app had before Explore came from the server, and the generic ones that show any cards at any size (carousels, grids, bento, hero, banner…), plus text, countdown, subjects, promo, spacer, divider and web; the feed; and the reader's own: their day, quick games, their subjects' levels, cards like the ones they saved, paths of ten, and what they started and left.
 ///
 /// The catalogue of them, with their fields and an example each, is
 /// docs/explore/core.md; their checks are
@@ -8,6 +8,7 @@ library;
 import '../explore_block.dart';
 import 'core/books_block.dart';
 import 'core/card_blocks.dart';
+import 'core/continue_block.dart';
 import 'core/cover_block.dart';
 import 'core/feed_block.dart';
 import 'core/goal_block.dart';
@@ -34,6 +35,7 @@ const List<ExploreBlock> blocks = [
   LikeSavedBlock(),
   PathsBlock(),
   BooksBlock(),
+  ContinueBlock(),
   MathsDailyBlock(),
   NewsBlock(),
   GoalBlock(),

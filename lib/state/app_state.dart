@@ -126,6 +126,7 @@ class AppState extends ChangeNotifier {
   static const _kAnswers = 'knowit.answersJson';
   static const _kJudgements = 'knowit.judgements';
   static const _kReadingLog = 'knowit.readingLog';
+  static const _kPathsOpened = 'knowit.pathsOpened';
   static const _kTasteVariant = 'knowit.exp.tasteVariant';
   static const _kReactions = 'knowit.reactions';
   static const _kSureSeed = 'knowit.exp.sureSeed';
@@ -264,6 +265,12 @@ class AppState extends ChangeNotifier {
   /// and its back held the reader, the turns, the hint, how it left
   /// (reading_log.dart). Kept on the phone and in the account's backup.
   List<CardReadEntry> readingLog = [];
+
+  /// The paths the reader has opened, the latest first, each as
+  /// `genre|subject|part|at` (the theme's id, the subject's key, the part
+  /// from 1, seconds since the epoch): what Explore's Continue goes on
+  /// with (continue_block.dart). Kept on the phone, six at most.
+  List<String> pathsOpened = [];
 
   /// What the cards that ask ([Pill.reacts]) did for the reader, in their
   /// own word: the card's id to the [Reaction]'s key. The latest word on a
@@ -652,6 +659,7 @@ class AppState extends ChangeNotifier {
     _trialWarnedAt = _instantOf(_prefs.getString(_kTrialWarnedAt));
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     readingLog = ReadingLog.decode(_prefs.getString(_kReadingLog));
+    pathsOpened = _prefs.getStringList(_kPathsOpened) ?? [];
     reactions = _decodeReactions(_prefs.getString(_kReactions));
     // The phone's own draw for the cards that ask how sure only some of the
     // time (SureAsk): kept, so a card asks or not the same way all day.
@@ -1261,6 +1269,19 @@ class AppState extends ChangeNotifier {
       'where': where,
       ...stint.facts,
     });
+  }
+
+  /// Notes that the reader opened part [part] of theme [genre], of the
+  /// subject keyed [topicKey]: first in [pathsOpened], once.
+  Future<void> notePathOpened(String genre, String topicKey, int part) async {
+    final String head = '$genre|$topicKey|$part|';
+    final int at = _clock().millisecondsSinceEpoch ~/ 1000;
+    pathsOpened = [
+      '$head$at',
+      for (final String k in pathsOpened)
+        if (!k.startsWith(head)) k,
+    ].take(6).toList();
+    await _prefs.setStringList(_kPathsOpened, pathsOpened);
   }
 
   /// Writes a read down (reading_log.dart): on the phone now, and into the
@@ -3379,6 +3400,7 @@ class AppState extends ChangeNotifier {
     answers = {};
     judgements = [];
     readingLog = [];
+    pathsOpened = [];
     reactions = {};
     topicWeights = {};
     topicLevels = {};

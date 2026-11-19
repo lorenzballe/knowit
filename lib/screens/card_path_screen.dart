@@ -43,6 +43,7 @@ class CardPathScreen extends StatelessWidget {
     CardPath path, {
     required String from,
   }) {
+    app.notePathOpened(path.genre.id, path.topicKey, path.part);
     Analytics.capture('path page opened', {
       'genre': path.genre.id,
       'part': path.part,
