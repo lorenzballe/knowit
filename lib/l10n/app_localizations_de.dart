@@ -1671,6 +1671,31 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pathContinue => 'Weiter';
 
   @override
+  String get notesTitle => 'Notizen';
+
+  @override
+  String get noteYours => 'Deine Notiz';
+
+  @override
+  String get noteAdd => 'Notiz hinzufügen';
+
+  @override
+  String get noteEdit => 'Bearbeiten';
+
+  @override
+  String get noteSave => 'Speichern';
+
+  @override
+  String get noteDelete => 'Notiz löschen';
+
+  @override
+  String get noteHint => 'Was willst du dir von dieser Karte merken?';
+
+  @override
+  String get notesEmpty =>
+      'Noch keine Notizen. Öffne eine gespeicherte Karte und schreib auf, was du dir merken willst.';
+
+  @override
   String get pathUnlock => 'Alle Pfade freischalten';
 
   @override

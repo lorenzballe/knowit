@@ -2382,6 +2382,54 @@ abstract class AppLocalizations {
   /// **'Continue'**
   String get pathContinue;
 
+  /// The reader's notes on cards, all of them: a row of the profile and the title of its page. One word.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notesTitle;
+
+  /// Over the reader's own note on a card, and the sheet it is written in.
+  ///
+  /// In en, this message translates to:
+  /// **'Your note'**
+  String get noteYours;
+
+  /// On a card's own page, before the reader has written a note on it.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note'**
+  String get noteAdd;
+
+  /// Beside the reader's note on a card's page: tapping it opens the note to change.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get noteEdit;
+
+  /// The button that keeps the note as written. One word.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get noteSave;
+
+  /// What the bin beside the button does, for screen readers: takes the note away.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the note'**
+  String get noteDelete;
+
+  /// In the empty field the note is written in.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to remember about this card?'**
+  String get noteHint;
+
+  /// The notes page before the reader has written any.
+  ///
+  /// In en, this message translates to:
+  /// **'No notes yet. Open a card you kept and write what you want to remember.'**
+  String get notesEmpty;
+
   /// Button on a path's page on the free plan, its free cards read: opens Astute+.
   ///
   /// In en, this message translates to:

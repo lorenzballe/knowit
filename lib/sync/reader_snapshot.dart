@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import '../models/pill.dart';
 import '../models/place.dart';
+import '../state/card_notes.dart';
 import '../state/reading_log.dart';
 
 /// Everything about a reader that should survive a new phone.
@@ -34,6 +35,7 @@ class ReaderSnapshot {
     this.answers = const {},
     this.judgements = const [],
     this.readingLog = const [],
+    this.notes = const {},
     this.reactions = const {},
     this.pickedTopics = const [],
     this.topicWeights = const {},
@@ -82,6 +84,10 @@ class ReaderSnapshot {
   /// the reader reads, which the app learns their taste from.
   final List<CardReadEntry> readingLog;
 
+  /// The reader's notes on cards, a note taken away kept as an empty one
+  /// with its time, so a merge does not bring it back (card_notes.dart).
+  final Map<String, CardNote> notes;
+
   /// What the cards that ask did for the reader: a card's id to its
   /// reaction's key (AppState.reactions). Strings only, so the backup holds
   /// no array inside an array.
@@ -120,6 +126,7 @@ class ReaderSnapshot {
       answers.isEmpty &&
       judgements.isEmpty &&
       readingLog.isEmpty &&
+      notes.isEmpty &&
       reactions.isEmpty &&
       savedIds.isEmpty &&
       completedDates.isEmpty;
@@ -146,6 +153,7 @@ class ReaderSnapshot {
     // SDK does not refuse one, it throws — the app closed on every backup
     // that carried a read (TestFlight build 63).
     'readingLog': ReadingLog.encode(readingLog),
+    'notes': CardNotes.toJson(notes),
     'reactions': reactions,
     'pickedTopics': pickedTopics,
     'topicWeights': topicWeights,
@@ -186,6 +194,8 @@ class ReaderSnapshot {
           if (e.key is String && Reaction.of(e.value) != null)
             e.key as String: e.value as String,
     };
+
+    final notes = CardNotes.fromJson(raw['notes']);
 
     final readingRaw = raw['readingLog'];
     final readingLog = readingRaw is String
@@ -273,6 +283,7 @@ class ReaderSnapshot {
       judgements: judgements,
       reactions: reactions,
       readingLog: readingLog,
+      notes: notes,
       pickedTopics: strings(raw['pickedTopics']),
       topicWeights: weights,
       topicLevels: levels,
@@ -366,6 +377,13 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
       ? local.readingLog
       : remote.readingLog;
 
+  // Notes: for each card, the word written last, a note taken away
+  // included.
+  final Map<String, CardNote> notes = CardNotes.merged(
+    remote.notes,
+    local.notes,
+  );
+
   // A rung was first reached on whichever phone reached it first: the
   // earlier date is the true one.
   final Map<String, String> rungDates = {...remote.rungDates};
@@ -443,6 +461,7 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     answers: answers,
     judgements: judgements,
     readingLog: readingLog,
+    notes: notes,
     // A card's latest word stands, and this phone's is the latest it knows.
     reactions: {...remote.reactions, ...local.reactions},
     pickedTopics: localChoseMix

@@ -1671,6 +1671,31 @@ class AppLocalizationsNl extends AppLocalizations {
   String get pathContinue => 'Verder';
 
   @override
+  String get notesTitle => 'Notities';
+
+  @override
+  String get noteYours => 'Jouw notitie';
+
+  @override
+  String get noteAdd => 'Notitie toevoegen';
+
+  @override
+  String get noteEdit => 'Bewerken';
+
+  @override
+  String get noteSave => 'Opslaan';
+
+  @override
+  String get noteDelete => 'Notitie verwijderen';
+
+  @override
+  String get noteHint => 'Wat wil je onthouden van deze kaart?';
+
+  @override
+  String get notesEmpty =>
+      'Nog geen notities. Open een kaart die je hebt bewaard en schrijf op wat je wilt onthouden.';
+
+  @override
   String get pathUnlock => 'Alle paden ontgrendelen';
 
   @override

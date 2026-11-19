@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 
 import '../data/topics.dart';
+import 'notes_screen.dart';
 import 'mix_screen.dart';
 import '../analytics.dart';
 import '../cloud.dart';
@@ -648,6 +649,15 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+              // The reader's notes on cards, each written on a card's own
+              // page: all of them in one place.
+              ProfileRow(
+                key: const ValueKey('profile-notes'),
+                mark: ProfileMarks.quill,
+                label: context.l10n.notesTitle,
+                value: app.notedIds.isEmpty ? null : '${app.notedIds.length}',
+                onTap: () => NotesScreen.open(context, app),
               ),
               // Where the reader lives: the city kept, or off, and the way
               // to change either. Only where a place can be read, or one is

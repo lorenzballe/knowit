@@ -1737,6 +1737,31 @@ class AppLocalizationsRu extends AppLocalizations {
   String get pathContinue => 'Дальше';
 
   @override
+  String get notesTitle => 'Заметки';
+
+  @override
+  String get noteYours => 'Твоя заметка';
+
+  @override
+  String get noteAdd => 'Добавить заметку';
+
+  @override
+  String get noteEdit => 'Изменить';
+
+  @override
+  String get noteSave => 'Сохранить';
+
+  @override
+  String get noteDelete => 'Удалить заметку';
+
+  @override
+  String get noteHint => 'Что ты хочешь запомнить из этой карточки?';
+
+  @override
+  String get notesEmpty =>
+      'Заметок пока нет. Открой сохранённую карточку и запиши, что хочешь запомнить.';
+
+  @override
   String get pathUnlock => 'Открыть все маршруты';
 
   @override

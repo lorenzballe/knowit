@@ -1664,6 +1664,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pathContinue => 'Continue';
 
   @override
+  String get notesTitle => 'Notes';
+
+  @override
+  String get noteYours => 'Your note';
+
+  @override
+  String get noteAdd => 'Add a note';
+
+  @override
+  String get noteEdit => 'Edit';
+
+  @override
+  String get noteSave => 'Save';
+
+  @override
+  String get noteDelete => 'Delete the note';
+
+  @override
+  String get noteHint => 'What do you want to remember about this card?';
+
+  @override
+  String get notesEmpty =>
+      'No notes yet. Open a card you kept and write what you want to remember.';
+
+  @override
   String get pathUnlock => 'Unlock every path';
 
   @override

@@ -1672,6 +1672,31 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pathContinue => 'Continuer';
 
   @override
+  String get notesTitle => 'Notes';
+
+  @override
+  String get noteYours => 'Ta note';
+
+  @override
+  String get noteAdd => 'Ajouter une note';
+
+  @override
+  String get noteEdit => 'Modifier';
+
+  @override
+  String get noteSave => 'Enregistrer';
+
+  @override
+  String get noteDelete => 'Supprimer la note';
+
+  @override
+  String get noteHint => 'Que veux-tu retenir de cette carte ?';
+
+  @override
+  String get notesEmpty =>
+      'Pas encore de notes. Ouvre une carte que tu as gardée et écris ce que tu veux retenir.';
+
+  @override
   String get pathUnlock => 'Débloquer tous les parcours';
 
   @override

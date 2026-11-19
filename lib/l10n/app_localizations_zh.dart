@@ -1607,6 +1607,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pathContinue => '继续';
 
   @override
+  String get notesTitle => '笔记';
+
+  @override
+  String get noteYours => '你的笔记';
+
+  @override
+  String get noteAdd => '添加笔记';
+
+  @override
+  String get noteEdit => '编辑';
+
+  @override
+  String get noteSave => '保存';
+
+  @override
+  String get noteDelete => '删除笔记';
+
+  @override
+  String get noteHint => '这张卡片里你想记住什么？';
+
+  @override
+  String get notesEmpty => '还没有笔记。打开一张你收藏的卡片，写下你想记住的内容。';
+
+  @override
   String get pathUnlock => '解锁所有路线';
 
   @override

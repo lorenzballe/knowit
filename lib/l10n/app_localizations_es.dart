@@ -1671,6 +1671,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pathContinue => 'Seguir';
 
   @override
+  String get notesTitle => 'Notas';
+
+  @override
+  String get noteYours => 'Tu nota';
+
+  @override
+  String get noteAdd => 'Añadir una nota';
+
+  @override
+  String get noteEdit => 'Editar';
+
+  @override
+  String get noteSave => 'Guardar';
+
+  @override
+  String get noteDelete => 'Borrar la nota';
+
+  @override
+  String get noteHint => '¿Qué quieres recordar de esta tarjeta?';
+
+  @override
+  String get notesEmpty =>
+      'Aún no hay notas. Abre una tarjeta que hayas guardado y escribe lo que quieras recordar.';
+
+  @override
   String get pathUnlock => 'Desbloquea todos los recorridos';
 
   @override

@@ -1569,6 +1569,30 @@ class RemoteLocalizations extends AppLocalizations {
   String get pathContinue => _words.text('pathContinue') ?? _base.pathContinue;
 
   @override
+  String get notesTitle => _words.text('notesTitle') ?? _base.notesTitle;
+
+  @override
+  String get noteYours => _words.text('noteYours') ?? _base.noteYours;
+
+  @override
+  String get noteAdd => _words.text('noteAdd') ?? _base.noteAdd;
+
+  @override
+  String get noteEdit => _words.text('noteEdit') ?? _base.noteEdit;
+
+  @override
+  String get noteSave => _words.text('noteSave') ?? _base.noteSave;
+
+  @override
+  String get noteDelete => _words.text('noteDelete') ?? _base.noteDelete;
+
+  @override
+  String get noteHint => _words.text('noteHint') ?? _base.noteHint;
+
+  @override
+  String get notesEmpty => _words.text('notesEmpty') ?? _base.notesEmpty;
+
+  @override
   String get pathUnlock => _words.text('pathUnlock') ?? _base.pathUnlock;
 
   @override

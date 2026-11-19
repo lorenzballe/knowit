@@ -43,6 +43,7 @@ import '../utils/reminders.dart';
 import 'journey_record.dart';
 import 'music_sound.dart';
 import 'progress.dart';
+import 'card_notes.dart';
 import 'reading_log.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
@@ -127,6 +128,7 @@ class AppState extends ChangeNotifier {
   static const _kJudgements = 'knowit.judgements';
   static const _kReadingLog = 'knowit.readingLog';
   static const _kPathsOpened = 'knowit.pathsOpened';
+  static const _kNotes = 'knowit.notes';
   static const _kTasteVariant = 'knowit.exp.tasteVariant';
   static const _kReactions = 'knowit.reactions';
   static const _kSureSeed = 'knowit.exp.sureSeed';
@@ -271,6 +273,11 @@ class AppState extends ChangeNotifier {
   /// from 1, seconds since the epoch): what Explore's Continue goes on
   /// with (continue_block.dart). Kept on the phone, six at most.
   List<String> pathsOpened = [];
+
+  /// The reader's notes, by card: a few lines of their own on a card
+  /// (card_notes.dart). A note taken away stays as an empty one, so that
+  /// an older backup does not bring it back.
+  Map<String, CardNote> notes = {};
 
   /// What the cards that ask ([Pill.reacts]) did for the reader, in their
   /// own word: the card's id to the [Reaction]'s key. The latest word on a
@@ -660,6 +667,7 @@ class AppState extends ChangeNotifier {
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     readingLog = ReadingLog.decode(_prefs.getString(_kReadingLog));
     pathsOpened = _prefs.getStringList(_kPathsOpened) ?? [];
+    notes = CardNotes.decode(_prefs.getString(_kNotes));
     reactions = _decodeReactions(_prefs.getString(_kReactions));
     // The phone's own draw for the cards that ask how sure only some of the
     // time (SureAsk): kept, so a card asks or not the same way all day.
@@ -1269,6 +1277,46 @@ class AppState extends ChangeNotifier {
       'where': where,
       ...stint.facts,
     });
+  }
+
+  /// The reader's note on [pillId], or null when there is none.
+  String? noteOn(String pillId) {
+    final CardNote? note = notes[pillId];
+    return note == null || note.isEmpty ? null : note.text;
+  }
+
+  /// The cards with a note, the one written last first.
+  List<String> get notedIds {
+    final List<MapEntry<String, CardNote>> kept = [
+      for (final MapEntry<String, CardNote> e in notes.entries)
+        if (!e.value.isEmpty) e,
+    ]..sort((a, b) => b.value.at.compareTo(a.value.at));
+    return [for (final MapEntry<String, CardNote> e in kept) e.key];
+  }
+
+  /// Writes [text] as the reader's note on [pillId], trimmed and cut to
+  /// [CardNotes.maxLength]; empty, it takes the note away.
+  Future<void> setNote(String pillId, String text) async {
+    String kept = text.trim();
+    if (kept.length > CardNotes.maxLength) {
+      kept = kept.substring(0, CardNotes.maxLength).trimRight();
+    }
+    final String? was = noteOn(pillId);
+    if (kept == (was ?? '')) return;
+    notes = {
+      ...notes,
+      pillId: CardNote(kept, _clock().millisecondsSinceEpoch ~/ 1000),
+    };
+    await _prefs.setString(_kNotes, CardNotes.encode(notes));
+    Analytics.capture(
+      kept.isEmpty
+          ? 'note removed'
+          : was == null
+          ? 'note written'
+          : 'note changed',
+      {...cardFacts(pillId), 'length': kept.length, 'notes': notedIds.length},
+    );
+    notifyListeners();
   }
 
   /// Notes that the reader opened part [part] of theme [genre], of the
@@ -3401,6 +3449,7 @@ class AppState extends ChangeNotifier {
     judgements = [];
     readingLog = [];
     pathsOpened = [];
+    notes = {};
     reactions = {};
     topicWeights = {};
     topicLevels = {};
@@ -3886,6 +3935,7 @@ class AppState extends ChangeNotifier {
     judgements: List<Judgement>.from(judgements),
     readingLog: List<CardReadEntry>.from(readingLog),
     reactions: Map<String, String>.from(reactions),
+    notes: Map<String, CardNote>.from(notes),
     pickedTopics: pickedTopics.toList(),
     topicWeights: Map<String, double>.from(topicWeights),
     topicLevels: Map<String, int>.from(topicLevels),
@@ -3923,6 +3973,7 @@ class AppState extends ChangeNotifier {
     judgements = List<Judgement>.from(s.judgements);
     readingLog = List<CardReadEntry>.from(s.readingLog);
     reactions = Map<String, String>.from(s.reactions);
+    notes = Map<String, CardNote>.from(s.notes);
     if (s.pickedTopics.isNotEmpty) pickedTopics = s.pickedTopics.toSet();
     topicWeights = Map<String, double>.from(s.topicWeights);
     topicLevels = Map<String, int>.from(s.topicLevels);
@@ -3959,6 +4010,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setString(_kDayLog, jsonEncode(dayLog));
     await _prefs.setString(_kReadingLog, ReadingLog.encode(readingLog));
     await _prefs.setString(_kReactions, jsonEncode(reactions));
+    await _prefs.setString(_kNotes, CardNotes.encode(notes));
     await _prefs.setStringList(_kSaidIds, saidIds);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);

@@ -1617,6 +1617,30 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pathContinue => '이어서';
 
   @override
+  String get notesTitle => '메모';
+
+  @override
+  String get noteYours => '내 메모';
+
+  @override
+  String get noteAdd => '메모 추가';
+
+  @override
+  String get noteEdit => '편집';
+
+  @override
+  String get noteSave => '저장';
+
+  @override
+  String get noteDelete => '메모 삭제';
+
+  @override
+  String get noteHint => '이 카드에서 기억하고 싶은 것은?';
+
+  @override
+  String get notesEmpty => '아직 메모가 없어요. 저장한 카드를 열고 기억하고 싶은 것을 적어 보세요.';
+
+  @override
   String get pathUnlock => '모든 코스 열기';
 
   @override

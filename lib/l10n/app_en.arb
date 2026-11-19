@@ -1717,6 +1717,38 @@
  "@pathContinue": {
   "description": "Beside a path begun, on an area's page. One short word."
  },
+ "notesTitle": "Notes",
+ "@notesTitle": {
+  "description": "The reader's notes on cards, all of them: a row of the profile and the title of its page. One word."
+ },
+ "noteYours": "Your note",
+ "@noteYours": {
+  "description": "Over the reader's own note on a card, and the sheet it is written in."
+ },
+ "noteAdd": "Add a note",
+ "@noteAdd": {
+  "description": "On a card's own page, before the reader has written a note on it."
+ },
+ "noteEdit": "Edit",
+ "@noteEdit": {
+  "description": "Beside the reader's note on a card's page: tapping it opens the note to change."
+ },
+ "noteSave": "Save",
+ "@noteSave": {
+  "description": "The button that keeps the note as written. One word."
+ },
+ "noteDelete": "Delete the note",
+ "@noteDelete": {
+  "description": "What the bin beside the button does, for screen readers: takes the note away."
+ },
+ "noteHint": "What do you want to remember about this card?",
+ "@noteHint": {
+  "description": "In the empty field the note is written in."
+ },
+ "notesEmpty": "No notes yet. Open a card you kept and write what you want to remember.",
+ "@notesEmpty": {
+  "description": "The notes page before the reader has written any."
+ },
  "pathUnlock": "Unlock every path",
  "@pathUnlock": {
   "description": "Button on a path's page on the free plan, its free cards read: opens Astute+."

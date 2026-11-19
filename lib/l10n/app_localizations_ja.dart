@@ -1613,6 +1613,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pathContinue => '続ける';
 
   @override
+  String get notesTitle => 'メモ';
+
+  @override
+  String get noteYours => 'あなたのメモ';
+
+  @override
+  String get noteAdd => 'メモを追加';
+
+  @override
+  String get noteEdit => '編集';
+
+  @override
+  String get noteSave => '保存';
+
+  @override
+  String get noteDelete => 'メモを削除';
+
+  @override
+  String get noteHint => 'このカードで覚えておきたいことは？';
+
+  @override
+  String get notesEmpty => 'まだメモはありません。保存したカードを開いて、覚えておきたいことを書きましょう。';
+
+  @override
   String get pathUnlock => 'すべてのコースを解放';
 
   @override

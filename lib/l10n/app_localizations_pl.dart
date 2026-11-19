@@ -1731,6 +1731,31 @@ class AppLocalizationsPl extends AppLocalizations {
   String get pathContinue => 'Dalej';
 
   @override
+  String get notesTitle => 'Notatki';
+
+  @override
+  String get noteYours => 'Twoja notatka';
+
+  @override
+  String get noteAdd => 'Dodaj notatkę';
+
+  @override
+  String get noteEdit => 'Edytuj';
+
+  @override
+  String get noteSave => 'Zapisz';
+
+  @override
+  String get noteDelete => 'Usuń notatkę';
+
+  @override
+  String get noteHint => 'Co chcesz zapamiętać z tej karty?';
+
+  @override
+  String get notesEmpty =>
+      'Nie masz jeszcze notatek. Otwórz zapisaną kartę i zapisz, co chcesz zapamiętać.';
+
+  @override
   String get pathUnlock => 'Odblokuj wszystkie ścieżki';
 
   @override
