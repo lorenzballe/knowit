@@ -85,6 +85,11 @@ class ExploreScreenState extends State<ExploreScreen>
   /// The subject's display name, or null for all of them.
   String? _subject;
 
+  /// Whether the head has gone all the way up, the cards running under the
+  /// status bar: the soft edge there then reaches a little below it, as it
+  /// cannot while the subjects' row is in view, which it would blur.
+  final ValueNotifier<bool> _headAway = ValueNotifier(false);
+
   bool _searching = false;
   String _query = '';
 
@@ -225,6 +230,7 @@ class ExploreScreenState extends State<ExploreScreen>
 
   @override
   void dispose() {
+    _headAway.dispose();
     _stay.dispose();
     _searchSettle?.cancel();
     _field.dispose();
@@ -574,6 +580,7 @@ class ExploreScreenState extends State<ExploreScreen>
                     top: top,
                     row: head,
                     ground: context.p.surface,
+                    away: _headAway,
                   ),
                 ),
                 SliverPadding(
@@ -613,18 +620,30 @@ class ExploreScreenState extends State<ExploreScreen>
             ),
           ),
         // Under the status bar, where the cards run under the time and the
-        // battery: a light blur, strongest at the top and gone at its foot,
-        // as the edge of a list under a bar is drawn on iOS 26, and only a
-        // breath of the page's colour, so the time is read over a card
-        // without the top of the screen being darkened. Over the head,
-        // which is the page's colour, it is not seen.
+        // battery: they go soft and dissolve into the page towards the top
+        // of the screen, strongest at its edge, as a list under a bar is
+        // drawn on iOS 26. Once the head is all the way up the edge reaches
+        // a little below the status bar, over the cards alone; while the
+        // subjects' row is in view it stops at the status bar, so the row is
+        // never blurred. Over the head, which is the page's colour, it is
+        // not seen.
         Positioned(
           key: const ValueKey('explore-top-edge'),
           left: 0,
           right: 0,
           top: 0,
-          height: top,
-          child: IgnorePointer(child: _TopEdge(ground: context.p.surface)),
+          child: IgnorePointer(
+            child: ValueListenableBuilder<bool>(
+              valueListenable: _headAway,
+              builder: (context, away, child) => AnimatedContainer(
+                duration: const Duration(milliseconds: 180),
+                curve: Curves.easeOut,
+                height: away ? top + math.max(18.0, top * 0.45) : top,
+                child: child,
+              ),
+              child: _TopEdge(ground: context.p.surface),
+            ),
+          ),
         ),
       ],
     );
@@ -875,22 +894,23 @@ class _Head extends StatelessWidget {
 /// which is what makes the row readable as a palette rather than as a row
 /// of grey pills.
 /// The top edge of the screen where the cards run under the status bar: a
-/// blur that is strongest at the top and thins to nothing at the foot, so
-/// the cards go soft under the time and the battery rather than dark. It is
-/// laid in thin slices, each blurring the cards themselves rather than the
-/// slice above it, by a little less than the one before: close enough that
-/// no seam shows between them, and one picture of the cards serves them
-/// all. A breath of [ground] over it keeps the time legible on a bright card.
+/// blur strongest at the top and thinning to nothing at the foot, with the
+/// page's colour over it, so the cards go soft and dissolve into the page
+/// under the time and the battery. The blur is laid in thin slices, each
+/// blurring the cards themselves rather than the slice above it, by a
+/// little less than the one before: close enough that no seam shows, and
+/// one picture of the cards serves them all.
 class _TopEdge extends StatelessWidget {
   const _TopEdge({required this.ground});
 
   final Color ground;
 
   /// From the top of the screen down: how soft each slice is.
-  static const List<double> sigmas = [6, 5, 4, 3.1, 2.3, 1.6, 1, 0.5];
+  static const List<double> sigmas = [9, 7.5, 6, 4.6, 3.4, 2.4, 1.5, 0.8];
 
   @override
   Widget build(BuildContext context) => Stack(
+    fit: StackFit.expand,
     children: [
       BackdropGroup(
         child: Column(
@@ -907,18 +927,23 @@ class _TopEdge extends StatelessWidget {
           ],
         ),
       ),
+      // The page's own colour over the blur, nearly whole at the edge of
+      // the screen and gone at the foot: what passes under the time
+      // dissolves into the page rather than being cut by a line.
       DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              ground.withValues(alpha: 0.16),
+              ground.withValues(alpha: 0.9),
+              ground.withValues(alpha: 0.55),
+              ground.withValues(alpha: 0.18),
               ground.withValues(alpha: 0),
             ],
+            stops: const [0, 0.45, 0.75, 1],
           ),
         ),
-        child: const SizedBox.expand(),
       ),
     ],
   );
@@ -930,7 +955,15 @@ class _TopEdge extends StatelessWidget {
 /// scrolled up, as Instagram's does. It stands in the status bar's room on
 /// the page's own colour, the row of subjects under it.
 class _FloatingHead extends SliverPersistentHeaderDelegate {
-  _FloatingHead({required this.top, required this.row, required this.ground});
+  _FloatingHead({
+    required this.top,
+    required this.row,
+    required this.ground,
+    required this.away,
+  });
+
+  /// Set, once the frame is drawn, to whether the head is all the way up.
+  final ValueNotifier<bool> away;
 
   /// The status bar's room.
   final double top;
@@ -950,28 +983,41 @@ class _FloatingHead extends SliverPersistentHeaderDelegate {
   double get maxExtent => top + rowHeight;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlaps) =>
-      // Moved, not squeezed: drawn whole and cut by what is left of it in
-      // view, so it slides up and down rather than shrinking.
-      ClipRect(
-        child: OverflowBox(
-          alignment: Alignment.bottomCenter,
-          minHeight: maxExtent,
-          maxHeight: maxExtent,
-          child: ColoredBox(
-            key: const ValueKey('explore-head'),
-            color: ground,
-            child: Padding(
-              padding: EdgeInsets.only(top: top),
-              child: SizedBox(height: rowHeight, child: row),
-            ),
-          ),
+  Widget build(BuildContext context, double shrinkOffset, bool overlaps) {
+    // Told after the frame, never while the list is being laid out.
+    final bool gone = shrinkOffset >= maxExtent - 0.5;
+    if (gone != away.value) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (away.value != gone) away.value = gone;
+      });
+    }
+    return _moved();
+  }
+
+  /// Moved, not squeezed: drawn whole and cut by what is left of it in view,
+  /// so it slides up and down rather than shrinking.
+  Widget _moved() => ClipRect(
+    child: OverflowBox(
+      alignment: Alignment.bottomCenter,
+      minHeight: maxExtent,
+      maxHeight: maxExtent,
+      child: ColoredBox(
+        key: const ValueKey('explore-head'),
+        color: ground,
+        child: Padding(
+          padding: EdgeInsets.only(top: top),
+          child: SizedBox(height: rowHeight, child: row),
         ),
-      );
+      ),
+    ),
+  );
 
   @override
   bool shouldRebuild(_FloatingHead old) =>
-      old.top != top || old.row != row || old.ground != ground;
+      old.top != top ||
+      old.row != row ||
+      old.ground != ground ||
+      old.away != away;
 }
 
 class _SubjectRow extends StatelessWidget {
