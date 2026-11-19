@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '../data/pills_repository.dart' show kPillsPerDay;
 import '../l10n/l10n.dart';
 
 import 'package:flutter/services.dart';
@@ -38,6 +39,8 @@ import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
+import '../explore/blocks/core/your_day_block.dart' show DayPanel, weekOf;
+import '../widgets/hand_glass.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -305,7 +308,13 @@ class ProfileScreen extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),
+        // The foot clears a glass tab bar the list runs under.
+        padding: EdgeInsets.fromLTRB(
+          22,
+          8,
+          22,
+          24 + (barGlass ? MediaQuery.paddingOf(context).bottom : 0),
+        ),
         children: [
           // The record, not an identity. This screen used to open with a
           // circle of initials nobody typed, a name nobody set, and four
@@ -316,7 +325,23 @@ class ProfileScreen extends StatelessWidget {
           Eyebrow(context.l10n.yourRecord),
           const SizedBox(height: 12),
           _Headline(app: app),
-          if (app.weekCompletion().any((day) => day)) ...[
+          // The day and the streak: how many of today's five are read, the
+          // week, the days in a row. They were at the top of Explore, which
+          // now opens straight on its cards; the record is where a reader
+          // looks for how they are doing. Before a day is dealt, the week.
+          if (app.todaysDeck.isNotEmpty) ...[
+            const SizedBox(height: 18),
+            DayPanel(
+              read: app.dayClosed
+                  ? kPillsPerDay
+                  : app.todayIndex.clamp(0, kPillsPerDay),
+              of: kPillsPerDay,
+              streak: app.liveStreak,
+              week: weekOf(app, app.today),
+              today: app.today,
+              onTap: onToday ?? () {},
+            ),
+          ] else if (app.weekCompletion().any((day) => day)) ...[
             const SizedBox(height: 18),
             WeekStrip(week: app.weekCompletion(), barHeight: 34),
           ],

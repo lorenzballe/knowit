@@ -532,27 +532,15 @@ void main() {
     }
   });
 
-  group('the streak by the title', () {
-    testWidgets('a flame and the days beside the search, a tap to Today; '
-        'nothing at 0', (tester) async {
-      int todays = 0;
-      await _pumpScreen(tester, await readyApp(), onToday: () => todays++);
-      expect(find.byKey(const ValueKey('explore-streak')), findsNothing);
-
+  group('the streak', () {
+    testWidgets('is not on Explore, which opens on its cards: the day and '
+        'the streak are at the top of Profile', (tester) async {
       final AppState app = await readyApp(const {}, _wednesday);
       app.streak = 12;
       app.lastCompletionDate = '2026-11-10';
-      await _pumpScreen(tester, app, onToday: () => todays++);
-      expect(find.byKey(const ValueKey('explore-streak')), findsOneWidget);
-      expect(
-        find.descendant(
-          of: find.byKey(const ValueKey('explore-streak')),
-          matching: find.text('12 days'),
-        ),
-        findsOneWidget,
-      );
-      await tester.tap(find.byKey(const ValueKey('explore-streak')));
-      expect(todays, 1);
+      await _pumpScreen(tester, app, onToday: () {});
+      expect(find.byKey(const ValueKey('explore-streak')), findsNothing);
+      expect(find.text('12 days'), findsNothing);
     });
   });
   group('paths', () {

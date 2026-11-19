@@ -10,24 +10,6 @@
       "block": "offline"
     },
     {
-      "id": "your-day",
-      "block": "your-day",
-      "gap": 4,
-      "audience": {
-        "any": [
-          {
-            "minBuild": 55
-          },
-          {
-            "platforms": [
-              "web",
-              "android"
-            ]
-          }
-        ]
-      }
-    },
-    {
       "id": "maths-daily",
       "block": "maths-daily",
       "title": {

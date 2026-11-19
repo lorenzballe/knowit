@@ -33,6 +33,7 @@ import 'mix_screen.dart';
 import '../analytics.dart';
 import '../measure/screens.dart';
 import '../measure/shelves.dart';
+import '../widgets/hand_glass.dart';
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -471,24 +472,15 @@ class ExploreScreenState extends State<ExploreScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // The streak by the title follows the day as it is finished.
-                ListenableBuilder(
-                  listenable: widget.app,
-                  builder: (context, _) => Padding(
+                // One row, as Instagram's Explore is: the lens that opens
+                // the search, then the subjects. The tab says where this is;
+                // a title said it again.
+                if (_searching)
+                  Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
                     child: _Head(
-                      streak: widget.app.liveStreak,
-                      onStreak: widget.onToday == null ? null : openToday,
-                      searching: _searching,
                       field: _field,
                       focus: _focus,
-                      onOpenSearch: () {
-                        Analytics.capture('explore search opened');
-                        // What is opened from the search was not opened from a shelf.
-                        _sight.forgetTouch();
-                        setState(() => _searching = true);
-                        _focus.requestFocus();
-                      },
                       onCloseSearch: () {
                         Analytics.capture('explore search closed', {
                           'had_query': _query.trim().isNotEmpty,
@@ -501,11 +493,17 @@ class ExploreScreenState extends State<ExploreScreen>
                       },
                       onChanged: _typed,
                     ),
-                  ),
-                ),
-                if (!_searching)
+                  )
+                else
                   _SubjectRow(
                     selected: _subject,
+                    onSearch: () {
+                      Analytics.capture('explore search opened');
+                      // What is opened from the search was not opened from a shelf.
+                      _sight.forgetTouch();
+                      setState(() => _searching = true);
+                      _focus.requestFocus();
+                    },
                     // A subject, All, or the lit subject again — the last two both
                     // clear it, so the way back is whichever the finger finds first.
                     onPick: (name) {
@@ -582,7 +580,11 @@ class ExploreScreenState extends State<ExploreScreen>
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverPadding(
-                  padding: const EdgeInsets.only(bottom: 30),
+                  padding: EdgeInsets.only(
+                    bottom:
+                        30 +
+                        (barGlass ? MediaQuery.paddingOf(context).bottom : 0),
+                  ),
                   sliver: ExploreSliver(host: this, slots: slots),
                 ),
               ],
@@ -590,27 +592,29 @@ class ExploreScreenState extends State<ExploreScreen>
           ),
         ),
         // The shelves run under the tab bar rather than stopping short of
-        // it, so the last one has to say it is not the end.
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: 40,
-          child: IgnorePointer(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    context.p.surface.withValues(alpha: 0),
-                    context.p.surface,
-                  ],
+        // it, so the last one has to say it is not the end: under a solid
+        // bar. Under glass they show through it, and say it themselves.
+        if (!barGlass)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 40,
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      context.p.surface.withValues(alpha: 0),
+                      context.p.surface,
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
@@ -777,150 +781,74 @@ class ExploreScreenState extends State<ExploreScreen>
   }
 }
 
-/// The title, and the way into the whole pool.
+/// The search, open: the field over every card, and the way out of it.
 class _Head extends StatelessWidget {
   const _Head({
-    required this.streak,
-    required this.onStreak,
-    required this.searching,
     required this.field,
     required this.focus,
-    required this.onOpenSearch,
     required this.onCloseSearch,
     required this.onChanged,
   });
 
-  /// The days in a row, said in a chip beside the search: nothing at 0.
-  final int streak;
-
-  /// A tap on the streak: the day it counts is on Today.
-  final VoidCallback? onStreak;
-
-  final bool searching;
   final TextEditingController field;
   final FocusNode focus;
-  final VoidCallback onOpenSearch;
   final VoidCallback onCloseSearch;
   final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    if (searching) {
-      return Row(
-        children: [
-          Expanded(
-            child: Container(
-              height: 38,
-              padding: const EdgeInsets.symmetric(horizontal: 13),
-              decoration: BoxDecoration(
-                color: context.p.ink.withValues(alpha: 0.07),
-                borderRadius: BorderRadius.circular(13),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.search_rounded,
-                    size: 16,
-                    color: context.p.ink.withValues(alpha: 0.6),
-                  ),
-                  const SizedBox(width: 9),
-                  Expanded(
-                    child: TextField(
-                      controller: field,
-                      focusNode: focus,
-                      onChanged: onChanged,
-                      textInputAction: TextInputAction.search,
-                      style: AppText.body(size: 14.5, color: context.p.ink),
-                      cursorColor: context.p.ink,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        border: InputBorder.none,
-                        hintText: context.l10n.searchEveryCard,
-                        hintStyle: AppText.body(
-                          size: 14.5,
-                          color: context.p.inkFaint,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: onCloseSearch,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 12),
-              child: Text(
-                context.l10n.cancel,
-                style: AppText.body(
-                  size: 14,
-                  weight: FontWeight.w500,
-                  color: context.p.inkMuted,
-                ),
-              ),
-            ),
-          ),
-        ],
-      );
-    }
-
     return Row(
       children: [
         Expanded(
-          child: Text(
-            context.l10n.tabExplore,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.display(
-              size: 27,
-              weight: FontWeight.w600,
-              height: 1,
-              spacing: -0.8,
-              color: context.p.ink,
+          child: Container(
+            height: 38,
+            padding: const EdgeInsets.symmetric(horizontal: 13),
+            decoration: BoxDecoration(
+              color: context.p.ink.withValues(alpha: 0.07),
+              borderRadius: BorderRadius.circular(19),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.search_rounded,
+                  size: 16,
+                  color: context.p.ink.withValues(alpha: 0.6),
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: TextField(
+                    controller: field,
+                    focusNode: focus,
+                    onChanged: onChanged,
+                    textInputAction: TextInputAction.search,
+                    style: AppText.body(size: 14.5, color: context.p.ink),
+                    cursorColor: context.p.ink,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      border: InputBorder.none,
+                      hintText: context.l10n.searchEveryCard,
+                      hintStyle: AppText.body(
+                        size: 14.5,
+                        color: context.p.inkFaint,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        // The streak, where the eye goes after the title: kept in sight on
-        // the tab a reader goes to once the day is read.
-        if (streak > 0)
-          GestureDetector(
-            key: const ValueKey('explore-streak'),
-            behavior: HitTestBehavior.opaque,
-            onTap: onStreak,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 4),
-              child: StreakChip(streak: streak, height: 38),
-            ),
-          ),
-        Semantics(
-          key: const ValueKey('explore-search'),
-          button: true,
-          label: context.l10n.searchEveryCard,
-          // A 38 tile in a 44 target, its right edge on the margin.
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: onOpenSearch,
-            child: SizedBox(
-              width: 44,
-              height: 44,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: 38,
-                  height: 38,
-                  decoration: BoxDecoration(
-                    color: context.p.ink.withValues(alpha: 0.07),
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Icons.search_rounded,
-                    size: 16,
-                    color: context.p.ink.withValues(alpha: 0.6),
-                  ),
-                ),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onCloseSearch,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12),
+            child: Text(
+              context.l10n.cancel,
+              style: AppText.body(
+                size: 14,
+                weight: FontWeight.w500,
+                color: context.p.inkMuted,
               ),
             ),
           ),
@@ -936,9 +864,16 @@ class _Head extends StatelessWidget {
 /// which is what makes the row readable as a palette rather than as a row
 /// of grey pills.
 class _SubjectRow extends StatelessWidget {
-  const _SubjectRow({required this.selected, required this.onPick});
+  const _SubjectRow({
+    required this.selected,
+    required this.onPick,
+    required this.onSearch,
+  });
 
   final String? selected;
+
+  /// The lens at the head of the row: the search over every card.
+  final VoidCallback onSearch;
 
   /// Null clears the filter — the "All" at the head of the row.
   final ValueChanged<String?> onPick;
@@ -952,9 +887,11 @@ class _SubjectRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         // "All" first, so the way back to everything is a chip and not
         // the knowledge that tapping the lit one again clears it.
-        itemCount: kMixSubjects.length + 1,
+        itemCount: kMixSubjects.length + 2,
         separatorBuilder: (_, _) => const SizedBox(width: 7),
         itemBuilder: (context, i) {
+          if (i == 0) return _Lens(onTap: onSearch);
+          i -= 1;
           final MixSubject? subject = i == 0 ? null : kMixSubjects[i - 1];
           final bool on = subject == null
               ? selected == null
@@ -1018,6 +955,43 @@ class _SubjectRow extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+/// The lens at the head of the subjects' row: the search over every card,
+/// round, the height of a chip.
+class _Lens extends StatelessWidget {
+  const _Lens({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      key: const ValueKey('explore-search'),
+      button: true,
+      label: context.l10n.searchEveryCard,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Center(
+          child: Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(
+              color: context.p.ink.withValues(alpha: 0.07),
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.search_rounded,
+              size: 18,
+              color: context.p.ink.withValues(alpha: 0.7),
+            ),
+          ),
+        ),
       ),
     );
   }

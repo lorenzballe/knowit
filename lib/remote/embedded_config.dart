@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "0d33a80eeb568def",
+ "hash": "0b5524edfd9a7319",
  "app": {
   "gate": null,
   "flags": {},
@@ -24,24 +24,6 @@ const String kEmbeddedRemote = r'''
    {
     "id": "offline",
     "block": "offline"
-   },
-   {
-    "id": "your-day",
-    "block": "your-day",
-    "gap": 4,
-    "audience": {
-     "any": [
-      {
-       "minBuild": 55
-      },
-      {
-       "platforms": [
-        "web",
-        "android"
-       ]
-      }
-     ]
-    }
    },
    {
     "id": "maths-daily",
