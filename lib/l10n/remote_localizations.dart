@@ -947,10 +947,6 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('fivePillsADayPick') ?? _base.fivePillsADayPick;
 
   @override
-  String nSelected(int n) =>
-      _words.format('nSelected', localeName, {'n': n}) ?? _base.nSelected(n);
-
-  @override
   String startWithNTopics(int n) =>
       _words.format('startWithNTopics', localeName, {'n': n}) ??
       _base.startWithNTopics(n);
@@ -4926,17 +4922,6 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get mathsDailyAnother =>
       _words.text('mathsDailyAnother') ?? _base.mathsDailyAnother;
-
-  @override
-  String get newsOpen => _words.text('newsOpen') ?? _base.newsOpen;
-
-  @override
-  String get newsRead => _words.text('newsRead') ?? _base.newsRead;
-
-  @override
-  String newsOutlets(int count) =>
-      _words.format('newsOutlets', localeName, {'count': count}) ??
-      _base.newsOutlets(count);
 
   @override
   String goalShelf(String goal) =>

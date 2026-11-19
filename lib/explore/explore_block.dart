@@ -98,6 +98,11 @@ class ExploreSection {
   /// Who it is for, and when (Audience.allows in lib/remote/remote.dart).
   Object? get audience => json['audience'];
 
+  /// Whether it is drawn on a subject's page too, when the section says:
+  /// `"subjectPages": false` keeps it to Explore for every subject. Null
+  /// leaves it to the block ([ExploreBlock.onSubjectPages]).
+  bool? get subjectPages => get<bool>('subjectPages');
+
   /// A field of the type the block expects, or null.
   T? get<T>(String key) {
     final Object? raw = json[key];
@@ -198,4 +203,12 @@ abstract class ExploreBlock {
   /// cards for it, nothing for this reader — and Explore leaves it out
   /// altogether, title and all.
   Widget? build(BuildContext context, ExploreHost host, ExploreSection section);
+
+  /// Whether the block is also drawn on a subject's page, Explore narrowed
+  /// by a chip: a shelf of cards is, narrowed to the subject; what is one
+  /// thing for every reader and every subject (the day's challenge, the
+  /// quick games, the reader's subjects) is not, since on Sport it is no
+  /// more about Sport than on Nature. A section says otherwise with
+  /// `subjectPages`.
+  bool get onSubjectPages => true;
 }

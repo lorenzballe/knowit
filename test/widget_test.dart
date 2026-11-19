@@ -528,12 +528,12 @@ void main() {
 
     // A shelf says what it holds and why it is a shelf. The rows are a
     // question from every subject; what readers kept is the top list's,
-    // which is always there — here, with no counts to read, as its places
-    // empty.
+    // which is not there while there are no counts to read: a list with
+    // nothing on it is no shelf.
     expect(find.text("Today's shelf"), findsOneWidget);
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
-    expect(find.text('Top of the week'), findsOneWidget);
-    expect(find.byKey(const ValueKey('top-empty')), findsOneWidget);
+    expect(find.text('Top of the week'), findsNothing);
+    expect(find.byKey(const ValueKey('top-empty')), findsNothing);
     // Further down, a question from every subject.
     final Finder asking = find.text(
       'A question from every subject',
@@ -682,19 +682,15 @@ void main() {
     expect(find.byKey(ValueKey('top-${other.id}')), findsNothing);
     expect(find.byKey(ValueKey('top-${econ.id}')), findsOneWidget);
 
-    // A subject nobody has counted yet says how a card gets there.
+    // A subject nobody has counted yet has no top list: an empty ranking on
+    // a subject's page read as something broken.
     final String quiet = kMixSubjects
         .map((s) => s.name)
         .firstWhere((name) => name != 'Economics' && name != other.topic);
     await tester.tap(find.byKey(ValueKey('subject-$quiet-off')));
     await _settle(tester);
-    expect(find.byKey(const ValueKey('top-empty')), findsOneWidget);
-    expect(
-      find.text(
-        'Nothing on the list yet. Every card you like, save or say counts.',
-      ),
-      findsOneWidget,
-    );
+    expect(find.byKey(const ValueKey('top-empty')), findsNothing);
+    expect(find.text('Top in $quiet'), findsNothing);
   });
 
   group("The phone's language", () {

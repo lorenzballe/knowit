@@ -12,7 +12,6 @@ import '../data/pills_repository.dart';
 import '../data/topics.dart' show inkOn;
 import '../explore/blocks/bets/bet_host.dart';
 import '../explore/blocks/core/shelves.dart';
-import '../explore/blocks/core/your_day_block.dart' show StreakChip;
 import '../explore/explore_block.dart';
 import '../models/pill.dart';
 import '../remote/remote.dart';

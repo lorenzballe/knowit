@@ -18,6 +18,8 @@ library;
 
 export '../../../data/books.dart';
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../analytics.dart';
@@ -200,16 +202,37 @@ class _DrawnCover extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Text(
-              book.book.title,
-              maxLines: 5,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.display(
-                size: 17 * k,
-                weight: FontWeight.w600,
-                height: 1.08,
-                color: ink,
-              ),
+            child: LayoutBuilder(
+              builder: (context, box) {
+                // Set no larger than lets its longest word stand whole on a
+                // line: "Destruction" broke as "Destructio" and "n".
+                final TextStyle style = AppText.display(
+                  size: 17 * k,
+                  weight: FontWeight.w600,
+                  height: 1.08,
+                  color: ink,
+                );
+                final TextScaler scaler = MediaQuery.textScalerOf(context);
+                double widest = 0;
+                for (final String word in book.book.title.split(' ')) {
+                  final TextPainter painter = TextPainter(
+                    text: TextSpan(text: word, style: style),
+                    textDirection: TextDirection.ltr,
+                    textScaler: scaler,
+                  )..layout();
+                  widest = math.max(widest, painter.width);
+                  painter.dispose();
+                }
+                final double shrink = widest > box.maxWidth
+                    ? box.maxWidth / widest * 0.98
+                    : 1;
+                return Text(
+                  book.book.title,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                  style: style.copyWith(fontSize: style.fontSize! * shrink),
+                );
+              },
             ),
           ),
           Text(

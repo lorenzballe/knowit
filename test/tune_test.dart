@@ -146,12 +146,13 @@ void main() {
           },
         ),
       );
-      expect(find.text('20 selected'), findsOneWidget);
+      // Counted once, on the button, not again in grey above it.
+      expect(find.text('Save 20 topics'), findsOneWidget);
+      expect(find.text('20 selected'), findsNothing);
       await tester.tap(find.byKey(const ValueKey('topics-fine-tune')));
       await tester.pump(const Duration(milliseconds: 300));
       expect(handed, contains('space'));
       // What the fine-tuning saved is what the editor shows on its return.
-      expect(find.text('3 selected'), findsOneWidget);
       expect(find.text('Save 3 topics'), findsOneWidget);
     });
   });

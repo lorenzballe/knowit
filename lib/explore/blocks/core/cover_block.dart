@@ -106,9 +106,10 @@ class CoverDeal {
   /// dealt, a subject each, in the order they were dealt: the question set
   /// big is the cover's poster, and the short ones are left for the small
   /// tiles, where a long one would be set small. A small tile takes the
-  /// first card whose question it holds whole, of a subject not on the
-  /// cover yet before one that is. As many groups are laid as there are a
-  /// large card and two small ones for.
+  /// first card whose question it sets near the top of its type, of a
+  /// subject not on the cover yet before one that is, and only where there
+  /// is none any card it holds whole. As many groups are laid as there are
+  /// a large card and two small ones for.
   static CoverDeal? of(
     BuildContext context,
     List<Pill> cards,
@@ -118,8 +119,13 @@ class CoverDeal {
   }) {
     final TileLook small = TileLook.forBox(grid.smallBox);
     final TileLook large = TileLook.forBox(grid.largeBox);
+    // A small tile is a glance: a question short enough to be set near the
+    // top of its type, never six lines of small print beside the poster.
+    final TileLook glance = small.withMin(small.max - 1.5);
     bool holdsSmall(Pill p) =>
         questionFits(context, p, grid.smallBox, small, read: isRead(p));
+    bool glancesSmall(Pill p) =>
+        questionFits(context, p, grid.smallBox, glance, read: isRead(p));
     bool holdsLarge(Pill p) =>
         questionFits(context, p, grid.largeBox, large, read: isRead(p));
     // The first cards dealt, a subject each: twice as many as the cover
@@ -152,13 +158,20 @@ class CoverDeal {
       subjects.add(next.topic);
     }
     final List<Pill> smalls = [];
-    for (final bool freshOnly in const [true, false]) {
+    // Short questions of subjects not on the cover yet first, then short
+    // ones of any subject, then any the tile holds whole.
+    for (final (bool freshOnly, bool glance) in const [
+      (true, true),
+      (false, true),
+      (true, false),
+      (false, false),
+    ]) {
       for (final Pill p in cards) {
         if (smalls.length == leads.length * 2) break;
         if (used.contains(p.id) || (freshOnly && subjects.contains(p.topic))) {
           continue;
         }
-        if (!holdsSmall(p)) continue;
+        if (!(glance ? glancesSmall(p) : holdsSmall(p))) continue;
         smalls.add(p);
         used.add(p.id);
         subjects.add(p.topic);

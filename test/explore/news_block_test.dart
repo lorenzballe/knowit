@@ -1,7 +1,7 @@
 // The news, reasoned (lib/data/news_paper.dart, explore/blocks/core/
 // news_block.dart): the morning's paper from the server, kept on the phone,
-// found by id like a bank card, and shown on Explore as clippings, each a
-// tap from its card.
+// found by id like a bank card, and shown on Explore as a shelf of cards
+// like every other, each a tap from its card.
 //
 //   flutter test test/explore/news_block_test.dart
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/utils/share_link.dart';
+import 'package:astuto/widgets/explore/card_tiles.dart';
 
 import 'core_harness.dart';
 
@@ -172,25 +173,25 @@ void main() {
     expect(NewsPaper.on(morning), hasLength(1));
   });
 
-  testWidgets('on Explore the paper is clippings, each a tap from its card; '
-      "on a subject's page only its own stories", (tester) async {
+  testWidgets('on Explore the paper is a shelf of cards like any other, '
+      "each a tap from its card; on a subject's page only its own stories", (
+    tester,
+  ) async {
     final app = await _app({});
     NewsPaper.adopt('2026-11-16', [_fresh]);
     final host = CoreHost(app);
     await pumpSections(tester, host, sections);
     expect(find.text('The news, reasoned'), findsOneWidget);
+    // A card, as on every shelf: its question on its colour, no clipping.
+    expect(find.byType(CardTile), findsOneWidget);
+    expect(find.text(_fresh['question']! as String), findsOneWidget);
     expect(
       find.text('Egg prices hit a record as bird flu empties henhouses'),
-      findsOneWidget,
+      findsNothing,
     );
-    expect(find.text(r'$6.23'), findsOneWidget);
-    expect(find.text('Why?  →'), findsOneWidget);
-    // How many papers carry it, and which.
-    expect(
-      find.text('Reported by 3 outlets · BBC News, The Guardian, DW'),
-      findsOneWidget,
+    await tester.tap(
+      find.byKey(const ValueKey('explore-news-2026-11-16-eggs')),
     );
-    await tester.tap(find.byKey(const ValueKey('news-news-2026-11-16-eggs')));
     expect(host.opened.single, ('news-today', 'news-2026-11-16-eggs'));
 
     await pumpSections(
@@ -207,19 +208,14 @@ void main() {
     expect(find.text('The news, reasoned'), findsNothing);
   });
 
-  testWidgets('a story read says so; a paper of expired cards, or none, is '
-      'no section', (tester) async {
+  testWidgets('a story read is ticked as on every shelf; a paper of expired '
+      'cards, or none, is no section', (tester) async {
     final app = await _app({
       'knowit.seenIds': ['news-2026-11-16-eggs'],
     });
     NewsPaper.adopt('2026-11-16', [_fresh]);
     await pumpSections(tester, CoreHost(app), sections);
-    expect(
-      find.byKey(const ValueKey('news-read-news-2026-11-16-eggs')),
-      findsOneWidget,
-    );
-    expect(find.text('Read'), findsOneWidget);
-    expect(find.text('Why?  →'), findsNothing);
+    expect(tester.widget<CardTile>(find.byType(CardTile)).read, isTrue);
 
     NewsPaper.adopt('2026-01-01', [_stale]);
     await pumpSections(tester, CoreHost(app), sections);

@@ -145,7 +145,8 @@ void main() {
       scrollable: find.byType(Scrollable).first,
     );
     expect(find.text('After the feed'), findsOneWidget);
-    final int round = kFeedBands.fold(0, (n, band) => n + band.length);
+    // A round of bands holds three cards a band at the most.
+    final int round = kFeedRound * 3;
     final Set<String> feedCards = {
       for (final (section, id) in host.shown)
         if (section == 'feed') id,
@@ -180,6 +181,77 @@ void main() {
       }
     });
   }
+
+  test('the shapes of its bands, by lot: every shape, never one twice in a '
+      'row, the large cards on either side in turn, the same lot for the '
+      'same day and page and another for another', () {
+    final FeedPattern a = FeedPattern('2026-11-19|feed|');
+    final List<FeedShape> shapes = [for (int i = 0; i < 300; i++) a.shapeAt(i)];
+    expect(shapes.toSet(), FeedShape.values.toSet());
+    int lastSide = 0;
+    for (int i = 0; i < shapes.length; i++) {
+      if (i > 0) expect(shapes[i], isNot(shapes[i - 1]));
+      if (shapes[i].side != 0) {
+        expect(shapes[i].side, isNot(lastSide));
+        lastSide = shapes[i].side;
+      }
+      if (shapes[i] == FeedShape.across) {
+        for (int back = 1; back <= 3 && i - back >= 0; back++) {
+          expect(shapes[i - back], isNot(FeedShape.across));
+        }
+      }
+    }
+    // The cover's shapes come often, two side by side the most.
+    int count(FeedShape s) => shapes.where((x) => x == s).length;
+    expect(
+      count(FeedShape.coverLeft) + count(FeedShape.coverRight),
+      greaterThan(60),
+    );
+    expect(count(FeedShape.pair), greaterThan(count(FeedShape.across)));
+
+    final FeedPattern same = FeedPattern('2026-11-19|feed|');
+    expect([for (int i = 0; i < 40; i++) same.shapeAt(i)], shapes.take(40));
+    final FeedPattern tomorrow = FeedPattern('2026-11-20|feed|');
+    final FeedPattern sport = FeedPattern('2026-11-19|feed|Sport');
+    expect([
+      for (int i = 0; i < 40; i++) tomorrow.shapeAt(i),
+    ], isNot(shapes.take(40)));
+    expect([
+      for (int i = 0; i < 40; i++) sport.shapeAt(i),
+    ], isNot(shapes.take(40)));
+  });
+
+  test('the cover\'s shapes measure as the cover does: three fifths and two '
+      'fifths of the page, the two small ones sharing the large one\'s '
+      'height, on the side the shape says', () {
+    final FeedGrid grid = FeedGrid(362);
+    final List<Rect> left = grid.rectsOf(FeedShape.coverLeft);
+    expect(left[0].left, 0);
+    expect(left[0].width, closeTo((362 - kFeedSpacing) * 3 / 5, 0.01));
+    expect(left[1].left, closeTo(left[0].width + kFeedSpacing, 0.01));
+    expect(left[1].right, closeTo(362, 0.01));
+    expect(left[2].bottom, closeTo(left[0].bottom, 0.01));
+    final List<Rect> right = grid.rectsOf(FeedShape.coverRight);
+    expect(right[0].right, closeTo(362, 0.01));
+    expect(right[1].left, 0);
+    for (final FeedShape shape in FeedShape.values) {
+      final List<Rect> boxes = grid.rectsOf(shape);
+      expect(boxes, hasLength(shape.boxes));
+      for (int i = 0; i < boxes.length; i++) {
+        expect(boxes[i].left, greaterThanOrEqualTo(0));
+        expect(boxes[i].right, lessThanOrEqualTo(362.01));
+        for (int j = i + 1; j < boxes.length; j++) {
+          expect(
+            boxes[i].intersect(boxes[j]).isEmpty ||
+                boxes[i].intersect(boxes[j]).width <= 0 ||
+                boxes[i].intersect(boxes[j]).height <= 0,
+            isTrue,
+            reason: '$shape: boxes $i and $j overlap',
+          );
+        }
+      }
+    }
+  });
 
   test('the build\'s own Explore ends on the feed', () {
     expect(kOwnExploreJson.last['block'], 'feed');

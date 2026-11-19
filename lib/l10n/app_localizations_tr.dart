@@ -1002,11 +1002,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Günde beş kart, her sabah yenileri. Karışımda istediğin konuları seç — sonra değiştirebilirsin.';
 
   @override
-  String nSelected(int n) {
-    return '$n seçildi';
-  }
-
-  @override
   String startWithNTopics(int n) {
     return '$n konuyla başla';
   }
@@ -4983,22 +4978,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get mathsDailyAnother => 'Buna benzer bir tane daha';
-
-  @override
-  String get newsOpen => 'Neden?';
-
-  @override
-  String get newsRead => 'Okundu';
-
-  @override
-  String newsOutlets(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count yayın bildirdi',
-    );
-    return '$_temp0';
-  }
 
   @override
   String goalShelf(String goal) {
