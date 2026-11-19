@@ -305,11 +305,13 @@ void main() {
         for (final s in kOwnExplore)
           if (watched.containsKey(s.id)) s.id,
       ];
-      expect(order.first, 'your-day');
+      // Explore opens on its cards: the reader's day is at the top of
+      // Profile now, not here.
+      expect(order.first, 'bets-day');
+      expect(order, isNot(contains('your-day')));
       expect(
         order,
         containsAllInOrder([
-          'your-day',
           'bets-day',
           'quick-games',
           'top',
