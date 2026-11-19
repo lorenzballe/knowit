@@ -18,6 +18,7 @@ import '../data/genres.dart';
 import '../data/local_cards.dart';
 import '../data/books.dart';
 import '../data/goals.dart';
+import '../data/skills.dart';
 import '../data/news_paper.dart';
 import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
@@ -96,6 +97,7 @@ class AppState extends ChangeNotifier {
   static const _kTopicWeights = 'knowit.topicWeights';
   static const _kGoal = 'knowit.goal';
   static const _kGoals = 'knowit.goals';
+  static const _kSkills = 'knowit.skills';
   static const _kGoalAsked = 'knowit.goalAsked';
   static const _kTopicLevels = 'knowit.topicLevels';
   static const _kGenresOff = 'knowit.genresOff';
@@ -287,6 +289,26 @@ class AppState extends ChangeNotifier {
 
   /// The first of [goals], or null.
   String? get goal => goals.isEmpty ? null : goals.first;
+
+  /// What the reader wants to learn (lib/data/skills.dart), by key, in the
+  /// order they picked. Asked on the profile and changing nothing in the
+  /// app: it is kept here and told to the reader's profile in analytics,
+  /// for the people who write the cards.
+  List<String> skills = const [];
+
+  /// Says what the reader wants to learn: the skills this build knows, each
+  /// once, in the order given.
+  Future<void> setSkills(List<String> keys) async {
+    skills = List.unmodifiable(<String>{
+      for (final String k in keys)
+        if (Skill.of(k) case final Skill s) s.name,
+    });
+    await _prefs.setStringList(_kSkills, skills);
+    Analytics.person(
+      set: {'skills': skills.join(','), 'skills_count': skills.length},
+    );
+    notifyListeners();
+  }
 
   /// Whether the reader has been asked what they want to get better at: on
   /// the first run, or once on Explore for a reader who came before the
@@ -584,6 +606,10 @@ class AppState extends ChangeNotifier {
       _prefs.getStringList(_kGoals) ?? [?_prefs.getString(_kGoal)],
     );
     goalAsked = goals.isNotEmpty || (_prefs.getBool(_kGoalAsked) ?? false);
+    skills = List.unmodifiable(<String>{
+      for (final String k in _prefs.getStringList(_kSkills) ?? const [])
+        if (Skill.of(k) case final Skill s) s.name,
+    });
     topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
     genresOff = (_prefs.getStringList(_kGenresOff) ?? []).toSet();
     strandsOff = (_prefs.getStringList(_kStrandsOff) ?? []).toSet();
@@ -2999,6 +3025,8 @@ class AppState extends ChangeNotifier {
       'pct_right': said?.right.round(),
       'calibration_gap': said == null ? null : (said.sure - said.right).round(),
       'last_active_local_hour': DateTime.now().hour,
+      'skills': skills.isEmpty ? null : skills.join(','),
+      'skills_count': skills.length,
     };
   }
 

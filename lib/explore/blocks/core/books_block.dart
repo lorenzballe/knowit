@@ -202,35 +202,48 @@ class _DrawnCover extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
+            // A word is never broken across two lines ("Destructio / n"):
+            // the title comes down a size, its optical size with it, until
+            // its widest word fits the cover's width.
             child: LayoutBuilder(
               builder: (context, box) {
-                // Set no larger than lets its longest word stand whole on a
-                // line: "Destruction" broke as "Destructio" and "n".
-                final TextStyle style = AppText.display(
-                  size: 17 * k,
+                TextStyle style(double size) => AppText.display(
+                  size: size,
                   weight: FontWeight.w600,
                   height: 1.08,
                   color: ink,
                 );
                 final TextScaler scaler = MediaQuery.textScalerOf(context);
-                double widest = 0;
-                for (final String word in book.book.title.split(' ')) {
-                  final TextPainter painter = TextPainter(
-                    text: TextSpan(text: word, style: style),
-                    textDirection: TextDirection.ltr,
-                    textScaler: scaler,
-                  )..layout();
-                  widest = math.max(widest, painter.width);
-                  painter.dispose();
+                double widest(double size) {
+                  double most = 0;
+                  for (final String word in book.book.title.split(
+                    RegExp(r'\s+'),
+                  )) {
+                    final TextPainter painter = TextPainter(
+                      text: TextSpan(text: word, style: style(size)),
+                      textDirection: Directionality.of(context),
+                      textScaler: scaler,
+                      maxLines: 1,
+                    )..layout();
+                    most = math.max(most, painter.width);
+                    painter.dispose();
+                  }
+                  return most;
                 }
-                final double shrink = widest > box.maxWidth
-                    ? box.maxWidth / widest * 0.98
-                    : 1;
+
+                double size = 17 * k;
+                // Down a step at a time, measured again at each, since the
+                // face's optical size changes its widths with its size.
+                while (size > 11 * k &&
+                    box.maxWidth.isFinite &&
+                    widest(size) > box.maxWidth * 0.98) {
+                  size -= 0.5 * k;
+                }
                 return Text(
                   book.book.title,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
-                  style: style.copyWith(fontSize: style.fontSize! * shrink),
+                  style: style(size),
                 );
               },
             ),

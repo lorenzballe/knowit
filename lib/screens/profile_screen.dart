@@ -37,6 +37,8 @@ import 'journey_screen.dart';
 import 'saved_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
+import 'skills_screen.dart';
+import '../data/skills.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
 import '../explore/blocks/core/your_day_block.dart' show DayPanel, weekOf;
@@ -449,6 +451,10 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
+          // What the reader wants to learn, under what they read: the same
+          // chips, the same way in.
+          const SizedBox(height: 22),
+          _SkillsBlock(app: app),
           // Nothing to cover until something has been read: a list of
           // twenty subjects all reading zero is the same wall of nothing
           // the four tiles used to be. Under the topics, because it is the
@@ -1694,6 +1700,95 @@ class _JourneyButton extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// What the reader wants to learn: every skill as a chip, the ones picked in
+/// their colour with their mark, the rest dark, as the subjects are shown
+/// above it. The whole block opens the screen they are picked on.
+class _SkillsBlock extends StatelessWidget {
+  const _SkillsBlock({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.p;
+    final Set<String> picked = app.skills.toSet();
+    return Semantics(
+      container: true,
+      button: true,
+      label: l.skillsRowTitle,
+      hint: l.edit,
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: const ValueKey('profile-skills'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(
+          context,
+        ).push(MaterialPageRoute<void>(builder: (_) => SkillsScreen(app: app))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Eyebrow(l.skillsRowTitle),
+                Text(
+                  l.edit,
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    color: p.link,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 11),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final Skill s in Skill.values)
+                  _chip(context, s, picked.contains(s.name)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _chip(BuildContext context, Skill s, bool on) {
+    final p = context.p;
+    final Color ink = on ? inkOn(s.colour) : p.ink.withValues(alpha: 0.34);
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10, 9, 13, 9),
+      decoration: BoxDecoration(
+        color: on ? s.colour : p.inverse.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustomPaint(size: const Size.square(14), painter: SkillGlyph(s, ink)),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              context.l10n.skillName(s.name),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.body(
+                size: 12.5,
+                weight: FontWeight.w500,
+                color: ink,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

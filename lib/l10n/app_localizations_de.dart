@@ -1363,6 +1363,42 @@ class AppLocalizationsDe extends AppLocalizations {
   String get perkNew => 'NEU';
 
   @override
+  String get skillsTitle => 'Was lernen';
+
+  @override
+  String get skillsTitleMark => 'lernen';
+
+  @override
+  String get skillsLine =>
+      'Wähle, was dich interessiert. So wissen wir, welche Karten wir als Nächstes schreiben.';
+
+  @override
+  String get skillsDone => 'Fertig';
+
+  @override
+  String get skillsRowTitle => 'Was du lernen willst';
+
+  @override
+  String skillName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Kritisches Denken',
+      'decisions': 'Besser entscheiden',
+      'money': 'Geld und Sparen',
+      'numbers': 'Zahlen und Statistik',
+      'talk': 'Kommunizieren',
+      'persuade': 'Überzeugen',
+      'people': 'Menschen verstehen',
+      'fakes': 'Fakes erkennen',
+      'science': 'Wissenschaftlich denken',
+      'focus': 'Konzentration',
+      'lead': 'Führung',
+      'culture': 'Allgemeinwissen',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get perkFiveShort => 'Jeden Tag, auf deinem Niveau.';
 
   @override

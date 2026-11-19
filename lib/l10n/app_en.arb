@@ -1321,6 +1321,35 @@
  "@perkNew": {
   "description": "Small tag beside a paywall feature that is new. Short, in capitals where the language has them."
  },
+ "skillsTitle": "What to learn",
+ "@skillsTitle": {
+  "description": "Headline of the screen where the reader picks the skills they want to learn (Profile)."
+ },
+ "skillsTitleMark": "learn",
+ "@skillsTitleMark": {
+  "description": "The one word of skillsTitle painted in colour. Must appear in skillsTitle exactly as written."
+ },
+ "skillsLine": "Pick the ones you care about. It helps us choose which cards to write next.",
+ "@skillsLine": {
+  "description": "Line under skillsTitle: why we ask. Picking changes nothing in the app; it tells the team what to write."
+ },
+ "skillsDone": "Done",
+ "@skillsDone": {
+  "description": "Button that closes the skills screen."
+ },
+ "skillsRowTitle": "What you want to learn",
+ "@skillsRowTitle": {
+  "description": "Profile heading over the skills the reader picked, which opens the skills screen."
+ },
+ "skillName": "{key, select, critical{Critical thinking} decisions{Better decisions} money{Money and saving} numbers{Numbers and statistics} talk{Communication} persuade{Persuasion} people{Understanding people} fakes{Spotting fakes} science{Thinking like a scientist} focus{Focus} lead{Leadership} culture{General knowledge} other{{key}}}",
+ "@skillName": {
+  "description": "A skill the reader may want to learn, by its key. Short: two of them share a row of tiles.",
+  "placeholders": {
+   "key": {
+    "type": "String"
+   }
+  }
+ },
  "perkFiveShort": "Every day, at your level.",
  "@perkFiveShort": {
   "description": "Paywall feature line under perkOwnFiveTitle: one short line."

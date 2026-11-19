@@ -1321,6 +1321,41 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkNew => 'NEW';
 
   @override
+  String get skillsTitle => '배우고 싶은 것';
+
+  @override
+  String get skillsTitleMark => '배우고';
+
+  @override
+  String get skillsLine => '관심 있는 것을 골라 주세요. 다음에 쓸 카드를 정하는 데 도움이 돼요.';
+
+  @override
+  String get skillsDone => '완료';
+
+  @override
+  String get skillsRowTitle => '배우고 싶은 것';
+
+  @override
+  String skillName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': '비판적 사고',
+      'decisions': '더 나은 결정',
+      'money': '돈과 저축',
+      'numbers': '숫자와 통계',
+      'talk': '소통',
+      'persuade': '설득',
+      'people': '사람 이해하기',
+      'fakes': '가짜 가려내기',
+      'science': '과학자처럼 생각하기',
+      'focus': '집중력',
+      'lead': '리더십',
+      'culture': '일반 상식',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get perkFiveShort => '매일, 당신의 수준으로.';
 
   @override

@@ -1333,6 +1333,28 @@ class RemoteLocalizations extends AppLocalizations {
   String get perkNew => _words.text('perkNew') ?? _base.perkNew;
 
   @override
+  String get skillsTitle => _words.text('skillsTitle') ?? _base.skillsTitle;
+
+  @override
+  String get skillsTitleMark =>
+      _words.text('skillsTitleMark') ?? _base.skillsTitleMark;
+
+  @override
+  String get skillsLine => _words.text('skillsLine') ?? _base.skillsLine;
+
+  @override
+  String get skillsDone => _words.text('skillsDone') ?? _base.skillsDone;
+
+  @override
+  String get skillsRowTitle =>
+      _words.text('skillsRowTitle') ?? _base.skillsRowTitle;
+
+  @override
+  String skillName(String key) =>
+      _words.format('skillName', localeName, {'key': key}) ??
+      _base.skillName(key);
+
+  @override
   String get perkFiveShort =>
       _words.text('perkFiveShort') ?? _base.perkFiveShort;
 

@@ -2028,6 +2028,42 @@ abstract class AppLocalizations {
   /// **'NEW'**
   String get perkNew;
 
+  /// Headline of the screen where the reader picks the skills they want to learn (Profile).
+  ///
+  /// In en, this message translates to:
+  /// **'What to learn'**
+  String get skillsTitle;
+
+  /// The one word of skillsTitle painted in colour. Must appear in skillsTitle exactly as written.
+  ///
+  /// In en, this message translates to:
+  /// **'learn'**
+  String get skillsTitleMark;
+
+  /// Line under skillsTitle: why we ask. Picking changes nothing in the app; it tells the team what to write.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the ones you care about. It helps us choose which cards to write next.'**
+  String get skillsLine;
+
+  /// Button that closes the skills screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get skillsDone;
+
+  /// Profile heading over the skills the reader picked, which opens the skills screen.
+  ///
+  /// In en, this message translates to:
+  /// **'What you want to learn'**
+  String get skillsRowTitle;
+
+  /// A skill the reader may want to learn, by its key. Short: two of them share a row of tiles.
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, critical{Critical thinking} decisions{Better decisions} money{Money and saving} numbers{Numbers and statistics} talk{Communication} persuade{Persuasion} people{Understanding people} fakes{Spotting fakes} science{Thinking like a scientist} focus{Focus} lead{Leadership} culture{General knowledge} other{{key}}}'**
+  String skillName(String key);
+
   /// Paywall feature line under perkOwnFiveTitle: one short line.
   ///
   /// In en, this message translates to:
