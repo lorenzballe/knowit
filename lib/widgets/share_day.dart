@@ -17,6 +17,7 @@ import '../utils/share_link.dart';
 import 'subject_icon.dart';
 import 'ui.dart';
 import 'web/card_thumb.dart';
+import 'glass_round.dart';
 
 /// The day, sent to a friend: a picture of the five cards that came out, and
 /// a line under it.
@@ -361,22 +362,29 @@ class _Close extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    return Semantics(
-      button: true,
+    return GlassRound(
+      symbol: GlassRound.close,
       label: MaterialLocalizations.of(context).closeButtonLabel,
-      child: GestureDetector(
-        key: const ValueKey('share-day-close'),
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Container(
-          width: 36,
-          height: 36,
-          decoration: BoxDecoration(
-            color: p.surfaceRaised,
-            shape: BoxShape.circle,
-            border: Border.all(color: p.line),
+      onPressed: onTap,
+      size: 36,
+      iconSize: 15,
+      fallback: Semantics(
+        button: true,
+        label: MaterialLocalizations.of(context).closeButtonLabel,
+        child: GestureDetector(
+          key: const ValueKey('share-day-close'),
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: p.surfaceRaised,
+              shape: BoxShape.circle,
+              border: Border.all(color: p.line),
+            ),
+            child: Icon(Icons.close_rounded, size: 18, color: p.inkMuted),
           ),
-          child: Icon(Icons.close_rounded, size: 18, color: p.inkMuted),
         ),
       ),
     );

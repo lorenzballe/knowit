@@ -15,6 +15,7 @@ import '../../theme.dart';
 import '../scenes/story_view.dart';
 import '../subject_icon.dart';
 import 'parts.dart';
+import '../glass_round.dart';
 
 /// True stories, played the way a story plays on a phone.
 ///
@@ -727,20 +728,27 @@ class _StoryPlayerState extends State<StoryPlayer>
               ),
             ),
           ),
-          Semantics(
-            key: const ValueKey('story-close'),
-            button: true,
+          GlassRound(
+            symbol: GlassRound.close,
             label: context.l10n.storyClose,
-            excludeSemantics: true,
-            onTap: _close,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              excludeFromSemantics: true,
+            onPressed: _close,
+            size: 44,
+            iconSize: 18,
+            fallback: Semantics(
+              key: const ValueKey('story-close'),
+              button: true,
+              label: context.l10n.storyClose,
+              excludeSemantics: true,
               onTap: _close,
-              child: SizedBox(
-                width: 48,
-                height: 48,
-                child: Icon(Icons.close_rounded, size: 24, color: p.ink),
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                excludeFromSemantics: true,
+                onTap: _close,
+                child: SizedBox(
+                  width: 48,
+                  height: 48,
+                  child: Icon(Icons.close_rounded, size: 24, color: p.ink),
+                ),
               ),
             ),
           ),

@@ -9,6 +9,7 @@ import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/glass_round.dart';
 
 /// A full-screen re-read of a set of cards.
 ///
@@ -148,29 +149,37 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                 child: Row(
                   children: [
                     // A ring of 38, in a target a finger finds: 44.
-                    Semantics(
-                      button: true,
+                    GlassRound(
+                      symbol: GlassRound.close,
                       label: MaterialLocalizations.of(context)
                           .closeButtonTooltip,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () => Navigator.of(context).pop(),
-                        child: SizedBox(
-                          width: 44,
-                          height: 44,
-                          child: Center(
-                            child: Container(
-                              width: 38,
-                              height: 38,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(color: context.p.line),
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.close_rounded,
-                                size: 18,
-                                color: context.p.ink,
+                      onPressed: () => Navigator.of(context).pop(),
+                      size: 44,
+                      iconSize: 17,
+                      fallback: Semantics(
+                        button: true,
+                        label: MaterialLocalizations.of(context)
+                            .closeButtonTooltip,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => Navigator.of(context).pop(),
+                          child: SizedBox(
+                            width: 44,
+                            height: 44,
+                            child: Center(
+                              child: Container(
+                                width: 38,
+                                height: 38,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: context.p.line),
+                                ),
+                                alignment: Alignment.center,
+                                child: Icon(
+                                  Icons.close_rounded,
+                                  size: 18,
+                                  color: context.p.ink,
+                                ),
                               ),
                             ),
                           ),

@@ -9,6 +9,7 @@ import '../theme.dart';
 import 'card_edge.dart';
 import 'chunky.dart';
 import 'subject_icon.dart';
+import 'glass_round.dart';
 
 // Every screen names itself by wrapping in a ScreenView, which lives with
 // the rest of what the app measures. It is a wrapper and not a mixin
@@ -158,7 +159,9 @@ class SkipCorner extends StatelessWidget {
   }
 }
 
-/// Circular back chevron in a hairline ring, top-left of the sub-screens.
+/// Circular back chevron in a hairline ring, top-left of the sub-screens;
+/// on iOS 26 and later Apple's own back button, in the system's glass
+/// ([GlassRound]).
 ///
 /// The ring is 38 and the target round it 44, the least a finger can be
 /// asked to find; the ring's left edge sits three points in from where it
@@ -170,28 +173,35 @@ class BackCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
+    return GlassRound(
+      symbol: GlassRound.back,
       label: MaterialLocalizations.of(context).backButtonTooltip,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: SizedBox(
-          width: 44,
-          height: 44,
-          child: Center(
-            child: Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: context.p.line),
-              ),
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.arrow_back_rounded,
-                size: 17,
-                color: context.p.ink,
+      onPressed: onPressed,
+      size: 44,
+      iconSize: 17,
+      fallback: Semantics(
+        button: true,
+        label: MaterialLocalizations.of(context).backButtonTooltip,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onPressed,
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: Center(
+              child: Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: context.p.line),
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.arrow_back_rounded,
+                  size: 17,
+                  color: context.p.ink,
+                ),
               ),
             ),
           ),
