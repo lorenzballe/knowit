@@ -19,7 +19,7 @@ PHONE = 375
 ACROSS = PHONE - 40
 
 # What every section may carry, whatever its block.
-BASE = {"id", "block", "audience", "gap"}
+BASE = {"id", "block", "audience", "gap", "subjectPages"}
 WORDS = {"title", "subtitle"}
 
 

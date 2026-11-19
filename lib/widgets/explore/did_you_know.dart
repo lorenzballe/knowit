@@ -136,13 +136,14 @@ class _DidYouKnowState extends State<DidYouKnow>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Named as every shelf on Explore is named.
                         Text(
                           l.didYouKnow,
                           style: AppText.body(
-                            size: 16,
-                            weight: FontWeight.w600,
-                            height: 1,
-                            spacing: -0.2,
+                            size: 19,
+                            weight: FontWeight.w700,
+                            height: 1.15,
+                            spacing: -0.45,
                             color: ink,
                           ),
                         ),
@@ -150,9 +151,9 @@ class _DidYouKnowState extends State<DidYouKnow>
                         Text(
                           l.didYouKnowLine,
                           style: AppText.body(
-                            size: 12,
+                            size: 13,
                             height: 1.3,
-                            color: ink.withValues(alpha: 0.42),
+                            color: ink.withValues(alpha: 0.5),
                           ),
                         ),
                       ],
@@ -465,26 +466,30 @@ class _DidYouKnowState extends State<DidYouKnow>
                   ),
                 ),
               ),
-              const SizedBox(width: 9),
-              Container(
-                constraints: const BoxConstraints(minWidth: 24),
-                height: 24,
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: lit ? context.p.surface : fg.withValues(alpha: 0.14),
-                  borderRadius: BorderRadius.circular(99),
-                ),
-                child: Text(
-                  '$count',
-                  style: AppText.body(
-                    size: 12,
-                    weight: FontWeight.w700,
-                    height: 1,
-                    color: lit ? context.p.ink : fg,
+              // A count of none is not shown: a 0 on a button reads as a
+              // score before anything was played.
+              if (count > 0) ...[
+                const SizedBox(width: 9),
+                Container(
+                  constraints: const BoxConstraints(minWidth: 24),
+                  height: 24,
+                  padding: const EdgeInsets.symmetric(horizontal: 7),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: lit ? context.p.surface : fg.withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                  child: Text(
+                    '$count',
+                    style: AppText.body(
+                      size: 12,
+                      weight: FontWeight.w700,
+                      height: 1,
+                      color: lit ? context.p.ink : fg,
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),

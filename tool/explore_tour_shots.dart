@@ -210,6 +210,7 @@ Map<String, Object> _twoWeeksIn() {
     if (_plus) 'knowit.plus': true,
     if (_paper) 'knowit.theme': 'light',
     'knowit.streak': 13,
+    'knowit.installedOn': dateKey(now.subtract(const Duration(days: 14))),
     'knowit.completedDates': [
       for (var back = 1; back < 14; back++)
         dateKey(now.subtract(Duration(days: back))),
