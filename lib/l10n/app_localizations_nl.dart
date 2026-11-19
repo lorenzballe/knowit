@@ -1362,6 +1362,119 @@ class AppLocalizationsNl extends AppLocalizations {
   String get perkNew => 'NIEUW';
 
   @override
+  String get threeTitle => 'De drie van vandaag';
+
+  @override
+  String threeStep(int n, int total) {
+    return '$n van $total';
+  }
+
+  @override
+  String get threeSame =>
+      'Vandaag voor iedereen dezelfde drie. Ongeveer een minuut.';
+
+  @override
+  String threeYouSaid(String guess) {
+    return 'Jij zei $guess.';
+  }
+
+  @override
+  String threePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '+$n punten',
+      one: '+1 punt',
+      zero: 'Geen punten',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeNext => 'Volgende';
+
+  @override
+  String get threeSeeScore => 'Bekijk je score';
+
+  @override
+  String get threeDone => 'De drie van vandaag · klaar';
+
+  @override
+  String threeDay(int n) {
+    return 'Dag $n';
+  }
+
+  @override
+  String get threeOf300 => 'van 300';
+
+  @override
+  String threeCloser(int pct) {
+    return 'Dichterbij dan $pct% van de lezers van vandaag.';
+  }
+
+  @override
+  String threeFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Een van de eerste $n vandaag.',
+      one: 'De eerste die vandaag speelt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String threeReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n lezers speelden vandaag.',
+      one: '1 lezer speelde vandaag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeYou => 'Jij';
+
+  @override
+  String threeStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dagen',
+      one: '1 dag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeSend => 'Versturen';
+
+  @override
+  String get threeWhy => 'Bekijk het waarom';
+
+  @override
+  String threeYesterday(int score) {
+    return 'De drie van gisteren: $score van 300.';
+  }
+
+  @override
+  String threeShareHead(String date) {
+    return 'Astute · De drie van vandaag · $date';
+  }
+
+  @override
+  String threeShareScore(int score, int day) {
+    return '$score van 300 · dag $day';
+  }
+
+  @override
+  String threeRowSaid(String said, String truth) {
+    return 'Jij zei $said. Het is $truth.';
+  }
+
+  @override
   String get skillsTitle => 'Wat leren';
 
   @override

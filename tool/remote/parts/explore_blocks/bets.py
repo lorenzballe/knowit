@@ -316,6 +316,7 @@ FITS: dict[str, tuple[Callable[[dict, dict], bool], str]] = {
         "an estimate a power of ten counts right, or a pick of odds",
     ),
     "bets-day": (_share_set, "a share from 0 to 100% the card has typed or estimated"),
+    "three": (_share_set, "a share from 0 to 100% the card has typed or estimated"),
 }
 
 
@@ -502,6 +503,9 @@ SPEC: dict[str, dict] = {
         "same": lambda s: _check_flag(s, "same"),
         "sure": lambda s: _check_flag(s, "sure"),
     }},
+    # Today's three: always three, the same for everyone, on a card of its
+    # own with no shelf's head, in one look.
+    "three": {"limit": None, "tone": False, "subtitle": False, "fields": {}},
 }
 
 SIZES = ("s", "m", "l")

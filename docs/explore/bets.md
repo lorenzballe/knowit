@@ -169,14 +169,23 @@ copies the question and its options alone, with “What do you say?” and a
 link to the app. The card offered is the latest one staked on today, or the
 section's `card`, or one dealt for the day.
 
-## The crowd, left out
+## The crowd
 
-`#139e` shows where everyone else guessed. The app has no such figures:
-`lib/sync/tally.dart` counts, per card, how many readers hold it, and nothing
-of what anyone answered. A crowd drawn from anything else would be made up,
-so it is left out, and the bet of the day shows how far off the reader was
-instead. If the tally comes to hold guesses, the crowd is a row under the
-verdict of `DayTile`.
+Where everyone else guessed on a card is still left out: `lib/sync/tally.dart`
+counts, per card, how many readers hold it, and nothing of what anyone
+answered, so the bet of the day shows how far off the reader was instead.
+
+Today's three is the one game with a crowd, and it is counted for it alone:
+`lib/sync/crowd.dart` keeps, for each day, how many readers came to each
+score in tens of points (`crowd/{day}`, `n.b0` to `n.b30`), and nothing
+about who. A reader adds their score once, in one batch with a mark under
+their own id (`crowd/{day}/readers/{uid}`) that cannot be there already and
+is never changed or read back; `firestore.rules` lets a count move only by
+one, and only together with that mark. The result listens to the day's
+counts while it is on screen, so the line and the spread move as readers
+come in. Under five readers it says only how many have played; with a
+score in the lower half, how many played, never how few it beat. Signed
+out, or with no server, the result shows the score alone.
 
 ## The blocks: fields and examples
 
@@ -354,6 +363,30 @@ A whole round, as one document:
   {"id": "slip", "block": "bets-slip", "size": "l",
    "audience": {"weekdays": [6, 7]}}
 ]}
+```
+
+### `three` — today's three (C1)
+
+Three shares to estimate, the same three for everyone that day, one at a
+time on a track, about a minute in all: a hundred points for the answer
+itself, three fewer for every point off, in tens. Then the day's score out
+of three hundred, where it stands among today's readers (The crowd, above),
+the days in a row, a way to send it on that says how far off and never the
+answers, and the three cards, where each answer is explained. A card read
+before is played all the same; only its first answer is the card's. It
+opens Explore, and is never on a subject's page. It needs three cards that
+take a share as a number; with fewer it is left out.
+
+It has no fields of its own: one size, three cards, no tone and no line
+under it. `source` may name the three.
+
+```json
+{"id": "three", "block": "three"}
+```
+
+```json
+{"id": "three", "block": "three",
+ "source": {"ids": ["art-detection-9", "psychology-streaks-6", "maths-percentages-4"]}}
 ```
 
 ## What a block asks of Explore

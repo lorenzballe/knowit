@@ -299,6 +299,7 @@ void main() {
     testWidgets('the day\'s challenge, the quick games and the reader\'s '
         'subjects are Explore\'s for every subject only', (tester) async {
       for (final String block in [
+        'three',
         'bets-day',
         'quick-games',
         'subject-levels',
@@ -354,17 +355,17 @@ void main() {
         for (final s in kOwnExplore)
           if (watched.containsKey(s.id)) s.id,
       ];
-      // Explore opens on its cover, the day's cards in a mosaic, then the
-      // day's challenge: the reader's day is at the top of Profile now, not
-      // here.
-      expect(order.first, 'cover');
+      // Explore opens on today's three, the same for everyone, then its
+      // cover, the day's cards in a mosaic: the reader's day is at the top
+      // of Profile now, not here.
+      expect(order.first, 'three');
       expect(order, isNot(contains('your-day')));
       expect(
         order,
         // The top list, with nothing counted yet in a test, is left out.
         containsAllInOrder([
+          'three',
           'cover',
-          'bets-day',
           'quick-games',
           'paths',
           'theme-practical-0',

@@ -1363,6 +1363,118 @@ class AppLocalizationsDe extends AppLocalizations {
   String get perkNew => 'NEU';
 
   @override
+  String get threeTitle => 'Die drei von heute';
+
+  @override
+  String threeStep(int n, int total) {
+    return '$n von $total';
+  }
+
+  @override
+  String get threeSame => 'Heute dieselben drei für alle. Etwa eine Minute.';
+
+  @override
+  String threeYouSaid(String guess) {
+    return 'Du hast $guess gesagt.';
+  }
+
+  @override
+  String threePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '+$n Punkte',
+      one: '+1 Punkt',
+      zero: 'Keine Punkte',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeNext => 'Weiter';
+
+  @override
+  String get threeSeeScore => 'Zum Ergebnis';
+
+  @override
+  String get threeDone => 'Die drei von heute · fertig';
+
+  @override
+  String threeDay(int n) {
+    return 'Tag $n';
+  }
+
+  @override
+  String get threeOf300 => 'von 300';
+
+  @override
+  String threeCloser(int pct) {
+    return 'Näher dran als $pct % der Leser von heute.';
+  }
+
+  @override
+  String threeFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Unter den ersten $n heute.',
+      one: 'Als Erster heute dabei.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String threeReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Leser haben heute gespielt.',
+      one: '1 Leser hat heute gespielt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeYou => 'Du';
+
+  @override
+  String threeStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Tage',
+      one: '1 Tag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeSend => 'Teilen';
+
+  @override
+  String get threeWhy => 'Das Warum';
+
+  @override
+  String threeYesterday(int score) {
+    return 'Die drei von gestern: $score von 300.';
+  }
+
+  @override
+  String threeShareHead(String date) {
+    return 'Astute · Die drei von heute · $date';
+  }
+
+  @override
+  String threeShareScore(int score, int day) {
+    return '$score von 300 · Tag $day';
+  }
+
+  @override
+  String threeRowSaid(String said, String truth) {
+    return 'Du: $said. Richtig: $truth.';
+  }
+
+  @override
   String get skillsTitle => 'Was lernen';
 
   @override

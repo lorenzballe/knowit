@@ -1333,6 +1333,98 @@ class RemoteLocalizations extends AppLocalizations {
   String get perkNew => _words.text('perkNew') ?? _base.perkNew;
 
   @override
+  String get threeTitle => _words.text('threeTitle') ?? _base.threeTitle;
+
+  @override
+  String threeStep(int n, int total) =>
+      _words.format('threeStep', localeName, {'n': n, 'total': total}) ??
+      _base.threeStep(n, total);
+
+  @override
+  String get threeSame => _words.text('threeSame') ?? _base.threeSame;
+
+  @override
+  String threeYouSaid(String guess) =>
+      _words.format('threeYouSaid', localeName, {'guess': guess}) ??
+      _base.threeYouSaid(guess);
+
+  @override
+  String threePoints(int n) =>
+      _words.format('threePoints', localeName, {'n': n}) ??
+      _base.threePoints(n);
+
+  @override
+  String get threeNext => _words.text('threeNext') ?? _base.threeNext;
+
+  @override
+  String get threeSeeScore =>
+      _words.text('threeSeeScore') ?? _base.threeSeeScore;
+
+  @override
+  String get threeDone => _words.text('threeDone') ?? _base.threeDone;
+
+  @override
+  String threeDay(int n) =>
+      _words.format('threeDay', localeName, {'n': n}) ?? _base.threeDay(n);
+
+  @override
+  String get threeOf300 => _words.text('threeOf300') ?? _base.threeOf300;
+
+  @override
+  String threeCloser(int pct) =>
+      _words.format('threeCloser', localeName, {'pct': pct}) ??
+      _base.threeCloser(pct);
+
+  @override
+  String threeFirst(int n) =>
+      _words.format('threeFirst', localeName, {'n': n}) ?? _base.threeFirst(n);
+
+  @override
+  String threeReaders(int n) =>
+      _words.format('threeReaders', localeName, {'n': n}) ??
+      _base.threeReaders(n);
+
+  @override
+  String get threeYou => _words.text('threeYou') ?? _base.threeYou;
+
+  @override
+  String threeStreak(int n) =>
+      _words.format('threeStreak', localeName, {'n': n}) ??
+      _base.threeStreak(n);
+
+  @override
+  String get threeSend => _words.text('threeSend') ?? _base.threeSend;
+
+  @override
+  String get threeWhy => _words.text('threeWhy') ?? _base.threeWhy;
+
+  @override
+  String threeYesterday(int score) =>
+      _words.format('threeYesterday', localeName, {'score': score}) ??
+      _base.threeYesterday(score);
+
+  @override
+  String threeShareHead(String date) =>
+      _words.format('threeShareHead', localeName, {'date': date}) ??
+      _base.threeShareHead(date);
+
+  @override
+  String threeShareScore(int score, int day) =>
+      _words.format('threeShareScore', localeName, {
+        'score': score,
+        'day': day,
+      }) ??
+      _base.threeShareScore(score, day);
+
+  @override
+  String threeRowSaid(String said, String truth) =>
+      _words.format('threeRowSaid', localeName, {
+        'said': said,
+        'truth': truth,
+      }) ??
+      _base.threeRowSaid(said, truth);
+
+  @override
   String get skillsTitle => _words.text('skillsTitle') ?? _base.skillsTitle;
 
   @override

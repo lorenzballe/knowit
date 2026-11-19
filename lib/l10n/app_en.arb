@@ -1321,6 +1321,159 @@
  "@perkNew": {
   "description": "Small tag beside a paywall feature that is new. Short, in capitals where the language has them."
  },
+ "threeTitle": "Today's three",
+ "@threeTitle": {
+  "description": "Today's three: three shares to estimate, the same for everyone that day. A name, short."
+ },
+ "threeStep": "{n} of {total}",
+ "@threeStep": {
+  "description": "Which of today's three the reader is on: 1 of 3.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "threeSame": "The same three for everyone today. About a minute.",
+ "@threeSame": {
+  "description": "Under the Lock in button of today's three."
+ },
+ "threeYouSaid": "You said {guess}.",
+ "@threeYouSaid": {
+  "description": "After a guess is locked in, after 'It is 9%.': what the reader said.",
+  "placeholders": {
+   "guess": {
+    "type": "String"
+   }
+  }
+ },
+ "threePoints": "{n, plural, =0{No points} =1{+1 point} other{+{n} points}}",
+ "@threePoints": {
+  "description": "Points a guess won, out of 100.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "threeNext": "Next",
+ "@threeNext": {
+  "description": "Button: on to the next of today's three."
+ },
+ "threeSeeScore": "See your score",
+ "@threeSeeScore": {
+  "description": "Button after the third guess: the day's score."
+ },
+ "threeDone": "Today's three · done",
+ "@threeDone": {
+  "description": "Head of the result card of today's three."
+ },
+ "threeDay": "Day {n}",
+ "@threeDay": {
+  "description": "Days in a row today's three was played, on the result card.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "threeOf300": "of 300",
+ "@threeOf300": {
+  "description": "Beside the day's score in large figures: '200 of 300'."
+ },
+ "threeCloser": "Closer than {pct}% of today's readers.",
+ "@threeCloser": {
+  "description": "Where the day's score stands among the readers who played today.",
+  "placeholders": {
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "threeFirst": "{n, plural, =1{The first to play today.} other{One of the first {n} to play today.}}",
+ "@threeFirst": {
+  "description": "When fewer than five readers have played today.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "threeReaders": "{n, plural, =1{1 reader played today.} other{{n} readers played today.}}",
+ "@threeReaders": {
+  "description": "On the result of today's three, when the score is in the lower half of today's readers: how many played.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "threeYou": "You",
+ "@threeYou": {
+  "description": "Under the bar of today's readers by score that holds the reader's own score. One short word."
+ },
+ "threeStreak": "{n, plural, =1{1 day} other{{n} days}}",
+ "@threeStreak": {
+  "description": "Days in a row today's three was played, beside this week's seven days: short, it shares a line with them.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "threeSend": "Send it",
+ "@threeSend": {
+  "description": "Button: send the day's score to someone."
+ },
+ "threeWhy": "See the why",
+ "@threeWhy": {
+  "description": "Button: open the three cards, where each answer is explained."
+ },
+ "threeYesterday": "Yesterday's three: {score} of 300.",
+ "@threeYesterday": {
+  "description": "Under the result: yesterday's score.",
+  "placeholders": {
+   "score": {
+    "type": "int"
+   }
+  }
+ },
+ "threeShareHead": "Astute · Today's three · {date}",
+ "@threeShareHead": {
+  "description": "First line of the message the score is sent in.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "threeShareScore": "{score} of 300 · day {day}",
+ "@threeShareScore": {
+  "description": "Second line of the message: the score and the days in a row.",
+  "placeholders": {
+   "score": {
+    "type": "int"
+   },
+   "day": {
+    "type": "int"
+   }
+  }
+ },
+ "threeRowSaid": "You said {said}. It is {truth}.",
+ "@threeRowSaid": {
+  "description": "On the result, under each of the three: the guess and the answer.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   },
+   "truth": {
+    "type": "String"
+   }
+  }
+ },
  "skillsTitle": "What to learn",
  "@skillsTitle": {
   "description": "Headline of the screen where the reader picks the skills they want to learn (Profile)."

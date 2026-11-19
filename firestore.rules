@@ -22,6 +22,20 @@ service cloud.firestore {
 
     // A day as the app files it, YYYY-MM-DD in UTC, that is today on some
     // clock near now: from the day before it starts to two days after.
+    // A score of today's three as the crowd counts it: b0 to b30, tens of
+    // points of three hundred.
+    function isBucket(k) {
+      return k is string && k.matches('^b([0-9]|[12][0-9]|30)$');
+    }
+
+    // The reader's mark for today's three on [day], made by this very write
+    // and not there before it: what lets a count move by one, once a day.
+    function markedNow(day) {
+      let mark = /databases/$(database)/documents/crowd/$(day)/readers/$(request.auth.uid);
+      return !exists(mark) && existsAfter(mark)
+        && getAfter(mark).data.k == request.resource.data.k;
+    }
+
     function isRecentDay(day) {
       let parts = day.split('-');
       let start = timestamp.date(int(parts[0]), int(parts[1]), int(parts[2]));
@@ -186,6 +200,40 @@ service cloud.firestore {
         && request.resource.data.n[request.resource.data.k]
              == resource.data.n.get(request.resource.data.k, 0) + 1;
       allow delete: if false;
+    }
+
+    // Today's three, across readers: one document per day the app files it,
+    // one count per score in tens of points, nothing about who. A reader
+    // adds one, once a day: a mark under their own id in the day's readers,
+    // which cannot be there already and is never changed, read or taken
+    // away, and in the same write one more on one count, which only moves
+    // together with such a mark. Anyone signed in may read the counts.
+    match /crowd/{day} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && isRecentDay(day)
+        && request.resource.data.keys().hasOnly(['k', 'n'])
+        && isBucket(request.resource.data.k)
+        && request.resource.data.n.keys().hasOnly([request.resource.data.k])
+        && request.resource.data.n[request.resource.data.k] == 1
+        && markedNow(day);
+      allow update: if request.auth != null && isRecentDay(day)
+        && request.resource.data.keys().hasOnly(['k', 'n'])
+        && isBucket(request.resource.data.k)
+        && request.resource.data.n.size() <= 31
+        && request.resource.data.n.diff(resource.data.n).affectedKeys()
+             .hasOnly([request.resource.data.k])
+        && request.resource.data.n[request.resource.data.k]
+             == resource.data.n.get(request.resource.data.k, 0) + 1
+        && markedNow(day);
+      allow delete: if false;
+
+      match /readers/{uid} {
+        allow create: if request.auth != null && request.auth.uid == uid
+          && isRecentDay(day)
+          && request.resource.data.keys().hasOnly(['k'])
+          && isBucket(request.resource.data.k);
+        allow read, update, delete: if false;
+      }
     }
 
     // Anything not named above is closed, including reads of other readers.

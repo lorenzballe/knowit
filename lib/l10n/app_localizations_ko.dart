@@ -1321,6 +1321,110 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkNew => 'NEW';
 
   @override
+  String get threeTitle => '오늘의 3문제';
+
+  @override
+  String threeStep(int n, int total) {
+    return '$n / $total';
+  }
+
+  @override
+  String get threeSame => '오늘은 모두 같은 3문제. 약 1분.';
+
+  @override
+  String threeYouSaid(String guess) {
+    return '내 답: $guess.';
+  }
+
+  @override
+  String threePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '+$n점',
+      zero: '점수 없음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeNext => '다음';
+
+  @override
+  String get threeSeeScore => '점수 보기';
+
+  @override
+  String get threeDone => '오늘의 3문제 · 완료';
+
+  @override
+  String threeDay(int n) {
+    return '$n일째';
+  }
+
+  @override
+  String get threeOf300 => '/ 300';
+
+  @override
+  String threeCloser(int pct) {
+    return '오늘 독자의 $pct%보다 정답에 가까워요.';
+  }
+
+  @override
+  String threeFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 처음 푼 $n명 중 한 명이에요.',
+      one: '오늘 첫 번째로 풀었어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String threeReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 $n명이 참여했어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeYou => '나';
+
+  @override
+  String threeStreak(int n) {
+    return '$n일';
+  }
+
+  @override
+  String get threeSend => '보내기';
+
+  @override
+  String get threeWhy => '이유 보기';
+
+  @override
+  String threeYesterday(int score) {
+    return '어제의 3문제: $score / 300.';
+  }
+
+  @override
+  String threeShareHead(String date) {
+    return 'Astute · 오늘의 3문제 · $date';
+  }
+
+  @override
+  String threeShareScore(int score, int day) {
+    return '$score / 300 · $day일째';
+  }
+
+  @override
+  String threeRowSaid(String said, String truth) {
+    return '내 답 $said · 정답 $truth';
+  }
+
+  @override
   String get skillsTitle => '배우고 싶은 것';
 
   @override

@@ -1349,6 +1349,110 @@ class AppLocalizationsTr extends AppLocalizations {
   String get perkNew => 'YENİ';
 
   @override
+  String get threeTitle => 'Bugünün üçlüsü';
+
+  @override
+  String threeStep(int n, int total) {
+    return '$n / $total';
+  }
+
+  @override
+  String get threeSame => 'Bugün herkese aynı üç soru. Yaklaşık bir dakika.';
+
+  @override
+  String threeYouSaid(String guess) {
+    return 'Senin tahminin: $guess.';
+  }
+
+  @override
+  String threePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '+$n puan',
+      zero: 'Puan yok',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeNext => 'Sonraki';
+
+  @override
+  String get threeSeeScore => 'Puanını gör';
+
+  @override
+  String get threeDone => 'Bugünün üçlüsü · tamam';
+
+  @override
+  String threeDay(int n) {
+    return '$n. gün';
+  }
+
+  @override
+  String get threeOf300 => '/ 300';
+
+  @override
+  String threeCloser(int pct) {
+    return 'Yakınlıkta bugünkü okurların yüzde $pct kadarını geçtin.';
+  }
+
+  @override
+  String threeFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugün ilk oynayan $n kişiden birisin.',
+      one: 'Bugün ilk oynayan sensin.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String threeReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugün $n okur oynadı.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeYou => 'Sen';
+
+  @override
+  String threeStreak(int n) {
+    return '$n gün';
+  }
+
+  @override
+  String get threeSend => 'Gönder';
+
+  @override
+  String get threeWhy => 'Nedenini gör';
+
+  @override
+  String threeYesterday(int score) {
+    return 'Dünün üçlüsü: $score / 300.';
+  }
+
+  @override
+  String threeShareHead(String date) {
+    return 'Astute · Bugünün üçlüsü · $date';
+  }
+
+  @override
+  String threeShareScore(int score, int day) {
+    return '$score / 300 · $day. gün';
+  }
+
+  @override
+  String threeRowSaid(String said, String truth) {
+    return 'Senin: $said. Doğrusu: $truth.';
+  }
+
+  @override
   String get skillsTitle => 'Ne öğrenmeli';
 
   @override

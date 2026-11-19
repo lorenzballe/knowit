@@ -60,11 +60,11 @@ void main() {
     CardThumb.image = (url) => onePixel;
   });
 
-  testWidgets('the cover opens the build\'s own Explore, close under the '
-      'subjects', (tester) async {
-    expect(kOwnExplore.skip(2).first.id, 'cover');
-    expect(kOwnExplore.skip(2).first.json['gap'], 6);
-    expect(kOwnExplore.skip(3).first.id, 'bets-day');
+  testWidgets('today\'s three opens the build\'s own Explore, the cover '
+      'under it', (tester) async {
+    expect(kOwnExplore.skip(2).first.id, 'three');
+    expect(kOwnExplore.skip(3).first.id, 'cover');
+    expect(kOwnExplore.skip(3).first.json['gap'], 6);
   });
 
   testWidgets('two groups of three: the large card on the left, then on the '

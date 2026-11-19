@@ -1413,6 +1413,124 @@ class AppLocalizationsRu extends AppLocalizations {
   String get perkNew => 'НОВОЕ';
 
   @override
+  String get threeTitle => 'Три вопроса дня';
+
+  @override
+  String threeStep(int n, int total) {
+    return '$n из $total';
+  }
+
+  @override
+  String get threeSame => 'Сегодня у всех одни и те же три. Около минуты.';
+
+  @override
+  String threeYouSaid(String guess) {
+    return 'Твой ответ: $guess.';
+  }
+
+  @override
+  String threePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '+$n очка',
+      many: '+$n очков',
+      few: '+$n очка',
+      one: '+1 очко',
+      zero: 'Нет очков',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeNext => 'Дальше';
+
+  @override
+  String get threeSeeScore => 'Посмотреть результат';
+
+  @override
+  String get threeDone => 'Три вопроса дня · готово';
+
+  @override
+  String threeDay(int n) {
+    return 'День $n';
+  }
+
+  @override
+  String get threeOf300 => 'из 300';
+
+  @override
+  String threeCloser(int pct) {
+    return 'Ближе, чем $pct% сегодняшних читателей.';
+  }
+
+  @override
+  String threeFirst(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Среди первых $n игроков сегодня.',
+      one: 'Первый игрок сегодня.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String threeReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Сегодня сыграли $n читателя.',
+      many: 'Сегодня сыграли $n читателей.',
+      few: 'Сегодня сыграли $n читателя.',
+      one: 'Сегодня сыграл $n читатель.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeYou => 'Ты';
+
+  @override
+  String threeStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня',
+      many: '$n дней',
+      few: '$n дня',
+      one: '1 день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get threeSend => 'Отправить';
+
+  @override
+  String get threeWhy => 'Посмотреть почему';
+
+  @override
+  String threeYesterday(int score) {
+    return 'Вчерашние три: $score из 300.';
+  }
+
+  @override
+  String threeShareHead(String date) {
+    return 'Astute · Три вопроса дня · $date';
+  }
+
+  @override
+  String threeShareScore(int score, int day) {
+    return '$score из 300 · день $day';
+  }
+
+  @override
+  String threeRowSaid(String said, String truth) {
+    return 'Твой ответ: $said. Верно: $truth.';
+  }
+
+  @override
   String get skillsTitle => 'Чему учиться';
 
   @override
