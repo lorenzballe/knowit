@@ -795,7 +795,7 @@
   "firstLabel": "Dal",
   "forYouNow": "Per te, adesso",
   "hardBadge": "Difficile",
-  "hidesIn": "In {where}",
+  "hidesIn": "Tema: {where}",
   "howSure": "Quanto ne sono sicuro, e perché?",
   "inRange": "Dentro: +{pts} punti. È {said}.",
   "inYourMoves": "Nelle tue mosse · {n}×",

@@ -3487,7 +3487,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String hidesIn(String where) {
-    return 'Dans $where';
+    return 'Thème : $where';
   }
 
   @override

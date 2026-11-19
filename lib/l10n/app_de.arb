@@ -795,7 +795,7 @@
   "firstLabel": "Seit",
   "forYouNow": "Für dich, jetzt",
   "hardBadge": "Schwer",
-  "hidesIn": "In {where}",
+  "hidesIn": "Thema: {where}",
   "howSure": "Wie sicher bin ich, und warum?",
   "inRange": "Getroffen: +{pts} Punkte. Es sind {said}.",
   "inYourMoves": "In deinen Zügen · {n}×",

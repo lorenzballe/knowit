@@ -795,7 +795,7 @@
   "firstLabel": "Od",
   "forYouNow": "Dla ciebie, teraz",
   "hardBadge": "Trudne",
-  "hidesIn": "W: {where}",
+  "hidesIn": "Temat: {where}",
   "howSure": "Na ile mam pewność i dlaczego?",
   "inRange": "Trafione: +{pts} pkt. To {said}.",
   "inYourMoves": "W twoich ruchach · {n}×",

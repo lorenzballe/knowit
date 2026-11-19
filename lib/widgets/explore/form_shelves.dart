@@ -789,7 +789,7 @@ class MoveRow extends StatelessWidget {
                       const SizedBox(width: 6),
                       Expanded(
                         child: Text(
-                          context.l10n.hidesIn(inSentence(genreLabel(p))),
+                          hidesInLine(context.l10n, p),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppText.body(

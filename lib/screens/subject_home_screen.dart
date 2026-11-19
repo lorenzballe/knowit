@@ -12,6 +12,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../analytics.dart';
+import '../data/genre_names.dart';
 import '../data/genres.dart';
 import '../data/pill_bank.dart';
 import '../data/pills_repository.dart' show dateKey;
@@ -260,7 +261,7 @@ class SubjectHomeScreen extends StatelessWidget {
           for (final t in home.themes)
             _Theme(
               key: ValueKey('subject-theme-${t.genre.id}'),
-              label: t.genre.label,
+              label: context.l10n.themeOf(t.genre),
               read: t.read,
               total: t.cards.length,
               style: style,
@@ -283,7 +284,13 @@ class SubjectHomeScreen extends StatelessWidget {
                   ...t.cards.where((c) => !app.seenIds.contains(c.id)),
                   ...t.cards.where((c) => app.seenIds.contains(c.id)),
                 ];
-                _openCards(context, unread, 0, t.genre.label, 'subject theme');
+                _openCards(
+                  context,
+                  unread,
+                  0,
+                  context.l10n.themeOf(t.genre),
+                  'subject theme',
+                );
               },
             ),
         ],
@@ -519,7 +526,7 @@ class _NextCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      (genreById(pill.genre)?.label ?? '').toUpperCase(),
+                      context.l10n.themeById(pill.genre).toUpperCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.label(

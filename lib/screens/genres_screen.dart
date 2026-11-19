@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/genre_names.dart';
 import '../data/genres.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
@@ -460,7 +461,7 @@ class _GenreChip extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: !off,
-      label: genre.label,
+      label: context.l10n.themeOf(genre),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
@@ -491,7 +492,7 @@ class _GenreChip extends StatelessWidget {
               // own tail rather than running off the card.
               Flexible(
                 child: Text(
-                  genre.label,
+                  context.l10n.themeOf(genre),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.body(
@@ -565,7 +566,8 @@ class _Inside extends StatelessWidget {
               Container(width: 16, height: 1, color: colour),
               const SizedBox(width: 8),
               Text(
-                '${context.l10n.insideGenre} ${genre.label}'.toUpperCase(),
+                '${context.l10n.insideGenre} ${context.l10n.themeOf(genre)}'
+                    .toUpperCase(),
                 style: AppText.label(
                   size: 9,
                   weight: FontWeight.w700,

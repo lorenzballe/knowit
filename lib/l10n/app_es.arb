@@ -795,7 +795,7 @@
   "firstLabel": "Desde",
   "forYouNow": "Para ti, ahora",
   "hardBadge": "Difícil",
-  "hidesIn": "En {where}",
+  "hidesIn": "Tema: {where}",
   "howSure": "¿Qué tan seguro estoy, y por qué?",
   "inRange": "Dentro: +{pts} puntos. Es {said}.",
   "inYourMoves": "En tus jugadas · {n}×",
