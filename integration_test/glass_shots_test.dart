@@ -13,6 +13,7 @@
 //
 //   flutter test integration_test/glass_shots_test.dart -d <simulator>
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -51,6 +52,9 @@ Future<void> _hold(WidgetTester tester, String name, int seconds) async {
   await _run(tester, const Duration(milliseconds: 1500));
   // ignore: avoid_print
   print('SHOT $name');
+  // And in the app's own tmp folder, which the workflow reads as the walk
+  // goes: a printed line reaches its log only when the test ends.
+  File('${Directory.systemTemp.path}/glass_shot.txt').writeAsStringSync(name);
   await _run(tester, Duration(seconds: seconds));
 }
 
