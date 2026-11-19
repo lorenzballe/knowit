@@ -5,6 +5,7 @@ import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/card_note.dart';
 import '../widgets/reveal_body.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/card_edge.dart';
@@ -206,6 +207,8 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                 // pill.answer alone, which on a worked problem is the last
                 // line of the solution and on a debate is one side of it.
                 RevealBody.onPage(pill, context.p),
+                const SizedBox(height: 24),
+                CardNoteSection(app: widget.app, pill: pill),
               ],
             ),
           ),
@@ -387,12 +390,21 @@ class _Open extends StatelessWidget {
         children: [
           Icon(Icons.open_in_full_rounded, size: 16, color: ink),
           const SizedBox(width: 7),
-          Text(
-            label,
-            style: AppText.body(
-              size: 13.5,
-              weight: FontWeight.w700,
-              color: ink,
+          // Smaller rather than cut or spilling: at a large text size the
+          // words are wider than the card.
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                label,
+                maxLines: 1,
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w700,
+                  color: ink,
+                ),
+              ),
             ),
           ),
         ],

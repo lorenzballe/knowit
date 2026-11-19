@@ -568,7 +568,7 @@ class Series {
   final SeriesKind kind;
   final List<Pill> cards;
 
-  /// For [SeriesKind.strand]: the strand's name.
+  /// For [SeriesKind.strand]: the strand's id.
   final String strand;
 
   String get key => kind == SeriesKind.strand ? 'strand' : kind.name;
@@ -628,7 +628,7 @@ List<Series> seriesOfTheDay(Iterable<Pill> pool, {required int day}) {
                       .compareTo(shelfHash('$day:strand:$b')),
             );
         if (strands.isEmpty) return null;
-        strand = strandLabel(strands.first);
+        strand = strands.first;
         fits = byStrand[strands.first]!;
       default:
         final moves = _seriesMoves[kind]!;

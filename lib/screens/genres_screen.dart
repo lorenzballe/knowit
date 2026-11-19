@@ -614,7 +614,7 @@ class _StrandRow extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: !off,
-      label: strand.label,
+      label: context.l10n.strandOf(strand),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
@@ -641,7 +641,7 @@ class _StrandRow extends StatelessWidget {
               const SizedBox(width: 9),
               Expanded(
                 child: Text(
-                  strand.label,
+                  context.l10n.strandOf(strand),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.body(

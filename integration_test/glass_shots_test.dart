@@ -24,7 +24,12 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/explore/blocks/core/paths_block.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/remote/remote.dart';
+import 'package:astuto/data/goals.dart';
+import 'package:astuto/screens/area_screen.dart';
 import 'package:astuto/screens/card_path_screen.dart';
+import 'package:astuto/screens/journey_screen.dart';
+import 'package:astuto/screens/pill_detail_screen.dart';
+import 'package:astuto/screens/subject_home_screen.dart';
 import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/screens/skills_screen.dart';
@@ -153,6 +158,26 @@ void main() {
         '$theme-path',
       );
       await _push(tester, SkillsScreen(app: app), '$theme-skills');
+      await _push(
+        tester,
+        AreaScreen(app: app, area: Goal.values.first),
+        '$theme-area',
+      );
+      await _push(
+        tester,
+        SubjectHomeScreen(app: app, topicKey: _firstPath().topicKey),
+        '$theme-subject',
+      );
+      await _push(
+        tester,
+        PillDetailScreen(app: app, pill: _firstPath().cards.first),
+        '$theme-card',
+      );
+      await _push(
+        tester,
+        JourneyScreen(app: app, onBack: () {}),
+        '$theme-journey',
+      );
     });
   }
 }

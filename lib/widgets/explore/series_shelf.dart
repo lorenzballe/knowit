@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../data/explore_mix.dart';
+import '../../data/genre_names.dart';
 import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
@@ -33,7 +34,9 @@ class SeriesRow extends StatelessWidget {
       SeriesKind.growth => l.seriesGrowth,
       SeriesKind.anchors => l.seriesAnchors,
       SeriesKind.retold => l.seriesRetold,
-      SeriesKind.strand => l.seriesStrand(s.strand),
+      SeriesKind.strand => l.seriesStrand(
+        l.strandName(s.strand) ?? strandLabel(s.strand),
+      ),
     };
   }
 

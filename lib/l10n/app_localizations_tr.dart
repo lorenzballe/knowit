@@ -1650,6 +1650,31 @@ class AppLocalizationsTr extends AppLocalizations {
   String get pathContinue => 'Devam';
 
   @override
+  String get notesTitle => 'Notlar';
+
+  @override
+  String get noteYours => 'Notun';
+
+  @override
+  String get noteAdd => 'Not ekle';
+
+  @override
+  String get noteEdit => 'Düzenle';
+
+  @override
+  String get noteSave => 'Kaydet';
+
+  @override
+  String get noteDelete => 'Notu sil';
+
+  @override
+  String get noteHint => 'Bu karttan neyi hatırlamak istiyorsun?';
+
+  @override
+  String get notesEmpty =>
+      'Henüz not yok. Kaydettiğin bir kartı aç ve hatırlamak istediğini yaz.';
+
+  @override
   String get pathUnlock => 'Tüm yolların kilidini aç';
 
   @override

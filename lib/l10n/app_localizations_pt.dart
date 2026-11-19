@@ -1670,6 +1670,31 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pathContinue => 'Continuar';
 
   @override
+  String get notesTitle => 'Notas';
+
+  @override
+  String get noteYours => 'A tua nota';
+
+  @override
+  String get noteAdd => 'Adicionar uma nota';
+
+  @override
+  String get noteEdit => 'Editar';
+
+  @override
+  String get noteSave => 'Guardar';
+
+  @override
+  String get noteDelete => 'Apagar a nota';
+
+  @override
+  String get noteHint => 'O que queres lembrar desta carta?';
+
+  @override
+  String get notesEmpty =>
+      'Ainda não tens notas. Abre uma carta que guardaste e escreve o que queres lembrar.';
+
+  @override
   String get pathUnlock => 'Desbloquear todos os percursos';
 
   @override

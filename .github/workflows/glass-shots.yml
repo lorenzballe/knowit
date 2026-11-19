@@ -63,7 +63,11 @@ jobs:
       - name: Walk the app and photograph it
         run: |
           mkdir -p shots
-          flutter test integration_test/glass_shots_test.dart -d "$UDID" > walk.log 2>&1 &
+          # Through a terminal of its own (script -F flushes each write), so a
+          # SHOT line is in walk.log the moment it is said: written to a plain
+          # file, the output came all at once at the end of each test, and every
+          # picture was named by the last screen of the test before.
+          script -q -F walk.log flutter test integration_test/glass_shots_test.dart -d "$UDID" > /dev/null 2>&1 &
           PID=$!
           i=0
           while kill -0 "$PID" 2>/dev/null; do
