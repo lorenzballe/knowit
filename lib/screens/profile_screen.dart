@@ -38,8 +38,6 @@ import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
 import 'tune_screen.dart';
-import '../widgets/grounds.dart';
-import '../widgets/hand_glass.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
@@ -307,13 +305,7 @@ class ProfileScreen extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: ListView(
-        // The foot clears the glass tab bar the list runs under.
-        padding: EdgeInsets.fromLTRB(
-          22,
-          8,
-          22,
-          24 + (barGlass ? MediaQuery.paddingOf(context).bottom : 0),
-        ),
+        padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),
         children: [
           // The record, not an identity. This screen used to open with a
           // circle of initials nobody typed, a name nobody set, and four

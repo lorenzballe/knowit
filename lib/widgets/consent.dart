@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 import '../theme.dart';
-import 'grounds.dart';
 
 /// Whether Astute may measure how the app is used, asked before anything is
 /// measured, with its two answers side by side and the same size: saying no
@@ -90,59 +89,50 @@ class ConsentSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    return SheetGround(
-      child: Container(
-        key: const ValueKey('consent-sheet'),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        ),
-        padding: EdgeInsets.fromLTRB(
-          22,
-          26,
-          22,
-          MediaQuery.paddingOf(context).bottom + 18,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l.consentTitle,
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w600,
-                  spacing: -0.6,
-                  color: p.ink,
-                ),
+    return Container(
+      key: const ValueKey('consent-sheet'),
+      decoration: BoxDecoration(
+        color: p.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        22,
+        26,
+        22,
+        MediaQuery.paddingOf(context).bottom + 18,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l.consentTitle,
+              style: AppText.display(
+                size: 20,
+                weight: FontWeight.w600,
+                spacing: -0.6,
+                color: p.ink,
               ),
-              const SizedBox(height: 8),
-              // What Profile's switch says it measures, word for word: the
-              // two places that speak of it cannot drift apart.
-              Text(
-                l.anonymousUsageLine,
-                style: AppText.body(
-                  size: 13.5,
-                  height: 1.45,
-                  color: p.inkMuted,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l.consentChangeLater(l.tabProfile, l.anonymousUsage),
-                style: AppText.body(
-                  size: 13.5,
-                  height: 1.45,
-                  color: p.inkMuted,
-                ),
-              ),
-              const SizedBox(height: 20),
-              _Answers(
-                onAnswer: (bool yes) => Navigator.of(context).pop(yes),
-                onDark: false,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 8),
+            // What Profile's switch says it measures, word for word: the
+            // two places that speak of it cannot drift apart.
+            Text(
+              l.anonymousUsageLine,
+              style: AppText.body(size: 13.5, height: 1.45, color: p.inkMuted),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l.consentChangeLater(l.tabProfile, l.anonymousUsage),
+              style: AppText.body(size: 13.5, height: 1.45, color: p.inkMuted),
+            ),
+            const SizedBox(height: 20),
+            _Answers(
+              onAnswer: (bool yes) => Navigator.of(context).pop(yes),
+              onDark: false,
+            ),
+          ],
         ),
       ),
     );
