@@ -10,6 +10,7 @@ library;
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import 'genres.dart';
+import 'strand_names.dart';
 
 /// [genre]'s name in [language] (`it`, `de`, …): its English name when this
 /// build has none in that language.
@@ -36,6 +37,13 @@ extension ThemeNames on AppLocalizations {
   /// under no theme.
   String themeOfCard(Pill card) =>
       themeById(card.genre, orElse: subjectOf(card.topic));
+
+  /// [strand]'s name in this language.
+  String strandOf(Strand strand) => strandName(strand.id) ?? strand.label;
+
+  /// The name of the strand filed under [id] in this language, or null when
+  /// this build has none in it.
+  String? strandName(String id) => kStrandNames[languageOf(this)]?[id];
 }
 
 /// Every theme's name, by language and then by [Genre.id].
