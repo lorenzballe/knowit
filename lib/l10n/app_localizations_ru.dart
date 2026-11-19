@@ -1492,6 +1492,215 @@ class AppLocalizationsRu extends AppLocalizations {
   String get threeYou => 'Ты';
 
   @override
+  String whyMissing(String move) {
+    return 'Ход мысли, который ты часто упускаешь: $move';
+  }
+
+  @override
+  String whyMoveAgain(String move) {
+    return '$move: снова, в новом случае';
+  }
+
+  @override
+  String get whyAgain => 'Снова, чтобы взглянуть ещё раз';
+
+  @override
+  String whyGoal(String goal) {
+    return 'Для твоей цели: $goal';
+  }
+
+  @override
+  String whyLiked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Похожа на $n карточки, которые тебе понравились',
+      many: 'Похожа на $n карточек, которые тебе понравились',
+      few: 'Похожа на $n карточки, которые тебе понравились',
+      one: 'Похожа на $n карточку, которая тебе понравилась',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyHard(String subject) {
+    return 'Сложная: «$subject» — твоя сильная сторона';
+  }
+
+  @override
+  String whyLevel(String subject) {
+    return 'На твоём уровне: $subject';
+  }
+
+  @override
+  String whyGentle(String subject) {
+    return 'Лёгкий вход: $subject';
+  }
+
+  @override
+  String whyYourSubject(String subject) {
+    return 'Твой предмет: $subject';
+  }
+
+  @override
+  String get whyRandom => 'Выпала случайно из твоих предметов';
+
+  @override
+  String get whyTitle => 'Почему эта карточка';
+
+  @override
+  String whyTrains(String move) {
+    return 'Тренирует: $move';
+  }
+
+  @override
+  String whyMet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Встречался $n раза.',
+      many: 'Встречался $n раз.',
+      few: 'Встречался $n раза.',
+      one: 'Встречался $n раз.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyRight(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Верно $n раза.',
+      many: 'Верно $n раз.',
+      few: 'Верно $n раза.',
+      one: 'Верно $n раз.',
+      zero: 'Пока ни разу верно.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whyLevelRow(String subject) {
+    return 'Твой уровень: $subject';
+  }
+
+  @override
+  String whyLevelWord(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      'starting': 'Начало',
+      'some': 'В пути',
+      'strong': 'Сильный уровень',
+      'other': 'В пути',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get whyLastMetRow => 'Последняя встреча с этим ходом';
+
+  @override
+  String whyDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня назад',
+      many: '$n дней назад',
+      few: '$n дня назад',
+      one: '$n день назад',
+      zero: 'Сегодня',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whyGoalRow => 'Твоя цель';
+
+  @override
+  String get whyLikedRow => 'Похожие карточки, которые тебе понравились';
+
+  @override
+  String get whyRandomLine =>
+      'В бесплатном плане часть каждого дня выпадает случайно из выбранных тобой предметов.';
+
+  @override
+  String get whyPlusLine =>
+      'С Astute+ все пять выбираются для тебя: по твоему уровню, по твоему вкусу, а упущенные ходы мысли возвращаются.';
+
+  @override
+  String get whyMakeMine => 'Все пять — мои';
+
+  @override
+  String get whyMore => 'Больше такого';
+
+  @override
+  String get whyMoreDone => 'Учтено: больше такого';
+
+  @override
+  String get whyLess => 'Меньше';
+
+  @override
+  String get whyTune => 'Настроить свой микс';
+
+  @override
+  String moveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Базовая частота',
+      'survivorship': 'Ошибка выжившего',
+      'regression': 'Регрессия к среднему',
+      'confirmation': 'Подтверждение',
+      'anchoring': 'Якорь',
+      'sampling': 'Выборка',
+      'confounding': 'Скрытые факторы',
+      'counterfactual': 'По сравнению с чем',
+      'multipleComparisons': 'Множество попыток',
+      'availability': 'Доступность',
+      'sunkCost': 'Невозвратные затраты',
+      'conjunction': 'Конъюнкция',
+      'conditional': 'Условная вероятность',
+      'independence': 'Независимость',
+      'coincidence': 'Совпадения',
+      'exponential': 'Экспоненциальный рост',
+      'reflection': 'Быстрый ответ',
+      'simpson': 'Итоги',
+      'estimation': 'Оценка',
+      'computation': 'Посчитать',
+      'other': 'Рассуждение',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String moveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Точность теста — не вероятность, что это про тебя',
+      'survivorship': 'Данные, что у тебя есть, — это данные, которые выжили',
+      'regression': 'Крайности сами возвращаются к среднему',
+      'confirmation': 'Искать «да» — не значит проверять',
+      'anchoring': 'Первое названное число сдвигает все последующие',
+      'sampling': 'Кто попал в выборку, решает, что она может сказать',
+      'confounding': 'Возможно, что-то третье вызывает и то и другое',
+      'counterfactual': 'Изменение ничего не значит без сравнения',
+      'multipleComparisons': 'Проверь достаточно всего — и что-то пройдёт',
+      'availability': 'Легко представить — не значит часто',
+      'sunkCost':
+          'Потрачено — значит потрачено: решать можно только то, что осталось',
+      'conjunction': 'Детали делают историю убедительнее и менее вероятной',
+      'conditional': 'Новые сведения меняют шансы',
+      'independence': 'У случая нет памяти',
+      'coincidence': 'Редкое становится частым, когда попыток много',
+      'exponential': 'Ни у кого нет чутья на удвоение',
+      'reflection': 'Ответ, что приходит первым, и нужно проверить',
+      'simpson':
+          'Целое может склоняться туда, куда не склоняется ни одна часть',
+      'estimation': 'Разбей неразрешимое на то, что можно оценить',
+      'computation': 'Задача, которую правда можно решить до конца',
+      'other': 'Рассуждение',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String threeStreak(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

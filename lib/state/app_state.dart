@@ -914,7 +914,7 @@ class AppState extends ChangeNotifier {
     topics: pickedTopics,
     weights: profile.weightsOn(dayNumberOf(date), leanedWeights),
     mix: topicWeights,
-    levels: isPlus ? measuredLevels : profile.levelsUnder(topicLevels),
+    levels: dealtLevels,
     taste: isPlus ? profile.tasteWith(taste) : profile.lean,
     genresOff: genresOff,
     strandsOff: strandsOff,
@@ -1791,6 +1791,13 @@ class AppState extends ChangeNotifier {
     nudge(read.skipped, -kReadTasteLean);
     return lean;
   }
+
+  /// The reader's level in each subject as the day is dealt at it: measured
+  /// from their answers on Astute+, as the onboarding was read on the free
+  /// plan. 0 starting out, 1 some, 2 strong. Today's cards say why they are
+  /// there from the same levels (lib/data/why.dart).
+  Map<String, int> get dealtLevels =>
+      isPlus ? measuredLevels : profile.levelsUnder(topicLevels);
 
   /// How many of a subject's most recent judgements decide its level, and
   /// how many there have to be before they decide anything.

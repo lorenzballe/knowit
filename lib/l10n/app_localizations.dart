@@ -2112,6 +2112,180 @@ abstract class AppLocalizations {
   /// **'You'**
   String get threeYou;
 
+  /// On one of today's cards, under its head: it trains a reasoning move the reader has got wrong more often than right.
+  ///
+  /// In en, this message translates to:
+  /// **'A move you keep missing: {move}'**
+  String whyMissing(String move);
+
+  /// On one of today's cards: a reasoning move met before, back in a different card.
+  ///
+  /// In en, this message translates to:
+  /// **'{move}, back in a new case'**
+  String whyMoveAgain(String move);
+
+  /// On one of today's cards: a card met before, come back on the review ladder.
+  ///
+  /// In en, this message translates to:
+  /// **'Back for a second look'**
+  String get whyAgain;
+
+  /// On one of today's cards: it is about one of the goals the reader picked.
+  ///
+  /// In en, this message translates to:
+  /// **'For your goal: {goal}'**
+  String whyGoal(String goal);
+
+  /// On one of today's cards: it is like cards the reader liked (same kind of card).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Like a card you liked} other{Like {n} cards you liked}}'**
+  String whyLiked(int n);
+
+  /// On one of today's cards: a hard question, dealt because the reader is strong in its subject.
+  ///
+  /// In en, this message translates to:
+  /// **'A hard one: you\'re strong in {subject}'**
+  String whyHard(String subject);
+
+  /// On one of today's cards: a question at the reader's level in its subject.
+  ///
+  /// In en, this message translates to:
+  /// **'At your level in {subject}'**
+  String whyLevel(String subject);
+
+  /// On one of today's cards: an easy card, for a reader starting out in its subject.
+  ///
+  /// In en, this message translates to:
+  /// **'An easy way into {subject}'**
+  String whyGentle(String subject);
+
+  /// On one of today's cards: from one of the subjects the reader picked.
+  ///
+  /// In en, this message translates to:
+  /// **'From {subject}, one of your subjects'**
+  String whyYourSubject(String subject);
+
+  /// On one of today's cards, on the free plan: dealt at random from the reader's subjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Dealt at random from your subjects'**
+  String get whyRandom;
+
+  /// Title of the sheet that says why a card was dealt to the reader today.
+  ///
+  /// In en, this message translates to:
+  /// **'Why this card'**
+  String get whyTitle;
+
+  /// On the sheet: the reasoning move the card trains. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'It trains {move}'**
+  String whyTrains(String move);
+
+  /// On the sheet: how many cards with this reasoning move the reader has answered.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{You met it once.} other{You met it {n} times.}}'**
+  String whyMet(int n);
+
+  /// On the sheet, after whyMet: how many of them were right.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Not right yet.} =1{Right once.} other{Right {n} times.}}'**
+  String whyRight(int n);
+
+  /// On the sheet, a row: the reader's level in the card's subject (the value is whyLevelWord).
+  ///
+  /// In en, this message translates to:
+  /// **'Your level in {subject}'**
+  String whyLevelRow(String subject);
+
+  /// The reader's level in a subject, as measured from their answers. One or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'{level, select, starting{Starting out} some{Getting there} strong{Strong} other{Getting there}}'**
+  String whyLevelWord(String level);
+
+  /// On the sheet, a row: when the reader last met this reasoning move (the value is whyDaysAgo).
+  ///
+  /// In en, this message translates to:
+  /// **'You last met this move'**
+  String get whyLastMetRow;
+
+  /// How long ago, in days. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Today} =1{Yesterday} other{{n} days ago}}'**
+  String whyDaysAgo(int n);
+
+  /// On the sheet, a row: the reader's goal the card is about (the value is the goal's name).
+  ///
+  /// In en, this message translates to:
+  /// **'Your goal'**
+  String get whyGoalRow;
+
+  /// On the sheet, a row: how many cards like this one the reader liked (the value is a number).
+  ///
+  /// In en, this message translates to:
+  /// **'Cards like it you liked'**
+  String get whyLikedRow;
+
+  /// On the sheet of a card dealt at random, on the free plan.
+  ///
+  /// In en, this message translates to:
+  /// **'On the free plan, part of each day is dealt at random from the subjects you kept on.'**
+  String get whyRandomLine;
+
+  /// On the sheet of a card dealt at random: what Astute+ does instead.
+  ///
+  /// In en, this message translates to:
+  /// **'With Astute+ all five are picked for you: at your level, leaning to what you like, with the moves you miss coming back.'**
+  String get whyPlusLine;
+
+  /// Button on that sheet: opens Astute+.
+  ///
+  /// In en, this message translates to:
+  /// **'Make all five mine'**
+  String get whyMakeMine;
+
+  /// Button on the sheet: deal more cards like this one.
+  ///
+  /// In en, this message translates to:
+  /// **'More like this'**
+  String get whyMore;
+
+  /// The same button once pressed.
+  ///
+  /// In en, this message translates to:
+  /// **'More like it, noted'**
+  String get whyMoreDone;
+
+  /// Button on the sheet: deal fewer cards like this one. One short word.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get whyLess;
+
+  /// Link at the foot of the sheet: opens the page where the reader tunes their mix of subjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Tune your mix'**
+  String get whyTune;
+
+  /// The name of a reasoning move a card trains, as short as the English. The key is the move.
+  ///
+  /// In en, this message translates to:
+  /// **'{move, select, baseRate{Base rates} survivorship{Survivorship} regression{Regression to the mean} confirmation{Confirmation} anchoring{Anchoring} sampling{Sampling} confounding{Confounding} counterfactual{Compared to what} multipleComparisons{Multiple looks} availability{Availability} sunkCost{Sunk cost} conjunction{Conjunction} conditional{Conditional odds} independence{Independence} coincidence{Coincidence} exponential{Exponential growth} reflection{The quick answer} simpson{Aggregates} estimation{Estimation} computation{Working it out} other{Reasoning}}'**
+  String moveName(String move);
+
+  /// The one line that names a reasoning move. The key is the move.
+  ///
+  /// In en, this message translates to:
+  /// **'{move, select, baseRate{How accurate a test is, is not how likely you are} survivorship{The data you have is the data that survived} regression{Extremes drift back on their own} confirmation{Looking for a yes is not a test} anchoring{The first number said moves every number after} sampling{Who ended up in the sample decides what it can say} confounding{Something else may be causing both} counterfactual{A change means nothing without a control} multipleComparisons{Test enough things and one will pass} availability{Easy to picture is not the same as common} sunkCost{Spent is spent; only what is left can be decided} conjunction{Detail makes a story likelier and less probable} conditional{What you were told changes the odds} independence{Chance has no memory} coincidence{Rare things are common when there are many tries} exponential{Nobody has intuition for doubling} reflection{The answer that arrives first is the one to check} simpson{A whole can lean the way no part of it does} estimation{Break the unanswerable into things you can guess} computation{A problem you can actually finish} other{Reasoning}}'**
+  String moveLine(String move);
+
   /// Days in a row today's three was played, beside this week's seven days: short, it shares a line with them.
   ///
   /// In en, this message translates to:

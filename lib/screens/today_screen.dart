@@ -10,12 +10,14 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../data/topics.dart';
+import '../data/why.dart';
 import '../widgets/magic_card.dart';
 import '../data/pills_repository.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/ui.dart';
+import '../widgets/why_sheet.dart';
 import 'today_done_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
@@ -177,10 +179,21 @@ class _TodayScreenState extends State<TodayScreen> {
     );
   }
 
+  /// Why each of the day's cards is here (lib/data/why.dart), by id: the
+  /// line each says under its head, and the sheet the line opens.
+  Map<String, CardWhy> _whys(AppState app) {
+    final String? sunday = _sundaysOwn(app);
+    return {
+      for (final Pill p in app.todaysDeck)
+        p.id: whyOf(app, p, sunday: p.id == sunday),
+    };
+  }
+
   /// The day, being read. Unchanged from the screen this app has always
   /// opened on: the word Today, the streak beside it, the bars, the deck.
   Widget _reading(BuildContext context, {required Key key}) {
     final app = widget.app;
+    final Map<String, CardWhy> whys = _whys(app);
     return Padding(
       key: key,
       // The sides come from the deck's own constant, so Today and the
@@ -265,15 +278,26 @@ class _TodayScreenState extends State<TodayScreen> {
               // Which cards are the reader's own, on the day that has
               // others: Astute+ has no others to tell them from.
               ownIds: app.isPlus ? const {} : app.ownIdsToday,
-              // On the reader's Sunday, the one more of their own is said
-              // on the card itself — the first of their own — under its
-              // head, where a card about a place says why it is there. It
-              // used to be a line over the deck, about a card not yet in
-              // sight, read before the day had started.
+              // Every card says why it is here under its head, where a
+              // card about a place says so: the move it trains and the
+              // reader keeps missing, their goal, their level, the one more
+              // of their own on their Sunday, or chance. A tap on the line
+              // opens what the deal knew, and more or less like it.
               notes: {
-                if (_sundaysOwn(app) case final String id)
-                  id: context.l10n.sundayOneMore,
+                for (final MapEntry<String, CardWhy> e in whys.entries)
+                  if (whyLine(context.l10n, e.value) case final String line)
+                    e.key: line,
               },
+              noteIcons: {
+                for (final MapEntry<String, CardWhy> e in whys.entries)
+                  e.key: whyIcon(e.value.kind),
+              },
+              onNote: (pill) => showWhySheet(
+                context,
+                app,
+                pill,
+                sunday: pill.id == _sundaysOwn(app),
+              ),
               answerFor: app.answerFor,
               onAnswer: (id, response, confidence, reason) => app.recordAnswer(
                 id,

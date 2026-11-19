@@ -57,9 +57,16 @@ class PillCard extends StatelessWidget {
   final Place? home;
 
   /// Why this card is in today's five, said on its front under its head
-  /// the way a card about a place says so: on the reader's Sunday, the one
-  /// more of their own. Null for nothing to say.
+  /// the way a card about a place says so (lib/data/why.dart). Null for
+  /// nothing to say.
   final String? note;
+
+  /// The mark beside [note]: what kind of reason it is.
+  final IconData? noteIcon;
+
+  /// A tap on [note]: Why this card (why_sheet.dart). Null, the line is
+  /// only read.
+  final VoidCallback? onNote;
 
   const PillCard({
     super.key,
@@ -72,6 +79,8 @@ class PillCard extends StatelessWidget {
     this.isOwn = false,
     this.home,
     this.note,
+    this.noteIcon,
+    this.onNote,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -273,9 +282,10 @@ class PillCard extends StatelessWidget {
           if (!flipped && note != null)
             _WhyLine(
               key: const ValueKey('card-note'),
-              icon: Icons.auto_awesome_rounded,
+              icon: noteIcon ?? Icons.auto_awesome_rounded,
               text: note!,
               ink: pill.ink,
+              onTap: onNote,
             ),
           Expanded(
             child: flipped
@@ -364,16 +374,20 @@ class _WhyLine extends StatelessWidget {
     required this.icon,
     required this.text,
     required this.ink,
+    this.onTap,
   });
 
   final IconData icon;
   final String text;
   final Color ink;
 
+  /// Opens what the line is short for; null, it is only read.
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     final Color muted = ink.withValues(alpha: 0.66);
-    return Padding(
+    final Widget line = Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,8 +398,24 @@ class _WhyLine extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           Flexible(
-            child: Text(
-              text,
+            child: Text.rich(
+              TextSpan(
+                text: text,
+                children: [
+                  // A tap opens more: the line says so with a mark at its
+                  // end, as a link in a sentence does.
+                  if (onTap != null)
+                    TextSpan(
+                      text: '\u00a0\u203a',
+                      style: AppText.body(
+                        size: 12.5,
+                        weight: FontWeight.w800,
+                        height: 1.25,
+                        color: muted,
+                      ),
+                    ),
+                ],
+              ),
               style: AppText.body(
                 size: 12.5,
                 weight: FontWeight.w500,
@@ -395,6 +425,15 @@ class _WhyLine extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+    if (onTap == null) return line;
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: line,
       ),
     );
   }

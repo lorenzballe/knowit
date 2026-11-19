@@ -30,6 +30,7 @@ import 'week_screen.dart';
 import '../widgets/card_edge.dart';
 import '../widgets/premium.dart';
 import '../widgets/area_marks.dart' show goalName;
+import '../widgets/move_words.dart';
 
 part 'journey_story.dart';
 
@@ -2103,7 +2104,7 @@ class _MissingTile extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    m.principle.label,
+                    moveName(context.l10n, m.principle),
                     style: AppText.body(
                       size: 14,
                       weight: FontWeight.w600,
@@ -2126,7 +2127,7 @@ class _MissingTile extends StatelessWidget {
             ),
             const SizedBox(height: 3),
             Text(
-              m.principle.oneLine,
+              moveLine(context.l10n, m.principle),
               style: AppText.body(
                 size: 12,
                 height: 1.35,

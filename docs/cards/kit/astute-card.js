@@ -173,7 +173,7 @@ const Kit = (() => {
     const name = label.querySelector('.t'); if (name && s.name) name.textContent = s.name;
     label.querySelector('.kit-chip')?.remove(); card.querySelector('.kit-note')?.remove();
     if (e.chip && name) { const c = document.createElement('span'); c.className = 'kit-chip'; c.textContent = e.chip; name.after(c); }
-    if (e.note) { const n = document.createElement('p'); n.className = 'kit-note'; n.textContent = e.note; label.after(n); }
+    if (e.note) { const n = document.createElement('p'); n.className = 'kit-note'; if (bridge() && bridge().why) n.classList.add('kit-why'); n.textContent = e.note; label.after(n); }
     fitLabel();
   }
   // The page's own tag gives way when the subject's name and the app's chip leave it no room.
@@ -289,6 +289,14 @@ const Kit = (() => {
     const src = e.target && e.target.closest ? e.target.closest('.foot .src') : null;
     if (!src || !bridge() || !bridge().deeper) return;
     e.preventDefault(); e.stopPropagation(); haptic('selection'); bridge().deeper();
+  }, true);
+
+  // A tap on the line under the head that says why the card is in today's five opens Why this card in the app,
+  // as on a native card. From November 2026.
+  document.addEventListener('click', e => {
+    const why = e.target && e.target.closest ? e.target.closest('.kit-note.kit-why') : null;
+    if (!why || !bridge() || !bridge().why) return;
+    e.preventDefault(); e.stopPropagation(); haptic('selection'); bridge().why();
   }, true);
 
   // What the card tells the app. Standing alone they are kept on Kit, for the checker to read.

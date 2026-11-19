@@ -43,6 +43,8 @@ sealed class PageMessage {
         );
       case 'deeper':
         return const PageDeeper();
+      case 'why':
+        return const PageWhy();
       case 'react':
         final Reaction? reaction = Reaction.of(raw['value']);
         return reaction == null ? null : PageReact(reaction);
@@ -145,6 +147,12 @@ class PageAnswer extends PageMessage {
 /// The reader tapped the card's source: Go deeper (deeper_sheet.dart).
 class PageDeeper extends PageMessage {
   const PageDeeper();
+}
+
+/// The reader tapped the line under the card's head that says why it is in
+/// today's five: Why this card (why_sheet.dart).
+class PageWhy extends PageMessage {
+  const PageWhy();
 }
 
 /// The reader said what the card did for them (see [Pill.reacts]).

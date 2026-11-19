@@ -18,6 +18,8 @@ void main() {
       expect(read({'t': 'flip'}), isA<PageFlip>());
       expect(read({'t': 'tap'}), isA<PageTap>());
       expect(read({'t': 'done'}), isA<PageDone>());
+      expect(read({'t': 'deeper'}), isA<PageDeeper>());
+      expect(read({'t': 'why'}), isA<PageWhy>());
 
       final answer = read({
         't': 'answer',
