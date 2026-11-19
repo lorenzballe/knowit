@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "0b5524edfd9a7319",
+ "hash": "d87bf789c00f1adf",
  "app": {
   "gate": null,
   "flags": {},
@@ -26,94 +26,15 @@ const String kEmbeddedRemote = r'''
     "block": "offline"
    },
    {
-    "id": "maths-daily",
-    "block": "maths-daily",
-    "title": {
-     "en": "Problem of the day",
-     "it": "Il problema del giorno",
-     "de": "Aufgabe des Tages",
-     "es": "El problema del día",
-     "fr": "Le problème du jour",
-     "pt": "O problema do dia",
-     "nl": "Opgave van de dag",
-     "pl": "Zadanie dnia",
-     "ru": "Задача дня",
-     "tr": "Günün problemi",
-     "ja": "今日の問題",
-     "ko": "오늘의 문제",
-     "zh": "每日一题"
-    },
-    "subtitle": {
-     "en": "A new one every day, the same for everyone.",
-     "it": "Uno nuovo ogni giorno, lo stesso per tutti.",
-     "de": "Jeden Tag eine neue, für alle dieselbe.",
-     "es": "Uno nuevo cada día, el mismo para todos.",
-     "fr": "Un nouveau chaque jour, le même pour tous.",
-     "pt": "Um novo todos os dias, o mesmo para todos.",
-     "nl": "Elke dag een nieuwe, voor iedereen dezelfde.",
-     "pl": "Codziennie nowe, dla wszystkich to samo.",
-     "ru": "Каждый день новая, одна на всех.",
-     "tr": "Her gün yenisi, herkes için aynısı.",
-     "ja": "毎日新しい問題。みんな同じ問題です。",
-     "ko": "매일 새로운 문제, 모두에게 같은 문제.",
-     "zh": "每天一道新题，人人相同。"
-    }
-   },
-   {
-    "id": "news-today",
-    "block": "news-today",
-    "title": {
-     "en": "The news, reasoned",
-     "it": "Notizie ragionate",
-     "de": "Nachrichten, durchdacht",
-     "es": "Noticias razonadas",
-     "fr": "L'actualité, raisonnée",
-     "pt": "Notícias pensadas",
-     "nl": "Het nieuws, doordacht",
-     "pl": "Wiadomości z namysłem",
-     "ru": "Новости с объяснением",
-     "tr": "Düşünülmüş haberler",
-     "ja": "考えるニュース",
-     "ko": "생각하는 뉴스",
-     "zh": "讲道理的新闻"
-    },
-    "subtitle": {
-     "en": "Today's stories, and the why behind each.",
-     "it": "Le storie di oggi, e il perché di ognuna.",
-     "de": "Die Geschichten von heute und das Warum dahinter.",
-     "es": "Las historias de hoy y el porqué de cada una.",
-     "fr": "Les histoires du jour, et le pourquoi de chacune.",
-     "pt": "As histórias de hoje e o porquê de cada uma.",
-     "nl": "De verhalen van vandaag, en het waarom erachter.",
-     "pl": "Dzisiejsze historie i to, dlaczego się wydarzyły.",
-     "ru": "Сегодняшние истории и то, почему они случились.",
-     "tr": "Bugünün haberleri ve her birinin nedeni.",
-     "ja": "今日のニュースと、その理由。",
-     "ko": "오늘의 이야기와 그 이유.",
-     "zh": "今天的新闻，以及背后的原因。"
-    }
-   },
-   {
-    "id": "goal",
-    "block": "goal",
-    "title": {
-     "en": "Useful for",
-     "it": "Ti serve per"
-    },
-    "subtitle": {
-     "en": "Pick one: Explore and your coach will lean that way.",
-     "it": "Scegline uno: Esplora e il tuo coach andranno in quella direzione.",
-     "de": "Wähle eins: Entdecken und dein Coach richten sich danach.",
-     "es": "Elige uno: Explorar y tu coach irán en esa dirección.",
-     "fr": "Choisis-en un : Explorer et ton coach iront dans ce sens.",
-     "pt": "Escolhe um: o Explorar e o teu coach vão nessa direção.",
-     "nl": "Kies er één: Ontdek en je coach gaan die kant op.",
-     "pl": "Wybierz jeden: Odkrywaj i twój coach pójdą w tę stronę.",
-     "ru": "Выбери одно: Обзор и твой коуч подстроятся под это.",
-     "tr": "Birini seç: Keşfet ve koçun o yöne yönelecek.",
-     "ja": "ひとつ選んでください。「探す」とコーチがその方向に合わせます。",
-     "ko": "하나를 고르세요. 탐색과 코치가 그쪽으로 맞춰 줘요.",
-     "zh": "选一个：探索页和你的教练会朝这个方向调整。"
+    "id": "cover",
+    "block": "cover",
+    "gap": 6,
+    "source": {
+     "query": {
+      "unread": true,
+      "perSubject": 1,
+      "limit": 40
+     }
     }
    },
    {
@@ -162,6 +83,74 @@ const String kEmbeddedRemote = r'''
        ]
       }
      ]
+    }
+   },
+   {
+    "id": "news-today",
+    "block": "news-today",
+    "title": {
+     "en": "The news, reasoned",
+     "it": "Notizie ragionate",
+     "de": "Nachrichten, durchdacht",
+     "es": "Noticias razonadas",
+     "fr": "L'actualité, raisonnée",
+     "pt": "Notícias pensadas",
+     "nl": "Het nieuws, doordacht",
+     "pl": "Wiadomości z namysłem",
+     "ru": "Новости с объяснением",
+     "tr": "Düşünülmüş haberler",
+     "ja": "考えるニュース",
+     "ko": "생각하는 뉴스",
+     "zh": "讲道理的新闻"
+    },
+    "subtitle": {
+     "en": "Today's stories, and the why behind each.",
+     "it": "Le storie di oggi, e il perché di ognuna.",
+     "de": "Die Geschichten von heute und das Warum dahinter.",
+     "es": "Las historias de hoy y el porqué de cada una.",
+     "fr": "Les histoires du jour, et le pourquoi de chacune.",
+     "pt": "As histórias de hoje e o porquê de cada uma.",
+     "nl": "De verhalen van vandaag, en het waarom erachter.",
+     "pl": "Dzisiejsze historie i to, dlaczego się wydarzyły.",
+     "ru": "Сегодняшние истории и то, почему они случились.",
+     "tr": "Bugünün haberleri ve her birinin nedeni.",
+     "ja": "今日のニュースと、その理由。",
+     "ko": "오늘의 이야기와 그 이유.",
+     "zh": "今天的新闻，以及背后的原因。"
+    }
+   },
+   {
+    "id": "maths-daily",
+    "block": "maths-daily",
+    "title": {
+     "en": "Problem of the day",
+     "it": "Il problema del giorno",
+     "de": "Aufgabe des Tages",
+     "es": "El problema del día",
+     "fr": "Le problème du jour",
+     "pt": "O problema do dia",
+     "nl": "Opgave van de dag",
+     "pl": "Zadanie dnia",
+     "ru": "Задача дня",
+     "tr": "Günün problemi",
+     "ja": "今日の問題",
+     "ko": "오늘의 문제",
+     "zh": "每日一题"
+    },
+    "subtitle": {
+     "en": "A new one every day, the same for everyone.",
+     "it": "Uno nuovo ogni giorno, lo stesso per tutti.",
+     "de": "Jeden Tag eine neue, für alle dieselbe.",
+     "es": "Uno nuevo cada día, el mismo para todos.",
+     "fr": "Un nouveau chaque jour, le même pour tous.",
+     "pt": "Um novo todos os dias, o mesmo para todos.",
+     "nl": "Elke dag een nieuwe, voor iedereen dezelfde.",
+     "pl": "Codziennie nowe, dla wszystkich to samo.",
+     "ru": "Каждый день новая, одна на всех.",
+     "tr": "Her gün yenisi, herkes için aynısı.",
+     "ja": "毎日新しい問題。みんな同じ問題です。",
+     "ko": "매일 새로운 문제, 모두에게 같은 문제.",
+     "zh": "每天一道新题，人人相同。"
     }
    },
    {
@@ -305,6 +294,29 @@ const String kEmbeddedRemote = r'''
        ]
       }
      ]
+    }
+   },
+   {
+    "id": "goal",
+    "block": "goal",
+    "title": {
+     "en": "Useful for",
+     "it": "Ti serve per"
+    },
+    "subtitle": {
+     "en": "Pick one: Explore and your coach will lean that way.",
+     "it": "Scegline uno: Esplora e il tuo coach andranno in quella direzione.",
+     "de": "Wähle eins: Entdecken und dein Coach richten sich danach.",
+     "es": "Elige uno: Explorar y tu coach irán en esa dirección.",
+     "fr": "Choisis-en un : Explorer et ton coach iront dans ce sens.",
+     "pt": "Escolhe um: o Explorar e o teu coach vão nessa direção.",
+     "nl": "Kies er één: Ontdek en je coach gaan die kant op.",
+     "pl": "Wybierz jeden: Odkrywaj i twój coach pójdą w tę stronę.",
+     "ru": "Выбери одно: Обзор и твой коуч подстроятся под это.",
+     "tr": "Birini seç: Keşfet ve koçun o yöne yönelecek.",
+     "ja": "ひとつ選んでください。「探す」とコーチがその方向に合わせます。",
+     "ko": "하나를 고르세요. 탐색과 코치가 그쪽으로 맞춰 줘요.",
+     "zh": "选一个：探索页和你的教练会朝这个方向调整。"
     }
    },
    {

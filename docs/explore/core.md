@@ -199,6 +199,28 @@ Fields: `source` (required).
  "source": {"ids": ["psychology-streaks-1"]}}
 ```
 
+### `cover`
+
+The top of the page, and the first thing a reader sees of Explore: the
+section's cards in a mosaic, as a magazine lays its cover. Two cards large,
+each three fifths of the width, their questions set big; beside each, two
+small ones, one above the other; every one in words, in its subject's
+colour. The large one stands on the left and then on the right, so the eye
+goes down the page in a zigzag. The large tiles take the longest questions
+of the first cards dealt, every card is of a subject of its own where the
+source gives enough, a small tile takes only a question it holds whole, and
+a group that cannot be laid whole is left out. The first time
+Explore opens it comes up a tile at a time (still for a reader who asked
+for less motion); after that it is simply there.
+
+Fields: `title`, `subtitle` (neither by default: the cards are the cover),
+and a `source`.
+
+```json
+{"id": "cover", "block": "cover", "gap": 6,
+ "source": {"query": {"unread": true, "perSubject": 1, "limit": 40}}}
+```
+
 ### `feed`
 
 Explore without an end. After the shelves, the whole bank in the day's
