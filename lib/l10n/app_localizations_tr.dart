@@ -1349,6 +1349,42 @@ class AppLocalizationsTr extends AppLocalizations {
   String get perkNew => 'YENİ';
 
   @override
+  String get skillsTitle => 'Ne öğrenmeli';
+
+  @override
+  String get skillsTitleMark => 'öğrenmeli';
+
+  @override
+  String get skillsLine =>
+      'İlgilendiklerini seç. Sıradaki kartları seçmemize yardımcı olur.';
+
+  @override
+  String get skillsDone => 'Tamam';
+
+  @override
+  String get skillsRowTitle => 'Öğrenmek istediklerin';
+
+  @override
+  String skillName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Eleştirel düşünme',
+      'decisions': 'Daha iyi kararlar',
+      'money': 'Para ve birikim',
+      'numbers': 'Sayılar ve istatistik',
+      'talk': 'İletişim',
+      'persuade': 'İkna',
+      'people': 'İnsanları anlamak',
+      'fakes': 'Sahteyi ayırt etmek',
+      'science': 'Bilim insanı gibi düşünmek',
+      'focus': 'Odaklanma',
+      'lead': 'Liderlik',
+      'culture': 'Genel kültür',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get perkFiveShort => 'Her gün, senin seviyende.';
 
   @override

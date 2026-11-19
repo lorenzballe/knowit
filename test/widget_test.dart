@@ -824,13 +824,14 @@ void main() {
       await _settle(tester);
 
       await _openProfile(tester);
+      // The subjects' block: the skills under it have an Edit of their own.
       await tester.scrollUntilVisible(
-        find.text('Edit'),
+        find.byKey(const ValueKey('profile-topics')),
         200,
         scrollable: _profileList,
       );
       await _settle(tester);
-      await tester.tap(find.text('Edit'));
+      await tester.tap(find.byKey(const ValueKey('profile-topics')));
       await _settle(tester);
 
       // The picker, not the paywall: the mix is what the free day's own

@@ -1308,6 +1308,41 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkNew => '新';
 
   @override
+  String get skillsTitle => '想学什么';
+
+  @override
+  String get skillsTitleMark => '学';
+
+  @override
+  String get skillsLine => '选出你感兴趣的。这能帮我们决定接下来写哪些卡片。';
+
+  @override
+  String get skillsDone => '完成';
+
+  @override
+  String get skillsRowTitle => '想学的内容';
+
+  @override
+  String skillName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': '批判性思维',
+      'decisions': '更好地决策',
+      'money': '金钱与储蓄',
+      'numbers': '数字与统计',
+      'talk': '沟通',
+      'persuade': '说服',
+      'people': '理解他人',
+      'fakes': '识破假消息',
+      'science': '像科学家一样思考',
+      'focus': '专注力',
+      'lead': '领导力',
+      'culture': '通识',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get perkFiveShort => '每天，按你的水平。';
 
   @override

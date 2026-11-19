@@ -1317,6 +1317,41 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkNew => 'NEW';
 
   @override
+  String get skillsTitle => '学びたいこと';
+
+  @override
+  String get skillsTitleMark => '学び';
+
+  @override
+  String get skillsLine => '興味のあるものを選んでください。次に書くカードを決める参考になります。';
+
+  @override
+  String get skillsDone => '完了';
+
+  @override
+  String get skillsRowTitle => '学びたいこと';
+
+  @override
+  String skillName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': '批判的思考',
+      'decisions': 'より良い決断',
+      'money': 'お金と貯蓄',
+      'numbers': '数字と統計',
+      'talk': '伝える力',
+      'persuade': '説得する力',
+      'people': '人を理解する',
+      'fakes': 'フェイクを見抜く',
+      'science': '科学者のように考える',
+      'focus': '集中力',
+      'lead': 'リーダーシップ',
+      'culture': '一般教養',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get perkFiveShort => '毎日、あなたのレベルで。';
 
   @override

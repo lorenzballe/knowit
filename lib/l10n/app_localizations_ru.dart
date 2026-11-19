@@ -1413,6 +1413,42 @@ class AppLocalizationsRu extends AppLocalizations {
   String get perkNew => 'НОВОЕ';
 
   @override
+  String get skillsTitle => 'Чему учиться';
+
+  @override
+  String get skillsTitleMark => 'учиться';
+
+  @override
+  String get skillsLine =>
+      'Выбери то, что тебе интересно. Так мы поймём, какие карточки писать дальше.';
+
+  @override
+  String get skillsDone => 'Готово';
+
+  @override
+  String get skillsRowTitle => 'Чему хочешь научиться';
+
+  @override
+  String skillName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'critical': 'Критическое мышление',
+      'decisions': 'Лучшие решения',
+      'money': 'Деньги и сбережения',
+      'numbers': 'Числа и статистика',
+      'talk': 'Общение',
+      'persuade': 'Убеждение',
+      'people': 'Понимать людей',
+      'fakes': 'Распознавать фейки',
+      'science': 'Мыслить как учёный',
+      'focus': 'Концентрация',
+      'lead': 'Лидерство',
+      'culture': 'Общая эрудиция',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get perkFiveShort => 'Каждый день, на твоём уровне.';
 
   @override
