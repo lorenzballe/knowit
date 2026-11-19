@@ -135,6 +135,13 @@ class _TodayDoneViewState extends State<TodayDoneView>
 
   /// How far the shelf has been pulled from rest, in points.
   double _dx = 0;
+
+  /// Whether the card at the front has been turned to its question. The
+  /// finished day shows each card as played, first: its answer, what it
+  /// explains and the line to keep, which is what the day leaves the reader
+  /// with. A drawn card's front, as first shown, keeps empty the room its
+  /// answer will take, and on the shelf read as a card half drawn (the
+  /// owner's own phone, a card of Space); played, it is the card filled.
   bool _flipped = false;
 
   /// The pick this widget asked for, so the parent handing it back is not
@@ -563,14 +570,18 @@ class _TodayDoneViewState extends State<TodayDoneView>
       },
       onShare: () => showShareSheet(context, pill),
     );
-    if (!front) return face(false);
+    if (!front) return face(true);
     // Held down, the card is liked; the bookmark on its back saves it.
     return HoldToKeep(
       saved: app.isLiked(pill.id),
       ink: pill.ink,
       ground: pill.color,
       onToggle: () => app.toggleLiked(pill.id),
-      child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
+      child: FlipCard(
+        showBack: !_flipped,
+        front: face(false),
+        back: face(true),
+      ),
     );
   }
 

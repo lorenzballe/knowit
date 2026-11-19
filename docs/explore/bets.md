@@ -377,8 +377,9 @@ before is played all the same; only its first answer is the card's. It
 opens Explore, and is never on a subject's page. It needs three cards that
 take a share as a number; with fewer it is left out.
 
-It has no fields of its own: one size, three cards, no tone and no line
-under it. `source` may name the three.
+One size, three cards, no tone and no line under it. Its one field is
+`gap`, the room above it in points (0 to 120): it opens Explore, 6 under
+the head. `source` may name the three.
 
 ```json
 {"id": "three", "block": "three"}

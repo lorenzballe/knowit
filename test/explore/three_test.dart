@@ -227,9 +227,8 @@ void main() {
     Crowd.useForTest(crowd);
     final BetsTestHost host = await start(tester);
     await show(tester, host);
-    // No run yet, and nothing says "0 days".
-    expect(find.byKey(const ValueKey('three-week')), findsOneWidget);
-    expect(find.byKey(const ValueKey('three-streak')), findsNothing);
+    // The days in a row are the profile's: Explore shows no row of days.
+    expect(find.byKey(const ValueKey('three-week')), findsNothing);
     final List<String> ids = await play(tester, off: 10);
     expect(ids.toSet(), three.toSet());
 
@@ -336,10 +335,11 @@ void main() {
       },
     );
     await show(tester, host);
-    expect(find.byKey(const ValueKey('three-week')), findsOneWidget);
-    expect(textOf(tester, 'three-streak'), l.threeStreak(2));
+    expect(find.byKey(const ValueKey('three-week')), findsNothing);
     await play(tester);
-    expect(find.text(l.threeDay(3).toUpperCase()), findsOneWidget);
+    // The run is kept, and said when the score is sent; not on the card.
+    expect(ThreeDays.instance.streak(sunday), 3);
+    expect(find.text(l.threeDay(3).toUpperCase()), findsNothing);
     expect(textOf(tester, 'three-yesterday'), l.threeYesterday(150));
   });
 

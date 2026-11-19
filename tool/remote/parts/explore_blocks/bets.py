@@ -505,7 +505,10 @@ SPEC: dict[str, dict] = {
     }},
     # Today's three: always three, the same for everyone, on a card of its
     # own with no shelf's head, in one look.
-    "three": {"limit": None, "tone": False, "subtitle": False, "fields": {}},
+    "three": {"limit": None, "tone": False, "subtitle": False, "fields": {
+        # The room above it, in points: it opens Explore, close under the head.
+        "gap": lambda s: _check_count(s, "gap", 0, 120),
+    }},
 }
 
 SIZES = ("s", "m", "l")

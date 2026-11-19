@@ -209,8 +209,10 @@ void main() {
 
   group('the day\'s shelf', () {
     for (final double text in [1.0, 2.0]) {
-      testWidgets('a card with pictures shows its front, then turned its '
-          'back, with its save and share; at ${text}x', (tester) async {
+      testWidgets('a card with pictures shows its back, as played, then '
+          'turned its front, with its save and share; at ${text}x', (
+        tester,
+      ) async {
         final List<Pill> five = pagedCards().take(5).toList();
         PillBank.adopt(bankWithPictures({five.first.id}));
         CardThumb.image = (url) => onePixel;
@@ -225,7 +227,7 @@ void main() {
         expect(tester.takeException(), isNull);
         expect(find.byKey(const ValueKey('shelf-picture')), findsWidgets);
         expect(
-          find.byKey(ValueKey('card-thumb-${five.first.id}-front-large')),
+          find.byKey(ValueKey('card-thumb-${five.first.id}-back-large')),
           findsOneWidget,
         );
         expect(find.bySemanticsLabel('Save this card'), findsWidgets);
@@ -236,7 +238,7 @@ void main() {
         }
         expect(tester.takeException(), isNull);
         expect(
-          find.byKey(ValueKey('card-thumb-${five.first.id}-back-large')),
+          find.byKey(ValueKey('card-thumb-${five.first.id}-front-large')),
           findsOneWidget,
         );
       });

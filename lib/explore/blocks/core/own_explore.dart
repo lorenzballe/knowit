@@ -24,7 +24,7 @@ const List<Map<String, Object?>> kOwnExploreJson = [
   {'id': 'offline', 'block': 'offline'},
   // Today's three: the day's puzzle, the same three for everyone, scored
   // and set against today's other readers. It opens Explore.
-  {'id': 'three', 'block': 'three'},
+  {'id': 'three', 'block': 'three', 'gap': 6},
   // The cover: the day's cards in a mosaic, two large and four small, a
   // subject each.
   {
