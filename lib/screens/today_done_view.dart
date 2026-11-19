@@ -736,10 +736,14 @@ class _CardFace extends StatelessWidget {
           child: CardThumb(
             pill: pill,
             side: side,
-            // Taken at the shelf's own size, so it fills the card's width as
-            // a card in words does; a card taller than the canvas has the
-            // picture's ground under it, as a card in words has air.
-            shelf: true,
+            // The card's own picture, at the deck's shape and taken large,
+            // whole: the one taken at the shelf's shape laid the page out
+            // again for a shorter screen, and its drawing came out squashed
+            // over a field of empty ground (the owner's own phone, a card of
+            // Space). Narrower than the shelf's card, it stands in the
+            // middle on its own ground, which is the card's colour edge to
+            // edge, so nothing shows where the picture ends.
+            large: true,
             fit: BoxFit.contain,
             fallback: ColoredBox(color: pill.color, child: words),
             foreground: _PictureControls(
@@ -940,17 +944,19 @@ class _PictureControls extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, box) {
-        // Where the picture lies in the card, drawn whole from the top.
-        const double aspect = WebThumbs.shelfAspect;
+        // Where the picture lies in the card, drawn whole from the top: the
+        // deck's own shape (see above).
+        const double aspect = WebThumbs.aspect;
         final bool wide = box.maxWidth / box.maxHeight > aspect;
         final double picture = wide ? box.maxHeight * aspect : box.maxWidth;
         final double side = (box.maxWidth - picture) / 2;
         // The pair sits at the card's foot, as on a card in words, under the
         // picture's ground where the card is taller than the picture.
         const double foot = 0;
-        // The page was taken 324 points across; its pair of 44 sits 17 in
-        // from the side and 15 up from the foot, 4 apart (pill_card.dart).
-        final double k = picture / 324;
+        // The page was taken 366 points across, the deck's own width; its
+        // pair of 44 sits 17 in from the side and 15 up from the foot, 4
+        // apart (pill_card.dart).
+        final double k = picture / 366;
         return Stack(
           children: [
             if (liked)
