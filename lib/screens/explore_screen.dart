@@ -24,11 +24,13 @@ import '../sync/trace.dart';
 import '../theme.dart';
 import '../widgets/explore/explore_engine.dart';
 import '../widgets/explore/first_shelves.dart' show CardRow;
+import '../widgets/explore/search_start.dart';
 import '../widgets/explore/section_page.dart';
 import '../widgets/explore/story_player.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
+import 'area_screen.dart';
 import 'deck_viewer_screen.dart';
 import 'mix_screen.dart';
 import '../analytics.dart';
@@ -92,6 +94,10 @@ class ExploreScreenState extends State<ExploreScreen>
 
   bool _searching = false;
   String _query = '';
+
+  /// A kind of card picked under the empty search field: its cards are
+  /// listed until something is typed or the kind is let go.
+  CardKind? _kind;
 
   /// Each scroll of the shelves, for the shelves watched on screen. The
   /// head goes up and comes back by the list's own scroll (it is the list's
@@ -203,7 +209,10 @@ class ExploreScreenState extends State<ExploreScreen>
   Timer? _searchSettle;
 
   void _typed(String q) {
-    setState(() => _query = q);
+    setState(() {
+      _query = q;
+      if (q.trim().isNotEmpty) _kind = null;
+    });
     _searchSettle?.cancel();
     if (q.trim().isEmpty) return;
     // The phone answers at once from the bank it holds; the server, which
@@ -250,6 +259,7 @@ class ExploreScreenState extends State<ExploreScreen>
       _subject = null;
       _searching = false;
       _query = '';
+      _kind = null;
     });
     if (_list.hasClients) _list.jumpTo(0);
   }
@@ -473,6 +483,7 @@ class ExploreScreenState extends State<ExploreScreen>
                 setState(() {
                   _searching = false;
                   _query = '';
+                  _kind = null;
                 });
               },
               onChanged: _typed,
@@ -718,12 +729,26 @@ class ExploreScreenState extends State<ExploreScreen>
           ]
         : searchPills(_query, home: widget.app.place);
     if (_query.trim().isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-        child: Text(
-          context.l10n.searchEveryCard,
-          style: AppText.body(size: 13, color: context.p.inkMuted),
-        ),
+      if (_kind case final CardKind kind) return _ofKind(context, kind);
+      // Before anything is typed: words to try, the areas by need, and
+      // the cards by kind (prototype A7).
+      return SearchStart(
+        day: widget.app.today,
+        onTry: (word) {
+          Analytics.capture('explore search tried', {'word': word});
+          _field.value = TextEditingValue(
+            text: word,
+            selection: TextSelection.collapsed(offset: word.length),
+          );
+          _typed(word);
+        },
+        onArea: (area) =>
+            AreaScreen.open(context, widget.app, area, from: 'search'),
+        onKind: (kind) {
+          Analytics.capture('explore search kind', {'kind': kind.name});
+          _focus.unfocus();
+          setState(() => _kind = kind);
+        },
       );
     }
     if (rows.isEmpty) {
@@ -753,6 +778,63 @@ class ExploreScreenState extends State<ExploreScreen>
           Padding(
             padding: const EdgeInsets.only(bottom: 7),
             child: CardRow(pill: pill, onTap: () => _open(rows, pill)),
+          ),
+      ],
+    );
+  }
+
+  /// The cards of [kind], under the empty search field: unread first, with
+  /// the kind's name, how many, and the way back to the start.
+  Widget _ofKind(BuildContext context, CardKind kind) {
+    final l = context.l10n;
+    final Palette p = context.p;
+    final List<Pill> rows = cardsOfKind(
+      kind,
+      day: widget.app.today,
+      home: widget.app.place,
+      read: widget.app.seenIds,
+    );
+    return ListView(
+      key: ValueKey('search-kind-list-${kind.name}'),
+      padding: const EdgeInsets.fromLTRB(20, 2, 20, 120),
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                kindName(l, kind),
+                style: AppText.display(
+                  size: 22,
+                  weight: FontWeight.w600,
+                  spacing: -0.5,
+                  color: p.ink,
+                ),
+              ),
+            ),
+            IconButton(
+              key: const ValueKey('search-kind-clear'),
+              tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+              onPressed: () => setState(() => _kind = null),
+              icon: Icon(Icons.close_rounded, color: p.inkMuted),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Text(
+            l.kindCards(rows.length),
+            style: AppText.body(size: 12, color: p.ink.withValues(alpha: 0.42)),
+          ),
+        ),
+        for (final Pill pill in rows)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 7),
+            child: CardRow(
+              pill: pill,
+              read: widget.app.seenIds.contains(pill.id),
+              onTap: () => _open(rows, pill),
+            ),
           ),
       ],
     );

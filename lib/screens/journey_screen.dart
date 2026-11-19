@@ -25,6 +25,7 @@ import '../widgets/ui.dart';
 import 'deck_viewer_screen.dart';
 import 'mix_screen.dart' show kMixSubjects;
 import 'path_screen.dart';
+import 'subject_home_screen.dart';
 import 'progress_text.dart';
 import 'week_screen.dart';
 import '../widgets/card_edge.dart';
@@ -1411,24 +1412,10 @@ class _SubjectsTile extends StatelessWidget {
   final AppState app;
   final JourneyRecord record;
 
-  /// The cards read of a subject, from its mark on the wheel.
-  void _open(BuildContext context, String key) {
-    final TopicStyle style = kTopics[key]!;
-    final List<Pill> deck = PillBank.live
-        .where((p) => p.topic == style.name && app.seenIds.contains(p.id))
-        .toList();
-    if (deck.isEmpty) return;
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => DeckViewerScreen(
-          app: app,
-          deck: deck,
-          title: context.l10n.subjectOf(style.name),
-          source: 'journey',
-        ),
-      ),
-    );
-  }
+  /// A subject's own home, from its mark on the wheel: how far into it,
+  /// its level, the next card, its themes (subject_home_screen.dart).
+  void _open(BuildContext context, String key) =>
+      SubjectHomeScreen.open(context, app, key, from: 'journey');
 
   @override
   Widget build(BuildContext context) {
@@ -1495,6 +1482,18 @@ class _SubjectsTile extends StatelessWidget {
                 ),
               );
             },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              l.journeySubjectsTap,
+              key: const ValueKey('journey-subjects-tap'),
+              textAlign: TextAlign.center,
+              style: AppText.body(
+                size: 12.5,
+                color: context.p.ink.withValues(alpha: 0.5),
+              ),
+            ),
           ),
         ],
       ),
@@ -1569,12 +1568,12 @@ class _Radar extends StatelessWidget {
                 width: icon,
                 height: icon,
                 child: Semantics(
-                  button: values[i] > 0,
+                  button: true,
                   label: kTopics[keys[i]]!.name,
                   child: GestureDetector(
                     key: ValueKey('subject-${keys[i]}'),
                     behavior: HitTestBehavior.opaque,
-                    onTap: values[i] > 0 ? () => onOpen(keys[i]) : null,
+                    onTap: () => onOpen(keys[i]),
                     child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,

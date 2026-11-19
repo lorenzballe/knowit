@@ -1529,6 +1529,149 @@ class AppLocalizationsJa extends AppLocalizations {
   String get whyTune => '配分を調整する';
 
   @override
+  String get searchTry => '試してみる';
+
+  @override
+  String get searchByNeed => '目的から';
+
+  @override
+  String get searchByKind => '種類から';
+
+  @override
+  String kindName(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'play': '遊べる',
+      'quiz': 'クイズ',
+      'estimate': '見積もり',
+      'debate': 'ディベート',
+      'quick': 'すぐ読める',
+      'other': 'カード',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String kindCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n枚');
+    return '$_temp0';
+  }
+
+  @override
+  String get areaUsefulFor => '役立つ場面';
+
+  @override
+  String areaPaths(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$nつのコース・各10枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaMoves => 'ここで鍛える考え方';
+
+  @override
+  String get areaMoreCards => 'ほかのカード';
+
+  @override
+  String get pathKicker => 'コース';
+
+  @override
+  String pathMeta(String subject, int n, int minutes) {
+    return '$subject・$n枚・約$minutes分';
+  }
+
+  @override
+  String pathPartOf(int part, int parts) {
+    return 'パート$part／$parts';
+  }
+
+  @override
+  String pathTrains(String moves) {
+    return '鍛える考え方：$moves';
+  }
+
+  @override
+  String pathReadOf(int n, int total) {
+    return '$total枚中$n枚読了';
+  }
+
+  @override
+  String get pathFreeTag => '無料';
+
+  @override
+  String get pathStart => 'コースを始める';
+
+  @override
+  String pathContinueAt(int n) {
+    return '続ける・$n枚目';
+  }
+
+  @override
+  String get pathContinue => '続ける';
+
+  @override
+  String get pathUnlock => 'すべてのコースを解放';
+
+  @override
+  String get pathFreeLine => 'どのコースも最初の2枚は無料です。';
+
+  @override
+  String pathNextPart(int n) {
+    return 'パート$n：さらに深く';
+  }
+
+  @override
+  String pathDeeperLine(int n) {
+    return '同じテーマでさらに$n枚、より難しく。';
+  }
+
+  @override
+  String get pathAgain => 'もう一度読む';
+
+  @override
+  String get subjectKicker => '科目';
+
+  @override
+  String subjectReadOf(int n, int total) {
+    return '$total枚中$n枚読了';
+  }
+
+  @override
+  String subjectRight(int right, int answered) {
+    return '$answered問中$right問正解';
+  }
+
+  @override
+  String subjectToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'レベル$levelまであと$n問正解',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subjectLevel => 'レベル';
+
+  @override
+  String get subjectNext => '次のおすすめ';
+
+  @override
+  String get subjectNextLine => '今のレベルの一段上。';
+
+  @override
+  String subjectInside(String subject) {
+    return '$subjectの中身';
+  }
+
+  @override
+  String get journeySubjectsTap => '科目をタップすると、その科目のページが開きます。';
+
+  @override
   String moveName(String move) {
     String _temp0 = intl.Intl.selectLogic(move, {
       'baseRate': '基準率',

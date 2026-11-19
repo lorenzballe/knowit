@@ -1533,6 +1533,149 @@ class AppLocalizationsKo extends AppLocalizations {
   String get whyTune => '구성 조정하기';
 
   @override
+  String get searchTry => '이건 어때요';
+
+  @override
+  String get searchByNeed => '필요에 따라';
+
+  @override
+  String get searchByKind => '종류별로';
+
+  @override
+  String kindName(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'play': '플레이',
+      'quiz': '퀴즈',
+      'estimate': '어림하기',
+      'debate': '토론',
+      'quick': '빠른 읽기',
+      'other': '카드',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String kindCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n장');
+    return '$_temp0';
+  }
+
+  @override
+  String get areaUsefulFor => '도움이 되는 곳';
+
+  @override
+  String areaPaths(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '코스 $n개 · 각 10장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaMoves => '여기서 훈련하는 생각법';
+
+  @override
+  String get areaMoreCards => '관련 카드 더 보기';
+
+  @override
+  String get pathKicker => '코스';
+
+  @override
+  String pathMeta(String subject, int n, int minutes) {
+    return '$subject · $n장 · 약 $minutes분';
+  }
+
+  @override
+  String pathPartOf(int part, int parts) {
+    return '$parts부 중 $part부';
+  }
+
+  @override
+  String pathTrains(String moves) {
+    return '훈련: $moves';
+  }
+
+  @override
+  String pathReadOf(int n, int total) {
+    return '$total장 중 $n장 읽음';
+  }
+
+  @override
+  String get pathFreeTag => '무료';
+
+  @override
+  String get pathStart => '코스 시작하기';
+
+  @override
+  String pathContinueAt(int n) {
+    return '이어서 · $n번째 카드';
+  }
+
+  @override
+  String get pathContinue => '이어서';
+
+  @override
+  String get pathUnlock => '모든 코스 열기';
+
+  @override
+  String get pathFreeLine => '모든 코스의 처음 두 장은 무료예요.';
+
+  @override
+  String pathNextPart(int n) {
+    return '$n부: 더 깊이';
+  }
+
+  @override
+  String pathDeeperLine(int n) {
+    return '같은 주제의 카드 $n장 더, 더 어렵게.';
+  }
+
+  @override
+  String get pathAgain => '다시 읽기';
+
+  @override
+  String get subjectKicker => '과목';
+
+  @override
+  String subjectReadOf(int n, int total) {
+    return '$total장 중 $n장 읽음';
+  }
+
+  @override
+  String subjectRight(int right, int answered) {
+    return '$answered번 답해 $right번 정답';
+  }
+
+  @override
+  String subjectToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '레벨 $level까지 정답 $n개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subjectLevel => '레벨';
+
+  @override
+  String get subjectNext => '다음 추천 카드';
+
+  @override
+  String get subjectNextLine => '지금 수준보다 한 단계 위.';
+
+  @override
+  String subjectInside(String subject) {
+    return '$subject 안에서';
+  }
+
+  @override
+  String get journeySubjectsTap => '과목을 누르면 그 과목의 페이지가 열려요.';
+
+  @override
   String moveName(String move) {
     String _temp0 = intl.Intl.selectLogic(move, {
       'baseRate': '기저율',

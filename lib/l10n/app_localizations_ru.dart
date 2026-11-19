@@ -1643,6 +1643,163 @@ class AppLocalizationsRu extends AppLocalizations {
   String get whyTune => 'Настроить свой микс';
 
   @override
+  String get searchTry => 'Попробуй';
+
+  @override
+  String get searchByNeed => 'По задаче';
+
+  @override
+  String get searchByKind => 'По виду';
+
+  @override
+  String kindName(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'play': 'Поиграть',
+      'quiz': 'Викторины',
+      'estimate': 'Оценки',
+      'debate': 'Споры',
+      'quick': 'Быстрое чтение',
+      'other': 'Карточки',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String kindCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки',
+      many: '$n карточек',
+      few: '$n карточки',
+      one: '$n карточка',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaUsefulFor => 'Пригодится';
+
+  @override
+  String areaPaths(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n маршрута · по десять карточек',
+      many: '$n маршрутов · по десять карточек',
+      few: '$n маршрута · по десять карточек',
+      one: '$n маршрут · по десять карточек',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaMoves => 'Ходы мысли, которые здесь тренируются';
+
+  @override
+  String get areaMoreCards => 'Ещё карточки на эту тему';
+
+  @override
+  String get pathKicker => 'Маршрут';
+
+  @override
+  String pathMeta(String subject, int n, int minutes) {
+    return '$subject · карточек: $n · около $minutes мин';
+  }
+
+  @override
+  String pathPartOf(int part, int parts) {
+    return 'Часть $part из $parts';
+  }
+
+  @override
+  String pathTrains(String moves) {
+    return 'Тренирует: $moves';
+  }
+
+  @override
+  String pathReadOf(int n, int total) {
+    return 'Прочитано $n из $total';
+  }
+
+  @override
+  String get pathFreeTag => 'Бесплатно';
+
+  @override
+  String get pathStart => 'Начать маршрут';
+
+  @override
+  String pathContinueAt(int n) {
+    return 'Дальше · карточка $n';
+  }
+
+  @override
+  String get pathContinue => 'Дальше';
+
+  @override
+  String get pathUnlock => 'Открыть все маршруты';
+
+  @override
+  String get pathFreeLine => 'Первые две карточки каждого маршрута бесплатны.';
+
+  @override
+  String pathNextPart(int n) {
+    return 'Часть $n: глубже';
+  }
+
+  @override
+  String pathDeeperLine(int n) {
+    return 'Ещё $n карточек на ту же тему, сложнее.';
+  }
+
+  @override
+  String get pathAgain => 'Прочитать снова';
+
+  @override
+  String get subjectKicker => 'Предмет';
+
+  @override
+  String subjectReadOf(int n, int total) {
+    return 'Прочитано $n из $total карточек';
+  }
+
+  @override
+  String subjectRight(int right, int answered) {
+    return 'Верно $right из $answered';
+  }
+
+  @override
+  String subjectToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n верного ответа до уровня $level',
+      many: '$n верных ответов до уровня $level',
+      few: '$n верных ответа до уровня $level',
+      one: '$n верный ответ до уровня $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subjectLevel => 'Уровень';
+
+  @override
+  String get subjectNext => 'Следующая для тебя';
+
+  @override
+  String get subjectNextLine => 'На ступень выше твоего уровня.';
+
+  @override
+  String subjectInside(String subject) {
+    return 'Внутри: $subject';
+  }
+
+  @override
+  String get journeySubjectsTap =>
+      'Нажми на предмет, чтобы открыть его страницу.';
+
+  @override
   String moveName(String move) {
     String _temp0 = intl.Intl.selectLogic(move, {
       'baseRate': 'Базовая частота',

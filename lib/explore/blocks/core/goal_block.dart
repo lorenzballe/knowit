@@ -10,6 +10,8 @@ import '../../../widgets/explore/card_tiles.dart';
 import '../../../widgets/explore/first_shelves.dart';
 import '../../explore_block.dart';
 import 'layout.dart';
+import '../../../screens/area_screen.dart';
+import '../../../theme.dart';
 
 /// Where a card pays off in a life (lib/data/goals.dart), on Explore for
 /// every subject: a shelf of one area a day, each in turn, the same for
@@ -36,6 +38,20 @@ class GoalBlock extends ExploreBlock with SectionLayout {
     return ShelfFrame(
       title: l.goalShelf(goalName(l, area)),
       line: goalLine(l, area),
+      // The area's own page: its paths, the moves it trains, more of it.
+      trailing: TextButton(
+        key: const ValueKey('goal-see-all'),
+        onPressed: () => AreaScreen.open(context, app, area, from: 'shelf'),
+        style: TextButton.styleFrom(
+          foregroundColor: context.p.ink,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          visualDensity: VisualDensity.compact,
+        ),
+        child: Text(
+          l.booksSeeAll,
+          style: AppText.body(size: 13.5, weight: FontWeight.w700),
+        ),
+      ),
       child: TileRow(
         size: TileSize.m,
         pills: cards,

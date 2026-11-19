@@ -2274,6 +2274,198 @@ abstract class AppLocalizations {
   /// **'Tune your mix'**
   String get whyTune;
 
+  /// Search, before anything is typed: a few words to try. One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Try'**
+  String get searchTry;
+
+  /// Search, before anything is typed: the areas of life cards help with. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'By need'**
+  String get searchByNeed;
+
+  /// Search, before anything is typed: kinds of card (to play, quizzes...). Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'By kind'**
+  String get searchByKind;
+
+  /// A kind of card, by how it is played. play: an interactive page; quiz: pick one of a few answers; estimate: put a number on something; debate: take a side; quick: read in a breath.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, play{To play} quiz{Quizzes} estimate{Estimates} debate{Debates} quick{Quick reads} other{Cards}}'**
+  String kindName(String kind);
+
+  /// How many cards a kind has, above its list.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card} other{{n} cards}}'**
+  String kindCards(int n);
+
+  /// Over an area's page: the area of life its cards help with. Shown in capitals, before the area's name below it.
+  ///
+  /// In en, this message translates to:
+  /// **'Useful for'**
+  String get areaUsefulFor;
+
+  /// On an area's page, over its paths (ten cards on one theme). Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One path · ten cards} other{{n} paths · ten cards each}}'**
+  String areaPaths(int n);
+
+  /// On an area's page: title over the reasoning moves the area trains.
+  ///
+  /// In en, this message translates to:
+  /// **'The moves you train here'**
+  String get areaMoves;
+
+  /// On an area's page: title over more cards for that area.
+  ///
+  /// In en, this message translates to:
+  /// **'More cards for it'**
+  String get areaMoreCards;
+
+  /// Over a path's own page: the word for a path (ten cards on one theme, easy to hard). Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Path'**
+  String get pathKicker;
+
+  /// In a path's head, in capitals: its subject, how many cards, about how many minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{subject} · {n} cards · about {minutes} min'**
+  String pathMeta(String subject, int n, int minutes);
+
+  /// A theme with many cards goes on in parts of ten: which part this is.
+  ///
+  /// In en, this message translates to:
+  /// **'Part {part} of {parts}'**
+  String pathPartOf(int part, int parts);
+
+  /// In a path's head: the reasoning moves its cards train.
+  ///
+  /// In en, this message translates to:
+  /// **'Trains: {moves}'**
+  String pathTrains(String moves);
+
+  /// In a path's head: how many of its cards are read.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total} read'**
+  String pathReadOf(int n, int total);
+
+  /// A small tag on a card of a path that the free plan opens. One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get pathFreeTag;
+
+  /// Button on a path's page, nothing read yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the path'**
+  String get pathStart;
+
+  /// Button on a path's page: go on from card n.
+  ///
+  /// In en, this message translates to:
+  /// **'Go on · card {n}'**
+  String pathContinueAt(int n);
+
+  /// Beside a path begun, on an area's page. One short word.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get pathContinue;
+
+  /// Button on a path's page on the free plan, its free cards read: opens Astute+.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock every path'**
+  String get pathUnlock;
+
+  /// Under that button.
+  ///
+  /// In en, this message translates to:
+  /// **'The first two cards of every path are free.'**
+  String get pathFreeLine;
+
+  /// Button or row: the next part of the same theme, deeper.
+  ///
+  /// In en, this message translates to:
+  /// **'Part {n}: go deeper'**
+  String pathNextPart(int n);
+
+  /// Under the next part's name.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} more cards on the same theme, harder.'**
+  String pathDeeperLine(int n);
+
+  /// Button on a path's page, every card read: read it again.
+  ///
+  /// In en, this message translates to:
+  /// **'Read it again'**
+  String get pathAgain;
+
+  /// Over a subject's own page in Your journey. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get subjectKicker;
+
+  /// In a subject's head: its cards read, of all its cards.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total} cards read'**
+  String subjectReadOf(int n, int total);
+
+  /// In a subject's head: answers right, of those answered.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} right of {answered} answered'**
+  String subjectRight(int right, int answered);
+
+  /// In a subject's head: how many right answers (on new cards) the next level is away.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One right answer from level {level}} other{{n} right answers from level {level}}}'**
+  String subjectToNext(int n, int level);
+
+  /// Under the number in the level's ring. One short word, shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get subjectLevel;
+
+  /// On a subject's page: title over the card to read next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next for you'**
+  String get subjectNext;
+
+  /// Under that title.
+  ///
+  /// In en, this message translates to:
+  /// **'One step above where you are.'**
+  String get subjectNextLine;
+
+  /// On a subject's page: title over its themes.
+  ///
+  /// In en, this message translates to:
+  /// **'Inside {subject}'**
+  String subjectInside(String subject);
+
+  /// Under the wheel of subjects in Your journey: a tap on one opens its page.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a subject for its own page.'**
+  String get journeySubjectsTap;
+
   /// The name of a reasoning move a card trains, as short as the English. The key is the move.
   ///
   /// In en, this message translates to:

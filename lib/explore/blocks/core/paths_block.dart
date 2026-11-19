@@ -19,6 +19,7 @@ import '../../../data/pill_bank.dart';
 import '../../../data/topics.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
+import '../../../screens/card_path_screen.dart';
 import '../../../screens/deck_viewer_screen.dart';
 import '../../../state/app_state.dart';
 import '../../../theme.dart';
@@ -34,57 +35,114 @@ const int kPathLength = 10;
 /// How many of a path's cards the free plan reads: the way in.
 const int kPathFree = 2;
 
-/// One path: a genre, its subject's key, and its ten.
+/// How many parts a theme goes deeper in: ten cards a part, a part for
+/// every whole ten it has, this many at most.
+const int kPathParts = 3;
+
+/// One path: a genre, its subject's key, and its ten. A theme with twenty
+/// cards or more goes on in a second [part], with thirty in a third: the
+/// same theme, deeper, each part harder than the one before.
 class CardPath {
   const CardPath({
     required this.genre,
     required this.topicKey,
     required this.cards,
+    this.part = 1,
+    this.parts = 1,
   });
 
   final Genre genre;
   final String topicKey;
   final List<Pill> cards;
+
+  /// Which part of the theme this is, from 1, of [parts].
+  final int part;
+  final int parts;
+}
+
+/// The parts of [genre], of subject [topicKey], from [bank]: its cards easy
+/// before hard and a card with a drawing before one without, in tens, a
+/// part for every whole ten, [kPathParts] at most. None for a theme of
+/// fewer than ten. A book's ideas are read in the book, not in a path.
+List<CardPath> partsOf(Genre genre, String topicKey, List<Pill> bank) {
+  final List<Pill> cards = [...?cardsByGenre(bank)[genre.id]];
+  const Map<String, int> order = {'easy': 0, 'medium': 1, 'hard': 2};
+  cards.sort((a, b) {
+    final int byLevel = (order[a.difficulty.name] ?? 1).compareTo(
+      order[b.difficulty.name] ?? 1,
+    );
+    if (byLevel != 0) return byLevel;
+    final int byPage = (b.hasPage ? 1 : 0).compareTo(a.hasPage ? 1 : 0);
+    return byPage != 0 ? byPage : a.id.compareTo(b.id);
+  });
+  final int parts = (cards.length ~/ kPathLength).clamp(0, kPathParts);
+  return [
+    for (int i = 0; i < parts; i++)
+      CardPath(
+        genre: genre,
+        topicKey: topicKey,
+        cards: cards.skip(i * kPathLength).take(kPathLength).toList(),
+        part: i + 1,
+        parts: parts,
+      ),
+  ];
+}
+
+/// [bank]'s cards by theme, a book's ideas left out: counted once a bank.
+Map<String, List<Pill>> cardsByGenre(List<Pill> bank) {
+  if (identical(bank, _byGenreOf) && _byGenre != null) return _byGenre!;
+  final Map<String, List<Pill>> out = {};
+  for (final Pill p in bank) {
+    if (p.genre.isEmpty || p.book != null) continue;
+    out.putIfAbsent(p.genre, () => []).add(p);
+  }
+  _byGenreOf = bank;
+  return _byGenre = out;
+}
+
+List<Pill>? _byGenreOf;
+Map<String, List<Pill>>? _byGenre;
+
+/// The part of a theme a reader who has [read] those cards has got to: the
+/// first not read through, or the last when every one is.
+CardPath currentPart(List<CardPath> parts, Set<String> read) {
+  for (final CardPath part in parts) {
+    if (!part.cards.every((p) => read.contains(p.id))) return part;
+  }
+  return parts.last;
+}
+
+/// Part [n] of [path]'s theme, or null where there is none.
+CardPath? partOf(CardPath path, int n) {
+  final List<CardPath> parts = partsOf(
+    path.genre,
+    path.topicKey,
+    PillBank.live,
+  );
+  return n >= 1 && n <= parts.length ? parts[n - 1] : null;
 }
 
 /// The paths of [bank], [limit] of them, turning over weekly from [today],
-/// narrowed to [subject] (a subject's name) when there is one.
+/// narrowed to [subject] (a subject's name) when there is one: each theme
+/// at the part a reader who has [read] those cards has got to.
 List<CardPath> pathsOf(
   List<Pill> bank, {
   required DateTime today,
   String? subject,
   int limit = 8,
+  Set<String> read = const {},
 }) {
-  final Map<String, List<Pill>> byGenre = {};
-  for (final Pill p in bank) {
-    // A book's ideas are read in the book, in its order, not dealt into a
-    // path between other cards.
-    if (p.genre.isEmpty || p.book != null) continue;
-    if (subject != null && p.topic != subject) continue;
-    byGenre.putIfAbsent(p.genre, () => []).add(p);
-  }
-  const Map<String, int> order = {'easy': 0, 'medium': 1, 'hard': 2};
   final List<CardPath> all = [];
   for (final MapEntry<String, List<Genre>> subjectGenres in kGenres.entries) {
+    if (subject != null && kTopics[subjectGenres.key]?.name != subject) {
+      continue;
+    }
     for (final Genre genre in subjectGenres.value) {
-      final List<Pill>? cards = byGenre[genre.id];
-      if (cards == null || cards.length < kPathLength) continue;
-      final List<Pill> sorted = [...cards]
-        ..sort((a, b) {
-          final int byLevel = (order[a.difficulty.name] ?? 1).compareTo(
-            order[b.difficulty.name] ?? 1,
-          );
-          if (byLevel != 0) return byLevel;
-          final int byPage = (b.hasPage ? 1 : 0).compareTo(a.hasPage ? 1 : 0);
-          return byPage != 0 ? byPage : a.id.compareTo(b.id);
-        });
-      all.add(
-        CardPath(
-          genre: genre,
-          topicKey: subjectGenres.key,
-          cards: sorted.take(kPathLength).toList(),
-        ),
-      );
+      final List<CardPath> parts = partsOf(genre, subjectGenres.key, bank);
+      if (parts.isEmpty) continue;
+      // Each theme at the part the reader has got to: a theme read through
+      // goes on, deeper, where it has more.
+      all.add(currentPart(parts, read));
     }
   }
   if (all.isEmpty) return const [];
@@ -131,6 +189,7 @@ class PathsBlock extends ExploreBlock with SectionLayout {
       today: app.today,
       subject: host.subject,
       limit: section.limit ?? 8,
+      read: app.seenIds,
     );
     if (paths.isEmpty) return null;
     return SectionFrame(
@@ -149,7 +208,10 @@ class PathsBlock extends ExploreBlock with SectionLayout {
                 .where((p) => app.seenIds.contains(p.id))
                 .length,
             locked: !app.isPlus,
-            onTap: () => openPath(context, app, paths[i]),
+            // The path's own page first: its ten, which are read, which
+            // the plan opens, and the way on (card_path_screen.dart).
+            onTap: () =>
+                CardPathScreen.open(context, app, paths[i], from: 'paths'),
           ),
         ),
       ),
@@ -157,8 +219,8 @@ class PathsBlock extends ExploreBlock with SectionLayout {
   }
 }
 
-/// Opens [path] at full size, a card at a time, counted as read as they go:
-/// all ten on Astute+, from [from]; on the free plan its first [kPathFree],
+/// Opens [path] at full size, a card at a time, counted as read as they go,
+/// from [from]: all ten on Astute+; on the free plan its first [kPathFree],
 /// then the card that offers the rest.
 Future<void> openPath(
   BuildContext context,
@@ -173,7 +235,7 @@ Future<void> openPath(
         app: app,
         deck: whole ? path.cards : path.cards.take(kPathFree).toList(),
         title: path.genre.label,
-        initialIndex: whole ? from : 0,
+        initialIndex: whole ? from : from.clamp(0, kPathFree - 1),
         countsAsRead: true,
         source: 'path',
         of: path.cards.length,
@@ -392,6 +454,7 @@ class _PathTile extends StatelessWidget {
       button: true,
       label: [
         path.genre.label,
+        if (path.part > 1) context.l10n.pathPartOf(path.part, path.parts),
         context.l10n.nCards(path.cards.length),
         if (locked) context.l10n.pathFree(kPathFree),
       ].join(', '),
@@ -456,8 +519,13 @@ class _PathTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
+              // A theme gone deeper says which part it is at: 2/3.
               Text(
-                context.l10n.subjectOf(style.name).toUpperCase(),
+                (path.part > 1
+                        ? '${context.l10n.subjectOf(style.name)} · '
+                              '${path.part}/${path.parts}'
+                        : context.l10n.subjectOf(style.name))
+                    .toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.label(

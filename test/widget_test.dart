@@ -26,6 +26,7 @@ import 'package:astuto/models/reminder.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/paywall_screen.dart';
+import 'package:astuto/screens/subject_home_screen.dart';
 import 'package:astuto/screens/today_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/journey_screen.dart';
@@ -628,9 +629,28 @@ void main() {
     expect(find.byKey(const ValueKey('subject-Economics-off')), findsOneWidget);
     expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsWidgets);
 
-    // And the lens opens a field over the whole pool.
+    // And the lens opens a field over the whole pool, with somewhere to go
+    // before anything is typed: words to try, the areas, the kinds.
     await tester.tap(find.byKey(const ValueKey('explore-search')));
     await _settle(tester);
+    expect(find.byKey(const ValueKey('search-start')), findsOneWidget);
+    expect(find.byKey(const ValueKey('search-need-money')), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('search-kind-quiz')),
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byKey(const ValueKey('search-start')),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await tester.tap(find.byKey(const ValueKey('search-kind-quiz')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('search-kind-list-quiz')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('search-kind-clear')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('search-start')), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'why');
     await _settle(tester);
     expect(find.textContaining('matching'), findsOneWidget);
@@ -876,7 +896,8 @@ void main() {
       await _settle(tester);
       expect(find.byType(JourneyScreen), findsOneWidget);
 
-      // A subject's mark on the wheel opens the cards read of it.
+      // A subject's mark on the wheel opens its own home: how far into it,
+      // its level, the next card, its themes.
       final Finder list = find.descendant(
         of: find.byType(JourneyScreen),
         matching: find.byType(Scrollable),
@@ -889,8 +910,10 @@ void main() {
       await _settle(tester);
       await tester.tap(find.byKey(const ValueKey('subject-space')));
       await _settle(tester);
-      expect(find.byType(DeckViewerScreen), findsOneWidget);
-      expect(find.text(read.question), findsWidgets);
+      expect(find.byType(SubjectHomeScreen), findsOneWidget);
+      expect(find.byKey(const ValueKey('subject-ring')), findsOneWidget);
+      expect(find.textContaining('1 of '), findsWidgets);
+      expect(read.topic, 'Space');
     });
 
     testWidgets('the button after the day is the paywall on the free plan', (

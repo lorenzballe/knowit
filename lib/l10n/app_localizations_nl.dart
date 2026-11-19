@@ -1581,6 +1581,156 @@ class AppLocalizationsNl extends AppLocalizations {
   String get whyTune => 'Je mix afstellen';
 
   @override
+  String get searchTry => 'Probeer';
+
+  @override
+  String get searchByNeed => 'Naar behoefte';
+
+  @override
+  String get searchByKind => 'Naar soort';
+
+  @override
+  String kindName(String kind) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'play': 'Om te spelen',
+      'quiz': 'Quizzen',
+      'estimate': 'Schattingen',
+      'debate': 'Debatten',
+      'quick': 'Snel gelezen',
+      'other': 'Kaarten',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String kindCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten',
+      one: '1 kaart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaUsefulFor => 'Handig voor';
+
+  @override
+  String areaPaths(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n paden · elk tien kaarten',
+      one: 'Eén pad · tien kaarten',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get areaMoves => 'De denkstappen die je hier traint';
+
+  @override
+  String get areaMoreCards => 'Meer kaarten hiervoor';
+
+  @override
+  String get pathKicker => 'Pad';
+
+  @override
+  String pathMeta(String subject, int n, int minutes) {
+    return '$subject · $n kaarten · zo\'n $minutes min';
+  }
+
+  @override
+  String pathPartOf(int part, int parts) {
+    return 'Deel $part van $parts';
+  }
+
+  @override
+  String pathTrains(String moves) {
+    return 'Traint: $moves';
+  }
+
+  @override
+  String pathReadOf(int n, int total) {
+    return '$n van $total gelezen';
+  }
+
+  @override
+  String get pathFreeTag => 'Gratis';
+
+  @override
+  String get pathStart => 'Begin het pad';
+
+  @override
+  String pathContinueAt(int n) {
+    return 'Verder · kaart $n';
+  }
+
+  @override
+  String get pathContinue => 'Verder';
+
+  @override
+  String get pathUnlock => 'Alle paden ontgrendelen';
+
+  @override
+  String get pathFreeLine => 'De eerste twee kaarten van elk pad zijn gratis.';
+
+  @override
+  String pathNextPart(int n) {
+    return 'Deel $n: dieper';
+  }
+
+  @override
+  String pathDeeperLine(int n) {
+    return 'Nog $n kaarten over hetzelfde thema, moeilijker.';
+  }
+
+  @override
+  String get pathAgain => 'Opnieuw lezen';
+
+  @override
+  String get subjectKicker => 'Vak';
+
+  @override
+  String subjectReadOf(int n, int total) {
+    return '$n van $total kaarten gelezen';
+  }
+
+  @override
+  String subjectRight(int right, int answered) {
+    return '$right goed van $answered beantwoord';
+  }
+
+  @override
+  String subjectToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n goede antwoorden tot niveau $level',
+      one: 'Eén goed antwoord tot niveau $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subjectLevel => 'Niveau';
+
+  @override
+  String get subjectNext => 'Volgende voor jou';
+
+  @override
+  String get subjectNextLine => 'Eén stap boven jouw niveau.';
+
+  @override
+  String subjectInside(String subject) {
+    return 'Binnen $subject';
+  }
+
+  @override
+  String get journeySubjectsTap => 'Tik op een vak voor zijn eigen pagina.';
+
+  @override
   String moveName(String move) {
     String _temp0 = intl.Intl.selectLogic(move, {
       'baseRate': 'Basiskansen',
