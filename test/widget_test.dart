@@ -19,6 +19,7 @@ import 'package:astuto/debug_flags.dart';
 import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/legal.dart';
 import 'package:astuto/main.dart';
+import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/models/reminder.dart';
@@ -702,6 +703,31 @@ void main() {
     final String quiet = kMixSubjects
         .map((s) => s.name)
         .firstWhere((name) => name != 'Economics' && name != other.topic);
+    // The head may have gone up with the list: back to the top, where the
+    // row is; then along the row, which scrolls sideways, Thinking first.
+    tester
+        .state<ScrollableState>(
+          find
+              .descendant(
+                of: find.byType(ExploreScreen),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+        )
+        .position
+        .jumpTo(0);
+    await _settle(tester);
+    await tester.scrollUntilVisible(
+      find.byKey(ValueKey('subject-$quiet-off')),
+      120,
+      scrollable: find
+          .ancestor(
+            of: find.byKey(const ValueKey('subject-Economics-on')),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await _settle(tester);
     await tester.tap(find.byKey(ValueKey('subject-$quiet-off')));
     await _settle(tester);
     expect(find.byKey(const ValueKey('top-empty')), findsNothing);
@@ -2167,22 +2193,24 @@ void main() {
     await tester.tap(find.text('SEE THE PLANS'));
     await _settle(tester);
 
-    // Three things on one screen, nothing to scroll to. Each has to exist
-    // before it may be sold — the day is dealt by the state, the journey
-    // and the archive are screens — so naming them here is a promise this
-    // test holds the paywall to.
+    // Everything Astute+ is, each with its line. Each has to exist before
+    // it may be sold — the assistant and the coach are the card's and the
+    // journey's, the day is dealt by the state, the journey and the archive
+    // are screens — so naming them here is a promise this test holds the
+    // paywall to.
     expect(_paywallHeadline, findsOneWidget);
     for (final perk in const [
-      'Watch the gap close',
+      'Your assistant',
+      'A coach every week',
       'Five of your own cards',
-      'Every path, whole',
+      'Every path and every book',
+      'Watch the gap close',
     ]) {
-      expect(find.text(perk), findsOneWidget);
+      expect(find.text(perk), findsOneWidget, reason: perk);
     }
     // And nothing it no longer delivers.
     expect(find.textContaining('extra'), findsNothing);
     expect(find.textContaining('freeze'), findsNothing);
-    expect(find.byType(Scrollable), findsNothing);
     // Sharing left the paywall when it became free.
     expect(find.text('Share as image'), findsNothing);
   });
@@ -2245,8 +2273,17 @@ void main() {
     // And the way back to a plan already paid for, which needs nothing
     // from the store's offer and so is always there.
     expect(find.text('Restore purchases'), findsOneWidget);
-    // Still one screen with nothing to scroll.
-    expect(find.byType(Scrollable), findsNothing);
+    // The way to buy and the way back are on the screen as it opens:
+    // only the features above them scroll, on a phone too short for them.
+    final double screen =
+        tester.view.physicalSize.height / tester.view.devicePixelRatio;
+    for (final Finder f in [
+      find.byKey(const ValueKey('paywall-buy')),
+      find.text('Restore purchases'),
+      find.text('Privacy Policy'),
+    ]) {
+      expect(tester.getBottomLeft(f).dy, lessThanOrEqualTo(screen));
+    }
   });
 
   testWidgets('the headline paints only the word it leans on', (tester) async {
@@ -2261,7 +2298,7 @@ void main() {
     // gradient is a layer over "fools." alone.
     expect(_paywallHeadline, findsOneWidget);
     final masked = find.descendant(
-      of: find.byType(PaywallScreen),
+      of: find.byKey(const ValueKey('paywall-headline')),
       matching: find.byType(ShaderMask),
     );
     expect(masked, findsOneWidget);

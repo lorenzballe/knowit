@@ -1398,6 +1398,36 @@ class AppLocalizationsRu extends AppLocalizations {
       'Твои последние дни, по пять карточек в каждом, — открой снова.';
 
   @override
+  String get perkAskTitle => 'Твой помощник';
+
+  @override
+  String get perkAskLine => 'Объясняет любую карточку и проверяет тебя.';
+
+  @override
+  String get perkCoachTitle => 'Тренер каждую неделю';
+
+  @override
+  String get perkCoachLine => 'Где ты ошибаешься и что тренировать.';
+
+  @override
+  String get perkNew => 'НОВОЕ';
+
+  @override
+  String get perkFiveShort => 'Каждый день, на твоём уровне.';
+
+  @override
+  String get perkShelvesTitle => 'Каждый путь и каждая книга';
+
+  @override
+  String get perkShelvesLine => 'Целиком, и новые каждую неделю.';
+
+  @override
+  String get perkGapShort => 'Насколько уверен — и насколько прав.';
+
+  @override
+  String get perkReadShort => 'Каждый прочитанный день — открыть снова.';
+
+  @override
   String get trialToday => 'Сегодня · весь Astute+, бесплатно';
 
   @override

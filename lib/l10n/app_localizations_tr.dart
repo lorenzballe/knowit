@@ -1334,6 +1334,36 @@ class AppLocalizationsTr extends AppLocalizations {
       'Son günlerin, her biri beş kartıyla, yeniden açılmaya hazır.';
 
   @override
+  String get perkAskTitle => 'Asistanın';
+
+  @override
+  String get perkAskLine => 'Her kartı anlatır, sonra seni sınar.';
+
+  @override
+  String get perkCoachTitle => 'Her hafta bir koç';
+
+  @override
+  String get perkCoachLine => 'Nerede yanıldığın, sırada ne çalışacağın.';
+
+  @override
+  String get perkNew => 'YENİ';
+
+  @override
+  String get perkFiveShort => 'Her gün, senin seviyende.';
+
+  @override
+  String get perkShelvesTitle => 'Her yol ve her kitap';
+
+  @override
+  String get perkShelvesLine => 'Eksiksiz, her hafta yenileriyle.';
+
+  @override
+  String get perkGapShort => 'Ne kadar emin, ne kadar haklı: hafta hafta.';
+
+  @override
+  String get perkReadShort => 'Okuduğun her gün, yeniden açmak için.';
+
+  @override
   String get trialToday => 'Bugün · Astute+ tamamen ücretsiz';
 
   @override

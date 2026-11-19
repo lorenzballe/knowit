@@ -22,7 +22,6 @@ import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/fit_text.dart';
-import '../data/topics.dart';
 import '../widgets/ambient.dart';
 import '../widgets/motion.dart';
 import '../widgets/ui.dart' show ScreenView;
@@ -50,31 +49,69 @@ int get kYearlySavingPercent {
   return (100 * (full - kYearlyCents) / full).round();
 }
 
-// Three things, the record first: the free profile says how far off the
-// reader is today, and only the journey says whether that is closing, so it
-// is the one thing the free plan cannot show at all. Then the day made of
-// the reader's own cards, then every path whole: the free plan opens a
-// path's first two cards, and the rest is here. (What you've read gave way
-// to the paths: the archive's own door already opens on it, and a path is
-// the thing a reader can see they are missing.) Six perks read as a list
-// of features; three read as a reason.
+// Everything Astute+ is, every time, each with its line: the owner asked
+// for no screen where the words are there one time and gone the next. One
+// short line each, so all of it stands on an ordinary phone's screen with
+// nothing to scroll; on the smallest the list scrolls under the plans
+// rather than lose a word. The assistant and the coach first, as what is
+// new; then the day of the reader's own cards, the paths and the books, the
+// record, the archive. The door a reader came through puts its own thing
+// first, so the first line under the headline is what they reached for.
 //
-// Each is drawn rather than marked with an icon: the gap closing on a
-// chart, five cards fanned, a month of days read. An icon on a faint square
-// said "feature"; the picture says which one, at a glance, and fills the
-// card it sits on.
-List<({_PerkArt art, String title, String sub})> _perks(
-  AppLocalizations l, [
-  PaywallVariant? variant,
-]) => [
-  (art: _PerkArt.gap, title: l.perkGapTitle, sub: l.perkGapLine),
-  (art: _PerkArt.five, title: l.perkOwnFiveTitle, sub: l.perkOwnFiveLine),
-  // On the paths' own door the headline says them already: what was read
-  // takes their place there.
-  variant == PaywallVariant.paths
-      ? (art: _PerkArt.days, title: l.perkReadTitle, sub: l.perkReadLine)
-      : (art: _PerkArt.paths, title: l.perkPathsTitle, sub: l.perkPathsLine),
-];
+// Each is marked by a small drawing in one of the headline's colours, in
+// the line weight of the app's own marks: a speech bubble, a chart going
+// up, cards in a fan, a book, two lines meeting, a clock turned back.
+List<_Feature> _features(AppLocalizations l, PaywallVariant variant) {
+  final _Feature ask = (
+    glyph: _Glyph.ask,
+    title: l.perkAskTitle,
+    sub: l.perkAskLine,
+    fresh: true,
+  );
+  final _Feature coach = (
+    glyph: _Glyph.coach,
+    title: l.perkCoachTitle,
+    sub: l.perkCoachLine,
+    fresh: true,
+  );
+  final _Feature five = (
+    glyph: _Glyph.five,
+    title: l.perkOwnFiveTitle,
+    sub: l.perkFiveShort,
+    fresh: false,
+  );
+  final _Feature shelves = (
+    glyph: _Glyph.books,
+    title: l.perkShelvesTitle,
+    sub: l.perkShelvesLine,
+    fresh: false,
+  );
+  final _Feature gap = (
+    glyph: _Glyph.gap,
+    title: l.perkGapTitle,
+    sub: l.perkGapShort,
+    fresh: false,
+  );
+  final _Feature read = (
+    glyph: _Glyph.read,
+    title: l.perkReadTitle,
+    sub: l.perkReadShort,
+    fresh: false,
+  );
+  final List<_Feature> all = [ask, coach, five, shelves, gap, read];
+  final _Feature? first = switch (variant) {
+    PaywallVariant.record => gap,
+    PaywallVariant.five => five,
+    PaywallVariant.read => read,
+    PaywallVariant.paths => shelves,
+    PaywallVariant.outcome => null,
+  };
+  return first == null ? all : [first, ...all.where((f) => f != first)];
+}
+
+/// One thing Astute+ gives: its mark, its name, its line, and whether it
+/// is new.
+typedef _Feature = ({_Glyph glyph, String title, String sub, bool fresh});
 
 /// The three perks' hues, the headline's three in its order — yellow, teal,
 /// violet — bright at night, and deepened on paper enough to draw a line
@@ -812,24 +849,24 @@ class _PaywallScreenState extends State<PaywallScreen> {
     final List<Widget> opener = [
       // Ten less than the air under the row used to be, now that the way
       // out is a finger's height: the headline stays where it was.
-      SizedBox(height: short ? 4 : 12),
+      SizedBox(height: short ? 2 : 6),
       _Headline(
         key: const ValueKey('paywall-headline'),
         text: opening.title,
         mark: opening.mark,
-        size: short ? 34 : 40,
+        size: short ? 32 : 37,
       ),
       // What the door was reached for, in a line: the record, the whole
       // day, the days, or what the habit adds up to.
       Padding(
-        padding: EdgeInsets.only(top: short ? 8 : 10),
+        padding: EdgeInsets.only(top: short ? 6 : 8),
         child: FitText(
           opening.line,
           key: const ValueKey('paywall-line'),
           maxLines: 3,
           minSize: 12.5,
           style: AppText.body(
-            size: short ? 14 : 15,
+            size: short ? 13.5 : 14.5,
             height: 1.38,
             color: p.ink.withValues(alpha: 0.62),
           ),
@@ -838,7 +875,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     ];
 
     final List<Widget> foot = [
-      SizedBox(height: short ? 8 : 12),
+      SizedBox(height: short ? 6 : 8),
       ..._offerBlock(
         context,
         short: short,
@@ -900,19 +937,34 @@ class _PaywallScreenState extends State<PaywallScreen> {
           ),
           SafeArea(
             child: oneScreen
-                // One screen, no scrolling. What is for sale is read at a
-                // glance or it is not read: the three perks sit in whatever
-                // height the opening, the plans and the button leave them,
-                // and a phone too short for their lines shows their titles
-                // alone rather than a scrollbar.
+                // The plans and the button always on screen, at the foot;
+                // above them the opening and every feature, each with its
+                // line, scrolling under the plans on a phone too short for
+                // all of it, never cut down to fit.
                 ? Padding(
                     padding: padding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         top,
-                        ...opener,
-                        Expanded(child: _perksInRoom(l)),
+                        Expanded(
+                          child: _FadeFoot(
+                            child: SingleChildScrollView(
+                              key: const ValueKey('paywall-features-scroll'),
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  ...opener,
+                                  SizedBox(height: short ? 12 : 16),
+                                  _FeatureList(
+                                    features: _features(l, _variant),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                         ...foot,
                       ],
                     ),
@@ -924,19 +976,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       children: [
                         top,
                         ...opener,
-                        const SizedBox(height: 18),
-                        for (final (int i, perk) in _perks(
-                          l,
-                          _variant,
-                        ).indexed) ...[
-                          if (i > 0) const SizedBox(height: _Perk.between),
-                          _Perk(
-                            art: perk.art,
-                            title: perk.title,
-                            sub: perk.sub,
-                            index: i,
-                          ),
-                        ],
+                        const SizedBox(height: 22),
+                        _FeatureList(features: _features(l, _variant)),
                         const SizedBox(height: 6),
                         ...foot,
                       ],
@@ -947,68 +988,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
       ),
     );
   }
-
-  /// The three perks in the height the rest of the screen leaves them:
-  /// three cards sharing it, each as tall as a third of it allows, so the
-  /// room is filled by the three things rather than by the air between
-  /// them. Past [_Perk.most] a card grows no more, and the rest is spread
-  /// round the three. The three are set alike: their lines are shown on
-  /// all three, at one size, or on none.
-  Widget _perksInRoom(AppLocalizations l) => LayoutBuilder(
-    builder: (context, room) {
-      final perks = _perks(l, _variant);
-      // Never right up against the line above or the plans below, however
-      // short the phone.
-      final double air = math.min(_Perk.air, room.maxHeight / 2);
-      final double height = room.maxHeight - 2 * air;
-      final double each =
-          (height - (perks.length - 1) * _Perk.between) / perks.length;
-      // A phone too short even for three of the smallest keeps as many as
-      // there is room for, in order, rather than overflow: the record first.
-      final int shown = each >= _Perk.least
-          ? perks.length
-          : math.max(
-              0,
-              math.min(
-                perks.length,
-                (height + _Perk.between) ~/ (_Perk.least + _Perk.between),
-              ),
-            );
-      final double card = shown == perks.length
-          ? math.min(each, _Perk.most)
-          : _Perk.least;
-      final _PerkLayout layout = _PerkLayout.fit(
-        context,
-        width: room.maxWidth,
-        height: card,
-        titles: [for (final perk in perks.take(shown)) perk.title],
-        subs: [for (final perk in perks.take(shown)) perk.sub],
-      );
-      return Padding(
-        padding: EdgeInsets.symmetric(vertical: air),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (final (int i, perk) in perks.take(shown).indexed) ...[
-              if (i > 0) const SizedBox(height: _Perk.between),
-              RiseIn.staggered(
-                i,
-                step: const Duration(milliseconds: 60),
-                child: _Perk(
-                  art: perk.art,
-                  title: perk.title,
-                  sub: perk.sub,
-                  index: i,
-                  layout: layout,
-                ),
-              ),
-            ],
-          ],
-        ),
-      );
-    },
-  );
 
   /// The plans, the button and the terms under it — or, where the store has
   /// not put the plans on screen, why not and what to do.
@@ -1624,571 +1603,311 @@ class _Headline extends StatelessWidget {
   }
 }
 
-/// What a perk's picture shows.
-enum _PerkArt {
-  /// The record: how sure, dashed, and how right, rising to meet it, the
-  /// gap between them closing week by week.
-  gap,
+/// The bottom of the scrolling part fades into the plans, so what goes on
+/// under them is seen to go on rather than to stop at a line.
+class _FadeFoot extends StatelessWidget {
+  const _FadeFoot({required this.child});
 
-  /// The reader's own day: five cards, fanned, each its subject's colour.
-  five,
-
-  /// The days read: a month of them, filled in, the last one marked.
-  days,
-
-  /// A path: ten steps climbing from the easiest card to the hardest, each
-  /// a little larger and brighter than the last.
-  paths,
-}
-
-/// How the three perk cards are set, alike, in the room they share: how
-/// tall, the picture's size, the title's, and the size of the line under
-/// it, or none when the three lines do not all fit whole.
-class _PerkLayout {
-  const _PerkLayout({
-    required this.height,
-    required this.pad,
-    required this.picture,
-    required this.titleSize,
-    required this.subSize,
-  });
-
-  final double height;
-  final double pad;
-  final double picture;
-  final double titleSize;
-  final double? subSize;
-
-  /// Between the picture and the words.
-  double get space => picture >= 56 ? 16 : 12;
-
-  static double padFor(double h) => h >= 96
-      ? 14
-      : h >= 66
-      ? 11
-      : 7;
-
-  /// The set that [height] allows cards [width] wide, with [titles] and
-  /// [subs] in them.
-  static _PerkLayout fit(
-    BuildContext context, {
-    required double width,
-    required double height,
-    required List<String> titles,
-    required List<String> subs,
-  }) {
-    final double pad = padFor(height);
-    final double picture = (height - 2 * pad).clamp(30.0, 84.0).toDouble();
-    final double titleSize = height >= 76 ? 17.5 : (height >= 58 ? 16 : 15);
-    final double words =
-        width - 2 * (pad + 2) - picture - (picture >= 56 ? 16 : 12);
-    final TextScaler scaler = MediaQuery.textScalerOf(context);
-    final TextDirection direction = Directionality.of(context);
-    final TextStyle base = DefaultTextStyle.of(context).style;
-    double measure(String text, TextStyle style, int lines) {
-      final TextPainter painter = TextPainter(
-        text: TextSpan(text: text, style: base.merge(style)),
-        textDirection: direction,
-        textScaler: scaler,
-        maxLines: lines,
-      )..layout(maxWidth: math.max(0, words));
-      final double h = painter.didExceedMaxLines
-          ? double.infinity
-          : painter.height;
-      painter.dispose();
-      return h;
-    }
-
-    double tallest(List<String> texts, TextStyle style, int lines) =>
-        texts.map((t) => measure(t, style, lines)).fold(0, math.max);
-
-    // A pixel or two kept back: what is measured and what is drawn can
-    // round apart.
-    final double left =
-        height -
-        2 * pad -
-        tallest(titles, _Perk.titleStyle(titleSize, null), 1) -
-        _Perk.under -
-        2;
-    double? subSize;
-    for (double s = 13.5; s >= 12; s -= 0.5) {
-      if (tallest(subs, _Perk.subStyle(s, null), 3) <= left) {
-        subSize = s;
-        break;
-      }
-    }
-    return _PerkLayout(
-      height: height,
-      pad: pad,
-      picture: picture,
-      titleSize: titleSize,
-      subSize: subSize,
-    );
-  }
-}
-
-/// One of the three things, on a card of its own in its hue: its picture,
-/// its title, and its line where the cards have the room for it whole.
-///
-/// Given a [layout], the card is set by it — as tall as a third of the room
-/// allows, with the picture a square as tall as the card does. Without one
-/// — the page that scrolls, at the largest text sizes — it is as tall as
-/// its words.
-class _Perk extends StatelessWidget {
-  final _PerkArt art;
-  final String title;
-  final String sub;
-
-  /// Which of the three: its hue, and when its picture draws.
-  final int index;
-  final _PerkLayout? layout;
-
-  const _Perk({
-    required this.art,
-    required this.title,
-    required this.sub,
-    required this.index,
-    this.layout,
-  });
-
-  /// The least a card is: its picture and its title, a size down.
-  static const double least = 46;
-
-  /// The most it grows to.
-  static const double most = 128;
-
-  /// Between two cards, and above the first and below the last.
-  static const double between = 10;
-  static const double air = 8;
-
-  /// Between the title and its line.
-  static const double under = 4;
-
-  static TextStyle titleStyle(double size, Color? ink) => AppText.body(
-    size: size,
-    weight: FontWeight.w700,
-    height: 1.18,
-    spacing: -0.25,
-    color: ink,
-  );
-
-  static TextStyle subStyle(double size, Color? ink) =>
-      AppText.body(size: size, height: 1.36, color: ink);
+  final Widget child;
 
   @override
-  Widget build(BuildContext context) {
-    final Palette p = context.p;
-    final bool dark = p.isDark;
-    final Color hue = (dark ? _perkHues : _perkHuesOnPaper)[index % 3];
-    final _PerkLayout? set = layout;
-    final double pad = set?.pad ?? 14;
-    final double picture = set?.picture ?? 64;
-    final double titleSize = set?.titleSize ?? 17.5;
-    final double? subSize = set == null ? 13.5 : set.subSize;
-    final Color subInk = p.ink.withValues(alpha: dark ? 0.62 : 0.66);
+  Widget build(BuildContext context) => ShaderMask(
+    blendMode: BlendMode.dstIn,
+    shaderCallback: (r) => LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: const [Colors.white, Colors.white, Colors.transparent],
+      stops: [0, 1 - (18 / r.height).clamp(0.0, 1.0), 1],
+    ).createShader(r),
+    child: child,
+  );
+}
 
-    return Container(
-      key: ValueKey('paywall-perk-${art.name}'),
-      height: set?.height,
-      padding: EdgeInsets.symmetric(horizontal: pad + 2, vertical: pad),
-      decoration: BoxDecoration(
-        // The card's hue as a wash, stronger at the picture's side.
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color.alphaBlend(
-              hue.withValues(alpha: dark ? 0.13 : 0.10),
-              dark ? p.surface : p.surfaceRaised,
-            ),
-            Color.alphaBlend(
-              hue.withValues(alpha: dark ? 0.04 : 0.03),
-              dark ? p.surface : p.surfaceRaised,
-            ),
-          ],
+/// Every feature, one under the other: its mark in a colour of the
+/// headline's, its name, and its line, always whole.
+class _FeatureList extends StatelessWidget {
+  const _FeatureList({required this.features});
+
+  final List<_Feature> features;
+
+  /// The marks' colours, by night and on paper: the headline's three, then
+  /// three more of the cards' own, so no two features in a row share one.
+  static const List<Color> _night = [
+    Color(0xFF8B6CFF),
+    Color(0xFFFFE14D),
+    Color(0xFF2DE0D2),
+    Color(0xFFFF5C9A),
+    Color(0xFF5C8DFF),
+    Color(0xFFFF9A3D),
+    Color(0xFF4CDB7A),
+  ];
+  static const List<Color> _paper = [
+    Color(0xFF6E3AFF),
+    Color(0xFFC79200),
+    Color(0xFF00A99C),
+    Color(0xFFE0336F),
+    Color(0xFF2B5CFF),
+    Color(0xFFE06A00),
+    Color(0xFF14A04A),
+  ];
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      for (final (int i, _Feature f) in features.indexed)
+        Padding(
+          padding: EdgeInsets.only(top: i == 0 ? 0 : 10),
+          child: RiseIn.staggered(
+            i,
+            step: const Duration(milliseconds: 45),
+            child: _row(context, f),
+          ),
         ),
-        borderRadius: BorderRadius.circular(
-          set != null && set.height < 60 ? 16 : 22,
+    ],
+  );
+
+  Widget _row(BuildContext context, _Feature f) {
+    final l = context.l10n;
+    final p = context.p;
+    final List<Color> hues = p.isDark ? _night : _paper;
+    final Color hue = hues[f.glyph.index % hues.length];
+    final Color tile = Color.alphaBlend(
+      hue.withValues(alpha: p.isDark ? 0.13 : 0.1),
+      p.surface,
+    );
+    return Row(
+      key: ValueKey('paywall-feature-${f.glyph.name}'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: tile,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          alignment: Alignment.center,
+          child: CustomPaint(
+            size: const Size.square(22),
+            painter: _GlyphPainter(f.glyph, hue, tile),
+          ),
         ),
-        border: Border.all(color: hue.withValues(alpha: dark ? 0.22 : 0.20)),
-      ),
-      child: Row(
-        children: [
-          _PerkPicture(art: art, hue: hue, size: picture, index: index),
-          SizedBox(width: set?.space ?? 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FitText(
-                  title,
-                  maxLines: 1,
-                  minSize: 12,
-                  style: titleStyle(titleSize, p.ink),
+        const SizedBox(width: 14),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 1),
+                // The name, and beside it whether it is new: on the line
+                // below when the name is long.
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 4,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      f.title,
+                      style: AppText.body(
+                        size: 15,
+                        weight: FontWeight.w700,
+                        height: 1.22,
+                        color: p.ink,
+                      ),
+                    ),
+                    if (f.fresh)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2.5,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(color: hue.withValues(alpha: 0.7)),
+                        ),
+                        child: Text(
+                          l.perkNew,
+                          style: AppText.label(
+                            size: 9,
+                            weight: FontWeight.w800,
+                            spacing: 1,
+                            height: 1.1,
+                            color: hue,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-                if (subSize != null) ...[
-                  const SizedBox(height: under),
-                  Text(
-                    sub,
-                    maxLines: set == null ? null : 3,
-                    style: subStyle(subSize, subInk),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// A perk's picture: a square in its hue with the thing drawn in it, drawn
-/// in once as the paywall opens — the line rising, the cards fanning, the
-/// days filling — and still for anyone who asked for less motion.
-class _PerkPicture extends StatefulWidget {
-  const _PerkPicture({
-    required this.art,
-    required this.hue,
-    required this.size,
-    required this.index,
-  });
-
-  final _PerkArt art;
-  final Color hue;
-  final double size;
-  final int index;
-
-  @override
-  State<_PerkPicture> createState() => _PerkPictureState();
-}
-
-class _PerkPictureState extends State<_PerkPicture>
-    with SingleTickerProviderStateMixin {
-  // Each a little after the one above, as the cards rise in.
-  late final AnimationController _draw = AnimationController(
-    vsync: this,
-    duration: Duration(milliseconds: 1100 + 140 * widget.index),
-  );
-  late final Animation<double> _t = CurvedAnimation(
-    parent: _draw,
-    curve: Interval(
-      (140 * widget.index + 180) / (1100 + 140 * widget.index),
-      1,
-      curve: Curves.easeOutCubic,
-    ),
-  );
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final bool still = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
-    if (still) {
-      _draw.value = 1;
-    } else if (!_draw.isAnimating && _draw.value == 0) {
-      _draw.forward();
-    }
-  }
-
-  @override
-  void dispose() {
-    _draw.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bool dark = context.p.isDark;
-    final double s = widget.size;
-    return ExcludeSemantics(
-      child: Container(
-        width: s,
-        height: s,
-        decoration: BoxDecoration(
-          color: widget.hue.withValues(alpha: dark ? 0.16 : 0.12),
-          borderRadius: BorderRadius.circular(s * 0.3),
-        ),
-        child: RepaintBoundary(
-          child: AnimatedBuilder(
-            animation: _t,
-            builder: (context, _) => CustomPaint(
-              size: Size.square(s),
-              painter: _PerkArtPainter(
-                art: widget.art,
-                t: _t.value,
-                hue: widget.hue,
-                ink: context.p.ink,
-                dark: dark,
               ),
-            ),
+              const SizedBox(height: 2),
+              Text(
+                f.sub,
+                style: AppText.body(
+                  size: 13.5,
+                  height: 1.3,
+                  color: p.ink.withValues(alpha: 0.6),
+                ),
+              ),
+            ],
           ),
         ),
-      ),
+      ],
     );
   }
 }
 
-class _PerkArtPainter extends CustomPainter {
-  _PerkArtPainter({
-    required this.art,
-    required this.t,
-    required this.hue,
-    required this.ink,
-    required this.dark,
-  });
+/// A feature's mark.
+enum _Glyph { ask, coach, five, books, gap, read }
 
-  final _PerkArt art;
-  final double t;
-  final Color hue;
-  final Color ink;
-  final bool dark;
+/// The marks, drawn at 22 by 22 in one weight of line, rounded at the ends
+/// as the app's own marks are.
+class _GlyphPainter extends CustomPainter {
+  const _GlyphPainter(this.glyph, this.colour, this.ground);
+
+  final _Glyph glyph;
+  final Color colour;
+
+  /// The tile behind the mark, for what is in front to hide what is behind.
+  final Color ground;
 
   @override
-  void paint(Canvas canvas, Size size) => switch (art) {
-    _PerkArt.gap => _gap(canvas, size.width),
-    _PerkArt.five => _five(canvas, size.width),
-    _PerkArt.days => _days(canvas, size.width),
-    _PerkArt.paths => _paths(canvas, size.width),
-  };
-
-  /// Five weeks: how sure, dashed and level near the top, and how right,
-  /// rising from well under it and closing on it, fast and then slowly, as
-  /// a gap closes; the gap between the two shaded, each week a bead.
-  void _gap(Canvas canvas, double s) {
-    final Rect r = Rect.fromLTRB(s * 0.18, s * 0.25, s * 0.82, s * 0.78);
-    Offset at(double x, double y) =>
-        Offset(r.left + x * r.width, r.top + y * r.height);
-    const double sure = 0.0;
-    // How right, week by week: the gap halving, near enough.
-    double rightAt(double x) => sure + 0.96 * math.pow(0.16, x).toDouble();
-    const int steps = 48;
-    final double reach = t.clamp(0.0, 1.0);
-    final List<Offset> curve = [
-      for (int i = 0; i <= steps; i++)
-        if (i / steps <= reach + 1e-9) at(i / steps, rightAt(i / steps)),
-    ];
-    if (curve.isEmpty) return;
-    final double sureY = at(0, sure).dy;
-
-    // The gap, shaded between the two lines as far as the line has come.
-    final Path wedge = Path()..moveTo(curve.first.dx, sureY);
-    wedge.lineTo(curve.last.dx, sureY);
-    for (final Offset o in curve.reversed) {
-      wedge.lineTo(o.dx, o.dy);
-    }
-    wedge.close();
-    canvas.drawPath(
-      wedge,
-      Paint()
-        ..shader = ui.Gradient.linear(Offset(r.left, 0), Offset(r.right, 0), [
-          hue.withValues(alpha: dark ? 0.30 : 0.24),
-          hue.withValues(alpha: dark ? 0.10 : 0.08),
-        ]),
-    );
-
-    // How sure: dashed, the whole width from the start.
-    final Paint dash = Paint()
-      ..color = ink.withValues(alpha: dark ? 0.6 : 0.5)
-      ..strokeWidth = s * 0.032
-      ..strokeCap = StrokeCap.round;
-    for (double x = r.left; x < r.right - s * 0.01; x += s * 0.08) {
-      canvas.drawLine(
-        Offset(x, sureY),
-        Offset(math.min(x + s * 0.035, r.right), sureY),
-        dash,
-      );
-    }
-
-    // How right, closing on it.
-    final Path line = Path()..moveTo(curve.first.dx, curve.first.dy);
-    for (final Offset o in curve.skip(1)) {
-      line.lineTo(o.dx, o.dy);
-    }
-    canvas.drawPath(
-      line,
-      Paint()
-        ..color = hue
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = s * 0.055
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round,
-    );
-    // The weeks it has passed, as beads on it; the last ringed once the
-    // line has reached it.
-    for (int w = 0; w <= 4; w++) {
-      final double x = w / 4;
-      if (x > reach + 1e-9) break;
-      final Offset o = at(x, rightAt(x));
-      final bool last = w == 4;
-      canvas.drawCircle(o, s * (last ? 0.058 : 0.045), Paint()..color = hue);
-      canvas.drawCircle(
-        o,
-        s * (last ? 0.024 : 0.018),
-        Paint()..color = dark ? const Color(0xFF15140A) : Colors.white,
-      );
-      if (last) {
-        canvas.drawCircle(
-          o,
-          s * 0.1,
-          Paint()
-            ..color = hue.withValues(alpha: 0.35)
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = s * 0.022,
+  void paint(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.scale(size.width / 22);
+    final Paint line = Paint()
+      ..color = colour
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.8
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    final Paint fill = Paint()..color = colour;
+    switch (glyph) {
+      case _Glyph.ask:
+        // A speech bubble, and a spark of an answer at its corner.
+        final Path bubble = Path()
+          ..moveTo(4, 4.5)
+          ..lineTo(14, 4.5)
+          ..arcToPoint(
+            const Offset(16.5, 7),
+            radius: const Radius.circular(2.5),
+          )
+          ..lineTo(16.5, 12.5)
+          ..arcToPoint(const Offset(14, 15), radius: const Radius.circular(2.5))
+          ..lineTo(8.5, 15)
+          ..lineTo(5, 18)
+          ..lineTo(5, 15)
+          ..arcToPoint(
+            const Offset(1.5, 12.5),
+            radius: const Radius.circular(2.5),
+          )
+          ..lineTo(1.5, 7)
+          ..arcToPoint(const Offset(4, 4.5), radius: const Radius.circular(2.5))
+          ..close();
+        canvas.drawPath(bubble, line);
+        canvas.drawLine(const Offset(5.5, 9), const Offset(12.5, 9), line);
+        canvas.drawLine(const Offset(5.5, 11.8), const Offset(10, 11.8), line);
+        final Path spark = Path()
+          ..moveTo(18.5, 0.8)
+          ..quadraticBezierTo(18.9, 2.9, 21, 3.3)
+          ..quadraticBezierTo(18.9, 3.7, 18.5, 5.8)
+          ..quadraticBezierTo(18.1, 3.7, 16, 3.3)
+          ..quadraticBezierTo(18.1, 2.9, 18.5, 0.8)
+          ..close();
+        canvas.drawPath(spark, fill);
+      case _Glyph.coach:
+        // A week's chart, going up.
+        canvas.drawLine(const Offset(2, 19.5), const Offset(20, 19.5), line);
+        final Path up = Path()
+          ..moveTo(3.5, 15)
+          ..lineTo(8, 10.5)
+          ..lineTo(11.5, 13)
+          ..lineTo(18, 5);
+        canvas.drawPath(up, line);
+        final Path head = Path()
+          ..moveTo(13.8, 5)
+          ..lineTo(18, 5)
+          ..lineTo(18, 9.2);
+        canvas.drawPath(head, line);
+      case _Glyph.five:
+        // Cards in a fan, the front one hiding the ones behind.
+        final Paint behind = Paint()..color = ground;
+        for (final (double a, Offset at) in const [
+          (-0.42, Offset(7.4, 13.2)),
+          (-0.14, Offset(10.2, 12.2)),
+          (0.16, Offset(13.2, 12.4)),
+        ]) {
+          canvas.save();
+          canvas.translate(at.dx, at.dy);
+          canvas.rotate(a);
+          final RRect card = RRect.fromLTRBR(
+            -4.2,
+            -7.2,
+            4.2,
+            6.6,
+            const Radius.circular(1.8),
+          );
+          canvas.drawRRect(card, behind);
+          canvas.drawRRect(card, line);
+          canvas.restore();
+        }
+      case _Glyph.books:
+        // A book, open.
+        final Path left = Path()
+          ..moveTo(11, 6)
+          ..quadraticBezierTo(7, 3.8, 2, 4.5)
+          ..lineTo(2, 17)
+          ..quadraticBezierTo(7, 16.3, 11, 18.5);
+        final Path right = Path()
+          ..moveTo(11, 6)
+          ..quadraticBezierTo(15, 3.8, 20, 4.5)
+          ..lineTo(20, 17)
+          ..quadraticBezierTo(15, 16.3, 11, 18.5);
+        canvas.drawPath(left, line);
+        canvas.drawPath(right, line);
+        canvas.drawLine(const Offset(11, 6), const Offset(11, 18.5), line);
+      case _Glyph.gap:
+        // A chart: how sure, and how right, coming together at its end.
+        final Path axis = Path()
+          ..moveTo(2.5, 2.5)
+          ..lineTo(2.5, 19.5)
+          ..lineTo(20, 19.5);
+        canvas.drawPath(axis, line);
+        final Path sure = Path()
+          ..moveTo(5.5, 5.5)
+          ..quadraticBezierTo(12, 6.5, 18.5, 11);
+        final Path right = Path()
+          ..moveTo(5.5, 16)
+          ..quadraticBezierTo(12, 15, 18.5, 12);
+        canvas.drawPath(sure, line);
+        canvas.drawPath(right, line);
+        canvas.drawCircle(const Offset(18.5, 11.5), 2.1, fill);
+      case _Glyph.read:
+        // A clock, turned back.
+        canvas.drawArc(
+          Rect.fromCircle(center: const Offset(11.5, 11.5), radius: 8),
+          -2.6,
+          5.0,
+          false,
+          line,
         );
-      }
+        final Path tip = Path()
+          ..moveTo(2.2, 4.8)
+          ..lineTo(4.6, 7.9)
+          ..lineTo(8.3, 6.7);
+        canvas.drawPath(tip, line);
+        final Path hands = Path()
+          ..moveTo(11.5, 7.5)
+          ..lineTo(11.5, 11.8)
+          ..lineTo(14.6, 13.6);
+        canvas.drawPath(hands, line);
     }
-  }
-
-  /// Five cards, fanned open from one held at the foot, each in a subject's
-  /// colour, with two lines of words on each.
-  void _five(Canvas canvas, double s) {
-    const List<Color> cards = [
-      Color(0xFFFF3D7F),
-      Color(0xFFFF7A1A),
-      Color(0xFFFFE600),
-      Color(0xFF00D9D9),
-      Color(0xFF4C6FFF),
-    ];
-    final Offset pivot = Offset(s * 0.5, s * 0.86);
-    final double w = s * 0.27;
-    final double h = s * 0.40;
-    for (int i = 0; i < cards.length; i++) {
-      final double angle = (i - 2) * 17 * math.pi / 180 * t;
-      canvas.save();
-      canvas.translate(pivot.dx, pivot.dy);
-      canvas.rotate(angle);
-      final RRect card = RRect.fromRectAndRadius(
-        Rect.fromLTWH(-w / 2, -h - s * 0.06, w, h),
-        Radius.circular(s * 0.05),
-      );
-      canvas.drawRRect(
-        card.shift(Offset(0, s * 0.012)),
-        Paint()..color = Colors.black.withValues(alpha: dark ? 0.35 : 0.12),
-      );
-      canvas.drawRRect(card, Paint()..color = cards[i]);
-      final Color words = inkOn(cards[i]).withValues(alpha: 0.55);
-      final Paint stroke = Paint()
-        ..color = words
-        ..strokeWidth = s * 0.025
-        ..strokeCap = StrokeCap.round;
-      final double top = -h - s * 0.06 + s * 0.08;
-      canvas.drawLine(
-        Offset(-w / 2 + s * 0.05, top),
-        Offset(w / 2 - s * 0.05, top),
-        stroke,
-      );
-      canvas.drawLine(
-        Offset(-w / 2 + s * 0.05, top + s * 0.05),
-        Offset(w / 2 - s * 0.10, top + s * 0.05),
-        stroke,
-      );
-      canvas.restore();
-    }
-  }
-
-  /// A month of days, four weeks of five, filled in as read; the few
-  /// missed left empty, the last one ringed.
-  void _days(Canvas canvas, double s) {
-    const int cols = 5, rows = 4;
-    const Set<int> missed = {3, 9, 14};
-    final double cell = s * 0.105;
-    final double gap = s * 0.04;
-    final double width = cols * cell + (cols - 1) * gap;
-    final double height = rows * cell + (rows - 1) * gap;
-    final Offset origin = Offset((s - width) / 2, (s - height) / 2);
-    final int count = cols * rows;
-    for (int k = 0; k < count; k++) {
-      final int col = k % cols, row = k ~/ cols;
-      final Rect box = Rect.fromLTWH(
-        origin.dx + col * (cell + gap),
-        origin.dy + row * (cell + gap),
-        cell,
-        cell,
-      );
-      // Each day in turn, a little after the one before.
-      final double shown = ((t * (count + 4) - k) / 4).clamp(0.0, 1.0);
-      final bool read = !missed.contains(k);
-      final Paint empty = Paint()
-        ..color = ink.withValues(alpha: dark ? 0.12 : 0.10);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(box, Radius.circular(cell * 0.3)),
-        empty,
-      );
-      if (!read || shown == 0) continue;
-      final Rect filled = Rect.fromCenter(
-        center: box.center,
-        width: cell * shown,
-        height: cell * shown,
-      );
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(filled, Radius.circular(cell * 0.3 * shown)),
-        Paint()..color = hue.withValues(alpha: k == count - 1 ? 1 : 0.85),
-      );
-      if (k == count - 1 && t >= 0.999) {
-        canvas.drawRRect(
-          RRect.fromRectAndRadius(
-            box.inflate(s * 0.03),
-            Radius.circular(cell * 0.45),
-          ),
-          Paint()
-            ..color = hue.withValues(alpha: 0.45)
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = s * 0.02,
-        );
-      }
-    }
-  }
-
-  /// Ten steps on a rising line, drawn one after another; the last ringed
-  /// once it is reached.
-  void _paths(Canvas canvas, double s) {
-    Offset at(int i) => Offset(
-      s * (0.2 + 0.6 * i / 9),
-      s * (0.76 - 0.52 * math.pow(i / 9, 1.25)),
-    );
-    final int shown = (t * 10).ceil().clamp(0, 10);
-    if (shown == 0) return;
-    final Path line = Path()..moveTo(at(0).dx, at(0).dy);
-    for (int i = 1; i < shown; i++) {
-      line.lineTo(at(i).dx, at(i).dy);
-    }
-    canvas.drawPath(
-      line,
-      Paint()
-        ..color = hue.withValues(alpha: dark ? 0.45 : 0.4)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = s * 0.03
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round,
-    );
-    for (int i = 0; i < shown; i++) {
-      canvas.drawCircle(
-        at(i),
-        s * (0.032 + 0.026 * i / 9),
-        Paint()..color = hue.withValues(alpha: 0.55 + 0.45 * i / 9),
-      );
-    }
-    if (shown == 10 && t >= 0.999) {
-      canvas.drawCircle(
-        at(9),
-        s * 0.1,
-        Paint()
-          ..color = hue.withValues(alpha: 0.35)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = s * 0.022,
-      );
-    }
+    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(_PerkArtPainter old) =>
-      old.t != t ||
-      old.art != art ||
-      old.hue != hue ||
-      old.ink != ink ||
-      old.dark != dark;
+  bool shouldRepaint(_GlyphPainter old) =>
+      old.glyph != glyph || old.colour != colour || old.ground != ground;
 }
 
 class _PlanTile extends StatelessWidget {

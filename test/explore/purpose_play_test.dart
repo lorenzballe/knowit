@@ -617,10 +617,7 @@ void main() {
           'updated': {p.id: '2026-10-04'},
         }),
       );
-      expect(
-        find.text(l.purposeMovingUpdated('Oct 4').toUpperCase()),
-        findsOneWidget,
-      );
+      expect(find.text(l.purposeMovingUpdated('Oct 4')), findsOneWidget);
     });
 
     testWidgets('tomorrow\'s shelves, as the section names them', (

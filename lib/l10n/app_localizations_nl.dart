@@ -1347,6 +1347,36 @@ class AppLocalizationsNl extends AppLocalizations {
       'Je laatste dagen, elk met zijn vijf kaarten, klaar om weer te openen.';
 
   @override
+  String get perkAskTitle => 'Je assistent';
+
+  @override
+  String get perkAskLine => 'Legt elke kaart uit en test je daarna.';
+
+  @override
+  String get perkCoachTitle => 'Elke week een coach';
+
+  @override
+  String get perkCoachLine => 'Waar je misgaat en wat je oefent.';
+
+  @override
+  String get perkNew => 'NIEUW';
+
+  @override
+  String get perkFiveShort => 'Elke dag, op jouw niveau.';
+
+  @override
+  String get perkShelvesTitle => 'Elk pad en elk boek';
+
+  @override
+  String get perkShelvesLine => 'Helemaal, en elke week nieuwe.';
+
+  @override
+  String get perkGapShort => 'Hoe zeker tegen hoe vaak juist, per week.';
+
+  @override
+  String get perkReadShort => 'Elke gelezen dag, om opnieuw te openen.';
+
+  @override
   String get trialToday => 'Vandaag · heel Astute+, gratis';
 
   @override

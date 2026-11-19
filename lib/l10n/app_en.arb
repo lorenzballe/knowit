@@ -1301,6 +1301,46 @@
  "perkOwnFiveLine": "Every day, at your level, with the ones you miss coming back.",
  "perkReadTitle": "What you've read",
  "perkReadLine": "Your recent days, each with its five cards, ready to open again.",
+ "perkAskTitle": "Your assistant",
+ "@perkAskTitle": {
+  "description": "Paywall feature: the assistant on every card (Astute+)."
+ },
+ "perkAskLine": "Explains any card, then tests you on it.",
+ "@perkAskLine": {
+  "description": "Paywall feature line under perkAskTitle."
+ },
+ "perkCoachTitle": "A coach every week",
+ "@perkCoachTitle": {
+  "description": "Paywall feature: the weekly AI coach (Astute+)."
+ },
+ "perkCoachLine": "Where you slip, and what to practise next.",
+ "@perkCoachLine": {
+  "description": "Paywall feature line under perkCoachTitle."
+ },
+ "perkNew": "NEW",
+ "@perkNew": {
+  "description": "Small tag beside a paywall feature that is new. Short, in capitals where the language has them."
+ },
+ "perkFiveShort": "Every day, at your level.",
+ "@perkFiveShort": {
+  "description": "Paywall feature line under perkOwnFiveTitle: one short line."
+ },
+ "perkShelvesTitle": "Every path and every book",
+ "@perkShelvesTitle": {
+  "description": "Paywall feature: every path and every book in pills, whole (Astute+)."
+ },
+ "perkShelvesLine": "Whole, with new ones every week.",
+ "@perkShelvesLine": {
+  "description": "Paywall feature line under perkShelvesTitle: one short line."
+ },
+ "perkGapShort": "How sure against how right, week by week.",
+ "@perkGapShort": {
+  "description": "Paywall feature line under perkGapTitle: one short line."
+ },
+ "perkReadShort": "Every day you read, to open again.",
+ "@perkReadShort": {
+  "description": "Paywall feature line under perkReadTitle: one short line."
+ },
  "trialToday": "Today · all of Astute+, free",
  "@trialToday": {
   "description": "First step of the trial timeline under the paywall's button."

@@ -1306,6 +1306,36 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkReadLine => '최근의 날들을 각각 카드 다섯 장과 함께 다시 열어 볼 수 있어요.';
 
   @override
+  String get perkAskTitle => '나만의 어시스턴트';
+
+  @override
+  String get perkAskLine => '카드마다 설명하고 시험해 봐요.';
+
+  @override
+  String get perkCoachTitle => '매주 코치';
+
+  @override
+  String get perkCoachLine => '어디서 틀리는지, 다음엔 뭘 연습할지.';
+
+  @override
+  String get perkNew => 'NEW';
+
+  @override
+  String get perkFiveShort => '매일, 당신의 수준으로.';
+
+  @override
+  String get perkShelvesTitle => '모든 경로와 모든 책';
+
+  @override
+  String get perkShelvesLine => '끝까지, 매주 새로운 것도.';
+
+  @override
+  String get perkGapShort => '확신과 정답률을 매주 비교해요.';
+
+  @override
+  String get perkReadShort => '읽은 날을 언제든 다시 열어요.';
+
+  @override
   String get trialToday => '오늘 · Astute+ 전체를 무료로';
 
   @override

@@ -273,18 +273,54 @@ void main() {
       expect(line(tester), contains('newest first'));
     });
 
-    testWidgets('the perks lead with the record', (tester) async {
+    testWidgets('every feature, the assistant and the coach first', (
+      tester,
+    ) async {
       await open(tester, 'see the plans');
-      final double gap = tester.getTopLeft(find.text('Watch the gap close')).dy;
-      final double own = tester
-          .getTopLeft(find.text('Five of your own cards'))
-          .dy;
-      final double read = tester.getTopLeft(find.text('Every path, whole')).dy;
-      expect(gap, lessThan(own));
-      expect(own, lessThan(read));
+      final List<String> order = [
+        'Your assistant',
+        'A coach every week',
+        'Five of your own cards',
+        'Every path and every book',
+        'Watch the gap close',
+        'What you\'ve read',
+      ];
+      double last = -1;
+      for (final String title in order) {
+        expect(find.text(title), findsOneWidget, reason: title);
+        final double y = tester.getTopLeft(find.text(title)).dy;
+        expect(y, greaterThan(last), reason: title);
+        last = y;
+      }
+      // What is new says so.
+      expect(find.text('NEW'), findsNWidgets(2));
       // Nothing the free plan already has, and nothing never delivered.
       expect(find.textContaining('freeze'), findsNothing);
-      expect(find.byType(Scrollable), findsNothing);
+    });
+
+    testWidgets('the door puts its own feature first', (tester) async {
+      Future<String> first(String source) async {
+        await open(tester, source);
+        final Finder rows = find.byWidgetPredicate(
+          (w) =>
+              w.key is ValueKey<String> &&
+              (w.key! as ValueKey<String>).value.startsWith('paywall-feature-'),
+        );
+        final Element top = rows.evaluate().reduce(
+          (a, b) =>
+              tester.getTopLeft(find.byWidget(a.widget)).dy <=
+                  tester.getTopLeft(find.byWidget(b.widget)).dy
+              ? a
+              : b,
+        );
+        return (top.widget.key! as ValueKey<String>).value;
+      }
+
+      expect(await first('see the plans'), 'paywall-feature-ask');
+      expect(await first('journey'), 'paywall-feature-gap');
+      expect(await first('sixth card'), 'paywall-feature-five');
+      expect(await first('archive'), 'paywall-feature-read');
+      expect(await first('paths'), 'paywall-feature-books');
     });
   });
 
@@ -338,10 +374,10 @@ void main() {
   });
 
   group('an iPhone SE holds every door whole', () {
-    // The door's line and the trial's days take room the perks used to
-    // have: on a short phone the perks go down a size rather than away, and
-    // the screen still does not scroll. German is the longest of the
-    // languages whose letters the test's fonts carry.
+    // The plans, the button and the links stay on screen; every feature
+    // keeps its line, and on a short phone they scroll under the plans
+    // rather than lose their words. German is the longest of the languages
+    // whose letters the test's fonts carry.
     for (final Locale locale in const [Locale('en'), Locale('de')]) {
       testWidgets(locale.languageCode, (tester) async {
         final l = lookupAppLocalizations(locale);
@@ -364,16 +400,37 @@ void main() {
             notifies: true,
           );
           expect(tester.takeException(), isNull, reason: source);
-          for (final String perk in [
-            l.perkGapTitle,
+          for (final String words in [
+            l.perkAskTitle,
+            l.perkAskLine,
+            l.perkCoachTitle,
+            l.perkCoachLine,
             l.perkOwnFiveTitle,
-            l.perkPathsTitle,
+            l.perkFiveShort,
+            l.perkShelvesTitle,
+            l.perkShelvesLine,
+            l.perkGapTitle,
+            l.perkGapShort,
+            l.perkReadTitle,
+            l.perkReadShort,
           ]) {
-            expect(find.text(perk), findsOneWidget, reason: '$source $perk');
+            expect(find.text(words), findsOneWidget, reason: '$source $words');
           }
           expect(find.byKey(const ValueKey('paywall-cancel')), findsOneWidget);
           expect(find.text(l.restorePurchases), findsOneWidget);
-          expect(find.byType(Scrollable), findsNothing);
+          // The way to buy is on the screen, not under the fold.
+          final double screen =
+              tester.view.physicalSize.height / tester.view.devicePixelRatio;
+          expect(
+            tester.getBottomLeft(find.byKey(const ValueKey('paywall-buy'))).dy,
+            lessThanOrEqualTo(screen),
+            reason: source,
+          );
+          expect(
+            tester.getBottomLeft(find.text(l.restorePurchases)).dy,
+            lessThanOrEqualTo(screen),
+            reason: source,
+          );
         }
       });
     }
