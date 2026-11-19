@@ -15,7 +15,9 @@
 /// only, so no card is on the screen twice.
 library;
 
+import '../l10n/app_localizations.dart';
 import '../models/pill.dart';
+import 'genre_names.dart';
 import 'genres.dart';
 import 'themed_shelves.dart';
 import 'topics.dart';
@@ -671,9 +673,14 @@ String strandLabel(String strandId) {
   return tail.isEmpty ? strandId : tail[0].toUpperCase() + tail.substring(1);
 }
 
-/// The genre a card sits in, by name: where the move hides, on a shelf that
-/// shows one move met in many places.
-String genreLabel(Pill p) => genreById(p.genre)?.label ?? p.topic;
+/// The line under a card on a shelf that shows one move met in many places:
+/// the theme the card sits in, where the move hides. English sets the name
+/// inside its sentence, "In physics"; the other languages say it as a label,
+/// "Tema: Fisica", and keep the name as it is written.
+String hidesInLine(AppLocalizations l, Pill p) {
+  final String where = l.themeOfCard(p);
+  return l.hidesIn(languageOf(l) == 'en' ? inSentence(where) : where);
+}
 
 /// A name as it reads inside a sentence: "In physics", "In what makes it
 /// valuable", but still "In AI" — a word whose second letter is a capital

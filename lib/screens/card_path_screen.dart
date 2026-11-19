@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import '../analytics.dart';
 import '../data/topics.dart';
 import '../explore/blocks/core/paths_block.dart';
+import '../data/genre_names.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
@@ -292,7 +293,7 @@ class _Head extends StatelessWidget {
           Semantics(
             header: true,
             child: Text(
-              path.genre.label,
+              context.l10n.themeOf(path.genre),
               style: AppText.display(
                 size: 30,
                 weight: FontWeight.w600,

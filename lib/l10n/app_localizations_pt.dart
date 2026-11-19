@@ -3483,7 +3483,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String hidesIn(String where) {
-    return 'Em $where';
+    return 'Tema: $where';
   }
 
   @override

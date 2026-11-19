@@ -12,6 +12,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../analytics.dart';
+import '../data/genre_names.dart';
 import '../data/genres.dart';
 import '../data/goals.dart';
 import '../data/pill_bank.dart';
@@ -348,7 +349,7 @@ class _PathRow extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            path.genre.label,
+                            context.l10n.themeOf(path.genre),
                             style: AppText.body(
                               size: 15,
                               weight: FontWeight.w700,

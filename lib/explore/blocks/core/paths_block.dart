@@ -14,6 +14,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../../../data/genre_names.dart';
 import '../../../data/genres.dart';
 import '../../../data/pill_bank.dart';
 import '../../../data/topics.dart';
@@ -234,7 +235,7 @@ Future<void> openPath(
       builder: (_) => DeckViewerScreen(
         app: app,
         deck: whole ? path.cards : path.cards.take(kPathFree).toList(),
-        title: path.genre.label,
+        title: context.l10n.themeOf(path.genre),
         initialIndex: whole ? from : from.clamp(0, kPathFree - 1),
         countsAsRead: true,
         source: 'path',
@@ -332,7 +333,7 @@ class PathMore extends StatelessWidget {
           ),
           const SizedBox(height: 18),
           Text(
-            path.genre.label.toUpperCase(),
+            context.l10n.themeOf(path.genre).toUpperCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppText.label(
@@ -453,7 +454,7 @@ class _PathTile extends StatelessWidget {
     return Semantics(
       button: true,
       label: [
-        path.genre.label,
+        context.l10n.themeOf(path.genre),
         if (path.part > 1) context.l10n.pathPartOf(path.part, path.parts),
         context.l10n.nCards(path.cards.length),
         if (locked) context.l10n.pathFree(kPathFree),
@@ -507,7 +508,7 @@ class _PathTile extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                path.genre.label,
+                context.l10n.themeOf(path.genre),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.display(

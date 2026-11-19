@@ -3605,7 +3605,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String hidesIn(String where) {
-    return 'W: $where';
+    return 'Temat: $where';
   }
 
   @override

@@ -795,7 +795,7 @@
   "firstLabel": "Dès",
   "forYouNow": "Pour toi, maintenant",
   "hardBadge": "Difficile",
-  "hidesIn": "Dans {where}",
+  "hidesIn": "Thème : {where}",
   "howSure": "À quel point j'en suis sûr, et pourquoi ?",
   "inRange": "Dans la fourchette : +{pts} points. C'est {said}.",
   "inYourMoves": "Dans tes coups · {n}×",
