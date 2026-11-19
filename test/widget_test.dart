@@ -2467,10 +2467,11 @@ void main() {
     expect(again.left, greaterThan(line.right));
     _expectAtFront(tester, 1);
 
+    // Each card as played: its question, its answer and the line to keep.
     final front = _todaysFive.first;
     expect(find.text(front.question), findsOneWidget);
     expect(find.text(front.barMove), findsOneWidget);
-    expect(find.text(front.answer), findsNothing);
+    expect(find.text(front.answer), findsOneWidget);
 
     // Nothing about the week is said over the shelf: the header and the
     // eyebrow are what they are on every evening.
@@ -2497,7 +2498,7 @@ void main() {
       if (own) marked++;
       expect(
         find.descendant(
-          of: find.byKey(ValueKey('shelf-face-${front.id}-front')),
+          of: find.byKey(ValueKey('shelf-face-${front.id}-back')),
           matching: find.text('FOR YOU'),
         ),
         own ? findsOneWidget : findsNothing,
@@ -2770,21 +2771,24 @@ void main() {
       await finish(tester);
 
       final front = _todaysFive.first;
-      await tester.tap(find.text(front.question));
-      await _settle(tester);
-      // The canvas's back: the answer and the line to bring it up with.
-      // Not the deck's full reveal — that belongs to the first time.
+      // As played, first: the answer and the line to bring it up with. Not
+      // the deck's full reveal — that belongs to the first time.
       expect(find.text(front.answer), findsOneWidget);
       expect(find.text(front.barMove), findsOneWidget);
       expect(find.text('Source · ${front.source}'), findsNothing);
       expect(find.text('WHAT TO KEEP'), findsNothing);
 
+      // Turned: the question alone.
       await tester.tap(find.text(front.question));
       await _settle(tester);
       expect(find.text(front.answer), findsNothing);
+
+      await tester.tap(find.text(front.question));
+      await _settle(tester);
+      expect(find.text(front.answer), findsOneWidget);
     });
 
-    testWidgets('a swipe brings the next card to the front, face down', (
+    testWidgets('a swipe brings the next card to the front, as played', (
       tester,
     ) async {
       SharedPreferences.setMockInitialValues(_installed());
@@ -2795,14 +2799,15 @@ void main() {
       final deck = _todaysFive;
       await tester.tap(find.text(deck.first.question));
       await _settle(tester);
-      expect(find.text(deck.first.answer), findsOneWidget);
+      expect(find.text(deck.first.answer), findsNothing);
 
       await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
       await _settle(tester);
       _expectAtFront(tester, 2);
       expect(find.text(deck[1].question), findsOneWidget);
-      // Turning a card over does not carry to the next one.
-      expect(find.text(deck.first.answer), findsNothing);
+      // Turning a card over does not carry to the next one: it is shown as
+      // played, its answer and all.
+      expect(find.text(deck[1].answer), findsOneWidget);
 
       await tester.drag(find.byType(TodayDoneView), const Offset(200, 0));
       await _settle(tester);

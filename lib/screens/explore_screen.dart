@@ -90,7 +90,6 @@ class ExploreScreenState extends State<ExploreScreen>
   /// Whether the head has gone all the way up, the cards running under the
   /// status bar: the soft edge there then reaches a little below it, as it
   /// cannot while the subjects' row is in view, which it would blur.
-  final ValueNotifier<bool> _headAway = ValueNotifier(false);
 
   bool _searching = false;
   String _query = '';
@@ -100,8 +99,9 @@ class ExploreScreenState extends State<ExploreScreen>
   CardKind? _kind;
 
   /// Each scroll of the shelves, for the shelves watched on screen. The
-  /// head goes up and comes back by the list's own scroll (it is the list's
-  /// first row, [_FloatingHead]), at the finger's speed.
+  /// head is the list's first row: it goes up with the cards and is there
+  /// again only at the top, where a tap on Explore's tab brings the list
+  /// back ([toTop]).
   bool _headFollows(ScrollNotification n) => _sight.scrolled(n);
 
   /// What the shelves put in front of the reader in each stay on the tab.
@@ -239,7 +239,6 @@ class ExploreScreenState extends State<ExploreScreen>
 
   @override
   void dispose() {
-    _headAway.dispose();
     _stay.dispose();
     _searchSettle?.cancel();
     _field.dispose();
@@ -247,6 +246,17 @@ class ExploreScreenState extends State<ExploreScreen>
     _list.dispose();
     shelves.topMonth.dispose();
     super.dispose();
+  }
+
+  /// Back to the top of the shelves, where the head is: Explore's tab
+  /// tapped again, as an app's tab does on iOS.
+  void toTop() {
+    if (!_list.hasClients || _list.offset <= 0) return;
+    _list.animateTo(
+      0,
+      duration: const Duration(milliseconds: 420),
+      curve: Curves.easeOutCubic,
+    );
   }
 
   /// Puts the shelves back the way the tab opens: every subject, no search,
@@ -585,13 +595,14 @@ class ExploreScreenState extends State<ExploreScreen>
               // Always pullable, however short the page.
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
-                SliverPersistentHeader(
-                  floating: true,
-                  delegate: _FloatingHead(
-                    top: top,
-                    row: head,
-                    ground: context.p.surface,
-                    away: _headAway,
+                SliverToBoxAdapter(
+                  child: ColoredBox(
+                    key: const ValueKey('explore-head'),
+                    color: context.p.surface,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: top),
+                      child: SizedBox(height: _headRow, child: head),
+                    ),
                   ),
                 ),
                 SliverPadding(
@@ -633,28 +644,17 @@ class ExploreScreenState extends State<ExploreScreen>
         // Under the status bar, where the cards run under the time and the
         // battery: they go soft and dissolve into the page towards the top
         // of the screen, strongest at its edge, as a list under a bar is
-        // drawn on iOS 26. Once the head is all the way up the edge reaches
-        // a little below the status bar, over the cards alone; while the
-        // subjects' row is in view it stops at the status bar, so the row is
-        // never blurred. Over the head, which is the page's colour, it is
-        // not seen.
+        // drawn on iOS 26. Exactly the status bar's room and no more: it
+        // never reaches over the row of subjects or the cards below the
+        // bar's line. Over the head, which is the page's colour, it is not
+        // seen.
         Positioned(
           key: const ValueKey('explore-top-edge'),
           left: 0,
           right: 0,
           top: 0,
-          child: IgnorePointer(
-            child: ValueListenableBuilder<bool>(
-              valueListenable: _headAway,
-              builder: (context, away, child) => AnimatedContainer(
-                duration: const Duration(milliseconds: 180),
-                curve: Curves.easeOut,
-                height: away ? top + math.max(18.0, top * 0.45) : top,
-                child: child,
-              ),
-              child: _TopEdge(ground: context.p.surface),
-            ),
-          ),
+          height: top,
+          child: IgnorePointer(child: _TopEdge(ground: context.p.surface)),
         ),
       ],
     );
@@ -1031,76 +1031,8 @@ class _TopEdge extends StatelessWidget {
   );
 }
 
-/// Explore's head as the first row of its list, one that floats: it goes
-/// up with the cards as the list is scrolled down, at the finger's own
-/// speed and no faster, and comes back the same way the moment the list is
-/// scrolled up, as Instagram's does. It stands in the status bar's room on
-/// the page's own colour, the row of subjects under it.
-class _FloatingHead extends SliverPersistentHeaderDelegate {
-  _FloatingHead({
-    required this.top,
-    required this.row,
-    required this.ground,
-    required this.away,
-  });
-
-  /// Set, once the frame is drawn, to whether the head is all the way up.
-  final ValueNotifier<bool> away;
-
-  /// The status bar's room.
-  final double top;
-
-  /// The lens and the subjects.
-  final Widget row;
-
-  final Color ground;
-
-  /// How tall the row of subjects is (_SubjectRow).
-  static const double rowHeight = 50;
-
-  @override
-  double get minExtent => 0;
-
-  @override
-  double get maxExtent => top + rowHeight;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlaps) {
-    // Told after the frame, never while the list is being laid out.
-    final bool gone = shrinkOffset >= maxExtent - 0.5;
-    if (gone != away.value) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (away.value != gone) away.value = gone;
-      });
-    }
-    return _moved();
-  }
-
-  /// Moved, not squeezed: drawn whole and cut by what is left of it in view,
-  /// so it slides up and down rather than shrinking.
-  Widget _moved() => ClipRect(
-    child: OverflowBox(
-      alignment: Alignment.bottomCenter,
-      minHeight: maxExtent,
-      maxHeight: maxExtent,
-      child: ColoredBox(
-        key: const ValueKey('explore-head'),
-        color: ground,
-        child: Padding(
-          padding: EdgeInsets.only(top: top),
-          child: SizedBox(height: rowHeight, child: row),
-        ),
-      ),
-    ),
-  );
-
-  @override
-  bool shouldRebuild(_FloatingHead old) =>
-      old.top != top ||
-      old.row != row ||
-      old.ground != ground ||
-      old.away != away;
-}
+/// How tall the row of the lens and the subjects is.
+const double _headRow = 50;
 
 class _SubjectRow extends StatelessWidget {
   const _SubjectRow({

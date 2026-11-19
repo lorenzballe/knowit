@@ -144,8 +144,10 @@ void main() {
   });
 
   testWidgets('going down the shelves takes the head up with the cards, '
-      'at the finger\'s own speed, out of sight; the least move back up brings '
-      'it back as far as the finger goes', (tester) async {
+      'at the finger\'s own speed, out of sight; it is there again only at '
+      'the top, and a tap on Explore\'s tab goes back up to it', (
+    tester,
+  ) async {
     final AppState app = await readyApp();
     _adopt({
       'sections': [
@@ -179,9 +181,8 @@ void main() {
     await tester.pumpAndSettle(const Duration(milliseconds: 50));
     expect(head, findsNothing);
 
-    // A little back up, a finger drawn down a frame at a time as on a
-    // phone: it comes back as far as the finger went, no more.
-    final double cardsThen = topOf(cards);
+    // A little back up does not bring it down over the cards: no edge cut
+    // across them mid-list. It is the list's first row, and stays there.
     final TestGesture finger = await tester.startGesture(
       tester.getCenter(list),
     );
@@ -189,11 +190,15 @@ void main() {
       await finger.moveBy(const Offset(0, 8));
       await tester.pump(const Duration(milliseconds: 16));
     }
-    final double came = topOf(cards) - cardsThen;
-    expect(came, greaterThan(5));
-    expect(tester.getBottomLeft(head).dy, closeTo(rest + came, 0.5));
     await finger.up();
     await tester.pumpAndSettle(const Duration(milliseconds: 50));
+    expect(head, findsNothing);
+
+    // Explore's tab tapped again: back up to the head, where it rests.
+    tester.state<ExploreScreenState>(find.byType(ExploreScreen)).toTop();
+    await tester.pumpAndSettle(const Duration(milliseconds: 50));
+    expect(head, findsOneWidget);
+    expect(topOf(head), closeTo(rest, 0.5));
     expect(height, greaterThan(40));
   });
 

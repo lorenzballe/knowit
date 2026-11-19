@@ -2,8 +2,7 @@
 /// that day, one at a time, about a minute in all, a hundred points each for
 /// how close the guess comes. Then the score out of three hundred, where it
 /// stands among the readers who played the same three today, counted on the
-/// server as they play (lib/sync/crowd.dart), the days in a row, a way to
-/// send it on that says how far off, never the answers, and the cards
+/// server as they play (lib/sync/crowd.dart), a way to send it on that says how far off, never the answers, and the cards
 /// themselves, where each answer is explained.
 ///
 /// It opens Explore: the day's puzzle everyone plays, and talks about.
@@ -486,10 +485,6 @@ class _ThreeStep extends StatelessWidget {
             ],
           ),
         ),
-        if (!laid) ...[
-          const SizedBox(height: 10),
-          _ThreeWeek(ink: BetInk.page(context)),
-        ],
       ],
     );
   }
@@ -552,106 +547,6 @@ class _ThreeHead extends StatelessWidget {
   }
 }
 
-/// The days in a row, and this week's, Monday to Sunday: a reason to come
-/// back tomorrow.
-class _ThreeWeek extends StatelessWidget {
-  const _ThreeWeek({required this.ink});
-
-  final BetInk ink;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final ThreeDays days = ThreeDays.instance;
-    final DateTime now = BetsDay.instance.now;
-    final int streak = days.streak(now);
-    final List<bool> week = days.week(now);
-    final String locale = Localizations.localeOf(context).toString();
-    final DateTime monday = DateTime(
-      now.year,
-      now.month,
-      now.day,
-    ).subtract(Duration(days: now.weekday - 1));
-    String letter(int i) {
-      String d;
-      try {
-        d = DateFormat.E(locale).format(monday.add(Duration(days: i)));
-      } catch (_) {
-        d = DateFormat.E('en').format(monday.add(Duration(days: i)));
-      }
-      return d.characters.first.toUpperCase();
-    }
-
-    const Color flame = Color(0xFFFF7A1A);
-    return Container(
-      key: const ValueKey('three-week'),
-      padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: ink.ground,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.local_fire_department_rounded,
-            size: 18,
-            color: streak > 0 ? flame : ink.sub,
-          ),
-          const SizedBox(width: 6),
-          // The run in days, when there is one: nothing says "0 days". It
-          // shrinks rather than be cut where the week leaves it little room.
-          Expanded(
-            child: streak == 0
-                ? const SizedBox.shrink()
-                : FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      l.threeStreak(streak),
-                      key: const ValueKey('three-streak'),
-                      maxLines: 1,
-                      style: AppText.body(
-                        size: 14,
-                        weight: FontWeight.w800,
-                        color: flame,
-                      ),
-                    ),
-                  ),
-          ),
-          for (int i = 0; i < 7; i++)
-            Container(
-              margin: const EdgeInsets.only(left: 5),
-              width: 26,
-              height: 26,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: week[i] ? flame : Colors.transparent,
-                border: Border.all(
-                  color: i == now.weekday - 1
-                      ? flame
-                      : ink.ink.withValues(alpha: week[i] ? 0 : 0.14),
-                  width: 1.6,
-                ),
-              ),
-              child: Text(
-                letter(i),
-                style: AppText.body(
-                  size: 10.5,
-                  weight: FontWeight.w800,
-                  color: week[i] ? Colors.white : ink.sub,
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-/// The day's score: out of three hundred, where it stands among today's
-/// readers, the three and what each came to, the way to send it and the
-/// cards that explain them.
 class _ThreeResult extends StatelessWidget {
   const _ThreeResult({
     super.key,
@@ -712,12 +607,8 @@ class _ThreeResult extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Expanded(child: BetKicker(l.threeDone, color: ink.ink)),
-                  if (streak > 0) BetKicker(l.threeDay(streak), color: ink.ink),
-                ],
-              ),
+              // The days in a row are the profile's to show, not Explore's.
+              BetKicker(l.threeDone, color: ink.ink),
               const SizedBox(height: 10),
               // The score as large as the card allows, the three squares at
               // its right whatever the text size.

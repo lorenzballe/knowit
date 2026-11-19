@@ -1686,7 +1686,13 @@ class _AstutoShellState extends State<AstutoShell>
   /// one between them. A widget's tap always cuts, and without the click:
   /// the app is only just on the screen, and nobody touched the bar.
   void _goTo(int tab, {String by = 'bar'}) {
-    if (tab == _tab || !mounted) return;
+    if (!mounted) return;
+    // Explore's tab tapped on Explore: back up to its head, where the
+    // subjects are, since the head no longer comes down mid-list.
+    if (tab == _tab) {
+      if (tab == 1 && by == 'bar') _explore.currentState?.toTop();
+      return;
+    }
     final bool fromBar = by == 'bar';
     if (fromBar) HapticFeedback.selectionClick();
     final int from = _tab;

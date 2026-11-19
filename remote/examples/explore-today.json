@@ -11,7 +11,8 @@
     },
     {
       "id": "three",
-      "block": "three"
+      "block": "three",
+      "gap": 6
     },
     {
       "id": "cover",
