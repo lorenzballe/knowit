@@ -18,7 +18,7 @@ WORDS = json.loads((HERE / "shapes.json").read_text(encoding="utf-8"))
 
 # What every section says, read by Explore itself rather than by its block:
 # its source and audience are checked by the explore part and the engine.
-SECTION_FIELDS = {"id", "block", "source", "audience", "title", "subtitle"}
+SECTION_FIELDS = {"id", "block", "source", "audience", "title", "subtitle", "subjectPages"}
 
 # What every shape reads, beside its own fields.
 SHAPE_FIELDS = {"size", "limit", "min", "kind", "variant", "subject", "signature", "style"}

@@ -35,7 +35,7 @@ LANGUAGES = {"en", "it", "de", "es", "fr", "ja", "ko", "nl", "pl", "pt", "ru", "
 # What every section may say, whatever its block (lib/explore/explore_block.dart,
 # and `gap`, read by the engine). A key starting with "_" is a note for whoever
 # reads the document, and the app passes over it.
-COMMON = {"id", "block", "title", "subtitle", "source", "size", "style", "limit", "audience", "gap"}
+COMMON = {"id", "block", "title", "subtitle", "source", "size", "style", "limit", "audience", "gap", "subjectPages"}
 
 # Where a section's cards can come from (ExploreHost.cardsFor).
 SHELVES = {"today", "asking", "topWeek", "topMonth", "loved", "mine", "forYou", "local"}
@@ -227,6 +227,8 @@ def check_common(section: dict, where: str) -> list[str]:
         g = section["gap"]
         if not isinstance(g, (int, float)) or isinstance(g, bool) or not 0 <= g <= 120:
             problems.append(f"{where}: `gap` is the room above the section, 0 to 120 points")
+    if "subjectPages" in section and not isinstance(section["subjectPages"], bool):
+        problems.append(f"{where}: `subjectPages` is true or false: whether the section is drawn on a subject's page too")
     if "size" in section and not isinstance(section["size"], str):
         problems.append(f"{where}: `size` is a name, like m or xl")
     if "style" in section and not isinstance(section["style"], dict):

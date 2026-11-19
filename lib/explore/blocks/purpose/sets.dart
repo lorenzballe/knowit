@@ -100,6 +100,11 @@ class SetBlock extends ExploreBlock {
   @override
   String get name => 'purpose.set';
 
+  /// A set counts its cards across every subject: not on one subject's
+  /// page, where its count would not be the count of what it shows.
+  @override
+  bool get onSubjectPages => false;
+
   /// The block's sizes; `m` is the canvas's.
   static const Map<String, TileSize> sizes = {
     's': TileSize(156, 180),

@@ -81,6 +81,16 @@ class CommonFieldsTest(unittest.TestCase):
         self.assertTrue(one(got, "section 'd': `size` is a name"))
         self.assertEqual(problems({"id": "e", "block": "today", "gap": 0, "limit": 12}), [])
 
+    def test_subject_pages_is_true_or_false_on_any_block(self):
+        got = problems({"id": "a", "block": "promo", "subjectPages": "no"})
+        self.assertTrue(one(got, "section 'a': `subjectPages` is true or false"))
+        for block in ("promo", "today", "bets-day", "stack", "purpose.set", "shape-deck"):
+            self.assertEqual(
+                [p for p in problems({"id": "b", "block": block, "subjectPages": False}) if "subjectPages" in p],
+                [],
+                block,
+            )
+
     def test_an_audience_key_the_app_does_not_know_is_refused(self):
         got = problems({"id": "a", "block": "top", "audience": {"all": [{"plus": False}, {"moon": "full"}]}})
         self.assertTrue(one(got, "audience key 'moon' is not one the app knows"))

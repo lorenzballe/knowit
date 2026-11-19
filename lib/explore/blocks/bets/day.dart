@@ -37,6 +37,11 @@ class DayBlock extends BetBlock {
   @override
   String get name => 'bets-day';
 
+  /// One challenge for everybody today, not a subject's: not on a
+  /// subject's page.
+  @override
+  bool get onSubjectPages => false;
+
   @override
   int get defaultLimit => 3;
 

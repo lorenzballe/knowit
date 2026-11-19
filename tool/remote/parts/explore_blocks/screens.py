@@ -49,7 +49,7 @@ MARKS = {"chart"} | SUBJECTS
 SIZES = {"xs", "s", "m", "l", "xl"}
 
 # The fields every block of the family reads; each block adds its own.
-COMMON = {"id", "block", "title", "subtitle", "source", "size", "style", "limit", "audience"}
+COMMON = {"id", "block", "title", "subtitle", "source", "size", "style", "limit", "audience", "subjectPages"}
 
 
 # ── The bank ──────────────────────────────────────────────────────────────

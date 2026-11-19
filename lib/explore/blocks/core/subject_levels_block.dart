@@ -1,6 +1,7 @@
 /// The reader's subjects, each with a level from 1 to 10: a ring in the
-/// subject's colour round the level, four to a row, the subject's name
-/// under it. A tap narrows Explore to the subject, as its chip does.
+/// subject's colour round the level, the subject's name under it, in one
+/// row that runs on to the side as a shelf's does. A tap narrows Explore to
+/// the subject, as its chip does.
 ///
 /// It shows the subjects the reader has read anything of, the furthest on
 /// first, at most eight unless the section says (`limit`); a reader who has
@@ -120,7 +121,11 @@ class SubjectLevelsBlock extends ExploreBlock with SectionLayout {
   @override
   String get name => 'subject-levels';
 
-  /// Subjects shown when the section gives no `limit`: two rows.
+  /// Every subject the reader reads: not on one subject's page.
+  @override
+  bool get onSubjectPages => false;
+
+  /// Subjects shown when the section gives no `limit`.
   static const int defaultLimit = 8;
 
   @override
@@ -176,31 +181,22 @@ class SubjectLevelsBlock extends ExploreBlock with SectionLayout {
       );
     }
 
+    // One row, run to the screen's edges as every shelf's row is: four to
+    // a row left one ring alone under four on a reader of five subjects.
+    // Tall enough for a ring and a name of two lines at the reader's size.
+    final double name = MediaQuery.textScalerOf(context).scale(11.5) * 1.2;
     return SectionFrame(
       title: section.title(host.language),
       line: section.subtitle(host.language),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        child: Column(
-          children: [
-            for (int i = 0; i < levels.length; i += 4) ...[
-              if (i > 0) const SizedBox(height: 14),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (int j = i; j < i + 4; j++)
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 3),
-                        child: j < levels.length
-                            ? cell(levels[j])
-                            : const SizedBox.shrink(),
-                      ),
-                    ),
-                ],
-              ),
-            ],
-          ],
+      child: SizedBox(
+        height: LevelRing.defaultSize + 7 + name * 2 + 4,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: levels.length,
+          separatorBuilder: (_, _) => const SizedBox(width: 6),
+          itemBuilder: (context, i) =>
+              SizedBox(width: 76, child: cell(levels[i])),
         ),
       ),
     );
@@ -216,8 +212,11 @@ class LevelRing extends StatelessWidget {
     required this.share,
     required this.colour,
     this.on = false,
-    this.size = 62,
+    this.size = defaultSize,
   });
+
+  /// A ring's width and height on the row of subjects.
+  static const double defaultSize = 62;
 
   final int level;
 

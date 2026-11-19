@@ -282,6 +282,7 @@ A section:
 | `size`, `style`, `limit` | what its block reads: the catalogue says which |
 | `audience` | who it is for, and when (above), split by the section's id |
 | `gap` | the room above it, 0 to 120 points; 24 unless its block says otherwise |
+| `subjectPages` | `false` keeps it to Explore for every subject, off a subject's page (the chip of one subject); `true` puts it there too. Unless it says, its block decides: the day's challenge, the quick games, a set and the reader's subjects are for every subject only, a shelf of cards is narrowed to the subject |
 
 Kept item by item: a section that cannot be read, whose id is taken already,
 aimed at somebody else, drawn by a block this build does not know, or with

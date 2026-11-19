@@ -68,3 +68,5 @@ tool/shots/edit/
 tool/shots/paywall/
 # The screen a purchase ends on, waiting and on yes (tool/purchase_shots.dart): looked at, not kept
 tool/shots/purchase/
+# Explore on a phone, top to bottom (tool/explore_tour_shots.dart): looked at, not kept
+tool/shots/explore-tour/

@@ -973,11 +973,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fivePillsADayPick => '每天五张卡片，每天早上换新。选出你想放进组合的主题——以后可以更改。';
 
   @override
-  String nSelected(int n) {
-    return '已选 $n 个';
-  }
-
-  @override
   String startWithNTopics(int n) {
     return '从 $n 个主题开始';
   }
@@ -4844,22 +4839,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get mathsDailyAnother => '再来一道类似的';
-
-  @override
-  String get newsOpen => '为什么？';
-
-  @override
-  String get newsRead => '已读';
-
-  @override
-  String newsOutlets(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count 家媒体报道',
-    );
-    return '$_temp0';
-  }
 
   @override
   String goalShelf(String goal) {
