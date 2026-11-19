@@ -961,7 +961,8 @@ class _SubjectRow extends StatelessWidget {
 }
 
 /// The lens at the head of the subjects' row: the search over every card,
-/// round, the height of a chip.
+/// drawn as a chip of the row, the same height, corners and ground, and set
+/// at the top of the row as the chips are, so the row reads as one line.
 class _Lens extends StatelessWidget {
   const _Lens({required this.onTap});
 
@@ -976,13 +977,14 @@ class _Lens extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Center(
+        child: Align(
+          alignment: Alignment.topCenter,
           child: Container(
-            width: 38,
-            height: 38,
+            width: 44,
+            height: 36,
             decoration: BoxDecoration(
-              color: context.p.ink.withValues(alpha: 0.07),
-              shape: BoxShape.circle,
+              color: context.p.ink.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(12),
             ),
             alignment: Alignment.center,
             child: Icon(
