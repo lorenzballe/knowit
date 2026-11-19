@@ -206,8 +206,17 @@ class TopBlock extends ExploreBlock with SectionLayout {
   String get name => 'top';
 
   @override
-  Widget build(BuildContext context, ExploreHost host, ExploreSection section) {
+  Widget? build(
+    BuildContext context,
+    ExploreHost host,
+    ExploreSection section,
+  ) {
     final ExploreShelves shelves = ExploreShelves.of(host);
+    // A list with nothing on it in either window is no section: an empty
+    // ranking on a subject's page read as something broken.
+    if (shelves.top(month: false).isEmpty && shelves.top(month: true).isEmpty) {
+      return null;
+    }
     return ValueListenableBuilder<bool>(
       valueListenable: shelves.topMonth,
       builder: (context, month, _) {
@@ -220,7 +229,8 @@ class TopBlock extends ExploreBlock with SectionLayout {
             host,
             'title',
             subject != null
-                ? l.topIn(subject)
+                // In the reader's language: the name is the key.
+                ? l.topIn(l.subjectOf(subject))
                 : month
                 ? l.topOfTheMonth
                 : l.topOfTheWeek,

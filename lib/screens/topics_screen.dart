@@ -151,18 +151,8 @@ class _TopicsScreenState extends State<TopicsScreen> {
                             const SizedBox(height: 18),
                             _FineTuneRow(onTap: _fineTune),
                           ],
+                          // The count is said once, on the button.
                           const SizedBox(height: 14),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              context.l10n.nSelected(_count),
-                              textAlign: TextAlign.center,
-                              style: AppText.body(
-                                size: 12.5,
-                                color: context.p.inkFaint,
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),

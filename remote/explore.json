@@ -1,5 +1,5 @@
 {
-  "_": "Explore as the build's own (remote/examples/explore-today.json), with the problem of the day, the news and the reader's goals. The test shelves for the TestFlight builds (debug-…) are gone: a reader, or a reviewer, opening Explore saw them first.",
+  "_": "Explore as the owner and the app agreed it in November: what is new today (the cover, the day's challenge, the news), what is the reader's (for you, where you live), one surprise a day of the week (a different shelf each weekday), then the depth (paths, quick games, books, and after the books, every other day from the third, Astute+ for a reader on the free plan), the top list, what a card is useful for, and the endless feed. The day's challenge and the quick games are for Explore of every subject only; a subject's page is that subject's cards. Builds 54 and older keep the shelves they knew.",
   "sections": [
     {
       "id": "nothing",
@@ -138,20 +138,223 @@
       }
     },
     {
-      "id": "path",
-      "block": "purpose.set",
+      "id": "where-you-live",
+      "block": "where-you-live"
+    },
+    {
+      "id": "surprise-mon",
+      "block": "stories",
       "audience": {
-        "any": [
+        "all": [
           {
-            "minBuild": 55
+            "weekdays": [
+              1
+            ]
           },
           {
-            "platforms": [
-              "web",
-              "android"
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
             ]
           }
         ]
+      }
+    },
+    {
+      "id": "surprise-tue",
+      "block": "did-you-know",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              2
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-wed",
+      "block": "unmask",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              3
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-thu",
+      "block": "origins",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              4
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-fri",
+      "block": "sharpest",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              5
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-sat",
+      "block": "surprise",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              6
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "surprise-sun",
+      "block": "series",
+      "audience": {
+        "all": [
+          {
+            "weekdays": [
+              7
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "paths",
+      "block": "paths",
+      "title": {
+        "en": "Ten-card paths",
+        "it": "Percorsi da 10 carte",
+        "de": "Pfade aus zehn Karten",
+        "es": "Recorridos de 10 cartas",
+        "fr": "Parcours de 10 cartes",
+        "ja": "10枚のコース",
+        "ko": "10장 코스",
+        "nl": "Paden van tien kaarten",
+        "pl": "Ścieżki z 10 kart",
+        "pt": "Percursos de 10 cartas",
+        "ru": "Маршруты из 10 карточек",
+        "tr": "10 kartlık yollar",
+        "zh": "十张卡片之路"
+      },
+      "subtitle": {
+        "en": "One theme, from the easiest card to the hardest.",
+        "it": "Un tema, dalla carta più facile alla più difficile.",
+        "de": "Ein Thema, von der leichtesten Karte bis zur schwersten.",
+        "es": "Un tema, de la carta más fácil a la más difícil.",
+        "fr": "Un thème, de la carte la plus facile à la plus difficile.",
+        "ja": "ひとつのテーマを、やさしいカードから難しいカードへ。",
+        "ko": "하나의 주제를 가장 쉬운 카드부터 가장 어려운 카드까지.",
+        "nl": "Eén thema, van de makkelijkste kaart tot de moeilijkste.",
+        "pl": "Jeden temat, od najłatwiejszej karty do najtrudniejszej.",
+        "pt": "Um tema, da carta mais fácil à mais difícil.",
+        "ru": "Одна тема — от самой лёгкой карточки до самой трудной.",
+        "tr": "Tek bir konu, en kolay karttan en zoruna.",
+        "zh": "一个主题，从最简单的卡片到最难的。"
       }
     },
     {
@@ -202,83 +405,79 @@
       }
     },
     {
-      "id": "subject-levels",
-      "block": "subject-levels",
+      "id": "books",
+      "block": "books",
       "title": {
-        "en": "Your subjects",
-        "it": "Le tue materie",
-        "de": "Deine Fächer",
-        "es": "Tus temas",
-        "fr": "Tes sujets",
-        "ja": "あなたの分野",
-        "ko": "나의 주제",
-        "nl": "Jouw vakken",
-        "pl": "Twoje tematy",
-        "pt": "Os teus temas",
-        "ru": "Твои темы",
-        "tr": "Konuların",
-        "zh": "你的主题"
+        "en": "Books in pills",
+        "it": "Libri in pillole",
+        "de": "Bücher in Häppchen",
+        "es": "Libros en píldoras",
+        "fr": "Livres en pilules",
+        "ja": "本をひとくちで",
+        "ko": "한입 책",
+        "nl": "Boeken in hapjes",
+        "pl": "Książki w pigułce",
+        "pt": "Livros em pílulas",
+        "ru": "Книги в двух словах",
+        "tr": "Kapsül kitaplar",
+        "zh": "一口读书"
       },
       "subtitle": {
-        "en": "Level 1 to 10, from the cards you read and get right.",
-        "it": "Livello da 1 a 10, dalle carte che leggi e indovini.",
-        "de": "Stufe 1 bis 10, aus den Karten, die du liest und richtig beantwortest.",
-        "es": "Nivel del 1 al 10, según las cartas que lees y aciertas.",
-        "fr": "Niveau 1 à 10, selon les cartes que tu lis et réussis.",
-        "ja": "読んだカードと正解したカードから決まるレベル1〜10。",
-        "ko": "읽고 맞힌 카드로 정해지는 레벨 1~10.",
-        "nl": "Niveau 1 tot 10, uit de kaarten die je leest en goed hebt.",
-        "pl": "Poziom od 1 do 10, z kart, które czytasz i odgadujesz.",
-        "pt": "Nível de 1 a 10, pelas cartas que lês e acertas.",
-        "ru": "Уровень от 1 до 10 — по карточкам, которые ты читаешь и угадываешь.",
-        "tr": "Okuduğun ve doğru bildiğin kartlara göre 1'den 10'a seviye.",
-        "zh": "等级 1 到 10，取决于你读过和答对的卡片。"
-      },
+        "en": "The big ideas of bestsellers, five cards a book, a few minutes in all.",
+        "it": "Le grandi idee dei bestseller, cinque carte a libro, pochi minuti in tutto.",
+        "de": "Die großen Ideen von Bestsellern, fünf Karten pro Buch, ein paar Minuten insgesamt.",
+        "es": "Las grandes ideas de los bestsellers, cinco tarjetas por libro, unos minutos en total.",
+        "fr": "Les grandes idées des best-sellers, cinq cartes par livre, quelques minutes en tout.",
+        "ja": "ベストセラーの大事なアイデアを、1冊5枚のカードで。全部で数分。",
+        "ko": "베스트셀러의 핵심 아이디어를 책 한 권에 카드 다섯 장으로. 다 합쳐 몇 분.",
+        "nl": "De grote ideeën van bestsellers, vijf kaarten per boek, een paar minuten in totaal.",
+        "pl": "Najważniejsze idee bestsellerów, pięć kart na książkę, kilka minut w sumie.",
+        "pt": "As grandes ideias dos bestsellers, cinco cartas por livro, poucos minutos ao todo.",
+        "ru": "Главные идеи бестселлеров, пять карточек на книгу, несколько минут на всё.",
+        "tr": "Çok satan kitapların büyük fikirleri, kitap başına beş kart, toplamda birkaç dakika.",
+        "zh": "畅销书的核心观点，每本五张卡片，总共几分钟。"
+      }
+    },
+    {
+      "id": "plus-offer",
+      "block": "promo",
+      "from": "explore offer",
+      "subjectPages": false,
       "audience": {
-        "any": [
+        "all": [
           {
-            "minBuild": 55
+            "plus": false
           },
           {
-            "platforms": [
-              "web",
-              "android"
+            "minDays": 3
+          },
+          {
+            "weekdays": [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            "any": [
+              {
+                "minBuild": 55
+              },
+              {
+                "platforms": [
+                  "web",
+                  "android"
+                ]
+              }
             ]
           }
         ]
       }
     },
     {
-      "id": "like-saved",
-      "block": "like-saved",
-      "title": {
-        "en": "More like what you saved",
-        "it": "Altre come quelle che hai salvato",
-        "de": "Mehr wie das, was du behalten hast",
-        "es": "Más como lo que guardaste",
-        "fr": "D'autres comme celles que tu as gardées",
-        "ja": "保存したカードに似たもの",
-        "ko": "보관한 카드와 비슷한 카드",
-        "nl": "Meer zoals wat je bewaarde",
-        "pl": "Więcej podobnych do zachowanych",
-        "pt": "Mais como o que guardaste",
-        "ru": "Похожие на сохранённые",
-        "tr": "Sakladıklarına benzer kartlar",
-        "zh": "和你收藏的相似"
-      },
-      "audience": {
-        "any": [
-          {
-            "minBuild": 55
-          },
-          {
-            "platforms": [
-              "web",
-              "android"
-            ]
-          }
-        ]
-      }
+      "id": "top",
+      "block": "top"
     },
     {
       "id": "goal",
@@ -304,40 +503,6 @@
       }
     },
     {
-      "id": "paths",
-      "block": "paths",
-      "title": {
-        "en": "Ten-card paths",
-        "it": "Percorsi da 10 carte",
-        "de": "Pfade aus zehn Karten",
-        "es": "Recorridos de 10 cartas",
-        "fr": "Parcours de 10 cartes",
-        "ja": "10枚のコース",
-        "ko": "10장 코스",
-        "nl": "Paden van tien kaarten",
-        "pl": "Ścieżki z 10 kart",
-        "pt": "Percursos de 10 cartas",
-        "ru": "Маршруты из 10 карточек",
-        "tr": "10 kartlık yollar",
-        "zh": "十张卡片之路"
-      },
-      "subtitle": {
-        "en": "One theme, from the easiest card to the hardest.",
-        "it": "Un tema, dalla carta più facile alla più difficile.",
-        "de": "Ein Thema, von der leichtesten Karte bis zur schwersten.",
-        "es": "Un tema, de la carta más fácil a la más difícil.",
-        "fr": "Un thème, de la carte la plus facile à la plus difficile.",
-        "ja": "ひとつのテーマを、やさしいカードから難しいカードへ。",
-        "ko": "하나의 주제를 가장 쉬운 카드부터 가장 어려운 카드까지.",
-        "nl": "Eén thema, van de makkelijkste kaart tot de moeilijkste.",
-        "pl": "Jeden temat, od najłatwiejszej karty do najtrudniejszej.",
-        "pt": "Um tema, da carta mais fácil à mais difícil.",
-        "ru": "Одна тема — от самой лёгкой карточки до самой трудной.",
-        "tr": "Tek bir konu, en kolay karttan en zoruna.",
-        "zh": "一个主题，从最简单的卡片到最难的。"
-      }
-    },
-    {
       "id": "today",
       "block": "today",
       "audience": {
@@ -352,10 +517,6 @@
           }
         ]
       }
-    },
-    {
-      "id": "top",
-      "block": "top"
     },
     {
       "id": "loved",
@@ -406,45 +567,19 @@
       }
     },
     {
-      "id": "where-you-live",
-      "block": "where-you-live"
-    },
-    {
       "id": "moving",
-      "block": "purpose.moving"
-    },
-    {
-      "id": "books",
-      "block": "books",
-      "title": {
-        "en": "Books in pills",
-        "it": "Libri in pillole",
-        "de": "Bücher in Häppchen",
-        "es": "Libros en píldoras",
-        "fr": "Livres en pilules",
-        "ja": "本をひとくちで",
-        "ko": "한입 책",
-        "nl": "Boeken in hapjes",
-        "pl": "Książki w pigułce",
-        "pt": "Livros em pílulas",
-        "ru": "Книги в двух словах",
-        "tr": "Kapsül kitaplar",
-        "zh": "一口读书"
-      },
-      "subtitle": {
-        "en": "The big ideas of bestsellers, five cards a book, a few minutes in all.",
-        "it": "Le grandi idee dei bestseller, cinque carte a libro, pochi minuti in tutto.",
-        "de": "Die großen Ideen von Bestsellern, fünf Karten pro Buch, ein paar Minuten insgesamt.",
-        "es": "Las grandes ideas de los bestsellers, cinco tarjetas por libro, unos minutos en total.",
-        "fr": "Les grandes idées des best-sellers, cinq cartes par livre, quelques minutes en tout.",
-        "ja": "ベストセラーの大事なアイデアを、1冊5枚のカードで。全部で数分。",
-        "ko": "베스트셀러의 핵심 아이디어를 책 한 권에 카드 다섯 장으로. 다 합쳐 몇 분.",
-        "nl": "De grote ideeën van bestsellers, vijf kaarten per boek, een paar minuten in totaal.",
-        "pl": "Najważniejsze idee bestsellerów, pięć kart na książkę, kilka minut w sumie.",
-        "pt": "As grandes ideias dos bestsellers, cinco cartas por livro, poucos minutos ao todo.",
-        "ru": "Главные идеи бестселлеров, пять карточек на книгу, несколько минут на всё.",
-        "tr": "Çok satan kitapların büyük fikirleri, kitap başına beş kart, toplamda birkaç dakika.",
-        "zh": "畅销书的核心观点，每本五张卡片，总共几分钟。"
+      "block": "purpose.moving",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
       }
     },
     {
@@ -497,7 +632,19 @@
     },
     {
       "id": "theme-sharpest-0",
-      "block": "sharpest"
+      "block": "sharpest",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
     },
     {
       "id": "theme-origins-0",
@@ -743,7 +890,19 @@
     },
     {
       "id": "theme-practical-0",
-      "block": "practical"
+      "block": "practical",
+      "audience": {
+        "all": [
+          {
+            "platforms": [
+              "ios"
+            ]
+          },
+          {
+            "maxBuild": 54
+          }
+        ]
+      }
     },
     {
       "id": "feed",

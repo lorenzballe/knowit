@@ -1482,12 +1482,6 @@ abstract class AppLocalizations {
   /// **'Five cards a day, new every morning. Pick the topics you want in the mix — you can change them later.'**
   String get fivePillsADayPick;
 
-  /// No description provided for @nSelected.
-  ///
-  /// In en, this message translates to:
-  /// **'{n} selected'**
-  String nSelected(int n);
-
   /// No description provided for @startWithNTopics.
   ///
   /// In en, this message translates to:
@@ -7301,24 +7295,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Another like this'**
   String get mathsDailyAnother;
-
-  /// Explore, the news, reasoned: the button on a story's clipping that opens its card, whose next step is why it happened.
-  ///
-  /// In en, this message translates to:
-  /// **'Why?'**
-  String get newsOpen;
-
-  /// Explore, the news, reasoned: on a story already read, after a tick, in place of the button.
-  ///
-  /// In en, this message translates to:
-  /// **'Read'**
-  String get newsRead;
-
-  /// Explore, a news clipping: how many outlets carry the story, before their names (always two or more).
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, other{Reported by {count} outlets}}'**
-  String newsOutlets(int count);
 
   /// Explore, the reader's goal: the name of its shelf, with the goal the reader picked.
   ///

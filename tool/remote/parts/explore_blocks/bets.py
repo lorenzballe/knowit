@@ -29,7 +29,7 @@ BANK = ROOT / "tool" / "cards" / "bank"
 L10N = ROOT / "lib" / "l10n"
 
 # What every section may say, whatever its block (lib/explore/explore_block.dart).
-COMMON = {"id", "block", "title", "subtitle", "source", "size", "style", "limit", "audience"}
+COMMON = {"id", "block", "title", "subtitle", "source", "size", "style", "limit", "audience", "subjectPages"}
 
 # The kinds of bet a shelf lays, as the slip's `kinds` names them.
 KINDS = ("range", "stake", "number", "closer", "magnitude", "day", "bigger")

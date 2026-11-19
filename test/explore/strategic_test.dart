@@ -421,7 +421,33 @@ void main() {
           locale: const Locale('de'),
         );
         expect(tester.takeException(), isNull);
-        expect(find.byType(LevelRing), findsNWidgets(8));
+        // One row that runs on to the side: all eight in it, the last ones
+        // a swipe away.
+        Set<String> rings() => {
+          for (final Element e
+              in find
+                  .byWidgetPredicate(
+                    (w) =>
+                        w.key is ValueKey<String> &&
+                        (w.key! as ValueKey<String>).value.startsWith(
+                          'subject-level-',
+                        ),
+                  )
+                  .evaluate())
+            (e.widget.key! as ValueKey<String>).value,
+        };
+        final Set<String> seen = rings();
+        final Finder row = find.ancestor(
+          of: find.byType(LevelRing).first,
+          matching: find.byType(Scrollable),
+        );
+        for (int i = 0; i < 4; i++) {
+          await tester.drag(row.first, const Offset(-200, 0));
+          await tester.pump();
+          expect(tester.takeException(), isNull);
+          seen.addAll(rings());
+        }
+        expect(seen, hasLength(8));
       });
     }
   });

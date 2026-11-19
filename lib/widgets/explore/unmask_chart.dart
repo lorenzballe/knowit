@@ -376,7 +376,11 @@ class _ChartPainter extends CustomPainter {
     }
 
     canvas.save();
-    canvas.clipRect(plot.inflate(2));
+    // Clipped at the sides, where columns slide out of the window, but not
+    // at the top: a bar that reaches it keeps the number over it whole.
+    canvas.clipRect(
+      Rect.fromLTRB(plot.left - 2, 0, plot.right + 2, plot.bottom + 2),
+    );
     final bool bars = s.form == TrickSceneForm.bars;
     final List<double> published = s.values;
     final List<double> fair = s.honestValues;

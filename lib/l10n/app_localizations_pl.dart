@@ -1051,11 +1051,6 @@ class AppLocalizationsPl extends AppLocalizations {
       'Pięć kart dziennie, co rano nowe. Wybierz tematy do miksu — możesz je później zmienić.';
 
   @override
-  String nSelected(int n) {
-    return '$n wybranych';
-  }
-
-  @override
   String startWithNTopics(int n) {
     return 'Zacznij z $n tematami';
   }
@@ -5265,25 +5260,6 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get mathsDailyAnother => 'Jeszcze jedno takie';
-
-  @override
-  String get newsOpen => 'Dlaczego?';
-
-  @override
-  String get newsRead => 'Przeczytane';
-
-  @override
-  String newsOutlets(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Pisze o tym $count redakcji',
-      many: 'Pisze o tym $count redakcji',
-      few: 'Piszą o tym $count redakcje',
-      one: 'Pisze o tym $count redakcja',
-    );
-    return '$_temp0';
-  }
 
   @override
   String goalShelf(String goal) {

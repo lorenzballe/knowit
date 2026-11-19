@@ -956,14 +956,6 @@
  "next": "Next",
  "whatShouldWeTalkAbout": "What should we talk about?",
  "fivePillsADayPick": "Five cards a day, new every morning. Pick the topics you want in the mix — you can change them later.",
- "nSelected": "{n} selected",
- "@nSelected": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "startWithNTopics": "Start with {n} topics",
  "@startWithNTopics": {
   "placeholders": {
@@ -5439,23 +5431,6 @@
  "mathsDailyAnother": "Another like this",
  "@mathsDailyAnother": {
   "description": "Explore, the problem of the day, once answered: on Astute+ with the answers by Claude, opens Go deeper to ask for a new problem on the same idea."
- },
- "newsOpen": "Why?",
- "@newsOpen": {
-  "description": "Explore, the news, reasoned: the button on a story's clipping that opens its card, whose next step is why it happened."
- },
- "newsRead": "Read",
- "@newsRead": {
-  "description": "Explore, the news, reasoned: on a story already read, after a tick, in place of the button."
- },
- "newsOutlets": "{count, plural, other{Reported by {count} outlets}}",
- "@newsOutlets": {
-  "description": "Explore, a news clipping: how many outlets carry the story, before their names (always two or more).",
-  "placeholders": {
-   "count": {
-    "type": "int"
-   }
-  }
  },
  "goalShelf": "Useful for: {goal}",
  "@goalShelf": {

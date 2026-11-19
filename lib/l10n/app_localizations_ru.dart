@@ -1054,11 +1054,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Пять карточек в день, каждое утро новые. Выбери темы для микса — потом их можно изменить.';
 
   @override
-  String nSelected(int n) {
-    return 'Выбрано: $n';
-  }
-
-  @override
   String startWithNTopics(int n) {
     return 'Начать с $n тем';
   }
@@ -5286,25 +5281,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mathsDailyAnother => 'Ещё одну такую';
-
-  @override
-  String get newsOpen => 'Почему?';
-
-  @override
-  String get newsRead => 'Прочитано';
-
-  @override
-  String newsOutlets(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Пишут $count издания',
-      many: 'Пишут $count изданий',
-      few: 'Пишут $count издания',
-      one: 'Пишет $count издание',
-    );
-    return '$_temp0';
-  }
 
   @override
   String goalShelf(String goal) {

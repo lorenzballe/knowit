@@ -202,40 +202,35 @@ class _DrawnCover extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            // A word is never broken across two lines ("Destructio / n"):
-            // the title comes down a size until its widest word fits the
-            // cover's width.
             child: LayoutBuilder(
               builder: (context, box) {
-                TextStyle style(double size) => AppText.display(
-                  size: size,
+                // Set no larger than lets its longest word stand whole on a
+                // line: "Destruction" broke as "Destructio" and "n".
+                final TextStyle style = AppText.display(
+                  size: 17 * k,
                   weight: FontWeight.w600,
                   height: 1.08,
                   color: ink,
                 );
-                double size = 17 * k;
                 final TextScaler scaler = MediaQuery.textScalerOf(context);
                 double widest = 0;
-                for (final String word in book.book.title.split(
-                  RegExp(r'\s+'),
-                )) {
+                for (final String word in book.book.title.split(' ')) {
                   final TextPainter painter = TextPainter(
-                    text: TextSpan(text: word, style: style(size)),
-                    textDirection: Directionality.of(context),
+                    text: TextSpan(text: word, style: style),
+                    textDirection: TextDirection.ltr,
                     textScaler: scaler,
-                    maxLines: 1,
                   )..layout();
                   widest = math.max(widest, painter.width);
                   painter.dispose();
                 }
-                if (box.maxWidth.isFinite && widest > box.maxWidth) {
-                  size = math.max(11 * k, size * box.maxWidth / widest * 0.97);
-                }
+                final double shrink = widest > box.maxWidth
+                    ? box.maxWidth / widest * 0.98
+                    : 1;
                 return Text(
                   book.book.title,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
-                  style: style(size),
+                  style: style.copyWith(fontSize: style.fontSize! * shrink),
                 );
               },
             ),

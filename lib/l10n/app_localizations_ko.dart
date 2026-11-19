@@ -983,11 +983,6 @@ class AppLocalizationsKo extends AppLocalizations {
       '하루 다섯 장, 매일 아침 새로운 카드. 믹스에 넣을 주제를 고르세요 — 나중에 바꿀 수 있어요.';
 
   @override
-  String nSelected(int n) {
-    return '$n개 선택';
-  }
-
-  @override
   String startWithNTopics(int n) {
     return '$n개 주제로 시작';
   }
@@ -4896,22 +4891,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get mathsDailyAnother => '비슷한 문제 하나 더';
-
-  @override
-  String get newsOpen => '왜?';
-
-  @override
-  String get newsRead => '읽음';
-
-  @override
-  String newsOutlets(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count개 매체 보도',
-    );
-    return '$_temp0';
-  }
 
   @override
   String goalShelf(String goal) {

@@ -979,11 +979,6 @@ class AppLocalizationsJa extends AppLocalizations {
       '1日5枚のカードを、毎朝新しく。ミックスに入れる分野を選んでください — あとで変えられます。';
 
   @override
-  String nSelected(int n) {
-    return '$n件選択';
-  }
-
-  @override
   String startWithNTopics(int n) {
     return '$n分野で始める';
   }
@@ -4875,22 +4870,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get mathsDailyAnother => '似た問題をもう一問';
-
-  @override
-  String get newsOpen => 'なぜ？';
-
-  @override
-  String get newsRead => '読んだ';
-
-  @override
-  String newsOutlets(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count社が報道',
-    );
-    return '$_temp0';
-  }
 
   @override
   String goalShelf(String goal) {

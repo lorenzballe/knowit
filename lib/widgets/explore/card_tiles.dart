@@ -124,6 +124,27 @@ class TileLook {
   /// as it needs; the tile Explore always had kept it to two.
   final int? footLines;
 
+  /// This look with its question never set smaller than [size] (nor
+  /// larger than its own top): what a box asks of a question to hold it at
+  /// a size that reads from across the room.
+  TileLook withMin(double size) => TileLook(
+    padding: padding,
+    radius: radius,
+    icon: icon,
+    tick: tick,
+    label: label,
+    labelSize: labelSize,
+    labelGap: labelGap,
+    questionGap: questionGap,
+    min: math.min(math.max(min, size), max),
+    max: max,
+    lineHeight: lineHeight,
+    spacing: spacing,
+    alignment: alignment,
+    foot: foot,
+    footLines: footLines,
+  );
+
   /// This look with another corner: a mosaic whose tiles are of several
   /// sizes keeps one corner for all of them.
   TileLook withRadius(double corner) => TileLook(

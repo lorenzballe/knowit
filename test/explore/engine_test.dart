@@ -66,6 +66,18 @@ class _Counted extends StatelessWidget {
   }
 }
 
+/// A block that is one thing for every subject: drawn on Explore of every
+/// subject only.
+class _ForAll extends _Tall {
+  const _ForAll();
+
+  @override
+  String get name => 'test-for-all';
+
+  @override
+  bool get onSubjectPages => false;
+}
+
 /// A block that fails.
 class _Broken extends ExploreBlock {
   const _Broken();
@@ -131,10 +143,12 @@ ScrollPosition _list(WidgetTester tester) => tester
 void main() {
   setUpAll(() {
     kExploreBlocks['test-tall'] = const _Tall();
+    kExploreBlocks['test-for-all'] = const _ForAll();
     kExploreBlocks['test-broken'] = const _Broken();
   });
   tearDownAll(() {
     kExploreBlocks.remove('test-tall');
+    kExploreBlocks.remove('test-for-all');
     kExploreBlocks.remove('test-broken');
   });
   setUp(() {
@@ -262,6 +276,41 @@ void main() {
       expect(top('c') - top('b'), 100 + kSectionGap);
     });
 
+    testWidgets('a subject\'s page leaves out what is not about a subject: '
+        'its block says so, or the section', (tester) async {
+      final AppState app = await readyApp();
+      final List<ExploreSection> sections = sectionsOf([
+        _tall('shelf'),
+        {'id': 'challenge', 'block': 'test-for-all'},
+        {..._tall('kept-off'), 'subjectPages': false},
+        {'id': 'brought', 'block': 'test-for-all', 'subjectPages': true},
+      ]);
+      await pumpSections(tester, CoreHost(app), sections);
+      for (final String id in ['shelf', 'challenge', 'kept-off', 'brought']) {
+        expect(find.byKey(ValueKey('tall-$id')), findsOneWidget, reason: id);
+      }
+      await pumpSections(tester, CoreHost(app, subject: 'Sport'), sections);
+      expect(find.byKey(const ValueKey('tall-shelf')), findsOneWidget);
+      expect(find.byKey(const ValueKey('tall-brought')), findsOneWidget);
+      expect(find.byKey(const ValueKey('tall-challenge')), findsNothing);
+      expect(find.byKey(const ValueKey('tall-kept-off')), findsNothing);
+    });
+
+    testWidgets('the day\'s challenge, the quick games and the reader\'s '
+        'subjects are Explore\'s for every subject only', (tester) async {
+      for (final String block in [
+        'bets-day',
+        'quick-games',
+        'subject-levels',
+        'purpose.set',
+      ]) {
+        expect(kExploreBlocks[block]!.onSubjectPages, isFalse, reason: block);
+      }
+      for (final String block in ['cover', 'feed', 'paths', 'books', 'top']) {
+        expect(kExploreBlocks[block]!.onSubjectPages, isTrue, reason: block);
+      }
+    });
+
     testWidgets('the shelves are numbered as the reader meets them, and a '
         'line that is not a shelf is not watched', (tester) async {
       final AppState app = await readyApp();
@@ -312,11 +361,12 @@ void main() {
       expect(order, isNot(contains('your-day')));
       expect(
         order,
+        // The top list, with nothing counted yet in a test, is left out.
         containsAllInOrder([
           'cover',
           'bets-day',
           'quick-games',
-          'top',
+          'paths',
           'theme-practical-0',
         ]),
       );

@@ -23,7 +23,7 @@ LANGUAGES = frozenset({"en", "de", "es", "fr", "it", "ja", "ko", "nl", "pl", "pt
 
 # What any section may say, whatever its block: the engine's fields, and
 # `fit`, which every block of this family reads.
-COMMON = frozenset({"id", "block", "title", "subtitle", "source", "size", "style", "limit", "audience", "fit"})
+COMMON = frozenset({"id", "block", "title", "subtitle", "source", "size", "style", "limit", "audience", "fit", "subjectPages"})
 
 # The most cards a block of the family lays out (kPurposeMost).
 MOST = 24

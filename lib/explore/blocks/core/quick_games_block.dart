@@ -116,6 +116,10 @@ class QuickGamesBlock extends ExploreBlock with SectionLayout {
   @override
   String get name => 'quick-games';
 
+  /// Games for every subject: not on a subject's page.
+  @override
+  bool get onSubjectPages => false;
+
   @override
   Widget? build(
     BuildContext context,
@@ -178,8 +182,8 @@ class QuickGamesBlock extends ExploreBlock with SectionLayout {
   }
 }
 
-/// One game's tile: its colour, its mark, its name, and a note on top
-/// where the game has one to say.
+/// One game's tile: its colour, its mark, its name, and a note over the
+/// name where the game has one to say.
 class GameTile extends StatelessWidget {
   const GameTile({
     super.key,
@@ -195,7 +199,7 @@ class GameTile extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
 
-  /// A line in a pill at the top right: the record, on Sixty seconds.
+  /// A line over the name: the record, on Sixty seconds.
   final String? note;
 
   @override
@@ -245,62 +249,48 @@ class GameTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 32,
-                              height: 32,
-                              decoration: BoxDecoration(
-                                color: ink.withValues(alpha: 0.13),
-                                shape: BoxShape.circle,
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(icon, size: 18, color: ink),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: note == null
-                                  ? const SizedBox.shrink()
-                                  : Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 4,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: ink.withValues(alpha: 0.14),
-                                          borderRadius: BorderRadius.circular(
-                                            999,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          note!,
-                                          key: const ValueKey('game-note'),
-                                          textAlign: TextAlign.end,
-                                          style: AppText.body(
-                                            size: 10.5,
-                                            weight: FontWeight.w700,
-                                            height: 1.15,
-                                            color: ink,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                            ),
-                          ],
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: ink.withValues(alpha: 0.13),
+                            shape: BoxShape.circle,
+                          ),
+                          alignment: Alignment.center,
+                          child: Icon(icon, size: 18, color: ink),
                         ),
                         const SizedBox(height: 14),
-                        Text(
-                          title,
-                          style: AppText.display(
-                            size: 18,
-                            weight: FontWeight.w600,
-                            height: 1.08,
-                            spacing: -0.3,
-                            color: ink,
-                          ),
+                        // The note over the name, as a line of its own: a
+                        // pill in the corner broke in two on most phones.
+                        // The names of a row stay level at its foot.
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (note != null) ...[
+                              Text(
+                                note!,
+                                key: const ValueKey('game-note'),
+                                style: AppText.body(
+                                  size: 11.5,
+                                  weight: FontWeight.w700,
+                                  height: 1.2,
+                                  color: ink.withValues(alpha: 0.78),
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ],
+                            Text(
+                              title,
+                              style: AppText.display(
+                                size: 18,
+                                weight: FontWeight.w600,
+                                height: 1.08,
+                                spacing: -0.3,
+                                color: ink,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

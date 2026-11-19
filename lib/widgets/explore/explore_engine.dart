@@ -85,8 +85,10 @@ class ExploreSlot {
 
 /// What [host] draws of [sections] for the reader [who] is: the sections
 /// aimed at them (`audience`, split by the section's own id), of a block
-/// this build knows, that have something to show now — in order, each
-/// shelf numbered as the reader meets it.
+/// this build knows, drawn on the page the reader is on (a subject's page
+/// leaves out what is not about a subject: [ExploreBlock.onSubjectPages]),
+/// that have something to show now — in order, each shelf numbered as the
+/// reader meets it.
 ///
 /// Every block is asked to draw its section once here and the answer is
 /// thrown away: the section is drawn again as it comes into view, so a
@@ -104,6 +106,10 @@ List<ExploreSlot> exploreSlots(
     if (!Audience.allows(section.audience, who, salt: section.id)) continue;
     final ExploreBlock? block = kExploreBlocks[section.block];
     if (block == null) continue;
+    if (host.subject != null &&
+        !(section.subjectPages ?? block.onSubjectPages)) {
+      continue;
+    }
     if (_drawn(context, host, block, section) == null) continue;
     final bool shelf = sectionIsShelf(block);
     out.add(
