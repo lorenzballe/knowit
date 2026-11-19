@@ -12,7 +12,6 @@ import '../data/pills_repository.dart';
 import '../data/topics.dart' show inkOn;
 import '../explore/blocks/bets/bet_host.dart';
 import '../explore/blocks/core/shelves.dart';
-import '../explore/blocks/core/your_day_block.dart' show StreakChip;
 import '../explore/explore_block.dart';
 import '../models/pill.dart';
 import '../remote/remote.dart';
@@ -88,25 +87,10 @@ class ExploreScreenState extends State<ExploreScreen>
   bool _searching = false;
   String _query = '';
 
-  /// Whether the head (title, streak, search, subjects) is in view. Going
-  /// down the shelves puts it away, so the cards have the whole screen; the
-  /// least move back up brings it again, as a feed's bar does.
-  bool _headShown = true;
-
-  bool _headFollows(ScrollNotification n) {
-    if (n is ScrollUpdateNotification &&
-        n.depth == 0 &&
-        n.metrics.axis == Axis.vertical) {
-      final double by = n.scrollDelta ?? 0;
-      final bool show = n.metrics.pixels <= 24 || by < -4
-          ? true
-          : by > 4
-          ? false
-          : _headShown;
-      if (show != _headShown) setState(() => _headShown = show);
-    }
-    return _sight.scrolled(n);
-  }
+  /// Each scroll of the shelves, for the shelves watched on screen. The
+  /// head goes up and comes back by the list's own scroll (it is the list's
+  /// first row, [_FloatingHead]), at the finger's speed.
+  bool _headFollows(ScrollNotification n) => _sight.scrolled(n);
 
   /// What the shelves put in front of the reader in each stay on the tab.
   final ShelfSight _sight = ShelfSight();
@@ -458,104 +442,91 @@ class ExploreScreenState extends State<ExploreScreen>
 
   @override
   Widget build(BuildContext context) {
-    // Searching, the head stays: the field is what the reader is using.
-    final bool shown = _headShown || _searching;
     // The status bar's room, at least 12 where there is none (a browser).
-    // It goes away with the head, and the cards run on under the time and
-    // the battery, to the top of the screen, as Instagram's Explore does.
+    // The head stands in it at the top of the shelves; scrolled down, it
+    // goes up with the cards, and they run on under the time and the
+    // battery to the top of the screen, as Instagram's Explore does.
     final double top = math.max(MediaQuery.paddingOf(context).top, 12);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ClipRect(
-          child: AnimatedAlign(
-            key: const ValueKey('explore-head'),
-            alignment: Alignment.bottomCenter,
-            heightFactor: shown ? 1 : 0,
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOutCubic,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: top),
-                // One row, as Instagram's Explore is: the lens that opens
-                // the search, then the subjects. The tab says where this is;
-                // a title said it again.
-                if (_searching)
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
-                    child: _Head(
-                      field: _field,
-                      focus: _focus,
-                      onCloseSearch: () {
-                        Analytics.capture('explore search closed', {
-                          'had_query': _query.trim().isNotEmpty,
-                        });
-                        _field.clear();
-                        setState(() {
-                          _searching = false;
-                          _query = '';
-                        });
-                      },
-                      onChanged: _typed,
-                    ),
-                  )
-                else
-                  _SubjectRow(
-                    selected: _subject,
-                    onSearch: () {
-                      Analytics.capture('explore search opened');
-                      // What is opened from the search was not opened from a shelf.
-                      _sight.forgetTouch();
-                      setState(() => _searching = true);
-                      _focus.requestFocus();
-                    },
-                    // A subject, All, or the lit subject again — the last two both
-                    // clear it, so the way back is whichever the finger finds first.
-                    onPick: (name) {
-                      final String? next = name == _subject ? null : name;
-                      Analytics.capture('explore filtered', {
-                        'subject': next ?? 'all',
-                      });
-                      setState(() => _subject = next);
-                    },
-                  ),
-              ],
+    if (_searching) {
+      // Searching, the head stays: the field is what the reader is using.
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(height: top),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+            child: _Head(
+              field: _field,
+              focus: _focus,
+              onCloseSearch: () {
+                Analytics.capture('explore search closed', {
+                  'had_query': _query.trim().isNotEmpty,
+                });
+                _field.clear();
+                setState(() {
+                  _searching = false;
+                  _query = '';
+                });
+              },
+              onChanged: _typed,
             ),
           ),
-        ),
-        Expanded(
-          // Below the head the status bar is not this list's to keep: it
-          // is in the head's room, or, the head put away, the cards' own.
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: _searching
-                ? _found(context)
-                : ListenableBuilder(
-                    // The counts, what the reader has read — a card read here
-                    // is marked where it sits as soon as the reader is back on
-                    // its shelf — and a newer remote document, whose sections
-                    // are drawn the moment it is taken up.
-                    listenable: Listenable.merge([
-                      Tallies.instance,
-                      Served.instance,
-                      widget.app,
-                      Remote.revision,
-                    ]),
-                    builder: (context, _) =>
-                        _sections(context, edge: shown ? 0 : top),
-                  ),
+          Expanded(
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: _found(context),
+            ),
           ),
+        ],
+      );
+    }
+    return ListenableBuilder(
+      // The counts, what the reader has read — a card read here is marked
+      // where it sits as soon as the reader is back on its shelf — and a
+      // newer remote document, whose sections are drawn the moment it is
+      // taken up.
+      listenable: Listenable.merge([
+        Tallies.instance,
+        Served.instance,
+        widget.app,
+        Remote.revision,
+      ]),
+      builder: (context, _) => _sections(
+        context,
+        top: top,
+        // One row, as Instagram's Explore is: the lens that opens the
+        // search, then the subjects. The tab says where this is; a title
+        // said it again.
+        head: _SubjectRow(
+          selected: _subject,
+          onSearch: () {
+            Analytics.capture('explore search opened');
+            // What is opened from the search was not opened from a shelf.
+            _sight.forgetTouch();
+            setState(() => _searching = true);
+            _focus.requestFocus();
+          },
+          // A subject, All, or the lit subject again — the last two both
+          // clear it, so the way back is whichever the finger finds first.
+          onPick: (name) {
+            final String? next = name == _subject ? null : name;
+            Analytics.capture('explore filtered', {'subject': next ?? 'all'});
+            setState(() => _subject = next);
+          },
         ),
-      ],
+      ),
     );
   }
 
-  /// The sections, a fade where they run under the tab bar, and one at the
-  /// top of the screen [edge] tall while they run under the status bar, so
-  /// the time and the battery are read over a card as over the page.
-  Widget _sections(BuildContext context, {double edge = 0}) {
+  /// The sections under their [head], a fade where they run under the tab
+  /// bar, and one under the status bar, [top] tall, where they run under the
+  /// time and the battery, so both are read over a card as over the page.
+  Widget _sections(
+    BuildContext context, {
+    required double top,
+    required Widget head,
+  }) {
     // Every shelf is worked out afresh for this build, and looked at again
     // once laid out: counts arriving can move every one of them.
     shelves.begin(subject: _subject);
@@ -589,11 +560,21 @@ class ExploreScreenState extends State<ExploreScreen>
             color: context.p.ink,
             backgroundColor: context.p.surfaceRaised,
             onRefresh: _reload,
+            // Below the status bar, where the head stands.
+            edgeOffset: top,
             child: CustomScrollView(
               controller: _list,
               // Always pullable, however short the page.
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
+                SliverPersistentHeader(
+                  floating: true,
+                  delegate: _FloatingHead(
+                    top: top,
+                    row: head,
+                    ground: context.p.surface,
+                  ),
+                ),
                 SliverPadding(
                   padding: EdgeInsets.only(
                     bottom:
@@ -630,31 +611,28 @@ class ExploreScreenState extends State<ExploreScreen>
               ),
             ),
           ),
-        // Under the status bar, once the head is away: the page's own colour
-        // behind the time and the battery, thinning into the cards, as the
-        // edge of a list that runs under a bar is drawn on iOS 26.
+        // Under the status bar: the page's own colour behind the time and the
+        // battery, thinning into the cards that run under them, as the edge
+        // of a list under a bar is drawn on iOS 26. Over the head, which is
+        // the page's colour, it is not seen.
         Positioned(
           key: const ValueKey('explore-top-edge'),
           left: 0,
           right: 0,
           top: 0,
-          height: edge + 18,
+          height: top,
           child: IgnorePointer(
-            child: AnimatedOpacity(
-              opacity: edge > 0 ? 1 : 0,
-              duration: const Duration(milliseconds: 220),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      context.p.surface.withValues(alpha: 0.92),
-                      context.p.surface.withValues(alpha: 0.6),
-                      context.p.surface.withValues(alpha: 0),
-                    ],
-                    stops: const [0, 0.55, 1],
-                  ),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    context.p.surface.withValues(alpha: 0.94),
+                    context.p.surface.withValues(alpha: 0.7),
+                    context.p.surface.withValues(alpha: 0),
+                  ],
+                  stops: const [0, 0.5, 1],
                 ),
               ),
             ),
@@ -908,6 +886,56 @@ class _Head extends StatelessWidget {
 /// The mark keeps the subject's colour even when the chip is not chosen,
 /// which is what makes the row readable as a palette rather than as a row
 /// of grey pills.
+/// Explore's head as the first row of its list, one that floats: it goes
+/// up with the cards as the list is scrolled down, at the finger's own
+/// speed and no faster, and comes back the same way the moment the list is
+/// scrolled up, as Instagram's does. It stands in the status bar's room on
+/// the page's own colour, the row of subjects under it.
+class _FloatingHead extends SliverPersistentHeaderDelegate {
+  _FloatingHead({required this.top, required this.row, required this.ground});
+
+  /// The status bar's room.
+  final double top;
+
+  /// The lens and the subjects.
+  final Widget row;
+
+  final Color ground;
+
+  /// How tall the row of subjects is (_SubjectRow).
+  static const double rowHeight = 50;
+
+  @override
+  double get minExtent => 0;
+
+  @override
+  double get maxExtent => top + rowHeight;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlaps) =>
+      // Moved, not squeezed: drawn whole and cut by what is left of it in
+      // view, so it slides up and down rather than shrinking.
+      ClipRect(
+        child: OverflowBox(
+          alignment: Alignment.bottomCenter,
+          minHeight: maxExtent,
+          maxHeight: maxExtent,
+          child: ColoredBox(
+            key: const ValueKey('explore-head'),
+            color: ground,
+            child: Padding(
+              padding: EdgeInsets.only(top: top),
+              child: SizedBox(height: rowHeight, child: row),
+            ),
+          ),
+        ),
+      );
+
+  @override
+  bool shouldRebuild(_FloatingHead old) =>
+      old.top != top || old.row != row || old.ground != ground;
+}
+
 class _SubjectRow extends StatelessWidget {
   const _SubjectRow({
     required this.selected,

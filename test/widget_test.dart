@@ -599,6 +599,21 @@ void main() {
     // that it is somewhere before and nowhere after.
     expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsWidgets);
 
+    // The subject row heads the list and floats back the moment the list
+    // is drawn back: a finger drawn down a little, a frame at a time as on
+    // a phone, brings it over the shelf.
+    await tester.ensureVisible(find.text("Today's shelf"));
+    await tester.pump();
+    final TestGesture finger = await tester.startGesture(
+      tester.getCenter(find.byType(AstutoApp)),
+    );
+    for (int i = 0; i < 10; i++) {
+      await finger.moveBy(const Offset(0, 10));
+      await tester.pump(const Duration(milliseconds: 16));
+    }
+    await finger.up();
+    await tester.pump();
+
     await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
     await _settle(tester);
     expect(find.byKey(const ValueKey('subject-Economics-on')), findsOneWidget);
