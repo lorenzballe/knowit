@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -611,32 +612,19 @@ class ExploreScreenState extends State<ExploreScreen>
               ),
             ),
           ),
-        // Under the status bar: the page's own colour behind the time and the
-        // battery, thinning into the cards that run under them, as the edge
-        // of a list under a bar is drawn on iOS 26. Over the head, which is
-        // the page's colour, it is not seen.
+        // Under the status bar, where the cards run under the time and the
+        // battery: a light blur, strongest at the top and gone at its foot,
+        // as the edge of a list under a bar is drawn on iOS 26, and only a
+        // breath of the page's colour, so the time is read over a card
+        // without the top of the screen being darkened. Over the head,
+        // which is the page's colour, it is not seen.
         Positioned(
           key: const ValueKey('explore-top-edge'),
           left: 0,
           right: 0,
           top: 0,
           height: top,
-          child: IgnorePointer(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    context.p.surface.withValues(alpha: 0.94),
-                    context.p.surface.withValues(alpha: 0.7),
-                    context.p.surface.withValues(alpha: 0),
-                  ],
-                  stops: const [0, 0.5, 1],
-                ),
-              ),
-            ),
-          ),
+          child: IgnorePointer(child: _TopEdge(ground: context.p.surface)),
         ),
       ],
     );
@@ -886,6 +874,56 @@ class _Head extends StatelessWidget {
 /// The mark keeps the subject's colour even when the chip is not chosen,
 /// which is what makes the row readable as a palette rather than as a row
 /// of grey pills.
+/// The top edge of the screen where the cards run under the status bar: a
+/// blur that is strongest at the top and thins to nothing at the foot, so
+/// the cards go soft under the time and the battery rather than dark. It is
+/// laid in thin slices, each blurring the cards themselves rather than the
+/// slice above it, by a little less than the one before: close enough that
+/// no seam shows between them, and one picture of the cards serves them
+/// all. A breath of [ground] over it keeps the time legible on a bright card.
+class _TopEdge extends StatelessWidget {
+  const _TopEdge({required this.ground});
+
+  final Color ground;
+
+  /// From the top of the screen down: how soft each slice is.
+  static const List<double> sigmas = [6, 5, 4, 3.1, 2.3, 1.6, 1, 0.5];
+
+  @override
+  Widget build(BuildContext context) => Stack(
+    children: [
+      BackdropGroup(
+        child: Column(
+          children: [
+            for (final double sigma in sigmas)
+              Expanded(
+                child: ClipRect(
+                  child: BackdropFilter.grouped(
+                    filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+                    child: const SizedBox.expand(),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+      DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              ground.withValues(alpha: 0.16),
+              ground.withValues(alpha: 0),
+            ],
+          ),
+        ),
+        child: const SizedBox.expand(),
+      ),
+    ],
+  );
+}
+
 /// Explore's head as the first row of its list, one that floats: it goes
 /// up with the cards as the list is scrolled down, at the finger's own
 /// speed and no faster, and comes back the same way the moment the list is

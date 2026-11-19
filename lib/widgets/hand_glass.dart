@@ -18,7 +18,7 @@ bool get handGlass =>
 
 /// Whether the tab bar is glass, so the screens that scroll run on under it
 /// rather than stopping above it.
-bool get barGlass => handGlass;
+bool get barGlass => appleGlass;
 
 /// Whether the tab bar is Apple's own: on iOS 26 and later, where the system
 /// draws Liquid Glass itself, the bar is the UIKit tab bar, as Instagram's
