@@ -29,6 +29,7 @@ import '../../../screens/deck_viewer_screen.dart';
 import '../../../state/app_state.dart';
 import '../../../theme.dart';
 import '../../../widgets/premium.dart';
+import '../../../widgets/ui.dart' show BackCircle;
 import '../../../widgets/web/card_thumb.dart';
 import '../../explore_block.dart';
 import 'layout.dart';
@@ -468,6 +469,12 @@ class BookScreen extends StatelessWidget {
             surfaceTintColor: Colors.transparent,
             elevation: 0,
             foregroundColor: p.ink,
+            // The app's own back button, Apple's glass one on iOS 26, as
+            // on every other screen, not the system's bare arrow.
+            leadingWidth: 64,
+            leading: Center(
+              child: BackCircle(onPressed: () => Navigator.of(context).pop()),
+            ),
           ),
           body: ListView(
             padding: EdgeInsets.fromLTRB(
@@ -1006,6 +1013,11 @@ class LibraryScreen extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         foregroundColor: p.ink,
+        // The app's own back button, Apple's glass one on iOS 26.
+        leadingWidth: 64,
+        leading: Center(
+          child: BackCircle(onPressed: () => Navigator.of(context).pop()),
+        ),
         title: Text(
           context.l10n.booksLibraryTitle,
           style: AppText.body(size: 17, weight: FontWeight.w700, color: p.ink),
