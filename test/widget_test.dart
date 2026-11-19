@@ -706,8 +706,13 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       expect(find.text('Oggi'), findsWidgets);
-      expect(find.text('Esplora'), findsOneWidget);
-      expect(find.text('Profilo'), findsOneWidget);
+      String said(String tab) => tester
+          .widget<Semantics>(find.byKey(ValueKey('tab-$tab')))
+          .properties
+          .label!;
+      expect(said('Today'), 'Oggi');
+      expect(said('Explore'), 'Esplora');
+      expect(said('Profile'), 'Profilo');
     });
 
     test('every language carries every string', () {
@@ -1973,7 +1978,13 @@ void main() {
     );
     await _settle(tester);
     expect(find.text('YOUR RECORD'), findsOneWidget);
-    expect(find.text('Profile'), findsOneWidget);
+    expect(
+      tester
+          .widget<Semantics>(find.byKey(const ValueKey('tab-Profile')))
+          .properties
+          .selected,
+      isTrue,
+    );
 
     await tester.dragFrom(
       tester.getCenter(find.text('APPEARANCE')),
@@ -1997,22 +2008,26 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    /// How lit each tab is, read off the pill behind its icon.
+    /// How lit each tab is, read off its mark: drawn from its idle ink to
+    /// the full ink as the light comes onto it.
     List<double> lit() => [
       for (final label in const ['Today', 'Explore', 'Profile'])
-        (tester
-                    .widget<Container>(
-                      find
-                          .descendant(
-                            of: find.byKey(ValueKey('tab-$label')),
-                            matching: find.byType(Container),
-                          )
-                          .first,
-                    )
-                    .decoration
-                as BoxDecoration)
-            .color!
-            .a,
+        () {
+          final Finder tab = find.byKey(ValueKey('tab-$label'));
+          final double idle =
+              Theme.of(tester.element(tab)).extension<Palette>()!.isDark
+              ? 0.82
+              : 0.66;
+          final double a = tester
+              .widget<Icon>(
+                find.descendant(of: tab, matching: find.byType(Icon)),
+              )
+              .color!
+              .a;
+          final double on = (a - idle) / (1 - idle);
+          // Rounded, so a lit tab reads 1 and a dark one 0, not a hair off.
+          return (on * 1000).round() / 1000;
+        }(),
     ];
 
     expect(lit(), [1.0, 0.0, 0.0]);
@@ -3531,7 +3546,7 @@ void main() {
     await _settle(tester);
 
     Palette paletteOn(String tabLabel) {
-      final context = tester.element(find.text(tabLabel).last);
+      final context = tester.element(find.byKey(ValueKey('tab-$tabLabel')));
       return Theme.of(context).extension<Palette>()!;
     }
 
