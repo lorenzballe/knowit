@@ -22,7 +22,6 @@ const List<Map<String, Object?>> kOwnExploreJson = [
   {'id': 'nothing', 'block': 'nothing-here'},
   {'id': 'offline', 'block': 'offline'},
   // Today's five, the week and the streak, a tap from Today.
-  {'id': 'your-day', 'block': 'your-day', 'gap': 4},
   // One bet, alone and large, the same for every reader today. What others
   // guessed is not shown: the phone has no such counts
   // (docs/explore/bets.md).
