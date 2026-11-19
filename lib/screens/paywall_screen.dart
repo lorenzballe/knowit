@@ -969,17 +969,32 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       ],
                     ),
                   )
-                : SingleChildScrollView(
-                    padding: padding.copyWith(bottom: padding.bottom + 16),
+                // The way out stays put above what scrolls: on iOS 26 it is
+                // Apple's own glass button, a native view, and one moved by
+                // a scroll can be left drawn away from its place.
+                : Padding(
+                    padding: padding.copyWith(bottom: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         top,
-                        ...opener,
-                        const SizedBox(height: 22),
-                        _FeatureList(features: _features(l, _variant)),
-                        const SizedBox(height: 6),
-                        ...foot,
+                        Expanded(
+                          child: SingleChildScrollView(
+                            padding: EdgeInsets.only(
+                              bottom: padding.bottom + 16,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                ...opener,
+                                const SizedBox(height: 22),
+                                _FeatureList(features: _features(l, _variant)),
+                                const SizedBox(height: 6),
+                                ...foot,
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
