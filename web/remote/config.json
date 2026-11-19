@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "hash": "5d0d61770f46c0c0",
+ "hash": "11f65d1447d48f37",
  "app": {
   "gate": null,
   "flags": {},
@@ -9,7 +9,7 @@
  },
  "strings": {},
  "explore": {
-  "_": "Explore as the owner and the app agreed it in November: what is new today (the cover, the day's challenge, the news), what is the reader's (for you, where you live), one surprise a day of the week (a different shelf each weekday), then the depth (paths, quick games, books), the top list, what a card is useful for, and the endless feed. The day's challenge and the quick games are for Explore of every subject only; a subject's page is that subject's cards. Builds 54 and older keep the shelves they knew.",
+  "_": "Explore as the owner and the app agreed it in November: what is new today (the cover, the day's challenge, the news), what is the reader's (for you, where you live), one surprise a day of the week (a different shelf each weekday), then the depth (paths, quick games, books, and after the books, every other day from the third, Astute+ for a reader on the free plan), the top list, what a card is useful for, and the endless feed. The day's challenge and the quick games are for Explore of every subject only; a subject's page is that subject's cards. Builds 54 and older keep the shelves they knew.",
   "sections": [
    {
     "id": "nothing",
@@ -484,6 +484,43 @@
      "ru": "Главные идеи бестселлеров, пять карточек на книгу, несколько минут на всё.",
      "tr": "Çok satan kitapların büyük fikirleri, kitap başına beş kart, toplamda birkaç dakika.",
      "zh": "畅销书的核心观点，每本五张卡片，总共几分钟。"
+    }
+   },
+   {
+    "id": "plus-offer",
+    "block": "promo",
+    "from": "explore offer",
+    "subjectPages": false,
+    "audience": {
+     "all": [
+      {
+       "plus": false
+      },
+      {
+       "minDays": 3
+      },
+      {
+       "weekdays": [
+        1,
+        3,
+        5,
+        7
+       ]
+      },
+      {
+       "any": [
+        {
+         "minBuild": 55
+        },
+        {
+         "platforms": [
+          "web",
+          "android"
+         ]
+        }
+       ]
+      }
+     ]
     }
    },
    {
