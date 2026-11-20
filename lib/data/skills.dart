@@ -3,9 +3,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 /// What a reader may want to learn, asked on the profile, the way a reading
-/// app asks it: for the people who write the cards to know what to write
-/// next. It changes nothing in the app, which deals as it did; it is kept on
-/// the phone and told to the reader's profile in analytics.
+/// app asks it. Each skill serves an area of life ([area], lib/data/goals.dart):
+/// the areas picked lean the cards picked for the reader and the coach. Kept
+/// on the phone and told to the reader's profile in analytics too, for the
+/// people who write the cards to know what to write next.
 ///
 /// Each has its colour, a deeper one to draw its mark on paper, and its two
 /// hues: a badge of them carries its mark, so a skill reads as a badge on the
