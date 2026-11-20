@@ -10,8 +10,8 @@
 #cap{font:500 max(1.9cqh,13px)/1.35 var(--body);min-height:calc(3 * 1.35 * max(1.9cqh,13px));overflow-wrap:break-word;margin:0}
 #cap b{font-weight:800}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:break-word}
+#why .body{margin:0;font-size:max(2cqh,13px);line-height:1.34;overflow-wrap:break-word}
+#why .body b{font-weight:800}
 .part{cursor:pointer}
 </style>
 <article class="card" id="card" data-topic="space" data-kind="Tap to explore">
@@ -21,7 +21,7 @@
     <div class="stagebox" id="stage">
       <svg id="pic" role="img" aria-label="Sun, Earth with its atmosphere, and the Moon in Earth's shadow"></svg>
       <p id="cap">Earth sits right between the Sun and the Moon. Tap each part to see what it does.</p>
-      <div id="why" class="gone"><p class="big">Bent, filtered sunlight.</p><p class="body">In an eclipse no direct sunlight reaches the Moon. Earth's atmosphere bends sunlight into the shadow and filters it, letting through only the red. That red light is what paints the Moon.</p></div>
+      <div id="why" class="gone"><p class="body"><b>Bent, filtered sunlight.</b> In an eclipse no direct sunlight reaches the Moon. Earth's atmosphere bends sunlight into the shadow and filters it, letting through only the red. That red light is what paints the Moon.</p></div>
     </div>
     <p class="say" id="say">Tap the Sun, the atmosphere and the Moon.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The red Moon is lit by sunlight bent and filtered by Earth's air.</div>
@@ -170,7 +170,8 @@ Kit.play.card = async () => {
   await new Promise(r => setTimeout(r, 2200));
 };
 // Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

@@ -75,7 +75,7 @@ function draw(){
   const tg = mk('g', {});
   const a = 25 * Math.PI / 180;
   const lx = cx + W * .06 + Math.sin(a) * 26 * u, ly = G - Math.cos(a) * 26 * u;
-  const ex = W - 13 * u, ey = G - 3 * u, peak = short ? Math.max(4 + 12 * u, G - 34 * u) : f * 2.4 + 22 * u;
+  const ex = W - 13 * u, ey = G - 3 * u, peak = short ? 4 + u : f * 2.4 + 22 * u;
   const qx = (lx + ex) / 2, qy = 2 * peak - (ly + ey) / 2;
   fly = {lx, ly, ex, ey, peak};
   for (let i = 1; i <= 16; i++){
@@ -152,7 +152,8 @@ Kit.play.card = async () => {
   await new Promise(r => setTimeout(r, 600));
 };
 // Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-{ let seen = ''; const el = Kit.$('sv'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('sv'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

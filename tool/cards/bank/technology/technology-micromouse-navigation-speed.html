@@ -12,14 +12,13 @@
 .row{display:flex;align-items:center;gap:3cqw}
 .lab{font:700 max(1.9cqh,13px)/1.2 var(--body);color:var(--k);white-space:nowrap}
 #spd{flex:1;min-width:0;accent-color:var(--k);height:max(3cqh,22px);cursor:pointer}
-#spv{font:700 max(1.9cqh,13px)/1.2 var(--mono);color:var(--k);min-width:4.2em;text-align:right}
+#spv{font:700 max(1.9cqh,13px)/1.2 var(--body);font-variant-numeric:tabular-nums;color:var(--k);min-width:4.2em;text-align:right}
 .btn{flex:1;font:700 max(2cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 3cqw;cursor:pointer}
 .btn.on,#go{background:var(--k);color:var(--c);box-shadow:none}
 #go:disabled{opacity:.45}
-#out{font:700 max(1.9cqh,13px)/1.3 var(--mono);color:var(--k);min-height:1.3em;text-align:center;overflow-wrap:anywhere}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{font-size:max(2.6cqh,16px)}
-#why .body{font-size:max(1.8cqh,12px)}
+#out{font:700 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:1.3em;text-align:center;overflow-wrap:anywhere}
+#why .body{font-size:max(2.1cqh,13px);line-height:1.45;margin:0}
+#why .body b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Aim and launch">
   <div class="in">
@@ -32,7 +31,7 @@
       <div id="out">Route found in a blink. Now drive it.</div>
     </div>
     <p class="say" id="say">Set the speed, pick the turns, launch. Try to go fast.</p>
-    <div id="why" class="gone"><p class="big">Finding the route is the easy part.</p><p class="body">The mouse knows the way almost at once. The hard part is driving it: flat out on the straights, clean through every turn, never touching a wall. That is why the robots keep getting smaller, faster, lighter.</p></div>
+    <div id="why" class="gone"><p class="body"><b>Finding the route is the easy part:</b> the mouse knows the way almost at once. The hard part is driving it: flat out on the straights, clean through every turn, never touching a wall. So the robots keep getting smaller, faster, lighter.</p></div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In Micromouse, solving is easy; navigating fast is the real race.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
   </div>
@@ -86,7 +85,7 @@ const corners = cells.filter((p, i) => {
 const TURNS = corners.length - 2;
 
 // ---------- state ----------
-let smooth = false, running = false, runs = 0, crashed = false, finished = false, best = null, revealed = false;
+let smooth = false, running = false, runs = 0, crashed = false, finished = false, best = null, revealed = false, last = null;
 let G = {}; // drawing refs
 const sv = Kit.$('maze');
 const ns = (t, a, p) => Kit.mk(t, a, p);
@@ -134,7 +133,7 @@ Kit.onShow.card = () => {
   ns('circle', {cx: .1 * k, cy: .08 * k, r: .045 * k, fill: 'var(--c)'}, m);
   const boom = ns('circle', {r: cs * .45, fill: 'none', stroke: '#e5484d', 'stroke-width': cs * .1, opacity: 0}, sv);
   G = {cs, pts, rr, sq, sm, route, trail, len, m, boom};
-  place(0);
+  place(revealed && last === 'ok' ? len : 0);
 };
 
 function place(dist, extra) {
@@ -194,7 +193,7 @@ function launch() {
 }
 
 function done(crash, sim) {
-  running = false; Kit.$('go').disabled = false; runs++;
+  running = false; Kit.$('go').disabled = false; runs++; last = crash ? 'crash' : 'ok';
   if (crash) {
     crashed = true;
     Kit.$('out').textContent = smooth ? 'Crash! Too fast even for a smooth turn.' : 'Crash! Too fast for a sharp turn.';
@@ -206,7 +205,7 @@ function done(crash, sim) {
   }
   if (!revealed && ((crashed && finished) || runs >= 3)) {
     revealed = true;
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   }
 }
 
@@ -235,7 +234,8 @@ Kit.play.card = async () => {
   await wait(1400);
 };
 // Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-{ let seen = ''; const el = Kit.$('maze'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('maze'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

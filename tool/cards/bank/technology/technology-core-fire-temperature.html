@@ -17,7 +17,8 @@
 #hold{font:700 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 6cqw;cursor:pointer;align-self:center;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none}
 #hold.on{transform:scale(.97);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--k) 25%,transparent)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{overflow-wrap:break-word}
+#why .body{font:500 max(2.1cqh,13px)/1.42 var(--body);overflow-wrap:break-word}
+#why .body b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Hold · simulation">
   <div class="in">
@@ -27,7 +28,7 @@
       <div id="wrap"><canvas id="cv"></canvas></div>
       <div id="legend"><span><i class="ins"></i>insulated steel</span><span><i class="bare"></i>bare steel</span><span><i class="air"></i>fresh air</span></div>
       <button id="hold">Hold to let air in</button>
-      <div id="why" class="gone"><p class="big">Up to 1,000 degrees</p><p class="body">Air rushing in through the broken windows kept feeding the fire. NIST's simulations show peaks of 1,000 degrees where the steel had lost its insulation, and at that heat it could no longer hold the load.</p></div>
+      <div id="why" class="gone"><p class="body"><b>Up to 1,000 degrees.</b> Air rushing in through the broken windows kept feeding the fire; NIST's simulations show those peaks where the steel had lost its insulation.</p></div>
     </div>
     <p class="say" id="say">Hold the button: air pours in through the broken windows.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fresh air fed the fire; bare steel at 1,000 degrees gave way.</div>
@@ -73,11 +74,18 @@ const ox = off.getContext('2d'), img = ox.createImageData(N, N);
 
 Kit.onShow.card = () => {
   const {x, W, H} = Kit.fitCanvas(cv);
-  const fs = Math.max(12, Math.min(W, H) * 0.045);
-  const top = fs * 3.6, scaleW = fs * 4.4, pad = fs * 0.6;
-  const side = Math.max(40, Math.min(W - scaleW - pad * 2, H - top - pad));
-  const px = pad + (W - scaleW - pad * 2 - side) / 2, py = top;
-  L = {x, W, H, fs, top, scaleW, side, px, py};
+  const fs = Math.max(12, Math.min(W, H) * 0.045), pad = fs * 0.6;
+  // The scale keeps room for its widest label, so "1,000°" is never cut by the edge.
+  x.font = `600 ${Math.max(12, fs * 0.7)}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  const scaleW = fs * 1.55 + x.measureText('1,000°').width + 3;
+  // The readout sits above the plan; in a short, wide box it moves beside it, so the plan keeps its size.
+  const top = fs * 3.4, rw = Math.max(fs * 7.5, 118);
+  const above = Math.min(W - scaleW - pad * 2, H - top - pad);
+  const beside = Math.min(W - scaleW - rw - pad * 3, H - pad * 2);
+  const wide = beside > above * 1.15;
+  const side = Math.max(40, wide ? beside : above);
+  const px = wide ? pad : pad + (W - scaleW - pad * 2 - side) / 2, py = wide ? (H - side) / 2 : top;
+  L = {x, W, H, fs, top, scaleW, side, px, py, pad, wide};
   draw();
 };
 
@@ -148,27 +156,42 @@ function draw() {
     x.restore();
   });
 
-  // labels inside plan
+  // labels inside plan: "core" under its box, "broken windows" over the gap in the wall,
+  // on two lines when the plan is too narrow for one
+  const body = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
   const lf = Math.max(12, fs * 0.75);
-  x.font = `700 ${lf}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.font = `700 ${lf}px ${body}`;
   x.textBaseline = 'middle';
   x.fillStyle = INK;
-  x.textAlign = 'left'; x.fillText('broken windows', U(.03), V(.24));
-  x.textAlign = 'center'; x.fillText('core', U(.5), V(.37) - lf * 0.9);
+  x.textAlign = 'center'; x.fillText('core', U(.5), V(.63) + lf * 0.85);
+  x.textAlign = 'left';
+  if (x.measureText('broken windows').width < side * .6) x.fillText('broken windows', U(.03), V(.24));
+  else {
+    const f2 = Math.min(lf, (V(.37) - V(.03) - 3) / 2.2);
+    x.font = `700 ${f2}px ${body}`;
+    x.fillText('broken', U(.03), V(.03) + f2 * .6); x.fillText('windows', U(.03), V(.03) + f2 * 1.7);
+  }
 
-  // readout
+  // readout: above the plan, or beside it in a short box
   const T = done ? 1000 : Math.round(20 + 980 * p);
-  const body = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
   const disp = getComputedStyle(document.body).getPropertyValue('--display') || body;
   x.textAlign = 'left'; x.textBaseline = 'alphabetic';
   x.font = `800 ${fs * 1.9}px ${disp}`; x.fillStyle = INK;
   const num = T.toLocaleString('en-US') + '°';
-  x.fillText(num, fs * 0.6, fs * 2.1);
-  const nw = x.measureText(num).width;
-  x.font = `600 ${Math.max(12, fs * 0.72)}px ${body}`; x.fillStyle = INK;
+  const cf = Math.max(12, fs * 0.72);
   const cap = done ? 'bare steel can no longer hold the load' : 'hottest bare steel in the core';
-  const capX = fs * 0.6 + nw + fs * 0.5, capW = W - capX - fs * 0.4;
-  wrapText(x, cap, capX, fs * 1.2, capW, Math.max(12, fs * 0.72) * 1.3, 2);
+  if (L.wide) {
+    const rx = px + side + L.pad * 1.6, ny = py + fs * 1.75;
+    x.fillText(num, rx, ny);
+    x.font = `600 ${cf}px ${body}`; x.fillStyle = INK;
+    wrapText(x, cap, rx, ny + cf * 1.45, W - L.scaleW - rx - L.pad * .5, cf * 1.3, 3);
+  } else {
+    x.fillText(num, fs * 0.6, fs * 2.1);
+    const nw = x.measureText(num).width;
+    x.font = `600 ${cf}px ${body}`; x.fillStyle = INK;
+    const capX = fs * 0.6 + nw + fs * 0.5, capW = W - capX - fs * 0.4;
+    wrapText(x, cap, capX, fs * 1.2, capW, cf * 1.3, 2);
+  }
 
   // scale bar
   const sx = W - L.scaleW + fs * 0.4, bw = fs * 0.8, y0 = py, y1 = py + side;

@@ -22,6 +22,8 @@
 .hop{fill:none;stroke:var(--k);stroke-width:1.8;stroke-linecap:round;stroke-dasharray:.1 4.2;opacity:.7}
 .tip{fill:var(--k);opacity:.7}
 .hl{fill:var(--k);opacity:.12}
+.slot{fill:none;stroke:var(--k);stroke-width:1.5;opacity:.28}
+.slot.gh{opacity:.14}
 .ball{fill:var(--k)}
 .one{fill:var(--c)}
 .oneb{fill:var(--k)}
@@ -56,8 +58,8 @@ function geo(){
   const left = Math.max(W*0.08, 22);
   const colW = Math.min((W - left - 6)/N, H*0.11);
   // The digits as big as their columns allow, the carries never under a size a phone can read.
-  const fs = Math.max(Math.min(colW*1.18, H*0.12), 12), cs = Math.max(10, fs*0.6);
-  const rowH = Math.min(H/5.4, fs*1.8);
+  const fs = Math.max(Math.min(colW*1.25, H*0.12), 12), cs = Math.max(10, fs*0.6);
+  const rowH = Math.min(H/5.4, fs*1.9);
   // While the carries fly, room above them for the flight; once done, the whole sum centred in its box.
   const r1 = Math.min(fs*0.62, colW*0.54), above = cs*0.75 + rowH*0.5;
   const y0 = fin ? (H - (above + rowH*3.3 + r1))/2 + above : H/2 - rowH*2;
@@ -74,6 +76,12 @@ function draw(){
   if (done > 0 && done < N) Kit.mk('rect',{class:'hl', x:g.x(done-1)-g.colW/2, y:g.yN-g.rowH*0.5, width:g.colW, height:g.yR-g.yN+g.rowH, rx:g.colW*0.25}, svg);
   txt('dg gh', g.x0 - g.colW*0.6, g.yN, '…', g.fs);
   txt('rs gh', g.x0 - g.colW*0.6, g.yR, '…', g.fs);
+  // The sum as a sheet still to fill in: where each carry will land, where each digit of the answer goes.
+  for (let j = 0; j < N; j++){
+    const k = j >= MAIN ? ' gh' : '';
+    if (j >= 1 && j > done) { const q = g.cs*0.95; Kit.mk('rect',{class:'slot' + k, x:g.x(j) - q/2, y:g.yC - q/2, width:q, height:q, rx:q*0.25}, svg); }
+    if (j >= done) Kit.mk('line',{class:'slot' + k, x1:g.x(j) - g.colW*0.3, x2:g.x(j) + g.colW*0.3, y1:g.yR + g.fs*0.42, y2:g.yR + g.fs*0.42, 'stroke-linecap':'round'}, svg);
+  }
   for (let j = 0; j < N; j++){
     txt('dg' + (j >= MAIN ? ' gh' : ''), g.x(j), g.yN, D[j], g.fs, {id:'n'+j});
     if (j < done){
@@ -169,7 +177,8 @@ Kit.play.card = async () => {
   await w(600);
 };
 // Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-{ let seen = ''; const el = Kit.$('mult'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('mult'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

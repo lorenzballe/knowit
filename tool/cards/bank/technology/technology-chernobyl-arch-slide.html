@@ -44,16 +44,19 @@ function draw() {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   if (W < 10 || H < 10) return;
-  const fs = Math.max(12, Math.min(f * 0.85, H * 0.06));
+  const fs = Math.max(12, Math.min(f * 0.95, H * 0.06));
   // Under the rails each name takes two lines, or one when the box is short (the answer in).
   const one = H < fs * 14;
-  const gy = H - fs * (one ? 2.2 : 3.6);
-  // The arch keeps its shape: in a short box the whole scene is drawn smaller, never squashed flat.
-  const k = Math.max(.4, Math.min(1, (gy - fs * 2.2) / (W * .46 * .78)));
-  const sx0 = W * .08, sw = W * .36 * k, sx1 = sx0 + sw;
+  const gy0 = H - fs * (one ? 2.2 : 3.6);
+  // The arch keeps its shape: in a short box the whole scene is drawn smaller, never squashed flat;
+  // in a tall one it stands taller, up to as tall as it is wide.
+  const k = Math.max(.4, Math.min(1, (gy0 - fs * 2.2) / (W * .46 * .78)));
   const s = W * .46 * k, t = Math.max(5, W * .032 * k);
+  const h = Math.max(30, s * Math.max(.78, Math.min(1, (gy0 - fs * 2.2) / s)));
+  // What height is left over: the scene stands higher, on a deeper band of ground, so no wide empty sky is left over it.
+  const gy = gy0 - Math.max(0, gy0 - fs * 2.2 - h - 6) * .45;
+  const sx0 = W * .08, sw = W * .36 * k, sx1 = sx0 + sw;
   const endCx = (sx0 + sx1) / 2, startCx = W - s / 2 - W * .02;
-  const h = Math.max(30, Math.min(gy - fs * 2.2, s * .78));
   const hs = h * .55;
   G = {W, H, fs, gy, sx0, sx1, sw, s, t, endCx, startCx, h};
   // A name stays whole inside the picture, however narrow the box.
@@ -98,6 +101,18 @@ function draw() {
   const ay = gy - h * .42, aw = Math.min(s * .2, fs * 1.6);
   Kit.mk('path', {d: `M${startCx + aw * .45} ${ay - aw * .5} L${startCx - aw * .55} ${ay} L${startCx + aw * .45} ${ay + aw * .5} Z`, style: 'fill:var(--k);opacity:.55'}, G.ghost);
 
+  // At the start, where it goes: over from where it is built onto the old sarcophagus, through the sky
+  // left above them (only when there is sky to spare).
+  G.way = null;
+  const wy0 = gy - h - fs * 2.2, wy1 = gy - hs - fs * 4.4;
+  if (!done && wy0 > fs * 3.2) {
+    const wx0 = startCx - s * .12, wx1 = endCx + sw * .08, wy = Math.min(wy0, wy1) - (Math.min(wy0, wy1) - fs * .6) * .55;
+    G.way = Kit.mk('g', {style: 'opacity:.6'}, svg);
+    Kit.mk('path', {d: `M${wx0} ${wy0} Q${(wx0 + wx1) / 2} ${wy} ${wx1} ${wy1}`, style: 'fill:none;stroke:var(--k);stroke-width:2.4;stroke-dasharray:7 6;stroke-linecap:round'}, G.way);
+    const ux = wx1 - (wx0 + wx1) / 2, uy = wy1 - wy, n = Math.hypot(ux, uy) || 1, tx = ux / n, ty = uy / n, a = fs * .9;
+    Kit.mk('path', {d: `M${wx1 + tx * 2} ${wy1 + ty * 2} L${wx1 - tx * a - ty * a * .55} ${wy1 - ty * a + tx * a * .55} L${wx1 - tx * a + ty * a * .55} ${wy1 - ty * a - tx * a * .55} Z`, style: 'fill:var(--k)'}, G.way);
+  }
+
   // the arch, drawn at its final spot and translated
   const A = Kit.mk('g', {}, svg); G.arch = A;
   const R = s / 2, Ri = R - t, hi = h - t;
@@ -131,6 +146,7 @@ function setP(v) {
   const cover = clamp(ov / G.sw, 0, 1);
   G.leaks.forEach(L => L.g.style.opacity = Math.abs(L.x - cx) < half - 2 ? .08 : 1);
   G.hint.style.opacity = done ? 0 : clamp(1 - p * 6, 0, 1);
+  if (G.way) G.way.style.opacity = done ? 0 : .6 * clamp(1 - p * 4, 0, 1);
   G.built.style.opacity = done ? .8 : p > .02 ? .45 : 1;
   Kit.$('fill').style.width = (cover * 100) + '%';
   Kit.$('pct').textContent = Math.round(cover * 100) + '%';

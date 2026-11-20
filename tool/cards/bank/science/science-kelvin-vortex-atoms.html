@@ -115,12 +115,12 @@ function s3() {
   const full = H >= fs * 12;
   const capB = full ? fs * 3.4 : fs * 1.9, below = full ? fs * 3.5 : fs * 2.0;
   const room = Math.max(8, H - capB - below);
-  const r = Math.max(4, Math.min(W / 6 * .9, H * .22, room / 2 - 2)), sw = Math.max(r < 12 ? 2 : 5, r * .15);
+  const r = Math.max(4, Math.min(W * .143, H * .22, room / 2 - 2)), sw = Math.max(r < 12 ? 2 : 5, r * .15);
   const oy = Math.max(0, (room - 2 * r - fs * 1.2) / 2), cy = oy + capB + fs * .6 + r;
   caption(g, 'Each knot, one element', full ? 'Tie the ring a new way: new atom' : null, oy);
   const ink = `fill:none;stroke:${INK};stroke-width:${sw};stroke-linecap:round`;
   const under = `fill:none;stroke:${BG};stroke-width:${sw + 7};stroke-linecap:round`;
-  const cols = [W / 6, W / 2, W * 5 / 6], names = ['plain ring', 'linked', 'knotted'], el = ['element A', 'element B', 'element C'];
+  const cols = [W * .15, W / 2, W * .85], names = ['plain ring', 'linked', 'knotted'], el = ['element A', 'element B', 'element C'];
   // plain ring
   M('circle', {cx: cols[0], cy, r: r * .8, style: ink}, g);
   // Hopf link

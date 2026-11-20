@@ -7,7 +7,7 @@
   "difficulty": "medium",
   "principle": "none",
   "question": "A spinning wheel hangs from one end of its axle. Where does it go?",
-  "answer": "The weight's twist points sideways, at right angles to the spin arrow. So the spin arrow swings that way, without growing or dropping. The twist swings with it, so the wheel goes round.",
+  "answer": "Round the rope, not down. The weight's twist points sideways, at right angles to the spin arrow. So the spin arrow swings that way, without growing or dropping. The twist swings with it, so the wheel goes round.",
   "move": "Twist a spinning wheel at right angles and it swings round, not down.",
   "keywords": [
     "gyroscope",
