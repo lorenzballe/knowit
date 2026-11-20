@@ -5669,6 +5669,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get bookTheIdeas => 'Fikirler';
 
   @override
+  String get bookRecommendedBy => 'Önerenler';
+
+  @override
   String get bookFreeThisWeek => 'Bu hafta ücretsiz';
 
   @override

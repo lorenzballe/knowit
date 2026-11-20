@@ -5779,6 +5779,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookTheIdeas => 'Las ideas';
 
   @override
+  String get bookRecommendedBy => 'Recomendado por';
+
+  @override
   String get bookFreeThisWeek => 'Gratis esta semana';
 
   @override

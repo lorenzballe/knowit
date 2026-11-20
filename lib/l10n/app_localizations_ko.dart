@@ -5536,6 +5536,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get bookTheIdeas => '아이디어';
 
   @override
+  String get bookRecommendedBy => '추천한 사람';
+
+  @override
   String get bookFreeThisWeek => '이번 주 무료';
 
   @override

@@ -35,6 +35,7 @@ const List<ExploreBlock> blocks = [
   LikeSavedBlock(),
   PathsBlock(),
   BooksBlock(),
+  FounderBooksBlock(),
   ContinueBlock(),
   MathsDailyBlock(),
   NewsBlock(),

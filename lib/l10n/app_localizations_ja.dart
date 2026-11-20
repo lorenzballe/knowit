@@ -5515,6 +5515,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get bookTheIdeas => 'アイデア';
 
   @override
+  String get bookRecommendedBy => 'この本をすすめた人';
+
+  @override
   String get bookFreeThisWeek => '今週は無料';
 
   @override

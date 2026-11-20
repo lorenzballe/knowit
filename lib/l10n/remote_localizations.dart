@@ -5490,6 +5490,10 @@ class RemoteLocalizations extends AppLocalizations {
   String get bookTheIdeas => _words.text('bookTheIdeas') ?? _base.bookTheIdeas;
 
   @override
+  String get bookRecommendedBy =>
+      _words.text('bookRecommendedBy') ?? _base.bookRecommendedBy;
+
+  @override
   String get bookFreeThisWeek =>
       _words.text('bookFreeThisWeek') ?? _base.bookFreeThisWeek;
 

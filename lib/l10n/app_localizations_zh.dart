@@ -5517,6 +5517,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bookTheIdeas => '观点';
 
   @override
+  String get bookRecommendedBy => '推荐者';
+
+  @override
   String get bookFreeThisWeek => '本周免费';
 
   @override

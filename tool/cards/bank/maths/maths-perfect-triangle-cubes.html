@@ -77,22 +77,31 @@ function draw(){
   const {x,W,H} = Kit.fitCanvas(cv);
   x.clearRect(0,0,W,H);
   const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
-  const n = st.n, s = Math.min(W/n, H/n);
-  const ox = (W-n*s)/2, oy = (H-n*s)/2;
+  // Until seven rows are stacked the triangle keeps the size of seven rows, the rows still to come
+  // drawn as empty slots: the reader sees the shape it is filling. Past seven it zooms out to fit.
+  const n = st.n, rows = Math.max(n, 7), s = Math.min(W/rows, H/rows);
+  const ox = (W-rows*s)/2, oy = (H-rows*s)/2;
   const mk = markOf(n), b = mk && mk.m ? bounds(mk.m) : null;
-  const gap = n<=12 ? s*.09 : n<=40 ? s*.07 : 0;
-  x.fillStyle = ink;
+  const gap = rows<=12 ? s*.09 : rows<=40 ? s*.07 : 0;
+  x.fillStyle = ink; x.strokeStyle = ink;
   let idx = 0;
-  for(let r=1;r<=n;r++){
-    const y = oy+(r-1)*s, xs = ox+(n-r)*s/2;
-    for(let c=0;c<r;c++,idx++){
+  for(let r=1;r<=rows;r++){
+    const y = oy+(r-1)*s, xs = ox+(rows-r)*s/2;
+    for(let c=0;c<r;c++){
+      const px = xs+c*s+gap/2, py = y+gap/2, w = s-gap+(gap?0:.4);
+      if(r>n){
+        x.globalAlpha = .38; x.lineWidth = Math.max(1, s*.05);
+        const i = x.lineWidth/2;
+        if(x.roundRect){ x.beginPath(); x.roundRect(px+i,py+i,w-2*i,w-2*i,w*.18); x.stroke(); } else x.strokeRect(px+i,py+i,w-2*i,w-2*i);
+        continue;
+      }
       let target = .3;
       if(mk){
         if(!b) target = 1;
         else { let band=0; while(idx>=b[band]) band++; target = band%2 ? .4 : 1; }
       }
+      idx++;
       x.globalAlpha = .3 + (target-.3)*st.mix;
-      const px = xs+c*s+gap/2, py = y+gap/2, w = s-gap+(gap?0:.4);
       if(gap && x.roundRect){ x.beginPath(); x.roundRect(px,py,w,w,w*.18); x.fill(); }
       else x.fillRect(px,py,w,w);
     }

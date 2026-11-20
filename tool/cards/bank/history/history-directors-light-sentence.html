@@ -70,7 +70,8 @@ function draw(animate) {
   // height left over is shared out between the rows: the scale is drawn at its real size in the tall
   // box of the start and in the shorter one the answer leaves it.
   // A short box packs the rows closer: the guess nearer the track, the sentence beside its note.
-  const up = t => t ? 4.6 : 2.75, down = t => done ? (t ? 5.3 : 3.85) : 2.3;
+  // While the reader is guessing, a tall box also shows the guess itself, large, under the title.
+  const up = t => t ? (done ? 4.6 : 9.2) : 2.75, down = t => done ? (t ? 5.3 : 3.85) : 2.3;
   let title = true, f = Math.min(W / 20, 16, (H - 2) / (up(true) + down(true)));
   if (f < 12.5) { title = false; f = Math.min(W / 20, 16, (H - 2) / (up(false) + down(false))); }
   f = Math.max(10.5, f);
@@ -82,7 +83,14 @@ function draw(animate) {
   geo = {W, H, f, x0, x1, y};
   const X = v => x0 + (x1 - x0) * v / MAX;
 
-  if (title) txt(svg, W / 2, y - f * 4.05 - sMid, 'Years in prison', f * 1.05, 800);
+  if (title) txt(svg, W / 2, y - f * (done ? 4.05 : 8.6) - sMid, 'Years in prison', f * 1.05, 800);
+  if (title && !done) {
+    const big = Kit.mk('text', {x: W / 2, y: y - f * 4.3, 'text-anchor': 'middle', style: 'fill:var(--k)'}, svg);
+    const n = Kit.mk('tspan', {'font-family': 'var(--display)', 'font-weight': 800, 'font-size': f * 3.6}, big);
+    n.textContent = moved ? fmt(g) : '?';
+    const u = Kit.mk('tspan', {'font-family': 'var(--body)', 'font-weight': 800, 'font-size': f * 1.3, dx: f * .35}, big);
+    u.textContent = moved && fmt(g) === '1' ? 'year' : 'years';
+  }
 
   // track
   Kit.mk('line', {x1: x0, y1: y, x2: x1, y2: y, stroke: 'var(--k)', 'stroke-width': f * .5, 'stroke-linecap': 'round', opacity: .18}, svg);
@@ -158,6 +166,9 @@ Kit.play.card = async () => {
 // Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
 // Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
 { let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// This scale has a compact layout made for a short box (a small phone with the answer under it): there
+// it is still drawn again at its real size, never kept small from a larger drawing.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100 && b.height > 40) draw(false); seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

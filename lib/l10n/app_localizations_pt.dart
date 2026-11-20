@@ -5778,6 +5778,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get bookTheIdeas => 'As ideias';
 
   @override
+  String get bookRecommendedBy => 'Recomendado por';
+
+  @override
   String get bookFreeThisWeek => 'Grátis esta semana';
 
   @override

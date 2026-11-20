@@ -417,6 +417,9 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     # Ten cards on a theme, easy to hard, a row of them: Astute+.
     "paths": shelf("limit"),
     "books": shelf(),
+    # The books in pills the people who built the companies everyone
+    # knows recommended, under their names (lib/data/book_picks.dart).
+    "founder-books": shelf(),
     # What the reader started and left: a path read partway, a book
     # stopped at an idea. Works out its own; none started, no section.
     "continue": shelf("limit"),

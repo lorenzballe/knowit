@@ -6242,6 +6242,10 @@
  "@bookTheIdeas": {
   "description": "Books in pills, a book's own page: bookTheIdeas"
  },
+ "bookRecommendedBy": "Recommended by",
+ "@bookRecommendedBy": {
+  "description": "Books in pills, a book's own page: the label over the people who built well-known companies and recommended the book, each with where they said it"
+ },
  "bookFreeThisWeek": "Free this week",
  "@bookFreeThisWeek": {
   "description": "Books in pills, a book's own page: bookFreeThisWeek"

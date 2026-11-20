@@ -5780,6 +5780,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get bookTheIdeas => 'De ideeën';
 
   @override
+  String get bookRecommendedBy => 'Aanbevolen door';
+
+  @override
   String get bookFreeThisWeek => 'Gratis deze week';
 
   @override

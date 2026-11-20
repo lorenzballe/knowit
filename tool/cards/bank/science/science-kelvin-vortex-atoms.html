@@ -62,8 +62,11 @@ function spin(p, x, y, r, dir, sw) {
 
 function s0() {
   const g = M('g', {}, Kit.$('pic'));
-  caption(g, '1867 · Tait\u2019s smoke box', 'Tap the cloth, out pops a ring');
-  const cy = H * .55, bw = W * .3, bh = Math.min(H * .36, bw * 1.15), bx = W * .07, by = cy - bh / 2;
+  // The box as large as the width allows, the caption, the box and its labels set as one block in the middle.
+  const capH = fs * 3.3, labH = fs * 2.3, bw = W * .38, bh = Math.max(20, Math.min(bw * 1.45, H - capH - labH - fs * 1.2));
+  const oy = Math.max(0, (H - capH - fs * .6 - bh - labH) / 2);
+  caption(g, '1867 · Tait\u2019s smoke box', 'Tap the cloth, out pops a ring', oy);
+  const bx = W * .07, by = oy + capH + fs * .6, cy = by + bh / 2;
   M('rect', {x: bx, y: by, width: bw, height: bh, rx: 6, style: `fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:${INK};stroke-width:2.5`}, g);
   // cloth on the back
   let d = `M${bx},${by + 4}`; for (let i = 1; i <= 8; i++) d += ` Q${bx - 8 * (i % 2 ? 1 : -1)},${by + bh * (i - .5) / 8} ${bx},${by + bh * i / 8}`;

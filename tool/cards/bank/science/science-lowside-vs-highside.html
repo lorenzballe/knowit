@@ -63,7 +63,10 @@ function draw(){
   // A short box (the answer in, on a small phone): the caption gives its row to the picture, the two
   // sides of the bend are written inside the ground's band, and the bike and rider take the height left.
   const short = H < 140;
-  G = short ? H - f * 1.7 : H * 0.82; u = short ? Math.min(W / 130, (G - 4) / 42) : Math.min(W / 130, H / 80); cx = W * 0.34;
+  // Otherwise the bike and rider are as big as the box lets them be: the lean to the left, the flight
+  // over them and the slide to the right all inside it.
+  G = short ? H - f * 1.7 : H * 0.82; cx = W * (short ? 0.34 : 0.4);
+  u = short ? Math.min(W / 130, (G - 4) / 42) : Math.min((cx - 12) / 33.6, (G - f * 1.8) / 54, W / 95);
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
   mk('rect', {x: 0, y: G, width: W, height: H - G, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent)'});
   mk('line', {x1: 0, x2: W, y1: G, y2: G, style: 'stroke:var(--k);stroke-width:2'});
@@ -75,7 +78,7 @@ function draw(){
   const tg = mk('g', {});
   const a = 25 * Math.PI / 180;
   const lx = cx + W * .06 + Math.sin(a) * 26 * u, ly = G - Math.cos(a) * 26 * u;
-  const ex = W - 13 * u, ey = G - 3 * u, peak = short ? 4 + u : f * 2.4 + 22 * u;
+  const ex = W - 9 * u, ey = G - 3 * u, peak = short ? 4 + u : Math.max(f * 2.4 + 22 * u, f * 1.3 + 6 + 26.2 * u);
   const qx = (lx + ex) / 2, qy = 2 * peak - (ly + ey) / 2;
   fly = {lx, ly, ex, ey, peak};
   for (let i = 1; i <= 16; i++){
@@ -105,6 +108,8 @@ function done(){
   if (seen.size === 2 && !finished){
     // Both crashes seen, the story is told: the switch goes and the picture takes its room.
     finished = true; Kit.hide('say'); Kit.hide('sw'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    // Drawn again at once at the size it now has: its short layout is made for a small phone's strip.
+    draw();
   }
 }
 function build(m){
@@ -120,7 +125,7 @@ function build(m){
       .to(st, {bx: W * .16, bRot: -88, duration: .4, ease: 'power2.in'})
       .call(() => { cut(); status('You slide along the ground'); })
       .to(st, {bx: W * .5, duration: 1.3, ease: 'power2.out'})
-      .to(st, {px: '+=' + W * .26, py: G - 4 * u, rRot: -95, duration: 1.4, ease: 'power2.out'}, '<');
+      .to(st, {px: '+=' + Math.min(W * .26, W * .34 - 11.7 * u), py: G - 4 * u, rRot: -95, duration: 1.4, ease: 'power2.out'}, '<');
   } else {
     tl.call(() => status('Rear tyre slides out'))
       .to(st, {bx: W * .06, bRot: -56, duration: .5, ease: 'power1.in'})
@@ -132,7 +137,8 @@ function build(m){
       .to(st, {py: F.peak, duration: .5, ease: 'power2.out'}, 'fly')
       .to(st, {py: F.ey, duration: .6, ease: 'power2.in'}, 'fly+=0.5')
       .to(st, {rRot: 630, duration: 1.1, ease: 'none'}, 'fly')
-      .to(st, {bRot: 88, bx: W * .16, duration: .7, ease: 'power2.in'}, 'fly');
+      // The bike falls the other way and lies short of where the rider lands.
+      .to(st, {bRot: 88, bx: Math.min(W * .16, F.ex - 48.6 * u - cx), duration: .7, ease: 'power2.in'}, 'fly');
   }
   render();
 }

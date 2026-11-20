@@ -156,21 +156,9 @@ function draw() {
     x.restore();
   });
 
-  // labels inside plan: "core" under its box, "broken windows" over the gap in the wall,
-  // on two lines when the plan is too narrow for one
+  // No words on the plan itself: the gap in its wall, the air and the core are named by the
+  // words around it (the hint, the legend, the readout), so nothing is written over the drawing.
   const body = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
-  const lf = Math.max(12, fs * 0.75);
-  x.font = `700 ${lf}px ${body}`;
-  x.textBaseline = 'middle';
-  x.fillStyle = INK;
-  x.textAlign = 'center'; x.fillText('core', U(.5), V(.63) + lf * 0.85);
-  x.textAlign = 'left';
-  if (x.measureText('broken windows').width < side * .6) x.fillText('broken windows', U(.03), V(.24));
-  else {
-    const f2 = Math.min(lf, (V(.37) - V(.03) - 3) / 2.2);
-    x.font = `700 ${f2}px ${body}`;
-    x.fillText('broken', U(.03), V(.03) + f2 * .6); x.fillText('windows', U(.03), V(.03) + f2 * 1.7);
-  }
 
   // readout: above the plan, or beside it in a short box
   const T = done ? 1000 : Math.round(20 + 980 * p);
@@ -184,13 +172,14 @@ function draw() {
     const rx = px + side + L.pad * 1.6, ny = py + fs * 1.75;
     x.fillText(num, rx, ny);
     x.font = `600 ${cf}px ${body}`; x.fillStyle = INK;
-    wrapText(x, cap, rx, ny + cf * 1.45, W - L.scaleW - rx - L.pad * .5, cf * 1.3, 3);
+    lines(x, cap, W - L.scaleW - rx - L.pad * .5, 3).forEach((l, i) => x.fillText(l, rx, ny + cf * 1.45 + i * cf * 1.3));
   } else {
     x.fillText(num, fs * 0.6, fs * 2.1);
     const nw = x.measureText(num).width;
     x.font = `600 ${cf}px ${body}`; x.fillStyle = INK;
-    const capX = fs * 0.6 + nw + fs * 0.5, capW = W - capX - fs * 0.4;
-    wrapText(x, cap, capX, fs * 1.2, capW, cf * 1.3, 2);
+    // its words beside it, their last line on the number's own baseline
+    const capX = fs * 0.6 + nw + fs * 0.5, capW = W - capX - fs * 0.4, ls = lines(x, cap, capW, 2);
+    ls.forEach((l, i) => x.fillText(l, capX, fs * 2.1 - (ls.length - 1 - i) * cf * 1.3));
   }
 
   // scale bar
@@ -209,14 +198,15 @@ function draw() {
   x.moveTo(sx - 2, yp); x.lineTo(sx - fs * 0.55, yp - fs * 0.35); x.lineTo(sx - fs * 0.55, yp + fs * 0.35); x.fill();
 }
 
-function wrapText(x, s, X, Y, w, lh, max) {
-  const words = s.split(' '); let line = '', n = 0;
-  for (const wd of words) {
+// The words of s in lines no wider than w, at most max of them (the last one takes the rest).
+function lines(x, s, w, max) {
+  const out = []; let line = '';
+  for (const wd of s.split(' ')) {
     const tr = line ? line + ' ' + wd : wd;
-    if (x.measureText(tr).width > w && line) { x.fillText(line, X, Y + n * lh); n++; line = wd; if (n >= max) return; }
-    else line = tr;
+    if (x.measureText(tr).width > w && line && out.length < max - 1) { out.push(line); line = wd; } else line = tr;
   }
-  if (line) x.fillText(line, X, Y + n * lh);
+  if (line) out.push(line);
+  return out;
 }
 
 function finish() {

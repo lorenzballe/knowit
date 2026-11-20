@@ -8106,6 +8106,12 @@ abstract class AppLocalizations {
   /// **'The ideas'**
   String get bookTheIdeas;
 
+  /// Books in pills, a book's own page: the label over the people who built well-known companies and recommended the book, each with where they said it
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended by'**
+  String get bookRecommendedBy;
+
   /// Books in pills, a book's own page: bookFreeThisWeek
   ///
   /// In en, this message translates to:

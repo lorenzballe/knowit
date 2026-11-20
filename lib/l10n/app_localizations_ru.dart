@@ -5982,6 +5982,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get bookTheIdeas => 'Идеи';
 
   @override
+  String get bookRecommendedBy => 'Рекомендуют';
+
+  @override
   String get bookFreeThisWeek => 'Бесплатно на этой неделе';
 
   @override
