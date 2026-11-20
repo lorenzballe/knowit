@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 
 import '../analytics.dart';
 import '../data/skills.dart';
-import '../data/topics.dart' show inkOn;
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -14,8 +13,9 @@ import '../widgets/chunky.dart';
 import '../widgets/ui.dart' show BackCircle, ScreenView;
 
 /// What the reader wants to learn, picked from the profile: twelve skills
-/// in two columns, each a tile with its mark that fills with its colour,
-/// raised on its own edge, when picked. All twelve are on the screen at
+/// in two columns, each a card of the page's ground with a badge of two
+/// hues, lit up and ringed when picked: never tiles of one colour, which are
+/// the subjects' look. All twelve are on the screen at
 /// once, the rows sharing the height the phone has; only a text too large
 /// for that lets the grid scroll. Nothing in the app changes with them; they
 /// are kept, and told to the reader's profile in analytics, for the people
@@ -157,9 +157,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
     final int rows = (all.length / 2).ceil();
     final TextScaler scaler = MediaQuery.textScalerOf(context);
     final double least =
-        math.max(2 * scaler.scale(14.5) * 1.22, 26) +
-        2 * _Tile.padY +
-        kTileDepth;
+        math.max(2 * scaler.scale(14.5) * 1.22, 36) + 2 * _Tile.padY + 4;
     final double share = (box.maxHeight - gap * (rows - 1)) / rows;
     final bool fits = share >= least;
     final double height = fits ? math.min(share, 136) : least;
@@ -246,13 +244,12 @@ class _Headline extends StatelessWidget {
   }
 }
 
-/// How far a picked tile stands on its edge.
-const double kTileDepth = 4;
-
-/// A skill: its mark and its name, on the page's quiet ground, or filled
-/// with its colour and raised on its edge, a tick in the corner, once
-/// picked. Tall enough, the mark sits above the name; in a short row, beside
-/// it.
+/// A skill: a badge of its two hues carrying its mark, and its name, on a
+/// card of the page's own ground, never a tile of one colour as a subject's
+/// is. Picked, the badge lights up in full, a ring of the same two hues runs
+/// round the card with their glow under it, and a tick fills in. Tall
+/// enough, the badge sits above the name; in a short row, beside it, the
+/// tick then on the badge's corner so the name keeps the room.
 class _Tile extends StatefulWidget {
   const _Tile({required this.skill, required this.on, required this.onTap});
 
@@ -260,8 +257,8 @@ class _Tile extends StatefulWidget {
   final bool on;
   final VoidCallback onTap;
 
-  /// The room above and below what a tile shows.
-  static const double padY = 10;
+  /// The room above and below what a short tile shows.
+  static const double padY = 9;
 
   @override
   State<_Tile> createState() => _TileState();
@@ -270,24 +267,23 @@ class _Tile extends StatefulWidget {
 class _TileState extends State<_Tile> {
   bool _down = false;
 
+  LinearGradient get _hues => LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: widget.skill.hues,
+  );
+
   @override
   Widget build(BuildContext context) {
     final p = context.p;
     final Skill skill = widget.skill;
     final bool on = widget.on;
-    // Not picked, the page's quiet ground with a wash of the skill's own
-    // colour, so the grid reads as twelve different things before any is
-    // chosen; picked, the colour itself.
-    final Color face = on
-        ? skill.colour
-        : Color.alphaBlend(
-            skill.colour.withValues(alpha: p.isDark ? 0.12 : 0.09),
-            p.ink.withValues(alpha: p.isDark ? 0.04 : 0.03),
-          );
-    final Color ink = on ? inkOn(skill.colour) : p.ink;
-    final Color mark = on ? ink : skill.mark(p.isDark);
     final String name = context.l10n.skillName(skill.name);
-    final bool raised = on && !_down;
+    // The card itself: the page's raised ground, a hairline round it; picked,
+    // a ring of the skill's two hues instead, and their glow under it.
+    final Color ground = p.isDark
+        ? Color.alphaBlend(Colors.white.withValues(alpha: 0.055), p.surface)
+        : Colors.white;
     return Semantics(
       key: ValueKey('skill-${skill.name}-${on ? 'on' : 'off'}'),
       button: true,
@@ -300,41 +296,43 @@ class _TileState extends State<_Tile> {
         onTapUp: (_) => setState(() => _down = false),
         onTapCancel: () => setState(() => _down = false),
         onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 90),
+        child: AnimatedScale(
+          scale: _down ? 0.97 : 1,
+          duration: const Duration(milliseconds: 110),
           curve: Curves.easeOut,
-          // The edge under a picked tile; under one not picked, nothing, so
-          // the faces line up row by row either way.
-          decoration: BoxDecoration(
-            color: on ? chunkyEdge(skill.colour) : Colors.transparent,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: EdgeInsets.only(
-            top: raised ? 0 : kTileDepth,
-            bottom: raised ? kTileDepth : 0,
-          ),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 220),
             curve: Curves.easeOut,
+            padding: EdgeInsets.all(on ? 2 : 1),
             decoration: BoxDecoration(
-              color: face,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: on
-                    ? skill.colour
-                    : skill.colour.withValues(alpha: p.isDark ? 0.3 : 0.34),
-                width: 1.2,
-              ),
+              gradient: on ? _hues : null,
+              color: on ? null : p.line,
+              borderRadius: BorderRadius.circular(22),
+              boxShadow: [
+                BoxShadow(
+                  color: skill.hues.last.withValues(
+                    alpha: on ? (p.isDark ? 0.34 : 0.26) : 0,
+                  ),
+                  blurRadius: 18,
+                  offset: const Offset(0, 6),
+                ),
+              ],
             ),
-            child: LayoutBuilder(
-              // Tall where the mark, a gap and two lines of the name at the
-              // reader's text size stand one above the other; beside it if not.
-              builder: (context, box) =>
-                  box.maxHeight >=
-                      49 +
-                          2 * MediaQuery.textScalerOf(context).scale(15.5) * 1.2
-                  ? _tall(box, name, ink, mark)
-                  : _row(box, name, ink, mark),
+            child: Container(
+              decoration: BoxDecoration(
+                color: ground,
+                borderRadius: BorderRadius.circular(on ? 20 : 21),
+              ),
+              child: LayoutBuilder(
+                // Tall where the badge, a gap and two lines of the name at the
+                // reader's text size stand one above the other; beside it if not.
+                builder: (context, box) =>
+                    box.maxHeight >=
+                        54 +
+                            2 * MediaQuery.textScalerOf(context).scale(15) * 1.2
+                    ? _tall(box, name)
+                    : _row(box, name),
+              ),
             ),
           ),
         ),
@@ -342,52 +340,85 @@ class _TileState extends State<_Tile> {
     );
   }
 
-  /// The tick in the corner: a ring, filled once picked.
-  Widget _tick(Color ink, double size) {
+  /// The badge: the skill's two hues and its mark, lit in full once picked;
+  /// before, a soft wash of them with the mark in the first.
+  Widget _badge(double size) {
+    final p = context.p;
+    final Skill skill = widget.skill;
+    final bool on = widget.on;
+    final Color soft = p.isDark ? p.surface : Colors.white;
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOut,
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.3),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: on
+              ? skill.hues
+              : [
+                  for (final Color c in skill.hues)
+                    Color.alphaBlend(
+                      c.withValues(alpha: p.isDark ? 0.24 : 0.16),
+                      soft,
+                    ),
+                ],
+        ),
+      ),
+      alignment: Alignment.center,
+      child: CustomPaint(
+        size: Size.square(size * 0.62),
+        painter: SkillGlyph(
+          skill,
+          on ? skill.onHues : (p.isDark ? skill.hues.first : skill.onPaper),
+        ),
+      ),
+    );
+  }
+
+  /// The tick: a ring, filled with the skill's hues once picked.
+  Widget _tick(double size) {
     final p = context.p;
     final bool on = widget.on;
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 220),
       width: size,
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: on ? ink : Colors.transparent,
-        border: Border.all(
-          color: on ? ink : p.ink.withValues(alpha: 0.24),
-          width: 1.6,
-        ),
+        gradient: on ? _hues : null,
+        border: on
+            ? null
+            : Border.all(color: p.ink.withValues(alpha: 0.22), width: 1.6),
       ),
       child: AnimatedScale(
         scale: on ? 1 : 0,
-        duration: const Duration(milliseconds: 220),
+        duration: const Duration(milliseconds: 240),
         curve: Curves.easeOutBack,
         child: Icon(
           Icons.check_rounded,
-          size: size * 0.7,
-          color: widget.skill.colour,
+          size: size * 0.68,
+          color: widget.skill.onHues,
         ),
       ),
     );
   }
 
   /// The name, on up to three lines in [width], never broken inside a
-  /// word: where its longest word is wider than that, or the lines taller
-  /// than [height], the whole name is set smaller instead.
-  Widget _name(
-    String name,
-    Color ink,
-    double size,
-    double width,
-    Alignment at,
-  ) {
+  /// word: where its longest word is wider than that, the whole name is set
+  /// smaller instead.
+  Widget _name(String name, double size, double width, Alignment at) {
+    final p = context.p;
     // Measured as it is drawn: with what the page's own text style lends it.
     final TextStyle style = DefaultTextStyle.of(context).style.merge(
       AppText.body(
         size: size,
         weight: FontWeight.w700,
         height: 1.2,
-        color: ink,
+        color: p.ink,
       ),
     );
     final TextScaler scaler = MediaQuery.textScalerOf(context);
@@ -412,95 +443,76 @@ class _TileState extends State<_Tile> {
     );
   }
 
-  /// Tall: the mark and the tick above, the name at the foot.
-  Widget _tall(BoxConstraints box, String name, Color ink, Color mark) {
-    final double glyph = (box.maxHeight * 0.26).clamp(22.0, 34.0);
+  /// Tall: the badge and the tick above, the name at the foot.
+  Widget _tall(BoxConstraints box, String name) {
+    final double badge = (box.maxHeight * 0.34).clamp(30.0, 42.0);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 11, 11, 10),
+      padding: const EdgeInsets.fromLTRB(13, 12, 12, 11),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomPaint(
-                size: Size.square(glyph),
-                painter: SkillGlyph(widget.skill, mark),
-              ),
-              const Spacer(),
-              _tick(ink, 22),
-            ],
+            children: [_badge(badge), const Spacer(), _tick(22)],
           ),
           const Spacer(),
-          // Smaller rather than cut, where a long name meets a large text.
           Flexible(
             flex: 0,
-            child: _name(
-              name,
-              ink,
-              15.5,
-              box.maxWidth - 26,
-              Alignment.bottomLeft,
-            ),
+            child: _name(name, 15, box.maxWidth - 25, Alignment.bottomLeft),
           ),
         ],
       ),
     );
   }
 
-  /// Short: the mark, the name beside it taking the rest of the row; the
-  /// tick, once picked, a small badge on the mark's corner, so the name
-  /// keeps the room.
-  Widget _row(BoxConstraints box, String name, Color ink, Color mark) {
+  /// Short: the badge, the name beside it taking the rest of the row; the
+  /// tick, once picked, on the badge's corner.
+  Widget _row(BoxConstraints box, String name) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, _Tile.padY, 10, _Tile.padY),
+      padding: const EdgeInsets.fromLTRB(10, _Tile.padY, 10, _Tile.padY),
       child: Row(
         children: [
           SizedBox(
-            width: 30,
-            height: 30,
+            width: 36,
+            height: 36,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
+                Positioned(left: 0, top: 2, child: _badge(32)),
                 Positioned(
-                  left: 0,
-                  top: 3,
-                  child: CustomPaint(
-                    size: const Size.square(24),
-                    painter: SkillGlyph(widget.skill, mark),
+                  right: -3,
+                  bottom: -3,
+                  child: AnimatedScale(
+                    scale: widget.on ? 1 : 0,
+                    duration: const Duration(milliseconds: 240),
+                    curve: Curves.easeOutBack,
+                    child: Container(
+                      padding: const EdgeInsets.all(1.5),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: context.p.isDark
+                            ? Color.alphaBlend(
+                                Colors.white.withValues(alpha: 0.055),
+                                context.p.surface,
+                              )
+                            : Colors.white,
+                      ),
+                      child: _tick(15),
+                    ),
                   ),
                 ),
-                Positioned(right: -2, bottom: -2, child: _badge(ink)),
               ],
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 9),
           Expanded(
             child: LayoutBuilder(
               builder: (context, room) =>
-                  _name(name, ink, 14.5, room.maxWidth, Alignment.centerLeft),
+                  _name(name, 14.5, room.maxWidth, Alignment.centerLeft),
             ),
           ),
         ],
       ),
     );
   }
-
-  /// The tick of a short tile: a badge that grows in once picked, nothing
-  /// before.
-  Widget _badge(Color ink) => AnimatedScale(
-    scale: widget.on ? 1 : 0,
-    duration: const Duration(milliseconds: 220),
-    curve: Curves.easeOutBack,
-    child: Container(
-      width: 15,
-      height: 15,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: ink,
-        border: Border.all(color: widget.skill.colour, width: 1.5),
-      ),
-      child: Icon(Icons.check_rounded, size: 11, color: widget.skill.colour),
-    ),
-  );
 }

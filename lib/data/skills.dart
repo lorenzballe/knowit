@@ -7,23 +7,72 @@ import 'package:flutter/material.dart';
 /// next. It changes nothing in the app, which deals as it did; it is kept on
 /// the phone and told to the reader's profile in analytics.
 ///
-/// Each has its colour, one of the cards' own, bright for the tile it fills
-/// when picked and in the dark, and a deeper one to draw its mark on paper.
+/// Each has its colour, a deeper one to draw its mark on paper, and its two
+/// hues: a badge of them carries its mark, so a skill reads as a badge on the
+/// page's own ground, never as a tile of one colour like a subject's.
 enum Skill {
-  critical(Color(0xFF2B5CFF), Color(0xFF2B5CFF)),
-  decisions(Color(0xFFFF7A1A), Color(0xFFE06A00)),
-  money(Color(0xFF00D451), Color(0xFF14A04A)),
-  numbers(Color(0xFFFFE600), Color(0xFFC79200)),
-  talk(Color(0xFF00D9D9), Color(0xFF00A99C)),
-  persuade(Color(0xFFFF3D7F), Color(0xFFE0336F)),
-  people(Color(0xFF9B5CFF), Color(0xFF6E3AFF)),
-  fakes(Color(0xFFFF3B30), Color(0xFFD8341A)),
-  science(Color(0xFF00E5A0), Color(0xFF0E9A70)),
-  focus(Color(0xFFFFB000), Color(0xFFC77A00)),
-  lead(Color(0xFFC13AFF), Color(0xFF9B1FD6)),
-  culture(Color(0xFF00A6FF), Color(0xFF0077CC));
+  critical(Color(0xFF2B5CFF), Color(0xFF2B5CFF), [
+    Color(0xFF3A5BFF),
+    Color(0xFF7A4DFF),
+  ]),
+  decisions(Color(0xFFFF7A1A), Color(0xFFE06A00), [
+    Color(0xFFFF8A00),
+    Color(0xFFFF4D4D),
+  ]),
+  money(Color(0xFF00D451), Color(0xFF14A04A), [
+    Color(0xFF00C853),
+    Color(0xFF00A88F),
+  ]),
+  numbers(Color(0xFFFFE600), Color(0xFFC79200), [
+    Color(0xFFFFB300),
+    Color(0xFFFF7A00),
+  ]),
+  talk(Color(0xFF00D9D9), Color(0xFF00A99C), [
+    Color(0xFF00C2E0),
+    Color(0xFF2F7BFF),
+  ]),
+  persuade(Color(0xFFFF3D7F), Color(0xFFE0336F), [
+    Color(0xFFFF4F9A),
+    Color(0xFFB14DFF),
+  ]),
+  people(Color(0xFF9B5CFF), Color(0xFF6E3AFF), [
+    Color(0xFF8E5CFF),
+    Color(0xFFFF5CB8),
+  ]),
+  fakes(Color(0xFFFF3B30), Color(0xFFD8341A), [
+    Color(0xFFFF3B30),
+    Color(0xFFB0002A),
+  ]),
+  science(Color(0xFF00E5A0), Color(0xFF0E9A70), [
+    Color(0xFF00D9A3),
+    Color(0xFF00A3FF),
+  ]),
+  focus(Color(0xFFFFB000), Color(0xFFC77A00), [
+    Color(0xFFFFD500),
+    Color(0xFFFF9F0A),
+  ]),
+  lead(Color(0xFFC13AFF), Color(0xFF9B1FD6), [
+    Color(0xFFC13AFF),
+    Color(0xFF5B4DFF),
+  ]),
+  culture(Color(0xFF00A6FF), Color(0xFF0077CC), [
+    Color(0xFF00B2FF),
+    Color(0xFF00E0C6),
+  ]);
 
-  const Skill(this.colour, this.onPaper);
+  const Skill(this.colour, this.onPaper, this.hues);
+
+  /// The two hues of the skill's badge, from its top left to its bottom
+  /// right.
+  final List<Color> hues;
+
+  /// The ink of the mark on the badge: white, or near-black where the hues
+  /// are too light for white to read.
+  Color get onHues {
+    final double light =
+        (hues[0].computeLuminance() + hues[1].computeLuminance()) / 2;
+    return light > 0.5 ? const Color(0xFF15130F) : Colors.white;
+  }
 
   /// The tile's colour when picked, and the mark's in the dark.
   final Color colour;
