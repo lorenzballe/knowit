@@ -46,12 +46,29 @@ class TodayScreen extends StatefulWidget {
   /// the table after the fifth is thrown, and it is thrown too.
   final ValueChanged<bool>? onDeckOnTable;
 
+  /// Told as one of the day's cards is let go, sent on. From the first one
+  /// the day is under way: the shell keeps its tab bar out of the way of
+  /// the cards that are left, and gives the deck the room it held.
+  final VoidCallback? onCardSent;
+
+  /// What stands at the far end of the header while the shell keeps its tab
+  /// bar aside: the tabs, small, where they can be called back from. Null
+  /// while the bar is in its place.
+  final Widget? tabsAside;
+
+  /// Calls the tab bar back, from anywhere on the header; null while the
+  /// bar is in its place.
+  final VoidCallback? onCallTabs;
+
   const TodayScreen({
     super.key,
     required this.app,
     this.onBack,
     this.onCardMotion,
     this.onDeckOnTable,
+    this.onCardSent,
+    this.tabsAside,
+    this.onCallTabs,
   });
 
   @override
@@ -225,18 +242,33 @@ class _TodayScreenState extends State<TodayScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _ReadingHeader(
-            streak: app.liveStreak,
-            frozen: app.streakWasFrozen,
-            onBack: widget.onBack,
-            // Said beside the day's name — the one place on the screen with
-            // room to spare on a first morning, which has no streak to show
-            // there — so the deck below never moves to make room for it.
-            hint: _hinting && app.pillsRead == 0
-                ? context.l10n.swipeForTheNextOne
-                : null,
+          // The header and the gap under it are one thing to touch while
+          // the shell keeps its tab bar aside: a tap anywhere on them calls
+          // the bar back. The tabs standing small at the far end say so and
+          // answer a screen reader themselves; the room is the same as it
+          // was, so nothing under it moves.
+          GestureDetector(
+            key: const ValueKey('today-head'),
+            behavior: HitTestBehavior.opaque,
+            excludeFromSemantics: true,
+            onTap: widget.onCallTabs,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: _ReadingHeader(
+                streak: app.liveStreak,
+                frozen: app.streakWasFrozen,
+                onBack: widget.onBack,
+                // Said beside the day's name — the one place on the screen
+                // with room to spare on a first morning, which has no streak
+                // to show there — so the deck below never moves to make
+                // room for it.
+                hint: _hinting && app.pillsRead == 0
+                    ? context.l10n.swipeForTheNextOne
+                    : null,
+                far: widget.tabsAside,
+              ),
+            ),
           ),
-          const SizedBox(height: 16),
           _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
           const SizedBox(height: 16),
           // The deck takes every pixel that is left.
@@ -265,6 +297,10 @@ class _TodayScreenState extends State<TodayScreen> {
               onRead: (stint) {
                 if (stint.thrown) {
                   _thrown = stint;
+                  // Said as the card is let go, not when it has flown: the
+                  // deck takes the bar's room while the next card rises
+                  // into it, never under a card being read.
+                  widget.onCardSent?.call();
                 } else {
                   app.cardClosed(stint, where: 'today');
                 }
@@ -410,88 +446,117 @@ class _ReadingHeader extends StatelessWidget {
 
   /// How the card is sent on, once, at the far end of the row.
   final String? hint;
+
+  /// What stands at the far end of the row when the hint does not: the
+  /// tabs, small, while the shell keeps its bar out of the day's way. No
+  /// taller than the row already is, so the deck under it never moves.
+  final Widget? far;
   const _ReadingHeader({
     required this.streak,
     this.frozen = false,
     this.onBack,
     this.hint,
+    this.far,
   });
 
   @override
   Widget build(BuildContext context) {
+    final Widget? far = hint == null ? this.far : null;
+    final Widget row = _row(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: Row(
-        children: [
-          if (onBack != null) ...[
-            BackCircle(onPressed: onBack!),
-            const SizedBox(width: 12),
-          ],
-          // A long date and a streak badge do not both fit on a narrow
-          // handset. The date gives way by a point or two rather than being
-          // clipped, or overflowing, which is what it did.
-          Flexible(
-            flex: 2,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                context.l10n.tabToday,
-                maxLines: 1,
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w600,
-                  spacing: -0.4,
-                  color: context.p.ink,
+      // The tabs stand over the row's far end rather than in it: the row is
+      // measured without them, so it is exactly as tall and as wide as it
+      // was, and they are flush to the end whatever the day's name and the
+      // streak beside it take.
+      child: far == null
+          ? row
+          : Stack(
+              clipBehavior: Clip.none,
+              children: [
+                row,
+                PositionedDirectional(
+                  top: 0,
+                  bottom: 0,
+                  end: 0,
+                  child: Center(child: far),
                 ),
+              ],
+            ),
+    );
+  }
+
+  Widget _row(BuildContext context) {
+    return Row(
+      children: [
+        if (onBack != null) ...[
+          BackCircle(onPressed: onBack!),
+          const SizedBox(width: 12),
+        ],
+        // A long date and a streak badge do not both fit on a narrow
+        // handset. The date gives way by a point or two rather than being
+        // clipped, or overflowing, which is what it did.
+        Flexible(
+          flex: 2,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              context.l10n.tabToday,
+              maxLines: 1,
+              style: AppText.display(
+                size: 20,
+                weight: FontWeight.w600,
+                spacing: -0.4,
+                color: context.p.ink,
               ),
             ),
           ),
-          const SizedBox(width: 10),
-          // Nothing until there is something. A badge reading "0 days" on the
-          // morning somebody installs the app is a worse first impression
-          // than no badge at all.
-          if (streak > 0)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
-              decoration: BoxDecoration(
-                color: frozen
-                    ? context.p.link.withValues(alpha: 0.22)
-                    : context.p.line,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration: BoxDecoration(
-                      color: frozen ? context.p.link : context.p.inverse,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    context.l10n.streakDays(streak),
-                    style: AppText.body(
-                      size: 12,
-                      weight: FontWeight.w600,
-                      color: context.p.ink,
-                    ),
-                  ),
-                ],
-              ),
+        ),
+        const SizedBox(width: 10),
+        // Nothing until there is something. A badge reading "0 days" on the
+        // morning somebody installs the app is a worse first impression
+        // than no badge at all.
+        if (streak > 0)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+            decoration: BoxDecoration(
+              color: frozen
+                  ? context.p.link.withValues(alpha: 0.22)
+                  : context.p.line,
+              borderRadius: BorderRadius.circular(999),
             ),
-          if (hint != null) ...[
-            const SizedBox(width: 12),
-            // Three parts of the row's room to the day's name's two: the
-            // name keeps its size in every language, and the hint, which
-            // gives way, rarely has to.
-            Expanded(flex: 3, child: _SwipeHint(text: hint!)),
-          ],
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: frozen ? context.p.link : context.p.inverse,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  context.l10n.streakDays(streak),
+                  style: AppText.body(
+                    size: 12,
+                    weight: FontWeight.w600,
+                    color: context.p.ink,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        if (hint != null) ...[
+          const SizedBox(width: 12),
+          // Three parts of the row's room to the day's name's two: the
+          // name keeps its size in every language, and the hint, which
+          // gives way, rarely has to.
+          Expanded(flex: 3, child: _SwipeHint(text: hint!)),
         ],
-      ),
+      ],
     );
   }
 }

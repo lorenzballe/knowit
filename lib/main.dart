@@ -1527,6 +1527,28 @@ class _AstutoShellState extends State<AstutoShell>
   /// swipe to the next tab are the same gesture and the deck must win it.
   bool _deckOnTable = true;
 
+  /// The deck the day is under way on: the day's own, from the moment its
+  /// first card is sent on. From then until the shelf is up the bar keeps
+  /// out of the way of the cards that are left, and the deck has the room
+  /// the bar held. Never from the start: the app opens with its three tabs
+  /// in sight, and the first card is read with them there. Held as the
+  /// deck itself, so a day that turns under an app left open starts with
+  /// its bar again.
+  List<Pill>? _underWay;
+
+  /// True while the bar, kept aside for the day, has been called back from
+  /// Today's header: it lies over the foot of the deck for a few seconds,
+  /// as a menu does, and steps aside again on its own.
+  bool _barCalled = false;
+  Timer? _barCall;
+
+  /// How long a bar called back stays before it steps aside again.
+  static const Duration _barStay = Duration(seconds: 6);
+
+  /// Whether the bar is kept aside: on Today, with the day under way.
+  bool get _barAside =>
+      _tab == 0 && _deckOnTable && identical(_underWay, widget.app.todaysDeck);
+
   /// The Explore tab keeps its state across tab changes, which is right
   /// until the finished day sends the reader to "today's best" and finds
   /// the tab still on last week's month filter.
@@ -1555,12 +1577,43 @@ class _AstutoShellState extends State<AstutoShell>
   @override
   void dispose() {
     widget.widgetOpen?.removeListener(_followWidget);
+    _barCall?.cancel();
     _pages.removeListener(_followPage);
     _pages.dispose();
     _jump.dispose();
     _lit.dispose();
     _barSmall.dispose();
     super.dispose();
+  }
+
+  /// The bar, kept aside for the day, called back from Today's header; a
+  /// second call sends it away again. It stays a few seconds and no longer:
+  /// long enough to go somewhere, not long enough to be read around.
+  void _callBar() {
+    _barCall?.cancel();
+    if (_barCalled) {
+      setState(() => _barCalled = false);
+      return;
+    }
+    HapticFeedback.selectionClick();
+    setState(() => _barCalled = true);
+    _barCall = Timer(_barStay, () {
+      if (mounted && _barCalled) setState(() => _barCalled = false);
+    });
+  }
+
+  /// A bar called back is let go, where something else has the screen: a
+  /// card under the finger, another tab, the shelf. Inside a setState.
+  void _letBarGo() {
+    _barCall?.cancel();
+    _barCalled = false;
+  }
+
+  /// The room Today keeps at its foot while the bar is aside: what the bar
+  /// itself kept under it, low, into the room the home indicator holds.
+  static double _footRoom(BuildContext context) {
+    final double foot = MediaQuery.viewPaddingOf(context).bottom;
+    return foot > 20 ? foot - 12 : 12;
   }
 
   /// A widget's tap is followed after the frame: the pages have to be laid
@@ -1691,7 +1744,10 @@ class _AstutoShellState extends State<AstutoShell>
     if (fromBar) HapticFeedback.selectionClick();
     final int from = _tab;
     _barSmall.value = false;
-    setState(() => _tab = tab);
+    setState(() {
+      _tab = tab;
+      _letBarGo();
+    });
     _noteTab(tab, by: by);
     if ((tab - from).abs() == 1 && fromBar) {
       _jump.stop();
@@ -1752,16 +1808,45 @@ class _AstutoShellState extends State<AstutoShell>
 
   @override
   Widget build(BuildContext context) {
+    // Read here, above the Scaffold: under it the body is told the bar's
+    // height in place of the home indicator's room, which is the one asked
+    // for.
+    final double footRoom = _footRoom(context);
     final screens = [
       TodayScreen(
         app: widget.app,
         onCardMotion: (moving) {
-          if (moving != _cardMoving) setState(() => _cardMoving = moving);
+          if (moving == _cardMoving) return;
+          setState(() {
+            _cardMoving = moving;
+            // A card under the finger: a bar called back gives way to it.
+            if (moving) _letBarGo();
+          });
         },
         onDeckOnTable: (onTable) {
-          if (onTable != _deckOnTable) setState(() => _deckOnTable = onTable);
+          if (onTable != _deckOnTable) {
+            setState(() {
+              _deckOnTable = onTable;
+              // The shelf is up: the day is no longer under way, and the
+              // bar is back in its place for good.
+              if (!onTable) {
+                _underWay = null;
+                _letBarGo();
+              }
+            });
+          }
           widget.onDeckOnTable?.call(onTable);
         },
+        onCardSent: () {
+          final List<Pill> deck = widget.app.todaysDeck;
+          if (identical(_underWay, deck) && !_barCalled) return;
+          setState(() {
+            _underWay = deck;
+            _letBarGo();
+          });
+        },
+        tabsAside: _barAside ? _TabsAside(onCall: _callBar) : null,
+        onCallTabs: _barAside ? _callBar : null,
       ),
       ExploreScreen(
         key: _explore,
@@ -1818,8 +1903,9 @@ class _AstutoShellState extends State<AstutoShell>
           // one thing on it, and every sideways drag belongs to the card
           // being thrown — a page that slid instead, depending on where the
           // finger landed, was the worst of both. The five are a screen you
-          // finish, not one you slide off. The bar still goes anywhere; it
-          // is the sliding that stops.
+          // finish, not one you slide off. The bar still goes anywhere, in
+          // its place or called back from Today's header once the day is
+          // under way; it is the sliding that stops.
           //
           // No glow at the ends: there is nothing past the last tab, and
           // the Android indicator would say so in a colour of its own.
@@ -1858,9 +1944,27 @@ class _AstutoShellState extends State<AstutoShell>
                           // and the profile scroll on under a glass bar,
                           // and pad their own foot so the last row can
                           // still be lifted clear of it.
-                          builder: (context) => Padding(
+                          //
+                          // With the day under way the bar is aside, and
+                          // its room is the deck's: given over as the first
+                          // card is let go, while the next one rises, so no
+                          // card changes size under the eyes reading it.
+                          builder: (context) => AnimatedPadding(
+                            // Back at once when the shelf comes up: the table
+                            // is bare by then, the last card thrown, and the
+                            // shelf comes in at the size it stays.
+                            duration: Duration(
+                              milliseconds:
+                                  !_deckOnTable ||
+                                      MediaQuery.disableAnimationsOf(context)
+                                  ? 0
+                                  : 280,
+                            ),
+                            curve: Curves.easeOutCubic,
                             padding: EdgeInsets.only(
-                              bottom: i == 0 || !barGlass
+                              bottom: i == 0 && _barAside
+                                  ? footRoom
+                                  : i == 0 || !barGlass
                                   ? MediaQuery.paddingOf(context).bottom
                                   : 0,
                             ),
@@ -1888,8 +1992,14 @@ class _AstutoShellState extends State<AstutoShell>
         // The bar steps aside while a card is being thrown. Two rows of
         // controls along the bottom edge was one too many, and a card thrown
         // downward should not be thrown at a row of buttons.
+        //
+        // And it stays aside once the day is under way, from the first card
+        // sent on to the shelf: the five are a screen you finish. Called
+        // back from Today's header it lies over the foot of the deck for a
+        // few seconds, the one time anything covers a card, and at the
+        // reader's own asking.
         bottomNavigationBar: _AstutoTabBar(
-          hidden: _cardMoving,
+          hidden: _cardMoving || (_barAside && !_barCalled),
           lit: _lit,
           onChanged: _goTo,
           small: _barSmall,
@@ -1923,6 +2033,58 @@ class _KeepAliveState extends State<_KeepAlive>
   Widget build(BuildContext context) {
     super.build(context);
     return widget.child;
+  }
+}
+
+/// The three tabs, small, at the far end of Today's header while the bar
+/// itself is kept out of the day's way: where the bar went, and the way to
+/// call it back.
+///
+/// The bar's own marks, the one for Today lit as it is there, in a pill no
+/// taller than the streak's beside it, so the header keeps its height and
+/// the deck under it stays where it is. The eye has the marks; a screen
+/// reader hears the three names, and that it is something to press.
+class _TabsAside extends StatelessWidget {
+  const _TabsAside({required this.onCall});
+
+  final VoidCallback onCall;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final l = context.l10n;
+    final Color idle = p.ink.withValues(alpha: p.isDark ? 0.62 : 0.5);
+    return Semantics(
+      key: const ValueKey('tabs-aside'),
+      button: true,
+      label: '${l.tabToday}, ${l.tabExplore}, ${l.tabProfile}',
+      onTap: onCall,
+      child: ExcludeSemantics(
+        child: Container(
+          height: 26,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: p.ink.withValues(alpha: 0.22)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (var i = 0; i < _AstutoTabBar.tabs.length; i++) ...[
+                if (i > 0) const SizedBox(width: 9),
+                Icon(
+                  i == 0
+                      ? _AstutoTabBar.tabs[i].lit
+                      : _AstutoTabBar.tabs[i].icon,
+                  size: 14,
+                  color: i == 0 ? p.ink : idle,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

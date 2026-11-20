@@ -222,7 +222,18 @@ Future<void> _openSetting(WidgetTester tester, String label) async {
 }
 
 Future<void> _openProfile(WidgetTester tester) async {
+  await _callTabs(tester);
   await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+  await _settle(tester);
+}
+
+/// The tab bar back in sight, where the day under way has it aside: once a
+/// card of the five has been sent on the bar keeps out of the way of the
+/// rest, the tabs stand small in Today's header, and a tap there calls the
+/// bar back. Nothing to do where the bar is in its place.
+Future<void> _callTabs(WidgetTester tester) async {
+  if (find.byKey(const ValueKey('tabs-aside')).evaluate().isEmpty) return;
+  await tester.tap(find.byKey(const ValueKey('today-head')));
   await _settle(tester);
 }
 
@@ -1958,7 +1969,10 @@ void main() {
     expect(find.byType(PillCardStack), findsOneWidget);
     expect(find.text("Today's shelf"), findsNothing);
 
-    // The bar still goes anywhere, so nobody is held there.
+    // The bar still goes anywhere, so nobody is held there: aside for the
+    // day once a card has been sent on, it is a tap on the header away.
+    expect(find.byKey(const ValueKey('tabs-aside')), findsOneWidget);
+    await _callTabs(tester);
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
     expect(find.text("Today's shelf"), findsOneWidget);
