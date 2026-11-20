@@ -5315,6 +5315,9 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => 'Volgende in het pad';
+
+  @override
   String get shareSendCard => 'Stuur de kaart';
 
   @override

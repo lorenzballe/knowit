@@ -1224,6 +1224,7 @@
   "widgetAskGotIt": "Понятно",
   "widgetAskNotNow": "Не сейчас",
   "pathCardOf": "Карточка {n} из {total}",
+  "pathDoorNext": "Дальше по маршруту",
   "shareSendCard": "Отправить карточку",
   "shareAsImage": "Картинкой",
   "shareCopyLink": "Копировать ссылку",

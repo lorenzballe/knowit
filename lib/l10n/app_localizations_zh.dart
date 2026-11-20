@@ -5073,6 +5073,9 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => '这条路的下一张';
+
+  @override
   String get shareSendCard => '发送卡片';
 
   @override

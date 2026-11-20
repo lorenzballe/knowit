@@ -5491,6 +5491,9 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => 'Дальше по маршруту';
+
+  @override
   String get shareSendCard => 'Отправить карточку';
 
   @override

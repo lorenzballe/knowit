@@ -1224,6 +1224,7 @@
   "widgetAskGotIt": "わかりました",
   "widgetAskNotNow": "今はしない",
   "pathCardOf": "{total}枚中{n}枚目",
+  "pathDoorNext": "コースの次へ",
   "shareSendCard": "カードを送る",
   "shareAsImage": "画像で",
   "shareCopyLink": "リンクをコピー",

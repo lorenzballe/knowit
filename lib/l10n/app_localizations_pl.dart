@@ -5475,6 +5475,9 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => 'Dalej na ścieżce';
+
+  @override
   String get shareSendCard => 'Wyślij kartę';
 
   @override

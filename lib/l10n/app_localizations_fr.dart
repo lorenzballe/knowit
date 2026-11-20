@@ -5327,6 +5327,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => 'Suite du parcours';
+
+  @override
   String get shareSendCard => 'Envoyer la carte';
 
   @override

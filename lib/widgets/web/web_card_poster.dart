@@ -109,17 +109,32 @@ class WebCardPoster extends StatelessWidget {
                   ),
                 ],
                 SizedBox(height: h * 0.021),
-                BalancedText(
-                  pill.question,
-                  style: AppText.display(
-                    size: size,
-                    weight: FontWeight.w800,
-                    height: 1.13,
-                    spacing: -0.012 * size,
-                    color: ink,
+                // As the kit sets it, and smaller only where it would not
+                // fit: at a large text size on a small phone a long question
+                // ran past the card's foot. It has all the room down to the
+                // foot, the fallback's line kept there.
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.topLeft,
+                      child: SizedBox(
+                        width: math.max(0, box.maxWidth - 56),
+                        child: BalancedText(
+                          pill.question,
+                          style: AppText.display(
+                            size: size,
+                            weight: FontWeight.w800,
+                            height: 1.13,
+                            spacing: -0.012 * size,
+                            color: ink,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                const Spacer(),
                 if (fallback)
                   Text(
                     context.l10n.tapToReveal,

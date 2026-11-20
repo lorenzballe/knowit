@@ -5314,6 +5314,9 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => 'Seguinte no percurso';
+
+  @override
   String get shareSendCard => 'Enviar a carta';
 
   @override

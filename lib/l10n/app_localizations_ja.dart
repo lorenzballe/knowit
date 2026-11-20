@@ -5070,6 +5070,9 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => 'コースの次へ';
+
+  @override
   String get shareSendCard => 'カードを送る';
 
   @override

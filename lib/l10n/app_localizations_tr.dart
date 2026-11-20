@@ -5217,6 +5217,9 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => 'Yolda sıradaki';
+
+  @override
   String get shareSendCard => 'Kartı gönder';
 
   @override

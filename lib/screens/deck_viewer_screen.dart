@@ -8,6 +8,7 @@ import '../theme.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
 import '../widgets/pill_card_stack.dart';
+import '../widgets/path_door.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/glass_round.dart';
 
@@ -134,6 +135,15 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   }
 
   int get _total => widget.of ?? widget.deck.length;
+
+  /// The card whose path's door is under it: the one open, when the deck is
+  /// Explore's and the card is in a path.
+  Pill? get _door {
+    if (_atEnd || _index >= widget.deck.length) return null;
+    if (!widget.source.startsWith('explore')) return null;
+    final Pill pill = widget.deck[_index];
+    return pathOfCard(pill) == null ? null : pill;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -292,18 +302,30 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
               ),
 
               const SizedBox(height: 12),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 260),
-                child: Text(
-                  _hint,
-                  key: ValueKey(_hint),
-                  style: AppText.body(
-                    size: 12.5,
-                    weight: FontWeight.w500,
-                    color: context.p.inkFaint,
+              // A card read from Explore that belongs to a path has, in place
+              // of the line about the gesture, the door to the path (A5).
+              if (_door case final Pill pill)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: PathDoor(
+                    key: ValueKey('path-door-${pill.id}'),
+                    app: widget.app,
+                    pill: pill,
+                  ),
+                )
+              else
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 260),
+                  child: Text(
+                    _hint,
+                    key: ValueKey(_hint),
+                    style: AppText.body(
+                      size: 12.5,
+                      weight: FontWeight.w500,
+                      color: context.p.inkFaint,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
