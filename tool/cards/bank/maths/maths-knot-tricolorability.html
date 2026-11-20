@@ -144,6 +144,8 @@ Kit.play.card = async () => {
   const hit = k => Kit.$('knot').querySelector(`.hit[data-k="${k}"]`).dispatchEvent(new MouseEvent('click', {bubbles: true}));
   hit(1); await wait(150); hit(2); await wait(150); hit(2); await wait(1800);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('knot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

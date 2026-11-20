@@ -65,7 +65,8 @@ function layout() {
 
   // vertical budget: season marks above the clocks, one or two label rows below
   const by = H - f * (compact ? 1.9 : 3.4), topY = f * 2.2;
-  const R = Math.max(14, Math.min(W * .17, (by - topY - f * .3) / 2));
+  // The clocks leave the words between them their room: "tap to pick" is about 5.4 f wide.
+  const R = Math.max(14, Math.min(W * .17, W * .24 - f * 2.9, (by - topY - f * .3) / 2));
   const cyc = by - f * .3 - R, top = cyc - R;
   const sides = {L: {cx: W * .26, c: SUM, n: 'Summer time'}, R: {cx: W * .74, c: WIN, n: 'Winter time'}};
   const ty = cyc, th = Math.max(6, R * .16);
@@ -277,6 +278,8 @@ Kit.play.card = async () => {
   await wait(Kit.calm ? 100 : 1500);
   launch('L'); await wait(Kit.calm ? 60 : 1300);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

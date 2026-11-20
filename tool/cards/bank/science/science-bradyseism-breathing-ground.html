@@ -19,7 +19,7 @@
       <svg id="scene" role="img" aria-label="A coast cut in two: a hill, a temple on a terrace, the sea beside it, and a pocket of magma deep below. Dragging runs the centuries."></svg>
     </div>
     <p class="say" id="say">Drag the picture to run the centuries.</p>
-    <p class="body gone" id="why">This coast sits on a supervolcano. As its magma moves, the ground slowly rises and sinks: here it sank, and the ruins lie 5 to 8 m down.</p>
+    <p class="body gone" id="why">Near Naples, a supervolcano lies under the coast. As its magma moves, the ground rises and sinks: here Roman ruins now lie 5 to 8 m down.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Bradyseism: the ground breathes, slowly rising and sinking over centuries.</div>
     <div class="foot"><span class="src">Source · Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)</span></div>
   </div>
@@ -48,13 +48,13 @@ function build() {
   // The line of time under the picture, until the story is told; then the picture takes its room.
   const bar = done ? 0 : Math.max(34, f * 2.5);
   const Hs = H - bar;
-  const m = Hs * .039;                           // pixels to a metre
+  const m = Hs * .042;                           // pixels to a metre
   const seaY = 8.9 * m;
-  // The depth, in a corner: over the sea where there is room, in it where there is not.
-  const block = big * 1.22 + fs * 1.25 + 2, inSea = seaY < block + 6;
+  // The depth, in a corner over the sea: with what it means below it where there is room, alone where not.
+  const block = big * 1.22 + fs * 1.25 + 2, tight = seaY < block + 6;
   const r = Math.min(18, W * .05);               // the round corners of the slice of ground
-  const chamber = {cx: W * TOWN, cy: Hs * .86, rx: W * .3, ry: Hs * .095};
-  const tw = Math.min(W * .3, 5.5 * m * 1.45), th = tw / 1.45, cx = W * TOWN;
+  const chamber = {cx: W * TOWN, cy: Hs * .875, rx: W * .3, ry: Hs * .085};
+  const tw = Math.min(W * .34, 5.5 * m * 1.6), th = tw / 1.6, cx = W * TOWN;
   const g = Kit.mk('g', {}, svg);
   const defs = Kit.mk('defs', {}, g);
   const slice = Kit.mk('clipPath', {id: 'slice'}, defs);
@@ -70,10 +70,6 @@ function build() {
   const core = Kit.mk('ellipse', {cx: chamber.cx, cy: chamber.cy + chamber.ry * .12, fill: CORE}, world);
   const magmaLbl = Kit.mk('text', {x: chamber.cx, y: chamber.cy + fs * .36, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: INK, 'font-family': 'var(--body)'}, world);
   magmaLbl.textContent = 'magma';
-  const arrows = Kit.mk('g', {fill: STONE, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', opacity: 0}, world);
-  const arrowAt = [chamber.cx - chamber.rx * .62, chamber.cx + chamber.rx * .62].map(x => {
-    const a = Kit.mk('path', {}, arrows); return {a, x};
-  });
 
   // The town on its terrace: a temple, its people, and, once under the sea, its ruins and a diver.
   const town = Kit.mk('g', {}, world);
@@ -81,22 +77,21 @@ function build() {
   temple(whole, tw, th, false); temple(ruin, tw, th, true);
   const people = Kit.mk('g', {}, town);
   // One by the hill, one by the shore, on the terrace either side of the temple.
-  person(people, (W * .23 - cx) / 2 + (-tw / 2) / 2, th * .34, '#d8452f');
-  person(people, (W * .635 - cx) / 2 + (tw / 2) / 2, th * .3, SEA);
-  const wetTint = Kit.mk('rect', {x: 0, y: seaY, width: W, height: Hs - seaY, fill: SEA, opacity: .5, 'clip-path': 'url(#wet)'}, world);
+  person(people, (W * .23 - cx) / 2 + (-tw / 2) / 2, th * .42, '#d8452f');
+  person(people, (W * .64 - cx) / 2 + (tw / 2) / 2, th * .38, SEA);
+  const wetTint = Kit.mk('rect', {x: 0, y: seaY, width: W, height: Hs - seaY, fill: SEA, opacity: .2, 'clip-path': 'url(#wet)'}, world);
   const diver = Kit.mk('g', {opacity: 0}, world);
-  swimmer(diver, th * .62);
+  swimmer(diver, th * .6);
 
   const ground = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, world);
   Kit.mk('line', {x1: 0, x2: W, y1: seaY, y2: seaY, stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '7 6'}, world);
-  if (!inSea) Kit.mk('text', {x: W - 10, y: seaY + fs * 1.25, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)'}, world).textContent = 'sea level';
+  Kit.mk('text', {x: W - 10, y: seaY + fs * 1.25, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)'}, world).textContent = 'sea level';
   const rim = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
   const gauge = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
 
   // Where the sky is too low for both, what it means stays over the sea and the number goes in it.
-  const nx = inSea ? W - 10 : W - 2, ny = inSea ? seaY + big * .98 : big * .9;
-  const depth = Kit.mk('text', {x: nx, y: ny, 'text-anchor': 'end', 'font-size': big, 'font-weight': 800, fill: inSea ? '#fff' : INK, 'font-family': 'var(--display)'}, g);
-  const what = Kit.mk('text', {x: nx, y: inSea ? seaY - fs * .45 : ny + big * .27 + fs + 2, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'var(--body)'}, g);
+  const depth = Kit.mk('text', {x: W - 2, y: big * .9, 'text-anchor': 'end', 'font-size': big, 'font-weight': 800, fill: INK, 'font-family': 'var(--display)'}, g);
+  const what = Kit.mk('text', {x: W - 2, y: big * .9 + big * .27 + fs + 2, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'var(--body)', display: tight ? 'none' : 'inline'}, g);
 
   // The line of time.
   const ty = H - bar * .42, tx0 = W * .17, tx1 = W * .83, kr = Math.max(10, f * .72);
@@ -107,7 +102,7 @@ function build() {
   Kit.mk('text', {x: tx1 + kr + 8, y: ty + fs * .36, 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'var(--body)'}, time).textContent = 'today';
   const knob = Kit.mk('circle', {cy: ty, r: kr, fill: STONE, stroke: INK, 'stroke-width': 3}, time);
 
-  G = {svg, W, H, f, fs, Hs, m, seaY, r, chamber, tw, th, rock, seams, pocket, core, magmaLbl, arrows, arrowAt, town, whole, ruin, people, wetPath, wetTint, diver, ground, rim, gauge, depth, what, run, knob, tx0, tx1};
+  G = {svg, W, H, f, fs, Hs, m, seaY, r, chamber, tw, th, rock, seams, pocket, core, magmaLbl, town, whole, ruin, people, wetPath, wetTint, diver, ground, rim, gauge, depth, what, run, knob, tx0, tx1};
   render();
 }
 
@@ -118,7 +113,7 @@ function temple(g, w, hgt, fallen) {
   Kit.mk('rect', Object.assign({x: -w / 2, y: -step, width: w, height: step}, at), g);
   Kit.mk('rect', Object.assign({x: -w * .46, y: -2 * step, width: w * .92, height: step}, at), g);
   const xs = [0, 1, 2, 3].map(k => -w * .4 + k * (w * .8 - cw) / 3);
-  const tall = fallen ? [1, .55, .82, .3] : [1, 1, 1, 1];
+  const tall = fallen ? [.8, .5, .7, .28] : [1, 1, 1, 1];
   xs.forEach((x, k) => {
     const ch = colH * tall[k], top = -2 * step - ch;
     if (fallen && tall[k] < 1) Kit.mk('path', Object.assign({d: `M${x},${-2 * step} V${top + cw * .3} L${x + cw * .35},${top} L${x + cw * .6},${top + cw * .35} L${x + cw},${top + cw * .1} V${-2 * step} Z`}, at), g);
@@ -133,26 +128,30 @@ function temple(g, w, hgt, fallen) {
     Kit.mk('path', Object.assign({d: `M${-w * .5},${y - ent} L0,${y - ent - ped} L${w * .5},${y - ent} Z`}, at), g);
   } else {
     // A drum of a column, fallen on the floor.
-    Kit.mk('rect', Object.assign({x: w * .52, y: -cw * 1.05, width: cw * 1.9, height: cw * 1.05, rx: cw * .2}, at), g);
+    Kit.mk('rect', Object.assign({x: -w * .52 - cw * 1.9, y: -cw * 1.05, width: cw * 1.9, height: cw * 1.05, rx: cw * .2}, at), g);
   }
 }
 
-// A person of the town, standing, about the size of a person beside the temple.
+// A person of the town, standing beside the temple: head, tunic, arms and legs.
 function person(g, x, tall, cloth) {
-  const head = tall * .17, at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'};
-  Kit.mk('path', Object.assign({d: `M${x - tall * .2},0 L${x - tall * .12},${-tall * .66} Q${x},${-tall * .76} ${x + tall * .12},${-tall * .66} L${x + tall * .2},0 Z`, fill: cloth}, at), g);
-  Kit.mk('circle', Object.assign({cx: x, cy: -tall * .66 - head * 1.05, r: head, fill: '#f2c29b'}, at), g);
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, u = tall / 10;
+  Kit.mk('path', Object.assign({d: `M${x - 1.2 * u},${-3.2 * u} L${x - 1.4 * u},0 M${x + 1.2 * u},${-3.2 * u} L${x + 1.4 * u},0`, fill: 'none'}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x - 2.3 * u},${-6.4 * u} L${x - 3.1 * u},${-3.6 * u} M${x + 2.3 * u},${-6.4 * u} L${x + 3.1 * u},${-3.6 * u}`, fill: 'none'}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x - 2.6 * u},${-2.8 * u} L${x - 1.9 * u},${-7 * u} Q${x},${-7.8 * u} ${x + 1.9 * u},${-7 * u} L${x + 2.6 * u},${-2.8 * u} Z`, fill: cloth}, at), g);
+  Kit.mk('circle', Object.assign({cx: x, cy: -8.6 * u, r: 1.45 * u, fill: '#f2c29b'}, at), g);
 }
 
-// A diver, swimming over the ruins, with a breath of bubbles.
+// A diver, swimming over the ruins: mask, tank, arms forward, legs and fins behind, a breath of bubbles.
 function swimmer(g, len) {
-  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, k = len / 10;
-  Kit.mk('path', Object.assign({d: `M${-5 * k},${-.4 * k} L${-8.6 * k},${-1.9 * k} L${-8.2 * k},${1.4 * k} Z`, fill: INK}, at), g);
-  Kit.mk('rect', Object.assign({x: -5.6 * k, y: -1.2 * k, width: 9 * k, height: 2.4 * k, rx: 1.2 * k, fill: INK}, at), g);
-  Kit.mk('rect', Object.assign({x: -3.4 * k, y: -2.5 * k, width: 5 * k, height: 1.5 * k, rx: .7 * k, fill: STONE}, at), g);
-  Kit.mk('circle', Object.assign({cx: 4.6 * k, cy: 0, r: 1.6 * k, fill: '#f2c29b'}, at), g);
-  Kit.mk('rect', Object.assign({x: 4.7 * k, y: -1 * k, width: 1.7 * k, height: 1.3 * k, rx: .4 * k, fill: STONE}, at), g);
-  [[6.6, -3.2, .55], [7.4, -5.2, .75], [6.8, -7.4, .45]].forEach(([x, y, rr]) => Kit.mk('circle', {cx: x * k, cy: y * k, r: rr * k, fill: STONE, stroke: INK, 'stroke-width': 1.5}, g));
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, k = len / 10;
+  Kit.mk('path', Object.assign({d: `M${-3.6 * k},${.2 * k} L${-7.2 * k},${-.6 * k} M${-3.6 * k},${.6 * k} L${-7 * k},${1.6 * k}`, fill: 'none', 'stroke-width': Math.max(2.4, k * .9)}, at), g);
+  Kit.mk('path', Object.assign({d: `M${-7.2 * k},${-.6 * k} l${-2.2 * k},${-1.3 * k} l${.3 * k},${2 * k} Z M${-7 * k},${1.6 * k} l${-2.3 * k},${-.2 * k} l${.9 * k},${1.9 * k} Z`, fill: INK}, at), g);
+  Kit.mk('rect', Object.assign({x: -4.2 * k, y: -1.3 * k, width: 7.4 * k, height: 2.6 * k, rx: 1.3 * k, fill: INK}, at), g);
+  Kit.mk('rect', Object.assign({x: -2.8 * k, y: -2.7 * k, width: 4.6 * k, height: 1.5 * k, rx: .7 * k, fill: STONE}, at), g);
+  Kit.mk('path', Object.assign({d: `M${2.4 * k},${.6 * k} L${5.6 * k},${2.2 * k} L${7.6 * k},${1.6 * k}`, fill: 'none', 'stroke-width': Math.max(2.2, k * .8)}, at), g);
+  Kit.mk('circle', Object.assign({cx: 4.6 * k, cy: -.5 * k, r: 1.6 * k, fill: '#f2c29b'}, at), g);
+  Kit.mk('rect', Object.assign({x: 4.8 * k, y: -1.5 * k, width: 1.9 * k, height: 1.4 * k, rx: .4 * k, fill: STONE}, at), g);
+  [[6.4, -2.2, .5], [7.1, -3.4, .62], [6.6, -4.5, .42]].forEach(([x, y, rr]) => Kit.mk('circle', {class: 'bubble', cx: x * k, cy: y * k, r: rr * k, fill: STONE, stroke: INK, 'stroke-width': 1.5}, g));
 }
 
 function render() {
@@ -178,15 +177,7 @@ function render() {
   const swell = 1 + .2 * hh / 5;
   G.pocket.setAttribute('rx', chamber.rx * (1 + .06 * hh / 5)); G.pocket.setAttribute('ry', chamber.ry * swell);
   G.core.setAttribute('rx', chamber.rx * .62 * (1 + .1 * hh / 5)); G.core.setAttribute('ry', chamber.ry * .5 * swell);
-  const d = dh(t) > 0 ? 1 : -1, a = G.f * .55;
-  G.arrowAt.forEach(({a: p, x}) => {
-    const y0 = chamber.cy - chamber.ry * swell - a * .4, y1 = y0 - a * 2.1, tip = d > 0 ? y1 - a * .7 : y0 + a * .3, tail = d > 0 ? y0 : y1;
-    const head = d > 0 ? y1 : y0 - a * .4;
-    p.setAttribute('d', d > 0
-      ? `M${x - a * .28},${tail} V${head} H${x - a * .7} L${x},${tip} L${x + a * .7},${head} H${x + a * .28} V${tail} Z`
-      : `M${x - a * .28},${y1} V${y0 - a * .4} H${x - a * .7} L${x},${y0 + a * .3} L${x + a * .7},${y0 - a * .4} H${x + a * .28} V${y1} Z`);
-  });
-  G.arrows.setAttribute('opacity', touched && t > .01 && t < .985 ? 1 : 0);
+  const d = dh(t) > 0 ? 1 : -1;
 
   const floor = Y(TOWN), cx = W * TOWN;
   G.town.setAttribute('transform', `translate(${cx.toFixed(1)},${floor.toFixed(1)})`);
@@ -198,13 +189,13 @@ function render() {
     else { gsap.to(G.whole, {attr: {opacity: ruined ? 0 : 1}, duration: .25}); gsap.to(G.ruin, {attr: {opacity: ruined ? 1 : 0}, duration: .25, delay: ruined ? .1 : 0}); }
   }
   G.people.setAttribute('opacity', Math.min(1, Math.max(0, (hh + .3) / .8)));
-  const deep = Math.min(1, Math.max(0, (-hh - 3.5) / 1.5));
-  G.diver.setAttribute('opacity', deep);
-  const dy = Math.max(seaY + G.th * .45, floor - G.th * 1.08);
-  G.diver.setAttribute('transform', `translate(${(cx + G.tw * .18).toFixed(1)},${dy.toFixed(1)})`);
+  // Over the ruins, halfway between their top and the surface, where there is room for a diver and a breath.
+  const k = G.th * .06, crest = floor - G.th * .62, dy = (seaY + crest) / 2 + 1.4 * k, room = dy - (seaY + 5.4 * k);
+  G.diver.setAttribute('opacity', Math.min(1, Math.max(0, room / (G.th * .25))));
+  G.diver.setAttribute('transform', `translate(${(cx - G.tw * .12).toFixed(1)},${dy.toFixed(1)})`);
 
   // How deep under the sea the town's floor lies, once it does.
-  const gx = cx - G.tw * .5 - G.th * .28, ah = Math.min(G.f * .45, (floor - seaY) / 3);
+  const gx = cx + G.tw * .5 + G.th * .3, ah = Math.min(G.f * .45, (floor - seaY) / 3);
   G.gauge.setAttribute('d', hh > -.8 ? '' : `M${gx},${seaY + 2} V${floor - 2} M${gx - ah * .8},${seaY + 2 + ah} L${gx},${seaY + 2} L${gx + ah * .8},${seaY + 2 + ah} M${gx - ah * .8},${floor - 2 - ah} L${gx},${floor - 2} L${gx + ah * .8},${floor - 2 - ah}`);
   const metres = Math.round(hh);
   G.depth.textContent = metres === 0 ? '0 m' : (metres > 0 ? '+' : '−') + Math.abs(metres) + ' m';
