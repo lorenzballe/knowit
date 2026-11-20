@@ -103,18 +103,14 @@ void main() {
       find.byKey(ValueKey('skill-${s.name}-${on ? 'on' : 'off'}'));
 
   Future<void> tap(WidgetTester tester, Finder f) async {
-    // From the top each time: a tile above the fold is not found by
-    // scrolling on down.
-    tester
-        .state<ScrollableState>(find.byType(Scrollable).first)
-        .position
-        .jumpTo(0);
-    await tester.pump();
-    await tester.scrollUntilVisible(
-      f,
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
+    // All twelve are on the screen at once; only a text too large for
+    // that lets the grid scroll, and then from the top each time.
+    final Finder list = find.byType(Scrollable);
+    if (list.evaluate().isNotEmpty) {
+      tester.state<ScrollableState>(list.first).position.jumpTo(0);
+      await tester.pump();
+      await tester.scrollUntilVisible(f, 200, scrollable: list.first);
+    }
     await tester.tap(f);
     await tester.pumpAndSettle();
   }
@@ -125,14 +121,59 @@ void main() {
     await open(tester);
     final l = lookupAppLocalizations(const Locale('en'));
     for (final Skill s in Skill.values) {
-      await tester.scrollUntilVisible(
-        tile(s, false),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
+      expect(tile(s, false), findsOneWidget, reason: s.name);
       expect(find.text(l.skillName(s.name)), findsOneWidget, reason: s.name);
     }
   });
+
+  Future<void> phone(WidgetTester tester, Size size, double text) async {
+    tester.view.physicalSize = size;
+    tester.view.devicePixelRatio = 1;
+    tester.platformDispatcher.textScaleFactorTestValue = text;
+    addTearDown(tester.view.reset);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+  }
+
+  testWidgets('all twelve fit a small phone at once, nothing to scroll', (
+    tester,
+  ) async {
+    await phone(tester, const Size(375, 667), 1);
+    await open(tester, picked: ['money', 'people']);
+    expect(find.byType(Scrollable), findsNothing);
+    final Rect done = tester.getRect(find.byKey(const ValueKey('skills-done')));
+    for (final Skill s in Skill.values) {
+      final bool on = s == Skill.money || s == Skill.people;
+      final Rect r = tester.getRect(tile(s, on));
+      expect(r.top, greaterThanOrEqualTo(0), reason: s.name);
+      expect(r.bottom, lessThanOrEqualTo(done.top), reason: s.name);
+      expect(r.right, lessThanOrEqualTo(375), reason: s.name);
+    }
+    expect(tester.takeException(), isNull);
+  });
+
+  for (final String language in ['en', 'de', 'ru', 'ja']) {
+    testWidgets('at twice the text on a small phone the grid scrolls, '
+        'nothing spills, in $language', (tester) async {
+      await phone(tester, const Size(320, 640), 2);
+      final AppState app = await tester.runAsync(
+        () => readyApp({
+          'knowit.skills': <String>['talk'],
+        }),
+      ) as AppState;
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: Locale(language),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: SkillsScreen(app: app),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      expect(find.byType(Scrollable), findsOneWidget);
+    });
+  }
 
   testWidgets('a tap picks a skill and keeps it; a second lets it go', (
     tester,
