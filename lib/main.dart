@@ -1726,9 +1726,18 @@ class _AstutoShellState extends State<AstutoShell>
       if (note.direction == ScrollDirection.reverse) _barSmall.value = true;
       if (note.direction == ScrollDirection.forward) _barSmall.value = false;
     }
+    // The pages themselves dragged sideways (depth 0: not a shelf inside a
+    // tab): the reader is going to another tab, and the bar is whole again
+    // from the first move, as a tap on it makes it (the owner).
+    if (note.depth == 0 &&
+        note.metrics.axis == Axis.horizontal &&
+        note is ScrollStartNotification) {
+      _barSmall.value = false;
+    }
     if (note is! ScrollEndNotification || !_pages.hasClients) return false;
     final int page = (_pages.page ?? _tab.toDouble()).round();
     if (page != _tab) {
+      _barSmall.value = false;
       setState(() => _tab = page);
       _noteTab(page, by: 'swipe');
     }
