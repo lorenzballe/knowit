@@ -37,6 +37,14 @@ const Map<String, Object?> _feed = {
 
 /// [child] as the app shows a screen, on a phone of [size] at [text] times
 /// the text size, at night.
+/// A card's picture on the shelf: the one taken at the shelf's proportion or
+/// the one at the deck's, whichever is nearer the card's shape.
+Finder _picture(String id, String side) => find.byWidgetPredicate(
+  (w) =>
+      w.key == ValueKey('card-thumb-$id-$side-shelf') ||
+      w.key == ValueKey('card-thumb-$id-$side-large'),
+);
+
 Future<void> _pump(
   WidgetTester tester,
   Widget child, {
@@ -226,10 +234,7 @@ void main() {
         );
         expect(tester.takeException(), isNull);
         expect(find.byKey(const ValueKey('shelf-picture')), findsWidgets);
-        expect(
-          find.byKey(ValueKey('card-thumb-${five.first.id}-back-large')),
-          findsOneWidget,
-        );
+        expect(_picture(five.first.id, 'back'), findsOneWidget);
         expect(find.bySemanticsLabel('Save this card'), findsWidgets);
 
         await tester.tapAt(tester.getCenter(find.byType(TodayDoneView)));
@@ -237,10 +242,7 @@ void main() {
           await tester.pump(const Duration(milliseconds: 100));
         }
         expect(tester.takeException(), isNull);
-        expect(
-          find.byKey(ValueKey('card-thumb-${five.first.id}-front-large')),
-          findsOneWidget,
-        );
+        expect(_picture(five.first.id, 'front'), findsOneWidget);
       });
 
       testWidgets('a card without stays as it was; at ${text}x', (
@@ -262,6 +264,28 @@ void main() {
         expect(find.text(five.first.question), findsOneWidget);
       });
     }
+
+    testWidgets('on a phone of the owner\'s size the card shows the picture '
+        'taken at the shelf\'s proportion, side to side', (tester) async {
+      final List<Pill> five = pagedCards().take(5).toList();
+      PillBank.adopt(bankWithPictures({five.first.id}));
+      CardThumb.image = (url) => onePixel;
+      final AppState app = await _dayDone([
+        for (final Pill p in five) PillBank.byId(p.id)!,
+      ]);
+      await _pump(
+        tester,
+        TodayDoneView(app: app, at: 0, onPick: (_) {}),
+        // The room the shelf has between Today's head and its foot on that
+        // phone: about 345 by 488 for the card.
+        size: const Size(393, 600),
+      );
+      expect(tester.takeException(), isNull);
+      expect(
+        find.byKey(ValueKey('card-thumb-${five.first.id}-back-shelf')),
+        findsOneWidget,
+      );
+    });
 
     testWidgets('a picture that will not come: the card in words', (
       tester,

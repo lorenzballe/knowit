@@ -736,6 +736,12 @@ class _CardFace extends StatelessWidget {
     // card that has none.
     if (CardThumb.has(pill, side)) {
       final Color ground = groundOf(pill);
+      // Of the card's two pictures, the one nearer its shape: on most phones
+      // the one taken at the shelf's own proportion, which fills the card
+      // from side to side as every card does; on a card the room has made
+      // taller, the one taken at the deck's.
+      final bool atShelf =
+          width / height > (WebThumbs.shelfAspect + WebThumbs.aspect) / 2;
       final Color mark = pill.web?.ground == null ? ink : inkOn(ground);
       return Container(
         key: const ValueKey('shelf-picture'),
@@ -747,17 +753,20 @@ class _CardFace extends StatelessWidget {
           child: CardThumb(
             pill: pill,
             side: side,
-            // The card's own picture, at the deck's shape and taken large,
-            // whole: the one taken at the shelf's shape laid the page out
-            // again for a shorter screen, and its drawing came out squashed
-            // over a field of empty ground (the owner's own phone, a card of
-            // Space). Narrower than the shelf's card, it stands in the
-            // middle on its own ground, which is the card's colour edge to
-            // edge, so nothing shows where the picture ends.
-            large: true,
+            // Taken 366 points across either way (tool/cards/thumbs.cjs): at
+            // the shelf's proportion, 366 by 511, so the page lays itself out
+            // with nearly the room it has on the deck and its drawing is
+            // drawn again at that size, not squashed (the owner's phone, a
+            // card of Space, once); its content then lines up with the card's
+            // sides, where the deck's picture, narrower than the card, stood
+            // in its middle with a band of ground either side (the owner's
+            // phone, a card of Psychology). Whole, from the top.
+            shelf: atShelf,
+            large: !atShelf,
             fit: BoxFit.contain,
             fallback: ColoredBox(color: pill.color, child: words),
             foreground: _PictureControls(
+              aspect: atShelf ? WebThumbs.shelfAspect : WebThumbs.aspect,
               saved: saved,
               liked: liked,
               tag: CardTags.of(pill.id),
@@ -931,6 +940,7 @@ class _CardFace extends StatelessWidget {
 /// never on its words.
 class _PictureControls extends StatelessWidget {
   const _PictureControls({
+    required this.aspect,
     required this.saved,
     this.liked = false,
     this.tag,
@@ -939,6 +949,9 @@ class _PictureControls extends StatelessWidget {
     required this.onSave,
     required this.onShare,
   });
+
+  /// The proportion of the picture under them, width over height.
+  final double aspect;
 
   final bool saved;
 
@@ -955,18 +968,16 @@ class _PictureControls extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, box) {
-        // Where the picture lies in the card, drawn whole from the top: the
-        // deck's own shape (see above).
-        const double aspect = WebThumbs.aspect;
+        // Where the picture lies in the card, drawn whole from the top.
         final bool wide = box.maxWidth / box.maxHeight > aspect;
         final double picture = wide ? box.maxHeight * aspect : box.maxWidth;
         final double side = (box.maxWidth - picture) / 2;
         // The pair sits at the card's foot, as on a card in words, under the
         // picture's ground where the card is taller than the picture.
         const double foot = 0;
-        // The page was taken 366 points across, the deck's own width; its
-        // pair of 44 sits 17 in from the side and 15 up from the foot, 4
-        // apart (pill_card.dart).
+        // The page was taken 366 points across, the deck's own width, at
+        // either proportion; its pair of 44 sits 17 in from the side and 15
+        // up from the foot, 4 apart (pill_card.dart).
         final double k = picture / 366;
         return Stack(
           children: [
