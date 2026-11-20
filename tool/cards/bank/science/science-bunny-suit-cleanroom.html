@@ -14,9 +14,8 @@
 #fill{display:block;height:100%;width:100%;background:var(--k);border-radius:1cqh}
 #cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);margin:0;min-height:2.6em}
 #go{font:700 max(2.2cqh,14px)/1.2 var(--body);background:var(--k);color:var(--c);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer;align-self:center}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{margin:0}
-#why .body{margin:0}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Build it · step by step">
   <div class="in">
@@ -30,10 +29,7 @@
       <svg id="pic" aria-label="A lab with a meteorite sample, a door, a dusty shelf and a scientist"></svg>
       <p id="cap">An ordinary lab: lead drifts onto the sample from everywhere.</p>
       <button id="go">Step 1 of 3 · Scrub with ammonia</button>
-      <div id="why" class="gone">
-        <p class="big">Clair Patterson</p>
-        <p class="body">He was measuring tiny amounts of lead in meteorites, the oldest rocks in the solar system. Lead from the world around him kept getting into his samples. So he shut it out, and basically invented the cleanroom.</p>
-      </div>
+      <p class="body gone" id="why"><b>Clair Patterson.</b> He was measuring tiny amounts of lead in meteorites, the oldest rocks in the solar system, and lead from the world around him kept getting into his samples. So he shut it out, and basically invented the cleanroom.</p>
     </div>
     <p class="say" id="say">Tap the button to add one defence at a time.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>To measure a tiny trace, first keep the whole world out.</div>
@@ -173,7 +169,7 @@ function next() {
     Kit.hide('go'); Kit.hide('say');
     setTimeout(() => {
       Kit.hide('cap'); Kit.show('why'); Kit.show('keep');
-      if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+      if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
     }, Kit.calm ? 0 : 700);
   }
 }
@@ -189,6 +185,8 @@ Kit.play.card = async () => {
   for (let i = 0; i < 3; i++) { Kit.$('go').click(); await w(250); }
   await w(1300);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

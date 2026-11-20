@@ -8,9 +8,8 @@
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);margin:0;min-height:5.2cqh;overflow-wrap:anywhere}
-#why{display:flex;flex-direction:column;gap:1.2cqh;min-height:0;flex-shrink:1;overflow:auto}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:anywhere}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 #row{display:flex;align-items:center;gap:3cqw}
 #next{font:700 max(2.1cqh,14px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
 #dots{font:600 max(1.7cqh,12px)/1 var(--mono);color:var(--muted)}
@@ -22,10 +21,7 @@
     <div class="stagebox" id="stage">
       <svg id="pic"></svg>
       <p id="cap">Before: plastic was made from cellulose, a material from plants. It caught fire easily.</p>
-      <div id="why" class="gone">
-        <p class="big">From plants to oil and gas</p>
-        <p class="body">Early plastic came from cellulose, a plant material. Bakelite (1907) used oil and methane gas instead: far more abundant and far less flammable, so plastic could be made in huge amounts.</p>
-      </div>
+      <p class="body gone" id="why"><b>From plants to oil and gas.</b> Bakelite (1907) used oil and methane gas instead of plant cellulose: far more abundant, far less flammable, so plastic could be made in huge amounts.</p>
       <div id="row"><button id="next">Next step</button><span id="dots">1 / 5</span></div>
     </div>
     <p class="say" id="say">Tap Next step to follow the switch.</p>
@@ -158,6 +154,8 @@ Kit.$('next').addEventListener('click', () => {
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => { if (!Kit.calm && E) gsap.from([E.left[0], E.right[0]], {opacity: 0, y: 12, stagger: .12, duration: .5, ease: 'power3.out', onComplete: () => apply(0)}); };
 Kit.play.card = async () => { for (let i = 0; i < 5; i++) { Kit.$('next').click(); await new Promise(r => setTimeout(r, 250)); } await new Promise(r => setTimeout(r, 700)); };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

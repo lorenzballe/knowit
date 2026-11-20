@@ -9,8 +9,8 @@
 #pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
 #pic text{font-family:var(--body);fill:var(--k)}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{margin:0}
 #why .body{margin:0;font:500 max(1.9cqh,13px)/1.3 var(--body)}
+#why b{font-weight:800}
 .q,.say,.body,.keep{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Guess a number · how sure">
@@ -20,8 +20,7 @@
     <div class="stagebox" id="stage">
       <svg id="pic" aria-label="A scale of prison years from 0 to 25"></svg>
       <div id="why" class="gone">
-        <p class="big">Only 2.5 years</p>
-        <p class="body">He was jailed only for embezzling millions of dollars in government subsidies. Well connected to the state's top officials, he was never made to answer for the illegal confinement and the human rights violations.</p>
+        <p class="body"><b>Only 2.5 years,</b> and only for embezzling millions of dollars in government subsidies. Well connected to the state's top officials, he was never made to answer for the illegal confinement and the human rights violations.</p>
       </div>
     </div>
     <div id="sure"></div>
@@ -139,6 +138,8 @@ Kit.play.card = async () => {
   Kit.$('sure').querySelector('[data-v="80"]').click();
   await new Promise(r => setTimeout(r, 1400));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

@@ -15,9 +15,8 @@
 #art{flex:1;min-height:0;position:relative}
 #pic{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;display:block}
 #pic.dragging{cursor:grabbing}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{overflow-wrap:anywhere}
-#why .body{overflow-wrap:anywhere}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag · watch it seal">
   <div class="in">
@@ -26,7 +25,7 @@
     <div class="stagebox" id="stage">
       <div id="meter"><span class="lab">Sealed</span><div class="bar"><i id="fill"></i></div><span id="pct">0%</span></div>
       <div id="art"><svg id="pic" aria-label="A steel arch on rails beside the old sarcophagus"></svg></div>
-      <div id="why" class="gone"><p class="big">Build it beside, then slide it over.</p><p class="body">The new containment is a giant steel arch built next to the old sarcophagus, not on top of it. Once finished, it slides sideways into place and covers the old structure like a lid.</p></div>
+      <p class="body gone" id="why"><b>Build it beside, then slide it over.</b> The new containment is a giant steel arch built next to the old sarcophagus, not on top of it. Once finished, it slides sideways into place and covers the old structure like a lid.</p>
     </div>
     <p class="say" id="say">Drag the steel arch along its rails onto the old sarcophagus.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Build the giant lid off to the side, then slide it over.</div>

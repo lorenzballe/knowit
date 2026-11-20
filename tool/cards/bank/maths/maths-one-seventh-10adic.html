@@ -10,8 +10,8 @@
 #mult{width:100%;flex:1;min-height:0;display:block}
 #step{font:700 max(2.3cqh,14px)/1.25 var(--mono);text-align:center;min-height:2.6em;color:var(--k);overflow-wrap:anywhere}
 #step .w{opacity:.65;font-weight:600}
-#why{display:flex;flex-direction:column;gap:1.2cqh}
-#why .big{overflow-wrap:anywhere}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 #go{font:700 max(2.3cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;align-self:center;min-width:60%}
 #go:disabled{opacity:.5}
 .dg{fill:var(--k);font-family:var(--mono);font-weight:700;text-anchor:middle;dominant-baseline:central}
@@ -32,10 +32,7 @@
       <svg id="mult"></svg>
       <div id="step">Multiply it by 7, digit by digit, from the right.</div>
       <button id="go">× 7 the first digit</button>
-      <div id="why" class="gone">
-        <p class="big">7 × …857142857143 = …0001</p>
-        <p class="body">Every step writes a 0 and launches a carry to the left, and the carries never run out. So every digit is 0 except the last 1: seven times this number is exactly 1, which is what 1/7 means.</p>
-      </div>
+      <p class="body gone" id="why"><b>7 × …857142857143 = …0001.</b> Every step writes a 0 and launches a carry to the left, and the carries never run out: every digit is 0 except the last 1. Seven times this number is exactly 1, which is what 1/7 means.</p>
     </div>
     <p class="say" id="say">Tap to multiply one digit and launch its carry left.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In the 10-adics, a number is 1/7 if 7 times it equals 1.</div>
@@ -149,6 +146,8 @@ Kit.play.card = async () => {
   while (busy) await w(50);
   await w(600);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('mult'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

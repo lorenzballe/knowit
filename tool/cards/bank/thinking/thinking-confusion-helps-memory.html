@@ -8,7 +8,8 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #plot{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
 #ctl{display:flex;align-items:center;gap:3cqw}
-#why{display:flex;flex-direction:column;gap:1cqh}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 #count{font:600 max(1.8cqh,12px)/1.2 var(--mono);color:var(--muted)}
 .opt{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 6cqw;cursor:pointer}
 .opt:disabled{opacity:.45;cursor:default}
@@ -22,10 +23,7 @@
     <div class="stagebox" id="stage">
       <svg id="plot"></svg>
       <div id="ctl"><button class="opt" id="go">Launch ↑</button><span id="count">0 of 3 launches</span></div>
-      <div id="why" class="gone">
-        <p class="big">Confusion makes it stick.</p>
-        <p class="body">When something is confusing, System 2, your slow careful thinking, works harder. That extra work makes you more likely to reach the right answer, and to remember the experience.</p>
-      </div>
+      <p class="body gone" id="why"><b>Confusion makes it stick.</b> When something is confusing, System 2, your slow careful thinking, works harder. That extra work makes you more likely to reach the right answer, and to remember the experience.</p>
     </div>
     <p class="say" id="say">Drag to pick how confusing the lesson is, then launch. Try three very different spots.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A little struggle while learning is what makes it stay.</div>
@@ -116,7 +114,7 @@ function finish() {
     const len = g.trend.getTotalLength();
     g.trend.style.strokeDasharray = `${len}`;
     gsap.fromTo(g.trend, {strokeDashoffset: len}, {strokeDashoffset: 0, duration: .9, ease: 'power2.inOut', onComplete: () => g.trend.style.strokeDasharray = '7 6'});
-    gsap.from('#why > *', {opacity: 0, y: 8, stagger: .12, duration: .4});
+    gsap.from('#why', {opacity: 0, y: 8, duration: .4});
   }
 }
 
@@ -137,6 +135,8 @@ Kit.play.card = async () => {
   }
   await new Promise(r => setTimeout(r, 1100));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

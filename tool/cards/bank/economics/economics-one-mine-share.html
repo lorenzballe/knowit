@@ -14,6 +14,7 @@
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{margin:0}
 #why .body{margin:0;overflow-wrap:break-word}
+#why .body b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="economics" data-kind="Guess · fill the share">
   <div class="in">
@@ -27,8 +28,7 @@
         <button class="btn go" id="check" disabled>Check</button>
       </div>
       <div id="why" class="gone">
-        <p class="big">15% from a single site</p>
-        <p class="body">For many years McArthur River, in Saskatchewan, Canada, produced about 15% of all the world's uranium on its own. That is roughly 3 kilos in every 20 mined anywhere on Earth.</p>
+        <p class="body"><b>15% from a single site.</b> For many years McArthur River, in Saskatchewan, Canada, made about that share on its own: roughly 3 kilos in every 20 mined anywhere on Earth.</p>
       </div>
     </div>
     <p class="say" id="say">Tap the squares or +1% to fill in your guess, then check.</p>
@@ -39,19 +39,54 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const TRUE = 15;
-let guess = 0, done = false, cells = [];
+let guess = 0, done = false, cells = [], seen = '';
 const svg = Kit.$('map');
+
+function words(x, y, t, size, weight, family, op){
+  const e = Kit.mk('text', {x, y, style: `fill:var(--k);${op ? 'opacity:' + op + ';' : ''}font:${weight} ${size}px ${family}`}, svg);
+  e.textContent = t; return e;
+}
 
 function draw(){
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   const {W, H, f} = Kit.fitSvg(svg);
+  seen = `${Math.round(W)}x${Math.round(H)}`;
   const fs = Math.max(f, 13);
-  const y1 = fs * 1.1, y2 = y1 + fs * 1.6, y0 = y2 + fs * 0.9;
-  const s = Math.max(4, Math.min(W / 10, (H - y0) / 10));
-  const x0 = (W - s * 10) / 2, g = s * 0.13;
-  Kit.mk('text', {x: W / 2, y: y1, 'text-anchor': 'middle', style: `fill:var(--k);opacity:.7;font:600 ${fs * 0.85}px var(--body);letter-spacing:.04em`}, svg).textContent = "THE WORLD'S URANIUM · 1 square = 1%";
-  const t = Kit.mk('text', {x: W / 2, y: y2, 'text-anchor': 'middle', style: `fill:var(--k);font:800 ${fs * 1.15}px var(--display)`}, svg);
-  t.textContent = done ? `One mine: ${TRUE}% · you: ${guess}%` : `Your guess: ${guess}%`;
+  const y1 = fs * 1.1, y2 = y1 + fs * 1.6;
+  let s = Math.max(4, Math.min(W / 10, (H - y2 - fs * 0.9) / 10)), x0, y0;
+  // Once the answer is in, a low box keeps the grid at its full height on the left, the number beside it.
+  const side = done && Math.min(H, W * .56) > s * 10 * 1.08;
+  if (side) {
+    let G = Math.min(H, W * .56);
+    const gap = Math.max(14, W * .06), small = Math.max(11, fs * .85);
+    const F = Math.min((W - G - gap) * .5, G * .36, 72);
+    const col = [
+      words(0, 0, `${TRUE}%`, F, 900, 'var(--display)'),
+      words(0, 0, 'from one mine', fs, 700, 'var(--body)'),
+      words(0, 0, `your guess: ${guess}%`, small, 700, 'var(--body)'),
+      words(0, 0, '1 square = 1% of', small, 600, 'var(--body)', .7),
+      words(0, 0, "the world's uranium", small, 600, 'var(--body)', .7)
+    ];
+    const sw = small * .95;
+    let wide = 0;
+    col.forEach((e, k) => { let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} wide = Math.max(wide, w + (k === 2 ? sw + small * .5 : 0)); });
+    G = Math.max(40, Math.min(G, W - gap - wide - 2));
+    s = G / 10; x0 = 0; y0 = (H - G) / 2;
+    const cx = G + gap, place = (e, x, y) => { e.setAttribute('x', x); e.setAttribute('y', y); };
+    place(col[0], cx, y0 + F * .74);
+    place(col[1], cx, y0 + F * .74 + fs * 1.5);
+    place(col[4], cx, y0 + G - small * .28);
+    place(col[3], cx, y0 + G - small * 1.6);
+    const gy = y0 + G - small * 3.2;
+    place(col[2], cx + sw + small * .5, gy);
+    Kit.mk('rect', {x: cx, y: gy - sw * .88, width: sw, height: sw, rx: sw * .18, style: `fill:var(--k);opacity:.14;stroke:var(--k);stroke-width:1.5px;stroke-dasharray:${sw * .22} ${sw * .14}`}, svg);
+  } else {
+    y0 = y2 + fs * 0.9; x0 = (W - s * 10) / 2;
+    Kit.mk('text', {x: W / 2, y: y1, 'text-anchor': 'middle', style: `fill:var(--k);opacity:.7;font:600 ${fs * 0.85}px var(--body);letter-spacing:.04em`}, svg).textContent = "THE WORLD'S URANIUM · 1 square = 1%";
+    const t = Kit.mk('text', {x: W / 2, y: y2, 'text-anchor': 'middle', style: `fill:var(--k);font:800 ${fs * 1.15}px var(--display)`}, svg);
+    t.textContent = done ? `One mine: ${TRUE}% · you: ${guess}%` : `Your guess: ${guess}%`;
+  }
+  const g = s * 0.13;
   cells = [];
   for (let i = 0; i < 100; i++){
     const r = Math.floor(i / 10), c = i % 10;
@@ -92,6 +127,8 @@ Kit.$('check').onclick = () => {
 };
 
 Kit.onShow.card = () => draw();
+// Drawn again at the size it now has whenever its room changes: never shrunk whole into a corner.
+new ResizeObserver(() => { const b = svg.getBoundingClientRect(); if (b.height > 1 && `${Math.round(b.width)}x${Math.round(b.height)}` !== seen) draw(); }).observe(svg);
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#map rect', {opacity: 0, stagger: .004, duration: .3}); };
 Kit.play.card = async () => {
   for (let i = 0; i < 8; i++) Kit.$('plus').click();

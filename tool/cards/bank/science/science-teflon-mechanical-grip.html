@@ -8,8 +8,8 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #opts{display:flex;flex-direction:row;gap:2cqw}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{overflow-wrap:anywhere}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 .opt{flex:1;font:700 max(2.1cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 1.5cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .say{font:600 max(1.9cqh,12px)/1.3 var(--body)}
@@ -25,7 +25,7 @@
         <button class="opt" data-i="1">Sandblasted</button>
         <button class="opt" data-i="2">Same</button>
       </div>
-      <div id="why" class="gone"><p class="big">The sandblasted one.</p><p class="body">Sandblasting cuts nanoscopic grooves. When heated, the water and C8 evaporate but Teflon only softens and flows into them. No chemical bond: it is mechanically stuck.</p></div>
+      <p class="body gone" id="why"><b>The sandblasted one.</b> Sandblasting cuts nanoscopic grooves. When heated, the water and C8 evaporate but Teflon only softens and flows into them. No chemical bond: it is mechanically stuck.</p>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Two pans, seen up close. Which one keeps its Teflon when scraped?</p>
@@ -74,7 +74,7 @@ function build(svg, i, x0, pw, H, fs, rough){
   }
   // wet spray: no backdrop film, just Teflon particles, water and C8 droplets
   const film = Kit.mk('rect', {x: cx0, y: yc, width: x1 - cx0, height: sy - yc, fill: 'none', opacity: 0}, c);
-  const r = (sy - yc) * .23, parts = [], wet = [];
+  const r = Math.max(1.5, (sy - yc) * .23), parts = [], wet = [];
   for (let row = 0; row < 2; row++) for (let px = cx0 + r + row * r; px < x1 - r * .5; px += r * 2.1) {
     parts.push(Kit.mk('circle', {cx: px, cy: sy - r - row * r * 1.7, r: r * .95, fill: TEF, stroke: INK, 'stroke-width': 1, 'stroke-opacity': .55}, c));
   }
@@ -171,6 +171,8 @@ Kit.play.card = async () => {
   if (tl) tl.progress(1);
   await new Promise(r => setTimeout(r, 600));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
