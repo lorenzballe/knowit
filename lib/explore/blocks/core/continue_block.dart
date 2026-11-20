@@ -281,17 +281,21 @@ class StartedTile extends StatelessWidget {
         kTopics.values.first;
     final String name = path != null ? l.themeOf(path.genre) : book!.book.title;
     // A part not begun is the next of one read whole: it says so.
+    // Otherwise the line is the card the reader goes on with, by its place
+    // and its question: what is next pulls harder than what is done, and
+    // the bar above already says how far (prototype A3).
     final String meta = path != null && started.read == 0
         ? l.pathNextPart(path.part)
-        : [
-            if (path != null && path.parts > 1)
-              l.pathPartOf(path.part, path.parts),
-            l.pathReadOf(started.read, started.cards.length),
-          ].join(' · ');
+        : '${started.next + 1}/${started.cards.length} · '
+              '${started.cards[started.next].question}';
+    final String read = [
+      if (path != null && path.parts > 1) l.pathPartOf(path.part, path.parts),
+      l.pathReadOf(started.read, started.cards.length),
+    ].join(' · ');
     final Color tint = p.isDark ? style.color : style.ink;
     return Semantics(
       button: true,
-      label: '${l.pathContinue}: $name, $meta',
+      label: '${l.pathContinue}: $name, $read. $meta',
       excludeSemantics: true,
       child: Material(
         color: p.surfaceRaised,
