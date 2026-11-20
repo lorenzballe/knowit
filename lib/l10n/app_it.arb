@@ -1224,6 +1224,7 @@
   "widgetAskGotIt": "Ho capito",
   "widgetAskNotNow": "Non ora",
   "pathCardOf": "Carta {n} di {total}",
+  "pathDoorNext": "Prossima nel percorso",
   "shareSendCard": "Manda la carta",
   "shareAsImage": "Come immagine",
   "shareCopyLink": "Copia link",

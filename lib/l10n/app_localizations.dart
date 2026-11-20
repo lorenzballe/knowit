@@ -7464,6 +7464,12 @@ abstract class AppLocalizations {
   /// **'Card {n} of {total}'**
   String pathCardOf(int n, int total);
 
+  /// Under a card read from Explore that belongs to a path, after the path's name and where the card sits in it ("Physics · 4/10"): the way on to the path's next card. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'Next in the path'**
+  String get pathDoorNext;
+
   /// A card's share sheet: the main button. Sends its question and the link to its page, where a friend answers it before seeing the answer.
   ///
   /// In en, this message translates to:

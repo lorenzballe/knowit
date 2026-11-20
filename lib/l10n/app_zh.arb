@@ -1224,6 +1224,7 @@
   "widgetAskGotIt": "知道了",
   "widgetAskNotNow": "以后再说",
   "pathCardOf": "第{n}张，共{total}张",
+  "pathDoorNext": "这条路的下一张",
   "shareSendCard": "发送卡片",
   "shareAsImage": "以图片分享",
   "shareCopyLink": "复制链接",

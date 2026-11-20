@@ -5689,6 +5689,10 @@
    }
   }
  },
+ "pathDoorNext": "Next in the path",
+ "@pathDoorNext": {
+  "description": "Under a card read from Explore that belongs to a path, after the path's name and where the card sits in it (\"Physics \u00b7 4/10\"): the way on to the path's next card. Short."
+ },
  "shareSendCard": "Send the card",
  "@shareSendCard": {
   "description": "A card's share sheet: the main button. Sends its question and the link to its page, where a friend answers it before seeing the answer."

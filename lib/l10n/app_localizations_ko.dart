@@ -5091,6 +5091,9 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => '코스 다음 카드';
+
+  @override
   String get shareSendCard => '카드 보내기';
 
   @override

@@ -5068,6 +5068,9 @@ class RemoteLocalizations extends AppLocalizations {
       _base.pathCardOf(n, total);
 
   @override
+  String get pathDoorNext => _words.text('pathDoorNext') ?? _base.pathDoorNext;
+
+  @override
   String get shareSendCard =>
       _words.text('shareSendCard') ?? _base.shareSendCard;
 

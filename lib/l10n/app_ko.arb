@@ -1224,6 +1224,7 @@
   "widgetAskGotIt": "알겠어요",
   "widgetAskNotNow": "나중에",
   "pathCardOf": "{total}장 중 {n}번째",
+  "pathDoorNext": "코스 다음 카드",
   "shareSendCard": "카드 보내기",
   "shareAsImage": "이미지로",
   "shareCopyLink": "링크 복사",

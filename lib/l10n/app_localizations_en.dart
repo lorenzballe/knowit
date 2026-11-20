@@ -5270,6 +5270,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get pathDoorNext => 'Next in the path';
+
+  @override
   String get shareSendCard => 'Send the card';
 
   @override
