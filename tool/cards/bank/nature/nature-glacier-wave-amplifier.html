@@ -83,8 +83,10 @@ function build(){
   S.bR = m('rect', {x: bx0, y: by, width: 0, height: bh, fill: C.brown});
   S.bI = m('rect', {x: bx0 + bw * 55 / 300, y: by, width: 0, height: bh, fill: C.blue});
   S.bw = bw;
-  // the figure under the bar: drawn short, the crest marks can pass behind it, never through it
-  S.val = m('text', {x: bx1, y: by + bh + fs * 1.35, 'text-anchor': 'end', fill: C.ink, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body);paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round'});
+  // the figure under the bar sits clear of the tall wave's crest mark below it; drawn too short for that,
+  // the mark passes behind it, never through it
+  const vy = Math.max(by + bh + fs * .95, Math.min(by + bh + fs * 1.35, sea - H * .3 - fs * .4));
+  S.val = m('text', {x: bx1, y: vy, 'text-anchor': 'end', fill: C.ink, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body);paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round'});
   S.w = {A: 0, c: sx, wd: W * .09};
   reset(mode < 0 ? 1 : mode, true);
   drawLines();
