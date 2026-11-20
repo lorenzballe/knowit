@@ -33,6 +33,9 @@ const svg = Kit.$('pic');
 const NMIN = 1, NMAX = 10, STEP = 0.035;
 let n = 3, L = null, revealed = false, tweens = [], dragging = false;
 let g, cDots = [], qDots = [], cPos = [], qPos = [], cRun, qRun, cCnt, qCnt, knob, knobT, track;
+// The race as it stands, how far each runner has gone: a drawing done again (the answer takes room)
+// draws it on the new dots and lets it run on, rather than starting both lanes again at 0.
+let lanes = {};
 
 function txt(x, y, s, anchor, weight, size, op) {
   const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'start',
@@ -44,10 +47,12 @@ function build() {
   const {W, H, f} = Kit.fitSvg(svg);
   svg.innerHTML = '';
   const fs = Math.max(f * 0.85, 12), pad = W * 0.05;
-  const labY = fs * 1.1, cy0 = fs * 1.9;
-  const trackY = H - fs * 1.4, sliderLabY = trackY - fs * 2.0;
-  const qLineY = sliderLabY - fs * 2.2, qLabY = qLineY - fs * 1.7;
-  const cy1 = qLabY - fs * 1.5;
+  // On a short box the rows close up a little, so the dots keep a strip of their own.
+  const k = Math.max(.76, Math.min(1, (H - fs * 3) / (fs * 10.7)));
+  const labY = fs * 1.1 * k, cy0 = fs * 1.9 * k;
+  const trackY = H - fs * 1.4 * k, sliderLabY = trackY - fs * 2.0 * k;
+  const qLineY = sliderLabY - fs * 2.2 * k, qLabY = qLineY - fs * 1.7 * k;
+  const cy1 = Math.max(cy0 + 1, qLabY - fs * 1.5 * k);
   L = {W, H, f: fs, pad, labY, cy0, cy1, qLabY, qLineY, sliderLabY, trackY};
 
   txt(pad, labY, 'CLASSICAL', 'start', 800, fs);
@@ -66,14 +71,14 @@ function build() {
   knob = Kit.mk('circle', {cx: nx(n), cy: trackY, r: fs * .95, style: 'fill:var(--k);stroke:var(--c);stroke-width:' + fs * .15}, svg);
   knobT = txt(nx(n), trackY + fs * .36, n, 'middle', 800, fs, 1);
   knobT.style.fill = 'var(--c)'; knobT.style.pointerEvents = 'none';
-  drawDots();
+  drawDots(true);
   finish();
 }
 
 function nx(i) { return L.pad + (L.W - 2 * L.pad) * (i - NMIN) / (NMAX - NMIN); }
 
-function drawDots() {
-  tweens.forEach(t => t.kill()); tweens = [];
+function drawDots(keep) {
+  if (!keep) { tweens.forEach(t => t.kill()); tweens = []; lanes = {}; }
   g.innerHTML = '';
   const N = 2 ** n, w = L.W - 2 * L.pad, h = L.cy1 - L.cy0;
   const cols = Math.max(1, Math.ceil(Math.sqrt(N * w / h)));
@@ -101,29 +106,33 @@ function drawDots() {
   qRun = Kit.mk('circle', {cx: qPos[0][0], cy: qPos[0][1], r: rr, style: `fill:var(--k);stroke:var(--c);stroke-width:${rr * .35}`}, g);
   cCnt.textContent = `0 / ${N.toLocaleString('en')} ops`;
   qCnt.textContent = `0 / ${n} ops`;
+  for (const key in lanes) { lanes[key].last = -1; paintLane(lanes[key]); }
 }
 
-function runLane(pos, dots, run, cnt, total) {
-  const o = {i: 0}; let last = -1;
-  const upd = () => {
-    const k = Math.min(total - 1, Math.floor(o.i));
-    for (let j = last + 1; j <= k; j++) dots[j].style.opacity = 1;
-    last = Math.max(last, k);
-    const a = pos[k], b = pos[Math.min(total - 1, k + 1)], t = o.i - k;
-    run.setAttribute('cx', a[0] + (b[0] - a[0]) * t);
-    run.setAttribute('cy', a[1] + (b[1] - a[1]) * t);
-    cnt.textContent = `${(k + 1).toLocaleString('en')} / ${total.toLocaleString('en')} ops`;
-  };
-  if (Kit.calm) { o.i = total - 1; upd(); cnt.textContent += ' · done'; return; }
-  tweens.push(gsap.to(o, {i: total - 1, duration: Math.max(.001, (total - 1) * STEP), ease: 'none', onUpdate: upd,
-    onComplete: () => { upd(); cnt.textContent += ' · done'; Kit.haptic('light'); }}));
-  upd();
+// A lane is drawn on whatever dots are there now, so its tween runs on across a drawing done again.
+function paintLane(ln) {
+  const [pos, dots, run, cnt] = ln.key === 'q' ? [qPos, qDots, qRun, qCnt] : [cPos, cDots, cRun, cCnt], total = ln.total;
+  const k = Math.min(total - 1, Math.floor(ln.o.i));
+  for (let j = ln.last + 1; j <= k; j++) dots[j].style.opacity = 1;
+  ln.last = Math.max(ln.last, k);
+  const a = pos[k], b = pos[Math.min(total - 1, k + 1)], t = ln.o.i - k;
+  run.setAttribute('cx', a[0] + (b[0] - a[0]) * t);
+  run.setAttribute('cy', a[1] + (b[1] - a[1]) * t);
+  cnt.textContent = `${(k + 1).toLocaleString('en')} / ${total.toLocaleString('en')} ops` + (ln.done ? ' · done' : '');
+}
+
+function runLane(key, total) {
+  const ln = lanes[key] = {key, total, o: {i: 0}, last: -1, done: false};
+  if (Kit.calm) { ln.o.i = total - 1; ln.done = true; paintLane(ln); return; }
+  tweens.push(gsap.to(ln.o, {i: total - 1, duration: Math.max(.001, (total - 1) * STEP), ease: 'none', onUpdate: () => paintLane(ln),
+    onComplete: () => { ln.done = true; paintLane(ln); Kit.haptic('light'); }}));
+  paintLane(ln);
 }
 
 function race() {
   drawDots();
-  runLane(qPos, qDots, qRun, qCnt, n);
-  runLane(cPos, cDots, cRun, cCnt, 2 ** n);
+  runLane('q', n);
+  runLane('c', 2 ** n);
 }
 
 function finish() { /* resting state after resize: empty paths ready */ }

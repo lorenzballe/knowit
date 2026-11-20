@@ -84,12 +84,14 @@ function draw() {
 }
 
 function capSpot() { return {x: L.bins[1].x + L.binW / 2, y: L.binY + L.binH * .64}; }
+// The caption the drop ends on: the same words whether the drop has just played or the drawing is done again.
+const END = ['Caps with caps, bottles with bottles:', 'each stream stays clean.'];
 function finalState() {
   const c = capSpot();
   gsap.set(E.fl, {x: c.x, y: c.y, scale: .85}); gsap.set(E.sp, {opacity: 1}); gsap.set(E.cont, {opacity: 0});
   E.lab.style.opacity = 0;
   E.sub[1].textContent = 'PET + additives'; E.sub[0].textContent = 'pure PET';
-  E.st1.textContent = 'Inside: aluminium, glass fillers.'; E.st2.textContent = 'Kept apart, the bottle stream stays clean.';
+  E.st1.textContent = END[0]; E.st2.textContent = END[1];
 }
 
 function toSvg(e) { const b = svg.getBoundingClientRect(); return {x: (e.clientX - b.left) * L.W / b.width, y: (e.clientY - b.top) * L.H / b.height}; }
@@ -135,7 +137,7 @@ function drop(i) {
   }
   const c = capSpot();
   tl.to(E.fl, {x: c.x, y: c.y, duration: .6 * d, ease: 'power3.inOut'});
-  tl.call(() => { E.sub[1].textContent = 'PET + additives'; E.st1.textContent = 'Caps with caps, bottles with bottles:'; E.st2.textContent = 'each stream stays clean.'; Kit.haptic('success'); });
+  tl.call(() => { E.sub[1].textContent = 'PET + additives'; E.st1.textContent = END[0]; E.st2.textContent = END[1]; Kit.haptic('success'); });
 }
 function finish() {
   phase = 'done';

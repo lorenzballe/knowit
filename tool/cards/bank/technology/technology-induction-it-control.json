@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "How does IT Control keep a pan at an exact temperature?",
-  "answer": "Temperature sensors on the coil read the heat all the time. The hob turns power down as it nears the setting and back up when it drops, so the temperature stays constant and food doesn't burn.",
+  "answer": "Measure, then adjust. Sensors on the coil read the heat all the time: the hob turns power down near the 180°C you set and back up when it drops, so the temperature stays constant and food doesn't burn.",
   "move": "A sensor plus automatic power control lets you set degrees, like an oven.",
   "keywords": [
     "induction hob",
