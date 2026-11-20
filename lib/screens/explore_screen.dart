@@ -167,15 +167,16 @@ class ExploreScreenState extends State<ExploreScreen>
       'fresh': fresh,
     });
     setState(() {});
-    final l = context.l10n;
+    // New cards are seen at the top: they need no line saying so (the
+    // owner). Only a pull that brings nothing new is told, or it would look
+    // as if it had not worked.
+    if (fresh > 0) return;
     ScaffoldMessenger.maybeOf(context)
       ?..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
           key: const ValueKey('explore-fresh'),
-          content: Text(
-            fresh == 0 ? l.exploreUpToDate : l.exploreFreshCards(fresh),
-          ),
+          content: Text(context.l10n.exploreUpToDate),
           duration: const Duration(seconds: 2),
         ),
       );
