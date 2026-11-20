@@ -7,8 +7,8 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
-#scene{display:block;width:100%;height:100%;flex:1;min-height:0;touch-action:none;cursor:ew-resize;background:none}
-#why{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#scene{display:block;width:100%;height:100%;flex:1;min-height:0;touch-action:none;cursor:ew-resize;background:none;overflow:visible}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
 .say,.q{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Drag · time-lapse">
@@ -16,120 +16,237 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">BRADYSEISM</span></div>
     <h2 class="q">What is bradyseism, and why are some ancient towns underwater?</h2>
     <div class="stagebox" id="stage">
-      <svg id="scene"></svg>
+      <svg id="scene" role="img" aria-label="A coast cut in two: a hill, a temple on a terrace, the sea beside it, and a pocket of magma deep below. Dragging runs the centuries."></svg>
     </div>
-    <p class="say" id="say">Drag across the picture to run the centuries, from then to today.</p>
-    <p class="body gone" id="why">This coast sits on a huge caldera, a supervolcano. As magma moves below, the ground slowly rises and falls over centuries and millennia. Here the coastal strip sank below the sea, and its ruins now lie 5 to 8 metres down.</p>
+    <p class="say" id="say">Drag the picture to run the centuries.</p>
+    <p class="body gone" id="why">This coast sits on a supervolcano. As its magma moves, the ground slowly rises and sinks: here it sank, and the ruins lie 5 to 8 m down.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Bradyseism: the ground breathes, slowly rising and sinking over centuries.</div>
     <div class="foot"><span class="src">Source · Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const st = {t: 0};
-let G = null, done = false, lastDir = 0;
-const h = t => 2 - 9 * t + 2.5 * Math.sin(3 * Math.PI * t);          // metres vs sea level
+// The town's floor, in metres above the sea, from then (t = 0) to today (t = 1): up and down, and down for good.
+const h = t => 2 - 9 * t + 2.5 * Math.sin(3 * Math.PI * t);
 const dh = t => -9 + 7.5 * Math.PI * Math.cos(3 * Math.PI * t);
+const INK = '#10100c', SEA = '#2f7fe0', MAGMA = '#ff5a1f', CORE = '#ffc83d', STONE = '#fffbf0', ROCK = ['#f6d892', '#ecbb6a', '#d99a50'];
+const ease = (a, b, x) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+// The coast before it moves, in metres above the town's floor: a hill, the terrace of the town, the slope to the seabed.
+const shape = x => 7 * (1 - ease(.07, .22, x)) - 9 * ease(.64, .8, x) - 6 * ease(.78, 1.2, x);
+// How much of the town's rise or fall each point of the ground shares: all of it over the magma, less and less away from it.
+const share = x => { const d = Math.max(0, Math.abs(x - .45) - .17); return Math.exp(-((d / (x < .45 ? .2 : .3)) ** 2)); };
+const TOWN = .45, N = 72;
+
+const st = {t: 0};
+let G = null, done = false, lastDir = 0, touched = false;
 
 function build() {
   const svg = Kit.$('scene');
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const m = H * 0.032, seaY = H * 0.36;
-  const P = (x, y) => [x * W, y];
-  const surf = [P(0, seaY - 4 * m), P(.12, seaY - 4 * m), P(.22, seaY), P(.62, seaY), P(.8, seaY + 10 * m), P(1, seaY + 10 * m)];
-  const line = (pts, dy = 0) => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + (p[1] + dy).toFixed(1)).join(' ');
-  const defs = Kit.mk('defs', {}, svg);
-  const rg = Kit.mk('radialGradient', {id: 'mg'}, defs);
-  Kit.mk('stop', {offset: '0%', 'stop-color': '#ffe08a'}, rg);
-  Kit.mk('stop', {offset: '55%', 'stop-color': '#ff6a1f'}, rg);
-  Kit.mk('stop', {offset: '100%', 'stop-color': '#a3160b'}, rg);
-  const cp = Kit.mk('clipPath', {id: 'wet'}, defs);
-  const wetPath = Kit.mk('path', {d: line(surf) + ` L${W},${-H} L0,${-H} Z`}, cp);
+  const fs = Math.max(10.5, f * .78), big = Math.max(22, f * 2.1);
+  // The line of time under the picture, until the story is told; then the picture takes its room.
+  const bar = done ? 0 : Math.max(34, f * 2.5);
+  const Hs = H - bar;
+  const m = Hs * .039;                           // pixels to a metre
+  const seaY = 8.9 * m;
+  // The depth, in a corner: over the sea where there is room, in it where there is not.
+  const block = big * 1.22 + fs * 1.25 + 2, inSea = seaY < block + 6;
+  const r = Math.min(18, W * .05);               // the round corners of the slice of ground
+  const chamber = {cx: W * TOWN, cy: Hs * .86, rx: W * .3, ry: Hs * .095};
+  const tw = Math.min(W * .3, 5.5 * m * 1.45), th = tw / 1.45, cx = W * TOWN;
+  const g = Kit.mk('g', {}, svg);
+  const defs = Kit.mk('defs', {}, g);
+  const slice = Kit.mk('clipPath', {id: 'slice'}, defs);
+  Kit.mk('path', {d: `M0,${-H} H${W} V${Hs - r} Q${W},${Hs} ${W - r},${Hs} H${r} Q0,${Hs} 0,${Hs - r} Z`}, slice);
+  const wet = Kit.mk('clipPath', {id: 'wet'}, defs);
+  const wetPath = Kit.mk('path', {}, wet);
+  const world = Kit.mk('g', {'clip-path': 'url(#slice)'}, g);
 
-  Kit.mk('rect', {x: 0, y: seaY, width: W, height: H - seaY, fill: '#2d74a8'}, svg);
-  const grp = Kit.mk('g', {}, svg);
-  const surfD = line(surf);
-  const ground = Kit.mk('path', {d: surfD + ` L${W},${H} L0,${H} Z`, fill: '#8a5a36'}, grp);
-  [.09, .18, .28].forEach((d, i) => Kit.mk('path', {d: line(surf, H * d), fill: 'none', stroke: i % 2 ? '#7a4c2c' : '#a06b42', 'stroke-width': Math.max(2, H * .012)}, grp));
-  Kit.mk('path', {d: line(surf), fill: 'none', stroke: '#2f6b1c', 'stroke-width': Math.max(3, H * .012)}, grp);
-  // ruins
-  const rx = W * .45, cw = W * .022, ch = H * .1;
-  [-2.2, 0, 2.2].forEach((k, i) => Kit.mk('rect', {x: rx + k * cw * 1.6 - cw / 2, y: seaY - ch * (i === 2 ? .7 : 1), width: cw, height: ch * (i === 2 ? .7 : 1), fill: '#f3ead8', stroke: '#10100c', 'stroke-width': 1.2}, grp));
-  Kit.mk('rect', {x: rx - 2.2 * cw * 1.6 - cw, y: seaY - ch - cw * .7, width: 2.2 * cw * 1.6 + cw * 2, height: cw * .7, fill: '#f3ead8', stroke: '#10100c', 'stroke-width': 1.2}, grp);
-  Kit.mk('rect', {x: rx - W * .1, y: seaY - H * .012, width: W * .2, height: H * .012, fill: '#d9ccb2', stroke: '#10100c', 'stroke-width': 1}, grp);
-  const townLbl = Kit.mk('text', {x: rx - W * .06, y: seaY + f * 1.2, 'text-anchor': 'middle', 'font-size': f * .9, 'font-weight': 700, fill: '#fff3dc', 'font-family': 'var(--body)'}, grp);
-  townLbl.textContent = 'ancient town';
-  // underwater tint
-  Kit.mk('rect', {x: 0, y: seaY, width: W, height: H - seaY, fill: '#2d74a8', opacity: .45, 'clip-path': 'url(#wet)'}, svg);
-  Kit.mk('line', {x1: 0, x2: W, y1: seaY, y2: seaY, stroke: '#10100c', 'stroke-width': 2, 'stroke-dasharray': '6 5'}, svg);
-  const seaLbl = Kit.mk('text', {x: W - 8, y: seaY - f * .45, 'text-anchor': 'end', 'font-size': f * .85, 'font-weight': 700, fill: '#10100c', 'font-family': 'var(--body)'}, svg);
-  seaLbl.textContent = 'sea level';
-  // magma
-  const mag = Kit.mk('ellipse', {cx: W * .3, cy: H * .8, rx: W * .22, ry: H * .07, fill: 'url(#mg)'}, svg);
-  const magLbl = Kit.mk('text', {x: W * .3, y: H * .8 + f * .35, 'text-anchor': 'middle', 'font-size': f * .85, 'font-weight': 700, fill: '#3a0a02', 'font-family': 'var(--body)'}, svg);
-  magLbl.textContent = 'magma';
-  // gauge
-  const gauge = Kit.mk('line', {x1: rx + W * .1, x2: rx + W * .1, stroke: '#10100c', 'stroke-width': 2.5}, svg);
-  const read = Kit.mk('text', {x: rx + W * .12, 'font-size': f * 1.15, 'font-weight': 800, fill: '#10100c', 'font-family': 'var(--mono)'}, svg);
-  const phase = Kit.mk('text', {x: 10, y: f * 1.5, 'font-size': f * 1.05, 'font-weight': 800, fill: '#10100c', 'font-family': 'var(--body)'}, svg);
-  // timeline
-  const ty = H - f * 1.6, tx0 = W * .14, tx1 = W * .86;
-  Kit.mk('rect', {x: 0, y: ty - f * 1.4, width: W, height: f * 3, fill: '#000', opacity: .35}, svg);
-  Kit.mk('line', {x1: tx0, x2: tx1, y1: ty, y2: ty, stroke: '#fff', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
-  const tl = Kit.mk('text', {x: tx0 - 8, y: ty + f * .35, 'text-anchor': 'end', 'font-size': f * .85, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)'}, svg); tl.textContent = 'then';
-  const tr = Kit.mk('text', {x: tx1 + 8, y: ty + f * .35, 'font-size': f * .85, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)'}, svg); tr.textContent = 'today';
-  const knob = Kit.mk('circle', {cy: ty, r: Math.max(9, f * .75), fill: '#ffcf3a', stroke: '#111', 'stroke-width': 2}, svg);
-  G = {svg, W, H, f, m, seaY, grp, ground, surfD, wetPath, mag, magLbl, gauge, read, phase, knob, tx0, tx1, rx};
+  Kit.mk('rect', {x: 0, y: seaY, width: W, height: Hs - seaY, fill: SEA}, world);
+  const rock = ROCK.map(c => Kit.mk('path', {fill: c}, world));
+  const seams = [0, 1].map(() => Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.5, opacity: .3}, world));
+  const pocket = Kit.mk('ellipse', {cx: chamber.cx, cy: chamber.cy, fill: MAGMA, stroke: INK, 'stroke-width': 2.5}, world);
+  const core = Kit.mk('ellipse', {cx: chamber.cx, cy: chamber.cy + chamber.ry * .12, fill: CORE}, world);
+  const magmaLbl = Kit.mk('text', {x: chamber.cx, y: chamber.cy + fs * .36, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: INK, 'font-family': 'var(--body)'}, world);
+  magmaLbl.textContent = 'magma';
+  const arrows = Kit.mk('g', {fill: STONE, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', opacity: 0}, world);
+  const arrowAt = [chamber.cx - chamber.rx * .62, chamber.cx + chamber.rx * .62].map(x => {
+    const a = Kit.mk('path', {}, arrows); return {a, x};
+  });
+
+  // The town on its terrace: a temple, its people, and, once under the sea, its ruins and a diver.
+  const town = Kit.mk('g', {}, world);
+  const whole = Kit.mk('g', {}, town), ruin = Kit.mk('g', {opacity: 0}, town);
+  temple(whole, tw, th, false); temple(ruin, tw, th, true);
+  const people = Kit.mk('g', {}, town);
+  // One by the hill, one by the shore, on the terrace either side of the temple.
+  person(people, (W * .23 - cx) / 2 + (-tw / 2) / 2, th * .34, '#d8452f');
+  person(people, (W * .635 - cx) / 2 + (tw / 2) / 2, th * .3, SEA);
+  const wetTint = Kit.mk('rect', {x: 0, y: seaY, width: W, height: Hs - seaY, fill: SEA, opacity: .5, 'clip-path': 'url(#wet)'}, world);
+  const diver = Kit.mk('g', {opacity: 0}, world);
+  swimmer(diver, th * .62);
+
+  const ground = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, world);
+  Kit.mk('line', {x1: 0, x2: W, y1: seaY, y2: seaY, stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '7 6'}, world);
+  if (!inSea) Kit.mk('text', {x: W - 10, y: seaY + fs * 1.25, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)'}, world).textContent = 'sea level';
+  const rim = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
+  const gauge = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+
+  // Where the sky is too low for both, what it means stays over the sea and the number goes in it.
+  const nx = inSea ? W - 10 : W - 2, ny = inSea ? seaY + big * .98 : big * .9;
+  const depth = Kit.mk('text', {x: nx, y: ny, 'text-anchor': 'end', 'font-size': big, 'font-weight': 800, fill: inSea ? '#fff' : INK, 'font-family': 'var(--display)'}, g);
+  const what = Kit.mk('text', {x: nx, y: inSea ? seaY - fs * .45 : ny + big * .27 + fs + 2, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'var(--body)'}, g);
+
+  // The line of time.
+  const ty = H - bar * .42, tx0 = W * .17, tx1 = W * .83, kr = Math.max(10, f * .72);
+  const time = Kit.mk('g', bar ? {} : {display: 'none'}, g);
+  Kit.mk('line', {x1: tx0, x2: tx1, y1: ty, y2: ty, stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round', opacity: .35}, time);
+  const run = Kit.mk('line', {x1: tx0, y1: ty, y2: ty, stroke: INK, 'stroke-width': 4, 'stroke-linecap': 'round'}, time);
+  Kit.mk('text', {x: tx0 - kr - 8, y: ty + fs * .36, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'var(--body)'}, time).textContent = 'then';
+  Kit.mk('text', {x: tx1 + kr + 8, y: ty + fs * .36, 'font-size': fs, 'font-weight': 700, fill: INK, 'font-family': 'var(--body)'}, time).textContent = 'today';
+  const knob = Kit.mk('circle', {cy: ty, r: kr, fill: STONE, stroke: INK, 'stroke-width': 3}, time);
+
+  G = {svg, W, H, f, fs, Hs, m, seaY, r, chamber, tw, th, rock, seams, pocket, core, magmaLbl, arrows, arrowAt, town, whole, ruin, people, wetPath, wetTint, diver, ground, rim, gauge, depth, what, run, knob, tx0, tx1};
   render();
+}
+
+// A temple, standing or fallen, drawn on its base at (0, 0).
+function temple(g, w, hgt, fallen) {
+  const at = {fill: STONE, stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'};
+  const step = hgt * .07, colH = hgt * .58, cw = w * .1, capH = cw * .4, ent = hgt * .1, ped = hgt * .17;
+  Kit.mk('rect', Object.assign({x: -w / 2, y: -step, width: w, height: step}, at), g);
+  Kit.mk('rect', Object.assign({x: -w * .46, y: -2 * step, width: w * .92, height: step}, at), g);
+  const xs = [0, 1, 2, 3].map(k => -w * .4 + k * (w * .8 - cw) / 3);
+  const tall = fallen ? [1, .55, .82, .3] : [1, 1, 1, 1];
+  xs.forEach((x, k) => {
+    const ch = colH * tall[k], top = -2 * step - ch;
+    if (fallen && tall[k] < 1) Kit.mk('path', Object.assign({d: `M${x},${-2 * step} V${top + cw * .3} L${x + cw * .35},${top} L${x + cw * .6},${top + cw * .35} L${x + cw},${top + cw * .1} V${-2 * step} Z`}, at), g);
+    else {
+      Kit.mk('rect', Object.assign({x, y: top, width: cw, height: ch}, at), g);
+      Kit.mk('rect', Object.assign({x: x - cw * .22, y: top - capH, width: cw * 1.44, height: capH}, at), g);
+    }
+  });
+  if (!fallen) {
+    const y = -2 * step - colH - capH;
+    Kit.mk('rect', Object.assign({x: -w * .46, y: y - ent, width: w * .92, height: ent}, at), g);
+    Kit.mk('path', Object.assign({d: `M${-w * .5},${y - ent} L0,${y - ent - ped} L${w * .5},${y - ent} Z`}, at), g);
+  } else {
+    // A drum of a column, fallen on the floor.
+    Kit.mk('rect', Object.assign({x: w * .52, y: -cw * 1.05, width: cw * 1.9, height: cw * 1.05, rx: cw * .2}, at), g);
+  }
+}
+
+// A person of the town, standing, about the size of a person beside the temple.
+function person(g, x, tall, cloth) {
+  const head = tall * .17, at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'};
+  Kit.mk('path', Object.assign({d: `M${x - tall * .2},0 L${x - tall * .12},${-tall * .66} Q${x},${-tall * .76} ${x + tall * .12},${-tall * .66} L${x + tall * .2},0 Z`, fill: cloth}, at), g);
+  Kit.mk('circle', Object.assign({cx: x, cy: -tall * .66 - head * 1.05, r: head, fill: '#f2c29b'}, at), g);
+}
+
+// A diver, swimming over the ruins, with a breath of bubbles.
+function swimmer(g, len) {
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, k = len / 10;
+  Kit.mk('path', Object.assign({d: `M${-5 * k},${-.4 * k} L${-8.6 * k},${-1.9 * k} L${-8.2 * k},${1.4 * k} Z`, fill: INK}, at), g);
+  Kit.mk('rect', Object.assign({x: -5.6 * k, y: -1.2 * k, width: 9 * k, height: 2.4 * k, rx: 1.2 * k, fill: INK}, at), g);
+  Kit.mk('rect', Object.assign({x: -3.4 * k, y: -2.5 * k, width: 5 * k, height: 1.5 * k, rx: .7 * k, fill: STONE}, at), g);
+  Kit.mk('circle', Object.assign({cx: 4.6 * k, cy: 0, r: 1.6 * k, fill: '#f2c29b'}, at), g);
+  Kit.mk('rect', Object.assign({x: 4.7 * k, y: -1 * k, width: 1.7 * k, height: 1.3 * k, rx: .4 * k, fill: STONE}, at), g);
+  [[6.6, -3.2, .55], [7.4, -5.2, .75], [6.8, -7.4, .45]].forEach(([x, y, rr]) => Kit.mk('circle', {cx: x * k, cy: y * k, r: rr * k, fill: STONE, stroke: INK, 'stroke-width': 1.5}, g));
 }
 
 function render() {
   if (!G) return;
-  const t = st.t, hh = h(t), y = -hh * G.m;
-  G.grp.setAttribute('transform', `translate(0,${y})`);
-  G.ground.setAttribute('d', G.surfD + ` L${G.W},${(G.H - y).toFixed(1)} L0,${(G.H - y).toFixed(1)} Z`);
-  G.wetPath.setAttribute('transform', `translate(0,${y})`);
-  const ry = G.H * (.045 + .05 * (hh + 7) / 10);
-  G.mag.setAttribute('ry', ry);
-  const base = G.seaY + y;
-  G.gauge.setAttribute('y1', G.seaY); G.gauge.setAttribute('y2', base);
-  G.read.setAttribute('y', Math.max(G.seaY, base) + G.f * 1.3);
-  G.read.textContent = (hh >= 0 ? '+' : '−') + Math.abs(hh).toFixed(1) + ' m';
-  const d = dh(t) > 0 ? 1 : -1;
-  G.phase.textContent = t < .01 ? 'The town stands on dry land' : t > .97 ? 'Today: ruins about 7 m under the sea' : d > 0 ? 'Centuries pass… the ground rises' : 'Centuries pass… the ground sinks';
-  if (t > .01 && d !== lastDir) { if (lastDir) Kit.haptic('light'); lastDir = d; }
+  const {W, Hs, m, seaY, r, chamber} = G, t = st.t, hh = h(t);
+  const Y = x => seaY - (shape(x) + hh * share(x)) * m;
+  const xs = Array.from({length: N}, (_, i) => i / (N - 1));
+  const top = xs.map(x => [x * W, Y(x)]);
+  const line = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const under = k => top.map(([x, y]) => [x, y + k * (Hs - y)]);
+  const fill = pts => line(pts) + ` L${W},${Hs + 2} L0,${Hs + 2} Z`;
+  G.rock[0].setAttribute('d', fill(top));
+  G.rock[1].setAttribute('d', fill(under(.24)));
+  G.rock[2].setAttribute('d', fill(under(.52)));
+  G.seams[0].setAttribute('d', line(under(.24)));
+  G.seams[1].setAttribute('d', line(under(.52)));
+  G.ground.setAttribute('d', line(top));
+  G.wetPath.setAttribute('d', `M0,${seaY} H${W} ` + top.slice().reverse().map(([x, y]) => `L${x.toFixed(1)},${Math.max(seaY, y).toFixed(1)}`).join(' ') + ' Z');
+  // The slice's own edge: down the left side from the ground, round the bottom, up the right side to the sea.
+  G.rim.setAttribute('d', `M0,${top[0][1].toFixed(1)} V${Hs - r} Q0,${Hs} ${r},${Hs} H${W - r} Q${W},${Hs} ${W},${Hs - r} V${Math.min(seaY, top[N - 1][1]).toFixed(1)}`);
+
+  // The magma swells as the ground rises, and empties as it sinks.
+  const swell = 1 + .2 * hh / 5;
+  G.pocket.setAttribute('rx', chamber.rx * (1 + .06 * hh / 5)); G.pocket.setAttribute('ry', chamber.ry * swell);
+  G.core.setAttribute('rx', chamber.rx * .62 * (1 + .1 * hh / 5)); G.core.setAttribute('ry', chamber.ry * .5 * swell);
+  const d = dh(t) > 0 ? 1 : -1, a = G.f * .55;
+  G.arrowAt.forEach(({a: p, x}) => {
+    const y0 = chamber.cy - chamber.ry * swell - a * .4, y1 = y0 - a * 2.1, tip = d > 0 ? y1 - a * .7 : y0 + a * .3, tail = d > 0 ? y0 : y1;
+    const head = d > 0 ? y1 : y0 - a * .4;
+    p.setAttribute('d', d > 0
+      ? `M${x - a * .28},${tail} V${head} H${x - a * .7} L${x},${tip} L${x + a * .7},${head} H${x + a * .28} V${tail} Z`
+      : `M${x - a * .28},${y1} V${y0 - a * .4} H${x - a * .7} L${x},${y0 + a * .3} L${x + a * .7},${y0 - a * .4} H${x + a * .28} V${y1} Z`);
+  });
+  G.arrows.setAttribute('opacity', touched && t > .01 && t < .985 ? 1 : 0);
+
+  const floor = Y(TOWN), cx = W * TOWN;
+  G.town.setAttribute('transform', `translate(${cx.toFixed(1)},${floor.toFixed(1)})`);
+  // A metre under the sea, the temple is a ruin: a quick change, never the two at once.
+  const ruined = hh < -1;
+  if (ruined !== G.ruined) {
+    const first = G.ruined === undefined; G.ruined = ruined;
+    if (first || Kit.calm) { G.whole.setAttribute('opacity', ruined ? 0 : 1); G.ruin.setAttribute('opacity', ruined ? 1 : 0); }
+    else { gsap.to(G.whole, {attr: {opacity: ruined ? 0 : 1}, duration: .25}); gsap.to(G.ruin, {attr: {opacity: ruined ? 1 : 0}, duration: .25, delay: ruined ? .1 : 0}); }
+  }
+  G.people.setAttribute('opacity', Math.min(1, Math.max(0, (hh + .3) / .8)));
+  const deep = Math.min(1, Math.max(0, (-hh - 3.5) / 1.5));
+  G.diver.setAttribute('opacity', deep);
+  const dy = Math.max(seaY + G.th * .45, floor - G.th * 1.08);
+  G.diver.setAttribute('transform', `translate(${(cx + G.tw * .18).toFixed(1)},${dy.toFixed(1)})`);
+
+  // How deep under the sea the town's floor lies, once it does.
+  const gx = cx - G.tw * .5 - G.th * .28, ah = Math.min(G.f * .45, (floor - seaY) / 3);
+  G.gauge.setAttribute('d', hh > -.8 ? '' : `M${gx},${seaY + 2} V${floor - 2} M${gx - ah * .8},${seaY + 2 + ah} L${gx},${seaY + 2} L${gx + ah * .8},${seaY + 2 + ah} M${gx - ah * .8},${floor - 2 - ah} L${gx},${floor - 2} L${gx + ah * .8},${floor - 2 - ah}`);
+  const metres = Math.round(hh);
+  G.depth.textContent = metres === 0 ? '0 m' : (metres > 0 ? '+' : '−') + Math.abs(metres) + ' m';
+  G.what.textContent = metres > 0 ? 'town above the sea' : metres < 0 ? 'town under the sea' : 'town at sea level';
+
   G.knob.setAttribute('cx', G.tx0 + t * (G.tx1 - G.tx0));
+  G.run.setAttribute('x2', G.tx0 + t * (G.tx1 - G.tx0));
+  if (touched && !done) Kit.$('say').textContent = t > .97 ? 'Today: the town lies under the sea.' : d > 0 ? 'The magma swells: the ground rises.' : 'The magma empties: the ground sinks.';
+  if (t > .01 && d !== lastDir) { if (lastDir) Kit.haptic('light'); lastDir = d; }
   if (t > .97 && !done) finish();
 }
 
 function finish() {
   done = true; Kit.haptic('success');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  build();
 }
 
 function tFrom(e) {
-  const r = G.svg.getBoundingClientRect();
-  const x = (e.clientX - r.left) / r.width * G.W;
+  const b = G.svg.getBoundingClientRect();
+  const x = (e.clientX - b.left) / b.width * G.W;
   return Math.min(1, Math.max(0, (x - G.tx0) / (G.tx1 - G.tx0)));
 }
 let dragging = false;
 const sc = Kit.$('scene');
-sc.addEventListener('pointerdown', e => { dragging = true; try { sc.setPointerCapture(e.pointerId); } catch (_) {} gsap.killTweensOf(st); st.t = Math.max(st.t, 0) ; st.t = tFrom(e); render(); Kit.haptic('selection'); });
+sc.addEventListener('pointerdown', e => { dragging = true; touched = true; try { sc.setPointerCapture(e.pointerId); } catch (_) {} gsap.killTweensOf(st); st.t = tFrom(e); render(); Kit.haptic('selection'); });
 sc.addEventListener('pointermove', e => { if (!dragging) return; st.t = tFrom(e); render(); });
-['pointerup', 'pointercancel'].forEach(n => sc.addEventListener(n, () => { dragging = false; }));
+['pointerup', 'pointercancel'].forEach(n => sc.addEventListener(n, () => { dragging = false; render(); }));
 
 Kit.onShow.card = () => build();
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(Kit.$('stage'));
 Kit.onEnter.card = () => {
   if (Kit.calm || !G) return;
-  gsap.fromTo(G.knob, {attr: {r: G.f * .75}}, {attr: {r: G.f * 1.05}, repeat: 3, yoyo: true, duration: .45, ease: 'sine.inOut'});
+  gsap.fromTo(G.knob, {attr: {r: G.f * .72}}, {attr: {r: G.f * 1.02}, repeat: 3, yoyo: true, duration: .45, ease: 'sine.inOut'});
 };
 Kit.play.card = async () => {
-  const r = sc.getBoundingClientRect(), y = r.top + r.height / 2;
+  const b = sc.getBoundingClientRect(), y = b.top + b.height / 2;
   const ev = (type, x) => sc.dispatchEvent(new PointerEvent(type, {bubbles: true, clientX: x, clientY: y, pointerId: 1}));
-  ev('pointerdown', r.left + r.width * .1);
-  for (let i = 1; i <= 10; i++) { ev('pointermove', r.left + r.width * (.1 + .09 * i)); await new Promise(res => setTimeout(res, 30)); }
-  ev('pointerup', r.right);
+  ev('pointerdown', b.left + b.width * .1);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', b.left + b.width * (.1 + .09 * i)); await new Promise(res => setTimeout(res, 30)); }
+  ev('pointerup', b.right);
   await new Promise(res => setTimeout(res, 700));
 };
 Kit.single();

@@ -73,7 +73,7 @@ node tool/cards/card_check.cjs <pagina.html> [cartella-screenshot]
 
 - Fotografa ogni carta su **tre telefoni** (piccolo, medio, grande).
 - Se la pagina registra `Kit.play[id]`, la **gioca fino in fondo** e la rifotografa: molti difetti compaiono solo dopo (etichette che si sovrappongono a un grafico appena disegnato).
-- Segnala: colonna che trabocca, elementi fuori dalla carta, **scritte che si sovrappongono** nei disegni, grandi spazi vuoti, errori del codice.
+- Segnala: colonna che trabocca, elementi fuori dalla carta, **scritte che si sovrappongono** nei disegni, grandi spazi vuoti, errori del codice, e **un disegno rimpicciolito o schiacciato** quando arriva la risposta (fatto per una misura e mostrato a un'altra: va ridisegnato quando il suo spazio cambia).
 
 Il controllore **non basta da solo**. Dopo che dice "clear", **si guardano gli screenshot uno per uno**, come li vedrebbe il lettore: allineamenti, scritte storte o troppo piccole, spazi vuoti, cose brutte. Poi passa al critico (vedi `CRITERI.md`).
 

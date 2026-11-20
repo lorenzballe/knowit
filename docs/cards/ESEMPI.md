@@ -61,3 +61,16 @@ Cosa vuol dire per chi scrive:
 3. **Il lettore prende posizione, poi incontra le due parti:** il caso migliore a favore e il caso migliore contro, detti in modo onesto. Niente è giusto o sbagliato (nei dati, una carta che non dà voto, come `debate`).
 4. **Finisce con una domanda da farsi** più che con una lezione.
 5. **Restano fuori** le idee che sminuiscono un gruppo di persone e quelle che insegnano a manipolare, ingannare o sedurre qualcuno.
+
+## Lezione 5: il disegno riempie la carta, anche dopo la risposta (novembre 2026)
+
+Sulla carta del bradisismo ("What is bradyseism, and why are some ancient towns underwater?"), il proprietario: "La resa di questa carta fa schifo, il disegno diventa piccolissimo… meglio quelli stilizzati, che sono più belli e malleabili. Qui si vede la non professionalità."
+
+Perché succedeva: il disegno era fatto una volta sola, alla misura che aveva all'inizio. Quando arrivavano la spiegazione e "What to keep", il riquadro del disegno si abbassava e il browser rimpiccioliva tutto il disegno per farlo stare, scritte comprese: alla fine era un francobollo al centro della carta. In più era una sezione da manuale, con colori spenti, rovine minuscole e un numero in carattere da terminale.
+
+Cosa vuol dire per chi disegna:
+
+1. **Stilizzato e grande.** Forme piene e decise, contorni d'inchiostro spessi, pochi colori con un significato (il mare blu, il magma arancione), personaggini semplici per la scala (gli abitanti, poi il sub sulle rovine). Il disegno occupa tutta la larghezza della colonna.
+2. **Malleabile: si ridisegna alla misura vera ogni volta che il suo spazio cambia** (un `ResizeObserver` sul riquadro che richiama il disegno), e la composizione è pensata per stare bene sia alta sia bassa e larga. Mai un disegno fatto per una misura e mostrato a un'altra.
+3. **Alla fine si fa spazio al disegno:** la spiegazione si accorcia quando il disegno mostra già i numeri, e quello che non serve più (la barra del tempo, a storia finita) se ne va.
+4. **Il controllore lo vede da solo:** `tool/cards/card_check.cjs` segnala un disegno mostrato più piccolo di com'era stato fatto, o schiacciato in una striscia alla fine.
