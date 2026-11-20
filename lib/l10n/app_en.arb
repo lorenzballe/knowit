@@ -1929,7 +1929,7 @@
  "@skillsTitleMark": {
   "description": "The one word of skillsTitle painted in colour. Must appear in skillsTitle exactly as written."
  },
- "skillsLine": "Pick the ones you care about. It helps us choose which cards to write next.",
+ "skillsLine": "Pick what you want to get better at: the cards picked for you will lean towards it.",
  "@skillsLine": {
   "description": "Line under skillsTitle: why we ask. Picking changes nothing in the app; it tells the team what to write."
  },

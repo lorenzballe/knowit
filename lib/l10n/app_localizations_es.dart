@@ -1860,7 +1860,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Elige las que te interesan. Nos ayuda a decidir qué tarjetas escribir después.';
+      'Elige en qué quieres mejorar: las tarjetas elegidas para ti se inclinarán hacia ello.';
 
   @override
   String get skillsDone => 'Listo';

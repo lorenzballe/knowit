@@ -83,6 +83,20 @@ enum Skill {
   /// The mark's colour on a page of [dark] or not.
   Color mark(bool dark) => dark ? colour : onPaper;
 
+  /// The area of life (lib/data/goals.dart) the skill serves, by key, or
+  /// null for one that is no area (general knowledge): picking a skill
+  /// picks its area, so the cards picked for the reader and the coach lean
+  /// towards it.
+  String? get area => switch (this) {
+    critical || decisions => 'decide',
+    money => 'money',
+    numbers || fakes || science => 'news',
+    talk || persuade || people => 'people',
+    focus => 'health',
+    lead => 'business',
+    culture => null,
+  };
+
   /// The skill with this key, or null for one this build does not know.
   static Skill? of(String key) {
     for (final Skill s in values) {

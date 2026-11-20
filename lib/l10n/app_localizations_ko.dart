@@ -1793,7 +1793,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skillsTitleMark => '배우고';
 
   @override
-  String get skillsLine => '관심 있는 것을 골라 주세요. 다음에 쓸 카드를 정하는 데 도움이 돼요.';
+  String get skillsLine => '더 잘하고 싶은 것을 고르세요. 당신을 위해 고르는 카드가 그쪽으로 기울어져요.';
 
   @override
   String get skillsDone => '완료';

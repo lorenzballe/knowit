@@ -1857,7 +1857,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Scegli quelle che ti interessano. Ci aiuta a capire quali carte scrivere dopo.';
+      'Scegli in cosa vuoi migliorare: le carte scelte per te andranno in quella direzione.';
 
   @override
   String get skillsDone => 'Fatto';

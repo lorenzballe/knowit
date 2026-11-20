@@ -2583,7 +2583,7 @@ abstract class AppLocalizations {
   /// Line under skillsTitle: why we ask. Picking changes nothing in the app; it tells the team what to write.
   ///
   /// In en, this message translates to:
-  /// **'Pick the ones you care about. It helps us choose which cards to write next.'**
+  /// **'Pick what you want to get better at: the cards picked for you will lean towards it.'**
   String get skillsLine;
 
   /// Button that closes the skills screen.

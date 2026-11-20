@@ -305,13 +305,21 @@ class AppState extends ChangeNotifier {
   String? get goal => goals.isEmpty ? null : goals.first;
 
   /// What the reader wants to learn (lib/data/skills.dart), by key, in the
-  /// order they picked. Asked on the profile and changing nothing in the
-  /// app: it is kept here and told to the reader's profile in analytics,
-  /// for the people who write the cards.
+  /// order they picked. Asked on the profile; each picks its area of life
+  /// ([goals]), so the cards picked for the reader and the coach lean
+  /// towards it. Told to the reader's profile in analytics too, for the
+  /// people who write the cards.
   List<String> skills = const [];
 
+  /// The areas of life the reader's skills serve, in the order they were
+  /// picked, each once, [kMostGoals] at most.
+  static List<String> areasOf(List<String> skills) => <String>{
+    for (final String k in skills)
+      if (Skill.of(k)?.area case final String area) area,
+  }.take(kMostGoals).toList();
+
   /// Says what the reader wants to learn: the skills this build knows, each
-  /// once, in the order given.
+  /// once, in the order given; their areas become the reader's goals.
   Future<void> setSkills(List<String> keys) async {
     skills = List.unmodifiable(<String>{
       for (final String k in keys)
@@ -321,7 +329,7 @@ class AppState extends ChangeNotifier {
     Analytics.person(
       set: {'skills': skills.join(','), 'skills_count': skills.length},
     );
-    notifyListeners();
+    await setGoals(areasOf(skills));
   }
 
   /// Whether the reader has been asked what they want to get better at: on
@@ -624,6 +632,9 @@ class AppState extends ChangeNotifier {
       for (final String k in _prefs.getStringList(_kSkills) ?? const [])
         if (Skill.of(k) case final Skill s) s.name,
     });
+    // Skills picked on a build where they changed nothing pick their areas
+    // now, unless the reader already said what they want.
+    if (goals.isEmpty) goals = _keptGoals(areasOf(skills));
     topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
     genresOff = (_prefs.getStringList(_kGenresOff) ?? []).toSet();
     strandsOff = (_prefs.getStringList(_kStrandsOff) ?? []).toSet();

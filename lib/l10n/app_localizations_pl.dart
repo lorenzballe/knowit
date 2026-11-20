@@ -1922,7 +1922,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Wybierz, co cię interesuje. Pomoże nam to zdecydować, jakie karty pisać dalej.';
+      'Wybierz, w czym chcesz być lepszy: karty wybrane dla ciebie pójdą w tę stronę.';
 
   @override
   String get skillsDone => 'Gotowe';

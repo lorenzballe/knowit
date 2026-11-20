@@ -103,25 +103,22 @@ class _SkillsScreenState extends State<SkillsScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    l.skillsLine,
-                    style: AppText.body(
-                      size: 15,
-                      height: 1.38,
-                      color: p.ink.withValues(alpha: 0.62),
-                    ),
-                  ),
-                ),
-              ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 4),
                   child: LayoutBuilder(
-                    builder: (context, box) => _grid(context, box, all, picked),
+                    builder: (context, box) => _grid(
+                      context,
+                      box,
+                      all,
+                      picked,
+                      line: l.skillsLine,
+                      lineStyle: AppText.body(
+                        size: 15,
+                        height: 1.38,
+                        color: p.ink.withValues(alpha: 0.62),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -143,22 +140,35 @@ class _SkillsScreenState extends State<SkillsScreen> {
     );
   }
 
-  /// The twelve in two columns. Each row takes its share of the height
-  /// there is, no taller than a tile wants; where even the least a tile
-  /// needs, its name on two lines at the reader's text size, does not fit
-  /// six times, the rows keep that least and the grid scrolls.
+  /// The line saying what the picks do, then the twelve in two columns.
+  /// Each row takes its share of the height left, no taller than a tile
+  /// wants; where even the least a tile needs, its name on two lines at the
+  /// reader's text size, does not fit six times, the rows keep that least
+  /// and the line and the grid scroll together.
   Widget _grid(
     BuildContext context,
     BoxConstraints box,
     List<Skill> all,
-    Set<String> picked,
-  ) {
-    const double gap = 10;
+    Set<String> picked, {
+    required String line,
+    required TextStyle lineStyle,
+  }) {
+    const double gap = 10, under = 16;
     final int rows = (all.length / 2).ceil();
     final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextStyle style = DefaultTextStyle.of(context).style.merge(lineStyle);
+    final TextPainter measure = TextPainter(
+      text: TextSpan(text: line, style: style),
+      textDirection: Directionality.of(context),
+      textScaler: scaler,
+      locale: Localizations.maybeLocaleOf(context),
+    )..layout(maxWidth: box.maxWidth);
+    final double lineHeight = measure.height;
+    measure.dispose();
     final double least =
         math.max(2 * scaler.scale(14.5) * 1.22, 36) + 2 * _Tile.padY + 4;
-    final double share = (box.maxHeight - gap * (rows - 1)) / rows;
+    final double share =
+        (box.maxHeight - lineHeight - under - gap * (rows - 1)) / rows;
     final bool fits = share >= least;
     final double height = fits ? math.min(share, 136) : least;
     Widget row(int i) => SizedBox(
@@ -181,17 +191,20 @@ class _SkillsScreenState extends State<SkillsScreen> {
         ],
       ),
     );
-    final Widget grid = Column(
+    final Widget page = Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(line, style: lineStyle),
+        const SizedBox(height: under),
         for (int i = 0; i < all.length; i += 2) ...[
           if (i > 0) const SizedBox(height: gap),
           row(i),
         ],
       ],
     );
-    if (fits) return Align(alignment: Alignment.topCenter, child: grid);
-    return SingleChildScrollView(child: grid);
+    if (fits) return Align(alignment: Alignment.topCenter, child: page);
+    return SingleChildScrollView(child: page);
   }
 }
 

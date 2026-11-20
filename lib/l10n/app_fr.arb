@@ -410,7 +410,7 @@
   "threeRowSaid": "Tu as dit {said}. C'est {truth}.",
   "skillsTitle": "Quoi apprendre",
   "skillsTitleMark": "apprendre",
-  "skillsLine": "Choisis celles qui t'intéressent. Ça nous aide à savoir quelles cartes écrire ensuite.",
+  "skillsLine": "Choisis ce que tu veux améliorer : les cartes choisies pour toi iront dans ce sens.",
   "skillsDone": "Terminé",
   "skillsRowTitle": "Ce que tu veux apprendre",
   "skillName": "{key, select, critical{Esprit critique} decisions{Mieux décider} money{Argent et épargne} numbers{Chiffres et statistiques} talk{Communiquer} persuade{Persuader} people{Comprendre les gens} fakes{Repérer les intox} science{Penser en scientifique} focus{Concentration} lead{Leadership} culture{Culture générale} other{{key}}}",

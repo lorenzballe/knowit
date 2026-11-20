@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
+import 'package:astuto/data/goals.dart';
 import 'package:astuto/data/skills.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/screens/skills_screen.dart';
@@ -55,7 +56,8 @@ class _Recorder implements AnalyticsSink {
 }
 
 /// What the reader wants to learn: asked on the profile, kept on the phone
-/// and told to analytics, changing nothing in the app.
+/// and told to analytics; each skill picks its area of life, which leans the
+/// cards picked for the reader and the coach.
 void main() {
   late _Recorder sink;
 
@@ -190,6 +192,66 @@ void main() {
       SharedPreferences.getInstance,
     ) as SharedPreferences;
     expect(prefs.getStringList('knowit.skills'), ['critical']);
+  });
+
+  testWidgets('the skills picked are the areas the cards lean towards', (
+    tester,
+  ) async {
+    final AppState app = await open(tester);
+    await tap(tester, tile(Skill.science, false));
+    await tap(tester, tile(Skill.persuade, false));
+    await tap(tester, tile(Skill.fakes, false));
+    // Two skills of one area count once, in the order first picked.
+    expect(app.goals, ['news', 'people']);
+    await tap(tester, tile(Skill.culture, false));
+    await tap(tester, tile(Skill.money, false));
+    await tap(tester, tile(Skill.focus, false));
+    // Three areas at most; general knowledge is no area.
+    expect(app.goals, ['news', 'people', 'money']);
+    for (final Skill s in [
+      Skill.science,
+      Skill.persuade,
+      Skill.fakes,
+      Skill.money,
+      Skill.focus,
+    ]) {
+      await tap(tester, tile(s, true));
+    }
+    expect(app.skills, ['culture']);
+    expect(app.goals, isEmpty);
+    final SharedPreferences prefs = await tester.runAsync(
+      SharedPreferences.getInstance,
+    ) as SharedPreferences;
+    expect(prefs.getStringList('knowit.goals'), isEmpty);
+  });
+
+  testWidgets('skills picked before they did anything pick their areas', (
+    tester,
+  ) async {
+    final AppState fresh = await tester.runAsync(
+      () => readyApp({
+        'knowit.skills': ['lead', 'decisions', 'critical'],
+      }),
+    ) as AppState;
+    expect(fresh.goals, ['business', 'decide']);
+    // What the reader said they want stays what they said.
+    final AppState said = await tester.runAsync(
+      () => readyApp({
+        'knowit.skills': ['lead'],
+        'knowit.goals': ['health'],
+      }),
+    ) as AppState;
+    expect(said.goals, ['health']);
+  });
+
+  test('every skill but general knowledge serves an area that exists', () {
+    for (final Skill s in Skill.values) {
+      if (s == Skill.culture) {
+        expect(s.area, isNull);
+      } else {
+        expect(Goal.of(s.area!), isNotNull, reason: s.name);
+      }
+    }
   });
 
   testWidgets('what a build does not know is dropped', (tester) async {

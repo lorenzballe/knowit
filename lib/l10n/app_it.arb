@@ -410,7 +410,7 @@
   "threeRowSaid": "Avevi detto {said}. È {truth}.",
   "skillsTitle": "Cosa imparare",
   "skillsTitleMark": "imparare",
-  "skillsLine": "Scegli quelle che ti interessano. Ci aiuta a capire quali carte scrivere dopo.",
+  "skillsLine": "Scegli in cosa vuoi migliorare: le carte scelte per te andranno in quella direzione.",
   "skillsDone": "Fatto",
   "skillsRowTitle": "Cosa vuoi imparare",
   "skillName": "{key, select, critical{Pensiero critico} decisions{Decidere meglio} money{Soldi e risparmio} numbers{Numeri e statistica} talk{Comunicare} persuade{Persuadere} people{Capire le persone} fakes{Smascherare le bufale} science{Pensare da scienziato} focus{Concentrazione} lead{Leadership} culture{Cultura generale} other{{key}}}",
