@@ -10,8 +10,8 @@
 #pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 #cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:5.4cqh;margin:0;overflow-wrap:anywhere}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:anywhere}
+#why .body{margin:0;font-size:max(2cqh,13px);line-height:1.34;overflow-wrap:anywhere}
+#why .body b{font-weight:800}
 .hot{cursor:pointer}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Tap to uncover">
@@ -21,7 +21,7 @@
     <div class="stagebox" id="stage">
       <div id="pic"><svg id="svg"></svg></div>
       <p id="cap">A caver is hurt at the bottom. Tap spot 1 to start the clock.</p>
-      <div id="why" class="gone"><p class="big">At least 9–10 hours</p><p class="body">No rescue gets you out in an hour. Two people must climb out to call help, rescuers rig every wall with ropes, and the injured caver crosses the rock on a stretcher.</p></div>
+      <div id="why" class="gone"><p class="body"><b>At least 9–10 hours.</b> No rescue gets you out in an hour. Two people must climb out to call help, rescuers rig every wall with ropes, and the injured caver crosses the rock on a stretcher.</p></div>
     </div>
     <p class="say" id="say">Tap the glowing spots in order to run the rescue.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In a cave there is no quick rescue: even the shortest takes 9–10 hours.</div>
@@ -72,12 +72,18 @@ function draw(){
   const svg=Kit.$('svg'); svg.innerHTML='';
   const {W,H,f}=Kit.fitSvg(svg); G={W,H};
   const fs=Math.max(f*.8,12), u=Math.min(W,H)/100; G.u=u;
-  const pts=P.map(([a,b])=>[a*W,b*H]); G.pts=pts;
-  const sy=.2*H;
-  const pw=Math.max(.055*W,16);
+  // However low the box gets, the sky keeps room for the clock and the cave takes the rest: the
+  // passage thins with it, so a short box still shows three walls, not a fat worm.
+  const r=Math.max(11,Math.min(.075*H,.09*W));
+  const sy=Math.max(.2*H,2*r+10), Y=b=>sy+(b-.2)/.8*(H-sy);
+  const pw=Math.max(9,Math.min(Math.max(.055*W,16),.12*(H-sy)));
+  // the injured caver's name stays inside the picture: the last chamber makes room for it
+  const cav=Kit.mk('text',{'text-anchor':'end',style:`font:600 ${fs}px var(--body);fill:var(--k)`},svg); cav.textContent='Injured caver';
+  let cw=fs*6.4; try{cw=cav.getComputedTextLength()||cw;}catch(_){}
+  const pts=P.map(([a,b],i)=>[i===6?Math.max(a*W,cw+pw*1.25+6):a*W,Y(b)]); G.pts=pts;
   // a slice of hillside, cut open: rock with a broken lower edge, a band of soil on top
   const bot=[[1,.985],[.86,.965],[.72,.99],[.55,.97],[.4,.995],[.24,.968],[.1,.985],[0,.972]];
-  const ground=`M0,${sy} L${W},${sy} `+bot.map(([a,b])=>`L${a*W},${b*H}`).join(' ')+' Z';
+  const ground=`M0,${sy} L${W},${sy} `+bot.map(([a,b])=>`L${a*W},${Y(b)}`).join(' ')+' Z';
   Kit.mk('path',{d:ground,style:ROCK},svg);
   const sb=Math.max(.035*H,8);
   Kit.mk('path',{d:`M0,${sy} L${W},${sy} L${W},${sy+sb*.8} C${W*.75},${sy+sb*1.25} ${W*.5},${sy+sb*.6} ${W*.25},${sy+sb*1.15} S${W*.05},${sy+sb*.8} 0,${sy+sb} Z`,style:SOIL},svg);
@@ -94,30 +100,30 @@ function draw(){
   Kit.mk('line',{x1:0,y1:sy,x2:pts[0][0]-gap,y2:sy,style:'stroke:var(--k);stroke-width:2.5;stroke-linecap:round'},svg);
   Kit.mk('line',{x1:pts[0][0]+gap,y1:sy,x2:W,y2:sy,style:'stroke:var(--k);stroke-width:2.5;stroke-linecap:round'},svg);
   // a tree on the surface: this is the outside world
-  const tx=.93*W, th=Math.min(.12*H,.1*W), tw=th*.42;
+  const tx=.93*W, th=Math.min(sy*.6,.1*W), tw=th*.42;
   Kit.mk('rect',{x:tx-1.5,y:sy-th*.25,width:3,height:th*.25,style:'fill:var(--k)'},svg);
   Kit.mk('polygon',{points:`${tx-tw},${sy-th*.2} ${tx+tw},${sy-th*.2} ${tx},${sy-th}`,style:'fill:var(--k);stroke:var(--k);stroke-width:2;stroke-linejoin:round'},svg);
   // ropes
   G.ropes=PITCH.map(([a,b])=>{
     const L=Math.hypot(pts[b][0]-pts[a][0],pts[b][1]-pts[a][1]);
-    const l=Kit.mk('line',{x1:pts[a][0],y1:pts[a][1],x2:pts[b][0],y2:pts[b][1],style:`stroke:${OR};stroke-width:${Math.max(3,u*.8)};stroke-linecap:round;stroke-dasharray:${L};stroke-dashoffset:${step>=2?0:L}`},svg);
+    const l=Kit.mk('line',{x1:pts[a][0],y1:pts[a][1],x2:pts[b][0],y2:pts[b][1],style:`stroke:${OR};stroke-width:${Math.max(3,u*.8)};stroke-linecap:round;stroke-dasharray:${L} ${L+20};stroke-dashoffset:${step>=2?0:L}`},svg);
     Kit.mk('circle',{cx:pts[a][0],cy:pts[a][1],r:Math.max(3,u*1.1),style:`fill:${OR};stroke:var(--k);stroke-width:1.5;opacity:${step>=2?1:0}`},svg).classList.add('anc');
     return {l,L};
   });
   // labels
-  Kit.mk('text',{x:pts[6][0]-pw*1.25,y:pts[6][1]+fs*.35,'text-anchor':'end',style:`font:600 ${fs}px var(--body);fill:var(--k)`},svg).textContent='Injured caver';
+  cav.setAttribute('x',pts[6][0]-pw*1.25); cav.setAttribute('y',pts[6][1]+fs*.35); svg.appendChild(cav);
   Kit.mk('text',{x:pts[0][0]-pw*1.2,y:sy-fs*.6,'text-anchor':'end',style:`font:600 ${fs}px var(--body);fill:var(--k)`},svg).textContent='Entrance';
   // two people (orange helmets)
   G.ppl=[0,1].map(()=>Kit.mk('circle',{r:Math.max(4,u*1.3),style:`fill:${OR};stroke:var(--k);stroke-width:1.5`},svg));
   setPeople();
   // stretcher
-  const sw=Math.max(.09*W,30), sh=Math.max(sw*.32,10);
+  const k=Math.min(1,pw/16), sw=Math.max(.09*W,30)*k, sh=Math.max(sw*.32,10*k);
   G.st=Kit.mk('g',{},svg);
   Kit.mk('rect',{x:-sw/2,y:-sh/2,width:sw,height:sh,rx:sh*.25,style:`fill:${OR};stroke:var(--k);stroke-width:2`},G.st);
   Kit.mk('circle',{cx:sw/2-sh*.55,cy:0,r:sh*.32,style:'fill:var(--c);stroke:var(--k);stroke-width:1.5'},G.st);
   setCar();
   // clock
-  const r=Math.min(.075*H,.09*W); G.cx=.04*W+r; G.cy=.1*H;
+  G.cx=.04*W+r; G.cy=sy/2;
   Kit.mk('circle',{cx:G.cx,cy:G.cy,r,style:'fill:var(--c);stroke:var(--k);stroke-width:3'},svg);
   for(let i=0;i<4;i++){const a=i*Math.PI/2;Kit.mk('line',{x1:G.cx+Math.sin(a)*r*.74,y1:G.cy-Math.cos(a)*r*.74,x2:G.cx+Math.sin(a)*r*.9,y2:G.cy-Math.cos(a)*r*.9,style:'stroke:var(--k);stroke-width:2.5;stroke-linecap:round'},svg);}
   G.mh=Kit.mk('line',{x1:G.cx,y1:G.cy,x2:G.cx,y2:G.cy-r*.78,style:'stroke:var(--k);stroke-width:2;stroke-linecap:round'},svg);
@@ -160,6 +166,8 @@ Kit.onEnter.card=()=>{if(!Kit.calm&&G.hot)gsap.from(G.hot,{scale:0,transformOrig
 Kit.play.card=async()=>{SPD=.05;const w=ms=>new Promise(r=>setTimeout(r,ms));
   for(let i=0;i<3;i++){if(G.hot)G.hot.dispatchEvent(new MouseEvent('click',{bubbles:true}));await w(700);}
   await w(500);};
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

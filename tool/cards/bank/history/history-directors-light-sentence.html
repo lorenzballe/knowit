@@ -9,7 +9,7 @@
 #pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
 #pic text{font-family:var(--body);fill:var(--k)}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{margin:0;font:500 max(1.9cqh,13px)/1.3 var(--body)}
+#why .body{margin:0;font:500 clamp(12px,2.15cqh,14px)/1.3 var(--body)}
 #why b{font-weight:800}
 .q,.say,.body,.keep{overflow-wrap:anywhere}
 </style>
@@ -20,7 +20,7 @@
     <div class="stagebox" id="stage">
       <svg id="pic" aria-label="A scale of prison years from 0 to 25"></svg>
       <div id="why" class="gone">
-        <p class="body"><b>Only 2.5 years,</b> and only for embezzling millions of dollars in government subsidies. Well connected to the state's top officials, he was never made to answer for the illegal confinement and the human rights violations.</p>
+        <p class="body"><b>Only 2.5 years,</b> for embezzling millions of dollars in government subsidies. Well connected to the state's top officials, he never answered for the illegal confinement and the human rights violations.</p>
       </div>
     </div>
     <div id="sure"></div>
@@ -54,30 +54,42 @@ function txt(svg, x, y, s, size, weight, anchor, fill) {
   if (fill) t.setAttribute('style', 'fill:' + fill);
   t.textContent = s; return t;
 }
-function clampX(x, s, size) {
-  const w = s.length * size * 0.56 / 2, {W} = geo;
-  return Math.max(w + 4, Math.min(W - w - 4, x));
+// A label centred on x, moved in so it never runs off either side.
+function clampX(t, x) {
+  let w = 0; try { w = t.getComputedTextLength(); } catch (_) {}
+  t.setAttribute('x', Math.max(w / 2 + 4, Math.min(geo.W - w / 2 - 4, x)));
 }
 
 function draw(animate) {
   const svg = Kit.$('pic');
-  const {W, H, f: f0} = Kit.fitSvg(svg);
-  const f = Math.max(12, Math.min(f0, H / 11, W / 22));
+  const {W, H} = Kit.fitSvg(svg);
   svg.innerHTML = '';
+  // The rows, in units of the type size f, around the track: the title and the guess above it, the
+  // numbers under it and, once it is known, the real sentence. The type is set by the width, made
+  // smaller only when the box is short, and the title goes first when even that is not enough. The
+  // height left over is shared out between the rows: the scale is drawn at its real size in the tall
+  // box of the start and in the shorter one the answer leaves it.
+  // A short box packs the rows closer: the guess nearer the track, the sentence beside its note.
+  const up = t => t ? 4.6 : 2.75, down = t => done ? (t ? 5.3 : 3.85) : 2.3;
+  let title = true, f = Math.min(W / 20, 16, (H - 2) / (up(true) + down(true)));
+  if (f < 12.5) { title = false; f = Math.min(W / 20, 16, (H - 2) / (up(false) + down(false))); }
+  f = Math.max(10.5, f);
+  const slack = Math.max(0, H - (up(title) + down(title)) * f);
+  const sTop = done ? slack * (title ? .1 : .2) : slack / 2, sMid = done && title ? slack * .3 : 0, sLow = done ? slack * (title ? .4 : .5) : 0;
   const pad = Math.max(f * 1.4, W * .07);
   const x0 = pad, x1 = W - pad;
-  const y = H * (done ? .46 : .52);
+  const y = sTop + up(title) * f + sMid;
   geo = {W, H, f, x0, x1, y};
   const X = v => x0 + (x1 - x0) * v / MAX;
 
-  txt(svg, W / 2, Math.max(f * .9, y - f * 5.2), 'Years in prison', f * 1.05, 800);
+  if (title) txt(svg, W / 2, y - f * 4.05 - sMid, 'Years in prison', f * 1.05, 800);
 
   // track
   Kit.mk('line', {x1: x0, y1: y, x2: x1, y2: y, stroke: 'var(--k)', 'stroke-width': f * .5, 'stroke-linecap': 'round', opacity: .18}, svg);
   for (let v = 0; v <= MAX; v += 1) {
     const big = v % 5 === 0;
     Kit.mk('line', {x1: X(v), y1: y + f * .45, x2: X(v), y2: y + f * (big ? 1 : .7), stroke: 'var(--k)', 'stroke-width': big ? 2 : 1, opacity: big ? .7 : .35}, svg);
-    if (big) txt(svg, X(v), y + f * 1.8, String(v), f * .9, 600, 'middle');
+    if (big) txt(svg, X(v), y + f * 1.8, String(v), Math.max(10, f * .9), 600, 'middle');
   }
 
   // guess
@@ -86,17 +98,22 @@ function draw(animate) {
   Kit.mk('line', {x1: X(g), y1: y - f * 1.5, x2: X(g), y2: y, stroke: gc, 'stroke-width': 2}, svg);
   Kit.mk('circle', {cx: X(g), cy: y, r: f * .95, fill: 'var(--c)', stroke: gc, 'stroke-width': f * .28}, svg);
   const gs = moved ? `your guess · ${fmt(g)} yrs` : 'drag me';
-  txt(svg, clampX(X(g), gs, f), y - f * 2.4, gs, f, 800);
+  clampX(txt(svg, X(g), y - f * (title ? 2.4 : 2.2), gs, f, 800), X(g));
 
   // real
   if (done) {
+    const yR = y + f * (title ? 3.5 : 3.3) + sLow, lx = Math.max(x0 - f * .4, 4);
     const bar = Kit.mk('line', {x1: x0, y1: y, x2: X(REAL), y2: y, stroke: RED, 'stroke-width': f * .7, 'stroke-linecap': 'round'}, svg);
     const pin = Kit.mk('g', {}, svg);
-    Kit.mk('line', {x1: X(REAL), y1: y, x2: X(REAL), y2: y + f * 2.6, stroke: RED, 'stroke-width': 2.5}, pin);
+    Kit.mk('line', {x1: X(REAL), y1: y, x2: X(REAL), y2: yR - f * .75, stroke: RED, 'stroke-width': 2.5}, pin);
     Kit.mk('circle', {cx: X(REAL), cy: y, r: f * .6, fill: RED}, pin);
-    const rs = 'real sentence · 2.5 yrs';
-    txt(svg, Math.max(x0 - f * .4, 4), y + f * 3.5, rs, f * 1.05, 800, 'start', RED);
-    txt(svg, Math.max(x0 - f * .4, 4), y + f * 5.4, 'for the money only', f * .85, 600, 'start');
+    const real = txt(svg, lx, yR, 'real sentence · 2.5 yrs', f * 1.05, 800, 'start', RED);
+    // Under it in a tall box; beside it, if there is room, in a short one.
+    if (title) txt(svg, lx, yR + f * 1.3, 'for the money only', f * .85, 600, 'start');
+    else {
+      const sub = txt(svg, W - 4, yR, 'for the money only', Math.max(10, f * .85), 600, 'end');
+      try { if (lx + real.getComputedTextLength() + f > W - 4 - sub.getComputedTextLength()) sub.remove(); } catch (_) {}
+    }
     if (animate && !Kit.calm) {
       gsap.from(bar, {attr: {x2: x0}, duration: .8, ease: 'power3.out'});
       gsap.from(pin, {opacity: 0, y: -f, duration: .5, delay: .4, ease: 'back.out(2)'});

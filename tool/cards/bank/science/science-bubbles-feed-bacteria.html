@@ -17,8 +17,8 @@
 #num{font-family:var(--mono);min-width:5ch;text-align:right}
 #air{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer;align-self:center;max-width:80%}
 #air:active{transform:scale(.97)}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{overflow-wrap:break-word}
+#why{font:500 max(1.9cqh,13px)/1.32 var(--body);margin:0;overflow-wrap:break-word}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Tap · watch">
   <div class="in">
@@ -29,7 +29,7 @@
       <div id="legend"><span><i style="background:#7be08a"></i>aerobic bacteria</span><span><i style="background:#c98a45"></i>organic matter</span><span><i style="background:#c48cff"></i>nitrogen compounds</span></div>
       <div id="meter"><span>Oxidized</span><div id="bar"><div id="fill"></div></div><span id="num">0/24</span></div>
       <button id="air">Blow air in from the base</button>
-      <div id="why" class="gone"><p class="big">Air for the bacteria</p><p class="body">The bubbles are air, blown in from the bottom of the tank. Some of the bacteria living there are aerobic: they need oxygen to stay alive. With that oxygen they oxidize the organic and nitrogen-rich matter in the sewage.</p></div>
+      <p class="body gone" id="why"><b>The bubbles are air for the bacteria,</b> blown in from the bottom of the tank. Some of the bacteria living there are aerobic: they need oxygen to stay alive. With it they oxidize the organic and nitrogen-rich matter in the sewage.</p>
     </div>
     <p class="say" id="say">Tap to pump air into the tank and watch the bacteria.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The bubbles are oxygen delivery for bacteria that clean the water.</div>
@@ -45,7 +45,7 @@ for (let i = 0; i < N; i++) parts.push({u: .08 + Kit.rnd() * .84, v: .14 + Kit.r
 // order in which they get eaten
 const order = parts.map((p, i) => i).sort(() => Kit.rnd() - .5);
 for (let i = 0; i < 8; i++) bugs.push({u: .1 + (i + .5) / 8 * .8 + (Kit.rnd() - .5) * .06, v: .25 + Kit.rnd() * .5, rot: Kit.rnd() * 180, el: null, body: null});
-let eaten = 0, taps = 0, done = false;
+let eaten = 0, taps = 0, done = false, finished = false;
 let G = null; // geometry
 
 function P(u, v) { return [G.x0 + u * G.w, G.y0 + v * G.h]; }
@@ -57,7 +57,10 @@ function draw() {
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * .85, 12);
   const pad = Math.max(W * .03, 6);
-  G = {x0: pad, y0: fs * 2.2, w: W - 2 * pad, h: H - fs * 2.2 - fs * 2.4, fs, W, H};
+  // In a short box the line under the tank gives its room to the tank: the diffusers and their
+  // bubbles show where the air comes in.
+  const lean = H < 150;
+  G = {x0: pad, y0: fs * 2.2, w: W - 2 * pad, h: Math.max(H - fs * 2.2 - fs * (lean ? .3 : 2.4), 20), fs, W, H};
   G.r = Math.max(Math.min(G.w, G.h) * .022, 4);
   const air = taps > 0;
   // status label above tank
@@ -71,7 +74,7 @@ function draw() {
   const yb = G.y0 + G.h - G.r * 1.2;
   Kit.mk('line', {x1: P(DIFF[0], 0)[0], x2: P(DIFF[4], 0)[0], y1: yb, y2: yb, stroke: '#9fb7c2', 'stroke-width': G.r * .7, 'stroke-linecap': 'round'}, svg);
   DIFF.forEach(u => Kit.mk('rect', {x: P(u, 0)[0] - G.r * 1.6, y: yb - G.r * .7, width: G.r * 3.2, height: G.r * 1.1, rx: G.r * .5, fill: '#dfe8ec'}, svg));
-  Kit.mk('text', {x: W / 2, y: G.y0 + G.h + fs * 1.6, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg).textContent = '↑ air blown in from the base ↑';
+  if (!lean) Kit.mk('text', {x: W / 2, y: G.y0 + G.h + fs * 1.6, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg).textContent = '↑ air blown in from the base ↑';
   // particles
   G.pl = Kit.mk('g', {}, svg);
   parts.forEach(p => {
@@ -88,6 +91,11 @@ function draw() {
     b.body = Kit.mk('rect', {x: -G.r * 2.2, y: -G.r * 1.05, width: G.r * 4.4, height: G.r * 2.1, rx: G.r * 1.05, fill: air ? '#7be08a' : '#6f7f86', stroke: air ? '#1f7a3e' : '#3a464b', 'stroke-width': G.r * .35}, b.el);
   });
   G.bub = Kit.mk('g', {}, svg);
+  // Once the story is told the air keeps coming: with motion reduced, a still column over each diffuser.
+  if (finished && Kit.calm) {
+    const yb = G.y0 + G.h - G.r * 1.6, step = (G.h - G.r * 3) / 4.4;
+    DIFF.forEach((u, i) => { for (let k = 0; k < 4; k++) Kit.mk('circle', {cx: P(u, 0)[0] + Math.sin(i * 3.7 + k * 2.3) * G.r * 1.5, cy: yb - (k + .55 + .35 * Math.sin(i * 2.1 + k * 1.7)) * step, r: G.r * (.45 + .2 * ((i + 2 * k) % 3)), fill: 'rgba(255,255,255,.25)', stroke: '#ffffff', 'stroke-width': 1.5}, G.bub); });
+  }
   setMeter();
 }
 
@@ -140,10 +148,17 @@ function tap() {
 }
 
 function finish() {
-  Kit.hide('air'); Kit.hide('say'); Kit.hide('legend');
+  // The story is told: the button, the hint, the key and the counter go, and the tank takes their room.
+  Kit.hide('air'); Kit.hide('say'); Kit.hide('legend'); Kit.hide('meter');
   Kit.show('why'); Kit.show('keep');
   Kit.haptic('success');
-  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+  finished = true;
+  if (Kit.calm) draw();
+  else {
+    gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+    const air = () => { bubbles(); gsap.delayedCall(1, air); };
+    air();
+  }
 }
 
 Kit.$('air').addEventListener('click', tap);

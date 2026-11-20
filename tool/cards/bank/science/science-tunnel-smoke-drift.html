@@ -9,7 +9,8 @@
 #pic{flex:1;min-height:0;width:100%;display:block}
 #opts{display:flex;flex-direction:column;gap:1cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{overflow-wrap:anywhere}
+#why .body{font:500 max(2.1cqh,13px)/1.42 var(--body);overflow-wrap:anywhere}
+#why .body b{font-weight:800}
 .opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 </style>
@@ -24,7 +25,7 @@
         <button class="opt" data-i="1">← Against the traffic</button>
         <button class="opt" data-i="2">Nowhere: it just rises and spreads</button>
       </div>
-      <div id="why" class="gone"><p class="big">With the traffic →</p><p class="body">Moving cars push the air ahead of them, so the tunnel's air flows the way they drive. The smoke rides that flow downstream. That's why you escape the other way, against the traffic.</p></div>
+      <div id="why" class="gone"><p class="body"><b>With the traffic.</b> Moving cars push the air ahead of them, and the smoke rides that flow downstream. That's why you escape the other way, against the traffic.</p></div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Watch the traffic, then bet where the smoke will go.</p>
@@ -56,7 +57,7 @@ function step(dt) {
   for (let i = 0; i < N; i++) {
     const p = P[i];
     p.age += dt;
-    if (p.age > p.life) { P[i] = spawn(); continue; }
+    if (p.age > p.life || p.x > 1.1) { P[i] = spawn(); continue; }
     if (p.y > .14) p.y += p.vy * dt; else p.vy = 0;
     p.vx += (S.wind - p.vx) * Math.min(1, dt * .9) + (Kit.rnd() - .5) * .02 * dt * (1 - S.wind * 5);
     p.x += p.vx * dt;
@@ -107,16 +108,19 @@ Kit.onShow.card = () => {
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * .8, 12);
-  const top = H * .14, road = H * .8, rx = Math.min(H * .1, W * .1);
+  // Measured in real pixels, so a short box keeps its words: a band above the tunnel for them,
+  // the roof, then the road at the foot; the tunnel itself takes the rest.
+  const top = fs * 1.75, roofH = Math.max(5, Math.min(H * .05, 10));
+  const roadH = Math.max(7, H * .07), road = H - roadH - Math.max(2, H * .03);
   // the hill the tunnel is bored through: a flat tint with a lumpy skyline
-  const hy = H * .035;
+  const hy = Math.min(H * .035, fs * .3);
   Kit.mk('path', {d: `M0 ${top}V${hy + H * .03}C${W * .12} ${hy} ${W * .22} ${hy - H * .02} ${W * .36} ${hy + H * .005}S${W * .6} ${hy + H * .03} ${W * .72} ${hy - H * .01}S${W * .92} ${hy + H * .01} ${W} ${hy + H * .025}V${top}Z`, fill: tint(14)}, svg);
   Kit.mk('text', {x: W * .03, y: top - fs * .5, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: INK}, svg).textContent = 'Traffic →';
   // road
-  Kit.mk('rect', {x: 0, y: road, width: W, height: H * .07, fill: INK}, svg);
-  Kit.mk('line', {x1: 0, x2: W, y1: road + H * .035, y2: road + H * .035, stroke: BG, 'stroke-width': Math.max(2, H * .006), 'stroke-dasharray': `${W * .05} ${W * .04}`}, svg);
-  // emergency exit: a green door with its sign
-  const dh = (road - top) * .38, dw = W * .07, dx = W * .05;
+  Kit.mk('rect', {x: 0, y: road, width: W, height: roadH, fill: INK}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: road + roadH / 2, y2: road + roadH / 2, stroke: BG, 'stroke-width': Math.max(2, H * .006), 'stroke-dasharray': `${W * .05} ${W * .04}`}, svg);
+  // emergency exit: a green door with its sign, the sign kept under the roof
+  const dh = Math.min((road - top) * .38, road - (top + roofH + 2 + fs * 1.9)), dw = W * .07, dx = W * .05;
   Kit.mk('rect', {x: dx, y: road - dh, width: dw, height: dh, rx: 2, fill: EXITGREEN}, svg);
   Kit.mk('circle', {cx: dx + dw * .78, cy: road - dh * .48, r: Math.max(1.5, dw * .07), fill: BG}, svg);
   const sw = Math.max(fs * 2.9, dw * 1.4);
@@ -126,7 +130,7 @@ Kit.onShow.card = () => {
   const cars = CARS.map(() => car(svg, cw, ch, INK));
   // crashed car, tipped over, with a flat flame on top
   const crash = car(svg, cw, ch, tint(45));
-  crash.setAttribute('transform', `translate(${W * .5 - cw / 2},${road + H * .03}) rotate(-12 ${cw / 2} 0)`);
+  crash.setAttribute('transform', `translate(${W * .5 - cw / 2},${road + roadH * .4}) rotate(-12 ${cw / 2} 0)`);
   const fx = W * .5, fb = road - ch * .25, fh = ch * .85, fw = ch * .34;
   Kit.mk('path', {d: `M${fx - fw} ${fb}C${fx - fw * 1.3} ${fb - fh * .45} ${fx - fw * .2} ${fb - fh * .55} ${fx - fw * .1} ${fb - fh}C${fx + fw * .5} ${fb - fh * .7} ${fx + fw * 1.4} ${fb - fh * .4} ${fx + fw} ${fb}Z`, fill: '#e8572a'}, svg);
   Kit.mk('path', {d: `M${fx - fw * .45} ${fb}C${fx - fw * .6} ${fb - fh * .3} ${fx - fw * .1} ${fb - fh * .35} ${fx} ${fb - fh * .6}C${fx + fw * .3} ${fb - fh * .35} ${fx + fw * .7} ${fb - fh * .25} ${fx + fw * .45} ${fb}Z`, fill: '#f4c542'}, svg);
@@ -140,7 +144,7 @@ Kit.onShow.card = () => {
   const puffs = P.map(() => Kit.mk('circle', {fill: tint(55), r: 0}, frontG));
   const ol = Math.max(1.5, H * .006);
   // tunnel roof, drawn over the smoke so the cloud sits under it
-  Kit.mk('rect', {x: 0, y: top, width: W, height: H * .05, fill: INK}, svg);
+  Kit.mk('rect', {x: 0, y: top, width: W, height: roofH, fill: INK}, svg);
   const al = W * .06;
   const arrows = ARROWS.map(() => {
     const g = Kit.mk('g', {opacity: 0}, svg);
@@ -151,7 +155,8 @@ Kit.onShow.card = () => {
   const m = Kit.mk('g', {opacity: 0}, svg), ms = (road - top) * .22;
   Kit.mk('circle', {cx: 0, cy: -ms, r: ms * .14, fill: INK}, m);
   Kit.mk('path', {d: `M0 ${-ms * .85}V${-ms * .4}M0 ${-ms * .4}L${-ms * .2} 0M0 ${-ms * .4}L${ms * .2} 0M0 ${-ms * .72}L${-ms * .25} ${-ms * .5}M0 ${-ms * .72}L${ms * .2} ${-ms * .55}`, stroke: INK, 'stroke-width': Math.max(2, ms * .1), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'}, m);
-  const airLbl = Kit.mk('text', {x: W * .97, y: H * .97, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: INK, opacity: 0}, svg);
+  // what pushes the smoke, once it is told: on the band above the tunnel, beside the traffic
+  const airLbl = Kit.mk('text', {x: W * .97, y: top - fs * .5, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: INK, opacity: 0}, svg);
   airLbl.textContent = 'air pushed along by cars →';
   G = {W, H, top, road, cars, puffs, backs, ol, arrows, man: m, cw, airLbl, al};
   render();
@@ -173,7 +178,7 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
   Kit.answer({choice: said, correct: ok, sure: pct});
   Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  sure.grade(ok, pct);
   Kit.show('keep');
   reveal();
 });

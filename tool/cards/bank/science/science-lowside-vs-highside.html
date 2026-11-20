@@ -12,9 +12,8 @@
 .sw button{flex:1;font:700 max(2.1cqh,14px)/1.15 var(--body);border:0;border-radius:1.8cqh;padding:1.2cqh 2cqw;background:transparent;color:var(--k);cursor:pointer;overflow-wrap:anywhere}
 .sw button small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.3cqh}
 .sw button.on{background:var(--k);color:var(--c)}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display)}
-#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+#why{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Switch · compare">
   <div class="in">
@@ -28,7 +27,7 @@
       </div>
     </div>
     <p class="say" id="say">Flip between the two crashes and watch the rear tyre.</p>
-    <div id="why" class="gone"><p class="big">Slide out vs. thrown off</p><p class="body">Low-side: the rear tyre loses grip and the bike drops to the inside, so you slide. High-side: the tyre slides, then suddenly grips again, and the bike flicks you up and over. Rossi says the one with the gas closed throws you higher and harder; he was hurt that way at Mugello, at 180 km/h on a cold tyre.</p></div>
+    <p class="body gone" id="why"><b>Low-side:</b> the rear tyre loses grip, the bike drops to the inside and you slide. <b>High-side:</b> it slides, then suddenly grips again, and the bike flicks you up and over. Rossi says the one with the gas closed throws you higher and harder: it hurt him at Mugello, at 180 km/h on a cold tyre.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Low-side: grip goes and you slide. High-side: grip comes back and you fly.</div>
     <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)</span></div>
   </div>
@@ -61,11 +60,14 @@ function reset(){
 function draw(){
   const r = Kit.fitSvg(svg); W = r.W; H = r.H; f = Math.max(r.f, 13);
   svg.innerHTML = '';
-  G = H * 0.82; u = Math.min(W / 130, H / 80); cx = W * 0.34;
+  // A short box (the answer in, on a small phone): the caption gives its row to the picture, the two
+  // sides of the bend are written inside the ground's band, and the bike and rider take the height left.
+  const short = H < 140;
+  G = short ? H - f * 1.7 : H * 0.82; u = short ? Math.min(W / 130, (G - 4) / 42) : Math.min(W / 130, H / 80); cx = W * 0.34;
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
   mk('rect', {x: 0, y: G, width: W, height: H - G, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent)'});
   mk('line', {x1: 0, x2: W, y1: G, y2: G, style: 'stroke:var(--k);stroke-width:2'});
-  const lab = (x, anchor, t) => { const e = mk('text', {x, y: G + f * 1.5, 'text-anchor': anchor, style: `font:600 ${f * .85}px var(--body);fill:var(--k);opacity:.6`}); e.textContent = t; };
+  const lab = (x, anchor, t) => { const e = mk('text', {x, y: G + f * (short ? 1.2 : 1.5), 'text-anchor': anchor, style: `font:600 ${f * .85}px var(--body);fill:var(--k);opacity:.6`}); e.textContent = t; };
   lab(8, 'start', '← inside of bend'); lab(W - 8, 'end', 'outside →');
   el.skid = mk('line', {x1: cx, x2: cx, y1: G - 1, y2: G - 1, style: `stroke:${ACC};stroke-width:${Math.max(3, u * 1.2)};stroke-linecap:round;opacity:.85`});
   // trail dots for the high-side flight
@@ -73,7 +75,7 @@ function draw(){
   const tg = mk('g', {});
   const a = 25 * Math.PI / 180;
   const lx = cx + W * .06 + Math.sin(a) * 26 * u, ly = G - Math.cos(a) * 26 * u;
-  const ex = W - 13 * u, ey = G - 3 * u, peak = f * 2.4 + 22 * u;
+  const ex = W - 13 * u, ey = G - 3 * u, peak = short ? Math.max(4 + 12 * u, G - 34 * u) : f * 2.4 + 22 * u;
   const qx = (lx + ex) / 2, qy = 2 * peak - (ly + ey) / 2;
   fly = {lx, ly, ex, ey, peak};
   for (let i = 1; i <= 16; i++){
@@ -94,13 +96,15 @@ function draw(){
   mk('circle', {cx: 0, cy: -17 * u, r: 4.6 * u, style: 'fill:#fff;stroke:var(--k);stroke-width:2'}, el.rider);
   mk('rect', {x: -1 * u, y: -21.6 * u, width: 2 * u, height: 9.2 * u, style: `fill:${ACC}`}, el.rider);
   el.status = mk('text', {x: W / 2, y: f * 1.3, 'text-anchor': 'middle', style: `font:700 ${f * 1.05}px var(--body);fill:var(--k)`});
+  if (short) el.status.setAttribute('display', 'none');
   if (mode){ build(mode); tl.progress(1); render(); }
   else { reset(); status('Seen from behind, leaning left'); render(); }
 }
 function done(){
   seen.add(mode);
   if (seen.size === 2 && !finished){
-    finished = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    // Both crashes seen, the story is told: the switch goes and the picture takes its room.
+    finished = true; Kit.hide('say'); Kit.hide('sw'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
   }
 }
 function build(m){

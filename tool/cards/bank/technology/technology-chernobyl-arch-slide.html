@@ -45,14 +45,19 @@ function draw() {
   const {W, H, f} = Kit.fitSvg(svg);
   if (W < 10 || H < 10) return;
   const fs = Math.max(12, Math.min(f * 0.85, H * 0.06));
-  const gy = H - fs * 3.6;
-  const sx0 = W * .08, sx1 = W * .44, sw = sx1 - sx0;
-  const s = W * .46, t = Math.max(6, W * .032);
+  // Under the rails each name takes two lines, or one when the box is short (the answer in).
+  const one = H < fs * 14;
+  const gy = H - fs * (one ? 2.2 : 3.6);
+  // The arch keeps its shape: in a short box the whole scene is drawn smaller, never squashed flat.
+  const k = Math.max(.4, Math.min(1, (gy - fs * 2.2) / (W * .46 * .78)));
+  const sx0 = W * .08, sw = W * .36 * k, sx1 = sx0 + sw;
+  const s = W * .46 * k, t = Math.max(5, W * .032 * k);
   const endCx = (sx0 + sx1) / 2, startCx = W - s / 2 - W * .02;
-  const h = Math.max(40, Math.min(gy - fs * 2.2, s * .78));
+  const h = Math.max(30, Math.min(gy - fs * 2.2, s * .78));
   const hs = h * .55;
   G = {W, H, fs, gy, sx0, sx1, sw, s, t, endCx, startCx, h};
-  const txt = (x, y, str, extra = '') => { const e = Kit.mk('text', {x, y, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);letter-spacing:.06em;fill:var(--k);${extra}`}, svg); e.textContent = str; return e; };
+  // A name stays whole inside the picture, however narrow the box.
+  const txt = (x, y, str, extra = '') => { const e = Kit.mk('text', {x, y, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);letter-spacing:.06em;fill:var(--k);${extra}`}, svg); e.textContent = str; let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} if (w) e.setAttribute('x', Math.max(w / 2 + 2, Math.min(W - w / 2 - 2, x))); return e; };
 
   // ground and rails
   Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
@@ -78,11 +83,20 @@ function draw() {
   });
 
   // ground labels
-  txt(endCx, gy + fs * 1.6, 'OLD');
-  txt(endCx, gy + fs * 2.95, 'SARCOPHAGUS');
   G.built = Kit.mk('g', {}, svg);
-  const b1 = txt(startCx, gy + fs * 1.6, 'BUILT'), b2 = txt(startCx, gy + fs * 2.95, 'NEXT DOOR');
-  G.built.append(b1, b2);
+  if (one) {
+    txt(endCx, gy + fs * 1.55, 'OLD SARCOPHAGUS');
+    G.built.append(txt(startCx, gy + fs * 1.55, 'BUILT NEXT DOOR'));
+  } else {
+    txt(endCx, gy + fs * 1.6, 'OLD');
+    txt(endCx, gy + fs * 2.95, 'SARCOPHAGUS');
+    G.built.append(txt(startCx, gy + fs * 1.6, 'BUILT'), txt(startCx, gy + fs * 2.95, 'NEXT DOOR'));
+  }
+  // Once it is over, where it was built: its outline, and which way it went.
+  G.ghost = Kit.mk('g', {style: `opacity:${done ? 1 : 0}`}, svg);
+  Kit.mk('path', {d: `M${startCx - s / 2} ${gy} A${s / 2} ${h} 0 0 1 ${startCx + s / 2} ${gy}`, style: 'fill:none;stroke:var(--k);stroke-width:2.2;stroke-dasharray:5 6;stroke-linecap:round;opacity:.5'}, G.ghost);
+  const ay = gy - h * .42, aw = Math.min(s * .2, fs * 1.6);
+  Kit.mk('path', {d: `M${startCx + aw * .45} ${ay - aw * .5} L${startCx - aw * .55} ${ay} L${startCx + aw * .45} ${ay + aw * .5} Z`, style: 'fill:var(--k);opacity:.55'}, G.ghost);
 
   // the arch, drawn at its final spot and translated
   const A = Kit.mk('g', {}, svg); G.arch = A;
@@ -117,7 +131,7 @@ function setP(v) {
   const cover = clamp(ov / G.sw, 0, 1);
   G.leaks.forEach(L => L.g.style.opacity = Math.abs(L.x - cx) < half - 2 ? .08 : 1);
   G.hint.style.opacity = done ? 0 : clamp(1 - p * 6, 0, 1);
-  G.built.style.opacity = p > .02 ? .45 : 1;
+  G.built.style.opacity = done ? .8 : p > .02 ? .45 : 1;
   Kit.$('fill').style.width = (cover * 100) + '%';
   Kit.$('pct').textContent = Math.round(cover * 100) + '%';
   if (!done && cover > .995) finish();
@@ -126,7 +140,9 @@ function setP(v) {
 function finish() {
   done = true; Kit.haptic('success');
   Kit.$('pct').textContent = '100% ✓';
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  // The lid is on: the meter has said all it had to, and the picture takes its room.
+  Kit.hide('say'); Kit.hide('meter'); Kit.show('why'); Kit.show('keep');
+  if (G && G.ghost) G.ghost.style.opacity = 1;
   if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
 }
 

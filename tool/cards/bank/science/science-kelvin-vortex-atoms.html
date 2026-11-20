@@ -10,9 +10,10 @@
 #pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
 #ctl{display:flex;align-items:center;gap:3cqw}
 #zoom{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 6cqw;cursor:pointer}
-#steps{font:700 max(1.7cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#steps{font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--k);opacity:.6}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{overflow-wrap:break-word}
+#why .body{margin:0;overflow-wrap:break-word}
+#why .body b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Zoom in · step by step">
   <div class="in">
@@ -21,7 +22,7 @@
     <div class="stagebox" id="stage">
       <svg id="pic"></svg>
       <div id="ctl"><button id="zoom">Zoom in ›</button><span id="steps">1 / 4</span></div>
-      <div id="why" class="gone"><p class="big">Atoms as knotted smoke rings of ether</p><p class="body">Tait's smoke rings held their shape, and a vortex ring in a perfect fluid should last forever. So Kelvin said atoms are tiny vortex rings in the ether, and each kind of knot makes a different element.</p></div>
+      <div id="why" class="gone"><p class="body"><b>Atoms as knotted smoke rings of ether.</b> Tait's smoke rings held their shape, and a vortex ring in a perfect fluid should last forever.</p></div>
     </div>
     <p class="say" id="say">Tap Zoom in to go from a smoke box down to an atom.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Kelvin, 1867: an atom is a knotted, spinning ring of ether.</div>
@@ -39,9 +40,9 @@ function txt(p, x, y, s, opt = {}) {
     style: `font:${opt.w || 700} ${opt.size || fs}px var(--body);fill:${opt.fill || INK};${opt.op ? 'opacity:' + opt.op : ''}`}, p);
   t.textContent = s; return t;
 }
-function caption(g, a, b) {
-  txt(g, W / 2, fs * 1.3, a, {size: fs * 1.15});
-  if (b) txt(g, W / 2, fs * 2.75, b, {w: 500, op: .7});
+function caption(g, a, b, oy = 0) {
+  txt(g, W / 2, oy + fs * 1.3, a, {size: fs * 1.15});
+  if (b) txt(g, W / 2, oy + fs * 2.75, b, {w: 500, op: .7});
 }
 function spin(p, x, y, r, dir, sw) {
   const o = M('g', {transform: `translate(${x},${y})`}, p);
@@ -112,10 +113,11 @@ function trefoil(n) {
 function s3() {
   const g = M('g', {}, Kit.$('pic'));
   const full = H >= fs * 12;
-  caption(g, 'Each knot, one element', full ? 'Tie the ring a new way: new atom' : null);
   const capB = full ? fs * 3.4 : fs * 1.9, below = full ? fs * 3.5 : fs * 2.0;
   const room = Math.max(8, H - capB - below);
-  const r = Math.max(4, Math.min(W / 6 * .78, H * .2, room / 2 - 2)), cy = capB + room / 2, sw = Math.max(r < 12 ? 2 : 5, r * .15);
+  const r = Math.max(4, Math.min(W / 6 * .9, H * .22, room / 2 - 2)), sw = Math.max(r < 12 ? 2 : 5, r * .15);
+  const oy = Math.max(0, (room - 2 * r - fs * 1.2) / 2), cy = oy + capB + fs * .6 + r;
+  caption(g, 'Each knot, one element', full ? 'Tie the ring a new way: new atom' : null, oy);
   const ink = `fill:none;stroke:${INK};stroke-width:${sw};stroke-linecap:round`;
   const under = `fill:none;stroke:${BG};stroke-width:${sw + 7};stroke-linecap:round`;
   const cols = [W / 6, W / 2, W * 5 / 6], names = ['plain ring', 'linked', 'knotted'], el = ['element A', 'element B', 'element C'];
@@ -144,10 +146,12 @@ function s3() {
   return [g, `${W / 2} ${cy}`];
 }
 
+let seen = '';
 function draw() {
   loops.forEach(t => t.kill()); loops = [];
   const svg = Kit.$('pic'); svg.innerHTML = '';
-  ({W, H} = Kit.fitSvg(svg)); fs = Math.max(12, Math.min(H * .05, W * .042));
+  ({W, H} = Kit.fitSvg(svg));
+  seen = `${Math.round(W)}x${Math.round(H)}`; fs = Math.max(12, Math.min(H * .05, W * .042));
   const out = [s0(), s1(), s2(), s3()];
   scenes = out.map(o => o[0]); origins = out.map(o => o[1]);
   scenes.forEach((g, i) => { g.style.opacity = i === step ? 1 : 0; g.style.visibility = i === step ? 'visible' : 'hidden'; });
@@ -183,6 +187,7 @@ Kit.play.card = async () => {
   for (let i = 0; i < 3; i++) { Kit.$('zoom').click(); await w(1100); }
   await w(600);
 };
+new ResizeObserver(() => { const b = Kit.$('pic').getBoundingClientRect(); if (b.height > 1 && !busy && `${Math.round(b.width)}x${Math.round(b.height)}` !== seen) draw(); }).observe(Kit.$('pic'));
 Kit.single();
 </script>
 </html>

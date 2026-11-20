@@ -11,8 +11,8 @@
 #skill{width:100%;margin:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
 .ends{display:flex;justify-content:space-between;gap:3cqw;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--k);opacity:.8}
 .ends span:last-child{text-align:right}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{overflow-wrap:break-word}
+#why{font:500 max(1.9cqh,13px)/1.32 var(--body);margin:0;overflow-wrap:break-word}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="life" data-kind="Drag · watch">
   <div class="in">
@@ -24,7 +24,7 @@
         <input data-drag id="skill" type="range" min="0" max="100" value="8" aria-label="Skills, know-how and mindset">
         <div class="ends"><span>Gold only</span><span>Gold + skills · know-how · mindset</span></div>
       </div>
-      <div id="why" class="gone"><p class="body">Money and beauty do make a difference, but they only count if you know how to use them. Without skills, know-how and the right mindset, others take them from you. Build yourself first, and your chances of getting money and the rest go up with it.</p></div>
+      <p class="body gone" id="why"><b>Money and beauty do matter, but only if you know how to use them.</b> Without skills, know-how and the right mindset, others take them from you. Build yourself first, and your chances of getting money and the rest go up with it.</p>
     </div>
     <p class="say" id="say">Drag the slider: same bag of gold, more skill and mindset.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Gold is only a tool; the strength has to be yours.</div>
@@ -39,12 +39,15 @@ let s = 0.08, angle = 0.6, G = null, revealed = false, ticking = false, acc = 0;
 function draw(){
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const u = Math.min(W / 9.4, H / 7);
+  // In a short, wide box (once the answer is in) the verdict moves to the top left and the figure
+  // takes the whole height, the wolf's circle still inside the width.
+  const low = H < W * 0.5, fz = Math.max(f * 1.15, 15);
+  const u = low ? Math.min(W / 11.5, H / 5.75) : Math.min(W / 9.4, H / 7);
   const cx = W * 0.5, gy = H - 1.15 * u, sw = 0.22 * u;
   const mk = (t, a, p) => Kit.mk(t, a, p);
-  const g = {u, cx, gy, W, H};
-  g.status = mk('text', {x: cx, y: 0.95 * u, 'text-anchor': 'middle', fill: 'var(--k)',
-    style: `font:700 ${Math.max(f * 1.15, 15)}px var(--display)`}, svg);
+  const g = {u, cx, gy, W, H, low};
+  g.status = mk('text', {x: low ? 0 : cx, y: low ? fz * 0.95 : 0.95 * u, 'text-anchor': low ? 'start' : 'middle', fill: 'var(--k)',
+    style: `font:700 ${fz}px var(--display)`}, svg);
   g.ring = mk('ellipse', {cx, cy: gy, fill: 'color-mix(in srgb, var(--k) 8%, transparent)', stroke: 'var(--k)',
     'stroke-width': 0.08 * u, 'stroke-dasharray': `${0.25 * u} ${0.18 * u}`}, svg);
   g.back = mk('g', {}, svg);
@@ -88,7 +91,8 @@ function place(){
   G.ring.setAttribute('opacity', 0.2 + 0.8 * s);
   G.upper.setAttribute('transform', `rotate(${(1 - s) * 16},0,${-1.7 * u})`);
   G.bag.setAttribute('transform', `translate(${1.0 * u},${-2.1 * u}) scale(${0.9 + 0.3 * s})`);
-  const R = sr + 1.45 * u, sn = Math.sin(angle);
+  // The wolf keeps its distance, but its circle stays on the card: its nose never past the card's edge.
+  const R = Math.min(sr + 1.45 * u, G.W / 2 + 22 - 1.2 * u), sn = Math.sin(angle);
   const x = cx + R * Math.cos(angle), y = gy + 0.22 * R * sn;
   const k = 0.82 + 0.18 * sn, dir = sn < 0 ? 1 : -1;
   const layer = sn < 0 ? G.back : G.front;
@@ -100,7 +104,7 @@ function place(){
 
 function coin(out){
   if (!G || Kit.calm) return;
-  const {u, cx, gy, W} = G;
+  const {u, cx, gy, W, low} = G;
   const c = Kit.mk('circle', {r: 0.17 * u, fill: GOLD, stroke: GOLD_D, 'stroke-width': 0.05 * u}, G.coins);
   const bx = cx + 1.0 * u, by = gy - 1.4 * u;
   if (out){
@@ -111,9 +115,11 @@ function coin(out){
       .to(c, {attr: {cy: gy + 0.25 * u}, duration: .8, ease: 'bounce.out'}, 0)
       .to(c, {opacity: 0, duration: .4}, .9);
   } else {
-    gsap.set(c, {attr: {cx: Kit.rnd() * W, cy: -0.3 * u}});
+    // Coins come in from the top of the picture, never from over the question above it.
+    gsap.set(c, {attr: {cx: (low ? 0.4 + 0.6 * Kit.rnd() : Kit.rnd()) * W, cy: 0.2 * u}, opacity: 0});
     gsap.timeline({onComplete: () => c.remove()})
-      .to(c, {attr: {cx: bx, cy: by}, duration: .9, ease: 'power2.in'})
+      .to(c, {opacity: 1, duration: .2}, 0)
+      .to(c, {attr: {cx: bx, cy: by}, duration: .9, ease: 'power2.in'}, 0)
       .to(c, {opacity: 0, duration: .15});
   }
 }
@@ -130,7 +136,8 @@ function tick(t, delta){
 function reveal(){
   if (revealed) return; revealed = true;
   Kit.haptic('success');
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  // The story is told: the slider goes, and the picture takes its room.
+  Kit.hide('say'); Kit.hide('ctl'); Kit.show('why'); Kit.show('keep');
   draw();
 }
 
@@ -155,6 +162,8 @@ Kit.play.card = async () => {
   r.value = 100; r.dispatchEvent(new Event('input', {bubbles: true}));
   await new Promise(z => setTimeout(z, 700));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) draw(); seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
