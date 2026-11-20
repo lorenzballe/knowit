@@ -16,6 +16,7 @@ import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/ui.dart';
+import '../widgets/web/web_card_page.dart';
 import 'today_done_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
@@ -181,8 +182,43 @@ class _TodayScreenState extends State<TodayScreen> {
   /// opened on: the word Today, the streak beside it, the bars, the deck.
   Widget _reading(BuildContext context, {required Key key}) {
     final app = widget.app;
-    return Padding(
+    return Stack(
       key: key,
+      clipBehavior: Clip.none,
+      children: [
+        // The table takes a breath of the colour of the card in front, the
+        // way the shelf's ground answers its front card once the day is
+        // read: black with the card's colour in it, never a second colour.
+        // It runs past this screen's own room, over the status bar and
+        // under the tab bar, so the table has no seam where the shell's
+        // room for them begins; the page clips it at the glass.
+        Positioned(
+          left: 0,
+          right: 0,
+          top: -_Tint.reach,
+          bottom: -_Tint.reach,
+          child: _Tint(colour: _frontColour(app)),
+        ),
+        _table(context),
+      ],
+    );
+  }
+
+  /// The colour of the card in front: a free card's own ground where its
+  /// page has one, its subject's otherwise, and behind the card after the
+  /// fifth the spectrum's violet, as on the shelf.
+  static Color _frontColour(AppState app) {
+    final List<Pill> deck = app.todaysDeck;
+    final int at = app.todayIndex;
+    if (at >= deck.length) return kSpectrum[9];
+    final Pill pill = deck[at];
+    return pill.hasPage ? groundOf(pill) : pill.color;
+  }
+
+  /// The word Today, the bars and the deck.
+  Widget _table(BuildContext context) {
+    final app = widget.app;
+    return Padding(
       // The sides come from the deck's own constant, so Today and the
       // re-read cannot drift apart again.
       padding: const EdgeInsets.fromLTRB(kDeckMargin, 10, kDeckMargin, 8),
@@ -508,6 +544,53 @@ class _SwipeHint extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// The table while the five are read, washed with the front card's colour.
+///
+/// It was black and still, so that the card was the only colour on the
+/// screen. It still is the only colour: this is that colour, an eighth of
+/// it, thrown on the ground the card stands on, brightest beside the card
+/// and falling away towards the top and the foot of the screen, so the
+/// phone reads as lit by the card rather than framed in black. The colour
+/// crosses over when the next card comes to the front, as the shelf's glow
+/// does, and holds still otherwise.
+class _Tint extends StatelessWidget {
+  const _Tint({required this.colour});
+
+  final Color colour;
+
+  /// How far past its screen the wash runs, above and below.
+  static const double reach = 400;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool still = MediaQuery.disableAnimationsOf(context);
+    return IgnorePointer(
+      child: TweenAnimationBuilder<Color?>(
+        key: const ValueKey('table-tint'),
+        tween: ColorTween(end: colour),
+        duration: Duration(milliseconds: still ? 0 : 550),
+        curve: Curves.easeOut,
+        builder: (context, lit, _) {
+          final Color c = lit ?? colour;
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                radius: 0.9,
+                colors: [
+                  c.withValues(alpha: 0.13),
+                  c.withValues(alpha: 0.11),
+                  c.withValues(alpha: 0.07),
+                ],
+                stops: const [0, 0.62, 1],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

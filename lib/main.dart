@@ -1794,7 +1794,9 @@ class _AstutoShellState extends State<AstutoShell>
         // Still, and black. The drifting light belongs to the onboarding,
         // which is a pitch and can afford atmosphere; this is the thing
         // itself, and a tool reads as well made when it holds still. The
-        // cards are the only colour, which is the whole idea.
+        // cards are the only colour, which is the whole idea: the table on
+        // Today takes an eighth of the front card's own, and it holds as
+        // still as the card does (TodayScreen's wash).
         backgroundColor: context.p.surface,
         // The body runs the whole height, under the tab bar, and each
         // screen puts the bar's height back as padding — so nothing moves,
