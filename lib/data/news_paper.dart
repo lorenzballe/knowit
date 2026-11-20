@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../cloud.dart';
 import '../models/pill.dart';
+import '../models/scenes/news.dart';
 import '../sync/served.dart' show kFunctionsRegion;
 import 'card_json.dart';
 import 'pills_repository.dart' show dealableOn;
@@ -48,6 +49,45 @@ abstract final class NewsPaper {
     for (final Pill p in _cards)
       if (dealableOn(p, day)) p,
   ];
+
+  /// Days a news card is dealt after the news it tells (FRESH_DAYS in
+  /// functions/src/news.ts): its news is its last day less these.
+  static const int dealtDays = 3;
+
+  /// How far back Explore's latest news reaches: the stories of these days
+  /// and weeks, not only the morning's.
+  static const int latestDays = 14;
+
+  /// The day of the news [p] tells, or null for a card that is no news.
+  static DateTime? dayOf(Pill p) {
+    final scene = p.scene;
+    if (scene is! NewsScene) return null;
+    return scene.expires.subtract(const Duration(days: dealtDays));
+  }
+
+  /// The stories of the last [latestDays] days on [day], the newest first:
+  /// Explore's latest news. A story still told there may be past the days
+  /// it is dealt in a reader's five.
+  static List<Pill> latest(DateTime day) {
+    final DateTime from = DateTime(
+      day.year,
+      day.month,
+      day.day,
+    ).subtract(const Duration(days: latestDays));
+    final List<Pill> out = [
+      for (final Pill p in _cards)
+        if (dayOf(p) case final DateTime d when !d.isBefore(from)) p,
+    ];
+    // Newest first; a day's stories in the paper's own order.
+    final Map<String, int> at = {
+      for (int i = 0; i < _cards.length; i++) _cards[i].id: i,
+    };
+    out.sort((a, b) {
+      final int byDay = dayOf(b)!.compareTo(dayOf(a)!);
+      return byDay != 0 ? byDay : at[a.id]!.compareTo(at[b.id]!);
+    });
+    return out;
+  }
 
   /// A card of the paper by id, current or not.
   static Pill? byId(String id) => _byId[id];

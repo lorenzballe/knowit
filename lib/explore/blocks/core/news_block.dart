@@ -8,14 +8,15 @@ import '../../../widgets/explore/card_tiles.dart';
 import '../../explore_block.dart';
 import 'layout.dart';
 
-/// The news, reasoned: this morning's paper (lib/data/news_paper.dart), the
-/// day's stories as a shelf of cards like every other shelf on Explore: a
-/// row of tiles, each the story's card in its subject's colour with its
-/// question, a tap from the deck, three taps from what happened to why.
+/// The latest news, reasoned: the stories of the last two weeks' papers
+/// (lib/data/news_paper.dart, [NewsPaper.latest]), the newest first, as a
+/// shelf of cards like every other shelf on Explore: a row of tiles, each the
+/// story's card in its subject's colour with its question, a tap from the
+/// deck, three taps from what happened to why.
 ///
-/// On Explore for every subject the whole paper; on a subject's page only
-/// its stories, and nothing when it has none. A paper whose cards have all
-/// expired is no paper.
+/// On Explore for every subject all of them; on a subject's page only its
+/// own stories, and nothing when it has none. No story in the last two
+/// weeks, no section.
 class NewsBlock extends ExploreBlock with SectionLayout {
   const NewsBlock();
 
@@ -31,7 +32,7 @@ class NewsBlock extends ExploreBlock with SectionLayout {
     final AppState app = host.app;
     final String? subject = host.subject;
     final List<Pill> cards = [
-      for (final Pill p in NewsPaper.on(app.today))
+      for (final Pill p in NewsPaper.latest(app.today))
         if (subject == null || p.topic == subject) p,
     ];
     if (cards.isEmpty) return null;

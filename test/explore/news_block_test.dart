@@ -208,6 +208,26 @@ void main() {
     expect(find.text('The news, reasoned'), findsNothing);
   });
 
+  test('the latest news reach back two weeks, newest first, past the days '
+      'a story is dealt; older ones are gone', () {
+    final DateTime day = DateTime(2026, 11, 20, 9);
+    NewsPaper.adopt('2026-11-18', [
+      _card('news-2026-11-18-b', date: '2026-11-18', expires: '2026-11-21'),
+      _card('news-2026-11-10-a', date: '2026-11-10', expires: '2026-11-13'),
+      _card('news-2026-10-30-old', date: '2026-10-30', expires: '2026-11-02'),
+    ]);
+    expect(
+      NewsPaper.dayOf(PillBank.byId('news-2026-11-10-a')!),
+      DateTime(2026, 11, 10),
+    );
+    expect(
+      [for (final p in NewsPaper.latest(day)) p.id],
+      ['news-2026-11-18-b', 'news-2026-11-10-a'],
+    );
+    // In a reader's five only what is still dealt.
+    expect([for (final p in NewsPaper.on(day)) p.id], ['news-2026-11-18-b']);
+  });
+
   testWidgets('a story read is ticked as on every shelf; a paper of expired '
       'cards, or none, is no section', (tester) async {
     final app = await _app({

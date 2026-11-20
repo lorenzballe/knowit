@@ -46,7 +46,7 @@ import { ALL_PER_DAY, MODEL, MONTH_BUDGET_USD, PER_DAY, SHARED, answer as answer
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
 import { coachNote, readCoach } from './coach.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
-import { NEWS_MODEL, NEWS_MONTH_BUDGET_USD, askModel, fetchText, makePaper } from './news.js';
+import { NEWS_LATEST_DAYS, NEWS_MODEL, NEWS_MONTH_BUDGET_USD, askModel, fetchText, makePaper } from './news.js';
 import { search as searchBank } from './search.js';
 import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, pruneReader, readPlace, readReader, serveDay, serveExplore } from './serve.js';
 import { currentWithheld, runScorecard, withheld } from './scorecard.js';
@@ -249,16 +249,30 @@ export const newsMorning = onSchedule(
   },
 );
 
-/** The newest paper with something in it, for the phone: its day and its
- * cards, in the bank's own shape. Open to every reader. */
+/** The latest news, for the phone: the stories of the last two weeks'
+ * papers, the newest paper first, each story once, in the bank's own shape,
+ * with the day of the newest paper that has any. Explore shows them all as
+ * its latest news, each subject's page its own; a build that knows only the
+ * morning's paper keeps showing the cards still dealt. Open to every reader. */
 export const newsToday = onCall({ enforceAppCheck: false, maxInstances: 10, memory: '256MiB' }, async () => {
-  const recent = await db.collection('news').orderBy('date', 'desc').limit(4).get();
-  const doc = recent.docs.find((d) => {
-    const cards = d.get('cards');
-    return Array.isArray(cards) && cards.length > 0;
-  });
-  if (!doc) return { date: null, cards: [] };
-  return { date: doc.get('date') ?? null, cards: doc.get('cards') };
+  const recent = await db.collection('news').orderBy('date', 'desc').limit(NEWS_LATEST_DAYS).get();
+  let date: string | null = null;
+  const seen = new Set<string>();
+  const cards: unknown[] = [];
+  for (const doc of recent.docs) {
+    const list = doc.get('cards');
+    if (!Array.isArray(list) || list.length === 0) continue;
+    date ??= doc.get('date') ?? null;
+    for (const card of list) {
+      const id = (card as { id?: unknown })?.id;
+      if (typeof id === 'string') {
+        if (seen.has(id)) continue;
+        seen.add(id);
+      }
+      cards.push(card);
+    }
+  }
+  return { date, cards };
 });
 
 // ── The pool, asked a question ───────────────────────────────────────────
