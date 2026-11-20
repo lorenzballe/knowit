@@ -8,7 +8,10 @@ import '../theme.dart';
 
 /// A card's diagram, drawn live in the card's ink and animated once, the way
 /// someone explaining it would draw it: the frame, then the thing, then the
-/// comparison that is the point. Tapping it plays it again.
+/// comparison that is the point. Tapping it plays it again; on the back of
+/// a card in the deck, where the card can give it the whole screen, a tap
+/// opens it there instead ([onOpen]), and it is drawn again from nothing at
+/// that size.
 ///
 /// The motion borrows its manners from the best explainers of mathematics on
 /// video: every stroke is drawn rather than faded in, every number counts up
@@ -28,12 +31,18 @@ class DiagramView extends StatefulWidget {
   /// Starts at the last frame, for a still (a share image, a test).
   final bool still;
 
+  /// What a tap does in place of playing the drawing again: opens it with
+  /// the whole screen to itself. Null wherever it is not on a card in the
+  /// deck, and a tap plays it again.
+  final VoidCallback? onOpen;
+
   const DiagramView({
     super.key,
     required this.diagram,
     required this.ink,
     this.delay = const Duration(milliseconds: 380),
     this.still = false,
+    this.onOpen,
   });
 
   @override
@@ -123,9 +132,12 @@ class _DiagramViewState extends State<DiagramView>
       image: true,
       label: d.caption.isEmpty ? null : d.caption,
       excludeSemantics: true,
+      // Something to press only where a press opens it.
+      button: widget.onOpen != null,
+      onTap: widget.onOpen,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: _replay,
+        onTap: widget.onOpen ?? _replay,
         child: LayoutBuilder(
           builder: (context, box) {
             final width = box.maxWidth.isFinite ? box.maxWidth : 320.0;

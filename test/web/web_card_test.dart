@@ -8,6 +8,7 @@ import 'package:astuto/data/topics.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/measure/card_read.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/drawing_screen.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/web/card_kit.dart';
@@ -52,6 +53,7 @@ Pill _card(
   String id, {
   Challenge challenge = const PageJudged(),
   WebTouch touch = WebTouch.taps,
+  WebThumbs? thumbs,
 }) {
   final TopicStyle style = kTopics['medicine']!;
   return Pill(
@@ -69,6 +71,7 @@ Pill _card(
       html: '<article class="card" id="card"></article><script>Kit.single()</script>',
       touch: touch,
       label: 'A table with three groups of children and ten chips to stake.',
+      thumbs: thumbs,
     ),
   );
 }
@@ -506,6 +509,100 @@ void main() {
       await tester.tap(find.text('Tap to reveal'));
       await settle(tester);
       expect(_back(), findsOneWidget);
+    });
+  });
+
+  group('a free card\'s drawing at full screen', () {
+    const WebThumbs taken = WebThumbs(
+      front: 'thumbs/a-front.webp?v=1',
+      back: 'thumbs/a-back.webp?v=1',
+    );
+
+    testWidgets('a tap the page left alone opens the picture of its back, '
+        'once the page has said its answer is out', (tester) async {
+      final List<CardStint> stints = [];
+      await tester.pumpWidget(
+        _Deck(
+          deck: [_card('a', thumbs: taken)],
+          answers: [],
+          stints: stints,
+        ),
+      );
+      await settle(tester);
+      final FakeWebSurface page = FakeWebSurface.made.single;
+
+      // Before the answer, nothing: the back is the answer, drawn.
+      page.say(const PageTap());
+      await settle(tester);
+      expect(find.byType(DrawingScreen), findsNothing);
+
+      page.say(const PageRevealed());
+      await settle(tester);
+      expect(find.byType(DrawingScreen), findsNothing, reason: 'not unasked');
+
+      page.say(const PageTap());
+      await settle(tester);
+      expect(find.byType(DrawingScreen), findsOneWidget);
+      // The card's ground from edge to edge, and the way back.
+      final Scaffold screen = tester.widget<Scaffold>(
+        find.descendant(
+          of: find.byType(DrawingScreen),
+          matching: find.byType(Scaffold),
+        ),
+      );
+      expect(screen.backgroundColor, kTopics['medicine']!.color);
+      // No picture comes under test: the answer in words, never an empty
+      // colour.
+      expect(
+        find.descendant(
+          of: find.byType(DrawingScreen),
+          matching: find.text('The children given salt water.'),
+        ),
+        findsOneWidget,
+      );
+
+      await tester.tap(find.byKey(const ValueKey('drawing-close')));
+      await settle(tester);
+      expect(find.byType(DrawingScreen), findsNothing);
+      expect(_back(), findsNothing, reason: 'the card is as it was left');
+    });
+
+    testWidgets('a card with no picture of its back opens nothing', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _Deck(deck: [_card('a')], answers: [], stints: []),
+      );
+      await settle(tester);
+      final FakeWebSurface page = FakeWebSurface.made.single;
+      page.say(const PageRevealed());
+      page.say(const PageTap());
+      await settle(tester);
+      expect(find.byType(DrawingScreen), findsNothing);
+    });
+
+    testWidgets('what one card said is not the next card\'s to open on', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _Deck(
+          deck: [
+            _card('a', thumbs: taken),
+            _card('b', thumbs: taken),
+          ],
+          answers: [],
+          stints: [],
+        ),
+      );
+      await settle(tester);
+      FakeWebSurface.made.first.say(const PageRevealed());
+      FakeWebSurface.made.first.say(const PageDone());
+      await settle(tester);
+      await settle(tester);
+      // The second card is in front, and has not shown its answer.
+      FakeWebSurface.made[1].say(const PageTap());
+      await settle(tester);
+      expect(find.byType(DrawingScreen), findsNothing);
     });
   });
 

@@ -319,7 +319,7 @@ other ending.
 | `hint_opened`, `ms_to_hint` | on a card that offers a hint before it is answered |
 | `options_changed` | on a card whose answer can be changed before it is committed (a ruler, typed digits): how often it was taken back. Absent on one-tap cards, which commit on the tap |
 | `back_scroll_pct` | how much of the back was in sight: 100 for a back that fits, else how far it was scrolled |
-| `extras_opened` | which tucked parts of the back were opened, comma-separated: `working`, `picture`, `scene`, `simply` (the simpler telling), `counter` (the other side's case) |
+| `extras_opened` | which tucked parts of the back were opened, comma-separated: `working`, `picture`, `scene`, `simply` (the simpler telling), `counter` (the other side's case), `full` (the drawing opened with the whole screen to itself) |
 | `reread` | the card was in front of the reader before: an earlier day, or an earlier stint |
 | `exit` | `thrown`, `swiped`, `thrown down` (less like this), `tab`, `push`, `background`, `closed` (its screen closed), `gone` (replaced under the reader) |
 

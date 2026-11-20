@@ -126,6 +126,12 @@ class WebCardPage extends ChangeNotifier {
   /// Where the page holds the finger itself, as it last said.
   List<Rect> get zones => _zones;
 
+  /// Whether the card has shown its answer, as the kit says once it has
+  /// ([PageRevealed]): from then, and not before, its picture of its back
+  /// can be opened at full screen without giving anything away.
+  bool get revealed => _revealed;
+  bool _revealed = false;
+
   /// The deck's ears, for what the page asks of the card on top.
   ValueChanged<PageMessage>? listener;
 
@@ -206,6 +212,8 @@ class WebCardPage extends ChangeNotifier {
         notifyListeners();
       case PageZones(:final rects):
         _zones = rects;
+      case PageRevealed():
+        _revealed = true;
       default:
         if (!answerAside(message, pillId: pill.id)) listener?.call(message);
     }

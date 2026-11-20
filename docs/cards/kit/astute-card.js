@@ -128,7 +128,35 @@ const Kit = (() => {
     bridge() ? bridge().zones(rects) : (Kit.zoneRects = rects);
   }
   let zonesQueued = false;
-  const zonesSoon = () => { if (zonesQueued) return; zonesQueued = true; nativeFrame(() => { zonesQueued = false; zones(); }); };
+  const zonesSoon = () => { if (zonesQueued) return; zonesQueued = true; nativeFrame(() => { zonesQueued = false; zones(); reveal(); }); };
+
+  // The card has shown its answer: the app is told, once. It keeps for after this what would give the
+  // answer away before it (the picture of the card's back, at full screen, on a tap the page left alone).
+  // The line to keep is the mark: a card ends on it and shows it with its answer, never before. Seen
+  // means drawn where a finger would find it: not under .gone or aria-hidden, not hidden or still fading
+  // in, with a box of its own inside the card, and the thing actually on the glass at the middle of that
+  // box — which is what tells the back of a card that turns in 3D from its front, and a line folded
+  // away under a closed panel from an open one. A card with no such line never says so, and neither
+  // does one the kit cannot be sure of: the app then offers nothing. From November 2026.
+  let revealed = false;
+  function reveal() {
+    if (revealed || !card || !isReady) return;
+    const keep = card.querySelector('.keep');
+    if (!keep || keep.closest('.gone') || keep.closest('[aria-hidden="true"]')) return;
+    let seen = 1;
+    for (let el = keep; el && el.nodeType === 1 && el !== card.parentElement; el = el.parentElement) {
+      const s = getComputedStyle(el);
+      if (s.display === 'none' || s.visibility === 'hidden') return;
+      seen *= +s.opacity;
+    }
+    if (seen < 0.5) return;
+    const b = keep.getBoundingClientRect(), c = card.getBoundingClientRect();
+    if (b.width < 1 || b.height < 1 || b.bottom <= c.top || b.top >= c.bottom || b.right <= c.left || b.left >= c.right) return;
+    const x = Math.min(Math.max(b.left + b.width / 2, c.left + 1), c.right - 1), y = Math.min(Math.max(b.top + b.height / 2, c.top + 1), c.bottom - 1);
+    if (!document.elementsFromPoint(x, y).some(el => el === keep || keep.contains(el))) return;
+    revealed = true;
+    bridge() && bridge().revealed ? bridge().revealed() : (Kit.revealed = true);
+  }
 
   // On the web build the card is an iframe, and the app never sees a finger on it: a drag that is
   // not the page's own is handed out to the app, which throws the card with it.
@@ -212,7 +240,7 @@ const Kit = (() => {
     const first = () => {
       fitLabel(); onShow[card.id]?.();
       nativeFrame(() => nativeFrame(() => {
-        isReady = true; zones();
+        isReady = true; zones(); reveal();
         if (app) { bridge().ready(); if (!bridge().env.shown) hold(); else enter(); } else enter();
       }));
     };

@@ -12,6 +12,7 @@
 //   {t:'haptic', kind}                         light, medium, heavy, selection, success, warning, error
 //   {t:'open', url}                            a link, opened outside the app
 //   {t:'zones', rects}                         where the page wants every touch, [[x, y, w, h], ...]
+//   {t:'revealed'}                             the card has shown its answer (its line to keep is in sight), once
 //   {t:'pan', phase, dx, dy, vx, vy}           on the web build only: a drag that is the deck's, not the page's
 //   {t:'error', message}                       something on the page broke
 // App to page: {t:'env', env} when something about the reader changes (theme, language, reduced
@@ -95,6 +96,7 @@
     haptic: kind => send({t: 'haptic', kind: String(kind || 'light')}),
     open: url => send({t: 'open', url: String(url)}),
     zones: rects => send({t: 'zones', rects}),
+    revealed: () => send({t: 'revealed'}),
     hold: () => { holding = true; },
     release: () => { if (!holding) return; holding = false; const queued = held.splice(0); if (queued.length) frame(t => queued.forEach(([, fn]) => { try { fn(t); } catch (e) { report(e); } })); }
   };

@@ -61,6 +61,8 @@ sealed class PageMessage {
           return null;
         }
         return PageOpen(url);
+      case 'revealed':
+        return const PageRevealed();
       case 'zones':
         final Object? rects = raw['rects'];
         if (rects is! List) return null;
@@ -180,6 +182,14 @@ class PageHaptic extends PageMessage {
 class PageOpen extends PageMessage {
   final Uri url;
   const PageOpen(this.url);
+}
+
+/// The card has shown its answer: its line to keep is in sight. Said once,
+/// by the kit, on every page that ends on such a line. Until it is, the app
+/// shows nothing that would give the answer away: the picture of the card's
+/// back, at full screen, waits for it.
+class PageRevealed extends PageMessage {
+  const PageRevealed();
 }
 
 /// Where the page holds the finger itself, in the page's own pixels, which

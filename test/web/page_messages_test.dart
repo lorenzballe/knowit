@@ -17,6 +17,7 @@ void main() {
       expect(read({'t': 'ready'}), isA<PageReady>());
       expect(read({'t': 'flip'}), isA<PageFlip>());
       expect(read({'t': 'tap'}), isA<PageTap>());
+      expect(read({'t': 'revealed'}), isA<PageRevealed>());
       expect(read({'t': 'done'}), isA<PageDone>());
 
       final answer = read({

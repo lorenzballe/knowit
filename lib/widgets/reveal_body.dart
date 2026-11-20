@@ -7,6 +7,7 @@ import '../data/goals.dart';
 import '../measure/card_read.dart';
 import '../measure/screens.dart' show seenOf;
 import '../models/pill.dart';
+import '../screens/drawing_screen.dart';
 import '../sync/reports.dart';
 import '../theme.dart';
 import 'area_marks.dart' show goalIcon, goalName;
@@ -1101,6 +1102,12 @@ class _CardRevealState extends State<CardReveal> {
             key: const ValueKey('diagram'),
             diagram: pill.diagram!,
             ink: ink,
+            // The answer is out, and this is its drawing: a touch gives it
+            // the whole screen (DrawingScreen), where it is drawn again.
+            onOpen: () {
+              CardRead.of(context)?.opened('full');
+              DrawingScreen.open(context, pill);
+            },
           ),
         ),
       );

@@ -14,6 +14,7 @@ import '../measure/card_read.dart';
 import '../measure/screens.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
+import '../screens/drawing_screen.dart';
 import '../state/music_sound.dart';
 import '../sync/served.dart';
 import '../sync/trace.dart';
@@ -22,6 +23,7 @@ import 'card_edge.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
 import 'place_line.dart';
+import 'web/card_thumb.dart';
 import 'web/page_messages.dart';
 import 'web/web_card_face.dart';
 import 'web/web_card_page.dart';
@@ -395,8 +397,12 @@ class _PillCardStackState extends State<PillCardStack>
       case PageDeeper():
         _read?.opened('deeper');
         GoDeeper.open?.call(context, pill);
+      // And a tap it left alone, once its answer is out, opens the card's
+      // picture of its back with the whole screen to itself: the drawing
+      // the card ended on, nearer. Before the answer it opens nothing, as
+      // it turns nothing.
       case PageTap():
-        break;
+        _openPicture(pill);
       case PageDone():
         _sendOn();
       case PagePan(:final phase, :final delta, :final velocity):
@@ -418,6 +424,18 @@ class _PillCardStackState extends State<PillCardStack>
       default:
         break;
     }
+  }
+
+  /// A free card's drawing at full screen: its picture of its back, which
+  /// the bank publishes beside its page, on the card's own ground. Only for
+  /// a page that has said its answer is out ([PageRevealed]), so the back is
+  /// never seen before the front is played, and only where there is a
+  /// picture to show.
+  void _openPicture(Pill pill) {
+    if (!(_pages[pill.id]?.revealed ?? false)) return;
+    if (!CardThumb.has(pill, CardSide.back)) return;
+    _read?.opened('full');
+    DrawingScreen.open(context, pill);
   }
 
   /// An answer given on a page, recorded exactly as a native card records
