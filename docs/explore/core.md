@@ -497,6 +497,43 @@ Fields: `title`, `subtitle`, `limit` (paths shown, 8 by default).
  "title": {"en": "Ten-card paths", "it": "Percorsi da 10 carte"}}
 ```
 
+### `founder-books`
+
+The books in pills that the people who built the companies everyone knows
+recommended in public (lib/data/book_picks.dart): a row like the books'
+own, in the same weekly turn and with the same way in, each tile under the
+names of who recommended it. A book's own page says each pick: who, what
+they built, their words quoted exactly, and where they said it, which a tap
+opens. Every pick is checked against that page; a pick nobody can check is
+left out. Fewer than three such books (two on a subject's page), no
+section.
+
+Fields: `title`, `subtitle`.
+
+```json
+{"id": "founder-books", "block": "founder-books",
+ "title": {"en": "What the founders read", "it": "Cosa leggono i grandi imprenditori"}}
+```
+
+### `line-of-day`
+
+One sentence worth keeping a day, the same for every reader
+(lib/data/day_lines.dart): the words large, who wrote them, and where and
+when ("On Liberty, 1859"; the translator for a line first written in
+another language), which a tap opens where it was written. A button sends
+it on, with where it is from. On Explore for every subject any line; on a
+subject's page a line of its themes (thinking, science, life, decisions,
+people, money), and none on a page with none. Each line is checked against
+the book, letter or talk it comes from, never a line passed around under a
+famous name.
+
+Fields: `title`, `subtitle`.
+
+```json
+{"id": "line-of-day", "block": "line-of-day",
+ "title": {"en": "Line of the day", "it": "La frase del giorno"}}
+```
+
 ## The shelves Explore always had
 
 Each draws its shelf exactly as Explore drew it, from the same reckoning

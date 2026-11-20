@@ -289,8 +289,14 @@ class _DrawnCover extends StatelessWidget {
                   for (final String word in book.book.title.split(
                     RegExp(r'\s+'),
                   )) {
+                    // Measured in the style the title is drawn in: the
+                    // page's own, under the cover's.
                     final TextPainter painter = TextPainter(
-                      text: TextSpan(text: word, style: style(size)),
+                      text: TextSpan(
+                        text: word,
+                        style: DefaultTextStyle.of(context).style
+                            .merge(style(size)),
+                      ),
                       textDirection: Directionality.of(context),
                       textScaler: scaler,
                       maxLines: 1,
@@ -375,11 +381,7 @@ class _BookTile extends StatelessWidget {
     final String? line = over ?? (weekly ? l.bookFreeThisWeek : null);
     return Semantics(
       button: true,
-      label: [
-        book.book.title,
-        book.book.author,
-        ?over,
-      ].join(', '),
+      label: [book.book.title, book.book.author, ?over].join(', '),
       child: GestureDetector(
         key: ValueKey('book-${book.id}'),
         behavior: HitTestBehavior.opaque,

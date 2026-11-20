@@ -426,5 +426,8 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     # The problem of the day, on the Maths page only: it picks its own.
     "maths-daily": shelf(),
     "news-today": shelf(),
+    # One sentence worth keeping a day, checked where it was written
+    # (lib/data/day_lines.dart): it picks its own.
+    "line-of-day": shelf(),
     "goal": shelf(),
 }
