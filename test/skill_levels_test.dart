@@ -1,6 +1,6 @@
-// What trains each skill, the reader's level in it, and the line a card
-// carries when it trains a skill the reader put in focus
-// (lib/data/skill_levels.dart, lib/data/why.dart, lib/widgets/skill_mark.dart).
+// What trains each skill, the reader's level in it, and the small mark a
+// card carries in its head when it trains a skill the reader put in focus
+// (lib/data/skill_levels.dart, lib/widgets/skill_mark.dart).
 //
 //   flutter test test/skill_levels_test.dart
 import 'package:flutter/material.dart';
@@ -9,15 +9,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/skill_levels.dart';
 import 'package:astuto/data/skills.dart';
-import 'package:astuto/data/why.dart';
-import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/skills_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/skill_mark.dart';
-import 'package:astuto/widgets/why_sheet.dart' show whyLine;
 
 import 'explore/core_harness.dart';
 
@@ -111,56 +109,107 @@ void main() {
         home: Scaffold(body: child),
       );
 
-  final Pill card = bank.firstWhere(
-    (p) => p.web == null && p.challenge is NoChallenge && p.scene == null,
-  );
-
-  test('a card that trains a skill in focus says so under its head, before '
-      'the reasons a skill outweighs, after those it does not', () async {
-    final Pill money = bank.firstWhere(
-      (p) =>
-          Skill.money.fitOf(p) == 0 &&
-          p.place == null &&
-          skillMarkOf(p, ['money']) == Skill.money,
+  testWidgets("a card that trains a skill in focus carries the skill's mark "
+      'in its head on the right, where a liked card has its heart, or just '
+      'before the heart; a tap on it, on the card being read, says what it '
+      'means', (tester) async {
+    final Pill pill = bank.firstWhere(
+      (p) => p.web == null && Skill.money.fitOf(p) == 0,
     );
-    final AppState app = await readyApp({
-      'knowit.plus': true,
-      'knowit.skills': <String>['money'],
-    });
-    final CardWhy why = whyOf(app, money);
-    expect(why.kind, WhyKind.skill);
-    expect(why.skill, Skill.money);
-    final l = lookupAppLocalizations(const Locale('en'));
-    expect(whyLine(l, why), l.whySkill(l.skillName('money')));
-    // A card back on the review ladder says that first.
-    app.reviewIdsToday.add(money.id);
-    expect(whyOf(app, money).kind, isNot(WhyKind.skill));
-    app.reviewIdsToday.remove(money.id);
-    // Nothing in focus, nothing said of it.
-    final AppState none = await readyApp({'knowit.plus': true});
-    expect(whyOf(none, money).kind, isNot(WhyKind.skill));
+    int taps = 0;
+    Future<void> card({bool liked = false, bool live = true}) =>
+        tester.pumpWidget(
+          host(
+            Center(
+              child: SizedBox(
+                width: 380,
+                height: 700,
+                child: PillCard(
+                  pill: pill,
+                  flipped: false,
+                  skill: Skill.money,
+                  liked: liked,
+                  controlsLive: live,
+                  onSkill: () => taps++,
+                ),
+              ),
+            ),
+          ),
+        );
+    const ValueKey<String> key = ValueKey('skill-mark-money');
+    await card();
+    await tester.pumpAndSettle();
+    final Rect face = tester.getRect(find.byType(PillCard));
+    Rect mark = tester.getRect(find.byKey(key));
+    // Where the heart's right side stands, 28 in, at the head's middle.
+    expect(
+      face.right - (mark.center.dx + SkillMark.size / 2),
+      closeTo(28, 0.5),
+    );
+    expect(mark.center.dy - face.top, closeTo(34, 2));
+    await tester.tap(find.byKey(key));
+    expect(taps, 1);
+
+    await card(liked: true);
+    await tester.pumpAndSettle();
+    final Rect heart = tester.getRect(
+      find.byKey(const ValueKey('liked-heart')),
+    );
+    mark = tester.getRect(find.byKey(key));
+    expect(
+      heart.left - (mark.center.dx + SkillMark.size / 2),
+      closeTo(SkillMark.gap, 0.5),
+    );
+    expect(mark.center.dy, closeTo(heart.center.dy, 0.5));
+
+    // On a card waiting under the one being read, seen but not pressed.
+    await card(live: false);
+    await tester.pumpAndSettle();
+    expect(find.byKey(key), findsOneWidget);
+    await tester.tap(find.byKey(key), warnIfMissed: false);
+    expect(taps, 1);
+    expect(tester.takeException(), isNull);
   });
 
-  testWidgets("the line about a skill in focus carries the skill's dot; any "
-      'other line, its mark', (tester) async {
-    Widget face({List<Color>? dot}) => host(
-      SizedBox(
-        height: 640,
-        child: PillCard(
-          pill: card,
-          flipped: false,
-          note: 'Trains Money and saving, one of your skills',
-          noteIcon: Icons.flag_rounded,
-          noteDot: dot,
-        ),
+  testWidgets('the mark is left out where the head has no room for it beside '
+      'the subject and its chip', (tester) async {
+    final Pill pill = bank.firstWhere(
+      (p) => p.web == null && Skill.money.fitOf(p) == 0,
+    );
+    final l = lookupAppLocalizations(const Locale('en'));
+    // The narrowest card whose head has room for it, beside "Again".
+    final int room = [for (int w = 200; w < 600; w++) w].firstWhere(
+      (w) => SkillMark.fits(
+        width: w.toDouble(),
+        middle: 28 + SkillMark.size / 2,
+        subject: l.subjectOf(pill.topic),
+        chip: l.againChip,
       ),
     );
-    await tester.pumpWidget(face(dot: Skill.money.hues));
-    expect(find.byKey(const ValueKey('why-dot')), findsOneWidget);
-    expect(find.byIcon(Icons.flag_rounded), findsNothing);
-    await tester.pumpWidget(face());
-    expect(find.byKey(const ValueKey('why-dot')), findsNothing);
-    expect(find.byIcon(Icons.flag_rounded), findsOneWidget);
+    Future<void> card(double width) async {
+      await tester.pumpWidget(
+        host(
+          Center(
+            child: SizedBox(
+              width: width,
+              height: 640,
+              child: PillCard(
+                pill: pill,
+                flipped: false,
+                isReview: true,
+                skill: Skill.money,
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    await card(room - 1);
+    expect(find.byKey(const ValueKey('skill-mark-money')), findsNothing);
+    await card(room.toDouble());
+    expect(find.byKey(const ValueKey('skill-mark-money')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

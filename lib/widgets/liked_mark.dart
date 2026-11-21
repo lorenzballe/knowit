@@ -50,13 +50,22 @@ class LikedMark extends StatelessWidget {
 abstract final class CardTags {
   static final Map<String, String?> _of = {};
   static final Map<String, Future<void>> _asked = {};
+  static final Set<String> _unread = {};
+
+  /// Ticks each time a card's page is read for its tag, so what is laid over
+  /// a page's head can stand where it belongs as soon as that is known.
+  static final ValueNotifier<int> changes = ValueNotifier<int>(0);
   static final RegExp _tag = RegExp(
     r'<span class="tag"[^>]*>(.*?)</span>',
     dotAll: true,
   );
 
-  /// Whether the card's page has been read for its tag.
+  /// Whether the card's page has been read for its tag, or given up on.
   static bool knows(String id) => _of.containsKey(id);
+
+  /// Whether the card's page has truly been read for its tag: a page that
+  /// could not be had says nothing of whether it prints one.
+  static bool read(String id) => _of.containsKey(id) && !_unread.contains(id);
 
   /// The card's tag, or null when it has none or it is not known yet.
   static String? of(String id) => _of[id];
@@ -65,6 +74,8 @@ abstract final class CardTags {
   static void remember(String id, String html) {
     final Match? found = _tag.firstMatch(html);
     _of[id] = found == null ? null : _plain(found.group(1)!);
+    _unread.remove(id);
+    changes.value++;
   }
 
   /// Reads the tag of [pill] from its page, fetching the page if it is not in
@@ -77,6 +88,7 @@ abstract final class CardTags {
         remember(pill.id, await CardPages.instance.html(web));
       } catch (_) {
         _of[pill.id] = null;
+        _unread.add(pill.id);
       }
     }();
   }

@@ -1435,11 +1435,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get whyAgain => 'İkinci bir bakış için geri geldi';
 
   @override
-  String whySkill(String skill) {
-    return 'Becerilerinden biri: $skill';
-  }
-
-  @override
   String whyGoal(String goal) {
     return 'Hedefin için: $goal';
   }
@@ -1850,6 +1845,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get skillMarkKicker => 'BU KARTIN ÇALIŞTIRDIĞI';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return 'Çalıştırdığı: $skill';
+  }
 
   @override
   String get skillMarkBody =>

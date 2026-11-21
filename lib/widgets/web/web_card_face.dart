@@ -83,7 +83,6 @@ class WebCardFace extends StatefulWidget {
     this.onMessage,
     this.chip,
     this.note,
-    this.noteDot,
   });
 
   final Pill pill;
@@ -100,9 +99,6 @@ class WebCardFace extends StatefulWidget {
   /// page does.
   final String? chip;
   final String? note;
-
-  /// The two hues of the dot before [note], where it names a skill in focus.
-  final List<Color>? noteDot;
 
   @override
   State<WebCardFace> createState() => _WebCardFaceState();
@@ -170,7 +166,6 @@ class _WebCardFaceState extends State<WebCardFace> {
             fallback: !live,
             chip: widget.chip,
             note: widget.note,
-            noteDot: widget.noteDot,
           ),
           if (live)
             IgnorePointer(

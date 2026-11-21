@@ -1437,15 +1437,6 @@
  "@whyAgain": {
   "description": "On one of today's cards: a card met before, come back on the review ladder."
  },
- "whySkill": "Trains {skill}, one of your skills",
- "@whySkill": {
-  "description": "Line under a card's head on Today (why this card is in front of the reader): the card trains one of the skills the reader put in focus in What to learn. A dot in the skill's colours stands before it.",
-  "placeholders": {
-   "skill": {
-    "type": "String"
-   }
-  }
- },
  "whyGoal": "For your goal: {goal}",
  "@whyGoal": {
   "description": "On one of today's cards: it is about one of the goals the reader picked.",
@@ -1962,6 +1953,15 @@
  "skillMarkKicker": "THIS CARD TRAINS",
  "@skillMarkKicker": {
   "description": "Small capitals over a skill's name, on the sheet a card's skill mark opens: the card trains this skill."
+ },
+ "skillMarkLabel": "Trains {skill}",
+ "@skillMarkLabel": {
+  "description": "What a screen reader says for the small mark a card carries in its head, beside the heart, when it trains a skill the reader put in focus.",
+  "placeholders": {
+   "skill": {
+    "type": "String"
+   }
+  }
  },
  "skillMarkBody": "One of the skills you put in focus. Every card like this one moves you up.",
  "@skillMarkBody": {

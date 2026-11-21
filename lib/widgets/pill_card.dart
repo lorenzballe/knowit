@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/skills.dart';
 import '../data/topics.dart' show inkOn;
 import '../measure/card_read.dart';
 import '../models/pill.dart';
@@ -22,6 +23,7 @@ import 'place_line.dart';
 import 'scene_view.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
+import 'skill_mark.dart';
 import 'subject_icon.dart';
 import 'web/page_messages.dart';
 import 'web/web_card_face.dart';
@@ -68,11 +70,13 @@ class PillCard extends StatelessWidget {
   /// only read.
   final VoidCallback? onNote;
 
-  /// The two hues of a dot that stands before [note] in place of its mark,
-  /// when the line says which skill in focus the card trains
-  /// (lib/data/skill_levels.dart): the skill's own colours, as in What to
-  /// learn. Null for none.
-  final List<Color>? noteDot;
+  /// The skill the reader put in focus that this card trains, when it trains
+  /// one (lib/data/skill_levels.dart): its small mark in the card's head,
+  /// beside where the heart of a liked card stands (skill_mark.dart).
+  final Skill? skill;
+
+  /// A tap on that mark, on the card being read: what it means.
+  final VoidCallback? onSkill;
 
   const PillCard({
     super.key,
@@ -87,7 +91,8 @@ class PillCard extends StatelessWidget {
     this.note,
     this.noteIcon,
     this.onNote,
-    this.noteDot,
+    this.skill,
+    this.onSkill,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -129,6 +134,7 @@ class PillCard extends StatelessWidget {
     final Widget card = Stack(
       children: [
         _face(context),
+        if (skill != null) _skillMark(context, skill!),
         // Each control is 44 square, its mark where the 38 one put it.
         if (onSave != null)
           Positioned(
@@ -177,6 +183,110 @@ class PillCard extends StatelessWidget {
     );
   }
 
+  /// The mark of the skill in focus the card trains, in its head on the
+  /// right: where the heart of a liked card stands, or just before it when
+  /// the card is liked; at the height of the subject's name. On a drawn card
+  /// the head is the page's, its tag on the right, and the mark stands
+  /// before the tag as the heart does. Where the head has no room for it
+  /// beside the subject and its chip, it is left out rather than laid on
+  /// them.
+  Widget _skillMark(BuildContext context, Skill skill) {
+    // A drawn card's back is the app's own face, as every card's is.
+    final bool drawn = pill.web != null && !flipped;
+    // A number printed in the head, where none is printed today, keeps it.
+    if (!drawn && indexLabel != null) return const SizedBox.shrink();
+    final Color ink = drawn && pill.web?.ground != null
+        ? inkOn(groundOf(pill))
+        : pill.ink;
+    final String? chip = isReview
+        ? context.l10n.againChip
+        : isOwn
+        ? context.l10n.forYouChip
+        : null;
+    Widget at(BuildContext context, BoxConstraints box) {
+      // On a drawn card the head is the page's: the mark waits until the
+      // page has been read for the tag it prints on the right, so it never
+      // stands on it.
+      if (drawn && !CardTags.read(pill.id)) return const SizedBox.shrink();
+      // The glyph's middle, from the card's top and right edges.
+      final double top = drawn
+          ? CardTags.headMiddle
+          : _headMiddle(context, chip);
+      final double right = drawn
+          ? SkillMark.middleOnPage(CardTags.of(pill.id), liked: liked)
+          : 28 +
+                (liked ? LikedMark.size + SkillMark.gap : 0) +
+                SkillMark.size / 2;
+      if (!SkillMark.fits(
+        width: box.maxWidth,
+        middle: right,
+        subject: context.l10n.subjectOf(pill.topic),
+        chip: chip,
+        scaler: drawn ? TextScaler.noScaling : MediaQuery.textScalerOf(context),
+      )) {
+        return const SizedBox.shrink();
+      }
+      const double half = SkillMark.touch / 2;
+      return Stack(
+        children: [
+          // Liked, it steps aside for the heart as the heart comes in.
+          AnimatedPositioned(
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero
+                : const Duration(milliseconds: 320),
+            curve: Curves.easeOutCubic,
+            top: top - half,
+            right: right - half,
+            child: SkillMark(
+              skill: skill,
+              ink: ink,
+              onTap: controlsLive ? onSkill : null,
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Positioned.fill(
+      child: drawn
+          ? ValueListenableBuilder<int>(
+              valueListenable: CardTags.changes,
+              builder: (context, _, _) => LayoutBuilder(builder: at),
+            )
+          : LayoutBuilder(builder: at),
+    );
+  }
+
+  /// The middle of a card's own head, from its top, where the heart stands:
+  /// below the face's top padding, half the head's row, which is the
+  /// subject's mark, its name at the reader's text size, or the [chip], the
+  /// tallest of them.
+  double _headMiddle(BuildContext context, String? chip) {
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextStyle base = DefaultTextStyle.of(context).style;
+    double lineOf(String text, double size, double spacing) {
+      final TextPainter t = TextPainter(
+        text: TextSpan(
+          text: text.toUpperCase(),
+          style: base.merge(AppText.label(size: size, spacing: spacing)),
+        ),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final double h = t.height;
+      t.dispose();
+      return h;
+    }
+
+    double row = math.max(
+      16,
+      lineOf(context.l10n.subjectOf(pill.topic), 11, 1.4),
+    );
+    if (chip != null) row = math.max(row, 6 + lineOf(chip, 9.5, 1));
+    return 26 + row / 2;
+  }
+
   /// The save and share as they are on this card: live on the card being
   /// read, drawn but not pressed or read out on one waiting under it.
   Widget _live(Widget controls) => controlsLive
@@ -206,9 +316,6 @@ class PillCard extends StatelessWidget {
                     ? context.l10n.forYouChip
                     : null,
                 note: placeLineOf(context, pill.place, home) ?? note,
-                noteDot: placeLineOf(context, pill.place, home) == null
-                    ? noteDot
-                    : null,
               ),
               // Liked, the heart stands in the page's head on the right,
               // before the tag it prints there.
@@ -308,7 +415,6 @@ class PillCard extends StatelessWidget {
             _WhyLine(
               key: const ValueKey('card-note'),
               icon: noteIcon ?? Icons.auto_awesome_rounded,
-              dot: noteDot,
               text: note!,
               ink: pill.ink,
               onTap: onNote,
@@ -398,17 +504,12 @@ class _WhyLine extends StatelessWidget {
   const _WhyLine({
     super.key,
     required this.icon,
-    this.dot,
     required this.text,
     required this.ink,
     this.onTap,
   });
 
   final IconData icon;
-
-  /// A dot of these two hues in place of [icon]: the skill in focus the card
-  /// trains, in its own colours, ringed in white so it reads on any card.
-  final List<Color>? dot;
   final String text;
   final Color ink;
 
@@ -424,25 +525,8 @@ class _WhyLine extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: dot == null ? 1.5 : 2),
-            child: ExcludeSemantics(
-              child: dot == null
-                  ? Icon(icon, size: 13, color: muted)
-                  : Container(
-                      key: const ValueKey('why-dot'),
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: dot!,
-                        ),
-                        border: Border.all(color: Colors.white, width: 1.5),
-                      ),
-                    ),
-            ),
+            padding: const EdgeInsets.only(top: 1.5),
+            child: ExcludeSemantics(child: Icon(icon, size: 13, color: muted)),
           ),
           const SizedBox(width: 5),
           Flexible(

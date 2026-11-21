@@ -1451,11 +1451,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get whyAgain => 'Zurück für einen zweiten Blick';
 
   @override
-  String whySkill(String skill) {
-    return 'Trainiert $skill, eine deiner Fähigkeiten';
-  }
-
-  @override
   String whyGoal(String goal) {
     return 'Für dein Ziel: $goal';
   }
@@ -1879,6 +1874,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get skillMarkKicker => 'DIESE KARTE TRAINIERT';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return 'Trainiert $skill';
+  }
 
   @override
   String get skillMarkBody =>

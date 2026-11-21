@@ -1,9 +1,12 @@
-/// The bar of a skill's level, and the sheet a card's line about a skill in
-/// focus opens (lib/data/skill_levels.dart): the skill the card trains, the
+/// The small mark a card carries in its head when it trains a skill the
+/// reader put in focus (lib/data/skill_levels.dart), the bar of a skill's
+/// level, and the sheet the mark opens: the skill the card trains, the
 /// reader's level in it, and the way to What to learn.
 library;
 
 import 'package:flutter/material.dart';
+
+import 'package:flutter/services.dart';
 
 import '../analytics.dart';
 import '../data/skill_levels.dart';
@@ -13,6 +16,7 @@ import '../screens/skills_screen.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import 'chunky.dart';
+import 'liked_mark.dart';
 
 /// A skill's level as a bar of five, one a level: those climbed full, the one
 /// being climbed filled as far as the next level comes nearer, all five full
@@ -72,8 +76,130 @@ class SkillBar extends StatelessWidget {
   }
 }
 
-/// Puts the sheet a card's line about a skill in focus opens: the skill the
-/// card trains, that
+/// The mark of the skill in focus a card trains: the skill's own glyph, as
+/// small as the heart a liked card carries and in the same ink, in the
+/// card's head on the right, where that heart stands or just before it.
+/// Nothing more: the card is the question, and this is a quiet word on what
+/// it trains. A tap, on the card being read, opens what it means
+/// ([showSkillMarkSheet]).
+///
+/// Laid over a card, it is the middle of a square a finger can find
+/// ([touch]) that leaves the card's own layout as it is; set in a row, as on
+/// the shelf, where it is only seen, the square is the glyph's own.
+class SkillMark extends StatelessWidget {
+  const SkillMark({
+    super.key,
+    required this.skill,
+    required this.ink,
+    this.scale = 1,
+    this.reach = touch,
+    this.onTap,
+  });
+
+  final Skill skill;
+
+  /// The card's ink, as the heart's.
+  final Color ink;
+
+  /// The card's size against the deck's own.
+  final double scale;
+
+  /// The square it takes, at the deck's size.
+  final double reach;
+
+  /// Opens what the mark means; null, it is only seen.
+  final VoidCallback? onTap;
+
+  /// The glyph's size: the heart's, a touch larger for its finer lines.
+  static const double size = 16;
+
+  /// The square a tap on it is heard in, laid over a card.
+  static const double touch = 36;
+
+  /// Between it and the heart.
+  static const double gap = 8;
+
+  /// Where it stands in a drawn card's head: its middle, in from the card's
+  /// right edge in the page's points, at the right side of where a liked
+  /// card's heart stands, before its tag ([CardTags.heartRight]), or just
+  /// before that heart when the card is liked.
+  static double middleOnPage(String? tag, {required bool liked}) =>
+      CardTags.heartRight(tag) + (liked ? LikedMark.size + gap : 0) + size / 2;
+
+  /// Whether a card's head, [width] across, has room for the mark with its
+  /// middle [middle] in from the right, after the subject's mark and name
+  /// and the chip, set as the card sets them (pill_card.dart; on a drawn
+  /// card, the kit in the app, docs/cards/kit/astute-card.css): a mark of
+  /// 16, then 8, the name at 11 points in capitals with 1.4 between letters,
+  /// then 9 and the chip at 9.5 with 1 between letters and 8 either side;
+  /// at the reader's text size ([scaler]) on the app's own face, at the
+  /// page's own on a drawn one. Where it has none, the mark is left out
+  /// rather than laid on them.
+  static bool fits({
+    required double width,
+    required double middle,
+    required String subject,
+    String? chip,
+    TextScaler scaler = TextScaler.noScaling,
+  }) {
+    double measure(String text, double size, double spacing) {
+      final TextPainter t = TextPainter(
+        text: TextSpan(
+          text: text.toUpperCase(),
+          style: TextStyle(
+            fontFamily: 'Figtree',
+            fontSize: size,
+            fontWeight: FontWeight.w600,
+            letterSpacing: spacing,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final double w = t.width;
+      t.dispose();
+      return w;
+    }
+
+    double left = CardTags.margin + 16 + 8 + measure(subject, 11, 1.4);
+    if (chip != null) left += 9 + measure(chip, 9.5, 1) + 16;
+    return width - middle - size / 2 - gap >= left;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return KeyedSubtree(
+      key: ValueKey('skill-mark-${skill.name}'),
+      child: Semantics(
+        label: l.skillMarkLabel(l.skillName(skill.name)),
+        button: onTap != null,
+        excludeSemantics: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap == null
+              ? null
+              : () {
+                  HapticFeedback.selectionClick();
+                  onTap!();
+                },
+          child: SizedBox.square(
+            dimension: reach * scale,
+            child: Center(
+              child: CustomPaint(
+                size: Size.square(size * scale),
+                painter: SkillGlyph(skill, ink.withValues(alpha: 0.9)),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Puts the sheet a card's skill mark opens: the skill the card trains, that
 /// it is one the reader put in focus, their level in it, and the way to What
 /// to learn.
 Future<void> showSkillMarkSheet(
@@ -82,7 +208,7 @@ Future<void> showSkillMarkSheet(
   Skill skill, {
   String? cardId,
 }) {
-  Analytics.capture('skill line opened', {
+  Analytics.capture('skill mark opened', {
     'skill': skill.name,
     if (cardId != null) ...app.cardFacts(cardId),
   });
