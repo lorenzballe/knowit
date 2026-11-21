@@ -28,72 +28,101 @@ const NS = 3.3;            // 1 m at light speed
 let state = 'idle';        // idle | run | done
 let tw = null, G = {};
 
+// Laid out in rows of real size, top to bottom: the clock, what it counts, the wires' names, the
+// circuit, the electron's name. The circuit takes what the rows leave, so a lower box draws it lower
+// rather than pushing the words into each other.
 function draw() {
   const svg = Kit.$('pic');
   if (tw) { tw.kill(); tw = null; if (state === 'run') state = 'done'; }
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f, 12);
-  const ink = 'var(--k)', mut = 'var(--muted)';
-  const yTop = H * .26, yBot = H * .86;
-  const bx = W * .2, by = H * .55, bh = H * .14;
-  const lx = W * .8, r = Math.min(W * .1, H * .085);
+  const fs = Math.max(f, 12), low = H < fs * 15;
+  const ink = 'var(--k)';
   const sw = 3.2;
+  const lab = (x, y, t, a, size) => { const e = Kit.mk('text', {x, y, 'text-anchor': a, 'font-family': 'var(--body)', 'font-size': size || Math.max(10.5, fs * .85), fill: ink, 'fill-opacity': .75}, svg); e.textContent = t; return e; };
 
-  // clock
-  G.clock = Kit.mk('text', {x: W / 2, y: H * .1, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs * 2, fill: ink}, svg);
+  // the glow under the wires, so they stay drawn through it
+  G.glow = Kit.mk('circle', {opacity: state === 'done' ? 1 : 0, fill: 'rgba(255,210,63,.55)'}, svg);
+  // clock, and what it counts: under it, or beside it on two lines in a low box
+  const cs = low ? fs * 1.6 : fs * 2;
+  G.clock = Kit.mk('text', {x: W / 2, y: cs * .95, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': cs, fill: ink}, svg);
   G.clock.textContent = (state === 'done' ? NS : 0).toFixed(1) + ' ns';
-  const sub = Kit.mk('text', {x: W / 2, y: H * .1 + fs * 1.4, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-size': fs * .85, fill: mut}, svg);
-  sub.textContent = 'since the switch closed (slowed a billion times)';
+  const ss = Math.max(10, fs * .85);
+  let top0;
+  const two = low && (() => {
+    const a = lab(0, 0, 'since the switch closed', 'start', ss), b = lab(0, 0, '(slowed a billion times)', 'start', ss);
+    const cw = G.clock.getComputedTextLength(), w = Math.max(a.getComputedTextLength(), b.getComputedTextLength()), all = cw + 12 + w;
+    if (all > W - 8) { a.remove(); b.remove(); return false; }
+    const x0 = (W - all) / 2, hh = Math.max(cs * 1.25, ss * 2.8);
+    G.clock.setAttribute('text-anchor', 'start'); G.clock.setAttribute('x', x0); G.clock.setAttribute('y', hh / 2 + cs * .33);
+    for (const [e, k] of [[a, 0], [b, 1]]) { e.setAttribute('x', x0 + cw + 12); e.setAttribute('y', hh / 2 - ss * 1.38 + ss * .95 + k * ss * 1.4); }
+    top0 = hh + fs * .3;
+    return true;
+  })();
+  if (!two) {
+    const sub = lab(W / 2, cs * 1.3 + ss * .95, 'since the switch closed (slowed a billion times)', 'middle', ss);
+    const sw0 = sub.getComputedTextLength();
+    if (sw0 > W - 8) sub.setAttribute('font-size', Math.max(9.5, ss * (W - 8) / sw0));
+    top0 = cs * 1.3 + ss * 1.3 + fs * .35;
+  }
+
+  // the circuit's band: the top wire under its two names, the bottom wire over the electron's
+  const yTop = top0 + fs * 1.15, yBot = H - fs * 1.55, hC = Math.max(10, yBot - yTop);
+  const bx = W * .2, lx = W * .8;
+  // on the battery's wire, top to bottom: the switch's two contacts, then the battery under its cap,
+  // each as tall as the band allows and never so short that they run into each other
+  const swLen = Math.max(9, hC * .117), capH = Math.min(7, Math.max(3, hC * .06));
+  const cTop = yTop + Math.max(4, hC * .103), hinge = cTop + swLen, swY = (cTop + hinge) / 2;
+  const bTop = Math.max(yTop + hC * .365, hinge + capH + 5);
+  const bBot = Math.max(bTop + 8, Math.min(bTop + Math.max(12, hC * .23), yBot - 4));
+  const by = (bTop + bBot) / 2, bh = bBot - bTop;
+  const r = Math.min(W * .1, Math.max(8, hC * .14));
 
   // wires: they run off far away, the bulb sits just 1 m from the battery
   const wire = d => Kit.mk('path', {d, fill: 'none', stroke: ink, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
-  const swY = H * .36;
-  wire(`M${bx},${by - bh / 2} L${bx},${swY + H * .03}`);
-  wire(`M${bx},${swY - H * .04} L${bx},${yTop} L0,${yTop}`);
+  wire(`M${bx},${by - bh / 2} L${bx},${hinge}`);
+  wire(`M${bx},${cTop} L${bx},${yTop} L0,${yTop}`);
   wire(`M${bx},${by + bh / 2} L${bx},${yBot} L0,${yBot}`);
   wire(`M${lx},${by - r} L${lx},${yTop} L${W},${yTop}`);
   wire(`M${lx},${by + r * .9} L${lx},${yBot} L${W},${yBot}`);
-  const lab = (x, y, t, a) => { const e = Kit.mk('text', {x, y, 'text-anchor': a, 'font-family': 'var(--body)', 'font-size': fs * .85, fill: mut}, svg); e.textContent = t; return e; };
   lab(4, yTop - fs * .5, '← wire runs far away', 'start');
   lab(W - 4, yTop - fs * .5, 'and back →', 'end');
 
   // battery
   Kit.mk('rect', {x: bx - W * .045, y: by - bh / 2, width: W * .09, height: bh, rx: 6, fill: 'var(--c)', stroke: ink, 'stroke-width': sw}, svg);
-  Kit.mk('rect', {x: bx - W * .02, y: by - bh / 2 - 7, width: W * .04, height: 7, fill: ink}, svg);
+  Kit.mk('rect', {x: bx - W * .02, y: by - bh / 2 - capH, width: W * .04, height: capH, fill: ink}, svg);
   lab(bx - W * .06, by + fs * .3, 'battery', 'end');
 
   // switch
-  G.hinge = {x: bx, y: swY + H * .03};
-  Kit.mk('circle', {cx: bx, cy: swY + H * .03, r: 4, fill: ink}, svg);
-  Kit.mk('circle', {cx: bx, cy: swY - H * .04, r: 4, fill: ink}, svg);
-  const L = H * .07;
-  G.lever = Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: -L, stroke: ink, 'stroke-width': sw + 1, 'stroke-linecap': 'round', transform: `translate(${bx},${swY + H * .03}) rotate(${state === 'idle' ? 40 : 0})`}, svg);
-  G.swLab = lab(bx + W * .06, swY + fs * .3, state === 'idle' ? 'tap: switch' : 'switch', 'start');
-  G.ring = Kit.mk('circle', {cx: bx, cy: swY, r: H * .07, fill: 'none', stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '4 5', opacity: state === 'idle' ? .7 : 0}, svg);
+  G.hinge = {x: bx, y: hinge};
+  Kit.mk('circle', {cx: bx, cy: hinge, r: 4, fill: ink}, svg);
+  Kit.mk('circle', {cx: bx, cy: cTop, r: 4, fill: ink}, svg);
+  G.lever = Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: -swLen, stroke: ink, 'stroke-width': sw + 1, 'stroke-linecap': 'round', transform: `translate(${bx},${hinge}) rotate(${state === 'idle' ? 40 : 0})`}, svg);
+  const ringR = Math.max(hC * .117, swLen * .75 + 5);
+  G.swLab = lab(bx + Math.max(W * .06, ringR * 1.2 + 6), swY + fs * .3, state === 'idle' ? 'tap: switch' : 'switch', 'start');
+  G.ring = Kit.mk('circle', {cx: bx, cy: swY, r: ringR, fill: 'none', stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '4 5', opacity: state === 'idle' ? .7 : 0}, svg);
 
   // wavefront of fields
   G.waves = [0, 1, 2].map(i => Kit.mk('circle', {cx: bx, cy: swY, r: 0, fill: i ? 'none' : 'rgba(255,210,63,.18)', stroke: '#e0a800', 'stroke-width': i ? 2 : 3.5, opacity: 0}, svg));
   G.D = Math.hypot(lx - bx, by - swY) - r;
 
-  // bulb
-  G.glow = Kit.mk('circle', {cx: lx, cy: by, r: r * 2.2, fill: 'rgba(255,210,63,.55)', opacity: state === 'done' ? 1 : 0}, svg);
+  // bulb, its name to its left, clear of the wires that leave it above and below
+  G.glow.setAttribute('cx', lx); G.glow.setAttribute('cy', by); G.glow.setAttribute('r', r * 2.2);
   G.bulb = Kit.mk('circle', {cx: lx, cy: by, r, fill: state === 'done' ? '#ffd23f' : 'var(--c)', stroke: ink, 'stroke-width': sw}, svg);
   Kit.mk('path', {d: `M${lx - r * .35},${by + r * .3} L${lx - r * .2},${by - r * .25} L${lx},${by + r * .1} L${lx + r * .2},${by - r * .25} L${lx + r * .35},${by + r * .3}`, fill: 'none', stroke: ink, 'stroke-width': 2}, svg);
-  lab(lx, by - r - fs * .6 > yTop + fs ? by - r - fs * .6 : by + r + fs * 1.3, 'bulb', 'middle');
+  lab(lx - r - 7, by + fs * .3, 'bulb', 'end');
 
   // 1 metre
-  const dy = H * .75;
-  Kit.mk('path', {d: `M${bx},${dy - 6} L${bx},${dy + 6} M${bx},${dy} L${lx},${dy} M${lx},${dy - 6} L${lx},${dy + 6}`, stroke: ink, 'stroke-width': 1.5}, svg);
+  const dy = Math.min(yBot - 3, Math.max(yTop + hC * .82, bBot + 4)), tk = Math.max(2, Math.min(6, yBot - dy - 1));
+  Kit.mk('path', {d: `M${bx},${dy - tk} L${bx},${dy + tk} M${bx},${dy} L${lx},${dy} M${lx},${dy - tk} L${lx},${dy + tk}`, stroke: ink, 'stroke-width': 1.5}, svg);
   const m = Kit.mk('text', {x: (bx + lx) / 2, y: dy - fs * .5, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink}, svg);
   m.textContent = '1 metre';
 
   // an electron in the wire
   G.e = Kit.mk('circle', {cx: W * .1, cy: yBot, r: 5, fill: '#2b7bff', stroke: ink, 'stroke-width': 1.5}, svg);
-  G.eLab = lab(W * .1, yBot + fs * 1.3, state === 'done' ? 'electron: barely moved' : 'an electron', 'start');
-  G.eLab.setAttribute('x', 4);
+  G.eLab = lab(4, yBot + fs * 1.25, state === 'done' ? 'electron: barely moved' : 'an electron', 'start');
 
-  if (state === 'idle' && !Kit.calm) gsap.to(G.ring, {attr: {r: H * .085}, opacity: .25, repeat: -1, yoyo: true, duration: .8});
+  if (state === 'idle' && !Kit.calm) gsap.to(G.ring, {attr: {r: ringR * 1.2}, opacity: .25, repeat: -1, yoyo: true, duration: .8});
 }
 
 function flip() {

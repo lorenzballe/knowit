@@ -54,7 +54,9 @@ Kit.onShow.card = () => {
   G = {W, H, f: fs, m,
     hd: {x: 0.40 * W, y: 0.55 * H}, hn: {x: 0.14 * W, y: 0.07 * H},
     ground: 0.58 * H, r: Math.max(0.028 * m, 6),
-    tx0: 0.04 * W, tx1: 0.96 * W, rowA: 0.80 * H, rowB: 0.975 * H, amp: 0.12 * H};
+    tx0: 0.04 * W, tx1: 0.96 * W, rowB: Math.min(0.975 * H, H - 7), amp: 0.12 * H};
+  // the two traces far enough apart for the lower one's name to sit between them
+  G.rowA = Math.min(0.80 * H, G.rowB - Math.max(fs * 1.9, 0.175 * H));
   // ground
   Kit.mk('line', {x1: 0, x2: W, y1: G.ground, y2: G.ground, stroke: 'currentColor', 'stroke-opacity': .25, 'stroke-width': 2}, svg);
   // traces (static)
@@ -65,7 +67,8 @@ Kit.onShow.card = () => {
     Kit.mk('path', {d, fill: 'none', stroke: 'currentColor', 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, svg);
   };
   trace(headF, G.rowA); trace(handF, G.rowB);
-  const lab = (txt, y) => { const e = Kit.mk('text', {x: G.tx1, y, 'text-anchor': 'end', fill: 'currentColor', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); e.textContent = txt; };
+  // the traces' names end short of the right end, where the time cursor stands once the story is told
+  const lab = (txt, y) => { const e = Kit.mk('text', {x: G.tx1 - 14, y, 'text-anchor': 'end', fill: 'currentColor', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); e.textContent = txt; };
   lab('force at the head', G.rowA - 6);
   lab('force at your hand', G.rowB - 6);
   dyn = Kit.mk('g', {}, svg);
@@ -99,11 +102,11 @@ function draw(t) {
   Kit.mk('line', {x1: hd.x + dx * 0.84, y1: hd.y + dy * 0.84, x2: hd.x + dx * 1.0, y2: hd.y + dy * 1.0, stroke: 'currentColor', 'stroke-opacity': .45, 'stroke-width': 0.07 * m, 'stroke-linecap': 'round'}, dyn);
   // club head
   Kit.mk('ellipse', {cx: hd.x + 0.025 * m, cy: hd.y + 0.012 * m, rx: 0.045 * m, ry: 0.022 * m, fill: 'currentColor'}, dyn);
-  // ball
+  // ball: it flies off to the right, fading out before it reaches the edge of the box
   const u = clamp((t - 0.01) / 0.75);
   const bx0 = hd.x + 0.07 * m + G.r, by0 = G.ground - G.r;
-  const bx = bx0 + u * (W * 1.1 - bx0), by = by0 - 4 * u * (1 - u) * 0.38 * H;
-  Kit.mk('circle', {cx: bx, cy: by, r: G.r, fill: 'none', stroke: 'currentColor', 'stroke-width': 2.5}, dyn);
+  const bx = bx0 + u * (W - G.r - 3 - bx0), by = by0 - 4 * u * (1 - u) * Math.min(0.38 * H, by0 - G.r - 3);
+  if (u < 1) Kit.mk('circle', {cx: bx, cy: by, r: G.r, fill: 'none', stroke: 'currentColor', 'stroke-width': 2.5, opacity: (1 - clamp((u - .8) / .2)).toFixed(3)}, dyn);
   // impact burst
   const hf2 = headF(t);
   if (hf2 > 0.05) {
@@ -126,6 +129,9 @@ function draw(t) {
   if (!done && t >= 0.9) {
     done = true; Kit.haptic('success');
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    // The story told, the jolt finishes its trip and the time bar goes: the drawing takes its room.
+    const o = {t};
+    gsap.to(o, {t: 1, duration: Kit.calm ? 0 : .5, ease: 'power1.out', onUpdate: () => { slider.value = o.t * 100; draw(o.t); }, onComplete: () => { slider.value = 100; draw(1); Kit.hide('ctl'); }});
   }
 }
 

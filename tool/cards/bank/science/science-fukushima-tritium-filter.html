@@ -8,8 +8,8 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);overflow-wrap:anywhere}
 #why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+#why .body b{font-weight:800}
 #row{display:flex;justify-content:flex-start}
 #go{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 5cqw;cursor:pointer;max-width:70%}
 #go:disabled{opacity:.5}
@@ -22,8 +22,7 @@
     <div class="stagebox" id="stage">
       <svg id="pic" aria-label="Water from a tank, zoomed in to molecules and passed through filters"></svg>
       <div id="why" class="gone">
-        <p class="big">Tritium is part of the water itself.</p>
-        <p class="body">A first filter takes out cesium-137, then ALPS removes essentially every other radionuclide. Tritium is an isotope of hydrogen, chemically the same, so it sits inside the water molecule and can't be separated chemically.</p>
+        <p class="body"><b>Tritium is part of the water itself.</b> A first filter takes out cesium-137, then ALPS removes essentially every other radionuclide. Tritium is an isotope of hydrogen, chemically the same, so it sits inside the water molecule and can't be separated chemically.</p>
       </div>
     </div>
     <p class="say" id="say">Tap to zoom in, step by step.</p>

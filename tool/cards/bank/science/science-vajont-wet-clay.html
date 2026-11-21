@@ -128,10 +128,13 @@
     // The ancient landslide, resting on the clay.
     E.blockOuter = Kit.mk('g', {class: 'enter'}, inside);
     E.block = Kit.mk('g', {}, E.blockOuter);
-    Kit.mk('path', {d: blockD, fill: 'url(#gBlock)', stroke: '#2a1f17', 'stroke-opacity': .5, 'stroke-width': 1}, E.block);
+    const slab = Kit.mk('path', {d: blockD, fill: 'url(#gBlock)', stroke: '#2a1f17', 'stroke-opacity': .5, 'stroke-width': 1}, E.block);
     const bs = Kit.mk('g', {'clip-path': 'url(#blockClip)', fill: 'none'}, E.block);
+    // its strata only as far as the block reaches: drawn across the valley and clipped, they still
+    // reached past the card's edge once the block had slid (the clip hides them, not their box)
+    const BL = LAYER.slice(0, 7);
     for (let k = 1; k <= 4; k++) {
-      const d = M(LAYER[0], k * .015, -k * .065) + cr(LAYER, k * .015, -k * .065);
+      const d = M(BL[0], k * .015, -k * .065) + cr(BL, k * .015, -k * .065);
       Kit.mk('path', {d, stroke: '#3a2a1e', 'stroke-opacity': .35, 'stroke-width': 1.2}, bs);
       Kit.mk('path', {d, stroke: '#ffe1bf', 'stroke-opacity': .12, 'stroke-width': T.h * .02}, bs);
     }
@@ -157,11 +160,18 @@
     E.fx = Kit.mk('g', {}, inside);
     E.stream = Kit.mk('path', {fill: 'none', stroke: '#1a9acd', 'stroke-linecap': 'round', 'stroke-width': Math.max(3, fs * .32), opacity: 0}, inside);
 
-    // Block label: travels with the slide but never rotates, so its lines stay apart.
+    // Block label: travels with the slide but never rotates, so its lines stay apart. Each line sits in
+    // the middle of the slab at its own height, measured where the slab is drawn, in a size it holds
+    // (a short box makes the slab thin).
     E.bLab = Kit.mk('g', {}, inside);
-    const bl = P(.27, .36);
-    txt(E.bLab, bl[0], bl[1], 'ANCIENT', {'text-anchor': 'middle', fill: '#10100c'});
-    txt(E.bLab, bl[0], bl[1] + fs * 1.4, 'LANDSLIDE', {'text-anchor': 'middle', fill: '#10100c'});
+    const across = y => { const pt = svg.createSVGPoint(); pt.y = y; let a = null, b = null;
+      for (let x = T.x0; x <= T.x1; x++) { pt.x = x; if (slab.isPointInFill(pt)) { if (a === null) a = x; b = x; } } return a === null ? [T.x0, T.x1] : [a, b]; };
+    const ys = [P(0, .34)[1], P(0, .34)[1] + fs * 1.4];   // the slab's thickest part
+    const lab = ['ANCIENT', 'LANDSLIDE'].map((w, i) => txt(E.bLab, 0, ys[i], w, {'text-anchor': 'middle', fill: '#10100c', style: 'font-family:var(--mono);letter-spacing:0'}));
+    let fsL = fs;
+    lab.forEach((e, i) => { const [a, b] = across(ys[i] - fs * .35); fsL = Math.min(fsL, fs * (b - a - 10) / e.getComputedTextLength()); });
+    fsL = Math.max(10, fsL);
+    lab.forEach((e, i) => { const [a, b] = across(ys[i] - fsL * .35); e.setAttribute('font-size', fsL); e.setAttribute('x', (a + b) / 2); });
 
     // Clay label (before), with a leader up to the layer.
     E.clayLab = Kit.mk('g', {}, inside);
