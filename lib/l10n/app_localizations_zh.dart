@@ -1783,7 +1783,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skillsTitleMark => '学';
 
   @override
-  String get skillsLine => '选出你感兴趣的。这能帮我们决定接下来写哪些卡片。';
+  String get skillsLine => '选出你想提升的方面，为你挑选的卡片会向它倾斜。';
 
   @override
   String get skillsDone => '完成';
@@ -5515,6 +5515,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get bookTheIdeas => '观点';
+
+  @override
+  String get bookRecommendedBy => '推荐者';
 
   @override
   String get bookFreeThisWeek => '本周免费';

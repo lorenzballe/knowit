@@ -8,7 +8,8 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #plot{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
 #ctl{display:flex;align-items:center;gap:3cqw}
-#why{display:flex;flex-direction:column;gap:1cqh}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 #count{font:600 max(1.8cqh,12px)/1.2 var(--mono);color:var(--muted)}
 .opt{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 6cqw;cursor:pointer}
 .opt:disabled{opacity:.45;cursor:default}
@@ -22,10 +23,7 @@
     <div class="stagebox" id="stage">
       <svg id="plot"></svg>
       <div id="ctl"><button class="opt" id="go">Launch ↑</button><span id="count">0 of 3 launches</span></div>
-      <div id="why" class="gone">
-        <p class="big">Confusion makes it stick.</p>
-        <p class="body">When something is confusing, System 2, your slow careful thinking, works harder. That extra work makes you more likely to reach the right answer, and to remember the experience.</p>
-      </div>
+      <p class="body gone" id="why"><b>Confusion makes it stick.</b> When something is confusing, System 2, your slow careful thinking, works harder. That extra work makes you more likely to reach the right answer, and to remember the experience.</p>
     </div>
     <p class="say" id="say">Drag to pick how confusing the lesson is, then launch. Try three very different spots.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A little struggle while learning is what makes it stay.</div>
@@ -42,14 +40,16 @@ function draw() {
   const {W, H, f: f0} = Kit.fitSvg(svg);
   const f = Math.max(f0, 12);
   while (svg.firstChild) svg.removeChild(svg.firstChild);
-  const L = f * 1.4, R = W - f * 1.4, T = f * 2.6, B = H - f * 3.8;
+  // In a short box (the answer in), the words around the plot sit closer to it, so the plot keeps its height.
+  const tight = H < f * 15;
+  const L = f * 1.4, R = W - f * 1.4, T = f * (tight ? 2.2 : 2.6), B = H - f * (tight ? 3.3 : 3.8);
   const X = c => L + f + c * (R - L - 2 * f), Y = m => B - m * (B - T);
   g = {W, H, f, L, R, T, B, X, Y};
   Kit.mk('line', {x1: L - f * .6, x2: R + f * .6, y1: B, y2: B, style: 'stroke:var(--k);stroke-width:2.5;stroke-linecap:round'}, svg);
   const t1 = Kit.mk('text', {x: L - f * .6, y: T - f * 1.2, style: `font:700 ${f}px var(--body);fill:var(--k)`}, svg); t1.textContent = '↑ Remembered later';
-  const lc = Kit.mk('text', {x: L, y: B + f * 1.4, style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); lc.textContent = 'Clear';
-  const rc = Kit.mk('text', {x: R, y: B + f * 1.4, 'text-anchor': 'end', style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); rc.textContent = 'Confusing';
-  const ax = Kit.mk('text', {x: (L + R) / 2, y: B + f * 3.1, 'text-anchor': 'middle', style: `font:500 ${f * .9}px var(--body);fill:var(--muted)`}, svg); ax.textContent = 'how confusing it felt at first →';
+  const lc = Kit.mk('text', {x: L, y: B + f * (tight ? 1.3 : 1.4), style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); lc.textContent = 'Clear';
+  const rc = Kit.mk('text', {x: R, y: B + f * (tight ? 1.3 : 1.4), 'text-anchor': 'end', style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); rc.textContent = 'Confusing';
+  const ax = Kit.mk('text', {x: (L + R) / 2, y: B + f * (tight ? 2.8 : 3.1), 'text-anchor': 'middle', style: `font:500 ${f * .9}px var(--body);fill:var(--muted)`}, svg); ax.textContent = 'how confusing it felt at first →';
   if (done) {
     const p = Kit.mk('path', {d: `M${X(0)},${Y(.12)} L${X(1)},${Y(.84)}`, style: 'stroke:var(--k);stroke-width:3;stroke-dasharray:7 6;fill:none;opacity:.55'}, svg);
     g.trend = p;
@@ -116,7 +116,7 @@ function finish() {
     const len = g.trend.getTotalLength();
     g.trend.style.strokeDasharray = `${len}`;
     gsap.fromTo(g.trend, {strokeDashoffset: len}, {strokeDashoffset: 0, duration: .9, ease: 'power2.inOut', onComplete: () => g.trend.style.strokeDasharray = '7 6'});
-    gsap.from('#why > *', {opacity: 0, y: 8, stagger: .12, duration: .4});
+    gsap.from('#why', {opacity: 0, y: 8, duration: .4});
   }
 }
 
@@ -137,6 +137,9 @@ Kit.play.card = async () => {
   }
   await new Promise(r => setTimeout(r, 1100));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

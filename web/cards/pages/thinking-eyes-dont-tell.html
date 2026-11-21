@@ -24,16 +24,7 @@
 #calls .btn{flex:1}
 #result{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:1.3cqh}
 .cap{margin:0;opacity:.6}
-#strip{display:flex;gap:1.6cqw}
-.chip{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:.7cqh;padding:.9cqh 0 .8cqh;border-radius:1.6cqh;background:color-mix(in srgb,var(--k) 7%,transparent)}
-.chip svg{width:78%;height:auto;display:block}
-.chip .tr{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.04em;padding:.55cqh 0;width:90%;text-align:center;border-radius:99px;box-shadow:inset 0 0 0 .2cqh var(--k)}
-.chip.lie .tr{background:var(--k);color:var(--c);box-shadow:none}
-.chip .mk{width:2.9cqh;height:2.9cqh;min-width:20px;min-height:20px;border-radius:50%;display:grid;place-items:center}
-.chip .mk.ok{background:var(--k);color:var(--c)}
-.chip .mk.no{box-shadow:inset 0 0 0 .22cqh var(--k)}
-.chip .mk svg{width:62%;height:62%}
-#line{width:100%;height:11cqh;min-height:62px;display:block;overflow:visible}
+#line{width:100%;flex:1;min-height:0;display:block;overflow:visible}
 #tests{margin:-.4cqh 0 0}
 #tests p{margin:0 0 .7cqh;font:800 max(1.5cqh,11.5px)/1.25 var(--body)}
 #tests ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.5cqh}
@@ -42,8 +33,6 @@
 .answered .q{font-size:max(2.5cqh,15px)}
 @container (max-height:520px){
   .cap,#tests{display:none}
-  .chip{padding:5px 0 4px;gap:4px}
-  #line{height:58px;min-height:58px}
 }
 </style>
 <article class="card" id="card" data-topic="thinking" data-kind="Game · six calls">
@@ -58,8 +47,7 @@
       </div>
       <div id="result" class="gone">
         <p class="cap">THE TRUTH, AND YOUR CALL</p>
-        <div id="strip"></div>
-        <svg id="line" role="img" aria-label="A line from 0 to 100 percent: a coin at 50, people in 206 studies at 54, the eye rule at 3 of 6, and your score."></svg>
+        <svg id="line" role="img" aria-label="The six answers as cards, each with where the eyes went, the truth and your call; under them a line from 0 to 100 percent: a coin at 50, people in 206 studies at 54, the eye rule at 3 of 6, and your score."></svg>
       </div>
     </div>
     <p class="say" id="say">NLP’s rule: eyes to <b>their right</b> mean making it up. Six answers: call each one.</p>
@@ -93,16 +81,16 @@
   ];
   const svg = Kit.$('face'), say = Kit.$('say'), ask = Kit.$('ask'), said = Kit.$('said');
   let at = 0, calls = [], over = false, gazeNow = {dx: 0, dy: 0}, eyes = null, labels = null, mouth = null;
-  const TICK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const CROSS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>';
   const score = () => ROUNDS.filter((R, i) => calls[i] === !R.lie).length;
 
   function txt(x, y, s, a, parent) { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree'}, a), parent); e.textContent = s; return e; }
 
   // The face, drawn at the size it has on this phone, its chin just above the answer.
+  let faceAt = '';
   function draw() {
     svg.innerHTML = '';
     const {W, H} = Kit.fitSvg(svg);
+    faceAt = `${Math.round(W)}x${Math.round(H)}`;
     const rc = rough.svg(svg);
     const fs = Math.max(11.5, Math.min(13, H / 13));
     const r = Math.min(H * .47, W * .3), cx = W / 2, cy = H - r * 1.02 - 2;
@@ -198,20 +186,49 @@
     gsap.delayedCall(.35, () => { look(dx, dy); light(R.side); });
   }
 
-  function chip(R, mine) {
-    const ok = mine === !R.lie, dx = R.side === 'R' ? -1 : 1, dy = -R.up;
-    const eye = x => `<path d="M${x - 7},8 Q${x},1.5 ${x + 7},8 Q${x},14.5 ${x - 7},8 Z" fill="#fff" stroke="${INK}" stroke-width="1.4"/><circle cx="${x + dx * 3.4}" cy="${8 + dy * 2.6}" r="2.4" fill="${INK}"/>`;
-    const c = document.createElement('div');
-    c.className = 'chip' + (R.lie ? ' lie' : '');
-    c.innerHTML = `<svg viewBox="0 0 40 16" aria-hidden="true">${eye(11)}${eye(29)}</svg><span class="tr">${R.lie ? 'LIE' : 'TRUE'}</span><i class="mk ${ok ? 'ok' : 'no'}" aria-label="${ok ? 'you were right' : 'you were wrong'}">${ok ? TICK : CROSS}</i>`;
-    return c;
+  // One answer as a card on the board: where the eyes went, the truth, and the reader's call.
+  function chip(L, R, mine, x0, y0, w, h, n) {
+    const ok = mine === !R.lie, dx = R.side === 'R' ? -1 : 1, dy = -R.up, g = Kit.mk('g', {class: 'cg'}, L);
+    Kit.mk('rect', {x: x0, y: y0, width: w, height: h, rx: Math.min(12, w * .22), fill: `color-mix(in srgb, ${INK} 7%, transparent)`}, g);
+    // The eyes as wide as the card allows: where they went is what the card shows.
+    const pad = Math.min(10, h * .1), k = w * .92 / 32, ey = y0 + pad - 3.6 * k, ex0 = x0 + w / 2 - 20 * k;
+    for (const ex of [11, 29]) {
+      const X = v => ex0 + v * k, Y = v => ey + v * k, id = `ce${n}${ex}`;
+      const d = `M${X(ex - 7)},${Y(8)} Q${X(ex)},${Y(-.5)} ${X(ex + 7)},${Y(8)} Q${X(ex)},${Y(16.5)} ${X(ex - 7)},${Y(8)} Z`;
+      // the white, the pupil kept inside it as on the face, then the lid's line over both
+      Kit.mk('path', {d, fill: '#fff'}, g);
+      Kit.mk('path', {d}, Kit.mk('clipPath', {id}, g));
+      Kit.mk('circle', {cx: X(ex + dx * 3.6), cy: Y(8 + dy * 2.2), r: 2.5 * k, fill: INK, 'clip-path': `url(#${id})`}, g);
+      Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.5}, g);
+    }
+    const mr = Math.min(11, w * .24), my = y0 + h - pad - mr;
+    const ph = 19, pw = Math.min(w * .88, 44), py = (ey + 12.4 * k + my - mr) / 2 - ph / 2;
+    Kit.mk('rect', {x: x0 + (w - pw) / 2, y: py, width: pw, height: ph, rx: ph / 2, fill: R.lie ? INK : 'none', stroke: INK, 'stroke-width': R.lie ? 0 : 1.6}, g);
+    txt(x0 + w / 2, py + ph / 2 + 4, R.lie ? 'LIE' : 'TRUE', {'font-size': 11.5, 'font-weight': 800, 'letter-spacing': '.04em', 'text-anchor': 'middle', fill: R.lie ? PAPER : INK}, g);
+    Kit.mk('circle', {cx: x0 + w / 2, cy: my, r: ok ? mr : mr - .9, fill: ok ? INK : 'none', stroke: INK, 'stroke-width': ok ? 0 : 1.8}, g);
+    const m = mr / 12, cx = x0 + w / 2 - 12 * m, cy = my - 12 * m;
+    Kit.mk('path', {d: ok ? `M${cx + 6.5 * m},${cy + 12.5 * m} l${4.5 * m},${4.5 * m} L${cx + 17.5 * m},${cy + 7.5 * m}` : `M${cx + 8 * m},${cy + 8 * m} l${8 * m},${8 * m} M${cx + 16 * m},${cy + 8 * m} l${-8 * m},${8 * m}`,
+      fill: 'none', stroke: ok ? PAPER : INK, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
   }
 
   // The scale every score sits on, from always wrong to never fooled: a coin, people, you.
-  function line(right) {
-    const L = Kit.$('line'); L.innerHTML = '';
-    const {W, H} = Kit.fitSvg(L);
-    const pad = 8, x = v => pad + (W - 2 * pad) * v / 100, y = H * .4, pct = right / 6 * 100;
+  // The board: the six answers as cards across the top, the scale under them, drawn at the size the
+  // result has on this phone and drawn again when that changes.
+  let boardAt = '';
+  function board(right) {
+    const B = Kit.$('line'); B.innerHTML = '';
+    const {W, H} = Kit.fitSvg(B);
+    boardAt = `${Math.round(W)}x${Math.round(H)}`;
+    const LH = Math.max(62, Math.min(84, H * .38)), gy = Math.max(10, H * .06);
+    const gx = Math.max(5, W * .02), cw = (W - 5 * gx) / 6, ch = Math.max(64, Math.min(H - LH - gy, cw * 2.4));
+    const y0 = Math.max(0, (H - ch - gy - LH) / 2);
+    ROUNDS.forEach((R, i) => chip(B, R, calls[i], i * (cw + gx), y0, cw, ch, i));
+    line(B, right, W, y0 + ch + gy, LH);
+  }
+
+  function line(B, right, W, top, H) {
+    const L = Kit.mk('g', {class: 'sc'}, B);
+    const pad = 8, x = v => pad + (W - 2 * pad) * v / 100, y = top + H * .4, pct = right / 6 * 100;
     const t = (vx, vy, s, a) => txt(vx, vy, s, Object.assign({'font-size': 11.5, 'font-weight': 700}, a), L);
     Kit.mk('line', {x1: x(0), y1: y, x2: x(100), y2: y, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, L);
     for (const v of [0, 50, 100]) Kit.mk('line', {x1: x(v), y1: y - 5, x2: x(v), y2: y + 5, stroke: INK, 'stroke-width': 2}, L);
@@ -224,7 +241,7 @@
     Kit.mk('circle', {cx: x(54), cy: y, r: 5, fill: INK}, L);
     t(x(54) + 7, y - 9, '24,483 people 54%', {'text-anchor': 'start'});
     // You and the rule, under the line, on a row of their own: a lucky score sits beside the rule's coin.
-    const ry = H - 2, xr = x(50), xy = x(pct), gap = 10;
+    const ry = top + H - 2, xr = x(50), xy = x(pct), gap = 10;
     const tri = (cx, filled) => Kit.mk('path', {d: `M${cx},${y + 7} l5.5,9 h-11 Z`, fill: filled ? INK : PAPER, stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, L);
     const near = Math.abs(xy - xr) < 12, side = pct >= 50 ? 1 : -1;
     tri(near ? xr - 6 * side : xr, false); tri(near ? xy + 6 * side : xy, true);
@@ -246,16 +263,14 @@
     const right = score();
     Kit.$('card').classList.add('answered');
     Kit.hide('play'); Kit.hide('calls'); Kit.show('result');
-    const strip = Kit.$('strip'); strip.innerHTML = '';
-    ROUNDS.forEach((R, i) => strip.appendChild(chip(R, calls[i])));
     say.innerHTML = 'By design these eyes told you nothing: the rule scored a coin’s 3 of 6.';
     Kit.show('tests'); Kit.show('keep');
     Kit.haptic('success');
     requestAnimationFrame(() => {
-      line(right);
+      board(right);
       if (!Kit.calm) {
-        gsap.from('.chip', {opacity: 0, y: 8, stagger: .07, duration: .35, ease: 'power2.out'});
-        gsap.from('#line > *', {opacity: 0, duration: .4, stagger: .03, delay: .45});
+        gsap.from('#line .cg', {opacity: 0, y: 8, stagger: .07, duration: .35, ease: 'power2.out'});
+        gsap.from('#line .sc > *', {opacity: 0, duration: .4, stagger: .03, delay: .45});
       }
     });
   }
@@ -269,7 +284,15 @@
   // A tap on the face plays the glance again.
   Kit.$('play').addEventListener('click', () => { if (!over) round(at); });
 
-  Kit.onShow.card = () => { if (over) line(score()); else draw(); };
+  Kit.onShow.card = () => { if (over) board(score()); else draw(); };
+  // Drawn again at the size it now has whenever its room changes (an answer that wraps to another
+  // line, the result coming in), and only then, so an entrance already playing is left alone.
+  const size = el => { const b = el.getBoundingClientRect(); return b.width && b.height ? `${Math.round(b.width)}x${Math.round(b.height)}` : ''; };
+  new ResizeObserver(() => {
+    if (!over) { const k = size(svg); if (k && k !== faceAt) draw(); }
+    else { const k = size(Kit.$('line')); if (k && k !== boardAt) board(score()); }
+  }).observe(svg);
+  new ResizeObserver(() => { if (over) { const k = size(Kit.$('line')); if (k && k !== boardAt) board(score()); } }).observe(Kit.$('line'));
   Kit.onEnter.card = () => { if (!Kit.calm && !over) round(0); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 40 : ms));

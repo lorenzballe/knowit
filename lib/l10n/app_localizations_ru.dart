@@ -1929,7 +1929,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Выбери то, что тебе интересно. Так мы поймём, какие карточки писать дальше.';
+      'Выбери, в чём хочешь стать лучше: карточки, подобранные для тебя, сместятся в эту сторону.';
 
   @override
   String get skillsDone => 'Готово';
@@ -5980,6 +5980,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get bookTheIdeas => 'Идеи';
+
+  @override
+  String get bookRecommendedBy => 'Рекомендуют';
 
   @override
   String get bookFreeThisWeek => 'Бесплатно на этой неделе';

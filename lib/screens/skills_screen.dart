@@ -1,10 +1,11 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../analytics.dart';
 import '../data/skills.dart';
-import '../data/topics.dart' show inkOn;
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -12,10 +13,13 @@ import '../widgets/chunky.dart';
 import '../widgets/ui.dart' show BackCircle, ScreenView;
 
 /// What the reader wants to learn, picked from the profile: twelve skills
-/// in two columns, each a tile with its mark that fills with its colour
-/// when picked. Nothing in the app changes with them; they are kept, and
-/// told to the reader's profile in analytics, for the people who write the
-/// cards to know what to write next. The screen says so.
+/// in two columns, each a card of the page's ground with a badge of two
+/// hues, lit up and ringed when picked: never tiles of one colour, which are
+/// the subjects' look. All twelve are on the screen at
+/// once, the rows sharing the height the phone has; only a text too large
+/// for that lets the grid scroll. Nothing in the app changes with them; they
+/// are kept, and told to the reader's profile in analytics, for the people
+/// who write the cards to know what to write next. The screen says so.
 class SkillsScreen extends StatefulWidget {
   const SkillsScreen({super.key, required this.app});
 
@@ -53,6 +57,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
   }
 
   void _toggle(Skill s) {
+    HapticFeedback.selectionClick();
     final List<String> next = List.of(widget.app.skills);
     if (!next.remove(s.name)) next.add(s.name);
     widget.app.setSkills(next);
@@ -99,46 +104,22 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 ),
               ),
               Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
-                  children: [
-                    Text(
-                      l.skillsLine,
-                      style: AppText.body(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 4),
+                  child: LayoutBuilder(
+                    builder: (context, box) => _grid(
+                      context,
+                      box,
+                      all,
+                      picked,
+                      line: l.skillsLine,
+                      lineStyle: AppText.body(
                         size: 15,
                         height: 1.38,
                         color: p.ink.withValues(alpha: 0.62),
                       ),
                     ),
-                    const SizedBox(height: 22),
-                    for (int i = 0; i < all.length; i += 2) ...[
-                      IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Expanded(
-                              child: _Tile(
-                                skill: all[i],
-                                on: picked.contains(all[i].name),
-                                onTap: () => _toggle(all[i]),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: i + 1 < all.length
-                                  ? _Tile(
-                                      skill: all[i + 1],
-                                      on: picked.contains(all[i + 1].name),
-                                      onTap: () => _toggle(all[i + 1]),
-                                    )
-                                  : const SizedBox.shrink(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  ],
+                  ),
                 ),
               ),
               Padding(
@@ -157,6 +138,73 @@ class _SkillsScreenState extends State<SkillsScreen> {
         ),
       ),
     );
+  }
+
+  /// The line saying what the picks do, then the twelve in two columns.
+  /// Each row takes its share of the height left, no taller than a tile
+  /// wants; where even the least a tile needs, its name on two lines at the
+  /// reader's text size, does not fit six times, the rows keep that least
+  /// and the line and the grid scroll together.
+  Widget _grid(
+    BuildContext context,
+    BoxConstraints box,
+    List<Skill> all,
+    Set<String> picked, {
+    required String line,
+    required TextStyle lineStyle,
+  }) {
+    const double gap = 10, under = 16;
+    final int rows = (all.length / 2).ceil();
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextStyle style = DefaultTextStyle.of(context).style.merge(lineStyle);
+    final TextPainter measure = TextPainter(
+      text: TextSpan(text: line, style: style),
+      textDirection: Directionality.of(context),
+      textScaler: scaler,
+      locale: Localizations.maybeLocaleOf(context),
+    )..layout(maxWidth: box.maxWidth);
+    final double lineHeight = measure.height;
+    measure.dispose();
+    final double least =
+        math.max(2 * scaler.scale(14.5) * 1.22, 36) + 2 * _Tile.padY + 4;
+    final double share =
+        (box.maxHeight - lineHeight - under - gap * (rows - 1)) / rows;
+    final bool fits = share >= least;
+    final double height = fits ? math.min(share, 136) : least;
+    Widget row(int i) => SizedBox(
+      height: height,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (final int k in [i, i + 1]) ...[
+            if (k == i + 1) const SizedBox(width: gap),
+            Expanded(
+              child: k < all.length
+                  ? _Tile(
+                      skill: all[k],
+                      on: picked.contains(all[k].name),
+                      onTap: () => _toggle(all[k]),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        ],
+      ),
+    );
+    final Widget page = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(line, style: lineStyle),
+        const SizedBox(height: under),
+        for (int i = 0; i < all.length; i += 2) ...[
+          if (i > 0) const SizedBox(height: gap),
+          row(i),
+        ],
+      ],
+    );
+    if (fits) return Align(alignment: Alignment.topCenter, child: page);
+    return SingleChildScrollView(child: page);
   }
 }
 
@@ -209,29 +257,46 @@ class _Headline extends StatelessWidget {
   }
 }
 
-/// A skill: its mark and its name, on the page's quiet ground, or filled
-/// with its colour, a tick in the corner, once picked.
-class _Tile extends StatelessWidget {
+/// A skill: a badge of its two hues carrying its mark, and its name, on a
+/// card of the page's own ground, never a tile of one colour as a subject's
+/// is. Picked, the badge lights up in full, a ring of the same two hues runs
+/// round the card with their glow under it, and a tick fills in. Tall
+/// enough, the badge sits above the name; in a short row, beside it, the
+/// tick then on the badge's corner so the name keeps the room.
+class _Tile extends StatefulWidget {
   const _Tile({required this.skill, required this.on, required this.onTap});
 
   final Skill skill;
   final bool on;
   final VoidCallback onTap;
 
+  /// The room above and below what a short tile shows.
+  static const double padY = 9;
+
+  @override
+  State<_Tile> createState() => _TileState();
+}
+
+class _TileState extends State<_Tile> {
+  bool _down = false;
+
+  LinearGradient get _hues => LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: widget.skill.hues,
+  );
+
   @override
   Widget build(BuildContext context) {
     final p = context.p;
-    // Not picked, the page's quiet ground with a wash of the skill's own
-    // colour, so the grid reads as twelve different things before any is
-    // chosen; picked, the colour itself.
-    final Color ground = on
-        ? skill.colour
-        : Color.alphaBlend(
-            skill.colour.withValues(alpha: p.isDark ? 0.1 : 0.08),
-            p.ink.withValues(alpha: p.isDark ? 0.04 : 0.03),
-          );
-    final Color ink = on ? inkOn(skill.colour) : p.ink;
+    final Skill skill = widget.skill;
+    final bool on = widget.on;
     final String name = context.l10n.skillName(skill.name);
+    // The card itself: the page's raised ground, a hairline round it; picked,
+    // a ring of the skill's two hues instead, and their glow under it.
+    final Color ground = p.isDark
+        ? Color.alphaBlend(Colors.white.withValues(alpha: 0.055), p.surface)
+        : Colors.white;
     return Semantics(
       key: ValueKey('skill-${skill.name}-${on ? 'on' : 'off'}'),
       button: true,
@@ -240,63 +305,226 @@ class _Tile extends StatelessWidget {
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+        onTapDown: (_) => setState(() => _down = true),
+        onTapUp: (_) => setState(() => _down = false),
+        onTapCancel: () => setState(() => _down = false),
+        onTap: widget.onTap,
+        child: AnimatedScale(
+          scale: _down ? 0.97 : 1,
+          duration: const Duration(milliseconds: 110),
           curve: Curves.easeOut,
-          constraints: const BoxConstraints(minHeight: 112),
-          decoration: BoxDecoration(
-            color: ground,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: const EdgeInsets.fromLTRB(14, 14, 12, 13),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomPaint(
-                    size: const Size.square(28),
-                    painter: SkillGlyph(skill, on ? ink : skill.mark(p.isDark)),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOut,
+            padding: EdgeInsets.all(on ? 2 : 1),
+            decoration: BoxDecoration(
+              gradient: on ? _hues : null,
+              color: on ? null : p.line,
+              borderRadius: BorderRadius.circular(22),
+              boxShadow: [
+                BoxShadow(
+                  color: skill.hues.last.withValues(
+                    alpha: on ? (p.isDark ? 0.34 : 0.26) : 0,
                   ),
-                  const Spacer(),
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: 22,
-                    height: 22,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: on ? ink : Colors.transparent,
-                      border: Border.all(
-                        color: on ? ink : p.ink.withValues(alpha: 0.22),
-                        width: 1.6,
-                      ),
-                    ),
-                    child: on
-                        ? Icon(
-                            Icons.check_rounded,
-                            size: 15,
-                            color: skill.colour,
-                          )
-                        : null,
-                  ),
-                ],
-              ),
-              const Spacer(),
-              const SizedBox(height: 18),
-              Text(
-                name,
-                style: AppText.body(
-                  size: 15.5,
-                  weight: FontWeight.w700,
-                  height: 1.2,
-                  color: ink,
+                  blurRadius: 18,
+                  offset: const Offset(0, 6),
                 ),
+              ],
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: ground,
+                borderRadius: BorderRadius.circular(on ? 20 : 21),
               ),
-            ],
+              child: LayoutBuilder(
+                // Tall where the badge, a gap and two lines of the name at the
+                // reader's text size stand one above the other; beside it if not.
+                builder: (context, box) =>
+                    box.maxHeight >=
+                        54 +
+                            2 * MediaQuery.textScalerOf(context).scale(15) * 1.2
+                    ? _tall(box, name)
+                    : _row(box, name),
+              ),
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  /// The badge: the skill's two hues and its mark, lit in full once picked;
+  /// before, a soft wash of them with the mark in the first.
+  Widget _badge(double size) {
+    final p = context.p;
+    final Skill skill = widget.skill;
+    final bool on = widget.on;
+    final Color soft = p.isDark ? p.surface : Colors.white;
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOut,
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.3),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: on
+              ? skill.hues
+              : [
+                  for (final Color c in skill.hues)
+                    Color.alphaBlend(
+                      c.withValues(alpha: p.isDark ? 0.24 : 0.16),
+                      soft,
+                    ),
+                ],
+        ),
+      ),
+      alignment: Alignment.center,
+      child: CustomPaint(
+        size: Size.square(size * 0.62),
+        painter: SkillGlyph(
+          skill,
+          on ? skill.onHues : (p.isDark ? skill.hues.first : skill.onPaper),
+        ),
+      ),
+    );
+  }
+
+  /// The tick: a ring, filled with the skill's hues once picked.
+  Widget _tick(double size) {
+    final p = context.p;
+    final bool on = widget.on;
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 220),
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: on ? _hues : null,
+        border: on
+            ? null
+            : Border.all(color: p.ink.withValues(alpha: 0.22), width: 1.6),
+      ),
+      child: AnimatedScale(
+        scale: on ? 1 : 0,
+        duration: const Duration(milliseconds: 240),
+        curve: Curves.easeOutBack,
+        child: Icon(
+          Icons.check_rounded,
+          size: size * 0.68,
+          color: widget.skill.onHues,
+        ),
+      ),
+    );
+  }
+
+  /// The name, on up to three lines in [width], never broken inside a
+  /// word: where its longest word is wider than that, the whole name is set
+  /// smaller instead.
+  Widget _name(String name, double size, double width, Alignment at) {
+    final p = context.p;
+    // Measured as it is drawn: with what the page's own text style lends it.
+    final TextStyle style = DefaultTextStyle.of(context).style.merge(
+      AppText.body(
+        size: size,
+        weight: FontWeight.w700,
+        height: 1.2,
+        color: p.ink,
+      ),
+    );
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    double widest = 0;
+    for (final String word in name.split(RegExp(r'\s+'))) {
+      final TextPainter t = TextPainter(
+        text: TextSpan(text: word, style: style),
+        textDirection: Directionality.of(context),
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      widest = math.max(widest, t.width);
+      t.dispose();
+    }
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: at,
+      child: SizedBox(
+        width: math.max(width, widest + 1),
+        child: Text(name, maxLines: 3, style: style),
+      ),
+    );
+  }
+
+  /// Tall: the badge and the tick above, the name at the foot.
+  Widget _tall(BoxConstraints box, String name) {
+    final double badge = (box.maxHeight * 0.34).clamp(30.0, 42.0);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(13, 12, 12, 11),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [_badge(badge), const Spacer(), _tick(22)],
+          ),
+          const Spacer(),
+          Flexible(
+            flex: 0,
+            child: _name(name, 15, box.maxWidth - 25, Alignment.bottomLeft),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Short: the badge, the name beside it taking the rest of the row; the
+  /// tick, once picked, on the badge's corner.
+  Widget _row(BoxConstraints box, String name) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, _Tile.padY, 10, _Tile.padY),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 36,
+            height: 36,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Positioned(left: 0, top: 2, child: _badge(32)),
+                Positioned(
+                  right: -3,
+                  bottom: -3,
+                  child: AnimatedScale(
+                    scale: widget.on ? 1 : 0,
+                    duration: const Duration(milliseconds: 240),
+                    curve: Curves.easeOutBack,
+                    child: Container(
+                      padding: const EdgeInsets.all(1.5),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: context.p.isDark
+                            ? Color.alphaBlend(
+                                Colors.white.withValues(alpha: 0.055),
+                                context.p.surface,
+                              )
+                            : Colors.white,
+                      ),
+                      child: _tick(15),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 9),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, room) =>
+                  _name(name, 14.5, room.maxWidth, Alignment.centerLeft),
+            ),
+          ),
+        ],
       ),
     );
   }

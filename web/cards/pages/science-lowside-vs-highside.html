@@ -12,9 +12,8 @@
 .sw button{flex:1;font:700 max(2.1cqh,14px)/1.15 var(--body);border:0;border-radius:1.8cqh;padding:1.2cqh 2cqw;background:transparent;color:var(--k);cursor:pointer;overflow-wrap:anywhere}
 .sw button small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.3cqh}
 .sw button.on{background:var(--k);color:var(--c)}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display)}
-#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+#why{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Switch · compare">
   <div class="in">
@@ -28,7 +27,7 @@
       </div>
     </div>
     <p class="say" id="say">Flip between the two crashes and watch the rear tyre.</p>
-    <div id="why" class="gone"><p class="big">Slide out vs. thrown off</p><p class="body">Low-side: the rear tyre loses grip and the bike drops to the inside, so you slide. High-side: the tyre slides, then suddenly grips again, and the bike flicks you up and over. Rossi says the one with the gas closed throws you higher and harder; he was hurt that way at Mugello, at 180 km/h on a cold tyre.</p></div>
+    <p class="body gone" id="why"><b>Low-side:</b> the rear tyre loses grip, the bike drops to the inside and you slide. <b>High-side:</b> it slides, then suddenly grips again, and the bike flicks you up and over. Rossi says the one with the gas closed throws you higher and harder: it hurt him at Mugello, at 180 km/h on a cold tyre.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Low-side: grip goes and you slide. High-side: grip comes back and you fly.</div>
     <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)</span></div>
   </div>
@@ -61,11 +60,17 @@ function reset(){
 function draw(){
   const r = Kit.fitSvg(svg); W = r.W; H = r.H; f = Math.max(r.f, 13);
   svg.innerHTML = '';
-  G = H * 0.82; u = Math.min(W / 130, H / 80); cx = W * 0.34;
+  // A short box (the answer in, on a small phone): the caption gives its row to the picture, the two
+  // sides of the bend are written inside the ground's band, and the bike and rider take the height left.
+  const short = H < 140;
+  // Otherwise the bike and rider are as big as the box lets them be: the lean to the left, the flight
+  // over them and the slide to the right all inside it.
+  G = short ? H - f * 1.7 : H * 0.82; cx = W * (short ? 0.34 : 0.4);
+  u = short ? Math.min(W / 130, (G - 4) / 42) : Math.min((cx - 12) / 33.6, (G - f * 1.8) / 54, W / 95);
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
   mk('rect', {x: 0, y: G, width: W, height: H - G, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent)'});
   mk('line', {x1: 0, x2: W, y1: G, y2: G, style: 'stroke:var(--k);stroke-width:2'});
-  const lab = (x, anchor, t) => { const e = mk('text', {x, y: G + f * 1.5, 'text-anchor': anchor, style: `font:600 ${f * .85}px var(--body);fill:var(--k);opacity:.6`}); e.textContent = t; };
+  const lab = (x, anchor, t) => { const e = mk('text', {x, y: G + f * (short ? 1.2 : 1.5), 'text-anchor': anchor, style: `font:600 ${f * .85}px var(--body);fill:var(--k);opacity:.6`}); e.textContent = t; };
   lab(8, 'start', '← inside of bend'); lab(W - 8, 'end', 'outside →');
   el.skid = mk('line', {x1: cx, x2: cx, y1: G - 1, y2: G - 1, style: `stroke:${ACC};stroke-width:${Math.max(3, u * 1.2)};stroke-linecap:round;opacity:.85`});
   // trail dots for the high-side flight
@@ -73,7 +78,7 @@ function draw(){
   const tg = mk('g', {});
   const a = 25 * Math.PI / 180;
   const lx = cx + W * .06 + Math.sin(a) * 26 * u, ly = G - Math.cos(a) * 26 * u;
-  const ex = W - 13 * u, ey = G - 3 * u, peak = f * 2.4 + 22 * u;
+  const ex = W - 9 * u, ey = G - 3 * u, peak = short ? 4 + u : Math.max(f * 2.4 + 22 * u, f * 1.3 + 6 + 26.2 * u);
   const qx = (lx + ex) / 2, qy = 2 * peak - (ly + ey) / 2;
   fly = {lx, ly, ex, ey, peak};
   for (let i = 1; i <= 16; i++){
@@ -94,13 +99,17 @@ function draw(){
   mk('circle', {cx: 0, cy: -17 * u, r: 4.6 * u, style: 'fill:#fff;stroke:var(--k);stroke-width:2'}, el.rider);
   mk('rect', {x: -1 * u, y: -21.6 * u, width: 2 * u, height: 9.2 * u, style: `fill:${ACC}`}, el.rider);
   el.status = mk('text', {x: W / 2, y: f * 1.3, 'text-anchor': 'middle', style: `font:700 ${f * 1.05}px var(--body);fill:var(--k)`});
+  if (short) el.status.setAttribute('display', 'none');
   if (mode){ build(mode); tl.progress(1); render(); }
   else { reset(); status('Seen from behind, leaning left'); render(); }
 }
 function done(){
   seen.add(mode);
   if (seen.size === 2 && !finished){
-    finished = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    // Both crashes seen, the story is told: the switch goes and the picture takes its room.
+    finished = true; Kit.hide('say'); Kit.hide('sw'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    // Drawn again at once at the size it now has: its short layout is made for a small phone's strip.
+    draw();
   }
 }
 function build(m){
@@ -116,7 +125,7 @@ function build(m){
       .to(st, {bx: W * .16, bRot: -88, duration: .4, ease: 'power2.in'})
       .call(() => { cut(); status('You slide along the ground'); })
       .to(st, {bx: W * .5, duration: 1.3, ease: 'power2.out'})
-      .to(st, {px: '+=' + W * .26, py: G - 4 * u, rRot: -95, duration: 1.4, ease: 'power2.out'}, '<');
+      .to(st, {px: '+=' + Math.min(W * .26, W * .34 - 11.7 * u), py: G - 4 * u, rRot: -95, duration: 1.4, ease: 'power2.out'}, '<');
   } else {
     tl.call(() => status('Rear tyre slides out'))
       .to(st, {bx: W * .06, bRot: -56, duration: .5, ease: 'power1.in'})
@@ -128,7 +137,8 @@ function build(m){
       .to(st, {py: F.peak, duration: .5, ease: 'power2.out'}, 'fly')
       .to(st, {py: F.ey, duration: .6, ease: 'power2.in'}, 'fly+=0.5')
       .to(st, {rRot: 630, duration: 1.1, ease: 'none'}, 'fly')
-      .to(st, {bRot: 88, bx: W * .16, duration: .7, ease: 'power2.in'}, 'fly');
+      // The bike falls the other way and lies short of where the rider lands.
+      .to(st, {bRot: 88, bx: Math.min(W * .16, F.ex - 48.6 * u - cx), duration: .7, ease: 'power2.in'}, 'fly');
   }
   render();
 }
@@ -147,6 +157,9 @@ Kit.play.card = async () => {
   Kit.$('sw').children[1].click(); tl.progress(1); render(); done();
   await new Promise(r => setTimeout(r, 600));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('sv'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

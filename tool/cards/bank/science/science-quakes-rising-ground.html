@@ -6,153 +6,222 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#sv{flex:1;min-height:0;width:100%;display:block}
+#sv{flex:1;min-height:0;width:100%;display:block;overflow:visible}
 #sw{display:flex;gap:2.5cqw}
-.sb{flex:1;text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 3.5cqw;cursor:pointer;transition:background .25s,color .25s}
-.sb .h{display:block;font:700 max(2.1cqh,14px)/1.15 var(--body);overflow-wrap:anywhere}
-.sb .n{display:block;font:600 max(1.6cqh,12px)/1.2 var(--body);opacity:.8;margin-top:.5cqh}
+.sb{flex:1;min-height:44px;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:99px;padding:1.1cqh 3cqw;cursor:pointer;font:700 max(2.1cqh,14px)/1.15 var(--body);transition:background .25s,color .25s;overflow-wrap:anywhere}
 .sb.up.on{background:#d62828;color:#fff;box-shadow:none}
 .sb.down.on{background:var(--k);color:var(--c);box-shadow:none}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:anywhere}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
+.say,.q{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Flip a switch · compare">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
     <h2 class="q">When do earthquakes strike as the Campi Flegrei ground breathes?</h2>
     <div class="stagebox" id="stage">
-      <svg id="sv"></svg>
+      <svg id="sv" role="img" aria-label="A town on a dome of ground over a pocket of magma, with a seismograph above it that writes one line while the ground rises and one while it sinks."></svg>
       <div id="sw">
-        <button class="sb up" data-d="up"><span class="h">↑ Ground rises</span><span class="n" id="nUp">0 quakes</span></button>
-        <button class="sb down" data-d="down"><span class="h">↓ Ground sinks</span><span class="n" id="nDown">0 quakes</span></button>
+        <button class="sb up" data-d="up">↑ Make it rise</button>
+        <button class="sb down" data-d="down">↓ Make it sink</button>
       </div>
-      <div id="why" class="gone"><p class="big">Only while it rises.</p><p class="body">The ground at Campi Flegrei breathes: it slowly rises, then sinks. Earthquakes come only in the rising phase, called positive bradyseism. While it sinks, there are none.</p></div>
     </div>
-    <p class="say" id="say">Flip the switch: make the ground rise, then make it sink.</p>
+    <p class="say" id="say" aria-live="polite">Flip the switch: make the ground rise, then make it sink.</p>
+    <p class="body gone" id="why"><b>Only while it rises,</b> a phase called positive bradyseism. While the ground sinks, there are none.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Campi Flegrei shakes on the way up, never on the way down.</div>
     <div class="foot"><span class="src">Source · Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const INK = '#10100c', RED = '#d62828', MAGMA = '#ff5a1f', CORE = '#ffc83d', STONE = '#fffbf0', LEAF = '#00835b', ROCK = ['#f6d892', '#ecbb6a', '#d99a50'];
+// How far the ground has risen, from 0 (down) to 1 (up).
 const S = {u: .3};
-let G = null, dir = 0, tw = null, amp = 0, trace = [], fast = false, lastSpawn = 0, finished = false;
+// The seismograph writes on two lines: one only while the ground rises, one only while it sinks.
+const K = 110, lanes = {up: [], down: []}, acc = {up: 0, down: 0};
+// Where each quake struck: across the dome (-1 to 1) and how deep between the town and the magma (0 to 1).
+const quakes = [];
 const counts = {up: 0, down: 0}, done = {up: false, down: false};
-const N = 90;
-for (let i = 0; i < N; i++) trace.push(0);
+let G = null, dir = 0, tw = null, amp = 0, fast = false, lastSpawn = 0, finished = false, lastU = S.u;
 
-const RED = '#d62828', MAGMA = '#e8590c';
-const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
-
-function surf(x){ return G.y0 - S.u * G.B * Math.exp(-Math.pow((x - G.cx) / (G.W * .26), 2)); }
-
-Kit.onShow.card = () => {
-  const svg = Kit.$('sv'); svg.innerHTML = '';
+function build() {
+  const svg = Kit.$('sv');
+  svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f * .8, 12);
-  G = {W, H, f, fs, cx: W / 2, sh: Math.max(H * .2, fs * 3.4)};
-  G.y0 = G.sh + H * .27; G.B = H * .13;
-  G.cy = H * .84;
-  // seismograph: just the pen line, written on the page
-  const lab = Kit.mk('text', {x: 2, y: fs * 1.3, 'font-size': fs, style: 'fill:var(--k);font-family:var(--body);font-weight:600'}, svg);
-  lab.textContent = 'Seismograph';
-  G.state = Kit.mk('text', {x: W - 2, y: fs * 1.3, 'font-size': fs, 'text-anchor': 'end', style: 'fill:var(--k);font-family:var(--body);font-weight:700'}, svg);
-  G.trace = Kit.mk('path', {fill: 'none', 'stroke-width': Math.max(2, H * .005), 'stroke-linejoin': 'round', 'stroke-linecap': 'round', style: 'stroke:var(--k)'}, svg);
-  // ground: three flat layers of rock that bulge together
-  G.gnd = Kit.mk('g', {}, svg);
-  G.ground = Kit.mk('path', {style: `fill:${tint(30)}`}, G.gnd);
-  G.l1 = Kit.mk('path', {style: `fill:${tint(42)}`}, G.gnd);
-  G.l2 = Kit.mk('path', {style: `fill:${tint(54)}`}, G.gnd);
-  G.top = Kit.mk('path', {fill: 'none', 'stroke-width': Math.max(2.5, H * .007), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: 'stroke:var(--k)'}, G.gnd);
-  G.houses = Kit.mk('path', {style: 'fill:var(--k)'}, G.gnd);
-  G.ch = Kit.mk('ellipse', {style: `fill:${MAGMA}`}, G.gnd);
-  G.mt = Kit.mk('text', {'font-size': fs, 'text-anchor': 'middle', style: 'fill:var(--k);font-family:var(--body);font-weight:700'}, G.gnd);
-  G.mt.textContent = 'magma';
-  G.q = Kit.mk('g', {}, G.gnd);
-  render(); drawTrace(); setState();
-};
+  const fs = Math.max(10.5, f * .78);
+  const pH = Math.min(H * .36, Math.max(fs * 4.6, H * .27));       // the seismograph's paper
+  const avail = H - pH - 8;
+  const B = avail * .2;                                             // how high the ground can rise
+  const hw = Math.min(W * .075, avail * .14), hh = hw * 1.1;        // a house
+  // The ground under the town, all the way down; once the story is told the switch is gone, so the
+  // picture keeps room only for the rise the ground has now.
+  const y0 = pH + 8 + hh * 1.55 + B * (finished ? S.u : 1);
+  const D = H - y0, cx = W / 2, r = Math.min(18, W * .05);
+  const mg = {cx, cy: y0 + D * .66, rx: W * .3, ry: D * .17};
+  const g = Kit.mk('g', {}, svg);
 
-function render(){
+  // The seismograph: a strip of paper, one line for each way the ground can go.
+  Kit.mk('rect', {x: 1.5, y: 1.5, width: W - 3, height: pH - 3, rx: Math.min(14, pH * .2), fill: STONE, stroke: INK, 'stroke-width': 2.5}, g);
+  Kit.mk('line', {x1: 10, x2: W - 10, y1: pH / 2, y2: pH / 2, stroke: INK, 'stroke-width': 1.5, 'stroke-dasharray': '3 5', opacity: .3}, g);
+  const L = {};
+  ['up', 'down'].forEach((k, i) => {
+    const mid = pH * (i ? .75 : .25), ink = k === 'up' ? RED : INK;
+    const name = Kit.mk('text', {x: 12, y: mid + fs * .36, 'font-size': fs, 'font-weight': 800, fill: ink, 'font-family': 'var(--body)'}, g);
+    name.textContent = k === 'up' ? '↑ rising' : '↓ sinking';
+    const count = Kit.mk('text', {x: W - 12, y: mid + fs * .36, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 800, fill: ink, 'font-family': 'var(--body)'}, g);
+    count.textContent = '00 quakes';
+    let a = 12 + fs * 5.4, b = W - 12 - fs * 5.2;
+    try { a = 12 + name.getComputedTextLength() + fs * .9; b = W - 12 - count.getComputedTextLength() - fs * .9; } catch (_) {}
+    count.textContent = counts[k] + (counts[k] === 1 ? ' quake' : ' quakes');
+    const amp = Math.min(pH * .2, fs * 1.05);
+    Kit.mk('line', {x1: a, x2: b, y1: mid, y2: mid, stroke: INK, 'stroke-width': 1.2, opacity: .18}, g);
+    const line = Kit.mk('path', {fill: 'none', stroke: ink, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
+    const pen = Kit.mk('path', {fill: INK}, g);
+    L[k] = {mid, a, b, amp, line, pen, count};
+  });
+
+  // The ground: a slice of rock under the town, the magma below it.
+  const defs = Kit.mk('defs', {}, g), clip = Kit.mk('clipPath', {id: 'slice'}, defs);
+  Kit.mk('path', {d: `M0,${pH + 4} H${W} V${H - r} Q${W},${H} ${W - r},${H} H${r} Q0,${H} 0,${H - r} Z`}, clip);
+  const world = Kit.mk('g', {'clip-path': 'url(#slice)'}, g);
+  const rock = ROCK.map(c => Kit.mk('path', {fill: c}, world));
+  const seams = [0, 1].map(() => Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.5, opacity: .3}, world));
+  const ghost = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '6 5', opacity: .45}, world);
+  const pocket = Kit.mk('ellipse', {cx: mg.cx, cy: mg.cy, fill: MAGMA, stroke: INK, 'stroke-width': 2.5}, world);
+  const core = Kit.mk('ellipse', {cx: mg.cx, cy: mg.cy + mg.ry * .1, fill: CORE}, world);
+  const magma = Kit.mk('text', {x: mg.cx, y: mg.cy + fs * .36, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: INK, 'font-family': 'var(--body)'}, world);
+  magma.textContent = 'magma';
+  const dots = Kit.mk('g', {fill: RED, stroke: INK, 'stroke-width': 1.2}, world);
+  const bursts = Kit.mk('g', {fill: 'none', stroke: RED, 'stroke-width': 2.5}, world);
+  const surface = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, world);
+  // The town on the dome: five houses and two trees, and the shaking around it.
+  const town = Kit.mk('g', {}, g);
+  const homes = [-2, -1, 0, 1, 2].map(i => ({x: cx + i * hw * 1.55, el: house(town, hw, hh, i)}));
+  const trees = [-1, 1].map(s => ({x: cx + s * (hw * 1.55 * 2 + hw * 1.25), el: tree(town, hw * .62)}));
+  const shake = Kit.mk('g', {fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: 0}, g);
+  const rim = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
+
+  G = {svg, W, H, f, fs, pH, B, hw, hh, y0, D, cx, r, mg, L, rock, seams, ghost, pocket, core, magma, dots, bursts, surface, town, homes, trees, shake, rim};
+  G.dotEls = quakes.map(() => Kit.mk('circle', {r: Math.max(2.5, f * .2)}, dots));
+  render();
+}
+
+// A house: white walls, a dark roof, a window, its base at (0, 0) once placed.
+function house(g, w, h, i) {
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, tall = h * (i % 2 ? .82 : 1);
+  const el = Kit.mk('g', {}, g);
+  Kit.mk('rect', Object.assign({x: -w / 2, y: -tall, width: w, height: tall, fill: STONE}, at), el);
+  Kit.mk('path', Object.assign({d: `M${-w * .62},${-tall} L0,${-tall - w * .5} L${w * .62},${-tall} Z`, fill: INK}, at), el);
+  Kit.mk('rect', {x: -w * .17, y: -tall * .62, width: w * .34, height: tall * .34, fill: INK}, el);
+  return el;
+}
+function tree(g, w) {
+  const el = Kit.mk('g', {}, g);
+  Kit.mk('rect', {x: -w * .1, y: -w * .7, width: w * .2, height: w * .7, fill: INK}, el);
+  Kit.mk('circle', {cx: 0, cy: -w * 1.05, r: w * .55, fill: LEAF, stroke: INK, 'stroke-width': 2}, el);
+  return el;
+}
+
+const surf = x => G.y0 - S.u * G.B * Math.exp(-(((x - G.cx) / (G.W * .32)) ** 2));
+
+function render() {
   if (!G) return;
-  const {W, H} = G; let d = '', d1 = '', d2 = '';
-  for (let i = 0; i <= 48; i++){
-    const x = W * i / 48, y = surf(x), k = (y - G.y0);
-    d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
-    d1 += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (G.y0 + H * .1 + k * .8).toFixed(1);
-    d2 += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (G.y0 + H * .2 + k * .6).toFixed(1);
+  const {W, H, D, y0, mg} = G, N = 56;
+  const pts = Array.from({length: N}, (_, i) => { const x = W * i / (N - 1); return [x, surf(x)]; });
+  const line = p => p.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ');
+  const under = k => pts.map(([x, y]) => [x, y + k * D + (y0 - y) * k * .9]);
+  const fill = p => line(p) + ` L${W},${H + 2} L0,${H + 2} Z`;
+  G.rock[0].setAttribute('d', fill(pts));
+  G.rock[1].setAttribute('d', fill(under(.3)));
+  G.rock[2].setAttribute('d', fill(under(.58)));
+  G.seams[0].setAttribute('d', line(under(.3)));
+  G.seams[1].setAttribute('d', line(under(.58)));
+  G.surface.setAttribute('d', line(pts));
+  G.ghost.setAttribute('d', S.u > .06 ? `M${W * .12},${y0} H${W * .88}` : '');
+  G.rim.setAttribute('d', `M0,${pts[0][1].toFixed(1)} V${H - G.r} Q0,${H} ${G.r},${H} H${W - G.r} Q${W},${H} ${W},${H - G.r} V${pts[N - 1][1].toFixed(1)}`);
+  // The magma swells as the ground rises, and empties as it sinks.
+  const swell = .82 + .36 * S.u;
+  G.pocket.setAttribute('rx', mg.rx * (.92 + .16 * S.u)); G.pocket.setAttribute('ry', mg.ry * swell);
+  G.core.setAttribute('rx', mg.rx * .6 * (.9 + .2 * S.u)); G.core.setAttribute('ry', mg.ry * .5 * swell);
+  // The town rides the dome.
+  G.homes.forEach(h => h.el.setAttribute('transform', `translate(${h.x.toFixed(1)},${(surf(h.x) + 1).toFixed(1)})`));
+  G.trees.forEach(t => t.el.setAttribute('transform', `translate(${t.x.toFixed(1)},${(surf(t.x) + 1).toFixed(1)})`));
+  // Where the quakes struck, in the rock between the town and the magma.
+  const roof = mg.cy - mg.ry * swell;
+  quakes.forEach((q, i) => { const x = G.cx + q.fx * W * .26, top = surf(x); const el = G.dotEls[i]; if (el) { el.setAttribute('cx', x.toFixed(1)); el.setAttribute('cy', (top + 6 + q.fy * Math.max(4, roof - top - 12)).toFixed(1)); } });
+  // The two lines of the seismograph, each written only while the ground goes its way.
+  for (const k of ['up', 'down']) {
+    const l = G.L[k], v = lanes[k], dx = (l.b - l.a) / (K - 1);
+    const p = v.map((s, i) => [l.a + i * dx, l.mid + s * l.amp]);
+    l.line.setAttribute('d', p.length > 1 ? line(p) : '');
+    const hx = p.length ? p[p.length - 1][0] : l.a, hy = p.length ? p[p.length - 1][1] : l.mid, s = G.fs * .45;
+    l.pen.setAttribute('d', `M${hx.toFixed(1)},${hy.toFixed(1)} L${(hx + s * 1.6).toFixed(1)},${(hy - s * .7).toFixed(1)} L${(hx + s * 1.6).toFixed(1)},${(hy + s * .7).toFixed(1)} Z`);
+    l.count.textContent = counts[k] + (counts[k] === 1 ? ' quake' : ' quakes');
   }
-  G.top.setAttribute('d', d);
-  G.ground.setAttribute('d', d + `L${W},${H}L0,${H}Z`);
-  G.l1.setAttribute('d', d1 + `L${W},${H}L0,${H}Z`);
-  G.l2.setAttribute('d', d2 + `L${W},${H}L0,${H}Z`);
-  let hd = ''; const hw = Math.min(W * .045, H * .05), hh = hw * .8;
-  for (let i = -2; i <= 2; i++){
-    const x = G.cx + i * W * .085, y = surf(x) + 1;
-    hd += `M${x - hw / 2},${y}L${x - hw / 2},${y - hh}L${x},${y - hh - hw * .5}L${x + hw / 2},${y - hh}L${x + hw / 2},${y}Z`;
-  }
-  G.houses.setAttribute('d', hd);
-  const rx = W * .2 * (.85 + .3 * S.u), ry = H * .065 * (.85 + .35 * S.u);
-  G.ch.setAttribute('cx', G.cx); G.ch.setAttribute('cy', G.cy);
-  G.ch.setAttribute('rx', rx); G.ch.setAttribute('ry', ry);
-  G.mt.setAttribute('x', G.cx); G.mt.setAttribute('y', G.cy + G.fs * .35);
+  // The shaking around the town, while it lasts.
+  const sx = G.hw * 1.55 * 2 + G.hw * 2.1, sy = surf(G.cx) - G.hh * .6, d = G.hw * .32;
+  G.shake.innerHTML = '';
+  if (amp > .08 && !Kit.calm) {
+    G.shake.setAttribute('opacity', Math.min(1, amp * 1.6).toFixed(2));
+    [-1, 1].forEach(s => [0, 1, 2].forEach(j => Kit.mk('path', {d: `M${G.cx + s * (sx + j * d * 1.2)},${sy - d * 1.2} Q${G.cx + s * (sx + j * d * 1.2 + d * .6)},${sy} ${G.cx + s * (sx + j * d * 1.2)},${sy + d * 1.2}`}, G.shake)));
+  } else G.shake.setAttribute('opacity', 0);
 }
 
-function drawTrace(){
-  if (!G) return;
-  const {W, sh} = G, x0 = 2, x1 = W - 2, mid = sh * .62, A = sh * .28;
-  let d = '';
-  trace.forEach((v, i) => { d += (i ? 'L' : 'M') + (x0 + (x1 - x0) * i / (N - 1)).toFixed(1) + ',' + (mid + v * A).toFixed(1); });
-  G.trace.setAttribute('d', d);
-}
-
-function setState(){
-  if (!G) return;
-  const t = dir === 'up' ? ['Shaking', RED] : dir === 'down' ? ['Quiet', 'var(--k)'] : ['Still', 'var(--k)'];
-  G.state.textContent = t[0]; G.state.style.fill = t[1];
-}
-
-function spawn(){
-  const {W, H} = G;
-  const x = G.cx + (Kit.rnd() - .5) * W * .5;
-  const yt = surf(x) + H * .04, yb = G.cy - H * .08;
-  const y = yt + Kit.rnd() * Math.max(10, yb - yt);
-  const c = Kit.mk('circle', {cx: x, cy: y, r: 3, fill: RED, stroke: RED, 'stroke-width': 2.5, 'fill-opacity': 1}, G.q);
-  gsap.to(c, {attr: {r: G.f * 1.4}, 'fill-opacity': 0, opacity: 0, duration: fast ? .5 : 1, ease: 'power2.out', onComplete: () => c.remove()});
-  counts.up++; Kit.$('nUp').textContent = counts.up + ' quakes';
+function spawn() {
+  const q = {fx: (Kit.rnd() - .5) * 2, fy: .1 + Kit.rnd() * .8};
+  quakes.push(q);
+  if (quakes.length > 60) { quakes.shift(); if (G) G.dotEls.shift()?.remove(); }
+  counts.up++;
   amp = Math.min(1, amp + .55);
+  if (!G) return;
+  const dot = Kit.mk('circle', {r: Math.max(2.5, G.f * .2)}, G.dots);
+  G.dotEls.push(dot);
+  render();
+  if (Kit.calm) return;
+  const ring = Kit.mk('circle', {cx: dot.getAttribute('cx'), cy: dot.getAttribute('cy'), r: 3}, G.bursts);
+  gsap.to(ring, {attr: {r: G.f * 1.5}, opacity: 0, duration: fast ? .5 : .9, ease: 'power2.out', onComplete: () => ring.remove()});
 }
 
 gsap.ticker.add(() => {
   if (!G) return;
-  const now = performance.now();
-  if (dir === 'up' && tw && tw.isActive() && now - lastSpawn > (fast ? 70 : 230) * (0.6 + Kit.rnd())){ lastSpawn = now; spawn(); }
+  const moving = !!(tw && tw.isActive()), du = Math.abs(S.u - lastU), now = performance.now();
+  lastU = S.u;
+  if (dir === 'up' && moving && now - lastSpawn > (fast ? 70 : 230) * (.6 + Kit.rnd())) { lastSpawn = now; spawn(); }
+  if (moving && dir) {
+    acc[dir] += du * K;
+    while (acc[dir] >= 1) {
+      acc[dir] -= 1;
+      lanes[dir].push(dir === 'up' ? (Kit.rnd() - .5) * 2 * amp + (Kit.rnd() - .5) * .08 : (Kit.rnd() - .5) * .08);
+      if (lanes[dir].length > K) lanes[dir].shift();
+    }
+  }
   amp *= .9;
-  trace.shift(); trace.push((Kit.rnd() - .5) * 2 * amp + (Kit.rnd() - .5) * .03);
-  drawTrace(); render();
-  G.gnd.setAttribute('transform', amp > .05 ? `translate(${((Kit.rnd() - .5) * amp * 5).toFixed(1)},${((Kit.rnd() - .5) * amp * 3).toFixed(1)})` : '');
+  if (moving || amp > .004) render();
+  const j = amp > .05 && !Kit.calm ? `translate(${((Kit.rnd() - .5) * amp * 4).toFixed(1)},${((Kit.rnd() - .5) * amp * 2.5).toFixed(1)})` : '';
+  G.town.setAttribute('transform', j);
 });
 
-function finish(){
-  if (finished) return; finished = true;
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-  Kit.onShow.card();
-  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4});
+function finish() {
+  if (finished) return;
+  finished = true;
+  Kit.hide('say'); Kit.hide('sw'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  build();
 }
 
-function go(d){
+function go(d) {
   if (tw) tw.kill();
   document.querySelectorAll('.sb').forEach(b => b.classList.toggle('on', b.dataset.d === d));
   Kit.haptic('selection');
   const target = d === 'up' ? 1 : 0, dist = Math.abs(target - S.u);
-  dir = d; setState();
-  if (dist < .02){
+  dir = d;
+  if (dist < .02) {
     Kit.$('say').textContent = d === 'up' ? 'It is at the top. Now make it sink.' : 'It is at the bottom. Now make it rise.';
-    dir = 0; setState(); return;
+    dir = 0; return;
   }
-  tw = gsap.to(S, {u: target, duration: fast ? .8 : Math.max(.4, 4.5 * dist), ease: 'sine.inOut', onComplete(){
+  Kit.$('say').textContent = d === 'up' ? 'The ground rises…' : 'The ground sinks…';
+  tw = gsap.to(S, {u: target, duration: fast ? .8 : Math.max(.4, 4.5 * dist), ease: 'sine.inOut', onComplete() {
     if (dist > .3) done[d] = true;
-    dir = 0; setState();
+    dir = 0;
     if (done.up && done.down) finish();
     else Kit.$('say').textContent = d === 'up' ? 'Now flip it: make the ground sink.' : 'Now flip it: make the ground rise.';
   }});
@@ -160,6 +229,10 @@ function go(d){
 
 Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('.sb'); if (b) go(b.dataset.d); });
 
+Kit.onShow.card = () => build();
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('sv').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(Kit.$('sv'));
+if (document.fonts) document.fonts.ready.then(() => { if (G) build(); });
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.sb', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   fast = true;

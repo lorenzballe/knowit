@@ -66,11 +66,20 @@ function inspect() {
     for (const g of e.querySelectorAll('path,rect,circle,ellipse,line,polyline,polygon,text,image,use')) { const st = getComputedStyle(g); if (st.display === 'none' || st.visibility === 'hidden' || +st.opacity === 0 || g.closest('[opacity="0"],defs,clipPath,mask,pattern')) continue; const r = g.getBoundingClientRect(); if (!r.width && !r.height) continue; t = Math.min(t, r.top); b = Math.max(b, r.bottom); }
     return {height: b > t ? b - t : 0}; };
   const drawH = Math.max(0, ...pics.map(e => painted(e).height));
+  // How large a drawing is shown against the size it was drawn for: an SVG drawn once for the room it
+  // had and then given less (the answer coming in) is shrunk whole, labels and all, into a corner of it.
+  // Each drawing by its place among them, so the end compares a drawing with itself at the start (an icon drawn
+  // small on purpose, shown only at the end, is no drawing shrunk).
+  const fit = {}; pics.forEach((e, i) => { if (e.tagName !== 'svg' || !e.viewBox || !e.viewBox.baseVal || !e.viewBox.baseVal.width || (e.getAttribute('preserveAspectRatio') || '').startsWith('none')) return;
+    const r = e.getBoundingClientRect(), v = e.viewBox.baseVal; if (r.width >= 60 && r.height >= 40) fit[e.id || 'svg' + i] = Math.min(r.width / v.width, r.height / v.height); });
   const body = kids.filter(k => !k.matches('.foot, .src'));
   const footEl = inn && inn.querySelector(':scope > .foot, :scope > .src');
   let low = -Infinity; for (const k of body) for (const el of [k, ...k.querySelectorAll('*')]) { if (el.closest('svg') && el.tagName !== 'svg') continue; const st = getComputedStyle(el); if (st.display === 'none' || st.visibility === 'hidden' || +st.opacity === 0 || el.closest('.gone')) continue; if (!([...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) || el.matches('svg,canvas,img,button,input'))) continue; const r = el.getBoundingClientRect(); if (r.width && r.height) low = Math.max(low, r.bottom); }
   const foot = isFinite(low) ? (footEl ? footEl.getBoundingClientRect().top : inn.getBoundingClientRect().bottom) - low : 0;
-  return {id: card.id, issues, drawH, foot, cardH: cb.height};
+  // A drawing left too little room to draw again (under 100 px, a small phone) keeps the one it has, shown
+  // smaller and whole, and says so (data-kept): drawn again in a strip, it would break.
+  const kept = !!(inn && inn.querySelector('[data-kept]'));
+  return {id: card.id, issues, drawH, fit, kept, foot, cardH: cb.height};
 }
 
 async function deck() {
@@ -168,7 +177,7 @@ async function single() {
         const inside = (h) => zones.some(([x, y, w, ht]) => h.x >= x && h.x <= x + w && h.y >= y && h.y <= y + ht);
         say(where, held.filter(h => !inside(h)).map(h => `${h.what} is dragged, but the app would throw the card: mark it data-drag on a card whose web.touch is drags`));
       }
-      let drawStart = 0;
+      let drawStart = 0, fitStart = {};
       for (const stage of ['start', 'end']) {
         if (stage === 'end') {
           const played = await p.evaluate(async () => { const f = typeof Kit !== 'undefined' && Kit.play && Kit.play[document.querySelector('.card')?.id]; if (!f) return false; await f(); return true; });
@@ -177,8 +186,11 @@ async function single() {
         }
         const r = await p.evaluate(inspect);
         // The drawing must come back as it was when the answer shows: not squeezed to make room, with the foot left bare.
-        if (stage === 'start') drawStart = r.drawH;
+        if (stage === 'start') { drawStart = r.drawH; fitStart = r.fit; }
         else if (drawStart && r.drawH < drawStart * .8 && r.foot > r.cardH * .07) r.issues.push(`the drawing shrinks at the end (${Math.round(drawStart)} to ${Math.round(r.drawH)}px) and leaves ${Math.round(r.foot)}px empty below`);
+        // Nor shrunk whole into the room the answer leaves it, nor squeezed to a strip: drawn again, at the size it now has.
+        if (stage === 'end' && !r.kept) for (const k in r.fit) if (fitStart[k] && r.fit[k] < fitStart[k] * .88) { r.issues.push(`the drawing is shown at ${Math.round(100 * r.fit[k] / fitStart[k])}% of the size it was drawn for: draw it again when its room changes`); break; }
+        if (stage === 'end' && !r.kept && drawStart && r.drawH < drawStart * .45 && r.drawH < r.cardH * .2) r.issues.push(`the drawing is squeezed at the end (${Math.round(drawStart)} to ${Math.round(r.drawH)}px tall)`);
         const more = await p.evaluate(([corner, controls]) => {
           const issues = [], W = innerWidth, H = innerHeight;
           if (document.scrollingElement.scrollHeight > H + 1 || document.scrollingElement.scrollWidth > W + 1) issues.push('the page scrolls');

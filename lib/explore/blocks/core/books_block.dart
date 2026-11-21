@@ -23,9 +23,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../analytics.dart';
+import '../../../data/book_picks.dart';
 import '../../../data/books.dart';
 import '../../../data/pill_bank.dart';
 import '../../../l10n/l10n.dart';
+import '../../../legal.dart' show openLink;
 import '../../../models/pill.dart';
 import '../../../screens/deck_viewer_screen.dart';
 import '../../../state/app_state.dart';
@@ -91,6 +93,74 @@ class BooksBlock extends ExploreBlock with SectionLayout {
             weekly: books[i].id == weekly,
             locked: !app.isPlus && books[i].id != weekly,
             onTap: () => openBookPage(context, app, books[i], weekly: weekly),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The founders' shelf: the books in pills that the people who built the
+/// companies everyone knows have recommended (lib/data/book_picks.dart),
+/// each under the names of who recommended it; a book's page says where
+/// they said it. The same books as the row of every book, in the same turn,
+/// the same way in: a lens on the library, not another one.
+class FounderBooksBlock extends ExploreBlock with SectionLayout {
+  const FounderBooksBlock();
+
+  /// Fewer books than this and the shelf is not drawn: a row of one or two
+  /// is no collection. A subject's page is content with two.
+  static const int fewest = 3, fewestOnASubject = 2;
+
+  @override
+  String get name => 'founder-books';
+
+  @override
+  Widget? build(
+    BuildContext context,
+    ExploreHost host,
+    ExploreSection section,
+  ) {
+    final AppState app = host.app;
+    final List<CardBook> books = [
+      for (final CardBook b in booksOf(
+        PillBank.live,
+        today: app.today,
+        subject: host.subject,
+      ))
+        if (picksOf(b.id).isNotEmpty) b,
+    ];
+    if (books.length < (host.subject == null ? fewest : fewestOnASubject)) {
+      return null;
+    }
+    final String? weekly = bookOfTheWeek(PillBank.live, app.today);
+    return SectionFrame(
+      title: section.title(host.language),
+      line: section.subtitle(host.language),
+      child: SizedBox(
+        height: _BookTile.height,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          itemCount: books.length,
+          separatorBuilder: (_, _) => const SizedBox(width: 12),
+          itemBuilder: (context, i) => _BookTile(
+            key: ValueKey('founder-book-${books[i].id}'),
+            book: books[i],
+            read: books[i].cards
+                .where((p) => app.seenIds.contains(p.id))
+                .length,
+            weekly: books[i].id == weekly,
+            locked: !app.isPlus && books[i].id != weekly,
+            over: [for (final BookPick k in picksOf(books[i].id)) k.who]
+                .join(' · '),
+            onTap: () => openBookPage(
+              context,
+              app,
+              books[i],
+              weekly: weekly,
+              from: 'founders',
+            ),
           ),
         ),
       ),
@@ -219,8 +289,14 @@ class _DrawnCover extends StatelessWidget {
                   for (final String word in book.book.title.split(
                     RegExp(r'\s+'),
                   )) {
+                    // Measured in the style the title is drawn in: the
+                    // page's own, under the cover's.
                     final TextPainter painter = TextPainter(
-                      text: TextSpan(text: word, style: style(size)),
+                      text: TextSpan(
+                        text: word,
+                        style: DefaultTextStyle.of(context).style
+                            .merge(style(size)),
+                      ),
                       textDirection: Directionality.of(context),
                       textScaler: scaler,
                       maxLines: 1,
@@ -269,12 +345,14 @@ class _DrawnCover extends StatelessWidget {
 /// so under its cover, never over the publisher's title.
 class _BookTile extends StatelessWidget {
   const _BookTile({
+    super.key,
     required this.book,
     required this.read,
     required this.weekly,
     required this.locked,
     required this.onTap,
     this.width = rowWidth,
+    this.over,
   });
 
   /// The tile's width in the row, and the row's height for it.
@@ -292,13 +370,18 @@ class _BookTile extends StatelessWidget {
   final VoidCallback onTap;
   final double width;
 
+  /// The line over the title in place of the week's, as on the founders'
+  /// shelf: who recommended the book.
+  final String? over;
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
+    final String? line = over ?? (weekly ? l.bookFreeThisWeek : null);
     return Semantics(
       button: true,
-      label: '${book.book.title}, ${book.book.author}',
+      label: [book.book.title, book.book.author, ?over].join(', '),
       child: GestureDetector(
         key: ValueKey('book-${book.id}'),
         behavior: HitTestBehavior.opaque,
@@ -352,12 +435,12 @@ class _BookTile extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              if (weekly)
+              if (line != null)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 2),
                   child: Text(
-                    l.bookFreeThisWeek.toUpperCase(),
-                    key: const ValueKey('book-weekly'),
+                    line.toUpperCase(),
+                    key: ValueKey(over != null ? 'book-over' : 'book-weekly'),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.body(
@@ -371,7 +454,7 @@ class _BookTile extends StatelessWidget {
                 ),
               Text(
                 book.book.title,
-                maxLines: weekly ? 1 : 2,
+                maxLines: line != null ? 1 : 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.body(
                   size: 13.5,
@@ -605,6 +688,22 @@ class BookScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              if (picksOf(book.id) case final List<BookPick> picks
+                  when picks.isNotEmpty) ...[
+                const SizedBox(height: 28),
+                Text(
+                  l.bookRecommendedBy.toUpperCase(),
+                  style: AppText.body(
+                    size: 11,
+                    weight: FontWeight.w800,
+                    spacing: 1.3,
+                    color: p.ink.withValues(alpha: 0.5),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                for (final BookPick pick in picks)
+                  _PickRow(key: ValueKey('book-pick-${pick.who}'), pick: pick),
+              ],
               const SizedBox(height: 28),
               Text(
                 l.bookTheIdeas.toUpperCase(),
@@ -634,6 +733,85 @@ class BookScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// One person's recommendation on a book's page: who, what they built,
+/// their words, and where they said them, a tap away.
+class _PickRow extends StatelessWidget {
+  const _PickRow({super.key, required this.pick});
+
+  final BookPick pick;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final String where = '${pick.where}, ${pick.year}';
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Material(
+        color: p.ink.withValues(alpha: 0.045),
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            Analytics.capture('book pick source', {'who': pick.who});
+            openLink(pick.url);
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 13),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  pick.who,
+                  style: AppText.body(
+                    size: 15.5,
+                    weight: FontWeight.w700,
+                    color: p.ink,
+                  ),
+                ),
+                Text(
+                  pick.role,
+                  style: AppText.body(size: 13, color: p.inkMuted),
+                ),
+                if (pick.said.isNotEmpty) ...[
+                  const SizedBox(height: 9),
+                  Text(
+                    '“${pick.said}”',
+                    style: AppText.display(
+                      size: 16,
+                      weight: FontWeight.w500,
+                      height: 1.32,
+                      color: p.ink.withValues(alpha: 0.9),
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 9),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        where,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.body(
+                          size: 12.5,
+                          weight: FontWeight.w600,
+                          color: p.inkMuted,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(Icons.north_east_rounded, size: 14, color: p.inkMuted),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -716,9 +894,11 @@ Future<void> openBookPage(
   AppState app,
   CardBook book, {
   String? weekly,
+  String from = 'books',
 }) {
   Analytics.capture('book opened', {
     'book': book.id,
+    'from': from,
     'weekly': book.id == weekly,
     'is_plus': app.isPlus,
     'read': book.cards.where((p) => app.seenIds.contains(p.id)).length,

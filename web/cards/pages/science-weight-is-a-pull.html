@@ -24,8 +24,8 @@
 #sw button i{font-style:normal;display:inline-block;width:1.1em;height:1.1em;border-radius:50%;vertical-align:-.18em;margin-right:.45em;background:var(--edge);box-shadow:inset 0 0 0 1.5px currentColor}
 #sw button[data-v="0"] i{background:none;box-shadow:inset 0 0 0 1.5px currentColor}
 #why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{font:800 max(2.4cqh,16px)/1.15 var(--display);color:#a3151a;margin:0}
-#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why .body{font:500 clamp(12px,2.15cqh,14px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Flip a switch · two cases">
   <div class="in">
@@ -36,7 +36,7 @@
       <div><small>MATTER IN BALL</small><b id="mv">5 kg</b></div>
     </div>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Figure 5: the Earth as a halftone globe, a red ball hanging from a spring scale on its surface, and a red arrow labelled Weight pointing from the ball to the Earth's centre."></svg>
+      <svg id="pic" role="img" aria-label="The Earth as a halftone globe, a red ball hanging from a spring scale on its surface, and a red arrow labelled Weight pointing from the ball to the Earth's centre."></svg>
     </div>
     <div id="sw" role="group" aria-label="The Earth">
       <button data-v="1" class="on"><i></i>Earth here</button>
@@ -44,8 +44,7 @@
     </div>
     <p class="say" id="say">Take the Earth away, then bring it back. <b>Tap the globe</b> to move the scale.</p>
     <div id="why" class="gone">
-      <p class="big">Weight is a pull, not something the ball has.</p>
-      <p class="body">It is the Earth pulling the ball toward its centre, so "down" points there from every spot. Take the Earth away and the weight goes; the 5 kg of matter, the mass, stays.</p>
+      <p class="body"><b>Weight is a pull, not something the ball has.</b> It is the Earth pulling the ball toward its centre, so "down" points there from every spot. Take the Earth away and the weight goes; the 5 kg of matter, the mass, stays.</p>
     </div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Mass is how much matter; weight is the Earth's pull on it.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)</span></div>
@@ -72,9 +71,10 @@
     svg.innerHTML = '';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H; lastW = W; lastH = H;
     fs = 12;
-    const avail = H - fs * 2.2;
-    R = Math.max(28, Math.min((W / 2 - fs * .8) / 1.85, avail / 3.75));
-    cx = W / 2; cy = fs * .3 + avail / 2;
+    // The globe and its lines of "down" take 3.75 radii of height: as large as the box allows, wide or short.
+    const avail = H - fs * .4;
+    R = Math.max(14, Math.min((W / 2 - fs * .8) / 1.85, avail / 3.75));
+    cx = W / 2; cy = H / 2;
     P = .75 * R; A = .32 * R; B = .2 * R; br = .1 * R; hook = .05 * R; RAY = 1.8 * R;
 
     const defs = m('defs', {}, svg);
@@ -175,7 +175,6 @@
     E.ring = m('circle', {cx, cy, r: 0, fill: 'none', stroke: RED, 'stroke-width': 2, opacity: 0}, E.fx);
     const L = m('g', {}, svg);
     E.wLab = txt(L, 0, 0, 'WEIGHT', {fill: RED, 'font-weight': 800, 'dominant-baseline': 'middle', stroke: '#00E5A0', 'stroke-width': 3, 'paint-order': 'stroke'});
-    txt(L, cx, H - fs * .35, 'FIG. 5 · A BALL ON A SPRING SCALE', {'font-weight': 600, opacity: .7, 'text-anchor': 'middle'});
 
     if (!earthOn) {
       gsap.set(E.earth, {opacity: 0}); gsap.set(E.ghost, {opacity: 1});
@@ -215,14 +214,19 @@
     E.wLab.setAttribute('x', gx + gpx * fs * .8); E.wLab.setAttribute('y', gy + gpy * fs * .8);
     E.wLab.setAttribute('text-anchor', gpx >= 0 ? 'start' : 'end');
     E.wLab.setAttribute('opacity', Math.max(0, (st.w - .4) / .6));
-    // The centre's label, on the far side from the arrow.
-    const clx = cx - s * fs * 1.9, cly = cy + c * fs * 1.9;
+    // The centre's label, on the far side from the arrow: nearer the centre on a small globe.
+    const cd = Math.min(fs * 1.9, Math.max(fs * .7 + 6, R * .4));
+    const clx = cx - s * cd, cly = cy + c * cd;
     E.cChip.setAttribute('x', clx - E.cW / 2); E.cChip.setAttribute('y', cly - fs * .7);
     E.cTxt.setAttribute('x', clx); E.cTxt.setAttribute('y', cly + fs * .36);
-    // Each pebble's own weight.
+    // Each pebble's own weight, stopped short of the centre's label where the two would meet.
+    const chip = [clx - E.cW / 2 - 3, clx + E.cW / 2 + 3, cly - fs * .7 - 3, cly + fs * .7 + 3];
     E.peb.forEach(p => {
-      const dx = -Math.sin(p.a), dy = Math.cos(p.a), l0 = p.ps * 1.3, l = l0 + .26 * R * st.w, h = 5;
-      p.arr.setAttribute('d', st.w > .02 ? `M${dx * l0},${dy * l0} L${dx * l},${dy * l} M${dx * (l - h) - dy * h * .7},${dy * (l - h) + dx * h * .7} L${dx * l},${dy * l} L${dx * (l - h) + dy * h * .7},${dy * (l - h) - dx * h * .7}` : '');
+      const dx = -Math.sin(p.a), dy = Math.cos(p.a), l0 = p.ps * 1.3, h = 5, D = R + p.ps * .75;
+      const px = cx - dx * D, py = cy - dy * D;
+      let l = l0 + .26 * R * st.w;
+      for (let t = l0; t <= l; t++) { const x = px + dx * t, y = py + dy * t; if (x > chip[0] && x < chip[1] && y > chip[2] && y < chip[3]) { l = t - 1; break; } }
+      p.arr.setAttribute('d', st.w > .02 && l > l0 + h ? `M${dx * l0},${dy * l0} L${dx * l},${dy * l} M${dx * (l - h) - dy * h * .7},${dy * (l - h) + dx * h * .7} L${dx * l},${dy * l} L${dx * (l - h) + dy * h * .7},${dy * (l - h) - dx * h * .7}` : '');
     });
     rv.textContent = st.read.toFixed(1) + ' kg';
   }
@@ -246,7 +250,9 @@
       E.peb.forEach((p, i) => gsap.to(p.inner, Object.assign(drift(i), {duration: 2.2, delay: .1 + i * .04, ease: 'power2.out'})));
       gsap.fromTo('#mv', {scale: 1.3}, {scale: 1, transformOrigin: '100% 60%', duration: .8, delay: .4, ease: 'elastic.out(1,.4)'});
     } else {
-      const reveal = () => { if (cycled) return; cycled = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); };
+      // Once the Earth is back the story is told: the switch and the two readouts (both at 5 kg again, as the
+      // answer says) give their room to the globe.
+      const reveal = () => { if (cycled) return; cycled = true; Kit.hide('say'); Kit.hide('sw'); Kit.hide('read'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); };
       if (Kit.calm) { Object.assign(st, {s: 1, w: 1, read: 5, bob: 0}); gsap.set(E.earth, {opacity: 1, scale: 1, svgOrigin: org}); gsap.set(E.ghost, {opacity: 0}); gsap.set(E.dots, {opacity: .45}); E.peb.forEach(p => gsap.set(p.inner, {x: 0, y: 0, rotation: 0})); render(); reveal(); return; }
       gsap.to(st, {bob: 0, duration: .3, onUpdate: render});
       gsap.fromTo(E.earth, {scale: .5, opacity: 0}, {scale: 1, opacity: 1, svgOrigin: org, duration: .75, ease: 'back.out(1.7)'});

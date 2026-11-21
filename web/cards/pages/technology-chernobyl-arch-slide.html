@@ -7,17 +7,16 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#meter{display:flex;align-items:center;gap:2.5cqw;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
-#meter .bar{flex:1;height:max(1.1cqh,7px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 14%,transparent);overflow:hidden}
+#meter{display:grid;grid-template-columns:1fr auto;align-items:end;column-gap:2.5cqw;row-gap:.9cqh;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+#meter .bar{grid-row:2;grid-column:1/span 2;height:max(1.5cqh,9px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 14%,transparent);overflow:hidden}
 #meter .bar i{display:block;height:100%;width:0;background:var(--k);border-radius:1cqh}
-#meter .lab{white-space:nowrap}
-#pct{min-width:9ch;text-align:right;font-family:var(--mono)}
+#meter .lab{grid-row:1;grid-column:1;white-space:nowrap;letter-spacing:.12em;text-transform:uppercase}
+#pct{grid-row:1;grid-column:2;text-align:right;font:800 max(3.4cqh,18px)/1 var(--display);font-variant-numeric:tabular-nums}
 #art{flex:1;min-height:0;position:relative}
 #pic{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;display:block}
 #pic.dragging{cursor:grabbing}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{overflow-wrap:anywhere}
-#why .body{overflow-wrap:anywhere}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag · watch it seal">
   <div class="in">
@@ -26,7 +25,7 @@
     <div class="stagebox" id="stage">
       <div id="meter"><span class="lab">Sealed</span><div class="bar"><i id="fill"></i></div><span id="pct">0%</span></div>
       <div id="art"><svg id="pic" aria-label="A steel arch on rails beside the old sarcophagus"></svg></div>
-      <div id="why" class="gone"><p class="big">Build it beside, then slide it over.</p><p class="body">The new containment is a giant steel arch built next to the old sarcophagus, not on top of it. Once finished, it slides sideways into place and covers the old structure like a lid.</p></div>
+      <p class="body gone" id="why"><b>Build it beside, then slide it over.</b> The new containment is a giant steel arch built next to the old sarcophagus, not on top of it. Once finished, it slides sideways into place and covers the old structure like a lid.</p>
     </div>
     <p class="say" id="say">Drag the steel arch along its rails onto the old sarcophagus.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Build the giant lid off to the side, then slide it over.</div>
@@ -45,15 +44,23 @@ function draw() {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   if (W < 10 || H < 10) return;
-  const fs = Math.max(12, Math.min(f * 0.85, H * 0.06));
-  const gy = H - fs * 3.6;
-  const sx0 = W * .08, sx1 = W * .44, sw = sx1 - sx0;
-  const s = W * .46, t = Math.max(6, W * .032);
+  const fs = Math.max(12, Math.min(f * 0.95, H * 0.06));
+  // Under the rails each name takes two lines, or one when the box is short (the answer in).
+  const one = H < fs * 14;
+  const gy0 = H - fs * (one ? 2.2 : 3.6);
+  // The arch keeps its shape: in a short box the whole scene is drawn smaller, never squashed flat;
+  // in a tall one it stands taller, up to as tall as it is wide.
+  const k = Math.max(.4, Math.min(1, (gy0 - fs * 2.2) / (W * .46 * .78)));
+  const s = W * .46 * k, t = Math.max(5, W * .032 * k);
+  const h = Math.max(30, s * Math.max(.78, Math.min(1, (gy0 - fs * 2.2) / s)));
+  // What height is left over: the scene stands higher, on a deeper band of ground, so no wide empty sky is left over it.
+  const gy = gy0 - Math.max(0, gy0 - fs * 2.2 - h - 6) * .45;
+  const sx0 = W * .08, sw = W * .36 * k, sx1 = sx0 + sw;
   const endCx = (sx0 + sx1) / 2, startCx = W - s / 2 - W * .02;
-  const h = Math.max(40, Math.min(gy - fs * 2.2, s * .78));
   const hs = h * .55;
   G = {W, H, fs, gy, sx0, sx1, sw, s, t, endCx, startCx, h};
-  const txt = (x, y, str, extra = '') => { const e = Kit.mk('text', {x, y, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);letter-spacing:.06em;fill:var(--k);${extra}`}, svg); e.textContent = str; return e; };
+  // A name stays whole inside the picture, however narrow the box.
+  const txt = (x, y, str, extra = '') => { const e = Kit.mk('text', {x, y, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);letter-spacing:.06em;fill:var(--k);${extra}`}, svg); e.textContent = str; let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} if (w) e.setAttribute('x', Math.max(w / 2 + 2, Math.min(W - w / 2 - 2, x))); return e; };
 
   // ground and rails
   Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
@@ -79,11 +86,32 @@ function draw() {
   });
 
   // ground labels
-  txt(endCx, gy + fs * 1.6, 'OLD');
-  txt(endCx, gy + fs * 2.95, 'SARCOPHAGUS');
   G.built = Kit.mk('g', {}, svg);
-  const b1 = txt(startCx, gy + fs * 1.6, 'BUILT'), b2 = txt(startCx, gy + fs * 2.95, 'NEXT DOOR');
-  G.built.append(b1, b2);
+  if (one) {
+    txt(endCx, gy + fs * 1.55, 'OLD SARCOPHAGUS');
+    G.built.append(txt(startCx, gy + fs * 1.55, 'BUILT NEXT DOOR'));
+  } else {
+    txt(endCx, gy + fs * 1.6, 'OLD');
+    txt(endCx, gy + fs * 2.95, 'SARCOPHAGUS');
+    G.built.append(txt(startCx, gy + fs * 1.6, 'BUILT'), txt(startCx, gy + fs * 2.95, 'NEXT DOOR'));
+  }
+  // Once it is over, where it was built: its outline, and which way it went.
+  G.ghost = Kit.mk('g', {style: `opacity:${done ? 1 : 0}`}, svg);
+  Kit.mk('path', {d: `M${startCx - s / 2} ${gy} A${s / 2} ${h} 0 0 1 ${startCx + s / 2} ${gy}`, style: 'fill:none;stroke:var(--k);stroke-width:2.2;stroke-dasharray:5 6;stroke-linecap:round;opacity:.5'}, G.ghost);
+  const ay = gy - h * .42, aw = Math.min(s * .2, fs * 1.6);
+  Kit.mk('path', {d: `M${startCx + aw * .45} ${ay - aw * .5} L${startCx - aw * .55} ${ay} L${startCx + aw * .45} ${ay + aw * .5} Z`, style: 'fill:var(--k);opacity:.55'}, G.ghost);
+
+  // At the start, where it goes: over from where it is built onto the old sarcophagus, through the sky
+  // left above them (only when there is sky to spare).
+  G.way = null;
+  const wy0 = gy - h - fs * 2.2, wy1 = gy - hs - fs * 4.4;
+  if (!done && wy0 > fs * 3.2) {
+    const wx0 = startCx - s * .12, wx1 = endCx + sw * .08, wy = Math.min(wy0, wy1) - (Math.min(wy0, wy1) - fs * .6) * .55;
+    G.way = Kit.mk('g', {style: 'opacity:.6'}, svg);
+    Kit.mk('path', {d: `M${wx0} ${wy0} Q${(wx0 + wx1) / 2} ${wy} ${wx1} ${wy1}`, style: 'fill:none;stroke:var(--k);stroke-width:2.4;stroke-dasharray:7 6;stroke-linecap:round'}, G.way);
+    const ux = wx1 - (wx0 + wx1) / 2, uy = wy1 - wy, n = Math.hypot(ux, uy) || 1, tx = ux / n, ty = uy / n, a = fs * .9;
+    Kit.mk('path', {d: `M${wx1 + tx * 2} ${wy1 + ty * 2} L${wx1 - tx * a - ty * a * .55} ${wy1 - ty * a + tx * a * .55} L${wx1 - tx * a + ty * a * .55} ${wy1 - ty * a - tx * a * .55} Z`, style: 'fill:var(--k)'}, G.way);
+  }
 
   // the arch, drawn at its final spot and translated
   const A = Kit.mk('g', {}, svg); G.arch = A;
@@ -118,7 +146,8 @@ function setP(v) {
   const cover = clamp(ov / G.sw, 0, 1);
   G.leaks.forEach(L => L.g.style.opacity = Math.abs(L.x - cx) < half - 2 ? .08 : 1);
   G.hint.style.opacity = done ? 0 : clamp(1 - p * 6, 0, 1);
-  G.built.style.opacity = p > .02 ? .45 : 1;
+  if (G.way) G.way.style.opacity = done ? 0 : .6 * clamp(1 - p * 4, 0, 1);
+  G.built.style.opacity = done ? .8 : p > .02 ? .45 : 1;
   Kit.$('fill').style.width = (cover * 100) + '%';
   Kit.$('pct').textContent = Math.round(cover * 100) + '%';
   if (!done && cover > .995) finish();
@@ -127,7 +156,9 @@ function setP(v) {
 function finish() {
   done = true; Kit.haptic('success');
   Kit.$('pct').textContent = '100% ✓';
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  // The lid is on: the meter has said all it had to, and the picture takes its room.
+  Kit.hide('say'); Kit.hide('meter'); Kit.show('why'); Kit.show('keep');
+  if (G && G.ghost) G.ghost.style.opacity = 1;
   if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
 }
 

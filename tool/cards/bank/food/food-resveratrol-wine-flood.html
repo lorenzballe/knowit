@@ -10,9 +10,8 @@
 #ctl{display:flex;flex-direction:column;gap:.6cqh}
 #pour{width:100%;height:max(4.5cqh,30px);accent-color:var(--k);cursor:pointer;margin:0}
 .ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:break-word}
+#why{font:500 max(1.9cqh,13px)/1.32 var(--body);margin:0;overflow-wrap:break-word}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="food" data-kind="Drag · pour">
   <div class="in">
@@ -24,10 +23,7 @@
         <input data-drag type="range" id="pour" min="0" max="1000" value="0" aria-label="Glasses of red wine per day">
         <div class="ends"><span>1 glass</span><span>more and more glasses →</span></div>
       </div>
-      <div id="why" class="gone">
-        <p class="big">≈16,000 glasses a day</p>
-        <p class="body">That is about 2,000 litres. Wine holds only milligrams of resveratrol per litre, and the body often breaks much of it down. So the benefit from wine is practically nil.</p>
-      </div>
+      <p class="body gone" id="why"><b>About 16,000 glasses a day,</b> some 2,000 litres. Wine holds only milligrams of resveratrol per litre, and the body often breaks much of it down. So the benefit from wine is practically nil.</p>
     </div>
     <p class="say" id="say">Drag to pour more glasses a day until the heart dose is full.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Red wine's resveratrol is far too little to protect your heart.</div>
@@ -46,15 +42,17 @@ function build() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 12), fb = Math.max(f * 1.55, 18);
-  const l1 = fb * 1.05, l2 = l1 + fb * 0.45 + fs * 1.35, l3 = l2 + fs * 1.5;
-  const top = l3 + fs * 2.2, bot = H - 4;
-  const tx = 4, tw = W * 0.7, mx = W * 0.82, mw = Math.max(W * 0.08, 18);
+  // Two rows of readouts over the tank, so the tank keeps most of the room in a short box too: the
+  // glasses, then the litres and, over its meter, the heart dose.
+  const l1 = fb * 1.02, l2 = l1 + fb * 0.32 + fs * 1.2;
+  const top = l2 + fs * 0.9, bot = Math.max(H - 4, top + 24);
+  const mw = Math.max(W * 0.08, 18), mx = W - mw - 3, tx = 4, tw = mx - W * 0.06 - tx;
   g = {W, H, fs, fb, top, bot, tx, tw, mx, mw};
   const ink = 'var(--k)';
   // readouts
   el.n = Kit.mk('text', {x: tx, y: l1, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fb, fill: ink}, svg);
   el.l = Kit.mk('text', {x: tx, y: l2, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: ink}, svg);
-  el.p = Kit.mk('text', {x: tx, y: l3, 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs, fill: 'var(--muted)'}, svg);
+  el.p = Kit.mk('text', {x: mx + mw, y: l2, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink}, svg);
   // tank
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id: 'tk'}, defs);
@@ -81,7 +79,6 @@ function build() {
   el.bub = Kit.mk('g', {fill: '#fff', opacity: .7}, inner);
   Kit.mk('rect', {x: tx, y: top, width: tw, height: bot - top, rx: fs * .6, fill: 'none', stroke: ink, 'stroke-width': Math.max(fs * .18, 2.5)}, svg);
   // meter
-  Kit.mk('text', {x: mx + mw / 2, y: top - fs * .7, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink}, svg).textContent = '♥ dose';
   Kit.mk('rect', {x: mx, y: top, width: mw, height: bot - top, rx: mw / 2, fill: 'color-mix(in srgb,var(--k) 8%,transparent)', stroke: ink, 'stroke-width': Math.max(fs * .15, 2)}, svg);
   el.mfill = Kit.mk('rect', {x: mx + 3, width: mw - 6, rx: (mw - 6) / 2, fill: '#c2185b'}, svg);
   draw();
@@ -95,7 +92,13 @@ function draw() {
   try { const w = el.n.getComputedTextLength(), room = g.W - tx - 4; if (w > room) el.n.setAttribute('font-size', g.fb * room / w); } catch (e) {}
   el.l.textContent = `= ${fmt(+(G * 0.125).toFixed(G < 8 ? 3 : 0))} litres of wine`;
   const pct = G / MAX * 100;
-  el.p.textContent = `heart dose: ${pct < 1 ? pct.toFixed(3) : Math.round(pct)}%`;
+  el.p.textContent = `♥ dose ${pct < 1 ? pct.toFixed(3) : Math.round(pct)}%`;
+  // The litres and the dose share a row: on a narrow card both give a little, never touch.
+  try {
+    el.l.setAttribute('font-size', fs); el.p.setAttribute('font-size', fs);
+    const w = el.l.getComputedTextLength() + el.p.getComputedTextLength(), room = mx + mw - tx - fs;
+    if (w > room) { el.l.setAttribute('font-size', fs * room / w); el.p.setAttribute('font-size', fs * room / w); }
+  } catch (e) {}
   // wine surface
   const y = bot - st.t * (bot - top) * 0.93, amp = fs * .25 * Math.min(1, st.t * 4);
   let d = `M${tx} ${bot + 2} L${tx} ${y}`;
@@ -156,6 +159,9 @@ Kit.play.card = async () => {
   for (const v of [300, 650, 900, 1000]) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(k => setTimeout(k, 150)); }
   await new Promise(k => setTimeout(k, 700));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

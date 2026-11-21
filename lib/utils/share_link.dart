@@ -32,7 +32,11 @@ enum ShareRef {
   challenge('challenge'),
 
   /// Today's three: the day's score, a square a card, never the answers.
-  three('share_three');
+  three('share_three'),
+
+  /// The line of the day (lib/data/day_lines.dart), with where it was
+  /// written.
+  line('share_line');
 
   const ShareRef(this.ref);
 

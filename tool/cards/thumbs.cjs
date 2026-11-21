@@ -30,10 +30,12 @@ const typeOf = p => TYPES[path.extname(p)] || 'application/octet-stream';
 // times its size: the large pictures, for the places that show a card at full width, are these as
 // taken; the small ones, for shelves and tiles, are made from them (thumbs_webp.py).
 const SIZE = {width: 366, height: 606}, SCALE = 2.5;
-// The finished day's shelf sets every card on the 324 by 452 its cards in words are drawn on: a picture
-// taken at the deck's 366 by 606 had to shrink into it, its words smaller and a band of ground either
-// side. So each page is also taken at the shelf's own size, into thumbs/shelf/.
-const SHELF = {width: 324, height: 452};
+// The finished day's shelf sets every card on the proportion of 324 by 452 its cards in words are drawn
+// on: a picture taken at the deck's 366 by 606 had to shrink into it, its words smaller and a band of
+// ground either side. So each page is also taken at the shelf's proportion, into thumbs/shelf/: 366
+// across like the deck's, so the page has nearly the room it has there and its drawing, drawn again
+// at that size, is not squashed (taken at 324 by 452 it was, on a card of Space).
+const SHELF = {width: 366, height: 511};
 const ORIGIN = 'https://card.astute/';
 const hashOf = html => crypto.createHash('sha256').update(html, 'utf8').digest('hex').slice(0, 12);
 

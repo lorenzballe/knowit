@@ -38,7 +38,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const RIGHT = 1;
-let pick = -1, answered = false, busy = false;
+let pick = -1, answered = false, busy = false, flying = null, flyTl = null;
 const G = {};
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -86,8 +86,14 @@ function place() {
 
 Kit.onShow.card = () => {
   const svg = Kit.$('web');
-  gsap.killTweensOf('*'); busy = false;
+  // Only the drawing's own tweens go with it: the answer, the grade and what to keep fade in as the kit has them.
+  gsap.killTweensOf(svg.querySelectorAll('*'));
+  // A fly on its way when the web is drawn again lands on the new web, at the same spot of it.
+  const again = busy && flying;
+  if (flyTl) flyTl.kill();
+  busy = false; flying = null;
   if (G.sp) gsap.killTweensOf(G.sp);
+  if (again) requestAnimationFrame(() => dropFly(G.hx + again[0] * G.R, G.hy + again[1] * G.R));
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   const {W, H, f} = Kit.fitSvg(svg);
   const R = Math.min(W * .4, H * .42);
@@ -145,6 +151,7 @@ function dropFly(fx, fy) {
   if (busy || !G.alarm) return;
   busy = true;
   const {s, R, hx, hy, rx, ry} = G;
+  flying = [(fx - hx) / R, (fy - hy) / R];
   const fly = Kit.mk('g', {}, G.flies);
   Kit.mk('ellipse', {cx: -s * .5, cy: -s * .4, rx: s * .55, ry: s * .3, fill: 'var(--k)', 'fill-opacity': .35}, fly);
   Kit.mk('ellipse', {cx: s * .5, cy: -s * .4, rx: s * .55, ry: s * .3, fill: 'var(--k)', 'fill-opacity': .35}, fly);
@@ -159,7 +166,7 @@ function dropFly(fx, fy) {
     G.alarm.setAttribute('stroke-width', Math.max(2.4, R * .016) * (1 + k * .8));
     G.webG.setAttribute('transform', `translate(${R * .012 * k * Math.sin(vib.t * 50)},${R * .016 * k * Math.cos(vib.t * 43)})`);
   };
-  const tl = gsap.timeline({onComplete: () => { busy = false; fly.remove(); }});
+  const tl = flyTl = gsap.timeline({onComplete: () => { busy = false; flying = null; fly.remove(); }});
   const calm = Kit.calm;
   tl.to(fp, {y: fy, o: 1, duration: calm ? .01 : .45, ease: 'power2.in', onUpdate: setF})
     .add(() => Kit.haptic('light'))
@@ -189,6 +196,9 @@ Kit.$('web').addEventListener('pointerdown', e => {
 
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1200)); };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('web'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

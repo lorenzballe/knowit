@@ -88,6 +88,9 @@
     const P = (a, r) => [cx + r*R*Math.sin(a*Math.PI/180), cy - r*R*Math.cos(a*Math.PI/180)];
     const arc = (a0, a1, r) => { const [x0,y0] = P(a0,r), [x1,y1] = P(a1,r); return `M${x0} ${y0} A${r*R} ${r*R} 0 ${a1-a0>180?1:0} 1 ${x1} ${y1}`; };
     const sw = Math.max(1.5, R*.012);
+    // Drawn again (the answer takes room), it keeps what the reader saw, the scale's words and the
+    // writing on the bag, for as long as they still fit; it never adds what was not there.
+    const had = {labels: G.labels, plate: G.plate};
     G = {R, cx, cy, fs};
 
     const defs = NS('defs', {}, svg);
@@ -108,7 +111,7 @@
     // scale labels: only when there is room, each inside the scale, never touching
     const labels = [];
     const winBox = {x:wx-2, y:wy-top-2, width:ww+4, height:wh+top+4}, hubBox = {x:cx-R*.09, y:cy-R*.09, width:R*.18, height:R*.18};
-    if (R >= 100) {
+    if (R >= 100 || had.labels && R >= 85) {
       const place = (el, ang, rMax) => {
         const bb = el.getBBox(), w = bb.width, h = bb.height;
         for (let r = rMax; r >= .36; r -= .01) {
@@ -122,11 +125,12 @@
         if (place(e, (z.a0+z.a1)/2, .64)) labels.push(e); else e.remove(); });
       labels.slice().forEach(l => { const bb = l.getBBox(); if (hit(bb, winBox, 2) || hit(bb, hubBox, 1)) { l.remove(); labels.splice(labels.indexOf(l),1); } });
     }
+    G.labels = labels.length > 0;
 
     // the name written on the bag, only if it truly fits
     G.plate = null;
     const plate = txt(winG, cx, wy+fs*1.05, state.revealed ? 'a brand name' : '“pink cocaine”', {style:`fill:var(--k);font:400 ${fs*1.25}px var(--hand)`});
-    const pmax = Math.max(plate.getBBox().width, (plate.getBBox().width/(state.revealed?12:14))*14);
+    const pmax = had.plate ? plate.getBBox().width : Math.max(plate.getBBox().width, (plate.getBBox().width/(state.revealed?12:14))*14);
     if (R >= 100 && pmax <= ww-10 && wh > fs*3.4) G.plate = plate; else plate.remove();
 
     const pw = R*.58, ptop = G.plate ? wy+fs*1.95 : wy+R*.07;
@@ -266,6 +270,9 @@
     await wait(Kit.calm ? 300 : 3400);
   };
 })();
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('dial'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

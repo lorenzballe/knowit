@@ -1859,7 +1859,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Escolhe as que te interessam. Ajuda-nos a decidir que cartas escrever a seguir.';
+      'Escolhe em que queres melhorar: as cartas escolhidas para ti vão nesse sentido.';
 
   @override
   String get skillsDone => 'Feito';
@@ -5776,6 +5776,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get bookTheIdeas => 'As ideias';
+
+  @override
+  String get bookRecommendedBy => 'Recomendado por';
 
   @override
   String get bookFreeThisWeek => 'Grátis esta semana';

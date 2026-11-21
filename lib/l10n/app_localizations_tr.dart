@@ -1830,7 +1830,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'İlgilendiklerini seç. Sıradaki kartları seçmemize yardımcı olur.';
+      'Neyde daha iyi olmak istediğini seç: senin için seçilen kartlar o yöne kayacak.';
 
   @override
   String get skillsDone => 'Tamam';
@@ -5667,6 +5667,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get bookTheIdeas => 'Fikirler';
+
+  @override
+  String get bookRecommendedBy => 'Önerenler';
 
   @override
   String get bookFreeThisWeek => 'Bu hafta ücretsiz';

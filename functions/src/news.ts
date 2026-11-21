@@ -42,6 +42,10 @@ export const STORIES = 3;
 /** Days after the news that its card is still dealt (scene.expires). */
 export const FRESH_DAYS = 3;
 
+/** Days of papers the phone is handed as its latest news (newsToday): a
+ * story stays on Explore that long, after the days it is dealt. */
+export const NEWS_LATEST_DAYS = 14;
+
 /** How far back the papers are read, in hours. */
 export const HOURS = 36;
 

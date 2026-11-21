@@ -10,6 +10,8 @@
 #pic{flex:1;min-height:0;width:100%;display:block}
 #ctl{display:flex;flex-direction:column;gap:1cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{margin:0;font-size:clamp(12px,2.5cqh,13px);line-height:1.34}
+#why .body b{font-weight:800}
 .opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .opt:disabled{opacity:.35;cursor:default}
@@ -29,8 +31,7 @@
         <button class="opt hot gone" id="b3">Drop in cold food</button>
       </div>
       <div id="why" class="gone">
-        <p class="big">Measure, then adjust</p>
-        <p class="body">Temperature sensors on the coil read the heat all the time. The hob turns power down as it nears the setting and back up when it drops, so the temperature stays constant and food doesn't burn.</p>
+        <p class="body"><b>Measure, then adjust.</b> Sensors on the coil read the heat all the time: the hob turns power down near the 180°C you set and back up when it drops, so the temperature stays constant and food doesn't burn.</p>
       </div>
     </div>
     <p class="say" id="say">Heat the oil to 180°C: first with the sensor off, then on.</p>
@@ -53,9 +54,23 @@ Kit.onShow.card = () => {
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * 0.8, 12), mk = Kit.mk;
   const ink = 'var(--k)';
-  const cx = W * 0.37, panTop = H * 0.27, panBot = H * 0.47, tw = W * 0.46, bw = W * 0.38;
+  const cx = W * 0.37, tw = W * 0.46, bw = W * 0.38, dx = W * 0.04, dw = W * 0.62;
+  // In a tall box everything keeps its share of the height. In a low one (the answer has come in on a
+  // small phone) sizes come from the type instead, and the graph keeps a third of the room.
+  const low = H < 160;
+  let dy, dh, panTop, panBot, gy, glassH, coilY, cry, sensH, lab1, powY, py0, ph, gy0, gy1;
+  if (!low) {
+    dy = H * 0.02; dh = Math.max(H * 0.12, fs * 2.6); panTop = H * 0.27; panBot = H * 0.47;
+    gy = panBot + 2; glassH = H * 0.02; coilY = gy + H * 0.06; cry = H * 0.018; sensH = H * 0.03;
+    lab1 = H * 0.66 > coilY + fs * 1.6 ? H * 0.66 : coilY + fs * 1.6;
+    powY = H * 0.06; py0 = H * 0.06 + fs; ph = lab1 - fs * 1.4 - py0; gy0 = lab1 + fs * 1.0; gy1 = H - 4;
+  } else {
+    dy = 2; dh = fs * 2.1; gy1 = H - 3; gy0 = gy1 - Math.max(fs * 2.8, H * 0.3); lab1 = gy0 - fs * 0.55;
+    cry = Math.max(2.5, fs * 0.22); sensH = cry * 1.8; coilY = lab1 - fs * 1.15 - cry;
+    glassH = 3; gy = coilY - cry - 4 - glassH; panBot = gy - 2; panTop = Math.min(panBot - 8, dy + dh + Math.max(4, H * 0.04));
+    powY = fs * 0.95; py0 = powY + fs * 0.45; ph = lab1 - fs * 1.2 - py0;
+  }
   // display
-  const dx = W * 0.04, dw = W * 0.62, dy = H * 0.02, dh = Math.max(H * 0.12, fs * 2.6);
   mk('rect', {x: dx, y: dy, width: dw, height: dh, rx: dh * 0.2, fill: '#141414', stroke: ink, 'stroke-width': 2}, svg);
   mk('text', {x: dx + dw * 0.05, y: dy + dh * 0.62, fill: '#7dd3fc', 'font-size': fs}, svg).textContent = 'SET 180°';
   const tPan = mk('text', {x: dx + dw * 0.95, y: dy + dh * 0.62, fill: '#fde68a', 'font-size': fs * 1.15, 'text-anchor': 'end'}, svg);
@@ -63,7 +78,8 @@ Kit.onShow.card = () => {
   const smoke = mk('g', {opacity: 0}, svg);
   [-0.12, 0, 0.12].forEach((o, i) => {
     const x = cx + o * W;
-    mk('path', {d: `M${x},${panTop - 4} q${W*0.04},${-H*0.03} 0,${-H*0.06} q${-W*0.04},${-H*0.03} 0,${-H*0.06}`, fill: 'none', stroke: '#777', 'stroke-width': Math.max(4, W * 0.018), 'stroke-linecap': 'round', opacity: 0.8 - i * 0.1}, smoke);
+    const sh = Math.min(H * 0.06, Math.max(4, (panTop - 4 - dy - dh) / 2));
+    mk('path', {d: `M${x},${panTop - 4} q${W*0.04},${-sh / 2} 0,${-sh} q${-W*0.04},${-sh / 2} 0,${-sh}`, fill: 'none', stroke: '#777', 'stroke-width': Math.max(4, W * 0.018), 'stroke-linecap': 'round', opacity: 0.8 - i * 0.1}, smoke);
   });
   // pan
   const oilTop = panTop + (panBot - panTop) * 0.45;
@@ -71,12 +87,10 @@ Kit.onShow.card = () => {
   const ow = tw + (bw - tw) * k1;
   const oil = mk('path', {d: `M${cx - ow/2 + 3},${oilTop} L${cx + ow/2 - 3},${oilTop} L${cx + bw/2 - 3},${panBot - 3} L${cx - bw/2 + 3},${panBot - 3}Z`, fill: '#e8b13a'}, svg);
   mk('path', {d: `M${cx - tw/2},${panTop} L${cx - bw/2},${panBot} L${cx + bw/2},${panBot} L${cx + tw/2},${panTop}`, fill: 'none', stroke: ink, 'stroke-width': Math.max(3, W * 0.012), 'stroke-linejoin': 'round'}, svg);
-  mk('line', {x1: cx + tw/2, y1: panTop + H * 0.02, x2: cx + tw/2 + W * 0.12, y2: panTop - H * 0.01, stroke: ink, 'stroke-width': Math.max(5, W * 0.02), 'stroke-linecap': 'round'}, svg);
+  mk('line', {x1: cx + tw/2, y1: panTop + Math.min(H * 0.02, (panBot - panTop) * 0.2), x2: cx + tw/2 + W * 0.12, y2: panTop - Math.min(H * 0.01, (panBot - panTop) * 0.1), stroke: ink, 'stroke-width': Math.max(5, W * 0.02), 'stroke-linecap': 'round'}, svg);
   // glass
-  const gy = panBot + 2;
-  mk('rect', {x: W * 0.04, y: gy, width: W * 0.66, height: H * 0.02, fill: 'color-mix(in srgb,var(--k) 25%,transparent)', stroke: ink, 'stroke-width': 1.5}, svg);
+  mk('rect', {x: W * 0.04, y: gy, width: W * 0.66, height: glassH, fill: 'color-mix(in srgb,var(--k) 25%,transparent)', stroke: ink, 'stroke-width': 1.5}, svg);
   // field arcs
-  const coilY = gy + H * 0.06;
   const field = mk('g', {opacity: 0}, svg);
   const arcs = [0.08, 0.15].map(r => mk('path', {d: `M${cx - r * W},${coilY} A${r * W},${(coilY - panBot) * 1.1} 0 0 1 ${cx + r * W},${coilY}`, fill: 'none', stroke: '#ff5a2a', 'stroke-width': 2.5, 'stroke-dasharray': '6 6'}, field));
   // coil
@@ -85,24 +99,24 @@ Kit.onShow.card = () => {
   for (let i = 0; i < 8; i++) {
     const x = cx - bw / 2 + (i + 0.5) * bw / 8;
     if (i === 3 || i === 4) continue;
-    coilEls.push(mk('ellipse', {cx: x, cy: coilY, rx: bw / 18, ry: H * 0.018, fill: 'none', stroke: '#c2410c', 'stroke-width': Math.max(3, W * 0.01)}, coil));
+    coilEls.push(mk('ellipse', {cx: x, cy: coilY, rx: bw / 18, ry: cry, fill: 'none', stroke: '#c2410c', 'stroke-width': Math.max(3, W * 0.01)}, coil));
   }
-  const sensor = mk('rect', {x: cx - W * 0.035, y: coilY - H * 0.015, width: W * 0.07, height: H * 0.03, rx: 4, fill: '#888', stroke: ink, 'stroke-width': 2}, svg);
-  const lab1 = H * 0.66 > coilY + fs * 1.6 ? H * 0.66 : coilY + fs * 1.6;
+  const sensor = mk('rect', {x: cx - W * 0.035, y: coilY - sensH / 2, width: W * 0.07, height: sensH, rx: Math.min(4, sensH / 2), fill: '#888', stroke: ink, 'stroke-width': 2}, svg);
   mk('text', {x: cx - bw / 2, y: lab1, fill: ink, 'font-size': fs}, svg).textContent = 'COIL';
   const tSen = mk('text', {x: cx + bw / 2, y: lab1, fill: ink, 'font-size': fs, 'text-anchor': 'end'}, svg);
   // power bar
-  const px = W * 0.8, pw = W * 0.1, py0 = H * 0.06 + fs, ph = lab1 - fs * 1.4 - py0;
-  mk('text', {x: px + pw / 2, y: H * 0.06, fill: ink, 'font-size': fs, 'text-anchor': 'middle'}, svg).textContent = 'POWER';
+  const px = W * 0.8, pw = W * 0.1;
+  mk('text', {x: px + pw / 2, y: powY, fill: ink, 'font-size': fs, 'text-anchor': 'middle'}, svg).textContent = 'POWER';
   mk('rect', {x: px, y: py0, width: pw, height: ph, rx: 4, fill: 'none', stroke: ink, 'stroke-width': 2}, svg);
   const pFill = mk('rect', {x: px + 3, y: py0 + ph - 3, width: pw - 6, height: 0, rx: 2, fill: '#ff5a2a'}, svg);
   const tPow = mk('text', {x: px + pw / 2, y: lab1, fill: ink, 'font-size': fs, 'text-anchor': 'middle'}, svg);
   // graph
-  const gx0 = W * 0.04, gx1 = W * 0.96, gy0 = lab1 + fs * 1.0, gy1 = H - 4;
+  const gx0 = W * 0.04, gx1 = W * 0.96;
   mk('rect', {x: gx0, y: gy0, width: gx1 - gx0, height: gy1 - gy0, fill: 'color-mix(in srgb,var(--k) 6%,transparent)', rx: 6}, svg);
   const yOf = T => gy1 - (clamp(T, TMIN, TMAX) - TMIN) / (TMAX - TMIN) * (gy1 - gy0);
   mk('line', {x1: gx0, x2: gx1, y1: yOf(SET), y2: yOf(SET), stroke: '#2563eb', 'stroke-width': 2, 'stroke-dasharray': '5 4'}, svg);
-  mk('text', {x: gx1 - 4, y: yOf(SET) - 4, fill: '#2563eb', 'font-size': fs * 0.9, 'text-anchor': 'end'}, svg).textContent = '180°';
+  // in a low box the line's name goes left, clear of the power reading above the graph's right end
+  mk('text', {x: low ? gx0 + 4 : gx1 - 4, y: yOf(SET) - 4, fill: '#2563eb', 'font-size': fs * 0.9, 'text-anchor': low ? 'start' : 'end'}, svg).textContent = '180°';
   const ghost = mk('polyline', {fill: 'none', stroke: '#b91c1c', 'stroke-width': 2, opacity: 0.45, points: ''}, svg);
   const line = mk('polyline', {fill: 'none', stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round', points: ''}, svg);
   G = {W, H, tPan, smoke, oil, field, arcs, coilEls, sensor, tSen, pFill, py0, ph, tPow, gx0, gx1, yOf, ghost, line};
@@ -207,6 +221,9 @@ Kit.play.card = async () => {
   held = false;
   await new Promise(r => setTimeout(r, 700));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

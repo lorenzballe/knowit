@@ -9,8 +9,8 @@
 #pic{flex:1 1 0;min-height:0;width:100%;display:block;overflow:visible}
 #opts{display:flex;gap:2cqw}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{margin:0}
 #why .body{margin:0;overflow-wrap:break-word}
+#why .body b{font-weight:800}
 .opt{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:break-word}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 </style>
@@ -25,7 +25,7 @@
         <button class="opt" data-i="1">Badly damaged</button>
         <button class="opt" data-i="2">It survived</button>
       </div>
-      <div id="why" class="gone"><p class="big">It survived.</p><p class="body">In 1995, still unfinished, the structure took a magnitude 6.8 earthquake and stayed standing. A real quake was the hardest test it could get, and it showed the bridge can endure strong seismic shaking.</p></div>
+      <div id="why" class="gone"><p class="body"><b>It survived.</b> A real quake, the hardest test it could get, showed the bridge can endure strong seismic shaking.</p></div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Guess its fate, then say how sure you are.</p>
@@ -43,26 +43,32 @@ const ink = (p) => p === 100 ? 'var(--k)' : `color-mix(in srgb,var(--k) ${p}%,tr
 
 function txt(s, attrs, sty, parent) { const t = Kit.mk('text', attrs, parent); t.setAttribute('style', sty); t.textContent = s; return t; }
 
+let seen = '';
 function draw() {
   const {W, H, f} = Kit.fitSvg(S);
+  seen = `${Math.round(W)}x${Math.round(H)}`;
   S.innerHTML = '';
   const fs = Math.max(f, 12);
   R = {fs, W, H};
-  const compact = H < fs * 16;
+  const compact = H < fs * 14;
   // timeline
   const x0 = W * .06, x1 = W * .94, xm = W * .5, ty = Math.max(fs * 1.7, H * .1);
   const tl = Kit.mk('g', {}, S);
-  const l1 = Kit.mk('line', {x1: x0, y1: ty, x2: xm, y2: ty}, tl); l1.setAttribute('style', st({stroke: ink(100), 'stroke-width': fs * .28, 'stroke-linecap': 'round'}));
-  const l2 = Kit.mk('line', {x1: xm, y1: ty, x2: x1, y2: ty}, tl); l2.setAttribute('style', st({stroke: ink(35), 'stroke-width': fs * .2, 'stroke-dasharray': `${fs * .4} ${fs * .4}`, 'stroke-linecap': 'round'}));
-  txt('being built', {x: x0, y: ty + fs * 1.6}, st({font: `600 ${fs}px var(--body)`, fill: ink(70)}), tl);
-  txt('finished', {x: x1, y: ty + fs * 1.6, 'text-anchor': 'end'}, st({font: `600 ${fs}px var(--body)`, fill: ink(45)}), tl);
-  R.year = txt('1995', {x: xm, y: ty - fs * .9, 'text-anchor': 'middle'}, st({font: `800 ${fs * 1.05}px var(--mono)`, fill: ink(100)}), tl);
+  // In a low box the two words sit at the ends of the line, level with it, so the bridge keeps the height.
+  const lab = compact ? ty + fs * .36 : ty + fs * 1.6;
+  const b1 = txt('being built', {x: x0, y: lab}, st({font: `600 ${fs}px var(--body)`, fill: ink(70)}), tl);
+  const b2 = txt('finished', {x: x1, y: lab, 'text-anchor': 'end'}, st({font: `600 ${fs}px var(--body)`, fill: ink(45)}), tl);
+  let a0 = x0, a1 = x1;
+  if (compact) { try { a0 = x0 + b1.getComputedTextLength() + fs * .7; a1 = x1 - b2.getComputedTextLength() - fs * .7; } catch (_) { a0 = x0 + fs * 6.5; a1 = x1 - fs * 5; } }
+  const l1 = Kit.mk('line', {x1: a0, y1: ty, x2: xm, y2: ty}, tl); l1.setAttribute('style', st({stroke: ink(100), 'stroke-width': fs * .28, 'stroke-linecap': 'round'}));
+  const l2 = Kit.mk('line', {x1: xm, y1: ty, x2: a1, y2: ty}, tl); l2.setAttribute('style', st({stroke: ink(35), 'stroke-width': fs * .2, 'stroke-dasharray': `${fs * .4} ${fs * .4}`, 'stroke-linecap': 'round'}));
+  R.year = txt('1995', {x: xm, y: ty - fs * .9, 'text-anchor': 'middle'}, st({font: `800 ${fs * 1.05}px var(--body)`, fill: ink(100)}), tl);
   R.dot = Kit.mk('circle', {cx: xm, cy: ty, r: fs * .5}, tl); R.dot.setAttribute('style', st({fill: 'var(--c)', stroke: ink(100), 'stroke-width': fs * .2}));
   R.ring = Kit.mk('circle', {cx: xm, cy: ty, r: fs * .5}, tl); R.ring.setAttribute('style', st({fill: 'none', stroke: HOT, 'stroke-width': fs * .15, opacity: 0}));
 
   // scene
   const seaY = H * .82, deckY = H * .66, xL = W * .24, xR = W * .76;
-  const top = Math.min(Math.max(ty + fs * 3.4, H * .3), deckY - fs), sag = deckY - fs * .7, c = 2 * sag - top;
+  const top = Math.min(Math.max(ty + fs * (compact ? 1.5 : 3.4), H * .3), deckY - fs), sag = deckY - fs * .7, c = 2 * sag - top;
   const sea = Kit.mk('rect', {x: 0, y: seaY, width: W, height: Math.max(0, H - seaY)}, S); sea.setAttribute('style', st({fill: ink(10)}));
   R.seismo = Kit.mk('path', {}, S);
   let d = `M ${W * .04} ${(seaY + H) / 2}`;
@@ -169,6 +175,7 @@ Kit.play.card = async () => {
   Kit.$('sure').querySelector('[data-v="80"]').click();
   await new Promise(r => setTimeout(r, 3200));
 };
+new ResizeObserver(() => { const b = S.getBoundingClientRect(); if (b.height > 1 && `${Math.round(b.width)}x${Math.round(b.height)}` !== seen) draw(); }).observe(S);
 Kit.single();
 </script>
 </html>

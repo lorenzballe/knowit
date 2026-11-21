@@ -95,7 +95,10 @@
     // The key to the dots, written on the jar.
     const lx = x0 + (x1 - x0) * .14, ly = y1 - fs * 2.7;
     mk('circle', {cx: lx + fs * .9, cy: ly + fs * .95, r: ar, fill: ORANGE, stroke: INK, 'stroke-width': Math.max(1, ar * .15)}, G.jarWrap);
-    txt(G.jarWrap, lx + fs * 1.75, ly + fs * 1.33, '= a helium atom', {style: 'font:600 ' + fs + 'px var(--body)'});
+    const key = txt(G.jarWrap, lx + fs * 1.75, ly + fs * 1.33, '= a helium atom', {style: 'font:600 ' + fs + 'px var(--body)'});
+    // The key stays readable at any size: the atoms bounce off it (down to the jar's floor) as off a wall.
+    const kb = bb(key);
+    G.key = {x0: lx + fs * .9 - ar - 2, y0: Math.min(ly + fs * .95 - ar, kb ? kb.y : ly) - 2, x1: (kb && kb.width ? kb.x + kb.width : lx + fs * 9) + 2};
     G.atoms = mk('g', {}, G.jarWrap);
 
     // The graphene sheet: a black band with its honeycomb, resting on the jar's rim.
@@ -138,7 +141,11 @@
 
     // The rubber stamp, hidden until the end, clear of the counter.
     const skyR = x1 + W * .03, stW = fs * 7.2;
-    const stx = Math.max(cx0 + fs * 8 + stW / 2, Math.min(W * .5, skyR - stW / 2 - 4)), sty = fs * 2.6;
+    const stx = Math.max(cx0 + fs * 8 + stW / 2, Math.min(W * .5, skyR - stW / 2 - 4));
+    // ...and clear of the dome at its full bulge, however short the drawing: raised (never out of the top) when the dome comes up close.
+    const u = x => Math.max(0, Math.min(1, (x - x0) / (x1 - x0))), ua = u(stx - stW / 2), ub = u(stx + stW / 2);
+    const domeTop = sy - maxB * (ua <= .5 && ub >= .5 ? 1 : Math.max(Math.sin(Math.PI * ua), Math.sin(Math.PI * ub))) - t / 2;
+    const sty = Math.max(fs * 1.65 + 2, Math.min(fs * 2.6, domeTop - fs * 1.95));
     G.stamp = mk('g', {opacity: S.done ? 1 : 0}, G.ui);
     mk('rect', {x: stx - stW / 2, y: sty - fs * 1.15, width: stW, height: fs * 2.3, rx: fs * .25, style: 'fill:var(--c)', stroke: RED, 'stroke-width': Math.max(2.2, fs * .2)}, G.stamp);
     txt(G.stamp, stx, sty + fs * .55, 'SEALED', {'text-anchor': 'middle', fill: RED, style: `font:900 ${fs * 1.55}px var(--display)`, 'letter-spacing': '.04em'});
@@ -184,6 +191,13 @@
       if (a.x < x0 + ar + 3) { a.x = x0 + ar + 3; a.vx = Math.abs(a.vx); }
       if (a.x > x1 - ar - 3) { a.x = x1 - ar - 3; a.vx = -Math.abs(a.vx); }
       if (a.y > y1 - ar - 3) { a.y = y1 - ar - 3; a.vy = -Math.abs(a.vy); }
+      const k = G.key;
+      if (k && a.x > k.x0 - ar && a.x < k.x1 + ar && a.y > k.y0 - ar) {
+        const up = a.y - (k.y0 - ar), lf = a.x - (k.x0 - ar), rt = k.x1 + ar - a.x, m = Math.min(up, lf, rt);
+        if (m === up) { a.y = k.y0 - ar; a.vy = -Math.abs(a.vy); }
+        else if (m === lf) { a.x = k.x0 - ar; a.vx = -Math.abs(a.vx); }
+        else { a.x = k.x1 + ar; a.vx = Math.abs(a.vx); }
+      }
       const ty = top(a.x) + t / 2 + ar;
       if (a.y < ty) { a.y = ty; a.vy = Math.abs(a.vy) + .1; hit(a.x, ty - ar); }
       const m = Math.hypot(a.vx, a.vy); a.vx /= m; a.vy /= m;
@@ -285,6 +299,9 @@
     await w(Kit.calm ? 100 : 900);
   };
 })();
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

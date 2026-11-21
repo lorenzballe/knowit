@@ -19,6 +19,9 @@
 #scene .knob{fill:var(--c);stroke:var(--k)}
 #scene text{font-family:var(--hand);font-weight:700;fill:var(--k)}
 #why{display:flex;flex-direction:column;gap:.6cqh}
+#why{margin-top:-.8cqh}
+#why .body{font-size:max(1.9cqh,12px);line-height:1.32}
+#why .body b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Point the way · how sure">
   <div class="in">
@@ -27,7 +30,7 @@
     <div class="stagebox" id="stage"><svg id="scene" role="img" aria-label="A spinning bicycle wheel hangs from a rope tied to one end of its axle"></svg></div>
     <div id="sure"></div>
     <p class="say" id="say">Drag the arrow to where it goes once let go.</p>
-    <div id="why" class="gone"><p class="big">Round, not down</p><p class="body">The weight's twist points sideways, at right angles to the spin arrow. So the arrow swings that way, without growing or dropping. The twist swings with it, so round it goes.</p></div>
+    <div id="why" class="gone"><p class="body"><b>Round the rope, not down.</b> The weight's twist points sideways, at right angles to the spin arrow. So the arrow swings that way, without growing or dropping. The twist swings with it, so round it goes.</p></div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Twist a spinning wheel at right angles and it swings round, not down.</div>
     <div class="foot"><span class="src">Source · Veritasium, “Gyroscopic Precession” (YouTube, 2012)</span></div>
   </div>
@@ -112,8 +115,16 @@ function layout() {
     for (let j = 0; j < 12; j++) take(P(onWheel(g, j / 12 * TAU, R * 1.06)));
   }
   if (!locked) { const h0 = P(geo(PHI0).h), rr = RING * h0[2] + .14; take([h0[0] - rr, h0[1] - rr]); take([h0[0] + rr, h0[1] + rr]); }
-  const padX = .45, top = .55, bot = .45, bw = x1 - x0 + 2 * padX, bh = y1 - y0 + top + bot;
-  const s = Math.min(W / bw, H / bh), ox = W / 2 - s * (x0 + x1) / 2, oy = (H - s * bh) / 2 + s * (top - y0);
+  let s, ox, oy;
+  if (locked) {
+    // Once answered, the ring is gone and the why takes room: the swing keeps only the room its labels
+    // need around it, so the wheel stays large in a shorter box.
+    const px = F * 2.6, pt = 6, pb = F * .5, bw = x1 - x0, bh = y1 - y0;
+    s = Math.min((W - 2 * px) / bw, (H - pt - pb) / bh); ox = W / 2 - s * (x0 + x1) / 2; oy = pt + (H - pt - pb - s * bh) / 2 - s * y0;
+  } else {
+    const padX = .45, top = .55, bot = .45, bw = x1 - x0 + 2 * padX, bh = y1 - y0 + top + bot;
+    s = Math.min(W / bw, H / bh); ox = W / 2 - s * (x0 + x1) / 2; oy = (H - s * bh) / 2 + s * (top - y0);
+  }
   build();
   if (view.S && locked && !Kit.calm) gsap.to(view, {S: s, OX: ox, OY: oy, duration: .6, ease: 'power2.inOut', overwrite: true, onUpdate: draw});
   else { gsap.killTweensOf(view); view.S = s; view.OX = ox; view.OY = oy; draw(); }
@@ -165,7 +176,8 @@ function draw() {
   if (st.aW > 0) {
     const wt = scr([g.h[0], -WT * st.aW, g.h[2]]);
     at(E.wArr, {d: fat(H0, wt, Math.max(3, .045 * s), Math.max(13, .18 * s), Math.max(11, .16 * s)), opacity: clamp(st.aW * 4)});
-    at(E.wTx, {x: wt[0], y: wt[1] + F * .95, 'font-size': F, opacity: clamp(st.aW * 2 - 1)});
+    // beside the arrow's tip, not under it: the swing keeps the height it has for the wheel
+    at(E.wTx, {x: wt[0] + Math.max(F * .5, 7), y: wt[1] - F * .3, 'text-anchor': 'start', 'font-size': F, opacity: clamp(st.aW * 2 - 1)});
   } else { E.wArr.setAttribute('d', ''); E.wTx.setAttribute('opacity', 0); }
   if (st.aL > 0) {
     const tp = scr(add(g.h, g.u, LL * st.aL));

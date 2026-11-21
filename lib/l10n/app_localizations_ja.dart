@@ -1789,7 +1789,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get skillsTitleMark => '学び';
 
   @override
-  String get skillsLine => '興味のあるものを選んでください。次に書くカードを決める参考になります。';
+  String get skillsLine => '上達したいことを選んでください。あなた向けに選ぶカードがそちらに寄っていきます。';
 
   @override
   String get skillsDone => '完了';
@@ -5513,6 +5513,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get bookTheIdeas => 'アイデア';
+
+  @override
+  String get bookRecommendedBy => 'この本をすすめた人';
 
   @override
   String get bookFreeThisWeek => '今週は無料';

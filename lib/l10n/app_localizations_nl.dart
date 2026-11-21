@@ -1860,7 +1860,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Kies wat je interesseert. Zo weten we welke kaarten we hierna schrijven.';
+      'Kies waarin je beter wilt worden: de kaarten die we voor je kiezen, gaan die kant op.';
 
   @override
   String get skillsDone => 'Klaar';
@@ -5778,6 +5778,9 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get bookTheIdeas => 'De ideeën';
+
+  @override
+  String get bookRecommendedBy => 'Aanbevolen door';
 
   @override
   String get bookFreeThisWeek => 'Gratis deze week';

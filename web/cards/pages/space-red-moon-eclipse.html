@@ -10,8 +10,8 @@
 #cap{font:500 max(1.9cqh,13px)/1.35 var(--body);min-height:calc(3 * 1.35 * max(1.9cqh,13px));overflow-wrap:break-word;margin:0}
 #cap b{font-weight:800}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:break-word}
+#why .body{margin:0;font-size:max(2cqh,13px);line-height:1.34;overflow-wrap:break-word}
+#why .body b{font-weight:800}
 .part{cursor:pointer}
 </style>
 <article class="card" id="card" data-topic="space" data-kind="Tap to explore">
@@ -21,7 +21,7 @@
     <div class="stagebox" id="stage">
       <svg id="pic" role="img" aria-label="Sun, Earth with its atmosphere, and the Moon in Earth's shadow"></svg>
       <p id="cap">Earth sits right between the Sun and the Moon. Tap each part to see what it does.</p>
-      <div id="why" class="gone"><p class="big">Bent, filtered sunlight.</p><p class="body">In an eclipse no direct sunlight reaches the Moon. Earth's atmosphere bends sunlight into the shadow and filters it, letting through only the red. That red light is what paints the Moon.</p></div>
+      <div id="why" class="gone"><p class="body"><b>Bent, filtered sunlight.</b> In an eclipse no direct sunlight reaches the Moon. Earth's atmosphere bends sunlight into the shadow and filters it, letting through only the red. That red light is what paints the Moon.</p></div>
     </div>
     <p class="say" id="say">Tap the Sun, the atmosphere and the Moon.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The red Moon is lit by sunlight bent and filtered by Earth's air.</div>
@@ -47,6 +47,50 @@ const SUN = '#ffcf45';
 const RED = '#e0523a';
 const RED_DK = '#a8341f';
 
+// The three bodies on one line. The line tilts as far as the box rewards it: in a square or tall box
+// the Sun sits high on the left and the Moon low on the right, so the drawing fills its room; in a
+// low, wide box it lies flat. Everything is drawn along the line (Earth at 0, the Sun behind it, the
+// Moon ahead) and the labels are set upright where the line puts their bodies.
+function plan(W, H, fs, wid) {
+  const at = (r, deg) => {
+    const ra = r * 1.15, sunR = r * .55, mr = r * .4, th = deg * Math.PI / 180;
+    const dS = ra + r * .75 + sunR, dM = ra + r * .9 + mr, c = Math.cos(th), s = Math.sin(th);
+    // a name sits under its body, and under the dashed ring that asks for a tap
+    const sunY = Math.max(sunR + fs * 1.5, sunR * 1.3 + fs * 1.05), moonY = Math.max(mr + fs * 1.6, Math.max(mr * 1.6, 22) + fs * 1.05);
+    return {r, ra, sunR, mr, dS, dM, deg, c, s, sunY, moonY, S: [-dS * c, -dS * s], M: [dM * c, dM * s]};
+  };
+  const box = L => {
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+    const take = (x, y) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); };
+    const disc = (p, R) => { take(p[0] - R, p[1] - R); take(p[0] + R, p[1] + R); };
+    const lab = (x, base, w) => { take(x - w / 2, base - fs * .8); take(x + w / 2, base + fs * .28); };
+    disc(L.S, L.sunR * 1.3); disc([0, 0], L.ra * 1.12); disc(L.M, Math.max(L.mr * 1.6, 22));
+    lab(L.S[0], L.S[1] + L.sunY, wid.sun); lab(0, -L.ra - fs * 1.05, wid.atm); lab(L.M[0], L.M[1] + L.moonY, wid.moon);
+    return {x0, x1, y0, y1};
+  };
+  let best = null;
+  for (let deg = 0; deg <= 30; deg += 5) {
+    let lo = 4, hi = 400;
+    for (let i = 0; i < 28; i++) { const m = (lo + hi) / 2, b = box(at(m, deg)); if (b.x1 - b.x0 <= W - 4 && b.y1 - b.y0 <= H - 4) lo = m; else hi = m; }
+    if (!best || lo > best.r * 1.01) best = at(lo, deg);
+  }
+  const b = box(best);
+  best.ex = W / 2 - (b.x0 + b.x1) / 2; best.ey = H / 2 - (b.y0 + b.y1) / 2;
+  return best;
+}
+
+// A convex polygon cut to the box, so the shadow ends at the edge of the picture and never past it.
+function cut(poly, W, H) {
+  const edge = (pts, inside, hit) => { const out = []; pts.forEach((p, i) => { const q = pts[(i + pts.length - 1) % pts.length]; if (inside(p)) { if (!inside(q)) out.push(hit(q, p)); out.push(p); } else if (inside(q)) out.push(hit(q, p)); }); return out; };
+  const at = (q, p, k) => [q[0] + (p[0] - q[0]) * k, q[1] + (p[1] - q[1]) * k];
+  let pts = poly;
+  pts = edge(pts, p => p[0] >= 0, (q, p) => at(q, p, (0 - q[0]) / (p[0] - q[0])));
+  pts = edge(pts, p => p[0] <= W, (q, p) => at(q, p, (W - q[0]) / (p[0] - q[0])));
+  pts = edge(pts, p => p[1] >= 0, (q, p) => at(q, p, (0 - q[1]) / (p[1] - q[1])));
+  pts = edge(pts, p => p[1] <= H, (q, p) => at(q, p, (H - q[1]) / (p[1] - q[1])));
+  return pts;
+}
+
 function draw(fresh) {
   const svg = Kit.$('pic');
   gsap.killTweensOf(svg.querySelectorAll('*'));
@@ -56,14 +100,20 @@ function draw(fresh) {
   const m = (t, a, p = svg) => Kit.mk(t, a, p);
   const anim = !Kit.calm && fresh;
   const lit = st.sun && st.atm;
+  const labStyle = on => `fill:${on ? INK : tint(80)};font:600 ${fs}px var(--body)`;
+  const label = t => { const e = m('text', {'text-anchor': 'middle', style: labStyle(false)}); e.textContent = t; return e; };
+  const names = {sun: label('Sun'), atm: label('Atmosphere'), moon: label('Moon')}, wid = {};
+  for (const k in names) { let w = fs * ({sun: 2.2, atm: 6.3, moon: 3.2})[k]; try { w = names[k].getComputedTextLength() || w; } catch (_) {} wid[k] = w + 4; }
+  const L = plan(W, H, fs, wid), {r, ra, sunR, mr, dS, dM, ex, ey, c, s: sn} = L;
+  const P = (x, y) => [ex + x * c - y * sn, ey + x * sn + y * c];
 
-  const ey = H / 2, r = Math.min(H * .22, W * .13), ra = r * 1.15;
-  const ex = W * .43, sx = W * .1, sunR = r * .62;
-  const mx = W * .84, my = ey, mr = r * .4;
+  // Earth's shadow: one flat, darker wedge behind Earth, narrowing as it goes
+  const wedge = cut([P(0, -r), P(0, r), P(r * 11.5, 0)], W, H);
+  if (wedge.length > 2) m('polygon', {points: wedge.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '), style: `fill:${SHADE};opacity:.55`});
 
-  // Earth's shadow: one flat, darker wedge behind Earth
-  m('polygon', {points: `${ex},${ey - r} ${ex},${ey + r} ${W},${ey + r * .62} ${W},${ey - r * .62}`, style: `fill:${SHADE};opacity:.55`});
-
+  // Every point is set where the line puts it, so each shape keeps its own true box.
+  const q = (x, y) => P(x, y).map(v => v.toFixed(1)).join(',');
+  const E = P(0, 0), Sn = P(-dS, 0), Mo = P(dM, 0);
   const rays = m('g', {});
   const path = (d, a, style) => m('path', Object.assign({d, fill: 'none', 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0, style}, a), rays);
   const grow = (el, delay) => gsap.fromTo(el, {attr: {'stroke-dashoffset': 1}}, {attr: {'stroke-dashoffset': 0}, duration: .8, delay, ease: 'power2.inOut'});
@@ -71,74 +121,71 @@ function draw(fresh) {
 
   if (st.sun) {
     [-1, 1].forEach(s => {
-      const A = [sx + sunR * .6, ey + s * sunR * .55], B = [ex, ey + s * ra * .93];
-      const w = path(`M${A[0]},${A[1]} L${B[0]},${B[1]}`, {'stroke-width': sw}, `stroke:${SUN}`);
+      const A = [-dS + sunR * .6, s * sunR * .55], B = [0, s * ra * .93];
+      const w = path(`M${q(...A)} L${q(...B)}`, {'stroke-width': sw}, `stroke:${SUN}`);
       if (anim && fresh === 'sun') grow(w, 0);
       // rays stopped by Earth
-      const C = [ex - r * .82, ey + s * r * .5];
-      const bl = path(`M${A[0]},${A[1] - s * sunR * .3} L${C[0]},${C[1]}`, {'stroke-width': sw * .8}, `stroke:${SUN};opacity:.6`);
+      const C = [-r * .82, s * r * .5];
+      const bl = path(`M${q(A[0], A[1] - s * sunR * .3)} L${q(...C)}`, {'stroke-width': sw * .8}, `stroke:${SUN};opacity:.6`);
       if (anim && fresh === 'sun') grow(bl, .1);
       if (lit) {
-        const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy), u = [dx / L, dy / L];
+        const dx = B[0] - A[0], dy = B[1] - A[1], Ln = Math.hypot(dx, dy), u = [dx / Ln, dy / Ln];
         const len = r * .55;
         const d0 = (anim && (fresh === 'atm' || fresh === 'sun')) ? (fresh === 'sun' ? .8 : 0) : 0;
         // the other colours: scattered away, short and pale
         [[70, 0], [45, .5]].forEach(([n, k]) => {
-          const e = [B[0] + u[0] * len, B[1] + u[1] * len + s * k * r * .12];
-          const st2 = path(`M${B[0]},${B[1]} L${e[0]},${e[1]}`, {'stroke-width': sw * .7, 'stroke-dasharray': 1}, `stroke:${tint(n)}`);
+          const st2 = path(`M${q(...B)} L${q(B[0] + u[0] * len, B[1] + u[1] * len + s * k * r * .12)}`, {'stroke-width': sw * .7, 'stroke-dasharray': 1}, `stroke:${tint(n)}`);
           if (anim) grow(st2, d0);
         });
         // red light bent into the shadow
-        const M = [mx, my + s * mr * .25];
-        const cx1 = ex + (mx - ex) * .35, cy1 = B[1];
-        const red = path(`M${B[0]},${B[1]} Q${cx1},${cy1} ${M[0]},${M[1]}`, {'stroke-width': sw * 1.2}, `stroke:${RED}`);
+        const red = path(`M${q(...B)} Q${q(dM * .35, B[1])} ${q(dM, s * mr * .25)}`, {'stroke-width': sw * 1.2}, `stroke:${RED}`);
         if (anim) grow(red, d0 + .15);
       }
     });
   }
 
   // Earth + atmosphere (a thin band of air around the globe)
-  m('circle', {cx: ex, cy: ey, r: (r + ra) / 2, fill: 'none', 'stroke-width': ra - r + 2, style: `stroke:${tint(40)}`});
-  const atmRed = m('circle', {cx: ex, cy: ey, r: (r + ra) / 2, fill: 'none', 'stroke-width': ra - r + 2, style: `stroke:${RED};opacity:${st.atm ? .85 : 0}`});
+  m('circle', {cx: E[0], cy: E[1], r: (r + ra) / 2, fill: 'none', 'stroke-width': ra - r + 2, style: `stroke:${tint(40)}`});
+  const atmRed = m('circle', {cx: E[0], cy: E[1], r: (r + ra) / 2, fill: 'none', 'stroke-width': ra - r + 2, style: `stroke:${RED};opacity:${st.atm ? .85 : 0}`});
   if (anim && fresh === 'atm') gsap.from(atmRed, {opacity: 0, duration: .6});
-  m('circle', {cx: ex, cy: ey, r, style: `fill:${tint(18)}`});
-  m('path', {d: `M${ex - r * .5},${ey - r * .5} q${r * .3},${-r * .2} ${r * .5},${r * .1} q${r * .1},${r * .4} ${-r * .3},${r * .5} q${-r * .4},${-r * .1} ${-r * .2},${-r * .6}z`, style: `fill:${tint(55)}`});
-  m('path', {d: `M${ex + r * .1},${ey + r * .2} q${r * .4},${-r * .1} ${r * .55},${r * .25} q${-r * .15},${r * .35} ${-r * .45},${r * .3}z`, style: `fill:${tint(55)}`});
-  // night side
-  m('path', {d: `M${ex},${ey - r} A${r},${r} 0 0 1 ${ex},${ey + r}z`, style: `fill:${SHADE};opacity:.6`});
+  m('circle', {cx: E[0], cy: E[1], r, style: `fill:${tint(18)}`});
+  const land = pts => `M${q(pts[0] * r, pts[1] * r)}` + [2, 6].map(i => ` Q${q(pts[i] * r, pts[i + 1] * r)} ${q(pts[i + 2] * r, pts[i + 3] * r)}`).join('') + (pts.length > 10 ? ` Q${q(pts[10] * r, pts[11] * r)} ${q(pts[12] * r, pts[13] * r)}` : '') + 'Z';
+  m('path', {d: land([-.5, -.5, -.2, -.7, 0, -.4, .1, 0, -.3, .1, -.7, 0, -.5, -.5]), style: `fill:${tint(55)}`});
+  m('path', {d: land([.1, .2, .5, .1, .65, .45, .5, .8, .2, .75]), style: `fill:${tint(55)}`});
+  // night side, away from the Sun
+  m('path', {d: `M${q(0, -r)} A${r.toFixed(1)},${r.toFixed(1)} 0 0 1 ${q(0, r)}Z`, style: `fill:${SHADE};opacity:.6`});
 
   // Sun: a flat disc
-  m('circle', {cx: sx, cy: ey, r: sunR, style: `fill:${SUN}`});
+  m('circle', {cx: Sn[0], cy: Sn[1], r: sunR, style: `fill:${SUN}`});
 
   // Moon: grey disc, red disc on top when lit
+  const crater = (dx, dy, k, fill, g) => { const c2 = P(dM + dx * mr, dy * mr); m('circle', {cx: c2[0], cy: c2[1], r: mr * k, style: `fill:${fill}`}, g); };
   const grey = m('g', {});
-  m('circle', {cx: mx, cy: my, r: mr, style: `fill:${tint(70)}`}, grey);
-  m('circle', {cx: mx - mr * .3, cy: my - mr * .25, r: mr * .22, style: `fill:${tint(52)}`}, grey);
-  m('circle', {cx: mx + mr * .35, cy: my + mr * .3, r: mr * .15, style: `fill:${tint(52)}`}, grey);
+  m('circle', {cx: Mo[0], cy: Mo[1], r: mr, style: `fill:${tint(70)}`}, grey);
+  crater(-.3, -.25, .22, tint(52), grey); crater(.35, .3, .15, tint(52), grey);
   const redMoon = m('g', {style: `opacity:${lit ? 1 : 0}`});
-  const moon = m('circle', {cx: mx, cy: my, r: mr, style: `fill:${RED}`}, redMoon);
-  m('circle', {cx: mx - mr * .3, cy: my - mr * .25, r: mr * .22, style: `fill:${RED_DK}`}, redMoon);
-  m('circle', {cx: mx + mr * .35, cy: my + mr * .3, r: mr * .15, style: `fill:${RED_DK}`}, redMoon);
+  m('circle', {cx: Mo[0], cy: Mo[1], r: mr, style: `fill:${RED}`}, redMoon);
+  crater(-.3, -.25, .22, RED_DK, redMoon); crater(.35, .3, .15, RED_DK, redMoon);
   if (anim && lit && (fresh === 'atm' || fresh === 'sun')) {
     gsap.from(redMoon, {opacity: 0, duration: .7, delay: .9});
   }
-  if (anim && fresh === 'moon') gsap.from([grey, redMoon], {scale: 1.25, svgOrigin: `${mx} ${my}`, duration: .5, ease: 'back.out(3)'});
+  if (anim && fresh === 'moon') gsap.from([grey, redMoon], {scale: 1.25, svgOrigin: `${Mo[0]} ${Mo[1]}`, duration: .5, ease: 'back.out(3)'});
 
-  // labels: body font, sentence case, one size
-  const lab = (x, y, t, on) => m('text', {x, y, 'text-anchor': 'middle', style: `fill:${on ? INK : tint(80)};font:600 ${fs}px var(--body)`}).textContent = t;
-  lab(Math.max(sx, fs * 2.2), ey + sunR + fs * 1.5, 'Sun', st.sun);
-  lab(ex, ey - ra - fs * .7, 'Atmosphere', st.atm);
-  lab(Math.min(mx, W - fs * 2.2), my + mr + fs * 1.6, 'Moon', st.moon);
+  // labels: body font, sentence case, one size, upright beside their bodies
+  const put = (k, x, y, on) => { const e = names[k], hw = wid[k] / 2; e.setAttribute('x', Math.max(hw, Math.min(W - hw, x)).toFixed(1)); e.setAttribute('y', y.toFixed(1)); e.setAttribute('style', labStyle(on)); svg.appendChild(e); };
+  put('sun', Sn[0], Sn[1] + L.sunY, st.sun);
+  put('atm', E[0], E[1] - ra - fs * 1.05, st.atm);
+  put('moon', Mo[0], Mo[1] + L.moonY, st.moon);
 
   // tap hints + hotspots
-  const parts = [['sun', sx, ey, sunR * 1.3], ['atm', ex, ey, ra * 1.12], ['moon', mx, my, Math.max(mr * 1.6, 22)]];
-  parts.forEach(([p, x, y, rr]) => {
+  const parts = [['sun', Sn, sunR * 1.3], ['atm', E, ra * 1.12], ['moon', Mo, Math.max(mr * 1.6, 22)]];
+  parts.forEach(([p, c2, rr]) => {
     if (!st[p]) {
-      const ring = m('circle', {cx: x, cy: y, r: rr, fill: 'none', 'stroke-width': 1.5, 'stroke-dasharray': '4 5', 'stroke-linecap': 'round', style: `stroke:${INK}`, opacity: .6});
+      const ring = m('circle', {cx: c2[0], cy: c2[1], r: rr, fill: 'none', 'stroke-width': 1.5, 'stroke-dasharray': '4 5', 'stroke-linecap': 'round', style: `stroke:${INK}`, opacity: .6});
       if (!Kit.calm) gsap.to(ring, {opacity: .15, duration: .9, repeat: -1, yoyo: true, ease: 'sine.inOut'});
     }
   });
-  parts.forEach(([p, x, y, rr]) => m('circle', {cx: x, cy: y, r: rr, fill: 'transparent', class: 'part', 'data-part': p}));
+  parts.forEach(([p, c2, rr]) => m('circle', {cx: c2[0], cy: c2[1], r: rr, fill: 'transparent', class: 'part', 'data-part': p}));
 }
 
 function tap(p) {
@@ -169,6 +216,9 @@ Kit.play.card = async () => {
   }
   await new Promise(r => setTimeout(r, 2200));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

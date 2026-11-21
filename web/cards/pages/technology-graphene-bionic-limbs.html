@@ -10,7 +10,8 @@
 #pic{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 #cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:2.6em;margin:0}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font-size:max(1.9cqh,13px);line-height:1.3;margin:0}
+#why .body{font:500 clamp(12px,2.15cqh,14px)/1.3 var(--body);margin:0}
+#why b{font-weight:800}
 #scrub{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
 #scrub::-webkit-slider-runnable-track{height:max(.8cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
 #scrub::-moz-range-track{height:max(.8cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
@@ -27,10 +28,9 @@
       <div id="box"><svg id="pic" aria-label="A brain sends a signal down a nerve to graphene sensors in an amputated arm, which move a bionic hand"></svg></div>
       <p id="cap">1 · The brain decides: close the hand.</p>
       <div id="why" class="gone">
-        <p class="big">Sensors that read the nerves</p>
-        <p class="body">Graphene sensors built into the amputated limb pick up the nerve's signals. So the person controls the direction and the strength of each movement, almost like a natural limb.</p>
+        <p class="body"><b>Sensors that read the nerves.</b> Built into the amputated limb, graphene sensors pick up the nerve's signals, so the person controls the direction and the strength of each movement, almost like a natural limb.</p>
       </div>
-      <div>
+      <div id="ctl">
         <input data-drag id="scrub" type="range" min="0" max="100" value="0" aria-label="Timeline">
         <div class="steps" id="steps"><span class="on">1 THINK</span><span>2 NERVE</span><span>3 SENSOR</span><span>4 MOVE</span></div>
       </div>
@@ -59,8 +59,11 @@ Kit.onShow.card = () => {
   const mk = (t, a, p = svg) => Kit.mk(t, a, p);
   const fs = Math.max(12, Math.min(f, W * 0.045, H * 0.05));
   const cx = W * 0.3;
-  const w = Math.min(W * 0.11, H * 0.065);
-  const r = Math.min(W * 0.09, H * 0.065);
+  // A short box (the answer under it, or a small phone) draws the arm and the brain bolder, so the
+  // figure stays a figure and not a thin icon; from about 220 px up it is drawn as it always was.
+  const bold = 1 + 0.4 * Math.max(0, Math.min(1, (220 - H) / 100));
+  const w = Math.min(W * 0.11, H * 0.065 * bold);
+  const r = Math.min(W * 0.09, H * 0.065 * bold);
   const brainY = r * 1.1 + 2;
   const armTop = H * 0.2, sTop = H * 0.44, sBot = H * 0.53, palmTop = H * 0.72, palmBot = H * 0.8;
   const ink = 'var(--k)', card = 'var(--c)';
@@ -118,7 +121,7 @@ Kit.onShow.card = () => {
 
   // grip meter (left)
   const mx = Math.max(6, cx - w * 1.05 - Math.max(W * 0.12, 30)), mW = Math.max(10, W * 0.04);
-  const mTop = sBot + fs * 2.2, mBot = H * 0.94;
+  const mTop = sBot + fs * 2.2, mBot = Math.max(mTop + fs * 1.5, H * 0.94);
   mk('text', {x: mx + mW / 2, y: mTop - fs * 0.6, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs * 0.85}).textContent = 'GRIP';
   mk('rect', {x: mx, y: mTop, width: mW, height: mBot - mTop, rx: mW / 2, fill: 'none', stroke: ink, 'stroke-width': 2});
   const meter = mk('rect', {x: mx + 3, y: mBot - 3, width: mW - 6, height: 0, rx: (mW - 6) / 2, fill: ink});
@@ -165,7 +168,7 @@ function render() {
   const mh = (G.mBot - G.mTop - 6) * e;
   G.meter.setAttribute('y', G.mBot - 3 - mh); G.meter.setAttribute('height', Math.max(0, mh));
   const step = t < 0.25 ? 0 : t < 0.5 ? 1 : t < 0.7 ? 2 : 3;
-  G.labEls.forEach((el, i) => el.setAttribute('opacity', i === step ? 1 : 0.4));
+  G.labEls.forEach((el, i) => el.setAttribute('opacity', done || i === step ? 1 : 0.4));
   if (step !== lastStep) {
     lastStep = step;
     Kit.$('cap').textContent = CAPS[step];
@@ -176,7 +179,9 @@ function render() {
 function finish() {
   if (done) return; done = true;
   Kit.haptic('success');
-  Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  // The command has reached the hand: the timeline and its steps give their room to the drawing.
+  Kit.hide('cap'); Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  render();
 }
 
 let lastQ = 0;
@@ -200,6 +205,9 @@ Kit.play.card = async () => {
   for (const v of [20, 40, 60, 80, 100]) { sc.value = v; sc.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 120)); }
   await new Promise(r => setTimeout(r, 600));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

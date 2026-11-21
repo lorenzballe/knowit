@@ -11,7 +11,8 @@
 #map{position:absolute;inset:0;width:100%;height:100%;display:block}
 #opts{display:flex;flex-direction:column;gap:1cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{overflow-wrap:break-word}
+#why .body{font:500 max(2.1cqh,13px)/1.42 var(--body);overflow-wrap:break-word}
+#why .body b{font-weight:800}
 .opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 </style>
@@ -26,7 +27,7 @@
         <button class="opt" data-i="1">The government publishes no official figures</button>
         <button class="opt" data-i="2">Each province counts in a different way</button>
       </div>
-      <div id="why" class="gone"><p class="big">No official figures</p><p class="body">The government does not publish its statistics. Groups like Amnesty International and ECPM can only estimate: thousands of people executed in 2025, but the precise number is unknown.</p></div>
+      <div id="why" class="gone"><p class="body"><b>No official figures.</b> The government does not publish its statistics, so groups like Amnesty International and ECPM can only estimate.</p></div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Pick the reason. Then say how sure you are.</p>
@@ -45,10 +46,11 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
   Kit.answer({choice: said, correct: ok, sure: pct});
   Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  sure.grade(ok, pct);
   Kit.show('keep');
   done = true;
-  draw(); reveal();
+  // The map is drawn again once the answer has taken its room, then the estimate plays on it.
+  requestAnimationFrame(() => requestAnimationFrame(() => { draw(); reveal(); }));
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
@@ -56,11 +58,25 @@ Kit.$('opts').addEventListener('click', e => {
 });
 
 function draw(){
-  const svg = Kit.$('map'); svg.innerHTML = '';
+  const svg = Kit.$('map');
+  if (G.q) gsap.killTweensOf(G.q);
+  svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f, 13);
-  const s = Math.max(0.5, Math.min(W*0.9/100, (H - fs*4.4)/84));
-  const ox = (W - 100*s)/2, oy = Math.max(2, (H - (84*s + fs*4.2))/2);
+  const fs = Math.max(f, 13), lf = fs * .9, vf = fs * 1.7;
+  const word = (s, size, weight, font, extra) => { const t = Kit.mk('text', {style: `font:${weight} ${size}px ${font};fill:var(--k)${extra || ''}`}, svg); t.textContent = s; return t; };
+  const width = t => { try { return t.getComputedTextLength(); } catch (_) { return t.textContent.length * parseFloat(t.style.fontSize || 13) * .55; } };
+  // What is counted, then the count no one publishes: under the map, or beside it when the box is short.
+  const one = done ? '2025 estimate: thousands · exact count:' : 'Executions in China, 2025';
+  const two = done ? ['2025 estimate: thousands', 'exact count:'] : ['Executions in', 'China, 2025'];
+  const probe = [...two, '?,???'].map((w, i) => word(w, i < 2 ? lf : vf, i < 2 ? 700 : 800, i < 2 ? 'var(--body)' : 'var(--display)'));
+  const tw = Math.max(...probe.map(width)), gap = fs;
+  probe.forEach(t => t.remove());
+  const s1 = Math.min(W * .9 / 100, (H - fs * 4.4) / 84);
+  const s2 = Math.min((W - tw - gap) * .96 / 100, H * .94 / 84);
+  const side = s1 < 1.2 && s2 > s1 * 1.25;
+  const s = Math.max(.3, side ? s2 : s1);
+  const ox = side ? (W - (100 * s + gap + tw)) / 2 : (W - 100 * s) / 2;
+  const oy = side ? (H - 84 * s) / 2 : Math.max(2, (H - (84 * s + fs * 4.2)) / 2);
   const X = p => ox + p[0]*s, Y = p => oy + p[1]*s;
   const d = 'M' + P.map(p => X(p).toFixed(1)+','+Y(p).toFixed(1)).join('L') + 'Z';
   const defs = Kit.mk('defs', {}, svg);
@@ -79,11 +95,20 @@ function draw(){
   const q = Kit.mk('text', {x:ox+48*s, y:oy+38*s, 'text-anchor':'middle', 'dominant-baseline':'central', style:`font:800 ${Math.max(46*s,24)}px var(--display);fill:var(--c)`}, svg);
   q.textContent = '?';
   G.q = q;
-  const ty = oy + 84*s + fs*1.3;
-  const lab = Kit.mk('text', {x:W/2, y:ty, 'text-anchor':'middle', style:`font:700 ${fs*0.9}px var(--body);fill:var(--k);opacity:.7`}, svg);
-  lab.textContent = done ? 'Estimate: thousands · exact count:' : 'Executions in China, 2025';
-  const val = Kit.mk('text', {x:W/2, y:ty + fs*2.2, 'text-anchor':'middle', style:`font:800 ${fs*1.7}px var(--mono);fill:var(--k)`}, svg);
-  val.textContent = '?,???';
+  let val;
+  if (side) {
+    // Two lines of words, then the count, as one block centred on the map.
+    const tx = ox + 100 * s + gap, lh = lf * 1.3, tall = lf * .95 + lh + lf * .35 + vf * 1.25, b1 = (H - tall) / 2 + lf * .95;
+    two.forEach((w, i) => { const t = word(w, lf, 700, 'var(--body)', ';opacity:.7'); t.setAttribute('x', tx); t.setAttribute('y', b1 + i * lh); });
+    val = word('?,???', vf, 800, 'var(--display)', ';font-variant-numeric:tabular-nums');
+    val.setAttribute('x', tx); val.setAttribute('y', b1 + lh + lf * .35 + vf);
+  } else {
+    const ty = oy + 84*s + fs*1.3;
+    const lab = word(one, lf, 700, 'var(--body)', ';opacity:.7');
+    lab.setAttribute('x', W/2); lab.setAttribute('y', ty); lab.setAttribute('text-anchor', 'middle');
+    val = word('?,???', vf, 800, 'var(--display)', ';font-variant-numeric:tabular-nums');
+    val.setAttribute('x', W/2); val.setAttribute('y', ty + fs*2.2); val.setAttribute('text-anchor', 'middle');
+  }
   G.val = val;
   if (!Kit.calm && !done) gsap.to(q, {scale:1.08, transformOrigin:'50% 50%', duration:1, yoyo:true, repeat:-1, ease:'sine.inOut'});
 }
@@ -100,6 +125,9 @@ function reveal(){
 Kit.onShow.card = () => { draw(); };
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2200)); };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('map').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen) { seen = k; draw(); } }).observe(Kit.$('map'));
 Kit.single();
 </script>
 </html>

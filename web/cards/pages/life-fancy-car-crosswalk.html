@@ -46,10 +46,12 @@
 #ledger li.first em::before{background:var(--c);box-shadow:none}
 #go{align-self:flex-start}
 .answered .q{font-size:max(2.5cqh,15px)}
-@container (min-height:640px){
-  #ledger{gap:1.4cqh}
-  #ledger li{padding:1.7cqh 3.8cqw;row-gap:.6cqh}
-}
+.answered .in{gap:1.5cqh}
+.answered #stage{gap:1cqh}
+.answered #ledger{gap:.6cqh}
+.answered #ledger li{padding:.8cqh 3.2cqw}
+.answered #ledger li small{display:none}
+
 @container (max-height:520px){
   .answered .in{gap:1.5cqh}
   .answered #ledger{gap:.6cqh}
@@ -136,7 +138,8 @@
     if (running) { const r = running; running = null; r.progress(1); return; }
     svg.innerHTML = '';
     const {W, H} = Kit.fitSvg(svg);
-    const rh = Math.min(H * .62, W * .5), top = (H - rh) / 2 + H * .06, bot = top + rh, lane = rh / 2;
+    const end = $('card').classList.contains('answered');
+    const rh = Math.min(H * (end ? .74 : .62), W * .5), top = end ? H - rh - 2 : (H - rh) / 2 + H * .06, bot = top + rh, lane = rh / 2;
     const zx = W * .66, zw = Math.max(W * .12, 30), stopX = zx - zw / 2 - Math.max(6, W * .02);
     const len = Math.min(W * .19, lane * 1.75), wid = lane * .58, cy = top + lane * 1.5;
     Kit.mk('rect', {x: 0, y: top, width: W, height: rh, fill: '#2b2622'}, svg);

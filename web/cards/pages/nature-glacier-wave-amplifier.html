@@ -33,11 +33,13 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-let mode = -1, S = null, tl = null;
+let mode = -1, S = null, tl = null, debris = null;
 const seen = new Set();
 const C = {sky:'#e8f3f8', rock:'#7a5236', rockE:'#4a3020', mtn:'#5b6370', mtnE:'#3c424c', ice:'#f2fbff', iceE:'#8fc3da', sea:'#1d5c8f', seaTop:'#3d86c0', drop:'#5fb0e6', ink:'#10100c', brown:'#a8683c', blue:'#2f8fd6', brownL:'#5a3418', blueL:'#0b3d6e'};
 
 function build(){
+  // A strike still playing is played out first: the drawing done again shows where it ends.
+  if (tl && tl.progress() < 1) { tl.progress(1); if (debris && debris.tw) debris.tw.progress(1); }
   if (tl) tl.kill();
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
@@ -81,10 +83,23 @@ function build(){
   S.bR = m('rect', {x: bx0, y: by, width: 0, height: bh, fill: C.brown});
   S.bI = m('rect', {x: bx0 + bw * 55 / 300, y: by, width: 0, height: bh, fill: C.blue});
   S.bw = bw;
-  S.val = m('text', {x: bx1, y: by + bh + fs * 1.35, 'text-anchor': 'end', fill: C.ink, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body)'});
+  // the figure under the bar sits clear of the tall wave's crest mark below it; drawn too short for that,
+  // the mark passes behind it, never through it
+  const vy = Math.max(by + bh + fs * .95, Math.min(by + bh + fs * 1.35, sea - H * .3 - fs * .4));
+  S.val = m('text', {x: bx1, y: vy, 'text-anchor': 'end', fill: C.ink, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body);paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round'});
   S.w = {A: 0, c: sx, wd: W * .09};
   reset(mode < 0 ? 1 : mode, true);
   drawLines();
+  if (seen.has(mode)) settle(mode);
+}
+
+// What the reader played stays played when the drawing is done again: the strike's end, at the new size.
+function settle(m){
+  rk.t = 1.12; placeRock(rk.t); S.rock.setAttribute('opacity', .45);
+  S.glac.setAttribute('opacity', 0);
+  S.w.A = S.H * (m ? .3 : .1); S.w.c = S.W + S.w.wd * 2; wave();
+  setVol(m ? 300 : 55);
+  if (m && debris) drawDebris(debris);
 }
 
 function wave(){
@@ -115,7 +130,8 @@ function drawLines(){
   }
 }
 const rk = {t: .08};
-function reset(m){
+function reset(m, again){
+  if (!again && debris) { if (debris.tw) debris.tw.kill(); debris = null; }
   rk.t = .08; placeRock(rk.t);
   S.rock.setAttribute('opacity', 1);
   S.glac.setAttribute('opacity', m ? 1 : 0);
@@ -143,7 +159,7 @@ function play(m){
       .add(() => {
         Kit.haptic('light');
         gsap.fromTo(S.flash, {attr: {cx: hit.x, cy: hit.y - H * .03, r: 0, opacity: .9}}, {attr: {cx: hit.x, cy: hit.y - H * .03, r: W * .12, opacity: 0}, duration: .5});
-        shards(hit);
+        shards();
       })
       .to(vol, {v: 300, duration: 1.2, ease: 'power1.inOut', onUpdate: () => setVol(vol.v)})
       .to(g, {s: 1, duration: 1, ease: 'power2.in', onUpdate: () => {
@@ -158,27 +174,35 @@ function play(m){
   if (Kit.calm) tl.progress(1);
 }
 
-function shards(hit){
-  const {W, H, sea, sx, p} = S, ps = [];
+// The shards keep what chance drew for them, so a drawing done again flies the same ones, at its own size.
+function shards(){
+  const ps = [];
   for (let i = 0; i < 42; i++) {
-    const ice = i % 3 !== 0, q = p(.5 + Kit.rnd() * .5);
-    const x0 = q.x + S.n.x * H * .04, y0 = q.y + S.n.y * H * .04;
-    const x1 = sx + W * (.04 + Kit.rnd() * .4), tt = .9 + Kit.rnd() * .4;
-    const gr = H * 2.4, vy = (sea - y0 - .5 * gr * tt * tt) / tt;
-    const s = H * (ice ? .012 + Kit.rnd() * .016 : .007 + Kit.rnd() * .008);
-    const el = ice
+    const ice = i % 3 !== 0, q = .5 + Kit.rnd() * .5, x = .04 + Kit.rnd() * .4, tt = .9 + Kit.rnd() * .4;
+    ps.push({ice, q, x, tt, s: ice ? .012 + Kit.rnd() * .016 : .007 + Kit.rnd() * .008, rot: Kit.rnd() * 720 - 360});
+  }
+  const d = debris = {ps, k: 0};
+  drawDebris(d);
+  d.tw = gsap.to(d, {k: 1.4, duration: 1.4, ease: 'none', onUpdate: () => flyDebris(d)});
+}
+function drawDebris(d){
+  const {W, H, sea, sx, p, n} = S;
+  for (const q of d.ps) {
+    const a = p(q.q), s = H * q.s;
+    q.x0 = a.x + n.x * H * .04; q.y0 = a.y + n.y * H * .04; q.gr = H * 2.4;
+    q.vx = (sx + W * q.x - q.x0) / q.tt; q.vy = (sea - q.y0 - .5 * q.gr * q.tt * q.tt) / q.tt;
+    q.el = q.ice
       ? Kit.mk('polygon', {points: `${-s},${-s * .6} ${s * .7},${-s} ${s},${s * .5} ${-s * .4},${s}`, fill: C.ice, stroke: C.iceE, 'stroke-width': 1.2}, S.parts)
       : Kit.mk('circle', {cx: 0, cy: 0, r: s, fill: C.drop}, S.parts);
-    ps.push({el, x0, y0, vx: (x1 - x0) / tt, vy, gr, tt, rot: Kit.rnd() * 720 - 360});
   }
-  const o = {k: 0};
-  gsap.to(o, {k: 1.4, duration: 1.4, ease: 'none', onUpdate: () => {
-    for (const q of ps) {
-      const t = Math.min(o.k, q.tt), x = q.x0 + q.vx * t, y = q.y0 + q.vy * t + .5 * q.gr * t * t;
-      q.el.setAttribute('transform', `translate(${x},${y}) rotate(${q.rot * t})`);
-      q.el.setAttribute('opacity', o.k > q.tt ? Math.max(0, 1 - (o.k - q.tt) * 4) : 1);
-    }
-  }});
+  flyDebris(d);
+}
+function flyDebris(d){
+  for (const q of d.ps) {
+    const t = Math.min(d.k, q.tt), x = q.x0 + q.vx * t, y = q.y0 + q.vy * t + .5 * q.gr * t * t;
+    q.el.setAttribute('transform', `translate(${x},${y}) rotate(${q.rot * t})`);
+    q.el.setAttribute('opacity', d.k > q.tt ? Math.max(0, 1 - (d.k - q.tt) * 4) : 1);
+  }
 }
 
 function done(){
@@ -200,6 +224,9 @@ Kit.play.card = async () => {
   bs[1].click(); await wait(200); if (tl) tl.progress(1);
   await wait(600);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

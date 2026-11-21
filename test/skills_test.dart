@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
+import 'package:astuto/data/goals.dart';
 import 'package:astuto/data/skills.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/screens/skills_screen.dart';
@@ -55,7 +56,8 @@ class _Recorder implements AnalyticsSink {
 }
 
 /// What the reader wants to learn: asked on the profile, kept on the phone
-/// and told to analytics, changing nothing in the app.
+/// and told to analytics; each skill picks its area of life, which leans the
+/// cards picked for the reader and the coach.
 void main() {
   late _Recorder sink;
 
@@ -103,18 +105,14 @@ void main() {
       find.byKey(ValueKey('skill-${s.name}-${on ? 'on' : 'off'}'));
 
   Future<void> tap(WidgetTester tester, Finder f) async {
-    // From the top each time: a tile above the fold is not found by
-    // scrolling on down.
-    tester
-        .state<ScrollableState>(find.byType(Scrollable).first)
-        .position
-        .jumpTo(0);
-    await tester.pump();
-    await tester.scrollUntilVisible(
-      f,
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
+    // All twelve are on the screen at once; only a text too large for
+    // that lets the grid scroll, and then from the top each time.
+    final Finder list = find.byType(Scrollable);
+    if (list.evaluate().isNotEmpty) {
+      tester.state<ScrollableState>(list.first).position.jumpTo(0);
+      await tester.pump();
+      await tester.scrollUntilVisible(f, 200, scrollable: list.first);
+    }
     await tester.tap(f);
     await tester.pumpAndSettle();
   }
@@ -125,14 +123,59 @@ void main() {
     await open(tester);
     final l = lookupAppLocalizations(const Locale('en'));
     for (final Skill s in Skill.values) {
-      await tester.scrollUntilVisible(
-        tile(s, false),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
+      expect(tile(s, false), findsOneWidget, reason: s.name);
       expect(find.text(l.skillName(s.name)), findsOneWidget, reason: s.name);
     }
   });
+
+  Future<void> phone(WidgetTester tester, Size size, double text) async {
+    tester.view.physicalSize = size;
+    tester.view.devicePixelRatio = 1;
+    tester.platformDispatcher.textScaleFactorTestValue = text;
+    addTearDown(tester.view.reset);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+  }
+
+  testWidgets('all twelve fit a small phone at once, nothing to scroll', (
+    tester,
+  ) async {
+    await phone(tester, const Size(375, 667), 1);
+    await open(tester, picked: ['money', 'people']);
+    expect(find.byType(Scrollable), findsNothing);
+    final Rect done = tester.getRect(find.byKey(const ValueKey('skills-done')));
+    for (final Skill s in Skill.values) {
+      final bool on = s == Skill.money || s == Skill.people;
+      final Rect r = tester.getRect(tile(s, on));
+      expect(r.top, greaterThanOrEqualTo(0), reason: s.name);
+      expect(r.bottom, lessThanOrEqualTo(done.top), reason: s.name);
+      expect(r.right, lessThanOrEqualTo(375), reason: s.name);
+    }
+    expect(tester.takeException(), isNull);
+  });
+
+  for (final String language in ['en', 'de', 'ru', 'ja']) {
+    testWidgets('at twice the text on a small phone the grid scrolls, '
+        'nothing spills, in $language', (tester) async {
+      await phone(tester, const Size(320, 640), 2);
+      final AppState app = await tester.runAsync(
+        () => readyApp({
+          'knowit.skills': <String>['talk'],
+        }),
+      ) as AppState;
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: Locale(language),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: SkillsScreen(app: app),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      expect(find.byType(Scrollable), findsOneWidget);
+    });
+  }
 
   testWidgets('a tap picks a skill and keeps it; a second lets it go', (
     tester,
@@ -149,6 +192,66 @@ void main() {
       SharedPreferences.getInstance,
     ) as SharedPreferences;
     expect(prefs.getStringList('knowit.skills'), ['critical']);
+  });
+
+  testWidgets('the skills picked are the areas the cards lean towards', (
+    tester,
+  ) async {
+    final AppState app = await open(tester);
+    await tap(tester, tile(Skill.science, false));
+    await tap(tester, tile(Skill.persuade, false));
+    await tap(tester, tile(Skill.fakes, false));
+    // Two skills of one area count once, in the order first picked.
+    expect(app.goals, ['news', 'people']);
+    await tap(tester, tile(Skill.culture, false));
+    await tap(tester, tile(Skill.money, false));
+    await tap(tester, tile(Skill.focus, false));
+    // Three areas at most; general knowledge is no area.
+    expect(app.goals, ['news', 'people', 'money']);
+    for (final Skill s in [
+      Skill.science,
+      Skill.persuade,
+      Skill.fakes,
+      Skill.money,
+      Skill.focus,
+    ]) {
+      await tap(tester, tile(s, true));
+    }
+    expect(app.skills, ['culture']);
+    expect(app.goals, isEmpty);
+    final SharedPreferences prefs = await tester.runAsync(
+      SharedPreferences.getInstance,
+    ) as SharedPreferences;
+    expect(prefs.getStringList('knowit.goals'), isEmpty);
+  });
+
+  testWidgets('skills picked before they did anything pick their areas', (
+    tester,
+  ) async {
+    final AppState fresh = await tester.runAsync(
+      () => readyApp({
+        'knowit.skills': ['lead', 'decisions', 'critical'],
+      }),
+    ) as AppState;
+    expect(fresh.goals, ['business', 'decide']);
+    // What the reader said they want stays what they said.
+    final AppState said = await tester.runAsync(
+      () => readyApp({
+        'knowit.skills': ['lead'],
+        'knowit.goals': ['health'],
+      }),
+    ) as AppState;
+    expect(said.goals, ['health']);
+  });
+
+  test('every skill but general knowledge serves an area that exists', () {
+    for (final Skill s in Skill.values) {
+      if (s == Skill.culture) {
+        expect(s.area, isNull);
+      } else {
+        expect(Goal.of(s.area!), isNotNull, reason: s.name);
+      }
+    }
   });
 
   testWidgets('what a build does not know is dropped', (tester) async {

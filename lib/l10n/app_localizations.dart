@@ -2583,7 +2583,7 @@ abstract class AppLocalizations {
   /// Line under skillsTitle: why we ask. Picking changes nothing in the app; it tells the team what to write.
   ///
   /// In en, this message translates to:
-  /// **'Pick the ones you care about. It helps us choose which cards to write next.'**
+  /// **'Pick what you want to get better at: the cards picked for you will lean towards it.'**
   String get skillsLine;
 
   /// Button that closes the skills screen.
@@ -8105,6 +8105,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The ideas'**
   String get bookTheIdeas;
+
+  /// Books in pills, a book's own page: the label over the people who built well-known companies and recommended the book, each with where they said it
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended by'**
+  String get bookRecommendedBy;
 
   /// Books in pills, a book's own page: bookFreeThisWeek
   ///

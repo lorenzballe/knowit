@@ -14,9 +14,8 @@
 #fill{display:block;height:100%;width:100%;background:var(--k);border-radius:1cqh}
 #cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);margin:0;min-height:2.6em}
 #go{font:700 max(2.2cqh,14px)/1.2 var(--body);background:var(--k);color:var(--c);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer;align-self:center}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{margin:0}
-#why .body{margin:0}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Build it · step by step">
   <div class="in">
@@ -30,10 +29,7 @@
       <svg id="pic" aria-label="A lab with a meteorite sample, a door, a dusty shelf and a scientist"></svg>
       <p id="cap">An ordinary lab: lead drifts onto the sample from everywhere.</p>
       <button id="go">Step 1 of 3 · Scrub with ammonia</button>
-      <div id="why" class="gone">
-        <p class="big">Clair Patterson</p>
-        <p class="body">He was measuring tiny amounts of lead in meteorites, the oldest rocks in the solar system. Lead from the world around him kept getting into his samples. So he shut it out, and basically invented the cleanroom.</p>
-      </div>
+      <p class="body gone" id="why"><b>Clair Patterson.</b> He was measuring tiny amounts of lead in meteorites, the oldest rocks in the solar system, and lead from the world around him kept getting into his samples. So he shut it out, and basically invented the cleanroom.</p>
     </div>
     <p class="say" id="say">Tap the button to add one defence at a time.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>To measure a tiny trace, first keep the whole world out.</div>
@@ -70,17 +66,20 @@ function draw() {
   // floor tint and walls
   Kit.mk('rect', {x: x0, y: y0, width: x1 - x0, height: h, fill: 'var(--k)', opacity: .05}, svg);
   Kit.mk('path', {d: `M${x0},${dA} L${x0},${y0} L${x1},${y0} L${x1},${y1} L${x0},${y1} L${x0},${dB}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': sw * 1.4, 'stroke-linejoin': 'round'}, svg);
-  txt(x0 + sw * 2, dA - fs * .7, 'Outside air', fs, 'start', svg);
-  // shelf with dust
-  const sy = y0 + h * .24, sx0 = W * .3, sx1 = W * .64;
+  const air = txt(x0 + sw * 2, dA - fs * .7, 'Outside air', fs, 'start', svg);
+  // shelf with dust: room for its name under the ceiling, and clear of the name by the door
+  let aw = fs * 5.6; try { aw = air.getComputedTextLength() || aw; } catch (_) {}
+  const sy = Math.max(y0 + h * .24, y0 + fs * 2.2), sx1 = W * .64;
+  const clash = sy > dA - fs * 1.7 && sy < dA + fs * 1.5;
+  const sx0 = clash ? Math.min(sx1 - W * .16, Math.max(W * .3, x0 + sw * 2 + aw + fs * .8)) : W * .3;
   Kit.mk('line', {x1: sx0, y1: sy, x2: sx1, y2: sy, stroke: 'var(--k)', 'stroke-width': sw, 'stroke-linecap': 'round'}, svg);
   txt((sx0 + sx1) / 2, sy - fs * 1.1, 'Dusty shelf', fs, 'middle', svg);
   g.dust = Kit.mk('g', {}, svg);
   for (let i = 0; i < 14; i++) Kit.mk('circle', {cx: sx0 + (sx1 - sx0) * (i + .5) / 14, cy: sy - sw * 1.2, r: sw * .7, fill: 'var(--k)', opacity: .55}, g.dust);
   g.dust.style.opacity = step >= 1 ? 0 : 1;
   g.sx0 = sx0; g.sx1 = sx1; g.sy = sy;
-  // bench, dish, meteorite
-  const by = y0 + h * .72, bx0 = W * .3, bx1 = W * .68;
+  // bench, dish, meteorite: its name between the legs, above the floor
+  const by = Math.min(y0 + h * .72, y1 - sw * 2.2 - fs * 1.75), bx0 = W * .3, bx1 = W * .68;
   Kit.mk('rect', {x: bx0, y: by, width: bx1 - bx0, height: sw * 2.2, rx: sw, fill: 'var(--k)'}, svg);
   Kit.mk('line', {x1: bx0 + sw * 3, y1: by, x2: bx0 + sw * 3, y2: y1, stroke: 'var(--k)', 'stroke-width': sw}, svg);
   Kit.mk('line', {x1: bx1 - sw * 3, y1: by, x2: bx1 - sw * 3, y2: y1, stroke: 'var(--k)', 'stroke-width': sw}, svg);
@@ -172,8 +171,9 @@ function next() {
   else {
     Kit.hide('go'); Kit.hide('say');
     setTimeout(() => {
-      Kit.hide('cap'); Kit.show('why'); Kit.show('keep');
-      if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+      // The story is told: the meter has said its last word, and the picture takes its room.
+      Kit.hide('cap'); Kit.hide('meter'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
     }, Kit.calm ? 0 : 700);
   }
 }
@@ -189,6 +189,9 @@ Kit.play.card = async () => {
   for (let i = 0; i < 3; i++) { Kit.$('go').click(); await w(250); }
   await w(1300);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

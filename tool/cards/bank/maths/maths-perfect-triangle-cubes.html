@@ -11,7 +11,7 @@
 #read{display:flex;flex-direction:column;align-items:center;gap:.4cqh;text-align:center}
 #rbig{font:800 max(3.4cqh,20px)/1.1 var(--display);color:var(--k)}
 #rsub{font:700 max(1.9cqh,13px)/1.25 var(--body);color:var(--k);overflow-wrap:anywhere}
-#rsub.dim{color:var(--muted)}
+#rsub.dim{color:color-mix(in srgb,var(--k) 62%,transparent)}
 #track{position:relative;height:max(7.5cqh,52px);margin:0 5cqw;touch-action:none;cursor:pointer}
 #rail{position:absolute;left:0;right:0;top:max(1.8cqh,12px);height:max(.6cqh,4px);border-radius:9px;background:color-mix(in srgb,var(--k) 22%,transparent)}
 #fill{position:absolute;left:0;top:max(1.8cqh,12px);height:max(.6cqh,4px);border-radius:9px;background:var(--k);width:0}
@@ -20,8 +20,17 @@
 .tl.last{transform:translateX(-100%)}
 .tl.hit,.tick.hit{opacity:1}
 #thumb{position:absolute;top:max(2.1cqh,14px);left:0;width:max(4cqh,28px);height:max(4cqh,28px);margin:calc(max(4cqh,28px)/-2) 0 0 calc(max(4cqh,28px)/-2);border-radius:50%;background:var(--k);box-shadow:0 0 0 max(.6cqh,4px) color-mix(in srgb,var(--k) 25%,transparent)}
-#why{display:flex;flex-direction:column;gap:.8cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh;padding-top:5px}
 #why .body{font:600 max(1.75cqh,12px)/1.3 var(--body)}
+#why sup{line-height:0}
+/* On a short card the told story sets its count beside the triangle, so the triangle keeps its height. */
+@container (max-height:520px){
+  #stage.told{flex-direction:row;align-items:center;gap:3cqw}
+  #stage.told #cvbox{align-self:stretch}
+  #stage.told #read{flex:0 0 44%;align-items:flex-start;text-align:left}
+  #stage.told #rbig span{display:block}
+  #stage.told #rbig .sep{display:none}
+}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Drag · see">
   <div class="in">
@@ -33,7 +42,7 @@
       <div id="track"><div id="rail"></div><div id="fill"></div><div id="thumb"></div></div>
     </div>
     <p class="say" id="say">Drag the dot right to stack more rows onto the triangle.</p>
-    <div id="why" class="gone"><p class="body">Each perfect number lands on a triangle with 2<sup>p</sup>−1 rows, so it holds (2<sup>p</sup>−1)·2<sup>p</sup>/2 = 2<sup>p−1</sup>(2<sup>p</sup>−1) dots: the perfect-number formula itself. The first m odd cubes add to m²(2m²−1), the same formula when m² = 2<sup>p−1</sup>: 2, 4, then 8 cubes.</p></div>
+    <div id="why" class="gone"><p class="body">Each perfect number is a triangle of 2<sup>p</sup>−1 rows: (2<sup>p</sup>−1)·2<sup>p</sup>/2 = 2<sup>p−1</sup>(2<sup>p</sup>−1) dots, the perfect-number formula itself. The first m odd cubes add to m²(2m²−1), the same formula when m² = 2<sup>p−1</sup>: 2, 4, then 8 cubes.</p></div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>2<sup>p−1</sup>(2<sup>p</sup>−1) is one shape seen two ways: a triangle and a stack of odd cubes.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)</span></div>
   </div>
@@ -43,9 +52,9 @@
 const MAX = 127;
 const MARKS = [
   {n:3,   v:6,    m:0, sub:'Perfect: 6 = 1 + 2 + 3. The only one with no cube stack.'},
-  {n:7,   v:28,   m:2, sub:'Perfect, and = 1³ + 3³'},
-  {n:31,  v:496,  m:4, sub:'Perfect, and = 1³ + 3³ + 5³ + 7³'},
-  {n:127, v:8128, m:8, sub:'Perfect, and = 1³ + 3³ + 5³ + … + 15³'}
+  {n:7,   v:28,   m:2, sub:'Perfect, and\u00a0= 1³\u00a0+ 3³'},
+  {n:31,  v:496,  m:4, sub:'Perfect, and\u00a0= 1³\u00a0+ 3³\u00a0+ 5³\u00a0+ 7³'},
+  {n:127, v:8128, m:8, sub:'Perfect, and\u00a0= 1³\u00a0+ 3³\u00a0+ 5³\u00a0+ …\u00a0+ 15³'}
 ];
 const st = {n:1, mix:1, t:0};
 let done = false, cv = Kit.$('cv');
@@ -68,22 +77,31 @@ function draw(){
   const {x,W,H} = Kit.fitCanvas(cv);
   x.clearRect(0,0,W,H);
   const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
-  const n = st.n, s = Math.min(W/n, H/n);
-  const ox = (W-n*s)/2, oy = (H-n*s)/2;
+  // Until seven rows are stacked the triangle keeps the size of seven rows, the rows still to come
+  // drawn as empty slots: the reader sees the shape it is filling. Past seven it zooms out to fit.
+  const n = st.n, rows = Math.max(n, 7), s = Math.min(W/rows, H/rows);
+  const ox = (W-rows*s)/2, oy = (H-rows*s)/2;
   const mk = markOf(n), b = mk && mk.m ? bounds(mk.m) : null;
-  const gap = n<=12 ? s*.09 : n<=40 ? s*.07 : 0;
-  x.fillStyle = ink;
+  const gap = rows<=12 ? s*.09 : rows<=40 ? s*.07 : 0;
+  x.fillStyle = ink; x.strokeStyle = ink;
   let idx = 0;
-  for(let r=1;r<=n;r++){
-    const y = oy+(r-1)*s, xs = ox+(n-r)*s/2;
-    for(let c=0;c<r;c++,idx++){
+  for(let r=1;r<=rows;r++){
+    const y = oy+(r-1)*s, xs = ox+(rows-r)*s/2;
+    for(let c=0;c<r;c++){
+      const px = xs+c*s+gap/2, py = y+gap/2, w = s-gap+(gap?0:.4);
+      if(r>n){
+        x.globalAlpha = .38; x.lineWidth = Math.max(1, s*.05);
+        const i = x.lineWidth/2;
+        if(x.roundRect){ x.beginPath(); x.roundRect(px+i,py+i,w-2*i,w-2*i,w*.18); x.stroke(); } else x.strokeRect(px+i,py+i,w-2*i,w-2*i);
+        continue;
+      }
       let target = .3;
       if(mk){
         if(!b) target = 1;
         else { let band=0; while(idx>=b[band]) band++; target = band%2 ? .4 : 1; }
       }
+      idx++;
       x.globalAlpha = .3 + (target-.3)*st.mix;
-      const px = xs+c*s+gap/2, py = y+gap/2, w = s-gap+(gap?0:.4);
       if(gap && x.roundRect){ x.beginPath(); x.roundRect(px,py,w,w,w*.18); x.fill(); }
       else x.fillRect(px,py,w,w);
     }
@@ -92,7 +110,7 @@ function draw(){
 }
 function readout(){
   const n = st.n, mk = markOf(n), T = tri(n);
-  Kit.$('rbig').textContent = `${T.toLocaleString('en')} dot${T>1?'s':''} · ${n} row${n>1?'s':''}`;
+  Kit.$('rbig').innerHTML = `<span>${T.toLocaleString('en')} dot${T>1?'s':''}</span><span class="sep"> · </span><span>${n} row${n>1?'s':''}</span>`;
   const rs = Kit.$('rsub');
   rs.textContent = mk ? mk.sub : 'Not perfect. Drag on.';
   rs.classList.toggle('dim', !mk);
@@ -122,7 +140,8 @@ function setT(t){
 }
 function finish(){
   done = true; Kit.haptic('success');
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  // The story is told: the slider gives its room to the triangle.
+  Kit.hide('say'); Kit.hide('track'); Kit.$('stage').classList.add('told'); Kit.show('why'); Kit.show('keep');
 }
 function tFromX(cx){ const r = Kit.$('rail').getBoundingClientRect(); return (cx-r.left)/r.width; }
 let dragging = false;

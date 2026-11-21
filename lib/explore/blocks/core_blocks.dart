@@ -13,6 +13,7 @@ import 'core/cover_block.dart';
 import 'core/feed_block.dart';
 import 'core/goal_block.dart';
 import 'core/like_saved_block.dart';
+import 'core/line_block.dart';
 import 'core/maths_daily_block.dart';
 import 'core/news_block.dart';
 import 'core/other_blocks.dart';
@@ -35,8 +36,10 @@ const List<ExploreBlock> blocks = [
   LikeSavedBlock(),
   PathsBlock(),
   BooksBlock(),
+  FounderBooksBlock(),
   ContinueBlock(),
   MathsDailyBlock(),
   NewsBlock(),
+  LineOfDayBlock(),
   GoalBlock(),
 ];

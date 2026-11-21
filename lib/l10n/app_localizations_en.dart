@@ -1849,7 +1849,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Pick the ones you care about. It helps us choose which cards to write next.';
+      'Pick what you want to get better at: the cards picked for you will lean towards it.';
 
   @override
   String get skillsDone => 'Done';
@@ -5732,6 +5732,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bookTheIdeas => 'The ideas';
+
+  @override
+  String get bookRecommendedBy => 'Recommended by';
 
   @override
   String get bookFreeThisWeek => 'Free this week';

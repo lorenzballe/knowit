@@ -52,16 +52,23 @@ function draw(){
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * .85, 12);
-  const cx = W / 2, cy = H * .5, R = Math.min(W * .24, H * .23);
+  // The tube takes the room its words leave it, at any height: the label on top a line clear of
+  // "tube's motion" (set beside its arrow when the box is too short for both), the label underneath inside the box.
+  const ty = H * .07, bot = H * .92 - fs * 2;
+  let top = ty + fs * 2.7 + H * .07;
+  const side = (bot - top) / 2 < 18;
+  if (side) top = ty + fs * 1.2 + H * .07;
+  const R = Math.max(6, Math.min(W * .24, H * .23, (bot - top) / 2));
+  const cx = W / 2, cy = Math.max(top + R, Math.min(H * .5, bot - R));
   const defs = Kit.mk('defs', {}, svg);
   const m = Kit.mk('marker', {id: 'ah', viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 4, markerHeight: 4, orient: 'auto-start-reverse'}, defs);
   Kit.mk('path', {d: 'M0,0 L10,5 L0,10 z', fill: 'context-stroke'}, m);
   ['fx', 'fo'].forEach(id => { const fl = Kit.mk('filter', {id, x: '-100%', y: '-100%', width: '300%', height: '300%'}, defs); G[id] = Kit.mk('feGaussianBlur', {stdDeviation: '0 0'}, fl); });
 
   // tube's motion
-  const ty = H * .07;
   arrow(svg, cx - R * 1.1, ty, cx + R * 1.1, ty, Math.max(f * .25, 3), 'var(--k)');
-  txt(svg, cx, ty + fs * 1.35, "tube's motion", fs, 'middle', 700, 'var(--k)');
+  if (side) txt(svg, cx - R * 1.1 - fs * .5, ty, "tube's motion", fs, 'end', 700, 'var(--k)');
+  else txt(svg, cx, ty + fs * 1.35, "tube's motion", fs, 'middle', 700, 'var(--k)');
 
   // tube cross-section
   Kit.mk('circle', {cx, cy, r: R, fill: 'color-mix(in srgb,var(--k) 10%,transparent)', stroke: 'var(--k)', 'stroke-width': Math.max(f * .22, 3)}, svg);
@@ -129,6 +136,9 @@ Kit.$('opts').addEventListener('click', e => {
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 700)); };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
