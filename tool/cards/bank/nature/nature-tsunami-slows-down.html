@@ -66,7 +66,7 @@
   const AMAX = AMP(UEND);
 
   // ---------- geometry ----------
-  let W = 0, H = 0, fs = 12, seaY = 0, X0 = 0, XS = 0, depthPx = 0, A0 = 0, xLand = 0, LX = 0, G = {}, lastW = 0, lastH = 0;
+  let W = 0, H = 0, fs = 12, seaY = 0, X0 = 0, XS = 0, depthPx = 0, A0 = 0, xLand = 0, LX = 0, G = {}, lastW = 0, lastH = 0, lowBox = false;
   const xOf = u => X0 + u * (XS - X0), uOf = x => (x - X0) / (XS - X0);
   const beachY = x => { const f0 = seaY + 3 + D(1) * depthPx; return f0 + (seaY - H * .06 - f0) * smooth(XS, W * .97, x); };
   const floorY = x => x <= XS ? seaY + 3 + D(Math.max(0, uOf(x))) * depthPx : beachY(x);
@@ -112,10 +112,11 @@
     lastW = W; lastH = H;
     fs = Math.max(12, Math.min(14, f.f || 12));
     // A low box (the end, on a small phone) has one row of words under the water and the gauges fitted above it.
-    const low = H < 100;
+    const low = lowBox = H < 100;
     seaY = H * (low ? .5 : .52); X0 = W * .03; XS = W * .86; A0 = H * .025; LX = W * .012;
     // the deep sea bed sits on a slab of earth, so the slice reads as an object, not a box
-    depthPx = (H - seaY) * .74;
+    // (in a low box the water is a thin band for the dots, and the words lie on the sea bed, as "shallow" does)
+    depthPx = low ? Math.max(8, H - seaY - 25) : (H - seaY) * .74;
     xLand = XS; while (xLand < W && beachY(xLand) > seaY) xLand += 1;
 
     // the two measures, above the water on the left
@@ -140,7 +141,7 @@
     });
     txt(svg, W - 3, Math.max(fs * .95, beachY(W * .93) - fs * 2.1), 'coast', {'text-anchor': 'end', fill: MUTE});
     // in a low box the dots' key takes the place of "deep ocean" on the one row there is: "shallow" still says which side is which
-    const rowY = low ? Math.min(seaY + fs * 2.4, H - 4) : seaY + fs * 2.4;
+    const rowY = low ? H - 9 : seaY + fs * 2.4;
     if (!low || phase === 'bet') txt(svg, X0 + 3, rowY, 'deep ocean', {fill: DOT});
     txt(svg, xOf(.78), rowY, 'shallow', {'text-anchor': 'end', fill: DOT});
     G.legend = txt(svg, X0 + 3, low ? rowY : seaY + fs * 3.8, '• = equal time steps', {fill: DOT, opacity: phase === 'bet' ? 0 : 1});
@@ -182,8 +183,8 @@
     G.dots.innerHTML = '';
     if (phase !== 'bet') for (let k = 0; k * TK <= st.t + 1e-6; k++) {
       const x = xOf(uAt(k * TK));
-      mk('line', {x1: x, x2: x, y1: seaY + 2, y2: seaY + fs * .7, stroke: DOT, 'stroke-opacity': .8, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, G.dots);
-      mk('circle', {cx: x, cy: seaY + fs * .95, r: 2.6, fill: DOT}, G.dots);
+      mk('line', {x1: x, x2: x, y1: seaY + 2, y2: seaY + (lowBox ? 3.4 : fs * .7), stroke: DOT, 'stroke-opacity': .8, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, G.dots);
+      mk('circle', {cx: x, cy: seaY + (lowBox ? 6 : fs * .95), r: 2.6, fill: DOT}, G.dots);
     }
     // the measures
     const sp = Math.sqrt(d);

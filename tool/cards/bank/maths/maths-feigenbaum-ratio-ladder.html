@@ -15,6 +15,9 @@
 #world{position:absolute;inset:0;overflow:hidden;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 #dia{position:absolute;left:0;top:0;width:100%;height:57%;display:block}
 #lad{position:absolute;left:0;top:57%;width:100%;height:43%;display:block}
+/* Once the answer is in, a stage too short for both (the smallest phone) keeps the ladder, where the answer is:
+   the cascade was seen whole as the view pulled back, and two strips of it would have nothing readable left. */
+#world.tight #dia{display:none}#world.tight #lad{top:0;height:100%}
 #slips{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .slip{position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;
   font:700 max(1.6cqh,12px)/1 var(--body);font-variant-numeric:tabular-nums;color:var(--c);
@@ -179,7 +182,7 @@
   function layoutLadder() {
     lad.innerHTML = '';
     const f = Kit.fitSvg(lad), LW = f.W, LH = f.H;
-    G.LT = H; G.LW = LW; G.LH = LH;
+    G.LT = lad.getBoundingClientRect().top - world.getBoundingClientRect().top; G.LW = LW; G.LH = LH;
     const small = Math.max(12, fs * .92), bigS = Math.max(18, fs * 1.7);
     G.CT = Math.min(Math.max(fs * 2.7, bigS * 1.55), LH * .45);
     G.CB = Math.max(G.CT + 4, LH - fs * 2);
@@ -219,14 +222,16 @@
 
   // ---------- layout ----------
   function layout() {
+    const wr = world.getBoundingClientRect();
+    world.classList.toggle('tight', shown && wr.height > 0 && wr.height < 180);
     const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
     const cs = getComputedStyle(card);
     BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
     KC = rgbOf(cs.getPropertyValue('--k').trim() || cs.color, '#ffffff');
     CC = rgbOf(cs.getPropertyValue('--c').trim() || cs.backgroundColor, '#1e8c5a');
     INK = `rgb(${KC.join(',')})`;
-    const wh = world.getBoundingClientRect().height || H / .57;
-    fs = Math.max(12, Math.min(15, W / 27, wh / 32));
+    const wh = wr.height || H / .57;
+    fs = Math.max(12, Math.min(15, (wr.width || W) / 27, wh / 32));
     PX0 = 12; PX1 = W - 12; PY0 = fs * 1.9; PY1 = H - fs * 3.5;
     const dpr = Math.min(2, (cv.width / W) || 1);
     off.width = Math.max(10, Math.round((PX1 - PX0) * dpr)); off.height = Math.max(10, Math.round((PY1 - PY0) * dpr)); dkey = '';

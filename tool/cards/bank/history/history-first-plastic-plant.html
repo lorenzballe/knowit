@@ -10,6 +10,8 @@
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);overflow-wrap:anywhere}
 #why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);overflow-wrap:anywhere}
+/* The smallest card: the answer set a touch tighter, so the drawing keeps the room for the plant. */
+@container (max-height:540px){#why{gap:.5cqh}#why .body{line-height:1.26}}
 [data-m]{cursor:pointer}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Tap · history">
@@ -64,42 +66,59 @@ function draw(){
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, Math.min(f*.85, W/26));
-  const s = Math.min(W*.22, H*.2);
-  const rowY = s*.58 + 4;
+  // how wide a line is, in the drawing's own fonts
+  const wide = (txt, font) => { const t = Kit.mk('text', {style:font}, svg); t.textContent = txt; const w = t.getComputedTextLength(); t.remove(); return w; };
+  // Everything stays inside the drawing's own box. Under the row of materials the plant needs at least
+  // plantMin: a box left short once the answer is in drops each material's second caption line (the answer
+  // right under the drawing says it) and, only if it must, draws the materials a little smaller.
+  const plantMin = fs*3.4;
+  const capsOf = s => { const rowY = s*.58 + 2, cap1 = rowY + s*.56 + fs*1.25; return {rowY, cap1, cap2: cap1 + fs*1.35}; };
+  const roomOf = (s, two) => { const c = capsOf(s); return H - 1 - ((two ? c.cap2 : c.cap1) + fs*.75); };
+  let s = Math.min(W*.22, H*.2), two = roomOf(s, true) >= plantMin;
+  while (!two && roomOf(s, false) < plantMin && s > fs*1.4) s -= 1;
+  const {rowY, cap1, cap2} = capsOf(s), capB = two ? cap2 : cap1;
   const cols = {al:W/6, gl:W/2, pl:W*5/6};
-  const cap1 = rowY + s*.56 + fs*1.25, cap2 = cap1 + fs*1.35;
   G = {W, H, fs, s, rowY, cols};
 
   for (const m of ['al','gl','pl']){
     const g = Kit.mk('g', {'data-m':m, id:'it-'+m}, svg);
-    Kit.mk('rect', {x:cols[m]-W/6+3, y:2, width:W/3-6, height:cap2+fs*.5, rx:fs*.8,
+    Kit.mk('rect', {x:cols[m]-W/6+3, y:2, width:W/3-6, height:capB+fs*.5, rx:fs*.8,
       style: done[m] ? 'fill:none' : 'fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:1.5;stroke-dasharray:4 4'}, g);
     const sh = shape(m, cols[m], rowY, s, g); sh.id = 'sh-'+m;
     if (m==='pl' && done.pl) sh.setAttribute('opacity', .18);
     const c = Kit.mk('g', {id:'cap-'+m, opacity: done[m] ? 1 : 0}, g);
     const t1 = Kit.mk('text', {x:cols[m], y:cap1, 'text-anchor':'middle', style:`font:800 ${fs}px var(--body);fill:var(--k);letter-spacing:.06em`}, c); t1.textContent = M[m].l1;
-    const t2 = Kit.mk('text', {x:cols[m], y:cap2, 'text-anchor':'middle', style:`font:500 ${fs}px var(--body);fill:var(--k)`}, c); t2.textContent = M[m].l2;
+    if (two){ const t2 = Kit.mk('text', {x:cols[m], y:cap2, 'text-anchor':'middle', style:`font:500 ${fs}px var(--body);fill:var(--k)`}, c); t2.textContent = M[m].l2; }
     if (!done[m]){
       const q = Kit.mk('text', {x:cols[m], y:cap1 + fs*.6, 'text-anchor':'middle', style:`font:700 ${fs}px var(--body);fill:var(--muted)`}, g); q.textContent = 'tap';
     }
   }
 
-  // The plant
-  const top = cap2 + fs*1.6, bottom = Math.max(H - 3, top + 40), fh = Math.max(40, bottom - top);
-  const fw = Math.min(W*.92, fh*1.7), x0 = (W - fw)/2;
-  const bh = Math.min(fs*2.1, fh*.3), by = top + bh + Math.min(fs*.5, fh*.05);
+  // The plant, from under the captions to the foot of the box. Its banner is as wide as its words need and
+  // its name board goes up only where the building has room for it (the answer under the drawing names it).
+  const top = capB + fs*.75, bottom = H - 1, fh = Math.max(fs*2, bottom - top);
+  const BAN = 'FIRST PLASTIC RECYCLING PLANT', NAME = 'Plastic Waste Recycling Mill';
+  const nfs = Math.max(12, Math.min(fs*1.05, W*.92/(28*.6))), nW = wide(NAME, `font:800 ${nfs}px var(--body)`);
+  const bh = Math.max(Math.min(fs*2.1, fh*.3), Math.min(fs*1.5, fh*.45)), by = top + bh + Math.min(fs*.5, fh*.05);
   const rh = Math.min(fh*.16, fs*2.2, (bottom-by)*.3), bodyY = by + rh;
+  const signH = nfs*1.9, sign = bottom - bodyY >= signH + fs*.8;
+  const fw = Math.min(W*.92, Math.max(fh*1.7, W*.6, sign ? nW + nfs*1.4 + 8 : 0)), x0 = (W - fw)/2;
+  let bfs = Math.max(12, Math.min(fs*.95, fw/(29*.68)));
+  let bW = wide(BAN, `font:900 ${bfs}px var(--body);letter-spacing:.04em`);
+  if (bW + fs*2.4 > W - 2){ bfs = Math.max(10, bfs*(W - 2 - fs*2.4)/bW); bW = wide(BAN, `font:900 ${bfs}px var(--body);letter-spacing:.04em`); }
+  const banW = Math.min(W - 2, Math.max(fw + fs*1.2, bW + fs*2.4)), bx0 = (W - banW)/2, bx1 = bx0 + banW;
   G.door = {x: W/2, y: bottom - (bottom-bodyY)*.22};
   const ghost = Kit.mk('g', {id:'ghost', opacity: done.pl ? 0 : 1}, svg);
   Kit.mk('rect', {x:x0, y:by, width:fw, height:Math.max(0, bottom-by), rx:fs*.4, style:'fill:none;stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:2;stroke-dasharray:6 6'}, ghost);
   const gq = Kit.mk('text', {x:W/2, y:(by+bottom)/2 + fs*.6, 'text-anchor':'middle', style:`font:800 ${fs*2.4}px var(--display);fill:color-mix(in srgb,var(--k) 35%,transparent)`}, ghost); gq.textContent = '?';
 
   const P = Kit.mk('g', {id:'plant', opacity: done.pl ? 1 : 0}, svg);
-  // chimney + smoke
+  // chimney + smoke (it rises behind the banner, no higher than just over it)
   const chx = x0 + fw*.12, chw = fw*.08;
+  G.rise = Math.max(0, Math.min(fs*2.2, by - rh*.8 - top + fs*.4));
   Kit.mk('rect', {x:chx, y:by - rh*.6, width:chw, height:rh*1.7, style:'fill:var(--k)'}, P);
   for (let i = 0; i < 3; i++){
-    Kit.mk('circle', {class:'smoke', cx:chx+chw/2, cy:by - rh*.8, r:chw*.45, style:'fill:color-mix(in srgb,var(--k) 25%,transparent)'}, P);
+    Kit.mk('circle', {class:'smoke', cx:chx+chw/2, cy:by - rh*.8, r:Math.min(chw*.45, fs*.5), style:'fill:color-mix(in srgb,var(--k) 25%,transparent)'}, P);
   }
   // sawtooth roof
   const n = 4, tw = fw/n; let d = `M${x0},${bodyY}`;
@@ -109,17 +128,19 @@ function draw(){
   for (let i = 0; i < n; i++) Kit.mk('path', {d:`M${x0+i*tw+tw*.12},${by+rh*.2} L${x0+i*tw+tw*.12},${bodyY-2} L${x0+i*tw+tw*.6},${bodyY-2} Z`, style:'fill:#7fd0f5'}, P);
   // body
   Kit.mk('rect', {x:x0, y:bodyY, width:fw, height:Math.max(0, bottom-bodyY), style:'fill:color-mix(in srgb,var(--k) 88%,var(--c))'}, P);
-  const nfs = Math.max(12, Math.min(fs*1.05, fw/(28*.6)));
-  const signH = nfs*1.9, signY = bodyY + (bottom-bodyY)*.14;
-  Kit.mk('rect', {x:x0+fw*.05, y:signY, width:fw*.9, height:signH, rx:nfs*.3, style:'fill:var(--c)'}, P);
-  const nt = Kit.mk('text', {x:W/2, y:signY + signH*.66, 'text-anchor':'middle', style:`font:800 ${nfs}px var(--body);fill:var(--k)`}, P); nt.textContent = 'Plastic Waste Recycling Mill';
-  const dh = Math.min((bottom-bodyY)*.42, bottom - (signY+signH) - 4), dw = Math.max(dh*.7, fw*.12);
+  let dh = (bottom-bodyY)*.55;
+  if (sign){
+    const signW = Math.min(fw - 8, Math.max(fw*.9, nW + nfs*1.4)), signY = bodyY + Math.min((bottom-bodyY)*.14, (bottom-bodyY-signH)/2);
+    Kit.mk('rect', {x:W/2-signW/2, y:signY, width:signW, height:signH, rx:nfs*.3, style:'fill:var(--c)'}, P);
+    const nt = Kit.mk('text', {x:W/2, y:signY + signH*.66, 'text-anchor':'middle', style:`font:800 ${nfs}px var(--body);fill:var(--k)`}, P); nt.textContent = NAME;
+    dh = Math.min((bottom-bodyY)*.42, bottom - (signY+signH) - 4);
+  }
+  const dw = Math.max(dh*.7, fw*.12);
   if (dh > 6) Kit.mk('rect', {x:W/2-dw/2, y:bottom-dh, width:dw, height:dh, rx:dw*.12, style:'fill:#6cc6f2'}, P);
   // banner
-  const B = Kit.mk('g', {id:'banner'}, P);
-  const bfs = Math.max(12, Math.min(fs*.95, fw/(29*.68)));
-  Kit.mk('path', {d:`M${x0-fs*.6},${top} L${x0+fw+fs*.6},${top} L${x0+fw},${top+bh/2} L${x0+fw+fs*.6},${top+bh} L${x0-fs*.6},${top+bh} L${x0},${top+bh/2} Z`, style:'fill:#e8b923;stroke:var(--k);stroke-width:2'}, B);
-  const bt = Kit.mk('text', {x:W/2, y:top + bh/2 + bfs*.36, 'text-anchor':'middle', style:`font:900 ${bfs}px var(--body);fill:#1a1a1a;letter-spacing:.04em`}, B); bt.textContent = 'FIRST PLASTIC RECYCLING PLANT';
+  const B = Kit.mk('g', {id:'banner'}, P), nk = fs*.6;
+  Kit.mk('path', {d:`M${bx0},${top} L${bx1},${top} L${bx1-nk},${top+bh/2} L${bx1},${top+bh} L${bx0},${top+bh} L${bx0+nk},${top+bh/2} Z`, style:'fill:#e8b923;stroke:var(--k);stroke-width:2'}, B);
+  const bt = Kit.mk('text', {x:W/2, y:top + bh/2 + bfs*.36, 'text-anchor':'middle', style:`font:900 ${bfs}px var(--body);fill:#1a1a1a;letter-spacing:.04em`}, B); bt.textContent = BAN;
 
   if (done.pl && !Kit.calm) smoke();
 }
@@ -128,7 +149,7 @@ function smoke(){
   gsap.killTweensOf('.smoke');
   document.querySelectorAll('.smoke').forEach((c, i) => {
     gsap.fromTo(c, {y:0, x:0, opacity:.9, scale:.6, transformOrigin:'50% 50%'},
-      {y:-G.fs*2.2, x:G.fs*.8, opacity:0, scale:1.6, duration:2.4, repeat:-1, delay:i*.8, ease:'sine.out'});
+      {y:-G.rise, x:G.fs*.8, opacity:0, scale:1.6, duration:2.4, repeat:-1, delay:i*.8, ease:'sine.out'});
   });
 }
 
