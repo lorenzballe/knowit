@@ -38,7 +38,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const RIGHT = 1;
-let pick = -1, plugged = false, G = null;
+let pick = -1, plugged = false, answered = false, G = null;
 const SKIN='#f6cdb4', DERM='#eaa58d', LINE='#7a3b28', LUMEN='#fff4ec', SWEAT='#2f8df0', DARK='#4a2418';
 
 function draw(){
@@ -47,8 +47,12 @@ function draw(){
   svg.innerHTML = '';
   const {W,H,f} = Kit.fitSvg(svg);
   const fs = Math.max(Math.min(f, H*0.07), 12);
-  const s = H*0.28, ep = H*0.5, cx = W*0.5;
   const dw = Math.max(Math.min(W*0.07, H*0.075), 12);
+  // The skin sits low enough for the row of names above it, and the pore far enough left for the plug's name beside it.
+  const probe = Kit.mk('text', {'font-size':fs, class:'lb'}, svg); probe.textContent = 'ALUMINIUM-SALT PLUG';
+  let plugW = fs*12; try { const m = probe.getComputedTextLength(); if (m > 0) plugW = m; } catch (e) {}
+  probe.remove();
+  const s = Math.max(H*0.28, fs*2.35 + 2), ep = s + (H - s)*0.3, cx = Math.min(W*0.5, W - 3 - plugW - dw*1.1);
   const R = Math.min(W*0.09, H*0.09), gy = H - R*1.6;
   const g = Kit.mk('g', {}, svg);
   const r = Math.min(W*0.03, H*0.03);
@@ -71,8 +75,12 @@ function draw(){
   const lab = (t, x, y, anchor, col) => { const e = Kit.mk('text', {x, y, 'text-anchor':anchor, 'font-size':fs, fill:col, class:'lb'}, g); e.textContent = t; return e; };
   lab('PORE', cx - dw*0.9, s - fs*1.6, 'end', 'currentColor');
   lab('BACTERIA', cx + W*0.26, s - fs*1.6, 'middle', 'currentColor');
-  lab('SWEAT DUCT', cx + dw*1.1, (ep + gy - R)/2 + fs*0.4, 'start', DARK);
-  lab('SWEAT GLAND', cx - R*1.25, gy + fs*0.35, 'end', DARK);
+  // once the plug is named at the top of the duct, the duct's own name goes under it, or, with no room left beside the duct, gives way
+  const plugY = Math.max(s + H*0.11*0.6 + fs*0.35, s + fs*0.95);
+  let ductY = (ep + gy - R)/2 + fs*0.4;
+  if (answered && ductY - fs*0.75 < plugY + 4) ductY = plugY + fs*1.3;
+  if (!answered || ductY <= gy) lab('SWEAT DUCT', cx + dw*1.1, ductY, 'start', DARK);
+  lab('SWEAT GLAND', cx - R*1.32 - (dw + 5)/2 - 4, gy + fs*0.35, 'end', DARK);
   svg.style.color = getComputedStyle(Kit.$('card')).getPropertyValue('--k') || '#111';
   // sweat drops
   const dr = dw*0.3, yb = gy - R*0.5, drops = [];
@@ -82,10 +90,11 @@ function draw(){
   const plugH = H*0.11;
   const plug = Kit.mk('rect', {x:cx-dw/2, y:s-dw*0.25, width:dw, height:0, rx:dw*0.35, fill:'#ffffff', stroke:'#9aa3ad', 'stroke-width':2}, g);
   const salts = [];
-  for (let i = 0; i < 9; i++) salts.push(Kit.mk('rect', {x:cx + (i-4)*dw*0.55, y:s*0.15 + (i%3)*s*0.12, width:dw*0.28, height:dw*0.28, fill:'#ffffff', stroke:'#9aa3ad', 'stroke-width':1, opacity:0}, g));
-  const plugLab = lab('ALUMINIUM-SALT PLUG', cx + dw*1.1, s + plugH*0.6 + fs*0.35, 'start', DARK);
+  // the salts start on the skin, under the row of names, and fall into the pore
+  for (let i = 0; i < 9; i++) salts.push(Kit.mk('rect', {x:cx + (i-4)*dw*0.55, y:s - dw*0.75 - (i%2)*dw*0.45, width:dw*0.28, height:dw*0.28, fill:'#ffffff', stroke:'#9aa3ad', 'stroke-width':1, opacity:0}, g));
+  const plugLab = lab('ALUMINIUM-SALT PLUG', cx + dw*1.1, plugY, 'start', DARK);
   plugLab.setAttribute('opacity', 0);
-  G = {drops, bead, plug, salts, plugLab, s, yb, dr, plugH, dw, all:[plug, plugLab, ...salts]};
+  G = {drops, bead, plug, salts, plugLab, s, yb, dr, plugH, dw, cx, yIn: gy + R*0.3, all:[plug, plugLab, ...salts]};
   if (plugged) { settle(false); return; }
   if (!Kit.calm) {
     drops.forEach((d,i) => gsap.fromTo(d, {attr:{cy:yb}}, {attr:{cy:s}, duration:2.5, ease:'none', repeat:-1, delay:-i*0.5}));
@@ -99,11 +108,11 @@ function settle(anim){
   gsap.killTweensOf(drops); gsap.killTweensOf(bead);
   const tl = gsap.timeline();
   tl.to(salts, {opacity:1, duration:.25*d, stagger:.04*d}, 0)
-    .to(salts, {attr:{x:G.dw ? (i)=>+salts[0].getAttribute('x')*0 + (+salts[0].ownerSVGElement.viewBox.baseVal.width/2) - dw*0.14 : 0, y:s - dw*0.1}, duration:.7*d, ease:'power2.in', stagger:.05*d}, .2*d)
+    .to(salts, {attr:{x:G.cx - dw*0.14, y:s - dw*0.1}, duration:.7*d, ease:'power2.in', stagger:.05*d}, .2*d)
     .to(salts, {opacity:0, duration:.2*d}, 1.1*d)
     .to(bead, {attr:{rx:0, ry:0}, duration:.5*d}, .8*d)
     .to(plug, {attr:{height:plugH + dw*0.25}, duration:.8*d, ease:'power2.out'}, .9*d)
-    .to(drops, {attr:{cy:i => s + plugH + dr*1.4 + i*dr*2.3}, duration:.9*d, ease:'power2.out'}, 1.1*d)
+    .to(drops, {attr:{cy:i => Math.min(s + plugH + dr*1.4 + i*dr*2.3, G.yIn)}, duration:.9*d, ease:'power2.out'}, 1.1*d)
     .to(plugLab, {opacity:1, duration:.4*d}, 1.5*d);
 }
 
@@ -113,7 +122,7 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
   sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: the salts plug the pore`);
   Kit.show('keep');
-  plugged = true; Kit.haptic('success');
+  plugged = answered = true; Kit.haptic('success');
   requestAnimationFrame(() => { draw(); });
 });
 Kit.$('opts').addEventListener('click', e => {

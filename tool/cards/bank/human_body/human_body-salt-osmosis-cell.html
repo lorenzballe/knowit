@@ -10,12 +10,15 @@
 #pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
 #ctl{display:flex;flex-direction:column;gap:.6cqh}
 #ctl .row{display:flex;justify-content:space-between;font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
-#ctl .row span:last-child{color:var(--muted)}
+#ctl .row span:last-child{color:var(--k);opacity:.72}
 #salt{width:100%;height:max(4.4cqh,30px);accent-color:var(--k);cursor:pointer;margin:0}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);color:var(--k);margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
 .lbl{font-family:var(--body);font-weight:800;paint-order:stroke;stroke-linejoin:round}
+/* On the smallest card the answer takes the room the question and the slider no longer need (the drawing
+   says how salty it is outside), so the cell keeps a drawing of its own. */
+@container (max-height:540px){.answered .q{font-size:max(2.5cqh,15px)}.answered #ctl{display:none}}
 </style>
 <article class="card" id="card" data-topic="human_body" data-kind="Slide · see it happen">
   <div class="in">
@@ -88,12 +91,24 @@ function build() {
     g.arrows.push(inner);
   }
   // labels
-  g.top = Kit.mk('text', {x: f * .8, y: f * 1.5, 'font-size': f * .95, class: 'lbl', style: 'fill:var(--k);stroke:var(--c);stroke-width:' + f * .3}, svg);
+  const lf = Math.max(11, f * .95);
+  g.top = Kit.mk('text', {x: f * .8, y: lf * 1.25, 'font-size': lf, class: 'lbl', style: 'fill:var(--k);stroke:var(--c);stroke-width:' + f * .3}, svg);
   g.top.textContent = 'Outside: water';
   g.cl = Kit.mk('text', {'text-anchor': 'middle', 'font-size': f * .85, class: 'lbl', style: 'fill:var(--k);stroke:color-mix(in srgb,#2f86e0 22%,var(--c));stroke-width:' + f * .25}, svg);
   g.cl.textContent = 'CELL';
-  g.out = Kit.mk('text', {x: W - f * .8, y: H - f * .8, 'text-anchor': 'end', 'font-size': f * .9, class: 'lbl', style: 'fill:' + WATER_LIGHT + ';stroke:var(--c);stroke-width:' + f * .3 + ';opacity:0'}, svg);
+  g.out = Kit.mk('text', {x: W - f * .8, y: H - Math.max(f * .8, 4), 'text-anchor': 'end', 'font-size': Math.max(11, f * .9), class: 'lbl', style: 'fill:' + WATER_LIGHT + ';stroke:var(--c);stroke-width:' + f * .3 + ';opacity:0'}, svg);
   g.out.textContent = 'water leaves the cell';
+  // How far each arrow may reach: to the edge of the drawing's box, or to a label, whichever comes first.
+  // In a short box the arrows that point up and down are drawn shorter, never over the question or the words.
+  g.top.textContent = 'Outside: very salty water';
+  const boxes = [g.top, g.out].map(t => { const b = t.getBBox(); return {l: b.x - 3, r: b.x + b.width + 3, t: b.y - 2, b: b.y + b.height + 2}; });
+  g.reach = [];
+  for (let i = 0; i < ARROWS; i++) {
+    const a = (i * 360 / ARROWS + 22.5) * Math.PI / 180, c = Math.cos(a), sn = Math.sin(a);
+    let d = R * .5;
+    for (; d < far * 2; d += 1) { const x = cx + d * c, y = cy + d * sn; if (x < 3 || x > W - 3 || y < 3 || y > H - 3 || boxes.some(b => x > b.l && x < b.r && y > b.t && y < b.b)) break; }
+    g.reach.push(d);
+  }
   G = g; update();
 }
 
@@ -122,12 +137,14 @@ function update() {
 function drawArrows() {
   if (!G) return;
   const {f, R} = G, s = st.s, r = G.r;
-  const len = f * (1 + 1.6 * s), d0 = r + f * .5 + (st.phase % 1) * f * 1.2;
-  const h = f * .45;
-  G.arrows.forEach(a => {
-    a.setAttribute('d', `M${d0},0L${d0 + len},0M${d0 + len - h},${-h}L${d0 + len},0L${d0 + len - h},${h}`);
+  const len = f * (1 + 1.6 * s), gap = f * .5 + (st.phase % 1) * f * 1.2;
+  G.arrows.forEach((a, i) => {
+    // the arrow's whole run (gap, travel and length) shrinks to fit the room it has in its own direction
+    const k = Math.max(0, Math.min(1, (G.reach[i] - r) / (f * .5 + f * 1.2 + f * 2.6)));
+    const d0 = r + gap * k, l = len * k, h = Math.min(f * .45, l * .45);
+    a.setAttribute('d', `M${d0},0L${d0 + l},0M${d0 + l - h},${-h}L${d0 + l},0L${d0 + l - h},${h}`);
     const fade = 1 - (st.phase % 1) * .5;
-    a.style.opacity = s < .03 ? 0 : Math.min(1, s * 2.5) * fade;
+    a.style.opacity = s < .03 || k < .12 ? 0 : Math.min(1, s * 2.5) * fade;
   });
 }
 
@@ -142,7 +159,7 @@ input.addEventListener('input', () => {
   if (+input.value % 20 === 0) Kit.haptic('selection');
   if (+input.value >= 95 && !st.done) {
     st.done = true; Kit.haptic('success');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.$('card').classList.add('answered');
     setTimeout(build, 30);
     if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
   }

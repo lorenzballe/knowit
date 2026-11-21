@@ -8,7 +8,7 @@
 <style>
 #stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
 #picbox{flex:1;min-height:0;position:relative}
-#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden}
 #go{align-self:flex-start;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer}
 #go:disabled{opacity:.35;cursor:default}
 #why{display:flex;flex-direction:column;gap:1cqh}
@@ -71,13 +71,21 @@ function build(){
   const sw = Math.max(1.6, r*0.14);
   g.loop = Kit.mk('circle',{style:`fill:none;stroke:${k};stroke-width:${sw}`},g.world);
   g.str = Kit.mk('line',{style:`stroke:${k};stroke-width:${sw};stroke-linecap:round`},g.world);
-  g.hand = Kit.mk('rect',{rx:R*0.2,style:`fill:${k}`},g.world);
+  // the hand comes in from above the picture: flat where the picture's top edge cuts it, rounded where it holds the string
+  g.hand = Kit.mk('path',{style:`fill:${k}`},g.world);
+  // at the end, where it slept and how far it climbed: a faint outline at the bottom, a dotted arrow up to the yo-yo
+  g.trail = Kit.mk('g',{},svg);
+  g.ty1 = g.hy + R*2.3 + Math.max(4, R*0.15); g.ty2 = cy0 - R - Math.max(4, R*0.15);
+  const ah = Math.min(R*0.22, (g.ty2 - g.ty1)/3), tw = Math.max(1.5, R*0.05);
+  Kit.mk('circle',{cx,cy:cy0,r:R,style:`fill:none;stroke:${k};stroke-width:${tw};stroke-dasharray:${R*0.14} ${R*0.12};opacity:.4`},g.trail);
+  Kit.mk('line',{x1:cx,y1:g.ty1+ah*0.6,x2:cx,y2:g.ty2,style:`stroke:${k};stroke-width:${tw};stroke-dasharray:${tw*1.6} ${tw*1.8};stroke-linecap:round`},g.trail);
+  Kit.mk('path',{d:`M${cx-ah*0.75},${g.ty1+ah} L${cx},${g.ty1} L${cx+ah*0.75},${g.ty1+ah}`,style:`fill:none;stroke:${k};stroke-width:${tw};stroke-linecap:round;stroke-linejoin:round`},g.trail);
   const lab = (txt, anchor) => { const t = Kit.mk('text',{class:'lb','text-anchor':anchor,'font-size':g.f,style:`fill:${k}`},svg); t.textContent = txt; return t; };
   g.t0 = lab('spinning about as fast as a car engine','middle');
   g.t1a = lab('string','start'); g.t1b = lab('loose loop','middle');
   g.t1c = lab('spool','middle'); g.t1c.style.fill = 'var(--c)';
   g.t2 = lab('binds!','end'); g.t2.setAttribute('font-size', g.f*1.25);
-  g.t3 = lab('rolls up the string','middle');
+  g.t3 = lab('rolls up the string','start');
   G = g; render();
 }
 
@@ -98,8 +106,8 @@ function render(){
   const s = S.s, tx = cx + s*lr, ty = Ly - Math.sqrt(Math.max(0,1-s*s))*lr;
   const hx = tx;
   G.str.setAttribute('x1',hx); G.str.setAttribute('y1',hy); G.str.setAttribute('x2',tx); G.str.setAttribute('y2',ty);
-  const hw = R*0.38;
-  G.hand.setAttribute('x',hx-hw/2); G.hand.setAttribute('y',-R); G.hand.setAttribute('width',hw); G.hand.setAttribute('height',hy+R);
+  const hw = R*0.38, hr = Math.min(R*0.2, hw/2, hy/2), x0 = hx-hw/2, x1 = hx+hw/2;
+  G.hand.setAttribute('d',`M${x0},0H${x1}V${hy-hr}A${hr},${hr} 0 0 1 ${x1-hr},${hy}H${x0+hr}A${hr},${hr} 0 0 1 ${x0},${hy-hr}Z`);
   const place = (t,x,yy,o) => { t.setAttribute('x',x); t.setAttribute('y',yy); t.style.opacity = o; };
   const [, by] = sc(cx, y+R);
   place(G.t0, W/2, Math.min(by + f*1.5, H - f*0.3), S.l0);
@@ -109,7 +117,8 @@ function render(){
   place(G.t1c, ax, ay + f*0.35, S.l1);
   const [bx, byy] = sc(tx, ty);
   place(G.t2, Math.max(bx - f*0.6, f*4), byy - f*0.3, S.l2);
-  place(G.t3, W/2, Math.min(by + f*1.5, H - f*0.3), S.l3);
+  place(G.t3, cx + f*0.7, (G.ty1 + G.ty2)/2 + f*0.35, S.l3);
+  G.trail.style.opacity = S.l3;
 }
 
 gsap.ticker.add((t, dt) => { S.ang -= dt * (Kit.calm ? 0.08 : 0.45); render(); });

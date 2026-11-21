@@ -59,7 +59,7 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     '…and it breaks apart, releasing a chlorine atom.',
     'The chlorine reacts with ozone, breaking it.'
   ];
-  let W = 0, H = 0, fs = 12, r = 8, S = {}, P = {}, tl = null, bobs = [], phase = 'idle', order = [], locked = false, doneRes;
+  let W = 0, H = 0, fs = 12, r = 8, low = false, S = {}, P = {}, tl = null, bobs = [], phase = 'idle', order = [], locked = false, doneRes;
   const done = new Promise(res => doneRes = res);
   const mk = (t, a, p) => Kit.mk(t, a, p);
 
@@ -89,16 +89,20 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     if (W < 20 || H < 20) return;
     fs = Math.max(12, Math.min(14, W / 27));
-    r = Math.max(6, Math.min(W * .032, H * .032, 11));
+    // A strip (the small phone) has a layout of its own: smaller atoms, the sun as tall as the strip allows, two ozone
+    // molecules clear of the words and of the photon's path, and no word above the strip's top edge.
+    low = H < 90;
+    r = low ? Math.max(3.5, Math.min(W * .032, H * .1, 6)) : Math.max(6, Math.min(W * .032, H * .032, 11));
 
-    const y0 = H * .035, y1 = H * .5, GY = H * .9;
+    const y0 = H * .035, y1 = H * (low ? .62 : .5), GY = H * (low ? .94 : .9);
     // The stratosphere: one flat pale band with gently uneven edges.
     S.band = mk('g', {}, svg);
     const top = wave(y0, H * .008, 0), bot = wave(y1, H * .01, 2).reverse();
     const bd = poly(top) + poly(bot).replace('M', 'L') + 'Z';
     mk('path', {d: bd, style: `fill:${tint(9)}`}, S.band);
     S.spk = [];
-    S.zl = label(S.band, fs * .5, y0 + fs * 1.15, 'Ozone layer', {anchor: 'start'});
+    // (the band's name has no row of its own in a strip: "ozone" names its molecules there)
+    S.zl = low ? null : label(S.band, fs * .5, y0 + fs * 1.15, 'Ozone layer', {anchor: 'start'});
 
     // The ground: one flat hill.
     S.clouds = [];
@@ -107,7 +111,8 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     mk('path', {d: hb, style: `fill:${tint(22)}`}, S.hills);
 
     // The sun: a flat disc with short, still rays.
-    P.sun = {x: W * .86, y: H * .13}; P.R = Math.min(W, H) * .075;
+    P.R = low ? H * .17 : Math.min(W, H) * .075;
+    P.sun = low ? {x: W - P.R * 1.62 - 3, y: P.R * 1.62 + 1} : {x: W * .86, y: H * .13};
     S.sun = mk('g', {}, svg);
     S.rays = mk('g', {}, S.sun);
     for (let k = 0; k < 8; k++) { const a = k / 8 * Math.PI * 2 + .2, c = Math.cos(a), s = Math.sin(a);
@@ -115,10 +120,11 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     atom(S.sun, P.sun.x, P.sun.y, P.R, `color-mix(in srgb, ${PINK} 30%, var(--c))`);
 
     // Ozone: three oxygen atoms, bent.
-    const OZ = [[.3, .3], [.1, .2], [.46, .14], [.85, .41], [.64, .08]];
+    const OZ = low ? [[.33, .45], [.07, .32]] : [[.3, .3], [.1, .2], [.46, .14], [.85, .41], [.64, .08]];
     S.ozW = [];
     OZ.forEach(([fx, fy], i) => {
-      const x = W * fx, y = H * fy, w = mk('g', {}, svg); S.ozW.push(w);
+      // (a molecule's top atom stays inside the picture)
+      const x = W * fx, y = Math.max(H * fy, r * 1.75 + 1), w = mk('g', {}, svg); S.ozW.push(w);
       const c0 = [x, y - r * .7], c1 = [x - r * 1.55, y + r * .55], c2 = [x + r * 1.55, y + r * .55];
       if (i === 0) {
         P.A = {x, y, c2};
@@ -135,7 +141,7 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     S.broken = label(svg, P.A.x - r * 2.7 - 4, P.A.y + r * .55 + fs * .35, 'broken!', {anchor: 'end', op: 0});
 
     // Keep the band's name clear of the "ozone" / "broken!" tag: if they collide, print it just below.
-    try {
+    if (S.zl) try {
       const a = S.zl.getBBox(), b1 = S.ozLab.getBBox(), b2 = S.broken.getBBox(), pad = 4;
       const ux = Math.min(b1.x, b2.x), uy = Math.min(b1.y, b2.y),
             ux2 = Math.max(b1.x + b1.width, b2.x + b2.width), uy2 = Math.max(b1.y + b1.height, b2.y + b2.height);
@@ -150,7 +156,7 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     S.bClO = bond(svg, P.A.c2[0] + r * .6, P.T.y, P.T.x, P.T.y); S.bClO.setAttribute('opacity', 0);
 
     // The CFC, CCl2F2, sitting on the ground; its upper-right chlorine is a separate piece.
-    P.S0 = {x: W * .57, y: GY - r * 3.6}; P.E = {x: W * .57, y: H * .31};
+    P.S0 = {x: W * .57, y: low ? H - r * 2.6 : GY - r * 3.6}; P.E = {x: W * .57, y: H * (low ? .45 : .31)};
     S.cfc = mk('g', {}, svg);
     S.bCl = bond(S.cfc, 0, 0, r * 2.2, -r * 1.2);
     bond(S.cfc, 0, 0, -r * 2.2, -r * 1.2); bond(S.cfc, 0, 0, -r * 1.9, r * 1.6); bond(S.cfc, 0, 0, r * 1.9, r * 1.6);
@@ -160,10 +166,13 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     S.cfcLab = label(S.cfc, r * 4.3, fs * .35, 'CFC', {anchor: 'start'});
     S.clg = mk('g', {}, svg);
     atom(S.clg, 0, 0, r * 1.3, PINK);
-    S.clLab = label(S.clg, 0, -r * 1.3 - fs * .5, 'Cl', {op: 0});
+    // (in a strip "Cl" sits beside its atom: above it there is no room)
+    S.clLab = low ? label(S.clg, r * 1.3 + 3, fs * .35, 'Cl', {anchor: 'start', op: 0}) : label(S.clg, 0, -r * 1.3 - fs * .5, 'Cl', {op: 0});
     gsap.set(S.cfc, {x: P.S0.x, y: P.S0.y});
     gsap.set(S.clg, {x: P.S0.x + r * 2.2, y: P.S0.y - r * 1.2});
     S.yrs = label(svg, P.E.x, P.E.y + r * 2.6 + fs * 1.25, 'stays 50–100 years', {op: 0});
+    // (a strip has no room under the risen CFC: the step's own words say how long it stays)
+    if (low) S.yrs.style.display = 'none';
 
     // The UV photon: a wiggle from the sun to the chlorine.
     P.cl0 = {x: P.E.x + r * 2.2, y: P.E.y - r * 1.2};
@@ -217,7 +226,7 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
      .to(S.yrs, {opacity: 0, duration: .3}, 3.4)
      .to(S.ozLab, {opacity: 0, duration: .2}, 4.2)
      .to(S.b02, {opacity: 0, duration: .12}, 4.4)
-     .to(S.o2, {x: -r * 1.2, y: -r * 2.2, rotation: -28, transformOrigin: '50% 50%', duration: 1, ease: 'expo.out'}, 4.4)
+     .to(S.o2, {x: -r * (low ? .6 : 1.2), y: -r * (low ? 1.9 : 2.2), rotation: -28, transformOrigin: '50% 50%', duration: 1, ease: 'expo.out'}, 4.4)
      .to(S.a2, {x: r * .6, duration: .45, ease: 'power3.out'}, 4.4)
      .to(S.bClO, {opacity: 1, duration: .2}, 4.5)
      .fromTo(S.ring, {attr: {r: 0}, opacity: 1}, {attr: {r: r * 5}, opacity: 0, duration: .9, ease: 'expo.out', immediateRender: false}, 4.4)

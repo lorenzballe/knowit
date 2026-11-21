@@ -29,6 +29,11 @@
 .card .front p.say{padding-right:96px;overflow-wrap:anywhere}
 .back .body{overflow-wrap:anywhere}
 .foot .src{display:block;padding-right:96px;overflow-wrap:anywhere}
+/* In the app the foot already keeps the save and share's corner clear: the source takes the rest of the line. */
+.kit-app .foot .src{padding-right:0}
+.back>.foot{flex-shrink:0}
+/* The smallest card: the answer's words a little smaller, so the drawing keeps the room to name what it shows. */
+@container (max-height:540px){.kit-app .back .big{font-size:27px}.kit-app .back .body{font-size:13.5px;line-height:1.4}}
 .front .foot.spacer .src{visibility:hidden}
 .hint{animation:nudge 1.4s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(4px)}}
@@ -73,8 +78,8 @@ gsap.registerPlugin(MotionPathPlugin);
   const SNOW = [[0,0],[.1,.07],[.16,.06],[.21,.11],[.14,.14],[.08,.11],[.01,.16],[-.06,.11],[-.12,.13],[-.15,.1],[-.09,.05]];
 
   let peak = 2.2, guess = null, touched = false, asked = false, committed = false, turned = false;
-  let W = 0, H = 0, fs = 13, PX = 1, gM = null, gL = null, readout = null, lead = null, hint = null, cx = 0, hw = 0;
-  const yOf = k => (TOP - k) / (TOP - BOT) * H;
+  let W = 0, H = 0, fs = 13, PX = 1, SPAN = TOP - BOT, gM = null, gL = null, readout = null, lead = null, hint = null, cx = 0, hw = 0;
+  const yOf = k => (TOP - k) / SPAN * H;
   const label = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.textContent = t; return e; };
   const pts = (arr, x0, y0, hgt, w) => arr.map(([x, y]) => `${(x0 + x * w).toFixed(1)},${(y0 + y * hgt).toFixed(1)}`).join(' ');
 
@@ -103,7 +108,7 @@ gsap.registerPlugin(MotionPathPlugin);
   function drawFront() {
     const svg = Kit.$('pic'); svg.innerHTML = '';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(14, W / 26)); PX = H / (TOP - BOT);
+    fs = Math.max(12, Math.min(14, W / 26)); SPAN = TOP - BOT; PX = H / SPAN;
     cx = W * .4; hw = W * .3;
     sea(svg, 'seaA', '#007a2f');
     gM = Kit.mk('g', {}, svg); mountain(gM, cx, yOf(0));
@@ -151,8 +156,13 @@ gsap.registerPlugin(MotionPathPlugin);
   // ---------- back ----------
   function drawBack(anim) {
     const s = Kit.$('pic2'); s.innerHTML = '';
-    const f = Kit.fitSvg(s); W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(14, W / 26)); PX = H / (TOP - BOT);
+    // Measured on its box's own layout size: drawn as the card turns over, a measure taken on screen would
+    // still carry the turn's perspective, and the drawing would come out larger than its box.
+    const pb = s.parentElement; W = Math.max(1, pb.clientWidth); H = Math.max(1, pb.clientHeight);
+    s.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    fs = Math.max(12, Math.min(14, W / 26));
+    // The floor and the Trieste are named under the floor: the depth scale leaves them that room inside the box.
+    SPAN = Math.max(TOP - BOT, (TOP + DEEP) * H / Math.max(1, H - fs * 1.75)); PX = H / SPAN;
     cx = W * .4; hw = W * .3;
     const floorY = yOf(-DEEP), py = yOf(TRUE_PEAK), g0 = guess == null ? -1 : guess;
     sea(s, 'seaB', '#007a2f');
@@ -160,12 +170,9 @@ gsap.registerPlugin(MotionPathPlugin);
     const m = Kit.mk('g', {}, s); mountain(m, cx, py);
     Kit.mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: BED}, s);
     tint(s);
+    surface(s); // under the labels, so the waves never run through one
     const top = Kit.mk('g', {}, s);
-    // the reader's guess
-    const gy = yOf(g0), gc = guessColour(g0);
     const gLine = Kit.mk('g', {}, top);
-    Kit.mk('line', {x1: W * .03, x2: W * .97, y1: gy, y2: gy, stroke: gc, 'stroke-width': 1.8, 'stroke-dasharray': '6 5'}, gLine);
-    label(gLine, W * .03, gy - fs * .45, 'your guess', {fill: gc, 'font-weight': 800});
     // labels pinned to what they name
     const evL = label(top, cx, yOf(-6.6), 'Everest, 8,848 m', {'text-anchor': 'middle', fill: CREAM});
     const flL = label(top, W * .03, floorY + fs * 1.25, 'deepest floor: 10,900 m', {fill: CREAM});
@@ -173,7 +180,7 @@ gsap.registerPlugin(MotionPathPlugin);
     const bx = cx + fs * .7, y0 = yOf(0);
     const br = Kit.mk('path', {d: `M${bx - 4},${y0} h8 M${bx},${y0} V${py} M${bx - 4},${py} h8`, stroke: TRUTH, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round'}, top);
     const hs = Math.max(fs * 1.6, Math.min(fs * 3.2, (y0 - py) * 1.05));
-    const hero = Kit.mk('text', {x: bx + fs * .6, y: (y0 + py) / 2 + hs * .34, fill: TRUTH, 'font-size': hs, 'font-weight': 800, style: 'font-family:var(--display)'}, top);
+    const hero = Kit.mk('text', {x: bx + fs * .6, y: Math.max((y0 + py) / 2 + hs * .34, y0 + hs * .72 + 3), fill: TRUTH, 'font-size': hs, 'font-weight': 800, style: 'font-family:var(--display)'}, top);
     hero.textContent = '2 km';
     // the Trieste's dive, 1960
     const route = Kit.mk('path', {d: `M${W * .86},${y0 + fs * .4} C${W * .97},${yOf(-4)} ${W * .7},${yOf(-7.2)} ${W * .8},${floorY - fs * .7}`, stroke: CREAM, 'stroke-width': 1.3, fill: 'none', 'stroke-dasharray': '2 5', opacity: .45, 'stroke-linecap': 'round'}, top);
@@ -182,7 +189,22 @@ gsap.registerPlugin(MotionPathPlugin);
     Kit.mk('ellipse', {cx: 0, cy: -u * .2, rx: u, ry: u * .32, fill: CREAM}, sub);
     Kit.mk('circle', {cx: 0, cy: u * .3, r: u * .3, fill: CREAM, stroke: INK, 'stroke-width': 1}, sub);
     const trL = label(top, W - 4, floorY + fs * 1.25, 'Trieste, 1960', {'text-anchor': 'end', fill: CREAM});
-    surface(s);
+    // The reader's guess: its line steps around the words it would cross, and its label goes where it meets
+    // none of them, on the line's own side of the surface (over the line, under it, at the left, at the right).
+    const gy = yOf(g0), gc = guessColour(g0), sky = g0 > 0, y0s = yOf(0);
+    const bb = e => { const b = e.getBBox(); return {l: b.x, r: b.x + b.width, t: b.y, b: b.y + b.height}; };
+    const words = [hero, evL, flL, trL].map(bb);
+    const cuts = words.filter(w => gy > w.t - 2 && gy < w.b + 2).map(w => [w.l - 5, w.r + 5]).sort((a, b) => a[0] - b[0]);
+    let xa = W * .03;
+    const dash = (x1, x2) => { if (x2 - x1 > 4) Kit.mk('line', {x1, x2, y1: gy, y2: gy, stroke: gc, 'stroke-width': 1.8, 'stroke-dasharray': '6 5'}, gLine); };
+    for (const [l, r] of cuts) { dash(xa, Math.min(l, W * .97)); xa = Math.max(xa, r); }
+    dash(xa, W * .97);
+    const gl = label(gLine, W * .03, gy - fs * .45, 'your guess', {fill: gc, 'font-weight': 800});
+    const lw = gl.getComputedTextLength();
+    const fits = ([x, a, y]) => { const l = a === 'end' ? x - lw : x, r = l + lw, t = y - fs * .8, b = y + fs * .25;
+      return t >= 1 && b <= H - 1 && (sky ? b <= y0s - fs * .3 : t >= y0s + fs * .3) && !words.some(w => l < w.r && r > w.l && t < w.b && b > w.t); };
+    const at = [[W * .03, 'start', gy - fs * .45], [W * .03, 'start', gy + fs * 1.15], [W * .97, 'end', gy - fs * .45], [W * .97, 'end', gy + fs * 1.15]].find(fits);
+    if (at) { gl.setAttribute('x', at[0]); gl.setAttribute('text-anchor', at[1]); gl.setAttribute('y', at[2]); }
 
     const tl = gsap.timeline();
     tl.from(bed, {opacity: 0, duration: .5, ease: 'power2.out'})

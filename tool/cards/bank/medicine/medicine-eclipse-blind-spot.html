@@ -16,6 +16,8 @@
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
 .q{overflow-wrap:break-word}
+/* On the smallest card the answer takes the room the question no longer needs, so the eye keeps a drawing of its own. */
+@container (max-height:540px){.answered .q{font-size:max(2.5cqh,15px)}}
 </style>
 <article class="card" id="card" data-topic="medicine" data-kind="Drag a guess · the stare">
   <div class="in">
@@ -84,15 +86,23 @@
     svg.innerHTML = '';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     fs = Math.max(12, Math.min(14, W / 27));
-    SY = H - fs * 1.9; CY = SY - fs * 2; MB = SY - fs * 2.95;
+    // Too short for the eye above its labels (the smallest phone, once the answer is in): the labels sit beside
+    // the eye, and once the answer is in the two chips carry the times, so the scale under them drops its numbers.
+    // Nothing is drawn past the drawing's box, over the question.
+    const compact = H < fs * 7.95 + 44, bare = compact && done;
+    SY = bare ? H - fs * .6 : H - fs * 1.9; CY = SY - fs * 2; MB = SY - fs * 2.95;
     X0 = fs * 1.4; X1 = W - fs * 1.4;
+    const probe = text(svg, 0, 0, ''), wOf = (t, w) => { probe.textContent = t; probe.setAttribute('font-weight', w); return probe.getComputedTextLength(); };
+    const lwAll = Math.max(wOf('Fovea', 700), wOf('where you look', 500), wOf('Scotoma', 700), wOf('a black spot for life', 500));
+    probe.remove();
 
     // ---------- where things go: the eye above the labels, the sun to its left ----------
-    const y2 = MB - fs * .25, y1 = y2 - fs * 1.35;
-    const top = 4, bot = Math.max(top + 28, y1 - fs * 1.5);
+    let y2 = MB - fs * .25, y1 = y2 - fs * 1.35;
+    const top = compact ? 2 : 4, bot = compact ? CY - fs * .68 - 3 : Math.max(top + 28, y1 - fs * 1.5);
     R = Math.max(12, Math.min((bot - top) / 2, W * .27));
     cy = top + (bot - top) / 2;
     cx = Math.min(W - 6 - 1.3 * R, W * .6);
+    if (compact) { cx = Math.min(cx, W - 3 - lwAll - 10 - 1.3 * R); y1 = cy - fs * .1; y2 = y1 + fs * 1.35; }
     fx = cx + R * .87; fy = cy;
     const tip = cx - 1.15 * R;
     rs = Math.max(5, Math.min(R * .34, (tip - 8) / 3.6));
@@ -171,7 +181,7 @@
     [[0, '0'], [5, '5 s'], [30, '30 s'], [60, '1 min'], [120, '2 min'], [180, '3 min']].forEach(([t, l]) => {
       const x = ux(Math.sqrt(t / MAXT));
       Kit.mk('line', {x1: x, x2: x, y1: SY - fs * .35, y2: SY + fs * .35, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, sc);
-      text(sc, x, SY + fs * 1.45, l, {'text-anchor': 'middle', 'font-weight': 600});
+      if (!bare) text(sc, x, SY + fs * 1.45, l, {'text-anchor': 'middle', 'font-weight': 600});
     });
 
     // the stretch of line between your guess and hers
@@ -311,7 +321,7 @@
     const t = T(), ok = t <= 12;
     done = true; pending = true;
     Kit.answer({choice: fmt(t), correct: ok, sure: pct});
-    Kit.hide('say'); Kit.show('why');
+    Kit.hide('say'); Kit.show('why'); Kit.$('card').classList.add('answered');
     sure.grade(ok, pct, `${fmt(t)}, ${ok ? 'right' : 'wrong'}`);
     Kit.show('keep');
     // rebuild once the stage has its final size, then play the reveal on the new layout

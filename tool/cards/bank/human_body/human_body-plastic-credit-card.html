@@ -15,6 +15,9 @@
 #why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
 .lbl{font-family:var(--body);font-weight:700}
+/* The smallest card, once the week is done: the slider has done its work and the drawing's own count says the
+   answer's number, so both give their room to the full card. */
+@container (max-height:540px){#stage.end #ctrl,#stage.end #why .big{display:none}}
 </style>
 <article class="card" id="card" data-topic="human_body" data-kind="Scrub · a week of meals">
   <div class="in">
@@ -50,7 +53,10 @@ function draw() {
   const yMeal = pcy + pr + fs * 1.4;
   const big = fs * 1.7, yCount = yMeal + fs * .4 + big;
   const top = yCount + fs * 1.1;
-  let ch = Math.min(H - top - fs * 2.2, (W * .86) / 1.586); ch = Math.max(ch, 30);
+  const ch = Math.min(H - top - fs * 2.2, (W * .86) / 1.586);
+  // Too short for the plate, the count, the card and its caption (the answer has taken the room): the count
+  // over the card, both inside the box. The answer under the drawing says the meals and the card's weight.
+  if (ch < 30) return drawShort(svg, W, H, fs, big);
   const cw = ch * 1.586, cx = (W - cw) / 2;
   G = {pcx, pcy, cx, cy: top, cw, ch, fs};
   // plate
@@ -68,14 +74,29 @@ function draw() {
   G.meal = Kit.mk('text', {x: pcx, y: yMeal, 'text-anchor': 'middle', class: 'lbl', 'font-size': fs, fill: 'var(--k)'}, svg);
   G.count = Kit.mk('text', {x: pcx, y: yCount, 'text-anchor': 'middle', 'font-size': big, 'font-weight': 800, 'font-family': 'var(--display)', fill: 'var(--k)'}, svg);
   // credit card
-  const r = ch * .08;
+  card(svg);
+  G.cap = Kit.mk('text', {x: pcx, y: top + ch + fs * 1.5, 'text-anchor': 'middle', class: 'lbl', 'font-size': fs * .95, fill: 'var(--k)'}, svg);
+  G.cap.textContent = 'Full card = 5 g, a credit card\u2019s weight';
+  shown = 0; update(false);
+}
+
+// The credit card that fills, where G says.
+function card(svg) {
+  const {cx, cy: top, cw, ch} = G, r = ch * .08;
   G.card = Kit.mk('rect', {x: cx, y: top, width: cw, height: ch, rx: r, fill: 'rgba(255,255,255,.12)', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-dasharray': '7 5'}, svg);
   Kit.mk('rect', {x: cx + cw * .08, y: top + ch * .3, width: cw * .14, height: ch * .2, rx: ch * .03, fill: '#d9b04a', opacity: .85}, svg);
   const dg = Kit.mk('g', {}, svg); dots = [];
   const dr = cw / 62;
   PTS.forEach(p => dots.push(Kit.mk('circle', {cx: cx + p.u * cw, cy: top + p.v * ch, r: dr * p.s, fill: p.c, stroke: 'rgba(0,0,0,.35)', 'stroke-width': .6, opacity: 0}, dg)));
-  G.cap = Kit.mk('text', {x: pcx, y: top + ch + fs * 1.5, 'text-anchor': 'middle', class: 'lbl', 'font-size': fs * .95, fill: 'var(--k)'}, svg);
-  G.cap.textContent = 'Full card = 5 g, a credit card\u2019s weight';
+}
+
+function drawShort(svg, W, H, fs, big) {
+  const yCount = Math.min(big * .92, H * .4), top = yCount + fs * .6;
+  const ch = Math.max(20, Math.min(H - top - 1, (W * .86) / 1.586)), cw = ch * 1.586;
+  G = {pcx: W / 2, pcy: yCount - big * .3, cx: (W - cw) / 2, cy: top, cw, ch, fs};
+  G.meal = Kit.mk('text', {}, null); G.cap = Kit.mk('text', {}, null);
+  G.count = Kit.mk('text', {x: W / 2, y: yCount, 'text-anchor': 'middle', 'font-size': big, 'font-weight': 800, 'font-family': 'var(--display)', fill: 'var(--k)'}, svg);
+  card(svg);
   shown = 0; update(false);
 }
 
@@ -102,6 +123,7 @@ function update(anim) {
 
 function finish() {
   done = true; Kit.haptic('success');
+  Kit.$('stage').classList.add('end');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4}); });
 }

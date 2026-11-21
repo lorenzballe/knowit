@@ -17,6 +17,8 @@
 .dev{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 1cqw;cursor:pointer;overflow-wrap:anywhere}
 .dev.on{background:var(--k);color:var(--c);box-shadow:none}
 #why .body{font-size:max(1.9cqh,13px)}
+/* On the smallest card the answer takes the room the question no longer needs, so the drawing keeps its own. */
+@container (max-height:540px){.answered .q{font-size:max(2.5cqh,15px)}.answered #why .body{line-height:1.35}}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
   <div class="in">
@@ -65,12 +67,13 @@ function render(){
   if (!G) return;
   const t = performance.now()/1000, calm = Kit.calm;
   const len = Math.max(4, S.L * G.Lmax);
+  // In a short drawing the jet grows longer, never taller than the room above the caption.
   const layers = [[1, 0], [.72, .7], [.42, 1.4]];
   G.fl.forEach((p, i) => {
     const [k, ph] = layers[i];
     const w = calm ? 0 : Math.sin(t*9 + ph)*G.th*.18 + Math.sin(t*15.3 + ph*2)*G.th*.08;
     const ll = len * k * (calm ? 1 : 1 + Math.sin(t*12 + ph)*.04);
-    const h = (G.th*.35 + len*.16) * (k*.85 + .15);
+    const h = Math.min(G.hmax, (G.th*.35 + len*.16) * (k*.85 + .15));
     p.setAttribute('d', flamePath(G.fx, G.cy, ll, h, w*k));
   });
 }
@@ -88,8 +91,12 @@ Kit.onShow.card = () => {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 13);
-  const th = Math.min(H*.15, W*.1);
-  const cy = Math.min(H*.36, H - fs*3.4 - th*1.9);
+  // Too short for two captions under the gun (the smallest phone): one caption line, and the gun, its flame
+  // and its glow drawn inside the room above it, never over the question.
+  const short = H < fs * 6.6, capTop = H - fs * 1.4;
+  const th = short ? Math.min(W*.1, (capTop - 4) / 2.75) : Math.min(H*.15, W*.1);
+  const cy = short ? capTop - 2 - th * 1.75 : Math.min(H*.36, H - fs*3.4 - th*1.9);
+  const room = Math.min(cy - 2, capTop - cy - 2);
   const x0 = W*.03, x1 = W*.42, nz = W*.04;
   const fx = x1 + nz, Lmax = W*.97 - fx;
   const defs = Kit.mk('defs', {}, svg);
@@ -99,8 +106,8 @@ Kit.onShow.card = () => {
   Kit.mk('stop', {offset:'0', 'stop-color':'#ff8a1f', 'stop-opacity':.45}, rg);
   Kit.mk('stop', {offset:'1', 'stop-color':'#ff8a1f', 'stop-opacity':0}, rg);
   // glow behind flame
-  G = {th, cy, fx, Lmax};
-  G.glow = Kit.mk('ellipse', {cx:fx + Lmax*.35, cy, rx:Lmax*.55, ry:th*1.6, fill:'url(#glow)'}, svg);
+  G = {th, cy, fx, Lmax, hmax: short ? room / .75 : Infinity};
+  G.glow = Kit.mk('ellipse', {cx:fx + Lmax*.35, cy, rx:Lmax*.55, ry:short ? Math.min(th*1.6, room + 1) : th*1.6, fill:'url(#glow)'}, svg);
   G.fl = ['#ff4d1a', '#ff9a1f', '#ffe56b'].map(c => Kit.mk('path', {fill:c}, svg));
   // grips
   const gx = x0 + (x1-x0)*.55;
@@ -118,7 +125,9 @@ Kit.onShow.card = () => {
   // captions
   const cyA = H - fs*1.9, cyB = H - fs*.45;
   G.c1 = Kit.mk('text', {x:W/2, y:cyA, 'text-anchor':'middle', fill:'var(--k)', 'font-family':'var(--display)', 'font-weight':800, 'font-size':fs*1.1}, svg);
-  G.c2 = Kit.mk('text', {x:W/2, y:cyB, 'text-anchor':'middle', fill:'var(--k)', opacity:.75, 'font-family':'var(--body)', 'font-size':Math.max(fs*.85, 12)}, svg);
+  G.c2 = Kit.mk('text', {x:W/2, y:cyB, 'text-anchor':'middle', fill:'var(--k)', opacity:short ? .85 : .75, 'font-family':'var(--body)', 'font-size':Math.max(fs*.85, 12)}, svg);
+  // The name line repeats the question at the start and the tag on the gun at the end: a short drawing keeps the other.
+  if (short) G.c1.setAttribute('display', 'none');
   setTexts(); render();
 };
 
@@ -136,7 +145,7 @@ function choose(d){
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
   Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.$('card').classList.add('answered');
   revealed = true; setTexts();
   sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep');

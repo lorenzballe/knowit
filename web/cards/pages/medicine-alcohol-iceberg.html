@@ -23,7 +23,7 @@
 .lab{position:absolute;left:0;top:0;text-align:center;color:var(--edge);opacity:0;box-sizing:border-box;max-width:100%;box-shadow:none;text-shadow:none}
 .lab .n{display:block;font:700 max(1.5cqh,12px)/1.14 var(--body);letter-spacing:0;text-transform:none;overflow-wrap:anywhere}
 .lab .v{display:block;font:800 max(2.1cqh,14px)/1.16 var(--body);letter-spacing:0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.lab.one{white-space:nowrap;padding:.14em .65em;border-radius:0;background:var(--k)}
+.lab.one{white-space:nowrap;padding:.14em .65em;border-radius:0;background:var(--k);font-size:max(1.35cqh,12px);line-height:1.25}
 .lab.one .n,.lab.one .v{display:inline;font-size:max(1.35cqh,12px);line-height:1.25}
 .lab.one .v{margin-left:.45em}
 .lab.one.wrap{white-space:normal;border-radius:0}
@@ -112,7 +112,8 @@
     BANDS.forEach(b => { b.c = mix(b.t); });
   }
 
-  function layout() {
+  function layout(noHud) {
+    hud.classList.toggle('gone', !!noHud);
     amb.forEach(t => t.kill()); amb = [];
     gsap.killTweensOf(L);
     svg.innerHTML = ''; labs.innerHTML = '';
@@ -200,6 +201,15 @@
     if (total() > hi - lo) { const k = items.findIndex(it => it.b.other); if (k >= 0) { items[k].el.remove(); items.splice(k, 1); } }
     // still too tall: fold two-line labels into compact one-liners
     if (total() > hi - lo) items.forEach(it => { if (it.two) { it.two = false; it.el.style.background = it.b.c; asOne(it.el, it.fitW); it.w = it.el.offsetWidth; it.h = it.el.offsetHeight; } });
+    // Still too tall once the answer is in (a small phone): the counter over the berg gives up its room (the
+    // question and what to keep say both its lines), the one-liners may run wider than their band, and the
+    // smallest bands give up their labels (the closing words name them), so no label lies on another.
+    if (total() > hi - lo && done && !noHud) return layout(true);
+    if (total() > hi - lo) items.forEach(it => { if (!it.two) { it.fitW = W - 2 * pad; asOne(it.el, it.fitW); it.w = it.el.offsetWidth; it.h = it.el.offsetHeight; } });
+    while (total() > hi - lo && items.length > 1) {
+      let k = -1; items.forEach((it, j) => { if (it.i > 0 && (k < 0 || it.b.v < items[k].b.v)) k = j; });
+      if (k < 0) break; items[k].el.remove(); items.splice(k, 1);
+    }
     items.forEach(it => { const lh = it.h; it.y = it.i === 0 ? Math.min(it.b.mid + fs * .2, SY - lh / 2 - 2) : it.b.mid; });
     const fwd = () => items.forEach((it, k) => { const pv = items[k - 1]; it.y = Math.max(it.y, lo + it.h / 2, pv ? pv.y + pv.h / 2 + gap + it.h / 2 : -1e9); });
     fwd();

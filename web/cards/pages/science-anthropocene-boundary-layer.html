@@ -24,6 +24,8 @@
 #col .ink{fill:var(--k)}
 #col .hot{fill:#e4572e}
 #col .edge{fill:none;stroke:var(--k);stroke-width:2;stroke-linejoin:round}
+/* On the smallest card the answer takes the room the question no longer needs, so the columns keep theirs. */
+@container (max-height:540px){.answered .q{font-size:max(2.5cqh,15px)}}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Pull apart">
   <div class="in">
@@ -63,9 +65,27 @@ function draw() {
   const fit = Kit.fitSvg(svg), W = fit.W, H = fit.H;
   svg.innerHTML = '';
   const f = Math.max(12, Math.min(fit.f, H * 0.055, W * 0.045));
-  const mt = f * 2, mb = f * 0.4, Hc = H - mt - mb, G = Hc * 0.42, Hc0 = Hc - G, y0 = mt + G / 2;
-  const a = Hc0 * 0.16, b0 = Math.max(6, Hc0 * 0.045), h = Hc0 * 0.5, old = Hc0 - a - b0 - h;
-  const lx = W * 0.02, cx0 = W * 0.38, gap = W * 0.035, cw = (W * 0.985 - cx0 - 2 * gap) / 3;
+  // Pulled apart, the labels on the left stack one under the other, each beside its layer. A short column
+  // (the smallest phone, once the answer is in) has less room than they need: "Carbon & nitrogen" goes on
+  // one line, the site names sit closer, and last "Older rock" gives way, so no label is drawn past the
+  // drawing's box onto the words below it.
+  const geo = mt => { const Hc = H - mt - f * 0.4, G = Hc * 0.42, Hc0 = Hc - G; return {mt, G, Hc0, y0: mt + G / 2, a: Hc0 * 0.16, b0: Math.max(6, Hc0 * 0.045), h: Hc0 * 0.5}; };
+  const foot = (q, cn) => {
+    const yb = q.y0 + q.a - q.G / 2, bandH = q.b0 + q.G, yh = q.y0 + q.a + q.b0, old = q.Hc0 - q.a - q.b0 - q.h;
+    let prev = q.y0 + q.a / 2 + f * .35 - q.G / 2;
+    [1, 1, cn].forEach((n, i) => { const y = Math.max(yb + bandH * (i + .5) / 3 + f * .35 - (n - 1) * f * .58, prev + f * 1.2); prev = y + (n - 1) * f * 1.15; });
+    const hy = Math.max(yh + q.h * .62 + f * .35 + q.G / 2, prev + f * 1.25);
+    return Math.max(yh + q.h + old / 2 + f * .35 + q.G / 2, hy + f * 1.2) + f * .3;
+  };
+  const probe = Kit.mk('text', {'font-size': f}, svg); probe.textContent = 'Carbon & nitrogen';
+  const wCN = probe.getComputedTextLength(); probe.remove();
+  const lx = W * 0.02;
+  let q = geo(f * 2), cn = 2, cx0 = W * 0.38;
+  if (foot(q, 2) > H && lx + wCN + W * 0.03 <= W * 0.45) { cn = 1; cx0 = Math.max(cx0, lx + wCN + W * 0.03); }
+  if (foot(q, cn) > H) q = geo(f * 1.4);
+  const older = foot(q, cn) <= H;
+  const {mt, G, Hc0, y0, a, b0, h} = q, old = Hc0 - a - b0 - h;
+  const gap = W * 0.035, cw = (W * 0.985 - cx0 - 2 * gap) / 3;
   const xs = [0, 1, 2].map(i => cx0 + i * (cw + gap));
   const FH = b0 + G, sh = FH / 3;
   const ink = 'currentColor';
@@ -112,6 +132,7 @@ function draw() {
   holT.textContent = 'Holocene';
   const oldT = Kit.mk('text', {x: lx, y: oldY, 'font-size': f, fill: ink, opacity: .75}, gBot);
   oldT.textContent = 'Older rock';
+  if (!older) oldT.setAttribute('display', 'none');
 
   // the boundary band, drawn at full size, squeezed by scale
   const bandIn = Kit.mk('g', {}, gBand);
@@ -133,7 +154,7 @@ function draw() {
     Kit.mk('rect', {x, y: 0, width: cw, height: FH, fill: 'none', stroke: '#e4572e', 'stroke-width': 2}, bandIn);
   });
 
-  const subs = [['Radionuclides'], ['Plastics'], ['Carbon &', 'nitrogen']].map(lines => {
+  const subs = [['Radionuclides'], ['Plastics'], cn === 1 ? ['Carbon & nitrogen'] : ['Carbon &', 'nitrogen']].map(lines => {
     const t = Kit.mk('text', {x: lx, 'font-size': f, fill: ink}, gSub);
     lines.forEach((s, i) => { const ts = document.createElementNS(NS, 'tspan'); ts.setAttribute('x', lx); ts.setAttribute('dy', i ? f * 1.15 : 0); ts.textContent = s; t.appendChild(ts); });
     return {t, n: lines.length};
@@ -176,7 +197,7 @@ function render() {
 }
 
 function finish() {
-  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.$('card').classList.add('answered');
   requestAnimationFrame(() => { draw(); render(); });
 }
 function open() {

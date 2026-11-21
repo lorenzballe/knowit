@@ -50,8 +50,10 @@ function figure(parent, h, sack) {
 Kit.onShow.card = () => {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(12, f*.9);
-  const ground = H*.8, ceilG = H*.07, neckX = W*.5, endX = W*.96;
-  let aH = Math.min((ground - ceilG)*.74, W*.42), cH = aH*.56;
+  // The child's label under the ground, the adult's over his helmet: both inside the drawing's own box,
+  // however short the box gets once the answer comes in.
+  const ground = H - fs*1.8, ceilG = H*.07, neckX = W*.5, endX = W*.96;
+  let aH = Math.min((ground - ceilG)*.74, W*.42, ground - ceilG - fs*1.9), cH = aH*.56;
   const passTop = ground - cH*1.2;
   // tunnel interior with a rough ceiling (drawn straight on the card, outlined in ink)
   let d = `M0,${ground} L0,${ceilG}`;
@@ -70,8 +72,9 @@ Kit.onShow.card = () => {
   const line = Kit.mk('line', {x1: W*.04, y1: passTop, x2: neckX, y2: passTop, stroke: '#e0352b', 'stroke-width': 2, 'stroke-dasharray': '6 5', opacity: 0}, svg);
   const adult = figure(svg, aH, false), child = figure(svg, cH, true);
   const aLab = Kit.mk('text', {y: ground - aH - fs*.6, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
-  const cLab = Kit.mk('text', {y: ground + fs*1.4, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
-  const tLab = Kit.mk('text', {x: (neckX + endX)/2, y: ground + fs*2.9, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-size': Math.max(12, fs*.85), opacity: .85}, svg);
+  const cLab = Kit.mk('text', {y: ground + fs*1.35, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+  // named on the rock just over its low ceiling, on a line of its own
+  const tLab = Kit.mk('text', {x: (neckX + endX)/2, y: passTop - fs*.55, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-size': Math.max(12, fs*.85), opacity: .85}, svg);
   tLab.textContent = 'narrow tunnel';
   S = {W, H, ground, neckX, aH, cH, oreX, adult, child, aLab, cLab, ores, hit, line, fs};
   render();
@@ -86,7 +89,9 @@ function render() {
   const ax = a0 + (aStop - a0)*aT + shake;
   const aBob = !stuck && holding ? -Math.abs(Math.sin(P*55))*aH*.02 : 0;
   adult.g.setAttribute('transform', `translate(${ax},${ground + aBob})`);
-  aLab.setAttribute('x', Math.max(S.fs*4, ax)); aLab.textContent = stuck ? 'Adult: stuck' : 'Adult';
+  aLab.textContent = stuck ? 'Adult: stuck' : 'Adult';
+  // kept on his side of the rock face, never across its line
+  aLab.setAttribute('x', Math.min(Math.max(S.fs*4, ax), neckX - S.fs*.5 - aLab.getComputedTextLength()/2));
   aLab.setAttribute('fill', stuck ? '#b01e15' : '#10100c');
   hit.setAttribute('opacity', stuck ? .85 : 0); line.setAttribute('opacity', stuck ? .9 : 0);
   const c0 = W*.07, cStop = oreX - cH*.5, cEnd = neckX + (cStop - neckX)*.35;

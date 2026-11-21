@@ -20,6 +20,8 @@
 .opt.now .n{background:var(--c);color:var(--k)}
 .opt.no .n{text-decoration:line-through}
 .foot .src{display:block;max-width:calc(100% - 112px);overflow-wrap:anywhere}
+/* In the app the foot already keeps the save and share's corner clear: the source takes the rest of the line. */
+.kit-app .foot .src{max-width:none}
 svg .cap{font-family:var(--body);font-weight:800;fill:var(--k)}
 svg .lab{font-family:var(--mono);font-weight:700;fill:var(--k);opacity:.6;letter-spacing:.08em}
 svg .blk{fill:color-mix(in srgb,var(--k) 88%,var(--c));stroke:var(--k);stroke-width:2;stroke-linejoin:round}
@@ -66,10 +68,17 @@ function build(){
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 13);
-  const bw = Math.min(W * .27, H * .36), bh = bw * .62;
-  const gy = H - fs * 1.8, sup = bh * .18, fy = gy - sup - bh / 2;
+  // Everything stays inside the drawing's own box, under its caption: the ground leaves room for its two
+  // labels only when there is room for them, and the block is sized so that the tallest it gets (lifted
+  // over the hull while it turns, or, once joined, the hull's top) still sits under the caption.
+  const labels = H >= fs * 7.5, capB = fs * 1.5;
+  const gy = H - (labels ? fs * 1.8 : fs * .5);
+  const lifts = phase < 4 || running;
+  const bhMax = (gy - capB - fs * .3) / (lifts ? 2.98 : 1.88);
+  const bw = Math.max(8, Math.min(W * .27, labels ? H * .36 : H * .5, bhMax / .62)), bh = bw * .62;
+  const sup = bh * .18, fy = gy - sup - bh / 2;
   const gx = W * .7, bx = W * .2, sw = bw * .5, hh = bh * .7;
-  const yT = fy - bh / 2, liftY = yT - hh - bh * .6;
+  const yT = fy - bh / 2, liftY = Math.max(yT - hh - bh * .6, capB + bh / 2 + 2);
   G = {W, H, fs, bw, bh, gy, sup, fy, gx, bx, sw, hh, yT, liftY};
   const m = Kit.mk;
   // hull side pieces already in place
@@ -83,7 +92,7 @@ function build(){
   E.ghost = m('path', {class: 'ghost', d: blockPath(bw, bh), transform: `translate(${gx},${fy})`}, svg);
   // labels under the ground (only when there is room below the caption)
   const lb = Math.max(fs * .78, 12);
-  if (H >= fs * 6) {
+  if (labels) {
     m('text', {class: 'lab', x: bx, y: gy + fs * 1.25, 'text-anchor': 'middle', 'font-size': lb}, svg).textContent = 'BUILD AREA';
     m('text', {class: 'lab', x: gx, y: gy + fs * 1.25, 'text-anchor': 'middle', 'font-size': lb}, svg).textContent = 'HULL';
   }
@@ -94,7 +103,8 @@ function build(){
   E.cable = m('line', {class: 'cable', x1: 0, x2: 0, y1: fs * 2.2, y2: 0}, svg);
   E.block = m('g', {}, svg);
   m('path', {class: 'blk', d: blockPath(bw, bh)}, E.block);
-  [-.4, -.22, .22, .4].forEach(o => m('line', {class: 'rib', x1: o*bw, x2: o*bw, y1: -bh/2 + 3, y2: -2}, E.block));
+  // a block drawn small keeps only its outer ribs, so its TOP is not crossed by them
+  (bw < 60 ? [-.4, .4] : [-.4, -.22, .22, .4]).forEach(o => m('line', {class: 'rib', x1: o*bw, x2: o*bw, y1: -bh/2 + 3, y2: -2}, E.block));
   m('line', {class: 'rib', x1: -bw/2 + 3, x2: bw/2 - 3, y1: -bh*.05, y2: -bh*.05}, E.block);
   m('text', {class: 'top', x: 0, y: -bh * .25, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': Math.max(fs * .75, 12)}, E.block).textContent = 'TOP';
   E.cap = m('text', {class: 'cap', x: W / 2, y: fs * 1.1, 'text-anchor': 'middle', 'font-size': fs}, svg);

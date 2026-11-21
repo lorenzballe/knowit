@@ -8,13 +8,13 @@
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
 #clock{font:800 max(3.4cqh,20px)/1.1 var(--display);color:var(--k);text-align:center}
-#clock small{display:block;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+#clock small{display:block;font:600 max(1.6cqh,12px)/1.2 var(--body);color:color-mix(in srgb,var(--k) 72%,transparent);letter-spacing:.06em;text-transform:uppercase}
 #pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
 #reads{display:flex;gap:4cqw}
 #reads p{flex:1;margin:0;font:600 max(1.7cqh,12px)/1.25 var(--body);color:var(--k);overflow-wrap:anywhere}
-#reads b{display:block;font:800 max(1.5cqh,12px)/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+#reads b{display:block;font:800 max(1.5cqh,12px)/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:color-mix(in srgb,var(--k) 72%,transparent)}
 #sl{width:100%;margin:0;height:max(4cqh,28px);accent-color:var(--k);cursor:pointer}
-#ticks{position:relative;height:max(2.2cqh,15px);font:700 max(1.5cqh,12px)/1 var(--mono);color:var(--muted)}
+#ticks{position:relative;height:max(2.2cqh,15px);font:700 max(1.5cqh,12px)/1 var(--mono);color:color-mix(in srgb,var(--k) 72%,transparent)}
 #ticks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
 #ticks span.l{transform:none}#ticks span.r{transform:translateX(-100%)}
 #why{display:flex;flex-direction:column;gap:.6cqh}
@@ -23,6 +23,10 @@
 #stage.end #clock small{display:none}
 #stage.end #reads p{line-height:1.2}
 #stage.end #why .body{font-size:max(1.6cqh,12px);line-height:1.25}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* On the smallest card the end gives the drawing the room the clock and the slopes' names took:
+   the slider still reads 10 yr, and the why names both slopes. */
+@container (max-height:540px){#stage.end #clock{display:none}#stage.end #reads b{display:none}}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Slider · watch time pass">
   <div class="in">
@@ -37,7 +41,7 @@
       </div>
       <div>
         <input data-drag type="range" id="sl" min="0" max="1000" value="0" aria-label="Time watched">
-        <div id="ticks"><span class="l" style="left:0">0 s</span><span style="left:25%">1 min</span><span style="left:58%">1 day</span><span style="left:88%">1 yr</span><span class="r" style="left:100%">10 yr</span></div>
+        <div id="ticks"><span class="l" style="left:0">0 s</span><span style="left:calc(8px + (100% - 16px) * .21)">1 min</span><span style="left:calc(8px + (100% - 16px) * .581)">1 day</span><span class="r" style="left:100%">10 yr</span></div>
       </div>
       <div id="why" class="gone"><p class="body">A rockfall, or a mud flow like Sarno in 1998, comes down like a snow avalanche: seconds, minutes at most. A slide like Niscemi's moves millimetres a year, so it takes years to see.</p></div>
     </div>
@@ -116,7 +120,7 @@ function update(){
 }
 function finish(){
   done = true; Kit.haptic('success');
-  Kit.$('stage').classList.add('end');
+  Kit.$('stage').classList.add('end'); Kit.$('card').classList.add('answered');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   requestAnimationFrame(draw);
 }

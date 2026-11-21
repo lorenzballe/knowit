@@ -15,6 +15,8 @@
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font-size:max(2.8cqh,17px)}
 #why .body{font-size:max(1.9cqh,13px)}
+/* The smallest card: the answer set a touch smaller, so the three rows of the drawing keep their room. */
+@container (max-height:540px){#why .body{font-size:12px;line-height:1.32}}
 .cap{font:600 max(1.7cqh,12px)/1 var(--body);fill:var(--k)}
 </style>
 <article class="card" id="card" data-topic="psychology" data-kind="Tap to add · watch it grow">
@@ -88,22 +90,39 @@ function draw() {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, f * 0.78);
-  const cap = (y, txt) => { const t = Kit.mk('text', {x: W / 2, y, 'text-anchor': 'middle', class: 'cap'}, svg); t.textContent = txt; return t; };
-
-  // Row 1: the tube
-  const l1 = fs;
-  cap(l1, 'The tube, spinning');
-  const t1 = l1 + fs * 0.9, b1 = H * 0.5;
-  const th = Math.min(b1 - t1, W * 0.3), tw = Math.min(W * 0.86, th * 3.4);
-  live = makeTube(svg, W / 2, (t1 + b1) / 2, tw, th * 0.9, 'L');
-  live.set(S.a);
-
-  // Row 2: frames
-  const l2 = b1 + fs * 1.5;
-  cap(l2, 'Frames your eye catches');
+  const cap = (y, txt, x, anchor) => { const t = Kit.mk('text', {x: x == null ? W / 2 : x, y, 'text-anchor': anchor || 'middle', class: 'cap'}, svg); t.textContent = txt; return t; };
   const gap = W * 0.02, sw = (W * 0.94 - gap * (N - 1)) / N;
-  const sh = Math.min(sw * 0.5, Math.max(H * 0.1, 18));
-  const st = l2 + fs * 0.8;
+  // The three rows stacked, each under its caption, when the box is tall enough for them; a box left short
+  // once the answer is in sets the tube and what you see each beside its caption, so nothing is drawn past it.
+  const b1 = H * 0.5, sh0 = Math.min(sw * 0.5, Math.max(H * 0.1, 18));
+  const stacked = H - 2 - (b1 + fs * 1.5 + fs * 0.8 + sh0 + fs * 1.7 + fs * 0.8) >= 16;
+  let st, sh, l3;
+  if (stacked) {
+    // Row 1: the tube
+    const l1 = fs;
+    cap(l1, 'The tube, spinning');
+    const t1 = l1 + fs * 0.9;
+    const th = Math.min(b1 - t1, W * 0.3), tw = Math.min(W * 0.86, th * 3.4);
+    live = makeTube(svg, W / 2, (t1 + b1) / 2, tw, th * 0.9, 'L');
+    // Row 2: frames
+    const l2 = b1 + fs * 1.5;
+    cap(l2, 'Frames your eye catches');
+    sh = sh0; st = l2 + fs * 0.8;
+    l3 = st + sh + fs * 1.7;
+  } else {
+    // three bands: the tube, the frames under their caption, what you see
+    const band = (H - 2 - fs * 1.1) / 3;
+    const th = Math.max(16, Math.min(band - 4, W * 0.3));
+    const c1 = cap(0, 'The tube, spinning', 0, 'start'), w1 = c1.getComputedTextLength();
+    const tw = Math.min(W * 0.86 - w1 - fs, th * 3.4), x1 = (W - (w1 + fs + tw)) / 2;
+    c1.setAttribute('x', x1); c1.setAttribute('y', 1 + band / 2 + fs * 0.35);
+    live = makeTube(svg, x1 + w1 + fs + tw / 2, 1 + band / 2, tw, th * 0.9, 'L');
+    const l2 = 1 + band + fs * 1.05;
+    cap(l2, 'Frames your eye catches');
+    sh = Math.min(sw * 0.5, Math.max(16, band - 6)); st = l2 + fs * 0.45;
+    l3 = null;
+  }
+  live.set(S.a);
   slots = [];
   for (let i = 0; i < N; i++) {
     const x = W * 0.03 + i * (sw + gap);
@@ -113,11 +132,20 @@ function draw() {
   for (let i = 0; i < n; i++) addThumb(i, false);
 
   // Row 3: what you see
-  const l3 = st + sh + fs * 1.7;
-  cap3 = cap(l3, capText());
-  const rt = l3 + fs * 0.8, rb = H - 2;
-  const rh = Math.max(16, Math.min(rb - rt, W * 0.22)), rw = Math.min(W * 0.7, rh * 3.2);
-  res = makeTube(svg, W / 2, rt + rh / 2, rw, rh, 'R', {only: side || 'none'});
+  if (stacked) {
+    cap3 = cap(l3, capText());
+    const rt = l3 + fs * 0.8, rb = H - 2;
+    const rh = Math.max(16, Math.min(rb - rt, W * 0.22)), rw = Math.min(W * 0.7, rh * 3.2);
+    res = makeTube(svg, W / 2, rt + rh / 2, rw, rh, 'R', {only: side || 'none'});
+  } else {
+    const top3 = st + sh + 4, rh = Math.max(16, Math.min(H - 1 - top3, W * 0.22));
+    // room kept for the caption's longest wording, so the count can grow without reaching the tube
+    cap3 = cap(0, `What you see · ${N} frames stitched`, 0, 'start');
+    const w3 = cap3.getComputedTextLength(); cap3.textContent = capText();
+    const rw = Math.max(rh * 2, Math.min(W * 0.94 - w3 - fs, rh * 3.2)), x3 = Math.max(W * 0.03, (W - (w3 + fs + rw)) / 2);
+    cap3.setAttribute('x', x3); cap3.setAttribute('y', top3 + rh / 2 + fs * 0.35);
+    res = makeTube(svg, x3 + w3 + fs + rw / 2, top3 + rh / 2, rw, rh, 'R', {only: side || 'none'});
+  }
   res.set(facing());
   res.lg.setAttribute('opacity', n / N);
 }

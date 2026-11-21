@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611210928,
- "built": "2026-11-21T09:28:17Z",
+ "version": 202611211314,
+ "built": "2026-11-21T13:14:02Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -55493,11 +55493,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Question asks what the world's first plastic recycling centre was. Tap each material (plastic, aluminium, glass) to see why it was recycled. Shows a historic photo of the Plastic Waste Recycling Mill with a banner reading First Plastic Recycling Plant.",
-    "page": "pages/history-first-plastic-plant.html?v=eb918b5f2607",
-    "bytes": 10616,
+    "page": "pages/history-first-plastic-plant.html?v=9bb92205837b",
+    "bytes": 12670,
     "thumbs": {
-     "front": "thumbs/history-first-plastic-plant-front.webp?v=eb918b5f2607",
-     "back": "thumbs/history-first-plastic-plant-back.webp?v=eb918b5f2607"
+     "front": "thumbs/history-first-plastic-plant-front.webp?v=9bb92205837b",
+     "back": "thumbs/history-first-plastic-plant-back.webp?v=9bb92205837b"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -64306,11 +64306,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A scale with four stars to tap. Left side: Western interest and Jewish influence and unity. Right side: Arab division and WWII alignment with Germany. Arabs are 60% of the population. Tap each star to see which way the scale tips.",
-    "page": "pages/history-un-partition-scale.html?v=a579f8a99236",
-    "bytes": 17350,
+    "page": "pages/history-un-partition-scale.html?v=6b14ad06341e",
+    "bytes": 18405,
     "thumbs": {
-     "front": "thumbs/history-un-partition-scale-front.webp?v=a579f8a99236",
-     "back": "thumbs/history-un-partition-scale-back.webp?v=a579f8a99236"
+     "front": "thumbs/history-un-partition-scale-front.webp?v=6b14ad06341e",
+     "back": "thumbs/history-un-partition-scale-back.webp?v=6b14ad06341e"
     }
    },
    "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
@@ -64523,11 +64523,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Three tappable steps in order: sketch an eruption, troops reach Naples, film 18 March 1944. The question asks what made the 1944 Vesuvius eruption unique in its historical record.",
-    "page": "pages/history-vesuvius-first-film.html?v=319ae5671b38",
-    "bytes": 10889,
+    "page": "pages/history-vesuvius-first-film.html?v=70d42ef87c1f",
+    "bytes": 11039,
     "thumbs": {
-     "front": "thumbs/history-vesuvius-first-film-front.webp?v=319ae5671b38",
-     "back": "thumbs/history-vesuvius-first-film-back.webp?v=319ae5671b38"
+     "front": "thumbs/history-vesuvius-first-film-front.webp?v=70d42ef87c1f",
+     "back": "thumbs/history-vesuvius-first-film-back.webp?v=70d42ef87c1f"
     }
    },
    "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
@@ -65314,11 +65314,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A pore with sweat rising, and a question asking how antiperspirants work. The reader picks one of three answers: they kill smell bacteria, their aluminium salts plug the pore, or they soak up sweat like a sponge.",
-    "page": "pages/human_body-antiperspirant-pore-plug.html?v=08a9a33209d7",
-    "bytes": 8446,
+    "page": "pages/human_body-antiperspirant-pore-plug.html?v=e6dc609d0597",
+    "bytes": 9248,
     "thumbs": {
-     "front": "thumbs/human_body-antiperspirant-pore-plug-front.webp?v=08a9a33209d7",
-     "back": "thumbs/human_body-antiperspirant-pore-plug-back.webp?v=08a9a33209d7"
+     "front": "thumbs/human_body-antiperspirant-pore-plug-front.webp?v=e6dc609d0597",
+     "back": "thumbs/human_body-antiperspirant-pore-plug-back.webp?v=e6dc609d0597"
     }
    },
    "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
@@ -72889,11 +72889,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An interactive page with a plane and a draggable slider up to 1.8g, beside a figure whose blood level shifts from head to feet. The page asks why 1.8g makes you dizzy and hard to stand.",
-    "page": "pages/human_body-hyper-g-dizziness.html?v=f168cfffb078",
-    "bytes": 9168,
+    "page": "pages/human_body-hyper-g-dizziness.html?v=9a047315505a",
+    "bytes": 9318,
     "thumbs": {
-     "front": "thumbs/human_body-hyper-g-dizziness-front.webp?v=f168cfffb078",
-     "back": "thumbs/human_body-hyper-g-dizziness-back.webp?v=f168cfffb078"
+     "front": "thumbs/human_body-hyper-g-dizziness-front.webp?v=9a047315505a",
+     "back": "thumbs/human_body-hyper-g-dizziness-back.webp?v=9a047315505a"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -76041,11 +76041,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A week strip labelled MON to SUN with a credit-card shape that fills as you drag through meals. It asks how much plastic an average person ingests each week, and the reveal says about 5 grams.",
-    "page": "pages/human_body-plastic-credit-card.html?v=e47e047a0839",
-    "bytes": 7557,
+    "page": "pages/human_body-plastic-credit-card.html?v=4d343cba8ac5",
+    "bytes": 8778,
     "thumbs": {
-     "front": "thumbs/human_body-plastic-credit-card-front.webp?v=e47e047a0839",
-     "back": "thumbs/human_body-plastic-credit-card-back.webp?v=e47e047a0839"
+     "front": "thumbs/human_body-plastic-credit-card-front.webp?v=4d343cba8ac5",
+     "back": "thumbs/human_body-plastic-credit-card-back.webp?v=4d343cba8ac5"
     }
    },
    "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
@@ -76964,11 +76964,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive diagram of a cell surrounded by water. A slider adds salt outside the cell, and arrows show water leaving the cell as it shrinks. The question asks why too much salt makes cells lose water.",
-    "page": "pages/human_body-salt-osmosis-cell.html?v=b1408706a154",
-    "bytes": 8213,
+    "page": "pages/human_body-salt-osmosis-cell.html?v=440d926be25c",
+    "bytes": 9652,
     "thumbs": {
-     "front": "thumbs/human_body-salt-osmosis-cell-front.webp?v=b1408706a154",
-     "back": "thumbs/human_body-salt-osmosis-cell-back.webp?v=b1408706a154"
+     "front": "thumbs/human_body-salt-osmosis-cell-front.webp?v=440d926be25c",
+     "back": "thumbs/human_body-salt-osmosis-cell-back.webp?v=440d926be25c"
     }
    },
    "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
@@ -79905,11 +79905,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A 100-cell embryo where each cell has two X chromosomes, one glowing (active) and one dim (inactivated). The page asks how one X is silenced in early female embryos and offers a button to start the battle.",
-    "page": "pages/human_body-x-chromosome-silencing.html?v=c3fd554908e9",
-    "bytes": 8604,
+    "page": "pages/human_body-x-chromosome-silencing.html?v=605f5c1a3baa",
+    "bytes": 10537,
     "thumbs": {
-     "front": "thumbs/human_body-x-chromosome-silencing-front.webp?v=c3fd554908e9",
-     "back": "thumbs/human_body-x-chromosome-silencing-back.webp?v=c3fd554908e9"
+     "front": "thumbs/human_body-x-chromosome-silencing-front.webp?v=605f5c1a3baa",
+     "back": "thumbs/human_body-x-chromosome-silencing-back.webp?v=605f5c1a3baa"
     }
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
@@ -91664,11 +91664,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Text asks why children work the narrow tunnels of Potosí's silver mine, with a button to hold to send them in. Holding it shows two miners walking toward the silver, and only the small one fits the tunnel.",
-    "page": "pages/life-child-miners-potosi.html?v=fd030a2809f7",
-    "bytes": 8397,
+    "page": "pages/life-child-miners-potosi.html?v=9786b153687b",
+    "bytes": 8788,
     "thumbs": {
-     "front": "thumbs/life-child-miners-potosi-front.webp?v=fd030a2809f7",
-     "back": "thumbs/life-child-miners-potosi-back.webp?v=fd030a2809f7"
+     "front": "thumbs/life-child-miners-potosi-front.webp?v=9786b153687b",
+     "back": "thumbs/life-child-miners-potosi-back.webp?v=9786b153687b"
     }
    },
    "source": "Geopop, “Viaggio a Potosi, nella miniera d'argento boliviana: una realtá sconcertante” (YouTube, 2019)",
@@ -102229,11 +102229,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page: a made-up three-party race where the reader drags the Green party marker to where it stands after ten elections. Green shrinks as its voters switch to Left, and the page asks where it ends up.",
-    "page": "pages/maths-duverger-two-parties.html?v=29ed9c92a58b",
-    "bytes": 17194,
+    "page": "pages/maths-duverger-two-parties.html?v=499028442185",
+    "bytes": 17344,
     "thumbs": {
-     "front": "thumbs/maths-duverger-two-parties-front.webp?v=29ed9c92a58b",
-     "back": "thumbs/maths-duverger-two-parties-back.webp?v=29ed9c92a58b"
+     "front": "thumbs/maths-duverger-two-parties-front.webp?v=499028442185",
+     "back": "thumbs/maths-duverger-two-parties-back.webp?v=499028442185"
     }
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
@@ -102272,11 +102272,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A ladder of forks drawn as shrinking washes, each section between forks. Tap the drawing to measure a section against the next. The question asks what the number 4.669 means in bifurcations.",
-    "page": "pages/maths-feigenbaum-ratio-ladder.html?v=9556ac6b1f03",
-    "bytes": 23117,
+    "page": "pages/maths-feigenbaum-ratio-ladder.html?v=fb8591648745",
+    "bytes": 23590,
     "thumbs": {
-     "front": "thumbs/maths-feigenbaum-ratio-ladder-front.webp?v=9556ac6b1f03",
-     "back": "thumbs/maths-feigenbaum-ratio-ladder-back.webp?v=9556ac6b1f03"
+     "front": "thumbs/maths-feigenbaum-ratio-ladder-front.webp?v=fb8591648745",
+     "back": "thumbs/maths-feigenbaum-ratio-ladder-back.webp?v=fb8591648745"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -104448,11 +104448,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A balance scale with prime-power weights for the question: what must the prime powers of an odd perfect number look like? Tapping a prime changes its power until the scale balances.",
-    "page": "pages/maths-odd-perfect-numbers.html?v=883b6f1d48ce",
-    "bytes": 8689,
+    "page": "pages/maths-odd-perfect-numbers.html?v=1f8b847e1ecc",
+    "bytes": 9582,
     "thumbs": {
-     "front": "thumbs/maths-odd-perfect-numbers-front.webp?v=883b6f1d48ce",
-     "back": "thumbs/maths-odd-perfect-numbers-back.webp?v=883b6f1d48ce"
+     "front": "thumbs/maths-odd-perfect-numbers-front.webp?v=1f8b847e1ecc",
+     "back": "thumbs/maths-odd-perfect-numbers-back.webp?v=1f8b847e1ecc"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -107362,11 +107362,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A page asks where the cancer agency IARC places alcohol. A wine glass is dragged along a ranked scale of evidence groups, then revealed as Group 1, carcinogenic to humans, alongside cigarette smoke.",
-    "page": "pages/medicine-alcohol-group-one.html?v=4eb90349fdb2",
-    "bytes": 16610,
+    "page": "pages/medicine-alcohol-group-one.html?v=67caa6a5afe6",
+    "bytes": 16760,
     "thumbs": {
-     "front": "thumbs/medicine-alcohol-group-one-front.webp?v=4eb90349fdb2",
-     "back": "thumbs/medicine-alcohol-group-one-back.webp?v=4eb90349fdb2"
+     "front": "thumbs/medicine-alcohol-group-one-front.webp?v=67caa6a5afe6",
+     "back": "thumbs/medicine-alcohol-group-one-back.webp?v=67caa6a5afe6"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -107405,11 +107405,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A dark underwater scene with a lamp to drag down. Dragging it lights up what lies under the water, revealing the hidden causes of the 2.6 million alcohol deaths in 2019. A counter shows how many deaths are lit so far.",
-    "page": "pages/medicine-alcohol-iceberg.html?v=bbe857d191c4",
-    "bytes": 20732,
+    "page": "pages/medicine-alcohol-iceberg.html?v=0a9dd2b925e4",
+    "bytes": 21611,
     "thumbs": {
-     "front": "thumbs/medicine-alcohol-iceberg-front.webp?v=bbe857d191c4",
-     "back": "thumbs/medicine-alcohol-iceberg-back.webp?v=bbe857d191c4"
+     "front": "thumbs/medicine-alcohol-iceberg-front.webp?v=0a9dd2b925e4",
+     "back": "thumbs/medicine-alcohol-iceberg-back.webp?v=0a9dd2b925e4"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -111734,11 +111734,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A draggable pin on a time scale asks how long a 20-year-old stared at the 2017 eclipse, followed by a choice of how sure you are. The reveal states that six seconds was enough to leave a permanent black spot in her central vision.",
     "graded": false,
-    "page": "pages/medicine-eclipse-blind-spot.html?v=d21d0eab157e",
-    "bytes": 21992,
+    "page": "pages/medicine-eclipse-blind-spot.html?v=0e359ab02cb4",
+    "bytes": 23081,
     "thumbs": {
-     "front": "thumbs/medicine-eclipse-blind-spot-front.webp?v=d21d0eab157e",
-     "back": "thumbs/medicine-eclipse-blind-spot-back.webp?v=d21d0eab157e"
+     "front": "thumbs/medicine-eclipse-blind-spot-front.webp?v=0e359ab02cb4",
+     "back": "thumbs/medicine-eclipse-blind-spot-back.webp?v=0e359ab02cb4"
     }
    },
    "source": "Geopop, “Non guardare mai il sole ad occhio nudo, si potrebbero avere danni alla retina, anche permanenti!” (YouTube, 2026)",
@@ -140984,11 +140984,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Interactive scale from 50 to 700 km/h. The reader drags a marker to guess the top speed of volcanic eruption clouds. Text explains Plinian eruptions and how collapsing columns race out as flows.",
     "graded": false,
-    "page": "pages/nature-eruption-cloud-speed.html?v=666fe65316e0",
-    "bytes": 8850,
+    "page": "pages/nature-eruption-cloud-speed.html?v=52d516e7a8e3",
+    "bytes": 11204,
     "thumbs": {
-     "front": "thumbs/nature-eruption-cloud-speed-front.webp?v=666fe65316e0",
-     "back": "thumbs/nature-eruption-cloud-speed-back.webp?v=666fe65316e0"
+     "front": "thumbs/nature-eruption-cloud-speed-front.webp?v=52d516e7a8e3",
+     "back": "thumbs/nature-eruption-cloud-speed-back.webp?v=52d516e7a8e3"
     }
    },
    "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)",
@@ -141199,11 +141199,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A side view of Mount Everest above a dark ocean, with a drag handle. The reader drags Everest down until its base rests on the seabed of the Challenger Deep, then sees where its summit ends up relative to the water surface.",
-    "page": "pages/nature-everest-underwater.html?v=7185e0798e16",
-    "bytes": 13743,
+    "page": "pages/nature-everest-underwater.html?v=b09be4c18685",
+    "bytes": 16023,
     "thumbs": {
-     "front": "thumbs/nature-everest-underwater-front.webp?v=7185e0798e16",
-     "back": "thumbs/nature-everest-underwater-back.webp?v=7185e0798e16"
+     "front": "thumbs/nature-everest-underwater-front.webp?v=b09be4c18685",
+     "back": "thumbs/nature-everest-underwater-back.webp?v=b09be4c18685"
     }
    },
    "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
@@ -143187,11 +143187,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A timeline slider from 0 seconds to 10 years. A rockfall breaks loose and comes down fast, while a slide like Niscemi's has not visibly moved. The reader drags the slider to see both slopes over time and asks how fast a landslide moves.",
-    "page": "pages/nature-landslide-speed-range.html?v=7e66f52fb5d5",
-    "bytes": 8757,
+    "page": "pages/nature-landslide-speed-range.html?v=69fa17418336",
+    "bytes": 9215,
     "thumbs": {
-     "front": "thumbs/nature-landslide-speed-range-front.webp?v=7e66f52fb5d5",
-     "back": "thumbs/nature-landslide-speed-range-back.webp?v=7e66f52fb5d5"
+     "front": "thumbs/nature-landslide-speed-range-front.webp?v=69fa17418336",
+     "back": "thumbs/nature-landslide-speed-range-back.webp?v=69fa17418336"
     }
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
@@ -149983,11 +149983,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A question asks what happens to a tsunami's speed as it approaches the coast, with three choices: it speeds up, stays the same, or slows down. A wave replay control lets the reader watch the wave move into shallow water.",
-    "page": "pages/nature-tsunami-slows-down.html?v=1bdc513cc186",
-    "bytes": 17368,
+    "page": "pages/nature-tsunami-slows-down.html?v=f7a5c7e4ea55",
+    "bytes": 18240,
     "thumbs": {
-     "front": "thumbs/nature-tsunami-slows-down-front.webp?v=1bdc513cc186",
-     "back": "thumbs/nature-tsunami-slows-down-back.webp?v=1bdc513cc186"
+     "front": "thumbs/nature-tsunami-slows-down-front.webp?v=f7a5c7e4ea55",
+     "back": "thumbs/nature-tsunami-slows-down-back.webp?v=f7a5c7e4ea55"
     }
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
@@ -183530,11 +183530,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A point-of-view card titled 'The lottery and love'. It asks why people risk a 1-in-20,000 lottery ticket but not a 1-in-10 chance in love, and argues that fear of a 'no' outweighs the odds. It ends by asking: is it the odds that stop me, or what this one 'no' would really cost?",
     "graded": false,
-    "page": "pages/psychology-lottery-versus-love.html?v=4488e8dbd57b",
-    "bytes": 16428,
+    "page": "pages/psychology-lottery-versus-love.html?v=fe0837a1221e",
+    "bytes": 16578,
     "thumbs": {
-     "front": "thumbs/psychology-lottery-versus-love-front.webp?v=4488e8dbd57b",
-     "back": "thumbs/psychology-lottery-versus-love-back.webp?v=4488e8dbd57b"
+     "front": "thumbs/psychology-lottery-versus-love-front.webp?v=fe0837a1221e",
+     "back": "thumbs/psychology-lottery-versus-love-back.webp?v=fe0837a1221e"
     }
    },
    "source": "Diventare Strong, “Sei MENO Intelligente di Quanto Pensi: 7 Segni” (YouTube, 2024)",
@@ -186196,11 +186196,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Slider card: drag a jug along a line between two views on answering a rumor, from chasing it to showing your worth. A question asks whether their denial or what you had already seen of them wins.",
     "graded": false,
-    "page": "pages/psychology-rumor-communicating-vessels.html?v=28242d196e92",
-    "bytes": 19257,
+    "page": "pages/psychology-rumor-communicating-vessels.html?v=0147c7ab7a20",
+    "bytes": 19407,
     "thumbs": {
-     "front": "thumbs/psychology-rumor-communicating-vessels-front.webp?v=28242d196e92",
-     "back": "thumbs/psychology-rumor-communicating-vessels-back.webp?v=28242d196e92"
+     "front": "thumbs/psychology-rumor-communicating-vessels-front.webp?v=0147c7ab7a20",
+     "back": "thumbs/psychology-rumor-communicating-vessels-back.webp?v=0147c7ab7a20"
     }
    },
    "source": "Diventare Strong, “Come Gestire Chi Parla Male Di Te Alle Spalle” (YouTube, 2016)",
@@ -187336,11 +187336,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card showing a spinning tube labelled X and O. The reader presses either the O side or the X side, then flicks the tube, and sees only the side they pressed.",
-    "page": "pages/psychology-spinning-tube-trick-1.html?v=840e1372ecad",
-    "bytes": 8923,
+    "page": "pages/psychology-spinning-tube-trick-1.html?v=030bfc65bb85",
+    "bytes": 10871,
     "thumbs": {
-     "front": "thumbs/psychology-spinning-tube-trick-1-front.webp?v=840e1372ecad",
-     "back": "thumbs/psychology-spinning-tube-trick-1-back.webp?v=840e1372ecad"
+     "front": "thumbs/psychology-spinning-tube-trick-1-front.webp?v=030bfc65bb85",
+     "back": "thumbs/psychology-spinning-tube-trick-1-back.webp?v=030bfc65bb85"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
@@ -191201,11 +191201,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A stratigraphic column of rock layers with a thin dark line separating the Holocene from the Anthropocene. The reader is asked to drag the columns up or down to pull the thin line apart and see how the boundary would look in rock.",
-    "page": "pages/science-anthropocene-boundary-layer.html?v=fcebccc06d59",
-    "bytes": 11142,
+    "page": "pages/science-anthropocene-boundary-layer.html?v=3b975be582b7",
+    "bytes": 12770,
     "thumbs": {
-     "front": "thumbs/science-anthropocene-boundary-layer-front.webp?v=fcebccc06d59",
-     "back": "thumbs/science-anthropocene-boundary-layer-back.webp?v=fcebccc06d59"
+     "front": "thumbs/science-anthropocene-boundary-layer-front.webp?v=3b975be582b7",
+     "back": "thumbs/science-anthropocene-boundary-layer-back.webp?v=3b975be582b7"
     }
    },
    "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
@@ -193357,11 +193357,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Four step cards describing how CFCs destroy ozone, to be tapped in the order they happen: a chlorine atom breaks free, the CFC drifts up to the stratosphere, the chlorine breaks an ozone molecule, a UV photon hits the CFC.",
-    "page": "pages/science-cfc-ozone-hole.html?v=6f6606071c84",
-    "bytes": 18490,
+    "page": "pages/science-cfc-ozone-hole.html?v=4c799ef8f40e",
+    "bytes": 19472,
     "thumbs": {
-     "front": "thumbs/science-cfc-ozone-hole-front.webp?v=6f6606071c84",
-     "back": "thumbs/science-cfc-ozone-hole-back.webp?v=6f6606071c84"
+     "front": "thumbs/science-cfc-ozone-hole-front.webp?v=4c799ef8f40e",
+     "back": "thumbs/science-cfc-ozone-hole-back.webp?v=4c799ef8f40e"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -193571,11 +193571,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A reactor cross-section with a hold-to-add-heat button. Hold it to heat the core and watch the water turn to steam. The page asks why reactor number four blew its top off.",
-    "page": "pages/science-chernobyl-steam-blast.html?v=14ad90fabf80",
-    "bytes": 12810,
+    "page": "pages/science-chernobyl-steam-blast.html?v=3db948f20711",
+    "bytes": 16891,
     "thumbs": {
-     "front": "thumbs/science-chernobyl-steam-blast-front.webp?v=14ad90fabf80",
-     "back": "thumbs/science-chernobyl-steam-blast-back.webp?v=14ad90fabf80"
+     "front": "thumbs/science-chernobyl-steam-blast-front.webp?v=3db948f20711",
+     "back": "thumbs/science-chernobyl-steam-blast-back.webp?v=3db948f20711"
     }
    },
    "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
@@ -201821,11 +201821,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card asking why a parked car is so hard to push on a level road. It has a HOLD TO PUSH control and a note that swapping the car for a cart gives the same push, but the car barely creeps.",
-    "page": "pages/science-inertia-car-push.html?v=1669712d5a7b",
-    "bytes": 12187,
+    "page": "pages/science-inertia-car-push.html?v=4c6f66e12508",
+    "bytes": 12337,
     "thumbs": {
-     "front": "thumbs/science-inertia-car-push-front.webp?v=1669712d5a7b",
-     "back": "thumbs/science-inertia-car-push-back.webp?v=1669712d5a7b"
+     "front": "thumbs/science-inertia-car-push-front.webp?v=4c6f66e12508",
+     "back": "thumbs/science-inertia-car-push-back.webp?v=4c6f66e12508"
     }
    },
    "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
@@ -204439,11 +204439,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Side view of seafloor bands moving away from a mid-ocean ridge. Question: what do the rock's magnets do? Choices: all point the same way, point differently in bands with distance, or point every which way at random. Pick one to see arrows appear in the rock.",
-    "page": "pages/science-magnetic-seafloor-stripes.html?v=d815ff45c4fa",
-    "bytes": 16765,
+    "page": "pages/science-magnetic-seafloor-stripes.html?v=b4878140f158",
+    "bytes": 16915,
     "thumbs": {
-     "front": "thumbs/science-magnetic-seafloor-stripes-front.webp?v=d815ff45c4fa",
-     "back": "thumbs/science-magnetic-seafloor-stripes-back.webp?v=d815ff45c4fa"
+     "front": "thumbs/science-magnetic-seafloor-stripes-front.webp?v=b4878140f158",
+     "back": "thumbs/science-magnetic-seafloor-stripes-back.webp?v=b4878140f158"
     }
    },
    "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
@@ -205125,11 +205125,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A speed-versus-distance graph of a MotoGP bike braking from 350 km/h toward a corner 420 m away, with red dashes showing Valentino Rossi's braking point. Asks how many metres the bike needs to slow from 350 to 100 km/h.",
-    "page": "pages/science-motogp-braking-zone.html?v=b44a549445eb",
-    "bytes": 8700,
+    "page": "pages/science-motogp-braking-zone.html?v=8299349b55a4",
+    "bytes": 9793,
     "thumbs": {
-     "front": "thumbs/science-motogp-braking-zone-front.webp?v=b44a549445eb",
-     "back": "thumbs/science-motogp-braking-zone-back.webp?v=b44a549445eb"
+     "front": "thumbs/science-motogp-braking-zone-front.webp?v=8299349b55a4",
+     "back": "thumbs/science-motogp-braking-zone-back.webp?v=8299349b55a4"
     }
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
@@ -216503,11 +216503,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A close-up of a yo-yo spool with string wrapping around it, asking what makes a yo-yo climb back up its string. Zoomed-in views and a short explanation follow.",
-    "page": "pages/science-yoyo-string-binding.html?v=6746d608f925",
-    "bytes": 9198,
+    "page": "pages/science-yoyo-string-binding.html?v=9ef8c108db66",
+    "bytes": 10213,
     "thumbs": {
-     "front": "thumbs/science-yoyo-string-binding-front.webp?v=6746d608f925",
-     "back": "thumbs/science-yoyo-string-binding-back.webp?v=6746d608f925"
+     "front": "thumbs/science-yoyo-string-binding-front.webp?v=9ef8c108db66",
+     "back": "thumbs/science-yoyo-string-binding-back.webp?v=9ef8c108db66"
     }
    },
    "source": "Veritasium, “Stringless Yo-Yo!” (YouTube, 2016)",
@@ -216955,11 +216955,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive diagram of Apollo 13's path around the Moon. An orange dot can be dragged to fire the lunar module's thrusters, then released, to show how a small nudge lets the Moon's gravity swing the ship home.",
-    "page": "pages/space-apollo-slingshot.html?v=467b265c42e3",
-    "bytes": 10857,
+    "page": "pages/space-apollo-slingshot.html?v=99d6eea89079",
+    "bytes": 11007,
     "thumbs": {
-     "front": "thumbs/space-apollo-slingshot-front.webp?v=467b265c42e3",
-     "back": "thumbs/space-apollo-slingshot-back.webp?v=467b265c42e3"
+     "front": "thumbs/space-apollo-slingshot-front.webp?v=99d6eea89079",
+     "back": "thumbs/space-apollo-slingshot-back.webp?v=99d6eea89079"
     }
    },
    "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
@@ -226942,11 +226942,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive page titled 'The quake that shortened the day'. A tap-to-shake control shakes Earth at magnitude 9, then the reader zooms in. Text explains the 2011 Japan quake moved Earth's axis 17 cm and shortened each day by 1.8 microseconds.",
-    "page": "pages/space-quake-shortened-day.html?v=a08385810f3c",
-    "bytes": 11505,
+    "page": "pages/space-quake-shortened-day.html?v=605b4646dd3d",
+    "bytes": 13524,
     "thumbs": {
-     "front": "thumbs/space-quake-shortened-day-front.webp?v=a08385810f3c",
-     "back": "thumbs/space-quake-shortened-day-back.webp?v=a08385810f3c"
+     "front": "thumbs/space-quake-shortened-day-front.webp?v=605b4646dd3d",
+     "back": "thumbs/space-quake-shortened-day-back.webp?v=605b4646dd3d"
     }
    },
    "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
@@ -249264,11 +249264,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Multiple-choice quiz asking which two reasons smiths fold steel again and again, from four options: gathers impurities in one spot, spreads impurities through the steel, gives the steel a grain, or makes it equally strong every way. The reader then rates how sure they are.",
-    "page": "pages/technology-folding-the-steel.html?v=263722f7bbeb",
-    "bytes": 22271,
+    "page": "pages/technology-folding-the-steel.html?v=4ffff645c8b1",
+    "bytes": 22421,
     "thumbs": {
-     "front": "thumbs/technology-folding-the-steel-front.webp?v=263722f7bbeb",
-     "back": "thumbs/technology-folding-the-steel-back.webp?v=263722f7bbeb"
+     "front": "thumbs/technology-folding-the-steel-front.webp?v=4ffff645c8b1",
+     "back": "thumbs/technology-folding-the-steel-back.webp?v=4ffff645c8b1"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -252323,11 +252323,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Quiz card asking the official name of Elon Musk's consumer flamethrower. Four options: The Musk Flame X, The Not-a-Flamethrower, The Mars Torch M9, and XM42 NAF. The reader picks one, then rates how sure they are.",
-    "page": "pages/technology-not-a-flamethrower-2.html?v=b1b1fb854342",
-    "bytes": 9566,
+    "page": "pages/technology-not-a-flamethrower-2.html?v=ec452fc2c66b",
+    "bytes": 10566,
     "thumbs": {
-     "front": "thumbs/technology-not-a-flamethrower-2-front.webp?v=b1b1fb854342",
-     "back": "thumbs/technology-not-a-flamethrower-2-back.webp?v=b1b1fb854342"
+     "front": "thumbs/technology-not-a-flamethrower-2-front.webp?v=ec452fc2c66b",
+     "back": "thumbs/technology-not-a-flamethrower-2-back.webp?v=ec452fc2c66b"
     }
    },
    "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
@@ -253115,11 +253115,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Astute free card on micro machines. It asks how bending machines are made at microscopic size. It shows a tiny, complex mechanism that looks like a circuit board, on silicon with a film that reacts to light.",
-    "page": "pages/technology-printed-micro-machines.html?v=118156664c56",
-    "bytes": 9384,
+    "page": "pages/technology-printed-micro-machines.html?v=085b19075ba8",
+    "bytes": 9534,
     "thumbs": {
-     "front": "thumbs/technology-printed-micro-machines-front.webp?v=118156664c56",
-     "back": "thumbs/technology-printed-micro-machines-back.webp?v=118156664c56"
+     "front": "thumbs/technology-printed-micro-machines-front.webp?v=085b19075ba8",
+     "back": "thumbs/technology-printed-micro-machines-back.webp?v=085b19075ba8"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -255729,11 +255729,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive scale: drag an orange block to the weight you expect a tatara furnace to yield from sand and charcoal. The reveal shows 1,284 kg in and a 100 kg block out.",
-    "page": "pages/technology-tatara-mass-balance.html?v=e6bb1473b2ea",
-    "bytes": 15808,
+    "page": "pages/technology-tatara-mass-balance.html?v=5af8ff0cfda0",
+    "bytes": 15958,
     "thumbs": {
-     "front": "thumbs/technology-tatara-mass-balance-front.webp?v=e6bb1473b2ea",
-     "back": "thumbs/technology-tatara-mass-balance-back.webp?v=e6bb1473b2ea"
+     "front": "thumbs/technology-tatara-mass-balance-front.webp?v=5af8ff0cfda0",
+     "back": "thumbs/technology-tatara-mass-balance-back.webp?v=5af8ff0cfda0"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -256299,11 +256299,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A spot-the-break quiz asking where Senna's steering column snapped. Three options: A, right by the steering wheel; B, at the joint in the middle; C, down at the base. The page shows the column with a weld marked, and the reader picks a location and a confidence level.",
-    "page": "pages/technology-the-weak-weld.html?v=64b4f3c11c70",
-    "bytes": 11454,
+    "page": "pages/technology-the-weak-weld.html?v=b191637010ee",
+    "bytes": 13707,
     "thumbs": {
-     "front": "thumbs/technology-the-weak-weld-front.webp?v=64b4f3c11c70",
-     "back": "thumbs/technology-the-weak-weld-back.webp?v=64b4f3c11c70"
+     "front": "thumbs/technology-the-weak-weld-front.webp?v=b191637010ee",
+     "back": "thumbs/technology-the-weak-weld-back.webp?v=b191637010ee"
     }
    },
    "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
@@ -258398,11 +258398,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Four step tiles to tap in the order a ship's hull block is made: build it upside down, weld steel plates into panels, flip it upright, and join it to the hull. The page reads 'You placed 4 of 4'.",
-    "page": "pages/technology-upside-down-blocks.html?v=bec925c2433f",
-    "bytes": 11361,
+    "page": "pages/technology-upside-down-blocks.html?v=aeae6982e361",
+    "bytes": 12177,
     "thumbs": {
-     "front": "thumbs/technology-upside-down-blocks-front.webp?v=bec925c2433f",
-     "back": "thumbs/technology-upside-down-blocks-back.webp?v=bec925c2433f"
+     "front": "thumbs/technology-upside-down-blocks-front.webp?v=aeae6982e361",
+     "back": "thumbs/technology-upside-down-blocks-back.webp?v=aeae6982e361"
     }
    },
    "source": "Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)",
@@ -270952,11 +270952,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card asking which change moves a flamethrower box to the novelty counter. Three options: give it a smaller flame, name it Not-a-Flamethrower, or sell it only online. The reveal says the name classed it as a novelty item, not a weapon.",
-    "page": "pages/weird_facts-not-a-flamethrower.html?v=1d367c52d9f2",
-    "bytes": 16362,
+    "page": "pages/weird_facts-not-a-flamethrower.html?v=a4d65f103665",
+    "bytes": 18344,
     "thumbs": {
-     "front": "thumbs/weird_facts-not-a-flamethrower-front.webp?v=1d367c52d9f2",
-     "back": "thumbs/weird_facts-not-a-flamethrower-back.webp?v=1d367c52d9f2"
+     "front": "thumbs/weird_facts-not-a-flamethrower-front.webp?v=a4d65f103665",
+     "back": "thumbs/weird_facts-not-a-flamethrower-back.webp?v=a4d65f103665"
     }
    },
    "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
