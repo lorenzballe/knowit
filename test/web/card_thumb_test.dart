@@ -217,8 +217,8 @@ void main() {
 
   group('the day\'s shelf', () {
     for (final double text in [1.0, 2.0]) {
-      testWidgets('a card with pictures shows its back, as played, then '
-          'turned its front, with its save and share; at ${text}x', (
+      testWidgets('a card with pictures shows its front, its question, then '
+          'turned its back, with its save and share; at ${text}x', (
         tester,
       ) async {
         final List<Pill> five = pagedCards().take(5).toList();
@@ -234,7 +234,7 @@ void main() {
         );
         expect(tester.takeException(), isNull);
         expect(find.byKey(const ValueKey('shelf-picture')), findsWidgets);
-        expect(_picture(five.first.id, 'back'), findsOneWidget);
+        expect(_picture(five.first.id, 'front'), findsOneWidget);
         expect(find.bySemanticsLabel('Save this card'), findsWidgets);
 
         await tester.tapAt(tester.getCenter(find.byType(TodayDoneView)));
@@ -242,7 +242,7 @@ void main() {
           await tester.pump(const Duration(milliseconds: 100));
         }
         expect(tester.takeException(), isNull);
-        expect(_picture(five.first.id, 'front'), findsOneWidget);
+        expect(_picture(five.first.id, 'back'), findsOneWidget);
       });
 
       testWidgets('a card without stays as it was; at ${text}x', (
@@ -282,7 +282,7 @@ void main() {
       );
       expect(tester.takeException(), isNull);
       expect(
-        find.byKey(ValueKey('card-thumb-${five.first.id}-back-shelf')),
+        find.byKey(ValueKey('card-thumb-${five.first.id}-front-shelf')),
         findsOneWidget,
       );
     });

@@ -88,7 +88,14 @@ class PillCard extends StatelessWidget {
     this.onShare,
     this.page,
     this.onPageMessage,
+    this.controlsLive = true,
   });
+
+  /// Whether the save and share on the card can be pressed, and read out:
+  /// not on a card waiting under the one being read. They are drawn there
+  /// all the same, so a card rises with them already on it rather than
+  /// having them pop in half a second after it has come up.
+  final bool controlsLive;
 
   /// A free card's live page, when the deck keeps one for it (see
   /// [WebCardPool]); without one its poster is drawn in the page's place.
@@ -120,29 +127,31 @@ class PillCard extends StatelessWidget {
           Positioned(
             right: _CardControl.right,
             bottom: _CardControl.bottom,
-            child: Row(
-              children: [
-                _CardControl(
-                  label: saved
-                      ? context.l10n.removeFromSaved
-                      : context.l10n.saveThisPill,
-                  icon: saved
-                      ? Icons.bookmark_rounded
-                      : Icons.bookmark_border_rounded,
-                  ink: pill.ink,
-                  onTap: () {
-                    HapticFeedback.mediumImpact();
-                    onSave!.call();
-                  },
-                ),
-                const SizedBox(width: 4),
-                _CardControl(
-                  label: context.l10n.shareThisPill,
-                  icon: Icons.ios_share_rounded,
-                  ink: pill.ink,
-                  onTap: () => onShare?.call(),
-                ),
-              ],
+            child: _live(
+              Row(
+                children: [
+                  _CardControl(
+                    label: saved
+                        ? context.l10n.removeFromSaved
+                        : context.l10n.saveThisPill,
+                    icon: saved
+                        ? Icons.bookmark_rounded
+                        : Icons.bookmark_border_rounded,
+                    ink: pill.ink,
+                    onTap: () {
+                      HapticFeedback.mediumImpact();
+                      onSave!.call();
+                    },
+                  ),
+                  const SizedBox(width: 4),
+                  _CardControl(
+                    label: context.l10n.shareThisPill,
+                    icon: Icons.ios_share_rounded,
+                    ink: pill.ink,
+                    onTap: () => onShare?.call(),
+                  ),
+                ],
+              ),
             ),
           ),
       ],
@@ -160,6 +169,12 @@ class PillCard extends StatelessWidget {
       child: card,
     );
   }
+
+  /// The save and share as they are on this card: live on the card being
+  /// read, drawn but not pressed or read out on one waiting under it.
+  Widget _live(Widget controls) => controlsLive
+      ? controls
+      : ExcludeSemantics(child: IgnorePointer(child: controls));
 
   Widget _face(BuildContext context) {
     // A free card's front is its page, edge to edge inside the same frame:
