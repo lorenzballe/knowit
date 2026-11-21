@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/skills.dart';
 import '../data/topics.dart' show inkOn;
 import '../measure/card_read.dart';
 import '../models/pill.dart';
@@ -22,6 +23,7 @@ import 'place_line.dart';
 import 'scene_view.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
+import 'skill_mark.dart';
 import 'subject_icon.dart';
 import 'web/page_messages.dart';
 import 'web/web_card_face.dart';
@@ -68,6 +70,14 @@ class PillCard extends StatelessWidget {
   /// only read.
   final VoidCallback? onNote;
 
+  /// The skill the reader put in focus that this card trains, when it trains
+  /// one (lib/data/skill_levels.dart): its mark on the card's corner
+  /// (skill_mark.dart). Null for none.
+  final Skill? skill;
+
+  /// A tap on [skill]'s mark, on the card being read: what it means.
+  final VoidCallback? onSkill;
+
   const PillCard({
     super.key,
     required this.pill,
@@ -81,6 +91,8 @@ class PillCard extends StatelessWidget {
     this.note,
     this.noteIcon,
     this.onNote,
+    this.skill,
+    this.onSkill,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -122,6 +134,16 @@ class PillCard extends StatelessWidget {
     final Widget card = Stack(
       children: [
         _face(context),
+        // The skill in focus it trains: a dot on the card's corner.
+        if (skill != null)
+          Positioned(
+            top: 0,
+            right: 0,
+            child: SkillMark(
+              skill: skill!,
+              onTap: controlsLive ? onSkill : null,
+            ),
+          ),
         // Each control is 44 square, its mark where the 38 one put it.
         if (onSave != null)
           Positioned(

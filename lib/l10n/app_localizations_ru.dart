@@ -1929,10 +1929,33 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Выбери, в чём хочешь стать лучше: карточки, подобранные для тебя, сместятся в эту сторону.';
+      'Каждая прочитанная карточка поднимает тебя выше. Карточки, которые тренируют выбранное, получат его знак.';
 
   @override
   String get skillsDone => 'Готово';
+
+  @override
+  String get skillsFocus => 'В ФОКУСЕ';
+
+  @override
+  String skillLevel(int n) {
+    return 'Уровень $n';
+  }
+
+  @override
+  String get skillMarkKicker => 'ЭТА КАРТОЧКА ТРЕНИРУЕТ';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return 'Тренирует: $skill';
+  }
+
+  @override
+  String get skillMarkBody =>
+      'Это один из навыков, которые ты выбрал в фокус. Каждая такая карточка поднимает тебя выше.';
+
+  @override
+  String get skillMarkOpen => 'Посмотреть уровни';
 
   @override
   String get skillsRowTitle => 'Чему хочешь научиться';

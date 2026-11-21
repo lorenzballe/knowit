@@ -1860,10 +1860,33 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Kies waarin je beter wilt worden: de kaarten die we voor je kiezen, gaan die kant op.';
+      'Elke gelezen kaart brengt je verder. Kaarten die trainen wat je kiest, dragen zijn teken.';
 
   @override
   String get skillsDone => 'Klaar';
+
+  @override
+  String get skillsFocus => 'IN FOCUS';
+
+  @override
+  String skillLevel(int n) {
+    return 'Niveau $n';
+  }
+
+  @override
+  String get skillMarkKicker => 'DEZE KAART TRAINT';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return 'Traint $skill';
+  }
+
+  @override
+  String get skillMarkBody =>
+      'Een van de vaardigheden die je in focus hebt gezet. Elke kaart zoals deze brengt je verder.';
+
+  @override
+  String get skillMarkOpen => 'Bekijk je niveaus';
 
   @override
   String get skillsRowTitle => 'Wat je wilt leren';

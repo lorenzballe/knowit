@@ -1789,10 +1789,32 @@ class AppLocalizationsJa extends AppLocalizations {
   String get skillsTitleMark => '学び';
 
   @override
-  String get skillsLine => '上達したいことを選んでください。あなた向けに選ぶカードがそちらに寄っていきます。';
+  String get skillsLine => '読んだカードの数だけレベルが上がります。選んだものを鍛えるカードには、その印がつきます。';
 
   @override
   String get skillsDone => '完了';
+
+  @override
+  String get skillsFocus => 'フォーカス中';
+
+  @override
+  String skillLevel(int n) {
+    return 'レベル$n';
+  }
+
+  @override
+  String get skillMarkKicker => 'このカードで鍛えるもの';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return '$skillを鍛える';
+  }
+
+  @override
+  String get skillMarkBody => 'あなたがフォーカスに選んだスキルのひとつです。こうしたカードを読むたびにレベルが上がります。';
+
+  @override
+  String get skillMarkOpen => 'レベルを見る';
 
   @override
   String get skillsRowTitle => '学びたいこと';

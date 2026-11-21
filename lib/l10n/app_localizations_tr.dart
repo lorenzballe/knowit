@@ -1830,10 +1830,33 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Neyde daha iyi olmak istediğini seç: senin için seçilen kartlar o yöne kayacak.';
+      'Okuduğun her kart seni yükseltir. Seçtiğini çalıştıran kartlar onun işaretini taşır.';
 
   @override
   String get skillsDone => 'Tamam';
+
+  @override
+  String get skillsFocus => 'ODAKTA';
+
+  @override
+  String skillLevel(int n) {
+    return 'Seviye $n';
+  }
+
+  @override
+  String get skillMarkKicker => 'BU KARTIN ÇALIŞTIRDIĞI';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return 'Çalıştırdığı: $skill';
+  }
+
+  @override
+  String get skillMarkBody =>
+      'Odağa aldığın becerilerden biri. Bunun gibi her kart seni yükseltir.';
+
+  @override
+  String get skillMarkOpen => 'Seviyelerini gör';
 
   @override
   String get skillsRowTitle => 'Öğrenmek istediklerin';

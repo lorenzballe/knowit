@@ -1713,6 +1713,30 @@ class RemoteLocalizations extends AppLocalizations {
   String get skillsDone => _words.text('skillsDone') ?? _base.skillsDone;
 
   @override
+  String get skillsFocus => _words.text('skillsFocus') ?? _base.skillsFocus;
+
+  @override
+  String skillLevel(int n) =>
+      _words.format('skillLevel', localeName, {'n': n}) ?? _base.skillLevel(n);
+
+  @override
+  String get skillMarkKicker =>
+      _words.text('skillMarkKicker') ?? _base.skillMarkKicker;
+
+  @override
+  String skillMarkLabel(String skill) =>
+      _words.format('skillMarkLabel', localeName, {'skill': skill}) ??
+      _base.skillMarkLabel(skill);
+
+  @override
+  String get skillMarkBody =>
+      _words.text('skillMarkBody') ?? _base.skillMarkBody;
+
+  @override
+  String get skillMarkOpen =>
+      _words.text('skillMarkOpen') ?? _base.skillMarkOpen;
+
+  @override
   String get skillsRowTitle =>
       _words.text('skillsRowTitle') ?? _base.skillsRowTitle;
 

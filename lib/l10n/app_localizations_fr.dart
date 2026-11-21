@@ -1861,10 +1861,33 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Choisis ce que tu veux améliorer : les cartes choisies pour toi iront dans ce sens.';
+      'Chaque carte lue te fait monter. Celles qui entraînent ce que tu choisis porteront sa marque.';
 
   @override
   String get skillsDone => 'Terminé';
+
+  @override
+  String get skillsFocus => 'PRIORITÉ';
+
+  @override
+  String skillLevel(int n) {
+    return 'Niveau $n';
+  }
+
+  @override
+  String get skillMarkKicker => 'CETTE CARTE ENTRAÎNE';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return 'Entraîne $skill';
+  }
+
+  @override
+  String get skillMarkBody =>
+      'C’est l’une des compétences que tu as mises en priorité. Chaque carte comme celle-ci te fait monter.';
+
+  @override
+  String get skillMarkOpen => 'Voir tes niveaux';
 
   @override
   String get skillsRowTitle => 'Ce que tu veux apprendre';
