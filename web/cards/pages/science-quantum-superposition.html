@@ -14,6 +14,7 @@
 #pic .lab{fill:var(--k);font-family:var(--body);font-weight:700}
 #pic .stat{fill:var(--k);font-family:var(--display);font-weight:700}
 #pic .tal{fill:var(--k);font-family:var(--mono);opacity:.85}
+#pic .cnt{fill:var(--k);font-family:var(--mono);opacity:.8}
 .row{display:flex;align-items:center;gap:3cqw}
 .mix{display:flex;align-items:center;gap:2cqw;flex:1;min-width:0;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
 .mix input{flex:1;min-width:0;accent-color:var(--k)}
@@ -28,7 +29,7 @@
     <h2 class="q">What is the state of an electron before it is measured?</h2>
     <div class="stagebox" id="stage">
       <svg id="pic"></svg>
-      <div class="row">
+      <div class="row" id="ctl">
         <label class="mix">Up / down mix<input data-drag id="mix" type="range" min="10" max="90" value="50" step="5"></label>
         <button class="hold" id="hold">Hold, then let go to measure</button>
       </div>
@@ -50,22 +51,67 @@ function arrow(g, cx, y0, y1, dir, sw) {
   Kit.mk('polygon', {points: `${cx},${y1 - dir * h} ${cx - h * .8},${y1 + dir * h * .4} ${cx + h * .8},${y1 + dir * h * .4}`, class: 'ink'}, g);
 }
 
+// What the status says, in two parts: one line in a tall box, two lines beside the electron in a short one.
+const STATUS = {fresh: ['Not measured yet:', 'both at once'], hold: ['Both up and down', 'at once'], back: ['Back in', 'superposition'],
+  up: ['Measured:', 'UP (1)'], down: ['Measured:', 'DOWN (0)']};
+
 function draw() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const cx = W * .42, cy = H * .46, m = Math.min(W, H), r = m * .07, L = H * .21, sw = Math.max(3, m * .018);
-  const fs = Math.max(f, 13);
-  el.status = Kit.mk('text', {x: W / 2, y: fs * 1.3, 'text-anchor': 'middle', class: 'stat', 'font-size': fs * 1.15}, svg);
+  // A short, wide box (the answer has taken the room): the words go beside the electron, not above and below it.
+  const wide = H < W * .62;
+  const m = Math.min(W, H);
+  let cx, cy, r, L, sw, fs;
+  if (!wide) {
+    fs = Math.max(f, 13);
+    const top = fs * 1.75, bot = H - fs * 1.6;
+    sw = Math.max(3, m * .018); r = Math.max(9, m * .07);
+    cx = W * .42; cy = (top + bot) / 2;
+    // the arrows stop short of the status above and the tally below, labels and heads included
+    L = Math.max(8, Math.min(H * .21, (bot - top) / 2 - r - 4 - Math.max(fs * .55, sw * 2.6)));
+    el.status = Kit.mk('text', {x: W / 2, y: fs * 1.3, 'text-anchor': 'middle', class: 'stat', 'font-size': fs * 1.15}, svg);
+    el.tal = Kit.mk('text', {x: W / 2, y: H - fs * .5, 'text-anchor': 'middle', class: 'tal', 'font-size': fs}, svg);
+  } else {
+    fs = Math.max(12, Math.min(f * 1.1, 14));
+    sw = Math.max(2.5, H * .022); r = Math.max(9, H * .09);
+    cy = H / 2;
+    // labels of two lines at the tips: what each gives and how often it came out
+    const probe = Kit.mk('text', {class: 'lab', 'font-size': fs}, svg); probe.textContent = 'DOWN = 0 · 50%';
+    const probe2 = Kit.mk('text', {class: 'cnt', 'font-size': fs * .85}, svg); probe2.textContent = 'measured × 99';
+    const lw = Math.max(probe.getComputedTextLength(), probe2.getComputedTextLength());
+    probe.remove(); probe2.remove();
+    cx = W - 4 - lw - (sw * 3 + 8);
+    L = Math.max(8, H / 2 - r - 4 - sw * 2.6 - 3);
+    // the status, two lines on the left, as large as the room beside the electron allows
+    const room = cx - r * 1.9 - 12;
+    const t = Kit.mk('text', {class: 'stat', 'font-size': 20}, svg); let wmax = 0;
+    for (const k in STATUS) for (const line of STATUS[k]) { t.textContent = line; wmax = Math.max(wmax, t.getComputedTextLength()); }
+    t.remove();
+    const sf = Math.max(11, Math.min(fs * 1.6, 20 * room / wmax));
+    el.status = Kit.mk('text', {x: 0, y: cy - sf * .2, class: 'stat', 'font-size': sf}, svg);
+    el.status2 = Kit.mk('text', {x: 0, y: cy + sf * 1.05, class: 'stat', 'font-size': sf}, svg);
+  }
+  el.wide = wide;
   el.orbit = Kit.mk('g', {transform: `translate(${cx},${cy})`}, svg);
   el.orb = Kit.mk('ellipse', {cx: 0, cy: 0, rx: r * 1.9, ry: r * .55, class: 'orb', 'stroke-width': Math.max(1.5, sw * .5)}, el.orbit);
   el.up = Kit.mk('g', {}, svg); arrow(el.up, cx, cy - r - 4, cy - r - L, 1, sw);
   el.dn = Kit.mk('g', {}, svg); arrow(el.dn, cx, cy + r + 4, cy + r + L, -1, sw);
   el.e = Kit.mk('circle', {cx, cy, r, class: 'ink'}, svg);
   Kit.mk('text', {x: cx, y: cy + r * .35, 'text-anchor': 'middle', 'font-size': r * 1.1, style: 'fill:var(--c);font-family:var(--display);font-weight:700'}, svg).textContent = 'e';
-  const lx = cx + sw * 3 + 8;
-  el.lu = Kit.mk('text', {x: lx, y: cy - r - L + fs * .4, class: 'lab', 'font-size': fs}, svg);
-  el.ld = Kit.mk('text', {x: lx, y: cy + r + L + fs * .4, class: 'lab', 'font-size': fs}, svg);
-  el.tal = Kit.mk('text', {x: W / 2, y: H - fs * .5, 'text-anchor': 'middle', class: 'tal', 'font-size': fs}, svg);
+  const lx = cx + sw * 3 + 8, tu = cy - r - L, td = cy + r + L;
+  if (!wide) {
+    el.lu = Kit.mk('text', {x: lx, y: tu + fs * .4, class: 'lab', 'font-size': fs}, svg);
+    el.ld = Kit.mk('text', {x: lx, y: td + fs * .4, class: 'lab', 'font-size': fs}, svg);
+    el.cu = el.cd = null;
+  } else {
+    // up: the label hangs from the tip; down: it stands on it
+    const head = sw * 2.6;
+    el.lu = Kit.mk('text', {x: lx, y: tu - head + fs * .8, class: 'lab', 'font-size': fs}, svg);
+    el.cu = Kit.mk('text', {x: lx, y: tu - head + fs * 1.9, class: 'cnt', 'font-size': fs * .85}, svg);
+    el.ld = Kit.mk('text', {x: lx, y: td + head - fs * 1.25, class: 'lab', 'font-size': fs}, svg);
+    el.cd = Kit.mk('text', {x: lx, y: td + head - fs * .15, class: 'cnt', 'font-size': fs * .85}, svg);
+    el.tal = null;
+  }
   el.geo = {cx, cy};
   render(false);
 }
@@ -74,9 +120,14 @@ function labels() {
   const u = Math.round(p * 100);
   el.lu.textContent = `UP = 1 · ${u}%`;
   el.ld.textContent = `DOWN = 0 · ${100 - u}%`;
-  el.tal.textContent = `Measured:  up × ${nUp}   ·   down × ${nDn}`;
-  el.status.textContent = state === 'super' ? (holding ? 'Both up and down at once' : (nUp + nDn ? 'Back in superposition' : 'Not measured yet: both at once'))
-                                             : `Measured: ${last === 'up' ? 'UP (1)' : 'DOWN (0)'}`;
+  const said = STATUS[state === 'super' ? (holding ? 'hold' : (nUp + nDn ? 'back' : 'fresh')) : last];
+  if (el.wide) {
+    el.status.textContent = said[0]; el.status2.textContent = said[1];
+    el.cu.textContent = `measured × ${nUp}`; el.cd.textContent = `measured × ${nDn}`;
+  } else {
+    el.status.textContent = said.join(' ');
+    el.tal.textContent = `Measured:  up × ${nUp}   ·   down × ${nDn}`;
+  }
 }
 
 function render(anim) {
@@ -115,7 +166,8 @@ function stop() {
   if (!Kit.calm) gsap.fromTo(el.e, {scale: 1.35, transformOrigin: '50% 50%'}, {scale: 1, duration: .4, ease: 'back.out(3)'});
   Kit.haptic('selection');
   if (nUp + nDn >= 5 && Kit.$('why').classList.contains('gone')) {
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    // The measuring is done: the controls leave and the drawing takes their room, as the answer comes in.
+    Kit.hide('say'); Kit.hide('ctl'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
   }
 }
 
@@ -142,6 +194,9 @@ Kit.play.card = async () => {
   }
   await w(500);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

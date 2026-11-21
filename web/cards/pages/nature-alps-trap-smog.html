@@ -41,19 +41,21 @@ const wind = [], smog = [];
 for (let i = 0; i < 28; i++) wind.push({x: Kit.rnd() * 1.1 - .05, lane: i % 4, y: null});
 for (let i = 0; i < 70; i++) smog.push({x: .32 + Kit.rnd() * .46, y: Kit.rnd(), r: .5 + Kit.rnd(), a: 1});
 
-const AX = [0, .04, .09, .13, .18, .24, .3], AH = [.6, .82, .62, 1, .72, .38, 0];
+const AX = [0, .04, .09, .13, .18, .24, .3], AH = [.6, .82, .62, 1, .72, .38, 0], ALPS = .62;
+// the Alps' full height: tall, with room left above the peak for their name once they are lowered
+const AT = () => Math.min(H * ALPS, gy - f * 1.6);
 const PX = [.8, .86, .9, .95, 1], PH = [0, .6, 1, .8, .9];
 function interp(xs, hs, x) {
   if (x <= xs[0]) return hs[0];
   for (let i = 1; i < xs.length; i++) if (x <= xs[i]) { const t = (x - xs[i-1]) / (xs[i] - xs[i-1]); return hs[i-1] + t * (hs[i] - hs[i-1]); }
   return hs[hs.length - 1];
 }
-const alpsH = x => x > .3 ? 0 : interp(AX, AH, x) * H * .52 * S.alps;
+const alpsH = x => x > .3 ? 0 : interp(AX, AH, x) * AT() * S.alps;
 const apH = x => x < .8 ? 0 : interp(PX, PH, x) * H * .16;
 
-function alpsPath() {
+function alpsPath(k = S.alps) {
   let d = `M0,${gy}`;
-  for (let i = 0; i < AX.length; i++) d += ` L${AX[i]*W},${gy - AH[i]*H*.52*S.alps}`;
+  for (let i = 0; i < AX.length; i++) d += ` L${AX[i]*W},${gy - AH[i]*AT()*k}`;
   return d + ` L${.3*W},${gy} Z`;
 }
 
@@ -77,6 +79,8 @@ Kit.onShow.card = () => {
   // smog
   E.smog = Kit.mk('g', {}, svg);
   smog.forEach(p => p.el = Kit.mk('circle', {style: 'fill:#6b5845'}, E.smog));
+  // where the Alps stand: shown once they are lowered, so the drawing keeps the barrier the wind no longer meets
+  E.ghost = Kit.mk('path', {d: alpsPath(1), 'stroke-width': 1.5, style: 'fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:var(--k);stroke-opacity:.5;stroke-dasharray:5 4;stroke-linejoin:round'}, svg);
   // mountains
   E.alps = Kit.mk('path', {style: ink}, svg);
   let d = `M${.8*W},${gy}`; PX.forEach((x, i) => d += ` L${x*W},${gy - PH[i]*H*.16}`); d += ` L${W},${gy} Z`;
@@ -86,8 +90,14 @@ Kit.onShow.card = () => {
   wind.forEach(p => { p.y = null; p.el = Kit.mk('line', {style: 'stroke:var(--k)', 'stroke-width': Math.max(2, f * .16), 'stroke-linecap': 'round', 'marker-end': 'url(#ah)'}, E.wind); });
   // labels
   const T = (x, y, s, a, extra = '') => { const t = Kit.mk('text', {x, y, 'text-anchor': a, style: `fill:var(--k);font:700 ${f}px var(--body);${extra}`}, svg); t.textContent = s; return t; };
-  E.alpsT = T(.13 * W, 0, 'ALPS', 'middle', `font:800 ${f}px var(--display);letter-spacing:.08em`);
-  T(W - 4, gy - H * .16 - f * .5, 'Apennines', 'end');
+  // the Alps' name inside the mountain, out of the wind riding over it; once it is lowered, over its outline,
+  // above the wind that now sweeps the plain
+  E.alpsT = T(.13 * W, gy - AT() * .3, 'ALPS', 'middle', `font:800 ${f}px var(--display);letter-spacing:.08em`);
+  const aw = E.alpsT.getComputedTextLength ? E.alpsT.getComputedTextLength() : f * 3.3;
+  E.alpsSpan = [Math.max(0, .13 - aw / 2 / W), .13, .09, Math.min(.3, .13 + aw / 2 / W)];
+  E.alpsTop = AT() * .3 + f * .85;
+  // the Apennines' name under them, in the ground, where the wind sweeping south never crosses it
+  T(W - 4, gy + f * 2.75, 'Apennines', 'end');
   T(6, gy + f * 1.35, 'NORTH', 'start', 'opacity:.7');
   T(W - 4, gy + f * 1.35, 'SOUTH', 'end', 'opacity:.7');
   T(mx, gy + f * 1.35, 'Milan', 'middle');
@@ -98,8 +108,11 @@ Kit.onShow.card = () => {
 function render() {
   if (!E.alps) return;
   E.alps.setAttribute('d', alpsPath());
-  E.alpsT.setAttribute('y', gy - H * .52 * S.alps - f * .45);
-  E.alpsT.setAttribute('opacity', Math.max(0, (S.alps - .2) / .8));
+  E.ghost.setAttribute('opacity', Math.min(1, Math.max(0, (1 - S.alps) * 1.6)));
+  const inside = Math.min(...E.alpsSpan.map(alpsH)) >= E.alpsTop + 2;
+  E.alpsT.style.fill = inside ? 'var(--c)' : 'var(--k)';
+  E.alpsT.setAttribute('opacity', inside ? 1 : .6);
+  E.alpsT.setAttribute('y', inside ? gy - AT() * .3 : gy - AT() - f * .45);
   E.wind.setAttribute('opacity', S.wind);
   const L = windL(), ext = windExt();
   wind.forEach(p => { if (p.y == null) return; const x2 = Math.min(W - ext, Math.max(L + ext, p.x * W)); p.el.setAttribute('x1', x2 - L); p.el.setAttribute('x2', x2); p.el.setAttribute('y1', p.y); p.el.setAttribute('y2', p.y); });
@@ -118,7 +131,7 @@ gsap.ticker.add(() => {
     if (p.x > xmax) { p.x = xmin; p.y = null; }
     const target = gy - H * .1 - p.lane * gap;
     if (p.y == null) p.y = target;
-    const top = gy - alpsH(p.x) - H * .03 - p.lane * gap * .7;
+    const top = gy - alpsH(p.x) - apH(p.x) - H * .03 - p.lane * gap * .7;
     p.y = Math.min(p.y + (target - p.y) * .006 * r, top);
   });
   const push = mode === 'open' ? Math.max(0, 1 - S.alps) * .006 * r : 0;
@@ -158,6 +171,9 @@ Kit.play.card = async () => {
   Kit.$('btn').click(); await w(2500);
   Kit.$('btn').click(); await w(3700);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('sv'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

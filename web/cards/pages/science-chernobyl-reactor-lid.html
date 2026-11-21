@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:hidden}
 #cap{font:700 max(2.1cqh,13px)/1.25 var(--body);color:var(--k);min-height:2.6em;display:flex;align-items:flex-end}
 #scrub{-webkit-appearance:none;appearance:none;width:100%;height:4.4cqh;min-height:32px;background:transparent;margin:0;cursor:pointer;touch-action:none}
 #scrub::-webkit-slider-runnable-track{height:max(1cqh,7px);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,transparent)}
@@ -50,35 +50,50 @@ const caps = [
   [1.01, 'Radioactive material pours out into the environment']
 ];
 
+// The whole blast stays inside its own box: the lid ends in the sky above the torn roof, tilted as much
+// as that sky allows; the roof breaks upward in the middle; the debris and the cloud land in the box;
+// and "radioactive material" is set where nothing covers it, as near the cloud as it can be.
+const inRect = (px, py, q, m) => {
+  // q: a rect {x, y, w, h} turned by q.rot degrees about (q.px, q.py), then moved by (q.tx, q.ty)
+  let x = px - (q.tx || 0), y = py - (q.ty || 0);
+  if (q.rot) { const a = -q.rot * Math.PI / 180, dx = x - q.px, dy = y - q.py; x = q.px + dx * Math.cos(a) - dy * Math.sin(a); y = q.py + dx * Math.sin(a) + dy * Math.cos(a); }
+  return x >= q.x - m && x <= q.x + q.w + m && y >= q.y - m && y <= q.y + q.h + m;
+};
+// The same draw of cloud, bubbles and debris every time it is drawn again, so a resize does not shuffle them.
+let seed = 7;
+const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 Kit.onShow.card = () => {
+  seed = 7;
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 12);
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
-  const cx = W / 2, gy = H * 0.93, ry = H * 0.47;
+  const pad = 3;
+  const cx = W / 2, gy = H - Math.max(H * 0.07, 10), ry = H * 0.4;
   const bx0 = W * 0.08, bx1 = W * 0.92;
-  const cw = W * 0.44, cy0 = H * 0.68, cy1 = gy - H * 0.02;
+  const cw = W * 0.44, cy0 = ry + (gy - ry) * 0.46, cy1 = gy - (gy - ry) * 0.04;
   const lh = Math.max(H * 0.07, 24), lw = cw + W * 0.1, ly = cy0 - lh;
   const ink = 'fill:var(--k)', stroke = 'stroke:var(--k);fill:none';
   const g = {W, H, cx, ly, lh, cy0, cy1, cw, ry, gy};
 
-  // cloud (behind everything)
+  // cloud (behind everything): it rises out of the core and spreads under the top of the box
   g.cloud = [];
   for (let i = 0; i < 9; i++) {
-    g.cloud.push({el: mk('circle', {cx, cy: ry, r: 0, style: 'fill:#b9e04a;opacity:0'}),
-      dx: (Kit.rnd() - .5) * W * 0.6, dy: -H * (0.12 + Kit.rnd() * 0.3), r: W * (0.07 + Kit.rnd() * 0.07), d: Kit.rnd() * 0.15});
+    const r = W * (0.07 + rnd() * 0.07), dx = (rnd() - .5) * W * 0.6, dy = -H * (0.12 + rnd() * 0.3), d = rnd() * 0.15;
+    const ex = Math.max(r + pad, Math.min(W - r - pad, cx + dx)), ey = Math.max(r + pad, ry + dy);
+    g.cloud.push({el: mk('circle', {cx, cy: ry, r: 0, style: 'fill:#b9e04a;opacity:0'}), dx: ex - cx, ey, r, d});
   }
   // ground
-  mk('rect', {x: 0, y: gy, width: W, height: H - gy + 2, style: 'fill:var(--k);opacity:.18'});
+  mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: 'fill:var(--k);opacity:.18'});
   mk('line', {x1: 0, y1: gy, x2: W, y2: gy, style: 'stroke:var(--k);stroke-width:' + Math.max(2, H * .006)});
   // building walls
   const sw = Math.max(2.5, W * 0.01);
   mk('path', {d: `M${bx0},${gy}V${ry}M${bx1},${gy}V${ry}`, style: stroke + ';stroke-width:' + sw + ';stroke-linecap:round'});
   // concrete pit around core
-  const pw = W * 0.06;
+  const pw = W * 0.06, pitB = Math.min(H * 0.015, gy - cy1);
   mk('rect', {x: cx - cw / 2 - pw, y: cy0, width: pw, height: cy1 - cy0, style: ink + ';opacity:.55'});
   mk('rect', {x: cx + cw / 2, y: cy0, width: pw, height: cy1 - cy0, style: ink + ';opacity:.55'});
-  mk('rect', {x: cx - cw / 2 - pw, y: cy1, width: cw + pw * 2, height: H * 0.015, style: ink + ';opacity:.55'});
+  mk('rect', {x: cx - cw / 2 - pw, y: cy1, width: cw + pw * 2, height: pitB, style: ink + ';opacity:.55'});
   // core
   g.core = mk('rect', {x: cx - cw / 2, y: cy0, width: cw, height: cy1 - cy0, style: 'fill:#9fb6cc'});
   g.glow = mk('rect', {x: cx - cw / 2, y: cy0, width: cw, height: cy1 - cy0, style: 'fill:#ff6a1f;opacity:0'});
@@ -87,12 +102,12 @@ Kit.onShow.card = () => {
     mk('line', {x1: x, y1: cy0 + (cy1 - cy0) * .18, x2: x, y2: cy1, style: 'stroke:var(--k);opacity:.35;stroke-width:' + Math.max(2, W * .008)});
   }
   g.bub = [];
-  for (let i = 0; i < 14; i++) g.bub.push({el: mk('circle', {cx: 0, cy: 0, r: Math.max(2, W * (0.008 + Kit.rnd() * 0.01)), style: 'fill:#fff;opacity:0'}), x: cx - cw / 2 + cw * (0.06 + Kit.rnd() * 0.88), ph: Kit.rnd(), sp: 0.5 + Kit.rnd()});
+  for (let i = 0; i < 14; i++) g.bub.push({el: mk('circle', {cx: 0, cy: 0, r: Math.max(2, W * (0.008 + rnd() * 0.01)), style: 'fill:#fff;opacity:0'}), x: cx - cw / 2 + cw * (0.06 + rnd() * 0.88), ph: rnd(), sp: 0.5 + rnd()});
   g.steamT = mk('text', {x: cx, y: (cy0 + cy1) / 2 + fs * .35, 'text-anchor': 'middle', style: `fill:var(--k);font:800 ${fs}px var(--body);letter-spacing:.08em`});
   g.steamT.textContent = 'STEAM';
   // side puffs
   g.puffs = [-1, 1].map(s => mk('circle', {cx: cx + s * lw / 2, cy: cy0 - lh * .2, r: 0, style: 'fill:#fff;opacity:0;stroke:var(--k);stroke-width:1.5'}));
-  // roof halves
+  // roof halves: at the end each turns about the middle, raised by the blast, and stays inside the walls
   const rh = Math.max(H * 0.03, 8);
   g.roofL = mk('g', {});
   mk('rect', {x: bx0 - sw, y: ry - rh, width: cx - bx0 + sw, height: rh, style: ink}, g.roofL);
@@ -101,27 +116,82 @@ Kit.onShow.card = () => {
   g.roofT = mk('text', {x: bx0 + W * 0.02, y: ry - rh - fs * .6, style: `fill:var(--k);font:700 ${fs}px var(--body)`});
   g.roofT.textContent = 'ROOF';
   g.rh = rh; g.bx0 = bx0; g.bx1 = bx1;
-  // debris
-  g.deb = [];
-  for (let i = 0; i < 26; i++) {
-    const a = -Math.PI / 2 + (Kit.rnd() - .5) * 2.2, sp = H * (0.3 + Kit.rnd() * 0.5);
-    const s = Math.max(3, W * (0.008 + Kit.rnd() * 0.018));
-    g.deb.push({el: mk('rect', {x: -s / 2, y: -s / 2, width: s, height: s, style: ink + ';opacity:0'}), vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, rot: (Kit.rnd() - .5) * 720, x0: cx + (Kit.rnd() - .5) * cw, y0: cy0});
-  }
+  const lift = Math.min(H * 0.06, ry - rh - pad * 2);
+  const reach = cx - bx0 + sw, tilt = Math.asin(Math.max(0, Math.min(1, (gy - ry + lift - H * 0.08) / reach))) * 180 / Math.PI;
+  g.roofTo = {l: {tx: -W * 0.03, ty: -lift, rot: -Math.min(35, tilt)}, r: {tx: W * 0.03, ty: -lift, rot: Math.min(40, tilt)}};
   // flash
   g.flash = mk('circle', {cx, cy: cy0, r: 0, style: 'fill:#fff4c2;opacity:0'});
-  // lid
+  // lid, and where it ends: in the sky over the roof's raised middle, tilted as far as it fits
   g.lid = mk('g', {});
   mk('rect', {x: cx - lw / 2, y: ly, width: lw, height: lh, rx: lh * .12, style: ink}, g.lid);
   const lfs = Math.max(12, Math.min(fs * 1.15, lh * 0.6));
   const lt = mk('text', {x: cx, y: ly + lh / 2 + lfs * .35, 'text-anchor': 'middle', style: `fill:var(--c);font:800 ${lfs}px var(--body)`}, g.lid);
   lt.textContent = 'LID · 1000 t';
-  // radioactive label — placed below the lid's final (rotated) position
-  const ra = 22 * Math.PI / 180;
-  const lidBot = H * 0.05 + lh / 2 + (lw / 2) * Math.sin(ra) + (lh / 2) * Math.cos(ra) + H * 0.01;
-  const radY = Math.min(Math.max(H * 0.36, lidBot + fs * 1.3), gy - fs * 0.5);
-  g.radT = mk('text', {x: W * 0.97, y: radY, 'text-anchor': 'end', style: `fill:var(--k);font:800 ${fs}px var(--body);opacity:0`});
-  g.radT.textContent = 'radioactive material';
+  const sky = ry - rh - lift - pad * 2;
+  const rot = -Math.min(18, Math.asin(Math.max(0, Math.min(1, (sky - lh) / lw))) * 180 / Math.PI);
+  const ra = -rot * Math.PI / 180;
+  const halfH = (lw / 2) * Math.sin(ra) + (lh / 2) * Math.cos(ra), halfW = (lw / 2) * Math.cos(ra) + (lh / 2) * Math.sin(ra);
+  const lcy = pad + halfH;
+  // what stands at the end, for the label and the debris to keep clear of
+  const tw = lt.getComputedTextLength ? lt.getComputedTextLength() : lw * .6, th = lfs * 1.25;
+  const tHalfW = (tw / 2) * Math.cos(ra) + (th / 2) * Math.sin(ra), tHalfH = (tw / 2) * Math.sin(ra) + (th / 2) * Math.cos(ra);
+  const standing = [
+    {x: bx0 - sw, y: ry - rh, w: cx - bx0 + sw, h: rh, rot: g.roofTo.l.rot, px: cx, py: ry, tx: g.roofTo.l.tx, ty: g.roofTo.l.ty},
+    {x: cx, y: ry - rh, w: bx1 - cx + sw, h: rh, rot: g.roofTo.r.rot, px: cx, py: ry, tx: g.roofTo.r.tx, ty: g.roofTo.r.ty},
+    {x: bx0 - sw, y: ry, w: sw * 2, h: gy - ry}, {x: bx1 - sw, y: ry, w: sw * 2, h: gy - ry},
+    {x: cx - cw / 2 - pw, y: cy0, w: cw + pw * 2, h: gy - cy0}, {x: 0, y: gy - 2, w: W, h: H}
+  ];
+  const lidAt = lcx => [
+    {x: cx - lw / 2, y: ly, w: lw, h: lh, rot, px: cx, py: ly + lh / 2, tx: lcx - cx, ty: lcy - (ly + lh / 2)},
+    {x: lcx - tHalfW, y: lcy - tHalfH, w: tHalfW * 2, h: tHalfH * 2}
+  ];
+  const clear = (solid, x0, y0, w, h, m) => {
+    if (x0 < pad || y0 < pad || x0 + w > W - pad || y0 + h > H - pad) return false;
+    const nx = Math.max(1, Math.ceil(w / 5)), ny = Math.max(1, Math.ceil(h / 4));
+    for (let i = 0; i <= nx; i++) for (let k = 0; k <= ny; k++) { const x = x0 + w * i / nx, y = y0 + h * k / ny; if (solid.some(q => inRect(x, y, q, m))) return false; }
+    return true;
+  };
+  // radioactive label: the free spot nearest the cloud, on one line or, where the sky is narrow, on two;
+  // the lid a little right of the middle, or against the right edge if that frees the label a place
+  g.radT = mk('text', {x: 0, y: 0, 'text-anchor': 'start', style: `fill:var(--k);font:800 ${fs}px var(--body);opacity:0`});
+  const words = ['radioactive', 'material'];
+  g.radT.textContent = words.join(' ');
+  const w1 = g.radT.getComputedTextLength ? g.radT.getComputedTextLength() : fs * 10;
+  g.radT.textContent = words[0];
+  const w2 = g.radT.getComputedTextLength ? g.radT.getComputedTextLength() : fs * 6;
+  const ccx = g.cloud.reduce((a, c) => a + cx + c.dx, 0) / g.cloud.length, ccy = g.cloud.reduce((a, c) => a + c.ey, 0) / g.cloud.length;
+  let best = null, lcx = Math.min(W - pad - halfW, W * 0.58);
+  for (const at of [lcx, W - pad - halfW]) {
+    const solid = standing.concat(lidAt(at));
+    for (const [n, rw] of [[1, w1], [2, w2]]) {
+      const rhh = fs * 1.25 * n;
+      let bd = Infinity;
+      for (let y = pad; y + rhh <= gy; y += 2) for (let x = pad; x + rw <= W - pad; x += 3) {
+        const d = (x + rw / 2 - ccx) ** 2 + (y + rhh / 2 - ccy) ** 2;
+        if (d < bd && clear(solid, x, y, rw, rhh, 3)) { bd = d; best = {x, y, n, rw, rhh}; }
+      }
+      if (best) break;
+    }
+    if (best) { lcx = at; break; }
+  }
+  if (!best) best = {x: W - pad - w1, y: Math.min(gy - fs * 1.25, lcy + halfH + 4), n: 1, rw: w1, rhh: fs * 1.25};
+  g.lidTo = {dx: lcx - cx, dy: lcy - (ly + lh / 2), rot};
+  g.radT.textContent = '';
+  (best.n === 1 ? [words.join(' ')] : words).forEach((w, i) => { const sp = Kit.mk('tspan', {x: best.x, dy: i ? fs * 1.2 : 0}, g.radT); sp.textContent = w; });
+  g.radT.setAttribute('x', best.x); g.radT.setAttribute('y', best.y + fs * .95);
+  const lab = {x: best.x - 4, y: best.y - 4, w: best.rw + 8, h: best.rhh + 8};
+  // debris: each flies on an arc from the core to a place of its own inside the box, clear of the label
+  g.deb = [];
+  for (let i = 0; i < 26; i++) {
+    const a = -Math.PI / 2 + (rnd() - .5) * 2.2, sp = H * (0.3 + rnd() * 0.5);
+    const s = Math.max(3, W * (0.008 + rnd() * 0.018)), air = rnd() < .45;
+    const x0 = cx + (rnd() - .5) * cw, y0 = cy0;
+    let tx = Math.max(s + pad, Math.min(W - s - pad, x0 + Math.cos(a) * sp * .8));
+    let ty = air ? pad + s + rnd() * Math.max(1, ry - lift - rh - s * 2 - pad) : gy - s * .6 - rnd() * Math.min(6, (gy - cy1) + 4);
+    if (tx > lab.x - s && tx < lab.x + lab.w + s && ty > lab.y - s && ty < lab.y + lab.h + s) ty = gy - s * .6;
+    const arc = Math.max(0, Math.min(H * 0.3, (y0 + ty) / 2 - pad - s));
+    g.deb.push({el: mk('rect', {x: -s / 2, y: -s / 2, width: s, height: s, style: ink + ';opacity:0'}), x0, y0, tx, ty, arc, rot: (rnd() - .5) * 720});
+  }
   g.lw = lw;
   G = g; render();
 };
@@ -150,31 +220,29 @@ function render(time) {
     c.style.opacity = (v * .9).toFixed(3);
   });
   // lid launch
-  const L = eOut(seg(t, 0.5, 1));
-  const dy = -L * (ly - H * 0.05) - jy * -1;
-  const rot = 22 * L;
-  g.lid.setAttribute('transform', `translate(${jx},${dy}) rotate(${rot},${cx},${ly + lh / 2})`);
+  const L = eOut(seg(t, 0.5, 1)), to = g.lidTo;
+  g.lid.setAttribute('transform', `translate(${jx + L * to.dx},${jy + L * to.dy}) rotate(${to.rot * L},${cx},${ly + lh / 2})`);
   // flash
   const fl = seg(t, 0.49, 0.62);
-  g.flash.setAttribute('r', fl * W * 0.45);
+  g.flash.setAttribute('r', fl * Math.min(W * 0.45, H * 0.6));
   g.flash.style.opacity = (fl > 0 ? (1 - fl) * 0.9 : 0).toFixed(3);
   // roof
-  const R = seg(t, 0.53, 1);
-  g.roofL.setAttribute('transform', `translate(${-W * 0.22 * R},${-H * 0.22 * R + H * 0.3 * R * R}) rotate(${-35 * R},${cx},${ry})`);
-  g.roofR.setAttribute('transform', `translate(${W * 0.22 * R},${-H * 0.2 * R + H * 0.3 * R * R}) rotate(${40 * R},${cx},${ry})`);
+  const R = eOut(seg(t, 0.53, 1)), rl = g.roofTo.l, rr = g.roofTo.r;
+  g.roofL.setAttribute('transform', `translate(${rl.tx * R},${rl.ty * R}) rotate(${rl.rot * R},${cx},${ry})`);
+  g.roofR.setAttribute('transform', `translate(${rr.tx * R},${rr.ty * R}) rotate(${rr.rot * R},${cx},${ry})`);
   g.roofT.style.opacity = (1 - seg(t, 0.44, 0.52)).toFixed(3);
   // debris
   const D = seg(t, 0.52, 1);
   g.deb.forEach(d => {
-    const x = d.x0 + d.vx * D, y = d.y0 + d.vy * D + H * 0.55 * D * D;
+    const x = d.x0 + (d.tx - d.x0) * D, y = d.y0 + (d.ty - d.y0) * D - d.arc * 4 * D * (1 - D);
     d.el.setAttribute('transform', `translate(${x},${y}) rotate(${d.rot * D})`);
-    d.el.style.opacity = D > 0 ? (1 - seg(D, .7, 1) * .6).toFixed(3) : 0;
+    d.el.style.opacity = D > 0 ? (1 - seg(D, .7, 1) * .4).toFixed(3) : 0;
   });
   // cloud
   g.cloud.forEach(c => {
     const v = eOut(seg(t, 0.6 + c.d, 1));
     c.el.setAttribute('cx', cx + c.dx * v);
-    c.el.setAttribute('cy', cy0 + (ry - cy0) * Math.min(1, v * 2) + c.dy * v);
+    c.el.setAttribute('cy', cy0 + (ry - cy0) * Math.min(1, v * 2) + (c.ey - ry) * v);
     c.el.setAttribute('r', c.r * v);
     c.el.style.opacity = (v * 0.55).toFixed(3);
   });
@@ -188,6 +256,8 @@ function finish() {
   if (done) return; done = true;
   Kit.haptic('success');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  // The story told, its time bar and the line that narrated it go, and the drawing takes the room.
+  setTimeout(() => { Kit.hide('cap'); Kit.hide('scrub'); Kit.hide('ends'); }, Kit.calm ? 0 : 450);
 }
 
 let lastHap = 0;
@@ -211,6 +281,9 @@ Kit.play.card = async () => {
   s.value = 1000; s.dispatchEvent(new Event('input', {bubbles: true}));
   await new Promise(r => setTimeout(r, 900));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
