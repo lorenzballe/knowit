@@ -6,16 +6,16 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "What is a manager’s output, according to Intel’s Andy Grove?",
+  "question": "A manager spends the week in meetings, approving plans and training two hires. What did Intel’s Andy Grove say was her output?",
   "options": [
-    "The decisions and plans they make",
-    "What the teams they influence produce",
-    "How well they do their own tasks"
+    "The decisions and plans she made",
+    "What the teams she influences produce",
+    "How well she did her own tasks"
   ],
   "correct": 1,
-  "answer": "What the teams they influence produce: their own group’s output plus that of neighbouring groups they sway. Grove found middle managers listing judgements, plans and people trained; those are activities, the means. So a manager’s hour counts by what it changes, like a short, well-aimed talk that shapes weeks of someone’s work.",
+  "answer": "What the teams she influences produce: her own group’s output plus that of neighbouring groups she sways. When Grove asked middle managers, they listed judgements, plans and people trained; he called those activities, not output. So her hour counts by what it changes, like a short, well-aimed talk that shapes weeks of someone’s work.",
   "move": "Judge your work by what changes around you, not by how busy you were.",
-  "trap": "‘The decisions and plans they make’: activity feels like output.",
+  "trap": "‘The decisions and plans she made’: activity feels like output.",
   "simply": "A football coach never scores a goal. You can still tell a good coach: the team plays better. Managers are the same: you judge them by how their team does, not by how busy they look.",
   "why": "Busy days feel productive, yet a day of meetings and emails can change nothing. Asking what your work changed for the people around you, a teammate unblocked, a mistake caught early, shows which hours mattered.",
   "sure": 0.35,
