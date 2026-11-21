@@ -10,8 +10,8 @@
 #pic{display:block;width:100%;flex:1;min-height:0}
 #opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:break-word}
+#why .body{margin:0;font:500 max(2.1cqh,13px)/1.42 var(--body);overflow-wrap:break-word}
+#why .body b{font-weight:800}
 .opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:break-word}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 #pic text{font-family:var(--body);font-weight:700}
@@ -27,7 +27,7 @@
         <button class="opt" data-i="1">The book</button>
         <button class="opt" data-i="2">Neither: same</button>
       </div>
-      <div id="why" class="gone"><p class="big">Same temperature</p><p class="body">Both sit at room temperature, and your warmer hand loses heat to each. Metal conducts it away fast, so it feels cold; the book takes it slowly. Same reason a bath mat feels nicer than the towel beside it.</p></div>
+      <div id="why" class="gone"><p class="body"><b>Same temperature.</b> Both sit at room temperature, and your warmer hand loses heat to each. Metal conducts it away fast, so it feels cold; the book takes it slowly. Same reason a bath mat feels nicer than the towel beside it.</p></div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Touch them in your mind. Pick one, then say how sure.</p>
@@ -46,12 +46,15 @@ function draw(){
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H} = Kit.fitSvg(svg);
   const fs = Math.max(12, Math.min(H * .055, W * .042, 18));
-  const ow = Math.min(W * .36, H * .55), oh = H * .21, top = H * .28;
-  const rlY = Math.min(H * .92, H - fs * .7);
-  const tlY = Math.min(H * .81, rlY - fs * 1.35);
+  // The words under each object take what they need, from the bottom up, at their real size;
+  // the hands and the objects share what is left, so a short box keeps every label apart.
+  const rlY = H - fs * .7, tlY = rlY - fs * 1.35;
+  const th = Math.max(8, Math.min(H * .032, fs * .8));
+  const ty = tlY - fs * .6 - th * .9 - 2, flY = ty - th * .9 - fs * .8;
+  const base = flY - fs * .9, oh = base * .43, top = base - oh, ow = Math.min(W * .36, oh * 2.6);
   const cols = [
-    {x: W * .27, feel: 'feels cold', rate: 'heat leaves fast', every: 55, speed: H * .55},
-    {x: W * .73, feel: 'feels warm', rate: 'heat leaves slowly', every: 420, speed: H * .12}
+    {x: W * .27, feel: 'feels cold', rate: 'heat leaves fast', every: 55, pace: 3},
+    {x: W * .73, feel: 'feels warm', rate: 'heat leaves slowly', every: 420, pace: .67}
   ];
   const ink = 'var(--k)';
   cols.forEach((c, i) => {
@@ -76,12 +79,12 @@ function draw(){
     Kit.mk('rect', {x: c.x - hw / 2, y: -20, width: hw, height: top + 20, rx: hw * .22, fill: '#f1c09a', stroke: ink, 'stroke-width': 2}, hand);
     for (let k = 1; k <= 3; k++) {
       const fx = c.x - hw / 2 + hw * k / 4;
-      Kit.mk('line', {x1: fx, y1: top - H * .1, x2: fx, y2: top - 3, stroke: ink, 'stroke-width': 1.3, opacity: .55}, hand);
+      Kit.mk('line', {x1: fx, y1: top - Math.min(H * .1, top * .4), x2: fx, y2: top - 3, stroke: ink, 'stroke-width': 1.3, opacity: .55}, hand);
     }
     // labels
-    Kit.mk('text', {x: c.x, y: H * .6, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': fs, fill: ink}, svg).textContent = c.feel;
+    Kit.mk('text', {x: c.x, y: flY, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': fs, fill: ink}, svg).textContent = c.feel;
     // thermometer
-    const th = Math.max(8, H * .032), tx = c.x - ow / 2 + th, tw = ow - th * 1.5, ty = Math.min(H * .71, tlY - fs * .6 - th * .9 - 2);
+    const tx = c.x - ow / 2 + th, tw = ow - th * 1.5;
     Kit.mk('rect', {x: tx, y: ty - th / 2, width: tw, height: th, rx: th / 2, fill: 'none', stroke: ink, 'stroke-width': 1.6}, svg);
     c.fill = Kit.mk('rect', {x: tx, y: ty - th / 2, width: revealed ? tw * .55 : 0, height: th, rx: th / 2, fill: HEAT}, svg);
     Kit.mk('circle', {cx: tx, cy: ty, r: th * .9, fill: HEAT, stroke: ink, 'stroke-width': 1.6}, svg);
@@ -90,7 +93,7 @@ function draw(){
     c.tl.textContent = revealed ? 'room temperature' : 'temperature ?';
     c.rl = Kit.mk('text', {x: c.x, y: rlY, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': fs, fill: HEAT}, svg);
     c.rl.textContent = revealed ? c.rate : '';
-    c.y0 = top + 2; c.len = oh * .85; c.hw = hw; c.acc = 0; c.parts = []; c.r = Math.max(2.5, H * .012);
+    c.y0 = top + 2; c.len = oh * .85; c.speed = c.len * c.pace; c.hw = hw; c.acc = 0; c.parts = []; c.r = Math.max(2.5, Math.min(H * .012, oh * .06));
   });
   G = {cols};
   if (revealed && Kit.calm) staticDots();
@@ -139,7 +142,8 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
   sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep');
-  reveal();
+  // The drawing is drawn again once the answer has taken its room; then the thermometers fill.
+  requestAnimationFrame(() => requestAnimationFrame(reveal));
   Kit.haptic(ok ? 'success' : 'light');
 });
 Kit.$('opts').addEventListener('click', e => {
@@ -149,6 +153,9 @@ Kit.$('opts').addEventListener('click', e => {
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1400)); };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

@@ -1,7 +1,7 @@
 {
  "format": 1,
- "version": 202611171442,
- "built": "2026-11-17T14:42:44Z",
+ "version": 202611210825,
+ "built": "2026-11-21T08:25:57Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -234033,7 +234033,11 @@
   "475": "thinking-z29",
   "476": "thinking-z32",
   "477": "thinking-h16",
-  "478": "thinking-g2"
+  "478": "thinking-g2",
+  "479": "thinking-book-superforecasting-4",
+  "480": "thinking-f2",
+  "481": "thinking-z21",
+  "482": "thinking-6"
  },
  "commons": {
   "1": [
@@ -238700,6 +238704,30 @@
    "medicine-shared-decisions-1",
    "cinema-film-preservation-1",
    "science-peer-review-2"
+  ],
+  "479": [
+   "language-book-the-language-instinct-5",
+   "medicine-placebo-or-real-2",
+   "maths-algorithms-8",
+   "technology-battery-myths-1",
+   "economics-geography-3"
+  ],
+  "480": [
+   "nature-common-myths-3",
+   "space-signals-2",
+   "maths-fermi-3",
+   "philosophy-book-mans-search-for-meaning-5"
+  ],
+  "481": [
+   "food-cooking-myths-3",
+   "art-book-the-story-of-art-4",
+   "language-emoji-3",
+   "history-book-sapiens-1"
+  ],
+  "482": [
+   "language-questions-that-lead-3",
+   "psychology-book-stumbling-on-happiness-3",
+   "music-bach-1"
   ]
  }
 }

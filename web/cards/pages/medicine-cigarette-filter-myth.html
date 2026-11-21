@@ -17,7 +17,7 @@
 .sw.b{background:#7a4a22;border-radius:.4cqh}
 .sw.p{background:var(--k);border-radius:50%}
 .sw.g{border-radius:50%;background:color-mix(in srgb,#c2185b 30%,transparent);box-shadow:inset 0 0 0 .2cqh #c2185b}
-#why .body{margin:0}
+#why .body{margin:0;font:500 clamp(12px,2.15cqh,14px)/1.32 var(--body)}
 </style>
 <article class="card" id="card" data-topic="medicine" data-kind="Pull apart · smoke">
   <div class="in">
@@ -42,6 +42,9 @@
 // Geometry as fractions of the drawing width
 const TIP = .05, FX = .5, FE = .7, M0 = .76, M1 = .95;
 const sent = [false, false, false];
+// What became of each part of the smoke, written into the drawing once all three are through.
+const OUT = [['Tobacco bits', 'stopped'], ['Big smoke particles', 'mostly trapped'], ['Toxic gases', 'almost all get through']];
+let finished = false;
 // Particles: layer, start fy, final fx, final fy, pass
 const parts = [];
 (function gen(){
@@ -50,6 +53,11 @@ const parts = [];
     parts.push({l:1, sy:Kit.rnd()*1.4-.7, fx: pass ? M0+.02+Kit.rnd()*(M1-M0-.04) : FX+.01+Kit.rnd()*(FE-FX-.02), fy: pass ? Kit.rnd()*2-1 : Kit.rnd()*1.5-.75, pass}); }
   for (let i = 0; i < 30; i++) { const pass = i >= 2;
     parts.push({l:2, sy:Kit.rnd()*1.4-.7, fx: pass ? M0+.02+Kit.rnd()*(M1-M0-.04) : FX+.02+Kit.rnd()*(FE-FX-.04), fy: pass ? Kit.rnd()*2-1 : Kit.rnd()*1.4-.7, pass}); }
+})();
+// Where each particle waits in the puff of smoke at the tip before it is sent: evenly spread, the three parts mixed.
+(function puffPlaces(){
+  const order = parts.map((p, i) => [Kit.rnd(), i]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+  order.forEach((i, k) => { const rr = Math.sqrt((k + .5) / parts.length), a = k * 2.39996; parts[i].cu = rr * Math.cos(a); parts[i].cv = rr * Math.sin(a); });
 })();
 let G = null, layer = null;
 function shape(p){
@@ -62,11 +70,33 @@ function fin(p){
   const inMouth = p.pass;
   return {x:p.fx*G.W, y: G.cy + p.fy*(inMouth ? G.r*1.25 : G.r*.75)};
 }
+// The mark each part of the smoke is drawn with, at (x, y) and about s across.
+function mark(svg, l, x, y, s){
+  if (l === 0) return Kit.mk('rect', {x:x-s*.5, y:y-s*.36, width:s, height:s*.72, rx:s*.14, style:'fill:#7a4a22'}, svg);
+  if (l === 1) return Kit.mk('circle', {cx:x, cy:y, r:s*.45, style:'fill:var(--k)'}, svg);
+  return Kit.mk('circle', {cx:x, cy:y, r:s*.42, style:'fill:color-mix(in srgb,#c2185b 30%,transparent);stroke:#c2185b;stroke-width:1.6'}, svg);
+}
 function draw(){
   const svg = Kit.$('pic'); gsap.killTweensOf('#pic *'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const r = Math.min(H*.13, W*.065), cy = H*.56;
-  G = {W, H, f, r, cy};
+  // From the top: the three names, the cigarette and the mouth, then the way the smoke is drawn in
+  // while it is being sent, or what became of each part of it once all three are through. A short
+  // box makes the cigarette thinner before anything else gives; the height left over goes to the
+  // rows and then round the whole, so the drawing keeps its real size in a tall box and a short one.
+  // Above them, while the smoke is being sent, the part not sent yet waits in a puff at the burning tip.
+  const fs = Math.max(f*.78, 12), lab = fs*1.3;
+  let row = fs*1.75;
+  const under = () => finished ? fs*.8 + 3*row : fs*3;
+  const pMin = finished ? 0 : fs*3.6, pGap = finished ? 0 : fs*.5;
+  let r = Math.min(H*.13, W*.065);
+  if (pMin + pGap + lab + 3.2*r + under() > H) r = Math.max(8, (H - pMin - pGap - lab - under())/3.2);
+  let spare = Math.max(0, H - pMin - pGap - lab - 3.2*r - under());
+  let gap = 0, ph = pMin;
+  if (finished) { const add = Math.min(spare*.6/3, fs*1.1); row += add; spare -= 3*add; gap = Math.min(spare*.4, fs*1.2); spare -= gap; }
+  else { const add = Math.max(0, Math.min(spare*.85, Math.min(H*.46, 136) - pMin)); ph += add; spare -= add; }
+  const cy = spare/2 + ph + pGap + lab + 1.6*r;
+  const puff = finished ? null : {x:W*.48, y:spare/2 + ph/2, rx:Math.min(W*.44, ph*2.4), ry:ph/2*.9};
+  G = {W, H, f, r, cy, puff};
   const ink = 'stroke:var(--k);stroke-width:1.6';
   // mouth
   Kit.mk('rect', {x:M0*W, y:cy-1.6*r, width:(M1-M0)*W, height:3.2*r, rx:r*.9, style:'fill:color-mix(in srgb,var(--k) 6%,transparent);stroke:var(--k);stroke-width:1.4;stroke-dasharray:4 4'}, svg);
@@ -80,26 +110,58 @@ function draw(){
   const tip = Kit.mk('rect', {x:(TIP-.02)*W, y:cy-r, width:.02*W, height:2*r, rx:2, style:'fill:#e2552c;stroke:var(--k);stroke-width:1.6'}, svg);
   tip.id = 'tip';
   // labels
-  const fs = Math.max(f*.78, 12), ly = cy-1.6*r-fs*.7;
+  const ly = cy-1.6*r-fs*.5;
   [['TOBACCO',(TIP+FX)/2],['FILTER',(FX+FE)/2],['MOUTH',(M0+M1)/2]].forEach(([t,x]) => {
-    const e = Kit.mk('text', {x:x*W, y:ly, 'text-anchor':'middle', style:`font:700 ${fs}px var(--mono);fill:var(--k);letter-spacing:.06em`}, svg); e.textContent = t; });
-  // flow arrow
-  const ay = cy+r+fs*1.4;
-  Kit.mk('line', {x1:TIP*W, y1:ay, x2:(M0-.02)*W, y2:ay, style:'stroke:var(--muted);stroke-width:1.2'}, svg);
-  Kit.mk('path', {d:`M${(M0-.02)*W-6},${ay-4} L${(M0-.02)*W},${ay} L${(M0-.02)*W-6},${ay+4}`, style:'fill:none;stroke:var(--muted);stroke-width:1.2'}, svg);
-  const st = Kit.mk('text', {x:TIP*W, y:ay+fs*1.35, style:`font:600 ${fs}px var(--body);fill:var(--muted)`}, svg); st.textContent = 'smoke drawn in';
+    const e = Kit.mk('text', {x:x*W, y:ly, 'text-anchor':'middle', style:`font:800 ${fs}px var(--body);fill:var(--k);letter-spacing:.08em`}, svg); e.textContent = t; });
+  if (!finished) {
+    // flow arrow
+    const ay = cy+r+fs*1.4;
+    Kit.mk('line', {x1:TIP*W, y1:ay, x2:(M0-.02)*W, y2:ay, style:'stroke:var(--k);stroke-width:1.4;opacity:.7'}, svg);
+    Kit.mk('path', {d:`M${(M0-.02)*W-6},${ay-4} L${(M0-.02)*W},${ay} L${(M0-.02)*W-6},${ay+4}`, style:'fill:none;stroke:var(--k);stroke-width:1.4;opacity:.7'}, svg);
+    const st = Kit.mk('text', {x:TIP*W, y:ay+fs*1.35, style:`font:600 ${fs}px var(--body);fill:var(--k);opacity:.8`}, svg); st.textContent = 'smoke drawn in';
+  } else {
+    // What became of each part, each row led by the mark its part is drawn with.
+    const y0 = cy+1.6*r+fs*.8+gap;
+    OUT.forEach(([name, res], i) => {
+      const y = y0+(i+.5)*row;
+      mark(svg, i, fs*.6, y, fs*1.05);
+      Kit.mk('text', {x:fs*1.55, y:y+fs*.37, style:`font:800 ${fs*1.05}px var(--body);fill:var(--k)`}, svg).textContent = name;
+      Kit.mk('text', {x:W-2, y:y+fs*.37, 'text-anchor':'end', style:`font:600 ${fs}px var(--body);fill:var(--k)`}, svg).textContent = res;
+    });
+  }
+  if (puff) {
+    Kit.mk('path', {d:puffPath(puff.x, puff.y, puff.rx, puff.ry), style:'fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:color-mix(in srgb,var(--k) 55%,transparent);stroke-width:1.4'}, svg);
+    const x0 = puff.x - puff.rx*.72, y0 = puff.y + puff.ry*.72, x1 = TIP*W, y1 = cy - r - 4;
+    Kit.mk('path', {d:`M${x0},${y0} Q${x1 - 2},${(y0 + y1)/2} ${x1},${y1}`, style:'fill:none;stroke:var(--k);stroke-width:1.4;stroke-dasharray:3 4;opacity:.7'}, svg);
+  }
   layer = Kit.mk('g', {}, svg);
-  parts.forEach(p => { p.el = null; if (sent[p.l]) { p.el = shape(p); gsap.set(p.el, fin(p)); } });
+  parts.forEach(p => { p.el = null; if (sent[p.l]) { p.el = shape(p); gsap.set(p.el, fin(p)); } else if (puff) { p.el = shape(p); gsap.set(p.el, waiting(p)); } });
 }
+// A puff of smoke: an ellipse with a scalloped edge.
+function puffPath(cx, cy, rx, ry){
+  const n = 11, at = (a, k) => [cx + Math.cos(a)*rx*k, cy + Math.sin(a)*ry*k];
+  let d = '';
+  for (let i = 0; i <= n; i++) {
+    const [x, y] = at(i/n*Math.PI*2, 1);
+    if (!i) { d = `M${x.toFixed(1)},${y.toFixed(1)}`; continue; }
+    const [qx, qy] = at((i - .5)/n*Math.PI*2, 1.22);
+    d += ` Q${qx.toFixed(1)},${qy.toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)}`;
+  }
+  return d + 'Z';
+}
+// Where a particle waits in the puff.
+const waiting = p => ({x:G.puff.x + p.cu*G.puff.rx*.8, y:G.puff.y + p.cv*G.puff.ry*.74, opacity:1});
 function send(l){
   const ps = parts.filter(p => p.l === l);
   ps.forEach((p, i) => {
-    p.el = shape(p);
     const s = {x:TIP*G.W, y:G.cy + p.sy*G.r*.6}, e = fin(p);
-    gsap.set(p.el, {x:s.x, y:s.y, opacity:0});
+    const waited = !!p.el;
+    if (!waited) { p.el = shape(p); gsap.set(p.el, {x:s.x, y:s.y, opacity:0}); }
     if (Kit.calm) { gsap.set(p.el, {...e, opacity:1}); return; }
     const tl = gsap.timeline({delay:i*.045});
-    tl.to(p.el, {opacity:1, duration:.15});
+    // out of the puff and into the burning tip, then on through the cigarette
+    if (waited) tl.to(p.el, {x:s.x, y:s.y, duration:.45, ease:'power2.in'});
+    else tl.to(p.el, {opacity:1, duration:.15});
     if (p.pass) {
       tl.to(p.el, {x:FE*G.W, y:G.cy+p.sy*G.r*.5, duration:1.1+Kit.rnd()*.3, ease:'none'})
         .to(p.el, {x:e.x, y:e.y, duration:.6, ease:'power2.out'});
@@ -113,9 +175,12 @@ Kit.$('lays').addEventListener('click', e => {
   const b = e.target.closest('.lay'); if (!b) return;
   const l = +b.dataset.i; if (sent[l]) return;
   sent[l] = true; b.classList.add('done'); Kit.haptic('light'); send(l);
+  // Once all three are through, the buttons have done their work: what they found goes into the drawing.
   if (sent.every(Boolean)) setTimeout(() => {
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-  }, Kit.calm ? 0 : 1600);
+    finished = true;
+    Kit.hide('lays'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    draw();
+  }, Kit.calm ? 0 : 2400);
 });
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.lay', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
@@ -124,6 +189,9 @@ Kit.play.card = async () => {
   for (let i = 0; i < 3; i++) { bs[i].click(); await new Promise(r => setTimeout(r, 200)); }
   await new Promise(r => setTimeout(r, 3200));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

@@ -11,16 +11,16 @@
 #legend{display:flex;gap:5cqw;justify-content:center;font:600 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
 #legend i{display:inline-block;width:max(1.4cqh,10px);height:max(1.4cqh,10px);border-radius:50%;vertical-align:-.15em;margin-right:1.5cqw}
 #cap{font:700 max(2.1cqh,14px)/1.25 var(--body);color:var(--k);min-height:5.4cqh;overflow-wrap:break-word}
-#cap .lo{font-weight:500;color:var(--muted)}
+#cap .lo{font-weight:500;opacity:.78}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{margin:0}
 #why .body{margin:0;font-size:max(1.9cqh,13px);line-height:1.3}
+#why .body b{font-weight:800}
 #scrub{width:100%;margin:.4cqh 0 0;-webkit-appearance:none;appearance:none;height:max(4.4cqh,32px);background:transparent;cursor:pointer;touch-action:none}
 #scrub::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 22%,transparent)}
 #scrub::-moz-range-track{height:max(.9cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 22%,transparent)}
 #scrub::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);margin-top:calc((max(.9cqh,6px) - max(3.6cqh,26px))/2);border:.4cqh solid var(--c)}
 #scrub::-moz-range-thumb{width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);border:.4cqh solid var(--c)}
-#ticks{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1.2 var(--body);color:var(--muted);margin-top:-.4cqh}
+#ticks{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1.2 var(--body);color:var(--k);opacity:.78;margin-top:-.4cqh}
 .lab{font-family:var(--body);font-weight:800;letter-spacing:.06em;fill:var(--k)}
 .cellbody{fill:color-mix(in srgb,#ffb3a7 55%,var(--c));stroke:var(--k);stroke-dasharray:7 5}
 .na{fill:#f59e0b;stroke:var(--k);stroke-width:1}
@@ -36,8 +36,7 @@
       <div id="legend"><span><i style="background:#f59e0b"></i>sodium</span><span><i style="background:#2f7de1"></i>water</span></div>
       <p id="cap"></p>
       <div id="why" class="gone">
-        <p class="big">Osmotic pressure</p>
-        <p class="body">Water moves from the side with less dissolved sodium to the side with more. With too little sodium in the blood (hyponatremia), water pours into the cells and they swell. Luckily it almost never happens: nobody drinks 10 litres a day for a week.</p>
+        <p class="body"><b>Osmotic pressure.</b> Water moves from the side with less dissolved sodium to the side with more. With too little sodium in the blood (hyponatremia), water pours into the cells and they swell. From drinking water it almost never happens: it takes about 10 litres a day for a week.</p>
       </div>
       <input data-drag id="scrub" type="range" min="0" max="1000" value="0" aria-label="Timeline">
       <div id="ticks"><span>balanced</span><span>too much water</span><span>swelling</span></div>
@@ -57,30 +56,51 @@ const ease = v => v * v * (3 - 2 * v);
 function build() {
   const {W, H, f} = Kit.fitSvg(svg);
   while (svg.firstChild) svg.removeChild(svg.firstChild);
+  G = null;
+  if (W < 40 || H < 30) return;
   const fs = Math.max(f, 12);
-  const top = fs * 2.2;
-  const cx = W / 2, cy = top + (H - top) / 2;
-  const r0 = Math.min(W, H - top) * 0.23, rMax = r0 * 1.38;
+  const g = Kit.mk('g', {}, svg);
+  const lab = Kit.mk('text', {x: fs * .5, y: fs * 1.15, class: 'lab', 'font-size': fs}, g);
+  lab.textContent = 'BLOOD · OUTSIDE';
+  let lw = fs * 8.8; try { lw = lab.getComputedTextLength() || lw; } catch (_) {}
+  // The label's corner stays clear of the cell and of the dots.
+  const lr = fs * .5 + lw + fs * .5, lb = fs * 1.6;
+  // The cell, centred: as big as the box allows once it has swollen. While water flows in, its arrows
+  // reach past it (in a low, wide box only from the sides); once the story is told they are gone,
+  // and the cell takes the whole height.
+  const flat = H < W * .5;
+  const reach = done ? 3 : Math.max(f * .8, 8) + Math.max(f * 1.6, 16) + 2, up = flat ? 3 : reach, ah = Math.max(f * .55, 6);
+  let rMax = 0, cx = W / 2, cy = H / 2;
+  for (let i = 0; i <= 6; i++) for (let k = 0; k <= 10; k++) {
+    const x = W / 2 + W * .025 * i, y = H / 2 + lb * .6 * k / 10;
+    let r = Math.min(Math.min(y, H - y) - up, Math.min(x, W - x) - reach) - 2;
+    if (!flat && x - ah - 2 <= lr) r = Math.min(r, y - lb - reach);
+    r = Math.min(r, Math.hypot(Math.max(0, x - lr), y - lb) - 4);
+    if (r > rMax + 2 + i) { rMax = r; cx = x; cy = y; }
+  }
+  rMax = Math.max(8, Math.min(rMax, Math.min(W, H) * (done ? .42 : .34)));
+  const r0 = rMax / 1.38;
   const dr = Math.max(f * 0.48, 5), wr = Math.max(f * 0.32, 3.5);
   const pts = [];
   const pad = dr * 2;
-  let tries = 0;
-  while (pts.length < 44 && tries < 6000) {
-    tries++;
-    const x = pad + Kit.rnd() * (W - 2 * pad), y = top + pad + Kit.rnd() * (H - top - 2 * pad);
+  // The same draw of dots each time it is drawn again, so a resize does not shuffle them.
+  let seed = 7, gap = dr * 3, tries = 0;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  while (pts.length < 44 && gap > dr * 2.1) {
+    if (++tries > 1500) { tries = 0; gap *= .9; }
+    const x = pad + rnd() * (W - 2 * pad), y = pad + rnd() * (H - 2 * pad);
     if (Math.hypot(x - cx, y - cy) < rMax + dr * 2) continue;
-    if (pts.some(p => Math.hypot(p.x - x, p.y - y) < dr * 3)) continue;
+    if (x < lr + dr && y < lb + dr) continue;
+    if (pts.some(p => Math.hypot(p.x - x, p.y - y) < gap)) continue;
     pts.push({x, y});
   }
   const naOut = pts.slice(0, 16), wOut = pts.slice(16);
-  const g = Kit.mk('g', {}, svg);
-  Kit.mk('text', {x: pad * .5, y: fs * 1.2, class: 'lab', 'font-size': fs}, g).textContent = 'BLOOD · OUTSIDE';
   const cell = Kit.mk('circle', {cx, cy, r: r0, class: 'cellbody', 'stroke-width': Math.max(f * .22, 2.5)}, g);
   const cellLab = Kit.mk('text', {x: cx, y: cy, class: 'lab', 'font-size': fs, 'text-anchor': 'middle'}, g);
   cellLab.textContent = 'CELL';
   const arrows = [];
   for (let i = 0; i < 6; i++) {
-    const a = i / 6 * Math.PI * 2 + .5;
+    const a = flat ? [-.45, 0, .45][i % 3] + (i < 3 ? 0 : Math.PI) : i / 6 * Math.PI * 2 + .5;
     arrows.push({a, el: Kit.mk('path', {class: 'arr', 'stroke-width': Math.max(f * .3, 3), opacity: 0}, g)});
   }
   const naIn = [];
@@ -103,7 +123,7 @@ function render() {
   G.cell.setAttribute('r', r);
   const strain = cl((t - .8) / .2);
   G.cell.style.stroke = strain > 0 ? `color-mix(in srgb,#e11d48 ${Math.round(strain * 100)}%,var(--k))` : '';
-  G.cellLab.setAttribute('y', cy - r * .62 + fs * .35);
+  G.cellLab.setAttribute('y', cy - Math.min(r * .62, r - fs * 1.25) + fs * .35);
   G.naIn.forEach(n => {
     n.el.setAttribute('cx', cx + Math.cos(n.a) * n.k * r);
     n.el.setAttribute('cy', cy + Math.sin(n.a) * n.k * r * .9 + fs * .3);
@@ -124,7 +144,8 @@ function render() {
     }
     w.el.setAttribute('cx', x); w.el.setAttribute('cy', y); w.el.setAttribute('opacity', op);
   });
-  const ao = cl((t - .36) / .08) * (1 - cl((t - .9) / .1));
+  let ao = cl((t - .36) / .08) * (1 - cl((t - .9) / .1));
+  if (ao < .01 || done) ao = 0;
   const L = Math.max(f * 1.6, 16), h = Math.max(f * .55, 6);
   G.arrows.forEach(a => {
     const c = Math.cos(a.a), s = Math.sin(a.a);
@@ -151,14 +172,17 @@ function caption() {
 function finish() {
   if (done) return;
   done = true;
+  t = 1; render();
   Kit.haptic('success');
-  Kit.hide('say'); cap.classList.add('gone'); Kit.$('legend').classList.add('gone');
+  // The story is told: the timeline and its hints give their room to the drawing.
+  Kit.hide('say'); cap.classList.add('gone'); Kit.$('legend').classList.add('gone'); Kit.hide('scrub'); Kit.hide('ticks');
   Kit.show('why'); Kit.show('keep');
   if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 
 let lastStep = 0;
 scrub.addEventListener('input', () => {
+  if (done) return;
   t = scrub.value / 1000;
   const step = Math.floor(t * 4);
   if (step !== lastStep) { lastStep = step; Kit.haptic('selection'); }
@@ -181,6 +205,10 @@ Kit.play.card = async () => {
   }
   await new Promise(r => setTimeout(r, 700));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// The first caption is in place before the first layout, so the first drawing does not move the page under itself.
+caption();
+{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

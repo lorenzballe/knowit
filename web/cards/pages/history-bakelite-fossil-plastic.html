@@ -8,9 +8,8 @@
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);margin:0;min-height:5.2cqh;overflow-wrap:anywhere}
-#why{display:flex;flex-direction:column;gap:1.2cqh;min-height:0;flex-shrink:1;overflow:auto}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:anywhere}
+#why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
 #row{display:flex;align-items:center;gap:3cqw}
 #next{font:700 max(2.1cqh,14px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
 #dots{font:600 max(1.7cqh,12px)/1 var(--mono);color:var(--muted)}
@@ -22,10 +21,7 @@
     <div class="stagebox" id="stage">
       <svg id="pic"></svg>
       <p id="cap">Before: plastic was made from cellulose, a material from plants. It caught fire easily.</p>
-      <div id="why" class="gone">
-        <p class="big">From plants to oil and gas</p>
-        <p class="body">Early plastic came from cellulose, a plant material. Bakelite (1907) used oil and methane gas instead: far more abundant and far less flammable, so plastic could be made in huge amounts.</p>
-      </div>
+      <p class="body gone" id="why"><b>From plants to oil and gas.</b> Bakelite (1907) used oil and methane gas instead of plant cellulose: far more abundant, far less flammable, so plastic could be made in huge amounts.</p>
       <div id="row"><button id="next">Next step</button><span id="dots">1 / 5</span></div>
     </div>
     <p class="say" id="say">Tap Next step to follow the switch.</p>
@@ -50,23 +46,36 @@ function draw() {
   if (E) gsap.killTweensOf(Object.values(E).flat());
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(13, Math.min(f, W / 22)), sub = Math.max(12, fs * .82), L = fs * 1.45;
+  const fs = Math.max(12, Math.min(f, W / 22)), sub = Math.max(11, fs * .82), L = fs * 1.3;
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
   const txt = (x, y, s, w, str, col, p) => { const t = mk('text', {x, y, 'text-anchor': 'middle', style: `font:${w} ${s}px var(--body);fill:${col || 'var(--k)'}`}, p); t.textContent = str; return t; };
-  // layout, bottom up
-  const s = Math.min(W * .8 / 10 * .72, H * .07, fs * 1.6);
-  const rowY = H - s / 2 - 3, rowLab = rowY - s / 2 - .55 * L;
-  const prodLab = rowLab - 1.5 * L, prodBot = prodLab - 1.05 * L;
-  const ph = Math.max(18, Math.min(W * .15, H * .13)), pw = ph * 1.6;
-  const prodY = prodBot - ph / 2, prodTop = prodBot - ph;
-  const srcTop = 2.75 * L, srcBot = srcTop + (prodTop - srcTop) * .6;
-  const sh = srcBot - srcTop;
+  const len = (t, guess) => { let n = 0; try { n = t.getComputedTextLength(); } catch (e) {} return n || guess; };
+  // Drawn for the room it has: tall at the start, short and wide once the answer is in. Always the
+  // two sources, the pipes, the plastic with its name and its flame, and the row of how much can be
+  // made, its name beside it. With room to spare, a second line under each source's name, the
+  // plastic's name under it and the row's name over the row, as in a tall picture.
+  const rowName = txt(0, 0, sub, 600, 'how much can be made', 'var(--muted)');
+  const rnw = len(rowName, sub * 10);
+  const sC = Math.max(8, Math.min(fs * 1.1, (W - rnw - fs) / 13.6)), sU = Math.min(W * .8 / 10 * .72, fs * 1.25);
+  const room0 = H - L * 1.15 - 8 - (sC + 4);
+  const two = room0 - L * .95 >= 120, roomT = room0 - (two ? L * .95 : 0);
+  const cost = L * 1.25 + sU + L * 1.1 - sC - 4, tall = roomT - cost >= 140;
+  const room = tall ? roomT - cost : roomT, s = tall ? sU : sC;
+  const ph = Math.max(16, Math.min(room * .2, W * .13)), pw = ph * 1.6;
+  const sh = Math.max(14, Math.min((room - ph) * .66, W * .26));
+  const dp = Math.max(6, Math.min(room - ph - sh, sh * .75));
+  const spare = Math.max(0, room - ph - sh - dp);
+  const nameY = fs * .95, srcTop = (two ? nameY + L * .95 : nameY) + fs * .5 + spare / 2, srcBot = srcTop + sh;
+  const prodTop = srcBot + dp, prodBot = prodTop + ph, prodY = prodTop + ph / 2;
+  const rowY = H - s / 2 - 4;
   // groups (no panels behind them)
   const left = mk('g'), right = mk('g');
-  txt(W * .25, L * .95, fs, 800, 'CELLULOSE', null, left);
-  txt(W * .25, L * 1.95, sub, 500, 'from plants', 'var(--muted)', left);
-  txt(W * .75, L * .95, fs, 800, 'OIL · METHANE', null, right);
-  txt(W * .75, L * 1.95, sub, 500, 'fossil fuels', 'var(--muted)', right);
+  txt(W * .25, nameY, fs, 800, 'CELLULOSE', null, left);
+  txt(W * .75, nameY, fs, 800, 'OIL · METHANE', null, right);
+  if (two) {
+    txt(W * .25, nameY + L * .95, sub, 500, 'from plants', 'var(--muted)', left);
+    txt(W * .75, nameY + L * .95, sub, 500, 'fossil fuels', 'var(--muted)', right);
+  }
   // plant
   const cx = W * .25, sw = Math.max(2, sh * .04);
   mk('line', {x1: cx - sh * .35, y1: srcBot - 2, x2: cx + sh * .35, y2: srcBot - 2, style: `stroke:#5a3f1c;stroke-width:${sw};stroke-linecap:round`}, left);
@@ -90,32 +99,38 @@ function draw() {
   const pst = `fill:none;stroke-width:${Math.max(3, fs * .32)};stroke-linecap:round;stroke-dasharray:${fs * .5} ${fs * .55}`;
   const pipeL = mk('path', {d: `M${W * .25},${srcBot + 4} C${W * .25},${prodTop} ${W / 2 - pw * .2},${srcBot} ${W / 2 - pw * .2},${prodTop - 2}`, style: pst + ';stroke:#1b6b2e'});
   const pipeR = mk('path', {d: `M${W * .75},${srcBot + 4} C${W * .75},${prodTop} ${W / 2 + pw * .2},${srcBot} ${W / 2 + pw * .2},${prodTop - 2}`, style: pst + ';stroke:var(--k)'});
-  // product
+  // product, its name under it in a tall picture and beside it in a short one
   const prod = mk('rect', {x: W / 2 - pw / 2, y: prodTop, width: pw, height: ph, rx: ph * .22, style: 'stroke:var(--k);stroke-width:2', fill: '#efe3c4'});
   mk('circle', {cx: W / 2 - pw * .2, cy: prodY, r: ph * .22, style: 'fill:none;stroke:color-mix(in srgb,var(--k) 45%,transparent);stroke-width:2'});
   [.12, .26].forEach(k => mk('line', {x1: W / 2 + pw * .08, y1: prodTop + ph * (.3 + k), x2: W / 2 + pw * .36, y2: prodTop + ph * (.3 + k), style: 'stroke:color-mix(in srgb,var(--k) 45%,transparent);stroke-width:2;stroke-linecap:round'}));
-  const pl = txt(W / 2, prodLab, fs, 800, step >= 1 ? 'Bakelite' : 'early plastic');
+  const pl = tall ? txt(W / 2, prodBot + L * .95, fs, 800, '') : txt(W / 2 - pw / 2 - fs * .55, prodY + fs * .36, fs, 800, '');
+  if (!tall) pl.setAttribute('text-anchor', 'end');
   // flame
-  const fh = ph * 1.15, flx = W / 2 + pw / 2 + fh * .5;
+  const fh = ph * 1.15, flx = W / 2 + pw / 2 + fh * .5 + 2;
   const flame = mk('g');
   mk('path', {d: `M${flx},${prodBot} c${-fh * .42},0 ${-fh * .45},${-fh * .55} 0,${-fh} c${fh * .45},${fh * .45} ${fh * .42},${fh} 0,${fh}z`, style: 'fill:#c2410c'}, flame);
   mk('path', {d: `M${flx},${prodBot} c${-fh * .2},0 ${-fh * .22},${-fh * .3} 0,${-fh * .55} c${fh * .22},${fh * .25} ${fh * .2},${fh * .55} 0,${fh * .55}z`, style: 'fill:#ffd43b'}, flame);
-  const fl = txt(flx + fh * .5 + 4, prodBot - fh * .5 + sub * .35, sub, 700, 'burns far less', '#9a2f00');
+  const fl = txt(flx + fh * .5 + 4, prodBot - Math.min(fh, ph) * .5 + sub * .35, sub, 700, '', '#9a2f00');
   fl.setAttribute('text-anchor', 'start');
-  let flw = 0; try { flw = fl.getComputedTextLength(); } catch (e) {}
-  if (flw && +fl.getAttribute('x') + flw > W - 2) fl.setAttribute('x', W - 2 - flw);
   // year
   const year = mk('g');
-  const yr = Math.max(fs * 1.9, 26);
+  const yr = Math.min(Math.max(fs * 1.9, 26), sh * .55, W * .1);
   mk('circle', {cx: W / 2, cy: srcTop + sh * .45, r: yr, style: 'fill:var(--k)'}, year);
-  const yt = txt(W / 2, srcTop + sh * .45 + fs * .4, fs * 1.1, 800, '1907', 'var(--c)', year);
+  const ys = Math.min(fs * 1.1, yr * .62);
+  const yt = txt(W / 2, srcTop + sh * .45 + ys * .36, ys, 800, '1907', 'var(--c)', year);
   yt.style.fontFamily = 'var(--display)';
-  // output row
-  txt(W / 2, rowLab, sub, 600, 'how much can be made', 'var(--muted)');
+  // output row: its name over it in a tall picture, beside it in a short one
   const items = [];
-  const gap = (W * .8 - s * 10) / 9;
-  for (let i = 0; i < 10; i++) items.push(mk('rect', {x: W * .1 + i * (s + gap), y: rowY - s / 2, width: s, height: s, rx: s * .22, style: 'stroke:var(--k);stroke-width:1.5', fill: 'transparent'}));
-  E = {left: [left], right: [right], pipeL: [pipeL], pipeR: [pipeR], prod: [prod], flame: [flame], year: [year], items, pl, fl, fs};
+  if (tall) {
+    rowName.setAttribute('x', W / 2); rowName.setAttribute('y', rowY - s / 2 - L * .45);
+    const gap = (W * .8 - s * 10) / 9;
+    for (let i = 0; i < 10; i++) items.push(mk('rect', {x: W * .1 + i * (s + gap), y: rowY - s / 2, width: s, height: s, rx: s * .22, style: 'stroke:var(--k);stroke-width:1.5', fill: 'transparent'}));
+  } else {
+    const x0 = Math.max(2, (W - s * 13.6 - fs * .6 - rnw) / 2);
+    for (let i = 0; i < 10; i++) items.push(mk('rect', {x: x0 + i * s * 1.4, y: rowY - s / 2, width: s, height: s, rx: s * .22, style: 'stroke:var(--k);stroke-width:1.5', fill: 'transparent'}));
+    rowName.setAttribute('text-anchor', 'start'); rowName.setAttribute('x', x0 + s * 13.6 + fs * .6); rowName.setAttribute('y', rowY + sub * .36);
+  }
+  E = {left: [left], right: [right], pipeL: [pipeL], pipeR: [pipeR], prod: [prod], flame: [flame], year: [year], items, pl, fl, at: {W, flx, fh, ph, prodBot, sub}};
   if (!Kit.calm) gsap.to([pipeL, pipeR], {attr: {'stroke-dashoffset': -fs * 1.05 * 4}, duration: 2.4, ease: 'none', repeat: -1});
   apply(0);
 }
@@ -133,6 +148,10 @@ function apply(d) {
   go(E.flame, {scale: step >= 3 ? .3 : 1, transformOrigin: '50% 100%'});
   E.pl.textContent = step >= 1 ? 'Bakelite' : 'early plastic';
   E.fl.textContent = step >= 3 ? 'burns far less' : 'burns easily';
+  // The flame's words stay beside the flame as it shrinks, and inside the picture.
+  let flw = 0; try { flw = E.fl.getComputedTextLength(); } catch (e) {}
+  const a = E.at, small = step >= 3;
+  go(E.fl, {attr: {x: Math.min(a.flx + a.fh * (small ? .2 : .5) + 4, a.W - 2 - flw), y: a.prodBot - (small ? a.fh * .15 : Math.min(a.fh, a.ph) * .5) + a.sub * .35}});
   E.items.forEach((r, i) => {
     const on = i < MADE[step];
     const v = {attr: {fill: on ? (fossil ? '#5a2e12' : '#efe3c4') : 'transparent'}, opacity: on ? 1 : .35};
@@ -158,6 +177,9 @@ Kit.$('next').addEventListener('click', () => {
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => { if (!Kit.calm && E) gsap.from([E.left[0], E.right[0]], {opacity: 0, y: 12, stagger: .12, duration: .5, ease: 'power3.out', onComplete: () => apply(0)}); };
 Kit.play.card = async () => { for (let i = 0; i < 5; i++) { Kit.$('next').click(); await new Promise(r => setTimeout(r, 250)); } await new Promise(r => setTimeout(r, 700)); };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

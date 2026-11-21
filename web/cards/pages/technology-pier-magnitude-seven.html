@@ -12,8 +12,8 @@
 #shake:active{transform:scale(.97)}
 #read{font:700 max(4.6cqh,26px)/1.25 var(--mono);color:var(--k);white-space:nowrap;flex:none}
 #read small{font:600 max(1.6cqh,12px)/1 var(--body);color:var(--muted);display:block;text-align:right;margin-bottom:.5cqh}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{overflow-wrap:break-word}
+#why{font:500 max(1.9cqh,13px)/1.32 var(--body);margin:0;overflow-wrap:break-word}
+#why b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Tap to build · seismic design">
   <div class="in">
@@ -25,7 +25,7 @@
         <button id="shake">Shake +1</button>
         <div id="read"><small>quake</small>M <span id="mv">0</span></div>
       </div>
-      <div id="why" class="gone"><p class="big">Up to magnitude 7</p><p class="body">Japan gets earthquakes and typhoons, so each pier is designed to resist quakes up to magnitude 7. Moving parts let the bridge carry heavy loads and spread forces evenly.</p></div>
+      <p class="body gone" id="why"><b>Up to magnitude 7.</b> Japan gets earthquakes and typhoons, so each pier is designed to resist quakes that strong. Moving parts let the bridge carry heavy loads and spread forces evenly.</p>
     </div>
     <p class="say" id="say">Tap Shake to raise the quake one magnitude at a time.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In quake country each pier is built for a set limit: here, magnitude 7.</div>
@@ -44,9 +44,12 @@ function draw(){
   const {W, H, f} = Kit.fitSvg(svg);
   const K = ink(), C = bg(), fs = Math.max(f * .8, 12);
   const mx = W * .88, sx = W * .78;            // meter x, scene width
-  const top = H * .2, water = H * .6, bed = H * .86;
+  // Rows from the top, so a short box (the answer in) keeps every label inside it and apart: the
+  // label over the deck, the meter's limit, the deck; below the deck the scene keeps its proportions.
+  const lyMin = fs * 1.05, top = Math.max(H * .2, lyMin + fs * 1.9);
+  const deckY = Math.max(H * .24, top + H * .04), deckH = Math.max(H * .045, 8);
+  const Y = fr => deckY + (fr - .24) / .76 * (H - deckY), water = Y(.6), bed = Y(.86);
   const px = sx * .5, pw = Math.max(sx * .17, 30);
-  const deckY = H * .24, deckH = Math.max(H * .045, 8);
   // water
   Kit.mk('rect', {x: 0, y: water, width: sx, height: Math.max(bed - water, 0), fill: K, 'fill-opacity': .1}, svg);
   for (let i = 0; i < 3; i++) Kit.mk('path', {d: `M0 ${water + i * (bed - water) / 3 + 2} q ${sx/8} -5 ${sx/4} 0 t ${sx/4} 0 t ${sx/4} 0 t ${sx/4} 0`, fill: 'none', stroke: K, 'stroke-opacity': .18, 'stroke-width': 1.5}, svg);
@@ -69,7 +72,7 @@ function draw(){
   const arr = Kit.mk('g', {opacity: 0}, q);
   [-1, 1].forEach(d => Kit.mk('path', {d: `M${px + d * pw * .5} ${deckY - 8} h ${d * sx * .22} m ${-d * 8} -6 l ${d * 8} 6 l ${-d * 8} 6`, fill: 'none', stroke: K, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, arr));
   // label
-  const ly = deckY - Math.max(fs * 2.4, 30);
+  const ly = Math.max(lyMin, deckY - Math.max(fs * 2.4, 30));
   const lt = Kit.mk('text', {x: px, y: ly, fill: K, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, svg);
   lt.textContent = 'moving parts spread the force';
   // meter
@@ -115,6 +118,9 @@ Kit.play.card = async () => {
   for (let i = 0; i < MAX; i++) { Kit.$('shake').click(); await new Promise(r => setTimeout(r, 120)); }
   await new Promise(r => setTimeout(r, 1000));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) Kit.onShow.card(); seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

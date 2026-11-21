@@ -12,12 +12,14 @@
 .act.hard{background:var(--k);color:var(--c);box-shadow:none}
 .act:active{transform:scale(.97)}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{font-size:max(1.9cqh,13px)}
+#why .body{font:500 clamp(12px,2.15cqh,14px)/1.32 var(--body);margin:0}
+#why b{font-weight:800}
 .ink{fill:var(--k)}
 .inkS{stroke:var(--k);fill:none}
 .cc{fill:var(--c)}
 .chip{fill:color-mix(in srgb,var(--k) 12%,var(--c));stroke:color-mix(in srgb,var(--k) 45%,transparent)}
 .tx{font-family:var(--body);font-weight:700;fill:var(--k)}
+.tx.cc{fill:var(--c)}
 .cap{font-family:var(--display);font-weight:800;fill:var(--k)}
 .mut{fill:var(--muted)}
 </style>
@@ -32,8 +34,7 @@
         <button class="act hard" id="bBreak">Try hard<br>to disprove it</button>
       </div>
       <div id="why" class="gone">
-        <p class="big">Yeses are light. Surviving a “no” is heavy.</p>
-        <p class="body">A pile of cases that fit proves little: the next one could still say no. Science sets out to disprove its theories, and only when it can’t do we say it’s getting at something true.</p>
+        <p class="body"><b>Yeses are light. Surviving a “no” is heavy.</b> A pile of cases that fit proves little: the next one could still say no. Science sets out to disprove its theories, and only when it can’t do we say it’s getting at something true.</p>
       </div>
     </div>
     <p class="say" id="say">Pile up yeses and watch the scale. Then try to break the theory.</p>
@@ -68,6 +69,11 @@ function render() {
   G.pl.setAttribute('transform', `translate(${lx},${ly + s})`);
   G.pr.setAttribute('transform', `translate(${rx},${ry + s})`);
   G.cap.textContent = caption();
+  // The words under each pan stay inside the drawing, however far the beam swings them out.
+  [[G.count, rx], [G.dl, lx]].forEach(([t, x]) => {
+    let w = 0; try { w = t.getComputedTextLength(); } catch (_) {}
+    t.setAttribute('x', Math.max(2 + w / 2 - x, Math.min(G.W - 2 - w / 2 - x, 0)));
+  });
 }
 
 function drawItems(fresh) {
@@ -92,7 +98,7 @@ function drawItems(fresh) {
     const x = (col - (inRow - 1) / 2) * cs, y = base - row * cs * .95 - cs / 2;
     const g = Kit.mk('g', {}, items);
     Kit.mk('rect', {x: x - cs * .44, y: y - cs * .44, width: cs * .88, height: cs * .88, rx: cs * .25, class: 'chip', 'stroke-width': Math.max(1, f * .07)}, g);
-    const t = Kit.mk('text', {x, y: y + f * .3, 'text-anchor': 'middle', class: 'tx', 'font-size': f * .8}, g);
+    const t = Kit.mk('text', {x, y: y + f * .3, 'text-anchor': 'middle', class: 'tx', 'font-size': Math.max(9.5, f * .8)}, g);
     t.textContent = '✓';
     if (fresh === 'yes' && i === S.yes - 1) newest = g;
   }
@@ -103,12 +109,24 @@ function drawItems(fresh) {
 Kit.onShow.card = () => {
   const svg = Kit.$('sc'); svg.innerHTML = '';
   const {W, H, f: f0} = Kit.fitSvg(svg);
-  const f = Math.max(13, Math.min(f0, H * .06, W * .045));
-  const px = W / 2, py = f * 3.4;
-  const L = Math.min(W * .36, H * .7);
+  let f = Math.max(13, Math.min(f0, H * .06, W * .045));
+  let L = Math.min(W * .36, H * .7), py = f * 3.4, bh = f * 3.4;
+  let s = Math.max(f * 3, H - py - L * .25 - f * .8 - f * 2.6 - f * 1.4);
+  if (done) {
+    // At rest, tipped toward the theory: laid out for that tilt alone, so the scale keeps its size in the
+    // shorter box the answer leaves it. The doubt stays under the caption and the count above the foot;
+    // the type gets smaller first, then the beam shorter, only if the box is too short for both.
+    const sa = Math.sin(Math.abs(A.a) * Math.PI / 180), need = () => 7.7 * f + 2 * L * sa + 2;
+    while (need() > H && f > 11) f = Math.max(11, f - .5);
+    while (need() > H && L > W * .24) L -= 2;
+    const spare = Math.max(0, H - need());
+    bh = f * 2.9;
+    s = bh + f * .5 + spare * .7;
+    py = f * 2.05 + L * sa + spare * .15;
+  }
+  const px = W / 2;
   const pw = Math.min(L * .78, W * .3);
-  const pd = f * .8;
-  const s = Math.max(f * 3, H - py - L * .25 - pd - f * 2.6 - f * 1.4);
+  const pd = f * .8, lf = Math.max(10, f * .85);
   const sw = Math.max(2, f * .18);
   const cap = Kit.mk('text', {x: px, y: f * 1.3, 'text-anchor': 'middle', class: 'cap', 'font-size': f * 1.15}, svg);
   Kit.mk('path', {d: `M${px},${py} L${px},${H - f * .4}`, class: 'inkS', 'stroke-width': sw * 1.4}, svg);
@@ -120,17 +138,17 @@ Kit.onShow.card = () => {
   const pan = g => Kit.mk('path', {d: `M${-pw / 2},0 Q0,${pd * 2} ${pw / 2},0 Z`, class: 'ink'}, g);
   const pl = Kit.mk('g', {}, svg);
   pan(pl);
-  const bw = pw * .72, bh = f * 3.4;
+  const bw = pw * .72;
   Kit.mk('rect', {x: -bw / 2, y: -bh, width: bw, height: bh, rx: f * .4, class: 'ink'}, pl);
   const dt = Kit.mk('text', {x: 0, y: -bh / 2 + f * .38, 'text-anchor': 'middle', class: 'tx cc', 'font-size': f * 1.05}, pl);
   dt.textContent = 'DOUBT';
-  const lt = Kit.mk('text', {x: 0, y: pd + f * 1.5, 'text-anchor': 'middle', class: 'tx mut', 'font-size': f * .85}, pl);
+  const lt = Kit.mk('text', {x: 0, y: pd + f * 1.25, 'text-anchor': 'middle', class: 'tx mut', 'font-size': lf}, pl);
   lt.textContent = 'is the default';
   const pr = Kit.mk('g', {}, svg);
   pan(pr);
   const items = Kit.mk('g', {}, pr);
-  const count = Kit.mk('text', {x: 0, y: pd + f * 1.5, 'text-anchor': 'middle', class: 'tx mut', 'font-size': f * .85}, pr);
-  G = {W, H, f, px, py, L, pw, s, beam, sl, sr, pl, pr, items, count, cap};
+  const count = Kit.mk('text', {x: 0, y: pd + f * 1.25, 'text-anchor': 'middle', class: 'tx mut', 'font-size': lf}, pr);
+  G = {W, H, f, px, py, L, pw, s, beam, sl, sr, pl, pr, items, count, cap, dl: lt};
   drawItems();
   render();
 };
@@ -172,6 +190,9 @@ Kit.play.card = async () => {
   Kit.$('bBreak').click(); await w(1700);
   A.a = target(); render(); check(); await w(500);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('sc'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
