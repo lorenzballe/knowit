@@ -5520,6 +5520,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bookRecommendedBy => '推荐者';
 
   @override
+  String bookPickPhoto(String credit) {
+    return '照片：$credit';
+  }
+
+  @override
   String get bookFreeThisWeek => '本周免费';
 
   @override

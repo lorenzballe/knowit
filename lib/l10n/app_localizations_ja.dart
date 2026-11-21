@@ -5518,6 +5518,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get bookRecommendedBy => 'この本をすすめた人';
 
   @override
+  String bookPickPhoto(String credit) {
+    return '写真：$credit';
+  }
+
+  @override
   String get bookFreeThisWeek => '今週は無料';
 
   @override

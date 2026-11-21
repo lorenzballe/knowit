@@ -6246,6 +6246,15 @@
  "@bookRecommendedBy": {
   "description": "Books in pills, a book's own page: the label over the people who built well-known companies and recommended the book, each with where they said it"
  },
+ "bookPickPhoto": "Photo: {credit}",
+ "@bookPickPhoto": {
+  "description": "Books in pills, a book's own page: under a person who recommended the book, who took their photo and its licence, as the licence asks (e.g. 'Nick, CC BY 2.0')",
+  "placeholders": {
+   "credit": {
+    "type": "String"
+   }
+  }
+ },
  "bookFreeThisWeek": "Free this week",
  "@bookFreeThisWeek": {
   "description": "Books in pills, a book's own page: bookFreeThisWeek"

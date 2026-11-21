@@ -974,7 +974,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await tester.tap(find.byIcon(Icons.ios_share_rounded));
+    await tester.tap(find.byIcon(Icons.ios_share_rounded).hitTestable().first);
     await _settle(tester);
 
     // The share sheet, not the paywall: its title, which the button's own
@@ -2467,11 +2467,12 @@ void main() {
     expect(again.left, greaterThan(line.right));
     _expectAtFront(tester, 1);
 
-    // Each card as played: its question, its answer and the line to keep.
+    // Each card by its question, as it came in the deck, with the line to
+    // bring it up with: the answer is a tap away.
     final front = _todaysFive.first;
     expect(find.text(front.question), findsOneWidget);
     expect(find.text(front.barMove), findsOneWidget);
-    expect(find.text(front.answer), findsOneWidget);
+    expect(find.text(front.answer), findsNothing);
 
     // Nothing about the week is said over the shelf: the header and the
     // eyebrow are what they are on every evening.
@@ -2498,7 +2499,7 @@ void main() {
       if (own) marked++;
       expect(
         find.descendant(
-          of: find.byKey(ValueKey('shelf-face-${front.id}-back')),
+          of: find.byKey(ValueKey('shelf-face-${front.id}-front')),
           matching: find.text('FOR YOU'),
         ),
         own ? findsOneWidget : findsNothing,
@@ -2771,24 +2772,26 @@ void main() {
       await finish(tester);
 
       final front = _todaysFive.first;
-      // As played, first: the answer and the line to bring it up with. Not
-      // the deck's full reveal — that belongs to the first time.
-      expect(find.text(front.answer), findsOneWidget);
+      // Its question first, as it came in the deck, and the line to bring
+      // it up with; not turned already.
+      expect(find.text(front.question), findsOneWidget);
       expect(find.text(front.barMove), findsOneWidget);
+      expect(find.text(front.answer), findsNothing);
+
+      // Turned: the answer. Not the deck's full reveal — that belongs to
+      // the first time.
+      await tester.tap(find.text(front.question));
+      await _settle(tester);
+      expect(find.text(front.answer), findsOneWidget);
       expect(find.text('Source · ${front.source}'), findsNothing);
       expect(find.text('WHAT TO KEEP'), findsNothing);
 
-      // Turned: the question alone.
       await tester.tap(find.text(front.question));
       await _settle(tester);
       expect(find.text(front.answer), findsNothing);
-
-      await tester.tap(find.text(front.question));
-      await _settle(tester);
-      expect(find.text(front.answer), findsOneWidget);
     });
 
-    testWidgets('a swipe brings the next card to the front, as played', (
+    testWidgets('a swipe brings the next card to the front, by its question', (
       tester,
     ) async {
       SharedPreferences.setMockInitialValues(_installed());
@@ -2799,15 +2802,15 @@ void main() {
       final deck = _todaysFive;
       await tester.tap(find.text(deck.first.question));
       await _settle(tester);
-      expect(find.text(deck.first.answer), findsNothing);
+      expect(find.text(deck.first.answer), findsOneWidget);
 
       await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
       await _settle(tester);
       _expectAtFront(tester, 2);
       expect(find.text(deck[1].question), findsOneWidget);
-      // Turning a card over does not carry to the next one: it is shown as
-      // played, its answer and all.
-      expect(find.text(deck[1].answer), findsOneWidget);
+      // Turning a card over does not carry to the next one: it is shown by
+      // its question.
+      expect(find.text(deck[1].answer), findsNothing);
 
       await tester.drag(find.byType(TodayDoneView), const Offset(200, 0));
       await _settle(tester);
@@ -3858,12 +3861,16 @@ void main() {
       await _settle(tester);
 
       // Save the first two pills of the day.
-      final first = find.byIcon(Icons.bookmark_border_rounded);
+      // The card being read: every card in the deck wears the pair, but
+      // only the one on top takes a tap.
+      final first = find.byIcon(Icons.bookmark_border_rounded).hitTestable();
       await tester.tap(first.first);
       await _settle(tester);
       await _swipeCardAway(tester);
       await _settle(tester);
-      await tester.tap(find.byIcon(Icons.bookmark_border_rounded).first);
+      await tester.tap(
+        find.byIcon(Icons.bookmark_border_rounded).hitTestable().first,
+      );
       await _settle(tester);
 
       final prefs = await SharedPreferences.getInstance();
@@ -3931,7 +3938,9 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.byIcon(Icons.bookmark_border_rounded).first);
+      await tester.tap(
+        find.byIcon(Icons.bookmark_border_rounded).hitTestable().first,
+      );
       await _settle(tester);
 
       await _openSetting(tester, 'Saved');

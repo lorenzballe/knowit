@@ -136,12 +136,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
   /// How far the shelf has been pulled from rest, in points.
   double _dx = 0;
 
-  /// Whether the card at the front has been turned to its question. The
-  /// finished day shows each card as played, first: its answer, what it
-  /// explains and the line to keep, which is what the day leaves the reader
-  /// with. A drawn card's front, as first shown, keeps empty the room its
-  /// answer will take, and on the shelf read as a card half drawn (the
-  /// owner's own phone, a card of Space); played, it is the card filled.
+  /// Whether the card at the front has been turned to its answer. The
+  /// finished day shows each card by its question, as it came in the deck,
+  /// and a tap turns it over (the owner: the day's cards are not shown
+  /// turned already). A drawn card's question is its picture taken at the
+  /// shelf's own proportion, its drawing filling the room it has.
   bool _flipped = false;
 
   /// The pick this widget asked for, so the parent handing it back is not
@@ -570,18 +569,14 @@ class _TodayDoneViewState extends State<TodayDoneView>
       },
       onShare: () => showShareSheet(context, pill),
     );
-    if (!front) return face(true);
+    if (!front) return face(false);
     // Held down, the card is liked; the bookmark on its back saves it.
     return HoldToKeep(
       saved: app.isLiked(pill.id),
       ink: pill.ink,
       ground: pill.color,
       onToggle: () => app.toggleLiked(pill.id),
-      child: FlipCard(
-        showBack: !_flipped,
-        front: face(false),
-        back: face(true),
-      ),
+      child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
     );
   }
 
@@ -764,14 +759,31 @@ class _CardFace extends StatelessWidget {
             shelf: atShelf,
             large: !atShelf,
             fit: BoxFit.contain,
-            fallback: ColoredBox(color: pill.color, child: words),
+            // Where the picture will not come, the card in words, with the
+            // same save and share as everywhere else.
+            fallback: ColoredBox(
+              color: pill.color,
+              child: Stack(
+                children: [
+                  Positioned.fill(child: words),
+                  Positioned.fill(
+                    child: _PictureControls(
+                      aspect: width / height,
+                      saved: saved,
+                      ink: ink,
+                      onSave: onSave,
+                      onShare: onShare,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             foreground: _PictureControls(
               aspect: atShelf ? WebThumbs.shelfAspect : WebThumbs.aspect,
               saved: saved,
               liked: liked,
               tag: CardTags.of(pill.id),
               ink: mark,
-              fill: mark.withValues(alpha: 0.12),
               onSave: onSave,
               onShare: onShare,
             ),
@@ -779,11 +791,27 @@ class _CardFace extends StatelessWidget {
         ),
       );
     }
+    // The save and share where the deck has them, at the deck's size: the
+    // same on a card in words as on a drawn one (the owner: every card, the
+    // same buttons in the same place).
     return Container(
       width: width,
       height: height,
       decoration: _decoration(p, s, pill.color),
-      child: words,
+      child: Stack(
+        children: [
+          Positioned.fill(child: words),
+          Positioned.fill(
+            child: _PictureControls(
+              aspect: width / height,
+              saved: saved,
+              ink: ink,
+              onSave: onSave,
+              onShare: onShare,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -898,36 +926,28 @@ class _CardFace extends StatelessWidget {
               : _Front(pill: pill, scale: s, sub: sub),
         ),
         SizedBox(height: 22 * s),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                context.l10n.tapToFlip,
-                style: AppText.label(
-                  size: 10 * s,
-                  weight: FontWeight.w600,
-                  spacing: 1.1,
-                  color: sub,
+        // The save and share are laid over the card where the deck puts
+        // them ([_PictureControls]); this row keeps their room.
+        SizedBox(
+          height: 42 * s,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  context.l10n.tapToFlip,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.label(
+                    size: 10 * s,
+                    weight: FontWeight.w600,
+                    spacing: 1.1,
+                    color: sub,
+                  ),
                 ),
               ),
-            ),
-            _HeartButton(
-              saved: saved,
-              ink: ink,
-              fill: soft,
-              size: 42 * s,
-              onTap: onSave,
-            ),
-            SizedBox(width: 12 * s),
-            _CardButton(
-              label: context.l10n.shareThisCard,
-              icon: Icons.ios_share_rounded,
-              ink: ink,
-              fill: soft,
-              size: 42 * s,
-              onTap: onShare,
-            ),
-          ],
+              SizedBox(width: width * (109 / 366) - 28 * s + 8 * s),
+            ],
+          ),
         ),
       ],
     );
@@ -945,7 +965,6 @@ class _PictureControls extends StatelessWidget {
     this.liked = false,
     this.tag,
     required this.ink,
-    required this.fill,
     required this.onSave,
     required this.onShare,
   });
@@ -960,7 +979,6 @@ class _PictureControls extends StatelessWidget {
   final bool liked;
   final String? tag;
   final Color ink;
-  final Color fill;
   final VoidCallback onSave;
   final VoidCallback onShare;
 
@@ -995,7 +1013,6 @@ class _PictureControls extends StatelessWidget {
                   _HeartButton(
                     saved: saved,
                     ink: ink,
-                    fill: fill,
                     size: 44 * k,
                     onTap: onSave,
                   ),
@@ -1004,7 +1021,6 @@ class _PictureControls extends StatelessWidget {
                     label: context.l10n.shareThisCard,
                     icon: Icons.ios_share_rounded,
                     ink: ink,
-                    fill: fill,
                     size: 44 * k,
                     onTap: onShare,
                   ),
@@ -1325,7 +1341,6 @@ class _CardButton extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.ink,
-    required this.fill,
     required this.size,
     required this.onTap,
     this.child,
@@ -1334,7 +1349,6 @@ class _CardButton extends StatelessWidget {
   final String label;
   final IconData icon;
   final Color ink;
-  final Color fill;
   final double size;
   final VoidCallback onTap;
 
@@ -1349,15 +1363,19 @@ class _CardButton extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            color: fill,
-            borderRadius: BorderRadius.circular(size / 3),
+        // The deck's own control (pill_card.dart): the mark alone, 20 in a
+        // square of 44, in the card's ink let down, at the card's scale.
+        child: SizedBox.square(
+          dimension: size,
+          child: Center(
+            child:
+                child ??
+                Icon(
+                  icon,
+                  size: size * 20 / 44,
+                  color: ink.withValues(alpha: 0.62),
+                ),
           ),
-          alignment: Alignment.center,
-          child: child ?? Icon(icon, size: size * 17 / 42, color: ink),
         ),
       ),
     );
@@ -1370,14 +1388,12 @@ class _HeartButton extends StatefulWidget {
   const _HeartButton({
     required this.saved,
     required this.ink,
-    required this.fill,
     required this.size,
     required this.onTap,
   });
 
   final bool saved;
   final Color ink;
-  final Color fill;
   final double size;
   final VoidCallback onTap;
 
@@ -1419,7 +1435,6 @@ class _HeartButtonState extends State<_HeartButton>
           ? Icons.bookmark_rounded
           : Icons.bookmark_border_rounded,
       ink: widget.ink,
-      fill: widget.fill,
       size: widget.size,
       onTap: widget.onTap,
       child: still
@@ -1436,8 +1451,8 @@ class _HeartButtonState extends State<_HeartButton>
                 widget.saved
                     ? Icons.bookmark_rounded
                     : Icons.bookmark_border_rounded,
-                size: widget.size * 17 / 42,
-                color: widget.ink,
+                size: widget.size * 20 / 44,
+                color: widget.ink.withValues(alpha: 0.62),
               ),
             ),
     );

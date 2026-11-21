@@ -5672,6 +5672,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get bookRecommendedBy => 'Önerenler';
 
   @override
+  String bookPickPhoto(String credit) {
+    return 'Fotoğraf: $credit';
+  }
+
+  @override
   String get bookFreeThisWeek => 'Bu hafta ücretsiz';
 
   @override

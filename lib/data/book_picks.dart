@@ -268,3 +268,67 @@ const String _meeting = 'Berkshire Hathaway’s annual meeting';
 
 /// The picks of the book [id], none for a book nobody recommended.
 List<BookPick> picksOf(String id) => bookPicks[id] ?? const [];
+
+/// A face for each person in [bookPicks]: a photo free to use with its
+/// author named (from Wikimedia Commons), published beside the cards at
+/// web/cards/people/<slug>.jpg, so a face can be added or changed without a
+/// new build; and its credit, as the photo's licence asks, said on a book's
+/// page under the pick.
+class FounderPhoto {
+  const FounderPhoto({
+    required this.slug,
+    required this.credit,
+    required this.page,
+  });
+
+  /// The file's name: web/cards/people/<slug>.jpg.
+  final String slug;
+
+  /// Who took it and under what licence: "Bogdan Hoyaux / European Union,
+  /// CC BY 4.0".
+  final String credit;
+
+  /// The photo's own page, with its licence.
+  final String page;
+}
+
+/// The faces, by the name the picks give.
+const Map<String, FounderPhoto> founderPhotos = {
+  'Bill Gates': FounderPhoto(
+    slug: 'bill-gates',
+    credit: 'Bogdan Hoyaux / European Union, CC BY 4.0',
+    page: 'https://commons.wikimedia.org/wiki/File:Bill_Gates_at_the_European_Commission_-_P067383-987995_(cropped)_5.jpg',
+  ),
+  'Warren Buffett': FounderPhoto(
+    slug: 'warren-buffett',
+    credit: 'US International Trade Administration, public domain',
+    page: 'https://commons.wikimedia.org/wiki/File:Warren_Buffett_at_the_2015_SelectUSA_Investment_Summit_(cropped).jpg',
+  ),
+  'Charlie Munger': FounderPhoto(
+    slug: 'charlie-munger',
+    credit: 'Nick, CC BY 2.0',
+    page:
+        'https://commons.wikimedia.org/wiki/File:Charlie_Munger_(cropped).jpg',
+  ),
+  'Mark Zuckerberg': FounderPhoto(
+    slug: 'mark-zuckerberg',
+    credit: 'The White House, public domain',
+    page: 'https://commons.wikimedia.org/wiki/File:P20260929DT-1655_(55561811540)_(cropped_2).jpg',
+  ),
+  'Tobi Lütke': FounderPhoto(
+    slug: 'tobi-lutke',
+    credit: 'Benjamin Forrest, CC BY-SA 4.0',
+    page: 'https://commons.wikimedia.org/wiki/File:NYC-Commerce-Tobi-L%C3%BCtki-561.jpg',
+  ),
+  'Marc Andreessen': FounderPhoto(
+    slug: 'marc-andreessen',
+    credit: 'JD Lasica, CC BY 2.0',
+    page: 'https://commons.wikimedia.org/wiki/File:Marc_Andreessen-9_(cropped).jpg',
+  ),
+  'Naval Ravikant': FounderPhoto(
+    slug: 'naval-ravikant',
+    credit: 'Elias Bizannes, CC BY-SA 2.0',
+    page:
+        'https://commons.wikimedia.org/wiki/File:Naval_Ravikant_(cropped).jpg',
+  ),
+};

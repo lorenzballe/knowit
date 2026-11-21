@@ -956,13 +956,18 @@ class _PillCardStackState extends State<PillCardStack>
                         widget.onNote!(pill);
                       },
                 given: controls ? given : null,
-                saved: controls && widget.isSaved(pill.id),
-                onSave: controls ? () => widget.onSave(pill) : null,
-                liked: controls && (widget.isLiked?.call(pill.id) ?? false),
+                // The save and share, and the heart of a card liked, on every
+                // card in the deck, live only on the one being read: a card
+                // rises with them on it, instead of their popping in once it
+                // has come up.
+                saved: widget.isSaved(pill.id),
+                onSave: () => widget.onSave(pill),
+                controlsLive: controls,
+                liked: widget.isLiked?.call(pill.id) ?? false,
                 onLike: !controls || widget.onLike == null
                     ? null
                     : () => widget.onLike!(pill),
-                onShare: controls ? () => widget.onShare(pill) : null,
+                onShare: () => widget.onShare(pill),
                 page: _pages[pill.id],
                 onPageMessage: controls
                     ? (message) => _fromPage(pill, message)
