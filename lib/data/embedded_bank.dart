@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611210917,
- "built": "2026-11-21T09:17:12Z",
+ "version": 202611210928,
+ "built": "2026-11-21T09:28:17Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -244384,7 +244384,7 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Peter Thiel, Zero to One, 2014",
+   "source": "Peter Thiel with Blake Masters, Zero to One, 2014",
    "source_kind": "book",
    "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 2, Party Like It’s 1999",
    "written": "2026-11-20"
@@ -244439,7 +244439,7 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Peter Thiel, Zero to One, 2014",
+   "source": "Peter Thiel with Blake Masters, Zero to One, 2014",
    "source_kind": "book",
    "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 3, All Happy Companies Are Different",
    "written": "2026-11-20"
@@ -244489,7 +244489,7 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Peter Thiel, Zero to One, 2014",
+   "source": "Peter Thiel with Blake Masters, Zero to One, 2014",
    "source_kind": "book",
    "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 5, Last Mover Advantage",
    "written": "2026-11-20"
@@ -244532,7 +244532,7 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Peter Thiel, Zero to One, 2014",
+   "source": "Peter Thiel with Blake Masters, Zero to One, 2014",
    "source_kind": "book",
    "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 7, Follow the Money",
    "written": "2026-11-20"
@@ -244575,7 +244575,7 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Peter Thiel, Zero to One, 2014",
+   "source": "Peter Thiel with Blake Masters, Zero to One, 2014",
    "source_kind": "book",
    "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 11, If You Build It, Will They Come?",
    "written": "2026-11-20"
