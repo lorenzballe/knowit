@@ -52,21 +52,25 @@ function build(){
   const svg = Kit.$('svg'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * .8, 12);
-  const gy = H - fs * 2.2;
+  // A box too short for the whole drawing (the gauge's two labels would have no room over it: a small phone
+  // once the answer is in) gets a compact one, drawn at its real size: the reactor, the lid the steam throws
+  // off, the steam, and the gauge under a single label. The caption, the roof and the isotopes are left to the
+  // question and the answer.
+  const compact = H < fs * 11;
+  const gy = compact ? H - 2 : H - fs * 2.2;
   const mk = Kit.mk;
   const root = mk('g', {}, svg);
-  const g = {W, H, f, fs, gy, root, bubbles: []};
+  const g = {W, H, f, fs, gy, root, bubbles: [], compact, roof: [], iso: [], isoLab: null};
   // building
-  const bx0 = W*.04, bx1 = W*.76, by = gy*.24;
+  const bx0 = W*.04, bx1 = W*.76, by = gy * (compact ? .45 : .24);
   mk('rect', {x: bx0, y: by, width: bx1-bx0, height: gy-by, style: 'fill:var(--k);fill-opacity:.08;stroke:var(--k);stroke-opacity:.35;stroke-width:2'}, root);
-  g.roof = [];
-  for (let i = 0; i < 3; i++){
+  if (!compact) for (let i = 0; i < 3; i++){
     const w = (bx1-bx0)/3;
     g.roof.push(mk('rect', {x: bx0 + i*w, y: by - gy*.035, width: w + .5, height: gy*.035, style: 'fill:var(--k);fill-opacity:.55'}, root));
   }
   mk('line', {x1: 0, x2: W, y1: gy, y2: gy, style: 'stroke:var(--k);stroke-width:3'}, root);
   // vessel
-  const vx0 = W*.14, vx1 = W*.66, vy0 = gy*.46, vy1 = gy*.95;
+  const vx0 = W * (compact ? .12 : .14), vx1 = W * (compact ? .6 : .66), vy0 = gy * (compact ? .6 : .46), vy1 = gy*.95;
   Object.assign(g, {vx0, vx1, vy0, vy1});
   g.steam = mk('rect', {x: vx0, y: vy0, width: vx1-vx0, height: 0, fill: '#e6edf3', 'fill-opacity': .2}, root);
   g.water = mk('rect', {x: vx0, y: vy0, width: vx1-vx0, height: vy1-vy0, fill: '#2f80d0'}, root);
@@ -85,34 +89,46 @@ function build(){
   g.wlab = mk('text', {x: vx0 + 8, 'font-size': fs, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)', style: 'font-family:var(--body)'}, root);
   g.wlab.textContent = 'cooling water';
   // lid
-  const lh = Math.max(gy*.05, fs*1.5), lx = vx0 - W*.025, lw = (vx1-vx0) + W*.05, ly = vy0 - lh;
+  const lh = Math.max(gy*.05, fs*1.5), lx = vx0 - W * (compact ? .02 : .025), lw = (vx1-vx0) + W * (compact ? .04 : .05), ly = vy0 - lh;
   g.lidOuter = mk('g', {}, root);
   g.lidIn = mk('g', {}, g.lidOuter);
   mk('rect', {x: lx, y: ly, width: lw, height: lh, rx: 3, style: 'fill:var(--k)'}, g.lidIn);
   const lt = mk('text', {x: lx + lw/2, y: ly + lh/2 + fs*.35, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--c);font-family:var(--body);letter-spacing:.08em'}, g.lidIn);
   lt.textContent = 'LID · 1000s of tonnes';
-  if (lw < fs * 12) lt.textContent = 'LID';
+  if (compact) {
+    // its words kept whole on the lid: a touch smaller if they must be, never under 10.5px, else just LID
+    for (let lf = fs; lt.getComputedTextLength() > lw - 8 && lf > 10.5; ) { lf -= .5; lt.setAttribute('font-size', lf); lt.setAttribute('y', ly + lh/2 + lf*.35); }
+    if (lt.getComputedTextLength() > lw - 8) { lt.textContent = 'LID'; lt.setAttribute('font-size', fs); lt.setAttribute('y', ly + lh/2 + fs*.35); }
+  } else if (lw < fs * 12) lt.textContent = 'LID';
   Object.assign(g, {lx, ly, lw, lh});
   // gauge
-  const gx = W*.83, gw = W*.08, gt = gy*.42, gb = vy1;
+  const gx = W*.83, gw = W*.08, gt = compact ? fs * 1.6 + 2 : gy*.42, gb = vy1;
   mk('rect', {x: gx, y: gt, width: gw, height: gb-gt, rx: gw/2, style: 'fill:var(--k);fill-opacity:.08;stroke:var(--k);stroke-width:2'}, root);
   g.gfill = mk('rect', {x: gx + 3, y: gb, width: gw - 6, height: 0, rx: (gw-6)/2}, root);
   Object.assign(g, {gt, gb, gx, gw});
   const cx = gx + gw/2;
-  g.gLabs = [['STEAM', gt - fs*2.9], ['PRESSURE', gt - fs*1.5]].map(([t, y]) => {
-    const e = mk('text', {x: Math.min(cx, W - fs*3), y, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'}, root); e.textContent = t; return e;
-  });
-  const cap = mk('text', {x: 2, y: H - fs*.5, 'font-size': fs, 'font-weight': 600, style: 'fill:var(--k);opacity:.7;font-family:var(--body)'}, root);
-  cap.textContent = 'Chernobyl reactor 4 · 26 April 1986';
+  if (compact) {
+    // one line over the gauge, in the top corner
+    const e = mk('text', {x: W - 2, y: fs + 1, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'}, root);
+    e.textContent = 'STEAM PRESSURE'; g.gLabs = [e];
+  } else {
+    g.gLabs = [['STEAM', gt - fs*2.9], ['PRESSURE', gt - fs*1.5]].map(([t, y]) => {
+      const e = mk('text', {x: Math.min(cx, W - fs*3), y, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'}, root); e.textContent = t; return e;
+    });
+    const cap = mk('text', {x: 2, y: H - fs*.5, 'font-size': fs, 'font-weight': 600, style: 'fill:var(--k);opacity:.7;font-family:var(--body)'}, root);
+    cap.textContent = 'Chernobyl reactor 4 · 26 April 1986';
+  }
   // explosion layers
-  // the steam cloud rises behind the lid and the gauge's words
-  g.puff = mk('circle', {cx: (vx0+vx1)/2, cy: vy0, r: 0, fill: '#eef2f5', 'fill-opacity': 0}, root);
+  // the steam cloud rises behind the lid and the gauge's words, and stays inside the box
+  g.puffR = compact ? Math.min((vx1 - vx0) * .6, (H - 4) / 2) : Math.min((vx1 - vx0) * .75, vy0 - 3);
+  g.puff = mk('circle', {cx: (vx0+vx1)/2, cy: compact ? Math.min(vy0, H - 2 - g.puffR) : vy0, r: 0, fill: '#eef2f5', 'fill-opacity': 0}, root);
   root.insertBefore(g.puff, g.lidOuter);
-  g.iso = [];
-  for (let i = 0; i < 46; i++) g.iso.push(mk('circle', {cx: (vx0+vx1)/2, cy: vy0, r: Math.max(f*.22, 3), fill: '#a9e34b', stroke: '#2b8a3e', 'stroke-width': 1, opacity: 0}, root));
-  // named in the top corner, over the cloud of isotopes and clear of everything the blast throws
-  g.isoLab = mk('text', {x: W - 3, y: fs*1.1*.95 + 2, 'text-anchor': 'end', 'font-size': fs*1.1, 'font-weight': 800, fill: '#2b8a3e', opacity: 0, style: 'font-family:var(--body)'}, root);
-  g.isoLab.textContent = 'radioactive isotopes';
+  if (!compact) {
+    for (let i = 0; i < 46; i++) g.iso.push(mk('circle', {cx: (vx0+vx1)/2, cy: vy0, r: Math.max(f*.22, 3), fill: '#a9e34b', stroke: '#2b8a3e', 'stroke-width': 1, opacity: 0}, root));
+    // named in the top corner, over the cloud of isotopes and clear of everything the blast throws
+    g.isoLab = mk('text', {x: W - 3, y: fs*1.1*.95 + 2, 'text-anchor': 'end', 'font-size': fs*1.1, 'font-weight': 800, fill: '#2b8a3e', opacity: 0, style: 'font-family:var(--body)'}, root);
+    g.isoLab.textContent = 'radioactive isotopes';
+  }
   g.flash = mk('rect', {x: -20, y: -20, width: W + 40, height: H + 40, fill: '#fff', opacity: 0, 'pointer-events': 'none'}, svg);
   G = g;
   render(0);
@@ -190,7 +206,8 @@ function explode(instant){
   // in it (the gauge's two labels and the isotopes' name). The lid flies up and tips over to the left, the roof
   // breaks and lifts, the cloud stays under the top, and the lid lands in front of the isotopes it threw out.
   const box = e => { const b = e.getBBox(); return {l: b.x - 3, r: b.x + b.width + 3, t: b.y - 3, b: b.y + b.height + 3}; };
-  const gl = g.gLabs.map(box), words = [{l: Math.min(...gl.map(b => b.l)), r: Math.max(...gl.map(b => b.r)), t: Math.min(...gl.map(b => b.t)), b: Math.max(...gl.map(b => b.b))}, box(g.isoLab)];
+  const gl = g.gLabs.map(box), words = [{l: Math.min(...gl.map(b => b.l)), r: Math.max(...gl.map(b => b.r)), t: Math.min(...gl.map(b => b.t)), b: Math.max(...gl.map(b => b.b))}];
+  if (g.isoLab) words.push(box(g.isoLab));
   // the box of a rect turned by deg about (ox, oy), then moved by (dx, dy)
   const turned = (x, y, w, h, ox, oy, deg, dx, dy) => { const a = deg * Math.PI / 180, c = Math.cos(a), sn = Math.sin(a);
     const pts = [[x, y], [x + w, y], [x, y + h], [x + w, y + h]].map(([px, py]) => [ox + (px - ox) * c - (py - oy) * sn + dx, oy + (px - ox) * sn + (py - oy) * c + dy]);
@@ -208,21 +225,23 @@ function explode(instant){
     return [dx, dy];
   };
   const lcx = g.lx + g.lw/2, lcy = g.ly + g.lh/2;
-  const [lidX, lidY] = land([g.lx, g.ly, g.lw, g.lh], lcx, lcy, 20, -W * .06, -lcy);
-  g.root.appendChild(g.lidOuter); g.root.appendChild(g.isoLab);
-  gsap.to(g.lidOuter, {x: lidX, y: lidY, rotation: 20, svgOrigin: `${lcx} ${lcy}`, duration: 1.2 * k, ease: 'power3.out'});
+  // (in the compact drawing the lid tips less, its high end away from the gauge's label)
+  const tilt = g.compact ? 12 : 20;
+  const [lidX, lidY] = land([g.lx, g.ly, g.lw, g.lh], lcx, lcy, tilt, -W * .06, -lcy);
+  g.root.appendChild(g.lidOuter); if (g.isoLab) g.root.appendChild(g.isoLab);
+  gsap.to(g.lidOuter, {x: lidX, y: lidY, rotation: tilt, svgOrigin: `${lcx} ${lcy}`, duration: 1.2 * k, ease: 'power3.out'});
   g.roof.forEach((r, i) => {
     const x = +r.getAttribute('x'), y = +r.getAttribute('y'), w = +r.getAttribute('width'), h = +r.getAttribute('height');
     const deg = [-28, 14, 24][i], [dx, dy] = land([x, y, w, h], x + w/2, y, deg, [-.05, 0, -.03][i] * W, -g.gy * [.1, .15, .04][i]);
     gsap.to(r, {x: dx, y: dy, rotation: deg, svgOrigin: `${x + w/2} ${y}`, duration: 1.1 * k, ease: 'power3.out'});
   });
-  gsap.fromTo(g.puff, {attr: {r: 0}, 'fill-opacity': .9}, {attr: {r: Math.min((g.vx1 - g.vx0) * .75, g.vy0 - 3)}, 'fill-opacity': .35, duration: 1 * k, ease: 'power2.out'});
+  gsap.fromTo(g.puff, {attr: {r: 0}, 'fill-opacity': .9}, {attr: {r: g.puffR}, 'fill-opacity': .35, duration: 1 * k, ease: 'power2.out'});
   const isoR = words[1], right = words[0].l - 6;
   g.iso.forEach(p => {
     const tx = clamp(cx + (Kit.rnd() - .3) * W * .65, 8, right), ty = Math.max(g.gy * (.18 + Kit.rnd() * .24), tx > isoR.l - 6 ? isoR.b + 6 : 0);
     gsap.fromTo(p, {attr: {cx, cy: g.vy0}, opacity: 1}, {attr: {cx: tx, cy: ty}, opacity: .85, duration: (1 + Kit.rnd() * .8) * k, ease: 'power2.out', delay: instant ? 0 : Kit.rnd() * .2});
   });
-  gsap.to(g.isoLab, {opacity: 1, duration: .5 * k, delay: instant ? 0 : 1});
+  if (g.isoLab) gsap.to(g.isoLab, {opacity: 1, duration: .5 * k, delay: instant ? 0 : 1});
 }
 
 const hold = Kit.$('hold');
@@ -241,8 +260,9 @@ Kit.play.card = async () => {
   await new Promise(r => setTimeout(r, 3200));
 };
 // Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// A short box (a small phone) gets the compact drawing at its real size (build). Only a box left too little
+// room even for that keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 60) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { delete el.dataset.kept; const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
