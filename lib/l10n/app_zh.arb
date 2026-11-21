@@ -1332,6 +1332,7 @@
   "bookAgain": "再读一遍",
   "bookTheIdeas": "观点",
   "bookRecommendedBy": "推荐者",
+  "bookPickPhoto": "照片：{credit}",
   "bookFreeThisWeek": "本周免费",
   "booksSeeAll": "查看全部",
   "booksLibraryTitle": "全部书籍",

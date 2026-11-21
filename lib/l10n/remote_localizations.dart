@@ -5494,6 +5494,11 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('bookRecommendedBy') ?? _base.bookRecommendedBy;
 
   @override
+  String bookPickPhoto(String credit) =>
+      _words.format('bookPickPhoto', localeName, {'credit': credit}) ??
+      _base.bookPickPhoto(credit);
+
+  @override
   String get bookFreeThisWeek =>
       _words.text('bookFreeThisWeek') ?? _base.bookFreeThisWeek;
 

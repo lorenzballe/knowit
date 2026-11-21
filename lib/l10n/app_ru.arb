@@ -1332,6 +1332,7 @@
   "bookAgain": "Перечитать",
   "bookTheIdeas": "Идеи",
   "bookRecommendedBy": "Рекомендуют",
+  "bookPickPhoto": "Фото: {credit}",
   "bookFreeThisWeek": "Бесплатно на этой неделе",
   "booksSeeAll": "Смотреть все",
   "booksLibraryTitle": "Все книги",

@@ -4,6 +4,8 @@
 // on a book's page who said it, in their words, and where.
 //
 //   flutter test test/explore/founder_books_test.dart
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,6 +67,27 @@ void main() {
     }
   });
 
+  test('everyone who recommends a book has a face free to use, its author '
+      'named, published beside the cards', () {
+    final Set<String> people = {
+      for (final List<BookPick> picks in bookPicks.values)
+        for (final BookPick k in picks) k.who,
+    };
+    for (final String who in people) {
+      final FounderPhoto? photo = founderPhotos[who];
+      expect(photo, isNotNull, reason: who);
+      expect(photo!.credit, matches(RegExp(r'(CC BY|public domain)')));
+      expect(Uri.parse(photo.page).host, 'commons.wikimedia.org');
+      expect(
+        File('web/cards/people/${photo.slug}.jpg').existsSync(),
+        isTrue,
+        reason: photo.slug,
+      );
+    }
+    expect(founderNames(picksOf('sapiens')), 'Bill Gates +2');
+    expect(founderNames(picksOf('factfulness')), 'Bill Gates');
+  });
+
   testWidgets('on Explore: the books under the names of who recommended '
       'them; none of them, no shelf on a subject with fewer than two', (
     tester,
@@ -85,13 +108,14 @@ void main() {
     expect(
       find.descendant(
         of: tiles.first,
-        matching: find.text(
-          [for (final BookPick k in picksOf(id)) k.who]
-              .join(' · ')
-              .toUpperCase(),
-        ),
+        matching: find.text(founderNames(picksOf(id))),
       ),
       findsOneWidget,
+    );
+    // Their faces on the cover's corner: initials while the photos come.
+    expect(
+      find.descendant(of: tiles.first, matching: find.byType(FounderFace)),
+      findsNWidgets(picksOf(id).length.clamp(1, 3)),
     );
     expect(tester.takeException(), isNull);
 
@@ -137,6 +161,11 @@ void main() {
       expect(find.text(k.role), findsOneWidget);
       expect(find.text('${k.where}, ${k.year}'), findsOneWidget);
       if (k.said.isNotEmpty) expect(find.text('“${k.said}”'), findsOneWidget);
+      // Their face, and who took the photo, as its licence asks.
+      expect(
+        find.text('Photo: ${founderPhotos[k.who]!.credit}'),
+        findsOneWidget,
+      );
     }
     expect(tester.takeException(), isNull);
 

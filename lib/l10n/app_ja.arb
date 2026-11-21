@@ -1332,6 +1332,7 @@
   "bookAgain": "もう一度読む",
   "bookTheIdeas": "アイデア",
   "bookRecommendedBy": "この本をすすめた人",
+  "bookPickPhoto": "写真：{credit}",
   "bookFreeThisWeek": "今週は無料",
   "booksSeeAll": "すべて見る",
   "booksLibraryTitle": "すべての本",

@@ -8112,6 +8112,12 @@ abstract class AppLocalizations {
   /// **'Recommended by'**
   String get bookRecommendedBy;
 
+  /// Books in pills, a book's own page: under a person who recommended the book, who took their photo and its licence, as the licence asks (e.g. 'Nick, CC BY 2.0')
+  ///
+  /// In en, this message translates to:
+  /// **'Photo: {credit}'**
+  String bookPickPhoto(String credit);
+
   /// Books in pills, a book's own page: bookFreeThisWeek
   ///
   /// In en, this message translates to:

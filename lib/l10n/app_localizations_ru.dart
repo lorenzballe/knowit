@@ -5985,6 +5985,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get bookRecommendedBy => 'Рекомендуют';
 
   @override
+  String bookPickPhoto(String credit) {
+    return 'Фото: $credit';
+  }
+
+  @override
   String get bookFreeThisWeek => 'Бесплатно на этой неделе';
 
   @override

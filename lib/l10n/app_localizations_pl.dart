@@ -5963,6 +5963,11 @@ class AppLocalizationsPl extends AppLocalizations {
   String get bookRecommendedBy => 'Polecają';
 
   @override
+  String bookPickPhoto(String credit) {
+    return 'Zdjęcie: $credit';
+  }
+
+  @override
   String get bookFreeThisWeek => 'Za darmo w tym tygodniu';
 
   @override

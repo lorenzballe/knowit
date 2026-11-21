@@ -1332,6 +1332,7 @@
   "bookAgain": "다시 읽기",
   "bookTheIdeas": "아이디어",
   "bookRecommendedBy": "추천한 사람",
+  "bookPickPhoto": "사진: {credit}",
   "bookFreeThisWeek": "이번 주 무료",
   "booksSeeAll": "모두 보기",
   "booksLibraryTitle": "모든 책",

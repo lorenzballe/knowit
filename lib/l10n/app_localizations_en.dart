@@ -5737,6 +5737,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookRecommendedBy => 'Recommended by';
 
   @override
+  String bookPickPhoto(String credit) {
+    return 'Photo: $credit';
+  }
+
+  @override
   String get bookFreeThisWeek => 'Free this week';
 
   @override

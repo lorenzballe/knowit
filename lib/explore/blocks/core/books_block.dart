@@ -138,22 +138,20 @@ class FounderBooksBlock extends ExploreBlock with SectionLayout {
       title: section.title(host.language),
       line: section.subtitle(host.language),
       child: SizedBox(
-        height: _BookTile.height,
+        height: _FounderTile.height,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           itemCount: books.length,
-          separatorBuilder: (_, _) => const SizedBox(width: 12),
-          itemBuilder: (context, i) => _BookTile(
+          separatorBuilder: (_, _) => const SizedBox(width: 14),
+          itemBuilder: (context, i) => _FounderTile(
             key: ValueKey('founder-book-${books[i].id}'),
             book: books[i],
+            picks: picksOf(books[i].id),
             read: books[i].cards
                 .where((p) => app.seenIds.contains(p.id))
                 .length,
-            weekly: books[i].id == weekly,
             locked: !app.isPlus && books[i].id != weekly,
-            over: [for (final BookPick k in picksOf(books[i].id)) k.who]
-                .join(' · '),
             onTap: () => openBookPage(
               context,
               app,
@@ -343,6 +341,202 @@ class _DrawnCover extends StatelessWidget {
 /// A book in the row: its cover, the book of the week marked, its title and
 /// author under it, and how far the reader has read. The week's book says
 /// so under its cover, never over the publisher's title.
+/// The names under a book on the founders' shelf: the first who picked it,
+/// and how many more.
+String founderNames(List<BookPick> picks) => picks.isEmpty
+    ? ''
+    : picks.length == 1
+    ? picks.first.who
+    : '${picks.first.who} +${picks.length - 1}';
+
+/// A book on the founders' shelf: its cover, and on its corner the faces of
+/// who recommended it, a face being what makes a scrolling reader stop;
+/// under it their names and the book's title, and how much of it is read.
+class _FounderTile extends StatelessWidget {
+  const _FounderTile({
+    super.key,
+    required this.book,
+    required this.picks,
+    required this.read,
+    required this.locked,
+    required this.onTap,
+  });
+
+  static const double width = 124, face = 40;
+
+  /// The cover, the faces hanging below its edge, the names, the title and
+  /// the dashes.
+  static const double height = 186 + 26 + 19 + 18 + 7 + 3 + 4;
+
+  final CardBook book;
+  final List<BookPick> picks;
+  final int read;
+  final bool locked;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final bool done = read >= book.cards.length;
+    return Semantics(
+      button: true,
+      label: '${book.book.title}, ${picks.map((k) => k.who).join(', ')}',
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: SizedBox(
+          width: width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  BookCover(book: book, width: width),
+                  if (done || locked)
+                    Positioned(right: 6, top: 6, child: _Badge(done: done)),
+                  Positioned(
+                    left: 8,
+                    bottom: -face / 2,
+                    child: ExcludeSemantics(
+                      child: FounderFaces(
+                        who: [for (final BookPick k in picks) k.who],
+                        size: face,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: face / 2 + 8),
+              Text(
+                founderNames(picks),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.body(
+                  size: 13,
+                  weight: FontWeight.w800,
+                  height: 1.3,
+                  color: p.ink,
+                ),
+              ),
+              Text(
+                book.book.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.body(size: 12.5, height: 1.3, color: p.inkMuted),
+              ),
+              const SizedBox(height: 7),
+              _Progress(of: book.cards.length, read: read),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A book read whole, or one for Astute+, on its cover's corner.
+class _Badge extends StatelessWidget {
+  const _Badge({required this.done});
+
+  final bool done;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: EdgeInsets.all(done ? 3 : 5),
+    decoration: BoxDecoration(
+      color: done
+          ? const Color(0xFF22C55E)
+          : Colors.black.withValues(alpha: 0.55),
+      shape: BoxShape.circle,
+    ),
+    child: Icon(
+      done ? Icons.check_rounded : Icons.lock_rounded,
+      size: done ? 14 : 12,
+      color: Colors.white,
+    ),
+  );
+}
+
+/// The faces of [who], overlapping, the first in front.
+class FounderFaces extends StatelessWidget {
+  const FounderFaces({super.key, required this.who, required this.size});
+
+  final List<String> who;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> shown = who.take(3).toList();
+    final double step = size * 0.62;
+    return SizedBox(
+      width: size + step * (shown.length - 1),
+      height: size,
+      child: Stack(
+        children: [
+          for (int i = shown.length - 1; i >= 0; i--)
+            Positioned(
+              left: step * i,
+              child: FounderFace(who: shown[i], size: size),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One person's face (lib/data/book_picks.dart, [founderPhotos]) in a ring
+/// of the page's colour; their initials while it comes or where it will
+/// not.
+class FounderFace extends StatelessWidget {
+  const FounderFace({super.key, required this.who, required this.size});
+
+  final String who;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final FounderPhoto? photo = founderPhotos[who];
+    final Widget initials = ColoredBox(
+      color: Color.alphaBlend(p.ink.withValues(alpha: 0.14), p.surface),
+      child: Center(
+        child: Text(
+          [
+            for (final String w in who.split(' '))
+              if (w.isNotEmpty) w[0],
+          ].take(2).join(),
+          style: AppText.body(
+            size: size * 0.36,
+            weight: FontWeight.w800,
+            color: p.ink.withValues(alpha: 0.8),
+          ),
+        ),
+      ),
+    );
+    return Container(
+      width: size,
+      height: size,
+      padding: EdgeInsets.all(size * 0.06),
+      decoration: BoxDecoration(color: p.surface, shape: BoxShape.circle),
+      child: ClipOval(
+        child: photo == null
+            ? initials
+            : Image(
+                image: CardThumb.image(
+                  CardThumb.urlOf('people/${photo.slug}.jpg'),
+                ),
+                fit: BoxFit.cover,
+                gaplessPlayback: true,
+                frameBuilder: (context, child, frame, synchronous) =>
+                    frame == null && !synchronous ? initials : child,
+                errorBuilder: (context, error, stack) => initials,
+              ),
+      ),
+    );
+  }
+}
+
 class _BookTile extends StatelessWidget {
   const _BookTile({
     super.key,
@@ -748,6 +942,7 @@ class _PickRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final Palette p = context.p;
     final String where = '${pick.where}, ${pick.year}';
+    final FounderPhoto? photo = founderPhotos[pick.who];
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Material(
@@ -760,52 +955,73 @@ class _PickRow extends StatelessWidget {
             openLink(pick.url);
           },
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 13),
-            child: Column(
+            padding: const EdgeInsets.fromLTRB(14, 14, 16, 13),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  pick.who,
-                  style: AppText.body(
-                    size: 15.5,
-                    weight: FontWeight.w700,
-                    color: p.ink,
-                  ),
-                ),
-                Text(
-                  pick.role,
-                  style: AppText.body(size: 13, color: p.inkMuted),
-                ),
-                if (pick.said.isNotEmpty) ...[
-                  const SizedBox(height: 9),
-                  Text(
-                    '“${pick.said}”',
-                    style: AppText.display(
-                      size: 16,
-                      weight: FontWeight.w500,
-                      height: 1.32,
-                      color: p.ink.withValues(alpha: 0.9),
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 9),
-                Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        where,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                ExcludeSemantics(child: FounderFace(who: pick.who, size: 50)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        pick.who,
                         style: AppText.body(
-                          size: 12.5,
-                          weight: FontWeight.w600,
-                          color: p.inkMuted,
+                          size: 15.5,
+                          weight: FontWeight.w700,
+                          color: p.ink,
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(Icons.north_east_rounded, size: 14, color: p.inkMuted),
-                  ],
+                      Text(
+                        pick.role,
+                        style: AppText.body(size: 13, color: p.inkMuted),
+                      ),
+                      if (pick.said.isNotEmpty) ...[
+                        const SizedBox(height: 9),
+                        Text(
+                          '“${pick.said}”',
+                          style: AppText.display(
+                            size: 16,
+                            weight: FontWeight.w500,
+                            height: 1.32,
+                            color: p.ink.withValues(alpha: 0.9),
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: 9),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              where,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.body(
+                                size: 12.5,
+                                weight: FontWeight.w600,
+                                color: p.inkMuted,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            Icons.north_east_rounded,
+                            size: 14,
+                            color: p.inkMuted,
+                          ),
+                        ],
+                      ),
+                      // Who took the photo, as its licence asks.
+                      if (photo != null) ...[
+                        const SizedBox(height: 5),
+                        Text(
+                          context.l10n.bookPickPhoto(photo.credit),
+                          style: AppText.body(size: 10.5, color: p.inkFaint),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
               ],
             ),

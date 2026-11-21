@@ -1332,6 +1332,7 @@
   "bookAgain": "Rileggi",
   "bookTheIdeas": "Le idee",
   "bookRecommendedBy": "Consigliato da",
+  "bookPickPhoto": "Foto: {credit}",
   "bookFreeThisWeek": "Gratis questa settimana",
   "booksSeeAll": "Vedi tutti",
   "booksLibraryTitle": "Tutti i libri",

@@ -1332,6 +1332,7 @@
   "bookAgain": "Yeniden oku",
   "bookTheIdeas": "Fikirler",
   "bookRecommendedBy": "Önerenler",
+  "bookPickPhoto": "Fotoğraf: {credit}",
   "bookFreeThisWeek": "Bu hafta ücretsiz",
   "booksSeeAll": "Tümünü gör",
   "booksLibraryTitle": "Tüm kitaplar",
