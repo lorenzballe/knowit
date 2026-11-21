@@ -7,10 +7,6 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:.6cqh}
-#read{display:flex;align-items:baseline;justify-content:center;gap:2.5cqw;flex-wrap:wrap}
-#read .lab{font:600 max(1.7cqh,12px)/1.2 var(--body);color:var(--muted)}
-#pct{font:800 max(4.2cqh,22px)/1 var(--mono);color:var(--k);min-width:5ch;text-align:center}
-#pct.hot{color:#e4322b}
 #pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
@@ -21,7 +17,6 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">STRUCTURES</span></div>
     <h2 class="q">Why did corner wind strain Citicorp's braces more than head-on wind?</h2>
     <div class="stagebox" id="stage">
-      <div id="read"><span class="lab">Hardest-working brace</span><span id="pct">100%</span><span class="lab">of the head-on load</span></div>
       <svg id="pic"></svg>
     </div>
     <p class="say" id="say">Drag the wind arrow around the tower. Watch the braces.</p>
@@ -36,7 +31,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const svg = Kit.$('pic'), HOT = '#e4322b';
-let G = null, th = 0, done = false, drag = false;
+let G = null, th = 0, done = false, drag = false, reached = false;
 const rad = d => d * Math.PI / 180;
 
 function arrow(x1, y1, x2, y2, w, col, g) {
@@ -52,15 +47,56 @@ function text(x, y, s, size, col, anchor, g, weight) {
   t.textContent = s; return t;
 }
 
+// Words in one or two lines that fit a width (the readout beside the ring in a short, wide box).
+function lines(str, size, weight, maxW, g) {
+  const probe = text(0, 0, str, size, 'var(--k)', 'start', g, weight);
+  if (probe.getComputedTextLength() <= maxW) { probe.remove(); return [str]; }
+  const w = str.split(' '); let k = w.length - 1;
+  for (; k > 1; k--) { probe.textContent = w.slice(0, k).join(' '); if (probe.getComputedTextLength() <= maxW) break; }
+  probe.remove(); return [w.slice(0, k).join(' '), w.slice(k).join(' ')];
+}
+
 function draw() {
-  if (!G) return;
+  if (!G) return 0;
   const {W, H} = G, f = Math.max(G.f, 12);
   svg.innerHTML = '';
-  const m = Math.min(W, H * .95), cx = W / 2, cy = H / 2, h = .17 * m;
-  const x0 = cx - h, x1 = cx + h, y0 = cy - h, y1 = cy + h;
   const fy = Math.cos(rad(th)), fx = Math.sin(rad(th));      // from north (+), from west (+)
   const A = Math.abs(fy + fx), B = Math.abs(fy - fx);        // brace groups
+  const load = Math.max(A, B), hot = load > 1.03;
   const g = Kit.mk('g', {}, svg);
+  // The readout (the hardest-working brace against the head-on load) is part of the drawing: above the
+  // ring in a tall box, beside it in a short, wide one, so the ring keeps as much of the room as it can.
+  const lf = Math.max(12, Math.min(f * .95, 14)), nf = Math.max(24, Math.min(f * 2.2, 34));
+  const pct = Math.round(load * 100) + '%', pctCol = hot ? HOT : 'var(--k)';
+  const wide = W > H * 1.25;
+  let cx, cy, m;
+  // (lines spaced by their glyph boxes: about 1.2 em for the words, 1.32 em for the figure)
+  const wordH = lf * 1.24, numH = nf * 1.34;
+  if (!wide) {
+    const y1 = wordH / 2, y2 = wordH + 2 + numH / 2, readH = wordH + 2 + numH + lf * .3;
+    text(W / 2, y1, 'Hardest-working brace', lf, 'var(--k)', 'middle', g, 600).setAttribute('opacity', .72);
+    const n = text(0, y2, pct, nf, pctCol, 'start', g, 800); n.style.fontFamily = 'var(--mono)';
+    const l = text(0, y2 + nf * .12, 'of the head-on load', lf, 'var(--k)', 'start', g, 600); l.setAttribute('opacity', .72);
+    const nw = nf * .6 * 4, lw = l.getComputedTextLength(), x0 = (W - nw - lf * .6 - lw) / 2;
+    n.setAttribute('x', x0); l.setAttribute('x', x0 + nw + lf * .6);
+    m = Math.min(W, H - readH); cx = W / 2; cy = readH + (H - readH) / 2;
+  } else {
+    m = Math.min(H, W - 118); cx = W - m / 2; cy = H / 2;
+    const rw = W - m - 10;
+    const top = lines('Hardest-working brace', lf, 600, rw, g), bot = lines('of the head-on load', lf, 600, rw, g);
+    const blockH = (top.length + bot.length) * wordH + numH + 4;
+    let y = cy - blockH / 2 + wordH / 2;
+    top.forEach(t => { text(0, y, t, lf, 'var(--k)', 'start', g, 600).setAttribute('opacity', .72); y += wordH; });
+    y += (numH - wordH) / 2 + 2;
+    const n = text(0, y, pct, nf, pctCol, 'start', g, 800); n.style.fontFamily = 'var(--mono)';
+    y += (numH + wordH) / 2 + 2;
+    bot.forEach(t => { text(0, y, t, lf, 'var(--k)', 'start', g, 600).setAttribute('opacity', .72); y += wordH; });
+  }
+  G.cx = cx; G.cy = cy;
+  const h = .17 * m;
+  const x0 = cx - h, x1 = cx + h, y0 = cy - h, y1 = cy + h;
+  // the circle the wind is dragged around
+  Kit.mk('circle', {cx, cy, r: .47 * m, style: `fill:none;stroke:color-mix(in srgb,var(--k) 26%,transparent);stroke-width:1.5;stroke-dasharray:3 6`}, g);
   // tower floor
   Kit.mk('rect', {x: x0, y: y0, width: 2 * h, height: 2 * h, rx: m * .01,
     style: 'fill:color-mix(in srgb,var(--k) 7%,transparent)'}, g);
@@ -79,8 +115,11 @@ function draw() {
   // the famous mid-side columns
   [[cx, y0], [x1, cy], [cx, y1], [x0, cy]].forEach(([x, y]) =>
     Kit.mk('rect', {x: x - m * .022, y: y - m * .022, width: m * .044, height: m * .044, rx: m * .006, style: 'fill:var(--k)'}, g));
-  text(cx, cy - f * .8, 'TOWER', f * .8, 'var(--muted)', 'middle', g, 700);
-  text(cx, cy + f * .8, 'from above', f * .8, 'var(--muted)', 'middle', g, 500);
+  // what the square is, in the ink of the card, as large as the floor between the columns holds
+  const tf = Math.max(9.5, Math.min(f * .8, 13));
+  const t1 = text(cx, cy - tf * .75, 'TOWER', tf, 'var(--k)', 'middle', g, 700), t2 = text(cx, cy + tf * .75, 'from above', tf, 'var(--k)', 'middle', g, 500);
+  t1.setAttribute('opacity', .55); t2.setAttribute('opacity', .55);
+  if (t2.getComputedTextLength() > 2 * h - m * .1) t2.remove();
   // component pushes on the faces
   const L = .13 * m, gap = .03 * m, cw = m * .014;
   if (Math.abs(fy) > .06) {
@@ -98,26 +137,31 @@ function draw() {
   const hx = cx + Math.cos(phi) * r1, hy = cy + Math.sin(phi) * r1, tx = cx + Math.cos(phi) * r2, ty = cy + Math.sin(phi) * r2;
   arrow(tx, ty, hx, hy, m * .02, 'color-mix(in srgb,var(--k) 55%,transparent)', g);
   Kit.mk('circle', {cx: tx, cy: ty, r: m * .035, style: 'fill:var(--c);stroke:var(--k);stroke-width:' + m * .008}, g);
-  const nx = -Math.sin(phi), ny = Math.cos(phi);
-  const lx = (tx + hx) / 2 + nx * m * .05, ly = (ty + hy) / 2 + ny * m * .05;
-  text(lx, ly, 'wind F', f, 'var(--k)', 'middle', g, 800);
-  // readout
-  const s = Math.max(A, B), p = Kit.$('pct');
-  p.textContent = Math.round(s * 100) + '%';
-  p.classList.toggle('hot', s > 1.03);
-  return s;
+  // its name beside the handle it is dragged by, clear of it whatever the angle: offset across the
+  // arrow by half the word, the handle's radius and a little air
+  const wl = text(0, 0, 'wind F', f, 'var(--k)', 'middle', g, 800), ww = wl.getComputedTextLength();
+  const nx = -Math.sin(phi), ny = Math.cos(phi), mx = tx, my = ty;
+  const off = Math.abs(nx) * ww / 2 + Math.abs(ny) * f * .62 + m * .035 + Math.max(4, m * .02);
+  // of the two sides across the arrow, the one nearer the middle of the ring stays inside the drawing
+  const side = Math.abs(mx + nx * off - cx) <= Math.abs(mx - nx * off - cx) ? 1 : -1;
+  wl.setAttribute('x', Math.max(ww / 2 + 2, Math.min(W - ww / 2 - 2, mx + side * nx * off)));
+  wl.setAttribute('y', Math.max(f * .6, Math.min(H - f * .6, my + side * ny * off)));
+  return load;
 }
 
+function reveal() {
+  if (done) return; done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+}
+// The corner found while the finger is still on the wind: the answer waits for the finger to lift, so the
+// drawing does not move to its new place (the answer takes room from it) under the finger.
 function check() {
   const s = draw();
-  if (s > 1.385 && !done) {
-    done = true; Kit.haptic('success');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  }
+  if (s > 1.385 && !done) { if (drag) reached = true; else reveal(); }
 }
 function fromPointer(e) {
   const r = svg.getBoundingClientRect();
-  const x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
+  const x = e.clientX - r.left - (G ? G.cx : r.width / 2), y = e.clientY - r.top - (G ? G.cy : r.height / 2);
   let t = -(Math.atan2(y, x) * 180 / Math.PI + 90);
   t = ((t + 540) % 360) - 180;
   th = t; check();
@@ -132,6 +176,7 @@ const end = () => {
     gsap.to(o, {t: snap, duration: .25, ease: 'power2.out', onUpdate: () => { th = o.t; check(); }});
     Kit.haptic('selection');
   }
+  if (reached) reveal();
 };
 svg.addEventListener('pointerup', end);
 svg.addEventListener('pointercancel', end);

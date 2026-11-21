@@ -5,10 +5,10 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#stage{display:flex;flex-direction:column;gap:.6cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+#why .body{font:500 max(1.8cqh,13px)/1.25 var(--body);overflow-wrap:anywhere}
 #why .body b{font-weight:800}
 #row{display:flex;justify-content:flex-start}
 #go{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 5cqw;cursor:pointer;max-width:70%}
@@ -147,31 +147,52 @@ function build() {
   });
   els.scene = scene;
 
-  // Step 3: the magnifier on one tritiated molecule.
+  // Step 3: the magnifier on one tritiated molecule. In a low box (the end, on a small phone) the lens
+  // sits on the left with what it shows beside it, and the scene behind it steps aside.
   const mag = Kit.mk('g', {}, svg);
-  // veil in the card's own colour: it only calms the scene behind the lens
-  Kit.mk('rect', {x: 0, y: legH, width: W, height: H - legH, fill: '#00E5A0', opacity: .85}, mag);
-  const R = Math.min(W * .34, (H - legH) * .28), cx = W / 2, cy = legH + (H - legH) * .42;
-  Kit.mk('circle', {cx, cy, r: R, fill: '#13263f', stroke: INK, 'stroke-width': Math.max(3, f * .25)}, mag);
-  const mr = R * .32, lf = Math.max(13, mr * .75);
-  const hx = mr * 1.05, hy = mr * .85;
-  Kit.mk('line', {x1: cx, y1: cy, x2: cx + hx, y2: cy + hy, stroke: '#ffffff', 'stroke-width': mr * .22}, mag);
-  Kit.mk('line', {x1: cx, y1: cy, x2: cx - hx, y2: cy + hy, stroke: '#ffffff', 'stroke-width': mr * .22}, mag);
-  Kit.mk('circle', {cx: cx + hx, cy: cy + hy, r: mr * .68, fill: LENS.t}, mag);
-  Kit.mk('circle', {cx: cx - hx, cy: cy + hy, r: mr * .58, fill: LENS.h}, mag);
-  Kit.mk('circle', {cx, cy: cy - mr * .1, r: mr, fill: LENS.w}, mag);
-  txt(mag, cx, cy - mr * .1 + lf * .35, 'O', lf, {'text-anchor': 'middle', fill: COL.panel});
-  txt(mag, cx + hx, cy + hy + lf * .35, 'T', lf, {'text-anchor': 'middle', fill: COL.panel});
-  txt(mag, cx - hx, cy + hy + lf * .35, 'H', lf, {'text-anchor': 'middle', fill: COL.panel});
-  txt(mag, cx, cy + R + f * 1.5, 'T is tritium, a kind of hydrogen:', f, {'text-anchor': 'middle'});
-  txt(mag, cx, cy + R + f * 2.9, 'it is the water molecule itself', f, {'text-anchor': 'middle', fill: COL.t});
+  const short = H < 150;
+  const atoms = (cx, cy, mr, lf) => {
+    const hx = mr * 1.05, hy = mr * .85;
+    Kit.mk('line', {x1: cx, y1: cy, x2: cx + hx, y2: cy + hy, stroke: '#ffffff', 'stroke-width': mr * .22}, mag);
+    Kit.mk('line', {x1: cx, y1: cy, x2: cx - hx, y2: cy + hy, stroke: '#ffffff', 'stroke-width': mr * .22}, mag);
+    Kit.mk('circle', {cx: cx + hx, cy: cy + hy, r: mr * .68, fill: LENS.t}, mag);
+    Kit.mk('circle', {cx: cx - hx, cy: cy + hy, r: mr * .58, fill: LENS.h}, mag);
+    Kit.mk('circle', {cx, cy: cy - mr * .1, r: mr, fill: LENS.w}, mag);
+    txt(mag, cx, cy - mr * .1 + lf * .35, 'O', lf, {'text-anchor': 'middle', fill: COL.panel});
+    txt(mag, cx + hx, cy + hy + lf * .35, 'T', lf, {'text-anchor': 'middle', fill: COL.panel});
+    txt(mag, cx - hx, cy + hy + lf * .35, 'H', lf, {'text-anchor': 'middle', fill: COL.panel});
+  };
+  if (short) {
+    // the lens as tall as the band, its rim just inside it
+    const lw = Math.max(2.5, H * .035), R = Math.min(H / 2 - lw / 2 - .1, W * .3), cx = R + 4, cy = H / 2;
+    Kit.mk('circle', {cx, cy, r: R, fill: '#13263f', stroke: INK, 'stroke-width': lw}, mag);
+    const mr = R * .42;
+    atoms(cx, cy - mr * .15, mr, Math.max(10, Math.min(13, mr * .8)));
+    // what the lens shows, wrapped to the room on its right
+    const x0 = cx + R + 12, avail = W - x0 - 4, probe = txt(mag, 0, -50, '', f);
+    const wrap = str => { const out = []; let cur = ''; for (const w of str.split(' ')) { const nx = cur ? cur + ' ' + w : w; probe.textContent = nx; if (cur && probe.getComputedTextLength() > avail) { out.push(cur); cur = w; } else cur = nx; } if (cur) out.push(cur); return out; };
+    const lines = [].concat(wrap('T is tritium, a kind of hydrogen:').map(t => [t, INK]), wrap('it is the water molecule itself').map(t => [t, COL.t]));
+    probe.remove();
+    const lh = f * 1.25, y0 = cy - lines.length * lh / 2 + f * .95;
+    lines.forEach(([t, col], i) => txt(mag, x0, y0 + i * lh, t, f, {fill: col}));
+  } else {
+    // veil in the card's own colour: it only calms the scene behind the lens
+    Kit.mk('rect', {x: 0, y: legH, width: W, height: H - legH, fill: '#00E5A0', opacity: .85}, mag);
+    const R = Math.min(W * .34, (H - legH) * .28), cx = W / 2, cy = legH + (H - legH) * .42;
+    Kit.mk('circle', {cx, cy, r: R, fill: '#13263f', stroke: INK, 'stroke-width': Math.max(3, f * .25)}, mag);
+    const mr = R * .32;
+    atoms(cx, cy, mr, Math.max(13, mr * .75));
+    txt(mag, cx, cy + R + f * 1.5, 'T is tritium, a kind of hydrogen:', f, {'text-anchor': 'middle'});
+    txt(mag, cx, cy + R + f * 2.9, 'it is the water molecule itself', f, {'text-anchor': 'middle', fill: COL.t});
+  }
+  G.short = short;
   els.mag = mag;
   render();
 }
 
 function render() {
   gsap.set(els.tank, {autoAlpha: step === 0 ? 1 : 0, scale: 1, transformOrigin: '50% 50%'});
-  gsap.set(els.scene, {autoAlpha: step >= 1 ? 1 : 0, scale: 1});
+  gsap.set(els.scene, {autoAlpha: step >= 1 && !(G.short && step === 3) ? 1 : 0, scale: 1});
   gsap.set(els.out, {autoAlpha: step === 2 ? 1 : 0});
   gsap.set([els.f1.l, els.f2.l], {autoAlpha: step === 3 ? 0 : 1});
   gsap.set(els.mag, {autoAlpha: step === 3 ? 1 : 0});
@@ -223,8 +244,8 @@ Kit.play.card = async () => {
   Kit.$('go').click(); await wait(1100);
 };
 // Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole: on the smallest phone under 150 px, where this drawing's labels would crowd.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < (innerWidth < 355 ? 150 : 100)) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Left too little room to draw again (under 60 px), it keeps the drawing it has, shown smaller, whole; a low box above that has a layout of its own.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 60) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
