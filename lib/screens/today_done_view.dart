@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
 import '../data/daily.dart';
+import '../data/skill_levels.dart';
+import '../data/skills.dart';
 import '../state/app_state.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
@@ -17,6 +19,7 @@ import '../widgets/fit_text.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
 import '../widgets/liked_mark.dart';
+import '../widgets/skill_mark.dart';
 import 'deck_viewer_screen.dart';
 import 'journey_screen.dart';
 import '../analytics.dart';
@@ -563,6 +566,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
       glow: glow,
       saved: saved,
       liked: app.isLiked(pill.id),
+      skill: skillMarkOf(pill, app.skills),
       onSave: () {
         HapticFeedback.mediumImpact();
         app.toggleSaved(pill.id);
@@ -580,12 +584,16 @@ class _TodayDoneViewState extends State<TodayDoneView>
     );
   }
 
-  /// Reads the tag of each liked drawn card on the shelf from its page, so
-  /// its heart stands before the tag; drawn again once it is known.
+  /// Reads the tag of each drawn card on the shelf with a heart or a skill's
+  /// mark from its page, so they stand before the tag; drawn again once it
+  /// is known.
   void _learnTags(List<Pill> deck) {
     for (final Pill pill in deck) {
       if (pill.web == null || CardTags.knows(pill.id)) continue;
-      if (!widget.app.isLiked(pill.id)) continue;
+      if (!widget.app.isLiked(pill.id) &&
+          skillMarkOf(pill, widget.app.skills) == null) {
+        continue;
+      }
       CardTags.learn(pill).then((_) {
         if (mounted) setState(() {});
       });
@@ -684,6 +692,7 @@ class _CardFace extends StatelessWidget {
     required this.glow,
     required this.saved,
     this.liked = false,
+    this.skill,
     required this.onSave,
     required this.onShare,
   });
@@ -693,6 +702,10 @@ class _CardFace extends StatelessWidget {
 
   /// Whether the reader liked the card: a heart in its head, on the right.
   final bool liked;
+
+  /// The skill in focus the card trains, if any: its mark before the heart,
+  /// as in the deck, only seen here.
+  final Skill? skill;
 
   /// The deck's mark beside the subject, "For you" or "Again", when the
   /// card carried one.
@@ -782,6 +795,8 @@ class _CardFace extends StatelessWidget {
               aspect: atShelf ? WebThumbs.shelfAspect : WebThumbs.aspect,
               saved: saved,
               liked: liked,
+              skill: CardTags.read(pill.id) ? skill : null,
+              subject: pill.topic,
               tag: CardTags.of(pill.id),
               ink: mark,
               onSave: onSave,
@@ -905,6 +920,15 @@ class _CardFace extends StatelessWidget {
                 ],
               ),
             ),
+            if (skill case final Skill skill) ...[
+              SkillMark(
+                skill: skill,
+                ink: ink,
+                scale: s,
+                reach: SkillMark.size,
+              ),
+              SizedBox(width: SkillMark.gap * s),
+            ],
             if (liked) ...[
               LikedMark(ink: ink, scale: s),
               SizedBox(width: 8 * s),
@@ -963,6 +987,8 @@ class _PictureControls extends StatelessWidget {
     required this.aspect,
     required this.saved,
     this.liked = false,
+    this.skill,
+    this.subject,
     this.tag,
     required this.ink,
     required this.onSave,
@@ -978,6 +1004,13 @@ class _PictureControls extends StatelessWidget {
   /// of its head: the heart stands just before it, where the page puts it.
   final bool liked;
   final String? tag;
+
+  /// The skill in focus the card trains, if any, its mark before the heart,
+  /// once the page has been read for its [tag]; and the card's subject,
+  /// which the picture names in English (tool/cards/thumbs.cjs), so the mark
+  /// is left out where the name would run into it.
+  final Skill? skill;
+  final String? subject;
   final Color ink;
   final VoidCallback onSave;
   final VoidCallback onShare;
@@ -997,8 +1030,26 @@ class _PictureControls extends StatelessWidget {
         // either proportion; its pair of 44 sits 17 in from the side and 15
         // up from the foot, 4 apart (pill_card.dart).
         final double k = picture / 366;
+        final double middle = SkillMark.middleOnPage(tag, liked: liked);
         return Stack(
           children: [
+            if (skill case final Skill skill
+                when SkillMark.fits(
+                  width: 366,
+                  middle: middle,
+                  subject: lookupAppLocalizations(const Locale('en'))
+                      .subjectOf(subject ?? ''),
+                ))
+              Positioned(
+                top: (CardTags.headMiddle - SkillMark.size / 2) * k,
+                right: side + (middle - SkillMark.size / 2) * k,
+                child: SkillMark(
+                  skill: skill,
+                  ink: ink,
+                  scale: k,
+                  reach: SkillMark.size,
+                ),
+              ),
             if (liked)
               Positioned(
                 top: (CardTags.headMiddle - LikedMark.size / 2) * k,

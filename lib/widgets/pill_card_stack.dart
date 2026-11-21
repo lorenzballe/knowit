@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../data/card_pages.dart';
+import '../data/skills.dart';
 import 'deeper_sheet.dart';
 import '../data/subject_icons.dart';
 import '../data/topics.dart';
@@ -84,6 +85,14 @@ class PillCardStack extends StatefulWidget {
   /// a free card's page alike: Why this card. Null, the line is only read.
   final ValueChanged<Pill>? onNote;
 
+  /// The skill the reader put in focus that a card trains, if it trains one
+  /// (lib/data/skill_levels.dart): its small mark in the card's head, beside
+  /// the heart, on both sides. Null, no card carries one.
+  final Skill? Function(Pill pill)? skillOf;
+
+  /// A tap on that mark, on the card being read: what it means.
+  final void Function(Pill pill, Skill skill)? onSkill;
+
   /// True while a card is under the finger, so the chrome can step out of
   /// the way of the gesture.
   final ValueChanged<bool>? onMotion;
@@ -152,6 +161,8 @@ class PillCardStack extends StatefulWidget {
     this.notes = const {},
     this.noteIcons = const {},
     this.onNote,
+    this.skillOf,
+    this.onSkill,
     required this.isSaved,
     required this.onSave,
     required this.onShare,
@@ -937,6 +948,14 @@ class _PillCardStackState extends State<PillCardStack>
       // underneath truly does not have. FlipCard does not build it below a
       // half turn, and nothing but the top card is ever turned.
       final bool controls = isTop;
+      final Skill? skill = pill == null ? null : widget.skillOf?.call(pill);
+      final VoidCallback? onSkill =
+          pill == null || skill == null || !controls || widget.onSkill == null
+          ? null
+          : () {
+              _read?.opened('skill');
+              widget.onSkill!(pill, skill);
+            };
       Widget card = pill == null
           ? widget.trailing!
           : FlipCard(
@@ -955,6 +974,8 @@ class _PillCardStackState extends State<PillCardStack>
                         _read?.opened('why');
                         widget.onNote!(pill);
                       },
+                skill: skill,
+                onSkill: onSkill,
                 given: controls ? given : null,
                 // The save and share, and the heart of a card liked, on every
                 // card in the deck, live only on the one being read: a card
@@ -1001,6 +1022,8 @@ class _PillCardStackState extends State<PillCardStack>
                       isReview: widget.reviewIds.contains(pill.id),
                       isOwn: widget.ownIds.contains(pill.id),
                       home: widget.home,
+                      skill: skill,
+                      onSkill: onSkill,
                       given: given,
                       saved: widget.isSaved(pill.id),
                       onSave: () => widget.onSave(pill),

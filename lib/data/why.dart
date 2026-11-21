@@ -16,8 +16,6 @@ import '../state/app_state.dart';
 import 'goals.dart';
 import 'pill_bank.dart';
 import 'pills_repository.dart' show dateKey;
-import 'skill_levels.dart' show skillMarkOf;
-import 'skills.dart';
 import 'topics.dart' show topicKeyForName;
 
 /// The one reason a card gives, the most telling first.
@@ -31,10 +29,6 @@ enum WhyKind {
 
   /// The reader's own card that their Sunday adds to the day.
   sunday,
-
-  /// It trains one of the skills the reader put in focus in What to learn
-  /// (lib/data/skill_levels.dart): the line says which.
-  skill,
 
   /// About one of the goals the reader picked: in one of its genres, or
   /// training one of its moves.
@@ -85,7 +79,6 @@ class CardWhy {
     required this.pill,
     required this.level,
     this.goal,
-    this.skill,
     this.liked = 0,
     this.mastery,
     this.lastMet,
@@ -99,9 +92,6 @@ class CardWhy {
 
   /// The goal the card is about, when it is about one of the reader's.
   final Goal? goal;
-
-  /// The skill in focus the card trains most closely, when it trains one.
-  final Skill? skill;
 
   /// How many cards the reader liked are like it (the same genre), where
   /// the deal leans by them; 0 otherwise.
@@ -129,7 +119,6 @@ CardWhy whyOf(AppState app, Pill pill, {bool sunday = false}) {
     subject == null ? null : app.dealtLevels[subject],
   );
   final Goal? goal = _goalOf(app, pill);
-  final Skill? skill = skillMarkOf(pill, app.skills);
   final int liked = app.isPlus ? _likedLike(app, pill) : 0;
   final int? lastMet = move.isReal ? _lastMet(app, move) : null;
 
@@ -138,7 +127,6 @@ CardWhy whyOf(AppState app, Pill pill, {bool sunday = false}) {
     pill: pill,
     level: level,
     goal: goal,
-    skill: skill,
     liked: liked,
     mastery: mastery,
     lastMet: lastMet,
@@ -158,7 +146,6 @@ CardWhy whyOf(AppState app, Pill pill, {bool sunday = false}) {
     return said(WhyKind.random);
   }
   if (sunday) return said(WhyKind.sunday);
-  if (skill != null) return said(WhyKind.skill);
   if (goal != null) return said(WhyKind.goal);
   if (liked > 0) return said(WhyKind.liked);
   if (pill.asksSomething) {
