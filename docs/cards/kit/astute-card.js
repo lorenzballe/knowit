@@ -173,7 +173,9 @@ const Kit = (() => {
     const name = label.querySelector('.t'); if (name && s.name) name.textContent = s.name;
     label.querySelector('.kit-chip')?.remove(); card.querySelector('.kit-note')?.remove();
     if (e.chip && name) { const c = document.createElement('span'); c.className = 'kit-chip'; c.textContent = e.chip; name.after(c); }
-    if (e.note) { const n = document.createElement('p'); n.className = 'kit-note'; if (bridge() && bridge().why) n.classList.add('kit-why'); n.textContent = e.note; label.after(n); }
+    if (e.note) { const n = document.createElement('p'); n.className = 'kit-note'; if (bridge() && bridge().why) n.classList.add('kit-why'); n.textContent = e.note;
+      if (Array.isArray(e.noteDot) && e.noteDot.length === 2) { const t = document.createElement('span'); t.className = 'kit-t'; t.textContent = e.note; const d = document.createElement('span'); d.className = 'kit-dot'; d.style.background = 'linear-gradient(135deg,' + e.noteDot[0] + ',' + e.noteDot[1] + ')'; n.textContent = ''; n.append(d, t); n.classList.add('kit-dotted'); }
+      label.after(n); }
     fitLabel();
   }
   // The page's own tag gives way when the subject's name and the app's chip leave it no room.

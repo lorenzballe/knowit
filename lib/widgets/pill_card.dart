@@ -7,7 +7,6 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
-import '../data/skills.dart';
 import '../data/topics.dart' show inkOn;
 import '../measure/card_read.dart';
 import '../models/pill.dart';
@@ -23,7 +22,6 @@ import 'place_line.dart';
 import 'scene_view.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
-import 'skill_mark.dart';
 import 'subject_icon.dart';
 import 'web/page_messages.dart';
 import 'web/web_card_face.dart';
@@ -70,13 +68,11 @@ class PillCard extends StatelessWidget {
   /// only read.
   final VoidCallback? onNote;
 
-  /// The skill the reader put in focus that this card trains, when it trains
-  /// one (lib/data/skill_levels.dart): its mark on the card's corner
-  /// (skill_mark.dart). Null for none.
-  final Skill? skill;
-
-  /// A tap on [skill]'s mark, on the card being read: what it means.
-  final VoidCallback? onSkill;
+  /// The two hues of a dot that stands before [note] in place of its mark,
+  /// when the line says which skill in focus the card trains
+  /// (lib/data/skill_levels.dart): the skill's own colours, as in What to
+  /// learn. Null for none.
+  final List<Color>? noteDot;
 
   const PillCard({
     super.key,
@@ -91,8 +87,7 @@ class PillCard extends StatelessWidget {
     this.note,
     this.noteIcon,
     this.onNote,
-    this.skill,
-    this.onSkill,
+    this.noteDot,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -134,16 +129,6 @@ class PillCard extends StatelessWidget {
     final Widget card = Stack(
       children: [
         _face(context),
-        // The skill in focus it trains: a dot on the card's corner.
-        if (skill != null)
-          Positioned(
-            top: 0,
-            right: 0,
-            child: SkillMark(
-              skill: skill!,
-              onTap: controlsLive ? onSkill : null,
-            ),
-          ),
         // Each control is 44 square, its mark where the 38 one put it.
         if (onSave != null)
           Positioned(
@@ -221,6 +206,9 @@ class PillCard extends StatelessWidget {
                     ? context.l10n.forYouChip
                     : null,
                 note: placeLineOf(context, pill.place, home) ?? note,
+                noteDot: placeLineOf(context, pill.place, home) == null
+                    ? noteDot
+                    : null,
               ),
               // Liked, the heart stands in the page's head on the right,
               // before the tag it prints there.
@@ -320,6 +308,7 @@ class PillCard extends StatelessWidget {
             _WhyLine(
               key: const ValueKey('card-note'),
               icon: noteIcon ?? Icons.auto_awesome_rounded,
+              dot: noteDot,
               text: note!,
               ink: pill.ink,
               onTap: onNote,
@@ -409,12 +398,17 @@ class _WhyLine extends StatelessWidget {
   const _WhyLine({
     super.key,
     required this.icon,
+    this.dot,
     required this.text,
     required this.ink,
     this.onTap,
   });
 
   final IconData icon;
+
+  /// A dot of these two hues in place of [icon]: the skill in focus the card
+  /// trains, in its own colours, ringed in white so it reads on any card.
+  final List<Color>? dot;
   final String text;
   final Color ink;
 
@@ -430,8 +424,25 @@ class _WhyLine extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 1.5),
-            child: ExcludeSemantics(child: Icon(icon, size: 13, color: muted)),
+            padding: EdgeInsets.only(top: dot == null ? 1.5 : 2),
+            child: ExcludeSemantics(
+              child: dot == null
+                  ? Icon(icon, size: 13, color: muted)
+                  : Container(
+                      key: const ValueKey('why-dot'),
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: dot!,
+                        ),
+                        border: Border.all(color: Colors.white, width: 1.5),
+                      ),
+                    ),
+            ),
           ),
           const SizedBox(width: 5),
           Flexible(

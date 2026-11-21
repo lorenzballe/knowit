@@ -1,6 +1,6 @@
-// What trains each skill, the reader's level in it, and the mark a card
+// What trains each skill, the reader's level in it, and the line a card
 // carries when it trains a skill the reader put in focus
-// (lib/data/skill_levels.dart, lib/widgets/skill_mark.dart).
+// (lib/data/skill_levels.dart, lib/data/why.dart, lib/widgets/skill_mark.dart).
 //
 //   flutter test test/skill_levels_test.dart
 import 'package:flutter/material.dart';
@@ -9,14 +9,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/skill_levels.dart';
 import 'package:astuto/data/skills.dart';
+import 'package:astuto/data/why.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/skills_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card.dart';
-import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/skill_mark.dart';
+import 'package:astuto/widgets/why_sheet.dart' show whyLine;
 
 import 'explore/core_harness.dart';
 
@@ -114,55 +115,52 @@ void main() {
     (p) => p.web == null && p.challenge is NoChallenge && p.scene == null,
   );
 
-  testWidgets('a card that trains a skill in focus carries its mark on its '
-      'corner; a tap, on the card being read, says what it means', (
-    tester,
-  ) async {
-    final List<Skill> tapped = [];
-    Widget deck({Skill? Function(Pill)? skillOf}) => host(
+  test('a card that trains a skill in focus says so under its head, before '
+      'the reasons a skill outweighs, after those it does not', () async {
+    final Pill money = bank.firstWhere(
+      (p) =>
+          Skill.money.fitOf(p) == 0 &&
+          p.place == null &&
+          skillMarkOf(p, ['money']) == Skill.money,
+    );
+    final AppState app = await readyApp({
+      'knowit.plus': true,
+      'knowit.skills': <String>['money'],
+    });
+    final CardWhy why = whyOf(app, money);
+    expect(why.kind, WhyKind.skill);
+    expect(why.skill, Skill.money);
+    final l = lookupAppLocalizations(const Locale('en'));
+    expect(whyLine(l, why), l.whySkill(l.skillName('money')));
+    // A card back on the review ladder says that first.
+    app.reviewIdsToday.add(money.id);
+    expect(whyOf(app, money).kind, isNot(WhyKind.skill));
+    app.reviewIdsToday.remove(money.id);
+    // Nothing in focus, nothing said of it.
+    final AppState none = await readyApp({'knowit.plus': true});
+    expect(whyOf(none, money).kind, isNot(WhyKind.skill));
+  });
+
+  testWidgets("the line about a skill in focus carries the skill's dot; any "
+      'other line, its mark', (tester) async {
+    Widget face({List<Color>? dot}) => host(
       SizedBox(
         height: 640,
-        child: PillCardStack(
-          deck: [card],
-          index: 0,
-          onAdvance: () {},
-          answerFor: (_) => null,
-          onAnswer: (_, _, _, _) {},
-          reviewIds: const {},
-          isSaved: (_) => false,
-          onSave: (_) {},
-          onShare: (_) {},
-          skillOf: skillOf,
-          onSkill: (pill, skill) => tapped.add(skill),
+        child: PillCard(
+          pill: card,
+          flipped: false,
+          note: 'Trains Money and saving, one of your skills',
+          noteIcon: Icons.flag_rounded,
+          noteDot: dot,
         ),
       ),
     );
-
-    final SemanticsHandle semantics = tester.ensureSemantics();
-    await tester.pumpWidget(deck(skillOf: (_) => Skill.money));
-    await tester.pumpAndSettle();
-    final Finder mark = find.byKey(const ValueKey('skill-mark-money'));
-    expect(mark, findsOneWidget);
-    // On the card's top right corner.
-    final Rect face = tester.getRect(find.byType(PillCard).first);
-    final Rect at = tester.getRect(mark);
-    expect(at.right, closeTo(face.right, 1));
-    expect(at.top, closeTo(face.top, 1));
-    expect(
-      find.bySemanticsLabel(
-        'Trains ${lookupAppLocalizations(const Locale('en')).skillName('money')}',
-      ),
-      findsOneWidget,
-    );
-    semantics.dispose();
-    await tester.tap(mark);
-    await tester.pump();
-    expect(tapped, [Skill.money]);
-
-    // A card that trains none of them carries none.
-    await tester.pumpWidget(deck(skillOf: (_) => null));
-    await tester.pumpAndSettle();
-    expect(find.byType(SkillMark), findsNothing);
+    await tester.pumpWidget(face(dot: Skill.money.hues));
+    expect(find.byKey(const ValueKey('why-dot')), findsOneWidget);
+    expect(find.byIcon(Icons.flag_rounded), findsNothing);
+    await tester.pumpWidget(face());
+    expect(find.byKey(const ValueKey('why-dot')), findsNothing);
+    expect(find.byIcon(Icons.flag_rounded), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

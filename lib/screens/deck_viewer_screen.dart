@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/skill_levels.dart';
+import '../data/skills.dart';
 import '../l10n/l10n.dart';
 
 import '../models/pill.dart';
@@ -76,6 +77,13 @@ class DeckViewerScreen extends StatefulWidget {
 
 class _DeckViewerScreenState extends State<DeckViewerScreen> {
   late int _index = widget.initialIndex;
+
+  /// The skill in focus each card trains, by its id, for the cards that
+  /// train one: worked out once, as the deck opens.
+  late final Map<String, Skill> _skills = {
+    for (final Pill p in widget.deck)
+      if (skillMarkOf(p, widget.app.skills) case final Skill s) p.id: s,
+  };
 
   /// Past the last card: the card that says the deck is done is on top.
   bool get _atEnd => _index >= widget.deck.length;
@@ -300,14 +308,29 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     },
                     onShare: (pill) => showShareSheet(context, pill),
                     // A card that trains a skill the reader put in focus
-                    // carries its mark, here as on Today.
-                    skillOf: (pill) => skillMarkOf(pill, widget.app.skills),
-                    onSkill: (pill, skill) => showSkillMarkSheet(
-                      context,
-                      widget.app,
-                      skill,
-                      cardId: pill.id,
-                    ),
+                    // says which under its head, its dot in the skill's
+                    // colours, here as on Today; a tap opens the skill and
+                    // the reader's level in it.
+                    notes: {
+                      for (final MapEntry<String, Skill> e in _skills.entries)
+                        e.key: context.l10n.whySkill(
+                          context.l10n.skillName(e.value.name),
+                        ),
+                    },
+                    noteDots: {
+                      for (final MapEntry<String, Skill> e in _skills.entries)
+                        e.key: e.value.hues,
+                    },
+                    onNote: (pill) {
+                      final Skill? skill = _skills[pill.id];
+                      if (skill == null) return;
+                      showSkillMarkSheet(
+                        context,
+                        widget.app,
+                        skill,
+                        cardId: pill.id,
+                      );
+                    },
                   ),
                 ),
               ),

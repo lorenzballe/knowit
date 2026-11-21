@@ -1394,6 +1394,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get whyAgain => '再看一次';
 
   @override
+  String whySkill(String skill) {
+    return '训练你的能力：$skill';
+  }
+
+  @override
   String whyGoal(String goal) {
     return '为了你的目标：$goal';
   }
@@ -1798,11 +1803,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get skillMarkKicker => '这张卡片训练';
-
-  @override
-  String skillMarkLabel(String skill) {
-    return '训练$skill';
-  }
 
   @override
   String get skillMarkBody => '这是你设为专注的能力之一。每读一张这样的卡片，你都会升级。';

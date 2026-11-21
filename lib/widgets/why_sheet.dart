@@ -35,6 +35,7 @@ String? whyLine(AppLocalizations l, CardWhy why) {
     WhyKind.again =>
       why.pill.principle.isReal ? l.whyMoveAgain(move) : l.whyAgain,
     WhyKind.sunday => l.sundayOneMore,
+    WhyKind.skill => l.whySkill(l.skillName(why.skill!.name)),
     WhyKind.goal => l.whyGoal(goalName(l, why.goal!)),
     WhyKind.liked => l.whyLiked(why.liked),
     WhyKind.hard => l.whyHard(subject),
@@ -51,6 +52,7 @@ IconData whyIcon(WhyKind kind) => switch (kind) {
   WhyKind.missing => Icons.track_changes_rounded,
   WhyKind.again => Icons.replay_rounded,
   WhyKind.sunday => Icons.auto_awesome_rounded,
+  WhyKind.skill => Icons.circle,
   WhyKind.goal => Icons.flag_rounded,
   WhyKind.liked => Icons.favorite_rounded,
   WhyKind.hard => Icons.trending_up_rounded,

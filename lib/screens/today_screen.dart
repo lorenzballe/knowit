@@ -9,7 +9,6 @@ import '../measure/session.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
-import '../data/skill_levels.dart';
 import '../data/topics.dart';
 import '../data/why.dart';
 import '../widgets/magic_card.dart';
@@ -294,17 +293,28 @@ class _TodayScreenState extends State<TodayScreen> {
                 for (final MapEntry<String, CardWhy> e in whys.entries)
                   e.key: whyIcon(e.value.kind),
               },
-              onNote: (pill) => showWhySheet(
-                context,
-                app,
-                pill,
-                sunday: pill.id == _sundaysOwn(app),
-              ),
-              // A card that trains a skill the reader put in focus carries
-              // its mark; a tap says what it means.
-              skillOf: (pill) => skillMarkOf(pill, app.skills),
-              onSkill: (pill, skill) =>
-                  showSkillMarkSheet(context, app, skill, cardId: pill.id),
+              // A card that trains a skill the reader put in focus says which
+              // on that line, its dot in the skill's colours; a tap opens the
+              // skill and the reader's level in it rather than the reasons.
+              noteDots: {
+                for (final MapEntry<String, CardWhy> e in whys.entries)
+                  if (e.value.skill case final skill?
+                      when e.value.kind == WhyKind.skill)
+                    e.key: skill.hues,
+              },
+              onNote: (pill) {
+                final CardWhy? why = whys[pill.id];
+                if (why != null && why.kind == WhyKind.skill) {
+                  showSkillMarkSheet(context, app, why.skill!, cardId: pill.id);
+                } else {
+                  showWhySheet(
+                    context,
+                    app,
+                    pill,
+                    sunday: pill.id == _sundaysOwn(app),
+                  );
+                }
+              },
               answerFor: app.answerFor,
               onAnswer: (id, response, confidence, reason) => app.recordAnswer(
                 id,

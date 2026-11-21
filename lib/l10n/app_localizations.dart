@@ -2130,6 +2130,12 @@ abstract class AppLocalizations {
   /// **'Back for a second look'**
   String get whyAgain;
 
+  /// Line under a card's head on Today (why this card is in front of the reader): the card trains one of the skills the reader put in focus in What to learn. A dot in the skill's colours stands before it.
+  ///
+  /// In en, this message translates to:
+  /// **'Trains {skill}, one of your skills'**
+  String whySkill(String skill);
+
   /// On one of today's cards: it is about one of the goals the reader picked.
   ///
   /// In en, this message translates to:
@@ -2609,12 +2615,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'THIS CARD TRAINS'**
   String get skillMarkKicker;
-
-  /// What a screen reader says for the mark a card carries when it trains a skill the reader picked.
-  ///
-  /// In en, this message translates to:
-  /// **'Trains {skill}'**
-  String skillMarkLabel(String skill);
 
   /// On the sheet a card's skill mark opens: the skill is one the reader picked, and cards like this raise their level in it.
   ///

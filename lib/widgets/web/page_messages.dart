@@ -289,6 +289,10 @@ class PageEnv {
   final String? note;
   final String? chip;
 
+  /// The two hues of a dot the page sets before [note], where the line says
+  /// which skill in focus the card trains; null for none.
+  final List<Color>? noteDot;
+
   /// Whether the card asks how sure, this time ([SureAsk]): false tells the
   /// kit's row of percentages to stand aside and hand the card no number.
   final bool sure;
@@ -306,6 +310,7 @@ class PageEnv {
     this.subject,
     this.note,
     this.chip,
+    this.noteDot,
     this.sure = true,
   });
 
@@ -322,6 +327,7 @@ class PageEnv {
     subject: subject,
     note: note,
     chip: chip,
+    noteDot: noteDot,
     sure: sure,
   );
 
@@ -341,6 +347,7 @@ class PageEnv {
         : {'w': corner!.width.round(), 'h': corner!.height.round()},
     'subject': subject?.toJson(),
     'note': note,
+    'noteDot': noteDot?.map(_hex).toList(),
     'chip': chip,
     'sure': sure,
   };

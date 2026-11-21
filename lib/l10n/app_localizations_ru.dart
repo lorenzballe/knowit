@@ -1505,6 +1505,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get whyAgain => 'Снова, чтобы взглянуть ещё раз';
 
   @override
+  String whySkill(String skill) {
+    return 'Твой навык: $skill';
+  }
+
+  @override
   String whyGoal(String goal) {
     return 'Для твоей цели: $goal';
   }
@@ -1944,11 +1949,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get skillMarkKicker => 'ЭТА КАРТОЧКА ТРЕНИРУЕТ';
-
-  @override
-  String skillMarkLabel(String skill) {
-    return 'Тренирует: $skill';
-  }
 
   @override
   String get skillMarkBody =>
