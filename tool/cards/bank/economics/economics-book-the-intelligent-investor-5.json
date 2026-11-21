@@ -1,0 +1,50 @@
+{
+  "id": "economics-book-the-intelligent-investor-5",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.risk_and_reward",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A roulette wheel has 38 numbers; a winning $1 bet pays $35 plus your stake. You bet $1 on every number. What happens each spin?",
+  "options": [
+    "You break even",
+    "You win $2",
+    "You lose $2"
+  ],
+  "correct": 2,
+  "answer": "You lose $2 a spin: $38 staked, $36 back. Covering every number turns a bad bet into a certain loss. If a win paid $39, the same cover would gain $2 a spin: the casino’s position. Graham’s point: diversifying works only on top of a margin of safety, an edge in your favour.",
+  "move": "Before spreading your bets, check that each one is worth making.",
+  "trap": "‘You break even’: one number always wins, so every bet seems covered.",
+  "simply": "Buying every ticket in a raffle means you will win the prize, but if all the tickets cost more than the prize, you lose money every single time.",
+  "why": "It is the test for any spread-out plan, from a portfolio of shares to a stack of side projects: owning many things only smooths the results; it cannot turn poor odds into good ones. Each piece has to be worth having on its own.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-intelligent-investor",
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "year": 1949,
+    "part": 5,
+    "isbn": "9780063423527",
+    "badge": "Millions of copies sold in 36 languages"
+  },
+  "keywords": [
+    "roulette",
+    "diversification",
+    "margin of safety",
+    "benjamin graham"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Benjamin Graham, The Intelligent Investor, 1949",
+  "source_kind": "book",
+  "reference": "Benjamin Graham, The Intelligent Investor (Harper & Brothers, 1949; Harper Business, 2024), ch. 20",
+  "written": "2026-11-20"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "economics-book-business-adventures-2",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.experts_forecasts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Ford spent $250 million on the Edsel before its 1957 launch, then sold about 110,000 in two years. Was market research to blame?",
+  "answer": "Not as the legend says. Brooks found the motivational research came after the car was designed, only to shape its advertising. What sank the Edsel was a pile-up: record hype, then early cars with oil leaks, sticking hoods and trunks that would not open, and a recession with buyers turning to small, plain cars.",
+  "move": "When a failure has one neat explanation, look for the causes it hides.",
+  "simply": "If a cake flops, it is tempting to blame the new recipe. But maybe the oven was broken, the eggs were old and nobody was hungry that day.",
+  "why": "Post-mortems at work and in the news like one tidy cause. Fix the wrong one and the next launch fails the same way: dropping research would not have saved the Edsel; better quality control and timing might have.",
+  "book": {
+    "id": "business-adventures",
+    "title": "Business Adventures",
+    "author": "John Brooks",
+    "year": 1969,
+    "part": 2,
+    "isbn": "9781497644892",
+    "badge": "A New York Times bestseller 45 years after it came out"
+  },
+  "keywords": [
+    "edsel",
+    "ford",
+    "market research",
+    "product launch",
+    "recession"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Brooks, Business Adventures, 1969",
+  "source_kind": "book",
+  "reference": "John Brooks, Business Adventures (Weybright and Talley, 1969; Open Road Media, 2014), ch. 2, The Fate of the Edsel",
+  "written": "2026-11-20"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "economics-book-the-intelligent-investor-3",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.risk_and_reward",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If not the risk you take, what did Benjamin Graham say should set the return you aim for?",
+  "answer": "The intelligent effort you can and will put in. Graham rejected tying return to risk. A passive investor, wanting safety and no bother, should accept the minimum; more belongs to the alert one who works at it. A bargain found by research, he wrote, may carry less real risk than a bond.",
+  "move": "Expect better results from more work, not from more risk.",
+  "simply": "Two children want extra pocket money. One bets it on a coin toss; the other washes the neighbours’ cars. Only the second can count on being paid.",
+  "why": "It changes what to do when you want more from your savings. Without the time or skill to research, the sensible choice is the simple, defensive route; reaching for riskier bets does not buy the extra return that only work can earn.",
+  "book": {
+    "id": "the-intelligent-investor",
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "year": 1949,
+    "part": 3,
+    "isbn": "9780063423527",
+    "badge": "Millions of copies sold in 36 languages"
+  },
+  "keywords": [
+    "risk and return",
+    "defensive investor",
+    "enterprising investor",
+    "benjamin graham"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Benjamin Graham, The Intelligent Investor, 1949",
+  "source_kind": "book",
+  "reference": "Benjamin Graham, The Intelligent Investor (Harper & Brothers, 1949; Harper Business, 2024), ch. 4",
+  "written": "2026-11-20"
+}

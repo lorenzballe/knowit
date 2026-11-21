@@ -1,0 +1,42 @@
+{
+  "id": "economics-book-the-intelligent-investor-4",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.bubbles",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Your moody business partner offers daily to buy your $1,000 stake, or sell you more, at a new price. When should that sway you?",
+  "answer": "Only when it suits you. Graham’s Mr Market sometimes names a sensible price and often a silly one, carried away by enthusiasm or fear. Sell to him when he offers far too much, buy from him when he asks far too little, and the rest of the time judge the business by its own reports.",
+  "move": "A market price is an offer you can refuse, not a verdict.",
+  "simply": "Imagine a friend who offers to swap stickers every day, but whose prices change with his mood. You only trade on the days his mood hands you a bargain.",
+  "why": "It changes how to live with a falling portfolio or a soaring one: the daily figure is information you may use, not an order. Selling in a panic hands him your stake at his lowest price.",
+  "book": {
+    "id": "the-intelligent-investor",
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "year": 1949,
+    "part": 4,
+    "isbn": "9780063423527",
+    "badge": "Millions of copies sold in 36 languages"
+  },
+  "keywords": [
+    "mr market",
+    "share prices",
+    "market swings",
+    "benjamin graham"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Benjamin Graham, The Intelligent Investor, 1949",
+  "source_kind": "book",
+  "reference": "Benjamin Graham, The Intelligent Investor (Harper & Brothers, 1949; Harper Business, 2024), ch. 8",
+  "written": "2026-11-20"
+}

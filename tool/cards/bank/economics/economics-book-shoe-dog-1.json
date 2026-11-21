@@ -1,0 +1,43 @@
+{
+  "id": "economics-book-shoe-dog-1",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.who_wins_from_trade",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Japanese cameras have to do with the founding of Nike?",
+  "answer": "They were the model. In a 1962 Stanford seminar paper, Phil Knight argued that Japanese running shoes could do to German makers what Japanese cameras had done to German cameras. Months later, in Kobe, he pitched Onitsuka on selling its Tigers in America to undercut Adidas, naming his company, Blue Ribbon, on the spot.",
+  "move": "A shift that already reshaped one market can be a map for the next.",
+  "simply": "If cheap, good toy cars from a new maker beat the old expensive brand, you might guess the same could happen with toy trains. Knight made that guess about running shoes, and it came true.",
+  "why": "Good business ideas are often borrowed patterns: a cheaper, good-enough rival from abroad, a service moving online, a shop becoming an app. Spotting where a pattern has not yet arrived is a skill anyone can practise, starting with the markets they know.",
+  "book": {
+    "id": "shoe-dog",
+    "title": "Shoe Dog",
+    "author": "Phil Knight",
+    "year": 2016,
+    "part": 1,
+    "isbn": "9781501135910",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "phil knight",
+    "onitsuka",
+    "blue ribbon sports",
+    "japanese cameras",
+    "adidas"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Phil Knight, Shoe Dog, 2016",
+  "source_kind": "book",
+  "reference": "Phil Knight, Shoe Dog: A Memoir by the Creator of Nike (Scribner, 2016), chapter ‘1962’",
+  "written": "2026-11-20"
+}

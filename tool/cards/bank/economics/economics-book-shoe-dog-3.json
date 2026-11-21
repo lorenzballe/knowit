@@ -1,0 +1,51 @@
+{
+  "id": "economics-book-shoe-dog-3",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.debt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Phil Knight’s company doubled its sales every year, at a profit. Why was it nearly always out of cash?",
+  "options": [
+    "It lost money on every pair",
+    "Each bigger order was paid before selling",
+    "Its founder drew out the profits"
+  ],
+  "correct": 1,
+  "answer": "Because the shoes were paid for long before they sold. Each order, often double the last, went on bank credit, and Knight ploughed every dollar back. His banker kept saying slow down: he was growing faster than his own money could carry. As Knight put it, they weren’t broke, they just had no money.",
+  "move": "Fast growth eats cash before it pays any back.",
+  "trap": "‘It lost money on every pair’: no cash looks like no profit.",
+  "simply": "A lemonade stand that is doing well buys twice as many lemons each week. It pays for the lemons on Monday but sells the lemonade by Saturday, so midweek its money box is always empty.",
+  "why": "It explains why healthy, growing firms run short of money and why lenders ask about cash, not just sales. For anyone starting something, from a shop to a side business, growth needs cash up front, so plan the funding before the orders pour in.",
+  "sure": 0.35,
+  "book": {
+    "id": "shoe-dog",
+    "title": "Shoe Dog",
+    "author": "Phil Knight",
+    "year": 2016,
+    "part": 3,
+    "isbn": "9781501135910",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "cash flow",
+    "blue ribbon sports",
+    "bank credit",
+    "growth",
+    "phil knight"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Phil Knight, Shoe Dog, 2016",
+  "source_kind": "book",
+  "reference": "Phil Knight, Shoe Dog: A Memoir by the Creator of Nike (Scribner, 2016), chapters ‘1965’ and ‘1970’",
+  "written": "2026-11-20"
+}

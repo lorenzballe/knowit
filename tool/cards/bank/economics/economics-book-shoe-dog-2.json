@@ -1,0 +1,43 @@
+{
+  "id": "economics-book-shoe-dog-2",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.hidden_incentives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Phil Knight couldn’t sell encyclopaedias door to door. Why could he sell Japanese running shoes out of his car?",
+  "answer": "Because, he decided, it wasn’t selling. He believed in running and in these shoes, and people sensed it and wanted some of that belief. A couple of sports shops had turned him away; at track meets across the Pacific Northwest he couldn’t write orders fast enough. In his words: ‘Belief is irresistible.’",
+  "move": "Sell what you believe in; people can tell the difference.",
+  "simply": "Imagine selling raffle tickets for a school trip you don’t care about, then for one you are dying to go on. The second time, your excitement does half the selling.",
+  "why": "Most work involves persuading someone. Pitching something you doubt is tiring and it shows, while real conviction, backed by a product that delivers, carries much of the effort. Choosing what to sell may matter more than learning how to sell.",
+  "book": {
+    "id": "shoe-dog",
+    "title": "Shoe Dog",
+    "author": "Phil Knight",
+    "year": 2016,
+    "part": 2,
+    "isbn": "9781501135910",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "selling",
+    "belief",
+    "phil knight",
+    "running shoes",
+    "track meets"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Phil Knight, Shoe Dog, 2016",
+  "source_kind": "book",
+  "reference": "Phil Knight, Shoe Dog: A Memoir by the Creator of Nike (Scribner, 2016), chapter ‘1964’",
+  "written": "2026-11-20"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "economics-book-the-intelligent-investor-2",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.warning_signs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1948 a Federal Reserve survey found shares the least liked of four places for savings. Were shares too risky then?",
+  "answer": "No: Graham thought them cheap. People called shares a gamble just when they were good value and about to begin, in his words, ‘their greatest advance in history’. Later, after prices had climbed to dangerous heights, the same shares were called investments, and anyone buying them an investor.",
+  "move": "A rising price makes a thing feel safer just as it becomes riskier.",
+  "simply": "When a toy is new and nobody wants it, it sits cheap on the shelf. When everyone wants it, the price shoots up, and that is when buying it is the worse deal.",
+  "why": "It turns a common habit around: people feel brave buying after prices have risen and scared after they have fallen. Graham’s test is the price, not the mood, so a crowd calling something safe is a reason to check, not to relax.",
+  "book": {
+    "id": "the-intelligent-investor",
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "year": 1949,
+    "part": 2,
+    "isbn": "9780063423527",
+    "badge": "Millions of copies sold in 36 languages"
+  },
+  "keywords": [
+    "stock market",
+    "risk",
+    "federal reserve survey",
+    "speculation",
+    "benjamin graham"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Benjamin Graham, The Intelligent Investor, 1949",
+  "source_kind": "book",
+  "reference": "Benjamin Graham, The Intelligent Investor (Harper & Brothers, 1949; Harper Business, 2024), ch. 1",
+  "written": "2026-11-20"
+}
