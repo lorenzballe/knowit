@@ -90,6 +90,9 @@ canvas.full,svg.full{position:absolute;inset:0;width:100%;height:100%;user-selec
 /* What a native card says under its head, and the chip beside its subject, when the app has one to say. */
 .kit-note{margin:-1cqh 0 0;font:500 12.5px/1.25 var(--body);opacity:.66}
 .kit-note.kit-why{cursor:pointer;-webkit-tap-highlight-color:transparent}.kit-note.kit-why::after{content:"\00a0\203A";font-weight:700}
+/* A line that names a skill in focus: its dot in the skill's own colours, at full strength, the words as quiet as any line's. */
+.kit-note.kit-dotted{opacity:1}.kit-note.kit-dotted .kit-t,.kit-note.kit-dotted::after{opacity:.66}
+.kit-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px;box-shadow:0 0 0 1.5px #fff;box-sizing:border-box}
 .kit-chip{font:600 9.5px/1 var(--body);letter-spacing:1px;padding:3px 8px;border-radius:99px;background:color-mix(in srgb,var(--k) 9%,transparent);opacity:.7}
 /* The head stays one line: the subject's name, the app's chip, the page's tag. A tag that finds no room
    gives way (Kit hides it), never wraps inside its pill. */

@@ -1407,6 +1407,11 @@ class AppLocalizationsKo extends AppLocalizations {
   String get whyAgain => '다시 한번 보기 위해';
 
   @override
+  String whySkill(String skill) {
+    return '당신의 능력: $skill 훈련';
+  }
+
+  @override
   String whyGoal(String goal) {
     return '당신의 목표를 위해: $goal';
   }
@@ -1808,11 +1813,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get skillMarkKicker => '이 카드가 훈련하는 것';
-
-  @override
-  String skillMarkLabel(String skill) {
-    return '$skill 훈련';
-  }
 
   @override
   String get skillMarkBody => '집중하기로 고른 능력 중 하나예요. 이런 카드를 읽을 때마다 레벨이 올라가요.';

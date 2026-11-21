@@ -1401,6 +1401,11 @@ class RemoteLocalizations extends AppLocalizations {
   String get whyAgain => _words.text('whyAgain') ?? _base.whyAgain;
 
   @override
+  String whySkill(String skill) =>
+      _words.format('whySkill', localeName, {'skill': skill}) ??
+      _base.whySkill(skill);
+
+  @override
   String whyGoal(String goal) =>
       _words.format('whyGoal', localeName, {'goal': goal}) ??
       _base.whyGoal(goal);
@@ -1722,11 +1727,6 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get skillMarkKicker =>
       _words.text('skillMarkKicker') ?? _base.skillMarkKicker;
-
-  @override
-  String skillMarkLabel(String skill) =>
-      _words.format('skillMarkLabel', localeName, {'skill': skill}) ??
-      _base.skillMarkLabel(skill);
 
   @override
   String get skillMarkBody =>
