@@ -79,7 +79,8 @@ function draw() {
     slices.push(Kit.mk('polygon', {class: 'flank', points: pts(poly)}, scene));
   }
   Kit.mk('rect', {class: 'seaTop', x: C[0], y: seaY, width: W - C[0], height: H - seaY}, scene);
-  Kit.mk('rect', {class: 'base', x: 0, y: baseY, width: W, height: H - baseY}, scene);
+  // the ground runs on past the frame's foot, so the slid slices never show a sliver under it
+  Kit.mk('rect', {class: 'base', x: 0, y: baseY, width: W, height: H - baseY + 2}, scene);
   const faults = tops.map((p, i) => Kit.mk('line', {class: 'fault', x1: p[0] - (bots[i][0] - p[0]) * .06, y1: p[1] - (bots[i][1] - p[1]) * .06, x2: bots[i][0], y2: bots[i][1]}, scene));
   // labels: the count and its words on the left, the grip and its bar on the right
   const num = Kit.mk('text', {class: 'num', x: .02 * W, y: fs * 2.45, 'font-size': fs * 2.6}, svg);
@@ -87,12 +88,12 @@ function draw() {
   for (const d of '0123') { num.textContent = d; nw = Math.max(nw, num.getComputedTextLength ? num.getComputedTextLength() : fs * 1.6); }
   num.textContent = '0';
   const lx = .02 * W + nw + fs * .45;
-  const l1 = Kit.mk('text', {class: 'lbl', x: lx, y: fs * 1.45, 'font-size': fs}, svg);
+  const l1 = Kit.mk('text', {class: 'lbl', x: lx, y: fs * 1.2, 'font-size': fs}, svg);
   l1.textContent = 'faults slipping';
-  const l2 = Kit.mk('text', {class: 'lbl', x: lx, y: fs * 2.6, 'font-size': fs}, svg);
+  const l2 = Kit.mk('text', {class: 'lbl', x: lx, y: fs * 2.55, 'font-size': fs}, svg);
   l2.textContent = 'at the same instant';
   const reach = lx + Math.max(...[l1, l2].map(t => t.getComputedTextLength ? t.getComputedTextLength() : fs * 9));
-  const gl = Kit.mk('text', {class: 'lbl', x: W * .98, y: fs * 1.45, 'font-size': fs, 'text-anchor': 'end'}, svg);
+  const gl = Kit.mk('text', {class: 'lbl', x: W * .98, y: fs * 1.2, 'font-size': fs, 'text-anchor': 'end'}, svg);
   gl.textContent = 'Grip on the flank';
   const bw = Math.max(fs * 3, Math.min(.36 * W, W * .98 - reach - fs * 1.2)), bx = W * .98 - bw, by = fs * 1.95;
   Kit.mk('rect', {class: 'barbg', x: bx, y: by, width: bw, height: fs * .75, rx: fs * .375}, svg);

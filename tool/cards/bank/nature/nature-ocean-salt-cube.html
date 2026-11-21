@@ -41,9 +41,9 @@ function build() {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const pad = Math.max(8, f * .6);
-  const sw = 372, sh = 415;
-  const s = Math.min((W - 2 * pad) / sw, (H - 2 * pad) / sh);
-  G = {W, H, f, s, ox: (W - sw * s) / 2 + 14 * s, oy: (H - sh * s) / 2 + 385 * s};
+  const sw = 372, sh = 415, foot = f * 1.7;   // under the scene, room for the cube's width said beneath it
+  const s = Math.min((W - 2 * pad) / sw, (H - 2 * pad - foot) / sh);
+  G = {W, H, f, s, ox: (W - sw * s) / 2 + 14 * s, oy: (H - foot - sh * s) / 2 + 385 * s};
   const k = 'var(--k)';
   Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: f * .8, fill: `color-mix(in srgb, ${k} 8%, transparent)`}, svg);
   // waves
@@ -53,21 +53,23 @@ function build() {
     Kit.mk('path', {d: `M${a},${b} q${w / 4},${-w / 4} ${w / 2},0 t${w / 2},0`}, wg);
   });
   E.land = Kit.mk('polygon', {points: pts(SIC), fill: `color-mix(in srgb, ${k} 30%, var(--c))`, stroke: k, 'stroke-width': Math.max(1.5, f * .12), 'stroke-linejoin': 'round'}, svg);
-  const [lx, ly] = P(95, 75);
-  E.sic = Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': f * .95}, svg); E.sic.textContent = 'SICILY';
+  // the island's name in the middle of its width north to south, off both coasts
+  const [lx, ly] = P(80, 112);
+  E.sic = Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: k, class: 'lbl', 'font-size': Math.max(10, f * .95)}, svg); E.sic.textContent = 'SICILY';
   const [ex, ey] = P(226, 118);
   E.etna = Kit.mk('g', {}, svg);
   Kit.mk('path', {d: `M${ex - f * .5},${ey} L${ex},${ey - f * .7} L${ex + f * .5},${ey} Z`, fill: k}, E.etna);
-  const et = Kit.mk('text', {x: ex, y: ey + f * 1.1, 'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': f * .75}, E.etna); et.textContent = 'Etna';
+  // its name to the west of the cone, on the land, clear of the coast
+  const et = Kit.mk('text', {x: ex - f * .7, y: ey, 'text-anchor': 'end', fill: k, class: 'lbl', 'font-size': Math.max(10, f * .75)}, E.etna); et.textContent = 'Etna';
   E.ghost = Kit.mk('polygon', {points: pts([[TX, TN], [TX + SIDE, TN], [TX + SIDE, TN + SIDE], [TX, TN + SIDE]]), fill: 'none', stroke: k, 'stroke-width': Math.max(1.5, f * .12), 'stroke-dasharray': `${f * .5} ${f * .4}`, opacity: st.placed ? 0 : .7}, svg);
   E.cube = Kit.mk('g', {id: 'cube'}, svg);
   const sw2 = Math.max(1.5, f * .13);
   E.front = Kit.mk('polygon', {fill: '#ffffff', 'fill-opacity': .9, stroke: k, 'stroke-width': sw2, 'stroke-linejoin': 'round'}, E.cube);
   E.east = Kit.mk('polygon', {fill: '#dfe7ee', 'fill-opacity': .9, stroke: k, 'stroke-width': sw2, 'stroke-linejoin': 'round'}, E.cube);
   E.top = Kit.mk('polygon', {fill: '#f6f9fc', 'fill-opacity': .92, stroke: k, 'stroke-width': sw2, 'stroke-linejoin': 'round'}, E.cube);
-  E.name = Kit.mk('text', {'text-anchor': 'middle', fill: '#1a1a1a', class: 'lbl', 'font-size': f * .85, 'pointer-events': 'none'}, E.cube); E.name.textContent = 'ALL OCEAN SALT';
-  E.dimB = Kit.mk('text', {'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': f * 1.05}, svg);
-  E.dimV = Kit.mk('text', {'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': f * 1.05}, svg);
+  E.name = Kit.mk('text', {'text-anchor': 'middle', fill: '#1a1a1a', class: 'lbl', 'font-size': Math.max(10, f * .85), 'pointer-events': 'none'}, E.cube); E.name.textContent = 'ALL OCEAN SALT';
+  E.dimB = Kit.mk('text', {'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': Math.max(10.5, f * 1.05)}, svg);
+  E.dimV = Kit.mk('text', {'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': Math.max(10.5, f * 1.05)}, svg);
   E.cube.addEventListener('pointerdown', down);
   render();
 }
