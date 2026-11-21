@@ -104,6 +104,9 @@ dependencies:
   webview_flutter_android: ^4.14.1
   webview_flutter_wkwebview: ^3.27.0
   native_liquid_glass: ^0.3.1
+  # Video cards: a card that is a short film, opened to the whole screen and
+  # played from the site (lib/widgets/video_card.dart).
+  video_player: ^2.14.1
 
 dev_dependencies:
   flutter_test:
@@ -125,6 +128,9 @@ dev_dependencies:
   # So the finder that runs on a phone can be driven without one: the
   # geocoder is swapped for a stand-in in test/place_capture_test.dart.
   geocoding_platform_interface: ^5.0.0
+  # So a video card can be played without a phone: the player is swapped
+  # for a stand-in in test/video_card_test.dart.
+  video_player_platform_interface: ^6.9.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -151,6 +157,9 @@ flutter:
   # The app mark ships in both themes; BrandMark picks between them.
   assets:
     - assets/brand/
+    # The first frame of each video card, so its card is there at once
+    # (lib/data/video_cards.dart).
+    - assets/video/
     # The card kit, for free cards: the frame, the helpers, the bridge, the
     # fonts and every library a card may use, so a card's page is put
     # together on the phone and needs nothing from the network

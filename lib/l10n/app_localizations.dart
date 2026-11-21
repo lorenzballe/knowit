@@ -2628,6 +2628,42 @@ abstract class AppLocalizations {
   /// **'See your levels'**
   String get skillMarkOpen;
 
+  /// A video card's kind, said by VoiceOver with its length on its tile in Explore ("Video, 0:53").
+  ///
+  /// In en, this message translates to:
+  /// **'Video'**
+  String get videoKicker;
+
+  /// Under the play button of a video card opened to the whole screen, before it is first played: a second tap on the card plays its film. Short; shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to play'**
+  String get videoTapToPlay;
+
+  /// What a tap on a video card does while its film is stopped, as VoiceOver says it.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get videoPlay;
+
+  /// What a tap on a video card does while its film plays, as VoiceOver says it.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get videoPause;
+
+  /// Button on a video card once its film has played to the end: plays it again from the start.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch again'**
+  String get videoWatchAgain;
+
+  /// On a video card whose film could not be fetched (no connection): a tap on the card tries again.
+  ///
+  /// In en, this message translates to:
+  /// **'The film needs a connection. Tap to try again.'**
+  String get videoOffline;
+
   /// Profile heading over the skills the reader picked, which opens the skills screen.
   ///
   /// In en, this message translates to:

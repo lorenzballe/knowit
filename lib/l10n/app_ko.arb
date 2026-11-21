@@ -1347,5 +1347,11 @@
   "bookDoneCount": "다 읽은 책: {count}권",
   "bookDoneNext": "다음 책",
   "bookDoneGo": "열기",
-  "bookRetold": "{author}의 『{title}』에 담긴 아이디어를 Astute의 말로 풀었어요. 책 전체는 서점에서 만나 보세요."
+  "bookRetold": "{author}의 『{title}』에 담긴 아이디어를 Astute의 말로 풀었어요. 책 전체는 서점에서 만나 보세요.",
+  "videoKicker": "영상",
+  "videoTapToPlay": "눌러서 재생",
+  "videoPlay": "재생",
+  "videoPause": "일시정지",
+  "videoWatchAgain": "다시 보기",
+  "videoOffline": "영상을 보려면 인터넷 연결이 필요해요. 눌러서 다시 시도하세요."
 }

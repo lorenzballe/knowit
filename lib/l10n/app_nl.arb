@@ -1347,5 +1347,11 @@
   "bookDoneCount": "Boeken uit: {count}",
   "bookDoneNext": "Volgend boek",
   "bookDoneGo": "Openen",
-  "bookRetold": "De ideeën uit {title} van {author}, in Astutes eigen woorden. Het hele boek vind je in de boekhandel."
+  "bookRetold": "De ideeën uit {title} van {author}, in Astutes eigen woorden. Het hele boek vind je in de boekhandel.",
+  "videoKicker": "Video",
+  "videoTapToPlay": "Tik om af te spelen",
+  "videoPlay": "Afspelen",
+  "videoPause": "Pauzeren",
+  "videoWatchAgain": "Opnieuw kijken",
+  "videoOffline": "De video heeft een verbinding nodig. Tik om het opnieuw te proberen."
 }

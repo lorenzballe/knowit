@@ -1878,6 +1878,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillMarkOpen => 'See your levels';
 
   @override
+  String get videoKicker => 'Video';
+
+  @override
+  String get videoTapToPlay => 'Tap to play';
+
+  @override
+  String get videoPlay => 'Play';
+
+  @override
+  String get videoPause => 'Pause';
+
+  @override
+  String get videoWatchAgain => 'Watch again';
+
+  @override
+  String get videoOffline => 'The film needs a connection. Tap to try again.';
+
+  @override
   String get skillsRowTitle => 'What you want to learn';
 
   @override

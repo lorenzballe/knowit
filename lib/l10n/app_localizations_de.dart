@@ -1888,6 +1888,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get skillMarkOpen => 'Deine Stufen ansehen';
 
   @override
+  String get videoKicker => 'Video';
+
+  @override
+  String get videoTapToPlay => 'Zum Abspielen tippen';
+
+  @override
+  String get videoPlay => 'Abspielen';
+
+  @override
+  String get videoPause => 'Pause';
+
+  @override
+  String get videoWatchAgain => 'Noch einmal ansehen';
+
+  @override
+  String get videoOffline =>
+      'Das Video braucht eine Verbindung. Tippe, um es noch einmal zu versuchen.';
+
+  @override
   String get skillsRowTitle => 'Was du lernen willst';
 
   @override

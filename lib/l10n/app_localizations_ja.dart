@@ -1817,6 +1817,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get skillMarkOpen => 'レベルを見る';
 
   @override
+  String get videoKicker => '動画';
+
+  @override
+  String get videoTapToPlay => 'タップで再生';
+
+  @override
+  String get videoPlay => '再生';
+
+  @override
+  String get videoPause => '一時停止';
+
+  @override
+  String get videoWatchAgain => 'もう一度見る';
+
+  @override
+  String get videoOffline => '動画には接続が必要です。タップしてもう一度試してください。';
+
+  @override
   String get skillsRowTitle => '学びたいこと';
 
   @override

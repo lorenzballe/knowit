@@ -1821,6 +1821,24 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skillMarkOpen => '레벨 보기';
 
   @override
+  String get videoKicker => '영상';
+
+  @override
+  String get videoTapToPlay => '눌러서 재생';
+
+  @override
+  String get videoPlay => '재생';
+
+  @override
+  String get videoPause => '일시정지';
+
+  @override
+  String get videoWatchAgain => '다시 보기';
+
+  @override
+  String get videoOffline => '영상을 보려면 인터넷 연결이 필요해요. 눌러서 다시 시도하세요.';
+
+  @override
   String get skillsRowTitle => '배우고 싶은 것';
 
   @override

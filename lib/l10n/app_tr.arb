@@ -1347,5 +1347,11 @@
   "bookDoneCount": "Biten kitaplar: {count}",
   "bookDoneNext": "Sıradaki kitap",
   "bookDoneGo": "Aç",
-  "bookRetold": "{author} imzalı {title} kitabının fikirleri, Astute'un kendi sözleriyle. Kitabın tamamı için kitapçına bak."
+  "bookRetold": "{author} imzalı {title} kitabının fikirleri, Astute'un kendi sözleriyle. Kitabın tamamı için kitapçına bak.",
+  "videoKicker": "Video",
+  "videoTapToPlay": "İzlemek için dokun",
+  "videoPlay": "Oynat",
+  "videoPause": "Duraklat",
+  "videoWatchAgain": "Tekrar izle",
+  "videoOffline": "Video için bağlantı gerekiyor. Tekrar denemek için dokun."
 }

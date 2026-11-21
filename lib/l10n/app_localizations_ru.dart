@@ -1958,6 +1958,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get skillMarkOpen => 'Посмотреть уровни';
 
   @override
+  String get videoKicker => 'Видео';
+
+  @override
+  String get videoTapToPlay => 'Коснитесь, чтобы смотреть';
+
+  @override
+  String get videoPlay => 'Воспроизвести';
+
+  @override
+  String get videoPause => 'Пауза';
+
+  @override
+  String get videoWatchAgain => 'Смотреть снова';
+
+  @override
+  String get videoOffline =>
+      'Для видео нужно подключение. Коснитесь, чтобы повторить.';
+
+  @override
   String get skillsRowTitle => 'Чему хочешь научиться';
 
   @override

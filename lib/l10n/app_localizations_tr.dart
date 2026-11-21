@@ -1859,6 +1859,25 @@ class AppLocalizationsTr extends AppLocalizations {
   String get skillMarkOpen => 'Seviyelerini gör';
 
   @override
+  String get videoKicker => 'Video';
+
+  @override
+  String get videoTapToPlay => 'İzlemek için dokun';
+
+  @override
+  String get videoPlay => 'Oynat';
+
+  @override
+  String get videoPause => 'Duraklat';
+
+  @override
+  String get videoWatchAgain => 'Tekrar izle';
+
+  @override
+  String get videoOffline =>
+      'Video için bağlantı gerekiyor. Tekrar denemek için dokun.';
+
+  @override
   String get skillsRowTitle => 'Öğrenmek istediklerin';
 
   @override
