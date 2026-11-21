@@ -1,0 +1,50 @@
+{
+  "id": "technology-book-zero-to-one-3",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "One start-up aims for 1% of a $100 billion market, another to dominate a tiny one. Which plan does Peter Thiel prefer?",
+  "options": [
+    "A slice of the huge market",
+    "All of the tiny market"
+  ],
+  "correct": 1,
+  "answer": "All of the tiny market. Thiel calls talk of ‘1% of a $100 billion market’ a red flag: a huge market either has no good place to start or is full of rivals. A small, close-knit one can be served better than anyone else manages, then widened. Facebook began with just Harvard’s students.",
+  "move": "Win a small field outright before chasing a slice of a big one.",
+  "trap": "‘A slice of the huge market’: 1% of a lot sounds like a lot.",
+  "simply": "It’s easier to be the best chess player in your class than the thousandth best in the world. Win your class first; then the school; then the town.",
+  "why": "The same choice comes up for a shop, a freelancer or a new club: aim at everyone and compete with everyone, or become the obvious choice for a few. Being first choice somewhere small often beats being one option among hundreds somewhere big.",
+  "sure": 0.35,
+  "book": {
+    "id": "zero-to-one",
+    "title": "Zero to One",
+    "author": "Peter Thiel with Blake Masters",
+    "year": 2014,
+    "part": 3,
+    "isbn": "9780804139298",
+    "badge": "A #1 New York Times bestseller"
+  },
+  "keywords": [
+    "start-ups",
+    "market size",
+    "monopoly",
+    "facebook",
+    "peter thiel"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Peter Thiel, Zero to One, 2014",
+  "source_kind": "book",
+  "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 5, Last Mover Advantage",
+  "written": "2026-11-20"
+}

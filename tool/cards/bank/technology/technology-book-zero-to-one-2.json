@@ -1,0 +1,55 @@
+{
+  "id": "technology-book-zero-to-one-2",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.who_profits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2012 US airlines took in about $160 billion; Google took in $50 billion. Which kept more as profit?",
+  "options": [
+    "The airlines, by far",
+    "About the same",
+    "Google, by far"
+  ],
+  "correct": 2,
+  "answer": "Google, by far. It kept about 21% of its revenue as profit; the airlines, over three times its size, kept almost none, under a hundredth of Google’s margin by Thiel’s sums. His reading: many carriers sell near-identical seats and undercut each other, while Google had no close rival in search.",
+  "move": "Before admiring a big market, count who else sells the same thing.",
+  "trap": "‘The airlines, by far’: bigger sales seem to mean bigger profits.",
+  "simply": "Ten lemonade stands on one street all cut their prices to win customers, and each earns pennies. The only stand on the next street can charge what it likes. Selling more doesn’t mean keeping more.",
+  "why": "It changes how to read a busy industry or a crowded job market. Plenty of customers do not mean plenty of profit when everyone offers the same thing; what pays is being hard to replace, for a company or for a worker.",
+  "views": [
+    "Monopoly pays for progress: Thiel argues that profits no rival can compete away pay for long plans and ambitious research that firms locked in price wars cannot afford. Patents use the same logic, granting inventors years of exclusive rights.",
+    "Competition protects customers: Firms without rivals can charge more and improve less. When France gained a fourth mobile operator, prices fell by about half within two years, the economist Thomas Philippon reports."
+  ],
+  "sure": 0.35,
+  "book": {
+    "id": "zero-to-one",
+    "title": "Zero to One",
+    "author": "Peter Thiel with Blake Masters",
+    "year": 2014,
+    "part": 2,
+    "isbn": "9780804139298",
+    "badge": "A #1 New York Times bestseller"
+  },
+  "keywords": [
+    "monopoly",
+    "competition",
+    "google",
+    "airlines",
+    "profit margins"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Peter Thiel, Zero to One, 2014",
+  "source_kind": "book",
+  "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 3, All Happy Companies Are Different",
+  "written": "2026-11-20"
+}

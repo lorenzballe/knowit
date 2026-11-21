@@ -1,0 +1,43 @@
+{
+  "id": "life-book-high-output-management-3",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.meetings",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can 90 minutes of a manager’s time improve about 80 hours of someone else’s work?",
+  "answer": "Through a one-on-one every two weeks that Grove calls ‘the subordinate’s meeting’: the employee sets the agenda and brings the problems; the boss listens, learns and coaches. An hour and a half shapes the next two weeks, some 80 working hours, and shows the boss what is really going on.",
+  "move": "Let the person doing the work set the agenda when you meet.",
+  "simply": "A tutor who lets you bring the homework you’re stuck on helps more than one who lectures on whatever they planned. Half an hour on your real problem helps you all week.",
+  "why": "Many one-to-one meetings turn into status reports for the boss. Turning them round, so the person doing the work brings what is stuck, makes a short meeting the most useful hour of their fortnight, and the boss learns what reports leave out.",
+  "book": {
+    "id": "high-output-management",
+    "title": "High Output Management",
+    "author": "Andrew S. Grove",
+    "year": 1983,
+    "part": 3,
+    "isbn": "9780679762881",
+    "badge": "By the Intel CEO named Time’s Man of the Year in 1997"
+  },
+  "keywords": [
+    "one-on-one meetings",
+    "andy grove",
+    "agenda",
+    "coaching",
+    "managers"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Andrew S. Grove, High Output Management, 1983",
+  "source_kind": "book",
+  "reference": "Andrew S. Grove, High Output Management (Random House, 1983; Vintage, 1995), ch. 4, Meetings—The Medium of Managerial Work",
+  "written": "2026-11-20"
+}

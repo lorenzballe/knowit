@@ -67,10 +67,16 @@ Kit.onShow.card = () => {
     Kit.mk('path', {d, fill: 'none', stroke: 'currentColor', 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, svg);
   };
   trace(headF, G.rowA); trace(handF, G.rowB);
-  // the traces' names end short of the right end, where the time cursor stands once the story is told
-  const lab = (txt, y) => { const e = Kit.mk('text', {x: G.tx1 - 14, y, 'text-anchor': 'end', fill: 'currentColor', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); e.textContent = txt; };
-  lab('force at the head', G.rowA - 6);
-  lab('force at your hand', G.rowB - 6);
+  // the traces' names end short of the right end, where the time cursor stands once the story is told,
+  // and sit just clear of whatever their trace does under them
+  const lab = (txt, fn, base) => {
+    const e = Kit.mk('text', {x: G.tx1 - 14, y: base - 6, 'text-anchor': 'end', fill: 'currentColor', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); e.textContent = txt;
+    const t0 = Math.max(0, (G.tx1 - 14 - e.getComputedTextLength() - G.tx0) / (G.tx1 - G.tx0));
+    let hi = 0; for (let t = t0; t <= 1; t += .01) hi = Math.max(hi, fn(t) * G.amp);
+    e.setAttribute('y', base - Math.max(6, hi + 5));
+  };
+  lab('force at the head', headF, G.rowA);
+  lab('force at your hand', handF, G.rowB);
   dyn = Kit.mk('g', {}, svg);
   draw(T);
 };

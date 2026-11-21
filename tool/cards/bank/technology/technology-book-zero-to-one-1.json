@@ -1,0 +1,43 @@
+{
+  "id": "technology-book-zero-to-one-1",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.hype_cycles",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After the dot-com crash, Silicon Valley drew four lessons. Why does Peter Thiel suspect they were the wrong ones?",
+  "answer": "Because they were drawn in a panic, as reactions to what had just failed. Survivors swore off big plans, new markets and selling, and stuck to small steps and better versions of rivals’ products. Thiel suspects the opposite is nearer the truth: bold beats timid, any plan beats drifting, crowded markets kill profits.",
+  "move": "After a disaster, test the lesson too: a flinch is not a finding.",
+  "simply": "Burn your hand on the stove once and you might decide never to cook again. That lesson feels safe, but it’s the wrong one: the better lesson is an oven glove.",
+  "why": "Every failure, in a business, a team or a family, produces rules for next time. Asking whether each rule fixes the cause, or just avoids whatever hurt, stops one bad episode from making everyone timid for years.",
+  "book": {
+    "id": "zero-to-one",
+    "title": "Zero to One",
+    "author": "Peter Thiel with Blake Masters",
+    "year": 2014,
+    "part": 1,
+    "isbn": "9780804139298",
+    "badge": "A #1 New York Times bestseller"
+  },
+  "keywords": [
+    "dot-com crash",
+    "peter thiel",
+    "silicon valley",
+    "start-ups",
+    "lessons"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Peter Thiel, Zero to One, 2014",
+  "source_kind": "book",
+  "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 2, Party Like It’s 1999",
+  "written": "2026-11-20"
+}
