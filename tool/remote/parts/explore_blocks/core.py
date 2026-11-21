@@ -430,4 +430,7 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     # (lib/data/day_lines.dart): it picks its own.
     "line-of-day": shelf(),
     "goal": shelf(),
+    # Cards that are short films (lib/data/video_cards.dart), opened to the
+    # whole screen and played with a second tap: they are its own.
+    "video-cards": shelf(),
 }

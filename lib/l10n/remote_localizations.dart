@@ -1737,6 +1737,26 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('skillMarkOpen') ?? _base.skillMarkOpen;
 
   @override
+  String get videoKicker => _words.text('videoKicker') ?? _base.videoKicker;
+
+  @override
+  String get videoTapToPlay =>
+      _words.text('videoTapToPlay') ?? _base.videoTapToPlay;
+
+  @override
+  String get videoPlay => _words.text('videoPlay') ?? _base.videoPlay;
+
+  @override
+  String get videoPause => _words.text('videoPause') ?? _base.videoPause;
+
+  @override
+  String get videoWatchAgain =>
+      _words.text('videoWatchAgain') ?? _base.videoWatchAgain;
+
+  @override
+  String get videoOffline => _words.text('videoOffline') ?? _base.videoOffline;
+
+  @override
   String get skillsRowTitle =>
       _words.text('skillsRowTitle') ?? _base.skillsRowTitle;
 

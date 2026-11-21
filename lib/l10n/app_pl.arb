@@ -1347,5 +1347,11 @@
   "bookDoneCount": "Przeczytane książki: {count}",
   "bookDoneNext": "Następna książka",
   "bookDoneGo": "Otwórz",
-  "bookRetold": "Idee z książki {title} ({author}) opowiedziane słowami Astute. Całą książkę znajdziesz w księgarni."
+  "bookRetold": "Idee z książki {title} ({author}) opowiedziane słowami Astute. Całą książkę znajdziesz w księgarni.",
+  "videoKicker": "Wideo",
+  "videoTapToPlay": "Dotknij, by obejrzeć",
+  "videoPlay": "Odtwórz",
+  "videoPause": "Pauza",
+  "videoWatchAgain": "Obejrzyj ponownie",
+  "videoOffline": "Film wymaga połączenia z internetem. Dotknij, by spróbować ponownie."
 }

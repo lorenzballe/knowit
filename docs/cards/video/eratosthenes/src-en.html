@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eratostene e il bastone</title>
+<!--
+  Astute, prototype video card: how Eratosthenes measured the Earth with a stick (about 240 BC).
+  One SVG scene driven by one paused GSAP timeline. Open the page to watch it loop (scaled to fit);
+  render frame by frame with window.renderAt(seconds) at 1080x1920. Everything is inline: the two
+  kit fonts (Fraunces, Figtree, SIL OFL 1.1) and GSAP 3.15 (docs/cards/kit/vendor/gsap.min.js).
+-->
+<style>
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:100 900;font-display:block;src:url(data:font/woff2;base64,%%FRAUNCES%%) format("woff2")}
+@font-face{font-family:"Fraunces";font-style:italic;font-weight:100 900;font-display:block;src:url(data:font/woff2;base64,%%FRAUNCES_I%%) format("woff2")}
+@font-face{font-family:"Figtree";font-style:normal;font-weight:300 900;font-display:block;src:url(data:font/woff2;base64,%%FIGTREE%%) format("woff2")}
+:root{--c:#FFB000;--k:#10100c;--cream:#FFF3D6;--blue:#2B5CFF;--display:"Fraunces",Georgia,serif;--body:"Figtree",system-ui,sans-serif;font-variation-settings:"SOFT" 30,"WONK" 0}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0d0d0b;overflow:hidden}
+#v{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--c);color:var(--k);transform-origin:0 0}
+#scene{position:absolute;left:0;top:0}
+#head{position:absolute;left:80px;right:80px;top:82px;height:70px;display:flex;align-items:center;gap:20px;opacity:0}
+#head svg{width:46px;height:46px;flex:none}
+#head .t{font:600 32px/1 var(--body);letter-spacing:.16em}
+#head .tag{margin-left:auto;font:800 25px/1 var(--body);letter-spacing:.12em;padding:15px 26px;border-radius:99px;background:var(--k);color:var(--c)}
+.cap{position:absolute;left:80px;top:226px;width:920px;margin:0;font:800 72px/1.13 var(--display);letter-spacing:-.012em;text-wrap:balance}
+.cap .w{display:inline-block}
+.cap b{font-weight:900;color:var(--blue)}
+.cap em{font-style:italic;font-weight:700}
+#title{font-size:116px;line-height:1.02;letter-spacing:-.022em}
+.place{position:absolute;left:80px;top:548px;display:flex;align-items:center;gap:14px;font:800 32px/1 var(--body);letter-spacing:.12em;padding:15px 26px 15px 24px;border-radius:99px;background:var(--k);color:var(--c);white-space:nowrap;opacity:0}
+.place span{font-weight:600;letter-spacing:.02em;opacity:.82}
+.tagx{position:absolute;left:0;top:0;white-space:nowrap;opacity:0}
+.lab{font:800 40px/1.1 var(--body);text-align:center}
+.chip{font:900 60px/1 var(--display);font-variation-settings:"SOFT" 30,"WONK" 0,"opsz" 48;color:#fff;background:var(--blue);padding:12px 28px 17px;border-radius:99px;box-shadow:0 0 0 10px var(--halo,var(--c))}
+.row{position:absolute;left:0;width:1080px;display:flex;justify-content:center;align-items:baseline;gap:24px;white-space:nowrap;opacity:0}
+.num{font:900 88px/1 var(--display);letter-spacing:-.01em;font-variation-settings:"SOFT" 30,"WONK" 0,"opsz" 48}
+.num.big{font-size:132px}
+.num.blue{color:var(--blue)}
+.unit{font:700 44px/1 var(--body)}
+#eqN{display:inline-block;text-align:right}
+.op{font-family:var(--body);font-weight:800;font-size:.86em;margin:0 .06em}
+.opx{-webkit-text-stroke:.035em currentColor;margin-right:.08em}
+#k3{text-align:center}
+#k3 .num{font-size:56px}
+#k3 .lab2{font:700 36px/1.2 var(--body);margin-top:8px}
+#src{position:absolute;left:80px;top:1716px;width:920px;font:500 30px/1.3 var(--body);opacity:0}
+</style>
+</head>
+<body>
+<div id="v">
+<svg id="scene" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+  <g id="rays" stroke="#fff" stroke-width="5" stroke-linecap="round"></g>
+  <g id="world">
+    <circle id="earth" cx="0" cy="16000" r="16000" fill="#FFF3D6" stroke="#10100c" stroke-width="6" vector-effect="non-scaling-stroke"/>
+    <g id="well" opacity="0">
+      <rect x="226" y="-4" width="124" height="304" fill="#3d2c10"/>
+      <rect x="226" y="258" width="124" height="42" fill="#1b2a4f"/>
+      <rect id="waterLit" x="226" y="258" width="124" height="42" fill="#FFE9A6" opacity="0"/>
+      <rect id="beam" x="244" y="-4" width="88" height="0" fill="#fff" fill-opacity=".24"/>
+      <rect id="beamCore" x="285.5" y="-4" width="5" height="0" fill="#fff"/>
+      <ellipse id="splash" cx="288" cy="259" rx="0" ry="0" fill="#fff"/>
+      <path d="M226 -4V300H350V-4" fill="none" stroke="#10100c" stroke-width="6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+      <rect x="198" y="-52" width="36" height="54" rx="8" fill="#FFF3D6" stroke="#10100c" stroke-width="5" vector-effect="non-scaling-stroke"/>
+      <rect x="342" y="-52" width="36" height="54" rx="8" fill="#FFF3D6" stroke="#10100c" stroke-width="5" vector-effect="non-scaling-stroke"/>
+    </g>
+  </g>
+  <g id="ov">
+    <g id="slices"></g>
+    <path id="sliceLines" fill="none" stroke="#10100c" stroke-width="2.5" stroke-linecap="round"/>
+    <path id="wedgeO" fill="#2B5CFF"/>
+    <path id="radS" fill="none" stroke="#10100c" stroke-width="5" stroke-linecap="round"/>
+    <path id="radA" fill="none" stroke="#10100c" stroke-width="5" stroke-linecap="round"/>
+    <path id="circ" fill="none" stroke="#2B5CFF" stroke-width="12" stroke-linecap="round"/>
+    <path id="arcSA" fill="none" stroke="#2B5CFF" stroke-width="12" stroke-linecap="round"/>
+    <path id="shadowA" fill="#10100c" fill-opacity=".62"/>
+    <path id="wedgeA" fill="#2B5CFF"/>
+    <path id="keyS" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+    <path id="keyA" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+    <path id="stickS" fill="none" stroke="#10100c" stroke-linecap="round"/>
+    <path id="stickA" fill="none" stroke="#10100c" stroke-linecap="round"/>
+    <circle id="dotO" r="11" fill="#10100c" opacity="0"/>
+    <g id="leaders"></g>
+    <g id="bar" opacity="0">
+      <path id="barTrack" fill="none" stroke="#10100c" stroke-width="6" stroke-linecap="round"/>
+      <rect id="barBand" y="1482" height="36" rx="18" fill="#2B5CFF"/>
+      <path id="barMark" fill="none" stroke="#10100c" stroke-width="7" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g id="sun" opacity="0"><g id="sunTicks" stroke="#10100c" stroke-width="7" stroke-linecap="round"></g><circle r="58" fill="#fff" stroke="#10100c" stroke-width="6" vector-effect="non-scaling-stroke"/></g>
+</svg>
+
+<div id="head"><svg viewBox="0 0 24 24" fill="none" stroke="#10100c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14 M5 21h14 M7 3c0 6 10 12 10 18 M17 3c0 6-10 12-10 18"/></svg><span class="t">HISTORY</span><span class="tag">ERATOSTHENES · C. 240 BC</span></div>
+
+<h1 class="cap" id="title">How do you<br>measure the Earth<br>with a <em>stick?</em></h1>
+<p class="cap" id="c2">Summer solstice, noon: the Sun is straight overhead.</p>
+<p class="cap" id="c3">At the same moment, here the stick casts a shadow.</p>
+<p class="cap" id="c4">The Sun is so far away,<br>its rays arrive parallel.</p>
+<p class="cap" id="c5">The Earth is round: the same angle opens at its centre.</p>
+<p class="cap" id="c6"><b>7.2°</b> is one fiftieth of a circle.</p>
+<p class="cap" id="c7">The two cities are about <b>5,000</b> <b>stadia</b> apart.</p>
+<p class="cap" id="c8">How long was<br>a stadion?<br>No one knows for sure.</p>
+<p class="cap" id="c9">A shadow, an angle, a distance: the Earth measured with a <em>stick.</em></p>
+
+<div class="place" id="pS"><b>SYENE</b><span>today Aswan</span></div>
+<div class="place" id="pA"><b>ALEXANDRIA</b><span>further north</span></div>
+
+<div class="tagx lab" id="tNo">no shadow</div>
+<div class="tagx lab" id="tLight">light at the bottom</div>
+<div class="tagx lab" id="tSh">shadow</div>
+<div class="tagx chip" id="cA1">7.2°</div>
+<div class="tagx chip" id="cA2">7.2°</div>
+<div class="tagx chip" id="cO" style="--halo:var(--cream)">7.2°</div>
+<div class="tagx chip" id="c5k">5,000 stadia</div>
+
+<div class="row" id="cnt" style="top:1492px"><span class="num big" id="cntN">1</span><span class="unit">slices of 7.2°</span></div>
+<div class="row" id="eq1" style="top:1492px"><span class="num">50 <span class="op">×</span> 5,000 stadia</span></div>
+<div class="row" id="eq2" style="top:1606px"><span class="num"><span id="eqN">= 5,000</span> stadia</span></div>
+<div class="row" id="k1" style="top:1196px"><span class="num" style="font-size:96px">250,000 stadia</span></div>
+<div class="row" id="k2" style="top:1316px"><span class="num blue" style="font-size:80px"><span class="opx">≈</span> 39,000–46,000 km</span></div>
+<div class="tagx" id="k3"><div class="num">40,008 km</div><div class="lab2">the true value, pole to pole</div></div>
+<div id="src">Source · Cleomedes, <i>Caelestia</i> I.7</div>
+</div>
+
+<script>%%GSAP%%</script>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+
+// ---------- the world: a cut through the Earth along the meridian, Syene on top ----------
+// World units are screen pixels at zoom 1. North is to the left. Not to scale: the sticks grow as the camera
+// pulls back (EXP), so they stay visible on a whole Earth.
+const DEG = Math.PI / 180, ALPHA = 7.2 * DEG, TA = Math.tan(ALPHA);
+const R = 16000, STICK = 440, EXP = 0.55, RAY_GAP = 72;
+const O = {x: 0, y: R}, S = {x: 0, y: 0}, A = {x: -R * Math.sin(ALPHA), y: R - R * Math.cos(ALPHA)};
+const UP_S = {x: 0, y: -1}, UP_A = {x: -Math.sin(ALPHA), y: -Math.cos(ALPHA)}, NORTH_A = {x: -Math.cos(ALPHA), y: Math.sin(ALPHA)};
+const WELL_X = 288;
+
+const add = (a, b, k = 1) => ({x: a.x + b.x * k, y: a.y + b.y * k});
+const sub = (a, b) => ({x: a.x - b.x, y: a.y - b.y});
+const lerp = (a, b, t) => ({x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t});
+const dot = (a, b) => a.x * b.x + a.y * b.y;
+const norm = a => { const l = Math.hypot(a.x, a.y) || 1; return {x: a.x / l, y: a.y / l}; };
+const ang = v => Math.atan2(v.y, v.x);
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const f1 = v => (Math.round(v * 10) / 10).toString();
+const pt = p => f1(p.x) + ' ' + f1(p.y);
+const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+// The camera: world point (wx, wy) sits at screen point (px, py); zoom exp(lz); rotation rot (degrees).
+const cam = {wx: 0, wy: 0, px: 540, py: 1720, lz: 0, rot: 0};
+// Everything else that moves is a number here, tweened by the one timeline and drawn by sync().
+const P = {
+  t: 0, dip: 0, rp: 0, rayOp: 0, yTop: 832,
+  sunOp: 0, sunS: .7, sunR: 58, sunD: 600,
+  stickS: 0, stickA: 1, well: 0, beam: 0, splash: 0,
+  keyA: 0, keyS: 0, keyOp: 1, wedgeA: 0,
+  radS: 0, radA: 0, dotO: 0, wedgeO: 0,
+  slices: 0, slicesOp: 1, arcSA: 0, circ: 0,
+  bar: 0, band: 0, mark: 0, barOp: 0,
+  tNo: 0, tLight: 0, tSh: 0, cA1: 0, cA2: 0, cO: 0, c5k: 0, k3: 0
+};
+
+let DR = {x: 0, y: 0};
+const DC = {x: 540, y: 1100};
+const Z = () => Math.exp(cam.lz - P.dip);
+const rv = v => { const r = cam.rot * DEG, c = Math.cos(r), s = Math.sin(r); return {x: v.x * c - v.y * s, y: v.x * s + v.y * c}; };
+const toS = p => {
+  const z = Math.exp(cam.lz), r = cam.rot * DEG, c = Math.cos(r), s = Math.sin(r), k = Math.exp(-P.dip);
+  const dx = (p.x - cam.wx) * z, dy = (p.y - cam.wy) * z, x = cam.px + DR.x + dx * c - dy * s, y = cam.py + DR.y + dx * s + dy * c;
+  return {x: DC.x + (x - DC.x) * k, y: DC.y + (y - DC.y) * k};
+};
+
+const sector = (c, r, a0, a1) => {
+  if (r < .5) return '';
+  const p0 = {x: c.x + r * Math.cos(a0), y: c.y + r * Math.sin(a0)}, p1 = {x: c.x + r * Math.cos(a1), y: c.y + r * Math.sin(a1)};
+  return `M${pt(c)}L${pt(p0)}A${f1(r)} ${f1(r)} 0 ${Math.abs(a1 - a0) > Math.PI ? 1 : 0} ${a1 > a0 ? 1 : 0} ${pt(p1)}Z`;
+};
+const arcPath = (c, r, a0, a1) => {
+  const n = Math.max(1, Math.ceil(Math.abs(a1 - a0) / (1.2 * DEG))); let d = '';
+  for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; d += (i ? 'L' : 'M') + f1(c.x + r * Math.cos(a)) + ' ' + f1(c.y + r * Math.sin(a)); }
+  return d;
+};
+const seg = (a, b) => `M${pt(a)}L${pt(b)}`;
+const setD = (id, d) => $(id).setAttribute('d', d);
+
+// Labels and chips that point at the drawing: placed beside their target each frame, with a thin leader.
+const TAGS = {};
+function tag(id, side, gap) {
+  const el = $(id), g = mk('g', {opacity: 0}, $('leaders'));
+  const line = mk('path', {fill: 'none', stroke: '#10100c', 'stroke-width': 3.5, 'stroke-linecap': 'round'}, g);
+  const dotE = mk('circle', {r: 7, fill: '#10100c'}, g);
+  TAGS[id] = {el, side, gap, g, line, dotE, w: 0, h: 0};
+}
+function placeTag(id, a, inside) {
+  const T = TAGS[id], op = P[id];
+  T.el.style.opacity = op; T.g.setAttribute('opacity', op);
+  if (op <= 0) return;
+  const {w, h, gap} = T; let x, y, from;
+  if (T.side === 'below') { x = a.x - w / 2; y = a.y + gap; from = {x: a.x, y: y - 9}; }
+  else if (T.side === 'above') { x = a.x - w / 2; y = a.y - gap - h; from = {x: a.x, y: y + h + 9}; }
+  else if (T.side === 'right') { x = a.x + gap; y = a.y - h / 2; from = {x: x - 9, y: a.y}; }
+  else { x = a.x - gap - w; y = a.y - h / 2; from = {x: x + w + 9, y: a.y}; }
+  T.el.style.left = f1(x) + 'px'; T.el.style.top = f1(y) + 'px';
+  if (T.el.classList.contains('chip')) {
+    T.el.style.transformOrigin = T.side === 'right' ? '0 50%' : T.side === 'left' ? '100% 50%' : '50% 100%';
+    T.el.style.transform = `scale(${(.86 + .14 * op).toFixed(4)})`;
+  }
+  const to = inside || a, dir = norm(sub(to, from));
+  T.line.setAttribute('d', seg(from, add(to, dir, -2)));
+  T.dotE.setAttribute('cx', f1(to.x)); T.dotE.setAttribute('cy', f1(to.y));
+  T.dotE.setAttribute('fill', T.el.classList.contains('chip') ? '#fff' : '#10100c');
+}
+
+const sliceEls = [], rayEls = [];
+for (let i = 0; i < 40; i++) rayEls.push(mk('line', {opacity: 0}, document.getElementById('rays')));
+for (let i = 0; i < 8; i++) { const a = (i + .5) * Math.PI / 4; mk('line', {x1: f1(Math.cos(a) * 76), y1: f1(Math.sin(a) * 76), x2: f1(Math.cos(a) * 96), y2: f1(Math.sin(a) * 96), 'vector-effect': 'non-scaling-stroke'}, document.getElementById('sunTicks')); }
+const BAR = {x0: 150, x1: 930, v0: 36000, v1: 49000, y: 1500};
+const barX = v => BAR.x0 + (v - BAR.v0) / (BAR.v1 - BAR.v0) * (BAR.x1 - BAR.x0);
+
+function sync() {
+  DR = {x: 5 * Math.sin(P.t * 2 * Math.PI / 9), y: 4 * Math.sin(P.t * 2 * Math.PI / 11.7)};
+  const z = Z();
+  const kd = Math.exp(-P.dip);
+  $('world').setAttribute('transform', `translate(${DC.x} ${DC.y}) scale(${kd.toFixed(5)}) translate(${-DC.x} ${-DC.y}) translate(${f1(cam.px + DR.x)} ${f1(cam.py + DR.y)}) rotate(${cam.rot.toFixed(3)}) scale(${Math.exp(cam.lz).toFixed(6)}) translate(${f1(-cam.wx)} ${f1(-cam.wy)})`);
+  const E = toS(O), Rs = R * z;
+  const d = rv({x: 0, y: 1}), n = {x: d.y, y: -d.x};   // sunlight goes down d; n runs across the rays
+
+  // the sun, far away: it turns with the camera but never slides with it
+  const r = cam.rot * DEG;
+  const sun = {x: 540 + DR.x * .3 + P.sunD * Math.sin(r), y: 1330 - P.sunD * Math.cos(r)};
+  $('sun').setAttribute('transform', `translate(${pt(sun)}) scale(${(P.sunS * P.sunR / 58).toFixed(4)})`);
+  $('sun').setAttribute('opacity', P.sunOp);
+  const yTop = P.yTop;
+
+  // the sticks, longer than true when the camera is far, so they can still be seen
+  const ex = z >= 1 ? 1 : Math.pow(1 / z, EXP);
+  const Lf = STICK * z * ex, sw = 6 + 8 * Math.pow(z * ex, .7);
+  const bS = toS(S), uS = rv(UP_S), LS = Lf * P.stickS, tS = add(bS, uS, LS);
+  const bA = toS(A), uA = rv(UP_A), LA = Lf * P.stickA, tA = add(bA, uA, LA);
+  for (const [id, b, u, L] of [['stickS', bS, uS, LS], ['stickA', bA, uA, LA]]) {
+    const e = $(id); e.setAttribute('stroke-width', f1(sw));
+    e.setAttribute('d', L > .5 ? seg(add(b, u, -sw * .7), add(b, u, L)) : '');
+  }
+
+  // Alexandria's shadow: a dark band on the ground, north of the stick, as long as the stick times tan 7.2°
+  const nA = rv(NORTH_A), down = {x: -uA.x, y: -uA.y};
+  const shL = LA * TA * P.stickA, tip = add(bA, nA, shL), th = Math.max(13, sw * 1.5), foot = add(bA, nA, -sw * .6);
+  if (shL > .5) {
+    const up = {x: -down.x, y: -down.y}, mid = lerp(foot, tip, .5), hl = Math.hypot(tip.x - foot.x, tip.y - foot.y) / 2 + th * .35;
+    const c = add(mid, up, th * .12), ax = norm(sub(tip, foot)), rx = hl, ry = th / 2, rot = ang(ax) / DEG;
+    setD('shadowA', `M${pt(add(c, ax, -rx))}A${f1(rx)} ${f1(ry)} ${f1(rot)} 1 1 ${pt(add(c, ax, rx))}A${f1(rx)} ${f1(ry)} ${f1(rot)} 1 1 ${pt(add(c, ax, -rx))}Z`);
+  } else setD('shadowA', '');
+
+  // the ray that grazes the top of Alexandria's stick and lands at the tip of its shadow
+  const kA0 = add(tA, d, (yTop - tA.y) / d.y), kTip = add(bA, nA, LA * TA);
+  $('keyA').setAttribute('opacity', P.keyOp);
+  setD('keyA', P.keyA > 0 ? seg(kA0, lerp(kA0, kTip, P.keyA)) : '');
+  const kS0 = add(bS, d, (yTop - bS.y) / d.y);
+  $('keyS').setAttribute('opacity', P.keyOp);
+  setD('keyS', P.keyS > 0 ? seg(kS0, lerp(kS0, bS, P.keyS)) : '');
+
+  // the angle at the top of Alexandria's stick, between the stick and the ray: 7.2°
+  const rA = .62 * LA * P.wedgeA;
+  setD('wedgeA', P.wedgeA > 0 ? sector(tA, rA, ang({x: -uA.x, y: -uA.y}), ang(d)) : '');
+  $('wedgeA').setAttribute('opacity', clamp(P.wedgeA * 2));
+  const bisA = norm(add({x: -uA.x, y: -uA.y}, d)), wedgeAmid = add(tA, bisA, .72 * .62 * LA);
+
+  // sunlight everywhere: parallel rays, one every RAY_GAP px, pinned to Syene so they travel with the ground.
+  // Near the sticks they fade out (Alexandria's stick keeps its light off the ground: that is the shadow).
+  const offTop = dot(sub(tA, bS), n), offBase = dot(sub(bA, bS), n);
+  const zLo = Math.min(offTop, offBase), zHi = Math.max(offTop, offBase);
+  const near = (o, lo, hi) => clamp(((o < lo ? lo - o : o > hi ? o - hi : 0) - 8) / 34);
+  let used = 0;
+  for (let k = -64; k <= 64; k++) {
+    const off = k * RAY_GAP * Math.max(1, z);
+    const a = near(off, zLo, zHi) * near(off, 0, 0);
+    if (a <= 0) continue;
+    const Q = add(bS, n, off), P0 = add(Q, d, (yTop - Q.y) / d.y);
+    if (P0.x < -60 || P0.x > 1140) continue;
+    const f = sub(P0, E), b = dot(f, d), c = dot(f, f) - Rs * Rs, disc = b * b - c;
+    if (c <= 0 || disc <= 0) continue;
+    const hit = -b - Math.sqrt(disc); if (hit <= 0) continue;
+    const pk = clamp(P.rp * 1.6 - clamp(Math.abs(P0.x - 540) / 620) * .6);
+    if (pk <= 0) continue;
+    const P1 = add(P0, d, hit * pk), L = rayEls[used++];
+    L.setAttribute('x1', f1(P0.x)); L.setAttribute('y1', f1(P0.y)); L.setAttribute('x2', f1(P1.x)); L.setAttribute('y2', f1(P1.y));
+    L.setAttribute('opacity', (a * P.rayOp).toFixed(3));
+  }
+  for (let i = used; i < rayEls.length; i++) rayEls[i].setAttribute('opacity', 0);
+
+  // the well at Syene: light down the shaft, a bright disc on the water
+  $('well').setAttribute('opacity', P.well);
+  $('beam').setAttribute('height', f1(263 * P.beam)); $('beamCore').setAttribute('height', f1(263 * P.beam));
+  $('waterLit').setAttribute('opacity', P.splash);
+  $('splash').setAttribute('rx', f1(46 * P.splash)); $('splash').setAttribute('ry', f1(11 * P.splash));
+
+  // the two radii, the centre, the angle at the centre
+  setD('radS', P.radS > 0 ? seg(bS, lerp(bS, E, P.radS)) : '');
+  setD('radA', P.radA > 0 ? seg(bA, lerp(bA, E, P.radA)) : '');
+  $('dotO').setAttribute('cx', f1(E.x)); $('dotO').setAttribute('cy', f1(E.y)); $('dotO').setAttribute('opacity', P.dotO);
+  const aS = ang(sub(bS, E)), aA = ang(sub(bA, E));
+  setD('wedgeO', P.wedgeO > 0 ? sector(E, (Rs - 3) * P.wedgeO, aS, aA) : '');
+  const bisO = norm(add(norm(sub(bS, E)), norm(sub(bA, E)))), wedgeOmid = add(E, bisO, .27 * Rs);
+
+  // fifty slices of 7.2°, counted round from Syene through Alexandria
+  let lines = '';
+  for (let k = 1; k < 50; k++) {
+    const vis = clamp(P.slices - k) * P.slicesOp, el = sliceEls[k];
+    if (vis <= 0) { el.setAttribute('d', ''); continue; }
+    if (k % 2) { el.setAttribute('d', sector(E, Rs - 3, aS - ALPHA * k, aS - ALPHA * (k + 1))); el.setAttribute('opacity', vis.toFixed(3)); }
+    const a = aS - ALPHA * (k + 1);
+    if (k < 49 && P.slices - k >= .3) { const u = {x: Math.cos(a), y: Math.sin(a)}; lines += seg(add(E, u, 14), add(E, u, Rs - 3)); }
+  }
+  setD('sliceLines', lines); $('sliceLines').setAttribute('opacity', (.5 * P.slicesOp).toFixed(3));
+  $('cntN').textContent = Math.max(1, Math.min(50, Math.floor(P.slices + 1e-6)));
+
+  // the arc between the two cities, then the whole way round
+  setD('arcSA', P.arcSA > 0 ? arcPath(E, Rs, aS, aS - ALPHA * P.arcSA) : '');
+  setD('circ', P.circ > 0 ? arcPath(E, Rs, aS - ALPHA, aS - ALPHA - ALPHA * 49 * P.circ) : '');
+  const eqv = fmt(5000 * (1 + Math.floor(49 * P.circ + 1e-6)));
+  if ($('eqN').dataset.v !== eqv) { $('eqN').dataset.v = eqv; $('eqN').innerHTML = '<span class="op">=</span> ' + eqv; }
+
+  // the range of the answer in km, and the true figure
+  $('bar').setAttribute('opacity', P.barOp);
+  const xm = (BAR.x0 + BAR.x1) / 2;
+  setD('barTrack', P.bar > 0 ? seg({x: xm - (xm - BAR.x0) * P.bar, y: BAR.y}, {x: xm + (BAR.x1 - xm) * P.bar, y: BAR.y}) : '');
+  const b0 = barX(39000), b1 = barX(46000), bm = (b0 + b1) / 2, bw = (b1 - b0) * P.band;
+  $('barBand').setAttribute('x', f1(bm - bw / 2)); $('barBand').setAttribute('width', f1(Math.max(0, bw)));
+  const xt = barX(40008);
+  setD('barMark', P.mark > 0 ? seg({x: xt, y: BAR.y - 40 - 30 * (1 - P.mark)}, {x: xt, y: BAR.y + 40 - 30 * (1 - P.mark)}) : '');
+  $('barMark').setAttribute('opacity', P.mark);
+  const k3 = $('k3'); k3.style.opacity = P.k3; k3.style.left = f1(xt - k3.offsetWidth / 2) + 'px'; k3.style.top = (BAR.y + 66) + 'px';
+
+  // what points at the drawing
+  placeTag('tNo', bS);
+  placeTag('tLight', toS({x: WELL_X, y: 302}));
+  placeTag('tSh', add(lerp(foot, tip, .5), down, th * .4));
+  placeTag('cA1', wedgeAmid); placeTag('cA2', wedgeAmid);
+  placeTag('cO', wedgeOmid);
+  placeTag('c5k', {x: E.x + Rs * Math.cos(aS - ALPHA / 2), y: E.y + Rs * Math.sin(aS - ALPHA / 2)});
+}
+
+// ---------- the timeline ----------
+const tl = gsap.timeline({paused: true});
+const cur = Object.assign({}, P);
+// tween numbers in P, always from the value they had just before (so seeking is exact)
+function tw(at, dur, to, ease = 'power2.inOut') {
+  const from = {}; for (const k in to) from[k] = cur[k];
+  tl.fromTo(P, from, Object.assign({}, to, {duration: dur, ease, immediateRender: false}), at);
+  Object.assign(cur, to);
+}
+function fx(at, dur, target, from, to, ease = 'power2.out', extra = {}) {
+  tl.fromTo(target, from, Object.assign({}, to, {duration: dur, ease, immediateRender: false}, extra), at);
+}
+let view = Object.assign({}, cam);
+const screenOf = (v, p) => { const z = Math.exp(v.lz), r = v.rot * DEG, c = Math.cos(r), s = Math.sin(r); const dx = (p.x - v.wx) * z, dy = (p.y - v.wy) * z; return {x: v.px + dx * c - dy * s, y: v.py + dx * s + dy * c}; };
+// move the camera so that world point `anchor` ends at screen point `to`, with zoom z and rotation rot
+function camMove(at, dur, anchor, to, z, rot, ease = 'power2.inOut') {
+  const p0 = screenOf(view, anchor);
+  const from = {wx: anchor.x, wy: anchor.y, px: p0.x, py: p0.y, lz: view.lz, rot: view.rot};
+  const end = {wx: anchor.x, wy: anchor.y, px: to.x, py: to.y, lz: Math.log(z), rot};
+  tl.fromTo(cam, from, Object.assign({}, end, {duration: dur, ease, immediateRender: false}), at);
+  view = end;
+}
+function words(el) {
+  const html = el.innerHTML.replace(/<br\s*\/?>/g, ' <br> ').trim();
+  el.innerHTML = html.split(/\s+/).map(t => t === '<br>' ? '<br>' : `<span class="w">${t}</span>`).join(' ');
+  return el.querySelectorAll('.w');
+}
+function capIn(id, at, big) {
+  const w = words($(id));
+  gsap.set(w, {opacity: 0, y: big ? 46 : 30});
+  fx(at, big ? .8 : .6, w, {opacity: 0, y: big ? 46 : 30}, {opacity: 1, y: 0}, 'power3.out', {stagger: big ? .07 : .045});
+}
+const capOut = (ids, at) => fx(at, .3, ids.map(i => '#' + i), {opacity: 1, y: 0}, {opacity: 0, y: -22}, 'power2.in');
+
+function build() {
+  // size the labels once the fonts are in
+  for (const id in TAGS) { TAGS[id].w = TAGS[id].el.offsetWidth; TAGS[id].h = TAGS[id].el.offsetHeight; }
+  $('eqN').style.minWidth = (() => { const s = $('eqN'), t = s.textContent; s.innerHTML = '<span class="op">=</span> 250,000'; const w = s.offsetWidth; s.textContent = t; return w + 4; })() + 'px';
+  for (let k = 0; k < 50; k++) sliceEls.push(mk('path', {fill: '#FFDC8E'}, $('slices')));
+
+  // beat starts (s): each caption stays long enough to be read twice
+  const B = {b1: 0, b2: 4.5, b3: 10.4, b4: 16.6, b5: 22.4, b6: 28.7, b7: 33.6, b8: 39.2, b9: 45.7};
+  const END = B.b9 + 7.0;
+  tl.fromTo(P, {t: 0}, {t: END, duration: END, ease: 'none', immediateRender: false}, 0);
+  const TA_W = add(A, UP_A, STICK);   // the top of Alexandria's stick, in the world
+
+  // 1 · the question
+  fx(0, .5, '#head', {opacity: 0, y: -14}, {opacity: 1, y: 0});
+  camMove(.15, 1.7, S, {x: 540, y: 1400}, 1, 0, 'power3.out');
+  capIn('title', .3, true);
+  tw(.95, .75, {stickS: 1}, 'power3.out');
+  tw(1.0, .7, {well: 1}, 'power1.out');
+  tw(1.3, .9, {sunOp: 1, sunS: 1}, 'power3.out');
+  tw(1.8, .01, {rayOp: .62}, 'none');
+  tw(1.85, 1.5, {rp: 1}, 'power2.inOut');
+
+  // 2 · Syene, noon: no shadow, light at the bottom of the well
+  let b = B.b2;
+  capOut(['title'], b);
+  capIn('c2', b + .34);
+  fx(b + .55, .55, '#pS', {opacity: 0, x: -26}, {opacity: 1, x: 0}, 'power3.out');
+  tw(b + 1.0, 1.0, {beam: 1}, 'power2.in');
+  tw(b + 1.9, .55, {splash: 1}, 'power3.out');
+  tw(b + 2.4, .5, {tLight: 1}, 'power2.out');
+  tw(b + 3.0, .5, {tNo: 1}, 'power2.out');
+  camMove(b + 2.2, B.b3 - b - 2.25, S, {x: 540, y: 1400}, 1.05, 0, 'sine.inOut');
+
+  // 3 · Alexandria, the same moment: a shadow, and its angle
+  b = B.b3;
+  capOut(['c2'], b);
+  fx(b, .35, '#pS', {opacity: 1, x: 0}, {opacity: 0, x: -26}, 'power2.in');
+  tw(b, .35, {tNo: 0, tLight: 0}, 'power2.in');
+  capIn('c3', b + .34);
+  camMove(b + .15, 2.6, A, {x: 540, y: 1400}, 1, 7.2, 'sine.inOut');
+  tw(b + .15, 1.3, {dip: .9}, 'sine.inOut');
+  tw(b + 1.45, 1.3, {dip: 0}, 'sine.inOut');
+  fx(b + 2.3, .55, '#pA', {opacity: 0, x: -26}, {opacity: 1, x: 0}, 'power3.out');
+  tw(b + 2.5, .8, {keyA: 1}, 'power2.inOut');
+  tw(b + 3.2, .6, {wedgeA: 1}, 'power3.out');
+  tw(b + 3.55, .5, {cA1: 1}, 'power3.out');
+  tw(b + 4.0, .5, {tSh: 1}, 'power2.out');
+  camMove(b + 2.9, B.b4 - b - 3.0, TA_W, {x: 540, y: 880}, 1.3, 7.2, 'sine.inOut');
+
+  // 4 · why: the sun is so far that its rays arrive parallel
+  b = B.b4;
+  capOut(['c3'], b);
+  fx(b, .35, '#pA', {opacity: 1, x: 0}, {opacity: 0, x: -26}, 'power2.in');
+  tw(b, .35, {tSh: 0, cA1: 0}, 'power2.in');
+  capIn('c4', b + .34);
+  tw(b + .05, .7, {well: 0}, 'power1.in');
+  camMove(b + .1, 2.9, A, {x: 446, y: 1192}, 1500 / 16000, 0, 'power2.inOut');
+  tw(b + .1, 2.9, {sunR: 36, sunD: 690, yTop: 730}, 'power2.inOut');
+  tw(b + 2.6, .8, {keyS: 1}, 'power2.inOut');
+  tw(b + 2.6, .8, {rayOp: .4}, 'power2.inOut');
+  tw(b + 3.2, .5, {cA2: 1}, 'power3.out');
+
+  // 5 · round Earth: the same angle at the centre
+  b = B.b5;
+  capOut(['c4'], b);
+  capIn('c5', b + .34);
+  camMove(b + .15, 2.3, A, {x: 483.6, y: 887.1}, 900 / 16000, 0, 'power2.inOut');
+  tw(b + .5, 1.8, {radS: 1}, 'power2.inOut');
+  tw(b + .65, 1.8, {radA: 1}, 'power2.inOut');
+  tw(b + 2.3, .4, {dotO: 1}, 'power2.out');
+  tw(b + 2.45, .8, {wedgeO: .36}, 'power3.out');
+  tw(b + 2.9, .5, {cO: 1}, 'power3.out');
+
+  // 6 · 7.2° is one fiftieth of the circle
+  b = B.b6;
+  capOut(['c5'], b);
+  tw(b, .35, {cA2: 0, cO: 0}, 'power2.in');
+  capIn('c6', b + .34);
+  camMove(b + .15, 2.1, O, {x: 540, y: 1110}, 330 / 16000, 0, 'power2.inOut');
+  tw(b + .15, .45, {sunOp: 0}, 'power1.in');
+  tw(b + .15, 1.2, {rayOp: 0, keyOp: 0}, 'power2.inOut');
+  tw(b + .15, 2.1, {sunD: 820, yTop: 560}, 'power2.inOut');
+  tw(b + 1.8, .7, {wedgeO: 1}, 'power2.inOut');
+  tw(b + 2.3, .01, {slices: 1}, 'none');
+  fx(b + 2.3, .5, '#cnt', {opacity: 0, y: 22}, {opacity: 1, y: 0}, 'power3.out');
+  tw(b + 2.4, 2.0, {slices: 50}, 'sine.inOut');
+
+  // 7 · 50 × 5,000 stadia
+  b = B.b7;
+  capOut(['c6'], b);
+  capIn('c7', b + .34);
+  tw(b + .5, .7, {arcSA: 1}, 'power2.inOut');
+  tw(b + 1.0, .5, {c5k: 1}, 'power3.out');
+  fx(b + 1.5, .4, '#cnt', {opacity: 1, y: 0}, {opacity: 0, y: -22}, 'power2.in');
+  fx(b + 1.75, .55, '#eq1', {opacity: 0, y: 24}, {opacity: 1, y: 0}, 'power3.out');
+  fx(b + 2.3, .5, '#eq2', {opacity: 0, y: 24}, {opacity: 1, y: 0}, 'power3.out');
+  tw(b + 2.4, 2.3, {circ: 1}, 'power1.inOut');
+
+  // 8 · in km, and the true figure
+  b = B.b8;
+  capOut(['c7'], b);
+  tw(b, .35, {c5k: 0}, 'power2.in');
+  fx(b, .4, '#eq1', {opacity: 1, y: 0}, {opacity: 0, y: -26}, 'power2.in');
+  capIn('c8', b + .34);
+  fx(b + .05, .4, '#eq2', {opacity: 1, y: 0}, {opacity: 0, y: -40}, 'power2.in');
+  camMove(b + .1, 1.3, O, {x: 540, y: 900}, 240 / 16000, 0, 'power2.inOut');
+  fx(b + 1.15, .6, '#k1', {opacity: 0, y: 30}, {opacity: 1, y: 0}, 'power3.out');
+  fx(b + 1.85, .55, '#k2', {opacity: 0, y: 24}, {opacity: 1, y: 0}, 'power3.out');
+  tw(b + 2.4, .01, {barOp: 1}, 'none');
+  tw(b + 2.4, .6, {bar: 1}, 'power2.out');
+  tw(b + 2.7, .7, {band: 1}, 'power3.out');
+  tw(b + 3.35, .5, {mark: 1}, 'power3.out');
+  tw(b + 3.55, .5, {k3: 1}, 'power2.out');
+
+  // 9 · the closing line, and the source
+  b = B.b9;
+  capOut(['c8'], b);
+  fx(b, .45, ['#k1', '#k2'], {opacity: 1, y: 0}, {opacity: 0, y: -24}, 'power2.in');
+  tw(b, .45, {barOp: 0, k3: 0}, 'power2.in');
+  capIn('c9', b + .34);
+  camMove(b + .1, 1.8, O, {x: 540, y: 1200}, 350 / 16000, 0, 'power2.inOut');
+  tw(b + .1, 1.8, {sunD: 680, sunR: 34, yTop: 726}, 'power2.inOut');
+  tw(b + .8, 1.0, {sunOp: 1, keyOp: 1, rayOp: .55}, 'power2.inOut');
+  fx(b + 2.0, .7, '#src', {opacity: 0, y: 12}, {opacity: .78, y: 0});
+  tl.set({}, {}, END);
+  return END;
+}
+
+tag('tNo', 'below', 62); tag('tLight', 'below', 30); tag('tSh', 'below', 50);
+tag('cA1', 'right', 64); tag('cA2', 'left', 56); tag('cO', 'left', 56); tag('c5k', 'above', 104);
+
+function fit() {
+  const s = Math.min(innerWidth / 1080, innerHeight / 1920);
+  $('v').style.transform = `translate(${(innerWidth - 1080 * s) / 2}px, ${(innerHeight - 1920 * s) / 2}px) scale(${s})`;
+}
+addEventListener('resize', fit); fit();
+
+document.fonts.ready.then(() => Promise.all(['800 72px Fraunces', 'italic 700 72px Fraunces', '900 72px Fraunces', '700 40px Figtree', '600 30px Figtree'].map(f => document.fonts.load(f)))).then(() => {
+  const END = build();
+  window.DURATION = END;
+  window.renderAt = t => { tl.pause(); tl.seek(t); sync(); };
+  tl.seek(0); sync();
+  gsap.ticker.add(sync);
+  window.__ready = true;
+  if (!window.__noAutoplay) { tl.repeat(-1).repeatDelay(1.5); tl.play(0); }
+});
+})();
+</script>
+</body>
+</html>

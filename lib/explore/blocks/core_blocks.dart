@@ -21,6 +21,7 @@ import 'core/paths_block.dart';
 import 'core/quick_games_block.dart';
 import 'core/shelf_blocks.dart';
 import 'core/subject_levels_block.dart';
+import 'core/video_block.dart';
 import 'core/your_day_block.dart';
 
 /// The blocks of this family, in the order the catalogue lists them.
@@ -42,4 +43,5 @@ const List<ExploreBlock> blocks = [
   NewsBlock(),
   LineOfDayBlock(),
   GoalBlock(),
+  VideoCardsBlock(),
 ];

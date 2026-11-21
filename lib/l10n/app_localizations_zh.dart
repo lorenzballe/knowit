@@ -1811,6 +1811,24 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skillMarkOpen => '查看你的等级';
 
   @override
+  String get videoKicker => '视频';
+
+  @override
+  String get videoTapToPlay => '点一下播放';
+
+  @override
+  String get videoPlay => '播放';
+
+  @override
+  String get videoPause => '暂停';
+
+  @override
+  String get videoWatchAgain => '再看一遍';
+
+  @override
+  String get videoOffline => '视频需要联网。点一下重试。';
+
+  @override
   String get skillsRowTitle => '想学的内容';
 
   @override

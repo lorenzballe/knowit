@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "hash": "67d5099274ad2663",
+ "hash": "d591b3bd9348e808",
  "app": {
   "gate": null,
   "flags": {},
@@ -54,6 +54,40 @@
       "perSubject": 1,
       "limit": 40
      }
+    }
+   },
+   {
+    "id": "videos",
+    "block": "video-cards",
+    "title": {
+     "en": "Cards to watch",
+     "it": "Carte da guardare",
+     "es": "Cartas para ver",
+     "fr": "Cartes à regarder",
+     "de": "Karten zum Anschauen",
+     "pt": "Cartas para ver",
+     "nl": "Kaarten om te kijken",
+     "pl": "Karty do obejrzenia",
+     "ru": "Карточки-видео",
+     "tr": "İzlenecek kartlar",
+     "ja": "見るカード",
+     "ko": "보는 카드",
+     "zh": "可以看的卡片"
+    },
+    "subtitle": {
+     "en": "About a minute each. Tap the card, then tap it again to play.",
+     "it": "Circa un minuto ciascuna. Tocca la carta, poi toccala di nuovo e parte.",
+     "es": "Cerca de un minuto cada una. Toca la carta y vuelve a tocarla para verla.",
+     "fr": "Environ une minute chacune. Touchez la carte, puis touchez-la encore pour la lancer.",
+     "de": "Je etwa eine Minute. Tippe auf die Karte und dann noch einmal, um sie abzuspielen.",
+     "pt": "Cerca de um minuto cada. Toque na carta e toque de novo para ver.",
+     "nl": "Ongeveer een minuut per kaart. Tik op de kaart en tik nog eens om af te spelen.",
+     "pl": "Około minuty każda. Dotknij karty, a potem jeszcze raz, by ją obejrzeć.",
+     "ru": "Около минуты каждая. Коснитесь карточки, затем ещё раз, чтобы смотреть.",
+     "tr": "Her biri yaklaşık bir dakika. Karta dokun, izlemek için bir kez daha dokun.",
+     "ja": "どれも約1分。カードをタップして、もう一度タップすると再生します。",
+     "ko": "각 1분 정도예요. 카드를 누른 뒤 한 번 더 누르면 재생돼요.",
+     "zh": "每张约一分钟。点开卡片，再点一下就开始播放。"
     }
    },
    {

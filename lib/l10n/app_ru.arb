@@ -1347,5 +1347,11 @@
   "bookDoneCount": "Прочитано книг: {count}",
   "bookDoneNext": "Следующая книга",
   "bookDoneGo": "Открыть",
-  "bookRetold": "Идеи книги «{title}» ({author}), пересказанные словами Astute. Всю книгу ищи в книжном."
+  "bookRetold": "Идеи книги «{title}» ({author}), пересказанные словами Astute. Всю книгу ищи в книжном.",
+  "videoKicker": "Видео",
+  "videoTapToPlay": "Коснитесь, чтобы смотреть",
+  "videoPlay": "Воспроизвести",
+  "videoPause": "Пауза",
+  "videoWatchAgain": "Смотреть снова",
+  "videoOffline": "Для видео нужно подключение. Коснитесь, чтобы повторить."
 }

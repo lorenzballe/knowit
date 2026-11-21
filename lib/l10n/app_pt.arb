@@ -1347,5 +1347,11 @@
   "bookDoneCount": "Livros terminados: {count}",
   "bookDoneNext": "Próximo livro",
   "bookDoneGo": "Abrir",
-  "bookRetold": "As ideias de {title}, de {author}, contadas por palavras do Astute. Para o livro inteiro, procura-o numa livraria."
+  "bookRetold": "As ideias de {title}, de {author}, contadas por palavras do Astute. Para o livro inteiro, procura-o numa livraria.",
+  "videoKicker": "Vídeo",
+  "videoTapToPlay": "Toque para ver",
+  "videoPlay": "Reproduzir",
+  "videoPause": "Pausar",
+  "videoWatchAgain": "Ver de novo",
+  "videoOffline": "O vídeo precisa de conexão. Toque para tentar de novo."
 }

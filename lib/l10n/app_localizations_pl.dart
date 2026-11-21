@@ -1951,6 +1951,25 @@ class AppLocalizationsPl extends AppLocalizations {
   String get skillMarkOpen => 'Zobacz swoje poziomy';
 
   @override
+  String get videoKicker => 'Wideo';
+
+  @override
+  String get videoTapToPlay => 'Dotknij, by obejrzeć';
+
+  @override
+  String get videoPlay => 'Odtwórz';
+
+  @override
+  String get videoPause => 'Pauza';
+
+  @override
+  String get videoWatchAgain => 'Obejrzyj ponownie';
+
+  @override
+  String get videoOffline =>
+      'Film wymaga połączenia z internetem. Dotknij, by spróbować ponownie.';
+
+  @override
   String get skillsRowTitle => 'Czego chcesz się nauczyć';
 
   @override

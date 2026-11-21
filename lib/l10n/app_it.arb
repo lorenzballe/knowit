@@ -1347,5 +1347,11 @@
   "bookDoneCount": "Libri finiti: {count}",
   "bookDoneNext": "Il prossimo libro",
   "bookDoneGo": "Aprilo",
-  "bookRetold": "Le idee di {title} di {author}, raccontate con parole di Astute. Per il libro intero, cercalo in libreria."
+  "bookRetold": "Le idee di {title} di {author}, raccontate con parole di Astute. Per il libro intero, cercalo in libreria.",
+  "videoKicker": "Video",
+  "videoTapToPlay": "Tocca per guardare",
+  "videoPlay": "Riproduci",
+  "videoPause": "Pausa",
+  "videoWatchAgain": "Guarda di nuovo",
+  "videoOffline": "Il video ha bisogno della connessione. Tocca per riprovare."
 }
