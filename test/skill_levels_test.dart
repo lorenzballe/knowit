@@ -15,9 +15,8 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/skills_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
-import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/skill_mark.dart';
-import 'package:astuto/widgets/why_sheet.dart' show whyLine;
+import 'package:astuto/widgets/why_sheet.dart' show whyIcon, whyLine;
 
 import 'explore/core_harness.dart';
 
@@ -111,10 +110,6 @@ void main() {
         home: Scaffold(body: child),
       );
 
-  final Pill card = bank.firstWhere(
-    (p) => p.web == null && p.challenge is NoChallenge && p.scene == null,
-  );
-
   test('a card that trains a skill in focus says so under its head, before '
       'the reasons a skill outweighs, after those it does not', () async {
     final Pill money = bank.firstWhere(
@@ -132,6 +127,8 @@ void main() {
     expect(why.skill, Skill.money);
     final l = lookupAppLocalizations(const Locale('en'));
     expect(whyLine(l, why), l.whySkill(l.skillName('money')));
+    // In the plain mark every line carries, no dot of colour.
+    expect(whyIcon(WhyKind.skill), Icons.fitness_center_rounded);
     // A card back on the review ladder says that first.
     app.reviewIdsToday.add(money.id);
     expect(whyOf(app, money).kind, isNot(WhyKind.skill));
@@ -139,29 +136,6 @@ void main() {
     // Nothing in focus, nothing said of it.
     final AppState none = await readyApp({'knowit.plus': true});
     expect(whyOf(none, money).kind, isNot(WhyKind.skill));
-  });
-
-  testWidgets("the line about a skill in focus carries the skill's dot; any "
-      'other line, its mark', (tester) async {
-    Widget face({List<Color>? dot}) => host(
-      SizedBox(
-        height: 640,
-        child: PillCard(
-          pill: card,
-          flipped: false,
-          note: 'Trains Money and saving, one of your skills',
-          noteIcon: Icons.flag_rounded,
-          noteDot: dot,
-        ),
-      ),
-    );
-    await tester.pumpWidget(face(dot: Skill.money.hues));
-    expect(find.byKey(const ValueKey('why-dot')), findsOneWidget);
-    expect(find.byIcon(Icons.flag_rounded), findsNothing);
-    await tester.pumpWidget(face());
-    expect(find.byKey(const ValueKey('why-dot')), findsNothing);
-    expect(find.byIcon(Icons.flag_rounded), findsOneWidget);
-    expect(tester.takeException(), isNull);
   });
 
   testWidgets("the mark's sheet: the skill, why, the reader's level in it, "

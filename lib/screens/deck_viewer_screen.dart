@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/skill_levels.dart';
 import '../data/skills.dart';
+import '../data/why.dart' show WhyKind;
 import '../l10n/l10n.dart';
 
 import '../models/pill.dart';
@@ -13,6 +14,7 @@ import '../widgets/pill_card_stack.dart';
 import '../widgets/path_door.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
+import '../widgets/why_sheet.dart' show whyIcon;
 import '../widgets/glass_round.dart';
 
 /// A full-screen re-read of a set of cards.
@@ -308,18 +310,17 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     },
                     onShare: (pill) => showShareSheet(context, pill),
                     // A card that trains a skill the reader put in focus
-                    // says which under its head, its dot in the skill's
-                    // colours, here as on Today; a tap opens the skill and
-                    // the reader's level in it.
+                    // says which under its head, here as on Today; a tap
+                    // opens the skill and the reader's level in it.
                     notes: {
                       for (final MapEntry<String, Skill> e in _skills.entries)
                         e.key: context.l10n.whySkill(
                           context.l10n.skillName(e.value.name),
                         ),
                     },
-                    noteDots: {
-                      for (final MapEntry<String, Skill> e in _skills.entries)
-                        e.key: e.value.hues,
+                    noteIcons: {
+                      for (final String id in _skills.keys)
+                        id: whyIcon(WhyKind.skill),
                     },
                     onNote: (pill) {
                       final Skill? skill = _skills[pill.id];

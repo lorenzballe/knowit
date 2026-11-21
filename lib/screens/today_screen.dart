@@ -294,14 +294,8 @@ class _TodayScreenState extends State<TodayScreen> {
                   e.key: whyIcon(e.value.kind),
               },
               // A card that trains a skill the reader put in focus says which
-              // on that line, its dot in the skill's colours; a tap opens the
-              // skill and the reader's level in it rather than the reasons.
-              noteDots: {
-                for (final MapEntry<String, CardWhy> e in whys.entries)
-                  if (e.value.skill case final skill?
-                      when e.value.kind == WhyKind.skill)
-                    e.key: skill.hues,
-              },
+              // on that line; a tap opens the skill and the reader's level in
+              // it rather than the reasons.
               onNote: (pill) {
                 final CardWhy? why = whys[pill.id];
                 if (why != null && why.kind == WhyKind.skill) {

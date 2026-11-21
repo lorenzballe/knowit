@@ -31,7 +31,6 @@ class WebCardPoster extends StatelessWidget {
     this.fallback = false,
     this.chip,
     this.note,
-    this.noteDot,
   });
 
   final Pill pill;
@@ -41,9 +40,6 @@ class WebCardPoster extends StatelessWidget {
   /// the head, as the page draws them.
   final String? chip;
   final String? note;
-
-  /// The two hues of the dot before [note], as the page sets it.
-  final List<Color>? noteDot;
 
   @override
   Widget build(BuildContext context) {
@@ -102,38 +98,8 @@ class WebCardPoster extends StatelessWidget {
                 ),
                 if (note case final String note) ...[
                   SizedBox(height: h * 0.011),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        if (noteDot case final List<Color> hues)
-                          WidgetSpan(
-                            alignment: PlaceholderAlignment.middle,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 6),
-                              child: Container(
-                                width: 11,
-                                height: 11,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: hues,
-                                  ),
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 1.5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        TextSpan(
-                          text: note,
-                          style: TextStyle(color: ink.withValues(alpha: 0.66)),
-                        ),
-                      ],
-                    ),
+                  Text(
+                    note,
                     style: AppText.body(
                       size: 12.5,
                       weight: FontWeight.w500,

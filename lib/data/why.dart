@@ -33,7 +33,7 @@ enum WhyKind {
   sunday,
 
   /// It trains one of the skills the reader put in focus in What to learn
-  /// (lib/data/skill_levels.dart): the line says which, with the skill's dot.
+  /// (lib/data/skill_levels.dart): the line says which.
   skill,
 
   /// About one of the goals the reader picked: in one of its genres, or

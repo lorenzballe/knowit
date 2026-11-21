@@ -68,12 +68,6 @@ class PillCard extends StatelessWidget {
   /// only read.
   final VoidCallback? onNote;
 
-  /// The two hues of a dot that stands before [note] in place of its mark,
-  /// when the line says which skill in focus the card trains
-  /// (lib/data/skill_levels.dart): the skill's own colours, as in What to
-  /// learn. Null for none.
-  final List<Color>? noteDot;
-
   const PillCard({
     super.key,
     required this.pill,
@@ -87,7 +81,6 @@ class PillCard extends StatelessWidget {
     this.note,
     this.noteIcon,
     this.onNote,
-    this.noteDot,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -206,9 +199,6 @@ class PillCard extends StatelessWidget {
                     ? context.l10n.forYouChip
                     : null,
                 note: placeLineOf(context, pill.place, home) ?? note,
-                noteDot: placeLineOf(context, pill.place, home) == null
-                    ? noteDot
-                    : null,
               ),
               // Liked, the heart stands in the page's head on the right,
               // before the tag it prints there.
@@ -308,7 +298,6 @@ class PillCard extends StatelessWidget {
             _WhyLine(
               key: const ValueKey('card-note'),
               icon: noteIcon ?? Icons.auto_awesome_rounded,
-              dot: noteDot,
               text: note!,
               ink: pill.ink,
               onTap: onNote,
@@ -398,17 +387,12 @@ class _WhyLine extends StatelessWidget {
   const _WhyLine({
     super.key,
     required this.icon,
-    this.dot,
     required this.text,
     required this.ink,
     this.onTap,
   });
 
   final IconData icon;
-
-  /// A dot of these two hues in place of [icon]: the skill in focus the card
-  /// trains, in its own colours, ringed in white so it reads on any card.
-  final List<Color>? dot;
   final String text;
   final Color ink;
 
@@ -424,25 +408,8 @@ class _WhyLine extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: dot == null ? 1.5 : 2),
-            child: ExcludeSemantics(
-              child: dot == null
-                  ? Icon(icon, size: 13, color: muted)
-                  : Container(
-                      key: const ValueKey('why-dot'),
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: dot!,
-                        ),
-                        border: Border.all(color: Colors.white, width: 1.5),
-                      ),
-                    ),
-            ),
+            padding: const EdgeInsets.only(top: 1.5),
+            child: ExcludeSemantics(child: Icon(icon, size: 13, color: muted)),
           ),
           const SizedBox(width: 5),
           Flexible(

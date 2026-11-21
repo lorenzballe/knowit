@@ -80,10 +80,6 @@ class PillCardStack extends StatefulWidget {
   /// The mark beside each line of [notes], by the card's id.
   final Map<String, IconData> noteIcons;
 
-  /// The two hues of a dot in place of that mark, by the card's id, where the
-  /// line says which skill in focus the card trains.
-  final Map<String, List<Color>> noteDots;
-
   /// A tap on the line of [notes] on the card in front, on a native card or
   /// a free card's page alike: Why this card. Null, the line is only read.
   final ValueChanged<Pill>? onNote;
@@ -155,7 +151,6 @@ class PillCardStack extends StatefulWidget {
     this.ownIds = const {},
     this.notes = const {},
     this.noteIcons = const {},
-    this.noteDots = const {},
     this.onNote,
     required this.isSaved,
     required this.onSave,
@@ -377,9 +372,6 @@ class _PillCardStackState extends State<PillCardStack>
     ),
     note:
         placeLineOf(context, pill.place, widget.home) ?? widget.notes[pill.id],
-    noteDot: placeLineOf(context, pill.place, widget.home) == null
-        ? widget.noteDots[pill.id]
-        : null,
     chip: widget.reviewIds.contains(pill.id)
         ? context.l10n.againChip
         : widget.ownIds.contains(pill.id)
@@ -963,7 +955,6 @@ class _PillCardStackState extends State<PillCardStack>
                         _read?.opened('why');
                         widget.onNote!(pill);
                       },
-                noteDot: widget.noteDots[pill.id],
                 given: controls ? given : null,
                 // The save and share, and the heart of a card liked, on every
                 // card in the deck, live only on the one being read: a card
