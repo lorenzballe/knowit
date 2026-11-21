@@ -77,10 +77,10 @@
   const mk = (t, a, p) => Kit.mk(t, a, p);
   const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--body)'}, a), p); e.textContent = s; return e; };
 
-  // speed: a plain arrow whose length is the speed
-  function speedMeter(x0, cy, len, r, parent) {
-    const g = mk('g', {class: 'gauge'}, parent), t = Math.max(5, fs * .75), hh = t * 1.1, hl = t * 1.2;
-    txt(g, x0, cy - r * .55, 'Speed', {fill: MUTE});
+  // speed: a plain arrow whose length is the speed (slimmer in a low box, its name just above it)
+  function speedMeter(x0, cy, len, r, parent, low) {
+    const g = mk('g', {class: 'gauge'}, parent), t = low ? 7 : Math.max(5, fs * .75), hh = t * 1.1, hl = t * 1.2;
+    txt(g, x0, low ? cy - hh - 4 : cy - r * .55, 'Speed', {fill: MUTE});
     mk('line', {x1: x0, x2: x0, y1: cy - hh, y2: cy + hh, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
     const val = mk('path', {fill: CY, 'stroke-linejoin': 'round'}, g);
     const word = txt(g, x0, cy + r * .55 + fs * .35, '', {'font-weight': 700, fill: CY});
@@ -90,12 +90,13 @@
     };
     return {g, val, word, set, r};
   }
-  // height: a column of water standing on a line, as tall as the wave
-  function heightMeter(cx, cy, r, parent) {
-    const g = mk('g', {class: 'gauge'}, parent), w = Math.max(10, fs * 1.4), base = cy + r * .75, full = r * 1.5;
+  // height: a column of water standing on a line, as tall as the wave (in a low box it stands just above the water, named beside it)
+  function heightMeter(cx, cy, r, parent, low) {
+    const g = mk('g', {class: 'gauge'}, parent), w = Math.max(10, fs * 1.4), base = low ? seaY - 3 : cy + r * .75, full = low ? base - 4 : r * 1.5;
     const val = mk('rect', {x: cx - w / 2, width: w, fill: AM}, g);
     mk('line', {x1: cx - w, x2: cx + w, y1: base, y2: base, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
-    txt(g, cx, base + fs * 1.3, 'Height', {'text-anchor': 'middle', fill: MUTE});
+    if (low) txt(g, cx + w + 5, base - 2, 'Height', {fill: MUTE});
+    else txt(g, cx, base + fs * 1.3, 'Height', {'text-anchor': 'middle', fill: MUTE});
     const word = txt(g, cx + w / 2 + fs * .5, cy + fs * .35, '', {'font-weight': 700, fill: AM});
     const set = v => {
       const h = full * Math.max(.015, Math.min(1, v));
@@ -110,15 +111,17 @@
     const f = Kit.fitSvg(svg); W = f.W; H = f.H; if (!W || !H) return;
     lastW = W; lastH = H;
     fs = Math.max(12, Math.min(14, f.f || 12));
-    seaY = H * .52; X0 = W * .03; XS = W * .86; A0 = H * .025; LX = W * .012;
+    // A low box (the end, on a small phone) has one row of words under the water and the gauges fitted above it.
+    const low = H < 100;
+    seaY = H * (low ? .5 : .52); X0 = W * .03; XS = W * .86; A0 = H * .025; LX = W * .012;
     // the deep sea bed sits on a slab of earth, so the slice reads as an object, not a box
     depthPx = (H - seaY) * .74;
     xLand = XS; while (xLand < W && beachY(xLand) > seaY) xLand += 1;
 
     // the two measures, above the water on the left
-    const r = Math.max(20, Math.min(W * .115, (seaY - fs * 1.4) / 2.4, 70)), cy = r * 1.13 + 3;
-    G.speed = speedMeter(W * .055, cy, W * .25, r, svg);
-    G.height = heightMeter(W * .45, cy, r, svg);
+    const r = low ? 14 : Math.max(20, Math.min(W * .115, (seaY - fs * 1.4) / 2.4, 70)), cy = low ? seaY - 11 : r * 1.13 + 3;
+    G.speed = speedMeter(W * .055, cy, W * .25, r, svg, low);
+    G.height = heightMeter(W * .45, cy, r, svg, low);
 
     // the sea, then the sea bed and the coast on top of it
     G.sea = mk('path', {fill: SEA}, svg);
@@ -135,10 +138,12 @@
       mk('path', {d: `M${x - w / 2},${b}V${b - h}L${x},${b - h - w * .45}L${x + w / 2},${b - h}V${b}Z`, style: `fill:${tint(i === 1 ? 90 : 78)}`}, ground);
       mk('rect', {x: x - w * .14, y: b - h * .62, width: w * .28, height: h * .3, style: 'fill:var(--c)'}, ground);
     });
-    txt(svg, W - 3, beachY(W * .93) - fs * 2.1, 'coast', {'text-anchor': 'end', fill: MUTE});
-    txt(svg, X0 + 3, seaY + fs * 2.4, 'deep ocean', {fill: DOT});
-    txt(svg, xOf(.78), seaY + fs * 2.4, 'shallow', {'text-anchor': 'end', fill: DOT});
-    G.legend = txt(svg, X0 + 3, seaY + fs * 3.8, '• = equal time steps', {fill: DOT, opacity: phase === 'bet' ? 0 : 1});
+    txt(svg, W - 3, Math.max(fs * .95, beachY(W * .93) - fs * 2.1), 'coast', {'text-anchor': 'end', fill: MUTE});
+    // in a low box the dots' key takes the place of "deep ocean" on the one row there is: "shallow" still says which side is which
+    const rowY = low ? Math.min(seaY + fs * 2.4, H - 4) : seaY + fs * 2.4;
+    if (!low || phase === 'bet') txt(svg, X0 + 3, rowY, 'deep ocean', {fill: DOT});
+    txt(svg, xOf(.78), rowY, 'shallow', {'text-anchor': 'end', fill: DOT});
+    G.legend = txt(svg, X0 + 3, low ? rowY : seaY + fs * 3.8, '• = equal time steps', {fill: DOT, opacity: phase === 'bet' ? 0 : 1});
 
     G.surf = mk('path', {fill: 'none', stroke: CY, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
     G.spray = mk('g', {}, svg);
