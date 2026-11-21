@@ -12,7 +12,7 @@
 #opts{display:flex;flex-direction:column;gap:.9cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
-#why .big{margin:0}
+#why .big{font:800 max(2.6cqh,17px)/1.15 var(--display);margin:0}
 .opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .lbl{font-family:var(--body);font-weight:800;fill:currentColor}
@@ -78,6 +78,12 @@ function render(){
   gA.setAttribute('d', arrowPath(ax, yb, yb + a, f*.55)); gA.setAttribute('opacity', gOp);
   gL.setAttribute('y', yb + a + f*.35); gL.setAttribute('opacity', gOp);
 }
+// Back to the moment before the drop: the slinky hanging, tension and gravity balanced, the state the answer explains.
+function rewind(){
+  if (tw) tw.kill();
+  if (Kit.calm || st.tau <= 0){ st.tau = 0; render(); return; }
+  tw = gsap.to(st, {tau: 0, duration: .7, ease: 'power2.inOut', onUpdate: render});
+}
 function drop(after){
   if (tw) tw.kill();
   st.tau = 0; render();
@@ -95,7 +101,7 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
   sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep');
-  drop();
+  rewind();
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
@@ -134,6 +140,9 @@ Kit.play.card = async () => {
   Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100));
   Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 600));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

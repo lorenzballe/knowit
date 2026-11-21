@@ -39,7 +39,10 @@ const CAP = [
 ];
 const WHY = '<b>Why:</b> expanding high-pressure steam pushes the pistons with a huge force. That force acts over a very short stroke, so the jet gets to take-off speed in seconds.';
 const st = {t: 0};
-let G = null, lastStep = -1, done = false;
+let G = null, lastStep = 0, done = false;
+// The first caption is in place before anything is drawn: set later, from a redraw inside the
+// ResizeObserver, it changed the column's height while the observer was delivering (a loop error).
+Kit.$('cap').innerHTML = CAP[0];
 const clamp = v => Math.max(0, Math.min(1, v));
 const stepOf = t => t < .12 ? 0 : t < .22 ? 1 : t < .8 ? 2 : 3;
 
@@ -182,6 +185,9 @@ Kit.play.card = async () => {
   for (const v of [150, 400, 700, 1000]) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await wait(380); }
   await wait(500);
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

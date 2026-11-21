@@ -8,11 +8,11 @@
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;position:relative}
 #sv{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
-#opts{display:flex;flex-direction:column;gap:1cqh}
+#opts{display:flex;flex-direction:column;gap:.8cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{font:700 max(2.8cqh,17px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+#why .body b{font-weight:800}
+.opt{font:700 max(2cqh,14px)/1.15 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.05cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .lbl{font-family:var(--body);font-weight:700;fill:var(--k)}
 .mono{font-family:var(--mono);font-weight:700}
@@ -28,7 +28,7 @@
         <button class="opt" data-i="1">Its defense is chemical instead: mescaline</button>
         <button class="opt" data-i="2">Without spines it can grow much bigger</button>
       </div>
-      <div id="why" class="gone"><p class="big">Chemistry instead of thorns</p><p class="body">With no spines, peyote has to protect itself another way: it makes mescaline. That substance gives the plant its very bitter taste and its psychoactive effects, and both are weapons against animals that would eat it.</p></div>
+      <div id="why" class="gone"><p class="body"><b>Chemistry instead of thorns.</b> With no spines, peyote has to protect itself another way: it makes mescaline. That substance gives the plant its very bitter taste and its psychoactive effects, and both are weapons against animals that would eat it.</p></div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Look at the two cactuses, then pick the reason.</p>
@@ -54,14 +54,14 @@ function draw() {
   const fs = Math.max(12, Math.min(f, H * 0.065));
   const xl = W * 0.25, xr = W * 0.73;
   const showT = H >= fs * 6.5, showB = H >= fs * 10;
-  const gy = showB ? H - fs * 3.6 : H - fs * 0.4;
+  const gy = showB ? H - fs * 3.3 : H - fs * 0.4;
   R = {};
   // divider
   Kit.mk('line', {x1: W / 2, y1: fs * 0.4, x2: W / 2, y2: Math.max(fs * 0.4, H - fs * 0.4), style: 'stroke:var(--k);stroke-opacity:.25;stroke-width:1.5;stroke-dasharray:4 5'}, sv);
   // titles
   if (showT) {
-    txt(sv, xl, fs * 0.9, 'Spiny cactus', fs);
-    txt(sv, xr, fs * 0.9, 'Peyote', fs);
+    R.tl = txt(sv, xl, fs * 0.9, 'Spiny cactus', fs);
+    R.tr = txt(sv, xr, fs * 0.9, 'Peyote', fs);
   }
   // ground
   Kit.mk('line', {x1: W * 0.04, y1: gy, x2: W * 0.96, y2: gy, style: 'stroke:var(--k);stroke-width:2;stroke-linecap:round;stroke-opacity:.5'}, sv);
@@ -72,17 +72,20 @@ function draw() {
   const ah = Math.max(0, gy - top);
   const tw = Math.max(0, Math.min(W * 0.085, ah * 0.28));
   const armY = top + ah * 0.5, armX = tw * 1.5;
-  const step = Math.max(2, tw * 0.45);
+  // spines in step with the cactus: a small one gets short, thin, fewer of them, not a fur of them
+  const sl = Math.max(Math.min(6, ah * 0.12), tw * 0.32), ssw = Math.min(1.6, Math.max(1, sl * 0.3));
+  const step = Math.max(2, sl * 0.85, tw * 0.45);
   const cstyle = `fill:none;stroke:${GREEN};stroke-width:${tw * 0.75};stroke-linecap:round;stroke-linejoin:round`;
   Kit.mk('path', {d: `M${xl - tw * 0.4},${armY} H${xl - armX} V${armY - ah * 0.28}`, style: cstyle}, L);
   Kit.mk('path', {d: `M${xl + tw * 0.4},${armY + tw * 0.6} H${xl + armX} V${armY - ah * 0.18}`, style: cstyle}, L);
-  Kit.mk('rect', {x: xl - tw / 2, y: top, width: tw, height: ah + tw / 2, rx: tw / 2, style: `fill:${GREEN}`}, L);
+  // the trunk stands on the ground line: rounded on top, flat where it meets the ground
+  Kit.mk('rect', {x: xl - tw / 2, y: top, width: tw, height: ah, rx: tw / 2, style: `fill:${GREEN}`}, L);
+  Kit.mk('rect', {x: xl - tw / 2, y: gy - Math.min(tw / 2, ah / 2), width: tw, height: Math.min(tw / 2, ah / 2), style: `fill:${GREEN}`}, L);
   const sp = Kit.mk('g', {}, L); R.spines = [];
-  const sl = Math.max(6, tw * 0.32);
   const spine = (x, y, dir) => {
     for (const a of [-0.45, 0.45]) {
       const ang = dir + a;
-      R.spines.push(Kit.mk('line', {x1: x, y1: y, x2: x + Math.cos(ang) * sl, y2: y + Math.sin(ang) * sl, style: 'stroke:var(--k);stroke-width:1.6;stroke-linecap:round'}, sp));
+      R.spines.push(Kit.mk('line', {x1: x, y1: y, x2: x + Math.cos(ang) * sl, y2: y + Math.sin(ang) * sl, style: `stroke:var(--k);stroke-width:${ssw};stroke-linecap:round`}, sp));
     }
   };
   for (let y = top + tw * 0.4; y < gy - 4; y += step) { spine(xl - tw / 2, y, Math.PI); spine(xl + tw / 2, y, 0); }
@@ -111,44 +114,82 @@ function draw() {
   for (let i = 0; i < 9; i++) {
     const t = 0.1 + i * 0.1, a = Math.PI + t * Math.PI;
     const x = xr + Math.cos(a) * pw * 0.48, y = gy + Math.sin(a) * ph * 0.82;
-    Kit.mk('line', {x1: x, y1: y, x2: x + Math.cos(a) * sl * 1.3, y2: y + Math.sin(a) * sl * 1.3, style: 'stroke:var(--k);stroke-opacity:.45;stroke-width:1.6;stroke-dasharray:2 3;stroke-linecap:round'}, gh);
+    Kit.mk('line', {x1: x, y1: y, x2: x + Math.cos(a) * sl * 1.3, y2: y + Math.sin(a) * sl * 1.3, style: `stroke:var(--k);stroke-opacity:.45;stroke-width:${ssw};stroke-dasharray:2 3;stroke-linecap:round`}, gh);
   }
 
-  // ---- molecule (mescaline) where thorns would be
-  const r = Math.max(10, Math.min(W * 0.05, (domeTop - top) * 0.2));
-  const my = top + (domeTop - fs * 0.6 - top) * 0.5, mx = xr - r * 0.6;
+  // ---- molecule (mescaline) where thorns would be: as big as the room over the peyote allows,
+  // its rings, bonds and letters kept clear of the title, the flower, the divider and the edges.
+  const ofs = Math.max(12, fs * 0.85);
+  const parts = (mx, my, r, letters) => {
+    const ox = 1.342 * r + 0.433 * ofs, hw = ofs * 0.36, hh = ofs * 0.7;
+    if (!letters) return [[mx - 1.342 * r - 1.5, my - 1.55 * r - 1.5, mx + 2.345 * r + 1.5, my + r + 1.5]];
+    return [
+      [mx - 1.342 * r - 1.5, my - 1.55 * r - 1.5, mx + 2.345 * r + 1.5, my + r + 1.5],
+      [mx - hw, my - 1.55 * r - 0.5 * ofs - hh, mx + hw, my - 1.55 * r - 0.5 * ofs + hh],
+      [mx - ox - hw, my - 0.775 * r - 0.25 * ofs - hh, mx - ox + hw, my - 0.775 * r - 0.25 * ofs + hh],
+      [mx - ox - hw, my + 0.775 * r + 0.25 * ofs - hh, mx - ox + hw, my + 0.775 * r + 0.25 * ofs + hh],
+      [mx + 2.345 * r + 2, my + 0.5 * r - hh, mx + 2.345 * r + 2 + ofs * 2.1, my + 0.5 * r + hh]
+    ];
+  };
+  const plantTop = Math.min(domeTop - fs * 0.71, domeTop - sl * 1.3) - 3;
+  const place = (withTitle, letters = true) => {
+    const tb = withTitle && R.tr ? R.tr.getBBox() : null;
+    const blocks = [[xr - pw / 2 - sl * 1.4 - 2, plantTop, xr + pw / 2 + sl * 1.4 + 2, H]];
+    if (tb) blocks.push([tb.x - 3, tb.y - 2, tb.x + tb.width + 3, tb.y + tb.height + 2]);
+    const fits = q => q[0] >= W / 2 + 5 && q[2] <= W - 2 && q[1] >= 1 && q[3] <= gy - 3 && blocks.every(k => q[2] <= k[0] || q[0] >= k[2] || q[3] <= k[1] || q[1] >= k[3]);
+    const band0 = tb ? tb.y + tb.height + 2 : 1, idealY = (band0 + plantTop) / 2;
+    for (let r = Math.max(8, Math.min(W * 0.055, 20)); r >= (letters ? 7 : 4); r -= 0.5) {
+      let best = null, bd = Infinity;
+      for (let my = 0; my <= gy; my += 1.5) for (let mx = W / 2; mx <= W; mx += 1.5) {
+        const ps = parts(mx, my, r, letters);
+        if (!ps.every(fits)) continue;
+        const ux = (Math.min(...ps.map(q => q[0])) + Math.max(...ps.map(q => q[2]))) / 2, uy = (Math.min(...ps.map(q => q[1])) + Math.max(...ps.map(q => q[3]))) / 2;
+        const dd = (ux - xr) ** 2 + 0.5 * (uy - idealY) ** 2;
+        if (dd < bd) { bd = dd; best = {mx, my, r, ps, letters}; }
+      }
+      if (best) return best;
+    }
+    return null;
+  };
+  // In a box too low for both, the titles give way to the molecule (the plants stay side by side);
+  // in a strip, only its rings, beside the peyote.
+  let pl = place(true);
+  if (!pl && R.tr) { R.tl.style.display = R.tr.style.display = 'none'; R.tr = null; pl = place(false); }
+  if (!pl) pl = place(false, false);
+  if (!pl) { const r0 = 4; pl = {mx: W - r0 * 2.6, my: gy - r0 * 1.6, r: r0, letters: false}; pl.ps = parts(pl.mx, pl.my, r0, false); }
+  const {mx, my, r} = pl;
+  const ub = [Math.min(...pl.ps.map(q => q[0])), Math.min(...pl.ps.map(q => q[1])), Math.max(...pl.ps.map(q => q[2])), Math.max(...pl.ps.map(q => q[3]))];
   const M = Kit.mk('g', {}, sv); R.mol = M;
   const v = i => { const a = (-90 + 60 * i) * Math.PI / 180; return [mx + Math.cos(a) * r, my + Math.sin(a) * r]; };
-  const ms = `stroke:${PURPLE};stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round`;
+  const ms = `stroke:${PURPLE};stroke-width:${Math.min(2.4, Math.max(1.2, r * 0.24))};fill:none;stroke-linecap:round;stroke-linejoin:round`;
   let d = ''; for (let i = 0; i < 6; i++) { const [x, y] = v(i); d += (i ? 'L' : 'M') + x + ',' + y; } d += 'Z';
   R.bonds = [Kit.mk('path', {d, style: ms}, M)];
   R.bonds.push(Kit.mk('circle', {cx: mx, cy: my, r: r * 0.55, style: ms}, M));
-  const ofs = Math.max(12, fs * 0.85);
   for (const i of [0, 4, 5]) {
     const [x, y] = v(i), a = (-90 + 60 * i) * Math.PI / 180;
     const x2 = x + Math.cos(a) * r * 0.55, y2 = y + Math.sin(a) * r * 0.55;
     R.bonds.push(Kit.mk('line', {x1: x, y1: y, x2, y2, style: ms}, M));
-    txt(M, x2 + Math.cos(a) * ofs * 0.5, y2 + Math.sin(a) * ofs * 0.5, 'O', ofs, 'middle', `fill:${PURPLE}`).classList.add('mono');
+    if (pl.letters) txt(M, x2 + Math.cos(a) * ofs * 0.5, y2 + Math.sin(a) * ofs * 0.5, 'O', ofs, 'middle', `fill:${PURPLE}`).classList.add('mono');
   }
   const [cx0, cy0] = v(2);
   const b = r * 0.85;
   const p1 = [cx0 + b * 0.87, cy0 + b * 0.5], p2 = [p1[0] + b * 0.87, p1[1] - b * 0.5];
   R.bonds.push(Kit.mk('path', {d: `M${cx0},${cy0}L${p1}L${p2}`, style: ms}, M));
-  txt(M, p2[0] + 2, p2[1], 'NH₂', ofs, 'start', `fill:${PURPLE}`).classList.add('mono');
+  if (pl.letters) txt(M, p2[0] + 2, p2[1], 'NH₂', ofs, 'start', `fill:${PURPLE}`).classList.add('mono');
   R.bonds.forEach(e => { const L2 = e.getTotalLength ? e.getTotalLength() : 100; e.style.strokeDasharray = L2; e.style.strokeDashoffset = done ? 0 : L2; });
   M.style.opacity = done ? 1 : 0;
   M.style.display = done ? '' : 'none';
-  R.q = txt(sv, xr, my, '?', fs * 2.4, 'middle', 'font-family:var(--display);opacity:.55');
+  R.q = txt(sv, (ub[0] + ub[2]) / 2, (ub[1] + ub[3]) / 2, '?', Math.min(fs * 2.4, (ub[3] - ub[1]) * 0.75), 'middle', 'font-family:var(--display);opacity:.55');
   if (done) { R.q.style.opacity = 0; R.q.style.display = 'none'; gh.style.opacity = 0; }
 
   // ---- energy bars
   const BG = Kit.mk('g', {}, sv);
   if (!showB) BG.style.display = 'none';
-  const by = gy + fs * 1.3, bw = W * 0.36, bh = Math.max(6, fs * 0.55);
+  const by = gy + fs * 1.1, bw = W * 0.36, bh = Math.max(6, fs * 0.55);
   const bar = (x, frac, col, label, show) => {
     Kit.mk('rect', {x: x - bw / 2, y: by, width: bw, height: bh, rx: bh / 2, style: 'fill:var(--k);fill-opacity:.12'}, BG);
     const fill = Kit.mk('rect', {x: x - bw / 2, y: by, width: show ? bw * frac : 0, height: bh, rx: bh / 2, style: `fill:${col}`}, BG);
-    const t = txt(BG, x, by + bh + fs * 0.95, label, Math.max(12, fs * 0.8), 'middle', 'font-weight:600');
+    const t = txt(BG, x, by + bh + fs * 0.9, label, Math.max(12, fs * 0.8), 'middle', 'font-weight:600');
     return {fill, t, full: bw * frac};
   };
   R.lb = bar(xl, 0.85, GREEN, 'energy → spines', true);
@@ -190,6 +231,9 @@ Kit.onEnter.card = () => {
   if (R.spines && !done) gsap.from(R.spines, {opacity: 0, duration: .2, stagger: .01, delay: .2});
 };
 Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2200)); };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('sv'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
