@@ -189,6 +189,74 @@ const Map<String, List<BookPick>> bookPicks = {
       url: 'https://www.gatesnotes.com/Range',
     ),
   ],
+  // The books below are the ones the founders' shelf is about, being
+  // written as books in pills ([bookPicksComing]): their picks wait here,
+  // so the shelf shows them the day their cards arrive, with no new build.
+  'the-intelligent-investor': [
+    BookPick(
+      who: 'Warren Buffett',
+      role: _buffett,
+      said:
+          '… read The Intelligent Investor. That’s the book that gave me the '
+          'philosophy that has taken me now for a lot of years.',
+      where: _meeting,
+      year: 2008,
+      url: 'https://buffett.cnbc.com/video/2008/05/03/morning-session---2008-berkshire-hathaway-annual-meeting.html',
+    ),
+  ],
+  'business-adventures': [
+    BookPick(
+      who: 'Bill Gates',
+      role: _gates,
+      said: 'The best business book I’ve ever read',
+      where: 'GatesNotes',
+      year: 2014,
+      url: 'https://www.gatesnotes.com/Business-Adventures',
+    ),
+  ],
+  'shoe-dog': [
+    BookPick(
+      who: 'Warren Buffett',
+      role: _buffett,
+      said:
+          'The best book I read last year was Shoe Dog, by Nike’s Phil Knight.',
+      where: 'his letter to Berkshire Hathaway’s shareholders',
+      year: 2017,
+      url: 'https://www.berkshirehathaway.com/letters/2016ltr.pdf',
+    ),
+  ],
+  'high-output-management': [
+    BookPick(
+      who: 'Tobi Lütke',
+      role: 'Founder of Shopify',
+      said: '',
+      where: 'The Tim Ferriss Show, among the five best books he has read',
+      year: 2019,
+      url: 'https://tim.blog/2019/02/11/the-tim-ferriss-show-transcripts-tobi-lutke/',
+    ),
+  ],
+  'zero-to-one': [
+    BookPick(
+      who: 'Marc Andreessen',
+      role: 'Co-founder of Netscape and Andreessen Horowitz',
+      said:
+          'Zero to One is the first book any working or aspiring '
+          'entrepreneur must read—period.',
+      where: 'his praise for the book, at its publisher',
+      year: 2014,
+      url: 'https://www.penguinrandomhouse.com/books/234730/zero-to-one-by-peter-thiel-with-blake-masters/',
+    ),
+  ],
+};
+
+/// The books of [bookPicks] still being written as books in pills: their
+/// picks wait for their cards, and until then the shelf passes them over.
+const Set<String> bookPicksComing = {
+  'the-intelligent-investor',
+  'business-adventures',
+  'shoe-dog',
+  'high-output-management',
+  'zero-to-one',
 };
 
 const String _gates = 'Co-founder of Microsoft';

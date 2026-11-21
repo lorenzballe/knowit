@@ -46,7 +46,10 @@ void main() {
     };
     expect(bookPicks.length, greaterThanOrEqualTo(FounderBooksBlock.fewest));
     for (final MapEntry<String, List<BookPick>> e in bookPicks.entries) {
-      expect(books, contains(e.key), reason: e.key);
+      // A book still being written waits with its picks for its cards.
+      if (!books.contains(e.key)) {
+        expect(bookPicksComing, contains(e.key), reason: e.key);
+      }
       expect(e.value, isNotEmpty, reason: e.key);
       final Set<String> who = {};
       for (final BookPick k in e.value) {
