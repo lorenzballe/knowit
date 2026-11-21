@@ -47,7 +47,17 @@ function draw() {
   svg.innerHTML = '';
   const r = Kit.fitSvg(svg), W = r.W, H = r.H, f = Math.max(r.f, 13);
   G = {W, H, f, x0: W * .07, x1: W * .93};
-  const scaleH = f * 6.4, yA = H - f * 2.6, sceneB = H - scaleH;
+  // The race needs room above the ground for three lanes and the top one's name. Once it is on, the scale under
+  // it has no ticks to name and takes less room, and the lanes close up a little if they must; in a box too low
+  // even for that (the end, on a small phone) the race is drawn alone, its lanes named on the left.
+  const rr0 = f * .75, need = L => 2 * rr0 + 2 * L + f * 1.3 + 2;
+  let scaleH = f * 6.4, L = f * 3.2;
+  if (S.rev && H - scaleH - f * .4 < need(L)) {
+    scaleH = f * 5.3;
+    L = Math.min(f * 3.2, (H - scaleH - f * .4 - 2 * rr0 - f * 1.3 - 2) / 2);
+    if (L < f * 2.9) { lowRace(W, H, f); return; }
+  }
+  const yA = H - f * 2.6, sceneB = H - scaleH;
   const gY = sceneB - f * .4;
   G.yA = yA;
   // ground
@@ -69,8 +79,10 @@ function draw() {
 
   // race lanes
   G.xs = W * .34; G.xe = W * .93; G.puffs = [];
-  const L = f * 3.2, rr = f * .75;
-  Kit.mk('line', {x1: G.xe + rr, x2: G.xe + rr, y1: gY - rr - L * 2 - f * 1.6, y2: gY, style: `stroke:${INK};stroke-width:${f * .1};stroke-dasharray:${f * .4} ${f * .3};opacity:.5`}, svg);
+  const rr = rr0;
+  // the finish line: as tall as the race, and never above the picture (where the race has no room, as tall as the volcano)
+  const fy = gY - rr - L * 2 - f * 1.6;
+  Kit.mk('line', {x1: G.xe + rr, x2: G.xe + rr, y1: fy >= 0 ? fy : Math.min(cy, gY - f), y2: gY, style: `stroke:${INK};stroke-width:${f * .1};stroke-dasharray:${f * .4} ${f * .3};opacity:.5`}, svg);
   if (S.rev) {
     const lanes = [
       {v: 50, name: '50 km/h', fill: mix(45), stroke: 'none'},
@@ -122,9 +134,35 @@ function upd() {
   G.puffs.forEach(p => {
     const x = G.xs + (G.xe - G.xs) * Math.min(1, S.t / (T * 700 / p.v));
     p.g.setAttribute('transform', `translate(${x},${p.y})`);
+    if (!p.lab) return;
     const lx = clamp(x, G.W * .3 + p.w / 2, G.W * .99 - p.w / 2);
     p.lab.setAttribute('x', lx - x);
   });
+}
+
+// The race alone, in a box too low for the volcano and the scale: three lanes, each named on the left, run to a finish line.
+function lowRace(W, H, f) {
+  const lanes = [
+    {v: 50, name: '50 km/h', fill: mix(45), stroke: 'none'},
+    {v: 700, name: '700 km/h', fill: INK, stroke: 'none'},
+    {v: S.g, name: `you: ${S.g} km/h`, fill: 'none', stroke: INK}
+  ];
+  const Lc = (H - 2) / 3, rr = Math.min(f * .75, Lc * .36);
+  const labs = lanes.map((l, i) => txt(svg, 0, H - 1 - Lc * (i + .5) + f * .35, l.name, f, 700, 'end'));
+  let lw = 0; labs.forEach(t => { let w = t.textContent.length * f * .58; try { const m = t.getComputedTextLength(); if (m > 0) w = m; } catch (e) {} lw = Math.max(lw, w); });
+  labs.forEach(t => t.setAttribute('x', lw + 2));
+  G.xs = lw + 10 + rr * 1.6; G.xe = W - rr * 1.8 - 2; G.puffs = [];
+  Kit.mk('line', {x1: G.xe + rr, x2: G.xe + rr, y1: .5, y2: H - .5, style: `stroke:${INK};stroke-width:${f * .1};stroke-dasharray:${f * .4} ${f * .3};opacity:.5`}, svg);
+  lanes.forEach((l, i) => {
+    const y = H - 1 - Lc * (i + .5);
+    Kit.mk('line', {x1: G.xs, x2: G.xe, y1: y + rr, y2: y + rr, style: `stroke:${INK};stroke-width:1;opacity:.18`}, svg);
+    const g = Kit.mk('g', {}, svg), st = `fill:${l.fill};stroke:${l.stroke};stroke-width:${f * .14}`;
+    Kit.mk('circle', {cx: -rr * .9, cy: rr * .3, r: rr * .7, style: st}, g);
+    Kit.mk('circle', {cx: 0, cy: 0, r: rr, style: st}, g);
+    Kit.mk('circle', {cx: rr * .8, cy: rr * .25, r: rr * .75, style: st}, g);
+    G.puffs.push({g, lab: null, v: l.v, y});
+  });
+  upd();
 }
 
 function setFrom(e) {

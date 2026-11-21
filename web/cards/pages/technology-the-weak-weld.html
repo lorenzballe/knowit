@@ -58,12 +58,29 @@ function S(el, s){ el.setAttribute('style', s); return el; }
 function draw(){
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(f, 12);
-  const P0 = {x: W*.15, y: H*.17}, P1 = {x: W*.86, y: H*.88};
+  const th = Math.max(fs*.8, 9);
+  // A low box (the small phone) lays the column almost flat: the wheel as tall as the box allows, the marks
+  // small enough to hang under it, and at the end the weld named where it is instead of a magnifier too small to read.
+  const flat = H < 110, mr = flat ? Math.max(9, fs*.8) : fs*1.05;
+  const mo = flat ? th*.6 + 3 + mr : th*1.1 + mr + fs*.5, sw = th*.6, rot = flat ? -5 : -8;
+  let P0, P1, ry;
+  if (!flat) {
+    P0 = {x: W*.15, y: H*.17}; P1 = {x: W*.86, y: H*.88}; ry = fs*3.1;
+    // the wheel stays inside the picture: the column starts low enough for its rim
+    const a = Math.atan2(P1.y-P0.y, P1.x-P0.x), ext = Math.hypot(th*.9*Math.sin(a), ry*Math.cos(a)) + sw/2 + 2;
+    if (P0.y < ext) P0.y = Math.min(ext, H*.4);
+  } else if (!revealed) {
+    const yc = Math.max(th, Math.min(H*.42, H - mo - mr - 2 - H*.05));
+    P0 = {x: W*.1, y: yc}; P1 = {x: W*.88, y: yc + H*.06}; ry = Math.max(th, Math.min(fs*3.1, yc - sw/2 - 2, H - yc - sw/2 - 2));
+  } else {
+    const yc = H*.38;
+    P0 = {x: W*.1, y: yc}; P1 = {x: W*.88, y: yc + H*.04};
+    ry = Math.max(th, Math.min(fs*3.1, yc - sw/2 - 2 + .47*(P1.x-P0.x)*Math.sin(-rot*Math.PI/180), H - (yc + .47*(P1.x-P0.x)*Math.sin(-rot*Math.PI/180)) - sw/2 - 2));
+  }
   const dx = P1.x-P0.x, dy = P1.y-P0.y, len = Math.hypot(dx, dy);
   const u = {x: dx/len, y: dy/len}, n = {x: -u.y, y: u.x};
   const at = t => ({x: P0.x+dx*t, y: P0.y+dy*t});
   const ang = Math.atan2(dy, dx)*180/Math.PI;
-  const th = Math.max(fs*.8, 9);
   const J = at(.47);
   const mk = Kit.mk;
 
@@ -71,13 +88,13 @@ function draw(){
   const low = mk('g', {}, svg);
   S(mk('line', {x1: J.x, y1: J.y, x2: P1.x, y2: P1.y}, low), `stroke:var(--k);stroke-width:${th}px`);
   S(mk('line', {x1: J.x+n.x*th*.2, y1: J.y+n.y*th*.2, x2: P1.x+n.x*th*.2, y2: P1.y+n.y*th*.2}, low), `stroke:var(--c);stroke-width:${th*.18}px;opacity:.35`);
-  S(mk('rect', {x: P1.x-th*1.4, y: P1.y-th*1.1, width: th*2.8, height: th*2.2, rx: th*.4, transform: `rotate(${ang} ${P1.x} ${P1.y})`}, low), 'fill:var(--k)');
+  S(mk('rect', {x: P1.x-th*(flat ? 1.2 : 1.4), y: P1.y-th*(flat ? .9 : 1.1), width: th*(flat ? 2.4 : 2.8), height: th*(flat ? 1.8 : 2.2), rx: th*.4, transform: `rotate(${ang} ${P1.x} ${P1.y})`}, low), 'fill:var(--k)');
 
   // upper (added extension + wheel)
   const up = mk('g', {}, svg);
   S(mk('line', {x1: P0.x, y1: P0.y, x2: J.x, y2: J.y}, up), `stroke:var(--k);stroke-width:${th*.86}px`);
   S(mk('line', {x1: P0.x+n.x*th*.18, y1: P0.y+n.y*th*.18, x2: J.x+n.x*th*.18, y2: J.y+n.y*th*.18}, up), `stroke:var(--c);stroke-width:${th*.16}px;opacity:.35`);
-  S(mk('ellipse', {cx: P0.x, cy: P0.y, rx: th*.9, ry: fs*3.1, transform: `rotate(${ang} ${P0.x} ${P0.y})`}, up), `fill:none;stroke:var(--k);stroke-width:${th*.6}px`);
+  S(mk('ellipse', {cx: P0.x, cy: P0.y, rx: th*.9, ry, transform: `rotate(${ang} ${P0.x} ${P0.y})`}, up), `fill:none;stroke:var(--k);stroke-width:${sw}px`);
   S(mk('circle', {cx: P0.x, cy: P0.y, r: th*.75}, up), 'fill:var(--k)');
 
   // weld bead
@@ -96,7 +113,7 @@ function draw(){
   // choice markers
   const marks = mk('g', {}, svg), mlist = [];
   [.17, .47, .82].forEach((t, i) => {
-    const p = at(t), r = fs*1.05, o = th*1.1 + r + fs*.5, m = {x: p.x+n.x*o, y: p.y+n.y*o};
+    const p = at(t), r = mr, o = mo, m = {x: p.x+n.x*o, y: p.y+n.y*o};
     const g = mk('g', {}, marks);
     S(mk('line', {x1: p.x+n.x*th*.7, y1: p.y+n.y*th*.7, x2: m.x-n.x*r, y2: m.y-n.y*r}, g), `stroke:var(--k);stroke-width:${Math.max(1.5, fs*.1)}px`);
     const c = S(mk('circle', {cx: m.x, cy: m.y, r}, g), `fill:var(--c);stroke:var(--k);stroke-width:${Math.max(1.5, fs*.14)}px`);
@@ -104,8 +121,24 @@ function draw(){
     tx.textContent = 'ABC'[i]; mlist.push({c, tx});
   });
 
+  // in a low box: the weld named right beside it, under the column, growing out of the weld as a magnifier would
+  if (flat) {
+    const C = {x: J.x + th*1.2, y: J.y + th*.5 + 8 + fs*.75};
+    const link = S(mk('line', {x1: J.x, y1: J.y, x2: J.x, y2: J.y}, svg), 'opacity:0');
+    const zoom = mk('g', {opacity: 0}, svg), zin = mk('g', {}, zoom);
+    const lab = S(mk('text', {x: 0, y: 0, 'text-anchor': 'start'}, zin), `fill:var(--k);font-size:${fs}px`);
+    lab.textContent = 'the weld: weaker metal';
+    let tw = fs*11; try { const m = lab.getComputedTextLength(); if (m > 0) tw = m; } catch (e) {}
+    C.x = Math.min(C.x, W - 2 - tw);
+    G = {up, crack, marks, mlist, zoom, link, zcrack: null, J, C, u, fs, rot};
+    mark();
+    if (revealed) setEnd(); else { upT(0); zT(0); }
+    return;
+  }
+
   // magnified view of the weld
-  const R = Math.min(W*.21, H*.24), C = {x: W*.75, y: Math.max(R + fs*.4, H*.28)};
+  // its caption above it: below, the column runs right through where a caption would sit
+  const R = Math.min(W*.21, H*.24), C = {x: W*.75, y: Math.max(R + fs*1.7, H*.28)};
   const dJC = Math.hypot(C.x-J.x, C.y-J.y);
   const edge = {x: C.x-(C.x-J.x)/dJC*R, y: C.y-(C.y-J.y)/dJC*R};
   const link = S(mk('line', {x1: J.x, y1: J.y, x2: edge.x, y2: edge.y}, svg), `stroke:var(--k);stroke-width:${Math.max(1.5, fs*.12)}px;stroke-dasharray:${fs*.4} ${fs*.3};opacity:0`);
@@ -130,18 +163,18 @@ function draw(){
   S(mk('polyline', {points: cp2.join(' ')}, body), `fill:none;stroke:var(--c);stroke-width:${fs*.75}px;stroke-linejoin:round`);
   const zcrack = S(mk('polyline', {points: cp2.join(' ')}, body), `fill:none;stroke:var(--k);stroke-width:${fs*.3}px;stroke-linejoin:round`);
   S(mk('circle', {cx: 0, cy: 0, r: R}, zin), `fill:none;stroke:var(--k);stroke-width:${Math.max(2, fs*.24)}px`);
-  const lab = S(mk('text', {x: 0, y: R + fs*1.3, 'text-anchor': 'middle'}, zin), `fill:var(--k);font-size:${fs}px`);
+  const lab = S(mk('text', {x: 0, y: -R - fs*.55, 'text-anchor': 'middle'}, zin), `fill:var(--k);font-size:${fs}px`);
   lab.textContent = 'the weld: weaker metal';
   let tw = fs*11; try { const m = lab.getComputedTextLength(); if (m > 0) tw = m; } catch (e) {}
   const lo = tw/2 + 2 - C.x, hi = W - 2 - tw/2 - C.x;
   lab.setAttribute('x', Math.max(lo, Math.min(0, hi)));
 
-  G = {up, crack, marks, mlist, zoom, link, zcrack, J, C, u, fs};
+  G = {up, crack, marks, mlist, zoom, link, zcrack, J, C, u, fs, rot};
   mark();
   if (revealed) setEnd(); else { upT(0); zT(0); }
 }
 
-function upT(k){ const d = G.fs*.9; G.up.setAttribute('transform', `translate(${-G.u.x*d*k},${-G.u.y*d*k}) rotate(${-8*k} ${G.J.x} ${G.J.y})`); }
+function upT(k){ const d = G.fs*.9; G.up.setAttribute('transform', `translate(${-G.u.x*d*k},${-G.u.y*d*k}) rotate(${G.rot*k} ${G.J.x} ${G.J.y})`); }
 function zT(k){ const s = Math.max(k, .001); G.zoom.setAttribute('transform', `translate(${G.J.x + (G.C.x-G.J.x)*k},${G.J.y + (G.C.y-G.J.y)*k}) scale(${s})`); }
 
 function mark(){
@@ -158,17 +191,18 @@ function setEnd(){
 }
 function reveal(anim){
   if (!anim){ setEnd(); return; }
-  upT(0); zT(0); G.zoom.setAttribute('opacity', 0); G.crack.style.opacity = 0; G.link.style.opacity = 0; G.marks.setAttribute('opacity', 1);
-  const p = {a: 0, z: 0}, L = G.zcrack.getTotalLength ? G.zcrack.getTotalLength() : 300;
-  G.zcrack.style.strokeDasharray = L; G.zcrack.style.strokeDashoffset = L;
+  // in a low box the marks have no room under the flat column once the answer is in: they go at once
+  upT(0); zT(0); G.zoom.setAttribute('opacity', 0); G.crack.style.opacity = 0; G.link.style.opacity = 0; G.marks.setAttribute('opacity', G.zcrack ? 1 : 0);
+  const p = {a: 0, z: 0}, L = G.zcrack && G.zcrack.getTotalLength ? G.zcrack.getTotalLength() : 300;
+  if (G.zcrack) { G.zcrack.style.strokeDasharray = L; G.zcrack.style.strokeDashoffset = L; }
   const tl = gsap.timeline();
   tl.to(G.marks, {attr: {opacity: 0}, duration: .25})
     .to(G.crack, {opacity: 1, duration: .12, repeat: 3, yoyo: true})
     .set(G.crack, {opacity: 1})
     .to(p, {a: 1, duration: .5, ease: 'back.out(2)', onUpdate: () => upT(p.a), onStart: () => Kit.haptic('light')})
     .to(G.link, {opacity: 1, duration: .2})
-    .to(p, {z: 1, duration: .6, ease: 'power3.out', onUpdate: () => { zT(p.z); G.zoom.setAttribute('opacity', Math.min(1, p.z*1.5)); }}, '<')
-    .to(G.zcrack, {strokeDashoffset: 0, duration: .5, ease: 'power2.in'});
+    .to(p, {z: 1, duration: .6, ease: 'power3.out', onUpdate: () => { zT(p.z); G.zoom.setAttribute('opacity', Math.min(1, p.z*1.5)); }}, '<');
+  if (G.zcrack) tl.to(G.zcrack, {strokeDashoffset: 0, duration: .5, ease: 'power2.in'});
 }
 
 Kit.onShow.card = () => { draw(); };

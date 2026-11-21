@@ -44,6 +44,9 @@
 #sky .wt{fill:var(--k);stroke:var(--c);stroke-width:1.4;stroke-linejoin:round}
 #sky .wr{fill:none;stroke:var(--k)}
 #sky .ink{fill:var(--k)}
+/* On the smallest card the stars and the why use the column's full width, on its own margins, so they take
+   fewer lines and leave the scale its room below them. */
+@container (max-height:540px){#top{left:0;right:0}#why{padding:.6cqh 0 0}}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Tap the stars · the weighing">
   <div class="in">
@@ -78,7 +81,7 @@
   const S = {a: ANG[0], arr: 0, taps: 0};
   const placed = [];
   const INK = '#10100c', BLUE = '#1b2a78';
-  let W = 0, H = 0, fs = 12, P = {x: 0, y: 0}, L = 0, hang = 0, pw = 0, R = 0, E = {}, lastSign = -1, done = false, lastSize = '';
+  let W = 0, H = 0, fs = 12, P = {x: 0, y: 0}, L = 0, hang = 0, pw = 0, R = 0, E = {}, lastSign = -1, done = false, lastSize = '', side = false;
   const mk = (t, a, p) => Kit.mk(t, a, p);
   const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'text-anchor': 'middle', class: 'lb', 'font-size': fs}, a), p); e.textContent = s; return e; };
   const star4 = r => `M0,${-r} Q0,0 ${r},0 Q0,0 0,${r} Q0,0 ${-r},0 Q0,0 0,${-r}Z`;
@@ -102,6 +105,17 @@
     hang = Math.max(26, Math.min(H * .16, (by - T) * .2));
     P = {x: W / 2, y: H - 6 - (drop + hang + pw * .17 + lab)};
     R = Math.max(20, Math.min(W * .14, (P.y - T - fs - 10) / 1.4));
+    // Too little room under the stars or the why (the smallest phone) for the scale with its names under the
+    // pans: it is drawn smaller, inside that room, with each name beside its pan, so "Fair" and the beam never
+    // reach the words above.
+    side = P.y - R - fs - 10 < T;
+    if (side) {
+      L = W * .25; pw = W * .2;
+      const t = T + 4, d = L * Math.sin(14 * DEG), fixed = 8 + fs * .8 + d + pw * .17, room = H - 6 - t;
+      R = Math.max(12, Math.min(22, (room - fixed) * .4));
+      hang = Math.max(10, room - fixed - R);
+      P = {x: W / 2, y: t + fs * .8 + 8 + R};
+    }
 
     // dial: a flat half-moon behind the pivot, one mark for "Fair"
     E.rings = mk('g', {}, svg);
@@ -126,8 +140,11 @@
       mk('line', {x1: -pw / 2 - 2, x2: pw / 2 + 2, y1: 0, y2: 0, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
       const load = mk('g', {}, g);
       const ly = pw * .17 + fs * 1.25;
-      txt(g, 0, ly, k === 'L' ? 'Arabs' : 'Jews', {'font-weight': 700});
-      txt(g, 0, ly + fs * 1.4, k === 'L' ? '60% of people' : 'a minority', {'font-weight': 500});
+      if (side) txt(g, (k === 'L' ? -1 : 1) * (pw / 2 + 5), pw * .085 + fs * .35, k === 'L' ? 'Arabs' : 'Jews', {'font-weight': 700, 'text-anchor': k === 'L' ? 'end' : 'start'});
+      else {
+        txt(g, 0, ly, k === 'L' ? 'Arabs' : 'Jews', {'font-weight': 700});
+        txt(g, 0, ly + fs * 1.4, k === 'L' ? '60% of people' : 'a minority', {'font-weight': 500});
+      }
       E.side[k] = {s1, s2, g, load, fx};
     }
     // the Arab people on their pan

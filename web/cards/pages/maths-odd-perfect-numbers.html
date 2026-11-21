@@ -13,7 +13,7 @@
 .paper{fill:var(--c)}
 .lin{stroke:var(--k);fill:none;stroke-linecap:round}
 .soft{fill:color-mix(in srgb,var(--k) 10%,transparent)}
-.mut{fill:var(--muted)}
+.mut{fill:color-mix(in srgb,var(--k) 78%,var(--c))}
 .hit{fill:transparent;cursor:pointer}
 text{font-family:var(--body);font-weight:700}
 </style>
@@ -47,8 +47,9 @@ function draw() {
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, Math.min(f, W / 20, H / 21));
   const sm = Math.max(12, fs * 0.85);
-  const arm = W * 0.32, tilt = arm * Math.sin(14 * Math.PI / 180);
-  const bh = fs * 1.5, hang = bh + fs * 0.9, pw = W * 0.27;
+  let arm = W * 0.32, tilt = arm * Math.sin(14 * Math.PI / 180);
+  const bh = fs * 1.5, pw = W * 0.27;
+  let hang = bh + fs * 0.9;
   const rows = g => {
     const r = {};
     r.eq = fs * 0.8;
@@ -64,7 +65,16 @@ function draw() {
     return r;
   };
   let R = rows(0);
-  R = rows(Math.max(0, (H - R.end) / 4));
+  // Balanced, in a box too low for the whole figure (the end, on a small phone): the equation, the scale, a little
+  // shorter, and its verdict. The columns of powers give way: the words under the figure say what they showed.
+  const compact = done && R.end > H + 6;
+  if (compact) {
+    arm = W * 0.25; tilt = arm * Math.sin(14 * Math.PI / 180); hang = bh + fs * 0.6;
+    R = {eq: fs * 0.8};
+    R.piv = R.eq + fs * 0.9 + tilt; R.base = R.piv + tilt + hang + fs * 0.6; R.status = R.base + fs * 1.2;
+    const g = Math.max(0, (H - (R.status + fs * 0.6 + 2)) / 3);
+    R.piv += g; R.base += 2 * g; R.status += 3 * g;
+  } else R = rows(Math.max(0, (H - R.end) / 4));
   const cx = W / 2;
 
   // equation
@@ -87,7 +97,7 @@ function draw() {
       txt(g, x + b.w / 2, -bh / 2 - 2, b.t, sm, b.even ? 'paper' : 'ink');
       x += b.w + 4;
     });
-    txt(g, 0, fs * 1.25, label, sm, 'mut');
+    if (!compact) txt(g, 0, fs * 1.25, label, sm, 'mut');
     return g;
   };
   const bw = Math.max(sm * 1.4, Math.min(pw / 4.6, fs * 2.2));
@@ -102,9 +112,10 @@ function draw() {
   txt(svg, cx, R.status, status, fs, 'ink');
 
   // columns
-  const colW = W / 4, tw = Math.min(colW * .78, fs * 4.2);
+  // ("4 odd terms" is about 5.6 times its size wide: on a narrow card it is set a little smaller, to leave air between the columns)
+  const colW = W / 4, tw = Math.min(colW * .78, fs * 4.2), termFs = Math.max(10.5, Math.min(sm, (colW - 12) / 5.6));
   const cols = [];
-  ex.forEach((a, i) => {
+  if (!compact) ex.forEach((a, i) => {
     const x = colW * (i + .5), even = a % 2 === 1;
     const g = mk('g', {}, svg);
     mk('rect', {x: x - tw / 2, y: R.tile, width: tw, height: R.th, rx: fs * .5, class: even ? 'ink' : 'soft', style: 'stroke:var(--k);stroke-width:2'}, g);
@@ -114,7 +125,7 @@ function draw() {
     const n = a + 1, r = Math.min(fs * .32, colW / (n * 2.8)), sp = r * 2.6;
     const dots = [];
     for (let k = 0; k < n; k++) dots.push(mk('circle', {cx: x + (k - (n - 1) / 2) * sp, cy: R.dots, r, class: 'ink'}, g));
-    txt(g, x, R.terms, `${n} odd terms`, sm, 'mut');
+    txt(g, x, R.terms, `${n} odd terms`, termFs, 'mut');
     txt(g, x, R.verd, even ? 'σ EVEN' : 'σ odd', fs, 'ink');
     const hit = mk('rect', {x: colW * i, y: R.tile - 4, width: colW, height: R.verd + fs * .7 - R.tile + 4, class: 'hit', 'data-i': i}, svg);
     cols.push({g, dots, hit});
@@ -147,7 +158,7 @@ Kit.$('fig').addEventListener('click', ev => {
   ex[i] = ex[i] % 4 + 1;
   Kit.haptic('light');
   draw();
-  if (!Kit.calm) gsap.from(G.cols[i].dots, {scale: 0, transformOrigin: 'center', stagger: .05, duration: .35, ease: 'back.out(2)'});
+  if (!Kit.calm && G.cols[i]) gsap.from(G.cols[i].dots, {scale: 0, transformOrigin: 'center', stagger: .05, duration: .35, ease: 'back.out(2)'});
   tilt();
   if (evens() === 1 && !done) {
     done = true;
