@@ -99,16 +99,19 @@ function build(){
   g.gfill = mk('rect', {x: gx + 3, y: gb, width: gw - 6, height: 0, rx: (gw-6)/2}, root);
   Object.assign(g, {gt, gb, gx, gw});
   const cx = gx + gw/2;
-  [['STEAM', gt - fs*2.9], ['PRESSURE', gt - fs*1.5]].forEach(([t, y]) => {
-    const e = mk('text', {x: Math.min(cx, W - fs*3), y, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'}, root); e.textContent = t;
+  g.gLabs = [['STEAM', gt - fs*2.9], ['PRESSURE', gt - fs*1.5]].map(([t, y]) => {
+    const e = mk('text', {x: Math.min(cx, W - fs*3), y, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'}, root); e.textContent = t; return e;
   });
   const cap = mk('text', {x: 2, y: H - fs*.5, 'font-size': fs, 'font-weight': 600, style: 'fill:var(--k);opacity:.7;font-family:var(--body)'}, root);
   cap.textContent = 'Chernobyl reactor 4 · 26 April 1986';
   // explosion layers
+  // the steam cloud rises behind the lid and the gauge's words
   g.puff = mk('circle', {cx: (vx0+vx1)/2, cy: vy0, r: 0, fill: '#eef2f5', 'fill-opacity': 0}, root);
+  root.insertBefore(g.puff, g.lidOuter);
   g.iso = [];
   for (let i = 0; i < 46; i++) g.iso.push(mk('circle', {cx: (vx0+vx1)/2, cy: vy0, r: Math.max(f*.22, 3), fill: '#a9e34b', stroke: '#2b8a3e', 'stroke-width': 1, opacity: 0}, root));
-  g.isoLab = mk('text', {x: W*.6, y: gy*.1, 'text-anchor': 'middle', 'font-size': fs*1.1, 'font-weight': 800, fill: '#2b8a3e', opacity: 0, style: 'font-family:var(--body)'}, root);
+  // named in the top corner, over the cloud of isotopes and clear of everything the blast throws
+  g.isoLab = mk('text', {x: W - 3, y: fs*1.1*.95 + 2, 'text-anchor': 'end', 'font-size': fs*1.1, 'font-weight': 800, fill: '#2b8a3e', opacity: 0, style: 'font-family:var(--body)'}, root);
   g.isoLab.textContent = 'radioactive isotopes';
   g.flash = mk('rect', {x: -20, y: -20, width: W + 40, height: H + 40, fill: '#fff', opacity: 0, 'pointer-events': 'none'}, svg);
   G = g;
@@ -183,13 +186,41 @@ function explode(instant){
     gsap.fromTo(g.flash, {opacity: .85}, {opacity: 0, duration: .6});
     gsap.fromTo(g.root, {x: -6}, {x: 0, duration: .5, ease: 'elastic.out(1,.2)'});
   }
-  const lidTargetY = g.gy * .08 - g.ly;
-  gsap.to(g.lidOuter, {x: -W * .06, y: lidTargetY, rotation: -28, svgOrigin: `${g.lx + g.lw/2} ${g.ly + g.lh/2}`, duration: 1.2 * k, ease: 'power3.out'});
-  g.roof.forEach((r, i) => gsap.to(r, {x: (i - 1) * W * .12, y: -g.gy * (.12 + .05 * (i % 2)), rotation: (i - 1) * 50 + 15, svgOrigin: `${+r.getAttribute('x') + +r.getAttribute('width')/2} ${r.getAttribute('y')}`, duration: 1.1 * k, ease: 'power3.out'}));
-  gsap.fromTo(g.puff, {attr: {r: 0}, 'fill-opacity': .9}, {attr: {r: (g.vx1 - g.vx0) * .75}, 'fill-opacity': .35, duration: 1 * k, ease: 'power2.out'});
+  // Where the blast throws things: inside the drawing's own box, under its top edge, and clear of the words
+  // in it (the gauge's two labels and the isotopes' name). The lid flies up and tips over to the left, the roof
+  // breaks and lifts, the cloud stays under the top, and the lid lands in front of the isotopes it threw out.
+  const box = e => { const b = e.getBBox(); return {l: b.x - 3, r: b.x + b.width + 3, t: b.y - 3, b: b.y + b.height + 3}; };
+  const gl = g.gLabs.map(box), words = [{l: Math.min(...gl.map(b => b.l)), r: Math.max(...gl.map(b => b.r)), t: Math.min(...gl.map(b => b.t)), b: Math.max(...gl.map(b => b.b))}, box(g.isoLab)];
+  // the box of a rect turned by deg about (ox, oy), then moved by (dx, dy)
+  const turned = (x, y, w, h, ox, oy, deg, dx, dy) => { const a = deg * Math.PI / 180, c = Math.cos(a), sn = Math.sin(a);
+    const pts = [[x, y], [x + w, y], [x, y + h], [x + w, y + h]].map(([px, py]) => [ox + (px - ox) * c - (py - oy) * sn + dx, oy + (px - ox) * sn + (py - oy) * c + dy]);
+    return {l: Math.min(...pts.map(q => q[0])), r: Math.max(...pts.map(q => q[0])), t: Math.min(...pts.map(q => q[1])), b: Math.max(...pts.map(q => q[1]))}; };
+  // nudged into the box, then down from under any words it would land on
+  const land = (rect, ox, oy, deg, dx, dy) => {
+    for (let k2 = 0; k2 < 6; k2++) {
+      const b = turned(...rect, ox, oy, deg, dx, dy);
+      if (b.l < 2) dx += 2 - b.l; else if (b.r > W - 2) dx -= b.r - (W - 2);
+      if (b.t < 3) { dy += 3 - b.t; continue; }
+      const hit = words.find(w => b.l < w.r && b.r > w.l && b.t < w.b && b.b > w.t);
+      if (!hit) break;
+      dy += hit.b - b.t;
+    }
+    return [dx, dy];
+  };
+  const lcx = g.lx + g.lw/2, lcy = g.ly + g.lh/2;
+  const [lidX, lidY] = land([g.lx, g.ly, g.lw, g.lh], lcx, lcy, 20, -W * .06, -lcy);
+  g.root.appendChild(g.lidOuter); g.root.appendChild(g.isoLab);
+  gsap.to(g.lidOuter, {x: lidX, y: lidY, rotation: 20, svgOrigin: `${lcx} ${lcy}`, duration: 1.2 * k, ease: 'power3.out'});
+  g.roof.forEach((r, i) => {
+    const x = +r.getAttribute('x'), y = +r.getAttribute('y'), w = +r.getAttribute('width'), h = +r.getAttribute('height');
+    const deg = [-28, 14, 24][i], [dx, dy] = land([x, y, w, h], x + w/2, y, deg, [-.05, 0, -.03][i] * W, -g.gy * [.1, .15, .04][i]);
+    gsap.to(r, {x: dx, y: dy, rotation: deg, svgOrigin: `${x + w/2} ${y}`, duration: 1.1 * k, ease: 'power3.out'});
+  });
+  gsap.fromTo(g.puff, {attr: {r: 0}, 'fill-opacity': .9}, {attr: {r: Math.min((g.vx1 - g.vx0) * .75, g.vy0 - 3)}, 'fill-opacity': .35, duration: 1 * k, ease: 'power2.out'});
+  const isoR = words[1], right = words[0].l - 6;
   g.iso.forEach(p => {
-    const tx = cx + (Kit.rnd() - .3) * W * .65, ty = g.gy * (.18 + Kit.rnd() * .24);
-    gsap.fromTo(p, {attr: {cx, cy: g.vy0}, opacity: 1}, {attr: {cx: clamp(tx, 8, W - 8), cy: ty}, opacity: .85, duration: (1 + Kit.rnd() * .8) * k, ease: 'power2.out', delay: instant ? 0 : Kit.rnd() * .2});
+    const tx = clamp(cx + (Kit.rnd() - .3) * W * .65, 8, right), ty = Math.max(g.gy * (.18 + Kit.rnd() * .24), tx > isoR.l - 6 ? isoR.b + 6 : 0);
+    gsap.fromTo(p, {attr: {cx, cy: g.vy0}, opacity: 1}, {attr: {cx: tx, cy: ty}, opacity: .85, duration: (1 + Kit.rnd() * .8) * k, ease: 'power2.out', delay: instant ? 0 : Kit.rnd() * .2});
   });
   gsap.to(g.isoLab, {opacity: 1, duration: .5 * k, delay: instant ? 0 : 1});
 }
