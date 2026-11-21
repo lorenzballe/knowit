@@ -1,0 +1,51 @@
+{
+  "id": "life-book-high-output-management-4",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.trust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A star salesperson is promoted to run the sales team. How closely should her boss supervise her at first?",
+  "options": [
+    "Loosely: she has proved herself",
+    "Closely, as with someone new",
+    "Not at all, to show trust"
+  ],
+  "correct": 1,
+  "answer": "Closely, as with someone new. Grove set the amount of guidance by task-relevant maturity: how ready someone is for this particular task, not how able they are in general. Selling well says little about running people, so at first she needs the what, when and how spelled out; the reins loosen as she learns.",
+  "move": "Hand out freedom by experience with this task, not by overall talent.",
+  "trap": "‘Loosely: she has proved herself’: past success feels like readiness for anything.",
+  "simply": "A great swimmer still needs a teacher the first time she tries to ski. Being good at one thing doesn’t mean knowing the next. How much help you need depends on what is new to you.",
+  "why": "Whenever someone capable meets something new, a new manager, a teenager learning to drive, a colleague on an unfamiliar project, leaving them alone can look like trust. Often it is neglect, and the drop in results then gets blamed on them.",
+  "sure": 0.35,
+  "book": {
+    "id": "high-output-management",
+    "title": "High Output Management",
+    "author": "Andrew S. Grove",
+    "year": 1983,
+    "part": 4,
+    "isbn": "9780679762881",
+    "badge": "By the Intel CEO named Time’s Man of the Year in 1997"
+  },
+  "keywords": [
+    "task-relevant maturity",
+    "andy grove",
+    "delegation",
+    "promotion",
+    "supervision"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Andrew S. Grove, High Output Management, 1983",
+  "source_kind": "book",
+  "reference": "Andrew S. Grove, High Output Management (Random House, 1983; Vintage, 1995), ch. 12, Task-Relevant Maturity",
+  "written": "2026-11-20"
+}

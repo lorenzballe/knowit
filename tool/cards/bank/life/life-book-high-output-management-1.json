@@ -1,0 +1,43 @@
+{
+  "id": "life-book-high-output-management-1",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.second_order_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Andy Grove, who ran Intel, insist on measuring work in pairs?",
+  "answer": "Because a number pulls people towards it, the way a cyclist steers where they look, and something else gives: push stock down too far and shortages appear. So Grove paired a measure with its side effect: payments processed with errors found, floor area cleaned with a rating of how clean.",
+  "move": "Next to any number you chase, track what chasing it could break.",
+  "simply": "If your teacher only counted how many pages you wrote, you’d write big and messy. If she also checked how neat they were, you’d keep both in mind. Two numbers keep each other honest.",
+  "why": "Targets are everywhere: sales calls, steps a day, exam grades, waiting times. Pairing each with its likely casualty, such as calls with complaints or speed with mistakes, catches the damage early, before the number everyone celebrates starts hiding a problem.",
+  "book": {
+    "id": "high-output-management",
+    "title": "High Output Management",
+    "author": "Andrew S. Grove",
+    "year": 1983,
+    "part": 1,
+    "isbn": "9780679762881",
+    "badge": "By the Intel CEO named Time’s Man of the Year in 1997"
+  },
+  "keywords": [
+    "andy grove",
+    "indicators",
+    "targets",
+    "side effects",
+    "measurement"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Andrew S. Grove, High Output Management, 1983",
+  "source_kind": "book",
+  "reference": "Andrew S. Grove, High Output Management (Random House, 1983; Vintage, 1995), ch. 2, Managing the Breakfast Factory",
+  "written": "2026-11-20"
+}

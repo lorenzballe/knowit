@@ -55,8 +55,11 @@ function draw() {
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, f * .85);
-  const P = (x, y) => [x * W, y * H];
-  const peak = P(.3, .24), C = P(.8, .62), seaY = .62 * H, baseY = .93 * H;
+  // the two readings share a band along the top; the volcano stands under it, never behind the words
+  const band = fs * 2.95, top = band + fs * 1.3, baseY = .93 * H;
+  const Y = y => top + (y - .24) / .69 * (baseY - top);
+  const P = (x, y) => [x * W, Y(y)];
+  const peak = P(.3, .24), C = P(.8, .62), seaY = C[1];
   const s = t => [peak[0] + t * (C[0] - peak[0]), peak[1] + t * (C[1] - peak[1])];
   const tops = [.24, .5, .75].map(s);
   const bots = tops.map(p => [p[0] + .08 * W, baseY]);
@@ -64,33 +67,40 @@ function draw() {
   const scene = Kit.mk('g', {}, svg);
   Kit.mk('rect', {class: 'sea', x: .44 * W, y: seaY, width: .56 * W, height: H - seaY}, scene);
   const wave = Kit.mk('path', {class: 'wave', d: `M0,0 Q${.09 * W},${-.09 * H} ${.18 * W},0 Z`, transform: `translate(${C[0]},${seaY})`, opacity: 0}, scene);
-  Kit.mk('polygon', {class: 'rock', points: pts([[0, baseY], [0, .6 * H], P(.27, .25), P(.33, .25), tops[0], bots[0]])}, scene);
+  Kit.mk('polygon', {class: 'rock', points: pts([[0, baseY], P(0, .6), P(.27, .25), P(.33, .25), tops[0], bots[0]])}, scene);
   Kit.mk('ellipse', {class: 'lava', cx: peak[0], cy: peak[1] + 1, rx: .03 * W, ry: .012 * H}, scene);
-  const slices = [];
+  const slices = [], polys = [];
   for (let j = 0; j < 3; j++) {
+    // the flank's foot slopes on under the sea down to the sea floor inside the frame: a collapse has room to slide out
     const poly = j < 2
       ? [tops[j], tops[j + 1], bots[j + 1], bots[j]]
-      : [tops[2], C, [W, .84 * H], [W, baseY], bots[2]];
+      : [tops[2], C, [.94 * W, baseY], bots[2]];
+    polys.push(poly);
     slices.push(Kit.mk('polygon', {class: 'flank', points: pts(poly)}, scene));
   }
   Kit.mk('rect', {class: 'seaTop', x: C[0], y: seaY, width: W - C[0], height: H - seaY}, scene);
-  Kit.mk('rect', {class: 'base', x: 0, y: baseY, width: W, height: H - baseY}, scene);
+  // the ground runs on past the frame's foot, so the slid slices never show a sliver under it
+  Kit.mk('rect', {class: 'base', x: 0, y: baseY, width: W, height: H - baseY + 2}, scene);
   const faults = tops.map((p, i) => Kit.mk('line', {class: 'fault', x1: p[0] - (bots[i][0] - p[0]) * .06, y1: p[1] - (bots[i][1] - p[1]) * .06, x2: bots[i][0], y2: bots[i][1]}, scene));
-  // labels
-  const num = Kit.mk('text', {class: 'num', x: .04 * W, y: fs * 2.4, 'font-size': fs * 2.6}, svg);
+  // labels: the count and its words on the left, the grip and its bar on the right
+  const num = Kit.mk('text', {class: 'num', x: .02 * W, y: fs * 2.45, 'font-size': fs * 2.6}, svg);
+  let nw = 0;
+  for (const d of '0123') { num.textContent = d; nw = Math.max(nw, num.getComputedTextLength ? num.getComputedTextLength() : fs * 1.6); }
   num.textContent = '0';
-  const l1 = Kit.mk('text', {class: 'lbl', x: .04 * W, y: fs * 2.4 + fs * 2.2, 'font-size': fs}, svg);
+  const lx = .02 * W + nw + fs * .45;
+  const l1 = Kit.mk('text', {class: 'lbl', x: lx, y: fs * 1.2, 'font-size': fs}, svg);
   l1.textContent = 'faults slipping';
-  const l2 = Kit.mk('text', {class: 'lbl', x: .04 * W, y: fs * 2.4 + fs * 3.6, 'font-size': fs}, svg);
+  const l2 = Kit.mk('text', {class: 'lbl', x: lx, y: fs * 2.55, 'font-size': fs}, svg);
   l2.textContent = 'at the same instant';
-  const bw = .36 * W, bx = W * .96 - bw, by = fs * 2.1;
-  const gl = Kit.mk('text', {class: 'lbl', x: W * .96, y: fs * 1.3, 'font-size': fs, 'text-anchor': 'end'}, svg);
+  const reach = lx + Math.max(...[l1, l2].map(t => t.getComputedTextLength ? t.getComputedTextLength() : fs * 9));
+  const gl = Kit.mk('text', {class: 'lbl', x: W * .98, y: fs * 1.2, 'font-size': fs, 'text-anchor': 'end'}, svg);
   gl.textContent = 'Grip on the flank';
-  Kit.mk('rect', {class: 'barbg', x: bx, y: by, width: bw, height: fs * .9, rx: fs * .45}, svg);
-  const bar = Kit.mk('rect', {class: 'bar', x: bx, y: by, width: bw, height: fs * .9, rx: fs * .45}, svg);
+  const bw = Math.max(fs * 3, Math.min(.36 * W, W * .98 - reach - fs * 1.2)), bx = W * .98 - bw, by = fs * 1.95;
+  Kit.mk('rect', {class: 'barbg', x: bx, y: by, width: bw, height: fs * .75, rx: fs * .375}, svg);
+  const bar = Kit.mk('rect', {class: 'bar', x: bx, y: by, width: bw, height: fs * .75, rx: fs * .375}, svg);
   const u = [bots[1][0] - tops[1][0], bots[1][1] - tops[1][1]], L = Math.hypot(...u);
   const d = .045 * H;
-  G = {W, H, scene, slices, faults, num, bar, bw, wave, dx: d * u[0] / L, dy: d * u[1] / L};
+  G = {W, H, scene, slices, polys, faults, num, bar, bw, wave, dx: d * u[0] / L, dy: d * u[1] / L};
   pose(n, false);
 }
 
@@ -98,7 +108,15 @@ function offsets(k) {
   const S = SETS[k];
   return [0, 1, 2].map(j => { const c = S.filter(i => i <= j).length; return {x: c * G.dx, y: c * G.dy}; });
 }
-function collapsed(j) { return {x: (.13 + .04 * j) * G.W, y: (.1 + .035 * j) * G.H, rotation: 5 + 4 * j}; }
+// Collapsed: each slice slides seaward and tips, the lower ones farther, and none leaves the frame.
+function collapsed(j) {
+  const want = {x: (.04 + .035 * j) * G.W, y: (.06 + .03 * j) * G.H, rotation: 4 + 4 * j};
+  const poly = G.polys[j], xs = poly.map(p => p[0]), ys = poly.map(p => p[1]);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2, a = want.rotation * Math.PI / 180;
+  const right = Math.max(...poly.map(([x, y]) => cx + (x - cx) * Math.cos(a) - (y - cy) * Math.sin(a)));
+  want.x = Math.max(0, Math.min(want.x, G.W - 2 - right));
+  return want;
+}
 function setStatic(k) {
   G.faults.forEach((fl, i) => fl.classList.toggle('on', SETS[k].includes(i)));
   G.num.textContent = k;
@@ -149,6 +167,9 @@ Kit.play.card = async () => {
   }
   await new Promise(r => setTimeout(r, 300));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

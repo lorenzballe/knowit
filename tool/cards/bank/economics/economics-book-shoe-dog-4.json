@@ -1,0 +1,43 @@
+{
+  "id": "economics-book-shoe-dog-4",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.loyalty_traps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1971 Phil Knight slipped a folder from the briefcase of an executive at his Japanese supplier. What was in it?",
+  "answer": "A list of eighteen other American shoe distributors, with appointments to see half of them. For seven years Knight’s Blue Ribbon had built Onitsuka’s Tiger shoes in America, owning neither factories nor brand, so it could be dropped at will. He lined up other factories and in 1972 launched his own brand: Nike.",
+  "move": "Depend on one supplier and your future is theirs to decide.",
+  "simply": "If you sell another child’s homemade biscuits and get famous for it, that child can pick a new seller tomorrow. The only biscuits nobody can take away are the ones you bake yourself.",
+  "why": "Anyone whose work runs through a single platform, client or supplier, a seller on one marketplace or a freelancer with one big customer, holds the same weak hand. Building something of your own alongside is the insurance.",
+  "book": {
+    "id": "shoe-dog",
+    "title": "Shoe Dog",
+    "author": "Phil Knight",
+    "year": 2016,
+    "part": 4,
+    "isbn": "9781501135910",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "onitsuka",
+    "blue ribbon sports",
+    "supplier",
+    "nike brand",
+    "dependence"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Phil Knight, Shoe Dog, 2016",
+  "source_kind": "book",
+  "reference": "Phil Knight, Shoe Dog: A Memoir by the Creator of Nike (Scribner, 2016), chapter ‘1971’",
+  "written": "2026-11-20"
+}

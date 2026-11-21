@@ -1,0 +1,51 @@
+{
+  "id": "economics-book-shoe-dog-5",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.tariffs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A US rule taxed Nike’s imports on the price of a similar American-made shoe, if one existed, and Nike’s duty soared. What did Nike do?",
+  "options": [
+    "Moved all its production to America",
+    "Made a cheap similar shoe in Maine",
+    "Raised its own prices to match"
+  ],
+  "correct": 1,
+  "answer": "It made a cheap similar shoe in Maine. Nike launched One Line, a plain nylon running shoe built at its Saco factory and priced just above cost, so customs had a new, low American price to measure its imports against. Knight called the move ‘American Selling Price ourselves’; a settlement with customs followed in 1980.",
+  "move": "When a rule is used against you, check whether it cuts both ways.",
+  "trap": "‘Moved all its production to America’: dodging the duty seems the obvious fix.",
+  "simply": "If your bill is set by the price of a sandwich at the shop next door, and that shop keeps raising it, open your own stall and sell a cheap one.",
+  "why": "Rules written for one purpose can often be met on their own terms. Before fighting a rule head-on, read exactly what it measures; sometimes changing the thing it measures is quicker than changing the rule.",
+  "sure": 0.35,
+  "book": {
+    "id": "shoe-dog",
+    "title": "Shoe Dog",
+    "author": "Phil Knight",
+    "year": 2016,
+    "part": 5,
+    "isbn": "9781501135910",
+    "badge": "A New York Times bestseller"
+  },
+  "keywords": [
+    "american selling price",
+    "import duty",
+    "tariffs",
+    "one line",
+    "nike"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Phil Knight, Shoe Dog, 2016",
+  "source_kind": "book",
+  "reference": "Phil Knight, Shoe Dog: A Memoir by the Creator of Nike (Scribner, 2016), chapters ‘1977’ and ‘1980’",
+  "written": "2026-11-20"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "life-book-high-output-management-2",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.priorities",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A manager spends the week in meetings, approving plans and training two hires. What did Intel’s Andy Grove say was her output?",
+  "options": [
+    "The decisions and plans she made",
+    "What the teams she influences produce",
+    "How well she did her own tasks"
+  ],
+  "correct": 1,
+  "answer": "What the teams she influences produce: her own group’s output plus that of neighbouring groups she sways. When Grove asked middle managers, they listed judgements, plans and people trained; he called those activities, not output. So her hour counts by what it changes, like a short, well-aimed talk that shapes weeks of someone’s work.",
+  "move": "Judge your work by what changes around you, not by how busy you were.",
+  "trap": "‘The decisions and plans she made’: activity feels like output.",
+  "simply": "A football coach never scores a goal. You can still tell a good coach: the team plays better. Managers are the same: you judge them by how their team does, not by how busy they look.",
+  "why": "Busy days feel productive, yet a day of meetings and emails can change nothing. Asking what your work changed for the people around you, a teammate unblocked, a mistake caught early, shows which hours mattered.",
+  "sure": 0.35,
+  "book": {
+    "id": "high-output-management",
+    "title": "High Output Management",
+    "author": "Andrew S. Grove",
+    "year": 1983,
+    "part": 2,
+    "isbn": "9780679762881",
+    "badge": "By the Intel CEO named Time’s Man of the Year in 1997"
+  },
+  "keywords": [
+    "andy grove",
+    "managers",
+    "output",
+    "leverage",
+    "busyness"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Andrew S. Grove, High Output Management, 1983",
+  "source_kind": "book",
+  "reference": "Andrew S. Grove, High Output Management (Random House, 1983; Vintage, 1995), ch. 3, Managerial Leverage",
+  "written": "2026-11-20"
+}

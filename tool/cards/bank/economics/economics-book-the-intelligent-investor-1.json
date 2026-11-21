@@ -1,0 +1,50 @@
+{
+  "id": "economics-book-the-intelligent-investor-1",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.experts_forecasts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1970 traffic on US airlines hit a new high. How did the year turn out for their shareholders?",
+  "options": [
+    "Record profits",
+    "A small profit",
+    "A loss"
+  ],
+  "correct": 2,
+  "answer": "A loss. Graham tells it in his introduction: anyone could forecast that air travel would boom, and investment funds favoured airline shares. But technical troubles and too many seats wrecked the profits, and the shares fell harder than the market. His moral: a business that obviously grows does not obviously reward its investors.",
+  "move": "Ask who keeps the profit from a boom, not whether the boom will come.",
+  "trap": "‘Record profits’: more traffic seems bound to mean more money.",
+  "simply": "Imagine everyone expects ice cream to sell like mad this summer, so lots of new stands open. The town eats more ice cream than ever, but with so many stands, each sells too little to pay its way.",
+  "why": "It changes how you read any hot industry: growth everyone can see is usually already in the share price, and new rivals and extra capacity can eat the profits it promised.",
+  "sure": 0.35,
+  "book": {
+    "id": "the-intelligent-investor",
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "year": 1949,
+    "part": 1,
+    "isbn": "9780063423527",
+    "badge": "Millions of copies sold in 36 languages"
+  },
+  "keywords": [
+    "airlines",
+    "growth stocks",
+    "investment funds",
+    "benjamin graham"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Benjamin Graham, The Intelligent Investor, 1949",
+  "source_kind": "book",
+  "reference": "Benjamin Graham, The Intelligent Investor (Harper & Brothers, 1949; Harper Business, 2024), Introduction",
+  "written": "2026-11-20"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "economics-book-business-adventures-4",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.experts_forecasts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "In the mid-1950s Americans made about 20 million copies a year. By 1966, with Xerox machines in offices, roughly how many?",
+  "options": [
+    "About 200 million",
+    "About 2 billion",
+    "About 14 billion"
+  ],
+  "correct": 2,
+  "answer": "About 14 billion, by the estimates Brooks reports: 700 times as many. Before Xerox, copies meant carbon paper or fussy machines that made damp copies on special paper. Xerox’s dry copies on plain paper turned the urge into a mania. From 1939 to 1944 more than twenty companies had turned the inventor, Chester Carlson, down.",
+  "move": "Demand for a hard thing says little about demand once it is easy.",
+  "trap": "‘About 200 million’: a tenfold boom already feels enormous.",
+  "simply": "When notes had to be copied out by hand, people copied a page or two. Give everyone a copier and they copy everything, even things nobody would have bothered with before.",
+  "why": "It is a warning for anyone sizing a market from today’s habits: making something cheap and effortless can create demand that no survey of current users would show.",
+  "sure": 0.35,
+  "book": {
+    "id": "business-adventures",
+    "title": "Business Adventures",
+    "author": "John Brooks",
+    "year": 1969,
+    "part": 4,
+    "isbn": "9781497644892",
+    "badge": "A New York Times bestseller 45 years after it came out"
+  },
+  "keywords": [
+    "xerox",
+    "photocopier",
+    "chester carlson",
+    "demand"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Brooks, Business Adventures, 1969",
+  "source_kind": "book",
+  "reference": "John Brooks, Business Adventures (Weybright and Talley, 1969; Open Road Media, 2014), ch. 5, Xerox Xerox Xerox Xerox",
+  "written": "2026-11-20"
+}

@@ -73,25 +73,32 @@
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     fs = Math.max(12, Math.min(16, H * .042, W * .042));
 
-    // tall layout: plate hangs above, scenario rows stacked under; compact: plate between the signs, rows on one line each
+    // tall layout: plate hangs above, scenario rows stacked under; compact: plate over the gap between the signs,
+    // rows stacked too when the signs keep their size, else on one line each
     const needT = fs * 8.7;
     let plateH = fs * 2, A = Math.max(fs * 1.6, Math.min(fs * 3, H * .07));
     let y0 = fs * 1.1, pivot = y0 + plateH, top = pivot + A + fs;
     let s = Math.min(W * .38, H - top - needT);
     const tall = s >= Math.max(64, W * .2);
-    let cx, ty, labelY, row1, row2, cap1, cap2;
+    let cx, ty, labelY, row1, row2, cap1, cap2, stacked = false;
     if (tall) {
       const off = Math.max(0, (H - (top + s + needT)) / 2) * .7;
       y0 += off; pivot += off; top += off;
       labelY = top + s + fs * 1.6; cap1 = labelY + fs * 1.9; row1 = cap1 + fs * 1.4; cap2 = row1 + fs * 1.7; row2 = cap2 + fs * 1.4;
       cx = [W * .26, W * .74]; ty = top + s * .08;
     } else {
-      plateH = fs * 1.7; A = fs * 1.5; top = fs * .4;
-      s = Math.max(30, Math.min(W * .3, H - top - fs * 4.75));
-      top += Math.max(0, (H - (top + s + fs * 4.75)) / 2) * .8;
+      // the plate hangs over the two signs, never on them; its arrow swings in the gap between them
+      plateH = fs * 1.7; A = fs * 1.5; y0 = fs * .4; pivot = y0 + plateH; top = pivot + fs * .35;
+      stacked = Math.min(W * .3, H - top - fs * 7.7) >= Math.max(70, W * .24);
+      const need = stacked ? fs * 7.7 : fs * 4.75;
+      s = Math.max(30, Math.min(W * .3, H - top - need));
+      const off = Math.max(0, (H - (top + s + need)) / 2) * .8;
+      y0 += off; pivot += off; top += off;
       cx = [W * .21, W * .79];
-      y0 = top + s * .02; pivot = y0 + plateH; ty = top + s * .55;
-      labelY = top + s + fs * 1.25; row1 = labelY + fs * 1.6; row2 = row1 + fs * 1.45; cap1 = row1; cap2 = row2;
+      ty = top + s * .55;
+      labelY = top + s + fs * 1.25;
+      if (stacked) { cap1 = labelY + fs * 1.55; row1 = cap1 + fs * 1.45; cap2 = row1 + fs * 1.6; row2 = cap2 + fs * 1.45; }
+      else { row1 = labelY + fs * 1.6; row2 = row1 + fs * 1.45; cap1 = row1; cap2 = row2; }
     }
     G = {cx, top, s, pivot, A, y0, ty, tall};
     const k = s / 100, w = Math.max(2.2, s * .03);
@@ -116,7 +123,8 @@
     const pw = Math.min(W - 4, tw(pt) + fs * 1.6), pcy = y0 + plateH / 2;
     Kit.mk('ellipse', {cx: W / 2, cy: pcy, rx: Math.min(pw * .75, W / 2 - 1), ry: Math.max(2, Math.min(plateH * 1.4, pcy - 1, H - pcy - 1)), fill: 'url(#sA)'}, plate);
     plate.appendChild(pt);
-    [-1, 1].forEach(sg => Kit.mk('line', {x1: W / 2 + sg * pw * .38, x2: W / 2 + sg * pw * .42, y1: 0, y2: y0, stroke: '#a06c00', 'stroke-width': 1.4, 'stroke-dasharray': '3 2'}, svg));
+    // its two chains, when there is room above it to show them (a stub of chain reads as a stray mark)
+    if (y0 >= fs * .8) [-1, 1].forEach(sg => Kit.mk('line', {x1: W / 2 + sg * pw * .38, x2: W / 2 + sg * pw * .42, y1: 0, y2: y0, stroke: '#a06c00', 'stroke-width': 1.4, 'stroke-dasharray': '3 2'}, svg));
     Kit.mk('rect', {x: W / 2 - pw / 2, y: y0, width: pw, height: plateH, rx: fs * .5, fill: 'none', stroke: C.amber, 'stroke-width': 1.6, filter: 'url(#glow)'}, plate);
     // little screws on the plate
     [-1, 1].forEach(sg => Kit.mk('circle', {cx: W / 2 + sg * (pw / 2 - fs * .45), cy: pcy, r: 1.4, fill: '#a06c00'}, plate));
@@ -157,15 +165,15 @@
     const capA = {fill: C.cap, style: `font:600 12px var(--mono);letter-spacing:.08em`};
     if (tall) capA.style = `font:600 ${Math.max(12, fs * .9)}px var(--mono);letter-spacing:.08em`;
     const valA = col => ({fill: col, filter: 'url(#glow)', style: `font:800 ${fs}px var(--mono);letter-spacing:.06em`});
-    el.cap1 = txt(svg, W / 2, cap1, tall ? 'IF OTHERS GO TO WAR' : 'OTHERS AT WAR', capA);
-    el.cap2 = txt(svg, W / 2, cap2, tall ? 'IF SOMEONE INVADES' : 'IF INVADED', capA);
+    el.cap1 = txt(svg, W / 2, cap1, tall || stacked ? 'IF OTHERS GO TO WAR' : 'OTHERS AT WAR', capA);
+    el.cap2 = txt(svg, W / 2, cap2, tall || stacked ? 'IF SOMEONE INVADES' : 'IF INVADED', capA);
     const vals = [['STAY OUT', 'FIGHT BACK'], ['STAY OUT', 'NEVER FIGHT']], ys = [row1, row2];
     el.v = [[], []]; el.ph = [];
     [0, 1].forEach(i => [0, 1].forEach(r => {
       el.ph.push(txt(svg, cx[i], ys[r], '· · ·', {fill: C.unlit, style: `font:800 ${fs}px var(--mono);letter-spacing:.2em`}));
       el.v[i][r] = txt(svg, cx[i], ys[r], vals[i][r], valA(i ? C.ice : C.red));
     }));
-    if (!tall) {   // keep each row's three words apart
+    if (!tall && !stacked) {   // keep each row's three words apart
       [0, 1].forEach(r => {
         const cw = tw(r ? el.cap2 : el.cap1) / 2 + fs * .5;
         const L = el.v[0][r], R = el.v[1][r];
@@ -179,10 +187,10 @@
     // the invader and the sparks it throws off the shield
     const ix = cx[0] - s * .4, iy = top + s * .42, tx = Math.max(3, ix - fs * 3.2);
     G.ix = ix; G.iy = iy;
-    el.inv = Kit.mk('g', {opacity: 0, filter: 'url(#glow)'}, svg);
+    el.inv = Kit.mk('g', {opacity: 0, visibility: 'hidden', filter: 'url(#glow)'}, svg);
     const hd = Math.min(fs * .8, (ix - tx) * .4);
     el.invP = Kit.mk('path', {d: `M${tx},${iy} L${ix - fs * .3},${iy} M${ix - fs * .3 - hd},${iy - hd * .8} L${ix - fs * .3},${iy} L${ix - fs * .3 - hd},${iy + hd * .8}`, fill: 'none', stroke: C.violet, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, el.inv);
-    el.sparks = Kit.mk('g', {opacity: 0}, svg);
+    el.sparks = Kit.mk('g', {opacity: 0, visibility: 'hidden'}, svg);
     const maxR = Math.max(6, (ix - 3) / 1.5);
     for (let j = 0; j < 11; j++) {
       const a = (110 + j * 14) * Math.PI / 180, r2 = Math.min(fs * (1.1 + (j % 3) * .35), maxR, (iy - 3) / 1.5), r1 = Math.min(fs * .5, r2 * .45);
@@ -247,14 +255,14 @@
       .to(ph1, {opacity: 0, duration: .25}, .5)
       .fromTo(rows1, {opacity: 0}, {opacity: 1, duration: .8, ease: 'flick'}, .5)
       .to(el.cap2, {opacity: 1, duration: .6, ease: 'flick'}, 1.3)
-      .set(el.inv, {opacity: 1}, 1.55)
+      .set(el.inv, {autoAlpha: 1}, 1.55)
       .fromTo(el.invP, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .45, ease: 'power3.in'}, 1.55)
       .add(() => Kit.haptic('success'), 2)
       .fromTo(el.tube[0], {scale: 1}, {scale: 1.1, duration: .12, yoyo: true, repeat: 1, transformOrigin: '50% 50%', ease: 'power2.out'}, 2)
       .fromTo(el.spill[0], {opacity: .8}, {opacity: 1, duration: .12, yoyo: true, repeat: 1}, 2)
-      .fromTo(el.sparks, {opacity: 1, scale: .3}, {opacity: 0, scale: 1.5, svgOrigin: `${G.ix} ${G.iy}`, duration: .7, ease: 'expo.out'}, 2)
+      .fromTo(el.sparks, {autoAlpha: 1, scale: .3, svgOrigin: `${G.ix} ${G.iy}`}, {autoAlpha: 0, scale: 1.5, svgOrigin: `${G.ix} ${G.iy}`, duration: .7, ease: 'expo.out'}, 2)
       .to(el.invP, {drawSVG: '0% 0%', duration: .5, ease: 'power3.out'}, 2.02)
-      .to(el.inv, {opacity: 0, duration: .5, ease: 'power2.out'}, 2.1)
+      .to(el.inv, {autoAlpha: 0, duration: .5, ease: 'power2.out'}, 2.1)
       .to(ph2, {opacity: 0, duration: .25}, 2.05)
       .fromTo(el.v[0][1], {opacity: 0}, {opacity: 1, duration: .6, ease: 'flick'}, 2.05)
       .fromTo(el.v[1][1], {opacity: 0}, {opacity: 1, duration: .6, ease: 'flick'}, 2.25)
@@ -294,6 +302,9 @@
     await wait(Kit.calm ? 400 : 4200);
   };
 })();
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('neon'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

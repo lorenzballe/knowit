@@ -51,8 +51,19 @@ function update(){
   const r = rect(S.lat, G.lonS);
   shape.setAttribute('x', r.x); shape.setAttribute('y', r.y);
   shape.setAttribute('width', r.w); shape.setAttribute('height', r.h);
-  label.setAttribute('x', r.x + r.w/2); label.setAttribute('y', r.y + r.h/2);
-  label.style.opacity = r.h > G.f*1.1 ? 1 : 0;
+  // its name inside it when it fits, else beside it in ink, so the reader always knows what to drag
+  const fs = G.lf; label.setAttribute('font-size', fs);
+  const lw = label.getComputedTextLength ? label.getComputedTextLength() : 0, fit = lw ? Math.min(fs, fs * (r.w - 4) / lw) : fs;
+  if (r.h > fit * 1.15 && fit >= 9.5) {
+    label.setAttribute('font-size', fit);
+    label.setAttribute('text-anchor', 'middle'); label.setAttribute('fill', 'var(--c)');
+    label.setAttribute('x', r.x + r.w/2);
+  } else {
+    const right = r.x + r.w + fs * .35 + lw <= G.W - 2;
+    label.setAttribute('text-anchor', right ? 'start' : 'end'); label.setAttribute('fill', 'var(--k)');
+    label.setAttribute('x', right ? r.x + r.w + fs * .35 : r.x - fs * .35);
+  }
+  label.setAttribute('y', r.y + r.h/2);
   const factor = (r.w*r.h)/(G.g.w*G.g.h);
   Kit.$('read').innerHTML = `Drawn <b>×${factor < 10 ? factor.toFixed(1) : Math.round(factor)}</b> its equator size`;
   if (!S.done && S.lat >= 68) finish();
@@ -91,7 +102,7 @@ Kit.onShow.card = () => {
     Kit.mk('line', {x1:padL, x2:W, y1:y, y2:y, stroke:ink, 'stroke-opacity': a === 0 ? .7 : .35, 'stroke-width': a === 0 ? 2 : 1}, svg);
     if (a % 20 === 0){
       const t = Kit.mk('text', {x: padL - f*.4, y: y, 'text-anchor':'end', 'dominant-baseline':'middle',
-        fill: ink, 'font-size': f*.9, 'font-family':'var(--mono)', 'font-weight':700}, svg);
+        fill: ink, 'font-size': Math.max(10, f*.9), 'font-family':'var(--mono)', 'font-weight':700}, svg);
       t.textContent = a + '°';
     }
   }
@@ -100,13 +111,13 @@ Kit.onShow.card = () => {
   ghost = Kit.mk('rect', {x:G.g.x, y:G.g.y, width:G.g.w, height:G.g.h, fill:'none', stroke:ink,
     'stroke-width':2, 'stroke-dasharray':'4 3', rx:2}, svg);
   const gt = Kit.mk('text', {x:G.g.x + G.g.w/2, y:G.g.y - f*.5, 'text-anchor':'middle', fill:ink,
-    'font-size':f*.85, 'font-family':'var(--body)', 'font-weight':700}, svg);
+    'font-size':Math.max(10, f*.85), 'font-family':'var(--body)', 'font-weight':700}, svg);
   gt.textContent = 'same land at equator';
   if (G.g.x + G.g.w/2 - gt.getComputedTextLength()/2 < padL) gt.setAttribute('x', padL + gt.getComputedTextLength()/2 + 2);
   // the draggable state
   shape = Kit.mk('rect', {fill:ink, rx:3, stroke:ink, 'stroke-width':2}, svg);
   label = Kit.mk('text', {'text-anchor':'middle', 'dominant-baseline':'middle', fill:'var(--c)',
-    'font-size':f*.95, 'font-family':'var(--display)', 'font-weight':700, 'pointer-events':'none'}, svg);
+    'font-size':(G.lf = Math.max(10.5, f*.95)), 'font-family':'var(--display)', 'font-weight':700, 'pointer-events':'none'}, svg);
   label.textContent = 'Wyoming';
   update();
 };
@@ -143,6 +154,9 @@ Kit.play.card = async () => {
   if (!S.done){ S.lat = 76; update(); }
   await new Promise(r => setTimeout(r, 700));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('map'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

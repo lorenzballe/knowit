@@ -1,0 +1,43 @@
+{
+  "id": "technology-book-zero-to-one-4",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.who_profits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Founders Fund, Peter Thiel’s venture firm, only back start-ups that could each return the whole fund?",
+  "answer": "Because venture returns follow a power law: a few winners outweigh everything else put together. In Founders Fund’s 2005 fund, Facebook alone returned more than all the other investments combined. So a start-up that can only do fairly well is not worth a place.",
+  "move": "Where one win outweighs the rest, ask of each bet: could this be it?",
+  "simply": "Imagine one pupil’s project wins a prize bigger than all the other prizes put together. If you could coach only a few pupils, you’d pick ones who might win that prize.",
+  "why": "Wherever a few hits dominate, many safe, middling choices can feel prudent yet guarantee missing the one outcome that pays for the rest. The useful question becomes how big each could get, not how likely each is to break even.",
+  "book": {
+    "id": "zero-to-one",
+    "title": "Zero to One",
+    "author": "Peter Thiel with Blake Masters",
+    "year": 2014,
+    "part": 4,
+    "isbn": "9780804139298",
+    "badge": "A #1 New York Times bestseller"
+  },
+  "keywords": [
+    "power law",
+    "venture capital",
+    "founders fund",
+    "facebook",
+    "peter thiel"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Peter Thiel with Blake Masters, Zero to One, 2014",
+  "source_kind": "book",
+  "reference": "Peter Thiel with Blake Masters, Zero to One: Notes on Startups, or How to Build the Future (Crown Business, 2014), ch. 7, Follow the Money",
+  "written": "2026-11-20"
+}

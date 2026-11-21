@@ -58,14 +58,29 @@ function arc(cx, cy, r, frac) {
 Kit.onShow.card = () => {
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const r = Math.max(20, Math.min(W * 0.2, (H - f * 9) / 2));
-  const hy = f * 1.2, cy = hy + f * 0.9 + r;
-  const cxs = [W * 0.27, W * 0.73];
+  // Words never under 11 px, however short the box: the drawing is laid out around them.
+  const fs = Math.max(12, Math.min(f, 15)), hf = fs * 1.05, sf = Math.max(11, fs * .88), bh = Math.max(10, fs * .85);
+  let bh2 = bh, laneGap = bh * 1.6;
+  const hdH = hf * 1.2, subH = sf * 1.5, trkH = laneGap + bh, stH = sf * 1.55;
+  const rMax = W * .235;
+  // The route (the two tracks and their stations) goes under the clocks when there is room for both;
+  // in a very short box the clocks keep the room and the stations are left to the words below.
+  let route = true, fixed = hdH + subH + trkH + stH + fs * 1.7;
+  if ((H - fixed) / 2 < 28) { route = false; fixed = hdH + subH + fs * .6; }
+  const r = Math.max(18, Math.min(rMax, (H - fixed) / 2));
+  let extra = Math.max(0, H - fixed - 2 * r);
+  // Room left over in a tall box: the route grows first (bigger trains, lanes further apart), then the
+  // gaps around the clocks, then the gap above the route, and what is still left centres the drawing.
+  if (route) { const g = Math.min(extra, fs * 1.4); bh2 = bh + g * .2; laneGap += g * .8; extra -= g; }
+  const xA = extra * .1, xB = extra * .05, xC = route ? Math.min(extra * .85, fs * 2) : 0, xM = (extra - xA - xB - xC) / 2;
+  const gA = fs * .35 + xA, gB = fs * .25 + xB, gC = fs * .75 + xC;
+  const hy = xM + hf * .95, cy = xM + hdH + gA + r, sy = cy + r + gB + sf * 1.05;
+  const cxs = [W * 0.25, W * 0.75];
   const specs = [{tot: OLD, cls: 'old', hd: 'Old line', sub: '105 min trip'}, {tot: NEW, cls: 'new', hd: 'Base tunnel', sub: '35 min trip'}];
   G = {clocks: [], trains: []};
   specs.forEach((s, i) => {
     const cx = cxs[i];
-    Kit.mk('text', {x: cx, y: hy, class: 'hd', 'font-size': f * 1.05}, svg).textContent = s.hd;
+    Kit.mk('text', {x: cx, y: hy, class: 'hd', 'font-size': hf}, svg).textContent = s.hd;
     Kit.mk('circle', {cx, cy, r, class: 'dial', 'stroke-width': Math.max(2, r * .05)}, svg);
     Kit.mk('path', {d: arc(cx, cy, r * .96, s.tot / DIAL), class: 'goal', 'stroke-width': 1.5}, svg);
     const sec = Kit.mk('path', {d: '', class: s.cls}, svg);
@@ -73,21 +88,24 @@ Kit.onShow.card = () => {
       const a = k / 8 * Math.PI * 2 - Math.PI / 2, r1 = r * (k % 2 ? .9 : .82);
       Kit.mk('line', {x1: cx + r1 * Math.cos(a), y1: cy + r1 * Math.sin(a), x2: cx + r * Math.cos(a), y2: cy + r * Math.sin(a), class: 'tick', 'stroke-width': Math.max(1.5, r * .03)}, svg);
     }
-    const disc = Kit.mk('circle', {cx, cy, r: r * .42, style: 'fill:var(--c)'}, svg);
-    const num = Kit.mk('text', {x: cx, y: cy, class: 'num', 'font-size': Math.min(r * .4, f * 2)}, svg);
-    Kit.mk('text', {x: cx, y: cy + r + f * 1.5, class: 'sub', 'font-size': f * .85}, svg).textContent = s.sub;
+    Kit.mk('circle', {cx, cy, r: r * .42, style: 'fill:var(--c)'}, svg);
+    const num = Kit.mk('text', {x: cx, y: cy, class: 'num', 'font-size': Math.max(11, Math.min(r * .4, fs * 2))}, svg);
+    Kit.mk('text', {x: cx, y: sy, class: 'sub', 'font-size': sf}, svg).textContent = s.sub;
     G.clocks.push({cx, cy, r, sec, num, tot: s.tot});
   });
-  // track: Fortezza -> Innsbruck, one lane per train
-  const x0 = W * 0.08, x1 = W * 0.92, y1 = cy + r + f * 3.3, y2 = y1 + f * 1.5;
-  [y1, y2].forEach((y, i) => {
-    Kit.mk('line', {x1: x0, y1: y, x2: x1, y2: y, class: 'trk', 'stroke-width': Math.max(3, f * .25)}, svg);
-    const g = Kit.mk('g', {}, svg);
-    Kit.mk('rect', {x: -f * 1.6, y: -f * .5, width: f * 3.2, height: f, rx: f * .3, class: specs[i].cls}, g);
-    G.trains.push({g, x0, x1, y, tot: specs[i].tot});
-  });
-  Kit.mk('text', {x: x0, y: y2 + f * 1.7, class: 'st', 'font-size': f * .85}, svg).textContent = 'Fortezza (IT)';
-  Kit.mk('text', {x: x1, y: y2 + f * 1.7, class: 'st', 'font-size': f * .85, 'text-anchor': 'end'}, svg).textContent = 'Innsbruck (AT)';
+  if (route) {
+    // track: Fortezza -> Innsbruck, one lane per train; each train runs from one station to the other
+    const x0 = W * 0.06, x1 = W * 0.94, y1 = sy + sf * .45 + gC + bh2 / 2, y2 = y1 + laneGap, bw = bh2 * 3.2;
+    [y1, y2].forEach((y, i) => {
+      Kit.mk('line', {x1: x0, y1: y, x2: x1, y2: y, class: 'trk', 'stroke-width': Math.max(3, fs * .25)}, svg);
+      const g = Kit.mk('g', {}, svg);
+      Kit.mk('rect', {x: -bw / 2, y: -bh2 / 2, width: bw, height: bh2, rx: bh2 * .3, class: specs[i].cls}, g);
+      G.trains.push({g, x0: x0 + bw / 2, x1: x1 - bw / 2, y, tot: specs[i].tot});
+    });
+    const st = y2 + bh2 / 2 + sf * 1.3;
+    Kit.mk('text', {x: x0, y: st, class: 'st', 'font-size': sf}, svg).textContent = 'Fortezza (IT)';
+    Kit.mk('text', {x: x1, y: st, class: 'st', 'font-size': sf, 'text-anchor': 'end'}, svg).textContent = 'Innsbruck (AT)';
+  }
   draw();
 };
 
@@ -109,7 +127,8 @@ function setT(v) {
   if (t >= NEW && !newDone) { newDone = true; Kit.haptic('light'); if (!Kit.calm) gsap.fromTo(G.clocks[1].sec, {opacity: .4}, {opacity: 1, duration: .5, repeat: 1, yoyo: true}); }
   if (t >= OLD && !ended) {
     ended = true; Kit.haptic('success');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    // The trip is over: the time slider leaves (Lesson 5) and the clocks take its room.
+    Kit.hide('say'); Kit.hide('row'); Kit.show('why'); Kit.show('keep');
     if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
   }
 }
@@ -124,6 +143,9 @@ Kit.play.card = async () => {
   sl.value = 105; sl.dispatchEvent(new Event('input', {bubbles: true}));
   await new Promise(r => setTimeout(r, 800));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

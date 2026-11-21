@@ -1,0 +1,43 @@
+{
+  "id": "life-book-high-output-management-5",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.learning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A manager spends 12 hours preparing four lectures for 10 staff. Why did Andy Grove think it time well spent?",
+  "answer": "Because of leverage: a little of one person’s time multiplied across many. In Grove’s sums, those 10 people will work about 20,000 hours over the next year, so a course that makes them just 1% better returns some 200 hours of work for the manager’s 12.",
+  "move": "Count time spent teaching against every hour your learners will then work.",
+  "simply": "Spend one afternoon teaching your little brother to tie his shoes, and you save every morning you’d have spent tying them for him. One afternoon, hundreds of mornings.",
+  "why": "Explaining feels slower than doing it yourself, at work or at home. Showing a colleague a shortcut, or a child how to do a chore, costs an hour now and pays back every time they do it without you.",
+  "book": {
+    "id": "high-output-management",
+    "title": "High Output Management",
+    "author": "Andrew S. Grove",
+    "year": 1983,
+    "part": 5,
+    "isbn": "9780679762881",
+    "badge": "By the Intel CEO named Time’s Man of the Year in 1997"
+  },
+  "keywords": [
+    "training",
+    "andy grove",
+    "leverage",
+    "teaching",
+    "managers"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "Andrew S. Grove, High Output Management, 1983",
+  "source_kind": "book",
+  "reference": "Andrew S. Grove, High Output Management (Random House, 1983; Vintage, 1995), ch. 16, Why Training Is the Boss’s Job",
+  "written": "2026-11-20"
+}

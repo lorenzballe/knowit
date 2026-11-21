@@ -1,0 +1,50 @@
+{
+  "id": "economics-book-business-adventures-1",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.bank_runs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "28 May 1962 brought the Dow’s worst points drop since 1929. Traders dreaded mutual funds dumping shares. What did the funds do?",
+  "options": [
+    "Sold hard, deepening the fall",
+    "Bought more shares than they sold",
+    "Stopped trading until it passed"
+  ],
+  "correct": 1,
+  "answer": "They bought more than they sold: 530,000 shares net that Monday, by the Stock Exchange’s count, which Brooks reports. Presumably spotting bargains, they also had cash enough to pay nervous holders without heavy selling. On Thursday, as prices recovered, they sold 375,000 net. The force Wall Street feared turned out to steady the market.",
+  "move": "In a panic, check who really sold before blaming the usual suspect.",
+  "trap": "‘Sold hard, deepening the fall’: a spiral of forced sales is easy to picture.",
+  "simply": "Everyone thought the biggest children in the playground would push and topple the crowd. Instead, when the crowd wobbled, the biggest children stood still and held others up.",
+  "why": "Crashes come with a ready-made villain, usually the biggest player in sight. Checking who really bought and sold, as the Exchange did in 1962, can tell a different story, and that is the one to act on.",
+  "sure": 0.35,
+  "book": {
+    "id": "business-adventures",
+    "title": "Business Adventures",
+    "author": "John Brooks",
+    "year": 1969,
+    "part": 1,
+    "isbn": "9781497644892",
+    "badge": "A New York Times bestseller 45 years after it came out"
+  },
+  "keywords": [
+    "1962 crash",
+    "mutual funds",
+    "stock exchange",
+    "panic selling"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Brooks, Business Adventures, 1969",
+  "source_kind": "book",
+  "reference": "John Brooks, Business Adventures (Weybright and Talley, 1969; Open Road Media, 2014), ch. 1, The Fluctuation",
+  "written": "2026-11-20"
+}

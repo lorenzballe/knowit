@@ -1,0 +1,50 @@
+{
+  "id": "economics-book-business-adventures-3",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.institutions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "At 10 a.m. a company read news of a huge ore strike to reporters; a director then ordered shares. What did the appeals court rule?",
+  "options": [
+    "Legal: the news was out",
+    "Illegal: he jumped the gun",
+    "Legal: he bought for family trusts"
+  ],
+  "correct": 1,
+  "answer": "Illegal: he jumped the gun. Texas Gulf Sulphur read its 1964 statement from 10:00 to about 10:15; it reached the Dow Jones news tape, which investors watched, at 10:54. In 1968 the appeals court held that reading news to reporters only starts it on its way: he should have waited at least for the tape.",
+  "move": "News is public once people can act on it, not once it is spoken.",
+  "trap": "‘Legal: the news was out’: the trial judge had ruled just that.",
+  "simply": "Shouting ‘free cake’ in one room does not make it fair to grab a slice before the people in the next room have heard.",
+  "why": "It decides who may profit from a head start. Whoever hears news first, at work or on a board, can only profit by trading with people who could not yet know, which is why the law makes them wait.",
+  "sure": 0.35,
+  "book": {
+    "id": "business-adventures",
+    "title": "Business Adventures",
+    "author": "John Brooks",
+    "year": 1969,
+    "part": 3,
+    "isbn": "9781497644892",
+    "badge": "A New York Times bestseller 45 years after it came out"
+  },
+  "keywords": [
+    "insider trading",
+    "texas gulf sulphur",
+    "dow jones",
+    "disclosure"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Brooks, Business Adventures, 1969",
+  "source_kind": "book",
+  "reference": "John Brooks, Business Adventures (Weybright and Talley, 1969; Open Road Media, 2014), ch. 4, A Reasonable Amount of Time",
+  "written": "2026-11-20"
+}

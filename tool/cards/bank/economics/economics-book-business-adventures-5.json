@@ -1,0 +1,42 @@
+{
+  "id": "economics-book-business-adventures-5",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.hidden_incentives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1948 a GE executive repeated the rule against fixing prices with rivals. A manager replied, ‘I didn’t see you wink.’ What did he mean?",
+  "answer": "That at GE such orders sometimes came with a wink. Managers signed Directive 20.5, a ban on price deals, yet some took it as window dressing. In 1954 GE’s top executive told that manager to obey it; minutes later his direct boss told him to carry on. He did, and in 1961 went to jail.",
+  "move": "People obey the boss they answer to daily over the rule they signed.",
+  "simply": "The sign on the wall says no running in the corridor. But if your own teacher says ‘go on, run, just don’t get caught’, most children run. The voice they hear every day wins.",
+  "why": "Every workplace has written rules and spoken signals, and when the two disagree, people follow the signal. A rule that bosses pass on with a shrug or a joke is a rule being cancelled, and the people lower down carry the blame.",
+  "book": {
+    "id": "business-adventures",
+    "title": "Business Adventures",
+    "author": "John Brooks",
+    "year": 1969,
+    "part": 5,
+    "isbn": "9781497644892",
+    "badge": "A New York Times bestseller 45 years after it came out"
+  },
+  "keywords": [
+    "general electric",
+    "price fixing",
+    "antitrust",
+    "company rules"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "John Brooks, Business Adventures, 1969",
+  "source_kind": "book",
+  "reference": "John Brooks, Business Adventures (Weybright and Talley, 1969; Open Road Media, 2014), ch. 7, The Impacted Philosophers",
+  "written": "2026-11-20"
+}

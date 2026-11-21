@@ -8,7 +8,6 @@
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
 #plot{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize}
 #plot text{font-family:var(--body);fill:var(--k)}
-#plot .mono{font-family:var(--mono)}
 #row{display:flex;align-items:center;gap:3cqw}
 #heat{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.3cqh 6cqw;cursor:pointer}
 #heat:disabled{opacity:.45;cursor:default}
@@ -57,12 +56,17 @@ function txt(parent, x, y, s, o = {}){
 function draw(){
   const svg = Kit.$('plot');
   killB('a'); killB('b'); svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const L = f * 2.2, R = W - f * .8, Tp = f * 2.6, Bt = H * .56;
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  // Labels never under 10.5 px; in a box too low for the pots (the end, on a small phone) their news
+  // goes on one line of its own under the plot, and the dot on the curve alone tells the temperature.
+  const f = Math.max(11, f0), fl = Math.max(10.5, f * .85), fb = Math.max(11, f * .9);
+  const compact = H < f * 15;
+  const L = f * 2.2, R = W - f * .8, Tp = f * (compact ? 2.4 : 2.6);
+  const Bt = compact ? H - fl * 1.75 - f * 1.3 - 4 : H * Math.min(.56, Math.max(.5, .5 + .06 * (H - 200) / 100));
   const X = T => L + (T - TMIN) / (TMAX - TMIN) * (R - L);
   const Y = p => Bt - p / PTOP * (Bt - Tp);
   const iY = y => (Bt - y) / (Bt - Tp) * PTOP;
-  geo = {W, H, f, L, R, Tp, Bt, X, Y, iY};
+  geo = {W, H, f, fl, L, R, Tp, Bt, X, Y, iY};
   const ink = 'var(--k)';
   const sw = Math.max(1.5, f * .12);
 
@@ -71,15 +75,16 @@ function draw(){
   txt(svg, L + f * 2.1, f * 1.15, 'vapor pressure of water', {'font-weight': 700});
   // axes
   Kit.mk('path', {d: `M${L} ${Tp - f * .3}V${Bt}H${R}`, fill: 'none', stroke: ink, 'stroke-width': sw}, svg);
-  txt(svg, f * .95, (Tp + Bt) / 2, 'pressure ↑', {'text-anchor': 'middle', transform: `rotate(-90 ${f * .95} ${(Tp + Bt) / 2})`, 'font-size': f * .85});
-  txt(svg, L, Bt + f * 1.3, 'room temp', {'font-size': f * .85});
-  txt(svg, (L + X(100)) / 2 + f, Bt + f * 1.3, 'heat →', {'text-anchor': 'middle', 'font-size': f * .85, opacity: .7});
-  txt(svg, X(100), Bt + f * 1.3, '100 °C', {'text-anchor': 'middle', 'font-size': f * .85, 'font-weight': 700});
+  const pl = txt(svg, f * .95, (Tp + Bt) / 2, 'pressure ↑', {'text-anchor': 'middle', transform: `rotate(-90 ${f * .95} ${(Tp + Bt) / 2})`, 'font-size': fl});
+  if (pl.getComputedTextLength() > Bt - Tp) pl.remove();
+  txt(svg, L, Bt + f * 1.3, 'room temp', {'font-size': fl});
+  txt(svg, (L + X(100)) / 2 + f, Bt + f * 1.3, 'heat →', {'text-anchor': 'middle', 'font-size': fl, opacity: .7});
+  txt(svg, X(100), Bt + f * 1.3, '100 °C', {'text-anchor': 'middle', 'font-size': fl, 'font-weight': 700});
   Kit.mk('line', {x1: X(100), x2: X(100), y1: Bt, y2: Bt + f * .3, stroke: ink, 'stroke-width': sw}, svg);
 
   // 1 atm line
   Kit.mk('line', {x1: L, x2: R, y1: Y(1), y2: Y(1), stroke: ink, 'stroke-width': sw, 'stroke-dasharray': `${f * .5} ${f * .35}`}, svg);
-  txt(svg, L + f * .4, Y(1) - f * .45, 'open air · 1 atm', {'font-size': f * .85});
+  txt(svg, L + f * .4, Y(1) - f * .45, 'open air · 1 atm', {'font-size': fl});
 
   // curve
   let d = '';
@@ -89,7 +94,7 @@ function draw(){
   // pot B pressure line (draggable)
   G.bg = Kit.mk('g', {}, svg);
   G.bl = Kit.mk('line', {x1: L, x2: R, y1: 0, y2: 0, stroke: ink, 'stroke-width': sw * 1.4}, G.bg);
-  G.blab = txt(G.bg, L + f * .4, 0, 'pot B · drag ↕', {'font-size': f * .85, 'font-weight': 700});
+  G.blab = txt(G.bg, L + f * .4, 0, 'pot B · drag ↕', {'font-size': fl, 'font-weight': 700});
   G.knob = Kit.mk('circle', {cx: R - f * 1.2, cy: 0, r: f * .6, fill: ink, stroke: 'var(--c)', 'stroke-width': sw}, G.bg);
 
   // rings at boiling points
@@ -99,9 +104,27 @@ function draw(){
   G.vl = Kit.mk('line', {stroke: ink, 'stroke-width': sw, 'stroke-dasharray': `${f * .2} ${f * .25}`, opacity: .7}, svg);
   G.dot = Kit.mk('circle', {r: f * .45, fill: ink, stroke: 'var(--c)', 'stroke-width': sw}, svg);
 
-  // pots
+  const mono = {'font-family': 'var(--mono)', 'font-weight': 700};
+  if (compact){
+    // the two pots' news, A to the left and B to the right, made to fit side by side
+    const y = H - fl * .45;
+    G.a = {bubbles: [], pre: 'A ', st: txt(svg, L, y, '', {'font-size': fb, 'font-weight': 700})};
+    G.b = {bubbles: [], pre: 'B ', st: txt(svg, R, y, '', {'text-anchor': 'end', 'font-size': fb, 'font-weight': 700})};
+    G.fit = () => {
+      const room = R - L - fl * 1.2, w = G.a.st.getComputedTextLength() + G.b.st.getComputedTextLength();
+      const k = w > room ? Math.max(10 / fb, room / w) : 1;
+      G.a.st.setAttribute('font-size', fb * k); G.b.st.setAttribute('font-size', fb * k);
+    };
+    G.ro = Kit.mk('text', {});
+    G.rol = null;
+    render();
+    return;
+  }
+  G.fit = null;
+
+  // pots: their news on top, then the pot (and B's bell jar, always above it), then the name
   const py0 = Bt + f * 2.5, py1 = H - f * 1.9, ph = py1 - py0;
-  const bh = Math.max(f * 2, ph * .5), pw = Math.min(W * .26, bh * 1.5);
+  const bh = Math.max(f * 1.2, Math.min(Math.max(f * 2, ph * .5), ph - f * 1.9)), pw = Math.min(W * .26, bh * 1.5);
   const water = 'color-mix(in srgb, var(--k) 28%, transparent)';
   const pot = (w, cx, name) => {
     const g = Kit.mk('g', {}, svg);
@@ -110,9 +133,9 @@ function draw(){
     Kit.mk('path', {d: `M${cx - pw / 2} ${top}V${py1 - f * .3}Q${cx - pw / 2} ${py1} ${cx - pw / 2 + f * .3} ${py1}H${cx + pw / 2 - f * .3}Q${cx + pw / 2} ${py1} ${cx + pw / 2} ${py1 - f * .3}V${top}`, fill: 'none', stroke: ink, 'stroke-width': sw * 1.4, 'stroke-linejoin': 'round'}, g);
     const bubbles = [];
     for (let i = 0; i < 8; i++) bubbles.push(Kit.mk('circle', {cx: cx - pw / 2 + f * .5 + Kit.rnd() * (pw - f), cy: wb, r: f * (.14 + Kit.rnd() * .16), fill: 'none', stroke: ink, 'stroke-width': sw * .8, opacity: 0}, g));
-    const st = txt(g, cx, py0 + f * .9, '', {'text-anchor': 'middle', 'font-size': f * .9, 'font-weight': 700});
-    txt(g, cx, H - f * .5, name, {'text-anchor': 'middle', 'font-size': f * .85});
-    G[w] = {wb, wt, bubbles, st, top};
+    const st = txt(g, cx, py0 + f * .9, '', {'text-anchor': 'middle', 'font-size': fb, 'font-weight': 700});
+    txt(g, cx, H - f * .5, name, {'text-anchor': 'middle', 'font-size': fl});
+    G[w] = {wb, wt, bubbles, st, top, pre: ''};
   };
   const ca = W * .22, cb = W * .78;
   pot('a', ca, 'A · open air');
@@ -124,12 +147,13 @@ function draw(){
     Kit.mk('path', {d: `M${x} ${aY0}V${atop - f * .3}M${x - f * .3} ${atop - f * .6}L${x} ${atop - f * .3}L${x + f * .3} ${atop - f * .6}`, fill: 'none', stroke: ink, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
   });
   // bell jar over B, tube to the pump
-  const dw = pw / 2 + f * .5, dtop = py0 + f * 1.6, cr = Math.min(dw * .6, Math.max(f * .3, py1 - dtop - f * .5));
+  const dw = pw / 2 + f * .5, dtop = Math.min(py0 + f * 1.6, G.b.top - f * .45), cr = Math.min(dw * .6, Math.max(f * .3, py1 - dtop - f * .5));
   Kit.mk('path', {d: `M${cb - dw} ${py1 + f * .3}V${dtop + cr}Q${cb - dw} ${dtop} ${cb - dw + cr} ${dtop}H${cb + dw - cr}Q${cb + dw} ${dtop} ${cb + dw} ${dtop + cr}V${py1 + f * .3}`, fill: 'none', stroke: ink, 'stroke-width': sw, opacity: .75}, svg);
   Kit.mk('line', {x1: cb - dw - f * .4, x2: cb + dw + f * .4, y1: py1 + f * .3, y2: py1 + f * .3, stroke: ink, 'stroke-width': sw * 1.6, 'stroke-linecap': 'round'}, svg);
-  // readout
-  G.ro = txt(svg, W / 2, py0 + ph * .5, '', {'text-anchor': 'middle', 'font-size': f * 1.4, 'font-weight': 700, class: 'mono'});
-  G.rol = txt(svg, W / 2, py0 + ph * .5 + f * 1.3, 'both pots', {'text-anchor': 'middle', 'font-size': f * .8, opacity: .75});
+  // readout, between the pots and level with them, under their news
+  const rf = f * 1.4, ry = py1 - bh / 2 + rf * .35;
+  G.ro = txt(svg, W / 2, ry, '', Object.assign({'text-anchor': 'middle', 'font-size': rf}, mono));
+  G.rol = txt(svg, W / 2, ry + f * 1.25, 'both pots', {'text-anchor': 'middle', 'font-size': Math.max(10.5, f * .8), opacity: .75});
 
   render();
 }
@@ -150,8 +174,9 @@ function render(){
   G.rb.setAttribute('opacity', S.b ? 1 : 0);
   G.ro.textContent = Math.round(S.T) + ' °C';
   const idle = S.run ? 'heating…' : 'cold';
-  G.a.st.textContent = S.a ? 'boils at 100 °C' : idle;
-  G.b.st.textContent = S.b ? (Math.round(tb) <= TMIN ? 'boils at room temp!' : `boils at ${Math.round(tb)} °C`) + (S.done ? ' · wins' : '') : idle;
+  G.a.st.textContent = G.a.pre + (S.a ? 'boils at 100 °C' : idle);
+  G.b.st.textContent = G.b.pre + (S.b ? (Math.round(tb) <= TMIN ? 'boils at room temp!' : `boils at ${Math.round(tb)} °C`) + (S.done ? ' · wins' : '') : idle);
+  if (G.fit) G.fit();
   if (S.a) startB('a'); else killB('a');
   if (S.b) startB('b'); else killB('b');
   if (!S.a) G.a.bubbles.forEach(c => c.setAttribute('opacity', 0));
@@ -173,7 +198,7 @@ function heat(){
   gsap.to(S, {T: 100, duration: fast ? .5 : (Kit.calm ? 1.5 : 4.5), ease: 'none', onUpdate: check, onComplete: () => {
     S.T = 100; S.run = false; S.done = true; check();
     Kit.$('heat').disabled = false; Kit.$('heat').textContent = 'Heat again';
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    Kit.hide('say'); Kit.hide('row'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
   }});
 }
 Kit.$('heat').addEventListener('click', heat);
@@ -199,7 +224,8 @@ plot.addEventListener('pointerdown', e => {
   drag = true; plot.setPointerCapture(e.pointerId); setP(e);
 });
 plot.addEventListener('pointermove', e => { if (drag) setP(e); });
-plot.addEventListener('pointerup', () => drag = false);
+// Once the race has been told the button is gone: letting go of pot B's line runs the next race.
+plot.addEventListener('pointerup', () => { if (drag && S.done && !S.run) heat(); drag = false; });
 plot.addEventListener('pointercancel', () => drag = false);
 
 Kit.onShow.card = () => draw();
@@ -217,6 +243,9 @@ Kit.play.card = async () => {
   Kit.$('heat').click();
   await new Promise(r => setTimeout(r, 1100));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

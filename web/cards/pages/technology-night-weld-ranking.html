@@ -13,8 +13,8 @@
 #go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
 #go:active{transform:scale(.97)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#why .body b{font-weight:800}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Tap · watch it grow">
   <div class="in">
@@ -24,8 +24,7 @@
       <div id="art"><svg id="svg"></svg></div>
       <div id="ctl"><button id="go">Send in the night crew</button></div>
       <div id="why" class="gone">
-        <p class="big">Over 200 joints, ranked by importance.</p>
-        <p class="body">Every night, welders put two steel plates, 5 cm thick and 2 m long, on each joint, like Band‑Aids on both sides. LeMessurier started with the 30th floor, so the most critical joints were fixed first.</p>
+        <p class="body"><b>Over 200 joints, ranked by importance.</b> Every night, welders put two steel plates, 5 cm thick and 2 m long, on each joint, like Band‑Aids on both sides. LeMessurier started with the 30th floor, so the most critical joints were fixed first.</p>
       </div>
     </div>
     <p class="say" id="say">Tap: the crew welds the next joints on the ranked list.</p>
@@ -87,8 +86,11 @@ function draw() {
   const lab = fs * .9;
   const body = w => `font-family:var(--body);font-weight:${w};fill:var(--k)`;
 
-  const th = H * .88, tw = Math.min(W * .44, th * .42);
-  const cx = W * .66, tx = cx - tw / 2, ty = H * .07;
+  // In a low box (the end, on a small phone) the tower stands further right, its floor 30 named beside
+  // it, and the counter's rows close up: "Joints welded" on one line, the night beside the count.
+  const low = H < 170;
+  const th = H * (low ? .94 : .88), tw = Math.min(W * (low ? .3 : .44), th * .42);
+  const cx = low ? W - Math.max(W * .06, tw / 2 + 22) : W * .66, tx = cx - tw / 2, ty = H * (low ? .03 : .07);
   // the tower: a sloped crown, the slab of floors, and the stilts it stands on
   const crown = th * .06, legs = th * .1;
   const by0 = ty + crown, bh = th - crown - legs, gy = ty + th;
@@ -96,7 +98,7 @@ function draw() {
   geo = {fs, W, H, rg};
 
   // a crescent moon: it is night work
-  const mr = Math.min(W, H) * .04, mx = W * .9, my = H * .08;
+  const mr = low ? Math.max(4, Math.min(W, H) * .06) : Math.min(W, H) * .04, mx = low ? W - mr - 5 : W * .9, my = low ? mr + 5 : H * .08;
   Kit.mk('circle', {cx: mx, cy: my, r: mr, fill: MOON}, svg);
   Kit.mk('circle', {cx: mx + mr * .5, cy: my - mr * .3, r: mr * .9, style: 'fill:var(--c)'}, svg);
 
@@ -119,30 +121,51 @@ function draw() {
   // ground
   Kit.mk('line', {x1: tx - tw * .25, y1: gy, x2: tx + tw * 1.25, y2: gy, style: 'stroke:var(--k)', 'stroke-width': 2.4, 'stroke-linecap': 'round'}, svg);
 
-  // floor 30 marker
+  const left = W * (low ? .05 : .06);
   const y30 = by0 + R30 * rg + rg * .5;
-  const barBottom = H * .1 + fs * 6.6 + fs * .5;
-  const ly = Math.max(y30 - fs * .15, barBottom + fs * 1.6);
-  const lm = ly - fs * .35;
-  Kit.mk('path', {d: `M${tx - 22} ${lm} Q${tx - 12} ${lm - 1} ${tx - 7} ${y30}`, style: 'stroke:var(--k)', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, svg);
-  const lx = tx - 26;
-  Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', style: body(700), 'font-size': lab}, svg).textContent = 'Floor 30';
-  Kit.mk('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'end', style: body(500), 'font-size': lab}, svg).textContent = 'rank #1';
+  if (low) {
+    // floor 30, named on two lines just left of the tower
+    const lx = tx - 12;
+    Kit.mk('path', {d: `M${tx - 9} ${y30} L${tx - 2} ${y30}`, style: 'stroke:var(--k)', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, svg);
+    const f1 = Kit.mk('text', {x: lx, y: y30 - lab * .2, 'text-anchor': 'end', style: body(700), 'font-size': lab}, svg); f1.textContent = 'Floor 30';
+    const f2 = Kit.mk('text', {x: lx, y: y30 + lab * 1.1, 'text-anchor': 'end', style: body(500), 'font-size': lab}, svg); f2.textContent = 'rank #1';
+    const fl = lx - Math.max(f1.getComputedTextLength(), f2.getComputedTextLength());
+    // counter: the label, then the count with its night beside it, then how far down the list
+    Kit.mk('text', {x: left, y: lab, style: body(600), 'font-size': lab}, svg).textContent = 'Joints welded';
+    const cs = fs * 2.2, cb = lab * 1.3 + cs * .98 + 1;
+    G.count = Kit.mk('text', {x: left, y: cb, style: 'font-family:var(--display);font-weight:800;fill:var(--k)', 'font-size': cs}, svg);
+    G.count.textContent = '200+';
+    G.night = Kit.mk('text', {x: left + G.count.getComputedTextLength() + 8, y: cb, style: body(500), 'font-size': lab}, svg);
+    const bay = cb + cs * .26 + 3, bw = Math.max(20, fl - 10 - left);
+    Kit.mk('rect', {x: left, y: bay, width: bw, height: fs * .35, fill: TRACK, rx: fs * .17}, svg);
+    G.bar = Kit.mk('rect', {x: left, y: bay, width: bw * done / N, height: fs * .35, fill: HOT, rx: fs * .17}, svg);
+    geo.bw = bw;
+    G.note = Kit.mk('text', {x: left, y: H - lab * .3, style: body(500), 'font-size': lab}, svg);
+    G.note2 = Kit.mk('text', {x: left, y: H - lab * 1.6, style: body(500), 'font-size': lab}, svg);
+  } else {
+    // floor 30 marker
+    const barBottom = H * .1 + fs * 6.6 + fs * .5;
+    const ly = Math.max(y30 - fs * .15, barBottom + fs * 1.6);
+    const lm = ly - fs * .35;
+    Kit.mk('path', {d: `M${tx - 22} ${lm} Q${tx - 12} ${lm - 1} ${tx - 7} ${y30}`, style: 'stroke:var(--k)', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, svg);
+    const lx = tx - 26;
+    Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', style: body(700), 'font-size': lab}, svg).textContent = 'Floor 30';
+    Kit.mk('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'end', style: body(500), 'font-size': lab}, svg).textContent = 'rank #1';
 
-  // counter
-  const left = W * .06;
-  Kit.mk('text', {x: left, y: H * .1, style: body(600), 'font-size': lab}, svg).textContent = 'Joints';
-  Kit.mk('text', {x: left, y: H * .1 + fs * 1.15, style: body(600), 'font-size': lab}, svg).textContent = 'welded';
-  G.count = Kit.mk('text', {x: left, y: H * .1 + fs * 4, style: 'font-family:var(--display);font-weight:800;fill:var(--k)', 'font-size': fs * 2.6}, svg);
-  G.night = Kit.mk('text', {x: left, y: H * .1 + fs * 5.6, style: body(500), 'font-size': lab}, svg);
-  // how far down the list the crew has got
-  const bay = H * .1 + fs * 6.6, bw = Math.max(20, tx - 30 - left);
-  Kit.mk('rect', {x: left, y: bay, width: bw, height: fs * .4, fill: TRACK, rx: fs * .2}, svg);
-  G.bar = Kit.mk('rect', {x: left, y: bay, width: bw * done / N, height: fs * .4, fill: HOT, rx: fs * .2}, svg);
-  geo.bw = bw;
-  // bottom-left note
-  G.note = Kit.mk('text', {x: left, y: H * .93, style: body(500), 'font-size': lab}, svg);
-  G.note2 = Kit.mk('text', {x: left, y: H * .93 - fs * 1.3, style: body(500), 'font-size': lab}, svg);
+    // counter
+    Kit.mk('text', {x: left, y: H * .1, style: body(600), 'font-size': lab}, svg).textContent = 'Joints';
+    Kit.mk('text', {x: left, y: H * .1 + fs * 1.15, style: body(600), 'font-size': lab}, svg).textContent = 'welded';
+    G.count = Kit.mk('text', {x: left, y: H * .1 + fs * 4, style: 'font-family:var(--display);font-weight:800;fill:var(--k)', 'font-size': fs * 2.6}, svg);
+    G.night = Kit.mk('text', {x: left, y: H * .1 + fs * 5.6, style: body(500), 'font-size': lab}, svg);
+    // how far down the list the crew has got
+    const bay = H * .1 + fs * 6.6, bw = Math.max(20, tx - 30 - left);
+    Kit.mk('rect', {x: left, y: bay, width: bw, height: fs * .4, fill: TRACK, rx: fs * .2}, svg);
+    G.bar = Kit.mk('rect', {x: left, y: bay, width: bw * done / N, height: fs * .4, fill: HOT, rx: fs * .2}, svg);
+    geo.bw = bw;
+    // bottom-left note
+    G.note = Kit.mk('text', {x: left, y: H * .93, style: body(500), 'font-size': lab}, svg);
+    G.note2 = Kit.mk('text', {x: left, y: H * .93 - fs * 1.3, style: body(500), 'font-size': lab}, svg);
+  }
 
   // joints: a thin seam on each floor; once welded, a thick ink plate covers it
   const h0 = Math.max(1.5, rg * .14), h1 = Math.max(3, rg * .5);
@@ -211,6 +234,9 @@ Kit.play.card = async () => {
   for (let i = 0; i < 9 && !finished; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 150)); }
   await new Promise(r => setTimeout(r, 1300));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (under 85 px), it keeps the drawing it has, shown smaller, whole; a low box above that has a layout of its own.
+{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 85) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>
