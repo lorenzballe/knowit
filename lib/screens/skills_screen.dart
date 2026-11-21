@@ -5,21 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/skill_levels.dart';
 import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
+import '../widgets/skill_mark.dart' show SkillBar;
 import '../widgets/ui.dart' show BackCircle, ScreenView;
 
-/// What the reader wants to learn, picked from the profile: twelve skills
-/// in two columns, each a card of the page's ground with a badge of two
-/// hues, lit up and ringed when picked: never tiles of one colour, which are
-/// the subjects' look. All twelve are on the screen at
-/// once, the rows sharing the height the phone has; only a text too large
-/// for that lets the grid scroll. Nothing in the app changes with them; they
-/// are kept, and told to the reader's profile in analytics, for the people
-/// who write the cards to know what to write next. The screen says so.
+/// What the reader wants to learn, picked from the profile, and how far they
+/// have come in each: twelve skills in two columns, each a card of the
+/// page's ground with a badge of two hues, its level from the cards read that
+/// train it (lib/data/skill_levels.dart) and a bar filling towards the next;
+/// the picked ones ringed in their hues and marked in focus, never tiles of
+/// one colour, which are the subjects' look. Picked, a skill's area leans the
+/// cards picked for the reader, and a card that trains it carries its mark
+/// (lib/widgets/skill_mark.dart). All twelve are on the screen at once, the
+/// rows sharing the height the phone has; only a text too large for that lets
+/// the grid scroll.
 class SkillsScreen extends StatefulWidget {
   const SkillsScreen({super.key, required this.app});
 
@@ -35,10 +39,15 @@ class _SkillsScreenState extends State<SkillsScreen> {
   /// be what was changed to.
   late final List<String> _before;
 
+  /// The cards read that train each skill: nothing is read on this screen,
+  /// so counted once, as it opens.
+  late final Map<Skill, int> _cards;
+
   @override
   void initState() {
     super.initState();
     _before = List.of(widget.app.skills);
+    _cards = cardsTrainingEach(widget.app.seenIds);
   }
 
   @override
@@ -165,8 +174,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
     )..layout(maxWidth: box.maxWidth);
     final double lineHeight = measure.height;
     measure.dispose();
-    final double least =
-        math.max(2 * scaler.scale(14.5) * 1.22, 36) + 2 * _Tile.padY + 4;
+    final double least = _Tile.least(scaler);
     final double share =
         (box.maxHeight - lineHeight - under - gap * (rows - 1)) / rows;
     final bool fits = share >= least;
@@ -183,6 +191,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                   ? _Tile(
                       skill: all[k],
                       on: picked.contains(all[k].name),
+                      level: SkillLevel.of(_cards[all[k]] ?? 0),
                       onTap: () => _toggle(all[k]),
                     )
                   : const SizedBox.shrink(),
@@ -257,21 +266,48 @@ class _Headline extends StatelessWidget {
   }
 }
 
-/// A skill: a badge of its two hues carrying its mark, and its name, on a
-/// card of the page's own ground, never a tile of one colour as a subject's
-/// is. Picked, the badge lights up in full, a ring of the same two hues runs
-/// round the card with their glow under it, and a tick fills in. Tall
-/// enough, the badge sits above the name; in a short row, beside it, the
-/// tick then on the badge's corner so the name keeps the room.
+/// A skill: a badge of its two hues carrying its mark, its name, and its
+/// level under them with a bar filling towards the next, on a card of the
+/// page's own ground, never a tile of one colour as a subject's is. Picked, a
+/// ring of the same two hues runs round the card with their glow under it,
+/// and a pill of them on its top edge says the skill is in focus. Tall
+/// enough, the level says how many cards made it, on a line of its own; in a
+/// short row the bar and the level share the line under the name.
 class _Tile extends StatefulWidget {
-  const _Tile({required this.skill, required this.on, required this.onTap});
+  const _Tile({
+    required this.skill,
+    required this.on,
+    required this.level,
+    required this.onTap,
+  });
 
   final Skill skill;
   final bool on;
+  final SkillLevel level;
   final VoidCallback onTap;
 
   /// The room above and below what a short tile shows.
-  static const double padY = 9;
+  static const double padY = 7;
+
+  /// The least a short tile needs at the reader's text size: its name on two
+  /// lines, then the bar and the level under it.
+  static double least(TextScaler scaler) =>
+      2 * padY +
+      math.max(2 * scaler.scale(13.5) * 1.12, 28) +
+      5 +
+      math.max(scaler.scale(10.5) * 1.25, 5) +
+      2;
+
+  /// The height from which a tile stands tall: the badge and the name on two
+  /// lines, the bar, and the level on a line of its own.
+  static double tallFrom(TextScaler scaler) =>
+      2 * 9 +
+      math.max(2 * scaler.scale(14.5) * 1.12, 32) +
+      7 +
+      5 +
+      5 +
+      scaler.scale(11.5) * 1.25 +
+      1;
 
   @override
   State<_Tile> createState() => _TileState();
@@ -289,9 +325,13 @@ class _TileState extends State<_Tile> {
   @override
   Widget build(BuildContext context) {
     final p = context.p;
+    final l = context.l10n;
     final Skill skill = widget.skill;
     final bool on = widget.on;
-    final String name = context.l10n.skillName(skill.name);
+    final String name = l.skillName(skill.name);
+    final String level = l.skillLevel(widget.level.level);
+    final String cards = l.nCards(widget.level.cards);
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
     // The card itself: the page's raised ground, a hairline round it; picked,
     // a ring of the skill's two hues instead, and their glow under it.
     final Color ground = p.isDark
@@ -301,7 +341,9 @@ class _TileState extends State<_Tile> {
       key: ValueKey('skill-${skill.name}-${on ? 'on' : 'off'}'),
       button: true,
       toggled: on,
-      label: name,
+      label: on
+          ? '$name, ${l.skillsFocus}, $level, $cards'
+          : '$name, $level, $cards',
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -313,215 +355,236 @@ class _TileState extends State<_Tile> {
           scale: _down ? 0.97 : 1,
           duration: const Duration(milliseconds: 110),
           curve: Curves.easeOut,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOut,
-            padding: EdgeInsets.all(on ? 2 : 1),
-            decoration: BoxDecoration(
-              gradient: on ? _hues : null,
-              color: on ? null : p.line,
-              borderRadius: BorderRadius.circular(22),
-              boxShadow: [
-                BoxShadow(
-                  color: skill.hues.last.withValues(
-                    alpha: on ? (p.isDark ? 0.34 : 0.26) : 0,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned.fill(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 220),
+                  curve: Curves.easeOut,
+                  padding: EdgeInsets.all(on ? 2 : 1),
+                  decoration: BoxDecoration(
+                    gradient: on ? _hues : null,
+                    color: on ? null : p.line,
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        color: skill.hues.last.withValues(
+                          alpha: on ? (p.isDark ? 0.34 : 0.26) : 0,
+                        ),
+                        blurRadius: 18,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
                   ),
-                  blurRadius: 18,
-                  offset: const Offset(0, 6),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ground,
+                      borderRadius: BorderRadius.circular(on ? 20 : 21),
+                    ),
+                    child: LayoutBuilder(
+                      builder: (context, box) =>
+                          box.maxHeight >= _Tile.tallFrom(scaler)
+                          ? _tall(name, '$level · $cards')
+                          : _short(name, level),
+                    ),
+                  ),
                 ),
-              ],
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: ground,
-                borderRadius: BorderRadius.circular(on ? 20 : 21),
               ),
-              child: LayoutBuilder(
-                // Tall where the badge, a gap and two lines of the name at the
-                // reader's text size stand one above the other; beside it if not.
-                builder: (context, box) =>
-                    box.maxHeight >=
-                        54 +
-                            2 * MediaQuery.textScalerOf(context).scale(15) * 1.2
-                    ? _tall(box, name)
-                    : _row(box, name),
+              // In focus: a pill of the skill's hues on the card's top edge,
+              // in the gap above it.
+              Positioned(
+                top: -8,
+                right: 12,
+                child: IgnorePointer(
+                  child: AnimatedScale(
+                    scale: on ? 1 : 0,
+                    duration: const Duration(milliseconds: 240),
+                    curve: Curves.easeOutBack,
+                    child: _focus(l.skillsFocus),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  /// The badge: the skill's two hues and its mark, lit in full once picked;
-  /// before, a soft wash of them with the mark in the first.
-  Widget _badge(double size) {
-    final p = context.p;
-    final Skill skill = widget.skill;
-    final bool on = widget.on;
-    final Color soft = p.isDark ? p.surface : Colors.white;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
-      curve: Curves.easeOut,
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(size * 0.3),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: on
-              ? skill.hues
-              : [
-                  for (final Color c in skill.hues)
-                    Color.alphaBlend(
-                      c.withValues(alpha: p.isDark ? 0.24 : 0.16),
-                      soft,
-                    ),
-                ],
-        ),
-      ),
-      alignment: Alignment.center,
-      child: CustomPaint(
-        size: Size.square(size * 0.62),
-        painter: SkillGlyph(
-          skill,
-          on ? skill.onHues : (p.isDark ? skill.hues.first : skill.onPaper),
-        ),
-      ),
-    );
-  }
+  /// The badge: the skill's two hues and its mark, the one a card that
+  /// trains the skill carries in its head (skill_mark.dart).
+  Widget _badge(double size) => Container(
+    width: size,
+    height: size,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(size * 0.3),
+      gradient: _hues,
+    ),
+    alignment: Alignment.center,
+    child: CustomPaint(
+      size: Size.square(size * 0.62),
+      painter: SkillGlyph(widget.skill, widget.skill.onHues),
+    ),
+  );
 
-  /// The tick: a ring, filled with the skill's hues once picked.
-  Widget _tick(double size) {
-    final p = context.p;
-    final bool on = widget.on;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: on ? _hues : null,
-        border: on
-            ? null
-            : Border.all(color: p.ink.withValues(alpha: 0.22), width: 1.6),
-      ),
-      child: AnimatedScale(
-        scale: on ? 1 : 0,
-        duration: const Duration(milliseconds: 240),
-        curve: Curves.easeOutBack,
-        child: Icon(
-          Icons.check_rounded,
-          size: size * 0.68,
-          color: widget.skill.onHues,
+  /// "In focus", in small capitals on the skill's hues.
+  Widget _focus(String text) => Container(
+    key: ValueKey('skill-focus-${widget.skill.name}'),
+    padding: const EdgeInsets.fromLTRB(8, 3, 8, 3),
+    decoration: BoxDecoration(
+      gradient: _hues,
+      borderRadius: BorderRadius.circular(99),
+      boxShadow: [
+        BoxShadow(
+          color: widget.skill.hues.last.withValues(alpha: 0.3),
+          blurRadius: 6,
+          offset: const Offset(0, 2),
         ),
-      ),
-    );
-  }
+      ],
+    ),
+    child: Text(
+      text,
+      maxLines: 1,
+      textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.3),
+      style: AppText.label(size: 9, spacing: 0.9, color: widget.skill.onHues),
+    ),
+  );
 
-  /// The name, on up to three lines in [width], never broken inside a
-  /// word: where its longest word is wider than that, the whole name is set
-  /// smaller instead.
-  Widget _name(String name, double size, double width, Alignment at) {
+  /// The level, set small, made smaller rather than cut where a language
+  /// runs long.
+  Widget _level(String text, double size) => FittedBox(
+    fit: BoxFit.scaleDown,
+    alignment: Alignment.centerLeft,
+    child: Text(
+      text,
+      maxLines: 1,
+      softWrap: false,
+      style: AppText.body(
+        size: size,
+        weight: FontWeight.w600,
+        color: context.p.ink.withValues(alpha: 0.58),
+      ),
+    ),
+  );
+
+  /// The name, on up to two lines in the room it has, never broken inside a
+  /// word: where its longest word is wider than that, or the lines taller,
+  /// the whole name is set smaller instead.
+  Widget _name(String name, double size) {
     final p = context.p;
     // Measured as it is drawn: with what the page's own text style lends it.
     final TextStyle style = DefaultTextStyle.of(context).style.merge(
       AppText.body(
         size: size,
         weight: FontWeight.w700,
-        height: 1.2,
+        height: 1.12,
         color: p.ink,
       ),
     );
     final TextScaler scaler = MediaQuery.textScalerOf(context);
-    double widest = 0;
-    for (final String word in name.split(RegExp(r'\s+'))) {
-      final TextPainter t = TextPainter(
-        text: TextSpan(text: word, style: style),
-        textDirection: Directionality.of(context),
-        textScaler: scaler,
-        maxLines: 1,
-      )..layout();
-      widest = math.max(widest, t.width);
-      t.dispose();
-    }
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      alignment: at,
-      child: SizedBox(
-        width: math.max(width, widest + 1),
-        child: Text(name, maxLines: 3, style: style),
-      ),
+    return LayoutBuilder(
+      builder: (context, room) {
+        double widest = 0;
+        for (final String word in name.split(RegExp(r'\s+'))) {
+          final TextPainter t = TextPainter(
+            text: TextSpan(text: word, style: style),
+            textDirection: Directionality.of(context),
+            textScaler: scaler,
+            maxLines: 1,
+          )..layout();
+          widest = math.max(widest, t.width);
+          t.dispose();
+        }
+        return Align(
+          alignment: Alignment.centerLeft,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: SizedBox(
+              width: math.max(room.maxWidth, widest + 1),
+              child: Text(name, maxLines: 2, style: style),
+            ),
+          ),
+        );
+      },
     );
   }
 
-  /// Tall: the badge and the tick above, the name at the foot.
-  Widget _tall(BoxConstraints box, String name) {
-    final double badge = (box.maxHeight * 0.34).clamp(30.0, 42.0);
+  /// Tall: the badge and the name, the bar under them, and the level with
+  /// the cards that made it on a line of its own.
+  Widget _tall(String name, String level) {
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(13, 12, 12, 11),
+      padding: const EdgeInsets.fromLTRB(12, 9, 12, 9),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_badge(badge), const Spacer(), _tick(22)],
+          SizedBox(
+            height: math.max(2 * scaler.scale(14.5) * 1.12, 32),
+            child: Row(
+              children: [
+                _badge(32),
+                const SizedBox(width: 10),
+                Expanded(child: _name(name, 14.5)),
+              ],
+            ),
           ),
-          const Spacer(),
-          Flexible(
-            flex: 0,
-            child: _name(name, 15, box.maxWidth - 25, Alignment.bottomLeft),
-          ),
+          const SizedBox(height: 7),
+          SkillBar(skill: widget.skill, level: widget.level, height: 5),
+          const SizedBox(height: 5),
+          _level(level, 11.5),
         ],
       ),
     );
   }
 
-  /// Short: the badge, the name beside it taking the rest of the row; the
-  /// tick, once picked, on the badge's corner.
-  Widget _row(BoxConstraints box, String name) {
+  /// Short: the badge beside the name, the bar and the level sharing the
+  /// line under the name.
+  Widget _short(String name, String level) {
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, _Tile.padY, 10, _Tile.padY),
       child: Row(
         children: [
-          SizedBox(
-            width: 36,
-            height: 36,
-            child: Stack(
-              clipBehavior: Clip.none,
+          _badge(28),
+          const SizedBox(width: 9),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Positioned(left: 0, top: 2, child: _badge(32)),
-                Positioned(
-                  right: -3,
-                  bottom: -3,
-                  child: AnimatedScale(
-                    scale: widget.on ? 1 : 0,
-                    duration: const Duration(milliseconds: 240),
-                    curve: Curves.easeOutBack,
-                    child: Container(
-                      padding: const EdgeInsets.all(1.5),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: context.p.isDark
-                            ? Color.alphaBlend(
-                                Colors.white.withValues(alpha: 0.055),
-                                context.p.surface,
-                              )
-                            : Colors.white,
+                Flexible(
+                  child: SizedBox(
+                    height: math.max(2 * scaler.scale(13.5) * 1.12, 28),
+                    child: _name(name, 13.5),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                // The level keeps its own width, up to a little over half the
+                // line: set smaller past that, the bar taking the rest.
+                LayoutBuilder(
+                  builder: (context, row) => Row(
+                    children: [
+                      Expanded(
+                        child: SkillBar(
+                          skill: widget.skill,
+                          level: widget.level,
+                          height: 4,
+                        ),
                       ),
-                      child: _tick(15),
-                    ),
+                      const SizedBox(width: 7),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: row.maxWidth * 0.55,
+                        ),
+                        child: _level(level, 10.5),
+                      ),
+                    ],
                   ),
                 ),
               ],
-            ),
-          ),
-          const SizedBox(width: 9),
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, room) =>
-                  _name(name, 14.5, room.maxWidth, Alignment.centerLeft),
             ),
           ),
         ],

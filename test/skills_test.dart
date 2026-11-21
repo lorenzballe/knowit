@@ -1,11 +1,18 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
 import 'package:astuto/data/goals.dart';
+import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/data/skill_levels.dart';
 import 'package:astuto/data/skills.dart';
 import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/skills_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
@@ -55,11 +62,32 @@ class _Recorder implements AnalyticsSink {
   ) async {}
 }
 
-/// What the reader wants to learn: asked on the profile, kept on the phone
-/// and told to analytics; each skill picks its area of life, which leans the
-/// cards picked for the reader and the coach.
+/// The app's own letters, so what fits a phone is measured as it is drawn.
+Future<void> _loadRealFonts() async {
+  final faces = {
+    'Fraunces': 'assets/fonts/Fraunces.ttf',
+    'Figtree': 'assets/fonts/Figtree.ttf',
+  };
+  for (final face in faces.entries) {
+    final file = File(face.value);
+    if (!file.existsSync()) continue;
+    final loader = FontLoader(face.key);
+    final bytes = await file.readAsBytes();
+    loader.addFont(
+      Future.value(ByteData.view(Uint8List.fromList(bytes).buffer)),
+    );
+    await loader.load();
+  }
+}
+
+/// What the reader wants to learn and how far they have come in each: asked
+/// on the profile, kept on the phone and told to analytics; each skill picks
+/// its area of life, which leans the cards picked for the reader and the
+/// coach, and shows the reader's level from the cards they read.
 void main() {
   late _Recorder sink;
+
+  setUpAll(_loadRealFonts);
 
   setUp(() {
     sink = _Recorder();
@@ -71,12 +99,15 @@ void main() {
   Future<AppState> open(
     WidgetTester tester, {
     List<String> picked = const [],
+    List<String> read = const [],
+    Locale locale = const Locale('en'),
   }) async {
     final AppState app = await tester.runAsync(
-      () => readyApp({'knowit.skills': picked}),
+      () => readyApp({'knowit.skills': picked, 'knowit.seenIds': read}),
     ) as AppState;
     await tester.pumpWidget(
       MaterialApp(
+        locale: locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
@@ -136,20 +167,69 @@ void main() {
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
   }
 
-  testWidgets('all twelve fit a small phone at once, nothing to scroll', (
-    tester,
-  ) async {
-    await phone(tester, const Size(375, 667), 1);
-    await open(tester, picked: ['money', 'people']);
-    expect(find.byType(Scrollable), findsNothing);
-    final Rect done = tester.getRect(find.byKey(const ValueKey('skills-done')));
+  for (final String language in ['en', 'it']) {
+    testWidgets('all twelve fit the smallest phone at once, nothing to '
+        'scroll, in $language', (tester) async {
+      // An iPhone SE: 375 by 667, under a status bar of 20.
+      await phone(tester, const Size(375, 667), 1);
+      tester.view.padding = const FakeViewPadding(top: 20);
+      tester.view.viewPadding = const FakeViewPadding(top: 20);
+      await open(tester, picked: ['money', 'people'], locale: Locale(language));
+      expect(find.byType(Scrollable), findsNothing);
+      final Rect done = tester.getRect(
+        find.byKey(const ValueKey('skills-done')),
+      );
+      for (final Skill s in Skill.values) {
+        final bool on = s == Skill.money || s == Skill.people;
+        final Rect r = tester.getRect(tile(s, on));
+        expect(r.top, greaterThanOrEqualTo(20), reason: s.name);
+        expect(r.bottom, lessThanOrEqualTo(done.top), reason: s.name);
+        expect(r.right, lessThanOrEqualTo(375), reason: s.name);
+      }
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  testWidgets('each skill shows its level and the cards read that made it; '
+      'the picked ones are in focus', (tester) async {
+    await phone(tester, const Size(402, 874), 1);
+    final List<Pill> money = PillBank.cards
+        .where(Skill.money.trains)
+        .take(12)
+        .toList();
+    await open(
+      tester,
+      picked: ['money'],
+      read: [for (final Pill p in money) p.id],
+    );
+    final l = lookupAppLocalizations(const Locale('en'));
+    final Map<Skill, int> each = cardsTrainingEach(money.map((p) => p.id));
     for (final Skill s in Skill.values) {
-      final bool on = s == Skill.money || s == Skill.people;
-      final Rect r = tester.getRect(tile(s, on));
-      expect(r.top, greaterThanOrEqualTo(0), reason: s.name);
-      expect(r.bottom, lessThanOrEqualTo(done.top), reason: s.name);
-      expect(r.right, lessThanOrEqualTo(375), reason: s.name);
+      final SkillLevel level = SkillLevel.of(each[s]!);
+      expect(
+        find.text('${l.skillLevel(level.level)} · ${l.nCards(level.cards)}'),
+        findsWidgets,
+        reason: s.name,
+      );
     }
+    expect(find.text('${l.skillLevel(2)} · ${l.nCards(12)}'), findsWidgets);
+    // In focus: the pill on a picked skill's edge, and on no other.
+    double focus(Skill s) => tester
+        .widget<AnimatedScale>(
+          find
+              .ancestor(
+                of: find.byKey(ValueKey('skill-focus-${s.name}')),
+                matching: find.byType(AnimatedScale),
+              )
+              .first,
+        )
+        .scale;
+    expect(focus(Skill.money), 1);
+    for (final Skill s in Skill.values.where((s) => s != Skill.money)) {
+      expect(focus(s), 0, reason: s.name);
+    }
+    await tap(tester, tile(Skill.focus, false));
+    expect(focus(Skill.focus), 1);
     expect(tester.takeException(), isNull);
   });
 

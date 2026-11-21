@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
 import '../data/daily.dart';
+import '../data/skill_levels.dart';
+import '../data/skills.dart';
 import '../state/app_state.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
@@ -26,6 +28,7 @@ import '../widgets/premium.dart';
 import '../data/topics.dart';
 import '../widgets/share_day.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/skill_mark.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/web/card_thumb.dart';
 import '../widgets/web/web_card_page.dart' show groundOf;
@@ -552,11 +555,18 @@ class _TodayDoneViewState extends State<TodayDoneView>
         : !app.isPlus && app.ownIdsToday.contains(pill.id)
         ? context.l10n.forYouChip
         : null;
+    // And the mark of the skill in focus it trains, as in the deck; a tap,
+    // on the card in front, says what it means.
+    final Skill? skill = skillMarkOf(pill, app.skills);
     Widget face(bool back) => _CardFace(
       key: ValueKey('shelf-face-${pill.id}-${back ? 'back' : 'front'}'),
       pill: pill,
       number: k + 1,
       chip: chip,
+      skill: skill,
+      onSkill: !front || skill == null
+          ? null
+          : () => showSkillMarkSheet(context, app, skill, cardId: pill.id),
       width: _cardWidth,
       height: _cardHeight,
       back: back,
@@ -678,6 +688,8 @@ class _CardFace extends StatelessWidget {
     required this.pill,
     required this.number,
     this.chip,
+    this.skill,
+    this.onSkill,
     required this.width,
     required this.height,
     required this.back,
@@ -697,6 +709,13 @@ class _CardFace extends StatelessWidget {
   /// The deck's mark beside the subject, "For you" or "Again", when the
   /// card carried one.
   final String? chip;
+
+  /// The skill in focus the card trains: its mark on the card's corner, as
+  /// in the deck (skill_mark.dart). Null for none.
+  final Skill? skill;
+
+  /// A tap on that mark: what it means.
+  final VoidCallback? onSkill;
   final double width;
   final double height;
   final bool back;
@@ -738,54 +757,57 @@ class _CardFace extends StatelessWidget {
       final bool atShelf =
           width / height > (WebThumbs.shelfAspect + WebThumbs.aspect) / 2;
       final Color mark = pill.web?.ground == null ? ink : inkOn(ground);
-      return Container(
-        key: const ValueKey('shelf-picture'),
-        width: width,
-        height: height,
-        decoration: _decoration(p, s, ground),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(34 * s),
-          child: CardThumb(
-            pill: pill,
-            side: side,
-            // Taken 366 points across either way (tool/cards/thumbs.cjs): at
-            // the shelf's proportion, 366 by 511, so the page lays itself out
-            // with nearly the room it has on the deck and its drawing is
-            // drawn again at that size, not squashed (the owner's phone, a
-            // card of Space, once); its content then lines up with the card's
-            // sides, where the deck's picture, narrower than the card, stood
-            // in its middle with a band of ground either side (the owner's
-            // phone, a card of Psychology). Whole, from the top.
-            shelf: atShelf,
-            large: !atShelf,
-            fit: BoxFit.contain,
-            // Where the picture will not come, the card in words, with the
-            // same save and share as everywhere else.
-            fallback: ColoredBox(
-              color: pill.color,
-              child: Stack(
-                children: [
-                  Positioned.fill(child: words),
-                  Positioned.fill(
-                    child: _PictureControls(
-                      aspect: width / height,
-                      saved: saved,
-                      ink: ink,
-                      onSave: onSave,
-                      onShare: onShare,
+      return _marked(
+        s,
+        Container(
+          key: const ValueKey('shelf-picture'),
+          width: width,
+          height: height,
+          decoration: _decoration(p, s, ground),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(34 * s),
+            child: CardThumb(
+              pill: pill,
+              side: side,
+              // Taken 366 points across either way (tool/cards/thumbs.cjs): at
+              // the shelf's proportion, 366 by 511, so the page lays itself out
+              // with nearly the room it has on the deck and its drawing is
+              // drawn again at that size, not squashed (the owner's phone, a
+              // card of Space, once); its content then lines up with the card's
+              // sides, where the deck's picture, narrower than the card, stood
+              // in its middle with a band of ground either side (the owner's
+              // phone, a card of Psychology). Whole, from the top.
+              shelf: atShelf,
+              large: !atShelf,
+              fit: BoxFit.contain,
+              // Where the picture will not come, the card in words, with the
+              // same save and share as everywhere else.
+              fallback: ColoredBox(
+                color: pill.color,
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: words),
+                    Positioned.fill(
+                      child: _PictureControls(
+                        aspect: width / height,
+                        saved: saved,
+                        ink: ink,
+                        onSave: onSave,
+                        onShare: onShare,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            foreground: _PictureControls(
-              aspect: atShelf ? WebThumbs.shelfAspect : WebThumbs.aspect,
-              saved: saved,
-              liked: liked,
-              tag: CardTags.of(pill.id),
-              ink: mark,
-              onSave: onSave,
-              onShare: onShare,
+              foreground: _PictureControls(
+                aspect: atShelf ? WebThumbs.shelfAspect : WebThumbs.aspect,
+                saved: saved,
+                liked: liked,
+                tag: CardTags.of(pill.id),
+                ink: mark,
+                onSave: onSave,
+                onShare: onShare,
+              ),
             ),
           ),
         ),
@@ -794,24 +816,44 @@ class _CardFace extends StatelessWidget {
     // The save and share where the deck has them, at the deck's size: the
     // same on a card in words as on a drawn one (the owner: every card, the
     // same buttons in the same place).
-    return Container(
-      width: width,
-      height: height,
-      decoration: _decoration(p, s, pill.color),
-      child: Stack(
-        children: [
-          Positioned.fill(child: words),
-          Positioned.fill(
-            child: _PictureControls(
-              aspect: width / height,
-              saved: saved,
-              ink: ink,
-              onSave: onSave,
-              onShare: onShare,
+    return _marked(
+      s,
+      Container(
+        width: width,
+        height: height,
+        decoration: _decoration(p, s, pill.color),
+        child: Stack(
+          children: [
+            Positioned.fill(child: words),
+            Positioned.fill(
+              child: _PictureControls(
+                aspect: width / height,
+                saved: saved,
+                ink: ink,
+                onSave: onSave,
+                onShare: onShare,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  /// [card] with the mark of the skill in focus it trains on its corner, at
+  /// the shelf's scale [s].
+  Widget _marked(double s, Widget card) {
+    final Skill? skill = this.skill;
+    if (skill == null) return card;
+    return Stack(
+      children: [
+        card,
+        Positioned(
+          top: 0,
+          right: 0,
+          child: SkillMark(skill: skill, scale: s, onTap: onSkill),
+        ),
+      ],
     );
   }
 

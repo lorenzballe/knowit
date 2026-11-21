@@ -9,6 +9,7 @@ import '../measure/session.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../data/skill_levels.dart';
 import '../data/topics.dart';
 import '../data/why.dart';
 import '../widgets/magic_card.dart';
@@ -16,6 +17,7 @@ import '../data/pills_repository.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/skill_mark.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
 import 'today_done_view.dart';
@@ -298,6 +300,11 @@ class _TodayScreenState extends State<TodayScreen> {
                 pill,
                 sunday: pill.id == _sundaysOwn(app),
               ),
+              // A card that trains a skill the reader put in focus carries
+              // its mark; a tap says what it means.
+              skillOf: (pill) => skillMarkOf(pill, app.skills),
+              onSkill: (pill, skill) =>
+                  showSkillMarkSheet(context, app, skill, cardId: pill.id),
               answerFor: app.answerFor,
               onAnswer: (id, response, confidence, reason) => app.recordAnswer(
                 id,

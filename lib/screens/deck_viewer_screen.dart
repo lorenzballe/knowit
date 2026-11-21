@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/skill_levels.dart';
 import '../l10n/l10n.dart';
 
 import '../models/pill.dart';
@@ -10,6 +11,7 @@ import '../widgets/ui.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/path_door.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/skill_mark.dart';
 import '../widgets/glass_round.dart';
 
 /// A full-screen re-read of a set of cards.
@@ -297,6 +299,15 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                       setState(() {});
                     },
                     onShare: (pill) => showShareSheet(context, pill),
+                    // A card that trains a skill the reader put in focus
+                    // carries its mark, here as on Today.
+                    skillOf: (pill) => skillMarkOf(pill, widget.app.skills),
+                    onSkill: (pill, skill) => showSkillMarkSheet(
+                      context,
+                      widget.app,
+                      skill,
+                      cardId: pill.id,
+                    ),
                   ),
                 ),
               ),

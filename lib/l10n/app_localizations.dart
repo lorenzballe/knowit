@@ -2580,10 +2580,10 @@ abstract class AppLocalizations {
   /// **'learn'**
   String get skillsTitleMark;
 
-  /// Line under skillsTitle: why we ask. Picking changes nothing in the app; it tells the team what to write.
+  /// Line under skillsTitle: each card read raises the reader's level in the skills it trains, and a card that trains a skill they picked carries that skill's mark.
   ///
   /// In en, this message translates to:
-  /// **'Pick what you want to get better at: the cards picked for you will lean towards it.'**
+  /// **'Every card you read moves you up. Cards that train what you pick will carry its mark.'**
   String get skillsLine;
 
   /// Button that closes the skills screen.
@@ -2591,6 +2591,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get skillsDone;
+
+  /// Small capitals pill on a skill the reader picked (What to learn): the cards picked for them lean towards it, and cards that train it carry its mark. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'IN FOCUS'**
+  String get skillsFocus;
+
+  /// The reader's level in a skill, 1 to 5, from the cards they read that train it. Followed by " · " and the number of cards (nCards).
+  ///
+  /// In en, this message translates to:
+  /// **'Level {n}'**
+  String skillLevel(int n);
+
+  /// Small capitals over a skill's name, on the sheet a card's skill mark opens: the card trains this skill.
+  ///
+  /// In en, this message translates to:
+  /// **'THIS CARD TRAINS'**
+  String get skillMarkKicker;
+
+  /// What a screen reader says for the mark a card carries when it trains a skill the reader picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Trains {skill}'**
+  String skillMarkLabel(String skill);
+
+  /// On the sheet a card's skill mark opens: the skill is one the reader picked, and cards like this raise their level in it.
+  ///
+  /// In en, this message translates to:
+  /// **'One of the skills you put in focus. Every card like this one moves you up.'**
+  String get skillMarkBody;
+
+  /// Button on that sheet: opens What to learn, where each skill shows the reader's level.
+  ///
+  /// In en, this message translates to:
+  /// **'See your levels'**
+  String get skillMarkOpen;
 
   /// Profile heading over the skills the reader picked, which opens the skills screen.
   ///

@@ -1929,13 +1929,47 @@
  "@skillsTitleMark": {
   "description": "The one word of skillsTitle painted in colour. Must appear in skillsTitle exactly as written."
  },
- "skillsLine": "Pick what you want to get better at: the cards picked for you will lean towards it.",
+ "skillsLine": "Every card you read moves you up. Cards that train what you pick will carry its mark.",
  "@skillsLine": {
-  "description": "Line under skillsTitle: why we ask. Picking changes nothing in the app; it tells the team what to write."
+  "description": "Line under skillsTitle: each card read raises the reader's level in the skills it trains, and a card that trains a skill they picked carries that skill's mark."
  },
  "skillsDone": "Done",
  "@skillsDone": {
   "description": "Button that closes the skills screen."
+ },
+ "skillsFocus": "IN FOCUS",
+ "@skillsFocus": {
+  "description": "Small capitals pill on a skill the reader picked (What to learn): the cards picked for them lean towards it, and cards that train it carry its mark. Short."
+ },
+ "skillLevel": "Level {n}",
+ "@skillLevel": {
+  "description": "The reader's level in a skill, 1 to 5, from the cards they read that train it. Followed by \" · \" and the number of cards (nCards).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "skillMarkKicker": "THIS CARD TRAINS",
+ "@skillMarkKicker": {
+  "description": "Small capitals over a skill's name, on the sheet a card's skill mark opens: the card trains this skill."
+ },
+ "skillMarkLabel": "Trains {skill}",
+ "@skillMarkLabel": {
+  "description": "What a screen reader says for the mark a card carries when it trains a skill the reader picked.",
+  "placeholders": {
+   "skill": {
+    "type": "String"
+   }
+  }
+ },
+ "skillMarkBody": "One of the skills you put in focus. Every card like this one moves you up.",
+ "@skillMarkBody": {
+  "description": "On the sheet a card's skill mark opens: the skill is one the reader picked, and cards like this raise their level in it."
+ },
+ "skillMarkOpen": "See your levels",
+ "@skillMarkOpen": {
+  "description": "Button on that sheet: opens What to learn, where each skill shows the reader's level."
  },
  "skillsRowTitle": "What you want to learn",
  "@skillsRowTitle": {

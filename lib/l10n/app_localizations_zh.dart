@@ -1783,10 +1783,32 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skillsTitleMark => '学';
 
   @override
-  String get skillsLine => '选出你想提升的方面，为你挑选的卡片会向它倾斜。';
+  String get skillsLine => '每读一张卡片都会让你升级。训练你所选能力的卡片会带有它的标记。';
 
   @override
   String get skillsDone => '完成';
+
+  @override
+  String get skillsFocus => '专注中';
+
+  @override
+  String skillLevel(int n) {
+    return '等级 $n';
+  }
+
+  @override
+  String get skillMarkKicker => '这张卡片训练';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return '训练$skill';
+  }
+
+  @override
+  String get skillMarkBody => '这是你设为专注的能力之一。每读一张这样的卡片，你都会升级。';
+
+  @override
+  String get skillMarkOpen => '查看你的等级';
 
   @override
   String get skillsRowTitle => '想学的内容';

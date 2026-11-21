@@ -1793,10 +1793,32 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skillsTitleMark => '배우고';
 
   @override
-  String get skillsLine => '더 잘하고 싶은 것을 고르세요. 당신을 위해 고르는 카드가 그쪽으로 기울어져요.';
+  String get skillsLine => '카드를 읽을 때마다 레벨이 올라가요. 고른 것을 훈련하는 카드에는 그 표시가 붙어요.';
 
   @override
   String get skillsDone => '완료';
+
+  @override
+  String get skillsFocus => '집중';
+
+  @override
+  String skillLevel(int n) {
+    return '레벨 $n';
+  }
+
+  @override
+  String get skillMarkKicker => '이 카드가 훈련하는 것';
+
+  @override
+  String skillMarkLabel(String skill) {
+    return '$skill 훈련';
+  }
+
+  @override
+  String get skillMarkBody => '집중하기로 고른 능력 중 하나예요. 이런 카드를 읽을 때마다 레벨이 올라가요.';
+
+  @override
+  String get skillMarkOpen => '레벨 보기';
 
   @override
   String get skillsRowTitle => '배우고 싶은 것';
