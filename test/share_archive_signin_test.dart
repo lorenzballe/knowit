@@ -392,7 +392,15 @@ void main() {
         tester.getRect(find.byType(DayPicture)).bottom,
         lessThan(share.top),
       );
-      expect(find.byType(SingleChildScrollView), findsNothing);
+      // Nothing of the sheet scrolls. (The shelf behind it is the day's
+      // cards, and a card in words there may scroll its own words.)
+      expect(
+        find.descendant(
+          of: find.byType(BottomSheet),
+          matching: find.byType(SingleChildScrollView),
+        ),
+        findsNothing,
+      );
 
       await tester.tap(find.byKey(const ValueKey('share-day-close')));
       await _settle(tester);
