@@ -108,15 +108,17 @@ function build() {
 
   // Step 0: the everyday scale, a tank.
   const tank = Kit.mk('g', {}, svg);
-  const tw = Math.min(W * .5, H * .38), th = H * .5, tx = W / 2 - tw / 2, ty = H * .2;
+  // a squat storage tank and its caption, centred, filling most of the box
+  const tw = W * .6, ry = tw * .1, th = Math.max(tw * .3, H * .83 - 2 * ry - f * 3.2), tx = W / 2 - tw / 2;
+  const ty = Math.max(ry + 2, (H - (th + 2 * ry + f * 3.2)) / 2 + ry);
   Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, fill: '#c9d3e0'}, tank);
   Kit.mk('rect', {x: tx + tw * .06, y: ty + th * .2, width: tw * .88, height: th * .76, fill: '#2f7fd6'}, tank);
-  Kit.mk('ellipse', {cx: W / 2, cy: ty, rx: tw / 2, ry: tw * .12, fill: '#e8eef6'}, tank);
-  Kit.mk('ellipse', {cx: W / 2, cy: ty + th, rx: tw / 2, ry: tw * .12, fill: '#c9d3e0'}, tank);
+  Kit.mk('ellipse', {cx: W / 2, cy: ty, rx: tw / 2, ry, fill: '#e8eef6'}, tank);
+  Kit.mk('ellipse', {cx: W / 2, cy: ty + th, rx: tw / 2, ry, fill: '#c9d3e0'}, tank);
   for (let i = 1; i < 4; i++) Kit.mk('line', {x1: tx, x2: tx + tw, y1: ty + th * i / 4, y2: ty + th * i / 4, stroke: '#8a98ab', 'stroke-width': 2}, tank);
-  const drop = Kit.mk('circle', {cx: W / 2, cy: ty + th * .6, r: tw * .07, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-dasharray': '4 3'}, tank);
-  txt(tank, W / 2, ty + th + tw * .12 + f * 1.8, 'Contaminated water,', f, {'text-anchor': 'middle'});
-  txt(tank, W / 2, ty + th + tw * .12 + f * 3.2, 'stored in tanks', f, {'text-anchor': 'middle'});
+  const drop = Kit.mk('circle', {cx: W / 2, cy: ty + th * .6, r: Math.min(tw, H * .38) * .07, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-dasharray': '4 3'}, tank);
+  txt(tank, W / 2, ty + th + ry + f * 1.5, 'Contaminated water,', f, {'text-anchor': 'middle'});
+  txt(tank, W / 2, ty + th + ry + f * 2.9, 'stored in tanks', f, {'text-anchor': 'middle'});
   els.tank = tank; els.dropXY = [W / 2, ty + th * .6];
 
   // Step 1+: the tiny scale.
