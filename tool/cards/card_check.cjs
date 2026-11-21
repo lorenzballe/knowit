@@ -1,5 +1,5 @@
 // Photographs cards on three phones and reports what the eye would catch: something spilling out of
-// the card, the card's column overflowing, labels in a drawing overlapping, a big empty band.
+// the card, the card's column overflowing, labels in a drawing overlapping, words covered, a big empty band.
 //
 //   node tool/cards/card_check.cjs docs/cards/prototipi/giro-3.html [out-dir]      a page of prototypes
 //   node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html [out-dir]     one free card
@@ -58,6 +58,29 @@ function inspect() {
   for (let a = 0; a < boxes.length; a++) for (let c = a + 1; c < boxes.length; c++) { const A = boxes[a].b, B = boxes[c].b; if (A.left < B.right - 2 && B.left < A.right - 2 && A.top < B.bottom - 2 && B.top < A.bottom - 2) { issues.push(`pieces overlap: "${boxes[a].e.textContent.trim().slice(0, 20)}" / "${boxes[c].e.textContent.trim().slice(0, 20)}"`); a = boxes.length; break; } }
   const texts = [...card.querySelectorAll('svg text')].filter(t => { const s = getComputedStyle(t); return s.display !== 'none' && s.visibility !== 'hidden' && +s.opacity !== 0 && +(t.getAttribute('fill-opacity') ?? 1) !== 0 && !t.closest('[opacity="0"]'); }).map(t => ({t: t.textContent, b: t.getBoundingClientRect()})).filter(x => x.b.width);
   for (let a = 0; a < texts.length; a++) for (let c = a + 1; c < texts.length; c++) { const A = texts[a].b, B = texts[c].b; if (A.left < B.right && B.left < A.right && A.top < B.bottom && B.top < A.bottom) { issues.push(`labels overlap: "${texts[a].t}" / "${texts[c].t}"`); a = texts.length; break; } }
+  // Words covered, judged on what is painted, not on boxes: a drawing's label on the column's words, words
+  // on words, a drawing drawn past its own box over the words (a box on a box that paints nothing there is no fault).
+  if (inn) {
+    const pe = document.createElement('style'); pe.textContent = '*{pointer-events:auto!important} svg *{pointer-events:visiblePainted!important}'; document.head.appendChild(pe);
+    const alpha = c => { const m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return c === 'none' || c === 'transparent' ? 0 : 1; const q = m[1].split(/[ ,/]+/).filter(Boolean); return q.length > 3 ? parseFloat(q[3]) : 1; };
+    const seen = el => { for (let e = el; e && e !== document.body; e = e.parentElement) { const st = getComputedStyle(e); if (st.display === 'none' || st.visibility === 'hidden' || +st.opacity < 0.05 || e.classList.contains('gone') || e.getAttribute('opacity') === '0') return false; } return true; };
+    const inked = el => { const st = getComputedStyle(el); return alpha(st.color) > 0.05 || st.backgroundClip === 'text' || st.webkitBackgroundClip === 'text'; };
+    const paints = g => { const st = getComputedStyle(g); let o = 1; for (let e = g; e && e.tagName !== 'svg'; e = e.parentElement) o *= +getComputedStyle(e).opacity; const f = (st.fill || '').startsWith('url') ? 1 : alpha(st.fill), k = (st.stroke || '').startsWith('url') ? 1 : alpha(st.stroke); return o * Math.max(f * +st.fillOpacity, parseFloat(st.strokeWidth) > 0 ? k * +st.strokeOpacity : 0) >= 0.25; };
+    const meet = (A, B) => ({l: Math.max(A.left, B.left), r: Math.min(A.right, B.right), t: Math.max(A.top, B.top), b: Math.min(A.bottom, B.bottom)});
+    const both = (I, A, B) => { let n = 0; for (let i = 0; i < 5; i++) for (let j = 0; j < 5; j++) { const at = document.elementsFromPoint(I.l + (I.r - I.l) * (i + .5) / 5, I.t + (I.b - I.t) * (j + .5) / 5); if (at.includes(A) && at.includes(B) && ++n >= 2) return true; } return false; };
+    const over = (A, B) => { const wv = Math.min(A.right, B.right) - Math.max(A.left, B.left), hv = Math.min(A.bottom, B.bottom) - Math.max(A.top, B.top); return wv > 4 && hv > .35 * Math.min(A.height, B.height) && hv > 3; };
+    const words = [], tw = document.createTreeWalker(inn, NodeFilter.SHOW_TEXT);
+    for (let n = tw.nextNode(); n; n = tw.nextNode()) { const el = n.parentElement; if (!n.textContent.trim() || !el || el.closest('svg') || el.closest('.label') || !seen(el) || !inked(el)) continue; const rg = document.createRange(); rg.selectNodeContents(n); for (const b of rg.getClientRects()) if (b.width > 2 && b.height > 2) words.push({el, t: n.textContent.trim().slice(0, 24), b}); }
+    const marks = [...inn.querySelectorAll('svg text')].filter(t => t.textContent.trim() && seen(t) && paints(t)).map(t => ({el: t, t: t.textContent.trim().slice(0, 24), b: t.getBoundingClientRect()}));
+    for (const m of marks) { const w = words.find(w => over(m.b, w.b) && both(meet(m.b, w.b), m.el, w.el)); if (w) { issues.push(`a drawing's label covers the words: "${m.t}" / "${w.t}"`); break; } }
+    words: for (let a = 0; a < words.length; a++) for (let c = a + 1; c < words.length; c++) { const A = words[a], B = words[c]; if (A.el === B.el || A.el.contains(B.el) || B.el.contains(A.el)) continue; if (over(A.b, B.b) && both(meet(A.b, B.b), A.el, B.el)) { issues.push(`words cover words: "${A.t}" / "${B.t}"`); break words; } }
+    spill: for (const svg of inn.querySelectorAll('svg')) { if (svg.parentElement.closest('svg') || svg.closest('.label') || !seen(svg)) continue; const sb = svg.getBoundingClientRect(); if (sb.width < 20) continue;
+      for (const g of svg.querySelectorAll('path,rect,circle,ellipse,line,polyline,polygon,text,image,use')) { if (g.closest('defs,clipPath,mask,pattern,marker,symbol') || !seen(g) || (!g.matches('image,use') && !paints(g))) continue; const b = g.getBoundingClientRect();
+        if (b.width < 2 && b.height < 2 || !(b.bottom > sb.bottom + 4 || b.top < sb.top - 4 || b.left < sb.left - 4 || b.right > sb.right + 4)) continue;
+        const w = words.find(w => { const I = meet(b, w.b); return I.r - I.l > 4 && I.b - I.t > 4 && !(I.t >= sb.top - 4 && I.b <= sb.bottom + 4 && I.l >= sb.left - 4 && I.r <= sb.right + 4) && both(I, g, w.el); });
+        if (w) { issues.push(`the drawing spills over the words: "${w.t}"`); break spill; } } }
+    pe.remove();
+  }
   const kids = inn ? [...inn.children].filter(k => !k.classList.contains('gone') && getComputedStyle(k).display !== 'none') : [];
   for (let k = 1; k < kids.length; k++) { const gap = kids[k].getBoundingClientRect().top - kids[k - 1].getBoundingClientRect().bottom; if (gap > cb.height * .22 && !kids[k - 1].classList.contains('stagebox')) issues.push(`empty band of ${Math.round(gap)}px`); }
   // How tall the drawing is, and how much of the column's foot is left empty: held start to end by the caller.
