@@ -31,15 +31,19 @@
 const RIGHT = 1, NAMES = ['North-East crater', 'South-East crater'];
 const LAVA = '#ff5a1f', HOT = '#ffc23d';
 const st = {e: 3292, n: 0, pick: -1, done: false, flash: 0};
-let fast = false;
+let fast = false, fitted = null;
 
 function draw() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
-  const {W, H, f: f0} = Kit.fitSvg(svg);
+  // Left too little room to draw again (a small phone), it keeps the size it was drawn at, shown smaller, whole.
+  const keep = fitted && fitted.H >= 100 && svg.getBoundingClientRect().height < 100;
+  if (keep) svg.dataset.kept = '1';
+  const {W, H, f: f0} = keep ? fitted : (fitted = Kit.fitSvg(svg));
   const f = Math.max(f0, 12);
-  const y = e => H * 0.86 - (e - 3150) / (3380 - 3150) * (H * 0.86 - H * 0.16);
+  // The ground under the cones stays deep enough for the craters' names, whole, above the foot.
+  const yS = Math.min(H * 0.86 - 20 / 230 * H * 0.7, H - 1 - f * 2.47);
+  const y = e => H * 0.16 + (3380 - e) / 210 * (yS - H * 0.16);
   const ink = 'var(--k)', card = 'var(--c)';
-  const yS = y(3170);
   // massif
   Kit.mk('path', {d: `M0,${H} L0,${y(3070)} Q${W*.12},${y(3150)} ${W*.14},${yS} L${W*.88},${yS} Q${W*.92},${y(3140)} ${W},${y(3060)} L${W},${H} Z`,
     style: 'fill:color-mix(in srgb,var(--k) 72%,var(--c))'}, svg);
@@ -80,10 +84,11 @@ function draw() {
     style: `font:700 ${f*.85}px var(--body);fill:${ink}${cramped ? `;paint-order:stroke;stroke:${card};stroke-width:3px;stroke-linejoin:round` : ''}`}, svg);
   rl.textContent = '2018 record · 3,326 m';
   // crater names inside cones
+  const l2 = Math.min(yS + f * 2.95, H - 1 - f * .2);
   const lab = (x, t1, t2) => {
-    const t = Kit.mk('text', {x, y: yS + f * 1.6, 'text-anchor': 'middle', style: `font:800 ${f*.95}px var(--body);fill:var(--c)`}, svg);
+    const t = Kit.mk('text', {x, y: l2 - f * 1.35, 'text-anchor': 'middle', style: `font:800 ${f*.95}px var(--body);fill:var(--c)`}, svg);
     t.textContent = t1;
-    const u = Kit.mk('text', {x, y: yS + f * 2.95, 'text-anchor': 'middle', style: `font:600 ${f*.8}px var(--body);fill:var(--c);opacity:.85`}, svg);
+    const u = Kit.mk('text', {x, y: l2, 'text-anchor': 'middle', style: `font:600 ${f*.8}px var(--body);fill:var(--c);opacity:.85`}, svg);
     u.textContent = t2;
   };
   lab(neX, 'North-East', 'crater');

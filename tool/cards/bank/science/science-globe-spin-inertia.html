@@ -49,7 +49,7 @@ const G = [
   {I: 1, w: 0, p: 0.3, name: 'LIGHT', mass: 'mass ×1'},
   {I: 10, w: 0, p: 0.3, name: 'HEAVY', mass: 'mass ×10'}
 ];
-let pushing = false, built = null;
+let pushing = false, built = null, fitted = null;
 
 function arrowPath(x1, y, x2, h) {
   return `M${x1},${y} L${x2},${y} M${x2 - h},${y - h * .7} L${x2},${y} L${x2 - h},${y + h * .7}`;
@@ -58,9 +58,15 @@ function arrowPath(x1, y, x2, h) {
 Kit.onShow.card = () => {
   const svg = Kit.$('svg');
   while (svg.firstChild) svg.firstChild.remove();
-  const {W, H, f} = Kit.fitSvg(svg);
+  // Left less room than it was drawn for, under 100 px (a small phone), it keeps that drawing, shown smaller, whole.
+  const now = svg.getBoundingClientRect().height, keep = fitted && now < 100 && now < fitted.H - 1;
+  if (keep) svg.dataset.kept = '1';
+  let {W, H, f} = keep ? fitted : (fitted = Kit.fitSvg(svg));
   const fs = Math.max(f, 12);
-  const R = Math.max(10, Math.min(W * 0.17, (H - fs * 6.5) / 2));
+  // The globes with their names, bars and spins, whole: where they do not fit, drawn taller and shown smaller.
+  const need = fs * 7.1 + 20;
+  if (H < need) { W *= need / H; H = need; svg.setAttribute('viewBox', `0 0 ${W} ${H}`); }
+  const R = Math.max(10, Math.min(W * 0.17, (H - fs * 7.1) / 2));
   const cy = fs * 2.6 + R;
   built = G.map((g, i) => {
     const cx = W * (i ? 0.73 : 0.27);

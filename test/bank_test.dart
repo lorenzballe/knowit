@@ -103,6 +103,7 @@ void main() {
           (k, _) =>
               k == 'reference' ||
               k == 'written' ||
+              k == 'checked' ||
               k == 'disabled' ||
               k == 'source_kind' ||
               k == 'quote',

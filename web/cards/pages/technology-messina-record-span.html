@@ -184,8 +184,11 @@ const Turn = {
   // ---------- back ----------
   function drawBack(animate) {
     svg2.innerHTML = '';
-    const f = Kit.fitSvg(svg2), W = f.W, H = f.H, fs = fsOf(W), lh = fs * 1.5, pad = 1;
+    const f = Kit.fitSvg(svg2), fs = fsOf(f.W), lh = fs * 1.5, pad = 1;
     const fixed = 2 * lh + 10 + 14 + fs * 1.6 + 14 + lh;
+    // Too short for the span with its notes above and below (a small phone): drawn taller, shown smaller, whole.
+    let W = f.W, H = f.H;
+    if (H < fixed + 20) { W *= (fixed + 20) / H; H = fixed + 20; svg2.setAttribute('viewBox', `0 0 ${W} ${H}`); }
     const T = Math.max(18, Math.min(58, W * .14, H - fixed));
     const back = T * .7, far = Math.max(TRUE, guess);
     const x0 = pad + back, s = (W - pad - back - x0) / far, X = m => x0 + m * s;

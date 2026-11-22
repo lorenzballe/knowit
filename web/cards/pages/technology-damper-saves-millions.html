@@ -90,7 +90,15 @@ function setReal(v){
 function paint(anim){
   if (!geo) return;
   if (S.guess === null){ setGuessY(0); R.gLbl.textContent = ''; R.gLine.style.opacity = .4; }
-  else { setGuessY(S.guess); R.gLbl.textContent = (S.done ? 'you ' : '') + money(S.guess); R.gLine.style.opacity = 1; R.hint.style.opacity = 0; }
+  else {
+    setGuessY(S.guess); R.gLbl.textContent = (S.done ? 'you ' : '') + money(S.guess); R.gLine.style.opacity = 1; R.hint.style.opacity = 0;
+    // Too long for the room right of the bars: "you" goes on the line above, never past the edge.
+    const x = R.gLbl.getAttribute('x');
+    if (S.done && +x + R.gLbl.getComputedTextLength() > geo.W - 2) {
+      R.gLbl.textContent = '';
+      [['you', -1.15], [money(S.guess), 1.15]].forEach(([t, dy]) => { Kit.mk('tspan', {x, dy: geo.f * dy}, R.gLbl).textContent = t; });
+    }
+  }
   if (S.done){
     R.gBar.style.fillOpacity = 0; R.gBar.style.strokeDasharray = '6 5';
     if (anim && !Kit.calm){

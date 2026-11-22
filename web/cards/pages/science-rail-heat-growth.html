@@ -35,7 +35,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 let T = 0, done = false, lastTen = 0;
-let G = null; // drawn elements
+let G = null, fitted = null; // drawn elements
 const svg = Kit.$('pic'), slider = Kit.$('heat');
 
 function mix(a, b, t){
@@ -56,8 +56,16 @@ function railShape(parent, x, y, w, h, cls){
 
 function draw(){
   while (svg.firstChild) svg.removeChild(svg.firstChild);
-  const {W, H, f: f0} = Kit.fitSvg(svg);
-  const f = Math.max(13, Math.min(f0, H/14, W/20));
+  // Left too little room to draw again (a small phone), it keeps the size it was drawn at, shown smaller, whole.
+  const keep = fitted && fitted.H >= 100 && svg.getBoundingClientRect().height < 100;
+  if (keep) svg.dataset.kept = '1';
+  let {W, H, f: f0} = keep ? fitted : (fitted = Kit.fitSvg(svg));
+  // The magnified end holds its ruler and its numbers whole: the type a little smaller where the room is
+  // short, and where even that does not fit (a small picture), the whole drawn taller and shown smaller.
+  const need = f => 15.4 * f + Math.max(.9 * f, 12) + 2;
+  let f = Math.max(13, Math.min(f0, H/14, W/20));
+  while (f > 11 && need(f) > H) f = Math.max(11, f - .25);
+  if (need(f) > H) { W *= need(f) / H; H = need(f); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); }
   const ink = 'var(--k)';
   const L = W*.05, R = W*.95;
 

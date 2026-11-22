@@ -65,7 +65,11 @@ function paint() {
 }
 
 function draw() {
-  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const svg = Kit.$('pic');
+  // Left less room than it was drawn for, under 100 px (a small phone), it keeps that drawing, shown smaller, whole.
+  const hNow = svg.getBoundingClientRect().height;
+  if (G && hNow < 100 && hNow < G.H - 1) { svg.dataset.kept = '1'; place(); paint(); return; }
+  svg.innerHTML = '';
   const { W, H, f } = Kit.fitSvg(svg), fs = Math.max(f, 12);
   const sY = H * 0.24, floorY = H * 0.95;
   const cw = Math.min(W * 0.86, H * 1.1), hh = Math.max(H * 0.12, 40), r = hh * 0.62;
@@ -107,14 +111,17 @@ function draw() {
   const wa = arrowPts(wx, hh, hh + L, aW);
   Kit.mk('line', { x1: wa.line[0], y1: wa.line[1], x2: wa.line[2], y2: wa.line[3], stroke: '#ff7a6b', 'stroke-width': 4, 'stroke-linecap': 'round' }, craft);
   Kit.mk('polygon', { points: wa.head, fill: '#ff7a6b' }, craft);
-  Kit.mk('text', { x: wx - aW - 4, y: hh + L / 2 + fs * 0.35, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#ff9a8e' }, craft).textContent = cw / 2 - cw * 0.1 > fs * 4 ? 'weight' : '';
+  const wl = Kit.mk('text', { x: wx - aW - 4, y: hh + L / 2 + fs * 0.35, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#ff9a8e' }, craft);
+  wl.textContent = cw / 2 - cw * 0.1 > fs * 4 ? 'weight' : '';
+  // left of its arrow where that is inside the picture, else on its right
+  if (W / 2 + wx - aW - 4 - wl.getComputedTextLength() < 2) { wl.setAttribute('text-anchor', 'start'); wl.setAttribute('x', wx + aW + 4); }
   // lift arrow, grows with gasoline, from hull top on the right
   const liftX = cw / 2 - cw * 0.1;
   const liftLine = Kit.mk('line', { stroke: '#f2b134', 'stroke-width': 4, 'stroke-linecap': 'round' }, craft);
   const liftHead = Kit.mk('polygon', { fill: '#f2b134' }, craft);
   const liftLab = Kit.mk('text', { x: liftX - aW - 4, y: 0, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#f2b134', stroke: '#061a30', 'stroke-width': 3, 'paint-order': 'stroke' }, craft);
   liftLab.textContent = 'lift';
-  G = { craft, gas, gasLab, ih, liftLine, liftHead, liftLab, liftX, aw: aW, L, fs, cx: W / 2,
+  G = { H, craft, gas, gasLab, ih, liftLine, liftHead, liftLab, liftX, aw: aW, L, fs, cx: W / 2,
         surfTop: sY - hh * 0.25, floorTop: floorY - ch };
   place(); paint();
 }

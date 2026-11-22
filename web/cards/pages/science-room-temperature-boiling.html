@@ -95,9 +95,11 @@ Kit.onShow.card = () => {
       const ax = jx + jw * (.1 + .8 * Kit.rnd()), ay = jt + jw * .15 + (wt - jt - jw * .2) * Kit.rnd();
       R.air.push(Kit.mk('circle', {cx: ax, cy: ay, r: Math.max(fs * .17, 2.2), fill: ink}, svg));
     }
-    const rx = jx + jw + fs * .9, lh = fs * 1.6, ry = jt + Math.max((jh - lh * 2) / 2, fs);
+    // The three readouts beside the jar, whole above the foot: their lines closer where the jar is short.
+    const rx = jx + jw + fs * .9, lh = Math.max(fs * 1.25, Math.min(fs * 1.6, (jb - jt - fs * .96) / 2));
+    const ry = Math.min(jt + Math.max((jh - lh * 2) / 2, fs), jb - lh * 2 - fs * .25);
     R.tP = T('', {x: rx, y: ry}); R.tB = T('', {x: rx, y: ry + lh, fill: '#e0553b', 'font-weight': 800}); R.tW = T('', {x: rx, y: ry + lh * 2, fill: '#2f8fd8'});
-  } else { R.air = []; R.tP = T('', {}); R.tB = T('', {}); R.tW = T('', {}); R.bub = Kit.mk('g', {}, svg); G.w = null; }
+  } else { R.air = []; R.tP = T('', {display: 'none'}); R.tB = T('', {display: 'none'}); R.tW = T('', {display: 'none'}); R.bub = Kit.mk('g', {}, svg); G.w = null; }  // no jar, no readouts: none drawn in the corner
   update();
 };
 

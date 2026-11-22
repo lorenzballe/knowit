@@ -84,12 +84,15 @@ function draw(){
   mk('rect',{x:tx-r, y:ty0-r, width:2*r, height:by-ty0+r, rx:r, fill:'color-mix(in srgb, #fff 82%, var(--c))', stroke:ink, 'stroke-width':sw});
   mk('circle',{cx:tx, cy:by, r:rb, fill:'#d8432a', stroke:ink, 'stroke-width':sw});
   const merc = mk('rect',{x:tx-r*0.5, width:r, rx:r*0.5, fill:'#d8432a'});
-  const lh = fs*1.22, labs = [];
+  const lh = fs*1.22, labs = [], vals = [];
   // label block centres, pushed apart so blocks never overlap
-  const gap = lh*2.7, ycs = M.map(m => yOf(m.mark));
+  // and kept whole between the top edge and the foot, closer together where the room is short
+  const top = lh*0.5 + fs*0.95 + 1, lim = H - lh*1.0;
+  const gap = Math.max(lh*2.2, Math.min(lh*2.7, (lim - top) / (M.length - 1))), ycs = M.map(m => yOf(m.mark));
   const order = M.map((m,i) => i).sort((a,b) => ycs[a] - ycs[b]);
+  ycs[order[0]] = Math.max(ycs[order[0]], top);
   for (let k = 1; k < order.length; k++) ycs[order[k]] = Math.max(ycs[order[k]], ycs[order[k-1]] + gap);
-  const last = order[order.length-1], lim = H - lh*1.0;
+  const last = order[order.length-1];
   if (ycs[last] > lim) {
     ycs[last] = lim;
     for (let k = order.length-2; k >= 0; k--) ycs[order[k]] = Math.min(ycs[order[k]], ycs[order[k+1]] - gap);
@@ -103,8 +106,11 @@ function draw(){
     mk('circle',{cx:lx+fs*0.42, cy:dy, r:fs*0.36, fill:m.c}, g);
     const a = mk('text',{x:lx+fs*1.1, y:yc-lh*0.5, class:'nm', 'font-size':fs}, g); a.textContent = m.n;
     const b = mk('text',{x:lx, y:yc+lh*0.6, class:'val', 'font-size':fs}, g); b.textContent = m.v;
-    labs.push(g);
+    labs.push(g); vals.push(b);
   });
+  // The values beside the tube, a little smaller when the longest would run past the edge.
+  const lx0 = tx + r*2.2, wide = Math.max(...vals.map(v => v.getComputedTextLength()));
+  if (lx0 + wide > W - 2) vals.forEach(v => v.setAttribute('font-size', Math.max(9.5, fs * (W - 2 - lx0) / wide)));
   // hint arrow
   let hint = null;
   if (!dragged) {

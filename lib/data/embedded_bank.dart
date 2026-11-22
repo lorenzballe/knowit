@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611211314,
- "built": "2026-11-21T13:14:02Z",
+ "version": 202611221718,
+ "built": "2026-11-22T17:18:28Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -34594,11 +34594,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A card titled 'One mine' asks what share of the world's uranium came from the McArthur River mine. The reader sets a guess with -1% and +1% buttons on a 0 to 100 scale, then taps Check to reveal the answer of 15%.",
-    "page": "pages/economics-one-mine-share.html?v=bfa634ded7f4",
+    "page": "pages/economics-one-mine-share.html?v=d74e39d82379",
     "bytes": 8554,
     "thumbs": {
-     "front": "thumbs/economics-one-mine-share-front.webp?v=bfa634ded7f4",
-     "back": "thumbs/economics-one-mine-share-back.webp?v=bfa634ded7f4"
+     "front": "thumbs/economics-one-mine-share-front.webp?v=d74e39d82379",
+     "back": "thumbs/economics-one-mine-share-back.webp?v=d74e39d82379"
     }
    },
    "source": "Geopop, “Uranio: la risorsa chiave per la fissione nucleare tra estrazione e Paesi produttori più ricchi” (YouTube, 2021)",
@@ -55320,11 +55320,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card titled The longest elevator fall, with a photo of the Empire State Building and a red arrow marking the 75th floor. The reader drags an elevator down the shaft from the 75th floor to the ground.",
-    "page": "pages/history-elevator-fall-record.html?v=d17577f7edc3",
-    "bytes": 8717,
+    "page": "pages/history-elevator-fall-record.html?v=65b8ff77d988",
+    "bytes": 10248,
     "thumbs": {
-     "front": "thumbs/history-elevator-fall-record-front.webp?v=d17577f7edc3",
-     "back": "thumbs/history-elevator-fall-record-back.webp?v=d17577f7edc3"
+     "front": "thumbs/history-elevator-fall-record-front.webp?v=65b8ff77d988",
+     "back": "thumbs/history-elevator-fall-record-back.webp?v=65b8ff77d988"
     }
    },
    "source": "Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022)",
@@ -56434,11 +56434,11 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Quiz card titled 'Franklin's cannons at dawn' asking what bizarre measures Benjamin Franklin proposed in 1784 to save candle oil. Four choices: move every clock an hour forward; make candles cheaper; fire cannons at dawn and tax window shutters; cannons at dawn with a shutter tax. The reader picks one and rates their confidence.",
     "graded": false,
-    "page": "pages/history-franklin-cannon-shutters.html?v=b119114d68e7",
-    "bytes": 8923,
+    "page": "pages/history-franklin-cannon-shutters.html?v=70c63cc515da",
+    "bytes": 9563,
     "thumbs": {
-     "front": "thumbs/history-franklin-cannon-shutters-front.webp?v=b119114d68e7",
-     "back": "thumbs/history-franklin-cannon-shutters-back.webp?v=b119114d68e7"
+     "front": "thumbs/history-franklin-cannon-shutters-front.webp?v=70c63cc515da",
+     "back": "thumbs/history-franklin-cannon-shutters-back.webp?v=70c63cc515da"
     }
    },
    "source": "Geopop, “Dall'ora legale all'ora solare: i pro e contro del cambio orario e perché si parla di abolizione” (YouTube, 2022)",
@@ -58574,11 +58574,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card titled 'Kiev, the cradle of Rus'' asking why Russia sees Ukraine as a wound, not just a neighbor. It shows Kiev as capital of the early Rus' state, with a prompt to draw today's border and a timeline to drag as Kiev's state grows.",
-    "page": "pages/history-kiev-cradle-rus.html?v=6999ea44b436",
-    "bytes": 8805,
+    "page": "pages/history-kiev-cradle-rus.html?v=d11460d69500",
+    "bytes": 8957,
     "thumbs": {
-     "front": "thumbs/history-kiev-cradle-rus-front.webp?v=6999ea44b436",
-     "back": "thumbs/history-kiev-cradle-rus-back.webp?v=6999ea44b436"
+     "front": "thumbs/history-kiev-cradle-rus-front.webp?v=d11460d69500",
+     "back": "thumbs/history-kiev-cradle-rus-back.webp?v=d11460d69500"
     }
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
@@ -64133,11 +64133,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A slider for guessing how far the top of the Twin Towers swayed sideways when the planes hit, from 10 cm to 30 m. The reveal says the answer is about 30 cm, and that the impact itself did not bring the towers down.",
     "graded": false,
-    "page": "pages/history-towers-sway-30cm.html?v=a9c1da1dc16b",
-    "bytes": 8076,
+    "page": "pages/history-towers-sway-30cm.html?v=ed0fb83e625f",
+    "bytes": 8266,
     "thumbs": {
-     "front": "thumbs/history-towers-sway-30cm-front.webp?v=a9c1da1dc16b",
-     "back": "thumbs/history-towers-sway-30cm-back.webp?v=a9c1da1dc16b"
+     "front": "thumbs/history-towers-sway-30cm-front.webp?v=ed0fb83e625f",
+     "back": "thumbs/history-towers-sway-30cm-back.webp?v=ed0fb83e625f"
     }
    },
    "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
@@ -75752,11 +75752,11 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Card asking whether one 44 cl beer at 8.6% can push a driver over Italy's 0.5 g/L blood alcohol limit. A minus and plus counter lets the reader guess the breathalyzer reading 15 minutes later. The reveal shows 1.09 g/L.",
     "graded": false,
-    "page": "pages/human_body-one-strong-beer.html?v=8c816cbf1c8d",
-    "bytes": 9452,
+    "page": "pages/human_body-one-strong-beer.html?v=a8996c5e1bfe",
+    "bytes": 9817,
     "thumbs": {
-     "front": "thumbs/human_body-one-strong-beer-front.webp?v=8c816cbf1c8d",
-     "back": "thumbs/human_body-one-strong-beer-back.webp?v=8c816cbf1c8d"
+     "front": "thumbs/human_body-one-strong-beer-front.webp?v=a8996c5e1bfe",
+     "back": "thumbs/human_body-one-strong-beer-back.webp?v=a8996c5e1bfe"
     }
    },
    "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
@@ -102357,11 +102357,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card asks how Fermat's Last Theorem led to p-adic numbers, with a flag to drag to your guess of how many years the proof took.",
-    "page": "pages/maths-fermat-padic-numbers.html?v=a34b7976a1de",
-    "bytes": 7244,
+    "page": "pages/maths-fermat-padic-numbers.html?v=766bb3cef342",
+    "bytes": 8246,
     "thumbs": {
-     "front": "thumbs/maths-fermat-padic-numbers-front.webp?v=a34b7976a1de",
-     "back": "thumbs/maths-fermat-padic-numbers-back.webp?v=a34b7976a1de"
+     "front": "thumbs/maths-fermat-padic-numbers-front.webp?v=766bb3cef342",
+     "back": "thumbs/maths-fermat-padic-numbers-back.webp?v=766bb3cef342"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -103134,11 +103134,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Astute free card on the law of large numbers. It asks: what is the probability of losing money in 100 favorable bets? Each bet is a coin flip that wins $20 or loses $10. A draggable coin lets you run 100 bets.",
-    "page": "pages/maths-hundred-bets-safety.html?v=4e6923432067",
-    "bytes": 8945,
+    "page": "pages/maths-hundred-bets-safety.html?v=a63df29c4833",
+    "bytes": 9220,
     "thumbs": {
-     "front": "thumbs/maths-hundred-bets-safety-front.webp?v=4e6923432067",
-     "back": "thumbs/maths-hundred-bets-safety-back.webp?v=4e6923432067"
+     "front": "thumbs/maths-hundred-bets-safety-front.webp?v=a63df29c4833",
+     "back": "thumbs/maths-hundred-bets-safety-back.webp?v=a63df29c4833"
     }
    },
    "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
@@ -103177,11 +103177,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Coin-toss betting page: win $20 on heads, lose $10 on tails. A Toss 100 button runs 100 bets, drawing each run as a line, and the page asks what 100 tosses bring.",
-    "page": "pages/maths-hundred-good-bets.html?v=96a7f6555abd",
-    "bytes": 6709,
+    "page": "pages/maths-hundred-good-bets.html?v=f76aaa5a491e",
+    "bytes": 7250,
     "thumbs": {
-     "front": "thumbs/maths-hundred-good-bets-front.webp?v=96a7f6555abd",
-     "back": "thumbs/maths-hundred-good-bets-back.webp?v=96a7f6555abd"
+     "front": "thumbs/maths-hundred-good-bets-front.webp?v=f76aaa5a491e",
+     "back": "thumbs/maths-hundred-good-bets-back.webp?v=f76aaa5a491e"
     }
    },
    "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
@@ -105277,11 +105277,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A graph titled 'The logistic map' asks what happens when growth rate R passes 3. A control sets R, with marks at 2.5, 2.8, 3 and 3.4, and a Run button plays 30 years of population, which alternates between high and low levels once R is above 3.",
-    "page": "pages/maths-period-two-split.html?v=9d58e06ec235",
-    "bytes": 7917,
+    "page": "pages/maths-period-two-split.html?v=33178ca28fc8",
+    "bytes": 8279,
     "thumbs": {
-     "front": "thumbs/maths-period-two-split-front.webp?v=9d58e06ec235",
-     "back": "thumbs/maths-period-two-split-back.webp?v=9d58e06ec235"
+     "front": "thumbs/maths-period-two-split-front.webp?v=33178ca28fc8",
+     "back": "thumbs/maths-period-two-split-back.webp?v=33178ca28fc8"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -106595,11 +106595,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card titled Spoof numbers shows the number 22021 under a dark piece that can be tapped to lift its mask. Treating 22021 as prime makes its sigma total look exactly twice itself, so it seems perfect. Tapping reveals it is 19 squared times 61.",
-    "page": "pages/maths-spoof-perfect-numbers.html?v=65e864534453",
-    "bytes": 8541,
+    "page": "pages/maths-spoof-perfect-numbers.html?v=30ad52437048",
+    "bytes": 9747,
     "thumbs": {
-     "front": "thumbs/maths-spoof-perfect-numbers-front.webp?v=65e864534453",
-     "back": "thumbs/maths-spoof-perfect-numbers-back.webp?v=65e864534453"
+     "front": "thumbs/maths-spoof-perfect-numbers-front.webp?v=30ad52437048",
+     "back": "thumbs/maths-spoof-perfect-numbers-back.webp?v=30ad52437048"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -117413,11 +117413,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A cell is drawn on the page beneath the question 'What is a major consequence of radiation exposure?' Tapping the cell hits its DNA with radiation. The reveal says radiation can cause cancer by mutating cells.",
-    "page": "pages/medicine-radiation-cancer.html?v=3197e16655a7",
-    "bytes": 8735,
+    "page": "pages/medicine-radiation-cancer.html?v=edbbff2ad60a",
+    "bytes": 8886,
     "thumbs": {
-     "front": "thumbs/medicine-radiation-cancer-front.webp?v=3197e16655a7",
-     "back": "thumbs/medicine-radiation-cancer-back.webp?v=3197e16655a7"
+     "front": "thumbs/medicine-radiation-cancer-front.webp?v=edbbff2ad60a",
+     "back": "thumbs/medicine-radiation-cancer-back.webp?v=edbbff2ad60a"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -137309,9 +137309,9 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How much did the ground rise in two years after the 1538 eruption?",
-   "answer": "When Monte Nuovo erupted in 1538, the Campi Flegrei ground rose almost 20 metres in two years. Since 2016 it has risen about 80 cm: real, but some 25 times smaller.",
-   "move": "1538: ~20 m in 2 years. Since 2016: ~80 cm.",
+   "question": "How much did the ground rise in the two years before the 1538 eruption?",
+   "answer": "More than 10 metres: that is how far the Campi Flegrei ground rose in the two years before Monte Nuovo erupted in 1538. Since January 2016 it has risen about 1.3 m, in almost 11 years: real, but far slower.",
+   "move": "Before 1538: over 10 m in 2 years. Since 2016: about 1.3 m.",
    "keywords": [
     "campi flegrei",
     "monte nuovo",
@@ -137331,17 +137331,19 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two bars compare ground rise: almost 20 m in two years after the 1538 Monte Nuovo eruption, and about 80 cm since 2016. A small person figure gives scale. Tap the buttons to lift the ground and compare.",
-    "page": "pages/nature-campi-flegrei-uplift.html?v=7b82d73161d6",
-    "bytes": 7184,
+    "label": "Two bars compare how far the ground rose: more than 10 m in the two years before the 1538 Monte Nuovo eruption, and about 1.3 m since 2016. A small person figure gives scale. Tap the buttons to lift the ground and compare.",
+    "page": "pages/nature-campi-flegrei-uplift.html?v=f92a53cc2162",
+    "bytes": 7243,
     "thumbs": {
-     "front": "thumbs/nature-campi-flegrei-uplift-front.webp?v=7b82d73161d6",
-     "back": "thumbs/nature-campi-flegrei-uplift-back.webp?v=7b82d73161d6"
+     "front": "thumbs/nature-campi-flegrei-uplift-front.webp?v=f92a53cc2162",
+     "back": "thumbs/nature-campi-flegrei-uplift-back.webp?v=f92a53cc2162"
     }
    },
-   "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
-   "reference": "https://www.youtube.com/watch?v=D3ftPHDNXPg&t=838s",
-   "written": "2026-11-03"
+   "source": "INGV Osservatorio Vesuviano (2026)",
+   "reference": "https://www.ov.ingv.it/index.php/divulgazione/comprendere-i-campi-flegrei",
+   "source_kind": "institution",
+   "written": "2026-11-03",
+   "checked": "2026-11-22"
   },
   {
    "id": "nature-carbon-footprint-1",
@@ -141070,11 +141072,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Quiz page about Mount Etna's four active craters, asking the reader to tap the crater they think is the summit today. Each crater is a tap target on the volcano.",
-    "page": "pages/nature-etna-new-peak.html?v=2b77b078995a",
-    "bytes": 7323,
+    "page": "pages/nature-etna-new-peak.html?v=cf4c4fef3a8b",
+    "bytes": 7776,
     "thumbs": {
-     "front": "thumbs/nature-etna-new-peak-front.webp?v=2b77b078995a",
-     "back": "thumbs/nature-etna-new-peak-back.webp?v=2b77b078995a"
+     "front": "thumbs/nature-etna-new-peak-front.webp?v=cf4c4fef3a8b",
+     "back": "thumbs/nature-etna-new-peak-back.webp?v=cf4c4fef3a8b"
     }
    },
    "source": "Geopop, “Davvero l’Etna è cresciuto di 31 metri in pochi mesi? #shorts” (YouTube, 2021)",
@@ -143957,11 +143959,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Card titled Undersea Volcano asks how an explosive eruption of Marsili would lose its energy. A timeline sits below the text. Dragging it sets off an eruption 500 m down in the sea, with energy arrows spreading through the water column.",
-    "page": "pages/nature-marsili-water-shield.html?v=b70a88d78298",
-    "bytes": 11803,
+    "page": "pages/nature-marsili-water-shield.html?v=e3600ce9f16c",
+    "bytes": 11899,
     "thumbs": {
-     "front": "thumbs/nature-marsili-water-shield-front.webp?v=b70a88d78298",
-     "back": "thumbs/nature-marsili-water-shield-back.webp?v=b70a88d78298"
+     "front": "thumbs/nature-marsili-water-shield-front.webp?v=e3600ce9f16c",
+     "back": "thumbs/nature-marsili-water-shield-back.webp?v=e3600ce9f16c"
     }
    },
    "source": "Geopop, “Marsili: cosa accadrebbe in caso di eruzione del vulcano più grande d'Europa?” (YouTube, 2021)",
@@ -145985,11 +145987,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Titled Oyster Reefs, the page asks how much water a single oyster can filter in one day. A hold-to-feed button fills a grid of squares, each one litre of murky sea water, to show the scale.",
-    "page": "pages/nature-oyster-water-filter.html?v=a95e868f93c9",
-    "bytes": 9625,
+    "page": "pages/nature-oyster-water-filter.html?v=b00d12aecb99",
+    "bytes": 10041,
     "thumbs": {
-     "front": "thumbs/nature-oyster-water-filter-front.webp?v=a95e868f93c9",
-     "back": "thumbs/nature-oyster-water-filter-back.webp?v=a95e868f93c9"
+     "front": "thumbs/nature-oyster-water-filter-front.webp?v=b00d12aecb99",
+     "back": "thumbs/nature-oyster-water-filter-back.webp?v=b00d12aecb99"
     }
    },
    "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
@@ -148314,11 +148316,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A vertical sea-level scale with a 0 m line for today's sea level and a level 120 m below it. The question asks how much lower the sea was 20,000 years ago. Tapping locks 20 m of sea water into ice at a time, showing the sea dropping.",
-    "page": "pages/nature-sea-level-drop.html?v=38aa23c95ebb",
-    "bytes": 8288,
+    "page": "pages/nature-sea-level-drop.html?v=027209771f24",
+    "bytes": 8387,
     "thumbs": {
-     "front": "thumbs/nature-sea-level-drop-front.webp?v=38aa23c95ebb",
-     "back": "thumbs/nature-sea-level-drop-back.webp?v=38aa23c95ebb"
+     "front": "thumbs/nature-sea-level-drop-front.webp?v=027209771f24",
+     "back": "thumbs/nature-sea-level-drop-back.webp?v=027209771f24"
     }
    },
    "source": "Geopop, “LE ERE GLACIALI - VI SPIEGO COME, QUANDO E PERCHÉ AVVENGONO” (YouTube, 2020)",
@@ -149682,11 +149684,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Question: What pressure difference must a 100 m tall tree generate to lift water? A treetop can be dragged up until the tree stands 100 m tall, to show the height.",
-    "page": "pages/nature-tree-pressure-climb.html?v=31b23273fdfc",
-    "bytes": 8909,
+    "page": "pages/nature-tree-pressure-climb.html?v=6f3a41649a5e",
+    "bytes": 9163,
     "thumbs": {
-     "front": "thumbs/nature-tree-pressure-climb-front.webp?v=31b23273fdfc",
-     "back": "thumbs/nature-tree-pressure-climb-back.webp?v=31b23273fdfc"
+     "front": "thumbs/nature-tree-pressure-climb-front.webp?v=6f3a41649a5e",
+     "back": "thumbs/nature-tree-pressure-climb-back.webp?v=6f3a41649a5e"
     }
    },
    "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",
@@ -199724,11 +199726,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Interactive loop starting with 1 kg of old glass. Drag right to see how much is left after each melt, showing a kilogram of waste glass becoming a kilogram of new glass.",
     "graded": false,
-    "page": "pages/science-glass-recycling-loop.html?v=52e2d2d3f695",
-    "bytes": 8736,
+    "page": "pages/science-glass-recycling-loop.html?v=7cf931701695",
+    "bytes": 9021,
     "thumbs": {
-     "front": "thumbs/science-glass-recycling-loop-front.webp?v=52e2d2d3f695",
-     "back": "thumbs/science-glass-recycling-loop-back.webp?v=52e2d2d3f695"
+     "front": "thumbs/science-glass-recycling-loop-front.webp?v=7cf931701695",
+     "back": "thumbs/science-glass-recycling-loop-back.webp?v=7cf931701695"
     }
    },
    "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
@@ -199853,11 +199855,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Multiple-choice card asking how fast a globe ten times heavier spins up under the same push. Options: just as fast, ten times slower, or not at all. The reader picks an answer, then rates how sure they are.",
     "graded": false,
-    "page": "pages/science-globe-spin-inertia.html?v=c8e5559ee423",
-    "bytes": 7903,
+    "page": "pages/science-globe-spin-inertia.html?v=fa3ff26e91b5",
+    "bytes": 8430,
     "thumbs": {
-     "front": "thumbs/science-globe-spin-inertia-front.webp?v=c8e5559ee423",
-     "back": "thumbs/science-globe-spin-inertia-back.webp?v=c8e5559ee423"
+     "front": "thumbs/science-globe-spin-inertia-front.webp?v=fa3ff26e91b5",
+     "back": "thumbs/science-globe-spin-inertia-back.webp?v=fa3ff26e91b5"
     }
    },
    "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
@@ -200197,11 +200199,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Asks: what is the thickness of a graphene sheet? A stack of carbon sheets, as in pencil graphite, sits on the page. Tapping peels them off one at a time until a single sheet, one atom thick, is left.",
-    "page": "pages/science-graphene-one-atom.html?v=cdd035fcdaa7",
-    "bytes": 7881,
+    "page": "pages/science-graphene-one-atom.html?v=ab8a3b16d1b0",
+    "bytes": 7965,
     "thumbs": {
-     "front": "thumbs/science-graphene-one-atom-front.webp?v=cdd035fcdaa7",
-     "back": "thumbs/science-graphene-one-atom-back.webp?v=cdd035fcdaa7"
+     "front": "thumbs/science-graphene-one-atom-front.webp?v=ab8a3b16d1b0",
+     "back": "thumbs/science-graphene-one-atom-back.webp?v=ab8a3b16d1b0"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -204870,11 +204872,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Asks whether metals can boil during a thermite reaction. A drawing of molten metal heats as the reader drags upward, and bubbles form and rise in the melt.",
-    "page": "pages/science-metals-boil-thermite.html?v=928f4f770ab5",
-    "bytes": 11026,
+    "page": "pages/science-metals-boil-thermite.html?v=fffcd73a9764",
+    "bytes": 11584,
     "thumbs": {
-     "front": "thumbs/science-metals-boil-thermite-front.webp?v=928f4f770ab5",
-     "back": "thumbs/science-metals-boil-thermite-back.webp?v=928f4f770ab5"
+     "front": "thumbs/science-metals-boil-thermite-front.webp?v=fffcd73a9764",
+     "back": "thumbs/science-metals-boil-thermite-back.webp?v=fffcd73a9764"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -205799,11 +205801,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Question: Can microwaves from mobile phones damage molecules? Four answer choices are offered. After picking one, the reader watches a phone's microwave wave travel toward a DNA molecule.",
-    "page": "pages/science-phone-microwaves-dna.html?v=1a22cf7a4015",
-    "bytes": 8033,
+    "page": "pages/science-phone-microwaves-dna.html?v=47ca1adf2ac8",
+    "bytes": 8080,
     "thumbs": {
-     "front": "thumbs/science-phone-microwaves-dna-front.webp?v=1a22cf7a4015",
-     "back": "thumbs/science-phone-microwaves-dna-back.webp?v=1a22cf7a4015"
+     "front": "thumbs/science-phone-microwaves-dna-front.webp?v=47ca1adf2ac8",
+     "back": "thumbs/science-phone-microwaves-dna-back.webp?v=47ca1adf2ac8"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -208864,11 +208866,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A rail drawn beside a slider running from +0 °C to +40 °C. Question: how much does a 12 m rail grow when it warms 40 °C? Drag the slider to heat the rail from winter to summer.",
-    "page": "pages/science-rail-heat-growth.html?v=69837bd9b9f2",
-    "bytes": 9320,
+    "page": "pages/science-rail-heat-growth.html?v=f84414de93b5",
+    "bytes": 10022,
     "thumbs": {
-     "front": "thumbs/science-rail-heat-growth-front.webp?v=69837bd9b9f2",
-     "back": "thumbs/science-rail-heat-growth-back.webp?v=69837bd9b9f2"
+     "front": "thumbs/science-rail-heat-growth-front.webp?v=f84414de93b5",
+     "back": "thumbs/science-rail-heat-growth-back.webp?v=f84414de93b5"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -210610,11 +210612,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card showing a jar of water with a pump and a counter reading pump-outs: 0. Tapping the pump removes air from the jar. The question asked is how water can boil at room temperature.",
-    "page": "pages/science-room-temperature-boiling.html?v=67b3474b3b63",
-    "bytes": 9052,
+    "page": "pages/science-room-temperature-boiling.html?v=641c7945acd0",
+    "bytes": 9355,
     "thumbs": {
-     "front": "thumbs/science-room-temperature-boiling-front.webp?v=67b3474b3b63",
-     "back": "thumbs/science-room-temperature-boiling-back.webp?v=67b3474b3b63"
+     "front": "thumbs/science-room-temperature-boiling-front.webp?v=641c7945acd0",
+     "back": "thumbs/science-room-temperature-boiling-back.webp?v=641c7945acd0"
     }
    },
    "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
@@ -212135,11 +212137,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Split-screen slinky: the top shows a twisting motion while the bottom coil stays still. The question asks what signal reaches the slinky bottom first, with three answer options. The reader picks one, then watches the slinky let go.",
-    "page": "pages/science-slinky-twist-first.html?v=ca964eb50851",
-    "bytes": 7641,
+    "page": "pages/science-slinky-twist-first.html?v=3124906ec947",
+    "bytes": 7745,
     "thumbs": {
-     "front": "thumbs/science-slinky-twist-first-front.webp?v=ca964eb50851",
-     "back": "thumbs/science-slinky-twist-first-back.webp?v=ca964eb50851"
+     "front": "thumbs/science-slinky-twist-first-front.webp?v=3124906ec947",
+     "back": "thumbs/science-slinky-twist-first-back.webp?v=3124906ec947"
     }
    },
    "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
@@ -212435,11 +212437,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A tube moves forward while an O and an X spin on it. The reader picks whether the O passes faster, slower, or at the same speed as the tube, then watches arrows show the speeds adding up.",
-    "page": "pages/science-spinning-tube-speed.html?v=d05d2b3bff29",
-    "bytes": 8879,
+    "page": "pages/science-spinning-tube-speed.html?v=50b8786fe9f4",
+    "bytes": 9270,
     "thumbs": {
-     "front": "thumbs/science-spinning-tube-speed-front.webp?v=d05d2b3bff29",
-     "back": "thumbs/science-spinning-tube-speed-back.webp?v=d05d2b3bff29"
+     "front": "thumbs/science-spinning-tube-speed-front.webp?v=50b8786fe9f4",
+     "back": "thumbs/science-spinning-tube-speed-back.webp?v=50b8786fe9f4"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
@@ -213212,11 +213214,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A scale running from 0 down past zero to about −28, with two acids to tap and race. The question asks which acid reaches further.",
-    "page": "pages/science-superacids-hammett-scale.html?v=bf0e24581adc",
-    "bytes": 7817,
+    "page": "pages/science-superacids-hammett-scale.html?v=de5417ebc5be",
+    "bytes": 8233,
     "thumbs": {
-     "front": "thumbs/science-superacids-hammett-scale-front.webp?v=bf0e24581adc",
-     "back": "thumbs/science-superacids-hammett-scale-back.webp?v=bf0e24581adc"
+     "front": "thumbs/science-superacids-hammett-scale-front.webp?v=de5417ebc5be",
+     "back": "thumbs/science-superacids-hammett-scale-back.webp?v=de5417ebc5be"
     }
    },
    "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
@@ -215363,39 +215365,42 @@ const String kEmbeddedBank = r'''
    "difficulty": "medium",
    "principle": "availability",
    "question": "What slowly lifts and sinks the ground at Campi Flegrei?",
-   "answer": "The cause is fluids and magma pushing from below. This is bradisismo: magma and fluids push the ground up, and it sinks back as they ease. The movement is slow and cyclic, like the volcano breathing. In the 1970s and 80s it was intense enough that quakes shook Pozzuoli and whole areas were evacuated.",
-   "move": "Under Campi Flegrei the ground breathes: up when fluids push, down when they ease.",
+   "answer": "Fluids and magma pushing from below. In the leading explanation, gas from magma 6 to 8 km down gathers with hot water 3 to 4 km down and lifts the ground; the rock cracks as it bends, and those cracks are the quakes. As the fluids drain away, it sinks back. Since 2005 Pozzuoli has risen 1.7 m.",
+   "move": "When something shakes, look for what has been pushing for years.",
    "keywords": [
     "campi flegrei",
-    "bradisismo",
+    "bradyseism",
     "pozzuoli",
+    "earthquakes",
     "magma",
-    "fluids"
+    "volcanic gas"
    ],
    "era": "timeless",
    "region": "europe",
    "hook": "mechanism",
    "mood": "wonder",
-   "numeracy": 0,
+   "numeracy": 1,
    "abstraction": "concrete",
-   "shelf_life": "evergreen",
+   "shelf_life": "years",
    "mature": false,
    "language": "en",
    "figure": "none",
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Animated diagram of ground rising and sinking at a coastline. Question: what causes it? Options: sea tides, fluids and magma pushing from below, or old buildings settling. Then choose how sure you are.",
-    "page": "pages/science-volcano-breathing.html?v=aa1f910fc5f8",
-    "bytes": 9739,
+    "label": "Pozzuoli, near Naples, side on, up 1.7 m since 2005: the old town and three Roman columns at the water's edge rise and sink, shaking now and then, while the sea and a boat stay put. Pick the cause (Africa's plate, small quakes adding up, or fluids and magma from below) and say how sure. Then the rock opens: magma 6-8 km down, gas and hot water trapped 3-4 km down, the rock above cracking.",
+    "page": "pages/science-volcano-breathing.html?v=2dc99a6a89ff",
+    "bytes": 30023,
     "thumbs": {
-     "front": "thumbs/science-volcano-breathing-front.webp?v=aa1f910fc5f8",
-     "back": "thumbs/science-volcano-breathing-back.webp?v=aa1f910fc5f8"
+     "front": "thumbs/science-volcano-breathing-front.webp?v=2dc99a6a89ff",
+     "back": "thumbs/science-volcano-breathing-back.webp?v=2dc99a6a89ff"
     }
    },
-   "source": "Geopop, “BRADISISMO: IL RESPIRO DEL SUPERVULCANO CAMPI FLEGREI - Documentario - Sub-Eng” (YouTube, 2019)",
-   "reference": "https://www.youtube.com/watch?v=e3gBmoEu47M&t=22s",
-   "written": "2026-11-03"
+   "source": "INGV Osservatorio Vesuviano (2026); Battaglia et al., GRL (2006)",
+   "reference": "https://www.ov.ingv.it/index.php/divulgazione/comprendere-i-campi-flegrei",
+   "source_kind": "institution",
+   "written": "2026-11-03",
+   "checked": "2026-11-22"
   },
   {
    "id": "science-volcano-depth-tsunami",
@@ -220313,11 +220318,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A guess page titled 'Entropy then and now'. It states that black holes hold almost all of today's universal entropy, about 3×10^104 k_B, and asks the reader to drag an edge to guess the early universe's share of that total.",
     "graded": false,
-    "page": "pages/space-entropy-then-now.html?v=5450b39a104e",
-    "bytes": 12499,
+    "page": "pages/space-entropy-then-now.html?v=6e3c1d458dfa",
+    "bytes": 13062,
     "thumbs": {
-     "front": "thumbs/space-entropy-then-now-front.webp?v=5450b39a104e",
-     "back": "thumbs/space-entropy-then-now-back.webp?v=5450b39a104e"
+     "front": "thumbs/space-entropy-then-now-front.webp?v=6e3c1d458dfa",
+     "back": "thumbs/space-entropy-then-now-back.webp?v=6e3c1d458dfa"
     }
    },
    "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
@@ -226351,11 +226356,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page: a capsule is drawn from launch, around the Moon, and home, with a water gauge to watch. It asks when Artemis II astronauts cannot add water to their food, and what they eat during those hours.",
-    "page": "pages/space-no-water-phases.html?v=30390892cc5a",
-    "bytes": 12029,
+    "page": "pages/space-no-water-phases.html?v=f2f8d99fae43",
+    "bytes": 12518,
     "thumbs": {
-     "front": "thumbs/space-no-water-phases-front.webp?v=30390892cc5a",
-     "back": "thumbs/space-no-water-phases-back.webp?v=30390892cc5a"
+     "front": "thumbs/space-no-water-phases-front.webp?v=f2f8d99fae43",
+     "back": "thumbs/space-no-water-phases-back.webp?v=f2f8d99fae43"
     }
    },
    "source": "Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026)",
@@ -247039,11 +247044,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A card asking how much money a tuned mass damper saved over adding more steel to a skyscraper. A vertical money bar can be dragged up to the reader's guess for the cost of the 2,800 tons of steel avoided.",
     "graded": false,
-    "page": "pages/technology-damper-saves-millions.html?v=62478baea1cd",
-    "bytes": 8379,
+    "page": "pages/technology-damper-saves-millions.html?v=e4173b73706c",
+    "bytes": 8766,
     "thumbs": {
-     "front": "thumbs/technology-damper-saves-millions-front.webp?v=62478baea1cd",
-     "back": "thumbs/technology-damper-saves-millions-back.webp?v=62478baea1cd"
+     "front": "thumbs/technology-damper-saves-millions-front.webp?v=e4173b73706c",
+     "back": "thumbs/technology-damper-saves-millions-back.webp?v=e4173b73706c"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -251678,11 +251683,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A bridge-span comparison. The reader drags a red tower outward to where a single span across the Strait of Messina would end, then turns the card to see how that span compares with the longest span today.",
-    "page": "pages/technology-messina-record-span.html?v=2ef997960bea",
-    "bytes": 17597,
+    "page": "pages/technology-messina-record-span.html?v=c88e6a73fe52",
+    "bytes": 17835,
     "thumbs": {
-     "front": "thumbs/technology-messina-record-span-front.webp?v=2ef997960bea",
-     "back": "thumbs/technology-messina-record-span-back.webp?v=2ef997960bea"
+     "front": "thumbs/technology-messina-record-span-front.webp?v=c88e6a73fe52",
+     "back": "thumbs/technology-messina-record-span-back.webp?v=c88e6a73fe52"
     }
    },
    "source": "Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020)",
@@ -252408,11 +252413,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Two options are shown: build a new train, or convert the 1949 two-car convoy. The question asks why the 1949 convoy was chosen for the world's first solar train. Sliding left swaps building new for converting the old convoy.",
-    "page": "pages/technology-old-solar-train.html?v=8e556cade7af",
-    "bytes": 9441,
+    "page": "pages/technology-old-solar-train.html?v=6bcfbbbb927e",
+    "bytes": 10467,
     "thumbs": {
-     "front": "thumbs/technology-old-solar-train-front.webp?v=8e556cade7af",
-     "back": "thumbs/technology-old-solar-train-back.webp?v=8e556cade7af"
+     "front": "thumbs/technology-old-solar-train-front.webp?v=6bcfbbbb927e",
+     "back": "thumbs/technology-old-solar-train-back.webp?v=6bcfbbbb927e"
     }
    },
    "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
@@ -253371,11 +253376,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A card titled Hydro Power asks how much of Italy's August power one very rainy summer could supply. A tappable sky is shown, and the reveal reads almost 90 percent of demand covered by hydro.",
-    "page": "pages/technology-rainy-summer-hydro.html?v=ac8ea6356839",
-    "bytes": 8058,
+    "page": "pages/technology-rainy-summer-hydro.html?v=ecbe57839b22",
+    "bytes": 8378,
     "thumbs": {
-     "front": "thumbs/technology-rainy-summer-hydro-front.webp?v=ac8ea6356839",
-     "back": "thumbs/technology-rainy-summer-hydro-back.webp?v=ac8ea6356839"
+     "front": "thumbs/technology-rainy-summer-hydro-front.webp?v=ecbe57839b22",
+     "back": "thumbs/technology-rainy-summer-hydro-back.webp?v=ecbe57839b22"
     }
    },
    "source": "Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019)",
@@ -256514,11 +256519,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Two hull drawings, a perfect sphere and a cylinder, shown under deep-sea pressure. The page asks the reader to tap the hull they think gives way first under deep-sea pressure.",
     "graded": false,
-    "page": "pages/technology-titan-hull-shape.html?v=a2a0867011db",
-    "bytes": 8897,
+    "page": "pages/technology-titan-hull-shape.html?v=9481695cd604",
+    "bytes": 9353,
     "thumbs": {
-     "front": "thumbs/technology-titan-hull-shape-front.webp?v=a2a0867011db",
-     "back": "thumbs/technology-titan-hull-shape-back.webp?v=a2a0867011db"
+     "front": "thumbs/technology-titan-hull-shape-front.webp?v=9481695cd604",
+     "back": "thumbs/technology-titan-hull-shape-back.webp?v=9481695cd604"
     }
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
@@ -257686,11 +257691,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card titled BUOYANCY asking why the Trieste carried 85,000 litres of gasoline just to float. A float diagram shows seawater being swapped for gasoline by dragging, with a counter reading 0 L gasoline.",
-    "page": "pages/technology-trieste-gasoline-float.html?v=020677541d92",
-    "bytes": 9530,
+    "page": "pages/technology-trieste-gasoline-float.html?v=67fc7f135fff",
+    "bytes": 10031,
     "thumbs": {
-     "front": "thumbs/technology-trieste-gasoline-float-front.webp?v=020677541d92",
-     "back": "thumbs/technology-trieste-gasoline-float-back.webp?v=020677541d92"
+     "front": "thumbs/technology-trieste-gasoline-float-front.webp?v=67fc7f135fff",
+     "back": "thumbs/technology-trieste-gasoline-float-back.webp?v=67fc7f135fff"
     }
    },
    "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
@@ -257815,11 +257820,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A sequence diagram of ground freezing for tunnel digging: drill, nitrogen injection, frozen ground, brine circulation. A draggable marker on a temperature scale asks how cold the liquid pumped into the ground is.",
     "graded": false,
-    "page": "pages/technology-tunnel-ground-freezing.html?v=0e98e8ed3089",
-    "bytes": 10206,
+    "page": "pages/technology-tunnel-ground-freezing.html?v=dfdebc36651c",
+    "bytes": 10268,
     "thumbs": {
-     "front": "thumbs/technology-tunnel-ground-freezing-front.webp?v=0e98e8ed3089",
-     "back": "thumbs/technology-tunnel-ground-freezing-back.webp?v=0e98e8ed3089"
+     "front": "thumbs/technology-tunnel-ground-freezing-front.webp?v=dfdebc36651c",
+     "back": "thumbs/technology-tunnel-ground-freezing-back.webp?v=dfdebc36651c"
     }
    },
    "source": "Geopop, “Siamo letteralmente entrati dentro le Alpi per mostrarvi gli scavi delle gallerie del Brennero” (YouTube, 2025)",
@@ -264205,11 +264210,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card titled 'Why does not knowing when a game ends keep players cooperating?' with a tap-to-reason prompt. Tapping reasons backward from a known last round. A counter shows 0 of 10.",
-    "page": "pages/thinking-random-end-cooperation.html?v=30c9fa8e98d2",
-    "bytes": 8338,
+    "page": "pages/thinking-random-end-cooperation.html?v=43018d2f8c7b",
+    "bytes": 8867,
     "thumbs": {
-     "front": "thumbs/thinking-random-end-cooperation-front.webp?v=30c9fa8e98d2",
-     "back": "thumbs/thinking-random-end-cooperation-back.webp?v=30c9fa8e98d2"
+     "front": "thumbs/thinking-random-end-cooperation-front.webp?v=43018d2f8c7b",
+     "back": "thumbs/thinking-random-end-cooperation-back.webp?v=43018d2f8c7b"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -275232,7 +275237,8 @@ const String kEmbeddedBank = r'''
   "479": "thinking-book-superforecasting-4",
   "480": "thinking-f2",
   "481": "thinking-z21",
-  "482": "thinking-6"
+  "482": "thinking-6",
+  "483": "thinking-book-the-demon-haunted-world-4"
  },
  "commons": {
   "1": [
@@ -280054,6 +280060,16 @@ const String kEmbeddedBank = r'''
    "technology-v1-decision-speed-1",
    "human_body-water-only-marathon",
    "economics-plastic-glass-weight"
+  ],
+  "483": [
+   "technology-brenner-freight-time",
+   "cinema-book-in-the-blink-of-an-eye-3",
+   "psychology-book-influence-4",
+   "history-atmosphere-fusion-fire",
+   "science-spinning-proton-magnets",
+   "life-gut-or-data-2",
+   "economics-fees-that-grow-2",
+   "human_body-mosquito-dna-spots"
   ]
  }
 }

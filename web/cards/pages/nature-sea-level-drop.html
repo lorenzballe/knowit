@@ -92,7 +92,8 @@ function render(){
   }
   for (let i = 30; i >= 0; i--) { const x = a + (b - a) * i / 30; bot += `L${(x*W).toFixed(1)},${yOf(elevAt(x)).toFixed(1)} `; }
   ice.setAttribute('d', top + bot + 'Z');
-  iceLab.setAttribute('y', yOf(elevAt(0.13)) - th - fs * 0.45);
+  // over the ice, or on it once the ice reaches the top: never past the edge
+  iceLab.setAttribute('y', Math.max(yOf(elevAt(0.13)) - th - fs * 0.45, fs * 1.05));
   cur.setAttribute('y', sy - fs * 0.45);
   cur.textContent = `sea −${Math.round(m)} m`;
   cur.setAttribute('opacity', m > 4 ? 1 : 0);

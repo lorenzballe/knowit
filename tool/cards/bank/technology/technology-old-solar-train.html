@@ -79,12 +79,23 @@ function finish() {
   requestAnimationFrame(() => { Kit.onShow.card(); if (!Kit.calm && L) gsap.fromTo(L.bars[2], {opacity: .35}, {opacity: 1, duration: .22, repeat: 3, yoyo: true}); });
 }
 
+let fitted = null;
 Kit.onShow.card = () => {
-  const {W, H, f} = Kit.fitSvg(svg);
+  // Left less room than it was drawn for, under 100 px (a small phone), it keeps that size, shown smaller, whole.
+  const now = svg.getBoundingClientRect().height, keep = fitted && now < 100 && now < fitted.H - 1;
+  if (keep) svg.dataset.kept = '1';
+  let {W, H, f} = keep ? fitted : (fitted = Kit.fitSvg(svg));
   svg.innerHTML = '';
   if (sunTw) sunTw.kill();
   const fs = Math.max(12, Math.min(f, H * .055)), mx = W * .05;
-  const B = fs * 12.4, gy = Math.max(H * .3, H - B), U = gy;
+  // Under the rail as the card sets it where that fits; else its rows closer, then without the legend;
+  // past that, drawn taller and shown smaller. No word is cut at the foot.
+  const B = fs * 12.4, full = {cap: 1.6, leg: 3.1, bar0: 4.3, step: 2.7};
+  const K = [full, {cap: 1.45, leg: 2.75, bar0: 3.85, step: 2.35}, {cap: 1.45, leg: 0, bar0: 2.4, step: 2.35}]
+    .find(k => H * .7 >= (k.bar0 + k.step * 2 + 1.95) * fs + 1 || (k === full && H - B >= H * .3)) || {cap: 1.45, leg: 0, bar0: 2.4, step: 2.35};
+  const ext = (K.bar0 + K.step * 2 + 1.95) * fs + 1;
+  if (H * .7 < ext && !(K === full && H - B >= H * .3)) { W *= ext / .7 / H; H = ext / .7; svg.setAttribute('viewBox', `0 0 ${W} ${H}`); }
+  const gy = K === full ? Math.max(H * .3, H - B) : H * .3, U = gy;
   const h = Math.min(U * .5, W * .18), wr = h * .12, y0 = gy - h * 1.06 - wr * 1.6;
   const gap = W * .025, w = (W - 2 * mx - gap) / 2;
   const T = 'font-family:var(--body);fill:var(--k)';
@@ -100,10 +111,10 @@ Kit.onShow.card = () => {
   const lbl = Math.max(12, Math.min(fs, h * .2));
   const yr = Kit.mk('text', {x: mx + w * .5, y: y0 + h * .86, 'text-anchor': 'middle', style: `${T};font-weight:800;font-size:${lbl}px`}, svg); yr.textContent = '1949';
   const nw = Kit.mk('text', {x: mx + w + gap + w * .5, y: y0 + h * .86, 'text-anchor': 'middle', style: `${T};font-weight:800;font-size:${lbl}px`}, svg); nw.textContent = 'NEW';
-  const cap = Kit.mk('text', {x: W / 2, y: gy + fs * 1.6, 'text-anchor': 'middle', style: `${T};font-weight:800;font-size:${fs}px`}, svg);
+  const cap = Kit.mk('text', {x: W / 2, y: gy + fs * K.cap, 'text-anchor': 'middle', style: `${T};font-weight:800;font-size:${fs}px`}, svg);
   // legend
-  const ly = gy + fs * 3.1, sq = fs * .8;
-  [['reused from 1949', 'color-mix(in srgb,var(--k) 14%,var(--c))', mx], ['built new', NEW, W / 2 + gap]].forEach(([t, c, x]) => {
+  const ly = gy + fs * K.leg, sq = fs * .8;
+  if (K.leg) [['reused from 1949', 'color-mix(in srgb,var(--k) 14%,var(--c))', mx], ['built new', NEW, W / 2 + gap]].forEach(([t, c, x]) => {
     Kit.mk('rect', {x, y: ly - sq * .9, width: sq, height: sq, rx: sq * .2, style: `fill:${c};stroke:var(--k);stroke-width:1.5`}, svg);
     const tx = Kit.mk('text', {x: x + sq * 1.4, y: ly, style: `${T};font-weight:600;font-size:${fs * .9}px`}, svg); tx.textContent = t;
   });
@@ -111,7 +122,7 @@ Kit.onShow.card = () => {
   const names = ['Cost of new parts', 'Time to get it running', 'Proves old trains can go solar'], cols = ['#e0603a', '#e0603a', '#2f9e63'];
   const track = W - 2 * mx, bars = [], words = [];
   names.forEach((nm, i) => {
-    const by = gy + fs * 4.3 + i * fs * 2.7;
+    const by = gy + fs * K.bar0 + i * fs * K.step;
     const t = Kit.mk('text', {x: mx, y: by + fs, style: `${T};font-weight:700;font-size:${fs * .9}px`}, svg); t.textContent = nm;
     words.push(Kit.mk('text', {x: W - mx, y: by + fs, 'text-anchor': 'end', style: `${T};font-weight:800;font-size:${fs * .9}px`}, svg));
     Kit.mk('rect', {x: mx, y: by + fs * 1.35, width: track, height: fs * .6, rx: fs * .3, style: 'fill:color-mix(in srgb,var(--k) 15%,transparent)'}, svg);

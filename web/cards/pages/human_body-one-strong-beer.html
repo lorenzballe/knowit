@@ -72,7 +72,7 @@ function render(){
   // scale
   const kx = W * .60, kw = W * .09, kt = H * .06, kb = H * .95;
   const y = v => kb - (v / MAX) * (kb - kt);
-  els.y = y; els.kx = kx; els.kw = kw; els.kb = kb; els.fs = fs;
+  els.y = y; els.kx = kx; els.kw = kw; els.kb = kb; els.fs = fs; els.W = W;
   mk('rect', {x: kx, y: kt, width: kw, height: kb - kt, rx: 6, fill: 'color-mix(in srgb,var(--k) 7%,transparent)', stroke: 'var(--k)', 'stroke-width': 2});
   mk('rect', {x: kx, y: kt, width: kw, height: y(LIMIT) - kt, fill: '#e3262b', opacity: .2});
   els.fill = mk('rect', {x: kx + 3, width: kw - 6, rx: 4});
@@ -97,6 +97,12 @@ function update(){
   els.mlab.textContent = st.done ? '1.09 measured' : '';
   els.mlab.setAttribute('y', y(REAL) + fs * .4);
   els.mlab.setAttribute('style', `font-size:${fs * 1.05}px;font-weight:800;fill:#c81e1e`);
+  // Too long for the room right of the scale: the word goes under the number, never past the edge.
+  const mx = kx + kw + 10;
+  if (st.done && mx + els.mlab.getComputedTextLength() > els.W - 2) {
+    els.mlab.textContent = '';
+    ['1.09', 'measured'].forEach((t, i) => { Kit.mk('tspan', {x: mx, dy: i ? '1.1em' : 0}, els.mlab).textContent = t; });
+  }
   const gy = y(st.g), m = fs * .55;
   els.marker.setAttribute('d', `M${kx - 4},${gy} L${kx - 4 - m * 1.4},${gy - m} L${kx - 4 - m * 1.4},${gy + m} Z`);
   els.glab.setAttribute('y', gy + fs * .35);

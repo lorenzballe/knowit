@@ -45,7 +45,7 @@ function draw() {
   svg.innerHTML = '';
   const padL = r + fs * .4, padR = r + fs * .4, w = W - padL - padR;
   const x = v => padL + (14 - v) / (14 - S.lo) * w;
-  const axisY = H - fs * 3.3, barH = fs * .9;
+  const axisY = H - fs * 3.55, barH = fs * .9;  // the captions under the ticks stay whole above the foot
   const top = fs * 1.6 + r;
   const l2 = axisY - barH / 2 - fs * 1.9 - r;
   const l1 = Math.max(top, Math.min(top + (l2 - top) * .3, l2 - 2 * r - fs * 2.6));
@@ -91,14 +91,21 @@ function draw() {
     n.textContent = name;
     const dx = x(v) + (v <= 0.01 && S.mode === 'pH' ? S.shake : 0);
     Kit.mk('circle', {cx: dx, cy: ly, r, fill: col, stroke: 'var(--k)', 'stroke-width': 2}, svg);
-    const lx = Math.min(Math.max(dx, fs * 2.2), W - fs * 2.2);
-    const t = Kit.mk('text', {x: lx, y: ly - r - fs * .4, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+    const t = Kit.mk('text', {y: ly - r - fs * .4, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
     const approx = S.mode !== 'pH' && name[0] === 'F' && Math.round(v) === -28 ? '≈ ' : '';
     t.textContent = (S.mode === 'pH' ? 'pH ' : 'H₀ ') + approx + fmt(v);
+    // over its dot, but never past either edge
+    const hw = Math.max(fs * 2.2, t.getComputedTextLength() / 2 + 2);
+    t.setAttribute('x', Math.min(Math.max(dx, hw), W - hw));
   });
 }
 
-function layout() { G = Kit.fitSvg(svg); draw(); }
+function layout() {
+  // Left less room than it was drawn for, under 100 px (a small phone), it keeps that drawing, shown smaller, whole.
+  const h = svg.getBoundingClientRect().height;
+  if (G && h < 100 && h < G.H - 1) { svg.dataset.kept = '1'; draw(); return; }
+  G = Kit.fitSvg(svg); draw();
+}
 
 btn.addEventListener('click', () => {
   if (phase === 0) {

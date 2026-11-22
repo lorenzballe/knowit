@@ -67,7 +67,9 @@ function setT(v){
 Kit.onShow.card = () => {
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const band = Math.max(3.6 * f, .18 * H), Hm = H - band;
+  // The band under the map holds the timeline and, under its knob, the two dates whole.
+  const lsz = Math.max(f * .8, 12), kr = Math.max(11, f * .8);
+  const band = Math.max(3.6 * f, .18 * H, (kr + lsz * 1.15) / .65), Hm = H - band;
   const R = Math.min(.3 * W, .36 * Hm), kx = .4 * W, ky = .66 * Hm;
   const ty = Hm + band * .35, x0 = .08 * W, x1 = .92 * W;
   const ink = 'var(--k)';
@@ -90,10 +92,10 @@ Kit.onShow.card = () => {
   // timeline
   mk('line', {x1: x0, y1: ty, x2: x1, y2: ty, stroke: ink, 'stroke-opacity': .25, 'stroke-width': Math.max(6, f * .45), 'stroke-linecap': 'round'});
   const fill = mk('line', {x1: x0, y1: ty, x2: x0, y2: ty, stroke: ink, 'stroke-width': Math.max(6, f * .45), 'stroke-linecap': 'round'});
-  const knob = mk('circle', {cx: x0, cy: ty, r: Math.max(11, f * .8), fill: 'var(--c)', stroke: ink, 'stroke-width': Math.max(3, f * .22)});
-  const ls = `font:600 ${Math.max(f * .8, 12)}px var(--mono)`;
-  const a = mk('text', {x: x0 - 4, y: ty + Math.max(f * 1.9, 26), fill: ink, style: ls}); a.textContent = 'late 800s';
-  const b = mk('text', {x: x1 + 4, y: ty + Math.max(f * 1.9, 26), 'text-anchor': 'end', fill: ink, style: ls}); b.textContent = 'early 1200s';
+  const knob = mk('circle', {cx: x0, cy: ty, r: kr, fill: 'var(--c)', stroke: ink, 'stroke-width': Math.max(3, f * .22)});
+  const ls = `font:600 ${lsz}px var(--mono)`, ly = Math.min(ty + Math.max(f * 1.9, 26), H - lsz * .25);
+  const a = mk('text', {x: x0 - 4, y: ly, fill: ink, style: ls}); a.textContent = 'late 800s';
+  const b = mk('text', {x: x1 + 4, y: ly, 'text-anchor': 'end', fill: ink, style: ls}); b.textContent = 'early 1200s';
   G = {W, H, Hm, R, kx, ky, x0, x1, ty, blob, knob, fill, rus, ukr, border, lR, lU};
   setT(t);
   if (bordered){ [ukr, border, lR, lU].forEach(e => e.setAttribute('opacity', 1)); }
