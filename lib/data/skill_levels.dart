@@ -355,8 +355,25 @@ class SkillLevel {
     return SkillLevel._(level, n, (n - lo) / (hi - lo));
   }
 
+  /// The level at [cards] read, counted in parts of a card: a bar drawn
+  /// filling from one count to the next passes through these.
+  factory SkillLevel.between(double cards) {
+    final double n = cards < 0 ? 0 : cards;
+    int level = 1;
+    while (level < from.length && n >= from[level]) {
+      level++;
+    }
+    if (level == top) return SkillLevel._(level, n.floor(), 1);
+    final int lo = from[level - 1], hi = from[level];
+    return SkillLevel._(level, n.floor(), (n - lo) / (hi - lo));
+  }
+
   /// The cards each level starts from: level 1 from 0, level 5 from 150.
   static const List<int> from = [0, 10, 30, 70, 150];
+
+  /// How many more cards that train the skill reach the next level; null at
+  /// the top.
+  int? get toNextCards => level >= top ? null : from[level] - cards;
 
   /// The highest level.
   static const int top = 5;

@@ -18,6 +18,7 @@ import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
+import '../widgets/training.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
 import 'today_done_view.dart';
@@ -73,6 +74,11 @@ class _TodayScreenState extends State<TodayScreen> {
   /// the reader's own. It leaves the way every card leaves: thrown.
   bool _magic = false;
 
+  /// Whether the sheet of what the day trained is still to rise: set when
+  /// the day is finished here, in this session, and spent the first time
+  /// the shelf is up (lib/widgets/training.dart).
+  bool _trainingDue = false;
+
   /// Which of the finished day's cards is at the front of the shelf. Held
   /// here rather than in the shelf because the header's dot and the glow
   /// behind the whole tab take that card's colour.
@@ -94,6 +100,22 @@ class _TodayScreenState extends State<TodayScreen> {
       HapticFeedback.heavyImpact();
     });
     if (!widget.app.isPlus) _magic = true;
+    _trainingDue = true;
+  }
+
+  /// Once the shelf has landed, the sheet of what the day's cards trained in
+  /// the skills the reader picked; nothing when they picked none, or the day
+  /// trained none of them. Pushed over the tabs, so the shell's own asks at
+  /// the finished day (the reminder, the account, the place) wait for it.
+  void _riseTraining() {
+    _trainingDue = false;
+    Future<void>.delayed(const Duration(milliseconds: 650), () {
+      if (!mounted || !widget.app.todayCompleted || _magic) return;
+      if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
+      final List<DayTraining> items = dayTrainingOf(widget.app);
+      if (items.isEmpty) return;
+      showDayTraining(context, widget.app, items);
+    });
   }
 
   /// What the shell was last told about the table.
@@ -172,6 +194,7 @@ class _TodayScreenState extends State<TodayScreen> {
     // the shelf comes up when it, too, has been thrown.
     final bool onTable = !done || _magic;
     _tellShell(onTable);
+    if (!onTable && _trainingDue) _riseTraining();
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 420),
       switchInCurve: Curves.easeOutCubic,
@@ -285,10 +308,15 @@ class _TodayScreenState extends State<TodayScreen> {
               // reader keeps missing, their goal, their level, the one more
               // of their own on their Sunday, or chance. A tap on the line
               // opens what the deal knew, and more or less like it.
+              // One word for one thing: a card for the reader's goal that
+              // carries the mark of a skill they picked says so by the mark
+              // alone, not by the mark and a line saying it again.
               notes: {
                 for (final MapEntry<String, CardWhy> e in whys.entries)
-                  if (whyLine(context.l10n, e.value) case final String line)
-                    e.key: line,
+                  if (e.value.kind != WhyKind.goal ||
+                      skillMarkOf(e.value.pill, app.skills) == null)
+                    if (whyLine(context.l10n, e.value) case final String line)
+                      e.key: line,
               },
               noteIcons: {
                 for (final MapEntry<String, CardWhy> e in whys.entries)

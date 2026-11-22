@@ -2628,6 +2628,72 @@ abstract class AppLocalizations {
   /// **'See your levels'**
   String get skillMarkOpen;
 
+  /// Title of the reader's training: the skills they picked to get better at, with their level in each. The first chapter of Your journey, and a box on the profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Your training'**
+  String get trainingTitle;
+
+  /// Under the title of Your training on Your journey.
+  ///
+  /// In en, this message translates to:
+  /// **'The skills you chose. Every card that trains one moves you up.'**
+  String get trainingLine;
+
+  /// Under a skill's bar in Your training: how many more cards that train it the reader needs to read to reach the next level.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 more card to level {level}} other{{n} more cards to level {level}}}'**
+  String trainingToNext(int n, int level);
+
+  /// Under a skill's bar in Your training once the reader has reached its highest level.
+  ///
+  /// In en, this message translates to:
+  /// **'Top level'**
+  String get trainingTopLevel;
+
+  /// Small label over the skills the reader did not pick, each with its level, under the ones they did.
+  ///
+  /// In en, this message translates to:
+  /// **'The others'**
+  String get trainingOthers;
+
+  /// Your training, before the reader has picked any skill.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick what you want to get better at. Every card that trains it moves you up, and carries its mark.'**
+  String get trainingEmpty;
+
+  /// Button under trainingEmpty: opens What to learn, where skills are picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose skills'**
+  String get trainingPick;
+
+  /// On the profile's Your training box, under the first three skills the reader picked: how many more they picked.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{and 1 more} other{and {n} more}}'**
+  String trainingMore(int n);
+
+  /// Title of the sheet that rises when the reader finishes the day's cards: all n read (five, six on a Sunday). Then trainingDayLine and the skills those cards trained.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, select, 5{Five for five.} 6{Six for six.} other{{n} for {n}.}}'**
+  String trainingDayTitle(String n);
+
+  /// Under trainingDayTitle: the skills today's cards trained follow, each with how many cards and its bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Today you trained'**
+  String get trainingDayLine;
+
+  /// On the finished day's sheet, under a skill whose next level today's cards reached.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {n} reached'**
+  String trainingNewLevel(int n);
+
   /// A video card's kind, said by VoiceOver with its length on its tile in Explore ("Video, 0:53").
   ///
   /// In en, this message translates to:

@@ -2986,6 +2986,37 @@ void main() {
       );
     });
 
+    testWidgets('finishing the day with skills picked raises what its cards '
+        'trained in them, over the shelf; Done puts it away', (tester) async {
+      SharedPreferences.setMockInitialValues({
+        ..._installed(plus: true),
+        // Between them they are trained by nearly every subject.
+        'knowit.skills': ['culture', 'science'],
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('day-training')), findsOneWidget);
+      expect(find.byType(TodayDoneView), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('day-training-done')));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('day-training')), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('with no skill picked, nothing rises over the finished day', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed(plus: true));
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+      await _settle(tester);
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('day-training')), findsNothing);
+    });
+
     testWidgets('the way on is the journey, and it opens on the numbers', (
       tester,
     ) async {
@@ -3000,15 +3031,22 @@ void main() {
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
 
-      // The journey opens on what the week says and what to practise; the
-      // score comes next — five cards read is five points, all of it this
-      // week — then the level, then the tiles.
-      expect(find.text('1  ·  THIS WEEK'), findsOneWidget);
-      expect(find.text('2  ·  PRACTISE'), findsOneWidget);
+      // The journey opens on the reader's training, then what the week says
+      // and what to practise; the score comes next — five cards read is five
+      // points, all of it this week — then the level, then the tiles.
+      expect(find.text('1  ·  YOUR TRAINING'), findsOneWidget);
       final Finder list = find.descendant(
         of: find.byType(JourneyScreen),
         matching: find.byType(Scrollable),
       );
+      for (final String chapter in ['2  ·  THIS WEEK', '3  ·  PRACTISE']) {
+        await tester.scrollUntilVisible(
+          find.text(chapter),
+          200,
+          scrollable: list,
+        );
+        expect(find.text(chapter), findsOneWidget);
+      }
       await tester.scrollUntilVisible(
         find.byKey(const ValueKey('journey-score')),
         200,

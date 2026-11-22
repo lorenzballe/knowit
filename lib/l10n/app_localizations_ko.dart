@@ -1821,6 +1821,61 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skillMarkOpen => '레벨 보기';
 
   @override
+  String get trainingTitle => '내 훈련';
+
+  @override
+  String get trainingLine => '내가 고른 능력이에요. 그중 하나를 훈련하는 카드를 읽을 때마다 레벨이 올라가요.';
+
+  @override
+  String trainingToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '레벨 $level까지 $n장 남았어요',
+      one: '레벨 $level까지 1장 남았어요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingTopLevel => '최고 레벨';
+
+  @override
+  String get trainingOthers => '나머지';
+
+  @override
+  String get trainingEmpty =>
+      '더 잘하고 싶은 것을 골라 보세요. 그것을 훈련하는 카드를 읽을 때마다 레벨이 올라가고, 카드에 그 표시가 붙어요.';
+
+  @override
+  String get trainingPick => '능력 고르기';
+
+  @override
+  String trainingMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '외 $n개',
+      one: '외 1개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainingDayTitle(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {'other': '$n장 중 $n장.'});
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingDayLine => '오늘 훈련한 것';
+
+  @override
+  String trainingNewLevel(int n) {
+    return '레벨 $n 달성';
+  }
+
+  @override
   String get videoKicker => '영상';
 
   @override

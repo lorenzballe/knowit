@@ -32,6 +32,7 @@ import '../widgets/card_edge.dart';
 import '../widgets/premium.dart';
 import '../widgets/area_marks.dart' show goalName;
 import '../widgets/move_words.dart';
+import '../widgets/training.dart';
 
 part 'journey_story.dart';
 
@@ -111,6 +112,16 @@ class _JourneyScreenState extends State<JourneyScreen> {
                   // practise first, then the numbers behind them, grouped
                   // by what they are about, and the story so far at the end.
                   children: [
+                    // What the reader is training first: the skills they
+                    // picked and how far each has come, the one place their
+                    // progress in them lives.
+                    _Chapter(
+                      n: ++n,
+                      title: l.trainingTitle,
+                      trailing: TrainingChapter.change(context, app),
+                      child: TrainingChapter(app: app),
+                    ),
+                    chapterGap,
                     _Chapter(
                       n: ++n,
                       title: l.storyChapterWeek,
