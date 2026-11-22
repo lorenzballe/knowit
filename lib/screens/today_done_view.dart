@@ -555,9 +555,12 @@ class _TodayDoneViewState extends State<TodayDoneView>
         : !app.isPlus && app.ownIdsToday.contains(pill.id)
         ? context.l10n.forYouChip
         : null;
+    String picture(bool back) => '${pill.id}-${back ? 'back' : 'front'}';
     Widget face(bool back) => _CardFace(
       key: ValueKey('shelf-face-${pill.id}-${back ? 'back' : 'front'}'),
       pill: pill,
+      come: _come.contains(picture(back)),
+      onCome: () => _came(picture(back)),
       number: k + 1,
       chip: chip,
       width: _cardWidth,
@@ -582,6 +585,14 @@ class _TodayDoneViewState extends State<TodayDoneView>
       onToggle: () => app.toggleLiked(pill.id),
       child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
     );
+  }
+
+  /// The shelf's pictures that have come, by card and side: until one has,
+  /// its card is its outline in grey, edge and light under it included.
+  final Set<String> _come = {};
+
+  void _came(String picture) {
+    if (mounted && _come.add(picture)) setState(() {});
   }
 
   /// Reads the tag of each drawn card on the shelf with a heart or a skill's
@@ -695,10 +706,21 @@ class _CardFace extends StatelessWidget {
     this.skill,
     required this.onSave,
     required this.onShare,
+    this.come = true,
+    this.onCome,
   });
 
   final Pill pill;
   final int number;
+
+  /// Whether the card's picture has come. Until it has, the card is plain
+  /// grey with its save and share (CardThumb.waiting), and its edge and the
+  /// light under it are grey too: nothing of its colour shows before the
+  /// card does.
+  final bool come;
+
+  /// Told once the card's picture has come.
+  final VoidCallback? onCome;
 
   /// Whether the reader liked the card: a heart in its head, on the right.
   final bool liked;
@@ -755,12 +777,15 @@ class _CardFace extends StatelessWidget {
         key: const ValueKey('shelf-picture'),
         width: width,
         height: height,
-        decoration: _decoration(p, s, ground),
+        decoration: come
+            ? _decoration(p, s, ground)
+            : _decoration(p, s, CardThumb.waitingColour(p), glowing: false),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(34 * s),
           child: CardThumb(
             pill: pill,
             side: side,
+            onCome: onCome,
             // Taken 366 points across either way (tool/cards/thumbs.cjs): at
             // the shelf's proportion, 366 by 511, so the page lays itself out
             // with nearly the room it has on the deck and its drawing is
@@ -772,6 +797,16 @@ class _CardFace extends StatelessWidget {
             shelf: atShelf,
             large: !atShelf,
             fit: BoxFit.contain,
+            // While it comes, the card in grey with its save and share, in
+            // the grey's ink, as a photo still coming sits under its post's
+            // own buttons.
+            waiting: _PictureControls(
+              aspect: atShelf ? WebThumbs.shelfAspect : WebThumbs.aspect,
+              saved: saved,
+              ink: p.ink.withValues(alpha: p.isDark ? 0.55 : 0.5),
+              onSave: onSave,
+              onShare: onShare,
+            ),
             // Where the picture will not come, the card in words, with the
             // same save and share as everywhere else.
             fallback: ColoredBox(
@@ -831,7 +866,12 @@ class _CardFace extends StatelessWidget {
   }
 
   /// The card's shape, edge, glow and lift in [colour].
-  BoxDecoration _decoration(Palette p, double s, Color colour) {
+  BoxDecoration _decoration(
+    Palette p,
+    double s,
+    Color colour, {
+    bool glowing = true,
+  }) {
     return BoxDecoration(
       color: colour,
       // The deck's corner, at the shelf's scale: one card, one shape.
@@ -845,7 +885,7 @@ class _CardFace extends StatelessWidget {
         // coming off the card — but pulled all the way in it stopped
         // reaching the ground at all, so it spreads further than it did
         // on the first pass and less far than the canvas asks.
-        if (glow > 0)
+        if (glow > 0 && glowing)
           BoxShadow(
             color: pill.color.withValues(
               alpha: (p.isDark ? 0.52 : 0.36) * glow,

@@ -75,6 +75,20 @@ Future<void> _pump(
   }
 }
 
+/// Lets the pictures on screen come: decoded for real, as a phone does, then
+/// faded in. Until they have, a card shows its outline in grey and nothing
+/// on it.
+Future<void> _arrive(WidgetTester tester) async {
+  await tester.runAsync(() async {
+    for (final Element e in find.byType(Image).evaluate().toList()) {
+      await precacheImage((e.widget as Image).image, e, onError: (_, _) {});
+    }
+  });
+  await tester.pump();
+  await tester.pump(CardThumb.fade);
+  await tester.pump(const Duration(milliseconds: 50));
+}
+
 /// A reader whose day is done, its five [five], with [saved] kept.
 Future<AppState> _dayDone(List<Pill> five, {List<String> saved = const []}) {
   final String today = dateKey(DateTime.now());
@@ -235,6 +249,7 @@ void main() {
         expect(tester.takeException(), isNull);
         expect(find.byKey(const ValueKey('shelf-picture')), findsWidgets);
         expect(_picture(five.first.id, 'front'), findsOneWidget);
+        await _arrive(tester);
         expect(find.bySemanticsLabel('Save this card'), findsWidgets);
 
         await tester.tapAt(tester.getCenter(find.byType(TodayDoneView)));

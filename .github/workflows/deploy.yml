@@ -47,7 +47,11 @@ jobs:
           python3 tool/remote/gen_strings.py --check
           python3 -m unittest discover -s tool/remote -p "test_*.py"
 
-      - run: flutter test
+      # The app's whole suite is not run here, the owner's choice once the
+      # month's minutes ran out: it took most of the ten minutes each deploy
+      # spent, on every push to main, and every change to the app is tested
+      # in full before it is merged. The bank's and the remote document's own
+      # gates above still stand between a card or a setting and the site.
 
       # No service worker on the preview. Its whole job is to serve the
       # last build from cache, which on a page whose point is seeing the

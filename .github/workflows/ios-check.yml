@@ -5,15 +5,12 @@ name: iOS build check
 # checked in still compiles, which is the one thing a phone cannot tell.
 # Free on a public repository; a run takes about a quarter of an hour.
 
+# Run by hand only (Actions, this workflow, Run workflow), the owner's choice
+# once the month's minutes ran out: on every push to main that touched the
+# app it ran on a macOS runner, which GitHub counts ten times over, so
+# thirteen minutes a merge became some 130 of the month's. Codemagic builds
+# the app for the stores anyway.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "ios/**"
-      - "lib/**"
-      - "pubspec.yaml"
-      - "pubspec.lock"
-      - ".github/workflows/ios-check.yml"
   workflow_dispatch: {}
 
 concurrency:
