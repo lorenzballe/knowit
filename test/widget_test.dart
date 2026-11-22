@@ -965,6 +965,15 @@ void main() {
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.plus'), isTrue);
       expect(find.byType(JourneyScreen), findsOneWidget);
+      // The score, under the reader's training, is there to scroll to.
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-score')),
+        200,
+        scrollable: find.descendant(
+          of: find.byType(JourneyScreen),
+          matching: find.byType(Scrollable),
+        ),
+      );
       expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
     });
   });
