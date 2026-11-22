@@ -19,7 +19,7 @@
   "share": "Paylaş",
   "cardOf": "{n} karttan {k}.",
   "tomorrowsFiveOpenIn": "Yarının beşlisi {when} sonra açılıyor",
-  "topicOpensTomorrow": "{topic}, yarının beşlisini açıyor, {when} sonra",
+  "topicOpensTomorrow": "Yarının beşlisi {topic} ile başlıyor, {when} sonra",
   "exploreTodaysBest": "Bugünün en iyilerini keşfet",
   "magicUnlock": "{days} gün ücretsiz dene",
   "getPlus": "Astute+'a geç",

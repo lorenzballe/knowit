@@ -19,7 +19,7 @@
   "share": "共有",
   "cardOf": "{n}枚中{k}枚目",
   "tomorrowsFiveOpenIn": "明日の5枚は{when}後に開きます",
-  "topicOpensTomorrow": "{topic}が明日の5枚を開きます。{when}後",
+  "topicOpensTomorrow": "明日の5枚は{topic}から。あと{when}",
   "exploreTodaysBest": "今日のベストを見る",
   "magicUnlock": "{days}日間無料で試す",
   "getPlus": "Astute+にする",

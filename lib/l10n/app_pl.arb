@@ -19,7 +19,7 @@
   "share": "Udostępnij",
   "cardOf": "Karta {k} z {n}",
   "tomorrowsFiveOpenIn": "Jutrzejsza piątka otworzy się za {when}",
-  "topicOpensTomorrow": "{topic} otwiera jutrzejszą piątkę, za {when}",
+  "topicOpensTomorrow": "Jutrzejsza piątka zaczyna się od: {topic}, za {when}",
   "exploreTodaysBest": "Odkryj to, co dziś najlepsze",
   "magicUnlock": "Wypróbuj {days, plural, one{{days} dzień} other{{days} dni}} za darmo",
   "getPlus": "Przejdź na Astute+",

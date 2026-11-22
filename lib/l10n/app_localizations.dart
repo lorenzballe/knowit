@@ -237,7 +237,7 @@ abstract class AppLocalizations {
   /// No description provided for @topicOpensTomorrow.
   ///
   /// In en, this message translates to:
-  /// **'{topic} opens tomorrow\'s five, in {when}'**
+  /// **'Tomorrow\'s five start with {topic}, in {when}'**
   String topicOpensTomorrow(String topic, String when);
 
   /// No description provided for @exploreTodaysBest.
@@ -3003,7 +3003,7 @@ abstract class AppLocalizations {
   /// No description provided for @commitBeforeYouTurn.
   ///
   /// In en, this message translates to:
-  /// **'{difficulty} · commit before you turn it over.'**
+  /// **'{difficulty} · commit, then turn it.'**
   String commitBeforeYouTurn(String difficulty);
 
   /// No description provided for @yourAnswer.

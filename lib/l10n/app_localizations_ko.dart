@@ -101,7 +101,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topic이(가) 내일의 다섯 장을 엽니다. $when 후';
+    return '내일의 다섯 장은 $topic부터 시작해요. $when 후';
   }
 
   @override

@@ -103,7 +103,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topic otwiera jutrzejszą piątkę, za $when';
+    return 'Jutrzejsza piątka zaczyna się od: $topic, za $when';
   }
 
   @override

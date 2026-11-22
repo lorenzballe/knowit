@@ -147,6 +147,29 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
     return pathOfCard(pill) == null ? null : pill;
   }
 
+  /// Where the reader is in the deck, as the header says it.
+  String get _count => '${_index + 1}/$_total';
+
+  TextStyle _countStyle(BuildContext context) => AppText.body(
+    size: 13.5,
+    weight: FontWeight.w600,
+    color: context.p.inkMuted,
+  ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
+
+  /// How wide each side of the header is: the way out's 44, or the count's
+  /// own width where a deck of hundreds needs more.
+  double _side(BuildContext context) {
+    final TextPainter t = TextPainter(
+      text: TextSpan(text: '$_total/$_total', style: _countStyle(context)),
+      textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final double width = t.width;
+    t.dispose();
+    return width + 2 > 44 ? width + 2 : 44;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenView(
@@ -161,36 +184,42 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                 child: Row(
                   children: [
                     // A ring of 38, in a target a finger finds: 44.
-                    GlassRound(
-                      symbol: GlassRound.close,
-                      label: MaterialLocalizations.of(context)
-                          .closeButtonTooltip,
-                      onPressed: () => Navigator.of(context).pop(),
-                      size: 44,
-                      iconSize: 17,
-                      fallback: Semantics(
-                        button: true,
-                        label: MaterialLocalizations.of(context)
-                            .closeButtonTooltip,
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () => Navigator.of(context).pop(),
-                          child: SizedBox(
-                            width: 44,
-                            height: 44,
-                            child: Center(
-                              child: Container(
-                                width: 38,
-                                height: 38,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: context.p.line),
-                                ),
-                                alignment: Alignment.center,
-                                child: Icon(
-                                  Icons.close_rounded,
-                                  size: 18,
-                                  color: context.p.ink,
+                    SizedBox(
+                      width: _side(context),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: GlassRound(
+                          symbol: GlassRound.close,
+                          label: MaterialLocalizations.of(context)
+                              .closeButtonTooltip,
+                          onPressed: () => Navigator.of(context).pop(),
+                          size: 44,
+                          iconSize: 17,
+                          fallback: Semantics(
+                            button: true,
+                            label: MaterialLocalizations.of(context)
+                                .closeButtonTooltip,
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () => Navigator.of(context).pop(),
+                              child: SizedBox(
+                                width: 44,
+                                height: 44,
+                                child: Center(
+                                  child: Container(
+                                    width: 38,
+                                    height: 38,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: context.p.line),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                      Icons.close_rounded,
+                                      size: 18,
+                                      color: context.p.ink,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -222,21 +251,18 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                         ),
                       ),
                     ),
+                    // Where the reader is, on one line however many cards
+                    // the deck holds ("163/165"): as wide as it needs, the
+                    // way out on the left taking as much, so the title
+                    // stays in the middle.
                     SizedBox(
-                      width: 44,
+                      width: _side(context),
                       child: Text(
-                        _atEnd ? '' : '${_index + 1}/$_total',
+                        _atEnd ? '' : _count,
                         textAlign: TextAlign.right,
-                        style:
-                            AppText.body(
-                              size: 13.5,
-                              weight: FontWeight.w600,
-                              color: context.p.inkMuted,
-                            ).copyWith(
-                              fontFeatures: const [
-                                FontFeature.tabularFigures(),
-                              ],
-                            ),
+                        maxLines: 1,
+                        softWrap: false,
+                        style: _countStyle(context),
                       ),
                     ),
                   ],

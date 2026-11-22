@@ -4244,7 +4244,7 @@ void main() {
       expect(find.text('YOURS'), findsOneWidget);
       expect(find.text('You answered this one.'), findsOneWidget);
       expect(
-        find.text('${pick.difficulty.label} · commit before you turn it over.'),
+        find.text('${pick.difficulty.label} · commit, then turn it.'),
         findsNothing,
         reason: 'it was committed days ago',
       );

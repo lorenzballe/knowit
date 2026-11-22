@@ -19,7 +19,7 @@
   "share": "Поделиться",
   "cardOf": "Карточка {k} из {n}",
   "tomorrowsFiveOpenIn": "Завтрашняя пятёрка откроется через {when}",
-  "topicOpensTomorrow": "{topic} открывает завтрашнюю пятёрку через {when}",
+  "topicOpensTomorrow": "Завтрашняя пятёрка начнётся с темы «{topic}», через {when}",
   "exploreTodaysBest": "Лучшее за сегодня",
   "magicUnlock": "Попробуй {days, plural, one{{days} день} few{{days} дня} many{{days} дней} other{{days} дня}} бесплатно",
   "getPlus": "Перейти на Astute+",

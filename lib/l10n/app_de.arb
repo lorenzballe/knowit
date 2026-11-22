@@ -19,7 +19,7 @@
   "share": "Teilen",
   "cardOf": "Karte {k} von {n}",
   "tomorrowsFiveOpenIn": "Die fünf von morgen öffnen sich in {when}",
-  "topicOpensTomorrow": "{topic} eröffnet die fünf von morgen, in {when}",
+  "topicOpensTomorrow": "Morgen beginnen die fünf mit {topic}, in {when}",
   "exploreTodaysBest": "Das Beste von heute entdecken",
   "magicUnlock": "{days} Tage gratis testen",
   "getPlus": "Astute+ holen",

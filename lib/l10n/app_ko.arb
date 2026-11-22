@@ -19,7 +19,7 @@
   "share": "공유",
   "cardOf": "{n}장 중 {k}번째",
   "tomorrowsFiveOpenIn": "내일의 다섯 장은 {when} 후에 열려요",
-  "topicOpensTomorrow": "{topic}이(가) 내일의 다섯 장을 엽니다. {when} 후",
+  "topicOpensTomorrow": "내일의 다섯 장은 {topic}부터 시작해요. {when} 후",
   "exploreTodaysBest": "오늘의 베스트 보기",
   "magicUnlock": "{days}일 무료로 시작하기",
   "getPlus": "Astute+ 시작하기",
