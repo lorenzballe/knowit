@@ -145,6 +145,33 @@ final class WidgetOpens: NSObject, FlutterSceneLifeCycleDelegate {
     return pending
   }
 
+  /// Keeps a card's link on the site, astutetheapp.com/c/<id>, tapped in a
+  /// chat or a browser: the card the app is to open on its own, said the way
+  /// a widget's tap says one ("from" link, "in" link).
+  @discardableResult
+  static func noteLink(_ url: URL) -> Bool {
+    guard let host = url.host?.lowercased(),
+      host == "astutetheapp.com" || host == "www.astutetheapp.com"
+    else { return false }
+    let parts = url.pathComponents.filter { $0 != "/" && !$0.isEmpty }
+    guard parts.count == 2, parts[0] == "c" else { return false }
+    var id = parts[1]
+    if id.hasSuffix(".html") { id = String(id.dropLast(5)) }
+    guard !id.isEmpty else { return false }
+    pending = ["from": "link", "card": id, "in": "link"]
+    return true
+  }
+
+  /// A web link the phone handed over as an activity: the app opened, or
+  /// brought forward, by a card's link.
+  @discardableResult
+  static func noteActivity(_ activity: NSUserActivity) -> Bool {
+    guard activity.activityType == NSUserActivityTypeBrowsingWeb,
+      let url = activity.webpageURL
+    else { return false }
+    return noteLink(url)
+  }
+
   /// Keeps what an astute://widget link says: which widget, which card,
   /// and where the card lives. Every other link is left to whoever else is
   /// listening.
@@ -170,10 +197,26 @@ final class WidgetOpens: NSObject, FlutterSceneLifeCycleDelegate {
     options connectionOptions: UIScene.ConnectionOptions?
   ) -> Bool {
     var handled = false
-    for context in connectionOptions?.urlContexts ?? [] where WidgetOpens.note(context.url) {
+    // A widget's tap, or a card's link handed over as a URL (Safari's banner
+    // on a card's page, Open, passes the card's link as its argument).
+    for context in connectionOptions?.urlContexts ?? []
+    where WidgetOpens.note(context.url) || WidgetOpens.noteLink(context.url) {
+      handled = true
+    }
+    // Started from a card's link.
+    for activity in connectionOptions?.userActivities ?? [] where WidgetOpens.noteActivity(activity) {
       handled = true
     }
     return handled
+  }
+
+  /// The app, already running, brought forward by a card's link: the app is
+  /// told at once, as for a widget's tap.
+  @objc(scene:continueUserActivity:)
+  func scene(_ scene: UIScene, continueUserActivity userActivity: NSUserActivity) -> Bool {
+    guard WidgetOpens.noteActivity(userActivity) else { return false }
+    WidgetOpens.channel?.invokeMethod("opened", arguments: nil)
+    return true
   }
 
   /// The app, already running, brought forward by a widget's tap. The app
@@ -182,7 +225,8 @@ final class WidgetOpens: NSObject, FlutterSceneLifeCycleDelegate {
   @objc(scene:openURLContexts:)
   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) -> Bool {
     var handled = false
-    for context in URLContexts where WidgetOpens.note(context.url) {
+    for context in URLContexts
+    where WidgetOpens.note(context.url) || WidgetOpens.noteLink(context.url) {
       handled = true
     }
     if handled {

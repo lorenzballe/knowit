@@ -38,6 +38,7 @@ import 'package:astuto/widgets/hold_to_keep.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
 import 'package:astuto/sync/served.dart';
 import 'package:astuto/sync/tally.dart';
+import 'package:astuto/utils/share_link.dart' show cardLink;
 import 'package:astuto/utils/widget_open.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -1618,6 +1619,76 @@ void main() {
         WidgetOpen.read({'from': 'shelf.systemLarge', 'card': ''})!.card,
         isNull,
       );
+    });
+  });
+
+  group("A card's link opens the card, as a post's link does", () {
+    test('the link is the card\'s page on the site, short; the app knows it '
+        'with or without .html, www. or a query, and nothing else', () {
+      expect(
+        cardLink('science-volcano-breathing'),
+        'https://astutetheapp.com/c/science-volcano-breathing?ref=share_card',
+      );
+      for (final String url in [
+        'https://astutetheapp.com/c/science-volcano-breathing',
+        'https://astutetheapp.com/c/science-volcano-breathing.html',
+        'https://www.astutetheapp.com/c/science-volcano-breathing?ref=x',
+        'https://astutetheapp.com/c/science-volcano-breathing/',
+      ]) {
+        expect(
+          WidgetOpen.cardOfLink(Uri.parse(url)),
+          'science-volcano-breathing',
+          reason: url,
+        );
+      }
+      for (final String url in [
+        'https://astutetheapp.com/',
+        'https://astutetheapp.com/c/',
+        'https://astutetheapp.com/cards/pages/x.html',
+        'https://astutetheapp.com/c/a/b',
+        'https://example.com/c/science-volcano-breathing',
+        'astute://widget?from=card',
+      ]) {
+        expect(WidgetOpen.cardOfLink(Uri.parse(url)), isNull, reason: url);
+      }
+    });
+
+    testWidgets('tapped while the app runs, it opens that card on its own, '
+        'over the tab the reader was on', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+      await _settle(tester);
+      final Pill card = PillBank.cards.firstWhere((p) => p.web == null);
+
+      await phone.tapRunning({'from': 'link', 'card': card.id, 'in': 'link'});
+
+      final viewer = tester.widget<DeckViewerScreen>(
+        find.byType(DeckViewerScreen),
+      );
+      expect(viewer.deck.map((p) => p.id), [card.id]);
+      expect(viewer.source, 'link');
+      await tester.tap(find.byIcon(Icons.close_rounded));
+      await _settle(tester);
+      expect(_onTab(tester, 'Explore'), isTrue);
+    });
+
+    testWidgets('a card this build does not have leaves the app where it was', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await phone.tapRunning({
+        'from': 'link',
+        'card': 'a-card-from-the-future',
+        'in': 'link',
+      });
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      expect(tester.takeException(), isNull);
     });
   });
 

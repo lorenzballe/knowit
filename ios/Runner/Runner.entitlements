@@ -25,5 +25,16 @@
 	<array>
 		<string>group.com.astuto.app</string>
 	</array>
+	<!-- A card's link on the site (astutetheapp.com/c/<id>) opens the card
+	     in the app, as a post's link opens the post: the site says which app
+	     may (site/.well-known/apple-app-site-association) and the App ID has
+	     to carry Associated Domains, which codemagic.yaml turns on before a
+	     profile is made. Without the site's file the link opens the site, as
+	     it always has. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:astutetheapp.com</string>
+		<string>applinks:www.astutetheapp.com</string>
+	</array>
 </dict>
 </plist>

@@ -92,8 +92,9 @@ workflows:
           # a profile will not sign a build that claims a capability the App
           # ID does not carry, and that fails the export rather than the
           # feature. So both App IDs are brought up to date here, before any
-          # profile is minted — Sign in with Apple and App Groups on the app,
-          # App Groups on the widget — and the App Store profiles that already
+          # profile is minted — Sign in with Apple, Associated Domains and App
+          # Groups on the app, App Groups on the widget — and the App Store
+          # profiles that already
           # exist are dropped, because Apple marks them invalid when a
           # capability changes rather than updating them in place.
           #
@@ -119,6 +120,11 @@ workflows:
               app-store-connect bundle-ids enable-capabilities "$BUNDLE_UUID" \
                 --capability "Sign In with Apple" \
                 || echo "  Sign in with Apple was already enabled, or could not be changed."
+              # A card's link on the site opens the card in the app
+              # (ios/Runner/Runner.entitlements, applinks:astutetheapp.com).
+              app-store-connect bundle-ids enable-capabilities "$BUNDLE_UUID" \
+                --capability "Associated Domains" \
+                || echo "  Associated Domains was already enabled, or could not be changed."
             fi
             app-store-connect bundle-ids enable-capabilities "$BUNDLE_UUID" \
               --capability "App Groups" \
@@ -211,6 +217,29 @@ workflows:
             for f in ios/Runner/Runner.entitlements ios/AstutWidget/AstutWidget.entitlements; do
               /usr/libexec/PlistBuddy -c 'Delete :com.apple.security.application-groups' "$f" || true
             done
+          fi
+          # The same for a card's link opening the app (Associated Domains,
+          # turned on above): a profile without it would fail the signing, so
+          # the build goes ahead without it instead, and a card's link opens
+          # the site, as it always has.
+          links=no
+          for dir in "$HOME/Library/MobileDevice/Provisioning Profiles" \
+                     "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"; do
+            for p in "$dir"/*.mobileprovision; do
+              [ -e "$p" ] || continue
+              plist=$(mktemp)
+              security cms -D -i "$p" > "$plist" 2>/dev/null || continue
+              id=$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' "$plist" 2>/dev/null || true)
+              case "$id" in
+                *".$BUNDLE_ID")
+                  if grep -q "com.apple.developer.associated-domains" "$plist"; then links=yes; fi
+                  ;;
+              esac
+            done
+          done
+          echo "Card links open the app (Associated Domains on the app's profile): $links"
+          if [ "$links" != yes ]; then
+            /usr/libexec/PlistBuddy -c 'Delete :com.apple.developer.associated-domains' ios/Runner/Runner.entitlements || true
           fi
 
       - name: Install CocoaPods dependencies

@@ -33,6 +33,7 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun noteWidget(intent: Intent?): Boolean {
+        if (noteLink(intent)) return true
         val from = intent?.getStringExtra(AstutWidget.EXTRA_FROM) ?: return false
         val open = mutableMapOf("from" to from)
         intent.getStringExtra(AstutWidget.EXTRA_CARD)?.let { open["card"] = it }
@@ -42,6 +43,25 @@ class MainActivity : FlutterActivity() {
         intent.removeExtra(AstutWidget.EXTRA_FROM)
         intent.removeExtra(AstutWidget.EXTRA_CARD)
         intent.removeExtra(AstutWidget.EXTRA_IN)
+        return true
+    }
+
+    /// A card's link on the site, astutetheapp.com/c/<id>, tapped in a chat
+    /// or a browser: the card the app is to open on its own, said the way a
+    /// widget's tap says one ("from" link, "in" link).
+    private fun noteLink(intent: Intent?): Boolean {
+        val i = intent ?: return false
+        if (i.action != Intent.ACTION_VIEW) return false
+        val url = i.data ?: return false
+        val host = url.host?.lowercase() ?: return false
+        if (host != "astutetheapp.com" && host != "www.astutetheapp.com") return false
+        val parts = url.pathSegments.filter { it.isNotEmpty() }
+        if (parts.size != 2 || parts[0] != "c") return false
+        val id = parts[1].removeSuffix(".html")
+        if (id.isEmpty()) return false
+        widgetOpen = mapOf("from" to "link", "card" to id, "in" to "link")
+        // Said once: a recreated activity must not open the same card again.
+        i.data = null
         return true
     }
 

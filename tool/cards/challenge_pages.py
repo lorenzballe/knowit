@@ -15,6 +15,12 @@ A link's preview in a chat is the card's question over a picture: the front
 of its drawing, or for a card in words its subject's picture
 (tool/cards/og_images.py).
 
+As a post's link does, the link opens the app on a phone that has it: the
+site vouches for the app (site/.well-known/), and on an iPhone browsing the
+page Safari's own banner offers the app, Open where it is installed, Get where
+it is not (apple-itunes-app, its argument the card's link). The link is
+short, astutetheapp.com/c/<id>; the site serves it from c/<id>.html.
+
 Written when the site is put together (.github/workflows/deploy.yml), from the
 bank as it is published, into <site>/c/<id>.html; the card pages already sit
 at <site>/cards/pages/, and the kit they load is copied beside them.
@@ -134,6 +140,8 @@ HEAD = """<!DOCTYPE html>
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{teaser}">
 <meta property="og:url" content="{url}">
+<meta name="apple-itunes-app" content="app-id=6806852300, app-argument={url}">
+<link rel="canonical" href="{url}">
 <meta property="og:image" content="{image}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
@@ -280,7 +288,7 @@ def render(card: dict) -> str:
         title=_e(card.get("question")),
         teaser="Can you get it? A card from Astute, sent by a friend." if asks
         else "A card from Astute, sent by a friend. Tap to find out.",
-        url=f"{SITE}/c/{cid}.html",
+        url=f"{SITE}/c/{cid}",
         image=_e(image),
         colour=colour,
         ink=ink_of(colour),
