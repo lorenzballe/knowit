@@ -53,7 +53,10 @@ function draw() {
   const {W, H, f} = Kit.fitSvg(svg);
   svg.innerHTML = '';
   const fs = Math.max(f * .9, 12);
-  const padL = Math.max(fs * 3.6, 44), padR = fs * 1.4, padT = fs * 5.4, padB = fs * 4.4;
+  // The left margin is as wide as the longest label needs, so none is cut at the edge.
+  const probe = Kit.mk('text', {y: -99, 'font-size': fs, 'font-family': 'var(--mono)'}, svg); probe.textContent = '+$1000';
+  const padL = Math.max(fs * 3.6, 44, probe.getComputedTextLength() + fs * .4 + 2), padR = fs * 1.4, padT = fs * 5.4, padB = fs * 4.4;
+  probe.remove();
   const X = i => padL + (W - padL - padR) * i / N;
   const Y = v => padT + (H - padT - padB) * (hi - v) / (hi - lo);
   const ink = 'var(--k)', red = '#d0263a';

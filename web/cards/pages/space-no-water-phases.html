@@ -114,8 +114,11 @@ Kit.onShow.card = () => {
   const ts = Math.max(12, fs * .78);
   tt(fs * .6, y0 + ts * 1.5, 'WATER DISPENSER', 'mut', ts);
   tt(bw + gap + fs * .6, y0 + ts * 1.5, 'ON THE MENU', 'mut', ts);
-  const iy = y0 + ts * 1.5 + (bh - ts * 1.5) * .5;
-  const s = Math.max(10, Math.min((bh - ts * 2.2) * .3, bw * .14));
+  // The menu's two lines fit right of its picture, the pictures a little smaller if need be; both lines above the foot.
+  const iy = Math.min(y0 + ts * 1.5 + (bh - ts * 1.5) * .5, H - 2 - fs * 1.6);
+  const wl = [['Freeze-dried', 'txt', fs], ['Tortillas', 'txt', fs], ['add water', 'mut', Math.max(12, fs * .85)], ['ready to eat', 'mut', Math.max(12, fs * .85)]]
+    .reduce((m, [t, c, z]) => { const e = tt(0, -99, t, c, z), w = e.getComputedTextLength(); e.remove(); return Math.max(m, w); }, 0);
+  const s = Math.max(8, Math.min((bh - ts * 2.2) * .3, bw * .14, (W - 3 - wl - bw - gap - fs * .6) / 2.7));
   const ix = fs * .6 + s * 1.2;
   G.dropI = drop(ix, iy, s, BLUE, svg);
   G.no = mk('g', {}, svg);

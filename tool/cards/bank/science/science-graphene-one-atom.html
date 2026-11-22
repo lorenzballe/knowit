@@ -102,7 +102,7 @@ function draw(){
   const bx = rowL + rowW + r2*2.5, y1 = yb + r2, y0 = yb - (n-1)*step - r2, tk = r2*1.6;
   const rg = Kit.mk('g',{},svg);
   Kit.mk('path',{d:`M${bx-tk} ${y0}H${bx}V${y1}H${bx-tk}`,class:'rule','stroke-width':Math.max(2,r2*0.35)},rg);
-  const ym = (y0+y1)/2;
+  const ym = Math.min((y0+y1)/2, H - 1 - fs*1.45);  // its two lines beside the ruler, whole above the foot
   const rt = Kit.mk('text',{x:bx+fs*0.6,y:ym-fs*0.15,class:'ink','font-size':fs*1.15,'font-weight':700,'font-family':'var(--display)'},rg);
   rt.textContent = n>1 ? `${n} atoms` : '1 atom';
   const rt2 = Kit.mk('text',{x:bx+fs*0.6,y:ym+fs*1.2,class:'mut','font-size':fs,'font-family':'var(--body)'},rg);

@@ -47,12 +47,14 @@ function render() {
   const fs = Math.max(12, f * .85), sw = Math.max(1.5, H * .006);
   const g = Kit.mk('g', {}, svg);
   // pressure bar
-  const bx = W * .055, by0 = H * .08, by1 = H * .88, bw = Math.max(8, W * .03);
+  // its two words whole inside the top and the foot, the bar between them
+  const ys = Math.max(H * .045, fs * .95 + 1), yd = Math.min(H * .955, H - fs * .25 - 1);
+  const bx = W * .055, by0 = Math.max(H * .08, ys + fs * .45), by1 = Math.min(H * .88, yd - fs * 1.1), bw = Math.max(8, W * .03);
   Kit.mk('rect', {x: bx - bw / 2, y: by0, width: bw, height: by1 - by0, rx: bw / 2, style: `fill:${k};opacity:.12`}, g);
   Kit.mk('rect', {x: bx - bw / 2, y: by0, width: bw, height: (by1 - by0) * p, rx: bw / 2, style: `fill:${k}`}, g);
   Kit.mk('circle', {cx: bx, cy: by0 + (by1 - by0) * p, r: bw * .95, style: `fill:${c};stroke:${k};stroke-width:${sw}`}, g);
-  const t1 = Kit.mk('text', {x: 2, y: H * .045, style: `font:700 ${fs}px var(--body);fill:${k}`}, g); t1.textContent = 'surface';
-  const t2 = Kit.mk('text', {x: 2, y: H * .955, style: `font:700 ${fs}px var(--body);fill:${k}`}, g); t2.textContent = 'deep';
+  const t1 = Kit.mk('text', {x: 2, y: ys, style: `font:700 ${fs}px var(--body);fill:${k}`}, g); t1.textContent = 'surface';
+  const t2 = Kit.mk('text', {x: 2, y: yd, style: `font:700 ${fs}px var(--body);fill:${k}`}, g); t2.textContent = 'deep';
   const x0 = W * .16, x1 = W * .97, cx = (x0 + x1) / 2, cw = x1 - x0;
   const gap = H * .012, Lmin = H * .015, Lmax = H * .05, al = Lmin + (Lmax - Lmin) * p;
   const acol = p > .02 ? k : 'transparent', aw = Math.max(1.5, sw * .9);
@@ -89,6 +91,9 @@ function render() {
 }
 
 Kit.onShow.card = () => {
+  // Left less room than it was drawn for, under 100 px (a small phone), it keeps that drawing, shown smaller, whole.
+  const now = svg.getBoundingClientRect().height;
+  if (G && now < 100 && now < G.H - 1) { svg.dataset.kept = '1'; render(); return; }
   const {W, H, f} = Kit.fitSvg(svg), st = cs();
   G = {W, H, f, k: st.getPropertyValue('--k').trim() || '#10100c', c: st.getPropertyValue('--c').trim() || '#00A6FF'};
   render();

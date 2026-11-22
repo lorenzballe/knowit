@@ -109,7 +109,8 @@ Kit.onShow.card = () => {
   const t0 = m('text', {x: rx + f*.6, y: surf + fs*1.3, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--mono)'}, svg); t0.textContent = '0 m';
   const t5 = m('text', {x: rx + f*.6, y: vent - fs*.4, fill: '#10100c', 'font-size': fs*1.35, 'font-weight': 800, 'font-family': 'var(--display)'}, svg); t5.textContent = '500 m';
   // energy bar in the sky
-  const bx = W * .05, by = surf * .32, bwid = W * .4, bh = Math.max(f*.45, 6);
+  // low enough that its label stays whole under the top edge
+  const bx = W * .05, bwid = W * .4, bh = Math.max(f*.45, 6), by = Math.max(surf * .32, bh * .6 + fs * .95 + 1);
   const lb = m('text', {x: bx, y: by - bh*.6, fill: '#10100c', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); lb.textContent = 'Blast energy left';
   m('rect', {x: bx, y: by, width: bwid, height: bh, rx: bh/2, fill: '#10100c', opacity: .2}, svg);
   const bar = m('rect', {x: bx, y: by, width: bwid, height: bh, rx: bh/2, fill: '#ff5a1f', stroke: '#10100c', 'stroke-width': 1.5}, svg);

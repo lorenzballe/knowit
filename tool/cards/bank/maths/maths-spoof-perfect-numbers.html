@@ -41,20 +41,37 @@ function txt(p, x, y, s, size, fam, st, anchor) {
 function draw() {
   const svg = Kit.$('pic');
   svg.innerHTML = '';
-  const {W, H} = Kit.fitSvg(svg);
+  let {W, H} = Kit.fitSvg(svg);
   const u = Math.max(12, Math.min(H / 19.5, W / 20));
   const mono = 'var(--mono)', body = 'var(--body)', disp = 'var(--display)';
   const fs = Math.max(12, u * .95);
   const pad = W * .03;
   const total = u * 18.6;
-  let y = Math.max(0, (H - total) / 2);
+  const nf = Math.max(14, Math.min(u * 1.5, W / 10)), cf = Math.max(12, u * .8), fv = Math.max(12, u * .85);
+  const g = W * .025, bw = (W - 2 * pad - 4 * g) / 5, bh0 = Math.min(bw * 1.05, u * 3.8), bt = u * .95;
+  const sw = Math.min(W * .62, u * 11), sh = u * 2.1, end = sh / 2 + sw / 2 * Math.sin(Math.PI / 45) + 1;
+  // The stack top to bottom as the card sets it. Where that runs past the foot, each gap closes toward the
+  // least its words need, the caption left out if even that is too tall; past that it is drawn taller and
+  // shown smaller, whole. No word is cut at the edge.
+  const steps = cap => [
+    [u * 1.3, nf * .45 + 3], [bh0, Math.min(bh0, u * 2.6)], [u * 1.1, fs * .66 + 3],
+    cap ? [u * 1.4, fs * .45 + cf * .7 + 3] : [0, 0], cap ? [u * 1.8, cf * .5 + u * .4 + 2] : [u * 3.2, fs * .45 + u * .4 + 2],
+    [u * 2.2, fv * 1.11 + 5], [u * 3.3, fv * 1.11 + 5 + end]];
+  const sum = (v, i) => v.reduce((t, x) => t + x[i], bt * 2);
+  let yN = Math.max(0, (H - total) / 2) + u * .8, cap = true, k = 1, st6 = steps(true);
+  if (yN + sum(st6, 0) + end > H) {
+    yN = nf * .66 + 1;
+    if (yN + sum(st6, 1) + end > H) { cap = false; st6 = steps(false); }
+    k = Math.max(0, Math.min(1, (H - yN - end - sum(st6, 1)) / (sum(st6, 0) - sum(st6, 1))));
+    if (yN + sum(st6, 1) + end > H) { H = yN + sum(st6, 1) + end; svg.setAttribute('viewBox', `0 0 ${W} ${H}`); }
+  }
+  const [q1, bh, q2, q3, q4, q5, q6] = st6.map(([a, b]) => b + (a - b) * k);
+  let y = yN + q1;
 
   // the number
-  txt(svg, W / 2, y + u * .8, '198,585,576,189', Math.max(14, Math.min(u * 1.5, W / 10)), mono);
-  y += u * 2.1;
+  txt(svg, W / 2, yN, '198,585,576,189', nf, mono);
 
   // factor blocks
-  const g = W * .025, bw = (W - 2 * pad - 4 * g) / 5, bh = Math.min(bw * 1.05, u * 3.8);
   const ff = Math.max(12, Math.min(u * 1.25, bw * .27));
   const pieces = [['3²', '13'], ['7²', '57'], ['11²', '133'], ['13²', '183']];
   pieces.forEach((p, i) => {
@@ -62,7 +79,7 @@ function draw() {
     Kit.mk('rect', {x, y, width: bw, height: bh, rx: u * .5,
       style: 'fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:2'}, svg);
     txt(svg, x + bw / 2, y + bh / 2, p[0], ff, mono);
-    txt(svg, x + bw / 2, y + bh + u * 1.1, p[1], fs, mono);
+    txt(svg, x + bw / 2, y + bh + q2, p[1], fs, mono);
   });
   const x5 = pad + 4 * (bw + g);
   // underneath layer: the truth
@@ -80,33 +97,31 @@ function draw() {
     txt(mask, x5 + bw / 2, y + bh * .76, 'prime?', Math.max(12, Math.min(ff * .7, bh * .2)), body, paper);
     mask.addEventListener('pointerdown', reveal);
   }
-  const s5 = txt(svg, x5 + bw / 2, y + bh + u * 1.1, revealed ? '23622' : '22022', fs, mono);
-  y += bh + u * 2.5;
-  txt(svg, W / 2, y, 'σ of each piece, multiplied together = σ(n)', Math.max(12, u * .8), body, 'fill:var(--k);opacity:.7');
-  y += u * 1.8;
+  const s5 = txt(svg, x5 + bw / 2, y + bh + q2, revealed ? '23622' : '22022', fs, mono);
+  y += bh + q2 + q3;
+  if (cap) txt(svg, W / 2, y, 'σ of each piece, multiplied together = σ(n)', cf, body, 'fill:var(--k);opacity:.7');
+  y += q4;
 
   // bars
   const lab = Math.max(u * 3, 44), x0 = pad + lab;
-  const L0 = (W - x0 - pad) / R * .97, bt = u * .95;
-  const fv = Math.max(12, u * .85);
+  const L0 = (W - x0 - pad) / R * .97;
   txt(svg, pad, y + bt / 2, 'σ(n)', fs, mono, ink, 'start');
   Kit.mk('rect', {x: x0, y, width: L0, height: bt, rx: 3, style: ink}, svg);
   const over = Kit.mk('rect', {x: x0 + L0, y, width: revealed ? L0 * (R - 1) : 0, height: bt, rx: 3,
     style: 'fill:var(--k);opacity:.45'}, svg);
-  const v1 = txt(svg, x0, y + bt + u * 1, revealed ? '426,027,470,778' : '397,171,152,378', fv, mono, ink, 'start');
-  const y2 = y + bt + u * 2.2;
+  const v1 = txt(svg, x0, y + bt + Math.min(u, q5 - fv * .45 - 3), revealed ? '426,027,470,778' : '397,171,152,378', fv, mono, ink, 'start');
+  const y2 = y + bt + q5;
   txt(svg, pad, y2 + bt / 2, '2n', fs, mono, ink, 'start');
   Kit.mk('rect', {x: x0, y: y2, width: L0, height: bt, rx: 3,
     style: 'fill:color-mix(in srgb,var(--k) 12%,transparent);stroke:var(--k);stroke-width:2'}, svg);
-  txt(svg, x0, y2 + bt + u * 1, '397,171,152,378', fv, mono, ink, 'start');
+  txt(svg, x0, y2 + bt + Math.min(u, q6 - fv * .45 - 3 - end), '397,171,152,378', fv, mono, ink, 'start');
   Kit.mk('line', {x1: x0 + L0, x2: x0 + L0, y1: y - u * .4, y2: y2 + bt + u * .3,
     style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:4 4'}, svg);
-  y = y2 + bt + u * 3.3;
+  y = y2 + bt + q6;
 
   // stamp
   const st = Kit.mk('g', {transform: `translate(${W / 2},${y}) rotate(-4)`}, svg);
   const inner = Kit.mk('g', {}, st);
-  const sw = Math.min(W * .62, u * 11), sh = u * 2.1;
   Kit.mk('rect', {x: -sw / 2, y: -sh / 2, width: sw, height: sh, rx: u * .4,
     style: 'fill:none;stroke:var(--k);stroke-width:3'}, inner);
   const stT = txt(inner, 0, 0, revealed ? 'σ(n) ≠ 2n · SPOOF' : 'σ(n) = 2n · PERFECT?', Math.max(12, Math.min(u * 1.05, sw / 13)), disp);

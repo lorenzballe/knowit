@@ -1,155 +1,404 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-volcano-breathing -->
-<title>Astute free card</title>
+<title>The ground that breathes</title>
+<!-- Pozzuoli seen side on: the old town on its headland and the three Roman columns of the market at
+     the water's edge rise and sink against a sea, and a boat, that stay put; now and then, as they rise,
+     the columns shake: the quakes people feel, and blame. The reader picks the cause
+     and says how sure; then the rock opens: magma 6-8 km down, its gas and hot water trapped 3-4 km down,
+     swelling as the town rises, and the rock above cracking as it bends: the quakes. Taps only.
+     Facts: INGV Osservatorio Vesuviano, Campi Flegrei bulletin for October 2026 (GNSS station RITE,
+     Rione Terra: about 170 cm of uplift since November 2005) and "Comprendere i Campi Flegrei" (in the
+     leading explanation, which INGV calls one of the theories, the uplift is fed by gas from a magma
+     source 6-8 km deep, rich in water vapour, trapped about 3-4 km down; the quakes are the rock breaking
+     under that push, and leave only a step in the rise); Battaglia et al., Geophysical Research Letters
+     33 (2006), doi:10.1029/2005GL024904 (fluids moving to and from the hydrothermal system raise and
+     lower the ground); INGV "Il bradisismo" and the Parco Archeologico dei Campi Flegrei (three of the
+     market's columns still stand). -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #art{flex:1;min-height:0;position:relative}
 #art svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-#opts{display:flex;flex-direction:column;gap:1cqh}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display)}
-#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
-.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer}
+#opts{display:flex;flex-direction:column;gap:max(.9cqh,6px)}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:99px;padding:max(1.25cqh,9px) max(4.4cqw,16px);cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.opt:active{transform:scale(.98)}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+#sure .sq{text-wrap:balance}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+<article class="card" id="card" data-topic="science" data-kind="Pick the cause · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
     <h2 class="q">What slowly lifts and sinks the ground at Campi Flegrei?</h2>
-    <div class="stagebox" id="stage">
-      <div id="art"><svg id="pic"></svg></div>
-      <div id="opts">
-        <button class="opt" data-i="0">Sea tides pulling on the coast</button>
-        <button class="opt" data-i="1">Fluids and magma pushing from below</button>
-        <button class="opt" data-i="2">Old buildings slowly settling</button>
-      </div>
-      <div id="why" class="gone"><p class="big">Fluids and magma below</p><p class="body">This is bradisismo: magma and fluids push the ground up, then it sinks back as they ease. Slow and cyclic, like the volcano breathing. In the 1970s and 80s it was so intense that quakes shook Pozzuoli and whole areas were evacuated.</p></div>
+    <div class="stagebox" id="art"><svg id="pic" role="img" aria-label="Pozzuoli, side on: the old town on its headland, which has risen 1.7 m since 2005, and three Roman columns at the water's edge slowly rise and sink, shaking now and then, while the sea and a boat stay where they are."></svg></div>
+    <div id="opts">
+      <button class="opt" data-i="0">Africa’s plate pushing into Europe</button>
+      <button class="opt" data-i="1">Thousands of small quakes adding up</button>
+      <button class="opt" data-i="2">Fluids and magma pushing from below</button>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say">Watch the coast rise and sink. Pick the cause, then say how sure.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Under Campi Flegrei the ground breathes: up when fluids push, down when they ease.</div>
-    <div class="foot"><span class="src">Source · Geopop, “BRADISISMO: IL RESPIRO DEL SUPERVULCANO CAMPI FLEGREI - Documentario - Sub-Eng” (YouTube, 2019).</span></div>
+    <div id="sure" class="gone"></div>
+    <p class="say gone" id="why"></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When something shakes, look for what has been pushing for years.</div>
+    <div class="foot"><span class="src">Source · INGV Osservatorio Vesuviano (2026); Battaglia et al., GRL (2006)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RIGHT = 1;
-let pick = -1, revealed = false;
-const st = {v: -0.6, last: -0.6, rising: true};
-let D = null, R = {}, loop = null, ticking = false;
-const dots = Array.from({length: 7}, (_, i) => ({f: i / 7, o: (i % 2 ? 1 : -1) * (0.02 + 0.03 * (i % 4))}));
+(() => {
+  const RIGHT = 2;
+  // One ink; the card's green for the sky; cream for the rock; white for marble, plaster, and the gas and
+  // hot water gathering below; the sea's blue; and one warm accent, for the magma.
+  const INK = '#10100c', CREAM = '#FFF3D6', WHITE = '#ffffff', SEA = '#3D79F4', MAGMA = '#FF6A1A', GREEN = '#00E5A0';
+  // The trapped layer: hot water and gas, pale blue, so it reads as something there and not an empty tray.
+  const STEAM = '#BFE1FF';
+  const FONT = 'Figtree, system-ui, sans-serif';
+  const card = Kit.$('card'), box = Kit.$('art'), svg = Kit.$('pic');
+  // v: where the ground is in its breath, -1 low (the market's floor under the sea) to 1 high.
+  // split: how much of the picture the rock takes, 0 before the answer, 1 after it.
+  // cause: how far the depths are shown.
+  const st = {v: Kit.calm ? .6 : -1, split: 0, cause: 0};
+  // What the back says, by what the reader picked: the right answer, or why the pick fails.
+  const WHY = ['Plates strain other parts of Italy; here the push comes from fluids rising from the magma.',
+    'The quakes are a result: the rock cracks as fluids rising from the magma push the town up.',
+    'Most likely, gas from the magma and hot water lift the town, and let it sink as they drain.'];
+  let pick = -1, stage = 0, G = null, loop = null, lastV = -1, shakeAt = -9;
 
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
-  Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-  Kit.show('keep');
-  reveal();
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
-});
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const sm = t => t * t * (3 - 2 * t);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const f1 = n => (Math.round(n * 10) / 10).toString();
+  const mk = Kit.mk;
 
-function surf(x, v) {
-  const {W, H} = D;
-  return H * (0.33 - 0.10 * x / W) - H * 0.05 * v * Math.exp(-Math.pow((x - W * 0.5) / (W * 0.3), 2));
-}
-function line(fn, n) { let s = ''; for (let i = 0; i <= n; i++) { const x = D.W * i / n; s += (i ? 'L' : 'M') + x.toFixed(1) + ',' + fn(x).toFixed(1); } return s; }
+  // The ground at rest, and the breath on top of it: one broad bulge centred on the town, as the
+  // uplift at Campi Flegrei is largest at Pozzuoli and fades towards the rim of the caldera.
+  function rest(x) {
+    const P = G.prof;
+    for (let i = 1; i < P.length; i++) if (x <= P[i][0]) { const [x0, y0] = P[i - 1], [x1, y1] = P[i]; return lerp(y0, y1, sm(clamp((x - x0) / (x1 - x0), 0, 1))); }
+    return P[P.length - 1][1];
+  }
+  const bell = x => Math.exp(-Math.pow((x - G.xc) / G.sig, 2));
+  const lift = (x, v = st.v) => -G.A * v * bell(x);
+  const surf = (x, v = st.v) => rest(x) + lift(x, v);
+  const B1 = (x, v = st.v) => G.b1 + .9 * lift(x, v);
+  // The trapped layer's floor stays put: as the gas gathers, the layer swells upwards and lifts the lid.
+  const low = x => { const q = (x - G.xc) / G.lrx; return B1(x, -1) + G.t0 * (1 - q * q); };
+  const path = (fn, a, b, n, back) => { let s = ''; for (let i = 0; i <= n; i++) { const x = lerp(a, b, back ? 1 - i / n : i / n); s += (i || back ? 'L' : 'M') + f1(x) + ',' + f1(fn(x)); } return s; };
 
-function build() {
-  const svg = Kit.$('pic'); svg.innerHTML = '';
-  D = Kit.fitSvg(svg);
-  const {W, H} = D, fs = Math.max(D.f * 0.8, 12);
-  const defs = Kit.mk('defs', {}, svg);
-  const g = Kit.mk('radialGradient', {id: 'mg'}, defs);
-  Kit.mk('stop', {offset: '0%', 'stop-color': '#ffd27a'}, g);
-  Kit.mk('stop', {offset: '60%', 'stop-color': '#f0532c'}, g);
-  Kit.mk('stop', {offset: '100%', 'stop-color': '#a51f14'}, g);
-  R.g1 = Kit.mk('path', {fill: '#c79a63'}, svg);
-  R.g2 = Kit.mk('path', {fill: '#a37748'}, svg);
-  R.g3 = Kit.mk('path', {fill: '#6d4a2e'}, svg);
-  R.houses = [0.66, 0.73, 0.8, 0.87].map((p, i) => Kit.mk('rect', {width: W * 0.045, height: H * (0.035 + 0.012 * (i % 2)), fill: '#f4ecdc', stroke: '#5b4630', 'stroke-width': 1.2, 'data-x': p}, svg));
-  R.cols = [0, 1, 2].map(i => Kit.mk('rect', {width: W * 0.02, height: H * 0.11, fill: '#f6efe0', stroke: '#5b4630', 'stroke-width': 1.2}, svg));
-  R.sea = Kit.mk('path', {fill: '#2f7fc1', opacity: 0.62}, svg);
-  R.seaLine = Kit.mk('line', {x1: 0, x2: W, y1: H * 0.30, y2: H * 0.30, stroke: '#2f7fc1', 'stroke-width': 1.4, 'stroke-dasharray': '5 5'}, svg);
-  R.seaTxt = Kit.mk('text', {x: 6, y: H * 0.30 - fs * 0.5, 'font-size': fs, fill: 'currentColor', 'font-family': 'var(--body)', 'font-weight': 700}, svg); R.seaTxt.textContent = 'sea level';
-  R.colTxt = Kit.mk('text', {'font-size': fs, 'text-anchor': 'middle', fill: 'currentColor', 'font-family': 'var(--body)', 'font-weight': 700}, svg); R.colTxt.textContent = 'Serapis columns';
-  R.townTxt = Kit.mk('text', {'font-size': fs, 'text-anchor': 'middle', fill: 'currentColor', 'font-family': 'var(--body)', 'font-weight': 700}, svg); R.townTxt.textContent = 'Pozzuoli';
-  R.sy = Math.max(fs * 1.3, H * 0.08);
-  R.status = Kit.mk('text', {x: W / 2, y: R.sy, 'font-size': fs * 1.15, 'text-anchor': 'middle', fill: 'currentColor', 'font-family': 'var(--display)', 'font-weight': 700}, svg);
-  R.fl = Kit.mk('g', {opacity: revealed ? 1 : 0}, svg);
-  R.dots = dots.map(() => Kit.mk('circle', {r: Math.max(2.5, W * 0.009), fill: '#ffb347', stroke: '#7a2a10', 'stroke-width': 1}, R.fl));
-  R.mystery = Kit.mk('g', {opacity: revealed ? 0 : 1}, svg);
-  Kit.mk('ellipse', {cx: W / 2, cy: H * 0.8, rx: W * 0.2, ry: H * 0.07, fill: 'none', stroke: '#f4ecdc', 'stroke-width': 2, 'stroke-dasharray': '6 6'}, R.mystery);
-  const q = Kit.mk('text', {x: W / 2, y: H * 0.8 + fs * 0.6, 'font-size': fs * 1.8, 'text-anchor': 'middle', fill: '#f4ecdc', 'font-family': 'var(--display)', 'font-weight': 700}, R.mystery); q.textContent = '?';
-  R.mg = Kit.mk('g', {opacity: revealed ? 1 : 0}, svg);
-  R.ch = Kit.mk('ellipse', {cx: W / 2, cy: H * 0.8, fill: 'url(#mg)', stroke: '#ffd27a', 'stroke-width': 1.5}, R.mg);
-  R.chTxt = Kit.mk('text', {x: W / 2, y: H * 0.8 + fs * 0.35, 'font-size': fs, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800}, R.mg); R.chTxt.textContent = 'magma & fluids';
-  R.fs = fs;
-  draw();
-}
+  // A name on a dark pill, the card's green on ink; a second part, lighter, in white.
+  function pill(parent, a, b) {
+    const g = mk('g', {}, parent), h = G.ph;
+    const r = mk('rect', {height: h, rx: h / 2, fill: INK}, g);
+    const t = mk('text', {x: h * .48, y: h / 2 + G.fs * .36, 'font-family': FONT, 'font-size': G.fs, 'font-weight': 800, 'letter-spacing': '.07em'}, g);
+    mk('tspan', {fill: GREEN}, t).textContent = a;
+    if (b) mk('tspan', {fill: WHITE, 'font-weight': 600, 'letter-spacing': '.01em'}, t).textContent = ' ' + b;
+    r.setAttribute('width', t.getComputedTextLength() + h * .96);
+    return {g, w: +r.getAttribute('width'), h};
+  }
+  // A name on a dark pill beside what it names, with a thin line to it: the name in the card's green and,
+  // under it (or after it, where the rock is thin), its depth in white.
+  function tag(parent, name, depth, inline) {
+    const g = mk('g', {}, parent), lh = G.fs * 1.3, pad = G.fs * .58;
+    const lead = mk('path', {fill: 'none', stroke: INK, 'stroke-width': G.k * .8, 'stroke-linecap': 'round'}, g);
+    const dot = mk('circle', {r: G.k * 1.5, fill: INK}, g);
+    const r = mk('rect', {fill: INK}, g);
+    const lines = [mk('text', {'font-family': FONT, 'font-size': G.fs, 'font-weight': 800, 'letter-spacing': '.07em', fill: GREEN}, g)];
+    if (inline && depth) { mk('tspan', {}, lines[0]).textContent = name; mk('tspan', {fill: WHITE, 'font-weight': 600, 'letter-spacing': '.01em'}, lines[0]).textContent = ' ' + depth; }
+    else lines[0].textContent = name;
+    if (depth && !inline) { const t = mk('text', {'font-family': FONT, 'font-size': G.fs, 'font-weight': 600, fill: WHITE}, g); t.textContent = depth; lines.push(t); }
+    const w = Math.max(...lines.map(t => t.getComputedTextLength())) + 2 * pad, h = lines.length * lh + pad * .9;
+    r.setAttribute('width', f1(w)); r.setAttribute('height', f1(h)); r.setAttribute('rx', f1(Math.min(h / 2, lh * .8)));
+    const T = {g, lead, dot, w, h};
+    // Set with its top left corner at (x, y).
+    T.at = (x, y) => { r.setAttribute('x', f1(x)); r.setAttribute('y', f1(y));
+      lines.forEach((t, i) => { t.setAttribute('x', f1(x + pad)); t.setAttribute('y', f1(y + pad * .45 + lh * (i + .8))); }); };
+    return T;
+  }
+  const hit = (a, b, m = 2) => a.x < b.x + b.w + m && b.x < a.x + a.w + m && a.y < b.y + b.h + m && b.y < a.y + a.h + m;
 
-function draw() {
-  if (!D) return;
-  const {W, H} = D, v = st.v, fs = R.fs;
-  const dv = v - st.last;
-  if (Math.abs(dv) > 1e-5) st.rising = dv > 0;
-  st.last = v;
-  const s = x => surf(x, v);
-  R.g1.setAttribute('d', line(s, 48) + `L${W},${H}L0,${H}Z`);
-  R.g2.setAttribute('d', line(x => surf(x, v * 0.7) + H * 0.16, 48) + `L${W},${H}L0,${H}Z`);
-  R.g3.setAttribute('d', line(x => surf(x, v * 0.45) + H * 0.32, 48) + `L${W},${H}L0,${H}Z`);
-  const seaY = H * 0.30;
-  let d = `M0,${seaY}L${W},${seaY}`;
-  for (let i = 48; i >= 0; i--) { const x = W * i / 48; d += `L${x.toFixed(1)},${Math.max(s(x), seaY).toFixed(1)}`; }
-  R.sea.setAttribute('d', d + 'Z');
-  const cw = W * 0.02, ch = H * 0.11;
-  const minY = R.sy + fs * 1.5;
-  let top = 1e9;
-  R.cols.forEach((c, i) => { const x = W * 0.36 + i * W * 0.035; const y = s(x + cw / 2) - ch; top = Math.min(top, y); c.setAttribute('x', x); c.setAttribute('y', y); });
-  R.colTxt.setAttribute('x', W * 0.395); R.colTxt.setAttribute('y', Math.max(top - fs * 0.5, minY));
-  let ht = 1e9;
-  R.houses.forEach(h => { const x = W * +h.dataset.x, hh = +h.getAttribute('height'); const y = s(x + W * 0.022) - hh; ht = Math.min(ht, y); h.setAttribute('x', x); h.setAttribute('y', y); });
-  R.townTxt.setAttribute('x', W * 0.79); R.townTxt.setAttribute('y', Math.max(ht - fs * 0.5, minY));
-  R.status.textContent = st.rising ? 'ground rising ↑' : 'ground sinking ↓';
-  const rx = W * 0.2 * (1 + 0.12 * v), ry = H * 0.07 * (1 + 0.4 * v), cy = H * 0.8;
-  R.ch.setAttribute('rx', rx); R.ch.setAttribute('ry', ry);
-  const y0 = cy - ry, y1 = s(W / 2) + H * 0.06;
-  dots.forEach((p, i) => {
-    if (ticking && revealed) { p.f += st.rising ? 0.007 : -0.005; if (p.f > 1) p.f -= 1; if (p.f < 0) p.f += 1; }
-    const c = R.dots[i];
-    c.setAttribute('cx', W / 2 + p.o * W * (1 + p.f));
-    c.setAttribute('cy', y0 + (y1 - y0) * p.f);
-    c.setAttribute('opacity', (st.rising ? 0.95 : 0.45) * Math.sin(Math.PI * p.f));
+  function build() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const g = G = {W, H};
+    const k = g.k = clamp(W * .0052, 1.5, 2.2);
+    g.fs = clamp(W * .037, 11, 13);
+    g.ph = Math.round(g.fs * 1.95);
+    g.bs = clamp(W * .1, 24, 38);
+    // One unit for everything on the ground, as large as the width allows, while the sky keeps room for
+    // the town, its rise and its name, and the rock keeps room below; more rock once the answer is in
+    // and there is something down there to see.
+    // On a short picture after the answer (a small phone) the town's name gives way, and the room goes to
+    // the depths; the rise stays.
+    g.short = st.split > .5 && H < 175;
+    const top = g.short ? 4 : 2 + g.ph + g.fs * .55, SKY = g.short ? 38 : 40;
+    const under = Math.max(lerp(54, 84, st.split), H * lerp(.3, .46, st.split));
+    const u = g.u = clamp(Math.min(W / 80, (H - under - top) / SKY), 1.15, 4.4);
+    // Height to spare goes first to a little more air over the town, then to the rock.
+    const ys = g.ys = top + clamp((H - under - top) / u, SKY, SKY + 14) * u;
+    // The breath is broad: the whole of the old town and the market go up and down together.
+    g.A = 4.6 * u; g.xc = .6 * W; g.sig = .8 * W;
+    g.floorY = ys - 3 * u; g.hillY = ys - 12.5 * u;
+    g.prof = [[0, ys + lerp(14, 9, st.split) * u], [.2 * W, ys + lerp(12, 8, st.split) * u], [.3 * W, ys + 2 * u], [.325 * W, g.floorY], [.515 * W, g.floorY], [.6 * W, g.hillY], [.8 * W, g.hillY - .7 * u], [W, g.hillY - 1.1 * u]];
+    const Hu = H - ys;
+    // The lid is thick before the answer, the deep under it a band; the answer opens the deep.
+    g.b1 = ys + Math.max(lerp(.6, g.short ? .5 : .46, st.split) * Hu, 16.5 * u + 4);
+    g.lrx = .3 * W; g.t0 = Math.max(1.6 * u, 4);
+    g.mrx = (g.short ? .145 : .19) * W; g.mcx = g.xc + (g.short ? .06 : 0) * W; g.mry = clamp(.085 * Hu, 5, 7.5 * u);
+    g.my = Math.min(ys + .8 * Hu, H - g.mry - 1.6 * u - k);
+    const x0 = g.x0 = k / 2, x1 = g.x1 = W - k / 2, yb = g.yb = H - k / 2, rad = g.rad = 0;
+    const ink = {fill: 'none', stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+    const solid = fill => Object.assign({}, ink, {fill});
+
+    const clip = mk('clipPath', {id: 'slice'}, mk('defs', {}, svg));
+    mk('path', {d: `M${x0},-20H${x1}V${yb - rad}Q${x1},${yb} ${x1 - rad},${yb}H${x0 + rad}Q${x0},${yb} ${x0},${yb - rad}Z`}, clip);
+    const world = mk('g', {'clip-path': 'url(#slice)'}, svg);
+
+    g.seaBack = mk('path', {fill: SEA}, world);
+    // The three columns still standing in the Roman market, on its floor at the water's edge.
+    const cw = g.colW = Math.max(5.5, 2.6 * u), cs = Object.assign(solid(WHITE), {'stroke-width': f1(Math.min(k, cw * .2))});
+    g.cols = [-1, 0, 1].map(i => {
+      const c = mk('g', {}, world), sh = 15 * u, cx = .42 * W + i * Math.max(5.2 * u, 2.2 * cw);
+      mk('rect', Object.assign({}, cs, {x: f1(cx - cw / 2), y: f1(-sh), width: f1(cw), height: f1(sh + 4 * u)}), c);
+      mk('rect', Object.assign({}, cs, {x: f1(cx - cw * .68), y: f1(-sh - .7 * u), width: f1(cw * 1.36), height: f1(.7 * u)}), c);
+      mk('rect', Object.assign({}, cs, {x: f1(cx - cw * .9), y: f1(-sh - 1.75 * u), width: f1(cw * 1.8), height: f1(1.05 * u)}), c);
+      mk('rect', Object.assign({}, cs, {x: f1(cx - cw * .7), y: f1(-1.5 * u), width: f1(cw * 1.4), height: f1(.75 * u)}), c);
+      mk('rect', Object.assign({}, cs, {x: f1(cx - cw * .86), y: f1(-.75 * u), width: f1(cw * 1.72), height: f1(4.75 * u)}), c);
+      return {g: c, x: cx, top: -sh - 1.75 * u};
+    });
+    // The old town packed on its headland: tall houses shoulder to shoulder, and the bell tower.
+    g.town = [{a: .598, b: .652, h: 8.5}, {a: .648, b: .716, h: 12.5}, {a: .722, b: .757, h: 17.5, tower: 1}, {a: .762, b: .838, h: 10.5}, {a: .834, b: .906, h: 14}, {a: .902, b: .968, h: 9}].map(d => {
+      const t = mk('g', {}, world), xa = d.a * W, xb = d.b * W, hh = d.h * u, cx = (xa + xb) / 2;
+      if (d.tower) mk('path', Object.assign(solid(WHITE), {d: `M${f1(xa - .3 * u)},${f1(-hh)}L${f1(cx)},${f1(-hh - 3.2 * u)}L${f1(xb + .3 * u)},${f1(-hh)}Z`}), t);
+      mk('rect', Object.assign(solid(WHITE), {x: f1(xa), y: f1(-hh), width: f1(xb - xa), height: f1(hh + 5 * u)}), t);
+      if (!d.tower) mk('rect', Object.assign(solid(WHITE), {x: f1(xa - .45 * u), y: f1(-hh - .9 * u), width: f1(xb - xa + .9 * u), height: f1(.9 * u)}), t);
+      if (u > 1.2) {
+        const ww = Math.max(2.1, 1.05 * u), wh = Math.max(3, 1.6 * u);
+        if (d.tower) mk('path', {d: `M${f1(cx - ww * .6)},${f1(-hh + 4.2 * u)}V${f1(-hh + 2.6 * u)}A${f1(ww * .6)},${f1(ww * .6)} 0 0 1 ${f1(cx + ww * .6)},${f1(-hh + 2.6 * u)}V${f1(-hh + 4.2 * u)}Z`, fill: INK}, t);
+        else {
+          const n = clamp(Math.floor((xb - xa) / (3.3 * u)), 1, 3), rows = d.h > 11 ? [.3, .62] : [.42];
+          rows.forEach(r => { for (let i = 0; i < n; i++) mk('rect', {x: f1(xa + (xb - xa) * (i + .5) / n - ww / 2), y: f1(-hh * (1 - r) - wh / 2 - hh * 0), width: f1(ww), height: f1(wh), fill: INK}, t); });
+        }
+      }
+      return {g: t, x: cx, x0: xa - k, x1: xb + k, top: -hh - (d.tower ? 3.2 * u : .9 * u), tower: !!d.tower};
+    });
+    // The rock, one colour; once the answer is in, a line shows the lid of rock over the trapped layer.
+    g.band1 = mk('path', {fill: CREAM}, world);
+    // What pushes: the magma, the gas rising from it, the gas and hot water trapped under the lid, and
+    // the lid cracking as it bends: the quakes.
+    g.cause = mk('g', {opacity: 0}, world);
+    g.magma = mk('path', solid(MAGMA), g.cause);
+    g.bubbles = Array.from({length: 5}, (_, i) => ({p: i / 5, dx: (i - 2) * .05 * W, r: Math.max(2.4, (1.15 + .2 * (i % 2)) * u),
+      e: mk('circle', {fill: WHITE, stroke: INK, 'stroke-width': k * .75}, g.cause)}));
+    g.lens = mk('path', solid(STEAM), g.cause);
+    // Where the lid breaks as it bends: cracks in the rock above the swelling layer; when one slips, it
+    // opens a little and shakes: a quake.
+    g.cracks = [[.35, .3, .25, 64], [.42, .16, .55, 110], [.49, .34, .82, 72]].map(([fx, fy, at, deg]) => ({fx, fy, at, a: deg * Math.PI / 180,
+      on: Kit.calm || stage === 2 && st.cause >= 1, e: mk('path', {fill: INK}, g.cause),
+      j: mk('path', Object.assign({}, ink, {'stroke-width': k * .8}), g.cause)}));
+    g.crackL = Math.max(10, 6.4 * u);
+    // The sea again in front of the columns: what stands in it is seen through it.
+    g.seaFront = mk('path', {fill: SEA, 'fill-opacity': .55}, world);
+    g.ground = mk('path', ink, world);
+    g.seaTop = mk('path', ink, world);
+    // A fishing boat, afloat: it stays where the sea is while the ground goes up and down.
+    const bx = .115 * W, boat = mk('g', {}, world);
+    mk('path', Object.assign(solid(WHITE), {d: `M${f1(bx - 5.4 * u)},${f1(ys - 1.9 * u)}H${f1(bx + 5.8 * u)}Q${f1(bx + 4.6 * u)},${f1(ys + .4 * u)} ${f1(bx + 3 * u)},${f1(ys + .4 * u)}H${f1(bx - 3.6 * u)}Q${f1(bx - 4.8 * u)},${f1(ys + .2 * u)} ${f1(bx - 5.4 * u)},${f1(ys - 1.9 * u)}Z`}), boat);
+    mk('rect', Object.assign(solid(WHITE), {x: f1(bx - 2.6 * u), y: f1(ys - 4.3 * u), width: f1(3.2 * u), height: f1(2.4 * u)}), boat);
+    g.frame = mk('path', ink, svg);
+    g.shake = mk('path', {fill: 'none', stroke: INK, 'stroke-width': f1(k), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    if (Kit.calm && stage < 2) {
+      const ax = W - 3.6 * u, a0 = surf(ax, 1) + 2.6 * u, a1 = a0 + 10 * u, hw = 1.7 * u;
+      mk('path', Object.assign({}, ink, {'stroke-width': f1(k * 1.25), d: `M${f1(ax)},${f1(a0)}V${f1(a1)}M${f1(ax - hw)},${f1(a0 + hw)}L${f1(ax)},${f1(a0)}L${f1(ax + hw)},${f1(a0 + hw)}M${f1(ax - hw)},${f1(a1 - hw)}L${f1(ax)},${f1(a1)}L${f1(ax + hw)},${f1(a1 - hw)}`}), svg);
+    }
+
+    // The names: the town and the columns in the sky above them; the depths on the rock beside them.
+    const L = mk('g', {}, svg);
+    g.backPill = st.split > .5;
+    g.pTown = pill(L, 'POZZUOLI', g.backPill ? '' : 'near Naples');
+    // The town's name hangs over the town like a pin: high, but never far above its tower at the top of the breath.
+    const px0 = townX(), px1 = px0 + g.pTown.w, below = g.town.filter(t => t.x1 > px0 && t.x0 < px1);
+    g.pY = Math.max(2, Math.min(...below.map(t => surf(t.x, 1) + t.top)) - 3 * u - g.ph);
+    g.pLead = mk('path', {fill: 'none', stroke: INK, 'stroke-width': k * .8, 'stroke-linecap': 'round'}, L);
+    // How far it has risen, large, in the sky over the sea, where nothing else is.
+    g.big = mk('text', {x: 0, 'font-family': 'Fraunces, Georgia, serif', 'font-weight': 900, 'font-size': g.bs, 'letter-spacing': '-.02em', fill: INK}, L);
+    g.big.textContent = '+1.7 m';
+    g.cap = mk('text', {x: 0, 'font-family': FONT, 'font-size': g.fs, 'font-weight': 700, fill: INK}, L);
+    g.tGas = tag(L, 'HOT GAS & WATER', 'trapped 3–4 km down');
+    g.tMag = tag(L, 'MAGMA', '6–8 km down', g.short);
+    g.tQuake = tag(L, 'QUAKES', '');
+    g.pTown.g.style.display = g.pLead.style.display = g.short ? 'none' : '';
+    // The rise's line under it: in one line where it keeps clear of the town's name, the columns, the
+    // houses and the boat at every point of the breath, in two where one would not, short where neither.
+    g.capY = g.bs * 1.07 + g.fs * .98 + 2;
+    const setCap = lines => { g.cap.textContent = ''; lines.forEach((t, i) => { mk('tspan', {x: 0, y: f1(g.capY + i * g.fs * 1.25)}, g.cap).textContent = t; }); };
+    const capBox = () => { const b = g.cap.getBBox(); return {x: b.x, y: b.y, w: b.width, h: b.height}; };
+    const clear = () => [-1, 1].every(v => (g.short || !hit(capBox(), {x: townX(), y: g.pY, w: g.pTown.w, h: g.ph}, 6))
+      && g.cols.every(c => !hit(capBox(), {x: c.x - 3 * u, y: surf(c.x, v) + c.top, w: 6 * u, h: 20 * u}, 5))
+      && g.town.every(t => !hit(capBox(), {x: t.x0, y: surf(t.x, v) + t.top, w: t.x1 - t.x0, h: -t.top}, 5))
+      && !hit(capBox(), {x: .115 * W - 5.6 * u, y: ys - 4.5 * u, w: 11.6 * u, h: 5 * u}, 3));
+    setCap(['since 2005, about a person’s height']);
+    if (!clear()) setCap(['since 2005, about', 'a person’s height']);
+    if (!clear()) setCap(['since 2005']);
+    if (!clear()) g.cap.style.display = 'none';
+
+    draw();
+  }
+  const townTop = (v = st.v) => Math.min(...G.town.map(t => surf(t.x, v) + t.top));
+  const townX = () => G.backPill ? G.W - 2 - G.pTown.w : clamp(.78 * G.W - G.pTown.w / 2, 2, G.W - 2 - G.pTown.w);
+  const place = (p, x, top) => ({x, y: top - G.fs * .6 - p.h, w: p.w, h: p.h});
+
+  function draw() {
+    if (!G) return;
+    G.crackY = c => { const x = c.fx * G.W; return lerp(B1(x) - 2.4 * G.u, Math.max(surf(x), G.ys) + 2.6 * G.u, c.fy); };
+    const g = G, {W, H, u, k, ys} = g, v = st.v, n = 72, rising = v > lastV + 1e-4;
+    g.band1.setAttribute('d', path(x => surf(x), 0, W, n) + `L${W},${H + 4}L0,${H + 4}Z`);
+    g.ground.setAttribute('d', path(x => surf(x), 0, W, n));
+    // The sea stays where it is: water wherever the ground lies below it.
+    let shore = W;
+    for (let i = 0; i <= 240; i++) { const x = W * i / 240; if (surf(x) <= ys) { shore = x; break; } }
+    const water = `M0,${f1(ys)}L${f1(shore)},${f1(ys)}` + path(x => Math.max(surf(x), ys), 0, shore, 48, true) + 'Z';
+    g.seaBack.setAttribute('d', water); g.seaFront.setAttribute('d', water);
+    g.seaTop.setAttribute('d', `M${f1(g.x0)},${f1(ys)}L${f1(shore)},${f1(ys)}`);
+    // Before the answer the town shakes now and then as it rises: the quakes people feel, and blame.
+    if (stage < 2 && rising) for (const th of [-.15, .55]) if (lastV < th && v >= th) shakeAt = gsap.ticker.time;
+    const age = gsap.ticker.time - shakeAt, sh = stage < 2 && !Kit.calm && age < .5 ? 1 - age / .5 : 0, jx = sh ? Math.sin(age * 80) * 1.2 * u * sh : 0;
+    g.cols.forEach(c => c.g.setAttribute('transform', `translate(${f1(jx)},${f1(surf(c.x))})`));
+    g.town.forEach(t => t.g.setAttribute('transform', `translate(${f1(jx)},${f1(surf(t.x))})`));
+    if (sh) {
+      const zig = (x, y, r) => { let d = `M${f1(x)},${f1(y - r)}`; for (let i = 1; i <= 4; i++) d += `L${f1(x + (i % 2 ? .75 : -.75) * u)},${f1(y - r + i * r / 2)}`; return d; };
+      // The columns shake between two pairs of marks, one each side.
+      const ax = g.cols[2].x + .9 * g.colW + 1.3 * u, bx = g.cols[0].x - .9 * g.colW - 1.3 * u, ay = surf(g.cols[1].x) - 9 * u;
+      g.shake.setAttribute('d', zig(ax, ay, 3 * u) + zig(ax + 2 * u, ay, 2 * u) + zig(bx, ay, 3 * u) + zig(bx - 2 * u, ay, 2 * u));
+      g.shake.setAttribute('opacity', sh > .25 ? 1 : f1(sh * 4));
+    } else g.shake.setAttribute('d', '');
+    g.frame.setAttribute('d', `M${f1(g.x0)},${f1(ys)}V${f1(g.yb - g.rad)}Q${f1(g.x0)},${f1(g.yb)} ${f1(g.x0 + g.rad)},${f1(g.yb)}H${f1(g.x1 - g.rad)}Q${f1(g.x1)},${f1(g.yb)} ${f1(g.x1)},${f1(g.yb - g.rad)}V${f1(surf(W))}`);
+
+    // The depths: magma, the gas rising from it, the trapped layer swelling under the lid as the town
+    // rises, and the lid cracking as it bends.
+    g.cause.setAttribute('opacity', st.cause);
+    g.tGas.g.style.display = g.tMag.g.style.display = st.cause > 0 ? '' : 'none';
+    if (st.cause <= 0) g.tQuake.g.style.display = 'none';
+    if (st.cause > 0) {
+      const sw = 1 + .03 * v;
+      // The magma: a broad, uneven body, swelling a little as the town rises.
+      const mp = Array.from({length: 72}, (_, i) => { const t = i / 72 * 2 * Math.PI;
+        return [g.mcx + g.mrx * sw * Math.cos(t) * (1 + .06 * Math.sin(3 * t + 1) + .035 * Math.sin(5 * t + 2)), g.my + g.mry * sw * Math.sin(t) * (1 + .14 * Math.sin(2 * t + .6))]; });
+      g.magma.setAttribute('d', 'M' + mp.map(p => f1(p[0]) + ',' + f1(p[1])).join('L') + 'Z');
+      const mleft = mp.reduce((a, p) => p[0] < a[0] ? p : a);
+      g.lens.setAttribute('d', path(x => B1(x), g.xc - g.lrx, g.xc + g.lrx, 44) + path(low, g.xc - g.lrx, g.xc + g.lrx, 44, true) + 'Z');
+      const from = g.my - g.mry, now = gsap.ticker.time;
+      g.bubbles.forEach(b => {
+        const f = (now / 2.6 + b.p) % 1, x = g.mcx + b.dx + Math.sin((f + b.p) * 6.3) * u, to = low(x) + b.r;
+        b.e.setAttribute('cx', f1(x)); b.e.setAttribute('cy', f1(lerp(from - b.r, to, f)));
+        const grow = Math.min(1, f * 5, (1 - f) * 5);
+        b.e.setAttribute('r', f1(grow > .45 ? b.r * grow : 0));
+      });
+      // A crack opens as the lid passes its point on the way up; each time the lid passes it again, the
+      // crack slips: it opens a little more and shakes.
+      g.cracks.forEach(c => {
+        const x = c.fx * W, y = g.crackY(c);
+        const th = lerp(-.8, .9, c.at), pulse = rising && v >= th && v < th + .2 ? 1 - (v - th) / .2 : 0;
+        if (rising && v >= th) c.on = true;
+        if (!c.on || x + 3.6 * u > W - 2 * k - 4 - g.tGas.w - 1.5 * u) { c.e.setAttribute('d', ''); c.j.setAttribute('d', ''); return; }
+        const L = g.crackL, wm = Math.max(1.8, .8 * u) + .5 * pulse * u, dx = Math.cos(c.a), dy = -Math.sin(c.a), nx = -dy, ny = dx;
+        const zig = [0, .55, -.45, .5, -.3, 0], N = zig.length - 1, sp = zig.map((z, i) => { const t = i / N - .5; return [x + dx * L * t + nx * z * .55 * u, y + dy * L * t + ny * z * .55 * u, Math.sin(Math.PI * i / N) * wm / 2]; });
+        const side = sg => sp.map(([px, py, w]) => f1(px + nx * w * sg) + ',' + f1(py + ny * w * sg));
+        c.e.setAttribute('d', 'M' + side(1).join('L') + 'L' + side(-1).reverse().join('L') + 'Z');
+        c.j.setAttribute('d', pulse > .05 ? [-1, 1].map(sg => { const ox = x + nx * sg * 1.7 * u, oy = y + ny * sg * 1.7 * u, hl = .9 * u;
+          return `M${f1(ox - dx * hl)},${f1(oy - dy * hl)}L${f1(ox + dx * hl)},${f1(oy + dy * hl)}`; }).join('') : '');
+      });
+      // Their names beside them on dark pills, each with a thin line to what it names: the trapped layer's in
+      // the lid under the town, the magma's to its left, the quakes' to the left of their cracks.
+      const gs = g.tGas, gx = W - 2 * k - 4 - gs.w, ax = clamp(gx + gs.w / 2, .6 * W, g.xc + g.lrx * .8);
+      const gy = Math.min(B1(gx), B1(gx + gs.w), B1(ax)) - gs.h - 2.2 * u, ay = (B1(ax) + low(ax)) / 2;
+      gs.at(gx, gy);
+      gs.lead.setAttribute('d', `M${f1(ax)},${f1(gy + gs.h)}V${f1(ay)}`); gs.dot.setAttribute('cx', f1(ax)); gs.dot.setAttribute('cy', f1(ay));
+      const mg = g.tMag, [ex, ey] = mleft, mx = Math.max(2 * k + 3, ex - 4 * u - mg.w);
+      const myy = clamp(ey - mg.h / 2, low(mx + mg.w) + 1.2 * u, H - k - 3 - mg.h), ly = clamp(ey, myy + mg.h * .3, myy + mg.h * .7);
+      mg.at(mx, myy);
+      mg.lead.setAttribute('d', `M${f1(mx + mg.w)},${f1(ly)}L${f1(ex)},${f1(ey)}`); mg.dot.setAttribute('cx', f1(ex)); mg.dot.setAttribute('cy', f1(ey));
+      const qc = g.cracks[0], q = g.tQuake, qcx = qc.fx * W, qcy = g.crackY(qc), qx = qcx - 4.2 * u - q.w;
+      const xs = [qx, qx + q.w / 2, qx + q.w], qlo = Math.max(...xs.map(x => Math.max(surf(x), ys))) + .8 * u, qhi = Math.min(...xs.map(x => B1(x))) - .5 * u - q.h;
+      const qy = clamp(qcy - q.h / 2, qlo, qhi);
+      q.at(qx, qy);
+      q.lead.setAttribute('d', `M${f1(qx + q.w)},${f1(qy + q.h / 2)}L${f1(qcx - 1.2 * u)},${f1(qcy)}`); q.dot.style.display = 'none';
+      q.g.style.display = qc.on && qx > 2 * k + 2 && qlo <= qhi ? '' : 'none';
+    }
+    lastV = v;
+    // The town's name over it at the top of the sky, the rise top left: both stay still while it breathes.
+    g.pTown.g.setAttribute('transform', `translate(${f1(townX())},${f1(g.pY)})`);
+    const pc = townX() + g.pTown.w / 2, tw = g.town.reduce((a, t) => Math.abs(t.x - pc) < Math.abs(a.x - pc) ? t : a), ty0 = g.pY + g.ph + .5 * u, ty1 = surf(tw.x) + tw.top - .9 * u;
+    g.pLead.setAttribute('d', ty1 - ty0 > 1.5 * u && tw.x > townX() + 4 && tw.x < townX() + g.pTown.w - 4 ? `M${f1(tw.x)},${f1(ty0)}V${f1(ty1)}` : '');
+    g.big.setAttribute('y', f1(g.bs * .8));
+  }
+
+  // The breath, slow, up and down, for as long as the card is in front of the reader.
+  function breathe(lo, hi, dur) {
+    if (loop) loop.kill();
+    if (Kit.calm) return;
+    const up = st.v < (lo + hi) / 2;
+    loop = gsap.fromTo(st, {v: up ? lo : hi}, {v: up ? hi : lo, duration: dur, ease: 'sine.inOut', yoyo: true, repeat: -1, onUpdate: () => stage < 2 && draw()});
+  }
+
+  // Drawn again whenever its box changes: another phone, or the card making room for the answer.
+  new ResizeObserver(() => { if (G && (Math.abs(box.clientWidth - G.W) > .5 || Math.abs(box.clientHeight - G.H) > .5)) build(); }).observe(box);
+
+  // The drawing gives up or takes room smoothly when what is under it changes.
+  function reflow(change) {
+    const h0 = box.offsetHeight, q = card.querySelector('.q'), f0 = parseFloat(getComputedStyle(q).fontSize);
+    change();
+    if (Kit.calm) return;
+    const h1 = box.offsetHeight, fq = parseFloat(getComputedStyle(q).fontSize);
+    if (Math.abs(fq - f0) > .5) gsap.from(q, {fontSize: f0, duration: .5, ease: 'power3.inOut', clearProps: 'fontSize'});
+    if (Math.abs(h0 - h1) > 2) gsap.fromTo(box, {height: h0, flex: 'none'}, {height: h1, duration: .5, ease: 'power3.inOut', clearProps: 'height,flex'});
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => reveal(pct));
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    // The answer is in: how sure takes the options' place.
+    setTimeout(() => {
+      stage = 1;
+      reflow(() => { Kit.hide('opts'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`); });
+      sure.on();
+    }, Kit.calm ? 0 : 260);
   });
-}
 
-function startLoop(period) {
-  if (loop) loop.kill();
-  if (Kit.calm) { st.v = 0.5; draw(); return; }
-  loop = gsap.fromTo(st, {v: -0.9}, {v: 1, duration: period, yoyo: true, repeat: -1, ease: 'sine.inOut'});
-  if (!ticking) { ticking = true; gsap.ticker.add(draw); }
-}
-function reveal() {
-  revealed = true;
-  if (Kit.calm) { R.mg.setAttribute('opacity', 1); R.fl.setAttribute('opacity', 1); R.mystery.setAttribute('opacity', 0); draw(); return; }
-  gsap.to(R.mystery, {attr: {opacity: 0}, duration: .4});
-  gsap.to([R.mg, R.fl], {attr: {opacity: 1}, duration: .8, delay: .2});
-  startLoop(2.4);
-}
+  function reveal(pct) {
+    if (stage === 2) return;
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    stage = 2;
+    reflow(() => sure.grade(ok, pct));
+    svg.setAttribute('aria-label', 'Pozzuoli, side on, cut open, as the leading explanation has it. Magma 6 to 8 km down gives off gas, which rises and is trapped with hot water 3 to 4 km down under a lid of rock. The trapped layer swells and lifts the town, which has risen 1.7 m since 2005, and the lid cracks as it bends: those cracks are the quakes.');
+    if (loop) loop.kill();
+    if (Kit.calm) { Object.assign(st, {v: .8, split: 1, cause: 1}); build(); explain(); return; }
+    gsap.timeline()
+      .to(st, {split: 1, duration: .5, ease: 'power3.inOut', onUpdate: build}, 0)
+      .to(st, {v: -1, duration: .5, ease: 'sine.inOut', onUpdate: draw}, 0)
+      .to(st, {cause: 1, duration: .6, ease: 'power2.out', onUpdate: draw}, .35)
+      .to(st, {v: 1, duration: 2.2, ease: 'sine.inOut', onUpdate: draw}, .8)
+      .add(() => { explain(); breathe(.35, 1, 2.4); }, 3);
+    // The gas keeps rising while the depths are shown.
+    gsap.ticker.add(() => { if (stage === 2 && st.cause > 0) draw(); });
+  }
+  function explain() {
+    Kit.$('why').textContent = WHY[pick];
+    reflow(() => { card.classList.add('answered'); Kit.show('why'); Kit.show('keep'); });
+  }
 
-Kit.onShow.card = () => { build(); };
-Kit.onEnter.card = () => {
-  if (Kit.calm) { draw(); return; }
-  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
-  startLoop(2.8);
-};
-Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1200)); };
-Kit.single();
+  Kit.onShow.card = () => build();
+  Kit.onEnter.card = () => breathe(-.6, 1, 2.6);
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[RIGHT].click();
+    await wait(Kit.calm ? 60 : 420);
+    const b = Kit.$('sure').querySelector('[data-v="80"]');
+    if (b && !Kit.$('sure').classList.contains('gone')) b.click();
+    await wait(Kit.calm ? 200 : 3800);
+  };
+  Kit.single();
+})();
 </script>
 </html>

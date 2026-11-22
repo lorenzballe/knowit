@@ -20,26 +20,28 @@
 <article class="card" id="card" data-topic="nature" data-kind="Tap · compare">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
-    <h2 class="q">How much did the ground rise in two years after the 1538 eruption?</h2>
+    <h2 class="q">How much did the ground rise in the two years before the 1538 eruption?</h2>
     <div class="stagebox" id="stage">
       <svg id="pic" aria-label="Two blocks of ground with a person on top for scale"></svg>
       <div id="row">
-        <button class="opt" data-i="0">Since 2016<small>about 8 years</small></button>
-        <button class="opt" data-i="1">1538, Monte Nuovo<small>just 2 years</small></button>
+        <button class="opt" data-i="0">Since 2016<small>almost 11 years</small></button>
+        <button class="opt" data-i="1">Before 1538<small>just 2 years</small></button>
       </div>
       <div id="why" class="gone">
-        <p class="big">Almost 20 m in 2 years</p>
-        <p class="body">When Monte Nuovo erupted in 1538, the Campi Flegrei ground rose almost 20 metres in two years. Since 2016 it has risen about 80 cm: real, but some 25 times smaller.</p>
+        <p class="big">Over 10 m in 2 years</p>
+        <p class="body">That was the two years before Monte Nuovo erupted in 1538. Since 2016 the ground has risen about 1.3 m, in almost 11 years.</p>
       </div>
     </div>
     <p class="say" id="say">Tap both buttons to lift the ground. The little figure is a person, for scale.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>1538: ~20 m in 2 years. Since 2016: ~80 cm.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)</span></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Before 1538: over 10 m in 2 years. Since 2016: about 1.3 m.</div>
+    <div class="foot"><span class="src">Source · INGV Osservatorio Vesuviano (2026)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const TARGET = [0.8, 20];
+// INGV: "superando i 10 metri nei due anni precedenti" the 1538 eruption; the Pozzuoli Porto tide gauge,
+// "circa 127.7 cm nel periodo gennaio 2016 – ottobre 2026".
+const TARGET = [1.28, 10];
 const S = [{v: 0}, {v: 0}];
 const started = [false, false], finished = [false, false];
 let G = null;
@@ -49,7 +51,7 @@ function personPath(h){
   return `M${-w/2} 0 L${-w*.28} ${-h*.45} L${-w/2} ${-h*.74} L${w/2} ${-h*.74} L${w*.28} ${-h*.45} L${w/2} 0 Z` +
          `M0 ${-h+ 2*r} m${-r} 0 a${r} ${r} 0 1 0 ${2*r} 0 a${r} ${r} 0 1 0 ${-2*r} 0`;
 }
-function fmt(m){ return m < 2 ? '+' + Math.round(m * 100) + ' cm' : '+' + m.toFixed(m >= 19.95 ? 0 : 1) + ' m'; }
+function fmt(m){ return m < 1 ? '+' + Math.round(m * 100) + ' cm' : m >= 9.95 ? 'over 10 m' : '+' + m.toFixed(1) + ' m'; }
 
 function render(){
   if (!G) return;
@@ -68,20 +70,20 @@ Kit.onShow.card = () => {
   const fs = Math.max(f, 12);
   const base = Math.max(fs * 2.4, H * .11);
   const gy = H - base;
-  const k = (gy - fs * 1.9) / 21.75;
+  const k = (gy - fs * 1.9) / 11.4;
   const ph = 1.75 * k;
   const rw = fs * 2.8;
   const gap = W * .04;
   const cw = (W - rw - gap * 2) / 2;
   // ruler
-  [0, 5, 10, 15, 20].forEach(m => {
+  [0, 5, 10].forEach(m => {
     const y = gy - m * k;
     Kit.mk('line', {x1: rw - fs * .5, x2: rw - fs * .1, y1: y, y2: y, style: 'stroke:var(--k);stroke-width:1.5'}, svg);
     const t = Kit.mk('text', {x: rw - fs * .7, y: y + fs * .35, 'text-anchor': 'end', class: 'lbl', style: `fill:var(--k);font-size:${fs*.85}px;opacity:.75`}, svg);
     t.textContent = m + ' m';
   });
-  Kit.mk('line', {x1: rw - fs * .1, x2: rw - fs * .1, y1: gy - 20 * k, y2: gy, style: 'stroke:var(--k);stroke-width:1.5;opacity:.5'}, svg);
-  const caps = ['2016 → today', '1538, in 2 yrs'];
+  Kit.mk('line', {x1: rw - fs * .1, x2: rw - fs * .1, y1: gy - 10 * k, y2: gy, style: 'stroke:var(--k);stroke-width:1.5;opacity:.5'}, svg);
+  const caps = ['2016 → today', '1536 → 1538'];
   G = {k, gy, f: fs, ph, cols: []};
   for (let i = 0; i < 2; i++){
     const x = rw + gap + i * (cw + gap), cx = x + cw / 2;

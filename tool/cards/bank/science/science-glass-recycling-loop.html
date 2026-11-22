@@ -55,8 +55,11 @@ function Y(kg){ return G.T + (MAXKG - kg) / MAXKG * (G.H - G.T - G.B); }
 function draw(){
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * .9, 12);
-  G = {W, H, f: fs, L: fs * 3.4, R: fs * 1.2, T: fs * 1.2, B: fs * 3.4};
   svg.innerHTML = '';
+  // The left margin is as wide as the longest label needs, so none is cut at the edge.
+  const probe = Kit.mk('text', {y: -99, 'font-size': fs, 'font-family': 'var(--mono)'}, svg); probe.textContent = '0.5 kg';
+  G = {W, H, f: fs, L: Math.max(fs * 3.4, probe.getComputedTextLength() + fs * .5 + 2), R: fs * 1.2, T: fs * 1.2, B: fs * 3.4};
+  probe.remove();
   const ink = 'var(--k)';
   // grid
   [0, .5, 1].forEach(kg => {

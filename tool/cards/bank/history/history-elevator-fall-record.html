@@ -75,17 +75,28 @@ function draw(){
   const lab = mk('text', {x: ax, y: y75 - ch / 2 - F * .7, 'text-anchor': 'end', style: `fill:${RED};font:800 ${F * 1.1}px var(--display)`});
   lab.textContent = '75th floor';
 
-  // readouts, right column below the arrow
+  // readouts, right column below the arrow, whole in the room under it: names and numbers stacked
+  // where it is tall enough, else each number on the line of its name, smaller only if that is too tall.
   const rx = W - F * .3;
-  let ry = y75 + F * 2.6;
-  const small = Math.max(12, F * .8), bigF = Math.max(22, F * 2.3);
-  const t1 = mk('text', {x: rx, y: ry, 'text-anchor': 'end', style: `fill:var(--muted);font:700 ${small}px var(--body);letter-spacing:.06em`}); t1.textContent = 'FLOORS FALLEN';
-  ry += small * 0.6 + bigF * 1.1;
-  const nFl = mk('text', {x: rx, y: ry, 'text-anchor': 'end', style: `fill:var(--k);font:800 ${bigF}px var(--display)`});
-  ry += small * 2.2;
-  const t2 = mk('text', {x: rx, y: ry, 'text-anchor': 'end', style: `fill:var(--muted);font:700 ${small}px var(--body);letter-spacing:.06em`}); t2.textContent = 'METRES';
-  ry += small * 0.6 + bigF * 1.1;
-  const nM = mk('text', {x: rx, y: ry, 'text-anchor': 'end', style: `fill:var(--k);font:800 ${bigF}px var(--display)`});
+  const small = Math.max(12, F * .8), big0 = Math.max(22, F * 2.3);
+  const room0 = y75 - ch / 2 + F * 1.05, foot = H - 1;
+  const nameSt = `fill:var(--muted);font:700 ${small}px var(--body);letter-spacing:.06em`;
+  const t1 = mk('text', {x: rx, 'text-anchor': 'end', style: nameSt}); t1.textContent = 'FLOORS FALLEN';
+  const nFl = mk('text', {x: rx, 'text-anchor': 'end'});
+  const t2 = mk('text', {x: rx, 'text-anchor': 'end', style: nameSt}); t2.textContent = 'METRES';
+  const nM = mk('text', {x: rx, 'text-anchor': 'end'});
+  let bigF = Math.min(big0, (foot - room0 - small * 4.11) / 2.46);
+  if (bigF >= big0 * .85) {
+    const ry = Math.min(y75 + F * 2.6, foot - small * 3.4 - bigF * 2.46);
+    [[t1, 0], [nFl, small * .6 + bigF * 1.1], [t2, small * 2.8 + bigF * 1.1], [nM, small * 3.4 + bigF * 2.2]].forEach(([e, dy]) => e.setAttribute('y', ry + dy));
+  } else {
+    const r2 = Math.min(foot - big0 * .26, gy - F * .25);
+    bigF = Math.max(16, Math.min(big0, (r2 - room0) / 2));
+    nFl.setAttribute('style', `font:800 ${bigF}px var(--display)`); nFl.textContent = '300+';
+    const nx = rx - nFl.getComputedTextLength() - small * .7;
+    [[t1, nFl, r2 - bigF * 1.26], [t2, nM, r2]].forEach(([t, n, y]) => { t.setAttribute('x', nx); t.setAttribute('y', y); n.setAttribute('y', y); });
+  }
+  [nFl, nM].forEach(e => e.setAttribute('style', `fill:var(--k);font:800 ${bigF}px var(--display)`));
 
   // the car, with its cable stub
   const car = mk('g', {});
@@ -122,7 +133,6 @@ function finish(){
     }
   }
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  requestAnimationFrame(draw);
   if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
 }
 
@@ -163,6 +173,9 @@ Kit.play.card = async () => {
   if (!S.done) finish();
   await new Promise(r => setTimeout(r, 700));
 };
+// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
+// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
 Kit.single();
 </script>
 </html>

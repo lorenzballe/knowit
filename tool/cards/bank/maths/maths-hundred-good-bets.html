@@ -51,10 +51,17 @@ const runs = [];
 let busy = false, fast = false, g = null;
 const VMIN = -400, VMAX = 1100;
 
+let fitted = null;
 function geom(){
-  const {W,H,f} = Kit.fitSvg(svg);
+  // Left too little room to draw again (a small phone), it keeps the size it was drawn at, shown smaller, whole.
+  const keep = fitted && fitted.H >= 100 && svg.getBoundingClientRect().height < 100;
+  if (keep) svg.dataset.kept = '1';
+  const {W,H,f} = keep ? fitted : (fitted = Kit.fitSvg(svg));
   const fs = Math.max(f, 12);
-  const L = fs*3.8, R = fs*3.4, T = fs*1.6, B = fs*2.2;
+  // The left margin is as wide as the longest label needs, so none is cut at the edge.
+  const probe = Kit.mk('text',{class:'tl',y:-99,'font-size':fs},svg); probe.textContent = '+$1000';
+  const L = Math.max(fs*3.8, probe.getComputedTextLength() + fs*.4 + 2), R = fs*3.4, T = fs*1.6, B = fs*2.2;
+  probe.remove();
   const pw = W - L - R - fs*.8;
   g = {W,H,fs,L,R,T,B,
     x: i => L + pw*i/100,

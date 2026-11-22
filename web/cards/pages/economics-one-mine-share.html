@@ -75,7 +75,7 @@ function draw(){
     const cx = G + gap;
     // Each line set by its baseline; returns where its box starts and ends.
     const put = (e, y, x = cx) => { e.setAttribute('x', x); e.setAttribute('y', y); return {top: y + B.get(e).up, bot: y + B.get(e).down}; };
-    const yn = y0 + F * .71;
+    const yn = y0 + F * .75;
     num.setAttribute('x', cx); num.setAttribute('y', yn);
     from.setAttribute('x', cx); from.setAttribute('y', yn + fs * 1.55);
     let top = yn + fs * 1.55 + fs * .3;

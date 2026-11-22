@@ -81,7 +81,7 @@ function draw(){
   const len = wave.getTotalLength();
   wave.setAttribute('stroke-dasharray', len);
   const mw = lab(x0, cy - amp - fs*0.9, 'Microwave', 800, 'start');
-  const ok = lab(dx, top - fs*1.1, 'Untouched ✓', 800);
+  const ok = lab(dx, Math.max(top - fs*1.1, fs*1.1), 'Untouched ✓', 800);  // whole under the top edge
   G = {wave, len, mw, ok, dna, dot, frac: (dx - x0) / (x1 - x0)};
   if (state === 2){ wave.setAttribute('stroke-dashoffset', 0); }
   else { wave.setAttribute('stroke-dashoffset', len); mw.setAttribute('opacity', 0); ok.setAttribute('opacity', 0); }

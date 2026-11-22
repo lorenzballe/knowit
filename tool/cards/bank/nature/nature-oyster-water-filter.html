@@ -41,8 +41,12 @@ function build() {
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 12);
-  const labW = fs * 3.4;
-  const cell = Math.min((H * .94) / ROWS, (W - labW) * .52 / COLS);
+  // The labels' column is as wide as its longest label needs, and the tank leaves room above and below
+  // for the labels at its top and foot, so none is cut at the edge.
+  const probe = Kit.mk('text', {y: -99, style: `font:800 ${fs}px var(--mono)`}, svg); probe.textContent = '190 L';
+  const labW = Math.max(fs * 3.4, (probe.getComputedTextLength() + 2) / .68);
+  probe.remove();
+  const cell = Math.min((H * .94) / ROWS, (H - fs * 1.6) / ROWS, (W - labW) * .52 / COLS);
   const gap = Math.max(1, cell * .12);
   const tw = cell * COLS, th = cell * ROWS;
   const tx = labW, ty = (H - th) / 2;
@@ -77,7 +81,7 @@ function build() {
 
   // oyster
   const s = Math.min(cw * .4, H * .14);
-  const ox = ccx, oy = ty + th - s * .9;
+  const ox = ccx, oy = Math.min(ty + th - s * .9, H - fs * 1.5 - s * .55);
   g.ox = ox; g.oy = oy; g.s = s; g.cx0 = cx0;
   const o = Kit.mk('g', {transform: `translate(${ox},${oy})`}, svg);
   Kit.mk('ellipse', {cx: s * .05, cy: s * .02, rx: s * .82, ry: s * .16, fill: '#2b211f'}, o);

@@ -76,8 +76,9 @@ function render() {
   Kit.mk('line', {x1: rx0, x2: rx1, y1: rY, y2: rY, stroke: ink, 'stroke-width': Math.max(1.5, f * .1)}, svg);
   for (let i = 0; i <= 3; i++) Kit.mk('line', {x1: rx0 + i * 10 * k, x2: rx0 + i * 10 * k, y1: rY - f * .35, y2: rY + f * .35, stroke: ink, 'stroke-width': Math.max(1.5, f * .1)}, svg);
   const tx = (s, x, y, anchor, fill, wt) => { const t = Kit.mk('text', {x, y, 'text-anchor': anchor, fill, 'font-size': Math.max(12, f * .85), 'font-weight': wt || 700, 'font-family': 'var(--body)'}, svg); t.textContent = s; return t; };
-  tx('30 m', rx1, rY - f * .7, 'end', ink);
-  tx('sway at the top', W / 2 > rx1 ? rx1 : rx0, rY - f * 1.8 > f ? rY - f * 1.8 : -999, 'start', 'var(--muted)', 600);
+  const t30 = tx('30 m', rx1, rY - f * .7, 'end', ink);
+  // What the ruler measures, on its left before the answer takes that place, where it fits beside 30 m.
+  if (!st.done) { const sw = tx('sway at the top', rx0, rY - f * .7, 'start', 'var(--muted)', 600); if (sw.getComputedTextLength() + t30.getComputedTextLength() + f > rx1 - rx0) sw.remove(); }
   if (st.done) {
     const x = rx0 + 0.3 * k;
     Kit.mk('line', {x1: x, x2: x, y1: rY - f * .7, y2: rY + f * .7, stroke: red, 'stroke-width': Math.max(3, f * .22)}, svg);

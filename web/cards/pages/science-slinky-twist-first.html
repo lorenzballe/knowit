@@ -70,7 +70,7 @@ function render(){
   G.cl.setAttribute('y', yk + off + G.f*.35);
   G.cl.setAttribute('opacity', st.col>0.01 && st.col<0.93 ? 1 : 0);
   // bottom label (right side, after twist arrives)
-  G.bl.setAttribute('y', G.ys[N-1] + off + G.f*.35);
+  G.bl.setAttribute('y', Math.min(G.ys[N-1] + off + G.f*.35, G.H - 1 - G.f*.25 - G.bdy));  // whole above the foot as it falls
   G.bl.textContent = st.col>=1 ? 'now it falls' : 'bottom: still here';
   G.bl.setAttribute('opacity', st.tw>=1.12 ? 1 : 0);
 }
@@ -99,8 +99,9 @@ Kit.onShow.card = () => {
   const tl = mkT(cx+rx+8, 'start', 'twist ↓');
   const cl = mkT(cx-rx-8, 'end', 'release ↓');
   const bl = mkT(cx+rx+8, 'start', 'bottom: still here');
-  if (cx+rx+8 + fs*9.5 > W) { bl.setAttribute('x', W-4); bl.setAttribute('text-anchor','end'); bl.setAttribute('dy', ry+fs*1.3); }
-  G = {cx,rx,ry,g0,H,ys,coils,dots,bar,tl,cl,bl,f:fs,drop:H*.12};
+  let bdy = 0;
+  if (cx+rx+8 + fs*9.5 > W) { bdy = ry+fs*1.3; bl.setAttribute('x', W-4); bl.setAttribute('text-anchor','end'); bl.setAttribute('dy', bdy); }
+  G = {cx,rx,ry,g0,H,ys,coils,dots,bar,tl,cl,bl,bdy,f:fs,drop:H*.12};
   render();
 };
 

@@ -79,8 +79,10 @@ Kit.onShow.card = () => {
   mk('line', {x1: 0, x2: W, y1: g, y2: g, stroke: 'var(--k)', 'stroke-width': 2});
   mk('text', {x: cx, y: H - fs * .25, 'text-anchor': 'middle', 'font-size': fs * .9, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700}).textContent = 'roots';
 
-  // ruler
-  const rx = W * 0.12;
+  // ruler, set in as far as its longest label needs, so none is cut at the edge
+  const probe = mk('text', {y: -99, 'font-size': fs * .85, 'font-family': 'var(--mono)'}); probe.textContent = '100 m';
+  const rx = Math.max(W * 0.12, probe.getComputedTextLength() + 10);
+  probe.remove();
   mk('line', {x1: rx, x2: rx, y1: g, y2: g - 100 * s, stroke: 'var(--k)', 'stroke-width': 1.5, opacity: .6});
   for (let m = 0; m <= 100; m += 10) {
     const y = g - m * s;

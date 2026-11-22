@@ -66,7 +66,15 @@ function draw(){
   const {W, H, f} = Kit.fitSvg(svg);
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   const fs = Math.max(f * .85, 12), fl = Math.max(f, 13);
-  const ml = fs * 2.6, mr = fl * 5.6, mt = fs * 1.6, mb = fs * 2.2;
+  const two = D.lv.length === 2;
+  const names = two ? ['high', 'low'] : ['settles'];
+  const words = D.lv.map((v, k) => `${names[k]} ${v.toFixed(2)}`);
+  // The right margin is as wide as the longest label needs, so none is cut at the edge.
+  const probe = Kit.mk('text', {x: 0, y: -99, class: 'tx', 'font-size': fl}, svg);
+  let mr = fl * 5.6;
+  for (const w of words){ probe.textContent = w; mr = Math.max(mr, probe.getComputedTextLength() + fl * 1.2); }
+  svg.removeChild(probe);
+  const ml = fs * 2.6, mt = fs * 1.6, mb = fs * 2.2;
   const X = i => ml + i * (W - ml - mr) / N, Y = v => mt + (1 - v) * (H - mt - mb);
   [0, .5, 1].forEach(v => {
     Kit.mk('line', {x1: ml, x2: X(N), y1: Y(v), y2: Y(v), class: 'grid'}, svg);
@@ -77,7 +85,6 @@ function draw(){
   Kit.mk('text', {x: X(N), y: Y(0) + fs * 1.6, 'text-anchor': 'end', class: 'mu', 'font-size': fs}, svg).textContent = 'years →';
   Kit.mk('text', {x: ml, y: Y(0) + fs * 1.6, class: 'mu', 'font-size': fs}, svg).textContent = '0';
 
-  const two = D.lv.length === 2;
   const lvls = D.lv.map(v => Kit.mk('line', {x1: ml, x2: X(N) + fl * .4, y1: Y(v), y2: Y(v), class: 'lvl'}, svg));
   const line = Kit.mk('polyline', {points: D.pts.map((v, i) => `${X(i)},${Y(v)}`).join(' '), class: 'ln'}, svg);
   const r = Math.max(f * .3, 3.2);
@@ -87,10 +94,9 @@ function draw(){
   // labels at the right, pushed apart so they never touch
   let ys = D.lv.map(v => Y(v));
   if (two && ys[1] - ys[0] < fl * 1.45){ const c = (ys[0] + ys[1]) / 2; ys = [c - fl * .73, c + fl * .73]; }
-  const names = two ? ['high', 'low'] : ['settles'];
   const labs = D.lv.map((v, k) => {
     const t = Kit.mk('text', {x: X(N) + fl * .7, y: ys[k] + fl * .35, class: 'tx', 'font-size': fl}, svg);
-    t.textContent = `${names[k]} ${v.toFixed(2)}`;
+    t.textContent = words[k];
     return t;
   });
   return {line, dots, lvls, labs};
