@@ -8,7 +8,12 @@
 /// shown, and the back, once it is played. The day's shelf, the reader's own
 /// shelves and Explore's feed show these, and fall back to what they drew
 /// before on a card that has none yet, or whose picture will not come.
-library;
+///
+/// A picture is fetched once and kept on the phone ([CachedThumb]), and the
+/// day's are fetched while the reader is still reading them ([warmDay]), so
+/// the finished day's shelf has them at once. One still on its way shows the
+/// card's outline in grey ([CardSkeleton]), never an empty card of its colour
+/// with its controls floating on it.
 
 import 'dart:math' as math;
 
@@ -16,6 +21,8 @@ import 'package:flutter/material.dart';
 
 import '../../data/card_pages.dart';
 import '../../models/pill.dart';
+import '../card_skeleton.dart';
+import 'cached_thumb.dart';
 import 'web_card_page.dart';
 
 /// Which of a card's two pictures.
@@ -39,10 +46,11 @@ typedef ThumbImage = ImageProvider Function(Uri url);
 /// card's ground either side of it, or under it, reads as the card's own
 /// margin, since the picture's ground is that colour edge to edge.
 ///
-/// While the picture comes the box is the card's ground, and the picture
-/// fades in over it. Where there is none, or it will not load, [fallback]
-/// is drawn instead (nothing, when none is given): the place showing the
-/// card draws it as it would without a picture.
+/// While the picture comes the box is the card's outline in grey, and the
+/// card, its ground, picture and [foreground] together, fades in over it.
+/// Where there is none, or it will not load, [fallback] is drawn instead
+/// (nothing, when none is given): the place showing the card draws it as it
+/// would without a picture.
 class CardThumb extends StatelessWidget {
   const CardThumb({
     super.key,
@@ -53,13 +61,32 @@ class CardThumb extends StatelessWidget {
     this.foreground,
     this.large = false,
     this.shelf = false,
+    this.onCome,
   });
 
-  /// How the app fetches a picture: over the network, kept in the image
-  /// cache like any picture in a feed. Tests replace it.
-  static ThumbImage image = _network;
+  /// How the app fetches a picture: from the phone where it is kept, over
+  /// the network once otherwise ([CachedThumb]), and kept in the image cache
+  /// like any picture in a feed. Tests replace it.
+  static ThumbImage image = _kept;
 
-  static ImageProvider _network(Uri url) => NetworkImage(url.toString());
+  static ImageProvider _kept(Uri url) => CachedThumb(url);
+
+  /// Fetches the pictures the finished day's shelf will show of [deck],
+  /// front and back at the shelf's size, and the fronts the day sent as
+  /// five squares shows, while the reader is still reading: the shelf has
+  /// them at once. Quietly, a few at a time; only where the app fetches its
+  /// own pictures (a test's stand-in is left alone).
+  static Future<void> warmDay(Iterable<Pill> deck) async {
+    if (!identical(image, _kept)) return;
+    await CachedThumb.warm([
+      for (final Pill p in deck)
+        for (final CardSide side in CardSide.values)
+          if (refOf(p, side) case final String ref) ...[
+            urlOf(shelfOf(ref)),
+            if (side == CardSide.front) urlOf(ref),
+          ],
+    ]);
+  }
 
   /// How long the picture takes to come up over the ground.
   static const Duration fade = Duration(milliseconds: 260);
@@ -113,6 +140,10 @@ class CardThumb extends StatelessWidget {
   /// up, was soft. Where the large one will not come, the small one.
   final bool large;
 
+  /// Told, after the frame, once the picture has come: for a place that
+  /// draws round the card (its edge, the light under it) in grey until then.
+  final VoidCallback? onCome;
+
   @override
   Widget build(BuildContext context) {
     final String? small = refOf(pill, side);
@@ -158,6 +189,15 @@ class CardThumb extends StatelessWidget {
     return ResizeImage.resizeIfNeeded(px, null, source);
   }
 
+  /// What is drawn where the picture will not come, and the place told: the
+  /// fallback is the card in full, drawn as it is.
+  Widget _gone(Widget none) {
+    if (onCome != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => onCome!());
+    }
+    return none;
+  }
+
   Widget _picture(
     BuildContext context,
     bool still,
@@ -186,20 +226,41 @@ class CardThumb extends StatelessWidget {
       filterQuality: FilterQuality.medium,
       gaplessPlayback: true,
       frameBuilder: (context, child, frame, synchronous) {
-        final Widget shown = synchronous || still
-            ? child
-            : AnimatedOpacity(
-                opacity: frame == null ? 0 : 1,
-                duration: fade,
-                curve: Curves.easeOut,
-                child: child,
-              );
-        return Stack(
+        final bool come = frame != null || synchronous;
+        if (come && onCome != null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) => onCome!());
+        }
+        // The card whole, ground, picture and what sits on it, as one.
+        final Widget card = Stack(
           fit: StackFit.expand,
           children: [
             ColoredBox(color: groundOf(pill)),
-            shown,
+            child,
             ?foreground,
+          ],
+        );
+        if (synchronous) return card;
+        // Until the picture has come, the card's outline in grey and nothing
+        // on it; then the card over the outline, faded in where motion is on.
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            CardSkeleton(moving: !come),
+            if (still)
+              Visibility(
+                visible: come,
+                maintainState: true,
+                maintainAnimation: true,
+                maintainSize: true,
+                child: card,
+              )
+            else
+              AnimatedOpacity(
+                opacity: come ? 1 : 0,
+                duration: fade,
+                curve: Curves.easeOut,
+                child: IgnorePointer(ignoring: !come, child: card),
+              ),
           ],
         );
       },
@@ -210,8 +271,9 @@ class CardThumb extends StatelessWidget {
               fit: fit,
               fallback: fallback,
               foreground: foreground,
+              onCome: onCome,
             )
-          : none,
+          : _gone(none),
     );
   }
 }

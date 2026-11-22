@@ -19,6 +19,7 @@ import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
 import '../widgets/training.dart';
+import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
 import '../widgets/why_sheet.dart';
 import 'today_done_view.dart';
@@ -78,6 +79,23 @@ class _TodayScreenState extends State<TodayScreen> {
   /// the day is finished here, in this session, and spent the first time
   /// the shelf is up (lib/widgets/training.dart).
   bool _trainingDue = false;
+
+  /// The day whose pictures were last fetched ahead, by its cards.
+  String? _warmed;
+
+  /// Fetches the pictures the finished day's shelf will show, once a day,
+  /// after the frame: while the reader reads the five, so the shelf has them
+  /// the moment it comes up (the owner's phone: a card of its colour, empty,
+  /// for two seconds while its picture came).
+  void _warmDay(AppState app) {
+    final String day = [for (final Pill p in app.todaysDeck) p.id].join(',');
+    if (day.isEmpty || day == _warmed) return;
+    _warmed = day;
+    final List<Pill> deck = List.of(app.todaysDeck);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => CardThumb.warmDay(deck),
+    );
+  }
 
   /// Which of the finished day's cards is at the front of the shelf. Held
   /// here rather than in the shelf because the header's dot and the glow
@@ -183,6 +201,7 @@ class _TodayScreenState extends State<TodayScreen> {
     final app = widget.app;
     final bool done = app.todayCompleted;
     _markCompletion(done);
+    _warmDay(app);
     // Bought from the card itself: the offer has nothing left to offer and
     // leaves the table, so the shelf comes up. It used to stay "on the
     // table" with no card on it — the deck drops the card after the fifth
