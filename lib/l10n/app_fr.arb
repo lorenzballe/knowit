@@ -19,7 +19,7 @@
   "share": "Partager",
   "cardOf": "Carte {k} sur {n}",
   "tomorrowsFiveOpenIn": "Les cinq de demain s'ouvrent dans {when}",
-  "topicOpensTomorrow": "{topic} ouvre les cinq de demain, dans {when}",
+  "topicOpensTomorrow": "Demain, les cinq commencent par {topic}, dans {when}",
   "exploreTodaysBest": "Explorer le meilleur du jour",
   "magicUnlock": "Essaie {days} jours gratuits",
   "getPlus": "Passe à Astute+",

@@ -19,7 +19,7 @@
   "share": "分享",
   "cardOf": "第 {k} 张，共 {n} 张",
   "tomorrowsFiveOpenIn": "明天的五张将在 {when} 后开启",
-  "topicOpensTomorrow": "{topic} 将开启明天的五张，还有 {when}",
+  "topicOpensTomorrow": "明天的五张从{topic}开始，还有 {when}",
   "exploreTodaysBest": "探索今日精选",
   "magicUnlock": "免费试用{days}天",
   "getPlus": "升级到 Astute+",

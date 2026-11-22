@@ -304,27 +304,35 @@ class SkillGlyph extends CustomPainter {
         canvas.drawLine(const Offset(15, 15), const Offset(18, 18), line);
         canvas.drawLine(const Offset(18, 15), const Offset(15, 18), line);
       case Skill.science:
-        // A flask.
+        // A microscope: the flask is the Science subject's own mark, and a
+        // card of Science carrying both would show the same thing twice.
         canvas.drawPath(
           Path()
-            ..moveTo(8.5, 2.5)
-            ..lineTo(8.5, 8.5)
-            ..lineTo(3.2, 17.5)
-            ..quadraticBezierTo(2.4, 19.5, 4.6, 19.5)
-            ..lineTo(17.4, 19.5)
-            ..quadraticBezierTo(19.6, 19.5, 18.8, 17.5)
-            ..lineTo(13.5, 8.5)
-            ..lineTo(13.5, 2.5),
+            ..moveTo(7.2, 3.6)
+            ..lineTo(10.4, 2.2)
+            ..lineTo(13.6, 9.6)
+            ..lineTo(10.4, 11)
+            ..close(),
           line,
         );
-        canvas.drawLine(const Offset(7, 2.5), const Offset(15, 2.5), line);
+        canvas.drawLine(const Offset(12, 10.4), const Offset(12.9, 12.6), line);
         canvas.drawLine(
-          const Offset(5.6, 13.5),
-          const Offset(16.4, 13.5),
+          const Offset(9.2, 14.2),
+          const Offset(15.4, 14.2),
           line,
         );
-        canvas.drawCircle(const Offset(10, 16.3), 0.9, fill);
-        canvas.drawCircle(const Offset(13, 15.6), 0.7, fill);
+        canvas.drawPath(
+          Path()
+            ..moveTo(12.6, 5.6)
+            ..quadraticBezierTo(18.6, 7.4, 17.2, 15)
+            ..lineTo(17.2, 19.5),
+          line,
+        );
+        canvas.drawLine(
+          const Offset(4.5, 19.5),
+          const Offset(19.5, 19.5),
+          line,
+        );
       case Skill.focus:
         // A target.
         canvas.drawCircle(const Offset(11, 11), 8.5, line);

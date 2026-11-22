@@ -101,7 +101,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topic 将开启明天的五张，还有 $when';
+    return '明天的五张从$topic开始，还有 $when';
   }
 
   @override

@@ -2981,7 +2981,7 @@ void main() {
       await app.init();
       final lead = app.tomorrowsDeck.first;
       expect(
-        find.textContaining("${lead.topic} opens tomorrow's five, in"),
+        find.textContaining("Tomorrow's five start with ${lead.topic}, in"),
         findsOneWidget,
       );
     });
@@ -3710,7 +3710,7 @@ void main() {
       // Under the shelf, and no longer inside a scrolling page — the
       // closing screen is one screenful, and its last line is about
       // tomorrow rather than about the clock.
-      expect(find.textContaining("opens tomorrow's five, in"), findsOneWidget);
+      expect(find.textContaining("Tomorrow's five start with"), findsOneWidget);
     });
   });
 
@@ -4244,7 +4244,7 @@ void main() {
       expect(find.text('YOURS'), findsOneWidget);
       expect(find.text('You answered this one.'), findsOneWidget);
       expect(
-        find.text('${pick.difficulty.label} · commit before you turn it over.'),
+        find.text('${pick.difficulty.label} · commit, then turn it.'),
         findsNothing,
         reason: 'it was committed days ago',
       );

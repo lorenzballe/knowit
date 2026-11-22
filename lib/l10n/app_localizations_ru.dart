@@ -103,7 +103,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topic открывает завтрашнюю пятёрку через $when';
+    return 'Завтрашняя пятёрка начнётся с темы «$topic», через $when';
   }
 
   @override

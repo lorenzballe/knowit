@@ -25,8 +25,13 @@ import 'chunky.dart';
 import 'move_words.dart';
 import 'premium.dart';
 
-/// The line [why] says on its card, or null where the card says why itself
-/// (a card about where the reader lives).
+/// The line [why] says on its card, or null where it would say nothing a
+/// reader could not take for granted: that a card is from one of their
+/// subjects, at their level in it, or an easy way into it is true of nearly
+/// every card, and said on every one it drowned the lines that tell
+/// something (a card back for another go, the reader's goal, cards they
+/// liked, a hard one). Null too where the card says why itself (a card about
+/// where the reader lives). The sheet still tells every reason.
 String? whyLine(AppLocalizations l, CardWhy why) {
   final String subject = l.subjectOf(why.pill.topic);
   final String move = moveName(l, why.pill.principle);
@@ -38,9 +43,7 @@ String? whyLine(AppLocalizations l, CardWhy why) {
     WhyKind.goal => l.whyGoal(goalName(l, why.goal!)),
     WhyKind.liked => l.whyLiked(why.liked),
     WhyKind.hard => l.whyHard(subject),
-    WhyKind.level => l.whyLevel(subject),
-    WhyKind.gentle => l.whyGentle(subject),
-    WhyKind.subject => l.whyYourSubject(subject),
+    WhyKind.level || WhyKind.gentle || WhyKind.subject => null,
     WhyKind.place => null,
     WhyKind.random => l.whyRandom,
   };

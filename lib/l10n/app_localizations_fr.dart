@@ -101,7 +101,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topic ouvre les cinq de demain, dans $when';
+    return 'Demain, les cinq commencent par $topic, dans $when';
   }
 
   @override

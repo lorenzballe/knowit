@@ -155,6 +155,18 @@ void main() {
       expect(whyOf(app, read).level, WhyLevel.starting);
       app.topicLevels = {key(read): 1};
       expect(whyOf(app, read).kind, WhyKind.subject);
+      // True of nearly every card, these say nothing on the card itself.
+      for (final Pill p in [hard, read]) {
+        for (final int level in [0, 1]) {
+          app.topicLevels = {key(p): level};
+          final CardWhy why = whyOf(app, p);
+          if (why.kind == WhyKind.level ||
+              why.kind == WhyKind.gentle ||
+              why.kind == WhyKind.subject) {
+            expect(whyLine(en, why), isNull, reason: '${why.kind}');
+          }
+        }
+      }
     });
 
     test(
@@ -175,12 +187,16 @@ void main() {
   });
 
   group('on Today', () {
-    testWidgets('every card says why under its head, and the line opens the '
-        'sheet', (tester) async {
+    testWidgets('a card with a reason to give says why under its head, and '
+        'the line opens the sheet', (tester) async {
       final AppState app = await opened();
-      // A card drawn natively in front: a free card's page draws the same
-      // line itself (docs/cards/kit, `kit-why`).
-      final int native = app.todaysDeck.indexWhere((p) => p.web == null);
+      // A card drawn natively in front, with something to say: a free
+      // card's page draws the same line itself (docs/cards/kit, `kit-why`),
+      // and a card only from one of the reader's subjects, at their level,
+      // says nothing.
+      final int native = app.todaysDeck.indexWhere(
+        (p) => p.web == null && whyLine(en, whyOf(app, p)) != null,
+      );
       expect(native, greaterThanOrEqualTo(0));
       app.todayIndex = native;
       tester.view.physicalSize = const Size(390, 844);
@@ -223,7 +239,11 @@ void main() {
       expect(lines, isNotEmpty);
 
       await tester.tap(note);
-      await tester.pumpAndSettle();
+      // The card in front may be one that keeps moving: a fixed while for
+      // the sheet to come up, not until everything is still.
+      for (var i = 0; i < 10; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
       expect(find.byKey(const ValueKey('why-sheet')), findsOneWidget);
       expect(find.text(en.whyTitle), findsOneWidget);
       expect(find.byKey(const ValueKey('why-line')), findsOneWidget);

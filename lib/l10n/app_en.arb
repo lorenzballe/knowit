@@ -77,7 +77,7 @@
    }
   }
  },
- "topicOpensTomorrow": "{topic} opens tomorrow's five, in {when}",
+ "topicOpensTomorrow": "Tomorrow's five start with {topic}, in {when}",
  "@topicOpensTomorrow": {
   "placeholders": {
    "topic": {
@@ -2254,7 +2254,7 @@
    }
   }
  },
- "commitBeforeYouTurn": "{difficulty} · commit before you turn it over.",
+ "commitBeforeYouTurn": "{difficulty} · commit, then turn it.",
  "@commitBeforeYouTurn": {
   "placeholders": {
    "difficulty": {

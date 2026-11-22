@@ -19,7 +19,7 @@
   "share": "Delen",
   "cardOf": "Kaart {k} van {n}",
   "tomorrowsFiveOpenIn": "De vijf van morgen gaan open over {when}",
-  "topicOpensTomorrow": "{topic} opent de vijf van morgen, over {when}",
+  "topicOpensTomorrow": "Morgen beginnen de vijf met {topic}, over {when}",
   "exploreTodaysBest": "Ontdek het beste van vandaag",
   "magicUnlock": "Probeer {days} dagen gratis",
   "getPlus": "Neem Astute+",

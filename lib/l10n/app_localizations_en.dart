@@ -101,7 +101,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topic opens tomorrow\'s five, in $when';
+    return 'Tomorrow\'s five start with $topic, in $when';
   }
 
   @override
@@ -2133,7 +2133,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String commitBeforeYouTurn(String difficulty) {
-    return '$difficulty · commit before you turn it over.';
+    return '$difficulty · commit, then turn it.';
   }
 
   @override

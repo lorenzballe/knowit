@@ -101,7 +101,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topicが明日の5枚を開きます。$when後';
+    return '明日の5枚は$topicから。あと$when';
   }
 
   @override

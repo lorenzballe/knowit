@@ -1145,14 +1145,16 @@ class _AskFaceState extends State<_AskFace> {
 
   /// How tall the question may be.
   ///
-  /// Its share of the face, as it always was: a proportion keeps the same
-  /// composition from card to card. Unless what goes under it needs the
-  /// room. On a small phone a three-answer card gave its question 48% of
-  /// the face and pushed the last answer under the card's save and share,
-  /// where a tap on it saved the card. The question gives way first, down
-  /// to what it needs at its smallest size, because a question set smaller
-  /// is still read, and an answer under a button is not. A face shorter
-  /// than 520 points starts from 40%.
+  /// All the face the answers leave it: the question at the top, set as
+  /// large as that holds, and the answers at the foot, by the thumb, with
+  /// the line under them. A share of the face (48%, as it was) left a band
+  /// of empty colour under two answers, and a card is full. Unless what
+  /// goes under it needs the room: on a small phone a three-answer card
+  /// pushed the last answer under the card's save and share, where a tap on
+  /// it saved the card. The question gives way first, down to what it needs
+  /// at its smallest size, because a question set smaller is still read,
+  /// and an answer under a button is not. A face shorter than 520 points
+  /// starts from 40%.
   double _questionRoom(
     BuildContext context,
     BoxConstraints box,
@@ -1180,7 +1182,7 @@ class _AskFaceState extends State<_AskFace> {
           TextScaler.noScaling,
         ) +
         2;
-    return (height - below).clamp(math.min(needed, share), share);
+    return math.max(height - below, math.min(needed, share));
   }
 
   @override
@@ -1205,16 +1207,17 @@ class _AskFaceState extends State<_AskFace> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // The question takes its share of the card, or what the
-                // answers leave it (see [_questionRoom]), and is set as large
-                // as that will hold.
+                // The question takes what the answers leave it (see
+                // [_questionRoom]), from the top, set as large as that will
+                // hold, at the size a drawn card's question keeps to; the
+                // answers come at the foot.
                 SizedBox(
                   height: _questionRoom(context, constraints, promptHeight),
                   child: ScaledText(
                     text: pill.question,
                     min: 18,
                     max: 28,
-                    alignment: Alignment.bottomLeft,
+                    alignment: Alignment.topLeft,
                     styleFor: (size) => _questionStyle(pill, size),
                   ),
                 ),
