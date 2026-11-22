@@ -1182,8 +1182,12 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       // What is in the reader's head that morning, not what is in the
-      // app's counter: the first question of the morning it lands on.
-      final Reminder first = t.armed.single.first;
+      // app's counter: the first question of the morning it lands on. A
+      // Monday's tells the week's free book instead, so the first morning
+      // that is not one (on a Sunday the first to land is a Monday's).
+      final Reminder first = t.armed.single.firstWhere(
+        (r) => r.when.weekday != DateTime.monday,
+      );
       expect(first.body, t.app.leadOn(first.when).question);
       expect(first.body, isNot(contains('13 days')));
       expect(first.title, 'Your five are ready');

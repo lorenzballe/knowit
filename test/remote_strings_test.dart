@@ -305,11 +305,17 @@ void main() {
       );
       await app.init();
       final AppLocalizations build = lookupAppLocalizations(const Locale('en'));
-      expect(app.reminderPlan().first.title, build.nudgeTitle);
+      // The first morning that is not a Monday: a Monday's names the week's
+      // free book instead, and on a Sunday the first to land is a Monday's.
+      String title() => app
+          .reminderPlan()
+          .firstWhere((r) => r.when.weekday != DateTime.monday)
+          .title;
+      expect(title(), build.nudgeTitle);
       _take({
         'en': {'nudgeTitle': 'Five new cards are waiting'},
       });
-      expect(app.reminderPlan().first.title, 'Five new cards are waiting');
+      expect(title(), 'Five new cards are waiting');
     });
   });
 }

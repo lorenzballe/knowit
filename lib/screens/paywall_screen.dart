@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart'
     show ValueListenable, defaultTargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart' show DateFormat, NumberFormat;
 
 import '../analytics.dart';
@@ -947,20 +948,36 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         top,
+                        // Still where it all fits, made a little smaller
+                        // together where it nearly does, and scrolling
+                        // only where it is plainly more than the screen:
+                        // never a page that gives under the finger by a
+                        // few points on one door and not on another.
                         Expanded(
-                          child: _FadeFoot(
-                            child: SingleChildScrollView(
-                              key: const ValueKey('paywall-features-scroll'),
-                              padding: const EdgeInsets.only(bottom: 14),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  ...opener,
-                                  SizedBox(height: short ? 12 : 16),
-                                  _FeatureList(
-                                    features: _features(l, _variant),
+                          child: LayoutBuilder(
+                            builder: (context, room) => _FadeFoot(
+                              child: SingleChildScrollView(
+                                key: const ValueKey('paywall-features-scroll'),
+                                child: _FitDown(
+                                  height: room.maxHeight,
+                                  child: Padding(
+                                    // Room under the last feature for the
+                                    // fade at the foot to fall in, at any
+                                    // size the words are set.
+                                    padding: const EdgeInsets.only(bottom: 24),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        ...opener,
+                                        SizedBox(height: short ? 12 : 16),
+                                        _FeatureList(
+                                          features: _features(l, _variant),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
@@ -1636,6 +1653,135 @@ class _FadeFoot extends StatelessWidget {
     ).createShader(r),
     child: child,
   );
+}
+
+/// Its child at its own size where it fits in [height]; where it nearly
+/// does, made smaller to fit, down to [least] of its size, and set as much
+/// wider first, so it keeps the width it is given and its lines break where
+/// they would; where even that would not fit, at its own size again, taller
+/// than [height], for the scroll it is in to show the rest.
+class _FitDown extends SingleChildRenderObjectWidget {
+  const _FitDown({required this.height, required super.child});
+
+  final double height;
+
+  /// The smallest it is made: past this the words would be too small to
+  /// read with ease, and scrolling them is the better way.
+  static const double least = 0.8;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderFitDown(height);
+
+  @override
+  void updateRenderObject(BuildContext context, _RenderFitDown r) =>
+      r.height = height;
+}
+
+class _RenderFitDown extends RenderProxyBox {
+  _RenderFitDown(this._height);
+
+  double _height;
+  set height(double value) {
+    if (value == _height) return;
+    _height = value;
+    markNeedsLayout();
+  }
+
+  double _scale = 1;
+
+  /// How much smaller the child is drawn: 1 where it is drawn at its size.
+  @visibleForTesting
+  double get scale => _scale;
+
+  Matrix4 get _transform => Matrix4.diagonal3Values(_scale, _scale, 1);
+
+  @override
+  void performLayout() {
+    final RenderBox? child = this.child;
+    final double width = constraints.maxWidth;
+    if (child == null) {
+      size = constraints.constrain(Size(width, 0));
+      return;
+    }
+    double lay(double across) {
+      child.layout(
+        BoxConstraints.tightFor(width: across),
+        parentUsesSize: true,
+      );
+      return child.size.height;
+    }
+
+    _scale = 1;
+    final double natural = lay(width);
+    if (_height > 0 && natural > _height) {
+      double fit = _height / natural;
+      bool fits = false;
+      if (fit >= _FitDown.least) {
+        // Set wider by as much as it is made smaller, so it keeps its width.
+        // Words that size themselves to their width can take more room set
+        // wider; a few tries find the size they settle at.
+        for (int i = 0; i < 4; i++) {
+          final double tall = lay(width / fit);
+          if (tall * fit <= _height + 0.5) {
+            fits = true;
+            break;
+          }
+          fit = _height / tall;
+          if (fit < _FitDown.least) break;
+        }
+        if (!fits) {
+          // As it is set at its own width, made smaller: it fits, a touch
+          // narrower than its room.
+          fit = _height / lay(width);
+          fits = true;
+        }
+      } else if (lay(width / _FitDown.least) * _FitDown.least <= _height) {
+        fit = _FitDown.least;
+        fits = true;
+      }
+      if (fits) {
+        _scale = fit;
+      } else {
+        lay(width);
+      }
+    }
+    size = constraints.constrain(Size(width, child.size.height * _scale));
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    final RenderBox? child = this.child;
+    if (child == null) return;
+    if (_scale == 1) {
+      layer = null;
+      context.paintChild(child, offset);
+      return;
+    }
+    layer = context.pushTransform(
+      needsCompositing,
+      offset,
+      _transform,
+      (context, offset) => context.paintChild(child, offset),
+      oldLayer: layer as TransformLayer?,
+    );
+  }
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
+    final RenderBox? child = this.child;
+    if (child == null) return false;
+    return result.addWithPaintTransform(
+      transform: _transform,
+      position: position,
+      hitTest: (result, position) => child.hitTest(result, position: position),
+    );
+  }
+
+  @override
+  void applyPaintTransform(RenderBox child, Matrix4 transform) {
+    transform.multiply(_transform);
+  }
 }
 
 /// Every feature, one under the other: its mark in a colour of the

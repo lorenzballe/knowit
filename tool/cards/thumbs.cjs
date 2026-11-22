@@ -6,8 +6,8 @@
 //
 // A page is opened as the app opens it (the app's bridge in front, the kit and its fonts served from
 // docs/cards/kit, nothing from the network), at the card's size on a 402-wide phone, at night. The
-// front is taken once the page says it is ready and its entrance has settled; the back after
-// Kit.play has played it through. Each is a WebP under web/cards/thumbs/, and thumbs/index.json
+// front is taken once the page says it is ready and its entrance has come to rest, its drawing as it
+// ends; the back once Kit.play has played it through and it, too, has come to rest. Each is a WebP under web/cards/thumbs/, and thumbs/index.json
 // keeps the hash of the page each was taken from (tool/cards/bundle.py names the pictures with it,
 // and leaves a card without pictures until they are taken).
 const path = require('path'), fs = require('fs'), crypto = require('crypto');
@@ -56,6 +56,38 @@ function pages() {
   return out;
 }
 
+// Whether what moves on the page has come to rest: no GSAP animation still to run (one paused, one
+// under a paused timeline, or one that repeats forever is waiting, not moving) and no CSS animation
+// of a set length still running.
+const STILL = () => {
+  let moving = 0;
+  if (typeof gsap !== 'undefined') {
+    for (const t of gsap.globalTimeline.getChildren(true, true, true)) {
+      let held = false;
+      for (let a = t; a; a = a.parent) if (a.paused && a.paused()) { held = true; break; }
+      if (held || (t.repeat && t.repeat() === -1) || t.totalDuration() > 1e5) continue;
+      if (t.progress() < 1) moving++;
+    }
+  }
+  for (const a of document.getAnimations()) {
+    if (a.playState === 'running' && a.effect?.getTiming?.().iterations !== Infinity) moving++;
+  }
+  return moving === 0;
+};
+
+// Waits at least [least] ms, then until the page is still, up to [most] ms: a card's picture shows
+// its drawing as it ends, not halfway through coming in (the owner: the question side, with its
+// animation already finished). A page that keeps moving is taken at [most].
+async function settle(page, least, most) {
+  await page.waitForTimeout(least);
+  for (let waited = least; waited < most; waited += 100) {
+    if (await page.evaluate(`(${STILL.toString()})()`)) break;
+    await page.waitForTimeout(100);
+  }
+  // The frame after the last change, drawn.
+  await page.waitForTimeout(150);
+}
+
 async function shoot(browser, card, size = SIZE, raw = RAW) {
   const page = await browser.newPage({viewport: size, deviceScaleFactor: SCALE});
   const heard = [];
@@ -78,11 +110,11 @@ async function shoot(browser, card, size = SIZE, raw = RAW) {
     await page.goto(ORIGIN + 'card.html');
     for (let t = 0; t < 60 && !heard.some(m => m.t === 'ready'); t++) await page.waitForTimeout(100);
     if (!heard.some(m => m.t === 'ready')) throw new Error('never ready');
-    await page.waitForTimeout(1500);
+    await settle(page, 1500, 8000);
     await page.screenshot({path: path.join(raw, `${card.id}-front.png`)});
     const played = await page.evaluate(async () => { const f = typeof Kit !== 'undefined' && Kit.play && Kit.play[document.querySelector('.card')?.id]; if (!f) return false; await f(); return true; });
     if (!played) throw new Error('no Kit.play');
-    await page.waitForTimeout(3200);
+    await settle(page, 3200, 9000);
     // The back is shown for a card someone read, with their own answer, which this one is not: the
     // answer played here is the photographer's. So what speaks of it (the kit's verdict line, and any
     // line or label saying what "you" said or guessed) is hidden, its room kept, before the picture.
