@@ -1878,6 +1878,66 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillMarkOpen => 'See your levels';
 
   @override
+  String get trainingTitle => 'Your training';
+
+  @override
+  String get trainingLine =>
+      'The skills you chose. Every card that trains one moves you up.';
+
+  @override
+  String trainingToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n more cards to level $level',
+      one: '1 more card to level $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingTopLevel => 'Top level';
+
+  @override
+  String get trainingOthers => 'The others';
+
+  @override
+  String get trainingEmpty =>
+      'Pick what you want to get better at. Every card that trains it moves you up, and carries its mark.';
+
+  @override
+  String get trainingPick => 'Choose skills';
+
+  @override
+  String trainingMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'and $n more',
+      one: 'and 1 more',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainingDayTitle(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '5': 'Five for five.',
+      '6': 'Six for six.',
+      'other': '$n for $n.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingDayLine => 'Today you trained';
+
+  @override
+  String trainingNewLevel(int n) {
+    return 'Level $n reached';
+  }
+
+  @override
   String get videoKicker => 'Video';
 
   @override

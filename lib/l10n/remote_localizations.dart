@@ -1737,6 +1737,52 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('skillMarkOpen') ?? _base.skillMarkOpen;
 
   @override
+  String get trainingTitle =>
+      _words.text('trainingTitle') ?? _base.trainingTitle;
+
+  @override
+  String get trainingLine => _words.text('trainingLine') ?? _base.trainingLine;
+
+  @override
+  String trainingToNext(int n, int level) =>
+      _words.format('trainingToNext', localeName, {'n': n, 'level': level}) ??
+      _base.trainingToNext(n, level);
+
+  @override
+  String get trainingTopLevel =>
+      _words.text('trainingTopLevel') ?? _base.trainingTopLevel;
+
+  @override
+  String get trainingOthers =>
+      _words.text('trainingOthers') ?? _base.trainingOthers;
+
+  @override
+  String get trainingEmpty =>
+      _words.text('trainingEmpty') ?? _base.trainingEmpty;
+
+  @override
+  String get trainingPick => _words.text('trainingPick') ?? _base.trainingPick;
+
+  @override
+  String trainingMore(int n) =>
+      _words.format('trainingMore', localeName, {'n': n}) ??
+      _base.trainingMore(n);
+
+  @override
+  String trainingDayTitle(String n) =>
+      _words.format('trainingDayTitle', localeName, {'n': n}) ??
+      _base.trainingDayTitle(n);
+
+  @override
+  String get trainingDayLine =>
+      _words.text('trainingDayLine') ?? _base.trainingDayLine;
+
+  @override
+  String trainingNewLevel(int n) =>
+      _words.format('trainingNewLevel', localeName, {'n': n}) ??
+      _base.trainingNewLevel(n);
+
+  @override
   String get videoKicker => _words.text('videoKicker') ?? _base.videoKicker;
 
   @override

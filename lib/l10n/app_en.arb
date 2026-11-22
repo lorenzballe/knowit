@@ -1971,6 +1971,73 @@
  "@skillMarkOpen": {
   "description": "Button on that sheet: opens What to learn, where each skill shows the reader's level."
  },
+ "trainingTitle": "Your training",
+ "@trainingTitle": {
+  "description": "Title of the reader's training: the skills they picked to get better at, with their level in each. The first chapter of Your journey, and a box on the profile."
+ },
+ "trainingLine": "The skills you chose. Every card that trains one moves you up.",
+ "@trainingLine": {
+  "description": "Under the title of Your training on Your journey."
+ },
+ "trainingToNext": "{n, plural, =1{1 more card to level {level}} other{{n} more cards to level {level}}}",
+ "@trainingToNext": {
+  "description": "Under a skill's bar in Your training: how many more cards that train it the reader needs to read to reach the next level.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "level": {
+    "type": "int"
+   }
+  }
+ },
+ "trainingTopLevel": "Top level",
+ "@trainingTopLevel": {
+  "description": "Under a skill's bar in Your training once the reader has reached its highest level."
+ },
+ "trainingOthers": "The others",
+ "@trainingOthers": {
+  "description": "Small label over the skills the reader did not pick, each with its level, under the ones they did."
+ },
+ "trainingEmpty": "Pick what you want to get better at. Every card that trains it moves you up, and carries its mark.",
+ "@trainingEmpty": {
+  "description": "Your training, before the reader has picked any skill."
+ },
+ "trainingPick": "Choose skills",
+ "@trainingPick": {
+  "description": "Button under trainingEmpty: opens What to learn, where skills are picked."
+ },
+ "trainingMore": "{n, plural, =1{and 1 more} other{and {n} more}}",
+ "@trainingMore": {
+  "description": "On the profile's Your training box, under the first three skills the reader picked: how many more they picked.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "trainingDayTitle": "{n, select, 5{Five for five.} 6{Six for six.} other{{n} for {n}.}}",
+ "@trainingDayTitle": {
+  "description": "Title of the sheet that rises when the reader finishes the day's cards: all n read (five, six on a Sunday). Then trainingDayLine and the skills those cards trained.",
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
+ "trainingDayLine": "Today you trained",
+ "@trainingDayLine": {
+  "description": "Under trainingDayTitle: the skills today's cards trained follow, each with how many cards and its bar."
+ },
+ "trainingNewLevel": "Level {n} reached",
+ "@trainingNewLevel": {
+  "description": "On the finished day's sheet, under a skill whose next level today's cards reached.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
  "videoKicker": "Video",
  "@videoKicker": {
   "description": "A video card's kind, said by VoiceOver with its length on its tile in Explore (\"Video, 0:53\")."

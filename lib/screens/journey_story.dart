@@ -884,26 +884,47 @@ class _YourStory extends StatelessWidget {
 
 /// A chapter: its number and name in small capitals, then what it says.
 class _Chapter extends StatelessWidget {
-  const _Chapter({required this.n, required this.title, required this.child});
+  const _Chapter({
+    required this.n,
+    required this.title,
+    required this.child,
+    this.trailing,
+  });
 
   final int n;
   final String title;
   final Widget child;
+
+  /// At the end of the chapter's head, where a chapter has a way to change
+  /// what it shows (the skills of Your training).
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
       Padding(
-        padding: const EdgeInsets.only(left: 4, bottom: 10),
-        child: Text(
-          '$n  ·  ${_upper(context, title)}',
-          style: AppText.body(
-            size: 11,
-            weight: FontWeight.w800,
-            spacing: 1.4,
-            color: context.p.ink.withValues(alpha: 0.5),
-          ),
+        padding: EdgeInsets.only(
+          left: 4,
+          right: 4,
+          bottom: trailing == null ? 10 : 6,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                '$n  ·  ${_upper(context, title)}',
+                style: AppText.body(
+                  size: 11,
+                  weight: FontWeight.w800,
+                  spacing: 1.4,
+                  color: context.p.ink.withValues(alpha: 0.5),
+                ),
+              ),
+            ),
+            ?trailing,
+          ],
         ),
       ),
       child,

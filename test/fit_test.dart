@@ -288,6 +288,14 @@ void main() {
           );
           list.position.jumpTo(0);
           await settle(tester);
+          // The score is under the reader's training, the journey's first
+          // chapter: brought into view, then tapped.
+          await tester.scrollUntilVisible(
+            find.byKey(const ValueKey('journey-week-0')),
+            200,
+            scrollable: find.byType(Scrollable).first,
+          );
+          await settle(tester);
           await tester.tap(find.byKey(const ValueKey('journey-week-0')));
           await settle(tester);
           note(locale, 'journey, a past week', tester);

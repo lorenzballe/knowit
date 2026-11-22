@@ -1817,6 +1817,61 @@ class AppLocalizationsJa extends AppLocalizations {
   String get skillMarkOpen => 'レベルを見る';
 
   @override
+  String get trainingTitle => 'あなたのトレーニング';
+
+  @override
+  String get trainingLine => 'あなたが選んだスキルです。そのどれかを鍛えるカードを読むたびに、レベルが上がります。';
+
+  @override
+  String trainingToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'レベル$levelまであと$n枚',
+      one: 'レベル$levelまであと1枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingTopLevel => '最高レベル';
+
+  @override
+  String get trainingOthers => 'そのほか';
+
+  @override
+  String get trainingEmpty =>
+      '上達したいことを選びましょう。それを鍛えるカードを読むたびにレベルが上がり、カードにはその印がつきます。';
+
+  @override
+  String get trainingPick => 'スキルを選ぶ';
+
+  @override
+  String trainingMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ほか$nつ',
+      one: 'ほか1つ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainingDayTitle(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {'other': '$n枚中$n枚。'});
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingDayLine => '今日鍛えたもの';
+
+  @override
+  String trainingNewLevel(int n) {
+    return 'レベル$nに到達';
+  }
+
+  @override
   String get videoKicker => '動画';
 
   @override

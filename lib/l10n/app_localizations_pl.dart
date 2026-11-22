@@ -1951,6 +1951,70 @@ class AppLocalizationsPl extends AppLocalizations {
   String get skillMarkOpen => 'Zobacz swoje poziomy';
 
   @override
+  String get trainingTitle => 'Twój trening';
+
+  @override
+  String get trainingLine =>
+      'Umiejętności, które wybrałeś. Każda karta, która ćwiczy jedną z nich, cię podnosi.';
+
+  @override
+  String trainingToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Jeszcze $n karty do poziomu $level',
+      many: 'Jeszcze $n kart do poziomu $level',
+      few: 'Jeszcze $n karty do poziomu $level',
+      one: 'Jeszcze 1 karta do poziomu $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingTopLevel => 'Najwyższy poziom';
+
+  @override
+  String get trainingOthers => 'Pozostałe';
+
+  @override
+  String get trainingEmpty =>
+      'Wybierz, w czym chcesz być lepszy. Każda karta, która to ćwiczy, cię podnosi i ma jego znak.';
+
+  @override
+  String get trainingPick => 'Wybierz umiejętności';
+
+  @override
+  String trainingMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'i jeszcze $n',
+      many: 'i jeszcze $n',
+      few: 'i jeszcze $n',
+      one: 'i jeszcze 1',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainingDayTitle(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '5': 'Pięć na pięć.',
+      '6': 'Sześć na sześć.',
+      'other': '$n na $n.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingDayLine => 'Dziś ćwiczyłeś';
+
+  @override
+  String trainingNewLevel(int n) {
+    return 'Osiągnięty poziom $n';
+  }
+
+  @override
   String get videoKicker => 'Wideo';
 
   @override

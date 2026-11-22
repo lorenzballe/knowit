@@ -1859,6 +1859,66 @@ class AppLocalizationsTr extends AppLocalizations {
   String get skillMarkOpen => 'Seviyelerini gör';
 
   @override
+  String get trainingTitle => 'Antrenmanın';
+
+  @override
+  String get trainingLine =>
+      'Seçtiğin beceriler. Birini çalıştıran her kart seni yükseltir.';
+
+  @override
+  String trainingToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Seviye $level için $n kart daha',
+      one: 'Seviye $level için 1 kart daha',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingTopLevel => 'En yüksek seviye';
+
+  @override
+  String get trainingOthers => 'Diğerleri';
+
+  @override
+  String get trainingEmpty =>
+      'Neyde daha iyi olmak istediğini seç. Onu çalıştıran her kart seni yükseltir ve onun işaretini taşır.';
+
+  @override
+  String get trainingPick => 'Becerileri seç';
+
+  @override
+  String trainingMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 've $n tane daha',
+      one: 've 1 tane daha',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainingDayTitle(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '5': 'Beşte beş.',
+      '6': 'Altıda altı.',
+      'other': '$n/$n.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingDayLine => 'Bugün çalıştırdıkların';
+
+  @override
+  String trainingNewLevel(int n) {
+    return 'Yeni seviye: $n';
+  }
+
+  @override
   String get videoKicker => 'Video';
 
   @override

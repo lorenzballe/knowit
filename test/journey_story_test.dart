@@ -139,8 +139,8 @@ void main() {
     });
     await show(plus);
     await tester.pump();
-    expect(find.text('2  ·  YOUR COACH'), findsOneWidget);
-    expect(find.text('3  ·  PRACTISE'), findsOneWidget);
+    expect(find.text('3  ·  YOUR COACH'), findsOneWidget);
+    expect(find.text('4  ·  PRACTISE'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('journey-coach-ask')));
     await tester.pumpAndSettle();
     expect(find.text('A good week: 8 in 10 right when sure.'), findsOneWidget);
@@ -177,14 +177,15 @@ void main() {
     await tester.pump();
     expect(tester.takeException(), isNull);
     final List<String> chapters = [
-      '1  ·  THIS WEEK',
-      '2  ·  PRACTISE',
-      '3  ·  WHERE YOU ARE',
-      '4  ·  HOW YOU REASON',
-      '5  ·  WHAT YOU KNOW',
-      '6  ·  YOUR HABITS',
-      '7  ·  WHAT STAYS WITH YOU',
-      '8  ·  YOUR STORY',
+      '1  ·  YOUR TRAINING',
+      '2  ·  THIS WEEK',
+      '3  ·  PRACTISE',
+      '4  ·  WHERE YOU ARE',
+      '5  ·  HOW YOU REASON',
+      '6  ·  WHAT YOU KNOW',
+      '7  ·  YOUR HABITS',
+      '8  ·  WHAT STAYS WITH YOU',
+      '9  ·  YOUR STORY',
     ];
     double last = -1;
     for (final String c in chapters) {
@@ -193,10 +194,10 @@ void main() {
       expect(y, greaterThan(last), reason: '$c comes after the one before');
       last = y;
     }
-    // The score is in the third chapter, under what to practise.
+    // The score is in the fourth chapter, under what to practise.
     expect(
       tester.getTopLeft(find.byKey(const ValueKey('journey-score'))).dy,
-      greaterThan(tester.getTopLeft(find.text('3  ·  WHERE YOU ARE')).dy),
+      greaterThan(tester.getTopLeft(find.text('4  ·  WHERE YOU ARE')).dy),
     );
     expect(find.text('See it with Astute+'), findsOneWidget);
     expect(find.byKey(const ValueKey('story-practice-misses')), findsOneWidget);

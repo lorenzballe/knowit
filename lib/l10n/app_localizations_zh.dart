@@ -1811,6 +1811,60 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skillMarkOpen => '查看你的等级';
 
   @override
+  String get trainingTitle => '你的训练';
+
+  @override
+  String get trainingLine => '这是你选择的能力。每读一张训练其中之一的卡片，你都会升级。';
+
+  @override
+  String trainingToNext(int n, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '再读 $n 张升到等级 $level',
+      one: '再读 1 张升到等级 $level',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingTopLevel => '最高等级';
+
+  @override
+  String get trainingOthers => '其他';
+
+  @override
+  String get trainingEmpty => '选择你想提升的方面。每读一张训练它的卡片，你都会升级，卡片上也会带有它的标记。';
+
+  @override
+  String get trainingPick => '选择能力';
+
+  @override
+  String trainingMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '还有 $n 项',
+      one: '还有 1 项',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainingDayTitle(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {'other': '$n 张全部读完。'});
+    return '$_temp0';
+  }
+
+  @override
+  String get trainingDayLine => '今天你训练了';
+
+  @override
+  String trainingNewLevel(int n) {
+    return '达到等级 $n';
+  }
+
+  @override
   String get videoKicker => '视频';
 
   @override
