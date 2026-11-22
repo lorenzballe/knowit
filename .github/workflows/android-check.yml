@@ -5,15 +5,10 @@ name: Android build check
 # cannot either. A debug APK, unsigned and thrown away: only whether the
 # Kotlin and the widget layouts compile.
 
+# Run by hand only (Actions, this workflow, Run workflow), the owner's choice
+# once the month's minutes ran out: on every push to main that touched the
+# app it spent them on a build Codemagic makes anyway.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "android/**"
-      - "lib/**"
-      - "pubspec.yaml"
-      - "pubspec.lock"
-      - ".github/workflows/android-check.yml"
   workflow_dispatch: {}
 
 concurrency:
