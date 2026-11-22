@@ -1,6 +1,7 @@
 // A card's picture fetched once and kept on the phone (CachedThumb,
-// FileThumbStore), the day's fetched ahead, and the card's outline in grey,
-// with nothing on it, while one is still on its way (CardThumb, CardSkeleton).
+// FileThumbStore), the day's fetched ahead, and the card in plain grey with
+// only what works without its picture, while one is still on its way
+// (CardThumb), as a photo in a feed comes.
 //
 //   flutter test test/web/cached_thumb_test.dart
 import 'dart:async';
@@ -15,7 +16,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/theme.dart';
-import 'package:astuto/widgets/card_skeleton.dart';
 import 'package:astuto/widgets/web/cached_thumb.dart';
 import 'package:astuto/widgets/web/card_thumb.dart';
 import 'package:astuto/widgets/web/thumb_store_io.dart';
@@ -114,8 +114,8 @@ void main() {
       CardThumb.image = NoPicture.new;
     });
 
-    testWidgets('the card\'s outline in grey and nothing on it; then the card, '
-        'with what sits on it', (tester) async {
+    testWidgets('the card in plain grey with only its save and share; then '
+        'the card, with what sits on its picture', (tester) async {
       final Pill card = pagedCards().first;
       PillBank.adopt(bankWithPictures({card.id}));
       final Pill pill = PillBank.byId(card.id)!;
@@ -131,9 +131,13 @@ void main() {
               child: CardThumb(
                 pill: pill,
                 side: CardSide.front,
+                waiting: TextButton(
+                  onPressed: () {},
+                  child: const Text('save while it comes'),
+                ),
                 foreground: TextButton(
                   onPressed: () {},
-                  child: const Text('save'),
+                  child: const Text('heart on the picture'),
                 ),
               ),
             ),
@@ -141,16 +145,11 @@ void main() {
         ),
       );
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.byType(CardSkeleton), findsOneWidget);
-      // Nothing on the card until the card is there: not seen, not tapped.
-      expect(find.text('save').hitTestable(), findsNothing);
-      final AnimatedOpacity hidden = tester.widget(
-        find.ancestor(
-          of: find.text('save'),
-          matching: find.byType(AnimatedOpacity),
-        ),
-      );
-      expect(hidden.opacity, 0);
+      expect(find.byKey(const ValueKey('card-waiting')), findsOneWidget);
+      // What works without the picture is there and works; what sits on the
+      // picture is not, until it has come.
+      expect(find.text('save while it comes').hitTestable(), findsOneWidget);
+      expect(find.text('heart on the picture').hitTestable(), findsNothing);
 
       final ui.Image image = await tester.runAsync(
         () => createTestImage(width: 4, height: 6),
@@ -159,42 +158,9 @@ void main() {
       await tester.pump();
       await tester.pump(CardThumb.fade);
       await tester.pump(const Duration(milliseconds: 50));
-      final AnimatedOpacity shown = tester.widget(
-        find.ancestor(
-          of: find.text('save'),
-          matching: find.byType(AnimatedOpacity),
-        ),
-      );
-      expect(shown.opacity, 1);
-      expect(find.text('save').hitTestable(), findsOneWidget);
-      // The outline under it holds still.
-      expect(
-        tester.widget<CardSkeleton>(find.byType(CardSkeleton)).moving,
-        isFalse,
-      );
+      expect(find.text('heart on the picture').hitTestable(), findsOneWidget);
+      expect(find.text('save while it comes'), findsNothing);
       expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('the outline fits any box, the shelf\'s or a tile\'s', (
-      tester,
-    ) async {
-      for (final Size box in const [
-        Size(324, 452),
-        Size(120, 200),
-        Size(160, 90),
-        Size(60, 60),
-      ]) {
-        await tester.pumpWidget(
-          MaterialApp(
-            theme: buildAstutoTheme(Brightness.light),
-            home: Center(
-              child: SizedBox.fromSize(size: box, child: const CardSkeleton()),
-            ),
-          ),
-        );
-        await tester.pump(const Duration(milliseconds: 500));
-        expect(tester.takeException(), isNull, reason: '$box');
-      }
     });
   });
 }

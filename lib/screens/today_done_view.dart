@@ -15,7 +15,6 @@ import '../state/app_state.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/card_edge.dart';
-import '../widgets/card_skeleton.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
@@ -714,9 +713,10 @@ class _CardFace extends StatelessWidget {
   final Pill pill;
   final int number;
 
-  /// Whether the card's picture has come. Until it has, the card is its
-  /// outline in grey (CardSkeleton), and its edge and the light under it are
-  /// grey too: nothing of its colour shows before the card does.
+  /// Whether the card's picture has come. Until it has, the card is plain
+  /// grey with its save and share (CardThumb.waiting), and its edge and the
+  /// light under it are grey too: nothing of its colour shows before the
+  /// card does.
   final bool come;
 
   /// Told once the card's picture has come.
@@ -779,7 +779,7 @@ class _CardFace extends StatelessWidget {
         height: height,
         decoration: come
             ? _decoration(p, s, ground)
-            : _decoration(p, s, CardSkeleton.cardColour(p), glowing: false),
+            : _decoration(p, s, CardThumb.waitingColour(p), glowing: false),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(34 * s),
           child: CardThumb(
@@ -797,6 +797,16 @@ class _CardFace extends StatelessWidget {
             shelf: atShelf,
             large: !atShelf,
             fit: BoxFit.contain,
+            // While it comes, the card in grey with its save and share, in
+            // the grey's ink, as a photo still coming sits under its post's
+            // own buttons.
+            waiting: _PictureControls(
+              aspect: atShelf ? WebThumbs.shelfAspect : WebThumbs.aspect,
+              saved: saved,
+              ink: p.ink.withValues(alpha: p.isDark ? 0.55 : 0.5),
+              onSave: onSave,
+              onShare: onShare,
+            ),
             // Where the picture will not come, the card in words, with the
             // same save and share as everywhere else.
             fallback: ColoredBox(
