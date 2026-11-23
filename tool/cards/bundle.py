@@ -172,11 +172,23 @@ def thumbs_index() -> dict[str, str]:
     return json.loads(index.read_text(encoding="utf-8")) if index.exists() else {}
 
 
+# The pictures' edition, bumped when the kit changes how every page is drawn, so every picture is
+# taken again (tool/cards/thumbs.cjs keeps the same) and the app and the site fetch the new ones
+# instead of keeping the old under the same name. 2: the source hidden under the question, a video
+# cited by its channel.
+PICTURES = "\n<!-- pictures 2 -->"
+
+
+def picture_hash(html: str) -> str:
+    """The pictures' version: the page's hash with the pictures' edition."""
+    return page_hash(html + PICTURES)
+
+
 def thumbs_of(card: dict, index: dict[str, str]) -> dict | None:
     """The pictures of a free card's page, front and back, named with the page's hash: only while
     they were taken from the page as it is now. A card whose page changed since goes without until
     thumbs.cjs takes them again, and the app draws it as it would with no picture."""
-    h = page_hash(card["_html"])
+    h = picture_hash(card["_html"])
     if index.get(card["id"]) != h:
         return None
     return {side: f"thumbs/{card['id']}-{side}.webp?v={h}" for side in ("front", "back")}

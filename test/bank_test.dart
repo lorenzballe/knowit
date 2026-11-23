@@ -51,6 +51,10 @@ Map<String, Object?> pick(String id) => {
   'source': 'A source',
 };
 
+/// The pictures' edition, as tool/cards/bundle.py and tool/cards/thumbs.cjs
+/// keep it (PICTURES): bumped when the kit changes how every page is drawn.
+const String _pictures = '\n<!-- pictures 2 -->';
+
 void main() {
   setUp(() {
     PillBank.reset();
@@ -122,11 +126,16 @@ void main() {
           web['page'] = 'pages/$id.html?v=$hash';
           web['bytes'] = utf8.encode(page).length;
           // Its pictures, front and back, named while they were taken from
-          // the page as it is now (tool/cards/thumbs.cjs, bundle.py).
-          if (thumbsIndex[id] == hash) {
+          // the page as it is now, in the pictures' edition
+          // (tool/cards/thumbs.cjs and bundle.py, PICTURES).
+          final String pictures = sha256
+              .convert(utf8.encode(page + _pictures))
+              .toString()
+              .substring(0, 12);
+          if (thumbsIndex[id] == pictures) {
             web['thumbs'] = {
-              'front': 'thumbs/$id-front.webp?v=$hash',
-              'back': 'thumbs/$id-back.webp?v=$hash',
+              'front': 'thumbs/$id-front.webp?v=$pictures',
+              'back': 'thumbs/$id-back.webp?v=$pictures',
             };
           }
           expect(
