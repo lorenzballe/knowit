@@ -8,7 +8,8 @@
 //
 // TOUR_PHONE (se, pro, max; pro by default), TOUR_LANG (it by default),
 // TOUR_PAPER=true for the light theme, TOUR_PLUS=true for a reader with
-// Astute+, TOUR_SUBJECT=Sport for one subject's Explore, TOUR_FULL=true for
+// Astute+, TOUR_SUBJECT=Sport for one subject's Explore (Thinking,Sport for
+// Thinking's chip lit beside Sport's), TOUR_FULL=true for
 // the whole page in one picture, TOUR_LABEL to keep two runs apart (each a
 // --dart-define). A camera, not a check: it lives outside
 // test/ so CI never runs it. The pictures land in tool/shots/explore-tour/,
@@ -363,14 +364,17 @@ void main() {
     await _settle(tester, 20);
     await tester.tap(find.byKey(const ValueKey('tab-Explore')).first);
     await _settle(tester, 20);
-    if (_subject.isNotEmpty) {
-      await tester.tap(find.byKey(const ValueKey('subject-$_subject-off')));
+    // One subject, or several to light together ("Thinking,Economics":
+    // Thinking's chip beside a subject's).
+    for (final String subject in _subject.split(',')) {
+      if (subject.isEmpty) continue;
+      await tester.tap(find.byKey(ValueKey('subject-$subject-off')));
       await _settle(tester, 20);
     }
 
     final String name =
         '$_phone-$_lang-${_paper ? 'light' : 'dark'}${_plus ? '-plus' : ''}'
-        '${_subject.isEmpty ? '' : '-${_subject.toLowerCase()}'}'
+        '${_subject.isEmpty ? '' : '-${_subject.toLowerCase().replaceAll(',', '+')}'}'
         '${_weekday == 0 ? '' : '-day$_weekday'}'
         '${_full ? '-full' : ''}';
     Future<void> take(String shot) async {

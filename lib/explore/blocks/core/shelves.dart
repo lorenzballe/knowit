@@ -85,6 +85,15 @@ class ExploreShelves {
   String? get subject => _subject;
   String? _subject;
 
+  /// Whether Thinking's chip is lit beside the subject's: the subject's
+  /// cards that train a reasoning move, thinking with that subject.
+  bool get thinking => _thinking;
+  bool _thinking = false;
+
+  /// The subject in view and the lens, as the shelves kept for one are told
+  /// from another's.
+  String get _view => '${_subject ?? ''}${_thinking ? '+thinking' : ''}';
+
   /// The top list's window, the week or the month: the reader's to switch,
   /// kept as long as the screen is.
   final ValueNotifier<bool> topMonth = ValueNotifier<bool>(false);
@@ -93,9 +102,10 @@ class ExploreShelves {
   /// read, and every shelf worked out afresh when it is next asked for. The
   /// mix, the cards that came back and the cards a source dealt stay dealt
   /// for as long as what they were dealt from does.
-  void begin({String? subject}) {
+  void begin({String? subject, bool thinking = false}) {
     _begun = true;
     _subject = subject;
+    _thinking = thinking;
     _dealToday();
     _served = Served.instance.lastExplore;
     _todayAll = null;
@@ -168,7 +178,9 @@ class ExploreShelves {
   /// [pills] narrowed to the subject in view.
   List<Pill> only(Iterable<Pill> pills) => _subject == null
       ? pills.toList()
-      : pills.where((p) => p.topic == _subject).toList();
+      : pills
+            .where((p) => onSubject(p, _subject, thinking: _thinking))
+            .toList();
 
   /// The subject in view by its key, `economics`, or null for all.
   String? get subjectKey => _subject == null
@@ -248,7 +260,7 @@ class ExploreShelves {
           final Pill? pill = pillById(id);
           return pill != null &&
               !pill.isAboutAPlace &&
-              (_subject == null || pill.topic == _subject);
+              onSubject(pill, _subject, thinking: _thinking);
         },
       ))
         (pillById(place.id)!, place.readers),
@@ -291,7 +303,7 @@ class ExploreShelves {
           return pill != null &&
               !pill.isAboutAPlace &&
               unread(pill) &&
-              (_subject == null || pill.topic == _subject);
+              onSubject(pill, _subject, thinking: _thinking);
         },
         limit: 8,
       ))
@@ -390,7 +402,8 @@ class ExploreShelves {
                   read: _readWhenDealt,
                   seed: monthSeed(_clock()),
                 ))
-        if (reachesReader(p, home) && (_subject == null || p.topic == _subject))
+        if (reachesReader(p, home) &&
+            onSubject(p, _subject, thinking: _thinking))
           p,
     ];
   }
@@ -419,8 +432,7 @@ class ExploreShelves {
     // Today's shelf comes from the server when it has answered, and from
     // the phone before: the mix follows it once, when it arrives.
     final String source = _served == null ? 'phone' : 'served';
-    final String key =
-        '$day|${_subject ?? ''}|$dealtOn|${PillBank.version}|$source';
+    final String key = '$day|$_view|$dealtOn|${PillBank.version}|$source';
     if (_mix != null && key == _mixKey) return _mix!;
     _mixKey = key;
     moodMemo.clear();
@@ -455,12 +467,12 @@ class ExploreShelves {
   List<CameBackCard> get cameBack {
     final String key =
         '${dateKey(app.today)}|${app.answers.length}|'
-        '${app.todaysDeck.length}|${_subject ?? ''}|${_dueCount(app)}';
+        '${app.todaysDeck.length}|$_view|${_dueCount(app)}';
     if (key == _cameBackKey) return _cameBackCards;
     _cameBackKey = key;
     return _cameBackCards = [
       for (final r in app.reviewsWaitingWithAnswers)
-        if (_subject == null || r.card.topic == _subject)
+        if (onSubject(r.card, _subject, thinking: _thinking))
           CameBackCard(
             r.card,
             days:
@@ -526,8 +538,7 @@ class ExploreShelves {
       // blocks pick from it what they need — numbers for a bet, debates
       // for two halves, a theme for a set — and a section that wants
       // other cards says which.
-      final String key =
-          '${section.id}|*|${_subject ?? ''}|$dealtOn|${PillBank.version}';
+      final String key = '${section.id}|*|$_view|$dealtOn|${PillBank.version}';
       if (_queries.length > 200) _queries.clear();
       final List<Pill> pool = _queries[key] ??= _pool(section);
       return pool.take(most ?? pool.length).toList();
@@ -545,7 +556,7 @@ class ExploreShelves {
       // deal or the bank changes: kept across builds, where the other
       // sources are worked out again on every one.
       final String key =
-          '${section.id}|${_keyOf(query)}|${_subject ?? ''}|$dealtOn|'
+          '${section.id}|${_keyOf(query)}|$_view|$dealtOn|'
           '${PillBank.version}';
       if (_queries.length > 200) _queries.clear();
       found = _queries[key] ??= _query(section, query);
