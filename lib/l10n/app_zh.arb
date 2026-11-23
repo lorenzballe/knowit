@@ -416,7 +416,7 @@
   "skillMarkKicker": "这张卡片训练",
   "skillMarkLabel": "训练{skill}",
   "skillMarkBody": "这是你设为专注的能力之一。每读一张这样的卡片，你都会升级。",
-  "skillMarkOpen": "查看你的等级",
+  "skillMarkOpen": "查看你的全部分数",
   "trainingTitle": "你的训练",
   "trainingLine": "每次回答都会改变你的分数，答对难题加得最多。分数没有上限。",
   "trainingOthers": "其他",

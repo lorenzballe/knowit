@@ -1803,7 +1803,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skillMarkBody => '这是你设为专注的能力之一。每读一张这样的卡片，你都会升级。';
 
   @override
-  String get skillMarkOpen => '查看你的等级';
+  String get skillMarkOpen => '查看你的全部分数';
 
   @override
   String get trainingTitle => '你的训练';

@@ -1943,7 +1943,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'To jedna z umiejętności, które wybrałeś jako priorytet. Każda taka karta cię podnosi.';
 
   @override
-  String get skillMarkOpen => 'Zobacz swoje poziomy';
+  String get skillMarkOpen => 'Zobacz wszystkie swoje wyniki';
 
   @override
   String get trainingTitle => 'Twój trening';

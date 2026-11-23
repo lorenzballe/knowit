@@ -1878,7 +1878,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'È una delle abilità che hai messo in focus. Ogni carta come questa ti fa salire.';
 
   @override
-  String get skillMarkOpen => 'Vedi i tuoi livelli';
+  String get skillMarkOpen => 'Vedi tutti i tuoi punteggi';
 
   @override
   String get trainingTitle => 'Il tuo allenamento';

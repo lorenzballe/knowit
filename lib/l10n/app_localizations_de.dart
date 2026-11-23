@@ -1880,7 +1880,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine der Fähigkeiten, die du in den Fokus gestellt hast. Jede Karte wie diese bringt dich weiter.';
 
   @override
-  String get skillMarkOpen => 'Deine Stufen ansehen';
+  String get skillMarkOpen => 'Alle deine Punktzahlen ansehen';
 
   @override
   String get trainingTitle => 'Dein Training';

@@ -1958,9 +1958,9 @@
  "@skillMarkBody": {
   "description": "On the sheet a card's skill mark opens: the skill is one the reader picked, and cards like this raise their level in it."
  },
- "skillMarkOpen": "See your levels",
+ "skillMarkOpen": "See all your scores",
  "@skillMarkOpen": {
-  "description": "Button on that sheet: opens What to learn, where each skill shows the reader's level."
+  "description": "Button on that sheet (and on the finished day's): opens What to learn, where each skill shows the reader's score in it."
  },
  "trainingTitle": "Your training",
  "@trainingTitle": {

@@ -416,7 +416,7 @@
   "skillMarkKicker": "ESTA CARTA TREINA",
   "skillMarkLabel": "Treina {skill}",
   "skillMarkBody": "É uma das capacidades que puseste em foco. Cada carta como esta faz-te subir.",
-  "skillMarkOpen": "Ver os teus níveis",
+  "skillMarkOpen": "Ver todas as tuas pontuações",
   "trainingTitle": "O teu treino",
   "trainingLine": "Cada resposta mexe na tua pontuação, e uma carta difícil acertada é a que mais conta. Não há teto.",
   "trainingOthers": "As outras",

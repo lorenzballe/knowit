@@ -416,7 +416,7 @@
   "skillMarkKicker": "このカードで鍛えるもの",
   "skillMarkLabel": "{skill}を鍛える",
   "skillMarkBody": "あなたがフォーカスに選んだスキルのひとつです。こうしたカードを読むたびにレベルが上がります。",
-  "skillMarkOpen": "レベルを見る",
+  "skillMarkOpen": "すべてのスコアを見る",
   "trainingTitle": "あなたのトレーニング",
   "trainingLine": "回答するたびにスコアが動きます。難しいカードに正解すると一番大きく上がります。上限はありません。",
   "trainingOthers": "そのほか",

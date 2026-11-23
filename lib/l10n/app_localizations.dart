@@ -2616,10 +2616,10 @@ abstract class AppLocalizations {
   /// **'One of the skills you put in focus. Every card like this one moves you up.'**
   String get skillMarkBody;
 
-  /// Button on that sheet: opens What to learn, where each skill shows the reader's level.
+  /// Button on that sheet (and on the finished day's): opens What to learn, where each skill shows the reader's score in it.
   ///
   /// In en, this message translates to:
-  /// **'See your levels'**
+  /// **'See all your scores'**
   String get skillMarkOpen;
 
   /// Title of the reader's training: the skills they picked to get better at, with their level in each. The first chapter of Your journey, and a box on the profile.

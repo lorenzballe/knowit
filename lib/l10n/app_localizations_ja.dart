@@ -1809,7 +1809,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get skillMarkBody => 'あなたがフォーカスに選んだスキルのひとつです。こうしたカードを読むたびにレベルが上がります。';
 
   @override
-  String get skillMarkOpen => 'レベルを見る';
+  String get skillMarkOpen => 'すべてのスコアを見る';
 
   @override
   String get trainingTitle => 'あなたのトレーニング';

@@ -1870,7 +1870,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'One of the skills you put in focus. Every card like this one moves you up.';
 
   @override
-  String get skillMarkOpen => 'See your levels';
+  String get skillMarkOpen => 'See all your scores';
 
   @override
   String get trainingTitle => 'Your training';

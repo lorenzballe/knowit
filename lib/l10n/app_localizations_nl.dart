@@ -1881,7 +1881,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Een van de vaardigheden die je in focus hebt gezet. Elke kaart zoals deze brengt je verder.';
 
   @override
-  String get skillMarkOpen => 'Bekijk je niveaus';
+  String get skillMarkOpen => 'Al je scores bekijken';
 
   @override
   String get trainingTitle => 'Jouw training';

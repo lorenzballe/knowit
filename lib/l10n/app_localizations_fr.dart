@@ -1882,7 +1882,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'C’est l’une des compétences que tu as mises en priorité. Chaque carte comme celle-ci te fait monter.';
 
   @override
-  String get skillMarkOpen => 'Voir tes niveaux';
+  String get skillMarkOpen => 'Voir tous tes scores';
 
   @override
   String get trainingTitle => 'Ton entraînement';

@@ -1813,7 +1813,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skillMarkBody => '집중하기로 고른 능력 중 하나예요. 이런 카드를 읽을 때마다 레벨이 올라가요.';
 
   @override
-  String get skillMarkOpen => '레벨 보기';
+  String get skillMarkOpen => '내 점수 모두 보기';
 
   @override
   String get trainingTitle => '내 훈련';

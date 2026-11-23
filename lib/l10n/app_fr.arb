@@ -416,7 +416,7 @@
   "skillMarkKicker": "CETTE CARTE ENTRAÎNE",
   "skillMarkLabel": "Entraîne {skill}",
   "skillMarkBody": "C’est l’une des compétences que tu as mises en priorité. Chaque carte comme celle-ci te fait monter.",
-  "skillMarkOpen": "Voir tes niveaux",
+  "skillMarkOpen": "Voir tous tes scores",
   "trainingTitle": "Ton entraînement",
   "trainingLine": "Chaque réponse fait bouger ton score, surtout une carte difficile réussie. Il n’y a pas de plafond.",
   "trainingOthers": "Les autres",

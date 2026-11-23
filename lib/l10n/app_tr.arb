@@ -416,7 +416,7 @@
   "skillMarkKicker": "BU KARTIN ÇALIŞTIRDIĞI",
   "skillMarkLabel": "Çalıştırdığı: {skill}",
   "skillMarkBody": "Odağa aldığın becerilerden biri. Bunun gibi her kart seni yükseltir.",
-  "skillMarkOpen": "Seviyelerini gör",
+  "skillMarkOpen": "Tüm puanlarını gör",
   "trainingTitle": "Antrenmanın",
   "trainingLine": "Her cevap puanını oynatır, en çok da doğru bilinen zor bir kart. Bir tavanı yok.",
   "trainingOthers": "Diğerleri",

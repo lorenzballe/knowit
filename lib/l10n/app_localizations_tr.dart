@@ -1851,7 +1851,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Odağa aldığın becerilerden biri. Bunun gibi her kart seni yükseltir.';
 
   @override
-  String get skillMarkOpen => 'Seviyelerini gör';
+  String get skillMarkOpen => 'Tüm puanlarını gör';
 
   @override
   String get trainingTitle => 'Antrenmanın';

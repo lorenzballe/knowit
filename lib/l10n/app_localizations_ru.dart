@@ -1950,7 +1950,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Это один из навыков, которые ты выбрал в фокус. Каждая такая карточка поднимает тебя выше.';
 
   @override
-  String get skillMarkOpen => 'Посмотреть уровни';
+  String get skillMarkOpen => 'Все твои рейтинги';
 
   @override
   String get trainingTitle => 'Твоя тренировка';
