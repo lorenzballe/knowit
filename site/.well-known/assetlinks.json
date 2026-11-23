@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.astuto.app",
+      "sha256_cert_fingerprints": [
+        "D3:28:24:A8:AF:2A:F4:D1:D6:47:28:2C:E2:34:B4:EE:6C:3F:4B:07:51:31:D2:56:0D:43:34:EE:74:2C:4C:60"
+      ]
+    }
+  }
+]
