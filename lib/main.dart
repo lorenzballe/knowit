@@ -1613,9 +1613,12 @@ class _AstutoShellState extends State<AstutoShell>
 
     // A card's link: the card, on its own, over the tab the reader was on,
     // as a post opens from its link. One this build does not have yet (a
-    // card newer than the app) leaves the app where it was.
+    // card newer than the app), or one taken out of the app, leaves the app
+    // where it was.
     if (open.place == WidgetOpen.link) {
-      final Pill? card = id == null ? null : PillBank.byId(id);
+      final Pill? card = id == null || PillBank.isRetired(id)
+          ? null
+          : PillBank.byId(id);
       if (card == null) return;
       Navigator.of(context).push(
         MaterialPageRoute(

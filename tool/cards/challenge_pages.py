@@ -312,6 +312,11 @@ def write(site: Path, bank: dict) -> int:
     for card in bank.get("cards") or []:
         if not card.get("id") or not card.get("question"):
             continue
+        # A card taken out of the app (wrong, or the same as another) has no
+        # page: its link, guessed or sent before it was taken out, finds the
+        # site's own page for an address that is not there.
+        if card.get("disabled"):
+            continue
         (out / f"{card['id']}.html").write_text(render(card), encoding="utf-8")
         n += 1
     return n

@@ -214,6 +214,11 @@ class PillBank {
     ),
   );
 
+  /// Whether the card [id] was taken out of the bank: kept so that what a
+  /// reader already holds still opens, never dealt, and never opened from a
+  /// link.
+  static bool isRetired(String id) => _bundle.retired.contains(id);
+
   /// Every card still dealt to somebody, about a place or not, in the
   /// bank's order: for what a reader has already met — their saved cards,
   /// their journey, their answers — where a card about their home counts

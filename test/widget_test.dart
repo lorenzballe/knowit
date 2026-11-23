@@ -1675,6 +1675,22 @@ void main() {
       expect(_onTab(tester, 'Explore'), isTrue);
     });
 
+    testWidgets('a card taken out of the app is not opened from its link', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      // One of the cards the bank keeps but no longer deals.
+      const String retired = 'art-abstraction-6';
+      expect(PillBank.isRetired(retired), isTrue);
+      expect(PillBank.byId(retired), isNotNull);
+      await phone.tapRunning({'from': 'link', 'card': retired, 'in': 'link'});
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('a card this build does not have leaves the app where it was', (
       tester,
     ) async {
