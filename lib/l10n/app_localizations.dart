@@ -2712,12 +2712,6 @@ abstract class AppLocalizations {
   /// **'Video'**
   String get videoKicker;
 
-  /// Under the play button of a video card opened to the whole screen, before it is first played: a second tap on the card plays its film. Short; shown in capitals.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap to play'**
-  String get videoTapToPlay;
-
   /// What a tap on a video card does while its film is stopped, as VoiceOver says it.
   ///
   /// In en, this message translates to:

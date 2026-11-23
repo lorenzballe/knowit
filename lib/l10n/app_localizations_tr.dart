@@ -1930,9 +1930,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get videoKicker => 'Video';
 
   @override
-  String get videoTapToPlay => 'İzlemek için dokun';
-
-  @override
   String get videoPlay => 'Oynat';
 
   @override

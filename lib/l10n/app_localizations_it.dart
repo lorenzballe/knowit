@@ -1957,9 +1957,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get videoKicker => 'Video';
 
   @override
-  String get videoTapToPlay => 'Tocca per guardare';
-
-  @override
   String get videoPlay => 'Riproduci';
 
   @override

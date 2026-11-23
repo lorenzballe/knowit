@@ -2026,9 +2026,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get videoKicker => 'Wideo';
 
   @override
-  String get videoTapToPlay => 'Dotknij, by obejrzeć';
-
-  @override
   String get videoPlay => 'Odtwórz';
 
   @override

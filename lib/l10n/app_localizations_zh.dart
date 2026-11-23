@@ -1876,9 +1876,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get videoKicker => '视频';
 
   @override
-  String get videoTapToPlay => '点一下播放';
-
-  @override
   String get videoPlay => '播放';
 
   @override

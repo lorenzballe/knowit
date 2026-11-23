@@ -1,5 +1,5 @@
 /// Video cards: a card that is a short film, drawn in a card's own colours
-/// and type, opened to the whole screen and played with a second tap
+/// and type, opened to the whole screen with a tap and playing at once
 /// (lib/widgets/video_card.dart).
 ///
 /// Each film is made from a page with the card kit's fonts and GSAP, set
@@ -21,6 +21,7 @@ class VideoCard {
     required this.languages,
     required this.length,
     required this.ground,
+    this.posterAt = const Duration(seconds: 4),
   });
 
   /// The card's id, for what is said about it ("video-eratosthenes").
@@ -44,6 +45,11 @@ class VideoCard {
 
   /// The colour of its ground, which the screen takes round the film.
   final int ground;
+
+  /// The moment of the film its first frame in the app is (posterFor): the
+  /// film plays on from there when the card is opened, so its picture comes
+  /// alive rather than starting over.
+  final Duration posterAt;
 
   /// The language it is told in for a reader of [language]: theirs where it
   /// is told in it, English otherwise.

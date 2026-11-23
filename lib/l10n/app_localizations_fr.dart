@@ -1961,9 +1961,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get videoKicker => 'Vidéo';
 
   @override
-  String get videoTapToPlay => 'Touchez pour lancer';
-
-  @override
   String get videoPlay => 'Lire';
 
   @override

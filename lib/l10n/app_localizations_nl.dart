@@ -1960,9 +1960,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get videoKicker => 'Video';
 
   @override
-  String get videoTapToPlay => 'Tik om af te spelen';
-
-  @override
   String get videoPlay => 'Afspelen';
 
   @override

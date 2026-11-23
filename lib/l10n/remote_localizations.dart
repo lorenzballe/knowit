@@ -1792,10 +1792,6 @@ class RemoteLocalizations extends AppLocalizations {
   String get videoKicker => _words.text('videoKicker') ?? _base.videoKicker;
 
   @override
-  String get videoTapToPlay =>
-      _words.text('videoTapToPlay') ?? _base.videoTapToPlay;
-
-  @override
   String get videoPlay => _words.text('videoPlay') ?? _base.videoPlay;
 
   @override

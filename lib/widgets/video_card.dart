@@ -1,10 +1,12 @@
 /// A video card (lib/data/video_cards.dart): a tile of its first frame, and
 /// the card itself, opened to the whole screen with a tap on the tile and
-/// played with a second tap on the card.
+/// playing at once.
 ///
-/// The card is the film's own frame, as large as the screen takes it, with
-/// a card's corners, on black, the way a photograph is opened: the tile's
-/// picture grows into it. A tap plays it, another pauses it, and at its end
+/// Opened, the card is the screen, not a card laid on it: its ground from
+/// edge to edge, the film across the screen standing on its foot, the
+/// tile's picture growing into it as it opens. The film plays as soon as it
+/// is there, from the frame the tile showed, so the picture comes alive
+/// rather than starting over. A tap pauses it, another goes on; at its end
 /// the last frame stays with the way to watch it again. A pull down, or the
 /// cross above it, puts it back where it came from.
 library;
@@ -38,27 +40,140 @@ String filmClock(Duration length) {
 
 Object _heroOf(VideoCard card) => 'video-card-${card.id}';
 
-/// A video card's first frame, cut from the top to the box it is given.
+/// The room kept above the film for the row of controls, under the top of
+/// the screen's own inset.
+const double _headRoom = 52;
+
+/// The corners of the film where it is a card of its own on the ground, on a
+/// phone too short for it to stand across the screen.
+const double _filmCorner = 20;
+
+/// Where the film stands on a screen of [size] with [safe] insets: across
+/// the whole width, standing on the screen's foot, the card's ground above
+/// it holding the row of controls. On a phone too short for that, as large
+/// as fits under the row, a card of its own on the ground.
+Rect filmPlace(Size size, EdgeInsets safe) {
+  final double head = safe.top + _headRoom;
+  final double width = size.width;
+  final double height = width / kFilmAspect;
+  // Lifted off the foot only by more than a home bar takes.
+  final double foot = math.max(0.0, safe.bottom - 34);
+  if (size.height - foot - height >= head) {
+    return Rect.fromLTWH(0, size.height - foot - height, width, height);
+  }
+  final double room = math.max(0.0, size.height - head - safe.bottom - 10);
+  final double h = math.min(height, room);
+  final double w = h * kFilmAspect;
+  return Rect.fromLTWH((width - w) / 2, head, w, h);
+}
+
+/// Whether the film at [place] stands across the whole of a screen [width]
+/// wide.
+bool _across(Rect place, double width) => place.width >= width - 0.5;
+
+/// A video card's first frame on its ground, at [place] in the box it is
+/// given; by default across the box's width from its top, cut at its foot,
+/// as a tile shows it.
 class _Frame extends StatelessWidget {
-  const _Frame({required this.card, required this.language});
+  const _Frame({
+    required this.card,
+    required this.language,
+    this.corner = _corner,
+    this.place,
+    this.filmCorner = 0,
+  });
 
   final VideoCard card;
   final String language;
 
+  /// The frame's own corners.
+  final double corner;
+
+  /// Where the picture stands in a box of the given size.
+  final Rect Function(Size box)? place;
+
+  /// The picture's own corners, within the frame.
+  final double filmCorner;
+
   @override
   Widget build(BuildContext context) => ClipRRect(
-    borderRadius: BorderRadius.circular(_corner),
+    borderRadius: BorderRadius.circular(corner),
     child: ColoredBox(
       color: Color(card.ground),
-      child: Image.asset(
-        card.posterFor(language),
-        fit: BoxFit.cover,
-        alignment: Alignment.topCenter,
-        gaplessPlayback: true,
-        // Where the picture will not come, the card's own ground.
-        errorBuilder: (_, _, _) => const SizedBox.expand(),
+      child: LayoutBuilder(
+        builder: (context, box) {
+          final Size size = box.biggest;
+          final Rect at =
+              place?.call(size) ??
+              Rect.fromLTWH(0, 0, size.width, size.width / kFilmAspect);
+          return Stack(
+            clipBehavior: Clip.hardEdge,
+            children: [
+              Positioned.fromRect(
+                rect: at,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(filmCorner),
+                  child: Image.asset(
+                    card.posterFor(language),
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                    gaplessPlayback: true,
+                    // Where the picture will not come, the card's own
+                    // ground.
+                    errorBuilder: (_, _, _) => const SizedBox.expand(),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     ),
+  );
+}
+
+/// The tile's picture on its way to the screen and back: its box grows from
+/// the tile to the whole screen, its corners going square, and the picture
+/// moves within it from the tile's top to where the film stands.
+Widget _flight(
+  BuildContext flightContext,
+  Animation<double> animation,
+  HeroFlightDirection direction,
+  BuildContext fromContext,
+  BuildContext toContext,
+) {
+  final BuildContext screen = direction == HeroFlightDirection.push
+      ? toContext
+      : fromContext;
+  final Hero hero = screen.widget as Hero;
+  final _Frame end = hero.child as _Frame;
+  final MediaQueryData m = MediaQuery.of(flightContext);
+  final Rect place = filmPlace(m.size, m.padding);
+  final double across = _across(place, m.size.width) ? 0 : _filmCorner;
+  // Where the film stands, as parts of the screen.
+  final double left = place.left / m.size.width;
+  final double top = place.top / m.size.height;
+  final double width = place.width / m.size.width;
+  return AnimatedBuilder(
+    animation: animation,
+    builder: (context, _) {
+      final double t = animation.value;
+      return _Frame(
+        card: end.card,
+        language: end.language,
+        corner: _corner * (1 - t),
+        filmCorner: across * t,
+        place: (box) {
+          final double w = box.width * (1 + (width - 1) * t);
+          return Rect.fromLTWH(
+            box.width * left * t,
+            box.height * top * t,
+            w,
+            w / kFilmAspect,
+          );
+        },
+      );
+    },
   );
 }
 
@@ -96,6 +211,7 @@ class VideoCardTile extends StatelessWidget {
           children: [
             Hero(
               tag: _heroOf(card),
+              flightShuttleBuilder: _flight,
               child: _Frame(card: card, language: language),
             ),
             Positioned(
@@ -195,13 +311,22 @@ class _VideoCardScreenState extends State<VideoCardScreen>
     with TickerProviderStateMixin {
   VideoPlayerController? _player;
 
-  /// Whether the film has been started; until then the card is its first
-  /// frame, waiting for the second tap.
+  /// Whether the card has come all the way up: the film waits for it, so
+  /// it starts on the frame the tile grew into rather than behind it.
+  bool _up = false;
+
+  /// Whether the film has been started.
   bool _started = false;
 
-  /// Whether a tap asked for the film before it could be played: it plays
-  /// as soon as it can.
-  bool _waiting = false;
+  /// Whether the film has moved off the frame it was started on, and is
+  /// shown in its picture's place.
+  bool _shows = false;
+
+  /// Where the film was started from.
+  Duration _from = Duration.zero;
+
+  /// Whether the reader paused it.
+  bool _paused = false;
 
   /// Whether the film could not be had.
   bool _failed = false;
@@ -219,6 +344,13 @@ class _VideoCardScreenState extends State<VideoCardScreen>
     duration: widget.card.length,
   );
 
+  /// The film coming: a stroke running along the line of how far it has
+  /// run, until it plays.
+  late final AnimationController _coming = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1100),
+  );
+
   /// How far the card has been pulled down, and its way back when let go.
   double _pull = 0;
   late final AnimationController _back =
@@ -233,6 +365,8 @@ class _VideoCardScreenState extends State<VideoCardScreen>
       );
   double _pulledFrom = 0;
 
+  Animation<double>? _route;
+
   VideoCard get card => widget.card;
 
   @override
@@ -241,28 +375,77 @@ class _VideoCardScreenState extends State<VideoCardScreen>
     _prepare();
   }
 
-  /// Makes the player and has it fetch the film's start, so the second tap
-  /// plays at once.
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final ModalRoute<Object?>? route = ModalRoute.of(context);
+    _screen = route;
+    final Animation<double>? animation = route?.animation;
+    if (animation != _route) {
+      _route?.removeStatusListener(_arrived);
+      _route = animation;
+      animation?.addStatusListener(_arrived);
+    }
+    if (route == null || animation == null) {
+      _arrive();
+    } else {
+      _arrived(animation.status);
+    }
+  }
+
+  /// The route the card is up in.
+  ModalRoute<Object?>? _screen;
+
+  /// Up once its way up is over. The first frame of a route is laid out
+  /// out of sight, as if it were already up, for the picture to know where
+  /// it flies to: that frame is not the card being up.
+  void _arrived(AnimationStatus status) {
+    if (status != AnimationStatus.completed) return;
+    if (_screen?.offstage ?? false) return;
+    _arrive();
+  }
+
+  void _arrive() {
+    if (_up) return;
+    _up = true;
+    _go();
+  }
+
+  /// Makes the player and has it fetch the film from the frame the tile
+  /// shows, to play the moment the card is up.
   void _prepare() {
     final VideoPlayerController player = VideoCardScreen.makePlayer(
       card.filmFor(widget.language),
     );
     _player = player;
     player.addListener(_heard);
+    if (!_coming.isAnimating) _coming.repeat();
     player.initialize().then(
-      (_) {
+      (_) async {
         if (!mounted || _player != player) return;
+        if (!_started) {
+          _from = card.posterAt;
+          await player.seekTo(_from);
+          if (!mounted || _player != player) return;
+        }
         setState(() {});
-        if (_waiting) _play();
+        _go();
       },
       onError: (Object error) {
         if (!mounted || _player != player) return;
-        setState(() {
-          _failed = true;
-          _waiting = false;
-        });
+        _coming.stop();
+        setState(() => _failed = true);
       },
     );
+  }
+
+  /// Plays the film once the card is up and the film is there, unless the
+  /// reader paused it first.
+  void _go() {
+    final VideoPlayerController? player = _player;
+    if (!_up || _started || _paused || player == null) return;
+    if (!player.value.isInitialized) return;
+    _play();
   }
 
   /// What the player says: how far it is, and whether it has ended.
@@ -271,10 +454,8 @@ class _VideoCardScreenState extends State<VideoCardScreen>
     if (player == null || !mounted) return;
     final VideoPlayerValue v = player.value;
     if (v.hasError && !_failed) {
-      setState(() {
-        _failed = true;
-        _waiting = false;
-      });
+      _coming.stop();
+      setState(() => _failed = true);
       return;
     }
     if (!v.isInitialized) return;
@@ -289,6 +470,12 @@ class _VideoCardScreenState extends State<VideoCardScreen>
         _run.stop();
       }
     }
+    // The film takes the picture's place once it has moved off the frame
+    // it was started on, so the picture never blinks.
+    if (_started && !_shows && (v.position - _from).inMilliseconds.abs() > 40) {
+      _shows = true;
+      _coming.stop();
+    }
     final bool ended =
         _started &&
         !v.isPlaying &&
@@ -301,22 +488,16 @@ class _VideoCardScreenState extends State<VideoCardScreen>
         Analytics.capture('video card finished', {'card': card.id});
       }
     } else {
-      // The first frame of the film, once it moves, takes the card from its
-      // picture.
       setState(() {});
     }
   }
 
   Future<void> _play() async {
     final VideoPlayerController? player = _player;
-    if (player == null) return;
-    if (!player.value.isInitialized) {
-      setState(() => _waiting = true);
-      return;
-    }
+    if (player == null || !player.value.isInitialized) return;
     setState(() {
-      _waiting = false;
       _started = true;
+      _paused = false;
       _ended = false;
     });
     if (!_said) {
@@ -328,6 +509,7 @@ class _VideoCardScreenState extends State<VideoCardScreen>
     }
     final int total = player.value.duration.inMilliseconds;
     if (total > 0 && player.value.position.inMilliseconds >= total - 250) {
+      _from = Duration.zero;
       await player.seekTo(Duration.zero);
       _run.value = 0;
     }
@@ -343,14 +525,21 @@ class _VideoCardScreenState extends State<VideoCardScreen>
       player?.dispose();
       setState(() {
         _failed = false;
-        _waiting = true;
+        _started = false;
+        _shows = false;
       });
       _prepare();
       return;
     }
     if (player != null && player.value.isPlaying) {
       player.pause();
-      setState(() {});
+      setState(() => _paused = true);
+      return;
+    }
+    if (_ended) return;
+    if (player == null || !player.value.isInitialized) {
+      // Paused before it came: it waits for another tap.
+      setState(() => _paused = !_paused);
       return;
     }
     _play();
@@ -378,9 +567,11 @@ class _VideoCardScreenState extends State<VideoCardScreen>
 
   @override
   void dispose() {
+    _route?.removeStatusListener(_arrived);
     _player?.removeListener(_heard);
     _player?.dispose();
     _run.dispose();
+    _coming.dispose();
     _back.dispose();
     super.dispose();
   }
@@ -388,258 +579,260 @@ class _VideoCardScreenState extends State<VideoCardScreen>
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final EdgeInsets safe = MediaQuery.paddingOf(context);
+    final MediaQueryData m = MediaQuery.of(context);
+    final EdgeInsets safe = m.padding;
     final Animation<double> route =
         ModalRoute.of(context)?.animation ?? kAlwaysCompleteAnimation;
     final VideoPlayerController? player = _player;
-    final VideoPlayerValue? v = player?.value;
-    final bool playing = v?.isPlaying ?? false;
-    // The film shows once it has moved past its first frame; until then, the
-    // picture the tile grew from.
-    final bool filmShows =
-        _started &&
-        (v?.isInitialized ?? false) &&
-        (v!.position > const Duration(milliseconds: 60) || !playing);
+    final bool playing = player?.value.isPlaying ?? false;
+    final Color ground = Color(card.ground);
+    // The card's own ink, for what is laid on its ground.
+    final bool light =
+        ThemeData.estimateBrightnessForColor(ground) == Brightness.light;
+    final Color ink = light ? _filmInk : Colors.white;
+    final Rect place = filmPlace(m.size, safe);
+    final bool across = _across(place, m.size.width);
+    final double pulled = _pull.clamp(0.0, 600.0);
+    final double fade = 1 - math.min(pulled / 420, 0.7);
+    // Pulled, the screen becomes a card again: smaller, and round.
+    final double scale = 1 - math.min(pulled / 1600, 0.16);
+    final double round = math.min(pulled / 160, 1) * _corner;
+    final Animation<double> late = CurvedAnimation(
+      parent: route,
+      curve: const Interval(0.6, 1, curve: Curves.easeOut),
+    );
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
+      value: light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
       // The words laid over the film take the app's type, not a page's.
       child: Material(
         type: MaterialType.transparency,
-        child: LayoutBuilder(
-          builder: (context, box) {
-            // The largest card of the film's proportion between the row of
-            // controls and the foot of the screen.
-            final double top = safe.top + 52;
-            final double room = math.max(
-              0,
-              box.maxHeight - top - safe.bottom - 10,
-            );
-            double width = box.maxWidth;
-            double height = width / kFilmAspect;
-            if (height > room) {
-              height = room;
-              width = height * kFilmAspect;
-            }
-            final Rect place = Rect.fromLTWH(
-              (box.maxWidth - width) / 2,
-              top + (room - height) / 2,
-              width,
-              height,
-            );
-            final double pulled = _pull.clamp(0.0, 600.0);
-            final double fade = 1 - math.min(pulled / 420, 0.7);
-            final Animation<double> late = CurvedAnimation(
-              parent: route,
-              curve: const Interval(0.6, 1, curve: Curves.easeOut),
-            );
-            return Stack(
-              children: [
-                // Black, as a photograph is opened on; it lets the page show
-                // through as the card is pulled away.
-                Positioned.fill(
-                  child: GestureDetector(
-                    onTap: _close,
-                    child: FadeTransition(
-                      opacity: route,
-                      child: ColoredBox(
-                        color: Colors.black.withValues(alpha: fade),
-                      ),
-                    ),
-                  ),
+        child: Stack(
+          children: [
+            // What the card was opened over, darkened, seen only as the
+            // card is pulled away.
+            Positioned.fill(
+              child: FadeTransition(
+                opacity: route,
+                child: ColoredBox(
+                  color: Colors.black.withValues(alpha: 0.6 * fade),
                 ),
-                Positioned.fromRect(
-                  rect: place,
-                  child: Semantics(
-                    button: true,
-                    label: [
-                      card.titleFor(widget.language),
-                      _failed
-                          ? l.videoOffline
-                          : _ended
-                          ? l.videoWatchAgain
-                          : playing
-                          ? l.videoPause
-                          : l.videoPlay,
-                    ].join('. '),
-                    excludeSemantics: true,
-                    onTap: _tap,
-                    child: GestureDetector(
-                      key: const ValueKey('video-card'),
-                      behavior: HitTestBehavior.opaque,
-                      onTap: _tap,
-                      onVerticalDragUpdate: _pulled,
-                      onVerticalDragEnd: _letGo,
-                      child: Transform.translate(
-                        offset: Offset(0, _pull),
-                        child: Transform.scale(
-                          scale: 1 - math.min(pulled / 1600, 0.16),
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              Hero(
-                                tag: _heroOf(card),
-                                child: _Frame(
-                                  card: card,
-                                  language: widget.language,
-                                ),
+              ),
+            ),
+            Positioned.fill(
+              child: Semantics(
+                button: true,
+                label: [
+                  card.titleFor(widget.language),
+                  _failed
+                      ? l.videoOffline
+                      : _ended
+                      ? l.videoWatchAgain
+                      : playing || (!_paused && !_started)
+                      ? l.videoPause
+                      : l.videoPlay,
+                ].join('. '),
+                excludeSemantics: true,
+                onTap: _tap,
+                child: GestureDetector(
+                  key: const ValueKey('video-card'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: _tap,
+                  onVerticalDragUpdate: _pulled,
+                  onVerticalDragEnd: _letGo,
+                  child: Transform.translate(
+                    offset: Offset(0, _pull),
+                    child: Transform.scale(
+                      scale: scale,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(round),
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Hero(
+                              tag: _heroOf(card),
+                              flightShuttleBuilder: _flight,
+                              child: _Frame(
+                                card: card,
+                                language: widget.language,
+                                corner: 0,
+                                filmCorner: across ? 0 : _filmCorner,
+                                place: (_) => place,
                               ),
-                              // The film over its picture, faded out with
-                              // the rest as the card goes back to its tile.
-                              if (_started && player != null)
-                                FadeTransition(
+                            ),
+                            // The film over its picture, faded out with the
+                            // rest as the card goes back to its tile.
+                            if (_shows && player != null)
+                              Positioned.fromRect(
+                                rect: place,
+                                child: FadeTransition(
                                   opacity: late,
-                                  child: AnimatedOpacity(
-                                    opacity: filmShows ? 1 : 0,
-                                    duration: const Duration(milliseconds: 220),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                        _corner,
-                                      ),
-                                      child: VideoPlayer(player),
+                                  child: ClipRRect(
+                                    key: const ValueKey('video-film'),
+                                    borderRadius: BorderRadius.circular(
+                                      across ? 0 : _filmCorner,
                                     ),
+                                    child: VideoPlayer(player),
                                   ),
                                 ),
-                              FadeTransition(
+                              ),
+                            Positioned.fromRect(
+                              rect: place,
+                              child: FadeTransition(
                                 opacity: late,
                                 child: _Over(
-                                  card: card,
-                                  started: _started,
-                                  playing: playing,
-                                  waiting: _waiting,
+                                  paused: _paused && !_ended,
                                   failed: _failed,
                                   ended: _ended,
                                   onAgain: _play,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            // The row above the film: how far it has run,
+                            // and the way out.
+                            Positioned(
+                              top: safe.top + 4,
+                              left: 20,
+                              right: 12,
+                              height: 44,
+                              child: FadeTransition(
+                                opacity: late,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: AnimatedBuilder(
+                                        animation: Listenable.merge([
+                                          _run,
+                                          _coming,
+                                        ]),
+                                        builder: (context, _) => _RunBar(
+                                          value: _run.value,
+                                          coming: _shows || _failed
+                                              ? null
+                                              : _coming.value,
+                                          ink: ink,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 14),
+                                    GlassRound(
+                                      symbol: GlassRound.close,
+                                      label: l.closeLabel,
+                                      onPressed: _close,
+                                      fallback: Semantics(
+                                        button: true,
+                                        label: l.closeLabel,
+                                        child: GestureDetector(
+                                          key: const ValueKey('video-close'),
+                                          behavior: HitTestBehavior.opaque,
+                                          onTap: _close,
+                                          child: SizedBox.square(
+                                            dimension: 44,
+                                            child: Center(
+                                              child: Container(
+                                                width: 36,
+                                                height: 36,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: ink.withValues(
+                                                    alpha: 0.12,
+                                                  ),
+                                                ),
+                                                alignment: Alignment.center,
+                                                child: Icon(
+                                                  Icons.close_rounded,
+                                                  size: 19,
+                                                  color: ink,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
-                // The row above the card: how far the film has run, and the
-                // way out.
-                Positioned(
-                  top: safe.top + 4,
-                  left: 20,
-                  right: 12,
-                  height: 44,
-                  child: FadeTransition(
-                    opacity: late,
-                    child: Opacity(
-                      opacity: fade,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: AnimatedBuilder(
-                              animation: _run,
-                              builder: (context, _) =>
-                                  _RunBar(value: _run.value),
-                            ),
-                          ),
-                          const SizedBox(width: 14),
-                          GlassRound(
-                            symbol: GlassRound.close,
-                            label: l.closeLabel,
-                            onPressed: _close,
-                            fallback: Semantics(
-                              button: true,
-                              label: l.closeLabel,
-                              child: GestureDetector(
-                                key: const ValueKey('video-close'),
-                                behavior: HitTestBehavior.opaque,
-                                onTap: _close,
-                                child: SizedBox.square(
-                                  dimension: 44,
-                                  child: Center(
-                                    child: Container(
-                                      width: 36,
-                                      height: 36,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white.withValues(
-                                          alpha: 0.14,
-                                        ),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: const Icon(
-                                        Icons.close_rounded,
-                                        size: 19,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-/// How far the film has run: a thin line, white on a fainter white.
+/// How far the film has run: a thin line in the card's ink, on a fainter
+/// one; while the film is coming ([coming], 0 to 1 and round again), a
+/// short stroke runs along it.
 class _RunBar extends StatelessWidget {
-  const _RunBar({required this.value});
+  const _RunBar({required this.value, required this.ink, this.coming});
 
   final double value;
+  final Color ink;
+  final double? coming;
 
   @override
   Widget build(BuildContext context) => ClipRRect(
     borderRadius: BorderRadius.circular(2),
     child: SizedBox(
       height: 3,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          ColoredBox(color: Colors.white.withValues(alpha: 0.22)),
-          FractionallySizedBox(
-            alignment: Alignment.centerLeft,
-            widthFactor: value.clamp(0.0, 1.0),
-            child: const ColoredBox(color: Colors.white),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, box) {
+          final double w = box.maxWidth;
+          final double? t = coming;
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              ColoredBox(color: ink.withValues(alpha: 0.18)),
+              FractionallySizedBox(
+                alignment: Alignment.centerLeft,
+                widthFactor: value.clamp(0.0, 1.0),
+                child: ColoredBox(color: ink.withValues(alpha: 0.85)),
+              ),
+              if (t != null)
+                Positioned(
+                  key: const ValueKey('video-coming'),
+                  left: -w * 0.25 + w * 1.25 * Curves.easeInOut.transform(t),
+                  top: 0,
+                  bottom: 0,
+                  width: w * 0.25,
+                  child: ColoredBox(color: ink.withValues(alpha: 0.55)),
+                ),
+            ],
+          );
+        },
       ),
     ),
   );
 }
 
-/// What is laid over the film. Before it is first played, the way to play
-/// it and the word for it, low on the card, on the ground the films keep
-/// clear there; paused, a smaller way to go on in the card's corner, so the
-/// frame it stopped on is read whole; at its end, the way to watch it again,
-/// in the room the last frame leaves between its picture and its source;
-/// where it could not be had, the word that it needs a connection.
+/// What is laid over the film: paused, the way on in its middle; at its
+/// end, the way to watch it again, in the room the last frame leaves between
+/// its picture and its source; where it could not be had, the word that it
+/// needs a connection.
 class _Over extends StatelessWidget {
   const _Over({
-    required this.card,
-    required this.started,
-    required this.playing,
-    required this.waiting,
+    required this.paused,
     required this.failed,
     required this.ended,
     required this.onAgain,
   });
 
-  final VideoCard card;
-  final bool started, playing, waiting, failed, ended;
+  final bool paused, failed, ended;
   final VoidCallback onAgain;
 
-  /// Where on the card, from its top, the things laid over it stand (their
-  /// middles): the way to play it on the ground of its first frame, and the
-  /// way to watch it again between the last frame's picture (to 81%) and
-  /// its source (from 90%).
-  static const double playAt = 0.84, againAt = 0.853;
+  /// Where on the film, from its top, the things laid over it stand (their
+  /// middles): the word that it needs a connection on the ground of its
+  /// first frame, and the way to watch it again between the last frame's
+  /// picture (to 81%) and its source (from 90%).
+  static const double offlineAt = 0.84, againAt = 0.853;
 
   @override
   Widget build(BuildContext context) {
@@ -647,7 +840,7 @@ class _Over extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) {
         final double k = (box.maxWidth / 402).clamp(0.75, 1.1);
-        // [child]'s middle at [y] of the card's height.
+        // [child]'s middle at [y] of the film's height.
         Widget at(double y, Widget child) => Positioned(
           left: 0,
           right: 0,
@@ -657,34 +850,11 @@ class _Over extends StatelessWidget {
             child: Center(child: child),
           ),
         );
-        Widget round(double size, {required bool spin}) => Container(
-          key: const ValueKey('video-play'),
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: _filmInk.withValues(alpha: 0.9),
-          ),
-          alignment: Alignment.center,
-          child: spin
-              ? SizedBox.square(
-                  dimension: size * 0.38,
-                  child: const CircularProgressIndicator(
-                    strokeWidth: 2.4,
-                    color: Colors.white,
-                  ),
-                )
-              : Icon(
-                  Icons.play_arrow_rounded,
-                  size: size * 0.56,
-                  color: Colors.white,
-                ),
-        );
         if (failed) {
           return Stack(
             children: [
               at(
-                playAt,
+                offlineAt,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 28 * k),
                   child: Container(
@@ -741,40 +911,34 @@ class _Over extends StatelessWidget {
             ],
           );
         }
-        if (playing) return const SizedBox.shrink();
-        if (started) {
-          // Paused: the way on, small, in the corner.
-          return Stack(
-            children: [
-              Positioned(
-                right: 16 * k,
-                bottom: 16 * k,
-                child: round(46 * k, spin: waiting),
-              ),
-            ],
-          );
-        }
-        final double button = 64 * k;
-        return Stack(
-          children: [
-            at(playAt, round(button, spin: waiting)),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: box.maxHeight * playAt + button / 2 + 12,
-              child: Center(
-                child: Text(
-                  l.videoTapToPlay.toUpperCase(),
-                  style: AppText.label(
-                    size: 11,
-                    weight: FontWeight.w700,
-                    spacing: 1.4,
-                    color: _filmInk.withValues(alpha: 0.72),
+        // Paused: the way on, in the middle, over the frame it stopped on.
+        return IgnorePointer(
+          child: Center(
+            child: AnimatedOpacity(
+              opacity: paused ? 1 : 0,
+              duration: const Duration(milliseconds: 160),
+              child: AnimatedScale(
+                scale: paused ? 1 : 0.8,
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutBack,
+                child: Container(
+                  key: paused ? const ValueKey('video-play') : null,
+                  width: 72 * k,
+                  height: 72 * k,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _filmInk.withValues(alpha: 0.78),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.play_arrow_rounded,
+                    size: 40 * k,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-          ],
+          ),
         );
       },
     );

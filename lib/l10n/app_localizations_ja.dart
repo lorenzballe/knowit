@@ -1883,9 +1883,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get videoKicker => '動画';
 
   @override
-  String get videoTapToPlay => 'タップで再生';
-
-  @override
   String get videoPlay => '再生';
 
   @override

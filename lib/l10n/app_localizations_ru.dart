@@ -2033,9 +2033,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get videoKicker => 'Видео';
 
   @override
-  String get videoTapToPlay => 'Коснитесь, чтобы смотреть';
-
-  @override
   String get videoPlay => 'Воспроизвести';
 
   @override
