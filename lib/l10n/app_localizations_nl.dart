@@ -1869,11 +1869,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get skillsFocus => 'IN FOCUS';
 
   @override
-  String skillLevel(int n) {
-    return 'Niveau $n';
-  }
-
-  @override
   String get skillMarkKicker => 'DEZE KAART TRAINT';
 
   @override
@@ -1893,21 +1888,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get trainingLine =>
-      'De vaardigheden die je koos. Elke kaart die er een traint, brengt je verder.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Nog $n kaarten tot niveau $level',
-      one: 'Nog 1 kaart tot niveau $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'Hoogste niveau';
+      'Elk antwoord beweegt je score, een moeilijke kaart goed het meest. Er is geen plafond.';
 
   @override
   String get trainingOthers => 'De andere';
@@ -1944,8 +1925,30 @@ class AppLocalizationsNl extends AppLocalizations {
   String get trainingDayLine => 'Vandaag heb je getraind';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Niveau $n bereikt';
+  String get scoreTitle => 'Astute-score';
+
+  @override
+  String scoreWeek(String n) {
+    return '$n deze week';
+  }
+
+  @override
+  String get scoreStart => 'Je eerste antwoord zet hem in gang.';
+
+  @override
+  String scoreToday(String n) {
+    return '$n vandaag';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'uit $n antwoorden',
+      one: 'uit 1 antwoord',
+    );
+    return '$_temp0';
   }
 
   @override

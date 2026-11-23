@@ -1792,11 +1792,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skillsFocus => '专注中';
 
   @override
-  String skillLevel(int n) {
-    return '等级 $n';
-  }
-
-  @override
   String get skillMarkKicker => '这张卡片训练';
 
   @override
@@ -1814,21 +1809,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get trainingTitle => '你的训练';
 
   @override
-  String get trainingLine => '这是你选择的能力。每读一张训练其中之一的卡片，你都会升级。';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '再读 $n 张升到等级 $level',
-      one: '再读 1 张升到等级 $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => '最高等级';
+  String get trainingLine => '每次回答都会改变你的分数，答对难题加得最多。分数没有上限。';
 
   @override
   String get trainingOthers => '其他';
@@ -1860,8 +1841,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get trainingDayLine => '今天你训练了';
 
   @override
-  String trainingNewLevel(int n) {
-    return '达到等级 $n';
+  String get scoreTitle => 'Astute 分数';
+
+  @override
+  String scoreWeek(String n) {
+    return '本周 $n';
+  }
+
+  @override
+  String get scoreStart => '从你的第一次回答开始。';
+
+  @override
+  String scoreToday(String n) {
+    return '今天 $n';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '基于 $n 次回答',
+      one: '基于 1 次回答',
+    );
+    return '$_temp0';
   }
 
   @override

@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
-import '../data/skill_levels.dart';
+import '../data/skill_scores.dart';
 import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
-import '../widgets/skill_mark.dart' show SkillBar;
+import '../widgets/skill_score.dart';
 import '../widgets/ui.dart' show BackCircle, ScreenView;
 
 /// What the reader wants to learn, picked from the profile, and how far they
 /// have come in each: twelve skills in two columns, each a card of the
-/// page's ground with a badge of two hues, its level from the cards read that
-/// train it (lib/data/skill_levels.dart) and a bar filling towards the next;
+/// page's ground with a badge of two hues and its score, a number with no top
+/// that every answer on a card training it moves (lib/data/skill_scores.dart),
+/// with how far it moved this week;
 /// the picked ones ringed in their hues and marked in focus, never tiles of
 /// one colour, which are the subjects' look. Picked, a skill's area leans the
 /// cards picked for the reader, and a card that trains it carries its mark
@@ -39,15 +40,15 @@ class _SkillsScreenState extends State<SkillsScreen> {
   /// be what was changed to.
   late final List<String> _before;
 
-  /// The cards read that train each skill: nothing is read on this screen,
-  /// so counted once, as it opens.
-  late final Map<Skill, int> _cards;
+  /// The reader's scores: nothing is answered on this screen, so worked out
+  /// once, as it opens.
+  late final ScoreBook _book;
 
   @override
   void initState() {
     super.initState();
     _before = List.of(widget.app.skills);
-    _cards = cardsTrainingEach(widget.app.seenIds);
+    _book = scoreBookOf(widget.app);
   }
 
   @override
@@ -191,7 +192,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                   ? _Tile(
                       skill: all[k],
                       on: picked.contains(all[k].name),
-                      level: SkillLevel.of(_cards[all[k]] ?? 0),
+                      score: _book.of(all[k]),
                       onTap: () => _toggle(all[k]),
                     )
                   : const SizedBox.shrink(),
@@ -267,30 +268,30 @@ class _Headline extends StatelessWidget {
 }
 
 /// A skill: a badge of its two hues carrying its mark, its name, and its
-/// level under them with a bar filling towards the next, on a card of the
-/// page's own ground, never a tile of one colour as a subject's is. Picked, a
-/// ring of the same two hues runs round the card with their glow under it,
-/// and a pill of them on its top edge says the skill is in focus. Tall
-/// enough, the level says how many cards made it, on a line of its own; in a
-/// short row the bar and the level share the line under the name.
+/// score under them with how far it moved this week, on a card of the page's
+/// own ground, never a tile of one colour as a subject's is. Picked, a ring of
+/// the same two hues runs round the card with their glow under it, and a pill
+/// of them on its top edge says the skill is in focus. Tall enough, the score
+/// has a line of its own under the badge; in a short row it sits under the
+/// name.
 class _Tile extends StatefulWidget {
   const _Tile({
     required this.skill,
     required this.on,
-    required this.level,
+    required this.score,
     required this.onTap,
   });
 
   final Skill skill;
   final bool on;
-  final SkillLevel level;
+  final SkillScore score;
   final VoidCallback onTap;
 
   /// The room above and below what a short tile shows.
   static const double padY = 7;
 
   /// The least a short tile needs at the reader's text size: its name on two
-  /// lines, then the bar and the level under it.
+  /// lines, then the score under it.
   static double least(TextScaler scaler) =>
       2 * padY +
       math.max(2 * scaler.scale(13.5) * 1.12, 28) +
@@ -299,7 +300,7 @@ class _Tile extends StatefulWidget {
       2;
 
   /// The height from which a tile stands tall: the badge and the name on two
-  /// lines, the bar, and the level on a line of its own.
+  /// lines, and the score on a line of its own.
   static double tallFrom(TextScaler scaler) =>
       2 * 9 +
       math.max(2 * scaler.scale(14.5) * 1.12, 32) +
@@ -329,8 +330,10 @@ class _TileState extends State<_Tile> {
     final Skill skill = widget.skill;
     final bool on = widget.on;
     final String name = l.skillName(skill.name);
-    final String level = l.skillLevel(widget.level.level);
-    final String cards = l.nCards(widget.level.cards);
+    final String level = scoreNumber(context, widget.score.now);
+    final String cards = widget.score.answers == 0
+        ? l.scoreStart
+        : l.scoreWeek(signedNumber(context, widget.score.week));
     final TextScaler scaler = MediaQuery.textScalerOf(context);
     // The card itself: the page's raised ground, a hairline round it; picked,
     // a ring of the skill's two hues instead, and their glow under it.
@@ -385,8 +388,8 @@ class _TileState extends State<_Tile> {
                     child: LayoutBuilder(
                       builder: (context, box) =>
                           box.maxHeight >= _Tile.tallFrom(scaler)
-                          ? _tall(name, '$level · $cards')
-                          : _short(name, level),
+                          ? _tall(name)
+                          : _short(name),
                     ),
                   ),
                 ),
@@ -451,22 +454,42 @@ class _TileState extends State<_Tile> {
     ),
   );
 
-  /// The level, set small, made smaller rather than cut where a language
-  /// runs long.
-  Widget _level(String text, double size) => FittedBox(
-    fit: BoxFit.scaleDown,
-    alignment: Alignment.centerLeft,
-    child: Text(
-      text,
-      maxLines: 1,
-      softWrap: false,
-      style: AppText.body(
-        size: size,
-        weight: FontWeight.w600,
-        color: context.p.ink.withValues(alpha: 0.58),
+  /// The score and how far it moved this week, set small, made smaller
+  /// rather than cut where a language runs long.
+  Widget _score(double size) {
+    final p = context.p;
+    final l = context.l10n;
+    final SkillScore score = widget.score;
+    return FittedBox(
+      key: ValueKey('skill-score-${widget.skill.name}'),
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.centerLeft,
+      child: Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: scoreNumber(context, score.now),
+              style: TextStyle(color: p.ink, fontWeight: FontWeight.w800),
+            ),
+            const TextSpan(text: '  '),
+            TextSpan(
+              text: score.answers == 0
+                  ? l.scoreStart
+                  : l.scoreWeek(signedNumber(context, score.week)),
+              style: TextStyle(
+                color: score.answers == 0
+                    ? p.ink.withValues(alpha: 0.5)
+                    : moveColour(context, score.week),
+              ),
+            ),
+          ],
+        ),
+        maxLines: 1,
+        softWrap: false,
+        style: AppText.body(size: size, weight: FontWeight.w600),
       ),
-    ),
-  );
+    );
+  }
 
   /// The name, on up to two lines in the room it has, never broken inside a
   /// word: where its longest word is wider than that, or the lines taller,
@@ -511,9 +534,9 @@ class _TileState extends State<_Tile> {
     );
   }
 
-  /// Tall: the badge and the name, the bar under them, and the level with
-  /// the cards that made it on a line of its own.
-  Widget _tall(String name, String level) {
+  /// Tall: the badge and the name, and under them the score with its week
+  /// on a line of its own.
+  Widget _tall(String name) {
     final TextScaler scaler = MediaQuery.textScalerOf(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 9, 12, 9),
@@ -531,18 +554,16 @@ class _TileState extends State<_Tile> {
               ],
             ),
           ),
-          const SizedBox(height: 7),
-          SkillBar(skill: widget.skill, level: widget.level, height: 5),
-          const SizedBox(height: 5),
-          _level(level, 11.5),
+          const SizedBox(height: 17),
+          _score(11.5),
         ],
       ),
     );
   }
 
-  /// Short: the badge beside the name, the bar and the level sharing the
-  /// line under the name.
-  Widget _short(String name, String level) {
+  /// Short: the badge beside the name, the score with its week on the line
+  /// under the name.
+  Widget _short(String name) {
     final TextScaler scaler = MediaQuery.textScalerOf(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, _Tile.padY, 10, _Tile.padY),
@@ -562,28 +583,7 @@ class _TileState extends State<_Tile> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                // The level keeps its own width, up to a little over half the
-                // line: set smaller past that, the bar taking the rest.
-                LayoutBuilder(
-                  builder: (context, row) => Row(
-                    children: [
-                      Expanded(
-                        child: SkillBar(
-                          skill: widget.skill,
-                          level: widget.level,
-                          height: 4,
-                        ),
-                      ),
-                      const SizedBox(width: 7),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: row.maxWidth * 0.55,
-                        ),
-                        child: _level(level, 10.5),
-                      ),
-                    ],
-                  ),
-                ),
+                _score(10.5),
               ],
             ),
           ),

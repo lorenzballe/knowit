@@ -5,9 +5,11 @@
 //   flutter test test/skill_levels_test.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/skill_levels.dart';
+import 'package:astuto/data/skill_scores.dart';
 import 'package:astuto/data/skills.dart';
 import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/models/pill.dart';
@@ -16,6 +18,7 @@ import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/skill_mark.dart';
+import 'package:astuto/widgets/skill_score.dart';
 
 import 'explore/core_harness.dart';
 
@@ -30,11 +33,7 @@ void main() {
       expect(Skill.values.any((s) => s.trains(p)), isTrue, reason: p.id);
     }
     for (final Skill s in Skill.values) {
-      expect(
-        each[s],
-        greaterThanOrEqualTo(SkillLevel.from.last),
-        reason: s.name,
-      );
+      expect(each[s], greaterThanOrEqualTo(150), reason: s.name);
     }
   });
 
@@ -64,27 +63,6 @@ void main() {
     expect(skillMarkOf(decision, ['money', 'talk']), isNull);
     // A key this build does not know marks nothing.
     expect(skillMarkOf(decision, ['juggling']), isNull);
-  });
-
-  test('a level from the cards read: 1 from the first, 2 from 10, 3 from 30, '
-      '4 from 70, 5 from 150; the bar fills towards the next', () {
-    SkillLevel at(int n) => SkillLevel.of(n);
-    expect(at(0).level, 1);
-    expect(at(0).toNext, 0);
-    expect(at(5).toNext, closeTo(0.5, 1e-9));
-    expect(at(9).level, 1);
-    expect(at(10).level, 2);
-    expect(at(10).toNext, 0);
-    expect(at(29).level, 2);
-    expect(at(30).level, 3);
-    expect(at(69).level, 3);
-    expect(at(70).level, 4);
-    expect(at(149).level, 4);
-    expect(at(150).level, 5);
-    expect(at(150).toNext, 1);
-    expect(at(4000).level, 5);
-    expect(at(-3).level, 1);
-    expect(at(18).cards, 18);
   });
 
   test("the cards read count for every skill they train, and a card the "
@@ -213,15 +191,24 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets("the mark's sheet: the skill, why, the reader's level in it, "
-      'and the way to What to learn', (tester) async {
-    final List<Pill> read = bank.where(Skill.money.trains).take(12).toList();
+  testWidgets("the mark's sheet: the skill, why, the reader's score in it "
+      'with its week and its answers, and the way to What to learn', (
+    tester,
+  ) async {
+    final List<Pill> read = bank
+        .where((p) => Skill.money.fitOf(p) == 0 && p.isGraded)
+        .take(4)
+        .toList();
     final AppState app = await tester.runAsync(
       () => readyApp({
         'knowit.skills': <String>['money'],
         'knowit.seenIds': [for (final Pill p in read) p.id],
+        'knowit.judgements': judgementsOf(read),
       }),
     ) as AppState;
+    final SkillScore score = scoreBookOf(app).of(Skill.money);
+    expect(score.now, greaterThan(kScoreStart));
+    expect(score.answers, 4);
     final l = lookupAppLocalizations(const Locale('en'));
     await tester.pumpWidget(
       host(
@@ -241,7 +228,23 @@ void main() {
     expect(find.text(l.skillMarkKicker), findsOneWidget);
     expect(find.text(l.skillName('money')), findsOneWidget);
     expect(find.text(l.skillMarkBody), findsOneWidget);
-    expect(find.text('${l.skillLevel(2)} · ${l.nCards(12)}'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('skill-mark-level')),
+        matching: find.text(
+          NumberFormat.decimalPattern('en').format(score.now),
+        ),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining(l.scoreWeek('+${score.week}'), findRichText: true),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining(l.scoreAnswers(4), findRichText: true),
+      findsOneWidget,
+    );
     await tester.tap(find.byKey(const ValueKey('skill-mark-open')));
     await tester.pumpAndSettle();
     expect(find.byType(SkillsScreen), findsOneWidget);

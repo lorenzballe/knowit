@@ -1802,11 +1802,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skillsFocus => '집중';
 
   @override
-  String skillLevel(int n) {
-    return '레벨 $n';
-  }
-
-  @override
   String get skillMarkKicker => '이 카드가 훈련하는 것';
 
   @override
@@ -1824,21 +1819,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get trainingTitle => '내 훈련';
 
   @override
-  String get trainingLine => '내가 고른 능력이에요. 그중 하나를 훈련하는 카드를 읽을 때마다 레벨이 올라가요.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '레벨 $level까지 $n장 남았어요',
-      one: '레벨 $level까지 1장 남았어요',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => '최고 레벨';
+  String get trainingLine => '답할 때마다 점수가 움직여요. 어려운 카드를 맞히면 가장 크게 올라요. 상한은 없어요.';
 
   @override
   String get trainingOthers => '나머지';
@@ -1871,8 +1852,30 @@ class AppLocalizationsKo extends AppLocalizations {
   String get trainingDayLine => '오늘 훈련한 것';
 
   @override
-  String trainingNewLevel(int n) {
-    return '레벨 $n 달성';
+  String get scoreTitle => 'Astute 점수';
+
+  @override
+  String scoreWeek(String n) {
+    return '이번 주 $n';
+  }
+
+  @override
+  String get scoreStart => '첫 답변부터 시작돼요.';
+
+  @override
+  String scoreToday(String n) {
+    return '오늘 $n';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '답변 $n개 기준',
+      one: '답변 1개 기준',
+    );
+    return '$_temp0';
   }
 
   @override

@@ -1941,15 +1941,6 @@
  "@skillsFocus": {
   "description": "Small capitals pill on a skill the reader picked (What to learn): the cards picked for them lean towards it, and cards that train it carry its mark. Short."
  },
- "skillLevel": "Level {n}",
- "@skillLevel": {
-  "description": "The reader's level in a skill, 1 to 5, from the cards they read that train it. Followed by \" · \" and the number of cards (nCards).",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "skillMarkKicker": "THIS CARD TRAINS",
  "@skillMarkKicker": {
   "description": "Small capitals over a skill's name, on the sheet a card's skill mark opens: the card trains this skill."
@@ -1975,25 +1966,9 @@
  "@trainingTitle": {
   "description": "Title of the reader's training: the skills they picked to get better at, with their level in each. The first chapter of Your journey, and a box on the profile."
  },
- "trainingLine": "The skills you chose. Every card that trains one moves you up.",
+ "trainingLine": "Every answer moves your score, a hard card right the most. There is no top.",
  "@trainingLine": {
-  "description": "Under the title of Your training on Your journey."
- },
- "trainingToNext": "{n, plural, =1{1 more card to level {level}} other{{n} more cards to level {level}}}",
- "@trainingToNext": {
-  "description": "Under a skill's bar in Your training: how many more cards that train it the reader needs to read to reach the next level.",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   },
-   "level": {
-    "type": "int"
-   }
-  }
- },
- "trainingTopLevel": "Top level",
- "@trainingTopLevel": {
-  "description": "Under a skill's bar in Your training once the reader has reached its highest level."
+  "description": "Under the title of Your training in Your journey: what the scores are. Each skill picked follows with its score."
  },
  "trainingOthers": "The others",
  "@trainingOthers": {
@@ -2029,9 +2004,35 @@
  "@trainingDayLine": {
   "description": "Under trainingDayTitle: the skills today's cards trained follow, each with how many cards and its bar."
  },
- "trainingNewLevel": "Level {n} reached",
- "@trainingNewLevel": {
-  "description": "On the finished day's sheet, under a skill whose next level today's cards reached.",
+ "scoreTitle": "Astute score",
+ "@scoreTitle": {
+  "description": "The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name."
+ },
+ "scoreWeek": "{n} this week",
+ "@scoreWeek": {
+  "description": "Under a score: how far it moved in the last seven days. n is the signed number, already formatted: \"+24\", \"−8\" or \"0\".",
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
+ "scoreStart": "Your first answer starts it.",
+ "@scoreStart": {
+  "description": "Under a skill's score that no answer has moved yet."
+ },
+ "scoreToday": "{n} today",
+ "@scoreToday": {
+  "description": "On the sheet that rises when the day's cards are done: how far the reader's Astute score moved today. n is the signed number, already formatted: \"+26\", \"−4\" or \"0\".",
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
+ "scoreAnswers": "{n, plural, =1{from 1 answer} other{from {n} answers}}",
+ "@scoreAnswers": {
+  "description": "On the sheet a skill's mark opens, after the reader's score in it: how many answers made it.",
   "placeholders": {
    "n": {
     "type": "int"
@@ -2499,9 +2500,15 @@
  "@nudgeBookBody": {
   "description": "The Monday reminder: the week's free book, its author, and how long its big ideas take.",
   "placeholders": {
-   "title": {"type": "String"},
-   "author": {"type": "String"},
-   "minutes": {"type": "int"}
+   "title": {
+    "type": "String"
+   },
+   "author": {
+    "type": "String"
+   },
+   "minutes": {
+    "type": "int"
+   }
   }
  },
  "nudgeFreezeTitle": "Your freeze is holding",
@@ -5816,7 +5823,7 @@
  },
  "pathDoorNext": "Next in the path",
  "@pathDoorNext": {
-  "description": "Under a card read from Explore that belongs to a path, after the path's name and where the card sits in it (\"Physics \u00b7 4/10\"): the way on to the path's next card. Short."
+  "description": "Under a card read from Explore that belongs to a path, after the path's name and where the card sits in it (\"Physics · 4/10\"): the way on to the path's next card. Short."
  },
  "shareSendCard": "Send the card",
  "@shareSendCard": {
@@ -6391,14 +6398,20 @@
  "@bookDoneLine": {
   "description": "The card at the end of a book read whole: how many ideas, how long.",
   "placeholders": {
-   "ideas": {"type": "int"},
-   "minutes": {"type": "int"}
+   "ideas": {
+    "type": "int"
+   },
+   "minutes": {
+    "type": "int"
+   }
   }
  },
  "bookDoneCount": "Books finished: {count}",
  "@bookDoneCount": {
   "placeholders": {
-   "count": {"type": "int"}
+   "count": {
+    "type": "int"
+   }
   }
  },
  "bookDoneNext": "Next book",

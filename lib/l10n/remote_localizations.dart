@@ -1716,10 +1716,6 @@ class RemoteLocalizations extends AppLocalizations {
   String get skillsFocus => _words.text('skillsFocus') ?? _base.skillsFocus;
 
   @override
-  String skillLevel(int n) =>
-      _words.format('skillLevel', localeName, {'n': n}) ?? _base.skillLevel(n);
-
-  @override
   String get skillMarkKicker =>
       _words.text('skillMarkKicker') ?? _base.skillMarkKicker;
 
@@ -1742,15 +1738,6 @@ class RemoteLocalizations extends AppLocalizations {
 
   @override
   String get trainingLine => _words.text('trainingLine') ?? _base.trainingLine;
-
-  @override
-  String trainingToNext(int n, int level) =>
-      _words.format('trainingToNext', localeName, {'n': n, 'level': level}) ??
-      _base.trainingToNext(n, level);
-
-  @override
-  String get trainingTopLevel =>
-      _words.text('trainingTopLevel') ?? _base.trainingTopLevel;
 
   @override
   String get trainingOthers =>
@@ -1778,9 +1765,23 @@ class RemoteLocalizations extends AppLocalizations {
       _words.text('trainingDayLine') ?? _base.trainingDayLine;
 
   @override
-  String trainingNewLevel(int n) =>
-      _words.format('trainingNewLevel', localeName, {'n': n}) ??
-      _base.trainingNewLevel(n);
+  String get scoreTitle => _words.text('scoreTitle') ?? _base.scoreTitle;
+
+  @override
+  String scoreWeek(String n) =>
+      _words.format('scoreWeek', localeName, {'n': n}) ?? _base.scoreWeek(n);
+
+  @override
+  String get scoreStart => _words.text('scoreStart') ?? _base.scoreStart;
+
+  @override
+  String scoreToday(String n) =>
+      _words.format('scoreToday', localeName, {'n': n}) ?? _base.scoreToday(n);
+
+  @override
+  String scoreAnswers(int n) =>
+      _words.format('scoreAnswers', localeName, {'n': n}) ??
+      _base.scoreAnswers(n);
 
   @override
   String get videoKicker => _words.text('videoKicker') ?? _base.videoKicker;

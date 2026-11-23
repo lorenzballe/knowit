@@ -1,7 +1,7 @@
 /// The small mark a card carries in its head when it trains a skill the
-/// reader put in focus (lib/data/skill_levels.dart), the bar of a skill's
-/// level, and the sheet the mark opens: the skill the card trains, the
-/// reader's level in it, and the way to What to learn.
+/// reader put in focus (lib/data/skill_levels.dart), and the sheet the mark
+/// opens: the skill the card trains, the reader's score in it with its
+/// month (lib/data/skill_scores.dart), and the way to What to learn.
 library;
 
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
-import '../data/skill_levels.dart';
+import '../data/skill_scores.dart';
 import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../screens/skills_screen.dart';
@@ -17,64 +17,7 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import 'chunky.dart';
 import 'liked_mark.dart';
-
-/// A skill's level as a bar of five, one a level: those climbed full, the one
-/// being climbed filled as far as the next level comes nearer, all five full
-/// at the top; in the skill's two hues.
-class SkillBar extends StatelessWidget {
-  const SkillBar({
-    super.key,
-    required this.skill,
-    required this.level,
-    this.height = 5,
-  });
-
-  final Skill skill;
-  final SkillLevel level;
-  final double height;
-
-  /// How full the [i]th of the five is.
-  double fillOf(int i) {
-    if (level.level >= SkillLevel.top || i < level.level - 1) return 1;
-    if (i == level.level - 1) return level.toNext.clamp(0.0, 1.0);
-    return 0;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.p;
-    final Color track = p.ink.withValues(alpha: p.isDark ? 0.14 : 0.1);
-    final LinearGradient hues = LinearGradient(colors: skill.hues);
-    return SizedBox(
-      height: height,
-      child: Row(
-        children: [
-          for (int i = 0; i < SkillLevel.top; i++) ...[
-            if (i > 0) const SizedBox(width: 3),
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(height),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    ColoredBox(color: track),
-                    FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: fillOf(i),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(gradient: hues),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
+import 'skill_score.dart';
 
 /// The mark of the skill in focus a card trains: the skill's own glyph, as
 /// small as the heart a liked card carries and in the same ink, in the
@@ -232,9 +175,7 @@ class SkillMarkSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
-    final SkillLevel level = SkillLevel.of(
-      cardsTrainingEach(app.seenIds)[skill] ?? 0,
-    );
+    final SkillScore score = scoreBookOf(app).of(skill);
     return Container(
       key: const ValueKey('skill-mark-sheet'),
       decoration: BoxDecoration(
@@ -331,17 +272,60 @@ class SkillMarkSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              '${l.skillLevel(level.level)} · ${l.nCards(level.cards)}',
+            Row(
               key: const ValueKey('skill-mark-level'),
-              style: AppText.body(
-                size: 14,
-                weight: FontWeight.w700,
-                color: p.ink,
-              ),
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  scoreNumber(context, score.now),
+                  style: AppText.display(
+                    size: 30,
+                    weight: FontWeight.w600,
+                    height: 1,
+                    color: p.ink,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 3),
+                    child: score.answers == 0
+                        ? ScoreWeek(score: score, size: 13.5)
+                        : Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: l.scoreWeek(
+                                    signedNumber(context, score.week),
+                                  ),
+                                  style: TextStyle(
+                                    color: moveColour(context, score.week),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '  \u00b7  ${l.scoreAnswers(score.answers)}',
+                                ),
+                              ],
+                            ),
+                            style: AppText.body(
+                              size: 13.5,
+                              color: p.ink.withValues(alpha: 0.55),
+                            ),
+                          ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 9),
-            SkillBar(skill: skill, level: level, height: 7),
+            if (score.answers > 0) ...[
+              const SizedBox(height: 12),
+              ScoreSpark(
+                values: score.days,
+                colour: skill.mark(p.isDark),
+                height: 34,
+              ),
+            ],
             const SizedBox(height: 24),
             ChunkyButton(
               key: const ValueKey('skill-mark-open'),

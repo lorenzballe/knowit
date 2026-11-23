@@ -1839,11 +1839,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get skillsFocus => 'ODAKTA';
 
   @override
-  String skillLevel(int n) {
-    return 'Seviye $n';
-  }
-
-  @override
   String get skillMarkKicker => 'BU KARTIN ÇALIŞTIRDIĞI';
 
   @override
@@ -1863,21 +1858,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get trainingLine =>
-      'Seçtiğin beceriler. Birini çalıştıran her kart seni yükseltir.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Seviye $level için $n kart daha',
-      one: 'Seviye $level için 1 kart daha',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'En yüksek seviye';
+      'Her cevap puanını oynatır, en çok da doğru bilinen zor bir kart. Bir tavanı yok.';
 
   @override
   String get trainingOthers => 'Diğerleri';
@@ -1914,8 +1895,30 @@ class AppLocalizationsTr extends AppLocalizations {
   String get trainingDayLine => 'Bugün çalıştırdıkların';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Yeni seviye: $n';
+  String get scoreTitle => 'Astute puanı';
+
+  @override
+  String scoreWeek(String n) {
+    return 'bu hafta $n';
+  }
+
+  @override
+  String get scoreStart => 'İlk cevabınla başlar.';
+
+  @override
+  String scoreToday(String n) {
+    return 'bugün $n';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cevaptan',
+      one: '1 cevaptan',
+    );
+    return '$_temp0';
   }
 
   @override

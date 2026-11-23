@@ -1931,11 +1931,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get skillsFocus => 'PRIORYTET';
 
   @override
-  String skillLevel(int n) {
-    return 'Poziom $n';
-  }
-
-  @override
   String get skillMarkKicker => 'TA KARTA ĆWICZY';
 
   @override
@@ -1955,23 +1950,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get trainingLine =>
-      'Umiejętności, które wybrałeś. Każda karta, która ćwiczy jedną z nich, cię podnosi.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Jeszcze $n karty do poziomu $level',
-      many: 'Jeszcze $n kart do poziomu $level',
-      few: 'Jeszcze $n karty do poziomu $level',
-      one: 'Jeszcze 1 karta do poziomu $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'Najwyższy poziom';
+      'Każda odpowiedź zmienia twój wynik, najbardziej trudna karta trafiona. Nie ma górnej granicy.';
 
   @override
   String get trainingOthers => 'Pozostałe';
@@ -2010,8 +1989,32 @@ class AppLocalizationsPl extends AppLocalizations {
   String get trainingDayLine => 'Dziś ćwiczyłeś';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Osiągnięty poziom $n';
+  String get scoreTitle => 'Wynik Astute';
+
+  @override
+  String scoreWeek(String n) {
+    return '$n w tym tygodniu';
+  }
+
+  @override
+  String get scoreStart => 'Zaczyna się od twojej pierwszej odpowiedzi.';
+
+  @override
+  String scoreToday(String n) {
+    return '$n dzisiaj';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'z $n odpowiedzi',
+      many: 'z $n odpowiedzi',
+      few: 'z $n odpowiedzi',
+      one: 'z 1 odpowiedzi',
+    );
+    return '$_temp0';
   }
 
   @override

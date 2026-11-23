@@ -2598,12 +2598,6 @@ abstract class AppLocalizations {
   /// **'IN FOCUS'**
   String get skillsFocus;
 
-  /// The reader's level in a skill, 1 to 5, from the cards they read that train it. Followed by " · " and the number of cards (nCards).
-  ///
-  /// In en, this message translates to:
-  /// **'Level {n}'**
-  String skillLevel(int n);
-
   /// Small capitals over a skill's name, on the sheet a card's skill mark opens: the card trains this skill.
   ///
   /// In en, this message translates to:
@@ -2634,23 +2628,11 @@ abstract class AppLocalizations {
   /// **'Your training'**
   String get trainingTitle;
 
-  /// Under the title of Your training on Your journey.
+  /// Under the title of Your training in Your journey: what the scores are. Each skill picked follows with its score.
   ///
   /// In en, this message translates to:
-  /// **'The skills you chose. Every card that trains one moves you up.'**
+  /// **'Every answer moves your score, a hard card right the most. There is no top.'**
   String get trainingLine;
-
-  /// Under a skill's bar in Your training: how many more cards that train it the reader needs to read to reach the next level.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 more card to level {level}} other{{n} more cards to level {level}}}'**
-  String trainingToNext(int n, int level);
-
-  /// Under a skill's bar in Your training once the reader has reached its highest level.
-  ///
-  /// In en, this message translates to:
-  /// **'Top level'**
-  String get trainingTopLevel;
 
   /// Small label over the skills the reader did not pick, each with its level, under the ones they did.
   ///
@@ -2688,11 +2670,35 @@ abstract class AppLocalizations {
   /// **'Today you trained'**
   String get trainingDayLine;
 
-  /// On the finished day's sheet, under a skill whose next level today's cards reached.
+  /// The reader's score in all the skills together: a number with no top, moved by every answer on a card (like a chess rating). Its name; Astute is the app's name.
   ///
   /// In en, this message translates to:
-  /// **'Level {n} reached'**
-  String trainingNewLevel(int n);
+  /// **'Astute score'**
+  String get scoreTitle;
+
+  /// Under a score: how far it moved in the last seven days. n is the signed number, already formatted: "+24", "−8" or "0".
+  ///
+  /// In en, this message translates to:
+  /// **'{n} this week'**
+  String scoreWeek(String n);
+
+  /// Under a skill's score that no answer has moved yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first answer starts it.'**
+  String get scoreStart;
+
+  /// On the sheet that rises when the day's cards are done: how far the reader's Astute score moved today. n is the signed number, already formatted: "+26", "−4" or "0".
+  ///
+  /// In en, this message translates to:
+  /// **'{n} today'**
+  String scoreToday(String n);
+
+  /// On the sheet a skill's mark opens, after the reader's score in it: how many answers made it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{from 1 answer} other{from {n} answers}}'**
+  String scoreAnswers(int n);
 
   /// A video card's kind, said by VoiceOver with its length on its tile in Explore ("Video, 0:53").
   ///
