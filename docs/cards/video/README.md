@@ -2,7 +2,10 @@
 
 A video card is a card that is a short film: drawn in its subject's colours
 and the kit's type, it opens to the whole screen from its tile in Explore and
-plays with a second tap (`lib/widgets/video_card.dart`). The cards there are
+plays at once, from the frame its tile shows (`lib/widgets/video_card.dart`).
+Opened, the card is the screen: the film across it, standing on the screen's
+foot, and the card's ground (`ground` in `lib/data/video_cards.dart`) above
+it, holding how far the film has run and the cross. The cards there are
 listed in `lib/data/video_cards.dart`; Explore shows them in the section of
 block `video-cards` (`remote/explore.json`).
 
@@ -23,7 +26,11 @@ when it is played); its frame at four seconds, the question whole over its
 picture, goes in the app as its tile (`assets/video/<file>-<language>.webp`,
 WebP at quality 88). The built page and the frames are not kept.
 
-Every film keeps the bottom of its frame clear where the card lays its
-controls: around 84% of the height on its first frame, for the way to play
-it, and between its last picture and its source on its last frame, for the
-way to watch it again.
+Every film keeps its top rows in the card's ground colour all through, since
+the screen's ground runs on above the film there; its tile's frame is the one
+at `posterAt` (four seconds unless the card says otherwise), and the film
+plays on from that moment when the card opens, so the picture comes alive
+rather than starting over. Every film also keeps the bottom of its frame
+clear where the card lays what it says: around 84% of the height, for the
+word that it needs a connection, and between its last picture and its source
+on its last frame, for the way to watch it again.

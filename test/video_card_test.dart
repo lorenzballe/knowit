@@ -180,50 +180,76 @@ void main() {
     }
   }
 
-  testWidgets('a tap on the tile opens the card to the whole screen; a '
-      'second plays it, a third pauses it; at its end it is offered again; '
-      'the cross puts it back', (tester) async {
+  /// Opens the card from its tile and waits for it to be up: not until
+  /// nothing moves, since a film playing keeps its line of how far it has
+  /// run moving.
+  Future<void> open(WidgetTester tester) async {
+    await tester.tap(find.byType(VideoCardTile));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    await settle(tester);
+  }
+
+  /// Where the film's picture stands on the screen.
+  Rect pictureOn(WidgetTester tester) => tester.getRect(
+    find.descendant(
+      of: find.byType(VideoCardScreen),
+      matching: find.byType(Image),
+    ),
+  );
+
+  testWidgets('a tap on the tile opens the card to the whole screen, and it '
+      'plays at once from the frame the tile shows; a tap pauses it, another '
+      'goes on; at its end it is offered again; the cross puts it back', (
+    tester,
+  ) async {
     await phone(tester);
     final l = lookupAppLocalizations(const Locale('it'));
     expect(find.text('0:53'), findsOneWidget);
     await tester.tap(find.byType(VideoCardTile));
-    await tester.pumpAndSettle();
-    expect(find.byType(VideoCardScreen), findsOneWidget);
+    // On its way up, the film is fetched and set on the tile's frame, and
+    // waits for the card to be up.
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
     expect(
       player.asked.first,
       'make https://astutetheapp.com/cards/video/eratosthenes-it.mp4',
     );
-    // The film's own proportion, across the screen, under the row of
-    // controls and above the foot.
-    final Rect place = tester.getRect(find.byKey(const ValueKey('video-card')));
+    expect(player.asked, contains('seek ${card.posterAt.inMilliseconds}'));
+    expect(player.asked, isNot(contains('play')));
+    await tester.pump(const Duration(milliseconds: 400));
+    await settle(tester);
+    expect(find.byType(VideoCardScreen), findsOneWidget);
+    expect(player.asked.last, 'play');
+    // The card is the screen: the film across it, standing on its foot, the
+    // card's ground above it holding the row of controls. No way to play it
+    // is asked for: it plays.
+    final Rect place = pictureOn(tester);
     expect(place.width / place.height, closeTo(9 / 16, 0.01));
     expect(place.width, closeTo(402, 0.5));
+    expect(place.bottom, closeTo(874, 0.5));
     expect(place.top, greaterThanOrEqualTo(62 + 48));
-    expect(place.bottom, lessThanOrEqualTo(874 - 34));
-    // Waiting for the second tap: the way to play it, and the word for it.
-    expect(find.byKey(const ValueKey('video-play')), findsOneWidget);
-    expect(find.text(l.videoTapToPlay.toUpperCase()), findsOneWidget);
-    final Rect play = tester.getRect(find.byKey(const ValueKey('video-play')));
-    expect(place.contains(play.center), isTrue);
-
-    await tester.tap(find.byKey(const ValueKey('video-card')));
-    await settle(tester);
-    expect(player.asked, contains('play'));
     expect(find.byKey(const ValueKey('video-play')), findsNothing);
-    player.position = const Duration(seconds: 3);
+    // Until it moves, the frame it starts on is the picture, and the line of
+    // how far it has run says it is coming.
+    expect(find.byKey(const ValueKey('film')), findsNothing);
+    expect(find.byKey(const ValueKey('video-coming')), findsOneWidget);
+    player.position = const Duration(seconds: 6);
     await tester.pump(const Duration(milliseconds: 600));
     await settle(tester);
     expect(find.byKey(const ValueKey('film')), findsOneWidget);
+    expect(tester.getRect(find.byKey(const ValueKey('film'))), place);
+    expect(find.byKey(const ValueKey('video-coming')), findsNothing);
 
     await tester.tap(find.byKey(const ValueKey('video-card')));
     await settle(tester);
     expect(player.asked.last, 'pause');
     expect(find.byKey(const ValueKey('video-play')), findsOneWidget);
-    // Started once, the word under it is not said again.
-    expect(find.text(l.videoTapToPlay.toUpperCase()), findsNothing);
 
     await tester.tap(find.byKey(const ValueKey('video-card')));
     await settle(tester);
+    expect(player.asked.last, 'play');
+    expect(find.byKey(const ValueKey('video-play')), findsNothing);
     player.end(player.last);
     await settle(tester);
     expect(find.byKey(const ValueKey('video-again')), findsOneWidget);
@@ -248,9 +274,9 @@ void main() {
     player.offline = true;
     await phone(tester, language: 'en');
     final l = lookupAppLocalizations(const Locale('en'));
-    await tester.tap(find.byType(VideoCardTile));
-    await tester.pumpAndSettle();
+    await open(tester);
     expect(find.text(l.videoOffline), findsOneWidget);
+    expect(find.byKey(const ValueKey('video-coming')), findsNothing);
     player.offline = false;
     await tester.tap(find.byKey(const ValueKey('video-card')));
     await settle(tester);
@@ -269,19 +295,18 @@ void main() {
     tester,
   ) async {
     await phone(tester);
-    await tester.tap(find.byType(VideoCardTile));
-    await tester.pumpAndSettle();
+    await open(tester);
     await tester.drag(
       find.byKey(const ValueKey('video-card')),
       const Offset(0, 60),
     );
-    await tester.pumpAndSettle();
+    await settle(tester);
     expect(find.byType(VideoCardScreen), findsOneWidget);
     await tester.drag(
       find.byKey(const ValueKey('video-card')),
       const Offset(0, 240),
     );
-    await tester.pumpAndSettle();
+    await settle(tester);
     expect(find.byType(VideoCardScreen), findsNothing);
     expect(tester.takeException(), isNull);
   });
@@ -290,20 +315,28 @@ void main() {
     (const Size(320, 568), const EdgeInsets.only(top: 20)),
     (const Size(375, 667), const EdgeInsets.only(top: 20)),
     (const Size(430, 932), const EdgeInsets.only(top: 59, bottom: 34)),
+    (const Size(412, 915), const EdgeInsets.only(top: 24, bottom: 48)),
   ]) {
     for (final String language in ['en', 'it', 'de', 'ja']) {
       testWidgets('the card lays out on a ${size.width.round()} by '
           '${size.height.round()} phone in $language', (tester) async {
         await phone(tester, size: size, language: language, safe: safe);
-        await tester.tap(find.byType(VideoCardTile));
-        await tester.pumpAndSettle();
-        final Rect place = tester.getRect(
-          find.byKey(const ValueKey('video-card')),
-        );
+        await open(tester);
+        final Rect place = pictureOn(tester);
         expect(place.left, greaterThanOrEqualTo(0));
         expect(place.right, lessThanOrEqualTo(size.width + 0.01));
         expect(place.top, greaterThanOrEqualTo(safe.top + 48));
-        expect(place.bottom, lessThanOrEqualTo(size.height - safe.bottom));
+        // On a phone long enough, across it and on its foot, lifted only
+        // above a foot taller than a home bar; else whole above the foot.
+        if (size.height / size.width > 16 / 9 + 0.1) {
+          expect(place.width, closeTo(size.width, 0.5));
+          expect(
+            place.bottom,
+            closeTo(size.height - (safe.bottom - 34).clamp(0, 99), 0.5),
+          );
+        } else {
+          expect(place.bottom, lessThanOrEqualTo(size.height - safe.bottom));
+        }
         expect(tester.takeException(), isNull);
         await tester.tap(find.byKey(const ValueKey('video-close')));
         await tester.pumpAndSettle();

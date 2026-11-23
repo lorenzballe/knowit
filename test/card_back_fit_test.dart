@@ -8,6 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/data/card_json.dart';
 import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/data/skill_scores.dart';
+import 'package:astuto/data/skills.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/theme.dart';
@@ -70,6 +72,16 @@ const Map<String, (Size, Size)> _phones = {
   'medium': (Size(390, 844), Size(354, 624)),
   'large': (Size(430, 932), Size(394, 712)),
 };
+
+/// The score an answer moved, beside the verdict of every graded back, as
+/// wide as it comes: an answer moves a score by 24 at most.
+const ScoreMove _move = ScoreMove(
+  before: 1024,
+  after: 1000,
+  skill: Skill.money,
+  on: '',
+);
+
 const Size _phone = Size(360, 740);
 const Size _card = Size(324, 520);
 
@@ -104,6 +116,7 @@ void main() {
                   pill: pill,
                   flipped: true,
                   given: _answerFor(pill),
+                  move: pill.isGraded ? _move : null,
                   onSave: () {},
                   onShare: () {},
                 ),

@@ -1779,16 +1779,17 @@ class RemoteLocalizations extends AppLocalizations {
       _words.format('scoreToday', localeName, {'n': n}) ?? _base.scoreToday(n);
 
   @override
+  String scoreMoveLabel(String name, String n) =>
+      _words.format('scoreMoveLabel', localeName, {'name': name, 'n': n}) ??
+      _base.scoreMoveLabel(name, n);
+
+  @override
   String scoreAnswers(int n) =>
       _words.format('scoreAnswers', localeName, {'n': n}) ??
       _base.scoreAnswers(n);
 
   @override
   String get videoKicker => _words.text('videoKicker') ?? _base.videoKicker;
-
-  @override
-  String get videoTapToPlay =>
-      _words.text('videoTapToPlay') ?? _base.videoTapToPlay;
 
   @override
   String get videoPlay => _words.text('videoPlay') ?? _base.videoPlay;

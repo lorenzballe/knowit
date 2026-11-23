@@ -2694,6 +2694,12 @@ abstract class AppLocalizations {
   /// **'{n} today'**
   String scoreToday(String n);
 
+  /// Read out for the small chip beside the verdict on a card's back: how far this answer moved one of the reader's scores. name is the score's name, a skill's ("Money") or the Astute score's; n is the signed number, already formatted: "+12" or "−8".
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {n} for this answer'**
+  String scoreMoveLabel(String name, String n);
+
   /// On the sheet a skill's mark opens, after the reader's score in it: how many answers made it.
   ///
   /// In en, this message translates to:
@@ -2705,12 +2711,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Video'**
   String get videoKicker;
-
-  /// Under the play button of a video card opened to the whole screen, before it is first played: a second tap on the card plays its film. Short; shown in capitals.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap to play'**
-  String get videoTapToPlay;
 
   /// What a tap on a video card does while its film is stopped, as VoiceOver says it.
   ///

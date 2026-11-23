@@ -280,26 +280,6 @@ void main() {
         await tester.pumpWidget(host(locale, entry.value));
         await settle(tester);
         note(locale, entry.key, tester);
-        // A past week tapped on the score chart, which has words of its own.
-        if (entry.key == 'journey-measured') {
-          // Back to the top: the screen before it was taken down the fold.
-          final ScrollableState list = tester.state(
-            find.byType(Scrollable).first,
-          );
-          list.position.jumpTo(0);
-          await settle(tester);
-          // The score is under the reader's training, the journey's first
-          // chapter: brought into view, then tapped.
-          await tester.scrollUntilVisible(
-            find.byKey(const ValueKey('journey-week-0')),
-            200,
-            scrollable: find.byType(Scrollable).first,
-          );
-          await settle(tester);
-          await tester.tap(find.byKey(const ValueKey('journey-week-0')));
-          await settle(tester);
-          note(locale, 'journey, a past week', tester);
-        }
         // The intro is five scenes; the first is not the long one.
         if (entry.key == 'intro') {
           for (var scene = 2; scene <= 5; scene++) {

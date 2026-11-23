@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/skill_scores.dart' show ScoreMove;
 import '../data/skills.dart';
 import '../data/topics.dart' show inkOn;
 import '../measure/card_read.dart';
@@ -24,6 +25,7 @@ import 'scene_view.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
 import 'skill_mark.dart';
+import 'skill_score.dart';
 import 'subject_icon.dart';
 import 'web/page_messages.dart';
 import 'web/web_card_face.dart';
@@ -78,6 +80,11 @@ class PillCard extends StatelessWidget {
   /// A tap on that mark, on the card being read: what it means.
   final VoidCallback? onSkill;
 
+  /// How the reader's answer moved their score, said beside the verdict on
+  /// the back: in [skill] when the card trains it, or else in every skill
+  /// together (lib/data/skill_scores.dart). Null, nothing is said.
+  final ScoreMove? move;
+
   const PillCard({
     super.key,
     required this.pill,
@@ -93,6 +100,7 @@ class PillCard extends StatelessWidget {
     this.onNote,
     this.skill,
     this.onSkill,
+    this.move,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -424,6 +432,7 @@ class PillCard extends StatelessWidget {
                 ? _BackFace(
                     pill: pill,
                     given: given,
+                    move: move,
                     cornerRoom: onSave != null ? _CardControl.room : 0,
                   )
                 // The challenge decides the front. A new kind of challenge
@@ -690,7 +699,15 @@ class _BackFace extends StatelessWidget {
 
   /// Room kept clear for the save and share buttons in the bottom corner.
   final double cornerRoom;
-  const _BackFace({required this.pill, this.given, this.cornerRoom = 0});
+
+  /// How the answer moved the reader's score, beside the verdict.
+  final ScoreMove? move;
+  const _BackFace({
+    required this.pill,
+    this.given,
+    this.move,
+    this.cornerRoom = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -715,6 +732,7 @@ class _BackFace extends StatelessWidget {
         right: right,
         given: pill.challenge.describe(given.response),
         confidence: given.confidence,
+        move: move,
         room: room,
       );
       Widget leadOf(_Verdict verdict) => Column(
@@ -824,15 +842,18 @@ double _measureSpan(
   BuildContext context,
   InlineSpan span,
   double width,
-  TextScaler scaler,
-) {
+  TextScaler scaler, {
+  List<PlaceholderDimensions> placeholders = const [],
+}) {
   final base = DefaultTextStyle.of(context);
   final p = TextPainter(
     text: TextSpan(style: base.style, children: [span]),
     textDirection: Directionality.of(context),
     textScaler: scaler,
     textHeightBehavior: base.textHeightBehavior,
-  )..layout(maxWidth: width);
+  );
+  if (placeholders.isNotEmpty) p.setPlaceholderDimensions(placeholders);
+  p.layout(maxWidth: width);
   final h = p.height;
   p.dispose();
   return h;
@@ -859,11 +880,15 @@ class _Verdict extends StatelessWidget {
 
   /// How much of it the back has room for.
   final _Room room;
+
+  /// How the answer moved the reader's score, said right after the verdict.
+  final ScoreMove? move;
   const _Verdict({
     required this.pill,
     required this.right,
     required this.given,
     this.confidence,
+    this.move,
     this.room = _Room.all,
   });
 
@@ -949,9 +974,17 @@ class _Verdict extends StatelessWidget {
 
   InlineSpan _span(BuildContext context) {
     final String? detail = _detail(context);
+    final ScoreMove? move = this.move;
     return TextSpan(
       children: [
         TextSpan(text: _head(context), style: _headStyle(pill.ink)),
+        // The score it moved, as it moved: said with the verdict, the
+        // moment the back comes round.
+        if (move != null)
+          WidgetSpan(
+            alignment: PlaceholderAlignment.middle,
+            child: ScoreMoveChip(move: move, ink: pill.ink),
+          ),
         if (detail != null)
           TextSpan(text: '  $detail', style: _detailStyle(pill.ink)),
       ],
@@ -960,11 +993,19 @@ class _Verdict extends StatelessWidget {
 
   /// The room the verdict takes at [width]: its words beside the mark.
   double heightIn(BuildContext context, double width, TextScaler scaler) {
+    final ScoreMove? move = this.move;
     final double h = _measureSpan(
       context,
       _span(context),
       width - _mark - _gap,
       scaler,
+      placeholders: [
+        if (move != null)
+          PlaceholderDimensions(
+            size: ScoreMoveChip.sizeOf(context, move, scaler),
+            alignment: PlaceholderAlignment.middle,
+          ),
+      ],
     );
     return math.max(h, _mark + 3);
   }
@@ -1071,6 +1112,13 @@ class _AskFaceState extends State<_AskFace> {
   static const double _footGap = 14;
   static const double _cornerClear = 37;
 
+  /// The largest the question is set on a face [width] wide: a short
+  /// question set as large as a poster's line, so it fills the card rather
+  /// than leaving a band of empty colour above its answers. It used to stop
+  /// at 28, the size a drawn card's question keeps to beside its drawing; a
+  /// card with no drawing has its question for a picture.
+  static double _questionMax(double width) => (width * 0.16).clamp(40.0, 56.0);
+
   /// The nudge's row, and the gap above it.
   static const double _hintGap = 4;
   static const double _hintRow = 44;
@@ -1114,18 +1162,24 @@ class _AskFaceState extends State<_AskFace> {
   /// and does not jump when the step comes.
   double _inputHeight(BuildContext context, double width, TextScaler scaler) {
     final pill = widget.pill;
+    // The option the reader took, marked as theirs on a card read again.
+    final int? taken = widget.onAnswer == null
+        ? int.tryParse(widget.given?.response ?? '')
+        : null;
     final double input = switch (pill.challenge) {
       PickOne(:final options) => _PickInput.heightFor(
         context,
         options,
         width,
         scaler,
+        taken: taken,
       ),
       TakeASide(:final positions) => _PickInput.heightFor(
         context,
         positions,
         width,
         scaler,
+        taken: taken,
       ),
       TypeNumber() => 54,
       Estimate() => PlaceItInput.heightFor(scaler),
@@ -1208,16 +1262,18 @@ class _AskFaceState extends State<_AskFace> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // The question takes what the answers leave it (see
-                // [_questionRoom]), from the top, set as large as that will
-                // hold, at the size a drawn card's question keeps to; the
-                // answers come at the foot.
+                // [_questionRoom]), set as large as that will hold, up to a
+                // poster's line ([_questionMax]); the answers come at the
+                // foot.
                 SizedBox(
                   height: _questionRoom(context, constraints, promptHeight),
                   child: ScaledText(
                     text: pill.question,
                     min: 18,
-                    max: 28,
-                    alignment: Alignment.topLeft,
+                    max: _questionMax(constraints.maxWidth),
+                    // Where a short one leaves room even so, it stands a
+                    // little above the middle of it, not hung from the top.
+                    alignment: const Alignment(-1, -0.3),
                     styleFor: (size) => _questionStyle(pill, size),
                   ),
                 ),
@@ -1343,35 +1399,53 @@ class _PickInput extends StatelessWidget {
   });
 
   /// How tall the options set at [width], as [_ChoiceButton] lays them:
-  /// each one's words, its padding and its edge, and the gap between.
+  /// each one's words, its padding and its edge, and the gap between. The
+  /// option a reader took ([taken], on a card read again) sets its words
+  /// firmer, inside a firmer edge, beside the word that marks it theirs:
+  /// measured as one that was not, it wrapped where it had been counted on
+  /// one line, and the answers ran down under the card's save and share.
   static double heightFor(
     BuildContext context,
     List<String> options,
     double width,
-    TextScaler scaler,
-  ) {
+    TextScaler scaler, {
+    int? taken,
+  }) {
     double total = 0;
     for (int i = 0; i < options.length; i++) {
+      final bool own = i == taken;
+      final double edge = own
+          ? _ChoiceButton.takenEdgeWidth
+          : _ChoiceButton.edgeWidth;
+      final double words =
+          width -
+          2 * (_ChoiceButton.padX + edge) -
+          (own
+              ? _ChoiceButton.tagGap + _ChoiceButton.tagWidth(context, scaler)
+              : 0);
       total +=
           _measure(
             context,
             options[i],
-            _ChoiceButton.labelStyle(const Color(0xFF000000), false),
-            width - 34,
+            _ChoiceButton.labelStyle(const Color(0xFF000000), own),
+            words,
             scaler,
           ) +
-          30;
-      if (i > 0) total += 9;
+          2 * (_ChoiceButton.padY + edge);
+      if (i > 0) total += _gap;
     }
     return total;
   }
+
+  /// Between one option and the next.
+  static const double _gap = 10;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: List.generate(options.length, (i) {
         return Padding(
-          padding: EdgeInsets.only(bottom: i == options.length - 1 ? 0 : 9),
+          padding: EdgeInsets.only(bottom: i == options.length - 1 ? 0 : _gap),
           child: _ChoiceButton(
             label: options[i],
             ink: pill.ink,
@@ -1575,11 +1649,40 @@ class _ChoiceButton extends StatelessWidget {
   });
 
   static TextStyle labelStyle(Color ink, bool taken) => AppText.body(
-    size: 14.5,
+    size: 15.5,
     weight: taken ? FontWeight.w600 : FontWeight.w500,
     height: 1.35,
     color: ink,
   );
+
+  /// The room round its words, inside its edge.
+  static const double padX = 18, padY = 16;
+
+  /// Its edge, and the firmer one round the option a reader took.
+  static const double edgeWidth = 1, takenEdgeWidth = 1.6;
+
+  /// Between the words and the word that marks the reader's own.
+  static const double tagGap = 10;
+
+  static TextStyle tagStyle(Color ink) =>
+      AppText.label(size: 9, spacing: 1, color: ink.withValues(alpha: 0.6));
+
+  /// How wide the word that marks the reader's own option sets.
+  static double tagWidth(BuildContext context, TextScaler scaler) {
+    final TextPainter p = TextPainter(
+      text: TextSpan(
+        text: 'YOURS',
+        style: DefaultTextStyle.of(context).style
+            .merge(tagStyle(const Color(0xFF000000))),
+      ),
+      textDirection: Directionality.of(context),
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    final double w = p.width;
+    p.dispose();
+    return w;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1591,28 +1694,21 @@ class _ChoiceButton extends StatelessWidget {
         onTap: onTap,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: padX, vertical: padY),
           decoration: BoxDecoration(
             color: fill,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: taken ? ink.withValues(alpha: 0.55) : edge,
-              width: taken ? 1.6 : 1,
+              width: taken ? takenEdgeWidth : edgeWidth,
             ),
           ),
           child: Row(
             children: [
               Expanded(child: Text(label, style: labelStyle(ink, taken))),
               if (taken) ...[
-                const SizedBox(width: 10),
-                Text(
-                  'YOURS',
-                  style: AppText.label(
-                    size: 9,
-                    spacing: 1,
-                    color: ink.withValues(alpha: 0.6),
-                  ),
-                ),
+                const SizedBox(width: tagGap),
+                Text('YOURS', style: tagStyle(ink)),
               ],
             ],
           ),

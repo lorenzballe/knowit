@@ -192,12 +192,13 @@ const Kit = (() => {
   }
 
   // A video is cited by its channel, not by a title that can run to a sentence: "Source · Veritasium,
-  // “Spinning Tube Trick Explained” (YouTube, 2012)" reads "Source · Veritasium · YouTube, 2012". Go
-  // deeper keeps the whole citation (lib/models/pill.dart, shortSource, does the same on a native card).
+  // “Spinning Tube Trick Explained” (YouTube, 2012)." reads "Source · Veritasium · YouTube, 2012.", the
+  // full stop most pages end it on kept. Go deeper keeps the whole citation (lib/models/pill.dart,
+  // shortSource, does the same on a native card).
   function shortSources() {
     document.querySelectorAll('.foot .src').forEach(el => {
-      const m = el.textContent.match(/^(.*?·\s*)?([^,“”·]+?),\s*“.*”\s*\(YouTube(?:,\s*(\d{4}))?\)\s*$/);
-      if (m) el.textContent = (m[1] || '') + m[2].trim() + ' · YouTube' + (m[3] ? ', ' + m[3] : '');
+      const m = el.textContent.match(/^(.*?·\s*)?([^,“”·]+?),\s*“.*”\s*\(YouTube(?:,\s*(\d{4}))?\)(\.?)\s*$/);
+      if (m) el.textContent = (m[1] || '') + m[2].trim() + ' · YouTube' + (m[3] ? ', ' + m[3] : '') + m[4];
     });
   }
 

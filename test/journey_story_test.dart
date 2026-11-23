@@ -108,8 +108,8 @@ void main() {
     expect(overconfidentIn(calibrated), isNull);
   });
 
-  testWidgets('with the answers by Claude on, the coach is the second '
-      'chapter: on Astute+ the week\'s note a tap away, sent as numbers; on '
+  testWidgets('with the answers by Claude on, the coach comes after the '
+      'week: on Astute+ the week\'s note a tap away, sent as numbers; on '
       'the free plan, what it is behind the lock', (tester) async {
     tester.view.physicalSize = const Size(402, 9000);
     tester.view.devicePixelRatio = 1;
@@ -139,8 +139,9 @@ void main() {
     });
     await show(plus);
     await tester.pump();
-    expect(find.text('3  ·  YOUR COACH'), findsOneWidget);
-    expect(find.text('4  ·  PRACTISE'), findsOneWidget);
+    expect(find.text('2  ·  PRACTISE'), findsOneWidget);
+    expect(find.text('3  ·  THIS WEEK'), findsOneWidget);
+    expect(find.text('4  ·  YOUR COACH'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('journey-coach-ask')));
     await tester.pumpAndSettle();
     expect(find.text('A good week: 8 in 10 right when sure.'), findsOneWidget);
@@ -153,8 +154,8 @@ void main() {
     expect(find.byKey(const ValueKey('journey-coach-locked')), findsOneWidget);
   });
 
-  testWidgets('the journey reads in eight chapters: the week and what to '
-      'practise first, the story last; on the free plan the line Astute+ '
+  testWidgets('the journey reads in chapters: the one number, what to '
+      'practise and the week first, the story last; on the free plan the line Astute+ '
       'shows sits behind glass with the way through', (tester) async {
     tester.view.physicalSize = const Size(402, 9000);
     tester.view.devicePixelRatio = 1;
@@ -176,16 +177,22 @@ void main() {
     );
     await tester.pump();
     expect(tester.takeException(), isNull);
+    // One number at the head, what to practise right under it, what the
+    // reader knows before how they reason; what stays with them only once
+    // something has.
+    final bool stays = find
+        .textContaining('WHAT STAYS WITH YOU')
+        .evaluate()
+        .isNotEmpty;
     final List<String> chapters = [
       '1  ·  YOUR TRAINING',
-      '2  ·  THIS WEEK',
-      '3  ·  PRACTISE',
-      '4  ·  WHERE YOU ARE',
+      '2  ·  PRACTISE',
+      '3  ·  THIS WEEK',
+      '4  ·  WHAT YOU KNOW',
       '5  ·  HOW YOU REASON',
-      '6  ·  WHAT YOU KNOW',
-      '7  ·  YOUR HABITS',
-      '8  ·  WHAT STAYS WITH YOU',
-      '9  ·  YOUR STORY',
+      '6  ·  YOUR HABITS',
+      if (stays) '7  ·  WHAT STAYS WITH YOU',
+      stays ? '8  ·  YOUR STORY' : '7  ·  YOUR STORY',
     ];
     double last = -1;
     for (final String c in chapters) {
@@ -194,11 +201,11 @@ void main() {
       expect(y, greaterThan(last), reason: '$c comes after the one before');
       last = y;
     }
-    // The score is in the fourth chapter, under what to practise.
-    expect(
-      tester.getTopLeft(find.byKey(const ValueKey('journey-score'))).dy,
-      greaterThan(tester.getTopLeft(find.text('4  ·  WHERE YOU ARE')).dy),
-    );
+    // The one number is the Astute score, in the first chapter; the points
+    // and the ladder that repeated it are gone.
+    expect(find.byKey(const ValueKey('training-score')), findsOneWidget);
+    expect(find.byKey(const ValueKey('journey-score')), findsNothing);
+    expect(find.textContaining('WHERE YOU ARE'), findsNothing);
     expect(find.text('See it with Astute+'), findsOneWidget);
     expect(find.byKey(const ValueKey('story-practice-misses')), findsOneWidget);
     expect(

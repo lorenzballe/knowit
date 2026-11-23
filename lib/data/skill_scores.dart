@@ -97,24 +97,12 @@ class ScoreBook {
 /// it trains it ([SkillTraining.fitOf]).
 const List<double> _fitWeight = [1, 0.8, 0.5];
 
-/// The reader's scores from their [judgements], as of [today]: worked out
-/// in the order the judgements were made, each day's end kept for the line.
-/// A judgement with no card, or on a card the bank no longer has or that is
-/// not graded, moves nothing.
-ScoreBook scoresOf(
-  Iterable<Judgement> judgements, {
-  required DateTime today,
-  Pill? Function(String id)? cardOf,
-}) {
-  final Pill? Function(String id) find = cardOf ?? PillBank.byId;
-  final String todayKey = dateKey(today);
-  // The window's days, oldest first.
-  final List<String> window = [
-    for (int i = kScoreDays - 1; i >= 0; i--)
-      dateKey(DateTime(today.year, today.month, today.day - i)),
-  ];
-  final String first = window.first;
+/// The scores as the judgements move them, one at a time, in the order they
+/// were made.
+class _Running {
+  _Running(this.find);
 
+  final Pill? Function(String id) find;
   double overall = kScoreStart.toDouble();
   int overallAnswers = 0;
   final Map<Skill, double> each = {
@@ -123,20 +111,19 @@ ScoreBook scoresOf(
   final Map<Skill, int> answers = {for (final Skill s in Skill.values) s: 0};
   final Set<String> met = {};
 
-  // Each day's end, by the window's index; before the window, what the
-  // scores were when it opened.
-  final List<Map<Skill?, double>?> ends = List.filled(kScoreDays, null);
+  /// Every score as it stands, the overall one under null.
   Map<Skill?, double> snapshot() => {null: overall, ...each};
-  Map<Skill?, double> before = snapshot();
 
-  for (final Judgement j in judgements) {
+  /// The score of [skill] as it stands, or the overall one for null.
+  double of(Skill? skill) => skill == null ? overall : each[skill]!;
+
+  /// Moves the scores by [j]: false for a judgement with no card, or on a
+  /// card the bank no longer has or that is not graded, which moves nothing.
+  bool take(Judgement j) {
     final String? id = j.pillId;
-    if (id == null) continue;
+    if (id == null) return false;
     final Pill? card = find(id);
-    if (card == null || !card.isGraded) continue;
-    final String on = j.on ?? '';
-    // Kept in the order made: a judgement dated before the window moves the
-    // score the window opens on.
+    if (card == null || !card.isGraded) return false;
     final double again = met.add(id) ? 1 : 0.5;
     final int worth = cardScore(card);
     final double got = j.correct ? 1 : 0;
@@ -154,12 +141,44 @@ ScoreBook scoresOf(
               (got - chanceRight(now, worth));
       answers[s] = answers[s]! + 1;
     }
+    return true;
+  }
+}
+
+/// The reader's scores from their [judgements], as of [today]: worked out
+/// in the order the judgements were made, each day's end kept for the line.
+/// A judgement with no card, or on a card the bank no longer has or that is
+/// not graded, moves nothing.
+ScoreBook scoresOf(
+  Iterable<Judgement> judgements, {
+  required DateTime today,
+  Pill? Function(String id)? cardOf,
+}) {
+  final _Running run = _Running(cardOf ?? PillBank.byId);
+  final String todayKey = dateKey(today);
+  // The window's days, oldest first.
+  final List<String> window = [
+    for (int i = kScoreDays - 1; i >= 0; i--)
+      dateKey(DateTime(today.year, today.month, today.day - i)),
+  ];
+  final String first = window.first;
+
+  // Each day's end, by the window's index; before the window, what the
+  // scores were when it opened.
+  final List<Map<Skill?, double>?> ends = List.filled(kScoreDays, null);
+  Map<Skill?, double> before = run.snapshot();
+
+  for (final Judgement j in judgements) {
+    if (!run.take(j)) continue;
+    final String on = j.on ?? '';
+    // Kept in the order made: a judgement dated before the window moves the
+    // score the window opens on.
     if (on.compareTo(first) < 0) {
-      before = snapshot();
+      before = run.snapshot();
     } else {
       final int at = window.indexOf(on);
-      if (at >= 0) ends[at] = snapshot();
-      if (on.compareTo(todayKey) > 0) ends[kScoreDays - 1] = snapshot();
+      if (at >= 0) ends[at] = run.snapshot();
+      if (on.compareTo(todayKey) > 0) ends[kScoreDays - 1] = run.snapshot();
     }
   }
 
@@ -170,7 +189,7 @@ ScoreBook scoresOf(
     carried = ends[i] ?? carried;
     days.add(carried);
   }
-  days[kScoreDays - 1] = snapshot();
+  days[kScoreDays - 1] = run.snapshot();
 
   SkillScore scoreOf(Skill? s, int n) => SkillScore(
     now: days.last[s]!.round(),
@@ -179,7 +198,63 @@ ScoreBook scoresOf(
   );
 
   return ScoreBook(
-    overall: scoreOf(null, overallAnswers),
-    skills: {for (final Skill s in Skill.values) s: scoreOf(s, answers[s]!)},
+    overall: scoreOf(null, run.overallAnswers),
+    skills: {
+      for (final Skill s in Skill.values) s: scoreOf(s, run.answers[s]!),
+    },
   );
+}
+
+/// How far one answer moved a score: where the score stood just before it
+/// and just after, as the reader sees a score, in whole points.
+class ScoreMove {
+  const ScoreMove({
+    required this.before,
+    required this.after,
+    this.skill,
+    required this.on,
+  });
+
+  final int before;
+  final int after;
+
+  /// The skill whose score it is; null for the score of every skill
+  /// together.
+  final Skill? skill;
+
+  /// The day the answer was given (dateKey).
+  final String on;
+
+  /// By how much: +12, or -8.
+  int get by => after - before;
+}
+
+/// How the last answer given on [pillId] moved the reader's score in
+/// [skill], when the card trains it, or else their score in every skill
+/// together. Null when no answer on it moved a score.
+ScoreMove? lastMoveOn(
+  String pillId,
+  Iterable<Judgement> judgements, {
+  Skill? skill,
+  Pill? Function(String id)? cardOf,
+}) {
+  final _Running run = _Running(cardOf ?? PillBank.byId);
+  final Pill? card = run.find(pillId);
+  if (card == null) return null;
+  final Skill? scored = skill != null && skill.fitOf(card) != null
+      ? skill
+      : null;
+  ScoreMove? last;
+  for (final Judgement j in judgements) {
+    final bool mine = j.pillId == pillId;
+    final double before = run.of(scored);
+    if (!run.take(j) || !mine) continue;
+    last = ScoreMove(
+      before: before.round(),
+      after: run.of(scored).round(),
+      skill: scored,
+      on: j.on ?? '',
+    );
+  }
+  return last;
 }

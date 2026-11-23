@@ -253,6 +253,19 @@ class TrainingChapter extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // The one number is every reader's, skills picked or not.
+                _Overall(score: book.overall),
+                if (book.overall.answers > 0) ...[
+                  const SizedBox(height: 12),
+                  ScoreSpark(
+                    values: book.overall.days,
+                    colour: p.ink,
+                    height: 40,
+                  ),
+                ],
+                const SizedBox(height: 18),
+                Container(height: 1, color: p.ink.withValues(alpha: 0.08)),
+                const SizedBox(height: 16),
                 Text(
                   l.trainingEmpty,
                   style: AppText.body(

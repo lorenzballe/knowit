@@ -1941,6 +1941,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String scoreMoveLabel(String name, String n) {
+    return '$name: $n voor dit antwoord';
+  }
+
+  @override
   String scoreAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -1953,9 +1958,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get videoKicker => 'Video';
-
-  @override
-  String get videoTapToPlay => 'Tik om af te spelen';
 
   @override
   String get videoPlay => 'Afspelen';

@@ -11,7 +11,9 @@ import 'package:intl/intl.dart';
 
 import '../data/pills_repository.dart' show dateKey;
 import '../data/skill_scores.dart';
+import '../data/skills.dart';
 import '../l10n/l10n.dart';
+import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 
@@ -33,6 +35,36 @@ class _Kept {
 }
 
 final Expando<_Kept> _kept = Expando('scores');
+
+/// How the reader's answer on [pill] today moved their score: in [skill],
+/// the skill in focus the card trains, or else in every skill together.
+/// Null when the card was not answered today, or the answer moved nothing
+/// a reader could see. Worked out once for each new judgement.
+ScoreMove? todayMoveOf(AppState app, Pill pill, Skill? skill) {
+  final String key = '${app.judgements.length}|${dateKey(app.today)}';
+  _Moves? moves = _moves[app];
+  if (moves == null || moves.key != key) {
+    moves = _Moves(key);
+    _moves[app] = moves;
+  }
+  final String at = '${pill.id}|${skill?.name}';
+  if (moves.byCard.containsKey(at)) return moves.byCard[at];
+  final ScoreMove? move = lastMoveOn(pill.id, app.judgements, skill: skill);
+  final ScoreMove? shown =
+      move == null || move.by == 0 || move.on != dateKey(app.today)
+      ? null
+      : move;
+  moves.byCard[at] = shown;
+  return shown;
+}
+
+class _Moves {
+  _Moves(this.key);
+  final String key;
+  final Map<String, ScoreMove?> byCard = {};
+}
+
+final Expando<_Moves> _moves = Expando('moves');
 
 /// [n] in the reader's digits, grouped: 1,284 or 1.284.
 String scoreNumber(BuildContext context, int n) =>
@@ -166,5 +198,131 @@ class _SparkPainter extends CustomPainter {
       if (a[i] != b[i]) return false;
     }
     return true;
+  }
+}
+
+/// How far an answer moved a score, said beside its verdict on the card's
+/// back: the skill's own glyph, or for the score of every skill together an
+/// arrow up or down, and the points, counted up as the back comes
+/// round. In the card's ink, on a wash of it, so it reads on every card's
+/// colour; the sign says up or down, not the colour alone.
+///
+/// Set in a line of text (a [WidgetSpan]), it takes the room [sizeOf] says
+/// from the first frame, so the words after it never move as it counts.
+class ScoreMoveChip extends StatelessWidget {
+  const ScoreMoveChip({super.key, required this.move, required this.ink});
+
+  final ScoreMove move;
+
+  /// The card's ink.
+  final Color ink;
+
+  /// Before it, from the verdict.
+  static const double before = 8;
+  static const double _glyph = 13;
+
+  /// The room the glyph stands in: the arrow is drawn a point larger than
+  /// a skill's glyph, for its finer stroke.
+  static const double _slot = 14;
+  static const double _gapIn = 4;
+  static const EdgeInsets _pad = EdgeInsets.fromLTRB(7, 3, 9, 3);
+
+  static TextStyle _style(Color ink) => AppText.body(
+    size: 12.5,
+    weight: FontWeight.w800,
+    height: 1.2,
+    color: ink,
+  ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
+
+  /// The room it takes, [before] it included, at [scaler].
+  static Size sizeOf(BuildContext context, ScoreMove move, TextScaler scaler) {
+    final TextPainter t = TextPainter(
+      text: TextSpan(
+        text: signedNumber(context, move.by),
+        style: DefaultTextStyle.of(context).style.merge(_style(Colors.black)),
+      ),
+      textDirection: Directionality.of(context),
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    final Size words = t.size;
+    t.dispose();
+    return Size(
+      before + _pad.horizontal + _slot + _gapIn + words.width.ceilToDouble(),
+      _pad.vertical + math.max(_slot, words.height),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Size size = sizeOf(context, move, MediaQuery.textScalerOf(context));
+    final Skill? skill = move.skill;
+    final String name = skill == null ? l.scoreTitle : l.skillName(skill.name);
+    final bool still = MediaQuery.disableAnimationsOf(context);
+    // A node of its own: set in a line of text, it would be read as part of
+    // the words before it, or not at all.
+    return Semantics(
+      container: true,
+      label: l.scoreMoveLabel(name, signedNumber(context, move.by)),
+      excludeSemantics: true,
+      child: SizedBox.fromSize(
+        key: const ValueKey('score-move'),
+        size: size,
+        child: Padding(
+          padding: const EdgeInsets.only(left: before),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: ink.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Padding(
+              padding: _pad,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox.square(
+                    dimension: _slot,
+                    child: Center(
+                      child: skill != null
+                          ? CustomPaint(
+                              size: const Size.square(_glyph),
+                              painter: SkillGlyph(skill, ink),
+                            )
+                          // An arrow, not a line going up: that one is
+                          // Economics' mark.
+                          : Icon(
+                              move.by > 0
+                                  ? Icons.arrow_upward_rounded
+                                  : Icons.arrow_downward_rounded,
+                              size: _slot,
+                              color: ink,
+                            ),
+                    ),
+                  ),
+                  const SizedBox(width: _gapIn),
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(
+                      begin: still ? move.by.toDouble() : 0,
+                      end: move.by.toDouble(),
+                    ),
+                    duration: still
+                        ? Duration.zero
+                        : const Duration(milliseconds: 900),
+                    curve: const Interval(0.3, 1, curve: Curves.easeOutCubic),
+                    builder: (context, v, _) => Text(
+                      signedNumber(context, v.round()),
+                      style: _style(ink),
+                      maxLines: 1,
+                      softWrap: false,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
