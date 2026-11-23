@@ -74,3 +74,19 @@ Cosa vuol dire per chi disegna:
 2. **Malleabile: si ridisegna alla misura vera ogni volta che il suo spazio cambia** (un `ResizeObserver` sul riquadro che richiama il disegno), e la composizione è pensata per stare bene sia alta sia bassa e larga. Mai un disegno fatto per una misura e mostrato a un'altra.
 3. **Alla fine si fa spazio al disegno:** la spiegazione si accorcia quando il disegno mostra già i numeri, e quello che non serve più (la barra del tempo, a storia finita) se ne va.
 4. **Il controllore lo vede da solo:** `tool/cards/card_check.cjs` segnala un disegno mostrato più piccolo di com'era stato fatto, o schiacciato in una striscia alla fine.
+
+## Lezione 6: ogni carta perfetta, anche quelle che nessuno ha guardato (novembre 2026)
+
+Guardando le carte del giorno sul telefono, il proprietario: "ci sono alcune carte che non sono fatte troppo benissimo… il disegno non è che sia una cosa fenomenale… dobbiamo fare tutte le carte, devono essere perfette." Le carte erano tre: una di psicologia e una di scienze con una fascia vuota tra la domanda e le risposte, e quella dell'Etna ("What happens if half a mountain falls into the sea?") con un triangolo marrone per vulcano.
+
+Cosa è venuto fuori guardandole tutte:
+
+- **Le carte a domanda senza disegno lasciavano un buco.** La domanda si fermava a 28 punti, la misura che ha accanto a un disegno; una carta senza disegno ha la domanda come immagine. Ora cresce fino a riempire la carta (fino a un sesto della sua larghezza), e un controllo su tutte le 2.829 carte che chiedono (`test/card_front_fit_test.dart`) vede che non resta una fascia vuota sopra le risposte e che nessuna risposta finisce sotto salva e condividi.
+- **Le carte disegnate, giudicate una per una contro le lezioni 3 e 5:** su 934, 80 rotte o quasi vuote (un puntino, un riquadro tratteggiato, solo pulsanti), 612 deboli, 207 accettabili, 34 buone, una ottima. Il difetto più comune: il lato della domanda vuoto, con il disegno che arriva solo dopo che il lettore ha agito (assi da riempire, un cursore su un campo vuoto, didascalie in carattere da terminale).
+
+Cosa vuol dire per chi disegna:
+
+1. **Il lato della domanda è la copertina.** È quello che si vede nel mazzo del giorno e sullo scaffale: deve già mostrare grande la cosa vera di cui parla la storia (il vulcano, il ponte, la cella, la coppia), con quello che il lettore deve fare sopra o accanto. Mai assi vuoti, riquadri tratteggiati o un puntino in attesa della risposta.
+2. **Il livello sono le carte rifatte di novembre 2026**, oltre al bradisismo: l'Etna, il ponte di Eshima, la diga di Hoover, la risonanza contata in "Terre", il popcorn al cinema, la cella di Guayaquil.
+3. **Ridisegnare non è riscrivere:** storia, fatti, domanda, risposta e fonte restano, salvo una parola dove il disegno la chiede. Ma se rifacendo il disegno si trova un fatto sbagliato, si corregge con le fonti (Guayaquil: i 79 morti del 23 febbraio 2021 erano in tre carceri, non tutti decapitati in uno).
+4. **Si rifanno tutte, a ondate, dalle peggiori.** Ogni ondata passa `card_check.cjs` su tre telefoni, poi le foto della carta si rifanno (`tool/cards/thumbs.cjs <id>…`) e il pacchetto si ricostruisce (`tool/cards/bundle.py`).

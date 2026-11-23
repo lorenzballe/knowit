@@ -1,19 +1,25 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Flatten, then burn</title>
-<!-- A high-speed camera on one tin drop inside the light source of an EUV chip machine. The reader
-     scrubs the clock from -1.5 to +3.05 microseconds. A drop of molten tin 25 µm across flies at
-     70 m/s; at 0 a weak CO2-laser pre-pulse hits it and it spreads into a thin pancake; 3 µs later it
-     has flown into the main beam, far wider than the drop was, and fills it; the main pulse turns all
-     of it into a plasma of over 200,000 °C (ASML: 40 times the Sun's surface) that glows at 13.5 nm.
-     Why twice: a round drop is far narrower than the main beam, so most of the pulse would fly past
-     it; the pancake fills the beam and turns to plasma in one go. At the end "Hit it once" replays the
-     drop without the pre-pulse: the main pulse lights only the sliver of beam the round drop is in.
+<!-- A high-speed camera on one tin drop inside the light source of an EUV chip machine, drawn flat:
+     the drop is a silver ball with an ink edge, flying across the frame; the two laser pulses rise from
+     below as two columns, pale while they wait, orange (the weak pre-pulse) and red (the main pulse)
+     when they fire. The reader scrubs the clock from -1.5 to +3.05 microseconds, read out large in the
+     top corner. A drop of molten tin 25 µm across flies at 70 m/s; at 0 a weak CO2-laser pre-pulse hits
+     it and it spreads into a thin pancake, a disc seen a little from above; 3 µs later it has flown into
+     the main beam, far wider than the drop was, and spans it; the main pulse turns all of it into a ball
+     of plasma of over 200,000 °C (ASML: 40 times the Sun's surface) that sends out 13.5 nm light (violet
+     strokes), and the beam stops there. Why twice: a round drop is far narrower than the main beam, so
+     most of the pulse would fly past it; the pancake fills the beam and turns to plasma in one go. At the
+     end "Hit it once" replays the drop without the pre-pulse: the main pulse lights only the sliver of
+     beam under the round drop (yellow) and the rest of the beam flies on past it.
      Facts: ASML "Light & lasers" (25 µm, 70 m/s, 13.5 nm); ASML "Making EUV: from lab to fab" (2022),
      ASML annual report 2025 and San Diego page (50,000 drops a second, two CO2 pulses, 40 times the
      Sun's surface); Bits&Chips (a weak pulse makes the pancake, a hard one vaporizes it); US patents on
      EUV source control (pre-pulse to main pulse 3-4 µs; main focal spot much larger than the drop);
      ARCNL (the sheet forms over microseconds); arXiv 2109.02999 (tin must reach 30-50 eV, over
      350,000 K). Inspired by Veritasium, "The Closest Thing We Have to Alien Technology".
+     The picture is drawn again at its real size whenever its box changes; where it is short and wide
+     the clock shares the top with the plasma, where there is room it has a band of its own.
      Touch: drags (the clock is data-drag; a tap on it jumps, the play button plays it, arrow keys work;
      at the end the clock gives way to the "Hit it once" button). -->
 <link rel="stylesheet" href="kit/fonts.css">
@@ -39,7 +45,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HIGH-SPEED CAMERA</span></div>
     <h2 class="q">To make the light that prints chips, a laser hits each tin drop twice, microseconds apart. Why not once?</h2>
     <div class="stagebox" id="stage">
-      <canvas id="cam" role="img" aria-label="A drop of molten tin flies toward two infrared laser beams coming from the left: a thin pre-pulse beam and, lower down, a much wider main beam."></canvas>
+      <canvas id="cam" role="img" aria-label="A drop of molten tin flies across the frame toward two infrared laser beams rising from below: a thin pre-pulse beam and, further along, a much wider main beam."></canvas>
       <div id="scrub">
         <button id="play" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="ico" d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></svg></button>
         <svg id="track" data-drag tabindex="0" role="slider" aria-label="Time, in microseconds" aria-valuemin="-1.5" aria-valuemax="3.05" aria-valuenow="-1.5" aria-valuetext="minus 1.5 microseconds"></svg>
@@ -55,16 +61,23 @@
 <script>
 (() => {
   const cv = Kit.$('cam'), trk = Kit.$('track'), playB = Kit.$('play'), ico = Kit.$('ico'), say = Kit.$('say'), card = Kit.$('card'), cmp = Kit.$('cmp');
-  const INK = '#10100c';
+  // One ink; silver for the tin; the laser orange when it is the weak pre-pulse, red when it is the main
+  // pulse, yellow for the sliver of it a round drop catches; lavender and white for the plasma, violet
+  // for the 13.5 nm light it gives off.
+  const INK = '#10100c', TIN = '#d4dbe3', TIN_D = '#97a3b0', GLINT = '#ffffff';
+  const PRE = '#ffa64d', MAIN = '#ff4d2e', SLIVER = '#ffd84a', PLASMA = '#cdb6ff', CORE = '#ffffff', EUV = '#4b1fb8';
+  const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
   // Time in microseconds, sizes in micrometres.
-  const T0 = -1.5, T1 = 3.05, TP = 3;             // the clock's start and end; the main pulse
-  const V = 70, VX = 15;                           // the fall (70 m/s = 70 µm per µs); the push the pre-pulse gives
-  const R0 = 12.5, RM = 110;                       // the drop's radius; the pancake's, when the main pulse comes
-  const HU = 560, YPP = 150, YMP = YPP + V * TP;   // the frame's height; where each pulse is aimed
+  const T0 = -1.5, T1 = 3.05, TP = 3;              // the clock's start and end; the main pulse
+  const V = 70, VX = 15;                            // the flight (70 m/s = 70 µm per µs); the push the pre-pulse gives
+  const R0 = 12.5, RM = 110, RP = RM * 1.12;        // the drop's radius; the pancake's when the main pulse comes; the plasma's
+  const XP = 150, XM = XP + V * TP, UW = 500;       // where each pulse is aimed along the flight; the frame's width
+  const A0P = 42, AFP = R0 + 8, A0M = 140, AFM = RM + 8;   // each beam's half-width at the frame's foot and at its focus
+  const LB = 90;                                    // the least of the beams shown under the flight: the plasma's foot and a line
   const PLAY = 'M7 4.5v15l12.5-7.5z', PAUSE = 'M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z';
   const SAY = [
     'A drop of molten tin, 25&nbsp;µm across, flies at 70&nbsp;m/s. Two pulses of an infrared laser wait for it. Drag the clock.',
-    '<b>0&nbsp;µs.</b> A weak pre-pulse hits the drop. Look how much narrower it is than the main beam below: most of that beam would miss it.',
+    '<b>0&nbsp;µs.</b> A weak pre-pulse hits the drop. Look how much narrower it is than the main beam ahead: most of that beam would miss it.',
     'The hit flattens the tin into a thin pancake. It keeps flying and spreading, until it spans the main beam.',
     '<b>A drop is far narrower than the beam:</b> most of the pulse would fly past. The pancake fills it and turns to plasma in one go.'
   ];
@@ -72,164 +85,200 @@
   const ONCE = ['No pre-pulse this time: the drop stays round as it flies into the main beam.',
     '<b>Hit once, the round drop catches only a sliver of the beam.</b> The rest of the pulse flies past it.'];
   const ARIA_ONCE = ['Without a pre-pulse, the round drop flies on toward the much wider main beam.',
-    'The main pulse has fired at the round drop: only the thin sliver of beam in its way touches the tin, and the rest of the pulse flies past.'];
+    'The main pulse has fired at the round drop: only the thin sliver of beam under it touches the tin, and the rest of the pulse flies on past.'];
   const ARIA = [
-    'A drop of molten tin flies toward two infrared laser beams coming from the left: a thin pre-pulse beam and, lower down, a much wider main beam.',
-    'The pre-pulse has just hit the drop, which is far narrower than the main beam below it.',
-    'The drop has spread into a thin pancake, seen from the side, flying toward the main beam.',
-    'The pancake fills the main beam and has become a glowing plasma of over 200,000 degrees Celsius, giving off 13.5 nanometre light.'
+    'A drop of molten tin flies across the frame toward two infrared laser beams rising from below: a thin pre-pulse beam and, further along, a much wider main beam.',
+    'The pre-pulse has just hit the drop, which is far narrower than the main beam ahead of it.',
+    'The drop has spread into a thin pancake, a flat disc, flying on toward the main beam.',
+    'The pancake spans the main beam and has become a ball of plasma of over 200,000 degrees Celsius, giving off 13.5 nanometre light.'
   ];
   let t = T0, g = null, x = null, tk = null, fillL = null, head = null, phase = 0, done = false, tw = null, once = false;
 
   // ---------- the camera ----------
+  // The ground of the beams' paths: the card's colour, lightened.
+  function tint(c, k) {
+    const m = /^#?([0-9a-f]{6})$/i.exec((c || '').trim()); if (!m) return '#4dc1ff';
+    const n = parseInt(m[1], 16), ch = [n >> 16, (n >> 8) & 255, n & 255].map(v => Math.round(v + (255 - v) * k));
+    return '#' + ch.map(v => v.toString(16).padStart(2, '0')).join('');
+  }
   function layout() {
     const f = Kit.fitCanvas(cv); x = f.x;
-    const W = f.W, H = f.H, s = H / HU;
-    const fs = Math.max(11.5, Math.min(13.5, H / 15, W / 24));
-    g = {W, H, s, fs, xpp: W * .5 / s};
+    const W = f.W, H = f.H;
+    const fs = Math.max(11.5, Math.min(13.5, W / 24));
+    // Until the main pulse the picture needs room over the flight only for the pancake's rise and its
+    // name, and the clock is set large on a band of its own. Once the plasma is lit it needs room for the
+    // plasma: then two ways to set it, the one with the bigger drop wins. With a band of its own at the
+    // top for the readout, the plasma lies under it; short and wide, the readout shares the top with the
+    // plasma, left of it.
+    let big = done ? Math.max(20, Math.min(34, W * .1, H * .15)) : Math.max(22, Math.min(48, W * .135, H * .17));
+    const NB = big * 1.2 + fs * 1.5, name = fs * 2.6 / (W / UW);
+    const topB = done ? TP * VX + RP + 34 : TP * VX + R0 + name, topS = TP * VX + RP + 8;
+    const sS = Math.min(W / UW, H / (topS + LB)), sB = Math.min(W / UW, (H - NB) / (topB + LB));
+    const band = !done || sB >= sS * .86, s = band ? sB : sS, oy = band ? NB : 0, ox = Math.max(0, (W - UW * s) / 2);
+    const HA = (H - oy) / s, top = band ? topB : topS, yf = top + Math.max(0, HA - top - LB) * (done ? .4 : .22);
+    x.font = `800 ${big}px ${SERIF}`;
+    const room = band ? W - 4 : ox + (XM - RP) * s - 12, wide = x.measureText('200,000+ °C').width;
+    if (wide > room) big = Math.max(15, big * room / wide);
+    const path = tint(getComputedStyle(card).getPropertyValue('--c'), .3);
+    g = {W, H, s, fs, big, band, ox, oy, yf, path, X: u => ox + u * s, Y: v => oy + v * s};
   }
-  const P = u => u * g.s;
-  function rr(a, b, w, h, q) { x.beginPath(); x.moveTo(a + q, b); x.arcTo(a + w, b, a + w, b + h, q); x.arcTo(a + w, b + h, a, b + h, q); x.arcTo(a, b + h, a, b, q); x.arcTo(a, b, a + w, b, q); x.closePath(); }
-  // A laser beam from the left edge to its focus: a dashed outline while it waits, filled when it fires.
-  function beam(y, xf, a0, af, through, fire) {
-    const {W} = g, xe = through ? W : xf + af * .3;
-    const top = [[0, y - a0], [xf, y - af], [xe, y - af]], bot = [[0, y + a0], [xf, y + af], [xe, y + af]];
-    x.beginPath(); top.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); [...bot].reverse().forEach(([a, b]) => x.lineTo(a, b)); x.closePath();
-    if (fire > 0) {
-      const gr = x.createLinearGradient(0, 0, xf, 0);
-      gr.addColorStop(0, `rgba(255,236,200,${.16 * fire})`); gr.addColorStop(1, `rgba(255,244,225,${.62 * fire})`);
-      x.fillStyle = gr; x.fill();
-    }
-    x.save(); x.setLineDash(fire > .02 ? [] : [5, 5]); x.strokeStyle = `rgba(${Math.round(150 + 105 * fire)},${Math.round(245 * fire)},${Math.round(25 + 200 * fire)},${.85 + .1 * fire})`; x.lineWidth = 1.3;
-    for (const edge of [top, bot]) { x.beginPath(); edge.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.stroke(); }
+  // Where the tin is at a time, and how far it has spread (0 a drop, 1 the pancake the main pulse meets).
+  function tinAt(tt) {
+    if (once || tt <= 0) return {u: XP + V * tt, v: g.yf, e: 0};
+    const u = Math.min(1, tt / TP);
+    return {u: XP + V * tt, v: g.yf - VX * tt, e: 1 - (1 - u) * (1 - u)};
+  }
+  const circle = (cx, cy, r) => { x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); };
+  // A laser beam rising from the frame's foot to its focus, where it stops flat on what it is aimed at;
+  // or, given `to`, straight on up past it.
+  function beam(xc, yf, a0, af, fill, lw, to) {
+    const {H} = g, end = to == null ? yf : to;
+    x.beginPath(); x.moveTo(xc - a0, H + 4); x.lineTo(xc - af, yf); x.lineTo(xc - af, end); x.lineTo(xc + af, end); x.lineTo(xc + af, yf); x.lineTo(xc + a0, H + 4); x.closePath();
+    x.fillStyle = fill; x.fill(); x.strokeStyle = INK; x.lineWidth = lw; x.stroke();
+  }
+  // A name on a white pill, where it sits on a beam split in two.
+  function pill(s, a, b) {
+    x.font = `700 ${g.fs}px ${FONT}`; const w = x.measureText(s).width, h = g.fs * 1.5, l = a - w / 2 - g.fs * .55, tp = b - g.fs * 1.05;
+    x.beginPath(); x.roundRect ? x.roundRect(l, tp, w + g.fs * 1.1, h, h / 2) : x.rect(l, tp, w + g.fs * 1.1, h);
+    x.fillStyle = '#ffffff'; x.fill(); x.strokeStyle = INK; x.lineWidth = 1.5; x.stroke();
+    return label(s, a, b, 'center');
+  }
+  // The drop: silver, its shade low on the right, a glint, an ink edge.
+  function drop(cx, cy, r) {
+    x.save(); circle(cx, cy, r); x.clip();
+    x.fillStyle = TIN_D; x.fillRect(cx - r - 1, cy - r - 1, 2 * r + 2, 2 * r + 2);
+    x.fillStyle = TIN; circle(cx - r * .24, cy - r * .24, r * .94); x.fill();
     x.restore();
+    x.fillStyle = GLINT; x.beginPath(); x.ellipse(cx - r * .4, cy - r * .42, r * .27, r * .16, -Math.PI / 4, 0, Math.PI * 2); x.fill();
+    circle(cx, cy, r); x.strokeStyle = INK; x.lineWidth = Math.max(1.6, Math.min(2.4, r * .2)); x.stroke();
   }
-  // The readouts once the plasma is lit: the temperature, top right; the light it gives, bottom right.
-  function hudLines() {
-    const {W, H, fs} = g, big = Math.max(17, Math.min(26, H / 10, W / 13));
-    return [['200,000+ °C', W - 12, 10 + big * .82, big, INK, `800 ${big}px Fraunces`],
-      ['40× the Sun’s surface', W - 12, 14 + big * .82 + fs * 1.05, fs, 'rgba(16,16,12,.88)', `600 ${fs}px Figtree`],
-      ['13.5 nm light', W - 12, H - 11, fs, '#3a0a8c', `700 ${fs}px Figtree`]];
+  // The pancake: a disc lying flat, seen a little from above, its rim under it; a drop still, at first.
+  function pancake(cx, cy, R, ry, th) {
+    const lw = Math.max(1.6, Math.min(2.4, ry * .5));
+    x.beginPath(); x.ellipse(cx, cy + th, R, ry, 0, 0, Math.PI * 2); x.fillStyle = TIN_D; x.fill(); x.strokeStyle = INK; x.lineWidth = lw; x.stroke();
+    x.beginPath(); x.rect(cx - R - lw, cy, 2 * R + 2 * lw, th); x.fillStyle = TIN_D; x.fill();
+    x.beginPath(); x.moveTo(cx - R, cy); x.lineTo(cx - R, cy + th); x.moveTo(cx + R, cy); x.lineTo(cx + R, cy + th); x.stroke();
+    x.beginPath(); x.ellipse(cx, cy, R, ry, 0, 0, Math.PI * 2); x.fillStyle = TIN; x.fill(); x.stroke();
+    x.fillStyle = GLINT; x.beginPath(); x.ellipse(cx - R * .38, cy - ry * .36, R * .22, ry * .26, 0, 0, Math.PI * 2); x.fill();
   }
-  // Their boxes, [left, top, right, bottom], for the rays to keep out of.
-  function hud() {
-    return hudLines().map(([s, a, b, size, , font]) => { x.font = font; const w = x.measureText(s).width; return [a - w, b - size * .85, a, b + size * .25]; });
+  // Where a pulse strikes: a small flat flash.
+  function flash(cx, cy, r) {
+    x.beginPath();
+    for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 - Math.PI / 2, q = i % 2 ? r * .46 : r; x.lineTo(cx + Math.cos(a) * q, cy + Math.sin(a) * q); }
+    x.closePath(); x.fillStyle = '#fff3a8'; x.fill(); x.strokeStyle = INK; x.lineWidth = 1.6; x.stroke();
   }
-  // Hit once: the main pulse fires at the round drop. Only the sliver of beam in its way reaches the
-  // tin, a small spark on its face; behind it, its shadow; the rest of the beam flies past.
-  function sliver(cx, cy, k) {
-    const {W} = g, r = Math.max(3.5, P(R0));
-    x.fillStyle = `rgba(255,244,225,${.95 * k})`; x.fillRect(0, cy - r, cx, 2 * r);
-    x.fillStyle = `rgba(5,40,80,${.5 * k})`; x.fillRect(cx, cy - r, W - cx, 2 * r);
-    const sx = cx - r * .55, sr = r * 2.6, gr = x.createRadialGradient(sx, cy, 0, sx, cy, sr);
-    gr.addColorStop(0, `rgba(255,255,255,${k})`); gr.addColorStop(.45, `rgba(120,50,230,${.7 * k})`); gr.addColorStop(1, 'rgba(100,40,220,0)');
-    x.fillStyle = gr; x.beginPath(); x.arc(sx, cy, sr, 0, 7); x.fill();
+  // Three strokes behind what flies: it is moving, fast.
+  function speed(cx, cy, hw, hh) {
+    const L = Math.max(7, Math.min(22, hh * 1.7)), gap = Math.max(4, hh * .45);
+    x.strokeStyle = INK; x.lineWidth = Math.max(1.6, Math.min(2.4, hh * .2)); x.lineCap = 'round';
+    for (const i of [-1, 0, 1]) { const y = cy + i * hh * .55, l = i ? L * .65 : L; x.beginPath(); x.moveTo(cx - hw - gap, y); x.lineTo(cx - hw - gap - l, y); x.stroke(); }
   }
-  function onceLabels(cx, cy) {
-    const {W, fs} = g, r = Math.max(3.5, P(R0)), f = `700 ${fs}px Figtree`;
-    x.font = f; let a = 'a sliver hits the drop'; if (x.measureText(a).width > cx - r - 30) a = 'a sliver hits';
-    pill(a, cx - r - 9, cy - r - 7, fs, f); label(a, cx - r - 9, cy - r - 7, 'right', fs, INK, f);
-    const b = 'the rest flies past →'; pill(b, W - 12, cy + r + fs + 5, fs, f); label(b, W - 12, cy + r + fs + 5, 'right', fs, INK, f);
-    const tg = 'HIT ONCE', tf = `800 ${fs}px Figtree`; pill(tg, W - 12, 12 + fs * .72, fs, tf); label(tg, W - 12, 12 + fs * .72, 'right', fs, INK, tf);
+  function label(s, a, b, align, weight) {
+    x.font = `${weight || 700} ${g.fs}px ${FONT}`; x.textAlign = align || 'left'; x.textBaseline = 'alphabetic'; x.fillStyle = INK; x.fillText(s, a, b);
+    const w = x.measureText(s).width, l = align === 'right' ? a - w : align === 'center' ? a - w / 2 : a;
+    return [l, b - g.fs * .8, l + w, b + g.fs * .25];
   }
-  // A light backing under a readout that sits on a beam.
-  function pill(s, a, b, size, font) { x.font = font; const w = x.measureText(s).width; x.fillStyle = 'rgba(255,255,255,.78)'; rr(a - w - 7, b - size * 1.02, w + 14, size * 1.42, size * .5); x.fill(); }
-  function label(s, a, b, align, size, color, font) {
-    x.font = font || `600 ${size}px "JetBrains Mono"`; x.textAlign = align; x.textBaseline = 'alphabetic'; x.fillStyle = color; x.fillText(s, a, b);
+  const leader = (a, b, c, d) => { x.strokeStyle = INK; x.lineWidth = 1.5; x.lineCap = 'round'; x.beginPath(); x.moveTo(a, b); x.lineTo(c, d); x.stroke(); };
+
+  // What the big readout says: the clock, until the plasma is lit; then how hot it is.
+  function readout() {
+    const f2 = v => Math.abs(v).toFixed(2) + ' µs';
+    if (once) return t >= TP ? ['Hit once', 'no pre-pulse this time'] : [f2(TP - t), 'to the main pulse'];
+    if (t >= TP) return ['200,000+ °C', '40× the Sun’s surface'];
+    return t < 0 ? [f2(t), 'to the pre-pulse'] : [f2(t), 'since the pre-pulse'];
   }
 
   function paint() {
     if (!g) return;
-    const {W, H, s, fs} = g;
+    const {W, H, s, fs, X, Y, yf, oy} = g;
     x.clearRect(0, 0, W, H);
+    x.lineJoin = 'round'; x.lineCap = 'round';
+    const ym = yf - VX * TP, d = tinAt(t), r0 = Math.max(4, R0 * s);
+    const firePre = !once && t >= 0 && t < .25, fire = t >= TP ? Math.min(1, (t - TP) / .02) : 0;
+    const cx = X(d.u), cy = Y(d.v), top = oy - 4, boxes = [];
 
-    const xp = P(g.xpp), yp = P(YPP), xm = P(g.xpp + VX * TP), ym = P(YMP);
-    const firePre = !once && t >= 0 ? Math.max(0, 1 - t / .3) : 0, fireMain = t >= TP ? Math.min(1, (t - TP) / .02) : 0;
-    beam(ym, xm, P(125), P(RM + 8), true, fireMain);
-    beam(yp, xp, P(48), P(R0 + 8), false, firePre);
-    // which beam is which, inside each beam at the left edge
-    const bl = Math.max(11.5, fs * .92);
-    if (!(once && fireMain)) label('main pulse', 12, ym + bl * .35, 'left', bl, 'rgba(16,16,12,.9)');
-    // the pre-pulse's name, while it matters and where the clock leaves it room
-    if (!fireMain && P(48) * 2 > bl * 1.2 && yp - bl * .5 > 14 + fs) label('pre-pulse', 12, yp + bl * .35, 'left', bl, 'rgba(16,16,12,.9)');
+    // The beams, kept below the clock's band: each one pale where it is aimed, in colour when it fires.
+    x.save(); x.beginPath(); x.rect(0, oy, W, H - oy); x.clip();
+    if (!once) beam(X(XP), Y(yf), A0P * s, AFP * s, firePre ? PRE : g.path, firePre ? 2.4 : 2);
+    if (fire > 0 && once) {
+      // Hit once: the beam flies on up past the round drop; the sliver under it is all the tin catches.
+      beam(X(XM), Y(ym), A0M * s, AFM * s, MAIN, 2.4, top);
+      x.fillStyle = SLIVER; x.fillRect(cx - r0, cy, 2 * r0, H - cy + 4);
+      x.fillStyle = g.path; x.fillRect(cx - r0, top, 2 * r0, cy - top);
+      x.strokeStyle = INK; x.lineWidth = 1.5;
+      for (const e of [cx - r0, cx + r0]) { x.beginPath(); x.moveTo(e, top); x.lineTo(e, H + 4); x.stroke(); }
+    } else beam(X(XM), Y(ym), A0M * s, AFM * s, fire > 0 ? MAIN : g.path, fire > 0 ? 2.4 : 2);
+    x.restore();
 
-    // the tin: a drop, then a pancake seen from the side
-    if (once && fireMain > 0) sliver(xp, ym, fireMain);
-    if (t < TP || once) {
-      const tt = once ? 0 : Math.max(0, t), cx = P(g.xpp + VX * tt), cy = P(YPP + V * t);
-      x.save(); x.shadowColor = 'rgba(16,16,12,.35)'; x.shadowBlur = 8;
-      x.strokeStyle = 'rgba(16,16,12,.75)'; x.lineWidth = 1;
-      if (t <= 0 || once) {
-        const r = Math.max(3.5, P(R0)), gr = x.createRadialGradient(cx - r * .35, cy - r * .35, r * .1, cx, cy, r);
-        gr.addColorStop(0, '#ffffff'); gr.addColorStop(.45, '#c9d1da'); gr.addColorStop(1, '#5d6670');
-        x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill(); x.stroke();
-      } else {
-        const u = Math.min(1, t / TP), e = 1 - (1 - u) * (1 - u);
-        const R = Math.max(3.5, P(R0 + (RM - R0) * e)), h = Math.max(1.1, Math.max(3.5, P(R0)) * (1 - e) ** 1.6), bow = R * .18 * e;
-        const gr = x.createLinearGradient(cx, cy - R, cx, cy + R);
-        gr.addColorStop(0, '#76808c'); gr.addColorStop(.5, '#f4f7fa'); gr.addColorStop(1, '#76808c');
-        x.fillStyle = gr; x.beginPath(); x.moveTo(cx - bow, cy - R);
-        x.quadraticCurveTo(cx + 2 * h + bow, cy, cx - bow, cy + R);
-        x.quadraticCurveTo(cx - 2 * h + bow, cy, cx - bow, cy - R); x.fill(); x.stroke();
-      }
-      x.restore();
-      // the spark where the pre-pulse struck
-      if (firePre > 0) {
-        const r = Math.max(6, P(R0) * 2.2) * (.6 + .4 * firePre), sx = cx - Math.max(2, P(R0) * .8), gr = x.createRadialGradient(sx, cy, 0, sx, cy, r);
-        gr.addColorStop(0, `rgba(255,255,255,${firePre})`); gr.addColorStop(.4, `rgba(255,190,90,${.8 * firePre})`); gr.addColorStop(1, 'rgba(255,90,40,0)');
-        x.fillStyle = gr; x.beginPath(); x.arc(sx, cy, r, 0, 7); x.fill();
-      }
-      // what we are looking at
-      if (!(once && fireMain)) {
-      const lx = t <= .35 || once ? cx + Math.max(3.5, P(R0)) + 8 : cx + Math.max(3, P(RM) * .1) + 10, ly = cy, lf = `700 ${fs}px Figtree`;
-      x.font = lf; let name = t <= .35 || once ? 'tin drop' : 'pancake, side view';
-      if (lx + 8 + x.measureText(name).width > W - 10) name = 'pancake';
-      x.strokeStyle = 'rgba(16,16,12,.6)'; x.lineWidth = 1; x.beginPath(); x.moveTo(lx - 5, ly); x.lineTo(lx + 4, ly); x.stroke();
-      label(name, lx + 8, ly + fs * .35, 'left', fs, INK, lf);
-      }
-    }
+    // The readout, top left: its box is kept clear of everything else.
+    const [big, small] = readout(), nb = g.big * .9;
+    x.font = `800 ${g.big}px ${SERIF}`; x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.fillStyle = INK;
+    x.fillText(big, 2, nb);
+    const bw = x.measureText(big).width;
+    // the caption clear of the µ's tail
+    const cb = label(small, 2, nb + g.big * .22 + fs * 1.1, 'left', 600);
+    boxes.push([0, 0, Math.max(bw + 2, cb[2]), cb[3] + 2]);
 
-    // the plasma
-    if (fireMain > 0 && !once) {
-      const k = fireMain, r = P(RM) * 1.12;
-      let gr = x.createRadialGradient(xm, ym, 0, xm, ym, r * 2);
-      gr.addColorStop(0, `rgba(255,255,255,${.45 * k})`); gr.addColorStop(1, 'rgba(255,255,255,0)');
-      x.fillStyle = gr; x.fillRect(0, 0, W, H);
-      // the light going out, each ray stopping short of the readouts
-      const keepOut = hud();
-      const inside = (px, py) => keepOut.some(b => px > b[0] - 4 && px < b[2] + 4 && py > b[1] - 4 && py < b[3] + 4);
-      x.save(); x.setLineDash([3, 4]); x.strokeStyle = `rgba(70,20,140,${.9 * k})`; x.lineWidth = 1.5;
+    // The plasma: a ball, lavender edged in ink, white at the heart; its light going out in violet.
+    if (fire > 0 && !once) {
+      const pr = RP * s * (.55 + .45 * fire), px = X(XM), py = Y(ym);
+      x.font = `700 ${fs}px ${FONT}`;
+      const lw = x.measureText('13.5 nm light').width;
+      // its name, left of it, about level with it (under the readout), and a line to its edge
+      const ly = Math.max(py + fs * .35, boxes[0][3] + fs * 1.3), lb = [2, ly - fs * .8, 2 + lw, ly + fs * .25];
+      const keep = [...boxes, lb, [2 + lw, ly - fs * .5, px, ly]], inside = (a, b) => keep.some(q => a > q[0] - 4 && a < q[2] + 4 && b > q[1] - 4 && b < q[3] + 4);
+      x.strokeStyle = EUV; x.lineWidth = Math.max(2.6, fs * .24); x.lineCap = 'round';
       for (let i = 0; i < 12; i++) {
-        const a = (i + .5) * Math.PI / 6, c = Math.cos(a), sn = Math.sin(a);
-        let o = 1.4; while (o > .95 && inside(xm + c * r * o, ym + sn * r * o)) o -= .05;
-        if (o <= 1.05) continue;
-        x.beginPath(); x.moveTo(xm + c * r * .92, ym + sn * r * .92); x.lineTo(xm + c * r * o, ym + sn * r * o); x.stroke();
+        const a = i * Math.PI / 6 + Math.PI / 12, c = Math.cos(a), sn = Math.sin(a), a0 = pr * 1.16, a1 = pr * 1.4;
+        if ([a0, (a0 + a1) / 2, a1].some(o => inside(px + c * o, py + sn * o))) continue;
+        const ex = px + c * a1, ey = py + sn * a1;
+        if (ex < 3 || ex > W - 3 || ey < 3 || ey > H - 3) continue;   // a stroke the edge would cut, left out
+        x.beginPath(); x.moveTo(px + c * a0, py + sn * a0); x.lineTo(px + c * a1, py + sn * a1); x.stroke();
       }
-      x.restore();
-      gr = x.createRadialGradient(xm, ym, 0, xm, ym, r);
-      gr.addColorStop(0, `rgba(255,255,255,${k})`); gr.addColorStop(.3, `rgba(247,238,255,${.97 * k})`); gr.addColorStop(.62, `rgba(150,90,245,${.8 * k})`); gr.addColorStop(1, 'rgba(100,40,230,0)');
-      x.fillStyle = gr; x.beginPath(); x.arc(xm, ym, r, 0, 7); x.fill();
+      circle(px, py, pr); x.fillStyle = PLASMA; x.fill();
+      circle(px - pr * .1, py - pr * .1, pr * .64); x.fillStyle = CORE; x.fill();
+      circle(px, py, pr); x.strokeStyle = INK; x.lineWidth = 2.6; x.stroke();
+      if (fire >= 1) {
+        label('13.5 nm light', 2, ly, 'left');
+        const dy = ly - fs * .32 - py, edge = px - Math.sqrt(Math.max(0, pr * pr - dy * dy));
+        leader(2 + lw + 6, ly - fs * .32, edge - 3, ly - fs * .32);
+        boxes.push(lb);
+      }
     }
 
-    // the camera's readouts
-    const sign = t < -1e-9 ? '−' : '+';
-    x.fillStyle = '#d70015'; x.beginPath(); x.arc(14, 12 + fs * .3, 3.6, 0, 7); x.fill();
-    label(`t = ${sign}${Math.abs(t).toFixed(2)} µs`, 23, 12 + fs * .72, 'left', fs, INK);
-    if (fireMain > 0 && once) {
-      onceLabels(xp, ym);
-    } else if (fireMain > 0) {
-      const short = H < 140;
-      hudLines().forEach(([s, a, b, size, color, font], i) => { if (i === 2 || (short && i === 1)) pill(s, a, b, size, font); label(s, a, b, 'right', size, color, font); });
-      // and the next drop is already on its way: one every 20 µs
-      const nf = `600 ${fs}px Figtree`, ns = `next drop in ${Math.round(20 - t)} µs`; x.font = nf;
-      const nw = x.measureText(ns).width, lw = x.measureText('13.5 nm light').width;
-      if (!short && 12 + nw + 14 + 10 + lw + 14 < W - 12) { pill(ns, 12 + nw + 7, H - 11, fs, nf); label(ns, 12 + 7, H - 11, 'left', fs, INK, nf); }
-    } else {
-      // a scale: how long 100 µm is in this picture, under the main beam
-      const bw = P(100), bx = W - 14 - bw, by = H - 12;
-      x.font = `600 ${fs}px "JetBrains Mono"`;
-      x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.moveTo(bx, by - 4); x.lineTo(bx, by); x.lineTo(bx + bw, by); x.lineTo(bx + bw, by - 4); x.stroke();
-      label('100 µm', bx - 6, by, 'right', fs, INK);
+    // The tin: a drop, then a pancake; behind it, how fast it flies.
+    if (t < TP || once) {
+      let hw = r0, hh = r0;
+      if (d.e <= 0) drop(cx, cy, r0);
+      else {
+        const R = Math.max(r0, (R0 + (RM - R0) * d.e) * s), ry = Math.max(R * .24, r0 * (1 - d.e) ** 1.6), th = Math.max(1.8, r0 * .5 * (1 - d.e) + 1.6);
+        pancake(cx, cy, R, ry, th); hw = R; hh = ry + th / 2;
+      }
+      speed(cx, cy + (d.e > 0 ? hh * .2 : 0), hw, Math.max(hh, r0 * .7));
+      if (firePre) flash(cx, cy + r0, r0 * 1.15);
+      if (once && fire > 0) flash(cx, cy + r0, r0 * 1.15);
+      // its name, over it, with a short line down to it
+      if (!(once && fire > 0)) {
+        const name = t <= .35 || once ? 'tin drop' : 'pancake', topY = cy - hh - 3;
+        const b = label(name, cx, topY - 12, 'center');
+        leader(cx, topY - 9, cx, topY - 2);
+        boxes.push(b);
+      }
+    }
+
+    // The beams' names, at their feet: the pre-pulse left of its beam, the main pulse inside its own.
+    if (!once) label('pre-pulse', X(XP) - A0P * s - 7, H - fs * .7, 'right');
+    if (!fire) label('main pulse', X(XM), H - fs * .7, 'center');
+    else if (once) {
+      // Hit once: a sliver of the beam reaches the drop; the rest of it flies on past.
+      x.font = `700 ${fs}px ${FONT}`;
+      const ly = (cy + H) / 2 + fs * .35, k = Math.min(1, Math.max(0, (ly - Y(ym)) / (H + 4 - Y(ym))));
+      const right = X(XM) - (AFM + (A0M - AFM) * k) * s - 8;
+      let a = 'a sliver hits the drop';
+      if (x.measureText(a).width > right - 2) a = 'a sliver hits';
+      label(a, right, ly, 'right');
+      leader(right + 4, ly - fs * .32, cx - r0 - 2, ly - fs * .32);
+      pill('the rest flies past ↑', X(XM), oy + fs * 1.35 + 4);
     }
   }
 
@@ -237,18 +286,18 @@
   function drawTrack() {
     trk.innerHTML = '';
     const {W, H} = Kit.fitSvg(trk), fs = Math.max(11.5, Math.min(13, H / 3));
-    const x0 = 11, x1 = W - 11, ty = Math.max(11, Math.round(H * .3));
+    const x0 = 12, x1 = W - 12, ty = Math.max(12, Math.round(H * .32));
     tk = {x0, x1, ty, X: v => x0 + (v - T0) / (T1 - T0) * (x1 - x0)};
-    Kit.mk('line', {x1: x0, y1: ty, x2: x1, y2: ty, stroke: 'rgba(16,16,12,.25)', 'stroke-width': 4, 'stroke-linecap': 'round'}, trk);
-    fillL = Kit.mk('line', {x1: x0, y1: ty, x2: tk.X(t), y2: ty, stroke: '#10100c', 'stroke-width': 4, 'stroke-linecap': 'round'}, trk);
+    Kit.mk('line', {x1: x0, y1: ty, x2: x1, y2: ty, stroke: INK, 'stroke-opacity': .3, 'stroke-width': 3, 'stroke-linecap': 'round'}, trk);
+    fillL = Kit.mk('line', {x1: x0, y1: ty, x2: tk.X(t), y2: ty, stroke: INK, 'stroke-width': 4, 'stroke-linecap': 'round'}, trk);
     for (const [v, name, anchor] of [[0, 'pre-pulse', 'middle'], [TP, 'main pulse', 'end']]) {
-      Kit.mk('line', {x1: tk.X(v), y1: ty - 7, x2: tk.X(v), y2: ty + 7, stroke: '#10100c', 'stroke-width': 2}, trk);
-      const e = Kit.mk('text', {x: anchor === 'end' ? x1 + 9 : tk.X(v), y: ty + 9 + fs, 'font-size': fs, 'font-weight': 700, 'font-family': 'Figtree', fill: '#10100c', 'text-anchor': anchor}, trk);
+      Kit.mk('line', {x1: tk.X(v), y1: ty - 7, x2: tk.X(v), y2: ty + 7, stroke: INK, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, trk);
+      const e = Kit.mk('text', {x: anchor === 'end' ? x1 + 10 : tk.X(v), y: ty + 10 + fs, 'font-size': fs, 'font-weight': 700, 'font-family': 'Figtree', fill: INK, 'text-anchor': anchor}, trk);
       e.textContent = name;
     }
-    const st = Kit.mk('text', {x: x0 - 9, y: ty + 9 + fs, 'font-size': fs, 'font-weight': 600, 'font-family': 'Figtree', fill: 'rgba(16,16,12,.6)'}, trk);
+    const st = Kit.mk('text', {x: x0 - 10, y: ty + 10 + fs, 'font-size': fs, 'font-weight': 600, 'font-family': 'Figtree', fill: INK, 'fill-opacity': .65}, trk);
     st.textContent = 'start';
-    head = Kit.mk('circle', {cx: tk.X(t), cy: ty, r: 9, fill: '#10100c', stroke: '#ffffff', 'stroke-width': 2.5}, trk);
+    head = Kit.mk('circle', {cx: tk.X(t), cy: ty, r: 10, fill: '#fffbf0', stroke: INK, 'stroke-width': 3}, trk);
   }
   function moveHead() { if (!tk) return; const hx = tk.X(t); head.setAttribute('cx', hx); fillL.setAttribute('x2', hx); }
 
@@ -261,7 +310,8 @@
     const ph = t >= TP ? 3 : t >= .5 ? 2 : t >= 0 ? 1 : 0;
     if (ph !== phase) { phase = ph; say.innerHTML = once ? ONCE[ph === 3 ? 1 : 0] : SAY[ph]; cv.setAttribute('aria-label', once ? ARIA_ONCE[ph === 3 ? 1 : 0] : ARIA[ph]); }
     if (!quiet && !once && before < 0 && t >= 0 && t < TP) Kit.haptic('light');
-    if (t >= T1 - 1e-6) finish();
+    // The story is told when the main pulse fires: the picture makes room for the plasma at once.
+    if (t >= TP) finish();
   }
   function finish() {
     if (done) return;
@@ -269,6 +319,7 @@
     card.classList.add('answered'); Kit.show('keep');
     // the clock has done its work: in its place, the other way to do it
     Kit.hide('track'); Kit.show('cmp');
+    all();
   }
   cmp.addEventListener('click', () => {
     stop(); once = !once; phase = -1;
@@ -307,13 +358,11 @@
   });
 
   function all() { layout(); drawTrack(); paint(); }
-  // The camera's numbers are set in a face no other text on the card uses: fetch it, then draw again.
-  if (document.fonts && document.fonts.load) document.fonts.load('600 13px "JetBrains Mono"').then(() => { if (g) paint(); }, () => {});
   Kit.onShow.card = all;
   // The pictures are drawn at their real size: when their boxes change (the end box comes in), again.
   let box = '';
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { const a = cv.getBoundingClientRect(), b = trk.getBoundingClientRect(), k = [a.width, a.height, b.width, b.height].map(Math.round).join('x'); if (g && k !== box) { box = k; all(); } }).observe(Kit.$('stage'));
-  Kit.onEnter.card = () => { if (!Kit.calm && typeof gsap !== 'undefined' && head) gsap.fromTo(head, {attr: {r: 9}}, {attr: {r: 12}, duration: .45, yoyo: true, repeat: 3, ease: 'sine.inOut'}); };
+  Kit.onEnter.card = () => { if (!Kit.calm && typeof gsap !== 'undefined' && head) gsap.fromTo(head, {attr: {r: 10}}, {attr: {r: 13}, duration: .45, yoyo: true, repeat: 3, ease: 'sine.inOut'}); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
     playB.click(); await wait(Kit.calm ? 60 : 4600);

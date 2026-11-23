@@ -1,28 +1,31 @@
 <!doctype html>
 <!-- slug: science-air-wrapped-drag -->
+<!-- The picture: two steel spheres hanging from magnets over a deep glass tank of water, a plain one and a darker one
+     coated to repel water, their names beside them. The slider drops them and the view follows them down the tank:
+     the plain one splashes in and trails a wake of bubbles; the other drags the air down with it, a funnel from the
+     surface that closes into a teardrop torpedo around it, and pulls ahead, to the tank's floor. There its drag
+     coefficient comes up in the water, joined to the torpedo by a thin line. Flat colours, thick ink outlines. Drawn
+     again at its real size whenever its room changes; the slider goes at the end, so the tank keeps the room. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card · Air-wrapped drag</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
 #pic{flex:1;min-height:0;width:100%;display:block}
-#pic text{font-family:var(--body);font-weight:700}
 #scrub{width:100%;height:max(4.5cqh,30px);accent-color:var(--k);cursor:pointer;margin:0}
-.ticks{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1.2 var(--mono);color:var(--muted)}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
-.src{overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:-.7cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.22 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.src{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Scrub · timeline">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG</span></div>
     <h2 class="q">What drag coefficient does a projectile wrapped in air get underwater?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="Two spheres falling through water, then a drag bar chart"></svg>
+      <svg id="pic" role="img" aria-label="Two steel spheres hang from magnets over a deep glass tank of water: a plain one and a darker one that repels water. The slider drops them in."></svg>
       <input data-drag id="scrub" type="range" min="0" max="1000" value="0" aria-label="Time">
-      <div class="ticks"><span>drop</span><span>air shell</span><span>race</span><span>measure</span></div>
     </div>
     <div id="why" class="gone"><p class="body">The water-repelling sphere carries a shell of air, so it moves as a smooth torpedo of gas, not a solid. Researchers measured it in 2017 (Science Advances): a drag coefficient of only 0.02 to 0.03, ten times lower than the same shape made solid.</p></div>
     <p class="say" id="say">Drag the slider to drop both spheres into the water.</p>
@@ -33,96 +36,177 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const svg = Kit.$('pic'), scrub = Kit.$('scrub');
-let dims = null, t = 0, done = false;
-const bubbles = Array.from({length: 16}, (_, i) => ({a: Kit.rnd() * 6.28, d: .6 + i * .35, r: .12 + Kit.rnd() * .2, s: .5 + Kit.rnd()}));
+// Flat colours with one meaning each: the water blue, the plain steel light, the coated sphere dark, the air it
+// carries silver-white; the magnets that hold the spheres dark, with their copper coil.
+const INK = '#10100c', SEA = '#2f7fe0', WHITE = '#fffbf0', STEEL = '#cfd4da', COAT = '#56606c', AIR = '#e6f1ff', MAG = '#3b4149', COIL = '#d0803f';
+// What the slider shows, in the line under the picture.
+const CAP = ['Both spheres hit the water.', 'One wraps itself in an air torpedo.', 'It falls about 33% faster.', 'Drag coefficient: 10× lower.'];
+// The plain sphere's wake: bubbles left behind it, each at its own distance and to its own side.
+const WAKE = Array.from({length: 22}, (_, i) => ({d: 1.05 + i * .62, a: Kit.rnd() * 6.28, r: .12 + Kit.rnd() * .16, w: .3 + Kit.rnd() * .55}));
 const cl = v => Math.max(0, Math.min(1, v));
+let G = null, t = 0, done = false, touched = false;
+
+function build() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(15, f * .95)), big = Math.max(20, Math.min(30, f * 1.9));
+  // The tank, in the picture's own measure: the spheres hanging from their magnets, the tank's rim, the water, a
+  // floor well below the picture's foot. The view starts close on the spheres and follows them down to the floor;
+  // there, told, the spheres are drawn as large as the torpedo lets them be.
+  const R = Math.max(6, Math.min(W * .09, done ? (H - 10) / 6.8 : H * .1));
+  const y0 = H * .3, rimY = y0 + R + H * .1, seaY = rimY + H * .09, floorY = seaY + Math.max(H * 1.55, R * 9);
+  G = {W, H, f, fs, big, R, y0, rimY, seaY, floorY, wall: Math.min(16, W * .05)};
+  render();
+}
+
+// The air the coated sphere carries: tight round its front, drawn out behind it to a point.
+function teardrop(x, y, rr, L) {
+  return `M${x - rr},${y} C${x - rr},${y - L * .42} ${x - rr * .32},${y - L * .86} ${x},${y - L} C${x + rr * .32},${y - L * .86} ${x + rr},${y - L * .42} ${x + rr},${y} A${rr},${rr} 0 0 1 ${x - rr},${y} Z`;
+}
+
+// A steel sphere: its colour, an ink outline, a highlight.
+function sphere(p, x, y, R, fill, shine) {
+  Kit.mk('circle', {cx: x, cy: y, r: R, fill, stroke: INK, 'stroke-width': Math.max(1.6, R * .11)}, p);
+  Kit.mk('ellipse', {cx: x - R * .36, cy: y - R * .38, rx: R * .26, ry: R * .16, fill: shine, transform: `rotate(-38 ${x - R * .36} ${y - R * .38})`}, p);
+}
+
+// Thrown up where a sphere breaks the surface, while it is just under it.
+function splash(p, x, sy, depth, R) {
+  const k = cl(1 - Math.abs(depth - R * .8) / (R * 1.9));
+  if (k <= .02) return;
+  [-2, -1, 0, 1, 2].forEach(i => {
+    const a = -Math.PI / 2 + i * .42, d = R * (.85 + .25 * (2 - Math.abs(i))) * (.4 + .6 * k);
+    Kit.mk('circle', {cx: x + Math.cos(a) * d * 1.3, cy: sy + Math.sin(a) * d - R * .1, r: R * (.13 + .025 * (2 - Math.abs(i))) * k + .8, fill: WHITE, stroke: INK, 'stroke-width': 1.3}, p);
+  });
+  Kit.mk('path', {d: `M${x - R * 1.25},${sy} q${R * .15},${-R * .6 * k} ${-R * .35},${-R * 1.1 * k} M${x + R * 1.25},${sy} q${-R * .15},${-R * .6 * k} ${R * .35},${-R * 1.1 * k}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, p);
+}
+
+function text(p, x, y, s, size, col, a = {}) {
+  const e = Kit.mk('text', Object.assign({x, y, fill: col, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': size}, a), p);
+  e.textContent = s;
+  return e;
+}
 
 function render() {
-  if (!dims) return;
-  const {W, H, f} = dims;
+  if (!G) return;
+  const {W, H, fs, big, R, y0, rimY, floorY, wall} = G;
   svg.innerHTML = '';
-  const fs = Math.max(12, f), fsS = Math.max(12, f * .85);
-  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k') || '#111';
-  const top = fs * 2.6, bot = H - fs * 2.2;
-  const tankW = W * .58, tx = 0, th = bot - top;
+  const p = cl(t / .6);
+  const xA = W * .15, xB = W * .52, rr = R * 1.16, Lmax = R * 5.4;
+  // Falling: side by side through the air; in the water the coated one goes about a third farther in the same
+  // time, down to the floor, the plain one three quarters of the way.
+  const yEnd = floorY - R * 1.4, D = yEnd - y0, sIn = Math.max(0, G.seaY - y0), s = p * D;
+  const wB = y0 + s, wA = y0 + Math.min(s, sIn) + Math.max(0, s - sIn) * (.75 * D - sIn) / Math.max(1, D - sIn);
+  // The view follows the coated sphere down, until the floor is at its foot.
+  const cam = Math.max(0, Math.min(floorY + 4 - H, wB - H * .62));
+  const Y = w => w - cam, seaY = Y(G.seaY), yA = Y(wA), yB = Y(wB), rim = Y(rimY), floor = Y(floorY);
+  const dA = wA - G.seaY, dB = wB - G.seaY;
+
+  // Only what is in the picture is drawn: the tank runs on under its foot until the floor comes into view.
   const defs = Kit.mk('defs', {}, svg);
-  const g = Kit.mk('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#2f7fc4'}, g);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#0b2f5e'}, g);
-  const cp = Kit.mk('clipPath', {id: 'tc'}, defs);
-  Kit.mk('rect', {x: tx, y: top, width: tankW, height: th, rx: fs * .6}, cp);
-
-  // caption
-  const cap = t < .18 ? 'Both spheres hit the water' : t < .4 ? 'One wraps itself in an air torpedo' : t < .62 ? 'It falls about 33% faster' : 'Drag coefficient: 10× lower';
-  Kit.mk('text', {x: 0, y: fs * 1.2, 'font-size': fs * 1.1, fill: ink}, svg).textContent = cap;
-
-  // tank
-  Kit.mk('rect', {x: tx, y: top, width: tankW, height: th, rx: fs * .6, fill: 'url(#wg)'}, svg);
-  const layer = Kit.mk('g', {'clip-path': 'url(#tc)'}, svg);
-  const R = Math.min(tankW * .09, th * .06);
-  const p = cl(t / .6), y0 = top + R * 1.2, D = th - R * 2.6;
-  const xA = tankW * .27, xB = tankW * .73;
-  const yA = y0 + p * D * .75, yB = y0 + p * D;
-
-  // plain sphere wake
-  bubbles.forEach((b, i) => {
-    const dy = b.d * R * Math.min(1, p * 4);
-    if (yA - dy < top) return;
-    Kit.mk('circle', {cx: xA + Math.sin(b.a + t * 30 * b.s) * R * (.4 + b.d * .25), cy: yA - R * .6 - dy, r: R * b.r * (1 + b.d * .15), fill: 'none', stroke: 'rgba(255,255,255,.55)', 'stroke-width': Math.max(1, R * .08)}, layer);
+  const clip = Kit.mk('clipPath', {id: 'tank'}, defs);
+  const a = 1.5, r = wall, top = Math.max(rim, -2), low = floor - r <= H + 1;
+  const walls = low ? `M${a},${top} V${floor - r} Q${a},${floor} ${r},${floor} H${W - r} Q${W - a},${floor} ${W - a},${floor - r} V${top}`
+    : `M${a},${top} V${H + 1} M${W - a},${H + 1} V${top}`;
+  Kit.mk('path', {d: low ? walls + ' Z' : `M0,${top} V${H + 1} H${W} V${top} Z`}, clip);
+  const inside = Kit.mk('g', {'clip-path': 'url(#tank)'}, svg);
+  // The glass over the water, a shade paler than the card; the water; marks on the glass every so far down.
+  const foot = Math.min(floor, H + 1);
+  if (seaY > top) Kit.mk('rect', {x: 0, y: top, width: W, height: Math.min(seaY, foot) - top, fill: '#fff', opacity: .24}, inside);
+  if (seaY < foot) Kit.mk('rect', {x: 0, y: Math.max(seaY, -2), width: W, height: foot - Math.max(seaY, -2), fill: SEA}, inside);
+  // A scale on the glass, a long mark every other one, so the view is seen going down.
+  const step = H * .1;
+  for (let w = G.seaY + step, i = 1; w < floorY - step * .4; w += step, i++) if (Y(w) > 2 && Y(w) < H - 2) Kit.mk('line', {x1: 0, x2: Math.max(8, R * (i % 2 ? .38 : .7)), y1: Y(w), y2: Y(w), stroke: INK, 'stroke-width': 2, opacity: .55}, inside);
+  const dyn = Kit.mk('g', {}, inside);
+  if (seaY > -2 && seaY < H) Kit.mk('line', {x1: 0, x2: W, y1: seaY, y2: seaY, stroke: INK, 'stroke-width': 2.5}, inside);
+  if (top < H) Kit.mk('path', {d: walls, fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, svg);
+  // The magnets the spheres hang from, each on its cable, while they are in the picture: a dark body, a copper coil.
+  const magH = R * .58, magW = R * .98, my = Y(y0 - R - magH);
+  if (my + magH > 0) [xA, xB].forEach(x => {
+    if (my > 0) Kit.mk('line', {x1: x, x2: x, y1: 0, y2: my, stroke: INK, 'stroke-width': 2}, svg);
+    Kit.mk('rect', {x: x - magW / 2, y: my, width: magW, height: magH, rx: magH * .22, fill: MAG, stroke: INK, 'stroke-width': 2}, svg);
+    Kit.mk('rect', {x: x - magW / 2 + 2.5, y: my + magH * .3, width: magW - 5, height: magH * .36, fill: COIL}, svg);
   });
-  Kit.mk('circle', {cx: xA, cy: yA, r: R, fill: '#c9cdd3', stroke: '#fff', 'stroke-width': 1.5}, layer);
 
-  // air torpedo
-  const form = cl(t / .25), L = R * (1.1 + 5.5 * form), rr = R * 1.12;
-  const d = `M${xB - rr},${yB} C${xB - rr},${yB - L * .5} ${xB - R * .2},${yB - L * .9} ${xB},${yB - L} C${xB + R * .2},${yB - L * .9} ${xB + rr},${yB - L * .5} ${xB + rr},${yB} A${rr} ${rr} 0 0 1 ${xB - rr} ${yB} Z`;
-  Kit.mk('path', {d, fill: 'rgba(235,245,255,.85)', stroke: '#fff', 'stroke-width': 1.5}, layer);
-  Kit.mk('circle', {cx: xB, cy: yB, r: R, fill: '#7f8894', stroke: '#fff', 'stroke-width': 1}, layer);
+  // The plain sphere: a splash going in, a trail of bubbles behind it.
+  const out = Kit.mk('g', {}, svg);
+  splash(dA < R * 3 ? out : dyn, xA, seaY, dA, R);
+  if (dA > R * .6) WAKE.forEach(b => {
+    const by2 = yA - R * (.35 + b.d), br = R * b.r * (1 + b.d * .04);
+    if (by2 - br < seaY + 2 || by2 + br < -2) return;
+    Kit.mk('circle', {cx: xA + Math.sin(b.a + b.d * 1.4) * R * b.w, cy: by2, r: br, fill: WHITE, stroke: INK, 'stroke-width': 1.3}, dyn);
+  });
+  sphere(dA > 0 ? dyn : out, xA, yA, R, STEEL, '#ffffff');
 
-  // lane labels
-  Kit.mk('text', {x: xA, y: bot + fs * 1.4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink}, svg).textContent = 'Plain';
-  Kit.mk('text', {x: xB, y: bot + fs * 1.4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink}, svg).textContent = 'Repels water';
+  // The coated sphere: under the water it wears a skin of air, and drags a funnel of it from the surface that
+  // closes behind it into a teardrop.
+  splash(dB < R * 3 ? out : dyn, xB, seaY, dB, R);
+  const L = Math.min(Lmax, Math.max(0, dB));
+  if (dB > -R * .2 && L > R * .2) {
+    Kit.mk('path', {d: teardrop(xB, yB, rr, Math.max(L, rr)), fill: AIR, stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, dyn);
+    Kit.mk('path', {d: `M${xB - rr * .55},${yB - rr * .55} C${xB - rr * .6},${yB - L * .4} ${xB - rr * .25},${yB - L * .7} ${xB - rr * .05},${yB - L * .85}`, fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1.5, R * .14), 'stroke-linecap': 'round'}, dyn);
+  }
+  if (dB > 0) Kit.mk('circle', {cx: xB, cy: yB, r: R + Math.max(1.6, R * .1), fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1.6, R * .12)}, dyn);
+  sphere(dB > 0 ? dyn : out, xB, yB, R, COAT, '#9aa4af');
 
-  // chart
-  const cx0 = tankW + W * .06, cw = W - cx0, gr = cl((t - .62) / .3);
-  const base = bot, maxH = th - fs * 3;
-  Kit.mk('line', {x1: cx0, x2: W, y1: base, y2: base, stroke: ink, 'stroke-width': 2}, svg);
-  Kit.mk('text', {x: cx0, y: top + fs * .3, 'font-size': fsS, fill: ink, opacity: .75}, svg).textContent = 'Drag coeff.';
-  const bw = cw * .34, b1 = cx0 + cw * .08, b2 = cx0 + cw * .58;
-  const h1 = maxH * gr, h2 = maxH / 10 * gr;
-  Kit.mk('rect', {x: b1, y: base - h1, width: bw, height: h1, fill: '#9aa1ab', rx: 3}, svg);
-  Kit.mk('rect', {x: b2, y: base - h2, width: bw, height: h2, fill: '#2f7fc4', rx: 3}, svg);
+  // Their names, beside them: ink over the water, white in it.
+  const names = Kit.mk('g', {}, svg);
+  text(names, xA + R + fs * .45, yA + fs * .35, 'Plain', fs, dA > fs * .5 ? '#fff' : INK);
+  const nameB = text(names, xB + rr + fs * .45, yB + fs * .35, 'Repels water', fs, dB > fs * .5 ? '#fff' : INK);
+
+  // Measured: the torpedo's drag coefficient, in the water over it, a thin line down to it.
+  const gr = cl((t - .62) / .3);
   if (gr > 0) {
-    Kit.mk('text', {x: b1 + bw / 2, y: base - h1 - fs * .4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink, opacity: gr}, svg).textContent = '10×';
-    Kit.mk('text', {x: b2 + bw / 2, y: base - h2 - fs * .4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink, opacity: gr}, svg).textContent = '0.02–0.03';
+    const num = Kit.mk('g', {opacity: gr}, svg), col = '#fff', right = W - 10;
+    const n = text(num, right, 0, '0.02–0.03', Math.min(big, H * .26), col, {'text-anchor': 'end', 'font-family': 'var(--display)', 'font-weight': 800});
+    // What it is: on one line where it fits beside the torpedo's tail, on two where not.
+    const room = right - (xB + R);
+    const what = text(num, right, 0, 'drag coefficient: 10× lower', fs * .92, col, {'text-anchor': 'end'});
+    const lines = [what];
+    if (what.getComputedTextLength() > room) { what.textContent = 'drag coefficient:'; lines.push(text(num, right, 0, '10× lower', fs * .92, col, {'text-anchor': 'end'})); }
+    // Stacked from the top of the water down, each box under the last.
+    const top = Math.max(seaY + 6, 5);
+    let y = top;
+    [n, ...lines].forEach((e, i) => { const b = e.getBBox(); e.setAttribute('y', y - b.y - (i ? 0 : b.height * .12)); y = e.getBBox().y + e.getBBox().height + 1; });
+    const left = right - Math.max(...[n, ...lines].map(e => e.getComputedTextLength()));
+    // Where the block would sit on the torpedo's name, the name gives way: the line names the torpedo.
+    const nb = nameB.getBBox();
+    if (nb.y < y + 2 && nb.x + nb.width > left - 2) nameB.remove();
+    // A short line from the block's side to the torpedo's flank at the same height, as near as the torpedo allows.
+    const sy = (top + y) / 2, ty = Math.max(yB - L * .78, Math.min(yB - rr * .4, sy));
+    const tx = xB + rr * Math.max(.18, 1 - Math.pow(Math.max(0, yB - ty) / Math.max(L, rr), 1.3)) + 2;
+    Kit.mk('path', {d: `M${left - 5},${sy} L${tx},${ty}`, stroke: col, 'stroke-width': 1.3, fill: 'none'}, num);
+    Kit.mk('circle', {cx: tx, cy: ty, r: 2.2, fill: col}, num);
   }
-  Kit.mk('text', {x: b1 + bw / 2, y: bot + fs * 1.4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink}, svg).textContent = 'Solid';
-  Kit.mk('text', {x: b2 + bw / 2, y: bot + fs * 1.4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink}, svg).textContent = 'Air';
 
-  if (t >= .97 && !done) {
-    done = true; Kit.haptic('success');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  }
+  if (touched && !done) Kit.$('say').textContent = t <= 0 ? 'Drag the slider to drop both spheres into the water.' : CAP[t < .18 ? 0 : t < .4 ? 1 : t < .62 ? 2 : 3];
+  if (t >= .97 && !done) finish();
+}
+
+// Told: the slider and its line give their room to the tank, and the answer comes in.
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.hide('scrub'); Kit.show('why'); Kit.show('keep');
+  build();
 }
 
 scrub.addEventListener('input', () => {
   const nt = scrub.value / 1000;
   if (Math.floor(nt * 4) !== Math.floor(t * 4)) Kit.haptic('selection');
-  t = nt; render();
+  touched = true; t = nt; render();
 });
-Kit.onShow.card = () => { dims = Kit.fitSvg(svg); render(); };
+Kit.onShow.card = () => build();
 Kit.onEnter.card = () => {
   if (Kit.calm) return;
   gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
   const o = {v: 0};
-  gsap.to(o, {v: 60, duration: .5, delay: .5, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (scrub.value <= 60 && !done) { scrub.value = o.v; t = o.v / 1000; render(); } }});
+  gsap.to(o, {v: 40, duration: .45, delay: .5, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (!touched && !done) { scrub.value = o.v; t = o.v / 1000; render(); } }});
 };
 Kit.play.card = async () => {
   for (let v = 0; v <= 1000; v += 100) { scrub.value = v; scrub.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 30)); }
   await new Promise(r => setTimeout(r, 500));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; build(); } }).observe(svg); }
 Kit.single();
 </script>
 </html>

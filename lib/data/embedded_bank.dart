@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611231647,
- "built": "2026-11-23T16:47:15Z",
+ "version": 202611231809,
+ "built": "2026-11-23T18:09:16Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -137267,7 +137267,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Why is burning plastic for energy a mistake?",
-   "answer": "Burning plastic gives back some energy, but less than it costs to make new plastic, and its carbon is released as CO₂. Recycling keeps the plastic as plastic, so no new fossil fuel is needed to replace it. Plastic is worth more as plastic than as fuel.",
+   "answer": "Burning plastic gives back some energy, but less than it costs to make new plastic, and its carbon is released as CO₂. Recycling keeps the plastic as plastic, and remaking it takes far less fossil fuel than making it new. Plastic is worth more as plastic than as fuel.",
    "move": "Plastic is worth more as plastic than as fuel.",
    "keywords": [
     "plastic",
@@ -137289,12 +137289,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two paths for a plastic bottle, one burning it for energy and one recycling it back into plastic. Tap to advance both paths and watch a pile of oil grow, to see which path spends more fossil fuel.",
-    "page": "pages/nature-burning-plastic-waste.html?v=7984738c7175",
-    "bytes": 8572,
+    "label": "An incinerator with a fire in its mouth on one side, a recycling bin on the other, a plastic bottle between them: two paths for the bottle, burning it for energy or recycling it back into plastic. Tap to advance both paths and watch drums of oil pile up under each, to see which path spends more fossil fuel.",
+    "page": "pages/nature-burning-plastic-waste.html?v=7f7685dccaa4",
+    "bytes": 20366,
     "thumbs": {
-     "front": "thumbs/nature-burning-plastic-waste-front.webp?v=d26b8314fa6a",
-     "back": "thumbs/nature-burning-plastic-waste-back.webp?v=d26b8314fa6a"
+     "front": "thumbs/nature-burning-plastic-waste-front.webp?v=4ac53ca70b03",
+     "back": "thumbs/nature-burning-plastic-waste-back.webp?v=4ac53ca70b03"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -142675,12 +142675,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Multiple-choice question: why is this record heatwave not the main problem? Options: a freak one-off event, it only lasted a week, or it's only the beginning of a trend. A sketch shows a rising trend line with an arrow at the current event.",
-    "page": "pages/nature-heatwave-only-beginning-2.html?v=2997e4e3b206",
-    "bytes": 7544,
+    "label": "Multiple-choice question: why is this record heatwave not the main problem? Options: a freak one-off event, it only lasted a week, or it's only the beginning of a trend. A drawing shows a town under a hot summer sky, the heat of past summers rising over its roofs in small peaks and this week's record heatwave in one tall peak, the sun above it: about 1,300 deaths.",
+    "page": "pages/nature-heatwave-only-beginning-2.html?v=ef53d9e11804",
+    "bytes": 17612,
     "thumbs": {
-     "front": "thumbs/nature-heatwave-only-beginning-2-front.webp?v=0efb907a26a1",
-     "back": "thumbs/nature-heatwave-only-beginning-2-back.webp?v=0efb907a26a1"
+     "front": "thumbs/nature-heatwave-only-beginning-2-front.webp?v=86c139f74e27",
+     "back": "thumbs/nature-heatwave-only-beginning-2-back.webp?v=86c139f74e27"
     }
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
@@ -144923,13 +144923,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Four ingredient options are listed: silica, aragonite crystals, keratin, and conchiolin. The reader picks two to build nacre, and the reveal shows that aragonite plus conchiolin make up nacre.",
+    "label": "An open pearl oyster with a pearl in it, its shining lining labelled nacre, over four ingredient options: silica, aragonite crystals, keratin, and conchiolin. The reader picks two and watches them build up in a close-up of the nacre; the reveal shows aragonite tablets glued by conchiolin.",
     "graded": false,
-    "page": "pages/nature-nacre-two-components.html?v=c422a90b35dd",
-    "bytes": 9872,
+    "page": "pages/nature-nacre-two-components.html?v=85ec76343d9f",
+    "bytes": 23325,
     "thumbs": {
-     "front": "thumbs/nature-nacre-two-components-front.webp?v=984aa32f6d4f",
-     "back": "thumbs/nature-nacre-two-components-back.webp?v=984aa32f6d4f"
+     "front": "thumbs/nature-nacre-two-components-front.webp?v=9d6d37622297",
+     "back": "thumbs/nature-nacre-two-components-back.webp?v=9d6d37622297"
     }
    },
    "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
@@ -178151,13 +178151,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two science video options, one a clear explanation with no wrong ideas and one a dialogue that airs misconceptions first. The question asks which taught more: clear, dialogue, or about the same. The reader picks an answer and then rates how sure they are.",
+    "label": "Two students at a desk watch two science videos on laptops: one a clear explanation with no wrong ideas, one a dialogue that airs misconceptions first. The question asks which taught more: clear, dialogue, or about the same. The reader picks an answer and then rates how sure they are.",
     "graded": false,
-    "page": "pages/psychology-effort-means-learning.html?v=0a35a305b705",
-    "bytes": 7419,
+    "page": "pages/psychology-effort-means-learning.html?v=315d0881c5f3",
+    "bytes": 19725,
     "thumbs": {
-     "front": "thumbs/psychology-effort-means-learning-front.webp?v=68598ca5b775",
-     "back": "thumbs/psychology-effort-means-learning-back.webp?v=68598ca5b775"
+     "front": "thumbs/psychology-effort-means-learning-front.webp?v=eeac8c40ea29",
+     "back": "thumbs/psychology-effort-means-learning-back.webp?v=eeac8c40ea29"
     }
    },
    "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
@@ -191030,12 +191030,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Two spheres sit above a water surface, one solid and one wrapped in a shell of air. The question asks what drag coefficient a projectile wrapped in air gets underwater, and a slider drops both spheres into the water.",
-    "page": "pages/science-air-wrapped-drag.html?v=1b38449902fd",
-    "bytes": 8199,
+    "label": "Two steel spheres hang from magnets over a deep glass tank of water: a plain one and a darker one that repels water. The question asks what drag coefficient a projectile wrapped in air gets underwater, and a slider drops both spheres into the water.",
+    "page": "pages/science-air-wrapped-drag.html?v=119123aba94e",
+    "bytes": 14621,
     "thumbs": {
-     "front": "thumbs/science-air-wrapped-drag-front.webp?v=9f53b78d7e63",
-     "back": "thumbs/science-air-wrapped-drag-back.webp?v=9f53b78d7e63"
+     "front": "thumbs/science-air-wrapped-drag-front.webp?v=7b2436be07c2",
+     "back": "thumbs/science-air-wrapped-drag-back.webp?v=7b2436be07c2"
     }
    },
    "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
@@ -205502,7 +205502,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "How does Fukushima's released water compare to the Pacific's natural radioactivity?",
-   "answer": "The natural radioactivity from Potassium-40 in the Pacific Ocean is tens of millions of times higher than the total radioactivity of the entire Fukushima release. The page shows a drop of released water against the vast, naturally radioactive Pacific Ocean. Zooming out, each new square is 10× the last.",
+   "answer": "The natural radioactivity from Potassium-40 in the Pacific Ocean is millions of times higher than the total radioactivity of the entire Fukushima release. The page shows a drop of released water against the vast, naturally radioactive Pacific Ocean. Zooming out, each new square is 10× the last.",
    "move": "Don't ask \"is it radioactive?\" Ask \"how much, next to what is already there?\"",
    "keywords": [
     "fukushima",
@@ -205524,12 +205524,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A zoomable scale view: a single drop of released Fukushima water sits in a vast sea, and each new square zooms out 10 times further. Drag up or tap to zoom out and compare the release with the Pacific's natural radioactivity.",
-    "page": "pages/science-pacific-background-radiation.html?v=7d7afc68ae30",
-    "bytes": 24237,
+    "label": "A yellow square, all the radioactivity of the Fukushima release, with a drop of its water and the storage tanks it is kept in drawn inside it. Each new square is 10 times the last: drag up or tap to zoom out and compare the release with the Pacific's natural radioactivity.",
+    "page": "pages/science-pacific-background-radiation.html?v=d490ae248133",
+    "bytes": 23265,
     "thumbs": {
-     "front": "thumbs/science-pacific-background-radiation-front.webp?v=14df574f2b9c",
-     "back": "thumbs/science-pacific-background-radiation-back.webp?v=14df574f2b9c"
+     "front": "thumbs/science-pacific-background-radiation-front.webp?v=9a1ff78de8fa",
+     "back": "thumbs/science-pacific-background-radiation-back.webp?v=9a1ff78de8fa"
     }
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
@@ -206383,12 +206383,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A sediment column of layered mud is shown. Tapping the Add a layer button lays down each new age, one layer at a time. The question asked is: what makes plastic a useful Anthropocene indicator?",
-    "page": "pages/science-plastic-sediment-layer.html?v=188d58061abc",
-    "bytes": 8779,
+    "label": "A lake cut in section: a hill with an autumn tree dropping leaves into the water, a low shore across it, a bed of old rock below. Tapping the Add a layer button lays down mud, one age at a time. The question asked is: what makes plastic a useful Anthropocene indicator?",
+    "page": "pages/science-plastic-sediment-layer.html?v=53712cd7177e",
+    "bytes": 17502,
     "thumbs": {
-     "front": "thumbs/science-plastic-sediment-layer-front.webp?v=138c6a574ccb",
-     "back": "thumbs/science-plastic-sediment-layer-back.webp?v=138c6a574ccb"
+     "front": "thumbs/science-plastic-sediment-layer-front.webp?v=3401fedf0b97",
+     "back": "thumbs/science-plastic-sediment-layer-back.webp?v=3401fedf0b97"
     }
    },
    "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
@@ -214999,13 +214999,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive page asking how much uranium-235 a bomb needs to go supercritical. Three options: about 1 kg (golf-ball size), about 52 kg (17 cm ball), and about 1,000 kg (46 cm ball). Tapping a size shows its ball, and the reader then rates how sure they are.",
+    "label": "Three balls of uranium-235 on a wooden bench, drawn to the same scale: about 1 kg (golf-ball size), about 52 kg (17 cm) and about 1,000 kg (46 cm). The question asks how much uranium-235 a bomb needs to go supercritical; tapping a size picks its ball, and the reader then rates how sure they are.",
     "graded": false,
-    "page": "pages/science-uranium-critical-mass.html?v=32fbca95e8ee",
-    "bytes": 9479,
+    "page": "pages/science-uranium-critical-mass.html?v=03fc1ade2f64",
+    "bytes": 15087,
     "thumbs": {
-     "front": "thumbs/science-uranium-critical-mass-front.webp?v=f06f89c30622",
-     "back": "thumbs/science-uranium-critical-mass-back.webp?v=f06f89c30622"
+     "front": "thumbs/science-uranium-critical-mass-front.webp?v=cc9e008b2b4e",
+     "back": "thumbs/science-uranium-critical-mass-back.webp?v=cc9e008b2b4e"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -247695,11 +247695,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Question card asking how diagonals changed a maze's complexity. A draggable mouse lets the reader give it more moves, up to 6, to show how the number of possible turns grows.",
-    "page": "pages/technology-diagonal-turn-explosion.html?v=004dbcf7841b",
-    "bytes": 10947,
+    "page": "pages/technology-diagonal-turn-explosion.html?v=83e5664a1b72",
+    "bytes": 15375,
     "thumbs": {
-     "front": "thumbs/technology-diagonal-turn-explosion-front.webp?v=77c5b382f095",
-     "back": "thumbs/technology-diagonal-turn-explosion-back.webp?v=77c5b382f095"
+     "front": "thumbs/technology-diagonal-turn-explosion-front.webp?v=460630cad6b4",
+     "back": "thumbs/technology-diagonal-turn-explosion-back.webp?v=460630cad6b4"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -253246,12 +253246,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Two runners on a track, one classical and one quantum, step at the same pace as a dial sets the problem size. The quantum runner needs far fewer steps to reach the result.",
-    "page": "pages/technology-quantum-fewer-steps.html?v=48b4c1a3f3d3",
-    "bytes": 10000,
+    "label": "A laptop at the foot of a tall staircase of operations, and a quantum computer's gold chandelier over a short one, a runner climbing each at the same pace as a dial sets the problem size. The quantum runner needs far fewer steps to reach the result.",
+    "page": "pages/technology-quantum-fewer-steps.html?v=d928ef1f1a71",
+    "bytes": 19201,
     "thumbs": {
-     "front": "thumbs/technology-quantum-fewer-steps-front.webp?v=b6e1f7cf4394",
-     "back": "thumbs/technology-quantum-fewer-steps-back.webp?v=b6e1f7cf4394"
+     "front": "thumbs/technology-quantum-fewer-steps-front.webp?v=ce01eb94a3bd",
+     "back": "thumbs/technology-quantum-fewer-steps-back.webp?v=ce01eb94a3bd"
     }
    },
    "source": "Veritasium, “How Does a Quantum Computer Work?” (YouTube, 2013)",
@@ -256475,11 +256475,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Animated timeline of a molten tin drop, 25 micrometres across, flying at 70 metres per second. Two infrared laser pulses, microseconds apart, are shown hitting it. A draggable clock lets the reader move through the timing. The page asks why the laser hits the drop twice and not once.",
-    "page": "pages/technology-tin-pancake.html?v=02613ec8616a",
-    "bytes": 22550,
+    "page": "pages/technology-tin-pancake.html?v=4e12e924a9d9",
+    "bytes": 25574,
     "thumbs": {
-     "front": "thumbs/technology-tin-pancake-front.webp?v=e17f1e8b7c4e",
-     "back": "thumbs/technology-tin-pancake-back.webp?v=e17f1e8b7c4e"
+     "front": "thumbs/technology-tin-pancake-front.webp?v=445189f0cff2",
+     "back": "thumbs/technology-tin-pancake-back.webp?v=445189f0cff2"
     }
    },
    "source": "Veritasium, “The Closest Thing We Have to Alien Technology” (YouTube, 2025)",
@@ -261474,12 +261474,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Question: What good comes from feeling confused while learning? A slider picks how confusing a lesson is, and a Launch button runs it, with a counter showing 0 of 3 launches used. The reveal says confusion makes learning stick.",
-    "page": "pages/thinking-confusion-helps-memory.html?v=d5621731c173",
-    "bytes": 8820,
+    "label": "Question: What good comes from feeling confused while learning? A classroom blackboard with the class in front: dragging a stick of chalk along it picks how confusing a lesson is, and a Launch button sends a ball of chalk up as high as the lesson was remembered later, with a counter showing 0 of 3 launches used. The reveal says confusion makes learning stick.",
+    "page": "pages/thinking-confusion-helps-memory.html?v=37211f96a556",
+    "bytes": 15246,
     "thumbs": {
-     "front": "thumbs/thinking-confusion-helps-memory-front.webp?v=6e20f99ab88d",
-     "back": "thumbs/thinking-confusion-helps-memory-back.webp?v=6e20f99ab88d"
+     "front": "thumbs/thinking-confusion-helps-memory-front.webp?v=c5cd2a38504b",
+     "back": "thumbs/thinking-confusion-helps-memory-back.webp?v=c5cd2a38504b"
     }
    },
    "source": "Veritasium, “The Science of Thinking” (YouTube, 2017)",
@@ -262183,7 +262183,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "medium",
    "principle": "none",
    "question": "How many people died directly from radiation at Fukushima?",
-   "answer": "Only one death was tied to radioactivity: the plant director. The tsunami killed over 15,000 people. We remember Fukushima for its radiation, not the wave.",
+   "answer": "Only one death was tied to radioactivity: a worker who had measured radiation at the plant. The tsunami killed over 15,000 people. We remember Fukushima for its radiation, not the wave.",
    "move": "What we fear most is not always what kills most.",
    "keywords": [
     "fukushima",
@@ -262206,11 +262206,11 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Card asks how many people died directly from radiation at Fukushima. The reader drags to guess, and each dot on the display stands for one person. The reveal gives the answer: one death from radiation, while the tsunami killed over 15,000.",
     "graded": false,
-    "page": "pages/thinking-fukushima-radiation-toll.html?v=9dacd5613dfb",
-    "bytes": 7877,
+    "page": "pages/thinking-fukushima-radiation-toll.html?v=a11269b39c67",
+    "bytes": 17389,
     "thumbs": {
-     "front": "thumbs/thinking-fukushima-radiation-toll-front.webp?v=7f5fb66de534",
-     "back": "thumbs/thinking-fukushima-radiation-toll-back.webp?v=7f5fb66de534"
+     "front": "thumbs/thinking-fukushima-radiation-toll-front.webp?v=4fd85fcd8f14",
+     "back": "thumbs/thinking-fukushima-radiation-toll-back.webp?v=4fd85fcd8f14"
     }
    },
    "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
@@ -264366,14 +264366,14 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Quiz card: Tester throws a stone on move 1 in a two-player game. Choose to strike back by defecting on move 2, or let it go and keep cooperating, then try the other option.",
-    "page": "pages/thinking-tester-probes-forgiveness.html?v=aacce8e9ad28",
-    "bytes": 7267,
+    "page": "pages/thinking-tester-probes-forgiveness.html?v=dfd432db33dc",
+    "bytes": 20615,
     "thumbs": {
-     "front": "thumbs/thinking-tester-probes-forgiveness-front.webp?v=1c5520eac10c",
-     "back": "thumbs/thinking-tester-probes-forgiveness-back.webp?v=1c5520eac10c"
+     "front": "thumbs/thinking-tester-probes-forgiveness-front.webp?v=a1c06fd9251c",
+     "back": "thumbs/thinking-tester-probes-forgiveness-back.webp?v=a1c06fd9251c"
     }
    },
-   "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+   "source": "Veritasium, “What Game Theory Reveals About Life, The Universe, and Everything” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=836s",
    "written": "2026-11-03"
   },
@@ -264491,11 +264491,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Tap-to-test card on confirmation bias. Four number triples (3, 6, 12; 10, 20, 40; 2, 4, 7; 100, 200, 400) can be tapped to test a hidden rule. Asks why guessing 2, 4, 7 cracks the rule faster than the doubling triples.",
-    "page": "pages/thinking-two-four-seven.html?v=f401c9bd66ad",
-    "bytes": 7589,
+    "page": "pages/thinking-two-four-seven.html?v=b2e1d9f39a06",
+    "bytes": 22120,
     "thumbs": {
-     "front": "thumbs/thinking-two-four-seven-front.webp?v=d1d8ca597a61",
-     "back": "thumbs/thinking-two-four-seven-back.webp?v=d1d8ca597a61"
+     "front": "thumbs/thinking-two-four-seven-front.webp?v=55b725125e63",
+     "back": "thumbs/thinking-two-four-seven-back.webp?v=55b725125e63"
     }
    },
    "source": "Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)",
@@ -270512,7 +270512,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "medium",
    "principle": "estimation",
    "question": "Ashgabat's marble, laid flat: how many football fields would it cover?",
-   "answer": "Ashgabat's marble, laid flat, would pave more than 692 football fields: a square only about 26 across. The city has over 540 new buildings and about 4.5 million slabs of white Carrara marble.",
+   "answer": "Ashgabat's marble, laid flat, would pave more than 692 football fields: a square only about 26 across. The city has over 540 new buildings and about 4.5 million square metres of white marble.",
    "move": "Don't divide, root it: √692 ≈ 26 fields a side.",
    "keywords": [
     "ashgabat",
@@ -270534,11 +270534,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Ashgabat's marble, laid flat: a draggable square block asks how many football fields it would cover. Drag the corner to size the block; the reveal says more than 692 fields, about 26 across.",
-    "page": "pages/weird_facts-marble-football-fields.html?v=b6658974e0a6",
-    "bytes": 15776,
+    "page": "pages/weird_facts-marble-football-fields.html?v=50948ef99a2b",
+    "bytes": 21599,
     "thumbs": {
-     "front": "thumbs/weird_facts-marble-football-fields-front.webp?v=a99902627b09",
-     "back": "thumbs/weird_facts-marble-football-fields-back.webp?v=a99902627b09"
+     "front": "thumbs/weird_facts-marble-football-fields-front.webp?v=8061cd0df6dc",
+     "back": "thumbs/weird_facts-marble-football-fields-back.webp?v=8061cd0df6dc"
     }
    },
    "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",

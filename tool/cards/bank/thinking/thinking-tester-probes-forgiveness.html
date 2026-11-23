@@ -1,5 +1,11 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: thinking-tester-probes-forgiveness -->
+<!-- Look: two neighbours in their gardens on a sunny day, a low wooden fence between them with a sign on it that
+     counts the moves. On the left Tester, on the right you. A stone thrown is a defection: it flies over the fence
+     in an arc and lies on the grass at the feet of the one it was thrown at, so each side's pile counts what it
+     took. On move 1 Tester has just thrown one at you. Strike back and your stone flies the other way; from move 3
+     Tester says sorry and nothing more is thrown. Let it go and Tester throws again every other move, five stones
+     at your feet by move 10, its arm still up. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -10,27 +16,31 @@
 #pic svg{display:block;width:100%;height:100%}
 #opts{display:flex;gap:2.4cqw}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#why .big{font:800 1.12em/1 var(--display);letter-spacing:0}
 .opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .opt small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.3cqh}
+/* Once a reply has been played, the two buttons say only their names: the drawing takes the room. */
+.answered .q{font-size:max(2.5cqh,15px)}
+.answered .opt{padding:1.1cqh 3cqw;border-radius:99px}
+.answered .opt small{display:none}
 </style>
 <article class="card" id="card" data-topic="thinking" data-kind="Try it · two ways">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GAME THEORY</span></div>
     <h2 class="q">How does the Tester strategy probe its opponent, and does it pay?</h2>
     <div class="stagebox" id="stage">
-      <div id="pic"><svg id="svg"></svg></div>
+      <div id="pic"><svg id="svg" role="img" aria-label="Two neighbours in their gardens, a low fence between them. Tester, on the left, has just thrown a stone over the fence; it lies at your feet. A sign on the fence says move 1."></svg></div>
       <div id="opts">
         <button class="opt" data-b="hit">Strike back<small>defect on move 2</small></button>
         <button class="opt" data-b="let">Let it go<small>keep cooperating</small></button>
       </div>
-      <div id="why" class="gone"><p class="big" id="wbig"></p><p class="body" id="wbody"></p></div>
+      <div id="why" class="gone"><p class="body"><b class="big" id="wbig"></b> <span id="wbody"></span></p></div>
     </div>
     <p class="say" id="say">Tester threw a stone on move 1. Pick your reply, then try the other.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Probing with a first-move defection didn't pay; nice strategies did better.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)</span></div>
+    <div class="foot"><span class="src">Source · Veritasium, “What Game Theory Reveals About Life, The Universe, and Everything” (YouTube, 2023)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
@@ -47,56 +57,204 @@ const WHY = {
 const TAIL = 'Still, being nasty didn’t pay: nice strategies did much better, and Tit for Tat won again. In the top 15, only one was not nice.';
 let branch = null, shown = 1, timer = null, tried = new Set();
 
-function draw(animIdx){
-  const svg = Kit.$('svg'); svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f * .85, 12), fl = Math.max(f * .75, 12);
-  const pad = W * .03, cw = (W - 2 * pad) / N;
-  const r = Math.min(cw * .36, H * .1);
-  const y1 = H * .30, y2 = H * .66;
-  const ink = 'var(--k)';
-  const tx = (x, y, s, a, opts = {}) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor': a, fill: ink, style: `font:${opts.w || 800} ${opts.fs || fs}px var(--body)`}, opts.attr || {}), svg); t.textContent = s; return t; };
-  const tS = branch ? SEQ[branch].t.slice(0, shown) : 'D';
-  const yS = branch ? SEQ[branch].y.slice(0, shown) : 'C';
+// The gardens. One ink; the sky and the grass; the fence's wood; grey for the stones, the defections. Tester in
+// red, you in blue.
+const INK = '#10100c', SKY = '#DDEFF8', GRASS = '#86C86E', WOOD = '#D9A066', STONE = '#A39E94', FACET = '#C9C4BA',
+  RED = '#D8452F', BLUE = '#2F7FE0', SKIN = '#F2C29B', WHITE = '#ffffff', LEGS = '#3A3A44';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), f1 = n => (Math.round(n * 10) / 10).toString(), mk = Kit.mk;
+const svg = Kit.$('svg');
+let G = null;
+// Stones in the air: each lands on its pile when its flight ends.
+const flying = new Set();
+
+// What the game has come to: the moves played so far, the stones each has taken, how each one stands.
+function now() {
+  const tS = branch ? SEQ[branch].t.slice(0, shown) : 'D', yS = branch ? SEQ[branch].y.slice(0, shown) : 'C';
   const cnt = s => [...s].filter(c => c === 'D').length;
-  const ly1 = y1 - r - fs * .55, ly2 = y2 - r - fs * .55;
-  tx(pad, ly1, 'TESTER', 'start');
-  tx(W - pad, ly1, `stones: ${cnt(tS)}`, 'end', {w: 600});
-  tx(pad, ly2, 'YOU', 'start');
-  tx(W - pad, ly2, `stones: ${cnt(yS)}`, 'end', {w: 600});
-  const cell = (i, y, m, isNew) => {
-    const x = pad + (i + .5) * cw;
-    if (!m){ Kit.mk('circle', {cx: x, cy: y, r: r * .18, fill: 'color-mix(in srgb, var(--k) 25%, transparent)'}, svg); return; }
-    const g = Kit.mk('g', {}, svg);
-    if (m === 'D'){
-      const rip = Kit.mk('circle', {cx: x, cy: y, r: r, fill: 'none', stroke: ink, 'stroke-width': Math.max(r * .1, 1.5), opacity: .5}, g);
-      Kit.mk('circle', {cx: x, cy: y, r: r, fill: ink}, g);
-      Kit.mk('circle', {cx: x - r * .3, cy: y - r * .3, r: r * .22, fill: 'var(--c)', opacity: .45}, g);
-      if (isNew && !Kit.calm){ gsap.fromTo(rip, {attr: {r: r}, opacity: .7}, {attr: {r: r * 1.7}, opacity: 0, duration: 1.1, ease: 'power2.out'}); }
-      else rip.setAttribute('opacity', 0);
+  const last = shown - 1, over = shown >= N;
+  // Tester: its arm up as it throws, and at the end of the game it was let off; sorry once you struck back.
+  const sorry = branch === 'hit' && shown >= 3;
+  const tPose = sorry ? 'sorry' : (tS[last] === 'D' || (branch === 'let' && over)) ? 'throw' : 'down';
+  const yPose = yS[last] === 'D' ? 'throw' : 'down';
+  return {tS, yS, atYou: cnt(tS), atTester: cnt(yS), tPose, yPose, sorry, over};
+}
+
+// A stone, round-cornered and a little irregular, the same on every phone: its facet lighter.
+function stone(p, x, y, s, seed) {
+  let q = seed * 9301 + 49297;
+  const rnd = () => (q = (q * 9301 + 49297) % 233280) / 233280;
+  const n = 7, pts = [];
+  for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2, rr = s * (.82 + rnd() * .3); pts.push([x + Math.cos(a) * rr * 1.15, y + Math.sin(a) * rr * .85]); }
+  let d = '';
+  pts.forEach((pt, i) => { const nx = pts[(i + 1) % n], mx = (pt[0] + nx[0]) / 2, my = (pt[1] + nx[1]) / 2; d += (i ? '' : `M${f1((pts[n - 1][0] + pt[0]) / 2)},${f1((pts[n - 1][1] + pt[1]) / 2)}`) + `Q${f1(pt[0])},${f1(pt[1])} ${f1(mx)},${f1(my)}`; });
+  const g = mk('g', {}, p);
+  mk('path', {d: d + 'Z', fill: STONE, stroke: INK, 'stroke-width': f1(G.k * .9), 'stroke-linejoin': 'round'}, g);
+  mk('path', {d: `M${f1(x - s * .55)},${f1(y - s * .15)}Q${f1(x - s * .35)},${f1(y - s * .6)} ${f1(x + s * .15)},${f1(y - s * .55)}`, fill: 'none', stroke: FACET, 'stroke-width': f1(Math.max(1.4, s * .28)), 'stroke-linecap': 'round'}, g);
+  return g;
+}
+
+// A neighbour standing on (x, y), turned towards the fence (dir 1 to the right, -1 to the left), r the head's
+// radius: legs, shirt, arms (down, or the near one up to throw), head, hair or cap, and a face that shows the mood.
+function person(p, x, y, r, dir, o) {
+  const g = mk('g', {}, p), k = G.k;
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const hip = y - 2.6 * r, sh = y - 5 * r, hw = 1.15 * r, sw = 1.35 * r, hy = sh - 1.2 * r, foot = y - .2 * r;
+  mk('path', Object.assign({d: `M${f1(x - .95 * r)},${f1(foot)}V${f1(hip)}H${f1(x - .06 * r)}V${f1(foot)}Z M${f1(x + .06 * r)},${f1(foot)}V${f1(hip)}H${f1(x + .95 * r)}V${f1(foot)}Z`, fill: LEGS}, at), g);
+  [-1, 1].forEach(s => mk('ellipse', Object.assign({cx: f1(x + s * .62 * r), cy: f1(foot), rx: f1(.64 * r), ry: f1(.24 * r), fill: INK}, at), g));
+  mk('path', Object.assign({d: `M${f1(x - hw)},${f1(hip)}L${f1(x - sw)},${f1(sh + .45 * r)}Q${f1(x - sw)},${f1(sh)} ${f1(x - sw + .5 * r)},${f1(sh)}H${f1(x + sw - .5 * r)}Q${f1(x + sw)},${f1(sh)} ${f1(x + sw)},${f1(sh + .45 * r)}L${f1(x + hw)},${f1(hip)}Z`, fill: o.shirt}, at), g);
+  const aw = Math.max(k * 1.6, r * .42);
+  const far = [x - dir * (sw + .28 * r), hip + .15 * r];
+  const near = o.pose === 'throw' ? [x + dir * 2.15 * r, sh - 2.55 * r] : [x + dir * (sw + .28 * r), hip + .15 * r];
+  const arms = [`M${f1(x - dir * (sw - .25 * r))},${f1(sh + .45 * r)}L${f1(far[0])},${f1(far[1])}`,
+    o.pose === 'throw' ? `M${f1(x + dir * (sw - .25 * r))},${f1(sh + .45 * r)}L${f1(x + dir * 2.25 * r)},${f1(sh - .45 * r)}L${f1(near[0])},${f1(near[1])}` : `M${f1(x + dir * (sw - .25 * r))},${f1(sh + .45 * r)}L${f1(near[0])},${f1(near[1])}`];
+  arms.forEach(d => { mk('path', Object.assign({}, at, {d, fill: 'none', 'stroke-width': f1(aw + 2 * k)}), g); mk('path', {d, fill: 'none', stroke: o.shirt, 'stroke-width': f1(aw), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g); });
+  mk('rect', Object.assign({x: f1(x - .3 * r), y: f1(sh - .4 * r), width: f1(.6 * r), height: f1(.55 * r), fill: SKIN}, at), g);
+  mk('circle', Object.assign({cx: f1(x), cy: f1(hy), r: f1(r), fill: SKIN}, at), g);
+  if (o.cap) {
+    // A cap, its peak to the front.
+    mk('path', Object.assign({d: `M${f1(x - .98 * r)},${f1(hy - .45 * r)}C${f1(x - 1.0 * r)},${f1(hy - 1.5 * r)} ${f1(x + 1.0 * r)},${f1(hy - 1.5 * r)} ${f1(x + .98 * r)},${f1(hy - .45 * r)}Z`, fill: o.shirt}, at), g);
+    mk('path', Object.assign({d: `M${f1(x + dir * .3 * r)},${f1(hy - .47 * r)}H${f1(x + dir * 1.7 * r)}Q${f1(x + dir * 1.62 * r)},${f1(hy - .26 * r)} ${f1(x + dir * .3 * r)},${f1(hy - .3 * r)}Z`, fill: o.shirt}, at), g);
+  } else {
+    mk('path', Object.assign({d: `M${f1(x - 1.02 * r)},${f1(hy + .05 * r)}C${f1(x - 1.1 * r)},${f1(hy - 1.3 * r)} ${f1(x + 1.1 * r)},${f1(hy - 1.3 * r)} ${f1(x + 1.02 * r)},${f1(hy + .05 * r)}C${f1(x + .3 * r)},${f1(hy - .6 * r)} ${f1(x - .4 * r)},${f1(hy - .45 * r)} ${f1(x - 1.02 * r)},${f1(hy + .05 * r)}Z`, fill: o.hair}, at), g);
+  }
+  const lx = x + dir * .2 * r;
+  [-1, 1].forEach(s => mk('circle', {cx: f1(lx + s * .36 * r), cy: f1(hy + .1 * r), r: f1(Math.max(1.3, .1 * r)), fill: INK}, g));
+  const m = {fill: 'none', stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linecap': 'round'};
+  const mouth = {grin: `M${f1(lx - .36 * r)},${f1(hy + .4 * r)}Q${f1(lx)},${f1(hy + .75 * r)} ${f1(lx + .36 * r)},${f1(hy + .4 * r)}`,
+    smile: `M${f1(lx - .28 * r)},${f1(hy + .45 * r)}Q${f1(lx)},${f1(hy + .66 * r)} ${f1(lx + .28 * r)},${f1(hy + .45 * r)}`,
+    frown: `M${f1(lx - .26 * r)},${f1(hy + .62 * r)}Q${f1(lx)},${f1(hy + .42 * r)} ${f1(lx + .26 * r)},${f1(hy + .62 * r)}`,
+    sorry: `M${f1(lx - .2 * r)},${f1(hy + .55 * r)}H${f1(lx + .2 * r)}`}[o.mood];
+  mk('path', Object.assign({d: mouth}, m), g);
+  // Brows: tilted up in the middle when sorry, down in the middle when hurt.
+  if (o.mood === 'sorry' || o.mood === 'frown') {
+    const s = o.mood === 'sorry' ? 1 : -1, by = hy - (o.cap ? .1 : .3) * r;
+    mk('path', Object.assign({d: `M${f1(lx - .58 * r)},${f1(by)}L${f1(lx - .16 * r)},${f1(by - s * .14 * r)}M${f1(lx + .16 * r)},${f1(by - s * .14 * r)}L${f1(lx + .58 * r)},${f1(by)}`}, m, {'stroke-width': f1(k * .7)}), g);
+  }
+  [far, near].forEach(([hx, hy2]) => mk('circle', Object.assign({cx: f1(hx), cy: f1(hy2), r: f1(Math.max(2.5, r * .3)), fill: SKIN}, at), g));
+  // About to throw again: a stone in the raised hand.
+  if (o.pose === 'throw' && o.holding) stone(g, near[0] + dir * .1 * r, near[1] - .45 * r, r * .42, 3);
+  return {near, hy, x, r};
+}
+
+function build() {
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 40 || H < 30) return;
+  svg.innerHTML = '';
+  const k = clamp(W * .0075, 1.8, 2.6), R = clamp(W * .04, 9, 15);
+  const grass = clamp(H * .15, 12, 34), yG = H - grass;
+  // The neighbours as tall as the sky leaves room for, a raised hand and its stone included.
+  const r = Math.max(5, Math.min((yG - 6) / 8.3, W * .062));
+  const fs = clamp(r * .95, 12, 18);
+  G = {W, H, k, R, grass, yG, r, fs};
+  const defs = mk('defs', {}, svg);
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(R)}, mk('clipPath', {id: 'garden'}, defs));
+  G.scene = mk('g', {'clip-path': 'url(#garden)'}, svg);
+  G.top = mk('g', {'clip-path': 'url(#garden)'}, svg);
+  mk('rect', {x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R - k / 2), fill: 'none', stroke: INK, 'stroke-width': f1(k)}, svg);
+  render();
+}
+
+// Where a pile's stones lie, in front of the one who took them, on the fence's side: three along, two on them.
+function pileAt(who, i) {
+  const {W, yG, grass, r} = G, sz = Math.min(r * .6, grass * .36);
+  const x0 = who === 'you' ? W * .79 - r * 1.25 : W * .21 + r * 1.25, dir = who === 'you' ? -1 : 1;
+  const row = i < 3 ? 0 : i < 5 ? 1 : 2, col = i < 3 ? i : i < 5 ? i - 3 + .5 : 1;
+  return [x0 + dir * col * sz * 2.1, yG + grass * .5 - row * sz * 1.45, sz];
+}
+
+function render() {
+  if (!G) return;
+  const {W, H, k, yG, grass, r, fs} = G, s = now();
+  const g = G.scene; g.innerHTML = '';
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: SKY}, g);
+  mk('rect', {x: 0, y: f1(yG), width: f1(W), height: f1(grass + 2), fill: GRASS}, g);
+  mk('path', {d: `M0,${f1(yG)}H${f1(W)}`, stroke: INK, 'stroke-width': f1(k)}, g);
+  // The fence between the gardens: pickets and rails, waist high, with the move on a sign.
+  const fx = W / 2, fh = r * 2.9, pw = Math.max(6, r * .55), np = 4, gap = pw * .45;
+  const span = np * pw + (np - 1) * gap, x0 = fx - span / 2;
+  const wood = {fill: WOOD, stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  [.35, .75].forEach(v => mk('rect', Object.assign({x: f1(x0 - pw * .6), y: f1(yG - fh * v - pw * .25), width: f1(span + pw * 1.2), height: f1(pw * .5)}, wood), g));
+  for (let i = 0; i < np; i++) { const px = x0 + i * (pw + gap); mk('path', Object.assign({d: `M${f1(px)},${f1(yG + 1)}V${f1(yG - fh + pw * .5)}L${f1(px + pw / 2)},${f1(yG - fh)}L${f1(px + pw)},${f1(yG - fh + pw * .5)}V${f1(yG + 1)}Z`}, wood), g); }
+  // The sign hangs on the rails; where the fence is too low to carry it, it stands on a post above it.
+  const sfs = Math.max(11.5, fs * .78), sh2 = sfs * 1.6, onRails = fh > sh2 * 2.4;
+  const sy = onRails ? yG - fh * .55 : yG - fh - sh2 * .5 - pw * .9;
+  if (!onRails) mk('path', {d: `M${f1(fx)},${f1(yG - fh + pw * .3)}V${f1(sy)}`, stroke: INK, 'stroke-width': f1(k * 1.4), 'stroke-linecap': 'round'}, g);
+  const sign = mk('text', {x: f1(fx), y: f1(sy + sfs * .36), 'text-anchor': 'middle', 'font-family': FONT, 'font-size': f1(sfs), 'font-weight': 800, fill: INK}, g);
+  sign.textContent = `move ${s.over ? N : shown}`;
+  const sw = sign.getComputedTextLength() + sfs * 1.1;
+  g.insertBefore(mk('rect', {x: f1(fx - sw / 2), y: f1(sy - sh2 / 2), width: f1(sw), height: f1(sh2), rx: f1(Math.min(5, sh2 * .25)), fill: WHITE, stroke: INK, 'stroke-width': f1(k * .9)}), sign);
+
+  // The two of them, on the grass either side.
+  const tx = Math.max(W * .19, 2 * r + 4), yx = W - tx;
+  G.tester = person(g, tx, yG, r, 1, {shirt: RED, cap: true, pose: s.tPose, mood: s.sorry ? 'sorry' : 'grin', holding: branch === 'let' && s.over});
+  G.you = person(g, yx, yG, r, -1, {shirt: BLUE, hair: '#3B2A20', pose: s.yPose, mood: s.atYou > s.atTester ? 'frown' : 'smile'});
+  // The stones each has taken, but for those still in the air.
+  const inAir = who => [...flying].filter(f => f.to === who).length;
+  for (let i = 0; i < s.atYou - inAir('you'); i++) { const [x, y, sz] = pileAt('you', i); stone(g, x, y, sz, i + 1); }
+  for (let i = 0; i < s.atTester - inAir('tester'); i++) { const [x, y, sz] = pileAt('tester', i); stone(g, x, y, sz, i + 7); }
+  // The last throw's path, dashed, while nothing else has been thrown since: on move 1, Tester's.
+  if (!branch) arc(g, 'tester', 0, 1, true);
+  // Tester's word, once it backs off: over its head, or beside it, towards the fence, where the sky is low.
+  if (s.sorry) {
+    const bw = fs * 4.6, bh = fs * 1.9, hy = G.tester.hy, headTop = hy - r, rr = Math.min(bh / 2, 9);
+    const above = headTop - r * .45 - bh >= 4;
+    const bx = above ? clamp(tx - bw * .25, 4, W / 2 - bw - 6) : tx + r * 1.55, by = above ? headTop - r * .45 - bh : clamp(hy - bh / 2 - r * .2, 4, yG - bh - 4);
+    let d;
+    if (above) {
+      const tipX = tx + r * .1, tipY = headTop + r * .05, b0 = clamp(tipX - 6, bx + rr + 2, bx + bw - rr - 14);
+      d = `M${f1(bx + rr)},${f1(by)}H${f1(bx + bw - rr)}Q${f1(bx + bw)},${f1(by)} ${f1(bx + bw)},${f1(by + rr)}V${f1(by + bh - rr)}Q${f1(bx + bw)},${f1(by + bh)} ${f1(bx + bw - rr)},${f1(by + bh)}H${f1(b0 + 10)}L${f1(tipX)},${f1(tipY)}L${f1(b0)},${f1(by + bh)}H${f1(bx + rr)}Q${f1(bx)},${f1(by + bh)} ${f1(bx)},${f1(by + bh - rr)}V${f1(by + rr)}Q${f1(bx)},${f1(by)} ${f1(bx + rr)},${f1(by)}Z`;
     } else {
-      Kit.mk('circle', {cx: x, cy: y, r: r * .85, fill: 'var(--c)', stroke: ink, 'stroke-width': Math.max(r * .14, 1.5)}, g);
+      const tipX = tx + r * 1.05, tipY = hy + r * .1, t0 = clamp(tipY - 4, by + rr, by + bh - rr - 7);
+      d = `M${f1(bx + rr)},${f1(by)}H${f1(bx + bw - rr)}Q${f1(bx + bw)},${f1(by)} ${f1(bx + bw)},${f1(by + rr)}V${f1(by + bh - rr)}Q${f1(bx + bw)},${f1(by + bh)} ${f1(bx + bw - rr)},${f1(by + bh)}H${f1(bx + rr)}Q${f1(bx)},${f1(by + bh)} ${f1(bx)},${f1(by + bh - rr)}V${f1(t0 + 7)}L${f1(tipX)},${f1(tipY)}L${f1(bx)},${f1(t0)}V${f1(by + rr)}Q${f1(bx)},${f1(by)} ${f1(bx + rr)},${f1(by)}Z`;
     }
-    if (isNew && !Kit.calm) gsap.from(g, {opacity: 0, y: -r, duration: .3, ease: 'back.out(2)'});
-  };
-  for (let i = 0; i < N; i++){ cell(i, y1, tS[i], i === animIdx); cell(i, y2, yS[i], i === animIdx); }
-  const by = y2 + r + fl * 1.3;
-  tx(pad + cw * .5, by, 'move 1', 'start', {w: 600, fs: fl, attr: {'text-anchor': 'middle'}});
-  tx(W - pad - cw * .5, by, '10', 'middle', {w: 600, fs: fl});
-  tx(W / 2, Math.min(H - fl * .4, by + fl * 1.6), '● stone = defect   ○ = cooperate', 'middle', {w: 500, fs: fl});
+    mk('path', {d, fill: WHITE, stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'}, g);
+    const t = mk('text', {x: f1(bx + bw / 2), y: f1(by + bh / 2 + fs * .36), 'text-anchor': 'middle', 'font-family': SERIF, 'font-size': f1(fs), 'font-weight': 800, fill: RED}, g);
+    t.textContent = 'Sorry!';
+  }
+}
+
+// The path a stone takes from a thrower's raised hand over the fence to the pile it lands on.
+function path(from, i) {
+  const who = from === 'tester' ? 'you' : 'tester', hand = from === 'tester' ? G.tester.near : G.you.near;
+  const [x2, y2] = pileAt(who, i), top = Math.max(G.fs * .6, Math.min(hand[1], y2) - G.H * .22);
+  return [[hand[0], hand[1] - G.r * .4], [(hand[0] + x2) / 2, top], [x2, y2]];
+}
+function arc(p, from, i, op, dashed) {
+  const [a, c, b] = path(from, i);
+  return mk('path', {d: `M${f1(a[0])},${f1(a[1])}Q${f1(c[0])},${f1(c[1] * 2 - (a[1] + b[1]) / 2)} ${f1(b[0])},${f1(b[1])}`, fill: 'none', stroke: INK, 'stroke-width': f1(G.k * .8), 'stroke-dasharray': `${f1(G.k * 1.2)} ${f1(G.k * 2.6)}`, 'stroke-linecap': 'round', opacity: op * .55}, p);
+}
+// A stone thrown on this move: it flies along its arc and lands on its pile.
+function fly(from) {
+  const to = from === 'tester' ? 'you' : 'tester', s = now(), i = (to === 'you' ? s.atYou : s.atTester) - 1;
+  if (Kit.calm || typeof gsap === 'undefined' || !G) return;
+  const f = {to}; flying.add(f); render();
+  const [a, c0, b] = path(from, i), c = [c0[0], c0[1] * 2 - (a[1] + b[1]) / 2];
+  const st = mk('g', {}, G.top), sz = pileAt(to, i)[2];
+  stone(st, 0, 0, sz, i + (to === 'you' ? 1 : 7));
+  const o = {t: 0};
+  const at = t => [(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * c[0] + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * c[1] + t * t * b[1]];
+  const put = () => { const [x, y] = at(o.t); st.setAttribute('transform', `translate(${f1(x)},${f1(y)}) rotate(${f1(o.t * 300)})`); };
+  put();
+  gsap.to(o, {t: 1, duration: .42, ease: 'none', onUpdate: put, onComplete: () => { st.remove(); flying.delete(f); render(); }});
 }
 
 function run(b){
   branch = b; tried.add(b); clearInterval(timer);
+  flying.clear(); if (G) G.top.innerHTML = '';
   document.querySelectorAll('.opt').forEach(o => o.classList.toggle('on', o.dataset.b === b));
   Kit.$('wbig').textContent = WHY[b][0];
   Kit.$('wbody').textContent = WHY[b][1] + TAIL;
   Kit.hide('say');
-  if (Kit.calm){ shown = N; draw(-1); Kit.show('why'); Kit.show('keep'); return; }
-  shown = 1; draw(-1);
+  if (Kit.calm){ shown = N; render(); Kit.$('card').classList.add('answered'); Kit.show('why'); Kit.show('keep'); return; }
+  shown = 1; render();
   timer = setInterval(() => {
-    shown++; draw(shown - 1);
-    if (shown >= N){ clearInterval(timer); Kit.show('why'); Kit.show('keep'); Kit.haptic(tried.size > 1 ? 'success' : 'light');
+    shown++;
+    const m = shown - 1;
+    if (SEQ[b].t[m] === 'D') fly('tester');
+    if (SEQ[b].y[m] === 'D') fly('you');
+    render();
+    if (shown >= N){ clearInterval(timer); Kit.$('card').classList.add('answered'); Kit.show('why'); Kit.show('keep'); Kit.haptic(tried.size > 1 ? 'success' : 'light');
       gsap.from('#why', {opacity: 0, y: 8, duration: .4}); }
   }, 220);
 }
@@ -105,12 +263,11 @@ Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b) return;
   Kit.haptic('selection'); Kit.hide('why'); run(b.dataset.b);
 });
-Kit.onShow.card = () => draw(-1);
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out', clearProps: 'opacity,transform'}); };
 Kit.play.card = async () => { Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 2800)); };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: the answer coming in takes room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) { flying.clear(); build(); } }).observe(svg); }
 Kit.single();
 </script>
 </html>

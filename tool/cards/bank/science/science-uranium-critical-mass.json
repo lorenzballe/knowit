@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive page asking how much uranium-235 a bomb needs to go supercritical. Three options: about 1 kg (golf-ball size), about 52 kg (17 cm ball), and about 1,000 kg (46 cm ball). Tapping a size shows its ball, and the reader then rates how sure they are.",
+    "label": "Three balls of uranium-235 on a wooden bench, drawn to the same scale: about 1 kg (golf-ball size), about 52 kg (17 cm) and about 1,000 kg (46 cm). The question asks how much uranium-235 a bomb needs to go supercritical; tapping a size picks its ball, and the reader then rates how sure they are.",
     "graded": false
   },
   "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",

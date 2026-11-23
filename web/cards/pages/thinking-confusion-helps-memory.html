@@ -1,5 +1,11 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: thinking-confusion-helps-memory -->
+<!-- Look: a classroom blackboard filling the drawing, in its wooden frame, the chalk tray under it with two sticks
+     of chalk and a duster, and in front of it the class, heads and shoulders seen from behind. On the board, in
+     chalk and a teacher's hand, the two axes: how confusing the lesson felt at first, from clear to confusing, and
+     how much was remembered later. A stick of chalk stands on the axis where the reader drags it; each launch sends
+     a ball of chalk up as high as that lesson was remembered, where it sticks as a dot. Three spread out, and the
+     finding is drawn through them in yellow chalk. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -10,18 +16,19 @@
 #ctl{display:flex;align-items:center;gap:3cqw}
 #why{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
 #why b{font-weight:800}
-#count{font:600 max(1.8cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#count{font:600 max(1.8cqh,12px)/1.2 var(--body);color:var(--k);opacity:.62;font-variant-numeric:tabular-nums}
 .opt{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 6cqw;cursor:pointer}
 .opt:disabled{opacity:.45;cursor:default}
 .big{overflow-wrap:anywhere}
 .body{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="thinking" data-kind="Aim and launch">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SYSTEM 2</span></div>
     <h2 class="q">What good comes from feeling confused while learning?</h2>
     <div class="stagebox" id="stage">
-      <svg id="plot"></svg>
+      <svg id="plot" role="img" aria-label="A classroom blackboard with the class in front of it. Chalked on the board: how confusing a lesson felt at first, from clear to confusing, against how much was remembered later. A stick of chalk stands on the axis, ready to launch."></svg>
       <div id="ctl"><button class="opt" id="go">Launch ↑</button><span id="count">0 of 3 launches</span></div>
       <p class="body gone" id="why"><b>Confusion makes it stick.</b> When something is confusing, System 2, your slow careful thinking, works harder. That extra work makes you more likely to reach the right answer, and to remember the experience.</p>
     </div>
@@ -36,40 +43,97 @@ let aim = 0.5, shots = [], flying = false, done = false, g = null;
 const clamp = v => Math.max(0.04, Math.min(0.96, v));
 const svg = Kit.$('plot');
 
+// The classroom. One ink; the wall; the board's slate, its wooden frame and tray; white chalk, and yellow chalk for
+// the finding; the class's hair and shirts.
+const INK = '#10100c', WALL = '#EADFC8', SLATE = '#2E4A3F', WOOD = '#B97A45', LEDGE = '#9C6236', CHALK = '#F4F0E4',
+  DIM = 'rgba(244,240,228,.62)', YELLOW = '#FFD54A', FELT = '#3A3A44', SKIN = '#F2C29B';
+const HAIR = ['#3B2A20', '#10100c', '#C98B3C', '#6B4A3A', '#10100c', '#8A5A2B'], SHIRT = ['#2F7FE0', '#D8452F', '#7A5CC8', '#2E9E6A', '#E0A030', '#2F7FE0'];
+const lim = (v, a, b) => Math.max(a, Math.min(b, v)), f1 = n => (Math.round(n * 10) / 10).toString(), mk = Kit.mk;
+const HAND = 'Caveat, "Comic Sans MS", cursive';
+
+// The class, from behind: heads and shoulders along the foot of the drawing, the same on every phone.
+function pupils(p, W, y0, H, k) {
+  const n = Math.max(4, Math.min(6, Math.round(W / 64))), hz = H - y0, r = Math.min(hz * .36, W / n * .24);
+  for (let i = 0; i < n; i++) {
+    const x = W * (i + .5) / n + (i % 2 ? r * .25 : -r * .2), hy = y0 + hz * .42 + (i % 3) * r * .08, at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+    mk('path', Object.assign({d: `M${f1(x - r * 1.85)},${f1(H + 2)}C${f1(x - r * 1.85)},${f1(hy + r * 1.3)} ${f1(x - r)},${f1(hy + r * .9)} ${f1(x)},${f1(hy + r * .9)}C${f1(x + r)},${f1(hy + r * .9)} ${f1(x + r * 1.85)},${f1(hy + r * 1.3)} ${f1(x + r * 1.85)},${f1(H + 2)}Z`, fill: SHIRT[i]}, at), p);
+    mk('circle', Object.assign({cx: f1(x), cy: f1(hy), r: f1(r), fill: HAIR[i]}, at), p);
+    // Ears, either side, and for some a ponytail or a bun.
+    [-1, 1].forEach(s => mk('ellipse', Object.assign({cx: f1(x + s * r * .98), cy: f1(hy + r * .15), rx: f1(r * .2), ry: f1(r * .28), fill: SKIN}, at), p));
+    if (i % 3 === 1) mk('circle', Object.assign({cx: f1(x), cy: f1(hy - r * 1.05), r: f1(r * .38), fill: HAIR[i]}, at), p);
+    if (i % 3 === 2) mk('path', Object.assign({d: `M${f1(x - r * .25)},${f1(hy + r * .7)}Q${f1(x)},${f1(hy + r * 1.7)} ${f1(x + r * .3)},${f1(hy + r * .7)}Z`, fill: HAIR[i]}, at), p);
+  }
+}
+
 function draw() {
   const {W, H, f: f0} = Kit.fitSvg(svg);
   const f = Math.max(f0, 12);
   while (svg.firstChild) svg.removeChild(svg.firstChild);
-  // In a short box (the answer in), the words around the plot sit closer to it, so the plot keeps its height.
-  const tight = H < f * 15;
-  const L = f * 1.4, R = W - f * 1.4, T = f * (tight ? 2.2 : 2.6), B = H - f * (tight ? 3.3 : 3.8);
-  const X = c => L + f + c * (R - L - 2 * f), Y = m => B - m * (B - T);
-  g = {W, H, f, L, R, T, B, X, Y};
-  Kit.mk('line', {x1: L - f * .6, x2: R + f * .6, y1: B, y2: B, style: 'stroke:var(--k);stroke-width:2.5;stroke-linecap:round'}, svg);
-  const t1 = Kit.mk('text', {x: L - f * .6, y: T - f * 1.2, style: `font:700 ${f}px var(--body);fill:var(--k)`}, svg); t1.textContent = '↑ Remembered later';
-  const lc = Kit.mk('text', {x: L, y: B + f * (tight ? 1.3 : 1.4), style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); lc.textContent = 'Clear';
-  const rc = Kit.mk('text', {x: R, y: B + f * (tight ? 1.3 : 1.4), 'text-anchor': 'end', style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); rc.textContent = 'Confusing';
-  const ax = Kit.mk('text', {x: (L + R) / 2, y: B + f * (tight ? 2.8 : 3.1), 'text-anchor': 'middle', style: `font:500 ${f * .9}px var(--body);fill:var(--muted)`}, svg); ax.textContent = 'how confusing it felt at first →';
+  if (W < 40 || H < 40) return;
+  const k = lim(W * .0075, 1.8, 2.6), R = lim(W * .04, 9, 15), cf = lim(f * 1.25, 15, 22);
+  // The class at the foot, the tray above it, the board above that.
+  const hz = lim(H * .15, 20, 48), tr = lim(H * .03, 6, 10), yTray = H - hz - tr * .6, fr = lim(W * .028, 7, 11);
+  const sx0 = fr, sy0 = fr, sx1 = W - fr, sy1 = yTray - tr * .5;
+  // The chart chalked on the board: room above for its name, below for the axis's words. In a short board the
+  // words sit closer to the axis, so the chart keeps its height.
+  const tight = sy1 - sy0 < cf * 9;
+  const L = sx0 + cf * .9, R2 = sx1 - cf * .9, T = sy0 + cf * (tight ? 1.45 : 1.8), B = sy1 - cf * (tight ? 1.5 : 2.75);
+  const X = c => L + cf * .7 + c * (R2 - L - cf * 1.4), Y = m => B - m * (B - T);
+  g = {W, H, f, cf, L, R: R2, T, B, X, Y, k};
+  const defs = mk('defs', {}, svg);
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(R)}, mk('clipPath', {id: 'room'}, defs));
+  const room = mk('g', {'clip-path': 'url(#room)'}, svg);
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: WALL}, room);
+  // The board: its frame, its slate.
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(sy1 + fr * .2), fill: WOOD, stroke: INK, 'stroke-width': f1(k)}, room);
+  mk('rect', {x: f1(sx0), y: f1(sy0), width: f1(sx1 - sx0), height: f1(sy1 - sy0), fill: SLATE, stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'}, room);
+  // The tray, with two sticks of chalk at one end and the duster at the other, clear of the chalked words.
+  mk('rect', {x: f1(-k), y: f1(yTray - tr * .5), width: f1(W + 2 * k), height: f1(tr), fill: LEDGE, stroke: INK, 'stroke-width': f1(k)}, room);
+  const cl = lim(W * .05, 11, 20), cw = Math.max(4, cl * .26);
+  // (On a short board the words sit low, and the tray is left bare.)
+  if (!tight) {
+    [[sx0 + 4, 0], [sx0 + 4 + cl * 1.2, 1]].forEach(([x, i]) => mk('rect', {x: f1(x), y: f1(yTray - tr * .5 - cw), width: f1(cl * (i ? .7 : 1)), height: f1(cw), rx: f1(cw / 2), fill: i ? YELLOW : CHALK, stroke: INK, 'stroke-width': f1(k * .8)}, room));
+    const dw = lim(W * .11, 24, 40), dh = Math.max(7, dw * .28), dx = sx1 - dw - 4, top = yTray - tr * .5;
+    mk('rect', {x: f1(dx), y: f1(top - dh * .55), width: f1(dw), height: f1(dh * .55), rx: f1(2), fill: FELT, stroke: INK, 'stroke-width': f1(k * .8)}, room);
+    mk('rect', {x: f1(dx), y: f1(top - dh), width: f1(dw), height: f1(dh * .5), rx: f1(dh * .2), fill: WOOD, stroke: INK, 'stroke-width': f1(k * .8)}, room);
+  }
+  pupils(room, W, yTray + tr * .5, H, k);
+  mk('rect', {x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R - k / 2), fill: 'none', stroke: INK, 'stroke-width': f1(k)}, svg);
+
+  // The chalk: the axes, their words, the shots, the finding, the stick that launches.
+  const ch = mk('g', {}, svg);
+  const line = (d, w, col, extra = {}) => mk('path', Object.assign({d, fill: 'none', stroke: col || CHALK, 'stroke-width': f1(w || k * 1.1), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, extra), ch);
+  const word = (x, y, s, size, o = {}) => { const t = mk('text', {x: f1(x), y: f1(y), 'text-anchor': o.anchor || 'start', 'font-family': HAND, 'font-size': f1(size), 'font-weight': 700, fill: o.fill || CHALK}, ch); t.textContent = s; return t; };
+  line(`M${f1(L - cf * .3)},${f1(B)}H${f1(R2 + cf * .3)}`);
+  line(`M${f1(L)},${f1(B + cf * .2)}V${f1(T - cf * .2)}M${f1(L - cf * .25)},${f1(T + cf * .15)}L${f1(L)},${f1(T - cf * .2)}L${f1(L + cf * .25)},${f1(T + cf * .15)}`);
+  word(L + cf * .45, T + cf * .25, 'Remembered later', cf);
+  word(L, B + cf * (tight ? .98 : 1.0), 'Clear', cf);
+  word(R2, B + cf * (tight ? .98 : 1.0), 'Confusing', cf, {anchor: 'end'});
+  if (!tight) word((L + R2) / 2, B + cf * 2.3, 'how confusing it felt at first →', cf * .8, {anchor: 'middle', fill: DIM});
   if (done) {
-    const p = Kit.mk('path', {d: `M${X(0)},${Y(.12)} L${X(1)},${Y(.84)}`, style: 'stroke:var(--k);stroke-width:3;stroke-dasharray:7 6;fill:none;opacity:.55'}, svg);
-    g.trend = p;
+    g.trend = line(`M${f1(X(0))},${f1(Y(.12))}L${f1(X(1))},${f1(Y(.84))}`, k * 1.5, YELLOW, {'stroke-dasharray': `${f1(k * 3)} ${f1(k * 2.6)}`});
   }
   shots.forEach(s => {
-    Kit.mk('line', {x1: X(s.c), x2: X(s.c), y1: B, y2: Y(s.m), style: 'stroke:var(--k);stroke-width:1.5;opacity:.25'}, svg);
-    s.el = Kit.mk('circle', {cx: X(s.c), cy: Y(s.m), r: f * .65, style: 'fill:var(--k)'}, svg);
+    line(`M${f1(X(s.c))},${f1(B)}V${f1(Y(s.m))}`, k * .8, DIM, {'stroke-dasharray': `${f1(k * 1.2)} ${f1(k * 2.2)}`});
+    s.el = mk('circle', {cx: f1(X(s.c)), cy: f1(Y(s.m)), r: f1(cf * .42), fill: CHALK}, ch);
   });
-  g.aimLine = Kit.mk('line', {x1: X(aim), x2: X(aim), y1: T - f * .4, y2: B, style: `stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 5;opacity:${done ? 0 : .5}`}, svg);
-  g.launcher = Kit.mk('path', {d: `M${-f * .9},${f * .2} L0,${-f * 1.1} L${f * .9},${f * .2} Z`, transform: `translate(${X(aim)},${B})`, style: `fill:var(--k);opacity:${done ? 0 : 1}`}, svg);
-  g.ball = Kit.mk('circle', {cx: X(aim), cy: B, r: f * .65, style: 'fill:var(--k);opacity:0'}, svg);
+  // Where the next launch goes: a faint chalk line up the board, and the stick of chalk standing on the axis.
+  g.aimLine = line(`M${f1(X(aim))},${f1(T - cf * .1)}V${f1(B)}`, k * .7, DIM, {'stroke-dasharray': `${f1(k * 1.2)} ${f1(k * 2.4)}`, opacity: done ? 0 : 1});
+  const stw = Math.max(6, cf * .42), sth = cf * 1.35;
+  g.launcher = mk('g', {transform: `translate(${f1(X(aim))},${f1(B)})`, opacity: done ? 0 : 1}, ch);
+  mk('path', {d: `M${f1(-stw / 2)},0V${f1(-sth + stw / 2)}A${f1(stw / 2)},${f1(stw / 2)} 0 0 1 ${f1(stw / 2)},${f1(-sth + stw / 2)}V0Z`, fill: CHALK, stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round'}, g.launcher);
+  mk('path', {d: `M${f1(-stw / 2)},${f1(-sth * .3)}H${f1(stw / 2)}`, stroke: INK, 'stroke-width': f1(k * .6), opacity: .5}, g.launcher);
+  g.ball = mk('circle', {cx: f1(X(aim)), cy: f1(B - sth), r: f1(cf * .42), fill: CHALK, opacity: 0}, ch);
+  g.sth = sth;
 }
 
 function setAim(clientX) {
   if (!g || done || flying) return;
   const r = svg.getBoundingClientRect();
-  aim = clamp(((clientX - r.left) - g.L - g.f) / (g.R - g.L - 2 * g.f));
+  aim = clamp(((clientX - r.left) - g.L - g.cf * .7) / (g.R - g.L - g.cf * 1.4));
   const x = g.X(aim);
-  g.aimLine.setAttribute('x1', x); g.aimLine.setAttribute('x2', x);
-  g.launcher.setAttribute('transform', `translate(${x},${g.B})`);
+  g.aimLine.setAttribute('d', `M${f1(x)},${f1(g.T - g.cf * .1)}V${f1(g.B)}`);
+  g.launcher.setAttribute('transform', `translate(${f1(x)},${f1(g.B)})`);
 }
 let dragging = false;
 svg.addEventListener('pointerdown', e => { dragging = true; svg.setPointerCapture(e.pointerId); setAim(e.clientX); Kit.haptic('selection'); });
@@ -81,7 +145,7 @@ function launch() {
     if (flying || done || !g) return res();
     flying = true; Kit.$('go').disabled = true; Kit.haptic('light');
     const c = aim, m = Math.max(.06, Math.min(.95, .12 + .72 * c + (Kit.rnd() - .5) * .08));
-    const x = g.X(c), y0 = g.B, y1 = g.Y(m), ball = g.ball;
+    const x = g.X(c), y0 = g.B - g.sth, y1 = g.Y(m), ball = g.ball;
     ball.setAttribute('cx', x); ball.style.opacity = 1;
     const o = {t: 0};
     gsap.to(o, {t: 1, duration: Kit.calm ? .01 : .5 + .6 * m, ease: 'power2.out',
@@ -98,7 +162,7 @@ function launch() {
         } else {
           draw();
           const last = shots[shots.length - 1].el;
-          if (!Kit.calm) gsap.from(last, {attr: {r: g.f * 1.4}, opacity: .3, duration: .4, ease: 'back.out(2)'});
+          if (!Kit.calm) gsap.from(last, {attr: {r: g.cf * 1}, opacity: .3, duration: .4, ease: 'back.out(2)'});
           if (shots.length >= 3) msg += ' Now try a spot far from the others.';
           else msg += ' Drag elsewhere and launch again.';
           Kit.$('say').textContent = msg;
@@ -111,12 +175,16 @@ function launch() {
 
 function finish() {
   Kit.haptic('success');
-  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.$('card').classList.add('answered'); Kit.show('why'); Kit.show('keep');
   if (g.trend && !Kit.calm) {
-    const len = g.trend.getTotalLength();
-    g.trend.style.strokeDasharray = `${len}`;
-    gsap.fromTo(g.trend, {strokeDashoffset: len}, {strokeDashoffset: 0, duration: .9, ease: 'power2.inOut', onComplete: () => g.trend.style.strokeDasharray = '7 6'});
     gsap.from('#why', {opacity: 0, y: 8, duration: .4});
+    // The finding is chalked in once the board has been drawn again at the size the answer leaves it.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const t = g.trend; if (!t) return;
+      const len = t.getTotalLength();
+      t.style.strokeDasharray = `${len}`;
+      gsap.fromTo(t, {strokeDashoffset: len}, {strokeDashoffset: 0, duration: .9, ease: 'power2.inOut', onComplete: () => { t.style.strokeDasharray = ''; t.style.strokeDashoffset = ''; }});
+    }));
   }
 }
 
@@ -127,7 +195,7 @@ Kit.onEnter.card = () => {
   gsap.from(g.launcher, {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
   const o = {a: .5};
   gsap.to(o, {a: .75, duration: .5, yoyo: true, repeat: 1, ease: 'sine.inOut', delay: .4,
-    onUpdate: () => { if (!dragging && !flying && shots.length === 0) { aim = o.a; const x = g.X(aim); g.aimLine.setAttribute('x1', x); g.aimLine.setAttribute('x2', x); g.launcher.setAttribute('transform', `translate(${x},${g.B})`); } }});
+    onUpdate: () => { if (!dragging && !flying && shots.length === 0) { aim = o.a; const x = g.X(aim); g.aimLine.setAttribute('d', `M${f1(x)},${f1(g.T - g.cf * .1)}V${f1(g.B)}`); g.launcher.setAttribute('transform', `translate(${f1(x)},${f1(g.B)})`); } }});
 };
 Kit.play.card = async () => {
   for (const c of [.1, .5, .9]) {
@@ -137,9 +205,10 @@ Kit.play.card = async () => {
   }
   await new Promise(r => setTimeout(r, 1100));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: the answer coming in takes room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) { const tw = typeof gsap !== 'undefined' && gsap.globalTimeline, was = tw ? new Set(tw.getChildren(false, true, true)) : null; draw(); if (tw) tw.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } }).observe(svg); }
+// The hand the chalk is written in, loaded before the board is first drawn.
+if (document.fonts && document.fonts.load) document.fonts.load('700 20px Caveat').then(() => { if (g) draw(); }, () => {});
 Kit.single();
 </script>
 </html>

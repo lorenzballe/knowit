@@ -1,6 +1,11 @@
 <!doctype html>
 <!-- slug: psychology-effort-means-learning -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- The students, drawn big: two of them side by side at one desk, each watching a science video on a laptop. Over
+     the first, the clear explanation: one bubble, the right idea. Over the second, the dialogue: a bubble with the
+     wrong idea, then one with the right. The first sits at ease; the second frowns, chin in hand. The reader picks the
+     video that taught more and says how sure; then the bubbles give way to what each took away: a small dim bulb over
+     the first, a big bright one over the second, who also put in a whole point more of mental effort. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -14,22 +19,14 @@
 #why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
 .opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
-.ax{stroke:var(--k);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.axl{fill:var(--k);font-family:var(--body);font-weight:800}
-.lab{fill:var(--k);font-family:var(--body);font-weight:700}
-.trend{stroke:var(--k);stroke-width:2;stroke-dasharray:6 6;fill:none;opacity:.45}
-.dotA{fill:var(--c);stroke:var(--k);stroke-width:3}
-.dotB{fill:var(--k)}
-.qm{fill:var(--k);opacity:.18;font-family:var(--display);font-weight:800}
-.br{stroke:var(--k);stroke-width:2;fill:none}
-.brl{fill:var(--k);font-family:var(--hand);font-weight:700}
+#sure .sq{text-wrap:balance}
 </style>
 <article class="card" id="card" data-topic="psychology" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">LEARNING</span></div>
     <h2 class="q">Which science video made students learn more?</h2>
     <div class="stagebox" id="stage">
-      <svg id="plot"></svg>
+      <svg id="plot" role="img" aria-label="Two students side by side at a desk, each watching a science video on a laptop. Over the first, a clear explanation: one bubble with the right idea. Over the second, a dialogue: a bubble with a wrong idea, then one with the right one. The first sits at ease; the second frowns, chin in hand."></svg>
       <div id="opts">
         <button class="opt" data-i="0">A clear explanation, no wrong ideas</button>
         <button class="opt" data-i="1">A dialogue that airs the wrong ideas first</button>
@@ -40,7 +37,7 @@
         <p class="body">Students who watched it rated their mental effort a whole point higher. That extra effort turned into more learning. The easy, clear video felt fine but asked less of them.</p>
       </div>
     </div>
-    <div id="sure"></div>
+    <div id="sure" class="gone"></div>
     <p class="say" id="say">Pick the video you think taught more, then say how sure.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A video that makes you think hard teaches more than one that feels easy.</div>
     <div class="foot"><span class="src">Source · Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)</span></div>
@@ -52,65 +49,179 @@ const RIGHT = 1;
 let pick = -1, revealed = false;
 const svg = Kit.$('plot');
 let G = null;
+// One ink for every outline; the card's white for its words. Two students in their own colours, a wooden desk, grey
+// laptops; the video's bubbles white, the right idea green, the wrong one red; what they learnt a bulb, lit gold.
+const INK = '#10100c', WHITE = '#ffffff', WOOD = '#C98B4E', WOOD2 = '#A86E37', LID = '#E4E7EA';
+const SKIN = ['#F6CBA5', '#C98A5E'], HAIR = ['#3A2618', INK], SHIRT = ['#4FC3F7', '#FF9A62'];
+const YES = '#1FAE5B', NO = '#E8503A', GOLD = '#FFD23F', DIM = '#C9C3D8', SWEAT = '#9FDcff';
+const FONT = 'Figtree, system-ui, sans-serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), f1 = n => n.toFixed(1);
 
-function draw(animate){
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
-  const {W,H,f} = Kit.fitSvg(svg);
-  const fs = Math.max(13, Math.min(f, H*0.075));
-  const L = fs*2.4, R = 12, T = fs*0.8, B = fs*2.4;
-  const x0 = L, y0 = H-B, x1 = W-R, y1 = T;
-  const px = u => x0 + (x1-x0)*u, py = v => y0 - (y0-y1)*v;
-  // axes
-  Kit.mk('path',{class:'ax',d:`M${x0} ${y1} L${x0} ${y0} L${x1} ${y0}`},svg);
-  Kit.mk('path',{class:'ax',d:`M${x0-6} ${y1+9} L${x0} ${y1} L${x0+6} ${y1+9}`},svg);
-  Kit.mk('path',{class:'ax',d:`M${x1-9} ${y0-6} L${x1} ${y0} L${x1-9} ${y0+6}`},svg);
-  const xl = Kit.mk('text',{class:'axl',x:(x0+x1)/2,y:y0+fs*1.7,'text-anchor':'middle','font-size':fs},svg); xl.textContent='Mental effort';
-  const yl = Kit.mk('text',{class:'axl',x:0,y:0,'text-anchor':'middle','font-size':fs,transform:`translate(${x0-fs*0.9} ${(y0+y1)/2}) rotate(-90)`},svg); yl.textContent='Learning';
-  if (!revealed){
-    const qs = Math.max(0, Math.min(fs*4.5, (y0-y1)*0.75));
-    const q = Kit.mk('text',{class:'qm',x:(x0+x1)/2,y:(y0+y1)/2+qs*0.36,'text-anchor':'middle','font-size':qs},svg); q.textContent='?';
-    return;
+// A student sitting at the desk, seen from the front, head of radius s, the desk's edge at deskY. `effort`: brows down,
+// mouth tight, chin in hand; otherwise at ease, smiling.
+function student(g, cx, deskY, s, i, effort, k) {
+  const p = Kit.mk('g', {}, g), at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const S = fill => Object.assign({fill}, at);
+  const hy = deskY - s * 3.05;
+  // Body: shoulders and shirt, down behind the laptop to the desk.
+  Kit.mk('path', Object.assign({d: `M${f1(cx - s * 1.55)},${f1(deskY + 2)} L${f1(cx - s * 1.42)},${f1(hy + s * 1.75)} Q${f1(cx)},${f1(hy + s * 1.25)} ${f1(cx + s * 1.42)},${f1(hy + s * 1.75)} L${f1(cx + s * 1.55)},${f1(deskY + 2)} Z`}, S(SHIRT[i])), p);
+  Kit.mk('path', Object.assign({d: `M${f1(cx - s * .32)},${f1(hy + s * .85)} V${f1(hy + s * 1.42)} H${f1(cx + s * .32)} V${f1(hy + s * .85)} Z`}, S(SKIN[i])), p);
+  // Head, hair, face.
+  Kit.mk('circle', Object.assign({cx: f1(cx), cy: f1(hy), r: f1(s)}, S(SKIN[i])), p);
+  if (i === 0) Kit.mk('path', Object.assign({d: `M${f1(cx - s * 1.02)},${f1(hy + s * .2)} C${f1(cx - s * 1.2)},${f1(hy - s * 1.35)} ${f1(cx + s * 1.2)},${f1(hy - s * 1.35)} ${f1(cx + s * 1.02)},${f1(hy + s * .2)} Q${f1(cx + s * .75)},${f1(hy - s * .45)} ${f1(cx + s * .1)},${f1(hy - s * .5)} Q${f1(cx - s * .5)},${f1(hy - s * .52)} ${f1(cx - s * 1.02)},${f1(hy + s * .2)} Z`}, S(HAIR[i])), p);
+  else Kit.mk('path', Object.assign({d: `M${f1(cx - s * 1.0)},${f1(hy - s * .05)} C${f1(cx - s * 1.08)},${f1(hy - s * 1.3)} ${f1(cx + s * 1.08)},${f1(hy - s * 1.3)} ${f1(cx + s * 1.0)},${f1(hy - s * .05)} Q${f1(cx + s * .4)},${f1(hy - s * .62)} ${f1(cx - s * .2)},${f1(hy - s * .55)} Q${f1(cx - s * .7)},${f1(hy - s * .5)} ${f1(cx - s * 1.0)},${f1(hy - s * .05)} Z`}, S(HAIR[i])), p);
+  const ey = hy + s * .08, ex = s * .36, ew = Math.max(1.4, s * .1);
+  [-1, 1].forEach(d => Kit.mk('circle', {cx: f1(cx + d * ex), cy: f1(ey), r: f1(ew), fill: INK}, p));
+  if (effort) {
+    // Brows drawn down towards the middle; a tight, slanted mouth.
+    [-1, 1].forEach(d => Kit.mk('path', {d: `M${f1(cx + d * ex * 1.55)},${f1(ey - s * .3)} L${f1(cx + d * ex * .45)},${f1(ey - s * .17)}`, stroke: INK, 'stroke-width': f1(Math.max(1.6, s * .1)), 'stroke-linecap': 'round'}, p));
+    Kit.mk('path', {d: `M${f1(cx - s * .2)},${f1(hy + s * .5)} L${f1(cx + s * .22)},${f1(hy + s * .44)}`, stroke: INK, 'stroke-width': f1(Math.max(1.4, s * .08)), 'stroke-linecap': 'round'}, p);
+  } else {
+    [-1, 1].forEach(d => Kit.mk('path', {d: `M${f1(cx + d * ex * 1.45)},${f1(ey - s * .26)} Q${f1(cx + d * ex)},${f1(ey - s * .38)} ${f1(cx + d * ex * .5)},${f1(ey - s * .28)}`, fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(1.4, s * .08)), 'stroke-linecap': 'round'}, p));
+    Kit.mk('path', {d: `M${f1(cx - s * .28)},${f1(hy + s * .4)} Q${f1(cx)},${f1(hy + s * .64)} ${f1(cx + s * .28)},${f1(hy + s * .4)}`, fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(1.4, s * .08)), 'stroke-linecap': 'round'}, p);
+    [-1, 1].forEach(d => Kit.mk('circle', {cx: f1(cx + d * s * .58), cy: f1(hy + s * .38), r: f1(s * .15), fill: '#FF8FA3', opacity: .6}, p));
   }
-  const A = {x:px(.24), y:py(.26)}, Bp = {x:px(.76), y:py(.78)};
-  const r = Math.max(7, fs*0.55);
-  const trend = Kit.mk('path',{class:'trend',d:`M${px(.06)} ${py(.08)} L${px(.94)} ${py(.96)}`},svg);
-  // effort bracket on the x axis
-  const by = y0 - fs*0.8;
-  const br = Kit.mk('path',{class:'br',d:`M${A.x} ${by-6} L${A.x} ${by} L${Bp.x} ${by} L${Bp.x} ${by-6}`},svg);
-  const brl = Kit.mk('text',{class:'brl',x:(A.x+Bp.x)/2,y:by-fs*0.5,'text-anchor':'middle','font-size':fs*1.05},svg); brl.textContent='+1 point of effort';
-  const dA = Kit.mk('circle',{class:'dotA',cx:A.x,cy:A.y,r},svg);
-  const dB = Kit.mk('circle',{class:'dotB',cx:Bp.x,cy:Bp.y,r},svg);
-  const lA = Kit.mk('text',{class:'lab',x:A.x+r+6,y:A.y-r-4,'font-size':fs},svg); lA.textContent='Clear explanation';
-  const lB = Kit.mk('text',{class:'lab',x:Bp.x-r-6,y:Bp.y+fs*0.35,'text-anchor':'end','font-size':fs},svg); lB.textContent='Misconception dialogue';
-  if (animate && !Kit.calm){
+  // Arms: a hand on the desk each side of the laptop; the second student's right hand holds up the chin.
+  const hand = (x, y) => Kit.mk('circle', Object.assign({cx: f1(x), cy: f1(y), r: f1(s * .3)}, S(SKIN[i])), p);
+  const sleeve = (x1, y1, x2, y2) => { Kit.mk('path', {d: `M${f1(x1)},${f1(y1)} L${f1(x2)},${f1(y2)}`, stroke: INK, 'stroke-width': f1(s * .62 + k * 2), 'stroke-linecap': 'round'}, p); Kit.mk('path', {d: `M${f1(x1)},${f1(y1)} L${f1(x2)},${f1(y2)}`, stroke: SHIRT[i], 'stroke-width': f1(s * .62), 'stroke-linecap': 'round'}, p); };
+  sleeve(cx - s * 1.3, hy + s * 2, cx - s * 1.75, deskY - s * .1); hand(cx - s * 1.78, deskY + s * .05);
+  if (effort) { sleeve(cx + s * 1.3, hy + s * 2, cx + s * .55, hy + s * 1.15); hand(cx + s * .45, hy + s * 1.0); }
+  else { sleeve(cx + s * 1.3, hy + s * 2, cx + s * 1.75, deskY - s * .1); hand(cx + s * 1.78, deskY + s * .05); }
+  return {head: [cx, hy], top: hy - s * 1.05, brow: [cx - s * .62, hy - s * .52]};
+}
+
+// A laptop on the desk, its lid's back to us.
+function laptop(g, cx, deskY, s, k) {
+  const w = s * 2.6, h = s * 1.7, at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  Kit.mk('rect', Object.assign({x: f1(cx - w / 2), y: f1(deskY - h), width: f1(w), height: f1(h), rx: f1(s * .14), fill: LID}, at), g);
+  Kit.mk('circle', {cx: f1(cx), cy: f1(deskY - h / 2), r: f1(s * .17), fill: '#C9CED3'}, g);
+  Kit.mk('rect', Object.assign({x: f1(cx - w * .56), y: f1(deskY - s * .04), width: f1(w * 1.12), height: f1(s * .16), rx: f1(s * .06), fill: '#B9BEC4'}, at), g);
+  return {top: deskY - h, w};
+}
+
+// A speech bubble from the video: what it says drawn in it, a tick for the right idea, a cross for a wrong one.
+function bubble(g, x, y, w, h, tail, mark, k) {
+  const b = Kit.mk('g', {}, g), r = Math.min(w, h) * .3, [tx, ty] = tail;
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  const bx = clamp(tx, x + r + w * .1, x + w - r - w * .1);
+  Kit.mk('path', Object.assign({d: `M${f1(x + r)},${f1(y)} H${f1(x + w - r)} Q${f1(x + w)},${f1(y)} ${f1(x + w)},${f1(y + r)} V${f1(y + h - r)} Q${f1(x + w)},${f1(y + h)} ${f1(x + w - r)},${f1(y + h)} H${f1(bx + w * .08)} L${f1(tx)},${f1(ty)} L${f1(bx - w * .08)},${f1(y + h)} H${f1(x + r)} Q${f1(x)},${f1(y + h)} ${f1(x)},${f1(y + h - r)} V${f1(y + r)} Q${f1(x)},${f1(y)} ${f1(x + r)},${f1(y)} Z`, fill: WHITE}, at), b);
+  const cx = x + w / 2, cy = y + h / 2, m = Math.min(w, h) * .26, sw = f1(Math.max(2.4, m * .42));
+  if (mark === 'yes') Kit.mk('path', {d: `M${f1(cx - m)},${f1(cy + m * .05)} L${f1(cx - m * .25)},${f1(cy + m * .72)} L${f1(cx + m * 1.05)},${f1(cy - m * .7)}`, fill: 'none', stroke: YES, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, b);
+  else Kit.mk('path', {d: `M${f1(cx - m * .75)},${f1(cy - m * .75)} L${f1(cx + m * .75)},${f1(cy + m * .75)} M${f1(cx + m * .75)},${f1(cy - m * .75)} L${f1(cx - m * .75)},${f1(cy + m * .75)}`, fill: 'none', stroke: NO, 'stroke-width': sw, 'stroke-linecap': 'round'}, b);
+  return b;
+}
+
+// A light bulb: what a student took away. Bright: gold glass and rays; dim: grey glass, no rays.
+function bulb(g, cx, cy, r, bright, k) {
+  const b = Kit.mk('g', {}, g), at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  if (bright) for (let i = 0; i < 8; i++) {
+    const a = -Math.PI / 2 + (i - 3.5) * .42; if (Math.sin(a) > .35) continue;
+    Kit.mk('path', {d: `M${f1(cx + r * 1.35 * Math.cos(a))},${f1(cy + r * 1.35 * Math.sin(a))} L${f1(cx + r * 1.85 * Math.cos(a))},${f1(cy + r * 1.85 * Math.sin(a))}`, stroke: GOLD, 'stroke-width': f1(Math.max(2.4, r * .2)), 'stroke-linecap': 'round', class: 'ray'}, b);
+  }
+  Kit.mk('path', Object.assign({d: `M${f1(cx - r * .45)},${f1(cy + r * .82)} C${f1(cx - r * .5)},${f1(cy + r * .55)} ${f1(cx - r * 1.02)},${f1(cy + r * .3)} ${f1(cx - r)},${f1(cy - r * .1)} A${f1(r)},${f1(r)} 0 1 1 ${f1(cx + r)},${f1(cy - r * .1)} C${f1(cx + r * 1.02)},${f1(cy + r * .3)} ${f1(cx + r * .5)},${f1(cy + r * .55)} ${f1(cx + r * .45)},${f1(cy + r * .82)} Z`, fill: bright ? GOLD : DIM}, at), b);
+  Kit.mk('rect', Object.assign({x: f1(cx - r * .45), y: f1(cy + r * .82), width: f1(r * .9), height: f1(r * .5), rx: f1(r * .12), fill: '#9AA1A8'}, at), b);
+  if (bright) Kit.mk('path', {d: `M${f1(cx - r * .45)},${f1(cy - r * .35)} A${f1(r * .55)},${f1(r * .55)} 0 0 1 ${f1(cx + r * .05)},${f1(cy - r * .78)}`, fill: 'none', stroke: WHITE, 'stroke-width': f1(Math.max(1.6, r * .16)), 'stroke-linecap': 'round'}, b);
+  return b;
+}
+
+// A label in the card's white, its lines stacked from its top left; and a thin line from it to what it names.
+function label(g, lines, fs, w8 = 800) {
+  const t = Kit.mk('text', {'font-family': FONT, 'font-size': f1(fs), fill: WHITE}, g);
+  const spans = lines.map((s, i) => { const sp = Kit.mk('tspan', {x: 0, y: f1(fs * (.82 + 1.15 * i)), 'font-weight': w8}, t); sp.textContent = s; return sp; });
+  const w = Math.max(...spans.map((sp, i) => { try { return sp.getComputedTextLength(); } catch (_) { return lines[i].length * fs * .55; } }));
+  return {t, w, h: fs * 1.15 * lines.length};
+}
+const place = (l, x, y) => l.t.setAttribute('transform', `translate(${f1(x)},${f1(y)})`);
+const pin = (g, x1, y1, x2, y2) => { const p = Kit.mk('g', {}, g); Kit.mk('path', {d: `M${f1(x1)},${f1(y1)} L${f1(x2)},${f1(y2)}`, stroke: WHITE, 'stroke-width': 1.4, fill: 'none'}, p); Kit.mk('circle', {cx: f1(x2), cy: f1(y2), r: 2.6, fill: WHITE, stroke: INK, 'stroke-width': 1}, p); return p; };
+
+function draw(animate) {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 80 || H < 50) { G = null; return; }
+  const k = clamp(Math.min(W, H) * .008, 1.6, 2.6);
+  const fs = clamp(Math.min(W * .038, H * .07), 11, 13);
+  const g = Kit.mk('g', {}, svg);
+  // Each video's name over its half; a line if it fits, two if not.
+  const halves = s => { const at = [...s.matchAll(/ /g)].map(m => m.index).reduce((b, i) => Math.abs(i - s.length / 2) < Math.abs(b - s.length / 2) ? i : b, -99); return at < 0 ? [s] : [s.slice(0, at), s.slice(at + 1)]; };
+  const names = ['clear explanation', 'dialogue with wrong ideas'].map(n => { let l = label(g, [n], fs); if (l.w > W / 2 - 8) { l.t.remove(); l = label(g, halves(n), fs); } return l; });
+  const titleH = Math.max(...names.map(n => n.h)) + fs * .35;
+  // The desk along the bottom; the students as big as the height left allows: head, body, and above the head room
+  // for the video's bubbles (or, once answered, the bulbs).
+  const deskH = clamp(H * .1, 8, 26), deskY = H - deskH;
+  const s = clamp(Math.min((deskY - titleH - 4) / 5.75, W * .12), 6, 44);
+  const cx = [W * .25, W * .75];
+  // The names sit just over the room for the bubbles, whatever room is left over going to the top.
+  const nameY = Math.max(1, deskY - s * 5.75 - titleH - 2);
+  names.forEach((n, i) => place(n, clamp(cx[i] - n.w / 2, 2, W - 2 - n.w), nameY));
+  Kit.mk('rect', {x: 0, y: f1(deskY), width: f1(W), height: f1(deskH), fill: WOOD}, g);
+  Kit.mk('path', {d: `M0,${f1(deskY)} H${f1(W)}`, stroke: INK, 'stroke-width': f1(k * 1.1)}, g);
+  if (deskH > 12) Kit.mk('path', {d: `M0,${f1(deskY + deskH * .5)} H${f1(W)}`, stroke: WOOD2, 'stroke-width': f1(Math.max(1, deskH * .12))}, g);
+  const kids = [0, 1].map(i => student(g, cx[i], deskY, s, i, i === 1, k));
+  const tops = [0, 1].map(i => laptop(g, cx[i], deskY, s, k));
+  // Over each head: the video's bubbles on the front; once answered, the bulbs.
+  const zoneTop = nameY + titleH + 1, zoneBot = kids[0].top - s * .15, zh = zoneBot - zoneTop;
+  const el = {bubbles: [], bulbs: [], tags: [], sweat: null};
+  if (!revealed) {
+    const bh = clamp(zh * .9, 12, s * 1.6), bw = Math.min(bh * 1.5, W * .18);
+    const by = zoneBot - bh - s * .1;
+    el.bubbles.push(bubble(g, cx[0] - bw / 2, by, bw, bh, [cx[0] - s * .1, kids[0].top + s * .1], 'yes', k));
+    el.bubbles.push(bubble(g, cx[1] - bw * 1.08, by - bh * .1, bw, bh, [cx[1] - s * .5, kids[1].top + s * .15], 'no', k));
+    el.bubbles.push(bubble(g, cx[1] + bw * .08, by + bh * .05, bw, bh, [cx[1] + s * .4, kids[1].top + s * .1], 'yes', k));
+  } else {
+    const r1 = clamp(zh * .32, 6, s * .95), r0 = r1 * .66;
+    const y1 = zoneBot - r1 * 1.45, y0 = zoneBot - r0 * 1.45;
+    el.bulbs.push(bulb(g, cx[0], y0, r0, false, k), bulb(g, cx[1], y1, r1, true, k));
+    // The second student's effort: a drop of sweat at the brow.
+    const [bx, by] = kids[1].brow, d = s * .26;
+    el.sweat = Kit.mk('path', {d: `M${f1(bx)},${f1(by - d * 1.2)} Q${f1(bx + d * .75)},${f1(by - d * .1)} ${f1(bx + d * .55)},${f1(by + d * .45)} A${f1(d * .6)},${f1(d * .6)} 0 0 1 ${f1(bx - d * .55)},${f1(by + d * .45)} Q${f1(bx - d * .75)},${f1(by - d * .1)} ${f1(bx)},${f1(by - d * 1.2)} Z`, fill: SWEAT, stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linejoin': 'round'}, g);
+    // Named in the gap between the two: what the second put in, and what they took away.
+    const mid = (cx[0] + s * 1.2 + cx[1] - s * 1.2) / 2, room = cx[1] - cx[0] - s * 2.6;
+    const one = room > fs * 8.2, eff = label(g, one ? ['+1 point of effort'] : ['+1 point', 'of effort'], fs), lrn = label(g, one ? ['more learning'] : ['more', 'learning'], fs);
+    const ex = clamp(mid - eff.w / 2, 2, W - 2 - eff.w), ey = clamp(by - eff.h * .2, zoneTop, deskY - eff.h - 2);
+    place(eff, ex, ey);
+    el.tags.push(eff.t, pin(g, ex + eff.w + 2, ey + fs * .5, bx - d * .7, by));
+    const lx = clamp(mid - lrn.w / 2, 2, W - 2 - lrn.w), ly = clamp(y1 - lrn.h / 2, zoneTop, ey - lrn.h - fs * .3);
+    place(lrn, lx, ly);
+    el.tags.push(lrn.t, pin(g, lx + lrn.w + 2, ly + fs * .5, cx[1] - r1 * 1.02, y1));
+  }
+  G = {W, H, el};
+  if (animate && !Kit.calm && revealed) {
     const tl = gsap.timeline();
-    tl.from([dA,lA],{opacity:0,duration:.35})
-      .from(dB,{attr:{cx:A.x,cy:A.y},duration:.9,ease:'power3.out'})
-      .from(lB,{opacity:0,duration:.3},'-=.3')
-      .from([br,brl],{opacity:0,y:6,duration:.35},'-=.2')
-      .from(trend,{opacity:0,duration:.5},'-=.1');
+    tl.from(el.bulbs[0], {opacity: 0, scale: .4, transformOrigin: '50% 80%', duration: .4, ease: 'back.out(1.6)'})
+      .from(el.bulbs[1], {opacity: 0, scale: .4, transformOrigin: '50% 80%', duration: .5, ease: 'back.out(1.8)'}, '+=.15')
+      .from(el.bulbs[1].querySelectorAll('.ray'), {opacity: 0, duration: .3, stagger: .03}, '-=.1')
+      .from(el.sweat, {opacity: 0, y: -4, duration: .3}, '-=.2')
+      .from(el.tags, {opacity: 0, duration: .35, stagger: .08}, '-=.1');
   }
 }
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
   Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  revealed = true; draw(true);
+  // The verdict names the answer when it was picked: the explanation need not say it again.
+  if (ok) Kit.$('why').querySelector('.big')?.remove();
+  Kit.hide('say'); Kit.show('why');
+  revealed = true;
   sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: it was the dialogue`);
   Kit.show('keep');
+  svg.setAttribute('aria-label', 'The two students after their videos: over the first, who watched the clear explanation, a small dim bulb; over the second, who watched the dialogue and put in a whole point more of mental effort, a big bright bulb: more learning.');
+  // Drawn, in motion, once the page has made its room.
+  requestAnimationFrame(() => requestAnimationFrame(() => draw(true)));
   Kit.haptic(ok ? 'success' : 'light');
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+  // The answer is in: how sure takes the answers' place, and the picture their room.
+  Kit.hide('opts'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`);
+  sure.on();
 });
 Kit.onShow.card = () => draw(false);
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2200)); };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('plot'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: another phone, the answers giving way, or the answer
+// taking room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(false); }).observe(svg); }
 Kit.single();
 </script>
 </html>

@@ -27,7 +27,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Question: What good comes from feeling confused while learning? A slider picks how confusing a lesson is, and a Launch button runs it, with a counter showing 0 of 3 launches used. The reveal says confusion makes learning stick."
+    "label": "Question: What good comes from feeling confused while learning? A classroom blackboard with the class in front: dragging a stick of chalk along it picks how confusing a lesson is, and a Launch button sends a ball of chalk up as high as the lesson was remembered later, with a counter showing 0 of 3 launches used. The reveal says confusion makes learning stick."
   },
   "source": "Veritasium, “The Science of Thinking” (YouTube, 2017)",
   "reference": "https://www.youtube.com/watch?v=UBVV8pch1dM&t=550s",

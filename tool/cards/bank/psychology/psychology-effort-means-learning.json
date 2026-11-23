@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two science video options, one a clear explanation with no wrong ideas and one a dialogue that airs misconceptions first. The question asks which taught more: clear, dialogue, or about the same. The reader picks an answer and then rates how sure they are.",
+    "label": "Two students at a desk watch two science videos on laptops: one a clear explanation with no wrong ideas, one a dialogue that airs misconceptions first. The question asks which taught more: clear, dialogue, or about the same. The reader picks an answer and then rates how sure they are.",
     "graded": false
   },
   "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
