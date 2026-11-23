@@ -213,7 +213,7 @@ final class WidgetOpens: NSObject, FlutterSceneLifeCycleDelegate {
   /// The app, already running, brought forward by a card's link: the app is
   /// told at once, as for a widget's tap.
   @objc(scene:continueUserActivity:)
-  func scene(_ scene: UIScene, continueUserActivity userActivity: NSUserActivity) -> Bool {
+  func scene(_ scene: UIScene, continue userActivity: NSUserActivity) -> Bool {
     guard WidgetOpens.noteActivity(userActivity) else { return false }
     WidgetOpens.channel?.invokeMethod("opened", arguments: nil)
     return true
