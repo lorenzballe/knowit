@@ -632,7 +632,11 @@ class _Small extends StatelessWidget {
     final Widget plain = ColoredBox(
       color: pill.color,
       child: Center(
-        child: CardMark(pill: pill, size: height * 0.26, ink: pill.ink),
+        child: SubjectIcon(
+          subject: pill.topic,
+          size: height * 0.26,
+          ink: pill.ink,
+        ),
       ),
     );
     return ExcludeSemantics(

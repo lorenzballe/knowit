@@ -370,8 +370,8 @@ class FinishedSet extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: CardMark(
-                                pill: fan[i],
+                              child: SubjectIcon(
+                                subject: fan[i].topic,
                                 size: 12,
                                 ink: fan[i].ink,
                               ),

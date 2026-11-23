@@ -178,7 +178,11 @@ class CardRow extends StatelessWidget {
                   width: 44,
                   color: pill.color,
                   alignment: Alignment.center,
-                  child: CardMark(pill: pill, size: 16, ink: pill.ink),
+                  child: SubjectIcon(
+                    subject: pill.topic,
+                    size: 16,
+                    ink: pill.ink,
+                  ),
                 ),
                 Expanded(
                   child: Padding(

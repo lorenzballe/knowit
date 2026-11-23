@@ -766,7 +766,11 @@ class _ListRow extends StatelessWidget {
             height: tile,
             alignment: Alignment.center,
             decoration: cardFace(context, pill.color, radius: tile * 0.26),
-            child: CardMark(pill: pill, size: tile * 0.36, ink: pill.ink),
+            child: SubjectIcon(
+              subject: pill.topic,
+              size: tile * 0.36,
+              ink: pill.ink,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
