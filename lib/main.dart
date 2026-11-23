@@ -602,12 +602,21 @@ class _AstutoRootState extends State<AstutoRoot> {
   Future<void> _takeWidgetOpen() async {
     final WidgetOpen? open = await takeWidgetOpen();
     if (open == null || !mounted) return;
-    Session.instance.cameFrom('widget');
-    Analytics.capture('app opened from widget', {
-      'widget': open.from,
-      'pill_id': open.card,
-      'where': open.place,
-    });
+    if (open.place == WidgetOpen.link) {
+      // A card's link, tapped somewhere else on the phone.
+      Session.instance.cameFrom('link');
+      Analytics.capture('app opened from link', {
+        'pill_id': ?open.card,
+        'known': open.card != null && PillBank.byId(open.card!) != null,
+      });
+    } else {
+      Session.instance.cameFrom('widget');
+      Analytics.capture('app opened from widget', {
+        'widget': open.from,
+        'pill_id': open.card,
+        'where': open.place,
+      });
+    }
     _widgetOpen.value = open;
   }
 
@@ -1601,6 +1610,29 @@ class _AstutoShellState extends State<AstutoShell>
     final String? id = open.card;
     // Whatever was open over the tabs gives way to the card asked for.
     Navigator.of(context).popUntil((route) => route.isFirst);
+
+    // A card's link: the card, on its own, over the tab the reader was on,
+    // as a post opens from its link. One this build does not have yet (a
+    // card newer than the app), or one taken out of the app, leaves the app
+    // where it was.
+    if (open.place == WidgetOpen.link) {
+      final Pill? card = id == null || PillBank.isRetired(id)
+          ? null
+          : PillBank.byId(id);
+      if (card == null) return;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => DeckViewerScreen(
+            app: app,
+            deck: [card],
+            title: context.l10n.subjectOf(card.topic),
+            initialIndex: 0,
+            source: 'link',
+          ),
+        ),
+      );
+      return;
+    }
 
     final bool shelf =
         open.place == WidgetOpen.shelf ||

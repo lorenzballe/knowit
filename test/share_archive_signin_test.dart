@@ -453,10 +453,10 @@ void main() {
       );
     });
 
-    test('a card leaves as its own page on the site', () {
+    test('a card leaves as its own page on the site, its link short', () {
       expect(
         cardLink('space-aerogel-comet-catch'),
-        'https://astutetheapp.com/c/space-aerogel-comet-catch.html'
+        'https://astutetheapp.com/c/space-aerogel-comet-catch'
         '?ref=share_card',
       );
     });

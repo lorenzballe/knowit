@@ -22,6 +22,8 @@ BANK = {
         {"id": "art-guess", "topic": "art", "kind": "estimate", "question": "Roughly?",
          "value": 5.6, "unit": "tonnes", "withinFactor": 3, "answer": "About 5.6."},
         {"id": "no-question", "topic": "art", "kind": "read"},
+        {"id": "art-retired", "topic": "art", "kind": "read", "question": "Taken out?",
+         "answer": "Yes.", "disabled": True},
     ]
 }
 
@@ -34,12 +36,19 @@ class CardPages(unittest.TestCase):
     def test_a_page_for_every_card_and_the_shared_style(self):
         with tempfile.TemporaryDirectory() as d:
             n = cp.write(Path(d), BANK)
-            self.assertEqual(n, 7, "every card with a question")
+            self.assertEqual(n, 7, "every card with a question, but the one taken out")
             for cid in ("space-x", "maths-y", "art-pick", "history-read", "art-side", "art-sum"):
                 self.assertTrue((Path(d) / "c" / f"{cid}.html").exists(), cid)
             self.assertFalse((Path(d) / "c" / "no-question.html").exists())
+            # A card taken out of the app has no page to be found at.
+            self.assertFalse((Path(d) / "c" / "art-retired.html").exists())
             self.assertIn(".card.words", (Path(d) / "c" / "card.css").read_text())
             self.assertIn("Not quite.", (Path(d) / "c" / "card.js").read_text())
+
+    def test_a_page_names_its_short_link_and_offers_the_app(self):
+        page = cp.render(card("history-read"))
+        self.assertIn('<link rel="canonical" href="https://astutetheapp.com/c/history-read">', page)
+        self.assertIn('content="app-id=6806852300, app-argument=https://astutetheapp.com/c/history-read"', page)
 
     def test_a_drawn_card_plays_inside_and_its_drawing_is_the_preview(self):
         page = cp.render(card("space-x"))

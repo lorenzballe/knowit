@@ -138,7 +138,7 @@ void main() {
     expect(cardLink('news-2026-11-16-eggs'), ShareRef.card.link);
     expect(
       cardLink('economics-1'),
-      'https://$kSiteHost/c/economics-1.html?ref=${ShareRef.card.ref}',
+      'https://$kSiteHost/c/economics-1?ref=${ShareRef.card.ref}',
     );
 
     // Asked again within the two hours: not asked.

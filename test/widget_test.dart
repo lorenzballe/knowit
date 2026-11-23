@@ -38,6 +38,7 @@ import 'package:astuto/widgets/hold_to_keep.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
 import 'package:astuto/sync/served.dart';
 import 'package:astuto/sync/tally.dart';
+import 'package:astuto/utils/share_link.dart' show cardLink;
 import 'package:astuto/utils/widget_open.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -1282,8 +1283,15 @@ void main() {
         orElse: () => throw StateError('nothing planned for day $daysAhead'),
       );
 
-      // Today: a day since the last one, nothing to say but the question.
-      expect(on(0).title, 'Your five are ready');
+      // Today: a day since the last one, nothing to say but the question;
+      // or, on a Monday, the week's free book, which a reader who keeps
+      // coming is told that day.
+      expect(
+        on(0).title,
+        on(0).when.weekday == DateTime.monday
+            ? "This week's free book"
+            : 'Your five are ready',
+      );
       // Tomorrow: two days since — the freeze is what holds, so say so.
       expect(on(1).title, 'Your freeze is holding');
       expect(on(1).body, contains(t.app.leadOn(on(1).when).question));
@@ -1618,6 +1626,92 @@ void main() {
         WidgetOpen.read({'from': 'shelf.systemLarge', 'card': ''})!.card,
         isNull,
       );
+    });
+  });
+
+  group("A card's link opens the card, as a post's link does", () {
+    test('the link is the card\'s page on the site, short; the app knows it '
+        'with or without .html, www. or a query, and nothing else', () {
+      expect(
+        cardLink('science-volcano-breathing'),
+        'https://astutetheapp.com/c/science-volcano-breathing?ref=share_card',
+      );
+      for (final String url in [
+        'https://astutetheapp.com/c/science-volcano-breathing',
+        'https://astutetheapp.com/c/science-volcano-breathing.html',
+        'https://www.astutetheapp.com/c/science-volcano-breathing?ref=x',
+        'https://astutetheapp.com/c/science-volcano-breathing/',
+      ]) {
+        expect(
+          WidgetOpen.cardOfLink(Uri.parse(url)),
+          'science-volcano-breathing',
+          reason: url,
+        );
+      }
+      for (final String url in [
+        'https://astutetheapp.com/',
+        'https://astutetheapp.com/c/',
+        'https://astutetheapp.com/cards/pages/x.html',
+        'https://astutetheapp.com/c/a/b',
+        'https://example.com/c/science-volcano-breathing',
+        'astute://widget?from=card',
+      ]) {
+        expect(WidgetOpen.cardOfLink(Uri.parse(url)), isNull, reason: url);
+      }
+    });
+
+    testWidgets('tapped while the app runs, it opens that card on its own, '
+        'over the tab the reader was on', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+      await _settle(tester);
+      final Pill card = PillBank.cards.firstWhere((p) => p.web == null);
+
+      await phone.tapRunning({'from': 'link', 'card': card.id, 'in': 'link'});
+
+      final viewer = tester.widget<DeckViewerScreen>(
+        find.byType(DeckViewerScreen),
+      );
+      expect(viewer.deck.map((p) => p.id), [card.id]);
+      expect(viewer.source, 'link');
+      await tester.tap(find.byIcon(Icons.close_rounded));
+      await _settle(tester);
+      expect(_onTab(tester, 'Explore'), isTrue);
+    });
+
+    testWidgets('a card taken out of the app is not opened from its link', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      // One of the cards the bank keeps but no longer deals.
+      const String retired = 'art-abstraction-6';
+      expect(PillBank.isRetired(retired), isTrue);
+      expect(PillBank.byId(retired), isNotNull);
+      await phone.tapRunning({'from': 'link', 'card': retired, 'in': 'link'});
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a card this build does not have leaves the app where it was', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await phone.tapRunning({
+        'from': 'link',
+        'card': 'a-card-from-the-future',
+        'in': 'link',
+      });
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      expect(tester.takeException(), isNull);
     });
   });
 
