@@ -132,6 +132,11 @@ class _Frame extends StatelessWidget {
   );
 }
 
+/// The tile's picture grows straight into the screen, as a picture opened
+/// on a phone does, rather than swinging along an arc.
+RectTween _straight(Rect? begin, Rect? end) =>
+    RectTween(begin: begin, end: end);
+
 /// The tile's picture on its way to the screen and back: its box grows from
 /// the tile to the whole screen, its corners going square, and the picture
 /// moves within it from the tile's top to where the film stands.
@@ -211,6 +216,7 @@ class VideoCardTile extends StatelessWidget {
           children: [
             Hero(
               tag: _heroOf(card),
+              createRectTween: _straight,
               flightShuttleBuilder: _flight,
               child: _Frame(card: card, language: language),
             ),
@@ -650,6 +656,7 @@ class _VideoCardScreenState extends State<VideoCardScreen>
                           children: [
                             Hero(
                               tag: _heroOf(card),
+                              createRectTween: _straight,
                               flightShuttleBuilder: _flight,
                               child: _Frame(
                                 card: card,
