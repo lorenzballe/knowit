@@ -24,10 +24,10 @@ import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'deck_viewer_screen.dart';
 import 'mix_screen.dart' show kMixSubjects;
-import 'path_screen.dart';
 import 'subject_home_screen.dart';
 import 'progress_text.dart';
 import 'week_screen.dart';
+import 'path_screen.dart';
 import '../widgets/card_edge.dart';
 import '../widgets/premium.dart';
 import '../widgets/area_marks.dart' show goalName;
@@ -61,7 +61,6 @@ class JourneyScreen extends StatefulWidget {
 class _JourneyScreenState extends State<JourneyScreen> {
   /// The week tapped on the score chart, if one was; the week in hand if
   /// not.
-  int? _week;
 
   @override
   Widget build(BuildContext context) {
@@ -112,14 +111,21 @@ class _JourneyScreenState extends State<JourneyScreen> {
                   // practise first, then the numbers behind them, grouped
                   // by what they are about, and the story so far at the end.
                   children: [
-                    // What the reader is training first: the skills they
-                    // picked and how far each has come, the one place their
-                    // progress in them lives.
+                    // What the reader is training first: their Astute
+                    // score, the one number the journey keeps, and the
+                    // skills they picked with theirs.
                     _Chapter(
                       n: ++n,
                       title: l.trainingTitle,
                       trailing: TrainingChapter.change(context, app),
                       child: TrainingChapter(app: app),
+                    ),
+                    chapterGap,
+                    // What to do now, under the number it moves.
+                    _Chapter(
+                      n: ++n,
+                      title: l.storyChapterPractice,
+                      child: _Practice(app: app),
                     ),
                     chapterGap,
                     _Chapter(
@@ -135,48 +141,6 @@ class _JourneyScreenState extends State<JourneyScreen> {
                         child: _Coach(app: app),
                       ),
                     ],
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.storyChapterPractice,
-                      child: _Practice(app: app),
-                    ),
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.storyChapterWhere,
-                      child: _Stack([
-                        _ScoreTile(
-                          app: app,
-                          record: record,
-                          chosen: _week,
-                          onChoose: (i) => setState(() => _week = i),
-                        ),
-                        _LevelTile(app: app),
-                      ]),
-                    ),
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.storyChapterReason,
-                      child: _Stack([
-                        _HowYouReason(app: app),
-                        _PointsOffTile(app: app, record: record),
-                        _Pair(
-                          _SureTile(record: record),
-                          _MovesTile(app: app, record: record),
-                        ),
-                        if (_MissingTile.missed(app).isNotEmpty)
-                          _MissingTile(app: app),
-                        // What the cards that ask did for the reader, in
-                        // their own word; nothing until one has asked.
-                        if (app.reactions.isNotEmpty)
-                          _Pair(
-                            _ReactionTile(app: app, changed: true),
-                            _ReactionTile(app: app, changed: false),
-                          ),
-                      ]),
-                    ),
                     chapterGap,
                     _Chapter(
                       n: ++n,
@@ -197,6 +161,33 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     chapterGap,
                     _Chapter(
                       n: ++n,
+                      title: l.storyChapterReason,
+                      child: _Stack([
+                        _HowYouReason(app: app),
+                        // How far off the reader's sureness is, once there
+                        // are enough answers to say: before, the line above
+                        // says how many more, and an empty chart said it
+                        // again.
+                        if (app.calibratedAnswers >= kCalibrationFloor)
+                          _PointsOffTile(app: app, record: record),
+                        _Pair(
+                          _SureTile(record: record),
+                          _MovesTile(app: app, record: record),
+                        ),
+                        if (_MissingTile.missed(app).isNotEmpty)
+                          _MissingTile(app: app),
+                        // What the cards that ask did for the reader, in
+                        // their own word; nothing until one has asked.
+                        if (app.reactions.isNotEmpty)
+                          _Pair(
+                            _ReactionTile(app: app, changed: true),
+                            _ReactionTile(app: app, changed: false),
+                          ),
+                      ]),
+                    ),
+                    chapterGap,
+                    _Chapter(
+                      n: ++n,
                       title: l.journeyChapterHabits,
                       child: _Stack([
                         _Pair(
@@ -210,17 +201,23 @@ class _JourneyScreenState extends State<JourneyScreen> {
                         ),
                       ]),
                     ),
-                    chapterGap,
-                    _Chapter(
-                      n: ++n,
-                      title: l.journeyChapterMemory,
-                      child: _Stack([
-                        _MemoryTile(app: app, record: record),
-                        if (_WeekAsksTile.asksOf(app, record.today)
-                            case final List<Pill> asks when asks.isNotEmpty)
-                          _WeekAsksTile(app: app, asks: asks),
-                      ]),
-                    ),
+                    // What stays, once something has: a chapter of noughts
+                    // and dashes told a new reader nothing.
+                    if (app.heldCards > 0 ||
+                        _WeekAsksTile.asksOf(app, record.today).isNotEmpty) ...[
+                      chapterGap,
+                      _Chapter(
+                        n: ++n,
+                        title: l.journeyChapterMemory,
+                        child: _Stack([
+                          if (app.heldCards > 0)
+                            _MemoryTile(app: app, record: record),
+                          if (_WeekAsksTile.asksOf(app, record.today)
+                              case final List<Pill> asks when asks.isNotEmpty)
+                            _WeekAsksTile(app: app, asks: asks),
+                        ]),
+                      ),
+                    ],
                     chapterGap,
                     _Chapter(
                       n: ++n,
@@ -266,9 +263,6 @@ const Color _greenFill = Color(0xFF00D451);
 String _locale(BuildContext context) =>
     Localizations.localeOf(context).toString();
 
-String _number(BuildContext context, num n) =>
-    NumberFormat.decimalPattern(_locale(context)).format(n);
-
 String _percent(BuildContext context, double share) =>
     NumberFormat.percentPattern(_locale(context)).format(share);
 
@@ -288,26 +282,11 @@ String _day(BuildContext context, DateTime d) =>
 String _month(BuildContext context, DateTime d) =>
     _format(context, (l) => DateFormat.LLLL(l)).format(d);
 
-/// A month as a label under a chart, short and with a capital.
-String _monthLabel(BuildContext context, DateTime d) {
-  final String out = _format(context, (l) => DateFormat.LLL(l)).format(d);
-  return out.isEmpty ? out : out[0].toUpperCase() + out.substring(1);
-}
-
 /// Capitals, with Turkish's dotted capital I.
 String _upper(BuildContext context, String text) =>
     Localizations.localeOf(context).languageCode == 'tr'
     ? text.replaceAll('i', 'İ').toUpperCase()
     : text.toUpperCase();
-
-/// Italian runs "del 8 luglio" together as "dell'8 luglio".
-String _elided(BuildContext context, String text) =>
-    Localizations.localeOf(context).languageCode == 'it'
-    ? text.replaceAllMapped(
-        RegExp(r"\b(de|da|a)l (1|8|11)\b"),
-        (m) => "${m[1]}ll'${m[2]}",
-      )
-    : text;
 
 /// The month the reader started in, and its last day — once it is over.
 ({DateTime first, String last})? _firstMonth(JourneyRecord record) {
@@ -377,25 +356,6 @@ class _Pair extends StatelessWidget {
   );
 }
 
-/// Small capitals over a number.
-class _Kicker extends StatelessWidget {
-  const _Kicker(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Text(
-    _upper(context, text),
-    style: AppText.body(
-      size: 9.5,
-      weight: FontWeight.w700,
-      height: 1,
-      spacing: 1.3,
-      color: context.p.ink.withValues(alpha: 0.45),
-    ),
-  );
-}
-
 /// A number set large, shrunk rather than cut when a language runs long.
 class _Big extends StatelessWidget {
   const _Big(this.text, {this.size = 30, this.valueKey});
@@ -425,10 +385,9 @@ class _Big extends StatelessWidget {
 
 /// The word after a large number, on its baseline.
 class _Unit extends StatelessWidget {
-  const _Unit(this.text, {this.size = 12});
+  const _Unit(this.text);
 
   final String text;
-  final double size;
 
   @override
   Widget build(BuildContext context) => Text(
@@ -436,7 +395,7 @@ class _Unit extends StatelessWidget {
     maxLines: 3,
     overflow: TextOverflow.ellipsis,
     style: AppText.body(
-      size: size,
+      size: 12,
       weight: FontWeight.w600,
       height: 1.2,
       color: context.p.ink.withValues(alpha: 0.5),
@@ -636,604 +595,9 @@ Path _dashed(Path source, {double dash = 4, double gap = 3}) {
   return out;
 }
 
-/// A label on a chart, placed by its baseline as an SVG text is.
-void _label(
-  Canvas canvas,
-  String text,
-  Offset at, {
-  required Color color,
-  TextAlign anchor = TextAlign.center,
-  double size = 10,
-}) {
-  final TextPainter tp = TextPainter(
-    text: TextSpan(
-      text: text,
-      style: AppText.body(size: size, weight: FontWeight.w600, color: color),
-    ),
-    textDirection: TextDirection.ltr,
-    maxLines: 1,
-  )..layout();
-  final double ascent = tp.computeDistanceToActualBaseline(
-    TextBaseline.alphabetic,
-  );
-  double x = at.dx;
-  if (anchor == TextAlign.right) x -= tp.width;
-  if (anchor == TextAlign.center) x -= tp.width / 2;
-  tp.paint(canvas, Offset(x, at.dy - ascent));
-}
-
 // ── The score ─────────────────────────────────────────────────────────────
 
-/// The score set large, what the last four weeks added to it, and a point
-/// for each week since the first day: tap one to see that week.
-class _ScoreTile extends StatelessWidget {
-  const _ScoreTile({
-    required this.app,
-    required this.record,
-    required this.chosen,
-    required this.onChoose,
-  });
-
-  final AppState app;
-  final JourneyRecord record;
-  final int? chosen;
-  final ValueChanged<int> onChoose;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final Color ink = context.p.ink;
-    final int total = app.score.total;
-    final List<JourneyWeek> weeks = record.weeks();
-    final List<int> scores = [for (final w in weeks) record.scoreOn(w.last)];
-    final int at = (chosen ?? weeks.length - 1).clamp(0, weeks.length - 1);
-    final JourneyWeek week = weeks[at];
-    final int earned = record.earnedIn(week);
-    final int cards = record.readBetween(week.first, week.last).length;
-    final int gained = record.gainedIn(28);
-
-    return _Box(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _Kicker(l.journeyYourScore),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Flexible(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          _number(context, total),
-                          key: const ValueKey('journey-score'),
-                          maxLines: 1,
-                          style: AppText.display(
-                            size: 56,
-                            weight: FontWeight.w600,
-                            height: 0.88,
-                            spacing: -2.4,
-                            color: ink,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    _Unit(l.journeyPointsUnit(total), size: 14),
-                  ],
-                ),
-              ),
-              if (gained > 0) ...[
-                const SizedBox(width: 8),
-                Container(
-                  key: const ValueKey('journey-gained'),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 9,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _greenFill.withValues(alpha: 0.14),
-                    borderRadius: BorderRadius.circular(9),
-                  ),
-                  child: Text(
-                    l.journeyGainedIn(_number(context, gained)),
-                    maxLines: 1,
-                    style: AppText.body(
-                      size: 11.5,
-                      weight: FontWeight.w700,
-                      height: 1,
-                      color: _green(context),
-                    ),
-                  ),
-                ),
-              ],
-            ],
-          ),
-          const SizedBox(height: 14),
-          _ScoreChart(weeks: weeks, scores: scores, at: at, onChoose: onChoose),
-          const SizedBox(height: 14),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Text(
-                  week.current
-                      ? l.journeyWeekSoFar(earned)
-                      : _elided(
-                          context,
-                          l.journeyWeekOf(
-                            earned,
-                            _day(context, dayOfKey(week.first)),
-                          ),
-                        ),
-                  key: const ValueKey('journey-say'),
-                  style: AppText.display(
-                    size: 17,
-                    weight: FontWeight.w600,
-                    height: 1.25,
-                    spacing: -0.3,
-                    color: ink,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                l.journeyCards(cards),
-                style: AppText.body(
-                  size: 11.5,
-                  weight: FontWeight.w600,
-                  height: 1.3,
-                  color: ink.withValues(alpha: 0.45),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Text(
-            _elided(
-              context,
-              l.journeyScoreCaption(_day(context, dayOfKey(weeks.first.first))),
-            ),
-            style: AppText.body(
-              size: 11,
-              weight: FontWeight.w500,
-              height: 1.35,
-              color: ink.withValues(alpha: 0.45),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// A round top for the score axis: the half of it a round number, so the
-/// three labels read 0, a half and the whole.
-int _niceTop(int most) {
-  if (most <= 0) return 10;
-  final double half = most / 2;
-  final double mag = math
-      .pow(10, (math.log(half) / math.ln10).floor())
-      .toDouble();
-  for (final double m in const [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10]) {
-    if (m * mag >= half) return (2 * m * mag).round();
-  }
-  return (20 * mag).round();
-}
-
-class _ScoreChart extends StatelessWidget {
-  const _ScoreChart({
-    required this.weeks,
-    required this.scores,
-    required this.at,
-    required this.onChoose,
-  });
-
-  final List<JourneyWeek> weeks;
-  final List<int> scores;
-  final int at;
-  final ValueChanged<int> onChoose;
-
-  static const double height = 230;
-
-  @override
-  Widget build(BuildContext context) {
-    final Color ink = context.p.ink;
-    final Color ground = context.p.surface;
-    final int top = _niceTop(scores.fold(0, math.max));
-    final String locale = _locale(context);
-    String axis(int v) => v >= 10000
-        ? NumberFormat.compact(locale: locale).format(v)
-        : NumberFormat.decimalPattern(locale).format(v);
-    final labels = <(int, String)>[];
-    for (var i = 0; i < weeks.length; i++) {
-      final DateTime d = dayOfKey(weeks[i].first);
-      if (i == 0 || dayOfKey(weeks[i - 1].first).month != d.month) {
-        labels.add((i, _monthLabel(context, d)));
-      }
-    }
-
-    return LayoutBuilder(
-      builder: (context, box) {
-        final double w = box.maxWidth;
-        final geo = _ScoreGeometry(w, weeks.length, top);
-        final double hit = weeks.length < 2
-            ? 44
-            : math.min(44, (geo.x(1) - geo.x(0)).abs());
-        final Offset mark = Offset(geo.x(at), geo.y(scores[at]));
-        return GestureDetector(
-          key: const ValueKey('journey-chart'),
-          behavior: HitTestBehavior.opaque,
-          onTapUp: (d) => onChoose(geo.nearest(d.localPosition.dx)),
-          child: SizedBox(
-            height: height,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned.fill(
-                  child: CustomPaint(
-                    painter: _ScorePainter(
-                      geo: geo,
-                      scores: scores,
-                      ink: ink,
-                      ground: ground,
-                      yLabels: [axis(top), axis(top ~/ 2), axis(0)],
-                      xLabels: labels,
-                    ),
-                  ),
-                ),
-                AnimatedPositioned(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                  left: mark.dx - 12,
-                  top: mark.dy - 12,
-                  width: 24,
-                  height: 24,
-                  child: IgnorePointer(
-                    child: CustomPaint(
-                      painter: _RingPainter(
-                        pink: _pink(context),
-                        ground: ground,
-                      ),
-                    ),
-                  ),
-                ),
-                // Targets 44 high, and as wide as 44 or the room between
-                // two weeks, whichever is less, so neighbours never overlap.
-                for (var i = 0; i < weeks.length; i++)
-                  Positioned(
-                    left: geo.x(i) - hit / 2,
-                    top: geo.y(scores[i]) - 22,
-                    width: hit,
-                    height: 44,
-                    child: Semantics(
-                      button: true,
-                      selected: i == at,
-                      child: GestureDetector(
-                        key: ValueKey('journey-week-$i'),
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () => onChoose(i),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-/// Where the score chart puts things: the design's 338 by 230, with the
-/// width taken from the phone.
-class _ScoreGeometry {
-  _ScoreGeometry(this.width, this.n, this.top);
-
-  final double width;
-  final int n;
-  final int top;
-
-  static const double left = 36;
-  static const double base = 200;
-  static const double rise = 186;
-
-  double get right => width - 8;
-
-  double x(int i) => n <= 1 ? right : left + i / (n - 1) * (right - left);
-  double y(int v) => base - (v / top).clamp(0.0, 1.0) * rise;
-
-  int nearest(double dx) {
-    var best = 0;
-    for (var i = 1; i < n; i++) {
-      if ((x(i) - dx).abs() < (x(best) - dx).abs()) best = i;
-    }
-    return best;
-  }
-}
-
-class _ScorePainter extends CustomPainter {
-  _ScorePainter({
-    required this.geo,
-    required this.scores,
-    required this.ink,
-    required this.ground,
-    required this.yLabels,
-    required this.xLabels,
-  });
-
-  final _ScoreGeometry geo;
-  final List<int> scores;
-  final Color ink;
-  final Color ground;
-  final List<String> yLabels;
-  final List<(int, String)> xLabels;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint grid = Paint()
-      ..color = ink.withValues(alpha: 0.07)
-      ..strokeWidth = 1;
-    for (var i = 0; i < 6; i++) {
-      final double y = 14 + 31.0 * i;
-      canvas.drawLine(
-        Offset(_ScoreGeometry.left, y),
-        Offset(geo.right + 0, y),
-        grid,
-      );
-    }
-    canvas.drawLine(
-      const Offset(_ScoreGeometry.left, _ScoreGeometry.base),
-      Offset(geo.right, _ScoreGeometry.base),
-      Paint()
-        ..color = ink.withValues(alpha: 0.18)
-        ..strokeWidth = 1,
-    );
-    final Color faint = ink.withValues(alpha: 0.4);
-    _label(
-      canvas,
-      yLabels[0],
-      const Offset(28, 17.5),
-      color: faint,
-      anchor: TextAlign.right,
-    );
-    _label(
-      canvas,
-      yLabels[1],
-      const Offset(28, 110.5),
-      color: faint,
-      anchor: TextAlign.right,
-    );
-    _label(
-      canvas,
-      yLabels[2],
-      const Offset(28, 203.5),
-      color: faint,
-      anchor: TextAlign.right,
-    );
-
-    double lastRight = -1e9;
-    for (final (int i, String text) in xLabels) {
-      final bool end = i == geo.n - 1 && geo.n > 1 || geo.n == 1;
-      final double x = geo.x(i);
-      if (x - lastRight < 30) continue;
-      _label(
-        canvas,
-        text,
-        Offset(x, 219),
-        color: faint,
-        anchor: end ? TextAlign.right : TextAlign.center,
-      );
-      lastRight = x;
-    }
-
-    final Path line = Path();
-    for (var i = 0; i < scores.length; i++) {
-      final Offset p = Offset(geo.x(i), geo.y(scores[i]));
-      if (i == 0) {
-        line.moveTo(p.dx, p.dy);
-      } else {
-        line.lineTo(p.dx, p.dy);
-      }
-    }
-    // The ground under the line, lit from it and fading to the base: the
-    // climb reads as a shape, not only as a thread.
-    if (scores.length > 1) {
-      double crest = _ScoreGeometry.base;
-      for (final int s in scores) {
-        if (geo.y(s) < crest) crest = geo.y(s);
-      }
-      final Path area = Path.from(line)
-        ..lineTo(geo.x(scores.length - 1), _ScoreGeometry.base)
-        ..lineTo(geo.x(0), _ScoreGeometry.base)
-        ..close();
-      canvas.drawPath(
-        area,
-        Paint()
-          ..shader =
-              LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [ink.withValues(alpha: 0.16), ink.withValues(alpha: 0)],
-              ).createShader(
-                Rect.fromLTRB(0, crest, size.width, _ScoreGeometry.base),
-              ),
-      );
-    }
-    canvas.drawPath(
-      line,
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.5
-        ..strokeJoin = StrokeJoin.round
-        ..strokeCap = StrokeCap.round
-        ..color = ink,
-    );
-    final Paint fill = Paint()..color = ground;
-    final Paint ring = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
-      ..color = ink;
-    for (var i = 0; i < scores.length; i++) {
-      final Offset p = Offset(geo.x(i), geo.y(scores[i]));
-      canvas
-        ..drawCircle(p, 3.5, fill)
-        ..drawCircle(p, 3.5, ring);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_ScorePainter old) => true;
-}
-
-/// The marker on the week picked: a pink dot, ringed in the ground and
-/// again in pink.
-class _RingPainter extends CustomPainter {
-  _RingPainter({required this.pink, required this.ground});
-
-  final Color pink;
-  final Color ground;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Offset c = size.center(Offset.zero);
-    canvas
-      ..drawCircle(c, 12, Paint()..color = pink)
-      ..drawCircle(c, 10, Paint()..color = ground)
-      ..drawCircle(c, 6, Paint()..color = pink);
-  }
-
-  @override
-  bool shouldRepaint(_RingPainter old) =>
-      old.pink != pink || old.ground != ground;
-}
-
 // ── The level ─────────────────────────────────────────────────────────────
-
-/// The level by name, how far the next one is, and the ladder as seven bars
-/// that grow: the ones climbed, this one, and the next dashed. Tapping it
-/// opens the whole path.
-/// What the next step still asks for, in words.
-String _stepToGo(AppLocalizations l, Step step) => switch (step.kind) {
-  StepKind.read => l.journeyToGoCards(step.n),
-  StepKind.answer => l.journeyToGoAnswers(step.n),
-  StepKind.judge => l.journeyToGoSure(step.n),
-  StepKind.hold => l.journeyToGoHeld(step.n),
-  StepKind.gap => l.journeyToGoPoints(math.max(1, step.n - step.target)),
-  StepKind.beforeJudged => l.journeyToGoSure(step.n),
-};
-
-class _LevelTile extends StatelessWidget {
-  const _LevelTile({required this.app});
-
-  final AppState app;
-
-  static const List<double> _heights = [14, 22, 30, 38, 46, 56, 70];
-
-  String _toGo(AppLocalizations l, Step step) => _stepToGo(l, step);
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final Color ink = context.p.ink;
-    final Standing standing = app.standing;
-    final int at = standing.at;
-    final Rung? next = standing.next;
-    final Step? step = standing.step;
-    final String right = next == null
-        ? l.topLevel
-        : step == null
-        ? l.nextRung(rungName(context, next))
-        : l.journeyStepFrom(_toGo(l, step), rungName(context, next));
-
-    return Semantics(
-      button: true,
-      key: const ValueKey('journey-level'),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (routeContext) => PathScreen(
-              app: app,
-              onBack: () => Navigator.of(routeContext).pop(),
-            ),
-          ),
-        ),
-        child: _Box(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _Kicker(l.journeyLevelOf(at + 1, kRungs.length)),
-                        const SizedBox(height: 6),
-                        _Big(rungName(context, standing.rung), size: 32),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 150),
-                    child: Text(
-                      right,
-                      textAlign: TextAlign.right,
-                      style: AppText.body(
-                        size: 11.5,
-                        weight: FontWeight.w600,
-                        height: 1.3,
-                        color: ink.withValues(alpha: 0.55),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 14),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  for (var i = 0; i < kRungs.length; i++) ...[
-                    if (i > 0) const SizedBox(width: 5),
-                    Expanded(
-                      child: SizedBox(
-                        height: _heights[math.min(i, _heights.length - 1)],
-                        child: i == at + 1
-                            ? CustomPaint(
-                                painter: _DashedBarPainter(
-                                  color: ink.withValues(alpha: 0.4),
-                                ),
-                              )
-                            : DecoratedBox(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: i == at
-                                      ? ink
-                                      : ink.withValues(
-                                          alpha: i < at ? 0.38 : 0.08,
-                                        ),
-                                ),
-                              ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 /// The next step on the ladder: an outline, dashed, not yet filled.
 class _DashedBarPainter extends CustomPainter {

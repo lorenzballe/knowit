@@ -809,6 +809,31 @@ class _YourStory extends StatelessWidget {
       ),
     ];
     final Color ink = context.p.ink;
+    // The milestones in full, the path from the first card to the last
+    // milestone, one tap under the story.
+    return Semantics(
+      button: true,
+      key: const ValueKey('journey-story'),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (routeContext) => PathScreen(
+              app: app,
+              onBack: () => Navigator.of(routeContext).pop(),
+            ),
+          ),
+        ),
+        child: _storyBox(context, steps, ink),
+      ),
+    );
+  }
+
+  Widget _storyBox(
+    BuildContext context,
+    List<({String what, String? when, bool now})> steps,
+    Color ink,
+  ) {
     return _Box(
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 12),
       child: Column(

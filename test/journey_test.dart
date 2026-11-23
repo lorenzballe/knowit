@@ -304,42 +304,38 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('the score, a point a week, and the week tapped', (
+    testWidgets('one number: the Astute score heads the journey, and no '
+        'points or ladder of levels repeat it; practise comes right under it', (
       tester,
     ) async {
-      final DateTime now = DateTime.now();
-      String ago(int d) => dateKey(now.subtract(Duration(days: d)));
-      final List<String> ids = PillBank.cards
-          .take(20)
-          .map((p) => p.id)
-          .toList();
       final app = await _app({
         'knowit.onboarded': true,
         'knowit.plus': true,
-        'knowit.seenIds': ids,
-        'knowit.readDays': jsonEncode({
-          ago(13): ids.take(12).toList(),
-          ago(1): ids.skip(12).toList(),
-        }),
+        'knowit.skills': ['money'],
       });
       await pump(tester, app);
-
-      expect(find.text('YOUR SCORE'), findsOneWidget);
+      expect(find.byKey(const ValueKey('training-score')), findsOneWidget);
+      expect(find.text('YOUR SCORE'), findsNothing);
+      expect(find.byKey(const ValueKey('journey-score')), findsNothing);
+      expect(find.byKey(const ValueKey('journey-level')), findsNothing);
+      final l = lookupAppLocalizations(const Locale('en'));
+      double top(String chapter) => tester.getTopLeft(find.text(chapter)).dy;
       expect(
-        (tester.widget(
-          find.byKey(const ValueKey('journey-score')),
-        ) as Text).data,
-        '${app.score.total}',
+        top('2  ·  ${l.storyChapterPractice.toUpperCase()}'),
+        lessThan(top('3  ·  ${l.storyChapterWeek.toUpperCase()}')),
       );
-      expect(find.text('+${app.score.total} in 4 weeks'), findsOneWidget);
-      expect(find.byKey(const ValueKey('journey-week-1')), findsOneWidget);
-      expect(find.byKey(const ValueKey('journey-week-2')), findsNothing);
-
-      // Tapping the first week says what that week earned.
-      await tester.tap(find.byKey(const ValueKey('journey-week-0')));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('you earned 12 points.'), findsOneWidget);
-      expect(find.text('12 cards'), findsOneWidget);
+      expect(
+        tester
+            .getTopLeft(find.textContaining(l.journeyChapterKnow.toUpperCase()))
+            .dy,
+        lessThan(
+          tester
+              .getTopLeft(
+                find.textContaining(l.storyChapterReason.toUpperCase()),
+              )
+              .dy,
+        ),
+      );
     });
 
     testWidgets('the moves you keep missing and the week in questions '
@@ -405,24 +401,20 @@ void main() {
       expect(find.byType(DeckViewerScreen), findsOneWidget);
     });
 
-    testWidgets('before there is anything to say, dashes and why', (
-      tester,
-    ) async {
+    testWidgets('before there is anything to say, how many more answers '
+        'it takes, said once, and no empty chart', (tester) async {
       final app = await _app(
         _answered({
           80: [(0, 0), (5, 3)],
         }),
       );
       await pump(tester, app);
+      expect(find.byKey(const ValueKey('journey-gap')), findsNothing);
       expect(
-        (tester.widget(find.byKey(const ValueKey('journey-gap'))) as Text).data,
-        '—',
-      );
-      expect(
-        find.textContaining('7 more answers with how sure'),
+        find.textContaining('7 more answers saying how sure'),
         findsOneWidget,
       );
-      expect(find.text('LEVEL 1 OF 7'), findsOneWidget);
+      expect(find.text('LEVEL 1 OF 7'), findsNothing);
       expect(find.text('Counted from today'), findsOneWidget);
       expect(find.text('nothing dated yet'), findsOneWidget);
     });
