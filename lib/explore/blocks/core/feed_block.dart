@@ -210,9 +210,15 @@ class FeedGrid {
 /// How a box of the feed draws its card: as its size says, except that a
 /// tall box sets its question no larger than a box a third shorter would,
 /// so a question in a narrow column reads as lines, not as a word to a line.
-TileLook feedLook(Size box) => box.height > box.width * 1.5
-    ? TileLook.forBox(Size(box.width, box.width * 1.45))
-    : TileLook.forBox(box);
+/// And never in small print: a question is set near the top of its box's
+/// type, a headline to stop the thumb, as the cover sets its small tiles,
+/// or it waits for a box that holds it so.
+TileLook feedLook(Size box) {
+  final TileLook look = box.height > box.width * 1.5
+      ? TileLook.forBox(Size(box.width, box.width * 1.45))
+      : TileLook.forBox(box);
+  return look.withMin(math.max(look.min, math.max(look.max - 2, 12.5)));
+}
 
 /// The feed's cards as they are laid, band after band. A band is laid the
 /// first time it is built and stays as it was laid, so a reader who
@@ -281,7 +287,7 @@ class FeedDeal {
       // A card that no box of the band holds whole, at the reader's text
       // size, gives way to the next, so the feed goes on rather than stop.
       for (int tries = 0; placed == null && tries < 40; tries++) {
-        while (_waiting.length < drawn.boxes * 6 && _next < pool.length) {
+        while (_waiting.length < drawn.boxes * 14 && _next < pool.length) {
           final Pill pill = pool[_next++];
           if (!skip(pill)) _waiting.add(pill);
         }

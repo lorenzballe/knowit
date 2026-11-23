@@ -33,7 +33,7 @@ class NewsBlock extends ExploreBlock with SectionLayout {
     final String? subject = host.subject;
     final List<Pill> cards = [
       for (final Pill p in NewsPaper.latest(app.today))
-        if (subject == null || p.topic == subject) p,
+        if (onSubject(p, subject)) p,
     ];
     if (cards.isEmpty) return null;
     return SectionFrame(

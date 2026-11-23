@@ -10,7 +10,7 @@ import '../l10n/l10n.dart';
 import '../data/card_pages.dart';
 import '../data/local_cards.dart';
 import '../data/pills_repository.dart';
-import '../data/topics.dart' show inkOn, kThinkingWhite;
+import '../data/topics.dart' show inkOn, kThinkingWhite, kTopics;
 import '../explore/blocks/bets/bet_host.dart';
 import '../explore/blocks/core/shelves.dart';
 import '../explore/explore_block.dart';
@@ -86,6 +86,11 @@ class ExploreScreenState extends State<ExploreScreen>
 
   /// The subject's display name, or null for all of them.
   String? _subject;
+
+  /// Whether Thinking's chip is lit beside [_subject]'s: the subject's cards
+  /// that train a reasoning move, thinking with economics, with medicine.
+  /// Never with Thinking itself, or with no subject.
+  bool _lens = false;
 
   /// Whether the head has gone all the way up, the cards running under the
   /// status bar: the soft edge there then reaches a little below it, as it
@@ -190,7 +195,7 @@ class ExploreScreenState extends State<ExploreScreen>
         .where((s) => s.block == 'feed')
         .firstOrNull;
     if (feed == null) return 0;
-    shelves.begin(subject: _subject);
+    shelves.begin(subject: _subject, thinking: _lens);
     return shelves
         .cardsFor(feed)
         .where((p) => !isRead(p) && reachesReader(p, widget.app.place))
@@ -268,6 +273,7 @@ class ExploreScreenState extends State<ExploreScreen>
     _focus.unfocus();
     setState(() {
       _subject = null;
+      _lens = false;
       _searching = false;
       _query = '';
       _kind = null;
@@ -285,7 +291,7 @@ class ExploreScreenState extends State<ExploreScreen>
   void openFromWidget(String pillId) {
     _sight.forgetTouch();
     showBest();
-    shelves.begin(subject: _subject);
+    shelves.begin(subject: _subject, thinking: _lens);
     final List<Pill> shelf = shelves.today;
     final int at = shelf.indexWhere((p) => p.id == pillId);
     final Pill? card = at >= 0
@@ -421,7 +427,10 @@ class ExploreScreenState extends State<ExploreScreen>
   void openSubject(String subject) {
     final String? next = subject == _subject ? null : subject;
     Analytics.capture('explore filtered', {'subject': next ?? 'all'});
-    setState(() => _subject = next);
+    setState(() {
+      _subject = next;
+      _lens = false;
+    });
     if (_list.hasClients) {
       _list.animateTo(
         0,
@@ -529,6 +538,7 @@ class ExploreScreenState extends State<ExploreScreen>
         // said it again.
         head: _SubjectRow(
           selected: _subject,
+          lens: _lens,
           onSearch: () {
             Analytics.capture('explore search opened');
             // What is opened from the search was not opened from a shelf.
@@ -538,10 +548,22 @@ class ExploreScreenState extends State<ExploreScreen>
           },
           // A subject, All, or the lit subject again — the last two both
           // clear it, so the way back is whichever the finger finds first.
+          // Thinking is a lens as well as a subject: lit with another, the
+          // two stay lit together, that subject's thinking.
           onPick: (name) {
-            final String? next = name == _subject ? null : name;
-            Analytics.capture('explore filtered', {'subject': next ?? 'all'});
-            setState(() => _subject = next);
+            final (String? next, bool lens) = pickSubject(
+              name,
+              subject: _subject,
+              lens: _lens,
+            );
+            Analytics.capture('explore filtered', {
+              'subject': next ?? 'all',
+              'thinking': lens,
+            });
+            setState(() {
+              _subject = next;
+              _lens = lens;
+            });
           },
         ),
       ),
@@ -558,7 +580,7 @@ class ExploreScreenState extends State<ExploreScreen>
   }) {
     // Every shelf is worked out afresh for this build, and looked at again
     // once laid out: counts arriving can move every one of them.
-    shelves.begin(subject: _subject);
+    shelves.begin(subject: _subject, thinking: _lens);
     _sight.measureSoon();
     final List<ExploreSlot> slots;
     _probing = true;
@@ -1035,14 +1057,46 @@ class _TopEdge extends StatelessWidget {
 /// How tall the row of the lens and the subjects is.
 const double _headRow = 50;
 
+/// What the row of subjects shows after [name] is tapped (null for All),
+/// from [subject] and [lens], the subject lit and whether Thinking's chip is
+/// lit beside it: the subject, or null for all, and whether Thinking stays
+/// lit beside it.
+///
+/// Thinking is practised in every subject, so its chip combines: tapped
+/// while a subject is lit, both stay lit, that subject's cards that train a
+/// way of reasoning; a subject tapped while Thinking is lit joins it. A lit
+/// chip tapped again goes out and leaves the other lit; All clears both.
+@visibleForTesting
+(String?, bool) pickSubject(
+  String? name, {
+  required String? subject,
+  required bool lens,
+}) {
+  final String thinking = kTopics['thinking']!.name;
+  if (name == null) return (null, false);
+  if (name == thinking) {
+    if (subject == thinking) return (null, false);
+    if (lens) return (subject, false);
+    if (subject != null) return (subject, true);
+    return (thinking, false);
+  }
+  if (name == subject) return (lens ? thinking : null, false);
+  if (subject == thinking || lens) return (name, true);
+  return (name, false);
+}
+
 class _SubjectRow extends StatelessWidget {
   const _SubjectRow({
     required this.selected,
+    required this.lens,
     required this.onPick,
     required this.onSearch,
   });
 
   final String? selected;
+
+  /// Whether Thinking's chip is lit beside [selected]'s.
+  final bool lens;
 
   /// The lens at the head of the row: the search over every card.
   final VoidCallback onSearch;
@@ -1051,9 +1105,10 @@ class _SubjectRow extends StatelessWidget {
   final ValueChanged<String?> onPick;
 
   /// The row's subjects: Thinking first, then the mix's. Thinking is no
-  /// subject of the mix, which can never turn it off, but more than half
-  /// the deck is its cards, and a reader looking for them has a chip for
-  /// them like any subject's. Its card is white, so its chip is lit in the
+  /// subject of the mix, which can never turn it off: it is practised in
+  /// every subject, so its chip holds the cards of every subject that train
+  /// a way of reasoning, and lit beside another subject's, that subject's
+  /// (see [pickSubject]). Its card is white, so its chip is lit in the
   /// page's inverse and its mark is drawn in the ink.
   static const List<MixSubject> subjects = [
     MixSubject('thinking', 'Thinking', kThinkingWhite),
@@ -1075,12 +1130,12 @@ class _SubjectRow extends StatelessWidget {
           if (i == 0) return _Lens(onTap: onSearch);
           i -= 1;
           final MixSubject? subject = i == 0 ? null : subjects[i - 1];
-          final bool on = subject == null
-              ? selected == null
-              : selected == subject.name;
           // Thinking's white would vanish on paper: lit, it takes the
           // page's inverse, and its mark the ink.
           final bool white = subject?.key == 'thinking';
+          final bool on = subject == null
+              ? selected == null
+              : selected == subject.name || (white && lens);
           final Color lit = subject == null || white
               ? context.p.inverse
               : subject.color;
