@@ -67,7 +67,7 @@ class CardHead extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SubjectIcon(subject: pill.topic, size: 15, ink: ink ?? pill.ink),
+        CardMark(pill: pill, size: 15, ink: ink ?? pill.ink),
         const SizedBox(width: 7),
         Flexible(
           child: Text(

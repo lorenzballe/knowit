@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../data/subject_icons.dart';
+import '../l10n/l10n.dart';
+import '../models/pill.dart';
 
 /// The subject's own mark, recoloured to whatever ink it sits on.
 ///
@@ -77,6 +79,41 @@ class SubjectBadge extends StatelessWidget {
             : null,
       ),
       child: SubjectIcon(subject: subject, size: size * 0.6, ink: ink),
+    );
+  }
+}
+
+/// A card's mark in its head: its subject's, and, on a card of another
+/// subject that trains a reasoning move too ([Pill.thinksToo]), Thinking's
+/// lightbulb beside it, the same size and ink. The card stays its subject's:
+/// the lightbulb only says it is thinking as well.
+class CardMark extends StatelessWidget {
+  const CardMark({
+    super.key,
+    required this.pill,
+    required this.size,
+    required this.ink,
+  });
+
+  final Pill pill;
+  final double size;
+  final Color ink;
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget own = SubjectIcon(subject: pill.topic, size: size, ink: ink);
+    if (!pill.thinksToo) return own;
+    return Row(
+      key: ValueKey('thinks-too-${pill.id}'),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        own,
+        SizedBox(width: (size * 0.28).roundToDouble()),
+        Semantics(
+          label: context.l10n.subjectOf('Thinking'),
+          child: SubjectIcon(subject: 'Thinking', size: size, ink: ink),
+        ),
+      ],
     );
   }
 }

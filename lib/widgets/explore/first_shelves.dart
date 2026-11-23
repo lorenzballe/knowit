@@ -178,11 +178,7 @@ class CardRow extends StatelessWidget {
                   width: 44,
                   color: pill.color,
                   alignment: Alignment.center,
-                  child: SubjectIcon(
-                    subject: pill.topic,
-                    size: 16,
-                    ink: pill.ink,
-                  ),
+                  child: CardMark(pill: pill, size: 16, ink: pill.ink),
                 ),
                 Expanded(
                   child: Padding(
@@ -551,7 +547,7 @@ class TopPlaced extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SubjectIcon(subject: pill.topic, size: 14, ink: pill.ink),
+                  CardMark(pill: pill, size: 14, ink: pill.ink),
                   const SizedBox(width: 6),
                   Flexible(
                     child: Text(

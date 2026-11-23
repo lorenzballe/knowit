@@ -607,7 +607,7 @@ class _Row extends StatelessWidget {
     final Widget plain = ColoredBox(
       color: pill.color,
       child: Center(
-        child: SubjectIcon(subject: pill.topic, size: 16, ink: pill.ink),
+        child: CardMark(pill: pill, size: 16, ink: pill.ink),
       ),
     );
     return Container(

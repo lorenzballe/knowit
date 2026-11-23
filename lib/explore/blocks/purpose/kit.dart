@@ -331,7 +331,7 @@ class PurposeHead extends StatelessWidget {
     );
     return Row(
       children: [
-        SubjectIcon(subject: pill.topic, size: 15, ink: ink ?? pill.ink),
+        CardMark(pill: pill, size: 15, ink: ink ?? pill.ink),
         const SizedBox(width: 7),
         if (trailingAtEnd) Expanded(child: name) else Flexible(child: name),
         if (trailing != null) ...[const SizedBox(width: 6), trailing!],

@@ -243,7 +243,7 @@ class ShapeHead extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SubjectIcon(subject: pill.topic, size: size, ink: mark),
+        CardMark(pill: pill, size: size, ink: mark),
         if (named) ...[
           const SizedBox(width: 7),
           Flexible(

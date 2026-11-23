@@ -587,7 +587,7 @@ class _BannerTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SubjectIcon(subject: pill.topic, size: 24, ink: pill.ink),
+                CardMark(pill: pill, size: 24, ink: pill.ink),
                 if (read) ...[
                   const SizedBox(height: 8),
                   ReadTick(pill: pill, color: pill.ink, size: 15),
@@ -766,11 +766,7 @@ class _ListRow extends StatelessWidget {
             height: tile,
             alignment: Alignment.center,
             decoration: cardFace(context, pill.color, radius: tile * 0.26),
-            child: SubjectIcon(
-              subject: pill.topic,
-              size: tile * 0.36,
-              ink: pill.ink,
-            ),
+            child: CardMark(pill: pill, size: tile * 0.36, ink: pill.ink),
           ),
           const SizedBox(width: 12),
           Expanded(

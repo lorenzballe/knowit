@@ -916,7 +916,7 @@ class _CardFace extends StatelessWidget {
       children: [
         Row(
           children: [
-            SubjectIcon(subject: pill.topic, size: 16 * s, ink: ink),
+            CardMark(pill: pill, size: 16 * s, ink: ink),
             SizedBox(width: 8 * s),
             Expanded(
               child: Row(
@@ -1668,7 +1668,7 @@ class _Tomorrow extends StatelessWidget {
     return Row(
       children: [
         if (lead != null) ...[
-          SubjectIcon(subject: lead.topic, size: 20, ink: tint),
+          CardMark(pill: lead, size: 20, ink: tint),
           const SizedBox(width: 12),
         ],
         Expanded(

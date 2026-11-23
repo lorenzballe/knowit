@@ -574,9 +574,7 @@ class _MiniCard extends StatelessWidget {
       padding: const EdgeInsets.all(CardFan.cardWidth * 0.11),
       alignment: AlignmentDirectional.topStart,
       decoration: _miniFace(context, pill.color, marked),
-      child: marked
-          ? SubjectIcon(subject: pill.topic, size: 15, ink: pill.ink)
-          : null,
+      child: marked ? CardMark(pill: pill, size: 15, ink: pill.ink) : null,
     );
   }
 }

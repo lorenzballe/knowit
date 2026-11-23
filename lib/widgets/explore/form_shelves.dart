@@ -695,7 +695,7 @@ class CameBackRow extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    SubjectIcon(subject: p.topic, size: 14, ink: subOn(p)),
+                    CardMark(pill: p, size: 14, ink: subOn(p)),
                     const SizedBox(width: 7),
                     // Gives way in a language that takes more words to say
                     // it, rather than running off the card.

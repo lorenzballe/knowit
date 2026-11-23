@@ -503,7 +503,7 @@ class _CardLine extends StatelessWidget {
                 color: pill.color,
                 borderRadius: BorderRadius.circular(9),
               ),
-              child: SubjectIcon(subject: pill.topic, size: 15, ink: pill.ink),
+              child: CardMark(pill: pill, size: 15, ink: pill.ink),
             ),
             const SizedBox(width: 12),
             Expanded(

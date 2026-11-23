@@ -945,6 +945,18 @@ class Pill {
   bool get hasCounterpoint => counterpoint.isNotEmpty;
   bool get isGraded => challenge.isGraded;
 
+  /// Whether the card, of a subject other than Thinking, trains one of
+  /// Thinking's named reasoning moves: an economics card about anchoring, a
+  /// medicine card about base rates. It stays its subject's card, in its
+  /// subject's colour and under its subject's chip, and carries Thinking's
+  /// lightbulb beside its own mark (lib/widgets/subject_icon.dart,
+  /// [CardMark]). The quick answer, which many cards of every kind are
+  /// filed under, is not one of those moves.
+  bool get thinksToo =>
+      principle.isReal &&
+      principle != Principle.reflection &&
+      topic != 'Thinking';
+
   /// A panel fill that shows up on this card. Tinting with white works on a
   /// saturated card and disappears on a pale one, so follow the ink.
   Color get wash => ink.withValues(alpha: 0.09);

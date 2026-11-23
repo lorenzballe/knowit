@@ -263,7 +263,7 @@ class ShapeTile extends StatelessWidget {
   Widget _centredMark() => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      SubjectIcon(subject: pill.topic, size: 15, ink: pill.ink),
+      CardMark(pill: pill, size: 15, ink: pill.ink),
       if (read) ...[const SizedBox(width: 6), ReadMark(pill: pill)],
     ],
   );

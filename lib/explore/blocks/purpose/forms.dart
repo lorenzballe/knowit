@@ -854,7 +854,7 @@ class CuriousBlock extends ExploreBlock {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SubjectIcon(subject: p.topic, size: 15, ink: p.ink),
+                  CardMark(pill: p, size: 15, ink: p.ink),
                   if (host.isRead(p)) ...[
                     const SizedBox(width: 6),
                     ReadMark(pill: p),

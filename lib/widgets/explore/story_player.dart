@@ -715,7 +715,7 @@ class _StoryPlayerState extends State<StoryPlayer>
       child: Row(
         children: [
           ExcludeSemantics(
-            child: SubjectIcon(subject: p.topic, size: 16, ink: p.ink),
+            child: CardMark(pill: p, size: 16, ink: p.ink),
           ),
           const SizedBox(width: 8),
           Expanded(

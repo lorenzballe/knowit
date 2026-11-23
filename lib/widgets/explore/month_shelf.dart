@@ -174,7 +174,7 @@ class _Small extends StatelessWidget {
           children: [
             Row(
               children: [
-                SubjectIcon(subject: pill.topic, size: 15, ink: pill.ink),
+                CardMark(pill: pill, size: 15, ink: pill.ink),
                 const Spacer(),
                 if (read) ReadMark(pill: pill, size: 13),
               ],

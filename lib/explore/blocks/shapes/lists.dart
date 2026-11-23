@@ -104,8 +104,8 @@ class RowsBlock extends ShapeBlock {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 1),
-                      child: SubjectIcon(
-                        subject: cards[i].topic,
+                      child: CardMark(
+                        pill: cards[i],
                         size: 16,
                         ink: cards[i].ink,
                       ),
@@ -299,7 +299,7 @@ class _ChecklistState extends State<_Checklist> {
               children: [
                 Row(
                   children: [
-                    SubjectIcon(subject: p.topic, size: 15, ink: p.ink),
+                    CardMark(pill: p, size: 15, ink: p.ink),
                     const SizedBox(width: 7),
                     Flexible(
                       child: Text(
@@ -479,11 +479,7 @@ class FiguresBlock extends ShapeBlock {
                           const SizedBox(height: 7),
                           Row(
                             children: [
-                              SubjectIcon(
-                                subject: p.topic,
-                                size: 12,
-                                ink: figureColour(p),
-                              ),
+                              CardMark(pill: p, size: 12, ink: figureColour(p)),
                               const SizedBox(width: 6),
                               Flexible(
                                 child: Text(
@@ -649,8 +645,8 @@ class TimelineBlock extends ShapeBlock {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(top: 2),
-                                    child: SubjectIcon(
-                                      subject: cards[i].topic,
+                                    child: CardMark(
+                                      pill: cards[i],
                                       size: 15,
                                       ink: cards[i].ink,
                                     ),
