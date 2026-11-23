@@ -1,6 +1,15 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: technology-diagonal-turn-explosion -->
 <title>Astute card · Diagonals in the maze</title>
+<!-- Look: two floors of a micromouse maze, drawn flat at the same scale, cream with the maze's red posts at
+     the corners of its cells; on each, a micromouse seen from above (green board, two black wheels, its
+     sensor wing in front), and the trails it could run: older moves pale, the newest in ink with a dot
+     where each path now ends. Left (or top), square hallways only: three choices a move, straight, left or
+     right. Right (or below), with diagonals: five, the same and the two half-turns. Over each, how many
+     paths there are, large. Under them a rail of 1 to 6 moves with a little micromouse, side on, to drag:
+     each extra move multiplies the count (3^n against 5^n, a toy count, walls left out), and the view pulls
+     back as the trails spread. Tall, the two cases are rows; low and wide, columns; the picture is drawn
+     again whenever its box changes, and at the end, with little room, the rail gives its room to the floors. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
@@ -9,26 +18,18 @@
 #cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
-/* the text under the drawing: the prompt and the closing text share one slot,
-   so the drawing keeps the same size from the first move to the last */
-.tail{display:grid;flex:none;min-height:0}
-.tail > *{grid-area:1/1;align-self:start;margin-top:0}
-.tail .end{display:flex;flex-direction:column;gap:1.2cqh;min-width:0}
-.tail #why.gone{display:flex!important;visibility:hidden}
-.tail #keep.gone{display:block!important;visibility:hidden}
+.answered .q{font-size:max(2.6cqh,15px)}
+/* The shortest phone has little room at the end: the column closes up a little for the floors. */
+@container (max-height:520px){.answered.card .in{gap:1.5cqh}}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag · watch it grow">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">MICROMOUSE</span></div>
     <h2 class="q">How did diagonals change the maze's complexity?</h2>
-    <div class="stagebox" id="stage"><canvas id="cv"></canvas></div>
-    <div class="tail">
-      <p class="say" id="say">Drag the mouse right to give it more moves, up to 6.</p>
-      <div class="end">
-        <div id="why" class="gone"><p class="body">On square hallways a mouse has few choices at each step. Diagonals add new headings, so every move offers more turns, and each extra move multiplies them: the total opens up exponentially. More paths to weigh, but runs become one fluid, snaking motion.</p></div>
-        <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A few extra options per step multiply into an explosion of paths.</div>
-      </div>
-    </div>
+    <div class="stagebox" id="stage"><canvas id="cv" role="img" aria-label="Two floors of a micromouse maze side by side, each with a micromouse seen from above. On square hallways it has three ways to go; with diagonals, five. Under them, a rail of moves with a little micromouse to drag."></canvas></div>
+    <p class="say" id="say">Drag the mouse right to give it more moves, up to 6.</p>
+    <div id="why" class="gone"><p class="body">On square hallways a mouse has few choices at each step. Diagonals add new headings, so every move offers more turns, and each extra move multiplies them: the total opens up exponentially. More paths to weigh, but runs become one fluid, snaking motion.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A few extra options per step multiply into an explosion of paths.</div>
     <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
   </div>
 </article>
@@ -37,6 +38,7 @@
 const MAXN = 6, MINN = 1;
 const DIRS = [[0,-1],[1,-1],[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1]];
 // Toy model: square hallways = straight, left, right (3 choices); with diagonals = straight, ±45°, ±90° (5 choices).
+// Each level is the stretch of floor the paths cover with that move, every segment once.
 function build(turns){
   const levels = [[]]; let states = new Map([['0,0,0',[0,0,0]]]);
   for (let d = 1; d <= MAXN; d++){
@@ -54,128 +56,148 @@ function build(turns){
 }
 const SQ = build([0,-2,2]), DG = build([0,-1,1,-2,2]);
 const B = {sq:3, dg:5};
+// The floor both views show after n moves: what the diagonal paths reach (they reach all the square ones do).
+const BOX = [null];
+for (let n = 1, b = [0,0,0,0]; n <= MAXN; n++){ for (const [a,c,e,f] of DG[n]) b = [Math.min(b[0],a,e), Math.max(b[1],a,e), Math.min(b[2],c,f), Math.max(b[3],c,f)]; BOX.push(b.slice()); }
+// One ink; the maze's cream floor and red posts; pale blue for the moves already made; the micromouse's green board.
+const INK = '#10100c', FLOOR = '#f7f2e6', POST = '#e8452c', OLD = '#9fb7cb', PCB = '#2fbf71', PCB_D = '#1f9455', SENSOR = '#fffbf0';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
 const st = {t:1, grow:1, n:1, done:false, drag:false};
-let L = null, ink = '#111', bg = '#fff', mid = '#888', soft = '#ccc', faint = '#ddd';
+const view = {x0: BOX[1][0], x1: BOX[1][1], y0: BOX[1][2], y1: BOX[1][3]};
+const shown = {sq: 3, dg: 5};
+let L = null;
 const cv = Kit.$('cv');
 const fmt = v => Math.round(v).toLocaleString('en-US');
 
-// flat tints of ink on the card colour, like color-mix(in srgb, var(--k) N%, var(--c))
-function rgb(c){
-  const t = document.createElement('canvas').getContext('2d');
-  t.fillStyle = '#000'; t.fillStyle = c; const s = t.fillStyle;
-  if (s[0] === '#') return [1,3,5].map(i => parseInt(s.slice(i, i+2), 16));
-  return (s.match(/[\d.]+/g) || [0,0,0]).slice(0,3).map(Number);
-}
-function mix(a, b, p){
-  const A = rgb(a), Bc = rgb(b);
-  return 'rgb(' + A.map((v, i) => Math.round(v*p + Bc[i]*(1-p))).join(',') + ')';
-}
+function rr(x, X, Y, w, h, r){ r = Math.max(0, Math.min(r, w/2, h/2)); x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
 
+// Where everything goes, for the room the drawing has now.
 function layout(){
   const r = Kit.fitCanvas(cv); if (!r || !r.W) return;
-  const cs = getComputedStyle(Kit.$('card'));
-  ink = (cs.getPropertyValue('--k') || '#111').trim(); bg = (cs.getPropertyValue('--c') || '#fff').trim();
-  mid = mix(ink, bg, 0.55); soft = mix(ink, bg, 0.3); faint = mix(ink, bg, 0.14);
   const {x, W, H} = r;
-  const f = Math.max(12, Math.min(W*0.045, H*0.042));
-  const pad = Math.max(6, W*0.02);
-  const head = f*3.5;
-  const avail = H - head - f*3.6;
-  const ph = Math.max(60, avail*0.56);
-  const pw = (W - pad*3)/2;
-  const gy0 = head + ph + f*2.0, gy1 = H - f*2.4;
-  L = {x, W, H, f, pad, head, ph, pw, gx0: pad + f*0.6, gx1: W - pad - f*0.9, gy0, gy1};
+  const fs = Math.max(11.5, Math.min(13.5, W / 24));
+  const tall = H >= W * 1.02;
+  const big = Math.max(22, Math.min(tall ? 40 : 36, W * .11, H * .12));
+  // The rail of moves, kept while there is room for it and the floors; the line that says what the
+  // numbers count, kept but where the floors would be left a strip.
+  const railH = Math.max(52, fs * 4.1);
+  const rail = tall || H - railH >= 220 || !st.done;
+  const cap = H - (rail ? railH : 0) >= 150 ? fs * 1.9 : 0;
+  const bottom = H - (rail ? railH : 0) - cap;
+  const gap = Math.max(10, W * .035), m = 1.5;            // the floors' ink edge kept inside the canvas
+  const panels = [];
+  x.font = `800 ${big}px ${SERIF}`; const numW = x.measureText('15,625').width;
+  x.font = `700 ${fs}px ${FONT}`; const titW = Math.max(x.measureText('Square hallways').width, x.measureText('With diagonals').width);
+  if (tall){
+    // Rows: the words on the left, the floor on the right.
+    const tw = Math.max(numW, titW) + gap, rh = (bottom - gap) / 2;
+    for (let i = 0; i < 2; i++){ const y = i * (rh + gap) + m; panels.push({tx: 0, ty: y, x: tw, y, w: W - tw - m, h: rh - m, row: true}); }
+  } else {
+    // Columns: the words over each floor.
+    const head = fs * 1.3 + big * 1.02 + fs * .5, pw = (W - gap - 2 * m) / 2;
+    for (let i = 0; i < 2; i++){ const X = m + i * (pw + gap); panels.push({tx: X - m, ty: 0, x: X, y: head, w: pw, h: Math.max(30, bottom - head - m), row: false}); }
+  }
+  const x0 = Math.max(18, W * .07), x1 = W - Math.max(18, W * .07), ty = H - railH * .64;
+  L = {x, W, H, fs, big, tall, rail, panels, cap, bottom, x0, x1, ty, railH};
   draw();
 }
 
-const fam = v => getComputedStyle(document.body).getPropertyValue(v) || 'sans-serif';
-
-// a mouse seen from above, nose pointing up the maze
-function topMouse(cx, cy, s){
-  const x = L.x;
-  x.strokeStyle = ink; x.lineCap = 'round'; x.lineWidth = Math.max(1.2, s*0.14);
-  x.beginPath(); x.moveTo(cx, cy + s*0.9); x.bezierCurveTo(cx + s*0.7, cy + s*1.3, cx - s*0.5, cy + s*1.6, cx + s*0.2, cy + s*2.0); x.stroke();
-  x.fillStyle = ink;
-  x.beginPath(); x.ellipse(cx, cy + s*0.25, s*0.6, s*0.8, 0, 0, 7); x.fill();
-  x.beginPath(); x.moveTo(cx - s*0.45, cy - s*0.25); x.quadraticCurveTo(cx, cy - s*1.4, cx + s*0.45, cy - s*0.25); x.fill();
-  x.beginPath(); x.arc(cx - s*0.48, cy - s*0.35, s*0.32, 0, 7); x.arc(cx + s*0.48, cy - s*0.35, s*0.32, 0, 7); x.fill();
+// A micromouse seen from above, nose up: two black wheels, the green board, the sensor wing in front, its chip.
+function topMouse(x, cx, cy, s){
+  const w = s * .7, h = s * .86, lw = Math.max(1.2, Math.min(2.2, s * .07));
+  x.lineJoin = 'round'; x.strokeStyle = INK; x.lineWidth = lw;
+  x.fillStyle = INK;
+  for (const sd of [-1, 1]) { rr(x, cx + sd * (w / 2 + s * .02) - (sd < 0 ? s * .17 : 0), cy - s * .05, s * .17, s * .38, s * .05); x.fill(); }
+  rr(x, cx - w / 2, cy - h / 2 + s * .1, w, h - s * .1, s * .16); x.fillStyle = PCB; x.fill(); x.stroke();
+  rr(x, cx - s * .48, cy - h / 2 - s * .04, s * .96, s * .2, s * .07); x.fillStyle = PCB_D; x.fill(); x.stroke();
+  if (s > 18) { x.fillStyle = SENSOR; for (const k of [-.36, -.13, .13, .36]) { x.fillRect(cx + k * s - s * .045, cy - h / 2 + s * .0, s * .09, s * .09); } }
+  rr(x, cx - s * .13, cy + s * .02, s * .26, s * .26, s * .04); x.fillStyle = INK; x.fill();
 }
 
-// one maze floor seen from above: the trails the mouse could have run
-function panel(px, py, pw, ph, levels, strong, title, count){
-  const {x, f} = L;
-  x.textAlign = 'center'; x.fillStyle = ink; x.globalAlpha = 1;
-  x.font = `600 ${f*0.8}px ${fam('--body')}`;
-  x.fillText(title, px + pw/2, f*1.0);
-  x.fillStyle = strong ? ink : mid;
-  x.font = `800 ${f*1.55}px ${fam('--display')}`;
-  x.fillText(count, px + pw/2, f*2.75);
-  x.save();
-  x.beginPath(); x.rect(px, py, pw, ph); x.clip();
-  const cell = Math.min(pw, ph)/13.5, cx = px + pw/2, cy = py + ph/2 + cell*0.8;
-  x.lineCap = 'round'; x.lineJoin = 'round';
-  // older moves: thin, pale trails; the newest move: bold
-  for (let d = 1; d <= st.n; d++){
-    const last = d === st.n, p = last ? st.grow : 1;
-    x.strokeStyle = last ? (strong ? ink : mid) : (strong ? soft : faint);
-    x.lineWidth = last ? Math.max(1.4, cell*0.16) : Math.max(1, cell*0.1);
-    x.beginPath();
-    for (const [a,b,c,e] of levels[d]){
-      x.moveTo(cx + a*cell, cy + b*cell);
-      x.lineTo(cx + (a + (c-a)*p)*cell, cy + (b + (e-b)*p)*cell);
-    }
-    x.stroke();
+// One floor of the maze: the trails the mouse could have run, from where it started.
+function floor(p, levels){
+  const {x} = L;
+  const vw = view.x1 - view.x0, vh = view.y1 - view.y0;
+  // The view pulls back as the trails spread, but never so far that they blur into a stamp: past that,
+  // the floor is a window on them, round the mouse.
+  const fit = Math.min(p.w / (vw + 1.5), p.h / (vh + 1.7)), c = Math.max(fit, Math.min(11, p.w / 5, p.h / 3.2));
+  const crop = c > fit * 1.01, mx = crop ? 0 : view.x0 + vw / 2, my = crop ? 0 : view.y0 + vh / 2;
+  const cx = p.x + p.w / 2 - mx * c, cy = p.y + p.h / 2 - my * c;
+  const X = g => cx + g * c, Y = g => cy + g * c;
+  rr(x, p.x, p.y, p.w, p.h, Math.min(14, p.w * .06)); x.fillStyle = FLOOR; x.fill();
+  x.save(); x.clip();
+  // the maze's posts, at the corners of its cells, while they are big enough to be posts
+  if (c >= 15){
+    const ps = Math.max(3, c * .13);
+    x.fillStyle = POST; x.strokeStyle = INK; x.lineWidth = 1;
+    for (let i = Math.floor((p.x - cx) / c) - 1; i <= Math.ceil((p.x + p.w - cx) / c); i++)
+      for (let j = Math.floor((p.y - cy) / c) - 1; j <= Math.ceil((p.y + p.h - cy) / c); j++){
+        const px = X(i + .5), py = Y(j + .5); x.beginPath(); x.rect(px - ps / 2, py - ps / 2, ps, ps); x.fill(); x.stroke();
+      }
   }
-  topMouse(cx, cy + cell*0.15, cell*0.45);
+  x.lineCap = 'round'; x.lineJoin = 'round';
+  // the moves already made: pale; the newest: in ink, growing out, a dot where each path ends
+  for (let d = 1; d <= st.n; d++){
+    const last = d === st.n, k = last ? st.grow : 1;
+    x.strokeStyle = last ? INK : OLD;
+    x.lineWidth = last ? Math.max(2, Math.min(4.5, c * .1)) : Math.max(1.4, Math.min(3, c * .065));
+    x.beginPath();
+    for (const [a,b,e,f] of levels[d]){ x.moveTo(X(a), Y(b)); x.lineTo(X(a + (e - a) * k), Y(b + (f - b) * k)); }
+    x.stroke();
+    if (last && k > .98){
+      const dr = Math.max(1.8, Math.min(5, c * .1)); x.fillStyle = INK;
+      x.beginPath(); const seen = new Set();
+      for (const [, , e, f] of levels[d]){ const key = e + ',' + f; if (seen.has(key)) continue; seen.add(key); x.moveTo(X(e) + dr, Y(f)); x.arc(X(e), Y(f), dr, 0, Math.PI * 2); }
+      x.fill();
+    }
+  }
+  topMouse(x, X(0), Y(0) + c * .04, Math.max(9, Math.min(c * .78, 70)));
   x.restore();
-}
-
-// the drag handle: a small mouse, side on, sitting on the axis and facing right
-function mouse(cx, cy, r){
-  const x = L.x;
-  x.strokeStyle = ink; x.lineCap = 'round'; x.lineWidth = Math.max(1.5, r*0.16);
-  x.beginPath(); x.moveTo(cx - r*0.9, cy - r*0.35); x.bezierCurveTo(cx - r*1.6, cy - r*0.2, cx - r*1.3, cy - r*1.1, cx - r*2.0, cy - r*0.9); x.stroke();
-  x.fillStyle = ink;
-  x.beginPath(); x.moveTo(cx - r*1.0, cy);
-  x.bezierCurveTo(cx - r*1.05, cy - r*1.25, cx + r*0.6, cy - r*1.3, cx + r*1.45, cy - r*0.2);
-  x.lineTo(cx + r*1.45, cy); x.closePath(); x.fill();
-  x.beginPath(); x.arc(cx + r*0.45, cy - r*1.0, r*0.36, 0, 7); x.fill();
-  x.fillStyle = bg; x.beginPath(); x.arc(cx + r*0.85, cy - r*0.55, r*0.11, 0, 7); x.fill();
+  rr(x, p.x, p.y, p.w, p.h, Math.min(14, p.w * .06)); x.strokeStyle = INK; x.lineWidth = 2.5; x.stroke();
 }
 
 function draw(){
   if (!L) return;
-  const {x, W, H, f, pad, head, ph, pw, gx0, gx1, gy0, gy1} = L;
-  x.clearRect(0, 0, W, H); x.globalAlpha = 1;
-  const n = st.n, body = fam('--body');
-  panel(pad, head, pw, ph, SQ, false, 'Square hallways', fmt(Math.pow(B.sq, n)));
-  panel(pad*2 + pw, head, pw, ph, DG, true, 'With diagonals', fmt(Math.pow(B.dg, n)));
-  // graph
-  const max = Math.pow(B.dg, MAXN);
-  const X = t => gx0 + (t/MAXN)*(gx1 - gx0), Y = v => gy1 - (v/max)*(gy1 - gy0);
-  x.fillStyle = ink; x.textAlign = 'left'; x.font = `600 ${f*0.8}px ${body}`;
-  x.fillText(`Possible paths after ${n} move${n>1?'s':''} (toy count)`, gx0, gy0 - f*0.55);
-  x.strokeStyle = ink; x.lineWidth = Math.max(1.5, f*0.1); x.lineCap = 'round';
-  x.beginPath(); x.moveTo(gx0, gy1); x.lineTo(gx1, gy1); x.stroke();
-  x.textAlign = 'center'; x.fillStyle = ink; x.font = `500 ${f*0.8}px ${body}`;
-  for (let i = 0; i <= MAXN; i++) x.fillText(i, X(i), H - f*0.35);
-  const curve = (b, col, w, upto) => {
-    x.strokeStyle = col; x.lineWidth = w; x.lineJoin = 'round'; x.lineCap = 'round'; x.beginPath();
-    for (let t = 0; t <= upto + 1e-6; t += 0.05){ const px = X(t), py = Y(Math.pow(b, t)); t === 0 ? x.moveTo(px, py) : x.lineTo(px, py); }
-    x.stroke();
-  };
-  curve(B.dg, faint, Math.max(1.5, f*0.12), MAXN);
-  curve(B.sq, mid, Math.max(2, f*0.2), st.t);
-  curve(B.dg, ink, Math.max(2.5, f*0.24), st.t);
-  const kx = X(st.t);
-  x.fillStyle = ink; x.beginPath(); x.arc(kx, Y(Math.pow(B.dg, st.t)), f*0.28, 0, 7); x.fill();
-  // curve labels, kept apart
-  x.font = `600 ${f*0.8}px ${body}`; x.textAlign = 'left';
-  x.fillStyle = ink; x.fillText('diagonals', gx0 + f*0.4, gy0 + f*0.9);
-  x.fillStyle = mid; x.fillText('square only', gx0 + f*0.4, gy0 + f*2.1);
-  mouse(kx, gy1, f*0.6);
+  const {x, W, H, fs, big, panels} = L;
+  x.clearRect(0, 0, W, H);
+  const cases = [[SQ, 'Square hallways', shown.sq], [DG, 'With diagonals', shown.dg]];
+  panels.forEach((p, i) => {
+    const [levels, title, count] = cases[i];
+    floor(p, levels);
+    x.fillStyle = INK; x.textAlign = 'left'; x.textBaseline = 'alphabetic';
+    x.font = `700 ${fs}px ${FONT}`;
+    // the case's name, and its count under it: in the row's left column, or over the floor
+    x.fillText(title, p.tx, p.ty + fs);
+    x.font = `800 ${big}px ${SERIF}`; x.fillText(fmt(count), p.tx, p.ty + fs * 1.3 + big * .9);
+    // in a row there is room to say where the count comes from
+    if (p.row){ x.font = `600 ${fs}px ${FONT}`; x.fillText(`${i ? B.dg : B.sq} choices a move`, p.tx, p.ty + fs * 2.45 + big * 1.05); }
+  });
+  // what the numbers count
+  if (L.cap){ x.font = `600 ${fs}px ${FONT}`; x.textAlign = 'left'; x.fillStyle = INK; x.fillText(`Possible paths after ${st.n} move${st.n > 1 ? 's' : ''} (toy count)`, 0, L.bottom + fs * 1.35); }
+  if (L.rail) rail();
 }
 
+// The rail of moves, 1 to 6, and the micromouse on it to drag.
+function rail(){
+  const {x, fs, x0, x1, ty} = L, X = t => x0 + (t - 1) / (MAXN - 1) * (x1 - x0);
+  x.lineCap = 'round';
+  x.strokeStyle = INK; x.globalAlpha = .3; x.lineWidth = 3; x.beginPath(); x.moveTo(x0, ty); x.lineTo(x1, ty); x.stroke(); x.globalAlpha = 1;
+  x.lineWidth = 4; x.beginPath(); x.moveTo(x0, ty); x.lineTo(X(st.t), ty); x.stroke();
+  x.font = `700 ${fs}px ${FONT}`; x.textAlign = 'center'; x.fillStyle = INK;
+  const ms = Math.max(20, fs * 1.95);
+  for (let i = 1; i <= MAXN; i++){ x.lineWidth = 2.5; x.beginPath(); x.moveTo(X(i), ty - 5); x.lineTo(X(i), ty + 5); x.stroke(); x.fillText(i, X(i), ty + ms * .5 + fs * 1.05); }
+  // the same micromouse, nose along the rail
+  x.save(); x.translate(X(st.t), ty); x.rotate(Math.PI / 2); topMouse(x, 0, 0, ms); x.restore();
+}
+
+function setView(n, now){
+  const b = BOX[n], to = {x0: b[0], x1: b[1], y0: b[2], y1: b[3]};
+  gsap.killTweensOf(view);
+  if (now || Kit.calm) Object.assign(view, to); else gsap.to(view, Object.assign({duration: .45, ease: 'power2.out', onUpdate: draw}, to));
+  const counts = {sq: Math.pow(B.sq, n), dg: Math.pow(B.dg, n)};
+  gsap.killTweensOf(shown);
+  if (now || Kit.calm) Object.assign(shown, counts); else gsap.to(shown, Object.assign({duration: .4, ease: 'power1.out', onUpdate: draw}, counts));
+}
 function setT(t){
   st.t = Math.max(MINN, Math.min(MAXN, t));
   const n = Math.round(st.t);
@@ -183,12 +205,14 @@ function setT(t){
     st.n = n; Kit.haptic('selection'); st.grow = 0;
     gsap.killTweensOf(st, 'grow');
     if (Kit.calm) st.grow = 1; else gsap.to(st, {grow: 1, duration: .4, ease: 'power2.out', onUpdate: draw});
+    setView(n);
   }
   draw();
 }
+// Where a finger on the drawing sets the moves: along the rail, or across the floors when the rail is gone.
 function tFromEvent(e){
-  const r = cv.getBoundingClientRect();
-  return ((e.clientX - r.left) - L.gx0)/(L.gx1 - L.gx0) * MAXN;
+  const r = cv.getBoundingClientRect(), px = e.clientX - r.left;
+  return 1 + (px - L.x0) / (L.x1 - L.x0) * (MAXN - 1);
 }
 cv.addEventListener('pointerdown', e => {
   if (!L) return; st.drag = true; try { cv.setPointerCapture(e.pointerId); } catch(_){}
@@ -201,14 +225,17 @@ const release = () => {
   gsap.to(st, {t: target, duration: .25, ease: 'power2.out', onUpdate: draw});
   if (target === MAXN && !st.done){
     st.done = true; Kit.haptic('success');
+    Kit.$('card').classList.add('answered');
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    cv.setAttribute('aria-label', 'After six moves: on square hallways, 729 possible paths; with diagonals, 15,625. The trails on the diagonal floor fill it far more densely.');
   }
 };
 cv.addEventListener('pointerup', release);
 cv.addEventListener('pointercancel', release);
 
 Kit.onShow.card = layout;
-if (window.ResizeObserver) new ResizeObserver(() => layout()).observe(Kit.$('stage'));
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room.
+{ let seen = ''; if (window.ResizeObserver) new ResizeObserver(() => { const b = Kit.$('stage').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && L) { seen = k; layout(); } }).observe(Kit.$('stage')); }
 Kit.onEnter.card = () => {
   if (Kit.calm) return;
   st.grow = 0; gsap.to(st, {grow: 1, duration: .6, ease: 'power2.out', onUpdate: draw});
@@ -216,7 +243,7 @@ Kit.onEnter.card = () => {
 Kit.play.card = async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const r = cv.getBoundingClientRect();
-  const X = t => r.left + L.gx0 + (t/MAXN)*(L.gx1 - L.gx0), y = r.top + L.gy1;
+  const X = t => r.left + L.x0 + (t - 1) / (MAXN - 1) * (L.x1 - L.x0), y = r.top + L.ty;
   const ev = (type, t) => cv.dispatchEvent(new PointerEvent(type, {clientX: X(t), clientY: y, bubbles: true, pointerId: 1, isPrimary: true}));
   ev('pointerdown', 1);
   for (let t = 1; t <= MAXN; t += 0.5){ ev('pointermove', t); await wait(40); }

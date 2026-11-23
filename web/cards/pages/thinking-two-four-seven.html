@@ -1,5 +1,11 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: thinking-two-four-seven -->
+<!-- Look: a room with a staircase of yellow toy blocks on its floor, each column as many blocks as its number holds
+     the first: 2, 4, 8 is one, two and four blocks. On the left you, your guess in a thought bubble, "×2", and the
+     mould it makes drawn round the blocks in red dashes; on the right the one who knows the rule, saying yes. Every
+     doubling triple builds the very same staircase, so it fills the mould and teaches nothing; 2, 4, 7 builds three
+     and a half blocks where ×2 wants four, the rule still says yes, the guess cracks, and the rule shows itself as
+     an arrow climbing the steps. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -8,18 +14,19 @@
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #chips{display:flex;flex-wrap:wrap;gap:1cqh 2.4cqw;justify-content:center}
-.chip{font:700 max(2.1cqh,14px)/1.1 var(--mono);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:1.6cqh;padding:1.4cqh 3.6cqw;cursor:pointer}
+.chip{font:800 max(2.1cqh,14px)/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:99px;padding:1.4cqh 4.2cqw;cursor:pointer;font-variant-numeric:tabular-nums}
 .chip:disabled{opacity:.35;cursor:default}
 #why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+#why .body{font:500 max(1.85cqh,12.5px)/1.3 var(--body);margin:0}
 .say{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="thinking" data-kind="Try it · test a rule">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">CONFIRMATION BIAS</span></div>
     <h2 class="q">Why does guessing 2, 4, 7 crack the rule faster than 3, 6, 12?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic"></svg>
+      <svg id="pic" role="img" aria-label="A staircase of yellow blocks, 2, 4 and 8, one, two and four blocks high, inside a red dashed mould: your guess, times two. You stand on the left thinking times two; on the right the one who knows the rule says yes."></svg>
       <div id="chips">
         <button class="chip" data-t="3,6,12">3, 6, 12</button>
         <button class="chip" data-t="10,20,40">10, 20, 40</button>
@@ -42,54 +49,206 @@ const tests = [[2,4,8]];
 let fresh = -1, done = false;
 const rule = t => t[0] < t[1] && t[1] < t[2];
 const dbl = t => t[1] === 2*t[0] && t[2] === 2*t[1];
+
+// One ink and the room's pale blue. Yellow for the blocks, the numbers being tested; red for you, your guess ×2
+// and the mould it makes; blue for the one who knows the rule, and for the rule once it shows.
+const INK = '#10100c', WALL = '#E3EEF7', FLOOR = '#E8B878', BLOCK = '#FFC83D', RED = '#D8452F', BLUE = '#2F6FD0',
+  SKIN = '#F2C29B', WHITE = '#ffffff', HAIR = '#3B2A20', LEGS = '#3A3A44';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), f1 = n => (Math.round(n * 10) / 10).toString(), mk = Kit.mk;
 const sv = Kit.$('pic');
-function el(tag, a, p, style){ const e = Kit.mk(tag, a, p); if (style) e.setAttribute('style', style); return e; }
-function mark(g, cx, cy, r, yes, strong){
-  const c = el('circle', {cx, cy, r}, g, yes ? 'fill:var(--k)' : `fill:none;stroke:var(--k);stroke-width:${Math.max(2,r*.16)}`);
-  const t = el('text', {x: cx, y: cy, 'text-anchor':'middle', 'dominant-baseline':'central'}, g,
-    `font:800 ${r*1.15}px var(--body);fill:${yes ? 'var(--c)' : 'var(--k)'}`);
-  t.textContent = yes ? '✓' : '✗';
-  return [c, t];
+// What the drawing shows now: the triple on the floor, each column's height in blocks (a block is the first number),
+// what your guess says of it (1 yes, 0 no), how far it has cracked, and how much of the rule has shown.
+const S = {t: [2, 4, 8], h: [1, 2, 4], mark: 1, crack: 0, rule: 0};
+let G = null;
+
+// A person standing on (x, y), r the radius of the head: legs and shoes, a shirt, arms, a head with its hair, a face.
+function person(p, x, y, r, o) {
+  const g = mk('g', {}, p), k = G.k;
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const hip = y - 2.6 * r, sh = y - 5 * r, hw = 1.15 * r, sw = 1.35 * r, hy = sh - 1.2 * r, foot = y - .2 * r;
+  mk('path', Object.assign({d: `M${f1(x - .95 * r)},${f1(foot)}V${f1(hip)}H${f1(x - .06 * r)}V${f1(foot)}Z M${f1(x + .06 * r)},${f1(foot)}V${f1(hip)}H${f1(x + .95 * r)}V${f1(foot)}Z`, fill: LEGS}, at), g);
+  [-1, 1].forEach(s => mk('ellipse', Object.assign({cx: f1(x + s * .62 * r), cy: f1(foot), rx: f1(.64 * r), ry: f1(.24 * r), fill: INK}, at), g));
+  mk('path', Object.assign({d: `M${f1(x - hw)},${f1(hip)}L${f1(x - sw)},${f1(sh + .45 * r)}Q${f1(x - sw)},${f1(sh)} ${f1(x - sw + .5 * r)},${f1(sh)}H${f1(x + sw - .5 * r)}Q${f1(x + sw)},${f1(sh)} ${f1(x + sw)},${f1(sh + .45 * r)}L${f1(x + hw)},${f1(hip)}Z`, fill: o.shirt}, at), g);
+  // The arms, sleeves of the shirt outlined in ink: down the sides, or the near one bent up to the chin, thinking.
+  const aw = Math.max(k * 1.6, r * .42);
+  const lh = [x - sw - .28 * r, hip + .15 * r], rh = o.chin ? [x + .5 * r, sh - .15 * r] : [x + sw + .28 * r, hip + .15 * r];
+  const arms = [`M${f1(x - sw + .25 * r)},${f1(sh + .45 * r)}L${f1(lh[0])},${f1(lh[1])}`,
+    o.chin ? `M${f1(x + sw - .25 * r)},${f1(sh + .45 * r)}L${f1(x + sw + .35 * r)},${f1(sh + 1.75 * r)}L${f1(rh[0])},${f1(rh[1])}` : `M${f1(x + sw - .25 * r)},${f1(sh + .45 * r)}L${f1(rh[0])},${f1(rh[1])}`];
+  arms.forEach(d => { mk('path', Object.assign({}, at, {d, fill: 'none', 'stroke-width': f1(aw + 2 * k)}), g); mk('path', {d, fill: 'none', stroke: o.shirt, 'stroke-width': f1(aw), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g); });
+  mk('rect', Object.assign({x: f1(x - .3 * r), y: f1(sh - .4 * r), width: f1(.6 * r), height: f1(.55 * r), fill: SKIN}, at), g);
+  if (o.long) mk('path', Object.assign({d: `M${f1(x - 1.08 * r)},${f1(hy)}Q${f1(x - 1.3 * r)},${f1(hy + 1.45 * r)} ${f1(x - .55 * r)},${f1(hy + 1.4 * r)}H${f1(x + .55 * r)}Q${f1(x + 1.3 * r)},${f1(hy + 1.45 * r)} ${f1(x + 1.08 * r)},${f1(hy)}Z`, fill: o.hair}, at), g);
+  mk('circle', Object.assign({cx: f1(x), cy: f1(hy), r: f1(r), fill: SKIN}, at), g);
+  if (o.bun) mk('circle', Object.assign({cx: f1(x + .1 * r), cy: f1(hy - 1.12 * r), r: f1(.42 * r), fill: o.hair}, at), g);
+  mk('path', Object.assign({d: `M${f1(x - 1.02 * r)},${f1(hy + .05 * r)}C${f1(x - 1.1 * r)},${f1(hy - 1.3 * r)} ${f1(x + 1.1 * r)},${f1(hy - 1.3 * r)} ${f1(x + 1.02 * r)},${f1(hy + .05 * r)}C${f1(x + .55 * r)},${f1(hy - .42 * r)} ${f1(x - .2 * r)},${f1(hy - .55 * r)} ${f1(x - 1.02 * r)},${f1(hy + .05 * r)}Z`, fill: o.hair}, at), g);
+  // The face, turned a little towards the blocks.
+  const lx = x + o.look * .18 * r;
+  [-1, 1].forEach(s => mk('circle', {cx: f1(lx + s * .36 * r), cy: f1(hy + .08 * r), r: f1(Math.max(1.3, .1 * r)), fill: INK}, g));
+  const mouth = mk('path', Object.assign({}, at, {fill: 'none', 'stroke-width': f1(k * .8)}), g);
+  const brows = mk('path', Object.assign({}, at, {fill: 'none', 'stroke-width': f1(k * .7), opacity: 0, d: `M${f1(lx - .55 * r)},${f1(hy - .36 * r)}q${f1(.18 * r)},${f1(-.18 * r)} ${f1(.36 * r)},0M${f1(lx + .19 * r)},${f1(hy - .36 * r)}q${f1(.18 * r)},${f1(-.18 * r)} ${f1(.36 * r)},0`}), g);
+  [lh, rh].forEach(([hx, yy]) => mk('circle', Object.assign({cx: f1(hx), cy: f1(yy), r: f1(Math.max(2.5, r * .3)), fill: SKIN}, at), g));
+  return {g, mouth, brows, x: lx, hy, r};
 }
-function draw(){
-  while (sv.firstChild) sv.removeChild(sv.firstChild);
-  const {W, H, f} = Kit.fitSvg(sv);
-  const fs = Math.max(f, 13), small = Math.max(fs*.72, 12);
-  const headH = small*1.4 + fs*1.6 + 8;
-  const rowH = Math.min((H - headH) / 5, fs*3.4);
-  const xR = W*.63, xG = W*.87;
-  // headers
-  const hd = (x, a, b) => {
-    el('text', {x, y: small, 'text-anchor':'middle'}, sv, `font:700 ${small}px var(--body);fill:var(--k);opacity:.6;letter-spacing:.06em`).textContent = a;
-    const t = el('text', {x, y: small*1.4 + fs*1.2, 'text-anchor':'middle'}, sv, `font:800 ${fs*1.1}px var(--display);fill:var(--k)`);
-    t.textContent = b; return t;
-  };
-  hd(xR, 'RULE', done ? 'going up' : '?').setAttribute('id', 'ruleName');
-  hd(xG, 'YOUR GUESS', '×2');
-  el('text', {x: 0, y: small}, sv, `font:700 ${small}px var(--body);fill:var(--k);opacity:.6;letter-spacing:.06em`).textContent = 'TESTED';
-  el('line', {x1: 0, x2: W, y1: headH - 4, y2: headH - 4}, sv, 'stroke:var(--k);stroke-width:1.5;opacity:.25');
-  tests.forEach((t, i) => {
-    const y0 = headH + i*rowH, cy = y0 + rowH/2;
-    const R = rule(t), G = dbl(t), split = R !== G;
-    const g = el('g', {}, sv);
-    if (split) el('rect', {x: 0, y: y0 + 3, width: W, height: rowH - 6, rx: rowH*.22}, g, 'fill:var(--k);fill-opacity:.12;stroke:var(--k);stroke-width:2');
-    // little bars: the triple's shape
-    const bw = Math.max(5, rowH*.11), bh = rowH*.56, mx = Math.max(...t);
-    t.forEach((n, j) => {
-      const h = Math.max(3, bh * n / mx);
-      el('rect', {x: 8 + j*(bw+3), y: cy + bh/2 - h, width: bw, height: h, rx: 1.5}, g, 'fill:var(--k);opacity:.75');
+// A smile, or, surprised, a round mouth under raised brows.
+function smile(f, on) {
+  const {x, hy, r} = f;
+  f.mouth.setAttribute('d', on ? `M${f1(x - .3 * r)},${f1(hy + .42 * r)}Q${f1(x)},${f1(hy + .68 * r)} ${f1(x + .3 * r)},${f1(hy + .42 * r)}`
+    : `M${f1(x - .13 * r)},${f1(hy + .52 * r)}a${f1(.13 * r)},${f1(.17 * r)} 0 1 0 ${f1(.26 * r)},0a${f1(.13 * r)},${f1(.17 * r)} 0 1 0 ${f1(-.26 * r)},0Z`);
+  f.brows.setAttribute('opacity', on ? 0 : 1);
+}
+
+// A thought: a cloud around (cx, cy), w by h, with two small puffs trailing down to (tx, ty).
+function cloud(p, cx, cy, w, h, tx, ty) {
+  const n = Math.max(7, Math.round((w + h) / (G.r * .9))), pts = [];
+  for (let i = 0; i < n; i++) { const a = -Math.PI / 2 + i * 2 * Math.PI / n; pts.push([cx + w / 2 * Math.cos(a), cy + h / 2 * Math.sin(a)]); }
+  let d = `M${f1(pts[0][0])},${f1(pts[0][1])}`;
+  pts.forEach((q, i) => { const nx = pts[(i + 1) % n], ch = Math.hypot(nx[0] - q[0], nx[1] - q[1]); d += `A${f1(ch * .62)},${f1(ch * .62)} 0 0 1 ${f1(nx[0])},${f1(nx[1])}`; });
+  const at = {fill: WHITE, stroke: INK, 'stroke-width': f1(G.k), 'stroke-linejoin': 'round'};
+  const g = mk('g', {}, p);
+  [[.62, .16], [.82, .1]].forEach(([u, s]) => mk('circle', Object.assign({cx: f1(cx + (tx - cx) * u), cy: f1(cy + h / 2 + (ty - cy - h / 2) * u), r: f1(Math.max(2, G.r * s))}, at), g));
+  mk('path', Object.assign({d: d + 'Z'}, at), g);
+  return g;
+}
+// A speech bubble, x, y its top left, w by h, its tail to (tx, ty) below it.
+function speech(p, x, y, w, h, tx, ty) {
+  const rr = Math.min(h / 2, 10), bx = clamp(tx, x + rr + 8, x + w - rr - 14), bw = Math.min(10, w * .18);
+  const d = `M${f1(x + rr)},${f1(y)}H${f1(x + w - rr)}Q${f1(x + w)},${f1(y)} ${f1(x + w)},${f1(y + rr)}V${f1(y + h - rr)}Q${f1(x + w)},${f1(y + h)} ${f1(x + w - rr)},${f1(y + h)}H${f1(bx + bw)}L${f1(tx)},${f1(ty)}L${f1(bx)},${f1(y + h)}H${f1(x + rr)}Q${f1(x)},${f1(y + h)} ${f1(x)},${f1(y + h - rr)}V${f1(y + rr)}Q${f1(x)},${f1(y)} ${f1(x + rr)},${f1(y)}Z`;
+  return mk('path', {d, fill: WHITE, stroke: INK, 'stroke-width': f1(G.k), 'stroke-linejoin': 'round'}, p);
+}
+const text = (p, x, y, s, size, o = {}) => { const t = mk('text', Object.assign({x: f1(x), y: f1(y), 'text-anchor': o.anchor || 'middle', 'font-family': o.font || FONT, 'font-size': f1(size), 'font-weight': o.weight || 800, fill: o.fill || INK}, o.attr || {}), p); t.textContent = s; return t; };
+
+// The room at its size: the floor, the blocks, the mould, the two people and what they say.
+function build() {
+  const {W, H} = Kit.fitSvg(sv);
+  if (W < 40 || H < 40) return;
+  sv.innerHTML = '';
+  const k = clamp(W * .0075, 1.8, 2.6), R = clamp(W * .04, 9, 15);
+  const floorH = clamp(H * .08, 10, 24), yF = H - floorH, top = clamp(H * .1, 12, 30);
+  // A block is as high as it is wide; the staircase as tall as four of them where the room allows.
+  const u = Math.min((yF - top) / 4, W * .15), sx = W / 2 - 1.5 * u;
+  // The people as big as the room leaves them beside the blocks, with a bubble over each.
+  const r = Math.min((yF - 6) / 10.6, (sx - 8) / 3.9, W * .075);
+  const fs = clamp(r * 1.05, 12, 20);
+  G = {W, H, k, u, sx, yF, r, fs};
+  const defs = mk('defs', {}, sv);
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(R)}, mk('clipPath', {id: 'room'}, defs));
+  const g = mk('g', {'clip-path': 'url(#room)'}, sv);
+  mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: WALL}, g);
+  mk('rect', {x: 0, y: f1(yF), width: f1(W), height: f1(floorH + 2), fill: FLOOR}, g);
+  mk('path', {d: `M0,${f1(yF)}H${f1(W)}`, stroke: INK, 'stroke-width': f1(k)}, g);
+
+  // The blocks: a column per number, four blocks each at most (the last of them cut short where the number is),
+  // and the number on the bottom one, so the three read as the triple along the floor. render() sizes them.
+  const blk = {fill: BLOCK, stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  G.cols = [0, 1, 2].map(() => { const c = mk('g', {}, g); return {g: c, blocks: [0, 1, 2, 3].map(() => mk('rect', Object.assign({}, blk), c)), num: text(c, 0, 0, '', 12, {font: SERIF})}; });
+  // Your guess's mould, ×2: one, two, four blocks, in red dashes just outside the staircase it expects.
+  const o = k * 1.7, x0 = sx - o, x3 = sx + 3 * u + o, y1 = yF - u - o, y2 = yF - 2 * u - o, y4 = yF - 4 * u - o;
+  G.o = o;
+  mk('path', {d: `M${f1(x0)},${f1(yF)}V${f1(y1)}H${f1(sx + u - o)}V${f1(y2)}H${f1(sx + 2 * u - o)}V${f1(y4)}H${f1(x3)}V${f1(yF)}`, fill: 'none', stroke: RED, 'stroke-width': f1(k * 1.15), 'stroke-dasharray': `${f1(k * 3)} ${f1(k * 2.4)}`, 'stroke-linejoin': 'round'}, g);
+  // The rule, once it shows: an arrow climbing the steps, and its name beside it.
+  G.arrow = mk('path', {fill: 'none', stroke: BLUE, 'stroke-width': f1(k * 1.6), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  G.head = mk('path', {fill: BLUE, stroke: BLUE, 'stroke-width': f1(k), 'stroke-linejoin': 'round'}, g);
+  G.ruleName = text(g, 0, 0, 'going up', Math.max(12, fs * .85), {font: SERIF, anchor: 'end', fill: BLUE, attr: {id: 'ruleName', opacity: 0}});
+
+  // You, on the left, thinking ×2; the one who knows the rule on the right.
+  const yx = Math.max(sx / 2, 1.95 * r + 4), hx = W - yx;
+  G.you = person(g, yx, yF, r, {shirt: RED, hair: HAIR, look: 1, chin: true});
+  G.host = person(g, hx, yF, r, {shirt: BLUE, hair: INK, look: -1, bun: true, long: true});
+  smile(G.host, true);
+  const headTop = yF - 7.25 * r;
+  // Your thought: ×2, then, a gap away, what it says of the triple, a tick or a cross. The gap is where it cracks.
+  const big = fs * 1.15, mark = fs * .62, gap = Math.max(9, big * .5);
+  G.thought = mk('g', {}, g);
+  const back = mk('g', {}, G.thought), times = text(G.thought, 0, 0, '×2', big, {font: SERIF, fill: RED}), tw = times.getComputedTextLength() || big * 1.2;
+  const all = tw + gap + 2 * mark, cw = Math.min(Math.max(all + r * 1.3, r * 3.4), sx - 6), ch = Math.max(big * 1.6, r * 2.1);
+  const ccx = clamp(yx + r * .3, cw / 2 + 4, sx - cw / 2 - 2), ccy = Math.max(ch / 2 + 4, headTop - r * .7 - ch / 2);
+  cloud(back, ccx, ccy, cw, ch, G.you.x + r * .2, headTop + r * .15);
+  const left = ccx - all / 2, tx = left + tw / 2;
+  times.setAttribute('x', f1(tx)); times.setAttribute('y', f1(ccy + big * .36));
+  G.mark = mk('g', {transform: `translate(${f1(left + tw + gap + mark)},${f1(ccy)})`}, G.thought);
+  G.markYes = mk('g', {}, G.mark); G.markNo = mk('g', {}, G.mark);
+  mk('circle', {r: f1(mark), fill: INK}, G.markYes);
+  mk('path', {d: `M${f1(-mark * .45)},${f1(0)}l${f1(mark * .32)},${f1(mark * .32)}l${f1(mark * .58)},${f1(-mark * .62)}`, fill: 'none', stroke: WHITE, 'stroke-width': f1(Math.max(1.6, mark * .26)), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.markYes);
+  mk('circle', {r: f1(mark - k * .5), fill: WHITE, stroke: INK, 'stroke-width': f1(k)}, G.markNo);
+  mk('path', {d: `M${f1(-mark * .36)},${f1(-mark * .36)}l${f1(mark * .72)},${f1(mark * .72)}M${f1(mark * .36)},${f1(-mark * .36)}l${f1(-mark * .72)},${f1(mark * .72)}`, stroke: INK, 'stroke-width': f1(Math.max(1.6, mark * .24)), 'stroke-linecap': 'round'}, G.markNo);
+  // The crack, from the top of the thought to its foot, zigzag down the gap between ×2 and its verdict.
+  const cy0 = ccy - ch / 2 - 1, cy1 = ccy + ch / 2 + 1, cx0 = left + tw + gap / 2, z = gap * .34;
+  G.crack = mk('path', {d: `M${f1(cx0 - z * .3)},${f1(cy0)}L${f1(cx0 + z)},${f1(cy0 + ch * .28)}L${f1(cx0 - z)},${f1(cy0 + ch * .52)}L${f1(cx0 + z)},${f1(cy0 + ch * .76)}L${f1(cx0 - z * .2)},${f1(cy1)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * 1.2), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, G.thought);
+  G.crackLen = G.crack.getTotalLength();
+  // What the rule's keeper says: yes, to every triple here.
+  const sw = Math.max(fs * 3.3, r * 3), sh = fs * 1.9;
+  const bx = clamp(hx - sw / 2 - r * .2, sx + 3 * u + o + 6, W - sw - 4), by = Math.max(4, headTop - r * .55 - sh);
+  G.say = mk('g', {}, g);
+  speech(G.say, bx, by, sw, sh, clamp(G.host.x - r * .3, bx + 10, bx + sw - 10), headTop + r * .1);
+  text(G.say, bx + sw / 2, by + sh / 2 + fs * .36, 'Yes!', fs * 1.05, {font: SERIF, fill: BLUE});
+  // Ink round the room.
+  mk('rect', {x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(R - k / 2), fill: 'none', stroke: INK, 'stroke-width': f1(k)}, sv);
+  render();
+}
+
+// The blocks, the gap, the mark, the crack and the rule, as S says now.
+function render() {
+  if (!G) return;
+  const {u, sx, yF, k} = G;
+  G.cols.forEach((c, i) => {
+    const x = sx + i * u, h = S.h[i];
+    c.blocks.forEach((b, j) => {
+      const hh = clamp(h - j, 0, 1) * u;
+      if (hh < 1) { b.setAttribute('display', 'none'); return; }
+      b.removeAttribute('display');
+      Object.entries({x: x, y: yF - j * u - hh, width: u, height: hh, rx: Math.min(4, u * .1, hh / 2)}).forEach(([a, v]) => b.setAttribute(a, f1(v)));
     });
-    el('text', {x: 8 + 3*(bw+3) + 8, y: cy, 'dominant-baseline':'central'}, g, `font:700 ${fs}px var(--mono);fill:var(--k)`).textContent = t.join(', ');
-    const r = Math.min(rowH*.3, fs*.95);
-    const m1 = mark(g, xR, cy, r, R), m2 = mark(g, xG, cy, r, G);
-    if (!split && i > 0) el('text', {x: (xR+xG)/2, y: cy + r + small*.2, 'text-anchor':'middle', 'dominant-baseline':'hanging'}, g, `font:600 ${small}px var(--body);fill:var(--k);opacity:0`);
-    if (i === fresh && !Kit.calm){
-      gsap.from(g, {opacity: 0, x: -24, duration: .45, ease: 'power3.out'});
-      gsap.from([...m1, ...m2], {scale: 0, transformOrigin: 'center', transformBox: 'fill-box', stagger: .12, delay: .3, duration: .4, ease: 'back.out(2.5)'});
-    }
+    // As big as the block allows, three digits included.
+    const n = String(S.t[i]);
+    let size = Math.min(u * .46, 24);
+    if (c.num.textContent !== n || c.num.dataset.u !== f1(u)) {
+      c.num.textContent = n; c.num.setAttribute('font-size', f1(size));
+      const w = c.num.getComputedTextLength(); if (w > u * .78) size *= u * .78 / w;
+      c.num.dataset.u = f1(u); c.num.dataset.size = f1(size);
+    } else size = +c.num.dataset.size;
+    c.num.setAttribute('x', f1(x + u / 2)); c.num.setAttribute('y', f1(yF - u / 2 + size * .36)); c.num.setAttribute('font-size', f1(size));
   });
-  fresh = -1;
+  G.markYes.setAttribute('opacity', S.mark); G.markNo.setAttribute('opacity', 1 - S.mark);
+  G.crack.setAttribute('stroke-dasharray', `${f1(G.crackLen)} ${f1(G.crackLen)}`);
+  G.crack.setAttribute('stroke-dashoffset', f1(G.crackLen * (1 - S.crack)));
+  G.crack.setAttribute('opacity', S.crack > 0 ? 1 : 0);
+  smile(G.you, S.crack <= 0);
+  // The rule: an arrow over the tops of the steps, from the first to the last.
+  const g = G.r * .55, pts = [0, 1, 2].map(i => [sx + (i + .5) * u, yF - S.h[i] * u - g - k * 2]);
+  const d = `M${f1(pts[0][0] - u * .3)},${f1(pts[0][1] + u * .12)}Q${f1(pts[0][0] + u * .45)},${f1(pts[0][1] - u * .2)} ${f1(pts[1][0])},${f1(pts[1][1])}Q${f1(pts[1][0] + u * .55)},${f1(pts[1][1] - u * .15)} ${f1(pts[2][0] - u * .05)},${f1(pts[2][1] + u * .05)}`;
+  G.arrow.setAttribute('d', d);
+  const len = G.arrow.getTotalLength(), a = G.arrow.getPointAtLength(len), b = G.arrow.getPointAtLength(Math.max(0, len - 3));
+  const ang = Math.atan2(a.y - b.y, a.x - b.x), hl = Math.max(7, k * 4);
+  G.arrow.setAttribute('stroke-dasharray', `${f1(len)} ${f1(len)}`);
+  G.arrow.setAttribute('stroke-dashoffset', f1(len * (1 - S.rule)));
+  G.arrow.setAttribute('opacity', S.rule > 0 ? 1 : 0);
+  const ex = a.x + Math.cos(ang) * hl * .35, ey = a.y + Math.sin(ang) * hl * .35;
+  G.head.setAttribute('d', `M${f1(ex)},${f1(ey)}L${f1(ex - Math.cos(ang - .5) * hl)},${f1(ey - Math.sin(ang - .5) * hl)}L${f1(ex - Math.cos(ang + .5) * hl)},${f1(ey - Math.sin(ang + .5) * hl)}Z`);
+  G.head.setAttribute('opacity', S.rule > .97 ? 1 : 0);
+  // Its name above and to the left of the arrow's middle, clear of the step it climbs.
+  G.ruleName.setAttribute('x', f1(pts[1][0] - u * .2));
+  G.ruleName.setAttribute('y', f1(pts[1][1] - k * 2 - 3));
+  G.ruleName.setAttribute('opacity', f1(clamp((S.rule - .6) / .4, 0, 1)));
 }
+const draw = () => build();
+
+// A triple tested: its blocks, and what each side says of it.
+function test(t) {
+  const moving = !Kit.calm && typeof gsap !== 'undefined';
+  S.t = t; S.mark = dbl(t) ? 1 : 0;
+  const to = t.map(n => n / t[0]);
+  if (!moving) { S.h = to; if (!dbl(t)) { S.crack = 1; S.rule = 1; } render(); return; }
+  render();
+  gsap.to(S.h, {0: to[0], 1: to[1], 2: to[2], duration: .6, ease: 'power2.inOut', onUpdate: render});
+  // The numbers come in on their blocks; the keeper says yes again; your thought shows its verdict.
+  G.cols.forEach((c, i) => gsap.from(c.num, {opacity: 0, y: -G.u * .3, duration: .35, delay: i * .08, ease: 'back.out(2)'}));
+  gsap.fromTo(G.say, {scale: .7, transformOrigin: '50% 100%'}, {scale: 1, duration: .4, delay: .25, ease: 'back.out(3)'});
+  gsap.fromTo(G.mark, {scale: .4, transformOrigin: '50% 50%'}, {scale: 1, duration: .35, delay: .15, ease: 'back.out(3)'});
+  if (!dbl(t)) gsap.timeline({delay: .75, onUpdate: render})
+    .to(S, {crack: 1, duration: .35, ease: 'power2.in', onUpdate: render, onComplete: () => Kit.haptic('light')})
+    .to(S, {rule: 1, duration: .8, ease: 'power2.inOut', onUpdate: render}, '+=.2');
+}
+
 Kit.$('chips').addEventListener('click', e => {
   const b = e.target.closest('.chip'); if (!b || b.disabled || done) return;
   b.disabled = true;
@@ -99,26 +258,27 @@ Kit.$('chips').addEventListener('click', e => {
   if (dbl(t)) {
     Kit.haptic('light');
     say.textContent = `“Follows my rule.” But ×2 said yes too — you learned nothing new. Try another.`;
-    draw();
+    test(t);
   } else {
     done = true; Kit.haptic('success');
-    draw();
-    Kit.hide('chips'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    const rn = document.getElementById('ruleName');
-    if (rn && !Kit.calm) gsap.from(rn, {opacity: 0, y: 8, duration: .5, delay: .6});
+    test(t);
+    Kit.hide('chips'); Kit.hide('say'); Kit.$('card').classList.add('answered'); Kit.show('why'); Kit.show('keep');
   }
 });
 Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.chip', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from('.chip', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out', clearProps: 'opacity,transform'});
+  gsap.from(G.cols.map(c => c.g), {y: -G.u * .5, opacity: 0, stagger: .1, duration: .45, ease: 'back.out(1.6)'});
+};
 Kit.play.card = async () => {
   const w = ms => new Promise(r => setTimeout(r, ms));
   Kit.$('chips').children[0].click(); await w(300);
   Kit.$('chips').children[1].click(); await w(300);
   Kit.$('chips').children[2].click(); await w(1200);
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole: on the smallest phone under 150 px, where this drawing's labels would crowd.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < (innerWidth < 355 ? 150 : 100)) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: the answer coming in takes room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = sv.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) build(); }).observe(sv); }
 Kit.single();
 </script>
 </html>

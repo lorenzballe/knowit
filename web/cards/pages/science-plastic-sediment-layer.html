@@ -1,5 +1,12 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-plastic-sediment-layer -->
+<!-- The picture: a lake cut in section, flat colours and thick ink outlines. On the left a hill with an autumn tree
+     dropping its leaves into the water, on the right a low shore; under the water, the lake's bed of old rock in
+     bands. Each tap lays a band of mud on the bed, flecked with sand and bits of leaves; when people start making
+     plastic a little town comes up on the shore, a bottle floats on the lake and bright fragments sink into the last
+     two bands. Letting millennia pass rots the leaf bits away; the plastic stays, a band marked "micro-plastic
+     layer". Drawn again at its real size whenever its room changes, the sky and the old rock giving way at the end
+     so the bands keep their room. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -20,7 +27,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
     <h2 class="q">What makes plastic a useful Anthropocene indicator?</h2>
     <div class="stagebox" id="stage">
-      <svg id="core" aria-label="A sediment core built layer by layer"></svg>
+      <svg id="core" role="img" aria-label="A lake cut in section: a hill with an autumn tree on the left, a low shore on the right, leaves sinking through the water onto a bed of old rock. Each tap lays down a layer of mud."></svg>
       <div id="ctrl">
         <button class="opt main" id="add">Add a layer</button>
         <button class="opt" id="wait" disabled>Let millennia pass</button>
@@ -38,61 +45,158 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const N = 6, P = 4;
-const MUD = ['#5b4129', '#7a5634', '#4f3c2b', '#6e5236', '#4a3828', '#5f4934'];
-const PCOL = ['#ff3d7f', '#2ec4ff', '#ffd23f', '#9dff5c', '#ffffff'];
+// Flat colours with one meaning each: the water blue; the new mud in browns; the old rock round the lake in ochre
+// bands, lighter near the top; leaves green and orange; plastic in the bright colours nothing in nature lays down.
+const INK = '#10100c', SEA = '#2f7fe0', WHITE = '#fffbf0', ROOF = '#d8452f', GRASS = '#3f9a4a', BARK = '#6b4428', CROWN = '#ff8a2a';
+const MUD = ['#8f6440', '#a8794c', '#7f5838', '#9c6f46', '#87603e', '#a57449'];
+const OLD = ['#f6d892', '#ecbb6a', '#d99a50'];
+const LEAF = ['#3f9a4a', '#f08a28'], PCOL = ['#ff3d7f', '#2ec4ff', '#ffd23f', '#fffbf0', '#9d5cff'];
 const R = () => Kit.rnd();
 const layers = [...Array(N)].map((_, i) => ({
-  sand: [...Array(18)].map(() => [R(), R(), .6 + R() * .8]),
-  org: [...Array(9)].map(() => [R(), R(), R() * 180, .7 + R() * .6]),
-  pl: i >= P ? [...Array(28)].map(() => [R(), R(), R() * 180, Math.floor(R() * PCOL.length), .6 + R() * .9]) : []
+  sand: [...Array(12)].map(() => [R(), R(), .6 + R() * .8]),
+  leaf: [...Array(8)].map(() => [R(), R(), R() * 180, .7 + R() * .6, Math.floor(R() * 2)]),
+  pl: i >= P ? [...Array(24)].map(() => [R(), R(), R() * 180, Math.floor(R() * PCOL.length), .6 + R() * .9]) : []
 }));
-let laid = 0, aged = false;
-let G = null;
+// What is still sinking through the water: leaves from the tree, and, once people make it, plastic.
+const sinkLeaf = [...Array(5)].map(() => [R(), R(), R() * 180, Math.floor(R() * 2)]);
+const sinkPl = [...Array(7)].map(() => [R(), R(), R() * 180, Math.floor(R() * PCOL.length)]);
+let laid = 0, aged = false, done = false, G = null;
+const S = {rot: 0, tag: 0};
+const ss = (a, b, x) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
 
 function draw() {
   const svg = Kit.$('core'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
-  const cw = Math.min(W * .38, H * .45), cx = W / 2, top = H * .05, bot = H * .97;
-  const lh = (bot - top) / N, x0 = cx - cw / 2;
-  G = {W, H, f, cw, cx, top, bot, lh, x0};
+  const fs = Math.max(12, Math.min(15, f * .95));
+  // The lake in the picture's measure: sky over the water, the bands of mud, the old rock under them. At the end
+  // the sky and the old rock give room to the bands.
+  let sky = H * (done ? .16 : .25);
+  const old = H * (done ? .12 : .17), water = H * .07, tagH = fs * 1.5;
+  // at the end, where the plastic band would be too thin to carry its name, the name goes over the lake
+  if (done && 2 * (H - sky - old - water) / N < tagH * 1.9) sky = Math.max(sky, tagH + 8);
+  const seaY = sky, bedY = H - old, lh = (bedY - seaY - water) / N, top = bedY - laid * lh;
+  const hill = sky * .4, shore = sky * .22;
+  // The ground: down the hill to the water, down the steep bank to the lake's bed, along it, up the far bank to
+  // the water and on up the low shore.
+  const ground = x => x < W * .5 ? (seaY - hill) + hill * ss(W * .04, W * .2, x) + (bedY - seaY) * ss(W * .2, W * .34, x)
+    : bedY - (bedY - seaY) * ss(W * .66, W * .8, x) - shore * ss(W * .8, W * .98, x);
+  const xs = Array.from({length: 81}, (_, i) => i / 80 * W), line = xs.map(x => [x, ground(x)]);
+  const d = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  // where the lake's edge is at a height, on each side
+  const edge = (y, side) => { let lo = side < 0 ? 0 : W * .5, hi = side < 0 ? W * .5 : W; for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if ((ground(m) < y) === (side < 0)) lo = m; else hi = m; } return (lo + hi) / 2; };
+  const r = Math.min(16, W * .05);
+  G = {W, H, fs, seaY, bedY, lh, top, edge};
+
   const defs = Kit.mk('defs', {}, svg);
-  const cp = Kit.mk('clipPath', {id: 'cl'}, defs);
-  Kit.mk('rect', {x: x0, y: top, width: cw, height: bot - top, rx: cw * .12}, cp);
-  // empty tube
-  Kit.mk('rect', {id: 'tube', x: x0, y: top, width: cw, height: bot - top, rx: cw * .12, fill: 'color-mix(in srgb,var(--k) 6%,transparent)', stroke: 'var(--k)', 'stroke-opacity': .35, 'stroke-width': 1.5, 'stroke-dasharray': '5 5'}, svg);
-  const inner = Kit.mk('g', {'clip-path': 'url(#cl)'}, svg);
-  for (let i = 0; i < laid; i++) drawLayer(inner, i);
-  // side labels
-  const lx = x0 - f * .7;
-  const t1 = Kit.mk('text', {x: lx, y: top + f * 1.1, 'text-anchor': 'end', fill: 'var(--k)', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 700}, svg); t1.textContent = 'newer';
-  const t2 = Kit.mk('text', {x: lx, y: bot - f * .3, 'text-anchor': 'end', fill: 'var(--k)', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 700}, svg); t2.textContent = 'older';
-  Kit.mk('line', {x1: lx - f, y1: top + f * 1.9, x2: lx - f, y2: bot - f * 1.6, stroke: 'var(--k)', 'stroke-opacity': .4, 'stroke-width': 1.5, 'marker-end': ''}, svg);
-  // plastic band label
-  const bandTop = bot - N * lh, bandBot = bot - P * lh, bm = (bandTop + bandBot) / 2;
-  const lab = Kit.mk('g', {id: 'plab', opacity: aged ? 1 : 0}, svg);
-  Kit.mk('rect', {x: x0 - 3, y: bandTop + 2, width: cw + 6, height: bandBot - bandTop - 2, rx: cw * .1, fill: 'none', stroke: '#ff3d7f', 'stroke-width': 3}, lab);
-  const rx = x0 + cw + f * .7;
-  Kit.mk('line', {x1: x0 + cw + 3, y1: bm, x2: rx - 3, y2: bm, stroke: '#ff3d7f', 'stroke-width': 2}, lab);
-  ['micro-', 'plastic', 'layer'].forEach((w, k) => {
-    const t = Kit.mk('text', {x: rx, y: bm + (k - 1) * f * 1.35 + f * .35, fill: 'var(--k)', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 800}, lab); t.textContent = w;
-  });
+  const slice = Kit.mk('clipPath', {id: 'slice'}, defs);
+  Kit.mk('path', {d: `M0,-2 H${W} V${H - r} Q${W},${H} ${W - r},${H} H${r} Q0,${H} 0,${H - r} Z`}, slice);
+  const land = Kit.mk('clipPath', {id: 'land'}, defs);
+  Kit.mk('path', {d: d(line) + ` L${W},${H + 2} L0,${H + 2} Z`}, land);
+  const world = Kit.mk('g', {'clip-path': 'url(#slice)'}, svg);
+
+  // The water, and what is sinking through it.
+  Kit.mk('rect', {x: 0, y: seaY, width: W, height: H - seaY, fill: SEA}, world);
+  // each one inside the lake at its own depth, clear of the banks
+  const deep = (v, s) => seaY + s + v * Math.max(0, top - seaY - 2 * s);
+  const inX = (u, y, s) => { const a = edge(y, -1) + s + 4, b = edge(y, 1) - s - 4; return a + u * Math.max(0, b - a); };
+  if (!aged) sinkLeaf.forEach(([u, v, a, c], i) => { if (i >= 5 - laid) return; const y = deep(v, lh * .3); leaf(world, inX(u, y, lh * .3), y, lh * .3, a, LEAF[c], 1); });
+  if (laid >= P) sinkPl.forEach(([u, v, a, c]) => { const y = deep(v, lh * .25); fleck(world, inX(u, y, lh * .17), y, lh * .17, a, PCOL[c]); });
+
+  // The bands of mud laid so far, oldest at the bottom: sand, leaf bits that rot away, plastic that does not.
+  const mud = Kit.mk('g', {}, world);
+  for (let i = 0; i < laid; i++) {
+    const g = Kit.mk('g', {class: 'lay', 'data-i': i}, mud), y = bedY - (i + 1) * lh, L = layers[i];
+    const x0 = edge(y, -1) - 4, x1 = edge(y, 1) + 4, w = x1 - x0;
+    Kit.mk('rect', {x: 0, y, width: W, height: lh + 1, fill: MUD[i]}, g);
+    Kit.mk('line', {x1: 0, x2: W, y1: y, y2: y, stroke: INK, 'stroke-width': 1.5, opacity: .4}, g);
+    L.sand.forEach(([u, v, s]) => Kit.mk('circle', {cx: x0 + 10 + u * (w - 20), cy: y + (.15 + v * .7) * lh, r: Math.max(.9, lh * .035 * s), fill: '#f1dcae', opacity: .8}, g));
+    if (S.rot < 1) L.leaf.forEach(([u, v, a, s, c]) => leaf(g, x0 + 12 + u * (w - 24), y + (.25 + v * .5) * lh, lh * .22 * s, a, LEAF[c], 1 - S.rot));
+    L.pl.forEach(([u, v, a, c, s]) => fleck(g, x0 + 10 + u * (w - 20), y + (.18 + v * .64) * lh, lh * .14 * s, a, PCOL[c]));
+  }
+
+  // The land: the hill and the far shore, cut to show the old rock in its bands, grass on top.
+  const rock = Kit.mk('g', {'clip-path': 'url(#land)'}, world);
+  // the old rock in level bands, as it was laid long before: the lake is cut into them
+  const seams = [seaY + (bedY - seaY) * .5, bedY + old * .45];
+  OLD.forEach((c, i) => { const y = i ? seams[i - 1] : -2; Kit.mk('rect', {x: 0, y, width: W, height: H + 2 - y, fill: c}, rock); });
+  seams.forEach(y => Kit.mk('line', {x1: 0, x2: W, y1: y, y2: y, stroke: INK, 'stroke-width': 1.5, opacity: .3}, rock));
+  const grass = line.filter(p => p[1] < seaY - 1);
+  const run = side => grass.filter(p => side < 0 ? p[0] < W / 2 : p[0] > W / 2);
+  [-1, 1].forEach(side => { const g = run(side); if (g.length > 1) Kit.mk('path', {d: d(g), fill: 'none', stroke: GRASS, 'stroke-width': Math.max(4, lh * .22), 'stroke-linecap': 'round'}, rock); });
+  Kit.mk('path', {d: d(line), fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, world);
+  // the water's surface, between the shores
+  const sx0 = edge(seaY, -1), sx1 = edge(seaY, 1);
+  Kit.mk('line', {x1: sx0, x2: sx1, y1: seaY, y2: seaY, stroke: INK, 'stroke-width': 2.5}, world);
+
+  // The tree on the hill, its leaves falling to the lake; the town on the far shore once people make plastic,
+  // and a bottle floating on the lake.
+  const tx = W * .085, ty = ground(tx) + 2, th = Math.min(ty - 3, H * .26) / 1.06;
+  tree(world, tx, ty, th, fs);
+  if (!aged) [[.17, .5, 30], [.24, .82, -40]].forEach(([u, v, a], i) => leaf(world, W * u, ty - th * .55 + v * (seaY - ty + th * .55), lh * .28, a + i * 50, LEAF[1], 1));
+  if (laid >= P) {
+    [[.885, .9], [.935, 1.1]].forEach(([u, k], i) => house(world, W * u, ground(W * u) + 1.5, Math.min(sky * .2, W * .028) * k, i));
+    bottle(world, W * .62, seaY, Math.max(10, lh * .75));
+  }
+
+  // The slice's own edge.
+  Kit.mk('path', {d: `M0,${ground(0).toFixed(1)} V${H - r} Q0,${H} ${r},${H} H${W - r} Q${W},${H} ${W},${H - r} V${ground(W).toFixed(1)}`, fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, svg);
+
+  // Which way is time: on the rock beside the bands, the newest on top, the oldest at the bottom, an arrow up.
+  if (laid >= 2) {
+    const tg = Kit.mk('g', {}, svg), yn = top + lh * .5, yo = bedY - lh * .5, x = Math.max(8, W * .025);
+    word(tg, x, yn + fs * .35, 'newer', fs, INK);
+    word(tg, x, yo + fs * .35, 'older', fs, INK);
+    const ax = x + fs * .95;
+    if (yo - yn > fs * 3.2) Kit.mk('path', {d: `M${ax},${yo - fs * .85} V${yn + fs * .75} M${ax - fs * .35},${yn + fs * 1.15} L${ax},${yn + fs * .75} L${ax + fs * .35},${yn + fs * 1.15}`, fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, tg);
+  }
+
+  // Told: the band with the plastic in it, bracketed and named.
+  if (aged && S.tag > 0) {
+    const tg = Kit.mk('g', {opacity: S.tag}, svg), y0 = bedY - N * lh + 2, y1 = bedY - P * lh - 2, bx = edge(y1, 1) - 10;
+    Kit.mk('path', {d: `M${bx - 6},${y0} H${bx} V${y1} H${bx - 6}`, fill: 'none', stroke: '#fff', 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, tg);
+    const t = word(tg, 0, 0, 'micro-plastic layer', fs, card()), b = t.getBBox(), ph = b.height + fs * .45, pw = b.width + fs * 1.1;
+    const on = y1 - y0 > ph * 1.9;
+    const px = on ? Math.max(edge(y0, -1) + 6, Math.min(bx - 12 - pw, (edge(y1, -1) + bx) / 2 - pw / 2)) : (sx0 + sx1) / 2 - pw / 2;
+    const py = on ? (y0 + y1) / 2 - ph / 2 : Math.max(1, seaY - ph - 4);
+    if (!on) Kit.mk('path', {d: `M${px + pw / 2},${py + ph} V${y0 + (y1 - y0) * .35}`, stroke: '#fff', 'stroke-width': 1.6, fill: 'none'}, tg);
+    tg.insertBefore(Kit.mk('rect', {x: px, y: py, width: pw, height: ph, rx: ph / 2, fill: INK}, tg), tg.firstChild);
+    t.setAttribute('x', px + fs * .55); t.setAttribute('y', py + ph / 2 - b.y - b.height / 2);
+  }
 }
 
-function drawLayer(parent, i) {
-  const {x0, cw, bot, lh} = G, y = bot - (i + 1) * lh, L = layers[i];
-  const g = Kit.mk('g', {class: 'lay', 'data-i': i}, parent);
-  Kit.mk('rect', {x: x0, y, width: cw, height: lh + 1, fill: MUD[i]}, g);
-  Kit.mk('line', {x1: x0, y1: y, x2: x0 + cw, y2: y, stroke: '#000', 'stroke-opacity': .25, 'stroke-width': 1}, g);
-  L.sand.forEach(([u, v, s]) => Kit.mk('circle', {cx: x0 + u * cw, cy: y + (.08 + v * .84) * lh, r: lh * .03 * s, fill: '#e9d4a6', opacity: .55}, g));
-  if (!aged) L.org.forEach(([u, v, a, s]) => {
-    const px = x0 + (.08 + u * .84) * cw, py = y + (.15 + v * .7) * lh;
-    Kit.mk('ellipse', {class: 'org', cx: px, cy: py, rx: lh * .1 * s, ry: lh * .035 * s, fill: '#4f9a35', transform: `rotate(${a} ${px} ${py})`}, g);
-  });
-  L.pl.forEach(([u, v, a, c, s]) => {
-    const px = x0 + (.06 + u * .88) * cw, py = y + (.12 + v * .76) * lh, w = lh * .09 * s, h = lh * .045 * s;
-    Kit.mk('rect', {class: 'pl', x: px - w / 2, y: py - h / 2, width: w, height: h, rx: h * .3, fill: PCOL[c], transform: `rotate(${a} ${px} ${py})`}, g);
-  });
-  return g;
+const card = () => getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#00E5A0';
+function word(p, x, y, s, size, col) { const e = Kit.mk('text', {x, y, fill: col, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': size}, p); e.textContent = s; return e; }
+// A leaf: a pointed oval and its middle vein.
+function leaf(p, x, y, l, a, c, o) {
+  const g = Kit.mk('g', {transform: `translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${a.toFixed(0)})`, opacity: o}, p);
+  Kit.mk('path', Object.assign({d: `M${-l},0 Q0,${-l * .55} ${l},0 Q0,${l * .55} ${-l},0 Z`, fill: c}, l >= 4 ? {stroke: INK, 'stroke-width': Math.max(.8, l * .12)} : {}), g);
+}
+// A fragment of plastic: a sharp little sliver of colour, outlined where it is big enough to take it.
+function fleck(p, x, y, l, a, c) {
+  l = Math.max(2.4, l);
+  Kit.mk('rect', Object.assign({x: x - l / 2, y: y - l * .2, width: l, height: Math.max(1.2, l * .4), fill: c, transform: `rotate(${a.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})`}, l >= 4 ? {stroke: INK, 'stroke-width': .7} : {}), p);
+}
+// The tree: a trunk and a round crown in autumn orange.
+function tree(p, x, y, h, fs) {
+  const cr = h * .3, g = Kit.mk('g', {}, p);
+  Kit.mk('path', {d: `M${x - h * .05},${y} L${x - h * .035},${y - h * .55} L${x + h * .035},${y - h * .55} L${x + h * .05},${y} Z`, fill: BARK, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+  const puffs = [[0, -.68, 1], [-.22, -.58, .72], [.23, -.6, .75], [0, -.86, .62]];
+  puffs.forEach(([dx, dy, k]) => Kit.mk('circle', {cx: x + dx * h, cy: y + dy * h, r: cr * k + 1.4, fill: INK}, g));
+  puffs.forEach(([dx, dy, k]) => Kit.mk('circle', {cx: x + dx * h, cy: y + dy * h, r: cr * k - 1, fill: CROWN}, g));
+}
+// A house of the town: walls, a pitched roof, a door.
+function house(p, x, y, s, i) {
+  const at = {stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, w = s * 1.9, h = s * 1.45;
+  Kit.mk('rect', Object.assign({x: x - w / 2, y: y - h, width: w, height: h, fill: WHITE}, at), p);
+  Kit.mk('path', Object.assign({d: `M${x - w / 2 - s * .25},${y - h} L${x},${y - h - s * .95} L${x + w / 2 + s * .25},${y - h} Z`, fill: ROOF}, at), p);
+  Kit.mk('rect', {x: x - s * .22 + (i % 2 ? s * .35 : -s * .3), y: y - s * .75, width: s * .44, height: s * .75, fill: INK}, p);
+}
+// A plastic bottle floating on its side, half in the water.
+function bottle(p, x, y, l) {
+  const g = Kit.mk('g', {transform: `translate(${x},${y + l * .05}) rotate(-8)`}, p), h = l * .36;
+  Kit.mk('path', {d: `M${-l / 2},${-h / 2} H${l * .18} L${l * .32},${-h * .22} H${l * .44} V${h * .22} H${l * .32} L${l * .18},${h / 2} H${-l / 2} Q${-l * .56},0 ${-l / 2},${-h / 2} Z`, fill: '#7fd6ff', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, g);
+  Kit.mk('rect', {x: l * .44, y: -h * .26, width: l * .1, height: h * .52, fill: ROOF, stroke: INK, 'stroke-width': 1.4}, g);
+  Kit.mk('rect', {x: -l * .3, y: -h / 2, width: l * .3, height: h, fill: WHITE, stroke: INK, 'stroke-width': 1.4}, g);
 }
 
 const say = t => { Kit.$('say').textContent = t; };
@@ -110,25 +214,24 @@ Kit.$('wait').addEventListener('click', () => {
   if (laid < N || aged) return;
   Kit.$('wait').disabled = true; Kit.haptic('success');
   const finish = () => {
-    aged = true; draw();
-    if (!Kit.calm) gsap.from('#plab', {opacity: 0, duration: .6});
+    aged = true; done = true;
     Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (Kit.calm) { S.tag = 1; draw(); } else gsap.to(S, {tag: 1, duration: .6, delay: .2, onUpdate: draw});
+    draw();
   };
-  if (Kit.calm) return finish();
-  gsap.to('#core .org', {opacity: 0, duration: 1.3, stagger: {each: .015, from: 'random'}, onComplete: finish});
-  gsap.to('#core .lay rect:first-child', {filter: 'brightness(.85)', duration: 1.3});
+  if (Kit.calm) { S.rot = 1; return finish(); }
+  gsap.to(S, {rot: 1, duration: 1.3, ease: 'power1.in', onUpdate: draw, onComplete: finish});
 });
 
 Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#tube', {opacity: 0, scaleY: .8, transformOrigin: '50% 100%', duration: .6, ease: 'power3.out'}); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#core', {opacity: 0, y: 10, duration: .6, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   const w = ms => new Promise(r => setTimeout(r, ms));
   for (let i = 0; i < N; i++) { Kit.$('add').click(); await w(120); }
   Kit.$('wait').click(); await w(2400);
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('core'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seen = ''; const el = Kit.$('core'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; draw(); } }).observe(el); }
 Kit.single();
 </script>
 </html>

@@ -1,5 +1,11 @@
 <!doctype html>
 <!-- slug: thinking-fukushima-radiation-toll -->
+<!-- Look: the coast in one landscape, flat, with ink outlines. On the left the nuclear plant: four reactor buildings,
+     the striped stack, a yellow radiation sign at the fence. On the right a small coastal town, and behind it the sea
+     rising into a wave. In front of each, on the sand, the people it killed, one dot each, gathered in a crowd that
+     grows from the ground on the same scale on both sides: the reader's guess in front of the plant. Then the guess
+     falls to one person, a plant worker, ringed; the wave breaks over the town, and the crowd in front of it
+     fills, more than 15,000. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -11,24 +17,25 @@
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 #ctrl{display:flex;flex-direction:column;gap:1cqh}
 #row{display:flex;align-items:center;gap:3cqw}
-#guess{font:700 max(2.4cqh,15px)/1.1 var(--mono);color:var(--k);min-width:6.5ch;text-align:right}
+#guess{font:800 max(2.4cqh,15px)/1.1 var(--body);color:var(--k);min-width:5.5ch;text-align:right;font-variant-numeric:tabular-nums}
 #sl{flex:1;min-width:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
 #lock{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;align-self:stretch}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{margin:0}
-#why .body{margin:0;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{margin:0;font:900 max(3.4cqh,19px)/1.04 var(--display)}
+#why .body{margin:0;overflow-wrap:anywhere;font:500 max(1.85cqh,12.5px)/1.32 var(--body)}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="thinking" data-kind="Slide · guess">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FEAR VS FACT</span></div>
     <h2 class="q">How many people died directly from radiation at Fukushima?</h2>
     <div class="stagebox" id="stage">
-      <div id="cvbox"><canvas id="cv"></canvas></div>
+      <div id="cvbox"><canvas id="cv" role="img" aria-label="The coast at Fukushima: the nuclear plant with its stack and a radiation sign on the left, a small town with the sea rising into a wave behind it on the right. In front of the plant, a crowd of dots, one for each person, as many as your guess."></canvas></div>
       <div id="ctrl">
         <div id="row"><input data-drag id="sl" type="range" min="0" max="1000" value="600" aria-label="Your guess"><span id="guess">0</span></div>
         <button id="lock">That's my guess</button>
       </div>
-      <div id="why" class="gone"><p class="big">Just one</p><p class="body">The plant director was the only person whose death was tied to radioactivity. The tsunami killed over 15,000. Yet we remember Fukushima for its radiation, not the wave.</p></div>
+      <div id="why" class="gone"><p class="big">Just one</p><p class="body">One worker, who had measured radiation at the plant, was the only person whose death was tied to radioactivity. The tsunami killed over 15,000. Yet we remember Fukushima for its radiation, not the wave.</p></div>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">Drag to guess the radiation deaths. Each dot is one person.</p>
@@ -39,71 +46,191 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const MAXN = 15000;
-const G = {n: 1, t: 0, rev: false, ring: 0};
+const G = {n: 1, t: 0, rev: false, ring: 0, wave: 0};
 let locked = false, done = false, ctx = null, W = 0, H = 0, F = 14;
 const sl = Kit.$('sl');
 const toN = v => Math.max(1, Math.round(Math.pow(10, v / 1000 * Math.log10(MAXN))));
 const fmt = n => Math.round(n).toLocaleString('en-US');
 
+// One ink and the sky; the sand the people stand on; blue for the sea and its wave; the plant's pale walls and
+// its stack, red and white; yellow for the radiation sign; the town's cream walls and dark roofs.
+const INK = '#10100c', SKY = '#E2EFFA', SAND = '#EBDDBB', SEA = '#2F7FE0', DEEP = '#1F5FB8', FOAM = '#ffffff',
+  WALL = '#DCE6EE', BAND = '#B9CCDB', RED = '#D8452F', WHITE = '#ffffff', SIGN = '#FFC83D', HOUSE = '#FFF3D6', ROOF = '#6B4A3A';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+// The layout, worked out per size: a row at the top of the sky for what each crowd is; under it the coast, the plant
+// on the left and the town and the sea on the right; under that the sand, where the two crowds stand. Each crowd
+// fills its places from the ground at the middle outwards, so any number of people makes a mound and the most there
+// can be, 15,000, fills a dome; one dot a person, on the same scale on both sides.
+let L = null;
+function lay() {
+  const k = clamp(W * .0075, 1.6, 2.4), R = clamp(W * .04, 9, 15), f = Math.max(12, F);
+  const nf = clamp(f * 1.3, 14, 26), sf = Math.max(12, f * .82), top = Math.max(nf * 1.05 + 8, 20);
+  // The sand is shallow while the reader guesses, the coast above it large; deeper once the answer shows, for the
+  // two crowds side by side. Either way the most there can be fills a field, on one scale for both.
+  const fieldH = clamp(H * (G.rev ? .36 : .28), 30, 130), yG = H - fieldH, pad = Math.max(6, W * .025), mid = Math.max(8, W * .035);
+  const fw = W / 2 - pad - mid / 2, fh = fieldH - k * 1.5 - Math.max(5, fieldH * .1);
+  // A dome over the field's foot holds about 0.785 of its rectangle.
+  let s = Math.sqrt(.785 * fw * fh / MAXN) * .985, cells = [];
+  for (let i = 0; i < 40; i++) {
+    const cols = Math.floor(fw / s), rows = Math.floor(fh / s);
+    cells = [];
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const u = (c + .5) / cols * 2 - 1, v = (r + .5) / rows;
+      if (u * u + v * v <= 1) cells.push([c, r, u * u + v * v]);
+    }
+    if (cells.length >= MAXN) break;
+    s *= .985;
+  }
+  cells.sort((a, b) => a[2] - b[2]);
+  // Each dot nudged a little off its square, the same on every phone, so a crowd reads as people, not a mesh.
+  let q = 11; const rnd = () => (q = (q * 16807) % 2147483647) / 2147483647;
+  const jit = cells.map(() => [(rnd() - .5) * s * .5, (rnd() - .5) * s * .5]);
+  const cols = Math.floor(fw / s);
+  const field = x0 => ({x0: x0 + (fw - cols * s) / 2, y1: H - k * 1.5 - Math.max(3, fieldH * .06), cx: x0 + fw / 2});
+  L = {k, R, f, nf, sf, top, fieldH, yG, pad, mid, fw, fh, s, cells, jit, left: field(pad), right: field(W / 2 + mid / 2)};
+}
+
 function readGuess(){ G.n = toN(+sl.value); Kit.$('guess').textContent = fmt(G.n); draw(); }
 
+// A small person standing on (x, y), h tall: a head and a body.
+function person(x, cx, y, h) {
+  const hr = h * .2;
+  x.beginPath(); x.arc(cx, y - h + hr, hr, 0, Math.PI * 2);
+  x.moveTo(cx - h * .26, y); x.lineTo(cx - h * .22, y - h * .52); x.quadraticCurveTo(cx, y - h * .66, cx + h * .22, y - h * .52); x.lineTo(cx + h * .26, y); x.closePath();
+  x.fillStyle = INK; x.fill();
+}
+
 function draw(){
-  if (!ctx) return;
+  if (!ctx || !L) return;
   const x = ctx, cs = getComputedStyle(Kit.$('card'));
-  const ink = cs.getPropertyValue('--k').trim() || '#111';
+  const body = cs.getPropertyValue('--body') || 'sans-serif', disp = cs.getPropertyValue('--display') || 'serif';
+  const {k, R, f, yG, top, s, cells, jit} = L, band = yG - top;
   x.clearRect(0, 0, W, H);
-  const f = Math.max(12, F);
-  const gap = W * 0.05, top = 4, fh = f * 3.2;
-  const pw = (W - gap) / 2, ph = Math.max(20, H - top - fh);
-  let s = Math.sqrt(pw * ph / MAXN), cols, rows;
-  for (let i = 0; i < 60; i++){ cols = Math.max(1, Math.floor(pw / s)); rows = Math.ceil(MAXN / cols); if (rows * s <= ph) break; s *= 0.98; }
-  const d = Math.max(1, s * 0.74);
-  const panels = [{x0: 0, n: Math.round(G.n), name: G.rev ? 'Radiation' : 'Radiation · your guess'}, {x0: pw + gap, n: Math.round(G.t), name: 'Tsunami'}];
-  panels.forEach((p, i) => {
-    const gx = p.x0 + (pw - cols * s) / 2, by = top + ph;
-    x.globalAlpha = 0.25; x.strokeStyle = ink; x.lineWidth = 1.5;
-    x.strokeRect(p.x0 + .75, top + .75, pw - 1.5, ph - 1.5);
-    x.globalAlpha = 1; x.fillStyle = ink;
-    const n = Math.min(MAXN, p.n);
-    for (let k = 0; k < n; k++){
-      const c = k % cols, r = Math.floor(k / cols);
-      x.fillRect(gx + c * s, by - (r + 1) * s, d, d);
+  x.save();
+  x.beginPath(); x.roundRect ? x.roundRect(k / 2, k / 2, W - k, H - k, R) : x.rect(k / 2, k / 2, W - k, H - k); x.clip();
+  x.lineJoin = 'round'; x.lineCap = 'round';
+  const shape = (fill, w = k) => { x.fillStyle = fill; x.fill(); x.strokeStyle = INK; x.lineWidth = w; x.stroke(); };
+  x.fillStyle = SKY; x.fillRect(0, 0, W, H);
+  x.fillStyle = SAND; x.fillRect(0, yG, W, H - yG);
+
+  // The plant, on the left: four reactor buildings in a row and the stack among them, all under the row of words.
+  const bx0 = Math.max(L.pad + 2, W * .04), bw = Math.min((W * .39 - bx0) / 4.5, band * .62), bh = Math.min(band * .7, bw * 1.25), gap = bw * .16;
+  const stackX = bx0 + 2 * bw + 1.5 * gap, stackH = band * .96, sw0 = Math.max(5, bw * .26), sw1 = sw0 * .62;
+  for (let i = 0; i < 6; i++) {
+    const y0 = yG - stackH * i / 6, y1 = yG - stackH * (i + 1) / 6, w0 = sw0 + (sw1 - sw0) * i / 6, w1 = sw0 + (sw1 - sw0) * (i + 1) / 6;
+    x.beginPath(); x.moveTo(stackX - w0 / 2, y0); x.lineTo(stackX - w1 / 2, y1); x.lineTo(stackX + w1 / 2, y1); x.lineTo(stackX + w0 / 2, y0); x.closePath();
+    x.fillStyle = i % 2 ? WHITE : RED; x.fill();
+  }
+  x.beginPath(); x.moveTo(stackX - sw0 / 2, yG); x.lineTo(stackX - sw1 / 2, yG - stackH); x.lineTo(stackX + sw1 / 2, yG - stackH); x.lineTo(stackX + sw0 / 2, yG);
+  x.strokeStyle = INK; x.lineWidth = k; x.stroke();
+  for (let i = 0; i < 4; i++) {
+    const bx = bx0 + i * (bw + gap) + (i > 1 ? gap : 0), h = bh * (i % 2 ? .93 : 1);
+    x.beginPath(); x.rect(bx, yG - h, bw, h); shape(WALL);
+    x.beginPath(); x.rect(bx, yG - h, bw, h * .2); shape(BAND, k * .8);
+    x.fillStyle = INK; x.fillRect(bx + bw * .3, yG - h * .55, bw * .4, Math.max(1.5, k * .8));
+  }
+  // The sign at the plant's edge: a yellow triangle with the trefoil, on a post.
+  const ts = clamp(Math.min(f * 1.45, band * .5), 12, 26), px = W * .5 - L.mid / 2 - Math.max(ts * .7, W * .04), py = yG - Math.max(ts * 1.15, bh * .72);
+  x.beginPath(); x.moveTo(px, yG); x.lineTo(px, py); x.strokeStyle = INK; x.lineWidth = k * 1.3; x.stroke();
+  x.beginPath(); x.moveTo(px, py - ts * .62); x.lineTo(px + ts * .58, py + ts * .38); x.lineTo(px - ts * .58, py + ts * .38); x.closePath(); shape(SIGN);
+  const tc = py + ts * .1, tr = ts * .26;
+  x.fillStyle = INK;
+  for (let i = 0; i < 3; i++) { const a = -Math.PI / 2 + i * 2 * Math.PI / 3; x.beginPath(); x.moveTo(px, tc); x.arc(px, tc, tr, a - .5, a + .5); x.closePath(); x.fill(); }
+  x.fillStyle = SIGN; x.beginPath(); x.arc(px, tc, tr * .3, 0, Math.PI * 2); x.fill();
+  x.fillStyle = INK; x.beginPath(); x.arc(px, tc, tr * .18, 0, Math.PI * 2); x.fill();
+
+  // The town on the right, gone once the wave has broken over it.
+  const hw = Math.min(W * .075, band * .5), hh = hw * .8, hx0 = W * .5 + L.mid / 2 + Math.max(6, W * .025);
+  if (G.wave < 1) {
+    x.globalAlpha = 1 - G.wave;
+    for (let i = 0; i < 3; i++) {
+      const hx = hx0 + i * hw * 1.3, h = hh * (i === 1 ? 1.15 : 1);
+      x.beginPath(); x.rect(hx, yG - h, hw, h); shape(HOUSE, k * .85);
+      x.beginPath(); x.moveTo(hx - hw * .1, yG - h); x.lineTo(hx + hw / 2, yG - h - hw * .55); x.lineTo(hx + hw * 1.1, yG - h); x.closePath(); shape(ROOF, k * .85);
+      x.fillStyle = INK; x.fillRect(hx + hw * .36, yG - h * .62, hw * .28, hw * .28);
     }
-    if (i === 1 && !G.rev){
-      x.globalAlpha = .35; x.font = `700 ${f * 3}px ${cs.getPropertyValue('--display') || 'serif'}`;
-      x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('?', p.x0 + pw / 2, top + ph / 2); x.globalAlpha = 1;
-    }
-    if (i === 0 && G.rev && G.ring > 0){
-      const cx = gx + d / 2, cy = by - s + d / 2, R = Math.max(10, f * 0.9) * G.ring;
-      x.lineWidth = 2.5; x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.stroke();
-      x.beginPath(); x.arc(cx, cy, Math.max(3, d * 1.2), 0, Math.PI * 2); x.fill();
-      x.globalAlpha = G.ring; x.font = `600 ${f * .9}px ${cs.getPropertyValue('--body') || 'sans-serif'}`;
-      x.textAlign = 'left'; x.textBaseline = 'bottom';
-      x.fillText('the plant director', Math.min(cx + R * 0.6, p.x0 + 6), cy - R - 4); x.globalAlpha = 1;
-    }
-    x.textAlign = 'center'; x.textBaseline = 'alphabetic';
-    const num = i === 1 ? (G.rev ? (G.t >= MAXN - 1 ? '15,000+' : fmt(G.t)) : '') : fmt(G.n);
-    x.font = `700 ${f * 1.35}px ${cs.getPropertyValue('--mono') || 'monospace'}`;
-    x.fillText(num, p.x0 + pw / 2, top + ph + f * 1.55);
-    x.font = `600 ${Math.max(12, f * .82)}px ${cs.getPropertyValue('--body') || 'sans-serif'}`;
-    x.globalAlpha = .75; x.fillText(p.name, p.x0 + pw / 2, top + ph + f * 2.95); x.globalAlpha = 1;
-  });
+    x.globalAlpha = 1;
+  }
+  // The sea, rising behind the town into a wave: its back from the right edge, its crest curling over to the left;
+  // when it breaks it rolls forward over the town and falls lower.
+  const wH = band * (.94 - .06 * G.wave), wW = Math.min(W * .34, band * .94 * 1.3), wx0 = W - wW + G.wave * (hx0 - hw * .2 - (W - wW)), wx1 = W + k * 2, wy = yG - wH;
+  const X = u => wx0 + (wx1 - wx0) * u, Y = v => wy + wH * v;
+  x.beginPath(); x.moveTo(X(1), Y(1.02)); x.lineTo(X(1), Y(.22));
+  x.bezierCurveTo(X(.84), Y(.02), X(.5), Y(.0), X(.27), Y(.27));
+  x.bezierCurveTo(X(.13), Y(.44), X(.2), Y(.62), X(.36), Y(.55));
+  x.bezierCurveTo(X(.45), Y(.5), X(.43), Y(.39), X(.35), Y(.41));
+  x.bezierCurveTo(X(.5), Y(.28), X(.66), Y(.52), X(.6), Y(1.02));
+  x.closePath(); shape(SEA);
+  x.beginPath(); x.moveTo(X(.92), Y(.1)); x.bezierCurveTo(X(.64), Y(.02), X(.4), Y(.07), X(.28), Y(.27));
+  x.strokeStyle = FOAM; x.lineWidth = Math.max(k * 1.8, wH * .07); x.stroke();
+  x.beginPath(); x.moveTo(X(.66), Y(.64)); x.bezierCurveTo(X(.64), Y(.5), X(.53), Y(.42), X(.43), Y(.48));
+  x.strokeStyle = DEEP; x.lineWidth = Math.max(k * 1.3, wH * .045); x.stroke();
+
+  // The ground's edge, ink.
+  x.beginPath(); x.moveTo(0, yG); x.lineTo(W, yG); x.strokeStyle = INK; x.lineWidth = k; x.stroke();
+
+  // The crowds.
+  const crowd = (fd, n) => {
+    const d = Math.max(.7, s * .8);
+    x.fillStyle = INK;
+    for (let i = 0; i < Math.min(n, cells.length); i++) { const [c, r] = cells[i], [jx, jy] = jit[i]; x.fillRect(fd.x0 + c * s + jx, fd.y1 - (r + 1) * s + jy, d, d); }
+  };
+  const nl = Math.round(G.n), nr = Math.round(G.t), ph = clamp(L.fh * .62, 11, 24);
+  // One person is drawn as a person and, once it is the answer, ringed and named, all inside its own field: on one
+  // line beside the ring where there is room, on two where there is not.
+  const lf = Math.max(12, f * .82), rr0 = Math.max(ph * .72, 9), edge = W / 2 - L.mid / 2 - 3;
+  x.font = `700 ${lf}px ${body}`;
+  const one = x.measureText('one plant worker').width, two = Math.max(x.measureText('one plant').width, x.measureText('worker').width);
+  const lines = L.pad + 2 * rr0 + 8 + one <= edge ? 1 : 2, lw = lines === 1 ? one : two;
+  const lx = clamp(L.left.cx - (rr0 + 5 + lw) / 2 + rr0 / 2, L.pad + rr0 + 3, edge - lw - 5 - rr0);
+  if (nl <= 1) person(x, G.rev ? lx : L.left.cx, L.left.y1, ph); else crowd(L.left, nl);
+  if (nr > 0) crowd(L.right, nr);
+  if (G.rev && G.ring > 0) {
+    const cy = L.left.y1 - ph * .5, rr = rr0 * (.6 + .4 * G.ring);
+    x.globalAlpha = G.ring;
+    x.beginPath(); x.arc(lx, cy, rr, 0, Math.PI * 2); x.strokeStyle = INK; x.lineWidth = k * 1.1; x.stroke();
+    x.font = `700 ${lf}px ${body}`; x.fillStyle = INK; x.textBaseline = 'middle'; x.textAlign = 'left';
+    const ly = Math.max(cy, yG + lf * (lines === 1 ? .8 : 1.35));
+    if (lines === 1) x.fillText('one plant worker', lx + rr0 + 5, ly);
+    else { x.fillText('one plant', lx + rr0 + 5, ly - lf * .58); x.fillText('worker', lx + rr0 + 5, ly + lf * .58); }
+    x.globalAlpha = 1;
+  }
+
+  // What each crowd is, in the row at the top: its number large and its name beside it.
+  const tag = (n, name, left, a) => {
+    if (a <= 0) return;
+    const ty = L.top - 7, tx = left ? L.pad + 3 : W - L.pad - 3;
+    x.globalAlpha = a; x.textBaseline = 'alphabetic'; x.fillStyle = INK;
+    x.font = `900 ${L.nf}px ${disp}`; const nw = x.measureText(n).width;
+    x.font = `700 ${L.sf}px ${body}`; const mw = x.measureText(name).width, g = L.sf * .4;
+    const x0 = left ? tx : tx - nw - g - mw;
+    x.textAlign = 'left';
+    x.font = `900 ${L.nf}px ${disp}`; x.fillText(n, x0, ty);
+    x.font = `700 ${L.sf}px ${body}`; x.fillText(name, x0 + nw + g, ty);
+    x.globalAlpha = 1;
+  };
+  tag(fmt(G.n), G.rev ? 'radiation' : 'your guess', true, 1);
+  tag(G.t >= MAXN - 1 ? '15,000+' : fmt(G.t), 'tsunami', false, G.rev ? Math.min(1, G.t / 600) : 0);
+  x.restore();
+  x.beginPath(); x.roundRect ? x.roundRect(k / 2, k / 2, W - k, H - k, R) : x.rect(k / 2, k / 2, W - k, H - k);
+  x.strokeStyle = INK; x.lineWidth = k; x.stroke();
 }
 
 function reveal(){
-  G.rev = true;
-  if (Kit.calm){ G.n = 1; G.t = MAXN; G.ring = 1; draw(); return; }
+  G.rev = true; lay();
+  if (Kit.calm){ G.n = 1; G.t = MAXN; G.ring = 1; G.wave = 1; draw(); return; }
   gsap.timeline({onUpdate: draw})
     .to(G, {n: 1, duration: .7, ease: 'power2.inOut', onUpdate: draw})
     .to(G, {ring: 1, duration: .4, ease: 'back.out(2)', onUpdate: draw})
-    .to(G, {t: MAXN, duration: 2, ease: 'power1.in', onUpdate: draw}, '-=.1');
+    .to(G, {wave: 1, duration: .6, ease: 'power2.in', onUpdate: draw}, '-=.1')
+    .to(G, {t: MAXN, duration: 2, ease: 'power1.in', onUpdate: draw}, '-=.25');
 }
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   if (done) return; done = true;
   const g = toN(+sl.value), ok = g <= 3;
   Kit.answer({choice: `${fmt(g)} deaths`, correct: ok, sure: pct});
-  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why');
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.$('card').classList.add('answered'); Kit.show('why');
   sure.grade(ok, pct, `${fmt(g)}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep'); Kit.haptic(ok ? 'success' : 'light');
   reveal();
@@ -118,6 +245,7 @@ Kit.$('lock').addEventListener('click', () => {
 Kit.onShow.card = () => {
   const r = Kit.fitCanvas(Kit.$('cv')); ctx = r.x; W = r.W; H = r.H;
   F = Math.max(12, Math.min(W, H * 1.6) * 0.045);
+  lay();
   if (!G.rev) readGuess(); else draw();
 };
 Kit.onEnter.card = () => {

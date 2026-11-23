@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Two spheres sit above a water surface, one solid and one wrapped in a shell of air. The question asks what drag coefficient a projectile wrapped in air gets underwater, and a slider drops both spheres into the water."
+    "label": "Two steel spheres hang from magnets over a deep glass tank of water: a plain one and a darker one that repels water. The question asks what drag coefficient a projectile wrapped in air gets underwater, and a slider drops both spheres into the water."
   },
   "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=285s",

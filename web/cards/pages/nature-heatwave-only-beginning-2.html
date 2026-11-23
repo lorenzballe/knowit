@@ -1,5 +1,9 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-heatwave-only-beginning -->
+<!-- The heat, drawn big: a town's roofs under a hot summer sky, the heat of each summer rising over them as a flat
+     orange peak, this week's record the tallest, the sun burning over it. The reader picks the real problem and says
+     how sure; then the picture pulls back in time and the decades ahead rise beside the record: peaks that come more
+     often, climb higher and last longer. A sketch of the trend's shape, not measured data, and the card says so. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -8,21 +12,20 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #chart{flex:1;min-height:0;width:100%;display:block}
 #opts{display:flex;flex-direction:column;gap:1cqh}
-#why{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.7cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0;overflow-wrap:anywhere}
+#why .body{font:500 max(1.8cqh,13px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
 .opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
-.note{font:500 max(1.5cqh,12px)/1.2 var(--body);color:var(--muted);margin:0}
-#chart text{font-family:var(--body);fill:var(--k)}
-#chart .lab{font-weight:700}
-#chart .red{fill:#c81e14}
-#chart .mut{fill:var(--muted)}
+.note{font:500 max(1.5cqh,11.5px)/1.2 var(--body);color:var(--k);opacity:.7;margin:0}
+#sure .sq{text-wrap:balance}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">CLIMATE</span></div>
     <h2 class="q">Why is this record heatwave not the main problem?</h2>
     <div class="stagebox" id="stage">
-      <svg id="chart" role="img" aria-label="Sketch of heatwaves over time: past, this week, and the decades ahead"></svg>
+      <svg id="chart" role="img" aria-label="A town under a hot summer sky. Over its roofs the heat of past summers rises in small peaks, and this week's record heatwave in one tall peak, the sun burning above it: about 1,300 deaths."></svg>
       <p class="note">A sketch of the trend's shape, not measured data.</p>
       <div id="opts">
         <button class="opt" data-i="0">It was a freak, one-off event</button>
@@ -31,7 +34,7 @@
       </div>
       <div id="why" class="gone"><p class="big">Only the beginning</p><p class="body">This heatwave killed about 1,300 people in Europe in one week. But ahead lie decades in which such events grow more likely, more intense and longer.</p></div>
     </div>
-    <div id="sure"></div>
+    <div id="sure" class="gone"></div>
     <p class="say" id="say">Pick the real problem. Then watch the decades ahead.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The record isn't the ceiling: it's the start of the slope.</div>
     <div class="foot"><span class="src">Source · Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026).</span></div>
@@ -43,79 +46,212 @@ const RIGHT = 2;
 let pick = -1;
 const S = {T: 0};
 let G = null;
+// One ink for every outline; a hot sky; the heat in two flat oranges; the sun; the town's walls and its slate roofs.
+const INK = '#10100c', SKY = '#FFE7B0', SUN = '#FFD23F', RAY = '#FF8A1F', HEAT = '#FF5A1F', CORE = '#FFA33A', WALL = '#FFFBF0', ROOF = '#3E5A78';
+const FONT = 'Figtree, system-ui, sans-serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
+// The heat of each moment, from long ago (x = 0) through this week (NOW) to the decades ahead (x = 1): past summers'
+// heatwaves small, this week's the record, the ones ahead more frequent, more intense and longer. A shape, not data.
 const NOW = 0.42;
 const bumps = [
   {c:.07,a:.18,w:.008},{c:.17,a:.22,w:.008},{c:.27,a:.26,w:.009},{c:.35,a:.3,w:.009},
   {c:NOW,a:.6,w:.011}
 ];
-(function(){ let c = NOW + .07, k = 0;
+(function(){ let c = NOW + .07;
   while (c < .985) { const p = (c - NOW) / (1 - NOW);
-    bumps.push({c, a: .55 + .42 * p, w: .010 + .016 * p});
-    c += .075 - .045 * p; k++; }
+    bumps.push({c, a: .55 + .37 * p, w: .010 + .016 * p});
+    c += .075 - .045 * p; }
 })();
-function val(x){ let v = .04 + .08 * x; for (const b of bumps){ const d = (x - b.c) / b.w; if (Math.abs(d) < 5) v = Math.max(v, .04 + .08*x + b.a*Math.exp(-d*d)); } return Math.min(v, 1); }
+// The heatwaves still ahead are drawn only as the answer comes in: `grow` raises them from flat to full.
+function val(x, grow = 1){ const b0 = .04 + .07 * x; let v = b0; for (const b of bumps){ const d = (x - b.c) / b.w, a = b.c > NOW ? b.a * grow : b.a; if (Math.abs(d) < 5) v = Math.max(v, b0 + a*Math.exp(-d*d)); } return Math.min(v, 1); }
+// The front shows the past up to a little after this week; the answer pulls the picture back to the decades ahead.
+const FRONT = NOW + .09;
+const ease = (a, b, x) => { const u = clamp((x - a) / (b - a), 0, 1); return u * u * (3 - 2 * u); };
 
-function draw(){
-  if (!G) return;
-  const {W, L, R, top, bot, el} = G;
-  const xEnd = NOW + S.T * (1 - NOW) + 0.004;
-  const px = x => L + x * (R - L), py = v => bot - v * (bot - top);
-  let d = '', n = 420;
-  for (let i = 0; i <= n; i++){ const x = i / n * xEnd; if (x > xEnd) break; d += (i ? 'L' : 'M') + px(x).toFixed(1) + ' ' + py(val(x)).toFixed(1); }
-  el.past.setAttribute('d', d);
-  el.area.setAttribute('d', d + `L${px(xEnd).toFixed(1)} ${bot}L${L} ${bot}Z`);
-  el.fog.setAttribute('opacity', (1 - S.T) * .9);
-  el.qm.setAttribute('opacity', 1 - Math.min(1, S.T * 3));
-  el.leg.forEach((t, i) => t.setAttribute('opacity', Math.max(0, Math.min(1, S.T * 3 - i))));
+// The roofs of a town, along the bottom of the picture: houses, a tall block, a bell tower, a dome.
+function town(g, W, H, th, k) {
+  const at = {stroke: INK, 'stroke-width': k * .8, 'stroke-linejoin': 'round'};
+  // Low houses stand where this week's peak rises, on the front and on the answer, so nothing hides it.
+  const u0 = clamp(W / 13, 15, 30), kinds = ['house', 'block', 'dome', 'house', 'house', 'tower', 'house', 'block', 'house', 'tower', 'house', 'house', 'block'];
+  const width = {house: 1.15, block: .95, tower: .58, dome: 1.6};
+  // Enough buildings to cross the frame, all squeezed a little so the last one ends at its edge.
+  const row = []; let sum = 0;
+  for (let j = 0; sum < W + u0 * .3; j++) { const kd = kinds[j % kinds.length]; row.push(kd); sum += width[kd] * u0; }
+  const u = u0 * (W + u0 * .3) / sum;
+  let x = -u0 * .3;
+  const win = (wx, wy, ww, wh) => Kit.mk('rect', {x: wx, y: wy, width: ww, height: wh, rx: ww * .3, fill: INK}, g);
+  for (const kind of row) {
+    if (kind === 'house') {
+      const w = u * 1.15, h = th * .62, y = H - h, rh = th * .24;
+      Kit.mk('rect', Object.assign({x, y, width: w, height: h + 4, fill: WALL}, at), g);
+      Kit.mk('path', Object.assign({d: `M${x - w * .06},${y} L${x + w / 2},${y - rh} L${x + w * 1.06},${y} Z`, fill: ROOF}, at), g);
+      const ww = w * .16, wh = h * .26;
+      win(x + w * .22, y + h * .22, ww, wh); win(x + w * .62, y + h * .22, ww, wh);
+      x += w;
+    } else if (kind === 'block') {
+      const w = u * .95, h = th * .86, y = H - h;
+      Kit.mk('rect', Object.assign({x, y, width: w, height: h + 4, fill: WALL}, at), g);
+      Kit.mk('rect', Object.assign({x: x - w * .06, y: y - th * .07, width: w * 1.12, height: th * .07, fill: ROOF}, at), g);
+      const ww = w * .17, wh = h * .16;
+      for (const r of [.16, .48]) for (const c of [.22, .61]) win(x + w * c, y + h * r, ww, wh);
+      x += w;
+    } else if (kind === 'tower') {
+      const w = u * .58, h = th * 1.18, y = H - h, rh = th * .3;
+      Kit.mk('rect', Object.assign({x, y, width: w, height: h + 4, fill: WALL}, at), g);
+      Kit.mk('path', Object.assign({d: `M${x - w * .1},${y} L${x + w / 2},${y - rh} L${x + w * 1.1},${y} Z`, fill: ROOF}, at), g);
+      Kit.mk('path', {d: `M${x + w * .3},${y + h * .3} V${y + h * .14} Q${x + w / 2},${y + h * .05} ${x + w * .7},${y + h * .14} V${y + h * .3} Z`, fill: INK}, g);
+      x += w;
+    } else {
+      const w = u * 1.6, h = th * .58, y = H - h, R = w * .36;
+      Kit.mk('rect', Object.assign({x, y, width: w, height: h + 4, fill: WALL}, at), g);
+      Kit.mk('path', Object.assign({d: `M${x + w / 2 - R},${y} A${R},${R * .95} 0 0 1 ${x + w / 2 + R},${y} Z`, fill: ROOF}, at), g);
+      Kit.mk('rect', Object.assign({x: x + w / 2 - R * .14, y: y - R * .95 - R * .32, width: R * .28, height: R * .34, fill: WALL}, at), g);
+      for (const c of [.2, .44, .68]) Kit.mk('path', {d: `M${x + w * c},${y + h * .75} V${y + h * .38} Q${x + w * (c + .06)},${y + h * .22} ${x + w * (c + .12)},${y + h * .38} V${y + h * .75} Z`, fill: INK}, g);
+      x += w;
+    }
+  }
 }
 
-Kit.onShow.card = () => {
+// A label in two weights, its lines stacked from its top left, haloed in the sky's colour so it reads over the heat.
+function label(g, lines, fs) {
+  const t = Kit.mk('text', {'font-family': FONT, 'font-size': fs, fill: INK, stroke: SKY, 'stroke-width': fs * .3, 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, g);
+  const spans = lines.map(([s, w], i) => { const sp = Kit.mk('tspan', {x: 0, y: (fs * (.82 + 1.2 * i)).toFixed(1), 'font-weight': w}, t); sp.textContent = s; return sp; });
+  const w = Math.max(...spans.map((sp, i) => { try { return sp.getComputedTextLength(); } catch (_) { return lines[i][0].length * fs * .55; } }));
+  return {t, w, h: fs * 1.2 * lines.length};
+}
+const put = (l, x, y, op) => { l.t.setAttribute('transform', `translate(${x.toFixed(1)},${y.toFixed(1)})`); l.t.setAttribute('opacity', op.toFixed(2)); };
+
+function build() {
   const svg = Kit.$('chart');
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(Math.min(f, H / 13), 12);
   svg.innerHTML = '';
-  if (H < fs * 13 - 0.5) { G = null; return; }
-  const L = 2, R = W - 2, top = fs * 5, bot = H - fs * 1.7;
-  const nx = L + NOW * (R - L);
-  const el = {};
-  Kit.mk('line', {x1: L, y1: bot, x2: R, y2: bot, stroke: 'currentColor', 'stroke-width': 1.5, style: 'color:var(--k)'}, svg);
-  el.fog = Kit.mk('rect', {x: nx + fs * .6, y: top - fs * .2, width: Math.max(0, R - nx - fs * .6), height: Math.max(0, bot - top + fs * .2), rx: fs * .6, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent)'}, svg);
-  el.qm = Kit.mk('text', {x: (nx + R) / 2 + fs * .3, y: (top + bot) / 2 + fs, 'text-anchor': 'middle', class: 'lab mut', 'font-size': fs * 2.6}, svg); el.qm.textContent = '?';
-  el.area = Kit.mk('path', {style: 'fill:color-mix(in srgb,#c81e14 22%,transparent)'}, svg);
-  el.past = Kit.mk('path', {fill: 'none', stroke: '#c81e14', 'stroke-width': Math.max(2, fs * .17), 'stroke-linejoin': 'round'}, svg);
-  // arrow to this week's spike
-  const spikeY = bot - val(NOW) * (bot - top);
-  const ay = top - fs * 1.4;
-  Kit.mk('path', {d: `M${nx - fs * .3} ${ay}Q${nx - fs * .2} ${(ay + spikeY) / 2} ${nx} ${spikeY - fs * .5}`, fill: 'none', stroke: '#c81e14', 'stroke-width': 2.5}, svg);
-  Kit.mk('path', {d: `M${nx - fs * .45} ${spikeY - fs * 1.05}L${nx} ${spikeY - fs * .3}L${nx + fs * .4} ${spikeY - fs * 1.1}Z`, fill: '#c81e14'}, svg);
-  const t1 = Kit.mk('text', {x: nx - fs * .5, y: fs * 1.1, 'text-anchor': 'end', class: 'lab red', 'font-size': fs}, svg); t1.textContent = 'this week';
-  const t2 = Kit.mk('text', {x: nx - fs * .5, y: fs * 2.5, 'text-anchor': 'end', 'font-size': fs * .9}, svg); t2.textContent = '~1,300 deaths';
-  el.leg = ['more likely', 'more intense', 'longer'].map((s, i) => {
-    const t = Kit.mk('text', {x: nx + fs * 1.2, y: fs * (1.1 + 1.4 * i), class: 'lab', 'font-size': fs}, svg); t.textContent = '↑ ' + s; return t; });
-  const b1 = Kit.mk('text', {x: L, y: H - fs * .3, class: 'mut', 'font-size': fs * .9}, svg); b1.textContent = 'past';
-  const b2 = Kit.mk('text', {x: nx, y: H - fs * .3, 'text-anchor': 'middle', class: 'lab', 'font-size': fs * .9}, svg); b2.textContent = 'now';
-  const b3 = Kit.mk('text', {x: R, y: H - fs * .3, 'text-anchor': 'end', class: 'mut', 'font-size': fs * .9}, svg); b3.textContent = 'decades ahead →';
-  G = {W, L, R, top, bot, el};
-  draw();
-};
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 60 || H < 50) { G = null; return; }
+  const fs = clamp(Math.min(W * .039, H * .09), 11, 13.5);
+  const k = clamp(Math.min(W, H) * .011, 2, 3);
+  const r = Math.min(16, W * .05);
+  const th = clamp(H * .19, 15, 54);                  // the town's height
+  const base = H - th * .5;                           // the heat starts behind the roofs
+  // A band at the top for the two names of the answer, this week and the decades ahead: the heat never climbs into it.
+  const roomy = H >= 150;
+  const top = fs * 2.1;
+  const g = Kit.mk('g', {}, svg);
+  const defs = Kit.mk('defs', {}, g);
+  const clip = Kit.mk('clipPath', {id: 'hw-frame'}, defs);
+  Kit.mk('rect', {x: k / 2, y: k / 2, width: W - k, height: H - k, rx: r}, clip);
+  const world = Kit.mk('g', {'clip-path': 'url(#hw-frame)'}, g);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: SKY}, world);
+  const sun = Kit.mk('g', {}, world);
+  const rays = Kit.mk('g', {}, sun);
+  const disc = Kit.mk('circle', {fill: SUN, stroke: INK, 'stroke-width': k}, sun);
+  const heat = Kit.mk('path', {fill: HEAT}, world);
+  const core = Kit.mk('path', {fill: CORE}, world);
+  const edge = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'}, world);
+  town(Kit.mk('g', {}, world), W, H, th, k);
+  Kit.mk('rect', {x: k / 2, y: k / 2, width: W - k, height: H - k, rx: r, fill: 'none', stroke: INK, 'stroke-width': k}, g);
+  // The labels: this week's record, beside its peak on the front and in the top left on the answer; the past
+  // summers, on the front of a roomy picture; the decades ahead, in the top right on the answer.
+  const ink = {stroke: INK, 'stroke-width': 1.4, fill: 'none', 'stroke-linecap': 'round'};
+  const lead = () => ({line: Kit.mk('path', ink, g), dot: Kit.mk('circle', {r: 2.6, fill: INK}, g)});
+  const nowL = lead(), pastL = roomy ? lead() : null, aheadL = lead();
+  const nowFront = label(g, roomy ? [['this week', 800], ['about 1,300 deaths', 600]] : [['this week: about 1,300 deaths', 700]], fs);
+  const nowBack = label(g, [['this week', 800]], fs);
+  const past = roomy ? label(g, [['past summers', 600]], fs) : null;
+  const ahead = label(g, [['decades ahead', 800]], fs);
+  G = {svg, W, H, fs, k, th, base, top, roomy, sun, rays, disc, heat, core, edge, nowL, pastL, aheadL, nowFront, nowBack, past, ahead};
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const {W, H, fs, k, base, top} = G, T = S.T;
+  const xEnd = FRONT + T * (1 - FRONT), grow = ease(.15, .9, T);
+  const pad = k * 2.5, L = pad, R = W - pad;
+  const px = x => L + x / xEnd * (R - L), py = v => base - v * (base - top);
+  let d = '', c = '';
+  const n = Math.round(clamp(W * 1.4, 240, 600));
+  for (let i = 0; i <= n; i++) {
+    const x = i / n * xEnd, v = val(x, grow), X = px(x).toFixed(1);
+    d += (i ? 'L' : 'M') + X + ' ' + py(v).toFixed(1);
+    c += (i ? 'L' : 'M') + X + ' ' + py(.04 + (v - .04) * .5).toFixed(1);
+  }
+  const close = ` L${W} ${py(val(xEnd, grow)).toFixed(1)} L${W} ${H} L0 ${H} L0 ${py(val(0)).toFixed(1)} Z`;
+  G.heat.setAttribute('d', d + close);
+  G.core.setAttribute('d', c + close);
+  G.edge.setAttribute('d', d);
+  const nx = px(NOW), ny = py(val(NOW));
+  const leader = (l, x1, y1, x2, y2, op) => { l.line.setAttribute('d', `M${x1.toFixed(1)},${y1.toFixed(1)} L${x2.toFixed(1)},${y2.toFixed(1)}`); l.line.setAttribute('opacity', op.toFixed(2)); l.dot.setAttribute('cx', x2.toFixed(1)); l.dot.setAttribute('cy', y2.toFixed(1)); l.dot.setAttribute('opacity', op.toFixed(2)); };
+  // The sun burns over this week's peak, as big as the sky above it allows: under the labels' band once the answer
+  // has filled it.
+  const roof = T < .5 ? fs * .5 : top;
+  const rs = clamp(Math.min(W * .075, (ny - roof - fs * .3) / 3.3), 0, 30);
+  const sy = ny - fs * .25 - rs * 1.65;
+  G.disc.setAttribute('cx', nx.toFixed(1)); G.disc.setAttribute('cy', sy.toFixed(1)); G.disc.setAttribute('r', rs.toFixed(1));
+  G.sun.setAttribute('opacity', rs < 7 ? 0 : 1);
+  const key = rs.toFixed(1) + ',' + nx.toFixed(1) + ',' + sy.toFixed(1);
+  if (G.sunKey !== key) {
+    G.sunKey = key; G.rays.innerHTML = '';
+    for (let i = 0; i < 10; i++) {
+      const a = i / 10 * Math.PI * 2 + .3, r0 = rs * 1.18, r1 = rs * 1.58, h = rs * .2;
+      const P = (rr, da) => [nx + rr * Math.cos(a + da), sy + rr * Math.sin(a + da)];
+      const [a1, a2, tip] = [P(r0, -h / r0), P(r0, h / r0), P(r1, 0)];
+      Kit.mk('path', {d: `M${a1[0].toFixed(1)},${a1[1].toFixed(1)} L${tip[0].toFixed(1)},${tip[1].toFixed(1)} L${a2[0].toFixed(1)},${a2[1].toFixed(1)} Z`, fill: RAY, stroke: INK, 'stroke-width': k * .6, 'stroke-linejoin': 'round'}, G.rays);
+    }
+  }
+  // This week: on the front just left of its peak, under its top; on the answer in the top left corner.
+  const fOp = clamp(1 - T * 2.5, 0, 1), bOp = clamp((T - .6) / .4, 0, 1);
+  const fx = Math.max(pad + fs * .3, nx - fs * 1.1 - G.nowFront.w), fy = ny + fs * .35;
+  put(G.nowFront, fx, fy, fOp);
+  const bx = pad + fs * .45, by = fs * .5;
+  put(G.nowBack, bx, by, bOp);
+  // On the answer the line runs from the name's end down to the peak's left flank, under the sun.
+  if (T < .5) leader(G.nowL, fx + G.nowFront.w + fs * .25, fy + fs * .45, nx - 1.5, ny + 1, fOp);
+  else {
+    // A point on the peak's left flank a little under its top: where the curve a·e^(−d²) has dropped by dv.
+    const fy2 = ny + Math.min(fs * .9, (base - ny) * .2), dv = (fy2 - ny) / (base - top), b = bumps[4];
+    const dx = Math.sqrt(-Math.log(Math.max(.05, 1 - dv / b.a))) * b.w / xEnd * (R - L);
+    leader(G.nowL, bx + G.nowBack.w + fs * .35, by + fs * .5, nx - dx - 1.5, fy2, bOp);
+  }
+  // The past summers, on the front of a roomy picture: a word over the peaks they made.
+  if (G.past) {
+    const pc = bumps[1].c, pX = px(pc), pY = py(val(pc)), pOp = clamp(1 - T * 3, 0, 1);
+    put(G.past, px(bumps[0].c) - fs * .3, pY - fs * 2.6, pOp);
+    leader(G.pastL, pX, pY - fs * 1.15, pX, pY - 3, pOp);
+  }
+  // The decades ahead, as they rise: named in the top right corner, a short line down to the peak under the name.
+  const ax = R - fs * .45 - G.ahead.w, ay = fs * .5;
+  put(G.ahead, ax, ay, bOp);
+  const under = bumps.filter(b => b.c > NOW && b.c <= xEnd).reduce((m, b) => !m || Math.abs(px(b.c) - (ax + G.ahead.w * .3)) < Math.abs(px(m.c) - (ax + G.ahead.w * .3)) ? b : m, null);
+  if (under) { const hx = px(under.c), hy = py(val(under.c, grow)); leader(G.aheadL, hx, ay + G.ahead.h + fs * .15, hx, Math.max(ay + G.ahead.h + fs * .3, hy - 3), bOp); }
+}
+
+Kit.onShow.card = () => build();
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
   Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  // The verdict already names the answer when it was picked: the explanation need not say it again, and the
+  // picture keeps the room.
+  if (ok) Kit.$('why').querySelector('.big')?.remove();
+  Kit.hide('say'); Kit.show('why');
   sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep');
-  Kit.onShow.card();
-  if (Kit.calm) { S.T = 1; draw(); }
-  else gsap.to(S, {T: 1, duration: 2.6, ease: 'power1.inOut', onUpdate: draw, onComplete: () => Kit.haptic('light')});
+  Kit.$('chart').setAttribute('aria-label', 'The picture pulls back in time: the past summers small, this week\'s record peak, and after it the decades ahead, peaks that come more often, climb higher than the record and last longer.');
+  build();
+  if (Kit.calm || typeof gsap === 'undefined') { S.T = 1; render(); }
+  else gsap.to(S, {T: 1, duration: 2.6, ease: 'power1.inOut', onUpdate: render, onComplete: () => Kit.haptic('light')});
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+  // The answer is in: how sure takes the answers' place, and the picture their room.
+  Kit.hide('opts'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`);
+  sure.on();
 });
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3000)); };
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; const el = Kit.$('chart'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) build(); }).observe(el); }
 Kit.single();
 </script>
 </html>

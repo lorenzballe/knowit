@@ -1,32 +1,40 @@
 <!doctype html>
 <!-- slug: nature-burning-plastic-waste -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- The fire and the bin, drawn big: on the left an incinerator burning in its mouth, on the right a recycling bin,
+     a plastic bottle between them. Each tap takes the next step on both paths at once, and the oil each path burns
+     piles up in drums between them, under that path's bottle: made from oil (three drums each); burnt (some energy
+     back, a drum's worth, CO2 out of the chimney) or recycled; then a new bottle, made from oil again on the left
+     (five drums in all), from the old plastic on the right (still three). Illustrative amounts, no real units. -->
 <title>Astute free card · Burning plastic</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#caps{display:grid;grid-template-columns:1fr 1fr;gap:3cqw;min-height:5.4cqh}
-.cap{font:600 max(1.75cqh,12px)/1.25 var(--body);color:var(--k);text-align:center;overflow-wrap:anywhere}
-.cap b{display:block;font:800 max(1.5cqh,12px)/1.2 var(--mono);letter-spacing:.06em;opacity:.7}
+#caps{display:grid;grid-template-columns:1fr 1fr;gap:3cqw}
+.cap{font:600 max(1.75cqh,12px)/1.25 var(--body);color:var(--k);text-align:center;overflow-wrap:anywhere;text-wrap:balance}
+.cap b{display:block;font:800 max(1.4cqh,11px)/1.25 var(--body);letter-spacing:.08em;opacity:.72}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #next{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer;align-self:center;max-width:80%}
 #next:active{transform:scale(.97)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0}
+/* On a short card, once the story is told, the last step's captions give way: the explanation says the same, and
+   the picture keeps its room. */
+@media (max-height:540px){.card.told #caps{display:none}}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Tap through · two paths">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
     <h2 class="q">Why is burning plastic for energy a mistake?</h2>
     <div class="stagebox" id="stage">
-      <div id="caps"><div class="cap" id="c0"></div><div class="cap" id="c1"></div></div>
-      <svg id="pic" aria-label="Two stacks of fossil fuel used: one for burning plastic, one for recycling it"></svg>
+      <div id="caps" class="gone"><div class="cap" id="c0"></div><div class="cap" id="c1"></div></div>
+      <svg id="pic" role="img" aria-label="An incinerator with a fire in its mouth on the left, a recycling bin on the right, and a plastic bottle between them: burn it, or recycle it."></svg>
       <button id="next">Step 1 · Make a bottle</button>
       <div id="why" class="gone">
         <p class="body">Burning plastic gives back some energy, but less than it costs to make new plastic, and its carbon goes up as CO₂.</p>
-        <p class="body">Recycling keeps the plastic as plastic, so no new fossil fuel is spent to replace it.</p>
+        <p class="body">Recycling keeps the plastic as plastic, and remaking it takes far less fossil fuel than making it new.</p>
       </div>
     </div>
     <p class="say" id="say">Tap to take the next step on both paths and watch the oil pile up.</p>
@@ -37,7 +45,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 let step = 0;
-const BURN = [0, 3, 2, 5];   // blocks of fossil fuel used (illustrative, no real units)
+const BURN = [0, 3, 2, 5];   // drums of fossil fuel used (illustrative, no real units)
 const REC  = [0, 3, 3, 3];
 const CAPS = [
   ['', ''],
@@ -46,73 +54,174 @@ const CAPS = [
   ['<b>3 · NEW BOTTLE</b>Made from oil, again', '<b>3 · NEW BOTTLE</b>Made from the old plastic']
 ];
 const BTN = ['Step 1 · Make a bottle', 'Step 2 · Throw it away', 'Step 3 · We need a new bottle'];
-const GOLD = '#f2b705';
+// One ink for every outline. The incinerator's grey steel and its fire; the bin's yellow; the oil drums near black;
+// the bottles clear blue plastic; the energy back gold; the CO2 grey.
+const INK = '#10100c', STEEL = '#8E9AA0', STEEL2 = '#6C787E', FLAME = '#FF7A1A', FLAME2 = '#FFD23F', BIN = '#FFD23F', BIN2 = '#E8B400';
+const DRUM = '#262D33', RIB = '#4B5862', PLASTIC = '#CDEBFF', CAP = '#2F7FE0', GOLD = '#FFC83D', SMOKE = '#9A9690';
+const FONT = 'Figtree, system-ui, sans-serif', DISPLAY = 'Fraunces, Georgia, serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), f1 = n => n.toFixed(1);
+const svg = Kit.$('pic');
+let L = null;
 
-function draw(animate){
-  const svg = Kit.$('pic');
-  const {W, H, f} = Kit.fitSvg(svg);
-  svg.innerHTML = '';
-  const fs = Math.max(f, 13);
-  const cx = [W * 0.27, W * 0.73];
-  const bw = Math.min(W * 0.27, 140);
-  const headY = fs * 1.2;
-  const base = H - fs * 1.9;
-  const cloudTop = headY + fs * 0.8;
-  const cloudH = Math.max(H * 0.17, fs * 3);
-  const bh = Math.min((base - cloudTop - cloudH) / 5.6, bw * 0.45);
-  const fresh = [];
-  const ink = 'var(--k)';
+// A plastic bottle standing at (cx, yb), h tall: blue cap, neck, shoulders, a white label round its middle.
+function bottle(g, cx, yb, h, k) {
+  const w = h * .4, b = Kit.mk('g', {}, g), at = {stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round'};
+  Kit.mk('path', Object.assign({d: `M${f1(cx - w / 2)},${f1(yb - h * .08)} V${f1(yb - h * .62)} Q${f1(cx - w / 2)},${f1(yb - h * .78)} ${f1(cx - w * .2)},${f1(yb - h * .84)} V${f1(yb - h * .9)} H${f1(cx + w * .2)} V${f1(yb - h * .84)} Q${f1(cx + w / 2)},${f1(yb - h * .78)} ${f1(cx + w / 2)},${f1(yb - h * .62)} V${f1(yb - h * .08)} Q${f1(cx + w / 2)},${f1(yb)} ${f1(cx + w * .38)},${f1(yb)} H${f1(cx - w * .38)} Q${f1(cx - w / 2)},${f1(yb)} ${f1(cx - w / 2)},${f1(yb - h * .08)} Z`, fill: PLASTIC}, at), b);
+  Kit.mk('rect', Object.assign({x: f1(cx - w / 2), y: f1(yb - h * .48), width: f1(w), height: f1(h * .17), fill: '#ffffff'}, at), b);
+  Kit.mk('rect', Object.assign({x: f1(cx - w * .26), y: f1(yb - h), width: f1(w * .52), height: f1(h * .11), rx: f1(w * .08), fill: CAP}, at), b);
+  Kit.mk('path', {d: `M${f1(cx + w * .25)},${f1(yb - h * .6)} V${f1(yb - h * .2)}`, stroke: '#ffffff', 'stroke-width': f1(Math.max(1.5, w * .1)), 'stroke-linecap': 'round'}, b);
+  return b;
+}
 
-  ['BURN IT', 'RECYCLE IT'].forEach((t, i) => {
-    Kit.mk('text', {x: cx[i], y: headY, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.15}, svg).textContent = t;
-    Kit.mk('line', {x1: cx[i] - bw * 0.75, x2: cx[i] + bw * 0.75, y1: base, y2: base, stroke: ink, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, svg);
-    Kit.mk('text', {x: cx[i], y: base + fs * 1.35, 'text-anchor': 'middle', fill: ink, opacity: .75, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * 0.85}, svg).textContent = 'fossil fuel used';
-  });
+// An oil drum standing at (cx, yb), w wide and h tall; or, for the energy given back, its dashed gold ghost and a bolt.
+function drum(g, cx, yb, w, h, k, energy) {
+  const d = Kit.mk('g', {}, g), x = cx - w / 2, y = yb - h;
+  if (energy) {
+    Kit.mk('rect', {x: f1(x + 1), y: f1(y + 1), width: f1(w - 2), height: f1(h - 2), rx: f1(Math.min(6, h * .2)), fill: 'none', stroke: GOLD, 'stroke-width': f1(k * 1.1), 'stroke-dasharray': `${f1(k * 2.2)} ${f1(k * 1.6)}`}, d);
+    const s = Math.min(w, h) * .38;
+    Kit.mk('path', {d: `M${f1(cx + s * .2)},${f1(y + h / 2 - s)} L${f1(cx - s * .5)},${f1(y + h / 2 + s * .1)} H${f1(cx)} L${f1(cx - s * .25)},${f1(y + h / 2 + s)} L${f1(cx + s * .55)},${f1(y + h / 2 - s * .15)} H${f1(cx + s * .05)} Z`, fill: GOLD, stroke: INK, 'stroke-width': f1(k * .6), 'stroke-linejoin': 'round'}, d);
+    return d;
+  }
+  const at = {stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round'};
+  Kit.mk('rect', Object.assign({x: f1(x), y: f1(y + 1), width: f1(w), height: f1(h - 2), rx: f1(Math.min(5, h * .16)), fill: DRUM}, at), d);
+  for (const f of [.32, .68]) Kit.mk('path', {d: `M${f1(x + 1.5)},${f1(y + h * f)} H${f1(x + w - 1.5)}`, stroke: RIB, 'stroke-width': f1(Math.max(1.2, h * .07))}, d);
+  // A drop of oil, white, on its front.
+  const r = Math.min(w, h) * .13;
+  if (r > 2.2) Kit.mk('path', {d: `M${f1(cx)},${f1(y + h * .5 - r * 1.6)} Q${f1(cx + r)},${f1(y + h * .5 - r * .2)} ${f1(cx + r)},${f1(y + h * .5 + r * .2)} A${f1(r)},${f1(r)} 0 0 1 ${f1(cx - r)},${f1(y + h * .5 + r * .2)} Q${f1(cx - r)},${f1(y + h * .5 - r * .2)} ${f1(cx)},${f1(y + h * .5 - r * 1.6)} Z`, fill: '#ffffff'}, d);
+  return d;
+}
 
-  const block = (i, k, isNew) => {
-    const y = base - (k + 1) * bh;
-    const r = Kit.mk('rect', {x: cx[i] - bw / 2, y: y + 2, width: bw, height: bh - 4, rx: bh * 0.22, fill: ink}, svg);
-    if (isNew) fresh.push(r);
-    return r;
+// An incinerator standing on the ground: grey steel, a tall smokestack up to `top` banded in red and white, its mouth
+// full of fire, flames licking out of it.
+function incinerator(g, x, yb, w, bh, top, k, hot) {
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'}, inc = Kit.mk('g', {}, g);
+  const y = yb - bh, chx = x + w * .1, chw = w * .2, sh = y - top;
+  Kit.mk('path', Object.assign({d: `M${f1(chx)},${f1(y + 2)} L${f1(chx + chw * .1)},${f1(top)} H${f1(chx + chw * .9)} L${f1(chx + chw)},${f1(y + 2)} Z`, fill: STEEL2}, at), inc);
+  for (const f of [.08, .3]) Kit.mk('rect', Object.assign({x: f1(chx + chw * .1 * (1 - f) + .5), y: f1(top + sh * f), width: f1(chw * (1 - .2 * (1 - f)) - 1), height: f1(Math.max(3, sh * .09)), fill: '#E8503A'}, at, {'stroke-width': f1(k * .6)}), inc);
+  Kit.mk('rect', Object.assign({x: f1(chx - chw * .05), y: f1(top - Math.max(3, sh * .04)), width: f1(chw * 1.1), height: f1(Math.max(3, sh * .04)), fill: STEEL}, at), inc);
+  Kit.mk('rect', Object.assign({x: f1(x), y: f1(y), width: f1(w), height: f1(bh), rx: f1(w * .04), fill: STEEL}, at), inc);
+  Kit.mk('rect', Object.assign({x: f1(x - w * .03), y: f1(y - bh * .02), width: f1(w * 1.06), height: f1(bh * .1), fill: STEEL2}, at), inc);
+  for (const f of [.3, .55, .8]) Kit.mk('circle', {cx: f1(x + w * .1), cy: f1(y + bh * f), r: f1(Math.max(1.5, w * .018)), fill: STEEL2}, inc);
+  // The mouth: an arch, dark, the fire inside it.
+  const mw = w * .58, mx = x + w * .3, mh = bh * .66, my = yb - mh;
+  const arch = `M${f1(mx)},${f1(yb)} V${f1(my + mw / 2)} A${f1(mw / 2)},${f1(mw / 2)} 0 0 1 ${f1(mx + mw)},${f1(my + mw / 2)} V${f1(yb)} Z`;
+  Kit.mk('path', Object.assign({d: arch, fill: INK}, at), inc);
+  const fire = Kit.mk('g', {}, inc), s = hot ? 1.25 : 1;
+  const flame = (cx, fw, fh, c, c2) => {
+    const fy = yb - 2;
+    Kit.mk('path', Object.assign({d: `M${f1(cx - fw / 2)},${f1(fy)} Q${f1(cx - fw * .62)},${f1(fy - fh * .45)} ${f1(cx - fw * .05)},${f1(fy - fh)} Q${f1(cx + fw * .05)},${f1(fy - fh * .55)} ${f1(cx + fw * .32)},${f1(fy - fh * .68)} Q${f1(cx + fw * .65)},${f1(fy - fh * .3)} ${f1(cx + fw / 2)},${f1(fy)} Z`, fill: c}, at, {'stroke-width': f1(k * .7)}), fire);
+    Kit.mk('path', {d: `M${f1(cx - fw * .25)},${f1(fy)} Q${f1(cx - fw * .3)},${f1(fy - fh * .35)} ${f1(cx)},${f1(fy - fh * .58)} Q${f1(cx + fw * .3)},${f1(fy - fh * .3)} ${f1(cx + fw * .25)},${f1(fy)} Z`, fill: c2}, fire);
   };
+  flame(mx + mw * .3, mw * .5, mh * .78 * s, FLAME, FLAME2);
+  flame(mx + mw * .68, mw * .55, mh * .95 * s, FLAME, FLAME2);
+  flame(mx + mw * .5, mw * .42, mh * .6 * s, '#FF5A1F', FLAME2);
+  return {g: inc, fire, mouth: [mx + mw / 2, my + mw * .45], top: [chx + chw / 2, top - Math.max(3, sh * .04)]};
+}
 
-  // Burn column
-  const nb = BURN[step], prevB = step > 0 ? BURN[step - 1] : 0;
-  for (let k = 0; k < nb; k++) block(0, k, animate && k >= prevB && step !== 2);
-  if (step === 2) {
-    const y = base - 3 * bh;
-    const g = Kit.mk('g', {}, svg);
-    Kit.mk('rect', {x: cx[0] - bw / 2, y: y + 2, width: bw, height: bh - 4, rx: bh * 0.22, fill: 'none', stroke: GOLD, 'stroke-width': 3, 'stroke-dasharray': '6 5'}, g);
-    Kit.mk('text', {x: cx[0], y: y + bh / 2 + fs * 0.32, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': Math.max(fs * 0.8, 12)}, g).textContent = 'energy back';
-    if (animate) fresh.push(g);
+// A recycling bin standing on the ground: yellow, its lid, the three chasing arrows of recycling on its front.
+function recyclingBin(g, x, yb, w, h, k) {
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'}, b = Kit.mk('g', {}, g);
+  const lid = h * .14, y = yb - h + lid;
+  Kit.mk('path', Object.assign({d: `M${f1(x + w * .04)},${f1(y)} L${f1(x + w * .12)},${f1(yb - h * .04)} H${f1(x + w * .88)} L${f1(x + w * .96)},${f1(y)} Z`, fill: BIN}, at), b);
+  Kit.mk('rect', Object.assign({x: f1(x), y: f1(yb - h), width: f1(w), height: f1(lid), rx: f1(lid * .3), fill: BIN2}, at), b);
+  Kit.mk('rect', Object.assign({x: f1(x + w * .4), y: f1(yb - h - lid * .5), width: f1(w * .2), height: f1(lid * .5), rx: f1(lid * .2), fill: BIN2}, at), b);
+  for (const f of [.2, .8]) Kit.mk('circle', Object.assign({cx: f1(x + w * f), cy: f1(yb - h * .03), r: f1(h * .055), fill: INK}, at), b);
+  // The arrows: three arcs round a circle, each with its head, turning.
+  const cx = x + w / 2, cy = y + (yb - y) * .48, r = Math.min(w, h) * .2, arrows = Kit.mk('g', {}, b);
+  for (let i = 0; i < 3; i++) {
+    const a0 = i * 2 * Math.PI / 3 - Math.PI / 2 + .25, a1 = a0 + 2 * Math.PI / 3 - .55;
+    const p = a => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    const [x0, y0] = p(a0), [x1, y1] = p(a1), hd = r * .5, ta = a1 + Math.PI / 2;
+    Kit.mk('path', {d: `M${f1(x0)},${f1(y0)} A${f1(r)},${f1(r)} 0 0 1 ${f1(x1)},${f1(y1)}`, fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(2, r * .26)), 'stroke-linecap': 'round'}, arrows);
+    Kit.mk('path', {d: `M${f1(x1 + hd * Math.cos(ta))},${f1(y1 + hd * Math.sin(ta))} L${f1(x1 + hd * .62 * Math.cos(ta - 2.2))},${f1(y1 + hd * .62 * Math.sin(ta - 2.2))} L${f1(x1 + hd * .62 * Math.cos(ta + 2.2))},${f1(y1 + hd * .62 * Math.sin(ta + 2.2))} Z`, fill: INK, stroke: INK, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, arrows);
   }
+  return {g: b, arrows, centre: [cx, cy], mouth: [x + w / 2, yb - h]};
+}
+
+// A cloud of CO2, puffs round (cx, cy), r its size.
+function cloud(g, cx, cy, r, k, fs) {
+  const c = Kit.mk('g', {}, g), puffs = [[-.62, .12, .58], [0, -.18, .78], [.64, .1, .6], [.1, .3, .62]];
+  puffs.forEach(([dx, dy, s]) => Kit.mk('circle', {cx: f1(cx + dx * r), cy: f1(cy + dy * r), r: f1(s * r + k), fill: INK}, c));
+  puffs.forEach(([dx, dy, s]) => Kit.mk('circle', {cx: f1(cx + dx * r), cy: f1(cy + dy * r), r: f1(s * r - k * .4), fill: SMOKE}, c));
+  const t = Kit.mk('text', {x: f1(cx), y: f1(cy + r * .3), 'text-anchor': 'middle', 'font-family': FONT, 'font-weight': 800, 'font-size': f1(clamp(r * .62, 11, 20)), fill: '#ffffff'}, c);
+  t.textContent = 'CO₂';
+  return c;
+}
+
+const text = (g, x, y, s, a) => { const t = Kit.mk('text', Object.assign({x: f1(x), y: f1(y), fill: INK, 'font-family': FONT}, a), g); t.textContent = s; return t; };
+
+function draw(animate) {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 80 || H < 50) return;
+  const k = clamp(Math.min(W, H) * .009, 1.6, 2.6);
+  const fs = clamp(Math.min(W * .042, H * .075), 11, 13.5);
+  const pad = k * 1.5;
+  // The two paths' names on top, the ground near the bottom with what the drums measure under it.
+  const titleH = fs * 1.55, footH = fs * 1.5, gy = H - footH;
+  // The drums, side by side in the middle, the burnt path's on the left: room for five and a bottle on top.
+  const sw = clamp(W * .14, 24, 58), mid = sw * .22;
+  const avail = gy - titleH - fs * .2;
+  const dh = Math.min(sw * .8, avail / 6.9), bh = dh * 1.85;
+  const xL = W / 2 - mid / 2 - sw / 2, xR = W / 2 + mid / 2 + sw / 2;
+  // The incinerator and the bin, as big as their side allows; the smokestack as tall as the sky over it, leaving room
+  // for the cloud it will send up.
+  const sideW = xL - sw / 2 - mid - pad;
+  const iw = Math.min(sideW, avail * .95), ibh = Math.min(iw * .74, avail * .5);
+  const cr = clamp(Math.min(iw * .26, avail * .13), 8, 34);
+  const stackTop = Math.min(gy - ibh - iw * .35, Math.max(titleH + cr * 2.3, gy - ibh - iw * 1.9));
+  const bw = Math.min(sideW * .86, avail * .7), bhh = Math.min(bw * 1.5, avail * .78);
+  L = {W, H, k, fs, gy, sw, dh, bh, xL, xR};
+  const g = Kit.mk('g', {}, svg);
+  // Names of the two paths, over each half.
+  text(g, W * .25, fs * 1.1, 'Burn it', {'text-anchor': 'middle', 'font-family': DISPLAY, 'font-weight': 800, 'font-size': f1(fs * 1.2)});
+  text(g, W * .75, fs * 1.1, 'Recycle it', {'text-anchor': 'middle', 'font-family': DISPLAY, 'font-weight': 800, 'font-size': f1(fs * 1.2)});
+  const inc = incinerator(g, pad, gy, iw, ibh, stackTop, k, step === 2);
+  const bin = recyclingBin(g, W - pad - bw, gy, bw, bhh, k);
+  Kit.mk('path', {d: `M0,${f1(gy)} H${f1(W)}`, stroke: INK, 'stroke-width': f1(k * 1.2), 'stroke-linecap': 'round'}, g);
+  text(g, W / 2, gy + fs * 1.15, 'fossil fuel used', {'text-anchor': 'middle', 'font-weight': 600, 'font-size': f1(fs * .92)});
+  // The drums of each path.
+  const stack = (cx, n, energyAt, fresh) => {
+    const out = [];
+    for (let i = 0; i < n; i++) { const d = drum(g, cx, gy - i * dh, sw, dh, k, i === energyAt); out.push({d, i, fresh: fresh(i)}); }
+    return out;
+  };
+  const prevB = step ? BURN[step - 1] : 0, prevR = step ? REC[step - 1] : 0;
+  const burnN = step === 2 ? 3 : BURN[step];
+  const left = stack(xL, burnN, step === 2 ? 2 : -1, i => step === 3 ? i >= 2 : i >= prevB);
+  const right = stack(xR, REC[step], -1, i => i >= prevR);
+  // The bottles: one between the paths before it is made; then one on each path's drums, until it is thrown away;
+  // then a new one on each.
+  let bL = null, bR = null, b0 = null;
+  if (step === 0) b0 = bottle(g, W / 2, gy, Math.min(avail * .7, (xR - xL + sw) * 1.9), k);
+  if (step === 1 || step === 3) { bL = bottle(g, xL, gy - burnN * dh, bh, k); bR = bottle(g, xR, gy - REC[step] * dh, bh, k); }
+  // What burning sends up: CO2 out of the chimney, once the bottle has burnt; and the energy it gave back named.
+  let co2 = null, energy = null;
   if (step >= 2) {
-    const g = Kit.mk('g', {}, svg);
-    const cy = cloudTop + cloudH * 0.5, R = Math.min(cloudH * 0.32, bw * 0.28);
-    [[-0.9, 0.2, 0.8], [0, -0.2, 1.05], [0.9, 0.2, 0.8]].forEach(([dx, dy, s]) =>
-      Kit.mk('circle', {cx: cx[0] + dx * R, cy: cy + dy * R, r: R * s, fill: 'color-mix(in srgb,var(--k) 22%,transparent)'}, g));
-    Kit.mk('text', {x: cx[0], y: cy + fs * 0.45, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.25}, g).textContent = 'CO₂';
-    if (animate && step === 2) fresh.push(g);
+    const r = clamp(Math.min(cr, (inc.top[1] - titleH) * .45), 8, 34);
+    co2 = cloud(g, inc.top[0] + r * .6, Math.max(titleH + r * .9, inc.top[1] - r * 1.05), r, k, fs);
   }
-
-  // Recycle column
-  const nr = REC[step], prevR = step > 0 ? REC[step - 1] : 0;
-  for (let k = 0; k < nr; k++) block(1, k, animate && k >= prevR);
-  if (step >= 2) {
-    const g = Kit.mk('g', {}, svg);
-    const cy = cloudTop + cloudH * 0.5, R = Math.min(cloudH * 0.32, bw * 0.3);
-    const a0 = -0.3, a1 = 4.9;
-    const p = (a) => [cx[1] + R * Math.cos(a), cy + R * Math.sin(a)];
-    const [x0, y0] = p(a0), [x1, y1] = p(a1);
-    Kit.mk('path', {d: `M${x0},${y0} A${R},${R} 0 1 1 ${x1},${y1}`, fill: 'none', stroke: ink, 'stroke-width': 3.5, 'stroke-linecap': 'round'}, g);
-    const ah = R * 0.45, ang = a1 + Math.PI / 2;
-    Kit.mk('path', {d: `M${x1 + ah * Math.cos(ang - 2.6)},${y1 + ah * Math.sin(ang - 2.6)} L${x1},${y1} L${x1 + ah * Math.cos(ang + 2.6)},${y1 + ah * Math.sin(ang + 2.6)}`, fill: 'none', stroke: ink, 'stroke-width': 3.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
-    if (animate && step === 2) fresh.push(g);
-    if (animate && step === 3 && !Kit.calm) gsap.fromTo(g, {rotation: 0, transformOrigin: `${cx[1]}px ${cy}px`}, {rotation: 360, duration: .9, ease: 'power2.inOut'});
-  }
-
-  if (animate && fresh.length && !Kit.calm) {
-    gsap.from(fresh, {opacity: 0, y: -bh * 1.2, stagger: .12, duration: .45, ease: 'back.out(1.6)'});
+  if (step === 2) energy = text(g, xL, gy - 3 * dh - fs * .55, 'energy back', {'text-anchor': 'middle', 'font-weight': 800, 'font-size': f1(fs * .92), stroke: '#00D451', 'stroke-width': f1(fs * .35), 'paint-order': 'stroke', 'stroke-linejoin': 'round'});
+  if (!animate || Kit.calm || typeof gsap === 'undefined') return;
+  // What just happened, in motion.
+  const drop = list => list.filter(o => o.fresh).forEach((o, j) => gsap.from(o.d, {y: -dh * 2.5, opacity: 0, duration: .45, delay: .1 + j * .12, ease: 'back.out(1.4)'}));
+  if (step === 1) {
+    drop(left); drop(right);
+    [bL, bR].forEach(b => gsap.from(b, {y: -dh, opacity: 0, duration: .45, delay: .5, ease: 'back.out(1.6)'}));
+  } else if (step === 2) {
+    // Each bottle leaps into its end: the fire, which flares; the bin, whose arrows turn.
+    const fly = (from, to, done) => { const b = bottle(g, from[0], from[1], bh, k); gsap.to(b, {x: to[0] - from[0], y: to[1] - from[1] + bh * .5, scale: .6, transformOrigin: '50% 100%', opacity: 0, duration: .6, ease: 'power2.in', onComplete: () => { b.remove(); done && done(); }}); };
+    fly([xL, gy - 3 * dh], inc.mouth, () => gsap.fromTo(inc.fire, {scale: 1}, {scale: 1.15, transformOrigin: `${f1(inc.mouth[0])}px ${f1(gy)}px`, duration: .2, yoyo: true, repeat: 1}));
+    fly([xR, gy - 3 * dh], bin.mouth, () => gsap.fromTo(bin.arrows, {rotation: 0}, {rotation: 360, svgOrigin: `${f1(bin.centre[0])} ${f1(bin.centre[1])}`, duration: .9, ease: 'power2.inOut'}));
+    gsap.from(left[2].d, {opacity: 0, duration: .5, delay: .55});
+    if (energy) gsap.from(energy, {opacity: 0, y: 6, duration: .4, delay: .7});
+    if (co2) gsap.from(co2, {opacity: 0, y: dh, scale: .7, transformOrigin: '50% 100%', duration: .7, delay: .6, ease: 'power2.out'});
+  } else if (step === 3) {
+    drop(left);
+    gsap.from(bL, {y: -dh, opacity: 0, duration: .45, delay: .55, ease: 'back.out(1.6)'});
+    // The old plastic comes back out of the bin, a bottle again, and goes onto its drums.
+    gsap.from(bR, {x: bin.mouth[0] - xR, y: bin.mouth[1] - (gy - 3 * dh) + bh * .3, scale: .6, transformOrigin: '50% 100%', opacity: 0, duration: .7, delay: .2, ease: 'power2.out'});
+    gsap.fromTo(bin.arrows, {rotation: 0}, {rotation: 360, svgOrigin: `${f1(bin.centre[0])} ${f1(bin.centre[1])}`, duration: .7, ease: 'power2.inOut'});
   }
 }
 
@@ -126,12 +235,15 @@ Kit.$('next').addEventListener('click', () => {
   if (step >= 3) return;
   step++;
   Kit.haptic(step === 3 ? 'success' : 'light');
+  Kit.show('caps');
   setCaps();
-  draw(true);
   if (step < 3) Kit.$('next').textContent = BTN[step];
   else {
-    Kit.hide('next'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.hide('next'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.$('card').classList.add('told');
+    svg.setAttribute('aria-label', 'Both paths after a new bottle: the burnt one used five drums of oil and sent CO2 up the chimney; the recycled one still three, its bottle made from the old plastic.');
   }
+  // Drawn, in motion, once the page has made its room (the captions coming in, the answer at the end).
+  requestAnimationFrame(() => requestAnimationFrame(() => draw(true)));
 });
 
 Kit.onShow.card = () => draw(false);
@@ -140,9 +252,8 @@ Kit.play.card = async () => {
   for (let i = 0; i < 3; i++) { Kit.$('next').click(); await new Promise(r => setTimeout(r, 400)); }
   await new Promise(r => setTimeout(r, 700));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(false); }).observe(svg); }
 Kit.single();
 </script>
 </html>

@@ -1,5 +1,9 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-nacre-two-components -->
+<!-- The shell, drawn big: one valve of a pearl oyster, its dark frilled lip, the shining nacre that lines it and a
+     pearl resting in it. The reader picks two ingredients: at the first a close-up circle comes out of the lining, and
+     each ingredient builds up in it (glassy shards, strands of horn, mineral tablets, a brown protein). Then how sure;
+     the answer shows nacre as it is: aragonite tablets stacked like bricks in conchiolin, the protein that glues them. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -8,20 +12,21 @@
 #stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
 #wall{flex:1;min-height:0;width:100%;display:block}
 #opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
-#why{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
 .opt{font:700 max(2cqh,13px)/1.15 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.3cqh}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 .opt:disabled{cursor:default}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
-#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body)}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+#sure .sq{text-wrap:balance}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Pick two · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK TWO</span></div>
     <h2 class="q">What are the two main components of nacre?</h2>
     <div class="stagebox" id="stage">
-      <svg id="wall"></svg>
+      <svg id="wall" role="img" aria-label="An open pearl oyster shell: a dark frilled lip around a shining lining of nacre, a pearl resting in it."></svg>
       <div id="opts">
         <button class="opt" data-k="sil">Silica<small>a glassy mineral</small></button>
         <button class="opt" data-k="ara">Aragonite crystals<small>calcium carbonate</small></button>
@@ -30,7 +35,7 @@
       </div>
       <div id="why" class="gone"><p class="big">Aragonite + conchiolin</p><p class="body">Nacre is tablets of aragonite, a mineral made of calcium carbonate, held together by conchiolin, an organic protein. The protein is the binding matrix, so the whole is stronger than the mineral alone.</p></div>
     </div>
-    <div id="sure"></div>
+    <div id="sure" class="gone"></div>
     <p class="say" id="say">Pick two ingredients and watch your nacre build up.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Nacre is mineral bricks glued by protein mortar.</div>
     <div class="foot"><span class="src">Source · Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)</span></div>
@@ -42,104 +47,253 @@ const picks = [];
 let done = false;
 const svg = Kit.$('wall');
 const G = {};
+// One ink for every outline. The shell: its rough outside, its dark lip, the pearly nacre with its sheens, the pearl.
+// In the close-up each ingredient keeps one colour: the tablets white as nacre, the protein brown, the silica glass
+// blue, the keratin horn.
+const INK = '#10100c', SHELL = '#7E8783', LIP = '#363D3B', NACRE = '#FCF8F2', PINK = '#F4D3E0', MINT = '#D3EEE7', LILAC = '#DDD6F4';
+const TABLET = '#FFFDF9', GLUE = '#A06C3B', FIBRE = '#7A512C', GLASS = '#BCDDEB', HORN = '#D8A657', LOOSE = '#FFF4E3';
+const FONT = 'Figtree, system-ui, sans-serif';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), lerp = (a, b, t) => a + (b - a) * t;
+const st = {z: 0};   // 0: the shell alone; 1: the shell and the close-up beside it
+const f1 = n => n.toFixed(1);
+const poly = pts => 'M' + pts.map(p => f1(p[0]) + ',' + f1(p[1])).join(' L') + ' Z';
 
-function draw(animKey){
+// The outline of one valve round (cx, cy): its hinge a straight edge on the `side` it opens from (1 below, -1 above),
+// the edge away from the hinge frilled with the flaky scales a pearl oyster grows (`frill`), never two alike.
+// `lean` slants it (a pearl oyster is a little oblique), `turn` turns it round its hinge, in degrees.
+function valve(cx, cy, rx, ry, side, frill, lean = 0, turn = 0, n = 150) {
+  const pts = [], hy = cy + side * ry * .78, a = turn * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a);
+  for (let i = 0; i < n; i++) {
+    const t = i / n * Math.PI * 2, s = Math.sin(t), c = Math.cos(t);
+    const far = clamp(.35 - side * s * 1.2, 0, 1);
+    const bump = frill * far * (Math.pow(Math.abs(Math.sin(t * 6.5 + 1.1)), 3) * .7 + Math.pow(Math.abs(Math.sin(t * 10.3 + .4)), 2) * .45);
+    let x = cx + rx * (1 + bump) * c;
+    let y = cy + ry * (1 + bump) * s;
+    if (side * (y - cy) > ry * .78) y = hy;
+    x += (hy - y) * lean;
+    const dx = x - cx, dy = y - hy;
+    pts.push([cx + dx * ca - dy * sa, hy + dx * sa + dy * ca]);
+  }
+  return pts;
+}
+
+// The nacre lining a valve: its pearly white, and crescents of pink, mint and lilac where its hollow curves, flat,
+// like light on it. `tilt` turns the sheen with the valve.
+function lining(g, cx, cy, rx, ry, side, k, tilt, lean = 0, turn = 0, hinge = cy) {
+  // The lining shares its valve's slant, and its turn round the same hinge: all of it drawn in one turned group.
+  const d = poly(valve(cx, cy, rx, ry, side, 0, lean, 0));
+  g = Kit.mk('g', turn ? {transform: `rotate(${f1(turn)} ${f1(cx)} ${f1(hinge)})`} : {}, g);
+  const id = 'nacre-' + Math.round(cx * 7 + cy * 13 + rx);
+  const cp = Kit.mk('clipPath', {id}, g);
+  Kit.mk('path', {d}, cp);
+  const sh = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
+  Kit.mk('rect', {x: f1(cx - rx - 2), y: f1(cy - ry - 2), width: f1(2 * rx + 4), height: f1(2 * ry + 4), fill: LILAC}, sh);
+  Kit.mk('ellipse', {cx: f1(cx - rx * .05), cy: f1(cy - side * ry * .08), rx: f1(rx * .95), ry: f1(ry * .9), fill: PINK}, sh);
+  Kit.mk('ellipse', {cx: f1(cx + rx * .03), cy: f1(cy - side * ry * .16), rx: f1(rx * .86), ry: f1(ry * .78), fill: NACRE}, sh);
+  const mx = cx + rx * .36, my = cy - side * ry * .4;
+  Kit.mk('ellipse', {cx: f1(mx), cy: f1(my), rx: f1(rx * .42), ry: f1(ry * .22), fill: MINT, transform: `rotate(${tilt} ${f1(mx)} ${f1(my)})`}, sh);
+  Kit.mk('ellipse', {cx: f1(mx - rx * .04), cy: f1(my + side * ry * .06), rx: f1(rx * .4), ry: f1(ry * .17), fill: NACRE, transform: `rotate(${tilt} ${f1(mx)} ${f1(my)})`}, sh);
+  Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linejoin': 'round'}, g);
+}
+
+// An open pearl oyster, its width S, its hinge's middle at (cx, cy): the upper valve standing open behind the hinge,
+// the lower one in front holding the pearl, both lined with nacre inside their dark lip. Returns where to look.
+function shell(g, cx, cy, S, k) {
+  const ink = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  // Its shadow on the ground.
+  Kit.mk('ellipse', {cx: f1(cx + S * .02), cy: f1(cy + S * .5), rx: f1(S * .48), ry: f1(S * .07), fill: INK, opacity: .14}, g);
+  // The upper valve, open behind and turned a little: its flaky grey scales, its dark lip, its nacre.
+  const ur = S * .45, uq = S * .31, ucy = cy - uq * .78, UT = -5, UL = -.08;
+  Kit.mk('path', Object.assign({d: poly(valve(cx, ucy, ur, uq, 1, .15, UL, UT)), fill: SHELL}, ink), g);
+  Kit.mk('path', Object.assign({d: poly(valve(cx, ucy, ur * .97, uq * .96, 1, .05, UL, UT)), fill: LIP}, ink, {'stroke-width': f1(k * .8)}), g);
+  lining(g, cx, ucy + uq * .05, ur * .79, uq * .73, 1, k, 10, UL, UT, cy);
+  // The lower valve, in front: its flaky scales and rough outside at the near edge, its dark lip, its nacre, the pearl.
+  const lr = S * .5, lq = S * .27, lcy = cy + lq * .78, LL = .1;
+  Kit.mk('path', Object.assign({d: poly(valve(cx, lcy + S * .035, lr, lq, -1, .15, LL)), fill: SHELL}, ink), g);
+  Kit.mk('path', Object.assign({d: poly(valve(cx, lcy, lr * .97, lq * .95, -1, .05, LL)), fill: LIP}, ink, {'stroke-width': f1(k * .8)}), g);
+  const nx = cx, ny = lcy - lq * .04, nrx = lr * .79, nry = lq * .7;
+  lining(g, nx, ny, nrx, nry, -1, k, -10, LL, 0, cy);
+  // The hinge's dark ligament, where the two valves meet.
+  Kit.mk('ellipse', Object.assign({cx: f1(cx), cy: f1(cy), rx: f1(S * .12), ry: f1(S * .028), fill: '#5A3B2A'}, ink, {'stroke-width': f1(k * .8)}), g);
+  // The pearl, resting in the hollow, its little shadow under it.
+  const pr = S * .075, px = nx + nrx * .14 - nry * .2 * LL, py = ny + nry * .2;
+  Kit.mk('ellipse', {cx: f1(px + pr * .2), cy: f1(py + pr * .85), rx: f1(pr * 1.05), ry: f1(pr * .3), fill: LILAC}, g);
+  Kit.mk('circle', Object.assign({cx: f1(px), cy: f1(py), r: f1(pr), fill: '#FFFEFB'}, ink), g);
+  Kit.mk('path', {d: `M${f1(px + pr * .6)},${f1(py - pr * .15)} A${f1(pr * .66)},${f1(pr * .66)} 0 0 1 ${f1(px - pr * .2)},${f1(py + pr * .63)}`, fill: 'none', stroke: PINK, 'stroke-width': f1(pr * .28), 'stroke-linecap': 'round'}, g);
+  Kit.mk('circle', {cx: f1(px - pr * .34), cy: f1(py - pr * .34), r: f1(pr * .22), fill: '#ffffff'}, g);
+  // Spots on the upper valve's lining, left to right (where the close-up may look), where the name points (its left),
+  // and the shell's top.
+  const a = UT * Math.PI / 180, on = (u, v) => { const y = ucy + uq * v, x = cx + ur * u + (cy - y) * UL, dx = x - cx, dy = y - cy; return [cx + dx * Math.cos(a) - dy * Math.sin(a), cy + dx * Math.sin(a) + dy * Math.cos(a)]; };
+  const spots = [-.3, -.15, 0, .15, .3, .45, .55].map(u => on(u, -.15));
+  const [lx, ly] = on(-.42, -.05);
+  return {spots, lx, ly, top: ucy - uq * 1.12, bottom: cy + S * .57};
+}
+
+// The close-up: what the reader's nacre is made of so far, or, once answered, what nacre is made of.
+function closeUp(g, cx, cy, R, k) {
+  const has = key => done ? (key === 'ara' || key === 'con') : picks.includes(key);
+  const id = 'zoom-' + Math.round(R * 10);
+  const cp = Kit.mk('clipPath', {id}, g);
+  Kit.mk('circle', {cx: f1(cx), cy: f1(cy), r: f1(R)}, cp);
+  const body = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
+  const glue = has('con'), x0 = cx - R, x1 = cx + R;
+  Kit.mk('circle', {cx: f1(cx), cy: f1(cy), r: f1(R), fill: glue ? GLUE : LOOSE}, body);
+  G.con = Kit.mk('g', {}, body); G.ara = Kit.mk('g', {}, body); G.sil = Kit.mk('g', {}, body); G.ker = Kit.mk('g', {}, body); G.rows = [];
+  const rows = clamp(Math.round(R / 12), 4, 7), bh = 2 * R / rows, bw = R * .62, gap = Math.max(2.5, bh * .2);
+  const out = {tablet: [cx - R + bw * Math.round(.75 * R / bw), cy - R + bh * 1.5], glue: [cx - R * .22, cy + R - bh]};
+  if (R < 14) { Kit.mk('circle', {cx: f1(cx), cy: f1(cy), r: f1(R), fill: 'none', stroke: INK, 'stroke-width': f1(k * 1.1)}, g); return out; }
+  if (glue) for (let i = 0; i < 7; i++) {
+    const yy = cy - R + 2 * R * (i + .5) / 7; let d = `M${f1(x0)},${f1(yy)}`;
+    for (let s = 1; s <= 6; s++) d += ` Q${f1(x0 + 2 * R * (s - .5) / 6)},${f1(yy + (s % 2 ? 1 : -1) * R * .05)} ${f1(x0 + 2 * R * s / 6)},${f1(yy)}`;
+    Kit.mk('path', {d, fill: 'none', stroke: FIBRE, 'stroke-width': f1(Math.max(1, R * .018)), opacity: .8}, G.con);
+  }
+  // Aragonite: tablets in rows, offset like bricks, cut where the circle's box ends. Glued, they lie flat and tight;
+  // with nothing to hold them, loose.
+  if (has('ara')) for (let r = 0; r < rows; r++) {
+    const row = Kit.mk('g', {}, G.ara); G.rows.push(row);
+    const off = r % 2 ? -bw / 2 : 0, y = cy - R + r * bh + gap / 2;
+    for (let c = 0; c * bw + off < 2 * R; c++) {
+      const a = Math.max(x0 + off + c * bw + gap / 2, x0 + 1), b = Math.min(x0 + off + (c + 1) * bw - gap / 2, x1 - 1);
+      if (b - a < gap) continue;
+      const tilt = glue ? 0 : ((r * 7 + c * 3) % 5 - 2) * 4, dy = glue ? 0 : ((r * 3 + c * 5) % 3 - 1) * gap * .5;
+      Kit.mk('rect', {x: f1(a), y: f1(y + dy), width: f1(b - a), height: f1(bh - gap), rx: f1(Math.min(bh * .22, 5)), fill: TABLET, stroke: INK, 'stroke-width': f1(Math.max(1.2, k * .55)), transform: tilt ? `rotate(${tilt} ${f1((a + b) / 2)} ${f1(y + bh / 2)})` : ''}, row);
+    }
+  }
+  // The two that are not in nacre: shards of glass, strands of horn.
+  if (has('sil')) for (let i = 0; i < 9; i++) {
+    const s = R * (.12 + (i % 3) * .04), a = i * 2.4, rr = R * (.18 + .55 * ((i * 37) % 10) / 10);
+    const x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a);
+    Kit.mk('path', {d: `M${f1(x)},${f1(y - s)} L${f1(x + s * .85)},${f1(y + s * .55)} L${f1(x - s * .75)},${f1(y + s * .45)} Z`, fill: GLASS, stroke: INK, 'stroke-width': f1(Math.max(1.2, k * .55)), 'stroke-linejoin': 'round', transform: `rotate(${i * 41} ${f1(x)} ${f1(y)})`, class: 'bit'}, G.sil);
+  }
+  if (has('ker')) for (let i = 0; i < 5; i++) {
+    const xx = cx - R * .8 + R * 1.6 * (i + .5) / 5; let d = `M${f1(xx)},${f1(cy - R)}`;
+    for (let s = 1; s <= 6; s++) d += ` Q${f1(xx + (s % 2 ? 1 : -1) * R * .12)},${f1(cy - R + 2 * R * (s - .5) / 6)} ${f1(xx)},${f1(cy - R + 2 * R * s / 6)}`;
+    const strand = Kit.mk('g', {class: 'bit'}, G.ker);
+    Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(4, R * .085)), 'stroke-linecap': 'round'}, strand);
+    Kit.mk('path', {d, fill: 'none', stroke: HORN, 'stroke-width': f1(Math.max(2, R * .05)), 'stroke-linecap': 'round'}, strand);
+  }
+  Kit.mk('circle', {cx: f1(cx), cy: f1(cy), r: f1(R), fill: 'none', stroke: INK, 'stroke-width': f1(k * 1.1)}, g);
+  return out;
+}
+
+// A label of one or two lines from its top left, its first line bold.
+function label(g, lines, fs) {
+  const t = Kit.mk('text', {'font-family': FONT, 'font-size': f1(fs), fill: INK}, g);
+  const spans = lines.map((s, i) => { const sp = Kit.mk('tspan', {x: 0, y: f1(fs * (.82 + 1.2 * i)), 'font-weight': i ? 600 : 800}, t); sp.textContent = s; return sp; });
+  const w = Math.max(...spans.map((sp, i) => { try { return sp.getComputedTextLength(); } catch (_) { return lines[i].length * fs * .55; } }));
+  return {t, w, h: fs * 1.2 * lines.length};
+}
+const place = (l, x, y) => l.t.setAttribute('transform', `translate(${f1(x)},${f1(y)})`);
+const pin = (g, x1, y1, x2, y2) => { Kit.mk('path', {d: `M${f1(x1)},${f1(y1)} L${f1(x2)},${f1(y2)}`, stroke: INK, 'stroke-width': 1.4, fill: 'none'}, g); Kit.mk('circle', {cx: f1(x2), cy: f1(y2), r: 3, fill: INK, stroke: '#ffffff', 'stroke-width': 1.2}, g); };
+
+function draw(animKey) {
   svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f * .85, 12);
-  const defs = Kit.mk('defs', {}, svg);
-  const gr = Kit.mk('linearGradient', {id:'pearl', x1:0, y1:0, x2:1, y2:1}, defs);
-  [['0','#fffdf8'],['.5','#ece4f7'],['1','#dcf1ef']].forEach(([o,c]) => Kit.mk('stop', {offset:o, 'stop-color':c}, gr));
-  const top = fs * 2.4, bot = fs * 2.4;
-  const x0 = W * .07, w = W * .86, y0 = top, h = Math.max(40, H - top - bot);
-  const cp = Kit.mk('clipPath', {id:'wc'}, defs);
-  Kit.mk('rect', {x:x0, y:y0, width:w, height:h, rx:fs*.6}, cp);
-
-  Kit.mk('rect', {x:x0, y:y0, width:w, height:h, rx:fs*.6, fill:'none', style:'stroke:var(--k);stroke-opacity:.35', 'stroke-width':2, 'stroke-dasharray':'6 6'}, svg);
-  const body = Kit.mk('g', {'clip-path':'url(#wc)'}, svg);
-
-  const show = k => done ? (k === 'ara' || k === 'con') : picks.includes(k);
-
-  // protein matrix
-  G.con = Kit.mk('g', {}, body);
-  Kit.mk('rect', {x:x0, y:y0, width:w, height:h, fill:'#8a5a2e'}, G.con);
-  for (let i = 0; i < 9; i++) {
-    const yy = y0 + h * (i + .5) / 9; let d = `M${x0} ${yy}`;
-    for (let s = 1; s <= 8; s++) d += ` Q${x0 + w*(s-.5)/8} ${yy + (s%2?1:-1)*h*.04} ${x0 + w*s/8} ${yy}`;
-    Kit.mk('path', {d, fill:'none', stroke:'#c99559', 'stroke-width':1.4, opacity:.7}, G.con);
-  }
-  // aragonite tablets
-  G.ara = Kit.mk('g', {}, body);
-  const rows = Math.max(4, Math.round(h / (fs * 2.3))), bh = h / rows, cols = 4, bw = w / cols;
-  const gap = Math.max(3, bh * .2);
-  for (let r = 0; r < rows; r++) {
-    const off = r % 2 ? -bw / 2 : 0;
-    for (let c = 0; c < cols + 1; c++) {
-      const left = Math.max(x0 + off + c*bw + gap/2, x0 + gap/2);
-      const right = Math.min(x0 + off + (c+1)*bw - gap/2, x0 + w - gap/2);
-      if (right - left <= gap) continue;
-      Kit.mk('rect', {x:left, y:y0 + r*bh + gap/2, width:right - left, height:bh - gap, rx:bh*.16, fill:'url(#pearl)', style:'stroke:var(--k);stroke-opacity:.25', 'stroke-width':1, class:'brick'}, G.ara);
-    }
-  }
-  // distractors
-  G.sil = Kit.mk('g', {}, body);
-  Kit.rndSeed = 1;
-  for (let i = 0; i < 14; i++) {
-    const s = fs * (.7 + (i % 3) * .3);
-    const cx = x0 + s + (w - 2*s) * ((i * 37) % 100) / 100, cy = y0 + s + (h - 2*s) * ((i * 61 + 13) % 100) / 100;
-    Kit.mk('path', {d:`M${cx} ${cy - s} L${cx + s*.8} ${cy + s*.6} L${cx - s*.7} ${cy + s*.4}Z`, fill:'#9aa7b1', opacity:.85, class:'bit'}, G.sil);
-  }
-  G.ker = Kit.mk('g', {}, body);
-  const amp = Math.min(fs, w / 14 * .8);
-  for (let i = 0; i < 7; i++) {
-    const xx = x0 + w * (i + .5) / 7; let d = `M${xx} ${y0}`;
-    for (let s = 1; s <= 6; s++) d += ` Q${xx + (s%2?1:-1)*amp} ${y0 + h*(s-.5)/6} ${xx} ${y0 + h*s/6}`;
-    Kit.mk('path', {d, fill:'none', stroke:'#7d6b8f', 'stroke-width':3, 'stroke-linecap':'round', class:'bit'}, G.ker);
-  }
-  ['con','ara','sil','ker'].forEach(k => G[k].style.opacity = show(k) ? 1 : 0);
-
-  // labels
-  if (done) {
-    const bx = x0 + bw * 1.5, by = y0 + bh * .5;
-    const t1 = Kit.mk('text', {x:W/2, y:fs*1.3, 'text-anchor':'middle', 'font-size':fs, 'font-weight':700, style:'fill:var(--k);font-family:var(--body)'}, svg);
-    t1.textContent = 'Aragonite · calcium carbonate';
-    Kit.mk('line', {x1:W/2, y1:fs*1.7, x2:bx, y2:by, style:'stroke:var(--k)', 'stroke-width':1.5}, svg);
-    Kit.mk('circle', {cx:bx, cy:by, r:4, style:'fill:var(--k)'}, svg);
-    const gx = x0 + bw * 2, gy = y0 + bh * (rows - 1) + gap / 4;
-    const t2 = Kit.mk('text', {x:W/2, y:H - fs*.5, 'text-anchor':'middle', 'font-size':fs, 'font-weight':700, style:'fill:var(--k);font-family:var(--body)'}, svg);
-    t2.textContent = 'Conchiolin · protein glue';
-    Kit.mk('line', {x1:W/2, y1:H - fs*1.5, x2:gx, y2:gy, style:'stroke:var(--k)', 'stroke-width':1.5}, svg);
-    Kit.mk('circle', {cx:gx, cy:gy, r:4, style:'fill:var(--k)'}, svg);
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 60 || H < 40) return;
+  const k = clamp(Math.min(W, H) * .011, 1.8, 3);
+  const fs = clamp(Math.min(W * .04, H * .075), 11, 13.5);
+  const pad = k * 2, z = st.z, lh = fs * 1.2;
+  const root = Kit.mk('g', {}, svg);
+  // The names this state needs, measured first so the picture can make room for them.
+  const nacre = label(root, ['nacre'], fs);
+  const yours = z >= 1 && !done ? label(root, ['your nacre'], fs) : null;
+  const ara = z >= 1 && done ? label(root, ['aragonite', 'calcium carbonate'], fs) : null;
+  const con = z >= 1 && done ? label(root, ['conchiolin', 'protein glue'], fs) : null;
+  // The shell alone: as big as the box allows, under its name. With the close-up, in a short wide box: the shell, the
+  // circle and the names in a row. Otherwise: the circle in the top right, under the name of what it shows and (once
+  // answered) over the name of the glue; the shell in the bottom left, as big as the room left allows; its name over it.
+  // The shell is 1.08 S wide and 1.17 S tall, its hinge 0.58 S under its top.
+  const nameH = lh + fs * .5;
+  const S0 = Math.min((W - 2 * pad) * .8, (H - 2 * pad - nameH) / 1.17);
+  const solo = {S: S0, x: W / 2, y: pad + nameH + S0 * .6};
+  const flat = W / H >= 2.2;
+  let duo, R, cxz, cyz;
+  if (flat) {
+    const side = Math.max(yours ? yours.w : 0, ara ? ara.w : 0, con ? con.w : 0);
+    R = Math.max(16, (H - 2 * pad) / 2 - 1);
+    cxz = W - pad - side - fs * .9 - R; cyz = H / 2;
+    const S1 = Math.max(30, Math.min((cxz - R * .75 - pad) / 1.08, (H - 2 * pad) / 1.17));
+    duo = {S: S1, x: pad + S1 * .54, y: pad + S1 * .6};
   } else {
-    const t = Kit.mk('text', {x:W/2, y:fs*1.4, 'text-anchor':'middle', 'font-size':fs, 'font-weight':600, style:'fill:var(--k);opacity:.6;font-family:var(--body)'}, svg);
-    t.textContent = picks.length ? 'Your nacre, close up' : 'Your nacre: empty so far';
+    const above = done ? 2 * lh + fs * .4 : lh + fs * .4, below = done ? 2 * lh + fs * .4 : 0;
+    R = Math.max(16, Math.min(W * .29, (H - 2 * pad - above - below) / 2));
+    cxz = W - pad - R; cyz = pad + above + R;
+    const S1 = Math.max(30, Math.min((cxz + R * .1 - pad) / 1.08, (H - 2 * pad - nameH) / 1.17, (W - 2 * pad) * .72));
+    duo = {S: S1, x: pad + S1 * .54, y: H - pad - S1 * .57};
   }
-
-  if (animKey && !Kit.calm) {
-    if (animKey === 'final') {
-      gsap.from(svg.querySelectorAll('text,line,circle'), {opacity:0, duration:.6, stagger:.1});
-    } else {
-      const g = G[animKey];
-      if (animKey === 'ara') gsap.from(g.querySelectorAll('.brick'), {y:-h*.3, opacity:0, stagger:{each:.025, from:'start'}, duration:.45, ease:'power3.out'});
-      else if (animKey === 'con') gsap.from(g, {opacity:0, duration:.7, ease:'power2.out'});
-      else gsap.from(g.querySelectorAll('.bit'), {opacity:0, scale:.3, transformOrigin:'50% 50%', stagger:.03, duration:.4});
+  const S = lerp(solo.S, duo.S, z), sx = lerp(solo.x, duo.x, z), sy = lerp(solo.y, duo.y, z);
+  const spot = shell(root, sx, sy, S, k);
+  root.appendChild(nacre.t);
+  // The name of what lines the shell, over its left side (in a row, only before the close-up takes the room).
+  if (!flat || z < .5) {
+    const nlx = clamp(spot.lx - nacre.w * .5, pad, W - pad - nacre.w), nly = Math.max(pad, spot.top - nameH);
+    place(nacre, nlx, nly);
+    pin(root, nlx + nacre.w * .5, nly + lh + fs * .1, spot.lx, spot.ly);
+  } else nacre.t.remove();
+  G.zoom = null;
+  if (z > 0) {
+    // The spot the close-up looks at: of those on the upper valve's lining, the nearest to the circle that the circle
+    // leaves in sight.
+    const ringR = Math.max(4, S * .035);
+    let [ox, oy] = spot.spots[0];
+    for (const [px, py] of spot.spots) if (Math.hypot(px - cxz, py - cyz) > R + ringR + fs) [ox, oy] = [px, py];
+    spot.x = ox; spot.y = oy;
+    const r = R * z, cx = lerp(spot.x, cxz, z), cy = lerp(spot.y, cyz, z);
+    const zg = Kit.mk('g', {}, root);
+    // Two lines from a ring on the lining to the circle, tangent to it.
+    const dx = cx - spot.x, dy = cy - spot.y, dd = Math.hypot(dx, dy), ring = Math.max(4, S * .035);
+    if (dd > r + ring + 2) {
+      const a = Math.atan2(dy, dx), b = Math.asin(r / dd), L = Math.sqrt(dd * dd - r * r);
+      for (const sgn of [-1, 1]) Kit.mk('line', {x1: f1(spot.x + ring * Math.cos(a + sgn * Math.PI / 2)), y1: f1(spot.y + ring * Math.sin(a + sgn * Math.PI / 2)), x2: f1(spot.x + L * Math.cos(a + sgn * b)), y2: f1(spot.y + L * Math.sin(a + sgn * b)), stroke: INK, 'stroke-width': 1.4}, zg);
     }
+    Kit.mk('circle', {cx: f1(spot.x), cy: f1(spot.y), r: f1(ring), fill: 'none', stroke: INK, 'stroke-width': 1.8}, zg);
+    G.zoom = closeUp(zg, cx, cy, r, k);
+    if (yours) {
+      root.appendChild(yours.t);
+      if (flat) place(yours, cx + R + fs * .9, cy - lh / 2);
+      else place(yours, clamp(cx - yours.w / 2, pad, W - pad - yours.w), cy - R - lh - fs * .25);
+    }
+    if (ara) {
+      // Each part named where there is room for it, a line into the circle: in a row, both to its right; otherwise
+      // the tablets from above, the glue from below.
+      root.appendChild(ara.t); root.appendChild(con.t);
+      const [tx, ty] = G.zoom.tablet, [gx, gy] = G.zoom.glue;
+      if (flat) {
+        const lx = cx + R + fs * .9;
+        place(ara, lx, Math.max(pad, cy - R)); place(con, lx, Math.min(H - pad - con.h, cy + R - con.h));
+        pin(root, lx - fs * .3, Math.max(pad, cy - R) + fs * .5, tx, ty);
+        pin(root, lx - fs * .3, Math.min(H - pad - con.h, cy + R - con.h) + fs * .5, gx, gy);
+      } else {
+        const ax = clamp(cx - ara.w / 2, pad, W - pad - ara.w), ay = cy - R - 2 * lh - fs * .3;
+        const cxl = clamp(cx - con.w / 2 + R * .1, pad, W - pad - con.w), cyl = cy + R + fs * .3;
+        place(ara, ax, ay); place(con, cxl, cyl);
+        pin(root, clamp(tx, ax + 4, ax + ara.w - 4), ay + 2 * lh + fs * .05, tx, ty);
+        pin(root, clamp(gx, cxl + 4, cxl + con.w - 4), cyl - fs * .15, gx, gy);
+      }
+    }
+  } else { if (yours) yours.t.remove(); }
+  if (z <= 0 || !ara) { if (ara) { ara.t.remove(); con.t.remove(); } }
+  if (animKey && !Kit.calm && G.zoom) {
+    if (animKey === 'final') gsap.from(root.querySelectorAll('text'), {opacity: 0, duration: .5, stagger: .08});
+    else if (animKey === 'ara') G.rows.forEach((row, i) => gsap.from(row, {y: -30, opacity: 0, duration: .45, delay: i * .07, ease: 'power3.out'}));
+    else if (animKey === 'con') gsap.from(G.con, {opacity: 0, duration: .7, ease: 'power2.out'});
+    else gsap.from(G[animKey].querySelectorAll('.bit'), {opacity: 0, scale: .3, transformOrigin: '50% 50%', stagger: .04, duration: .4});
   }
 }
 
+const names = () => picks.map(k => Kit.$('opts').querySelector(`[data-k="${k}"]`).firstChild.textContent.trim()).join(' + ');
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = picks.includes('ara') && picks.includes('con');
-  const names = picks.map(k => Kit.$('opts').querySelector(`[data-k="${k}"]`).firstChild.textContent.trim());
-  const said = names.join(' + ');
+  const said = names();
   Kit.answer({choice: said, correct: ok, sure: pct});
   done = true;
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  draw('final');
-  if (!Kit.calm) {
-    gsap.from(G.ara.querySelectorAll('.brick'), {opacity:0, duration:.5, stagger:.015});
-  }
+  // The verdict already names the answer when it was picked: the explanation need not say it again.
+  if (ok) Kit.$('why').querySelector('.big')?.remove();
+  Kit.hide('say'); Kit.show('why');
   sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep');
+  svg.setAttribute('aria-label', 'The oyster shell, and beside it its nacre close up: white tablets of aragonite, a calcium carbonate mineral, stacked like bricks and glued by brown conchiolin, a protein.');
+  if (st.z >= 1) draw('final');
   Kit.haptic(ok ? 'success' : 'light');
 });
 
@@ -147,25 +301,32 @@ Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || done || picks.length >= 2) return;
   const k = b.dataset.k; if (picks.includes(k)) return;
   picks.push(k); b.classList.add('on'); Kit.haptic('selection');
-  draw(k);
+  // The first ingredient brings the close-up out of the lining; each then builds up in it.
+  const build = () => {
+    if (st.z < 1 && !Kit.calm) { gsap.killTweensOf(st); gsap.to(st, {z: 1, duration: .55, ease: 'power2.inOut', onUpdate: () => draw(), onComplete: () => draw(done ? 'final' : k)}); }
+    else { st.z = 1; draw(done ? 'final' : k); }
+  };
   if (picks.length === 2) {
+    // Both picked: how sure takes the answers' place, and the picture their room.
     Kit.$('opts').querySelectorAll('.opt').forEach(o => o.disabled = true);
     Kit.$('say').textContent = 'Now say how sure you are.';
+    Kit.hide('opts'); Kit.show('sure'); sure.ask(`${names()}: how sure are you?`);
     sure.on();
-  }
+    requestAnimationFrame(() => requestAnimationFrame(build));
+  } else build();
 });
 
 Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   const w = ms => new Promise(r => setTimeout(r, ms));
   Kit.$('opts').querySelector('[data-k="ara"]').click(); await w(150);
   Kit.$('opts').querySelector('[data-k="con"]').click(); await w(150);
   Kit.$('sure').querySelector('[data-v="80"]').click(); await w(900);
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('wall'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: another phone, the answers giving way, or the answer
+// taking room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(svg); }
 Kit.single();
 </script>
 </html>

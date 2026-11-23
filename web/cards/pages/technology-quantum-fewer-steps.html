@@ -2,6 +2,15 @@
 <!-- slug: technology-quantum-fewer-steps -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card · Exponential speedup</title>
+<!-- Look: the two machines, drawn flat with ink edges, each with the staircase of operations it must climb
+     to reach the result, at the same scale. Left, a classical computer, a laptop, at the foot of a staircase
+     of 2^n steps rising to the top of the picture; right, a quantum computer, the gold "chandelier" of its
+     cryostat hanging from the ceiling, and under it a staircase of n steps. On each a little runner climbs
+     one step per tick, both at the same pace; the steps climbed turn ink, a flag waits at each top. Over
+     each, how many operations it needs, large, and how many are done. Under them, the problem size, 1 to 10,
+     to drag. The bigger the problem, the taller the classical staircase grows (1,024 steps at 10) while the
+     quantum one stays a few steps high (10): not faster steps, far fewer of them. Drawn again whenever its
+     box changes; at the end, where the room is short, the problem size gives its room to the staircases. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
@@ -12,12 +21,15 @@
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* The shortest phone has little room at the end: the column closes up a little for the picture. */
+@container (max-height:520px){.answered.card .in{gap:1.4cqh}.answered #why .body{line-height:1.25}}
 </style>
 <article class="card" id="card" data-topic="technology" data-kind="Drag · see">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">QUANTUM</span></div>
     <h2 class="q">What is the real advantage of a quantum computer?</h2>
-    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A laptop at the foot of a tall staircase of operations, and a quantum computer's gold chandelier over a short one, a little runner on each. Problem size: 3."></svg></div>
     <p class="say" id="say">Drag the dial to make the problem bigger. Both runners step at the same pace.</p>
     <div id="why" class="gone">
       <p class="big">Not faster steps: far fewer of them.</p>
@@ -29,133 +41,230 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const svg = Kit.$('pic');
+const svg = Kit.$('pic'), mk = Kit.mk;
 const NMIN = 1, NMAX = 10, STEP = 0.035;
-let n = 3, L = null, revealed = false, tweens = [], dragging = false;
-let g, cDots = [], qDots = [], cPos = [], qPos = [], cRun, qRun, cCnt, qCnt, knob, knobT, track;
-// The race as it stands, how far each runner has gone: a drawing done again (the answer takes room)
-// draws it on the new dots and lets it run on, rather than starting both lanes again at 0.
-let lanes = {};
+// One ink; pale steps still to climb, ink ones climbed; gold for the quantum machine and its runner,
+// greys for the laptop; skin for the runners.
+const INK = '#10100c', TODO = 'rgba(255,255,255,.42)', GOLD = '#f5b82e', GOLD_D = '#c98516', COPPER = '#d9772b';
+const STEEL = '#c9ced6', LAPTOP = '#e6e8ec', SCREEN = '#1c2545', SKIN = '#f2c29b', SHIRT = '#ffffff';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const f1 = v => (Math.round(v * 10) / 10).toString(), fmt = v => Math.round(v).toLocaleString('en');
+let n = 3, L = null, revealed = false, dragging = false, tweens = [];
+// How far each runner has climbed (a step index, fractional mid-hop), and whether it is there.
+const lanes = {c: {i: 0, total: 8, done: false}, q: {i: 0, total: 3, done: false}};
 
-function txt(x, y, s, anchor, weight, size, op) {
-  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'start',
-    style: `fill:var(--k);font:${weight || 700} ${size}px var(--body);opacity:${op == null ? 1 : op}`}, svg);
+function txt(parent, x, y, s, size, weight, family, anchor) {
+  const t = mk('text', {x: f1(x), y: f1(y), 'font-family': family || FONT, 'font-weight': weight || 700, 'font-size': f1(size), fill: INK, 'text-anchor': anchor || 'start'}, parent);
   t.textContent = s; return t;
 }
+const nx = i => L.tx0 + (L.tx1 - L.tx0) * (i - NMIN) / (NMAX - NMIN);
 
+// Where everything goes, for the room the drawing has now, and the still parts of it.
 function build() {
-  const {W, H, f} = Kit.fitSvg(svg);
+  const {W, H} = Kit.fitSvg(svg);
   svg.innerHTML = '';
-  const fs = Math.max(f * 0.85, 12), pad = W * 0.05;
-  // On a short box the rows close up a little, so the dots keep a strip of their own.
-  const k = Math.max(.76, Math.min(1, (H - fs * 3) / (fs * 10.7)));
-  const labY = fs * 1.1 * k, cy0 = fs * 1.9 * k;
-  const trackY = H - fs * 1.4 * k, sliderLabY = trackY - fs * 2.0 * k;
-  const qLineY = sliderLabY - fs * 2.2 * k, qLabY = qLineY - fs * 1.7 * k;
-  const cy1 = Math.max(cy0 + 1, qLabY - fs * 1.5 * k);
-  L = {W, H, f: fs, pad, labY, cy0, cy1, qLabY, qLineY, sliderLabY, trackY};
+  const fs = Math.max(11.5, Math.min(13.5, W / 24));
+  const big = Math.max(22, Math.min(36, W * .1, H * .1));
+  // The problem size, one row at the foot: kept while there is room for it and the staircases.
+  const slider = !revealed || H >= 210, SR = slider ? Math.max(42, fs * 3.3) : 0;
+  const gap = Math.max(10, W * .035), WL = Math.round(W * .56), qx = WL + gap;   // the classical column; the quantum's left edge
+  const g = mk('g', {}, svg);
 
-  txt(pad, labY, 'CLASSICAL', 'start', 800, fs);
-  cCnt = txt(W - pad, labY, '', 'end', 600, fs, .75);
-  txt(pad, qLabY, 'QUANTUM', 'start', 800, fs);
-  qCnt = txt(W - pad, qLabY, '', 'end', 600, fs, .75);
-  g = Kit.mk('g', {}, svg);
+  // The two names, over their columns; under each its count (filled in by paint()) and how far it has got,
+  // each line set under the one above by its measured box.
+  const t1 = txt(g, 0, fs, 'Classical', fs, 700), tb = t1.getBBox();
+  txt(g, qx, fs, 'Quantum', fs, 700);
+  const probe = txt(g, 0, 0, '1,024', big, 800, SERIF), pb = probe.getBBox(); probe.remove();
+  const cy = tb.y + tb.height + 1 - pb.y, cBottom = cy + pb.y + pb.height;
+  const sp = txt(g, 0, 0, 'all done', fs, 600), sb = sp.getBBox(); sp.remove();
+  const dy = cBottom + 1 - sb.y, head = dy + sb.y + sb.height;
+  const y0 = head + fs * .95, y1 = H - SR - (slider ? fs * .7 : 2);  // the staircases' room: its top, the floor
+  L = {W, H, fs, big, slider, SR, head, gap, y0, y1, WL, qx, g};
+  L.cCount = txt(g, 0, cy, '', big, 800, SERIF);
+  L.qCount = txt(g, qx, cy, '', big, 800, SERIF);
+  L.cDone = txt(g, 0, dy, '', fs, 600);
+  L.qDone = txt(g, qx, dy, '', fs, 600);
 
-  txt(pad, sliderLabY, 'Problem size', 'start', 700, fs, .8);
-  txt(W - pad, sliderLabY, 'bigger →', 'end', 600, fs, .6);
-  track = Kit.mk('line', {x1: pad, x2: W - pad, y1: trackY, y2: trackY,
-    style: 'stroke:var(--k);stroke-width:' + fs * .28 + ';stroke-linecap:round;opacity:.25'}, svg);
-  for (let i = NMIN; i <= NMAX; i++) {
-    Kit.mk('circle', {cx: nx(i), cy: trackY, r: fs * .14, style: 'fill:var(--k);opacity:.45'}, svg);
-  }
-  knob = Kit.mk('circle', {cx: nx(n), cy: trackY, r: fs * .95, style: 'fill:var(--k);stroke:var(--c);stroke-width:' + fs * .15}, svg);
-  knobT = txt(nx(n), trackY + fs * .36, n, 'middle', 800, fs, 1);
-  knobT.style.fill = 'var(--c)'; knobT.style.pointerEvents = 'none';
-  drawDots(true);
-  finish();
+  // The classical computer: a laptop at the foot of its staircase. (The quantum computer's chandelier is
+  // drawn with the staircases: it takes the room its short staircase leaves.)
+  const areaH = y1 - y0, lw = Math.min(WL * .4, areaH * .42, 92), lh = lw * .74;
+  laptop(g, 0, y1, lw, lh);
+  L.lw = lw;
+
+  // The floor both stand on.
+  mk('path', {d: `M0,${f1(y1)}H${f1(W)}`, stroke: INK, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, g);
+  L.stairs = mk('g', {}, g);
+  L.runC = runner(g, SHIRT, Math.max(16, Math.min(26, areaH * .1)));
+  L.runQ = runner(g, GOLD, Math.max(16, Math.min(26, areaH * .1)));
+
+  if (slider) {
+    const sy = H - SR * .5;
+    txt(g, 0, sy + fs * .36, 'Problem size', fs, 700);
+    const lab = fs * 7.2;
+    L.tx0 = lab + fs * 1.1; L.tx1 = W - fs * 1.1; L.ty = sy;
+    mk('line', {x1: f1(L.tx0), x2: f1(L.tx1), y1: f1(sy), y2: f1(sy), stroke: INK, 'stroke-opacity': .3, 'stroke-width': 3, 'stroke-linecap': 'round'}, g);
+    for (let i = NMIN; i <= NMAX; i++) mk('circle', {cx: f1(nx(i)), cy: f1(sy), r: f1(fs * .14), fill: INK, 'fill-opacity': .5}, g);
+    L.knob = mk('circle', {cx: f1(nx(n)), cy: f1(sy), r: f1(fs * .98), fill: INK, stroke: '#fffbf0', 'stroke-width': f1(fs * .16)}, g);
+    L.knobT = txt(g, nx(n), sy + fs * .36, n, fs, 800, FONT, 'middle');
+    L.knobT.setAttribute('fill', getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#00A6FF');
+    L.knobT.style.pointerEvents = 'none';
+  } else { L.tx0 = 0; L.tx1 = W; L.ty = H - 10; }
+  stairs();
+  paint();
 }
 
-function nx(i) { return L.pad + (L.W - 2 * L.pad) * (i - NMIN) / (NMAX - NMIN); }
+// The quantum computer's cryostat insides: gold plates, narrower going down, rods between them, coaxial lines
+// running down, the chip at the bottom.
+function chandelier(g, cx, top, w, h) {
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  mk('path', Object.assign({d: `M${f1(cx - w * .62)},${f1(top)}H${f1(cx + w * .62)}`, fill: 'none', 'stroke-width': 2.5}, at), g);
+  const plates = [1, .84, .68, .54, .42], ph = Math.max(4, h * .055), gapY = (h - ph * 2.4) / plates.length;
+  const ys = plates.map((_, k) => top + h * .04 + k * gapY);
+  // rods first, behind the plates
+  for (let k = 0; k < plates.length - 1; k++) for (const u of [-.36, .36]) {
+    const x = cx + u * w * plates[k + 1];
+    mk('path', Object.assign({d: `M${f1(x)},${f1(ys[k] + ph)}V${f1(ys[k + 1])}`, fill: 'none', stroke: STEEL, 'stroke-width': Math.max(2, w * .03)}, {'stroke-linecap': 'round'}), g);
+  }
+  // the coaxial lines, wavy, down the middle
+  for (const u of [-.14, 0, .14]) {
+    let d = `M${f1(cx + u * w)},${f1(ys[0] + ph)}`;
+    for (let k = 1; k <= 8; k++) { const y = ys[0] + ph + (ys[plates.length - 1] - ys[0]) * k / 8, dx = (k % 2 ? 1 : -1) * w * .035; d += `Q${f1(cx + u * w + dx * 2)},${f1(y - (ys[plates.length - 1] - ys[0]) / 16)} ${f1(cx + u * w)},${f1(y)}`; }
+    mk('path', {d, fill: 'none', stroke: COPPER, 'stroke-width': Math.max(1.6, w * .022), 'stroke-linecap': 'round'}, g);
+  }
+  plates.forEach((p, k) => {
+    const pw = w * p;
+    mk('rect', Object.assign({x: f1(cx - pw / 2), y: f1(ys[k]), width: f1(pw), height: f1(ph), rx: f1(ph / 2), fill: GOLD}, at), g);
+    mk('path', {d: `M${f1(cx - pw / 2 + ph * .6)},${f1(ys[k] + ph * .72)}H${f1(cx + pw / 2 - ph * .6)}`, stroke: GOLD_D, 'stroke-width': Math.max(1, ph * .28), 'stroke-linecap': 'round'}, g);
+    // the hangers from the ceiling to the top plate
+    if (k === 0) for (const u of [-.4, .4]) mk('path', Object.assign({d: `M${f1(cx + u * pw)},${f1(top)}V${f1(ys[0])}`, fill: 'none', stroke: STEEL, 'stroke-width': Math.max(2, w * .03)}, {'stroke-linecap': 'round'}), g);
+  });
+  // the chip, in its gold mount, under the last plate
+  const last = ys[plates.length - 1] + ph, cs = w * .2;
+  mk('path', Object.assign({d: `M${f1(cx)},${f1(last)}V${f1(last + ph * .9)}`, fill: 'none', stroke: STEEL, 'stroke-width': Math.max(2, w * .03)}, {}), g);
+  mk('rect', Object.assign({x: f1(cx - cs / 2), y: f1(last + ph * .9), width: f1(cs), height: f1(cs * .62), rx: 2, fill: GOLD_D}, at), g);
+}
 
-function drawDots(keep) {
-  if (!keep) { tweens.forEach(t => t.kill()); tweens = []; lanes = {}; }
+// A laptop, open, front on, standing on the floor at (x, floor).
+function laptop(g, x, floor, w, h) {
+  const at = {stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'};
+  const bh = h * .16, lidW = w * .82, lidH = h - bh, lx = x + (w - lidW) / 2, ly = floor - bh - lidH;
+  mk('rect', Object.assign({x: f1(lx), y: f1(ly), width: f1(lidW), height: f1(lidH), rx: f1(w * .05), fill: LAPTOP}, at), g);
+  const m = w * .055;
+  mk('rect', {x: f1(lx + m), y: f1(ly + m), width: f1(lidW - 2 * m), height: f1(lidH - 2 * m), rx: f1(w * .02), fill: SCREEN}, g);
+  // three lines of something on the screen
+  [.62, .44, .74].forEach((k, i) => mk('path', {d: `M${f1(lx + m * 2)},${f1(ly + m * 2 + i * (lidH - 2 * m) * .24)}h${f1((lidW - 4 * m) * k)}`, stroke: '#7fd0ff', 'stroke-width': Math.max(1.6, w * .035), 'stroke-linecap': 'round'}, g));
+  mk('path', Object.assign({d: `M${f1(x)},${f1(floor)}L${f1(x + w * .05)},${f1(floor - bh)}H${f1(x + w * .95)}L${f1(x + w)},${f1(floor)}Z`, fill: STEEL}, at), g);
+}
+
+// A little runner, feet at (0, 0): legs, tunic, arms, head. Its legs swap as it climbs.
+function runner(parent, cloth, s) {
+  const g = mk('g', {}, parent), u = s / 10, at = {stroke: INK, 'stroke-width': Math.max(1.6, u * .9), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const legs = mk('path', Object.assign({fill: 'none'}, at), g);
+  mk('path', Object.assign({d: `M${f1(-2.4 * u)},${f1(-3.2 * u)}L${f1(-1.8 * u)},${f1(-7 * u)}Q0,${f1(-7.8 * u)} ${f1(1.8 * u)},${f1(-7 * u)}L${f1(2.4 * u)},${f1(-3.2 * u)}Z`, fill: cloth}, at), g);
+  mk('path', Object.assign({d: `M${f1(-1.9 * u)},${f1(-6.5 * u)}L${f1(-3.2 * u)},${f1(-4.2 * u)}M${f1(1.9 * u)},${f1(-6.5 * u)}L${f1(3.4 * u)},${f1(-7.6 * u)}`, fill: 'none'}, at), g);
+  mk('circle', Object.assign({cx: 0, cy: f1(-9.3 * u), r: f1(1.5 * u), fill: SKIN}, at), g);
+  g.legs = legs; g.u = u;
+  return g;
+}
+function pose(r, x, y, k) {
+  const u = r.u, a = k % 2 ? 1 : -1;
+  r.legs.setAttribute('d', `M${f1(-1 * u)},${f1(-3.2 * u)}L${f1(-1.6 * u + a * .8 * u)},0M${f1(1 * u)},${f1(-3.2 * u)}L${f1(1.6 * u - a * .8 * u)},0`);
+  r.setAttribute('transform', `translate(${f1(x)},${f1(y)})`);
+}
+
+// The two staircases, at the same step: the classical one fills its column, the quantum one has n of its steps.
+function stairs() {
+  const {fs, y0, y1, WL, qx, lw} = L, g = L.stairs;
   g.innerHTML = '';
-  const N = 2 ** n, w = L.W - 2 * L.pad, h = L.cy1 - L.cy0;
-  const cols = Math.max(1, Math.ceil(Math.sqrt(N * w / h)));
-  const rows = Math.ceil(N / cols);
-  const cell = Math.min(w / cols, h / rows, L.f * 2.4);
-  const r = Math.max(1.2, Math.min(cell * .3, L.f * .45));
-  const ox = L.pad + cell / 2, oy = L.cy0 + cell / 2;
-  cPos = [];
-  for (let i = 0; i < N; i++) {
-    const row = Math.floor(i / cols), c = i % cols, col = row % 2 ? cols - 1 - c : c;
-    cPos.push([ox + col * cell, oy + row * cell]);
+  const N = 2 ** n, flag = fs * 1.9, x0 = lw + 6, sw = (WL - 4 - x0) / N, sh = (y1 - y0 - flag) / N;
+  L.sw = sw; L.sh = sh;
+  // The quantum computer: its gold chandelier, hanging from the ceiling over its column, as big as the room
+  // over its staircase, its runner and flag allows; or, where that is more, beside them.
+  const colW = L.W - qx, room = (y1 - y0) - n * sh - flag - L.runQ.u * 10 - fs * .6;
+  const over = Math.min(colW * .88, room / 1.12);
+  const side = qx + 2 + n * sw + Math.max(flag * .6, L.runQ.u * 4) + fs * .5, besideW = L.W - side;
+  const beside = Math.min(besideW * .92, (y1 - y0 + fs * .3) / 1.16);
+  const cw = Math.max(30, Math.max(over, beside));
+  chandelier(g, beside > over ? side + besideW / 2 : qx + colW / 2, y0 - fs * .3, cw, cw * 1.12);
+  const lanesAt = {c: {x0, N, fill: SHIRT}, q: {x0: qx + 2, N: n, fill: GOLD}};
+  L.geo = {};
+  for (const key of ['c', 'q']) {
+    const {x0: X0, N: M, fill} = lanesAt[key];
+    let d = `M${f1(X0)},${f1(y1)}`;
+    if (sw >= 1.6) for (let k = 1; k <= M; k++) d += `V${f1(y1 - k * sh)}H${f1(X0 + k * sw)}`;
+    else d += `L${f1(X0 + M * sw)},${f1(y1 - M * sh)}`;
+    d += `V${f1(y1)}Z`;
+    const clipId = 'climbed-' + key;
+    const cp = mk('clipPath', {id: clipId}, mk('defs', {}, g));
+    const cr = mk('rect', {x: f1(X0 - 1), y: 0, width: 0, height: f1(L.H)}, cp);
+    mk('path', {d, fill: TODO}, g);
+    mk('path', {d, fill, 'clip-path': `url(#${clipId})`}, g);
+    mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+    // the flag at the top: the result
+    const tx = X0 + M * sw - Math.min(sw * .5, fs * .7), ty = y1 - M * sh;
+    mk('path', {d: `M${f1(tx)},${f1(ty)}V${f1(ty - flag * .92)}`, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, g);
+    mk('path', {d: `M${f1(tx)},${f1(ty - flag * .92)}L${f1(tx + flag * .55)},${f1(ty - flag * .72)}L${f1(tx)},${f1(ty - flag * .52)}Z`, fill: SHIRT, stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    L.geo[key] = {X0, M, cr};
   }
-  const qs = Math.min(cell, w / Math.max(1, n - 1 || 1));
-  qPos = [];
-  for (let i = 0; i < n; i++) qPos.push([ox + i * qs, L.qLineY]);
-  const sw = Math.max(1, r * .5);
-  Kit.mk('polyline', {points: cPos.map(p => p.join(',')).join(' '),
-    style: `fill:none;stroke:var(--k);stroke-width:${sw};opacity:.2;stroke-linejoin:round`}, g);
-  Kit.mk('polyline', {points: qPos.map(p => p.join(',')).join(' ') + (n === 1 ? ' ' + qPos[0].join(',') : ''),
-    style: `fill:none;stroke:var(--k);stroke-width:${sw};opacity:.2;stroke-linecap:round`}, g);
-  cDots = cPos.map(p => Kit.mk('circle', {cx: p[0], cy: p[1], r, style: 'fill:var(--k);opacity:.22'}, g));
-  qDots = qPos.map(p => Kit.mk('circle', {cx: p[0], cy: p[1], r, style: 'fill:var(--k);opacity:.22'}, g));
-  const rr = Math.max(r * 1.7, L.f * .45);
-  cRun = Kit.mk('circle', {cx: cPos[0][0], cy: cPos[0][1], r: rr, style: `fill:var(--k);stroke:var(--c);stroke-width:${rr * .35}`}, g);
-  qRun = Kit.mk('circle', {cx: qPos[0][0], cy: qPos[0][1], r: rr, style: `fill:var(--k);stroke:var(--c);stroke-width:${rr * .35}`}, g);
-  cCnt.textContent = `0 / ${N.toLocaleString('en')} ops`;
-  qCnt.textContent = `0 / ${n} ops`;
-  for (const key in lanes) { lanes[key].last = -1; paintLane(lanes[key]); }
 }
 
-// A lane is drawn on whatever dots are there now, so its tween runs on across a drawing done again.
-function paintLane(ln) {
-  const [pos, dots, run, cnt] = ln.key === 'q' ? [qPos, qDots, qRun, qCnt] : [cPos, cDots, cRun, cCnt], total = ln.total;
-  const k = Math.min(total - 1, Math.floor(ln.o.i));
-  for (let j = ln.last + 1; j <= k; j++) dots[j].style.opacity = 1;
-  ln.last = Math.max(ln.last, k);
-  const a = pos[k], b = pos[Math.min(total - 1, k + 1)], t = ln.o.i - k;
-  run.setAttribute('cx', a[0] + (b[0] - a[0]) * t);
-  run.setAttribute('cy', a[1] + (b[1] - a[1]) * t);
-  cnt.textContent = `${(k + 1).toLocaleString('en')} / ${total.toLocaleString('en')} ops` + (ln.done ? ' · done' : '');
-}
-
-function runLane(key, total) {
-  const ln = lanes[key] = {key, total, o: {i: 0}, last: -1, done: false};
-  if (Kit.calm) { ln.o.i = total - 1; ln.done = true; paintLane(ln); return; }
-  tweens.push(gsap.to(ln.o, {i: total - 1, duration: Math.max(.001, (total - 1) * STEP), ease: 'none', onUpdate: () => paintLane(ln),
-    onComplete: () => { ln.done = true; paintLane(ln); Kit.haptic('light'); }}));
-  paintLane(ln);
+// Where each runner is, the steps behind it inked, and the counts.
+function paint() {
+  if (!L) return;
+  const {sw, sh, y1} = L;
+  for (const [key, run] of [['c', L.runC], ['q', L.runQ]]) {
+    const ln = lanes[key], G = L.geo[key], i = Math.min(ln.i, G.M), k = Math.floor(i), fr = i - k;
+    // standing on step k (0 = the floor before the first), hopping to the next
+    const at = j => j <= 0 ? [G.X0 - Math.max(6, run.u * 4), y1] : [G.X0 + (j - .5) * sw, y1 - j * sh];
+    const [ax, ay] = at(k), [bx, by] = at(Math.min(G.M, k + 1)), hop = Math.min(run.u * 3, Math.max(2, sh * .6)) * Math.sin(Math.PI * fr);
+    pose(run, ax + (bx - ax) * fr, ay + (by - ay) * fr - hop, k);
+    G.cr.setAttribute('width', f1(Math.max(0, (G.X0 + i * sw) - G.X0 + 1)));
+  }
+  const c = lanes.c, q = lanes.q, cd = Math.min(c.total, Math.floor(c.i)), qd = Math.min(q.total, Math.floor(q.i));
+  L.cCount.textContent = fmt(c.total); L.qCount.textContent = fmt(q.total);
+  // the word after each count, set after the number in its own size
+  for (const [el, total] of [[L.cCount, c.total], [L.qCount, q.total]]) {
+    const ts = mk('tspan', {'font-family': FONT, 'font-weight': 600, 'font-size': f1(L.fs), dx: f1(L.fs * .35)}, el);
+    ts.textContent = total === 1 ? 'operation' : 'operations';
+  }
+  L.cDone.textContent = c.done ? 'all done' : `${fmt(cd)} done`;
+  L.qDone.textContent = q.done ? 'all done' : `${fmt(qd)} done`;
 }
 
 function race() {
-  drawDots();
-  runLane('q', n);
-  runLane('c', 2 ** n);
+  tweens.forEach(t => t.kill()); tweens = [];
+  lanes.c = {i: 0, total: 2 ** n, done: false}; lanes.q = {i: 0, total: n, done: false};
+  if (L) stairs();
+  for (const key of ['q', 'c']) {
+    const ln = lanes[key];
+    if (Kit.calm) { ln.i = ln.total; ln.done = true; continue; }
+    // one step per tick, the same tick for both
+    const o = {v: 0};
+    tweens.push(gsap.to(o, {v: ln.total, duration: ln.total * STEP, ease: 'none', onUpdate: () => { ln.i = Math.floor(o.v) + Math.min(1, (o.v % 1) * 1.6); paint(); },
+      onComplete: () => { ln.i = ln.total; ln.done = true; paint(); Kit.haptic('light'); }}));
+  }
+  paint();
+  svg.setAttribute('aria-label', `Problem size ${n}: the classical computer must climb ${fmt(2 ** n)} steps of operations, the quantum computer ${n}, each one step at a time at the same pace.`);
 }
-
-function finish() { /* resting state after resize: empty paths ready */ }
 
 function setN(x) {
-  let v = Math.round(NMIN + (x - L.pad) / (L.W - 2 * L.pad) * (NMAX - NMIN));
+  let v = Math.round(NMIN + (x - L.tx0) / (L.tx1 - L.tx0) * (NMAX - NMIN));
   v = Math.max(NMIN, Math.min(NMAX, v));
-  knob.setAttribute('cx', nx(v)); knobT.setAttribute('x', nx(v)); knobT.textContent = v;
-  if (v !== n) { n = v; Kit.haptic('selection'); drawDots(); }
+  if (L.knob) { L.knob.setAttribute('cx', f1(nx(v))); L.knobT.setAttribute('x', f1(nx(v))); L.knobT.textContent = v; }
+  if (v !== n) {
+    n = v; Kit.haptic('selection');
+    tweens.forEach(t => t.kill()); tweens = [];
+    lanes.c = {i: 0, total: 2 ** n, done: false}; lanes.q = {i: 0, total: n, done: false};
+    stairs(); paint();
+  }
 }
 
-function localX(e) {
-  const r = svg.getBoundingClientRect();
-  return (e.clientX - r.left) * L.W / r.width;
-}
-function localY(e) {
-  const r = svg.getBoundingClientRect();
-  return (e.clientY - r.top) * L.H / r.height;
-}
+function localX(e) { const r = svg.getBoundingClientRect(); return (e.clientX - r.left) * L.W / r.width; }
+function localY(e) { const r = svg.getBoundingClientRect(); return (e.clientY - r.top) * L.H / r.height; }
 
 svg.addEventListener('pointerdown', e => {
   if (!L) return;
-  if (localY(e) < L.sliderLabY - L.f) return;
+  if (L.slider && localY(e) < L.H - L.SR - L.fs) return;
   dragging = true;
   try { svg.setPointerCapture(e.pointerId); } catch (_) {}
   setN(localX(e));
@@ -165,8 +274,9 @@ const release = () => {
   if (!dragging) return; dragging = false;
   race();
   if (!revealed && n >= 6) {
-    revealed = true;
     setTimeout(() => {
+      revealed = true;
+      Kit.$('card').classList.add('answered');
       Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
     }, Kit.calm ? 0 : 900);
   }
@@ -178,7 +288,7 @@ Kit.onShow.card = () => build();
 Kit.onEnter.card = () => { if (!Kit.calm) race(); };
 Kit.play.card = async () => {
   const r = svg.getBoundingClientRect();
-  const x = r.left + nx(NMAX) * r.width / L.W, y = r.top + L.trackY * r.height / L.H;
+  const x = r.left + nx(NMAX) * r.width / L.W, y = r.top + L.ty * r.height / L.H;
   const ev = (t, px) => svg.dispatchEvent(new PointerEvent(t, {clientX: px, clientY: y, pointerId: 1, bubbles: true}));
   ev('pointerdown', r.left + nx(n) * r.width / L.W);
   await new Promise(res => setTimeout(res, 80));
@@ -187,9 +297,9 @@ Kit.play.card = async () => {
   ev('pointerup', x);
   await new Promise(res => setTimeout(res, 1600));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room.
+// The runners climb on across it, where they had got to.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; seen = k; if (!first && L) build(); }).observe(svg); }
 Kit.single();
 </script>
 </html>
