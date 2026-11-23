@@ -1,0 +1,18 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "7XXWUW8T7U.com.astuto.app",
+        "appIDs": ["7XXWUW8T7U.com.astuto.app"],
+        "paths": ["/c/*"],
+        "components": [
+          {
+            "/": "/c/*",
+            "comment": "A card's own page: on a phone with the app, the card in the app."
+          }
+        ]
+      }
+    ]
+  }
+}
