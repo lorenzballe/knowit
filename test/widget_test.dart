@@ -1283,8 +1283,15 @@ void main() {
         orElse: () => throw StateError('nothing planned for day $daysAhead'),
       );
 
-      // Today: a day since the last one, nothing to say but the question.
-      expect(on(0).title, 'Your five are ready');
+      // Today: a day since the last one, nothing to say but the question;
+      // or, on a Monday, the week's free book, which a reader who keeps
+      // coming is told that day.
+      expect(
+        on(0).title,
+        on(0).when.weekday == DateTime.monday
+            ? "This week's free book"
+            : 'Your five are ready',
+      );
       // Tomorrow: two days since — the freeze is what holds, so say so.
       expect(on(1).title, 'Your freeze is holding');
       expect(on(1).body, contains(t.app.leadOn(on(1).when).question));
