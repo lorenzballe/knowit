@@ -56,7 +56,9 @@ List<Pill> answersOn(ExploreHost host, String question, {int limit = 30}) =>
     askCards(
       question,
       limit: limit,
-      keep: (p) => foundFrom(p, host.app.place) && onSubject(p, host.subject),
+      keep: (p) =>
+          foundFrom(p, host.app.place) &&
+          (host.subject == null || p.topic == host.subject),
     );
 
 /// The ask field, the words to try, and what answers.
@@ -171,7 +173,9 @@ class _AskState extends State<_Ask> {
       }
       hits = hits
           ?.where(
-            (p) => foundFrom(p, host.app.place) && onSubject(p, host.subject),
+            (p) =>
+                foundFrom(p, host.app.place) &&
+                (host.subject == null || p.topic == host.subject),
           )
           .toList();
     }

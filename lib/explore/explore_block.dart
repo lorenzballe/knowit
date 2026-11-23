@@ -17,24 +17,8 @@ library;
 
 import 'package:flutter/widgets.dart';
 
-import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
-
-/// Whether [p] is on Explore narrowed to [subject], by the name cards carry:
-/// every card when it is narrowed to none, and a subject's own cards when it
-/// is. Thinking is practised in every subject, so narrowed to Thinking,
-/// Explore holds Thinking's own cards and, from every other subject, each
-/// card that trains one of its reasoning moves: thinking with economics,
-/// with medicine, with sport. With [thinking], Thinking's chip lit beside
-/// the subject's, only the subject's cards that train one.
-bool onSubject(Pill p, String? subject, {bool thinking = false}) {
-  if (subject == null) return !thinking || p.principle.isReal;
-  if (subject == _thinking) return p.topic == subject || p.principle.isReal;
-  return p.topic == subject && (!thinking || p.principle.isReal);
-}
-
-final String _thinking = kTopics['thinking']!.name;
 
 /// One section of Explore, as the remote document or the build's own list
 /// gives it: which block draws it, and whatever that block reads.
