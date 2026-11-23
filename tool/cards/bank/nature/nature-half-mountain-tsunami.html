@@ -1,26 +1,31 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-half-mountain-tsunami -->
+<!-- The picture: Etna in section, snow on its summit and a plume over it, its loose eastern flank cut off by a
+     dashed crack, the sea in section beside it and a small town on the far coast. A boulder rolls in and the far
+     coast barely ripples; half the mountain slides in as a heap on the sea floor, the water it pushes aside leaves
+     as a train of waves, and the first floods the town. Drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block}
-#read{font:700 max(2cqh,13px)/1.25 var(--body);color:var(--k);text-align:center;min-height:2.6em}
+#read{font:700 max(2cqh,13px)/1.25 var(--body);color:var(--k);min-height:2.5em;margin:0;overflow-wrap:anywhere}
 #sw{display:flex;gap:2cqw;background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:99px;padding:.6cqh}
 .sw{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:transparent;border:0;border-radius:99px;padding:1.3cqh 2cqw;cursor:pointer}
 .sw.on{background:var(--k);color:var(--c)}
 #why{display:flex;flex-direction:column;gap:.6cqh}
-#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+#why .body{font:500 max(1.85cqh,12.5px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Flip a switch · compare">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TSUNAMI</span></div>
     <h2 class="q">What happens if half a mountain falls into the sea?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="Etna's flank, the sea and a distant coast"></svg>
-      <div id="read">Pick what falls from Etna's flank.</div>
+      <svg id="pic" role="img" aria-label="Etna drawn in section, snow on its summit and smoke above it, its eastern flank marked off by a dashed crack. Beside it the sea, and a small town on the far coast."></svg>
+      <p id="read">Pick what falls from Etna's flank.</p>
       <div id="sw">
         <button class="sw" data-m="boulder">A boulder</button>
         <button class="sw" data-m="mountain">Half a mountain</button>
@@ -34,100 +39,246 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const st = {mode: null, slab: 0, rock: 0, c: -1, splash: 0};
+// Flat colours with one meaning each: the sea blue, Etna's dark rock, its loose flank a shade lighter, sand for the
+// sea floor and the far coast, white for snow, smoke, foam and the town's walls, red for its roofs.
+const INK = '#10100c', SEA = '#2f7fe0', WHITE = '#fffbf0', ROCK = '#4b4245', LOOSE = '#7b6d6c', HEAP = '#8a7b78',
+  SAND = '#f4d38e', FLOOR = '#e3b265', DEEP = '#d39a52', ROOF = '#d8452f', SMOKE = '#e9e4de';
+const st = {mode: null, slide: 0, rock: 0, c: -1, A: 0, spray: 0};
 const seen = new Set();
-let G = {}, E = {}, tl = null;
-const X0 = 0.41, CEND = 0.935;
-const drops = Array.from({length: 14}, (_, i) => ({dx: (Kit.rnd() - .5) * 0.16, v: 0.25 + Kit.rnd() * 0.35, r: 0.5 + Kit.rnd()}));
+let G = null, E = {}, tl = null;
+
+const clamp01 = x => Math.min(1, Math.max(0, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const d = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+// A smooth line through the points (Catmull-Rom), as many short steps.
+function spline(pts, n = 10) {
+  const out = [];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+    for (let k = 0; k < n; k++) {
+      const t = k / n, t2 = t * t, t3 = t2 * t;
+      const cr = (a, b, c, e) => .5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - e) * t2 + (3 * b - a - 3 * c + e) * t3);
+      out.push([cr(p0[0], p1[0], p2[0], p3[0]), cr(p0[1], p1[1], p2[1], p3[1])]);
+    }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+// The height of a line at x, the line running left to right.
+function at(line, x) {
+  if (x <= line[0][0]) return line[0][1];
+  for (let i = 1; i < line.length; i++) if (line[i][0] >= x) { const [x0, y0] = line[i - 1], [x1, y1] = line[i]; return x1 - x0 < 1e-6 ? y1 : y0 + (y1 - y0) * (x - x0) / (x1 - x0); }
+  return line[line.length - 1][1];
+}
+const quad = (a, c, b, n) => Array.from({length: n + 1}, (_, i) => { const t = i / n; return [(1 - t) ** 2 * a[0] + 2 * t * (1 - t) * c[0] + t * t * b[0], (1 - t) ** 2 * a[1] + 2 * t * (1 - t) * c[1] + t * t * b[1]]; });
 
 function build() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const sea = .58 * H, floor = .93 * H;
-  G = {W, H, f, sea, floor};
-  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
-  const P = a => a.map(p => p.join(',')).join(' ');
-  // distant coast
-  mk('polygon', {points: P([[.78*W, H], [.78*W, sea+.07*H], [.86*W, sea-.035*H], [W, sea-.045*H], [W, H]]), fill: '#c9a46a'});
-  E.houses = [.875, .915, .955].map((hx, i) => {
-    const x = hx * W, y = sea - .037 * H - (i * .004 * H), s = Math.max(W * .022, 8);
-    const g = mk('g', {});
-    mk('rect', {x: x - s, y: y - s * 1.3, width: s * 2, height: s * 1.3, fill: '#f4ede0'}, g);
-    mk('polygon', {points: P([[x - s * 1.2, y - s * 1.3], [x, y - s * 2.2], [x + s * 1.2, y - s * 1.3]]), fill: '#d9603b'}, g);
-    return {g, x, y, hx};
+  const {W, H} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(14, W / 25));
+  // Sky over the summit for its smoke; a wide, shallow sea; the ground in section under it all.
+  // Measured from the bottom up, against both sides of the box, so a tall box gives its extra room to the sky:
+  // a thin band of old ground, a sea wider than it is deep, Etna never taller than its width allows.
+  const band = Math.min(Math.max(H * .12, 8), W * .09), dn = Math.min(Math.max(W * .13, H * .16), H * .24);
+  const bedY = H - band, seaY = bedY - dn, up = Math.min(seaY - Math.max(fs * 1.8, H * .2), W * .42), yp = seaY - up, r = Math.min(16, W * .05);
+  // Etna: in from the left edge, over its summit and down its eastern flank into the sea, to its foot on the floor.
+  const etna = spline([[0, seaY - .52 * up], [.08 * W, seaY - .8 * up], [.165 * W, yp + .03 * up], [.205 * W, yp + .08 * up], [.245 * W, yp],
+    [.31 * W, seaY - .6 * up], [.4 * W, seaY - .2 * up], [.475 * W, seaY], [.52 * W, seaY + .55 * dn], [.56 * W, bedY]]);
+  // The far coast, low and far off: its slope under the sea, a beach, the ground the town stands on.
+  const coast = spline([[.66 * W, bedY], [.77 * W, seaY + .5 * dn], [.87 * W, seaY - .006 * H], [.895 * W, seaY - .036 * H], [W, seaY - .042 * H]], 8);
+  // The crack that cuts off the loose flank: from just under the summit, deep through the mountain, to the flank under the sea.
+  const F0 = [.268 * W, at(etna, .268 * W)], T = [.515 * W, at(etna, .515 * W)];
+  const fault = quad(F0, [F0[0], seaY + .12 * dn], T, 24);
+  // The ground the water lies on: whole, or with the scar the flank leaves.
+  const ground = (x, scar) => x < .56 * W ? (scar && x > F0[0] && x < T[0] ? at(fault, x) : at(etna, x)) : x < .66 * W ? bedY : at(coast, x);
+  const body = etna.filter(p => p[0] <= F0[0]).concat(fault, etna.filter(p => p[0] >= T[0]));
+  const N = 22, xs = Array.from({length: N}, (_, i) => F0[0] + (T[0] - F0[0]) * i / (N - 1));
+  const flankTop = xs.map(x => [x, at(etna, x)]);
+  const flankBot = xs.slice().reverse().map(x => [x, at(fault, x)]);
+  // Where the flank comes to rest: a heap of blocks on the scar and the sea floor, its top under the water.
+  const area = (() => { const p = flankTop.concat(flankBot); let a = 0; for (let i = 0; i < p.length; i++) { const q = p[(i + 1) % p.length]; a += p[i][0] * q[1] - q[0] * p[i][1]; } return Math.abs(a) / 2; })();
+  const L0 = .405 * W, L1 = .74 * W, hx = Array.from({length: N}, (_, i) => L0 + (L1 - L0) * i / (N - 1));
+  const lift = Math.min(area / ((L1 - L0) * .62), .62 * dn);
+  const heapTop = hx.map((x, i) => { const u = i / (N - 1), m = Math.sin(Math.PI * u) ** .7; return [x, Math.min(ground(x, true), Math.max(seaY + .25 * dn, ground(x, true) - m * (lift - lift * .12 * Math.abs(Math.sin(u * Math.PI * 6)))))]; });
+  const heapBot = hx.slice().reverse().map(x => [x, ground(x, true)]);
+  const shore = (() => { for (let x = .38 * W; x < .6 * W; x += 1) if (at(etna, x) >= seaY) return x; return .475 * W; })();
+  const s = Math.max(4.5, Math.min(H * .04, W * .026));
+  const coastTop = at(coast, .94 * W);
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const root = mk('g', {}, svg);
+  const defs = mk('defs', {}, root);
+  const clip = mk('clipPath', {id: 'slice'}, defs);
+  mk('path', {d: `M0,0 H${W} V${H - r} Q${W},${H} ${W - r},${H} H${r} Q0,${H} 0,${H - r} Z`}, clip);
+  const wet = mk('clipPath', {id: 'wet'}, defs);
+  E.wetPath = mk('path', {}, wet);
+  const world = mk('g', {'clip-path': 'url(#slice)'}, root);
+
+  // Smoke from the summit, drifting west: puffs that grow as they rise, outlined as one cloud.
+  const puffs = [];
+  for (let k = 0; k < 7; k++) {
+    const rr = Math.min(W * (.022 + k * .0085), yp * (.16 + k * .05)), cx = .202 * W - k * .034 * W, cy = yp - fs * .15 - k * Math.max(yp * .17, 5);
+    if (cy - rr < 3) break;
+    puffs.push([cx, cy, rr]);
+  }
+  const smoke = mk('g', {}, world);
+  puffs.forEach(([cx, cy, rr]) => mk('circle', {cx, cy, r: rr + 1.4, fill: INK}, smoke));
+  puffs.forEach(([cx, cy, rr]) => mk('circle', {cx, cy, r: rr - 1.2, fill: SMOKE}, smoke));
+
+  // The ground in section: two old layers under everything, the far coast, the town on it.
+  const mid = bedY + (H - bedY) * .5;
+  mk('rect', {x: 0, y: bedY, width: W, height: H - bedY + 2, fill: FLOOR}, world);
+  mk('rect', {x: 0, y: mid, width: W, height: H - mid + 2, fill: DEEP}, world);
+  mk('path', {d: `M0,${mid.toFixed(1)} H${W}`, stroke: INK, 'stroke-width': 1.5, opacity: .3, fill: 'none'}, world);
+  mk('path', {d: d(coast) + ` L${W},${bedY} L${.66 * W},${bedY} Z`, fill: SAND}, world);
+  E.houses = [[.905, 1], [.942, 1.15], [.978, .9]].map(([hx0, k], i) => {
+    const x = hx0 * W, y = at(coast, x) + 1, g = mk('g', {}, world);
+    house(g, x, y, s * k, i);
+    return {g, x, y};
   });
-  // volcano body and slab
-  const body = [[0, H], [0, .42*H], [.12*W, .2*H], [.17*W, .17*H], [.30*W, sea+.06*H], [.40*W, sea+.02*H], [.52*W, floor], [.52*W, H]];
-  mk('polygon', {points: P(body), fill: '#4a3a35'});
-  mk('polygon', {points: P([[.17*W, .17*H], [.30*W, sea+.06*H], [.40*W, sea+.02*H], [.52*W, floor]]), fill: 'none', stroke: '#2b211e', 'stroke-width': Math.max(1.5, f*.12), 'stroke-dasharray': '4 4', opacity: .6});
-  E.slabPts = [[.17*W, .17*H], [.23*W, .17*H], [.40*W, sea+.02*H], [.30*W, sea+.06*H]];
-  E.slabC = [.27*W, .35*H];
-  E.slab = mk('polygon', {points: P(E.slabPts), fill: '#6b5148', stroke: '#2b211e', 'stroke-width': 1.5});
-  mk('ellipse', {cx: .2*W, cy: .17*H, rx: .03*W, ry: .008*H, fill: '#ff7a3d'});
-  const rr = Math.max(W * .02, 7);
-  E.rock = mk('polygon', {points: P([[-rr, -rr*.4], [-rr*.3, -rr], [rr*.8, -rr*.6], [rr, rr*.5], [0, rr], [-rr*.9, rr*.6]]), fill: '#6b5148', stroke: '#2b211e', 'stroke-width': 1.2});
-  // floor
-  mk('rect', {x: 0, y: floor, width: W, height: H - floor, fill: '#2a2320'});
-  E.water = mk('path', {fill: '#1f86c7', opacity: .82});
-  E.surf = mk('path', {fill: 'none', stroke: '#eafaff', 'stroke-width': Math.max(2, f * .15)});
-  E.drops = drops.map(() => mk('circle', {r: 0, fill: '#0f5f99'}));
-  const fs = Math.max(f * .95, 12);
-  const lab = (x, y, t, a) => { const e = mk('text', {x, y, 'text-anchor': a, fill: '#10100c', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}); e.textContent = t; };
-  lab(.2*W, .17*H - fs * .9, 'Etna', 'middle');
-  lab(.97*W, sea - .17*H, 'Distant coast', 'end');
+  // Etna: the mountain, whole under its loose flank until the flank goes (so no seam shows along the crack), its snow.
+  E.whole = mk('path', {d: d(etna) + ` L0,${bedY} Z`, fill: ROCK}, world);
+  mk('path', {d: d(body) + ` L0,${bedY} Z`, fill: ROCK}, world);
+  // The snow lies on the mountain that stays: it never hangs over the scar.
+  const stays = mk('clipPath', {id: 'stays'}, defs);
+  mk('path', {d: d(body) + ` L0,${bedY} Z`}, stays);
+  const snowLine = etna.filter(p => p[0] > .09 * W && p[0] < .3 * W);
+  const snowEdge = snowLine.slice().reverse().map(p => [p[0], p[1] + up * (.12 + .05 * Math.sin(p[0] / W * 60))]);
+  mk('path', {d: d(snowLine.concat(snowEdge)) + ' Z', fill: WHITE, 'clip-path': 'url(#stays)'}, world);
+  E.flank = mk('path', {d: d(flankTop.concat(flankBot)) + ' Z', fill: LOOSE}, world);
+  E.crack = mk('path', {d: d(fault), fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '6 5', 'stroke-linecap': 'round'}, world);
+  // The sea: the water between its surface and the ground, so it can climb the far coast.
+  E.water = mk('path', {fill: SEA}, world);
+  E.heap = mk('path', {fill: HEAP, stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, world);
+  const rr = Math.max(5, W * .024);
+  E.rock = mk('path', {d: `M${-rr},${-rr * .3} L${-rr * .4},${-rr} L${rr * .7},${-rr * .7} L${rr},${rr * .3} L${rr * .2},${rr} L${-rr * .8},${rr * .7} Z`, fill: LOOSE, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, world);
+  E.tint = mk('rect', {x: 0, y: 0, width: W, height: H, fill: SEA, opacity: .3, 'clip-path': 'url(#wet)'}, world);
+  E.ridge = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, world);
+  E.surf = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, world);
+  E.foam = mk('path', {fill: 'none', stroke: WHITE, 'stroke-width': Math.max(3, s * .55), 'stroke-linecap': 'round'}, world);
+  E.spray = mk('g', {}, world);
+  E.drops = Array.from({length: 7}, (_, i) => ({el: mk('circle', {r: 0, fill: WHITE, stroke: INK, 'stroke-width': 1.5}, E.spray), a: -Math.PI * (.18 + .64 * i / 6), v: .6 + .4 * Kit.rnd()}));
+  // The slice's own edge: down from the ground on the left, round the bottom, up to the far coast.
+  mk('path', {d: `M0,${etna[0][1].toFixed(1)} V${H - r} Q0,${H} ${r},${H} H${W - r} Q${W},${H} ${W},${H - r} V${coast[coast.length - 1][1].toFixed(1)}`, fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, root);
+
+  // Two names, each on what it names.
+  const name = mk('text', {x: .045 * W, y: Math.max(seaY - .32 * up, at(etna, .045 * W) + fs * 1.25), fill: WHITE, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * 1.05}, root);
+  name.textContent = 'Etna';
+  const ly = Math.max(fs, coastTop - 2.45 * s * 1.15 - .15 * H);
+  const far = mk('g', {}, root);
+  mk('text', {x: W - 2, y: ly, 'text-anchor': 'end', fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, far).textContent = 'distant coast';
+  mk('path', {d: `M${.942 * W},${ly + fs * .45} V${coastTop - 2.45 * s * 1.15 - 3}`, stroke: INK, 'stroke-width': 1.2, fill: 'none'}, far);
+
+  G = {W, H, fs, yp, seaY, bedY, up, dn, s, etna, coast, fault, ground, flankTop, flankBot, heapTop, heapBot, shore, F0, T, rr};
   render();
 }
 
-function amp(cf) {
-  if (cf < 0) return 0;
-  const p = Math.max(0, (cf - X0) / (1 - X0)), grow = Math.min(1, (cf - X0) / .05);
-  return st.mode === 'mountain' ? .13 * G.H * grow * (1 - .2 * p) : .028 * G.H * grow * Math.exp(-p * 4);
+// A house of the town: walls, a pitched roof, a door.
+function house(g, x, y, s, i) {
+  const at = {stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'};
+  const w = s * 1.9, h = s * 1.45;
+  Kit.mk('rect', Object.assign({x: x - w / 2, y: y - h, width: w, height: h, fill: WHITE}, at), g);
+  Kit.mk('path', Object.assign({d: `M${x - w / 2 - s * .25},${y - h} L${x},${y - h - s * .95} L${x + w / 2 + s * .25},${y - h} Z`, fill: ROOF}, at), g);
+  Kit.mk('rect', {x: x - s * .22 + (i % 2 ? s * .35 : -s * .3), y: y - s * .75, width: s * .44, height: s * .75, fill: INK}, g);
+}
+
+// The sea's surface: still, or the train of waves the falling mass pushed off, crest first.
+function surface(x) {
+  const {W, H, seaY} = G;
+  if (st.c < 0 || st.A <= 0) return seaY;
+  const big = st.mode === 'mountain', c = st.c * W, w = .05 * W;
+  // Nearing the far coast the water gets shallow: the wave slows, grows and stands up, its front steep.
+  const shoal = big ? clamp01((c - .7 * W) / (.18 * W)) : 0;
+  const amp = (big ? .085 * (1 + .55 * shoal) : .014) * H * st.A, front = w * (.75 - .3 * shoal);
+  const bump = z => Math.exp(-((z / (z > 0 ? front : w * 1.25)) ** 2));
+  const start = clamp01((x - G.shore + .01 * W) / (.04 * W));
+  return seaY - start * amp * (bump(x - c) + .55 * bump(x - c + 2.6 * w) + .3 * bump(x - c + 5 * w) - .22 * bump(x - c + 1.3 * w) - .12 * bump(x - c + 3.8 * w));
 }
 
 function render() {
-  if (!G.W) return;
-  const {W, H, sea} = G, w = .055 * W, c = st.c * W, A = amp(st.c);
-  const gss = d => Math.exp(-((d / w) ** 2));
-  const y = x => st.c < 0 ? sea : sea - A * (gss(x - c) + .5 * gss(x - c + 2.4 * w) + .25 * gss(x - c + 4.6 * w) - .3 * gss(x - c + 1.2 * w));
-  let d = '';
-  for (let i = 0; i <= 90; i++) { const x = i / 90 * W; d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y(x).toFixed(1); }
-  E.surf.setAttribute('d', d);
-  E.water.setAttribute('d', d + `L${W} ${H}L0 ${H}Z`);
-  const s = st.slab;
-  E.slab.setAttribute('transform', `translate(${s * .15 * W} ${s * .3 * H}) rotate(${s * 28} ${E.slabC[0]} ${E.slabC[1]})`);
-  const r = st.rock, rx = .33 * W + r * .09 * W, ry = .41 * H + r * r * (sea + .09 * H - .41 * H);
-  E.rock.setAttribute('transform', `translate(${rx} ${ry}) rotate(${r * 200})`);
-  E.rock.style.display = st.mode === 'boulder' ? '' : 'none';
-  const big = st.mode === 'mountain', sp = st.splash;
-  E.drops.forEach((e, i) => {
-    const q = drops[i], on = sp > 0 && sp < 1 && (big || i < 6);
-    const k = big ? 1 : .35;
-    e.setAttribute('cx', (X0 + q.dx * k * sp * 2) * W);
-    e.setAttribute('cy', sea - q.v * k * H * sp * 1.6 + H * 1.3 * k * sp * sp);
-    e.setAttribute('r', on ? q.r * Math.max(3, W * .008) * (big ? 1.4 : .7) : 0);
+  if (!G) return;
+  const {W, H, seaY, s} = G, scar = st.slide > 0;
+  // The flank in place, or on its way to the heap, or the heap itself.
+  const k = st.mode === 'mountain' ? st.slide : 0;
+  E.whole.style.display = k > 0 ? 'none' : '';
+  E.flank.style.display = k > 0 ? 'none' : '';
+  E.crack.style.display = k > 0 ? 'none' : '';
+  E.heap.style.display = k > 0 ? '' : 'none';
+  if (k > 0) {
+    const from = G.flankTop.concat(G.flankBot), to = G.heapTop.concat(G.heapBot);
+    // The flank slides down and spreads as it goes; it lands as a heap.
+    E.heap.setAttribute('d', d(from.map((p, i) => [lerp(p[0], to[i][0], k), lerp(p[1], to[i][1], k)])) + ' Z');
+  }
+  // The ground line: Etna whole, or Etna with its scar; the sea floor; the far coast.
+  const xs = Array.from({length: 121}, (_, i) => i / 120 * W);
+  const gy = xs.map(x => G.ground(x, scar));
+  E.ridge.setAttribute('d', d(xs.map((x, i) => [x, gy[i]])));
+  // The water lies between its surface and the ground, wherever the surface is above the ground.
+  const sy = xs.map(x => surface(x));
+  const top = xs.map((x, i) => [x, Math.min(sy[i], gy[i])]);
+  const water = d(top) + ' ' + xs.slice().reverse().map((x, j) => { const i = xs.length - 1 - j; return `L${x.toFixed(1)},${gy[i].toFixed(1)}`; }).join(' ') + ' Z';
+  E.water.setAttribute('d', water);
+  E.wetPath.setAttribute('d', water);
+  let line = '', on = false;
+  xs.forEach((x, i) => { const wet = sy[i] < gy[i] - .5; if (wet) { line += (on ? 'L' : 'M') + x.toFixed(1) + ',' + sy[i].toFixed(1); on = true; } else on = false; });
+  E.surf.setAttribute('d', line);
+  // White foam rides the main crest when it is a big one.
+  const big = st.mode === 'mountain' && st.A > .3 && st.c > 0;
+  if (big) {
+    const c = st.c * W, pts = [];
+    for (let x = c - .05 * W; x <= c + .006 * W; x += 2) pts.push([x, surface(x) + Math.max(2, s * .3)]);
+    E.foam.setAttribute('d', d(pts));
+  } else E.foam.setAttribute('d', '');
+  // Spray where the mass meets the sea: thrown up, and gone again when it falls back on the water.
+  const sp = st.spray, sx = st.mode === 'mountain' ? G.shore + .03 * W : G.shore + .012 * W, size = st.mode === 'mountain' ? 1 : .45;
+  E.drops.forEach(q => {
+    const dist = sp * q.v * H * .22 * size, x = sx + Math.cos(q.a) * dist, y = seaY + Math.sin(q.a) * dist + sp * sp * H * .25 * size;
+    const on = sp > 0 && sp < 1 && y < surface(x) - 1;
+    q.el.setAttribute('cx', x.toFixed(1)); q.el.setAttribute('cy', y.toFixed(1));
+    q.el.setAttribute('r', on ? Math.max(1.8, W * .009 * size) * (1 - sp * .5) : 0);
   });
-  E.houses.forEach(h => {
-    const t = big ? Math.min(1, Math.max(0, (c - h.x + .02 * W) / (.035 * W))) : 0;
-    h.g.setAttribute('transform', `rotate(${t * 75} ${h.x + W * .022} ${h.y})`);
-  });
+  // At the far coast the first wave stands up as a wall of water and breaks on the town: the first house leans.
+  const hit = big ? clamp01((st.c * W - .84 * W) / (.04 * W)) : 0;
+  E.houses.forEach((h, i) => h.g.setAttribute('transform', i ? '' : `rotate(${(-7 * hit).toFixed(1)} ${h.x.toFixed(1)} ${h.y.toFixed(1)})`));
+  // The boulder: perched on the flank, then rolling down it into the sea.
+  const show = st.mode === 'boulder' || st.mode === null;
+  E.rock.style.display = show ? '' : 'none';
+  if (show) {
+    const x = lerp(.37 * W, .53 * W, st.rock), y = G.ground(x, false) - G.rr * .85;
+    E.rock.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(st.rock * 330).toFixed(0)})`);
+  }
 }
 
 function play(mode) {
   if (tl) tl.kill();
-  Object.assign(st, {mode, slab: 0, rock: 0, c: -1, splash: 0});
-  const read = Kit.$('read');
-  read.textContent = mode === 'mountain' ? 'Half the mountain slides into the sea…' : 'A boulder tumbles into the sea…';
+  Object.assign(st, {mode, slide: 0, rock: 0, c: -1, A: 0, spray: 0});
+  const read = Kit.$('read'), big = mode === 'mountain';
+  read.textContent = big ? 'Half the mountain slides into the sea…' : 'A boulder tumbles into the sea…';
   render();
-  const big = mode === 'mountain';
   tl = gsap.timeline({onUpdate: render, onComplete: () => {
     read.textContent = big ? 'At the coast: a wall of water floods the shore.' : 'At the coast: a ripple you would hardly notice.';
     seen.add(mode);
-    if (seen.size === 2) { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
+    if (big) Kit.haptic('heavy');
+    if (seen.size === 2) finish();
   }});
-  tl.to(st, big ? {slab: 1, duration: .9, ease: 'power2.in'} : {rock: 1, duration: .7, ease: 'power1.in'});
-  tl.to(st, {splash: 1, duration: .9, ease: 'none'}, '>-0.05');
-  tl.fromTo(st, {c: X0}, {c: CEND, duration: 2, ease: 'power1.out', immediateRender: false}, '<');
+  if (big) {
+    tl.to(st, {slide: 1, duration: 1.3, ease: 'power2.in'}, 0);
+    tl.to(st, {spray: 1, duration: .9, ease: 'none'}, .7);
+    tl.fromTo(st, {A: 0}, {A: 1, duration: .45, ease: 'power2.out', immediateRender: false}, .75);
+    tl.fromTo(st, {c: .51}, {c: .885, duration: 2.1, ease: 'power1.inOut', immediateRender: false}, .75);
+  } else {
+    tl.to(st, {rock: 1, duration: .8, ease: 'power1.in'}, 0);
+    tl.to(st, {spray: 1, duration: .7, ease: 'none'}, .45);
+    tl.fromTo(st, {A: 0}, {A: 1, duration: .3, ease: 'power2.out', immediateRender: false}, .5);
+    tl.fromTo(st, {c: .51}, {c: .885, duration: 2, ease: 'power1.inOut', immediateRender: false}, .5);
+  }
   if (Kit.calm) tl.progress(1);
+}
+
+// Both seen: the switch and its line give their room to the picture, and the answer comes in.
+function finish() {
+  Kit.hide('say'); Kit.hide('read'); Kit.hide('sw');
+  Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
 }
 
 Kit.$('sw').addEventListener('click', e => {
@@ -142,9 +293,8 @@ Kit.play.card = async () => {
   Kit.$('sw').children[0].click(); await w(3200);
   Kit.$('sw').children[1].click(); await w(3400);
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seenSize = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seenSize && G) { seenSize = k; build(); } }).observe(el); }
 Kit.single();
 </script>
 </html>

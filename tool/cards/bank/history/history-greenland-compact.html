@@ -1,30 +1,33 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-greenland-compact -->
+<!-- Look: one landscape across the drawing, flat, with ink outlines. On the left Greenland: its ice sheet rising
+     white behind dark coastal rock, Nuuk's red wooden houses at the shore and Greenland's flag on its pole. On the
+     right, across a strip of sea, Washington: the Capitol, white on its bank. The four things a deal hands out
+     (sovereignty, defense, economic aid, land rights) wait as pills over the sea. Each deal sends them to the side
+     that holds them, where they pile up: buying sends them all to the US and puts the US flag on Greenland's
+     pole; the compact keeps Greenland's flag and sovereignty, the aid flies over from Washington, defense and
+     the land rights go to the US. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#stage{display:flex;flex-direction:column;gap:max(1.1cqh,7px);flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #modes{display:flex;gap:3cqw}
-.mode{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer}
+.mode{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:99px;padding:max(1.3cqh,10px) 3cqw;cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.mode:active{transform:scale(.98)}
 .mode.on{background:var(--k);color:var(--c);box-shadow:none}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
-.col{fill:color-mix(in srgb,var(--k) 7%,transparent)}
-.colT{fill:var(--k);font-family:var(--display);font-weight:800;letter-spacing:.06em}
-.pill rect{fill:var(--k)}
-.pill text{fill:var(--c);font-family:var(--body);font-weight:700}
-.cap{fill:var(--k);font-family:var(--body);font-weight:700}
-.mid{stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-dasharray:4 5}
+#why .body{font:500 max(1.85cqh,12.5px)/1.32 var(--body);margin:0}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Compare · two deals">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOPOLITICS</span></div>
     <h2 class="q">Instead of buying Greenland, what deal might Trump offer it?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic"></svg>
+      <svg id="pic" role="img" aria-label="Greenland's ice and Nuuk's red houses on the left, Washington's Capitol on the right, the sea between. Four things a deal hands out wait over the sea: sovereignty, defense, economic aid, land rights."></svg>
       <div id="modes">
         <button class="mode" data-m="buy">Buy it</button>
         <button class="mode" data-m="compact">Compact</button>
@@ -38,94 +41,210 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const NAMES = ['Sovereignty', 'Defense', 'Economic aid', 'Land rights'];
-const GL = .25, US = .75, MID = .5;
-const TARGET = {
-  none:    [[MID,1],[MID,1],[MID,1],[MID,1]],
-  buy:     [[US,1],[US,1],[MID,.18],[US,1]],
-  compact: [[GL,1],[US,1],[GL,1],[US,1]]
-};
-const CAP = {
-  none: 'Tap a deal to see who gets what',
-  buy: 'Bought: it all becomes US land',
-  compact: 'Compact: like the Marshall Islands, Palau'
-};
-let mode = 'none', geo = null, pills = [], cap = null;
-const pos = NAMES.map(() => ({x: MID, o: 1}));
-const tried = new Set();
+(() => {
+  const NAMES = ['Sovereignty', 'Defense', 'Economic aid', 'Land rights'];
+  // Who holds each, by deal: G Greenland, U the United States, M nobody yet (over the sea).
+  const HOLD = {none: 'MMMM', buy: 'UUMU', compact: 'GUGU'};
+  const CAP = {none: 'Tap a deal to see who gets what', buy: 'Bought: it all becomes US land', compact: 'Compact: like the Marshall Islands, Palau'};
+  // One ink and the card's amber; white for ice, marble and the flags' white; cream for land, a warm grey for rock;
+  // the sea's blue; and the two flags' own colours, Greenland's red and the US navy.
+  const INK = '#10100c', AMBER = '#FFB000', WHITE = '#ffffff', CREAM = '#FFF3D6', ROCK = '#9C978D', SEA = '#7DBBF2', SKY = '#E2EFFA', RED = '#D8452F', NAVY = '#24398C';
+  const FONT = 'Figtree, system-ui, sans-serif';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const f1 = n => (Math.round(n * 10) / 10).toString();
+  const mk = Kit.mk;
+  const svg = Kit.$('pic'), card = Kit.$('card');
+  let mode = 'none', G = null;
+  const tried = new Set();
+  // Where each pill is now, so a redraw puts it back where it was.
+  const pos = NAMES.map(() => ({x: 0, y: 0, o: 1, set: false}));
 
-function place(i) {
-  const p = pills[i]; if (!p || !geo) return;
-  p.setAttribute('transform', `translate(${p.x0 = pos[i].x * geo.W - geo.w / 2},${geo.ys[i] - geo.h / 2})`);
-  p.setAttribute('opacity', pos[i].o);
-}
-
-function draw() {
-  const svg = Kit.$('pic');
-  svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f, 12);
-  const top = fs * 2.8, bot = H - fs * 2.6;
-  const rowH = (bot - top) / 4;
-  const h = Math.min(rowH * .72, fs * 2.5), w = Math.min(W * .44, fs * 10);
-  geo = {W, H, w, h, ys: NAMES.map((_, i) => top + rowH * (i + .5))};
-  const r = Math.min(W, H) * .03;
-  Kit.mk('rect', {x: W * .02, y: 0, width: W * .46, height: bot, rx: r, class: 'col'}, svg);
-  Kit.mk('rect', {x: W * .52, y: 0, width: W * .46, height: bot, rx: r, class: 'col'}, svg);
-  Kit.mk('line', {x1: W / 2, y1: fs * .6, x2: W / 2, y2: bot - fs * .6, class: 'mid'}, svg);
-  const t1 = Kit.mk('text', {x: W * GL, y: fs * 1.7, 'text-anchor': 'middle', class: 'colT', 'font-size': fs}, svg); t1.textContent = 'GREENLAND';
-  const t2 = Kit.mk('text', {x: W * US, y: fs * 1.7, 'text-anchor': 'middle', class: 'colT', 'font-size': fs}, svg); t2.textContent = 'USA';
-  pills = NAMES.map((n, i) => {
-    const g = Kit.mk('g', {class: 'pill'}, svg);
-    const inner = Kit.mk('g', {class: 'pin'}, g);
-    Kit.mk('rect', {width: w, height: h, rx: h / 2}, inner);
-    const t = Kit.mk('text', {x: w / 2, y: h / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': fs}, inner);
-    t.textContent = n;
+  // Greenland's flag: white over red, a disc set towards the hoist, red over white.
+  function flagGL(p, x, y, w, k) {
+    const h = w * 2 / 3, g = mk('g', {transform: `translate(${f1(x)},${f1(y)})`}, p), r = h / 3, cx = w * 7 / 18;
+    mk('rect', {width: f1(w), height: f1(h / 2), fill: WHITE}, g);
+    mk('rect', {y: f1(h / 2), width: f1(w), height: f1(h / 2), fill: RED}, g);
+    mk('path', {d: `M${f1(cx - r)},${f1(h / 2)}A${f1(r)},${f1(r)} 0 0 1 ${f1(cx + r)},${f1(h / 2)}Z`, fill: RED}, g);
+    mk('path', {d: `M${f1(cx - r)},${f1(h / 2)}A${f1(r)},${f1(r)} 0 0 0 ${f1(cx + r)},${f1(h / 2)}Z`, fill: WHITE}, g);
+    mk('rect', {width: f1(w), height: f1(h), fill: 'none', stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linejoin': 'round'}, g);
     return g;
-  });
-  NAMES.forEach((_, i) => place(i));
-  cap = Kit.mk('text', {x: W / 2, y: H - fs * .7, 'text-anchor': 'middle', class: 'cap', 'font-size': fs}, svg);
-  cap.textContent = CAP[mode];
-}
-
-function setMode(m) {
-  mode = m;
-  document.querySelectorAll('.mode').forEach(b => b.classList.toggle('on', b.dataset.m === m));
-  if (cap) cap.textContent = CAP[m];
-  TARGET[m].forEach(([x, o], i) => {
-    gsap.killTweensOf(pos[i]);
-    const d = Kit.calm ? 0 : .7;
-    if (m === 'compact' && i === 2) {
-      // Aid starts on the US side and flows to Greenland.
-      gsap.timeline()
-        .to(pos[i], {x: US, o: 1, duration: d * .6, delay: d ? i * .08 : 0, ease: 'power2.out', onUpdate: () => place(i)})
-        .to(pos[i], {x: GL, duration: d, ease: 'power2.inOut', onUpdate: () => place(i)});
-    } else {
-      gsap.to(pos[i], {x, o, duration: d, delay: d ? i * .08 : 0, ease: 'back.out(1.4)', onUpdate: () => place(i), onComplete: () => place(i)});
-    }
-  });
-  Kit.haptic('selection');
-  tried.add(m);
-  if (tried.size === 2 && Kit.$('why').classList.contains('gone')) {
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
   }
-}
+  // The US flag: thirteen stripes, the blue canton with its stars as dots where there is room for them.
+  function flagUS(p, x, y, w, k) {
+    const h = w * 10 / 19, g = mk('g', {transform: `translate(${f1(x)},${f1(y)})`}, p), s = h / 13;
+    for (let i = 0; i < 13; i++) mk('rect', {y: f1(i * s), width: f1(w), height: f1(s + .2), fill: i % 2 ? WHITE : RED}, g);
+    const cw = w * .4, chh = s * 7;
+    mk('rect', {width: f1(cw), height: f1(chh), fill: NAVY}, g);
+    if (cw > 14) for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) mk('circle', {cx: f1(cw * (c + .5) / 4), cy: f1(chh * (r + .5) / 3), r: f1(Math.max(.6, chh * .07)), fill: WHITE}, g);
+    mk('rect', {width: f1(w), height: f1(h), fill: 'none', stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linejoin': 'round'}, g);
+    return g;
+  }
+  // The Capitol, white on its bank, standing on (cx, base), w wide: two wings, the middle with its portico, the
+  // drum and its columns, the dome, the lantern and the statue on top.
+  function capitol(p, cx, base, w, k) {
+    const g = mk('g', {}, p), at = {fill: WHITE, stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round'}, u = w / 100;
+    const box = (x0, x1, y0, y1) => mk('rect', Object.assign({x: f1(cx + x0 * u), y: f1(base - y1 * u), width: f1((x1 - x0) * u), height: f1((y1 - y0) * u)}, at), g);
+    const roof = (x0, x1, y0, hh) => mk('path', Object.assign({d: `M${f1(cx + x0 * u)},${f1(base - y0 * u)}L${f1(cx + (x0 + x1) / 2 * u)},${f1(base - (y0 + hh) * u)}L${f1(cx + x1 * u)},${f1(base - y0 * u)}Z`}, at), g);
+    const cols = (x0, x1, y0, y1, n) => { let d = ''; for (let i = 1; i < n; i++) { const x = cx + (x0 + (x1 - x0) * i / n) * u; d += `M${f1(x)},${f1(base - y0 * u)}V${f1(base - y1 * u)}`; } mk('path', {d, stroke: INK, 'stroke-width': f1(k * .55), 'stroke-linecap': 'round'}, g); };
+    box(-50, -17, 0, 15); box(17, 50, 0, 15); roof(-40, -27, 15, 4.5); roof(27, 40, 15, 4.5);
+    cols(-48, -19, 2.5, 12, 7); cols(19, 48, 2.5, 12, 7);
+    box(-19, 19, 0, 21); roof(-9, 9, 21, 6); cols(-9, 9, 2.5, 18, 5);
+    box(-14, 14, 21, 32); cols(-14, 14, 22.5, 31, 8);
+    box(-11, 11, 32, 36);
+    mk('path', Object.assign({d: `M${f1(cx - 11 * u)},${f1(base - 36 * u)}C${f1(cx - 11 * u)},${f1(base - 50 * u)} ${f1(cx - 4 * u)},${f1(base - 52 * u)} ${f1(cx)},${f1(base - 52 * u)}C${f1(cx + 4 * u)},${f1(base - 52 * u)} ${f1(cx + 11 * u)},${f1(base - 50 * u)} ${f1(cx + 11 * u)},${f1(base - 36 * u)}Z`}, at), g);
+    box(-2.4, 2.4, 51.5, 57);
+    mk('path', {d: `M${f1(cx)},${f1(base - 57 * u)}V${f1(base - 61.5 * u)}`, stroke: INK, 'stroke-width': f1(k * 1.1), 'stroke-linecap': 'round'}, g);
+    return {g, top: base - 61.5 * u};
+  }
 
-Kit.$('modes').addEventListener('click', e => {
-  const b = e.target.closest('.mode'); if (b) setMode(b.dataset.m);
-});
+  function draw() {
+    const {W, H} = Kit.fitSvg(svg);
+    if (W < 40 || H < 40) return;
+    svg.innerHTML = '';
+    const fs = clamp(W * .04, 11, 13.5), k = clamp(W * .0075, 1.8, 2.7), pad = Math.max(8, fs * .7);
+    // A plate with its own pale Arctic sky and an ink rim: the caption at the top where there is room, the sky the
+    // pills pile into, the land and the sea below.
+    const capH = H >= 175 ? fs * 2.1 : 0;
+    const ph = clamp(Math.min(fs * 1.95, (H - capH) / 6.2), 18, 27), gap = Math.max(4, ph * .26);
+    const seaH = Math.max(fs * 1.8, H * .11), seaTop = H - seaH;
+    const gx1 = W * .46, ux0 = W * .62;
+    // Greenland's ice rises as high as its own pile of two leaves room for; the Capitol as high as the pile of three
+    // that buying gives the US leaves it.
+    // In a short drawing the Capitol is sized for the compact's two and a third pill, when buying is shown again, may
+    // stand over its dome.
+    const iceTop = capH + pad + 2 * ph + 2 * gap, usTop = Math.min(capH + pad + (H > 190 ? 3 : 2) * (ph + gap), seaTop - Math.max(4, H * .025) - 30);
+    const sh = seaTop - iceTop;
+    G = {W, H, fs, k, ph, gap, capH, pad, seaTop};
+    const ink = w => ({fill: 'none', stroke: INK, 'stroke-width': f1(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+    const solid = (fill, w = k) => Object.assign(ink(w), {fill});
+    const r = clamp(W * .035, 8, 14);
+    const clip = mk('clipPath', {id: 'plate'}, mk('defs', {}, svg));
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(r)}, clip);
+    const scene = mk('g', {'clip-path': 'url(#plate)'}, svg);
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: SKY}, scene);
 
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic .pill > .pin', {opacity: 0, scale: .9, transformOrigin: '50% 50%', stagger: .08, duration: .45, ease: 'power3.out', clearProps: 'opacity,scale'}); };
-Kit.play.card = async () => {
-  document.querySelector('.mode[data-m="buy"]').click();
-  await new Promise(r => setTimeout(r, 900));
-  document.querySelector('.mode[data-m="compact"]').click();
-  await new Promise(r => setTimeout(r, 1800));
-};
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+    // The sea, from one shore to the other.
+    mk('rect', {x: 0, y: f1(seaTop), width: f1(W), height: f1(seaH), fill: SEA}, scene);
+    // Greenland: the ice sheet, flat and high inland, falling steeply to the coast.
+    const iy = x => iceTop + (seaTop - iceTop) * Math.pow(clamp(x / (gx1 * 1.03), 0, 1), 3.4);
+    let d = `M${f1(-k)},${f1(seaTop)}`;
+    for (let i = 0; i <= 32; i++) { const x = -k + (gx1 * 1.03 + k) * i / 32; d += `L${f1(x)},${f1(iy(x))}`; }
+    d += `L${f1(gx1 * 1.03)},${f1(seaTop)}Z`;
+    mk('path', Object.assign({d}, solid(WHITE)), scene);
+    // A few lines on the ice where it breaks over the edge.
+    const crack = [.66, .74, .82].map(u => { const x = gx1 * u, y = iy(x); return `M${f1(x)},${f1(y + sh * .06)}l${f1(-sh * .05)},${f1(sh * .1)}`; }).join('');
+    mk('path', Object.assign({d: crack, opacity: .45}, ink(k * .6)), scene);
+    // The coastal rock in front of it, in a run of low peaks, and the shore.
+    const rockBase = seaTop, rh = Math.min(sh * .34, H * .2), peaks = [[.4, .05], [.5, .5], [.6, .3], [.7, .78], [.8, .45], [.9, .68], [.98, .3], [1.06, .08]];
+    let rd = `M${f1(gx1 * .34)},${f1(rockBase)}`;
+    peaks.forEach(([fx, fh]) => { rd += `L${f1(gx1 * fx)},${f1(rockBase - rh * fh)}`; });
+    rd += `L${f1(gx1 * 1.1)},${f1(rockBase)}Z`;
+    mk('path', Object.assign({d: rd}, solid(ROCK)), scene);
+    // Nuuk: red wooden houses on the rock at the water's edge, one white among them.
+    const hu = clamp(rh * .26, 6, 12), hx = [.56, .68, .8, .92];
+    hx.forEach((fx, i) => {
+      const x = gx1 * fx, w = hu * (i === 2 ? 1.7 : 1.45), hh = hu * (i === 1 ? 1.15 : .95), y = rockBase - hu * .3;
+      mk('path', Object.assign({d: `M${f1(x - w / 2)},${f1(y)}V${f1(y - hh)}L${f1(x)},${f1(y - hh - hu * .75)}L${f1(x + w / 2)},${f1(y - hh)}V${f1(y)}Z`}, solid(i === 2 ? WHITE : RED, k * .75)), scene);
+      mk('rect', {x: f1(x - hu * .2), y: f1(y - hh * .62), width: f1(hu * .4), height: f1(hu * .4), fill: INK}, scene);
+    });
+    // Greenland's flagpole on the rock by the houses; whose flag flies there is the deal's.
+    const px = gx1 * .45, fw = clamp(Math.min(sh * .26, W * .1), 16, 34), pTop = Math.max(iceTop + fw * .2, rockBase - rh * .2 - fw * 1.9);
+    mk('path', Object.assign({d: `M${f1(px)},${f1(rockBase - rh * .12)}V${f1(pTop)}`}, ink(k * .8)), scene);
+    mk('circle', {cx: f1(px), cy: f1(pTop - k), r: f1(k * 1.1), fill: INK}, scene);
+    G.flagGL = flagGL(scene, px + k * .4, pTop + k * .2, fw, k);
+    G.flagUS = flagUS(scene, px + k * .4, pTop + k * .2, fw * 1.12, k);
+    G.flagUS.setAttribute('opacity', 0);
+    // Washington: the bank, and the Capitol on it.
+    const bank = seaTop - Math.max(4, H * .025);
+    mk('path', Object.assign({d: `M${f1(ux0 - k)},${f1(seaTop)}C${f1(ux0 + W * .03)},${f1(bank)} ${f1(ux0 + W * .05)},${f1(bank)} ${f1(ux0 + W * .09)},${f1(bank)}L${f1(W + k)},${f1(bank)}V${f1(seaTop)}Z`}, solid(CREAM)), scene);
+    const cwid = Math.min((W - ux0) * .94, (bank - usTop) / .615), cap = capitol(scene, ux0 + (W - ux0) * .52, bank, cwid, k);
+    mk('path', Object.assign({d: `M0,${f1(seaTop)}H${f1(W)}`}, ink(k)), scene);
+    // Their names, on the water below them.
+    const nameFs = Math.min(fs * .92, seaH * .5), nameY = seaTop + seaH / 2 + nameFs * .36;
+    const name = (x, anchor, t) => { const e = mk('text', {x: f1(x), y: f1(nameY), 'text-anchor': anchor, 'font-family': FONT, 'font-size': f1(nameFs), 'font-weight': 800, 'letter-spacing': '.1em', fill: INK}, scene); e.textContent = t; };
+    name(pad, 'start', 'GREENLAND'); name(W - pad, 'end', 'USA');
+    mk('rect', Object.assign({x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(r - k / 2)}, ink(k)), svg);
+
+    // The caption, at the top of the sky.
+    G.cap = null;
+    if (capH) { G.cap = mk('text', {x: f1(pad), y: f1(pad + fs * .9), 'font-family': FONT, 'font-size': f1(fs * .98), 'font-weight': 700, fill: INK}, svg); G.cap.textContent = CAP[mode]; }
+
+    // Where each side's pile stands: on Greenland over the ice, on the US over the Capitol, the undecided over the sea.
+    // The undecided pile stands in the middle of the sky between the two shores.
+    G.top = capH + pad * .6;
+    const four = 4 * ph + 3 * gap;
+    G.cols = {G: {x: W * .23, base: iceTop - gap}, U: {x: ux0 + (W - ux0) * .52, base: cap.top - gap}, M: {x: W * .54, base: Math.min(seaTop - gap * 1.5, (G.top + seaTop) / 2 + four / 2)}};
+    // The pills.
+    G.pills = NAMES.map(n => {
+      const g = mk('g', {}, svg), t = mk('text', {x: 0, y: f1(ph / 2 + fs * .36), 'text-anchor': 'middle', 'font-family': FONT, 'font-size': f1(fs), 'font-weight': 700, fill: AMBER}, g);
+      t.textContent = n;
+      const w = t.getComputedTextLength() + ph * .95;
+      g.insertBefore(mk('rect', {x: f1(-w / 2), width: f1(w), height: f1(ph), rx: f1(ph / 2), fill: INK}), t);
+      return {g, w};
+    });
+    place(mode, true);
+  }
+
+  // Each pill's place in a deal: piled over the side that holds it, first in the list on top.
+  function slots(m) {
+    const by = {G: [], U: [], M: []};
+    [...HOLD[m]].forEach((c, i) => by[c].push(i));
+    const out = [];
+    for (const c of Object.keys(by)) {
+      const n = by[c].length, col = G.cols[c], top = col.base - n * G.ph - (n - 1) * G.gap;
+      by[c].forEach((i, j) => { out[i] = {x: col.x, y: Math.max(G.top, top) + j * (G.ph + G.gap), o: m === 'buy' && c === 'M' ? .18 : 1}; });
+    }
+    return out;
+  }
+  const show = i => { const p = pos[i], g = G.pills[i]; g.g.setAttribute('transform', `translate(${f1(clamp(p.x, g.w / 2 + 2, G.W - g.w / 2 - 2))},${f1(p.y)})`); g.g.setAttribute('opacity', f1(p.o)); };
+  function place(m, now) {
+    if (!G) return;
+    const to = slots(m);
+    if (G.cap) G.cap.textContent = CAP[m];
+    const buy = m === 'buy';
+    pos.forEach((p, i) => {
+      gsap.killTweensOf(p);
+      if (now || Kit.calm || !p.set) { Object.assign(p, to[i], {set: true}); show(i); return; }
+      if (m === 'compact' && i === 2 && HOLD.compact[2] === 'G') {
+        // The aid sets out from Washington and crosses the sea to Greenland.
+        const via = slots('buy'); const u = {x: G.cols.U.x, y: Math.min(via[3].y, to[i].y)};
+        gsap.timeline().to(p, {x: u.x, y: u.y, o: 1, duration: .45, ease: 'power2.out', onUpdate: () => show(i)})
+          .to(p, {x: to[i].x, y: to[i].y, duration: .8, ease: 'power2.inOut', onUpdate: () => show(i)});
+      } else gsap.to(p, {x: to[i].x, y: to[i].y, o: to[i].o, duration: .7, delay: i * .07, ease: 'back.out(1.3)', onUpdate: () => show(i)});
+    });
+    // Whose flag flies over Greenland.
+    if (Kit.calm || now) { G.flagUS.setAttribute('opacity', buy ? 1 : 0); G.flagGL.setAttribute('opacity', buy ? 0 : 1); }
+    else { gsap.to(G.flagUS, {attr: {opacity: buy ? 1 : 0}, duration: .35, delay: buy ? .25 : 0}); gsap.to(G.flagGL, {attr: {opacity: buy ? 0 : 1}, duration: .35, delay: buy ? 0 : .25}); }
+  }
+
+  function setMode(m) {
+    mode = m;
+    document.querySelectorAll('.mode').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+    svg.setAttribute('aria-label', m === 'buy'
+      ? 'Bought: the US flag flies over Greenland, and sovereignty, defense and land rights all pile up on the US side; economic aid is not needed.'
+      : 'Compact: Greenland keeps its flag and its sovereignty, economic aid crosses the sea from Washington to Greenland, and defense and land rights go to the US.');
+    place(m, false);
+    Kit.haptic('selection');
+    tried.add(m);
+    if (tried.size === 2 && Kit.$('why').classList.contains('gone')) {
+      Kit.hide('say'); card.classList.add('answered'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    }
+  }
+  Kit.$('modes').addEventListener('click', e => { const b = e.target.closest('.mode'); if (b) setMode(b.dataset.m); });
+
+  // Drawn again, at the size it now has, whenever its room changes.
+  let seen = '';
+  new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key !== seen) { seen = key; draw(); } }).observe(svg);
+  Kit.onShow.card = () => draw();
+  // The four come in over the sea, one after the other.
+  Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.pills.map(p => p.g), {opacity: 0, duration: .45, stagger: .08, ease: 'power2.out', clearProps: 'opacity'}); };
+  Kit.play.card = async () => {
+    document.querySelector('.mode[data-m="buy"]').click();
+    await new Promise(r => setTimeout(r, 900));
+    document.querySelector('.mode[data-m="compact"]').click();
+    await new Promise(r => setTimeout(r, 1800));
+  };
+})();
 Kit.single();
 </script>
 </html>

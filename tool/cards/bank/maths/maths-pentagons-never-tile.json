@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "The page shows one point on a floor with 360° around it, and four shapes to tap: triangle, square, pentagon and hexagon. It asks whether copies of a shape can close around one corner."
+    "label": "Four tiles lie round one point of a floor, each showing the corner it brings: a triangle 60°, a square 90°, a pentagon 108°, a hexagon 120°, with 360° to fill. Tapping a shape lays its copies round the point: triangles, squares and hexagons close and fill the floor with a repeating pattern; pentagons leave a 36° gap, and a fourth overlaps."
   },
   "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=268s",

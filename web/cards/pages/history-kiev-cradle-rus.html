@@ -1,30 +1,43 @@
 <!doctype html>
 <!-- slug: history-kiev-cradle-rus -->
+<!-- Look: Eastern Europe seen from above, drawn flat on a plate with an ink rim: cream land, a pale blue sea, the
+     Dnieper in a strong blue running south through Kiev, which stands on it as a white church under golden
+     domes. Dragging along the timeline under the map runs the late 800s to the early 1200s: Kievan Rus' spreads
+     from Kiev in red, north to the Baltic lakes and east to the upper Volga, while the count of centuries climbs.
+     At the end the reader draws today's border: the map closes in on Ukraine, its border draws itself in ink,
+     and the names come in, Ukraine around Kiev, Russia beyond the line. The timeline goes; the map takes its room.
+     Map: Natural Earth 1:50m (world-atlas 2.0.2), public domain, with Crimea drawn in Ukraine as the United
+     Nations recognise it; the Dnieper traced through the towns on its banks; the realm drawn by hand, roughly, near
+     its widest in the 11th century (Novgorod's lands to Lake Ladoga, Rostov and Suzdal in the north-east, Volhynia
+     in the west), starting as the river road from Novgorod to Kiev that it was in 882. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Kiev, the cradle of Rus'</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:max(1.1cqh,8px)}
+#meter{font:800 max(2.3cqh,15px)/1.2 var(--display);color:var(--k);margin:0;letter-spacing:-.005em}
+#meter span{font-variant-numeric:tabular-nums}
 #mapbox{flex:1;min-height:0;position:relative}
-#map{display:block;width:100%;height:100%;touch-action:none;cursor:pointer}
-#meter{font:700 max(2.4cqh,15px)/1.2 var(--display);color:var(--k);text-align:center;margin:0}
-#meter span{font-family:var(--mono)}
-#ctl{display:flex;justify-content:center;min-height:max(5.4cqh,36px)}
-#go{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.3cqh 5cqw;cursor:pointer}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.85cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-#why .big{margin:0}
+#map{display:block;width:100%;height:100%;touch-action:none;cursor:ew-resize}
+#ctl{position:absolute;left:0;right:0;bottom:0;display:flex}
+#go{flex:1;font:800 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:max(1.3cqh,10px) 5cqw;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0;letter-spacing:-.01em}
+#why .body{font:500 max(1.85cqh,12.5px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Drag · watch">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">CRADLE OF RUS'</span></div>
     <h2 class="q">Why does Russia see Ukraine as a wound, not just a neighbor?</h2>
     <div class="stagebox" id="stage">
-      <p id="meter">Kiev, capital for <span id="cent">0.0</span> centuries</p>
-      <div id="mapbox"><svg id="map"></svg></div>
-      <div id="ctl"><button id="go" class="gone">Draw today's border</button></div>
+      <p id="meter"><span id="lead">Kiev becomes the capital in 882</span><span id="count" hidden>Kiev, capital for <span id="cent">0.1</span> centuries</span></p>
+      <div id="mapbox">
+        <svg id="map" role="img" aria-label="A map of Eastern Europe: Kiev stands on the Dnieper as a church under golden domes. A timeline under the map runs from the late 800s to the early 1200s."></svg>
+        <div id="ctl"><button id="go" class="gone">Draw today's border</button></div>
+      </div>
       <div id="why" class="gone">
         <p class="big">Russia was born in Kiev.</p>
         <p class="body">Kiev was the capital of the first great Russian state for about four centuries, from the late 800s to the early 1200s. So it is seen as the cradle of the Russian people and of the later empire, and that cradle lies in Ukraine.</p>
@@ -37,107 +50,287 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-let t = 0, bordered = false, G = null, dragging = false, revealed = false;
-const svg = Kit.$('map');
+const RUS = {"box":[[0,0],[2000,1984]],"land":"M1639 2024 1640 2016 1611 1953 1605 1946 1584 1940 1577 1931 1560 1920 1532 1915 1495 1893 1398 1819 1360 1809 1335 1784 1325 1789 1310 1786 1300 1778 1288 1761 1247 1747 1246 1743 1268 1732 1252 1725 1262 1719 1287 1732 1316 1720 1316 1709 1312 1708 1312 1702 1326 1678 1330 1658 1335 1653 1339 1656 1341 1663 1346 1647 1367 1646 1337 1619 1326 1619 1314 1597 1328 1598 1344 1588 1363 1590 1357 1576 1410 1549 1411 1543 1403 1528 1392 1528 1386 1538 1362 1543 1375 1531 1363 1534 1340 1551 1296 1556 1284 1572 1264 1578 1249 1594 1242 1590 1233 1591 1215 1602 1198 1602 1185 1607 1158 1632 1149 1650 1136 1660 1150 1642 1150 1633 1146 1627 1135 1644 1121 1652 1123 1672 1133 1696 1152 1723 1166 1735 1173 1735 1192 1725 1204 1728 1214 1719 1242 1723 1232 1756 1196 1764 1182 1755 1168 1756 1161 1768 1147 1777 1143 1786 1117 1786 1101 1795 1088 1814 1074 1825 1052 1828 1030 1814 1041 1779 1036 1761 1025 1752 1011 1752 992 1737 971 1739 964 1732 1007 1698 1016 1696 1042 1678 1037 1664 1026 1668 1010 1657 962 1666 932 1649 918 1647 915 1643 929 1639 930 1633 910 1629 900 1620 954 1628 968 1614 953 1619 933 1612 926 1598 926 1579 913 1557 924 1584 921 1611 898 1610 900 1599 889 1613 872 1613 849 1620 839 1648 809 1686 781 1698 772 1696 768 1699 766 1710 770 1716 772 1744 761 1784 725 1791 726 1774 729 1770 721 1768 715 1775 717 1785 707 1808 713 1808 695 1834 695 1864 688 1887 686 1910 678 1921 668 1917 655 1919 639 1939 634 1980 624 1984 603 2006 619 2018 622 2024 17 2024 17 2024 22 2018 24 2004 17 1996 9 1993 -1 1983 -4 1972 -17 1951 -33 1936 -31 1930 -40 1929 -40 777 -40 777 -9 773 43 769 69 749 88 749 111 740 145 738 172 741 193 761 194 766 176 751 183 784 191 792 223 796 236 791 253 776 264 750 271 747 287 750 295 747 320 722 336 692 334 705 323 724 298 749 314 759 330 759 338 727 341 709 336 673 339 648 352 576 369 559 379 531 396 509 441 500 444 513 466 542 471 566 489 580 504 578 530 557 534 497 549 451 540 447 533 456 527 457 510 446 501 416 511 405 502 403 500 390 505 383 506 364 521 358 536 358 536 350 542 351 553 342 563 345 578 340 606 343 610 339 610 332 664 344 681 356 726 362 732 356 736 327 749 336 759 322 770 326 780 324 790 308 838 322 840 314 819 290 787 290 767 271 761 255 767 260 769 248 762 242 746 251 727 253 711 259 699 251 666 261 669 241 658 260 650 261 638 253 641 266 637 265 627 272 623 265 598 277 570 282 562 290 557 287 526 291 513 288 498 300 490 302 487 300 501 283 492 274 489 263 480 277 466 278 466 265 474 259 471 254 476 245 460 241 443 228 441 219 431 224 424 217 426 181 437 152 440 132 442 133 440 126 446 123 440 91 435 83 443 61 443 50 437 42 441 11 458 -7 459 -15 468 -14 465 -31 477 -32 481 -29 501 -36 500 -40 2040 -40 2040 1554 2036 1554 2019 1578 1999 1590 1989 1590 1987 1600 1974 1594 1981 1607 1976 1619 1975 1639 1966 1681 1959 1676 1958 1686 1947 1701 1946 1716 1951 1723 1971 1727 1995 1745 2017 1795 2018 1767 2023 1761 2021 1798 2028 1844 2040 1852 2040 2024ZM330 -40 330 -39 319 -35 327 -33 324 -24 309 -17 298 -27 299 -12 295 -7 300 0 289 7 276 10 270 3 268 19 275 31 268 36 256 63 257 81 245 75 239 88 228 172 232 179 241 180 244 191 259 189 265 208 281 226 279 236 289 245 295 271 293 277 270 292 237 306 244 312 266 308 268 315 257 317 248 333 222 343 219 341 175 363 142 355 136 357 164 368 169 378 154 380 155 403 151 407 145 430 140 429 136 438 135 469 121 490 120 509 103 541 69 588 63 590 54 582 5 576 5 586 -5 582 -29 598 -31 608 -29 628 -40 638 -40 -40ZM930 1655 940 1659 930 1658 900 1649 897 1638 905 1648ZM265 462 249 472 244 493 248 502 241 504 235 515 222 520 212 537 200 540 211 526 205 506 212 479 237 457 247 456 251 459 257 452ZM104 583 98 586 97 579 103 555 121 528 126 527 151 488 155 491ZM351 229 356 230 363 240 359 246 351 246 349 254 338 253 336 235 340 234 339 241 343 240 344 224 347 223ZM449 -40 452 -40 451 -36 451 -36 458 -37 459 -31 451 -27 446 -40 449 -40ZM456 243 464 246 467 251 461 254 462 264 457 263 450 251ZM424 223 422 227 416 227 414 213 416 211ZM455 414 473 418 489 435 479 435 456 452 438 451 432 456 423 474 415 476 415 470 428 456 414 443 413 440 420 432 416 421 423 420 427 424 436 423 440 416ZM473 396 469 400 465 396 459 406 452 407 449 404 448 389 431 379 452 379 463 369 466 377 475 380 478 396ZM491 425 487 426 478 418 481 414 492 416ZM-1 686 -11 682 -21 673 -12 656 5 675Z","ukraine":"M1340 1551 1296 1556 1284 1572 1264 1578 1249 1594 1242 1590 1233 1591 1215 1602 1198 1602 1185 1607 1158 1632 1149 1650 1136 1660 1150 1642 1150 1633 1146 1627 1135 1644 1121 1652 1123 1672 1133 1696 1119 1691 1119 1681 1111 1673 1095 1675 1088 1666 1066 1662 1051 1653 1041 1652 1037 1664 1026 1668 1010 1657 962 1666 932 1649 918 1647 915 1643 929 1639 930 1633 910 1629 900 1620 954 1628 968 1614 953 1619 933 1612 926 1598 926 1579 913 1557 924 1584 921 1611 898 1610 900 1599 889 1613 872 1613 849 1620 839 1648 809 1686 781 1698 772 1696 768 1699 766 1710 770 1716 772 1744 763 1733 752 1727 740 1729 717 1739 709 1736 707 1744 686 1737 677 1731 671 1721 691 1715 691 1701 708 1684 709 1675 723 1665 728 1653 724 1642 726 1626 741 1620 742 1634 749 1626 770 1633 776 1628 784 1638 800 1636 804 1632 791 1620 792 1602 788 1592 768 1578 765 1566 767 1548 741 1526 748 1498 743 1480 730 1481 721 1464 705 1460 700 1466 698 1460 693 1460 693 1453 690 1451 677 1448 674 1442 660 1432 643 1425 622 1434 598 1431 582 1442 562 1446 551 1465 505 1470 472 1485 466 1485 448 1462 421 1462 390 1450 373 1448 361 1437 357 1436 350 1444 338 1448 333 1431 321 1427 318 1420 308 1414 304 1398 296 1397 299 1382 310 1372 330 1336 347 1344 350 1340 342 1328 345 1317 343 1292 348 1286 419 1219 435 1218 444 1207 445 1199 440 1181 448 1174 426 1128 425 1108 426 1099 433 1097 448 1103 474 1079 528 1077 567 1083 617 1101 639 1104 647 1120 670 1124 671 1133 681 1123 690 1126 700 1122 725 1130 727 1138 732 1141 740 1131 755 1123 769 1147 782 1143 819 1140 827 1147 829 1155 841 1161 847 1152 841 1129 855 1100 875 1082 883 1085 891 1080 915 1080 928 1086 937 1085 946 1079 955 1060 977 1065 997 1056 1032 1055 1043 1064 1055 1090 1073 1109 1072 1115 1057 1119 1067 1155 1063 1161 1097 1168 1115 1164 1122 1177 1131 1179 1140 1209 1139 1228 1151 1244 1156 1246 1169 1236 1183 1238 1196 1250 1208 1249 1215 1256 1224 1247 1264 1233 1274 1243 1283 1261 1306 1277 1312 1275 1313 1266 1318 1263 1331 1271 1343 1271 1361 1282 1377 1277 1386 1287 1396 1288 1417 1301 1436 1298 1441 1330 1430 1349 1417 1356 1422 1365 1439 1372 1426 1375 1421 1382 1419 1397 1432 1400 1437 1417 1435 1423 1442 1426 1434 1456 1435 1464 1428 1469 1378 1473 1373 1475 1363 1493 1346 1500 1341 1505 1337 1529 1343 1532 1339 1543ZM930 1655 940 1659 930 1658 900 1649 897 1638 905 1648ZM1037 1664 1041 1652 1051 1653 1066 1662 1088 1666 1095 1675 1111 1673 1119 1681 1119 1691 1133 1696 1152 1723 1166 1735 1173 1735 1192 1725 1204 1728 1214 1719 1242 1723 1232 1756 1196 1764 1182 1755 1168 1756 1161 1768 1147 1777 1143 1786 1117 1786 1101 1795 1088 1814 1074 1825 1052 1828 1030 1814 1041 1779 1036 1761 1025 1752 1011 1752 992 1737 971 1739 964 1732 1007 1698 1016 1696 1042 1678Z","uaBorder":"M772 1744 763 1733 752 1727 740 1729 717 1739 709 1736 707 1744 686 1737 677 1731 671 1721 691 1715 691 1701 708 1684 709 1675 723 1665 728 1653 724 1642 726 1626 741 1620 742 1634 749 1626 770 1633 776 1628 784 1638 800 1636 804 1632 791 1620 792 1602 788 1592 768 1578 765 1566 767 1548 741 1526 748 1498 743 1480 730 1481 721 1464 705 1460 700 1466 698 1460 693 1460 693 1453 690 1451 677 1448 674 1442 660 1432 643 1425 622 1434 598 1431 582 1442 562 1446 551 1465 505 1470 472 1485 466 1485 448 1462 421 1462 390 1450 373 1448 361 1437 357 1436 350 1444 338 1448 333 1431 321 1427 318 1420 308 1414 304 1398 296 1397 299 1382 310 1372 330 1336 347 1344 350 1340 342 1328 345 1317 343 1292 348 1286 419 1219 435 1218 444 1207 445 1199 440 1181 448 1174 426 1128 425 1108 426 1099 433 1097 448 1103 474 1079 528 1077 567 1083 617 1101 639 1104 647 1120 670 1124 671 1133 681 1123 690 1126 700 1122 725 1130 727 1138 732 1141 740 1131 755 1123 769 1147 782 1143 819 1140 827 1147 829 1155 841 1161 847 1152 841 1129 855 1100 875 1082 883 1085 891 1080 915 1080 928 1086 937 1085 946 1079 955 1060 977 1065 997 1056 1032 1055 1043 1064 1055 1090 1073 1109 1072 1115 1057 1119 1067 1155 1063 1161 1097 1168 1115 1164 1122 1177 1131 1179 1140 1209 1139 1228 1151 1244 1156 1246 1169 1236 1183 1238 1196 1250 1208 1249 1215 1256 1224 1247 1264 1233 1274 1243 1283 1261 1306 1277 1312 1275 1313 1266 1318 1263 1331 1271 1343 1271 1361 1282 1377 1277 1386 1287 1396 1288 1417 1301 1436 1298 1441 1330 1430 1349 1417 1356 1422 1365 1439 1372 1426 1375 1421 1382 1419 1397 1432 1400 1437 1417 1435 1423 1442 1426 1434 1456 1435 1464 1428 1469 1378 1473 1373 1475 1363 1493 1346 1500 1341 1505 1337 1529 1343 1532 1339 1543 1340 1551","borders":"M-40 189 -29 188 -9 174 4 143 5 88 25 88 41 63 33 42 17 20 39 -31 38 -40M296 1397 272 1401 255 1377 230 1378 218 1372 193 1370 180 1391 149 1402 133 1390 122 1399 85 1399 76 1402 69 1422 6 1411 -18 1385 -28 1381 -38 1341 -29 1322 -12 1301 9 1307 27 1305 51 1292 59 1274 74 1269 91 1257 106 1258 112 1260 112 1270 123 1272 132 1263 145 1256 153 1277 162 1281 158 1297 168 1298 176 1303 185 1291 199 1286 214 1288 234 1299 244 1290 278 1296 293 1305 300 1319 330 1336M688 1887 663 1883 651 1878 640 1861 630 1863 625 1859 608 1856 586 1840 543 1845 524 1851 502 1863 494 1872 470 1879 396 1860 382 1862 362 1857 313 1843 291 1844 288 1841 289 1833 301 1822 281 1803 275 1807 272 1818 258 1823 252 1844 261 1877 274 1889 287 1907 284 1915 264 1933 247 1935 242 1955 246 1974 237 1983 231 1984 224 1979 174 1983 172 1975 179 1970 194 1944 169 1933 171 1925 160 1916 150 1897 136 1887 134 1878 121 1882 122 1892 119 1898 107 1904 105 1913 96 1914 96 1908 92 1903 46 1868 26 1841 26 1833 35 1829 45 1834 49 1827 50 1821 37 1793 59 1794 62 1789 48 1769 36 1760 35 1754 40 1738 53 1724 60 1707 53 1702 36 1704 37 1699 42 1699 45 1679 50 1674 55 1678 68 1678 65 1670 45 1653 51 1643 43 1633 46 1628 42 1610 48 1601 61 1595 65 1599 74 1599 99 1587 135 1596 140 1600 145 1614 158 1626 165 1640 170 1640 166 1665 180 1683 209 1705 203 1715 198 1717 209 1729 196 1731 196 1734 207 1739 213 1748 231 1755 242 1769 250 1768 262 1758 272 1757 282 1763 287 1772 274 1773 269 1783 281 1803M2040 979 2022 1021 2001 1043 1983 1052 1978 1076 1953 1107 1942 1109 1968 1163 1965 1172 1947 1186 1941 1185 1892 1144 1884 1142 1875 1149 1870 1164 1872 1186 1859 1203 1856 1219 1857 1252 1876 1270 1862 1307 1860 1330 1867 1345 1896 1357 1902 1366 1904 1383 1920 1400 1931 1392 1972 1388 1977 1391 2014 1427 2040 1458M2040 1475 2023 1476 2020 1482 2025 1490 2040 1495M2040 1996 2036 1992 2001 1970 1989 1973 1985 1967 1977 1967 1960 1961 1940 1960 1915 1948 1914 1920 1903 1918 1888 1922 1872 1910 1851 1906 1846 1921 1835 1911 1825 1912 1789 1935 1779 1937 1772 1933 1773 1920 1721 1905 1712 1896 1695 1891 1681 1895 1670 1890 1644 1897 1611 1898 1594 1890 1574 1888 1541 1877 1532 1880 1506 1877 1501 1879 1495 1893M915 1080 904 1060 907 1037 902 1028 904 1016 886 991 896 973 910 973 921 982 938 983 954 972 957 966 970 959 970 951 957 939 955 925 941 916 915 913 920 892 896 876 884 850 877 846 882 833 862 818 864 805 873 792 864 769 869 758 870 741 854 732 845 720 833 714 817 713 792 728 785 718 787 703 772 694 756 701 744 686 728 689 722 680 725 669 721 641 716 635 709 610 698 610 711 567 696 553 695 546 687 543 699 517 712 511 706 505 699 476 702 456 699 421 717 397 725 375 738 367 732 356M727 253 821 160 892 72 909 33 893 2 860 -26 848 -40M338 727 346 728 354 737 381 753 408 757 410 766 420 778 408 806 410 827 320 811 236 791M320 722 323 724M140 1600 158 1597 165 1601 176 1592 195 1595 201 1592 207 1582 212 1581 219 1563 232 1555 231 1551 245 1532 247 1524 274 1494 275 1483 297 1464 318 1463 338 1448M582 1442 593 1443 605 1454 625 1505 641 1536 669 1572 679 1606 678 1624 666 1670 668 1702 662 1706 671 1721M106 1258 106 1248 95 1231 96 1219 80 1213 66 1198 55 1203 43 1186 41 1181 52 1176 51 1168 33 1170 19 1155 4 1147 7 1166 -18 1175 -37 1138 -21 1127 -28 1117 -40 1117M410 827 418 824 442 846 447 859 446 872 458 955 457 989 452 998 425 1010 409 1030 431 1051 434 1057 430 1080 424 1089 425 1108M96 1914 86 1915 84 1919 74 1917 71 1938 51 1941 49 1925 44 1925 9 1963 13 1974 9 1993M-40 1913 -35 1909 -38 1896 -35 1875 -23 1874 -15 1855 -1 1847 10 1854 8 1834 11 1830 26 1833M231 1984 246 2006 263 2019 264 2024M90 2024 90 2023 97 2007 108 2009 115 1991 137 1985 143 1985 152 1994 161 1983 174 1983M339 648 375 629 399 624 426 630 441 630 449 638 458 635 490 643 506 651 525 651 546 641 556 662 587 674 618 712 634 721 625 752 642 760 631 773 611 772 606 784 588 791 583 799 578 824 566 846 577 854 576 864 562 863 561 850 544 856 536 863 526 861 519 877 510 875 492 882 486 876 459 877 446 872M534 497 576 482 583 489 584 484 609 504 619 508 633 532 641 538 668 534 687 543M722 680 708 686 693 701 689 712 660 707 655 708 647 718 634 721M97 2007 100 1994 97 1973 81 1959 71 1938M48 1601 31 1601 21 1610 8 1611 -28 1601 -39 1586 -40 1586M-40 1408 -39 1408 -39 1396 -28 1381M1977 1967 1971 1981 1964 1985 1964 1992 1975 2005 2006 2020 2006 2024M-29 1322 -31 1311 -40 1305M36 1704 25 1700 17 1680 -28 1665 -40 1668","dnieper":[[1017,728],[1001,787],[985,807],[932,819],[885,834],[841,844],[833,873],[835,903],[828,940],[816,982],[814,1002],[834,1054],[858,1095],[842,1157],[837,1228],[841,1240],[851,1270],[896,1309],[933,1340],[1020,1375],[1097,1427],[1125,1431],[1134,1491],[1086,1519],[1035,1576],[970,1612],[923,1621]],"realm":[[977,214],[1100,201],[1217,241],[1327,357],[1422,472],[1493,600],[1494,718],[1410,808],[1353,902],[1299,1015],[1242,1118],[1194,1219],[1135,1290],[1055,1332],[955,1363],[840,1392],[724,1417],[594,1439],[454,1417],[370,1358],[342,1276],[406,1166],[438,1042],[502,941],[592,842],[656,729],[681,604],[693,497],[729,402],[812,328],[891,272]],"anchors":{"kiev":[838,1240],"novgorod":[892,454],"ukraine":[[565,1314],[589,1336],[548,1293],[1283,1428],[1228,1471],[631,1275],[834,1396],[1019,1392]],"realm":[1017,738],"belarus":[[693,952],[729,1037],[681,868]],"russia":[[1310,946],[1210,827],[1329,621],[1447,1118],[1515,1267],[1159,732]]},"ukraineBox":[[296,1055],[1442,1828]],"realmBox":[[342,201],[1494,1439]]};
+(() => {
+  // One ink; cream for the land, a pale blue for the sea and a strong one for the river; the realm in red, Kiev's
+  // domes in gold.
+  const INK = '#10100c', CREAM = '#FFF3D6', SEA = '#AFD6F6', RIVER = '#2F7FE0', RED = '#D8452F', REALM = '#F3B49C', GOLD = '#FFC83D', WHITE = '#ffffff';
+  const FONT = 'Figtree, system-ui, sans-serif';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = t => t * t * (3 - 2 * t);
+  const f1 = n => (Math.round(n * 10) / 10).toString();
+  const mk = Kit.mk;
+  const svg = Kit.$('map'), card = Kit.$('card');
+  // grow: the reader runs the centuries; ready: the end reached, the border to draw; border: drawing it; done: told.
+  let phase = 'grow', G = null, dragging = false;
+  // t: the timeline, late 800s to early 1200s; z: the map closing in on Ukraine; b: the border drawn; n: the names.
+  const st = {t: 0, z: 0, b: 0, n: 0};
 
-function blobPath(g, tt){
-  const s = Math.max(tt, .07), R = g.R * s, cx = g.kx, cy = g.ky - .4 * R;
-  let d = '';
-  for (let i = 0; i <= 48; i++){
-    const a = i / 48 * Math.PI * 2;
-    const r = R * (1 + .18 * Math.sin(3 * a + 1) + .1 * Math.cos(2 * a));
-    d += (i ? 'L' : 'M') + (cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1);
+  const parse = d => d.split('M').filter(Boolean).map(seg => {
+    const v = seg.replace(/Z/g, ' ').trim().split(/\s+/).map(Number), pts = [];
+    for (let i = 0; i + 1 < v.length; i += 2) pts.push([v[i], v[i + 1]]);
+    return {pts, closed: /Z\s*$/.test(seg)};
+  });
+  const SHAPES = {land: parse(RUS.land), ukraine: parse(RUS.ukraine), uaBorder: parse(RUS.uaBorder), borders: parse(RUS.borders)};
+  const K = RUS.anchors.kiev, N = RUS.anchors.novgorod;
+  // In 882 the state was the river road from Novgorod to Kiev; by the 1050s it reached its widest. Each point of
+  // its edge starts on a narrow band along that road and moves out to its place, the far north-east last.
+  const road = p => { const dx = N[0] - K[0], dy = N[1] - K[1], u = clamp(((p[0] - K[0]) * dx + (p[1] - K[1]) * dy) / (dx * dx + dy * dy), 0, 1), q = [K[0] + u * dx, K[1] + u * dy], d = Math.hypot(p[0] - q[0], p[1] - q[1]) || 1; return [q[0] + (p[0] - q[0]) / d * 58, q[1] + (p[1] - q[1]) / d * 58]; };
+  const START = RUS.realm.map(road), FAR = Math.max(...RUS.realm.map((p, i) => Math.hypot(p[0] - START[i][0], p[1] - START[i][1])));
+  const grow = (d, t) => ease(clamp(t / (.14 + .42 * d / FAR), 0, 1));
+  const realmAt = t => RUS.realm.map((p, i) => { const s = START[i], g = grow(Math.hypot(p[0] - s[0], p[1] - s[1]), t); return [lerp(s[0], p[0], g), lerp(s[1], p[1], g)]; });
+  // Whether a point lies in Ukraine as it is today, so that no other country's name is set on it.
+  const inUkraine = (x, y) => SHAPES.ukraine.reduce((n, r) => { let c = false; for (let i = 0, j = r.pts.length - 1; i < r.pts.length; j = i++) { const [xi, yi] = r.pts[i], [xj, yj] = r.pts[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return n || c; }, false);
+
+  // Cut to the drawing's box, so nothing is drawn outside it: a shape to fill keeps its edge along the box, a line
+  // to stroke is cut into the pieces inside it.
+  function cutShape(pts, x0, y0, x1, y1) {
+    const sides = [[p => p[0] >= x0, (a, b) => [x0, a[1] + (x0 - a[0]) / (b[0] - a[0]) * (b[1] - a[1])]], [p => p[0] <= x1, (a, b) => [x1, a[1] + (x1 - a[0]) / (b[0] - a[0]) * (b[1] - a[1])]],
+      [p => p[1] >= y0, (a, b) => [a[0] + (y0 - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), y0]], [p => p[1] <= y1, (a, b) => [a[0] + (y1 - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), y1]]];
+    let out = pts;
+    for (const [inside, cut] of sides) {
+      const inp = out; out = [];
+      for (let i = 0; i < inp.length; i++) {
+        const c = inp[i], p = inp[(i + inp.length - 1) % inp.length], ci = inside(c), pi = inside(p);
+        if (ci) { if (!pi) out.push(cut(p, c)); out.push(c); } else if (pi) out.push(cut(p, c));
+      }
+      if (!out.length) break;
+    }
+    return out;
   }
-  return d + 'Z';
-}
+  function cutLine(pts, closed, x0, y0, x1, y1) {
+    const all = closed ? pts.concat([pts[0]]) : pts, parts = [];
+    let cur = null;
+    for (let i = 1; i < all.length; i++) {
+      const [ax, ay] = all[i - 1], [bx, by] = all[i], dx = bx - ax, dy = by - ay;
+      let t0 = 0, t1 = 1;
+      const ok = [[-dx, ax - x0], [dx, x1 - ax], [-dy, ay - y0], [dy, y1 - ay]].every(([p, q]) => {
+        if (p === 0) return q >= 0;
+        const r = q / p;
+        if (p < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; }
+        return true;
+      });
+      if (!ok) { cur = null; continue; }
+      const a = [ax + t0 * dx, ay + t0 * dy], b = [ax + t1 * dx, ay + t1 * dy];
+      if (!cur || t0 > 0) { cur = [a]; parts.push(cur); }
+      cur.push(b);
+      if (t1 < 1) cur = null;
+    }
+    return parts;
+  }
+  const P = (F, p) => f1(F.X(p[0])) + ',' + f1(F.Y(p[1]));
+  const fillOf = (rings, F) => rings.map(r => cutShape(r, F.x0, F.y0, F.x1, F.y1)).filter(r => r.length > 2).map(r => 'M' + r.map(p => P(F, p)).join('L') + 'Z').join('');
+  const linesOf = (rings, F) => rings.flatMap(r => cutLine(r.pts, r.closed, F.x0, F.y0, F.x1, F.y1)).filter(r => r.length > 1).map(r => 'M' + r.map(p => P(F, p)).join('L'));
 
-function setT(v){
-  t = Math.max(0, Math.min(1, v));
-  Kit.$('cent').textContent = t >= .995 ? '≈ 4' : (4 * t).toFixed(1);
-  if (!G) return;
-  G.blob.setAttribute('d', blobPath(G, t));
-  const x = G.x0 + (G.x1 - G.x0) * t;
-  G.knob.setAttribute('cx', x); G.fill.setAttribute('x2', x);
-  G.rus.setAttribute('opacity', t > .35 ? 1 : 0);
-  G.rus.setAttribute('y', G.ky - .4 * G.R * t - .15 * G.R * t);
-  if (t >= .995 && !bordered && !revealed){ revealed = true; Kit.show('go'); Kit.haptic('success');
-    if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 8, duration: .4, ease: 'power3.out'}); }
-}
+  // The part of the map shown: while the centuries run, the whole realm and the sea below it; once the border is
+  // drawn, Ukraine and the lands north of it. Widened to the drawing's shape; where the map runs out, cut to keep Kiev.
+  // The road at first; the whole realm, and the sea below it, once it has grown; Ukraine once the border is drawn.
+  const FOCUS = [{x0: 500, y0: 330, x1: 1240, y1: 1500}, {x0: 300, y0: 150, x1: 1560, y1: 1720}, {x0: 270, y0: 780, x1: 1470, y1: 1850}];
+  const mixBox = (a, b, u) => ({x0: lerp(a.x0, b.x0, u), y0: lerp(a.y0, b.y0, u), x1: lerp(a.x1, b.x1, u), y1: lerp(a.y1, b.y1, u)});
+  function frame(W, H) {
+    const f = mixBox(mixBox(FOCUS[0], FOCUS[1], ease(clamp(st.t / .6, 0, 1))), FOCUS[2], ease(st.z));
+    const A = W / H, B = RUS.box[1];
+    let w = f.x1 - f.x0, h = f.y1 - f.y0, cx = (f.x0 + f.x1) / 2, cy = (f.y0 + f.y1) / 2;
+    if (w / h < A) w = h * A; else h = w / A;
+    if (w > B[0]) { w = B[0]; h = w / A; }
+    if (h > B[1]) { h = B[1]; w = h * A; }
+    // Kiev stays well inside, and the window inside the map.
+    cy = clamp(cy, K[1] - h * .62, K[1] + h * .3);
+    cx = clamp(cx, w / 2, B[0] - w / 2); cy = clamp(cy, h / 2, B[1] - h / 2);
+    const x0 = cx - w / 2, y0 = cy - h / 2, s = W / w;
+    return {s, x0, y0, x1: x0 + w, y1: y0 + h, X: x => (x - x0) * s, Y: y => (y - y0) * s};
+  }
 
-Kit.onShow.card = () => {
-  svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  // The band under the map holds the timeline and, under its knob, the two dates whole.
-  const lsz = Math.max(f * .8, 12), kr = Math.max(11, f * .8);
-  const band = Math.max(3.6 * f, .18 * H, (kr + lsz * 1.15) / .65), Hm = H - band;
-  const R = Math.min(.3 * W, .36 * Hm), kx = .4 * W, ky = .66 * Hm;
-  const ty = Hm + band * .35, x0 = .08 * W, x1 = .92 * W;
-  const ink = 'var(--k)';
-  const mk = (tag, a, p = svg) => Kit.mk(tag, a, p);
-  // Ukraine side (south-west of today's border)
-  const bP = `M0,${.28 * Hm} Q${.45 * W},${.36 * Hm} ${W},${.6 * Hm}`;
-  const ukr = mk('path', {d: bP + ` L${W},${Hm} L0,${Hm}Z`, fill: ink, opacity: 0, style: 'fill-opacity:.1'});
-  const blob = mk('path', {d: '', fill: ink, 'fill-opacity': .22, stroke: ink, 'stroke-width': Math.max(2, f * .14), 'stroke-linejoin': 'round'});
-  const border = mk('path', {d: bP, fill: 'none', stroke: ink, 'stroke-width': Math.max(3, f * .22), 'stroke-linecap': 'round', opacity: 0});
-  const rus = mk('text', {x: kx, y: ky, 'text-anchor': 'middle', fill: ink, opacity: 0, style: `font:700 ${Math.max(f * .85, 12)}px var(--display);letter-spacing:.06em`});
-  rus.textContent = "KIEVAN RUS'";
-  const lR = mk('text', {x: W - 6, y: Math.max(f * 1.2, .1 * Hm), 'text-anchor': 'end', fill: ink, opacity: 0, style: `font:800 ${Math.max(f, 13)}px var(--display);letter-spacing:.12em`});
-  lR.textContent = 'RUSSIA TODAY';
-  const lU = mk('text', {x: 6, y: Hm - f * .5, fill: ink, opacity: 0, style: `font:800 ${Math.max(f, 13)}px var(--display);letter-spacing:.12em`});
-  lU.textContent = 'UKRAINE TODAY';
-  mk('circle', {cx: kx, cy: ky, r: Math.max(5, f * .38), fill: ink});
-  mk('circle', {cx: kx, cy: ky, r: Math.max(9, f * .7), fill: 'none', stroke: ink, 'stroke-width': 2});
-  const kl = mk('text', {x: kx + Math.max(13, f * .95), y: ky + f * .35, fill: ink, style: `font:800 ${Math.max(f * .95, 13)}px var(--body)`});
-  kl.textContent = 'KIEV';
-  // timeline
-  mk('line', {x1: x0, y1: ty, x2: x1, y2: ty, stroke: ink, 'stroke-opacity': .25, 'stroke-width': Math.max(6, f * .45), 'stroke-linecap': 'round'});
-  const fill = mk('line', {x1: x0, y1: ty, x2: x0, y2: ty, stroke: ink, 'stroke-width': Math.max(6, f * .45), 'stroke-linecap': 'round'});
-  const knob = mk('circle', {cx: x0, cy: ty, r: kr, fill: 'var(--c)', stroke: ink, 'stroke-width': Math.max(3, f * .22)});
-  const ls = `font:600 ${lsz}px var(--mono)`, ly = Math.min(ty + Math.max(f * 1.9, 26), H - lsz * .25);
-  const a = mk('text', {x: x0 - 4, y: ly, fill: ink, style: ls}); a.textContent = 'late 800s';
-  const b = mk('text', {x: x1 + 4, y: ly, 'text-anchor': 'end', fill: ink, style: ls}); b.textContent = 'early 1200s';
-  G = {W, H, Hm, R, kx, ky, x0, x1, ty, blob, knob, fill, rus, ukr, border, lR, lU};
-  setT(t);
-  if (bordered){ [ukr, border, lR, lU].forEach(e => e.setAttribute('opacity', 1)); }
-};
+  // A church of Kiev, standing on its point: a white body under three golden onion domes.
+  function church(parent, x, y, h, k) {
+    const g = mk('g', {transform: `translate(${f1(x)},${f1(y)})`}, parent), u = h / 10;
+    const at = {stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round'};
+    const dome = (cx, base, r) => `M${f1(cx - r)},${f1(base)}C${f1(cx - r)},${f1(base - r * .9)} ${f1(cx - r * .2)},${f1(base - r * 1.15)} ${f1(cx)},${f1(base - r * 2)}C${f1(cx + r * .2)},${f1(base - r * 1.15)} ${f1(cx + r)},${f1(base - r * .9)} ${f1(cx + r)},${f1(base)}Z`;
+    mk('rect', Object.assign({x: f1(-4.4 * u), y: f1(-4 * u), width: f1(8.8 * u), height: f1(4 * u), fill: WHITE}, at), g);
+    [-3, 3].forEach(cx => { mk('rect', Object.assign({x: f1(cx - .9 * u), y: f1(-5.6 * u), width: f1(1.8 * u), height: f1(1.6 * u), fill: WHITE}, at), g); mk('path', Object.assign({d: dome(cx * u, -5.6 * u, 1.15 * u), fill: GOLD}, at), g); });
+    mk('rect', Object.assign({x: f1(-1.4 * u), y: f1(-6.6 * u), width: f1(2.8 * u), height: f1(2.6 * u), fill: WHITE}, at), g);
+    mk('path', Object.assign({d: dome(0, -6.6 * u, 1.7 * u), fill: GOLD}, at), g);
+    mk('path', {d: `M0,${f1(-10 * u)}V${f1(-11.6 * u)}M${f1(-.55 * u)},${f1(-11 * u)}H${f1(.55 * u)}`, stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linecap': 'round'}, g);
+    mk('path', {d: `M${f1(-.8 * u)},0V${f1(-1.9 * u)}A${f1(.8 * u)},${f1(.8 * u)} 0 0 1 ${f1(.8 * u)},${f1(-1.9 * u)}V0`, fill: INK}, g);
+    return g;
+  }
+  function word(parent, x, y, text, o = {}) {
+    const t = mk('text', {x: f1(x), y: f1(y), 'font-family': FONT, 'font-size': f1(o.size || G.fs), 'font-weight': o.weight || 800, 'text-anchor': o.anchor || 'start',
+      'letter-spacing': o.spacing || '.08em', fill: o.fill || INK, stroke: o.halo || CREAM, 'stroke-width': f1((o.size || G.fs) * .34), 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, parent);
+    t.textContent = text;
+    return t;
+  }
+  const boxOf = (e, pad = 2) => { const b = e.getBBox(); return {x0: b.x - pad, y0: b.y - pad, x1: b.x + b.width + pad, y1: b.y + b.height + pad}; };
+  const inPoly = (pts, x, y) => { let c = false; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) { const [xi, yi] = pts[i], [xj, yj] = pts[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
 
-function fromEvent(e){
-  const r = svg.getBoundingClientRect();
-  setT((e.clientX - r.left - G.x0) / (G.x1 - G.x0));
-}
-svg.addEventListener('pointerdown', e => { if (bordered) return; dragging = true; svg.setPointerCapture?.(e.pointerId); fromEvent(e); Kit.haptic('selection'); });
-svg.addEventListener('pointermove', e => { if (dragging) fromEvent(e); });
-svg.addEventListener('pointerup', () => dragging = false);
-svg.addEventListener('pointercancel', () => dragging = false);
+  function draw() {
+    const {W, H} = Kit.fitSvg(svg);
+    if (W < 40 || H < 40) return;
+    svg.innerHTML = '';
+    const fs = clamp(W * .04, 11, 13.5), k = clamp(W * .0075, 1.8, 2.7);
+    // While the centuries run, their line under the map; when it is done, the button to draw the border sits there.
+    const band = phase === 'grow' || phase === 'ready' ? Math.max(42, fs * 3.2) : 0, Hm = H - band;
+    const F = frame(W, Hm);
+    G = {W, H, Hm, fs, k, F, band};
+    const r = clamp(W * .035, 8, 14);
+    const clip = mk('clipPath', {id: 'plate'}, mk('defs', {}, svg));
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(Hm), rx: f1(r)}, clip);
+    const map = mk('g', {'clip-path': 'url(#plate)'}, svg);
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(Hm), fill: SEA}, map);
+    const line = (w, c = INK) => ({fill: 'none', stroke: c, 'stroke-width': f1(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+    mk('path', {d: fillOf(SHAPES.land.map(r => r.pts), F), fill: CREAM, 'fill-rule': 'evenodd'}, map);
+    G.realm = mk('path', Object.assign(line(k * .7, RED), {fill: REALM, 'fill-rule': 'evenodd'}), map);
+    mk('path', Object.assign({d: linesOf([{pts: RUS.dnieper, closed: false}], F).join('')}, line(k * 1.15, RIVER)), map);
+    mk('path', Object.assign({d: linesOf(SHAPES.land, F).join('')}, line(k)), map);
+    // Today's borders: the others thin; Ukraine's own, in ink, drawn piece by piece when the reader asks.
+    G.others = mk('path', Object.assign({d: linesOf(SHAPES.borders, F).join(''), opacity: 0, 'stroke-dasharray': `${f1(k * 2.2)} ${f1(k * 1.6)}`}, line(k * .6)), map);
+    G.border = linesOf(SHAPES.uaBorder, F).map(d => mk('path', Object.assign({d}, line(k * 1.25)), map));
+    G.border.forEach(p => { p._len = p.getTotalLength(); p.setAttribute('stroke-dasharray', f1(p._len + 1)); });
+    mk('rect', Object.assign({x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(Hm - k), rx: f1(r - k / 2)}, line(k)), svg);
 
-Kit.$('go').addEventListener('click', () => {
-  if (bordered) return; bordered = true; Kit.haptic('light');
-  Kit.hide('go'); Kit.hide('ctl'); Kit.hide('say');
-  const d = Kit.calm ? 0 : 1;
-  const len = G.border.getTotalLength();
-  G.border.setAttribute('opacity', 1);
-  gsap.fromTo(G.border, {strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: 1 * d, ease: 'power2.inOut',
-    onComplete: () => G.border.removeAttribute('style')});
-  gsap.to([G.ukr, G.lU, G.lR], {attr: {opacity: 1}, duration: .5 * d, delay: .8 * d});
-  setTimeout(() => {
-    Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .12, duration: .4, ease: 'power3.out'});
-  }, 1100 * d);
-});
+    // Kiev: its church on the river, its name to the west of it.
+    const L = mk('g', {}, svg), kx = F.X(K[0]), ky = F.Y(K[1]), ch = clamp(fs * 2.6, 24, 38);
+    church(L, kx - ch * .06, ky + ch * .12, ch, k);
+    G.kiev = word(L, kx - ch * .58, ky - ch * .05, 'KIEV', {anchor: 'end', size: fs * 1.05});
+    G.rus = word(L, 0, 0, "KIEVAN RUS'", {anchor: 'middle', halo: REALM, fill: INK});
+    const m = k + 4;
+    // The names of today, each in its own country: at the first of its places the map shows that keeps it inside
+    // the plate, off Ukraine (for the other two) and off the names already set.
+    G.names = mk('g', {opacity: 0}, svg);
+    const cx0 = kx - ch * .06;
+    const taken = [boxOf(G.kiev), {x0: cx0 - ch * .48, y0: ky + ch * .12 - ch * 1.2, x1: cx0 + ch * .48, y1: ky + ch * .14}];
+    // Each name is ringed in the colour of the ground under it, the realm's or the land's; a place wholly on one or
+    // the other is taken first, so the ring never changes colour halfway along a word.
+    const realm = realmAt(st.t), inRealm = ([dx, dy]) => inPoly(realm, dx, dy);
+    // Whether the river runs through a place on the drawing.
+    const river = RUS.dnieper.map(p => [F.X(p[0]), F.Y(p[1])]);
+    const wet = b => river.some((p, i) => i && [0, .25, .5, .75, 1].some(u => { const x = lerp(river[i - 1][0], p[0], u), y = lerp(river[i - 1][1], p[1], u); return x > b.x0 && x < b.x1 && y > b.y0 && y < b.y1; }));
+    G.kiev.setAttribute('stroke', inRealm([F.x0 + (+G.kiev.getAttribute('x') - G.kiev.getComputedTextLength() / 2) / F.s, F.y0 + (+G.kiev.getAttribute('y') - fs * .4) / F.s]) ? REALM : CREAM);
+    // A name of two words may stand on two lines where one would not sit wholly on one ground; with no such place
+    // it takes the best it has, without a ring.
+    const put = (text, spots, o, own) => {
+      const h = o.size || fs, e = word(G.names, 0, 0, text, Object.assign({anchor: 'middle'}, o));
+      const parts = text.split(' '), lines = parts.length > 1 ? [[text], parts] : [[text]];
+      const set = ls => { e.textContent = ''; ls.forEach((l, i) => { const s = mk('tspan', {x: 0, dy: i ? f1(h * 1.12) : 0}, e); s.textContent = l; }); return Math.max(...[...e.children].map(s => s.getComputedTextLength())); };
+      for (const strict of [true, false]) for (const ls of lines) {
+        const w = set(ls), tall = h * (1 + (ls.length - 1) * 1.12);
+        for (const p of spots) {
+          const x = clamp(F.X(p[0]), m + w / 2, W - m - w / 2), y = F.Y(p[1]) - tall / 2 + h * .82;
+          if (y - h < m || y - h + tall > Hm - m) continue;
+          const b = {x0: x - w / 2, y0: y - h, x1: x + w / 2, y1: y - h + tall + h * .2};
+          if (taken.some(a => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1)) continue;
+          const pts = [0, .25, .5, .75, 1].flatMap(u => [0, .5, 1].map(v => [b.x0 + u * w, b.y0 + v * (b.y1 - b.y0)])).map(([sx, sy]) => [F.x0 + sx / F.s, F.y0 + sy / F.s]);
+          if (pts.some(([dx, dy]) => inUkraine(dx, dy) !== own)) continue;
+          const under = pts.map(inRealm), one = under.every(v => v === under[0]);
+          if (strict && (!one || wet(b))) continue;
+          e.setAttribute('y', f1(y)); [...e.children].forEach(s => s.setAttribute('x', f1(x)));
+          e.setAttribute('stroke', one ? (under[0] ? REALM : CREAM) : 'none'); taken.push(b);
+          return e;
+        }
+      }
+      e.remove(); return null;
+    };
+    G.ua = put('UKRAINE TODAY', RUS.anchors.ukraine, {}, true);
+    G.ru = put('RUSSIA TODAY', RUS.anchors.russia, {}, false);
+    G.by = put('BELARUS', RUS.anchors.belarus, {size: fs * .85, weight: 700}, false);
+    if (G.by) G.by.setAttribute('opacity', .75);
 
-Kit.onEnter.card = () => {
-  if (Kit.calm || !G) return;
-  gsap.fromTo(G.knob, {attr: {r: +G.knob.getAttribute('r')}}, {attr: {r: +G.knob.getAttribute('r') * 1.35}, duration: .5, yoyo: true, repeat: 3, ease: 'sine.inOut'});
-};
+    // The line of the centuries, with its two ends named beside it.
+    G.track = null;
+    if (band) {
+      const tl = mk('g', {opacity: phase === 'grow' ? 1 : 0}, svg), ty = Hm + band * .55, kr = clamp(fs * .78, 10, 13);
+      const a = word(tl, 0, ty + fs * .36, 'late 800s', {spacing: '0', weight: 700, halo: 'none'}), b = word(tl, W, ty + fs * .36, 'early 1200s', {anchor: 'end', spacing: '0', weight: 700, halo: 'none'});
+      a.setAttribute('stroke-width', 0); b.setAttribute('stroke-width', 0);
+      const x0 = a.getComputedTextLength() + kr + 10, x1 = W - b.getComputedTextLength() - kr - 10;
+      mk('line', Object.assign({x1: f1(x0), x2: f1(x1), y1: f1(ty), y2: f1(ty), opacity: .3}, line(k * 1.3)), tl);
+      G.run = mk('line', Object.assign({x1: f1(x0), y1: f1(ty), y2: f1(ty)}, line(k * 1.6)), tl);
+      G.knob = mk('circle', {cy: f1(ty), r: f1(kr), fill: CREAM, stroke: INK, 'stroke-width': f1(k * 1.1)}, tl);
+      G.track = {x0, x1, g: tl, kr};
+    }
+    paint();
+  }
 
-Kit.play.card = async () => {
-  for (let i = 1; i <= 10; i++){ setT(i / 10); await new Promise(r => setTimeout(r, 30)); }
-  Kit.$('go').click();
-  await new Promise(r => setTimeout(r, 1800));
-};
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('map'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+  function paint() {
+    if (!G) return;
+    const F = G.F, t = st.t, now = realmAt(t);
+    G.realm.setAttribute('d', fillOf([now], F));
+    // The realm's name: beside the river road while the state is that road, then over the realm's middle as it
+    // spreads; ringed in the colour under it. It gives way to today's names.
+    const ra = RUS.anchors.realm, rw = G.rus.getComputedTextLength(), dx = N[0] - K[0], dy = N[1] - K[1];
+    const u = clamp(((ra[0] - K[0]) * dx + (ra[1] - K[1]) * dy) / (dx * dx + dy * dy), 0, 1), q = [K[0] + u * dx, K[1] + u * dy];
+    const g = grow(Math.hypot(ra[0] - q[0], ra[1] - q[1]), t);
+    const rx = lerp(F.X(q[0]) + rw / 2 + 58 * F.s + 6, F.X(ra[0]), g), ry = lerp(F.Y(q[1]), F.Y(ra[1]), g) + G.fs * .35;
+    G.rus.setAttribute('x', f1(rx)); G.rus.setAttribute('y', f1(ry));
+    G.rus.setAttribute('stroke', inPoly(now, F.x0 + rx / F.s, F.y0 + (ry - G.fs * .35) / F.s) ? REALM : CREAM);
+    const fits = rx - rw / 2 > G.k + 4 && rx + rw / 2 < G.W - G.k - 4 && ry - G.fs > G.k + 4 && ry < G.Hm - G.k - 4;
+    G.rus.setAttribute('opacity', fits ? f1(1 - st.n) : 0);
+    G.border.forEach(p => p.setAttribute('stroke-dashoffset', f1(p._len * (1 - st.b))));
+    G.others.setAttribute('opacity', f1(st.b * .55));
+    G.names.setAttribute('opacity', f1(st.n));
+    if (G.track) {
+      const x = G.track.x0 + t * (G.track.x1 - G.track.x0);
+      G.knob.setAttribute('cx', f1(x)); G.run.setAttribute('x2', f1(x));
+    }
+    // At the start, when Kiev became the capital; once the years run, for how long it has been.
+    const running = t >= .025;
+    Kit.$('lead').hidden = running; Kit.$('count').hidden = !running;
+    Kit.$('cent').textContent = t >= .995 ? '≈ 4' : (4 * t).toFixed(1);
+  }
+
+  function setT(v) {
+    if (phase !== 'grow') return;
+    st.t = clamp(v, 0, 1);
+    // The map pulls back as the realm grows, so it is drawn again, not only repainted.
+    draw();
+    if (st.t >= .995) ready();
+  }
+  // The end of the line: it makes way for the button that draws today's border.
+  function ready() {
+    phase = 'ready'; Kit.haptic('success');
+    Kit.show('go');
+    if (Kit.calm) { draw(); return; }
+    gsap.to(G.track.g, {attr: {opacity: 0}, duration: .25, onComplete: draw});
+    gsap.from('#go', {opacity: 0, y: 8, duration: .4, ease: 'power3.out', delay: .1});
+  }
+  function drawBorder() {
+    if (phase !== 'ready') return;
+    phase = 'border'; Kit.haptic('light');
+    Kit.hide('go'); Kit.hide('say');
+    svg.style.cursor = 'default';
+    svg.setAttribute('aria-label', "A map of Eastern Europe: the red realm of Kievan Rus' spreads north and east from Kiev, on the Dnieper. Today's borders are drawn in ink: Kiev lies inside Ukraine, and the realm runs on beyond the line into Russia and Belarus.");
+    // Once told, the count of centuries is in the words below: it goes, and the map takes its room.
+    const told = () => { phase = 'done'; card.classList.add('answered'); Kit.hide('meter'); Kit.show('why'); Kit.show('keep'); };
+    if (Kit.calm) { Object.assign(st, {z: 1, b: 1, n: 1}); draw(); told(); return; }
+    gsap.timeline({onUpdate: draw})
+      .to(st, {z: 1, duration: .7, ease: 'power2.inOut'}, 0)
+      .to(st, {b: 1, duration: 1, ease: 'power2.inOut'}, .5)
+      .to(st, {n: 1, duration: .45, ease: 'power2.out'}, 1.25)
+      .call(told, null, 1.5);
+  }
+  Kit.$('go').addEventListener('click', drawBorder);
+
+  const fromEvent = e => { const b = svg.getBoundingClientRect(), x = (e.clientX - b.left) * G.W / b.width; return (x - G.track.x0) / (G.track.x1 - G.track.x0); };
+  svg.addEventListener('pointerdown', e => { if (phase !== 'grow' || !G || !G.track) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setT(fromEvent(e)); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (dragging && phase === 'grow') setT(fromEvent(e)); });
+  ['pointerup', 'pointercancel'].forEach(n => svg.addEventListener(n, () => { dragging = false; }));
+
+  // Drawn again, at the size it now has, whenever its room changes.
+  let seen = '';
+  new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key !== seen) { seen = key; draw(); } }).observe(svg);
+  Kit.onShow.card = () => draw();
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G || !G.knob) return;
+    const r0 = +G.knob.getAttribute('r');
+    gsap.fromTo(G.knob, {attr: {r: r0}}, {attr: {r: r0 * 1.35}, duration: .5, yoyo: true, repeat: 3, ease: 'sine.inOut'});
+  };
+  Kit.play.card = async () => {
+    for (let i = 1; i <= 10; i++) { setT(i / 10); await new Promise(r => setTimeout(r, 30)); }
+    await new Promise(r => setTimeout(r, Kit.calm ? 50 : 450));
+    Kit.$('go').click();
+    await new Promise(r => setTimeout(r, Kit.calm ? 300 : 1900));
+  };
+})();
 Kit.single();
 </script>
 </html>

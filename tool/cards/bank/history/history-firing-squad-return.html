@@ -1,40 +1,45 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-firing-squad-return -->
+<!-- Look: the American South seen from above, drawn flat: cream states inside a heavy ink coast, Mexico and the
+     sea in the card's own amber. The three states the question offers stand out in white, named on the map;
+     a tap on one picks it, as its button does. Then the answer: South Carolina turns red, and the reader holds
+     to run the empty years along a strip at the map's foot, 2010 to 2024, while the count climbs; 2025 lands
+     red. Once it is told the strip goes and the map takes its room.
+     Map: US Census Bureau state boundaries (us-atlas 3.0.1) and Natural Earth 1:50m (world-atlas 2.0.2), both
+     public domain, in an Albers equal-area projection, simplified for the drawing. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
-#opts{display:flex;flex-direction:column;gap:1.2cqh}
-.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer}
-.opt.on{background:var(--k);color:var(--c);box-shadow:none}
-#sim{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#sim.gone{display:none}
+#stage{display:flex;flex-direction:column;gap:max(1.2cqh,8px);flex:1;min-height:0}
 #tl{flex:1;min-height:0;width:100%;display:block}
-#hold{align-self:center;font:800 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 7cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
-#hold.down{transform:scale(.95)}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#tl .pickable{cursor:pointer}
+#opts{display:flex;flex-direction:column;gap:max(.9cqh,6px)}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:99px;padding:max(1.25cqh,9px) max(4.4cqw,16px);cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.opt:active{transform:scale(.98)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#sim{display:flex}
+#hold{flex:1;font:800 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:max(1.5cqh,11px) 5cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
+#hold.down{transform:scale(.97)}
 #why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRING SQUAD</span></div>
     <h2 class="q">In which US state was the firing squad reintroduced and used in 2025?</h2>
     <div class="stagebox" id="stage">
+      <svg id="tl" role="img" aria-label="A map of the American South: Texas, South Carolina and Florida stand out in white, named on the map."></svg>
       <div id="opts">
         <button class="opt" data-i="0">Texas</button>
         <button class="opt" data-i="1">South Carolina</button>
         <button class="opt" data-i="2">Florida</button>
       </div>
-      <div id="sim" class="gone">
-        <svg id="tl" aria-label="Years without a firing squad, 2010 to 2025"></svg>
-        <button id="hold">Hold to run the years</button>
-        <div id="why" class="gone"><p class="big">South Carolina, 2025</p><p class="body">The firing squad had not been used for 15 years. In 2025 South Carolina used it again: one of the older methods the US has brought back in recent years.</p></div>
-      </div>
+      <div id="sim" class="gone"><button id="hold">Hold to run the years</button></div>
+      <div id="why" class="gone"><p class="body">The firing squad had not been used for 15 years. In 2025 South Carolina used it again: one of the older methods the US has brought back in recent years.</p></div>
     </div>
-    <div id="sure"></div>
+    <div id="sure" class="gone"></div>
     <p class="say" id="say">Pick a state. Then say how sure you are.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The firing squad came back in South Carolina in 2025, after 15 unused years.</div>
     <div class="foot"><span class="src">Source · Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)</span></div>
@@ -42,92 +47,313 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RIGHT = 1;
-let pick = -1;
-const st = {p: 0, done: false};
-let tw = null;
-const svg = Kit.$('tl');
+const US = {"nation":"M1623 965 1637 1007 1656 1039 1675 1061 1679 1084 1712 1142 1716 1191 1716 1197 1714 1193 1710 1200 1710 1214 1713 1214 1717 1205 1711 1222 1700 1236 1707 1221 1680 1229 1677 1227 1676 1217 1667 1204 1651 1196 1648 1198 1636 1175 1627 1168 1626 1171 1621 1162 1625 1162 1624 1148 1620 1151 1622 1157 1617 1161 1591 1125 1593 1127 1598 1121 1603 1106 1599 1105 1601 1110 1597 1109 1596 1103 1590 1101 1589 1105 1596 1111 1591 1121 1584 1110 1582 1093 1586 1101 1588 1081 1584 1059 1578 1049 1567 1051 1566 1045 1550 1034 1549 1027 1543 1025 1538 1018 1521 1009 1511 1011 1507 1016 1509 1021 1501 1021 1487 1032 1486 1029 1477 1034 1483 1038 1495 1029 1481 1039 1473 1036 1468 1037 1464 1029 1468 1036 1469 1030 1463 1024 1425 1008 1406 1008 1375 1017 1355 1021 1365 1017 1358 1012 1357 1002 1353 999 1349 1017 1338 1015 1335 1018 1314 1016 1301 1021 1300 1018 1295 1028 1292 1028 1284 1036 1280 1035 1280 1040 1284 1039 1285 1043 1289 1043 1294 1033 1299 1034 1296 1037 1299 1041 1305 1037 1301 1042 1304 1042 1300 1044 1303 1048 1299 1047 1297 1053 1293 1050 1295 1055 1288 1054 1291 1057 1287 1055 1287 1060 1295 1066 1308 1067 1312 1074 1317 1075 1314 1076 1316 1077 1312 1084 1307 1080 1300 1088 1305 1076 1301 1079 1290 1071 1281 1070 1266 1083 1256 1071 1250 1073 1251 1076 1239 1086 1235 1080 1219 1075 1221 1072 1228 1077 1227 1073 1223 1068 1218 1071 1217 1065 1213 1067 1209 1059 1205 1059 1205 1055 1196 1056 1197 1050 1181 1055 1185 1061 1189 1061 1177 1066 1140 1055 1113 1060 1100 1062 1075 1076 1078 1071 1085 1068 1074 1067 1077 1060 1074 1056 1069 1061 1066 1060 1063 1067 1068 1070 1069 1079 1057 1085 1057 1089 1071 1077 1075 1078 1048 1101 1007 1122 979 1147 966 1170 962 1183 971 1234 966 1212 962 1212 965 1210 961 1195 963 1173 975 1146 1004 1123 993 1127 989 1123 988 1132 982 1136 977 1133 973 1136 970 1139 977 1137 978 1140 971 1150 958 1148 968 1157 961 1175 957 1177 956 1173 951 1177 960 1177 959 1209 966 1225 965 1231 971 1235 972 1241 958 1245 950 1237 926 1235 900 1220 887 1217 880 1196 872 1187 873 1176 869 1173 871 1161 855 1149 853 1140 839 1125 837 1114 831 1106 824 1085 809 1066 801 1063 801 1058 799 1060 795 1051 756 1044 754 1048 742 1049 731 1074 727 1075 721 1084 708 1080 683 1064 665 1047 652 999 634 985 613 958 603 952 598 939 592 936 524 927 521 949 487 945 404 932 264 850 270 840 173 828 172 821 169 821 171 799 166 787 148 763 136 759 138 755 134 744 123 743 112 735 99 717 65 706 60 699 67 672 59 666 61 654 50 641 45 622 35 605 35 591 43 587 44 575 35 571 28 557 31 528 36 528 35 539 44 548 37 520 44 518 44 515 37 513 36 524 31 526 21 513 17 513 21 501 4 460 7 456 6 440 11 432 12 418 0 393 1 384 20 359 27 341 28 326 26 323 30 313 27 299 32 285 31 270 59 225 85 163 97 119 101 124 112 122 107 118 101 120 97 115 95 117 100 100 100 113 104 101 109 98 101 94 102 87 111 87 104 80 101 85 105 45 101 32 105 13 125 30 147 39 151 38 157 48 158 43 162 42 160 45 161 47 164 45 164 56 156 63 156 57 139 75 148 76 141 74 164 57 164 53 167 55 158 84 155 87 155 79 153 80 154 87 150 90 148 83 151 79 147 82 146 87 151 91 158 83 161 86 165 83 165 72 168 71 166 68 177 55 175 42 172 43 173 50 170 45 171 40 175 41 176 37 168 28 172 26 176 30 179 24 178 15 175 18 173 16 171 5 174 3 352 49 383 56 568 89 764 112 982 123 1049 123 1049 105 1055 105 1059 109 1066 135 1092 140 1093 146 1104 144 1107 140 1119 140 1131 143 1128 147 1135 148 1140 158 1143 152 1150 151 1154 157 1166 163 1166 166 1177 163 1188 155 1192 162 1213 160 1222 165 1234 163 1190 188 1152 227 1154 231 1171 227 1192 216 1196 220 1190 234 1197 229 1208 235 1228 221 1240 219 1255 210 1272 191 1285 185 1294 188 1286 189 1278 199 1272 211 1271 221 1282 210 1278 217 1284 212 1293 213 1301 217 1310 230 1321 227 1328 231 1332 231 1331 226 1336 229 1350 218 1371 215 1381 210 1388 209 1387 223 1401 221 1402 224 1417 217 1419 231 1415 235 1419 234 1429 242 1432 240 1430 236 1438 236 1441 243 1421 243 1412 247 1402 242 1400 253 1390 245 1373 243 1368 250 1349 253 1339 271 1335 268 1340 257 1332 259 1327 269 1324 261 1308 298 1307 304 1300 307 1296 318 1295 325 1299 326 1309 311 1316 309 1320 294 1328 287 1315 324 1315 342 1311 346 1308 357 1310 367 1305 389 1312 411 1312 425 1311 434 1325 462 1336 465 1350 457 1356 450 1364 432 1367 415 1365 394 1351 366 1354 358 1350 345 1357 330 1355 314 1361 311 1361 304 1365 299 1369 299 1377 286 1375 304 1377 308 1381 296 1380 308 1384 299 1383 282 1397 275 1389 267 1395 260 1392 258 1400 255 1411 261 1419 260 1426 267 1445 271 1455 286 1449 286 1457 300 1457 319 1451 324 1451 333 1441 339 1442 353 1451 355 1456 349 1457 341 1460 341 1457 339 1473 330 1484 339 1498 380 1497 398 1492 403 1493 396 1487 397 1485 411 1480 415 1479 426 1470 445 1490 453 1493 449 1507 457 1523 448 1532 448 1546 432 1572 418 1596 399 1615 382 1623 369 1613 356 1612 347 1631 338 1655 335 1665 339 1690 330 1707 313 1701 301 1706 297 1697 293 1697 284 1709 273 1724 247 1739 235 1788 223 1849 208 1848 197 1852 192 1858 194 1859 191 1861 188 1867 192 1867 182 1873 183 1868 178 1878 156 1874 142 1878 130 1876 116 1892 74 1897 74 1899 82 1905 84 1924 69 1942 78 1961 143 1973 143 1977 158 1984 163 1984 160 1989 160 1998 170 2000 174 1994 187 1991 183 1989 189 1984 192 1987 194 1985 197 1978 195 1972 207 1967 206 1968 213 1961 215 1959 206 1954 210 1958 228 1952 222 1952 217 1946 216 1946 207 1939 212 1943 234 1936 242 1936 238 1931 238 1930 245 1928 243 1920 254 1917 251 1910 258 1910 265 1905 269 1906 275 1902 279 1900 292 1899 302 1902 310 1909 310 1908 314 1901 318 1900 332 1904 329 1910 332 1915 337 1914 343 1927 351 1933 351 1940 344 1934 335 1929 334 1933 333 1940 339 1944 349 1944 357 1942 351 1930 356 1913 372 1921 363 1920 355 1917 355 1911 367 1906 370 1904 372 1900 365 1902 371 1899 374 1901 362 1899 360 1898 365 1893 359 1895 379 1882 385 1859 394 1847 397 1846 395 1840 404 1823 416 1821 426 1830 417 1839 416 1841 413 1859 408 1869 396 1868 399 1878 402 1885 397 1843 429 1818 440 1813 433 1812 435 1813 440 1807 444 1810 447 1818 444 1821 478 1803 523 1799 524 1799 513 1789 513 1773 504 1770 497 1770 496 1771 493 1768 497 1771 504 1780 513 1786 528 1796 532 1801 548 1799 570 1791 583 1789 601 1782 620 1777 610 1780 586 1784 582 1781 580 1784 577 1776 581 1776 570 1771 571 1774 566 1771 564 1772 559 1769 565 1767 560 1766 567 1764 567 1754 557 1756 549 1764 551 1754 544 1751 547 1752 539 1755 540 1754 535 1748 540 1749 531 1755 531 1754 526 1752 530 1749 525 1751 516 1757 512 1756 503 1752 505 1754 509 1749 515 1747 510 1747 518 1744 514 1746 520 1743 524 1737 521 1746 532 1743 545 1759 578 1753 573 1752 576 1747 572 1739 572 1737 567 1737 572 1734 571 1729 564 1721 569 1719 564 1723 556 1719 557 1718 564 1721 571 1728 566 1733 575 1747 575 1763 585 1761 599 1756 599 1738 586 1755 600 1764 601 1763 604 1766 604 1768 613 1762 609 1765 615 1760 617 1769 621 1770 628 1765 630 1754 620 1743 622 1752 624 1753 621 1756 628 1764 634 1770 633 1771 629 1782 629 1791 646 1811 679 1802 671 1793 652 1786 648 1798 668 1792 661 1793 664 1789 664 1781 660 1787 666 1783 668 1780 666 1782 670 1772 668 1779 670 1772 677 1765 676 1762 665 1761 672 1766 681 1789 674 1793 689 1794 674 1799 673 1803 679 1804 691 1800 692 1793 706 1779 707 1774 701 1778 698 1772 701 1775 707 1757 705 1781 712 1779 721 1771 729 1763 726 1764 728 1773 731 1782 721 1786 725 1789 725 1787 722 1790 722 1784 740 1780 736 1778 740 1785 741 1799 718 1785 745 1778 741 1765 745 1747 761 1739 775 1736 791 1727 789 1714 795 1700 808 1689 841 1680 843 1681 848 1671 857 1668 856 1671 861 1667 865 1654 873 1649 873 1651 882 1644 886 1639 884 1643 888 1636 898 1637 901 1625 915 1629 920 1624 924 1628 925 1626 941 1619 953 1623 952ZM1652 1260 1666 1246 1676 1251ZM1917 374 1924 365 1930 367 1931 370 1920 376ZM1242 169 1268 152 1261 161 1250 167 1253 168 1247 171ZM163 38 169 31 171 32 172 38 165 39 168 42 168 50 169 47 173 51 171 57 167 52 167 43ZM155 18 161 21 160 18 165 15 170 19 162 29Z","inner":"M1338 1015 1329 942 1332 795 1328 791 1429 781 1457 882 1469 902 1468 907 1473 910 1467 917 1465 931 1470 947 1470 963 1475 971 1369 982 1368 990 1378 997 1377 1004 1381 1009 1375 1017M270 840 278 839 281 836 281 826 274 822 275 812 276 807 285 801 288 783 295 776 307 771 299 759 298 746 294 737 295 731 299 722 301 678 316 679 319 686 323 686 328 679 336 640 525 671 487 945M1475 971 1483 984 1592 977 1596 987 1601 985 1598 967 1601 963 1623 965M1429 781 1479 775 1527 769 1520 785 1534 794 1539 793 1555 817 1583 836 1584 842 1593 851 1604 855 1610 874 1620 880 1626 896 1636 898M1350 457 1422 449 1422 453 1436 578 1434 581 1438 593 1426 600 1415 600 1417 608 1411 614 1409 621 1403 623 1401 635 1397 639 1383 629 1385 632 1380 634 1380 642 1375 647 1375 644 1366 641 1357 651 1347 645 1342 647 1338 644 1338 651 1336 647 1327 647 1328 653 1323 654 1320 649 1323 649 1322 641 1326 636 1323 632 1328 630 1339 606 1332 586 1335 577 1325 462M800 552 1047 559 1054 565 1061 564 1063 572 1060 571 1055 582 1063 589 1065 597 1074 600 1075 705 932 704 791 698M1900 292 1886 280 1859 191M1899 360 1895 358 1890 347 1876 352 1817 364 1817 330 1844 324 1885 315 1892 305 1899 302M1906 370 1901 362M1154 231 1152 229 1145 233 1146 261 1133 271 1128 279 1127 286 1136 292 1132 300 1131 325 1141 335 1148 335 1161 343 1164 351 1180 360 1187 371 1189 384 1006 388 1006 301 993 286 1002 276 1003 270 1002 251 995 235 994 190 985 164 986 138 982 123M1771 493 1773 487 1795 465 1780 455 1772 443 1775 433 1771 429 1782 407 1814 418 1813 433M1812 435 1808 438 1807 444M1770 497 1770 496M1479 775 1479 764 1489 759 1489 754 1493 748 1508 743 1520 732 1526 731 1528 723 1538 715 1541 720 1548 711 1560 708 1564 699 1571 696 1571 684 1653 673 1791 646M1714 795 1661 757 1618 764 1617 758 1610 751 1606 755 1606 750 1553 754 1527 769M1003 270 887 267 751 259 764 112M1075 705 1075 729 1083 783 1082 869 1067 864 1063 858 1053 853 1050 858 1038 855 1029 860 1024 857 1016 860 1007 867 997 859 998 857 991 860 985 853 978 859 977 865 974 855 964 860 964 856 955 852 947 858 943 857 944 851 939 851 938 843 928 843 923 847 917 842 895 839 893 830 888 827 887 831 875 830 867 820 864 821 868 727 752 720 754 695M1596 399 1598 412 1752 382 1757 387 1764 389 1771 404 1780 404 1782 407M1773 487 1764 488 1761 494 1628 520 1590 526 1582 482 1572 418M1006 388 1001 388 1002 402 1007 407 1000 424 1006 437 1000 437 998 430 979 420 957 419 951 424 934 412 739 401 747 304 751 259M1082 869 1088 873 1100 873 1100 873 1101 899 1102 949 1111 959 1110 967 1121 988 1124 987 1124 995 1116 1019 1118 1042 1109 1055 1113 1060M592 936 588 931 589 925 734 938 752 720M739 401 731 498M551 478 731 498 803 503 800 552 791 698 754 695 525 671 551 478 480 467 487 419 506 300 510 275 644 294 747 304M1876 352 1882 385M1823 416 1819 411 1827 404 1823 401 1817 364M1047 559 1036 544 1034 532 1030 533 1030 530 1177 525 1189 536 1186 546 1192 568 1218 591 1224 608 1230 603 1241 608 1233 634 1234 640 1250 651 1250 655 1254 654 1267 663 1272 677 1269 683 1275 695 1278 697 1279 693 1284 697 1284 712 1281 717 1276 715 1275 721 1272 721 1272 718 1269 718 1270 721 1272 727 1268 731 1271 733 1265 734 1269 740 1264 746 1240 748 1250 734 1247 723 1075 729M1628 520 1632 545 1644 529 1649 530 1654 520 1666 523 1666 518 1675 512 1688 514 1687 517 1695 527 1693 537 1671 524 1671 539 1658 562 1653 558 1645 582 1631 575 1628 592 1615 619 1617 625 1614 629 1615 631 1610 637 1608 634 1599 641 1595 639 1594 645 1583 650 1577 646 1566 654 1555 648 1553 640 1539 635 1530 624 1531 621 1523 614 1523 601 1533 598 1533 592 1537 589 1534 580 1540 568 1546 575 1550 572 1547 564 1551 554 1555 554 1558 547 1561 549 1567 546 1577 533 1582 498 1578 486 1582 482M1189 536 1191 525 1199 522 1204 509 1204 501 1198 494 1200 485 1221 479 1230 464 1230 449 1222 445 1211 431 1312 425M1323 654 1319 661 1322 670 1308 675 1310 690 1289 684 1283 692 1284 697M1264 746 1268 751 1265 751 1266 754 1257 760 1261 764 1258 766 1259 770 1254 769 1254 776 1252 772 1249 775 1253 777 1250 781 1254 789 1245 796 1248 800 1241 805 1239 802 1240 809 1236 808 1240 812 1235 813 1237 825 1233 830 1230 828 1226 836 1223 836 1228 838 1222 840 1226 842 1222 847 1218 847 1222 856 1216 860 1220 862 1213 862 1216 866 1213 868 1213 874 1217 872 1215 877 1219 873 1217 881 1221 882 1219 889 1215 890 1218 893 1217 895 1101 899M30 313 175 354 175 354 138 496 295 731M1801 548 1777 553 1761 494M1189 384 1190 392 1195 396 1191 402 1196 421 1209 425 1211 431M1030 530 1026 524 1029 515 1024 487 1019 484 1019 471 1009 453 1006 437M1436 578 1450 576 1460 590 1470 590 1482 596 1487 592 1495 596 1501 594 1510 586 1513 593 1523 601M1553 640 1540 655 1527 664 1523 676 1516 679 1514 685 1494 694 1326 708 1327 717 1275 721M1272 721 1270 721M1772 580 1770 580M1799 570 1784 577M1723 556 1725 548M1721 541 1723 538 1729 542 1725 548 1721 541 1704 535 1705 530 1701 527 1695 527M1470 445 1422 453M1308 298 1303 294 1305 285 1298 287 1298 287 1299 271 1287 265 1288 260 1274 257 1268 258 1218 245 1215 237 1210 236 1210 236 1208 235M1245 796 1328 791M1292 1028 1277 1006 1280 989 1202 993 1205 990 1201 980 1206 980 1204 974 1208 975 1206 968 1210 965 1206 962 1210 963 1210 958 1216 956 1211 955 1212 952 1215 953 1222 944 1219 941 1225 936 1219 937 1219 934 1226 933 1230 926 1225 926 1225 922 1220 921 1220 918 1225 920 1221 917 1223 912 1219 915 1222 908 1217 907 1217 904 1221 899 1219 896 1215 899 1217 895M506 300 497 285 493 287 492 295 465 289 461 294 447 290 444 295 440 290 438 274 428 268 430 258 423 244 423 230 418 224 404 234 398 227 399 217 406 213 404 201 415 177 406 176 404 171 401 172 389 142 376 131 381 130 378 126 380 119 372 103 383 56M1844 324 1840 319 1842 310 1837 283 1842 256 1840 245 1847 241 1853 232 1848 221 1849 208M1788 223 1791 241 1796 250 1796 270 1802 282 1801 291 1805 288 1808 291 1817 330M112 122 116 129 125 130 130 136 129 157 144 167 161 164 176 168 180 174 199 172 206 177 256 174 324 190 335 212 314 244 306 249 296 264 296 269 304 273 305 278 297 293 278 379 175 354M1494 694 1571 684M336 640 382 401 487 419M352 49 323 172 324 190M382 401 278 379","states":{"Texas":{"d":"M752 720 868 727 864 821 867 820 875 830 887 831 888 827 893 830 895 839 917 842 923 847 928 843 938 843 939 851 944 851 943 857 947 858 955 852 964 856 964 860 974 855 977 865 978 859 985 853 991 860 998 857 997 859 1007 867 1016 860 1024 857 1029 860 1038 855 1050 858 1053 853 1063 858 1067 864 1082 869 1088 873 1100 873 1100 873 1101 899 1102 949 1111 959 1110 967 1121 988 1124 987 1124 995 1116 1019 1118 1042 1109 1055 1113 1060 1100 1062 1075 1076 1078 1071 1085 1068 1074 1067 1077 1060 1074 1056 1069 1061 1066 1060 1063 1067 1068 1070 1069 1079 1057 1085 1057 1089 1071 1077 1075 1078 1048 1101 1007 1122 979 1147 966 1170 962 1183 971 1234 966 1212 962 1212 965 1210 961 1195 963 1173 975 1146 1004 1123 993 1127 989 1123 988 1132 982 1136 977 1133 973 1136 970 1139 977 1137 978 1140 971 1150 958 1148 968 1157 961 1175 957 1177 956 1173 951 1177 960 1177 959 1209 966 1225 965 1231 971 1235 972 1241 958 1245 950 1237 926 1235 900 1220 887 1217 880 1196 872 1187 873 1176 869 1173 871 1161 855 1149 853 1140 839 1125 837 1114 831 1106 824 1085 809 1066 801 1063 801 1058 799 1060 795 1051 756 1044 754 1048 742 1049 731 1074 727 1075 721 1084 708 1080 683 1064 665 1047 652 999 634 985 613 958 603 952 598 939 592 936 588 931 589 925 734 938Z","c":[886,973],"box":[[588,720],[1124,1245]]},"South Carolina":{"d":"M1527 769 1553 754 1606 750 1606 755 1610 751 1617 758 1618 764 1661 757 1714 795 1700 808 1689 841 1680 843 1681 848 1671 857 1668 856 1671 861 1667 865 1654 873 1649 873 1651 882 1644 886 1639 884 1643 888 1636 898 1626 896 1620 880 1610 874 1604 855 1593 851 1584 842 1583 836 1555 817 1539 793 1534 794 1520 785Z","c":[1621,809],"box":[[1520,750],[1714,898]]},"Florida":{"d":"M1652 1260 1666 1246 1676 1251ZM1475 971 1483 984 1592 977 1596 987 1601 985 1598 967 1601 963 1623 965 1637 1007 1656 1039 1675 1061 1679 1084 1712 1142 1716 1191 1716 1197 1714 1193 1710 1200 1710 1214 1713 1214 1717 1205 1711 1222 1700 1236 1707 1221 1680 1229 1677 1227 1676 1217 1667 1204 1651 1196 1648 1198 1636 1175 1627 1168 1626 1171 1621 1162 1625 1162 1624 1148 1620 1151 1622 1157 1617 1161 1591 1125 1593 1127 1598 1121 1603 1106 1599 1105 1601 1110 1597 1109 1596 1103 1590 1101 1589 1105 1596 1111 1591 1121 1584 1110 1582 1093 1586 1101 1588 1081 1584 1059 1578 1049 1567 1051 1566 1045 1550 1034 1549 1027 1543 1025 1538 1018 1521 1009 1511 1011 1507 1016 1509 1021 1501 1021 1487 1032 1486 1029 1477 1034 1483 1038 1495 1029 1481 1039 1473 1036 1468 1037 1464 1029 1468 1036 1469 1030 1463 1024 1425 1008 1406 1008 1375 1017 1381 1009 1377 1004 1378 997 1368 990 1369 982Z","c":[1596,1071],"box":[[1368,963],[1717,1260]]}},"near":"M1279 1500 1279 1490 1283 1468 1307 1454 1350 1444 1369 1436 1384 1432 1425 1437 1427 1432 1418 1432 1430 1428 1445 1436 1448 1448 1443 1466 1422 1494 1422 1500 1279 1500ZM578 1500 571 1482 591 1475 589 1467 581 1463 595 1450 598 1433 588 1425 580 1407 582 1391 577 1376 552 1347 532 1312 498 1279 508 1286 509 1280 491 1271 479 1247 489 1249 463 1231 460 1223 449 1224 448 1221 457 1213 442 1218 435 1210 435 1196 447 1184 450 1187 445 1173 437 1163 426 1162 420 1143 403 1132 396 1116 401 1102 377 1093 341 1035 318 951 322 924 301 914 302 908 291 898 281 902 253 877 257 890 248 913 252 946 249 962 257 980 278 1007 285 1030 290 1030 296 1038 298 1053 307 1058 307 1088 322 1105 325 1122 332 1129 335 1149 341 1154 339 1140 348 1149 352 1195 362 1209 372 1242 369 1267 381 1281 385 1270 396 1280 408 1306 418 1316 415 1328 396 1340 388 1340 377 1304 326 1250 321 1250 311 1234 317 1199 309 1167 284 1144 282 1126 275 1133 261 1133 253 1120 229 1103 227 1092 211 1074 210 1069 229 1075 242 1073 240 1078 249 1084 248 1072 243 1071 257 1049 229 998 202 973 199 962 202 945 196 939 197 920 189 910 190 898 181 878 180 870 185 865 178 856 172 828 172 828 270 840 263 849 405 933 521 949 524 928 595 937 606 953 652 1000 665 1046 680 1061 719 1083 731 1073 745 1048 759 1043 794 1050 821 1080 839 1123 871 1162 872 1185 886 1215 961 1244 972 1240 947 1315 938 1404 941 1423 961 1449 957 1463 958 1449 941 1427 946 1447 967 1489 976 1500 578 1500ZM63 -114 109 -82 118 -40 139 -18 145 16 150 13 149 25 139 27 104 -1 98 -10 110 -18 114 -26 107 -18 89 -19 81 -30 88 -32 79 -38 82 -45 64 -52 67 -60 80 -59 69 -65 61 -79 54 -79 54 -92 49 -89 48 -95 35 -97 39 -112 51 -106 54 -114 35 -116 30 -128 33 -132 45 -131ZM1322 -200 1334 -192 1331 -179 1339 -190 1371 -195 1417 -190 1423 -179 1421 -152 1432 -134 1433 -97 1458 -72 1453 -62 1464 -62 1494 -42 1501 -29 1490 -15 1500 -25 1512 -26 1539 -6 1524 -24 1532 -46 1543 -40 1549 -29 1552 -44 1542 -55 1554 -80 1542 -97 1523 -141 1526 -150 1523 -158 1515 -161 1517 -164 1497 -184 1518 -200 2148 -200 2148 -200 2131 -153 2080 -122 2073 -126 2048 -120 2033 -112 1972 -95 1937 -78 1926 -63 1922 -30 1897 -15 1899 -13 1882 8 1867 44 1822 44 1861 47 1865 49 1863 68 1834 123 1816 133 1786 164 1775 190 1768 193 1760 206 1750 207 1763 213 1743 234 1728 243 1702 278 1686 315 1621 328 1607 338 1620 363 1617 369 1578 397 1543 411 1506 443 1497 444 1484 438 1478 424 1480 416 1496 397 1504 350 1477 267 1439 249 1442 240 1436 235 1425 238 1416 217 1403 222 1390 202 1269 147 1235 164 1221 165 1214 160 1193 161 1187 157 1168 165 1152 154 1138 156 1135 148 1119 140 1096 145 1066 135 1056 106 1049 106 1049 124 959 123 795 115 631 99 402 60 173 3 168 -2 164 1 166 -6 162 -8 163 -13 172 -12 175 -16 162 -17 170 -32 155 -22 143 -36 146 -42 149 -33 158 -36 150 -41 155 -61 142 -46 134 -48 126 -62 123 -83 136 -101 125 -87 112 -90 112 -98 107 -90 94 -96 84 -104 102 -104 84 -109 90 -114 86 -117 89 -125 84 -120 71 -122 56 -142 71 -159 94 -156 75 -163 63 -156 60 -166 69 -189 82 -193 88 -192 99 -172 91 -195 96 -200 1322 -200ZM91 -200 71 -193 54 -174 53 -193 64 -197 66 -200 91 -200ZM2170 57 2177 52 2173 59 2176 67 2185 61 2190 48 2182 52 2189 30 2193 35 2205 32 2210 41 2190 67 2171 76 2163 71 2157 50 2163 16 2173 1 2180 12 2184 35ZM1990 159 1982 162 1977 158 1974 142 1960 140 1941 78 1921 70 1903 83 1897 74 1890 74 1876 116 1877 156 1867 190 1851 193 1848 208 1743 234 1776 206 1783 175 1810 141 1855 105 1876 53 1901 17 1949 -27 1980 -44 2002 -48 2024 -42 2027 -37 2017 -36 2028 -32 2029 -18 2007 9 1984 9 1962 24 1972 19 1990 20 2001 29 2018 15 2017 18 2029 17 2028 35 2019 52 2035 49 2035 57 2057 83 2078 79 2082 81 2076 88 2090 91 2123 85 2123 90 2132 88 2145 70 2154 78 2162 73 2169 76 2173 82 2169 87 2184 85 2122 142 2112 143 2115 153 2100 150 2099 158 2095 154 2092 157 2095 167 2069 218 2060 219 2051 210 2047 214 2043 211 2036 197 2040 174 2034 179 2075 127 2074 123 2089 134 2087 125 2108 110 2060 127 2070 99 2066 102 2059 97 2062 103 2059 113 2029 144 2021 142 2022 136 2018 142 2022 145 2013 156 2000 161ZM2231 -200 2228 -180 2233 -159 2242 -189 2246 -182 2260 -190 2260 -184 2260 -184 2253 -168 2260 -174 2258 -162 2260 -163 2260 -67 2260 -67 2224 -57 2203 -40 2194 -45 2190 -57 2209 -92 2183 -84 2190 -96 2190 -91 2196 -91 2196 -116 2211 -117 2206 -120 2206 -128 2200 -126 2197 -132 2199 -141 2207 -142 2199 -149 2198 -190 2204 -198 2200 -200 2231 -200ZM2095 -76 2056 -69 2002 -83 2011 -89 2053 -92 2091 -85 2097 -80ZM2076 64 2079 59 2099 59 2128 45 2133 46 2121 62 2125 72 2108 74 2111 70 2104 67 2105 62 2100 72 2086 73 2079 67 2068 70 2064 62 2055 63 2061 39 2063 54ZM1482 -91 1441 -99 1445 -106 1466 -110 1479 -99ZM1661 1326 1686 1323 1693 1327 1714 1321 1728 1326 1753 1325 1781 1343 1808 1340 1861 1357 1867 1357 1862 1353 1866 1353 1884 1360 1874 1363 1881 1368 1887 1362 1900 1368 1900 1372 1958 1373 1962 1383 1956 1385 1957 1389 1996 1384 2016 1392 2033 1393 2034 1398 1993 1421 1991 1416 1985 1423 1945 1427 1874 1448 1897 1417 1890 1407 1848 1409 1828 1399 1821 1383 1813 1376 1785 1382 1743 1375 1729 1365 1705 1372 1696 1364 1693 1372 1668 1371 1655 1364 1671 1357 1664 1349 1623 1354 1598 1380 1574 1386 1570 1397 1549 1408 1548 1400 1534 1407 1531 1404 1555 1393 1552 1379 1565 1363 1598 1344ZM1639 1406 1621 1414 1610 1408 1620 1407 1614 1399 1617 1391 1630 1392ZM1837 1243 1834 1248 1837 1250 1839 1245 1843 1248 1846 1266 1837 1268 1822 1248ZM1829 1223 1831 1234 1820 1245 1814 1236 1803 1235 1800 1232 1808 1229 1805 1204 1816 1207Z","bounds":[[0,3],[2000,1260]],"anchors":{"columbia":[1615,805],"gulf":[1306,1219],"brownsville":[956,1243],"keys":[1701,1227]}};
+(() => {
+  const NAMES = ['Texas', 'South Carolina', 'Florida'], RIGHT = 1, YEARS = 15;
+  // One ink; cream for the country, white for the three states on offer, a pale amber for its neighbours, and
+  // one red, for the state that used it.
+  const INK = '#10100c', CREAM = '#FFF3D6', NEAR = '#FFD27E', WHITE = '#ffffff', RED = '#D8452F', SEA = '#AFD6F6';
+  const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const f1 = n => (Math.round(n * 10) / 10).toString();
+  const mk = Kit.mk;
+  const svg = Kit.$('tl'), card = Kit.$('card'), hb = Kit.$('hold');
+  // ask: the three states on offer; sure: one picked; run: the answer in, the empty years to run; done: told.
+  let pick = -1, phase = 'ask', G = null, tw = null;
+  // pk: the picked state going dark; lit: South Carolina turning red; p: the empty years run, 0 to 15.
+  const st = {pk: 0, lit: 0, p: 0};
 
-function draw() {
-  if (Kit.$('sim').classList.contains('gone')) return;
-  const {W, H, f} = Kit.fitSvg(svg);
-  if (W < 10 || H < 10) return;
-  svg.innerHTML = '';
-  const gap = Math.max(4, W * 0.02);
-  const n = Math.floor(st.p);
-  const sub = Math.max(12, Math.min(f * 0.85, W / 22));
-  const bigSize = Math.max(16, Math.min(H * 0.2, W * 0.2));
-  const bigY = bigSize * 0.95;
-  const subY = bigY + bigSize * 0.3 + sub * 1.05;
-  const top = subY + sub * 0.35 + gap;
-  const big = Kit.mk('text', {x: W / 2, y: bigY, 'text-anchor': 'middle', style: `font:800 ${bigSize}px var(--display);fill:var(--k)`}, svg);
-  big.textContent = n;
-  const s = Kit.mk('text', {x: W / 2, y: subY, 'text-anchor': 'middle', style: `font:700 ${sub}px var(--body);fill:var(--k);opacity:.75`}, svg);
-  s.textContent = st.done ? 'years unused · then it returned' : (n === 1 ? 'year without a firing squad' : 'years without a firing squad');
-  const cols = 4, rows = 4;
-  const cw = (W - gap * (cols - 1)) / cols, ch = (H - top - gap * rows) / rows;
-  const fs = Math.max(12, Math.min(ch * 0.38, cw * 0.26, f * 1.05));
-  for (let i = 0; i < 16; i++) {
-    const c = i % cols, r = Math.floor(i / cols);
-    const x = c * (cw + gap), y = top + gap + r * (ch + gap);
-    const last = i === 15;
-    const lit = !last && i < n;
-    let fill = 'transparent', ink = 'var(--k)', op = .35;
-    if (lit) { fill = 'color-mix(in srgb,var(--k) 16%,transparent)'; op = .9; }
-    if (last && st.done) { fill = 'var(--k)'; ink = 'var(--c)'; op = 1; }
-    const g = Kit.mk('g', {}, svg);
-    Kit.mk('rect', {x, y, width: cw, height: ch, rx: Math.min(ch, cw) * 0.18, style: `fill:${fill};stroke:var(--k);stroke-width:${Math.max(1.5, f * .09)};stroke-opacity:${last ? 1 : .45}`}, g);
-    const t = Kit.mk('text', {x: x + cw / 2, y: y + ch / 2 + fs * 0.35, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--mono);fill:${ink};opacity:${op}`}, g);
-    t.textContent = last && st.done ? 'SC 2025' : 2010 + i;
-    if (lit) Kit.mk('line', {x1: x + cw * .18, y1: y + ch * .5, x2: x + cw * .82, y2: y + ch * .5, style: `stroke:var(--k);stroke-width:${Math.max(1.5, f * .08)};opacity:.5`}, g);
+  const hex = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * clamp(t, 0, 1)).toString(16).padStart(2, '0')).join(''); };
+
+  // The part of the country the map shows: the three states with room for their names, widened to the drawing's
+  // shape. A tall drawing shows more of the country to the north, a wide one more to either side.
+  function frame(W, H) {
+    let x0 = 575, x1 = 1785, y0 = 690, y1 = 1282;
+    const A = W / H, w = x1 - x0, h = y1 - y0;
+    if (w / h < A) { const e = h * A - w; x0 -= e * .45; x1 += e * .55; }
+    else { const e = w / A - h; y0 -= e * .82; y1 += e * .18; }
+    const s = W / (x1 - x0);
+    return {s, x0, y0, X: x => (x - x0) * s, Y: y => (y - y0) * s};
   }
-}
 
-function finish() {
-  if (st.done) return;
-  st.done = true; st.p = 15;
-  Kit.haptic('success');
-  Kit.hide('hold'); Kit.show('why'); Kit.show('keep');
-  draw();
-  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4, ease: 'power3.out'});
-}
-function startHold(e) {
-  if (st.done) return;
-  if (e) e.preventDefault();
-  Kit.$('hold').classList.add('down');
-  let last = -1;
-  tw = gsap.to(st, {p: 15, duration: (15 - st.p) * 0.2, ease: 'none',
-    onUpdate: () => { const n = Math.floor(st.p); if (n !== last) { last = n; Kit.haptic('light'); } draw(); },
-    onComplete: finish});
-}
-function stopHold() { Kit.$('hold').classList.remove('down'); if (tw && !st.done) tw.pause(); }
-const hb = Kit.$('hold');
-hb.addEventListener('pointerdown', startHold);
-['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, stopHold));
+  // The map's shapes, read once from their paths: rings of points, in the map's own units.
+  const parse = d => d.split('M').filter(Boolean).map(seg => {
+    const n = seg.replace(/Z/g, ' ').trim().split(/\s+/).map(Number), pts = [];
+    for (let i = 0; i + 1 < n.length; i += 2) pts.push([n[i], n[i + 1]]);
+    return {pts, closed: /Z\s*$/.test(seg)};
+  });
+  const SHAPES = {nation: parse(US.nation), inner: parse(US.inner), near: parse(US.near)};
+  NAMES.forEach(n => { SHAPES[n] = parse(US.states[n].d); });
+  // Cut to the drawing's box, so nothing is drawn outside it: a shape to fill keeps its edge along the box,
+  // a line to stroke is cut into the pieces inside it.
+  function cutShape(pts, x0, y0, x1, y1) {
+    const sides = [[p => p[0] >= x0, (a, b) => [x0, a[1] + (x0 - a[0]) / (b[0] - a[0]) * (b[1] - a[1])]], [p => p[0] <= x1, (a, b) => [x1, a[1] + (x1 - a[0]) / (b[0] - a[0]) * (b[1] - a[1])]],
+      [p => p[1] >= y0, (a, b) => [a[0] + (y0 - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), y0]], [p => p[1] <= y1, (a, b) => [a[0] + (y1 - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), y1]]];
+    let out = pts;
+    for (const [inside, cut] of sides) {
+      const inp = out; out = [];
+      for (let i = 0; i < inp.length; i++) {
+        const c = inp[i], p = inp[(i + inp.length - 1) % inp.length], ci = inside(c), pi = inside(p);
+        if (ci) { if (!pi) out.push(cut(p, c)); out.push(c); } else if (pi) out.push(cut(p, c));
+      }
+      if (!out.length) break;
+    }
+    return out;
+  }
+  function cutLine(pts, closed, x0, y0, x1, y1) {
+    const all = closed ? pts.concat([pts[0]]) : pts, parts = [];
+    let cur = null;
+    for (let i = 1; i < all.length; i++) {
+      let [ax, ay] = all[i - 1], [bx, by] = all[i], t0 = 0, t1 = 1;
+      const dx = bx - ax, dy = by - ay;
+      const ok = [[-dx, ax - x0], [dx, x1 - ax], [-dy, ay - y0], [dy, y1 - ay]].every(([p, q]) => {
+        if (p === 0) return q >= 0;
+        const r = q / p;
+        if (p < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; }
+        return true;
+      });
+      if (!ok) { cur = null; continue; }
+      const a = [ax + t0 * dx, ay + t0 * dy], b = [ax + t1 * dx, ay + t1 * dy];
+      if (!cur || t0 > 0) { cur = [a]; parts.push(cur); }
+      cur.push(b);
+      if (t1 < 1) cur = null;
+    }
+    return parts;
+  }
+  // A shape or a line of the map as a path in the drawing's own pixels, cut to its box.
+  function fillPath(name, F, W, H) {
+    const x0 = F.x0, y0 = F.y0, x1 = F.x0 + W / F.s, y1 = F.y0 + H / F.s;
+    return SHAPES[name].map(r => cutShape(r.pts, x0, y0, x1, y1)).filter(r => r.length > 2)
+      .map(r => 'M' + r.map(p => f1(F.X(p[0])) + ',' + f1(F.Y(p[1]))).join('L') + 'Z').join('');
+  }
+  function linePath(name, F, W, H) {
+    const x0 = F.x0, y0 = F.y0, x1 = F.x0 + W / F.s, y1 = F.y0 + H / F.s;
+    return SHAPES[name].flatMap(r => cutLine(r.pts, r.closed, x0, y0, x1, y1)).filter(r => r.length > 1)
+      .map(r => 'M' + r.map(p => f1(F.X(p[0])) + ',' + f1(F.Y(p[1]))).join('L')).join('');
+  }
 
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
-  Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.show('sim');
-  Kit.$('say').textContent = 'Hold the button: count the years with no firing squad.';
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-  requestAnimationFrame(draw);
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
-});
-Kit.onShow.card = () => { draw(); };
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
-Kit.play.card = async () => {
-  const w = ms => new Promise(r => setTimeout(r, ms));
-  Kit.$('opts').children[1].click(); await w(100);
-  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(300);
-  hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
-  await w(3400);
-  hb.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
-  finish(); await w(600);
-};
+  // A word on the map: ink, ringed in the colour under it so the borders give way to it.
+  function word(parent, x, y, text, o = {}) {
+    const t = mk('text', {x: f1(x), y: f1(y), 'font-family': o.serif ? SERIF : FONT, 'font-size': f1(o.size || G.fs), 'font-weight': o.weight || 800, 'text-anchor': o.anchor || 'middle',
+      fill: o.fill || INK, stroke: o.halo || CREAM, 'stroke-width': o.halo === 'none' ? 0 : f1(G.fs * .32), 'stroke-linejoin': 'round', 'paint-order': 'stroke', 'letter-spacing': o.spacing || '0'}, parent);
+    t.textContent = text;
+    return t;
+  }
+
+  function draw() {
+    const {W, H} = Kit.fitSvg(svg);
+    if (W < 40 || H < 40) return;
+    svg.innerHTML = '';
+    const fs = clamp(W * .042, 11.5, 14), k = clamp(W * .0075, 1.8, 2.7);
+    // While the years run, a strip of them under the map: a little page for each year, 2010 to 2025.
+    const strip = phase === 'run';
+    const gap = clamp(W * .009, 2, 4), cw = (W - 15 * gap) / 16, ch = clamp(cw * 1.05, 10, 22);
+    const band = strip ? ch + fs * 1.55 + 6 : 0;
+    const F = frame(W, H - band), Hm = H - band, X = F.X, Y = F.Y;
+    G = {W, H, fs, k, F, band, cw, ch, gap};
+    // The map is a plate with round corners and an ink rim: the sea pale blue inside it, the card's amber round it.
+    const r = clamp(W * .035, 8, 14);
+    const clip = mk('clipPath', {id: 'plate'}, mk('defs', {}, svg));
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(Hm), rx: f1(r)}, clip);
+    const map = mk('g', {'clip-path': 'url(#plate)'}, svg);
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(Hm), fill: SEA}, map);
+    const line = w => ({fill: 'none', stroke: INK, 'stroke-width': f1(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+    mk('path', {d: fillPath('near', F, W, Hm), fill: NEAR}, map);
+    mk('path', {d: fillPath('nation', F, W, Hm), fill: CREAM, 'fill-rule': 'evenodd'}, map);
+    mk('path', Object.assign({d: linePath('inner', F, W, Hm), 'stroke-opacity': .3}, line(1)), map);
+    G.states = NAMES.map((n, i) => mk('path', {d: fillPath(n, F, W, Hm), fill: WHITE, 'fill-rule': 'evenodd', class: phase === 'ask' ? 'pickable' : '', 'data-i': i}, map));
+    // Once the answer is in, the two it was not keep only a lighter line.
+    const after = phase === 'run' || phase === 'done';
+    NAMES.forEach((n, i) => mk('path', Object.assign({d: linePath(n, F, W, Hm)}, line(after && i !== RIGHT ? k * .55 : k)), map));
+    mk('path', Object.assign({d: linePath('nation', F, W, Hm)}, line(k)), map);
+    mk('rect', Object.assign({x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(Hm - k), rx: f1(r - k / 2)}, line(k)), svg);
+
+    const sc = US.states['South Carolina'], scBox = {x0: X(sc.box[0][0]), y0: Y(sc.box[0][1]), x1: X(sc.box[1][0]), y1: Y(sc.box[1][1])};
+    const m = k + 4;
+    // Where a name fits beside a shape: the first of the sides offered that keeps it inside the plate and off
+    // what it must not cover.
+    const hit = (a, b) => a.x < b.x1 && b.x0 < a.x + a.w && a.y < b.y1 && b.y0 < a.y + a.h;
+    function beside(w, h, box, sides, avoid = [], pad = fs * .5) {
+      for (const s of sides) {
+        let x = s === 'right' ? box.x1 + pad : s === 'left' ? box.x0 - pad - w : (box.x0 + box.x1) / 2 - w / 2;
+        const y = s === 'above' ? box.y0 - pad - h : s === 'below' ? box.y1 + pad : (box.y0 + box.y1) / 2 - h / 2;
+        x = clamp(x, m, W - m - w);
+        if (y < m || y + h > Hm - m) continue;
+        const at = {x, y, w, h};
+        if (hit(at, box) || avoid.some(a => hit(at, a))) continue;
+        return Object.assign(at, {side: s});
+      }
+      return null;
+    }
+
+    // How many years it went unused: large, in the Gulf, between the coast of Texas and Florida's.
+    G.count = mk('g', {opacity: 0}, svg);
+    const gTop = Y(1112), gBot = Math.min(Hm - m, Y(1292)), gx0 = X(1046), gx1 = Math.min(W - m, X(1566));
+    let big = clamp(Math.min((gBot - gTop) * .95, (gx1 - gx0) * .3), 20, 46), capFs = clamp(big * .34, 11, fs);
+    G.num = mk('text', {'font-family': SERIF, 'font-size': f1(big), 'font-weight': 900, fill: INK, 'letter-spacing': '-.02em'}, G.count);
+    G.cap = mk('text', {'font-family': FONT, 'font-size': f1(capFs), 'font-weight': 700, fill: INK}, G.count);
+    G.countAt = {x: gx0, mid: (gTop + gBot) / 2, big, capFs, room: gx1 - gx0};
+    const countBox = {x0: gx0, y0: G.countAt.mid - big * .5, x1: gx1, y1: G.countAt.mid + big * .5};
+
+    // The names of the three on offer. Texas's sits inside it; Florida's beside its coast, in the Gulf; South
+    // Carolina's, too small to hold it, beside it where there is room.
+    const L = mk('g', {}, svg);
+    const tx = US.states.Texas.c;
+    G.nTexas = word(L, X(tx[0]), Y(tx[1]) + fs * .35, 'Texas', {halo: 'none'});
+    G.nFlorida = word(L, X(1590), Y(1176), 'Florida', {anchor: 'end', halo: SEA});
+    G.nCarolina = word(L, 0, 0, 'South Carolina');
+    const nw = G.nCarolina.getComputedTextLength(), nAt = beside(nw, fs, scBox, ['right', 'above', 'left', 'below']) || {x: m, y: m, w: nw, h: fs};
+    G.nCarolina.setAttribute('x', f1(nAt.x + nw / 2)); G.nCarolina.setAttribute('y', f1(nAt.y + fs * .8));
+    if (nAt.side === 'right') G.nCarolina.setAttribute('stroke', SEA);
+    // The answer's own name, on a red pill beside the state, with the year, and a line to it.
+    G.tag = mk('g', {opacity: 0}, L);
+    const th = Math.round(fs * 1.9);
+    const tr = mk('rect', {height: th, rx: th / 2, fill: RED, stroke: INK, 'stroke-width': f1(k * .8)}, G.tag);
+    const tt = mk('text', {x: f1(th * .45), y: f1(th / 2 + fs * .36), 'font-family': FONT, 'font-size': f1(fs), 'font-weight': 800, fill: WHITE}, G.tag);
+    tt.textContent = 'South Carolina, 2025';
+    const tw = tt.getComputedTextLength() + th * .9;
+    tr.setAttribute('width', f1(tw));
+    const tAt = beside(tw, th, scBox, ['above', 'left', 'below', 'right'], [countBox], fs * .9) || {x: m, y: m, w: tw, h: th, side: 'above'};
+    G.tag.setAttribute('transform', `translate(${f1(tAt.x)},${f1(tAt.y)})`);
+    const dot = [X(US.anchors.columbia[0]), Y(US.anchors.columbia[1])];
+    const from = tAt.side === 'above' ? [clamp(dot[0], tAt.x + th * .6, tAt.x + tw - th * .6), tAt.y + th] : tAt.side === 'below' ? [clamp(dot[0], tAt.x + th * .6, tAt.x + tw - th * .6), tAt.y]
+      : tAt.side === 'left' ? [tAt.x + tw, tAt.y + th / 2] : [tAt.x, tAt.y + th / 2];
+    G.lead = mk('g', {opacity: 0}, L);
+    mk('path', {d: `M${f1(from[0])},${f1(from[1])}L${f1(dot[0])},${f1(dot[1])}`, stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linecap': 'round'}, G.lead);
+    mk('circle', {cx: f1(dot[0]), cy: f1(dot[1]), r: f1(k * 1.5), fill: INK}, G.lead);
+    L.insertBefore(G.lead, G.tag);
+
+    if (strip) {
+      const y0 = H - band + 4;
+      G.cells = [];
+      for (let i = 0; i < 16; i++) {
+        const x = i * (cw + gap), last = i === 15;
+        G.cells.push(mk('rect', {x: f1(x), y: f1(y0), width: f1(cw), height: f1(ch), rx: f1(Math.min(cw, ch) * .22), fill: last ? 'none' : CREAM,
+          stroke: last ? RED : INK, 'stroke-width': f1(k * .75), 'stroke-dasharray': last ? `${f1(k * 1.4)} ${f1(k * 1.2)}` : 'none'}, svg));
+      }
+      const ly = y0 + ch + fs * 1.15;
+      word(svg, 0, ly, '2010', {anchor: 'start', halo: 'none', weight: 700});
+      G.y2025 = word(svg, W, ly, '2025', {anchor: 'end', halo: 'none', weight: 800, fill: RED});
+    }
+    paint();
+  }
+
+  // Everything that changes as the reader picks, as South Carolina lights up, and as the years run.
+  function paint() {
+    if (!G) return;
+    const after = phase === 'run' || phase === 'done';
+    G.states.forEach((s, i) => {
+      let c = i === pick ? mix(WHITE, INK, st.pk) : WHITE;
+      if (after) c = i === RIGHT ? mix(c, RED, st.lit) : mix(c, CREAM, st.lit);
+      s.setAttribute('fill', c);
+    });
+    // Texas's name is inside it: white once it is dark.
+    G.nTexas.setAttribute('fill', pick === 0 && st.pk > .5 && !after ? WHITE : INK);
+    const fade = after ? 1 - st.lit : 1;
+    [G.nTexas, G.nFlorida, G.nCarolina].forEach(t => t.setAttribute('opacity', f1(fade)));
+    G.tag.setAttribute('opacity', after ? f1(st.lit) : 0);
+    G.lead.setAttribute('opacity', after ? f1(st.lit) : 0);
+    // The count: the years run while they run, then the fifteen it went unused.
+    const n = phase === 'done' ? YEARS : Math.floor(st.p);
+    G.count.setAttribute('opacity', after ? f1(st.lit) : 0);
+    // The number, then its words beside it on two lines; both made smaller together if the Gulf is narrow.
+    const c = G.countAt, words = phase === 'done' ? ['years unused,', 'then it returned'] : [n === 1 ? 'year without' : 'years without', 'a firing squad'];
+    let big = c.big, capFs = c.capFs;
+    for (let tries = 0; tries < 6; tries++) {
+      G.num.setAttribute('font-size', f1(big)); G.cap.setAttribute('font-size', f1(capFs));
+      G.num.textContent = '15';
+      const numW = G.num.getComputedTextLength();
+      G.cap.textContent = '';
+      const lh = capFs * 1.18, capX = c.x + numW + big * .18;
+      const spans = words.map((w, i) => { const s = mk('tspan', {x: f1(capX), y: f1(c.mid + (i - .5) * lh + capFs * .36)}, G.cap); s.textContent = w; return s; });
+      G.num.setAttribute('x', f1(c.x)); G.num.setAttribute('y', f1(c.mid + big * .35));
+      if (capX - c.x + Math.max(...spans.map(s => s.getComputedTextLength())) <= c.room || capFs <= 10.5) break;
+      big *= .9; capFs = Math.max(10.5, capFs * .92);
+    }
+    G.num.textContent = String(n);
+    if (G.cells) G.cells.forEach((c, i) => {
+      if (i < 15) c.setAttribute('fill', i < st.p ? INK : CREAM);
+      else { const on = st.p >= YEARS; c.setAttribute('fill', on ? RED : 'none'); c.setAttribute('stroke-dasharray', on ? 'none' : c.getAttribute('stroke-dasharray')); c.setAttribute('stroke', on ? INK : RED); }
+    });
+  }
+
+  function choose(i) {
+    if (phase !== 'ask') return;
+    pick = i; phase = 'sure';
+    const b = Kit.$('opts').children[i];
+    b.classList.add('on'); Kit.haptic('selection');
+    svg.querySelectorAll('.pickable').forEach(e => e.classList.remove('pickable'));
+    if (Kit.calm) { st.pk = 1; paint(); } else gsap.to(st, {pk: 1, duration: .3, ease: 'power2.out', onUpdate: paint});
+    // The answer is in: how sure takes the options' place, and the map keeps its room.
+    setTimeout(() => { Kit.hide('opts'); Kit.show('sure'); sure.on(); }, Kit.calm ? 0 : 280);
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (phase !== 'sure') return;
+    const ok = pick === RIGHT, said = NAMES[pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    phase = 'run';
+    card.classList.add('answered');
+    Kit.show('sim');
+    Kit.$('say').textContent = 'Hold the button: count the years with no firing squad.';
+    svg.setAttribute('aria-label', 'A map of the American South: South Carolina is red, labelled South Carolina, 2025. A strip of years under the map runs from 2010 to 2025.');
+    requestAnimationFrame(() => {
+      draw();
+      if (Kit.calm) { st.lit = 1; paint(); } else gsap.to(st, {lit: 1, duration: .7, ease: 'power2.inOut', onUpdate: paint});
+    });
+  });
+
+  function finish() {
+    if (phase !== 'run') return;
+    if (tw) tw.kill();
+    st.p = YEARS; st.lit = 1; phase = 'done';
+    Kit.haptic('success');
+    hb.classList.remove('down');
+    Kit.hide('sim'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    svg.setAttribute('aria-label', 'A map of the American South: South Carolina is red, labelled South Carolina, 2025. In the Gulf: 15 years unused, then it returned.');
+    draw();
+  }
+  function startHold(e) {
+    if (phase !== 'run') return;
+    if (e) e.preventDefault();
+    hb.classList.add('down');
+    let last = Math.floor(st.p);
+    tw = gsap.to(st, {p: YEARS, duration: (YEARS - st.p) * .2, ease: 'none',
+      onUpdate: () => { const n = Math.floor(st.p); if (n !== last) { last = n; Kit.haptic('light'); } paint(); },
+      onComplete: finish});
+  }
+  function stopHold() { hb.classList.remove('down'); if (tw && phase === 'run') tw.pause(); }
+  hb.addEventListener('pointerdown', startHold);
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, stopHold));
+
+  Kit.$('opts').addEventListener('click', e => { const b = e.target.closest('.opt'); if (b) choose(+b.dataset.i); });
+  // A tap on one of the three states picks it, as its button does.
+  svg.addEventListener('click', e => { const s = e.target.closest('.pickable'); if (s) Kit.$('opts').children[+s.dataset.i].click(); });
+
+  // Drawn again, at the size it now has, whenever its room changes.
+  let seen = '';
+  new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key !== seen) { seen = key; draw(); } }).observe(svg);
+  Kit.onShow.card = () => draw();
+  // The three on offer come forward, one after the other.
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G || phase !== 'ask') return;
+    gsap.from(G.states, {attr: {fill: CREAM}, duration: .5, stagger: .14, ease: 'power2.out', delay: .15});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[RIGHT].click();
+    await w(Kit.calm ? 60 : 450);
+    const b = Kit.$('sure').querySelector('[data-v="80"]');
+    if (b) b.click();
+    await w(Kit.calm ? 100 : 800);
+    hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+    await w(3400);
+    hb.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+    finish(); await w(600);
+  };
+})();
 Kit.single();
 </script>
 </html>

@@ -7,13 +7,13 @@
   "difficulty": "medium",
   "principle": "computation",
   "question": "What happened in the first large-scale prison massacre in 2021?",
-  "answer": "The first large-scale prison massacre came on 23 February 2021 in the Guayaquil Penitentiary, where 79 prisoners were beheaded. It was the first of 11 large-scale prison massacres in Ecuador's prisons over those two years. Ten more followed by early 2023.",
-  "move": "Guayaquil, 23 Feb 2021: 79 prisoners beheaded, the first of 11 prison massacres.",
+  "answer": "The first large-scale prison massacre came on 23 February 2021, when riots broke out at once in prisons in Guayaquil, Cuenca and Latacunga and left 79 inmates dead, some of them beheaded. It was the first of 11 large-scale prison massacres in Ecuador's prisons over those two years. Ten more followed by early 2023.",
+  "move": "23 Feb 2021: 79 inmates killed in three prisons at once, the first of 11 prison massacres.",
   "keywords": [
     "ecuador",
-    "guayaquil penitentiary",
+    "guayaquil",
     "prison massacres",
-    "beheadings"
+    "prison riots"
   ],
   "era": "recent",
   "region": "americas",

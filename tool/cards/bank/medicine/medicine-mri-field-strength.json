@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A grid of squares, each one equal to Earth's magnetic field, asks how much stronger an MRI's magnetic field is than Earth's. A ×10 button multiplies the field, and the squares grow to show the increase."
+    "label": "An MRI scanner seen from the front, a patient lying in its tunnel, feet towards us. It asks how much stronger its magnetic field is than Earth's. Each tap of ×10 multiplies the Earths packed into the tunnel, one little globe for one Earth's field: 10, 100, 1,000, up to 100,000, when the tunnel is solid with them and a bunch of keys is pulled off the floor onto its rim."
   },
   "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=WS2LAuwpFzM&t=33s",

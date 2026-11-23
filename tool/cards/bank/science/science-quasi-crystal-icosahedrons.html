@@ -1,5 +1,11 @@
 <!doctype html>
 <!-- slug: science-quasi-crystal-icosahedrons -->
+<!-- Look: a big ball-and-stick model on the card's own green, flat and stylised: cream atoms with thick ink outlines,
+     ink sticks, the ring of five around the front atom in gold, turning slowly about its five-fold axis. Holding the
+     button grows it the way the structure grows: the 13 atoms set into one gold icosahedron, twelve more fly in and
+     lock on, the cluster sets into one bigger icosahedron, twelve of those fly in. The same shape at every scale,
+     13 atoms, 169, 2,197, no limit. At the end, beside it, its X-ray pattern: rings of 10. Drawn again at its real
+     size whenever its room changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -22,7 +28,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">QUASI-CRYSTAL</span></div>
     <h2 class="q">What is the 3D version of a Penrose tiling called?</h2>
     <div class="stagebox" id="stage">
-      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="wrap"><canvas id="cv" role="img" aria-label="Thirteen atoms forming an icosahedron, the ring of five around its front atom picked out in gold. Holding the button grows it into icosahedrons of icosahedrons."></canvas></div>
       <button id="hold">Hold to grow</button>
       <div id="why" class="gone"><p class="big">A quasi-crystal</p><p class="body">Atoms here like to form icosahedrons, full of the five-fold symmetry crystals forbid. Inspired by Penrose tilings, a 3D structure keeps that order going forever without repeating. Its X-ray pattern: rings of 10 points.</p></div>
     </div>
@@ -33,114 +39,201 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const INK = '#10100c', CREAM = '#fffbf0', GOLD = ['#fff0b3', '#ffc83d', '#e39a1c'], FILM = '#10100c';
 const PHI = (1 + Math.sqrt(5)) / 2, R = PHI ** 3;
-// 12 icosahedron vertices, radius 1
-const V = [];
-for (const s1 of [-1, 1]) for (const s2 of [-1, 1]) {
-  V.push([0, s1, s2 * PHI], [s1, s2 * PHI, 0], [s2 * PHI, 0, s1]);
+// The icosahedron: 12 vertices at radius 1, its 30 edges, its 20 faces.
+let V = [];
+for (const s1 of [-1, 1]) for (const s2 of [-1, 1]) V.push([0, s1, s2 * PHI], [s1, s2 * PHI, 0], [s2 * PHI, 0, s1]);
+V = V.map(v => { const n = Math.hypot(...v); return v.map(c => c / n); });
+// Turned so that one vertex looks straight at the reader: its five-fold axis along the line of sight.
+{
+  const a = V[0], z = [0, 0, 1], ax = [a[1] * z[2] - a[2] * z[1], a[2] * z[0] - a[0] * z[2], a[0] * z[1] - a[1] * z[0]];
+  const s = Math.hypot(...ax), c = a[2], k = ax.map(q => q / s);
+  const rot = p => { const d = k[0] * p[0] + k[1] * p[1] + k[2] * p[2], cr = [k[1] * p[2] - k[2] * p[1], k[2] * p[0] - k[0] * p[2], k[0] * p[1] - k[1] * p[0]];
+    return [0, 1, 2].map(i => p[i] * c + cr[i] * s + k[i] * d * (1 - c)); };
+  V = V.map(rot);
 }
-V.forEach(v => { const n = Math.hypot(...v); v[0] /= n; v[1] /= n; v[2] /= n; });
+const D1 = Math.min(...V.slice(1).map(v => Math.hypot(v[0] - V[0][0], v[1] - V[0][1], v[2] - V[0][2])));
+const adj = (i, j) => Math.abs(Math.hypot(V[i][0] - V[j][0], V[i][1] - V[j][1], V[i][2] - V[j][2]) - D1) < 1e-6;
+const EDGES = [], FACES = [];
+for (let i = 0; i < 12; i++) for (let j = i + 1; j < 12; j++) if (adj(i, j)) EDGES.push([i, j]);
+for (let i = 0; i < 12; i++) for (let j = i + 1; j < 12; j++) for (let k = j + 1; k < 12; k++) if (adj(i, j) && adj(j, k) && adj(i, k)) FACES.push([i, j, k]);
+// The ring of five around the front vertex: five-fold symmetry, which no ordinary crystal can have.
+const RING = EDGES.filter(([i, j]) => i !== 0 && j !== 0 && adj(0, i) && adj(0, j));
 const C = [[0, 0, 0], ...V];
-let mind = 9;
-for (let i = 0; i < 12; i++) for (let j = i + 1; j < 12; j++) {
-  const d = Math.hypot(V[i][0] - V[j][0], V[i][1] - V[j][1], V[i][2] - V[j][2]); if (d < mind) mind = d;
-}
-const ADJ = [];
-for (let i = 1; i < 13; i++) { ADJ.push([0, i]); for (let j = i + 1; j < 13; j++) {
-  const d = Math.hypot(C[i][0] - C[j][0], C[i][1] - C[j][1], C[i][2] - C[j][2]); if (d < mind * 1.01) ADJ.push([i, j]);
-}}
-// icosahedra of icosahedra: 13^3 atoms, scaled by phi^3 at each level
-const P = [], E = [];
-for (let c = 0; c < 13; c++) for (let b = 0; b < 13; b++) {
-  const base = P.length;
-  for (let a = 0; a < 13; a++) {
-    const p = [0, 1, 2].map(k => C[a][k] + C[b][k] * R + C[c][k] * R * R);
-    P.push({p, d: Math.hypot(...p)});
-  }
-  ADJ.forEach(([i, j]) => E.push([base + i, base + j]));
-}
-const RMAX = Math.max(...P.map(q => q.d)) + 0.5;
+// Twelve newcomers each time, arriving one after another around the axis.
+const ARRIVE = V.map((v, i) => [i + 1, Math.atan2(v[1], v[0]) + (v[2] < 0 ? 7 : 0)]).sort((a, b) => a[1] - b[1]).map(a => a[0]);
 
-let x, W, H, prog = 0, holding = false, ang = 0.6, vr = 1.6, diff = 0, done = false;
+let x = null, W = 0, H = 0, prog = 0, holding = false, ang = .25, diff = 0, done = false;
+const TILT = .42;
 const cv = Kit.$('cv');
-const col = n => getComputedStyle(Kit.$('card')).getPropertyValue(n).trim() || '#111';
+const sm = (a, b, t) => { const u = Math.min(1, Math.max(0, (t - a) / (b - a))); return u * u * (3 - 2 * u); };
+const out = t => 1 - (1 - t) ** 3;
+// How far each newcomer has come, 0 to 1: the twelve icosahedrons, then the twelve clusters.
+const come1 = i => out(Math.min(1, Math.max(0, (prog - .06 - i * .022) / .1)));
+const come2 = i => out(Math.min(1, Math.max(0, (prog - .5 - i * .025) / .11)));
+const atoms = () => {
+  let n1 = 0, n2 = 0; for (let i = 0; i < 12; i++) { if (come1(i) >= 1) n1++; if (come2(i) >= 1) n2++; }
+  return prog < .5 ? 13 * (1 + n1) : 169 * (1 + n2);
+};
+
+// Where the picture, its labels and (at the end) the X-ray pattern go.
+function boxes() {
+  const f = Math.max(10, Math.min(H / 18, W / 22)), fs = Math.max(12, Math.min(15, f * .95)), tsz = Math.max(17, Math.min(26, f * 1.45));
+  // Low and wide is the end's room, once the answer has taken some: the model on the left, the X-rays beside it.
+  const wide = done && W / H > 1.05;
+  if (!wide) {
+    const top = tsz * 1.3, bot = fs * 1.7, rad = Math.min(W / 2 - 2, (H - top - bot) / 2);
+    return {wide, f, fs, tsz, cx: W / 2, cy: top + (H - top - bot) / 2, rad, top, bot};
+  }
+  const S = Math.min(H, W * .58), x0 = S + fs * .7, dX = Math.min((W - x0) * .62, H * .62, 124);
+  return {wide, f, fs, tsz, cx: S / 2, cy: H / 2, rad: S / 2 - 2, x0, dX, xc: W - dX / 2 - 2, yc: H - dX / 2 - 2};
+}
+
+// A point of the model on the canvas: spun about the axis, tilted, seen in perspective.
+function proj(p, B, u) {
+  const ca = Math.cos(ang), sa = Math.sin(ang), x1 = p[0] * ca - p[1] * sa, y1 = p[0] * sa + p[1] * ca;
+  const ct = Math.cos(TILT), st = Math.sin(TILT), y2 = y1 * ct - p[2] * st, z2 = y1 * st + p[2] * ct;
+  const k = B.dist / (B.dist - z2);
+  return {X: B.cx + x1 * u * k, Y: B.cy - y2 * u * k, z: z2, k};
+}
+const view = v => { const ca = Math.cos(ang), sa = Math.sin(ang), x1 = v[0] * ca - v[1] * sa, y1 = v[0] * sa + v[1] * ca, ct = Math.cos(TILT), st = Math.sin(TILT); return [x1, y1 * ct - v[2] * st, y1 * st + v[2] * ct]; };
+
+// A solid gold icosahedron at centre c, radius r: its faces lit from the top left, ink at its edges.
+function gem(c, r, B, u, alpha) {
+  if (alpha <= .01) return;
+  const P = V.map(v => proj([c[0] + v[0] * r, c[1] + v[1] * r, c[2] + v[2] * r], B, u)), Lt = [-.45, .6, .66];
+  const px = r * u * P[0].k, lw = Math.max(1, Math.min(2, px * .05));
+  x.globalAlpha = alpha; x.lineJoin = 'round';
+  for (const [i, j, k] of FACES) {
+    const a = view(V[i]), b = view(V[j]), d = view(V[k]);
+    let n = [(b[1] - a[1]) * (d[2] - a[2]) - (b[2] - a[2]) * (d[1] - a[1]), (b[2] - a[2]) * (d[0] - a[0]) - (b[0] - a[0]) * (d[2] - a[2]), (b[0] - a[0]) * (d[1] - a[1]) - (b[1] - a[1]) * (d[0] - a[0])];
+    const m = [(a[0] + b[0] + d[0]) / 3, (a[1] + b[1] + d[1]) / 3, (a[2] + b[2] + d[2]) / 3];
+    if (n[0] * m[0] + n[1] * m[1] + n[2] * m[2] < 0) n = n.map(q => -q);
+    const nl = Math.hypot(...n); n = n.map(q => q / nl);
+    if (n[2] <= 0) continue;
+    const s = n[0] * Lt[0] + n[1] * Lt[1] + n[2] * Lt[2];
+    x.fillStyle = s > .62 ? GOLD[0] : s > .2 ? GOLD[1] : GOLD[2];
+    x.beginPath(); x.moveTo(P[i].X, P[i].Y); x.lineTo(P[j].X, P[j].Y); x.lineTo(P[k].X, P[k].Y); x.closePath();
+    x.fill(); x.strokeStyle = INK; x.lineWidth = lw; x.stroke();
+  }
+  // its outline, thicker
+  const pts = P.map(p => [p.X, p.Y]).sort((a, b) => a[0] - b[0] || a[1] - b[1]), cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [], hi = [];
+  for (const p of pts) { while (lo.length > 1 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  for (const p of pts.slice().reverse()) { while (hi.length > 1 && cross(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  const hull = lo.slice(0, -1).concat(hi.slice(0, -1));
+  x.beginPath(); hull.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.closePath();
+  x.lineWidth = Math.max(1.5, Math.min(3, px * .09)); x.stroke();
+  x.globalAlpha = 1;
+}
+// A stick between two points: ink, with a core of colour.
+function stick(a, b, w, core, alpha) {
+  if (alpha <= .01 || w <= .2) return;
+  x.globalAlpha = alpha; x.lineCap = 'round';
+  x.strokeStyle = INK; x.lineWidth = w; x.beginPath(); x.moveTo(a.X, a.Y); x.lineTo(b.X, b.Y); x.stroke();
+  if (core) { x.strokeStyle = core; x.lineWidth = Math.max(0, w - 4); x.beginPath(); x.moveTo(a.X, a.Y); x.lineTo(b.X, b.Y); x.stroke(); }
+  x.globalAlpha = 1;
+}
 
 function draw() {
   if (!x) return;
-  const K = col('--k'), Cc = col('--c');
   x.clearRect(0, 0, W, H);
-  const rr = 0.6 * Math.pow(RMAX / 0.6, prog);
-  const target = Math.max(rr, 1.5) * 1.1;
-  vr += (target - vr) * 0.12;
-  const m = Math.min(W, H), sc = m * 0.46 / vr, cx = W / 2, cy = H * 0.5;
-  const ca = Math.cos(ang), sa = Math.sin(ang), tl = 0.42, ct = Math.cos(tl), st = Math.sin(tl);
-  const pr = new Array(P.length);
-  let count = 0;
-  for (let i = 0; i < P.length; i++) {
-    const q = P[i]; if (q.d > rr) { pr[i] = null; continue; }
-    count++;
-    const [px, py, pz] = q.p;
-    const x1 = px * ca + pz * sa, z1 = -px * sa + pz * ca;
-    const y2 = py * ct - z1 * st, z2 = py * st + z1 * ct;
-    const f = 1 / (1 + z2 / (vr * 4));
-    pr[i] = {X: cx + x1 * sc * f, Y: cy + y2 * sc * f, z: z2, f};
+  const B = boxes(), m1 = sm(.01, .12, prog), m2 = sm(.44, .54, prog);
+  // The view widens as the structure grows: one icosahedron, then a cluster of thirteen, then thirteen clusters.
+  const vr = 1.25 + (R + 1.25 - 1.25) * sm(.04, .4, prog) + (R * R + R + 1.3 - (R + 1.25)) * sm(.5, .88, prog);
+  B.dist = vr * 6;
+  const u = B.rad / (vr * 1.0);
+  const items = [];
+  // The first thirteen atoms, setting into a gem.
+  if (m1 < 1) {
+    const P = C.map(p => proj(p, B, u));
+    const w = Math.max(7, .1 * u) * (1 - m1), ra = .21 * u * (1 - .8 * m1);
+    for (const [i, j] of EDGES) { const gold = RING.some(r => r[0] === i && r[1] === j); items.push({z: (P[i + 1].z + P[j + 1].z) / 2 + (gold ? .02 : 0), f: () => stick(P[i + 1], P[j + 1], w * (gold ? 1.25 : 1), gold ? GOLD[1] : CREAM, 1 - m1)}); }
+    P.forEach((p, i) => items.push({z: p.z + .01, f: () => { x.globalAlpha = 1; x.beginPath(); x.arc(p.X, p.Y, ra * p.k, 0, 7); x.fillStyle = i ? CREAM : INK; x.fill(); x.lineWidth = Math.max(2, Math.min(3, ra * .12)); x.strokeStyle = INK; x.stroke(); }}));
+    B.ring = RING.map(([i, j]) => ({X: (P[i + 1].X + P[j + 1].X) / 2, Y: (P[i + 1].Y + P[j + 1].Y) / 2}));
   }
-  // bonds
-  x.strokeStyle = K; x.lineWidth = Math.max(0.6, sc * 0.03);
-  x.globalAlpha = count > 300 ? 0.18 : 0.4;
-  x.beginPath();
-  for (const [i, j] of E) { const a = pr[i], b = pr[j]; if (a && b) { x.moveTo(a.X, a.Y); x.lineTo(b.X, b.Y); } }
-  x.stroke();
-  // atoms, far to near
-  const idx = []; for (let i = 0; i < P.length; i++) if (pr[i]) idx.push(i);
-  idx.sort((i, j) => pr[j].z - pr[i].z);
-  x.lineWidth = Math.max(0.5, sc * 0.03);
-  for (const i of idx) {
-    const a = pr[i], r = Math.max(1.2, sc * 0.16 * a.f);
-    x.globalAlpha = Math.max(0.35, Math.min(1, 0.75 - a.z / (vr * 2.5)));
-    x.fillStyle = K; x.strokeStyle = Cc;
-    x.beginPath(); x.arc(a.X, a.Y, r, 0, 7); x.fill(); if (r > 2.5) x.stroke();
+  // The cluster of thirteen icosahedrons, and the sticks that hold it, until it sets into one bigger gem.
+  if (m2 < 1) {
+    const at = b => b === 0 ? [0, 0, 0] : (() => { const i = ARRIVE.indexOf(b), f = 1 + 2.6 * (1 - come1(i)); return C[b].map(q => q * R * f); })();
+    const seen = b => b === 0 ? m1 : Math.min(1, come1(ARRIVE.indexOf(b)) * 3);
+    const P = C.map((_, b) => proj(at(b), B, u)), sw = Math.max(6, .26 * u);
+    for (let b = 0; b < 13; b++) { const c = at(b), a = seen(b) * (1 - m2); items.push({z: P[b].z, f: () => gem(c, 1, B, u, a)}); }
+    const held = b => b === 0 ? m1 : (come1(ARRIVE.indexOf(b)) >= 1 ? 1 : 0);
+    for (const [i, j] of EDGES) items.push({z: (P[i + 1].z + P[j + 1].z) / 2 - .5, f: () => stick(P[i + 1], P[j + 1], sw, CREAM, Math.min(held(i + 1), held(j + 1)) * (1 - m2))});
   }
-  x.globalAlpha = 1;
-  // labels
-  const fs = Math.max(13, H * 0.05);
-  x.fillStyle = K; x.textBaseline = 'top';
-  x.font = `800 ${fs}px ${col('--display') || 'sans-serif'}`;
-  x.textAlign = 'left';
-  x.fillText(count >= P.length || done ? 'Quasi-crystal' : 'Icosahedron', 4, 4);
-  x.font = `700 ${fs * 0.8}px ${col('--mono') || 'monospace'}`;
-  x.textAlign = 'right';
-  x.fillText(`${count} atom${count === 1 ? '' : 's'}`, W - 4, 4);
-  x.textAlign = 'left'; x.textBaseline = 'bottom';
-  x.font = `600 ${fs * 0.72}px ${col('--body') || 'sans-serif'}`;
-  const note = done ? 'no limit, never repeats' : count > 100 ? '100 atoms? keep going…' : count > 10 ? '10 atoms? …' : prog > 0 ? 'five-fold symmetry' : '';
-  x.globalAlpha = 0.85; x.fillText(note, 4, H - 4); x.globalAlpha = 1;
-  // X-ray diffraction inset
-  if (diff > 0) {
-    const rad = m * 0.2, ix = W - rad - 6, iy = H - rad - 6;
-    x.globalAlpha = diff;
-    x.fillStyle = '#0b0b14'; x.beginPath(); x.arc(ix, iy, rad, 0, 7); x.fill();
-    x.fillStyle = '#fff';
-    x.beginPath(); x.arc(ix, iy, rad * 0.06, 0, 7); x.fill();
-    [[0.32, 0, 0.06], [0.58, Math.PI / 10, 0.045], [0.82, 0, 0.032]].forEach(([rf, off, sz], k) => {
-      for (let n = 0; n < 10; n++) {
-        if (n / 10 > diff * 1.4 - k * 0.2) continue;
-        const t = off + n * Math.PI / 5;
-        x.beginPath(); x.arc(ix + Math.cos(t) * rad * rf, iy + Math.sin(t) * rad * rf, rad * sz, 0, 7); x.fill();
-      }
-    });
-    x.fillStyle = K; x.textAlign = 'right'; x.textBaseline = 'bottom';
-    x.font = `700 ${Math.max(12, fs * 0.62)}px ${col('--body') || 'sans-serif'}`;
-    x.fillText('X-rays: rings of 10', W - 4, iy - rad - 4);
-    x.globalAlpha = 1;
+  // Thirteen clusters, each one set into a gem of its own, and the sticks between them.
+  if (m2 > 0) {
+    const g = R + 1, at = b => b === 0 ? [0, 0, 0] : (() => { const i = ARRIVE.indexOf(b), f = 1 + 2.2 * (1 - come2(i)); return C[b].map(q => q * R * R * f); })();
+    const seen = b => b === 0 ? m2 : Math.min(1, come2(ARRIVE.indexOf(b)) * 3);
+    const held = b => b === 0 ? m2 : (come2(ARRIVE.indexOf(b)) >= 1 ? 1 : 0);
+    const P = C.map((_, b) => proj(at(b), B, u)), sw = Math.max(6, .26 * g * u);
+    for (let b = 0; b < 13; b++) { const c = at(b), a = seen(b); items.push({z: P[b].z, f: () => gem(c, g, B, u, a)}); }
+    for (const [i, j] of EDGES) items.push({z: (P[i + 1].z + P[j + 1].z) / 2 - .5 * g, f: () => stick(P[i + 1], P[j + 1], sw, CREAM, Math.min(held(i + 1), held(j + 1)))});
   }
+  items.sort((a, b) => a.z - b.z).forEach(it => it.f());
+  labels(B);
+}
+
+function labels(B) {
+  const {fs, tsz} = B, n = atoms(), count = `${n.toLocaleString('en')} atoms`;
+  x.fillStyle = INK; x.textBaseline = 'alphabetic'; x.globalAlpha = 1;
+  const note = done ? 'no limit, never repeats' : prog <= 0 ? 'five-fold symmetry' : n > 100 ? '100 atoms? keep going…' : '';
+  if (!B.wide) {
+    x.font = `800 ${tsz}px Fraunces, serif`; x.textAlign = 'left'; x.fillText(done ? 'Quasi-crystal' : 'Icosahedron', 1, tsz * .95);
+    x.font = `700 ${fs}px Figtree, sans-serif`; x.textAlign = 'right'; x.fillText(count, W - 1, tsz * .95);
+    x.textAlign = 'left'; x.fillText(note, 1, H - fs * .45);
+    // The ring of five, pointed at from its name.
+    if (note === 'five-fold symmetry' && B.ring) {
+      const nx = x.measureText(note).width + fs * .5, ny = H - fs * .85, t = B.ring.reduce((a, b) => Math.hypot(b.X - nx, b.Y - ny) < Math.hypot(a.X - nx, a.Y - ny) ? b : a);
+      x.strokeStyle = INK; x.lineWidth = 1.6; x.beginPath(); x.moveTo(nx, ny); x.lineTo(t.X, t.Y); x.stroke();
+      x.beginPath(); x.arc(t.X, t.Y, 3, 0, 7); x.fill();
+    }
+    return;
+  }
+  // Low and wide: the count and the note beside the model, then the X-ray pattern with its name.
+  const x0 = B.x0, room = W - x0;
+  x.textAlign = 'left'; x.font = `800 ${fs * 1.08}px Figtree, sans-serif`; x.fillText(count, x0, fs * 1.1);
+  x.font = `700 ${fs}px Figtree, sans-serif`;
+  // one line where it fits, else broken at its comma, else word by word
+  let lines = [note];
+  if (x.measureText(note).width > room) {
+    const parts = note.split(', ');
+    if (parts.length === 2 && parts.every(q => x.measureText(q + ',').width <= room)) lines = [parts[0] + ',', parts[1]];
+    else { lines = ['']; for (const w of note.split(' ')) { const t = (lines[lines.length - 1] + ' ' + w).trim(); if (x.measureText(t).width > room && lines[lines.length - 1]) lines.push(w); else lines[lines.length - 1] = t; } }
+  }
+  lines.forEach((l, i) => x.fillText(l, x0, fs * 2.55 + i * fs * 1.25));
+  const noteBottom = fs * 2.55 + (lines.length - 1) * fs * 1.25 + fs * .35;
+  if (diff > 0) xray(B, noteBottom);
+}
+
+// The X-ray pattern: a dark film, a bright centre and three rings of ten spots, ten-fold, as no crystal gives.
+function xray(B, noteBottom) {
+  const {fs} = B, r = B.dX / 2, ix = B.xc, iy = B.yc;
+  x.globalAlpha = diff;
+  x.fillStyle = FILM; x.beginPath(); x.arc(ix, iy, r, 0, 7); x.fill();
+  x.strokeStyle = INK; x.lineWidth = 2.5; x.stroke();
+  x.fillStyle = '#fff6d6'; x.beginPath(); x.arc(ix, iy, r * .08, 0, 7); x.fill();
+  [[.34, 0, .07], [.6, Math.PI / 10, .055], [.84, 0, .042]].forEach(([rf, off, sz], k) => {
+    for (let q = 0; q < 10; q++) {
+      if (q / 10 > diff * 1.4 - k * .2) continue;
+      const t = off + q * Math.PI / 5 - Math.PI / 2;
+      x.fillStyle = k === 1 ? GOLD[1] : '#fff6d6';
+      x.beginPath(); x.arc(ix + Math.cos(t) * r * rf, iy + Math.sin(t) * r * rf, Math.max(1.4, r * sz), 0, 7); x.fill();
+    }
+  });
+  // Its name: over it where there is room, beside it where the note is in the way.
+  x.fillStyle = INK; x.font = `700 ${fs}px Figtree, sans-serif`;
+  const label = 'X-rays: rings of 10', w = x.measureText(label).width;
+  if (iy - r - fs * .5 - fs > noteBottom && W - 2 - w >= B.x0) { x.textAlign = 'right'; x.fillText(label, W - 2, iy - r - fs * .5); }
+  else { x.textAlign = 'right'; x.fillText('X-rays:', ix - r - fs * .5, iy - fs * .15); x.fillText('rings of 10', ix - r - fs * .5, iy + fs * 1.05); }
+  x.textAlign = 'left'; x.globalAlpha = 1;
 }
 
 function finish() {
   if (done) return; done = true; holding = false; prog = 1;
   Kit.haptic('success');
   Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  requestAnimationFrame(() => { Kit.onShow.card(); });
   const o = {v: 0};
   gsap.to(o, {v: 1, duration: Kit.calm ? 0.01 : 1.6, ease: 'power2.out', onUpdate: () => { diff = o.v; draw(); }});
 }
@@ -148,7 +241,7 @@ function finish() {
 gsap.ticker.add((t, dt) => {
   const s = dt / 1000;
   if (holding && !done) { prog = Math.min(1, prog + s / 4.5); if (prog >= 1) finish(); }
-  if (!Kit.calm || holding) ang += s * 0.45;
+  if (!Kit.calm) ang += s * .3;
   draw();
 });
 
@@ -161,7 +254,10 @@ hb.addEventListener('pointerleave', up);
 hb.addEventListener('pointercancel', up);
 hb.addEventListener('contextmenu', e => e.preventDefault());
 
-Kit.onShow.card = () => { const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H; draw(); };
+const fit = () => { const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H; draw(); };
+Kit.onShow.card = fit;
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('wrap').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && x) { seen = k; fit(); } }).observe(Kit.$('wrap'));
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));

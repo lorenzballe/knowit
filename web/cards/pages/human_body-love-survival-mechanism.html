@@ -1,41 +1,46 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: human_body-love-survival-mechanism -->
 <title>Astute free card</title>
+<!-- Two people falling in love, drawn big: a man and a woman looking at each other, a heart between them. The reader
+     picks what love is for and says how sure; then a dial raises their sex hormones: testosterone, from the testes,
+     rising in him in blue; estrogens, from the ovaries, rising in her in gold. They come together, take each other's
+     hand, and at the top of the dial two children stand beside them: the next generation. Touch: drags (the dial). -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
-#opts{display:flex;flex-direction:column;gap:1.2cqh}
-.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer}
-.opt.on{background:var(--k);color:var(--c);box-shadow:none}
-#play{display:flex;flex-direction:column;flex:1;min-height:0;gap:.8cqh}
-#play.gone{display:none}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:max(1.1cqh,7px)}
 #pic{flex:1;min-height:0;width:100%;display:block}
-#dialrow{display:flex;align-items:center;gap:3cqw;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--k)}
+#opts{display:flex;flex-direction:column;gap:max(.9cqh,6px)}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 32%,transparent);border-radius:99px;padding:max(1.3cqh,9px) max(4.4cqw,16px);cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.opt:active{transform:scale(.98)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#play{display:flex;flex-direction:column;gap:.8cqh}
+#dialrow{display:flex;align-items:center;gap:3cqw;font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
 #dial{flex:1;min-width:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
-#why .big{font:800 max(2.4cqh,15px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+#why .body b{font-weight:800}
+#sure .sq{text-wrap:balance}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="human_body" data-kind="Pick one · turn the dial">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">LOVE</span></div>
     <h2 class="q">What is falling in love for, biologically speaking?</h2>
     <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A man and a woman look at each other, a small heart between them."></svg>
       <div id="opts">
         <button class="opt" data-i="0">To make us feel happy</button>
         <button class="opt" data-i="1">The survival of the species</button>
         <button class="opt" data-i="2">To lower our stress</button>
       </div>
       <div id="play" class="gone">
-        <svg id="pic"></svg>
-        <div id="dialrow"><span>low</span><input data-drag id="dial" type="range" min="0" max="100" value="0" aria-label="Sex hormones"><span>high</span></div>
-        <div id="why" class="gone"><p class="big">Survival of the species</p><p class="body">Falling in love fires up a strong sexual desire, and that keeps the species going. The molecules behind it are the sex hormones, testosterone and estrogens, made mainly by the testes and the ovaries.</p></div>
+        <div id="dialrow"><span>low</span><input data-drag id="dial" type="range" min="0" max="100" value="30" aria-label="Sex hormones"><span>high</span></div>
       </div>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say">Pick one. Then say how sure you are.</p>
+    <div id="sure" class="gone"></div>
+    <div id="why" class="gone"><p class="body"><b>Survival of the species.</b> Falling in love fires up a strong sexual desire, and that keeps the species going.</p></div>
+    <p class="say gone" id="say">Pick one. Then say how sure you are.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Love's first job is biological: it pushes us to make the next generation.</div>
     <div class="foot"><span class="src">Source · Geopop, “Cosa succede nel nostro cervello quando ci innamoriamo? La biochimica dell’amore” (YouTube, 2025).</span></div>
   </div>
@@ -43,120 +48,226 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const RIGHT = 1;
-let pick = -1, done = false;
-const st = {v: 0};
-let G = null; // drawing handles
-const PINK = '#ff3d7a', BLUE = '#2f7bff';
+// One ink for every outline; white and a deep wine for clothes; two accents that each mean one thing: blue is
+// testosterone, gold is estrogens.
+const INK = '#10100c', WHITE = '#ffffff', WINE = '#7C1D3F', NIGHT = '#2A2440', BLUE = '#3D79F4', GOLD = '#FFC83D';
+const SKIN = ['#E2A272', '#F6CBA5'], HAIR = [INK, '#8A3F1C'], BLUSH = '#FF7E93';
+const FONT = 'Figtree, system-ui, sans-serif';
+const mk = Kit.mk, f1 = n => (Math.round(n * 10) / 10).toString();
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), lerp = (a, b, t) => a + (b - a) * t;
+const sm = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+let pick = -1, done = false, stage = 0, G = null;
+const st = {v: .3};
+const svg = Kit.$('pic'), card = Kit.$('card');
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
   Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.show('play');
   sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-  Kit.$('say').textContent = 'Turn the dial up: raise the sex hormones and watch.';
-  draw();
+  // The verdict already names the answer when it was picked: the explanation need not say it again.
+  if (ok) Kit.$('why').querySelector('b')?.remove();
+  stage = 1;
+  Kit.show('play');
+  const say = Kit.$('say'); say.textContent = 'Turn the dial up: raise the sex hormones and watch.'; Kit.show('say');
+  svg.setAttribute('aria-label', 'The two of them, and over each a name: testosterone, from the testes, in him; estrogens, from the ovaries, in her. A dial raises them.');
+  build();
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+  // The answer is in: how sure takes the answers' place.
+  Kit.hide('opts'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`);
+  sure.on();
 });
 
-function person(parent, col, h, skirt){
-  h = Math.max(1, h);
-  const g = Kit.mk('g', {}, parent);
-  const r = h*0.13;
-  Kit.mk('circle', {cx: 0, cy: -h + r, r, fill: col}, g);
-  const bw = h*0.2, top = -h + 2.25*r;
-  const d = skirt
-    ? `M${-bw*0.6},${top} L${bw*0.6},${top} L${bw*1.1},${-h*0.25} L${-bw*1.1},${-h*0.25} Z`
-    : `M${-bw*0.75},${top} L${bw*0.75},${top} L${bw*0.75},${-h*0.25} L${-bw*0.75},${-h*0.25} Z`;
-  Kit.mk('path', {d, fill: col, 'stroke-linejoin': 'round', stroke: col, 'stroke-width': h*0.04}, g);
-  Kit.mk('rect', {x: -bw*0.55, y: -h*0.26, width: bw*0.4, height: h*0.26, rx: bw*0.15, fill: col}, g);
-  Kit.mk('rect', {x: bw*0.15, y: -h*0.26, width: bw*0.4, height: h*0.26, rx: bw*0.15, fill: col}, g);
-  return g;
+// A name on a dark pill, in two lines: the hormone in its colour, where it is made in white.
+function pill(parent, a, b, colour) {
+  const g = mk('g', {}, parent), fs = G.fs, lh = fs * 1.28, pad = fs * .62;
+  const r = mk('rect', {fill: INK}, g);
+  const t1 = mk('text', {'font-family': FONT, 'font-size': f1(fs), 'font-weight': 800, 'letter-spacing': '.07em', fill: colour}, g);
+  t1.textContent = a;
+  const t2 = mk('text', {'font-family': FONT, 'font-size': f1(fs), 'font-weight': 600, fill: WHITE}, g);
+  t2.textContent = b;
+  const w = Math.max(t1.getComputedTextLength(), t2.getComputedTextLength()) + 2 * pad, h = 2 * lh + pad * .9;
+  r.setAttribute('width', f1(w)); r.setAttribute('height', f1(h)); r.setAttribute('rx', f1(lh * .75));
+  t1.setAttribute('x', f1(pad)); t1.setAttribute('y', f1(pad * .45 + lh * .8));
+  t2.setAttribute('x', f1(pad)); t2.setAttribute('y', f1(pad * .45 + lh * 1.8));
+  return {g, w, h};
 }
 
-function draw(){
-  const svg = Kit.$('pic');
-  if (Kit.$('play').classList.contains('gone')) return;
-  svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
-  const fs = Math.max(12, Math.min(f, H*0.07));
-  const defs = Kit.mk('defs', {}, svg);
-  const rg = Kit.mk('radialGradient', {id: 'glow'}, defs);
-  Kit.mk('stop', {offset: '0%', 'stop-color': PINK, 'stop-opacity': .55}, rg);
-  Kit.mk('stop', {offset: '70%', 'stop-color': PINK, 'stop-opacity': .18}, rg);
-  Kit.mk('stop', {offset: '100%', 'stop-color': PINK, 'stop-opacity': 0}, rg);
-
-  const ty = fs*1.1;
-  const lab = (x, y, t, anchor, col, w) => { const e = Kit.mk('text', {x, y, 'text-anchor': anchor, fill: col, 'font-family': 'var(--mono)', 'font-weight': w, 'font-size': fs}, svg); e.textContent = t; return e; };
-  lab(6, ty, 'testosterone', 'start', BLUE, 800);
-  lab(6, ty + fs*1.4, 'from the testes', 'start', ink, 500);
-  lab(W - 6, ty, 'estrogens', 'end', PINK, 800);
-  lab(W - 6, ty + fs*1.4, 'from the ovaries', 'end', ink, 500);
-
-  const top = ty + fs*2.2;
-  const kidsLabY = H - fs*0.3 - H*0.16 - fs*0.6;
-  const ground = kidsLabY - fs*1.6;
-  const h = Math.max(8, Math.min(ground - top - fs*0.6, W*0.42));
-  const shield = Kit.mk('ellipse', {fill: 'url(#glow)', stroke: PINK, 'stroke-width': 2.5, 'stroke-dasharray': '6 5'}, svg);
-  Kit.mk('line', {x1: W*0.08, x2: W*0.92, y1: ground, y2: ground, stroke: ink, 'stroke-opacity': .25, 'stroke-width': 2}, svg);
-
-  const dotsL = Kit.mk('g', {}, svg), dotsR = Kit.mk('g', {}, svg);
-  const mkDots = (g, col) => Array.from({length: 14}, () => ({
-    e: Kit.mk('circle', {r: Math.max(2.5, h*0.025), fill: col, opacity: 0}, g),
-    dx: (Kit.rnd() - .5)*h*0.5, dy: -h*(0.2 + Kit.rnd()*0.75)
-  }));
-  const dl = mkDots(dotsL, BLUE), dr = mkDots(dotsR, PINK);
-
-  const L = person(svg, ink, h, false), R = person(svg, ink, h, true);
-  const heart = Kit.mk('path', {d: 'M0,3 C-6,-3 -12,-9 -6,-13 C-3,-15 0,-12 0,-10 C0,-12 3,-15 6,-13 C12,-9 6,-3 0,3 Z', fill: PINK}, svg);
-
-  const klab = lab(W/2, kidsLabY, 'the next generation', 'middle', ink, 700);
-  const kids = [], kh = Math.max(4, H*0.16), n = 5;
-  for (let i = 0; i < n; i++){
-    const g = person(svg, PINK, kh, i % 2 === 1);
-    g.setAttribute('transform', `translate(${W*(0.2 + 0.15*i)},${H - fs*0.3})`);
-    g.setAttribute('opacity', 0);
-    kids.push(g);
+// A person, feet at (0, 0) and h tall, looking towards `dir`. Each part is kept so the pose can follow the dial.
+function person(parent, h, o) {
+  const u = h / 10, k = G.k, g = mk('g', {}, parent);
+  const ink = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const S = fill => Object.assign({fill}, ink);
+  const P = {g, u, dir: o.dir};
+  // Hair that falls behind the shoulders goes first.
+  if (o.hair === 'long') mk('path', Object.assign({d: `M${f1(-1.45 * u)},${f1(-8.7 * u)}C${f1(-1.7 * u)},${f1(-7.2 * u)} ${f1(-1.6 * u)},${f1(-6.6 * u)} ${f1(-1.1 * u)},${f1(-6.4 * u)}H${f1(1.1 * u)}C${f1(1.6 * u)},${f1(-6.6 * u)} ${f1(1.7 * u)},${f1(-7.2 * u)} ${f1(1.45 * u)},${f1(-8.7 * u)}Z`}, S(o.hairC)), g);
+  // Legs and shoes.
+  const legTop = o.skirt ? -2.7 * u : -4.6 * u, lw = o.skirt ? .62 * u : 1.02 * u, lx = o.skirt ? .42 * u : .6 * u;
+  [-1, 1].forEach(sd => {
+    mk('path', Object.assign({d: `M${f1(sd * lx - lw / 2)},${f1(legTop)}V${f1(-.45 * u)}H${f1(sd * lx + lw / 2)}V${f1(legTop)}Z`}, S(o.skirt ? o.skin : o.legs)), g);
+    mk('path', Object.assign({d: `M${f1(sd * lx - lw * .62 + o.dir * .12 * u)},${f1(0)}V${f1(-.55 * u)}H${f1(sd * lx + lw * .62 + o.dir * .32 * u)}Q${f1(sd * lx + lw * .62 + o.dir * .6 * u)},${f1(-.5 * u)} ${f1(sd * lx + lw * .62 + o.dir * .5 * u)},${f1(0)}Z`}, S(INK)), g);
+  });
+  // The body: a shirt and trousers, or a dress.
+  if (o.skirt) mk('path', Object.assign({d: `M${f1(-1.25 * u)},${f1(-7.55 * u)}Q${f1(0)},${f1(-7.95 * u)} ${f1(1.25 * u)},${f1(-7.55 * u)}L${f1(1.35 * u)},${f1(-5.2 * u)}L${f1(1.95 * u)},${f1(-2.6 * u)}Q${f1(0)},${f1(-2.25 * u)} ${f1(-1.95 * u)},${f1(-2.6 * u)}L${f1(-1.35 * u)},${f1(-5.2 * u)}Z`}, S(o.top)), g);
+  else {
+    mk('path', Object.assign({d: `M${f1(-1.18 * u)},${f1(-4.9 * u)}H${f1(1.18 * u)}V${f1(-4.1 * u)}H${f1(-1.18 * u)}Z`}, S(o.legs)), g);
+    mk('path', Object.assign({d: `M${f1(-1.35 * u)},${f1(-7.55 * u)}Q${f1(0)},${f1(-7.95 * u)} ${f1(1.35 * u)},${f1(-7.55 * u)}L${f1(1.22 * u)},${f1(-4.75 * u)}H${f1(-1.22 * u)}Z`}, S(o.top)), g);
+    // An open collar.
+    mk('path', {d: `M${f1(-.42 * u)},${f1(-7.75 * u)}L${f1(0)},${f1(-7.1 * u)}L${f1(.42 * u)},${f1(-7.75 * u)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
   }
-  G = {W, H, h, ground, shield, L, R, heart, dl, dr, dotsL, dotsR, kids, klab};
+  // Arms: each a sleeve and a hand, turning at the shoulder (set by pose()).
+  P.arms = [-1, 1].map(sd => {
+    const a = mk('g', {}, g);
+    mk('path', Object.assign({d: `M${f1(-.36 * u)},${f1(0)}V${f1(2.75 * u)}H${f1(.36 * u)}V${f1(0)}Z`}, S(o.sleeve)), a);
+    mk('circle', Object.assign({cx: 0, cy: f1(3.05 * u), r: f1(.42 * u)}, S(o.skin)), a);
+    return {g: a, sd, x: sd * 1.32 * u, y: -7.3 * u};
+  });
+  // Neck, head, face, hair on top.
+  mk('path', Object.assign({d: `M${f1(-.34 * u)},${f1(-8.1 * u)}V${f1(-7.55 * u)}H${f1(.34 * u)}V${f1(-8.1 * u)}Z`}, S(o.skin)), g);
+  const hy = -8.85 * u, hr = 1.15 * u, fx = o.dir * .28 * u;
+  mk('circle', Object.assign({cx: 0, cy: f1(hy), r: f1(hr)}, S(o.skin)), g);
+  [-1, 1].forEach(sd => {
+    mk('circle', {cx: f1(fx + sd * .4 * u), cy: f1(hy + .02 * u), r: f1(Math.max(1.4, .13 * u)), fill: INK}, g);
+    mk('circle', {cx: f1(fx + sd * .58 * u), cy: f1(hy + .42 * u), r: f1(.2 * u), fill: BLUSH, opacity: .75}, g);
+  });
+  mk('path', {d: `M${f1(fx - .22 * u)},${f1(hy + .5 * u)}Q${f1(fx)},${f1(hy + .72 * u)} ${f1(fx + .22 * u)},${f1(hy + .5 * u)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .8), 'stroke-linecap': 'round'}, g);
+  // The hair's crown: a curve whose top clears the head's own outline, so no scalp shows above the fringe.
+  if (o.hair === 'long') mk('path', Object.assign({d: `M${f1(-1.22 * u)},${f1(hy + .15 * u)}C${f1(-1.32 * u)},${f1(hy - 1.68 * u)} ${f1(1.32 * u)},${f1(hy - 1.68 * u)} ${f1(1.22 * u)},${f1(hy + .15 * u)}C${f1(o.dir * .6 * u)},${f1(hy - .55 * u)} ${f1(-o.dir * .3 * u)},${f1(hy - .5 * u)} ${f1(-1.22 * u)},${f1(hy + .15 * u)}Z`}, S(o.hairC)), g);
+  else mk('path', Object.assign({d: `M${f1(-1.19 * u)},${f1(hy + .05 * u)}C${f1(-1.28 * u)},${f1(hy - 1.7 * u)} ${f1(1.28 * u)},${f1(hy - 1.7 * u)} ${f1(1.19 * u)},${f1(hy + .05 * u)}Q${f1(o.dir * .4 * u)},${f1(hy - .5 * u)} ${f1(-o.dir * .2 * u)},${f1(hy - .62 * u)}Q${f1(-o.dir * .8 * u)},${f1(hy - .35 * u)} ${f1(-1.19 * u)},${f1(hy + .05 * u)}Z`}, S(o.hairC)), g);
+  P.top = -10 * u; P.belly = -5.1 * u; P.chest = -7.1 * u;
+  return P;
+}
+// Arms: hanging, or reaching out to a hand at (hx, hy) in the person's own frame.
+function pose(P, reach) {
+  P.arms.forEach(a => {
+    let deg = -a.sd * 9;
+    if (reach && reach[a.sd]) { const [tx, ty] = reach[a.sd]; deg = Math.atan2(tx - a.x, ty - a.y) * -180 / Math.PI; }
+    a.g.setAttribute('transform', `translate(${f1(a.x)},${f1(a.y)}) rotate(${f1(deg)})`);
+  });
+}
+
+function build() {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const g = G = {W, H};
+  g.k = clamp(Math.min(W, H) * .009, 1.5, 2.6);
+  g.fs = clamp(W * .036, 11, 12.5);
+  // A floor to stand on at the bottom. Before the answer, the two of them as tall as the room allows. With the
+  // dial in play, their names take the top corners: while the couple may stand apart, under the names; at the end,
+  // side by side in the middle, their heads between the names, the children under them.
+  const pills = stage >= 1;
+  const pT = pills ? pill(svg, 'TESTOSTERONE', 'from the testes', BLUE) : null, pE = pills ? pill(svg, 'ESTROGENS', 'from the ovaries', GOLD) : null;
+  g.ph = pT ? pT.h : 0; const pw = pT ? Math.max(pT.w, pE.w) : 0; if (pT) { pT.g.remove(); pE.g.remove(); }
+  g.ground = H - Math.max(6, H * .035);
+  let h = Math.min(g.ground - Math.max(10, H * .04), W * .8);
+  if (stage === 1) h = Math.min(h, g.ground - g.ph - 8);
+  if (stage === 2) {
+    const between = 10 * (W / 2 - pw - 6) / 2.75, under = g.ground - g.ph - 8;
+    h = Math.min(h, (g.ground - g.ph - 6) / .52, between >= under ? Math.max(under, Math.min(between, g.ground - 26)) : under);
+  }
+  g.h = Math.max(30, h);
+  const ink = {stroke: INK, 'stroke-width': f1(g.k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  mk('path', Object.assign({d: `M0,${f1(g.ground)}H${f1(W)}`, fill: 'none'}, ink), svg);
+  // The children, behind the couple's outer hands, shown as the dial nears the top.
+  g.kids = [-1, 1].map(sd => {
+    const wrap = mk('g', {opacity: 0}, svg);
+    const p = person(wrap, g.h * .52, sd < 0 ? {dir: 1, skin: SKIN[1], hair: 'short', hairC: HAIR[1], top: WHITE, sleeve: WHITE, legs: NIGHT}
+      : {dir: -1, skin: SKIN[0], hair: 'long', hairC: HAIR[0], top: WINE, sleeve: WINE, skirt: true});
+    pose(p);
+    return {wrap, p, sd};
+  });
+  g.him = person(svg, g.h, {dir: 1, skin: SKIN[0], hair: 'short', hairC: HAIR[0], top: WHITE, sleeve: WHITE, legs: NIGHT});
+  g.her = person(svg, g.h * .95, {dir: -1, skin: SKIN[1], hair: 'long', hairC: HAIR[1], top: WINE, sleeve: WINE, skirt: true});
+  // What rises in each of them: little molecules, blue in him, gold in her, from low in the belly up the body.
+  g.flows = [[g.him, BLUE], [g.her, GOLD]].map(([p, c]) => ({p, dots: Array.from({length: 6}, (_, i) => mk('circle', {r: f1(Math.max(2.1, p.u * .24)), fill: c, stroke: INK, 'stroke-width': f1(Math.max(1, g.k * .5)), opacity: 0, 'data-i': i}, svg))}));
+  g.heart = mk('path', Object.assign({d: 'M0,4 C-7,-2 -13,-9 -7,-14 C-3.6,-16.8 0,-14 0,-11 C0,-14 3.6,-16.8 7,-14 C13,-9 7,-2 0,4 Z', fill: WHITE}, ink, {'stroke-width': 1.6}), svg);
+  // The names, once the dial is in play, each pinned to the person it is in.
+  if (pills) {
+    g.pins = [mk('path', {stroke: INK, 'stroke-width': f1(Math.max(1.3, g.k * .6)), 'stroke-linecap': 'round', fill: 'none'}, svg), mk('path', {stroke: INK, 'stroke-width': f1(Math.max(1.3, g.k * .6)), 'stroke-linecap': 'round', fill: 'none'}, svg)];
+    g.pT = pill(svg, 'TESTOSTERONE', 'from the testes', '#8DB4FF');
+    g.pE = pill(svg, 'ESTROGENS', 'from the ovaries', GOLD);
+    g.pT.g.setAttribute('transform', `translate(1,1)`);
+    g.pE.g.setAttribute('transform', `translate(${f1(W - g.pE.w - 1)},1)`);
+  }
   render();
 }
 
-function render(){
+function render() {
   if (!G) return;
-  const v = st.v, {W, h, ground} = G;
-  const lx = W*(0.27 + 0.12*v), rx = W*(0.73 - 0.12*v);
-  G.L.setAttribute('transform', `translate(${lx},${ground})`);
-  G.R.setAttribute('transform', `translate(${rx},${ground})`);
-  const cy = ground - h*0.5;
-  G.shield.setAttribute('cx', W/2); G.shield.setAttribute('cy', cy);
-  G.shield.setAttribute('rx', Math.max(0, (rx - lx)/2 + h*(0.25 + 0.2*v)));
-  G.shield.setAttribute('ry', Math.max(0, h*(0.45 + 0.18*v)));
-  G.shield.setAttribute('opacity', Math.max(0, (v - .15)/.85));
-  const s = (h/40)*v;
-  G.heart.setAttribute('transform', `translate(${W/2},${ground - h*0.92}) scale(${s})`);
-  G.dl.forEach((d, i) => { d.e.setAttribute('cx', lx + d.dx); d.e.setAttribute('cy', ground + d.dy); d.e.setAttribute('opacity', i/14 < v ? .85 : 0); });
-  G.dr.forEach((d, i) => { d.e.setAttribute('cx', rx + d.dx); d.e.setAttribute('cy', ground + d.dy); d.e.setAttribute('opacity', i/14 < v ? .85 : 0); });
-  G.kids.forEach((k, i) => k.setAttribute('opacity', Math.min(1, Math.max(0, (v - (0.45 + i*0.1))/0.1))));
-  G.klab.setAttribute('opacity', Math.min(1, Math.max(.25, (v - .35)/.2)));
+  const g = G, v = st.v, {W, h} = g, now = typeof gsap !== 'undefined' ? gsap.ticker.time : 0;
+  // Apart and shy at the bottom of the dial; side by side, hand in hand, at the top: shoulder to shoulder, however
+  // big they are drawn.
+  const u0 = g.him.u, far = Math.min(W * .52, 7.2 * u0), near = 3.05 * u0, lean = sm(.4, 1, v);
+  const apart = lerp(far, near, sm(0, 1, v)), xH = W / 2 - apart / 2, xE = W / 2 + apart / 2;
+  g.him.g.setAttribute('transform', `translate(${f1(xH)},${f1(g.ground)}) rotate(${f1(lean * 3)})`);
+  g.her.g.setAttribute('transform', `translate(${f1(xE)},${f1(g.ground)}) rotate(${f1(-lean * 3)})`);
+  // Their hands meet in the middle as the dial nears the top; the outer hands reach down to the children.
+  const hold = sm(.55, .85, v), kid = sm(.72, .95, v);
+  const midX = W / 2, handY = g.ground - h * .42;
+  const reachH = {}, reachE = {};
+  if (hold > 0) { reachH[1] = [lerp(1.8 * g.him.u, midX - xH - g.him.u * .2, hold), lerp(-4.3 * g.him.u, handY - g.ground, hold)]; reachE[-1] = [lerp(-1.8 * g.her.u, midX - xE + g.her.u * .2, hold), lerp(-4.3 * g.her.u, handY - g.ground, hold)]; }
+  if (kid > 0) { reachH[-1] = [-1.9 * g.him.u - kid * .5 * g.him.u, lerp(-4.3, -3.6, kid) * g.him.u]; reachE[1] = [1.9 * g.her.u + kid * .5 * g.her.u, lerp(-4.3, -3.6, kid) * g.her.u]; }
+  pose(g.him, reachH); pose(g.her, reachE);
+  g.kids.forEach(c => {
+    const x = c.sd < 0 ? xH - g.him.u * 3.1 : xE + g.her.u * 3.1;
+    c.wrap.setAttribute('opacity', f1(kid));
+    c.wrap.setAttribute('transform', `translate(${f1(x)},${f1(g.ground + (1 - kid) * 6)})`);
+    pose(c.p, {[-c.sd]: [-c.sd * 1.9 * c.p.u, -6.4 * c.p.u]});
+  });
+  // The heart grows with the dial: between their heads while they stand apart, over them once they are close,
+  // never bigger than the room it has there.
+  const between = 1 - sm(.35, .75, v), u = g.him.u;
+  const roomGap = ((xE - xH) - 2.8 * u) / 27, roomTop = (g.ground - h - 4) / 21;
+  const want = (h / 95) * lerp(.6, 1.4, sm(0, 1, v));
+  const hs = Math.max(.2, Math.min(want, between > .5 ? roomGap : roomTop, Math.max(roomGap, roomTop)));
+  const yTop = g.ground - h - 3 - 4 * hs, yMid = g.ground - 8.85 * u + 6.4 * hs;
+  g.heart.setAttribute('transform', `translate(${f1(midX)},${f1(lerp(yTop, yMid, between))}) scale(${hs.toFixed(3)})`);
+  // The molecules rise from low in the belly to the chest, more of them the higher the dial.
+  g.flows.forEach(({p, dots}, j) => {
+    const x0 = j ? xE : xH, n = v * dots.length;
+    dots.forEach((d, i) => {
+      const ph = ((Kit.calm ? 0 : now / 2.2) + i / dots.length + j * .08) % 1;
+      const y = g.ground + lerp(p.belly, p.chest, ph), x = x0 + Math.sin(ph * 9 + j * 2) * p.u * .42 + (j ? -1 : 1) * Math.sin(lean * 3 * Math.PI / 180) * (-lerp(p.belly, p.chest, ph));
+      d.setAttribute('cx', f1(x)); d.setAttribute('cy', f1(y));
+      const on = clamp(n - i, 0, 1) * (stage >= 1 ? 1 : 0), edge = Math.min(1, ph * 6, (1 - ph) * 6);
+      d.setAttribute('opacity', (on * edge).toFixed(2));
+    });
+  });
+  if (g.pins) {
+    // Each name pinned to the top of the head it belongs to, wherever the lean has taken it.
+    const pinTo = (pl, x0, P, left, deg) => { const t = deg * Math.PI / 180, hx = x0 - P.top * Math.sin(t), hy = g.ground + P.top * Math.cos(t) - 3;
+      const sx = left ? clamp(hx, 1 + pl.h * .6, 1 + pl.w - pl.h * .6) : clamp(hx, W - 1 - pl.w + pl.h * .6, W - 1 - pl.h * .6);
+      return `M${f1(sx)},${f1(pl.h + 1)}L${f1(hx)},${f1(hy)}`; };
+    g.pins[0].setAttribute('d', pinTo(g.pT, xH, g.him, true, lean * 3));
+    g.pins[1].setAttribute('d', pinTo(g.pE, xE, g.her, false, -lean * 3));
+  }
 }
 
-Kit.$('dial').addEventListener('input', e => {
-  const t = +e.target.value/100;
+const dial = Kit.$('dial');
+dial.addEventListener('input', e => {
+  const t = +e.target.value / 100;
   if (Kit.calm) { st.v = t; render(); } else gsap.to(st, {v: t, duration: .35, ease: 'power2.out', onUpdate: render, overwrite: true});
-  if (t >= .98 && !done){
-    done = true; Kit.haptic('success');
-    Kit.$('say').textContent = 'Desire up, couple close, the species goes on.';
-    Kit.show('why'); Kit.show('keep');
-    requestAnimationFrame(draw);
+  if (t >= .98 && !done) {
+    done = true; stage = 2; Kit.haptic('success');
+    // The story is told: the dial and its prompt give their room to the drawing and what it means.
+    card.classList.add('answered');
+    Kit.hide('dialrow'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    svg.setAttribute('aria-label', 'The two of them side by side, hand in hand, a big heart over them, testosterone rising in him and estrogens in her; beside them, two children: the next generation.');
   }
 });
+// The molecules keep rising while the card is in front of the reader.
+let ticking = false;
+function tick() { if (stage >= 1) render(); }
 
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  // A fade only: the answers' own press is a CSS transition on transform, which a moving tween would fight.
+  gsap.from('.opt', {opacity: 0, stagger: .07, duration: .4, ease: 'power2.out'});
+  if (!ticking) { ticking = true; gsap.ticker.add(tick); }
+};
 Kit.play.card = async () => {
   const w = ms => new Promise(r => setTimeout(r, ms));
   Kit.$('opts').children[1].click(); await w(100);
@@ -164,6 +275,8 @@ Kit.play.card = async () => {
   const d = Kit.$('dial'); d.value = 100; d.dispatchEvent(new Event('input', {bubbles: true}));
   await w(700);
 };
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; seen = k; if (!first) build(); }).observe(svg); }
 Kit.single();
 </script>
 </html>
