@@ -18,6 +18,7 @@ import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
+import '../widgets/skill_score.dart' show todayMoveOf;
 import '../widgets/training.dart';
 import '../widgets/web/card_thumb.dart';
 import '../widgets/ui.dart';
@@ -350,6 +351,9 @@ class _TodayScreenState extends State<TodayScreen> {
               // A card that trains a skill the reader put in focus carries
               // its small mark beside the heart; a tap says what it means.
               skillOf: (pill) => skillMarkOf(pill, app.skills),
+              // The score the answer moved, beside its verdict.
+              moveOf: (pill) =>
+                  todayMoveOf(app, pill, skillMarkOf(pill, app.skills)),
               onSkill: (pill, skill) =>
                   showSkillMarkSheet(context, app, skill, cardId: pill.id),
               answerFor: app.answerFor,

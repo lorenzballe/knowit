@@ -429,6 +429,7 @@
   "scoreWeek": "今週 {n}",
   "scoreStart": "最初の回答から始まります。",
   "scoreToday": "今日 {n}",
+  "scoreMoveLabel": "{name}：この回答で {n}",
   "scoreAnswers": "{n, plural, =1{1回の回答から} other{{n}回の回答から}}",
   "skillsRowTitle": "学びたいこと",
   "skillName": "{key, select, critical{批判的思考} decisions{より良い決断} money{お金と貯蓄} numbers{数字と統計} talk{伝える力} persuade{説得する力} people{人を理解する} fakes{フェイクを見抜く} science{科学者のように考える} focus{集中力} lead{リーダーシップ} culture{一般教養} other{{key}}}",

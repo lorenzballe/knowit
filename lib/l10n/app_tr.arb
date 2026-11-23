@@ -429,6 +429,7 @@
   "scoreWeek": "bu hafta {n}",
   "scoreStart": "İlk cevabınla başlar.",
   "scoreToday": "bugün {n}",
+  "scoreMoveLabel": "{name}: bu cevapla {n}",
   "scoreAnswers": "{n, plural, =1{1 cevaptan} other{{n} cevaptan}}",
   "skillsRowTitle": "Öğrenmek istediklerin",
   "skillName": "{key, select, critical{Eleştirel düşünme} decisions{Daha iyi kararlar} money{Para ve birikim} numbers{Sayılar ve istatistik} talk{İletişim} persuade{İkna} people{İnsanları anlamak} fakes{Sahteyi ayırt etmek} science{Bilim insanı gibi düşünmek} focus{Odaklanma} lead{Liderlik} culture{Genel kültür} other{{key}}}",

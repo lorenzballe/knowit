@@ -1868,6 +1868,11 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String scoreMoveLabel(String name, String n) {
+    return '$name: 이 답변으로 $n';
+  }
+
+  @override
   String scoreAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

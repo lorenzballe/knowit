@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../data/card_pages.dart';
+import '../data/skill_scores.dart' show ScoreMove;
 import '../data/skills.dart';
 import 'deeper_sheet.dart';
 import '../data/subject_icons.dart';
@@ -93,6 +94,11 @@ class PillCardStack extends StatefulWidget {
   /// A tap on that mark, on the card being read: what it means.
   final void Function(Pill pill, Skill skill)? onSkill;
 
+  /// How the reader's answer on a card moved their score, said beside the
+  /// verdict on its back (lib/data/skill_scores.dart). Null, or null for a
+  /// card, nothing is said.
+  final ScoreMove? Function(Pill pill)? moveOf;
+
   /// True while a card is under the finger, so the chrome can step out of
   /// the way of the gesture.
   final ValueChanged<bool>? onMotion;
@@ -163,6 +169,7 @@ class PillCardStack extends StatefulWidget {
     this.onNote,
     this.skillOf,
     this.onSkill,
+    this.moveOf,
     required this.isSaved,
     required this.onSave,
     required this.onShare,
@@ -1025,6 +1032,7 @@ class _PillCardStackState extends State<PillCardStack>
                       skill: skill,
                       onSkill: onSkill,
                       given: given,
+                      move: given == null ? null : widget.moveOf?.call(pill),
                       saved: widget.isSaved(pill.id),
                       onSave: () => widget.onSave(pill),
                       liked: widget.isLiked?.call(pill.id) ?? false,

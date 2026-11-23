@@ -2694,6 +2694,12 @@ abstract class AppLocalizations {
   /// **'{n} today'**
   String scoreToday(String n);
 
+  /// Read out for the small chip beside the verdict on a card's back: how far this answer moved one of the reader's scores. name is the score's name, a skill's ("Money") or the Astute score's; n is the signed number, already formatted: "+12" or "−8".
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {n} for this answer'**
+  String scoreMoveLabel(String name, String n);
+
   /// On the sheet a skill's mark opens, after the reader's score in it: how many answers made it.
   ///
   /// In en, this message translates to:

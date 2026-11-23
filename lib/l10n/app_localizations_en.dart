@@ -1930,6 +1930,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String scoreMoveLabel(String name, String n) {
+    return '$name: $n for this answer';
+  }
+
+  @override
   String scoreAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

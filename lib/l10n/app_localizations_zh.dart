@@ -1857,6 +1857,11 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String scoreMoveLabel(String name, String n) {
+    return '$name：这次回答 $n';
+  }
+
+  @override
   String scoreAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

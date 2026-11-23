@@ -12,6 +12,7 @@ import '../widgets/pill_card_stack.dart';
 import '../widgets/path_door.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/skill_mark.dart';
+import '../widgets/skill_score.dart' show todayMoveOf;
 import '../widgets/glass_round.dart';
 
 /// A full-screen re-read of a set of cards.
@@ -326,6 +327,12 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     },
                     onShare: (pill) => showShareSheet(context, pill),
                     skillOf: (pill) => skillMarkOf(pill, widget.app.skills),
+                    // The score the answer moved, beside its verdict.
+                    moveOf: (pill) => todayMoveOf(
+                      widget.app,
+                      pill,
+                      skillMarkOf(pill, widget.app.skills),
+                    ),
                     onSkill: (pill, skill) => showSkillMarkSheet(
                       context,
                       widget.app,

@@ -1940,6 +1940,11 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String scoreMoveLabel(String name, String n) {
+    return '$name: $n por esta resposta';
+  }
+
+  @override
   String scoreAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

@@ -429,6 +429,7 @@
   "scoreWeek": "{n} questa settimana",
   "scoreStart": "Parte dalla tua prima risposta.",
   "scoreToday": "{n} oggi",
+  "scoreMoveLabel": "{name}: {n} per questa risposta",
   "scoreAnswers": "{n, plural, =1{da 1 risposta} other{da {n} risposte}}",
   "skillsRowTitle": "Cosa vuoi imparare",
   "skillName": "{key, select, critical{Pensiero critico} decisions{Decidere meglio} money{Soldi e risparmio} numbers{Numeri e statistica} talk{Comunicare} persuade{Persuadere} people{Capire le persone} fakes{Smascherare le bufale} science{Pensare da scienziato} focus{Concentrazione} lead{Leadership} culture{Cultura generale} other{{key}}}",

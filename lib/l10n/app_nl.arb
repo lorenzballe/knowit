@@ -429,6 +429,7 @@
   "scoreWeek": "{n} deze week",
   "scoreStart": "Je eerste antwoord zet hem in gang.",
   "scoreToday": "{n} vandaag",
+  "scoreMoveLabel": "{name}: {n} voor dit antwoord",
   "scoreAnswers": "{n, plural, =1{uit 1 antwoord} other{uit {n} antwoorden}}",
   "skillsRowTitle": "Wat je wilt leren",
   "skillName": "{key, select, critical{Kritisch denken} decisions{Beter beslissen} money{Geld en sparen} numbers{Cijfers en statistiek} talk{Communiceren} persuade{Overtuigen} people{Mensen begrijpen} fakes{Nepnieuws herkennen} science{Denken als wetenschapper} focus{Focus} lead{Leiderschap} culture{Algemene kennis} other{{key}}}",

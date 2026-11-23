@@ -1911,6 +1911,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String scoreMoveLabel(String name, String n) {
+    return '$name: bu cevapla $n';
+  }
+
+  @override
   String scoreAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,

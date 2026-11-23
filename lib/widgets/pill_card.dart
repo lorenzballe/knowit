@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../data/skill_scores.dart' show ScoreMove;
 import '../data/skills.dart';
 import '../data/topics.dart' show inkOn;
 import '../measure/card_read.dart';
@@ -24,6 +25,7 @@ import 'scene_view.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
 import 'skill_mark.dart';
+import 'skill_score.dart';
 import 'subject_icon.dart';
 import 'web/page_messages.dart';
 import 'web/web_card_face.dart';
@@ -78,6 +80,11 @@ class PillCard extends StatelessWidget {
   /// A tap on that mark, on the card being read: what it means.
   final VoidCallback? onSkill;
 
+  /// How the reader's answer moved their score, said beside the verdict on
+  /// the back: in [skill] when the card trains it, or else in every skill
+  /// together (lib/data/skill_scores.dart). Null, nothing is said.
+  final ScoreMove? move;
+
   const PillCard({
     super.key,
     required this.pill,
@@ -93,6 +100,7 @@ class PillCard extends StatelessWidget {
     this.onNote,
     this.skill,
     this.onSkill,
+    this.move,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -424,6 +432,7 @@ class PillCard extends StatelessWidget {
                 ? _BackFace(
                     pill: pill,
                     given: given,
+                    move: move,
                     cornerRoom: onSave != null ? _CardControl.room : 0,
                   )
                 // The challenge decides the front. A new kind of challenge
@@ -690,7 +699,15 @@ class _BackFace extends StatelessWidget {
 
   /// Room kept clear for the save and share buttons in the bottom corner.
   final double cornerRoom;
-  const _BackFace({required this.pill, this.given, this.cornerRoom = 0});
+
+  /// How the answer moved the reader's score, beside the verdict.
+  final ScoreMove? move;
+  const _BackFace({
+    required this.pill,
+    this.given,
+    this.move,
+    this.cornerRoom = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -715,6 +732,7 @@ class _BackFace extends StatelessWidget {
         right: right,
         given: pill.challenge.describe(given.response),
         confidence: given.confidence,
+        move: move,
         room: room,
       );
       Widget leadOf(_Verdict verdict) => Column(
@@ -824,15 +842,18 @@ double _measureSpan(
   BuildContext context,
   InlineSpan span,
   double width,
-  TextScaler scaler,
-) {
+  TextScaler scaler, {
+  List<PlaceholderDimensions> placeholders = const [],
+}) {
   final base = DefaultTextStyle.of(context);
   final p = TextPainter(
     text: TextSpan(style: base.style, children: [span]),
     textDirection: Directionality.of(context),
     textScaler: scaler,
     textHeightBehavior: base.textHeightBehavior,
-  )..layout(maxWidth: width);
+  );
+  if (placeholders.isNotEmpty) p.setPlaceholderDimensions(placeholders);
+  p.layout(maxWidth: width);
   final h = p.height;
   p.dispose();
   return h;
@@ -859,11 +880,15 @@ class _Verdict extends StatelessWidget {
 
   /// How much of it the back has room for.
   final _Room room;
+
+  /// How the answer moved the reader's score, said right after the verdict.
+  final ScoreMove? move;
   const _Verdict({
     required this.pill,
     required this.right,
     required this.given,
     this.confidence,
+    this.move,
     this.room = _Room.all,
   });
 
@@ -949,9 +974,17 @@ class _Verdict extends StatelessWidget {
 
   InlineSpan _span(BuildContext context) {
     final String? detail = _detail(context);
+    final ScoreMove? move = this.move;
     return TextSpan(
       children: [
         TextSpan(text: _head(context), style: _headStyle(pill.ink)),
+        // The score it moved, as it moved: said with the verdict, the
+        // moment the back comes round.
+        if (move != null)
+          WidgetSpan(
+            alignment: PlaceholderAlignment.middle,
+            child: ScoreMoveChip(move: move, ink: pill.ink),
+          ),
         if (detail != null)
           TextSpan(text: '  $detail', style: _detailStyle(pill.ink)),
       ],
@@ -960,11 +993,19 @@ class _Verdict extends StatelessWidget {
 
   /// The room the verdict takes at [width]: its words beside the mark.
   double heightIn(BuildContext context, double width, TextScaler scaler) {
+    final ScoreMove? move = this.move;
     final double h = _measureSpan(
       context,
       _span(context),
       width - _mark - _gap,
       scaler,
+      placeholders: [
+        if (move != null)
+          PlaceholderDimensions(
+            size: ScoreMoveChip.sizeOf(context, move, scaler),
+            alignment: PlaceholderAlignment.middle,
+          ),
+      ],
     );
     return math.max(h, _mark + 3);
   }

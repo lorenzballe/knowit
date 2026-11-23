@@ -1779,6 +1779,11 @@ class RemoteLocalizations extends AppLocalizations {
       _words.format('scoreToday', localeName, {'n': n}) ?? _base.scoreToday(n);
 
   @override
+  String scoreMoveLabel(String name, String n) =>
+      _words.format('scoreMoveLabel', localeName, {'name': name, 'n': n}) ??
+      _base.scoreMoveLabel(name, n);
+
+  @override
   String scoreAnswers(int n) =>
       _words.format('scoreAnswers', localeName, {'n': n}) ??
       _base.scoreAnswers(n);

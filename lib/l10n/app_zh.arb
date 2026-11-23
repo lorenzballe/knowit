@@ -429,6 +429,7 @@
   "scoreWeek": "本周 {n}",
   "scoreStart": "从你的第一次回答开始。",
   "scoreToday": "今天 {n}",
+  "scoreMoveLabel": "{name}：这次回答 {n}",
   "scoreAnswers": "{n, plural, =1{基于 1 次回答} other{基于 {n} 次回答}}",
   "skillsRowTitle": "想学的内容",
   "skillName": "{key, select, critical{批判性思维} decisions{更好地决策} money{金钱与储蓄} numbers{数字与统计} talk{沟通} persuade{说服} people{理解他人} fakes{识破假消息} science{像科学家一样思考} focus{专注力} lead{领导力} culture{通识} other{{key}}}",
