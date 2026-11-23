@@ -1783,7 +1783,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skillsTitleMark => '学';
 
   @override
-  String get skillsLine => '每读一张卡片都会让你升级。训练你所选能力的卡片会带有它的标记。';
+  String get skillsLine => '每次回答都会改变你的分数。训练你所选能力的卡片会带有它的标记。';
 
   @override
   String get skillsDone => '完成';
@@ -1800,7 +1800,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get skillMarkBody => '这是你设为专注的能力之一。每读一张这样的卡片，你都会升级。';
+  String get skillMarkBody => '这是你重点关注的能力之一。每回答一张这样的卡片，你在这项能力上的分数就会变化。';
 
   @override
   String get skillMarkOpen => '查看你的全部分数';
@@ -1815,7 +1815,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get trainingOthers => '其他';
 
   @override
-  String get trainingEmpty => '选择你想提升的方面。每读一张训练它的卡片，你都会升级，卡片上也会带有它的标记。';
+  String get trainingEmpty => '选择你想提升的方面。每回答一张训练它的卡片，你的分数就会变化，卡片上也会带有它的标记。';
 
   @override
   String get trainingPick => '选择能力';

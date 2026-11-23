@@ -1861,7 +1861,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Chaque carte lue te fait monter. Celles qui entraînent ce que tu choisis porteront sa marque.';
+      'Chaque réponse fait bouger ton score. Celles qui entraînent ce que tu choisis portent sa marque.';
 
   @override
   String get skillsDone => 'Terminé';
@@ -1879,7 +1879,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'C’est l’une des compétences que tu as mises en priorité. Chaque carte comme celle-ci te fait monter.';
+      'Une des compétences que tu as mises en avant. Chaque réponse sur une carte comme celle-ci fait bouger ton score.';
 
   @override
   String get skillMarkOpen => 'Voir tous tes scores';
@@ -1896,7 +1896,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Choisis ce que tu veux améliorer. Chaque carte qui l’entraîne te fait monter et porte sa marque.';
+      'Choisis ce que tu veux améliorer. Chaque réponse sur une carte qui l’entraîne fait bouger ton score, et la carte porte sa marque.';
 
   @override
   String get trainingPick => 'Choisir des compétences';

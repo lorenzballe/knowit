@@ -1859,7 +1859,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Jede gelesene Karte bringt dich weiter. Karten, die trainieren, was du wählst, tragen sein Zeichen.';
+      'Jede Antwort bewegt deine Punktzahl. Karten, die trainieren, was du wählst, tragen sein Zeichen.';
 
   @override
   String get skillsDone => 'Fertig';
@@ -1877,7 +1877,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'Eine der Fähigkeiten, die du in den Fokus gestellt hast. Jede Karte wie diese bringt dich weiter.';
+      'Eine der Fähigkeiten, die du in den Fokus gestellt hast. Jede Antwort auf einer Karte wie dieser bewegt deine Punktzahl darin.';
 
   @override
   String get skillMarkOpen => 'Alle deine Punktzahlen ansehen';
@@ -1894,7 +1894,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Wähle, worin du besser werden willst. Jede Karte, die das trainiert, bringt dich weiter und trägt sein Zeichen.';
+      'Wähle, worin du besser werden willst. Jede Antwort auf einer Karte, die es trainiert, bewegt deine Punktzahl darin, und die Karte trägt sein Zeichen.';
 
   @override
   String get trainingPick => 'Fähigkeiten wählen';

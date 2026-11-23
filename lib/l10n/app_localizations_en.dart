@@ -1849,7 +1849,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Every card you read moves you up. Cards that train what you pick will carry its mark.';
+      'Every answer moves your score. Cards that train what you pick will carry its mark.';
 
   @override
   String get skillsDone => 'Done';
@@ -1867,7 +1867,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'One of the skills you put in focus. Every card like this one moves you up.';
+      'One of the skills you put in focus. Every answer on a card like this one moves your score in it.';
 
   @override
   String get skillMarkOpen => 'See all your scores';
@@ -1884,7 +1884,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Pick what you want to get better at. Every card that trains it moves you up, and carries its mark.';
+      'Pick what you want to get better at. Every answer on a card that trains it moves your score in it, and the card carries its mark.';
 
   @override
   String get trainingPick => 'Choose skills';

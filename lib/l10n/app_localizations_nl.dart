@@ -1860,7 +1860,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Elke gelezen kaart brengt je verder. Kaarten die trainen wat je kiest, dragen zijn teken.';
+      'Elk antwoord beweegt je score. Kaarten die trainen wat je kiest, dragen zijn teken.';
 
   @override
   String get skillsDone => 'Klaar';
@@ -1878,7 +1878,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'Een van de vaardigheden die je in focus hebt gezet. Elke kaart zoals deze brengt je verder.';
+      'Een van de vaardigheden waar je op focust. Elk antwoord op een kaart als deze beweegt je score daarin.';
 
   @override
   String get skillMarkOpen => 'Al je scores bekijken';
@@ -1895,7 +1895,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Kies waarin je beter wilt worden. Elke kaart die dat traint, brengt je verder en draagt zijn teken.';
+      'Kies waar je beter in wilt worden. Elk antwoord op een kaart die het traint, beweegt je score, en de kaart draagt zijn teken.';
 
   @override
   String get trainingPick => 'Vaardigheden kiezen';

@@ -1830,7 +1830,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Okuduğun her kart seni yükseltir. Seçtiğini çalıştıran kartlar onun işaretini taşır.';
+      'Her cevap puanını oynatır. Seçtiğini çalıştıran kartlar onun işaretini taşır.';
 
   @override
   String get skillsDone => 'Tamam';
@@ -1848,7 +1848,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'Odağa aldığın becerilerden biri. Bunun gibi her kart seni yükseltir.';
+      'Odağa aldığın becerilerden biri. Bunun gibi bir karttaki her cevap o becerideki puanını oynatır.';
 
   @override
   String get skillMarkOpen => 'Tüm puanlarını gör';
@@ -1865,7 +1865,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Neyde daha iyi olmak istediğini seç. Onu çalıştıran her kart seni yükseltir ve onun işaretini taşır.';
+      'Neyde daha iyi olmak istediğini seç. Onu çalıştıran bir karttaki her cevap puanını oynatır ve kart onun işaretini taşır.';
 
   @override
   String get trainingPick => 'Becerileri seç';

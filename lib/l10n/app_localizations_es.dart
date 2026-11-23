@@ -1860,7 +1860,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Cada tarjeta que lees te hace subir. Las que entrenen lo que elijas llevarán su marca.';
+      'Cada respuesta mueve tu puntuación. Las que entrenen lo que elijas llevarán su marca.';
 
   @override
   String get skillsDone => 'Listo';
@@ -1878,7 +1878,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'Es una de las habilidades que pusiste en foco. Cada tarjeta como esta te hace subir.';
+      'Una de las habilidades que pusiste en foco. Cada respuesta en una tarjeta como esta mueve tu puntuación en ella.';
 
   @override
   String get skillMarkOpen => 'Ver todas tus puntuaciones';
@@ -1895,7 +1895,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Elige en qué quieres mejorar. Cada tarjeta que lo entrena te hace subir y lleva su marca.';
+      'Elige en qué quieres mejorar. Cada respuesta en una tarjeta que lo entrena mueve tu puntuación, y la tarjeta lleva su marca.';
 
   @override
   String get trainingPick => 'Elegir habilidades';

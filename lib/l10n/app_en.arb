@@ -1929,7 +1929,7 @@
  "@skillsTitleMark": {
   "description": "The one word of skillsTitle painted in colour. Must appear in skillsTitle exactly as written."
  },
- "skillsLine": "Every card you read moves you up. Cards that train what you pick will carry its mark.",
+ "skillsLine": "Every answer moves your score. Cards that train what you pick will carry its mark.",
  "@skillsLine": {
   "description": "Line under skillsTitle: each card read raises the reader's level in the skills it trains, and a card that trains a skill they picked carries that skill's mark."
  },
@@ -1954,7 +1954,7 @@
    }
   }
  },
- "skillMarkBody": "One of the skills you put in focus. Every card like this one moves you up.",
+ "skillMarkBody": "One of the skills you put in focus. Every answer on a card like this one moves your score in it.",
  "@skillMarkBody": {
   "description": "On the sheet a card's skill mark opens: the skill is one the reader picked, and cards like this raise their level in it."
  },
@@ -1974,7 +1974,7 @@
  "@trainingOthers": {
   "description": "Small label over the skills the reader did not pick, each with its level, under the ones they did."
  },
- "trainingEmpty": "Pick what you want to get better at. Every card that trains it moves you up, and carries its mark.",
+ "trainingEmpty": "Pick what you want to get better at. Every answer on a card that trains it moves your score in it, and the card carries its mark.",
  "@trainingEmpty": {
   "description": "Your training, before the reader has picked any skill."
  },

@@ -2583,7 +2583,7 @@ abstract class AppLocalizations {
   /// Line under skillsTitle: each card read raises the reader's level in the skills it trains, and a card that trains a skill they picked carries that skill's mark.
   ///
   /// In en, this message translates to:
-  /// **'Every card you read moves you up. Cards that train what you pick will carry its mark.'**
+  /// **'Every answer moves your score. Cards that train what you pick will carry its mark.'**
   String get skillsLine;
 
   /// Button that closes the skills screen.
@@ -2613,7 +2613,7 @@ abstract class AppLocalizations {
   /// On the sheet a card's skill mark opens: the skill is one the reader picked, and cards like this raise their level in it.
   ///
   /// In en, this message translates to:
-  /// **'One of the skills you put in focus. Every card like this one moves you up.'**
+  /// **'One of the skills you put in focus. Every answer on a card like this one moves your score in it.'**
   String get skillMarkBody;
 
   /// Button on that sheet (and on the finished day's): opens What to learn, where each skill shows the reader's score in it.
@@ -2643,7 +2643,7 @@ abstract class AppLocalizations {
   /// Your training, before the reader has picked any skill.
   ///
   /// In en, this message translates to:
-  /// **'Pick what you want to get better at. Every card that trains it moves you up, and carries its mark.'**
+  /// **'Pick what you want to get better at. Every answer on a card that trains it moves your score in it, and the card carries its mark.'**
   String get trainingEmpty;
 
   /// Button under trainingEmpty: opens What to learn, where skills are picked.

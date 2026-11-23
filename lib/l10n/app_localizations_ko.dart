@@ -1793,7 +1793,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skillsTitleMark => '배우고';
 
   @override
-  String get skillsLine => '카드를 읽을 때마다 레벨이 올라가요. 고른 것을 훈련하는 카드에는 그 표시가 붙어요.';
+  String get skillsLine => '답할 때마다 점수가 움직여요. 고른 것을 훈련하는 카드에는 그 표시가 붙어요.';
 
   @override
   String get skillsDone => '완료';
@@ -1810,7 +1810,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get skillMarkBody => '집중하기로 고른 능력 중 하나예요. 이런 카드를 읽을 때마다 레벨이 올라가요.';
+  String get skillMarkBody => '집중하기로 한 능력 중 하나예요. 이런 카드에 답할 때마다 그 점수가 움직여요.';
 
   @override
   String get skillMarkOpen => '내 점수 모두 보기';
@@ -1826,7 +1826,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      '더 잘하고 싶은 것을 골라 보세요. 그것을 훈련하는 카드를 읽을 때마다 레벨이 올라가고, 카드에 그 표시가 붙어요.';
+      '더 잘하고 싶은 것을 골라요. 그걸 훈련하는 카드에 답할 때마다 점수가 움직이고, 카드에는 그 표시가 붙어요.';
 
   @override
   String get trainingPick => '능력 고르기';

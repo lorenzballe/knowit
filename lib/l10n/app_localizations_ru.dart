@@ -1929,7 +1929,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Каждая прочитанная карточка поднимает тебя выше. Карточки, которые тренируют выбранное, получат его знак.';
+      'Каждый ответ двигает твой рейтинг. Карточки, которые тренируют выбранное, получат его знак.';
 
   @override
   String get skillsDone => 'Готово';
@@ -1947,7 +1947,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'Это один из навыков, которые ты выбрал в фокус. Каждая такая карточка поднимает тебя выше.';
+      'Один из навыков, на которых ты сосредоточен. Каждый ответ на такой карточке двигает твой рейтинг в нём.';
 
   @override
   String get skillMarkOpen => 'Все твои рейтинги';
@@ -1964,7 +1964,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Выбери, в чём хочешь стать лучше. Каждая карточка, которая это тренирует, поднимает тебя выше и получает его знак.';
+      'Выбери, в чём хочешь стать лучше. Каждый ответ на карточке, которая это тренирует, двигает твой рейтинг, а у карточки появляется его знак.';
 
   @override
   String get trainingPick => 'Выбрать навыки';

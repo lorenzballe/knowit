@@ -1789,7 +1789,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get skillsTitleMark => '学び';
 
   @override
-  String get skillsLine => '読んだカードの数だけレベルが上がります。選んだものを鍛えるカードには、その印がつきます。';
+  String get skillsLine => '回答するたびにスコアが動きます。選んだものを鍛えるカードには、その印がつきます。';
 
   @override
   String get skillsDone => '完了';
@@ -1806,7 +1806,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get skillMarkBody => 'あなたがフォーカスに選んだスキルのひとつです。こうしたカードを読むたびにレベルが上がります。';
+  String get skillMarkBody => '重点を置いたスキルのひとつです。このようなカードに答えるたびに、そのスコアが動きます。';
 
   @override
   String get skillMarkOpen => 'すべてのスコアを見る';
@@ -1822,7 +1822,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      '上達したいことを選びましょう。それを鍛えるカードを読むたびにレベルが上がり、カードにはその印がつきます。';
+      '上達したいものを選んでください。それを鍛えるカードに答えるたびにスコアが動き、そのカードには印がつきます。';
 
   @override
   String get trainingPick => 'スキルを選ぶ';

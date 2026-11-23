@@ -1857,7 +1857,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Ogni carta letta ti fa salire. Le carte che allenano ciò che scegli ne avranno il segno.';
+      'Ogni risposta muove il punteggio. Le carte che allenano ciò che scegli ne hanno il segno.';
 
   @override
   String get skillsDone => 'Fatto';
@@ -1875,7 +1875,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'È una delle abilità che hai messo in focus. Ogni carta come questa ti fa salire.';
+      'Una delle abilità che hai messo a fuoco. Ogni risposta su una carta come questa ne muove il punteggio.';
 
   @override
   String get skillMarkOpen => 'Vedi tutti i tuoi punteggi';
@@ -1892,7 +1892,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Scegli in cosa vuoi migliorare. Ogni carta che lo allena ti fa salire, e ne porta il segno.';
+      'Scegli in cosa vuoi migliorare. Ogni risposta su una carta che lo allena ne muove il punteggio, e la carta ne porta il segno.';
 
   @override
   String get trainingPick => 'Scegli le abilità';

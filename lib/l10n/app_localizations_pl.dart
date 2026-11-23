@@ -1922,7 +1922,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Każda przeczytana karta cię podnosi. Karty ćwiczące to, co wybierzesz, będą miały jego znak.';
+      'Każda odpowiedź zmienia twój wynik. Karty ćwiczące to, co wybierzesz, mają jej znak.';
 
   @override
   String get skillsDone => 'Gotowe';
@@ -1940,7 +1940,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'To jedna z umiejętności, które wybrałeś jako priorytet. Każda taka karta cię podnosi.';
+      'Jedna z umiejętności, na których się skupiasz. Każda odpowiedź na takiej karcie zmienia twój wynik w niej.';
 
   @override
   String get skillMarkOpen => 'Zobacz wszystkie swoje wyniki';
@@ -1957,7 +1957,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get trainingEmpty =>
-      'Wybierz, w czym chcesz być lepszy. Każda karta, która to ćwiczy, cię podnosi i ma jego znak.';
+      'Wybierz, w czym chcesz być lepszy. Każda odpowiedź na karcie, która to ćwiczy, zmienia twój wynik, a karta ma jej znak.';
 
   @override
   String get trainingPick => 'Wybierz umiejętności';
