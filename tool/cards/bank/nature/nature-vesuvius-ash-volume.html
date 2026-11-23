@@ -1,9 +1,14 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-vesuvius-cube -->
 <!-- Thought to carry: volume grows with the cube of the side, so a huge-sounding volume makes a surprisingly small block.
-     Front: a pale cube on the ground beside a 1 km bar; the reader drags its top to build the pile Vesuvius threw out in ten days, reading their own volume as they go.
-     Back: the least the pile could be, 245 million m³, grows as an orange cube 626 m a side, with the reader's cube drawn dashed over it on the same scale.
-     The front shows only the reader's own cube and its volume: no true value, no target line, no verdict until they commit and say how sure. -->
+     Front: Vesuvius in eruption, Monte Somma's old rim and the Great Cone inside it, ash rising from the crater; on the plain
+     beside it, at the same scale, the reader's pale cube. They drag its top to build the pile the volcano threw out in ten
+     days, reading their own volume as they go. The scale holds while the cube is small, so the volcano stays big; past
+     where the cube still fits, the view pulls back, volcano and cube together, and the top stays under the finger.
+     Back: the least the pile could be, 245 million m³, grows as an ash-grey cube 626 m a side beside the same volcano,
+     with the reader's cube drawn dashed over it.
+     The front shows only the reader's own cube and its volume: no true value, no target line, no verdict until they
+     commit and say how sure. -->
 <title>The pile from ten days of Vesuvius</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -40,13 +45,13 @@
     <div class="turn">
       <section class="face front">
         <h2 class="q">How much material did Vesuvius throw out in ten days in 1944?</h2>
-        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A cube on the ground beside a one kilometre bar. Drag its top to make it bigger or smaller."></svg></div>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="Vesuvius erupting, ash rising from its crater, and beside it on the plain, at the same scale, a cube with a one kilometre bar under it. Drag the cube's top to make it bigger or smaller."></svg></div>
         <div class="sure" id="sure"></div>
         <p class="say" id="say">Drag the cube up or down until it holds <b>everything</b> the volcano threw out in ten days.</p>
       </section>
       <section class="face back" aria-hidden="true">
         <p class="big">More than 245 million m³</p>
-        <div class="stagebox"><svg id="pic2" role="img" aria-label="An orange cube 626 metres a side, the least the material would fill, with your guess drawn dashed over it."></svg></div>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="Beside Vesuvius, at the same scale, an ash-grey cube 626 metres a side, the least the material would fill, with your guess drawn dashed over it."></svg></div>
         <p class="body">626 × 626 × 626 is about 245 million, so the material would fill at least a cube 626 m a side. Falling ash and lapilli damaged towns such as Pompei, Nocera, Scafati and Poggiomarino.</p>
         <div class="keep"><b>WHAT TO KEEP</b> Ten times wider holds a thousand times more: big volumes hide in small cubes.</div>
         <div class="foot"><span class="src">Source · Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022).</span></div>
@@ -66,57 +71,137 @@ const Turn = {
 (() => {
   const TRUE_SIDE = Math.cbrt(245e6);       // ≈ 626 m, the floor: the video says "more than"
   const MAXS = 2400, MINS = 30;
+  const PEAK = 1281, SOMMA_PEAK = 1132;      // the Great Cone and Monte Somma, metres above the sea
+  const INK = '#10100c', WHITE = '#fffbf0';
+  // Flat colours, one meaning each: the reader's cube white, the pile the grey of the ash it is made of,
+  // the old Somma rim a lighter brown than the younger cone in front of it, the plain sand.
   const GUESS = {top: '#ffffff', front: '#f1f4ee', side: '#d3dccf'};
-  const TRUTH = {top: '#ec7a4b', front: '#d4501f', side: '#a63a12'};
-  const INK = 'var(--k)';
+  const PILE = {top: '#a7a09a', front: '#857e78', side: '#69635e'};
+  const SOMMA = '#86695a', CONE = '#5f4a40', PLAIN = '#f4d38e', ASH = '#8f8984';
   let side = 150, touched = false, locked = false, turned = false;
-  let W = 0, H = 0, fs = 12, GY = 0, X0 = 0, S = 1;
+  let L = null;
   const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
 
   const fmt = v => v >= 1e9 ? `${(v / 1e9).toFixed(v >= 1e10 ? 0 : 1)} billion m³`
     : v >= 1e6 ? `${v >= 1e7 ? Math.round(v / 1e6) : (v / 1e6).toFixed(1)} million m³`
     : `${Math.round(v / 1e3)} thousand m³`;
   const sideFmt = s => s >= 1000 ? `${(s / 1000).toFixed(1)} km` : `${Math.round(s / 10) * 10} m`;
-  const text = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
-  const pts = arr => arr.map(p => p.join(',')).join(' ');
+  const text = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--body)', 'font-size': 12, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  const pts = arr => arr.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  // A smooth line through the points (Catmull-Rom), as many short steps.
+  function spline(ps, n = 6) {
+    const out = [];
+    for (let i = 0; i < ps.length - 1; i++) {
+      const p0 = ps[Math.max(0, i - 1)], p1 = ps[i], p2 = ps[i + 1], p3 = ps[Math.min(ps.length - 1, i + 2)];
+      for (let k = 0; k < n; k++) {
+        const t = k / n, t2 = t * t, t3 = t2 * t;
+        const cr = (a, b, c, e) => .5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - e) * t2 + (3 * b - a - 3 * c + e) * t3);
+        out.push([cr(p0[0], p1[0], p2[0], p3[0]), cr(p0[1], p1[1], p2[1], p3[1])]);
+      }
+    }
+    out.push(ps[ps.length - 1]);
+    return out;
+  }
 
-  // An oblique cube resting on the ground at x0: front face a×a, depth drawn at half size, 30°.
-  function cube(g, x0, gy, a, st, extra = {}) {
-    const dx = a * .5 * .866, dy = a * .5 * .5;
-    const base = Object.assign({stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, extra);
+  // An oblique cube standing on the ground, its right edge (the far side included) at x1: front face a×a,
+  // depth drawn at half size, 30°.
+  function cube(g, x1, gy, a, st, extra = {}) {
+    const dx = a * .5 * .866, dy = a * .5 * .5, x0 = x1 - dx - a;
+    const base = Object.assign({stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, extra);
     Kit.mk('polygon', Object.assign({points: pts([[x0 + a, gy], [x0 + a + dx, gy - dy], [x0 + a + dx, gy - a - dy], [x0 + a, gy - a]]), fill: st.side}, base), g);
     Kit.mk('polygon', Object.assign({points: pts([[x0, gy - a], [x0 + a, gy - a], [x0 + a + dx, gy - a - dy], [x0 + dx, gy - a - dy]]), fill: st.top}, base), g);
     Kit.mk('rect', Object.assign({x: x0, y: gy - a, width: a, height: a, fill: st.front}, base), g);
-    return {dx, dy};
+    return {x0, dx, dy};
   }
 
-  // ---------- the front: your cube ----------
-  function front() {
-    svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(14, W / 26));
-    const heroH = Math.max(fs * 5, H * .2);
-    GY = H - fs * 2.8; X0 = W * .1;
-    S = Math.min((W * .84) / (MAXS * 1.433), (GY - heroH - 6) / (MAXS * 1.25));
+  // Vesuvius as Naples sees it, on the ground at gy, its crater hv px above it at x = cx: Monte Somma's old rim to the
+  // west, the Great Cone grown inside it, ash rising from the crater and drifting west.
+  // The part of a line running left to right that lies between x = a and x = b, cut exactly there.
+  function within(line, a, b) {
+    const out = [];
+    for (let i = 0; i < line.length; i++) {
+      const p = line[i], q = line[i + 1];
+      if (p[0] >= a && p[0] <= b) out.push(p);
+      if (q) for (const e of [a, b]) if ((p[0] - e) * (q[0] - e) < 0) { const t = (e - p[0]) / (q[0] - p[0]); out.push([e, p[1] + (q[1] - p[1]) * t]); }
+    }
+    return out.sort((m, n) => m[0] - n[0]);
+  }
+  // `clear` is a box in the top right corner (the number) the ash keeps out of, and where the cube begins. The mountain
+  // is cut at W: the edge of the picture, or the front of a solid cube standing before it, so none of it shows
+  // through under the cube's far side.
+  function vesuvius(g, cx, gy, hv, fs, clear, W) {
+    const ux = hv * .62, P = (u, v) => [cx + u * ux, gy - v * hv], s = SOMMA_PEAK / PEAK;
+    const outline = within(spline([P(-2.9, -.03), P(-2.15, .25), P(-1.6, .58), P(-1.22, s * .95), P(-1.03, s), P(-.86, s * .91), P(-.7, .66), P(-.53, .6),
+      P(-.36, .76), P(-.19, .95), P(-.1, 1), P(-.03, .955), P(.04, .95), P(.1, .995), P(.3, .86), P(.7, .56), P(1.15, .28), P(1.65, .08), P(2.25, -.03)]), 0, W).map(p => [p[0], Math.min(p[1], gy)]);
+    const first = outline[0], last = outline[outline.length - 1];
+    // Ash from the crater: a column that widens as it rises and billows out at the sides, outlined as one cloud.
+    const puffs = [], fits = (x, y, r) => !(y - r < 3 || x - r < 2 || (x + r > clear.x && y - r < clear.y));
+    for (let k = 0; k < 9; k++) {
+      const t = k / 8, [x, y] = P(-.04 - .5 * t ** 1.4, 1.07 + 1.1 * t), r = ux * (.12 + .3 * t);
+      if (!fits(x, y, r)) break;
+      puffs.push([x, y, r]);
+      if (k >= 3) for (const [ox, oy, k2] of [[-.62, .3, .68], [.6, .38, .62]]) { const q = [x + ox * r, y + oy * r, r * k2]; if (fits(...q)) puffs.push(q); }
+    }
+    const ash = Kit.mk('g', {}, g);
+    puffs.forEach(([x, y, r]) => Kit.mk('circle', {cx: x, cy: y, r: r + 1.4, fill: INK}, ash));
+    puffs.forEach(([x, y, r]) => Kit.mk('circle', {cx: x, cy: y, r: r - 1.2, fill: ASH}, ash));
+    Kit.mk('polygon', {points: pts(outline.concat([[last[0], gy + 1], [first[0], gy + 1]])), fill: SOMMA}, g);
+    // The Great Cone in front of the old rim, from the valley between them down to the plain.
+    const A = P(-.53, .6); let B = P(-1.05, 0);
+    if (B[0] < 0) { const t = (0 - A[0]) / (B[0] - A[0]); B = [0, A[1] + (B[1] - A[1]) * t]; }
+    const cone = outline.filter(p => p[0] >= A[0]);
+    const base = B[1] >= gy - .5 ? [[last[0], gy + 1], [B[0], gy + 1]] : [[last[0], gy + 1], [0, gy + 1], B];
+    Kit.mk('polygon', {points: pts(cone.concat(base)), fill: CONE}, g);
+    Kit.mk('path', {d: `M${A[0].toFixed(1)},${A[1].toFixed(1)} L${B[0].toFixed(1)},${B[1].toFixed(1)}`, stroke: INK, 'stroke-width': 1.6, opacity: .45, fill: 'none'}, g);
+    Kit.mk('polyline', {points: pts(outline), fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
+    // Its name on its flank, where there is room for it and the cube does not stand in front of it.
+    const nx = Math.max(fs * 3, P(-.42, 0)[0]);
+    if (hv > fs * 2.6 && nx + fs * 3 < clear.cube) text(g, nx, gy - hv * .26, 'Vesuvius', {'text-anchor': 'middle', fill: WHITE, 'font-size': fs, 'font-weight': 800});
+  }
+
+  // ---------- the front: your cube beside the volcano ----------
+  // The cube's size on screen grows with its side at the volcano's scale while there is room, then more slowly as the
+  // view pulls back, so its top still follows the finger and the biggest cube just fits under the number.
+  function layout() {
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, W / 26));
     const big = Math.max(20, Math.min(H * .1, W * .085));
-    text(svg, X0, big * .95, fmt(side ** 3), {'font-family': 'var(--display)', 'font-size': big, 'font-weight': 800});
-    text(svg, X0, big * .95 + fs * 1.6, `your cube: ${sideFmt(side)} a side`, {'font-weight': 600});
-    Kit.mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: INK, 'stroke-width': 2}, svg);
-    const ry = GY + fs * .9, km = 1000 * S;
-    Kit.mk('path', {d: `M${X0},${ry - 4} V${ry + 4} M${X0},${ry} H${X0 + km} M${X0 + km},${ry - 4} V${ry + 4}`, stroke: INK, 'stroke-width': 1.6, fill: 'none'}, svg);
-    text(svg, X0 + km + 6, ry + fs * .35, '1 km', {'font-weight': 600});
-    const a = side * S, c = cube(Kit.mk('g', {}, svg), X0, GY, a, GUESS);
+    const heroB = big * .95 + fs * 1.6 + fs * .45;
+    const gb = Math.max(fs * 2.5, H * .1), GY = H - gb, x1 = W - 3;
+    const amax = Math.max(24, Math.min((W * .86) / 1.433, (GY - heroB - 8) / 1.25));
+    const S0 = Math.min(GY * .56, W * .5) / PEAK;
+    const s1 = Math.min(MAXS, .72 * amax / S0), a1 = s1 * S0;
+    return {W, H, fs, big, gb, GY, x1, amax, S0, s1, a1};
+  }
+  const aOf = s => s <= L.s1 ? s * L.S0 : L.a1 + (L.amax - L.a1) * (s - L.s1) / (MAXS - L.s1);
+  const sideOf = a => a <= L.a1 ? a / L.S0 : L.s1 + (a - L.a1) / (L.amax - L.a1) * (MAXS - L.s1);
+
+  function front() {
+    L = layout(); svg.innerHTML = '';
+    const {W, H, fs, big, GY, gb, x1} = L, a = aOf(side), S = a / side;
+    Kit.mk('rect', {x: 0, y: GY, width: W, height: H - GY, fill: PLAIN}, svg);
+    const land = Kit.mk('g', {}, svg);
+    const n1 = text(svg, W - 2, big * .95, fmt(side ** 3), {'text-anchor': 'end', 'font-family': 'var(--display)', 'font-size': big, 'font-weight': 800});
+    const n2 = text(svg, W - 2, big * .95 + fs * 1.6, `your cube: ${sideFmt(side)} a side`, {'text-anchor': 'end', 'font-size': fs, 'font-weight': 600});
+    const left = Math.min(...[n1, n2].map(t => { try { return t.getBBox().x; } catch (_) { return W * .3; } }));
+    vesuvius(land, W * .3, GY, PEAK * S, fs, {x: left - 8, y: big * .95 + fs * 2.1, cube: x1 - a * 1.433}, Math.min(W, x1 - a * .433));
+    Kit.mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: INK, 'stroke-width': 3}, land);
+    const c = cube(Kit.mk('g', {}, svg), x1, GY, a, GUESS);
+    // A kilometre at the same scale, in the plain under the cube.
+    const ry = GY + gb * .45, km = 1000 * S, bx = W - 4 - km;
+    Kit.mk('path', {d: `M${bx},${ry - 5} V${ry + 5} M${bx},${ry} H${bx + km} M${bx + km},${ry - 5} V${ry + 5}`, stroke: INK, 'stroke-width': 2, fill: 'none'}, svg);
+    text(svg, bx - 6, ry + fs * .36, '1 km', {'text-anchor': 'end', 'font-size': fs, 'font-weight': 700});
     if (!touched && !locked) {
-      const hx = X0 + a + c.dx + fs * 1.1, hy = GY - a - c.dy;
+      const hx = c.x0 + (a + c.dx) / 2, hy = GY - a - c.dy - fs * .7;
       const h = Kit.mk('g', {class: 'hint'}, svg);
-      Kit.mk('path', {d: `M${hx},${hy + fs * .4} v-${fs * 1.5} m-5,6 l5,-6 l5,6`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, h);
-      text(h, hx + fs * .7, hy - fs * .2, 'drag', {'font-weight': 600});
+      Kit.mk('path', {d: `M${hx},${hy} v-${fs * 1.5} m-5,6 l5,-6 l5,6`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, h);
+      text(h, hx - fs * .6, hy - fs * .45, 'drag', {'text-anchor': 'end', 'font-size': fs, 'font-weight': 600});
     }
   }
 
-  const setFromY = y => { side = Math.max(MINS, Math.min(MAXS, (GY - y) / 1.25 / S)); front(); };
+  const setFromY = y => { side = Math.max(MINS, Math.min(MAXS, sideOf((L.GY - y) / 1.25))); front(); };
   let drag = false;
-  const yOf = e => e.clientY - svg.getBoundingClientRect().top;
+  const yOf = e => (e.clientY - svg.getBoundingClientRect().top) / svg.getBoundingClientRect().height * L.H;
   svg.addEventListener('pointerdown', e => { if (locked) return; drag = true; touched = true; svg.setPointerCapture(e.pointerId); setFromY(yOf(e)); Kit.haptic('selection'); });
   svg.addEventListener('pointermove', e => { if (drag) setFromY(yOf(e)); });
   const up = () => { if (!drag) return; drag = false; sure.on(); };
@@ -131,37 +216,33 @@ const Turn = {
     setTimeout(() => Turn.over(), 700);
   });
 
-  // ---------- the back: the least the pile could be, your cube over it ----------
+  // ---------- the back: the least the pile could be, beside the same volcano, your cube over it ----------
   const B = {t: 0, d: 0, g: 0};
   function back() {
     svg2.innerHTML = '';
-    const f = Kit.fitSvg(svg2), w = f.W, h = f.H;
-    const top = fs * 4.6, gy = h - fs * 1.6, x0 = w * .1;
-    const M = Math.max(side, TRUE_SIDE) * 1.05;
-    const s = Math.min((w * .82) / (M * 1.433), Math.max(10, gy - top) / (M * 1.25));
-    Kit.mk('line', {x1: 0, x2: w, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2}, svg2);
-    const at = TRUE_SIDE * s * B.t, g = Kit.mk('g', {}, svg2);
-    if (B.t > 0) cube(g, x0, gy, at, TRUTH);
-    const A = TRUE_SIDE * s, dx = A * .433, dy = A * .25;
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, W / 26));
+    const gb = Math.max(fs * 2.3, H * .12), GY = H - gb, x1 = W - 3, top = fs * 2;
+    const M = Math.max(side, TRUE_SIDE);
+    const S = Math.min(Math.min(GY * .6, W * .5) / PEAK, (W * .86) / (M * 1.433), (GY - top) / (M * 1.25));
+    Kit.mk('rect', {x: 0, y: GY, width: W, height: H - GY, fill: PLAIN}, svg2);
+    vesuvius(svg2, W * .3, GY, PEAK * S, fs, {x: W * .45, y: fs * 1.6, cube: x1 - Math.max(side, TRUE_SIDE) * S * 1.433}, B.t > 0 ? Math.min(W, x1 - TRUE_SIDE * S * B.t * .433) : W);
+    Kit.mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: INK, 'stroke-width': 3}, svg2);
+    const A = TRUE_SIDE * S;
+    if (B.t > 0) cube(Kit.mk('g', {}, svg2), x1, GY, A * B.t, PILE);
     if (B.d > 0) {
-      const m = Kit.mk('g', {opacity: B.d}, svg2), my = gy + fs * .8;
-      Kit.mk('path', {d: `M${x0},${my - 4} V${my + 4} M${x0},${my} H${x0 + A} M${x0 + A},${my - 4} V${my + 4}`, stroke: INK, 'stroke-width': 1.6, fill: 'none'}, m);
-      text(m, x0 + A + 6, my + fs * .35, '626 m', {'font-weight': 800});
-      text(m, 2, fs * 1.2, 'more than 245 million m³', {'font-weight': 800});
-      text(m, 2, fs * 2.5, 'fills at least this cube', {'font-weight': 600});
-      const tx = x0 + A * .5 + dx * .5, ty = gy - A - dy * .5;
-      Kit.mk('path', {d: `M${fs * 2},${fs * 2.9} L${tx},${ty}`, stroke: INK, 'stroke-width': 1, fill: 'none'}, m);
-      Kit.mk('circle', {cx: tx, cy: ty, r: 2.4, fill: INK}, m);
+      // Its side, measured in the plain under it.
+      const m = Kit.mk('g', {opacity: B.d}, svg2), my = GY + gb * .45, x0 = x1 - A * 1.433;
+      Kit.mk('path', {d: `M${x0},${my - 5} V${my + 5} M${x0},${my} H${x0 + A} M${x0 + A},${my - 5} V${my + 5}`, stroke: INK, 'stroke-width': 2, fill: 'none'}, m);
+      text(m, x0 - 6, my + fs * .36, '626 m', {'text-anchor': 'end', 'font-size': fs, 'font-weight': 800});
     }
     if (B.g > 0) {
-      const gq = Kit.mk('g', {opacity: B.g}, svg2), a = side * s;
-      const c = cube(gq, x0, gy, a, {top: 'none', front: 'none', side: 'none'}, {stroke: '#ffffff', 'stroke-width': 2.4, 'stroke-dasharray': '6 4'});
-      const cx = x0 + a + c.dx, cy = gy - a - c.dy;
-      const lx = w - 2, ly = fs * 3.9;
-      text(gq, lx, ly, `your guess: ${fmt(side ** 3)}`, {'text-anchor': 'end', 'font-weight': 800});
-      const sx = Math.min(lx - fs, Math.max(cx, w * .55));
-      Kit.mk('path', {d: `M${sx},${ly + fs * .4} L${cx},${cy}`, stroke: INK, 'stroke-width': 1, fill: 'none'}, gq);
-      Kit.mk('circle', {cx, cy, r: 2.4, fill: '#ffffff', stroke: INK, 'stroke-width': 1}, gq);
+      const gq = Kit.mk('g', {opacity: B.g}, svg2), a = side * S;
+      const c = cube(gq, x1, GY, a, {top: 'none', front: 'none', side: 'none'}, {stroke: '#ffffff', 'stroke-width': 2.4, 'stroke-dasharray': '6 4'});
+      const cx = c.x0 + a + c.dx, cy = GY - a - c.dy, lx = W - 2, ly = fs * 1.1;
+      text(gq, lx, ly, `your guess: ${fmt(side ** 3)}`, {'text-anchor': 'end', 'font-size': fs, 'font-weight': 800});
+      const sx = Math.min(lx - fs, Math.max(cx, W * .55));
+      if (cy > ly + fs) Kit.mk('path', {d: `M${sx},${ly + fs * .4} L${cx},${cy}`, stroke: INK, 'stroke-width': 1.2, fill: 'none'}, gq);
+      Kit.mk('circle', {cx, cy, r: 2.6, fill: '#ffffff', stroke: INK, 'stroke-width': 1.2}, gq);
     }
   }
 
@@ -175,6 +256,10 @@ const Turn = {
   });
 
   Kit.onShow.card = () => { front(); if (turned) back(); };
+  // Drawn again at the size it now has whenever its room changes (the row of percentages giving way to the verdict).
+  let sizes = '';
+  const ro = new ResizeObserver(() => { const k = [svg, svg2].map(e => { const b = e.getBoundingClientRect(); return `${Math.round(b.width)}x${Math.round(b.height)}`; }).join('|'); if (k !== sizes && L) { sizes = k; front(); if (turned) back(); } });
+  [Kit.$('stage'), Kit.$('stage2')].forEach(e => ro.observe(e));
   Kit.onEnter.card = () => {
     if (Kit.calm || typeof gsap === 'undefined' || touched) return;
     const z = {s: MINS}; side = MINS; front();

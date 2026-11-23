@@ -27,7 +27,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Flash test page. A word flashes between rows of X's, and the reader picks which word flashed (popcorn, pretzel, or cracker) and how long the flash lasted. Compares a 1957 claim of 0.33 ms with one 17 ms frame, and 2006 lab results: thirsty 20% without the flash, 80% with it."
+    "label": "A cinema in the dark: curtains, the screen, the audience's heads, a bucket of popcorn. A word flashes on the screen between rows of X's for as long as the reader picks, down to one frame, and they say which flashed. Then Vicary's 1957 claim, 0.33 ms, against one 17 ms frame, and a 2006 lab: thirsty people chose the drink 20% without the flash, 80% with it."
   },
   "source": "Diventare Strong, “Persuasione Ipnotica. \"Comandi Nascosti\". Convincere Persuadere E Influenzare: Linguaggio Ipnotico” (YouTube, 2017)",
   "reference": "https://www.youtube.com/watch?v=rgMUHXLPtuc",

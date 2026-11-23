@@ -1,241 +1,200 @@
 <!doctype html>
 <!-- slug: history-guayaquil-prison-bars -->
-<!-- Look: a page from a history book. On the card's own Prussian blue, drawn flat in pale ink: a plain timeline of Ecuador's inmates, and below it a prison cell seen from the front, a stone sill with empty sockets where the bars go. No grid, no panels, no glow.
-     Interaction: drag across the empty cell. Each socket you cross raises a pale bar, and the bars are your guess at how many large-scale prison massacres Ecuador saw from early 2021 to early 2023. Then say how sure you are.
-     Wow: the real iron bars fall in, 11 of them, and rails weld them into a cell. The first bar turns amber, an amber line runs down to the caption, which writes itself out as "Guayaquil Penitentiary, 23.02.2021", while 79 tally marks, scratched like days on a cell wall, appear, one for each prisoner beheaded.
-     Layout: the page redraws itself to fit the space it has: full page, then without the timeline, then a single strip, so nothing ever overlaps. -->
+<!-- Look: a prison cell seen from the corridor, drawn flat with ink outlines, big: a concrete wall framing the open
+     cell front, a lintel above and a stone sill below with twenty empty sockets, and inside the pale back wall,
+     the floor and a bunk. Over the wall, what the bars will count: Ecuador's prison massacres, 2021 to 2023 (and,
+     where the drawing is tall, how its prisons filled: 11,000 inmates in 2009, over 31,000 now).
+     Interaction: drag across the cell. Each socket crossed raises a pale bar: the reader's guess at how many
+     large-scale massacres there were in those two years. Then say how sure.
+     The answer: eleven iron bars drop in and are welded into a gate; the first turns red, the wall above names it
+     (No. 1, the prisons of Guayaquil, Cuenca and Latacunga) and the sill dates it (23.02.2021), and 79 marks are
+     scratched on the back wall beside the bunk, one for each inmate killed.
+     Layout: drawn again at the size it has whenever its room changes; what does not fit (the second line over the
+     wall) gives way first. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Eleven bars</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-#pic text{font-family:var(--body);fill:var(--k)}
-#pic text.hand{font-family:var(--hand);font-weight:700}
 #why{display:flex;flex-direction:column;gap:.6cqh}
 #why .big{font:800 max(2.5cqh,16px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.75cqh,13px)/1.3 var(--body);margin:0}
 .answered .q{font-size:max(2.3cqh,15px)}
+/* On the smallest card, once answered, what the drawing and the line to keep already say gives way to the drawing:
+   the headline (the eleven bars) and the first massacre's date, place and toll (named on the gate and the wall). */
+@container (max-height: 520px){.answered #why .big,.answered #why .told{display:none}}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Drag a count · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">COUNT THE BARS</span></div>
     <h2 class="q">What happened in the first large-scale prison massacre in 2021?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A drawing: Ecuador's inmates grew from 11,000 in 2009 to over 31,000. Below, a prison cell for early 2021 to early 2023 where you drag bars to guess how many large-scale prison massacres happened, and a caption for the first one."></svg>
+      <svg id="pic" role="img" aria-label="A prison cell seen from the corridor, its front open: a stone sill with twenty empty sockets where bars go, a bunk inside. Above it: prison massacres in Ecuador, 2021 to 2023. Drag across the cell to raise bars, your guess at how many."></svg>
     </div>
     <div id="sure"></div>
     <p class="say" id="say">It was the first of a series. <b>Drag across the cell:</b> how many large-scale prison massacres in those two years?</p>
-    <div id="why" class="gone"><p class="big">11 massacres in two years</p><p class="body">The first came on 23 February 2021 in the Guayaquil Penitentiary, where 79 prisoners were beheaded. Ten more large-scale massacres followed inside Ecuador's prisons by early 2023.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Guayaquil, 23 Feb 2021: 79 prisoners beheaded, the first of 11 prison massacres.</div>
+    <div id="why" class="gone"><p class="big">11 massacres in two years</p><p class="body"><span class="told">The first came on 23 February 2021: riots in prisons in Guayaquil, Cuenca and Latacunga left 79 inmates dead, some beheaded. </span>Ten more large-scale massacres followed inside Ecuador's prisons by early 2023.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>23 Feb 2021: 79 inmates killed in three prisons at once, the first of 11 prison massacres.</div>
     <div class="foot"><span class="src">Source · Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
 (() => {
-  const hasDraw = typeof DrawSVGPlugin !== 'undefined';
-  if (hasDraw) gsap.registerPlugin(DrawSVGPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say');
-  // ink, ground, and flat tints of the ink on the ground (20%, 40%, 65%)
-  const LINE = '#10100c', GROUND = '#FFB000', AMBER = '#9b1c1c';
-  const T20 = '#cf9002', T40 = '#9f7005', T65 = '#644808';
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  // One ink; the concrete of the wall in two greys, the pale back wall of the cell, the floor; and one red, for the
+  // first of the eleven.
+  const INK = '#10100c', WALL = '#D3CBBD', STONE = '#B9AF9F', BACK = '#EFEBE3', SIDE = '#E2DBCE', CEIL = '#D8D0C2', FLOOR = '#CDC3B2', FRAME = '#56565E', WHITE = '#ffffff', RED = '#C8372A';
+  const FONT = 'Figtree, system-ui, sans-serif', HAND = 'Caveat, cursive', SERIF = 'Fraunces, Georgia, serif';
   const REAL = 11, SLOTS = 20;
   let guess = 0, touched = false, asked = false, revealed = false, lastW = 0, lastH = 0;
   let W = 0, H = 0, fs = 12, L = {};
-
-  const P = v => Math.max(0, v);
-  const T = (...a) => a.flat().filter(Boolean);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const f1 = n => (Math.round(n * 10) / 10).toString();
   const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 600}, a), p); e.textContent = s; return e; };
-  const fit = (e, max) => { e.removeAttribute('textLength'); e.removeAttribute('lengthAdjust'); const w = e.getComputedTextLength(); if (w > max && max > 0) { e.setAttribute('textLength', max); e.setAttribute('lengthAdjust', 'spacingAndGlyphs'); } };
-  const guessLabel = () => revealed ? `Guess ${guess} · real ${REAL}` : guess ? `Your guess: ${guess}` : 'Your guess: ?';
-  const TB_BEFORE = ['No. ? of ?', 'Site …', 'Date …'];
-  const TB_AFTER = ['No. 1 of 11 · 23.02.2021', 'Guayaquil Penitentiary', '79 prisoners beheaded'];
-  const MINI_BEFORE = 'Prison massacres, 2021–2023';
-  const MINI_AFTER = 'No. 1 · Guayaquil Penitentiary · 79 beheaded';
-
-  // A plain bracket spanning x1..x2, opening downwards.
-  function dim(p, x1, x2, y) {
-    const s = fs * .4;
-    mk('path', {d: `M${x1},${y + s} V${y} H${x2} V${y + s}`, stroke: T65, 'stroke-width': 1.5, fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, p);
+  // A word set at a size that fits its room: made smaller, down to a floor, never stretched.
+  function words(p, x, y, s, o = {}) {
+    const e = mk('text', {x: f1(x), y: f1(y), 'font-family': o.font || FONT, 'font-size': f1(o.size || fs), 'font-weight': o.weight || 700, 'text-anchor': o.anchor || 'start', fill: o.fill || INK}, p);
+    e.textContent = s;
+    if (o.max) for (let z = o.size || fs; e.getComputedTextLength() > o.max && z > (o.min || 10.5); ) { z -= .5; e.setAttribute('font-size', f1(z)); }
+    return e;
   }
+  const guessLabel = () => revealed ? `Guess ${guess} · real ${REAL}` : guess ? `Your guess: ${guess}` : '';
+  const TITLE = 'Prison massacres, 2021–2023', FIRST = ['No. 1 · Guayaquil, Cuenca, Latacunga', 'No. 1 · three prisons'];
 
   function layout() {
-    const r = svg.getBoundingClientRect();
-    if (r.width < 20 || r.height < 20) return;
-    if (lastW && Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1) return;
-    lastW = r.width; lastH = r.height;
+    const r0 = svg.getBoundingClientRect();
+    if (r0.width < 20 || r0.height < 20) return;
+    if (lastW && Math.abs(r0.width - lastW) < 1 && Math.abs(r0.height - lastH) < 1) return;
+    lastW = r0.width; lastH = r0.height;
     gsap.killTweensOf(svg.querySelectorAll('*'));
     svg.innerHTML = '';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(14, H / 25, W / 26));
-    const m = Math.max(12, fs * 1.05);
-    L = {};
+    fs = clamp(Math.min(W * .04, H / 10), 11, 13.5);
+    const k = clamp(W * .0075, 1.8, 2.7), pad = Math.max(8, fs * .7);
+    L = {k};
 
-    // ---------- choose how much of the page fits ----------
-    const top = m * .7, bot = H - m * .7, avail = bot - top;
-    const needA = fs * 7.7, needB = fs * 10.6, needC = fs * 7.3;
-    const mode = avail >= needA + needB + needC ? 'full' : avail >= needB + needC ? 'mid' : 'mini';
-    L.mode = mode;
+    // The wall: a plate of concrete with round corners and an ink rim.
+    const r = clamp(W * .035, 8, 14);
+    const clip = mk('clipPath', {id: 'wall'}, mk('defs', {}, svg));
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), rx: f1(r)}, clip);
+    const wall = mk('g', {'clip-path': 'url(#wall)'}, svg);
+    mk('rect', {x: 0, y: 0, width: f1(W), height: f1(H), fill: WALL}, wall);
 
-    let B0, B1, C0, C1;
-    if (mode !== 'mini') { C1 = bot; C0 = C1 - fs * 6.1; B1 = C0 - fs * 1.2; }
-    else B1 = bot;
+    // Over the cell, what the bars count; and where there is room, how the prisons filled.
+    const two = H >= 215, headH = H >= 112 ? fs * 1.65 + (two ? fs * 1.35 : 0) : 0, footH = fs * 1.75;
+    const ox0 = pad, ox1 = W - pad, oy0 = pad * .55 + headH, oy1 = H - footH - pad * .35;
+    const lintH = clamp((oy1 - oy0) * .075, 5, 12), sillH = clamp((oy1 - oy0) * .07, 5, 11);
+    const yTop = oy0 + lintH, yb = oy1 - sillH, barH = Math.max(4, yb - yTop);
+    const slotW = (ox1 - ox0 - 2 * k) / SLOTS, sx = i => ox0 + k + slotW * (i + .5), bw = slotW * .42;
+    Object.assign(L, {ox0, ox1, slotW, yTop, yb, sx, bw});
+    const ink = w => ({fill: 'none', stroke: INK, 'stroke-width': f1(w), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'});
+    const solid = (fill, w = k) => Object.assign(ink(w), {fill});
 
-    // ---------- the timeline of inmates (only when there is room) ----------
-    if (mode === 'full') {
-      const xL = m + fs * .5, xR = W - m - fs * .5;
-      const yr = y => xL + (y - 2009) / (2024 - 2009) * (xR - xL);
-      const yHead = top + fs * 1.05, yLab = yHead + fs * 1.75, yAx = yLab + fs * .95, yYr = yAx + fs * 1.55;
-      const gA = mk('g', {}, svg);
-      fit(txt(gA, xL, yHead, 'Inmates in Ecuador', {'fill-opacity': .75}), xR - xL);
-      // the two years the cell below looks at
-      mk('rect', {x: yr(2021), y: yAx - fs * .45, width: P(yr(2023) - yr(2021)), height: fs * .9, rx: 2, fill: T40}, gA);
-      mk('line', {x1: xL, x2: xR, y1: yAx, y2: yAx, stroke: LINE, 'stroke-width': 2, 'stroke-linecap': 'round', class: 'dr'}, gA);
-      [2021, 2023].forEach(y => mk('line', {x1: yr(y), x2: yr(y), y1: yAx - fs * .3, y2: yAx + fs * .3, stroke: LINE, 'stroke-width': 1.5}, gA));
-      txt(gA, xL, yYr, '2009', {'text-anchor': 'start'});
-      txt(gA, yr(2021), yYr, '2021', {'text-anchor': 'middle'});
-      txt(gA, yr(2023), yYr, '2023', {'text-anchor': 'middle'});
-      mk('circle', {cx: xL, cy: yAx, r: 3.6, fill: LINE}, gA);
-      mk('circle', {cx: xR, cy: yAx, r: 3.6, fill: LINE}, gA);
-      const a1 = txt(gA, xL, yLab, '11,000', {'font-weight': 800});
-      const a2 = txt(gA, xR, yLab, '31,000+ now', {'text-anchor': 'end', 'font-weight': 800});
-      const w1 = a1.getComputedTextLength(), w2 = a2.getComputedTextLength();
-      const d1 = xL + w1 + 8, d2 = xR - w2 - 8, dy = yLab - fs * .35;
-      if (d2 - d1 > fs * 2) {
-        const s = fs * .35;
-        mk('path', {d: `M${d1},${dy} H${d2} M${d2 - s},${dy - s * .7} L${d2},${dy} L${d2 - s},${dy + s * .7}`, stroke: T65, 'stroke-width': 1.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, gA);
-        const tx = mk('text', {x: (d1 + d2) / 2, y: yLab, 'font-size': fs, 'text-anchor': 'middle', 'font-weight': 800}, gA); tx.textContent = '×2.8';
-        const tw = tx.getComputedTextLength();
-        if (tw + fs * 1.6 < d2 - d1) gA.insertBefore(mk('rect', {x: (d1 + d2) / 2 - tw / 2 - 5, y: dy - fs * .6, width: tw + 10, height: fs * 1.2, fill: GROUND}), tx);
-        else tx.remove();
-      }
-      B0 = yYr + fs * 1.9;
-      // the 2021–2023 window opens out into the cell below
-      [[yr(2021), m], [yr(2023), W - m]].forEach(([x0, x1]) => mk('line', {x1: x0, y1: yYr + fs * .45, x2: x1, y2: B0, stroke: T20, 'stroke-width': 1.2, class: 'pj'}, svg));
-    } else B0 = top;
+    // Inside the cell, a room seen from its open front: the ceiling, the two side walls and the floor run back to
+    // the back wall; a bunk stands against it.
+    const dx = Math.min((ox1 - ox0) * .07, barH * .2), dyT = dx * .55, dyB = dx * .9;
+    const bk = {x0: ox0 + dx, x1: ox1 - dx, y0: yTop + dyT, y1: yb - dyB};
+    const face = (pts, fill) => mk('path', {d: 'M' + pts.map(p => p.map(f1).join(',')).join('L') + 'Z', fill}, wall);
+    face([[ox0, yTop], [ox1, yTop], [bk.x1, bk.y0], [bk.x0, bk.y0]], CEIL);
+    face([[ox0, yTop], [bk.x0, bk.y0], [bk.x0, bk.y1], [ox0, yb]], SIDE);
+    face([[ox1, yTop], [bk.x1, bk.y0], [bk.x1, bk.y1], [ox1, yb]], SIDE);
+    face([[ox0, yb], [bk.x0, bk.y1], [bk.x1, bk.y1], [ox1, yb]], FLOOR);
+    mk('rect', {x: f1(bk.x0), y: f1(bk.y0), width: f1(bk.x1 - bk.x0), height: f1(bk.y1 - bk.y0), fill: BACK}, wall);
+    mk('path', Object.assign({d: `M${f1(ox0)},${f1(yTop)}L${f1(bk.x0)},${f1(bk.y0)}M${f1(ox1)},${f1(yTop)}L${f1(bk.x1)},${f1(bk.y0)}M${f1(ox0)},${f1(yb)}L${f1(bk.x0)},${f1(bk.y1)}M${f1(ox1)},${f1(yb)}L${f1(bk.x1)},${f1(bk.y1)}`, opacity: .4}, ink(k * .5)), wall);
+    mk('rect', Object.assign({x: f1(bk.x0), y: f1(bk.y0), width: f1(bk.x1 - bk.x0), height: f1(bk.y1 - bk.y0), opacity: .4}, ink(k * .5)), wall);
+    const floorY = bk.y1;
+    // The bunk against the left of the back wall: once the gate is shut it is seen through the bars, and the right of
+    // the wall is left whole for the marks.
+    const bx0 = bk.x0 + slotW * .5, bx1 = Math.min(sx(8.2), bk.x1 - slotW), bTop = floorY - (bk.y1 - bk.y0) * .3, mH = Math.max(4, barH * .075);
+    mk('path', Object.assign({d: `M${f1(bx0 + slotW * .3)},${f1(bTop + mH)}V${f1(floorY + barH * .05)}M${f1(bx1 - slotW * .3)},${f1(bTop + mH)}V${f1(floorY + barH * .05)}`}, ink(k * 1.2)), wall);
+    mk('rect', Object.assign({x: f1(bx0), y: f1(bTop + mH), width: f1(bx1 - bx0), height: f1(mH * .7)}, solid(FRAME, k * .8)), wall);
+    mk('rect', Object.assign({x: f1(bx0), y: f1(bTop), width: f1(bx1 - bx0), height: f1(mH), rx: f1(mH * .4)}, solid(WHITE, k * .8)), wall);
+    mk('rect', Object.assign({x: f1(bx1 - slotW * 2.2), y: f1(bTop - mH * .55), width: f1(slotW * 1.8), height: f1(mH * .9), rx: f1(mH * .4)}, solid(WHITE, k * .7)), wall);
 
-    // ---------- the cell where the reader counts ----------
-    const gB = mk('g', {}, svg);
-    const bx0 = m + fs * .9, bx1 = W - m - fs * .9, slotW = (bx1 - bx0) / SLOTS, bw = slotW * .38;
-    const mini = mode === 'mini';
-    const yHeadB = B0 + fs * 1.45;
-    const yDim = B0 + fs * 2.6;
-    const yTop = B0 + fs * (mini ? 2.2 : 3.3);
-    const yb = Math.max(yTop + 6, B1 - fs * 2.3), yRow = yb + fs * 1.6;
-    const barH = yb - yTop;
-    const sx = i => bx0 + slotW * (i + .5);
-    Object.assign(L, {bx0, slotW, yTop, yb});
-
-    if (mini) {
-      const h = txt(gB, bx0, yHeadB, revealed ? MINI_AFTER : MINI_BEFORE, {'fill-opacity': revealed ? 1 : .75, 'font-weight': revealed ? 800 : 600});
-      if (revealed) h.style.fill = AMBER;
-      fit(h, bx1 - bx0); h._max = bx1 - bx0; h._after = MINI_AFTER;
-      L.tb = [h];
-    } else {
-      fit(txt(gB, bx0, yHeadB, 'Prison massacres, 2021–2023', {'fill-opacity': .75}), bx1 - bx0);
+    // 79 marks scratched on the back wall beside the gate, in gates of five: hidden until the answer.
+    const tx0 = Math.max(sx(REAL - 1) + slotW * .9, bk.x0 + 4), tx1 = bk.x1 - pad * .4, ty0 = bk.y0 + Math.max(pad * .4, fs * 1.4), ty1 = bk.y1 - Math.max(3, pad * .35);
+    L.sq = [];
+    const aw = Math.max(0, tx1 - tx0), ah = Math.max(0, ty1 - ty0);
+    let best = {s: 0, gc: 4, rows: 4};
+    for (let gc = 2; gc <= 8; gc++) { const rows = Math.ceil(16 / gc), s = Math.min(aw / (gc * 5.4), ah / (rows * 3.9)); if (s > best.s) best = {s, gc, rows}; }
+    const {s, gc, rows} = best, gw = s * 5.4, gh = s * 3.9, markH = s * 3.1;
+    const gox = tx0 + (aw - (gw * gc - s * 1.4)) / 2 + s * .5, goy = ty0 + (ah - (gh * rows - s * .8)) / 2, sw = Math.max(1.1, s * .3);
+    for (let m = 0; m < 79; m++) {
+      const g = Math.floor(m / 5), j = m % 5, gx = gox + (g % gc) * gw, gy = goy + Math.floor(g / gc) * gh, wob = ((m * 37) % 5 - 2) * s * .07;
+      const a = j < 4 ? {x1: gx + j * s, y1: gy, x2: gx + j * s + wob, y2: gy + markH} : {x1: gx - s * .5, y1: gy + markH * .82, x2: gx + s * 3.5, y2: gy + markH * .18};
+      L.sq.push(mk('line', Object.assign(a, {stroke: INK, 'stroke-width': f1(sw), 'stroke-linecap': 'round'}), wall));
     }
-    // the stone sill the bars stand in, with a socket for each bar
-    const sillH = Math.max(5, fs * .45);
-    mk('line', {x1: m, x2: W - m, y1: yb + sillH / 2, y2: yb + sillH / 2, stroke: T40, 'stroke-width': sillH, 'stroke-linecap': 'round', class: 'dr'}, gB);
-    for (let i = 0; i < SLOTS; i++) mk('rect', {x: sx(i) - bw * .6, y: yb, width: bw * 1.2, height: sillH * .55, rx: 1, fill: GROUND}, gB);
+    // What the marks are, over them.
+    L.toll = words(wall, (tx0 + tx1) / 2, ty0 - fs * .45, '79 inmates killed', {anchor: 'middle', weight: 800, size: fs * .95, max: tx1 - tx0, min: 9.5});
+    if (L.toll.getComputedTextLength() > tx1 - tx0 + 1) L.toll.textContent = '79 killed';
 
-    // the guess: pale bars
+    // The lintel and the sill, concrete, with a socket in each for a bar.
+    mk('rect', Object.assign({x: f1(ox0 - k * .5), y: f1(oy0), width: f1(ox1 - ox0 + k), height: f1(lintH)}, solid(STONE)), wall);
+    mk('rect', Object.assign({x: f1(ox0 - k * .5), y: f1(yb), width: f1(ox1 - ox0 + k), height: f1(sillH)}, solid(STONE)), wall);
+    for (let i = 0; i < SLOTS; i++) {
+      mk('rect', {x: f1(sx(i) - bw * .6), y: f1(yb + sillH * .22), width: f1(bw * 1.2), height: f1(sillH * .42), rx: 1, fill: INK, opacity: .55}, wall);
+      mk('rect', {x: f1(sx(i) - bw * .6), y: f1(oy0 + lintH * .36), width: f1(bw * 1.2), height: f1(lintH * .42), rx: 1, fill: INK, opacity: .55}, wall);
+    }
+    mk('rect', Object.assign({x: f1(ox0), y: f1(oy0), width: f1(ox1 - ox0), height: f1(oy1 - oy0)}, ink(k)), wall);
+
+    // The reader's guess: pale bars, one in each socket crossed.
     L.gBars = [];
     for (let i = 0; i < SLOTS; i++) {
-      const b = mk('rect', {x: sx(i) - bw / 2, y: yTop, width: bw, height: P(barH), rx: Math.min(bw / 2, 3), fill: T40}, gB);
+      const b = mk('rect', {x: f1(sx(i) - bw / 2), y: f1(yTop), width: f1(bw), height: f1(barH), rx: f1(Math.min(bw / 2, 3)), fill: INK, 'fill-opacity': .2, stroke: INK, 'stroke-opacity': .45, 'stroke-width': f1(k * .5)}, wall);
       b._on = i < guess;
-      gsap.set(b, {scaleY: b._on ? 1 : 0, transformOrigin: '50% 100%', opacity: revealed ? .28 : 1});
+      gsap.set(b, {scaleY: b._on ? 1 : 0, transformOrigin: '50% 100%', opacity: revealed ? .35 : 1});
       L.gBars.push(b);
     }
-    // the real thing: iron bars, welded by rails
-    const rx0 = sx(0) - slotW * .45, rx1 = sx(REAL - 1) + slotW * .45;
-    const railH = Math.max(4, fs * .38);
-    L.rails = mk('g', {}, gB);
-    mk('rect', {x: rx0, y: yTop - railH * .6, width: P(rx1 - rx0), height: railH, rx: 2, fill: LINE}, L.rails);
-    if (barH > fs * 3) mk('rect', {x: rx0, y: yTop + barH * .5 - railH * .35, width: P(rx1 - rx0), height: railH * .7, rx: 1.5, fill: LINE}, L.rails);
-    mk('rect', {x: rx0, y: yb - railH * .6, width: P(rx1 - rx0), height: railH, rx: 2, fill: LINE}, L.rails);
+    // The real ones: iron bars, welded by flat rails into a gate; the first is red.
+    const rx0 = sx(0) - slotW * .46, rx1 = sx(REAL - 1) + slotW * .46, railH = Math.max(3.5, fs * .34);
+    L.rails = mk('g', {}, wall);
+    [yTop + railH * .2, yTop + barH * .5 - railH / 2, yb - railH * 1.2].forEach(y => mk('rect', {x: f1(rx0), y: f1(y), width: f1(rx1 - rx0), height: f1(railH), rx: 1.5, fill: INK}, L.rails));
     L.rBars = [];
     for (let i = 0; i < REAL; i++) {
-      const b = mk('rect', {x: sx(i) - bw * .6, y: yTop, width: bw * 1.2, height: P(barH), rx: Math.min(bw * .6, 3), fill: i ? LINE : AMBER}, gB);
-      L.rBars.push(b);
+      const g = mk('g', {}, wall);
+      mk('rect', {x: f1(sx(i) - bw * .58), y: f1(yTop), width: f1(bw * 1.16), height: f1(barH), rx: f1(Math.min(bw * .5, 3)), fill: i ? INK : RED, stroke: INK, 'stroke-width': f1(k * .5)}, g);
+      mk('rect', {x: f1(sx(i) - bw * .32), y: f1(yTop + 2), width: f1(Math.max(1, bw * .18)), height: f1(Math.max(0, barH - 4)), rx: 1, fill: WHITE, opacity: .28}, g);
+      L.rBars.push(g);
     }
-    // a bracket with "11" over the welded cell
-    L.dim = null;
-    if (!mini) {
-      L.dim = mk('g', {}, gB);
-      dim(L.dim, rx0, rx1, yDim - fs * .1);
-      const dl = mk('text', {x: (rx0 + rx1) / 2, y: yDim + fs * .4, 'font-size': fs * 1.15, 'text-anchor': 'middle', 'font-weight': 800}, L.dim); dl.textContent = '11';
-      dl.style.fontFamily = 'var(--display)';
-      const dlw = dl.getComputedTextLength();
-      L.dim.insertBefore(mk('rect', {x: (rx0 + rx1) / 2 - dlw / 2 - 6, y: yDim - fs * .65, width: dlw + 12, height: fs * 1.3, fill: GROUND}), dl);
-    }
-    const rowW = bx1 - bx0;
-    L.no1 = txt(gB, sx(0) - bw / 2, yRow, '▲ 23.02.2021', {'font-weight': 800});
-    L.no1.style.fill = AMBER; fit(L.no1, rowW * .42);
-    L.guessT = txt(gB, bx1, yRow, guessLabel(), {'text-anchor': 'end', 'font-weight': 700});
-    L.guessT._max = rowW * .52; fit(L.guessT, L.guessT._max);
 
-    // the knob the finger drags
-    const kr = Math.min(fs * .62, barH * .5 + fs * .3);
-    L.knob = mk('g', {}, gB);
-    mk('circle', {cx: 0, cy: yb, r: kr, fill: LINE}, L.knob);
-    mk('path', {d: `M${-fs * .22},${yb - fs * .2} L${fs * .02},${yb} L${-fs * .22},${yb + fs * .2} M${fs * .05},${yb - fs * .2} L${fs * .29},${yb} L${fs * .05},${yb + fs * .2}`, stroke: GROUND, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L.knob);
-    gsap.set(L.knob, {x: bx0 + slotW * guess});
-    const hfs = Math.max(12, Math.min(fs * 1.25, barH * .85));
-    L.hint = mk('g', {}, gB);
-    txt(L.hint, bx0 + fs * 1.6, (yTop + yb) / 2 + hfs * .35, 'drag →  how many?', {class: 'hand', 'font-size': hfs}).style.fill = T65;
+    mk('rect', Object.assign({x: f1(k / 2), y: f1(k / 2), width: f1(W - k), height: f1(H - k), rx: f1(r - k / 2)}, ink(k)), svg);
+
+    // Over the wall: what the bars count, then, with the answer, the first of them by name.
+    L.head = null; L.sub = null;
+    if (headH) {
+      const tx = pad, ty = pad * .55 + fs * 1.15;
+      L.head = words(svg, tx, ty, revealed ? FIRST[0] : TITLE, {weight: revealed ? 800 : 700, fill: revealed ? RED : INK, max: W - 2 * pad});
+      if (revealed && L.head.getComputedTextLength() > W - 2 * pad) L.head.textContent = FIRST[1];
+      if (two) { L.sub = words(svg, tx, ty + fs * 1.3, 'Inmates in Ecuador: 11,000 in 2009, over 31,000 now', {weight: 600, size: fs * .9, max: W - 2 * pad, min: 9.5}); L.sub.setAttribute('fill-opacity', .72); }
+    }
+    // Under the sill: the first one's date, under its bar, and the guess.
+    const rowY = oy1 + footH * .5 + fs * .4;
+    L.no1 = words(svg, sx(0) - bw / 2, rowY, '▲ 23.02.2021', {weight: 800, fill: RED, max: W * .45});
+    L.guessT = words(svg, W - pad, rowY, guessLabel(), {anchor: 'end', weight: 700, max: W * .5});
+    // The knob the finger drags, on the sill.
+    const kr = Math.min(fs * .62, sillH + fs * .25);
+    L.knob = mk('g', {}, svg);
+    mk('circle', {cx: 0, cy: f1(yb + sillH / 2), r: f1(kr), fill: INK}, L.knob);
+    mk('path', {d: `M${f1(-fs * .22)},${f1(yb + sillH / 2 - fs * .2)} L${f1(fs * .02)},${f1(yb + sillH / 2)} L${f1(-fs * .22)},${f1(yb + sillH / 2 + fs * .2)} M${f1(fs * .05)},${f1(yb + sillH / 2 - fs * .2)} L${f1(fs * .29)},${f1(yb + sillH / 2)} L${f1(fs * .05)},${f1(yb + sillH / 2 + fs * .2)}`, stroke: WALL, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L.knob);
+    gsap.set(L.knob, {x: ox0 + k + slotW * guess});
+    // The hint, in the cell, until the first drag.
+    const hfs = clamp(barH * .2, 13, fs * 1.5);
+    L.hint = mk('g', {}, svg);
+    words(L.hint, sx(7.4), (bk.y0 + bTop) / 2 + hfs * .3, 'drag →  how many?', {font: HAND, size: hfs, weight: 700, max: bk.x1 - sx(7.4) - fs * 1.2, min: 13}).setAttribute('fill-opacity', .75);
     gsap.set(L.hint, {autoAlpha: touched || revealed ? 0 : 1});
     if (!touched && !revealed && !Kit.calm) gsap.to(L.hint, {x: fs * .9, repeat: -1, yoyo: true, duration: .8, ease: 'sine.inOut'});
-
-    // ---------- the caption, with tally marks scratched like days on a wall ----------
-    L.sq = []; L.dots = null; L.leader = null;
-    if (!mini) {
-      const gC = mk('g', {}, svg);
-      const xd = m + (W - 2 * m) * .62;
-      const tx0 = m, tav = xd - tx0 - fs * .5;
-      L.tb = [1.6, 3.3, 5.0].map((k, i) => {
-        const e = txt(gC, tx0, C0 + fs * k, revealed ? TB_AFTER[i] : TB_BEFORE[i], {'font-weight': i === 2 ? 800 : 600, 'fill-opacity': revealed ? 1 : .5});
-        if (revealed && i === 0) { e.style.fill = AMBER; e.setAttribute('font-weight', 800); }
-        fit(e, tav); e._max = tav; e._after = TB_AFTER[i]; return e;
-      });
-      // 79 marks, one per prisoner: fifteen gates of five and four more
-      const pad = fs * .45, ax0 = xd + pad, aw = P(W - m - ax0), ay0 = C0 + pad * .6, ah = P(C1 - C0 - pad * 1.2);
-      let best = {s: 0, gc: 4, rows: 4};
-      for (let gc = 3; gc <= 8; gc++) {
-        const rows = Math.ceil(16 / gc), s = Math.min(aw / (gc * 5.4), ah / (rows * 3.9));
-        if (s > best.s) best = {s, gc, rows};
-      }
-      const {s, gc, rows} = best, gw = s * 5.4, gh = s * 3.9, mh = s * 3.1;
-      const ox = ax0 + (aw - (gw * gc - s * 1.4)) / 2 + s * .5, oy = ay0 + (ah - (gh * rows - s * .8)) / 2;
-      const sw = Math.max(1.3, s * .32);
-      for (let k = 0; k < 79; k++) {
-        const g = Math.floor(k / 5), j = k % 5;
-        const gx = ox + (g % gc) * gw, gy = oy + Math.floor(g / gc) * gh;
-        const wob = ((k * 37) % 5 - 2) * s * .07;
-        const a = j < 4
-          ? {x1: gx + j * s, y1: gy, x2: gx + j * s + wob, y2: gy + mh}
-          : {x1: gx - s * .5, y1: gy + mh * .82, x2: gx + s * 3.5, y2: gy + mh * .18};
-        L.sq.push(mk('line', Object.assign(a, {stroke: LINE, 'stroke-width': sw, 'stroke-linecap': 'round'}), gC));
-      }
-      // amber line: bar No.1 is the case in the caption
-      const lx = sx(0);
-      L.leader = mk('path', {d: `M${lx},${yRow + fs * .45} V${C0 - 2}`, stroke: AMBER, 'stroke-width': 1.6, 'stroke-linecap': 'round', fill: 'none'}, svg);
-      L.leaderDot = mk('circle', {cx: lx, cy: C0, r: 2.8, fill: AMBER}, svg);
-    }
     final(revealed);
   }
 
-  // Shows or hides the answer in one go (resize, calm).
+  // Shows or hides the answer in one go (a redraw, or motion reduced).
   function final(on) {
-    gsap.set(L.rBars, {autoAlpha: on ? 1 : 0, y: 0, scaleX: 1});
-    gsap.set(T(L.rails, L.dim, L.no1, L.leader, L.leaderDot), {autoAlpha: on ? 1 : 0, scaleX: 1});
-    if (L.sq.length) gsap.set(L.sq, {autoAlpha: on ? 1 : 0, scale: 1, transformOrigin: '50% 50%'});
-    if (L.dots) gsap.set(L.dots, {autoAlpha: on ? 0 : 1});
+    gsap.set(L.rBars, {autoAlpha: on ? 1 : 0, y: 0});
+    gsap.set([L.rails, L.no1, L.toll], {autoAlpha: on ? 1 : 0, scaleX: 1});
+    gsap.set(L.sq, {autoAlpha: on ? 1 : 0, scale: 1, transformOrigin: '50% 50%'});
     gsap.set(L.knob, {autoAlpha: on ? 0 : 1});
   }
 
@@ -248,92 +207,61 @@
       if (Kit.calm) gsap.set(b, {scaleY: on ? 1 : 0});
       else gsap.to(b, {scaleY: on ? 1 : 0, duration: on ? .75 : .3, ease: on ? 'elastic.out(1.1,.4)' : 'back.in(1.7)', overwrite: true, transformOrigin: '50% 100%'});
     });
-    if (Kit.calm) gsap.set(L.knob, {x: L.bx0 + L.slotW * n});
-    else gsap.to(L.knob, {x: L.bx0 + L.slotW * n, duration: .65, ease: 'elastic.out(1,.5)', overwrite: 'auto'});
-    L.guessT.textContent = guessLabel(); fit(L.guessT, L.guessT._max);
+    if (Kit.calm) gsap.set(L.knob, {x: L.ox0 + L.k + L.slotW * n});
+    else gsap.to(L.knob, {x: L.ox0 + L.k + L.slotW * n, duration: .65, ease: 'elastic.out(1,.5)', overwrite: 'auto'});
+    L.guessT.textContent = guessLabel();
   }
 
-  // The caption writes itself out, letter by letter.
-  function typeIn(el, fin, delay, dur) {
-    const o = {p: 0};
-    el.textContent = fin; fit(el, el._max);
-    el.textContent = '';
-    gsap.to(o, {p: 1, delay, duration: dur, ease: 'none', onUpdate() {
-      el.textContent = fin.slice(0, Math.ceil(o.p * fin.length));
-    }, onComplete() { el.textContent = fin; }});
-  }
-
-  // The wow: the real bars fall in, the cell is welded shut, the first one is named.
+  // The answer: the iron bars drop in, the gate is welded, the first is named and dated, the marks are scratched.
   function reveal() {
     revealed = true;
-    L.guessT.textContent = guessLabel(); fit(L.guessT, L.guessT._max);
-    L.tb.forEach((e, i) => { e.setAttribute('fill-opacity', 1); if (!i) { e.style.fill = AMBER; e.setAttribute('font-weight', 800); } });
-    if (Kit.calm) { L.tb.forEach(e => { e.textContent = e._after; fit(e, e._max); }); gsap.set(L.gBars, {opacity: .28}); final(true); return; }
+    L.guessT.textContent = guessLabel();
+    if (L.head) { L.head.textContent = FIRST[0]; L.head.setAttribute('fill', RED); L.head.setAttribute('font-weight', 800); if (L.head.getComputedTextLength() > W - 16) L.head.textContent = FIRST[1]; }
+    if (Kit.calm) { gsap.set(L.gBars, {opacity: .35}); final(true); return; }
     const tl = gsap.timeline();
     tl.to(L.knob, {autoAlpha: 0, scale: .3, transformOrigin: '50% 50%', duration: .3, ease: 'back.in(2)'}, 0)
-      .to(L.gBars, {opacity: .28, duration: .4}, 0)
-      .fromTo(L.rBars, {autoAlpha: 0, y: -(L.yb + 20)}, {autoAlpha: 1, y: 0, duration: 1.15, ease: 'elastic.out(1,.55)', stagger: .08}, .1)
+      .to(L.gBars, {opacity: .35, duration: .4}, 0)
+      .fromTo(L.rBars, {autoAlpha: 0, y: -(L.yb + 20)}, {autoAlpha: 1, y: 0, duration: 1.1, ease: 'elastic.out(1,.6)', stagger: .07}, .1)
       .call(() => Kit.haptic('success'), null, .55)
-      .fromTo(L.rails, {autoAlpha: 1, scaleX: 0, transformOrigin: '0% 50%'}, {scaleX: 1, duration: .7, ease: 'expo.out'}, 1.05)
-      .to(L.rBars[0], {scaleX: 1.9, transformOrigin: '50% 100%', duration: .22, yoyo: true, repeat: 3, ease: 'power2.inOut'}, 1.45)
-      .fromTo(L.no1, {autoAlpha: 0, y: fs * .8}, {autoAlpha: 1, y: 0, duration: .6, ease: 'back.out(2.5)'}, 1.5)
-      .call(() => L.tb.forEach((e, i) => typeIn(e, e._after, i * .15, .8)), null, 1.6);
-    tl.set(L.rBars[0], {attr: {fill: AMBER}}, 1.6);
-    if (L.dim) tl.fromTo(L.dim, {autoAlpha: 0, scaleX: .2, transformOrigin: '50% 50%'}, {autoAlpha: 1, scaleX: 1, duration: .7, ease: 'back.out(2.2)'}, 1.15);
-    if (L.leader) {
-      if (hasDraw) tl.fromTo(L.leader, {autoAlpha: 1, drawSVG: '0%'}, {drawSVG: '100%', duration: .45, ease: 'power2.inOut'}, 1.55);
-      else tl.fromTo(L.leader, {autoAlpha: 0}, {autoAlpha: 1, duration: .4}, 1.55);
-      tl.fromTo(L.leaderDot, {autoAlpha: 0, scale: 0, transformOrigin: '50% 50%'}, {autoAlpha: 1, scale: 1, duration: .5, ease: 'back.out(4)'}, 1.95);
-    }
-    if (L.dots) tl.to(L.dots, {autoAlpha: 0, duration: .3}, 1.7);
-    if (L.sq.length) tl.fromTo(L.sq, {autoAlpha: 0, scale: 0, transformOrigin: '50% 100%'}, {autoAlpha: 1, scale: 1, duration: .35, ease: 'back.out(3)', stagger: .013}, 1.75);
+      .fromTo(L.rails, {autoAlpha: 1, scaleX: 0, transformOrigin: '0% 50%'}, {scaleX: 1, duration: .6, ease: 'expo.out'}, 1.05)
+      .fromTo(L.no1, {autoAlpha: 0, y: fs * .8}, {autoAlpha: 1, y: 0, duration: .5, ease: 'back.out(2.5)'}, 1.4)
+      .fromTo(L.toll, {autoAlpha: 0}, {autoAlpha: 1, duration: .4}, 1.6)
+      .fromTo(L.sq, {autoAlpha: 0, scale: 0, transformOrigin: '50% 100%'}, {autoAlpha: 1, scale: 1, duration: .3, ease: 'back.out(3)', stagger: .012}, 1.7);
+    if (L.head) tl.fromTo(L.head, {autoAlpha: 0}, {autoAlpha: 1, duration: .45}, 1.3);
   }
 
   const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
     const ok = Math.abs(guess - REAL) <= 2;
     Kit.answer({choice: String(guess), correct: ok, sure: pct});
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    Kit.$('card').classList.add('answered');
+    card.classList.add('answered');
     sure.grade(ok, pct, `You said ${guess}: ${ok ? 'close' : 'off'}. It was 11`);
-    setTimeout(() => { layout(); reveal(); }, 260);
+    svg.setAttribute('aria-label', 'The cell, closed: eleven iron bars welded into a gate, the first in red, named No. 1, the prisons of Guayaquil, Cuenca and Latacunga, 23.02.2021. On the back wall, 79 marks scratched in gates of five: 79 inmates killed.');
+    setTimeout(() => { lastW = 0; layout(); reveal(); }, 260);
   });
 
-  const slotOf = e => {
-    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * W / r.width;
-    return Math.max(1, Math.min(SLOTS, Math.ceil((x - L.bx0) / L.slotW)));
-  };
+  const slotOf = e => { const b = svg.getBoundingClientRect(), x = (e.clientX - b.left) * W / b.width; return clamp(Math.ceil((x - L.ox0 - L.k) / L.slotW), 1, SLOTS); };
   let drag = false;
-  const ask = () => {
-    if (guess && !asked) { asked = true; sure.on(); say.innerHTML = 'Happy with your count? <b>Say how sure you are</b>, or keep dragging.'; }
-  };
-  svg.addEventListener('pointerdown', e => { if (revealed || !L.gBars) return; drag = true; svg.setPointerCapture(e.pointerId); setGuess(slotOf(e)); });
+  const ask = () => { if (guess && !asked) { asked = true; sure.on(); say.innerHTML = 'Happy with your count? <b>Say how sure you are</b>, or keep dragging.'; } };
+  svg.addEventListener('pointerdown', e => { if (revealed || !L.gBars) return; drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setGuess(slotOf(e)); });
   svg.addEventListener('pointermove', e => { if (drag && !revealed) setGuess(slotOf(e)); });
   const up = () => { if (!drag) return; drag = false; ask(); };
   svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
 
-  // redraw the page whenever its space changes (e.g. when the answer text appears)
+  // Drawn again whenever its room changes (the answer coming in takes some of it).
   let raf = 0;
-  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
-    if (!L.gBars) return;
-    cancelAnimationFrame(raf); raf = requestAnimationFrame(layout);
-  }).observe(Kit.$('stage'));
-
+  new ResizeObserver(() => { if (!L.gBars) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(layout); }).observe(Kit.$('stage'));
   Kit.onShow.card = layout;
   Kit.onEnter.card = () => {
     if (Kit.calm || !L.gBars) return;
-    const tl = gsap.timeline(), dr = svg.querySelectorAll('.dr');
-    if (hasDraw) tl.from(dr, {drawSVG: '0%', duration: 1.1, ease: 'power3.inOut', stagger: .06}, 0);
-    else tl.from(dr, {opacity: 0, duration: .6, stagger: .05}, 0);
-    const vis = [...svg.querySelectorAll('text')].filter(t => !t.closest('[style*="hidden"]') && getComputedStyle(t).visibility !== 'hidden');
-    tl.from(svg.querySelectorAll('.pj'), {opacity: 0, duration: .6, ease: 'power2.out'}, .5)
-      .from(vis, {opacity: 0, y: 6, duration: .55, ease: 'power3.out', stagger: .03}, .35)
-      .from(L.knob, {scale: 0, transformOrigin: '50% 50%', duration: 1, ease: 'elastic.out(1,.4)'}, .9);
+    gsap.from(L.knob, {scale: 0, transformOrigin: '50% 50%', duration: .9, ease: 'elastic.out(1,.4)', delay: .3});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
     setGuess(7); ask();
     await wait(Kit.calm ? 80 : 700);
-    Kit.$('sure').querySelector('[data-v="80"]').click();
+    const b = Kit.$('sure').querySelector('[data-v="80"]');
+    if (b) b.click();
     await wait(Kit.calm ? 400 : 3400);
   };
 })();

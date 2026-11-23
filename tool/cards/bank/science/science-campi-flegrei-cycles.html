@@ -1,5 +1,10 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-campi-flegrei-cycles -->
+<!-- The picture: the Campi Flegrei caldera in section, its yellow tuff in layers, a rim on either side, the gulf filling
+     half its floor and Pozzuoli on the shore, a lens of magma beneath. Holding runs 60,000 years: the magma swells and
+     the ground domes over the town, then a vent opens, ash rises, the lens empties and the ground settles, and each
+     eruption leaves a small cone on the caldera floor. Under it, the record of the pressure draws itself, one tooth a
+     cycle. Drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -12,19 +17,19 @@
 #hold.down{transform:translateY(.4cqh) scale(.98);box-shadow:0 .2cqh 0 color-mix(in srgb,var(--k) 35%,transparent)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
-#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why .body{font:500 max(1.8cqh,12.5px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Hold · simulation">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANO RHYTHM</span></div>
     <h2 class="q">What pattern did the model reveal about past Campi Flegrei eruptions?</h2>
     <div class="stagebox" id="stage">
-      <svg id="plot"></svg>
+      <svg id="plot" role="img" aria-label="The Campi Flegrei caldera in section: a rim on either side, the sea in half its floor, the town of Pozzuoli on the shore and a lens of magma beneath. Under it, a line for the magma's pressure over the last 60,000 years."></svg>
       <div id="low">
         <button id="hold">Hold to run time</button>
         <div id="why" class="gone">
           <p class="big">Quasi-regular cycles</p>
-          <p class="body">Pressure from the magma slowly builds up, an eruption releases it, and the cycle starts again. Because this rhythm repeats, the model can be used as a predictive tool. (The drawing is a sketch, not real dates.)</p>
+          <p class="body">Pressure from the magma slowly builds up, an eruption releases it, and the cycle starts again. Because this rhythm repeats, the model can be used as a predictive tool.</p>
         </div>
       </div>
     </div>
@@ -47,74 +52,183 @@ function P(t){
   if (u < PEAK) return .16 + .72 * Math.pow(u / PEAK, 1.4);
   const v = (u - PEAK) / (1 - PEAK); return .88 - .72 * Math.pow(v, .55);
 }
-function S(t){ const [i, u] = cyc(Math.min(t, .99999)); return .52 - .36 * Math.cos(2 * Math.PI * (u - PEAK)); }
 
-let T = 0, holding = false, done = false, count = 0, G = null;
+// Flat colours, one meaning each: the tuff in three layers, the sea blue, the magma orange with a yellow heart,
+// the ash grey, the town white with red roofs.
+const INK = '#10100c', SEA = '#2f7fe0', MAGMA = '#ff5a1f', CORE = '#ffc83d', ASH = '#8f8984', WHITE = '#fffbf0', ROOF = '#d8452f';
+const TUFF = ['#f6d892', '#ecbb6a', '#d99a50'];
+// Where each eruption breaks through the caldera floor, as a share of its width: a sketch, like the dates.
+const VENTS = [.31, .68, .37, .61, .33];
+
+let T = 0, holding = false, done = false, count = 0, G = null, el = {};
 const svg = Kit.$('plot');
 
-function geo(){
-  const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f, 12);
-  const L = W * .05, R = W * .95, top = fs * 3.8, ax = H - fs * 2.2;
-  return {W, H, fs, L, R, top, ax, x: t => L + t * (R - L), y: p => ax - p * (ax - top)};
+// A smooth line through the points (Catmull-Rom), as many short steps; and its height at x.
+function spline(ps, n = 8) {
+  const out = [];
+  for (let i = 0; i < ps.length - 1; i++) {
+    const p0 = ps[Math.max(0, i - 1)], p1 = ps[i], p2 = ps[i + 1], p3 = ps[Math.min(ps.length - 1, i + 2)];
+    for (let k = 0; k < n; k++) {
+      const t = k / n, t2 = t * t, t3 = t2 * t;
+      const cr = (a, b, c, e) => .5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - e) * t2 + (3 * b - a - 3 * c + e) * t3);
+      out.push([cr(p0[0], p1[0], p2[0], p3[0]), cr(p0[1], p1[1], p2[1], p3[1])]);
+    }
+  }
+  out.push(ps[ps.length - 1]);
+  return out;
 }
-function pathTo(t, fn){
-  let d = '', n = Math.max(2, Math.round(500 * t));
-  for (let k = 0; k <= n; k++){ const s = t * k / n; d += (k ? 'L' : 'M') + G.x(s).toFixed(1) + ',' + G.y(fn(s)).toFixed(1); }
+function at(line, x) {
+  if (x <= line[0][0]) return line[0][1];
+  for (let i = 1; i < line.length; i++) if (line[i][0] >= x) { const [x0, y0] = line[i - 1], [x1, y1] = line[i]; return x1 - x0 < 1e-6 ? y1 : y0 + (y1 - y0) * (x - x0) / (x1 - x0); }
+  return line[line.length - 1][1];
+}
+const path = ps => ps.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+
+// The caldera above its record, or, in a short wide box, beside it: neither is ever squeezed into a strip.
+function geo() {
+  const {W, H} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(14, W / 25));
+  const side = W / H > 2.1;
+  let Ws, Hs, rx0, ry0, rw, rh;
+  if (side) { Ws = Math.round(W * .44); Hs = H; rx0 = Ws + fs; ry0 = 0; rw = W - rx0; rh = H; }
+  else { const hs = done ? Math.max(fs * 6, Math.min(H * .4, 110)) : Math.max(fs * 5, Math.min(H * .22, 70)); Ws = W; Hs = H - hs; rx0 = 0; ry0 = Hs + fs * .35; rw = W; rh = H - ry0; }
+  const L = rx0 + fs * .55, R = rx0 + rw - fs * .55, ya = ry0 + rh - fs * 1.45, yt = ry0 + fs * 1.5;
+  return {W, H, fs, side, Ws, Hs, rx0, ry0, rw, rh, r: Math.min(14, Ws * .045), L, R, ya, yt,
+    x: t => L + t * (R - L), y: p => ya - p * (ya - yt), seaY: Hs * .42, cx: Ws * .45,
+    // The caldera: its west rim, the floor and the town, the gulf in the southern half, the east rim.
+    base: spline([[0, Hs * .12], [.07 * Ws, Hs * .06], [.16 * Ws, Hs * .13], [.24 * Ws, Hs * .33], [.31 * Ws, Hs * .38], [.45 * Ws, Hs * .39], [.54 * Ws, Hs * .405],
+      [.6 * Ws, Hs * .47], [.7 * Ws, Hs * .53], [.79 * Ws, Hs * .49], [.86 * Ws, Hs * .31], [.93 * Ws, Hs * .14], [Ws, Hs * .16]])};
+}
+// The caldera floor now: the ground, raised over the town as the magma swells and let down when it erupts.
+function ground(x, p) {
+  const {Ws, Hs, base, cx} = G;
+  return at(base, x) - Hs * .07 * p * Math.exp(-(((x - cx) / (.18 * Ws)) ** 2));
+}
+function pathTo(t){
+  let d = '', n = Math.max(2, Math.round(400 * t));
+  for (let k = 0; k <= n; k++){ const s = t * k / n; d += (k ? 'L' : 'M') + G.x(s).toFixed(1) + ',' + G.y(P(s)).toFixed(1); }
   return d;
 }
-let el = {};
-function marker(i, anim){
-  const x = G.x(peaks[i]), s = G.fs * .75;
-  const g = Kit.mk('g', {transform: `translate(${x},${G.ax})`}, el.marks);
-  Kit.mk('circle', {cx: 0, cy: G.y(.88) - G.ax, r: G.fs * .35, fill: 'var(--k)'}, g);
-  Kit.mk('line', {x1: 0, x2: 0, y1: -s, y2: G.y(.88) - G.ax + G.fs * .35, stroke: 'var(--k)', 'stroke-width': 1, 'stroke-dasharray': '2 4', opacity: .45}, g);
-  const tri = Kit.mk('path', {d: `M${-s},0 L${-s * .3},${-s * 1.1} L${s * .3},${-s * 1.1} L${s},0Z`, fill: 'var(--k)'}, g);
-  if (anim && !Kit.calm){
-    const ring = Kit.mk('circle', {cx: 0, cy: G.y(.88) - G.ax, r: G.fs * .35, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2}, g);
-    gsap.fromTo(ring, {attr: {r: G.fs * .35}, opacity: 1}, {attr: {r: G.fs * 2}, opacity: 0, duration: .7, ease: 'power2.out', onComplete: () => ring.remove()});
-    gsap.from(tri, {scale: 0, transformOrigin: '50% 100%', duration: .4, ease: 'back.out(3)'});
-  }
-}
+const T_ = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': G.fs, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700}, a), p); e.textContent = t; return e; };
+
 function draw(){
-  G = geo(); svg.innerHTML = '';
-  const fs = G.fs;
-  Kit.mk('line', {x1: G.L, x2: G.R, y1: G.ax, y2: G.ax, stroke: 'var(--k)', 'stroke-width': 2}, svg);
-  const t1 = Kit.mk('text', {x: G.L, y: G.ax + fs * 1.5, 'font-size': fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700}, svg); t1.textContent = '60,000 years ago';
-  const t2 = Kit.mk('text', {x: G.R, y: G.ax + fs * 1.5, 'font-size': fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'end'}, svg); t2.textContent = 'today';
-  const t3 = Kit.mk('text', {x: G.L, y: fs * 1.1, 'font-size': fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800}, svg); t3.textContent = 'Magma pressure under the caldera';
-  el.area = Kit.mk('path', {fill: 'var(--k)', opacity: .1}, svg);
-  el.sine = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, fs * .22), 'stroke-dasharray': `${fs * .5} ${fs * .5}`, opacity: 0}, svg);
-  el.line = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2.5, fs * .2), 'stroke-linejoin': 'round'}, svg);
-  el.marks = Kit.mk('g', {}, svg);
-  el.head = Kit.mk('circle', {r: fs * .45, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': 3}, svg);
-  el.lab = Kit.mk('g', {opacity: 0}, svg);
+  G = geo(); svg.innerHTML = ''; el = {};
+  const {W, H, fs, Ws, Hs, r, cx} = G, mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const defs = mk('defs', {});
+  const clip = mk('clipPath', {id: 'slice'}, defs);
+  mk('path', {d: `M0,0 H${Ws} V${Hs - r} Q${Ws},${Hs} ${Ws - r},${Hs} H${r} Q0,${Hs} 0,${Hs - r} Z`}, clip);
+  const world = mk('g', {'clip-path': 'url(#slice)'});
+  el.ash = mk('g', {}, world);
+  mk('rect', {x: 0, y: G.seaY, width: Ws, height: Hs - G.seaY, fill: SEA}, world);
+  el.layers = TUFF.map(c => mk('path', {fill: c}, world));
+  el.seams = [0, 1].map(() => mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.5, opacity: .3}, world));
+  el.dike = mk('g', {opacity: 0}, world);
+  el.dikeBack = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, el.dike);
+  el.dikeFront = mk('path', {fill: 'none', stroke: MAGMA, 'stroke-width': 4.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, el.dike);
+  el.res = mk('ellipse', {cx, fill: MAGMA, stroke: INK, 'stroke-width': 2.5}, world);
+  el.core = mk('ellipse', {cx, fill: CORE}, world);
+  el.magma = T_(world, cx, 0, 'magma', {'text-anchor': 'middle', 'font-weight': 800, 'font-size': fs * .92});
+  const hs = Math.max(4, Math.min(fs * .62, Hs * .05));
+  el.town = [.44, .475, .51].map((u, i) => { const g = mk('g', {}, world); house(g, hs * (1 + .12 * (i % 2)), i); return {g, x: u * Ws}; });
+  el.ground = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, world);
+  el.surf = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, world);
+  el.rim = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'});
+
+  // The record: the pressure, cycle after cycle, over 60,000 years.
+  el.area = mk('path', {fill: INK, opacity: .1});
+  el.line = mk('path', {fill: 'none', stroke: INK, 'stroke-width': Math.max(2.5, fs * .2), 'stroke-linejoin': 'round'});
+  mk('line', {x1: G.L, x2: G.R, y1: G.ya, y2: G.ya, stroke: INK, 'stroke-width': 2});
+  T_(svg, G.rx0, H - 2, '60,000 years ago');
+  T_(svg, G.rx0 + G.rw, H - 2, 'today', {'text-anchor': 'end'});
+  el.press = T_(svg, G.rx0, G.ry0 + fs, done ? 'a sketch, not real dates' : 'magma pressure', {'font-weight': done ? 600 : 800});
+  el.marks = mk('g', {});
+  el.head = mk('circle', {r: fs * .45, fill: 'var(--c)', stroke: INK, 'stroke-width': 3});
+  el.lab = mk('g', {opacity: 0});
   for (let i = 0; i < count; i++) marker(i, false);
   update();
   if (done) finishArt(false);
 }
+
+// A house of Pozzuoli, on the ground at (0, 0): walls, a flat roof or a pitched one, a door.
+function house(g, s, i) {
+  const at = {stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'};
+  const w = s * 1.7, h = s * (1.3 + .25 * (i % 2));
+  Kit.mk('rect', Object.assign({x: -w / 2, y: -h, width: w, height: h, fill: WHITE}, at), g);
+  if (i % 2) Kit.mk('rect', Object.assign({x: -w / 2 - s * .12, y: -h - s * .28, width: w + s * .24, height: s * .28, fill: ROOF}, at), g);
+  else Kit.mk('path', Object.assign({d: `M${-w / 2 - s * .2},${-h} L0,${-h - s * .8} L${w / 2 + s * .2},${-h} Z`, fill: ROOF}, at), g);
+  Kit.mk('rect', {x: -s * .2, y: -s * .62, width: s * .4, height: s * .62, fill: INK}, g);
+}
+
 function update(){
-  const d = pathTo(T, P);
+  if (!G) return;
+  const {Ws, Hs, cx} = G, p = P(Math.min(T, 1));
+  const xs = Array.from({length: 97}, (_, i) => i / 96 * Ws);
+  const top = xs.map(x => [x, ground(x, p)]);
+  const under = k => top.map(([x, y]) => [x, y + k * (Hs - y)]);
+  const fill = ps => path(ps) + ` L${Ws},${Hs + 2} L0,${Hs + 2} Z`;
+  el.layers[0].setAttribute('d', fill(top));
+  el.layers[1].setAttribute('d', fill(under(.3)));
+  el.layers[2].setAttribute('d', fill(under(.6)));
+  el.seams[0].setAttribute('d', path(under(.3)));
+  el.seams[1].setAttribute('d', path(under(.6)));
+  el.ground.setAttribute('d', path(top));
+  // The gulf's surface, wherever the floor lies under the sea.
+  let surf = '', on = false;
+  top.forEach(([x, y]) => { if (y > G.seaY + .5) { surf += (on ? 'L' : 'M') + x.toFixed(1) + ',' + G.seaY.toFixed(1); on = true; } else on = false; });
+  el.surf.setAttribute('d', surf);
+  el.rim.setAttribute('d', `M0,${top[0][1].toFixed(1)} V${Hs - G.r} Q0,${Hs} ${G.r},${Hs} H${Ws - G.r} Q${Ws},${Hs} ${Ws},${Hs - G.r} V${top[top.length - 1][1].toFixed(1)}`);
+  // The lens of magma swells with the pressure and empties when it is let out.
+  const ry = Hs * .085 * (.75 + .55 * p), rx = Ws * .28 * (1 + .07 * p), cy = Hs * .79;
+  el.res.setAttribute('cy', cy); el.res.setAttribute('rx', rx); el.res.setAttribute('ry', ry);
+  el.core.setAttribute('cy', cy + ry * .12); el.core.setAttribute('rx', rx * .6); el.core.setAttribute('ry', ry * .5);
+  el.magma.setAttribute('y', cy + G.fs * .34);
+  el.magma.style.display = ry * 2 > G.fs * 1.15 && rx * 2 > G.fs * 4.2 ? '' : 'none';
+  el.town.forEach(h => h.g.setAttribute('transform', `translate(${h.x.toFixed(1)},${(ground(h.x, p) + 1).toFixed(1)})`));
+  // The record so far.
+  const d = pathTo(T);
   el.line.setAttribute('d', d);
-  el.area.setAttribute('d', d + `L${G.x(T)},${G.ax}L${G.x(0)},${G.ax}Z`);
+  el.area.setAttribute('d', d + `L${G.x(T)},${G.ya}L${G.x(0)},${G.ya}Z`);
   el.head.setAttribute('cx', G.x(T)); el.head.setAttribute('cy', G.y(P(T)));
   el.head.style.display = done ? 'none' : '';
 }
+
+// The i-th eruption: on the record a small cone under its peak; in the caldera a dike to the surface and a column of ash.
+function marker(i, anim){
+  const x = G.x(peaks[i]), s = G.fs * .62;
+  Kit.mk('path', {d: `M${x - s},${G.ya} L${x - s * .3},${G.ya - s * 1.1} L${x + s * .3},${G.ya - s * 1.1} L${x + s},${G.ya} Z`, fill: INK}, el.marks);
+  if (!anim) return;
+  const vx = VENTS[i] * G.Ws, p0 = P(peaks[i]);
+  const top = ground(vx, p0), cy = G.Hs * .79, ry = G.Hs * .085 * (.75 + .55 * p0);
+  el.dikeBack.setAttribute('d', `M${G.cx},${cy - ry} Q${(G.cx + vx) / 2 + G.Ws * .03},${(cy + top) / 2} ${vx},${top}`);
+  el.dikeFront.setAttribute('d', el.dikeBack.getAttribute('d'));
+  // The column: puffs that widen as they rise, outlined as one cloud, gone again in a moment.
+  const g = Kit.mk('g', {opacity: 1}, el.ash), u = G.Ws * .05, puffs = [];
+  for (let k = 0; k < 9; k++) {
+    const t = k / 8, px = vx - u * 1.4 * t ** 1.3, py = top - u * .7 - t * (top - u * 1.3), pr = u * (.5 + 1.05 * t);
+    if (py - pr < 2) break;
+    puffs.push([px, py, pr]);
+    if (k >= 3) for (const [ox, oy, k2] of [[-.62, .3, .68], [.6, .36, .62]]) if (py + oy * pr - pr * k2 > 2) puffs.push([px + ox * pr, py + oy * pr, pr * k2]);
+  }
+  puffs.forEach(([a, b, c]) => Kit.mk('circle', {cx: a, cy: b, r: c + 1.4, fill: INK}, g));
+  puffs.forEach(([a, b, c]) => Kit.mk('circle', {cx: a, cy: b, r: c - 1.2, fill: ASH}, g));
+  if (Kit.calm) { g.remove(); return; }
+  gsap.timeline()
+    .set(el.dike, {attr: {opacity: 1}})
+    .fromTo(g, {scale: .2, svgOrigin: `${vx} ${top}`}, {scale: 1, duration: .45, ease: 'power2.out'}, 0)
+    .to(el.dike, {attr: {opacity: 0}, duration: .5}, .4)
+    .to(g, {opacity: 0, duration: .6, ease: 'power1.in', onComplete: () => g.remove()}, .75);
+}
 function finishArt(anim){
-  el.sine.setAttribute('d', pathTo(1, S)); el.sine.setAttribute('opacity', .55);
   el.lab.innerHTML = '';
-  const fs = G.fs;
-  // label a release above peak 2, a build-up below trough in cycle 4
-  const px = G.x(peaks[1]), py = G.y(.88) - fs * 1.2;
-  const a = Kit.mk('text', {x: px, y: py, 'font-size': fs, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--hand)', 'font-weight': 700}, el.lab); a.textContent = 'release';
-  const bx = G.x(B[3] + .45 * (B[4] - B[3])), by = G.y(.16) + fs * 1.2;
-  if (by < G.ax - fs * .4){ const b = Kit.mk('text', {x: bx, y: by, 'font-size': fs, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--hand)', 'font-weight': 700}, el.lab); b.textContent = 'build-up'; }
-  if (anim && !Kit.calm){
-    const len = el.sine.getTotalLength();
-    el.sine.style.strokeDasharray = len; el.sine.style.strokeDashoffset = len;
-    gsap.to(el.sine, {strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', onComplete: () => { el.sine.style.strokeDasharray = ''; el.sine.style.strokeDashoffset = ''; }});
-    gsap.to(el.lab, {opacity: 1, duration: .5, delay: 1});
-  } else el.lab.setAttribute('opacity', 1);
+  const fs = G.fs, small = G.rw < fs * 15;
+  // On the record, a build-up under its rising line and a release beside its drop.
+  const halo = {stroke: 'var(--c)', 'stroke-width': 5, 'stroke-linejoin': 'round', 'paint-order': 'stroke', 'font-weight': 800, 'font-size': fs * (small ? .86 : .92)};
+  const i = 2, ub = B[i] + .55 * (peaks[i] - B[i]), xb = G.x(ub), yb = G.y(P(ub));
+  T_(el.lab, xb, yb + fs * .32, 'build-up', Object.assign({'text-anchor': 'middle'}, halo));
+  const xr = G.x(peaks[3]) + fs * .35;
+  T_(el.lab, Math.min(xr, G.R - fs * 3.6), G.y(.88) + fs * .25, 'release', halo);
+  if (anim && !Kit.calm) gsap.to(el.lab, {opacity: 1, duration: .5, delay: .3});
+  else el.lab.setAttribute('opacity', 1);
 }
 function finish(anim){
   if (done) return; done = true; holding = false; T = 1;
@@ -140,6 +254,8 @@ hb.addEventListener('pointerdown', down);
 hb.addEventListener('contextmenu', e => e.preventDefault());
 
 Kit.onShow.card = () => draw();
+// Drawn again at the size it now has whenever its room changes: when the answer comes in, never shrunk whole.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && G) { seen = k; draw(); } }).observe(svg); }
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
 Kit.play.card = async () => { finish(false); await new Promise(r => setTimeout(r, 600)); };
 Kit.single();

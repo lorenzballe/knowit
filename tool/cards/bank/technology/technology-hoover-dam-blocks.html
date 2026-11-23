@@ -1,5 +1,10 @@
 <!doctype html>
 <!-- slug: technology-hoover-dam-blocks -->
+<!-- Look: the dam itself, front on, flat and stylised: its concrete face wedged between the walls of the canyon, the
+     river at its foot, thick ink outlines. It opens as it was built, a face of blocks. Each way of pouring runs the
+     heat on that face: setting concrete warms itself, every joint lets heat out, and the warmth shows as flat bands
+     (cream cool, then yellow, orange, red). Where a block's core stays too much hotter than its skin, it cracks in ink.
+     Under it, the gap between core and skin against the line where cracks begin. Drawn again whenever its room changes. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Why the Hoover Dam was poured in blocks</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -20,7 +25,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DAM BUILDING</span></div>
     <h2 class="q">Why was the Hoover Dam poured as many separate blocks?</h2>
     <div class="stagebox" id="stage">
-      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="wrap"><canvas id="cv" role="img" aria-label="The Hoover Dam front on, its concrete face between the canyon walls and the river at its foot. Each way of pouring shows the concrete's heat escaping, and cracks where the core stays too hot."></canvas></div>
       <div id="opts">
         <button class="opt" data-n="1">One pour</button>
         <button class="opt" data-n="2">4 blocks</button>
@@ -36,20 +41,45 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+// The heat: a grid over the dam's face. Setting concrete makes heat (Q0, fading over TAU steps); heat spreads
+// within a block and leaves it at every joint and at the rock (held at zero). Cells outside the face are rock.
 const NX = 48, NY = 32, A = 0.22, Q0 = 0.004, TAU = 300, STEPS = 1800, PER = 8, TH = 0.25, SCALE = 0.8;
+const FOOT = .44;   // the face's foot, as a share of its crest: the canyon narrows to the river
+const INK = '#10100c', CON = ['#f7f2e6', '#e9e0c9'], ROCK = ['#ecc27c', '#d9a45c'], RIVER = '#1957c2', STEEL = '#e8e2d2';
+// The warmth in flat bands: cool concrete, warm, warmer, hot, hottest.
+const BANDS = [[.07, [247, 242, 230]], [.2, [255, 230, 150]], [.4, [255, 194, 84]], [.6, [255, 138, 61]], [9, [232, 69, 44]]];
+const NAME = {1: 'one pour', 2: '4 blocks', 4: '16 blocks', 8: '64 blocks'};
 let T = new Float32Array(NX * NY), N2 = new Float32Array(NX * NY);
-let n = 1, step = 0, state = 'none', gapNow = 0, gapPeak = 0, crack = [], seeds = [], raf = 0, geo = null, revealed = false;
+const face = (u, v) => { const l = (1 - FOOT) / 2 * v; return u >= l && u <= 1 - l; };
+const MASK = new Uint8Array(NX * NY);
+for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) MASK[j * NX + i] = face((i + .5) / NX, (j + .5) / NY) ? 1 : 0;
+let n = 8, step = 0, state = 'none', gapNow = 0, gapPeak = 0, crack = [], seeds = [], raf = 0, geo = null, L = null, revealed = false;
 const tried = new Set();
+
+// A block's outline on the face (its rectangle cut by the canyon's two slopes), in face units 0..1.
+function blockPoly(b) {
+  const bi = b % n, bj = Math.floor(b / n), u0 = bi / n, u1 = (bi + 1) / n, v0 = bj / n, v1 = (bj + 1) / n;
+  let P = [[u0, v0], [u1, v0], [u1, v1], [u0, v1]];
+  const clip =(P, f) => { const out = []; for (let k = 0; k < P.length; k++) { const a = P[k], c = P[(k + 1) % P.length], fa = f(a), fc = f(c); if (fa >= 0) out.push(a); if ((fa >= 0) !== (fc >= 0)) { const t = fa / (fa - fc); out.push([a[0] + (c[0] - a[0]) * t, a[1] + (c[1] - a[1]) * t]); } } return out; };
+  P = clip(P, p => p[0] - (1 - FOOT) / 2 * p[1]);
+  P = clip(P, p => (1 - (1 - FOOT) / 2 * p[1]) - p[0]);
+  return P;
+}
 
 function setup(k) {
   n = k; T.fill(0); step = 0; gapNow = 0; gapPeak = 0;
   crack = new Array(n * n).fill(0); seeds = [];
   for (let b = 0; b < n * n; b++) {
-    const list = [], cnt = n === 1 ? 9 : n === 2 ? 3 : 2;
+    const P = blockPoly(b), list = [], cnt = n === 1 ? 9 : n === 2 ? 3 : 2;
+    // perimeter, to start cracks anywhere on the block's edge
+    const segs = []; let per = 0;
+    for (let q = 0; q < P.length; q++) { const a = P[q], c = P[(q + 1) % P.length], l = Math.hypot(c[0] - a[0], c[1] - a[1]); segs.push([a, c, l]); per += l; }
+    const cx = P.reduce((s, p) => s + p[0], 0) / (P.length || 1), cy = P.reduce((s, p) => s + p[1], 0) / (P.length || 1);
     for (let c = 0; c < cnt; c++) {
-      const side = Math.floor(Kit.rnd() * 4), pos = .12 + Kit.rnd() * .76, pts = [];
-      for (let s = 0; s < 6; s++) pts.push((Kit.rnd() - .5) * .9);
-      list.push({side, pos, pts, len: .6 + Kit.rnd() * .5});
+      let at = Kit.rnd() * per, start = P[0] || [cx, cy];
+      for (const [a, e, l] of segs) { if (at <= l) { start = [a[0] + (e[0] - a[0]) * at / l, a[1] + (e[1] - a[1]) * at / l]; break; } at -= l; }
+      const pts = []; for (let s = 0; s < 6; s++) pts.push((Kit.rnd() - .5) * .9);
+      list.push({start, to: [cx, cy], pts, len: .6 + Kit.rnd() * .5});
     }
     seeds.push(list);
   }
@@ -57,90 +87,169 @@ function setup(k) {
 function sim() {
   const bw = NX / n, bh = NY / n, q = Q0 * Math.exp(-step / TAU);
   for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) {
-    const bi = Math.floor(i / bw), bj = Math.floor(j / bh), id = j * NX + i, t = T[id];
-    const nb = (ii, jj) => (ii < 0 || jj < 0 || ii >= NX || jj >= NY || Math.floor(ii / bw) !== bi || Math.floor(jj / bh) !== bj) ? 0 : T[jj * NX + ii];
+    const id = j * NX + i; if (!MASK[id]) { N2[id] = 0; continue; }
+    const bi = Math.floor(i / bw), bj = Math.floor(j / bh), t = T[id];
+    const nb = (ii, jj) => (ii < 0 || jj < 0 || ii >= NX || jj >= NY || !MASK[jj * NX + ii] || Math.floor(ii / bw) !== bi || Math.floor(jj / bh) !== bj) ? 0 : T[jj * NX + ii];
     N2[id] = t + A * (nb(i - 1, j) + nb(i + 1, j) + nb(i, j - 1) + nb(i, j + 1) - 4 * t) + q;
   }
   [T, N2] = [N2, T]; step++;
   gapNow = 0;
   for (let bj = 0; bj < n; bj++) for (let bi = 0; bi < n; bi++) {
     let mx = -1, mn = 9;
-    for (let j = bj * bh; j < (bj + 1) * bh; j++) for (let i = bi * bw; i < (bi + 1) * bw; i++) { const v = T[j * NX + i]; if (v > mx) mx = v; if (v < mn) mn = v; }
+    for (let j = bj * bh; j < (bj + 1) * bh; j++) for (let i = bi * bw; i < (bi + 1) * bw; i++) { const id = j * NX + i; if (!MASK[id]) continue; const v = T[id]; if (v > mx) mx = v; if (v < mn) mn = v; }
+    if (mx < 0) continue;
     const g = mx - mn, b = bj * n + bi;
     if (g > crack[b]) crack[b] = g;
     if (g > gapNow) gapNow = g;
   }
   if (gapNow > gapPeak) gapPeak = gapNow;
 }
-const STOPS = [[0, [61, 110, 148]], [.33, [242, 177, 52]], [.66, [232, 89, 12]], [1, [179, 0, 27]]];
-function col(v) {
-  const t = Math.max(0, Math.min(1, v / SCALE));
-  for (let s = 1; s < STOPS.length; s++) if (t <= STOPS[s][0]) {
-    const [a, ca] = STOPS[s - 1], [b, cb] = STOPS[s], u = (t - a) / (b - a);
-    return `rgb(${ca.map((c, k) => Math.round(c + (cb[k] - c) * u)).join(',')})`;
-  }
-  return 'rgb(179,0,27)';
+
+// Where everything goes, for the room the drawing has now.
+function lay() {
+  const {W, H} = geo, f = Math.max(10, Math.min(H / 18, W / 22));
+  const fs = Math.max(12, Math.min(14, f * .95)), ph = Math.round(fs * 1.85);
+  const gauge = H >= 165, gH = gauge ? fs * 3.75 : 0;
+  const top = ph + fs * .7, bot = H - gH - (gauge ? fs * .75 : 0), Hs = bot - top;
+  // From the top: the canyon's outer rim, its inner rim, the lake held behind the dam, the crest road, the face, the river.
+  const yH = top, yR = top + Hs * .05, yS = yR + Hs * .035, lakeH = Math.max(4, Hs * .04), ch = Math.max(5, fs * .5);
+  const yC = yS + lakeH + ch, riverH = Math.max(fs * 1.1, Hs * .15), yB = bot - riverH, hD = yB - yC;
+  const cw = Math.min(W * .76, hD / .52), xC0 = (W - cw) / 2, xC1 = xC0 + cw, bw = cw * FOOT, xB0 = (W - bw) / 2, xB1 = xB0 + bw;
+  L = {W, H, f, fs, ph, gauge, gH, top, bot, Hs, yH, yR, yS, ch, yC, yB, hD, cw, xC0, xC1, bw, xB0, xB1, img: null};
 }
-function draw() {
-  if (!geo) return;
-  const {x, W, H} = geo, cs = getComputedStyle(Kit.$('card'));
-  const ink = cs.getPropertyValue('--k').trim() || '#111', bg = cs.getPropertyValue('--c').trim() || '#fff', muted = cs.getPropertyValue('--muted').trim() || ink;
-  const f = Math.max(12, Math.min(18, Math.min(W, H) * 0.05));
-  x.clearRect(0, 0, W, H);
-  x.font = `600 ${f}px ${cs.getPropertyValue('--body')}`; x.textBaseline = 'alphabetic';
-  const mapTop = f * 1.9, gaugeH = f * 5;
-  const mw = Math.max(40, Math.min(W, (H - mapTop - gaugeH) * 1.5)), mh = mw / 1.5, mx = (W - mw) / 2, cell = mw / NX;
-  x.fillStyle = muted; x.textAlign = 'left';
-  x.fillText('A layer of dam concrete, from above', mx, f * 1.2);
-  for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) {
-    x.fillStyle = state === 'none' ? '#9aa3ab' : col(T[j * NX + i]);
-    x.fillRect(mx + i * cell, mapTop + j * cell, cell + .6, cell + .6);
-  }
-  const bwp = mw / n, bhp = mh / n;
-  if (n > 1) {
-    x.strokeStyle = bg; x.lineWidth = Math.max(2, cell * .5);
-    for (let k = 1; k < n; k++) {
-      x.beginPath(); x.moveTo(mx + k * bwp, mapTop); x.lineTo(mx + k * bwp, mapTop + mh); x.stroke();
-      x.beginPath(); x.moveTo(mx, mapTop + k * bhp); x.lineTo(mx + mw, mapTop + k * bhp); x.stroke();
+// A face point (u, v in 0..1 of the crest's box) on the canvas.
+const P2 = (u, v) => [L.xC0 + u * L.cw, L.yC + v * L.hD];
+function facePath(x) { x.beginPath(); x.moveTo(L.xC0, L.yC); x.lineTo(L.xC1, L.yC); x.lineTo(L.xB1, L.yB); x.lineTo(L.xB0, L.yB); x.closePath(); }
+
+// The concrete's colour at each point of the face: its block's shade before a pour, its warmth in bands after.
+function paintFace() {
+  const dpr = devicePixelRatio || 1, X0 = Math.floor(L.xC0 * dpr), Y0 = Math.floor(L.yC * dpr), w = Math.ceil(L.cw * dpr) + 1, h = Math.ceil(L.hD * dpr) + 1;
+  if (!L.img || L.img.width !== w || L.img.height !== h) { L.img = new ImageData(w, h); L.off = document.createElement('canvas'); L.off.width = w; L.off.height = h; }
+  const d = L.img.data;
+  for (let py = 0; py < h; py++) {
+    const v = ((Y0 + py + .5) / dpr - L.yC) / L.hD, gy = Math.min(NY - 1, Math.max(0, v * NY - .5)), j0 = Math.floor(gy), j1 = Math.min(NY - 1, j0 + 1), fy = gy - j0;
+    for (let px = 0; px < w; px++) {
+      const u = ((X0 + px + .5) / dpr - L.xC0) / L.cw, o = (py * w + px) * 4;
+      if (u < 0 || u > 1 || v < 0 || v > 1) { d[o + 3] = 0; continue; }
+      let c;
+      if (state === 'none') c = (Math.floor(u * n) + Math.floor(v * n)) % 2 ? [233, 224, 201] : [247, 242, 230];
+      else {
+        const gx = Math.min(NX - 1, Math.max(0, u * NX - .5)), i0 = Math.floor(gx), i1 = Math.min(NX - 1, i0 + 1), fx = gx - i0;
+        const t = ((T[j0 * NX + i0] * (1 - fx) + T[j0 * NX + i1] * fx) * (1 - fy) + (T[j1 * NX + i0] * (1 - fx) + T[j1 * NX + i1] * fx) * fy) / SCALE;
+        c = BANDS.find(bd => t < bd[0])[1];
+      }
+      d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 255;
     }
   }
+  L.off.getContext('2d').putImageData(L.img, 0, 0);
+  return {X0, Y0, w, h, dpr};
+}
+
+// A rounded box, drawn by hand so older webviews draw it too.
+function box(x, X, Y, w, h, r) { r = Math.min(r, w / 2, h / 2); x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
+// The name in a pill, its letters spaced one by one.
+function pill(x, label, at, y) {
+  const {fs, ph} = L, sp = fs * .82 * .1; x.font = `800 ${fs * .82}px Figtree, sans-serif`;
+  const ws = [...label].map(ch => x.measureText(ch).width), w = ws.reduce((a, b) => a + b, 0) + sp * (label.length - 1) + fs * 1.3;
+  x.fillStyle = INK; box(x, at, y, w, ph, ph / 2); x.fill();
+  x.fillStyle = getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#00A6FF';
+  x.textBaseline = 'middle'; x.textAlign = 'left';
+  let cx = at + fs * .65; [...label].forEach((ch, i) => { x.fillText(ch, cx, y + ph / 2 + .5); cx += ws[i] + sp; });
+  return w;
+}
+
+function draw() {
+  if (!geo || !L) return;
+  const {x, W, H} = geo, {fs, top, bot, yH, yR, yS, ch, yC, yB, xC0, xC1, xB0, xB1, Hs} = L;
+  x.clearRect(0, 0, W, H);
+  x.lineJoin = 'round'; x.lineCap = 'round';
+  // The lake the dam holds back, between the canyon's walls, and the four intake towers standing in it.
+  x.fillStyle = RIVER; x.fillRect(xC0 - 4, yS, L.cw + 8, yC - yS);
+  x.beginPath(); x.moveTo(xC0 - 4, yS); x.lineTo(xC1 + 4, yS); x.strokeStyle = INK; x.lineWidth = 2; x.stroke();
+  const tw = Math.max(7, fs * .8), tH = Math.min(fs * 1.6, (yS - top) * .95 + (yC - ch - yS));
+  for (const u of [.2, .33, .67, .8]) {
+    const cx = xC0 + u * L.cw, t0 = yC - ch - tH;
+    x.beginPath(); x.moveTo(cx - tw / 2, yC - ch); x.lineTo(cx - tw / 2, t0 + tw / 2); x.arc(cx, t0 + tw / 2, tw / 2, Math.PI, 0); x.lineTo(cx + tw / 2, yC - ch); x.closePath();
+    x.fillStyle = STEEL; x.fill(); x.lineWidth = 2; x.stroke();
+  }
+  // The canyon: a wall on each side, stepping up from the crest, down to the river.
+  for (const s of [-1, 1]) {
+    const X = u => s < 0 ? u : W - u, ex = s < 0 ? xC0 : W - xC1, eb = s < 0 ? xB0 : W - xB1;
+    const pts = [[X(-2), yH], [X(ex * .42), yH], [X(ex * .55), yR], [X(ex - 4), yR], [X(ex - 4), yC], [X(ex), yC], [X(eb), yB], [X(eb - Math.max(6, ex * .18)), bot], [X(-2), bot]];
+    x.beginPath(); pts.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.closePath();
+    x.fillStyle = ROCK[0]; x.fill();
+    // one darker seam of rock, low in the wall
+    x.save(); x.clip();
+    x.beginPath(); x.moveTo(X(-2), yC + L.hD * .5); x.lineTo(X(eb * .6), yC + L.hD * .62); x.lineTo(X(eb), yB + 2); x.lineTo(X(eb - Math.max(6, ex * .18)), bot + 2); x.lineTo(X(-2), bot + 2); x.closePath();
+    x.fillStyle = ROCK[1]; x.fill(); x.restore();
+    x.beginPath(); pts.slice(0, 7).forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b));
+    x.strokeStyle = INK; x.lineWidth = 2.5; x.stroke();
+  }
+  // The river at the dam's foot.
+  x.beginPath(); x.moveTo(xB0, yB); x.lineTo(xB1, yB); x.lineTo(xB1 + Math.max(6, (W - xC1) * .18), bot); x.lineTo(xB0 - Math.max(6, xC0 * .18), bot); x.closePath();
+  x.fillStyle = RIVER; x.fill();
+  // The face: its concrete, its blocks, its cracks.
+  const p = paintFace();
+  x.save(); facePath(x); x.clip();
+  x.imageSmoothingEnabled = false;
+  x.drawImage(L.off, p.X0 / p.dpr, p.Y0 / p.dpr, p.w / p.dpr, p.h / p.dpr);
+  x.strokeStyle = INK;
+  if (n > 1) {
+    x.lineWidth = state === 'none' ? 1.3 : 2; x.globalAlpha = state === 'none' ? .45 : 1;
+    for (let k = 1; k < n; k++) {
+      const [ax, ay] = P2(k / n, 0), [bx, by] = P2(k / n, 1); x.beginPath(); x.moveTo(ax, ay); x.lineTo(bx, by); x.stroke();
+      const [cx, cy] = P2(0, k / n), [dx, dy] = P2(1, k / n); x.beginPath(); x.moveTo(cx, cy); x.lineTo(dx, dy); x.stroke();
+    }
+    x.globalAlpha = 1;
+  }
   if (state !== 'none') {
-    x.strokeStyle = '#14181f'; x.lineCap = 'round'; x.lineJoin = 'round';
+    x.lineWidth = Math.max(2, L.f * .17);
     for (let b = 0; b < n * n; b++) {
-      const s = Math.min(1, (crack[b] - TH) / 0.35); if (s <= 0) continue;
-      const ox = mx + (b % n) * bwp, oy = mapTop + Math.floor(b / n) * bhp, L = Math.min(bwp, bhp) * .42 * s;
-      x.lineWidth = Math.max(1.5, cell * .35);
+      const s = Math.min(1, (crack[b] - TH) / .35); if (s <= 0) continue;
       for (const c of seeds[b]) {
-        let px, py, dx, dy;
-        if (c.side === 0) { px = ox + c.pos * bwp; py = oy; dx = 0; dy = 1; }
-        else if (c.side === 1) { px = ox + bwp; py = oy + c.pos * bhp; dx = -1; dy = 0; }
-        else if (c.side === 2) { px = ox + c.pos * bwp; py = oy + bhp; dx = 0; dy = -1; }
-        else { px = ox; py = oy + c.pos * bhp; dx = 1; dy = 0; }
-        x.beginPath(); x.moveTo(px, py);
-        const seg = L * c.len / c.pts.length;
-        c.pts.forEach(p => { px += dx * seg + dy * p * seg; py += dy * seg + dx * p * seg; x.lineTo(px, py); });
+        let [u, v] = c.start; const du = c.to[0] - u, dv = c.to[1] - v, dl = Math.hypot(du * L.cw, dv * L.hD) || 1;
+        const ux = du * L.cw / dl, uy = dv * L.hD / dl, len = Math.min(dl * .9, Math.min(L.cw, L.hD) / n * .55 * s * c.len), seg = len / c.pts.length;
+        let [px, py] = P2(u, v); x.beginPath(); x.moveTo(px, py);
+        c.pts.forEach(q => { px += ux * seg - uy * q * seg; py += uy * seg + ux * q * seg; x.lineTo(px, py); });
         x.stroke();
       }
     }
   }
-  // gauge
-  const gy = mapTop + mh + f * 1.7, by = gy + f * .55, bh = f * .9;
-  x.fillStyle = ink; x.textAlign = 'left';
-  x.fillText('How much hotter the core is than the skin', mx, gy);
-  x.fillStyle = 'color-mix(in srgb,' + ink + ' 12%,transparent)';
-  x.fillStyle = ink; x.globalAlpha = .12; x.fillRect(mx, by, mw, bh); x.globalAlpha = 1;
-  const fr = v => Math.min(1, v / SCALE) * mw;
-  x.fillStyle = gapNow > TH ? '#e8590c' : '#3d6e94'; x.fillRect(mx, by, fr(gapNow), bh);
-  if (gapPeak > 0) { x.fillStyle = ink; x.fillRect(mx + fr(gapPeak) - 1, by - f * .2, 2, bh + f * .4); }
-  const tx = mx + fr(TH);
-  x.fillStyle = '#c1121f'; x.fillRect(tx - 1.5, by - f * .25, 3, bh + f * .5);
-  x.textAlign = 'left'; x.fillText('◂ cracks beyond here', tx - f * .3, by + bh + f * 1.35);
+  x.restore();
+  facePath(x); x.strokeStyle = INK; x.lineWidth = 3; x.stroke();
+  // The crest: the road along the top.
+  box(x, xC0 - 4, yC - ch, L.cw + 8, ch, 2); x.fillStyle = STEEL; x.fill(); x.lineWidth = 2.5; x.stroke();
+  x.beginPath(); x.moveTo(xB0 - Math.max(6, xC0 * .18) - 4, yB); x.lineTo(xB1 + Math.max(6, (W - xC1) * .18) + 4, yB); x.lineWidth = 2.5; x.stroke();
+  // Its name, and the pour on show.
+  const pw = pill(x, 'HOOVER DAM', 1, 0);
+  if (state !== 'none') { x.fillStyle = INK; x.font = `700 ${fs}px Figtree, sans-serif`; x.textBaseline = 'middle'; x.fillText(NAME[n], pw + fs * .6, L.ph / 2 + .5); }
+  if (L.gauge) gauge(x);
 }
+
+// How much hotter the core is than the skin, against the line where cracks begin.
+function gauge(x) {
+  const {W, H, fs} = L, gy = H - L.gH, th = fs * .95, by = gy + fs * 1.35, fr = v => Math.min(1, v / SCALE) * (W - 4);
+  x.fillStyle = INK; x.font = `700 ${fs}px Figtree, sans-serif`; x.textBaseline = 'alphabetic'; x.textAlign = 'left';
+  x.fillText('How much hotter the core is than the skin', 1, gy + fs * .95);
+  const tx = 2 + fr(TH);
+  box(x, 2, by, W - 4, th, th / 2); x.fillStyle = '#fff7e6'; x.fill();
+  x.save(); box(x, 2, by, W - 4, th, th / 2); x.clip();
+  x.fillStyle = '#ffd3c8'; x.fillRect(tx, by, W, th);
+  if (state !== 'none') { x.fillStyle = gapNow > TH ? '#e8452c' : '#ffb347'; x.fillRect(2, by, fr(gapNow), th); }
+  x.restore();
+  box(x, 2, by, W - 4, th, th / 2); x.strokeStyle = INK; x.lineWidth = 2; x.stroke();
+  if (gapPeak > 0) { x.fillStyle = INK; x.fillRect(2 + fr(gapPeak) - 1.5, by - fs * .25, 3, th + fs * .5); }
+  x.fillStyle = INK; x.fillRect(tx - 1.5, by - fs * .3, 3, th + fs * .6);
+  x.beginPath(); x.moveTo(tx, by + th + fs * .38); x.lineTo(tx - fs * .32, by + th + fs * .9); x.lineTo(tx + fs * .32, by + th + fs * .9); x.closePath(); x.fill();
+  x.font = `700 ${fs}px Figtree, sans-serif`; x.fillText('cracks beyond here', tx + fs * .55, by + th + fs * 1.22);
+}
+
 function finish() {
   state = 'done'; draw();
   if (tried.size >= 2 && !revealed) {
     revealed = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
-    requestAnimationFrame(() => { Kit.onShow.card(); });
+    // The choice has been made twice: the buttons give their room to the dam, which names the pour it shows.
+    Kit.hide('opts');
   }
 }
 function run(k) {
@@ -158,7 +267,10 @@ Kit.$('opts').addEventListener('click', e => {
   [...Kit.$('opts').children].forEach(o => o.classList.toggle('on', o === b));
   Kit.haptic('selection'); run(+b.dataset.n);
 });
-Kit.onShow.card = () => { geo = Kit.fitCanvas(Kit.$('cv')); draw(); };
+const fit = () => { geo = Kit.fitCanvas(Kit.$('cv')); lay(); draw(); };
+Kit.onShow.card = fit;
+let seen = '';
+new ResizeObserver(() => { const b = Kit.$('wrap').getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k !== seen && geo) { seen = k; fit(); } }).observe(Kit.$('wrap'));
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   run.fast = true;

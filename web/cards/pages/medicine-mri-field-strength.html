@@ -1,39 +1,35 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: medicine-mri-field-strength -->
 <title>Astute free card · MRI field vs Earth's</title>
+<!-- An MRI scanner, front on: the big white magnet, its tunnel, and a patient on the table, feet towards us, under
+     a blanket. The field in the tunnel is counted in Earths: one Earth's magnetic field is one little globe. Each tap
+     multiplies it by ten: 10 globes, 100, 1,000, 10,000, and at 100,000 the tunnel is solid with them, the one Earth
+     still marked, a speck. Then a bunch of keys on the floor is pulled in and sticks to the rim: leave metal outside.
+     Taps only. Facts as before: the field is about 100,000 times Earth's (Geopop). -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#row{display:flex;align-items:flex-end;justify-content:space-between;gap:3cqw}
-#legend{display:flex;align-items:center;gap:2cqw;font:600 max(1.8cqh,12px)/1.25 var(--body);color:var(--k);overflow-wrap:anywhere}
-#legend i{flex:none;width:max(1.6cqh,11px);height:max(1.6cqh,11px);border-radius:50%;background:#2b0a08;box-shadow:0 0 0 .3cqh color-mix(in srgb,#2b0a08 35%,transparent)}
-#count{text-align:right;flex:none}
-#num{display:block;font:800 max(4.4cqh,24px)/1 var(--display);color:var(--k);font-variant-numeric:tabular-nums}
-#what{display:block;font:600 max(1.6cqh,12px)/1.25 var(--body);color:var(--muted)}
-#cvwrap{flex:1;min-height:0;position:relative;overflow:hidden}
+#cvwrap{flex:1;min-height:0;position:relative}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
-#go{font:800 max(2.6cqh,16px)/1 var(--display);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 6cqw;cursor:pointer;align-self:center;min-width:40cqw}
+#go{font:800 max(2.6cqh,16px)/1 var(--display);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 6cqw;cursor:pointer;align-self:flex-start;min-width:40cqw;transition:transform .14s cubic-bezier(.23,1,.32,1)}
 #go:active{transform:scale(.97)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
 .keep{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="medicine" data-kind="Tap to grow · scale">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">MRI</span></div>
     <h2 class="q">How much stronger is an MRI's magnetic field than Earth's?</h2>
     <div class="stagebox" id="stage">
-      <div id="row">
-        <div id="legend"><i></i><span>1 square = Earth's magnetic field</span></div>
-        <div id="count"><span id="num">1×</span><span id="what">Earth's field</span></div>
-      </div>
-      <div id="cvwrap"><canvas id="cv"></canvas></div>
+      <div id="cvwrap"><svg id="cv" role="img" aria-label="An MRI scanner seen from the front, a patient lying in its tunnel with their feet towards us. In the tunnel, one little globe: Earth's magnetic field."></svg></div>
       <button id="go">×10</button>
       <div id="why" class="gone"><p class="body">Inside an MRI you sit in a field 100,000 times more intense than Earth's. That is why it can pull metal objects with dangerous force. The scan itself is safe and non-invasive.</p></div>
     </div>
-    <p class="say" id="say">Tap ×10 and watch the field grow, square by square.</p>
+    <p class="say" id="say">Tap ×10 and watch the field grow, Earth by Earth.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An MRI is 100,000 Earths of magnetism: leave metal outside.</div>
     <div class="foot"><span class="src">Source · Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)</span></div>
   </div>
@@ -42,89 +38,270 @@
 <script>
 const TOTAL = 100000, STEPS = [1, 10, 100, 1000, 10000, 100000];
 const NAMES = ["Earth's field", "10 Earths", "100 Earths", "1,000 Earths", "10,000 Earths", "the MRI field"];
-let step = 0, shown = {v: 1}, ring = {r: 1, a: 1}, G = null, tw = null;
-const cv = Kit.$('cv');
-const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+// One ink; white for the magnet, warm greys for its sides; navy for the inside of the tunnel; Earth's blue and green
+// for the field counted in Earths; skin, a pale blanket and grey steel for the rest.
+const INK = '#10100c', WHITE = '#ffffff', SIDE = '#E9E1DB', LIP = '#D8CFC8', NAVY = '#1C2545', FAR = '#2A3660';
+const SEA = '#3D79F4', LAND = '#35D07F', SKIN = '#F2C29B', SHEET = '#D6E4FF', STEEL = '#C9CED6';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const mk = Kit.mk, f1 = n => (Math.round(n * 10) / 10).toString();
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), lerp = (a, b, t) => a + (b - a) * t;
+let step = 0, G = null, tw = null;
+const shown = {n: 1}, keys = {t: 0};
+const svg = Kit.$('cv'), box = Kit.$('cvwrap'), card = Kit.$('card');
 
-function layout() {
-  const {x, W, H} = Kit.fitCanvas(cv);
-  const m = 16, aw = W - 2 * m, ah = H - 2 * m;
-  let s = Math.sqrt(aw * ah / TOTAL), cols, rows;
-  for (let i = 0; i < 400; i++) {
-    cols = Math.max(1, Math.floor(aw / s)); rows = Math.ceil(TOTAL / cols);
-    if (rows * s <= ah) break; s *= .99;
+function build() {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const g = G = {W, H};
+  const k = g.k = clamp(Math.min(W, H) * .0095, 1.6, 2.8);
+  g.fs = clamp(W * .037, 11, 13);
+  g.big = clamp(W * .125, 26, 46);
+  // How wide and how tall the number is at a size, at its widest ("100,000×"), with its line under it.
+  const probe = mk('text', {'font-family': SERIF, 'font-weight': 900, 'letter-spacing': '-.02em'}, svg);
+  probe.textContent = '100,000×';
+  const numBox = size => { probe.setAttribute('font-size', size); const b = probe.getBBox(); return {w: b.width, top: b.y, bottom: b.y + b.height}; };
+  const floorH = Math.max(8, H * .03);
+  g.floor = H - floorH;
+  // Two ways to set it, and the one with the bigger magnet wins. Tall: the number over the scanner. Low and wide:
+  // the scanner on the right, the number (smaller if it must be) beside it. Either way the magnet stands to the
+  // right, leaving floor on its left for the keys.
+  const nb = numBox(g.big), numH = nb.bottom - nb.top + g.fs * 1.5;
+  // Stacked, the magnet takes the width but for the keys' bit of floor on its left.
+  const keysRoom = Math.max(42, W * .11);
+  const Bt = Math.min(g.floor - numH - 6 - W * .045, (W - keysRoom - k - 4) / 1.055 / 1.17);
+  const Bw = Math.min(g.floor - W * .045 - 2, W * .6 / 1.17);
+  g.tall = Bt >= Bw * .9;
+  let A, B;
+  if (g.tall) B = Bt;
+  else {
+    B = Bw;
+    // The number fits in the column the magnet leaves.
+    const col = W - B * 1.17 * 1.055 - k - 12;
+    while (g.big > 20 && numBox(g.big).w > col) g.big -= 1;
   }
-  const gw = cols * s, gh = rows * s;
-  G = {x, W, H, s, cols, ox: (W - gw) / 2, oy: (H - gh) / 2};
+  A = B * 1.17;
+  const nb2 = numBox(g.big); probe.remove();
+  g.numY = -nb2.top + 1; g.capY = g.numY + nb2.bottom + g.fs * 1.05;
+  g.numH = g.capY + g.fs * .45;
+  g.A = A; g.B = B; g.hy = g.floor - B;
+  const dx = A * .055, dy = -B * .055;        // the magnet's depth, back and up to the right
+  // Once the keys are on their way, the floor they lay on is not needed: stacked, the magnet stands in the middle.
+  g.hx = g.tall && step === STEPS.length - 1 ? Math.max(keysRoom * .55, (W - A - dx) / 2) : W - A - dx - k - 2;
+  const hr = Math.min(A, B) * .2;
+  g.bx = g.hx + A / 2; g.by = g.hy + B * .47; g.rb = Math.min(A, B) * .355;
+  g.bed = g.by + g.rb * .3;                  // the top of the table, in the tunnel
+  g.top = g.bed - g.rb * .2;                 // the top of the blanket over the patient, in the tunnel
+  const ink = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const solid = fill => Object.assign({fill}, ink);
+  const rr = (x, y, w, h, r) => `M${f1(x + r)},${f1(y)}H${f1(x + w - r)}Q${f1(x + w)},${f1(y)} ${f1(x + w)},${f1(y + r)}V${f1(y + h - r)}Q${f1(x + w)},${f1(y + h)} ${f1(x + w - r)},${f1(y + h)}H${f1(x + r)}Q${f1(x)},${f1(y + h)} ${f1(x)},${f1(y + h - r)}V${f1(y + r)}Q${f1(x)},${f1(y)} ${f1(x + r)},${f1(y)}Z`;
+  const circ = (cx, cy, r) => `M${f1(cx - r)},${f1(cy)}a${f1(r)},${f1(r)} 0 1,0 ${f1(2 * r)},0a${f1(r)},${f1(r)} 0 1,0 ${f1(-2 * r)},0Z`;
+
+  // The floor.
+  mk('path', Object.assign({d: `M0,${f1(g.floor)}H${f1(W)}`, fill: 'none'}, ink), svg);
+  // The magnet: its back and top in grey, then its front, white, with the tunnel cut through it.
+  mk('path', solid(SIDE), svg).setAttribute('d', rr(g.hx + dx, g.hy + dy, A, B, hr));
+  mk('path', Object.assign({d: `M${f1(g.hx + hr * .3)},${f1(g.hy + hr * .3)}L${f1(g.hx + dx + hr * .3)},${f1(g.hy + dy + hr * .3)}M${f1(g.hx + A - hr * .3)},${f1(g.hy + B - hr * .3)}L${f1(g.hx + A + dx - hr * .3)},${f1(g.hy + B + dy - hr * .3)}`, fill: 'none'}, ink), svg);
+  // Inside the tunnel: navy, and its far end, smaller and a little up and to the right.
+  mk('circle', {cx: f1(g.bx), cy: f1(g.by), r: f1(g.rb), fill: NAVY}, svg);
+  mk('circle', {cx: f1(g.bx + dx * .9), cy: f1(g.by + dy * .9), r: f1(g.rb * .62), fill: FAR}, svg);
+  // The field, counted in Earths (drawn by render()).
+  g.units = mk('g', {}, svg);
+  const defs = mk('defs', {}, svg);
+  g.pat = mk('pattern', {id: 'earths', patternUnits: 'userSpaceOnUse'}, defs);
+  g.patDot = mk('circle', {fill: SEA}, g.pat);
+  g.region = regionPath();
+  mk('path', {d: g.region}, mk('clipPath', {id: 'field'}, defs));
+  g.fill = mk('path', {d: g.region, fill: 'url(#earths)', 'clip-path': 'url(#field)'}, svg);
+  // The front of the magnet, with the tunnel's rim.
+  mk('path', Object.assign({d: rr(g.hx, g.hy, A, B, hr) + circ(g.bx, g.by, g.rb * 1.13), 'fill-rule': 'evenodd'}, solid(WHITE)), svg);
+  mk('path', Object.assign({d: circ(g.bx, g.by, g.rb * 1.13) + circ(g.bx, g.by, g.rb), 'fill-rule': 'evenodd'}, solid(LIP)), svg);
+  // A panel line on the front, as on the real thing.
+  const ins = Math.min(A, B) * .065;
+  mk('path', {d: rr(g.hx + ins, g.hy + ins, A - 2 * ins, B - 2 * ins, hr * .7), fill: 'none', stroke: INK, 'stroke-width': f1(k * .55), opacity: .22}, svg);
+  // The table, sliding out of the tunnel towards us (seen a little from above, so it widens as it comes), its
+  // stand down to the floor; on it the patient, under a blanket, feet up at our end.
+  const bx = g.bx, rb = g.rb, y0 = g.bed, y1 = g.bed + rb * .62, w0 = rb * 1.0, w1 = rb * 1.5, tt = Math.max(5, rb * .13);
+  mk('path', Object.assign({d: `M${f1(bx - w1 * .21)},${f1(y1 + tt)}L${f1(bx - w1 * .28)},${f1(g.floor)}H${f1(bx + w1 * .28)}L${f1(bx + w1 * .21)},${f1(y1 + tt)}Z`}, solid(LIP)), svg);
+  mk('path', Object.assign({d: `M${f1(bx - w1 / 2)},${f1(y1)}H${f1(bx + w1 / 2)}V${f1(y1 + tt)}H${f1(bx - w1 / 2)}Z`}, solid(SIDE)), svg);
+  mk('path', Object.assign({d: `M${f1(bx - w0 / 2)},${f1(y0)}H${f1(bx + w0 / 2)}L${f1(bx + w1 / 2)},${f1(y1)}H${f1(bx - w1 / 2)}Z`}, solid(WHITE)), svg);
+  // The blanket over the legs, a little wider than the mattress where it drapes, a fold between the legs.
+  const yb = y0 + (y1 - y0) * .66, bw0 = rb * .42, bw1 = rb * .7;
+  mk('path', Object.assign({d: `M${f1(bx - bw0)},${f1(g.top + rb * .1)}Q${f1(bx)},${f1(g.top - rb * .1)} ${f1(bx + bw0)},${f1(g.top + rb * .1)}L${f1(bx + bw1)},${f1(yb)}Q${f1(bx + bw1 * .5)},${f1(yb + rb * .07)} ${f1(bx)},${f1(yb + rb * .02)}Q${f1(bx - bw1 * .5)},${f1(yb + rb * .07)} ${f1(bx - bw1)},${f1(yb)}Z`}, solid(SHEET)), svg);
+  mk('path', {d: `M${f1(bx)},${f1(g.top + rb * .18)}Q${f1(bx - rb * .03)},${f1((g.top + yb) / 2)} ${f1(bx)},${f1(yb - rb * .3)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k * .6), 'stroke-linecap': 'round', opacity: .35}, svg);
+  // Two feet out of the blanket, soles to us, toes up, the big toes on the inside.
+  const fw = rb * .22, fh = rb * .38;
+  [-1, 1].forEach(sd => {
+    const cx = bx + sd * rb * .15, fb = yb + rb * .06, X = u => f1(cx - sd * (u - .5) * fw), Y = v => f1(fb - v * fh);
+    mk('path', Object.assign({d: `M${X(.12)},${Y(0)}C${X(-.06)},${Y(.5)} ${X(0)},${Y(.82)} ${X(.16)},${Y(.88)}Q${X(.26)},${Y(.97)} ${X(.36)},${Y(.9)}Q${X(.46)},${Y(1)} ${X(.57)},${Y(.93)}Q${X(.76)},${Y(1.1)} ${X(.95)},${Y(.86)}C${X(1.06)},${Y(.5)} ${X(1)},${Y(.2)} ${X(.88)},${Y(0)}Z`}, solid(SKIN)), svg);
+  });
+
+  // The one Earth, marked, and its name on a pill.
+  g.ring = mk('circle', {fill: 'none', stroke: WHITE, 'stroke-width': f1(Math.max(1.6, k * .8))}, svg);
+  g.lead = mk('path', {stroke: INK, 'stroke-width': f1(Math.max(1.4, k * .6)), 'stroke-linecap': 'round', fill: 'none'}, svg);
+  g.leadEnd = mk('circle', {r: f1(Math.max(2.4, k)), fill: INK}, svg);
+  const pg = mk('g', {}, svg), ph = Math.round(g.fs * 2);
+  const pr = mk('rect', {height: ph, rx: ph / 2, fill: INK}, pg);
+  const pt = mk('text', {'font-family': FONT, 'font-size': g.fs, 'font-weight': 800, 'letter-spacing': '.06em', fill: '#A9C8FF'}, pg);
+  pt.textContent = '1 EARTH';
+  const pw = pt.getComputedTextLength() + ph * .96;
+  pr.setAttribute('width', f1(pw));
+  g.pill = {g: pg, r: pr, t: pt, w: pw, h: ph};
+
+  // The keys, on the floor, and their flight into the tunnel.
+  g.whoosh = mk('path', {fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(1.6, k * .8)), 'stroke-linecap': 'round', opacity: 0}, svg);
+  g.keys = mk('g', {}, svg);
+  g.ks = clamp(g.rb * .2, 9, 16);
+  drawKeys(g.keys, g.ks);
+  // On the floor left of the magnet, lying flat; at the end, caught on the tunnel's rim, pointing in.
+  g.keyFrom = [clamp(g.hx * .3, g.ks * .6, g.hx - g.ks * 2.4), g.floor - g.ks * .42 - k * .6];
+  g.keyTo = [g.bx - g.rb * 1.05, g.by + g.rb * .12];
+
+  // How strong, in Earths: large, white, top left.
+  g.num = mk('text', {id: 'num', x: 0, y: f1(g.numY), 'font-family': SERIF, 'font-weight': 900, 'font-size': f1(g.big), 'letter-spacing': '-.02em', fill: WHITE}, svg);
+  g.what = mk('text', {id: 'what', x: 0, y: f1(g.capY), 'font-family': FONT, 'font-weight': 700, 'font-size': f1(g.fs), fill: WHITE}, svg);
+  // The pill: top right when the number is on top; under the number when the scanner takes the right.
+  g.pillAt = g.tall ? [W - pw - 2, Math.max(2, g.numY - ph * .75)] : [0, Math.min(g.numH + 6, g.by - ph / 2)];
+  pg.setAttribute('transform', `translate(${f1(g.pillAt[0])},${f1(g.pillAt[1])})`);
+  pt.setAttribute('x', f1(ph * .48)); pt.setAttribute('y', f1(ph / 2 + g.fs * .36));
+  render();
 }
-function fillN(n) {
-  const {x, s, cols, ox, oy} = G, full = Math.floor(n / cols), rem = n % cols;
-  if (full) x.fillRect(ox, oy, cols * s, full * s);
-  if (rem) x.fillRect(ox, oy + full * s, rem * s, s);
+
+// The part of the tunnel the field is shown in: all of it above the patient.
+function regionPath() {
+  const {bx, by, rb, top} = G, c = Math.max(-1, Math.min(1, (top - by) / rb)), a = Math.asin(c), xs = rb * Math.cos(a);
+  return `M${f1(bx + xs)},${f1(top)}A${f1(rb)},${f1(rb)} 0 ${c > 0 ? 1 : 0},0 ${f1(bx - xs)},${f1(top)}Z`;
 }
+const inRegion = (x, y, pad) => { const {bx, by, rb, top} = G; return Math.hypot(x - bx, y - by) <= rb - pad && y <= top - pad; };
+// The marked Earth: the middle of the field.
+function marker() { const {bx, by, rb, top} = G; return [bx, (by - rb + top) / 2]; }
+
+// Exactly n Earths on a square grid that keeps the marked one at its place: the grid as wide as lets n fit.
+function grid(n) {
+  const [mx, my] = marker(), {rb} = G;
+  let c = Math.sqrt(Math.PI * rb * rb * .55 / n) * 1.25, pts = [];
+  for (let it = 0; it < 80; it++) {
+    const rho = .38 * c, R = Math.ceil(rb * 1.1 / c) + 1;
+    pts = [];
+    for (let i = -R; i <= R; i++) for (let j = -R; j <= R; j++) { const x = mx + i * c, y = my + j * c; if (inRegion(x, y, rho + 1)) pts.push([x, y, Math.hypot(x - mx, y - my)]); }
+    if (pts.length >= n) break;
+    c *= .97;
+  }
+  pts.sort((a, b) => a[2] - b[2]);
+  return {c, pts: pts.slice(0, n)};
+}
+// An Earth: sea, two continents, an ink edge, when it is big enough to be seen as one.
+function earth(parent, x, y, r) {
+  const k = G.k;
+  if (r < 2.2) { mk('circle', {cx: f1(x), cy: f1(y), r: f1(r), fill: SEA}, parent); return; }
+  const g = mk('g', {}, parent);
+  mk('circle', {cx: f1(x), cy: f1(y), r: f1(r), fill: SEA, stroke: INK, 'stroke-width': f1(Math.min(k, r * .16))}, g);
+  if (r < 6) return;
+  const L = (d) => mk('path', {d, fill: LAND, stroke: INK, 'stroke-width': f1(Math.min(k * .6, r * .08)), 'stroke-linejoin': 'round'}, g);
+  L(`M${f1(x - r * .62)},${f1(y - r * .38)}Q${f1(x - r * .2)},${f1(y - r * .78)} ${f1(x + r * .08)},${f1(y - r * .4)}Q${f1(x - r * .02)},${f1(y - r * .02)} ${f1(x - r * .3)},${f1(y + r * .12)}Q${f1(x - r * .5)},${f1(y + r * .5)} ${f1(x - r * .78)},${f1(y + r * .05)}Z`);
+  L(`M${f1(x + r * .3)},${f1(y + r * .05)}Q${f1(x + r * .72)},${f1(y - r * .12)} ${f1(x + r * .74)},${f1(y + r * .28)}Q${f1(x + r * .62)},${f1(y + r * .72)} ${f1(x + r * .22)},${f1(y + r * .66)}Q${f1(x + r * .1)},${f1(y + r * .32)} ${f1(x + r * .3)},${f1(y + r * .05)}Z`);
+}
+function drawKeys(g, s) {
+  const k = Math.max(1.3, G.k * .65), at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', fill: STEEL};
+  mk('circle', Object.assign({cx: 0, cy: 0, r: f1(s * .42), fill: 'none'}, at), g);
+  // Two keys hanging from the ring: head, shaft, teeth.
+  [[-28, 0], [22, 1]].forEach(([deg, i]) => {
+    const kg = mk('g', {transform: `rotate(${deg})`}, g);
+    mk('circle', Object.assign({cx: 0, cy: f1(s * .72), r: f1(s * .3)}, at), kg);
+    mk('path', Object.assign({d: `M${f1(-s * .09)},${f1(s * 1)}V${f1(s * 1.95)}H${f1(s * .09)}V${f1(s * 1)}Z`}, at), kg);
+    mk('path', Object.assign({d: `M${f1(s * .09)},${f1(s * 1.55)}h${f1(s * .2)}v${f1(s * .14)}h${f1(-s * .1)}v${f1(s * .12)}h${f1(s * .1)}v${f1(s * .14)}h${f1(-s * .2)}Z`}, at), kg);
+  });
+}
+
 function render() {
   if (!G) return;
-  const {x, W, H, s, ox, oy} = G, k = ink(), n = Math.round(shown.v);
-  x.clearRect(0, 0, W, H);
-  x.fillStyle = k;
-  x.globalAlpha = 1; fillN(n);
-  // Earth's single square, with a ring so the eye can find it
-  const cx = ox + s / 2, cy = oy + s / 2;
-  x.fillStyle = '#2b0a08';
-  x.fillRect(ox, oy, Math.max(s, 2), Math.max(s, 2));
-  x.globalAlpha = ring.a;
-  x.strokeStyle = '#2b0a08'; x.lineWidth = 2.5;
-  x.beginPath(); x.arc(cx, cy, 6 + 6 * ring.r, 0, Math.PI * 2); x.stroke();
-  x.globalAlpha = 1;
-  Kit.$('num').textContent = n.toLocaleString('en') + '×';
+  const g = G, n = Math.max(1, shown.n), [mx, my] = marker();
+  g.units.innerHTML = '';
+  // Up to a hundred, each Earth drawn; past that, as many as the tunnel holds, a pattern; at 100,000, solid.
+  let c, rho;
+  if (n <= 100.5) {
+    const {c: cc, pts} = grid(Math.round(n));
+    c = cc; rho = Math.min(.38 * c, g.rb * .36);
+    pts.forEach(([x, y]) => earth(g.units, x, y, rho));
+    g.fill.setAttribute('display', 'none');
+  } else {
+    const area = regionArea();
+    c = Math.sqrt(area / n); rho = .38 * c;
+    const solid = c < .6;
+    g.fill.setAttribute('display', '');
+    if (solid) { g.fill.setAttribute('fill', SEA); }
+    else {
+      g.fill.setAttribute('fill', 'url(#earths)');
+      ['x', 'y'].forEach((a, i) => g.pat.setAttribute(a, f1([mx, my][i] - c / 2)));
+      g.pat.setAttribute('width', c.toFixed(3)); g.pat.setAttribute('height', c.toFixed(3));
+      g.patDot.setAttribute('cx', (c / 2).toFixed(3)); g.patDot.setAttribute('cy', (c / 2).toFixed(3)); g.patDot.setAttribute('r', Math.max(.25, rho * (c < 2 ? 1.25 : 1)).toFixed(3));
+    }
+  }
+  // The marked Earth: ringed once there are others to tell it from.
+  const ringR = Math.max(rho + 3, 5.5);
+  g.ring.setAttribute('cx', f1(mx)); g.ring.setAttribute('cy', f1(my)); g.ring.setAttribute('r', f1(ringR));
+  g.ring.setAttribute('opacity', n > 1.5 ? 1 : 0);
+  // Its pill's line, from the pill's nearest side to the ring.
+  const P = g.pillAt, pw = g.pill.w, ph = g.pill.h;
+  const sx = clamp(mx, P[0] + ph / 2, P[0] + pw - ph / 2), sy = P[1] + ph / 2;
+  const ang = Math.atan2(sy - my, sx - mx), ex = mx + Math.cos(ang) * (n > 1.5 ? ringR : rho), ey = my + Math.sin(ang) * (n > 1.5 ? ringR : rho);
+  g.lead.setAttribute('d', `M${f1(sx)},${f1(sy)}L${f1(ex)},${f1(ey)}`);
+  g.leadEnd.setAttribute('cx', f1(ex)); g.leadEnd.setAttribute('cy', f1(ey));
+  // The number.
+  const shownN = Math.round(n);
+  g.num.textContent = shownN.toLocaleString('en') + '×';
+  g.what.textContent = NAMES[step];
+  // The keys: flat on the floor, then pulled up in an arc, turning once, onto the tunnel's rim.
+  const t = keys.t, [x0, y0] = g.keyFrom, [x1, y1] = g.keyTo;
+  const kx = lerp(x0, x1, t), ky = lerp(y0, y1, t) - Math.sin(Math.PI * t) * g.rb * .3;
+  g.keys.setAttribute('transform', `translate(${f1(kx)},${f1(ky)}) rotate(${f1(lerp(-90, 270, t))})`);
+  if (t > .98) {
+    // Where they came from: three short strokes behind them, along the way they flew.
+    const d = Math.hypot(x1 - x0, y1 - y0), ux = (x0 - x1) / d, uy = (y0 - y1) / d, nx = -uy, ny = ux, L = g.ks * 1.5;
+    g.whoosh.setAttribute('d', [-1, 0, 1].map(i => { const ox = x1 + ux * g.ks * .95 + nx * i * g.ks * .5, oy = y1 + uy * g.ks * .95 + ny * i * g.ks * .5; return `M${f1(ox)},${f1(oy)}L${f1(ox + ux * L * (i ? .7 : 1))},${f1(oy + uy * L * (i ? .7 : 1))}`; }).join(''));
+    g.whoosh.setAttribute('opacity', 1);
+  } else g.whoosh.setAttribute('opacity', 0);
 }
+function regionArea() {
+  const {by, rb, top} = G; let a = 0, N = 80;
+  for (let i = 0; i < N; i++) { const y = by - rb + (i + .5) * (2 * rb / N); if (y > top) break; a += 2 * Math.sqrt(Math.max(0, rb * rb - (y - by) ** 2)) * (2 * rb / N); }
+  return a;
+}
+
 function grow() {
   if (step >= STEPS.length - 1) return;
   step++;
-  Kit.haptic(step === STEPS.length - 1 ? 'success' : 'light');
-  Kit.$('what').textContent = NAMES[step];
+  const last = step === STEPS.length - 1, to = STEPS[step];
+  Kit.haptic(last ? 'success' : 'light');
   if (tw) tw.kill();
-  if (Kit.calm) { shown.v = STEPS[step]; render(); }
-  else tw = gsap.to(shown, {v: STEPS[step], duration: .75, ease: 'power2.inOut', onUpdate: render, onComplete: render});
-  if (!Kit.calm) gsap.fromTo('#num', {scale: 1.15}, {scale: 1, duration: .35, ease: 'power2.out', transformOrigin: '100% 100%'});
-  if (step === STEPS.length - 1) {
+  if (Kit.calm) { shown.n = to; if (last) keys.t = 1; render(); }
+  else {
+    const from = Math.max(1, shown.n), lf = Math.log10(from), lt = Math.log10(to), o = {t: 0};
+    tw = gsap.timeline()
+      .to(o, {t: 1, duration: .75, ease: 'power2.inOut', onUpdate: () => { shown.n = Math.pow(10, lerp(lf, lt, o.t)); render(); }, onComplete: () => { shown.n = to; render(); }});
+    if (last) tw.to(keys, {t: 1, duration: .55, ease: 'power3.in', onUpdate: render, onComplete: () => Kit.haptic('heavy')}, '+=.1');
+  }
+  if (!Kit.calm) gsap.fromTo(G.num, {attr: {opacity: .4}}, {attr: {opacity: 1}, duration: .35, ease: 'power2.out'});
+  if (last) {
+    card.classList.add('answered');
     Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, duration: .45, stagger: .1, ease: 'power3.out'});
+    svg.setAttribute('aria-label', 'The MRI scanner from the front, its tunnel solid blue with 100,000 Earths of magnetic field, the one Earth a speck; a bunch of keys has been pulled off the floor and stuck to the tunnel\'s rim.');
   } else {
     Kit.$('go').textContent = '×10  →  ' + (STEPS[step] * 10).toLocaleString('en') + '×';
   }
 }
 Kit.$('go').addEventListener('click', grow);
 
-Kit.onShow.card = () => { layout(); render(); };
+Kit.onShow.card = () => build();
 Kit.onEnter.card = () => {
   if (Kit.calm) return;
-  gsap.fromTo(ring, {r: 0, a: 1}, {r: 1.6, a: .25, duration: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut', onUpdate: render});
-  gsap.from('#go', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'});
+  gsap.from('#go', {opacity: 0, duration: .4, ease: 'power2.out'});
 };
 Kit.play.card = async () => {
   for (let i = 0; i < 5; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 250)); }
   await new Promise(r => setTimeout(r, 900));
 };
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = box.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; seen = k; if (!first) build(); }).observe(box); }
 Kit.single();
 </script>
 </html>
-<script data-redraw>
-// Draw again when a drawing changes size: the answer coming in can take room from it, and a canvas
-// left as it was would be stretched by the browser.
-(() => {
-  const seen = new WeakMap();
-  const ro = new ResizeObserver(entries => {
-    let moved = false;
-    for (const e of entries) {
-      const r = e.contentRect, was = seen.get(e.target);
-      if (was && (Math.abs(was[0] - r.width) > 1 || Math.abs(was[1] - r.height) > 1)) moved = true;
-      seen.set(e.target, [r.width, r.height]);
-    }
-    if (!moved) return;
-    const card = document.querySelector('.card');
-    requestAnimationFrame(() => { if (card && Kit.onShow[card.id]) Kit.onShow[card.id](); });
-  });
-  document.querySelectorAll('canvas').forEach(cv => ro.observe(cv));
-})();
-</script>

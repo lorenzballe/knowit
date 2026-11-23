@@ -1,6 +1,10 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: maths-pentagons-never-tile -->
 <title>Astute free card</title>
+<!-- A floor, from above, with four glazed tiles waiting beside one point of it: a triangle, a square, a pentagon and
+     a hexagon, each with the corner it would bring to the point (60°, 90°, 108°, 120°). Tapping a shape lays its
+     copies round the point; when they close the 360° the floor fills with the same pattern, repeating, as a crystal
+     does. Pentagons do not: three leave a 36° gap, and a fourth overlaps the first. Taps only. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
@@ -8,8 +12,8 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;position:relative}
 #pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-#read{font:700 max(2cqh,13px)/1.25 var(--mono);text-align:center;color:var(--k);min-height:2.6em;display:flex;align-items:center;justify-content:center;overflow-wrap:anywhere}
-#read .bad{color:#e5484d}
+#read{font:700 max(2cqh,13px)/1.3 var(--body);text-align:center;color:var(--k);min-height:2.6em;display:flex;align-items:center;justify-content:center;overflow-wrap:anywhere;text-wrap:balance;margin:0}
+#read .bad{display:inline-block;background:#10100c;color:#FFB4AC;border-radius:99px;padding:.12em .55em;margin-left:.3em;white-space:nowrap}
 #shapes{display:grid;grid-template-columns:repeat(4,1fr);gap:2cqw}
 .sh{display:flex;flex-direction:column;align-items:center;gap:.6cqh;font:700 max(1.7cqh,12px)/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 1cqw;cursor:pointer;overflow-wrap:anywhere}
 .sh svg{width:max(4.2cqh,26px);height:max(4.2cqh,26px)}
@@ -19,14 +23,15 @@
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
 #why .body{font:500 max(1.8cqh,13px)/1.35 var(--body)}
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Try it · tiling">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FIVE-FOLD</span></div>
     <h2 class="q">Why do periodic crystals never have five-fold symmetry?</h2>
     <div class="stagebox" id="stage">
-      <div id="pic"><svg id="svg"></svg></div>
-      <div id="read">One point on a floor. 360° to fill around it.</div>
+      <div id="pic"><svg id="svg" role="img" aria-label="A floor seen from above: one point of it, with 360 degrees to fill around it, and four tiles beside it, a triangle with a 60 degree corner, a square with 90, a pentagon with 108 and a hexagon with 120."></svg></div>
+      <p id="read">One point on a floor. 360° to fill around it.</p>
       <div id="shapes">
         <button class="sh" data-n="3"><svg viewBox="-1 -1 2 2"><polygon/></svg>Triangle</button>
         <button class="sh" data-n="4"><svg viewBox="-1 -1 2 2"><polygon/></svg>Square</button>
@@ -35,7 +40,7 @@
       </div>
       <div id="why" class="gone">
         <p class="big">108° doesn't go into 360°.</p>
-        <p class="body">Triangles, squares and hexagons close around a point exactly. Pentagons always leave a gap or overlap, so no repeating crystal can be built from five-fold symmetry. Only quasicrystals, whose pattern never repeats, have it.</p>
+        <p class="body">Triangles, squares and hexagons close around a point exactly; pentagons never do. So no repeating crystal can have five-fold symmetry: only quasicrystals, whose pattern never repeats.</p>
       </div>
     </div>
     <p class="say" id="say">Tap a shape: can its copies close around one corner?</p>
@@ -45,104 +50,258 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RED = '#e5484d';
-let cur = 0, tl = null, fast = false, explained = false;
-const svg = Kit.$('svg');
+// One ink for every outline; three glazes for the tiles, so the floor's repeat can be seen; gold for a corner that
+// meets the point; red for what does not fit.
+const INK = '#10100c', RED = '#FF5A4E', GOLD = '#FFC83D', WHITE = '#ffffff';
+const GLAZE = ['#ffffff', '#FFE9B0', '#B9EDD3'];
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
+const mk = Kit.mk, f1 = n => (Math.round(n * 10) / 10).toString();
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const corner = n => (n - 2) * 180 / n;
+let cur = 0, tl = null, fast = false, explained = false, G = null;
+const svg = Kit.$('svg'), box = Kit.$('pic'), card = Kit.$('card'), read = Kit.$('read');
 
-// icons
+// The buttons' icons.
 document.querySelectorAll('.sh').forEach(b => {
   const n = +b.dataset.n, p = [];
   for (let i = 0; i < n; i++) { const t = -Math.PI / 2 + i * 2 * Math.PI / n; p.push((.9 * Math.cos(t)).toFixed(3) + ',' + (.9 * Math.sin(t) + (n === 3 ? .15 : 0)).toFixed(3)); }
   b.querySelector('polygon').setAttribute('points', p.join(' '));
 });
 
-function polyPts(n, s) {
-  const pts = []; let x = 0, y = 0, d = 0;
-  for (let i = 0; i < n; i++) { pts.push(x.toFixed(2) + ',' + y.toFixed(2)); x += s * Math.cos(d); y += s * Math.sin(d); d += 2 * Math.PI / n; }
-  return pts.join(' ');
-}
-const reach = {3: 1, 4: 1.414, 5: 1.618, 6: 2};
+// A tile with one corner on the origin, its first edge along the x axis: walked edge by edge.
+function cornerTile(n, s) { const pts = []; let x = 0, y = 0, d = 0; for (let i = 0; i < n; i++) { pts.push([x, y]); x += s * Math.cos(d); y += s * Math.sin(d); d += 2 * Math.PI / n; } return pts; }
+// A tile round its own centre, one corner pointing at angle a (radians).
+function centreTile(n, r, a) { return Array.from({length: n}, (_, i) => [r * Math.cos(a + i * 2 * Math.PI / n), r * Math.sin(a + i * 2 * Math.PI / n)]); }
+const D = pts => 'M' + pts.map(p => f1(p[0]) + ',' + f1(p[1])).join('L') + 'Z';
+const turn = (pts, deg, [px, py]) => { const c = Math.cos(deg * Math.PI / 180), s = Math.sin(deg * Math.PI / 180); return pts.map(([x, y]) => [px + x * c - y * s, py + x * s + y * c]); };
+// How far a tile with a corner on the point reaches from it, in edges.
+const REACH = {3: 1, 4: Math.SQRT2, 5: (1 + Math.sqrt(5)) / 2, 6: 2};
 
-function draw(animate) {
+function tilePath(parent, pts, fill, extra) {
+  return mk('path', Object.assign({d: D(pts), fill, stroke: INK, 'stroke-width': G.k, 'stroke-linejoin': 'round'}, extra || {}), parent);
+}
+// The corner of a tile, in gold: a slice between its two edges at vertex i.
+function cornerMark(parent, pts, i, r) {
+  const n = pts.length, V = pts[i], A = pts[(i + n - 1) % n], B = pts[(i + 1) % n];
+  const a0 = Math.atan2(A[1] - V[1], A[0] - V[0]), a1 = Math.atan2(B[1] - V[1], B[0] - V[0]);
+  let da = a1 - a0; while (da <= -Math.PI) da += 2 * Math.PI; while (da > Math.PI) da -= 2 * Math.PI;
+  const p0 = [V[0] + r * Math.cos(a0), V[1] + r * Math.sin(a0)], p1 = [V[0] + r * Math.cos(a1), V[1] + r * Math.sin(a1)];
+  return mk('path', {d: `M${f1(V[0])},${f1(V[1])}L${f1(p0[0])},${f1(p0[1])}A${f1(r)},${f1(r)} 0 0 ${da > 0 ? 1 : 0} ${f1(p1[0])},${f1(p1[1])}Z`, fill: GOLD, stroke: INK, 'stroke-width': G.k * .7, 'stroke-linejoin': 'round'}, parent);
+}
+// A name on a dark pill, with a thin line to what it names: the pill's middle near (x, y), kept inside the drawing.
+function pill(parent, text, x, y, tx, ty) {
+  const g = mk('g', {}, parent), h = Math.round(G.fs * 2), pad = h * .48;
+  const lead = mk('path', {stroke: INK, 'stroke-width': Math.max(1.4, G.k * .6), 'stroke-linecap': 'round'}, g);
+  mk('circle', {cx: f1(tx), cy: f1(ty), r: f1(Math.max(2.6, G.k * 1.1)), fill: INK}, g);
+  const r = mk('rect', {height: h, rx: h / 2, fill: INK}, g);
+  const t = mk('text', {'font-family': FONT, 'font-size': G.fs, 'font-weight': 800, 'letter-spacing': '.06em', fill: '#FFB4AC'}, g);
+  t.textContent = text;
+  const w = t.getComputedTextLength() + 2 * pad;
+  const px = clamp(x - w / 2, 2, G.W - 2 - w), py = clamp(y - h / 2, 2, G.H - 2 - h);
+  r.setAttribute('x', f1(px)); r.setAttribute('y', f1(py)); r.setAttribute('width', f1(w));
+  t.setAttribute('x', f1(px + pad)); t.setAttribute('y', f1(py + h / 2 + G.fs * .36));
+  lead.setAttribute('d', `M${f1(px + w / 2)},${f1(py + h / 2)}L${f1(tx)},${f1(ty)}`);
+  return g;
+}
+function pointMark(parent, x, y) {
+  mk('circle', {cx: f1(x), cy: f1(y), r: f1(G.dot + G.k), fill: WHITE}, parent);
+  mk('circle', {cx: f1(x), cy: f1(y), r: f1(G.dot), fill: INK}, parent);
+}
+
+function build(animate) {
   if (tl) { tl.kill(); tl = null; }
-  const {W, H} = Kit.fitSvg(svg);
   svg.innerHTML = '';
-  const cx = W / 2, cy = H / 2, R = Math.min(W, H) * .46;
-  Kit.mk('circle', {cx, cy, r: R * .98, fill: 'none', stroke: 'var(--k)', 'stroke-opacity': .25, 'stroke-width': 2, 'stroke-dasharray': '6 7'}, svg);
-  const layer = Kit.mk('g', {}, svg);
-  const dot = () => Kit.mk('circle', {cx, cy, r: Math.max(5, R * .035), fill: 'var(--k)', stroke: 'var(--c)', 'stroke-width': 2}, svg);
-  if (!cur) { dot(); return; }
-  const n = cur, a = (n - 2) * 180 / n, s = R / reach[n];
-  const fit = Math.floor(360 / a + 1e-6), pts = polyPts(n, s);
-  const total = n === 5 ? 4 : fit;
-  const els = [];
-  // gap wedge (pentagon)
-  let wedge = null;
-  if (n === 5) {
-    const r = s * .95, a0 = 3 * a * Math.PI / 180, a1 = 2 * Math.PI;
-    wedge = Kit.mk('path', {d: `M${cx},${cy} L${cx + r * Math.cos(a0)},${cy + r * Math.sin(a0)} A${r},${r} 0 0 1 ${cx + r * Math.cos(a1)},${cy + r * Math.sin(a1)} Z`, fill: RED, 'fill-opacity': .35, stroke: RED, 'stroke-width': 3, opacity: 0}, layer);
-  }
-  for (let k = 0; k < total; k++) {
-    const over = k >= fit;
-    const g = Kit.mk('g', {opacity: 0}, layer);
-    Kit.mk('polygon', {points: pts, fill: over ? RED : 'var(--k)', 'fill-opacity': over ? .55 : (k % 2 ? .62 : .9), stroke: over ? RED : 'var(--c)', 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
-    els.push(g);
-  }
-  dot();
-  const set = (g, r, o) => { g.setAttribute('transform', `translate(${cx},${cy}) rotate(${r})`); g.setAttribute('opacity', o); };
+  const {W, H} = Kit.fitSvg(svg);
+  G = {W, H, k: clamp(Math.min(W, H) * .0105, 1.7, 2.8), fs: clamp(W * .037, 11, 13)};
+  G.dot = Math.max(4, G.k * 1.9);
+  if (!cur) return samples();
+  return lay(cur, animate && !Kit.calm);
+}
+
+// Before a choice: the four tiles, glazed, each with its corner in gold and its size written on it, round the point.
+function samples() {
+  const {W, H, k} = G, g = mk('g', {}, svg);
+  const P = [W / 2, H / 2], rs = Math.min(W * .17, H * .235);
+  const dx = W / 2 - rs * 1.04 - 4, dy = H / 2 - rs - 3;
+  const spots = [[P[0] - dx, P[1] - dy], [P[0] + dx, P[1] - dy], [P[0] - dx, P[1] + dy], [P[0] + dx, P[1] + dy]];
+  // The floor's point, and the turn round it still to fill, as large as the tiles' corners leave room for.
+  const reachIn = Math.hypot(dx, dy) - rs * 1.04, rc = clamp(Math.min(reachIn - 8, Math.min(W, H) * .2), 18, 80);
+  mk('circle', {cx: f1(P[0]), cy: f1(P[1]), r: f1(rc), fill: 'none', stroke: WHITE, 'stroke-width': k, 'stroke-dasharray': `${f1(k * 2.6)} ${f1(k * 2.6)}`, opacity: .85}, g);
+  const big = clamp(rc * .48, 13, 30);
+  mk('text', {x: f1(P[0]), y: f1(P[1] - G.dot - k - big * .3), 'text-anchor': 'middle', 'font-family': SERIF, 'font-weight': 800, 'font-size': f1(big), fill: WHITE}, g).textContent = '360°';
+  pointMark(g, P[0], P[1]);
+  [3, 4, 5, 6].forEach((n, i) => {
+    const [cx, cy] = spots[i], r = rs * (n === 3 ? 1.12 : n === 4 ? 1.04 : 1);
+    // One corner of each tile points at the point: the corner it would bring.
+    const a = Math.atan2(P[1] - cy, P[0] - cx);
+    const pts = centreTile(n, r, a).map(([x, y]) => [cx + x, cy + y]);
+    tilePath(g, pts, GLAZE[i % 2 ? 1 : 0]);
+    cornerMark(g, pts, 0, r * (n === 3 ? .34 : .3));
+    // The corner's size, in the middle of the tile; smaller on the triangle, whose middle is tight.
+    const fsz = clamp(r * (n === 3 ? .34 : .42), 12, 22);
+    mk('text', {x: f1(cx), y: f1(cy + fsz * .35), 'text-anchor': 'middle', 'font-family': SERIF, 'font-weight': 800, 'font-size': f1(fsz), fill: INK}, g).textContent = corner(n) + '°';
+  });
+}
+// How wide a pill's words are, before the pill is drawn.
+function measure(text) {
+  const t = mk('text', {'font-family': FONT, 'font-size': G.fs, 'font-weight': 800, 'letter-spacing': '.06em'}, svg);
+  t.textContent = text; const w = t.getComputedTextLength(); t.remove(); return w + G.fs * 2 * .96;
+}
+
+// The tiles of a shape laid round the point, and (for those that close) the floor that repeats from them.
+function lay(n, animate) {
+  const {W, H, k} = G, a = corner(n), fit = Math.floor(360 / a + 1e-6);
+  const g = mk('g', {}, svg);
+  // Pentagons need room on the right for the names of what goes wrong there: the ring and the names, side by
+  // side, in the middle. The others sit in the middle, and their floor runs to the edges.
+  const pw = n === 5 ? Math.max(measure('A 36° GAP'), measure('THEY OVERLAP')) : 0, gapX = 10;
+  // A floor that repeats is shown with tiles small enough to see it repeat.
+  const R = n === 5 ? Math.min(H * .46, (W - pw - gapX - 6) / 2) : Math.min(W, H) * .37, s = R / REACH[n];
+  const P = [n === 5 ? (W - (2 * R + gapX + pw)) / 2 + R : W / 2, H / 2];
+  G.P = P; G.s = s;
+  const base = cornerTile(n, s);
+  // The tiled floor is a piece of floor: round corners and an ink edge, as a slice of ground is drawn.
+  const defs0 = mk('defs', {}, g), rr = Math.min(16, Math.min(W, H) * .07);
+  if (n !== 5) mk('rect', {x: k / 2, y: k / 2, width: f1(W - k), height: f1(H - k), rx: f1(rr)}, mk('clipPath', {id: 'slab'}, defs0));
+  const inner = mk('g', n !== 5 ? {'clip-path': 'url(#slab)'} : {}, g);
+  const floor = mk('g', {}, inner), ring = mk('g', {}, inner), top = mk('g', {}, g);
+  if (n !== 5) mk('rect', {x: k / 2, y: k / 2, width: f1(W - k), height: f1(H - k), rx: f1(rr), fill: 'none', stroke: INK, 'stroke-width': f1(k * 1.2)}, g);
   const msgFit = `${fit} × ${a}° = ${fit * a}°. Closed, no gap.`;
-  const msgGap = `3 × 108° = 324°. <span class="bad">A 36° gap.</span>`;
-  const msgOver = `4 × 108° = 432°. <span class="bad">They overlap.</span>`;
-  const read = Kit.$('read');
-  const finish = () => { if (n === 5) explain(); };
-  if (!animate || Kit.calm) {
-    els.forEach((g, k) => set(g, k * a, 1));
-    if (wedge) wedge.setAttribute('opacity', 0);
-    read.innerHTML = n === 5 ? msgOver : msgFit;
-    if (animate) finish();
-    return;
+  const msgGap = `3 × 108° = 324°.<span class="bad">A 36° gap.</span>`;
+  const msgOver = `4 × 108° = 432°.<span class="bad">They overlap.</span>`;
+  const ringTone = k2 => n === 6 ? [0, 2, 1][k2] : n === 5 ? k2 % 3 : k2 % 2;
+  const tiles = [];
+  const total = n === 5 ? 4 : fit;
+  // The fourth pentagon, if laid, in red; where it lies on the first, hatched, with the first's edge still showing.
+  const defs = mk('defs', {}, g);
+  if (n === 5) {
+    const hp = mk('pattern', {id: 'hatch', width: f1(Math.max(5, k * 2.6)), height: f1(Math.max(5, k * 2.6)), patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    mk('rect', {width: 99, height: 99, fill: '#FFC9C3'}, hp);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 99, stroke: RED, 'stroke-width': f1(Math.max(2, k * 1.2))}, hp);
+    mk('path', {d: D(base)}, mk('clipPath', {id: 'first'}, defs));
   }
-  els.forEach(g => set(g, 0, 0));
+  for (let i = 0; i < total; i++) {
+    const over = n === 5 && i === 3;
+    const t = mk('g', {}, ring);
+    if (!over) { tilePath(t, base, GLAZE[ringTone(i)]); tiles.push(t); continue; }
+    tilePath(t, base, '#FFC9C3', {stroke: 'none'});
+    // The first tile turned back by 324°, as the fourth sees it: so the clip lines up inside the fourth's frame.
+    const back = mk('g', {transform: 'rotate(36)', 'clip-path': 'url(#first)'}, t);
+    tilePath(back, turn(base, -36, [0, 0]), 'url(#hatch)', {stroke: 'none'});
+    tilePath(t, turn(base, 36, [0, 0]), 'none', {'stroke-dasharray': `${f1(k * 2)} ${f1(k * 1.6)}`, 'stroke-width': f1(k * .8)});
+    tilePath(t, base, 'none', {stroke: RED, 'stroke-width': f1(k * 1.3)});
+    tiles.push(t);
+  }
+  const place = (t, deg, o) => { t.setAttribute('transform', `translate(${f1(P[0])},${f1(P[1])}) rotate(${f1(deg)})`); t.setAttribute('opacity', f1(o)); };
+  // The floor beyond the first tiles: the same pattern, repeating, tile by tile outwards.
+  const rest = n === 5 ? [] : lattice(n, s, P).map(t => ({t, e: tilePath(floor, t.pts, GLAZE[t.tone], {opacity: 0})}));
+  // Pentagons: the gap the first three leave, in red, and what is said about it.
+  let wedge = null, gapPill = null, overPill = null;
+  if (n === 5) {
+    const r = s * .92, a0 = -36 * Math.PI / 180, a1 = 0;
+    wedge = mk('path', {d: `M${f1(P[0])},${f1(P[1])}L${f1(P[0] + r * Math.cos(a0))},${f1(P[1] + r * Math.sin(a0))}A${f1(r)},${f1(r)} 0 0 1 ${f1(P[0] + r * Math.cos(a1))},${f1(P[1] + r * Math.sin(a1))}Z`, fill: RED, stroke: INK, 'stroke-width': G.k * .8, 'stroke-linejoin': 'round', opacity: 0}, top);
+    // The gap's name to the right of the ring and above; the overlap's below, where the fourth tile lies on the first.
+    const gx = P[0] + s * .6 * Math.cos(-18 * Math.PI / 180), gy = P[1] + s * .6 * Math.sin(-18 * Math.PI / 180);
+    const ox = P[0] + s * .62 * Math.cos(36 * Math.PI / 180), oy = P[1] + s * .62 * Math.sin(36 * Math.PI / 180);
+    const lx = P[0] + R + gapX + pw / 2, h = G.fs * 2;
+    gapPill = pill(top, 'A 36° GAP', lx, P[1] - Math.max(h * .9, R * .5), gx, gy);
+    overPill = pill(top, 'THEY OVERLAP', lx, P[1] + Math.max(h * .9, R * .5), ox, oy);
+    gapPill.setAttribute('opacity', 0); overPill.setAttribute('opacity', 0);
+  }
+  const dotG = mk('g', {}, g); pointMark(dotG, P[0], P[1]);
+  const finish = () => { if (stale) { stale = false; requestAnimationFrame(() => build(false)); } if (n === 5) explain(); };
+
+  if (!animate) {
+    tiles.forEach((t, i) => place(t, i * a, 1));
+    rest.forEach(r => r.e.setAttribute('opacity', 1));
+    if (n === 5) { wedge.setAttribute('opacity', 1); gapPill.setAttribute('opacity', 1); overPill.setAttribute('opacity', 1); }
+    read.innerHTML = n === 5 ? msgOver : msgFit;
+    return {finish};
+  }
+  tiles.forEach(t => place(t, 0, 0));
   read.textContent = `Corner: ${a}°`;
   const d = fast ? .02 : .45, p = fast ? .01 : .12;
   tl = gsap.timeline({onComplete: finish});
-  els.forEach((g, k) => {
-    const o = {r: Math.max(0, (k - 1) * a), v: 0};
-    if (k === fit && n === 5) {
-      tl.add(() => { wedge.setAttribute('opacity', 1); read.innerHTML = msgGap; Kit.haptic('light'); });
-      tl.fromTo(wedge, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: fast ? .01 : .3, repeat: fast ? 0 : 3, yoyo: true});
+  tiles.forEach((t, i) => {
+    const o = {r: Math.max(0, (i - 1) * a), v: 0};
+    if (i === fit && n === 5) {
+      tl.add(() => { read.innerHTML = msgGap; Kit.haptic('light'); });
+      // The gap shows, then beats twice, red to pale red and back: never a muddy half-red on the green.
+      tl.fromTo(wedge, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: fast ? .01 : .25});
+      tl.to(gapPill, {attr: {opacity: 1}, duration: fast ? .01 : .25}, '<');
+      if (!fast) tl.to(wedge, {attr: {fill: '#FFB4AC'}, duration: .22, repeat: 3, yoyo: true, ease: 'sine.inOut'});
       tl.to({}, {duration: fast ? .02 : .9});
     }
-    tl.to(o, {r: k * a, v: 1, duration: d, ease: 'power3.out', onUpdate: () => set(g, o.r, o.v),
-      onComplete: () => { if (k < fit) read.textContent = `${k + 1} × ${a}° = ${(k + 1) * a}°`; }}, '+=' + p);
-    if (k === fit) tl.add(() => { wedge.setAttribute('opacity', 0); read.innerHTML = msgOver; Kit.haptic('light'); });
+    tl.to(o, {r: i * a, v: 1, duration: d, ease: 'power3.out', onUpdate: () => place(t, o.r, o.v),
+      onComplete: () => { if (i < fit) read.textContent = `${i + 1} × ${a}° = ${(i + 1) * a}°`; }}, '+=' + p);
+    if (i === fit) tl.add(() => { read.innerHTML = msgOver; Kit.haptic('light'); }).to(overPill, {attr: {opacity: 1}, duration: fast ? .01 : .25});
   });
-  if (n !== 5) tl.add(() => { read.textContent = msgFit; Kit.haptic('success'); });
+  if (n !== 5) {
+    tl.add(() => { read.textContent = msgFit; Kit.haptic('success'); });
+    // The pattern spreads: nearest tiles first, the farthest a little over half a second later.
+    const far = Math.max(1, ...rest.map(r => r.t.d)), t0 = tl.duration();
+    rest.forEach(r => tl.to(r.e, {attr: {opacity: 1}, duration: fast ? .01 : .25, ease: 'power1.out'}, fast ? t0 : t0 + .1 + r.t.d / far * .6));
+  }
+  return {finish};
+}
+
+// Every tile of the repeating floor that shows in the drawing, beyond those that touch the point: where it is,
+// its glaze (no two neighbours alike), and how far it lies from the point.
+function lattice(n, s, [px, py]) {
+  const {W, H} = G, out = [], m = s * 2.2;
+  const at = (x, y) => x > -m && x < W + m && y > -m && y < H + m;
+  const touches = pts => pts.some(([x, y]) => Math.hypot(x - px, y - py) < s * .01);
+  const push = (pts, tone) => { if (touches(pts)) return; const cx = pts.reduce((a, p) => a + p[0], 0) / pts.length, cy = pts.reduce((a, p) => a + p[1], 0) / pts.length;
+    if (!at(cx, cy)) return; out.push({pts, tone, d: Math.hypot(cx - px, cy - py)}); };
+  if (n === 4) {
+    for (let i = Math.floor(-px / s) - 1; i <= Math.ceil((W - px) / s); i++) for (let j = Math.floor(-py / s) - 1; j <= Math.ceil((H - py) / s); j++)
+      push([[px + i * s, py + j * s], [px + (i + 1) * s, py + j * s], [px + (i + 1) * s, py + (j + 1) * s], [px + i * s, py + (j + 1) * s]], ((i + j) % 2 + 2) % 2);
+  } else if (n === 3) {
+    const hh = s * Math.sqrt(3) / 2, v = (i, j) => [px + i * s + j * s / 2, py + j * hh];
+    for (let j = Math.floor(-py / hh) - 2; j <= Math.ceil((H - py) / hh) + 1; j++)
+      for (let i = Math.floor((-px - j * s / 2) / s) - 2; i <= Math.ceil((W - px - j * s / 2) / s) + 1; i++) {
+        push([v(i, j), v(i + 1, j), v(i, j + 1)], 0);
+        push([v(i + 1, j), v(i + 1, j + 1), v(i, j + 1)], 1);
+      }
+  } else if (n === 6) {
+    const r3 = Math.sqrt(3), c0 = [px + s / 2, py + s * r3 / 2];
+    for (let i = Math.floor((-px - 2 * s) / (1.5 * s)) - 1; i <= Math.ceil((W - px + 2 * s) / (1.5 * s)) + 1; i++)
+      for (let j = Math.floor((-py - i * s * r3 / 2) / (s * r3)) - 2; j <= Math.ceil((H - py - i * s * r3 / 2) / (s * r3)) + 1; j++) {
+        const cx = c0[0] + i * 1.5 * s, cy = c0[1] + i * s * r3 / 2 + j * s * r3;
+        push(centreTile(6, s, 0).map(([x, y]) => [cx + x, cy + y]), (((i + 2 * j) % 3) + 3) % 3);
+      }
+  }
+  return out.sort((a, b) => a.d - b.d);
 }
 
 function explain() {
   if (explained) return; explained = true;
   setTimeout(() => {
-    Kit.hide('shapes'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    // The drawing now names the gap and the overlap itself: the line under it gives its room back.
+    card.classList.add('answered');
+    Kit.hide('shapes'); Kit.hide('say'); Kit.hide('read'); Kit.show('why'); Kit.show('keep');
   }, fast ? 50 : 900);
 }
 
 Kit.$('shapes').addEventListener('click', e => {
   const b = e.target.closest('.sh'); if (!b) return;
   document.querySelectorAll('.sh').forEach(x => x.classList.toggle('on', x === b));
-  cur = +b.dataset.n; Kit.haptic('selection'); draw(true);
+  cur = +b.dataset.n; Kit.haptic('selection');
+  const r = build(true);
+  if (r && (Kit.calm || !tl)) r.finish();
 });
 
-Kit.onShow.card = () => draw(false);
+Kit.onShow.card = () => build(false);
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.sh', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   fast = true;
   document.querySelector('.sh[data-n="5"]').click();
   await new Promise(r => setTimeout(r, 900));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('svg'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+// A change of size in the middle of laying the tiles is drawn once they are laid.
+let stale = false;
+{ let seen = ''; new ResizeObserver(() => { const b = box.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (k === seen) return; const first = !seen; seen = k; if (first) return; if (tl && tl.isActive()) stale = true; else build(false); }).observe(box); }
 Kit.single();
 </script>
 </html>
