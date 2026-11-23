@@ -603,7 +603,7 @@ class Stamp extends StatelessWidget {
     final double height = width * 64 / 54;
     final Color ink = read ? p.ink : pal.ink.withValues(alpha: 0.4);
     final Widget mark = label == null
-        ? SubjectIcon(subject: p.topic, size: 18, ink: ink)
+        ? CardMark(pill: p, size: 18, ink: ink)
         : Text(
             label!,
             maxLines: 1,

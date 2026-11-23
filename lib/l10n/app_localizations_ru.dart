@@ -1929,18 +1929,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Каждая прочитанная карточка поднимает тебя выше. Карточки, которые тренируют выбранное, получат его знак.';
+      'Каждый ответ двигает твой рейтинг. Карточки, которые тренируют выбранное, получат его знак.';
 
   @override
   String get skillsDone => 'Готово';
 
   @override
   String get skillsFocus => 'В ФОКУСЕ';
-
-  @override
-  String skillLevel(int n) {
-    return 'Уровень $n';
-  }
 
   @override
   String get skillMarkKicker => 'ЭТА КАРТОЧКА ТРЕНИРУЕТ';
@@ -1952,40 +1947,24 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'Это один из навыков, которые ты выбрал в фокус. Каждая такая карточка поднимает тебя выше.';
+      'Один из навыков, на которых ты сосредоточен. Каждый ответ на такой карточке двигает твой рейтинг в нём.';
 
   @override
-  String get skillMarkOpen => 'Посмотреть уровни';
+  String get skillMarkOpen => 'Все твои рейтинги';
 
   @override
   String get trainingTitle => 'Твоя тренировка';
 
   @override
   String get trainingLine =>
-      'Навыки, которые ты выбрал. Каждая карточка, которая тренирует один из них, поднимает тебя выше.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Ещё $n карточки до уровня $level',
-      many: 'Ещё $n карточек до уровня $level',
-      few: 'Ещё $n карточки до уровня $level',
-      one: 'Ещё $n карточка до уровня $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'Высший уровень';
+      'Каждый ответ двигает твой рейтинг, а верный ответ на трудную карточку — сильнее всего. Потолка нет.';
 
   @override
   String get trainingOthers => 'Остальные';
 
   @override
   String get trainingEmpty =>
-      'Выбери, в чём хочешь стать лучше. Каждая карточка, которая это тренирует, поднимает тебя выше и получает его знак.';
+      'Выбери, в чём хочешь стать лучше. Каждый ответ на карточке, которая это тренирует, двигает твой рейтинг, а у карточки появляется его знак.';
 
   @override
   String get trainingPick => 'Выбрать навыки';
@@ -2017,8 +1996,32 @@ class AppLocalizationsRu extends AppLocalizations {
   String get trainingDayLine => 'Сегодня ты тренировал';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Достигнут уровень $n';
+  String get scoreTitle => 'Рейтинг Astute';
+
+  @override
+  String scoreWeek(String n) {
+    return '$n за неделю';
+  }
+
+  @override
+  String get scoreStart => 'Он начнётся с твоего первого ответа.';
+
+  @override
+  String scoreToday(String n) {
+    return '$n сегодня';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'по $n ответам',
+      many: 'по $n ответам',
+      few: 'по $n ответам',
+      one: 'по $n ответу',
+    );
+    return '$_temp0';
   }
 
   @override

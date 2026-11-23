@@ -551,7 +551,7 @@ class TopPlaced extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SubjectIcon(subject: pill.topic, size: 14, ink: pill.ink),
+                  CardMark(pill: pill, size: 14, ink: pill.ink),
                   const SizedBox(width: 6),
                   Flexible(
                     child: Text(

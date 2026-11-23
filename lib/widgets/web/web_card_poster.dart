@@ -58,7 +58,7 @@ class WebCardPoster extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SubjectIcon(subject: pill.topic, size: 16, ink: ink),
+                    CardMark(pill: pill, size: 16, ink: ink),
                     const SizedBox(width: 8),
                     Flexible(
                       child: Text(

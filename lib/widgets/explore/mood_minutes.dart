@@ -232,7 +232,7 @@ class _Grid extends StatelessWidget {
             else
               Row(
                 children: [
-                  SubjectIcon(subject: p.topic, size: 15, ink: p.ink),
+                  CardMark(pill: p, size: 15, ink: p.ink),
                   const Spacer(),
                   if (isRead(p)) ReadMark(pill: p, size: 13),
                 ],

@@ -610,7 +610,7 @@ class _MiniFace extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SubjectIcon(subject: pill.topic, size: 13, ink: pill.ink),
+            CardMark(pill: pill, size: 13, ink: pill.ink),
             const SizedBox(height: 8),
             Expanded(
               child: Text(

@@ -1830,18 +1830,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Okuduğun her kart seni yükseltir. Seçtiğini çalıştıran kartlar onun işaretini taşır.';
+      'Her cevap puanını oynatır. Seçtiğini çalıştıran kartlar onun işaretini taşır.';
 
   @override
   String get skillsDone => 'Tamam';
 
   @override
   String get skillsFocus => 'ODAKTA';
-
-  @override
-  String skillLevel(int n) {
-    return 'Seviye $n';
-  }
 
   @override
   String get skillMarkKicker => 'BU KARTIN ÇALIŞTIRDIĞI';
@@ -1853,38 +1848,24 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'Odağa aldığın becerilerden biri. Bunun gibi her kart seni yükseltir.';
+      'Odağa aldığın becerilerden biri. Bunun gibi bir karttaki her cevap o becerideki puanını oynatır.';
 
   @override
-  String get skillMarkOpen => 'Seviyelerini gör';
+  String get skillMarkOpen => 'Tüm puanlarını gör';
 
   @override
   String get trainingTitle => 'Antrenmanın';
 
   @override
   String get trainingLine =>
-      'Seçtiğin beceriler. Birini çalıştıran her kart seni yükseltir.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Seviye $level için $n kart daha',
-      one: 'Seviye $level için 1 kart daha',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'En yüksek seviye';
+      'Her cevap puanını oynatır, en çok da doğru bilinen zor bir kart. Bir tavanı yok.';
 
   @override
   String get trainingOthers => 'Diğerleri';
 
   @override
   String get trainingEmpty =>
-      'Neyde daha iyi olmak istediğini seç. Onu çalıştıran her kart seni yükseltir ve onun işaretini taşır.';
+      'Neyde daha iyi olmak istediğini seç. Onu çalıştıran bir karttaki her cevap puanını oynatır ve kart onun işaretini taşır.';
 
   @override
   String get trainingPick => 'Becerileri seç';
@@ -1914,8 +1895,30 @@ class AppLocalizationsTr extends AppLocalizations {
   String get trainingDayLine => 'Bugün çalıştırdıkların';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Yeni seviye: $n';
+  String get scoreTitle => 'Astute puanı';
+
+  @override
+  String scoreWeek(String n) {
+    return 'bu hafta $n';
+  }
+
+  @override
+  String get scoreStart => 'İlk cevabınla başlar.';
+
+  @override
+  String scoreToday(String n) {
+    return 'bugün $n';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cevaptan',
+      one: '1 cevaptan',
+    );
+    return '$_temp0';
   }
 
   @override

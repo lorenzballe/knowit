@@ -2,6 +2,7 @@
 // faces, so a question is measured as a reader sees it; a reader past the
 // first run; a host that deals cards from the sources as the screen does;
 // and a page of sections drawn by the engine on a phone of a given size.
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -10,6 +11,7 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/data/pills_repository.dart' show dateKey;
 import 'package:astuto/explore/blocks/core/shelves.dart';
 import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
@@ -57,6 +59,22 @@ Future<AppState> readyApp([
   );
   await app.init();
   return app;
+}
+
+/// The reader's judgements as they are kept (`knowit.judgements`): an answer
+/// on each of [cards], [right] or not, made [daysAgo] days before [today]
+/// (today when not given).
+String judgementsOf(
+  Iterable<Pill> cards, {
+  bool right = true,
+  int daysAgo = 0,
+  DateTime? today,
+}) {
+  final DateTime now = today ?? DateTime.now();
+  final String on = dateKey(DateTime(now.year, now.month, now.day - daysAgo));
+  return jsonEncode([
+    for (final Pill p in cards) {'c': null, 'k': right, 'p': p.id, 'd': on},
+  ]);
 }
 
 /// The stand-in host, dealing every section's cards from its source as the

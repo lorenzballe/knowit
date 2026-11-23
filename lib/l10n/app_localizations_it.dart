@@ -1857,18 +1857,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Ogni carta letta ti fa salire. Le carte che allenano ciò che scegli ne avranno il segno.';
+      'Ogni risposta muove il punteggio. Le carte che allenano ciò che scegli ne hanno il segno.';
 
   @override
   String get skillsDone => 'Fatto';
 
   @override
   String get skillsFocus => 'IN FOCUS';
-
-  @override
-  String skillLevel(int n) {
-    return 'Livello $n';
-  }
 
   @override
   String get skillMarkKicker => 'QUESTA CARTA ALLENA';
@@ -1880,38 +1875,24 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'È una delle abilità che hai messo in focus. Ogni carta come questa ti fa salire.';
+      'Una delle abilità che hai messo a fuoco. Ogni risposta su una carta come questa ne muove il punteggio.';
 
   @override
-  String get skillMarkOpen => 'Vedi i tuoi livelli';
+  String get skillMarkOpen => 'Vedi tutti i tuoi punteggi';
 
   @override
   String get trainingTitle => 'Il tuo allenamento';
 
   @override
   String get trainingLine =>
-      'Le abilità che hai scelto. Ogni carta che ne allena una ti fa salire.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Ancora $n carte al livello $level',
-      one: 'Ancora 1 carta al livello $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'Livello massimo';
+      'Ogni risposta muove il tuo punteggio, di più una carta difficile indovinata. Non c’è un massimo.';
 
   @override
   String get trainingOthers => 'Le altre';
 
   @override
   String get trainingEmpty =>
-      'Scegli in cosa vuoi migliorare. Ogni carta che lo allena ti fa salire, e ne porta il segno.';
+      'Scegli in cosa vuoi migliorare. Ogni risposta su una carta che lo allena ne muove il punteggio, e la carta ne porta il segno.';
 
   @override
   String get trainingPick => 'Scegli le abilità';
@@ -1941,8 +1922,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get trainingDayLine => 'Oggi hai allenato';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Livello $n raggiunto';
+  String get scoreTitle => 'Punteggio Astute';
+
+  @override
+  String scoreWeek(String n) {
+    return '$n questa settimana';
+  }
+
+  @override
+  String get scoreStart => 'Parte dalla tua prima risposta.';
+
+  @override
+  String scoreToday(String n) {
+    return '$n oggi';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'da $n risposte',
+      one: 'da 1 risposta',
+    );
+    return '$_temp0';
   }
 
   @override

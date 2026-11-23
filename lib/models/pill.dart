@@ -945,6 +945,23 @@ class Pill {
   bool get hasCounterpoint => counterpoint.isNotEmpty;
   bool get isGraded => challenge.isGraded;
 
+  /// The source as the card itself says it: a video by its channel, not by a
+  /// title that can run to a sentence ([shortSource]). Go deeper keeps the
+  /// whole citation.
+  String get sourceShort => shortSource(source);
+
+  /// Whether the card, of a subject other than Thinking, trains one of
+  /// Thinking's named reasoning moves: an economics card about anchoring, a
+  /// medicine card about base rates. It stays its subject's card, in its
+  /// subject's colour and under its subject's chip, and carries Thinking's
+  /// lightbulb beside its own mark (lib/widgets/subject_icon.dart,
+  /// [CardMark]). The quick answer, which many cards of every kind are
+  /// filed under, is not one of those moves.
+  bool get thinksToo =>
+      principle.isReal &&
+      principle != Principle.reflection &&
+      topic != 'Thinking';
+
   /// A panel fill that shows up on this card. Tinting with white works on a
   /// saturated card and disappears on a pale one, so follow the ink.
   Color get wash => ink.withValues(alpha: 0.09);
@@ -952,3 +969,18 @@ class Pill {
   /// The matching hairline for a panel edge.
   Color get washEdge => ink.withValues(alpha: 0.16);
 }
+
+/// [source] as a card says it: a video cited as `Channel, “Title” (YouTube,
+/// 2012)` becomes `Channel · YouTube, 2012`, its title, which can run to a
+/// sentence, left to Go deeper; any other source as it is. The card kit does
+/// the same on a drawn card (docs/cards/kit/astute-card.js, shortSources).
+String shortSource(String source) {
+  final RegExpMatch? m = _video.firstMatch(source);
+  if (m == null) return source;
+  final String year = m.group(2) ?? '';
+  return '${m.group(1)!.trim()} · YouTube${year.isEmpty ? '' : ', $year'}';
+}
+
+final RegExp _video = RegExp(
+  r'^([^,“”·]+?),\s*“.*”\s*\(YouTube(?:,\s*(\d{4}))?\)\s*$',
+);

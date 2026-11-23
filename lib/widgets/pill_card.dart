@@ -351,7 +351,7 @@ class PillCard extends StatelessWidget {
                 children: [
                   // The subject's own mark beside its name, as on the shelf
                   // the card ends the day on: one card, drawn one way.
-                  SubjectIcon(subject: pill.topic, size: 16, ink: pill.ink),
+                  CardMark(pill: pill, size: 16, ink: pill.ink),
                   const SizedBox(width: 8),
                   Text(
                     context.l10n.subjectOf(pill.topic).toUpperCase(),

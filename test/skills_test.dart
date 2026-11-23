@@ -4,18 +4,21 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
 import 'package:astuto/data/goals.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/skill_levels.dart';
+import 'package:astuto/data/skill_scores.dart';
 import 'package:astuto/data/skills.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/skills_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/skill_score.dart';
 
 import 'explore/core_harness.dart';
 
@@ -100,10 +103,15 @@ void main() {
     WidgetTester tester, {
     List<String> picked = const [],
     List<String> read = const [],
+    String? judgements,
     Locale locale = const Locale('en'),
   }) async {
     final AppState app = await tester.runAsync(
-      () => readyApp({'knowit.skills': picked, 'knowit.seenIds': read}),
+      () => readyApp({
+        'knowit.skills': picked,
+        'knowit.seenIds': read,
+        'knowit.judgements': ?judgements,
+      }),
     ) as AppState;
     await tester.pumpWidget(
       MaterialApp(
@@ -190,29 +198,52 @@ void main() {
     });
   }
 
-  testWidgets('each skill shows its level and the cards read that made it; '
-      'the picked ones are in focus', (tester) async {
+  testWidgets('each skill shows its score and how far it moved this week, or '
+      'that the first answer starts it; the picked ones are in focus', (
+    tester,
+  ) async {
     await phone(tester, const Size(402, 874), 1);
     final List<Pill> money = PillBank.cards
-        .where(Skill.money.trains)
-        .take(12)
+        .where((p) => Skill.money.fitOf(p) == 0 && p.isGraded)
+        .take(6)
         .toList();
-    await open(
+    final AppState app = await open(
       tester,
       picked: ['money'],
       read: [for (final Pill p in money) p.id],
+      judgements: judgementsOf(money),
     );
     final l = lookupAppLocalizations(const Locale('en'));
-    final Map<Skill, int> each = cardsTrainingEach(money.map((p) => p.id));
+    final ScoreBook book = scoreBookOf(app);
+    String said(Skill s) => tester
+        .widget<RichText>(
+          find.descendant(
+            of: find.byKey(ValueKey('skill-score-${s.name}')),
+            matching: find.byType(RichText),
+          ),
+        )
+        .text
+        .toPlainText();
     for (final Skill s in Skill.values) {
-      final SkillLevel level = SkillLevel.of(each[s]!);
+      final SkillScore score = book.of(s);
       expect(
-        find.text('${l.skillLevel(level.level)} · ${l.nCards(level.cards)}'),
-        findsWidgets,
+        said(s),
+        startsWith(NumberFormat.decimalPattern('en').format(score.now)),
+        reason: s.name,
+      );
+      expect(
+        said(s),
+        endsWith(
+          score.answers == 0
+              ? l.scoreStart
+              : l.scoreWeek(
+                  score.week > 0 ? '+${score.week}' : '${score.week}',
+                ),
+        ),
         reason: s.name,
       );
     }
-    expect(find.text('${l.skillLevel(2)} · ${l.nCards(12)}'), findsWidgets);
+    expect(book.of(Skill.money).now, greaterThan(kScoreStart));
     // In focus: the pill on a picked skill's edge, and on no other.
     double focus(Skill s) => tester
         .widget<AnimatedScale>(

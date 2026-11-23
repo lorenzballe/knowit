@@ -1859,18 +1859,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Jede gelesene Karte bringt dich weiter. Karten, die trainieren, was du wählst, tragen sein Zeichen.';
+      'Jede Antwort bewegt deine Punktzahl. Karten, die trainieren, was du wählst, tragen sein Zeichen.';
 
   @override
   String get skillsDone => 'Fertig';
 
   @override
   String get skillsFocus => 'IM FOKUS';
-
-  @override
-  String skillLevel(int n) {
-    return 'Stufe $n';
-  }
 
   @override
   String get skillMarkKicker => 'DIESE KARTE TRAINIERT';
@@ -1882,38 +1877,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'Eine der Fähigkeiten, die du in den Fokus gestellt hast. Jede Karte wie diese bringt dich weiter.';
+      'Eine der Fähigkeiten, die du in den Fokus gestellt hast. Jede Antwort auf einer Karte wie dieser bewegt deine Punktzahl darin.';
 
   @override
-  String get skillMarkOpen => 'Deine Stufen ansehen';
+  String get skillMarkOpen => 'Alle deine Punktzahlen ansehen';
 
   @override
   String get trainingTitle => 'Dein Training';
 
   @override
   String get trainingLine =>
-      'Die Fähigkeiten, die du gewählt hast. Jede Karte, die eine davon trainiert, bringt dich weiter.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Noch $n Karten bis Stufe $level',
-      one: 'Noch 1 Karte bis Stufe $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'Höchste Stufe';
+      'Jede Antwort bewegt deine Punktzahl, eine schwere Karte richtig am meisten. Nach oben gibt es keine Grenze.';
 
   @override
   String get trainingOthers => 'Die anderen';
 
   @override
   String get trainingEmpty =>
-      'Wähle, worin du besser werden willst. Jede Karte, die das trainiert, bringt dich weiter und trägt sein Zeichen.';
+      'Wähle, worin du besser werden willst. Jede Antwort auf einer Karte, die es trainiert, bewegt deine Punktzahl darin, und die Karte trägt sein Zeichen.';
 
   @override
   String get trainingPick => 'Fähigkeiten wählen';
@@ -1943,8 +1924,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get trainingDayLine => 'Heute hast du trainiert';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Stufe $n erreicht';
+  String get scoreTitle => 'Astute-Punktzahl';
+
+  @override
+  String scoreWeek(String n) {
+    return '$n diese Woche';
+  }
+
+  @override
+  String get scoreStart => 'Deine erste Antwort startet sie.';
+
+  @override
+  String scoreToday(String n) {
+    return '$n heute';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'aus $n Antworten',
+      one: 'aus 1 Antwort',
+    );
+    return '$_temp0';
   }
 
   @override

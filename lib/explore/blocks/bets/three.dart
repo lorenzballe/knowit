@@ -22,6 +22,7 @@ import '../../../l10n/l10n.dart';
 import '../../../sync/crowd.dart';
 import '../../../theme.dart';
 import '../../../utils/share_link.dart';
+import '../../../widgets/subject_icon.dart';
 import '../../explore_block.dart';
 import 'answers.dart';
 import 'bet_host.dart';
@@ -269,6 +270,14 @@ class ThreeCard extends StatelessWidget {
       for (final c in cards) day.betOn('three', c.pill.id),
     ];
     final bool done = at >= 3 && bets.every((b) => b != null);
+    // Each of the three in its own subject's colour, with its mark and its
+    // name, as its card is: three subjects, three colours. The score after
+    // them on the page's own panel.
+    final BetInk stepInk = BetInk.of(
+      context,
+      cards[at.clamp(0, 2)].pill,
+      BetTone.subject,
+    );
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 260),
       switchInCurve: Curves.easeOutCubic,
@@ -298,7 +307,7 @@ class ThreeCard extends StatelessWidget {
               cards: cards,
               at: at.clamp(0, 2),
               bet: bets[at.clamp(0, 2)],
-              ink: ink,
+              ink: stepInk,
               onNext: () => day.keepDraft(_kAt, at + 1),
             ),
     );
@@ -432,16 +441,38 @@ class _ThreeStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
+          key: ValueKey('three-card-${pill.id}'),
           decoration: BoxDecoration(
             color: ink.ground,
             borderRadius: BorderRadius.circular(26),
+            border: ink.edge,
           ),
           padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _ThreeHead(at: at, ink: ink),
-              const SizedBox(height: 14),
+              const SizedBox(height: 12),
+              // The card's subject, as its own head says it.
+              Row(
+                children: [
+                  CardMark(pill: pill, size: 14, ink: ink.mark),
+                  const SizedBox(width: 7),
+                  Flexible(
+                    child: Text(
+                      l.subjectOf(pill.topic).toUpperCase(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.label(
+                        size: 10.5,
+                        spacing: 1.3,
+                        color: ink.ink.withValues(alpha: 0.72),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
               LayoutBuilder(
                 builder: (context, box) => Text(
                   pill.question,

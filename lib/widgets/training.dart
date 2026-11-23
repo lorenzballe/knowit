@@ -1,30 +1,29 @@
 /// The reader's training: the skills they picked to get better at
-/// (lib/data/skills.dart, picked on What to learn), their level in each from
-/// the cards read that train it (lib/data/skill_levels.dart), and what a
-/// day's cards trained.
+/// (lib/data/skills.dart, picked on What to learn), their score in each, a
+/// number with no top that every answer moves (lib/data/skill_scores.dart),
+/// and what a day's cards did to it.
 ///
 /// One vocabulary across the app: the skill's badge (its glyph on its two
-/// hues) and its bar of five. The subjects are coloured pills, what the
-/// reader reads; the skills are never pills, they are what the reading
-/// trains. Shown in three places: the first chapter of Your journey
+/// hues), its score and its line over the month (lib/widgets/skill_score.dart).
+/// The subjects are coloured pills, what the reader reads; the skills are
+/// never pills, they are what the reading trains. Shown in three places: the first chapter of Your journey
 /// ([TrainingChapter]), a box on the profile ([ProfileTraining]), and the
 /// sheet that rises when the day's cards are done ([showDayTraining]).
 library;
-
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
 import '../data/skill_levels.dart';
+import '../data/skill_scores.dart';
 import '../data/skills.dart';
 import '../l10n/l10n.dart';
 import '../screens/skills_screen.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import 'chunky.dart';
-import 'skill_mark.dart';
+import 'skill_score.dart';
 import 'ui.dart' show Eyebrow;
 
 /// The skills [app]'s reader picked, in the order they picked them, that
@@ -88,86 +87,83 @@ class _Panel extends StatelessWidget {
   );
 }
 
-/// One skill the reader picked, at full size: its badge, its name and
-/// level, its bar, and how far the next level is.
+/// The colour a skill's line is drawn in: its own, a shade darker on paper.
+Color lineColour(BuildContext context, Skill s) => s.mark(context.p.isDark);
+
+/// One skill the reader picked, at full size: its badge, its name and how
+/// far its score moved this week, the score, and its line over the month.
 class _SkillRow extends StatelessWidget {
-  const _SkillRow({required this.skill, required this.level});
+  const _SkillRow({required this.skill, required this.score});
 
   final Skill skill;
-  final SkillLevel level;
+  final SkillScore score;
 
   @override
   Widget build(BuildContext context) {
     final p = context.p;
     final l = context.l10n;
-    final int? toNext = level.toNextCards;
     return Semantics(
       container: true,
-      child: Row(
+      child: Column(
         key: ValueKey('training-row-${skill.name}'),
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SkillBadge(skill: skill, size: 46),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
+          Row(
+            children: [
+              SkillBadge(skill: skill, size: 46),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Text(
-                        l.skillName(skill.name),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.body(
-                          size: 16,
-                          weight: FontWeight.w700,
-                          height: 1.2,
-                          color: p.ink,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
                     Text(
-                      l.skillLevel(level.level),
+                      l.skillName(skill.name),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: AppText.body(
-                        size: 13,
+                        size: 16,
                         weight: FontWeight.w700,
+                        height: 1.2,
                         color: p.ink,
                       ),
                     ),
+                    const SizedBox(height: 3),
+                    ScoreWeek(score: score),
                   ],
                 ),
-                const SizedBox(height: 8),
-                SkillBar(skill: skill, level: level, height: 6),
-                const SizedBox(height: 7),
-                Text(
-                  toNext == null
-                      ? l.trainingTopLevel
-                      : l.trainingToNext(toNext, level.level + 1),
-                  style: AppText.body(
-                    size: 12.5,
-                    height: 1.3,
-                    color: p.ink.withValues(alpha: 0.58),
-                  ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                scoreNumber(context, score.now),
+                style: AppText.display(
+                  size: 25,
+                  weight: FontWeight.w600,
+                  height: 1.1,
+                  color: p.ink,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+          if (score.answers > 0) ...[
+            const SizedBox(height: 10),
+            ScoreSpark(
+              values: score.days,
+              colour: lineColour(context, skill),
+              height: 26,
+            ),
+          ],
         ],
       ),
     );
   }
 }
 
-/// A skill not picked, small: its badge, its name and its level.
+/// A skill not picked, small: its badge, its name and its score.
 class _SkillChip extends StatelessWidget {
-  const _SkillChip({required this.skill, required this.level});
+  const _SkillChip({required this.skill, required this.score});
 
   final Skill skill;
-  final SkillLevel level;
+  final SkillScore score;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +194,7 @@ class _SkillChip extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            '${level.level}',
+            scoreNumber(context, score.now),
             style: AppText.body(
               size: 12.5,
               weight: FontWeight.w700,
@@ -211,11 +207,11 @@ class _SkillChip extends StatelessWidget {
   }
 }
 
-/// The first chapter of Your journey: the skills the reader picked, each
-/// with its level, its bar and the cards to the next level; the others under
-/// them, small, each with its level. With none picked, what training is and
-/// the way to pick. The chapter's head carries the way to change them
-/// ([TrainingChapter.change]).
+/// The first chapter of Your journey: the reader's Astute score, every
+/// answer's, with its week and its month; then each skill they picked with
+/// its own; the others under them, small, each with its score. With none
+/// picked, what training is and the way to pick. The chapter's head carries
+/// the way to change them ([TrainingChapter.change]).
 class TrainingChapter extends StatelessWidget {
   const TrainingChapter({super.key, required this.app});
 
@@ -246,7 +242,7 @@ class TrainingChapter extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.p;
     final l = context.l10n;
-    final Map<Skill, int> each = cardsTrainingEach(app.seenIds);
+    final ScoreBook book = scoreBookOf(app);
     final List<Skill> picked = pickedSkills(app);
     final List<Skill> others = [
       for (final Skill s in Skill.values)
@@ -281,6 +277,8 @@ class TrainingChapter extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                _Overall(score: book.overall),
+                const SizedBox(height: 8),
                 Text(
                   l.trainingLine,
                   style: AppText.body(
@@ -289,9 +287,19 @@ class TrainingChapter extends StatelessWidget {
                     color: p.ink.withValues(alpha: 0.62),
                   ),
                 ),
+                if (book.overall.answers > 0) ...[
+                  const SizedBox(height: 12),
+                  ScoreSpark(
+                    values: book.overall.days,
+                    colour: p.ink,
+                    height: 40,
+                  ),
+                ],
+                const SizedBox(height: 18),
+                Container(height: 1, color: p.ink.withValues(alpha: 0.08)),
                 for (final Skill s in picked) ...[
                   const SizedBox(height: 18),
-                  _SkillRow(skill: s, level: SkillLevel.of(each[s] ?? 0)),
+                  _SkillRow(skill: s, score: book.of(s)),
                 ],
               ],
             ),
@@ -325,10 +333,7 @@ class TrainingChapter extends StatelessWidget {
                     runSpacing: 8,
                     children: [
                       for (final Skill s in others)
-                        _SkillChip(
-                          skill: s,
-                          level: SkillLevel.of(each[s] ?? 0),
-                        ),
+                        _SkillChip(skill: s, score: book.of(s)),
                     ],
                   ),
                 ],
@@ -336,6 +341,55 @@ class TrainingChapter extends StatelessWidget {
             ),
           ),
         ],
+      ],
+    );
+  }
+}
+
+/// The Astute score at the head of Your training: its name, the number
+/// big, and how far it moved this week.
+class _Overall extends StatelessWidget {
+  const _Overall({required this.score});
+
+  final SkillScore score;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.p;
+    return Column(
+      key: const ValueKey('training-score'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          _caps(context, context.l10n.scoreTitle),
+          style: AppText.body(
+            size: 9.5,
+            weight: FontWeight.w700,
+            spacing: 1.3,
+            color: p.ink.withValues(alpha: 0.45),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.end,
+          spacing: 12,
+          children: [
+            Text(
+              scoreNumber(context, score.now),
+              style: AppText.display(
+                size: 44,
+                weight: FontWeight.w600,
+                height: 1,
+                spacing: -1,
+                color: p.ink,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: ScoreWeek(score: score, size: 13),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -349,8 +403,8 @@ String _caps(BuildContext context, String text) =>
 
 /// The profile's training: under the subjects, which are coloured pills, not
 /// a second wall of pills but the skills picked, at most three, each with its
-/// badge, its level and its bar; with none picked, what training is. The
-/// whole box opens What to learn, where they are picked and every level is.
+/// badge, its score and its week; with none picked, what training is. The
+/// whole box opens What to learn, where they are picked and every score is.
 class ProfileTraining extends StatelessWidget {
   const ProfileTraining({super.key, required this.app});
 
@@ -364,9 +418,7 @@ class ProfileTraining extends StatelessWidget {
     final p = context.p;
     final l = context.l10n;
     final List<Skill> picked = pickedSkills(app);
-    final Map<Skill, int> each = picked.isEmpty
-        ? const {}
-        : cardsTrainingEach(app.seenIds);
+    final ScoreBook book = scoreBookOf(app);
     final Widget inside = picked.isEmpty
         ? Text(
             l.trainingEmpty,
@@ -381,7 +433,7 @@ class ProfileTraining extends StatelessWidget {
             children: [
               for (final (int i, Skill s) in picked.take(shown).indexed) ...[
                 if (i > 0) const SizedBox(height: 13),
-                _row(context, s, SkillLevel.of(each[s] ?? 0)),
+                _row(context, s, book.of(s)),
               ],
               if (picked.length > shown) ...[
                 const SizedBox(height: 11),
@@ -402,7 +454,7 @@ class ProfileTraining extends StatelessWidget {
       label: [
         l.trainingTitle,
         for (final Skill s in picked.take(shown))
-          '${l.skillName(s.name)}, ${l.skillLevel(SkillLevel.of(each[s] ?? 0).level)}',
+          '${l.skillName(s.name)}, ${scoreNumber(context, book.of(s).now)}',
         if (picked.isEmpty) l.trainingEmpty,
       ].join('. '),
       hint: l.edit,
@@ -456,7 +508,7 @@ class ProfileTraining extends StatelessWidget {
     );
   }
 
-  Widget _row(BuildContext context, Skill s, SkillLevel level) {
+  Widget _row(BuildContext context, Skill s, SkillScore score) {
     final p = context.p;
     final l = context.l10n;
     return Row(
@@ -468,36 +520,28 @@ class ProfileTraining extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Expanded(
-                    child: Text(
-                      l.skillName(s.name),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.body(
-                        size: 14.5,
-                        weight: FontWeight.w700,
-                        color: p.ink,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    l.skillLevel(level.level),
-                    style: AppText.body(
-                      size: 12.5,
-                      weight: FontWeight.w600,
-                      color: p.ink.withValues(alpha: 0.55),
-                    ),
-                  ),
-                ],
+              Text(
+                l.skillName(s.name),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.body(
+                  size: 14.5,
+                  weight: FontWeight.w700,
+                  color: p.ink,
+                ),
               ),
-              const SizedBox(height: 6),
-              SkillBar(skill: s, level: level, height: 4),
+              const SizedBox(height: 2),
+              ScoreWeek(score: score, size: 12),
             ],
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          scoreNumber(context, score.now),
+          style: AppText.display(
+            size: 19,
+            weight: FontWeight.w600,
+            color: p.ink,
           ),
         ),
       ],
@@ -505,8 +549,8 @@ class ProfileTraining extends StatelessWidget {
   }
 }
 
-/// What the day's cards trained in one skill: how many of them, and the
-/// cards read that train it before the day and after.
+/// What the day did to one skill: how many of its cards train it, and the
+/// skill's score at the end of yesterday and now.
 @immutable
 class DayTraining {
   const DayTraining({
@@ -521,18 +565,19 @@ class DayTraining {
   /// How many of the day's cards, new to the reader, train it.
   final int plus;
 
-  /// The cards read that train it, before the day and with it.
+  /// The skill's score at the end of yesterday, and now.
   final int before;
   final int after;
 
-  /// Whether the day took the skill to a new level.
-  bool get levelled => SkillLevel.of(after).level > SkillLevel.of(before).level;
+  /// How far the day moved it.
+  int get moved => after - before;
 }
 
-/// What [app]'s day trained in the skills the reader picked: those the day's
-/// cards trained, most first, at most three. A card back for another go was
-/// read before and counts again for nothing. Empty when the reader picked
-/// none, or the day trained none of them.
+/// What [app]'s day did in the skills the reader picked: those the day's
+/// cards trained or whose score the day moved, the most moved first, at most
+/// three. A card back for another go was read before and is not counted as
+/// one of the day's. Empty when the reader picked none, or the day touched
+/// none of them.
 List<DayTraining> dayTrainingOf(AppState app) {
   final List<Skill> picked = pickedSkills(app);
   if (picked.isEmpty) return const [];
@@ -540,28 +585,30 @@ List<DayTraining> dayTrainingOf(AppState app) {
     for (final p in app.todaysDeck)
       if (!app.reviewIdsToday.contains(p.id)) p.id,
   ]);
-  final Map<Skill, int> all = cardsTrainingEach(app.seenIds);
+  final ScoreBook book = scoreBookOf(app);
   final List<DayTraining> out = [
     for (final Skill s in picked)
-      if ((today[s] ?? 0) > 0)
+      if ((today[s] ?? 0) > 0 || book.of(s).today != 0)
         DayTraining(
           skill: s,
-          plus: today[s]!,
-          before: math.max(0, (all[s] ?? 0) - today[s]!),
-          after: all[s] ?? 0,
+          plus: today[s] ?? 0,
+          before: book.of(s).now - book.of(s).today,
+          after: book.of(s).now,
         ),
   ];
-  // Most trained first; of two as trained, the one picked first.
+  // The most moved first; then the most trained; then the one picked first.
   final List<(int, DayTraining)> ranked = [...out.indexed]
     ..sort((a, b) {
-      final int by = b.$2.plus.compareTo(a.$2.plus);
+      int by = b.$2.moved.abs().compareTo(a.$2.moved.abs());
+      if (by == 0) by = b.$2.plus.compareTo(a.$2.plus);
       return by != 0 ? by : a.$1.compareTo(b.$1);
     });
   return [for (final (_, DayTraining d) in ranked.take(3)) d];
 }
 
 /// Puts the sheet that marks the day done: all of the day's cards read, and
-/// what they trained, each bar filling from where it stood this morning.
+/// what they did to the scores, each counting from where it stood this
+/// morning.
 Future<void> showDayTraining(
   BuildContext context,
   AppState app,
@@ -569,7 +616,7 @@ Future<void> showDayTraining(
 ) {
   Analytics.capture('day training shown', {
     'skills': items.map((d) => d.skill.name).join(','),
-    'levelled': items.where((d) => d.levelled).length,
+    'rose': items.where((d) => d.moved > 0).length,
   });
   return showModalBottomSheet<void>(
     context: context,
@@ -603,7 +650,7 @@ class DayTrainingSheet extends StatefulWidget {
 
 class _DayTrainingSheetState extends State<DayTrainingSheet>
     with SingleTickerProviderStateMixin {
-  /// The bars filling, one after another.
+  /// The scores counting, one after another.
   late final AnimationController _fill = AnimationController(
     vsync: this,
     duration: Duration(milliseconds: 700 + 220 * widget.items.length),
@@ -612,7 +659,7 @@ class _DayTrainingSheetState extends State<DayTrainingSheet>
   @override
   void initState() {
     super.initState();
-    // A beat for the sheet to come up, then the bars.
+    // A beat for the sheet to come up, then the scores.
     Future<void>.delayed(const Duration(milliseconds: 280), () {
       if (!mounted) return;
       if (MediaQuery.of(context).disableAnimations) {
@@ -620,7 +667,7 @@ class _DayTrainingSheetState extends State<DayTrainingSheet>
       } else {
         _fill.forward();
       }
-      if (widget.items.any((d) => d.levelled)) {
+      if (widget.items.any((d) => d.moved > 0)) {
         HapticFeedback.mediumImpact();
       }
     });
@@ -632,8 +679,8 @@ class _DayTrainingSheetState extends State<DayTrainingSheet>
     super.dispose();
   }
 
-  /// How far the [i]th bar has filled, 0 to 1: each starts a little after
-  /// the one above it.
+  /// How far the [i]th score has counted, 0 to 1: each starts a little
+  /// after the one above it.
   double _at(int i) {
     const double lag = 0.18;
     final double window = 1 - lag * (widget.items.length - 1);
@@ -686,14 +733,8 @@ class _DayTrainingSheetState extends State<DayTrainingSheet>
                 ),
               ),
             ),
-            const SizedBox(height: 6),
-            Text(
-              l.trainingDayLine,
-              style: AppText.body(
-                size: 15,
-                color: p.ink.withValues(alpha: 0.6),
-              ),
-            ),
+            const SizedBox(height: 8),
+            _dayScore(context),
             const SizedBox(height: 18),
             AnimatedBuilder(
               animation: _fill,
@@ -746,72 +787,84 @@ class _DayTrainingSheetState extends State<DayTrainingSheet>
     );
   }
 
+  /// The Astute score under the title, and how far today moved it.
+  Widget _dayScore(BuildContext context) {
+    final p = context.p;
+    final l = context.l10n;
+    final SkillScore overall = scoreBookOf(widget.app).overall;
+    return Text.rich(
+      key: const ValueKey('day-training-score'),
+      TextSpan(
+        children: [
+          TextSpan(text: '${l.scoreTitle} '),
+          TextSpan(
+            text: scoreNumber(context, overall.now),
+            style: TextStyle(color: p.ink, fontWeight: FontWeight.w700),
+          ),
+          const TextSpan(text: '  \u00b7  '),
+          TextSpan(
+            text: l.scoreToday(signedNumber(context, overall.today)),
+            style: TextStyle(
+              color: moveColour(context, overall.today),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+      style: AppText.body(
+        size: 15,
+        height: 1.35,
+        color: p.ink.withValues(alpha: 0.6),
+      ),
+    );
+  }
+
   Widget _item(BuildContext context, DayTraining d, double t) {
     final p = context.p;
     final l = context.l10n;
-    final SkillLevel now = SkillLevel.between(
-      d.before + (d.after - d.before) * t,
-    );
-    final bool reached =
-        d.levelled && now.level > SkillLevel.of(d.before).level;
+    final int shown = (d.before + d.moved * t).round();
+    final Color moved = moveColour(context, d.moved);
     return Row(
       key: ValueKey('day-training-${d.skill.name}'),
       children: [
         SkillBadge(skill: d.skill, size: 38),
         const SizedBox(width: 12),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Expanded(
-                    child: Text(
-                      l.skillName(d.skill.name),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.body(
-                        size: 15,
-                        weight: FontWeight.w700,
-                        color: p.ink,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    '+${d.plus}',
-                    style: AppText.body(
-                      size: 15,
-                      weight: FontWeight.w800,
-                      color: p.ink,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 7),
-              SkillBar(skill: d.skill, level: now, height: 6),
-              const SizedBox(height: 6),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
-                layoutBuilder: (current, previous) => Stack(
-                  alignment: AlignmentDirectional.centerStart,
-                  children: [...previous, ?current],
-                ),
-                child: Text(
-                  reached
-                      ? l.trainingNewLevel(now.level)
-                      : l.skillLevel(now.level),
-                  key: ValueKey(reached),
-                  style: AppText.body(
-                    size: 12.5,
-                    weight: reached ? FontWeight.w700 : FontWeight.w500,
-                    color: p.ink.withValues(alpha: reached ? 0.9 : 0.55),
-                  ),
-                ),
-              ),
-            ],
+          child: Text(
+            l.skillName(d.skill.name),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppText.body(
+              size: 15,
+              weight: FontWeight.w700,
+              height: 1.2,
+              color: p.ink,
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          scoreNumber(context, shown),
+          style: AppText.display(
+            size: 21,
+            weight: FontWeight.w600,
+            color: p.ink,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+          decoration: BoxDecoration(
+            color: moved.withValues(alpha: 0.16),
+            borderRadius: BorderRadius.circular(99),
+          ),
+          child: Text(
+            signedNumber(context, d.moved),
+            style: AppText.body(
+              size: 12.5,
+              weight: FontWeight.w800,
+              color: moved,
+            ),
           ),
         ),
       ],

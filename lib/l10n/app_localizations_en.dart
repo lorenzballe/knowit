@@ -1849,18 +1849,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Every card you read moves you up. Cards that train what you pick will carry its mark.';
+      'Every answer moves your score. Cards that train what you pick will carry its mark.';
 
   @override
   String get skillsDone => 'Done';
 
   @override
   String get skillsFocus => 'IN FOCUS';
-
-  @override
-  String skillLevel(int n) {
-    return 'Level $n';
-  }
 
   @override
   String get skillMarkKicker => 'THIS CARD TRAINS';
@@ -1872,38 +1867,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'One of the skills you put in focus. Every card like this one moves you up.';
+      'One of the skills you put in focus. Every answer on a card like this one moves your score in it.';
 
   @override
-  String get skillMarkOpen => 'See your levels';
+  String get skillMarkOpen => 'See all your scores';
 
   @override
   String get trainingTitle => 'Your training';
 
   @override
   String get trainingLine =>
-      'The skills you chose. Every card that trains one moves you up.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n more cards to level $level',
-      one: '1 more card to level $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'Top level';
+      'Every answer moves your score, a hard card right the most. There is no top.';
 
   @override
   String get trainingOthers => 'The others';
 
   @override
   String get trainingEmpty =>
-      'Pick what you want to get better at. Every card that trains it moves you up, and carries its mark.';
+      'Pick what you want to get better at. Every answer on a card that trains it moves your score in it, and the card carries its mark.';
 
   @override
   String get trainingPick => 'Choose skills';
@@ -1933,8 +1914,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trainingDayLine => 'Today you trained';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Level $n reached';
+  String get scoreTitle => 'Astute score';
+
+  @override
+  String scoreWeek(String n) {
+    return '$n this week';
+  }
+
+  @override
+  String get scoreStart => 'Your first answer starts it.';
+
+  @override
+  String scoreToday(String n) {
+    return '$n today';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'from $n answers',
+      one: 'from 1 answer',
+    );
+    return '$_temp0';
   }
 
   @override

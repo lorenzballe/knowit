@@ -1861,18 +1861,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get skillsLine =>
-      'Chaque carte lue te fait monter. Celles qui entraînent ce que tu choisis porteront sa marque.';
+      'Chaque réponse fait bouger ton score. Celles qui entraînent ce que tu choisis portent sa marque.';
 
   @override
   String get skillsDone => 'Terminé';
 
   @override
   String get skillsFocus => 'PRIORITÉ';
-
-  @override
-  String skillLevel(int n) {
-    return 'Niveau $n';
-  }
 
   @override
   String get skillMarkKicker => 'CETTE CARTE ENTRAÎNE';
@@ -1884,38 +1879,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get skillMarkBody =>
-      'C’est l’une des compétences que tu as mises en priorité. Chaque carte comme celle-ci te fait monter.';
+      'Une des compétences que tu as mises en avant. Chaque réponse sur une carte comme celle-ci fait bouger ton score.';
 
   @override
-  String get skillMarkOpen => 'Voir tes niveaux';
+  String get skillMarkOpen => 'Voir tous tes scores';
 
   @override
   String get trainingTitle => 'Ton entraînement';
 
   @override
   String get trainingLine =>
-      'Les compétences que tu as choisies. Chaque carte qui en entraîne une te fait monter.';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Encore $n cartes avant le niveau $level',
-      one: 'Encore 1 carte avant le niveau $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => 'Niveau maximum';
+      'Chaque réponse fait bouger ton score, surtout une carte difficile réussie. Il n’y a pas de plafond.';
 
   @override
   String get trainingOthers => 'Les autres';
 
   @override
   String get trainingEmpty =>
-      'Choisis ce que tu veux améliorer. Chaque carte qui l’entraîne te fait monter et porte sa marque.';
+      'Choisis ce que tu veux améliorer. Chaque réponse sur une carte qui l’entraîne fait bouger ton score, et la carte porte sa marque.';
 
   @override
   String get trainingPick => 'Choisir des compétences';
@@ -1945,8 +1926,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get trainingDayLine => 'Aujourd’hui, tu as entraîné';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'Niveau $n atteint';
+  String get scoreTitle => 'Score Astute';
+
+  @override
+  String scoreWeek(String n) {
+    return '$n cette semaine';
+  }
+
+  @override
+  String get scoreStart => 'Ta première réponse le lance.';
+
+  @override
+  String scoreToday(String n) {
+    return '$n aujourd’hui';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'sur $n réponses',
+      one: 'sur 1 réponse',
+    );
+    return '$_temp0';
   }
 
   @override

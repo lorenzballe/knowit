@@ -1789,18 +1789,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get skillsTitleMark => '学び';
 
   @override
-  String get skillsLine => '読んだカードの数だけレベルが上がります。選んだものを鍛えるカードには、その印がつきます。';
+  String get skillsLine => '回答するたびにスコアが動きます。選んだものを鍛えるカードには、その印がつきます。';
 
   @override
   String get skillsDone => '完了';
 
   @override
   String get skillsFocus => 'フォーカス中';
-
-  @override
-  String skillLevel(int n) {
-    return 'レベル$n';
-  }
 
   @override
   String get skillMarkKicker => 'このカードで鍛えるもの';
@@ -1811,37 +1806,23 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get skillMarkBody => 'あなたがフォーカスに選んだスキルのひとつです。こうしたカードを読むたびにレベルが上がります。';
+  String get skillMarkBody => '重点を置いたスキルのひとつです。このようなカードに答えるたびに、そのスコアが動きます。';
 
   @override
-  String get skillMarkOpen => 'レベルを見る';
+  String get skillMarkOpen => 'すべてのスコアを見る';
 
   @override
   String get trainingTitle => 'あなたのトレーニング';
 
   @override
-  String get trainingLine => 'あなたが選んだスキルです。そのどれかを鍛えるカードを読むたびに、レベルが上がります。';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'レベル$levelまであと$n枚',
-      one: 'レベル$levelまであと1枚',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => '最高レベル';
+  String get trainingLine => '回答するたびにスコアが動きます。難しいカードに正解すると一番大きく上がります。上限はありません。';
 
   @override
   String get trainingOthers => 'そのほか';
 
   @override
   String get trainingEmpty =>
-      '上達したいことを選びましょう。それを鍛えるカードを読むたびにレベルが上がり、カードにはその印がつきます。';
+      '上達したいものを選んでください。それを鍛えるカードに答えるたびにスコアが動き、そのカードには印がつきます。';
 
   @override
   String get trainingPick => 'スキルを選ぶ';
@@ -1867,8 +1848,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get trainingDayLine => '今日鍛えたもの';
 
   @override
-  String trainingNewLevel(int n) {
-    return 'レベル$nに到達';
+  String get scoreTitle => 'Astuteスコア';
+
+  @override
+  String scoreWeek(String n) {
+    return '今週 $n';
+  }
+
+  @override
+  String get scoreStart => '最初の回答から始まります。';
+
+  @override
+  String scoreToday(String n) {
+    return '今日 $n';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n回の回答から',
+      one: '1回の回答から',
+    );
+    return '$_temp0';
   }
 
   @override

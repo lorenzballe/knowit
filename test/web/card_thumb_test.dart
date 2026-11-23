@@ -355,7 +355,7 @@ void main() {
           // and its question on its colour.
           final Finder plain = find.byKey(ValueKey('kept-${ids[1]}'));
           expect(
-            find.descendant(of: plain, matching: find.byType(SubjectIcon)),
+            find.descendant(of: plain, matching: find.byType(CardMark)),
             findsOneWidget,
           );
           expect(
@@ -387,7 +387,7 @@ void main() {
       expect(slot, findsOneWidget);
       // Its subject's mark on its colour, where the picture would be.
       expect(
-        find.descendant(of: slot, matching: find.byType(SubjectIcon)),
+        find.descendant(of: slot, matching: find.byType(CardMark)),
         findsOneWidget,
       );
     });

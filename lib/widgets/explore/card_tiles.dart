@@ -486,11 +486,7 @@ class TileBody extends StatelessWidget {
         Row(
           children: look.label
               ? [
-                  SubjectIcon(
-                    subject: pill.topic,
-                    size: look.icon,
-                    ink: pill.ink,
-                  ),
+                  CardMark(pill: pill, size: look.icon, ink: pill.ink),
                   SizedBox(width: look.labelGap),
                   Flexible(
                     child: Text(
@@ -506,11 +502,7 @@ class TileBody extends StatelessWidget {
                   ],
                 ]
               : [
-                  SubjectIcon(
-                    subject: pill.topic,
-                    size: look.icon,
-                    ink: pill.ink,
-                  ),
+                  CardMark(pill: pill, size: look.icon, ink: pill.ink),
                   const Spacer(),
                   if (read)
                     ReadTick(pill: pill, color: pill.ink, size: look.tick),

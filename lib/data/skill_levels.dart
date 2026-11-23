@@ -7,8 +7,8 @@
 /// Every card of the bank trains at least one, most of them one to three
 /// (test/skill_levels_test.dart keeps both true).
 ///
-/// The cards a reader has read that train a skill make their level in it,
-/// from 1 to 5 ([SkillLevel]): What to learn shows each
+/// Every answer on a card that trains a skill moves the reader's score in it
+/// (lib/data/skill_scores.dart): What to learn shows each
 /// (lib/screens/skills_screen.dart), and a card that trains one of the
 /// skills they picked carries that skill's mark in its head
 /// (lib/widgets/skill_mark.dart).
@@ -336,55 +336,4 @@ Map<Skill, int> cardsTrainingEach(Iterable<String> ids) {
     }
   }
   return n;
-}
-
-/// A reader's level in a skill, from the cards they read that train it:
-/// level 1 from the first card, 2 from 10, 3 from 30, 4 from 70 and 5, the
-/// top, from 150; each level's bar fills as the next comes nearer.
-class SkillLevel {
-  const SkillLevel._(this.level, this.cards, this.toNext);
-
-  factory SkillLevel.of(int cards) {
-    final int n = cards < 0 ? 0 : cards;
-    int level = 1;
-    while (level < from.length && n >= from[level]) {
-      level++;
-    }
-    if (level == top) return SkillLevel._(level, n, 1);
-    final int lo = from[level - 1], hi = from[level];
-    return SkillLevel._(level, n, (n - lo) / (hi - lo));
-  }
-
-  /// The level at [cards] read, counted in parts of a card: a bar drawn
-  /// filling from one count to the next passes through these.
-  factory SkillLevel.between(double cards) {
-    final double n = cards < 0 ? 0 : cards;
-    int level = 1;
-    while (level < from.length && n >= from[level]) {
-      level++;
-    }
-    if (level == top) return SkillLevel._(level, n.floor(), 1);
-    final int lo = from[level - 1], hi = from[level];
-    return SkillLevel._(level, n.floor(), (n - lo) / (hi - lo));
-  }
-
-  /// The cards each level starts from: level 1 from 0, level 5 from 150.
-  static const List<int> from = [0, 10, 30, 70, 150];
-
-  /// How many more cards that train the skill reach the next level; null at
-  /// the top.
-  int? get toNextCards => level >= top ? null : from[level] - cards;
-
-  /// The highest level.
-  static const int top = 5;
-
-  /// 1 to [top].
-  final int level;
-
-  /// The cards read that train the skill.
-  final int cards;
-
-  /// How far the reader has come towards the next level, 0 to 1; 1 at the
-  /// top.
-  final double toNext;
 }

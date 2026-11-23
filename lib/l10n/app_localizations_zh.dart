@@ -1783,18 +1783,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get skillsTitleMark => '学';
 
   @override
-  String get skillsLine => '每读一张卡片都会让你升级。训练你所选能力的卡片会带有它的标记。';
+  String get skillsLine => '每次回答都会改变你的分数。训练你所选能力的卡片会带有它的标记。';
 
   @override
   String get skillsDone => '完成';
 
   @override
   String get skillsFocus => '专注中';
-
-  @override
-  String skillLevel(int n) {
-    return '等级 $n';
-  }
 
   @override
   String get skillMarkKicker => '这张卡片训练';
@@ -1805,36 +1800,22 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get skillMarkBody => '这是你设为专注的能力之一。每读一张这样的卡片，你都会升级。';
+  String get skillMarkBody => '这是你重点关注的能力之一。每回答一张这样的卡片，你在这项能力上的分数就会变化。';
 
   @override
-  String get skillMarkOpen => '查看你的等级';
+  String get skillMarkOpen => '查看你的全部分数';
 
   @override
   String get trainingTitle => '你的训练';
 
   @override
-  String get trainingLine => '这是你选择的能力。每读一张训练其中之一的卡片，你都会升级。';
-
-  @override
-  String trainingToNext(int n, int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '再读 $n 张升到等级 $level',
-      one: '再读 1 张升到等级 $level',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get trainingTopLevel => '最高等级';
+  String get trainingLine => '每次回答都会改变你的分数，答对难题加得最多。分数没有上限。';
 
   @override
   String get trainingOthers => '其他';
 
   @override
-  String get trainingEmpty => '选择你想提升的方面。每读一张训练它的卡片，你都会升级，卡片上也会带有它的标记。';
+  String get trainingEmpty => '选择你想提升的方面。每回答一张训练它的卡片，你的分数就会变化，卡片上也会带有它的标记。';
 
   @override
   String get trainingPick => '选择能力';
@@ -1860,8 +1841,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get trainingDayLine => '今天你训练了';
 
   @override
-  String trainingNewLevel(int n) {
-    return '达到等级 $n';
+  String get scoreTitle => 'Astute 分数';
+
+  @override
+  String scoreWeek(String n) {
+    return '本周 $n';
+  }
+
+  @override
+  String get scoreStart => '从你的第一次回答开始。';
+
+  @override
+  String scoreToday(String n) {
+    return '今天 $n';
+  }
+
+  @override
+  String scoreAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '基于 $n 次回答',
+      one: '基于 1 次回答',
+    );
+    return '$_temp0';
   }
 
   @override
