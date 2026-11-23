@@ -37,7 +37,10 @@ const SIZE = {width: 366, height: 606}, SCALE = 2.5;
 // at that size, is not squashed (taken at 324 by 452 it was, on a card of Space).
 const SHELF = {width: 366, height: 511};
 const ORIGIN = 'https://card.astute/';
-const hashOf = html => crypto.createHash('sha256').update(html, 'utf8').digest('hex').slice(0, 12);
+// The pictures' edition, as tool/cards/bundle.py keeps it (PICTURES): bumped when the kit changes how
+// every page is drawn, so every picture is taken again under a new name.
+const PICTURES = '\n<!-- pictures 2 -->';
+const hashOf = html => crypto.createHash('sha256').update(html + PICTURES, 'utf8').digest('hex').slice(0, 12);
 
 function pages() {
   const out = [];

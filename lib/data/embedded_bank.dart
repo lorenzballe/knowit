@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611221718,
- "built": "2026-11-22T17:18:28Z",
+ "version": 202611231551,
+ "built": "2026-11-23T15:51:37Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -4940,8 +4940,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/art-florence-5.html?v=628a23b91063",
     "bytes": 25100,
     "thumbs": {
-     "front": "thumbs/art-florence-5-front.webp?v=628a23b91063",
-     "back": "thumbs/art-florence-5-back.webp?v=628a23b91063"
+     "front": "thumbs/art-florence-5-front.webp?v=fc2e85c4e9ab",
+     "back": "thumbs/art-florence-5-back.webp?v=fc2e85c4e9ab"
     }
    },
    "source": "King, Brunelleschi's Dome, 2000",
@@ -12805,8 +12805,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/cinema-cgi-7.html?v=a38b30981f28",
     "bytes": 19840,
     "thumbs": {
-     "front": "thumbs/cinema-cgi-7-front.webp?v=a38b30981f28",
-     "back": "thumbs/cinema-cgi-7-back.webp?v=a38b30981f28"
+     "front": "thumbs/cinema-cgi-7-front.webp?v=10406cf73035",
+     "back": "thumbs/cinema-cgi-7-back.webp?v=10406cf73035"
     }
    },
    "source": "GamesBeat on Monsters University, 2013",
@@ -23812,8 +23812,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-australia-geologist-pay.html?v=8938f6224e8e",
     "bytes": 9306,
     "thumbs": {
-     "front": "thumbs/economics-australia-geologist-pay-front.webp?v=8938f6224e8e",
-     "back": "thumbs/economics-australia-geologist-pay-back.webp?v=8938f6224e8e"
+     "front": "thumbs/economics-australia-geologist-pay-front.webp?v=9e702bac117b",
+     "back": "thumbs/economics-australia-geologist-pay-back.webp?v=9e702bac117b"
     }
    },
    "source": "Geopop, “▶️QUANTO GUADAGNA UN GEOLOGO? STIPENDI IN ITALIA E ALL'ESTERO |GeologiaPOP🌍” (YouTube, 2018)",
@@ -26701,8 +26701,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-coltan-price-spike.html?v=c8134737c5d1",
     "bytes": 9104,
     "thumbs": {
-     "front": "thumbs/economics-coltan-price-spike-front.webp?v=c8134737c5d1",
-     "back": "thumbs/economics-coltan-price-spike-back.webp?v=c8134737c5d1"
+     "front": "thumbs/economics-coltan-price-spike-front.webp?v=d9273d1898bb",
+     "back": "thumbs/economics-coltan-price-spike-back.webp?v=d9273d1898bb"
     }
    },
    "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
@@ -26918,8 +26918,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-congo-miner-deaths.html?v=b0c9a94718f5",
     "bytes": 8259,
     "thumbs": {
-     "front": "thumbs/economics-congo-miner-deaths-front.webp?v=b0c9a94718f5",
-     "back": "thumbs/economics-congo-miner-deaths-back.webp?v=b0c9a94718f5"
+     "front": "thumbs/economics-congo-miner-deaths-front.webp?v=bcd70e51fa26",
+     "back": "thumbs/economics-congo-miner-deaths-back.webp?v=bcd70e51fa26"
     }
    },
    "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
@@ -29765,8 +29765,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-flies-window.html?v=d848573bae1e",
     "bytes": 11013,
     "thumbs": {
-     "front": "thumbs/economics-flies-window-front.webp?v=d848573bae1e",
-     "back": "thumbs/economics-flies-window-back.webp?v=d848573bae1e"
+     "front": "thumbs/economics-flies-window-front.webp?v=d65db372028f",
+     "back": "thumbs/economics-flies-window-back.webp?v=d65db372028f"
     }
    },
    "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
@@ -31303,8 +31303,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-gulf-idle-fleet.html?v=5ae601f30d70",
     "bytes": 6003,
     "thumbs": {
-     "front": "thumbs/economics-gulf-idle-fleet-front.webp?v=5ae601f30d70",
-     "back": "thumbs/economics-gulf-idle-fleet-back.webp?v=5ae601f30d70"
+     "front": "thumbs/economics-gulf-idle-fleet-front.webp?v=8d5b6491ca84",
+     "back": "thumbs/economics-gulf-idle-fleet-back.webp?v=8d5b6491ca84"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -31636,8 +31636,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-hormuz-oil-cut.html?v=5c4fd467d9d5",
     "bytes": 7580,
     "thumbs": {
-     "front": "thumbs/economics-hormuz-oil-cut-front.webp?v=5c4fd467d9d5",
-     "back": "thumbs/economics-hormuz-oil-cut-back.webp?v=5c4fd467d9d5"
+     "front": "thumbs/economics-hormuz-oil-cut-front.webp?v=203069dba40c",
+     "back": "thumbs/economics-hormuz-oil-cut-back.webp?v=203069dba40c"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -31679,8 +31679,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-hormuz-pipeline-shortfall.html?v=d447ec7f264d",
     "bytes": 10009,
     "thumbs": {
-     "front": "thumbs/economics-hormuz-pipeline-shortfall-front.webp?v=d447ec7f264d",
-     "back": "thumbs/economics-hormuz-pipeline-shortfall-back.webp?v=d447ec7f264d"
+     "front": "thumbs/economics-hormuz-pipeline-shortfall-front.webp?v=da33ea890ead",
+     "back": "thumbs/economics-hormuz-pipeline-shortfall-back.webp?v=da33ea890ead"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -33430,8 +33430,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-iran-war-energy-bill.html?v=7bbff288d1a2",
     "bytes": 7942,
     "thumbs": {
-     "front": "thumbs/economics-iran-war-energy-bill-front.webp?v=7bbff288d1a2",
-     "back": "thumbs/economics-iran-war-energy-bill-back.webp?v=7bbff288d1a2"
+     "front": "thumbs/economics-iran-war-energy-bill-front.webp?v=d782e7d8318b",
+     "back": "thumbs/economics-iran-war-energy-bill-back.webp?v=d782e7d8318b"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -34554,8 +34554,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-oil-countdown.html?v=32b759ff3a19",
     "bytes": 16912,
     "thumbs": {
-     "front": "thumbs/economics-oil-countdown-front.webp?v=32b759ff3a19",
-     "back": "thumbs/economics-oil-countdown-back.webp?v=32b759ff3a19"
+     "front": "thumbs/economics-oil-countdown-front.webp?v=d6d62277e330",
+     "back": "thumbs/economics-oil-countdown-back.webp?v=d6d62277e330"
     }
    },
    "source": "Geopop, “INTORNO AL 2065. ECCO PERCHE'” (YouTube, 2019)",
@@ -34597,8 +34597,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-one-mine-share.html?v=d74e39d82379",
     "bytes": 8554,
     "thumbs": {
-     "front": "thumbs/economics-one-mine-share-front.webp?v=d74e39d82379",
-     "back": "thumbs/economics-one-mine-share-back.webp?v=d74e39d82379"
+     "front": "thumbs/economics-one-mine-share-front.webp?v=2006dad41452",
+     "back": "thumbs/economics-one-mine-share-back.webp?v=2006dad41452"
     }
    },
    "source": "Geopop, “Uranio: la risorsa chiave per la fissione nucleare tra estrazione e Paesi produttori più ricchi” (YouTube, 2021)",
@@ -35112,8 +35112,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-plastic-glass-weight.html?v=c5c92dd5cc68",
     "bytes": 9819,
     "thumbs": {
-     "front": "thumbs/economics-plastic-glass-weight-front.webp?v=c5c92dd5cc68",
-     "back": "thumbs/economics-plastic-glass-weight-back.webp?v=c5c92dd5cc68"
+     "front": "thumbs/economics-plastic-glass-weight-front.webp?v=e128c8ae6ccc",
+     "back": "thumbs/economics-plastic-glass-weight-back.webp?v=e128c8ae6ccc"
     }
    },
    "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
@@ -36313,8 +36313,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-resource-curse-flask.html?v=43e4f3b47980",
     "bytes": 24566,
     "thumbs": {
-     "front": "thumbs/economics-resource-curse-flask-front.webp?v=43e4f3b47980",
-     "back": "thumbs/economics-resource-curse-flask-back.webp?v=43e4f3b47980"
+     "front": "thumbs/economics-resource-curse-flask-front.webp?v=4119e1ec1b33",
+     "back": "thumbs/economics-resource-curse-flask-back.webp?v=4119e1ec1b33"
     }
    },
    "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
@@ -36357,8 +36357,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-restart-clock.html?v=df805ec323a7",
     "bytes": 27837,
     "thumbs": {
-     "front": "thumbs/economics-restart-clock-front.webp?v=df805ec323a7",
-     "back": "thumbs/economics-restart-clock-back.webp?v=df805ec323a7"
+     "front": "thumbs/economics-restart-clock-front.webp?v=242c9b8ecfe6",
+     "back": "thumbs/economics-restart-clock-back.webp?v=242c9b8ecfe6"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -36927,8 +36927,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-slot-payback.html?v=1d1306edecb9",
     "bytes": 21465,
     "thumbs": {
-     "front": "thumbs/economics-slot-payback-front.webp?v=1d1306edecb9",
-     "back": "thumbs/economics-slot-payback-back.webp?v=1d1306edecb9"
+     "front": "thumbs/economics-slot-payback-front.webp?v=ff0752242914",
+     "back": "thumbs/economics-slot-payback-back.webp?v=ff0752242914"
     }
    },
    "source": "Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)",
@@ -36971,8 +36971,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-strait-traffic-collapse.html?v=2c5994d9f508",
     "bytes": 7058,
     "thumbs": {
-     "front": "thumbs/economics-strait-traffic-collapse-front.webp?v=2c5994d9f508",
-     "back": "thumbs/economics-strait-traffic-collapse-back.webp?v=2c5994d9f508"
+     "front": "thumbs/economics-strait-traffic-collapse-front.webp?v=5b3e05823066",
+     "back": "thumbs/economics-strait-traffic-collapse-back.webp?v=5b3e05823066"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -37805,8 +37805,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/economics-the-great-split.html?v=01b12b51e669",
     "bytes": 26544,
     "thumbs": {
-     "front": "thumbs/economics-the-great-split-front.webp?v=01b12b51e669",
-     "back": "thumbs/economics-the-great-split-back.webp?v=01b12b51e669"
+     "front": "thumbs/economics-the-great-split-front.webp?v=62d77ced5183",
+     "back": "thumbs/economics-the-great-split-back.webp?v=62d77ced5183"
     }
    },
    "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
@@ -38951,8 +38951,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-acid-squeezes-protein.html?v=a72809948191",
     "bytes": 21399,
     "thumbs": {
-     "front": "thumbs/food-acid-squeezes-protein-front.webp?v=a72809948191",
-     "back": "thumbs/food-acid-squeezes-protein-back.webp?v=a72809948191"
+     "front": "thumbs/food-acid-squeezes-protein-front.webp?v=ba400d522f4b",
+     "back": "thumbs/food-acid-squeezes-protein-back.webp?v=ba400d522f4b"
     }
    },
    "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
@@ -38994,8 +38994,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-apple-slow-breath.html?v=dfedfe5a436c",
     "bytes": 10067,
     "thumbs": {
-     "front": "thumbs/food-apple-slow-breath-front.webp?v=dfedfe5a436c",
-     "back": "thumbs/food-apple-slow-breath-back.webp?v=dfedfe5a436c"
+     "front": "thumbs/food-apple-slow-breath-front.webp?v=d1fed47ad9a9",
+     "back": "thumbs/food-apple-slow-breath-back.webp?v=d1fed47ad9a9"
     }
    },
    "source": "Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026)",
@@ -40319,8 +40319,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-cchbc-bottle-code.html?v=e35fa626c8f2",
     "bytes": 9938,
     "thumbs": {
-     "front": "thumbs/food-cchbc-bottle-code-front.webp?v=e35fa626c8f2",
-     "back": "thumbs/food-cchbc-bottle-code-back.webp?v=e35fa626c8f2"
+     "front": "thumbs/food-cchbc-bottle-code-front.webp?v=bbde7fb71d4c",
+     "back": "thumbs/food-cchbc-bottle-code-back.webp?v=bbde7fb71d4c"
     }
    },
    "source": "Geopop, “Controllate se la vostra prossima bottiglia di Coca-Cola ha la sigla CCHBC 70: ecco cosa significa” (YouTube, 2024)",
@@ -43168,8 +43168,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-estimated-weight-mark.html?v=2d602dab7d88",
     "bytes": 6572,
     "thumbs": {
-     "front": "thumbs/food-estimated-weight-mark-front.webp?v=2d602dab7d88",
-     "back": "thumbs/food-estimated-weight-mark-back.webp?v=2d602dab7d88"
+     "front": "thumbs/food-estimated-weight-mark-front.webp?v=c15feded79c9",
+     "back": "thumbs/food-estimated-weight-mark-back.webp?v=c15feded79c9"
     }
    },
    "source": "Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024)",
@@ -43212,8 +43212,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-estimated-weight-tolerance.html?v=54d5d14652fc",
     "bytes": 8642,
     "thumbs": {
-     "front": "thumbs/food-estimated-weight-tolerance-front.webp?v=54d5d14652fc",
-     "back": "thumbs/food-estimated-weight-tolerance-back.webp?v=54d5d14652fc"
+     "front": "thumbs/food-estimated-weight-tolerance-front.webp?v=45cf43532f09",
+     "back": "thumbs/food-estimated-weight-tolerance-back.webp?v=45cf43532f09"
     }
    },
    "source": "Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024)",
@@ -45801,8 +45801,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-mine-apple-cells.html?v=2d4fb38e950b",
     "bytes": 8600,
     "thumbs": {
-     "front": "thumbs/food-mine-apple-cells-front.webp?v=2d4fb38e950b",
-     "back": "thumbs/food-mine-apple-cells-back.webp?v=2d4fb38e950b"
+     "front": "thumbs/food-mine-apple-cells-front.webp?v=c10e20184170",
+     "back": "thumbs/food-mine-apple-cells-back.webp?v=c10e20184170"
     }
    },
    "source": "Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026)",
@@ -45895,8 +45895,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-onion-tear-gas.html?v=5ce0861921f3",
     "bytes": 10997,
     "thumbs": {
-     "front": "thumbs/food-onion-tear-gas-front.webp?v=5ce0861921f3",
-     "back": "thumbs/food-onion-tear-gas-back.webp?v=5ce0861921f3"
+     "front": "thumbs/food-onion-tear-gas-front.webp?v=e29dd77d86cc",
+     "back": "thumbs/food-onion-tear-gas-back.webp?v=e29dd77d86cc"
     }
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
@@ -48033,8 +48033,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-resveratrol-wine-flood.html?v=b39b49cfe9e2",
     "bytes": 10564,
     "thumbs": {
-     "front": "thumbs/food-resveratrol-wine-flood-front.webp?v=b39b49cfe9e2",
-     "back": "thumbs/food-resveratrol-wine-flood-back.webp?v=b39b49cfe9e2"
+     "front": "thumbs/food-resveratrol-wine-flood-front.webp?v=e8316d2058ec",
+     "back": "thumbs/food-resveratrol-wine-flood-back.webp?v=e8316d2058ec"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -49262,8 +49262,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-shark-fin-soup.html?v=ff20af80e1af",
     "bytes": 10578,
     "thumbs": {
-     "front": "thumbs/food-shark-fin-soup-front.webp?v=ff20af80e1af",
-     "back": "thumbs/food-shark-fin-soup-back.webp?v=ff20af80e1af"
+     "front": "thumbs/food-shark-fin-soup-front.webp?v=3c1ed4316bec",
+     "back": "thumbs/food-shark-fin-soup-back.webp?v=3c1ed4316bec"
     }
    },
    "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
@@ -49305,8 +49305,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-shark-mercury-climb.html?v=158fa89657c3",
     "bytes": 14813,
     "thumbs": {
-     "front": "thumbs/food-shark-mercury-climb-front.webp?v=158fa89657c3",
-     "back": "thumbs/food-shark-mercury-climb-back.webp?v=158fa89657c3"
+     "front": "thumbs/food-shark-mercury-climb-front.webp?v=95597cb9bb30",
+     "back": "thumbs/food-shark-mercury-climb-back.webp?v=95597cb9bb30"
     }
    },
    "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
@@ -50772,8 +50772,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/food-vacuum-reactor.html?v=5df7efa73048",
     "bytes": 12209,
     "thumbs": {
-     "front": "thumbs/food-vacuum-reactor-front.webp?v=5df7efa73048",
-     "back": "thumbs/food-vacuum-reactor-back.webp?v=5df7efa73048"
+     "front": "thumbs/food-vacuum-reactor-front.webp?v=c36d08896ad6",
+     "back": "thumbs/food-vacuum-reactor-back.webp?v=c36d08896ad6"
     }
    },
    "source": "Geopop, “Controllate se la vostra prossima bottiglia di Coca-Cola ha la sigla CCHBC 70: ecco cosa significa” (YouTube, 2024)",
@@ -51929,8 +51929,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-alcatraz-dummy-heads-4.html?v=1af0b44fd49b",
     "bytes": 10524,
     "thumbs": {
-     "front": "thumbs/history-alcatraz-dummy-heads-4-front.webp?v=1af0b44fd49b",
-     "back": "thumbs/history-alcatraz-dummy-heads-4-back.webp?v=1af0b44fd49b"
+     "front": "thumbs/history-alcatraz-dummy-heads-4-front.webp?v=db9acf70b606",
+     "back": "thumbs/history-alcatraz-dummy-heads-4-back.webp?v=db9acf70b606"
     }
    },
    "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
@@ -51973,8 +51973,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-alcatraz-spoon-wall.html?v=0ac710e66448",
     "bytes": 10682,
     "thumbs": {
-     "front": "thumbs/history-alcatraz-spoon-wall-front.webp?v=0ac710e66448",
-     "back": "thumbs/history-alcatraz-spoon-wall-back.webp?v=0ac710e66448"
+     "front": "thumbs/history-alcatraz-spoon-wall-front.webp?v=1b38c0ba68dc",
+     "back": "thumbs/history-alcatraz-spoon-wall-back.webp?v=1b38c0ba68dc"
     }
    },
    "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
@@ -52017,8 +52017,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-alcatraz-vent-duct.html?v=b293fc8e7f8e",
     "bytes": 12355,
     "thumbs": {
-     "front": "thumbs/history-alcatraz-vent-duct-front.webp?v=b293fc8e7f8e",
-     "back": "thumbs/history-alcatraz-vent-duct-back.webp?v=b293fc8e7f8e"
+     "front": "thumbs/history-alcatraz-vent-duct-front.webp?v=869e5bdbdb57",
+     "back": "thumbs/history-alcatraz-vent-duct-back.webp?v=869e5bdbdb57"
     }
    },
    "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
@@ -52060,8 +52060,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-ashgabat-carrara-marble.html?v=fdaaef47e2a4",
     "bytes": 7837,
     "thumbs": {
-     "front": "thumbs/history-ashgabat-carrara-marble-front.webp?v=fdaaef47e2a4",
-     "back": "thumbs/history-ashgabat-carrara-marble-back.webp?v=fdaaef47e2a4"
+     "front": "thumbs/history-ashgabat-carrara-marble-front.webp?v=834c74d20616",
+     "back": "thumbs/history-ashgabat-carrara-marble-back.webp?v=834c74d20616"
     }
    },
    "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
@@ -52103,8 +52103,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-ashgabat-star-symbol.html?v=e42aa430d0df",
     "bytes": 9773,
     "thumbs": {
-     "front": "thumbs/history-ashgabat-star-symbol-front.webp?v=e42aa430d0df",
-     "back": "thumbs/history-ashgabat-star-symbol-back.webp?v=e42aa430d0df"
+     "front": "thumbs/history-ashgabat-star-symbol-front.webp?v=03da076a1dff",
+     "back": "thumbs/history-ashgabat-star-symbol-back.webp?v=03da076a1dff"
     }
    },
    "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
@@ -52146,8 +52146,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-atmosphere-fusion-fire.html?v=149e313b0703",
     "bytes": 10614,
     "thumbs": {
-     "front": "thumbs/history-atmosphere-fusion-fire-front.webp?v=149e313b0703",
-     "back": "thumbs/history-atmosphere-fusion-fire-back.webp?v=149e313b0703"
+     "front": "thumbs/history-atmosphere-fusion-fire-front.webp?v=b2cf81ff88ee",
+     "back": "thumbs/history-atmosphere-fusion-fire-back.webp?v=b2cf81ff88ee"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -52189,8 +52189,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-atomic-shadow.html?v=6e10e40a8cee",
     "bytes": 7147,
     "thumbs": {
-     "front": "thumbs/history-atomic-shadow-front.webp?v=6e10e40a8cee",
-     "back": "thumbs/history-atomic-shadow-back.webp?v=6e10e40a8cee"
+     "front": "thumbs/history-atomic-shadow-front.webp?v=524ea619a2b0",
+     "back": "thumbs/history-atomic-shadow-back.webp?v=524ea619a2b0"
     }
    },
    "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
@@ -52232,8 +52232,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-baia-sunken-city.html?v=919c30f08f46",
     "bytes": 21970,
     "thumbs": {
-     "front": "thumbs/history-baia-sunken-city-front.webp?v=919c30f08f46",
-     "back": "thumbs/history-baia-sunken-city-back.webp?v=919c30f08f46"
+     "front": "thumbs/history-baia-sunken-city-front.webp?v=444484d32591",
+     "back": "thumbs/history-baia-sunken-city-back.webp?v=444484d32591"
     }
    },
    "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
@@ -52275,8 +52275,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-bakelite-fossil-plastic.html?v=8106e4b62be3",
     "bytes": 13524,
     "thumbs": {
-     "front": "thumbs/history-bakelite-fossil-plastic-front.webp?v=8106e4b62be3",
-     "back": "thumbs/history-bakelite-fossil-plastic-back.webp?v=8106e4b62be3"
+     "front": "thumbs/history-bakelite-fossil-plastic-front.webp?v=e04287dea9b8",
+     "back": "thumbs/history-bakelite-fossil-plastic-back.webp?v=e04287dea9b8"
     }
    },
    "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
@@ -52318,8 +52318,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-beccaria-deterrence.html?v=02d8dc044622",
     "bytes": 6824,
     "thumbs": {
-     "front": "thumbs/history-beccaria-deterrence-front.webp?v=02d8dc044622",
-     "back": "thumbs/history-beccaria-deterrence-back.webp?v=02d8dc044622"
+     "front": "thumbs/history-beccaria-deterrence-front.webp?v=de6b805b3878",
+     "back": "thumbs/history-beccaria-deterrence-back.webp?v=de6b805b3878"
     }
    },
    "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
@@ -52361,8 +52361,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-bermuda-triangle-name.html?v=4b065be79e91",
     "bytes": 8901,
     "thumbs": {
-     "front": "thumbs/history-bermuda-triangle-name-front.webp?v=4b065be79e91",
-     "back": "thumbs/history-bermuda-triangle-name-back.webp?v=4b065be79e91"
+     "front": "thumbs/history-bermuda-triangle-name-front.webp?v=5111394654a7",
+     "back": "thumbs/history-bermuda-triangle-name-back.webp?v=5111394654a7"
     }
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
@@ -52500,8 +52500,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-bombe-single-loop.html?v=799515f4b56d",
     "bytes": 7953,
     "thumbs": {
-     "front": "thumbs/history-bombe-single-loop-front.webp?v=799515f4b56d",
-     "back": "thumbs/history-bombe-single-loop-back.webp?v=799515f4b56d"
+     "front": "thumbs/history-bombe-single-loop-front.webp?v=b67aeba505d7",
+     "back": "thumbs/history-bombe-single-loop-back.webp?v=b67aeba505d7"
     }
    },
    "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
@@ -52995,8 +52995,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-borgia-alberoni-occupations.html?v=fc982cc7a0cc",
     "bytes": 9893,
     "thumbs": {
-     "front": "thumbs/history-borgia-alberoni-occupations-front.webp?v=fc982cc7a0cc",
-     "back": "thumbs/history-borgia-alberoni-occupations-back.webp?v=fc982cc7a0cc"
+     "front": "thumbs/history-borgia-alberoni-occupations-front.webp?v=0c87c79100cf",
+     "back": "thumbs/history-borgia-alberoni-occupations-back.webp?v=0c87c79100cf"
     }
    },
    "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
@@ -53481,8 +53481,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-brothers-home-prisoners.html?v=c5a650049ea9",
     "bytes": 6013,
     "thumbs": {
-     "front": "thumbs/history-brothers-home-prisoners-front.webp?v=c5a650049ea9",
-     "back": "thumbs/history-brothers-home-prisoners-back.webp?v=c5a650049ea9"
+     "front": "thumbs/history-brothers-home-prisoners-front.webp?v=e2f4db48d7b2",
+     "back": "thumbs/history-brothers-home-prisoners-back.webp?v=e2f4db48d7b2"
     }
    },
    "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
@@ -53524,8 +53524,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-capaci-timing-error.html?v=6368a004bb84",
     "bytes": 10673,
     "thumbs": {
-     "front": "thumbs/history-capaci-timing-error-front.webp?v=6368a004bb84",
-     "back": "thumbs/history-capaci-timing-error-back.webp?v=6368a004bb84"
+     "front": "thumbs/history-capaci-timing-error-front.webp?v=643a993e3d6c",
+     "back": "thumbs/history-capaci-timing-error-back.webp?v=643a993e3d6c"
     }
    },
    "source": "Geopop, “La ricostruzione 3D dell’attentato a Giovanni Falcone – Le dinamiche tecniche della strage Capaci” (YouTube, 2025)",
@@ -53981,8 +53981,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-celluloid-fire.html?v=464968fc27a7",
     "bytes": 8789,
     "thumbs": {
-     "front": "thumbs/history-celluloid-fire-front.webp?v=464968fc27a7",
-     "back": "thumbs/history-celluloid-fire-back.webp?v=464968fc27a7"
+     "front": "thumbs/history-celluloid-fire-front.webp?v=9cb146c22e5e",
+     "back": "thumbs/history-celluloid-fire-back.webp?v=9cb146c22e5e"
     }
    },
    "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
@@ -54031,8 +54031,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-challenger-missing-flights.html?v=bf583eff86c4",
     "bytes": 11117,
     "thumbs": {
-     "front": "thumbs/history-challenger-missing-flights-front.webp?v=bf583eff86c4",
-     "back": "thumbs/history-challenger-missing-flights-back.webp?v=bf583eff86c4"
+     "front": "thumbs/history-challenger-missing-flights-front.webp?v=a88ff87526c5",
+     "back": "thumbs/history-challenger-missing-flights-back.webp?v=a88ff87526c5"
     }
    },
    "source": "Rogers Commission report, 1986",
@@ -54075,8 +54075,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-china-execution-count.html?v=b2025b432f33",
     "bytes": 8154,
     "thumbs": {
-     "front": "thumbs/history-china-execution-count-front.webp?v=b2025b432f33",
-     "back": "thumbs/history-china-execution-count-back.webp?v=b2025b432f33"
+     "front": "thumbs/history-china-execution-count-front.webp?v=8e780b68541f",
+     "back": "thumbs/history-china-execution-count-back.webp?v=8e780b68541f"
     }
    },
    "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
@@ -54118,8 +54118,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-china-philippines-route.html?v=572cf93f5d34",
     "bytes": 7959,
     "thumbs": {
-     "front": "thumbs/history-china-philippines-route-front.webp?v=572cf93f5d34",
-     "back": "thumbs/history-china-philippines-route-back.webp?v=572cf93f5d34"
+     "front": "thumbs/history-china-philippines-route-front.webp?v=6987764a3ccc",
+     "back": "thumbs/history-china-philippines-route-back.webp?v=6987764a3ccc"
     }
    },
    "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
@@ -54585,8 +54585,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-concordia-salvage-crew.html?v=4a8ba64d70aa",
     "bytes": 8233,
     "thumbs": {
-     "front": "thumbs/history-concordia-salvage-crew-front.webp?v=4a8ba64d70aa",
-     "back": "thumbs/history-concordia-salvage-crew-back.webp?v=4a8ba64d70aa"
+     "front": "thumbs/history-concordia-salvage-crew-front.webp?v=b8ac8c85169c",
+     "back": "thumbs/history-concordia-salvage-crew-back.webp?v=b8ac8c85169c"
     }
    },
    "source": "Geopop, “Costa Concordia, la ricostruzione del naufragio dal momento dell’impatto alla rimozione del relitto” (YouTube, 2022)",
@@ -54628,8 +54628,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-crimea-1954-gift.html?v=5429ed9ae49e",
     "bytes": 10762,
     "thumbs": {
-     "front": "thumbs/history-crimea-1954-gift-front.webp?v=5429ed9ae49e",
-     "back": "thumbs/history-crimea-1954-gift-back.webp?v=5429ed9ae49e"
+     "front": "thumbs/history-crimea-1954-gift-front.webp?v=fd6e85b229cb",
+     "back": "thumbs/history-crimea-1954-gift-back.webp?v=fd6e85b229cb"
     }
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
@@ -55064,8 +55064,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-dark-web-origin.html?v=e5b89976976e",
     "bytes": 10117,
     "thumbs": {
-     "front": "thumbs/history-dark-web-origin-front.webp?v=e5b89976976e",
-     "back": "thumbs/history-dark-web-origin-back.webp?v=e5b89976976e"
+     "front": "thumbs/history-dark-web-origin-front.webp?v=b8263bae44b0",
+     "back": "thumbs/history-dark-web-origin-back.webp?v=b8263bae44b0"
     }
    },
    "source": "Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022)",
@@ -55108,8 +55108,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-directors-light-sentence.html?v=6fd8f352a759",
     "bytes": 10412,
     "thumbs": {
-     "front": "thumbs/history-directors-light-sentence-front.webp?v=6fd8f352a759",
-     "back": "thumbs/history-directors-light-sentence-back.webp?v=6fd8f352a759"
+     "front": "thumbs/history-directors-light-sentence-front.webp?v=75e892bad773",
+     "back": "thumbs/history-directors-light-sentence-back.webp?v=75e892bad773"
     }
    },
    "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
@@ -55151,8 +55151,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-disarm-in-steps.html?v=ff247bd0acc5",
     "bytes": 11212,
     "thumbs": {
-     "front": "thumbs/history-disarm-in-steps-front.webp?v=ff247bd0acc5",
-     "back": "thumbs/history-disarm-in-steps-back.webp?v=ff247bd0acc5"
+     "front": "thumbs/history-disarm-in-steps-front.webp?v=0f977e9dc76f",
+     "back": "thumbs/history-disarm-in-steps-back.webp?v=0f977e9dc76f"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -55194,8 +55194,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-dresden-twelve-bullets.html?v=b4f5aa7bb306",
     "bytes": 8511,
     "thumbs": {
-     "front": "thumbs/history-dresden-twelve-bullets-front.webp?v=b4f5aa7bb306",
-     "back": "thumbs/history-dresden-twelve-bullets-back.webp?v=b4f5aa7bb306"
+     "front": "thumbs/history-dresden-twelve-bullets-front.webp?v=92e608353f69",
+     "back": "thumbs/history-dresden-twelve-bullets-back.webp?v=92e608353f69"
     }
    },
    "source": "Geopop, “Perché Putin cammina come un pistolero? La vita di Vladimir tra risse, servizi segreti e politica” (YouTube, 2023)",
@@ -55237,8 +55237,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-ecuador-terrorist-label.html?v=6e2ecd854bc2",
     "bytes": 9100,
     "thumbs": {
-     "front": "thumbs/history-ecuador-terrorist-label-front.webp?v=6e2ecd854bc2",
-     "back": "thumbs/history-ecuador-terrorist-label-back.webp?v=6e2ecd854bc2"
+     "front": "thumbs/history-ecuador-terrorist-label-front.webp?v=bd76ea8f72a0",
+     "back": "thumbs/history-ecuador-terrorist-label-back.webp?v=bd76ea8f72a0"
     }
    },
    "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
@@ -55280,8 +55280,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-elephants-foot-dose.html?v=777826e26e86",
     "bytes": 21777,
     "thumbs": {
-     "front": "thumbs/history-elephants-foot-dose-front.webp?v=777826e26e86",
-     "back": "thumbs/history-elephants-foot-dose-back.webp?v=777826e26e86"
+     "front": "thumbs/history-elephants-foot-dose-front.webp?v=682149b524e6",
+     "back": "thumbs/history-elephants-foot-dose-back.webp?v=682149b524e6"
     }
    },
    "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
@@ -55323,8 +55323,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-elevator-fall-record.html?v=65b8ff77d988",
     "bytes": 10248,
     "thumbs": {
-     "front": "thumbs/history-elevator-fall-record-front.webp?v=65b8ff77d988",
-     "back": "thumbs/history-elevator-fall-record-back.webp?v=65b8ff77d988"
+     "front": "thumbs/history-elevator-fall-record-front.webp?v=b6c03b044fbe",
+     "back": "thumbs/history-elevator-fall-record-back.webp?v=b6c03b044fbe"
     }
    },
    "source": "Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022)",
@@ -55367,8 +55367,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-ethyl-name-trick.html?v=e87d5fec3361",
     "bytes": 7992,
     "thumbs": {
-     "front": "thumbs/history-ethyl-name-trick-front.webp?v=e87d5fec3361",
-     "back": "thumbs/history-ethyl-name-trick-back.webp?v=e87d5fec3361"
+     "front": "thumbs/history-ethyl-name-trick-front.webp?v=ff750f7c8b6c",
+     "back": "thumbs/history-ethyl-name-trick-back.webp?v=ff750f7c8b6c"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -55410,8 +55410,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-fat-man-implosion.html?v=869895210ec9",
     "bytes": 8490,
     "thumbs": {
-     "front": "thumbs/history-fat-man-implosion-front.webp?v=869895210ec9",
-     "back": "thumbs/history-fat-man-implosion-back.webp?v=869895210ec9"
+     "front": "thumbs/history-fat-man-implosion-front.webp?v=0dd73bf64c9f",
+     "back": "thumbs/history-fat-man-implosion-back.webp?v=0dd73bf64c9f"
     }
    },
    "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
@@ -55453,8 +55453,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-firing-squad-return.html?v=2c4a7d6e134d",
     "bytes": 7315,
     "thumbs": {
-     "front": "thumbs/history-firing-squad-return-front.webp?v=2c4a7d6e134d",
-     "back": "thumbs/history-firing-squad-return-back.webp?v=2c4a7d6e134d"
+     "front": "thumbs/history-firing-squad-return-front.webp?v=9d8363a37df3",
+     "back": "thumbs/history-firing-squad-return-back.webp?v=9d8363a37df3"
     }
    },
    "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
@@ -55496,8 +55496,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-first-plastic-plant.html?v=9bb92205837b",
     "bytes": 12670,
     "thumbs": {
-     "front": "thumbs/history-first-plastic-plant-front.webp?v=9bb92205837b",
-     "back": "thumbs/history-first-plastic-plant-back.webp?v=9bb92205837b"
+     "front": "thumbs/history-first-plastic-plant-front.webp?v=861e6c5b6dbb",
+     "back": "thumbs/history-first-plastic-plant-back.webp?v=861e6c5b6dbb"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -56437,8 +56437,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-franklin-cannon-shutters.html?v=70c63cc515da",
     "bytes": 9563,
     "thumbs": {
-     "front": "thumbs/history-franklin-cannon-shutters-front.webp?v=70c63cc515da",
-     "back": "thumbs/history-franklin-cannon-shutters-back.webp?v=70c63cc515da"
+     "front": "thumbs/history-franklin-cannon-shutters-front.webp?v=bd32d62cdaf8",
+     "back": "thumbs/history-franklin-cannon-shutters-back.webp?v=bd32d62cdaf8"
     }
    },
    "source": "Geopop, “Dall'ora legale all'ora solare: i pro e contro del cambio orario e perché si parla di abolizione” (YouTube, 2022)",
@@ -56480,8 +56480,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-gardening-mines-crib.html?v=2c200faeaa4a",
     "bytes": 10448,
     "thumbs": {
-     "front": "thumbs/history-gardening-mines-crib-front.webp?v=2c200faeaa4a",
-     "back": "thumbs/history-gardening-mines-crib-back.webp?v=2c200faeaa4a"
+     "front": "thumbs/history-gardening-mines-crib-front.webp?v=9e97e1e1a177",
+     "back": "thumbs/history-gardening-mines-crib-back.webp?v=9e97e1e1a177"
     }
    },
    "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
@@ -56523,8 +56523,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-gaza-kept-controls.html?v=ed2504eec8c4",
     "bytes": 20663,
     "thumbs": {
-     "front": "thumbs/history-gaza-kept-controls-front.webp?v=ed2504eec8c4",
-     "back": "thumbs/history-gaza-kept-controls-back.webp?v=ed2504eec8c4"
+     "front": "thumbs/history-gaza-kept-controls-front.webp?v=64cf1c9fcf67",
+     "back": "thumbs/history-gaza-kept-controls-back.webp?v=64cf1c9fcf67"
     }
    },
    "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
@@ -56566,8 +56566,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-glass-that-fell.html?v=a9cbeeeb431c",
     "bytes": 15103,
     "thumbs": {
-     "front": "thumbs/history-glass-that-fell-front.webp?v=a9cbeeeb431c",
-     "back": "thumbs/history-glass-that-fell-back.webp?v=a9cbeeeb431c"
+     "front": "thumbs/history-glass-that-fell-front.webp?v=3a74f92adb96",
+     "back": "thumbs/history-glass-that-fell-back.webp?v=3a74f92adb96"
     }
    },
    "source": "Veritasium, “The Most Radioactive Places on Earth” (YouTube, 2014)",
@@ -56609,8 +56609,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-gold-codes-card.html?v=02efbb4ba0be",
     "bytes": 26496,
     "thumbs": {
-     "front": "thumbs/history-gold-codes-card-front.webp?v=02efbb4ba0be",
-     "back": "thumbs/history-gold-codes-card-back.webp?v=02efbb4ba0be"
+     "front": "thumbs/history-gold-codes-card-front.webp?v=ff1e95a804ce",
+     "back": "thumbs/history-gold-codes-card-back.webp?v=ff1e95a804ce"
     }
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
@@ -56651,8 +56651,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-granite-five-millimetres-5.html?v=032e61253775",
     "bytes": 10787,
     "thumbs": {
-     "front": "thumbs/history-granite-five-millimetres-5-front.webp?v=032e61253775",
-     "back": "thumbs/history-granite-five-millimetres-5-back.webp?v=032e61253775"
+     "front": "thumbs/history-granite-five-millimetres-5-front.webp?v=9244fe14e185",
+     "back": "thumbs/history-granite-five-millimetres-5-back.webp?v=9244fe14e185"
     }
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
@@ -56693,8 +56693,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-great-power-war.html?v=51e29acd3860",
     "bytes": 21873,
     "thumbs": {
-     "front": "thumbs/history-great-power-war-front.webp?v=51e29acd3860",
-     "back": "thumbs/history-great-power-war-back.webp?v=51e29acd3860"
+     "front": "thumbs/history-great-power-war-front.webp?v=3999b693918e",
+     "back": "thumbs/history-great-power-war-back.webp?v=3999b693918e"
     }
    },
    "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
@@ -56736,8 +56736,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-greenland-compact.html?v=60991661ee14",
     "bytes": 7230,
     "thumbs": {
-     "front": "thumbs/history-greenland-compact-front.webp?v=60991661ee14",
-     "back": "thumbs/history-greenland-compact-back.webp?v=60991661ee14"
+     "front": "thumbs/history-greenland-compact-front.webp?v=8c829de57b04",
+     "back": "thumbs/history-greenland-compact-back.webp?v=8c829de57b04"
     }
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
@@ -56778,8 +56778,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-guayaquil-prison-bars.html?v=7e3015defbc6",
     "bytes": 21346,
     "thumbs": {
-     "front": "thumbs/history-guayaquil-prison-bars-front.webp?v=7e3015defbc6",
-     "back": "thumbs/history-guayaquil-prison-bars-back.webp?v=7e3015defbc6"
+     "front": "thumbs/history-guayaquil-prison-bars-front.webp?v=4f994f8389c4",
+     "back": "thumbs/history-guayaquil-prison-bars-back.webp?v=4f994f8389c4"
     }
    },
    "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
@@ -57250,8 +57250,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-hitlers-unbreakable-machine.html?v=8d199af86f75",
     "bytes": 6474,
     "thumbs": {
-     "front": "thumbs/history-hitlers-unbreakable-machine-front.webp?v=8d199af86f75",
-     "back": "thumbs/history-hitlers-unbreakable-machine-back.webp?v=8d199af86f75"
+     "front": "thumbs/history-hitlers-unbreakable-machine-front.webp?v=32d37e505e27",
+     "back": "thumbs/history-hitlers-unbreakable-machine-back.webp?v=32d37e505e27"
     }
    },
    "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
@@ -57293,8 +57293,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-hydrogen-wall.html?v=a5a22e9a1e8c",
     "bytes": 13556,
     "thumbs": {
-     "front": "thumbs/history-hydrogen-wall-front.webp?v=a5a22e9a1e8c",
-     "back": "thumbs/history-hydrogen-wall-back.webp?v=a5a22e9a1e8c"
+     "front": "thumbs/history-hydrogen-wall-front.webp?v=0307612474b3",
+     "back": "thumbs/history-hydrogen-wall-back.webp?v=0307612474b3"
     }
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
@@ -58362,8 +58362,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-iran-executions-2025.html?v=501476899867",
     "bytes": 6991,
     "thumbs": {
-     "front": "thumbs/history-iran-executions-2025-front.webp?v=501476899867",
-     "back": "thumbs/history-iran-executions-2025-back.webp?v=501476899867"
+     "front": "thumbs/history-iran-executions-2025-front.webp?v=f47f6a01ff24",
+     "back": "thumbs/history-iran-executions-2025-back.webp?v=f47f6a01ff24"
     }
    },
    "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
@@ -58405,8 +58405,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-italy-nuclear-bases.html?v=1376e0703de1",
     "bytes": 34610,
     "thumbs": {
-     "front": "thumbs/history-italy-nuclear-bases-front.webp?v=1376e0703de1",
-     "back": "thumbs/history-italy-nuclear-bases-back.webp?v=1376e0703de1"
+     "front": "thumbs/history-italy-nuclear-bases-front.webp?v=e7259011a515",
+     "back": "thumbs/history-italy-nuclear-bases-back.webp?v=e7259011a515"
     }
    },
    "source": "Geopop, “Perché ci sono così tante basi USA e NATO in Italia? Ecco dove si trovano i 12.000 soldati americani” (YouTube, 2022)",
@@ -58448,8 +58448,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-ivy-mike-blocks.html?v=626d1322b5d5",
     "bytes": 15241,
     "thumbs": {
-     "front": "thumbs/history-ivy-mike-blocks-front.webp?v=626d1322b5d5",
-     "back": "thumbs/history-ivy-mike-blocks-back.webp?v=626d1322b5d5"
+     "front": "thumbs/history-ivy-mike-blocks-front.webp?v=c274aa3d393b",
+     "back": "thumbs/history-ivy-mike-blocks-back.webp?v=c274aa3d393b"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -58491,8 +58491,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-jack-foley-maps.html?v=62cdbe86c15f",
     "bytes": 8080,
     "thumbs": {
-     "front": "thumbs/history-jack-foley-maps-front.webp?v=62cdbe86c15f",
-     "back": "thumbs/history-jack-foley-maps-back.webp?v=62cdbe86c15f"
+     "front": "thumbs/history-jack-foley-maps-front.webp?v=45fb0693fa5f",
+     "back": "thumbs/history-jack-foley-maps-back.webp?v=45fb0693fa5f"
     }
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
@@ -58534,8 +58534,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-kgb-pistolero-walk.html?v=5441aae0706d",
     "bytes": 10393,
     "thumbs": {
-     "front": "thumbs/history-kgb-pistolero-walk-front.webp?v=5441aae0706d",
-     "back": "thumbs/history-kgb-pistolero-walk-back.webp?v=5441aae0706d"
+     "front": "thumbs/history-kgb-pistolero-walk-front.webp?v=779a78905f6c",
+     "back": "thumbs/history-kgb-pistolero-walk-back.webp?v=779a78905f6c"
     }
    },
    "source": "Geopop, “Perché Putin cammina come un pistolero? La vita di Vladimir tra risse, servizi segreti e politica” (YouTube, 2023)",
@@ -58577,8 +58577,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-kiev-cradle-rus.html?v=d11460d69500",
     "bytes": 8957,
     "thumbs": {
-     "front": "thumbs/history-kiev-cradle-rus-front.webp?v=d11460d69500",
-     "back": "thumbs/history-kiev-cradle-rus-back.webp?v=d11460d69500"
+     "front": "thumbs/history-kiev-cradle-rus-front.webp?v=fc00ac4549e4",
+     "back": "thumbs/history-kiev-cradle-rus-back.webp?v=fc00ac4549e4"
     }
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
@@ -58620,8 +58620,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-kilogram-prefix.html?v=530d77a7b8f8",
     "bytes": 22503,
     "thumbs": {
-     "front": "thumbs/history-kilogram-prefix-front.webp?v=530d77a7b8f8",
-     "back": "thumbs/history-kilogram-prefix-back.webp?v=530d77a7b8f8"
+     "front": "thumbs/history-kilogram-prefix-front.webp?v=0bf1569a32de",
+     "back": "thumbs/history-kilogram-prefix-back.webp?v=0bf1569a32de"
     }
    },
    "source": "Veritasium, “World's Roundest Object!” (YouTube, 2013)",
@@ -58664,8 +58664,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-korean-auschwitz.html?v=2c298abaa9bb",
     "bytes": 8125,
     "thumbs": {
-     "front": "thumbs/history-korean-auschwitz-front.webp?v=2c298abaa9bb",
-     "back": "thumbs/history-korean-auschwitz-back.webp?v=2c298abaa9bb"
+     "front": "thumbs/history-korean-auschwitz-front.webp?v=b2465877b934",
+     "back": "thumbs/history-korean-auschwitz-back.webp?v=b2465877b934"
     }
    },
    "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
@@ -58708,8 +58708,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-leaded-iq-loss.html?v=e10d4967bfa0",
     "bytes": 23581,
     "thumbs": {
-     "front": "thumbs/history-leaded-iq-loss-front.webp?v=e10d4967bfa0",
-     "back": "thumbs/history-leaded-iq-loss-back.webp?v=e10d4967bfa0"
+     "front": "thumbs/history-leaded-iq-loss-front.webp?v=47b235362b69",
+     "back": "thumbs/history-leaded-iq-loss-back.webp?v=47b235362b69"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -58751,8 +58751,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-little-boy-efficiency.html?v=fc23b48b9a1b",
     "bytes": 24901,
     "thumbs": {
-     "front": "thumbs/history-little-boy-efficiency-front.webp?v=fc23b48b9a1b",
-     "back": "thumbs/history-little-boy-efficiency-back.webp?v=fc23b48b9a1b"
+     "front": "thumbs/history-little-boy-efficiency-front.webp?v=046811743a1b",
+     "back": "thumbs/history-little-boy-efficiency-back.webp?v=046811743a1b"
     }
    },
    "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
@@ -58793,8 +58793,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-llull-before-condorcet.html?v=1bc3899757ef",
     "bytes": 9623,
     "thumbs": {
-     "front": "thumbs/history-llull-before-condorcet-front.webp?v=1bc3899757ef",
-     "back": "thumbs/history-llull-before-condorcet-back.webp?v=1bc3899757ef"
+     "front": "thumbs/history-llull-before-condorcet-front.webp?v=5529a9016b56",
+     "back": "thumbs/history-llull-before-condorcet-back.webp?v=5529a9016b56"
     }
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
@@ -59847,8 +59847,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-nagasaki-radiation-fade.html?v=cd43b3c52ed0",
     "bytes": 8688,
     "thumbs": {
-     "front": "thumbs/history-nagasaki-radiation-fade-front.webp?v=cd43b3c52ed0",
-     "back": "thumbs/history-nagasaki-radiation-fade-back.webp?v=cd43b3c52ed0"
+     "front": "thumbs/history-nagasaki-radiation-fade-front.webp?v=ec754cea4832",
+     "back": "thumbs/history-nagasaki-radiation-fade-back.webp?v=ec754cea4832"
     }
    },
    "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
@@ -59890,8 +59890,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-national-redoubt.html?v=363e2fb70e45",
     "bytes": 21210,
     "thumbs": {
-     "front": "thumbs/history-national-redoubt-front.webp?v=363e2fb70e45",
-     "back": "thumbs/history-national-redoubt-back.webp?v=363e2fb70e45"
+     "front": "thumbs/history-national-redoubt-front.webp?v=bce5174f8f55",
+     "back": "thumbs/history-national-redoubt-back.webp?v=bce5174f8f55"
     }
    },
    "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
@@ -59933,8 +59933,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-nato-nuclear-yes.html?v=856dd015af30",
     "bytes": 10439,
     "thumbs": {
-     "front": "thumbs/history-nato-nuclear-yes-front.webp?v=856dd015af30",
-     "back": "thumbs/history-nato-nuclear-yes-back.webp?v=856dd015af30"
+     "front": "thumbs/history-nato-nuclear-yes-front.webp?v=78a2a350ecb3",
+     "back": "thumbs/history-nato-nuclear-yes-back.webp?v=78a2a350ecb3"
     }
    },
    "source": "Geopop, “Perché ci sono così tante basi USA e NATO in Italia? Ecco dove si trovano i 12.000 soldati americani” (YouTube, 2022)",
@@ -59976,8 +59976,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-nato-shrinking-cushion.html?v=f81bc577b91b",
     "bytes": 20636,
     "thumbs": {
-     "front": "thumbs/history-nato-shrinking-cushion-front.webp?v=f81bc577b91b",
-     "back": "thumbs/history-nato-shrinking-cushion-back.webp?v=f81bc577b91b"
+     "front": "thumbs/history-nato-shrinking-cushion-front.webp?v=88444e38b226",
+     "back": "thumbs/history-nato-shrinking-cushion-back.webp?v=88444e38b226"
     }
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
@@ -60019,8 +60019,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-north-korea-classes.html?v=bacc47a32cc6",
     "bytes": 7422,
     "thumbs": {
-     "front": "thumbs/history-north-korea-classes-front.webp?v=bacc47a32cc6",
-     "back": "thumbs/history-north-korea-classes-back.webp?v=bacc47a32cc6"
+     "front": "thumbs/history-north-korea-classes-front.webp?v=bc89bba742dc",
+     "back": "thumbs/history-north-korea-classes-back.webp?v=bc89bba742dc"
     }
    },
    "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
@@ -60062,8 +60062,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-north-korea-famine.html?v=da4459277d22",
     "bytes": 6434,
     "thumbs": {
-     "front": "thumbs/history-north-korea-famine-front.webp?v=da4459277d22",
-     "back": "thumbs/history-north-korea-famine-back.webp?v=da4459277d22"
+     "front": "thumbs/history-north-korea-famine-front.webp?v=9a73243e80aa",
+     "back": "thumbs/history-north-korea-famine-back.webp?v=9a73243e80aa"
     }
    },
    "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
@@ -60105,8 +60105,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-norwegian-rocket-alarm.html?v=22cf4047dfe4",
     "bytes": 28614,
     "thumbs": {
-     "front": "thumbs/history-norwegian-rocket-alarm-front.webp?v=22cf4047dfe4",
-     "back": "thumbs/history-norwegian-rocket-alarm-back.webp?v=22cf4047dfe4"
+     "front": "thumbs/history-norwegian-rocket-alarm-front.webp?v=75cb42229b8c",
+     "back": "thumbs/history-norwegian-rocket-alarm-back.webp?v=75cb42229b8c"
     }
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
@@ -60148,8 +60148,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-nsa-gold-codes.html?v=de655cc4f19a",
     "bytes": 14889,
     "thumbs": {
-     "front": "thumbs/history-nsa-gold-codes-front.webp?v=de655cc4f19a",
-     "back": "thumbs/history-nsa-gold-codes-back.webp?v=de655cc4f19a"
+     "front": "thumbs/history-nsa-gold-codes-front.webp?v=1e1e19da1ac5",
+     "back": "thumbs/history-nsa-gold-codes-back.webp?v=1e1e19da1ac5"
     }
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
@@ -60975,8 +60975,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-paradox-of-escalation.html?v=ce29cde250ca",
     "bytes": 15946,
     "thumbs": {
-     "front": "thumbs/history-paradox-of-escalation-front.webp?v=ce29cde250ca",
-     "back": "thumbs/history-paradox-of-escalation-back.webp?v=ce29cde250ca"
+     "front": "thumbs/history-paradox-of-escalation-front.webp?v=2b9b2b9d217f",
+     "back": "thumbs/history-paradox-of-escalation-back.webp?v=2b9b2b9d217f"
     }
    },
    "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
@@ -61018,8 +61018,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-pile-one-reactor.html?v=c060b936b292",
     "bytes": 10646,
     "thumbs": {
-     "front": "thumbs/history-pile-one-reactor-front.webp?v=c060b936b292",
-     "back": "thumbs/history-pile-one-reactor-back.webp?v=c060b936b292"
+     "front": "thumbs/history-pile-one-reactor-front.webp?v=a6cd7e92d85f",
+     "back": "thumbs/history-pile-one-reactor-back.webp?v=a6cd7e92d85f"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -61472,8 +61472,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-pompeii-casts.html?v=6009402e08e0",
     "bytes": 7410,
     "thumbs": {
-     "front": "thumbs/history-pompeii-casts-front.webp?v=6009402e08e0",
-     "back": "thumbs/history-pompeii-casts-back.webp?v=6009402e08e0"
+     "front": "thumbs/history-pompeii-casts-front.webp?v=8119fe7ab7f4",
+     "back": "thumbs/history-pompeii-casts-back.webp?v=8119fe7ab7f4"
     }
    },
    "source": "Geopop, “\"Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026)",
@@ -61516,8 +61516,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-pompeii-fire-cloud.html?v=279362fb19fd",
     "bytes": 9958,
     "thumbs": {
-     "front": "thumbs/history-pompeii-fire-cloud-front.webp?v=279362fb19fd",
-     "back": "thumbs/history-pompeii-fire-cloud-back.webp?v=279362fb19fd"
+     "front": "thumbs/history-pompeii-fire-cloud-front.webp?v=b303452c7f38",
+     "back": "thumbs/history-pompeii-fire-cloud-back.webp?v=b303452c7f38"
     }
    },
    "source": "Geopop, “\"Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026)",
@@ -61558,8 +61558,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-pompeii-flow-density.html?v=01277ee9abe0",
     "bytes": 8777,
     "thumbs": {
-     "front": "thumbs/history-pompeii-flow-density-front.webp?v=01277ee9abe0",
-     "back": "thumbs/history-pompeii-flow-density-back.webp?v=01277ee9abe0"
+     "front": "thumbs/history-pompeii-flow-density-front.webp?v=3f95f516c30a",
+     "back": "thumbs/history-pompeii-flow-density-back.webp?v=3f95f516c30a"
     }
    },
    "source": "Geopop, “\"Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026)",
@@ -61602,8 +61602,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-pompeii-pyroclastic-flow.html?v=d2e25c7f5de6",
     "bytes": 8592,
     "thumbs": {
-     "front": "thumbs/history-pompeii-pyroclastic-flow-front.webp?v=d2e25c7f5de6",
-     "back": "thumbs/history-pompeii-pyroclastic-flow-back.webp?v=d2e25c7f5de6"
+     "front": "thumbs/history-pompeii-pyroclastic-flow-front.webp?v=e25df6a204bd",
+     "back": "thumbs/history-pompeii-pyroclastic-flow-back.webp?v=e25df6a204bd"
     }
    },
    "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
@@ -61645,8 +61645,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-popular-mechanics-flaw.html?v=76b4a4d8b94a",
     "bytes": 18692,
     "thumbs": {
-     "front": "thumbs/history-popular-mechanics-flaw-front.webp?v=76b4a4d8b94a",
-     "back": "thumbs/history-popular-mechanics-flaw-back.webp?v=76b4a4d8b94a"
+     "front": "thumbs/history-popular-mechanics-flaw-front.webp?v=bcddfac1b37e",
+     "back": "thumbs/history-popular-mechanics-flaw-back.webp?v=bcddfac1b37e"
     }
    },
    "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
@@ -61689,8 +61689,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-prison-forced-labour.html?v=3a864740bcab",
     "bytes": 10483,
     "thumbs": {
-     "front": "thumbs/history-prison-forced-labour-front.webp?v=3a864740bcab",
-     "back": "thumbs/history-prison-forced-labour-back.webp?v=3a864740bcab"
+     "front": "thumbs/history-prison-forced-labour-front.webp?v=8ef97d6c294b",
+     "back": "thumbs/history-prison-forced-labour-back.webp?v=8ef97d6c294b"
     }
    },
    "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
@@ -61732,8 +61732,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-putins-domestic-mirror.html?v=91ca143763d6",
     "bytes": 28399,
     "thumbs": {
-     "front": "thumbs/history-putins-domestic-mirror-front.webp?v=91ca143763d6",
-     "back": "thumbs/history-putins-domestic-mirror-back.webp?v=91ca143763d6"
+     "front": "thumbs/history-putins-domestic-mirror-front.webp?v=08dfba3ef972",
+     "back": "thumbs/history-putins-domestic-mirror-back.webp?v=08dfba3ef972"
     }
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
@@ -61774,8 +61774,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-pyramid-sun-rays.html?v=790f0beffe3b",
     "bytes": 8699,
     "thumbs": {
-     "front": "thumbs/history-pyramid-sun-rays-front.webp?v=790f0beffe3b",
-     "back": "thumbs/history-pyramid-sun-rays-back.webp?v=790f0beffe3b"
+     "front": "thumbs/history-pyramid-sun-rays-front.webp?v=31ab5570f4fd",
+     "back": "thumbs/history-pyramid-sun-rays-back.webp?v=31ab5570f4fd"
     }
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
@@ -61818,8 +61818,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-pyramid-top-third.html?v=3892e1136b5b",
     "bytes": 9105,
     "thumbs": {
-     "front": "thumbs/history-pyramid-top-third-front.webp?v=3892e1136b5b",
-     "back": "thumbs/history-pyramid-top-third-back.webp?v=3892e1136b5b"
+     "front": "thumbs/history-pyramid-top-third-front.webp?v=f20a6bca7632",
+     "back": "thumbs/history-pyramid-top-third-back.webp?v=f20a6bca7632"
     }
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
@@ -61861,8 +61861,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-pyramid-worker-tombs.html?v=f1857fa0b046",
     "bytes": 11416,
     "thumbs": {
-     "front": "thumbs/history-pyramid-worker-tombs-front.webp?v=f1857fa0b046",
-     "back": "thumbs/history-pyramid-worker-tombs-back.webp?v=f1857fa0b046"
+     "front": "thumbs/history-pyramid-worker-tombs-front.webp?v=3bc0140bd2b9",
+     "back": "thumbs/history-pyramid-worker-tombs-back.webp?v=3bc0140bd2b9"
     }
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
@@ -61903,8 +61903,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-rag-paper-scroll.html?v=471ef1f70487",
     "bytes": 9476,
     "thumbs": {
-     "front": "thumbs/history-rag-paper-scroll-front.webp?v=471ef1f70487",
-     "back": "thumbs/history-rag-paper-scroll-back.webp?v=471ef1f70487"
+     "front": "thumbs/history-rag-paper-scroll-front.webp?v=721b3001b56f",
+     "back": "thumbs/history-rag-paper-scroll-back.webp?v=721b3001b56f"
     }
    },
    "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
@@ -62487,8 +62487,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-russia-warhead-share.html?v=a50263040759",
     "bytes": 6278,
     "thumbs": {
-     "front": "thumbs/history-russia-warhead-share-front.webp?v=a50263040759",
-     "back": "thumbs/history-russia-warhead-share-back.webp?v=a50263040759"
+     "front": "thumbs/history-russia-warhead-share-front.webp?v=50dd2beb046e",
+     "back": "thumbs/history-russia-warhead-share-back.webp?v=50dd2beb046e"
     }
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
@@ -62530,8 +62530,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-san-marino-appeals.html?v=332252f90cd8",
     "bytes": 12539,
     "thumbs": {
-     "front": "thumbs/history-san-marino-appeals-front.webp?v=332252f90cd8",
-     "back": "thumbs/history-san-marino-appeals-back.webp?v=332252f90cd8"
+     "front": "thumbs/history-san-marino-appeals-front.webp?v=fe5b5c14e7f8",
+     "back": "thumbs/history-san-marino-appeals-back.webp?v=fe5b5c14e7f8"
     }
    },
    "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
@@ -62572,8 +62572,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-san-marino-small.html?v=aa777139d5f2",
     "bytes": 9054,
     "thumbs": {
-     "front": "thumbs/history-san-marino-small-front.webp?v=aa777139d5f2",
-     "back": "thumbs/history-san-marino-small-back.webp?v=aa777139d5f2"
+     "front": "thumbs/history-san-marino-small-front.webp?v=c46f5d52d938",
+     "back": "thumbs/history-san-marino-small-back.webp?v=c46f5d52d938"
     }
    },
    "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
@@ -62615,8 +62615,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-sand-to-sword.html?v=1eeda9fcd5dd",
     "bytes": 10976,
     "thumbs": {
-     "front": "thumbs/history-sand-to-sword-front.webp?v=1eeda9fcd5dd",
-     "back": "thumbs/history-sand-to-sword-back.webp?v=1eeda9fcd5dd"
+     "front": "thumbs/history-sand-to-sword-front.webp?v=1d54fd039235",
+     "back": "thumbs/history-sand-to-sword-back.webp?v=1d54fd039235"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -62658,8 +62658,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-senna-suspension-fragment.html?v=a623aacda11d",
     "bytes": 10490,
     "thumbs": {
-     "front": "thumbs/history-senna-suspension-fragment-front.webp?v=a623aacda11d",
-     "back": "thumbs/history-senna-suspension-fragment-back.webp?v=a623aacda11d"
+     "front": "thumbs/history-senna-suspension-fragment-front.webp?v=7b8b6fc17395",
+     "back": "thumbs/history-senna-suspension-fragment-back.webp?v=7b8b6fc17395"
     }
    },
    "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
@@ -62702,8 +62702,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-senna-throttle-lift.html?v=b90bcedb0b90",
     "bytes": 7920,
     "thumbs": {
-     "front": "thumbs/history-senna-throttle-lift-front.webp?v=b90bcedb0b90",
-     "back": "thumbs/history-senna-throttle-lift-back.webp?v=b90bcedb0b90"
+     "front": "thumbs/history-senna-throttle-lift-front.webp?v=d3ba8f3acb64",
+     "back": "thumbs/history-senna-throttle-lift-back.webp?v=d3ba8f3acb64"
     }
    },
    "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
@@ -62746,8 +62746,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-shield-or-dove.html?v=afc20ec28883",
     "bytes": 20688,
     "thumbs": {
-     "front": "thumbs/history-shield-or-dove-front.webp?v=afc20ec28883",
-     "back": "thumbs/history-shield-or-dove-back.webp?v=afc20ec28883"
+     "front": "thumbs/history-shield-or-dove-front.webp?v=661d7a234794",
+     "back": "thumbs/history-shield-or-dove-back.webp?v=661d7a234794"
     }
    },
    "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
@@ -62788,8 +62788,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-silent-death-penalty.html?v=da3427a725c4",
     "bytes": 5894,
     "thumbs": {
-     "front": "thumbs/history-silent-death-penalty-front.webp?v=da3427a725c4",
-     "back": "thumbs/history-silent-death-penalty-back.webp?v=da3427a725c4"
+     "front": "thumbs/history-silent-death-penalty-front.webp?v=16acf9cb6efb",
+     "back": "thumbs/history-silent-death-penalty-back.webp?v=16acf9cb6efb"
     }
    },
    "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
@@ -62831,8 +62831,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-silk-road-sentence.html?v=aeef67bbaeed",
     "bytes": 20192,
     "thumbs": {
-     "front": "thumbs/history-silk-road-sentence-front.webp?v=aeef67bbaeed",
-     "back": "thumbs/history-silk-road-sentence-back.webp?v=aeef67bbaeed"
+     "front": "thumbs/history-silk-road-sentence-front.webp?v=569a0fc94bfc",
+     "back": "thumbs/history-silk-road-sentence-back.webp?v=569a0fc94bfc"
     }
    },
    "source": "Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022)",
@@ -62874,8 +62874,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-soviet-bomb-isotopes.html?v=61e57ca3d16a",
     "bytes": 8674,
     "thumbs": {
-     "front": "thumbs/history-soviet-bomb-isotopes-front.webp?v=61e57ca3d16a",
-     "back": "thumbs/history-soviet-bomb-isotopes-back.webp?v=61e57ca3d16a"
+     "front": "thumbs/history-soviet-bomb-isotopes-front.webp?v=ab75df404abb",
+     "back": "thumbs/history-soviet-bomb-isotopes-back.webp?v=ab75df404abb"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -62917,8 +62917,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-soviet-lifeline-cut.html?v=b2aa33979534",
     "bytes": 9240,
     "thumbs": {
-     "front": "thumbs/history-soviet-lifeline-cut-front.webp?v=b2aa33979534",
-     "back": "thumbs/history-soviet-lifeline-cut-back.webp?v=b2aa33979534"
+     "front": "thumbs/history-soviet-lifeline-cut-front.webp?v=8e0ae1c1dc06",
+     "back": "thumbs/history-soviet-lifeline-cut-back.webp?v=8e0ae1c1dc06"
     }
    },
    "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
@@ -62960,8 +62960,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-sperm-whale-oil.html?v=01fcb4f853b5",
     "bytes": 7127,
     "thumbs": {
-     "front": "thumbs/history-sperm-whale-oil-front.webp?v=01fcb4f853b5",
-     "back": "thumbs/history-sperm-whale-oil-back.webp?v=01fcb4f853b5"
+     "front": "thumbs/history-sperm-whale-oil-front.webp?v=12408b1bf6a0",
+     "back": "thumbs/history-sperm-whale-oil-back.webp?v=12408b1bf6a0"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -63390,8 +63390,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-straight-ramp-waste.html?v=ebe0c1c43747",
     "bytes": 8670,
     "thumbs": {
-     "front": "thumbs/history-straight-ramp-waste-front.webp?v=ebe0c1c43747",
-     "back": "thumbs/history-straight-ramp-waste-back.webp?v=ebe0c1c43747"
+     "front": "thumbs/history-straight-ramp-waste-front.webp?v=29b25a96cf9a",
+     "back": "thumbs/history-straight-ramp-waste-back.webp?v=29b25a96cf9a"
     }
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
@@ -63435,8 +63435,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-swiss-axis-shells.html?v=b7a3608ca5f6",
     "bytes": 11660,
     "thumbs": {
-     "front": "thumbs/history-swiss-axis-shells-front.webp?v=b7a3608ca5f6",
-     "back": "thumbs/history-swiss-axis-shells-back.webp?v=b7a3608ca5f6"
+     "front": "thumbs/history-swiss-axis-shells-front.webp?v=f8da59ce9782",
+     "back": "thumbs/history-swiss-axis-shells-back.webp?v=f8da59ce9782"
     }
    },
    "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
@@ -63478,8 +63478,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-swiss-cushion-state.html?v=11ed179f4660",
     "bytes": 9097,
     "thumbs": {
-     "front": "thumbs/history-swiss-cushion-state-front.webp?v=11ed179f4660",
-     "back": "thumbs/history-swiss-cushion-state-back.webp?v=11ed179f4660"
+     "front": "thumbs/history-swiss-cushion-state-front.webp?v=4e3a63039d1c",
+     "back": "thumbs/history-swiss-cushion-state-back.webp?v=4e3a63039d1c"
     }
    },
    "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
@@ -63521,8 +63521,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-swiss-nazi-gold.html?v=43bf39075901",
     "bytes": 8782,
     "thumbs": {
-     "front": "thumbs/history-swiss-nazi-gold-front.webp?v=43bf39075901",
-     "back": "thumbs/history-swiss-nazi-gold-back.webp?v=43bf39075901"
+     "front": "thumbs/history-swiss-nazi-gold-front.webp?v=7e5736e5e0ba",
+     "back": "thumbs/history-swiss-nazi-gold-back.webp?v=7e5736e5e0ba"
     }
    },
    "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
@@ -63964,8 +63964,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-three-deadly-inventions.html?v=d234672da7e9",
     "bytes": 15184,
     "thumbs": {
-     "front": "thumbs/history-three-deadly-inventions-front.webp?v=d234672da7e9",
-     "back": "thumbs/history-three-deadly-inventions-back.webp?v=d234672da7e9"
+     "front": "thumbs/history-three-deadly-inventions-front.webp?v=19de2d82b525",
+     "back": "thumbs/history-three-deadly-inventions-back.webp?v=19de2d82b525"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -64006,8 +64006,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-titanic-lifeboat-shortfall.html?v=2473f5cb4433",
     "bytes": 7123,
     "thumbs": {
-     "front": "thumbs/history-titanic-lifeboat-shortfall-front.webp?v=2473f5cb4433",
-     "back": "thumbs/history-titanic-lifeboat-shortfall-back.webp?v=2473f5cb4433"
+     "front": "thumbs/history-titanic-lifeboat-shortfall-front.webp?v=74f0aeed2061",
+     "back": "thumbs/history-titanic-lifeboat-shortfall-back.webp?v=74f0aeed2061"
     }
    },
    "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
@@ -64049,8 +64049,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-titanic-open-bulkheads.html?v=5e090af0e92b",
     "bytes": 8176,
     "thumbs": {
-     "front": "thumbs/history-titanic-open-bulkheads-front.webp?v=5e090af0e92b",
-     "back": "thumbs/history-titanic-open-bulkheads-back.webp?v=5e090af0e92b"
+     "front": "thumbs/history-titanic-open-bulkheads-front.webp?v=402dd6bf5d1d",
+     "back": "thumbs/history-titanic-open-bulkheads-back.webp?v=402dd6bf5d1d"
     }
    },
    "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
@@ -64092,8 +64092,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-titanic-propeller-lever.html?v=b82cd8b6d69d",
     "bytes": 12236,
     "thumbs": {
-     "front": "thumbs/history-titanic-propeller-lever-front.webp?v=b82cd8b6d69d",
-     "back": "thumbs/history-titanic-propeller-lever-back.webp?v=b82cd8b6d69d"
+     "front": "thumbs/history-titanic-propeller-lever-front.webp?v=0a47614f67ea",
+     "back": "thumbs/history-titanic-propeller-lever-back.webp?v=0a47614f67ea"
     }
    },
    "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
@@ -64136,8 +64136,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-towers-sway-30cm.html?v=ed0fb83e625f",
     "bytes": 8266,
     "thumbs": {
-     "front": "thumbs/history-towers-sway-30cm-front.webp?v=ed0fb83e625f",
-     "back": "thumbs/history-towers-sway-30cm-back.webp?v=ed0fb83e625f"
+     "front": "thumbs/history-towers-sway-30cm-front.webp?v=0830b7777439",
+     "back": "thumbs/history-towers-sway-30cm-back.webp?v=0830b7777439"
     }
    },
    "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
@@ -64180,8 +64180,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-trieste-window-crack.html?v=40b025a5fe53",
     "bytes": 12091,
     "thumbs": {
-     "front": "thumbs/history-trieste-window-crack-front.webp?v=40b025a5fe53",
-     "back": "thumbs/history-trieste-window-crack-back.webp?v=40b025a5fe53"
+     "front": "thumbs/history-trieste-window-crack-front.webp?v=f679d0da8e46",
+     "back": "thumbs/history-trieste-window-crack-back.webp?v=f679d0da8e46"
     }
    },
    "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
@@ -64223,8 +64223,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-tsar-cloud-height.html?v=f739629aa454",
     "bytes": 18343,
     "thumbs": {
-     "front": "thumbs/history-tsar-cloud-height-front.webp?v=f739629aa454",
-     "back": "thumbs/history-tsar-cloud-height-back.webp?v=f739629aa454"
+     "front": "thumbs/history-tsar-cloud-height-front.webp?v=667b9a2605fc",
+     "back": "thumbs/history-tsar-cloud-height-back.webp?v=667b9a2605fc"
     }
    },
    "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
@@ -64266,8 +64266,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-turing-weather-crib.html?v=7673c082beae",
     "bytes": 9883,
     "thumbs": {
-     "front": "thumbs/history-turing-weather-crib-front.webp?v=7673c082beae",
-     "back": "thumbs/history-turing-weather-crib-back.webp?v=7673c082beae"
+     "front": "thumbs/history-turing-weather-crib-front.webp?v=38403d5869ee",
+     "back": "thumbs/history-turing-weather-crib-back.webp?v=38403d5869ee"
     }
    },
    "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
@@ -64309,8 +64309,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-un-partition-scale.html?v=6b14ad06341e",
     "bytes": 18405,
     "thumbs": {
-     "front": "thumbs/history-un-partition-scale-front.webp?v=6b14ad06341e",
-     "back": "thumbs/history-un-partition-scale-back.webp?v=6b14ad06341e"
+     "front": "thumbs/history-un-partition-scale-front.webp?v=fde455f09b8d",
+     "back": "thumbs/history-un-partition-scale-back.webp?v=fde455f09b8d"
     }
    },
    "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
@@ -64352,8 +64352,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-us-iran-axis.html?v=156bdb668fbb",
     "bytes": 8509,
     "thumbs": {
-     "front": "thumbs/history-us-iran-axis-front.webp?v=156bdb668fbb",
-     "back": "thumbs/history-us-iran-axis-back.webp?v=156bdb668fbb"
+     "front": "thumbs/history-us-iran-axis-front.webp?v=521e199d73be",
+     "back": "thumbs/history-us-iran-axis-back.webp?v=521e199d73be"
     }
    },
    "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
@@ -64396,8 +64396,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-us-warhead-inventory.html?v=9b5d4b455a29",
     "bytes": 7622,
     "thumbs": {
-     "front": "thumbs/history-us-warhead-inventory-front.webp?v=9b5d4b455a29",
-     "back": "thumbs/history-us-warhead-inventory-back.webp?v=9b5d4b455a29"
+     "front": "thumbs/history-us-warhead-inventory-front.webp?v=64957e02d25d",
+     "back": "thumbs/history-us-warhead-inventory-back.webp?v=64957e02d25d"
     }
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
@@ -64440,8 +64440,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-vajont-four-minutes.html?v=e315ae5d29af",
     "bytes": 24850,
     "thumbs": {
-     "front": "thumbs/history-vajont-four-minutes-front.webp?v=e315ae5d29af",
-     "back": "thumbs/history-vajont-four-minutes-back.webp?v=e315ae5d29af"
+     "front": "thumbs/history-vajont-four-minutes-front.webp?v=984cc3e0b91f",
+     "back": "thumbs/history-vajont-four-minutes-back.webp?v=984cc3e0b91f"
     }
    },
    "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
@@ -64483,8 +64483,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-vajont-lake-710.html?v=0e3ad0dc3727",
     "bytes": 9148,
     "thumbs": {
-     "front": "thumbs/history-vajont-lake-710-front.webp?v=0e3ad0dc3727",
-     "back": "thumbs/history-vajont-lake-710-back.webp?v=0e3ad0dc3727"
+     "front": "thumbs/history-vajont-lake-710-front.webp?v=0fc7be88b68b",
+     "back": "thumbs/history-vajont-lake-710-back.webp?v=0fc7be88b68b"
     }
    },
    "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
@@ -64526,8 +64526,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-vesuvius-first-film.html?v=70d42ef87c1f",
     "bytes": 11039,
     "thumbs": {
-     "front": "thumbs/history-vesuvius-first-film-front.webp?v=70d42ef87c1f",
-     "back": "thumbs/history-vesuvius-first-film-back.webp?v=70d42ef87c1f"
+     "front": "thumbs/history-vesuvius-first-film-front.webp?v=517ba702c79d",
+     "back": "thumbs/history-vesuvius-first-film-back.webp?v=517ba702c79d"
     }
    },
    "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
@@ -64570,8 +64570,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-walled-city-crowd.html?v=488629432771",
     "bytes": 17458,
     "thumbs": {
-     "front": "thumbs/history-walled-city-crowd-front.webp?v=488629432771",
-     "back": "thumbs/history-walled-city-crowd-back.webp?v=488629432771"
+     "front": "thumbs/history-walled-city-crowd-front.webp?v=c1e268880edc",
+     "back": "thumbs/history-walled-city-crowd-back.webp?v=c1e268880edc"
     }
    },
    "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
@@ -64614,8 +64614,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-weighing-the-air.html?v=8031ee0c404c",
     "bytes": 16052,
     "thumbs": {
-     "front": "thumbs/history-weighing-the-air-front.webp?v=8031ee0c404c",
-     "back": "thumbs/history-weighing-the-air-back.webp?v=8031ee0c404c"
+     "front": "thumbs/history-weighing-the-air-front.webp?v=88cf97371f1a",
+     "back": "thumbs/history-weighing-the-air-back.webp?v=88cf97371f1a"
     }
    },
    "source": "Veritasium, “World's Longest Straw” (YouTube, 2012)",
@@ -64657,8 +64657,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-welchman-diagonal-board.html?v=afb68b1a3419",
     "bytes": 8743,
     "thumbs": {
-     "front": "thumbs/history-welchman-diagonal-board-front.webp?v=afb68b1a3419",
-     "back": "thumbs/history-welchman-diagonal-board-back.webp?v=afb68b1a3419"
+     "front": "thumbs/history-welchman-diagonal-board-front.webp?v=0aecdd62a0c9",
+     "back": "thumbs/history-welchman-diagonal-board-back.webp?v=0aecdd62a0c9"
     }
    },
    "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
@@ -64700,8 +64700,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/history-wet-sand-sled.html?v=55cd0eac70c0",
     "bytes": 11167,
     "thumbs": {
-     "front": "thumbs/history-wet-sand-sled-front.webp?v=55cd0eac70c0",
-     "back": "thumbs/history-wet-sand-sled-back.webp?v=55cd0eac70c0"
+     "front": "thumbs/history-wet-sand-sled-front.webp?v=b59b4e63fb7d",
+     "back": "thumbs/history-wet-sand-sled-back.webp?v=b59b4e63fb7d"
     }
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
@@ -64894,8 +64894,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-acetaldehyde-liver.html?v=22851f2dd3f1",
     "bytes": 27772,
     "thumbs": {
-     "front": "thumbs/human_body-acetaldehyde-liver-front.webp?v=22851f2dd3f1",
-     "back": "thumbs/human_body-acetaldehyde-liver-back.webp?v=22851f2dd3f1"
+     "front": "thumbs/human_body-acetaldehyde-liver-front.webp?v=45860d673d81",
+     "back": "thumbs/human_body-acetaldehyde-liver-back.webp?v=45860d673d81"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -65049,8 +65049,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-alcohol-heat-loss.html?v=1cf1dd792533",
     "bytes": 11005,
     "thumbs": {
-     "front": "thumbs/human_body-alcohol-heat-loss-front.webp?v=1cf1dd792533",
-     "back": "thumbs/human_body-alcohol-heat-loss-back.webp?v=1cf1dd792533"
+     "front": "thumbs/human_body-alcohol-heat-loss-front.webp?v=a00ebe4cc9a5",
+     "back": "thumbs/human_body-alcohol-heat-loss-back.webp?v=a00ebe4cc9a5"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
@@ -65092,8 +65092,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-alcohol-neuron-apoptosis.html?v=7fc35c2c5f38",
     "bytes": 8285,
     "thumbs": {
-     "front": "thumbs/human_body-alcohol-neuron-apoptosis-front.webp?v=7fc35c2c5f38",
-     "back": "thumbs/human_body-alcohol-neuron-apoptosis-back.webp?v=7fc35c2c5f38"
+     "front": "thumbs/human_body-alcohol-neuron-apoptosis-front.webp?v=08cd40ce5256",
+     "back": "thumbs/human_body-alcohol-neuron-apoptosis-back.webp?v=08cd40ce5256"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
@@ -65136,8 +65136,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-alcohol-synapse.html?v=2d6dd656ba6b",
     "bytes": 15782,
     "thumbs": {
-     "front": "thumbs/human_body-alcohol-synapse-front.webp?v=2d6dd656ba6b",
-     "back": "thumbs/human_body-alcohol-synapse-back.webp?v=2d6dd656ba6b"
+     "front": "thumbs/human_body-alcohol-synapse-front.webp?v=5447c293c115",
+     "back": "thumbs/human_body-alcohol-synapse-back.webp?v=5447c293c115"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
@@ -65317,8 +65317,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-antiperspirant-pore-plug.html?v=e6dc609d0597",
     "bytes": 9248,
     "thumbs": {
-     "front": "thumbs/human_body-antiperspirant-pore-plug-front.webp?v=e6dc609d0597",
-     "back": "thumbs/human_body-antiperspirant-pore-plug-back.webp?v=e6dc609d0597"
+     "front": "thumbs/human_body-antiperspirant-pore-plug-front.webp?v=998d2797e354",
+     "back": "thumbs/human_body-antiperspirant-pore-plug-back.webp?v=998d2797e354"
     }
    },
    "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
@@ -65889,8 +65889,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-blastocyst-membrane-shield.html?v=fb2a6bde93e2",
     "bytes": 8532,
     "thumbs": {
-     "front": "thumbs/human_body-blastocyst-membrane-shield-front.webp?v=fb2a6bde93e2",
-     "back": "thumbs/human_body-blastocyst-membrane-shield-back.webp?v=fb2a6bde93e2"
+     "front": "thumbs/human_body-blastocyst-membrane-shield-front.webp?v=cba6fd46e34d",
+     "back": "thumbs/human_body-blastocyst-membrane-shield-back.webp?v=cba6fd46e34d"
     }
    },
    "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
@@ -66807,8 +66807,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-bone-powder-texture.html?v=93d7f016fe25",
     "bytes": 7594,
     "thumbs": {
-     "front": "thumbs/human_body-bone-powder-texture-front.webp?v=93d7f016fe25",
-     "back": "thumbs/human_body-bone-powder-texture-back.webp?v=93d7f016fe25"
+     "front": "thumbs/human_body-bone-powder-texture-front.webp?v=bcebae064b8a",
+     "back": "thumbs/human_body-bone-powder-texture-back.webp?v=bcebae064b8a"
     }
    },
    "source": "Geopop, “Come avviene la cremazione dal punto di vista tecnico” (YouTube, 2022)",
@@ -68408,8 +68408,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-caffeine-steals-seat.html?v=1bcb88b4f392",
     "bytes": 8476,
     "thumbs": {
-     "front": "thumbs/human_body-caffeine-steals-seat-front.webp?v=1bcb88b4f392",
-     "back": "thumbs/human_body-caffeine-steals-seat-back.webp?v=1bcb88b4f392"
+     "front": "thumbs/human_body-caffeine-steals-seat-front.webp?v=baf0a67f3afd",
+     "back": "thumbs/human_body-caffeine-steals-seat-back.webp?v=baf0a67f3afd"
     }
    },
    "source": "Geopop, “Ho bevuto 4 caffè tutti insieme: gli effetti della caffeina sul corpo umano e sul cervello” (YouTube, 2024)",
@@ -69176,8 +69176,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-coca-hunger-thirst.html?v=65c98e22e91f",
     "bytes": 8086,
     "thumbs": {
-     "front": "thumbs/human_body-coca-hunger-thirst-front.webp?v=65c98e22e91f",
-     "back": "thumbs/human_body-coca-hunger-thirst-back.webp?v=65c98e22e91f"
+     "front": "thumbs/human_body-coca-hunger-thirst-front.webp?v=a4ec9b416121",
+     "back": "thumbs/human_body-coca-hunger-thirst-back.webp?v=a4ec9b416121"
     }
    },
    "source": "Geopop, “Viaggio a Potosi, nella miniera d'argento boliviana: una realtá sconcertante” (YouTube, 2019)",
@@ -69219,8 +69219,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-collapse-outruns-brain.html?v=de36f16c96fb",
     "bytes": 8843,
     "thumbs": {
-     "front": "thumbs/human_body-collapse-outruns-brain-front.webp?v=de36f16c96fb",
-     "back": "thumbs/human_body-collapse-outruns-brain-back.webp?v=de36f16c96fb"
+     "front": "thumbs/human_body-collapse-outruns-brain-front.webp?v=658e303af3e4",
+     "back": "thumbs/human_body-collapse-outruns-brain-back.webp?v=658e303af3e4"
     }
    },
    "source": "Geopop, “Quanto tempo è durata l'implosione del Titan e perché si è verificata solo alla 5a immersione?” (YouTube, 2023)",
@@ -69897,8 +69897,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-dream-switch.html?v=259a01228872",
     "bytes": 21721,
     "thumbs": {
-     "front": "thumbs/human_body-dream-switch-front.webp?v=259a01228872",
-     "back": "thumbs/human_body-dream-switch-back.webp?v=259a01228872"
+     "front": "thumbs/human_body-dream-switch-front.webp?v=5fd9257362c2",
+     "back": "thumbs/human_body-dream-switch-back.webp?v=5fd9257362c2"
     }
    },
    "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
@@ -69940,8 +69940,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-egg-breaks-spell.html?v=d21217a6880b",
     "bytes": 10203,
     "thumbs": {
-     "front": "thumbs/human_body-egg-breaks-spell-front.webp?v=d21217a6880b",
-     "back": "thumbs/human_body-egg-breaks-spell-back.webp?v=d21217a6880b"
+     "front": "thumbs/human_body-egg-breaks-spell-front.webp?v=4b570592aec6",
+     "back": "thumbs/human_body-egg-breaks-spell-back.webp?v=4b570592aec6"
     }
    },
    "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
@@ -69983,8 +69983,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-egg-chemical-call.html?v=fdec4d2d16e7",
     "bytes": 11743,
     "thumbs": {
-     "front": "thumbs/human_body-egg-chemical-call-front.webp?v=fdec4d2d16e7",
-     "back": "thumbs/human_body-egg-chemical-call-back.webp?v=fdec4d2d16e7"
+     "front": "thumbs/human_body-egg-chemical-call-front.webp?v=f81d9ff7c280",
+     "back": "thumbs/human_body-egg-chemical-call-back.webp?v=f81d9ff7c280"
     }
    },
    "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
@@ -70138,8 +70138,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-final-push-phase.html?v=8e4a62d7fbce",
     "bytes": 10133,
     "thumbs": {
-     "front": "thumbs/human_body-final-push-phase-front.webp?v=8e4a62d7fbce",
-     "back": "thumbs/human_body-final-push-phase-back.webp?v=8e4a62d7fbce"
+     "front": "thumbs/human_body-final-push-phase-front.webp?v=aee0837d6a8b",
+     "back": "thumbs/human_body-final-push-phase-back.webp?v=aee0837d6a8b"
     }
    },
    "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
@@ -70667,8 +70667,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-forgotten-dreams.html?v=042120f5447f",
     "bytes": 10798,
     "thumbs": {
-     "front": "thumbs/human_body-forgotten-dreams-front.webp?v=042120f5447f",
-     "back": "thumbs/human_body-forgotten-dreams-back.webp?v=042120f5447f"
+     "front": "thumbs/human_body-forgotten-dreams-front.webp?v=d9e4ff614599",
+     "back": "thumbs/human_body-forgotten-dreams-back.webp?v=d9e4ff614599"
     }
    },
    "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
@@ -70710,8 +70710,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-freedive-hardest-depth.html?v=24f6c8f46bef",
     "bytes": 10402,
     "thumbs": {
-     "front": "thumbs/human_body-freedive-hardest-depth-front.webp?v=24f6c8f46bef",
-     "back": "thumbs/human_body-freedive-hardest-depth-back.webp?v=24f6c8f46bef"
+     "front": "thumbs/human_body-freedive-hardest-depth-front.webp?v=7da639fd87a7",
+     "back": "thumbs/human_body-freedive-hardest-depth-back.webp?v=7da639fd87a7"
     }
    },
    "source": "Geopop, “Immergersi in apnea a 100 metri di profondità. Le tecniche del freediving con Antonio Mogavero” (YouTube, 2022)",
@@ -70753,8 +70753,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-freediving-burning-phase.html?v=37da6ab32ff5",
     "bytes": 12895,
     "thumbs": {
-     "front": "thumbs/human_body-freediving-burning-phase-front.webp?v=37da6ab32ff5",
-     "back": "thumbs/human_body-freediving-burning-phase-back.webp?v=37da6ab32ff5"
+     "front": "thumbs/human_body-freediving-burning-phase-front.webp?v=43f74c47b9ce",
+     "back": "thumbs/human_body-freediving-burning-phase-back.webp?v=43f74c47b9ce"
     }
    },
    "source": "Geopop, “Immergersi in apnea a 100 metri di profondità. Le tecniche del freediving con Antonio Mogavero” (YouTube, 2022)",
@@ -71564,8 +71564,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-habits-mark-genes.html?v=0748afc878de",
     "bytes": 26742,
     "thumbs": {
-     "front": "thumbs/human_body-habits-mark-genes-front.webp?v=0748afc878de",
-     "back": "thumbs/human_body-habits-mark-genes-back.webp?v=0748afc878de"
+     "front": "thumbs/human_body-habits-mark-genes-front.webp?v=f9330fefb7bd",
+     "back": "thumbs/human_body-habits-mark-genes-back.webp?v=f9330fefb7bd"
     }
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
@@ -71608,8 +71608,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-hangover-headache-dehydration.html?v=e7e890c7c09d",
     "bytes": 8409,
     "thumbs": {
-     "front": "thumbs/human_body-hangover-headache-dehydration-front.webp?v=e7e890c7c09d",
-     "back": "thumbs/human_body-hangover-headache-dehydration-back.webp?v=e7e890c7c09d"
+     "front": "thumbs/human_body-hangover-headache-dehydration-front.webp?v=f707246bafa7",
+     "back": "thumbs/human_body-hangover-headache-dehydration-back.webp?v=f707246bafa7"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
@@ -72691,8 +72691,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-highway-hypnosis.html?v=0ec664d77b6b",
     "bytes": 21264,
     "thumbs": {
-     "front": "thumbs/human_body-highway-hypnosis-front.webp?v=0ec664d77b6b",
-     "back": "thumbs/human_body-highway-hypnosis-back.webp?v=0ec664d77b6b"
+     "front": "thumbs/human_body-highway-hypnosis-front.webp?v=d5d1e2722165",
+     "back": "thumbs/human_body-highway-hypnosis-back.webp?v=d5d1e2722165"
     }
    },
    "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
@@ -72734,8 +72734,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-humidity-traps-sweat.html?v=88a60baf57b0",
     "bytes": 9062,
     "thumbs": {
-     "front": "thumbs/human_body-humidity-traps-sweat-front.webp?v=88a60baf57b0",
-     "back": "thumbs/human_body-humidity-traps-sweat-back.webp?v=88a60baf57b0"
+     "front": "thumbs/human_body-humidity-traps-sweat-front.webp?v=ee6160a05ab6",
+     "back": "thumbs/human_body-humidity-traps-sweat-back.webp?v=ee6160a05ab6"
     }
    },
    "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",
@@ -72892,8 +72892,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-hyper-g-dizziness.html?v=9a047315505a",
     "bytes": 9318,
     "thumbs": {
-     "front": "thumbs/human_body-hyper-g-dizziness-front.webp?v=9a047315505a",
-     "back": "thumbs/human_body-hyper-g-dizziness-back.webp?v=9a047315505a"
+     "front": "thumbs/human_body-hyper-g-dizziness-front.webp?v=b3438260475d",
+     "back": "thumbs/human_body-hyper-g-dizziness-back.webp?v=b3438260475d"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -72935,8 +72935,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-hyper-g-head.html?v=f3ddd2f40b7c",
     "bytes": 29821,
     "thumbs": {
-     "front": "thumbs/human_body-hyper-g-head-front.webp?v=f3ddd2f40b7c",
-     "back": "thumbs/human_body-hyper-g-head-back.webp?v=f3ddd2f40b7c"
+     "front": "thumbs/human_body-hyper-g-head-front.webp?v=718b26e69a08",
+     "back": "thumbs/human_body-hyper-g-head-back.webp?v=718b26e69a08"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -72979,8 +72979,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-inherited-gene-switches.html?v=087ee3b3192d",
     "bytes": 21014,
     "thumbs": {
-     "front": "thumbs/human_body-inherited-gene-switches-front.webp?v=087ee3b3192d",
-     "back": "thumbs/human_body-inherited-gene-switches-back.webp?v=087ee3b3192d"
+     "front": "thumbs/human_body-inherited-gene-switches-front.webp?v=5933cc436715",
+     "back": "thumbs/human_body-inherited-gene-switches-back.webp?v=5933cc436715"
     }
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
@@ -73021,8 +73021,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-ink-meets-macrophages.html?v=764f549824a8",
     "bytes": 9672,
     "thumbs": {
-     "front": "thumbs/human_body-ink-meets-macrophages-front.webp?v=764f549824a8",
-     "back": "thumbs/human_body-ink-meets-macrophages-back.webp?v=764f549824a8"
+     "front": "thumbs/human_body-ink-meets-macrophages-front.webp?v=f48cc83b2ca9",
+     "back": "thumbs/human_body-ink-meets-macrophages-back.webp?v=f48cc83b2ca9"
     }
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
@@ -73063,8 +73063,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-lead-hardened-arteries.html?v=06621a253968",
     "bytes": 23797,
     "thumbs": {
-     "front": "thumbs/human_body-lead-hardened-arteries-front.webp?v=06621a253968",
-     "back": "thumbs/human_body-lead-hardened-arteries-back.webp?v=06621a253968"
+     "front": "thumbs/human_body-lead-hardened-arteries-front.webp?v=49a20a043e12",
+     "back": "thumbs/human_body-lead-hardened-arteries-back.webp?v=49a20a043e12"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -74386,8 +74386,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-love-chemistry.html?v=fa87769dca0c",
     "bytes": 10630,
     "thumbs": {
-     "front": "thumbs/human_body-love-chemistry-front.webp?v=fa87769dca0c",
-     "back": "thumbs/human_body-love-chemistry-back.webp?v=fa87769dca0c"
+     "front": "thumbs/human_body-love-chemistry-front.webp?v=1881bb06d1cc",
+     "back": "thumbs/human_body-love-chemistry-back.webp?v=1881bb06d1cc"
     }
    },
    "source": "Geopop, “Cosa succede nel nostro cervello quando ci innamoriamo? La biochimica dell’amore” (YouTube, 2025)",
@@ -74430,8 +74430,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-love-survival-mechanism.html?v=03d1e5d0cc60",
     "bytes": 9111,
     "thumbs": {
-     "front": "thumbs/human_body-love-survival-mechanism-front.webp?v=03d1e5d0cc60",
-     "back": "thumbs/human_body-love-survival-mechanism-back.webp?v=03d1e5d0cc60"
+     "front": "thumbs/human_body-love-survival-mechanism-front.webp?v=e8b7d82db330",
+     "back": "thumbs/human_body-love-survival-mechanism-back.webp?v=e8b7d82db330"
     }
    },
    "source": "Geopop, “Cosa succede nel nostro cervello quando ci innamoriamo? La biochimica dell’amore” (YouTube, 2025)",
@@ -74473,8 +74473,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-mescaline-serotonin-locks.html?v=97cd82bb10e1",
     "bytes": 8523,
     "thumbs": {
-     "front": "thumbs/human_body-mescaline-serotonin-locks-front.webp?v=97cd82bb10e1",
-     "back": "thumbs/human_body-mescaline-serotonin-locks-back.webp?v=97cd82bb10e1"
+     "front": "thumbs/human_body-mescaline-serotonin-locks-front.webp?v=fb53e44d4f29",
+     "back": "thumbs/human_body-mescaline-serotonin-locks-back.webp?v=fb53e44d4f29"
     }
    },
    "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",
@@ -75059,8 +75059,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-mosquito-dna-spots.html?v=a39a2a8cfe69",
     "bytes": 17576,
     "thumbs": {
-     "front": "thumbs/human_body-mosquito-dna-spots-front.webp?v=a39a2a8cfe69",
-     "back": "thumbs/human_body-mosquito-dna-spots-back.webp?v=a39a2a8cfe69"
+     "front": "thumbs/human_body-mosquito-dna-spots-front.webp?v=03883351b79d",
+     "back": "thumbs/human_body-mosquito-dna-spots-back.webp?v=03883351b79d"
     }
    },
    "source": "Veritasium, “Why Mosquitoes Bite Some People More Than Others” (YouTube, 2018)",
@@ -75711,8 +75711,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-one-beer-curve.html?v=4de0388f1ad3",
     "bytes": 14830,
     "thumbs": {
-     "front": "thumbs/human_body-one-beer-curve-front.webp?v=4de0388f1ad3",
-     "back": "thumbs/human_body-one-beer-curve-back.webp?v=4de0388f1ad3"
+     "front": "thumbs/human_body-one-beer-curve-front.webp?v=14b73f0e2dfd",
+     "back": "thumbs/human_body-one-beer-curve-back.webp?v=14b73f0e2dfd"
     }
    },
    "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
@@ -75755,8 +75755,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-one-strong-beer.html?v=a8996c5e1bfe",
     "bytes": 9817,
     "thumbs": {
-     "front": "thumbs/human_body-one-strong-beer-front.webp?v=a8996c5e1bfe",
-     "back": "thumbs/human_body-one-strong-beer-back.webp?v=a8996c5e1bfe"
+     "front": "thumbs/human_body-one-strong-beer-front.webp?v=471a790f1332",
+     "back": "thumbs/human_body-one-strong-beer-back.webp?v=471a790f1332"
     }
    },
    "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
@@ -75797,8 +75797,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-osmotic-pressure-cells.html?v=7dcfd3ddd99c",
     "bytes": 11875,
     "thumbs": {
-     "front": "thumbs/human_body-osmotic-pressure-cells-front.webp?v=7dcfd3ddd99c",
-     "back": "thumbs/human_body-osmotic-pressure-cells-back.webp?v=7dcfd3ddd99c"
+     "front": "thumbs/human_body-osmotic-pressure-cells-front.webp?v=b6c07fe8c17c",
+     "back": "thumbs/human_body-osmotic-pressure-cells-back.webp?v=b6c07fe8c17c"
     }
    },
    "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
@@ -75958,8 +75958,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-pfas-builds-up.html?v=5271fa706a97",
     "bytes": 6311,
     "thumbs": {
-     "front": "thumbs/human_body-pfas-builds-up-front.webp?v=5271fa706a97",
-     "back": "thumbs/human_body-pfas-builds-up-back.webp?v=5271fa706a97"
+     "front": "thumbs/human_body-pfas-builds-up-front.webp?v=8e4c65af4122",
+     "back": "thumbs/human_body-pfas-builds-up-back.webp?v=8e4c65af4122"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -76001,8 +76001,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-pfas-exit-routes.html?v=915a6302a3d0",
     "bytes": 8975,
     "thumbs": {
-     "front": "thumbs/human_body-pfas-exit-routes-front.webp?v=915a6302a3d0",
-     "back": "thumbs/human_body-pfas-exit-routes-back.webp?v=915a6302a3d0"
+     "front": "thumbs/human_body-pfas-exit-routes-front.webp?v=bb745397fad4",
+     "back": "thumbs/human_body-pfas-exit-routes-back.webp?v=bb745397fad4"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -76044,8 +76044,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-plastic-credit-card.html?v=4d343cba8ac5",
     "bytes": 8778,
     "thumbs": {
-     "front": "thumbs/human_body-plastic-credit-card-front.webp?v=4d343cba8ac5",
-     "back": "thumbs/human_body-plastic-credit-card-back.webp?v=4d343cba8ac5"
+     "front": "thumbs/human_body-plastic-credit-card-front.webp?v=ff2c06b740be",
+     "back": "thumbs/human_body-plastic-credit-card-back.webp?v=ff2c06b740be"
     }
    },
    "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
@@ -76726,8 +76726,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-radiation-breaks-dna.html?v=fdcf1d4f81e6",
     "bytes": 10673,
     "thumbs": {
-     "front": "thumbs/human_body-radiation-breaks-dna-front.webp?v=fdcf1d4f81e6",
-     "back": "thumbs/human_body-radiation-breaks-dna-back.webp?v=fdcf1d4f81e6"
+     "front": "thumbs/human_body-radiation-breaks-dna-front.webp?v=c5c55587a24c",
+     "back": "thumbs/human_body-radiation-breaks-dna-back.webp?v=c5c55587a24c"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -76769,8 +76769,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-radioactive-atom-inside.html?v=e2d97851cb62",
     "bytes": 10558,
     "thumbs": {
-     "front": "thumbs/human_body-radioactive-atom-inside-front.webp?v=e2d97851cb62",
-     "back": "thumbs/human_body-radioactive-atom-inside-back.webp?v=e2d97851cb62"
+     "front": "thumbs/human_body-radioactive-atom-inside-front.webp?v=c98539b217b1",
+     "back": "thumbs/human_body-radioactive-atom-inside-back.webp?v=c98539b217b1"
     }
    },
    "source": "Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)",
@@ -76924,8 +76924,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-salt-free-deodorant.html?v=6e77accddc2b",
     "bytes": 8293,
     "thumbs": {
-     "front": "thumbs/human_body-salt-free-deodorant-front.webp?v=6e77accddc2b",
-     "back": "thumbs/human_body-salt-free-deodorant-back.webp?v=6e77accddc2b"
+     "front": "thumbs/human_body-salt-free-deodorant-front.webp?v=f18178efe010",
+     "back": "thumbs/human_body-salt-free-deodorant-back.webp?v=f18178efe010"
     }
    },
    "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
@@ -76967,8 +76967,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-salt-osmosis-cell.html?v=440d926be25c",
     "bytes": 9652,
     "thumbs": {
-     "front": "thumbs/human_body-salt-osmosis-cell-front.webp?v=440d926be25c",
-     "back": "thumbs/human_body-salt-osmosis-cell-back.webp?v=440d926be25c"
+     "front": "thumbs/human_body-salt-osmosis-cell-front.webp?v=f14cbc22351e",
+     "back": "thumbs/human_body-salt-osmosis-cell-back.webp?v=f14cbc22351e"
     }
    },
    "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
@@ -77011,8 +77011,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-salt-sea-glass.html?v=c89abd80748d",
     "bytes": 9133,
     "thumbs": {
-     "front": "thumbs/human_body-salt-sea-glass-front.webp?v=c89abd80748d",
-     "back": "thumbs/human_body-salt-sea-glass-back.webp?v=c89abd80748d"
+     "front": "thumbs/human_body-salt-sea-glass-front.webp?v=9af9d25a4c46",
+     "back": "thumbs/human_body-salt-sea-glass-back.webp?v=9af9d25a4c46"
     }
    },
    "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
@@ -77054,8 +77054,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-sea-water-harm.html?v=f2056fbc2f87",
     "bytes": 9240,
     "thumbs": {
-     "front": "thumbs/human_body-sea-water-harm-front.webp?v=f2056fbc2f87",
-     "back": "thumbs/human_body-sea-water-harm-back.webp?v=f2056fbc2f87"
+     "front": "thumbs/human_body-sea-water-harm-front.webp?v=a2f86570c463",
+     "back": "thumbs/human_body-sea-water-harm-back.webp?v=a2f86570c463"
     }
    },
    "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
@@ -78133,8 +78133,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-stripy-x-mosaic.html?v=a71861d8c3b0",
     "bytes": 9142,
     "thumbs": {
-     "front": "thumbs/human_body-stripy-x-mosaic-front.webp?v=a71861d8c3b0",
-     "back": "thumbs/human_body-stripy-x-mosaic-back.webp?v=a71861d8c3b0"
+     "front": "thumbs/human_body-stripy-x-mosaic-front.webp?v=2a94d86744de",
+     "back": "thumbs/human_body-stripy-x-mosaic-back.webp?v=2a94d86744de"
     }
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
@@ -78650,8 +78650,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-sweat-evaporation-heat.html?v=2cd269b189f8",
     "bytes": 24291,
     "thumbs": {
-     "front": "thumbs/human_body-sweat-evaporation-heat-front.webp?v=2cd269b189f8",
-     "back": "thumbs/human_body-sweat-evaporation-heat-back.webp?v=2cd269b189f8"
+     "front": "thumbs/human_body-sweat-evaporation-heat-front.webp?v=3f0324c8a063",
+     "back": "thumbs/human_body-sweat-evaporation-heat-back.webp?v=3f0324c8a063"
     }
    },
    "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",
@@ -79079,8 +79079,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-tattoo-ink-relay.html?v=560670909cc1",
     "bytes": 9213,
     "thumbs": {
-     "front": "thumbs/human_body-tattoo-ink-relay-front.webp?v=560670909cc1",
-     "back": "thumbs/human_body-tattoo-ink-relay-back.webp?v=560670909cc1"
+     "front": "thumbs/human_body-tattoo-ink-relay-front.webp?v=9a1eeb1eeefc",
+     "back": "thumbs/human_body-tattoo-ink-relay-back.webp?v=9a1eeb1eeefc"
     }
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
@@ -79502,8 +79502,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-three-smoky-breaths.html?v=a34e1edd090f",
     "bytes": 11517,
     "thumbs": {
-     "front": "thumbs/human_body-three-smoky-breaths-front.webp?v=a34e1edd090f",
-     "back": "thumbs/human_body-three-smoky-breaths-back.webp?v=a34e1edd090f"
+     "front": "thumbs/human_body-three-smoky-breaths-front.webp?v=00564e207a2a",
+     "back": "thumbs/human_body-three-smoky-breaths-back.webp?v=00564e207a2a"
     }
    },
    "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
@@ -79545,8 +79545,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-thrown-from-car.html?v=55c62a20f149",
     "bytes": 11067,
     "thumbs": {
-     "front": "thumbs/human_body-thrown-from-car-front.webp?v=55c62a20f149",
-     "back": "thumbs/human_body-thrown-from-car-back.webp?v=55c62a20f149"
+     "front": "thumbs/human_body-thrown-from-car-front.webp?v=4a93f4233853",
+     "back": "thumbs/human_body-thrown-from-car-back.webp?v=4a93f4233853"
     }
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
@@ -79587,8 +79587,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-uv-retina-damage.html?v=0a1b2f8a557e",
     "bytes": 11610,
     "thumbs": {
-     "front": "thumbs/human_body-uv-retina-damage-front.webp?v=0a1b2f8a557e",
-     "back": "thumbs/human_body-uv-retina-damage-back.webp?v=0a1b2f8a557e"
+     "front": "thumbs/human_body-uv-retina-damage-front.webp?v=bf1d821b9aba",
+     "back": "thumbs/human_body-uv-retina-damage-back.webp?v=bf1d821b9aba"
     }
    },
    "source": "Geopop, “Non guardare mai il sole ad occhio nudo, si potrebbero avere danni alla retina, anche permanenti!” (YouTube, 2026)",
@@ -79630,8 +79630,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-water-only-marathon.html?v=839611390974",
     "bytes": 12685,
     "thumbs": {
-     "front": "thumbs/human_body-water-only-marathon-front.webp?v=839611390974",
-     "back": "thumbs/human_body-water-only-marathon-back.webp?v=839611390974"
+     "front": "thumbs/human_body-water-only-marathon-front.webp?v=8f0f2e3d2d39",
+     "back": "thumbs/human_body-water-only-marathon-back.webp?v=8f0f2e3d2d39"
     }
    },
    "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
@@ -79673,8 +79673,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-water-overdose.html?v=6da0952ffc05",
     "bytes": 11637,
     "thumbs": {
-     "front": "thumbs/human_body-water-overdose-front.webp?v=6da0952ffc05",
-     "back": "thumbs/human_body-water-overdose-back.webp?v=6da0952ffc05"
+     "front": "thumbs/human_body-water-overdose-front.webp?v=8fce0a26144f",
+     "back": "thumbs/human_body-water-overdose-back.webp?v=8fce0a26144f"
     }
    },
    "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
@@ -79908,8 +79908,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/human_body-x-chromosome-silencing.html?v=605f5c1a3baa",
     "bytes": 10537,
     "thumbs": {
-     "front": "thumbs/human_body-x-chromosome-silencing-front.webp?v=605f5c1a3baa",
-     "back": "thumbs/human_body-x-chromosome-silencing-back.webp?v=605f5c1a3baa"
+     "front": "thumbs/human_body-x-chromosome-silencing-front.webp?v=ded48ffad6f2",
+     "back": "thumbs/human_body-x-chromosome-silencing-back.webp?v=ded48ffad6f2"
     }
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
@@ -87080,8 +87080,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/language-lost-scripts-3.html?v=fcbdcd925e23",
     "bytes": 17732,
     "thumbs": {
-     "front": "thumbs/language-lost-scripts-3-front.webp?v=fcbdcd925e23",
-     "back": "thumbs/language-lost-scripts-3-back.webp?v=fcbdcd925e23"
+     "front": "thumbs/language-lost-scripts-3-front.webp?v=7ab46a9feb91",
+     "back": "thumbs/language-lost-scripts-3-back.webp?v=7ab46a9feb91"
     }
    },
    "source": "Chadwick, The Decipherment of Linear B, 1958",
@@ -89905,8 +89905,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-48-hour-shelter.html?v=6ee4a4597ccf",
     "bytes": 18216,
     "thumbs": {
-     "front": "thumbs/life-48-hour-shelter-front.webp?v=6ee4a4597ccf",
-     "back": "thumbs/life-48-hour-shelter-back.webp?v=6ee4a4597ccf"
+     "front": "thumbs/life-48-hour-shelter-front.webp?v=5e16672137c2",
+     "back": "thumbs/life-48-hour-shelter-back.webp?v=5e16672137c2"
     }
    },
    "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
@@ -90279,8 +90279,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-assisted-evacuation-drill.html?v=3b0fa414f458",
     "bytes": 10313,
     "thumbs": {
-     "front": "thumbs/life-assisted-evacuation-drill-front.webp?v=3b0fa414f458",
-     "back": "thumbs/life-assisted-evacuation-drill-back.webp?v=3b0fa414f458"
+     "front": "thumbs/life-assisted-evacuation-drill-front.webp?v=492f3aa12c16",
+     "back": "thumbs/life-assisted-evacuation-drill-back.webp?v=492f3aa12c16"
     }
    },
    "source": "Geopop, “RISCHIO VULCANICO CAMPI FLEGREI: LA SIMULAZIONE D'EVACUAZIONE FUNZIONERA? Considerazioni e dubbi” (YouTube, 2019)",
@@ -91161,8 +91161,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-border-coin-flip.html?v=7edfd08d255c",
     "bytes": 24749,
     "thumbs": {
-     "front": "thumbs/life-border-coin-flip-front.webp?v=7edfd08d255c",
-     "back": "thumbs/life-border-coin-flip-back.webp?v=7edfd08d255c"
+     "front": "thumbs/life-border-coin-flip-front.webp?v=e86cba9120f4",
+     "back": "thumbs/life-border-coin-flip-back.webp?v=e86cba9120f4"
     }
    },
    "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
@@ -91538,8 +91538,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-cage-home-ages.html?v=b8f4eeee259f",
     "bytes": 7180,
     "thumbs": {
-     "front": "thumbs/life-cage-home-ages-front.webp?v=b8f4eeee259f",
-     "back": "thumbs/life-cage-home-ages-back.webp?v=b8f4eeee259f"
+     "front": "thumbs/life-cage-home-ages-front.webp?v=60b394a2a41b",
+     "back": "thumbs/life-cage-home-ages-back.webp?v=60b394a2a41b"
     }
    },
    "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
@@ -91582,8 +91582,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-cage-home-size.html?v=9be251d9e1aa",
     "bytes": 7576,
     "thumbs": {
-     "front": "thumbs/life-cage-home-size-front.webp?v=9be251d9e1aa",
-     "back": "thumbs/life-cage-home-size-back.webp?v=9be251d9e1aa"
+     "front": "thumbs/life-cage-home-size-front.webp?v=3bf6c7a75fca",
+     "back": "thumbs/life-cage-home-size-back.webp?v=3bf6c7a75fca"
     }
    },
    "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
@@ -91624,8 +91624,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-carving-cage-homes.html?v=bce0204f07f0",
     "bytes": 18568,
     "thumbs": {
-     "front": "thumbs/life-carving-cage-homes-front.webp?v=bce0204f07f0",
-     "back": "thumbs/life-carving-cage-homes-back.webp?v=bce0204f07f0"
+     "front": "thumbs/life-carving-cage-homes-front.webp?v=7d5c994b6cf9",
+     "back": "thumbs/life-carving-cage-homes-back.webp?v=7d5c994b6cf9"
     }
    },
    "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
@@ -91667,8 +91667,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-child-miners-potosi.html?v=9786b153687b",
     "bytes": 8788,
     "thumbs": {
-     "front": "thumbs/life-child-miners-potosi-front.webp?v=9786b153687b",
-     "back": "thumbs/life-child-miners-potosi-back.webp?v=9786b153687b"
+     "front": "thumbs/life-child-miners-potosi-front.webp?v=d8c2736169d1",
+     "back": "thumbs/life-child-miners-potosi-back.webp?v=d8c2736169d1"
     }
    },
    "source": "Geopop, “Viaggio a Potosi, nella miniera d'argento boliviana: una realtá sconcertante” (YouTube, 2019)",
@@ -92599,8 +92599,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-death-penalty-homosexuality.html?v=0248e7cdefa6",
     "bytes": 6083,
     "thumbs": {
-     "front": "thumbs/life-death-penalty-homosexuality-front.webp?v=0248e7cdefa6",
-     "back": "thumbs/life-death-penalty-homosexuality-back.webp?v=0248e7cdefa6"
+     "front": "thumbs/life-death-penalty-homosexuality-front.webp?v=0a4e6b710e76",
+     "back": "thumbs/life-death-penalty-homosexuality-back.webp?v=0a4e6b710e76"
     }
    },
    "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
@@ -92864,8 +92864,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-ecuador-murder-rate.html?v=c6a120de4b41",
     "bytes": 15008,
     "thumbs": {
-     "front": "thumbs/life-ecuador-murder-rate-front.webp?v=c6a120de4b41",
-     "back": "thumbs/life-ecuador-murder-rate-back.webp?v=c6a120de4b41"
+     "front": "thumbs/life-ecuador-murder-rate-front.webp?v=e805783ae4c3",
+     "back": "thumbs/life-ecuador-murder-rate-back.webp?v=e805783ae4c3"
     }
    },
    "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
@@ -93441,8 +93441,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-fancy-car-crosswalk.html?v=f45477fbd8ff",
     "bytes": 16265,
     "thumbs": {
-     "front": "thumbs/life-fancy-car-crosswalk-front.webp?v=f45477fbd8ff",
-     "back": "thumbs/life-fancy-car-crosswalk-back.webp?v=f45477fbd8ff"
+     "front": "thumbs/life-fancy-car-crosswalk-front.webp?v=a015843517cc",
+     "back": "thumbs/life-fancy-car-crosswalk-back.webp?v=a015843517cc"
     }
    },
    "source": "Diventare Strong, “Diventa POTENTE in 8 Punti” (YouTube, 2025)",
@@ -93929,8 +93929,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-giving-without-return.html?v=fd818d17a793",
     "bytes": 15365,
     "thumbs": {
-     "front": "thumbs/life-giving-without-return-front.webp?v=fd818d17a793",
-     "back": "thumbs/life-giving-without-return-back.webp?v=fd818d17a793"
+     "front": "thumbs/life-giving-without-return-front.webp?v=47cd51a9d31f",
+     "back": "thumbs/life-giving-without-return-back.webp?v=47cd51a9d31f"
     }
    },
    "source": "Diventare Strong, “Come Diventare Più STRONZI” (YouTube, 2022)",
@@ -94422,8 +94422,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-inch-of-pay.html?v=969e867d6a4d",
     "bytes": 15693,
     "thumbs": {
-     "front": "thumbs/life-inch-of-pay-front.webp?v=969e867d6a4d",
-     "back": "thumbs/life-inch-of-pay-back.webp?v=969e867d6a4d"
+     "front": "thumbs/life-inch-of-pay-front.webp?v=63e3c5228306",
+     "back": "thumbs/life-inch-of-pay-back.webp?v=63e3c5228306"
     }
    },
    "source": "Diventare Strong, “Come apparire Dominanti, Sicuri di sé stessi, Determinati, Alpha, Tosti e Produttivi” (YouTube, 2015)",
@@ -94577,8 +94577,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-jerks-dont-climb.html?v=220d08fcc199",
     "bytes": 14503,
     "thumbs": {
-     "front": "thumbs/life-jerks-dont-climb-front.webp?v=220d08fcc199",
-     "back": "thumbs/life-jerks-dont-climb-back.webp?v=220d08fcc199"
+     "front": "thumbs/life-jerks-dont-climb-front.webp?v=5aaec9b8445a",
+     "back": "thumbs/life-jerks-dont-climb-back.webp?v=5aaec9b8445a"
     }
    },
    "source": "Diventare Strong, “Come Diventare STRONZI - 4 Metodi Insoliti !” (YouTube, 2020)",
@@ -95485,8 +95485,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-material-trap.html?v=c8d59b1d2a7e",
     "bytes": 9548,
     "thumbs": {
-     "front": "thumbs/life-material-trap-front.webp?v=c8d59b1d2a7e",
-     "back": "thumbs/life-material-trap-back.webp?v=c8d59b1d2a7e"
+     "front": "thumbs/life-material-trap-front.webp?v=415922379ddf",
+     "back": "thumbs/life-material-trap-back.webp?v=415922379ddf"
     }
    },
    "source": "Diventare Strong, “Mentalità D'Acciaio: 7 Pensieri da Eliminare dalla Tua Mente (Atteggiamento Mentale Vincente Strong)” (YouTube, 2020)",
@@ -96075,8 +96075,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-permanent-time-choice.html?v=94be380f34fe",
     "bytes": 17732,
     "thumbs": {
-     "front": "thumbs/life-permanent-time-choice-front.webp?v=94be380f34fe",
-     "back": "thumbs/life-permanent-time-choice-back.webp?v=94be380f34fe"
+     "front": "thumbs/life-permanent-time-choice-front.webp?v=7cb351878520",
+     "back": "thumbs/life-permanent-time-choice-back.webp?v=7cb351878520"
     }
    },
    "source": "Geopop, “Dall'ora legale all'ora solare: i pro e contro del cambio orario e perché si parla di abolizione” (YouTube, 2022)",
@@ -99801,8 +99801,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/life-who-taught-your-scale.html?v=2e65d4a8de67",
     "bytes": 12525,
     "thumbs": {
-     "front": "thumbs/life-who-taught-your-scale-front.webp?v=2e65d4a8de67",
-     "back": "thumbs/life-who-taught-your-scale-back.webp?v=2e65d4a8de67"
+     "front": "thumbs/life-who-taught-your-scale-front.webp?v=fa1624510719",
+     "back": "thumbs/life-who-taught-your-scale-back.webp?v=fa1624510719"
     }
    },
    "source": "Veritasium, “World's Heaviest Weight” (YouTube, 2017)",
@@ -100101,8 +100101,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-all-nines-minus-one.html?v=755ec5a69827",
     "bytes": 7734,
     "thumbs": {
-     "front": "thumbs/maths-all-nines-minus-one-front.webp?v=755ec5a69827",
-     "back": "thumbs/maths-all-nines-minus-one-back.webp?v=755ec5a69827"
+     "front": "thumbs/maths-all-nines-minus-one-front.webp?v=fc20224c9492",
+     "back": "thumbs/maths-all-nines-minus-one-back.webp?v=fc20224c9492"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -101344,8 +101344,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-borda-spoiler-dial.html?v=36a19336f008",
     "bytes": 17550,
     "thumbs": {
-     "front": "thumbs/maths-borda-spoiler-dial-front.webp?v=36a19336f008",
-     "back": "thumbs/maths-borda-spoiler-dial-back.webp?v=36a19336f008"
+     "front": "thumbs/maths-borda-spoiler-dial-front.webp?v=b3b6df19ed5d",
+     "back": "thumbs/maths-borda-spoiler-dial-back.webp?v=b3b6df19ed5d"
     }
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
@@ -101580,8 +101580,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-coin-extra-turn.html?v=ba47294b6faf",
     "bytes": 8290,
     "thumbs": {
-     "front": "thumbs/maths-coin-extra-turn-front.webp?v=ba47294b6faf",
-     "back": "thumbs/maths-coin-extra-turn-back.webp?v=ba47294b6faf"
+     "front": "thumbs/maths-coin-extra-turn-front.webp?v=d1451f16d9de",
+     "back": "thumbs/maths-coin-extra-turn-back.webp?v=d1451f16d9de"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
@@ -101624,8 +101624,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-coin-rotation-paradox.html?v=72e4f08e903a",
     "bytes": 18569,
     "thumbs": {
-     "front": "thumbs/maths-coin-rotation-paradox-front.webp?v=72e4f08e903a",
-     "back": "thumbs/maths-coin-rotation-paradox-back.webp?v=72e4f08e903a"
+     "front": "thumbs/maths-coin-rotation-paradox-front.webp?v=15b767c5613e",
+     "back": "thumbs/maths-coin-rotation-paradox-back.webp?v=15b767c5613e"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
@@ -101668,8 +101668,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-collatz-loop-length.html?v=6469e4a3bdf5",
     "bytes": 13059,
     "thumbs": {
-     "front": "thumbs/maths-collatz-loop-length-front.webp?v=6469e4a3bdf5",
-     "back": "thumbs/maths-collatz-loop-length-back.webp?v=6469e4a3bdf5"
+     "front": "thumbs/maths-collatz-loop-length-front.webp?v=7bdb843655c1",
+     "back": "thumbs/maths-collatz-loop-length-back.webp?v=7bdb843655c1"
     }
    },
    "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
@@ -101711,8 +101711,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-collatz-peak.html?v=f1fc3fa38569",
     "bytes": 14618,
     "thumbs": {
-     "front": "thumbs/maths-collatz-peak-front.webp?v=f1fc3fa38569",
-     "back": "thumbs/maths-collatz-peak-back.webp?v=f1fc3fa38569"
+     "front": "thumbs/maths-collatz-peak-front.webp?v=521f936d1cd6",
+     "back": "thumbs/maths-collatz-peak-back.webp?v=521f936d1cd6"
     }
    },
    "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
@@ -101754,8 +101754,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-collatz-rival-loop.html?v=bf79b499a036",
     "bytes": 22989,
     "thumbs": {
-     "front": "thumbs/maths-collatz-rival-loop-front.webp?v=bf79b499a036",
-     "back": "thumbs/maths-collatz-rival-loop-back.webp?v=bf79b499a036"
+     "front": "thumbs/maths-collatz-rival-loop-front.webp?v=e2def1a1f3f2",
+     "back": "thumbs/maths-collatz-rival-loop-back.webp?v=e2def1a1f3f2"
     }
    },
    "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
@@ -102232,8 +102232,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-duverger-two-parties.html?v=499028442185",
     "bytes": 17344,
     "thumbs": {
-     "front": "thumbs/maths-duverger-two-parties-front.webp?v=499028442185",
-     "back": "thumbs/maths-duverger-two-parties-back.webp?v=499028442185"
+     "front": "thumbs/maths-duverger-two-parties-front.webp?v=3882a6127606",
+     "back": "thumbs/maths-duverger-two-parties-back.webp?v=3882a6127606"
     }
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
@@ -102275,8 +102275,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-feigenbaum-ratio-ladder.html?v=fb8591648745",
     "bytes": 23590,
     "thumbs": {
-     "front": "thumbs/maths-feigenbaum-ratio-ladder-front.webp?v=fb8591648745",
-     "back": "thumbs/maths-feigenbaum-ratio-ladder-back.webp?v=fb8591648745"
+     "front": "thumbs/maths-feigenbaum-ratio-ladder-front.webp?v=8051c38d4fc5",
+     "back": "thumbs/maths-feigenbaum-ratio-ladder-back.webp?v=8051c38d4fc5"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -102318,8 +102318,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-feigenbaum-universality.html?v=7947c345a9e3",
     "bytes": 6825,
     "thumbs": {
-     "front": "thumbs/maths-feigenbaum-universality-front.webp?v=7947c345a9e3",
-     "back": "thumbs/maths-feigenbaum-universality-back.webp?v=7947c345a9e3"
+     "front": "thumbs/maths-feigenbaum-universality-front.webp?v=2593f79f3110",
+     "back": "thumbs/maths-feigenbaum-universality-back.webp?v=2593f79f3110"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -102360,8 +102360,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-fermat-padic-numbers.html?v=766bb3cef342",
     "bytes": 8246,
     "thumbs": {
-     "front": "thumbs/maths-fermat-padic-numbers-front.webp?v=766bb3cef342",
-     "back": "thumbs/maths-fermat-padic-numbers-back.webp?v=766bb3cef342"
+     "front": "thumbs/maths-fermat-padic-numbers-front.webp?v=3ed1b2f0a546",
+     "back": "thumbs/maths-fermat-padic-numbers-back.webp?v=3ed1b2f0a546"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -102675,8 +102675,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-fibonacci-gaps.html?v=df6fa08ad910",
     "bytes": 23329,
     "thumbs": {
-     "front": "thumbs/maths-fibonacci-gaps-front.webp?v=df6fa08ad910",
-     "back": "thumbs/maths-fibonacci-gaps-back.webp?v=df6fa08ad910"
+     "front": "thumbs/maths-fibonacci-gaps-front.webp?v=0aca54f5d089",
+     "back": "thumbs/maths-fibonacci-gaps-back.webp?v=0aca54f5d089"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -102718,8 +102718,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-flattening-a-sphere.html?v=835e852dcb38",
     "bytes": 9556,
     "thumbs": {
-     "front": "thumbs/maths-flattening-a-sphere-front.webp?v=835e852dcb38",
-     "back": "thumbs/maths-flattening-a-sphere-back.webp?v=835e852dcb38"
+     "front": "thumbs/maths-flattening-a-sphere-front.webp?v=f53894797395",
+     "back": "thumbs/maths-flattening-a-sphere-back.webp?v=f53894797395"
     }
    },
    "source": "Geopop, “L'inganno delle mappe: le vere dimensioni dei Paesi come Russia e USA non sono come crediamo” (YouTube, 2022)",
@@ -103008,8 +103008,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-hakens-knot-scanner.html?v=051bad6d9450",
     "bytes": 19276,
     "thumbs": {
-     "front": "thumbs/maths-hakens-knot-scanner-front.webp?v=051bad6d9450",
-     "back": "thumbs/maths-hakens-knot-scanner-back.webp?v=051bad6d9450"
+     "front": "thumbs/maths-hakens-knot-scanner-front.webp?v=63f46ebc5003",
+     "back": "thumbs/maths-hakens-knot-scanner-back.webp?v=63f46ebc5003"
     }
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
@@ -103051,8 +103051,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-halting-problem.html?v=5e7c9b485c1c",
     "bytes": 17961,
     "thumbs": {
-     "front": "thumbs/maths-halting-problem-front.webp?v=5e7c9b485c1c",
-     "back": "thumbs/maths-halting-problem-back.webp?v=5e7c9b485c1c"
+     "front": "thumbs/maths-halting-problem-front.webp?v=e85f60402123",
+     "back": "thumbs/maths-halting-problem-back.webp?v=e85f60402123"
     }
    },
    "source": "Veritasium, “Math's Fundamental Flaw” (YouTube, 2021)",
@@ -103094,8 +103094,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-hensel-lifting.html?v=0914d9af3127",
     "bytes": 8250,
     "thumbs": {
-     "front": "thumbs/maths-hensel-lifting-front.webp?v=0914d9af3127",
-     "back": "thumbs/maths-hensel-lifting-back.webp?v=0914d9af3127"
+     "front": "thumbs/maths-hensel-lifting-front.webp?v=171d8ce99a51",
+     "back": "thumbs/maths-hensel-lifting-back.webp?v=171d8ce99a51"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -103137,8 +103137,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-hundred-bets-safety.html?v=a63df29c4833",
     "bytes": 9220,
     "thumbs": {
-     "front": "thumbs/maths-hundred-bets-safety-front.webp?v=a63df29c4833",
-     "back": "thumbs/maths-hundred-bets-safety-back.webp?v=a63df29c4833"
+     "front": "thumbs/maths-hundred-bets-safety-front.webp?v=39a72f84e0c3",
+     "back": "thumbs/maths-hundred-bets-safety-back.webp?v=39a72f84e0c3"
     }
    },
    "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
@@ -103180,8 +103180,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-hundred-good-bets.html?v=f76aaa5a491e",
     "bytes": 7250,
     "thumbs": {
-     "front": "thumbs/maths-hundred-good-bets-front.webp?v=f76aaa5a491e",
-     "back": "thumbs/maths-hundred-good-bets-back.webp?v=f76aaa5a491e"
+     "front": "thumbs/maths-hundred-good-bets-front.webp?v=a879e225ab38",
+     "back": "thumbs/maths-hundred-good-bets-back.webp?v=a879e225ab38"
     }
    },
    "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
@@ -103222,8 +103222,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-kepler-proof-dial.html?v=31663e5cc03f",
     "bytes": 17912,
     "thumbs": {
-     "front": "thumbs/maths-kepler-proof-dial-front.webp?v=31663e5cc03f",
-     "back": "thumbs/maths-kepler-proof-dial-back.webp?v=31663e5cc03f"
+     "front": "thumbs/maths-kepler-proof-dial-front.webp?v=4f5ff2a16db2",
+     "back": "thumbs/maths-kepler-proof-dial-back.webp?v=4f5ff2a16db2"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -103264,8 +103264,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-knot-equivalence.html?v=6944baa78a6e",
     "bytes": 16638,
     "thumbs": {
-     "front": "thumbs/maths-knot-equivalence-front.webp?v=6944baa78a6e",
-     "back": "thumbs/maths-knot-equivalence-back.webp?v=6944baa78a6e"
+     "front": "thumbs/maths-knot-equivalence-front.webp?v=0b4bead7241c",
+     "back": "thumbs/maths-knot-equivalence-back.webp?v=0b4bead7241c"
     }
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
@@ -103307,8 +103307,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-knot-theory-renaissance.html?v=ba97beca01af",
     "bytes": 20469,
     "thumbs": {
-     "front": "thumbs/maths-knot-theory-renaissance-front.webp?v=ba97beca01af",
-     "back": "thumbs/maths-knot-theory-renaissance-back.webp?v=ba97beca01af"
+     "front": "thumbs/maths-knot-theory-renaissance-front.webp?v=5543275aa3cf",
+     "back": "thumbs/maths-knot-theory-renaissance-back.webp?v=5543275aa3cf"
     }
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
@@ -103349,8 +103349,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-knot-tricolorability.html?v=69944b802f2a",
     "bytes": 8856,
     "thumbs": {
-     "front": "thumbs/maths-knot-tricolorability-front.webp?v=69944b802f2a",
-     "back": "thumbs/maths-knot-tricolorability-back.webp?v=69944b802f2a"
+     "front": "thumbs/maths-knot-tricolorability-front.webp?v=e6b8d7aaf989",
+     "back": "thumbs/maths-knot-tricolorability-back.webp?v=e6b8d7aaf989"
     }
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
@@ -103815,8 +103815,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-mandelbrot-bifurcation-slice.html?v=6bd7968dee50",
     "bytes": 12494,
     "thumbs": {
-     "front": "thumbs/maths-mandelbrot-bifurcation-slice-front.webp?v=6bd7968dee50",
-     "back": "thumbs/maths-mandelbrot-bifurcation-slice-back.webp?v=6bd7968dee50"
+     "front": "thumbs/maths-mandelbrot-bifurcation-slice-front.webp?v=3d3c5a506875",
+     "back": "thumbs/maths-mandelbrot-bifurcation-slice-back.webp?v=3d3c5a506875"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -103858,8 +103858,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-mercator-greenland.html?v=66a77755f790",
     "bytes": 7704,
     "thumbs": {
-     "front": "thumbs/maths-mercator-greenland-front.webp?v=66a77755f790",
-     "back": "thumbs/maths-mercator-greenland-back.webp?v=66a77755f790"
+     "front": "thumbs/maths-mercator-greenland-front.webp?v=f43ad213e1b1",
+     "back": "thumbs/maths-mercator-greenland-back.webp?v=f43ad213e1b1"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -103901,8 +103901,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-mercator-russia.html?v=45df57557cd0",
     "bytes": 21891,
     "thumbs": {
-     "front": "thumbs/maths-mercator-russia-front.webp?v=45df57557cd0",
-     "back": "thumbs/maths-mercator-russia-back.webp?v=45df57557cd0"
+     "front": "thumbs/maths-mercator-russia-front.webp?v=700593de5bca",
+     "back": "thumbs/maths-mercator-russia-back.webp?v=700593de5bca"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -103944,8 +103944,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-mercator-stretch.html?v=b0333341b2de",
     "bytes": 8791,
     "thumbs": {
-     "front": "thumbs/maths-mercator-stretch-front.webp?v=b0333341b2de",
-     "back": "thumbs/maths-mercator-stretch-back.webp?v=b0333341b2de"
+     "front": "thumbs/maths-mercator-stretch-front.webp?v=7f2addd641f6",
+     "back": "thumbs/maths-mercator-stretch-back.webp?v=7f2addd641f6"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -103987,8 +103987,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-mersenne-glass-rack.html?v=6d5006b91ea4",
     "bytes": 13545,
     "thumbs": {
-     "front": "thumbs/maths-mersenne-glass-rack-front.webp?v=6d5006b91ea4",
-     "back": "thumbs/maths-mersenne-glass-rack-back.webp?v=6d5006b91ea4"
+     "front": "thumbs/maths-mersenne-glass-rack-front.webp?v=3b297c93dc29",
+     "back": "thumbs/maths-mersenne-glass-rack-back.webp?v=3b297c93dc29"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -104408,8 +104408,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-odd-perfect-bound.html?v=4f6a9acd7afe",
     "bytes": 7651,
     "thumbs": {
-     "front": "thumbs/maths-odd-perfect-bound-front.webp?v=4f6a9acd7afe",
-     "back": "thumbs/maths-odd-perfect-bound-back.webp?v=4f6a9acd7afe"
+     "front": "thumbs/maths-odd-perfect-bound-front.webp?v=8bcedd53b76c",
+     "back": "thumbs/maths-odd-perfect-bound-back.webp?v=8bcedd53b76c"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -104451,8 +104451,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-odd-perfect-numbers.html?v=1f8b847e1ecc",
     "bytes": 9582,
     "thumbs": {
-     "front": "thumbs/maths-odd-perfect-numbers-front.webp?v=1f8b847e1ecc",
-     "back": "thumbs/maths-odd-perfect-numbers-back.webp?v=1f8b847e1ecc"
+     "front": "thumbs/maths-odd-perfect-numbers-front.webp?v=c439d96161d4",
+     "back": "thumbs/maths-odd-perfect-numbers-back.webp?v=c439d96161d4"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -104494,8 +104494,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-one-seventh-10adic.html?v=4f653221b30c",
     "bytes": 10211,
     "thumbs": {
-     "front": "thumbs/maths-one-seventh-10adic-front.webp?v=4f653221b30c",
-     "back": "thumbs/maths-one-seventh-10adic-back.webp?v=4f653221b30c"
+     "front": "thumbs/maths-one-seventh-10adic-front.webp?v=5c3e3aa47a7d",
+     "back": "thumbs/maths-one-seventh-10adic-back.webp?v=5c3e3aa47a7d"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -104538,8 +104538,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-padic-own-squares.html?v=cbd36f8969e9",
     "bytes": 8264,
     "thumbs": {
-     "front": "thumbs/maths-padic-own-squares-front.webp?v=cbd36f8969e9",
-     "back": "thumbs/maths-padic-own-squares-back.webp?v=cbd36f8969e9"
+     "front": "thumbs/maths-padic-own-squares-front.webp?v=173e087ec045",
+     "back": "thumbs/maths-padic-own-squares-back.webp?v=173e087ec045"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -104813,8 +104813,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-penrose-golden-ratio.html?v=ee30ccac5a34",
     "bytes": 8551,
     "thumbs": {
-     "front": "thumbs/maths-penrose-golden-ratio-front.webp?v=ee30ccac5a34",
-     "back": "thumbs/maths-penrose-golden-ratio-back.webp?v=ee30ccac5a34"
+     "front": "thumbs/maths-penrose-golden-ratio-front.webp?v=bc3fdd47f173",
+     "back": "thumbs/maths-penrose-golden-ratio-back.webp?v=bc3fdd47f173"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -104856,8 +104856,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-penrose-lookalikes.html?v=f6a1d220935f",
     "bytes": 19701,
     "thumbs": {
-     "front": "thumbs/maths-penrose-lookalikes-front.webp?v=f6a1d220935f",
-     "back": "thumbs/maths-penrose-lookalikes-back.webp?v=f6a1d220935f"
+     "front": "thumbs/maths-penrose-lookalikes-front.webp?v=5f4911c54429",
+     "back": "thumbs/maths-penrose-lookalikes-back.webp?v=5f4911c54429"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -104899,8 +104899,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-pentagons-never-tile.html?v=f3def435e173",
     "bytes": 8537,
     "thumbs": {
-     "front": "thumbs/maths-pentagons-never-tile-front.webp?v=f3def435e173",
-     "back": "thumbs/maths-pentagons-never-tile-back.webp?v=f3def435e173"
+     "front": "thumbs/maths-pentagons-never-tile-front.webp?v=d68bfb33d5e8",
+     "back": "thumbs/maths-pentagons-never-tile-back.webp?v=d68bfb33d5e8"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -105150,8 +105150,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-perfect-tiling.html?v=0274005efdfe",
     "bytes": 20886,
     "thumbs": {
-     "front": "thumbs/maths-perfect-tiling-front.webp?v=0274005efdfe",
-     "back": "thumbs/maths-perfect-tiling-back.webp?v=0274005efdfe"
+     "front": "thumbs/maths-perfect-tiling-front.webp?v=2ab27059ed9c",
+     "back": "thumbs/maths-perfect-tiling-back.webp?v=2ab27059ed9c"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -105193,8 +105193,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-perfect-triangle-cubes.html?v=ffd35a3ce00c",
     "bytes": 9747,
     "thumbs": {
-     "front": "thumbs/maths-perfect-triangle-cubes-front.webp?v=ffd35a3ce00c",
-     "back": "thumbs/maths-perfect-triangle-cubes-back.webp?v=ffd35a3ce00c"
+     "front": "thumbs/maths-perfect-triangle-cubes-front.webp?v=769ce8305999",
+     "back": "thumbs/maths-perfect-triangle-cubes-back.webp?v=769ce8305999"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -105237,8 +105237,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-period-doubling-chaos.html?v=b72ec6d13789",
     "bytes": 9836,
     "thumbs": {
-     "front": "thumbs/maths-period-doubling-chaos-front.webp?v=b72ec6d13789",
-     "back": "thumbs/maths-period-doubling-chaos-back.webp?v=b72ec6d13789"
+     "front": "thumbs/maths-period-doubling-chaos-front.webp?v=6e17f0686c96",
+     "back": "thumbs/maths-period-doubling-chaos-back.webp?v=6e17f0686c96"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -105280,8 +105280,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-period-two-split.html?v=33178ca28fc8",
     "bytes": 8279,
     "thumbs": {
-     "front": "thumbs/maths-period-two-split-front.webp?v=33178ca28fc8",
-     "back": "thumbs/maths-period-two-split-back.webp?v=33178ca28fc8"
+     "front": "thumbs/maths-period-two-split-front.webp?v=6028501b78bd",
+     "back": "thumbs/maths-period-two-split-back.webp?v=6028501b78bd"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -105324,8 +105324,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-perko-pair-knots.html?v=7feb17b77a3d",
     "bytes": 7027,
     "thumbs": {
-     "front": "thumbs/maths-perko-pair-knots-front.webp?v=7feb17b77a3d",
-     "back": "thumbs/maths-perko-pair-knots-back.webp?v=7feb17b77a3d"
+     "front": "thumbs/maths-perko-pair-knots-front.webp?v=417c7676fd8b",
+     "back": "thumbs/maths-perko-pair-knots-back.webp?v=417c7676fd8b"
     }
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
@@ -105367,8 +105367,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-pivotal-voter-dictator.html?v=e34efdd01d71",
     "bytes": 18455,
     "thumbs": {
-     "front": "thumbs/maths-pivotal-voter-dictator-front.webp?v=e34efdd01d71",
-     "back": "thumbs/maths-pivotal-voter-dictator-back.webp?v=e34efdd01d71"
+     "front": "thumbs/maths-pivotal-voter-dictator-front.webp?v=e42301ba424d",
+     "back": "thumbs/maths-pivotal-voter-dictator-back.webp?v=e42301ba424d"
     }
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
@@ -105667,8 +105667,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-pools-of-rock.html?v=95cbc562115c",
     "bytes": 6938,
     "thumbs": {
-     "front": "thumbs/maths-pools-of-rock-front.webp?v=95cbc562115c",
-     "back": "thumbs/maths-pools-of-rock-back.webp?v=95cbc562115c"
+     "front": "thumbs/maths-pools-of-rock-front.webp?v=34d073e736ba",
+     "back": "thumbs/maths-pools-of-rock-back.webp?v=34d073e736ba"
     }
    },
    "source": "Geopop, “La futura eruzione sottomarina del Marsili e le cause del rischio tsunami - l'animazione realistica” (YouTube, 2023)",
@@ -105964,8 +105964,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-question-seventeen.html?v=4f46c36472ff",
     "bytes": 19047,
     "thumbs": {
-     "front": "thumbs/maths-question-seventeen-front.webp?v=4f46c36472ff",
-     "back": "thumbs/maths-question-seventeen-back.webp?v=4f46c36472ff"
+     "front": "thumbs/maths-question-seventeen-front.webp?v=56baf1c342ea",
+     "back": "thumbs/maths-question-seventeen-back.webp?v=56baf1c342ea"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
@@ -106008,8 +106008,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-ranked-choice-paradox.html?v=5f548b125d61",
     "bytes": 9125,
     "thumbs": {
-     "front": "thumbs/maths-ranked-choice-paradox-front.webp?v=5f548b125d61",
-     "back": "thumbs/maths-ranked-choice-paradox-back.webp?v=5f548b125d61"
+     "front": "thumbs/maths-ranked-choice-paradox-front.webp?v=a832502a8528",
+     "back": "thumbs/maths-ranked-choice-paradox-back.webp?v=a832502a8528"
     }
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
@@ -106051,8 +106051,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-reidemeister-upper-bound.html?v=3bae36410ac5",
     "bytes": 31358,
     "thumbs": {
-     "front": "thumbs/maths-reidemeister-upper-bound-front.webp?v=3bae36410ac5",
-     "back": "thumbs/maths-reidemeister-upper-bound-back.webp?v=3bae36410ac5"
+     "front": "thumbs/maths-reidemeister-upper-bound-front.webp?v=143a3a03be6d",
+     "back": "thumbs/maths-reidemeister-upper-bound-back.webp?v=143a3a03be6d"
     }
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
@@ -106348,8 +106348,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-sandpile-any-size.html?v=16a389a24639",
     "bytes": 13456,
     "thumbs": {
-     "front": "thumbs/maths-sandpile-any-size-front.webp?v=16a389a24639",
-     "back": "thumbs/maths-sandpile-any-size-back.webp?v=16a389a24639"
+     "front": "thumbs/maths-sandpile-any-size-front.webp?v=39a50999954a",
+     "back": "thumbs/maths-sandpile-any-size-back.webp?v=39a50999954a"
     }
    },
    "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
@@ -106598,8 +106598,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-spoof-perfect-numbers.html?v=30ad52437048",
     "bytes": 9747,
     "thumbs": {
-     "front": "thumbs/maths-spoof-perfect-numbers-front.webp?v=30ad52437048",
-     "back": "thumbs/maths-spoof-perfect-numbers-back.webp?v=30ad52437048"
+     "front": "thumbs/maths-spoof-perfect-numbers-front.webp?v=6c773784f554",
+     "back": "thumbs/maths-spoof-perfect-numbers-back.webp?v=6c773784f554"
     }
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
@@ -106641,8 +106641,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-st-petersburg.html?v=7309decc650a",
     "bytes": 16151,
     "thumbs": {
-     "front": "thumbs/maths-st-petersburg-front.webp?v=7309decc650a",
-     "back": "thumbs/maths-st-petersburg-back.webp?v=7309decc650a"
+     "front": "thumbs/maths-st-petersburg-front.webp?v=33113adde801",
+     "back": "thumbs/maths-st-petersburg-back.webp?v=33113adde801"
     }
    },
    "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
@@ -106684,8 +106684,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-storm-jar-odds.html?v=0b62d6700c4b",
     "bytes": 15600,
     "thumbs": {
-     "front": "thumbs/maths-storm-jar-odds-front.webp?v=0b62d6700c4b",
-     "back": "thumbs/maths-storm-jar-odds-back.webp?v=0b62d6700c4b"
+     "front": "thumbs/maths-storm-jar-odds-front.webp?v=aa4e9b31339e",
+     "back": "thumbs/maths-storm-jar-odds-back.webp?v=aa4e9b31339e"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -106727,8 +106727,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-tao-arbitrarily-small.html?v=fbfabe72b716",
     "bytes": 14278,
     "thumbs": {
-     "front": "thumbs/maths-tao-arbitrarily-small-front.webp?v=fbfabe72b716",
-     "back": "thumbs/maths-tao-arbitrarily-small-back.webp?v=fbfabe72b716"
+     "front": "thumbs/maths-tao-arbitrarily-small-front.webp?v=2a8b7f4464c3",
+     "back": "thumbs/maths-tao-arbitrarily-small-back.webp?v=2a8b7f4464c3"
     }
    },
    "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
@@ -106770,8 +106770,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-ten-adic-third.html?v=ba84923e565b",
     "bytes": 5466,
     "thumbs": {
-     "front": "thumbs/maths-ten-adic-third-front.webp?v=ba84923e565b",
-     "back": "thumbs/maths-ten-adic-third-back.webp?v=ba84923e565b"
+     "front": "thumbs/maths-ten-adic-third-front.webp?v=4538cf155735",
+     "back": "thumbs/maths-ten-adic-third-back.webp?v=4538cf155735"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -106813,8 +106813,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-three-adic-squares.html?v=da0fbff8e630",
     "bytes": 8605,
     "thumbs": {
-     "front": "thumbs/maths-three-adic-squares-front.webp?v=da0fbff8e630",
-     "back": "thumbs/maths-three-adic-squares-back.webp?v=da0fbff8e630"
+     "front": "thumbs/maths-three-adic-squares-front.webp?v=99ceec76899d",
+     "back": "thumbs/maths-three-adic-squares-back.webp?v=99ceec76899d"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -106856,8 +106856,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-true-but-unprovable.html?v=49b6b8533fee",
     "bytes": 17860,
     "thumbs": {
-     "front": "thumbs/maths-true-but-unprovable-front.webp?v=49b6b8533fee",
-     "back": "thumbs/maths-true-but-unprovable-back.webp?v=49b6b8533fee"
+     "front": "thumbs/maths-true-but-unprovable-front.webp?v=46b926df404e",
+     "back": "thumbs/maths-true-but-unprovable-back.webp?v=46b926df404e"
     }
    },
    "source": "Veritasium, “Math's Fundamental Flaw” (YouTube, 2021)",
@@ -106899,8 +106899,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-two-tiles-never.html?v=e546bd739e50",
     "bytes": 11662,
     "thumbs": {
-     "front": "thumbs/maths-two-tiles-never-front.webp?v=e546bd739e50",
-     "back": "thumbs/maths-two-tiles-never-back.webp?v=e546bd739e50"
+     "front": "thumbs/maths-two-tiles-never-front.webp?v=5c58e5ee2f3f",
+     "back": "thumbs/maths-two-tiles-never-back.webp?v=5c58e5ee2f3f"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -106942,8 +106942,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-uncountable-bus.html?v=14e4bdd3e163",
     "bytes": 14903,
     "thumbs": {
-     "front": "thumbs/maths-uncountable-bus-front.webp?v=14e4bdd3e163",
-     "back": "thumbs/maths-uncountable-bus-back.webp?v=14e4bdd3e163"
+     "front": "thumbs/maths-uncountable-bus-front.webp?v=0893dbe056a6",
+     "back": "thumbs/maths-uncountable-bus-back.webp?v=0893dbe056a6"
     }
    },
    "source": "Veritasium, “How An Infinite Hotel Ran Out Of Room” (YouTube, 2021)",
@@ -107237,8 +107237,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-wang-never-repeats.html?v=2c9b913cddc9",
     "bytes": 10732,
     "thumbs": {
-     "front": "thumbs/maths-wang-never-repeats-front.webp?v=2c9b913cddc9",
-     "back": "thumbs/maths-wang-never-repeats-back.webp?v=2c9b913cddc9"
+     "front": "thumbs/maths-wang-never-repeats-front.webp?v=2e0b03f2a5b2",
+     "back": "thumbs/maths-wang-never-repeats-back.webp?v=2e0b03f2a5b2"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -107280,8 +107280,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-windows-of-order.html?v=71358c0c55c6",
     "bytes": 6715,
     "thumbs": {
-     "front": "thumbs/maths-windows-of-order-front.webp?v=71358c0c55c6",
-     "back": "thumbs/maths-windows-of-order-back.webp?v=71358c0c55c6"
+     "front": "thumbs/maths-windows-of-order-front.webp?v=45d69d12c849",
+     "back": "thumbs/maths-windows-of-order-back.webp?v=45d69d12c849"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -107322,8 +107322,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/maths-wyoming-mercator-pole.html?v=bc6b2e0ef749",
     "bytes": 8622,
     "thumbs": {
-     "front": "thumbs/maths-wyoming-mercator-pole-front.webp?v=bc6b2e0ef749",
-     "back": "thumbs/maths-wyoming-mercator-pole-back.webp?v=bc6b2e0ef749"
+     "front": "thumbs/maths-wyoming-mercator-pole-front.webp?v=17fd446457be",
+     "back": "thumbs/maths-wyoming-mercator-pole-back.webp?v=17fd446457be"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -107365,8 +107365,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-alcohol-group-one.html?v=67caa6a5afe6",
     "bytes": 16760,
     "thumbs": {
-     "front": "thumbs/medicine-alcohol-group-one-front.webp?v=67caa6a5afe6",
-     "back": "thumbs/medicine-alcohol-group-one-back.webp?v=67caa6a5afe6"
+     "front": "thumbs/medicine-alcohol-group-one-front.webp?v=00b6e97417b3",
+     "back": "thumbs/medicine-alcohol-group-one-back.webp?v=00b6e97417b3"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -107408,8 +107408,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-alcohol-iceberg.html?v=0a9dd2b925e4",
     "bytes": 21611,
     "thumbs": {
-     "front": "thumbs/medicine-alcohol-iceberg-front.webp?v=0a9dd2b925e4",
-     "back": "thumbs/medicine-alcohol-iceberg-back.webp?v=0a9dd2b925e4"
+     "front": "thumbs/medicine-alcohol-iceberg-front.webp?v=0e798987bf50",
+     "back": "thumbs/medicine-alcohol-iceberg-back.webp?v=0e798987bf50"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -107451,8 +107451,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-alcohol-one-in-twenty.html?v=66ef1a6c1e74",
     "bytes": 5263,
     "thumbs": {
-     "front": "thumbs/medicine-alcohol-one-in-twenty-front.webp?v=66ef1a6c1e74",
-     "back": "thumbs/medicine-alcohol-one-in-twenty-back.webp?v=66ef1a6c1e74"
+     "front": "thumbs/medicine-alcohol-one-in-twenty-front.webp?v=f7e2453894c5",
+     "back": "thumbs/medicine-alcohol-one-in-twenty-back.webp?v=f7e2453894c5"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -109997,8 +109997,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-cigarette-filter-myth.html?v=88af7df72c6f",
     "bytes": 13202,
     "thumbs": {
-     "front": "thumbs/medicine-cigarette-filter-myth-front.webp?v=88af7df72c6f",
-     "back": "thumbs/medicine-cigarette-filter-myth-back.webp?v=88af7df72c6f"
+     "front": "thumbs/medicine-cigarette-filter-myth-front.webp?v=5beeca5d12cd",
+     "back": "thumbs/medicine-cigarette-filter-myth-back.webp?v=5beeca5d12cd"
     }
    },
    "source": "Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)",
@@ -110186,8 +110186,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-codeine-breathing-brake.html?v=24bd10583a04",
     "bytes": 8593,
     "thumbs": {
-     "front": "thumbs/medicine-codeine-breathing-brake-front.webp?v=24bd10583a04",
-     "back": "thumbs/medicine-codeine-breathing-brake-back.webp?v=24bd10583a04"
+     "front": "thumbs/medicine-codeine-breathing-brake-front.webp?v=1fee1c6e56fb",
+     "back": "thumbs/medicine-codeine-breathing-brake-back.webp?v=1fee1c6e56fb"
     }
    },
    "source": "Geopop, “Lean, la droga viola che si fa dallo sciroppo per la tosse con la codeina: cosa fa la Purple Drank” (YouTube, 2024)",
@@ -110229,8 +110229,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-codeine-to-morphine.html?v=baae55a77d2a",
     "bytes": 11130,
     "thumbs": {
-     "front": "thumbs/medicine-codeine-to-morphine-front.webp?v=baae55a77d2a",
-     "back": "thumbs/medicine-codeine-to-morphine-back.webp?v=baae55a77d2a"
+     "front": "thumbs/medicine-codeine-to-morphine-front.webp?v=b45576f52b2e",
+     "back": "thumbs/medicine-codeine-to-morphine-back.webp?v=b45576f52b2e"
     }
    },
    "source": "Geopop, “Lean, la droga viola che si fa dallo sciroppo per la tosse con la codeina: cosa fa la Purple Drank” (YouTube, 2024)",
@@ -110770,8 +110770,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-deadliest-drug-alcohol.html?v=fe3fedda3476",
     "bytes": 5200,
     "thumbs": {
-     "front": "thumbs/medicine-deadliest-drug-alcohol-front.webp?v=fe3fedda3476",
-     "back": "thumbs/medicine-deadliest-drug-alcohol-back.webp?v=fe3fedda3476"
+     "front": "thumbs/medicine-deadliest-drug-alcohol-front.webp?v=489a18971b64",
+     "back": "thumbs/medicine-deadliest-drug-alcohol-back.webp?v=489a18971b64"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -110813,8 +110813,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-deodorant-cancer-link.html?v=a45233dbf0ed",
     "bytes": 8322,
     "thumbs": {
-     "front": "thumbs/medicine-deodorant-cancer-link-front.webp?v=a45233dbf0ed",
-     "back": "thumbs/medicine-deodorant-cancer-link-back.webp?v=a45233dbf0ed"
+     "front": "thumbs/medicine-deodorant-cancer-link-front.webp?v=96b73b2e2adf",
+     "back": "thumbs/medicine-deodorant-cancer-link-back.webp?v=96b73b2e2adf"
     }
    },
    "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
@@ -111182,8 +111182,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-dose-makes-poison.html?v=620f9333bee6",
     "bytes": 8733,
     "thumbs": {
-     "front": "thumbs/medicine-dose-makes-poison-front.webp?v=620f9333bee6",
-     "back": "thumbs/medicine-dose-makes-poison-back.webp?v=620f9333bee6"
+     "front": "thumbs/medicine-dose-makes-poison-front.webp?v=54422fde92fd",
+     "back": "thumbs/medicine-dose-makes-poison-back.webp?v=54422fde92fd"
     }
    },
    "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
@@ -111650,8 +111650,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-dupont-c8-dose.html?v=d52780661a84",
     "bytes": 17334,
     "thumbs": {
-     "front": "thumbs/medicine-dupont-c8-dose-front.webp?v=d52780661a84",
-     "back": "thumbs/medicine-dupont-c8-dose-back.webp?v=d52780661a84"
+     "front": "thumbs/medicine-dupont-c8-dose-front.webp?v=8f1a12ac7334",
+     "back": "thumbs/medicine-dupont-c8-dose-back.webp?v=8f1a12ac7334"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -111693,8 +111693,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-dupont-safe-dose.html?v=d04cde91eb65",
     "bytes": 9294,
     "thumbs": {
-     "front": "thumbs/medicine-dupont-safe-dose-front.webp?v=d04cde91eb65",
-     "back": "thumbs/medicine-dupont-safe-dose-back.webp?v=d04cde91eb65"
+     "front": "thumbs/medicine-dupont-safe-dose-front.webp?v=1d17dc50e659",
+     "back": "thumbs/medicine-dupont-safe-dose-back.webp?v=1d17dc50e659"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -111737,8 +111737,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-eclipse-blind-spot.html?v=0e359ab02cb4",
     "bytes": 23081,
     "thumbs": {
-     "front": "thumbs/medicine-eclipse-blind-spot-front.webp?v=0e359ab02cb4",
-     "back": "thumbs/medicine-eclipse-blind-spot-back.webp?v=0e359ab02cb4"
+     "front": "thumbs/medicine-eclipse-blind-spot-front.webp?v=7df7bd22b53e",
+     "back": "thumbs/medicine-eclipse-blind-spot-back.webp?v=7df7bd22b53e"
     }
    },
    "source": "Geopop, “Non guardare mai il sole ad occhio nudo, si potrebbero avere danni alla retina, anche permanenti!” (YouTube, 2026)",
@@ -112006,8 +112006,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-femtosecond-laser-ring.html?v=0b7654f30acf",
     "bytes": 9299,
     "thumbs": {
-     "front": "thumbs/medicine-femtosecond-laser-ring-front.webp?v=0b7654f30acf",
-     "back": "thumbs/medicine-femtosecond-laser-ring-back.webp?v=0b7654f30acf"
+     "front": "thumbs/medicine-femtosecond-laser-ring-front.webp?v=0ecca674dbf4",
+     "back": "thumbs/medicine-femtosecond-laser-ring-back.webp?v=0ecca674dbf4"
     }
    },
    "source": "Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)",
@@ -112049,8 +112049,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-firefighters-blood-donation.html?v=c79f6e5910f0",
     "bytes": 9321,
     "thumbs": {
-     "front": "thumbs/medicine-firefighters-blood-donation-front.webp?v=c79f6e5910f0",
-     "back": "thumbs/medicine-firefighters-blood-donation-back.webp?v=c79f6e5910f0"
+     "front": "thumbs/medicine-firefighters-blood-donation-front.webp?v=41d99aadec73",
+     "back": "thumbs/medicine-firefighters-blood-donation-back.webp?v=41d99aadec73"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -112092,8 +112092,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-first-drop-risk.html?v=f081fb18f114",
     "bytes": 9395,
     "thumbs": {
-     "front": "thumbs/medicine-first-drop-risk-front.webp?v=f081fb18f114",
-     "back": "thumbs/medicine-first-drop-risk-back.webp?v=f081fb18f114"
+     "front": "thumbs/medicine-first-drop-risk-front.webp?v=400da92ce06a",
+     "back": "thumbs/medicine-first-drop-risk-back.webp?v=400da92ce06a"
     }
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
@@ -112135,8 +112135,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-flesh-eating-vibrio.html?v=43a43fa61563",
     "bytes": 11211,
     "thumbs": {
-     "front": "thumbs/medicine-flesh-eating-vibrio-front.webp?v=43a43fa61563",
-     "back": "thumbs/medicine-flesh-eating-vibrio-back.webp?v=43a43fa61563"
+     "front": "thumbs/medicine-flesh-eating-vibrio-front.webp?v=8ffe763430da",
+     "back": "thumbs/medicine-flesh-eating-vibrio-back.webp?v=8ffe763430da"
     }
    },
    "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
@@ -113184,8 +113184,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-heart-period-doubling.html?v=f480d8e02294",
     "bytes": 8181,
     "thumbs": {
-     "front": "thumbs/medicine-heart-period-doubling-front.webp?v=f480d8e02294",
-     "back": "thumbs/medicine-heart-period-doubling-back.webp?v=f480d8e02294"
+     "front": "thumbs/medicine-heart-period-doubling-front.webp?v=5dd7b8956aed",
+     "back": "thumbs/medicine-heart-period-doubling-back.webp?v=5dd7b8956aed"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -113227,8 +113227,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-heated-glycerol-aldehydes.html?v=34e436b28dfb",
     "bytes": 10987,
     "thumbs": {
-     "front": "thumbs/medicine-heated-glycerol-aldehydes-front.webp?v=34e436b28dfb",
-     "back": "thumbs/medicine-heated-glycerol-aldehydes-back.webp?v=34e436b28dfb"
+     "front": "thumbs/medicine-heated-glycerol-aldehydes-front.webp?v=a0d4353a1f29",
+     "back": "thumbs/medicine-heated-glycerol-aldehydes-back.webp?v=a0d4353a1f29"
     }
    },
    "source": "Geopop, “Apriamo una sigaretta con tabacco riscaldato in laboratorio” (YouTube, 2024)",
@@ -113528,8 +113528,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-hidden-opioid-dose.html?v=c41f86b432db",
     "bytes": 7881,
     "thumbs": {
-     "front": "thumbs/medicine-hidden-opioid-dose-front.webp?v=c41f86b432db",
-     "back": "thumbs/medicine-hidden-opioid-dose-back.webp?v=c41f86b432db"
+     "front": "thumbs/medicine-hidden-opioid-dose-front.webp?v=7ca2e6f355c1",
+     "back": "thumbs/medicine-hidden-opioid-dose-back.webp?v=7ca2e6f355c1"
     }
    },
    "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
@@ -114367,8 +114367,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-isolated-island-illness.html?v=3675fbc587bc",
     "bytes": 9297,
     "thumbs": {
-     "front": "thumbs/medicine-isolated-island-illness-front.webp?v=3675fbc587bc",
-     "back": "thumbs/medicine-isolated-island-illness-back.webp?v=3675fbc587bc"
+     "front": "thumbs/medicine-isolated-island-illness-front.webp?v=7e1d3a6a6e37",
+     "back": "thumbs/medicine-isolated-island-illness-back.webp?v=7e1d3a6a6e37"
     }
    },
    "source": "Geopop, “L'insediamento umano più isolato del mondo è su un'isola sperduta nell'Atlantico: Tristan da Cunha” (YouTube, 2023)",
@@ -114409,8 +114409,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-ketamine-mdma-clash.html?v=188f757a1daa",
     "bytes": 9181,
     "thumbs": {
-     "front": "thumbs/medicine-ketamine-mdma-clash-front.webp?v=188f757a1daa",
-     "back": "thumbs/medicine-ketamine-mdma-clash-back.webp?v=188f757a1daa"
+     "front": "thumbs/medicine-ketamine-mdma-clash-front.webp?v=187fab645de7",
+     "back": "thumbs/medicine-ketamine-mdma-clash-back.webp?v=187fab645de7"
     }
    },
    "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
@@ -114452,8 +114452,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-laser-eye-monitor.html?v=09191a413543",
     "bytes": 9823,
     "thumbs": {
-     "front": "thumbs/medicine-laser-eye-monitor-front.webp?v=09191a413543",
-     "back": "thumbs/medicine-laser-eye-monitor-back.webp?v=09191a413543"
+     "front": "thumbs/medicine-laser-eye-monitor-front.webp?v=d94c8adfa267",
+     "back": "thumbs/medicine-laser-eye-monitor-back.webp?v=d94c8adfa267"
     }
    },
    "source": "Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)",
@@ -114495,8 +114495,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-laser-tattoo-removal.html?v=e88abfbdc6f6",
     "bytes": 6973,
     "thumbs": {
-     "front": "thumbs/medicine-laser-tattoo-removal-front.webp?v=e88abfbdc6f6",
-     "back": "thumbs/medicine-laser-tattoo-removal-back.webp?v=e88abfbdc6f6"
+     "front": "thumbs/medicine-laser-tattoo-removal-front.webp?v=669f25350674",
+     "back": "thumbs/medicine-laser-tattoo-removal-back.webp?v=669f25350674"
     }
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
@@ -114538,8 +114538,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-lingering-flashbacks.html?v=bc8415d88afe",
     "bytes": 10594,
     "thumbs": {
-     "front": "thumbs/medicine-lingering-flashbacks-front.webp?v=bc8415d88afe",
-     "back": "thumbs/medicine-lingering-flashbacks-back.webp?v=bc8415d88afe"
+     "front": "thumbs/medicine-lingering-flashbacks-front.webp?v=5609eb4fa075",
+     "back": "thumbs/medicine-lingering-flashbacks-back.webp?v=5609eb4fa075"
     }
    },
    "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",
@@ -114581,8 +114581,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-mescaline-dopamine-reward.html?v=6a7065f2e493",
     "bytes": 8210,
     "thumbs": {
-     "front": "thumbs/medicine-mescaline-dopamine-reward-front.webp?v=6a7065f2e493",
-     "back": "thumbs/medicine-mescaline-dopamine-reward-back.webp?v=6a7065f2e493"
+     "front": "thumbs/medicine-mescaline-dopamine-reward-front.webp?v=cbae83cef4f7",
+     "back": "thumbs/medicine-mescaline-dopamine-reward-back.webp?v=cbae83cef4f7"
     }
    },
    "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",
@@ -114677,8 +114677,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-mri-field-strength.html?v=2af44b69e4f0",
     "bytes": 6652,
     "thumbs": {
-     "front": "thumbs/medicine-mri-field-strength-front.webp?v=2af44b69e4f0",
-     "back": "thumbs/medicine-mri-field-strength-back.webp?v=2af44b69e4f0"
+     "front": "thumbs/medicine-mri-field-strength-front.webp?v=11902b55b1cc",
+     "back": "thumbs/medicine-mri-field-strength-back.webp?v=11902b55b1cc"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -116323,8 +116323,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-pink-cocaine-name.html?v=021f9e6e8392",
     "bytes": 18349,
     "thumbs": {
-     "front": "thumbs/medicine-pink-cocaine-name-front.webp?v=021f9e6e8392",
-     "back": "thumbs/medicine-pink-cocaine-name-back.webp?v=021f9e6e8392"
+     "front": "thumbs/medicine-pink-cocaine-name-front.webp?v=53f9cf8a8e0c",
+     "back": "thumbs/medicine-pink-cocaine-name-back.webp?v=53f9cf8a8e0c"
     }
    },
    "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
@@ -116921,8 +116921,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-popcorn-laser-effect.html?v=fc435a36ba45",
     "bytes": 10913,
     "thumbs": {
-     "front": "thumbs/medicine-popcorn-laser-effect-front.webp?v=fc435a36ba45",
-     "back": "thumbs/medicine-popcorn-laser-effect-back.webp?v=fc435a36ba45"
+     "front": "thumbs/medicine-popcorn-laser-effect-front.webp?v=eec29a7ec23d",
+     "back": "thumbs/medicine-popcorn-laser-effect-back.webp?v=eec29a7ec23d"
     }
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
@@ -116964,8 +116964,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-premium-lens-race.html?v=e7bfac187c27",
     "bytes": 10610,
     "thumbs": {
-     "front": "thumbs/medicine-premium-lens-race-front.webp?v=e7bfac187c27",
-     "back": "thumbs/medicine-premium-lens-race-back.webp?v=e7bfac187c27"
+     "front": "thumbs/medicine-premium-lens-race-front.webp?v=8fb74aba9637",
+     "back": "thumbs/medicine-premium-lens-race-back.webp?v=8fb74aba9637"
     }
    },
    "source": "Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)",
@@ -117148,8 +117148,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-proton-precession-cone.html?v=e63d83adcfdd",
     "bytes": 9291,
     "thumbs": {
-     "front": "thumbs/medicine-proton-precession-cone-front.webp?v=e63d83adcfdd",
-     "back": "thumbs/medicine-proton-precession-cone-back.webp?v=e63d83adcfdd"
+     "front": "thumbs/medicine-proton-precession-cone-front.webp?v=ae1dddcf75ca",
+     "back": "thumbs/medicine-proton-precession-cone-back.webp?v=ae1dddcf75ca"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -117373,8 +117373,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-quit-smoking-combo.html?v=b5d8f1a39df2",
     "bytes": 7121,
     "thumbs": {
-     "front": "thumbs/medicine-quit-smoking-combo-front.webp?v=b5d8f1a39df2",
-     "back": "thumbs/medicine-quit-smoking-combo-back.webp?v=b5d8f1a39df2"
+     "front": "thumbs/medicine-quit-smoking-combo-front.webp?v=3c523493725d",
+     "back": "thumbs/medicine-quit-smoking-combo-back.webp?v=3c523493725d"
     }
    },
    "source": "Geopop, “Il 96% delle persone non riesce a smettere di fumare da solo: perché e quali sono i metodi migliori” (YouTube, 2026)",
@@ -117416,8 +117416,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-radiation-cancer.html?v=edbbff2ad60a",
     "bytes": 8886,
     "thumbs": {
-     "front": "thumbs/medicine-radiation-cancer-front.webp?v=edbbff2ad60a",
-     "back": "thumbs/medicine-radiation-cancer-back.webp?v=edbbff2ad60a"
+     "front": "thumbs/medicine-radiation-cancer-front.webp?v=d6dde4582938",
+     "back": "thumbs/medicine-radiation-cancer-back.webp?v=d6dde4582938"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -117983,8 +117983,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-resonance-radio-push.html?v=fd3a7f46b9cb",
     "bytes": 9311,
     "thumbs": {
-     "front": "thumbs/medicine-resonance-radio-push-front.webp?v=fd3a7f46b9cb",
-     "back": "thumbs/medicine-resonance-radio-push-back.webp?v=fd3a7f46b9cb"
+     "front": "thumbs/medicine-resonance-radio-push-front.webp?v=ccd65ebffa20",
+     "back": "thumbs/medicine-resonance-radio-push-back.webp?v=ccd65ebffa20"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -120570,8 +120570,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-soft-robot-throat.html?v=225d7ffa19c7",
     "bytes": 11646,
     "thumbs": {
-     "front": "thumbs/medicine-soft-robot-throat-front.webp?v=225d7ffa19c7",
-     "back": "thumbs/medicine-soft-robot-throat-back.webp?v=225d7ffa19c7"
+     "front": "thumbs/medicine-soft-robot-throat-front.webp?v=dda75f8084a8",
+     "back": "thumbs/medicine-soft-robot-throat-back.webp?v=dda75f8084a8"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -121044,8 +121044,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-tattoo-flu-boost.html?v=b00070a224ae",
     "bytes": 28897,
     "thumbs": {
-     "front": "thumbs/medicine-tattoo-flu-boost-front.webp?v=b00070a224ae",
-     "back": "thumbs/medicine-tattoo-flu-boost-back.webp?v=b00070a224ae"
+     "front": "thumbs/medicine-tattoo-flu-boost-front.webp?v=6c16d129aa8c",
+     "back": "thumbs/medicine-tattoo-flu-boost-back.webp?v=6c16d129aa8c"
     }
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
@@ -121087,8 +121087,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-tattoo-lymph-nodes.html?v=0780e1dab106",
     "bytes": 18991,
     "thumbs": {
-     "front": "thumbs/medicine-tattoo-lymph-nodes-front.webp?v=0780e1dab106",
-     "back": "thumbs/medicine-tattoo-lymph-nodes-back.webp?v=0780e1dab106"
+     "front": "thumbs/medicine-tattoo-lymph-nodes-front.webp?v=4916bcb2595b",
+     "back": "thumbs/medicine-tattoo-lymph-nodes-back.webp?v=4916bcb2595b"
     }
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
@@ -121658,8 +121658,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-triple-dependency-window.html?v=ea58d4fe5c01",
     "bytes": 13434,
     "thumbs": {
-     "front": "thumbs/medicine-triple-dependency-window-front.webp?v=ea58d4fe5c01",
-     "back": "thumbs/medicine-triple-dependency-window-back.webp?v=ea58d4fe5c01"
+     "front": "thumbs/medicine-triple-dependency-window-front.webp?v=1905b0816567",
+     "back": "thumbs/medicine-triple-dependency-window-back.webp?v=1905b0816567"
     }
    },
    "source": "Geopop, “Il 96% delle persone non riesce a smettere di fumare da solo: perché e quali sono i metodi migliori” (YouTube, 2026)",
@@ -121700,8 +121700,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/medicine-water-kidney-stones.html?v=2916ca5c5a28",
     "bytes": 9625,
     "thumbs": {
-     "front": "thumbs/medicine-water-kidney-stones-front.webp?v=2916ca5c5a28",
-     "back": "thumbs/medicine-water-kidney-stones-back.webp?v=2916ca5c5a28"
+     "front": "thumbs/medicine-water-kidney-stones-front.webp?v=c7f99210d309",
+     "back": "thumbs/medicine-water-kidney-stones-back.webp?v=c7f99210d309"
     }
    },
    "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
@@ -130488,8 +130488,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/music-piano-1.html?v=0d3ee43e7249",
     "bytes": 16229,
     "thumbs": {
-     "front": "thumbs/music-piano-1-front.webp?v=0d3ee43e7249",
-     "back": "thumbs/music-piano-1-back.webp?v=0d3ee43e7249"
+     "front": "thumbs/music-piano-1-front.webp?v=b971c3054f54",
+     "back": "thumbs/music-piano-1-back.webp?v=b971c3054f54"
     }
    },
    "source": "Railsback, JASA, 1938",
@@ -134355,8 +134355,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-1976-impossible-heatwave.html?v=189e81fb01ca",
     "bytes": 8629,
     "thumbs": {
-     "front": "thumbs/nature-1976-impossible-heatwave-front.webp?v=189e81fb01ca",
-     "back": "thumbs/nature-1976-impossible-heatwave-back.webp?v=189e81fb01ca"
+     "front": "thumbs/nature-1976-impossible-heatwave-front.webp?v=f49aadb3974a",
+     "back": "thumbs/nature-1976-impossible-heatwave-back.webp?v=f49aadb3974a"
     }
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
@@ -134567,8 +134567,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-adria-sea-floor.html?v=3665c39fac50",
     "bytes": 28513,
     "thumbs": {
-     "front": "thumbs/nature-adria-sea-floor-front.webp?v=3665c39fac50",
-     "back": "thumbs/nature-adria-sea-floor-back.webp?v=3665c39fac50"
+     "front": "thumbs/nature-adria-sea-floor-front.webp?v=f9014443bb8e",
+     "back": "thumbs/nature-adria-sea-floor-back.webp?v=f9014443bb8e"
     }
    },
    "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
@@ -134610,8 +134610,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-adriatic-dry-floor.html?v=5620743ffba0",
     "bytes": 18523,
     "thumbs": {
-     "front": "thumbs/nature-adriatic-dry-floor-front.webp?v=5620743ffba0",
-     "back": "thumbs/nature-adriatic-dry-floor-back.webp?v=5620743ffba0"
+     "front": "thumbs/nature-adriatic-dry-floor-front.webp?v=ff6c0c820c01",
+     "back": "thumbs/nature-adriatic-dry-floor-back.webp?v=ff6c0c820c01"
     }
    },
    "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
@@ -134653,8 +134653,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-alps-trap-smog.html?v=4f65809170b0",
     "bytes": 10289,
     "thumbs": {
-     "front": "thumbs/nature-alps-trap-smog-front.webp?v=4f65809170b0",
-     "back": "thumbs/nature-alps-trap-smog-back.webp?v=4f65809170b0"
+     "front": "thumbs/nature-alps-trap-smog-front.webp?v=2d2d7e4dbdf2",
+     "back": "thumbs/nature-alps-trap-smog-back.webp?v=2d2d7e4dbdf2"
     }
    },
    "source": "Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)",
@@ -135806,8 +135806,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-asteroid-tsunami-energy.html?v=d7cd93133d68",
     "bytes": 9819,
     "thumbs": {
-     "front": "thumbs/nature-asteroid-tsunami-energy-front.webp?v=d7cd93133d68",
-     "back": "thumbs/nature-asteroid-tsunami-energy-back.webp?v=d7cd93133d68"
+     "front": "thumbs/nature-asteroid-tsunami-energy-front.webp?v=9c7bc67e333d",
+     "back": "thumbs/nature-asteroid-tsunami-energy-back.webp?v=9c7bc67e333d"
     }
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
@@ -135960,8 +135960,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-bared-teeth.html?v=b30c74a9911a",
     "bytes": 21672,
     "thumbs": {
-     "front": "thumbs/nature-bared-teeth-front.webp?v=b30c74a9911a",
-     "back": "thumbs/nature-bared-teeth-back.webp?v=b30c74a9911a"
+     "front": "thumbs/nature-bared-teeth-front.webp?v=eba02c06ac7b",
+     "back": "thumbs/nature-bared-teeth-back.webp?v=eba02c06ac7b"
     }
    },
    "source": "Diventare Strong, “Come apparire Dominanti, Sicuri di sé stessi, Determinati, Alpha, Tosti e Produttivi” (YouTube, 2015)",
@@ -136003,8 +136003,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-bay-funnel-tide.html?v=20ffb468bb04",
     "bytes": 7892,
     "thumbs": {
-     "front": "thumbs/nature-bay-funnel-tide-front.webp?v=20ffb468bb04",
-     "back": "thumbs/nature-bay-funnel-tide-back.webp?v=20ffb468bb04"
+     "front": "thumbs/nature-bay-funnel-tide-front.webp?v=65a16b272670",
+     "back": "thumbs/nature-bay-funnel-tide-back.webp?v=65a16b272670"
     }
    },
    "source": "Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)",
@@ -137293,8 +137293,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-burning-plastic-waste.html?v=7984738c7175",
     "bytes": 8572,
     "thumbs": {
-     "front": "thumbs/nature-burning-plastic-waste-front.webp?v=7984738c7175",
-     "back": "thumbs/nature-burning-plastic-waste-back.webp?v=7984738c7175"
+     "front": "thumbs/nature-burning-plastic-waste-front.webp?v=d26b8314fa6a",
+     "back": "thumbs/nature-burning-plastic-waste-back.webp?v=d26b8314fa6a"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -137335,8 +137335,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-campi-flegrei-uplift.html?v=f92a53cc2162",
     "bytes": 7243,
     "thumbs": {
-     "front": "thumbs/nature-campi-flegrei-uplift-front.webp?v=f92a53cc2162",
-     "back": "thumbs/nature-campi-flegrei-uplift-back.webp?v=f92a53cc2162"
+     "front": "thumbs/nature-campi-flegrei-uplift-front.webp?v=2df72de23f5e",
+     "back": "thumbs/nature-campi-flegrei-uplift-back.webp?v=2df72de23f5e"
     }
    },
    "source": "INGV Osservatorio Vesuviano (2026)",
@@ -137520,8 +137520,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-cave-rescue-time.html?v=d62274a7148c",
     "bytes": 11742,
     "thumbs": {
-     "front": "thumbs/nature-cave-rescue-time-front.webp?v=d62274a7148c",
-     "back": "thumbs/nature-cave-rescue-time-back.webp?v=d62274a7148c"
+     "front": "thumbs/nature-cave-rescue-time-front.webp?v=6166905b2065",
+     "back": "thumbs/nature-cave-rescue-time-back.webp?v=6166905b2065"
     }
    },
    "source": "Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)",
@@ -137721,8 +137721,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-clay-slide-plane.html?v=2494d62312d1",
     "bytes": 24618,
     "thumbs": {
-     "front": "thumbs/nature-clay-slide-plane-front.webp?v=2494d62312d1",
-     "back": "thumbs/nature-clay-slide-plane-back.webp?v=2494d62312d1"
+     "front": "thumbs/nature-clay-slide-plane-front.webp?v=e50a6f949ab3",
+     "back": "thumbs/nature-clay-slide-plane-back.webp?v=e50a6f949ab3"
     }
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
@@ -138429,8 +138429,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-co2-antarctic-ice.html?v=c4665c811c0a",
     "bytes": 9841,
     "thumbs": {
-     "front": "thumbs/nature-co2-antarctic-ice-front.webp?v=c4665c811c0a",
-     "back": "thumbs/nature-co2-antarctic-ice-back.webp?v=c4665c811c0a"
+     "front": "thumbs/nature-co2-antarctic-ice-front.webp?v=2b079fc42889",
+     "back": "thumbs/nature-co2-antarctic-ice-back.webp?v=2b079fc42889"
     }
    },
    "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
@@ -138583,8 +138583,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-column-collapse-flows.html?v=ebf134fbbda3",
     "bytes": 10596,
     "thumbs": {
-     "front": "thumbs/nature-column-collapse-flows-front.webp?v=ebf134fbbda3",
-     "back": "thumbs/nature-column-collapse-flows-back.webp?v=ebf134fbbda3"
+     "front": "thumbs/nature-column-collapse-flows-front.webp?v=cc6356d58e2e",
+     "back": "thumbs/nature-column-collapse-flows-back.webp?v=cc6356d58e2e"
     }
    },
    "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
@@ -138626,8 +138626,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-column-collapse-flows-2.html?v=658285384291",
     "bytes": 8657,
     "thumbs": {
-     "front": "thumbs/nature-column-collapse-flows-2-front.webp?v=658285384291",
-     "back": "thumbs/nature-column-collapse-flows-2-back.webp?v=658285384291"
+     "front": "thumbs/nature-column-collapse-flows-2-front.webp?v=0ddfddd04532",
+     "back": "thumbs/nature-column-collapse-flows-2-back.webp?v=0ddfddd04532"
     }
    },
    "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
@@ -140139,8 +140139,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-delta-salinity-dam.html?v=f55a30e789ed",
     "bytes": 9021,
     "thumbs": {
-     "front": "thumbs/nature-delta-salinity-dam-front.webp?v=f55a30e789ed",
-     "back": "thumbs/nature-delta-salinity-dam-back.webp?v=f55a30e789ed"
+     "front": "thumbs/nature-delta-salinity-dam-front.webp?v=852b5f39df3a",
+     "back": "thumbs/nature-delta-salinity-dam-back.webp?v=852b5f39df3a"
     }
    },
    "source": "Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)",
@@ -140989,8 +140989,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-eruption-cloud-speed.html?v=52d516e7a8e3",
     "bytes": 11204,
     "thumbs": {
-     "front": "thumbs/nature-eruption-cloud-speed-front.webp?v=52d516e7a8e3",
-     "back": "thumbs/nature-eruption-cloud-speed-back.webp?v=52d516e7a8e3"
+     "front": "thumbs/nature-eruption-cloud-speed-front.webp?v=8d6b3ba1e6ad",
+     "back": "thumbs/nature-eruption-cloud-speed-back.webp?v=8d6b3ba1e6ad"
     }
    },
    "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)",
@@ -141032,8 +141032,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-etna-flank-collapse.html?v=debb765c8e06",
     "bytes": 10351,
     "thumbs": {
-     "front": "thumbs/nature-etna-flank-collapse-front.webp?v=debb765c8e06",
-     "back": "thumbs/nature-etna-flank-collapse-back.webp?v=debb765c8e06"
+     "front": "thumbs/nature-etna-flank-collapse-front.webp?v=0d74c73648ef",
+     "back": "thumbs/nature-etna-flank-collapse-back.webp?v=0d74c73648ef"
     }
    },
    "source": "Geopop, “▶️ETNA: \"POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI\". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)",
@@ -141075,8 +141075,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-etna-new-peak.html?v=cf4c4fef3a8b",
     "bytes": 7776,
     "thumbs": {
-     "front": "thumbs/nature-etna-new-peak-front.webp?v=cf4c4fef3a8b",
-     "back": "thumbs/nature-etna-new-peak-back.webp?v=cf4c4fef3a8b"
+     "front": "thumbs/nature-etna-new-peak-front.webp?v=a461cb9ad29b",
+     "back": "thumbs/nature-etna-new-peak-back.webp?v=a461cb9ad29b"
     }
    },
    "source": "Geopop, “Davvero l’Etna è cresciuto di 31 metri in pochi mesi? #shorts” (YouTube, 2021)",
@@ -141118,8 +141118,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-europe-slab-swing.html?v=06e0bbbf4802",
     "bytes": 21957,
     "thumbs": {
-     "front": "thumbs/nature-europe-slab-swing-front.webp?v=06e0bbbf4802",
-     "back": "thumbs/nature-europe-slab-swing-back.webp?v=06e0bbbf4802"
+     "front": "thumbs/nature-europe-slab-swing-front.webp?v=f46f11054783",
+     "back": "thumbs/nature-europe-slab-swing-back.webp?v=f46f11054783"
     }
    },
    "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
@@ -141161,8 +141161,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-everest-trench-flip.html?v=e78ba9086301",
     "bytes": 8688,
     "thumbs": {
-     "front": "thumbs/nature-everest-trench-flip-front.webp?v=e78ba9086301",
-     "back": "thumbs/nature-everest-trench-flip-back.webp?v=e78ba9086301"
+     "front": "thumbs/nature-everest-trench-flip-front.webp?v=d78b2a314dfd",
+     "back": "thumbs/nature-everest-trench-flip-back.webp?v=d78b2a314dfd"
     }
    },
    "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
@@ -141204,8 +141204,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-everest-underwater.html?v=b09be4c18685",
     "bytes": 16023,
     "thumbs": {
-     "front": "thumbs/nature-everest-underwater-front.webp?v=b09be4c18685",
-     "back": "thumbs/nature-everest-underwater-back.webp?v=b09be4c18685"
+     "front": "thumbs/nature-everest-underwater-front.webp?v=0ce321fd652a",
+     "back": "thumbs/nature-everest-underwater-back.webp?v=0ce321fd652a"
     }
    },
    "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
@@ -142147,8 +142147,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-glacier-wave-amplifier.html?v=bb9579b75d64",
     "bytes": 12928,
     "thumbs": {
-     "front": "thumbs/nature-glacier-wave-amplifier-front.webp?v=bb9579b75d64",
-     "back": "thumbs/nature-glacier-wave-amplifier-back.webp?v=bb9579b75d64"
+     "front": "thumbs/nature-glacier-wave-amplifier-front.webp?v=b632b57a748e",
+     "back": "thumbs/nature-glacier-wave-amplifier-back.webp?v=b632b57a748e"
     }
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
@@ -142190,8 +142190,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-glass-co2-savings.html?v=06368c980b25",
     "bytes": 7208,
     "thumbs": {
-     "front": "thumbs/nature-glass-co2-savings-front.webp?v=06368c980b25",
-     "back": "thumbs/nature-glass-co2-savings-back.webp?v=06368c980b25"
+     "front": "thumbs/nature-glass-co2-savings-front.webp?v=f50925364ec7",
+     "back": "thumbs/nature-glass-co2-savings-back.webp?v=f50925364ec7"
     }
    },
    "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
@@ -142464,8 +142464,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-greenland-ice-air.html?v=26a1dd32f4a3",
     "bytes": 9826,
     "thumbs": {
-     "front": "thumbs/nature-greenland-ice-air-front.webp?v=26a1dd32f4a3",
-     "back": "thumbs/nature-greenland-ice-air-back.webp?v=26a1dd32f4a3"
+     "front": "thumbs/nature-greenland-ice-air-front.webp?v=cf6238adc45c",
+     "back": "thumbs/nature-greenland-ice-air-back.webp?v=cf6238adc45c"
     }
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
@@ -142507,8 +142507,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-greenland-ice-thickness.html?v=44cfada21817",
     "bytes": 8467,
     "thumbs": {
-     "front": "thumbs/nature-greenland-ice-thickness-front.webp?v=44cfada21817",
-     "back": "thumbs/nature-greenland-ice-thickness-back.webp?v=44cfada21817"
+     "front": "thumbs/nature-greenland-ice-thickness-front.webp?v=23eeb2f2e433",
+     "back": "thumbs/nature-greenland-ice-thickness-back.webp?v=23eeb2f2e433"
     }
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
@@ -142550,8 +142550,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-gulf-stream-storms.html?v=beee6265a6cf",
     "bytes": 10110,
     "thumbs": {
-     "front": "thumbs/nature-gulf-stream-storms-front.webp?v=beee6265a6cf",
-     "back": "thumbs/nature-gulf-stream-storms-back.webp?v=beee6265a6cf"
+     "front": "thumbs/nature-gulf-stream-storms-front.webp?v=690168708506",
+     "back": "thumbs/nature-gulf-stream-storms-back.webp?v=690168708506"
     }
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
@@ -142593,8 +142593,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-gulf-stream-storms-2.html?v=dcb54576242d",
     "bytes": 10457,
     "thumbs": {
-     "front": "thumbs/nature-gulf-stream-storms-2-front.webp?v=dcb54576242d",
-     "back": "thumbs/nature-gulf-stream-storms-2-back.webp?v=dcb54576242d"
+     "front": "thumbs/nature-gulf-stream-storms-2-front.webp?v=1d0956dc79c5",
+     "back": "thumbs/nature-gulf-stream-storms-2-back.webp?v=1d0956dc79c5"
     }
    },
    "source": "Geopop, “Esiste davvero il triangolo delle Bermuda? In realtà il \"mistero\" ha una spiegazione scientifica” (YouTube, 2021)",
@@ -142636,8 +142636,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-half-mountain-tsunami.html?v=5e03ec90a746",
     "bytes": 9245,
     "thumbs": {
-     "front": "thumbs/nature-half-mountain-tsunami-front.webp?v=5e03ec90a746",
-     "back": "thumbs/nature-half-mountain-tsunami-back.webp?v=5e03ec90a746"
+     "front": "thumbs/nature-half-mountain-tsunami-front.webp?v=9c22c4e983bc",
+     "back": "thumbs/nature-half-mountain-tsunami-back.webp?v=9c22c4e983bc"
     }
    },
    "source": "Geopop, “▶️ETNA: \"POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI\". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)",
@@ -142679,8 +142679,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-heatwave-only-beginning-2.html?v=2997e4e3b206",
     "bytes": 7544,
     "thumbs": {
-     "front": "thumbs/nature-heatwave-only-beginning-2-front.webp?v=2997e4e3b206",
-     "back": "thumbs/nature-heatwave-only-beginning-2-back.webp?v=2997e4e3b206"
+     "front": "thumbs/nature-heatwave-only-beginning-2-front.webp?v=0efb907a26a1",
+     "back": "thumbs/nature-heatwave-only-beginning-2-back.webp?v=0efb907a26a1"
     }
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
@@ -142722,8 +142722,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-hidden-shark-toll.html?v=591dfb3bfea1",
     "bytes": 6658,
     "thumbs": {
-     "front": "thumbs/nature-hidden-shark-toll-front.webp?v=591dfb3bfea1",
-     "back": "thumbs/nature-hidden-shark-toll-back.webp?v=591dfb3bfea1"
+     "front": "thumbs/nature-hidden-shark-toll-front.webp?v=67b41078dd35",
+     "back": "thumbs/nature-hidden-shark-toll-back.webp?v=67b41078dd35"
     }
    },
    "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
@@ -142877,8 +142877,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-ice-age-italy.html?v=bef64a3d9e92",
     "bytes": 23066,
     "thumbs": {
-     "front": "thumbs/nature-ice-age-italy-front.webp?v=bef64a3d9e92",
-     "back": "thumbs/nature-ice-age-italy-back.webp?v=bef64a3d9e92"
+     "front": "thumbs/nature-ice-age-italy-front.webp?v=a36a999d4e22",
+     "back": "thumbs/nature-ice-age-italy-back.webp?v=a36a999d4e22"
     }
    },
    "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
@@ -143149,8 +143149,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-la-luna-shale.html?v=fee94a06fd52",
     "bytes": 8688,
     "thumbs": {
-     "front": "thumbs/nature-la-luna-shale-front.webp?v=fee94a06fd52",
-     "back": "thumbs/nature-la-luna-shale-back.webp?v=fee94a06fd52"
+     "front": "thumbs/nature-la-luna-shale-front.webp?v=afd2223532ae",
+     "back": "thumbs/nature-la-luna-shale-back.webp?v=afd2223532ae"
     }
    },
    "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
@@ -143192,8 +143192,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-landslide-speed-range.html?v=69fa17418336",
     "bytes": 9215,
     "thumbs": {
-     "front": "thumbs/nature-landslide-speed-range-front.webp?v=69fa17418336",
-     "back": "thumbs/nature-landslide-speed-range-back.webp?v=69fa17418336"
+     "front": "thumbs/nature-landslide-speed-range-front.webp?v=5b73831f7daa",
+     "back": "thumbs/nature-landslide-speed-range-back.webp?v=5b73831f7daa"
     }
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
@@ -143234,8 +143234,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-landslide-speed-water.html?v=aeeddab961bf",
     "bytes": 9698,
     "thumbs": {
-     "front": "thumbs/nature-landslide-speed-water-front.webp?v=aeeddab961bf",
-     "back": "thumbs/nature-landslide-speed-water-back.webp?v=aeeddab961bf"
+     "front": "thumbs/nature-landslide-speed-water-front.webp?v=65dfa769ee57",
+     "back": "thumbs/nature-landslide-speed-water-back.webp?v=65dfa769ee57"
     }
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
@@ -143277,8 +143277,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-landslide-volume-estimate.html?v=499e3d1d9e19",
     "bytes": 9014,
     "thumbs": {
-     "front": "thumbs/nature-landslide-volume-estimate-front.webp?v=499e3d1d9e19",
-     "back": "thumbs/nature-landslide-volume-estimate-back.webp?v=499e3d1d9e19"
+     "front": "thumbs/nature-landslide-volume-estimate-front.webp?v=5aecf3f18d38",
+     "back": "thumbs/nature-landslide-volume-estimate-back.webp?v=5aecf3f18d38"
     }
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
@@ -143320,8 +143320,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-leaking-fracking-tank.html?v=d6ff0f1af32e",
     "bytes": 9141,
     "thumbs": {
-     "front": "thumbs/nature-leaking-fracking-tank-front.webp?v=d6ff0f1af32e",
-     "back": "thumbs/nature-leaking-fracking-tank-back.webp?v=d6ff0f1af32e"
+     "front": "thumbs/nature-leaking-fracking-tank-front.webp?v=bcda4d02fdea",
+     "back": "thumbs/nature-leaking-fracking-tank-back.webp?v=bcda4d02fdea"
     }
    },
    "source": "Geopop, “IL FRACKING - La spiegazione geologica con parole semplici” (YouTube, 2018)",
@@ -143363,8 +143363,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-limestone-water-network.html?v=3831c13720b4",
     "bytes": 10302,
     "thumbs": {
-     "front": "thumbs/nature-limestone-water-network-front.webp?v=3831c13720b4",
-     "back": "thumbs/nature-limestone-water-network-back.webp?v=3831c13720b4"
+     "front": "thumbs/nature-limestone-water-network-front.webp?v=850478b3490b",
+     "back": "thumbs/nature-limestone-water-network-back.webp?v=850478b3490b"
     }
    },
    "source": "Geopop, “▶️IL VIAGGIO DELL' ACQUA: DALLE MONTAGNE AI RUBINETTI |GeoPOP🌍” (YouTube, 2019)",
@@ -143407,8 +143407,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-lituya-bay-wave.html?v=8ad494a1dfa6",
     "bytes": 17470,
     "thumbs": {
-     "front": "thumbs/nature-lituya-bay-wave-front.webp?v=8ad494a1dfa6",
-     "back": "thumbs/nature-lituya-bay-wave-back.webp?v=8ad494a1dfa6"
+     "front": "thumbs/nature-lituya-bay-wave-front.webp?v=91b85227dbef",
+     "back": "thumbs/nature-lituya-bay-wave-back.webp?v=91b85227dbef"
     }
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
@@ -143449,8 +143449,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-longest-straw.html?v=949a7e14348f",
     "bytes": 15290,
     "thumbs": {
-     "front": "thumbs/nature-longest-straw-front.webp?v=949a7e14348f",
-     "back": "thumbs/nature-longest-straw-back.webp?v=949a7e14348f"
+     "front": "thumbs/nature-longest-straw-front.webp?v=6a06b22666f0",
+     "back": "thumbs/nature-longest-straw-back.webp?v=6a06b22666f0"
     }
    },
    "source": "Veritasium, “World's Longest Straw” (YouTube, 2012)",
@@ -143876,8 +143876,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-malaria-smell-trick.html?v=9aaf54c0c162",
     "bytes": 15747,
     "thumbs": {
-     "front": "thumbs/nature-malaria-smell-trick-front.webp?v=9aaf54c0c162",
-     "back": "thumbs/nature-malaria-smell-trick-back.webp?v=9aaf54c0c162"
+     "front": "thumbs/nature-malaria-smell-trick-front.webp?v=9adbe952a3b2",
+     "back": "thumbs/nature-malaria-smell-trick-back.webp?v=9adbe952a3b2"
     }
    },
    "source": "Veritasium, “Why Mosquitoes Bite Some People More Than Others” (YouTube, 2018)",
@@ -143919,8 +143919,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-mariana-trench-depth.html?v=b14092f0e2d1",
     "bytes": 8778,
     "thumbs": {
-     "front": "thumbs/nature-mariana-trench-depth-front.webp?v=b14092f0e2d1",
-     "back": "thumbs/nature-mariana-trench-depth-back.webp?v=b14092f0e2d1"
+     "front": "thumbs/nature-mariana-trench-depth-front.webp?v=534b0c828864",
+     "back": "thumbs/nature-mariana-trench-depth-back.webp?v=534b0c828864"
     }
    },
    "source": "Geopop, “Quanto è profonda la fossa delle marianne?#shorts” (YouTube, 2021)",
@@ -143962,8 +143962,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-marsili-water-shield.html?v=e3600ce9f16c",
     "bytes": 11899,
     "thumbs": {
-     "front": "thumbs/nature-marsili-water-shield-front.webp?v=e3600ce9f16c",
-     "back": "thumbs/nature-marsili-water-shield-back.webp?v=e3600ce9f16c"
+     "front": "thumbs/nature-marsili-water-shield-front.webp?v=b236327c0213",
+     "back": "thumbs/nature-marsili-water-shield-back.webp?v=b236327c0213"
     }
    },
    "source": "Geopop, “Marsili: cosa accadrebbe in caso di eruzione del vulcano più grande d'Europa?” (YouTube, 2021)",
@@ -144006,8 +144006,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-marsili-wave-height.html?v=0075987c856a",
     "bytes": 9501,
     "thumbs": {
-     "front": "thumbs/nature-marsili-wave-height-front.webp?v=0075987c856a",
-     "back": "thumbs/nature-marsili-wave-height-back.webp?v=0075987c856a"
+     "front": "thumbs/nature-marsili-wave-height-front.webp?v=ff1452102dc1",
+     "back": "thumbs/nature-marsili-wave-height-back.webp?v=ff1452102dc1"
     }
    },
    "source": "Geopop, “La futura eruzione sottomarina del Marsili e le cause del rischio tsunami - l'animazione realistica” (YouTube, 2023)",
@@ -144049,8 +144049,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-mediterranean-plates.html?v=dc38e3dbe064",
     "bytes": 8682,
     "thumbs": {
-     "front": "thumbs/nature-mediterranean-plates-front.webp?v=dc38e3dbe064",
-     "back": "thumbs/nature-mediterranean-plates-back.webp?v=dc38e3dbe064"
+     "front": "thumbs/nature-mediterranean-plates-front.webp?v=a8358624f06a",
+     "back": "thumbs/nature-mediterranean-plates-back.webp?v=a8358624f06a"
     }
    },
    "source": "Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020)",
@@ -144509,8 +144509,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-milan-first-30.html?v=7befea1e790a",
     "bytes": 7808,
     "thumbs": {
-     "front": "thumbs/nature-milan-first-30-front.webp?v=7befea1e790a",
-     "back": "thumbs/nature-milan-first-30-back.webp?v=7befea1e790a"
+     "front": "thumbs/nature-milan-first-30-front.webp?v=a99c32c21bb9",
+     "back": "thumbs/nature-milan-first-30-back.webp?v=a99c32c21bb9"
     }
    },
    "source": "Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)",
@@ -144552,8 +144552,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-mosquito-blood-eggs.html?v=3d4320c451ea",
     "bytes": 10594,
     "thumbs": {
-     "front": "thumbs/nature-mosquito-blood-eggs-front.webp?v=3d4320c451ea",
-     "back": "thumbs/nature-mosquito-blood-eggs-back.webp?v=3d4320c451ea"
+     "front": "thumbs/nature-mosquito-blood-eggs-front.webp?v=d5fa2bc3f401",
+     "back": "thumbs/nature-mosquito-blood-eggs-back.webp?v=d5fa2bc3f401"
     }
    },
    "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",
@@ -144595,8 +144595,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-mosquito-deadly-year.html?v=a7920cf131d9",
     "bytes": 5424,
     "thumbs": {
-     "front": "thumbs/nature-mosquito-deadly-year-front.webp?v=a7920cf131d9",
-     "back": "thumbs/nature-mosquito-deadly-year-back.webp?v=a7920cf131d9"
+     "front": "thumbs/nature-mosquito-deadly-year-front.webp?v=9ab3bcfcda7c",
+     "back": "thumbs/nature-mosquito-deadly-year-back.webp?v=9ab3bcfcda7c"
     }
    },
    "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",
@@ -144639,8 +144639,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-mosquito-ear-heat.html?v=969f0716b724",
     "bytes": 9046,
     "thumbs": {
-     "front": "thumbs/nature-mosquito-ear-heat-front.webp?v=969f0716b724",
-     "back": "thumbs/nature-mosquito-ear-heat-back.webp?v=969f0716b724"
+     "front": "thumbs/nature-mosquito-ear-heat-front.webp?v=44279e97532d",
+     "back": "thumbs/nature-mosquito-ear-heat-back.webp?v=44279e97532d"
     }
    },
    "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",
@@ -144682,8 +144682,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-mosquito-six-needles.html?v=5b994c3ae612",
     "bytes": 8268,
     "thumbs": {
-     "front": "thumbs/nature-mosquito-six-needles-front.webp?v=5b994c3ae612",
-     "back": "thumbs/nature-mosquito-six-needles-back.webp?v=5b994c3ae612"
+     "front": "thumbs/nature-mosquito-six-needles-front.webp?v=dd576df5199e",
+     "back": "thumbs/nature-mosquito-six-needles-back.webp?v=dd576df5199e"
     }
    },
    "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",
@@ -144725,8 +144725,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-mosquito-winter-basement.html?v=d17eb4987f12",
     "bytes": 11341,
     "thumbs": {
-     "front": "thumbs/nature-mosquito-winter-basement-front.webp?v=d17eb4987f12",
-     "back": "thumbs/nature-mosquito-winter-basement-back.webp?v=d17eb4987f12"
+     "front": "thumbs/nature-mosquito-winter-basement-front.webp?v=e7865c9cd24c",
+     "back": "thumbs/nature-mosquito-winter-basement-back.webp?v=e7865c9cd24c"
     }
    },
    "source": "Geopop, “Dove vanno le #zanzare d’inverno? Saperlo, può aiutarci a ridurne la proliferazione” (YouTube, 2026)",
@@ -144768,8 +144768,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-mosquito-winter-eggs.html?v=23a9a2f1d2d7",
     "bytes": 12060,
     "thumbs": {
-     "front": "thumbs/nature-mosquito-winter-eggs-front.webp?v=23a9a2f1d2d7",
-     "back": "thumbs/nature-mosquito-winter-eggs-back.webp?v=23a9a2f1d2d7"
+     "front": "thumbs/nature-mosquito-winter-eggs-front.webp?v=f3d4af2aeb75",
+     "back": "thumbs/nature-mosquito-winter-eggs-back.webp?v=f3d4af2aeb75"
     }
    },
    "source": "Geopop, “Dove vanno le #zanzare d’inverno? Saperlo, può aiutarci a ridurne la proliferazione” (YouTube, 2026)",
@@ -144928,8 +144928,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-nacre-two-components.html?v=c422a90b35dd",
     "bytes": 9872,
     "thumbs": {
-     "front": "thumbs/nature-nacre-two-components-front.webp?v=c422a90b35dd",
-     "back": "thumbs/nature-nacre-two-components-back.webp?v=c422a90b35dd"
+     "front": "thumbs/nature-nacre-two-components-front.webp?v=984aa32f6d4f",
+     "back": "thumbs/nature-nacre-two-components-back.webp?v=984aa32f6d4f"
     }
    },
    "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
@@ -145274,8 +145274,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-nazare-canyon-wave.html?v=73511612067b",
     "bytes": 7149,
     "thumbs": {
-     "front": "thumbs/nature-nazare-canyon-wave-front.webp?v=73511612067b",
-     "back": "thumbs/nature-nazare-canyon-wave-back.webp?v=73511612067b"
+     "front": "thumbs/nature-nazare-canyon-wave-front.webp?v=f6cca39e5157",
+     "back": "thumbs/nature-nazare-canyon-wave-back.webp?v=f6cca39e5157"
     }
    },
    "source": "Geopop, “Perché le onde più alte del mondo si formano proprio a Nazarè in Portogallo? E come si creano?” (YouTube, 2023)",
@@ -145711,8 +145711,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-obsidian-natural-glass.html?v=e41e6bee95b2",
     "bytes": 9756,
     "thumbs": {
-     "front": "thumbs/nature-obsidian-natural-glass-front.webp?v=e41e6bee95b2",
-     "back": "thumbs/nature-obsidian-natural-glass-back.webp?v=e41e6bee95b2"
+     "front": "thumbs/nature-obsidian-natural-glass-front.webp?v=53ca1dd60194",
+     "back": "thumbs/nature-obsidian-natural-glass-back.webp?v=53ca1dd60194"
     }
    },
    "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
@@ -145753,8 +145753,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-ocean-salt-cube.html?v=27439f71dfcd",
     "bytes": 10035,
     "thumbs": {
-     "front": "thumbs/nature-ocean-salt-cube-front.webp?v=27439f71dfcd",
-     "back": "thumbs/nature-ocean-salt-cube-back.webp?v=27439f71dfcd"
+     "front": "thumbs/nature-ocean-salt-cube-front.webp?v=63fe183f6062",
+     "back": "thumbs/nature-ocean-salt-cube-back.webp?v=63fe183f6062"
     }
    },
    "source": "Geopop, “Perché il sodio esplode a contatto con l’acqua? La reazione chimica spiegata con un esperimento” (YouTube, 2025)",
@@ -145990,8 +145990,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-oyster-water-filter.html?v=b00d12aecb99",
     "bytes": 10041,
     "thumbs": {
-     "front": "thumbs/nature-oyster-water-filter-front.webp?v=b00d12aecb99",
-     "back": "thumbs/nature-oyster-water-filter-back.webp?v=b00d12aecb99"
+     "front": "thumbs/nature-oyster-water-filter-front.webp?v=4c2bd018c454",
+     "back": "thumbs/nature-oyster-water-filter-back.webp?v=4c2bd018c454"
     }
    },
    "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
@@ -146033,8 +146033,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-pearl-defence.html?v=fe8ec5b4f383",
     "bytes": 8828,
     "thumbs": {
-     "front": "thumbs/nature-pearl-defence-front.webp?v=fe8ec5b4f383",
-     "back": "thumbs/nature-pearl-defence-back.webp?v=fe8ec5b4f383"
+     "front": "thumbs/nature-pearl-defence-front.webp?v=837d43a130f7",
+     "back": "thumbs/nature-pearl-defence-back.webp?v=837d43a130f7"
     }
    },
    "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
@@ -146076,8 +146076,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-permafrost-thaw-line.html?v=bc3103411e83",
     "bytes": 20943,
     "thumbs": {
-     "front": "thumbs/nature-permafrost-thaw-line-front.webp?v=bc3103411e83",
-     "back": "thumbs/nature-permafrost-thaw-line-back.webp?v=bc3103411e83"
+     "front": "thumbs/nature-permafrost-thaw-line-front.webp?v=487ed428a8bb",
+     "back": "thumbs/nature-permafrost-thaw-line-back.webp?v=487ed428a8bb"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -146278,8 +146278,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-pfas-everywhere-rain.html?v=205841d08440",
     "bytes": 10196,
     "thumbs": {
-     "front": "thumbs/nature-pfas-everywhere-rain-front.webp?v=205841d08440",
-     "back": "thumbs/nature-pfas-everywhere-rain-back.webp?v=205841d08440"
+     "front": "thumbs/nature-pfas-everywhere-rain-front.webp?v=c55b34e86b61",
+     "back": "thumbs/nature-pfas-everywhere-rain-back.webp?v=c55b34e86b61"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -146549,8 +146549,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-plastic-comes-back.html?v=45255c817b8d",
     "bytes": 10071,
     "thumbs": {
-     "front": "thumbs/nature-plastic-comes-back-front.webp?v=45255c817b8d",
-     "back": "thumbs/nature-plastic-comes-back-back.webp?v=45255c817b8d"
+     "front": "thumbs/nature-plastic-comes-back-front.webp?v=f7f76d3a952f",
+     "back": "thumbs/nature-plastic-comes-back-back.webp?v=f7f76d3a952f"
     }
    },
    "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
@@ -146591,8 +146591,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-plastic-patch-france.html?v=bf03fe060dd7",
     "bytes": 18752,
     "thumbs": {
-     "front": "thumbs/nature-plastic-patch-france-front.webp?v=bf03fe060dd7",
-     "back": "thumbs/nature-plastic-patch-france-back.webp?v=bf03fe060dd7"
+     "front": "thumbs/nature-plastic-patch-france-front.webp?v=ce7262971252",
+     "back": "thumbs/nature-plastic-patch-france-back.webp?v=ce7262971252"
     }
    },
    "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
@@ -146634,8 +146634,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-po-valley-basin.html?v=8ffb21e171fa",
     "bytes": 8790,
     "thumbs": {
-     "front": "thumbs/nature-po-valley-basin-front.webp?v=8ffb21e171fa",
-     "back": "thumbs/nature-po-valley-basin-back.webp?v=8ffb21e171fa"
+     "front": "thumbs/nature-po-valley-basin-front.webp?v=d7173eeb3340",
+     "back": "thumbs/nature-po-valley-basin-back.webp?v=d7173eeb3340"
     }
    },
    "source": "Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)",
@@ -146678,8 +146678,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-prevention-before-damage.html?v=22014a421217",
     "bytes": 10747,
     "thumbs": {
-     "front": "thumbs/nature-prevention-before-damage-front.webp?v=22014a421217",
-     "back": "thumbs/nature-prevention-before-damage-back.webp?v=22014a421217"
+     "front": "thumbs/nature-prevention-before-damage-front.webp?v=8a12b0e3bcf0",
+     "back": "thumbs/nature-prevention-before-damage-back.webp?v=8a12b0e3bcf0"
     }
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
@@ -147622,8 +147622,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-red-forest-chernobyl.html?v=a64779e282eb",
     "bytes": 6868,
     "thumbs": {
-     "front": "thumbs/nature-red-forest-chernobyl-front.webp?v=a64779e282eb",
-     "back": "thumbs/nature-red-forest-chernobyl-back.webp?v=a64779e282eb"
+     "front": "thumbs/nature-red-forest-chernobyl-front.webp?v=11722d7fe018",
+     "back": "thumbs/nature-red-forest-chernobyl-back.webp?v=11722d7fe018"
     }
    },
    "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
@@ -147664,8 +147664,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-red-sea-algae.html?v=60febac84aa5",
     "bytes": 8797,
     "thumbs": {
-     "front": "thumbs/nature-red-sea-algae-front.webp?v=60febac84aa5",
-     "back": "thumbs/nature-red-sea-algae-back.webp?v=60febac84aa5"
+     "front": "thumbs/nature-red-sea-algae-front.webp?v=4d359fb28fca",
+     "back": "thumbs/nature-red-sea-algae-back.webp?v=4d359fb28fca"
     }
    },
    "source": "Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)",
@@ -148319,8 +148319,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-sea-level-drop.html?v=027209771f24",
     "bytes": 8387,
     "thumbs": {
-     "front": "thumbs/nature-sea-level-drop-front.webp?v=027209771f24",
-     "back": "thumbs/nature-sea-level-drop-back.webp?v=027209771f24"
+     "front": "thumbs/nature-sea-level-drop-front.webp?v=d2e6c83a77f0",
+     "back": "thumbs/nature-sea-level-drop-back.webp?v=d2e6c83a77f0"
     }
    },
    "source": "Geopop, “LE ERE GLACIALI - VI SPIEGO COME, QUANDO E PERCHÉ AVVENGONO” (YouTube, 2020)",
@@ -148503,8 +148503,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-sharks-food-chain.html?v=4621d8d73625",
     "bytes": 13097,
     "thumbs": {
-     "front": "thumbs/nature-sharks-food-chain-front.webp?v=4621d8d73625",
-     "back": "thumbs/nature-sharks-food-chain-back.webp?v=4621d8d73625"
+     "front": "thumbs/nature-sharks-food-chain-front.webp?v=50479033e959",
+     "back": "thumbs/nature-sharks-food-chain-back.webp?v=50479033e959"
     }
    },
    "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
@@ -148546,8 +148546,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-sharks-overfishing-toll.html?v=99313b8804fa",
     "bytes": 8073,
     "thumbs": {
-     "front": "thumbs/nature-sharks-overfishing-toll-front.webp?v=99313b8804fa",
-     "back": "thumbs/nature-sharks-overfishing-toll-back.webp?v=99313b8804fa"
+     "front": "thumbs/nature-sharks-overfishing-toll-front.webp?v=d43515174da3",
+     "back": "thumbs/nature-sharks-overfishing-toll-back.webp?v=d43515174da3"
     }
    },
    "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
@@ -148589,8 +148589,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-siberian-anticyclone-trap.html?v=c47523bba6bc",
     "bytes": 8856,
     "thumbs": {
-     "front": "thumbs/nature-siberian-anticyclone-trap-front.webp?v=c47523bba6bc",
-     "back": "thumbs/nature-siberian-anticyclone-trap-back.webp?v=c47523bba6bc"
+     "front": "thumbs/nature-siberian-anticyclone-trap-front.webp?v=b0d7a2355c6d",
+     "back": "thumbs/nature-siberian-anticyclone-trap-back.webp?v=b0d7a2355c6d"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -148633,8 +148633,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-smallest-eruption-volume.html?v=87891883179d",
     "bytes": 8981,
     "thumbs": {
-     "front": "thumbs/nature-smallest-eruption-volume-front.webp?v=87891883179d",
-     "back": "thumbs/nature-smallest-eruption-volume-back.webp?v=87891883179d"
+     "front": "thumbs/nature-smallest-eruption-volume-front.webp?v=61f28cb59c38",
+     "back": "thumbs/nature-smallest-eruption-volume-back.webp?v=61f28cb59c38"
     }
    },
    "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-1” (YouTube, 2019)",
@@ -148676,8 +148676,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-spider-alarm-line.html?v=601927c6836e",
     "bytes": 12100,
     "thumbs": {
-     "front": "thumbs/nature-spider-alarm-line-front.webp?v=601927c6836e",
-     "back": "thumbs/nature-spider-alarm-line-back.webp?v=601927c6836e"
+     "front": "thumbs/nature-spider-alarm-line-front.webp?v=9279dea0930a",
+     "back": "thumbs/nature-spider-alarm-line-back.webp?v=9279dea0930a"
     }
    },
    "source": "Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022)",
@@ -148719,8 +148719,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-spider-empty-shell.html?v=09efaaf308f4",
     "bytes": 8297,
     "thumbs": {
-     "front": "thumbs/nature-spider-empty-shell-front.webp?v=09efaaf308f4",
-     "back": "thumbs/nature-spider-empty-shell-back.webp?v=09efaaf308f4"
+     "front": "thumbs/nature-spider-empty-shell-front.webp?v=9a11b80e661b",
+     "back": "thumbs/nature-spider-empty-shell-back.webp?v=9a11b80e661b"
     }
    },
    "source": "Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022)",
@@ -148762,8 +148762,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-spider-rock-gift.html?v=e31b0296b271",
     "bytes": 10105,
     "thumbs": {
-     "front": "thumbs/nature-spider-rock-gift-front.webp?v=e31b0296b271",
-     "back": "thumbs/nature-spider-rock-gift-back.webp?v=e31b0296b271"
+     "front": "thumbs/nature-spider-rock-gift-front.webp?v=3db75eaaf4d7",
+     "back": "thumbs/nature-spider-rock-gift-back.webp?v=3db75eaaf4d7"
     }
    },
    "source": "Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022)",
@@ -148805,8 +148805,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-spineless-peyote-defense.html?v=5a0058a4f32e",
     "bytes": 15480,
     "thumbs": {
-     "front": "thumbs/nature-spineless-peyote-defense-front.webp?v=5a0058a4f32e",
-     "back": "thumbs/nature-spineless-peyote-defense-back.webp?v=5a0058a4f32e"
+     "front": "thumbs/nature-spineless-peyote-defense-front.webp?v=a52660208cfe",
+     "back": "thumbs/nature-spineless-peyote-defense-back.webp?v=a52660208cfe"
     }
    },
    "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",
@@ -149291,8 +149291,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-super-caldera-violence.html?v=c3dfd7221bdd",
     "bytes": 9000,
     "thumbs": {
-     "front": "thumbs/nature-super-caldera-violence-front.webp?v=c3dfd7221bdd",
-     "back": "thumbs/nature-super-caldera-violence-back.webp?v=c3dfd7221bdd"
+     "front": "thumbs/nature-super-caldera-violence-front.webp?v=0c9ec23ae442",
+     "back": "thumbs/nature-super-caldera-violence-back.webp?v=0c9ec23ae442"
     }
    },
    "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)",
@@ -149334,8 +149334,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-supercooled-bottle.html?v=9aef1abee89a",
     "bytes": 13515,
     "thumbs": {
-     "front": "thumbs/nature-supercooled-bottle-front.webp?v=9aef1abee89a",
-     "back": "thumbs/nature-supercooled-bottle-back.webp?v=9aef1abee89a"
+     "front": "thumbs/nature-supercooled-bottle-front.webp?v=8500cc470781",
+     "back": "thumbs/nature-supercooled-bottle-back.webp?v=8500cc470781"
     }
    },
    "source": "Veritasium, “Supercooled Water - Explained!” (YouTube, 2011)",
@@ -149489,8 +149489,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-ten-am-rule.html?v=9fd687cb42b5",
     "bytes": 16223,
     "thumbs": {
-     "front": "thumbs/nature-ten-am-rule-front.webp?v=9fd687cb42b5",
-     "back": "thumbs/nature-ten-am-rule-back.webp?v=9fd687cb42b5"
+     "front": "thumbs/nature-ten-am-rule-front.webp?v=a688bdc97f17",
+     "back": "thumbs/nature-ten-am-rule-back.webp?v=a688bdc97f17"
     }
    },
    "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
@@ -149532,8 +149532,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-thermal-inversion-lid.html?v=3d2194139c6c",
     "bytes": 8601,
     "thumbs": {
-     "front": "thumbs/nature-thermal-inversion-lid-front.webp?v=3d2194139c6c",
-     "back": "thumbs/nature-thermal-inversion-lid-back.webp?v=3d2194139c6c"
+     "front": "thumbs/nature-thermal-inversion-lid-front.webp?v=595624000038",
+     "back": "thumbs/nature-thermal-inversion-lid-back.webp?v=595624000038"
     }
    },
    "source": "Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)",
@@ -149687,8 +149687,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-tree-pressure-climb.html?v=6f3a41649a5e",
     "bytes": 9163,
     "thumbs": {
-     "front": "thumbs/nature-tree-pressure-climb-front.webp?v=6f3a41649a5e",
-     "back": "thumbs/nature-tree-pressure-climb-back.webp?v=6f3a41649a5e"
+     "front": "thumbs/nature-tree-pressure-climb-front.webp?v=d1e13af8235e",
+     "back": "thumbs/nature-tree-pressure-climb-back.webp?v=d1e13af8235e"
     }
    },
    "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",
@@ -149729,8 +149729,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-tree-water-tension.html?v=2f3b26402ee4",
     "bytes": 10454,
     "thumbs": {
-     "front": "thumbs/nature-tree-water-tension-front.webp?v=2f3b26402ee4",
-     "back": "thumbs/nature-tree-water-tension-back.webp?v=2f3b26402ee4"
+     "front": "thumbs/nature-tree-water-tension-front.webp?v=2dd48293a24f",
+     "back": "thumbs/nature-tree-water-tension-back.webp?v=2dd48293a24f"
     }
    },
    "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",
@@ -149773,8 +149773,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-trees-from-air.html?v=325515ecef87",
     "bytes": 20497,
     "thumbs": {
-     "front": "thumbs/nature-trees-from-air-front.webp?v=325515ecef87",
-     "back": "thumbs/nature-trees-from-air-back.webp?v=325515ecef87"
+     "front": "thumbs/nature-trees-from-air-front.webp?v=2e801d31b3ec",
+     "back": "thumbs/nature-trees-from-air-back.webp?v=2e801d31b3ec"
     }
    },
    "source": "Veritasium, “Where Do Trees Get Their Mass?” (YouTube, 2012)",
@@ -149816,8 +149816,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-trench-volcano-food.html?v=2329a6623b1b",
     "bytes": 8648,
     "thumbs": {
-     "front": "thumbs/nature-trench-volcano-food-front.webp?v=2329a6623b1b",
-     "back": "thumbs/nature-trench-volcano-food-back.webp?v=2329a6623b1b"
+     "front": "thumbs/nature-trench-volcano-food-front.webp?v=3a9817fea90b",
+     "back": "thumbs/nature-trench-volcano-food-back.webp?v=3a9817fea90b"
     }
    },
    "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
@@ -149859,8 +149859,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-tristan-hot-spot.html?v=772b43746548",
     "bytes": 10295,
     "thumbs": {
-     "front": "thumbs/nature-tristan-hot-spot-front.webp?v=772b43746548",
-     "back": "thumbs/nature-tristan-hot-spot-back.webp?v=772b43746548"
+     "front": "thumbs/nature-tristan-hot-spot-front.webp?v=339e56f550f9",
+     "back": "thumbs/nature-tristan-hot-spot-back.webp?v=339e56f550f9"
     }
    },
    "source": "Geopop, “L'insediamento umano più isolato del mondo è su un'isola sperduta nell'Atlantico: Tristan da Cunha” (YouTube, 2023)",
@@ -149902,8 +149902,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-tsunami-no-wall.html?v=f633c7dca5d1",
     "bytes": 10022,
     "thumbs": {
-     "front": "thumbs/nature-tsunami-no-wall-front.webp?v=f633c7dca5d1",
-     "back": "thumbs/nature-tsunami-no-wall-back.webp?v=f633c7dca5d1"
+     "front": "thumbs/nature-tsunami-no-wall-front.webp?v=57559fc293a7",
+     "back": "thumbs/nature-tsunami-no-wall-back.webp?v=57559fc293a7"
     }
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
@@ -149945,8 +149945,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-tsunami-sea-retreat.html?v=ad059ec41c4a",
     "bytes": 10747,
     "thumbs": {
-     "front": "thumbs/nature-tsunami-sea-retreat-front.webp?v=ad059ec41c4a",
-     "back": "thumbs/nature-tsunami-sea-retreat-back.webp?v=ad059ec41c4a"
+     "front": "thumbs/nature-tsunami-sea-retreat-front.webp?v=8ac6b257b945",
+     "back": "thumbs/nature-tsunami-sea-retreat-back.webp?v=8ac6b257b945"
     }
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
@@ -149988,8 +149988,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-tsunami-slows-down.html?v=f7a5c7e4ea55",
     "bytes": 18240,
     "thumbs": {
-     "front": "thumbs/nature-tsunami-slows-down-front.webp?v=f7a5c7e4ea55",
-     "back": "thumbs/nature-tsunami-slows-down-back.webp?v=f7a5c7e4ea55"
+     "front": "thumbs/nature-tsunami-slows-down-front.webp?v=fe5c882a3518",
+     "back": "thumbs/nature-tsunami-slows-down-back.webp?v=fe5c882a3518"
     }
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
@@ -150031,8 +150031,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-twin-landslide-tsunami.html?v=3bc8c4a8d898",
     "bytes": 10856,
     "thumbs": {
-     "front": "thumbs/nature-twin-landslide-tsunami-front.webp?v=3bc8c4a8d898",
-     "back": "thumbs/nature-twin-landslide-tsunami-back.webp?v=3bc8c4a8d898"
+     "front": "thumbs/nature-twin-landslide-tsunami-front.webp?v=da6728cbab10",
+     "back": "thumbs/nature-twin-landslide-tsunami-back.webp?v=da6728cbab10"
     }
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
@@ -150249,8 +150249,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-venice-flood-causes.html?v=f988196e882b",
     "bytes": 7970,
     "thumbs": {
-     "front": "thumbs/nature-venice-flood-causes-front.webp?v=f988196e882b",
-     "back": "thumbs/nature-venice-flood-causes-back.webp?v=f988196e882b"
+     "front": "thumbs/nature-venice-flood-causes-front.webp?v=711931ef1cd5",
+     "back": "thumbs/nature-venice-flood-causes-back.webp?v=711931ef1cd5"
     }
    },
    "source": "Geopop, “ACQUA ALTA VENEZIA:  L'ANALISI SCIENTIFICA DELLE CAUSE” (YouTube, 2019)",
@@ -150292,8 +150292,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-venice-high-water.html?v=baf387673d06",
     "bytes": 10038,
     "thumbs": {
-     "front": "thumbs/nature-venice-high-water-front.webp?v=baf387673d06",
-     "back": "thumbs/nature-venice-high-water-back.webp?v=baf387673d06"
+     "front": "thumbs/nature-venice-high-water-front.webp?v=6fba84ae9dc0",
+     "back": "thumbs/nature-venice-high-water-back.webp?v=6fba84ae9dc0"
     }
    },
    "source": "Geopop, “ACQUA ALTA VENEZIA:  L'ANALISI SCIENTIFICA DELLE CAUSE” (YouTube, 2019)",
@@ -150334,8 +150334,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-vesuvius-1631-shape.html?v=4f14023f40cb",
     "bytes": 7456,
     "thumbs": {
-     "front": "thumbs/nature-vesuvius-1631-shape-front.webp?v=4f14023f40cb",
-     "back": "thumbs/nature-vesuvius-1631-shape-back.webp?v=4f14023f40cb"
+     "front": "thumbs/nature-vesuvius-1631-shape-front.webp?v=aed2d09f39a5",
+     "back": "thumbs/nature-vesuvius-1631-shape-back.webp?v=aed2d09f39a5"
     }
    },
    "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
@@ -150377,8 +150377,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-vesuvius-ash-volume.html?v=c86a22244d9f",
     "bytes": 11969,
     "thumbs": {
-     "front": "thumbs/nature-vesuvius-ash-volume-front.webp?v=c86a22244d9f",
-     "back": "thumbs/nature-vesuvius-ash-volume-back.webp?v=c86a22244d9f"
+     "front": "thumbs/nature-vesuvius-ash-volume-front.webp?v=c777ca0ce134",
+     "back": "thumbs/nature-vesuvius-ash-volume-back.webp?v=c777ca0ce134"
     }
    },
    "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
@@ -150419,8 +150419,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-vesuvius-inside-somma.html?v=94628e6a6132",
     "bytes": 8827,
     "thumbs": {
-     "front": "thumbs/nature-vesuvius-inside-somma-front.webp?v=94628e6a6132",
-     "back": "thumbs/nature-vesuvius-inside-somma-back.webp?v=94628e6a6132"
+     "front": "thumbs/nature-vesuvius-inside-somma-front.webp?v=c9b448bf835c",
+     "back": "thumbs/nature-vesuvius-inside-somma-back.webp?v=c9b448bf835c"
     }
    },
    "source": "Geopop, “VESUVIO - Prima era molto più grande! Uno dei miei primissimi video” (YouTube, 2021)",
@@ -150462,8 +150462,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-vesuvius-one-eruption.html?v=3577e5d8027c",
     "bytes": 9084,
     "thumbs": {
-     "front": "thumbs/nature-vesuvius-one-eruption-front.webp?v=3577e5d8027c",
-     "back": "thumbs/nature-vesuvius-one-eruption-back.webp?v=3577e5d8027c"
+     "front": "thumbs/nature-vesuvius-one-eruption-front.webp?v=1fa336cfe048",
+     "back": "thumbs/nature-vesuvius-one-eruption-back.webp?v=1fa336cfe048"
     }
    },
    "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
@@ -150505,8 +150505,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-vesuvius-warning-signs.html?v=d30ea2df0c88",
     "bytes": 22352,
     "thumbs": {
-     "front": "thumbs/nature-vesuvius-warning-signs-front.webp?v=d30ea2df0c88",
-     "back": "thumbs/nature-vesuvius-warning-signs-back.webp?v=d30ea2df0c88"
+     "front": "thumbs/nature-vesuvius-warning-signs-front.webp?v=1e009d7e7439",
+     "back": "thumbs/nature-vesuvius-warning-signs-back.webp?v=1e009d7e7439"
     }
    },
    "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
@@ -150548,8 +150548,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-water-carves-caves.html?v=084a9cbbf1f6",
     "bytes": 9923,
     "thumbs": {
-     "front": "thumbs/nature-water-carves-caves-front.webp?v=084a9cbbf1f6",
-     "back": "thumbs/nature-water-carves-caves-back.webp?v=084a9cbbf1f6"
+     "front": "thumbs/nature-water-carves-caves-front.webp?v=ae5ce9ee0449",
+     "back": "thumbs/nature-water-carves-caves-back.webp?v=ae5ce9ee0449"
     }
    },
    "source": "Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)",
@@ -151100,8 +151100,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-xylem-no-bubbles.html?v=765d20d150d3",
     "bytes": 10238,
     "thumbs": {
-     "front": "thumbs/nature-xylem-no-bubbles-front.webp?v=765d20d150d3",
-     "back": "thumbs/nature-xylem-no-bubbles-back.webp?v=765d20d150d3"
+     "front": "thumbs/nature-xylem-no-bubbles-front.webp?v=55b67ffc18f0",
+     "back": "thumbs/nature-xylem-no-bubbles-back.webp?v=55b67ffc18f0"
     }
    },
    "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",
@@ -151143,8 +151143,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-yakutsk-heat-spikes.html?v=1b5fa5963baf",
     "bytes": 21721,
     "thumbs": {
-     "front": "thumbs/nature-yakutsk-heat-spikes-front.webp?v=1b5fa5963baf",
-     "back": "thumbs/nature-yakutsk-heat-spikes-back.webp?v=1b5fa5963baf"
+     "front": "thumbs/nature-yakutsk-heat-spikes-front.webp?v=73dedb96054e",
+     "back": "thumbs/nature-yakutsk-heat-spikes-back.webp?v=73dedb96054e"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -151187,8 +151187,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/nature-yakutsk-record-cold.html?v=e8ce1c8333ad",
     "bytes": 12271,
     "thumbs": {
-     "front": "thumbs/nature-yakutsk-record-cold-front.webp?v=e8ce1c8333ad",
-     "back": "thumbs/nature-yakutsk-record-cold-back.webp?v=e8ce1c8333ad"
+     "front": "thumbs/nature-yakutsk-record-cold-front.webp?v=d563a5e78781",
+     "back": "thumbs/nature-yakutsk-record-cold-back.webp?v=d563a5e78781"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -162721,8 +162721,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/philosophy-zeno-4.html?v=2dcd7391a0b9",
     "bytes": 12275,
     "thumbs": {
-     "front": "thumbs/philosophy-zeno-4-front.webp?v=2dcd7391a0b9",
-     "back": "thumbs/philosophy-zeno-4-back.webp?v=2dcd7391a0b9"
+     "front": "thumbs/philosophy-zeno-4-front.webp?v=f6ae024c6638",
+     "back": "thumbs/philosophy-zeno-4-back.webp?v=f6ae024c6638"
     }
    },
    "source": "Itano et al., Physical Review A, 1990",
@@ -165437,8 +165437,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/pop_culture-denim-6.html?v=102a5d4d16ce",
     "bytes": 16945,
     "thumbs": {
-     "front": "thumbs/pop_culture-denim-6-front.webp?v=102a5d4d16ce",
-     "back": "thumbs/pop_culture-denim-6-back.webp?v=102a5d4d16ce"
+     "front": "thumbs/pop_culture-denim-6-front.webp?v=7aa333b4b27c",
+     "back": "thumbs/pop_culture-denim-6-back.webp?v=7aa333b4b27c"
     }
    },
    "source": "Balfour-Paul, Indigo, British Museum Press",
@@ -174824,8 +174824,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-bamboccia-disillusa.html?v=6f2a0c2d9cb2",
     "bytes": 9079,
     "thumbs": {
-     "front": "thumbs/psychology-bamboccia-disillusa-front.webp?v=6f2a0c2d9cb2",
-     "back": "thumbs/psychology-bamboccia-disillusa-back.webp?v=6f2a0c2d9cb2"
+     "front": "thumbs/psychology-bamboccia-disillusa-front.webp?v=8cb27891865c",
+     "back": "thumbs/psychology-bamboccia-disillusa-back.webp?v=8cb27891865c"
     }
    },
    "source": "Diventare Strong, “SEDURRE un UOMO per una RELAZIONE. 12 ERRORI Madornali.” (YouTube, 2023)",
@@ -176560,8 +176560,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-confidence-trap.html?v=5b2de683cbbd",
     "bytes": 8834,
     "thumbs": {
-     "front": "thumbs/psychology-confidence-trap-front.webp?v=5b2de683cbbd",
-     "back": "thumbs/psychology-confidence-trap-back.webp?v=5b2de683cbbd"
+     "front": "thumbs/psychology-confidence-trap-front.webp?v=2c6cf895cb73",
+     "back": "thumbs/psychology-confidence-trap-back.webp?v=2c6cf895cb73"
     }
    },
    "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
@@ -176986,8 +176986,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-conflict-two-addresses.html?v=8d17a0431dd2",
     "bytes": 18825,
     "thumbs": {
-     "front": "thumbs/psychology-conflict-two-addresses-front.webp?v=8d17a0431dd2",
-     "back": "thumbs/psychology-conflict-two-addresses-back.webp?v=8d17a0431dd2"
+     "front": "thumbs/psychology-conflict-two-addresses-front.webp?v=1e2ec6f83634",
+     "back": "thumbs/psychology-conflict-two-addresses-back.webp?v=1e2ec6f83634"
     }
    },
    "source": "Diventare Strong, “Come Smettere di Essere Troppo Buoni” (YouTube, 2021)",
@@ -178069,8 +178069,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-dream-logic-filter.html?v=3d1205038a0a",
     "bytes": 8544,
     "thumbs": {
-     "front": "thumbs/psychology-dream-logic-filter-front.webp?v=3d1205038a0a",
-     "back": "thumbs/psychology-dream-logic-filter-back.webp?v=3d1205038a0a"
+     "front": "thumbs/psychology-dream-logic-filter-front.webp?v=09043896149c",
+     "back": "thumbs/psychology-dream-logic-filter-back.webp?v=09043896149c"
     }
    },
    "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
@@ -178112,8 +178112,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-e-on-forehead.html?v=8a3596298c71",
     "bytes": 12969,
     "thumbs": {
-     "front": "thumbs/psychology-e-on-forehead-front.webp?v=8a3596298c71",
-     "back": "thumbs/psychology-e-on-forehead-back.webp?v=8a3596298c71"
+     "front": "thumbs/psychology-e-on-forehead-front.webp?v=a087a6b1dc58",
+     "back": "thumbs/psychology-e-on-forehead-back.webp?v=a087a6b1dc58"
     }
    },
    "source": "Diventare Strong, “Diventa POTENTE in 8 Punti” (YouTube, 2025)",
@@ -178156,8 +178156,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-effort-means-learning.html?v=0a35a305b705",
     "bytes": 7419,
     "thumbs": {
-     "front": "thumbs/psychology-effort-means-learning-front.webp?v=0a35a305b705",
-     "back": "thumbs/psychology-effort-means-learning-back.webp?v=0a35a305b705"
+     "front": "thumbs/psychology-effort-means-learning-front.webp?v=68598ca5b775",
+     "back": "thumbs/psychology-effort-means-learning-back.webp?v=68598ca5b775"
     }
    },
    "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
@@ -181292,8 +181292,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-gaze-limit.html?v=85a954c5cd13",
     "bytes": 18374,
     "thumbs": {
-     "front": "thumbs/psychology-gaze-limit-front.webp?v=85a954c5cd13",
-     "back": "thumbs/psychology-gaze-limit-back.webp?v=85a954c5cd13"
+     "front": "thumbs/psychology-gaze-limit-front.webp?v=5eb13eceaf73",
+     "back": "thumbs/psychology-gaze-limit-back.webp?v=5eb13eceaf73"
     }
    },
    "source": "Diventare Strong, “Come Avere Uno Sguardo Penetrante Incisivo e Intrigante” (YouTube, 2016)",
@@ -181335,8 +181335,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-gentle-slope-frame.html?v=e4d315127a5c",
     "bytes": 13593,
     "thumbs": {
-     "front": "thumbs/psychology-gentle-slope-frame-front.webp?v=e4d315127a5c",
-     "back": "thumbs/psychology-gentle-slope-frame-back.webp?v=e4d315127a5c"
+     "front": "thumbs/psychology-gentle-slope-frame-front.webp?v=ab5f77d199d6",
+     "back": "thumbs/psychology-gentle-slope-frame-back.webp?v=ab5f77d199d6"
     }
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
@@ -181600,8 +181600,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-gravity-hill.html?v=fd5949b6d5e3",
     "bytes": 23576,
     "thumbs": {
-     "front": "thumbs/psychology-gravity-hill-front.webp?v=fd5949b6d5e3",
-     "back": "thumbs/psychology-gravity-hill-back.webp?v=fd5949b6d5e3"
+     "front": "thumbs/psychology-gravity-hill-front.webp?v=e42b5f1a7b5f",
+     "back": "thumbs/psychology-gravity-hill-back.webp?v=e42b5f1a7b5f"
     }
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
@@ -183448,8 +183448,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-lead-crime-echo.html?v=5dee993236ce",
     "bytes": 10268,
     "thumbs": {
-     "front": "thumbs/psychology-lead-crime-echo-front.webp?v=5dee993236ce",
-     "back": "thumbs/psychology-lead-crime-echo-back.webp?v=5dee993236ce"
+     "front": "thumbs/psychology-lead-crime-echo-front.webp?v=c692905458d3",
+     "back": "thumbs/psychology-lead-crime-echo-back.webp?v=c692905458d3"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -183491,8 +183491,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-loss-weighs-double.html?v=c8d77f0f3d89",
     "bytes": 8059,
     "thumbs": {
-     "front": "thumbs/psychology-loss-weighs-double-front.webp?v=c8d77f0f3d89",
-     "back": "thumbs/psychology-loss-weighs-double-back.webp?v=c8d77f0f3d89"
+     "front": "thumbs/psychology-loss-weighs-double-front.webp?v=6f4df813f011",
+     "back": "thumbs/psychology-loss-weighs-double-back.webp?v=6f4df813f011"
     }
    },
    "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
@@ -183535,8 +183535,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-lottery-versus-love.html?v=fe0837a1221e",
     "bytes": 16578,
     "thumbs": {
-     "front": "thumbs/psychology-lottery-versus-love-front.webp?v=fe0837a1221e",
-     "back": "thumbs/psychology-lottery-versus-love-back.webp?v=fe0837a1221e"
+     "front": "thumbs/psychology-lottery-versus-love-front.webp?v=412ef291289c",
+     "back": "thumbs/psychology-lottery-versus-love-back.webp?v=412ef291289c"
     }
    },
    "source": "Diventare Strong, “Sei MENO Intelligente di Quanto Pensi: 7 Segni” (YouTube, 2024)",
@@ -183689,8 +183689,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-midas-touch.html?v=82a903210ec0",
     "bytes": 19611,
     "thumbs": {
-     "front": "thumbs/psychology-midas-touch-front.webp?v=82a903210ec0",
-     "back": "thumbs/psychology-midas-touch-back.webp?v=82a903210ec0"
+     "front": "thumbs/psychology-midas-touch-front.webp?v=8bbb7c225139",
+     "back": "thumbs/psychology-midas-touch-back.webp?v=8bbb7c225139"
     }
    },
    "source": "Diventare Strong, “►MiniCorso: Come Capire Se Piaci A Qualcuno con il Linguaggio Del Corpo (completo)” (YouTube, 2015)",
@@ -183731,8 +183731,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-misconception-memory.html?v=6c5557c97c45",
     "bytes": 20727,
     "thumbs": {
-     "front": "thumbs/psychology-misconception-memory-front.webp?v=6c5557c97c45",
-     "back": "thumbs/psychology-misconception-memory-back.webp?v=6c5557c97c45"
+     "front": "thumbs/psychology-misconception-memory-front.webp?v=18056180f69f",
+     "back": "thumbs/psychology-misconception-memory-back.webp?v=18056180f69f"
     }
    },
    "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
@@ -184793,8 +184793,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-niche-expertise-respect.html?v=cb1ff978802e",
     "bytes": 9151,
     "thumbs": {
-     "front": "thumbs/psychology-niche-expertise-respect-front.webp?v=cb1ff978802e",
-     "back": "thumbs/psychology-niche-expertise-respect-back.webp?v=cb1ff978802e"
+     "front": "thumbs/psychology-niche-expertise-respect-front.webp?v=2f2bf6d72bde",
+     "back": "thumbs/psychology-niche-expertise-respect-back.webp?v=2f2bf6d72bde"
     }
    },
    "source": "Diventare Strong, “FATTI RISPETTARE! 7 Trucchi Psicologici Scientifici” (YouTube, 2021)",
@@ -184836,8 +184836,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-once-in-a-while.html?v=c5ea706616d9",
     "bytes": 12734,
     "thumbs": {
-     "front": "thumbs/psychology-once-in-a-while-front.webp?v=c5ea706616d9",
-     "back": "thumbs/psychology-once-in-a-while-back.webp?v=c5ea706616d9"
+     "front": "thumbs/psychology-once-in-a-while-front.webp?v=19984ff86563",
+     "back": "thumbs/psychology-once-in-a-while-back.webp?v=19984ff86563"
     }
    },
    "source": "Diventare Strong, “Come Smettere di Essere Troppo Buoni” (YouTube, 2021)",
@@ -185476,8 +185476,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-psychogenic-polydipsia.html?v=073200ddb59b",
     "bytes": 12409,
     "thumbs": {
-     "front": "thumbs/psychology-psychogenic-polydipsia-front.webp?v=073200ddb59b",
-     "back": "thumbs/psychology-psychogenic-polydipsia-back.webp?v=073200ddb59b"
+     "front": "thumbs/psychology-psychogenic-polydipsia-front.webp?v=ed5c20c073b7",
+     "back": "thumbs/psychology-psychogenic-polydipsia-back.webp?v=ed5c20c073b7"
     }
    },
    "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
@@ -185519,8 +185519,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-pupil-pick.html?v=b451c7a03679",
     "bytes": 14781,
     "thumbs": {
-     "front": "thumbs/psychology-pupil-pick-front.webp?v=b451c7a03679",
-     "back": "thumbs/psychology-pupil-pick-back.webp?v=b451c7a03679"
+     "front": "thumbs/psychology-pupil-pick-front.webp?v=831c2d64dcf6",
+     "back": "thumbs/psychology-pupil-pick-back.webp?v=831c2d64dcf6"
     }
    },
    "source": "Diventare Strong, “Come Capire Se Piaci Dal Suo Sguardo E Da Cosa Ti Guarda” (YouTube, 2016)",
@@ -185563,8 +185563,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-rage-steel-balloon.html?v=115c81c17703",
     "bytes": 15549,
     "thumbs": {
-     "front": "thumbs/psychology-rage-steel-balloon-front.webp?v=115c81c17703",
-     "back": "thumbs/psychology-rage-steel-balloon-back.webp?v=115c81c17703"
+     "front": "thumbs/psychology-rage-steel-balloon-front.webp?v=1f5b8c64f103",
+     "back": "thumbs/psychology-rage-steel-balloon-back.webp?v=1f5b8c64f103"
     }
    },
    "source": "Diventare Strong, “7 Errori Che Ti Fanno Apparire INSICURO e Come Risolvere In Dettaglio” (YouTube, 2026)",
@@ -186157,8 +186157,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-room-you-hear.html?v=4c4fbe803432",
     "bytes": 18996,
     "thumbs": {
-     "front": "thumbs/psychology-room-you-hear-front.webp?v=4c4fbe803432",
-     "back": "thumbs/psychology-room-you-hear-back.webp?v=4c4fbe803432"
+     "front": "thumbs/psychology-room-you-hear-front.webp?v=3d0b8e9c0d6f",
+     "back": "thumbs/psychology-room-you-hear-back.webp?v=3d0b8e9c0d6f"
     }
    },
    "source": "Veritasium, “Testing if 60 minutes of silence drives you crazy” (YouTube, 2014)",
@@ -186201,8 +186201,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-rumor-communicating-vessels.html?v=0147c7ab7a20",
     "bytes": 19407,
     "thumbs": {
-     "front": "thumbs/psychology-rumor-communicating-vessels-front.webp?v=0147c7ab7a20",
-     "back": "thumbs/psychology-rumor-communicating-vessels-back.webp?v=0147c7ab7a20"
+     "front": "thumbs/psychology-rumor-communicating-vessels-front.webp?v=7810ddb62598",
+     "back": "thumbs/psychology-rumor-communicating-vessels-back.webp?v=7810ddb62598"
     }
    },
    "source": "Diventare Strong, “Come Gestire Chi Parla Male Di Te Alle Spalle” (YouTube, 2016)",
@@ -186383,8 +186383,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-second-knock.html?v=459fbebcb0f8",
     "bytes": 11043,
     "thumbs": {
-     "front": "thumbs/psychology-second-knock-front.webp?v=459fbebcb0f8",
-     "back": "thumbs/psychology-second-knock-back.webp?v=459fbebcb0f8"
+     "front": "thumbs/psychology-second-knock-front.webp?v=55c7c84175e8",
+     "back": "thumbs/psychology-second-knock-back.webp?v=55c7c84175e8"
     }
    },
    "source": "Diventare Strong, “Frasi dei Manipolatori: Non Farti Fregare” (YouTube, 2024)",
@@ -186579,8 +186579,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-seven-percent.html?v=20c22c9c75fc",
     "bytes": 17297,
     "thumbs": {
-     "front": "thumbs/psychology-seven-percent-front.webp?v=20c22c9c75fc",
-     "back": "thumbs/psychology-seven-percent-back.webp?v=20c22c9c75fc"
+     "front": "thumbs/psychology-seven-percent-front.webp?v=eb0d47692147",
+     "back": "thumbs/psychology-seven-percent-back.webp?v=eb0d47692147"
     }
    },
    "source": "Diventare Strong, “5 Segnali che PIACI ad una Persona (linguaggio del corpo)” (YouTube, 2023)",
@@ -187121,8 +187121,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-slot-reward-loop.html?v=6e1c7ed6b3ae",
     "bytes": 30685,
     "thumbs": {
-     "front": "thumbs/psychology-slot-reward-loop-front.webp?v=6e1c7ed6b3ae",
-     "back": "thumbs/psychology-slot-reward-loop-back.webp?v=6e1c7ed6b3ae"
+     "front": "thumbs/psychology-slot-reward-loop-front.webp?v=baca69432610",
+     "back": "thumbs/psychology-slot-reward-loop-back.webp?v=baca69432610"
     }
    },
    "source": "Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)",
@@ -187298,8 +187298,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-spinning-tube.html?v=29df30011f4a",
     "bytes": 10926,
     "thumbs": {
-     "front": "thumbs/psychology-spinning-tube-front.webp?v=29df30011f4a",
-     "back": "thumbs/psychology-spinning-tube-back.webp?v=29df30011f4a"
+     "front": "thumbs/psychology-spinning-tube-front.webp?v=606c1f4131cb",
+     "back": "thumbs/psychology-spinning-tube-back.webp?v=606c1f4131cb"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
@@ -187341,8 +187341,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-spinning-tube-trick-1.html?v=030bfc65bb85",
     "bytes": 10871,
     "thumbs": {
-     "front": "thumbs/psychology-spinning-tube-trick-1-front.webp?v=030bfc65bb85",
-     "back": "thumbs/psychology-spinning-tube-trick-1-back.webp?v=030bfc65bb85"
+     "front": "thumbs/psychology-spinning-tube-trick-1-front.webp?v=d43f27b5ba65",
+     "back": "thumbs/psychology-spinning-tube-trick-1-back.webp?v=d43f27b5ba65"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
@@ -187385,8 +187385,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-spinning-tube-trick-3.html?v=8030fc986fe3",
     "bytes": 12364,
     "thumbs": {
-     "front": "thumbs/psychology-spinning-tube-trick-3-front.webp?v=8030fc986fe3",
-     "back": "thumbs/psychology-spinning-tube-trick-3-back.webp?v=8030fc986fe3"
+     "front": "thumbs/psychology-spinning-tube-trick-3-front.webp?v=3f40529860ae",
+     "back": "thumbs/psychology-spinning-tube-trick-3-back.webp?v=3f40529860ae"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
@@ -187429,8 +187429,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-spotlight.html?v=3f61c87bae03",
     "bytes": 14035,
     "thumbs": {
-     "front": "thumbs/psychology-spotlight-front.webp?v=3f61c87bae03",
-     "back": "thumbs/psychology-spotlight-back.webp?v=3f61c87bae03"
+     "front": "thumbs/psychology-spotlight-front.webp?v=f086db5657df",
+     "back": "thumbs/psychology-spotlight-back.webp?v=f086db5657df"
     }
    },
    "source": "Diventare Strong, “Come apparire Dominanti, Sicuri di sé stessi, Determinati, Alpha, Tosti e Produttivi” (YouTube, 2015)",
@@ -187473,8 +187473,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-status-leverage.html?v=8adbe41ee5ac",
     "bytes": 21773,
     "thumbs": {
-     "front": "thumbs/psychology-status-leverage-front.webp?v=8adbe41ee5ac",
-     "back": "thumbs/psychology-status-leverage-back.webp?v=8adbe41ee5ac"
+     "front": "thumbs/psychology-status-leverage-front.webp?v=943e952422a1",
+     "back": "thumbs/psychology-status-leverage-back.webp?v=943e952422a1"
     }
    },
    "source": "Diventare Strong, “Come Fregarsene Di Tutto E Di Tutti (giudizio degli altri, resistere, durare)” (YouTube, 2016)",
@@ -187627,8 +187627,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-stranger-distance.html?v=57ff2223ac5a",
     "bytes": 16953,
     "thumbs": {
-     "front": "thumbs/psychology-stranger-distance-front.webp?v=57ff2223ac5a",
-     "back": "thumbs/psychology-stranger-distance-back.webp?v=57ff2223ac5a"
+     "front": "thumbs/psychology-stranger-distance-front.webp?v=25faf6f5a448",
+     "back": "thumbs/psychology-stranger-distance-back.webp?v=25faf6f5a448"
     }
    },
    "source": "Diventare Strong, “►MiniCorso: Come Capire Se Piaci A Qualcuno con il Linguaggio Del Corpo (completo)” (YouTube, 2015)",
@@ -188428,8 +188428,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-stroop-other-way.html?v=cc17e39517af",
     "bytes": 9596,
     "thumbs": {
-     "front": "thumbs/psychology-stroop-other-way-front.webp?v=cc17e39517af",
-     "back": "thumbs/psychology-stroop-other-way-back.webp?v=cc17e39517af"
+     "front": "thumbs/psychology-stroop-other-way-front.webp?v=df8babbc5924",
+     "back": "thumbs/psychology-stroop-other-way-back.webp?v=df8babbc5924"
     }
    },
    "source": "J. R. Stroop, Journal of Experimental Psychology, 1935",
@@ -188918,8 +188918,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-the-lucky-trap.html?v=cd05e93e98d3",
     "bytes": 20397,
     "thumbs": {
-     "front": "thumbs/psychology-the-lucky-trap-front.webp?v=cd05e93e98d3",
-     "back": "thumbs/psychology-the-lucky-trap-back.webp?v=cd05e93e98d3"
+     "front": "thumbs/psychology-the-lucky-trap-front.webp?v=40b3dc2805a5",
+     "back": "thumbs/psychology-the-lucky-trap-back.webp?v=40b3dc2805a5"
     }
    },
    "source": "Diventare Strong, “Mentalità D'Acciaio: 7 Pensieri da Eliminare dalla Tua Mente (Atteggiamento Mentale Vincente Strong)” (YouTube, 2020)",
@@ -188962,8 +188962,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-the-open-door.html?v=aaf26ef9c7dc",
     "bytes": 13402,
     "thumbs": {
-     "front": "thumbs/psychology-the-open-door-front.webp?v=aaf26ef9c7dc",
-     "back": "thumbs/psychology-the-open-door-back.webp?v=aaf26ef9c7dc"
+     "front": "thumbs/psychology-the-open-door-front.webp?v=8a70e32ffd1d",
+     "back": "thumbs/psychology-the-open-door-back.webp?v=8a70e32ffd1d"
     }
    },
    "source": "Diventare Strong, “Esci alla Scoperto: Basta PAURA di Mostrarti!” (YouTube, 2024)",
@@ -189242,8 +189242,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/psychology-who-holds-wheel.html?v=122743e63aa1",
     "bytes": 19708,
     "thumbs": {
-     "front": "thumbs/psychology-who-holds-wheel-front.webp?v=122743e63aa1",
-     "back": "thumbs/psychology-who-holds-wheel-back.webp?v=122743e63aa1"
+     "front": "thumbs/psychology-who-holds-wheel-front.webp?v=3dca41c522e7",
+     "back": "thumbs/psychology-who-holds-wheel-back.webp?v=3dca41c522e7"
     }
    },
    "source": "Diventare Strong, “Come Trattare Gli Altri Per Apparire Più Cazzuti Determinati Valorosi” (YouTube, 2017)",
@@ -190819,8 +190819,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-adiabatic-compression.html?v=29d123959955",
     "bytes": 22602,
     "thumbs": {
-     "front": "thumbs/science-adiabatic-compression-front.webp?v=29d123959955",
-     "back": "thumbs/science-adiabatic-compression-back.webp?v=29d123959955"
+     "front": "thumbs/science-adiabatic-compression-front.webp?v=796391fa4c0b",
+     "back": "thumbs/science-adiabatic-compression-back.webp?v=796391fa4c0b"
     }
    },
    "source": "Veritasium, “Fire Syringe” (YouTube, 2011)",
@@ -190862,8 +190862,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-adriatic-flexural-basin.html?v=535f8c694daf",
     "bytes": 7853,
     "thumbs": {
-     "front": "thumbs/science-adriatic-flexural-basin-front.webp?v=535f8c694daf",
-     "back": "thumbs/science-adriatic-flexural-basin-back.webp?v=535f8c694daf"
+     "front": "thumbs/science-adriatic-flexural-basin-front.webp?v=5d6192043bb1",
+     "back": "thumbs/science-adriatic-flexural-basin-back.webp?v=5d6192043bb1"
     }
    },
    "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
@@ -190905,8 +190905,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-aharonov-bohm.html?v=c7eabcc4ddd7",
     "bytes": 15818,
     "thumbs": {
-     "front": "thumbs/science-aharonov-bohm-front.webp?v=c7eabcc4ddd7",
-     "back": "thumbs/science-aharonov-bohm-back.webp?v=c7eabcc4ddd7"
+     "front": "thumbs/science-aharonov-bohm-front.webp?v=c27b44fd33d4",
+     "back": "thumbs/science-aharonov-bohm-back.webp?v=c27b44fd33d4"
     }
    },
    "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
@@ -190948,8 +190948,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-air-off-bacteria.html?v=b2bd077a7856",
     "bytes": 11749,
     "thumbs": {
-     "front": "thumbs/science-air-off-bacteria-front.webp?v=b2bd077a7856",
-     "back": "thumbs/science-air-off-bacteria-back.webp?v=b2bd077a7856"
+     "front": "thumbs/science-air-off-bacteria-front.webp?v=677c141b390f",
+     "back": "thumbs/science-air-off-bacteria-back.webp?v=677c141b390f"
     }
    },
    "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
@@ -190991,8 +190991,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-air-torpedo-sphere.html?v=e11fa8fb1221",
     "bytes": 14711,
     "thumbs": {
-     "front": "thumbs/science-air-torpedo-sphere-front.webp?v=e11fa8fb1221",
-     "back": "thumbs/science-air-torpedo-sphere-back.webp?v=e11fa8fb1221"
+     "front": "thumbs/science-air-torpedo-sphere-front.webp?v=aa37569d3988",
+     "back": "thumbs/science-air-torpedo-sphere-back.webp?v=aa37569d3988"
     }
    },
    "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
@@ -191034,8 +191034,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-air-wrapped-drag.html?v=1b38449902fd",
     "bytes": 8199,
     "thumbs": {
-     "front": "thumbs/science-air-wrapped-drag-front.webp?v=1b38449902fd",
-     "back": "thumbs/science-air-wrapped-drag-back.webp?v=1b38449902fd"
+     "front": "thumbs/science-air-wrapped-drag-front.webp?v=9f53b78d7e63",
+     "back": "thumbs/science-air-wrapped-drag-back.webp?v=9f53b78d7e63"
     }
    },
    "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
@@ -191077,8 +191077,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-aluminium-ice-melt.html?v=fb27c76df24b",
     "bytes": 8740,
     "thumbs": {
-     "front": "thumbs/science-aluminium-ice-melt-front.webp?v=fb27c76df24b",
-     "back": "thumbs/science-aluminium-ice-melt-back.webp?v=fb27c76df24b"
+     "front": "thumbs/science-aluminium-ice-melt-front.webp?v=01fa177c50fb",
+     "back": "thumbs/science-aluminium-ice-melt-back.webp?v=01fa177c50fb"
     }
    },
    "source": "Veritasium, “Misconceptions About Temperature” (YouTube, 2012)",
@@ -191120,8 +191120,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-antarctica-ancient-craton.html?v=27aa4cf7f1e4",
     "bytes": 9493,
     "thumbs": {
-     "front": "thumbs/science-antarctica-ancient-craton-front.webp?v=27aa4cf7f1e4",
-     "back": "thumbs/science-antarctica-ancient-craton-back.webp?v=27aa4cf7f1e4"
+     "front": "thumbs/science-antarctica-ancient-craton-front.webp?v=ba80bafcc463",
+     "back": "thumbs/science-antarctica-ancient-craton-back.webp?v=ba80bafcc463"
     }
    },
    "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
@@ -191163,8 +191163,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-antarctica-co2-2100.html?v=04d9d6f5b3d8",
     "bytes": 8114,
     "thumbs": {
-     "front": "thumbs/science-antarctica-co2-2100-front.webp?v=04d9d6f5b3d8",
-     "back": "thumbs/science-antarctica-co2-2100-back.webp?v=04d9d6f5b3d8"
+     "front": "thumbs/science-antarctica-co2-2100-front.webp?v=a0fc8265246b",
+     "back": "thumbs/science-antarctica-co2-2100-back.webp?v=a0fc8265246b"
     }
    },
    "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
@@ -191206,8 +191206,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-anthropocene-boundary-layer.html?v=3b975be582b7",
     "bytes": 12770,
     "thumbs": {
-     "front": "thumbs/science-anthropocene-boundary-layer-front.webp?v=3b975be582b7",
-     "back": "thumbs/science-anthropocene-boundary-layer-back.webp?v=3b975be582b7"
+     "front": "thumbs/science-anthropocene-boundary-layer-front.webp?v=b39175e32a4c",
+     "back": "thumbs/science-anthropocene-boundary-layer-back.webp?v=b39175e32a4c"
     }
    },
    "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
@@ -191249,8 +191249,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-apparent-dip.html?v=3d7957b7b65f",
     "bytes": 8601,
     "thumbs": {
-     "front": "thumbs/science-apparent-dip-front.webp?v=3d7957b7b65f",
-     "back": "thumbs/science-apparent-dip-back.webp?v=3d7957b7b65f"
+     "front": "thumbs/science-apparent-dip-front.webp?v=ad4d8589549b",
+     "back": "thumbs/science-apparent-dip-back.webp?v=ad4d8589549b"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -191292,8 +191292,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-arlington-teflon-blast.html?v=f2302a001d1a",
     "bytes": 19382,
     "thumbs": {
-     "front": "thumbs/science-arlington-teflon-blast-front.webp?v=f2302a001d1a",
-     "back": "thumbs/science-arlington-teflon-blast-back.webp?v=f2302a001d1a"
+     "front": "thumbs/science-arlington-teflon-blast-front.webp?v=c0a99276267d",
+     "back": "thumbs/science-arlington-teflon-blast-back.webp?v=c0a99276267d"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -191334,8 +191334,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-artesian-well-pressure.html?v=1c5f1086d10f",
     "bytes": 11850,
     "thumbs": {
-     "front": "thumbs/science-artesian-well-pressure-front.webp?v=1c5f1086d10f",
-     "back": "thumbs/science-artesian-well-pressure-back.webp?v=1c5f1086d10f"
+     "front": "thumbs/science-artesian-well-pressure-front.webp?v=12a614c1dc7d",
+     "back": "thumbs/science-artesian-well-pressure-back.webp?v=12a614c1dc7d"
     }
    },
    "source": "Geopop, “Ricostruzione 3D inedita dell'incidente di Vermicino: come hanno estratto il corpo di Alfredino” (YouTube, 2026)",
@@ -191376,8 +191376,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-aseismic-fault-creep.html?v=45040f9c7b32",
     "bytes": 11203,
     "thumbs": {
-     "front": "thumbs/science-aseismic-fault-creep-front.webp?v=45040f9c7b32",
-     "back": "thumbs/science-aseismic-fault-creep-back.webp?v=45040f9c7b32"
+     "front": "thumbs/science-aseismic-fault-creep-front.webp?v=74770e94d953",
+     "back": "thumbs/science-aseismic-fault-creep-back.webp?v=74770e94d953"
     }
    },
    "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
@@ -191568,8 +191568,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-backward-spin-x.html?v=af7e5b65ff52",
     "bytes": 8664,
     "thumbs": {
-     "front": "thumbs/science-backward-spin-x-front.webp?v=af7e5b65ff52",
-     "back": "thumbs/science-backward-spin-x-back.webp?v=af7e5b65ff52"
+     "front": "thumbs/science-backward-spin-x-front.webp?v=8b709d8c089a",
+     "back": "thumbs/science-backward-spin-x-back.webp?v=8b709d8c089a"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
@@ -191611,8 +191611,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-bank-floor-rubbish.html?v=98ab4bb42a27",
     "bytes": 10588,
     "thumbs": {
-     "front": "thumbs/science-bank-floor-rubbish-front.webp?v=98ab4bb42a27",
-     "back": "thumbs/science-bank-floor-rubbish-back.webp?v=98ab4bb42a27"
+     "front": "thumbs/science-bank-floor-rubbish-front.webp?v=0d101696986a",
+     "back": "thumbs/science-bank-floor-rubbish-back.webp?v=0d101696986a"
     }
    },
    "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
@@ -191804,8 +191804,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-belt-friction-equation.html?v=4a3ae71eb51f",
     "bytes": 8701,
     "thumbs": {
-     "front": "thumbs/science-belt-friction-equation-front.webp?v=4a3ae71eb51f",
-     "back": "thumbs/science-belt-friction-equation-back.webp?v=4a3ae71eb51f"
+     "front": "thumbs/science-belt-friction-equation-front.webp?v=a6b8b2708905",
+     "back": "thumbs/science-belt-friction-equation-back.webp?v=a6b8b2708905"
     }
    },
    "source": "Veritasium, “Stringless Yo-Yo!” (YouTube, 2016)",
@@ -191847,8 +191847,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-bermuda-gas-myth.html?v=a708d7153939",
     "bytes": 7980,
     "thumbs": {
-     "front": "thumbs/science-bermuda-gas-myth-front.webp?v=a708d7153939",
-     "back": "thumbs/science-bermuda-gas-myth-back.webp?v=a708d7153939"
+     "front": "thumbs/science-bermuda-gas-myth-front.webp?v=cb2488fc86ce",
+     "back": "thumbs/science-bermuda-gas-myth-back.webp?v=cb2488fc86ce"
     }
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
@@ -191890,8 +191890,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-big-globe-spin.html?v=9a457cfb4bff",
     "bytes": 9128,
     "thumbs": {
-     "front": "thumbs/science-big-globe-spin-front.webp?v=9a457cfb4bff",
-     "back": "thumbs/science-big-globe-spin-back.webp?v=9a457cfb4bff"
+     "front": "thumbs/science-big-globe-spin-front.webp?v=f519f81c9298",
+     "back": "thumbs/science-big-globe-spin-back.webp?v=f519f81c9298"
     }
    },
    "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
@@ -192049,8 +192049,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-bio-not-biodegradable.html?v=be57bb8aaea7",
     "bytes": 21961,
     "thumbs": {
-     "front": "thumbs/science-bio-not-biodegradable-front.webp?v=be57bb8aaea7",
-     "back": "thumbs/science-bio-not-biodegradable-back.webp?v=be57bb8aaea7"
+     "front": "thumbs/science-bio-not-biodegradable-front.webp?v=7af68300ed7e",
+     "back": "thumbs/science-bio-not-biodegradable-back.webp?v=7af68300ed7e"
     }
    },
    "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
@@ -192091,8 +192091,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-blue-aerogel.html?v=650f0d7446c8",
     "bytes": 17418,
     "thumbs": {
-     "front": "thumbs/science-blue-aerogel-front.webp?v=650f0d7446c8",
-     "back": "thumbs/science-blue-aerogel-back.webp?v=650f0d7446c8"
+     "front": "thumbs/science-blue-aerogel-front.webp?v=c93dfc127500",
+     "back": "thumbs/science-blue-aerogel-back.webp?v=c93dfc127500"
     }
    },
    "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
@@ -192134,8 +192134,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-boiling-point-pressure.html?v=d3f31bad7592",
     "bytes": 14620,
     "thumbs": {
-     "front": "thumbs/science-boiling-point-pressure-front.webp?v=d3f31bad7592",
-     "back": "thumbs/science-boiling-point-pressure-back.webp?v=d3f31bad7592"
+     "front": "thumbs/science-boiling-point-pressure-front.webp?v=7301db8b88b9",
+     "back": "thumbs/science-boiling-point-pressure-back.webp?v=7301db8b88b9"
     }
    },
    "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
@@ -192229,8 +192229,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-bomb-layer.html?v=87cce670e533",
     "bytes": 10442,
     "thumbs": {
-     "front": "thumbs/science-bomb-layer-front.webp?v=87cce670e533",
-     "back": "thumbs/science-bomb-layer-back.webp?v=87cce670e533"
+     "front": "thumbs/science-bomb-layer-front.webp?v=eb5ca49937e7",
+     "back": "thumbs/science-bomb-layer-back.webp?v=eb5ca49937e7"
     }
    },
    "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
@@ -192716,8 +192716,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-bouncing-egg-bubbles.html?v=16ac0f9c041b",
     "bytes": 18557,
     "thumbs": {
-     "front": "thumbs/science-bouncing-egg-bubbles-front.webp?v=16ac0f9c041b",
-     "back": "thumbs/science-bouncing-egg-bubbles-back.webp?v=16ac0f9c041b"
+     "front": "thumbs/science-bouncing-egg-bubbles-front.webp?v=9e0f4d367fc6",
+     "back": "thumbs/science-bouncing-egg-bubbles-back.webp?v=9e0f4d367fc6"
     }
    },
    "source": "Geopop, “L'uovo che rimbalza!” (YouTube, 2023)",
@@ -192759,8 +192759,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-bradyseism-breathing-ground.html?v=a665e47ba283",
     "bytes": 17327,
     "thumbs": {
-     "front": "thumbs/science-bradyseism-breathing-ground-front.webp?v=a665e47ba283",
-     "back": "thumbs/science-bradyseism-breathing-ground-back.webp?v=a665e47ba283"
+     "front": "thumbs/science-bradyseism-breathing-ground-front.webp?v=4357324a3f46",
+     "back": "thumbs/science-bradyseism-breathing-ground-back.webp?v=4357324a3f46"
     }
    },
    "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
@@ -192802,8 +192802,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-branches-human-summary.html?v=6f61855985f5",
     "bytes": 7850,
     "thumbs": {
-     "front": "thumbs/science-branches-human-summary-front.webp?v=6f61855985f5",
-     "back": "thumbs/science-branches-human-summary-back.webp?v=6f61855985f5"
+     "front": "thumbs/science-branches-human-summary-front.webp?v=32336d3fdd67",
+     "back": "thumbs/science-branches-human-summary-back.webp?v=32336d3fdd67"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -192846,8 +192846,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-branching-body-decays.html?v=829a95266113",
     "bytes": 8738,
     "thumbs": {
-     "front": "thumbs/science-branching-body-decays-front.webp?v=829a95266113",
-     "back": "thumbs/science-branching-body-decays-back.webp?v=829a95266113"
+     "front": "thumbs/science-branching-body-decays-front.webp?v=2572c6bf8b64",
+     "back": "thumbs/science-branching-body-decays-back.webp?v=2572c6bf8b64"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -192889,8 +192889,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-branching-energy-slices.html?v=1b25ec2601f9",
     "bytes": 6256,
     "thumbs": {
-     "front": "thumbs/science-branching-energy-slices-front.webp?v=1b25ec2601f9",
-     "back": "thumbs/science-branching-energy-slices-back.webp?v=1b25ec2601f9"
+     "front": "thumbs/science-branching-energy-slices-front.webp?v=29fcc34a5abe",
+     "back": "thumbs/science-branching-energy-slices-back.webp?v=29fcc34a5abe"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -192932,8 +192932,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-bubbles-feed-bacteria.html?v=5bf802587c04",
     "bytes": 10579,
     "thumbs": {
-     "front": "thumbs/science-bubbles-feed-bacteria-front.webp?v=5bf802587c04",
-     "back": "thumbs/science-bubbles-feed-bacteria-back.webp?v=5bf802587c04"
+     "front": "thumbs/science-bubbles-feed-bacteria-front.webp?v=9d8e78c49ef2",
+     "back": "thumbs/science-bubbles-feed-bacteria-back.webp?v=9d8e78c49ef2"
     }
    },
    "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
@@ -192975,8 +192975,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-bunny-suit-cleanroom.html?v=86c7e66bf5e2",
     "bytes": 12441,
     "thumbs": {
-     "front": "thumbs/science-bunny-suit-cleanroom-front.webp?v=86c7e66bf5e2",
-     "back": "thumbs/science-bunny-suit-cleanroom-back.webp?v=86c7e66bf5e2"
+     "front": "thumbs/science-bunny-suit-cleanroom-front.webp?v=3d1f6711a6a2",
+     "back": "thumbs/science-bunny-suit-cleanroom-back.webp?v=3d1f6711a6a2"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -193019,8 +193019,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-burning-plastic-energy.html?v=c3352a05bd17",
     "bytes": 9370,
     "thumbs": {
-     "front": "thumbs/science-burning-plastic-energy-front.webp?v=c3352a05bd17",
-     "back": "thumbs/science-burning-plastic-energy-back.webp?v=c3352a05bd17"
+     "front": "thumbs/science-burning-plastic-energy-front.webp?v=f3ced08cf383",
+     "back": "thumbs/science-burning-plastic-energy-back.webp?v=f3ced08cf383"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -193062,8 +193062,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-campi-flegrei-cycles.html?v=57924f26d7de",
     "bytes": 9046,
     "thumbs": {
-     "front": "thumbs/science-campi-flegrei-cycles-front.webp?v=57924f26d7de",
-     "back": "thumbs/science-campi-flegrei-cycles-back.webp?v=57924f26d7de"
+     "front": "thumbs/science-campi-flegrei-cycles-front.webp?v=578391df7f47",
+     "back": "thumbs/science-campi-flegrei-cycles-back.webp?v=578391df7f47"
     }
    },
    "source": "Geopop, “▶️ALLARME CAMPI FLEGREI? ANALISI ARTICOLO SCIENTIFICO- ScienceAdvances (Nov-2018) -GeologiaPOP” (YouTube, 2018)",
@@ -193105,8 +193105,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-canadair-foam-surfactant.html?v=6730670ca294",
     "bytes": 10136,
     "thumbs": {
-     "front": "thumbs/science-canadair-foam-surfactant-front.webp?v=6730670ca294",
-     "back": "thumbs/science-canadair-foam-surfactant-back.webp?v=6730670ca294"
+     "front": "thumbs/science-canadair-foam-surfactant-front.webp?v=d7abd7307745",
+     "back": "thumbs/science-canadair-foam-surfactant-back.webp?v=d7abd7307745"
     }
    },
    "source": "Geopop, “Come funziona il Canadair e quando interviene nelle missioni antincendio?” (YouTube, 2022)",
@@ -193147,8 +193147,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-caps-bottles-sorting.html?v=1a874108b668",
     "bytes": 10832,
     "thumbs": {
-     "front": "thumbs/science-caps-bottles-sorting-front.webp?v=1a874108b668",
-     "back": "thumbs/science-caps-bottles-sorting-back.webp?v=1a874108b668"
+     "front": "thumbs/science-caps-bottles-sorting-front.webp?v=6f8bca58087a",
+     "back": "thumbs/science-caps-bottles-sorting-back.webp?v=6f8bca58087a"
     }
    },
    "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
@@ -193190,8 +193190,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-carbon-filter-pores.html?v=6282b8292f21",
     "bytes": 13782,
     "thumbs": {
-     "front": "thumbs/science-carbon-filter-pores-front.webp?v=6282b8292f21",
-     "back": "thumbs/science-carbon-filter-pores-back.webp?v=6282b8292f21"
+     "front": "thumbs/science-carbon-filter-pores-front.webp?v=b19a3d261db5",
+     "back": "thumbs/science-carbon-filter-pores-back.webp?v=b19a3d261db5"
     }
    },
    "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
@@ -193233,8 +193233,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-carbon-in-steel.html?v=c4db2e21d47e",
     "bytes": 14056,
     "thumbs": {
-     "front": "thumbs/science-carbon-in-steel-front.webp?v=c4db2e21d47e",
-     "back": "thumbs/science-carbon-in-steel-back.webp?v=c4db2e21d47e"
+     "front": "thumbs/science-carbon-in-steel-front.webp?v=1cbcd867a314",
+     "back": "thumbs/science-carbon-in-steel-back.webp?v=1cbcd867a314"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -193275,8 +193275,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-cat-already-decided.html?v=668548da2ced",
     "bytes": 22310,
     "thumbs": {
-     "front": "thumbs/science-cat-already-decided-front.webp?v=668548da2ced",
-     "back": "thumbs/science-cat-already-decided-back.webp?v=668548da2ced"
+     "front": "thumbs/science-cat-already-decided-front.webp?v=0e6e07d40a9c",
+     "back": "thumbs/science-cat-already-decided-back.webp?v=0e6e07d40a9c"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -193319,8 +193319,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-cerberus-heat-dome.html?v=7c131fc2d5f2",
     "bytes": 8158,
     "thumbs": {
-     "front": "thumbs/science-cerberus-heat-dome-front.webp?v=7c131fc2d5f2",
-     "back": "thumbs/science-cerberus-heat-dome-back.webp?v=7c131fc2d5f2"
+     "front": "thumbs/science-cerberus-heat-dome-front.webp?v=c59e84db89e2",
+     "back": "thumbs/science-cerberus-heat-dome-back.webp?v=c59e84db89e2"
     }
    },
    "source": "Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)",
@@ -193362,8 +193362,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-cfc-ozone-hole.html?v=4c799ef8f40e",
     "bytes": 19472,
     "thumbs": {
-     "front": "thumbs/science-cfc-ozone-hole-front.webp?v=4c799ef8f40e",
-     "back": "thumbs/science-cfc-ozone-hole-back.webp?v=4c799ef8f40e"
+     "front": "thumbs/science-cfc-ozone-hole-front.webp?v=2a881876e859",
+     "back": "thumbs/science-cfc-ozone-hole-back.webp?v=2a881876e859"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -193405,8 +193405,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-chain-reaction.html?v=95cd0dd0f82f",
     "bytes": 15930,
     "thumbs": {
-     "front": "thumbs/science-chain-reaction-front.webp?v=95cd0dd0f82f",
-     "back": "thumbs/science-chain-reaction-back.webp?v=95cd0dd0f82f"
+     "front": "thumbs/science-chain-reaction-front.webp?v=64bb5be9a366",
+     "back": "thumbs/science-chain-reaction-back.webp?v=64bb5be9a366"
     }
    },
    "source": "Veritasium, “Why Einstein Thought Nuclear Weapons Were Impossible” (YouTube, 2018)",
@@ -193448,8 +193448,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-channel-tunnel-chalk.html?v=e67a928b0f95",
     "bytes": 13231,
     "thumbs": {
-     "front": "thumbs/science-channel-tunnel-chalk-front.webp?v=e67a928b0f95",
-     "back": "thumbs/science-channel-tunnel-chalk-back.webp?v=e67a928b0f95"
+     "front": "thumbs/science-channel-tunnel-chalk-front.webp?v=70cad732c58f",
+     "back": "thumbs/science-channel-tunnel-chalk-back.webp?v=70cad732c58f"
     }
    },
    "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
@@ -193491,8 +193491,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-chernobyl-lingering-cesium.html?v=dfd77eb7bce9",
     "bytes": 10296,
     "thumbs": {
-     "front": "thumbs/science-chernobyl-lingering-cesium-front.webp?v=dfd77eb7bce9",
-     "back": "thumbs/science-chernobyl-lingering-cesium-back.webp?v=dfd77eb7bce9"
+     "front": "thumbs/science-chernobyl-lingering-cesium-front.webp?v=8942b386e453",
+     "back": "thumbs/science-chernobyl-lingering-cesium-back.webp?v=8942b386e453"
     }
    },
    "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
@@ -193533,8 +193533,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-chernobyl-reactor-lid.html?v=6b7ec765c4f8",
     "bytes": 17982,
     "thumbs": {
-     "front": "thumbs/science-chernobyl-reactor-lid-front.webp?v=6b7ec765c4f8",
-     "back": "thumbs/science-chernobyl-reactor-lid-back.webp?v=6b7ec765c4f8"
+     "front": "thumbs/science-chernobyl-reactor-lid-front.webp?v=4674b3dff915",
+     "back": "thumbs/science-chernobyl-reactor-lid-back.webp?v=4674b3dff915"
     }
    },
    "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
@@ -193576,8 +193576,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-chernobyl-steam-blast.html?v=3db948f20711",
     "bytes": 16891,
     "thumbs": {
-     "front": "thumbs/science-chernobyl-steam-blast-front.webp?v=3db948f20711",
-     "back": "thumbs/science-chernobyl-steam-blast-back.webp?v=3db948f20711"
+     "front": "thumbs/science-chernobyl-steam-blast-front.webp?v=292d9e40f009",
+     "back": "thumbs/science-chernobyl-steam-blast-back.webp?v=292d9e40f009"
     }
    },
    "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
@@ -193861,8 +193861,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-chimborazo-highest.html?v=089aaa1a3ef9",
     "bytes": 10473,
     "thumbs": {
-     "front": "thumbs/science-chimborazo-highest-front.webp?v=089aaa1a3ef9",
-     "back": "thumbs/science-chimborazo-highest-back.webp?v=089aaa1a3ef9"
+     "front": "thumbs/science-chimborazo-highest-front.webp?v=6824393b5327",
+     "back": "thumbs/science-chimborazo-highest-back.webp?v=6824393b5327"
     }
    },
    "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
@@ -194674,8 +194674,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-cold-deodorant-spray.html?v=d466df9dd337",
     "bytes": 8395,
     "thumbs": {
-     "front": "thumbs/science-cold-deodorant-spray-front.webp?v=d466df9dd337",
-     "back": "thumbs/science-cold-deodorant-spray-back.webp?v=d466df9dd337"
+     "front": "thumbs/science-cold-deodorant-spray-front.webp?v=12e22494d699",
+     "back": "thumbs/science-cold-deodorant-spray-back.webp?v=12e22494d699"
     }
    },
    "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
@@ -194717,8 +194717,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-cold-laminar-flow-6.html?v=054e52f1d73f",
     "bytes": 17861,
     "thumbs": {
-     "front": "thumbs/science-cold-laminar-flow-6-front.webp?v=054e52f1d73f",
-     "back": "thumbs/science-cold-laminar-flow-6-back.webp?v=054e52f1d73f"
+     "front": "thumbs/science-cold-laminar-flow-6-front.webp?v=9e1d13e7dcc7",
+     "back": "thumbs/science-cold-laminar-flow-6-back.webp?v=9e1d13e7dcc7"
     }
    },
    "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
@@ -194911,8 +194911,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-cold-to-hot.html?v=1291bd581024",
     "bytes": 24122,
     "thumbs": {
-     "front": "thumbs/science-cold-to-hot-front.webp?v=1291bd581024",
-     "back": "thumbs/science-cold-to-hot-back.webp?v=1291bd581024"
+     "front": "thumbs/science-cold-to-hot-front.webp?v=21ceafd80da5",
+     "back": "thumbs/science-cold-to-hot-back.webp?v=21ceafd80da5"
     }
    },
    "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
@@ -195489,8 +195489,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-corium-steam-blast.html?v=915f660f9b0e",
     "bytes": 10084,
     "thumbs": {
-     "front": "thumbs/science-corium-steam-blast-front.webp?v=915f660f9b0e",
-     "back": "thumbs/science-corium-steam-blast-back.webp?v=915f660f9b0e"
+     "front": "thumbs/science-corium-steam-blast-front.webp?v=ed91bd4a607e",
+     "back": "thumbs/science-corium-steam-blast-back.webp?v=ed91bd4a607e"
     }
    },
    "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
@@ -195838,8 +195838,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-cosmic-rays-planes.html?v=507ccee771cb",
     "bytes": 9557,
     "thumbs": {
-     "front": "thumbs/science-cosmic-rays-planes-front.webp?v=507ccee771cb",
-     "back": "thumbs/science-cosmic-rays-planes-back.webp?v=507ccee771cb"
+     "front": "thumbs/science-cosmic-rays-planes-front.webp?v=9459f4ca1a93",
+     "back": "thumbs/science-cosmic-rays-planes-back.webp?v=9459f4ca1a93"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -195882,8 +195882,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-count-the-ball.html?v=c93b961c03e2",
     "bytes": 16949,
     "thumbs": {
-     "front": "thumbs/science-count-the-ball-front.webp?v=c93b961c03e2",
-     "back": "thumbs/science-count-the-ball-back.webp?v=c93b961c03e2"
+     "front": "thumbs/science-count-the-ball-front.webp?v=5ee5f0ea1659",
+     "back": "thumbs/science-count-the-ball-back.webp?v=5ee5f0ea1659"
     }
    },
    "source": "Veritasium, “World's Roundest Object!” (YouTube, 2013)",
@@ -195925,8 +195925,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-darvaza-gas-blowout.html?v=5833083da060",
     "bytes": 12728,
     "thumbs": {
-     "front": "thumbs/science-darvaza-gas-blowout-front.webp?v=5833083da060",
-     "back": "thumbs/science-darvaza-gas-blowout-back.webp?v=5833083da060"
+     "front": "thumbs/science-darvaza-gas-blowout-front.webp?v=557ef5de6993",
+     "back": "thumbs/science-darvaza-gas-blowout-back.webp?v=557ef5de6993"
     }
    },
    "source": "Geopop, “La \"Porta dell'Inferno\", come si è formata e perché dopo 50 anni brucia nel deserto in Turkmenistan?” (YouTube, 2021)",
@@ -195968,8 +195968,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-decoherence-branching.html?v=9612870e4807",
     "bytes": 8051,
     "thumbs": {
-     "front": "thumbs/science-decoherence-branching-front.webp?v=9612870e4807",
-     "back": "thumbs/science-decoherence-branching-back.webp?v=9612870e4807"
+     "front": "thumbs/science-decoherence-branching-front.webp?v=cc19a4aca13d",
+     "back": "thumbs/science-decoherence-branching-back.webp?v=cc19a4aca13d"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -196011,8 +196011,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-deet-plugs-pores.html?v=0f2d904a2f7b",
     "bytes": 10306,
     "thumbs": {
-     "front": "thumbs/science-deet-plugs-pores-front.webp?v=0f2d904a2f7b",
-     "back": "thumbs/science-deet-plugs-pores-back.webp?v=0f2d904a2f7b"
+     "front": "thumbs/science-deet-plugs-pores-front.webp?v=68e7f95298a8",
+     "back": "thumbs/science-deet-plugs-pores-back.webp?v=68e7f95298a8"
     }
    },
    "source": "Geopop, “Quali antizanzare funzionano meglio? Zampironi, spray: analizziamoli dal punto di vista chimico” (YouTube, 2024)",
@@ -196054,8 +196054,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-delayed-club-jolt.html?v=d31c3a424903",
     "bytes": 10174,
     "thumbs": {
-     "front": "thumbs/science-delayed-club-jolt-front.webp?v=d31c3a424903",
-     "back": "thumbs/science-delayed-club-jolt-back.webp?v=d31c3a424903"
+     "front": "thumbs/science-delayed-club-jolt-front.webp?v=c8e2cf85b71b",
+     "back": "thumbs/science-delayed-club-jolt-back.webp?v=c8e2cf85b71b"
     }
    },
    "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",
@@ -196097,8 +196097,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-diamond-fog-test.html?v=9068dd165112",
     "bytes": 8987,
     "thumbs": {
-     "front": "thumbs/science-diamond-fog-test-front.webp?v=9068dd165112",
-     "back": "thumbs/science-diamond-fog-test-back.webp?v=9068dd165112"
+     "front": "thumbs/science-diamond-fog-test-front.webp?v=d1e99baea8ac",
+     "back": "thumbs/science-diamond-fog-test-back.webp?v=d1e99baea8ac"
     }
    },
    "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
@@ -196139,8 +196139,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-diamond-sandpaper-test.html?v=d81ab4f6db3b",
     "bytes": 11587,
     "thumbs": {
-     "front": "thumbs/science-diamond-sandpaper-test-front.webp?v=d81ab4f6db3b",
-     "back": "thumbs/science-diamond-sandpaper-test-back.webp?v=d81ab4f6db3b"
+     "front": "thumbs/science-diamond-sandpaper-test-front.webp?v=5a8b27d3b225",
+     "back": "thumbs/science-diamond-sandpaper-test-back.webp?v=5a8b27d3b225"
     }
    },
    "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
@@ -196182,8 +196182,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-dilute-fukushima-water.html?v=f9ae71e06f63",
     "bytes": 17763,
     "thumbs": {
-     "front": "thumbs/science-dilute-fukushima-water-front.webp?v=f9ae71e06f63",
-     "back": "thumbs/science-dilute-fukushima-water-back.webp?v=f9ae71e06f63"
+     "front": "thumbs/science-dilute-fukushima-water-front.webp?v=e0b7778c7d6b",
+     "back": "thumbs/science-dilute-fukushima-water-back.webp?v=e0b7778c7d6b"
     }
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
@@ -196224,8 +196224,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-dna-spooled-tight.html?v=5522426c10d2",
     "bytes": 19240,
     "thumbs": {
-     "front": "thumbs/science-dna-spooled-tight-front.webp?v=5522426c10d2",
-     "back": "thumbs/science-dna-spooled-tight-back.webp?v=5522426c10d2"
+     "front": "thumbs/science-dna-spooled-tight-front.webp?v=e800e65dfb3f",
+     "back": "thumbs/science-dna-spooled-tight-back.webp?v=e800e65dfb3f"
     }
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
@@ -196267,8 +196267,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-doubled-gem-facets.html?v=da7dc9ef1bc5",
     "bytes": 8367,
     "thumbs": {
-     "front": "thumbs/science-doubled-gem-facets-front.webp?v=da7dc9ef1bc5",
-     "back": "thumbs/science-doubled-gem-facets-back.webp?v=da7dc9ef1bc5"
+     "front": "thumbs/science-doubled-gem-facets-front.webp?v=89367a915b2b",
+     "back": "thumbs/science-doubled-gem-facets-back.webp?v=89367a915b2b"
     }
    },
    "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
@@ -196310,8 +196310,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-dry-a-jelly.html?v=d4709a05a54e",
     "bytes": 20733,
     "thumbs": {
-     "front": "thumbs/science-dry-a-jelly-front.webp?v=d4709a05a54e",
-     "back": "thumbs/science-dry-a-jelly-back.webp?v=d4709a05a54e"
+     "front": "thumbs/science-dry-a-jelly-front.webp?v=abd47502a2f4",
+     "back": "thumbs/science-dry-a-jelly-back.webp?v=abd47502a2f4"
     }
    },
    "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
@@ -196353,8 +196353,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-dry-ice-frost.html?v=d888fc32db62",
     "bytes": 12737,
     "thumbs": {
-     "front": "thumbs/science-dry-ice-frost-front.webp?v=d888fc32db62",
-     "back": "thumbs/science-dry-ice-frost-back.webp?v=d888fc32db62"
+     "front": "thumbs/science-dry-ice-frost-front.webp?v=4576804a241f",
+     "back": "thumbs/science-dry-ice-frost-back.webp?v=4576804a241f"
     }
    },
    "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
@@ -196396,8 +196396,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-earth-stops-wind.html?v=a5773c1d6989",
     "bytes": 9031,
     "thumbs": {
-     "front": "thumbs/science-earth-stops-wind-front.webp?v=a5773c1d6989",
-     "back": "thumbs/science-earth-stops-wind-back.webp?v=a5773c1d6989"
+     "front": "thumbs/science-earth-stops-wind-front.webp?v=3914c48d784f",
+     "back": "thumbs/science-earth-stops-wind-back.webp?v=3914c48d784f"
     }
    },
    "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
@@ -196438,8 +196438,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-einstein-synchronization.html?v=293d8cdfa8e4",
     "bytes": 6845,
     "thumbs": {
-     "front": "thumbs/science-einstein-synchronization-front.webp?v=293d8cdfa8e4",
-     "back": "thumbs/science-einstein-synchronization-back.webp?v=293d8cdfa8e4"
+     "front": "thumbs/science-einstein-synchronization-front.webp?v=d074cef5c264",
+     "back": "thumbs/science-einstein-synchronization-back.webp?v=d074cef5c264"
     }
    },
    "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
@@ -196481,8 +196481,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-elevator-air-drag.html?v=1c0af96a441b",
     "bytes": 9237,
     "thumbs": {
-     "front": "thumbs/science-elevator-air-drag-front.webp?v=1c0af96a441b",
-     "back": "thumbs/science-elevator-air-drag-back.webp?v=1c0af96a441b"
+     "front": "thumbs/science-elevator-air-drag-front.webp?v=3101567a45bd",
+     "back": "thumbs/science-elevator-air-drag-back.webp?v=3101567a45bd"
     }
    },
    "source": "Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022)",
@@ -196776,8 +196776,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-energy-glass.html?v=31b1f8aa3565",
     "bytes": 25111,
     "thumbs": {
-     "front": "thumbs/science-energy-glass-front.webp?v=31b1f8aa3565",
-     "back": "thumbs/science-energy-glass-back.webp?v=31b1f8aa3565"
+     "front": "thumbs/science-energy-glass-front.webp?v=2ffe373ca03e",
+     "back": "thumbs/science-energy-glass-back.webp?v=2ffe373ca03e"
     }
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
@@ -196818,8 +196818,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-eruption-cloud-heat.html?v=d39298c39f7e",
     "bytes": 6464,
     "thumbs": {
-     "front": "thumbs/science-eruption-cloud-heat-front.webp?v=d39298c39f7e",
-     "back": "thumbs/science-eruption-cloud-heat-back.webp?v=d39298c39f7e"
+     "front": "thumbs/science-eruption-cloud-heat-front.webp?v=a7896aab23cd",
+     "back": "thumbs/science-eruption-cloud-heat-back.webp?v=a7896aab23cd"
     }
    },
    "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)",
@@ -196860,8 +196860,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-eruption-forecast-odds.html?v=5d0f2ea933a3",
     "bytes": 7297,
     "thumbs": {
-     "front": "thumbs/science-eruption-forecast-odds-front.webp?v=5d0f2ea933a3",
-     "back": "thumbs/science-eruption-forecast-odds-back.webp?v=5d0f2ea933a3"
+     "front": "thumbs/science-eruption-forecast-odds-front.webp?v=f03ea81da296",
+     "back": "thumbs/science-eruption-forecast-odds-back.webp?v=f03ea81da296"
     }
    },
    "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
@@ -197028,8 +197028,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-evacuation-drill-chaos.html?v=7e34dd3a59d8",
     "bytes": 11069,
     "thumbs": {
-     "front": "thumbs/science-evacuation-drill-chaos-front.webp?v=7e34dd3a59d8",
-     "back": "thumbs/science-evacuation-drill-chaos-back.webp?v=7e34dd3a59d8"
+     "front": "thumbs/science-evacuation-drill-chaos-front.webp?v=e888489681a3",
+     "back": "thumbs/science-evacuation-drill-chaos-back.webp?v=e888489681a3"
     }
    },
    "source": "Geopop, “RISCHIO VULCANICO CAMPI FLEGREI: LA SIMULAZIONE D'EVACUAZIONE FUNZIONERA? Considerazioni e dubbi” (YouTube, 2019)",
@@ -197546,8 +197546,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-extinguisher-charges.html?v=d3c52bff6730",
     "bytes": 26057,
     "thumbs": {
-     "front": "thumbs/science-extinguisher-charges-front.webp?v=d3c52bff6730",
-     "back": "thumbs/science-extinguisher-charges-back.webp?v=d3c52bff6730"
+     "front": "thumbs/science-extinguisher-charges-front.webp?v=97db532d7a67",
+     "back": "thumbs/science-extinguisher-charges-back.webp?v=97db532d7a67"
     }
    },
    "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
@@ -197589,8 +197589,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-falling-elevator-flat.html?v=29101209b0e6",
     "bytes": 9595,
     "thumbs": {
-     "front": "thumbs/science-falling-elevator-flat-front.webp?v=29101209b0e6",
-     "back": "thumbs/science-falling-elevator-flat-back.webp?v=29101209b0e6"
+     "front": "thumbs/science-falling-elevator-flat-front.webp?v=7f32ae556b2c",
+     "back": "thumbs/science-falling-elevator-flat-back.webp?v=7f32ae556b2c"
     }
    },
    "source": "Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022)",
@@ -197631,8 +197631,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-falling-slinky-centre.html?v=ee7bdfc16d80",
     "bytes": 9107,
     "thumbs": {
-     "front": "thumbs/science-falling-slinky-centre-front.webp?v=ee7bdfc16d80",
-     "back": "thumbs/science-falling-slinky-centre-back.webp?v=ee7bdfc16d80"
+     "front": "thumbs/science-falling-slinky-centre-front.webp?v=7e83e96df14b",
+     "back": "thumbs/science-falling-slinky-centre-back.webp?v=7e83e96df14b"
     }
    },
    "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
@@ -197674,8 +197674,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fallout-layer.html?v=919f0f8b5dd9",
     "bytes": 19768,
     "thumbs": {
-     "front": "thumbs/science-fallout-layer-front.webp?v=919f0f8b5dd9",
-     "back": "thumbs/science-fallout-layer-back.webp?v=919f0f8b5dd9"
+     "front": "thumbs/science-fallout-layer-front.webp?v=b8e13ba061fe",
+     "back": "thumbs/science-fallout-layer-back.webp?v=b8e13ba061fe"
     }
    },
    "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
@@ -197717,8 +197717,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fallout-two-weeks.html?v=bd16919a3048",
     "bytes": 8296,
     "thumbs": {
-     "front": "thumbs/science-fallout-two-weeks-front.webp?v=bd16919a3048",
-     "back": "thumbs/science-fallout-two-weeks-back.webp?v=bd16919a3048"
+     "front": "thumbs/science-fallout-two-weeks-front.webp?v=d1e0e5126dc5",
+     "back": "thumbs/science-fallout-two-weeks-back.webp?v=d1e0e5126dc5"
     }
    },
    "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
@@ -197760,8 +197760,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fault-breaks-layer.html?v=c5aeda0aa911",
     "bytes": 28768,
     "thumbs": {
-     "front": "thumbs/science-fault-breaks-layer-front.webp?v=c5aeda0aa911",
-     "back": "thumbs/science-fault-breaks-layer-back.webp?v=c5aeda0aa911"
+     "front": "thumbs/science-fault-breaks-layer-front.webp?v=f896abd67179",
+     "back": "thumbs/science-fault-breaks-layer-back.webp?v=f896abd67179"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -197803,8 +197803,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-feeling-cold-flow.html?v=33069deba745",
     "bytes": 8936,
     "thumbs": {
-     "front": "thumbs/science-feeling-cold-flow-front.webp?v=33069deba745",
-     "back": "thumbs/science-feeling-cold-flow-back.webp?v=33069deba745"
+     "front": "thumbs/science-feeling-cold-flow-front.webp?v=6e91451de322",
+     "back": "thumbs/science-feeling-cold-flow-back.webp?v=6e91451de322"
     }
    },
    "source": "Veritasium, “Misconceptions About Temperature” (YouTube, 2012)",
@@ -197846,8 +197846,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-feeling-heat-flow.html?v=054186fd599d",
     "bytes": 9483,
     "thumbs": {
-     "front": "thumbs/science-feeling-heat-flow-front.webp?v=054186fd599d",
-     "back": "thumbs/science-feeling-heat-flow-back.webp?v=054186fd599d"
+     "front": "thumbs/science-feeling-heat-flow-front.webp?v=66eaee20681f",
+     "back": "thumbs/science-feeling-heat-flow-back.webp?v=66eaee20681f"
     }
    },
    "source": "Veritasium, “Misconceptions About Temperature” (YouTube, 2012)",
@@ -197889,8 +197889,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-field-light-speed.html?v=61830eb78064",
     "bytes": 10666,
     "thumbs": {
-     "front": "thumbs/science-field-light-speed-front.webp?v=61830eb78064",
-     "back": "thumbs/science-field-light-speed-back.webp?v=61830eb78064"
+     "front": "thumbs/science-field-light-speed-front.webp?v=f9b94fd6e6a4",
+     "back": "thumbs/science-field-light-speed-back.webp?v=f9b94fd6e6a4"
     }
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
@@ -198414,8 +198414,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-flame-gravity-meter.html?v=3bab381af4a4",
     "bytes": 10936,
     "thumbs": {
-     "front": "thumbs/science-flame-gravity-meter-front.webp?v=3bab381af4a4",
-     "back": "thumbs/science-flame-gravity-meter-back.webp?v=3bab381af4a4"
+     "front": "thumbs/science-flame-gravity-meter-front.webp?v=34e887e94935",
+     "back": "thumbs/science-flame-gravity-meter-back.webp?v=34e887e94935"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -198457,8 +198457,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-flame-not-plasma.html?v=3ac526ef7c93",
     "bytes": 10471,
     "thumbs": {
-     "front": "thumbs/science-flame-not-plasma-front.webp?v=3ac526ef7c93",
-     "back": "thumbs/science-flame-not-plasma-back.webp?v=3ac526ef7c93"
+     "front": "thumbs/science-flame-not-plasma-front.webp?v=a13959083220",
+     "back": "thumbs/science-flame-not-plasma-back.webp?v=a13959083220"
     }
    },
    "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
@@ -198500,8 +198500,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-flame-shape-gravity.html?v=a7da43bd3af0",
     "bytes": 9165,
     "thumbs": {
-     "front": "thumbs/science-flame-shape-gravity-front.webp?v=a7da43bd3af0",
-     "back": "thumbs/science-flame-shape-gravity-back.webp?v=a7da43bd3af0"
+     "front": "thumbs/science-flame-shape-gravity-front.webp?v=880adf7bafb6",
+     "back": "thumbs/science-flame-shape-gravity-back.webp?v=880adf7bafb6"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -198543,8 +198543,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-flame-spark-gap.html?v=a01a7b064bca",
     "bytes": 10010,
     "thumbs": {
-     "front": "thumbs/science-flame-spark-gap-front.webp?v=a01a7b064bca",
-     "back": "thumbs/science-flame-spark-gap-back.webp?v=a01a7b064bca"
+     "front": "thumbs/science-flame-spark-gap-front.webp?v=194a670926e3",
+     "back": "thumbs/science-flame-spark-gap-back.webp?v=194a670926e3"
     }
    },
    "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
@@ -198585,8 +198585,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-flame-splits-field.html?v=14aef0ece245",
     "bytes": 10662,
     "thumbs": {
-     "front": "thumbs/science-flame-splits-field-front.webp?v=14aef0ece245",
-     "back": "thumbs/science-flame-splits-field-back.webp?v=14aef0ece245"
+     "front": "thumbs/science-flame-splits-field-front.webp?v=816bddefec7d",
+     "back": "thumbs/science-flame-splits-field-back.webp?v=816bddefec7d"
     }
    },
    "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
@@ -198627,8 +198627,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-flames-standing-wave.html?v=ad4515951219",
     "bytes": 13648,
     "thumbs": {
-     "front": "thumbs/science-flames-standing-wave-front.webp?v=ad4515951219",
-     "back": "thumbs/science-flames-standing-wave-back.webp?v=ad4515951219"
+     "front": "thumbs/science-flames-standing-wave-front.webp?v=8549a770545c",
+     "back": "thumbs/science-flames-standing-wave-back.webp?v=8549a770545c"
     }
    },
    "source": "Veritasium, “Musical Fire Table!” (YouTube, 2014)",
@@ -198671,8 +198671,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-flashover-temperature.html?v=9ed06cd7b9b5",
     "bytes": 10580,
     "thumbs": {
-     "front": "thumbs/science-flashover-temperature-front.webp?v=9ed06cd7b9b5",
-     "back": "thumbs/science-flashover-temperature-back.webp?v=9ed06cd7b9b5"
+     "front": "thumbs/science-flashover-temperature-front.webp?v=8abe97eb67f8",
+     "back": "thumbs/science-flashover-temperature-back.webp?v=8abe97eb67f8"
     }
    },
    "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
@@ -198714,8 +198714,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-flashover-ten-seconds.html?v=4d94daf288d6",
     "bytes": 10406,
     "thumbs": {
-     "front": "thumbs/science-flashover-ten-seconds-front.webp?v=4d94daf288d6",
-     "back": "thumbs/science-flashover-ten-seconds-back.webp?v=4d94daf288d6"
+     "front": "thumbs/science-flashover-ten-seconds-front.webp?v=fec61a0bc1a8",
+     "back": "thumbs/science-flashover-ten-seconds-back.webp?v=fec61a0bc1a8"
     }
    },
    "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
@@ -198757,8 +198757,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-foam-fire-water.html?v=2821eb14dff8",
     "bytes": 9455,
     "thumbs": {
-     "front": "thumbs/science-foam-fire-water-front.webp?v=2821eb14dff8",
-     "back": "thumbs/science-foam-fire-water-back.webp?v=2821eb14dff8"
+     "front": "thumbs/science-foam-fire-water-front.webp?v=89e0200c0b7a",
+     "back": "thumbs/science-foam-fire-water-back.webp?v=89e0200c0b7a"
     }
    },
    "source": "Geopop, “Come funziona il Canadair e quando interviene nelle missioni antincendio?” (YouTube, 2022)",
@@ -198800,8 +198800,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-foraminifera-clay-line.html?v=9a228a7b476f",
     "bytes": 14682,
     "thumbs": {
-     "front": "thumbs/science-foraminifera-clay-line-front.webp?v=9a228a7b476f",
-     "back": "thumbs/science-foraminifera-clay-line-back.webp?v=9a228a7b476f"
+     "front": "thumbs/science-foraminifera-clay-line-front.webp?v=fe1775dcdd43",
+     "back": "thumbs/science-foraminifera-clay-line-back.webp?v=fe1775dcdd43"
     }
    },
    "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
@@ -198842,8 +198842,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fourth-power-glow.html?v=6766f16498e6",
     "bytes": 14258,
     "thumbs": {
-     "front": "thumbs/science-fourth-power-glow-front.webp?v=6766f16498e6",
-     "back": "thumbs/science-fourth-power-glow-back.webp?v=6766f16498e6"
+     "front": "thumbs/science-fourth-power-glow-front.webp?v=a498902a329b",
+     "back": "thumbs/science-fourth-power-glow-back.webp?v=a498902a329b"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -198885,8 +198885,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fractures-reach-aquifer.html?v=50acd2b3c07d",
     "bytes": 11197,
     "thumbs": {
-     "front": "thumbs/science-fractures-reach-aquifer-front.webp?v=50acd2b3c07d",
-     "back": "thumbs/science-fractures-reach-aquifer-back.webp?v=50acd2b3c07d"
+     "front": "thumbs/science-fractures-reach-aquifer-front.webp?v=eee800969e88",
+     "back": "thumbs/science-fractures-reach-aquifer-back.webp?v=eee800969e88"
     }
    },
    "source": "Geopop, “IL FRACKING - La spiegazione geologica con parole semplici” (YouTube, 2018)",
@@ -198928,8 +198928,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-frozen-compass.html?v=cd60c48e8207",
     "bytes": 15303,
     "thumbs": {
-     "front": "thumbs/science-frozen-compass-front.webp?v=cd60c48e8207",
-     "back": "thumbs/science-frozen-compass-back.webp?v=cd60c48e8207"
+     "front": "thumbs/science-frozen-compass-front.webp?v=29ac63795a61",
+     "back": "thumbs/science-frozen-compass-back.webp?v=29ac63795a61"
     }
    },
    "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
@@ -198971,8 +198971,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fukushima-hydrogen-blast.html?v=7ba9acb9514b",
     "bytes": 15407,
     "thumbs": {
-     "front": "thumbs/science-fukushima-hydrogen-blast-front.webp?v=7ba9acb9514b",
-     "back": "thumbs/science-fukushima-hydrogen-blast-back.webp?v=7ba9acb9514b"
+     "front": "thumbs/science-fukushima-hydrogen-blast-front.webp?v=c2c561326e3f",
+     "back": "thumbs/science-fukushima-hydrogen-blast-back.webp?v=c2c561326e3f"
     }
    },
    "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
@@ -199014,8 +199014,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fukushima-tritium-filter.html?v=d07b4de091be",
     "bytes": 14908,
     "thumbs": {
-     "front": "thumbs/science-fukushima-tritium-filter-front.webp?v=d07b4de091be",
-     "back": "thumbs/science-fukushima-tritium-filter-back.webp?v=d07b4de091be"
+     "front": "thumbs/science-fukushima-tritium-filter-front.webp?v=92e307936304",
+     "back": "thumbs/science-fukushima-tritium-filter-back.webp?v=92e307936304"
     }
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
@@ -199057,8 +199057,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fukushima-tritium-grams.html?v=2250623292bf",
     "bytes": 7441,
     "thumbs": {
-     "front": "thumbs/science-fukushima-tritium-grams-front.webp?v=2250623292bf",
-     "back": "thumbs/science-fukushima-tritium-grams-back.webp?v=2250623292bf"
+     "front": "thumbs/science-fukushima-tritium-grams-front.webp?v=4ffd442c1b38",
+     "back": "thumbs/science-fukushima-tritium-grams-back.webp?v=4ffd442c1b38"
     }
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
@@ -199099,8 +199099,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fully-developed-sea.html?v=2a7a8241b914",
     "bytes": 10166,
     "thumbs": {
-     "front": "thumbs/science-fully-developed-sea-front.webp?v=2a7a8241b914",
-     "back": "thumbs/science-fully-developed-sea-back.webp?v=2a7a8241b914"
+     "front": "thumbs/science-fully-developed-sea-front.webp?v=8b7e9e2702b6",
+     "back": "thumbs/science-fully-developed-sea-back.webp?v=8b7e9e2702b6"
     }
    },
    "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
@@ -199142,8 +199142,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-fusion-fuel-grams.html?v=52dea8ac86fb",
     "bytes": 10900,
     "thumbs": {
-     "front": "thumbs/science-fusion-fuel-grams-front.webp?v=52dea8ac86fb",
-     "back": "thumbs/science-fusion-fuel-grams-back.webp?v=52dea8ac86fb"
+     "front": "thumbs/science-fusion-fuel-grams-front.webp?v=a38610688e2d",
+     "back": "thumbs/science-fusion-fuel-grams-back.webp?v=a38610688e2d"
     }
    },
    "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
@@ -199185,8 +199185,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-gap-colour.html?v=11f3717825ad",
     "bytes": 16556,
     "thumbs": {
-     "front": "thumbs/science-gap-colour-front.webp?v=11f3717825ad",
-     "back": "thumbs/science-gap-colour-back.webp?v=11f3717825ad"
+     "front": "thumbs/science-gap-colour-front.webp?v=d1e4730f8068",
+     "back": "thumbs/science-gap-colour-back.webp?v=d1e4730f8068"
     }
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
@@ -199227,8 +199227,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-gibraltar-mega-cascade.html?v=5cb55cbce202",
     "bytes": 9287,
     "thumbs": {
-     "front": "thumbs/science-gibraltar-mega-cascade-front.webp?v=5cb55cbce202",
-     "back": "thumbs/science-gibraltar-mega-cascade-back.webp?v=5cb55cbce202"
+     "front": "thumbs/science-gibraltar-mega-cascade-front.webp?v=20b9282748b1",
+     "back": "thumbs/science-gibraltar-mega-cascade-back.webp?v=20b9282748b1"
     }
    },
    "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
@@ -199642,8 +199642,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-glass-fused-rock.html?v=63cfdcb3d194",
     "bytes": 10257,
     "thumbs": {
-     "front": "thumbs/science-glass-fused-rock-front.webp?v=63cfdcb3d194",
-     "back": "thumbs/science-glass-fused-rock-back.webp?v=63cfdcb3d194"
+     "front": "thumbs/science-glass-fused-rock-front.webp?v=828d4de87284",
+     "back": "thumbs/science-glass-fused-rock-back.webp?v=828d4de87284"
     }
    },
    "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
@@ -199685,8 +199685,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-glass-pass-window.html?v=fd8a739558ee",
     "bytes": 9638,
     "thumbs": {
-     "front": "thumbs/science-glass-pass-window-front.webp?v=fd8a739558ee",
-     "back": "thumbs/science-glass-pass-window-back.webp?v=fd8a739558ee"
+     "front": "thumbs/science-glass-pass-window-front.webp?v=a0f3d7f52d52",
+     "back": "thumbs/science-glass-pass-window-back.webp?v=a0f3d7f52d52"
     }
    },
    "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
@@ -199729,8 +199729,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-glass-recycling-loop.html?v=7cf931701695",
     "bytes": 9021,
     "thumbs": {
-     "front": "thumbs/science-glass-recycling-loop-front.webp?v=7cf931701695",
-     "back": "thumbs/science-glass-recycling-loop-back.webp?v=7cf931701695"
+     "front": "thumbs/science-glass-recycling-loop-front.webp?v=2c4b0ec9e2d1",
+     "back": "thumbs/science-glass-recycling-loop-back.webp?v=2c4b0ec9e2d1"
     }
    },
    "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
@@ -199771,8 +199771,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-glass-shatters-voice.html?v=071cbc71dc3d",
     "bytes": 10588,
     "thumbs": {
-     "front": "thumbs/science-glass-shatters-voice-front.webp?v=071cbc71dc3d",
-     "back": "thumbs/science-glass-shatters-voice-back.webp?v=071cbc71dc3d"
+     "front": "thumbs/science-glass-shatters-voice-front.webp?v=ef87bbcb4b51",
+     "back": "thumbs/science-glass-shatters-voice-back.webp?v=ef87bbcb4b51"
     }
    },
    "source": "Geopop, “Si può rompere un calice di vetro solo con la voce?” (YouTube, 2026)",
@@ -199814,8 +199814,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-globe-inertia-tons.html?v=c154ef91f119",
     "bytes": 9621,
     "thumbs": {
-     "front": "thumbs/science-globe-inertia-tons-front.webp?v=c154ef91f119",
-     "back": "thumbs/science-globe-inertia-tons-back.webp?v=c154ef91f119"
+     "front": "thumbs/science-globe-inertia-tons-front.webp?v=2f3ea4307906",
+     "back": "thumbs/science-globe-inertia-tons-back.webp?v=2f3ea4307906"
     }
    },
    "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
@@ -199858,8 +199858,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-globe-spin-inertia.html?v=fa3ff26e91b5",
     "bytes": 8430,
     "thumbs": {
-     "front": "thumbs/science-globe-spin-inertia-front.webp?v=fa3ff26e91b5",
-     "back": "thumbs/science-globe-spin-inertia-back.webp?v=fa3ff26e91b5"
+     "front": "thumbs/science-globe-spin-inertia-front.webp?v=37a175ed2d6d",
+     "back": "thumbs/science-globe-spin-inertia-back.webp?v=37a175ed2d6d"
     }
    },
    "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
@@ -199902,8 +199902,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-globe-water-film.html?v=49084e1db835",
     "bytes": 10256,
     "thumbs": {
-     "front": "thumbs/science-globe-water-film-front.webp?v=49084e1db835",
-     "back": "thumbs/science-globe-water-film-back.webp?v=49084e1db835"
+     "front": "thumbs/science-globe-water-film-front.webp?v=f70f508169e3",
+     "back": "thumbs/science-globe-water-film-back.webp?v=f70f508169e3"
     }
    },
    "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
@@ -199945,8 +199945,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-granite-near-diamond.html?v=85f661e683df",
     "bytes": 20435,
     "thumbs": {
-     "front": "thumbs/science-granite-near-diamond-front.webp?v=85f661e683df",
-     "back": "thumbs/science-granite-near-diamond-back.webp?v=85f661e683df"
+     "front": "thumbs/science-granite-near-diamond-front.webp?v=63f5fc46dcb9",
+     "back": "thumbs/science-granite-near-diamond-back.webp?v=63f5fc46dcb9"
     }
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
@@ -199987,8 +199987,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-grape-contact-point.html?v=2564c65bd7a6",
     "bytes": 8383,
     "thumbs": {
-     "front": "thumbs/science-grape-contact-point-front.webp?v=2564c65bd7a6",
-     "back": "thumbs/science-grape-contact-point-back.webp?v=2564c65bd7a6"
+     "front": "thumbs/science-grape-contact-point-front.webp?v=38c1ec8afa42",
+     "back": "thumbs/science-grape-contact-point-back.webp?v=38c1ec8afa42"
     }
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
@@ -200030,8 +200030,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-grape-microwave-trap.html?v=dd1bb250b6cf",
     "bytes": 17921,
     "thumbs": {
-     "front": "thumbs/science-grape-microwave-trap-front.webp?v=dd1bb250b6cf",
-     "back": "thumbs/science-grape-microwave-trap-back.webp?v=dd1bb250b6cf"
+     "front": "thumbs/science-grape-microwave-trap-front.webp?v=14a916e1516d",
+     "back": "thumbs/science-grape-microwave-trap-back.webp?v=14a916e1516d"
     }
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
@@ -200073,8 +200073,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-grape-plasma.html?v=493f9c3cf41a",
     "bytes": 19081,
     "thumbs": {
-     "front": "thumbs/science-grape-plasma-front.webp?v=493f9c3cf41a",
-     "back": "thumbs/science-grape-plasma-back.webp?v=493f9c3cf41a"
+     "front": "thumbs/science-grape-plasma-front.webp?v=98af815306ea",
+     "back": "thumbs/science-grape-plasma-back.webp?v=98af815306ea"
     }
    },
    "source": "Veritasium, “Make Plasma With Grapes In The Microwave!” (YouTube, 2011)",
@@ -200117,8 +200117,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-grape-plasma-ions.html?v=9c9492bef948",
     "bytes": 12070,
     "thumbs": {
-     "front": "thumbs/science-grape-plasma-ions-front.webp?v=9c9492bef948",
-     "back": "thumbs/science-grape-plasma-ions-back.webp?v=9c9492bef948"
+     "front": "thumbs/science-grape-plasma-ions-front.webp?v=def3f899ddd0",
+     "back": "thumbs/science-grape-plasma-ions-back.webp?v=def3f899ddd0"
     }
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
@@ -200159,8 +200159,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-graphene-helium-seal.html?v=c6179a1be54e",
     "bytes": 19836,
     "thumbs": {
-     "front": "thumbs/science-graphene-helium-seal-front.webp?v=c6179a1be54e",
-     "back": "thumbs/science-graphene-helium-seal-back.webp?v=c6179a1be54e"
+     "front": "thumbs/science-graphene-helium-seal-front.webp?v=e63b2d6312cf",
+     "back": "thumbs/science-graphene-helium-seal-back.webp?v=e63b2d6312cf"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -200202,8 +200202,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-graphene-one-atom.html?v=ab8a3b16d1b0",
     "bytes": 7965,
     "thumbs": {
-     "front": "thumbs/science-graphene-one-atom-front.webp?v=ab8a3b16d1b0",
-     "back": "thumbs/science-graphene-one-atom-back.webp?v=ab8a3b16d1b0"
+     "front": "thumbs/science-graphene-one-atom-front.webp?v=dbc01b891c5e",
+     "back": "thumbs/science-graphene-one-atom-back.webp?v=dbc01b891c5e"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -200245,8 +200245,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-graphene-relativistic-electrons.html?v=2e5f7ee33bec",
     "bytes": 12070,
     "thumbs": {
-     "front": "thumbs/science-graphene-relativistic-electrons-front.webp?v=2e5f7ee33bec",
-     "back": "thumbs/science-graphene-relativistic-electrons-back.webp?v=2e5f7ee33bec"
+     "front": "thumbs/science-graphene-relativistic-electrons-front.webp?v=13d0b8ecae26",
+     "back": "thumbs/science-graphene-relativistic-electrons-back.webp?v=13d0b8ecae26"
     }
    },
    "source": "Veritasium, “How To Make Graphene” (YouTube, 2011)",
@@ -200286,8 +200286,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-graphene-sticky-tape.html?v=f176c4ccbdb0",
     "bytes": 23032,
     "thumbs": {
-     "front": "thumbs/science-graphene-sticky-tape-front.webp?v=f176c4ccbdb0",
-     "back": "thumbs/science-graphene-sticky-tape-back.webp?v=f176c4ccbdb0"
+     "front": "thumbs/science-graphene-sticky-tape-front.webp?v=b21f49662d20",
+     "back": "thumbs/science-graphene-sticky-tape-back.webp?v=b21f49662d20"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -200327,8 +200327,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-graphene-vs-steel.html?v=3838fc2d414c",
     "bytes": 9924,
     "thumbs": {
-     "front": "thumbs/science-graphene-vs-steel-front.webp?v=3838fc2d414c",
-     "back": "thumbs/science-graphene-vs-steel-back.webp?v=3838fc2d414c"
+     "front": "thumbs/science-graphene-vs-steel-front.webp?v=6671603e2a4e",
+     "back": "thumbs/science-graphene-vs-steel-back.webp?v=6671603e2a4e"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -200370,8 +200370,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-gravel-third-friction.html?v=f71dcfb5bdb8",
     "bytes": 19161,
     "thumbs": {
-     "front": "thumbs/science-gravel-third-friction-front.webp?v=f71dcfb5bdb8",
-     "back": "thumbs/science-gravel-third-friction-back.webp?v=f71dcfb5bdb8"
+     "front": "thumbs/science-gravel-third-friction-front.webp?v=17b3e151117c",
+     "back": "thumbs/science-gravel-third-friction-back.webp?v=17b3e151117c"
     }
    },
    "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
@@ -200875,8 +200875,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-greenland-craton-ores.html?v=58639da637db",
     "bytes": 11329,
     "thumbs": {
-     "front": "thumbs/science-greenland-craton-ores-front.webp?v=58639da637db",
-     "back": "thumbs/science-greenland-craton-ores-back.webp?v=58639da637db"
+     "front": "thumbs/science-greenland-craton-ores-front.webp?v=43814f4a40d8",
+     "back": "thumbs/science-greenland-craton-ores-back.webp?v=43814f4a40d8"
     }
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
@@ -200918,8 +200918,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-half-life-clock.html?v=e2f4cadafbdc",
     "bytes": 7856,
     "thumbs": {
-     "front": "thumbs/science-half-life-clock-front.webp?v=e2f4cadafbdc",
-     "back": "thumbs/science-half-life-clock-back.webp?v=e2f4cadafbdc"
+     "front": "thumbs/science-half-life-clock-front.webp?v=1470406922d3",
+     "back": "thumbs/science-half-life-clock-back.webp?v=1470406922d3"
     }
    },
    "source": "Geopop, “▶️ LE ERE GEOLOGICHE: COME DIAVOLO LE ABBIAMO RICOSTRUITE? |GeologiaPOP” (YouTube, 2018)",
@@ -200962,8 +200962,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-hanging-wheel-precession.html?v=e15fe14b90a8",
     "bytes": 16688,
     "thumbs": {
-     "front": "thumbs/science-hanging-wheel-precession-front.webp?v=e15fe14b90a8",
-     "back": "thumbs/science-hanging-wheel-precession-back.webp?v=e15fe14b90a8"
+     "front": "thumbs/science-hanging-wheel-precession-front.webp?v=a4a66a3edf08",
+     "back": "thumbs/science-hanging-wheel-precession-back.webp?v=a4a66a3edf08"
     }
    },
    "source": "Veritasium, “Gyroscopic Precession” (YouTube, 2012)",
@@ -201149,8 +201149,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-heat-feeds-extremes.html?v=f3f84c18ffd4",
     "bytes": 6837,
     "thumbs": {
-     "front": "thumbs/science-heat-feeds-extremes-front.webp?v=f3f84c18ffd4",
-     "back": "thumbs/science-heat-feeds-extremes-back.webp?v=f3f84c18ffd4"
+     "front": "thumbs/science-heat-feeds-extremes-front.webp?v=9af78bcc4da4",
+     "back": "thumbs/science-heat-feeds-extremes-back.webp?v=9af78bcc4da4"
     }
    },
    "source": "Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)",
@@ -201192,8 +201192,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-heat-of-a-drag.html?v=414690d3b7dd",
     "bytes": 20622,
     "thumbs": {
-     "front": "thumbs/science-heat-of-a-drag-front.webp?v=414690d3b7dd",
-     "back": "thumbs/science-heat-of-a-drag-back.webp?v=414690d3b7dd"
+     "front": "thumbs/science-heat-of-a-drag-front.webp?v=83fd32dba2e3",
+     "back": "thumbs/science-heat-of-a-drag-back.webp?v=83fd32dba2e3"
     }
    },
    "source": "Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)",
@@ -201235,8 +201235,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-heat-runaway-loop.html?v=f94b36bbe86f",
     "bytes": 11085,
     "thumbs": {
-     "front": "thumbs/science-heat-runaway-loop-front.webp?v=f94b36bbe86f",
-     "back": "thumbs/science-heat-runaway-loop-back.webp?v=f94b36bbe86f"
+     "front": "thumbs/science-heat-runaway-loop-front.webp?v=7f08e2b289f7",
+     "back": "thumbs/science-heat-runaway-loop-back.webp?v=7f08e2b289f7"
     }
    },
    "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
@@ -201279,8 +201279,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-heatwave-without-emissions.html?v=e423d66e502a",
     "bytes": 21706,
     "thumbs": {
-     "front": "thumbs/science-heatwave-without-emissions-front.webp?v=e423d66e502a",
-     "back": "thumbs/science-heatwave-without-emissions-back.webp?v=e423d66e502a"
+     "front": "thumbs/science-heatwave-without-emissions-front.webp?v=082b4ca97f43",
+     "back": "thumbs/science-heatwave-without-emissions-back.webp?v=082b4ca97f43"
     }
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
@@ -201322,8 +201322,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-hotter-than-sun.html?v=b14ac79799b7",
     "bytes": 17600,
     "thumbs": {
-     "front": "thumbs/science-hotter-than-sun-front.webp?v=b14ac79799b7",
-     "back": "thumbs/science-hotter-than-sun-back.webp?v=b14ac79799b7"
+     "front": "thumbs/science-hotter-than-sun-front.webp?v=8a757f6ab636",
+     "back": "thumbs/science-hotter-than-sun-back.webp?v=8a757f6ab636"
     }
    },
    "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
@@ -201482,8 +201482,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-hydrophobic-sphere-race.html?v=4debe703727d",
     "bytes": 9611,
     "thumbs": {
-     "front": "thumbs/science-hydrophobic-sphere-race-front.webp?v=4debe703727d",
-     "back": "thumbs/science-hydrophobic-sphere-race-back.webp?v=4debe703727d"
+     "front": "thumbs/science-hydrophobic-sphere-race-front.webp?v=cea283b69176",
+     "back": "thumbs/science-hydrophobic-sphere-race-back.webp?v=cea283b69176"
     }
    },
    "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
@@ -201525,8 +201525,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-hypergravity-flame.html?v=b043178d9904",
     "bytes": 8788,
     "thumbs": {
-     "front": "thumbs/science-hypergravity-flame-front.webp?v=b043178d9904",
-     "back": "thumbs/science-hypergravity-flame-back.webp?v=b043178d9904"
+     "front": "thumbs/science-hypergravity-flame-front.webp?v=9d820dc03daa",
+     "back": "thumbs/science-hypergravity-flame-back.webp?v=9d820dc03daa"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -201568,8 +201568,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-ice-hexagon-holes.html?v=1b428093d044",
     "bytes": 10910,
     "thumbs": {
-     "front": "thumbs/science-ice-hexagon-holes-front.webp?v=1b428093d044",
-     "back": "thumbs/science-ice-hexagon-holes-back.webp?v=1b428093d044"
+     "front": "thumbs/science-ice-hexagon-holes-front.webp?v=eee9c5861412",
+     "back": "thumbs/science-ice-hexagon-holes-back.webp?v=eee9c5861412"
     }
    },
    "source": "Geopop, “QUAL É LA DIFFERENZA TRA EVAPORAZIONE ED EBOLLIZIONE?” (YouTube, 2018)",
@@ -201611,8 +201611,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-ice-lifts-gibraltar.html?v=c9c045b5cf25",
     "bytes": 9947,
     "thumbs": {
-     "front": "thumbs/science-ice-lifts-gibraltar-front.webp?v=c9c045b5cf25",
-     "back": "thumbs/science-ice-lifts-gibraltar-back.webp?v=c9c045b5cf25"
+     "front": "thumbs/science-ice-lifts-gibraltar-front.webp?v=e9466388ed92",
+     "back": "thumbs/science-ice-lifts-gibraltar-back.webp?v=e9466388ed92"
     }
    },
    "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
@@ -201654,8 +201654,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-ice-regelation-wire.html?v=e15e3637fe48",
     "bytes": 7914,
     "thumbs": {
-     "front": "thumbs/science-ice-regelation-wire-front.webp?v=e15e3637fe48",
-     "back": "thumbs/science-ice-regelation-wire-back.webp?v=e15e3637fe48"
+     "front": "thumbs/science-ice-regelation-wire-front.webp?v=fc561b1dbf98",
+     "back": "thumbs/science-ice-regelation-wire-back.webp?v=fc561b1dbf98"
     }
    },
    "source": "Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)",
@@ -201697,8 +201697,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-impact-vs-sumatra.html?v=6c94f3fb1ad4",
     "bytes": 8593,
     "thumbs": {
-     "front": "thumbs/science-impact-vs-sumatra-front.webp?v=6c94f3fb1ad4",
-     "back": "thumbs/science-impact-vs-sumatra-back.webp?v=6c94f3fb1ad4"
+     "front": "thumbs/science-impact-vs-sumatra-front.webp?v=702fc35ca293",
+     "back": "thumbs/science-impact-vs-sumatra-back.webp?v=702fc35ca293"
     }
    },
    "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
@@ -201740,8 +201740,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-india-hits-eurasia.html?v=5622a0a95674",
     "bytes": 7110,
     "thumbs": {
-     "front": "thumbs/science-india-hits-eurasia-front.webp?v=5622a0a95674",
-     "back": "thumbs/science-india-hits-eurasia-back.webp?v=5622a0a95674"
+     "front": "thumbs/science-india-hits-eurasia-front.webp?v=645a33775c70",
+     "back": "thumbs/science-india-hits-eurasia-back.webp?v=645a33775c70"
     }
    },
    "source": "Geopop, “Vi mostro cosa è sepolto sotto lo Stretto di Messina - la geologia tra Calabria e Sicilia” (YouTube, 2025)",
@@ -201783,8 +201783,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-indium-traps.html?v=96f42275ebff",
     "bytes": 20788,
     "thumbs": {
-     "front": "thumbs/science-indium-traps-front.webp?v=96f42275ebff",
-     "back": "thumbs/science-indium-traps-back.webp?v=96f42275ebff"
+     "front": "thumbs/science-indium-traps-front.webp?v=4afef88833a3",
+     "back": "thumbs/science-indium-traps-back.webp?v=4afef88833a3"
     }
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
@@ -201826,8 +201826,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-inertia-car-push.html?v=4c6f66e12508",
     "bytes": 12337,
     "thumbs": {
-     "front": "thumbs/science-inertia-car-push-front.webp?v=4c6f66e12508",
-     "back": "thumbs/science-inertia-car-push-back.webp?v=4c6f66e12508"
+     "front": "thumbs/science-inertia-car-push-front.webp?v=324670ee8f52",
+     "back": "thumbs/science-inertia-car-push-back.webp?v=324670ee8f52"
     }
    },
    "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
@@ -203038,8 +203038,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-iridium-gubbio-clay.html?v=cb12fd016b8f",
     "bytes": 32367,
     "thumbs": {
-     "front": "thumbs/science-iridium-gubbio-clay-front.webp?v=cb12fd016b8f",
-     "back": "thumbs/science-iridium-gubbio-clay-back.webp?v=cb12fd016b8f"
+     "front": "thumbs/science-iridium-gubbio-clay-front.webp?v=530422565fa4",
+     "back": "thumbs/science-iridium-gubbio-clay-back.webp?v=530422565fa4"
     }
    },
    "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
@@ -203081,8 +203081,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-iron-sand-concentration.html?v=abd03f56feda",
     "bytes": 9342,
     "thumbs": {
-     "front": "thumbs/science-iron-sand-concentration-front.webp?v=abd03f56feda",
-     "back": "thumbs/science-iron-sand-concentration-back.webp?v=abd03f56feda"
+     "front": "thumbs/science-iron-sand-concentration-front.webp?v=ffd26fe6f457",
+     "back": "thumbs/science-iron-sand-concentration-back.webp?v=ffd26fe6f457"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -203125,8 +203125,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-iter-cold-magnets.html?v=da9b399444bd",
     "bytes": 9045,
     "thumbs": {
-     "front": "thumbs/science-iter-cold-magnets-front.webp?v=da9b399444bd",
-     "back": "thumbs/science-iter-cold-magnets-back.webp?v=da9b399444bd"
+     "front": "thumbs/science-iter-cold-magnets-front.webp?v=e94b9668a813",
+     "back": "thumbs/science-iter-cold-magnets-back.webp?v=e94b9668a813"
     }
    },
    "source": "Geopop, “Fusione nucleare, a che punto è la ricerca? L'eccellenza del progetto ITER” (YouTube, 2019)",
@@ -203168,8 +203168,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-iter-hot-cold.html?v=48bfccc81837",
     "bytes": 10371,
     "thumbs": {
-     "front": "thumbs/science-iter-hot-cold-front.webp?v=48bfccc81837",
-     "back": "thumbs/science-iter-hot-cold-back.webp?v=48bfccc81837"
+     "front": "thumbs/science-iter-hot-cold-front.webp?v=9f14941bcadb",
+     "back": "thumbs/science-iter-hot-cold-back.webp?v=9f14941bcadb"
     }
    },
    "source": "Geopop, “Fusione nucleare, a che punto è la ricerca? L'eccellenza del progetto ITER” (YouTube, 2019)",
@@ -203211,8 +203211,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-kelvin-vortex-atoms.html?v=ed12d65adc88",
     "bytes": 11798,
     "thumbs": {
-     "front": "thumbs/science-kelvin-vortex-atoms-front.webp?v=ed12d65adc88",
-     "back": "thumbs/science-kelvin-vortex-atoms-back.webp?v=ed12d65adc88"
+     "front": "thumbs/science-kelvin-vortex-atoms-front.webp?v=e85fb3ecf1d3",
+     "back": "thumbs/science-kelvin-vortex-atoms-back.webp?v=e85fb3ecf1d3"
     }
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
@@ -203254,8 +203254,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-kepler-water-units.html?v=69d3cd81aba6",
     "bytes": 22236,
     "thumbs": {
-     "front": "thumbs/science-kepler-water-units-front.webp?v=69d3cd81aba6",
-     "back": "thumbs/science-kepler-water-units-back.webp?v=69d3cd81aba6"
+     "front": "thumbs/science-kepler-water-units-front.webp?v=2fc97f0fe21e",
+     "back": "thumbs/science-kepler-water-units-back.webp?v=2fc97f0fe21e"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -203464,8 +203464,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-knotted-molecule.html?v=bcd97c5ed4b6",
     "bytes": 7558,
     "thumbs": {
-     "front": "thumbs/science-knotted-molecule-front.webp?v=bcd97c5ed4b6",
-     "back": "thumbs/science-knotted-molecule-back.webp?v=bcd97c5ed4b6"
+     "front": "thumbs/science-knotted-molecule-front.webp?v=e46ed741c946",
+     "back": "thumbs/science-knotted-molecule-back.webp?v=e46ed741c946"
     }
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
@@ -203507,8 +203507,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-kola-coring.html?v=37b6bef822a1",
     "bytes": 10435,
     "thumbs": {
-     "front": "thumbs/science-kola-coring-front.webp?v=37b6bef822a1",
-     "back": "thumbs/science-kola-coring-back.webp?v=37b6bef822a1"
+     "front": "thumbs/science-kola-coring-front.webp?v=ade4ea3459a0",
+     "back": "thumbs/science-kola-coring-back.webp?v=ade4ea3459a0"
     }
    },
    "source": "Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)",
@@ -203549,8 +203549,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-kola-rock-cores.html?v=43befdbccd59",
     "bytes": 8752,
     "thumbs": {
-     "front": "thumbs/science-kola-rock-cores-front.webp?v=43befdbccd59",
-     "back": "thumbs/science-kola-rock-cores-back.webp?v=43befdbccd59"
+     "front": "thumbs/science-kola-rock-cores-front.webp?v=177364b1364d",
+     "back": "thumbs/science-kola-rock-cores-back.webp?v=177364b1364d"
     }
    },
    "source": "Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)",
@@ -203592,8 +203592,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-landslide-depth-volume.html?v=80280d2f757c",
     "bytes": 6665,
     "thumbs": {
-     "front": "thumbs/science-landslide-depth-volume-front.webp?v=80280d2f757c",
-     "back": "thumbs/science-landslide-depth-volume-back.webp?v=80280d2f757c"
+     "front": "thumbs/science-landslide-depth-volume-front.webp?v=ff0e91daf31a",
+     "back": "thumbs/science-landslide-depth-volume-back.webp?v=ff0e91daf31a"
     }
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
@@ -204015,8 +204015,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-layers-in-step.html?v=88fd3ce9146a",
     "bytes": 15901,
     "thumbs": {
-     "front": "thumbs/science-layers-in-step-front.webp?v=88fd3ce9146a",
-     "back": "thumbs/science-layers-in-step-back.webp?v=88fd3ce9146a"
+     "front": "thumbs/science-layers-in-step-front.webp?v=b4ca639dfbb4",
+     "back": "thumbs/science-layers-in-step-back.webp?v=b4ca639dfbb4"
     }
    },
    "source": "Veritasium, “The Closest Thing We Have to Alien Technology” (YouTube, 2025)",
@@ -204058,8 +204058,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-leidenfrost-vapor-cushion.html?v=601cfc0625b8",
     "bytes": 8517,
     "thumbs": {
-     "front": "thumbs/science-leidenfrost-vapor-cushion-front.webp?v=601cfc0625b8",
-     "back": "thumbs/science-leidenfrost-vapor-cushion-back.webp?v=601cfc0625b8"
+     "front": "thumbs/science-leidenfrost-vapor-cushion-front.webp?v=067cd10933ab",
+     "back": "thumbs/science-leidenfrost-vapor-cushion-back.webp?v=067cd10933ab"
     }
    },
    "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
@@ -204100,8 +204100,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-lifting-a-car.html?v=e393acd12f98",
     "bytes": 9067,
     "thumbs": {
-     "front": "thumbs/science-lifting-a-car-front.webp?v=e393acd12f98",
-     "back": "thumbs/science-lifting-a-car-back.webp?v=e393acd12f98"
+     "front": "thumbs/science-lifting-a-car-front.webp?v=6698c4e8b1a8",
+     "back": "thumbs/science-lifting-a-car-back.webp?v=6698c4e8b1a8"
     }
    },
    "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
@@ -204144,8 +204144,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-light-energy-flow.html?v=1c0ae15a5541",
     "bytes": 10412,
     "thumbs": {
-     "front": "thumbs/science-light-energy-flow-front.webp?v=1c0ae15a5541",
-     "back": "thumbs/science-light-energy-flow-back.webp?v=1c0ae15a5541"
+     "front": "thumbs/science-light-energy-flow-front.webp?v=af0a2df2ee50",
+     "back": "thumbs/science-light-energy-flow-back.webp?v=af0a2df2ee50"
     }
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
@@ -204186,8 +204186,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-light-fields-in-phase.html?v=61c86f5be55e",
     "bytes": 7978,
     "thumbs": {
-     "front": "thumbs/science-light-fields-in-phase-front.webp?v=61c86f5be55e",
-     "back": "thumbs/science-light-fields-in-phase-back.webp?v=61c86f5be55e"
+     "front": "thumbs/science-light-fields-in-phase-front.webp?v=abfbac3f5185",
+     "back": "thumbs/science-light-fields-in-phase-back.webp?v=abfbac3f5185"
     }
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
@@ -204229,8 +204229,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-liquid-gas-ships.html?v=72527935b979",
     "bytes": 9456,
     "thumbs": {
-     "front": "thumbs/science-liquid-gas-ships-front.webp?v=72527935b979",
-     "back": "thumbs/science-liquid-gas-ships-back.webp?v=72527935b979"
+     "front": "thumbs/science-liquid-gas-ships-front.webp?v=70daddd57c21",
+     "back": "thumbs/science-liquid-gas-ships-back.webp?v=70daddd57c21"
     }
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
@@ -204272,8 +204272,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-little-boy-waste.html?v=1692fc3124a0",
     "bytes": 18426,
     "thumbs": {
-     "front": "thumbs/science-little-boy-waste-front.webp?v=1692fc3124a0",
-     "back": "thumbs/science-little-boy-waste-back.webp?v=1692fc3124a0"
+     "front": "thumbs/science-little-boy-waste-front.webp?v=21ad7045cb5e",
+     "back": "thumbs/science-little-boy-waste-back.webp?v=21ad7045cb5e"
     }
    },
    "source": "Geopop, “La bomba atomica di Oppenheimer - Animazione 3D di come funziona e com'è fatta dentro” (YouTube, 2022)",
@@ -204316,8 +204316,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-lowside-vs-highside.html?v=50036040af5b",
     "bytes": 10699,
     "thumbs": {
-     "front": "thumbs/science-lowside-vs-highside-front.webp?v=50036040af5b",
-     "back": "thumbs/science-lowside-vs-highside-back.webp?v=50036040af5b"
+     "front": "thumbs/science-lowside-vs-highside-front.webp?v=9f3609251b51",
+     "back": "thumbs/science-lowside-vs-highside-back.webp?v=9f3609251b51"
     }
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
@@ -204359,8 +204359,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-magnet-fake-diamonds.html?v=b530e5271b9f",
     "bytes": 7611,
     "thumbs": {
-     "front": "thumbs/science-magnet-fake-diamonds-front.webp?v=b530e5271b9f",
-     "back": "thumbs/science-magnet-fake-diamonds-back.webp?v=b530e5271b9f"
+     "front": "thumbs/science-magnet-fake-diamonds-front.webp?v=d63cfed2594c",
+     "back": "thumbs/science-magnet-fake-diamonds-back.webp?v=d63cfed2594c"
     }
    },
    "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
@@ -204401,8 +204401,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-magnetic-plasma-cage.html?v=0e5457752646",
     "bytes": 9793,
     "thumbs": {
-     "front": "thumbs/science-magnetic-plasma-cage-front.webp?v=0e5457752646",
-     "back": "thumbs/science-magnetic-plasma-cage-back.webp?v=0e5457752646"
+     "front": "thumbs/science-magnetic-plasma-cage-front.webp?v=564f66076752",
+     "back": "thumbs/science-magnetic-plasma-cage-back.webp?v=564f66076752"
     }
    },
    "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
@@ -204444,8 +204444,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-magnetic-seafloor-stripes.html?v=b4878140f158",
     "bytes": 16915,
     "thumbs": {
-     "front": "thumbs/science-magnetic-seafloor-stripes-front.webp?v=b4878140f158",
-     "back": "thumbs/science-magnetic-seafloor-stripes-back.webp?v=b4878140f158"
+     "front": "thumbs/science-magnetic-seafloor-stripes-front.webp?v=a56f8343404b",
+     "back": "thumbs/science-magnetic-seafloor-stripes-back.webp?v=a56f8343404b"
     }
    },
    "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
@@ -204487,8 +204487,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-magnetic-stripes.html?v=3182ddf68ada",
     "bytes": 22703,
     "thumbs": {
-     "front": "thumbs/science-magnetic-stripes-front.webp?v=3182ddf68ada",
-     "back": "thumbs/science-magnetic-stripes-back.webp?v=3182ddf68ada"
+     "front": "thumbs/science-magnetic-stripes-front.webp?v=ca7c64d2609b",
+     "back": "thumbs/science-magnetic-stripes-back.webp?v=ca7c64d2609b"
     }
    },
    "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
@@ -204530,8 +204530,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-many-worlds-dice.html?v=750d25a0bd2a",
     "bytes": 17370,
     "thumbs": {
-     "front": "thumbs/science-many-worlds-dice-front.webp?v=750d25a0bd2a",
-     "back": "thumbs/science-many-worlds-dice-back.webp?v=750d25a0bd2a"
+     "front": "thumbs/science-many-worlds-dice-front.webp?v=2a6d44ab57a7",
+     "back": "thumbs/science-many-worlds-dice-back.webp?v=2a6d44ab57a7"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -204573,8 +204573,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-many-worlds-flow.html?v=0a98c9625eb4",
     "bytes": 10957,
     "thumbs": {
-     "front": "thumbs/science-many-worlds-flow-front.webp?v=0a98c9625eb4",
-     "back": "thumbs/science-many-worlds-flow-back.webp?v=0a98c9625eb4"
+     "front": "thumbs/science-many-worlds-flow-front.webp?v=0ddfc342b4d8",
+     "back": "thumbs/science-many-worlds-flow-back.webp?v=0ddfc342b4d8"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -204616,8 +204616,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-martensite-needles.html?v=5ab0eab06384",
     "bytes": 12835,
     "thumbs": {
-     "front": "thumbs/science-martensite-needles-front.webp?v=5ab0eab06384",
-     "back": "thumbs/science-martensite-needles-back.webp?v=5ab0eab06384"
+     "front": "thumbs/science-martensite-needles-front.webp?v=5f1d18eb01cb",
+     "back": "thumbs/science-martensite-needles-back.webp?v=5f1d18eb01cb"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -204660,8 +204660,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-mass-cancels-falling.html?v=5629266354a0",
     "bytes": 7330,
     "thumbs": {
-     "front": "thumbs/science-mass-cancels-falling-front.webp?v=5629266354a0",
-     "back": "thumbs/science-mass-cancels-falling-back.webp?v=5629266354a0"
+     "front": "thumbs/science-mass-cancels-falling-front.webp?v=f46e9030034d",
+     "back": "thumbs/science-mass-cancels-falling-back.webp?v=f46e9030034d"
     }
    },
    "source": "Veritasium, “Misconceptions About Falling Objects” (YouTube, 2011)",
@@ -204704,8 +204704,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-maxwell-light-wave.html?v=900423f20916",
     "bytes": 8634,
     "thumbs": {
-     "front": "thumbs/science-maxwell-light-wave-front.webp?v=900423f20916",
-     "back": "thumbs/science-maxwell-light-wave-back.webp?v=900423f20916"
+     "front": "thumbs/science-maxwell-light-wave-front.webp?v=cf32eabb43ea",
+     "back": "thumbs/science-maxwell-light-wave-back.webp?v=cf32eabb43ea"
     }
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
@@ -204747,8 +204747,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-mediterranean-refill-speed.html?v=cb82f212240c",
     "bytes": 9351,
     "thumbs": {
-     "front": "thumbs/science-mediterranean-refill-speed-front.webp?v=cb82f212240c",
-     "back": "thumbs/science-mediterranean-refill-speed-back.webp?v=cb82f212240c"
+     "front": "thumbs/science-mediterranean-refill-speed-front.webp?v=eb5a3e989c39",
+     "back": "thumbs/science-mediterranean-refill-speed-back.webp?v=eb5a3e989c39"
     }
    },
    "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
@@ -204789,8 +204789,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-mediterranean-salt-layer.html?v=53d7ec54b28c",
     "bytes": 7707,
     "thumbs": {
-     "front": "thumbs/science-mediterranean-salt-layer-front.webp?v=53d7ec54b28c",
-     "back": "thumbs/science-mediterranean-salt-layer-back.webp?v=53d7ec54b28c"
+     "front": "thumbs/science-mediterranean-salt-layer-front.webp?v=d92e75a1eaf8",
+     "back": "thumbs/science-mediterranean-salt-layer-back.webp?v=d92e75a1eaf8"
     }
    },
    "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
@@ -204832,8 +204832,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-mercury-period-doubling.html?v=dd2f23b36dfa",
     "bytes": 9674,
     "thumbs": {
-     "front": "thumbs/science-mercury-period-doubling-front.webp?v=dd2f23b36dfa",
-     "back": "thumbs/science-mercury-period-doubling-back.webp?v=dd2f23b36dfa"
+     "front": "thumbs/science-mercury-period-doubling-front.webp?v=0ed902789fa2",
+     "back": "thumbs/science-mercury-period-doubling-back.webp?v=0ed902789fa2"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -204875,8 +204875,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-metals-boil-thermite.html?v=fffcd73a9764",
     "bytes": 11584,
     "thumbs": {
-     "front": "thumbs/science-metals-boil-thermite-front.webp?v=fffcd73a9764",
-     "back": "thumbs/science-metals-boil-thermite-back.webp?v=fffcd73a9764"
+     "front": "thumbs/science-metals-boil-thermite-front.webp?v=855b90cf09d5",
+     "back": "thumbs/science-metals-boil-thermite-back.webp?v=855b90cf09d5"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -205087,8 +205087,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-moon-water-land.html?v=03a1a61f2b5a",
     "bytes": 9439,
     "thumbs": {
-     "front": "thumbs/science-moon-water-land-front.webp?v=03a1a61f2b5a",
-     "back": "thumbs/science-moon-water-land-back.webp?v=03a1a61f2b5a"
+     "front": "thumbs/science-moon-water-land-front.webp?v=15f1671ae6fd",
+     "back": "thumbs/science-moon-water-land-back.webp?v=15f1671ae6fd"
     }
    },
    "source": "Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)",
@@ -205130,8 +205130,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-motogp-braking-zone.html?v=8299349b55a4",
     "bytes": 9793,
     "thumbs": {
-     "front": "thumbs/science-motogp-braking-zone-front.webp?v=8299349b55a4",
-     "back": "thumbs/science-motogp-braking-zone-back.webp?v=8299349b55a4"
+     "front": "thumbs/science-motogp-braking-zone-front.webp?v=d3080b7720dd",
+     "back": "thumbs/science-motogp-braking-zone-back.webp?v=d3080b7720dd"
     }
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
@@ -205173,8 +205173,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-neutron-slips-in.html?v=a3dc1a507bd0",
     "bytes": 9353,
     "thumbs": {
-     "front": "thumbs/science-neutron-slips-in-front.webp?v=a3dc1a507bd0",
-     "back": "thumbs/science-neutron-slips-in-back.webp?v=a3dc1a507bd0"
+     "front": "thumbs/science-neutron-slips-in-front.webp?v=15e40eb9919b",
+     "back": "thumbs/science-neutron-slips-in-back.webp?v=15e40eb9919b"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -205215,8 +205215,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-ocean-salt-mass.html?v=3962423fdbee",
     "bytes": 6937,
     "thumbs": {
-     "front": "thumbs/science-ocean-salt-mass-front.webp?v=3962423fdbee",
-     "back": "thumbs/science-ocean-salt-mass-back.webp?v=3962423fdbee"
+     "front": "thumbs/science-ocean-salt-mass-front.webp?v=524b8074166a",
+     "back": "thumbs/science-ocean-salt-mass-back.webp?v=524b8074166a"
     }
    },
    "source": "Geopop, “Perché il sodio esplode a contatto con l’acqua? La reazione chimica spiegata con un esperimento” (YouTube, 2025)",
@@ -205258,8 +205258,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-one-shared-wavefunction.html?v=dd595fd01abe",
     "bytes": 10553,
     "thumbs": {
-     "front": "thumbs/science-one-shared-wavefunction-front.webp?v=dd595fd01abe",
-     "back": "thumbs/science-one-shared-wavefunction-back.webp?v=dd595fd01abe"
+     "front": "thumbs/science-one-shared-wavefunction-front.webp?v=958f73afaf08",
+     "back": "thumbs/science-one-shared-wavefunction-back.webp?v=958f73afaf08"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -205300,8 +205300,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-one-way-light.html?v=bccb5c494a30",
     "bytes": 21830,
     "thumbs": {
-     "front": "thumbs/science-one-way-light-front.webp?v=bccb5c494a30",
-     "back": "thumbs/science-one-way-light-back.webp?v=bccb5c494a30"
+     "front": "thumbs/science-one-way-light-front.webp?v=6bf3c21640d4",
+     "back": "thumbs/science-one-way-light-back.webp?v=6bf3c21640d4"
     }
    },
    "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
@@ -205343,8 +205343,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-opposite-lens-errors.html?v=8510b3b299d8",
     "bytes": 13072,
     "thumbs": {
-     "front": "thumbs/science-opposite-lens-errors-front.webp?v=8510b3b299d8",
-     "back": "thumbs/science-opposite-lens-errors-back.webp?v=8510b3b299d8"
+     "front": "thumbs/science-opposite-lens-errors-front.webp?v=cecf08d5fc10",
+     "back": "thumbs/science-opposite-lens-errors-back.webp?v=cecf08d5fc10"
     }
    },
    "source": "Veritasium, “Can You Keep Zooming In Infinitely?” (YouTube, 2025)",
@@ -205528,8 +205528,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-pacific-background-radiation.html?v=7d7afc68ae30",
     "bytes": 24237,
     "thumbs": {
-     "front": "thumbs/science-pacific-background-radiation-front.webp?v=7d7afc68ae30",
-     "back": "thumbs/science-pacific-background-radiation-back.webp?v=7d7afc68ae30"
+     "front": "thumbs/science-pacific-background-radiation-front.webp?v=14df574f2b9c",
+     "back": "thumbs/science-pacific-background-radiation-back.webp?v=14df574f2b9c"
     }
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
@@ -205570,8 +205570,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-paper-plastic-cycles.html?v=5acd91352a3c",
     "bytes": 10498,
     "thumbs": {
-     "front": "thumbs/science-paper-plastic-cycles-front.webp?v=5acd91352a3c",
-     "back": "thumbs/science-paper-plastic-cycles-back.webp?v=5acd91352a3c"
+     "front": "thumbs/science-paper-plastic-cycles-front.webp?v=2aafde6ba9df",
+     "back": "thumbs/science-paper-plastic-cycles-back.webp?v=2aafde6ba9df"
     }
    },
    "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
@@ -205613,8 +205613,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-patterson-clean-lab.html?v=872a1152dc4f",
     "bytes": 11432,
     "thumbs": {
-     "front": "thumbs/science-patterson-clean-lab-front.webp?v=872a1152dc4f",
-     "back": "thumbs/science-patterson-clean-lab-back.webp?v=872a1152dc4f"
+     "front": "thumbs/science-patterson-clean-lab-front.webp?v=5a0a2d437c07",
+     "back": "thumbs/science-patterson-clean-lab-back.webp?v=5a0a2d437c07"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -205804,8 +205804,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-phone-microwaves-dna.html?v=47ca1adf2ac8",
     "bytes": 8080,
     "thumbs": {
-     "front": "thumbs/science-phone-microwaves-dna-front.webp?v=47ca1adf2ac8",
-     "back": "thumbs/science-phone-microwaves-dna-back.webp?v=47ca1adf2ac8"
+     "front": "thumbs/science-phone-microwaves-dna-front.webp?v=89596c5b3a83",
+     "back": "thumbs/science-phone-microwaves-dna-back.webp?v=89596c5b3a83"
     }
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
@@ -205847,8 +205847,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-piccard-white-mud.html?v=71955759a58b",
     "bytes": 7810,
     "thumbs": {
-     "front": "thumbs/science-piccard-white-mud-front.webp?v=71955759a58b",
-     "back": "thumbs/science-piccard-white-mud-back.webp?v=71955759a58b"
+     "front": "thumbs/science-piccard-white-mud-front.webp?v=9f4753bc8245",
+     "back": "thumbs/science-piccard-white-mud-back.webp?v=9f4753bc8245"
     }
    },
    "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
@@ -206301,8 +206301,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-pinhole-sun-image.html?v=6a1680b7aa68",
     "bytes": 8819,
     "thumbs": {
-     "front": "thumbs/science-pinhole-sun-image-front.webp?v=6a1680b7aa68",
-     "back": "thumbs/science-pinhole-sun-image-back.webp?v=6a1680b7aa68"
+     "front": "thumbs/science-pinhole-sun-image-front.webp?v=d9c3df1265a7",
+     "back": "thumbs/science-pinhole-sun-image-back.webp?v=d9c3df1265a7"
     }
    },
    "source": "Veritasium, “Can You Solve This Shadow Illusion?” (YouTube, 2011)",
@@ -206344,8 +206344,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-piranha-solution.html?v=a4256e62e6d5",
     "bytes": 8212,
     "thumbs": {
-     "front": "thumbs/science-piranha-solution-front.webp?v=a4256e62e6d5",
-     "back": "thumbs/science-piranha-solution-back.webp?v=a4256e62e6d5"
+     "front": "thumbs/science-piranha-solution-front.webp?v=aa0c0b1c2f9c",
+     "back": "thumbs/science-piranha-solution-back.webp?v=aa0c0b1c2f9c"
     }
    },
    "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
@@ -206387,8 +206387,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-plastic-sediment-layer.html?v=188d58061abc",
     "bytes": 8779,
     "thumbs": {
-     "front": "thumbs/science-plastic-sediment-layer-front.webp?v=188d58061abc",
-     "back": "thumbs/science-plastic-sediment-layer-back.webp?v=188d58061abc"
+     "front": "thumbs/science-plastic-sediment-layer-front.webp?v=138c6a574ccb",
+     "back": "thumbs/science-plastic-sediment-layer-back.webp?v=138c6a574ccb"
     }
    },
    "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
@@ -206803,8 +206803,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-poles-closer-center.html?v=bcfa064ec719",
     "bytes": 8781,
     "thumbs": {
-     "front": "thumbs/science-poles-closer-center-front.webp?v=bcfa064ec719",
-     "back": "thumbs/science-poles-closer-center-back.webp?v=bcfa064ec719"
+     "front": "thumbs/science-poles-closer-center-front.webp?v=b16797d7cd51",
+     "back": "thumbs/science-poles-closer-center-back.webp?v=b16797d7cd51"
     }
    },
    "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
@@ -206846,8 +206846,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-pollen-climate-diary.html?v=060b776ca68f",
     "bytes": 12238,
     "thumbs": {
-     "front": "thumbs/science-pollen-climate-diary-front.webp?v=060b776ca68f",
-     "back": "thumbs/science-pollen-climate-diary-back.webp?v=060b776ca68f"
+     "front": "thumbs/science-pollen-climate-diary-front.webp?v=90caf04fde6f",
+     "back": "thumbs/science-pollen-climate-diary-back.webp?v=90caf04fde6f"
     }
    },
    "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
@@ -206889,8 +206889,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-poynting-vector-arrow.html?v=67b2f9aa06ed",
     "bytes": 9878,
     "thumbs": {
-     "front": "thumbs/science-poynting-vector-arrow-front.webp?v=67b2f9aa06ed",
-     "back": "thumbs/science-poynting-vector-arrow-back.webp?v=67b2f9aa06ed"
+     "front": "thumbs/science-poynting-vector-arrow-front.webp?v=c47b2697bcdb",
+     "back": "thumbs/science-poynting-vector-arrow-back.webp?v=c47b2697bcdb"
     }
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
@@ -206932,8 +206932,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-pressure-at-depth.html?v=9ada816c51b6",
     "bytes": 18826,
     "thumbs": {
-     "front": "thumbs/science-pressure-at-depth-front.webp?v=9ada816c51b6",
-     "back": "thumbs/science-pressure-at-depth-back.webp?v=9ada816c51b6"
+     "front": "thumbs/science-pressure-at-depth-front.webp?v=f8a941fc56c4",
+     "back": "thumbs/science-pressure-at-depth-back.webp?v=f8a941fc56c4"
     }
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
@@ -206974,8 +206974,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-pressure-in-tons.html?v=25d6a0970a37",
     "bytes": 7973,
     "thumbs": {
-     "front": "thumbs/science-pressure-in-tons-front.webp?v=25d6a0970a37",
-     "back": "thumbs/science-pressure-in-tons-back.webp?v=25d6a0970a37"
+     "front": "thumbs/science-pressure-in-tons-front.webp?v=b8552d7a7f93",
+     "back": "thumbs/science-pressure-in-tons-back.webp?v=b8552d7a7f93"
     }
    },
    "source": "Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023)",
@@ -207018,8 +207018,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-pressure-melts-ice.html?v=e45b90423b00",
     "bytes": 10214,
     "thumbs": {
-     "front": "thumbs/science-pressure-melts-ice-front.webp?v=e45b90423b00",
-     "back": "thumbs/science-pressure-melts-ice-back.webp?v=e45b90423b00"
+     "front": "thumbs/science-pressure-melts-ice-front.webp?v=c2c2ebc9a1d7",
+     "back": "thumbs/science-pressure-melts-ice-back.webp?v=c2c2ebc9a1d7"
     }
    },
    "source": "Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)",
@@ -208111,8 +208111,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-push-harder-spin.html?v=1222ef1b107b",
     "bytes": 19339,
     "thumbs": {
-     "front": "thumbs/science-push-harder-spin-front.webp?v=1222ef1b107b",
-     "back": "thumbs/science-push-harder-spin-back.webp?v=1222ef1b107b"
+     "front": "thumbs/science-push-harder-spin-front.webp?v=ea2345de0de4",
+     "back": "thumbs/science-push-harder-spin-back.webp?v=ea2345de0de4"
     }
    },
    "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
@@ -208154,8 +208154,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-push-spins-globe.html?v=13bd728fea48",
     "bytes": 9493,
     "thumbs": {
-     "front": "thumbs/science-push-spins-globe-front.webp?v=13bd728fea48",
-     "back": "thumbs/science-push-spins-globe-back.webp?v=13bd728fea48"
+     "front": "thumbs/science-push-spins-globe-front.webp?v=cdff8d77fcee",
+     "back": "thumbs/science-push-spins-globe-back.webp?v=cdff8d77fcee"
     }
    },
    "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
@@ -208196,8 +208196,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-quakes-rising-ground.html?v=20e32a682c1b",
     "bytes": 14976,
     "thumbs": {
-     "front": "thumbs/science-quakes-rising-ground-front.webp?v=20e32a682c1b",
-     "back": "thumbs/science-quakes-rising-ground-back.webp?v=20e32a682c1b"
+     "front": "thumbs/science-quakes-rising-ground-front.webp?v=211ce68954c8",
+     "back": "thumbs/science-quakes-rising-ground-back.webp?v=211ce68954c8"
     }
    },
    "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
@@ -208740,8 +208740,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-quantum-superposition.html?v=dde84d372cd9",
     "bytes": 11704,
     "thumbs": {
-     "front": "thumbs/science-quantum-superposition-front.webp?v=dde84d372cd9",
-     "back": "thumbs/science-quantum-superposition-back.webp?v=dde84d372cd9"
+     "front": "thumbs/science-quantum-superposition-front.webp?v=06b61e8e3c4f",
+     "back": "thumbs/science-quantum-superposition-back.webp?v=06b61e8e3c4f"
     }
    },
    "source": "Veritasium, “How Does a Quantum Computer Work?” (YouTube, 2013)",
@@ -208783,8 +208783,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-quasi-crystal-icosahedrons.html?v=2fba4905b188",
     "bytes": 8620,
     "thumbs": {
-     "front": "thumbs/science-quasi-crystal-icosahedrons-front.webp?v=2fba4905b188",
-     "back": "thumbs/science-quasi-crystal-icosahedrons-back.webp?v=2fba4905b188"
+     "front": "thumbs/science-quasi-crystal-icosahedrons-front.webp?v=59ae7a3986c5",
+     "back": "thumbs/science-quasi-crystal-icosahedrons-back.webp?v=59ae7a3986c5"
     }
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
@@ -208826,8 +208826,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-radiation-inside-out.html?v=e84f18745b66",
     "bytes": 13886,
     "thumbs": {
-     "front": "thumbs/science-radiation-inside-out-front.webp?v=e84f18745b66",
-     "back": "thumbs/science-radiation-inside-out-back.webp?v=e84f18745b66"
+     "front": "thumbs/science-radiation-inside-out-front.webp?v=aa1410d97a79",
+     "back": "thumbs/science-radiation-inside-out-back.webp?v=aa1410d97a79"
     }
    },
    "source": "Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)",
@@ -208869,8 +208869,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-rail-heat-growth.html?v=f84414de93b5",
     "bytes": 10022,
     "thumbs": {
-     "front": "thumbs/science-rail-heat-growth-front.webp?v=f84414de93b5",
-     "back": "thumbs/science-rail-heat-growth-back.webp?v=f84414de93b5"
+     "front": "thumbs/science-rail-heat-growth-front.webp?v=d002ee91efe4",
+     "back": "thumbs/science-rail-heat-growth-back.webp?v=d002ee91efe4"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -209283,8 +209283,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-rally-pendulum-effect.html?v=7f5fde9aa9ed",
     "bytes": 8865,
     "thumbs": {
-     "front": "thumbs/science-rally-pendulum-effect-front.webp?v=7f5fde9aa9ed",
-     "back": "thumbs/science-rally-pendulum-effect-back.webp?v=7f5fde9aa9ed"
+     "front": "thumbs/science-rally-pendulum-effect-front.webp?v=3e8b819cdc05",
+     "back": "thumbs/science-rally-pendulum-effect-back.webp?v=3e8b819cdc05"
     }
    },
    "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
@@ -209326,8 +209326,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-rally-thousandth-second.html?v=e6da5b47cbde",
     "bytes": 8211,
     "thumbs": {
-     "front": "thumbs/science-rally-thousandth-second-front.webp?v=e6da5b47cbde",
-     "back": "thumbs/science-rally-thousandth-second-back.webp?v=e6da5b47cbde"
+     "front": "thumbs/science-rally-thousandth-second-front.webp?v=709f0ee7183e",
+     "back": "thumbs/science-rally-thousandth-second-back.webp?v=709f0ee7183e"
     }
    },
    "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
@@ -209369,8 +209369,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-rally-wheel-spin.html?v=ff31c2f3ee35",
     "bytes": 10130,
     "thumbs": {
-     "front": "thumbs/science-rally-wheel-spin-front.webp?v=ff31c2f3ee35",
-     "back": "thumbs/science-rally-wheel-spin-back.webp?v=ff31c2f3ee35"
+     "front": "thumbs/science-rally-wheel-spin-front.webp?v=88214947897f",
+     "back": "thumbs/science-rally-wheel-spin-back.webp?v=88214947897f"
     }
    },
    "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
@@ -210296,8 +210296,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-reynolds-goes-up.html?v=c27cdccd072b",
     "bytes": 13309,
     "thumbs": {
-     "front": "thumbs/science-reynolds-goes-up-front.webp?v=c27cdccd072b",
-     "back": "thumbs/science-reynolds-goes-up-back.webp?v=c27cdccd072b"
+     "front": "thumbs/science-reynolds-goes-up-front.webp?v=dc83b979a454",
+     "back": "thumbs/science-reynolds-goes-up-back.webp?v=dc83b979a454"
     }
    },
    "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
@@ -210339,8 +210339,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-rift-to-ocean.html?v=9838f5e644a1",
     "bytes": 31657,
     "thumbs": {
-     "front": "thumbs/science-rift-to-ocean-front.webp?v=9838f5e644a1",
-     "back": "thumbs/science-rift-to-ocean-back.webp?v=9838f5e644a1"
+     "front": "thumbs/science-rift-to-ocean-front.webp?v=32673d445ab1",
+     "back": "thumbs/science-rift-to-ocean-back.webp?v=32673d445ab1"
     }
    },
    "source": "Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)",
@@ -210529,8 +210529,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-rock-atom-clocks.html?v=dedaf5d73f96",
     "bytes": 11201,
     "thumbs": {
-     "front": "thumbs/science-rock-atom-clocks-front.webp?v=dedaf5d73f96",
-     "back": "thumbs/science-rock-atom-clocks-back.webp?v=dedaf5d73f96"
+     "front": "thumbs/science-rock-atom-clocks-front.webp?v=3a6627175782",
+     "back": "thumbs/science-rock-atom-clocks-back.webp?v=3a6627175782"
     }
    },
    "source": "Geopop, “▶️ LE ERE GEOLOGICHE: COME DIAVOLO LE ABBIAMO RICOSTRUITE? |GeologiaPOP” (YouTube, 2018)",
@@ -210572,8 +210572,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-rock-restoration.html?v=56d88ee40291",
     "bytes": 20931,
     "thumbs": {
-     "front": "thumbs/science-rock-restoration-front.webp?v=56d88ee40291",
-     "back": "thumbs/science-rock-restoration-back.webp?v=56d88ee40291"
+     "front": "thumbs/science-rock-restoration-front.webp?v=33f5c5cfe097",
+     "back": "thumbs/science-rock-restoration-back.webp?v=33f5c5cfe097"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -210615,8 +210615,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-room-temperature-boiling.html?v=641c7945acd0",
     "bytes": 9355,
     "thumbs": {
-     "front": "thumbs/science-room-temperature-boiling-front.webp?v=641c7945acd0",
-     "back": "thumbs/science-room-temperature-boiling-back.webp?v=641c7945acd0"
+     "front": "thumbs/science-room-temperature-boiling-front.webp?v=bc9990f362c9",
+     "back": "thumbs/science-room-temperature-boiling-back.webp?v=bc9990f362c9"
     }
    },
    "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
@@ -211159,8 +211159,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-s-waves-vanish.html?v=448fe4543747",
     "bytes": 9324,
     "thumbs": {
-     "front": "thumbs/science-s-waves-vanish-front.webp?v=448fe4543747",
-     "back": "thumbs/science-s-waves-vanish-back.webp?v=448fe4543747"
+     "front": "thumbs/science-s-waves-vanish-front.webp?v=41ee73051237",
+     "back": "thumbs/science-s-waves-vanish-back.webp?v=41ee73051237"
     }
    },
    "source": "Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)",
@@ -211202,8 +211202,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-salt-rusts-cables.html?v=555c31c1895c",
     "bytes": 13647,
     "thumbs": {
-     "front": "thumbs/science-salt-rusts-cables-front.webp?v=555c31c1895c",
-     "back": "thumbs/science-salt-rusts-cables-back.webp?v=555c31c1895c"
+     "front": "thumbs/science-salt-rusts-cables-front.webp?v=4f0cc937247f",
+     "back": "thumbs/science-salt-rusts-cables-back.webp?v=4f0cc937247f"
     }
    },
    "source": "Geopop, “Il crollo del Ponte Morandi a Genova, l'inedita ricostruzione video in 3D al momento del collasso” (YouTube, 2022)",
@@ -211495,8 +211495,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-sardinia-corsica-door.html?v=5ad92ad40db2",
     "bytes": 9830,
     "thumbs": {
-     "front": "thumbs/science-sardinia-corsica-door-front.webp?v=5ad92ad40db2",
-     "back": "thumbs/science-sardinia-corsica-door-back.webp?v=5ad92ad40db2"
+     "front": "thumbs/science-sardinia-corsica-door-front.webp?v=a6b26d3f1b74",
+     "back": "thumbs/science-sardinia-corsica-door-back.webp?v=a6b26d3f1b74"
     }
    },
    "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
@@ -211538,8 +211538,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-sardinia-stable-block.html?v=1ef696cf9445",
     "bytes": 10351,
     "thumbs": {
-     "front": "thumbs/science-sardinia-stable-block-front.webp?v=1ef696cf9445",
-     "back": "thumbs/science-sardinia-stable-block-back.webp?v=1ef696cf9445"
+     "front": "thumbs/science-sardinia-stable-block-front.webp?v=081f672c56a8",
+     "back": "thumbs/science-sardinia-stable-block-back.webp?v=081f672c56a8"
     }
    },
    "source": "Geopop, “PERCHÉ CI SONO POCHISSIMI TERREMOTI IN SARDEGNA? Geologia POP” (YouTube, 2020)",
@@ -211580,8 +211580,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-scherzer-round-lens.html?v=03ce242c1515",
     "bytes": 19354,
     "thumbs": {
-     "front": "thumbs/science-scherzer-round-lens-front.webp?v=03ce242c1515",
-     "back": "thumbs/science-scherzer-round-lens-back.webp?v=03ce242c1515"
+     "front": "thumbs/science-scherzer-round-lens-front.webp?v=66ab04a425a9",
+     "back": "thumbs/science-scherzer-round-lens-back.webp?v=66ab04a425a9"
     }
    },
    "source": "Veritasium, “Can You Keep Zooming In Infinitely?” (YouTube, 2025)",
@@ -211623,8 +211623,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-scotch-tape-graphene.html?v=9b426218d68e",
     "bytes": 6936,
     "thumbs": {
-     "front": "thumbs/science-scotch-tape-graphene-front.webp?v=9b426218d68e",
-     "back": "thumbs/science-scotch-tape-graphene-back.webp?v=9b426218d68e"
+     "front": "thumbs/science-scotch-tape-graphene-front.webp?v=9b743e22ce7e",
+     "back": "thumbs/science-scotch-tape-graphene-back.webp?v=9b743e22ce7e"
     }
    },
    "source": "Veritasium, “How To Make Graphene” (YouTube, 2011)",
@@ -211666,8 +211666,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-seismic-aseismic-faults.html?v=b6823c590cd8",
     "bytes": 11307,
     "thumbs": {
-     "front": "thumbs/science-seismic-aseismic-faults-front.webp?v=b6823c590cd8",
-     "back": "thumbs/science-seismic-aseismic-faults-back.webp?v=b6823c590cd8"
+     "front": "thumbs/science-seismic-aseismic-faults-front.webp?v=df740b9f7546",
+     "back": "thumbs/science-seismic-aseismic-faults-back.webp?v=df740b9f7546"
     }
    },
    "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
@@ -211709,8 +211709,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-seismic-chalk-map.html?v=562f07fa2ea6",
     "bytes": 10147,
     "thumbs": {
-     "front": "thumbs/science-seismic-chalk-map-front.webp?v=562f07fa2ea6",
-     "back": "thumbs/science-seismic-chalk-map-back.webp?v=562f07fa2ea6"
+     "front": "thumbs/science-seismic-chalk-map-front.webp?v=02e8f4061c29",
+     "back": "thumbs/science-seismic-chalk-map-back.webp?v=02e8f4061c29"
     }
    },
    "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
@@ -211753,8 +211753,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-seismic-time-axis.html?v=05a5902f1153",
     "bytes": 9315,
     "thumbs": {
-     "front": "thumbs/science-seismic-time-axis-front.webp?v=05a5902f1153",
-     "back": "thumbs/science-seismic-time-axis-back.webp?v=05a5902f1153"
+     "front": "thumbs/science-seismic-time-axis-front.webp?v=3bf0a68e7ce1",
+     "back": "thumbs/science-seismic-time-axis-back.webp?v=3bf0a68e7ce1"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -211796,8 +211796,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-shade-ball-raft.html?v=b438d4561a8d",
     "bytes": 11704,
     "thumbs": {
-     "front": "thumbs/science-shade-ball-raft-front.webp?v=b438d4561a8d",
-     "back": "thumbs/science-shade-ball-raft-back.webp?v=b438d4561a8d"
+     "front": "thumbs/science-shade-ball-raft-front.webp?v=8ffdf6a3995a",
+     "back": "thumbs/science-shade-ball-raft-back.webp?v=8ffdf6a3995a"
     }
    },
    "source": "Veritasium, “Can You Swim in Shade Balls?” (YouTube, 2019)",
@@ -211839,8 +211839,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-shade-balls.html?v=08b32d93be3c",
     "bytes": 21956,
     "thumbs": {
-     "front": "thumbs/science-shade-balls-front.webp?v=08b32d93be3c",
-     "back": "thumbs/science-shade-balls-back.webp?v=08b32d93be3c"
+     "front": "thumbs/science-shade-balls-front.webp?v=916a7675ba35",
+     "back": "thumbs/science-shade-balls-back.webp?v=916a7675ba35"
     }
    },
    "source": "Veritasium, “Why Are 96,000,000 Black Balls on This Reservoir?” (YouTube, 2019)",
@@ -211882,8 +211882,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-shared-volcanic-rock.html?v=efbdbd40e6eb",
     "bytes": 11485,
     "thumbs": {
-     "front": "thumbs/science-shared-volcanic-rock-front.webp?v=efbdbd40e6eb",
-     "back": "thumbs/science-shared-volcanic-rock-back.webp?v=efbdbd40e6eb"
+     "front": "thumbs/science-shared-volcanic-rock-front.webp?v=726fca9045c8",
+     "back": "thumbs/science-shared-volcanic-rock-back.webp?v=726fca9045c8"
     }
    },
    "source": "Geopop, “PERCHÉ CI SONO POCHISSIMI TERREMOTI IN SARDEGNA? Geologia POP” (YouTube, 2020)",
@@ -211925,8 +211925,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-sketch-before-measuring.html?v=8f9c4182f3c7",
     "bytes": 18893,
     "thumbs": {
-     "front": "thumbs/science-sketch-before-measuring-front.webp?v=8f9c4182f3c7",
-     "back": "thumbs/science-sketch-before-measuring-back.webp?v=8f9c4182f3c7"
+     "front": "thumbs/science-sketch-before-measuring-front.webp?v=19a818a2a9c5",
+     "back": "thumbs/science-sketch-before-measuring-back.webp?v=19a818a2a9c5"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -211968,8 +211968,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-slinky-bottom-waits.html?v=b9233fffc8a1",
     "bytes": 8913,
     "thumbs": {
-     "front": "thumbs/science-slinky-bottom-waits-front.webp?v=b9233fffc8a1",
-     "back": "thumbs/science-slinky-bottom-waits-back.webp?v=b9233fffc8a1"
+     "front": "thumbs/science-slinky-bottom-waits-front.webp?v=0e23ce4f940a",
+     "back": "thumbs/science-slinky-bottom-waits-back.webp?v=0e23ce4f940a"
     }
    },
    "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",
@@ -212010,8 +212010,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-slinky-breathing-mode.html?v=b22f5ff335b1",
     "bytes": 6414,
     "thumbs": {
-     "front": "thumbs/science-slinky-breathing-mode-front.webp?v=b22f5ff335b1",
-     "back": "thumbs/science-slinky-breathing-mode-back.webp?v=b22f5ff335b1"
+     "front": "thumbs/science-slinky-breathing-mode-front.webp?v=2cb2555c852a",
+     "back": "thumbs/science-slinky-breathing-mode-back.webp?v=2cb2555c852a"
     }
    },
    "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
@@ -212053,8 +212053,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-slinky-compression-wave.html?v=3bce7388bf28",
     "bytes": 7152,
     "thumbs": {
-     "front": "thumbs/science-slinky-compression-wave-front.webp?v=3bce7388bf28",
-     "back": "thumbs/science-slinky-compression-wave-back.webp?v=3bce7388bf28"
+     "front": "thumbs/science-slinky-compression-wave-front.webp?v=0e018401474d",
+     "back": "thumbs/science-slinky-compression-wave-back.webp?v=0e018401474d"
     }
    },
    "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",
@@ -212097,8 +212097,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-slinky-tennis-ball.html?v=0f3103937abb",
     "bytes": 8130,
     "thumbs": {
-     "front": "thumbs/science-slinky-tennis-ball-front.webp?v=0f3103937abb",
-     "back": "thumbs/science-slinky-tennis-ball-back.webp?v=0f3103937abb"
+     "front": "thumbs/science-slinky-tennis-ball-front.webp?v=7fcf8d3394fb",
+     "back": "thumbs/science-slinky-tennis-ball-back.webp?v=7fcf8d3394fb"
     }
    },
    "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",
@@ -212140,8 +212140,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-slinky-twist-first.html?v=3124906ec947",
     "bytes": 7745,
     "thumbs": {
-     "front": "thumbs/science-slinky-twist-first-front.webp?v=3124906ec947",
-     "back": "thumbs/science-slinky-twist-first-back.webp?v=3124906ec947"
+     "front": "thumbs/science-slinky-twist-first-front.webp?v=e068f063de09",
+     "back": "thumbs/science-slinky-twist-first-back.webp?v=e068f063de09"
     }
    },
    "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
@@ -212183,8 +212183,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-sludge-cannibalism.html?v=18db26d9dbcd",
     "bytes": 19348,
     "thumbs": {
-     "front": "thumbs/science-sludge-cannibalism-front.webp?v=18db26d9dbcd",
-     "back": "thumbs/science-sludge-cannibalism-back.webp?v=18db26d9dbcd"
+     "front": "thumbs/science-sludge-cannibalism-front.webp?v=6bdb2f7fb89f",
+     "back": "thumbs/science-sludge-cannibalism-back.webp?v=6bdb2f7fb89f"
     }
    },
    "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
@@ -212226,8 +212226,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-snow-flips-friction.html?v=f481fff5f31a",
     "bytes": 19513,
     "thumbs": {
-     "front": "thumbs/science-snow-flips-friction-front.webp?v=f481fff5f31a",
-     "back": "thumbs/science-snow-flips-friction-back.webp?v=f481fff5f31a"
+     "front": "thumbs/science-snow-flips-friction-front.webp?v=139d1541ae2c",
+     "back": "thumbs/science-snow-flips-friction-back.webp?v=139d1541ae2c"
     }
    },
    "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
@@ -212269,8 +212269,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-solid-inner-core.html?v=4bcd6976bc72",
     "bytes": 9837,
     "thumbs": {
-     "front": "thumbs/science-solid-inner-core-front.webp?v=4bcd6976bc72",
-     "back": "thumbs/science-solid-inner-core-back.webp?v=4bcd6976bc72"
+     "front": "thumbs/science-solid-inner-core-front.webp?v=c1ebcaf4a649",
+     "back": "thumbs/science-solid-inner-core-back.webp?v=c1ebcaf4a649"
     }
    },
    "source": "Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)",
@@ -212311,8 +212311,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-solid-nitrogen-bath.html?v=5c04bd23d8bc",
     "bytes": 9336,
     "thumbs": {
-     "front": "thumbs/science-solid-nitrogen-bath-front.webp?v=5c04bd23d8bc",
-     "back": "thumbs/science-solid-nitrogen-bath-back.webp?v=5c04bd23d8bc"
+     "front": "thumbs/science-solid-nitrogen-bath-front.webp?v=ec66551dd9f4",
+     "back": "thumbs/science-solid-nitrogen-bath-back.webp?v=ec66551dd9f4"
     }
    },
    "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
@@ -212354,8 +212354,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-spinning-proton-magnets.html?v=b96417e873ce",
     "bytes": 9409,
     "thumbs": {
-     "front": "thumbs/science-spinning-proton-magnets-front.webp?v=b96417e873ce",
-     "back": "thumbs/science-spinning-proton-magnets-back.webp?v=b96417e873ce"
+     "front": "thumbs/science-spinning-proton-magnets-front.webp?v=f8dcc344f69b",
+     "back": "thumbs/science-spinning-proton-magnets-back.webp?v=f8dcc344f69b"
     }
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
@@ -212398,8 +212398,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-spinning-slinky-zerog.html?v=69e03604d2ab",
     "bytes": 9310,
     "thumbs": {
-     "front": "thumbs/science-spinning-slinky-zerog-front.webp?v=69e03604d2ab",
-     "back": "thumbs/science-spinning-slinky-zerog-back.webp?v=69e03604d2ab"
+     "front": "thumbs/science-spinning-slinky-zerog-front.webp?v=4ada62fd9d5d",
+     "back": "thumbs/science-spinning-slinky-zerog-back.webp?v=4ada62fd9d5d"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -212440,8 +212440,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-spinning-tube-speed.html?v=50b8786fe9f4",
     "bytes": 9270,
     "thumbs": {
-     "front": "thumbs/science-spinning-tube-speed-front.webp?v=50b8786fe9f4",
-     "back": "thumbs/science-spinning-tube-speed-back.webp?v=50b8786fe9f4"
+     "front": "thumbs/science-spinning-tube-speed-front.webp?v=8dd7cd57bf7c",
+     "back": "thumbs/science-spinning-tube-speed-back.webp?v=8dd7cd57bf7c"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
@@ -212483,8 +212483,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-spinning-wheel.html?v=e077cacf42bb",
     "bytes": 22607,
     "thumbs": {
-     "front": "thumbs/science-spinning-wheel-front.webp?v=e077cacf42bb",
-     "back": "thumbs/science-spinning-wheel-back.webp?v=e077cacf42bb"
+     "front": "thumbs/science-spinning-wheel-front.webp?v=d8cd40cd4190",
+     "back": "thumbs/science-spinning-wheel-back.webp?v=d8cd40cd4190"
     }
    },
    "source": "Veritasium, “Anti-Gravity Wheel?” (YouTube, 2014)",
@@ -212526,8 +212526,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-spinning-x-slowdown.html?v=ec9b1a9c6d49",
     "bytes": 14313,
     "thumbs": {
-     "front": "thumbs/science-spinning-x-slowdown-front.webp?v=ec9b1a9c6d49",
-     "back": "thumbs/science-spinning-x-slowdown-back.webp?v=ec9b1a9c6d49"
+     "front": "thumbs/science-spinning-x-slowdown-front.webp?v=493e94b9788d",
+     "back": "thumbs/science-spinning-x-slowdown-back.webp?v=493e94b9788d"
     }
    },
    "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
@@ -212569,8 +212569,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-squeezed-plutonium.html?v=af60187f8e23",
     "bytes": 11262,
     "thumbs": {
-     "front": "thumbs/science-squeezed-plutonium-front.webp?v=af60187f8e23",
-     "back": "thumbs/science-squeezed-plutonium-back.webp?v=af60187f8e23"
+     "front": "thumbs/science-squeezed-plutonium-front.webp?v=fbbf9c0fb8b5",
+     "back": "thumbs/science-squeezed-plutonium-back.webp?v=fbbf9c0fb8b5"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -212612,8 +212612,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-steam-feeds-power.html?v=9c951e516b6e",
     "bytes": 26093,
     "thumbs": {
-     "front": "thumbs/science-steam-feeds-power-front.webp?v=9c951e516b6e",
-     "back": "thumbs/science-steam-feeds-power-back.webp?v=9c951e516b6e"
+     "front": "thumbs/science-steam-feeds-power-front.webp?v=78435dc6c86a",
+     "back": "thumbs/science-steam-feeds-power-back.webp?v=78435dc6c86a"
     }
    },
    "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
@@ -213045,8 +213045,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-steel-bar-signal.html?v=12e43525b6ac",
     "bytes": 17055,
     "thumbs": {
-     "front": "thumbs/science-steel-bar-signal-front.webp?v=12e43525b6ac",
-     "back": "thumbs/science-steel-bar-signal-back.webp?v=12e43525b6ac"
+     "front": "thumbs/science-steel-bar-signal-front.webp?v=26e9f64f0930",
+     "back": "thumbs/science-steel-bar-signal-back.webp?v=26e9f64f0930"
     }
    },
    "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
@@ -213088,8 +213088,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-steel-heat-capacity.html?v=511ada98e343",
     "bytes": 10555,
     "thumbs": {
-     "front": "thumbs/science-steel-heat-capacity-front.webp?v=511ada98e343",
-     "back": "thumbs/science-steel-heat-capacity-back.webp?v=511ada98e343"
+     "front": "thumbs/science-steel-heat-capacity-front.webp?v=c9da82b8b4d9",
+     "back": "thumbs/science-steel-heat-capacity-back.webp?v=c9da82b8b4d9"
     }
    },
    "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
@@ -213131,8 +213131,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-stratovolcano-explosivity.html?v=e4ba9b430f95",
     "bytes": 12949,
     "thumbs": {
-     "front": "thumbs/science-stratovolcano-explosivity-front.webp?v=e4ba9b430f95",
-     "back": "thumbs/science-stratovolcano-explosivity-back.webp?v=e4ba9b430f95"
+     "front": "thumbs/science-stratovolcano-explosivity-front.webp?v=7534a5159461",
+     "back": "thumbs/science-stratovolcano-explosivity-back.webp?v=7534a5159461"
     }
    },
    "source": "Geopop, “Vulcani: i tipi di vulcani, come si formano” (YouTube, 2021)",
@@ -213174,8 +213174,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-sulfur-brittle-steel.html?v=40b77f8090c6",
     "bytes": 10588,
     "thumbs": {
-     "front": "thumbs/science-sulfur-brittle-steel-front.webp?v=40b77f8090c6",
-     "back": "thumbs/science-sulfur-brittle-steel-back.webp?v=40b77f8090c6"
+     "front": "thumbs/science-sulfur-brittle-steel-front.webp?v=e106c7041e07",
+     "back": "thumbs/science-sulfur-brittle-steel-back.webp?v=e106c7041e07"
     }
    },
    "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
@@ -213217,8 +213217,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-superacids-hammett-scale.html?v=de5417ebc5be",
     "bytes": 8233,
     "thumbs": {
-     "front": "thumbs/science-superacids-hammett-scale-front.webp?v=de5417ebc5be",
-     "back": "thumbs/science-superacids-hammett-scale-back.webp?v=de5417ebc5be"
+     "front": "thumbs/science-superacids-hammett-scale-front.webp?v=838fdfb6effc",
+     "back": "thumbs/science-superacids-hammett-scale-back.webp?v=838fdfb6effc"
     }
    },
    "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
@@ -213260,8 +213260,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-supersaturation-crystals.html?v=302b3cfa0e05",
     "bytes": 8708,
     "thumbs": {
-     "front": "thumbs/science-supersaturation-crystals-front.webp?v=302b3cfa0e05",
-     "back": "thumbs/science-supersaturation-crystals-back.webp?v=302b3cfa0e05"
+     "front": "thumbs/science-supersaturation-crystals-front.webp?v=75a7b67144dc",
+     "back": "thumbs/science-supersaturation-crystals-back.webp?v=75a7b67144dc"
     }
    },
    "source": "Geopop, “Come creare i cristalli fatti in casa? Esperimento facile” (YouTube, 2018)",
@@ -213302,8 +213302,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-swell-travels-far.html?v=3c96d581936c",
     "bytes": 8303,
     "thumbs": {
-     "front": "thumbs/science-swell-travels-far-front.webp?v=3c96d581936c",
-     "back": "thumbs/science-swell-travels-far-back.webp?v=3c96d581936c"
+     "front": "thumbs/science-swell-travels-far-front.webp?v=2c8b95e53ac1",
+     "back": "thumbs/science-swell-travels-far-back.webp?v=2c8b95e53ac1"
     }
    },
    "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
@@ -213344,8 +213344,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tatara-heat.html?v=ecb7f3690593",
     "bytes": 9954,
     "thumbs": {
-     "front": "thumbs/science-tatara-heat-front.webp?v=ecb7f3690593",
-     "back": "thumbs/science-tatara-heat-back.webp?v=ecb7f3690593"
+     "front": "thumbs/science-tatara-heat-front.webp?v=537eb172ce37",
+     "back": "thumbs/science-tatara-heat-back.webp?v=537eb172ce37"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -213386,8 +213386,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-teflon-chain-reaction.html?v=117c1c50bcce",
     "bytes": 20682,
     "thumbs": {
-     "front": "thumbs/science-teflon-chain-reaction-front.webp?v=117c1c50bcce",
-     "back": "thumbs/science-teflon-chain-reaction-back.webp?v=117c1c50bcce"
+     "front": "thumbs/science-teflon-chain-reaction-front.webp?v=8c72edfd974f",
+     "back": "thumbs/science-teflon-chain-reaction-back.webp?v=8c72edfd974f"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -213428,8 +213428,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-teflon-mechanical-grip.html?v=1cc9f304de2a",
     "bytes": 10227,
     "thumbs": {
-     "front": "thumbs/science-teflon-mechanical-grip-front.webp?v=1cc9f304de2a",
-     "back": "thumbs/science-teflon-mechanical-grip-back.webp?v=1cc9f304de2a"
+     "front": "thumbs/science-teflon-mechanical-grip-front.webp?v=5b6dca532b95",
+     "back": "thumbs/science-teflon-mechanical-grip-back.webp?v=5b6dca532b95"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -213471,8 +213471,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-teflon-vs-pfoa.html?v=03354915f560",
     "bytes": 19348,
     "thumbs": {
-     "front": "thumbs/science-teflon-vs-pfoa-front.webp?v=03354915f560",
-     "back": "thumbs/science-teflon-vs-pfoa-back.webp?v=03354915f560"
+     "front": "thumbs/science-teflon-vs-pfoa-front.webp?v=8bfb8844f864",
+     "back": "thumbs/science-teflon-vs-pfoa-back.webp?v=8bfb8844f864"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -213514,8 +213514,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-telephoto-steep-bridge.html?v=57d5306d7bb9",
     "bytes": 24765,
     "thumbs": {
-     "front": "thumbs/science-telephoto-steep-bridge-front.webp?v=57d5306d7bb9",
-     "back": "thumbs/science-telephoto-steep-bridge-back.webp?v=57d5306d7bb9"
+     "front": "thumbs/science-telephoto-steep-bridge-front.webp?v=5c8320b13dac",
+     "back": "thumbs/science-telephoto-steep-bridge-back.webp?v=5c8320b13dac"
     }
    },
    "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
@@ -213557,8 +213557,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-template-horizon.html?v=6944ab7f4aca",
     "bytes": 9638,
     "thumbs": {
-     "front": "thumbs/science-template-horizon-front.webp?v=6944ab7f4aca",
-     "back": "thumbs/science-template-horizon-back.webp?v=6944ab7f4aca"
+     "front": "thumbs/science-template-horizon-front.webp?v=b607e7e9ac19",
+     "back": "thumbs/science-template-horizon-back.webp?v=b607e7e9ac19"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -213660,8 +213660,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tethys-ocean-wedge.html?v=c0407becfc7f",
     "bytes": 8072,
     "thumbs": {
-     "front": "thumbs/science-tethys-ocean-wedge-front.webp?v=c0407becfc7f",
-     "back": "thumbs/science-tethys-ocean-wedge-back.webp?v=c0407becfc7f"
+     "front": "thumbs/science-tethys-ocean-wedge-front.webp?v=30ed361c3e88",
+     "back": "thumbs/science-tethys-ocean-wedge-back.webp?v=30ed361c3e88"
     }
    },
    "source": "Geopop, “Vi mostro cosa è sepolto sotto lo Stretto di Messina - la geologia tra Calabria e Sicilia” (YouTube, 2025)",
@@ -213818,8 +213818,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-thermite-control.html?v=710f4870d6a6",
     "bytes": 23187,
     "thumbs": {
-     "front": "thumbs/science-thermite-control-front.webp?v=710f4870d6a6",
-     "back": "thumbs/science-thermite-control-back.webp?v=710f4870d6a6"
+     "front": "thumbs/science-thermite-control-front.webp?v=4b8c6d95130a",
+     "back": "thumbs/science-thermite-control-back.webp?v=4b8c6d95130a"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -213861,8 +213861,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-thermite-density-separation.html?v=701cd84d6748",
     "bytes": 9255,
     "thumbs": {
-     "front": "thumbs/science-thermite-density-separation-front.webp?v=701cd84d6748",
-     "back": "thumbs/science-thermite-density-separation-back.webp?v=701cd84d6748"
+     "front": "thumbs/science-thermite-density-separation-front.webp?v=4be2356335ee",
+     "back": "thumbs/science-thermite-density-separation-back.webp?v=4be2356335ee"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -213904,8 +213904,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-thermite-oxide-seal.html?v=d030da4742e1",
     "bytes": 11664,
     "thumbs": {
-     "front": "thumbs/science-thermite-oxide-seal-front.webp?v=d030da4742e1",
-     "back": "thumbs/science-thermite-oxide-seal-back.webp?v=d030da4742e1"
+     "front": "thumbs/science-thermite-oxide-seal-front.webp?v=4e23838a1e8a",
+     "back": "thumbs/science-thermite-oxide-seal-back.webp?v=4e23838a1e8a"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -213948,8 +213948,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-thermite-pulsing.html?v=7953f188feea",
     "bytes": 12985,
     "thumbs": {
-     "front": "thumbs/science-thermite-pulsing-front.webp?v=7953f188feea",
-     "back": "thumbs/science-thermite-pulsing-back.webp?v=7953f188feea"
+     "front": "thumbs/science-thermite-pulsing-front.webp?v=d6de9ef48d17",
+     "back": "thumbs/science-thermite-pulsing-back.webp?v=d6de9ef48d17"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -213990,8 +213990,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-thermite-steel-damper.html?v=7c468275b39c",
     "bytes": 18238,
     "thumbs": {
-     "front": "thumbs/science-thermite-steel-damper-front.webp?v=7c468275b39c",
-     "back": "thumbs/science-thermite-steel-damper-back.webp?v=7c468275b39c"
+     "front": "thumbs/science-thermite-steel-damper-front.webp?v=3d6f4cc3ed38",
+     "back": "thumbs/science-thermite-steel-damper-back.webp?v=3d6f4cc3ed38"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -214033,8 +214033,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-thermite-tap-time.html?v=610057ead0f3",
     "bytes": 11007,
     "thumbs": {
-     "front": "thumbs/science-thermite-tap-time-front.webp?v=610057ead0f3",
-     "back": "thumbs/science-thermite-tap-time-back.webp?v=610057ead0f3"
+     "front": "thumbs/science-thermite-tap-time-front.webp?v=df40521a1d30",
+     "back": "thumbs/science-thermite-tap-time-back.webp?v=df40521a1d30"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -214077,8 +214077,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-thin-air-same-heat.html?v=d3f26a10d9e3",
     "bytes": 15729,
     "thumbs": {
-     "front": "thumbs/science-thin-air-same-heat-front.webp?v=d3f26a10d9e3",
-     "back": "thumbs/science-thin-air-same-heat-back.webp?v=d3f26a10d9e3"
+     "front": "thumbs/science-thin-air-same-heat-front.webp?v=1108264a9679",
+     "back": "thumbs/science-thin-air-same-heat-back.webp?v=1108264a9679"
     }
    },
    "source": "Veritasium, “I Waterproofed Myself With Aerogel!” (YouTube, 2019)",
@@ -214119,8 +214119,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tiny-earth-wobble.html?v=226780dd8d0c",
     "bytes": 13925,
     "thumbs": {
-     "front": "thumbs/science-tiny-earth-wobble-front.webp?v=226780dd8d0c",
-     "back": "thumbs/science-tiny-earth-wobble-back.webp?v=226780dd8d0c"
+     "front": "thumbs/science-tiny-earth-wobble-front.webp?v=c382446f7085",
+     "back": "thumbs/science-tiny-earth-wobble-back.webp?v=c382446f7085"
     }
    },
    "source": "Veritasium, “Best Film on Newton's Third Law. Ever.” (YouTube, 2011)",
@@ -214162,8 +214162,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-titan-implosion-speed.html?v=e361dd359eeb",
     "bytes": 5732,
     "thumbs": {
-     "front": "thumbs/science-titan-implosion-speed-front.webp?v=e361dd359eeb",
-     "back": "thumbs/science-titan-implosion-speed-back.webp?v=e361dd359eeb"
+     "front": "thumbs/science-titan-implosion-speed-front.webp?v=726edbe1ea93",
+     "back": "thumbs/science-titan-implosion-speed-back.webp?v=726edbe1ea93"
     }
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
@@ -214397,8 +214397,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-toothpaste-eggshell-bases.html?v=c17e562e4281",
     "bytes": 8599,
     "thumbs": {
-     "front": "thumbs/science-toothpaste-eggshell-bases-front.webp?v=c17e562e4281",
-     "back": "thumbs/science-toothpaste-eggshell-bases-back.webp?v=c17e562e4281"
+     "front": "thumbs/science-toothpaste-eggshell-bases-front.webp?v=ac0591f159c8",
+     "back": "thumbs/science-toothpaste-eggshell-bases-back.webp?v=ac0591f159c8"
     }
    },
    "source": "Geopop, “È vero o no che il dentifricio può corrodere il guscio d’uovo? #esperimenti #chemistry #science” (YouTube, 2024)",
@@ -214441,8 +214441,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-transtensional-fault.html?v=5b211eefdfb8",
     "bytes": 9903,
     "thumbs": {
-     "front": "thumbs/science-transtensional-fault-front.webp?v=5b211eefdfb8",
-     "back": "thumbs/science-transtensional-fault-back.webp?v=5b211eefdfb8"
+     "front": "thumbs/science-transtensional-fault-front.webp?v=e6d3f6ff497d",
+     "back": "thumbs/science-transtensional-fault-back.webp?v=e6d3f6ff497d"
     }
    },
    "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
@@ -214485,8 +214485,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-truck-car-forces.html?v=b1558b3f62ef",
     "bytes": 11306,
     "thumbs": {
-     "front": "thumbs/science-truck-car-forces-front.webp?v=b1558b3f62ef",
-     "back": "thumbs/science-truck-car-forces-back.webp?v=b1558b3f62ef"
+     "front": "thumbs/science-truck-car-forces-front.webp?v=94e075f42d06",
+     "back": "thumbs/science-truck-car-forces-back.webp?v=94e075f42d06"
     }
    },
    "source": "Veritasium, “Three Incorrect Laws of Motion” (YouTube, 2011)",
@@ -214529,8 +214529,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-truck-squeezes-water.html?v=6120123cb19a",
     "bytes": 9234,
     "thumbs": {
-     "front": "thumbs/science-truck-squeezes-water-front.webp?v=6120123cb19a",
-     "back": "thumbs/science-truck-squeezes-water-back.webp?v=6120123cb19a"
+     "front": "thumbs/science-truck-squeezes-water-front.webp?v=62c530dbb27c",
+     "back": "thumbs/science-truck-squeezes-water-back.webp?v=62c530dbb27c"
     }
    },
    "source": "Geopop, “La \"scienza\" delle buche stradali” (YouTube, 2019)",
@@ -214572,8 +214572,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tsar-bomba-stages.html?v=6c132b512c7a",
     "bytes": 8249,
     "thumbs": {
-     "front": "thumbs/science-tsar-bomba-stages-front.webp?v=6c132b512c7a",
-     "back": "thumbs/science-tsar-bomba-stages-back.webp?v=6c132b512c7a"
+     "front": "thumbs/science-tsar-bomba-stages-front.webp?v=a188f8543397",
+     "back": "thumbs/science-tsar-bomba-stages-back.webp?v=a188f8543397"
     }
    },
    "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
@@ -214616,8 +214616,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tunnel-core-samples.html?v=e882e10663a9",
     "bytes": 8962,
     "thumbs": {
-     "front": "thumbs/science-tunnel-core-samples-front.webp?v=e882e10663a9",
-     "back": "thumbs/science-tunnel-core-samples-back.webp?v=e882e10663a9"
+     "front": "thumbs/science-tunnel-core-samples-front.webp?v=74c73f923bb9",
+     "back": "thumbs/science-tunnel-core-samples-back.webp?v=74c73f923bb9"
     }
    },
    "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
@@ -214659,8 +214659,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tunnel-fault-step.html?v=23d5795c19c4",
     "bytes": 10038,
     "thumbs": {
-     "front": "thumbs/science-tunnel-fault-step-front.webp?v=23d5795c19c4",
-     "back": "thumbs/science-tunnel-fault-step-back.webp?v=23d5795c19c4"
+     "front": "thumbs/science-tunnel-fault-step-front.webp?v=7d0002540053",
+     "back": "thumbs/science-tunnel-fault-step-back.webp?v=7d0002540053"
     }
    },
    "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
@@ -214703,8 +214703,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tunnel-or-bridge.html?v=64a3fbfd2fce",
     "bytes": 11190,
     "thumbs": {
-     "front": "thumbs/science-tunnel-or-bridge-front.webp?v=64a3fbfd2fce",
-     "back": "thumbs/science-tunnel-or-bridge-back.webp?v=64a3fbfd2fce"
+     "front": "thumbs/science-tunnel-or-bridge-front.webp?v=5ed333e0da15",
+     "back": "thumbs/science-tunnel-or-bridge-back.webp?v=5ed333e0da15"
     }
    },
    "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
@@ -214746,8 +214746,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tunnel-smoke-drift.html?v=06cba8d526f8",
     "bytes": 12866,
     "thumbs": {
-     "front": "thumbs/science-tunnel-smoke-drift-front.webp?v=06cba8d526f8",
-     "back": "thumbs/science-tunnel-smoke-drift-back.webp?v=06cba8d526f8"
+     "front": "thumbs/science-tunnel-smoke-drift-front.webp?v=7acf4d49d603",
+     "back": "thumbs/science-tunnel-smoke-drift-back.webp?v=7acf4d49d603"
     }
    },
    "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
@@ -214789,8 +214789,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-two-slit-fringes.html?v=76844437b452",
     "bytes": 18580,
     "thumbs": {
-     "front": "thumbs/science-two-slit-fringes-front.webp?v=76844437b452",
-     "back": "thumbs/science-two-slit-fringes-back.webp?v=76844437b452"
+     "front": "thumbs/science-two-slit-fringes-front.webp?v=d969f32e53b7",
+     "back": "thumbs/science-two-slit-fringes-back.webp?v=d969f32e53b7"
     }
    },
    "source": "Veritasium, “The Original Double Slit Experiment” (YouTube, 2013)",
@@ -214832,8 +214832,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-two-spheres-focus.html?v=b031d00aa66a",
     "bytes": 27619,
     "thumbs": {
-     "front": "thumbs/science-two-spheres-focus-front.webp?v=b031d00aa66a",
-     "back": "thumbs/science-two-spheres-focus-back.webp?v=b031d00aa66a"
+     "front": "thumbs/science-two-spheres-focus-front.webp?v=5227a2644de1",
+     "back": "thumbs/science-two-spheres-focus-back.webp?v=5227a2644de1"
     }
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
@@ -214875,8 +214875,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-tyres-stir-cesium.html?v=d47410a5a172",
     "bytes": 11621,
     "thumbs": {
-     "front": "thumbs/science-tyres-stir-cesium-front.webp?v=d47410a5a172",
-     "back": "thumbs/science-tyres-stir-cesium-back.webp?v=d47410a5a172"
+     "front": "thumbs/science-tyres-stir-cesium-front.webp?v=f143c4e8abbf",
+     "back": "thumbs/science-tyres-stir-cesium-back.webp?v=f143c4e8abbf"
     }
    },
    "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
@@ -214917,8 +214917,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-ultrasound-repellents.html?v=240f555d3f76",
     "bytes": 11771,
     "thumbs": {
-     "front": "thumbs/science-ultrasound-repellents-front.webp?v=240f555d3f76",
-     "back": "thumbs/science-ultrasound-repellents-back.webp?v=240f555d3f76"
+     "front": "thumbs/science-ultrasound-repellents-front.webp?v=2c484b2366b3",
+     "back": "thumbs/science-ultrasound-repellents-back.webp?v=2c484b2366b3"
     }
    },
    "source": "Geopop, “Quali antizanzare funzionano meglio? Zampironi, spray: analizziamoli dal punto di vista chimico” (YouTube, 2024)",
@@ -214960,8 +214960,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-underground-crystal-cavities.html?v=6ba93199810b",
     "bytes": 9588,
     "thumbs": {
-     "front": "thumbs/science-underground-crystal-cavities-front.webp?v=6ba93199810b",
-     "back": "thumbs/science-underground-crystal-cavities-back.webp?v=6ba93199810b"
+     "front": "thumbs/science-underground-crystal-cavities-front.webp?v=6a6ecebf98d3",
+     "back": "thumbs/science-underground-crystal-cavities-back.webp?v=6a6ecebf98d3"
     }
    },
    "source": "Geopop, “Come creare i cristalli fatti in casa? Esperimento facile” (YouTube, 2018)",
@@ -215004,8 +215004,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-uranium-critical-mass.html?v=32fbca95e8ee",
     "bytes": 9479,
     "thumbs": {
-     "front": "thumbs/science-uranium-critical-mass-front.webp?v=32fbca95e8ee",
-     "back": "thumbs/science-uranium-critical-mass-back.webp?v=32fbca95e8ee"
+     "front": "thumbs/science-uranium-critical-mass-front.webp?v=f06f89c30622",
+     "back": "thumbs/science-uranium-critical-mass-back.webp?v=f06f89c30622"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -215047,8 +215047,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-urchin-neutron-initiator.html?v=56e194bd2244",
     "bytes": 10845,
     "thumbs": {
-     "front": "thumbs/science-urchin-neutron-initiator-front.webp?v=56e194bd2244",
-     "back": "thumbs/science-urchin-neutron-initiator-back.webp?v=56e194bd2244"
+     "front": "thumbs/science-urchin-neutron-initiator-front.webp?v=915df37cda5a",
+     "back": "thumbs/science-urchin-neutron-initiator-back.webp?v=915df37cda5a"
     }
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
@@ -215090,8 +215090,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-vajont-wet-clay.html?v=5c4e81159400",
     "bytes": 25631,
     "thumbs": {
-     "front": "thumbs/science-vajont-wet-clay-front.webp?v=5c4e81159400",
-     "back": "thumbs/science-vajont-wet-clay-back.webp?v=5c4e81159400"
+     "front": "thumbs/science-vajont-wet-clay-front.webp?v=841f3c1a9191",
+     "back": "thumbs/science-vajont-wet-clay-back.webp?v=841f3c1a9191"
     }
    },
    "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
@@ -215133,8 +215133,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-vapor-lava-bubbles.html?v=8a7a8b888856",
     "bytes": 8429,
     "thumbs": {
-     "front": "thumbs/science-vapor-lava-bubbles-front.webp?v=8a7a8b888856",
-     "back": "thumbs/science-vapor-lava-bubbles-back.webp?v=8a7a8b888856"
+     "front": "thumbs/science-vapor-lava-bubbles-front.webp?v=b9136d6e8577",
+     "back": "thumbs/science-vapor-lava-bubbles-back.webp?v=b9136d6e8577"
     }
    },
    "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
@@ -215176,8 +215176,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-venezuela-buried-folds.html?v=0d7601564c5f",
     "bytes": 10807,
     "thumbs": {
-     "front": "thumbs/science-venezuela-buried-folds-front.webp?v=0d7601564c5f",
-     "back": "thumbs/science-venezuela-buried-folds-back.webp?v=0d7601564c5f"
+     "front": "thumbs/science-venezuela-buried-folds-front.webp?v=94829706737f",
+     "back": "thumbs/science-venezuela-buried-folds-back.webp?v=94829706737f"
     }
    },
    "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
@@ -215219,8 +215219,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-vertical-faults-mistake.html?v=91d6a008b445",
     "bytes": 9762,
     "thumbs": {
-     "front": "thumbs/science-vertical-faults-mistake-front.webp?v=91d6a008b445",
-     "back": "thumbs/science-vertical-faults-mistake-back.webp?v=91d6a008b445"
+     "front": "thumbs/science-vertical-faults-mistake-front.webp?v=8a72afd07166",
+     "back": "thumbs/science-vertical-faults-mistake-back.webp?v=8a72afd07166"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -215262,8 +215262,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-vibration-chain.html?v=71a0a3c4e227",
     "bytes": 10916,
     "thumbs": {
-     "front": "thumbs/science-vibration-chain-front.webp?v=71a0a3c4e227",
-     "back": "thumbs/science-vibration-chain-back.webp?v=71a0a3c4e227"
+     "front": "thumbs/science-vibration-chain-front.webp?v=23825e296aef",
+     "back": "thumbs/science-vibration-chain-back.webp?v=23825e296aef"
     }
    },
    "source": "Geopop, “Si può rompere un calice di vetro solo con la voce?” (YouTube, 2026)",
@@ -215305,8 +215305,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-vinegar-eats-eggshell.html?v=e3d3f3ec36de",
     "bytes": 23863,
     "thumbs": {
-     "front": "thumbs/science-vinegar-eats-eggshell-front.webp?v=e3d3f3ec36de",
-     "back": "thumbs/science-vinegar-eats-eggshell-back.webp?v=e3d3f3ec36de"
+     "front": "thumbs/science-vinegar-eats-eggshell-front.webp?v=05c712b8bdb9",
+     "back": "thumbs/science-vinegar-eats-eggshell-back.webp?v=05c712b8bdb9"
     }
    },
    "source": "Geopop, “L'uovo che rimbalza!” (YouTube, 2023)",
@@ -215348,8 +215348,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-viscous-laminar-flow.html?v=3dc138f6809d",
     "bytes": 6736,
     "thumbs": {
-     "front": "thumbs/science-viscous-laminar-flow-front.webp?v=3dc138f6809d",
-     "back": "thumbs/science-viscous-laminar-flow-back.webp?v=3dc138f6809d"
+     "front": "thumbs/science-viscous-laminar-flow-front.webp?v=2f3489bb6374",
+     "back": "thumbs/science-viscous-laminar-flow-back.webp?v=2f3489bb6374"
     }
    },
    "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
@@ -215392,8 +215392,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-volcano-breathing.html?v=2dc99a6a89ff",
     "bytes": 30023,
     "thumbs": {
-     "front": "thumbs/science-volcano-breathing-front.webp?v=2dc99a6a89ff",
-     "back": "thumbs/science-volcano-breathing-back.webp?v=2dc99a6a89ff"
+     "front": "thumbs/science-volcano-breathing-front.webp?v=73f15ecbcde7",
+     "back": "thumbs/science-volcano-breathing-back.webp?v=73f15ecbcde7"
     }
    },
    "source": "INGV Osservatorio Vesuviano (2026); Battaglia et al., GRL (2006)",
@@ -215436,8 +215436,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-volcano-depth-tsunami.html?v=71e52f9f36ea",
     "bytes": 19913,
     "thumbs": {
-     "front": "thumbs/science-volcano-depth-tsunami-front.webp?v=71e52f9f36ea",
-     "back": "thumbs/science-volcano-depth-tsunami-back.webp?v=71e52f9f36ea"
+     "front": "thumbs/science-volcano-depth-tsunami-front.webp?v=6e12e5fd152b",
+     "back": "thumbs/science-volcano-depth-tsunami-back.webp?v=6e12e5fd152b"
     }
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
@@ -215479,8 +215479,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-water-meets-lava.html?v=0c8f0c09921c",
     "bytes": 9496,
     "thumbs": {
-     "front": "thumbs/science-water-meets-lava-front.webp?v=0c8f0c09921c",
-     "back": "thumbs/science-water-meets-lava-back.webp?v=0c8f0c09921c"
+     "front": "thumbs/science-water-meets-lava-front.webp?v=d4d3e46b1d0a",
+     "back": "thumbs/science-water-meets-lava-back.webp?v=d4d3e46b1d0a"
     }
    },
    "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
@@ -215522,8 +215522,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-wave-base-depth.html?v=b46072951bb1",
     "bytes": 9205,
     "thumbs": {
-     "front": "thumbs/science-wave-base-depth-front.webp?v=b46072951bb1",
-     "back": "thumbs/science-wave-base-depth-back.webp?v=b46072951bb1"
+     "front": "thumbs/science-wave-base-depth-front.webp?v=48dd5afcc99b",
+     "back": "thumbs/science-wave-base-depth-back.webp?v=48dd5afcc99b"
     }
    },
    "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
@@ -215565,8 +215565,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-wave-energy-depth.html?v=b628b162c735",
     "bytes": 10672,
     "thumbs": {
-     "front": "thumbs/science-wave-energy-depth-front.webp?v=b628b162c735",
-     "back": "thumbs/science-wave-energy-depth-back.webp?v=b628b162c735"
+     "front": "thumbs/science-wave-energy-depth-front.webp?v=2592d96882f1",
+     "back": "thumbs/science-wave-energy-depth-back.webp?v=2592d96882f1"
     }
    },
    "source": "Geopop, “Perché le onde più alte del mondo si formano proprio a Nazarè in Portogallo? E come si creano?” (YouTube, 2023)",
@@ -215607,8 +215607,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-weather-attribution-method.html?v=59b2edc4d689",
     "bytes": 8268,
     "thumbs": {
-     "front": "thumbs/science-weather-attribution-method-front.webp?v=59b2edc4d689",
-     "back": "thumbs/science-weather-attribution-method-back.webp?v=59b2edc4d689"
+     "front": "thumbs/science-weather-attribution-method-front.webp?v=b518033c9204",
+     "back": "thumbs/science-weather-attribution-method-back.webp?v=b518033c9204"
     }
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
@@ -215650,8 +215650,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-weight-is-a-pull.html?v=055abd2735d9",
     "bytes": 24501,
     "thumbs": {
-     "front": "thumbs/science-weight-is-a-pull-front.webp?v=055abd2735d9",
-     "back": "thumbs/science-weight-is-a-pull-back.webp?v=055abd2735d9"
+     "front": "thumbs/science-weight-is-a-pull-front.webp?v=c5c14b24d163",
+     "back": "thumbs/science-weight-is-a-pull-back.webp?v=c5c14b24d163"
     }
    },
    "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
@@ -215693,8 +215693,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-well-to-time.html?v=7623c5a5918c",
     "bytes": 8146,
     "thumbs": {
-     "front": "thumbs/science-well-to-time-front.webp?v=7623c5a5918c",
-     "back": "thumbs/science-well-to-time-back.webp?v=7623c5a5918c"
+     "front": "thumbs/science-well-to-time-front.webp?v=6df936cd8049",
+     "back": "thumbs/science-well-to-time-back.webp?v=6df936cd8049"
     }
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
@@ -215848,8 +215848,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-why-drill-kola.html?v=fd482022b422",
     "bytes": 8994,
     "thumbs": {
-     "front": "thumbs/science-why-drill-kola-front.webp?v=fd482022b422",
-     "back": "thumbs/science-why-drill-kola-back.webp?v=fd482022b422"
+     "front": "thumbs/science-why-drill-kola-front.webp?v=a5eb2356d5a7",
+     "back": "thumbs/science-why-drill-kola-back.webp?v=a5eb2356d5a7"
     }
    },
    "source": "Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)",
@@ -216427,8 +216427,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-wire-through-ice.html?v=e76d330aec48",
     "bytes": 7922,
     "thumbs": {
-     "front": "thumbs/science-wire-through-ice-front.webp?v=e76d330aec48",
-     "back": "thumbs/science-wire-through-ice-back.webp?v=e76d330aec48"
+     "front": "thumbs/science-wire-through-ice-front.webp?v=f50258cb0255",
+     "back": "thumbs/science-wire-through-ice-back.webp?v=f50258cb0255"
     }
    },
    "source": "Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)",
@@ -216469,8 +216469,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-xenon-blind-control.html?v=bae86ea89084",
     "bytes": 6439,
     "thumbs": {
-     "front": "thumbs/science-xenon-blind-control-front.webp?v=bae86ea89084",
-     "back": "thumbs/science-xenon-blind-control-back.webp?v=bae86ea89084"
+     "front": "thumbs/science-xenon-blind-control-front.webp?v=d767814e8055",
+     "back": "thumbs/science-xenon-blind-control-back.webp?v=d767814e8055"
     }
    },
    "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
@@ -216511,8 +216511,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-yoyo-string-binding.html?v=9ef8c108db66",
     "bytes": 10213,
     "thumbs": {
-     "front": "thumbs/science-yoyo-string-binding-front.webp?v=9ef8c108db66",
-     "back": "thumbs/science-yoyo-string-binding-back.webp?v=9ef8c108db66"
+     "front": "thumbs/science-yoyo-string-binding-front.webp?v=ff6369c0b89e",
+     "back": "thumbs/science-yoyo-string-binding-back.webp?v=ff6369c0b89e"
     }
    },
    "source": "Veritasium, “Stringless Yo-Yo!” (YouTube, 2016)",
@@ -216554,8 +216554,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-zero-g-smoke.html?v=cb042a2364e6",
     "bytes": 19990,
     "thumbs": {
-     "front": "thumbs/science-zero-g-smoke-front.webp?v=cb042a2364e6",
-     "back": "thumbs/science-zero-g-smoke-back.webp?v=cb042a2364e6"
+     "front": "thumbs/science-zero-g-smoke-front.webp?v=a7078dcca8d6",
+     "back": "thumbs/science-zero-g-smoke-back.webp?v=a7078dcca8d6"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -216597,8 +216597,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/science-zero-g-thrust.html?v=5e8b8ed1c4e9",
     "bytes": 9116,
     "thumbs": {
-     "front": "thumbs/science-zero-g-thrust-front.webp?v=5e8b8ed1c4e9",
-     "back": "thumbs/science-zero-g-thrust-back.webp?v=5e8b8ed1c4e9"
+     "front": "thumbs/science-zero-g-thrust-front.webp?v=583ac3eda200",
+     "back": "thumbs/science-zero-g-thrust-back.webp?v=583ac3eda200"
     }
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -216879,8 +216879,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-aerogel-comet-catch.html?v=73f4372ce823",
     "bytes": 29776,
     "thumbs": {
-     "front": "thumbs/space-aerogel-comet-catch-front.webp?v=73f4372ce823",
-     "back": "thumbs/space-aerogel-comet-catch-back.webp?v=73f4372ce823"
+     "front": "thumbs/space-aerogel-comet-catch-front.webp?v=7361402d82dc",
+     "back": "thumbs/space-aerogel-comet-catch-back.webp?v=7361402d82dc"
     }
    },
    "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
@@ -216921,8 +216921,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-apollo13-tank-fire.html?v=f209a31fd41d",
     "bytes": 34429,
     "thumbs": {
-     "front": "thumbs/space-apollo13-tank-fire-front.webp?v=f209a31fd41d",
-     "back": "thumbs/space-apollo13-tank-fire-back.webp?v=f209a31fd41d"
+     "front": "thumbs/space-apollo13-tank-fire-front.webp?v=3dcac67741cf",
+     "back": "thumbs/space-apollo13-tank-fire-back.webp?v=3dcac67741cf"
     }
    },
    "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
@@ -216963,8 +216963,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-apollo-slingshot.html?v=99d6eea89079",
     "bytes": 11007,
     "thumbs": {
-     "front": "thumbs/space-apollo-slingshot-front.webp?v=99d6eea89079",
-     "back": "thumbs/space-apollo-slingshot-back.webp?v=99d6eea89079"
+     "front": "thumbs/space-apollo-slingshot-front.webp?v=f51595491b46",
+     "back": "thumbs/space-apollo-slingshot-back.webp?v=f51595491b46"
     }
    },
    "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
@@ -217600,8 +217600,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-black-hole-sky.html?v=b587db895469",
     "bytes": 7692,
     "thumbs": {
-     "front": "thumbs/space-black-hole-sky-front.webp?v=b587db895469",
-     "back": "thumbs/space-black-hole-sky-back.webp?v=b587db895469"
+     "front": "thumbs/space-black-hole-sky-front.webp?v=89f456597566",
+     "back": "thumbs/space-black-hole-sky-back.webp?v=89f456597566"
     }
    },
    "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
@@ -217696,8 +217696,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-bones-in-orbit.html?v=1808522e074a",
     "bytes": 16644,
     "thumbs": {
-     "front": "thumbs/space-bones-in-orbit-front.webp?v=1808522e074a",
-     "back": "thumbs/space-bones-in-orbit-back.webp?v=1808522e074a"
+     "front": "thumbs/space-bones-in-orbit-front.webp?v=e3a43791bd86",
+     "back": "thumbs/space-bones-in-orbit-back.webp?v=e3a43791bd86"
     }
    },
    "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
@@ -218576,8 +218576,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-corona-outshone.html?v=53e31c39e662",
     "bytes": 19276,
     "thumbs": {
-     "front": "thumbs/space-corona-outshone-front.webp?v=53e31c39e662",
-     "back": "thumbs/space-corona-outshone-back.webp?v=53e31c39e662"
+     "front": "thumbs/space-corona-outshone-front.webp?v=b4260af9005b",
+     "back": "thumbs/space-corona-outshone-back.webp?v=b4260af9005b"
     }
    },
    "source": "Veritasium, “What it’s like to watch a Total Solar Eclipse” (YouTube, 2017)",
@@ -220084,8 +220084,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-dzhanibekov-flip.html?v=95482604c215",
     "bytes": 9243,
     "thumbs": {
-     "front": "thumbs/space-dzhanibekov-flip-front.webp?v=95482604c215",
-     "back": "thumbs/space-dzhanibekov-flip-back.webp?v=95482604c215"
+     "front": "thumbs/space-dzhanibekov-flip-front.webp?v=3680d4cb0a27",
+     "back": "thumbs/space-dzhanibekov-flip-back.webp?v=3680d4cb0a27"
     }
    },
    "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
@@ -220235,8 +220235,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-earth-spaghettified.html?v=f25989a4ac05",
     "bytes": 19267,
     "thumbs": {
-     "front": "thumbs/space-earth-spaghettified-front.webp?v=f25989a4ac05",
-     "back": "thumbs/space-earth-spaghettified-back.webp?v=f25989a4ac05"
+     "front": "thumbs/space-earth-spaghettified-front.webp?v=62c1f59732e7",
+     "back": "thumbs/space-earth-spaghettified-back.webp?v=62c1f59732e7"
     }
    },
    "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
@@ -220278,8 +220278,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-elastic-resistance.html?v=67ae1189c97e",
     "bytes": 10276,
     "thumbs": {
-     "front": "thumbs/space-elastic-resistance-front.webp?v=67ae1189c97e",
-     "back": "thumbs/space-elastic-resistance-back.webp?v=67ae1189c97e"
+     "front": "thumbs/space-elastic-resistance-front.webp?v=e84995d41f5d",
+     "back": "thumbs/space-elastic-resistance-back.webp?v=e84995d41f5d"
     }
    },
    "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
@@ -220321,8 +220321,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-entropy-then-now.html?v=6e3c1d458dfa",
     "bytes": 13062,
     "thumbs": {
-     "front": "thumbs/space-entropy-then-now-front.webp?v=6e3c1d458dfa",
-     "back": "thumbs/space-entropy-then-now-back.webp?v=6e3c1d458dfa"
+     "front": "thumbs/space-entropy-then-now-front.webp?v=1f15a9d75436",
+     "back": "thumbs/space-entropy-then-now-back.webp?v=1f15a9d75436"
     }
    },
    "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
@@ -221626,8 +221626,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-filter-adapter.html?v=fd727363455f",
     "bytes": 22054,
     "thumbs": {
-     "front": "thumbs/space-filter-adapter-front.webp?v=fd727363455f",
-     "back": "thumbs/space-filter-adapter-back.webp?v=fd727363455f"
+     "front": "thumbs/space-filter-adapter-front.webp?v=ef41fabddc60",
+     "back": "thumbs/space-filter-adapter-back.webp?v=ef41fabddc60"
     }
    },
    "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
@@ -221670,8 +221670,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-flash-then-silence.html?v=b1e2657f46ed",
     "bytes": 19447,
     "thumbs": {
-     "front": "thumbs/space-flash-then-silence-front.webp?v=b1e2657f46ed",
-     "back": "thumbs/space-flash-then-silence-back.webp?v=b1e2657f46ed"
+     "front": "thumbs/space-flash-then-silence-front.webp?v=35b69fb08442",
+     "back": "thumbs/space-flash-then-silence-back.webp?v=35b69fb08442"
     }
    },
    "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
@@ -221714,8 +221714,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-flat-earth-challenge.html?v=7eef11d0a766",
     "bytes": 12091,
     "thumbs": {
-     "front": "thumbs/space-flat-earth-challenge-front.webp?v=7eef11d0a766",
-     "back": "thumbs/space-flat-earth-challenge-back.webp?v=7eef11d0a766"
+     "front": "thumbs/space-flat-earth-challenge-front.webp?v=567f030d06bc",
+     "back": "thumbs/space-flat-earth-challenge-back.webp?v=567f030d06bc"
     }
    },
    "source": "Geopop, “▶️TERRA PIATTA, IENE, TERRAPIATTISTI: MESSAGGIO A ELON MUSK |GeologiaPOP🌍” (YouTube, 2018)",
@@ -221757,8 +221757,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-four-copies.html?v=0b100e95fdf9",
     "bytes": 17367,
     "thumbs": {
-     "front": "thumbs/space-four-copies-front.webp?v=0b100e95fdf9",
-     "back": "thumbs/space-four-copies-back.webp?v=0b100e95fdf9"
+     "front": "thumbs/space-four-copies-front.webp?v=4664df952ebd",
+     "back": "thumbs/space-four-copies-back.webp?v=4664df952ebd"
     }
    },
    "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
@@ -221800,8 +221800,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-frozen-horizon-light.html?v=09adb994677b",
     "bytes": 16637,
     "thumbs": {
-     "front": "thumbs/space-frozen-horizon-light-front.webp?v=09adb994677b",
-     "back": "thumbs/space-frozen-horizon-light-back.webp?v=09adb994677b"
+     "front": "thumbs/space-frozen-horizon-light-front.webp?v=ccb0919f64d0",
+     "back": "thumbs/space-frozen-horizon-light-back.webp?v=ccb0919f64d0"
     }
    },
    "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
@@ -221843,8 +221843,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-frozen-horizon-light-2.html?v=855f267c4c94",
     "bytes": 18002,
     "thumbs": {
-     "front": "thumbs/space-frozen-horizon-light-2-front.webp?v=855f267c4c94",
-     "back": "thumbs/space-frozen-horizon-light-2-back.webp?v=855f267c4c94"
+     "front": "thumbs/space-frozen-horizon-light-2-front.webp?v=ec2eb723bae1",
+     "back": "thumbs/space-frozen-horizon-light-2-back.webp?v=ec2eb723bae1"
     }
    },
    "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
@@ -222498,8 +222498,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-gps-relativity-clocks.html?v=24ffc9163662",
     "bytes": 12517,
     "thumbs": {
-     "front": "thumbs/space-gps-relativity-clocks-front.webp?v=24ffc9163662",
-     "back": "thumbs/space-gps-relativity-clocks-back.webp?v=24ffc9163662"
+     "front": "thumbs/space-gps-relativity-clocks-front.webp?v=a6110bc18a23",
+     "back": "thumbs/space-gps-relativity-clocks-back.webp?v=a6110bc18a23"
     }
    },
    "source": "Geopop, “Sai come funziona il GPS? FIGO! NON LO SAPEVO!” (YouTube, 2021)",
@@ -222541,8 +222541,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-graphene-space-elevator.html?v=ffc12d074011",
     "bytes": 10344,
     "thumbs": {
-     "front": "thumbs/space-graphene-space-elevator-front.webp?v=ffc12d074011",
-     "back": "thumbs/space-graphene-space-elevator-back.webp?v=ffc12d074011"
+     "front": "thumbs/space-graphene-space-elevator-front.webp?v=41c64d58778a",
+     "back": "thumbs/space-graphene-space-elevator-back.webp?v=41c64d58778a"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -222584,8 +222584,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-gravity-curved-spacetime.html?v=fba8c769dc22",
     "bytes": 8777,
     "thumbs": {
-     "front": "thumbs/space-gravity-curved-spacetime-front.webp?v=fba8c769dc22",
-     "back": "thumbs/space-gravity-curved-spacetime-back.webp?v=fba8c769dc22"
+     "front": "thumbs/space-gravity-curved-spacetime-front.webp?v=baa5c55be7b3",
+     "back": "thumbs/space-gravity-curved-spacetime-back.webp?v=baa5c55be7b3"
     }
    },
    "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
@@ -222627,8 +222627,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-gravity-delay.html?v=818d8d3baf9d",
     "bytes": 9347,
     "thumbs": {
-     "front": "thumbs/space-gravity-delay-front.webp?v=818d8d3baf9d",
-     "back": "thumbs/space-gravity-delay-back.webp?v=818d8d3baf9d"
+     "front": "thumbs/space-gravity-delay-front.webp?v=86f92620078f",
+     "back": "thumbs/space-gravity-delay-back.webp?v=86f92620078f"
     }
    },
    "source": "Geopop, “Come potremmo sopravvivere se il Sole scomparisse: gli scenari di una Terra senza luce” (YouTube, 2025)",
@@ -223072,8 +223072,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-heat-death-clock.html?v=f99f012d93f7",
     "bytes": 13192,
     "thumbs": {
-     "front": "thumbs/space-heat-death-clock-front.webp?v=f99f012d93f7",
-     "back": "thumbs/space-heat-death-clock-back.webp?v=f99f012d93f7"
+     "front": "thumbs/space-heat-death-clock-front.webp?v=c7bdb9bc5381",
+     "back": "thumbs/space-heat-death-clock-back.webp?v=c7bdb9bc5381"
     }
    },
    "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
@@ -223115,8 +223115,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-hundred-billion-galaxies.html?v=2d32b05cb894",
     "bytes": 27515,
     "thumbs": {
-     "front": "thumbs/space-hundred-billion-galaxies-front.webp?v=2d32b05cb894",
-     "back": "thumbs/space-hundred-billion-galaxies-back.webp?v=2d32b05cb894"
+     "front": "thumbs/space-hundred-billion-galaxies-front.webp?v=aaba8feca012",
+     "back": "thumbs/space-hundred-billion-galaxies-back.webp?v=aaba8feca012"
     }
    },
    "source": "Veritasium, “How Far Away is the Moon? (The Scale of the Universe)” (YouTube, 2011)",
@@ -223158,8 +223158,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-lagrange-hilltops.html?v=5f7653b7c341",
     "bytes": 15623,
     "thumbs": {
-     "front": "thumbs/space-lagrange-hilltops-front.webp?v=5f7653b7c341",
-     "back": "thumbs/space-lagrange-hilltops-back.webp?v=5f7653b7c341"
+     "front": "thumbs/space-lagrange-hilltops-front.webp?v=5b54f6ff03f7",
+     "back": "thumbs/space-lagrange-hilltops-back.webp?v=5b54f6ff03f7"
     }
    },
    "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
@@ -225881,8 +225881,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-moon-flag-wave.html?v=eb042e2082ae",
     "bytes": 11349,
     "thumbs": {
-     "front": "thumbs/space-moon-flag-wave-front.webp?v=eb042e2082ae",
-     "back": "thumbs/space-moon-flag-wave-back.webp?v=eb042e2082ae"
+     "front": "thumbs/space-moon-flag-wave-front.webp?v=2d4dd15d9a81",
+     "back": "thumbs/space-moon-flag-wave-back.webp?v=2d4dd15d9a81"
     }
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
@@ -226315,8 +226315,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-nearest-day.html?v=c8b5b5a6ccd2",
     "bytes": 14670,
     "thumbs": {
-     "front": "thumbs/space-nearest-day-front.webp?v=c8b5b5a6ccd2",
-     "back": "thumbs/space-nearest-day-back.webp?v=c8b5b5a6ccd2"
+     "front": "thumbs/space-nearest-day-front.webp?v=cc28304fef81",
+     "back": "thumbs/space-nearest-day-back.webp?v=cc28304fef81"
     }
    },
    "source": "NASA Earth fact sheet; U.S. Naval Observatory",
@@ -226359,8 +226359,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-no-water-phases.html?v=f2f8d99fae43",
     "bytes": 12518,
     "thumbs": {
-     "front": "thumbs/space-no-water-phases-front.webp?v=f2f8d99fae43",
-     "back": "thumbs/space-no-water-phases-back.webp?v=f2f8d99fae43"
+     "front": "thumbs/space-no-water-phases-front.webp?v=ef62e1f03319",
+     "back": "thumbs/space-no-water-phases-back.webp?v=ef62e1f03319"
     }
    },
    "source": "Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026)",
@@ -226519,8 +226519,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-penrose-two-universes.html?v=42986c6121e0",
     "bytes": 14804,
     "thumbs": {
-     "front": "thumbs/space-penrose-two-universes-front.webp?v=42986c6121e0",
-     "back": "thumbs/space-penrose-two-universes-back.webp?v=42986c6121e0"
+     "front": "thumbs/space-penrose-two-universes-front.webp?v=658f6f7db274",
+     "back": "thumbs/space-penrose-two-universes-back.webp?v=658f6f7db274"
     }
    },
    "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
@@ -226950,8 +226950,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-quake-shortened-day.html?v=605b4646dd3d",
     "bytes": 13524,
     "thumbs": {
-     "front": "thumbs/space-quake-shortened-day-front.webp?v=605b4646dd3d",
-     "back": "thumbs/space-quake-shortened-day-back.webp?v=605b4646dd3d"
+     "front": "thumbs/space-quake-shortened-day-front.webp?v=77be55b4d92d",
+     "back": "thumbs/space-quake-shortened-day-back.webp?v=77be55b4d92d"
     }
    },
    "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
@@ -226993,8 +226993,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-red-moon-eclipse.html?v=87bc51c3748d",
     "bytes": 14020,
     "thumbs": {
-     "front": "thumbs/space-red-moon-eclipse-front.webp?v=87bc51c3748d",
-     "back": "thumbs/space-red-moon-eclipse-back.webp?v=87bc51c3748d"
+     "front": "thumbs/space-red-moon-eclipse-front.webp?v=d0a1b979b56e",
+     "back": "thumbs/space-red-moon-eclipse-back.webp?v=d0a1b979b56e"
     }
    },
    "source": "Geopop, “Eclissi lunare: la spiegazione semplice per capire come avviene” (YouTube, 2018)",
@@ -227567,8 +227567,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-sidereal-extra-spin.html?v=600cae6ff72c",
     "bytes": 23293,
     "thumbs": {
-     "front": "thumbs/space-sidereal-extra-spin-front.webp?v=600cae6ff72c",
-     "back": "thumbs/space-sidereal-extra-spin-back.webp?v=600cae6ff72c"
+     "front": "thumbs/space-sidereal-extra-spin-front.webp?v=e213d3a4e7b1",
+     "back": "thumbs/space-sidereal-extra-spin-back.webp?v=e213d3a4e7b1"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
@@ -227921,8 +227921,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-solar-day-spin.html?v=f13073bc04e5",
     "bytes": 10252,
     "thumbs": {
-     "front": "thumbs/space-solar-day-spin-front.webp?v=f13073bc04e5",
-     "back": "thumbs/space-solar-day-spin-back.webp?v=f13073bc04e5"
+     "front": "thumbs/space-solar-day-spin-front.webp?v=84dda707a277",
+     "back": "thumbs/space-solar-day-spin-back.webp?v=84dda707a277"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
@@ -228086,8 +228086,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-spice-stuffy-nose.html?v=8afc5d101dc4",
     "bytes": 12505,
     "thumbs": {
-     "front": "thumbs/space-spice-stuffy-nose-front.webp?v=8afc5d101dc4",
-     "back": "thumbs/space-spice-stuffy-nose-back.webp?v=8afc5d101dc4"
+     "front": "thumbs/space-spice-stuffy-nose-front.webp?v=61d95efc7a8a",
+     "back": "thumbs/space-spice-stuffy-nose-back.webp?v=61d95efc7a8a"
     }
    },
    "source": "Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026)",
@@ -228129,8 +228129,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-spin-magnetic-shield.html?v=fc933cfb9b0e",
     "bytes": 11201,
     "thumbs": {
-     "front": "thumbs/space-spin-magnetic-shield-front.webp?v=fc933cfb9b0e",
-     "back": "thumbs/space-spin-magnetic-shield-back.webp?v=fc933cfb9b0e"
+     "front": "thumbs/space-spin-magnetic-shield-front.webp?v=0618b4568cd9",
+     "back": "thumbs/space-spin-magnetic-shield-back.webp?v=0618b4568cd9"
     }
    },
    "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
@@ -228791,8 +228791,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-sunward-blind-spot.html?v=63151d4eaf9d",
     "bytes": 16704,
     "thumbs": {
-     "front": "thumbs/space-sunward-blind-spot-front.webp?v=63151d4eaf9d",
-     "back": "thumbs/space-sunward-blind-spot-back.webp?v=63151d4eaf9d"
+     "front": "thumbs/space-sunward-blind-spot-front.webp?v=8d2d1f89a113",
+     "back": "thumbs/space-sunward-blind-spot-back.webp?v=8d2d1f89a113"
     }
    },
    "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
@@ -230095,8 +230095,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/space-van-allen-donut.html?v=c4defb34e46e",
     "bytes": 10461,
     "thumbs": {
-     "front": "thumbs/space-van-allen-donut-front.webp?v=c4defb34e46e",
-     "back": "thumbs/space-van-allen-donut-back.webp?v=c4defb34e46e"
+     "front": "thumbs/space-van-allen-donut-front.webp?v=a075a13deeef",
+     "back": "thumbs/space-van-allen-donut-back.webp?v=a075a13deeef"
     }
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
@@ -231548,8 +231548,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/sport-ancient-2.html?v=a94469c1c34f",
     "bytes": 19393,
     "thumbs": {
-     "front": "thumbs/sport-ancient-2-front.webp?v=a94469c1c34f",
-     "back": "thumbs/sport-ancient-2-back.webp?v=a94469c1c34f"
+     "front": "thumbs/sport-ancient-2-front.webp?v=0f3ed3db9bcf",
+     "back": "thumbs/sport-ancient-2-back.webp?v=0f3ed3db9bcf"
     }
    },
    "source": "Minetti & Ardigò, Nature, 2002",
@@ -243600,8 +243600,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-archimedes-bridge-buoyancy.html?v=4755484c1727",
     "bytes": 9462,
     "thumbs": {
-     "front": "thumbs/technology-archimedes-bridge-buoyancy-front.webp?v=4755484c1727",
-     "back": "thumbs/technology-archimedes-bridge-buoyancy-back.webp?v=4755484c1727"
+     "front": "thumbs/technology-archimedes-bridge-buoyancy-front.webp?v=ba9fadedceb3",
+     "back": "thumbs/technology-archimedes-bridge-buoyancy-back.webp?v=ba9fadedceb3"
     }
    },
    "source": "Geopop, “Ponte sullo Stretto di Messina: il progetto costruttivo ufficiale e le altre alternative” (YouTube, 2021)",
@@ -243643,8 +243643,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-asbestos-stays-onsite.html?v=80e07dd4fb2f",
     "bytes": 12421,
     "thumbs": {
-     "front": "thumbs/technology-asbestos-stays-onsite-front.webp?v=80e07dd4fb2f",
-     "back": "thumbs/technology-asbestos-stays-onsite-back.webp?v=80e07dd4fb2f"
+     "front": "thumbs/technology-asbestos-stays-onsite-front.webp?v=e949eef953c9",
+     "back": "thumbs/technology-asbestos-stays-onsite-back.webp?v=e949eef953c9"
     }
    },
    "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
@@ -243685,8 +243685,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-backlash-pin-hole.html?v=370b228fb017",
     "bytes": 18012,
     "thumbs": {
-     "front": "thumbs/technology-backlash-pin-hole-front.webp?v=370b228fb017",
-     "back": "thumbs/technology-backlash-pin-hole-back.webp?v=370b228fb017"
+     "front": "thumbs/technology-backlash-pin-hole-front.webp?v=d81e84d6bc84",
+     "back": "thumbs/technology-backlash-pin-hole-back.webp?v=d81e84d6bc84"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -243728,8 +243728,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-ballast-drains-water.html?v=4c9738ce3a4a",
     "bytes": 11029,
     "thumbs": {
-     "front": "thumbs/technology-ballast-drains-water-front.webp?v=4c9738ce3a4a",
-     "back": "thumbs/technology-ballast-drains-water-back.webp?v=4c9738ce3a4a"
+     "front": "thumbs/technology-ballast-drains-water-front.webp?v=625471502a37",
+     "back": "thumbs/technology-ballast-drains-water-back.webp?v=625471502a37"
     }
    },
    "source": "Geopop, “A cosa servono le pietre sui binari?” (YouTube, 2021)",
@@ -243848,8 +243848,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-bending-solid-titanium.html?v=a50bbcd6701b",
     "bytes": 9960,
     "thumbs": {
-     "front": "thumbs/technology-bending-solid-titanium-front.webp?v=a50bbcd6701b",
-     "back": "thumbs/technology-bending-solid-titanium-back.webp?v=a50bbcd6701b"
+     "front": "thumbs/technology-bending-solid-titanium-front.webp?v=034c8abb2a1f",
+     "back": "thumbs/technology-bending-solid-titanium-back.webp?v=034c8abb2a1f"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -244620,8 +244620,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-brenner-freight-time.html?v=a37ffadc6141",
     "bytes": 9852,
     "thumbs": {
-     "front": "thumbs/technology-brenner-freight-time-front.webp?v=a37ffadc6141",
-     "back": "thumbs/technology-brenner-freight-time-back.webp?v=a37ffadc6141"
+     "front": "thumbs/technology-brenner-freight-time-front.webp?v=f24ce762fdf0",
+     "back": "thumbs/technology-brenner-freight-time-back.webp?v=f24ce762fdf0"
     }
    },
    "source": "Geopop, “Siamo letteralmente entrati dentro le Alpi per mostrarvi gli scavi delle gallerie del Brennero” (YouTube, 2025)",
@@ -244662,8 +244662,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-bridge-quake-test.html?v=3d8531629fcf",
     "bytes": 11294,
     "thumbs": {
-     "front": "thumbs/technology-bridge-quake-test-front.webp?v=3d8531629fcf",
-     "back": "thumbs/technology-bridge-quake-test-back.webp?v=3d8531629fcf"
+     "front": "thumbs/technology-bridge-quake-test-front.webp?v=5036f2954189",
+     "back": "thumbs/technology-bridge-quake-test-back.webp?v=5036f2954189"
     }
    },
    "source": "Geopop, “Ponte sullo Stretto di Messina: il progetto costruttivo ufficiale e le altre alternative” (YouTube, 2021)",
@@ -244705,8 +244705,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-bullet-splitting-sword.html?v=f894ab046d5d",
     "bytes": 9155,
     "thumbs": {
-     "front": "thumbs/technology-bullet-splitting-sword-front.webp?v=f894ab046d5d",
-     "back": "thumbs/technology-bullet-splitting-sword-back.webp?v=f894ab046d5d"
+     "front": "thumbs/technology-bullet-splitting-sword-front.webp?v=79f7541c35ca",
+     "back": "thumbs/technology-bullet-splitting-sword-back.webp?v=79f7541c35ca"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -244748,8 +244748,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-cable-steel-weight.html?v=fa277e16bf0d",
     "bytes": 8211,
     "thumbs": {
-     "front": "thumbs/technology-cable-steel-weight-front.webp?v=fa277e16bf0d",
-     "back": "thumbs/technology-cable-steel-weight-back.webp?v=fa277e16bf0d"
+     "front": "thumbs/technology-cable-steel-weight-front.webp?v=dbfddc74142f",
+     "back": "thumbs/technology-cable-steel-weight-back.webp?v=dbfddc74142f"
     }
    },
    "source": "Geopop, “Come sarà il Ponte sullo stretto di Messina? La ricostruzione 3D dai progetti originali” (YouTube, 2023)",
@@ -245179,8 +245179,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-carbon-fibre-buckling.html?v=1a2d74d1b457",
     "bytes": 7166,
     "thumbs": {
-     "front": "thumbs/technology-carbon-fibre-buckling-front.webp?v=1a2d74d1b457",
-     "back": "thumbs/technology-carbon-fibre-buckling-back.webp?v=1a2d74d1b457"
+     "front": "thumbs/technology-carbon-fibre-buckling-front.webp?v=13ecd99ebaf8",
+     "back": "thumbs/technology-carbon-fibre-buckling-back.webp?v=13ecd99ebaf8"
     }
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
@@ -245222,8 +245222,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-carrier-catapult-launch.html?v=225f9b68ee9f",
     "bytes": 12722,
     "thumbs": {
-     "front": "thumbs/technology-carrier-catapult-launch-front.webp?v=225f9b68ee9f",
-     "back": "thumbs/technology-carrier-catapult-launch-back.webp?v=225f9b68ee9f"
+     "front": "thumbs/technology-carrier-catapult-launch-front.webp?v=29d9d39c604f",
+     "back": "thumbs/technology-carrier-catapult-launch-back.webp?v=29d9d39c604f"
     }
    },
    "source": "Geopop, “Sulle portaerei come funziona la fase di decollo? Con le… catapulte! #geopop #aerei #airplane” (YouTube, 2023)",
@@ -245265,8 +245265,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-centrifugal-clutch.html?v=78b854e2af0a",
     "bytes": 9445,
     "thumbs": {
-     "front": "thumbs/technology-centrifugal-clutch-front.webp?v=78b854e2af0a",
-     "back": "thumbs/technology-centrifugal-clutch-back.webp?v=78b854e2af0a"
+     "front": "thumbs/technology-centrifugal-clutch-front.webp?v=20c8ce72f1c6",
+     "back": "thumbs/technology-centrifugal-clutch-back.webp?v=20c8ce72f1c6"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -245308,8 +245308,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-channel-tunnel-length.html?v=0435db26746c",
     "bytes": 9080,
     "thumbs": {
-     "front": "thumbs/technology-channel-tunnel-length-front.webp?v=0435db26746c",
-     "back": "thumbs/technology-channel-tunnel-length-back.webp?v=0435db26746c"
+     "front": "thumbs/technology-channel-tunnel-length-front.webp?v=43edd1040041",
+     "back": "thumbs/technology-channel-tunnel-length-back.webp?v=43edd1040041"
     }
    },
    "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
@@ -246381,8 +246381,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-chernobyl-arch-slide.html?v=36af1b4c4888",
     "bytes": 12769,
     "thumbs": {
-     "front": "thumbs/technology-chernobyl-arch-slide-front.webp?v=36af1b4c4888",
-     "back": "thumbs/technology-chernobyl-arch-slide-back.webp?v=36af1b4c4888"
+     "front": "thumbs/technology-chernobyl-arch-slide-front.webp?v=f061091f007d",
+     "back": "thumbs/technology-chernobyl-arch-slide-back.webp?v=f061091f007d"
     }
    },
    "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
@@ -246873,8 +246873,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-closed-loop-geothermal.html?v=3bea0931dbe4",
     "bytes": 9578,
     "thumbs": {
-     "front": "thumbs/technology-closed-loop-geothermal-front.webp?v=3bea0931dbe4",
-     "back": "thumbs/technology-closed-loop-geothermal-back.webp?v=3bea0931dbe4"
+     "front": "thumbs/technology-closed-loop-geothermal-front.webp?v=1d35b235017c",
+     "back": "thumbs/technology-closed-loop-geothermal-back.webp?v=1d35b235017c"
     }
    },
    "source": "Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)",
@@ -246916,8 +246916,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-core-fire-temperature.html?v=e2ad4e784042",
     "bytes": 13545,
     "thumbs": {
-     "front": "thumbs/technology-core-fire-temperature-front.webp?v=e2ad4e784042",
-     "back": "thumbs/technology-core-fire-temperature-back.webp?v=e2ad4e784042"
+     "front": "thumbs/technology-core-fire-temperature-front.webp?v=06a6b22f439f",
+     "back": "thumbs/technology-core-fire-temperature-back.webp?v=06a6b22f439f"
     }
    },
    "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
@@ -246959,8 +246959,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-corner-wind-braces.html?v=fe606e5451e8",
     "bytes": 11920,
     "thumbs": {
-     "front": "thumbs/technology-corner-wind-braces-front.webp?v=fe606e5451e8",
-     "back": "thumbs/technology-corner-wind-braces-back.webp?v=fe606e5451e8"
+     "front": "thumbs/technology-corner-wind-braces-front.webp?v=1952da6a4f96",
+     "back": "thumbs/technology-corner-wind-braces-back.webp?v=1952da6a4f96"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -247003,8 +247003,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-damper-mass-fraction.html?v=4d828f3449ac",
     "bytes": 9398,
     "thumbs": {
-     "front": "thumbs/technology-damper-mass-fraction-front.webp?v=4d828f3449ac",
-     "back": "thumbs/technology-damper-mass-fraction-back.webp?v=4d828f3449ac"
+     "front": "thumbs/technology-damper-mass-fraction-front.webp?v=d8d16e485817",
+     "back": "thumbs/technology-damper-mass-fraction-back.webp?v=d8d16e485817"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -247047,8 +247047,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-damper-saves-millions.html?v=e4173b73706c",
     "bytes": 8766,
     "thumbs": {
-     "front": "thumbs/technology-damper-saves-millions-front.webp?v=e4173b73706c",
-     "back": "thumbs/technology-damper-saves-millions-back.webp?v=e4173b73706c"
+     "front": "thumbs/technology-damper-saves-millions-front.webp?v=57b05b4b49cd",
+     "back": "thumbs/technology-damper-saves-millions-back.webp?v=57b05b4b49cd"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -247655,8 +247655,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-deep-alpine-tunnel.html?v=6aea0432d9d8",
     "bytes": 7625,
     "thumbs": {
-     "front": "thumbs/technology-deep-alpine-tunnel-front.webp?v=6aea0432d9d8",
-     "back": "thumbs/technology-deep-alpine-tunnel-back.webp?v=6aea0432d9d8"
+     "front": "thumbs/technology-deep-alpine-tunnel-front.webp?v=25a90d0603ae",
+     "back": "thumbs/technology-deep-alpine-tunnel-back.webp?v=25a90d0603ae"
     }
    },
    "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
@@ -247698,8 +247698,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-diagonal-turn-explosion.html?v=004dbcf7841b",
     "bytes": 10947,
     "thumbs": {
-     "front": "thumbs/technology-diagonal-turn-explosion-front.webp?v=004dbcf7841b",
-     "back": "thumbs/technology-diagonal-turn-explosion-back.webp?v=004dbcf7841b"
+     "front": "thumbs/technology-diagonal-turn-explosion-front.webp?v=77c5b382f095",
+     "back": "thumbs/technology-diagonal-turn-explosion-back.webp?v=77c5b382f095"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -248169,8 +248169,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-dry-plastic-fizz.html?v=ba4e64d01a28",
     "bytes": 7735,
     "thumbs": {
-     "front": "thumbs/technology-dry-plastic-fizz-front.webp?v=ba4e64d01a28",
-     "back": "thumbs/technology-dry-plastic-fizz-back.webp?v=ba4e64d01a28"
+     "front": "thumbs/technology-dry-plastic-fizz-front.webp?v=0450928523c0",
+     "back": "thumbs/technology-dry-plastic-fizz-back.webp?v=0450928523c0"
     }
    },
    "source": "Geopop, “Controllate se la vostra prossima bottiglia di Coca-Cola ha la sigla CCHBC 70: ecco cosa significa” (YouTube, 2024)",
@@ -248213,8 +248213,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-engines-freeze-yakutsk.html?v=afec1c22d6b4",
     "bytes": 10597,
     "thumbs": {
-     "front": "thumbs/technology-engines-freeze-yakutsk-front.webp?v=afec1c22d6b4",
-     "back": "thumbs/technology-engines-freeze-yakutsk-back.webp?v=afec1c22d6b4"
+     "front": "thumbs/technology-engines-freeze-yakutsk-front.webp?v=41c176a58f49",
+     "back": "thumbs/technology-engines-freeze-yakutsk-back.webp?v=41c176a58f49"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -248255,8 +248255,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-eshima-rigid-frame.html?v=f9050b0f2d8f",
     "bytes": 8272,
     "thumbs": {
-     "front": "thumbs/technology-eshima-rigid-frame-front.webp?v=f9050b0f2d8f",
-     "back": "thumbs/technology-eshima-rigid-frame-back.webp?v=f9050b0f2d8f"
+     "front": "thumbs/technology-eshima-rigid-frame-front.webp?v=17af1f4136cb",
+     "back": "thumbs/technology-eshima-rigid-frame-back.webp?v=17af1f4136cb"
     }
    },
    "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
@@ -248298,8 +248298,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-eshima-steep-ramp.html?v=a7e78c4c4202",
     "bytes": 8099,
     "thumbs": {
-     "front": "thumbs/technology-eshima-steep-ramp-front.webp?v=a7e78c4c4202",
-     "back": "thumbs/technology-eshima-steep-ramp-back.webp?v=a7e78c4c4202"
+     "front": "thumbs/technology-eshima-steep-ramp-front.webp?v=43dd85381aab",
+     "back": "thumbs/technology-eshima-steep-ramp-back.webp?v=43dd85381aab"
     }
    },
    "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
@@ -248341,8 +248341,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-evolved-footpaths.html?v=9698980a7055",
     "bytes": 16449,
     "thumbs": {
-     "front": "thumbs/technology-evolved-footpaths-front.webp?v=9698980a7055",
-     "back": "thumbs/technology-evolved-footpaths-back.webp?v=9698980a7055"
+     "front": "thumbs/technology-evolved-footpaths-front.webp?v=925fd631c587",
+     "back": "thumbs/technology-evolved-footpaths-back.webp?v=925fd631c587"
     }
    },
    "source": "Veritasium, “34 Years Of Strandbeest Evolution” (YouTube, 2024)",
@@ -249058,8 +249058,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-fastest-not-shortest.html?v=bcee73ed97e0",
     "bytes": 21908,
     "thumbs": {
-     "front": "thumbs/technology-fastest-not-shortest-front.webp?v=bcee73ed97e0",
-     "back": "thumbs/technology-fastest-not-shortest-back.webp?v=bcee73ed97e0"
+     "front": "thumbs/technology-fastest-not-shortest-front.webp?v=852df2c1900a",
+     "back": "thumbs/technology-fastest-not-shortest-back.webp?v=852df2c1900a"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -249101,8 +249101,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-fire-contains-methane.html?v=2af5db4ed7db",
     "bytes": 22703,
     "thumbs": {
-     "front": "thumbs/technology-fire-contains-methane-front.webp?v=2af5db4ed7db",
-     "back": "thumbs/technology-fire-contains-methane-back.webp?v=2af5db4ed7db"
+     "front": "thumbs/technology-fire-contains-methane-front.webp?v=63c2e3ca661c",
+     "back": "thumbs/technology-fire-contains-methane-back.webp?v=63c2e3ca661c"
     }
    },
    "source": "Geopop, “La \"Porta dell'Inferno\", come si è formata e perché dopo 50 anni brucia nel deserto in Turkmenistan?” (YouTube, 2021)",
@@ -249144,8 +249144,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-five-times-downforce.html?v=e617deb1f6a9",
     "bytes": 15483,
     "thumbs": {
-     "front": "thumbs/technology-five-times-downforce-front.webp?v=e617deb1f6a9",
-     "back": "thumbs/technology-five-times-downforce-back.webp?v=e617deb1f6a9"
+     "front": "thumbs/technology-five-times-downforce-front.webp?v=9ae79647a9c7",
+     "back": "thumbs/technology-five-times-downforce-back.webp?v=9ae79647a9c7"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -249187,8 +249187,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-flip-pivoting-fixtures.html?v=7a108ee8cc83",
     "bytes": 8791,
     "thumbs": {
-     "front": "thumbs/technology-flip-pivoting-fixtures-front.webp?v=7a108ee8cc83",
-     "back": "thumbs/technology-flip-pivoting-fixtures-back.webp?v=7a108ee8cc83"
+     "front": "thumbs/technology-flip-pivoting-fixtures-front.webp?v=52dba62aa6ca",
+     "back": "thumbs/technology-flip-pivoting-fixtures-back.webp?v=52dba62aa6ca"
     }
    },
    "source": "Geopop, “Come funziona la manovra della FLIP, la \"nave\" che si immergeva in verticale sul mare” (YouTube, 2024)",
@@ -249229,8 +249229,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-flip-vertical-stability.html?v=664630f94f60",
     "bytes": 8741,
     "thumbs": {
-     "front": "thumbs/technology-flip-vertical-stability-front.webp?v=664630f94f60",
-     "back": "thumbs/technology-flip-vertical-stability-back.webp?v=664630f94f60"
+     "front": "thumbs/technology-flip-vertical-stability-front.webp?v=70fbd98c3cd9",
+     "back": "thumbs/technology-flip-vertical-stability-back.webp?v=70fbd98c3cd9"
     }
    },
    "source": "Geopop, “Come funziona la manovra della FLIP, la \"nave\" che si immergeva in verticale sul mare” (YouTube, 2024)",
@@ -249272,8 +249272,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-folding-the-steel.html?v=4ffff645c8b1",
     "bytes": 22421,
     "thumbs": {
-     "front": "thumbs/technology-folding-the-steel-front.webp?v=4ffff645c8b1",
-     "back": "thumbs/technology-folding-the-steel-back.webp?v=4ffff645c8b1"
+     "front": "thumbs/technology-folding-the-steel-front.webp?v=450be991a693",
+     "back": "thumbs/technology-folding-the-steel-back.webp?v=450be991a693"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -249315,8 +249315,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-fukushima-sea-wall.html?v=86c7695af231",
     "bytes": 8787,
     "thumbs": {
-     "front": "thumbs/technology-fukushima-sea-wall-front.webp?v=86c7695af231",
-     "back": "thumbs/technology-fukushima-sea-wall-back.webp?v=86c7695af231"
+     "front": "thumbs/technology-fukushima-sea-wall-front.webp?v=b897b0d40756",
+     "back": "thumbs/technology-fukushima-sea-wall-back.webp?v=b897b0d40756"
     }
    },
    "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
@@ -249358,8 +249358,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-google-googol-name.html?v=6f8d073b5f2e",
     "bytes": 7132,
     "thumbs": {
-     "front": "thumbs/technology-google-googol-name-front.webp?v=6f8d073b5f2e",
-     "back": "thumbs/technology-google-googol-name-back.webp?v=6f8d073b5f2e"
+     "front": "thumbs/technology-google-googol-name-front.webp?v=655036316c26",
+     "back": "thumbs/technology-google-googol-name-back.webp?v=655036316c26"
     }
    },
    "source": "Geopop, “Ma perché #google si chiama così? #scienza #science #geopop #tech #informatica” (YouTube, 2024)",
@@ -249400,8 +249400,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-gps-light-rose.html?v=19cd5fb48f20",
     "bytes": 19355,
     "thumbs": {
-     "front": "thumbs/technology-gps-light-rose-front.webp?v=19cd5fb48f20",
-     "back": "thumbs/technology-gps-light-rose-back.webp?v=19cd5fb48f20"
+     "front": "thumbs/technology-gps-light-rose-front.webp?v=cabebf63959a",
+     "back": "thumbs/technology-gps-light-rose-back.webp?v=cabebf63959a"
     }
    },
    "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
@@ -249443,8 +249443,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-graphene-bionic-limbs.html?v=a2724d94a3d4",
     "bytes": 14123,
     "thumbs": {
-     "front": "thumbs/technology-graphene-bionic-limbs-front.webp?v=a2724d94a3d4",
-     "back": "thumbs/technology-graphene-bionic-limbs-back.webp?v=a2724d94a3d4"
+     "front": "thumbs/technology-graphene-bionic-limbs-front.webp?v=96aaeca52ee1",
+     "back": "thumbs/technology-graphene-bionic-limbs-back.webp?v=96aaeca52ee1"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -249486,8 +249486,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-graphene-desalination.html?v=5d0d39a98ccd",
     "bytes": 9311,
     "thumbs": {
-     "front": "thumbs/technology-graphene-desalination-front.webp?v=5d0d39a98ccd",
-     "back": "thumbs/technology-graphene-desalination-back.webp?v=5d0d39a98ccd"
+     "front": "thumbs/technology-graphene-desalination-front.webp?v=c1a75c54cb4f",
+     "back": "thumbs/technology-graphene-desalination-back.webp?v=c1a75c54cb4f"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -249528,8 +249528,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-graphene-fast-charge.html?v=993233a73036",
     "bytes": 15711,
     "thumbs": {
-     "front": "thumbs/technology-graphene-fast-charge-front.webp?v=993233a73036",
-     "back": "thumbs/technology-graphene-fast-charge-back.webp?v=993233a73036"
+     "front": "thumbs/technology-graphene-fast-charge-front.webp?v=4608f9d87ca7",
+     "back": "thumbs/technology-graphene-fast-charge-back.webp?v=4608f9d87ca7"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -249571,8 +249571,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-graphene-flagship-billion.html?v=f9422f61e3e7",
     "bytes": 6268,
     "thumbs": {
-     "front": "thumbs/technology-graphene-flagship-billion-front.webp?v=f9422f61e3e7",
-     "back": "thumbs/technology-graphene-flagship-billion-back.webp?v=f9422f61e3e7"
+     "front": "thumbs/technology-graphene-flagship-billion-front.webp?v=de69157690a2",
+     "back": "thumbs/technology-graphene-flagship-billion-back.webp?v=de69157690a2"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -249614,8 +249614,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-graphene-plastic-century.html?v=c91ba9b2c8e7",
     "bytes": 9314,
     "thumbs": {
-     "front": "thumbs/technology-graphene-plastic-century-front.webp?v=c91ba9b2c8e7",
-     "back": "thumbs/technology-graphene-plastic-century-back.webp?v=c91ba9b2c8e7"
+     "front": "thumbs/technology-graphene-plastic-century-front.webp?v=0ce382b283e5",
+     "back": "thumbs/technology-graphene-plastic-century-back.webp?v=0ce382b283e5"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -249658,8 +249658,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-gripper-costs-cents.html?v=9c23000007a6",
     "bytes": 8726,
     "thumbs": {
-     "front": "thumbs/technology-gripper-costs-cents-front.webp?v=9c23000007a6",
-     "back": "thumbs/technology-gripper-costs-cents-back.webp?v=9c23000007a6"
+     "front": "thumbs/technology-gripper-costs-cents-front.webp?v=a8cb73a3320e",
+     "back": "thumbs/technology-gripper-costs-cents-back.webp?v=a8cb73a3320e"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -249701,8 +249701,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-heat-pump-savings.html?v=141d2172a1df",
     "bytes": 9703,
     "thumbs": {
-     "front": "thumbs/technology-heat-pump-savings-front.webp?v=141d2172a1df",
-     "back": "thumbs/technology-heat-pump-savings-back.webp?v=141d2172a1df"
+     "front": "thumbs/technology-heat-pump-savings-front.webp?v=3fedb026bec1",
+     "back": "thumbs/technology-heat-pump-savings-back.webp?v=3fedb026bec1"
     }
    },
    "source": "Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)",
@@ -249743,8 +249743,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-hoover-dam-blocks.html?v=dae5cf87610c",
     "bytes": 8961,
     "thumbs": {
-     "front": "thumbs/technology-hoover-dam-blocks-front.webp?v=dae5cf87610c",
-     "back": "thumbs/technology-hoover-dam-blocks-back.webp?v=dae5cf87610c"
+     "front": "thumbs/technology-hoover-dam-blocks-front.webp?v=53475e112ca6",
+     "back": "thumbs/technology-hoover-dam-blocks-back.webp?v=53475e112ca6"
     }
    },
    "source": "Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)",
@@ -249786,8 +249786,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-human-hair-mechanism.html?v=a4bd8d504a93",
     "bytes": 9164,
     "thumbs": {
-     "front": "thumbs/technology-human-hair-mechanism-front.webp?v=a4bd8d504a93",
-     "back": "thumbs/technology-human-hair-mechanism-back.webp?v=a4bd8d504a93"
+     "front": "thumbs/technology-human-hair-mechanism-front.webp?v=ca537c7d066e",
+     "back": "thumbs/technology-human-hair-mechanism-back.webp?v=ca537c7d066e"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -249829,8 +249829,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-hydrogen-plugs-holes.html?v=50826b7e247b",
     "bytes": 26559,
     "thumbs": {
-     "front": "thumbs/technology-hydrogen-plugs-holes-front.webp?v=50826b7e247b",
-     "back": "thumbs/technology-hydrogen-plugs-holes-back.webp?v=50826b7e247b"
+     "front": "thumbs/technology-hydrogen-plugs-holes-front.webp?v=7aee809ef050",
+     "back": "thumbs/technology-hydrogen-plugs-holes-back.webp?v=7aee809ef050"
     }
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
@@ -249872,8 +249872,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-induction-cassette-press.html?v=e931a118266e",
     "bytes": 8807,
     "thumbs": {
-     "front": "thumbs/technology-induction-cassette-press-front.webp?v=e931a118266e",
-     "back": "thumbs/technology-induction-cassette-press-back.webp?v=e931a118266e"
+     "front": "thumbs/technology-induction-cassette-press-front.webp?v=76b1a53a5476",
+     "back": "thumbs/technology-induction-cassette-press-back.webp?v=76b1a53a5476"
     }
    },
    "source": "Geopop, “Consuma più un piano a induzione o un piano a gas? Abbiamo fatto un test per scoprirlo” (YouTube, 2025)",
@@ -249915,8 +249915,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-induction-foil-stick.html?v=89b5eec6abef",
     "bytes": 20470,
     "thumbs": {
-     "front": "thumbs/technology-induction-foil-stick-front.webp?v=89b5eec6abef",
-     "back": "thumbs/technology-induction-foil-stick-back.webp?v=89b5eec6abef"
+     "front": "thumbs/technology-induction-foil-stick-front.webp?v=23277675ed1d",
+     "back": "thumbs/technology-induction-foil-stick-back.webp?v=23277675ed1d"
     }
    },
    "source": "Geopop, “Apriamo una sigaretta con tabacco riscaldato in laboratorio” (YouTube, 2024)",
@@ -249957,8 +249957,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-induction-it-control.html?v=37e1b16b7b23",
     "bytes": 13749,
     "thumbs": {
-     "front": "thumbs/technology-induction-it-control-front.webp?v=37e1b16b7b23",
-     "back": "thumbs/technology-induction-it-control-back.webp?v=37e1b16b7b23"
+     "front": "thumbs/technology-induction-it-control-front.webp?v=3fab429f4c83",
+     "back": "thumbs/technology-induction-it-control-back.webp?v=3fab429f4c83"
     }
    },
    "source": "Geopop, “Consuma più un piano a induzione o un piano a gas? Abbiamo fatto un test per scoprirlo” (YouTube, 2025)",
@@ -250000,8 +250000,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-induction-magnetic-field.html?v=11f299c6f3ab",
     "bytes": 13131,
     "thumbs": {
-     "front": "thumbs/technology-induction-magnetic-field-front.webp?v=11f299c6f3ab",
-     "back": "thumbs/technology-induction-magnetic-field-back.webp?v=11f299c6f3ab"
+     "front": "thumbs/technology-induction-magnetic-field-front.webp?v=531ce27027d3",
+     "back": "thumbs/technology-induction-magnetic-field-back.webp?v=531ce27027d3"
     }
    },
    "source": "Geopop, “Consuma più un piano a induzione o un piano a gas? Abbiamo fatto un test per scoprirlo” (YouTube, 2025)",
@@ -250043,8 +250043,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-iron-armor-capacitance.html?v=d389c0711266",
     "bytes": 8175,
     "thumbs": {
-     "front": "thumbs/technology-iron-armor-capacitance-front.webp?v=d389c0711266",
-     "back": "thumbs/technology-iron-armor-capacitance-back.webp?v=d389c0711266"
+     "front": "thumbs/technology-iron-armor-capacitance-front.webp?v=e70f8ec31e7f",
+     "back": "thumbs/technology-iron-armor-capacitance-back.webp?v=e70f8ec31e7f"
     }
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
@@ -250086,8 +250086,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-italy-free-route.html?v=b747f866c5d4",
     "bytes": 9009,
     "thumbs": {
-     "front": "thumbs/technology-italy-free-route-front.webp?v=b747f866c5d4",
-     "back": "thumbs/technology-italy-free-route-back.webp?v=b747f866c5d4"
+     "front": "thumbs/technology-italy-free-route-front.webp?v=4fe74b58e4f2",
+     "back": "thumbs/technology-italy-free-route-back.webp?v=4fe74b58e4f2"
     }
    },
    "source": "Geopop, “Dentro una Torre di controllo, come si gestisce il traffico aereo in Italia” (YouTube, 2025)",
@@ -250129,8 +250129,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-iter-eiffel-weight.html?v=84a381a8420d",
     "bytes": 7673,
     "thumbs": {
-     "front": "thumbs/technology-iter-eiffel-weight-front.webp?v=84a381a8420d",
-     "back": "thumbs/technology-iter-eiffel-weight-back.webp?v=84a381a8420d"
+     "front": "thumbs/technology-iter-eiffel-weight-front.webp?v=44a091a81ffe",
+     "back": "thumbs/technology-iter-eiffel-weight-back.webp?v=44a091a81ffe"
     }
    },
    "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
@@ -251138,8 +251138,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-load-redistribution-towers.html?v=0931e9d01e1e",
     "bytes": 9635,
     "thumbs": {
-     "front": "thumbs/technology-load-redistribution-towers-front.webp?v=0931e9d01e1e",
-     "back": "thumbs/technology-load-redistribution-towers-back.webp?v=0931e9d01e1e"
+     "front": "thumbs/technology-load-redistribution-towers-front.webp?v=821fb4bed805",
+     "back": "thumbs/technology-load-redistribution-towers-back.webp?v=821fb4bed805"
     }
    },
    "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
@@ -251181,8 +251181,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-louvre-blind-spots.html?v=ec77abf371a7",
     "bytes": 7725,
     "thumbs": {
-     "front": "thumbs/technology-louvre-blind-spots-front.webp?v=ec77abf371a7",
-     "back": "thumbs/technology-louvre-blind-spots-back.webp?v=ec77abf371a7"
+     "front": "thumbs/technology-louvre-blind-spots-front.webp?v=c108cef7e325",
+     "back": "thumbs/technology-louvre-blind-spots-back.webp?v=c108cef7e325"
     }
    },
    "source": "Geopop, “Furto di gioielli in pieno giorno al Louvre, com'è stato possibile? L’inedita ricostruzione 3D” (YouTube, 2025)",
@@ -251223,8 +251223,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-low-pressure-lifting.html?v=ab8c1ca0e38e",
     "bytes": 6951,
     "thumbs": {
-     "front": "thumbs/technology-low-pressure-lifting-front.webp?v=ab8c1ca0e38e",
-     "back": "thumbs/technology-low-pressure-lifting-back.webp?v=ab8c1ca0e38e"
+     "front": "thumbs/technology-low-pressure-lifting-front.webp?v=5ee1c56251ea",
+     "back": "thumbs/technology-low-pressure-lifting-back.webp?v=5ee1c56251ea"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -251644,8 +251644,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-material-fatigue.html?v=60ce31a881b2",
     "bytes": 23657,
     "thumbs": {
-     "front": "thumbs/technology-material-fatigue-front.webp?v=60ce31a881b2",
-     "back": "thumbs/technology-material-fatigue-back.webp?v=60ce31a881b2"
+     "front": "thumbs/technology-material-fatigue-front.webp?v=205bb19d716a",
+     "back": "thumbs/technology-material-fatigue-back.webp?v=205bb19d716a"
     }
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
@@ -251686,8 +251686,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-messina-record-span.html?v=c88e6a73fe52",
     "bytes": 17835,
     "thumbs": {
-     "front": "thumbs/technology-messina-record-span-front.webp?v=c88e6a73fe52",
-     "back": "thumbs/technology-messina-record-span-back.webp?v=c88e6a73fe52"
+     "front": "thumbs/technology-messina-record-span-front.webp?v=451806042f54",
+     "back": "thumbs/technology-messina-record-span-back.webp?v=451806042f54"
     }
    },
    "source": "Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020)",
@@ -251729,8 +251729,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-micromouse-diagonal-blinders.html?v=d5731e3078ca",
     "bytes": 11390,
     "thumbs": {
-     "front": "thumbs/technology-micromouse-diagonal-blinders-front.webp?v=d5731e3078ca",
-     "back": "thumbs/technology-micromouse-diagonal-blinders-back.webp?v=d5731e3078ca"
+     "front": "thumbs/technology-micromouse-diagonal-blinders-front.webp?v=de2d4444636d",
+     "back": "thumbs/technology-micromouse-diagonal-blinders-back.webp?v=de2d4444636d"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -251772,8 +251772,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-micromouse-diagonal-cut-15.html?v=5994c3f79972",
     "bytes": 29386,
     "thumbs": {
-     "front": "thumbs/technology-micromouse-diagonal-cut-15-front.webp?v=5994c3f79972",
-     "back": "thumbs/technology-micromouse-diagonal-cut-15-back.webp?v=5994c3f79972"
+     "front": "thumbs/technology-micromouse-diagonal-cut-15-front.webp?v=9faaf037183d",
+     "back": "thumbs/technology-micromouse-diagonal-cut-15-back.webp?v=9faaf037183d"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -251816,8 +251816,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-micromouse-diagonals-16.html?v=62b9bedeaab0",
     "bytes": 9630,
     "thumbs": {
-     "front": "thumbs/technology-micromouse-diagonals-16-front.webp?v=62b9bedeaab0",
-     "back": "thumbs/technology-micromouse-diagonals-16-back.webp?v=62b9bedeaab0"
+     "front": "thumbs/technology-micromouse-diagonals-16-front.webp?v=c4801d1e8101",
+     "back": "thumbs/technology-micromouse-diagonals-16-back.webp?v=c4801d1e8101"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -251859,8 +251859,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-micromouse-fan-grip.html?v=e2ada282ae8d",
     "bytes": 30916,
     "thumbs": {
-     "front": "thumbs/technology-micromouse-fan-grip-front.webp?v=e2ada282ae8d",
-     "back": "thumbs/technology-micromouse-fan-grip-back.webp?v=e2ada282ae8d"
+     "front": "thumbs/technology-micromouse-fan-grip-front.webp?v=091437e673e6",
+     "back": "thumbs/technology-micromouse-fan-grip-back.webp?v=091437e673e6"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -251902,8 +251902,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-micromouse-navigation-speed.html?v=cc975c067b76",
     "bytes": 13161,
     "thumbs": {
-     "front": "thumbs/technology-micromouse-navigation-speed-front.webp?v=cc975c067b76",
-     "back": "thumbs/technology-micromouse-navigation-speed-back.webp?v=cc975c067b76"
+     "front": "thumbs/technology-micromouse-navigation-speed-front.webp?v=a6f0382ff754",
+     "back": "thumbs/technology-micromouse-navigation-speed-back.webp?v=a6f0382ff754"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -251945,8 +251945,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-milk-carton-layers.html?v=e3e4b3139c0c",
     "bytes": 13681,
     "thumbs": {
-     "front": "thumbs/technology-milk-carton-layers-front.webp?v=e3e4b3139c0c",
-     "back": "thumbs/technology-milk-carton-layers-back.webp?v=e3e4b3139c0c"
+     "front": "thumbs/technology-milk-carton-layers-front.webp?v=c9b518e0a7fe",
+     "back": "thumbs/technology-milk-carton-layers-back.webp?v=c9b518e0a7fe"
     }
    },
    "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
@@ -251989,8 +251989,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-morandi-rusted-cables.html?v=38f17210cfe0",
     "bytes": 6819,
     "thumbs": {
-     "front": "thumbs/technology-morandi-rusted-cables-front.webp?v=38f17210cfe0",
-     "back": "thumbs/technology-morandi-rusted-cables-back.webp?v=38f17210cfe0"
+     "front": "thumbs/technology-morandi-rusted-cables-front.webp?v=5fcbf6bd1ba0",
+     "back": "thumbs/technology-morandi-rusted-cables-back.webp?v=5fcbf6bd1ba0"
     }
    },
    "source": "Geopop, “Il crollo del Ponte Morandi a Genova, l'inedita ricostruzione video in 3D al momento del collasso” (YouTube, 2022)",
@@ -252031,8 +252031,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-motogp-braking-distance.html?v=2409016ad31e",
     "bytes": 9295,
     "thumbs": {
-     "front": "thumbs/technology-motogp-braking-distance-front.webp?v=2409016ad31e",
-     "back": "thumbs/technology-motogp-braking-distance-back.webp?v=2409016ad31e"
+     "front": "thumbs/technology-motogp-braking-distance-front.webp?v=bde45565e680",
+     "back": "thumbs/technology-motogp-braking-distance-back.webp?v=bde45565e680"
     }
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
@@ -252074,8 +252074,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-motogp-power-weight.html?v=8a2162604485",
     "bytes": 18948,
     "thumbs": {
-     "front": "thumbs/technology-motogp-power-weight-front.webp?v=8a2162604485",
-     "back": "thumbs/technology-motogp-power-weight-back.webp?v=8a2162604485"
+     "front": "thumbs/technology-motogp-power-weight-front.webp?v=00c05ef233f5",
+     "back": "thumbs/technology-motogp-power-weight-back.webp?v=00c05ef233f5"
     }
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
@@ -252117,8 +252117,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-neutral-temperature-welding.html?v=f959b095d0a8",
     "bytes": 10009,
     "thumbs": {
-     "front": "thumbs/technology-neutral-temperature-welding-front.webp?v=f959b095d0a8",
-     "back": "thumbs/technology-neutral-temperature-welding-back.webp?v=f959b095d0a8"
+     "front": "thumbs/technology-neutral-temperature-welding-front.webp?v=0398e37b2b84",
+     "back": "thumbs/technology-neutral-temperature-welding-back.webp?v=0398e37b2b84"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -252160,8 +252160,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-night-weld-ranking.html?v=9e3c4a0f42dc",
     "bytes": 13845,
     "thumbs": {
-     "front": "thumbs/technology-night-weld-ranking-front.webp?v=9e3c4a0f42dc",
-     "back": "thumbs/technology-night-weld-ranking-back.webp?v=9e3c4a0f42dc"
+     "front": "thumbs/technology-night-weld-ranking-front.webp?v=89db08729665",
+     "back": "thumbs/technology-night-weld-ranking-back.webp?v=89db08729665"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -252202,8 +252202,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-night-yard-rovers.html?v=f8eec2719494",
     "bytes": 9069,
     "thumbs": {
-     "front": "thumbs/technology-night-yard-rovers-front.webp?v=f8eec2719494",
-     "back": "thumbs/technology-night-yard-rovers-back.webp?v=f8eec2719494"
+     "front": "thumbs/technology-night-yard-rovers-front.webp?v=a3228a1b8ac4",
+     "back": "thumbs/technology-night-yard-rovers-back.webp?v=a3228a1b8ac4"
     }
    },
    "source": "Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)",
@@ -252244,8 +252244,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-no-continuous-wire.html?v=87c2c9ba3fb9",
     "bytes": 8318,
     "thumbs": {
-     "front": "thumbs/technology-no-continuous-wire-front.webp?v=87c2c9ba3fb9",
-     "back": "thumbs/technology-no-continuous-wire-back.webp?v=87c2c9ba3fb9"
+     "front": "thumbs/technology-no-continuous-wire-front.webp?v=c4da06eba40e",
+     "back": "thumbs/technology-no-continuous-wire-back.webp?v=c4da06eba40e"
     }
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
@@ -252288,8 +252288,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-nordic-ground-heat.html?v=6b7a9cb2d3f2",
     "bytes": 6761,
     "thumbs": {
-     "front": "thumbs/technology-nordic-ground-heat-front.webp?v=6b7a9cb2d3f2",
-     "back": "thumbs/technology-nordic-ground-heat-back.webp?v=6b7a9cb2d3f2"
+     "front": "thumbs/technology-nordic-ground-heat-front.webp?v=e97ce0f529f7",
+     "back": "thumbs/technology-nordic-ground-heat-back.webp?v=e97ce0f529f7"
     }
    },
    "source": "Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)",
@@ -252331,8 +252331,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-not-a-flamethrower-2.html?v=ec452fc2c66b",
     "bytes": 10566,
     "thumbs": {
-     "front": "thumbs/technology-not-a-flamethrower-2-front.webp?v=ec452fc2c66b",
-     "back": "thumbs/technology-not-a-flamethrower-2-back.webp?v=ec452fc2c66b"
+     "front": "thumbs/technology-not-a-flamethrower-2-front.webp?v=d2cf5d712c55",
+     "back": "thumbs/technology-not-a-flamethrower-2-back.webp?v=d2cf5d712c55"
     }
    },
    "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
@@ -252374,8 +252374,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-octane-knock-resistance.html?v=4cfa4d5e858c",
     "bytes": 13394,
     "thumbs": {
-     "front": "thumbs/technology-octane-knock-resistance-front.webp?v=4cfa4d5e858c",
-     "back": "thumbs/technology-octane-knock-resistance-back.webp?v=4cfa4d5e858c"
+     "front": "thumbs/technology-octane-knock-resistance-front.webp?v=1b063f58e363",
+     "back": "thumbs/technology-octane-knock-resistance-back.webp?v=1b063f58e363"
     }
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
@@ -252416,8 +252416,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-old-solar-train.html?v=6bcfbbbb927e",
     "bytes": 10467,
     "thumbs": {
-     "front": "thumbs/technology-old-solar-train-front.webp?v=6bcfbbbb927e",
-     "back": "thumbs/technology-old-solar-train-back.webp?v=6bcfbbbb927e"
+     "front": "thumbs/technology-old-solar-train-front.webp?v=8c33ec49bb29",
+     "back": "thumbs/technology-old-solar-train-back.webp?v=8c33ec49bb29"
     }
    },
    "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
@@ -252830,8 +252830,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-one-hammer-tunnel.html?v=084b7f51a8ed",
     "bytes": 10689,
     "thumbs": {
-     "front": "thumbs/technology-one-hammer-tunnel-front.webp?v=084b7f51a8ed",
-     "back": "thumbs/technology-one-hammer-tunnel-back.webp?v=084b7f51a8ed"
+     "front": "thumbs/technology-one-hammer-tunnel-front.webp?v=b76dde2c2360",
+     "back": "thumbs/technology-one-hammer-tunnel-back.webp?v=b76dde2c2360"
     }
    },
    "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
@@ -252873,8 +252873,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-onion-hops-anonymity.html?v=f3377a869120",
     "bytes": 12962,
     "thumbs": {
-     "front": "thumbs/technology-onion-hops-anonymity-front.webp?v=f3377a869120",
-     "back": "thumbs/technology-onion-hops-anonymity-back.webp?v=f3377a869120"
+     "front": "thumbs/technology-onion-hops-anonymity-front.webp?v=68096de07671",
+     "back": "thumbs/technology-onion-hops-anonymity-back.webp?v=68096de07671"
     }
    },
    "source": "Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022)",
@@ -252916,8 +252916,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-parbuckling-winch-cables.html?v=cc54b32664fd",
     "bytes": 9200,
     "thumbs": {
-     "front": "thumbs/technology-parbuckling-winch-cables-front.webp?v=cc54b32664fd",
-     "back": "thumbs/technology-parbuckling-winch-cables-back.webp?v=cc54b32664fd"
+     "front": "thumbs/technology-parbuckling-winch-cables-front.webp?v=e3fbc7884709",
+     "back": "thumbs/technology-parbuckling-winch-cables-back.webp?v=e3fbc7884709"
     }
    },
    "source": "Geopop, “Costa Concordia, la ricostruzione del naufragio dal momento dell’impatto alla rimozione del relitto” (YouTube, 2022)",
@@ -253036,8 +253036,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-pier-magnitude-seven.html?v=9c086f2e7742",
     "bytes": 8040,
     "thumbs": {
-     "front": "thumbs/technology-pier-magnitude-seven-front.webp?v=9c086f2e7742",
-     "back": "thumbs/technology-pier-magnitude-seven-back.webp?v=9c086f2e7742"
+     "front": "thumbs/technology-pier-magnitude-seven-front.webp?v=76d46362613e",
+     "back": "thumbs/technology-pier-magnitude-seven-back.webp?v=76d46362613e"
     }
    },
    "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
@@ -253080,8 +253080,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-predictable-safing.html?v=203754d4040b",
     "bytes": 9802,
     "thumbs": {
-     "front": "thumbs/technology-predictable-safing-front.webp?v=203754d4040b",
-     "back": "thumbs/technology-predictable-safing-back.webp?v=203754d4040b"
+     "front": "thumbs/technology-predictable-safing-front.webp?v=fa871fb46313",
+     "back": "thumbs/technology-predictable-safing-back.webp?v=fa871fb46313"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -253123,8 +253123,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-printed-micro-machines.html?v=085b19075ba8",
     "bytes": 9534,
     "thumbs": {
-     "front": "thumbs/technology-printed-micro-machines-front.webp?v=085b19075ba8",
-     "back": "thumbs/technology-printed-micro-machines-back.webp?v=085b19075ba8"
+     "front": "thumbs/technology-printed-micro-machines-front.webp?v=6a9c4c8bea9f",
+     "back": "thumbs/technology-printed-micro-machines-back.webp?v=6a9c4c8bea9f"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -253166,8 +253166,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-punctured-vine-robot.html?v=e41d7a172715",
     "bytes": 10292,
     "thumbs": {
-     "front": "thumbs/technology-punctured-vine-robot-front.webp?v=e41d7a172715",
-     "back": "thumbs/technology-punctured-vine-robot-back.webp?v=e41d7a172715"
+     "front": "thumbs/technology-punctured-vine-robot-front.webp?v=6963067c7554",
+     "back": "thumbs/technology-punctured-vine-robot-back.webp?v=6963067c7554"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -253209,8 +253209,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-quake-prevention-pays.html?v=e66ee6ae94b5",
     "bytes": 8706,
     "thumbs": {
-     "front": "thumbs/technology-quake-prevention-pays-front.webp?v=e66ee6ae94b5",
-     "back": "thumbs/technology-quake-prevention-pays-back.webp?v=e66ee6ae94b5"
+     "front": "thumbs/technology-quake-prevention-pays-front.webp?v=ff518da26409",
+     "back": "thumbs/technology-quake-prevention-pays-back.webp?v=ff518da26409"
     }
    },
    "source": "Geopop, “Terremoti in Giappone - come prevenire i disastri del rischio sismico con l'ingegneria” (YouTube, 2021)",
@@ -253250,8 +253250,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-quantum-fewer-steps.html?v=48b4c1a3f3d3",
     "bytes": 10000,
     "thumbs": {
-     "front": "thumbs/technology-quantum-fewer-steps-front.webp?v=48b4c1a3f3d3",
-     "back": "thumbs/technology-quantum-fewer-steps-back.webp?v=48b4c1a3f3d3"
+     "front": "thumbs/technology-quantum-fewer-steps-front.webp?v=b6e1f7cf4394",
+     "back": "thumbs/technology-quantum-fewer-steps-back.webp?v=b6e1f7cf4394"
     }
    },
    "source": "Veritasium, “How Does a Quantum Computer Work?” (YouTube, 2013)",
@@ -253293,8 +253293,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-rail-expansion-gaps.html?v=38023437849c",
     "bytes": 7487,
     "thumbs": {
-     "front": "thumbs/technology-rail-expansion-gaps-front.webp?v=38023437849c",
-     "back": "thumbs/technology-rail-expansion-gaps-back.webp?v=38023437849c"
+     "front": "thumbs/technology-rail-expansion-gaps-front.webp?v=14d2dce48ac0",
+     "back": "thumbs/technology-rail-expansion-gaps-back.webp?v=14d2dce48ac0"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -253336,8 +253336,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-rail-neutral-temperature.html?v=3d02a57c0cb1",
     "bytes": 9322,
     "thumbs": {
-     "front": "thumbs/technology-rail-neutral-temperature-front.webp?v=3d02a57c0cb1",
-     "back": "thumbs/technology-rail-neutral-temperature-back.webp?v=3d02a57c0cb1"
+     "front": "thumbs/technology-rail-neutral-temperature-front.webp?v=4822fd3976ff",
+     "back": "thumbs/technology-rail-neutral-temperature-back.webp?v=4822fd3976ff"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -253379,8 +253379,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-rainy-summer-hydro.html?v=ecbe57839b22",
     "bytes": 8378,
     "thumbs": {
-     "front": "thumbs/technology-rainy-summer-hydro-front.webp?v=ecbe57839b22",
-     "back": "thumbs/technology-rainy-summer-hydro-back.webp?v=ecbe57839b22"
+     "front": "thumbs/technology-rainy-summer-hydro-front.webp?v=9441d90d9678",
+     "back": "thumbs/technology-rainy-summer-hydro-back.webp?v=9441d90d9678"
     }
    },
    "source": "Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019)",
@@ -253422,8 +253422,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-rally-jump-throttle.html?v=5bb5b7c8dfe0",
     "bytes": 12441,
     "thumbs": {
-     "front": "thumbs/technology-rally-jump-throttle-front.webp?v=5bb5b7c8dfe0",
-     "back": "thumbs/technology-rally-jump-throttle-back.webp?v=5bb5b7c8dfe0"
+     "front": "thumbs/technology-rally-jump-throttle-front.webp?v=e88c0380033d",
+     "back": "thumbs/technology-rally-jump-throttle-back.webp?v=e88c0380033d"
     }
    },
    "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
@@ -253853,8 +253853,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-rbmk-crane-dome.html?v=7355b314e6c5",
     "bytes": 9940,
     "thumbs": {
-     "front": "thumbs/technology-rbmk-crane-dome-front.webp?v=7355b314e6c5",
-     "back": "thumbs/technology-rbmk-crane-dome-back.webp?v=7355b314e6c5"
+     "front": "thumbs/technology-rbmk-crane-dome-front.webp?v=fb186f7a2ca1",
+     "back": "thumbs/technology-rbmk-crane-dome-back.webp?v=fb186f7a2ca1"
     }
    },
    "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
@@ -254761,8 +254761,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-relay-maze-brain.html?v=d8597aa72088",
     "bytes": 9787,
     "thumbs": {
-     "front": "thumbs/technology-relay-maze-brain-front.webp?v=d8597aa72088",
-     "back": "thumbs/technology-relay-maze-brain-back.webp?v=d8597aa72088"
+     "front": "thumbs/technology-relay-maze-brain-front.webp?v=b3a85a6552b3",
+     "back": "thumbs/technology-relay-maze-brain-back.webp?v=b3a85a6552b3"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -254804,8 +254804,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-rich-get-linked.html?v=728b4902d454",
     "bytes": 16568,
     "thumbs": {
-     "front": "thumbs/technology-rich-get-linked-front.webp?v=728b4902d454",
-     "back": "thumbs/technology-rich-get-linked-back.webp?v=728b4902d454"
+     "front": "thumbs/technology-rich-get-linked-front.webp?v=00531d60bdc8",
+     "back": "thumbs/technology-rich-get-linked-back.webp?v=00531d60bdc8"
     }
    },
    "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
@@ -254847,8 +254847,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-rotor-sail.html?v=a0389137b936",
     "bytes": 20131,
     "thumbs": {
-     "front": "thumbs/technology-rotor-sail-front.webp?v=a0389137b936",
-     "back": "thumbs/technology-rotor-sail-back.webp?v=a0389137b936"
+     "front": "thumbs/technology-rotor-sail-front.webp?v=a63491c7d63b",
+     "back": "thumbs/technology-rotor-sail-back.webp?v=a63491c7d63b"
     }
    },
    "source": "Veritasium, “Backspin Basketball Flies Off Dam” (YouTube, 2015)",
@@ -255051,8 +255051,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-secretly-blue.html?v=108e91d9f337",
     "bytes": 18887,
     "thumbs": {
-     "front": "thumbs/technology-secretly-blue-front.webp?v=108e91d9f337",
-     "back": "thumbs/technology-secretly-blue-back.webp?v=108e91d9f337"
+     "front": "thumbs/technology-secretly-blue-front.webp?v=e6c197cc5b99",
+     "back": "thumbs/technology-secretly-blue-back.webp?v=e6c197cc5b99"
     }
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
@@ -255094,8 +255094,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-sewer-spoil-removal.html?v=d22193f442ac",
     "bytes": 9436,
     "thumbs": {
-     "front": "thumbs/technology-sewer-spoil-removal-front.webp?v=d22193f442ac",
-     "back": "thumbs/technology-sewer-spoil-removal-back.webp?v=d22193f442ac"
+     "front": "thumbs/technology-sewer-spoil-removal-front.webp?v=c3c38f2bbad3",
+     "back": "thumbs/technology-sewer-spoil-removal-back.webp?v=c3c38f2bbad3"
     }
    },
    "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
@@ -255137,8 +255137,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-sky-airspace-blocks.html?v=bded945b826a",
     "bytes": 7894,
     "thumbs": {
-     "front": "thumbs/technology-sky-airspace-blocks-front.webp?v=bded945b826a",
-     "back": "thumbs/technology-sky-airspace-blocks-back.webp?v=bded945b826a"
+     "front": "thumbs/technology-sky-airspace-blocks-front.webp?v=d9795bf3093b",
+     "back": "thumbs/technology-sky-airspace-blocks-back.webp?v=d9795bf3093b"
     }
    },
    "source": "Geopop, “Dentro la cabina dal decollo all’atterraggio - tutto quello che non si vede di un volo di linea” (YouTube, 2025)",
@@ -255180,8 +255180,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-sludge-to-biogas.html?v=fb2ec61b6754",
     "bytes": 22908,
     "thumbs": {
-     "front": "thumbs/technology-sludge-to-biogas-front.webp?v=fb2ec61b6754",
-     "back": "thumbs/technology-sludge-to-biogas-back.webp?v=fb2ec61b6754"
+     "front": "thumbs/technology-sludge-to-biogas-front.webp?v=f470e2e392e5",
+     "back": "thumbs/technology-sludge-to-biogas-back.webp?v=f470e2e392e5"
     }
    },
    "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
@@ -255223,8 +255223,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-smart-road-link.html?v=4b991756bfa8",
     "bytes": 9850,
     "thumbs": {
-     "front": "thumbs/technology-smart-road-link-front.webp?v=4b991756bfa8",
-     "back": "thumbs/technology-smart-road-link-back.webp?v=4b991756bfa8"
+     "front": "thumbs/technology-smart-road-link-front.webp?v=2fe34ba1a225",
+     "back": "thumbs/technology-smart-road-link-back.webp?v=2fe34ba1a225"
     }
    },
    "source": "Geopop, “i motivi dei tempi biblici della Salerno - Reggio Calabria? Sono anche geologici! #shorts” (YouTube, 2022)",
@@ -255265,8 +255265,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-solar-depot-grid.html?v=98f1bf897248",
     "bytes": 21138,
     "thumbs": {
-     "front": "thumbs/technology-solar-depot-grid-front.webp?v=98f1bf897248",
-     "back": "thumbs/technology-solar-depot-grid-back.webp?v=98f1bf897248"
+     "front": "thumbs/technology-solar-depot-grid-front.webp?v=bf385f5e233a",
+     "back": "thumbs/technology-solar-depot-grid-back.webp?v=bf385f5e233a"
     }
    },
    "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
@@ -255307,8 +255307,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-solar-oil-eroi.html?v=283341c70562",
     "bytes": 5608,
     "thumbs": {
-     "front": "thumbs/technology-solar-oil-eroi-front.webp?v=283341c70562",
-     "back": "thumbs/technology-solar-oil-eroi-back.webp?v=283341c70562"
+     "front": "thumbs/technology-solar-oil-eroi-front.webp?v=f25dba0be7b3",
+     "back": "thumbs/technology-solar-oil-eroi-back.webp?v=f25dba0be7b3"
     }
    },
    "source": "Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019)",
@@ -255350,8 +255350,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-solar-train-drivetrain.html?v=035a5cfc0ef8",
     "bytes": 12568,
     "thumbs": {
-     "front": "thumbs/technology-solar-train-drivetrain-front.webp?v=035a5cfc0ef8",
-     "back": "thumbs/technology-solar-train-drivetrain-back.webp?v=035a5cfc0ef8"
+     "front": "thumbs/technology-solar-train-drivetrain-front.webp?v=cbffcdd854d0",
+     "back": "thumbs/technology-solar-train-drivetrain-back.webp?v=cbffcdd854d0"
     }
    },
    "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
@@ -255393,8 +255393,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-stacked-solar-cell.html?v=71c6ff652b81",
     "bytes": 18424,
     "thumbs": {
-     "front": "thumbs/technology-stacked-solar-cell-front.webp?v=71c6ff652b81",
-     "back": "thumbs/technology-stacked-solar-cell-back.webp?v=71c6ff652b81"
+     "front": "thumbs/technology-stacked-solar-cell-front.webp?v=226964f36a74",
+     "back": "thumbs/technology-stacked-solar-cell-back.webp?v=226964f36a74"
     }
    },
    "source": "Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019)",
@@ -255437,8 +255437,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-static-load-floors.html?v=2b4d8a06f90d",
     "bytes": 7765,
     "thumbs": {
-     "front": "thumbs/technology-static-load-floors-front.webp?v=2b4d8a06f90d",
-     "back": "thumbs/technology-static-load-floors-back.webp?v=2b4d8a06f90d"
+     "front": "thumbs/technology-static-load-floors-front.webp?v=0a344b21b941",
+     "back": "thumbs/technology-static-load-floors-back.webp?v=0a344b21b941"
     }
    },
    "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
@@ -255480,8 +255480,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-steam-heavy-oil.html?v=7c87908d3ac3",
     "bytes": 15407,
     "thumbs": {
-     "front": "thumbs/technology-steam-heavy-oil-front.webp?v=7c87908d3ac3",
-     "back": "thumbs/technology-steam-heavy-oil-back.webp?v=7c87908d3ac3"
+     "front": "thumbs/technology-steam-heavy-oil-front.webp?v=0fe02b14355a",
+     "back": "thumbs/technology-steam-heavy-oil-back.webp?v=0fe02b14355a"
     }
    },
    "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
@@ -255523,8 +255523,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-steel-at-1000.html?v=96b4375160ab",
     "bytes": 8888,
     "thumbs": {
-     "front": "thumbs/technology-steel-at-1000-front.webp?v=96b4375160ab",
-     "back": "thumbs/technology-steel-at-1000-back.webp?v=96b4375160ab"
+     "front": "thumbs/technology-steel-at-1000-front.webp?v=7db49a148790",
+     "back": "thumbs/technology-steel-at-1000-back.webp?v=7db49a148790"
     }
    },
    "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
@@ -255566,8 +255566,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-steel-softens-first.html?v=a9492f362fe1",
     "bytes": 11076,
     "thumbs": {
-     "front": "thumbs/technology-steel-softens-first-front.webp?v=a9492f362fe1",
-     "back": "thumbs/technology-steel-softens-first-back.webp?v=a9492f362fe1"
+     "front": "thumbs/technology-steel-softens-first-front.webp?v=566a984176a8",
+     "back": "thumbs/technology-steel-softens-first-back.webp?v=566a984176a8"
     }
    },
    "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
@@ -255608,8 +255608,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-swaying-tower-stress.html?v=01b91b099f36",
     "bytes": 8087,
     "thumbs": {
-     "front": "thumbs/technology-swaying-tower-stress-front.webp?v=01b91b099f36",
-     "back": "thumbs/technology-swaying-tower-stress-back.webp?v=01b91b099f36"
+     "front": "thumbs/technology-swaying-tower-stress-front.webp?v=035ecbe54eb9",
+     "back": "thumbs/technology-swaying-tower-stress-back.webp?v=035ecbe54eb9"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -255651,8 +255651,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tail-pull-retract.html?v=d0295b4d3e52",
     "bytes": 18807,
     "thumbs": {
-     "front": "thumbs/technology-tail-pull-retract-front.webp?v=d0295b4d3e52",
-     "back": "thumbs/technology-tail-pull-retract-back.webp?v=d0295b4d3e52"
+     "front": "thumbs/technology-tail-pull-retract-front.webp?v=80039404d907",
+     "back": "thumbs/technology-tail-pull-retract-back.webp?v=80039404d907"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -255694,8 +255694,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tape-growing-robot.html?v=5a086b660f62",
     "bytes": 16385,
     "thumbs": {
-     "front": "thumbs/technology-tape-growing-robot-front.webp?v=5a086b660f62",
-     "back": "thumbs/technology-tape-growing-robot-back.webp?v=5a086b660f62"
+     "front": "thumbs/technology-tape-growing-robot-front.webp?v=51bd23894189",
+     "back": "thumbs/technology-tape-growing-robot-back.webp?v=51bd23894189"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -255737,8 +255737,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tatara-mass-balance.html?v=5af8ff0cfda0",
     "bytes": 15958,
     "thumbs": {
-     "front": "thumbs/technology-tatara-mass-balance-front.webp?v=5af8ff0cfda0",
-     "back": "thumbs/technology-tatara-mass-balance-back.webp?v=5af8ff0cfda0"
+     "front": "thumbs/technology-tatara-mass-balance-front.webp?v=d8370186388b",
+     "back": "thumbs/technology-tatara-mass-balance-back.webp?v=d8370186388b"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -255781,8 +255781,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tatara-steel-race.html?v=dc4ef090fe89",
     "bytes": 7885,
     "thumbs": {
-     "front": "thumbs/technology-tatara-steel-race-front.webp?v=dc4ef090fe89",
-     "back": "thumbs/technology-tatara-steel-race-back.webp?v=dc4ef090fe89"
+     "front": "thumbs/technology-tatara-steel-race-front.webp?v=2d195c673ef5",
+     "back": "thumbs/technology-tatara-steel-race-back.webp?v=2d195c673ef5"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
@@ -256264,8 +256264,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tempered-glass-squeeze.html?v=acadd0962c20",
     "bytes": 18744,
     "thumbs": {
-     "front": "thumbs/technology-tempered-glass-squeeze-front.webp?v=acadd0962c20",
-     "back": "thumbs/technology-tempered-glass-squeeze-back.webp?v=acadd0962c20"
+     "front": "thumbs/technology-tempered-glass-squeeze-front.webp?v=7f852b375a91",
+     "back": "thumbs/technology-tempered-glass-squeeze-back.webp?v=7f852b375a91"
     }
    },
    "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
@@ -256307,8 +256307,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-the-weak-weld.html?v=b191637010ee",
     "bytes": 13707,
     "thumbs": {
-     "front": "thumbs/technology-the-weak-weld-front.webp?v=b191637010ee",
-     "back": "thumbs/technology-the-weak-weld-back.webp?v=b191637010ee"
+     "front": "thumbs/technology-the-weak-weld-front.webp?v=494722cb4f0c",
+     "back": "thumbs/technology-the-weak-weld-back.webp?v=494722cb4f0c"
     }
    },
    "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
@@ -256350,8 +256350,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-thermite-curie-wipe.html?v=26418029e0b1",
     "bytes": 12225,
     "thumbs": {
-     "front": "thumbs/technology-thermite-curie-wipe-front.webp?v=26418029e0b1",
-     "back": "thumbs/technology-thermite-curie-wipe-back.webp?v=26418029e0b1"
+     "front": "thumbs/technology-thermite-curie-wipe-front.webp?v=fc2bcf4b2850",
+     "back": "thumbs/technology-thermite-curie-wipe-back.webp?v=fc2bcf4b2850"
     }
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
@@ -256392,8 +256392,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-thermite-rail-welds.html?v=4ba0496da4fd",
     "bytes": 8087,
     "thumbs": {
-     "front": "thumbs/technology-thermite-rail-welds-front.webp?v=4ba0496da4fd",
-     "back": "thumbs/technology-thermite-rail-welds-back.webp?v=4ba0496da4fd"
+     "front": "thumbs/technology-thermite-rail-welds-front.webp?v=3969f85bf17e",
+     "back": "thumbs/technology-thermite-rail-welds-back.webp?v=3969f85bf17e"
     }
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
@@ -256435,8 +256435,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-third-impact-load.html?v=dbb5362fe750",
     "bytes": 10826,
     "thumbs": {
-     "front": "thumbs/technology-third-impact-load-front.webp?v=dbb5362fe750",
-     "back": "thumbs/technology-third-impact-load-back.webp?v=dbb5362fe750"
+     "front": "thumbs/technology-third-impact-load-front.webp?v=6596f80af660",
+     "back": "thumbs/technology-third-impact-load-back.webp?v=6596f80af660"
     }
    },
    "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
@@ -256478,8 +256478,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tin-pancake.html?v=02613ec8616a",
     "bytes": 22550,
     "thumbs": {
-     "front": "thumbs/technology-tin-pancake-front.webp?v=02613ec8616a",
-     "back": "thumbs/technology-tin-pancake-back.webp?v=02613ec8616a"
+     "front": "thumbs/technology-tin-pancake-front.webp?v=e17f1e8b7c4e",
+     "back": "thumbs/technology-tin-pancake-back.webp?v=e17f1e8b7c4e"
     }
    },
    "source": "Veritasium, “The Closest Thing We Have to Alien Technology” (YouTube, 2025)",
@@ -256522,8 +256522,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-titan-hull-shape.html?v=9481695cd604",
     "bytes": 9353,
     "thumbs": {
-     "front": "thumbs/technology-titan-hull-shape-front.webp?v=9481695cd604",
-     "back": "thumbs/technology-titan-hull-shape-back.webp?v=9481695cd604"
+     "front": "thumbs/technology-titan-hull-shape-front.webp?v=bef85010e137",
+     "back": "thumbs/technology-titan-hull-shape-back.webp?v=bef85010e137"
     }
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
@@ -256965,8 +256965,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-touch-field-change.html?v=f0b4ab0ef512",
     "bytes": 10154,
     "thumbs": {
-     "front": "thumbs/technology-touch-field-change-front.webp?v=f0b4ab0ef512",
-     "back": "thumbs/technology-touch-field-change-back.webp?v=f0b4ab0ef512"
+     "front": "thumbs/technology-touch-field-change-front.webp?v=b61ec3874d08",
+     "back": "thumbs/technology-touch-field-change-back.webp?v=b61ec3874d08"
     }
    },
    "source": "Geopop, “Sai come funziona uno schermo touch screen? FIGO! NON LO SAPEVO” (YouTube, 2021)",
@@ -257008,8 +257008,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-touch-screen-conductor.html?v=77cbde8e7bad",
     "bytes": 11002,
     "thumbs": {
-     "front": "thumbs/technology-touch-screen-conductor-front.webp?v=77cbde8e7bad",
-     "back": "thumbs/technology-touch-screen-conductor-back.webp?v=77cbde8e7bad"
+     "front": "thumbs/technology-touch-screen-conductor-front.webp?v=92a168f18409",
+     "back": "thumbs/technology-touch-screen-conductor-back.webp?v=92a168f18409"
     }
    },
    "source": "Geopop, “Sai come funziona uno schermo touch screen? FIGO! NON LO SAPEVO” (YouTube, 2021)",
@@ -257050,8 +257050,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tower-leg-sections.html?v=56b25e7ba0ec",
     "bytes": 10440,
     "thumbs": {
-     "front": "thumbs/technology-tower-leg-sections-front.webp?v=56b25e7ba0ec",
-     "back": "thumbs/technology-tower-leg-sections-back.webp?v=56b25e7ba0ec"
+     "front": "thumbs/technology-tower-leg-sections-front.webp?v=69e9d13a1d34",
+     "back": "thumbs/technology-tower-leg-sections-back.webp?v=69e9d13a1d34"
     }
    },
    "source": "Geopop, “Come sarà il Ponte sullo stretto di Messina? La ricostruzione 3D dai progetti originali” (YouTube, 2023)",
@@ -257093,8 +257093,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-towers-casualty-multiplier.html?v=7b50c0ed5dc2",
     "bytes": 8256,
     "thumbs": {
-     "front": "thumbs/technology-towers-casualty-multiplier-front.webp?v=7b50c0ed5dc2",
-     "back": "thumbs/technology-towers-casualty-multiplier-back.webp?v=7b50c0ed5dc2"
+     "front": "thumbs/technology-towers-casualty-multiplier-front.webp?v=5939f2189a57",
+     "back": "thumbs/technology-towers-casualty-multiplier-back.webp?v=5939f2189a57"
     }
    },
    "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
@@ -257135,8 +257135,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-traction-control-slip.html?v=9e3f0a5d89b3",
     "bytes": 10689,
     "thumbs": {
-     "front": "thumbs/technology-traction-control-slip-front.webp?v=9e3f0a5d89b3",
-     "back": "thumbs/technology-traction-control-slip-back.webp?v=9e3f0a5d89b3"
+     "front": "thumbs/technology-traction-control-slip-front.webp?v=aeabc383c546",
+     "back": "thumbs/technology-traction-control-slip-back.webp?v=aeabc383c546"
     }
    },
    "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
@@ -257694,8 +257694,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-trieste-gasoline-float.html?v=67fc7f135fff",
     "bytes": 10031,
     "thumbs": {
-     "front": "thumbs/technology-trieste-gasoline-float-front.webp?v=67fc7f135fff",
-     "back": "thumbs/technology-trieste-gasoline-float-back.webp?v=67fc7f135fff"
+     "front": "thumbs/technology-trieste-gasoline-float-front.webp?v=4d7ee68432cc",
+     "back": "thumbs/technology-trieste-gasoline-float-back.webp?v=4d7ee68432cc"
     }
    },
    "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
@@ -257737,8 +257737,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-trucks-to-rail.html?v=e62391d81c3f",
     "bytes": 10971,
     "thumbs": {
-     "front": "thumbs/technology-trucks-to-rail-front.webp?v=e62391d81c3f",
-     "back": "thumbs/technology-trucks-to-rail-back.webp?v=e62391d81c3f"
+     "front": "thumbs/technology-trucks-to-rail-front.webp?v=fba76728127a",
+     "back": "thumbs/technology-trucks-to-rail-back.webp?v=fba76728127a"
     }
    },
    "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
@@ -257779,8 +257779,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tunnel-foam-mix.html?v=87c2b716da70",
     "bytes": 10912,
     "thumbs": {
-     "front": "thumbs/technology-tunnel-foam-mix-front.webp?v=87c2b716da70",
-     "back": "thumbs/technology-tunnel-foam-mix-back.webp?v=87c2b716da70"
+     "front": "thumbs/technology-tunnel-foam-mix-front.webp?v=42e9dbae1aab",
+     "back": "thumbs/technology-tunnel-foam-mix-back.webp?v=42e9dbae1aab"
     }
    },
    "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
@@ -257823,8 +257823,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tunnel-ground-freezing.html?v=dfdebc36651c",
     "bytes": 10268,
     "thumbs": {
-     "front": "thumbs/technology-tunnel-ground-freezing-front.webp?v=dfdebc36651c",
-     "back": "thumbs/technology-tunnel-ground-freezing-back.webp?v=dfdebc36651c"
+     "front": "thumbs/technology-tunnel-ground-freezing-front.webp?v=b8d24d278744",
+     "back": "thumbs/technology-tunnel-ground-freezing-back.webp?v=b8d24d278744"
     }
    },
    "source": "Geopop, “Siamo letteralmente entrati dentro le Alpi per mostrarvi gli scavi delle gallerie del Brennero” (YouTube, 2025)",
@@ -257866,8 +257866,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tunnel-pressure-barrier-5.html?v=7da3867bc630",
     "bytes": 11945,
     "thumbs": {
-     "front": "thumbs/technology-tunnel-pressure-barrier-5-front.webp?v=7da3867bc630",
-     "back": "thumbs/technology-tunnel-pressure-barrier-5-back.webp?v=7da3867bc630"
+     "front": "thumbs/technology-tunnel-pressure-barrier-5-front.webp?v=d08d3bd641bd",
+     "back": "thumbs/technology-tunnel-pressure-barrier-5-back.webp?v=d08d3bd641bd"
     }
    },
    "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
@@ -257909,8 +257909,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-tunnel-water-table.html?v=d154d80ff825",
     "bytes": 9669,
     "thumbs": {
-     "front": "thumbs/technology-tunnel-water-table-front.webp?v=d154d80ff825",
-     "back": "thumbs/technology-tunnel-water-table-back.webp?v=d154d80ff825"
+     "front": "thumbs/technology-tunnel-water-table-front.webp?v=dcfcb66a628b",
+     "back": "thumbs/technology-tunnel-water-table-back.webp?v=dcfcb66a628b"
     }
    },
    "source": "Geopop, “Alta Velocità Napoli-Bari: siamo andati a vedere come la stanno scavando attraverso gli Appennini” (YouTube, 2024)",
@@ -257952,8 +257952,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-twin-tunnel-links.html?v=39ab4d2a0b4c",
     "bytes": 7530,
     "thumbs": {
-     "front": "thumbs/technology-twin-tunnel-links-front.webp?v=39ab4d2a0b4c",
-     "back": "thumbs/technology-twin-tunnel-links-back.webp?v=39ab4d2a0b4c"
+     "front": "thumbs/technology-twin-tunnel-links-front.webp?v=05bd986777e7",
+     "back": "thumbs/technology-twin-tunnel-links-back.webp?v=05bd986777e7"
     }
    },
    "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
@@ -258363,8 +258363,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-undersea-cable-blur.html?v=2458fb2d6b30",
     "bytes": 16171,
     "thumbs": {
-     "front": "thumbs/technology-undersea-cable-blur-front.webp?v=2458fb2d6b30",
-     "back": "thumbs/technology-undersea-cable-blur-back.webp?v=2458fb2d6b30"
+     "front": "thumbs/technology-undersea-cable-blur-front.webp?v=7765baa236f9",
+     "back": "thumbs/technology-undersea-cable-blur-back.webp?v=7765baa236f9"
     }
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
@@ -258406,8 +258406,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-upside-down-blocks.html?v=aeae6982e361",
     "bytes": 12177,
     "thumbs": {
-     "front": "thumbs/technology-upside-down-blocks-front.webp?v=aeae6982e361",
-     "back": "thumbs/technology-upside-down-blocks-back.webp?v=aeae6982e361"
+     "front": "thumbs/technology-upside-down-blocks-front.webp?v=653531c0e3e5",
+     "back": "thumbs/technology-upside-down-blocks-back.webp?v=653531c0e3e5"
     }
    },
    "source": "Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)",
@@ -258449,8 +258449,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-v1-decision-speed-1.html?v=8d4716f7cb9c",
     "bytes": 24240,
     "thumbs": {
-     "front": "thumbs/technology-v1-decision-speed-1-front.webp?v=8d4716f7cb9c",
-     "back": "thumbs/technology-v1-decision-speed-1-back.webp?v=8d4716f7cb9c"
+     "front": "thumbs/technology-v1-decision-speed-1-front.webp?v=72ffb6f296b9",
+     "back": "thumbs/technology-v1-decision-speed-1-back.webp?v=72ffb6f296b9"
     }
    },
    "source": "Geopop, “Dentro la cabina dal decollo all’atterraggio - tutto quello che non si vede di un volo di linea” (YouTube, 2025)",
@@ -258492,8 +258492,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-vine-robot-camera.html?v=665f4d59133a",
     "bytes": 9362,
     "thumbs": {
-     "front": "thumbs/technology-vine-robot-camera-front.webp?v=665f4d59133a",
-     "back": "thumbs/technology-vine-robot-camera-back.webp?v=665f4d59133a"
+     "front": "thumbs/technology-vine-robot-camera-front.webp?v=467070a354c5",
+     "back": "thumbs/technology-vine-robot-camera-back.webp?v=467070a354c5"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -258535,8 +258535,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-vine-robot-retraction.html?v=51d2428542f7",
     "bytes": 9667,
     "thumbs": {
-     "front": "thumbs/technology-vine-robot-retraction-front.webp?v=51d2428542f7",
-     "back": "thumbs/technology-vine-robot-retraction-back.webp?v=51d2428542f7"
+     "front": "thumbs/technology-vine-robot-retraction-front.webp?v=77a0f450d2e6",
+     "back": "thumbs/technology-vine-robot-retraction-back.webp?v=77a0f450d2e6"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -258578,8 +258578,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-vine-robot-sand.html?v=dc4481297771",
     "bytes": 10358,
     "thumbs": {
-     "front": "thumbs/technology-vine-robot-sand-front.webp?v=dc4481297771",
-     "back": "thumbs/technology-vine-robot-sand-back.webp?v=dc4481297771"
+     "front": "thumbs/technology-vine-robot-sand-front.webp?v=7f3be0cb1d62",
+     "back": "thumbs/technology-vine-robot-sand-back.webp?v=7f3be0cb1d62"
     }
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
@@ -258621,8 +258621,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-vinyl-stereo-groove.html?v=67b30d049b68",
     "bytes": 10253,
     "thumbs": {
-     "front": "thumbs/technology-vinyl-stereo-groove-front.webp?v=67b30d049b68",
-     "back": "thumbs/technology-vinyl-stereo-groove-back.webp?v=67b30d049b68"
+     "front": "thumbs/technology-vinyl-stereo-groove-front.webp?v=7a7ac0d1b47c",
+     "back": "thumbs/technology-vinyl-stereo-groove-back.webp?v=7a7ac0d1b47c"
     }
    },
    "source": "Geopop, “Come è fatto un vinile e come funziona? Figo! Non lo sapevo” (YouTube, 2021)",
@@ -258665,8 +258665,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-weakest-floor-thirty.html?v=03f0ade44d62",
     "bytes": 7752,
     "thumbs": {
-     "front": "thumbs/technology-weakest-floor-thirty-front.webp?v=03f0ade44d62",
-     "back": "thumbs/technology-weakest-floor-thirty-back.webp?v=03f0ade44d62"
+     "front": "thumbs/technology-weakest-floor-thirty-front.webp?v=9896f6f1f396",
+     "back": "thumbs/technology-weakest-floor-thirty-back.webp?v=9896f6f1f396"
     }
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
@@ -258708,8 +258708,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-xm42-flamethrower.html?v=dff2e0621928",
     "bytes": 14798,
     "thumbs": {
-     "front": "thumbs/technology-xm42-flamethrower-front.webp?v=dff2e0621928",
-     "back": "thumbs/technology-xm42-flamethrower-back.webp?v=dff2e0621928"
+     "front": "thumbs/technology-xm42-flamethrower-front.webp?v=6bbafd9ce96a",
+     "back": "thumbs/technology-xm42-flamethrower-back.webp?v=6bbafd9ce96a"
     }
    },
    "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
@@ -258751,8 +258751,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-yakutsk-stilt-houses.html?v=949686de56e6",
     "bytes": 9888,
     "thumbs": {
-     "front": "thumbs/technology-yakutsk-stilt-houses-front.webp?v=949686de56e6",
-     "back": "thumbs/technology-yakutsk-stilt-houses-back.webp?v=949686de56e6"
+     "front": "thumbs/technology-yakutsk-stilt-houses-front.webp?v=cb000796ab6e",
+     "back": "thumbs/technology-yakutsk-stilt-houses-back.webp?v=cb000796ab6e"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -258794,8 +258794,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/technology-yellow-button-anomaly.html?v=34b7a2dda7da",
     "bytes": 24340,
     "thumbs": {
-     "front": "thumbs/technology-yellow-button-anomaly-front.webp?v=34b7a2dda7da",
-     "back": "thumbs/technology-yellow-button-anomaly-back.webp?v=34b7a2dda7da"
+     "front": "thumbs/technology-yellow-button-anomaly-front.webp?v=e4d2af9b2aa5",
+     "back": "thumbs/technology-yellow-button-anomaly-back.webp?v=e4d2af9b2aa5"
     }
    },
    "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
@@ -259700,8 +259700,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-airport-tells.html?v=8ab1cba13abb",
     "bytes": 12626,
     "thumbs": {
-     "front": "thumbs/thinking-airport-tells-front.webp?v=8ab1cba13abb",
-     "back": "thumbs/thinking-airport-tells-back.webp?v=8ab1cba13abb"
+     "front": "thumbs/thinking-airport-tells-front.webp?v=13cd339a993f",
+     "back": "thumbs/thinking-airport-tells-back.webp?v=13cd339a993f"
     }
    },
    "source": "Diventare Strong, “MiniCorso: Come Leggere Pensieri, Bugie, Emozioni. Accessi Oculari. PNL Linguaggio Del Corpo” (YouTube, 2017)",
@@ -259814,8 +259814,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-because.html?v=dc96d8df596a",
     "bytes": 10807,
     "thumbs": {
-     "front": "thumbs/thinking-because-front.webp?v=dc96d8df596a",
-     "back": "thumbs/thinking-because-back.webp?v=dc96d8df596a"
+     "front": "thumbs/thinking-because-front.webp?v=b262e9405116",
+     "back": "thumbs/thinking-because-back.webp?v=b262e9405116"
     }
    },
    "source": "Diventare Strong, “Come Farsi Valere: 5 Comandamenti. Nelle Relazioni Sentimentali, rapporti personali e con gli amici” (YouTube, 2020)",
@@ -259855,8 +259855,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-bell-or-tail.html?v=18acd622bfc9",
     "bytes": 13192,
     "thumbs": {
-     "front": "thumbs/thinking-bell-or-tail-front.webp?v=18acd622bfc9",
-     "back": "thumbs/thinking-bell-or-tail-back.webp?v=18acd622bfc9"
+     "front": "thumbs/thinking-bell-or-tail-front.webp?v=5208a88107dc",
+     "back": "thumbs/thinking-bell-or-tail-back.webp?v=5208a88107dc"
     }
    },
    "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
@@ -259896,8 +259896,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-bermuda-per-ship.html?v=92932216b416",
     "bytes": 19903,
     "thumbs": {
-     "front": "thumbs/thinking-bermuda-per-ship-front.webp?v=92932216b416",
-     "back": "thumbs/thinking-bermuda-per-ship-back.webp?v=92932216b416"
+     "front": "thumbs/thinking-bermuda-per-ship-front.webp?v=d590d476552a",
+     "back": "thumbs/thinking-bermuda-per-ship-back.webp?v=d590d476552a"
     }
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
@@ -261478,8 +261478,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-confusion-helps-memory.html?v=d5621731c173",
     "bytes": 8820,
     "thumbs": {
-     "front": "thumbs/thinking-confusion-helps-memory-front.webp?v=d5621731c173",
-     "back": "thumbs/thinking-confusion-helps-memory-back.webp?v=d5621731c173"
+     "front": "thumbs/thinking-confusion-helps-memory-front.webp?v=6e20f99ab88d",
+     "back": "thumbs/thinking-confusion-helps-memory-back.webp?v=6e20f99ab88d"
     }
    },
    "source": "Veritasium, “The Science of Thinking” (YouTube, 2017)",
@@ -261520,8 +261520,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-cool-down.html?v=7b87c02a1402",
     "bytes": 13586,
     "thumbs": {
-     "front": "thumbs/thinking-cool-down-front.webp?v=7b87c02a1402",
-     "back": "thumbs/thinking-cool-down-back.webp?v=7b87c02a1402"
+     "front": "thumbs/thinking-cool-down-front.webp?v=f5f4171143d6",
+     "back": "thumbs/thinking-cool-down-back.webp?v=f5f4171143d6"
     }
    },
    "source": "Diventare Strong, “Ti OFFEDONO? Rispondi così agli STRONZI” (YouTube, 2020)",
@@ -261900,8 +261900,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-easiest-to-fool.html?v=e025907f5c4b",
     "bytes": 9320,
     "thumbs": {
-     "front": "thumbs/thinking-easiest-to-fool-front.webp?v=e025907f5c4b",
-     "back": "thumbs/thinking-easiest-to-fool-back.webp?v=e025907f5c4b"
+     "front": "thumbs/thinking-easiest-to-fool-front.webp?v=5015385c0eaf",
+     "back": "thumbs/thinking-easiest-to-fool-back.webp?v=5015385c0eaf"
     }
    },
    "source": "Veritasium, “Why Do You Make People Look Stupid?” (YouTube, 2012)",
@@ -261941,8 +261941,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-effort-body-signs.html?v=d4c075021e3f",
     "bytes": 9898,
     "thumbs": {
-     "front": "thumbs/thinking-effort-body-signs-front.webp?v=d4c075021e3f",
-     "back": "thumbs/thinking-effort-body-signs-back.webp?v=d4c075021e3f"
+     "front": "thumbs/thinking-effort-body-signs-front.webp?v=5df8713f4b3b",
+     "back": "thumbs/thinking-effort-body-signs-back.webp?v=5df8713f4b3b"
     }
    },
    "source": "Veritasium, “The Science of Thinking” (YouTube, 2017)",
@@ -261982,8 +261982,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-eyes-dont-tell.html?v=716d012784bd",
     "bytes": 20567,
     "thumbs": {
-     "front": "thumbs/thinking-eyes-dont-tell-front.webp?v=716d012784bd",
-     "back": "thumbs/thinking-eyes-dont-tell-back.webp?v=716d012784bd"
+     "front": "thumbs/thinking-eyes-dont-tell-front.webp?v=cc8f667dad88",
+     "back": "thumbs/thinking-eyes-dont-tell-back.webp?v=cc8f667dad88"
     }
    },
    "source": "Diventare Strong, “MiniCorso: Come Leggere Pensieri, Bugie, Emozioni. Accessi Oculari. PNL Linguaggio Del Corpo” (YouTube, 2017)",
@@ -262209,8 +262209,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-fukushima-radiation-toll.html?v=9dacd5613dfb",
     "bytes": 7877,
     "thumbs": {
-     "front": "thumbs/thinking-fukushima-radiation-toll-front.webp?v=9dacd5613dfb",
-     "back": "thumbs/thinking-fukushima-radiation-toll-back.webp?v=9dacd5613dfb"
+     "front": "thumbs/thinking-fukushima-radiation-toll-front.webp?v=7f5fb66de534",
+     "back": "thumbs/thinking-fukushima-radiation-toll-back.webp?v=7f5fb66de534"
     }
    },
    "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
@@ -262325,8 +262325,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-generous-tit-tat.html?v=ed3719203f0c",
     "bytes": 11289,
     "thumbs": {
-     "front": "thumbs/thinking-generous-tit-tat-front.webp?v=ed3719203f0c",
-     "back": "thumbs/thinking-generous-tit-tat-back.webp?v=ed3719203f0c"
+     "front": "thumbs/thinking-generous-tit-tat-front.webp?v=8c3e542f0954",
+     "back": "thumbs/thinking-generous-tit-tat-back.webp?v=8c3e542f0954"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -263286,8 +263286,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-hidden-popcorn.html?v=52cbac6ec1be",
     "bytes": 13770,
     "thumbs": {
-     "front": "thumbs/thinking-hidden-popcorn-front.webp?v=52cbac6ec1be",
-     "back": "thumbs/thinking-hidden-popcorn-back.webp?v=52cbac6ec1be"
+     "front": "thumbs/thinking-hidden-popcorn-front.webp?v=744bd5cedb36",
+     "back": "thumbs/thinking-hidden-popcorn-back.webp?v=744bd5cedb36"
     }
    },
    "source": "Diventare Strong, “Persuasione Ipnotica. \"Comandi Nascosti\". Convincere Persuadere E Influenzare: Linguaggio Ipnotico” (YouTube, 2017)",
@@ -263327,8 +263327,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-hypnosis-recall.html?v=812ee7d0a563",
     "bytes": 13906,
     "thumbs": {
-     "front": "thumbs/thinking-hypnosis-recall-front.webp?v=812ee7d0a563",
-     "back": "thumbs/thinking-hypnosis-recall-back.webp?v=812ee7d0a563"
+     "front": "thumbs/thinking-hypnosis-recall-front.webp?v=4e8cfee67d2b",
+     "back": "thumbs/thinking-hypnosis-recall-back.webp?v=4e8cfee67d2b"
     }
    },
    "source": "Diventare Strong, “Persuasione Ipnotica. \"Comandi Nascosti\". Convincere Persuadere E Influenzare: Linguaggio Ipnotico” (YouTube, 2017)",
@@ -263406,8 +263406,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-inaction-sure-failure.html?v=cecaafd266d1",
     "bytes": 14486,
     "thumbs": {
-     "front": "thumbs/thinking-inaction-sure-failure-front.webp?v=cecaafd266d1",
-     "back": "thumbs/thinking-inaction-sure-failure-back.webp?v=cecaafd266d1"
+     "front": "thumbs/thinking-inaction-sure-failure-front.webp?v=4b111eca5615",
+     "back": "thumbs/thinking-inaction-sure-failure-back.webp?v=4b111eca5615"
     }
    },
    "source": "Diventare Strong, “Come Eliminare Blocchi Emotivi E Mentali” (YouTube, 2017)",
@@ -263483,8 +263483,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-known-last-round.html?v=0ecd43c9d8ff",
     "bytes": 6248,
     "thumbs": {
-     "front": "thumbs/thinking-known-last-round-front.webp?v=0ecd43c9d8ff",
-     "back": "thumbs/thinking-known-last-round-back.webp?v=0ecd43c9d8ff"
+     "front": "thumbs/thinking-known-last-round-front.webp?v=d45098dd805c",
+     "back": "thumbs/thinking-known-last-round-back.webp?v=d45098dd805c"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -263974,8 +263974,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-nice-strategies-win.html?v=d0fbed60be8b",
     "bytes": 8778,
     "thumbs": {
-     "front": "thumbs/thinking-nice-strategies-win-front.webp?v=d0fbed60be8b",
-     "back": "thumbs/thinking-nice-strategies-win-back.webp?v=d0fbed60be8b"
+     "front": "thumbs/thinking-nice-strategies-win-front.webp?v=4f40143aa37a",
+     "back": "thumbs/thinking-nice-strategies-win-back.webp?v=4f40143aa37a"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -264015,8 +264015,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-noisy-tit-for-tat.html?v=049d3e4615e2",
     "bytes": 9281,
     "thumbs": {
-     "front": "thumbs/thinking-noisy-tit-for-tat-front.webp?v=049d3e4615e2",
-     "back": "thumbs/thinking-noisy-tit-for-tat-back.webp?v=049d3e4615e2"
+     "front": "thumbs/thinking-noisy-tit-for-tat-front.webp?v=a68e48276b17",
+     "back": "thumbs/thinking-noisy-tit-for-tat-back.webp?v=a68e48276b17"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -264057,8 +264057,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-one-word.html?v=6fa4e7ada0f8",
     "bytes": 20645,
     "thumbs": {
-     "front": "thumbs/thinking-one-word-front.webp?v=6fa4e7ada0f8",
-     "back": "thumbs/thinking-one-word-back.webp?v=6fa4e7ada0f8"
+     "front": "thumbs/thinking-one-word-front.webp?v=fd7a322e1424",
+     "back": "thumbs/thinking-one-word-back.webp?v=fd7a322e1424"
     }
    },
    "source": "Diventare Strong, “Frasi dei Manipolatori: Non Farti Fregare” (YouTube, 2024)",
@@ -264135,8 +264135,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-power-of-no.html?v=7d0abfdf61e4",
     "bytes": 9798,
     "thumbs": {
-     "front": "thumbs/thinking-power-of-no-front.webp?v=7d0abfdf61e4",
-     "back": "thumbs/thinking-power-of-no-back.webp?v=7d0abfdf61e4"
+     "front": "thumbs/thinking-power-of-no-front.webp?v=f62750323aed",
+     "back": "thumbs/thinking-power-of-no-back.webp?v=f62750323aed"
     }
    },
    "source": "Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)",
@@ -264213,8 +264213,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-random-end-cooperation.html?v=43018d2f8c7b",
     "bytes": 8867,
     "thumbs": {
-     "front": "thumbs/thinking-random-end-cooperation-front.webp?v=43018d2f8c7b",
-     "back": "thumbs/thinking-random-end-cooperation-back.webp?v=43018d2f8c7b"
+     "front": "thumbs/thinking-random-end-cooperation-front.webp?v=b8fa1dd3ffda",
+     "back": "thumbs/thinking-random-end-cooperation-back.webp?v=b8fa1dd3ffda"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -264255,8 +264255,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-rotten-cake-no.html?v=8151615c769d",
     "bytes": 18894,
     "thumbs": {
-     "front": "thumbs/thinking-rotten-cake-no-front.webp?v=8151615c769d",
-     "back": "thumbs/thinking-rotten-cake-no-back.webp?v=8151615c769d"
+     "front": "thumbs/thinking-rotten-cake-no-front.webp?v=efa95d33bc1f",
+     "back": "thumbs/thinking-rotten-cake-no-back.webp?v=efa95d33bc1f"
     }
    },
    "source": "Diventare Strong, “Come Smettere di Essere Troppo Buoni” (YouTube, 2021)",
@@ -264369,8 +264369,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-tester-probes-forgiveness.html?v=aacce8e9ad28",
     "bytes": 7267,
     "thumbs": {
-     "front": "thumbs/thinking-tester-probes-forgiveness-front.webp?v=aacce8e9ad28",
-     "back": "thumbs/thinking-tester-probes-forgiveness-back.webp?v=aacce8e9ad28"
+     "front": "thumbs/thinking-tester-probes-forgiveness-front.webp?v=1c5520eac10c",
+     "back": "thumbs/thinking-tester-probes-forgiveness-back.webp?v=1c5520eac10c"
     }
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
@@ -264411,8 +264411,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-the-blame-trap.html?v=69a98e732957",
     "bytes": 14193,
     "thumbs": {
-     "front": "thumbs/thinking-the-blame-trap-front.webp?v=69a98e732957",
-     "back": "thumbs/thinking-the-blame-trap-back.webp?v=69a98e732957"
+     "front": "thumbs/thinking-the-blame-trap-front.webp?v=e86a486d9d1f",
+     "back": "thumbs/thinking-the-blame-trap-back.webp?v=e86a486d9d1f"
     }
    },
    "source": "Diventare Strong, “Mentalità D'Acciaio: 7 Pensieri da Eliminare dalla Tua Mente (Atteggiamento Mentale Vincente Strong)” (YouTube, 2020)",
@@ -264453,8 +264453,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-three-letters.html?v=27328adcf735",
     "bytes": 11473,
     "thumbs": {
-     "front": "thumbs/thinking-three-letters-front.webp?v=27328adcf735",
-     "back": "thumbs/thinking-three-letters-back.webp?v=27328adcf735"
+     "front": "thumbs/thinking-three-letters-front.webp?v=0e8f2ee7a9c5",
+     "back": "thumbs/thinking-three-letters-back.webp?v=0e8f2ee7a9c5"
     }
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
@@ -264494,8 +264494,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-two-four-seven.html?v=f401c9bd66ad",
     "bytes": 7589,
     "thumbs": {
-     "front": "thumbs/thinking-two-four-seven-front.webp?v=f401c9bd66ad",
-     "back": "thumbs/thinking-two-four-seven-back.webp?v=f401c9bd66ad"
+     "front": "thumbs/thinking-two-four-seven-front.webp?v=d1d8ca597a61",
+     "back": "thumbs/thinking-two-four-seven-back.webp?v=d1d8ca597a61"
     }
    },
    "source": "Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)",
@@ -264607,8 +264607,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-vicious-cycle.html?v=4e69874421c0",
     "bytes": 6013,
     "thumbs": {
-     "front": "thumbs/thinking-vicious-cycle-front.webp?v=4e69874421c0",
-     "back": "thumbs/thinking-vicious-cycle-back.webp?v=4e69874421c0"
+     "front": "thumbs/thinking-vicious-cycle-front.webp?v=6bedf905febf",
+     "back": "thumbs/thinking-vicious-cycle-back.webp?v=6bedf905febf"
     }
    },
    "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
@@ -264685,8 +264685,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/thinking-weight-of-disproof.html?v=29b400b167b0",
     "bytes": 10779,
     "thumbs": {
-     "front": "thumbs/thinking-weight-of-disproof-front.webp?v=29b400b167b0",
-     "back": "thumbs/thinking-weight-of-disproof-back.webp?v=29b400b167b0"
+     "front": "thumbs/thinking-weight-of-disproof-front.webp?v=2076cb11dfa2",
+     "back": "thumbs/thinking-weight-of-disproof-back.webp?v=2076cb11dfa2"
     }
    },
    "source": "Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)",
@@ -266395,8 +266395,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/weird_facts-air-holds-you-up.html?v=5685e2502871",
     "bytes": 14868,
     "thumbs": {
-     "front": "thumbs/weird_facts-air-holds-you-up-front.webp?v=5685e2502871",
-     "back": "thumbs/weird_facts-air-holds-you-up-back.webp?v=5685e2502871"
+     "front": "thumbs/weird_facts-air-holds-you-up-front.webp?v=32ed18f85022",
+     "back": "thumbs/weird_facts-air-holds-you-up-back.webp?v=32ed18f85022"
     }
    },
    "source": "Veritasium, “World's Heaviest Weight” (YouTube, 2017)",
@@ -266850,8 +266850,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/weird_facts-bermuda-not-top-ten.html?v=97c015e55b36",
     "bytes": 16568,
     "thumbs": {
-     "front": "thumbs/weird_facts-bermuda-not-top-ten-front.webp?v=97c015e55b36",
-     "back": "thumbs/weird_facts-bermuda-not-top-ten-back.webp?v=97c015e55b36"
+     "front": "thumbs/weird_facts-bermuda-not-top-ten-front.webp?v=3a15f29da84a",
+     "back": "thumbs/weird_facts-bermuda-not-top-ten-back.webp?v=3a15f29da84a"
     }
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
@@ -267344,8 +267344,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/weird_facts-chainsaw-frozen-meat.html?v=52b40387594b",
     "bytes": 14110,
     "thumbs": {
-     "front": "thumbs/weird_facts-chainsaw-frozen-meat-front.webp?v=52b40387594b",
-     "back": "thumbs/weird_facts-chainsaw-frozen-meat-back.webp?v=52b40387594b"
+     "front": "thumbs/weird_facts-chainsaw-frozen-meat-front.webp?v=54741149f012",
+     "back": "thumbs/weird_facts-chainsaw-frozen-meat-back.webp?v=54741149f012"
     }
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
@@ -267386,8 +267386,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/weird_facts-covered-ferris-wheel.html?v=cd7c112a213b",
     "bytes": 10176,
     "thumbs": {
-     "front": "thumbs/weird_facts-covered-ferris-wheel-front.webp?v=cd7c112a213b",
-     "back": "thumbs/weird_facts-covered-ferris-wheel-back.webp?v=cd7c112a213b"
+     "front": "thumbs/weird_facts-covered-ferris-wheel-front.webp?v=6554dce59612",
+     "back": "thumbs/weird_facts-covered-ferris-wheel-back.webp?v=6554dce59612"
     }
    },
    "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
@@ -270537,8 +270537,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/weird_facts-marble-football-fields.html?v=b6658974e0a6",
     "bytes": 15776,
     "thumbs": {
-     "front": "thumbs/weird_facts-marble-football-fields-front.webp?v=b6658974e0a6",
-     "back": "thumbs/weird_facts-marble-football-fields-back.webp?v=b6658974e0a6"
+     "front": "thumbs/weird_facts-marble-football-fields-front.webp?v=a99902627b09",
+     "back": "thumbs/weird_facts-marble-football-fields-back.webp?v=a99902627b09"
     }
    },
    "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
@@ -270960,8 +270960,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/weird_facts-not-a-flamethrower.html?v=a4d65f103665",
     "bytes": 18344,
     "thumbs": {
-     "front": "thumbs/weird_facts-not-a-flamethrower-front.webp?v=a4d65f103665",
-     "back": "thumbs/weird_facts-not-a-flamethrower-back.webp?v=a4d65f103665"
+     "front": "thumbs/weird_facts-not-a-flamethrower-front.webp?v=6208a00caee6",
+     "back": "thumbs/weird_facts-not-a-flamethrower-back.webp?v=6208a00caee6"
     }
    },
    "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
@@ -272356,8 +272356,8 @@ const String kEmbeddedBank = r'''
     "page": "pages/weird_facts-skin-of-aerogel.html?v=2cf3da393d67",
     "bytes": 13340,
     "thumbs": {
-     "front": "thumbs/weird_facts-skin-of-aerogel-front.webp?v=2cf3da393d67",
-     "back": "thumbs/weird_facts-skin-of-aerogel-back.webp?v=2cf3da393d67"
+     "front": "thumbs/weird_facts-skin-of-aerogel-front.webp?v=edc692d54e62",
+     "back": "thumbs/weird_facts-skin-of-aerogel-back.webp?v=edc692d54e62"
     }
    },
    "source": "Veritasium, “I Waterproofed Myself With Aerogel!” (YouTube, 2019)",
@@ -275238,7 +275238,8 @@ const String kEmbeddedBank = r'''
   "480": "thinking-f2",
   "481": "thinking-z21",
   "482": "thinking-6",
-  "483": "thinking-book-the-demon-haunted-world-4"
+  "483": "thinking-book-the-demon-haunted-world-4",
+  "484": "thinking-z14"
  },
  "commons": {
   "1": [
@@ -280070,6 +280071,16 @@ const String kEmbeddedBank = r'''
    "life-gut-or-data-2",
    "economics-fees-that-grow-2",
    "human_body-mosquito-dna-spots"
+  ],
+  "484": [
+   "life-gratitude-3",
+   "space-myths-about-them-3",
+   "psychology-stress-and-choices-3",
+   "music-music-and-memory-1",
+   "human_body-blood-pressure-1",
+   "food-local-or-not-2",
+   "science-sardinia-corsica-door",
+   "maths-three-adic-squares"
   ]
  }
 }
