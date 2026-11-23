@@ -168,7 +168,7 @@ class _RevealBodyState extends State<RevealBody> {
         _SourceTap(
           pill: pill,
           child: Text(
-            context.l10n.sourceLabel(pill.source),
+            context.l10n.sourceLabel(pill.sourceShort),
             style:
                 AppText.body(
                   size: 11.5,
@@ -1313,8 +1313,8 @@ class _CardRevealState extends State<CardReveal> {
     // "Book · Kahneman" differently, and should be able to.
     final String? kind = sourceKindName(l10n, pill.sourceKind);
     final source = kind == null
-        ? l10n.sourceLabel(pill.source)
-        : l10n.sourceLabelKind(kind, pill.source);
+        ? l10n.sourceLabel(pill.sourceShort)
+        : l10n.sourceLabelKind(kind, pill.sourceShort);
     final sourceStyle = _Type.source(ink, f.source);
     // The flag to report the card rides at the end of the source it would be
     // checked against, so it costs the card no line of its own. Measured as a
