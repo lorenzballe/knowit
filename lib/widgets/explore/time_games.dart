@@ -29,9 +29,9 @@ import '../../models/pill.dart';
 import '../../state/explore_play.dart';
 import '../../theme.dart';
 import '../../utils/share_link.dart';
-import 'challenge_art.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
+import 'challenges.dart';
 import 'parts.dart' show CardHead;
 
 /// What the three games share: the day's deal, the round in play, and the
@@ -152,6 +152,9 @@ abstract class TimeChallenge extends ChallengeGame {
   /// What a round's end is noted with.
   Map<String, Object> get finishedFacts;
 
+  /// The round's score, as its tile says it once the round is over: "3/4".
+  String get tally;
+
   /// Says [line] was shown.
   void shown(DatedLine line) {
     if (_shown.add(line.pill.id)) onShown?.call(line.pill);
@@ -224,6 +227,13 @@ class InOrderChallenge extends TimeChallenge {
     for (int i = 0; i < lines.length; i++) rightAt(i),
   ].where((r) => r).length;
 
+  /// What a random order puts in its place, on average: one, whatever the
+  /// number of moments.
+  static const int chance = 1;
+
+  @override
+  String get tally => '$right/${lines.length}';
+
   @override
   Map<String, Object> get finishedFacts => {'right': right};
 
@@ -244,8 +254,12 @@ class InOrderChallenge extends TimeChallenge {
       score: '$right',
       of: '$n',
       label: l.nOfM(right, n),
-      line: right == n ? l.inOrderPerfect : l.betsScoreSentence(right, n),
-      board: GameSquares(marks: [for (int i = 0; i < n; i++) rightAt(i)]),
+      line: right == n
+          ? l.inOrderPerfect
+          : challengeChance(l, right: right, chance: chance, of: n),
+      figures: [
+        (label: l.challengeAccuracy, value: gamePercent(context, right, n)),
+      ],
       review: [
         for (int i = 0; i < n; i++)
           GameReviewItem(
@@ -314,21 +328,16 @@ class _InOrderPlayState extends State<_InOrderPlay> {
     if (_told || _picks.length != _game.lines.length) return;
     setState(() => _told = true);
     _game.answer([..._picks]);
-    final int right = _game.right;
-    final int n = _game.lines.length;
-    if (right == n) {
-      HapticFeedback.lightImpact();
-    } else {
-      HapticFeedback.heavyImpact();
-    }
-    widget.kit.say(context.l10n.nOfM(right, n));
-    widget.kit.finish(cheer: right == n, after: const Duration(milliseconds: 1900));
+    HapticFeedback.lightImpact();
+    widget.kit.say(context.l10n.nOfM(_game.right, _game.lines.length));
+    widget.kit.finish(after: const Duration(milliseconds: 1900));
   }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final GameKit kit = widget.kit;
+    final Palette p = kit.palette;
     final List<DatedLine> shown = _game.lines;
     final List<DatedLine> truth = _game.truth;
     final int n = shown.length;
@@ -348,21 +357,16 @@ class _InOrderPlayState extends State<_InOrderPlay> {
         maxLines: 2,
         textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.4),
         style: AppText.display(
-          size: 19,
-          weight: FontWeight.w700,
-          height: 1.1,
+          size: 22,
+          weight: FontWeight.w400,
+          height: 1.2,
           spacing: -0.3,
-          color: kit.ink,
+          color: p.ink,
         ),
       ),
-      marks: [
-        for (int i = 0; i < n; i++) _told ? _game.rightAt(i) : null,
-      ],
-      at: _told ? n : _picks.length,
       body: LayoutBuilder(
         builder: (context, box) {
-          const double gap = 10;
-          final double h = (box.maxHeight - gap * (n - 1)) / n;
+          final double h = box.maxHeight / n;
           return Stack(
             children: [
               for (final DatedLine d in shown)
@@ -371,45 +375,58 @@ class _InOrderPlayState extends State<_InOrderPlay> {
                   final int pick = _picks.indexOf(d.pill.id);
                   return AnimatedPositioned(
                     key: ValueKey('in-order-card-${d.pill.id}'),
-                    duration: kit.motion(620),
-                    curve: Curves.easeInOutCubicEmphasized,
+                    duration: kit.motion(280),
+                    curve: Curves.easeOutCubic,
                     left: 0,
                     right: 0,
-                    top: slot * (h + gap),
+                    top: slot * h,
                     height: h,
                     child: _Moment(
                       line: d,
                       rank: pick < 0 ? null : pick + 1,
                       told: _told,
                       right: _told ? _game.rightAt(slot) : null,
+                      accent: kit.accent,
                       onTap: () => _tap(d),
                     ),
                   );
                 }(),
+              // The hairlines between the places, which stay where they
+              // are as the moments move.
+              for (int i = 0; i <= n; i++)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: i < n ? i * h : box.maxHeight - 1,
+                  height: 1,
+                  child: IgnorePointer(child: ColoredBox(color: p.line)),
+                ),
             ],
           );
         },
       ),
-      actions: GameButton(
+      actions: GameButton.primary(
         key: const ValueKey('in-order-check'),
+        context: context,
         label: l.inOrderCheck,
-        icon: Icons.check_rounded,
-        face: kArtInk,
-        ink: kArtCream,
-        height: 72,
+        tone: kit.look.tone,
         onTap: all && !_told ? _check : null,
       ),
     );
   }
 }
 
-/// One moment of In order: the badge of where it was put, and the moment.
+/// One moment of In order, set as a line of a page: in its margin where it
+/// was put — an empty ring before it is, its place after — and once told,
+/// its year, in the calm green where it stands right and the calm red
+/// where it does not.
 class _Moment extends StatelessWidget {
   const _Moment({
     required this.line,
     required this.rank,
     required this.told,
     required this.right,
+    required this.accent,
     required this.onTap,
   });
 
@@ -417,18 +434,15 @@ class _Moment extends StatelessWidget {
   final int? rank;
   final bool told;
   final bool? right;
+  final Color accent;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final Palette p = context.p;
     final int? r = rank;
     final bool on = r != null && !told;
-    final Color face = told
-        ? kArtCream
-        : on
-        ? const Color(0xFFFFF1B8)
-        : kArtCream;
     return Semantics(
       button: !told,
       selected: on,
@@ -444,30 +458,36 @@ class _Moment extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.fromLTRB(10, 10, 14, 10),
-          decoration: BoxDecoration(
-            color: face,
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              color: switch (right) {
-                true => kArtInk,
-                false => kArtInk,
-                null => kArtInk,
-              },
-              width: on ? 4 : 3,
-            ),
-          ),
+          duration: MediaQuery.disableAnimationsOf(context)
+              ? Duration.zero
+              : const Duration(milliseconds: 160),
+          curve: Curves.easeOut,
+          color: on
+              ? accent.withValues(alpha: p.isDark ? 0.1 : 0.06)
+              : Colors.transparent,
+          padding: const EdgeInsets.fromLTRB(4, 10, 8, 10),
           child: Row(
             children: [
-              _Badge(rank: r, year: told ? line.year : null, right: right),
-              const SizedBox(width: 12),
+              SizedBox(
+                width: 58,
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: _Place(
+                    rank: r,
+                    year: told ? line.year : null,
+                    right: right,
+                    accent: accent,
+                  ),
+                ),
+              ),
               Expanded(
                 child: MomentText(
                   line: line,
                   shown: told,
-                  max: 21,
+                  max: 19,
                   min: 13,
+                  ink: p.ink,
+                  accent: accent,
                 ),
               ),
             ],
@@ -478,68 +498,60 @@ class _Moment extends StatelessWidget {
   }
 }
 
-/// Where a moment was put — an empty ring before it is, its place after —
-/// and once told, its year, green where it stands right and coral where
-/// it does not.
-class _Badge extends StatelessWidget {
-  const _Badge({required this.rank, required this.year, required this.right});
+/// Where a moment was put — an empty ring before it is, its place in the
+/// ring after — and once told, its year, in a calm colour.
+class _Place extends StatelessWidget {
+  const _Place({
+    required this.rank,
+    required this.year,
+    required this.right,
+    required this.accent,
+  });
 
   final int? rank;
   final int? year;
   final bool? right;
+  final Color accent;
 
   @override
   Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final TextScaler scaler = MediaQuery.textScalerOf(
+      context,
+    ).clamp(maxScaleFactor: 1.2);
     final int? y = year;
     if (y != null) {
-      return Container(
-        width: 62,
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: right == true ? kGameRight : kGameWrong,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: kArtInk, width: 2.5),
-        ),
-        alignment: Alignment.center,
-        child: FittedBox(
-          child: Text(
-            '$y',
-            style: AppText.display(
-              size: 18,
-              weight: FontWeight.w800,
-              height: 1,
-              color: kArtInk,
-            ),
-          ),
-        ),
+      return Text(
+        '$y',
+        textScaler: scaler,
+        style: AppText.body(
+          size: 14,
+          weight: FontWeight.w600,
+          height: 1,
+          color: right == true ? challengeRight(p) : challengeWrong(p),
+        ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
       );
     }
     final int? r = rank;
     return Container(
-      width: 44,
-      height: 44,
+      width: 28,
+      height: 28,
       decoration: BoxDecoration(
-        color: r == null ? Colors.transparent : kArtInk,
         shape: BoxShape.circle,
-        border: Border.all(
-          color: r == null ? kArtInk.withValues(alpha: 0.45) : kArtInk,
-          width: 2.5,
-        ),
+        border: Border.all(color: r == null ? p.lineStrong : accent),
       ),
       alignment: Alignment.center,
       child: r == null
           ? null
           : Text(
               '$r',
-              textScaler: MediaQuery.textScalerOf(
-                context,
-              ).clamp(maxScaleFactor: 1.2),
-              style: AppText.display(
-                size: 21,
-                weight: FontWeight.w800,
+              textScaler: scaler,
+              style: AppText.body(
+                size: 13.5,
+                weight: FontWeight.w600,
                 height: 1,
-                color: kArtCream,
-              ),
+                color: accent,
+              ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
             ),
     );
   }
@@ -586,6 +598,9 @@ class WhatYearChallenge extends TimeChallenge {
   int get points => [
     for (int i = 0; i < lines.length; i++) pointsAt(i),
   ].fold(0, (a, b) => a + b);
+
+  @override
+  String get tally => '$points/${lines.length * 10}';
 
   int get yearsOff => [
     for (int i = 0; i < answers.length; i++) (guessAt(i)! - lines[i].year).abs(),
@@ -680,7 +695,7 @@ class _WhatYearPlayState extends State<_WhatYearPlay> {
 
   void _next() {
     if (_at + 1 >= _game.lines.length) {
-      widget.kit.finish(cheer: _game.points >= _game.lines.length * 9);
+      widget.kit.finish();
       return;
     }
     HapticFeedback.selectionClick();
@@ -1107,6 +1122,9 @@ class BeforeAfterChallenge extends TimeChallenge {
   List<bool?> get marks => [for (int i = 1; i < lines.length; i++) rightAt(i)];
 
   @override
+  String get tally => '$right/$needed';
+
+  @override
   Map<String, Object> get finishedFacts => {'right': right};
 
   @override
@@ -1207,7 +1225,7 @@ class _BeforeAfterPlayState extends State<_BeforeAfterPlay> {
       () {
         if (!mounted || _at != at) return;
         if (_game.over) {
-          widget.kit.finish(cheer: _game.right == _game.needed);
+          widget.kit.finish();
           return;
         }
         setState(() {
@@ -1377,7 +1395,11 @@ class _ChainCard extends StatelessWidget {
 // ── The moment's words ───────────────────────────────────────────────────
 
 /// A moment's words, set as large as the box takes, its year a gap until
-/// it is [shown] and then filled in, ink on the paper's reverse.
+/// it is [shown] and then filled in. On a card of paper — no [accent] —
+/// the gap is shaded and the year set in the paper's reverse; set as a
+/// page is, with an [accent], the words are in the serif's regular weight,
+/// the gap a hairline under a space the year's width, and the year comes
+/// in the challenge's tone.
 class MomentText extends StatelessWidget {
   const MomentText({
     super.key,
@@ -1385,6 +1407,8 @@ class MomentText extends StatelessWidget {
     required this.shown,
     this.max = 28,
     this.min = 15,
+    this.ink = kArtInk,
+    this.accent,
   });
 
   final DatedLine line;
@@ -1392,13 +1416,48 @@ class MomentText extends StatelessWidget {
   final double max;
   final double min;
 
+  /// The words' colour.
+  final Color ink;
+
+  /// The challenge's tone, for a moment set as a page is.
+  final Color? accent;
+
   TextSpan _span(double size, String gapLabel) {
+    final Color? a = accent;
+    if (a != null) {
+      TextStyle serif(FontWeight weight, Color colour) => AppText.display(
+        size: size,
+        weight: weight,
+        height: 1.26,
+        spacing: -0.01 * size,
+        color: colour,
+      );
+      final TextStyle base = serif(FontWeight.w400, ink);
+      return TextSpan(
+        style: base,
+        children: [
+          TextSpan(text: line.before),
+          if (shown)
+            TextSpan(text: '${line.year}', style: serif(FontWeight.w600, a))
+          else
+            TextSpan(
+              text: '\u2002\u2002\u2002\u2002',
+              semanticsLabel: gapLabel,
+              style: base.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: ink.withValues(alpha: 0.5),
+              ),
+            ),
+          TextSpan(text: line.after),
+        ],
+      );
+    }
     final TextStyle base = AppText.display(
       size: size,
       weight: FontWeight.w600,
       height: 1.16,
       spacing: -0.02 * size,
-      color: kArtInk,
+      color: ink,
     );
     return TextSpan(
       style: base,
@@ -1406,7 +1465,7 @@ class MomentText extends StatelessWidget {
         TextSpan(text: line.before),
         if (shown)
           TextSpan(
-            text: ' ${line.year} ',
+            text: ' ${line.year} ',
             style: base.copyWith(
               color: kArtCream,
               fontWeight: FontWeight.w800,
@@ -1415,7 +1474,7 @@ class MomentText extends StatelessWidget {
           )
         else
           TextSpan(
-            text: '     ',
+            text: '     ',
             semanticsLabel: gapLabel,
             style: base.copyWith(
               background: Paint()..color = kArtInk.withValues(alpha: 0.16),

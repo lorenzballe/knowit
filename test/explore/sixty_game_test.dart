@@ -24,7 +24,7 @@ import 'package:astuto/state/explore_play.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_link.dart' show sendText;
 import 'package:astuto/utils/share_text.dart';
-import 'package:astuto/widgets/explore/challenge_art.dart';
+import 'package:astuto/widgets/explore/challenge_marks.dart';
 import 'package:astuto/widgets/explore/challenge_screen.dart';
 import 'package:astuto/widgets/explore/challenges.dart';
 import 'package:astuto/widgets/explore/sixty_game.dart';
@@ -137,15 +137,18 @@ void main() {
     }
   }
 
-  testWidgets('the tile flies open into a screen of its own, in the game\'s '
-      'colour: the name, the rules, the record, Play; the cross puts it '
-      'back', (tester) async {
+  testWidgets('the tile opens into a screen of its own, on the app\'s own '
+      'page: the skill, the name, what it measures, Begin; the cross puts '
+      'it back', (tester) async {
     final CoreHost host = CoreHost(await readyApp());
     await pumpChallenges(tester, host);
     final SemanticsNode tile = tester.getSemantics(
       find.byKey(const ValueKey('challenge-sixty')),
     );
-    expect(tile.label, 'Sixty seconds, Set your record');
+    expect(
+      tile.label,
+      'Intuition, Sixty seconds, Eight claims against the clock.',
+    );
 
     await tester.tap(find.byKey(const ValueKey('challenge-sixty')));
     await tester.pump();
@@ -164,19 +167,23 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('Sixty seconds'), findsWidgets);
+    expect(find.text('INTUITION'), findsOneWidget);
     expect(
       find.text(
-        'Eight claims, true or false. You have one minute: go with your gut.',
+        'Eight claims, true or false, in one minute. It measures how well '
+        'you judge at speed, the way most of what we read is judged.',
       ),
       findsOneWidget,
     );
-    expect(find.text('Set your record'), findsOneWidget);
-    expect(find.bySemanticsLabel('Play'), findsOneWidget);
+    // No best yet: no figures to show.
+    expect(find.byKey(const ValueKey('sixty-record')), findsNothing);
+    expect(find.bySemanticsLabel('Begin'), findsOneWidget);
+    // The page is the app's own, the challenge's rule in its tone on it.
     final ChallengeGround ground = tester.widget(
       find.byKey(const ValueKey('sixty-ground')),
     );
-    expect(ground.colour, kQuickGames.first.colour);
-    expect(ground.art, ChallengeArt.sixty);
+    expect(ground.colour, Palette.dark.surface);
+    expect(find.byType(ChallengeRule), findsWidgets);
 
     await tester.tap(find.byKey(const ValueKey('sixty-close')));
     await tester.pumpAndSettle();
@@ -202,7 +209,7 @@ void main() {
     }
     expect(find.byKey(const ValueKey('sixty-end')), findsOneWidget);
     expect(find.text('All eight right.'), findsOneWidget);
-    expect(find.text('New record!'), findsOneWidget);
+    expect(find.text('Personal best'), findsOneWidget);
     expect(find.bySemanticsLabel('8 of 8'), findsOneWidget);
     expect(host.app.sixtyBest, 8);
 
@@ -233,9 +240,10 @@ void main() {
     await open(tester);
     expect(find.byKey(const ValueKey('sixty-end')), findsOneWidget);
     expect(find.byKey(const ValueKey('sixty-play')), findsNothing);
-    // Not a new record now: the record it set.
-    expect(find.text('New record!'), findsNothing);
-    expect(find.text('Your record 8/8'), findsOneWidget);
+    // Not a new best now: the best it set.
+    expect(find.text('Personal best'), findsNothing);
+    expect(find.text('Best'), findsOneWidget);
+    expect(find.text('8/8'), findsOneWidget);
   });
 
   testWidgets('the clock ends the round on its own; a claim not answered is '
@@ -244,7 +252,8 @@ void main() {
     await host.app.noteSixtyRound(3);
     await pumpChallenges(tester, host);
     await open(tester);
-    expect(find.text('Your record 3/8'), findsOneWidget);
+    expect(find.text('Best'), findsOneWidget);
+    expect(find.text('3/8'), findsOneWidget);
     await play(tester);
     await say(tester, right: false);
     await tester.pump(const Duration(seconds: 5));
@@ -257,9 +266,12 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
     }
     expect(find.byKey(const ValueKey('sixty-end')), findsOneWidget);
-    expect(find.text('before the time ran out'), findsOneWidget);
-    expect(find.text('Your record 3/8'), findsOneWidget);
-    expect(find.text('New record!'), findsNothing);
+    expect(
+      find.text('The time ran out with 7 claims unanswered.'),
+      findsOneWidget,
+    );
+    expect(find.text('3/8'), findsOneWidget);
+    expect(find.text('Personal best'), findsNothing);
     expect(host.app.sixtyBest, 3);
     expect(said.of('explore sixty finished').single['answered'], 1);
     expect(find.bySemanticsLabel(RegExp(r'No answer\.$')), findsNWidgets(7));
@@ -319,8 +331,10 @@ void main() {
     }
     expect(said.of('explore sixty shared').single['right'], 4);
 
-    // The next challenge: this screen back into its tile, and the next one
-    // out of its own, on its screen.
+    // The next challenge, after the claims again: this screen back into
+    // its tile, and the next one out of its own, on its screen.
+    await tester.ensureVisible(find.byKey(const ValueKey('sixty-next')));
+    await tester.pump();
     await tester.tap(find.byKey(const ValueKey('sixty-next')));
     for (int i = 0; i < 4; i++) {
       await tester.pump(const Duration(milliseconds: 400));
@@ -404,14 +418,18 @@ void main() {
             ),
             look: ChallengeLook(
               title: l.sixtyTitle,
-              colour: kQuickGames.first.colour,
-              art: ChallengeArt.sixty,
+              skill: l.sixtySkill,
+              line: l.sixtyAsks,
+              tone: kQuickGames.first.tone,
+              mark: ChallengeMark.sixty,
             ),
             heroTag: 'sixty',
             next: ChallengeLook(
               title: l.spotTitle,
-              colour: kQuickGames[1].colour,
-              art: ChallengeArt.spot,
+              skill: l.spotSkill,
+              line: l.spotAsks,
+              tone: kQuickGames[1].tone,
+              mark: ChallengeMark.spot,
             ),
             onNext: () {},
           ),
@@ -430,7 +448,7 @@ void main() {
       }
       expect(tester.takeException(), isNull);
       expect(find.byKey(const ValueKey('sixty-end')), findsOneWidget);
-      expect(find.byKey(const ValueKey('sixty-new-record')), findsOneWidget);
+      expect(find.byKey(const ValueKey('sixty-best')), findsOneWidget);
     });
   }
 }

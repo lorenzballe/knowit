@@ -5271,14 +5271,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exploreDayOpen => 'Aller aux cartes du jour';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return 'Ton record $n/$of';
-  }
-
-  @override
-  String get exploreSixtyFirst => 'Établis ton record';
-
-  @override
   String get exploreGameNone =>
       'Rien à jouer ici pour l\'instant. Reviens demain.';
 
@@ -5287,7 +5279,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get challengesLine =>
-      'Une minute ou deux chacun. Choisis-en un et joue.';
+      'De courts exercices de jugement et d\'estimation, de quelques minutes chacun.';
 
   @override
   String challengesPage(int n, int of) {
@@ -5295,14 +5287,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get gamePlay => 'Jouer';
+  String get gamePlay => 'Commencer';
 
   @override
   String get sixtyRules =>
-      'Huit affirmations, vraies ou fausses. Tu as une minute : fie-toi à ton instinct.';
-
-  @override
-  String get sixtyNewRecord => 'Nouveau record !';
+      'Huit affirmations, vraies ou fausses, en une minute. Ce défi mesure la justesse de ton jugement quand le temps presse : c\'est ainsi que l\'on juge presque tout ce qu\'on lit.';
 
   @override
   String get sixtyReview => 'Les huit affirmations';
@@ -5408,7 +5397,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get inOrderRules =>
-      'Quatre moments tirés des cartes, chacun sans son année. Touche-les dans l\'ordre où ils se sont produits, le plus ancien d\'abord.';
+      'Quatre moments tirés des cartes, sans leur année, à remettre dans l\'ordre où ils se sont produits. Ce défi mesure ton sens de la chronologie, première épreuve de toute explication : une cause précède son effet.';
 
   @override
   String get inOrderFirst => 'Touche le plus ancien';
@@ -5471,7 +5460,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String whatYearExact(int points) {
-    return 'Pile ! +$points';
+    return 'Année exacte, +$points';
   }
 
   @override
@@ -5554,6 +5543,127 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sixtySkill => 'Intuition';
+
+  @override
+  String get spotSkill => 'Discernement';
+
+  @override
+  String get tfSkill => 'Jugement';
+
+  @override
+  String get biggerSkill => 'Proportion';
+
+  @override
+  String get closerSkill => 'Estimation';
+
+  @override
+  String get magnitudeSkill => 'Échelle';
+
+  @override
+  String get rangeSkill => 'Calibration';
+
+  @override
+  String get stakeSkill => 'Conviction';
+
+  @override
+  String get numberSkill => 'Précision';
+
+  @override
+  String get inOrderSkill => 'Chronologie';
+
+  @override
+  String get whatYearSkill => 'Datation';
+
+  @override
+  String get beforeAfterSkill => 'Séquence';
+
+  @override
+  String get sixtyAsks => 'Huit affirmations contre la montre.';
+
+  @override
+  String get spotAsks => 'Quatre affirmations, dont une fausse.';
+
+  @override
+  String get tfAsks => 'Des affirmations où presque tous se trompent.';
+
+  @override
+  String get biggerAsks => 'Deux chiffres. Lequel est le plus grand ?';
+
+  @override
+  String get closerAsks => 'Approche-toi d’un chiffre, pas à pas.';
+
+  @override
+  String get magnitudeAsks => 'Trouve la bonne puissance de dix.';
+
+  @override
+  String get rangeAsks => 'Une fourchette juste assez large.';
+
+  @override
+  String get stakeAsks => 'Mise des points selon ta certitude.';
+
+  @override
+  String get numberAsks => 'Engage-toi sur un seul chiffre.';
+
+  @override
+  String get inOrderAsks => 'Quatre moments, du plus ancien.';
+
+  @override
+  String get whatYearAsks => 'Situe un moment dans son année.';
+
+  @override
+  String get beforeAfterAsks => 'Chaque moment face au précédent.';
+
+  @override
+  String get challengeBest => 'Record';
+
+  @override
+  String get challengeToday => 'Aujourd’hui';
+
+  @override
+  String get challengeAccuracy => 'Justesse';
+
+  @override
+  String get challengeTime => 'Temps';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s s';
+  }
+
+  @override
+  String get challengePersonalBest => 'Record personnel';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return 'Au-dessus du hasard : en devinant, on en trouve en moyenne $n sur $of.';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return 'Au niveau du hasard : en devinant, on en trouve en moyenne $n sur $of.';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return 'Sous le hasard : en devinant, on en trouve en moyenne $n sur $of.';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Le temps s\'est écoulé avec $n affirmations sans réponse.',
+      one: 'Le temps s\'est écoulé avec une affirmation sans réponse.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => 'Recommencer';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

@@ -19,7 +19,6 @@ import '../../state/explore_play.dart';
 import '../../theme.dart';
 import '../../utils/share_link.dart';
 import '../scaled_text.dart';
-import 'challenge_art.dart';
 import 'challenge_kit.dart';
 import 'challenge_screen.dart';
 import 'parts.dart' show upper;
@@ -193,7 +192,7 @@ class _SpotPlayState extends State<_SpotPlay>
     } else {
       _tell.forward(from: 0);
     }
-    widget.kit.finish(cheer: right, after: const Duration(milliseconds: 1700));
+    widget.kit.finish(after: const Duration(milliseconds: 1700));
   }
 
   @override

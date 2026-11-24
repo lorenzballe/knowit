@@ -1,23 +1,73 @@
-/// Explore's challenges: the games, four tiles to a page, two by two, and
-/// the pages side by side — a swipe brings the next four, and the dots
-/// under them say how many pages there are and which one is showing.
+/// Explore's challenges: four tiles to a page, two by two, and the pages
+/// side by side — a swipe brings the next four, and the dots under them
+/// say how many pages there are and which one is showing.
 ///
-/// Every tile is the same size on every page: the game's colour, its
-/// picture (challenge_art.dart), its name, and over the name the reader's
-/// record where the game keeps one. A tile that opens its game on a screen
-/// of its own (Sixty seconds, sixty_game.dart) grows into that screen: its
-/// ground and its picture are a [Hero], flown by [challengeFlight].
+/// A tile is set like an entry in a serious index, not drawn like a toy:
+/// on the app's own raised surface, a hairline round it, the skill the
+/// challenge trains in small capitals, its mark in the challenge's tone
+/// (challenge_marks.dart), the name in the app's serif, a quiet line on
+/// what it asks, and the reader's own figure where there is one, in
+/// tabular figures. Every tile is the same size on every page.
+///
+/// A tile opens its challenge on a screen of its own
+/// (challenge_screen.dart): its panel grows into the page, its words fading
+/// as it goes ([challengeFlight]), and back.
 library;
 
 import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../l10n/l10n.dart';
 import '../../theme.dart';
-import 'challenge_art.dart';
+import 'challenge_marks.dart';
+import 'parts.dart' show upper;
+
+/// A challenge's one colour: a deep tone of it on paper, and a lifted one
+/// at night, where a deep one would sink into the black. Used sparingly —
+/// its mark, a fine rule, its primary button.
+@immutable
+class ChallengeTone {
+  const ChallengeTone(this.deep, this.lifted);
+
+  /// On the day's paper.
+  final Color deep;
+
+  /// On the night's.
+  final Color lifted;
+
+  /// The tone on [p].
+  Color on(Palette p) => p.isDark ? lifted : deep;
+
+  /// The words on a button of the tone: as on the app's inverse buttons.
+  Color inkOn(Palette p) => p.onInverse;
+}
+
+/// The calm colours a verdict is told in: a green for right, a red for
+/// wrong, each a quiet tone of the page it is on.
+Color challengeRight(Palette p) =>
+    p.isDark ? const Color(0xFF8CC6A6) : const Color(0xFF2E6A4D);
+Color challengeWrong(Palette p) =>
+    p.isDark ? const Color(0xFFE8988A) : const Color(0xFF9E3A2D);
+
+/// The short rule in a challenge's tone over a small-caps label, as Go
+/// deeper's magazine sets its sections.
+class ChallengeRule extends StatelessWidget {
+  const ChallengeRule({super.key, required this.colour, this.width = 18});
+
+  final Color colour;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) => Align(
+    alignment: AlignmentDirectional.centerStart,
+    child: Container(width: width, height: 2, color: colour),
+  );
+}
+
+/// One of the reader's own figures: what it is, and the figure.
+typedef ChallengeFigure = ({String label, String value});
 
 /// How a challenge looks wherever it is drawn: its tile, its screen, the
 /// card that offers it as the next.
@@ -25,38 +75,30 @@ import 'challenge_art.dart';
 class ChallengeLook {
   const ChallengeLook({
     required this.title,
-    required this.colour,
-    required this.art,
-    this.note,
+    required this.skill,
+    required this.line,
+    required this.tone,
+    required this.mark,
+    this.figure,
   });
 
-  /// The game's name, in the reader's language.
+  /// The challenge's name, in the reader's language.
   final String title;
 
-  /// Its ground.
-  final Color colour;
+  /// The skill it trains: "Calibration", "Chronology".
+  final String skill;
 
-  /// Its picture.
-  final ChallengeArt art;
+  /// What it asks, in a quiet line.
+  final String line;
 
-  /// What its tile says over the name: the record, where it keeps one.
-  final String? note;
+  /// Its one colour.
+  final ChallengeTone tone;
 
-  /// The ink of its words and lines.
-  Color get ink => challengeInk(colour);
-}
+  /// Its mark.
+  final ChallengeMark mark;
 
-/// Of the drawn cards' ink and white, whichever reads better on [colour]:
-/// the ink on every colour of the wheel the games are drawn in.
-Color challengeInk(Color colour) {
-  double contrast(Color a, Color b) {
-    final double x = a.computeLuminance(), y = b.computeLuminance();
-    return (math.max(x, y) + 0.05) / (math.min(x, y) + 0.05);
-  }
-
-  return contrast(kArtInk, colour) >= contrast(Colors.white, colour)
-      ? kArtInk
-      : Colors.white;
+  /// The reader's own figure on its tile — the best, today's — or none.
+  final ChallengeFigure? figure;
 }
 
 /// One tile of the challenges: what it shows and what a tap on it does.
@@ -74,95 +116,91 @@ class ChallengeTileSpec {
   final ChallengeLook look;
   final VoidCallback onTap;
 
-  /// Set when the game has a screen of its own its tile grows into.
+  /// Set when the challenge has a screen of its own its tile grows into.
   final Object? heroTag;
 }
 
 /// The corners of a tile.
-const double kChallengeCorner = 22;
+const double kChallengeCorner = 14;
 
-/// Where a tile's picture stands in a tile of [size]: across its top, inset
-/// a little, in the pictures' proportions.
-Rect challengeTileArt(Size size) {
-  final double inset = (size.width * 0.05).clamp(6.0, 12.0);
-  final double width = size.width - inset * 2;
-  return Rect.fromLTWH(inset, inset, width, width / kArtAspect);
-}
+/// The small capitals every challenge names its skill in, and its heads.
+TextStyle challengeSmallCaps(Color colour, [double size = 10.5]) =>
+    AppText.label(
+      size: size,
+      weight: FontWeight.w600,
+      spacing: size * 0.13,
+      height: 1.2,
+      color: colour,
+    );
 
-/// The game's ground and its picture at [artAt] — the part of a tile, and
-/// of a game's screen, that flies from one to the other — and on a tile its
-/// words ([foreground]) at its foot.
+/// A challenge's panel — the part of a tile that grows into its screen, and
+/// the screen's own page — and on a tile its words ([foreground]), laid out
+/// at the tile's size ([foregroundSize]) so they never reflow as the panel
+/// grows.
 class ChallengeGround extends StatelessWidget {
   const ChallengeGround({
     super.key,
     required this.colour,
-    required this.art,
-    required this.artAt,
-    this.time = 0.25,
     this.radius = 0,
+    this.border,
     this.foreground,
-    this.foregroundWidth,
+    this.foregroundSize,
     this.foregroundOpacity = 1,
   });
 
   final Color colour;
-  final ChallengeArt art;
-
-  /// Where the picture stands, in a ground of the given size.
-  final Rect Function(Size size) artAt;
-
-  /// Sixty seconds' time gone, 0 to 1 ([ChallengePainter.time]).
-  final double time;
-
   final double radius;
 
-  /// The tile's words, at the ground's foot, [foregroundWidth] wide.
+  /// The hairline round it, or none.
+  final Color? border;
+
   final Widget? foreground;
-  final double? foregroundWidth;
+  final Size? foregroundSize;
   final double foregroundOpacity;
 
   @override
-  Widget build(BuildContext context) => ClipRRect(
-    borderRadius: BorderRadius.circular(radius),
-    child: ColoredBox(
-      color: colour,
-      child: LayoutBuilder(
-        builder: (context, box) {
-          final Rect at = artAt(box.biggest);
-          return Stack(
-            clipBehavior: Clip.hardEdge,
-            children: [
-              if (!at.isEmpty)
-                Positioned.fromRect(
-                  rect: at,
-                  child: ChallengeArtView(art: art, ground: colour, time: time),
-                ),
-              if (foreground != null && foregroundOpacity > 0)
-                Positioned(
-                  left: 0,
-                  bottom: 0,
-                  width: foregroundWidth ?? box.maxWidth,
-                  child: Opacity(
-                    opacity: foregroundOpacity.clamp(0.0, 1.0),
-                    child: foreground,
-                  ),
-                ),
-            ],
-          );
-        },
+  Widget build(BuildContext context) {
+    final Color? line = border;
+    final Widget? words = foreground;
+    final Size? at = foregroundSize;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: colour,
+        borderRadius: BorderRadius.circular(radius),
+        border: line == null || line.a == 0
+            ? null
+            : Border.all(color: line, width: 1),
       ),
-    ),
-  );
+      child: words == null || foregroundOpacity <= 0
+          ? const SizedBox.expand()
+          : ClipRRect(
+              borderRadius: BorderRadius.circular(radius),
+              child: Opacity(
+                opacity: foregroundOpacity.clamp(0.0, 1.0),
+                child: at == null
+                    ? SizedBox.expand(child: words)
+                    : OverflowBox(
+                        alignment: Alignment.topLeft,
+                        minWidth: at.width,
+                        maxWidth: at.width,
+                        minHeight: at.height,
+                        maxHeight: at.height,
+                        child: words,
+                      ),
+              ),
+            ),
+    );
+  }
 }
 
-/// A tile grows straight into the screen, as an app opened on a phone does.
+/// A tile grows straight into the screen.
 RectTween challengeRectTween(Rect? begin, Rect? end) =>
     RectTween(begin: begin, end: end);
 
-/// A challenge's ground on its way from its tile to its screen and back:
-/// the box grows from the tile to the whole screen, its corners going
-/// square, the picture moving from its place on the tile to its place on
-/// the screen, and the tile's words gone in the first part of the way.
+/// A challenge's panel on its way from its tile to its screen and back: the
+/// box grows from the tile to the whole screen, its corners going square,
+/// its surface becoming the page's and its hairline fading, and the tile's
+/// words gone in the first part of the way.
 Widget challengeFlight(
   BuildContext flightContext,
   Animation<double> animation,
@@ -177,31 +215,22 @@ Widget challengeFlight(
       (tileContext.widget as Hero).child as ChallengeGround;
   final ChallengeGround screen =
       (screenContext.widget as Hero).child as ChallengeGround;
-  Size sizeOf(BuildContext context, Size fallback) {
-    final RenderObject? box = context.findRenderObject();
-    return box is RenderBox && box.hasSize ? box.size : fallback;
-  }
-
-  final Size screenSize = sizeOf(
-    screenContext,
-    MediaQuery.sizeOf(flightContext),
-  );
-  final Size tileSize = sizeOf(tileContext, const Size(160, 200));
-  final Rect from = tile.artAt(tileSize);
-  final Rect to = screen.artAt(screenSize);
+  final RenderObject? box = tileContext.findRenderObject();
+  final Size tileSize = box is RenderBox && box.hasSize
+      ? box.size
+      : const Size(160, 200);
+  final Color line = tile.border ?? Colors.transparent;
   return AnimatedBuilder(
     animation: animation,
     builder: (context, _) {
       final double t = animation.value;
       return ChallengeGround(
-        colour: tile.colour,
-        art: tile.art,
-        time: lerpDouble(tile.time, screen.time, t)!,
+        colour: Color.lerp(tile.colour, screen.colour, t)!,
         radius: lerpDouble(tile.radius, screen.radius, t)!,
-        artAt: (_) => Rect.lerp(from, to, t)!,
+        border: line.withValues(alpha: line.a * (1 - t).clamp(0.0, 1.0)),
         foreground: tile.foreground,
-        foregroundWidth: tileSize.width,
-        foregroundOpacity: 1 - t / 0.28,
+        foregroundSize: tileSize,
+        foregroundOpacity: 1 - t / 0.3,
       );
     },
   );
@@ -229,7 +258,7 @@ class ChallengePager extends StatefulWidget {
       _asked.putIfAbsent(id, () => ValueNotifier<String?>(null));
 
   /// Turns pager [id] to the page with tile [tile] on it — the next
-  /// challenge, offered at the end of one, flies out of its own tile.
+  /// challenge, offered at the end of one, opens out of its own tile.
   static void reveal(String id, String tile) {
     final ValueNotifier<String?> ask = _askOf(id);
     ask.value = null;
@@ -274,7 +303,7 @@ class _ChallengePagerState extends State<ChallengePager> {
   int get _count =>
       (widget.tiles.length / ChallengePager.perPage).ceil().clamp(1, 99);
 
-  /// To [page], from a dot: the page turning says so in the hand.
+  /// To [page], from a dot.
   void _go(int page) {
     if (!_pages.hasClients) return;
     final int to = page.clamp(0, _count - 1);
@@ -283,7 +312,7 @@ class _ChallengePagerState extends State<ChallengePager> {
     } else {
       _pages.animateToPage(
         to,
-        duration: const Duration(milliseconds: 340),
+        duration: const Duration(milliseconds: 320),
         curve: Curves.easeOutCubic,
       );
     }
@@ -306,9 +335,8 @@ class _ChallengePagerState extends State<ChallengePager> {
               .skip(index * ChallengePager.perPage)
               .take(ChallengePager.perPage)
               .toList();
-          // A page not full keeps the grid, as a phone's last page of apps
-          // does: its tiles where the first page has them, the rest of it
-          // empty.
+          // A page not full keeps the grid: its tiles where the first page
+          // has them, the rest of it empty.
           Widget slot(int i) => SizedBox(
             key: i < on.length ? null : ValueKey('challenge-empty-$index-$i'),
             width: tileWidth,
@@ -354,11 +382,10 @@ class _ChallengePagerState extends State<ChallengePager> {
                 key: PageStorageKey<String>('challenges-${widget.id}'),
                 controller: _pages,
                 itemCount: _count,
-                onPageChanged: (_) => HapticFeedback.selectionClick(),
                 itemBuilder: (context, i) => page(i),
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             ChallengeDots(controller: _pages, count: _count, onPick: _go),
           ],
         );
@@ -367,7 +394,7 @@ class _ChallengePagerState extends State<ChallengePager> {
   }
 }
 
-/// The pages, as dots: the one showing long and in full ink, the others
+/// The pages, as dots: the one showing longer and in full ink, the others
 /// short and faint, the long one moving as the finger moves the pages. A
 /// tap on a dot goes to its page; to a screen reader it is the pages'
 /// control, adjusted up and down as iOS's own is.
@@ -416,8 +443,8 @@ class ChallengeDots extends StatelessWidget {
                     onTap: () => onPick(i),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: 10,
+                        horizontal: 3,
+                        vertical: 12,
                       ),
                       child: Builder(
                         builder: (context) {
@@ -426,13 +453,13 @@ class ChallengeDots extends StatelessWidget {
                             1.0,
                           );
                           return Container(
-                            width: lerpDouble(7, 22, near),
-                            height: 7,
+                            width: lerpDouble(5, 18, near),
+                            height: 5,
                             decoration: BoxDecoration(
                               color: ink.withValues(
-                                alpha: lerpDouble(0.24, 1, near),
+                                alpha: lerpDouble(0.2, 0.9, near),
                               ),
-                              borderRadius: BorderRadius.circular(4),
+                              borderRadius: BorderRadius.circular(2.5),
                             ),
                           );
                         },
@@ -448,48 +475,90 @@ class ChallengeDots extends StatelessWidget {
   }
 }
 
-/// One challenge's tile: its colour, its picture across the top, and at
-/// its foot the record and the name. It gives a little under the finger.
+/// One challenge's tile: the skill it trains across its top, the name, what
+/// it asks, and at its foot the reader's own figure and the challenge's
+/// mark.
 class ChallengeTile extends StatefulWidget {
   const ChallengeTile({super.key, required this.spec});
 
   final ChallengeTileSpec spec;
 
   /// The words' room from the tile's edges.
-  static const EdgeInsets pad = EdgeInsets.fromLTRB(13, 0, 12, 13);
+  static const EdgeInsets pad = EdgeInsets.fromLTRB(14, 14, 13, 13);
 
-  /// The name and the record, as the tile sets them: the name at [size].
-  static TextStyle titleStyle(Color ink, [double size = 17.5]) =>
+  /// The mark's side.
+  static const double markSide = 20;
+
+  /// Between the skill and the name, the name and its line, and the line
+  /// and the foot at the least.
+  static const double _afterSkill = 12;
+  static const double _afterRule = 9;
+  static const double _afterTitle = 5;
+  static const double _beforeFoot = 14;
+
+  /// The skill, the name and what it asks as the tile sets them, at [size].
+  static TextStyle skillStyle(Color ink, [double size = 10.5]) =>
+      challengeSmallCaps(ink, size);
+  static TextStyle titleStyle(Color ink, [double size = 19.5]) =>
       AppText.display(
         size: size,
-        weight: FontWeight.w600,
-        height: 1.08,
-        spacing: -0.3,
+        weight: FontWeight.w500,
+        height: 1.12,
+        spacing: -0.012 * size,
         color: ink,
       );
-  static TextStyle noteStyle(Color ink) => AppText.body(
-    size: 11.5,
-    weight: FontWeight.w700,
+  static TextStyle lineStyle(Color ink, [double size = 12.5]) =>
+      AppText.body(size: size, height: 1.36, color: ink);
+
+  /// The figure's name, and the figure, in tabular figures.
+  static TextStyle figureLabelStyle(Color ink, [double size = 12]) =>
+      AppText.body(
+        size: size,
+        weight: FontWeight.w500,
+        height: 1.2,
+        color: ink,
+      );
+  static TextStyle figureStyle(Color ink) => AppText.body(
+    size: 13,
+    weight: FontWeight.w600,
     height: 1.2,
-    color: ink.withValues(alpha: 0.8),
-  );
+    color: ink,
+  ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
 
   /// The reader's text size, as far as a tile of a grid of four follows
-  /// it: half as large again, and no further, so four still fit a page.
+  /// it: nearly half as large again, and no further, so four still fit a
+  /// page.
   static TextScaler scalerOf(BuildContext context) =>
-      MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.6);
+      MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.45);
 
-  /// The size [title] is set at on a tile whose words are [inner] wide:
-  /// 17.5, or less where its longest word would not fit the line — a name
-  /// is never broken in the middle of a word ("Sechzig Sekunden").
-  static double titleSizeFor(BuildContext context, String title, double inner) {
+  /// Whether the tile has room for what the challenge asks: not at the
+  /// largest text sizes, where the name and the figure take the tile.
+  static bool showsLine(BuildContext context) =>
+      MediaQuery.textScalerOf(context).scale(1) <= 1.3;
+
+  /// The size [text] is set at in [style] on a tile whose words are [inner]
+  /// wide: [size], or less where its longest word would not fit the line,
+  /// down to [least] — a word is never broken in the middle ("Sechzig
+  /// Sekunden", "KALIBRIERUNG").
+  static double fitSize(
+    BuildContext context,
+    String text,
+    TextStyle Function(Color ink, double size) style,
+    double inner, {
+    required double size,
+    required double least,
+  }) {
     final TextScaler scaler = scalerOf(context);
     final TextDirection direction = Directionality.of(context);
-    double widest(double size) {
+    final TextStyle inherited = DefaultTextStyle.of(context).style;
+    double widest(double at) {
       double most = 0;
-      for (final String word in title.split(RegExp(r'\s+'))) {
+      for (final String word in text.split(RegExp(r'\s+'))) {
         final TextPainter p = TextPainter(
-          text: TextSpan(text: word, style: titleStyle(kArtInk, size)),
+          text: TextSpan(
+            text: word,
+            style: inherited.merge(style(Colors.black, at)),
+          ),
           textDirection: direction,
           textScaler: scaler,
           maxLines: 1,
@@ -500,16 +569,34 @@ class ChallengeTile extends StatefulWidget {
       return most;
     }
 
-    double size = 17.5;
-    while (size > 12 && widest(size) > inner) {
-      size -= 0.5;
+    double at = size;
+    while (at > least && widest(at) > inner) {
+      at -= 0.5;
     }
-    return size;
+    return at;
   }
 
+  /// The sizes [look]'s skill, name and line are set at, [inner] wide.
+  static (double, double, double) sizesFor(
+    BuildContext context,
+    ChallengeLook look,
+    double inner,
+  ) => (
+    fitSize(
+      context,
+      upper(context, look.skill),
+      skillStyle,
+      inner,
+      size: 10.5,
+      least: 7,
+    ),
+    fitSize(context, look.title, titleStyle, inner, size: 19.5, least: 12),
+    fitSize(context, look.line, lineStyle, inner, size: 12.5, least: 9),
+  );
+
   /// How tall every tile is, [width] wide, for [looks] to all fit: the
-  /// picture, and under it the most lines of words any of them has — so
-  /// the tiles are one size on every page, at any text size.
+  /// most lines any of them has of each part — so the tiles are one size
+  /// on every page, at any text size.
   static double heightFor(
     BuildContext context,
     double width,
@@ -517,34 +604,57 @@ class ChallengeTile extends StatefulWidget {
   ) {
     final TextScaler scaler = scalerOf(context);
     final TextDirection direction = Directionality.of(context);
+    final TextStyle inherited = DefaultTextStyle.of(context).style;
     final double inner = width - pad.horizontal;
-    double words = 0;
-    for (final ChallengeLook look in looks) {
-      double h = 0;
-      final String? note = look.note;
-      if (note != null) {
-        final TextPainter p = TextPainter(
-          text: TextSpan(text: note, style: noteStyle(kArtInk)),
-          textDirection: direction,
-          textScaler: scaler,
-        )..layout(maxWidth: inner);
-        h += p.height + 4;
-        p.dispose();
-      }
-      final TextPainter t = TextPainter(
-        text: TextSpan(
-          text: look.title,
-          style: titleStyle(kArtInk, titleSizeFor(context, look.title, inner)),
-        ),
+    double measure(String text, TextStyle style, double maxWidth) {
+      final TextPainter p = TextPainter(
+        text: TextSpan(text: text, style: inherited.merge(style)),
         textDirection: direction,
         textScaler: scaler,
-      )..layout(maxWidth: inner);
-      h += t.height;
-      t.dispose();
-      words = math.max(words, h);
+      )..layout(maxWidth: maxWidth);
+      final double h = p.height;
+      p.dispose();
+      return h;
     }
-    final Rect art = challengeTileArt(Size(width, width));
-    return (art.bottom + 8 + words + pad.bottom).ceilToDouble();
+
+    double skill = 0, title = 0, line = 0, foot = markSide;
+    for (final ChallengeLook look in looks) {
+      final (double s, double t, double w) = sizesFor(context, look, inner);
+      skill = math.max(
+        skill,
+        measure(upper(context, look.skill), skillStyle(Colors.black, s), inner),
+      );
+      title = math.max(
+        title,
+        measure(look.title, titleStyle(Colors.black, t), inner),
+      );
+      if (showsLine(context)) {
+        line = math.max(
+          line,
+          measure(look.line, lineStyle(Colors.black, w), inner),
+        );
+      }
+      if (look.figure case final ChallengeFigure f) {
+        foot = math.max(
+          foot,
+          math.max(
+            measure(f.label, figureLabelStyle(Colors.black), inner),
+            measure(f.value, figureStyle(Colors.black), inner),
+          ),
+        );
+      }
+    }
+    return (pad.top +
+            2 +
+            _afterRule +
+            skill +
+            _afterSkill +
+            title +
+            (line > 0 ? _afterTitle + line : 0) +
+            _beforeFoot +
+            foot +
+            pad.bottom)
+        .ceilToDouble();
   }
 
   @override
@@ -562,34 +672,100 @@ class _ChallengeTileState extends State<ChallengeTile> {
   Widget build(BuildContext context) {
     final ChallengeTileSpec spec = widget.spec;
     final ChallengeLook look = spec.look;
-    final Color ink = look.ink;
-    final String? note = look.note;
+    final Palette p = context.p;
     final TextScaler scaler = ChallengeTile.scalerOf(context);
+    final ChallengeFigure? figure = look.figure;
     final Widget words = LayoutBuilder(
       builder: (context, box) {
         final double inner = box.maxWidth - ChallengeTile.pad.horizontal;
+        final (double skill, double title, double line) = ChallengeTile
+            .sizesFor(context, look, inner);
+        // The figure's name as large as its room beside the figure and
+        // the mark takes, never broken.
+        double figureLabel = 12;
+        if (figure != null) {
+          final TextPainter value = TextPainter(
+            text: TextSpan(
+              text: figure.value,
+              style: DefaultTextStyle.of(
+                context,
+              ).style.merge(ChallengeTile.figureStyle(p.ink)),
+            ),
+            textDirection: Directionality.of(context),
+            textScaler: scaler,
+            maxLines: 1,
+          )..layout();
+          figureLabel = ChallengeTile.fitSize(
+            context,
+            figure.label,
+            ChallengeTile.figureLabelStyle,
+            inner - ChallengeTile.markSide - 8 - 7 - value.width,
+            size: 12,
+            least: 8,
+          );
+          value.dispose();
+        }
         return Padding(
           padding: ChallengeTile.pad,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (note != null) ...[
-                Text(
-                  note,
-                  key: const ValueKey('game-note'),
-                  textScaler: scaler,
-                  style: ChallengeTile.noteStyle(ink),
-                ),
-                const SizedBox(height: 4),
-              ],
+              ChallengeRule(colour: look.tone.on(p)),
+              const SizedBox(height: ChallengeTile._afterRule),
+              Text(
+                upper(context, look.skill),
+                key: const ValueKey('challenge-skill'),
+                textScaler: scaler,
+                style: ChallengeTile.skillStyle(p.inkMuted, skill),
+              ),
+              const SizedBox(height: ChallengeTile._afterSkill),
               Text(
                 look.title,
                 textScaler: scaler,
-                style: ChallengeTile.titleStyle(
-                  ink,
-                  ChallengeTile.titleSizeFor(context, look.title, inner),
+                style: ChallengeTile.titleStyle(p.ink, title),
+              ),
+              if (ChallengeTile.showsLine(context)) ...[
+                const SizedBox(height: ChallengeTile._afterTitle),
+                Text(
+                  look.line,
+                  textScaler: scaler,
+                  style: ChallengeTile.lineStyle(p.inkMuted, line),
                 ),
+              ],
+              const Spacer(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: figure == null
+                        ? const SizedBox.shrink()
+                        : Row(
+                            key: const ValueKey('challenge-figure'),
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  figure.label,
+                                  textScaler: scaler,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: ChallengeTile.figureLabelStyle(
+                                    p.inkMuted,
+                                    figureLabel,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 7),
+                              Text(
+                                figure.value,
+                                textScaler: scaler,
+                                style: ChallengeTile.figureStyle(p.ink),
+                              ),
+                            ],
+                          ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -597,16 +773,20 @@ class _ChallengeTileState extends State<ChallengeTile> {
       },
     );
     final Widget ground = ChallengeGround(
-      colour: look.colour,
-      art: look.art,
-      artAt: challengeTileArt,
+      colour: p.surfaceRaised,
+      border: p.line,
       radius: kChallengeCorner,
       foreground: words,
     );
     final bool calm = MediaQuery.disableAnimationsOf(context);
     return Semantics(
       button: true,
-      label: note == null ? look.title : '${look.title}, $note',
+      label: [
+        look.skill,
+        look.title,
+        look.line,
+        if (figure != null) '${figure.label} ${figure.value}',
+      ].join(', '),
       excludeSemantics: true,
       onTap: spec.onTap,
       child: GestureDetector(
@@ -614,14 +794,11 @@ class _ChallengeTileState extends State<ChallengeTile> {
         onTapDown: (_) => _press(true),
         onTapUp: (_) => _press(false),
         onTapCancel: () => _press(false),
-        onTap: () {
-          HapticFeedback.selectionClick();
-          spec.onTap();
-        },
-        child: AnimatedScale(
-          scale: _down && !calm ? 0.96 : 1,
-          duration: const Duration(milliseconds: 140),
-          curve: Curves.easeOutCubic,
+        onTap: spec.onTap,
+        child: AnimatedOpacity(
+          opacity: _down ? 0.72 : 1,
+          duration: calm ? Duration.zero : const Duration(milliseconds: 120),
+          curve: Curves.easeOut,
           child: spec.heroTag == null
               ? ground
               : Hero(

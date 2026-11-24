@@ -5162,14 +5162,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get exploreDayOpen => 'Bugünün kartlarına git';
 
   @override
-  String exploreSixtyRecord(int n, int of) {
-    return 'Rekorun $n/$of';
-  }
-
-  @override
-  String get exploreSixtyFirst => 'Rekorunu belirle';
-
-  @override
   String get exploreGameNone =>
       'Şu an burada oynanacak bir şey yok. Yarın tekrar gel.';
 
@@ -5177,7 +5169,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get challengesTitle => 'Meydan okumalar';
 
   @override
-  String get challengesLine => 'Her biri bir iki dakika. Birini seç ve oyna.';
+  String get challengesLine =>
+      'Muhakeme ve tahmin üzerine kısa alıştırmalar, her biri birkaç dakika.';
 
   @override
   String challengesPage(int n, int of) {
@@ -5185,14 +5178,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get gamePlay => 'Oyna';
+  String get gamePlay => 'Başla';
 
   @override
   String get sixtyRules =>
-      'Sekiz iddia: doğru mu, yanlış mı? Bir dakikan var, içgüdülerine güven.';
-
-  @override
-  String get sixtyNewRecord => 'Yeni rekor!';
+      'Bir dakikada sekiz iddia: doğru mu, yanlış mı? Acele ederken ne kadar iyi karar verdiğini ölçer; okuduklarımızın çoğunu böyle değerlendiririz.';
 
   @override
   String get sixtyReview => 'Sekiz iddia';
@@ -5295,7 +5285,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get inOrderRules =>
-      'Kartlardan dört an, her birinin yılı gizli. Onlara oluş sırasına göre, en eskisinden başlayarak dokun.';
+      'Kartlardan dört an, yılları gizli; onları oluş sırasına diz. Kronoloji duygunu ölçer; her açıklamanın ilk sınavı budur: neden, sonucundan önce gelir.';
 
   @override
   String get inOrderFirst => 'En eskisine dokun';
@@ -5357,7 +5347,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String whatYearExact(int points) {
-    return 'Tam isabet! +$points';
+    return 'Yılı tam bildin, +$points';
   }
 
   @override
@@ -5436,6 +5426,126 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sixtySkill => 'Sezgi';
+
+  @override
+  String get spotSkill => 'Basiret';
+
+  @override
+  String get tfSkill => 'Muhakeme';
+
+  @override
+  String get biggerSkill => 'Oran';
+
+  @override
+  String get closerSkill => 'Tahmin';
+
+  @override
+  String get magnitudeSkill => 'Ölçek';
+
+  @override
+  String get rangeSkill => 'Kalibrasyon';
+
+  @override
+  String get stakeSkill => 'Kanaat';
+
+  @override
+  String get numberSkill => 'Kesinlik';
+
+  @override
+  String get inOrderSkill => 'Kronoloji';
+
+  @override
+  String get whatYearSkill => 'Tarihleme';
+
+  @override
+  String get beforeAfterSkill => 'Sıralama';
+
+  @override
+  String get sixtyAsks => 'Zamana karşı sekiz iddia.';
+
+  @override
+  String get spotAsks => 'Dört iddia, biri yanlış.';
+
+  @override
+  String get tfAsks => 'Çoğu kişinin yanıldığı iddialar.';
+
+  @override
+  String get biggerAsks => 'İki sayı. Hangisi büyük?';
+
+  @override
+  String get closerAsks => 'Adım adım bir sayıya yaklaş.';
+
+  @override
+  String get magnitudeAsks => 'Doğru on kuvvetini bul.';
+
+  @override
+  String get rangeAsks => 'Tam gerektiği kadar geniş bir aralık.';
+
+  @override
+  String get stakeAsks => 'Ne kadar eminsen o kadar puan koy.';
+
+  @override
+  String get numberAsks => 'Tek bir sayıda karar kıl.';
+
+  @override
+  String get inOrderAsks => 'Dört an, en eskisi önce.';
+
+  @override
+  String get whatYearAsks => 'Bir anı yılına yerleştir.';
+
+  @override
+  String get beforeAfterAsks => 'Her an, bir öncekine göre.';
+
+  @override
+  String get challengeBest => 'Rekor';
+
+  @override
+  String get challengeToday => 'Bugün';
+
+  @override
+  String get challengeAccuracy => 'İsabet';
+
+  @override
+  String get challengeTime => 'Süre';
+
+  @override
+  String challengeSeconds(int s) {
+    return '$s sn';
+  }
+
+  @override
+  String get challengePersonalBest => 'Kişisel rekor';
+
+  @override
+  String challengeAboveChance(int n, int of) {
+    return 'Şansın üzerinde: rastgele tahmin ortalama $of üzerinden $n getirir.';
+  }
+
+  @override
+  String challengeAtChance(int n, int of) {
+    return 'Şansla aynı düzeyde: rastgele tahmin ortalama $of üzerinden $n getirir.';
+  }
+
+  @override
+  String challengeBelowChance(int n, int of) {
+    return 'Şansın altında: rastgele tahmin ortalama $of üzerinden $n getirir.';
+  }
+
+  @override
+  String sixtyUnanswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Süre doldu, $n iddia yanıtsız kaldı.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengeAgain => 'Bir daha';
 
   @override
   String exploreSubjectLevel(String subject, int n) {

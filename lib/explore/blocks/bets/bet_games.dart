@@ -27,7 +27,6 @@ import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
 import '../../../theme.dart';
 import '../../../utils/share_link.dart';
-import '../../../widgets/explore/challenge_art.dart';
 import '../../../widgets/explore/challenge_kit.dart';
 import '../../../widgets/explore/challenge_screen.dart';
 import '../../../widgets/explore/parts.dart' show CardHead;
@@ -352,8 +351,7 @@ class _BetPlayState extends State<_BetPlay> {
   void _next() {
     final int? next = _game.next;
     if (next == null) {
-      final (int right, int of) = _game.score;
-      widget.kit.finish(cheer: right == of && of > 0);
+      widget.kit.finish();
       return;
     }
     HapticFeedback.selectionClick();

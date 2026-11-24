@@ -1,33 +1,32 @@
 /// A challenge on a screen of its own, opened from its tile among Explore's
-/// challenges: the tile grows into the whole screen in the game's colour
-/// (challengeFlight), and the game is played there in three moments, each
-/// the whole screen.
+/// challenges: the tile's panel grows into the app's own page
+/// (challengeFlight), and the challenge is taken there in three moments,
+/// each the whole screen, set as a page is.
 ///
-/// - What it is: the name, large; the game's picture; the rules in a line;
-///   the record, or how the game counts; a large Play.
-/// - The round: the picture gone up into the head, beside how far along,
-///   and below it the game itself, shaped to what it asks — a deck, a
-///   pair, a track, a staircase, a dial — with large targets, felt in the
-///   hand, each answer told at once.
-/// - How it went: the score, large; a new record, or the one standing; the
-///   round as squares; the next challenge; the cards again, each as it
-///   went, a tap from its card; Play again where the game plays again, and
-///   the score to send.
+/// - What it is: its mark, the skill it trains, the name, a sentence or two
+///   on what it measures and why that matters, the reader's own figures,
+///   and Begin.
+/// - The round: a running head — the mark, the name, how far along — and a
+///   fine rule under it, then the challenge itself, content first, with
+///   precise controls; each answer told by a calm colour and a short
+///   phrase.
+/// - How it went: a short report — the score, the figures (accuracy, the
+///   time where it counts, the best), a measured line reading them,
+///   "personal best" in words where it is one, the cards again, the next
+///   challenge, and another round or when the next comes, and the score to
+///   send.
 ///
-/// The screen is the same for every game ([ChallengeScreen]); what is
-/// played on it is the game's own ([ChallengeGame]), kept and counted as
-/// on its shelf: opened again the same day, the screen opens on how it
+/// The screen is the same for every challenge ([ChallengeScreen]); what is
+/// taken on it is the challenge's own ([ChallengeGame]), kept and counted
+/// as on its shelf: opened again the same day, the screen opens on how it
 /// went, or where the reader left off.
 library;
-
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../l10n/l10n.dart';
 import '../../theme.dart';
-import 'challenge_art.dart';
 import 'challenge_kit.dart';
 import 'challenges.dart';
 import 'parts.dart' show upper;
@@ -35,17 +34,20 @@ import 'parts.dart' show upper;
 /// The three moments of a challenge's screen.
 enum GameMoment { intro, play, result }
 
-/// What a game's round is given to be played with: the screen it is on,
-/// the way to the end, and a voice.
+/// What a challenge's round is given to be played with: the screen it is
+/// on, the way to the end, and a voice.
 @immutable
 class GameKit {
   const GameKit({
     required this.id,
     required this.look,
     required this.room,
+    required this.palette,
     required this.calm,
     required this.finish,
     required this.say,
+    this.ticking,
+    this.markTime,
   });
 
   /// The game's keys' prefix.
@@ -53,18 +55,29 @@ class GameKit {
   final ChallengeLook look;
   final ChallengeRoom room;
 
+  /// The app's palette, which the screen is on.
+  final Palette palette;
+
   /// Whether the reader asked for less motion.
   final bool calm;
 
-  /// Ends the round: after a beat for the last answer to land, cheered
-  /// with a burst of paper when [cheer] — a record, or all right.
-  final void Function({bool cheer, Duration after}) finish;
+  /// Ends the round, after a beat for the last answer to land.
+  final void Function({Duration after}) finish;
 
   /// Says a verdict to a screen reader.
   final ValueChanged<String> say;
 
-  Color get ink => look.ink;
-  Color get ground => look.colour;
+  /// What moves the mark's hand while the round is played, and where it
+  /// stands.
+  final Listenable? ticking;
+  final double Function()? markTime;
+
+  /// The words' ink, and the page.
+  Color get ink => palette.ink;
+  Color get ground => palette.surface;
+
+  /// The challenge's tone, on this page.
+  Color get accent => look.tone.on(palette);
 
   /// [ms], or nothing for a reader who asked for less motion.
   Duration motion(int ms) =>
@@ -79,6 +92,8 @@ class GameOutcome {
     required this.label,
     required this.line,
     this.of,
+    this.best,
+    this.figures = const [],
     this.chips = const [],
     this.board,
     this.reviewTitle,
@@ -95,13 +110,19 @@ class GameOutcome {
   /// The score as a screen reader says it.
   final String label;
 
-  /// The line under it.
+  /// The reading of it, in a measured line.
   final String line;
 
-  /// The record, or what the round came to besides.
+  /// "Personal best", where the round set one.
+  final String? best;
+
+  /// The round's figures: the accuracy, the time where it counts, the best.
+  final List<ChallengeFigure> figures;
+
+  /// What the round came to besides.
   final List<Widget> chips;
 
-  /// The round at a glance: its squares.
+  /// The round at a glance.
   final Widget? board;
 
   /// The cards again, under their heading.
@@ -109,33 +130,37 @@ class GameOutcome {
   final List<GameReviewItem> review;
 }
 
-/// A game, as its screen plays it: what it says before, the round, and how
-/// it went. It tells the screen when anything changes.
+/// A challenge, as its screen plays it: what it says before, the round,
+/// and how it went. It tells the screen when anything changes.
 abstract class ChallengeGame extends ChangeNotifier {
-  /// The prefix of its keys: `sixty`, whose Play is `sixty-play`.
+  /// The prefix of its keys: `sixty`, whose Begin is `sixty-play`.
   String get id;
 
   /// Whether the day's round is over: the screen opens on how it went.
   bool get over;
 
-  /// The rules, in a line.
+  /// What it measures and why it matters, or how it is taken: a sentence
+  /// or two.
   String rules(AppLocalizations l);
 
-  /// What the first moment says under the rules — the record, or how the
-  /// game counts — with its mark, or nothing.
+  /// What the first moment says under the rules — how the challenge counts
+  /// — with its mark, or nothing.
   (IconData, String)? note(AppLocalizations l) => null;
 
-  /// The first moment's button: Play, or Continue on a round begun.
+  /// The reader's own figures, shown before the round: the best.
+  List<ChallengeFigure> figures(AppLocalizations l) => const [];
+
+  /// The first moment's button: Begin, or Continue on a round begun.
   String playLabel(AppLocalizations l) => l.gamePlay;
 
-  /// Given once the screen is up, for a game that keeps time.
+  /// Given once the screen is up, for a challenge that keeps time.
   void attach(TickerProvider vsync) {}
 
-  /// Play was pressed: the round begins, or goes on.
+  /// Begin was pressed: the round begins, or goes on.
   void start();
 
   /// The round's moment is in front of the reader, [calm] where they asked
-  /// for less motion: for a game whose clock starts with it.
+  /// for less motion: for a challenge whose clock starts with it.
   void started({required bool calm}) {}
 
   /// The round.
@@ -144,14 +169,14 @@ abstract class ChallengeGame extends ChangeNotifier {
   /// How it went.
   GameOutcome outcome(BuildContext context, GameKit kit);
 
-  /// Where the picture's hand stands in [moment]: the stopwatch's time.
-  double artTime(GameMoment moment) => 0.25;
+  /// Where the mark's hand stands in [moment]: Sixty seconds' time.
+  double markTime(GameMoment moment) => 0.25;
 
-  /// What moves the picture's hand while the round is played.
+  /// What moves the mark's hand while the round is played.
   Listenable? get ticking => null;
 
-  /// Whether Play again plays another round today. A game whose answers
-  /// are the cards' own plays its round once a day.
+  /// Whether another round can be taken today. A challenge whose answers
+  /// are the cards' own is taken once a day.
   bool get replays => false;
 
   /// Sends the score on.
@@ -161,7 +186,7 @@ abstract class ChallengeGame extends ChangeNotifier {
   void leave() {}
 }
 
-/// A challenge, played on the whole screen.
+/// A challenge, taken on the whole screen.
 class ChallengeScreen extends StatefulWidget {
   const ChallengeScreen({
     super.key,
@@ -172,11 +197,11 @@ class ChallengeScreen extends StatefulWidget {
     this.onNext,
   });
 
-  /// What is played. The screen keeps it for as long as it is open, and
+  /// What is taken. The screen keeps it for as long as it is open, and
   /// lets it go after.
   final ChallengeGame game;
 
-  /// The tile's colour, picture and name.
+  /// The tile's words, tone and mark.
   final ChallengeLook look;
 
   /// The tile it grew out of, and goes back into.
@@ -197,31 +222,17 @@ class _ChallengeScreenState extends State<ChallengeScreen>
 
   late GameMoment _moment;
 
-  /// The picture's glide from one moment's place to the next.
-  late final AnimationController _move = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 420),
-  );
-  Rect? _artFrom;
-  Rect _artNow = Rect.zero;
-  double _timeFrom = 0.25;
-  double _timeNow = 0.25;
-
-  /// The route's own animation: the words come once the tile has grown,
+  /// The route's own animation: the words come once the page has grown,
   /// and go before it shrinks back.
   Animation<double>? _route;
   bool _up = false;
   bool _going = false;
-
-  /// How many times a round has been cheered: a new burst each time.
-  int _cheers = 0;
 
   @override
   void initState() {
     super.initState();
     _game.attach(this);
     _moment = _game.over ? GameMoment.result : GameMoment.intro;
-    _timeNow = _game.artTime(_moment);
     _game.addListener(_changed);
   }
 
@@ -261,44 +272,25 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     _route?.removeStatusListener(_routed);
     _game.removeListener(_changed);
     _game.dispose();
-    _move.dispose();
     super.dispose();
   }
 
   bool get _calm => MediaQuery.disableAnimationsOf(context);
 
-  /// Moves to [moment], the picture gliding to its place in it.
-  void _goTo(GameMoment moment) {
-    _artFrom = _artNow;
-    _timeFrom = _timeNow;
-    setState(() => _moment = moment);
-    if (_calm) {
-      _move.value = 1;
-    } else {
-      _move.forward(from: 0);
-    }
-  }
+  void _goTo(GameMoment moment) => setState(() => _moment = moment);
 
   void _play() {
-    HapticFeedback.mediumImpact();
     _game.start();
     _goTo(GameMoment.play);
     _game.started(calm: _calm);
   }
 
-  Future<void> _finish({
-    bool cheer = false,
-    Duration after = Duration.zero,
-  }) async {
+  Future<void> _finish({Duration after = Duration.zero}) async {
     if (after > Duration.zero && !_calm) {
       await Future<void>.delayed(after);
     }
     if (!mounted || _moment == GameMoment.result) return;
     _goTo(GameMoment.result);
-    if (cheer) {
-      HapticFeedback.mediumImpact();
-      if (!_calm) setState(() => _cheers++);
-    }
   }
 
   void _close() {
@@ -306,256 +298,119 @@ class _ChallengeScreenState extends State<ChallengeScreen>
     Navigator.of(context).maybePop();
   }
 
-  GameKit _kit(ChallengeRoom room) => GameKit(
+  GameKit _kit(ChallengeRoom room, Palette palette) => GameKit(
     id: _id,
     look: widget.look,
     room: room,
+    palette: palette,
     calm: _calm,
-    finish: ({bool cheer = false, Duration after = Duration.zero}) =>
-        _finish(cheer: cheer, after: after),
+    finish: ({Duration after = Duration.zero}) => _finish(after: after),
     say: (message) => announceGame(context, message),
+    ticking: _game.ticking,
+    markTime: () => _game.markTime(_moment),
   );
 
-  // ── Where the picture stands ──────────────────────────────────────────
-
-  static const double _playHeight = 66;
-
-  TextScaler _titleScaler(TextScaler s) => s.clamp(maxScaleFactor: 1.3);
-
-  TextStyle _titleStyle(Color ink) => AppText.display(
-    size: 46,
-    weight: FontWeight.w700,
-    height: 1.02,
-    spacing: -1.4,
-    color: ink,
-  );
-
-  TextStyle _rulesStyle(Color ink) => AppText.body(
-    size: 17,
-    weight: FontWeight.w500,
-    height: 1.35,
-    color: ink.withValues(alpha: 0.82),
-  );
-
-  TextStyle _chipStyle(Color ink) => AppText.body(
-    size: 13.5,
-    weight: FontWeight.w700,
-    height: 1.2,
-    color: ink,
-  );
-
-  /// The first moment's words, measured as they will be set: what the
-  /// picture has above them.
-  double _introWords(BuildContext context, double width) {
-    final l = context.l10n;
-    final TextScaler scaler = MediaQuery.textScalerOf(context);
-    final TextDirection direction = Directionality.of(context);
-    double measure(String text, TextStyle style, TextScaler s) {
-      final TextPainter p = TextPainter(
-        text: TextSpan(text: text, style: style),
-        textDirection: direction,
-        textScaler: s,
-      )..layout(maxWidth: width);
-      final double h = p.height;
-      p.dispose();
-      return h;
-    }
-
-    final Color ink = widget.look.ink;
-    final (IconData, String)? note = _game.note(l);
-    return measure(widget.look.title, _titleStyle(ink), _titleScaler(scaler)) +
-        12 +
-        measure(_game.rules(l), _rulesStyle(ink), scaler) +
-        (note == null
-            ? 0
-            : 18 +
-                  math.max(
-                    38,
-                    measure(note.$2, _chipStyle(ink), scaler) + 18,
-                  )) +
-        28 +
-        _playHeight;
-  }
-
-  /// Where the moment has the picture.
-  Rect _artFor(BuildContext context, GameMoment moment, ChallengeRoom room) {
-    if (moment != GameMoment.intro) return room.emblem;
-    final Size size = room.size;
-    final double words = _introWords(context, size.width - 56);
-    final double bottom = size.height - room.foot - words - 26;
-    final double top = room.head + 6;
-    final double tall = bottom - top;
-    if (tall < 72) {
-      return Rect.fromCenter(
-        center: Offset(size.width / 2, top),
-        width: 0,
-        height: 0,
-      );
-    }
-    // As large as the screen is wide, nearly: the picture has room of its
-    // own round its thing.
-    double width = math.min(size.width - 16, 420);
-    double height = width / kArtAspect;
-    if (height > tall) {
-      height = tall;
-      width = height * kArtAspect;
-    }
-    return Rect.fromLTWH(
-      (size.width - width) / 2,
-      top + (tall - height) * 0.6,
-      width,
-      height,
-    );
-  }
+  Duration _motion(int ms) =>
+      _calm ? Duration.zero : Duration(milliseconds: ms);
 
   @override
   Widget build(BuildContext context) {
     final MediaQueryData m = MediaQuery.of(context);
     final ChallengeRoom room = ChallengeRoom(m.size, m.padding);
-    final ChallengeLook look = widget.look;
-    final bool light =
-        ThemeData.estimateBrightnessForColor(look.colour) == Brightness.light;
+    final Palette p = context.p;
     final Animation<double> route =
         ModalRoute.of(context)?.animation ?? kAlwaysCompleteAnimation;
-    final Listenable? ticking = _game.ticking;
-    // The screen is the game's colour, whatever the app's: its own palette,
-    // so the close and anything else that asks for ink gets one that reads
-    // on it.
-    return Theme(
-      data: buildAstutoTheme(light ? Brightness.light : Brightness.dark),
-      child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          resizeToAvoidBottomInset: false,
-          body: Stack(
-            children: [
-              // What the tile opened over, darkened as the tile grows.
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: FadeTransition(
-                    opacity: route,
-                    child: const ColoredBox(color: Color(0x73000000)),
-                  ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: p.isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [
+            // What the tile opened over, dimmed as the page grows.
+            Positioned.fill(
+              child: IgnorePointer(
+                child: FadeTransition(
+                  opacity: route,
+                  child: const ColoredBox(color: Color(0x52000000)),
                 ),
               ),
-              Positioned.fill(
-                child: AnimatedBuilder(
-                  animation: ticking == null
-                      ? _move
-                      : Listenable.merge([_move, ticking]),
-                  builder: (context, _) {
-                    final Rect to = _artFor(context, _moment, room);
-                    final double toTime = _game.artTime(_moment);
-                    final double k = Curves.easeInOutCubicEmphasized.transform(
-                      _move.value,
-                    );
-                    final Rect? from = _artFrom;
-                    _artNow = from == null || _move.isCompleted
-                        ? to
-                        : Rect.lerp(from, to, k)!;
-                    _timeNow = from == null || _move.isCompleted
-                        ? toTime
-                        : _timeFrom + (toTime - _timeFrom) * k;
-                    final Rect art = _artNow;
-                    final double time = _timeNow;
-                    return Hero(
-                      tag: widget.heroTag,
-                      createRectTween: challengeRectTween,
-                      flightShuttleBuilder: challengeFlight,
-                      curve: Curves.easeInOutCubicEmphasized,
-                      child: ChallengeGround(
-                        key: ValueKey('$_id-ground'),
-                        colour: look.colour,
-                        art: look.art,
-                        artAt: (_) => art,
-                        time: time,
-                      ),
-                    );
-                  },
+            ),
+            Positioned.fill(
+              child: Hero(
+                tag: widget.heroTag,
+                createRectTween: challengeRectTween,
+                flightShuttleBuilder: challengeFlight,
+                child: ChallengeGround(
+                  key: ValueKey('$_id-ground'),
+                  colour: p.surface,
                 ),
               ),
-              Positioned.fill(
-                child: Visibility(
-                  visible: !_going,
-                  maintainState: true,
-                  // The words come in once the ground has landed, rising a
-                  // little into place.
-                  child: AnimatedOpacity(
-                    opacity: _up ? 1 : 0,
-                    duration: _calm
-                        ? Duration.zero
-                        : const Duration(milliseconds: 240),
-                    child: AnimatedSlide(
-                      offset: _up ? Offset.zero : const Offset(0, 0.015),
-                      duration: _calm
-                          ? Duration.zero
-                          : const Duration(milliseconds: 320),
-                      curve: Curves.easeOutCubic,
-                      child: IgnorePointer(
-                        ignoring: !_up,
-                        child: _moments(context, room),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              if (_cheers > 0 && _moment == GameMoment.result && !_going)
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: GameConfetti(
-                      key: ValueKey('$_id-cheer-$_cheers'),
-                      from: Offset(92, room.head + 64),
-                    ),
-                  ),
-                ),
-              // The way out comes with the words, once the screen is up.
-              Positioned(
-                top: room.top,
-                right: 10,
-                child: Visibility(
-                  visible: !_going,
-                  child: AnimatedOpacity(
-                    opacity: _up ? 1 : 0,
-                    duration: _calm
-                        ? Duration.zero
-                        : const Duration(milliseconds: 240),
+            ),
+            Positioned.fill(
+              child: Visibility(
+                visible: !_going,
+                maintainState: true,
+                // The words come in once the page has grown, rising a
+                // little into place.
+                child: AnimatedOpacity(
+                  opacity: _up ? 1 : 0,
+                  duration: _motion(200),
+                  curve: Curves.easeOut,
+                  child: AnimatedSlide(
+                    offset: _up ? Offset.zero : const Offset(0, 0.01),
+                    duration: _motion(220),
+                    curve: Curves.easeOutCubic,
                     child: IgnorePointer(
                       ignoring: !_up,
-                      child: GameClose(id: _id, onTap: _close),
+                      child: _moments(context, room, p),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            // The way out comes with the words, once the screen is up.
+            Positioned(
+              top: room.top + 2,
+              right: 12,
+              child: Visibility(
+                visible: !_going,
+                child: AnimatedOpacity(
+                  opacity: _up ? 1 : 0,
+                  duration: _motion(200),
+                  child: IgnorePointer(
+                    ignoring: !_up,
+                    child: GameClose(id: _id, onTap: _close),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _moments(BuildContext context, ChallengeRoom room) {
-    final GameKit kit = _kit(room);
+  Widget _moments(BuildContext context, ChallengeRoom room, Palette p) {
+    final GameKit kit = _kit(room, p);
     final Widget shown = switch (_moment) {
-      GameMoment.intro => _intro(context, room),
+      GameMoment.intro => _intro(context, room, p),
       GameMoment.play => _game.play(context, kit),
       GameMoment.result => _result(context, kit),
     };
     return AnimatedSwitcher(
-      duration: _calm ? Duration.zero : const Duration(milliseconds: 300),
+      duration: _motion(220),
       // The moment going is gone quickly, so the two never read as one.
-      reverseDuration: _calm
-          ? Duration.zero
-          : const Duration(milliseconds: 140),
+      reverseDuration: _motion(150),
       switchInCurve: Curves.easeOutCubic,
-      switchOutCurve: Curves.easeInCubic,
+      switchOutCurve: Curves.easeOut,
       layoutBuilder: (current, previous) =>
           Stack(fit: StackFit.expand, children: [...previous, ?current]),
       transitionBuilder: (child, animation) => FadeTransition(
         opacity: animation,
         child: SlideTransition(
           position: Tween(
-            begin: const Offset(0, 0.03),
+            begin: const Offset(0, 0.012),
             end: Offset.zero,
           ).animate(animation),
           child: child,
@@ -570,64 +425,79 @@ class _ChallengeScreenState extends State<ChallengeScreen>
 
   // ── What it is ────────────────────────────────────────────────────────
 
-  Widget _intro(BuildContext context, ChallengeRoom room) {
+  Widget _intro(BuildContext context, ChallengeRoom room, Palette p) {
     final l = context.l10n;
     final ChallengeLook look = widget.look;
-    final Color ink = look.ink;
+    final Color accent = look.tone.on(p);
     final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final List<ChallengeFigure> figures = _game.figures(l);
     final (IconData, String)? note = _game.note(l);
+    final List<ChallengeFigure> rows = figures.isNotEmpty
+        ? figures
+        : [if (note != null) (label: note.$2, value: '')];
     final Widget words = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
+        ChallengeRule(colour: accent, width: 24),
+        const SizedBox(height: 14),
+        Text(
+          upper(context, look.skill),
+          key: ValueKey('$_id-skill'),
+          style: challengeSmallCaps(p.inkMuted, 11),
+        ),
+        const SizedBox(height: 10),
         Semantics(
           header: true,
-          child: MediaQuery(
-            data: MediaQuery.of(
-              context,
-            ).copyWith(textScaler: _titleScaler(scaler)),
-            child: Text(look.title, style: _titleStyle(ink)),
+          child: Text(
+            look.title,
+            textScaler: scaler.clamp(maxScaleFactor: 1.3),
+            style: AppText.display(
+              size: 42,
+              weight: FontWeight.w400,
+              height: 1.05,
+              spacing: -1.1,
+              color: p.ink,
+            ),
           ),
         ),
-        const SizedBox(height: 12),
-        Text(_game.rules(l), style: _rulesStyle(ink)),
-        if (note != null) ...[
-          const SizedBox(height: 18),
-          GameChip(
-            key: ValueKey('$_id-record'),
-            icon: note.$1,
-            label: note.$2,
-            ink: ink,
-            ground: look.colour,
+        const SizedBox(height: 22),
+        Text(
+          _game.rules(l),
+          key: ValueKey('$_id-rules'),
+          style: AppText.display(
+            size: 18.5,
+            weight: FontWeight.w400,
+            height: 1.42,
+            spacing: -0.1,
+            color: p.ink,
           ),
+        ),
+        if (rows.isNotEmpty) ...[
+          const SizedBox(height: 30),
+          ChallengeFigures(key: ValueKey('$_id-record'), rows: rows),
         ],
-        const SizedBox(height: 28),
-        GameButton(
-          key: ValueKey('$_id-play'),
-          label: _game.playLabel(l),
-          icon: Icons.play_arrow_rounded,
-          face: ink,
-          ink: look.colour,
-          height: _playHeight,
-          onTap: _play,
-        ),
       ],
     );
-    final double words0 = _introWords(context, room.size.width - 56);
-    final bool fits = room.size.height - room.foot - words0 >= room.head;
-    if (!fits) {
-      // Words too large for the screen: they scroll, under the close.
-      return Padding(
-        padding: EdgeInsets.only(top: room.head),
-        child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(28, 8, 28, room.foot),
-          child: words,
-        ),
-      );
-    }
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Positioned(left: 28, right: 28, bottom: room.foot, child: words),
+        SizedBox(height: room.head),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 14, 24, 24),
+            child: words,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(24, 8, 24, room.foot),
+          child: GameButton.primary(
+            key: ValueKey('$_id-play'),
+            context: context,
+            label: _game.playLabel(l),
+            tone: look.tone,
+            onTap: _play,
+          ),
+        ),
       ],
     );
   }
@@ -636,44 +506,39 @@ class _ChallengeScreenState extends State<ChallengeScreen>
 
   Widget _result(BuildContext context, GameKit kit) {
     final l = context.l10n;
+    final Palette p = kit.palette;
     final ChallengeRoom room = kit.room;
-    final ChallengeLook look = widget.look;
-    final Color ink = look.ink;
     final GameOutcome out = _game.outcome(context, kit);
     final ChallengeLook? next = widget.next;
     final String? of = out.of;
+    final String? best = out.best;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    Widget heading(String text) => Semantics(
+      header: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ChallengeRule(colour: kit.accent),
+          const SizedBox(height: 10),
+          Text(
+            upper(context, text),
+            style: challengeSmallCaps(p.ink, 11),
+          ),
+        ],
+      ),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(
-          height: room.head,
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: room.top,
-              left: room.emblem.right + 4,
-              right: 64,
-            ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                look.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w700,
-                  height: 1.1,
-                  spacing: -0.4,
-                  color: ink,
-                ),
-              ),
-            ),
-          ),
+        ChallengeRunningHead(kit: kit),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Container(height: 1, color: p.line),
         ),
         Expanded(
           child: SingleChildScrollView(
             key: ValueKey('$_id-end'),
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+            padding: const EdgeInsets.fromLTRB(24, 26, 24, 32),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -687,107 +552,120 @@ class _ChallengeScreenState extends State<ChallengeScreen>
                         TextSpan(
                           text: out.score,
                           style: AppText.display(
-                            size: out.score.length > 3 ? 88 : 112,
-                            weight: FontWeight.w700,
-                            height: 0.95,
-                            spacing: -5,
-                            color: ink,
+                            size: out.score.length > 3 ? 64 : 80,
+                            weight: FontWeight.w400,
+                            height: 1,
+                            spacing: -2.4,
+                            color: p.ink,
                           ),
                         ),
                         if (of != null)
                           TextSpan(
-                            text: ' /$of',
+                            text: ' / $of',
                             style: AppText.display(
-                              size: 44,
-                              weight: FontWeight.w600,
-                              height: 0.95,
-                              spacing: -1,
-                              color: ink.withValues(alpha: 0.62),
+                              size: 30,
+                              weight: FontWeight.w400,
+                              height: 1,
+                              spacing: -0.4,
+                              color: p.inkMuted,
                             ),
                           ),
                       ],
                     ),
                     key: ValueKey('$_id-score'),
-                    textScaler: MediaQuery.textScalerOf(
-                      context,
-                    ).clamp(maxScaleFactor: 1.2),
+                    textScaler: scaler.clamp(maxScaleFactor: 1.2),
                   ),
                 ),
-                const SizedBox(height: 6),
+                if (best != null) ...[
+                  const SizedBox(height: 14),
+                  Row(
+                    key: ValueKey('$_id-best'),
+                    children: [
+                      Container(width: 18, height: 1.5, color: kit.accent),
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: Text(
+                          best,
+                          style: AppText.body(
+                            size: 14,
+                            weight: FontWeight.w600,
+                            height: 1.25,
+                            color: kit.accent,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+                const SizedBox(height: 26),
+                if (out.figures.isNotEmpty) ...[
+                  ChallengeFigures(rows: out.figures),
+                  const SizedBox(height: 20),
+                ],
                 Text(
                   out.line,
                   key: ValueKey('$_id-line'),
-                  style: AppText.body(
-                    size: 17,
-                    weight: FontWeight.w600,
-                    height: 1.3,
-                    color: ink.withValues(alpha: 0.82),
+                  style: AppText.display(
+                    size: 18,
+                    weight: FontWeight.w400,
+                    height: 1.42,
+                    spacing: -0.1,
+                    color: p.ink,
                   ),
                 ),
                 if (out.chips.isNotEmpty) ...[
                   const SizedBox(height: 16),
-                  Wrap(spacing: 8, runSpacing: 8, children: out.chips),
+                  Wrap(spacing: 18, runSpacing: 10, children: out.chips),
                 ],
                 if (out.board case final Widget board) ...[
-                  const SizedBox(height: 22),
+                  const SizedBox(height: 20),
                   board,
                 ],
-                if (next != null && widget.onNext != null) ...[
-                  const SizedBox(height: 26),
-                  GameNextCard(id: _id, look: next, onTap: widget.onNext!),
-                ],
                 if (out.review.isNotEmpty) ...[
-                  const SizedBox(height: 28),
-                  Semantics(
-                    header: true,
-                    child: Text(
-                      upper(context, out.reviewTitle ?? l.gameReview),
-                      style: AppText.label(
-                        size: 12,
-                        weight: FontWeight.w800,
-                        spacing: 1.4,
-                        color: ink.withValues(alpha: 0.75),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 40),
+                  heading(out.reviewTitle ?? l.gameReview),
+                  const SizedBox(height: 12),
                   GameReview(items: out.review),
+                ],
+                if (next != null && widget.onNext != null) ...[
+                  const SizedBox(height: 40),
+                  heading(l.gameNext),
+                  const SizedBox(height: 12),
+                  GameNextCard(id: _id, look: next, onTap: widget.onNext!),
                 ],
               ],
             ),
           ),
         ),
         Container(
-          padding: EdgeInsets.fromLTRB(20, 12, 20, room.foot),
+          padding: EdgeInsets.fromLTRB(24, 12, 24, room.foot),
           decoration: BoxDecoration(
-            color: look.colour,
-            border: Border(top: BorderSide(color: ink.withValues(alpha: 0.14))),
+            color: p.surface,
+            border: Border(top: BorderSide(color: p.line)),
           ),
           child: Row(
             children: [
               Expanded(
                 child: _game.replays
-                    ? GameButton(
+                    ? GameButton.plain(
                         key: ValueKey('$_id-again'),
-                        label: l.sixtyAgain,
-                        icon: Icons.replay_rounded,
-                        face: kArtCream,
-                        ink: kArtInk,
-                        height: 60,
+                        context: context,
+                        label: l.challengeAgain,
                         onTap: _play,
+                        height: 52,
+                        size: 15.5,
                       )
-                    : _Tomorrow(key: ValueKey('$_id-tomorrow'), ink: ink),
+                    : _Tomorrow(key: ValueKey('$_id-tomorrow')),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: GameButton(
+                child: GameButton.plain(
                   key: ValueKey('$_id-share'),
+                  context: context,
                   label: l.share,
-                  icon: Icons.ios_share_rounded,
-                  face: kArtInk,
-                  ink: kArtCream,
-                  height: 60,
                   onTap: () => _game.share(context),
+                  height: 52,
+                  size: 15.5,
                 ),
               ),
             ],
@@ -798,54 +676,90 @@ class _ChallengeScreenState extends State<ChallengeScreen>
   }
 }
 
-/// Where Play again stands on a game played once a day: when the next
-/// round comes. Words, not a button.
+/// Where another round stands on a challenge taken once a day: when the
+/// next round comes. Words, not a button.
 class _Tomorrow extends StatelessWidget {
-  const _Tomorrow({super.key, required this.ink});
-
-  final Color ink;
+  const _Tomorrow({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final Palette p = context.p;
     return Container(
-      constraints: const BoxConstraints(minHeight: 60),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: ink.withValues(alpha: 0.4), width: 2),
-      ),
+      constraints: const BoxConstraints(minHeight: 52),
       alignment: Alignment.center,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.schedule_rounded, size: 20, color: ink),
-          const SizedBox(width: 7),
-          Flexible(
-            child: Text(
-              l.gameTomorrow,
-              textAlign: TextAlign.center,
-              textScaler: MediaQuery.textScalerOf(
-                context,
-              ).clamp(maxScaleFactor: 1.4),
-              style: AppText.body(
-                size: 14,
-                weight: FontWeight.w700,
-                height: 1.2,
-                color: ink,
-              ),
-            ),
-          ),
-        ],
+      child: Text(
+        l.gameTomorrow,
+        textAlign: TextAlign.center,
+        textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.4),
+        style: AppText.body(
+          size: 13.5,
+          weight: FontWeight.w500,
+          height: 1.25,
+          color: p.inkMuted,
+        ),
       ),
     );
   }
 }
 
-/// A round's own head and parts, as every game lays them out: beside the
-/// picture what the game says there ([status]) and how far along
-/// ([count]); the bars of the round under them; the game; and its
-/// buttons at the foot.
+/// The running head of a round and of its report: the challenge's mark,
+/// its name in small capitals, and how far along, level with the close.
+class ChallengeRunningHead extends StatelessWidget {
+  const ChallengeRunningHead({super.key, required this.kit, this.count});
+
+  final GameKit kit;
+  final String? count;
+
+  @override
+  Widget build(BuildContext context) {
+    final ChallengeRoom room = kit.room;
+    final Palette p = kit.palette;
+    final String? count = this.count;
+    return Padding(
+      padding: EdgeInsets.only(top: room.top, left: 24, right: 66),
+      child: SizedBox(
+        height: room.head - room.top,
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                upper(context, kit.look.title),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textScaler: MediaQuery.textScalerOf(
+                  context,
+                ).clamp(maxScaleFactor: 1.4),
+                style: challengeSmallCaps(p.inkMuted, 11),
+              ),
+            ),
+            if (count != null) ...[
+              const SizedBox(width: 10),
+              Text(
+                count,
+                key: ValueKey('${kit.id}-count'),
+                textScaler: MediaQuery.textScalerOf(
+                  context,
+                ).clamp(maxScaleFactor: 1.4),
+                style: AppText.body(
+                  size: 13,
+                  weight: FontWeight.w600,
+                  height: 1,
+                  color: p.inkMuted,
+                ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A round's own page, as every challenge lays it out: the running head
+/// and the fine rule under it — or the challenge's own [rule], a clock —
+/// the round's bars where it has them, what the challenge says there
+/// ([status]), the challenge, and its controls at the foot.
 class GamePlayFrame extends StatelessWidget {
   const GamePlayFrame({
     super.key,
@@ -856,6 +770,7 @@ class GamePlayFrame extends StatelessWidget {
     this.marks,
     this.at = 0,
     this.actions,
+    this.rule,
   });
 
   final GameKit kit;
@@ -866,78 +781,41 @@ class GamePlayFrame extends StatelessWidget {
   final int at;
   final Widget? actions;
 
+  /// What stands under the running head in place of its hairline.
+  final Widget? rule;
+
   @override
   Widget build(BuildContext context) {
     final ChallengeRoom room = kit.room;
-    final Color ink = kit.ink;
-    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final Palette p = kit.palette;
     final List<bool?>? marks = this.marks;
-    final String? count = this.count;
+    const EdgeInsets side = EdgeInsets.symmetric(horizontal: 24);
     return Padding(
       padding: EdgeInsets.only(bottom: room.foot),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          ChallengeRunningHead(kit: kit, count: count),
           Padding(
-            padding: EdgeInsets.only(
-              top: room.top,
-              left: room.emblem.right + 2,
-              right: 64,
-            ),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: room.head - room.top),
-              child: Row(
-                children: [
-                  if (status case final Widget s)
-                    Expanded(
-                      child: Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: s,
-                      ),
-                    )
-                  else
-                    const Spacer(),
-                  if (count != null) ...[
-                    const SizedBox(width: 10),
-                    Text(
-                      count,
-                      key: ValueKey('${kit.id}-count'),
-                      textScaler: scaler.clamp(maxScaleFactor: 1.6),
-                      style: AppText.body(
-                        size: 15,
-                        weight: FontWeight.w800,
-                        height: 1,
-                        color: ink,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
+            padding: side,
+            child: rule ?? Container(height: 1, color: p.line),
           ),
           if (marks != null) ...[
-            const SizedBox(height: 10),
+            const SizedBox(height: 14),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GameSegments(
-                id: kit.id,
-                marks: marks,
-                at: at,
-                ink: ink,
-                ground: kit.ground,
-              ),
+              padding: side,
+              child: GameSegments(id: kit.id, marks: marks, at: at),
             ),
           ],
-          const SizedBox(height: 18),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: body,
-            ),
-          ),
+          if (status case final Widget s) ...[
+            const SizedBox(height: 20),
+            Padding(padding: side, child: s),
+          ],
+          const SizedBox(height: 20),
+          Expanded(child: Padding(padding: side, child: body)),
           if (actions case final Widget a) ...[
-            const SizedBox(height: 18),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 20), child: a),
+            const SizedBox(height: 16),
+            Padding(padding: side, child: a),
           ],
         ],
       ),

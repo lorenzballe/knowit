@@ -184,7 +184,9 @@ void main() {
       await pumpSections(tester, host, [_section('quick-games')]);
       expect(find.text('Challenges'), findsOneWidget);
       expect(
-        find.text('A minute or two each. Pick one and play.'),
+        find.text(
+          'Short exercises in judgement and estimation, a few minutes each.',
+        ),
         findsOneWidget,
       );
       final List<Offset> at = [
@@ -204,8 +206,12 @@ void main() {
       expect(at[2].dx, at[0].dx);
       expect(at[3].dy, at[2].dy);
       expect(find.byType(ChallengeTile), findsNWidgets(4));
+      // Each tile set as an entry: the skill it trains, the name, what
+      // it asks; no figure before there is one.
       expect(find.text('Sixty seconds'), findsOneWidget);
-      expect(find.text('Set your record'), findsOneWidget);
+      expect(find.text('INTUITION'), findsOneWidget);
+      expect(find.text('Eight claims against the clock.'), findsOneWidget);
+      expect(find.byKey(const ValueKey('challenge-figure')), findsNothing);
 
       await tester.tap(find.byKey(const ValueKey('challenge-true-false')));
       expect(host.screens.last.block, 'true-false');
@@ -287,7 +293,8 @@ void main() {
           'games': ['bets-bigger', 'sixty'],
         }),
       ]);
-      expect(find.text('Your record 6/8'), findsOneWidget);
+      expect(find.text('Best'), findsOneWidget);
+      expect(find.text('6/8'), findsOneWidget);
       expect(find.byKey(const ValueKey('challenge-spot-false')), findsNothing);
       expect(
         tester
