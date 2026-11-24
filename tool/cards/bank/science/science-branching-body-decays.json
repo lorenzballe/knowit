@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A scale you drag to guess how many times per second the radioactive atoms in your body split the universe, followed by a prompt to rate how sure you are of your guess.",
+    "label": "A person drawn big, the radioactive atoms in their body as yellow dots, one of them decaying: their world splits there into a copy where the atom decayed and one where it did not. The reader drags along a scale from 1 to 100,000 splits a second to guess how often this happens, then rates how sure they are.",
     "graded": false
   },
   "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",

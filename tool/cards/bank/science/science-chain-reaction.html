@@ -1,36 +1,31 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
 <!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
-     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
-     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
-       python3 tool/cards/check.py                                  the gate
-       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
-     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
-     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+     The picture: the chart drawn as a slab of uranium-235 metal seen face on, its nuclei packed in rows, rounds 0 to
+     10 along its foot and 0 to 10,000 nuclei up its side, the first nucleus splitting in its corner and throwing out
+     its neutrons. The reader draws a guess right on the metal, round by round; then the real chain grows over it,
+     2.5 times more each round, and every nucleus under the curve turns orange as it splits: nothing for five
+     rounds, then all at once. Flat colours, thick ink outlines, drawn again at its real size whenever its room
+     changes. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
-<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
 #stage{display:flex;flex-direction:column;gap:1.2cqh}
 #plotbox{position:relative;flex:1 1 0;min-height:0}
 #plot{position:absolute;inset:0;width:100%;height:100%;display:block;color:var(--k);touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
 #why{flex:none;display:flex;flex-direction:column;gap:.5cqh}
-#plot .grid{stroke:currentColor;stroke-opacity:.13;stroke-width:1}
-#plot .base{stroke:currentColor;stroke-opacity:.6;stroke-width:1.5}
-#plot .tick{fill:currentColor;fill-opacity:.62;font-family:var(--mono)}
-#plot .cap{fill:currentColor;fill-opacity:.8;font-family:var(--body);font-weight:700}
-#plot .hand{fill:currentColor;font-family:var(--hand)}
-#plot .num{fill:currentColor;font-family:var(--mono);font-weight:700}
-#plot .halo{paint-order:stroke fill;stroke:var(--c);stroke-width:5px;stroke-linejoin:round}
-#plot .guess{fill:none;stroke:currentColor;stroke-opacity:.42;stroke-linecap:round;stroke-linejoin:round}
-#plot .real{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
-#plot .glow{fill:none;stroke:currentColor;stroke-opacity:.13;stroke-linecap:round;stroke-linejoin:round}
-#plot .mass{fill:currentColor;fill-opacity:.07}
+#plot .tick{fill:currentColor;font-family:var(--body);font-weight:700}
+#plot .cap{fill:currentColor;font-family:var(--body);font-weight:700}
+#plot .hand{fill:currentColor;font-family:var(--hand);font-weight:700}
+#plot .num{fill:currentColor;font-family:var(--body);font-weight:800}
+#plot .halo{paint-order:stroke fill;stroke:#a3aba2;stroke-width:5px;stroke-linejoin:round}
+#plot .guess{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+#plot .real{fill:none;stroke:#ffc83d;stroke-linecap:round;stroke-linejoin:round}
+#plot .edge{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
 #plot .ink{fill:currentColor}
 #plot .ring{fill:none;stroke:currentColor}
-#plot .link{stroke:currentColor;stroke-opacity:.65;stroke-linecap:round}
+#plot .link{stroke:currentColor;stroke-linecap:round}
 </style>
 <!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
      (in the app, in the reader's language). The id stays "card". -->
@@ -40,7 +35,7 @@
     <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
     <h2 class="q">Every split frees 2.5 neutrons, each splitting another nucleus. How does it grow?</h2>
     <div class="stagebox" id="stage">
-      <div id="plotbox"><svg id="plot" role="img" aria-label="Chart of uranium nuclei split in each of ten rounds"></svg></div>
+      <div id="plotbox"><svg id="plot" role="img" aria-label="A slab of uranium-235 metal, its nuclei packed in rows: the chart of how many nuclei split in each of ten rounds, the first one splitting in its corner. Draw a guess on it with a finger."></svg></div>
       <!-- The why joins the chart once the real curve has been drawn over the guess. -->
       <div id="why" class="gone"><p class="body"><b>×2.5 every round:</b> it crawls, then explodes. By round 24, 3.6 billion at once.</p></div>
     </div>
@@ -55,13 +50,19 @@
 // Ten rounds of a chain reaction. A uranium-235 split frees 2.5 neutrons on average; if each one
 // splits another nucleus, round r splits 2.5^r nuclei. The reader draws a guess, the real curve answers.
 const R = 10, K = 2.5, YMAX = 10000, N = 200;
+// Flat colours with one meaning each: the metal grey, its nuclei a paler grey, a split nucleus orange, the
+// neutrons and the real chain yellow, everything outlined in ink.
+const INK = '#10100c', METAL = '#a3aba2', TOPF = '#cdd3cb', SHADE = '#8c948b', SHINE = '#bfc6bd', NUC = '#b5bcb3', STAMP = '#939b92', HOT = '#ff5a1f', SUN = '#ffc83d';
+// A fixed jitter for each nucleus, so the slab looks packed by hand, and the same at every size.
+const jit = (i, j) => { const s = Math.sin(i * 12.9898 + j * 78.233) * 43758.5453; return s - Math.floor(s); };
 const real = t => Math.pow(K, t);
 const fmt = v => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 const nice = v => { if (v < 100) return Math.round(v); const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const svg = Kit.$('plot');
 const guess = new Array(N + 1).fill(null); guess[0] = 1;      // the reader's line, a value every 1/20 round
 const st = {shown: 0, cmp: 0, burst: 0, pulse: 0, hint: 1};     // what gsap moves
-let G = null, back = null, front = null, rq = 0, pulseTw = null;
+let G = null, back = null, front = null, rq = 0, pulseTw = null, lit = null;
 let reach = 0, phase = 'draw', drawing = false, lastI = null, lastV = 1, pen = null, started = false;
 let markDone; const revealed = new Promise(r => { markDone = r; });
 
@@ -74,6 +75,8 @@ const P = (x, y) => x.toFixed(1) + ' ' + y.toFixed(1);
 let boxes = [];
 function free(b) {
   if (b.x < -1 || b.y < -1 || b.x + b.width > G.W + 1 || b.y + b.height > G.H + 1) return false;
+  // nothing is written on the bar's top face once the caption is in
+  if (G.fixed && b.y < G.top + 1) return false;
   return !boxes.some(o => b.x < o.x + o.width + 3 && b.x + b.width + 3 > o.x && b.y < o.y + o.height + 2 && b.y + b.height + 2 > o.y);
 }
 function label(cls, size, s, parent, spots, more) {
@@ -87,84 +90,144 @@ function label(cls, size, s, parent, spots, more) {
   t.remove(); return null;
 }
 
-// Axes at the real size: rounds 0 to 10 across, 0 to 10,000 nuclei up.
+// The slab at the real size: rounds 0 to 10 along its foot, 0 to 10,000 nuclei up its side, its nuclei in rows.
 function fit() {
   const {W, H, f} = Kit.fitSvg(svg);
-  const fs = Math.max(f, 14), sm = Math.max(fs * .78, 12);
-  G = {W, H, fs, sm, l: fs * .9, r: W - fs * 1.1, t: fs * 1.55, b: H - sm * 1.8};
+  const fs = clamp(Math.min(W * .045, H * .055), 12, 15), sm = Math.max(fs * .86, 11.5), k = clamp(Math.min(W, H) * .009, 2, 3);
+  // The bar, an ingot seen a little from above: its top face a narrow strip, its front face (wider at the foot)
+  // the chart.
+  const lid = clamp(H * .045, 8, 17), top = fs * 1.75 + lid, foot = H - sm * 1.75, x0b = 1.5, x1b = W - 1.5, sl = clamp(W * .03, 6, 14);
+  G = {W, H, fs, sm, k, top, foot, l: fs * 1.55 + sl * .5, r: W - fs * 1.1 - sl, t: top + fs * 1.15, b: foot - fs * 1.35};
   G.x = rd => G.l + (G.r - G.l) * rd / R;
   G.y = v => G.b - (G.b - G.t) * Math.min(v, YMAX * 1.05) / YMAX;
   svg.textContent = ''; boxes = [];
-  back = Kit.mk('g', {}, svg); front = Kit.mk('g', {}, svg);
-  for (let v = 2500; v <= YMAX; v += 2500) Kit.mk('line', {class: 'grid', x1: 0, x2: G.r, y1: G.y(v), y2: G.y(v)}, back);
-  Kit.mk('line', {class: 'base', x1: 0, x2: G.r, y1: G.b, y2: G.b}, back);
-  const cap = txt('cap', 0, fs * .95, fs * .95, 'Uranium nuclei split each round', back);
-  try { const w = cap.getComputedTextLength(); if (w > W) cap.setAttribute('font-size', (fs * .95 * W / w * .97).toFixed(1)); const b = cap.getBBox(); boxes.push({x: b.x, y: b.y, width: b.width, height: b.height}); } catch (e) {}
-  for (let r = 0; r <= R; r++) label('tick', sm, String(r), back, [[G.x(r), G.b + sm * 1.35, 'middle']]);
-  for (const v of [10000, 5000]) label('tick', sm, fmt(v), back, [[0, G.y(v) + sm * 1.05]]);
+  back = Kit.mk('g', {}, svg);
+  const defs = Kit.mk('defs', {}, back);
+  const at = {stroke: INK, 'stroke-width': k * 1.1, 'stroke-linejoin': 'round'};
+  // its top face, narrower at the back, its name stamped in it where there is room
+  Kit.mk('path', Object.assign({d: `M${x0b + sl},${top} L${x0b + sl + lid * 1.3},${top - lid} L${x1b - sl - lid * 1.3},${top - lid} L${x1b - sl},${top} Z`, fill: TOPF}, at), back);
+  if (lid >= 14.5) { const s = txt('cap', W / 2, top - lid * .27, Math.max(10, lid * .66), 'URANIUM-235', back, {'text-anchor': 'middle', fill: STAMP, 'font-weight': 800, 'letter-spacing': '.1em'}); s.removeAttribute('class'); s.setAttribute('font-family', 'Figtree, system-ui, sans-serif'); }
+  // its front face: grey metal, a shade along its foot, a shine across it
+  const shape = `M${x0b + sl},${top} L${x1b - sl},${top} L${x1b},${foot} L${x0b},${foot} Z`;
+  const face = Kit.mk('clipPath', {id: 'face'}, defs);
+  Kit.mk('path', {d: shape}, face);
+  const metal = Kit.mk('g', {'clip-path': 'url(#face)'}, back);
+  Kit.mk('rect', {x: 0, y: top, width: W, height: foot - top, fill: METAL}, metal);
+  Kit.mk('rect', {x: 0, y: G.b + 1, width: W, height: foot - G.b + 2, fill: SHADE}, metal);
+  Kit.mk('path', {d: `M${W * .62},${top} L${W * .8},${top} L${W * .42},${G.b} L${W * .24},${G.b} Z`, fill: SHINE}, metal);
+  Kit.mk('path', {d: `M${W * .85},${top} L${W * .89},${top} L${W * .51},${G.b} L${W * .47},${G.b} Z`, fill: SHINE}, metal);
+  // its nuclei, a light speckle through the metal; where it has split, the metal under the real curve glows
+  // orange and the same nuclei are yellow sparks
+  const r0 = clamp(Math.min(W, H) / 75, 1.7, 3.2), dx = r0 * 5.4, dy = r0 * 4.8;
+  let nuclei = '';
+  for (let row = 0, y = G.b - r0 * 2; y > top + r0; row++, y -= dy)
+    for (let col = 0, x = r0 * 2 + (row % 2 ? dx / 2 : 0); x < W - r0; col++, x += dx) {
+      const r = r0 * (.75 + .5 * jit(row, col)), cx = x + (jit(col, row) - .5) * dx * .6, cy = y + (jit(row + 7, col) - .5) * dy * .6;
+      nuclei += `M${(cx - r).toFixed(1)} ${cy.toFixed(1)}a${r.toFixed(1)} ${r.toFixed(1)} 0 1 0 ${(2 * r).toFixed(1)} 0a${r.toFixed(1)} ${r.toFixed(1)} 0 1 0 ${(-2 * r).toFixed(1)} 0`;
+    }
+  Kit.mk('path', {d: nuclei, fill: NUC}, metal);
+  const under = Kit.mk('clipPath', {id: 'split'}, defs);
+  lit = Kit.mk('path', {d: ''}, under);
+  const hot = Kit.mk('g', {'clip-path': 'url(#split)'}, metal);
+  Kit.mk('rect', {x: 0, y: top, width: W, height: foot - top, fill: HOT}, hot);
+  Kit.mk('path', {d: nuclei, fill: SUN}, hot);
+  Kit.mk('path', Object.assign({d: shape, fill: 'none'}, at), back);
+  // The bar's side: a tick and its number at 5,000 and 10,000, the number on the metal, haloed.
+  const edge = y => x0b + sl * (foot - y) / (foot - top);
+  for (const v of [10000, 5000]) {
+    const y = G.y(v), e = edge(y);
+    Kit.mk('line', {x1: e, x2: e + fs * .55, y1: y, y2: y, stroke: INK, 'stroke-width': k, 'stroke-linecap': 'round'}, back);
+    label('num halo', sm, fmt(v), back, [[e + fs * .8, y + sm * .36]]);
+  }
+  const cap = txt('cap', 0, fs * 1.1, fs, 'Uranium nuclei split each round', back);
+  try { const w = cap.getComputedTextLength(); if (w > W) cap.setAttribute('font-size', (fs * W / w * .97).toFixed(1)); const b = cap.getBBox(); boxes.push({x: b.x, y: b.y, width: b.width, height: b.height}); } catch (e) {}
+  // The rounds along the slab's foot.
+  for (let r = 0; r <= R; r++) {
+    Kit.mk('line', {x1: G.x(r), x2: G.x(r), y1: foot - 1, y2: foot + sm * .3, stroke: INK, 'stroke-width': k * .8, 'stroke-linecap': 'round'}, back);
+    label('tick', sm, String(r), back, [[G.x(r), foot + sm * 1.35, 'middle']]);
+  }
+  front = Kit.mk('g', {}, svg);
   G.fixed = boxes.slice();
+}
+
+// One nucleus splitting, drawn big: the nucleus in orange, its neutrons thrown out in yellow, each with a trail.
+function split(x, y, s, parent, o) {
+  const g = Kit.mk('g', {opacity: o.toFixed(2)}, parent);
+  [[-.9, -.75], [.35, -1.2], [1.15, -.25]].forEach(([ax, ay]) => {
+    const ex = x + ax * s * 2.1, ey = y + ay * s * 2.1;
+    Kit.mk('line', {x1: (x + ax * s * 1.05).toFixed(1), y1: (y + ay * s * 1.05).toFixed(1), x2: ex.toFixed(1), y2: ey.toFixed(1), stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-dasharray': '2 3'}, g);
+    Kit.mk('circle', {cx: ex.toFixed(1), cy: ey.toFixed(1), r: (s * .32).toFixed(1), fill: SUN, stroke: INK, 'stroke-width': 1.5}, g);
+  });
+  Kit.mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: s.toFixed(1), fill: HOT, stroke: INK, 'stroke-width': 2}, g);
+  return g;
 }
 
 function render() {
   if (!G) return;
   front.textContent = ''; boxes = G.fixed.slice();
-  const {fs, sm} = G, w = Math.max(fs * .28, 4), x0 = G.x(0), y0 = G.y(1);
+  const {fs, sm, k} = G, w = Math.max(fs * .3, 4), x0 = G.x(0), y0 = G.y(1);
   // the reader's guess, in pencil
   if (reach > 0) {
     let d = 'M' + P(x0, y0);
     for (let i = 1; i <= reach; i++) d += 'L' + P(G.x(i * R / N), G.y(guess[i]));
-    Kit.mk('path', {class: 'guess', d, 'stroke-width': (w * .95).toFixed(1)}, front);
+    Kit.mk('path', {class: 'guess', d, 'stroke-width': (w * .8).toFixed(1)}, front);
   }
-  // the real chain: each round 2.5 times the one before
-  let head = null;
+  // the real chain: each round 2.5 times the one before; every nucleus under it split
+  let head = null, area = '';
   if (st.shown > 0) {
     const u = st.shown; let d = 'M' + P(x0, y0);
     for (let t = .04; t < u; t += .04) d += 'L' + P(G.x(t), G.y(real(t)));
     const hx = G.x(u), hy = G.y(real(u)); d += 'L' + P(hx, hy);
-    Kit.mk('path', {class: 'mass', d: d + 'L' + P(hx, G.b) + 'L' + P(x0, G.b) + 'Z'}, front);
-    Kit.mk('path', {class: 'glow', d, 'stroke-width': (w * 3.4).toFixed(1)}, front);
-    Kit.mk('path', {class: 'real', d, 'stroke-width': w.toFixed(1)}, front);
-    for (let r = 1; r <= u + 1e-6; r++) Kit.mk('circle', {class: 'ink', cx: G.x(r).toFixed(1), cy: G.y(real(r)).toFixed(1), r: (w * .9).toFixed(1)}, front);
-    Kit.mk('circle', {class: 'ink', cx: hx.toFixed(1), cy: hy.toFixed(1), r: (w * 1.6).toFixed(1)}, front);
+    // what has split: the room under the curve, down to the zero line, from the first round to where it has got
+    area = d + 'L' + P(hx, G.b) + 'L' + P(x0, G.b) + 'Z';
+    Kit.mk('path', {class: 'edge', d, 'stroke-width': (w * 1.9).toFixed(1)}, front);
+    Kit.mk('path', {class: 'real', d, 'stroke-width': (w * 1.05).toFixed(1)}, front);
+    for (let r = 1; r <= u + 1e-6; r++) Kit.mk('circle', {cx: G.x(r).toFixed(1), cy: G.y(real(r)).toFixed(1), r: (w * .75).toFixed(1), fill: SUN, stroke: INK, 'stroke-width': 1.5}, front);
+    Kit.mk('circle', {cx: hx.toFixed(1), cy: hy.toFixed(1), r: (w * 1.25).toFixed(1), fill: SUN, stroke: INK, 'stroke-width': 2}, front);
     head = {hx, hy, u};
   }
-  // where it starts: one nucleus splits
+  lit.setAttribute('d', area);
+  // where it starts: one nucleus splits, throwing out its neutrons
   const hint = phase === 'draw' && st.hint > 0;
-  if (hint) Kit.mk('circle', {class: 'ring', cx: x0.toFixed(1), cy: y0.toFixed(1), r: (w * 1.6 + fs * 1.2 * st.pulse).toFixed(1), 'stroke-width': 2, opacity: ((1 - st.pulse) * st.hint).toFixed(2)}, front);
-  Kit.mk('circle', {class: 'ink', cx: x0.toFixed(1), cy: y0.toFixed(1), r: (w * 1.6).toFixed(1)}, front);
+  if (hint) Kit.mk('circle', {class: 'ring', cx: x0.toFixed(1), cy: y0.toFixed(1), r: (fs * .55 + fs * 1.3 * st.pulse).toFixed(1), 'stroke-width': 2, opacity: ((1 - st.pulse) * st.hint).toFixed(2)}, front);
+  split(x0, y0, fs * .62, front, 1);
   // halfway: the guess against the real count
   let cmp = null;
   if (st.cmp > 0) {
     const g5 = guess[N / 2], x5 = G.x(5), yG = G.y(g5), yR = G.y(real(5));
     cmp = {g5, x5, yG, yR, g: Kit.mk('g', {opacity: st.cmp.toFixed(2)}, front)};
     Kit.mk('line', {class: 'link', x1: x5.toFixed(1), x2: x5.toFixed(1), y1: yG.toFixed(1), y2: yR.toFixed(1), 'stroke-width': 2.4, 'stroke-dasharray': '0.1 5'}, cmp.g);
-    Kit.mk('circle', {class: 'ring', cx: x5.toFixed(1), cy: yG.toFixed(1), r: (w * 1.25).toFixed(1), 'stroke-width': 2.2}, cmp.g);
+    Kit.mk('circle', {cx: x5.toFixed(1), cy: yG.toFixed(1), r: (w * 1.1).toFixed(1), fill: '#fffbf0', stroke: INK, 'stroke-width': 2}, cmp.g);
   }
   // all at once
   if (st.burst > 0 && st.burst < 1) {
     const hx = G.x(R), hy = G.y(real(R));
-    for (let k = 0; k < 3; k++) {
-      const p = st.burst * 1.5 - k * .25;
+    for (let q = 0; q < 3; q++) {
+      const p = st.burst * 1.5 - q * .25;
       if (p > 0 && p < 1) Kit.mk('circle', {class: 'ring', cx: hx.toFixed(1), cy: hy.toFixed(1), r: (w * 1.6 + fs * 3.6 * p).toFixed(1), 'stroke-width': (3 * (1 - p) + .5).toFixed(2), opacity: (1 - p).toFixed(2)}, front);
     }
   }
   // the words, most important first, each where it touches no other
   if (head) {
     const {hx, hy} = head;
-    label('num halo', fs * 1.2, fmt(real(head.u)), front, head.u < 6.5
+    label('num halo', fs * 1.25, fmt(real(head.u)), front, head.u < 6.5
       ? [[hx + fs * .6, hy - fs * .6], [hx - fs * .7, hy - fs * .6, 'end'], [hx - fs * .7, hy - fs * 1.7, 'end']]
       : [[hx - fs * .8, hy - fs * .6, 'end'], [hx - fs * .8, hy + fs * 1.35, 'end'], [hx - fs * 1.2, hy + fs * .4, 'end']]);
   }
   if (cmp) {
     const {x5, yG, yR, g} = cmp, a = fs * .55;
     label('num halo', sm * 1.15, fmt(real(5)), g, [[x5 + a, yR - fs * .5], [x5 - a, yR - fs * .5, 'end'], [x5 + a, yR - fs * 1.6]]);
-    label('hand halo', fs * 1.15, 'you: ' + fmt(nice(cmp.g5)), g, [[x5 + a, yG + fs * 1.2], [x5 + a, yG - fs * .6], [x5 - a, yG - fs * .6, 'end'], [x5 - a, yG + fs * 1.2, 'end'], [x5 + a, yR - fs * 1.9], [x5 + a, yR - fs * 3.1]]);
+    // a guess that rises leaves the point's lower right and upper left clear of its own line: those first
+    label('hand halo', fs * 1.3, 'you: ' + fmt(nice(cmp.g5)), g, [[x5 + a, yG + fs * 1.2], [x5 - a, yG - fs * .6, 'end'], [x5 - a, yG + fs * 1.2, 'end'], [x5 + a, yG - fs * .6], [x5 + a, yR - fs * 1.9], [x5 + a, yR - fs * 3.1]]);
   }
-  if (hint) label('hand halo', fs * 1.1, 'start: 1 split', front, [[x0 + fs * .5, y0 - fs * .95], [x0 + fs * .5, y0 - fs * 2.1]], {opacity: st.hint.toFixed(2)});
+  if (hint) {
+    label('hand halo', fs * 1.3, 'start: 1 split', front, [[x0 + fs * 1.5, y0 - fs * 1.2], [x0 + fs * 1.5, y0 - fs * 2.3]], {opacity: st.hint.toFixed(2)});
+    label('hand halo', fs * 1.4, 'draw how it grows →', front, [[(G.l + G.r) / 2, (G.t + G.b) / 2, 'middle']], {opacity: st.hint.toFixed(2)});
+  }
   // the pencil tip while drawing, with the number it stands for
   if (drawing && pen) {
     const px = G.x(pen.i * R / N), py = G.y(pen.v), cx = Math.min(Math.max(px, G.l + fs * 1.6), G.W - fs * 1.8);
-    Kit.mk('circle', {class: 'ink', cx: px.toFixed(1), cy: py.toFixed(1), r: (w * 1.2).toFixed(1), opacity: .6}, front);
+    Kit.mk('circle', {class: 'ink', cx: px.toFixed(1), cy: py.toFixed(1), r: (w * 1.1).toFixed(1)}, front);
     label('num halo', sm * 1.15, fmt(nice(pen.v)), front, [[cx, py - fs * 1.8, 'middle'], [px - fs * 1.2, py + fs * .4, 'end'], [px + fs * 1.2, py + fs * .4], [cx, py + fs * 2.4, 'middle']]);
   }
 }
@@ -211,7 +274,7 @@ function lift() {
 svg.addEventListener('pointerup', lift);
 svg.addEventListener('pointercancel', lift);
 
-// The answer: the real curve grows over the guess, round by round, then the why.
+// The answer: the real curve grows over the guess, round by round, the nuclei under it splitting, then the why.
 function finish() {
   phase = 'reveal';
   for (let i = reach + 1; i <= N; i++) guess[i] = guess[reach];
@@ -219,6 +282,7 @@ function finish() {
   Kit.haptic('light');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   gsap.set(['#why', '#keep'], {opacity: 0});
+  svg.setAttribute('aria-label', 'The real chain grown over the guess: 1 split, then 2.5 times more each round, almost nothing for five rounds, then 9,537 nuclei splitting in round 10, every nucleus under the curve turned orange.');
   fit(); render();
   if (Kit.calm) { st.shown = R; st.cmp = 1; phase = 'done'; render(); gsap.set(['#why', '#keep'], {opacity: 1}); markDone(); return; }
   gsap.to(st, {shown: R, duration: 2.6, delay: .3, ease: 'none', onUpdate: render, onComplete: outro});

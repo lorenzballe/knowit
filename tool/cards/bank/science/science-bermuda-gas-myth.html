@@ -1,39 +1,40 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-bermuda-gas-myth -->
+<!-- The picture: the sea of the Bermuda Triangle in section. A cargo ship on the surface, the deep water under it,
+     the seabed in layers with a band of frozen methane in it, and a column of methane bubbles rising from a vent
+     toward the ship: the myth's own picture. The reader picks when a big gas rise last happened and says how sure;
+     then the gas stops, its last bubbles rise and burst, and the seabed's clock runs back from today under the ship
+     to the last big gas rise, 15,000 years ago, the reader's guess marked on it. Flat colours, thick ink outlines,
+     drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.4cqh}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.4cqh}
 #pic{flex:1;min-height:0;width:100%;display:block}
 #opts{display:flex;flex-direction:column;gap:1.1cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
 .opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
-#pic text{font-family:var(--body);fill:var(--k)}
-#pic .mut{fill:var(--muted)}
-#pic .wat{fill:color-mix(in srgb,var(--k) 10%,transparent)}
-#pic .ln{stroke:var(--k);fill:none}
-#pic .bnd{fill:var(--k);opacity:.85}
-#pic .bub{fill:none;stroke:var(--k)}
-#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
-#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body)}
+#why .body{font:500 max(1.8cqh,12.5px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+#sure .sq{text-wrap:balance}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">BERMUDA MYTHS</span></div>
     <h2 class="q">When did big methane eruptions last rise in the Bermuda Triangle?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" aria-label="A timeline under the sea, from the last big gas rise to today"></svg>
+      <svg id="pic" role="img" aria-label="The sea of the Bermuda Triangle drawn in section: a cargo ship on the surface, and under it a column of methane bubbles rising from frozen methane in the seabed."></svg>
       <div id="opts">
         <button class="opt" data-i="0" data-y="3">In the last few years</button>
         <button class="opt" data-i="1" data-y="100">About a century ago</button>
         <button class="opt" data-i="2" data-y="15000">At least 15,000 years ago</button>
       </div>
-      <div id="why" class="gone"><p class="big">At least 15,000 years ago</p><p class="body">Enough gas really can sink a small ship. But the US Geological Survey says no big gas rises have happened in the area for at least 15,000 years. So gas can't explain ships lost in modern times.</p></div>
+      <!-- The drawing shows the 15,000 years once the answer is in: the why need not say the answer again. -->
+      <div id="why" class="gone"><p class="body">Enough gas really can sink a small ship. But the US Geological Survey says no big gas rises have happened in the area for at least 15,000 years. So gas can't explain ships lost in modern times.</p></div>
     </div>
-    <div id="sure"></div>
+    <div id="sure" class="gone"></div>
     <p class="say" id="say">Pick one, then watch the seabed's clock run.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A cause that could work is not a cause that is happening now.</div>
     <div class="foot"><span class="src">Source · Geopop, “Cosa c'è di vero nel "mistero" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025).</span></div>
@@ -42,81 +43,296 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const RIGHT = 2;
+// Flat colours with one meaning each: the sea blue, the ship's hull red, its cabins and the bubbles white, the
+// seabed's mud in three sands, the frozen methane a pale ice.
+const INK = '#10100c', SEA = '#2f7fe0', WHITE = '#fffbf0', HULL = '#d8452f', ICE = '#dff1ff', GOLD = '#ffc83d', NAVY = '#1957c2',
+  MUD = ['#f6d892', '#ecbb6a', '#d99a50'];
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif';
 let pick = -1, done = false, guessY = 0;
 const svg = Kit.$('pic');
+// rise: the bubbles coming up on the cover; drain: the gas stopping, its column emptying from the vent up;
+// fill: the seabed's clock running back from today; mark: the end of the clock and the reader's guess coming in.
+const S = {rise: 1, drain: 0, fill: 0, mark: 0};
 let G = null;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const smooth = x => { const u = clamp(x, 0, 1); return u * u * (3 - 2 * u); };
+// A fixed jitter for each bubble, so the column looks the same at every size and every time it is drawn.
+const jit = (i, j) => { const s = Math.sin(i * 12.9898 + j * 78.233) * 43758.5453; return s - Math.floor(s); };
 
-function draw(animate){
+// A cargo ship side on, its waterline at y and its middle at x, bow to the right: hull, containers, bridge, funnel.
+function ship(g, x, y, L, k) {
+  const at = {stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'};
+  const top = y - L * .12, bow = y - L * .17, keel = y + L * .08;
+  // containers on the deck, two tiers in the middle
+  const bw = L * .12, bh = L * .085;
+  [[.02, 0, GOLD], [.14, 0, NAVY], [.26, 0, GOLD], [.08, 1, WHITE], [.2, 1, GOLD]].forEach(([u, tier, c]) =>
+    Kit.mk('rect', Object.assign({x: x - L * .06 + u * L, y: top - bh * (tier + 1), width: bw, height: bh, fill: c}, at), g));
+  // the bridge at the stern, its windows, the funnel behind it
+  Kit.mk('rect', Object.assign({x: x - L * .44, y: top - L * .2, width: L * .22, height: L * .2, fill: WHITE}, at), g);
+  for (let i = 0; i < 3; i++) Kit.mk('rect', {x: x - L * .415 + i * L * .062, y: top - L * .175, width: L * .04, height: L * .035, rx: 1, fill: INK}, g);
+  Kit.mk('rect', Object.assign({x: x - L * .4, y: top - L * .31, width: L * .09, height: L * .11, fill: HULL}, at), g);
+  Kit.mk('rect', Object.assign({x: x - L * .4, y: top - L * .31, width: L * .09, height: L * .035, fill: INK}, at), g);
+  // the hull: a raised bow, a straight stern
+  Kit.mk('path', Object.assign({d: `M${x - L * .5},${top} L${x + L * .38},${top} L${x + L * .5},${bow} L${x + L * .41},${keel} L${x - L * .46},${keel} Z`, fill: HULL}, at), g);
+  Kit.mk('path', {d: `M${x - L * .49},${top + L * .035} L${x + L * .44},${top + L * .035}`, stroke: WHITE, 'stroke-width': Math.max(1.5, L * .018), 'stroke-linecap': 'round'}, g);
+}
+
+function text(g, x, y, s, size, a) {
+  const t = Kit.mk('text', Object.assign({x: x.toFixed(1), y: y.toFixed(1), fill: INK, 'font-family': FONT, 'font-weight': 700, 'font-size': size.toFixed(1)}, a || {}), g);
+  t.textContent = s; return t;
+}
+
+function build() {
   svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const x0 = W*0.07, x1 = W*0.93, ly = H*0.56, sy = H*0.13;
-  const fs = Math.max(f, 12);
-  G = {W, H, f: fs, x0, x1, ly, sy};
-  // water
-  let d = `M0 ${sy}`;
-  for (let x = 0; x <= W; x += W/12) d += ` Q ${x + W/24} ${sy - fs*0.35} ${x + W/12} ${sy}`;
-  Kit.mk('path', {d: d + ` L${W} ${ly} L0 ${ly}Z`, class: 'wat'}, svg);
-  // ship at today
-  const sx = x1 - fs*1.8, s = fs*0.9;
-  Kit.mk('path', {d: `M${sx-s*1.6} ${sy-s*0.5} L${sx+s*1.6} ${sy-s*0.5} L${sx+s*1.1} ${sy+s*0.2} L${sx-s*1.1} ${sy+s*0.2}Z M${sx-s*0.4} ${sy-s*0.5} L${sx-s*0.4} ${sy-s*1.6} L${sx+s*0.6} ${sy-s*0.7}Z`, fill: 'var(--k)'}, svg);
-  // seabed timeline
-  Kit.mk('line', {x1: x0, y1: ly, x2: x1, y2: ly, class: 'ln', 'stroke-width': Math.max(2, fs*0.18), 'stroke-dasharray': done ? 'none' : `${fs*0.4} ${fs*0.35}`, opacity: done ? 1 : .5}, svg);
-  Kit.mk('circle', {cx: x1, cy: ly, r: fs*0.35, fill: 'var(--k)'}, svg);
-  const today = Kit.mk('text', {x: x1, y: ly + fs*1.6, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 800}, svg); today.textContent = 'Today';
-  if (!done){
-    const q = Kit.mk('text', {x: x0, y: ly + fs*1.6, 'font-size': fs*1.3, 'font-weight': 800, class: 'mut'}, svg); q.textContent = '← ?';
-    const t = Kit.mk('text', {x: W/2, y: (sy + ly)/2 + fs*0.4, 'text-anchor': 'middle', 'font-size': fs, class: 'mut'}, svg); t.textContent = 'Seabed clock: how long since gas?';
-    return;
+  const {W, H} = Kit.fitSvg(svg);
+  G = null;
+  if (W < 60 || H < 36) return;
+  const fs = clamp(Math.min(W * .042, H * .085), 11, 14);
+  const k = clamp(Math.min(W, H) * .011, 2, 3);
+  const r = Math.min(16, W * .05);
+  const end = done;
+  // The seabed: a band at the foot, thick enough for its frozen methane and, at the end, for the clock's words.
+  const bedH = end ? clamp(H * .36, fs * 2.5, fs * 5.2) : clamp(H * .3, fs * 2.6, fs * 6);
+  // The ship: as long as the picture's width and the sky over the water allow.
+  let L = Math.min(W * (end ? .34 : .46), end ? 140 : 190);
+  let seaY = clamp(L * .5, H * (end ? .13 : .2), H * (end ? .3 : .34));
+  L = Math.min(L, (seaY - 3) / .45);
+  const bedY = H - bedH;
+  const sx = end ? W - L * .5 - Math.max(6, W * .04) : W * .58;
+  const pad = Math.max(10, W * .045);
+  // The seabed's top: gently uneven; on the cover a crater under the ship, its rims raised, where the gas comes out.
+  const vent = end ? 0 : 1, vw = L * .16, vd = Math.min(bedH * .2, fs * .75);
+  const plain = x => bedY + Math.sin(x / W * 5.1 + .6) * bedH * .05;
+  const bed = x => plain(x) + vent * vd * Math.exp(-(((x - sx) / vw) ** 2)) - vent * vd * .55 * (Math.exp(-(((x - sx - vw * 1.5) / (vw * .55)) ** 2)) + Math.exp(-(((x - sx + vw * 1.5) / (vw * .55)) ** 2)));
+  const N = 80, xs = Array.from({length: N + 1}, (_, i) => i / N * W);
+  const line = (pts) => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const top = xs.map(x => [x, bed(x)]);
+  // The layers under the top keep the seabed's lie, not its crater: only the top is dug out.
+  const under = d => xs.map(x => [x, Math.max(bed(x) + 2, plain(x) + d)]);
+  const band = d => line(under(d)) + ` L${W},${H + 2} L0,${H + 2} Z`;
+
+  const root = Kit.mk('g', {}, svg);
+  const defs = Kit.mk('defs', {}, root);
+  const clip = Kit.mk('clipPath', {id: 'slice'}, defs);
+  Kit.mk('path', {d: `M0,${-H} H${W} V${H - r} Q${W},${H} ${W - r},${H} H${r} Q0,${H} 0,${H - r} Z`}, clip);
+  const world = Kit.mk('g', {'clip-path': 'url(#slice)'}, root);
+
+  // The sea, the seabed's three muds, the frozen methane in them.
+  Kit.mk('rect', {x: 0, y: seaY, width: W, height: H - seaY, fill: SEA}, world);
+  const d1 = bedH * .28, d2 = bedH * .66;
+  Kit.mk('path', {d: band(0), fill: MUD[0]}, world);
+  Kit.mk('path', {d: band(d1), fill: MUD[1]}, world);
+  Kit.mk('path', {d: band(d2), fill: MUD[2]}, world);
+  Kit.mk('path', {d: line(under(d1)), fill: 'none', stroke: INK, 'stroke-width': 1.4, opacity: .3}, world);
+  Kit.mk('path', {d: line(under(d2)), fill: 'none', stroke: INK, 'stroke-width': 1.4, opacity: .3}, world);
+  // The frozen methane: a band of ice in the mud, its top edge broken into blocks.
+  const iceT = end ? bedH * .6 : bedH * .38, iceB = end ? bedH * .9 : bedH * .74, showIce = (iceB - iceT) >= fs * 1.25;
+  if (showIce) {
+    const ix0 = W * .04, ix1 = W * .96, steps = 14;
+    let d = `M${ix0},${plain(ix0) + iceB}`;
+    for (let i = 0; i <= steps; i++) { const x = ix0 + (ix1 - ix0) * i / steps, j = (jit(i, 3) - .5) * (iceB - iceT) * .28; d += ` L${x.toFixed(1)},${(plain(x) + iceT + j).toFixed(1)}`; }
+    for (let i = steps; i >= 0; i--) { const x = ix0 + (ix1 - ix0) * i / steps, j = (jit(i, 7) - .5) * (iceB - iceT) * .18; d += ` L${x.toFixed(1)},${(plain(x) + iceB + j).toFixed(1)}`; }
+    Kit.mk('path', {d: d + ' Z', fill: ICE, stroke: INK, 'stroke-width': k * .75, 'stroke-linejoin': 'round'}, world);
+    // a few cracks between its blocks
+    for (let i = 1; i < steps; i += 3) { const x = ix0 + (ix1 - ix0) * (i + .4) / steps; Kit.mk('path', {d: `M${x.toFixed(1)},${(plain(x) + iceT + 2).toFixed(1)} l${(fs * .25).toFixed(1)},${((iceB - iceT) * .45).toFixed(1)}`, stroke: INK, 'stroke-width': 1.2, opacity: .45, fill: 'none'}, world); }
   }
-  // quiet band
-  const bh = fs*0.5;
-  const band = Kit.mk('rect', {x: animate ? x1 : x0, y: ly - bh/2, width: animate ? 0 : x1 - x0, height: bh, rx: bh/2, class: 'bnd'}, svg);
-  const num = Kit.mk('text', {x: W/2, y: ly - fs*2.9, 'text-anchor': 'middle', 'font-size': fs*1.6, 'font-weight': 800}, svg);
-  const sub = Kit.mk('text', {x: W/2, y: ly - fs*0.9, 'text-anchor': 'middle', 'font-size': fs*0.95, 'font-weight': 600}, svg);
-  sub.textContent = 'with no big gas rises';
-  const l1 = Kit.mk('text', {x: x0, y: ly + fs*1.6, 'font-size': fs, 'font-weight': 800}, svg); l1.textContent = '15,000+ years ago';
-  const l2 = Kit.mk('text', {x: x0, y: ly + fs*2.9, 'font-size': fs*0.9, class: 'mut'}, svg); l2.textContent = 'last big gas rise';
-  // reader's guess
-  const gx = x1 - (guessY/15000)*(x1 - x0);
-  const right = gx > W/2;
-  const tri = Kit.mk('path', {d: `M${gx} ${ly + bh*0.6} l${-fs*0.45} ${fs*0.75} l${fs*0.9} 0Z`, fill: 'var(--k)'}, svg);
-  const gl = Kit.mk('text', {x: right ? Math.min(gx + fs*0.45, W) : Math.max(gx - fs*0.45, 0), y: ly + fs*4.3, 'text-anchor': right ? 'end' : 'start', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--hand)'}, svg);
-  gl.textContent = pick === RIGHT ? 'Your guess ✓' : 'Your guess: ' + (guessY < 50 ? 'a few years ago' : '100 years ago');
-  // ancient bubbles at the left end
-  const bubs = [];
-  for (let i = 0; i < 6; i++){
-    const b = Kit.mk('circle', {cx: x0 + fs*(0.4 + (i%3)*0.7), cy: ly - fs*(0.8 + i*1.1), r: fs*(0.18 + (i%3)*0.1), class: 'bub', 'stroke-width': Math.max(1.2, fs*0.08), opacity: done && !animate ? .35 : 0}, svg);
-    bubs.push(b);
+  // On the cover, a crack from the frozen methane up to the vent.
+  if (!end && showIce) {
+    const y0 = plain(sx) + iceT - 1, y1 = bed(sx) + 1, zz = fs * .3;
+    Kit.mk('path', {d: `M${sx - zz},${y0} L${sx + zz},${y0 - (y0 - y1) * .35} L${sx - zz * .6},${y0 - (y0 - y1) * .7} L${sx},${y1}`, fill: 'none', stroke: INK, 'stroke-width': k * .8, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, world);
   }
-  if (!animate || Kit.calm){ num.textContent = '15,000 years'; bubs.forEach(b => b.setAttribute('opacity', .35)); return; }
-  const c = {v: 0};
-  gsap.set([num, sub, l1, l2], {opacity: 0});
-  gsap.from([tri, gl], {opacity: 0, y: fs, duration: .4});
-  const tl = gsap.timeline({delay: .35});
-  tl.to(band, {attr: {x: x0, width: x1 - x0}, duration: 2.2, ease: 'power2.inOut'}, 0)
-    .to([num, sub], {opacity: 1, duration: .3}, 0)
-    .to(c, {v: 15000, duration: 2.2, ease: 'power2.inOut', onUpdate: () => num.textContent = Math.round(c.v/100)*100 .toLocaleString('en-US') + ' years'}, 0)
-    .to([l1, l2], {opacity: 1, duration: .4}, 2.1)
-    .fromTo(bubs, {opacity: 0, attr: {cy: ly}}, {opacity: .35, attr: {cy: (i) => ly - fs*(0.8 + i*1.1)}, duration: 1, stagger: .08, ease: 'power1.out'}, 2.1)
-    .add(() => { num.textContent = '15,000 years'; Kit.haptic('success'); }, 2.2);
+  Kit.mk('path', {d: line(top), fill: 'none', stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'}, world);
+
+  // The plume: rows of bubbles from the vent to the surface, growing as they rise, the column widening.
+  const bub = [], plume = Kit.mk('g', {}, world);
+  const yV = bed(sx) - 2, yS = seaY + 2, span = yV - yS;
+  const r0 = Math.max(2.2, L * .022), r1 = Math.max(4.5, L * .06), w0 = L * .05, w1 = L * .4;
+  if (!end || S.drain < 1) {
+    let y = yV - r0, row = 0;
+    while (y > yS + r0) {
+      const u = clamp((yV - y) / span, 0, 1), rr = r0 + (r1 - r0) * u, w = w0 + (w1 - w0) * u;
+      const m = Math.max(1, Math.floor((2 * w) / (2.7 * rr)) + 1);
+      for (let j = 0; j < m; j++) {
+        const base = m === 1 ? 0 : -w + 2 * w * j / (m - 1);
+        const bx = sx + base + (jit(row, j) - .5) * rr * 1.1 + (row % 2 ? rr * .5 : -rr * .5) * (m > 1 ? 1 : 0);
+        const by = y + (jit(j, row) - .5) * rr * .6;
+        const rad = rr * (.7 + .3 * jit(row + 9, j));
+        const c = Kit.mk('circle', {cx: bx.toFixed(1), cy: by.toFixed(1), r: rad.toFixed(1), fill: WHITE, stroke: INK, 'stroke-width': Math.max(1.2, k * .6)}, plume);
+        bub.push({c, u, r: rad});
+      }
+      y -= rr * 2.15; row++;
+    }
+  }
+
+  // The ship on the surface, and the surface's front over its keel so it floats; foam where the gas breaks the surface.
+  ship(Kit.mk('g', {}, world), sx, seaY, L, Math.max(1.5, k * .8));
+  const wave = x => seaY + Math.sin(x / W * Math.PI * 9) * Math.max(1.2, fs * .14);
+  const surf = xs.map(x => [x, wave(x)]);
+  Kit.mk('path', {d: line(surf) + ` L${W},${seaY + L * .1} L0,${seaY + L * .1} Z`, fill: SEA}, world);
+  Kit.mk('path', {d: line(surf), fill: 'none', stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'}, world);
+  // The foam: puffs that overlap into one froth, outlined once (each puff drawn in ink a little larger, then in white).
+  const foam = Kit.mk('g', {}, world), froth = [];
+  if (!end || S.drain < 1) {
+    const edge = Kit.mk('g', {}, foam), fill = Kit.mk('g', {}, foam), kw = Math.max(1.3, k * .7), puffs = [];
+    // a low mound of froth on the water round the hull, highest in the middle
+    const n = 13;
+    for (let i = 0; i < n; i++) {
+      const u = i / (n - 1), fx = sx - L * .62 + L * 1.24 * u, hump = Math.sin(Math.PI * u);
+      puffs.push([fx, wave(fx) + L * .01, L * (.036 + .026 * hump + .012 * jit(i, 11))]);
+    }
+    puffs.forEach(([fx, fy, fr]) => {
+      froth.push({c: Kit.mk('circle', {cx: fx.toFixed(1), cy: fy.toFixed(1), fill: INK}, edge), r: fr + kw});
+      froth.push({c: Kit.mk('circle', {cx: fx.toFixed(1), cy: fy.toFixed(1), fill: WHITE}, fill), r: fr});
+    });
+  }
+
+  // The slice's own edge: down the left side from the surface, round the bottom, up the right side.
+  Kit.mk('path', {d: `M0,${wave(0).toFixed(1)} V${H - r} Q0,${H} ${r},${H} H${W - r} Q${W},${H} ${W},${H - r} V${wave(W).toFixed(1)}`, fill: 'none', stroke: INK, 'stroke-width': k * 1.1, 'stroke-linejoin': 'round'}, root);
+
+  const labels = Kit.mk('g', {}, root);
+  G = {W, H, fs, k, L, sx, seaY, bedY, bedH, bed, pad, bub, froth, foam, plume, labels};
+  // Words never touch: each tries its places in order and keeps the first that is free and inside the picture.
+  const boxes = [];
+  const box = el => { try { const b = el.getBBox(); return {x: b.x, y: b.y, w: b.width, h: b.height}; } catch (e) { return null; } };
+  const hits = (a, b, m) => a.x < b.x + b.w + m && b.x < a.x + a.w + m && a.y < b.y + b.h + m && b.y < a.y + a.h + m;
+  const place = (el, spots, keep) => {
+    for (const [x, y, an] of spots) {
+      el.setAttribute('x', x.toFixed(1)); el.setAttribute('y', y.toFixed(1)); if (an) el.setAttribute('text-anchor', an);
+      const b = box(el); if (!b || !b.w) return true;
+      if (b.x < 3 || b.x + b.w > W - 3 || b.y < 1 || b.y + b.h > H - 1 || boxes.some(o => hits(b, o, 3))) continue;
+      boxes.push(b); return true;
+    }
+    if (!keep) el.setAttribute('display', 'none');
+    return false;
+  };
+  // The ship takes its place first: nothing is written over it.
+  boxes.push({x: sx - L * .52, y: seaY - L * .45, w: L * 1.04, h: L * .55});
+
+  if (!end) {
+    // Two names on the cover, each on what it names: the gas beside its column, the frozen methane in its band.
+    const mid = (yV + yS) / 2, half = w0 + (w1 - w0) * .5 + r1;
+    const gas = text(labels, 0, 0, 'methane gas', fs, {fill: WHITE});
+    place(gas, [[sx - half - fs * .5, mid + fs * .35, 'end'], [sx - half - fs * .5, mid + fs * 1.6, 'end'], [sx + half + fs * .5, mid + fs * .35, 'start']]);
+    if (showIce) place(text(labels, 0, 0, 'frozen methane', fs * .95), [[W * .08, bed(W * .08) + (iceT + iceB) / 2 + fs * .35, 'start']], true);
+  } else {
+    // The seabed's clock: a bar under the mud's top, from the last big gas rise on the left to today under the ship.
+    const x0 = pad, x1 = W - pad, by = bedY + Math.max(fs * .55, d1 * .55), bh = Math.max(5, fs * .48);
+    G.bar = Kit.mk('rect', {y: (by - bh / 2).toFixed(1), height: bh.toFixed(1), rx: (bh / 2).toFixed(1), fill: INK}, root);
+    G.now = Kit.mk('circle', {cx: x1, cy: by, r: bh * .95, fill: WHITE, stroke: INK, 'stroke-width': k * .8}, root);
+    Object.assign(G, {x0, x1, by, bh});
+    // The last big gas rise itself: a few bubbles up from the clock's far end, growing as they rise.
+    G.old = Kit.mk('g', {opacity: 0}, root);
+    const ob = Math.max(2.4, fs * .28), atEnd = guessY >= 15000, ox = x0 + ob * 1.4 + (atEnd ? Math.max(5, fs * .5) * 1.1 : 0);
+    let oy = by - bh / 2 - ob * 1.3, top = oy;
+    for (let i = 0; i < 5; i++) {
+      const rr = ob * (.8 + i * .16);
+      if (oy - rr < seaY + L * .1 + 2) break;
+      Kit.mk('circle', {cx: (ox + (i % 2 ? rr * .7 : -rr * .2)).toFixed(1), cy: oy.toFixed(1), r: rr.toFixed(1), fill: WHITE, stroke: INK, 'stroke-width': Math.max(1.2, k * .6)}, G.old);
+      top = oy - rr; oy -= rr * 2.3;
+    }
+    boxes.push({x: ox - ob * 1.6, y: top, w: ob * 4, h: by - top});
+    // The words under the bar, in the mud: what each end is.
+    const ly = by + bh / 2 + fs * 1.15;
+    G.today = text(labels, 0, 0, 'today', fs);
+    place(G.today, [[x1, ly, 'end']], true);
+    // The reader's guess: a marker on the clock. Near today its words go beside it in the water; at the far end
+    // (the right answer) they join the far end's own words.
+    const gx = x1 - (guessY / 15000) * (x1 - x0), tr = Math.max(5, fs * .5), near = gx > W / 2;
+    G.then = text(labels, 0, 0, near ? 'last big gas rise' : 'last big gas rise · your guess ✓', fs, {opacity: 0});
+    place(G.then, [[x0, ly, 'start']], true);
+    G.guess = Kit.mk('g', {opacity: 0}, root);
+    Kit.mk('path', {d: `M${gx.toFixed(1)},${(by - bh / 2 - 1).toFixed(1)} l${-tr * .75},${-tr * 1.25} h${tr * 1.5} Z`, fill: WHITE, stroke: INK, 'stroke-width': k * .7, 'stroke-linejoin': 'round'}, G.guess);
+    boxes.push({x: gx - tr, y: by - bh / 2 - tr * 1.3, w: tr * 2, h: tr * 1.3});
+    if (near) {
+      G.guessT = text(G.guess, 0, 0, pick === RIGHT ? 'your guess ✓' : 'your guess', fs, {fill: WHITE});
+      const gy = by - bh / 2 - tr * .35;
+      place(G.guessT, [[gx - tr * 1.1, gy, 'end'], [gx - tr * 1.1, gy - fs * 1.2, 'end']], true);
+    }
+    // The count, big in the water: as large as the room between the surface and the seabed allows, never on a word.
+    const water = bedY - (seaY + L * .1);
+    // Sized so its line fits under it where the water allows; in a strip of water, the count alone.
+    let big = (water - fs * 1.35 - 13) / 1.3;
+    big = big >= 17 ? Math.min(big, W * .095, 34) : clamp(Math.min(water * .62, W * .095), 14, 34);
+    G.num = text(labels, 0, 0, '15,000 years', big, {fill: WHITE, 'font-family': SERIF, 'font-weight': 800});
+    G.sub = text(labels, 0, 0, 'with no big gas rise', fs, {fill: WHITE});
+    const left = x0 + ob * 4, room = Math.max(0, (sx - L * .55) - left);
+    let put = false;
+    // The count and its line under it, measured: the two together where the water has room for both.
+    for (let tries = 0; tries < 6 && !put; tries++) {
+      G.num.setAttribute('font-size', big.toFixed(1)); G.num.removeAttribute('display'); G.sub.removeAttribute('display');
+      const nb = box(G.num) || {h: big * 1.2}, dz = nb.y !== undefined ? (+G.num.getAttribute('y') || 0) - nb.y : big * .9;
+      const two = water > nb.h + fs * 1.35 + 10, tall = nb.h + (two ? fs * 1.35 + 5 : 0);
+      const ny = seaY + L * .1 + (water - tall) / 2 + dz;
+      put = place(G.num, [[left + room / 2, ny, 'middle'], [W / 2, ny, 'middle'], [left + fs * .3, ny, 'start']]);
+      if (put && two) place(G.sub, [[+G.num.getAttribute('x'), ny - dz + nb.h + fs * 1.05 + 4, G.num.getAttribute('text-anchor')]]);
+      else G.sub.setAttribute('display', 'none');
+      big *= .9;
+    }
+    G.gx = gx;
+  }
+  render();
+}
+
+function render() {
+  if (!G) return;
+  // The bubbles: on the cover they come up from the vent; at the end the gas stops and the column empties upward.
+  G.bub.forEach(b => {
+    const on = b.u <= S.rise && b.u >= S.drain * 1.08;
+    const grow = clamp((S.rise - b.u) / .12, 0, 1);
+    b.c.setAttribute('r', on ? (b.r * grow).toFixed(1) : 0);
+  });
+  G.froth.forEach(f => f.c.setAttribute('r', (f.r * clamp(1 - S.drain * 1.4, 0, 1) * clamp(S.rise * 3 - 2, 0, 1)).toFixed(1)));
+  if (!done) return;
+  const f = smooth(S.fill);
+  const xl = G.x1 - (G.x1 - G.x0) * f;
+  G.bar.setAttribute('x', xl.toFixed(1)); G.bar.setAttribute('width', Math.max(0, G.x1 - xl).toFixed(1));
+  const years = Math.round(15000 * f / 100) * 100;
+  G.num.textContent = (S.fill >= 1 ? '15,000' : years.toLocaleString('en-US')) + ' years';
+  G.num.setAttribute('opacity', clamp(S.fill * 4, 0, 1).toFixed(2));
+  if (G.sub) G.sub.setAttribute('opacity', clamp(S.fill * 4, 0, 1).toFixed(2));
+  G.then.setAttribute('opacity', S.mark.toFixed(2));
+  G.old.setAttribute('opacity', S.mark.toFixed(2));
+  G.guess.setAttribute('opacity', S.mark.toFixed(2));
+  G.guess.setAttribute('transform', `translate(0,${(-(1 - S.mark) * G.fs).toFixed(1)})`);
+}
+
+function reveal() {
+  done = true;
+  build();
+  if (Kit.calm) { Object.assign(S, {drain: 1, fill: 1, mark: 1}); build(); return; }
+  gsap.timeline({onUpdate: render})
+    .to(S, {drain: 1, duration: .7, ease: 'power1.in'})
+    .add(() => build())
+    .to(S, {fill: 1, duration: 2.1, ease: 'none'})
+    .to(S, {mark: 1, duration: .45, ease: 'back.out(1.6)', onComplete: () => Kit.haptic('success')});
 }
 
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
   Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  Kit.hide('say'); Kit.show('why');
   sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
   Kit.show('keep');
-  done = true;
-  requestAnimationFrame(() => draw(true));
+  Kit.$('pic').setAttribute('aria-label', 'The gas stops and the ship floats on calm water. Along the seabed a clock runs back from today to the last big gas rise: 15,000 years with no big gas rise.');
+  reveal();
 });
 Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; guessY = +b.dataset.y; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  pick = +b.dataset.i; guessY = +b.dataset.y; b.classList.add('on'); Kit.haptic('selection');
+  // The answer is in: how sure takes the answers' place, and the picture keeps its room.
+  Kit.hide('opts'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`);
+  sure.on();
 });
-Kit.onShow.card = () => draw(false);
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
-Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3600)); };
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (!done) gsap.fromTo(S, {rise: 0}, {rise: 1, duration: 1.4, ease: 'power1.out', onUpdate: render});
+};
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 150)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3600)); };
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) build(); }).observe(el); }
 Kit.single();
 </script>
 </html>

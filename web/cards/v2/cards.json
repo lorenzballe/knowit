@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611240906,
- "built": "2026-11-24T09:06:59Z",
+ "version": 202611240914,
+ "built": "2026-11-24T09:14:13Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -191837,12 +191837,12 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A quiz card asking when big methane gas eruptions last rose in the Bermuda Triangle. Three options: in the last few years, about a century ago, or at least 15,000 years ago. The card asks the reader to pick one.",
-    "page": "pages/science-bermuda-gas-myth.html?v=a708d7153939",
-    "bytes": 7980,
+    "label": "The sea of the Bermuda Triangle drawn in section: a cargo ship on the surface and, under it, a column of methane bubbles rising from frozen methane in the seabed. The quiz asks when big methane gas eruptions last rose there: in the last few years, about a century ago, or at least 15,000 years ago. The reader picks one and says how sure.",
+    "page": "pages/science-bermuda-gas-myth.html?v=f10aef9b9810",
+    "bytes": 22897,
     "thumbs": {
-     "front": "thumbs/science-bermuda-gas-myth-front.webp?v=cb2488fc86ce",
-     "back": "thumbs/science-bermuda-gas-myth-back.webp?v=cb2488fc86ce"
+     "front": "thumbs/science-bermuda-gas-myth-front.webp?v=6b6981c3b4a2",
+     "back": "thumbs/science-bermuda-gas-myth-back.webp?v=6b6981c3b4a2"
     }
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
@@ -192835,13 +192835,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A scale you drag to guess how many times per second the radioactive atoms in your body split the universe, followed by a prompt to rate how sure you are of your guess.",
+    "label": "A person drawn big, the radioactive atoms in their body as yellow dots, one of them decaying: their world splits there into a copy where the atom decayed and one where it did not. The reader drags along a scale from 1 to 100,000 splits a second to guess how often this happens, then rates how sure they are.",
     "graded": false,
-    "page": "pages/science-branching-body-decays.html?v=829a95266113",
-    "bytes": 8738,
+    "page": "pages/science-branching-body-decays.html?v=07c6e0acac1d",
+    "bytes": 16660,
     "thumbs": {
-     "front": "thumbs/science-branching-body-decays-front.webp?v=2572c6bf8b64",
-     "back": "thumbs/science-branching-body-decays-back.webp?v=2572c6bf8b64"
+     "front": "thumbs/science-branching-body-decays-front.webp?v=9689b2ef56d2",
+     "back": "thumbs/science-branching-body-decays-back.webp?v=9689b2ef56d2"
     }
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
@@ -193395,12 +193395,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page on a nuclear chain reaction where each split frees 2.5 neutrons. Readers draw a guess with a finger for how the count grows round by round, up to round 24.",
-    "page": "pages/science-chain-reaction.html?v=95cd0dd0f82f",
-    "bytes": 15930,
+    "label": "A bar of uranium-235 metal, the first nucleus splitting in its corner and throwing out its neutrons; its face is the chart of how many nuclei split in each of ten rounds, each split freeing 2.5 neutrons. Readers draw a guess on it with a finger, round by round; the real curve then grows over it, the metal under it glowing as its nuclei split.",
+    "page": "pages/science-chain-reaction.html?v=354676b11a1c",
+    "bytes": 21262,
     "thumbs": {
-     "front": "thumbs/science-chain-reaction-front.webp?v=64bb5be9a366",
-     "back": "thumbs/science-chain-reaction-back.webp?v=64bb5be9a366"
+     "front": "thumbs/science-chain-reaction-front.webp?v=bf1395230669",
+     "back": "thumbs/science-chain-reaction-back.webp?v=bf1395230669"
     }
    },
    "source": "Veritasium, “Why Einstein Thought Nuclear Weapons Were Impossible” (YouTube, 2018)",
@@ -197707,12 +197707,12 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "An interactive chart of fallout radiation decaying from 100 % at day 0 toward about 1 % by day 14. Drag across it to move forward day by day. The question asks what fraction of the initial radiation remains after about two weeks.",
-    "page": "pages/science-fallout-two-weeks.html?v=bd16919a3048",
-    "bytes": 8296,
+    "label": "A house over its cellar, a family sheltering in the cellar, the ground and roof outside dusted with 100 glowing specks of fallout. Drag across the picture to move forward day by day: the specks go out as the radiation falls from 100 % at day 0 toward about 1 % by day 14. The question asks what fraction of the initial radiation remains after about two weeks.",
+    "page": "pages/science-fallout-two-weeks.html?v=af75db593af6",
+    "bytes": 17815,
     "thumbs": {
-     "front": "thumbs/science-fallout-two-weeks-front.webp?v=d1e0e5126dc5",
-     "back": "thumbs/science-fallout-two-weeks-back.webp?v=d1e0e5126dc5"
+     "front": "thumbs/science-fallout-two-weeks-front.webp?v=8dddd7b688d4",
+     "back": "thumbs/science-fallout-two-weeks-back.webp?v=8dddd7b688d4"
     }
    },
    "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
