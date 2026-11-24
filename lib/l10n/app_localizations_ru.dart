@@ -5452,6 +5452,294 @@ class AppLocalizationsRu extends AppLocalizations {
       'Сейчас здесь не во что играть. Возвращайся завтра.';
 
   @override
+  String get challengesTitle => 'Испытания';
+
+  @override
+  String get challengesLine => 'По минуте-другой на каждое. Выбери и играй.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return 'Страница $n из $of';
+  }
+
+  @override
+  String get gamePlay => 'Играть';
+
+  @override
+  String get sixtyRules =>
+      'Восемь утверждений: правда или ложь? У тебя минута. Доверься чутью.';
+
+  @override
+  String get sixtyNewRecord => 'Новый рекорд!';
+
+  @override
+  String get sixtyReview => 'Восемь утверждений';
+
+  @override
+  String get gameRight => 'Верно';
+
+  @override
+  String get gameWrong => 'Неверно';
+
+  @override
+  String get gameUnanswered => 'Нет ответа';
+
+  @override
+  String get gameNext => 'Следующее испытание';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · Шестьдесят секунд · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$n из $of верно · $s с';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: 'Осталось $s секунды',
+      many: 'Осталось $s секунд',
+      few: 'Осталось $s секунды',
+      one: 'Осталась $s секунда',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameReview => 'Карточки';
+
+  @override
+  String get gameTomorrow => 'Новый раунд завтра';
+
+  @override
+  String get gameContinue => 'Продолжить';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$n из $of верно';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки сегодня',
+      many: '$n карточек сегодня',
+      few: '$n карточки сегодня',
+      one: '$n карточка сегодня',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => 'Всё верно.';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n очка',
+      many: '$n очков',
+      few: '$n очка',
+      one: '$n очко',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => 'Посмотреть итог';
+
+  @override
+  String get gameNextCard => 'Дальше';
+
+  @override
+  String get spotOnce => 'Один выбор в день';
+
+  @override
+  String get spotGotIt => 'Ложное найдено.';
+
+  @override
+  String get spotMissedIt => 'Не то: это правда.';
+
+  @override
+  String get tfRules =>
+      'Скажи «правда» или «ложь», а потом узнай почему. Большинство ошибается.';
+
+  @override
+  String get inOrderTitle => 'По порядку';
+
+  @override
+  String get inOrderRules =>
+      'Четыре события из карточек, у каждого скрыт год. Нажимай их в том порядке, в каком они произошли, начиная с самого раннего.';
+
+  @override
+  String get inOrderFirst => 'Нажми самое раннее';
+
+  @override
+  String get inOrderNext => 'Теперь следующее';
+
+  @override
+  String get inOrderReady => 'Всё расставлено. Проверим?';
+
+  @override
+  String get inOrderCheck => 'Проверить порядок';
+
+  @override
+  String inOrderPlaced(int n) {
+    return 'На месте $n';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return 'Твоё место: $n';
+  }
+
+  @override
+  String get inOrderPerfect => 'Всё на своих местах.';
+
+  @override
+  String get timeGap => 'пропущенный год';
+
+  @override
+  String get whatYearTitle => 'Какой год?';
+
+  @override
+  String get whatYearRules =>
+      'Три события, у каждого скрыт год. Выставь его на шкале: чем ближе, тем больше очков.';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$n из $of очков';
+  }
+
+  @override
+  String get whatYearPerfect => 'Все годы точно.';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'В сумме ошибка на $n года',
+      many: 'В сумме ошибка на $n лет',
+      few: 'В сумме ошибка на $n года',
+      one: 'В сумме ошибка на $n год',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return 'Твой ответ: $guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return 'Точно! +$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ошибка на $n года',
+      many: 'Ошибка на $n лет',
+      few: 'Ошибка на $n года',
+      one: 'Ошибка на $n год',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'На $n года раньше',
+      many: 'На $n лет раньше',
+      few: 'На $n года раньше',
+      one: 'На $n год раньше',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'На $n года позже',
+      many: 'На $n лет позже',
+      few: 'На $n года позже',
+      one: 'На $n год позже',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => 'Год';
+
+  @override
+  String get beforeAfterTitle => 'Раньше или позже?';
+
+  @override
+  String get beforeAfterRules =>
+      'Шесть событий, одно за другим. Каждое случилось раньше или позже того, что выше?';
+
+  @override
+  String get beforeAfterBefore => 'Раньше';
+
+  @override
+  String get beforeAfterAfter => 'Позже';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return 'До или после $year?';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return 'Твой ответ: до $year';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return 'Твой ответ: после $year';
+  }
+
+  @override
+  String get beforeAfterStart => 'С этого всё началось';
+
+  @override
+  String get beforeAfterPerfect => 'Ни одной ошибки.';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n пары сегодня',
+      many: '$n пар сегодня',
+      few: '$n пары сегодня',
+      one: '$n пара сегодня',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, уровень $n';
   }

@@ -5268,6 +5268,279 @@ class AppLocalizationsIt extends AppLocalizations {
       'Per ora qui non c\'è niente da giocare. Torna domani.';
 
   @override
+  String get challengesTitle => 'Sfide';
+
+  @override
+  String get challengesLine =>
+      'Un minuto o due ciascuna. Scegline una e gioca.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return 'Pagina $n di $of';
+  }
+
+  @override
+  String get gamePlay => 'Gioca';
+
+  @override
+  String get sixtyRules =>
+      'Otto affermazioni, vere o false. Hai un minuto: segui l\'istinto.';
+
+  @override
+  String get sixtyNewRecord => 'Nuovo record!';
+
+  @override
+  String get sixtyReview => 'Le otto affermazioni';
+
+  @override
+  String get gameRight => 'Giusto';
+
+  @override
+  String get gameWrong => 'Sbagliato';
+
+  @override
+  String get gameUnanswered => 'Nessuna risposta';
+
+  @override
+  String get gameNext => 'Prossima sfida';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · Sessanta secondi · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$n su $of giuste · $s s';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: 'Mancano $s secondi',
+      one: 'Manca 1 secondo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameReview => 'Le carte';
+
+  @override
+  String get gameTomorrow => 'Nuovo turno domani';
+
+  @override
+  String get gameContinue => 'Continua';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return 'Punteggio: $n su $of';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n carte oggi',
+      one: '1 carta oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => 'Tutte giuste.';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n punti',
+      one: '1 punto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => 'Guarda com\'è andata';
+
+  @override
+  String get gameNextCard => 'Avanti';
+
+  @override
+  String get spotOnce => 'Una scelta al giorno';
+
+  @override
+  String get spotGotIt => 'Hai trovato quella falsa.';
+
+  @override
+  String get spotMissedIt => 'Non quella: è vera.';
+
+  @override
+  String get tfRules =>
+      'Di\' vero o falso, poi scopri perché. Quasi tutti sbagliano.';
+
+  @override
+  String get inOrderTitle => 'In ordine';
+
+  @override
+  String get inOrderRules =>
+      'Quattro momenti dalle carte, ognuno senza l\'anno. Toccali nell\'ordine in cui sono accaduti, dal più antico.';
+
+  @override
+  String get inOrderFirst => 'Tocca il più antico';
+
+  @override
+  String get inOrderNext => 'Ora il successivo';
+
+  @override
+  String get inOrderReady => 'Tutti al loro posto. Controlli?';
+
+  @override
+  String get inOrderCheck => 'Controlla l\'ordine';
+
+  @override
+  String inOrderPlaced(int n) {
+    return 'Al posto $n';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return 'Il tuo posto: $n';
+  }
+
+  @override
+  String get inOrderPerfect => 'Tutti al posto giusto.';
+
+  @override
+  String get timeGap => 'un anno mancante';
+
+  @override
+  String get whatYearTitle => 'In che anno?';
+
+  @override
+  String get whatYearRules =>
+      'Tre momenti, ognuno senza l\'anno. Trovalo sulla rotella: più ti avvicini, più punti fai.';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$n punti su $of';
+  }
+
+  @override
+  String get whatYearPerfect => 'Ogni anno esatto.';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Fuori di $n anni in tutto',
+      one: 'Fuori di 1 anno in tutto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return 'Hai detto $guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return 'Esatto! +$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Fuori di $n anni',
+      one: 'Fuori di 1 anno',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n anni prima',
+      one: '1 anno prima',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n anni dopo',
+      one: '1 anno dopo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => 'Anno';
+
+  @override
+  String get beforeAfterTitle => 'Prima o dopo?';
+
+  @override
+  String get beforeAfterRules =>
+      'Sei momenti, uno dopo l\'altro. Ognuno è accaduto prima o dopo quello sopra?';
+
+  @override
+  String get beforeAfterBefore => 'Prima';
+
+  @override
+  String get beforeAfterAfter => 'Dopo';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return 'Prima o dopo il $year?';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return 'Hai detto: prima del $year';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return 'Hai detto: dopo il $year';
+  }
+
+  @override
+  String get beforeAfterStart => 'Da qui è partita la catena';
+
+  @override
+  String get beforeAfterPerfect => 'Nemmeno uno fuori posto.';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n coppie oggi',
+      one: '1 coppia oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, livello $n';
   }

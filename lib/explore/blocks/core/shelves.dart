@@ -12,6 +12,7 @@ library;
 
 import 'package:flutter/foundation.dart';
 
+import '../../../data/dated_lines.dart';
 import '../../../data/explore_mix.dart';
 import '../../../data/local_cards.dart';
 import '../../../data/pill_bank.dart';
@@ -443,6 +444,31 @@ class ExploreShelves {
 
   /// The day of the mix, for the shelves that deal again from it.
   int get mixDay => themeDay(_clock());
+
+  TimeDeal? _time;
+  String _timeKey = '';
+
+  /// The day's moments for the challenges of time (In order, What year?,
+  /// Before or after?): from the subject in view, read or not, as the
+  /// round of Sixty seconds is — or, where the subject has too few for a
+  /// day of rounds, from every subject, so the games are never missing.
+  TimeDeal get time {
+    final DateTime now = _clock();
+    final int day = themeDay(now);
+    final String key = '$day|${_subject ?? ''}|${PillBank.version}';
+    final TimeDeal? kept = _time;
+    if (kept != null && key == _timeKey) return kept;
+    _timeKey = key;
+    List<DatedLine> lines = datedLines(only(PillBank.cards), latest: now.year);
+    if (lines.length < kTimeLinesAtLeast) {
+      lines = datedLines(PillBank.cards, latest: now.year);
+    }
+    return _time = TimeDeal(lines, day: day);
+  }
+
+  /// How many moments a subject needs for its own games of time: a few
+  /// days of rounds without one repeating.
+  static const int kTimeLinesAtLeast = 40;
 
   /// The cards that came back and wait to be answered again, narrowed by
   /// the subject row: worked out again only when an answer is given or the

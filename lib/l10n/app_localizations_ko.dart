@@ -5047,6 +5047,263 @@ class AppLocalizationsKo extends AppLocalizations {
   String get exploreGameNone => '지금은 할 수 있는 게임이 없어요. 내일 다시 오세요.';
 
   @override
+  String get challengesTitle => '챌린지';
+
+  @override
+  String get challengesLine => '하나에 1~2분. 골라서 플레이하세요.';
+
+  @override
+  String challengesPage(int n, int of) {
+    return '$of페이지 중 $n페이지';
+  }
+
+  @override
+  String get gamePlay => '시작';
+
+  @override
+  String get sixtyRules => '주장 8개, 참일까 거짓일까. 시간은 1분, 직감을 믿으세요.';
+
+  @override
+  String get sixtyNewRecord => '새 기록!';
+
+  @override
+  String get sixtyReview => '주장 8개';
+
+  @override
+  String get gameRight => '정답';
+
+  @override
+  String get gameWrong => '오답';
+
+  @override
+  String get gameUnanswered => '미응답';
+
+  @override
+  String get gameNext => '다음 챌린지';
+
+  @override
+  String sixtyShareHead(String date) {
+    return 'Astute · 60초 · $date';
+  }
+
+  @override
+  String sixtyShareScore(int n, int of, int s) {
+    return '$of개 중 $n개 정답 · $s초';
+  }
+
+  @override
+  String sixtySecondsLeftLabel(int s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      s,
+      locale: localeName,
+      other: '$s초 남음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameReview => '카드';
+
+  @override
+  String get gameTomorrow => '새 라운드는 내일';
+
+  @override
+  String get gameContinue => '이어하기';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$of개 중 $n개 정답';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 $n장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => '모두 정답이에요.';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n점');
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => '결과 보기';
+
+  @override
+  String get gameNextCard => '다음';
+
+  @override
+  String get spotOnce => '하루에 한 번만 골라요';
+
+  @override
+  String get spotGotIt => '틀린 것을 찾아냈어요.';
+
+  @override
+  String get spotMissedIt => '그게 아니에요. 그건 사실이에요.';
+
+  @override
+  String get tfRules => '참인지 거짓인지 답하고 이유를 확인하세요. 대부분 틀려요.';
+
+  @override
+  String get inOrderTitle => '순서대로';
+
+  @override
+  String get inOrderRules =>
+      '카드 속 네 가지 사건, 연도는 가려져 있어요. 일어난 순서대로, 가장 이른 것부터 탭하세요.';
+
+  @override
+  String get inOrderFirst => '가장 이른 것을 탭하세요';
+
+  @override
+  String get inOrderNext => '이제 그다음';
+
+  @override
+  String get inOrderReady => '모두 놓았어요. 확인할까요?';
+
+  @override
+  String get inOrderCheck => '순서 확인';
+
+  @override
+  String inOrderPlaced(int n) {
+    return '$n번째';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return '내 순서: $n';
+  }
+
+  @override
+  String get inOrderPerfect => '모두 제자리예요.';
+
+  @override
+  String get timeGap => '가려진 연도';
+
+  @override
+  String get whatYearTitle => '몇 년도?';
+
+  @override
+  String get whatYearRules =>
+      '연도가 가려진 세 가지 사건. 다이얼로 연도를 맞춰 보세요. 가까울수록 점수가 높아요.';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$of점 중 $n점';
+  }
+
+  @override
+  String get whatYearPerfect => '모든 연도가 정확해요.';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '모두 합쳐 $n년 차이',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return '내 답: $guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return '정확해요! +$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n년 차이',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n년 앞으로',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n년 뒤로',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => '연도';
+
+  @override
+  String get beforeAfterTitle => '전일까 후일까?';
+
+  @override
+  String get beforeAfterRules => '여섯 가지 사건이 차례로 나와요. 각각 위의 사건보다 전일까요, 후일까요?';
+
+  @override
+  String get beforeAfterBefore => '전';
+
+  @override
+  String get beforeAfterAfter => '후';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return '$year년 이전일까 이후일까?';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return '내 답: $year년 이전';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return '내 답: $year년 이후';
+  }
+
+  @override
+  String get beforeAfterStart => '여기서 시작했어요';
+
+  @override
+  String get beforeAfterPerfect => '하나도 틀리지 않았어요.';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 $n쌍',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, 레벨 $n';
   }

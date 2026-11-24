@@ -1,11 +1,15 @@
-// The strategic Explore's own blocks: the reader's day, the quick games,
-// the subjects' levels and more like what was saved — each drawn with its
-// data, gone without it, whole on a 375-point phone at 1x and 2x text, and
-// doing what a tap on it promises; the record of Sixty seconds kept past the
-// day; the page a game opens on; and the streak beside Explore's search.
+// The strategic Explore's own blocks: the reader's day, the challenges
+// (the quick games), the subjects' levels and more like what was saved —
+// each drawn with its data, gone without it, whole on a 375-point phone at
+// 1x and 2x text, and doing what a tap on it promises; the record of Sixty
+// seconds kept past the day; the page a game opens on; and the streak
+// beside Explore's search. Sixty seconds on its own screen is
+// test/explore/sixty_game_test.dart.
 //
 //   flutter test test/explore/strategic_test.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderParagraph;
+import 'package:flutter/semantics.dart' show SemanticsNode;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +33,7 @@ import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/served.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/explore/challenges.dart';
 import 'package:astuto/widgets/explore/section_page.dart';
 import 'package:astuto/widgets/explore/sixty_seconds.dart';
 
@@ -171,33 +176,101 @@ void main() {
     });
   });
 
-  group('quick games', () {
-    testWidgets('four tiles, Sixty seconds with the record to set, and a '
-        'tap opens the game on a page of its own', (tester) async {
+  group('challenges (quick games)', () {
+    testWidgets('the four games first, two by two, Sixty seconds with the '
+        'record to set; the section called Challenges when it says nothing; '
+        'a tap on another game opens it on a screen of its own', (tester) async {
       final CoreHost host = CoreHost(await readyApp());
-      await pumpSections(tester, host, [
-        _section('quick-games', {'title': 'Quick games'}),
-      ]);
-      for (final String game in [
-        'sixty',
-        'spot-false',
-        'true-false',
-        'bets-bigger',
-      ]) {
-        expect(find.byKey(ValueKey('quick-game-$game')), findsOneWidget);
-      }
+      await pumpSections(tester, host, [_section('quick-games')]);
+      expect(find.text('Challenges'), findsOneWidget);
+      expect(
+        find.text('A minute or two each. Pick one and play.'),
+        findsOneWidget,
+      );
+      final List<Offset> at = [
+        for (final String game in [
+          'sixty',
+          'spot-false',
+          'true-false',
+          'bets-bigger',
+        ])
+          tester.getTopLeft(find.byKey(ValueKey('challenge-$game'))),
+      ];
+      // Two by two: Sixty seconds and Spot the false one side by side, the
+      // other two under them.
+      expect(at[0].dy, at[1].dy);
+      expect(at[0].dx, lessThan(at[1].dx));
+      expect(at[2].dy, greaterThan(at[0].dy));
+      expect(at[2].dx, at[0].dx);
+      expect(at[3].dy, at[2].dy);
+      expect(find.byType(ChallengeTile), findsNWidgets(4));
       expect(find.text('Sixty seconds'), findsOneWidget);
       expect(find.text('Set your record'), findsOneWidget);
 
-      await tester.tap(find.byKey(const ValueKey('quick-game-sixty')));
-      expect(host.pages, hasLength(1));
-      expect(host.pages.single.block, 'sixty');
-      expect(host.pages.single.id, 'quick-games-sixty');
-
-      await tester.tap(find.byKey(const ValueKey('quick-game-true-false')));
-      expect(host.pages.last.block, 'true-false');
+      await tester.tap(find.byKey(const ValueKey('challenge-true-false')));
+      expect(host.screens.last.block, 'true-false');
+      expect(host.screens.last.id, 'quick-games-true-false');
       // True or false without the spot under it: that game has a tile.
-      expect(host.pages.last.json['spot'], false);
+      expect(host.screens.last.json['spot'], false);
+      await tester.tap(find.byKey(const ValueKey('challenge-bets-bigger')));
+      expect(host.screens.last.block, 'bets-bigger');
+      expect(host.pages, isEmpty);
+    });
+
+    testWidgets('a swipe brings the next four, then the rest; the dots say '
+        'which page, every tile one size', (tester) async {
+      final CoreHost host = CoreHost(await readyApp());
+      await pumpSections(tester, host, [
+        _section('quick-games', {'title': 'Challenges'}),
+      ]);
+      final Size tile = tester.getSize(
+        find.byKey(const ValueKey('challenge-sixty')),
+      );
+      SemanticsNode dots() =>
+          tester.getSemantics(find.byKey(const ValueKey('challenge-dots')));
+      expect(dots().value, 'Page 1 of 3');
+      expect(find.byKey(const ValueKey('challenge-bets-closer')), findsNothing);
+
+      await tester.drag(
+        find.byKey(const ValueKey('challenge-sixty')),
+        const Offset(-300, 0),
+      );
+      await tester.pumpAndSettle();
+      for (final String game in [
+        'bets-closer',
+        'bets-magnitude',
+        'bets-range',
+        'bets-stake',
+      ]) {
+        final Finder one = find.byKey(ValueKey('challenge-$game'));
+        expect(one, findsOneWidget, reason: game);
+        expect(tester.getSize(one), tile, reason: game);
+      }
+      expect(dots().value, 'Page 2 of 3');
+
+      // A tap on the last dot: Your number and the three games of time,
+      // the page full, every tile the size of every other.
+      await tester.tap(find.byKey(const ValueKey('challenge-dot-2')));
+      await tester.pumpAndSettle();
+      expect(dots().value, 'Page 3 of 3');
+      for (final String game in [
+        'bets-number',
+        'in-order',
+        'what-year',
+        'before-after',
+      ]) {
+        final Finder one = find.byKey(ValueKey('challenge-$game'));
+        expect(one, findsOneWidget, reason: game);
+        expect(tester.getSize(one), tile, reason: game);
+      }
+      expect(find.byKey(const ValueKey('challenge-empty-2-1')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('challenge-bets-number')));
+      expect(host.screens.last.id, 'quick-games-bets-number');
+      // Its section as its page has it: its tiles one under another.
+      expect(host.screens.last.json['size'], 'l');
+      await tester.tap(find.byKey(const ValueKey('challenge-what-year')));
+      expect(host.screens.last.id, 'quick-games-what-year');
+      expect(host.screens.last.block, 'what-year');
     });
 
     testWidgets('the record, once there is one, and only the games the '
@@ -215,39 +288,56 @@ void main() {
         }),
       ]);
       expect(find.text('Your record 6/8'), findsOneWidget);
-      expect(find.byKey(const ValueKey('quick-game-spot-false')), findsNothing);
+      expect(find.byKey(const ValueKey('challenge-spot-false')), findsNothing);
       expect(
         tester
-            .getTopLeft(find.byKey(const ValueKey('quick-game-bets-bigger')))
+            .getTopLeft(find.byKey(const ValueKey('challenge-bets-bigger')))
             .dx,
         lessThan(
-          tester.getTopLeft(find.byKey(const ValueKey('quick-game-sixty'))).dx,
+          tester.getTopLeft(find.byKey(const ValueKey('challenge-sixty'))).dx,
         ),
       );
+      // One page: no dots.
+      expect(find.byKey(const ValueKey('challenge-dots')), findsNothing);
     });
 
     testWidgets('a game with nothing to play has no tile, and with none '
         'there is no section', (tester) async {
-      // With no cards for its figures, Which is bigger has nothing to
-      // compare: no tile, and alone it leaves no section. Sixty seconds,
-      // dealt from the day's mix, still has its tile.
+      // With no cards for its figures, a game of bets has nothing to play:
+      // no tile, and alone it leaves no section. Sixty seconds, dealt from
+      // the day's mix, still has its tile.
       final _NoCards host = _NoCards(await readyApp());
       await pumpSections(tester, host, [
-        _section('quick-games', {'title': 'Quick games'}),
+        _section('quick-games', {'title': 'Challenges'}),
       ]);
-      expect(find.byKey(const ValueKey('quick-game-sixty')), findsOneWidget);
+      expect(find.byKey(const ValueKey('challenge-sixty')), findsOneWidget);
+      for (final QuickGame game in kQuickGames.where(
+        (g) => g.key.startsWith('bets-'),
+      )) {
+        expect(
+          find.byKey(ValueKey('challenge-${game.key}')),
+          findsNothing,
+          reason: game.key,
+        );
+      }
+      // The games of time are dealt from the bank's moments, not from the
+      // host's cards: they stay, and six games make two pages, the first of
+      // time on the first.
+      expect(find.byKey(const ValueKey('challenge-in-order')), findsOneWidget);
       expect(
-        find.byKey(const ValueKey('quick-game-bets-bigger')),
-        findsNothing,
+        tester
+            .getSemantics(find.byKey(const ValueKey('challenge-dots')))
+            .value,
+        'Page 1 of 2',
       );
       await pumpSections(tester, host, [
         _section('quick-games', {
-          'title': 'Quick games',
+          'title': 'Challenges',
           'games': ['bets-bigger'],
         }),
       ]);
-      expect(find.text('Quick games'), findsNothing);
-      expect(find.byType(GameTile), findsNothing);
+      expect(find.text('Challenges'), findsNothing);
+      expect(find.byType(ChallengeTile), findsNothing);
     });
 
     for (final double text in [1.0, 2.0]) {
@@ -257,14 +347,44 @@ void main() {
         await pumpSections(
           tester,
           host,
-          [
-            _section('quick-games', {'title': 'Schnelle Spiele'}),
-          ],
+          [_section('quick-games')],
           text: text,
           locale: const Locale('de'),
         );
         expect(tester.takeException(), isNull);
-        expect(find.byType(GameTile), findsNWidgets(4));
+        expect(find.text('Herausforderungen'), findsOneWidget);
+        expect(find.byType(ChallengeTile), findsNWidgets(4));
+        // Every name whole: no word wider than its line, so none is broken
+        // in the middle ("Sechzig Sekunden").
+        for (final Element e
+            in find
+                .descendant(
+                  of: find.byType(ChallengeTile),
+                  matching: find.byType(RichText),
+                )
+                .evaluate()) {
+          final RichText rich = e.widget as RichText;
+          final RenderParagraph p = e.renderObject! as RenderParagraph;
+          for (final String word in rich.text.toPlainText().split(' ')) {
+            final TextPainter one = TextPainter(
+              text: TextSpan(text: word, style: rich.text.style),
+              textDirection: TextDirection.ltr,
+              textScaler: rich.textScaler,
+            )..layout();
+            expect(
+              one.width,
+              lessThanOrEqualTo(p.constraints.maxWidth + 0.5),
+              reason: word,
+            );
+            one.dispose();
+          }
+        }
+        await tester.drag(
+          find.byKey(const ValueKey('challenge-sixty')),
+          const Offset(-300, 0),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
       });
     }
 

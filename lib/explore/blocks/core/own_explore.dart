@@ -2,7 +2,7 @@
 /// document says nothing of it, drawn by the same engine as any document's,
 /// so `explore: null` is that Explore to the pixel. It opens on its cover,
 /// the day's cards in a mosaic; then, as the strategic Explore laid it, the
-/// reader's day, the day's challenge, the set they are filling, quick games,
+/// reader's day, the day's challenge, the set they are filling, the challenges,
 /// their subjects' levels and more like what they saved; it keeps four of
 /// the shelves Explore always had, and ends on the feed. The other shelves
 /// are still blocks a document can place.
@@ -40,37 +40,37 @@ const List<Map<String, Object?>> kOwnExploreJson = [
   // Today's five, the week and the streak, a tap from Today.
   // The set the reader is filling: the week's theme, a card at a time.
   {'id': 'path', 'block': 'purpose.set'},
-  // Four games, a tile each, each opening its game on a page of its own.
+  // The challenges: the games, four tiles to a page, each opening its game.
   {
     'id': 'quick-games',
     'block': 'quick-games',
     'title': {
-      'en': 'Quick games',
-      'it': 'Giochi veloci',
-      'de': 'Schnelle Spiele',
-      'es': 'Juegos rápidos',
-      'fr': 'Jeux rapides',
-      'ja': 'クイックゲーム',
-      'ko': '빠른 게임',
-      'nl': 'Snelle spelletjes',
-      'pl': 'Szybkie gry',
-      'pt': 'Jogos rápidos',
-      'ru': 'Быстрые игры',
-      'tr': 'Hızlı oyunlar',
-      'zh': '快速游戏',
+      'en': 'Challenges',
+      'it': 'Sfide',
+      'de': 'Herausforderungen',
+      'es': 'Desafíos',
+      'fr': 'Défis',
+      'ja': 'チャレンジ',
+      'ko': '챌린지',
+      'nl': 'Uitdagingen',
+      'pl': 'Wyzwania',
+      'pt': 'Desafios',
+      'ru': 'Испытания',
+      'tr': 'Meydan okumalar',
+      'zh': '挑战',
     },
     'subtitle': {
       'en': 'A minute or two each. Pick one and play.',
-      'it': 'Un minuto o due ciascuno. Scegline uno e gioca.',
-      'de': 'Je ein, zwei Minuten. Such dir eins aus und spiel.',
+      'it': 'Un minuto o due ciascuna. Scegline una e gioca.',
+      'de': 'Je ein, zwei Minuten. Such dir eine aus und spiel.',
       'es': 'Uno o dos minutos cada uno. Elige uno y juega.',
       'fr': 'Une minute ou deux chacun. Choisis-en un et joue.',
       'ja': 'どれも1〜2分。選んで遊ぼう。',
       'ko': '하나에 1~2분. 골라서 플레이하세요.',
       'nl': 'Een minuutje of twee per stuk. Kies er een en speel.',
-      'pl': 'Każda na minutę lub dwie. Wybierz i graj.',
+      'pl': 'Każde na minutę lub dwie. Wybierz jedno i graj.',
       'pt': 'Um ou dois minutos cada. Escolhe um e joga.',
-      'ru': 'По минуте-другой на каждую. Выбери и играй.',
+      'ru': 'По минуте-другой на каждое. Выбери и играй.',
       'tr': 'Her biri bir iki dakika. Birini seç ve oyna.',
       'zh': '每个只要一两分钟。选一个开始玩。',
     },

@@ -7362,6 +7362,360 @@ abstract class AppLocalizations {
   /// **'Nothing to play here right now. Come back tomorrow.'**
   String get exploreGameNone;
 
+  /// Explore: the name of the section of games — Sixty seconds, Spot the false one and the others, four to a page — when the remote document gives it none. Short: a section's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get challengesTitle;
+
+  /// Explore, the challenges: the line under the section's name, when the remote document gives it none.
+  ///
+  /// In en, this message translates to:
+  /// **'A minute or two each. Pick one and play.'**
+  String get challengesLine;
+
+  /// Explore, the challenges: the dots under the pages of games, as a screen reader says them — the page showing and how many there are.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {n} of {of}'**
+  String challengesPage(int n, int of);
+
+  /// A game opened on the whole screen from Explore's challenges: the large button that starts it. One short word.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get gamePlay;
+
+  /// Sixty seconds on the whole screen, before the round: the rules in a line, under the game's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Eight claims, true or false. You have one minute: go with your gut.'**
+  String get sixtyRules;
+
+  /// Sixty seconds on the whole screen, at the end of a round: the round beat the reader's record.
+  ///
+  /// In en, this message translates to:
+  /// **'New record!'**
+  String get sixtyNewRecord;
+
+  /// Sixty seconds on the whole screen, at the end of a round: over the round's eight claims again, each with whether the reader got it right. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The eight claims'**
+  String get sixtyReview;
+
+  /// A game played on the whole screen: an answer just given was right — said by a screen reader as it is given, and beside a claim at the end. Not the word for 'true': in Sixty seconds a claim is true or false, and an answer right or wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get gameRight;
+
+  /// A game played on the whole screen: an answer just given was wrong. Not the word for 'false' (see gameRight).
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong'**
+  String get gameWrong;
+
+  /// Sixty seconds, at the end of a round: a claim the time ran out on before the reader answered it, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'No answer'**
+  String get gameUnanswered;
+
+  /// At the end of a game played on the whole screen: over the name of the next game of Explore's challenges, which a tap opens. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Next challenge'**
+  String get gameNext;
+
+  /// First line of the message a round of Sixty seconds is sent in: the app, the game's name, and the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute · Sixty seconds · {date}'**
+  String sixtyShareHead(String date);
+
+  /// Second line of the message a round of Sixty seconds is sent in: how many of the claims were right, and in how many seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} right · {s} s'**
+  String sixtyShareScore(int n, int of, int s);
+
+  /// Sixty seconds on the whole screen, during the round: the clock, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'{s, plural, =1{1 second left} other{{s} seconds left}}'**
+  String sixtySecondsLeftLabel(int s);
+
+  /// At the end of a challenge played on the whole screen: the heading over the round's cards again, each as it went. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The cards'**
+  String get gameReview;
+
+  /// At the end of a challenge whose answers are the cards' own, played once a day: where Play again would be, when the next round comes. Short, beside the Share button.
+  ///
+  /// In en, this message translates to:
+  /// **'New round tomorrow'**
+  String get gameTomorrow;
+
+  /// The first moment of a challenge on the whole screen: the big button, on a round already begun today.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get gameContinue;
+
+  /// First line of the message a challenge's score is sent in: the app, the game's name, and the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute · {game} · {date}'**
+  String gameShareHead(String game, String date);
+
+  /// Second line of the message a challenge's score is sent in: how many were right, of how many.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} right'**
+  String gameShareScore(int n, int of);
+
+  /// The first moment of a challenge on the whole screen, under its rules: how many cards today's round has.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card today} other{{n} cards today}}'**
+  String gameCardsToday(int n);
+
+  /// At the end of a challenge: the line under the score when every card was right.
+  ///
+  /// In en, this message translates to:
+  /// **'Every one right.'**
+  String get gameAllRight;
+
+  /// A number of points in a challenge: won on the bets, or scored on the years. Shown after a plus or minus sign where it is a gain or a loss.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 point} other{{n} points}}'**
+  String gamePoints(int n);
+
+  /// A challenge on the whole screen, after its last card: the big button to the score.
+  ///
+  /// In en, this message translates to:
+  /// **'See how it went'**
+  String get gameSeeResult;
+
+  /// A challenge on the whole screen, after a card is told: the big button to the next card.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get gameNextCard;
+
+  /// Spot the false one on the whole screen, before playing: how often it can be played.
+  ///
+  /// In en, this message translates to:
+  /// **'One pick a day'**
+  String get spotOnce;
+
+  /// Spot the false one on the whole screen: the claim picked was the false one.
+  ///
+  /// In en, this message translates to:
+  /// **'You spotted the false one.'**
+  String get spotGotIt;
+
+  /// Spot the false one on the whole screen: the claim picked was true.
+  ///
+  /// In en, this message translates to:
+  /// **'Not that one: it\'s true.'**
+  String get spotMissedIt;
+
+  /// True or false on the whole screen: its rules, in a line, before playing.
+  ///
+  /// In en, this message translates to:
+  /// **'Say true or false, then see why. Most people get these wrong.'**
+  String get tfRules;
+
+  /// Explore, the challenges: the name of the game of putting four moments from the cards in the order they happened. Short: a tile's name.
+  ///
+  /// In en, this message translates to:
+  /// **'In order'**
+  String get inOrderTitle;
+
+  /// In order, before playing: its rules, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Four moments from the cards, each missing its year. Tap them in the order they happened, earliest first.'**
+  String get inOrderRules;
+
+  /// In order, while playing, before any moment is placed: what to tap first.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the earliest'**
+  String get inOrderFirst;
+
+  /// In order, while playing, once one or more moments are placed: what to tap next.
+  ///
+  /// In en, this message translates to:
+  /// **'Now the next one'**
+  String get inOrderNext;
+
+  /// In order, while playing, once every moment is placed: the order can be checked.
+  ///
+  /// In en, this message translates to:
+  /// **'All placed. Check it?'**
+  String get inOrderReady;
+
+  /// In order, while playing: the big button that checks the order the moments were put in.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the order'**
+  String get inOrderCheck;
+
+  /// In order, while playing: where a moment was put, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'In place {n}'**
+  String inOrderPlaced(int n);
+
+  /// In order, at the end, under a moment: the place the reader had put it in.
+  ///
+  /// In en, this message translates to:
+  /// **'Your place: {n}'**
+  String inOrderYours(int n);
+
+  /// In order, at the end: the line under the score when every moment was in its place.
+  ///
+  /// In en, this message translates to:
+  /// **'Every one in its place.'**
+  String get inOrderPerfect;
+
+  /// The games of time: the gap where a moment's year is hidden, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'a missing year'**
+  String get timeGap;
+
+  /// Explore, the challenges: the name of the game of guessing the year a moment from the cards happened. Short: a tile's name.
+  ///
+  /// In en, this message translates to:
+  /// **'What year?'**
+  String get whatYearTitle;
+
+  /// What year?, before playing: its rules, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Three moments, each missing its year. Dial it in: the closer, the more points.'**
+  String get whatYearRules;
+
+  /// What year?: the points scored, of the most there were, as a screen reader says the score and as the score is sent on.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} points'**
+  String whatYearPoints(int n, int of);
+
+  /// What year?, at the end: the line under the score when every year was exactly right.
+  ///
+  /// In en, this message translates to:
+  /// **'Every year exactly right.'**
+  String get whatYearPerfect;
+
+  /// What year?, at the end: the line under the score, how many years off the guesses were, all added up.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 year off in all} other{{n} years off in all}}'**
+  String whatYearOffInAll(int n);
+
+  /// What year?: under a moment once told, the year the reader dialled and the points it scored.
+  ///
+  /// In en, this message translates to:
+  /// **'You said {guess} · +{points}'**
+  String whatYearSaid(String guess, int points);
+
+  /// What year?: a year dialled exactly, and the points it scored.
+  ///
+  /// In en, this message translates to:
+  /// **'Spot on! +{points}'**
+  String whatYearExact(int points);
+
+  /// What year?: how many years off a dialled year was.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 year off} other{{n} years off}}'**
+  String whatYearOff(int n);
+
+  /// What year?: a button that moves the dial back, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 year earlier} other{{n} years earlier}}'**
+  String whatYearEarlier(int n);
+
+  /// What year?: a button that moves the dial on, as a screen reader says it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 year later} other{{n} years later}}'**
+  String whatYearLater(int n);
+
+  /// What year?: the dial of the years, as a screen reader names it.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get whatYearDial;
+
+  /// Explore, the challenges: the name of the game of saying whether each moment from the cards happened before or after the one before it. Short: a tile's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Before or after?'**
+  String get beforeAfterTitle;
+
+  /// Before or after?, before playing: its rules, in a line.
+  ///
+  /// In en, this message translates to:
+  /// **'Six moments, one after another. Did each happen before or after the one above it?'**
+  String get beforeAfterRules;
+
+  /// Before or after?: the button that says the moment happened before the one above it.
+  ///
+  /// In en, this message translates to:
+  /// **'Before'**
+  String get beforeAfterBefore;
+
+  /// Before or after?: the button that says the moment happened after the one above it.
+  ///
+  /// In en, this message translates to:
+  /// **'After'**
+  String get beforeAfterAfter;
+
+  /// Before or after?, while playing: the question beside the picture, with the year of the moment above.
+  ///
+  /// In en, this message translates to:
+  /// **'Before or after {year}?'**
+  String beforeAfterAsk(String year);
+
+  /// Before or after?, at the end, under a moment: the reader said it happened before the year of the one above it.
+  ///
+  /// In en, this message translates to:
+  /// **'You said: before {year}'**
+  String beforeAfterSaidBefore(String year);
+
+  /// Before or after?, at the end, under a moment: the reader said it happened after the year of the one above it.
+  ///
+  /// In en, this message translates to:
+  /// **'You said: after {year}'**
+  String beforeAfterSaidAfter(String year);
+
+  /// Before or after?, at the end, under the first moment: the one the chain began from, which was not asked.
+  ///
+  /// In en, this message translates to:
+  /// **'Where the chain began'**
+  String get beforeAfterStart;
+
+  /// Before or after?, at the end: the line under the score when every call was right.
+  ///
+  /// In en, this message translates to:
+  /// **'Not one out of place.'**
+  String get beforeAfterPerfect;
+
+  /// Which is bigger? on the whole screen, under its rules: how many pairs of figures today's round has.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 pair today} other{{n} pairs today}}'**
+  String biggerPairsToday(int n);
+
   /// Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.
   ///
   /// In en, this message translates to:

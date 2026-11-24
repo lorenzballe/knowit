@@ -179,6 +179,11 @@ abstract class ExploreHost {
   /// it may not be on.
   void openSection(ExploreSection section);
 
+  /// Shows [route], a screen [section] draws for itself over Explore — a
+  /// game played on the whole screen, its tile flying open into it — and
+  /// counts it as a page opened from the section, as [openSection] does.
+  void openScreen(ExploreSection section, Route<void> route);
+
   /// Notes something a reader did in a section that the app has no other
   /// record of — a reaction, a bet, a stance — under [event], with [facts].
   void note(ExploreSection section, String event, Map<String, Object?> facts);
@@ -207,7 +212,7 @@ abstract class ExploreBlock {
   /// Whether the block is also drawn on a subject's page, Explore narrowed
   /// by a chip: a shelf of cards is, narrowed to the subject; what is one
   /// thing for every reader and every subject (the day's challenge, the
-  /// quick games, the reader's subjects) is not, since on Sport it is no
+  /// challenges, the reader's subjects) is not, since on Sport it is no
   /// more about Sport than on Nature. A section says otherwise with
   /// `subjectPages`.
   bool get onSubjectPages => true;

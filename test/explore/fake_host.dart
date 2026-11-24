@@ -94,6 +94,17 @@ class FakeExploreHost implements ExploreHost {
   @override
   void openSection(ExploreSection section) => pages.add(section);
 
+  /// The sections that opened a screen of their own, and how it is shown:
+  /// a test that wants the screen itself pushes it ([pushScreen]).
+  final List<ExploreSection> screens = [];
+  void Function(Route<void> route)? pushScreen;
+
+  @override
+  void openScreen(ExploreSection section, Route<void> route) {
+    screens.add(section);
+    pushScreen?.call(route);
+  }
+
   @override
   void note(ExploreSection section, String event, Map<String, Object?> facts) =>
       notes.add((section.id, event, facts));

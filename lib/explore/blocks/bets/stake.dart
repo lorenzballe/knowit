@@ -80,6 +80,38 @@ class StakeBlock extends BetBlock {
   }
 }
 
+/// Stakes [stake] points on [option] of [answer]'s card, [sure] how sure
+/// where the shelf asked: doubled if it is the card's answer, lost if not,
+/// and the option kept as the card's answer. What a tile and the
+/// challenge's screen both do.
+Future<void> layStake(
+  ExploreHost host,
+  BetSection shelf,
+  BetAnswer answer, {
+  required int option,
+  required int stake,
+  int? sure,
+}) async {
+  final bool right = answer.accepts('$option');
+  await layBet(
+    host,
+    shelf.section,
+    Bet(
+      kind: 'stake',
+      section: shelf.id,
+      pill: answer.pill.id,
+      said: '$option',
+      right: right,
+      points: right ? stake : -stake,
+      confidence: sure,
+      facts: {'stake': stake},
+      at: DateTime.now().millisecondsSinceEpoch,
+    ),
+    pill: answer.pill,
+    response: '$option',
+  );
+}
+
 /// One pick to stake on.
 class StakeTile extends StatelessWidget {
   const StakeTile({
@@ -155,27 +187,8 @@ class StakeTile extends StatelessWidget {
       {'o': option ?? picked, 'k': stakeAt ?? k, if (pend) 'p': true},
     );
 
-    Future<void> lay(int? sure) async {
-      final int o = picked!;
-      final bool right = answer.accepts('$o');
-      await layBet(
-        host,
-        shelf.section,
-        Bet(
-          kind: 'stake',
-          section: shelf.id,
-          pill: pill.id,
-          said: '$o',
-          right: right,
-          points: right ? stake : -stake,
-          confidence: sure,
-          facts: {'stake': stake},
-          at: DateTime.now().millisecondsSinceEpoch,
-        ),
-        pill: pill,
-        response: '$o',
-      );
-    }
+    Future<void> lay(int? sure) =>
+        layStake(host, shelf, answer, option: picked!, stake: stake, sure: sure);
 
     void bet0() {
       BetFeel.lay();

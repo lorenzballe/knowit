@@ -9,6 +9,37 @@ import '../../theme.dart';
 import '../motion.dart';
 import 'parts.dart';
 
+/// What was played today is kept under the four it was played on, so the
+/// answer is still there when the shelf is scrolled back to, or the game
+/// opened on its own screen.
+String spotKey(SpotTheFalse spot) =>
+    'spot:${[for (final p in spot.cards) p.id].join(',')}';
+
+/// The claim picked as the false one today, by id, or null.
+String? spotPicked(SpotTheFalse spot) => switch (ExplorePlay.instance[spotKey(
+  spot,
+)]) {
+  final String id when spot.cards.any((p) => p.id == id) => id,
+  _ => null,
+};
+
+/// [pill] picked as the false one: kept for the day, noted, and recorded as
+/// the card's own answer ("False") through [onCommit]. What the shelf and
+/// the challenge's screen both do.
+void pickSpot(
+  SpotTheFalse spot,
+  Pill pill,
+  void Function(Pill, String) onCommit,
+) {
+  if (spotPicked(spot) != null) return;
+  ExplorePlay.instance.put(spotKey(spot), pill.id);
+  Analytics.capture('explore spot', {
+    'pill_id': pill.id,
+    'right': pill.id == spot.falseOne.id,
+  });
+  onCommit(pill, '${trueOrFalseIndex(pill, false)}');
+}
+
 /// Spot the false one: four claims from true-or-false cards under the
 /// true-or-false shelf, three true and one not, and the reader picks the one
 /// they think is false.
@@ -46,26 +77,13 @@ class _SpotTheFalseBlockState extends State<SpotTheFalseBlock> {
   /// The claim tapped, not yet said to be meant.
   String? _chosen;
 
-  /// What was played today is kept under the four it was played on, so the
-  /// answer is still there when the shelf is scrolled back to.
-  String get _key =>
-      'spot:${[for (final p in widget.spot.cards) p.id].join(',')}';
-
-  String? get _picked => switch (ExplorePlay.instance[_key]) {
-    final String id when widget.spot.cards.any((p) => p.id == id) => id,
-    _ => null,
-  };
+  String? get _picked => spotPicked(widget.spot);
 
   void _confirm() {
     final String? id = _chosen;
     if (id == null || _picked != null) return;
     final Pill pill = widget.spot.cards.firstWhere((p) => p.id == id);
-    ExplorePlay.instance.put(_key, id);
-    Analytics.capture('explore spot', {
-      'pill_id': pill.id,
-      'right': pill.id == widget.spot.falseOne.id,
-    });
-    widget.onCommit(pill, '${trueOrFalseIndex(pill, false)}');
+    pickSpot(widget.spot, pill, widget.onCommit);
     setState(() => _chosen = null);
   }
 
