@@ -5084,6 +5084,210 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get gameReview => 'カード';
+
+  @override
+  String get gameTomorrow => '次のラウンドは明日';
+
+  @override
+  String get gameContinue => '続ける';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$of問中$n問正解';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日は$n枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => '全問正解。';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$nポイント',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => '結果を見る';
+
+  @override
+  String get gameNextCard => '次へ';
+
+  @override
+  String get spotOnce => '選べるのは1日1回';
+
+  @override
+  String get spotGotIt => '間違いを見抜いた！';
+
+  @override
+  String get spotMissedIt => 'それではない。それは正しい。';
+
+  @override
+  String get tfRules => '正しいか間違いかを答えて、理由を見よう。たいていの人が間違えます。';
+
+  @override
+  String get inOrderTitle => '時代順';
+
+  @override
+  String get inOrderRules => 'カードから4つの出来事。年は伏せてあります。起きた順に、古いものからタップしよう。';
+
+  @override
+  String get inOrderFirst => 'いちばん古いものをタップ';
+
+  @override
+  String get inOrderNext => '次に古いものは？';
+
+  @override
+  String get inOrderReady => '全部並べたら確認しよう';
+
+  @override
+  String get inOrderCheck => '順番を確認';
+
+  @override
+  String inOrderPlaced(int n) {
+    return '$n番目';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return 'あなたの順番：$n';
+  }
+
+  @override
+  String get inOrderPerfect => 'すべて正しい順番！';
+
+  @override
+  String get timeGap => '伏せられた年';
+
+  @override
+  String get whatYearTitle => '何年？';
+
+  @override
+  String get whatYearRules => '年が伏せられた3つの出来事。ダイヤルで年を合わせよう。近いほど高得点。';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$of点中$n点';
+  }
+
+  @override
+  String get whatYearPerfect => 'すべての年がぴったり！';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '合計$n年のずれ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return 'あなたの答え：$guess・+$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return 'ぴったり！+$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n年のずれ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n年前へ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n年後へ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => '年';
+
+  @override
+  String get beforeAfterTitle => '前か後か？';
+
+  @override
+  String get beforeAfterRules => '6つの出来事が順に出てきます。それぞれ上の出来事より前か後か？';
+
+  @override
+  String get beforeAfterBefore => '前';
+
+  @override
+  String get beforeAfterAfter => '後';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return '$year年より前？後？';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return 'あなたの答え：$year年より前';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return 'あなたの答え：$year年より後';
+  }
+
+  @override
+  String get beforeAfterStart => 'ここから始まり';
+
+  @override
+  String get beforeAfterPerfect => 'ひとつも外さなかった！';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日は$n組',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject、レベル$n';
   }

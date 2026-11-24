@@ -222,7 +222,7 @@ class CoreBlocksTest(unittest.TestCase):
     def test_the_readers_own_blocks_work_out_their_own(self):
         self.assertEqual(problems(
             {"id": "d", "block": "your-day", "gap": 4},
-            {"id": "q", "block": "quick-games", "title": "Challenges", "games": ["sixty", "bets-bigger", "bets-closer", "bets-stake"]},
+            {"id": "q", "block": "quick-games", "title": "Challenges", "games": ["sixty", "bets-bigger", "bets-closer", "bets-stake", "in-order", "what-year", "before-after"]},
             {"id": "s", "block": "subject-levels", "title": "Your subjects", "limit": 12},
             {"id": "l", "block": "like-saved", "title": "More like what you saved", "limit": 6},
         ), [])

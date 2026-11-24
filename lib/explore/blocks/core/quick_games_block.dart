@@ -1,9 +1,10 @@
 /// Challenges (the `quick-games` block, by the name the document and the
 /// numbers have always known it): Explore's games as tiles, four to a page,
 /// two by two — Sixty seconds, Spot the false one, True or false and Which
-/// is bigger first, then the games of bets that are a game on their own —
-/// with the pages side by side, a swipe from one to the next, and dots that
-/// say how many there are (lib/widgets/explore/challenges.dart).
+/// is bigger first; then the games of bets that are a game on their own;
+/// then the three games of time — with the pages side by side, a swipe
+/// from one to the next, and dots that say how many there are
+/// (lib/widgets/explore/challenges.dart).
 ///
 /// The games were shelves far down the page, each as tall as a screen, and
 /// a reader who wanted a minute's play had to know where to scroll. A tile
@@ -12,20 +13,23 @@
 /// most right in one round, kept for good (`AppState.sixtyBest`), where the
 /// round itself lasts only the day.
 ///
-/// Sixty seconds is played on a screen of its own: its tile grows into the
-/// whole screen (lib/widgets/explore/sixty_game.dart). Every other game
-/// opens on a page of its own, drawn by its own block for the same host
-/// ([ExploreHost.openSection]). Either way it is the game's own reckoning
-/// that is played — the day's round, the day's bets, the record — kept and
-/// counted as it always was, under the section's id and the game's
-/// (`quick-games-sixty`).
+/// Every game is played on a screen of its own: its tile grows into the
+/// whole screen (lib/widgets/explore/challenge_screen.dart), and at the end
+/// the next challenge is a tap away, flying out of its own tile in turn.
+/// It is the game's own reckoning that is played there — the day's round,
+/// the day's bets, the record — kept and counted as it always was, under
+/// the section's id and the game's (`quick-games-sixty`).
 ///
 /// Of the games of bets (docs/explore/bets.md), these are here because each
-/// is a whole game on a page of its own: Closer, closer; Orders of
-/// magnitude; Bet a range; Place your bet; Your number. Not here: the slip
-/// and Bet a friend, which play nothing; Today's three, which opens Explore
-/// and whose three cards and crowd belong to its own section; and the bet
-/// of the day, which is Today's three again with one card.
+/// is a whole game on its own: Closer, closer; Orders of magnitude; Bet a
+/// range; Place your bet; Your number. Not here: the slip and Bet a friend,
+/// which play nothing; Today's three, which opens Explore and whose three
+/// cards and crowd belong to its own section; and the bet of the day,
+/// which is Today's three again with one card.
+///
+/// The games of time — In order, What year?, Before or after? — are new to
+/// the challenges and live only here: moments from the cards whose
+/// question names the year they happened (lib/data/dated_lines.dart).
 ///
 /// A game with nothing to play today has no tile; with none, there is no
 /// section.
@@ -33,14 +37,27 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../../../data/dated_lines.dart';
+import '../../../data/explore_mix.dart';
+import '../../../data/themed_shelves.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
 import '../../../widgets/explore/challenge_art.dart';
+import '../../../widgets/explore/challenge_kit.dart';
+import '../../../widgets/explore/challenge_screen.dart';
 import '../../../widgets/explore/challenges.dart';
 import '../../../widgets/explore/sixty_game.dart';
+import '../../../widgets/explore/spot_game.dart';
+import '../../../widgets/explore/time_games.dart';
+import '../../../widgets/explore/true_false_game.dart';
 import '../../explore_block.dart';
+import '../bets/answers.dart';
+import '../bets/bet_games.dart';
+import '../bets/bets_day.dart';
 import '../bets/bigger.dart';
+import '../bets/block.dart';
 import '../bets/closer.dart';
+import '../bets/deal.dart';
 import '../bets/magnitude.dart';
 import '../bets/number.dart';
 import '../bets/range.dart';
@@ -49,23 +66,34 @@ import 'layout.dart';
 import 'shelf_blocks.dart';
 import 'shelves.dart';
 
-/// One game a tile can open: what it is called, how it looks, and the
-/// section that draws it.
+/// Makes a game's screen for [inner], its section under the challenges, or
+/// null when it has nothing to play.
+typedef ChallengeOf =
+    ChallengeGame? Function(
+      ExploreHost host,
+      ExploreSection inner,
+      String title,
+    );
+
+/// One game a tile can open: what it is called, how it looks, what draws it
+/// on a page of its own, and what plays it on a screen of its own.
 @immutable
 class QuickGame {
   const QuickGame({
     required this.key,
-    required this.block,
     required this.colour,
     required this.art,
+    required this.play,
+    this.block,
     this.extra = const {},
   });
 
   /// The game's name in a section's `games`.
   final String key;
 
-  /// The block that draws the game.
-  final ExploreBlock block;
+  /// The block that draws the game on a page of its own, for the games
+  /// that are shelves too; none for a game played only here.
+  final ExploreBlock? block;
 
   /// The tile's ground, from the subjects' wheel: one the drawn cards' ink
   /// reads on.
@@ -77,6 +105,9 @@ class QuickGame {
   /// What the game's section says beyond its id and block.
   final Map<String, Object?> extra;
 
+  /// What plays it on its screen.
+  final ChallengeOf play;
+
   /// The game's own name, in the reader's language.
   String title(AppLocalizations l) => switch (key) {
     'sixty' => l.sixtyTitle,
@@ -87,6 +118,9 @@ class QuickGame {
     'bets-range' => l.betsRangeTitle,
     'bets-stake' => l.betsStakeTitle,
     'bets-number' => l.betsNumberTitle,
+    'in-order' => l.inOrderTitle,
+    'what-year' => l.whatYearTitle,
+    'before-after' => l.beforeAfterTitle,
     _ => l.betsBiggerTitle,
   };
 
@@ -94,28 +128,48 @@ class QuickGame {
   /// cards are noted under, so the numbers say they were played from here.
   ExploreSection sectionUnder(ExploreSection parent) => ExploreSection(
     id: '${parent.id}-$key',
-    block: block.name,
-    json: {'id': '${parent.id}-$key', 'block': block.name, ...extra},
+    block: block?.name ?? key,
+    json: {'id': '${parent.id}-$key', 'block': block?.name ?? key, ...extra},
   );
+
+  /// Whether the game has anything to play today: asked of its block as
+  /// the engine asks it of every section — only what it would draw, thrown
+  /// away — or, for a game of time, of the day's moments.
+  bool playable(BuildContext context, ExploreHost host, ExploreSection inner) {
+    final ExploreBlock? b = block;
+    if (b != null) return b.build(context, host, inner) != null;
+    final TimeGame? time = _timeOf(key);
+    return time != null &&
+        ExploreShelves.of(host).time.round(time, 0).isNotEmpty;
+  }
 }
 
+TimeGame? _timeOf(String key) => switch (key) {
+  'in-order' => TimeGame.order,
+  'what-year' => TimeGame.year,
+  'before-after' => TimeGame.chain,
+  _ => null,
+};
+
 /// The games, in the order a section that names none shows them: the four
-/// the first page always had, then the games of bets. True or false is
-/// played without the game of spotting the false one under it, which has a
-/// tile of its own; a game of bets on its page has its tiles one under
-/// another (`size` `l`), the width of the page.
+/// the first page always had, then the games of bets, then the games of
+/// time. True or false is played without the game of spotting the false
+/// one under it, which has a tile of its own; a game of bets on its page
+/// has its tiles one under another (`size` `l`), the width of the page.
 const List<QuickGame> kQuickGames = [
   QuickGame(
     key: 'sixty',
     block: SixtyBlock(),
     colour: Color(0xFFFFE600),
     art: ChallengeArt.sixty,
+    play: _sixty,
   ),
   QuickGame(
     key: 'spot-false',
     block: SpotFalseBlock(),
     colour: Color(0xFFFF3D7F),
     art: ChallengeArt.spot,
+    play: _spot,
   ),
   QuickGame(
     key: 'true-false',
@@ -123,12 +177,14 @@ const List<QuickGame> kQuickGames = [
     colour: Color(0xFF00E5A0),
     art: ChallengeArt.trueFalse,
     extra: {'spot': false},
+    play: _trueFalse,
   ),
   QuickGame(
     key: 'bets-bigger',
     block: BiggerBlock(),
     colour: Color(0xFF4C6FFF),
     art: ChallengeArt.bigger,
+    play: _bigger,
   ),
   QuickGame(
     key: 'bets-closer',
@@ -136,6 +192,7 @@ const List<QuickGame> kQuickGames = [
     colour: Color(0xFFFF7A1A),
     art: ChallengeArt.closer,
     extra: {'size': 'l'},
+    play: _closer,
   ),
   QuickGame(
     key: 'bets-magnitude',
@@ -143,6 +200,7 @@ const List<QuickGame> kQuickGames = [
     colour: Color(0xFF9B5CFF),
     art: ChallengeArt.magnitude,
     extra: {'size': 'l'},
+    play: _magnitude,
   ),
   QuickGame(
     key: 'bets-range',
@@ -150,6 +208,7 @@ const List<QuickGame> kQuickGames = [
     colour: Color(0xFF00D9D9),
     art: ChallengeArt.range,
     extra: {'size': 'l'},
+    play: _range,
   ),
   QuickGame(
     key: 'bets-stake',
@@ -157,6 +216,7 @@ const List<QuickGame> kQuickGames = [
     colour: Color(0xFFA6FF00),
     art: ChallengeArt.stake,
     extra: {'size': 'l'},
+    play: _stake,
   ),
   QuickGame(
     key: 'bets-number',
@@ -164,8 +224,233 @@ const List<QuickGame> kQuickGames = [
     colour: Color(0xFFE040FB),
     art: ChallengeArt.number,
     extra: {'size': 'l'},
+    play: _number,
+  ),
+  QuickGame(
+    key: 'in-order',
+    colour: Color(0xFFFFB020),
+    art: ChallengeArt.order,
+    play: _inOrder,
+  ),
+  QuickGame(
+    key: 'what-year',
+    colour: Color(0xFF6FCBFF),
+    art: ChallengeArt.year,
+    play: _whatYear,
+  ),
+  QuickGame(
+    key: 'before-after',
+    colour: Color(0xFFFF8A65),
+    art: ChallengeArt.chain,
+    play: _beforeAfter,
   ),
 ];
+
+// ── What plays each game ─────────────────────────────────────────────────
+
+/// A card opened from a game's screen, as from its shelf.
+void Function(List<Pill>, Pill) _opener(
+  ExploreHost host,
+  ExploreSection inner,
+) =>
+    (shelf, pill) => host.open(inner, shelf, pill);
+
+ChallengeGame? _sixty(ExploreHost host, ExploreSection inner, String title) {
+  final List<Pill> pills = ExploreShelves.of(host).mix.sixty;
+  if (pills.length != 8) return null;
+  return SixtyChallenge(
+    pills: pills,
+    best: () => host.app.sixtyBest,
+    onFinished: host.app.noteSixtyRound,
+    onOpen: _opener(host, inner),
+    onShown: (pill) => host.seen(inner, pill),
+  );
+}
+
+ChallengeGame? _spot(ExploreHost host, ExploreSection inner, String title) {
+  final SpotTheFalse? spot = ExploreShelves.of(host).mix.spot;
+  if (spot == null) return null;
+  return SpotChallenge(
+    spot: spot,
+    title: title,
+    onCommit: spotCommitter(host, spot),
+    onOpen: _opener(host, inner),
+    onShown: spotShower(host, inner),
+  );
+}
+
+ChallengeGame? _trueFalse(
+  ExploreHost host,
+  ExploreSection inner,
+  String title,
+) {
+  final ThemedShelf? t = ExploreShelves.of(host).mix.trueFalse;
+  if (t == null || t.pills.isEmpty) return null;
+  return TrueFalseChallenge(
+    pills: t.pills,
+    title: title,
+    answerOf: (p) => host.app.answerFor(p.id)?.response,
+    onCommit: host.commit,
+    onOpen: _opener(host, inner),
+    onShown: (pill) => host.seen(inner, pill),
+  );
+}
+
+/// A game of bets: the cards its block deals today for its section, once
+/// the day's bets are read.
+ChallengeGame? _bets(
+  ExploreHost host,
+  ExploreSection inner,
+  BetBlock block,
+  BetChallenge Function(BetSection shelf, List<BetAnswer> cards) make, {
+  int least = 1,
+}) {
+  if (!BetsDay.instance.loaded) return null;
+  final BetSection shelf = BetSection(inner);
+  final List<BetAnswer> cards = block.deal(host, shelf);
+  if (cards.length < least) return null;
+  return make(shelf, cards);
+}
+
+ChallengeGame? _bigger(ExploreHost host, ExploreSection inner, String title) =>
+    _bets(
+      host,
+      inner,
+      const BiggerBlock(),
+      (shelf, cards) => BiggerChallenge(
+        host: host,
+        shelf: shelf,
+        cards: cards,
+        title: title,
+      ),
+      least: 2,
+    );
+
+ChallengeGame? _closer(ExploreHost host, ExploreSection inner, String title) =>
+    _bets(
+      host,
+      inner,
+      const CloserBlock(),
+      (shelf, cards) => CloserChallenge(
+        host: host,
+        shelf: shelf,
+        cards: cards,
+        title: title,
+      ),
+    );
+
+ChallengeGame? _magnitude(
+  ExploreHost host,
+  ExploreSection inner,
+  String title,
+) => _bets(
+  host,
+  inner,
+  const MagnitudeBlock(),
+  (shelf, cards) => MagnitudeChallenge(
+    host: host,
+    shelf: shelf,
+    cards: cards,
+    title: title,
+  ),
+);
+
+ChallengeGame? _range(ExploreHost host, ExploreSection inner, String title) =>
+    _bets(
+      host,
+      inner,
+      const RangeBlock(),
+      (shelf, cards) => RangeChallenge(
+        host: host,
+        shelf: shelf,
+        cards: cards,
+        title: title,
+      ),
+    );
+
+ChallengeGame? _stake(ExploreHost host, ExploreSection inner, String title) =>
+    _bets(
+      host,
+      inner,
+      const StakeBlock(),
+      (shelf, cards) => StakeChallenge(
+        host: host,
+        shelf: shelf,
+        cards: cards,
+        title: title,
+      ),
+    );
+
+ChallengeGame? _number(ExploreHost host, ExploreSection inner, String title) =>
+    _bets(
+      host,
+      inner,
+      const NumberBlock(),
+      (shelf, cards) => NumberChallenge(
+        host: host,
+        shelf: shelf,
+        cards: cards,
+        title: title,
+      ),
+    );
+
+/// A game of time, on the day's moments.
+ChallengeGame? _time(
+  ExploreHost host,
+  ExploreSection inner,
+  TimeGame game,
+  TimeChallenge Function(TimeDeal deal) make,
+) {
+  final TimeDeal deal = ExploreShelves.of(host).time;
+  if (deal.round(game, 0).isEmpty) return null;
+  final TimeChallenge played = make(deal);
+  return played.playable ? played : null;
+}
+
+ChallengeGame? _inOrder(ExploreHost host, ExploreSection inner, String title) =>
+    _time(
+      host,
+      inner,
+      TimeGame.order,
+      (deal) => InOrderChallenge(
+        deal: deal,
+        title: title,
+        onOpen: _opener(host, inner),
+        onShown: (pill) => host.seen(inner, pill),
+      ),
+    );
+
+ChallengeGame? _whatYear(
+  ExploreHost host,
+  ExploreSection inner,
+  String title,
+) => _time(
+  host,
+  inner,
+  TimeGame.year,
+  (deal) => WhatYearChallenge(
+    deal: deal,
+    title: title,
+    onOpen: _opener(host, inner),
+    onShown: (pill) => host.seen(inner, pill),
+  ),
+);
+
+ChallengeGame? _beforeAfter(
+  ExploreHost host,
+  ExploreSection inner,
+  String title,
+) => _time(
+  host,
+  inner,
+  TimeGame.chain,
+  (deal) => BeforeAfterChallenge(
+    deal: deal,
+    title: title,
+    onOpen: _opener(host, inner),
+    onShown: (pill) => host.seen(inner, pill),
+  ),
+);
 
 /// The games [section] names in `games`, in its order, or all of them.
 List<QuickGame> gamesOf(ExploreSection section) {
@@ -197,12 +482,10 @@ class QuickGamesBlock extends ExploreBlock with SectionLayout {
     ExploreHost host,
     ExploreSection section,
   ) {
-    // Whether a game has anything to play is asked of its own block, as the
-    // engine asks it of every section: only what it would draw, thrown away.
     final List<(QuickGame, ExploreSection)> games = [
       for (final QuickGame game in gamesOf(section))
         if (game.sectionUnder(section) case final ExploreSection inner
-            when game.block.build(context, host, inner) != null)
+            when game.playable(context, host, inner))
           (game, inner),
     ];
     if (games.isEmpty) return null;
@@ -216,37 +499,44 @@ class QuickGamesBlock extends ExploreBlock with SectionLayout {
           ? (best > 0 ? l.exploreSixtyRecord(best, 8) : l.exploreSixtyFirst)
           : null,
     );
-    final List<ChallengeTileSpec> tiles = [];
-    for (int i = 0; i < games.length; i++) {
+
+    // Opens the game at [i] on its screen, out of its tile, the challenge
+    // after it offered at the end; a game that cannot be played there
+    // after all opens on its page, as before.
+    void openAt(int i) {
+      if (!context.mounted) return;
       final (QuickGame game, ExploreSection inner) = games[i];
       final ChallengeLook look = lookOf(game);
-      if (game.key != 'sixty') {
-        tiles.add(
-          ChallengeTileSpec(
-            id: game.key,
-            look: look,
-            onTap: () => host.openSection(inner),
-          ),
-        );
-        continue;
+      final ChallengeGame? played = game.play(host, inner, look.title);
+      if (played == null) {
+        host.openSection(inner);
+        return;
       }
-      // Sixty seconds, on the whole screen; the challenge after it offered
-      // when the round is over.
-      final (QuickGame, ExploreSection)? next = games.length > 1
-          ? games[(i + 1) % games.length]
-          : null;
-      tiles.add(
-        ChallengeTileSpec(
-          id: game.key,
-          look: look,
-          heroTag: challengeHeroOf(inner),
-          onTap: () => _playSixty(
-            context,
-            host,
-            inner,
-            look,
-            next: next == null ? null : (lookOf(next.$1), next.$2),
+      final int j = (i + 1) % games.length;
+      final bool more = games.length > 1;
+      final bool calm = MediaQuery.disableAnimationsOf(context);
+      host.openScreen(
+        inner,
+        challengeRoute(
+          ChallengeScreen(
+            game: played,
+            look: look,
+            heroTag: challengeHeroOf(inner),
+            next: more ? lookOf(games[j].$1) : null,
+            onNext: more
+                ? () {
+                    // Back into this tile, the pager turned to the next
+                    // one's page under the screen, and out of the next.
+                    Navigator.of(context).pop();
+                    ChallengePager.reveal(section.id, games[j].$1.key);
+                    Future<void>.delayed(
+                      calm ? Duration.zero : const Duration(milliseconds: 460),
+                      () => openAt(j),
+                    );
+                  }
+                : null,
           ),
+          calm: calm,
         ),
       );
     }
@@ -254,40 +544,17 @@ class QuickGamesBlock extends ExploreBlock with SectionLayout {
     return SectionFrame(
       title: section.title(host.language) ?? l.challengesTitle,
       line: section.subtitle(host.language) ?? l.challengesLine,
-      child: ChallengePager(id: section.id, tiles: tiles),
-    );
-  }
-
-  /// Opens Sixty seconds on its own screen, out of its tile, playing the
-  /// day's round exactly as its shelf does: the same eight claims, the
-  /// record kept by the app, a card opened as from any shelf.
-  static void _playSixty(
-    BuildContext context,
-    ExploreHost host,
-    ExploreSection inner,
-    ChallengeLook look, {
-    (ChallengeLook, ExploreSection)? next,
-  }) {
-    final List<Pill> pills = ExploreShelves.of(host).mix.sixty;
-    if (pills.length != 8) {
-      host.openSection(inner);
-      return;
-    }
-    host.openScreen(
-      inner,
-      sixtyGameRoute(
-        SixtyGame(
-          look: look,
-          heroTag: challengeHeroOf(inner),
-          pills: pills,
-          best: () => host.app.sixtyBest,
-          onFinished: host.app.noteSixtyRound,
-          onOpen: (shelf, pill) => host.open(inner, shelf, pill),
-          onShown: (pill) => host.seen(inner, pill),
-          next: next?.$1,
-          onNext: next == null ? null : () => host.openSection(next.$2),
-        ),
-        calm: MediaQuery.disableAnimationsOf(context),
+      child: ChallengePager(
+        id: section.id,
+        tiles: [
+          for (int i = 0; i < games.length; i++)
+            ChallengeTileSpec(
+              id: games[i].$1.key,
+              look: lookOf(games[i].$1),
+              heroTag: challengeHeroOf(games[i].$2),
+              onTap: () => openAt(i),
+            ),
+        ],
       ),
     );
   }

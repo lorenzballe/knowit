@@ -5341,6 +5341,221 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get gameReview => 'Les cartes';
+
+  @override
+  String get gameTomorrow => 'Nouvelle manche demain';
+
+  @override
+  String get gameContinue => 'Continuer';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$n sur $of';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartes aujourd\'hui',
+      one: '$n carte aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => 'Tout juste.';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n points',
+      one: '$n point',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => 'Voir le résultat';
+
+  @override
+  String get gameNextCard => 'Suivant';
+
+  @override
+  String get spotOnce => 'Un choix par jour';
+
+  @override
+  String get spotGotIt => 'Tu as trouvé la fausse.';
+
+  @override
+  String get spotMissedIt => 'Pas celle-là : elle est vraie.';
+
+  @override
+  String get tfRules =>
+      'Dis vrai ou faux, puis découvre pourquoi. La plupart se trompent.';
+
+  @override
+  String get inOrderTitle => 'Dans l\'ordre';
+
+  @override
+  String get inOrderRules =>
+      'Quatre moments tirés des cartes, chacun sans son année. Touche-les dans l\'ordre où ils se sont produits, le plus ancien d\'abord.';
+
+  @override
+  String get inOrderFirst => 'Touche le plus ancien';
+
+  @override
+  String get inOrderNext => 'Maintenant le suivant';
+
+  @override
+  String get inOrderReady => 'Tout est placé. On vérifie ?';
+
+  @override
+  String get inOrderCheck => 'Vérifier l\'ordre';
+
+  @override
+  String inOrderPlaced(int n) {
+    return 'En position $n';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return 'Ta position : $n';
+  }
+
+  @override
+  String get inOrderPerfect => 'Tout est à sa place.';
+
+  @override
+  String get timeGap => 'une année manquante';
+
+  @override
+  String get whatYearTitle => 'Quelle année ?';
+
+  @override
+  String get whatYearRules =>
+      'Trois moments, chacun sans son année. Règle-la sur le cadran : plus tu es près, plus tu marques.';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$n points sur $of';
+  }
+
+  @override
+  String get whatYearPerfect => 'Toutes les années pile.';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ans d\'écart au total',
+      one: '$n an d\'écart au total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return 'Tu as dit $guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return 'Pile ! +$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ans d\'écart',
+      one: '$n an d\'écart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ans plus tôt',
+      one: '$n an plus tôt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ans plus tard',
+      one: '$n an plus tard',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => 'Année';
+
+  @override
+  String get beforeAfterTitle => 'Avant ou après ?';
+
+  @override
+  String get beforeAfterRules =>
+      'Six moments, l\'un après l\'autre. Chacun s\'est-il produit avant ou après celui du dessus ?';
+
+  @override
+  String get beforeAfterBefore => 'Avant';
+
+  @override
+  String get beforeAfterAfter => 'Après';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return 'Avant ou après $year ?';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return 'Tu as dit : avant $year';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return 'Tu as dit : après $year';
+  }
+
+  @override
+  String get beforeAfterStart => 'Le point de départ';
+
+  @override
+  String get beforeAfterPerfect => 'Pas une seule erreur.';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n paires aujourd\'hui',
+      one: '$n paire aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, niveau $n';
   }

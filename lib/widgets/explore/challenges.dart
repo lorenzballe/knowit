@@ -222,17 +222,53 @@ class ChallengePager extends StatefulWidget {
   /// The room between two tiles.
   static const double gap = 10;
 
+  /// What each pager is asked to show, by its id: a tile's id.
+  static final Map<String, ValueNotifier<String?>> _asked = {};
+
+  static ValueNotifier<String?> _askOf(String id) =>
+      _asked.putIfAbsent(id, () => ValueNotifier<String?>(null));
+
+  /// Turns pager [id] to the page with tile [tile] on it — the next
+  /// challenge, offered at the end of one, flies out of its own tile.
+  static void reveal(String id, String tile) {
+    final ValueNotifier<String?> ask = _askOf(id);
+    ask.value = null;
+    ask.value = tile;
+  }
+
   @override
   State<ChallengePager> createState() => _ChallengePagerState();
 }
 
 class _ChallengePagerState extends State<ChallengePager> {
   late final PageController _pages = PageController();
+  late ValueNotifier<String?> _ask = ChallengePager._askOf(widget.id)
+    ..addListener(_asked);
+
+  @override
+  void didUpdateWidget(ChallengePager old) {
+    super.didUpdateWidget(old);
+    if (old.id != widget.id) {
+      _ask.removeListener(_asked);
+      _ask = ChallengePager._askOf(widget.id)..addListener(_asked);
+    }
+  }
 
   @override
   void dispose() {
+    _ask.removeListener(_asked);
     _pages.dispose();
     super.dispose();
+  }
+
+  /// A tile asked for: its page, at once — the screen in front hides the
+  /// turn.
+  void _asked() {
+    final String? tile = _ask.value;
+    if (tile == null || !_pages.hasClients) return;
+    final int at = widget.tiles.indexWhere((t) => t.id == tile);
+    if (at < 0) return;
+    _pages.jumpToPage(at ~/ ChallengePager.perPage);
   }
 
   int get _count =>

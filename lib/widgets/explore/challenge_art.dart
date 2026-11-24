@@ -59,6 +59,17 @@ enum ChallengeArt {
 
   /// Your number: a number set on a counter, its minus and its plus.
   number,
+
+  /// In order: moments on cards along the line of time, numbered.
+  order,
+
+  /// What year?: a page of the calendar, its year missing, over the ruler
+  /// of the years.
+  year,
+
+  /// Before or after?: two moments, one above the other, the arrows of
+  /// earlier and later.
+  chain,
 }
 
 /// Draws [art] on a ground of [ground]. [time] is how much of Sixty
@@ -97,6 +108,12 @@ class ChallengePainter extends CustomPainter {
         _stake(pen);
       case ChallengeArt.number:
         _number(pen);
+      case ChallengeArt.order:
+        _order(pen);
+      case ChallengeArt.year:
+        _year(pen);
+      case ChallengeArt.chain:
+        _chain(pen);
     }
     canvas.restore();
   }
@@ -662,4 +679,172 @@ void _number(_Pen p) {
   );
   p.box(const Rect.fromLTWH(84, 116, 32, 24), 5, _gold);
   p.c.drawCircle(const Offset(100, 127), 3.2, p.fill(kArtInk));
+}
+
+/// Four moments on cards standing along the line of time, each with the
+/// place it was put in: the arrow of time under them.
+void _order(_Pen p) {
+  p.haloAt(const Offset(100, 74), 66);
+  // The line of time, and its head.
+  p.outlined(
+    Path()
+      ..moveTo(18, 122)
+      ..lineTo(176, 122),
+    kArtCream,
+    width: 6,
+  );
+  p.shape(
+    Path()
+      ..moveTo(172, 110)
+      ..lineTo(192, 122)
+      ..lineTo(172, 134)
+      ..close(),
+    kArtInk,
+  );
+  const List<(double, double, Color)> cards = [
+    // middle x, turn in degrees, badge
+    (38, -6, _gold),
+    (78, 3, _blue),
+    (118, -3, _coral),
+    (158, 6, _green),
+  ];
+  for (int i = 0; i < cards.length; i++) {
+    final (double x, double turn, Color badge) = cards[i];
+    p.c.save();
+    p.c.translate(x, 86);
+    p.c.rotate(_rad(turn));
+    p.box(const Rect.fromLTWH(-17, -30, 34, 46), 6, kArtCream);
+    for (final (double y, double w) in const [(-10.0, 20.0), (-2.0, 14.0)]) {
+      p.c.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(-10, y, w, 3.6),
+          const Radius.circular(2),
+        ),
+        p.fill(kArtInk),
+      );
+    }
+    p.circle(const Offset(0, -30), 11, badge, width: 3);
+    p.glyph('${i + 1}', const Offset(0, -30), 15, kArtInk);
+    p.c.restore();
+    // Where it stands on the line.
+    p.c.drawCircle(Offset(x, 122), 4.2, p.fill(kArtInk));
+  }
+}
+
+/// A page of the calendar with its year torn out — a gap where it was —
+/// over the ruler of the years and its needle.
+void _year(_Pen p) {
+  p.haloAt(const Offset(100, 72), 66);
+  // The page, and the band along its top.
+  p.box(const Rect.fromLTWH(52, 18, 96, 78), 10, kArtCream);
+  p.shape(
+    Path()
+      ..addRRect(
+        RRect.fromRectAndCorners(
+          const Rect.fromLTWH(52, 18, 96, 22),
+          topLeft: const Radius.circular(10),
+          topRight: const Radius.circular(10),
+        ),
+      ),
+    _coral,
+  );
+  for (final double x in const [76.0, 124.0]) {
+    p.box(Rect.fromLTWH(x - 4, 10, 8, 18), 4, _gold, width: 2.6);
+  }
+  // The year: two figures and the gap of the two missing.
+  p.glyph('19', const Offset(84, 67), 30, kArtInk);
+  p.box(const Rect.fromLTWH(102, 52, 30, 30), 6, _gold, width: 2.8);
+  p.glyph('?', const Offset(117, 67), 24, kArtInk);
+  // The ruler, and the needle on it.
+  p.box(const Rect.fromLTWH(22, 106, 156, 32), 8, kArtCream);
+  for (int i = 0; i <= 14; i++) {
+    final double x = 30 + i * 10.0;
+    final bool major = i % 5 == 0;
+    p.segment(Offset(x, 136), Offset(x, major ? 116 : 126), width: major ? 3 : 2);
+  }
+  p.shape(
+    Path()
+      ..moveTo(92, 100)
+      ..lineTo(108, 100)
+      ..lineTo(100, 112)
+      ..close(),
+    kArtInk,
+  );
+  p.segment(const Offset(100, 106), const Offset(100, 138), width: 3.4);
+}
+
+/// Two moments, one above the other on the line of time, the one above
+/// dated, the one below asked: the arrows of earlier and later beside
+/// them.
+void _chain(_Pen p) {
+  p.haloAt(const Offset(104, 76), 66);
+  // The line between them.
+  p.segment(const Offset(118, 52), const Offset(118, 98), width: 5);
+  // The moment above, its year on a tab.
+  p.c.save();
+  p.c.translate(118, 40);
+  p.c.rotate(_rad(-3));
+  p.box(const Rect.fromLTWH(-44, -24, 88, 44), 8, kArtCream);
+  p.box(const Rect.fromLTWH(-36, -14, 34, 22), 5, kArtInk);
+  p.glyph('62', const Offset(-19, -3), 15, kArtCream);
+  p.c.drawRRect(
+    RRect.fromRectAndRadius(
+      const Rect.fromLTWH(6, -10, 30, 3.6),
+      const Radius.circular(2),
+    ),
+    p.fill(kArtInk),
+  );
+  p.c.drawRRect(
+    RRect.fromRectAndRadius(
+      const Rect.fromLTWH(6, -1, 22, 3.6),
+      const Radius.circular(2),
+    ),
+    p.fill(kArtInk),
+  );
+  p.c.restore();
+  // The moment asked about, its year a question.
+  p.c.save();
+  p.c.translate(118, 112);
+  p.c.rotate(_rad(4));
+  p.box(const Rect.fromLTWH(-44, -24, 88, 44), 8, kArtCream);
+  p.box(const Rect.fromLTWH(-36, -14, 34, 22), 5, _gold);
+  p.glyph('?', const Offset(-19, -3), 17, kArtInk);
+  p.c.drawRRect(
+    RRect.fromRectAndRadius(
+      const Rect.fromLTWH(6, -10, 30, 3.6),
+      const Radius.circular(2),
+    ),
+    p.fill(kArtInk),
+  );
+  p.c.drawRRect(
+    RRect.fromRectAndRadius(
+      const Rect.fromLTWH(6, -1, 22, 3.6),
+      const Radius.circular(2),
+    ),
+    p.fill(kArtInk),
+  );
+  p.c.restore();
+  // Earlier, and later.
+  p.circle(const Offset(40, 50), 19, _green);
+  p.outlined(
+    Path()
+      ..moveTo(40, 59)
+      ..lineTo(40, 41)
+      ..moveTo(32, 48)
+      ..lineTo(40, 40)
+      ..lineTo(48, 48),
+    kArtCream,
+    width: 4.6,
+  );
+  p.circle(const Offset(40, 104), 19, _blue);
+  p.outlined(
+    Path()
+      ..moveTo(40, 95)
+      ..lineTo(40, 113)
+      ..moveTo(32, 106)
+      ..lineTo(40, 114)
+      ..lineTo(48, 106),
+    kArtCream,
+    width: 4.6,
+  );
 }

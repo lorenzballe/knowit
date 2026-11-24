@@ -5102,6 +5102,208 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get gameReview => '카드';
+
+  @override
+  String get gameTomorrow => '새 라운드는 내일';
+
+  @override
+  String get gameContinue => '이어하기';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$of개 중 $n개 정답';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 $n장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => '모두 정답이에요.';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n점');
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => '결과 보기';
+
+  @override
+  String get gameNextCard => '다음';
+
+  @override
+  String get spotOnce => '하루에 한 번만 골라요';
+
+  @override
+  String get spotGotIt => '틀린 것을 찾아냈어요.';
+
+  @override
+  String get spotMissedIt => '그게 아니에요. 그건 사실이에요.';
+
+  @override
+  String get tfRules => '참인지 거짓인지 답하고 이유를 확인하세요. 대부분 틀려요.';
+
+  @override
+  String get inOrderTitle => '순서대로';
+
+  @override
+  String get inOrderRules =>
+      '카드 속 네 가지 사건, 연도는 가려져 있어요. 일어난 순서대로, 가장 이른 것부터 탭하세요.';
+
+  @override
+  String get inOrderFirst => '가장 이른 것을 탭하세요';
+
+  @override
+  String get inOrderNext => '이제 그다음';
+
+  @override
+  String get inOrderReady => '모두 놓았어요. 확인할까요?';
+
+  @override
+  String get inOrderCheck => '순서 확인';
+
+  @override
+  String inOrderPlaced(int n) {
+    return '$n번째';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return '내 순서: $n';
+  }
+
+  @override
+  String get inOrderPerfect => '모두 제자리예요.';
+
+  @override
+  String get timeGap => '가려진 연도';
+
+  @override
+  String get whatYearTitle => '몇 년도?';
+
+  @override
+  String get whatYearRules =>
+      '연도가 가려진 세 가지 사건. 다이얼로 연도를 맞춰 보세요. 가까울수록 점수가 높아요.';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$of점 중 $n점';
+  }
+
+  @override
+  String get whatYearPerfect => '모든 연도가 정확해요.';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '모두 합쳐 $n년 차이',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return '내 답: $guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return '정확해요! +$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n년 차이',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n년 앞으로',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n년 뒤로',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => '연도';
+
+  @override
+  String get beforeAfterTitle => '전일까 후일까?';
+
+  @override
+  String get beforeAfterRules => '여섯 가지 사건이 차례로 나와요. 각각 위의 사건보다 전일까요, 후일까요?';
+
+  @override
+  String get beforeAfterBefore => '전';
+
+  @override
+  String get beforeAfterAfter => '후';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return '$year년 이전일까 이후일까?';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return '내 답: $year년 이전';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return '내 답: $year년 이후';
+  }
+
+  @override
+  String get beforeAfterStart => '여기서 시작했어요';
+
+  @override
+  String get beforeAfterPerfect => '하나도 틀리지 않았어요.';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 $n쌍',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, 레벨 $n';
   }

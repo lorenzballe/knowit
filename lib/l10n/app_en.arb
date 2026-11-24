@@ -5704,6 +5704,283 @@
    }
   }
  },
+ "gameReview": "The cards",
+ "@gameReview": {
+  "description": "At the end of a challenge played on the whole screen: the heading over the round's cards again, each as it went. Shown in capitals."
+ },
+ "gameTomorrow": "New round tomorrow",
+ "@gameTomorrow": {
+  "description": "At the end of a challenge whose answers are the cards' own, played once a day: where Play again would be, when the next round comes. Short, beside the Share button."
+ },
+ "gameContinue": "Continue",
+ "@gameContinue": {
+  "description": "The first moment of a challenge on the whole screen: the big button, on a round already begun today."
+ },
+ "gameShareHead": "Astute · {game} · {date}",
+ "@gameShareHead": {
+  "description": "First line of the message a challenge's score is sent in: the app, the game's name, and the day.",
+  "placeholders": {
+   "game": {
+    "type": "String"
+   },
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "gameShareScore": "{n} of {of} right",
+ "@gameShareScore": {
+  "description": "Second line of the message a challenge's score is sent in: how many were right, of how many.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "gameCardsToday": "{n, plural, =1{1 card today} other{{n} cards today}}",
+ "@gameCardsToday": {
+  "description": "The first moment of a challenge on the whole screen, under its rules: how many cards today's round has.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "gameAllRight": "Every one right.",
+ "@gameAllRight": {
+  "description": "At the end of a challenge: the line under the score when every card was right."
+ },
+ "gamePoints": "{n, plural, =1{1 point} other{{n} points}}",
+ "@gamePoints": {
+  "description": "A number of points in a challenge: won on the bets, or scored on the years. Shown after a plus or minus sign where it is a gain or a loss.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "gameSeeResult": "See how it went",
+ "@gameSeeResult": {
+  "description": "A challenge on the whole screen, after its last card: the big button to the score."
+ },
+ "gameNextCard": "Next",
+ "@gameNextCard": {
+  "description": "A challenge on the whole screen, after a card is told: the big button to the next card."
+ },
+ "spotOnce": "One pick a day",
+ "@spotOnce": {
+  "description": "Spot the false one on the whole screen, before playing: how often it can be played."
+ },
+ "spotGotIt": "You spotted the false one.",
+ "@spotGotIt": {
+  "description": "Spot the false one on the whole screen: the claim picked was the false one."
+ },
+ "spotMissedIt": "Not that one: it's true.",
+ "@spotMissedIt": {
+  "description": "Spot the false one on the whole screen: the claim picked was true."
+ },
+ "tfRules": "Say true or false, then see why. Most people get these wrong.",
+ "@tfRules": {
+  "description": "True or false on the whole screen: its rules, in a line, before playing."
+ },
+ "inOrderTitle": "In order",
+ "@inOrderTitle": {
+  "description": "Explore, the challenges: the name of the game of putting four moments from the cards in the order they happened. Short: a tile's name."
+ },
+ "inOrderRules": "Four moments from the cards, each missing its year. Tap them in the order they happened, earliest first.",
+ "@inOrderRules": {
+  "description": "In order, before playing: its rules, in a line."
+ },
+ "inOrderFirst": "Tap the earliest",
+ "@inOrderFirst": {
+  "description": "In order, while playing, before any moment is placed: what to tap first."
+ },
+ "inOrderNext": "Now the next one",
+ "@inOrderNext": {
+  "description": "In order, while playing, once one or more moments are placed: what to tap next."
+ },
+ "inOrderReady": "All placed. Check it?",
+ "@inOrderReady": {
+  "description": "In order, while playing, once every moment is placed: the order can be checked."
+ },
+ "inOrderCheck": "Check the order",
+ "@inOrderCheck": {
+  "description": "In order, while playing: the big button that checks the order the moments were put in."
+ },
+ "inOrderPlaced": "In place {n}",
+ "@inOrderPlaced": {
+  "description": "In order, while playing: where a moment was put, as a screen reader says it.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "inOrderYours": "Your place: {n}",
+ "@inOrderYours": {
+  "description": "In order, at the end, under a moment: the place the reader had put it in.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "inOrderPerfect": "Every one in its place.",
+ "@inOrderPerfect": {
+  "description": "In order, at the end: the line under the score when every moment was in its place."
+ },
+ "timeGap": "a missing year",
+ "@timeGap": {
+  "description": "The games of time: the gap where a moment's year is hidden, as a screen reader says it."
+ },
+ "whatYearTitle": "What year?",
+ "@whatYearTitle": {
+  "description": "Explore, the challenges: the name of the game of guessing the year a moment from the cards happened. Short: a tile's name."
+ },
+ "whatYearRules": "Three moments, each missing its year. Dial it in: the closer, the more points.",
+ "@whatYearRules": {
+  "description": "What year?, before playing: its rules, in a line."
+ },
+ "whatYearPoints": "{n} of {of} points",
+ "@whatYearPoints": {
+  "description": "What year?: the points scored, of the most there were, as a screen reader says the score and as the score is sent on.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "whatYearPerfect": "Every year exactly right.",
+ "@whatYearPerfect": {
+  "description": "What year?, at the end: the line under the score when every year was exactly right."
+ },
+ "whatYearOffInAll": "{n, plural, =1{1 year off in all} other{{n} years off in all}}",
+ "@whatYearOffInAll": {
+  "description": "What year?, at the end: the line under the score, how many years off the guesses were, all added up.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whatYearSaid": "You said {guess} · +{points}",
+ "@whatYearSaid": {
+  "description": "What year?: under a moment once told, the year the reader dialled and the points it scored.",
+  "placeholders": {
+   "guess": {
+    "type": "String"
+   },
+   "points": {
+    "type": "int"
+   }
+  }
+ },
+ "whatYearExact": "Spot on! +{points}",
+ "@whatYearExact": {
+  "description": "What year?: a year dialled exactly, and the points it scored.",
+  "placeholders": {
+   "points": {
+    "type": "int"
+   }
+  }
+ },
+ "whatYearOff": "{n, plural, =1{1 year off} other{{n} years off}}",
+ "@whatYearOff": {
+  "description": "What year?: how many years off a dialled year was.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whatYearEarlier": "{n, plural, =1{1 year earlier} other{{n} years earlier}}",
+ "@whatYearEarlier": {
+  "description": "What year?: a button that moves the dial back, as a screen reader says it.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whatYearLater": "{n, plural, =1{1 year later} other{{n} years later}}",
+ "@whatYearLater": {
+  "description": "What year?: a button that moves the dial on, as a screen reader says it.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whatYearDial": "Year",
+ "@whatYearDial": {
+  "description": "What year?: the dial of the years, as a screen reader names it."
+ },
+ "beforeAfterTitle": "Before or after?",
+ "@beforeAfterTitle": {
+  "description": "Explore, the challenges: the name of the game of saying whether each moment from the cards happened before or after the one before it. Short: a tile's name."
+ },
+ "beforeAfterRules": "Six moments, one after another. Did each happen before or after the one above it?",
+ "@beforeAfterRules": {
+  "description": "Before or after?, before playing: its rules, in a line."
+ },
+ "beforeAfterBefore": "Before",
+ "@beforeAfterBefore": {
+  "description": "Before or after?: the button that says the moment happened before the one above it."
+ },
+ "beforeAfterAfter": "After",
+ "@beforeAfterAfter": {
+  "description": "Before or after?: the button that says the moment happened after the one above it."
+ },
+ "beforeAfterAsk": "Before or after {year}?",
+ "@beforeAfterAsk": {
+  "description": "Before or after?, while playing: the question beside the picture, with the year of the moment above.",
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "beforeAfterSaidBefore": "You said: before {year}",
+ "@beforeAfterSaidBefore": {
+  "description": "Before or after?, at the end, under a moment: the reader said it happened before the year of the one above it.",
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "beforeAfterSaidAfter": "You said: after {year}",
+ "@beforeAfterSaidAfter": {
+  "description": "Before or after?, at the end, under a moment: the reader said it happened after the year of the one above it.",
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "beforeAfterStart": "Where the chain began",
+ "@beforeAfterStart": {
+  "description": "Before or after?, at the end, under the first moment: the one the chain began from, which was not asked."
+ },
+ "beforeAfterPerfect": "Not one out of place.",
+ "@beforeAfterPerfect": {
+  "description": "Before or after?, at the end: the line under the score when every call was right."
+ },
+ "biggerPairsToday": "{n, plural, =1{1 pair today} other{{n} pairs today}}",
+ "@biggerPairsToday": {
+  "description": "Which is bigger? on the whole screen, under its rules: how many pairs of figures today's round has.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
  "exploreSubjectLevel": "{subject}, level {n}",
  "@exploreSubjectLevel": {
   "description": "Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.",

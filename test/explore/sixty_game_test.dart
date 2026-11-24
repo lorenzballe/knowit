@@ -25,6 +25,7 @@ import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_link.dart' show sendText;
 import 'package:astuto/utils/share_text.dart';
 import 'package:astuto/widgets/explore/challenge_art.dart';
+import 'package:astuto/widgets/explore/challenge_screen.dart';
 import 'package:astuto/widgets/explore/challenges.dart';
 import 'package:astuto/widgets/explore/sixty_game.dart';
 
@@ -153,7 +154,7 @@ void main() {
     expect(host.pages, isEmpty);
     // Halfway: the tile's ground on its way, the screen's words not yet in.
     await tester.pump(const Duration(milliseconds: 120));
-    expect(find.byType(SixtyGame), findsOneWidget);
+    expect(find.byType(ChallengeScreen), findsOneWidget);
     final Iterable<Hero> heroes = tester.widgetList<Hero>(find.byType(Hero));
     expect(
       heroes.where((h) => h.tag == challengeHeroOf(host.screens.single)),
@@ -179,7 +180,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('sixty-close')));
     await tester.pumpAndSettle();
-    expect(find.byType(SixtyGame), findsNothing);
+    expect(find.byType(ChallengeScreen), findsNothing);
     expect(find.byKey(const ValueKey('challenge-sixty')), findsOneWidget);
   });
 
@@ -318,9 +319,17 @@ void main() {
     }
     expect(said.of('explore sixty shared').single['right'], 4);
 
+    // The next challenge: this screen back into its tile, and the next one
+    // out of its own, on its screen.
     await tester.tap(find.byKey(const ValueKey('sixty-next')));
-    expect(host.pages.single.id, 'quick-games-spot-false');
-    expect(host.pages.single.block, 'spot-false');
+    for (int i = 0; i < 4; i++) {
+      await tester.pump(const Duration(milliseconds: 400));
+    }
+    expect(host.screens.last.id, 'quick-games-spot-false');
+    expect(host.screens.last.block, 'spot-false');
+    expect(find.byKey(const ValueKey('spot-play')), findsOneWidget);
+    expect(find.byKey(const ValueKey('sixty-play')), findsNothing);
+    expect(host.pages, isEmpty);
   });
 
   testWidgets('with motion reduced the screen is there at once, and the '
@@ -386,17 +395,19 @@ void main() {
                 .copyWith(textScaler: TextScaler.linear(text)),
             child: child!,
           ),
-          home: SixtyGame(
+          home: ChallengeScreen(
+            game: SixtyChallenge(
+              pills: claims,
+              best: () => host.app.sixtyBest,
+              onFinished: host.app.noteSixtyRound,
+              onOpen: (_, _) {},
+            ),
             look: ChallengeLook(
               title: l.sixtyTitle,
               colour: kQuickGames.first.colour,
               art: ChallengeArt.sixty,
             ),
             heroTag: 'sixty',
-            pills: claims,
-            best: () => host.app.sixtyBest,
-            onFinished: host.app.noteSixtyRound,
-            onOpen: (_, _) {},
             next: ChallengeLook(
               title: l.spotTitle,
               colour: kQuickGames[1].colour,

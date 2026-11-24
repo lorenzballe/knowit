@@ -329,6 +329,7 @@ def web(section: dict) -> list[str]:
 QUICK_GAMES = (
     "sixty", "spot-false", "true-false", "bets-bigger",
     "bets-closer", "bets-magnitude", "bets-range", "bets-stake", "bets-number",
+    "in-order", "what-year", "before-after",
 )
 
 

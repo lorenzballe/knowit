@@ -10,8 +10,12 @@ which the server places on Explore as a section of `remote/explore.json`
 
 Six of the blocks are also games among Explore's challenges (`quick-games`,
 docs/explore/core.md): Which is bigger, Closer, closer, Orders of magnitude,
-Bet a range, Place your bet and Your number, each a tile that opens the block
-on a page of its own as a section `quick-games-<block>`, dealt, laid and
+Bet a range, Place your bet and Your number, each a tile that opens the game
+on a screen of its own (`lib/explore/blocks/bets/bet_games.dart`) as a
+section `quick-games-<block>`: the cards the block deals that section today,
+one at a time, each bet laid by the very function its tile lays it with
+(`pickBigger`, `stepCloser`, `layMagnitude`, `layRange`, `layStake`,
+`layNumber`), with the same drafts and the same how sure — dealt, laid and
 counted as any section of bets is.
 
 A bet is not a game beside the cards: it **is** the card's answer, given on

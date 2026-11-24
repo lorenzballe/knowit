@@ -5052,6 +5052,191 @@ class RemoteLocalizations extends AppLocalizations {
       _base.sixtySecondsLeftLabel(s);
 
   @override
+  String get gameReview => _words.text('gameReview') ?? _base.gameReview;
+
+  @override
+  String get gameTomorrow => _words.text('gameTomorrow') ?? _base.gameTomorrow;
+
+  @override
+  String get gameContinue => _words.text('gameContinue') ?? _base.gameContinue;
+
+  @override
+  String gameShareHead(String game, String date) =>
+      _words.format('gameShareHead', localeName, {
+        'game': game,
+        'date': date,
+      }) ??
+      _base.gameShareHead(game, date);
+
+  @override
+  String gameShareScore(int n, int of) =>
+      _words.format('gameShareScore', localeName, {'n': n, 'of': of}) ??
+      _base.gameShareScore(n, of);
+
+  @override
+  String gameCardsToday(int n) =>
+      _words.format('gameCardsToday', localeName, {'n': n}) ??
+      _base.gameCardsToday(n);
+
+  @override
+  String get gameAllRight => _words.text('gameAllRight') ?? _base.gameAllRight;
+
+  @override
+  String gamePoints(int n) =>
+      _words.format('gamePoints', localeName, {'n': n}) ?? _base.gamePoints(n);
+
+  @override
+  String get gameSeeResult =>
+      _words.text('gameSeeResult') ?? _base.gameSeeResult;
+
+  @override
+  String get gameNextCard => _words.text('gameNextCard') ?? _base.gameNextCard;
+
+  @override
+  String get spotOnce => _words.text('spotOnce') ?? _base.spotOnce;
+
+  @override
+  String get spotGotIt => _words.text('spotGotIt') ?? _base.spotGotIt;
+
+  @override
+  String get spotMissedIt => _words.text('spotMissedIt') ?? _base.spotMissedIt;
+
+  @override
+  String get tfRules => _words.text('tfRules') ?? _base.tfRules;
+
+  @override
+  String get inOrderTitle => _words.text('inOrderTitle') ?? _base.inOrderTitle;
+
+  @override
+  String get inOrderRules => _words.text('inOrderRules') ?? _base.inOrderRules;
+
+  @override
+  String get inOrderFirst => _words.text('inOrderFirst') ?? _base.inOrderFirst;
+
+  @override
+  String get inOrderNext => _words.text('inOrderNext') ?? _base.inOrderNext;
+
+  @override
+  String get inOrderReady => _words.text('inOrderReady') ?? _base.inOrderReady;
+
+  @override
+  String get inOrderCheck => _words.text('inOrderCheck') ?? _base.inOrderCheck;
+
+  @override
+  String inOrderPlaced(int n) =>
+      _words.format('inOrderPlaced', localeName, {'n': n}) ??
+      _base.inOrderPlaced(n);
+
+  @override
+  String inOrderYours(int n) =>
+      _words.format('inOrderYours', localeName, {'n': n}) ??
+      _base.inOrderYours(n);
+
+  @override
+  String get inOrderPerfect =>
+      _words.text('inOrderPerfect') ?? _base.inOrderPerfect;
+
+  @override
+  String get timeGap => _words.text('timeGap') ?? _base.timeGap;
+
+  @override
+  String get whatYearTitle =>
+      _words.text('whatYearTitle') ?? _base.whatYearTitle;
+
+  @override
+  String get whatYearRules =>
+      _words.text('whatYearRules') ?? _base.whatYearRules;
+
+  @override
+  String whatYearPoints(int n, int of) =>
+      _words.format('whatYearPoints', localeName, {'n': n, 'of': of}) ??
+      _base.whatYearPoints(n, of);
+
+  @override
+  String get whatYearPerfect =>
+      _words.text('whatYearPerfect') ?? _base.whatYearPerfect;
+
+  @override
+  String whatYearOffInAll(int n) =>
+      _words.format('whatYearOffInAll', localeName, {'n': n}) ??
+      _base.whatYearOffInAll(n);
+
+  @override
+  String whatYearSaid(String guess, int points) =>
+      _words.format('whatYearSaid', localeName, {
+        'guess': guess,
+        'points': points,
+      }) ??
+      _base.whatYearSaid(guess, points);
+
+  @override
+  String whatYearExact(int points) =>
+      _words.format('whatYearExact', localeName, {'points': points}) ??
+      _base.whatYearExact(points);
+
+  @override
+  String whatYearOff(int n) =>
+      _words.format('whatYearOff', localeName, {'n': n}) ??
+      _base.whatYearOff(n);
+
+  @override
+  String whatYearEarlier(int n) =>
+      _words.format('whatYearEarlier', localeName, {'n': n}) ??
+      _base.whatYearEarlier(n);
+
+  @override
+  String whatYearLater(int n) =>
+      _words.format('whatYearLater', localeName, {'n': n}) ??
+      _base.whatYearLater(n);
+
+  @override
+  String get whatYearDial => _words.text('whatYearDial') ?? _base.whatYearDial;
+
+  @override
+  String get beforeAfterTitle =>
+      _words.text('beforeAfterTitle') ?? _base.beforeAfterTitle;
+
+  @override
+  String get beforeAfterRules =>
+      _words.text('beforeAfterRules') ?? _base.beforeAfterRules;
+
+  @override
+  String get beforeAfterBefore =>
+      _words.text('beforeAfterBefore') ?? _base.beforeAfterBefore;
+
+  @override
+  String get beforeAfterAfter =>
+      _words.text('beforeAfterAfter') ?? _base.beforeAfterAfter;
+
+  @override
+  String beforeAfterAsk(String year) =>
+      _words.format('beforeAfterAsk', localeName, {'year': year}) ??
+      _base.beforeAfterAsk(year);
+
+  @override
+  String beforeAfterSaidBefore(String year) =>
+      _words.format('beforeAfterSaidBefore', localeName, {'year': year}) ??
+      _base.beforeAfterSaidBefore(year);
+
+  @override
+  String beforeAfterSaidAfter(String year) =>
+      _words.format('beforeAfterSaidAfter', localeName, {'year': year}) ??
+      _base.beforeAfterSaidAfter(year);
+
+  @override
+  String get beforeAfterStart =>
+      _words.text('beforeAfterStart') ?? _base.beforeAfterStart;
+
+  @override
+  String get beforeAfterPerfect =>
+      _words.text('beforeAfterPerfect') ?? _base.beforeAfterPerfect;
+
+  @override
+  String biggerPairsToday(int n) =>
+      _words.format('biggerPairsToday', localeName, {'n': n}) ??
+      _base.biggerPairsToday(n);
+
+  @override
   String exploreSubjectLevel(String subject, int n) =>
       _words.format('exploreSubjectLevel', localeName, {
         'subject': subject,

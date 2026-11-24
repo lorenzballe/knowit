@@ -179,7 +179,7 @@ void main() {
   group('challenges (quick games)', () {
     testWidgets('the four games first, two by two, Sixty seconds with the '
         'record to set; the section called Challenges when it says nothing; '
-        'a tap on another game opens it on a page of its own', (tester) async {
+        'a tap on another game opens it on a screen of its own', (tester) async {
       final CoreHost host = CoreHost(await readyApp());
       await pumpSections(tester, host, [_section('quick-games')]);
       expect(find.text('Challenges'), findsOneWidget);
@@ -208,12 +208,13 @@ void main() {
       expect(find.text('Set your record'), findsOneWidget);
 
       await tester.tap(find.byKey(const ValueKey('challenge-true-false')));
-      expect(host.pages.last.block, 'true-false');
-      expect(host.pages.last.id, 'quick-games-true-false');
+      expect(host.screens.last.block, 'true-false');
+      expect(host.screens.last.id, 'quick-games-true-false');
       // True or false without the spot under it: that game has a tile.
-      expect(host.pages.last.json['spot'], false);
+      expect(host.screens.last.json['spot'], false);
       await tester.tap(find.byKey(const ValueKey('challenge-bets-bigger')));
-      expect(host.pages.last.block, 'bets-bigger');
+      expect(host.screens.last.block, 'bets-bigger');
+      expect(host.pages, isEmpty);
     });
 
     testWidgets('a swipe brings the next four, then the rest; the dots say '
@@ -247,18 +248,29 @@ void main() {
       }
       expect(dots().value, 'Page 2 of 3');
 
-      // A tap on the last dot: the page of the one game left, its other
-      // places kept empty so the tile is the size of every other.
+      // A tap on the last dot: Your number and the three games of time,
+      // the page full, every tile the size of every other.
       await tester.tap(find.byKey(const ValueKey('challenge-dot-2')));
       await tester.pumpAndSettle();
       expect(dots().value, 'Page 3 of 3');
-      final Finder number = find.byKey(const ValueKey('challenge-bets-number'));
-      expect(tester.getSize(number), tile);
-      expect(find.byKey(const ValueKey('challenge-empty-2-1')), findsOneWidget);
-      await tester.tap(number);
-      expect(host.pages.last.id, 'quick-games-bets-number');
-      // On its page, a game of bets has its tiles one under another.
-      expect(host.pages.last.json['size'], 'l');
+      for (final String game in [
+        'bets-number',
+        'in-order',
+        'what-year',
+        'before-after',
+      ]) {
+        final Finder one = find.byKey(ValueKey('challenge-$game'));
+        expect(one, findsOneWidget, reason: game);
+        expect(tester.getSize(one), tile, reason: game);
+      }
+      expect(find.byKey(const ValueKey('challenge-empty-2-1')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('challenge-bets-number')));
+      expect(host.screens.last.id, 'quick-games-bets-number');
+      // Its section as its page has it: its tiles one under another.
+      expect(host.screens.last.json['size'], 'l');
+      await tester.tap(find.byKey(const ValueKey('challenge-what-year')));
+      expect(host.screens.last.id, 'quick-games-what-year');
+      expect(host.screens.last.block, 'what-year');
     });
 
     testWidgets('the record, once there is one, and only the games the '
@@ -308,8 +320,16 @@ void main() {
           reason: game.key,
         );
       }
-      // Three games left: one page, no dots.
-      expect(find.byKey(const ValueKey('challenge-dots')), findsNothing);
+      // The games of time are dealt from the bank's moments, not from the
+      // host's cards: they stay, and six games make two pages, the first of
+      // time on the first.
+      expect(find.byKey(const ValueKey('challenge-in-order')), findsOneWidget);
+      expect(
+        tester
+            .getSemantics(find.byKey(const ValueKey('challenge-dots')))
+            .value,
+        'Page 1 of 2',
+      );
       await pumpSections(tester, host, [
         _section('quick-games', {
           'title': 'Challenges',

@@ -81,6 +81,54 @@ class RangeBlock extends BetBlock {
   }
 }
 
+/// The range either side of [guess] at [width], held to nought and a
+/// hundred.
+(double lo, double hi) rangeAround(double guess, RangeWidth width) => (
+  math.max(0, guess - width.half).toDouble(),
+  math.min(100, guess + width.half).toDouble(),
+);
+
+/// Lays a range on [answer]'s card: [guess] at its middle, the width at
+/// [at] of [widths]. It pays the width's points if the answer is in it, and
+/// the guess is kept as the card's answer. What a tile and the challenge's
+/// screen both do.
+Future<void> layRange(
+  ExploreHost host,
+  BetSection shelf,
+  BetAnswer answer, {
+  required double guess,
+  required int at,
+  required List<RangeWidth> widths,
+}) async {
+  final RangeWidth width = widths[at.clamp(0, widths.length - 1)];
+  final (double lo, double hi) = rangeAround(guess, width);
+  final bool hit = answer.value >= lo && answer.value <= hi;
+  final String response = plainResponse(guess);
+  await layBet(
+    host,
+    shelf.section,
+    Bet(
+      kind: 'range',
+      section: shelf.id,
+      pill: answer.pill.id,
+      said: response,
+      right: answer.accepts(response),
+      points: hit ? width.pays : 0,
+      facts: {
+        'w': at,
+        'half': width.half,
+        'pays': width.pays,
+        'lo': lo,
+        'hi': hi,
+        'hit': hit,
+      },
+      at: DateTime.now().millisecondsSinceEpoch,
+    ),
+    pill: answer.pill,
+    response: response,
+  );
+}
+
 /// One share to bet a range on.
 class RangeTile extends StatelessWidget {
   const RangeTile({
@@ -134,8 +182,7 @@ class RangeTile extends StatelessWidget {
       widthLabels,
       (inner - 6 * (widths.length - 1)) / widths.length - 16,
     );
-    final double lo = math.max(0, guess - width.half).toDouble();
-    final double hi = math.min(100, guess + width.half).toDouble();
+    final (double lo, double hi) = rangeAround(guess, width);
     final bool laid = bet != null;
     final bool open = !laid && !elsewhere;
     final String said = n.percent(answer.value);
@@ -145,31 +192,7 @@ class RangeTile extends StatelessWidget {
 
     Future<void> lay() async {
       BetFeel.lay();
-      final bool hit = answer.value >= lo && answer.value <= hi;
-      final String response = plainResponse(guess);
-      await layBet(
-        host,
-        shelf.section,
-        Bet(
-          kind: 'range',
-          section: shelf.id,
-          pill: pill.id,
-          said: response,
-          right: answer.accepts(response),
-          points: hit ? width.pays : 0,
-          facts: {
-            'w': wi,
-            'half': width.half,
-            'pays': width.pays,
-            'lo': lo,
-            'hi': hi,
-            'hit': hit,
-          },
-          at: DateTime.now().millisecondsSinceEpoch,
-        ),
-        pill: pill,
-        response: response,
-      );
+      await layRange(host, shelf, answer, guess: guess, at: wi, widths: widths);
     }
 
     final bool hit = laid && bet.facts['hit'] == true;

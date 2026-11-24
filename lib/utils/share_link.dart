@@ -37,6 +37,10 @@ enum ShareRef {
   /// Sixty seconds: the round's score, a square a claim, never the answers.
   sixty('share_sixty'),
 
+  /// Any other of Explore's challenges: the game's score, a square a card,
+  /// never the answers.
+  challenges('share_challenges'),
+
   /// The line of the day (lib/data/day_lines.dart), with where it was
   /// written.
   line('share_line');

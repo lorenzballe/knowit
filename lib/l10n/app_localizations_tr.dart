@@ -5230,6 +5230,214 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get gameReview => 'Kartlar';
+
+  @override
+  String get gameTomorrow => 'Yeni tur yarın';
+
+  @override
+  String get gameContinue => 'Devam et';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$of içinden $n doğru';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugün $n kart',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => 'Hepsi doğru.';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n puan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => 'Sonucu gör';
+
+  @override
+  String get gameNextCard => 'Sonraki';
+
+  @override
+  String get spotOnce => 'Günde bir seçim';
+
+  @override
+  String get spotGotIt => 'Yanlış olanı buldun.';
+
+  @override
+  String get spotMissedIt => 'O değil: o doğru.';
+
+  @override
+  String get tfRules =>
+      'Doğru mu yanlış mı söyle, sonra nedenini gör. Çoğu kişi yanılıyor.';
+
+  @override
+  String get inOrderTitle => 'Sırayla';
+
+  @override
+  String get inOrderRules =>
+      'Kartlardan dört an, her birinin yılı gizli. Onlara oluş sırasına göre, en eskisinden başlayarak dokun.';
+
+  @override
+  String get inOrderFirst => 'En eskisine dokun';
+
+  @override
+  String get inOrderNext => 'Şimdi sıradaki';
+
+  @override
+  String get inOrderReady => 'Hepsi yerleşti. Kontrol edelim mi?';
+
+  @override
+  String get inOrderCheck => 'Sırayı kontrol et';
+
+  @override
+  String inOrderPlaced(int n) {
+    return '$n. sırada';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return 'Senin sıran: $n';
+  }
+
+  @override
+  String get inOrderPerfect => 'Hepsi yerli yerinde.';
+
+  @override
+  String get timeGap => 'eksik bir yıl';
+
+  @override
+  String get whatYearTitle => 'Hangi yıl?';
+
+  @override
+  String get whatYearRules =>
+      'Üç an, her birinin yılı gizli. Yılı kadranla bul: ne kadar yakınsan o kadar puan.';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$of puandan $n puan';
+  }
+
+  @override
+  String get whatYearPerfect => 'Her yıl tam isabet.';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Toplamda $n yıl saptın',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return 'Senin cevabın: $guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return 'Tam isabet! +$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n yıl saptın',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n yıl önce',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n yıl sonra',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => 'Yıl';
+
+  @override
+  String get beforeAfterTitle => 'Önce mi sonra mı?';
+
+  @override
+  String get beforeAfterRules =>
+      'Altı an, art arda. Her biri üstündekinden önce mi oldu, sonra mı?';
+
+  @override
+  String get beforeAfterBefore => 'Önce';
+
+  @override
+  String get beforeAfterAfter => 'Sonra';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return '$year öncesi mi sonrası mı?';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return 'Senin cevabın: $year öncesi';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return 'Senin cevabın: $year sonrası';
+  }
+
+  @override
+  String get beforeAfterStart => 'Zincir burada başladı';
+
+  @override
+  String get beforeAfterPerfect => 'Bir tane bile şaşmadı.';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugün $n çift',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject, seviye $n';
   }

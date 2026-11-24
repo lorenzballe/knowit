@@ -5088,6 +5088,206 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get gameReview => '卡片';
+
+  @override
+  String get gameTomorrow => '明天有新一轮';
+
+  @override
+  String get gameContinue => '继续';
+
+  @override
+  String gameShareHead(String game, String date) {
+    return 'Astute · $game · $date';
+  }
+
+  @override
+  String gameShareScore(int n, int of) {
+    return '$of 个中答对 $n 个';
+  }
+
+  @override
+  String gameCardsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gameAllRight => '全部答对。';
+
+  @override
+  String gamePoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 分');
+    return '$_temp0';
+  }
+
+  @override
+  String get gameSeeResult => '查看结果';
+
+  @override
+  String get gameNextCard => '下一张';
+
+  @override
+  String get spotOnce => '每天只能选一次';
+
+  @override
+  String get spotGotIt => '你找出了假的那条。';
+
+  @override
+  String get spotMissedIt => '不是那条：它是真的。';
+
+  @override
+  String get tfRules => '判断真假，再看原因。大多数人都会答错。';
+
+  @override
+  String get inOrderTitle => '时间排序';
+
+  @override
+  String get inOrderRules => '卡片里的四个时刻，年份都被隐去。按发生的先后点选，从最早的开始。';
+
+  @override
+  String get inOrderFirst => '点选最早的';
+
+  @override
+  String get inOrderNext => '接着点下一个';
+
+  @override
+  String get inOrderReady => '都排好了，检查一下？';
+
+  @override
+  String get inOrderCheck => '检查顺序';
+
+  @override
+  String inOrderPlaced(int n) {
+    return '第 $n 个';
+  }
+
+  @override
+  String inOrderYours(int n) {
+    return '你排在：第 $n';
+  }
+
+  @override
+  String get inOrderPerfect => '全部排对了。';
+
+  @override
+  String get timeGap => '缺失的年份';
+
+  @override
+  String get whatYearTitle => '哪一年？';
+
+  @override
+  String get whatYearRules => '三个时刻，年份都被隐去。转动刻度猜年份：越接近，得分越高。';
+
+  @override
+  String whatYearPoints(int n, int of) {
+    return '$of 分中得 $n 分';
+  }
+
+  @override
+  String get whatYearPerfect => '每个年份都完全正确。';
+
+  @override
+  String whatYearOffInAll(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '总共差了 $n 年',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearSaid(String guess, int points) {
+    return '你的答案：$guess · +$points';
+  }
+
+  @override
+  String whatYearExact(int points) {
+    return '完全正确！+$points';
+  }
+
+  @override
+  String whatYearOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '差了 $n 年',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearEarlier(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '往前 $n 年',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String whatYearLater(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '往后 $n 年',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get whatYearDial => '年份';
+
+  @override
+  String get beforeAfterTitle => '之前还是之后？';
+
+  @override
+  String get beforeAfterRules => '六个时刻依次出现。每一个发生在上面那个之前还是之后？';
+
+  @override
+  String get beforeAfterBefore => '之前';
+
+  @override
+  String get beforeAfterAfter => '之后';
+
+  @override
+  String beforeAfterAsk(String year) {
+    return '在 $year 年之前还是之后？';
+  }
+
+  @override
+  String beforeAfterSaidBefore(String year) {
+    return '你的答案：$year 年之前';
+  }
+
+  @override
+  String beforeAfterSaidAfter(String year) {
+    return '你的答案：$year 年之后';
+  }
+
+  @override
+  String get beforeAfterStart => '从这里开始';
+
+  @override
+  String get beforeAfterPerfect => '一个都没错。';
+
+  @override
+  String biggerPairsToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天 $n 组',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String exploreSubjectLevel(String subject, int n) {
     return '$subject，等级 $n';
   }
