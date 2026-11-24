@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did Fermat’s Last Theorem lead to inventing p‑adic numbers?",
-  "answer": "Fermat's \"marvelous proof\" of his theorem never turned up, and the old tools couldn't do it. The proof took 358 years. New numbers had to be invented, the p-adics, which also gave a systematic way to solve other problems in Diophantus' Arithmetica.",
+  "question": "How long did Fermat’s Last Theorem wait for its proof?",
+  "answer": "Fermat's \"marvelous proof\" of his theorem never turned up, and the old tools couldn't do it. The proof took 358 years. It needed numbers invented long after Fermat: the p-adics, first described by Kurt Hensel in 1897, which also give a systematic way to solve other problems in Diophantus' Arithmetica.",
   "move": "Some problems only fall when we invent new numbers.",
   "keywords": [
     "fermat",
@@ -28,7 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A card asks how Fermat's Last Theorem led to p-adic numbers, with a flag to drag to your guess of how many years the proof took."
+    "label": "A card asks how Fermat's Last Theorem led to p-adic numbers. Diophantus' Arithmetica lies open with Fermat's note in its margin, xⁿ + yⁿ = zⁿ, and the margin hangs below the book as a long strip of paper marked in years; the reader drags Fermat's quill down it to guess how many years the proof took."
   },
   "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=tRaq4aYPzCc&t=748s",

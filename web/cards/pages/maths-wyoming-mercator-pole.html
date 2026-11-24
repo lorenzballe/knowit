@@ -2,6 +2,12 @@
 <!-- slug: maths-wyoming-mercator-pole -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
+<!-- The picture: a Mercator map of the north, from Florida to the Arctic: North America cream on a blue sea, Hudson
+     Bay, the islands of the Arctic, Greenland as big as it always looks there, the parallels spreading apart as they
+     climb. Wyoming is an orange rectangle in its place, 41° to 45° N. Beside it a small globe, the same Wyoming on it.
+     The reader drags Wyoming up the map toward the pole: the same land, so the same kilometres, swells on the map,
+     ×51 at 84° N, while on the globe it only moves, never growing. Its real home stays dashed where it was.
+     Flat colours, thick ink outlines; drawn again at its real size whenever its room changes. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
@@ -9,11 +15,15 @@
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
 #read{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;font:700 max(1.9cqh,13px)/1.2 var(--body);color:var(--k)}
 #read .n{font:800 max(3.4cqh,20px)/1 var(--display)}
-#read .m{color:var(--muted);font-weight:600}
+#read .m{color:var(--k);opacity:.85;font-weight:600}
 #mapbox{flex:1;min-height:0;position:relative;overflow:hidden;background:none;touch-action:none;cursor:ns-resize}
 #map{position:absolute;inset:0;width:100%;height:100%;display:block}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+/* Once the story is told, the question steps back a size; on a short card the readout goes too, Wyoming's own label
+   carrying how much bigger it is drawn. */
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:540px){.answered #read{display:none}}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Drag · see why">
   <div class="in">
@@ -21,7 +31,7 @@
     <h2 class="q">What happens to Wyoming’s size when you slide it toward the North Pole?</h2>
     <div class="stagebox" id="stage">
       <div id="read"><span><span class="m">Latitude </span><span class="n" id="lat">43°N</span></span><span><span class="m">Drawn </span><span class="n" id="mul">×1.0</span><span class="m"> bigger</span></span></div>
-      <div id="mapbox"><svg id="map"></svg></div>
+      <div id="mapbox"><svg id="map" role="img" aria-label="A Mercator map of North America and the Arctic, Greenland huge at the top, with Wyoming in orange in its place, and beside it a small globe with the same Wyoming on it. You drag Wyoming up the map toward the North Pole."></svg></div>
     </div>
     <p class="say" id="say">Drag Wyoming up the Mercator map, toward the pole.</p>
     <div id="why" class="gone"><p class="body">Same land, same square kilometres. But Mercator stretches every length at latitude φ by 1/cos φ, both ways, so area grows by that squared. Near the pole cos φ shrinks to zero: the stretch has no limit, and 90° N never fits on the map.</p></div>
@@ -31,80 +41,241 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const HOME = 43, DLAT = 4, DLON0 = 7, TOP = 87, BOT = 32, MAX = 84;
+// Wyoming: 41° to 45° N, 104.05° to 111.05° W. The map runs from 24° N to 87° N; it is dragged from home up to 84° N.
+const HOME = 43, DLAT = 4, DLON0 = 7, WLON = -107.55, TOP = 87, BOT = 24, MAX = 84;
 const R = Math.PI / 180;
 const merc = d => Math.log(Math.tan(Math.PI / 4 + d * R / 2));
-let cur = HOME, done = false, G = null, touched = false, bobbing = false;
+const MSP = merc(TOP) - merc(BOT);
+// One ink for every outline; the sea, the land, Wyoming orange.
+const INK = '#10100c', SEA = '#2f7fe0', LANDC = '#fff3d6', WYO = '#ff7a3c', WHITE = '#ffffff';
+const FONT = 'Figtree, system-ui, sans-serif';
+// Coastlines, simplified, [longitude, latitude], west negative.
+const LAND = [
+  // North America, from San Diego up the Pacific coast, round Alaska, along the Arctic coast, round Hudson Bay,
+  // down Labrador and the Atlantic coast, round Florida and the Gulf, then Mexico and Baja back to San Diego.
+  [[-117.1,32.5],[-118.4,33.9],[-120.6,34.6],[-121.9,36.6],[-122.5,37.8],[-123.8,39.5],[-124.4,40.4],[-124.2,42],[-124.1,44],[-123.9,46.2],[-124.7,48.4],
+   [-123.1,48.9],[-125,50.2],[-127.4,51.2],[-127.9,52.3],[-130.4,54.3],[-131.6,55.4],[-133.6,56.6],[-136.5,58.2],[-139.7,59.5],[-143.9,60],[-146.4,60.6],
+   [-149.6,59.9],[-151.8,59.2],[-150.9,60.9],[-152.5,60],[-154.5,58.1],[-156.6,57],[-158.6,56],[-161.8,55.1],[-164.5,54.6],[-162.5,55.9],[-160.5,56.8],
+   [-157.6,58.6],[-158.9,58.9],[-161.8,58.6],[-162.4,60],[-164.3,60.5],[-166.1,61.8],[-164.9,62.7],[-162,63.5],[-161,64.5],[-163,64.5],[-165.4,64.5],
+   [-168.1,65.6],[-166,66.2],[-163.7,66.6],[-162.6,66.9],[-164.4,67.7],[-166.8,68.35],[-166.2,68.9],[-161.9,70.3],[-156.5,71.39],[-154,70.9],[-148.5,70.3],
+   [-143.5,70.1],[-141,69.6],[-139,69.6],[-135,69.4],[-133,69.4],[-128,70.6],[-124,69.4],[-120,69.2],[-115.1,67.8],[-110,68],[-105,68.3],[-101,67.8],
+   [-98,68.2],[-96.5,67.7],[-95.5,69.5],[-94.3,71.9],[-92,70.5],[-89.8,68.5],[-87,67.5],[-84.8,69.2],[-83,69.9],[-81.8,69.4],[-82.5,67],[-86.2,66.5],
+   [-87.5,65],[-90.7,63.3],[-92.1,62.8],[-94,61.1],[-94.2,58.8],[-92.3,57],[-88,56.2],[-82.3,55.1],[-82.2,53],[-80.6,51.3],[-79.5,51.2],[-78.7,52.2],
+   [-79.2,54],[-77.8,55.3],[-76.5,56.5],[-78.1,58.5],[-77.5,60],[-77.9,62.4],[-75.6,62.2],[-71.9,61.6],[-69.9,61],[-69.6,59.3],[-68.4,58.1],[-65.9,58.7],
+   [-64.4,60.4],[-63,58.6],[-61.7,56.5],[-59.8,55.3],[-57,53.7],[-55.6,52.3],[-56.5,51.6],[-61,50.2],[-66.4,50.2],[-68,49.3],[-69.7,48.1],[-66.5,49.1],
+   [-64.2,48.8],[-65,47.8],[-64.8,47],[-64,46.2],[-61.4,45.7],[-61,45.3],[-63.6,44.6],[-66.1,43.8],[-66.1,45.2],[-68.2,44.4],[-70.2,43.6],[-70.6,42.6],
+   [-70,41.7],[-71.3,41.5],[-74,40.5],[-74.4,39.4],[-74.9,38.9],[-75.2,38],[-76,37],[-75.5,35.2],[-76.5,34.6],[-77.9,34],[-79.9,32.8],[-80.9,32],
+   [-81.4,30.3],[-81.3,29.9],[-81,29.2],[-80.6,28.4],[-80,26.7],[-80.2,25.8],[-80.5,25.1],[-81.1,25.15],[-81.8,26.1],[-82.1,26.6],[-82.6,27.3],[-82.7,27.8],
+   [-83,29.1],[-84.2,30],[-85,29.7],[-85.7,30.1],[-87.2,30.4],[-88,30.3],[-89.1,30.4],[-89.3,29.1],[-90,29.3],[-91.4,29.5],[-92.2,29.7],[-93.8,29.7],
+   [-94.8,29.3],[-95.4,28.9],[-96,28.6],[-97.2,27.8],[-97.3,26.6],[-97.15,25.95],[-97.7,24],[-97.8,22.3],[-97,20],[-105.5,20],[-105.7,22.5],[-106.4,23.2],
+   [-108.2,25],[-109,25.6],[-109.9,27],[-110.9,27.9],[-112.2,29],[-113.1,30.5],[-113.6,31.3],[-114.8,31.8],[-114.8,31],[-113.55,28.95],[-112.3,27.3],
+   [-111.3,26],[-110.3,24.2],[-109.9,22.9],[-111.6,24],[-112,24.6],[-113.6,26.7],[-115.1,27.85],[-115.8,29.5],[-116,30.5],[-116.6,31.85]],
+  // Vancouver Island, Kodiak, Newfoundland.
+  [[-123.5,48.3],[-123.9,49.3],[-125.2,50.1],[-127.9,50.8],[-126.5,49.5],[-124.7,48.6]],
+  [[-154,57],[-152.6,57.4],[-152.2,58.1],[-153,58.5],[-154.7,57.8]],
+  [[-53.1,46.65],[-52.7,47.6],[-53.5,48.5],[-54,49.5],[-55.7,49.6],[-55.4,51.6],[-57.3,50],[-59.3,48.6],[-59.3,47.6],[-57,47],[-55.5,46.9],[-54,47.2]],
+  // The Arctic islands of Canada: Baffin, Ellesmere, Axel Heiberg, Devon, Somerset, Prince of Wales, Melville, King
+  // William, Southampton, Victoria, Banks.
+  [[-71.5,62.9],[-69.8,62.4],[-66,62],[-64.5,63.6],[-63,64.5],[-62,65.5],[-61.6,66.6],[-63.5,66.9],[-64.5,68],[-67,69.5],[-68.6,70.5],[-72,71.5],
+   [-77.9,72.7],[-78,73.5],[-81,73.8],[-85,73.5],[-89.5,73.8],[-89,72.5],[-86.8,71],[-85.5,70],[-83.5,69.9],[-80,68.7],[-76,67.5],[-74,66],[-77,65.3],
+   [-78,65],[-76.5,64.3],[-73.5,64.2],[-72.5,63.3]],
+  [[-79,76.3],[-83,76.5],[-89.5,76.6],[-89.8,77.5],[-87.5,78.5],[-87,79.5],[-85,80.5],[-80,82.5],[-70.5,83.1],[-64,82.8],[-61.5,82],[-64.5,81],[-69,80],
+   [-74,79],[-75.5,78.3],[-77,77.5],[-78.5,76.5]],
+  [[-88,78.2],[-87,79.5],[-89,80.6],[-91,81.3],[-95,80.8],[-95.5,79.5],[-93,78.5]],
+  [[-80.5,74.7],[-79.5,75.6],[-82,76.4],[-89,76.5],[-93,75.8],[-96,75.3],[-92.5,74.6],[-86,74.5]],
+  [[-93.8,72],[-90.5,72.9],[-91,74],[-95,74],[-95.5,72.8]],
+  [[-97.5,71.6],[-96,72.5],[-97,73.9],[-101.5,73.5],[-102,72]],
+  [[-105.5,74.8],[-104.5,75.7],[-108,76.3],[-112,76.7],[-117.5,76.2],[-117,75],[-112,74.6]],
+  [[-97.8,68.6],[-95,69.2],[-96.5,69.8],[-99.3,69.5],[-99,68.9]],
+  [[-83.5,62],[-80.5,63],[-81,64],[-84,65.3],[-85.5,66],[-87,64.8],[-86,63.5]],
+  [[-118.9,71.5],[-117.5,72.9],[-114,73.3],[-110,72.9],[-106,73.1],[-102,72],[-101,70.3],[-104.5,68.9],[-108,68.9],[-113,68.5],[-117.5,69],[-119,70.5]],
+  [[-125.5,71.8],[-124,74.2],[-120,74.4],[-116.5,73.8],[-117.6,72.4],[-120.5,71.5],[-123.5,71.1]],
+  // Greenland, Iceland, Ireland, Britain.
+  [[-44,59.8],[-48,61],[-50.5,64],[-53,66.5],[-54,69],[-51,70.5],[-55,72],[-58,75.5],[-66,76.5],[-73,78],[-67,80],[-60,81.8],[-45,82.5],[-32,83.6],
+   [-20,82],[-12,81.5],[-18,78],[-19,75],[-22,72],[-22,70],[-26,68.5],[-33,68],[-38,65.5],[-41,63],[-43,60.5]],
+  [[-24.5,65.5],[-22,66.4],[-18,66.2],[-15,66.4],[-13.5,65.3],[-14.5,64.4],[-18,63.4],[-22.5,63.8],[-24,64.8]],
+  [[-9.8,51.5],[-10.4,52.2],[-10.1,53.5],[-8.6,54.3],[-7.4,55.3],[-5.6,54.6],[-6,53.3],[-6.4,52.2],[-8.2,51.6]],
+  [[-5.7,50.1],[-1.5,50.8],[1.4,51.1],[1.7,52.9],[0.1,53.6],[-1.4,55],[-2.6,56],[-1.8,57.7],[-3,58.6],[-5,58.6],[-5.8,57.5],[-6,56.5],[-5.6,55.3],
+   [-4.8,54.7],[-3,53.4],[-4.6,52.7],[-5.1,51.6],[-3.4,51.2],[-5,50.2]],
+  // Chukotka and Kamchatka, written west of 180° so they lie beside Alaska.
+  [[-200,70.5],[-189.7,69.7],[-179.4,68.9],[-174,67.5],[-171.6,66.9],[-169.7,66.1],[-171,65.4],[-173.2,64.4],[-176.5,65],[-182.5,64.7],[-180.9,62.3],
+   [-186,61],[-190,60],[-196.7,59.9],[-197.5,56],[-201.4,53],[-203.3,51],[-204.4,55],[-203,57.5],[-205,59],[-215,59],[-215,70.5]],
+  // Northern Eurasia, coarse, for the globe: Scandinavia round the Arctic coast to Chukotka, closed along 40° N; Svalbard;
+  // Novaya Zemlya.
+  [[5,58],[5,62.5],[12,65],[15.5,68.5],[23,70.5],[28,71],[33,69.8],[40,68.5],[44,67.7],[53,68.5],[59,69.5],[66,68.5],[70,73],[73.5,70],[80,72.5],
+   [80.5,73.5],[96,76],[104,77.7],[113,75.5],[117,73.5],[127,73.5],[129,72],[139,71.5],[152,71],[160,69.6],[160,70.5],[145,70.5],[145,59],[143,50],
+   [135,43],[130,40],[60,40],[30,40],[25,40],[20,45],[10,45],[0,45],[-2,48],[5,53],[8,55],[5,58]],
+  [[11,78],[15,77],[21,77.5],[27,78.5],[22,80.3],[11,79.8]],
+  [[52,70.8],[57,70.6],[60,72.5],[66,75],[69,76.8],[60,76.5],[55,74.5]]
+];
+// The Great Lakes, water over the land: Superior, Michigan, Huron, Erie, Ontario.
+const LAKES = [
+  [[-92.1,46.8],[-90,47.8],[-89,48.4],[-87.5,48.8],[-85,48],[-84.6,46.5],[-85.5,46.7],[-86.6,46.4],[-87.9,47.4],[-88.5,46.9],[-90,46.6],[-91.5,46.7]],
+  [[-87.5,41.6],[-87.8,42.4],[-87.9,43],[-87.5,44.5],[-86.9,45.6],[-84.7,45.8],[-85.5,45],[-86.5,44],[-86.2,43],[-86.5,42.1],[-86.8,41.7]],
+  [[-84.6,45.8],[-83.5,46],[-81.5,46.2],[-80,45],[-80.3,44.5],[-81.3,44.9],[-81.7,44],[-82.4,43],[-83.5,43.6],[-83.9,43.9],[-83.3,44.7],[-83.8,45.5]],
+  [[-83.4,41.5],[-81.5,41.7],[-80.1,42.1],[-78.9,42.9],[-80.3,42.6],[-82.5,42]],
+  [[-79.8,43.2],[-79.4,43.6],[-77,44],[-76.3,44.2],[-76.2,43.5],[-78,43.3],[-79,43.2]]
+];
+let cur = HOME, done = false, G = null, touched = false, bobTw = null;
+const r1 = v => (+v).toFixed(1), cl = (v, a, b) => Math.max(a, Math.min(b, v));
+// How wide Wyoming is, in degrees of longitude, at latitude lat: the same kilometres, over meridians that close in.
+const wide = lat => DLON0 * Math.cos(HOME * R) / Math.cos(lat * R);
+
+// A label on an ink pill, its middle at (x, y), kept inside (x0, x1).
+function pill(par, text, x, y, fs, x0, x1, anchor = 'middle') {
+  const g = Kit.mk('g', {}, par), h = Math.round(fs * 1.6), pad = fs * .6;
+  const rc = Kit.mk('rect', {height: h, rx: h / 2, fill: INK}, g);
+  const t = Kit.mk('text', {'font-family': FONT, 'font-size': fs, 'font-weight': 800, fill: WHITE}, g);
+  t.textContent = text;
+  const w = t.getComputedTextLength() + 2 * pad, a = cl(anchor === 'start' ? x : anchor === 'end' ? x - w : x - w / 2, x0 + 2, x1 - 2 - w);
+  rc.setAttribute('x', r1(a)); rc.setAttribute('y', r1(y - h / 2)); rc.setAttribute('width', r1(w));
+  t.setAttribute('x', r1(a + pad)); t.setAttribute('y', r1(y + fs * .36));
+  return {g, a, w, h, t};
+}
+// A shape cut to a rectangle (Sutherland-Hodgman): the map's land ends at the map's edge.
+function clip(pts, x0, y0, x1, y1) {
+  const cut = (a, b, i, v) => { const t = (v - a[i]) / (b[i] - a[i]); return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]; };
+  let out = pts;
+  for (const [i, v, keep] of [[0, x0, q => q[0] >= x0], [0, x1, q => q[0] <= x1], [1, y0, q => q[1] >= y0], [1, y1, q => q[1] <= y1]]) {
+    const inp = out; out = [];
+    inp.forEach((a, j) => { const b = inp[(j + 1) % inp.length], ia = keep(a), ib = keep(b); if (ia) { out.push(a); if (!ib) out.push(cut(a, b, i, v)); } else if (ib) out.push(cut(a, b, i, v)); });
+    if (!out.length) break;
+  }
+  return out;
+}
+// A word in white with an ink rim, readable over sea and land alike.
+function word(par, text, x, y, fs, at = {}) {
+  const t = Kit.mk('text', Object.assign({x: r1(x), y: r1(y), 'font-family': FONT, 'font-size': r1(fs), 'font-weight': 700, fill: WHITE, stroke: INK, 'stroke-width': r1(fs * .28), 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, at), par);
+  t.textContent = text; return t;
+}
 
 function setup() {
-  if (G) gsap.killTweensOf(G.hint);
-  const svg = Kit.$('map'); svg.innerHTML = '';
-  const {W, H, f} = Kit.fitSvg(svg);
-  const s = H / (merc(TOP) - merc(BOT));
-  const Y = d => H - (merc(d) - merc(BOT)) * s;
-  const cx = W * 0.56;
-  const ink = 'var(--k)';
-  // A parallel too close to the one named below it keeps its line and loses its name.
+  if (bobTw) { bobTw.kill(); bobTw = null; }
+  const svg = Kit.$('map'); svg.replaceChildren();
+  const {W, H} = Kit.fitSvg(svg);
+  if (W < 60 || H < 50) { G = null; return; }
+  const fs = cl(Math.min(W, H) * .042, 11, 13.5), k = cl(Math.min(W, H) * .007, 1.2, 2);
+  // The map fills the drawing where it is tall enough, the globe set in its empty Arctic corner; where it is short and
+  // wide, the map keeps the width of about half the world and the globe stands beside it.
+  const full = W / H * MSP / R, inset = full <= 200;
+  const mw = inset ? W : Math.min(W - 92, H * 200 * R / MSP), mx = W - mw;
+  const s = H / MSP, span = mw / s / R, lonL = -100 - span / 2;
+  const X = lo => mx + (lo - lonL) * R * s, Y = la => H - (merc(la) - merc(BOT)) * s;
+  const defs = Kit.mk('defs', {}, svg), rr = Math.min(14, mw * .05);
+  Kit.mk('rect', {x: r1(mx + k / 2), y: r1(k / 2), width: r1(mw - k), height: r1(H - k), rx: rr}, Kit.mk('clipPath', {id: 'mapc'}, defs));
+  const map = Kit.mk('g', {'clip-path': 'url(#mapc)'}, svg);
+  Kit.mk('rect', {x: r1(mx), y: 0, width: r1(mw), height: H, fill: SEA}, map);
+  // The parallels, every ten degrees: further and further apart toward the pole.
+  for (let d = 30; d <= 80; d += 10) Kit.mk('line', {x1: r1(mx), x2: r1(mx + mw), y1: r1(Y(d)), y2: r1(Y(d)), stroke: WHITE, 'stroke-width': 1, opacity: .45}, map);
+  const shape = (p, at) => { const q = clip(p.map(([lo, la]) => [X(lo), Y(la)]), mx - 2, -2, mx + mw + 2, H + 2); if (q.length > 2) Kit.mk('path', Object.assign({d: 'M' + q.map(v => r1(v[0]) + ',' + r1(v[1])).join('L') + 'Z', stroke: INK, 'stroke-linejoin': 'round'}, at), map); };
+  LAND.forEach(p => shape(p, {fill: LANDC, 'stroke-width': r1(k)}));
+  LAKES.forEach(p => shape(p, {fill: SEA, 'stroke-width': r1(k * .7)}));
+  // The parallels' names, at the map's left edge; one too close to the one under it keeps its line and loses its name.
   let named = Infinity;
-  for (let d = 40; d <= 80; d += 10) {
-    Kit.mk('line', {x1: 0, x2: W, y1: Y(d), y2: Y(d), style: `stroke:${ink};opacity:.3`, 'stroke-width': 1}, svg);
-    if (named - Y(d) < Math.max(f * .8, 12) * 1.2) continue;
-    named = Y(d);
-    const t = Kit.mk('text', {x: 8, y: Y(d) - 4, style: `fill:${ink};opacity:.8;font:600 ${Math.max(f * .8, 12)}px var(--body)`}, svg);
-    t.textContent = d + '°N';
+  const plabs = [];
+  const pf = cl(fs * .88, 10.5, 12.5), gl = inset ? (H > 160 ? Math.min(W * .14, H * .16, 54) : 0) : 0;
+  for (let d = 30; d <= 80; d += 10) {
+    const y = Y(d);
+    if (named - y < pf * 1.5 || y < pf * 1.2 || y > H - 3) continue;
+    if (inset && gl && y < gl * 2 + 8 + pf * 3.4) continue;
+    named = y; plabs.push(word(map, d + '°N', mx + 6, y - 3, pf));
   }
-  for (let k = -6; k <= 6; k++) {
-    const x = cx + k * 20 * R * s; if (x < 50 || x > W) continue;
-    Kit.mk('line', {x1: x, x2: x, y1: 0, y2: H, style: `stroke:${ink};opacity:.16`, 'stroke-width': 1}, svg);
+  // Where 90° N would be: never on the map.
+  // On a narrow map it is left to the words under the picture.
+  const far = word(map, '↑ 90°N: infinitely far up', mx + mw - 8, pf * 1.45, pf, {'text-anchor': 'end'});
+  if (far.getComputedTextLength() > mw - 18) far.remove();
+  Kit.mk('rect', {x: r1(mx + k / 2), y: r1(k / 2), width: r1(mw - k), height: r1(H - k), rx: rr, fill: 'none', stroke: INK, 'stroke-width': r1(k * 1.6)}, svg);
+
+  // The globe: the same Wyoming, at its true size, wherever it is dragged.
+  const gr = inset ? gl : cl(Math.min((mx - 12) / 2, H * .36), 0, 64);
+  const gx = inset ? 8 + gr : mx / 2 - 2, gy = inset ? 8 + gr : Math.min(H * .44, gr + 6 + (H - 2 * gr - fs * 2.2) * .35);
+  const globe = gr >= 22 ? Kit.mk('g', {}, svg) : null;
+  G = {W, H, fs, k, X, Y, s, mx, mw, globe, gx, gy, gr, inset, plabs, wyo: Kit.mk('g', {}, svg), hint: null};
+  if (globe) {
+    Kit.mk('circle', {cx: r1(gx), cy: r1(gy), r: r1(gr), fill: SEA}, globe);
+    Kit.mk('circle', {cx: r1(gx), cy: r1(gy), r: r1(gr)}, Kit.mk('clipPath', {id: 'glc'}, defs));
+    G.gland = Kit.mk('g', {'clip-path': 'url(#glc)'}, globe);
+    const P = G.P = orth(gx, gy, gr);
+    const gpath = p => 'M' + p.map(([lo, la]) => { const q = P(lo, la, true); return r1(q[0]) + ',' + r1(q[1]); }).join('L') + 'Z';
+    // Its parallels and meridians, only where they face us: a line lifts its pen behind the horizon.
+    const line = (pts, op) => { let d = '', pen = false; for (const [lo, la] of pts) { const q = P(lo, la); if (!q) { pen = false; continue; } d += (pen ? 'L' : 'M') + r1(q[0]) + ',' + r1(q[1]); pen = true; } Kit.mk('path', {d, fill: 'none', stroke: WHITE, 'stroke-width': .8, opacity: op}, G.gland); };
+    for (const la of [30, 60]) line(Array.from({length: 61}, (_, i) => [-180 + i * 6, la]), .45);
+    for (let lo = -180; lo < 180; lo += 30) line(Array.from({length: 21}, (_, i) => [lo, -10 + i * 5]), .35);
+    LAND.forEach(p => Kit.mk('path', {d: gpath(p), fill: LANDC, stroke: INK, 'stroke-width': .8, 'stroke-linejoin': 'round'}, G.gland));
+    G.gwyo = Kit.mk('path', {fill: WYO, stroke: INK, 'stroke-width': 1, 'stroke-linejoin': 'round'}, globe);
+    const pole = P(0, 90); Kit.mk('circle', {cx: r1(pole[0]), cy: r1(pole[1]), r: 1.8, fill: INK}, globe);
+    Kit.mk('circle', {cx: r1(gx), cy: r1(gy), r: r1(gr), fill: 'none', stroke: INK, 'stroke-width': r1(k * 1.6)}, globe);
+    G.glab = word(globe, 'on a globe', gx, gy + gr + pf * 1.35, pf, {'text-anchor': 'middle'});
   }
-  const pole = Kit.mk('text', {x: W - 10, y: Math.max(f * .8, 12) * 1.3, 'text-anchor': 'end', style: `fill:${ink};opacity:.85;font:700 ${Math.max(f * .8, 12)}px var(--body)`}, svg);
-  pole.textContent = '↑ 90°N: infinitely far up';
-  const gw = DLON0 * R * s, gy1 = Y(HOME + 2), gy2 = Y(HOME - 2);
-  const ghost = Kit.mk('rect', {x: cx - gw / 2, y: gy1, width: gw, height: gy2 - gy1, rx: 2, style: `fill:none;stroke:${ink};stroke-dasharray:4 3;opacity:.8`, 'stroke-width': 1.5}, svg);
-  const gl = Kit.mk('text', {x: cx - gw / 2 - 6, y: (gy1 + gy2) / 2 + 4, 'text-anchor': 'end', style: `fill:${ink};opacity:.85;font:600 ${Math.max(f * .75, 12)}px var(--body)`}, svg);
-  gl.textContent = 'its real home';
-  const shape = Kit.mk('rect', {rx: 3, style: `fill:${ink};opacity:.88`}, svg);
-  const lab = Kit.mk('text', {style: `font:800 ${Math.max(f * .85, 12)}px var(--body)`}, svg);
-  lab.textContent = 'Wyoming';
-  const hint = Kit.mk('text', {'text-anchor': 'middle', style: `fill:${ink};font:800 ${Math.max(f * .85, 12)}px var(--body)`}, svg);
-  hint.textContent = '▲ drag';
-  // Once the reader has dragged, the hint is gone for good, whatever size the map is drawn at.
-  if (touched) hint.style.display = 'none';
-  G = {W, H, f, s, Y, cx, shape, lab, ghost, gl, hint, home: gw * (gy2 - gy1)};
   update(cur);
-  if (bobbing) bob();
+  if (!touched && !Kit.calm && Kit.ready) bob();
 }
-function bob() {
-  if (Kit.calm || !G || touched) return;
-  bobbing = true;
-  gsap.to(G.hint, {attr: {y: '-=8'}, opacity: .4, duration: .6, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+
+// The globe's view: from over 52° N, 100° W. A point behind the horizon is held on the rim when `rim` is asked.
+function orth(cx, cy, r) {
+  const p0 = 52 * R, l0 = -100 * R, sp = Math.sin(p0), cp = Math.cos(p0);
+  return (lo, la, rim) => {
+    const p = la * R, l = lo * R - l0, c = sp * Math.sin(p) + cp * Math.cos(p) * Math.cos(l);
+    let x = Math.cos(p) * Math.sin(l), y = cp * Math.sin(p) - sp * Math.cos(p) * Math.cos(l);
+    if (c < 0) { if (!rim) return null; const n = Math.hypot(x, y) || 1; x /= n; y /= n; }
+    return Object.assign([cx + r * x, cy - r * y], {vis: c >= 0});
+  };
 }
 
 function update(lat) {
   cur = lat;
-  const {Y, s, cx, shape, lab, ghost, gl, hint, f, home} = G;
-  const w = DLON0 * Math.cos(HOME * R) / Math.cos(lat * R) * R * s;
-  const y1 = Y(lat + DLAT / 2), y2 = Y(lat - DLAT / 2), h = y2 - y1;
-  shape.setAttribute('x', cx - w / 2); shape.setAttribute('y', y1);
-  shape.setAttribute('width', w); shape.setAttribute('height', h);
-  const inside = h > f * 2 && w > f * 6;
-  if (inside) {
-    lab.setAttribute('x', cx); lab.setAttribute('y', y1 + h / 2 + f * .3);
-    lab.setAttribute('text-anchor', 'middle'); lab.style.fill = 'var(--c)';
-  } else {
-    lab.setAttribute('x', cx + w / 2 + 6); lab.setAttribute('y', y1 + h / 2 + f * .3);
-    lab.setAttribute('text-anchor', 'start'); lab.style.fill = 'var(--k)';
-  }
+  if (!G) return;
+  const {X, Y, fs, k, mx, mw, H} = G, w = wide(lat);
+  G.wyo.replaceChildren();
+  const x1 = X(WLON - w / 2), x2 = X(WLON + w / 2), y1 = Y(lat + DLAT / 2), y2 = Y(lat - DLAT / 2);
+  const hx1 = X(WLON - DLON0 / 2), hx2 = X(WLON + DLON0 / 2), hy1 = Y(HOME + DLAT / 2), hy2 = Y(HOME - DLAT / 2);
+  // Its real home, dashed, once it has left it.
   const away = lat > HOME + 4.5;
-  ghost.style.display = gl.style.display = away ? '' : 'none';
-  hint.setAttribute('x', cx); hint.setAttribute('y', y1 - f * .6);
-  const ratio = w * h / home;
+  if (away) {
+    Kit.mk('rect', {x: r1(hx1), y: r1(hy1), width: r1(hx2 - hx1), height: r1(hy2 - hy1), fill: 'none', stroke: INK, 'stroke-width': r1(k * 1.2), 'stroke-dasharray': '3 2.4'}, G.wyo);
+    // Named where the map has room for it on the ghost's right; on a narrow map the dashes alone mark it.
+    const hf = cl(fs * .85, 10.5, 12), home = word(G.wyo, 'its real home', hx2 + 5, (hy1 + hy2) / 2 + hf * .36, hf);
+    if (hx2 + 5 + home.getComputedTextLength() > mx + mw - 4) home.remove();
+  }
+  Kit.mk('rect', {x: r1(x1), y: r1(y1), width: r1(x2 - x1), height: r1(y2 - y1), fill: WYO, stroke: INK, 'stroke-width': r1(k * 1.6), 'stroke-linejoin': 'round'}, G.wyo);
+  // How much bigger it is drawn: its area on the map against its area at home.
+  const ratio = (x2 - x1) * (y2 - y1) / ((hx2 - hx1) * (hy2 - hy1)), times = '×' + (ratio < 10 ? ratio.toFixed(1) : Math.round(ratio));
+  // Its name: on a pill beside it, or inside it once there is room; with how much bigger it is drawn once it has moved.
+  const name = lat > HOME + 1 ? 'Wyoming ' + times : 'Wyoming';
+  const lf = cl(fs * .92, 11, 13), ym = (y1 + y2) / 2, size = t => { const q = pill(G.wyo, t, -999, -999, lf, -1e4, 1e4), w = q.w; q.g.remove(); return w; };
+  const fits = t => { const pw = size(t); return x2 - x1 > pw + 8 && y2 - y1 > lf * 2 ? 'in' : x2 + 6 + pw < mx + mw - 2 ? 'right' : x1 - 6 - pw > mx + 2 ? 'left' : t === name && lat > 70 && pw < mw - 12 ? 'below' : null; };
+  let text = name, where = fits(name);
+  if (!where && lat > HOME + 1) { text = times; where = fits(times) || 'below'; }
+  const py = where === 'below' ? y2 + lf * 1.3 : ym;
+  const lab = where === 'below' || where === 'in' ? pill(G.wyo, text, (x1 + x2) / 2, py, lf, mx, mx + mw)
+    : where === 'right' ? pill(G.wyo, text, x2 + 6, py, lf, mx, mx + mw, 'start') : pill(G.wyo, text, x1 - 6, py, lf, mx, mx + mw, 'end');
+  // A parallel's name under the pill steps aside while it is there.
+  G.plabs.forEach(t => { t.style.display = ''; const b = t.getBBox(); t.style.display = b.x < lab.a + lab.w + 3 && b.x + b.width + 3 > lab.a && b.y < py + lab.h / 2 + 3 && b.y + b.height + 3 > py - lab.h / 2 ? 'none' : ''; });
+  // Until the reader has dragged it: a handle above it.
+  if (!touched) {
+    G.hint = Kit.mk('g', {}, G.wyo);
+    const hf = cl(fs * .9, 11, 13), p = pill(G.hint, '↑ drag', (x1 + x2) / 2, y1 - hf * 1.35, hf, mx, mx + mw);
+    p.g.querySelector('rect').setAttribute('fill', WHITE); p.t.setAttribute('fill', INK);
+    p.g.querySelector('rect').setAttribute('stroke', INK); p.g.querySelector('rect').setAttribute('stroke-width', 1.5);
+  }
+  // On the globe: the same land, the same size, only further north.
+  if (G.globe && G.P) {
+    const pts = [], n = 6, a = WLON - w / 2, b = WLON + w / 2, lo = lat - DLAT / 2, hi = lat + DLAT / 2;
+    for (let i = 0; i <= n; i++) pts.push([a + (b - a) * i / n, lo]);
+    for (let i = 0; i <= n; i++) pts.push([b - (b - a) * i / n, hi]);
+    G.gwyo.setAttribute('d', 'M' + pts.map(([x, y]) => { const q = G.P(x, y, true); return r1(q[0]) + ',' + r1(q[1]); }).join('L') + 'Z');
+  }
   Kit.$('lat').textContent = Math.round(lat) + '°N';
-  Kit.$('mul').textContent = '×' + (ratio < 10 ? ratio.toFixed(1) : Math.round(ratio));
+  Kit.$('mul').textContent = times;
   if (!done && lat >= 78) {
     done = true; Kit.haptic('success');
+    Kit.$('card').classList.add('answered');
     Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   }
+}
+function bob() {
+  if (Kit.calm || !G || !G.hint || touched) return;
+  bobTw = gsap.fromTo(G.hint, {y: 0}, {y: -5, duration: .6, yoyo: true, repeat: -1, ease: 'sine.inOut'});
 }
 
 const box = Kit.$('mapbox');
@@ -117,34 +288,32 @@ function latAt(e) {
   return Math.max(HOME, Math.min(MAX, lat));
 }
 box.addEventListener('pointerdown', e => {
-  drag = true; touched = true; try { box.setPointerCapture(e.pointerId); } catch (_) {}
-  G.hint.style.display = 'none'; gsap.killTweensOf(G.hint);
+  if (!G) return;
+  drag = true; try { box.setPointerCapture(e.pointerId); } catch (_) {}
+  if (!touched) { touched = true; if (bobTw) { bobTw.kill(); bobTw = null; } }
   update(latAt(e));
 });
 box.addEventListener('pointermove', e => {
-  if (!drag) return; update(latAt(e));
+  if (!drag || !G) return; update(latAt(e));
   const t = Math.floor(cur / 5); if (t !== lastTick) { lastTick = t; Kit.haptic('selection'); }
 });
 const end = () => { drag = false; };
 box.addEventListener('pointerup', end); box.addEventListener('pointercancel', end);
 
 Kit.onShow.card = () => { setup(); };
-Kit.onEnter.card = () => {
-  if (Kit.calm || !G || G.hint.style.display === 'none') return;
-  bob();
-};
+Kit.onEnter.card = () => { if (!Kit.calm && !touched) bob(); };
+// The finger follows the map where it is now: the answer coming in moves it, as a reader's finger would follow.
 Kit.play.card = async () => {
-  const r = Kit.$('map').getBoundingClientRect();
-  const x = r.left + r.width * .56;
-  const ev = (t, y) => box.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
-  ev('pointerdown', r.bottom - r.height * .2);
-  for (let i = 1; i <= 10; i++) { ev('pointermove', r.bottom - r.height * (.2 + .78 * i / 10)); await new Promise(res => setTimeout(res, 30)); }
-  ev('pointerup', r.top + 2);
+  const at = u => { const r = Kit.$('map').getBoundingClientRect(); return [r.left + r.width * .56, r.bottom - r.height * u]; };
+  const ev = (t, [x, y]) => box.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', at(.2));
+  for (let i = 1; i <= 10; i++) { ev('pointermove', at(.2 + .78 * i / 10)); await new Promise(res => setTimeout(res, 30)); }
+  await new Promise(res => setTimeout(res, 120));
+  ev('pointermove', at(.995)); ev('pointerup', at(.995));
   await new Promise(res => setTimeout(res, 700));
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('map'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again at the size it now has whenever its room changes: when the answer takes room from it, never shrunk whole.
+{ let seen = ''; const el = Kit.$('map'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) setup(); }).observe(el); }
 Kit.single();
 </script>
 </html>

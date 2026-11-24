@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611240933,
- "built": "2026-11-24T09:33:14Z",
+ "version": 202611241056,
+ "built": "2026-11-24T10:56:12Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -75954,12 +75954,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A blood level counter starts at 0 parts per billion beside a glass of tap water. Tapping keeps drinking water with 4 parts per trillion of PFOA, and blood rises toward 2 parts per billion. Asks how trace PFAS in tap water can lead to high blood levels.",
-    "page": "pages/human_body-pfas-builds-up.html?v=5271fa706a97",
-    "bytes": 6311,
+    "label": "A person drinking a glass of tap water, between two drops seen through a lens: the tap water's, with one speck of PFOA at 4 parts per trillion, and their blood's, still clear. Each tap is another glass: specks pile into the blood toward 500 to the water's one, 2 parts per billion. Asks how trace PFAS in tap water can lead to high blood levels.",
+    "page": "pages/human_body-pfas-builds-up.html?v=06e6cf83053a",
+    "bytes": 14961,
     "thumbs": {
-     "front": "thumbs/human_body-pfas-builds-up-front.webp?v=8e4c65af4122",
-     "back": "thumbs/human_body-pfas-builds-up-back.webp?v=8e4c65af4122"
+     "front": "thumbs/human_body-pfas-builds-up-front.webp?v=014ddfbb9a6d",
+     "back": "thumbs/human_body-pfas-builds-up-back.webp?v=014ddfbb9a6d"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -101707,12 +101707,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A card titled Guess the Peak asks how high the Collatz sequence for 27 climbs before descending. It gives the rules: odd numbers are tripled plus one, even numbers are halved. A draggable slider lets the reader guess the peak, and a Launch button reveals 9,232 m.",
-    "page": "pages/maths-collatz-peak.html?v=f1fc3fa38569",
-    "bytes": 14618,
+    "label": "It asks how high the Collatz sequence for 27 climbs: odd numbers tripled plus one, even ones halved. Everest stands at its real height beside a storm cloud, with 27 as a hailstone at its foot; the reader drags a dashed line to guess the peak in metres, and a Launch button tosses the hailstone up past Everest to 9,232 m and down to 1.",
+    "page": "pages/maths-collatz-peak.html?v=2e91feee1ac8",
+    "bytes": 19238,
     "thumbs": {
-     "front": "thumbs/maths-collatz-peak-front.webp?v=521f936d1cd6",
-     "back": "thumbs/maths-collatz-peak-back.webp?v=521f936d1cd6"
+     "front": "thumbs/maths-collatz-peak-front.webp?v=07c26b1106ec",
+     "back": "thumbs/maths-collatz-peak-back.webp?v=07c26b1106ec"
     }
    },
    "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
@@ -102334,8 +102334,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did Fermat’s Last Theorem lead to inventing p‑adic numbers?",
-   "answer": "Fermat's \"marvelous proof\" of his theorem never turned up, and the old tools couldn't do it. The proof took 358 years. New numbers had to be invented, the p-adics, which also gave a systematic way to solve other problems in Diophantus' Arithmetica.",
+   "question": "How long did Fermat’s Last Theorem wait for its proof?",
+   "answer": "Fermat's \"marvelous proof\" of his theorem never turned up, and the old tools couldn't do it. The proof took 358 years. It needed numbers invented long after Fermat: the p-adics, first described by Kurt Hensel in 1897, which also give a systematic way to solve other problems in Diophantus' Arithmetica.",
    "move": "Some problems only fall when we invent new numbers.",
    "keywords": [
     "fermat",
@@ -102356,12 +102356,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A card asks how Fermat's Last Theorem led to p-adic numbers, with a flag to drag to your guess of how many years the proof took.",
-    "page": "pages/maths-fermat-padic-numbers.html?v=766bb3cef342",
-    "bytes": 8246,
+    "label": "A card asks how Fermat's Last Theorem led to p-adic numbers. Diophantus' Arithmetica lies open with Fermat's note in its margin, xⁿ + yⁿ = zⁿ, and the margin hangs below the book as a long strip of paper marked in years; the reader drags Fermat's quill down it to guess how many years the proof took.",
+    "page": "pages/maths-fermat-padic-numbers.html?v=0732a74ed7d7",
+    "bytes": 19734,
     "thumbs": {
-     "front": "thumbs/maths-fermat-padic-numbers-front.webp?v=3ed1b2f0a546",
-     "back": "thumbs/maths-fermat-padic-numbers-back.webp?v=3ed1b2f0a546"
+     "front": "thumbs/maths-fermat-padic-numbers-front.webp?v=5875b55d0d0c",
+     "back": "thumbs/maths-fermat-padic-numbers-back.webp?v=5875b55d0d0c"
     }
    },
    "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
@@ -105232,13 +105232,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question: how does the logistic map move from regular cycles to chaos as R rises? Shows cycles doubling 1, 2, 4, 8, 16 until chaos. Tap each growth rate R to sort it into settles-into-a-cycle or never-repeats, and tap again to switch sides.",
+    "label": "Question: how does the logistic map move from regular cycles to chaos as R rises? Two meadows show a population of rabbits year by year, one settling into a repeating cycle, one never repeating. Tap each growth rate R to sort it into one of them, and tap again to switch sides; the answer maps where the population ends up for every R, cycles doubling 1, 2, 4, 8 until chaos.",
     "graded": false,
-    "page": "pages/maths-period-doubling-chaos.html?v=b72ec6d13789",
-    "bytes": 9836,
+    "page": "pages/maths-period-doubling-chaos.html?v=1cf8dd433967",
+    "bytes": 17413,
     "thumbs": {
-     "front": "thumbs/maths-period-doubling-chaos-front.webp?v=6e17f0686c96",
-     "back": "thumbs/maths-period-doubling-chaos-back.webp?v=6e17f0686c96"
+     "front": "thumbs/maths-period-doubling-chaos-front.webp?v=9d8fa293d9e3",
+     "back": "thumbs/maths-period-doubling-chaos-back.webp?v=9d8fa293d9e3"
     }
    },
    "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
@@ -107318,12 +107318,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A Mercator world map with a draggable outline of Wyoming, drawn at latitude 43°N. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow. The page asks what happens to Wyoming's size there and why.",
-    "page": "pages/maths-wyoming-mercator-pole.html?v=bc6b2e0ef749",
-    "bytes": 8622,
+    "label": "A Mercator map of North America and the Arctic with Wyoming in orange at 43°N, and a small globe beside it with the same Wyoming. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow while on the globe it stays the same size. The page asks what happens to Wyoming's size there and why.",
+    "page": "pages/maths-wyoming-mercator-pole.html?v=0a20ec402512",
+    "bytes": 25018,
     "thumbs": {
-     "front": "thumbs/maths-wyoming-mercator-pole-front.webp?v=17fd446457be",
-     "back": "thumbs/maths-wyoming-mercator-pole-back.webp?v=17fd446457be"
+     "front": "thumbs/maths-wyoming-mercator-pole-front.webp?v=f3fc93eeabbb",
+     "back": "thumbs/maths-wyoming-mercator-pole-back.webp?v=f3fc93eeabbb"
     }
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
@@ -111689,12 +111689,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Card titled Safe Dose asks how DuPont picked its safe C8 drinking-water limit. A tap-to-reveal panel shows scientists getting 0.6 ppb and rounding it up to 1 ppb, the lowest detectable level then, one drop in 50,000 litres.",
-    "page": "pages/medicine-dupont-safe-dose.html?v=d04cde91eb65",
-    "bytes": 9294,
+    "label": "A chemical plant on a river bank runs C8 into the water; on the near bank a 50,000-litre tank stands by a person for scale. A tall gauge of C8 in parts per billion marks the band from 1 ppb up as detectable then; its cursor reads the scientists' 0.6. Asks how DuPont picked its safe C8 limit: a tap rounds the cursor up to 1 ppb, a second lets one drop fall into the tank.",
+    "page": "pages/medicine-dupont-safe-dose.html?v=a63aad66762c",
+    "bytes": 22474,
     "thumbs": {
-     "front": "thumbs/medicine-dupont-safe-dose-front.webp?v=1d17dc50e659",
-     "back": "thumbs/medicine-dupont-safe-dose-back.webp?v=1d17dc50e659"
+     "front": "thumbs/medicine-dupont-safe-dose-front.webp?v=8927f2fec5fc",
+     "back": "thumbs/medicine-dupont-safe-dose-back.webp?v=8927f2fec5fc"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -112045,12 +112045,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A timeline bar from “Today” to “1 year” with a prompt to drag along it to draw a guess about how firefighters' PFAS levels change with frequent blood donation. Red drops mark donations that carry chemicals out of the body.",
-    "page": "pages/medicine-firefighters-blood-donation.html?v=c79f6e5910f0",
-    "bytes": 9321,
+    "label": "The same firefighter twice, drawn as glass in full gear: today, full of PFAS to the shoulders; a year later, empty, a question mark in the chest. Eight empty blood bags hang between their helmets. Drag from Today to 1 year to draw a guess of how their PFAS changes with frequent blood donation.",
+    "page": "pages/medicine-firefighters-blood-donation.html?v=73086fcb6059",
+    "bytes": 21359,
     "thumbs": {
-     "front": "thumbs/medicine-firefighters-blood-donation-front.webp?v=41d99aadec73",
-     "back": "thumbs/medicine-firefighters-blood-donation-back.webp?v=41d99aadec73"
+     "front": "thumbs/medicine-firefighters-blood-donation-front.webp?v=25850e577f25",
+     "back": "thumbs/medicine-firefighters-blood-donation-back.webp?v=25850e577f25"
     }
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
@@ -114577,12 +114577,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two dose sliders for cocaine and mescaline drive a chart of the brain's dopamine reward signal over time. Cocaine shows a sharp spike while mescaline stays nearly flat. The question asks why mescaline has low addiction potential.",
-    "page": "pages/medicine-mescaline-dopamine-reward.html?v=6a7065f2e493",
-    "bytes": 8210,
+    "label": "Two brains side by side over a coca plant and a peyote cactus, a dashed want-more line across both. Dose each drug and its brain's reward signal rises inside it: cocaine's spikes past the line, mescaline's barely lifts. The question asks why mescaline has low addiction potential.",
+    "page": "pages/medicine-mescaline-dopamine-reward.html?v=e75890915d2d",
+    "bytes": 19661,
     "thumbs": {
-     "front": "thumbs/medicine-mescaline-dopamine-reward-front.webp?v=cbae83cef4f7",
-     "back": "thumbs/medicine-mescaline-dopamine-reward-back.webp?v=cbae83cef4f7"
+     "front": "thumbs/medicine-mescaline-dopamine-reward-front.webp?v=08df16083b26",
+     "back": "thumbs/medicine-mescaline-dopamine-reward-back.webp?v=08df16083b26"
     }
    },
    "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",

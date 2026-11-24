@@ -1,5 +1,12 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: medicine-dupont-safe-dose -->
+<!-- The picture: a chemical plant on the far bank of a river, smoke over its stacks, its waste pipe running C8 into
+     the water, a lime streak drifting downstream. On the near bank a water tank with 50,000 L painted on its side, 4 m
+     wide and 4 m tall, a person beside it for scale. On the right, standing the whole height of the picture, a gauge of
+     C8 in the water in parts per billion: the band from 1 ppb up is what could be detected then. Its cursor reads what
+     DuPont's scientists calculated, 0.6. The first tap rounds it up, as they did: the cursor climbs to 1 ppb, onto the
+     line where detection starts. The second lets one drop fall into the tank: 1 ppb is one drop in 50,000 litres.
+     Flat colours, thick ink outlines, drawn again at its real size whenever its room changes. -->
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -7,18 +14,17 @@
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
 #pic{flex:1;min-height:0;width:100%;display:block}
-#go{align-self:flex-start;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer}
+#go{align-self:flex-start;font:800 max(2.3cqh,15px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 6cqw;cursor:pointer;min-width:40cqw;transition:transform .14s cubic-bezier(.23,1,.32,1)}
+#go:active{transform:scale(.97)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
-.lbl{font-family:var(--body);font-weight:700}
-.mono{font-family:var(--mono)}
 </style>
 <article class="card" id="card" data-topic="medicine" data-kind="Build it · a safe dose">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SAFE DOSE</span></div>
     <h2 class="q">How did DuPont pick its “safe” C8 limit for drinking water?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic"></svg>
+      <svg id="pic" role="img" aria-label="A chemical plant on a river bank, its pipe running C8 into the water; on the near bank a 50,000 litre tank with a person beside it. On the right a tall gauge of C8 in the water, in parts per billion: from 1 ppb up is what could be detected then. Its cursor reads 0.6, what DuPont's scientists calculated."></svg>
       <button id="go">Round it up</button>
       <div id="why" class="gone"><p class="body">DuPont scientists calculated about 0.6 parts per billion, then rounded it up to 1. At the time, 1 ppb was about the lowest level you could detect in water: one drop in 50,000 litres.</p></div>
     </div>
@@ -29,127 +35,260 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-let step = 0, G = {};
+// One ink for every outline. The plant cream and warm grey under slate roofs; the banks in two sands, the river blue;
+// C8 lime wherever it is; the tank steel; the gauge cream, the band it could be detected in yellow.
+const INK = '#10100c', WALL = '#FFFBF0', SIDE = '#E9E1DB', ROOF = '#3E5A78', STEEL = '#D6DCE3', RING = '#9FA9B5',
+  SMOKE = '#EFECE6', BANK = ['#F6D892', '#ECBB6A'], RIVER = '#2F7FE0', WAVE = '#A9D0FF', C8 = '#D8F23E', SKIN = '#F2C29B',
+  ZONE = '#FFE08A', GLASS = '#EAF4FF', CLOTH = '#FFC83D', SOFT = '#FFB4AD';
+const FONT = 'Figtree, system-ui, sans-serif';
+const VMAX = 1.45;
+const mk = Kit.mk, clamp = (v, a, b) => Math.max(a, Math.min(b, v)), f1 = n => (Math.round(n * 10) / 10).toString();
 const svg = Kit.$('pic');
-const S = (t, a, p) => Kit.mk(t, a, p || svg);
-const TINT = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+let step = 0, G = null, pending = null;
+const cur = {v: .6};
 
-// a water drop: round bottom centred at (cx, cy), point on top
-function dropPath(cx, cy, r) {
-  const t = cy - r * 1.9;
-  return `M${cx} ${t} C${cx + r * .55} ${cy - r * 1.15} ${cx + r} ${cy - r * .6} ${cx + r} ${cy}` +
-         ` A${r} ${r} 0 0 1 ${cx - r} ${cy}` +
-         ` C${cx - r} ${cy - r * .6} ${cx - r * .55} ${cy - r * 1.15} ${cx} ${t} Z`;
+function txt(p, x, y, s, size, a) {
+  const t = mk('text', Object.assign({x: f1(x), y: f1(y), 'font-family': FONT, 'font-size': f1(size), 'font-weight': 700, fill: INK}, a || {}), p);
+  t.textContent = s; return t;
+}
+// A drop: round bottom centred at (cx, cy), its point on top.
+const dropPath = (cx, cy, r) => { const t = cy - r * 1.9; return `M${f1(cx)},${f1(t)} C${f1(cx + r * .55)},${f1(cy - r * 1.15)} ${f1(cx + r)},${f1(cy - r * .6)} ${f1(cx + r)},${f1(cy)} A${f1(r)},${f1(r)} 0 0 1 ${f1(cx - r)},${f1(cy)} C${f1(cx - r)},${f1(cy - r * .6)} ${f1(cx - r * .55)},${f1(cy - r * 1.15)} ${f1(cx)},${f1(t)} Z`; };
+
+// A person standing, feet at (x, y), as tall as `tall`: legs, arms, tunic, head.
+function person(g, x, y, tall, cloth) {
+  const u = tall / 10, at = {stroke: INK, 'stroke-width': f1(Math.max(1.3, tall * .035)), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  mk('path', Object.assign({d: `M${f1(x - 1.2 * u)},${f1(y - 3.2 * u)} L${f1(x - 1.4 * u)},${f1(y)} M${f1(x + 1.2 * u)},${f1(y - 3.2 * u)} L${f1(x + 1.4 * u)},${f1(y)}`, fill: 'none'}, at), g);
+  mk('path', Object.assign({d: `M${f1(x - 2.3 * u)},${f1(y - 6.4 * u)} L${f1(x - 3.1 * u)},${f1(y - 3.6 * u)} M${f1(x + 2.3 * u)},${f1(y - 6.4 * u)} L${f1(x + 3.1 * u)},${f1(y - 3.6 * u)}`, fill: 'none'}, at), g);
+  mk('path', Object.assign({d: `M${f1(x - 2.6 * u)},${f1(y - 2.8 * u)} L${f1(x - 1.9 * u)},${f1(y - 7 * u)} Q${f1(x)},${f1(y - 7.8 * u)} ${f1(x + 1.9 * u)},${f1(y - 7 * u)} L${f1(x + 2.6 * u)},${f1(y - 2.8 * u)} Z`, fill: cloth}, at), g);
+  mk('circle', Object.assign({cx: f1(x), cy: f1(y - 8.6 * u), r: f1(1.45 * u), fill: SKIN}, at), g);
 }
 
-function draw() {
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
-  const {W, H, f: f0} = Kit.fitSvg(svg);
-  const f = Math.max(f0, 13);
-  const L = Math.max(f * 1.2, W * .07), R = W - Math.max(f * 2.4, W * .1);
-  const X = v => L + (v / 1.2) * (R - L);
-  const topH = Math.min(H * .44, f * 9);
-  const ay = topH - f * 2.2;
-  const sw = Math.max(2, f * .16);
-  const fs = f * .95;
-  G = {X, f, ay};
-
-  // detectable zone (>= 1 ppb): a flat tinted field
-  S('rect', {x: X(1), y: ay - f * 4.6, width: R - X(1) + f, height: f * 4.6, style: `fill:${TINT(22)}`});
-  S('line', {x1: X(1), y1: ay - f * 4.6, x2: X(1), y2: ay, style: `stroke:var(--k);stroke-width:${sw * .7}`});
-  const dt = S('text', {x: X(1) - f * .4, y: ay - f * 3.9, 'text-anchor': 'end', class: 'lbl', style: `fill:var(--k);font-size:${fs}px;font-weight:600`});
-  dt.textContent = 'lowest level detectable →';
-  // the line
-  S('line', {x1: L, y1: ay, x2: R + f, y2: ay, style: `stroke:var(--k);stroke-width:${sw * 1.3};stroke-linecap:round`});
-  [[0, '0'], [1, '1']].forEach(([v, t]) => {
-    S('line', {x1: X(v), y1: ay - f * .35, x2: X(v), y2: ay + f * .35, style: `stroke:var(--k);stroke-width:${sw};stroke-linecap:round`});
-    const tx = S('text', {x: X(v), y: ay + f * 1.6, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${fs}px`}); tx.textContent = t;
-  });
-  const u = S('text', {x: R + f, y: ay + f * 1.6, 'text-anchor': 'end', class: 'lbl', style: `fill:var(--k);font-size:${fs}px;font-weight:600`}); u.textContent = 'ppb';
-
-  // where the calculation landed: an empty drop left behind
-  const r = f * .55;
-  G.ghost = S('g', {style: `opacity:${step ? 1 : 0}`});
-  S('path', {d: dropPath(X(.6), ay - r, r), style: `fill:var(--c);stroke:var(--k);stroke-width:${sw * .8};stroke-dasharray:${sw * 1.6} ${sw * 1.4};stroke-linejoin:round`}, G.ghost);
-  const gt = S('text', {x: X(.6), y: ay + f * 1.6, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${fs}px;font-weight:600`}, G.ghost); gt.textContent = '0.6';
-
-  // the marker: a solid drop sitting on the line
-  G.mk = S('g', {transform: `translate(${X(step ? 1 : .6)},0)`});
-  S('path', {d: dropPath(0, ay - r, r), style: 'fill:var(--k)'}, G.mk);
-  G.mt = S('text', {x: 0, y: ay - f * 2.3, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${fs}px`}, G.mk);
-  G.mt.textContent = step ? 'limit: 1 ppb' : 'calculated: 0.6';
-
-  // twenty water tanks
-  const by = topH + f * .6, bh = H - by;
-  G.tanksG = S('g', {style: `opacity:${step >= 2 ? 1 : 0}`});
-  const tt = S('text', {x: W / 2, y: by + f, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${fs}px`}, G.tanksG);
-  tt.textContent = '1 ppb = 1 drop in 20 tanks of 2,500 L';
-  const gy = by + f * 2, gh = bh - f * 2 - f * 1.8;
-  const cols = 5, rows = 4, gap = Math.min(W, gh) * .03;
-  const tw = Math.min((W - gap * (cols - 1)) / cols, (gh - gap * (rows - 1)) / rows * 1.15);
-  const th = Math.min(tw / 1.15, (gh - gap * (rows - 1)) / rows);
-  const gx = (W - (tw * cols + gap * (cols - 1))) / 2;
-  const tsw = Math.max(1.5, f * .12);
-  G.tanks = []; G.t0 = null;
-  for (let i = 0; i < 20; i++) {
-    const c = i % cols, rr = Math.floor(i / cols), x = gx + c * (tw + gap), y = gy + rr * (th + gap);
-    const g = S('g', {}, G.tanksG);
-    const lid = th * .1, wy = y + th * .26;
-    // water, flat
-    S('rect', {x: x + tw * .04, y: wy, width: tw * .92, height: y + th - wy - tw * .02, rx: tw * .08, style: `fill:${TINT(30)}`}, g);
-    // tank body
-    S('rect', {x: x + tw * .04, y: y + lid, width: tw * .92, height: th - lid, rx: tw * .1, style: `fill:none;stroke:var(--k);stroke-width:${tsw}`}, g);
-    // lid
-    S('line', {x1: x + tw * .3, y1: y + lid * .35, x2: x + tw * .7, y2: y + lid * .35, style: `stroke:var(--k);stroke-width:${tsw * 1.6};stroke-linecap:round`}, g);
-    G.tanks.push(g);
-    if (!i) G.t0 = {x: x + tw / 2, y: y + th * .6};
+// The plant on its bank, base at y: two stacks behind a hall with a saw-tooth roof, an office block beside it.
+// Says where its stacks end and where its waste pipe leaves it.
+function plant(g, x0, base, w, h, k) {
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  const hallW = w * .64, hallH = h * .38, teeth = 3, tooth = h * .15, bW = w * .3, bH = h * .56, bX = x0 + hallW - 1;
+  const sw = Math.max(5, w * .075), tops = [];
+  for (const f of [.24, .54]) {
+    const sx = x0 + hallW * f, top = base - h;
+    mk('rect', Object.assign({x: f1(sx - sw / 2), y: f1(top), width: f1(sw), height: f1(h - hallH * .5), fill: STEEL}, at), g);
+    mk('rect', Object.assign({x: f1(sx - sw / 2), y: f1(top), width: f1(sw), height: f1(Math.max(3, h * .09)), fill: ROOF}, at), g);
+    tops.push([sx, top]);
   }
-  const dr = Math.max(3, f * .32);
-  G.drop = S('g', {transform: `translate(${G.t0.x},${G.t0.y})`, style: `opacity:${step >= 2 ? 1 : 0}`}, G.tanksG);
-  S('path', {d: dropPath(0, 0, dr), style: 'fill:var(--k)'}, G.drop);
+  // the office block, windows in two columns
+  mk('rect', Object.assign({x: f1(bX), y: f1(base - bH), width: f1(bW), height: f1(bH + 1), fill: SIDE}, at), g);
+  const ww = bW * .2, wh = bH * .13;
+  for (const r of [.16, .42, .68]) for (const c of [.2, .58]) mk('rect', {x: f1(bX + bW * c), y: f1(base - bH + bH * r), width: f1(ww), height: f1(wh), rx: f1(ww * .2), fill: ROOF}, g);
+  // the hall and its saw-tooth roof
+  mk('rect', Object.assign({x: f1(x0), y: f1(base - hallH), width: f1(hallW), height: f1(hallH + 1), fill: WALL}, at), g);
+  let d = `M${f1(x0)},${f1(base - hallH)}`;
+  for (let i = 0; i < teeth; i++) { const xr = x0 + hallW * (i + 1) / teeth; d += ` L${f1(xr)},${f1(base - hallH - tooth)} L${f1(xr)},${f1(base - hallH)}`; }
+  mk('path', Object.assign({d: d + ' Z', fill: ROOF}, at), g);
+  const dw = hallW * .1, dh = hallH * .46;
+  for (const c of [.12, .34, .56]) mk('rect', {x: f1(x0 + hallW * c), y: f1(base - hallH * .72), width: f1(dw), height: f1(dh), rx: f1(dw * .2), fill: ROOF}, g);
+  return {tops, sw, pipeX: x0 + hallW * .86};
+}
 
-  // key: one drop
-  const dl = S('text', {x: W / 2, y: H - f * .4, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${fs}px;font-weight:600`}, G.tanksG);
-  dl.textContent = 'one drop = 0.05 mL · 50,000 L of water';
-  let tl = 0; try { tl = dl.getComputedTextLength(); } catch (e) {}
-  const kr = fs * .28;
-  S('path', {d: dropPath(W / 2 - tl / 2 - kr * 2.2, H - f * .4 - kr * .3, kr), style: 'fill:var(--k)'}, G.tanksG);
+// The tank: a steel cylinder seen a little from above, open on its water, rings, a ladder, its size on its side.
+function tank(g, x, base, w, h, k, fs) {
+  const rx = w / 2, ry = w * .12, cx = x + rx, top = base - h, at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  mk('path', Object.assign({d: `M${f1(x)},${f1(top)} V${f1(base)} A${f1(rx)},${f1(ry)} 0 0 0 ${f1(x + w)},${f1(base)} V${f1(top)} A${f1(rx)},${f1(ry)} 0 0 1 ${f1(x)},${f1(top)} Z`, fill: STEEL}, at), g);
+  for (const f of [.36, .7]) mk('path', {d: `M${f1(x)},${f1(top + h * f)} A${f1(rx)},${f1(ry)} 0 0 0 ${f1(x + w)},${f1(top + h * f)}`, fill: 'none', stroke: RING, 'stroke-width': f1(k * .8)}, g);
+  // a ladder up its right side, where the tank is wide enough to keep it clear of its label
+  const ladder = w >= 76;
+  if (ladder) {
+    const l0 = x + w * .82, l1 = x + w * .92, lt = top + ry * .9, lb = base + ry * .55;
+    let rungs = ''; for (let y = lt + (lb - lt) * .08; y < lb - 2; y += Math.max(5, (lb - lt) / 9)) rungs += `M${f1(l0)},${f1(y)} H${f1(l1)} `;
+    mk('path', {d: `M${f1(l0)},${f1(lt)} V${f1(lb)} M${f1(l1)},${f1(lt)} V${f1(lb)} ${rungs}`, fill: 'none', stroke: INK, 'stroke-width': f1(Math.max(1.2, k * .55)), 'stroke-linecap': 'round'}, g);
+  }
+  // its water, open to the sky
+  mk('ellipse', Object.assign({cx: f1(cx), cy: f1(top), rx: f1(rx), ry: f1(ry), fill: RIVER}, at), g);
+  mk('ellipse', {cx: f1(cx), cy: f1(top + ry * .12), rx: f1(rx * .78), ry: f1(ry * .55), fill: 'none', stroke: WAVE, 'stroke-width': f1(Math.max(1.2, k * .6))}, g);
+  // what it holds, painted on its side, as large as its face allows
+  const size = clamp(Math.min(w * (ladder ? .15 : .19), h * .2), 9.5, fs * 1.25);
+  txt(g, x + w * (ladder ? .41 : .5), top + h * .55 + size * .35, '50,000 L', size, {'text-anchor': 'middle', 'font-weight': 800});
+  return {cx, top, ry, rx};
+}
+
+// A dropper, its tip at (x, tip), as long as len: the glass with C8 in it, the rubber bulb on top.
+function dropper(g, x, tip, len, k) {
+  const w = len * .2, bulb = len * .3, neck = tip - len + bulb, at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'};
+  mk('path', Object.assign({d: `M${f1(x - w / 2)},${f1(neck)} V${f1(tip - len * .2)} L${f1(x - w * .12)},${f1(tip)} H${f1(x + w * .12)} L${f1(x + w / 2)},${f1(tip - len * .2)} V${f1(neck)} Z`, fill: GLASS}, at), g);
+  mk('path', {d: `M${f1(x - w * .32)},${f1(tip - len * .44)} V${f1(tip - len * .2)} L${f1(x - w * .06)},${f1(tip - len * .04)} H${f1(x + w * .06)} L${f1(x + w * .32)},${f1(tip - len * .2)} V${f1(tip - len * .44)} Z`, fill: C8}, g);
+  mk('path', Object.assign({d: `M${f1(x - w * .62)},${f1(neck + 1)} V${f1(tip - len + w * .55)} Q${f1(x - w * .62)},${f1(tip - len)} ${f1(x)},${f1(tip - len)} Q${f1(x + w * .62)},${f1(tip - len)} ${f1(x + w * .62)},${f1(tip - len + w * .55)} V${f1(neck + 1)} Z`, fill: ROOF}, at), g);
+  mk('rect', Object.assign({x: f1(x - w * .72), y: f1(neck - len * .02), width: f1(w * 1.44), height: f1(len * .06), rx: f1(len * .02), fill: SIDE}, at), g);
+}
+
+function build() {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  G = null;
+  if (W < 90 || H < 60) return;
+  const k = clamp(Math.min(W, H) * .011, 1.8, 3);
+  const fs = clamp(Math.min(W * .038, H * .055), 10.5, 13);
+  const at = {stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  const root = mk('g', {}, svg);
+  // The gauge stands on the right, the whole height of the picture; the landscape runs behind it.
+  const bw = clamp(W * .25, 66, 92), bx = W - bw - k / 2, Ws = bx - k * 2;
+  // The landscape in bands: the sky, the far bank under the plant, the river, the near bank.
+  const hb = H * .36, hr = hb + Math.max(5, H * .06), hn = hr + H * .26, r = Math.min(14, W * .045);
+  const defs = mk('defs', {}, root);
+  mk('path', {d: `M0,${f1(hb)} H${f1(W)} V${f1(H - r)} Q${f1(W)},${f1(H)} ${f1(W - r)},${f1(H)} H${f1(r)} Q0,${f1(H)} 0,${f1(H - r)} Z`}, mk('clipPath', {id: 'land'}, defs));
+  mk('rect', {x: 0, y: f1(hr), width: f1(W), height: f1(hn - hr)}, mk('clipPath', {id: 'water'}, defs));
+
+  // The plant on the far bank, and its smoke.
+  const sky = mk('g', {}, root);
+  const fh = hb * .74, fw = Math.min(Ws * .5, fh * 2.1), fx = Math.max(k, Ws * .03);
+  const pl = plant(sky, fx, hb, fw, fh, k);
+  const s = clamp(Math.min(fh * .2, (hb - fh) * .36), 3, 12);
+  pl.tops.forEach(([sx, top], i) => [[-.15, -.45, .55], [-.85, -1.05, .72], [-1.85, -1.4, .9]].forEach(([dx, dy, rr]) => {
+    const cy = Math.max(rr * s + k, top + dy * s), cx = Math.max(rr * s + k, sx + dx * s * (1 + i * .15));
+    mk('circle', {cx: f1(cx), cy: f1(cy), r: f1(rr * s), fill: SMOKE, stroke: INK, 'stroke-width': f1(k * .7)}, sky);
+  }));
+
+  // The banks and the river, the plant's waste running into it.
+  const land = mk('g', {'clip-path': 'url(#land)'}, root);
+  mk('rect', {x: 0, y: f1(hb), width: f1(W), height: f1(hr - hb + 1), fill: BANK[1]}, land);
+  mk('rect', {x: 0, y: f1(hr), width: f1(W), height: f1(hn - hr + 1), fill: RIVER}, land);
+  mk('rect', {x: 0, y: f1(hn), width: f1(W), height: f1(H - hn + 1), fill: BANK[0]}, land);
+  const rh = hn - hr, px = pl.pipeX, py = hr + rh * .22;
+  const water = mk('g', {'clip-path': 'url(#water)'}, land);
+  // the C8, a lime streak from the pipe drifting downstream, thinning as it goes
+  const top = [], bot = [];
+  for (let i = 0; i <= 40; i++) {
+    const u = i / 40, x = px + (W - px) * u, cy = py + rh * (.08 + .16 * u), hw = rh * (.17 * (1 - u) + .05) * (u < .06 ? .55 + u * 7.5 : 1);
+    top.push([x, cy - hw + Math.sin(u * 17) * rh * .015]); bot.push([x, cy + hw + Math.sin(u * 13 + 1) * rh * .015]);
+  }
+  const line = pts => pts.map((p, i) => (i ? 'L' : 'M') + f1(p[0]) + ',' + f1(p[1])).join(' ');
+  mk('path', {d: line(top) + ' ' + line(bot.reverse()).replace('M', 'L') + ' Z', fill: C8, stroke: INK, 'stroke-width': f1(k * .7), 'stroke-linejoin': 'round'}, water);
+  // waves under it
+  const wa = Math.max(4, rh * .1);
+  for (const [fx2, fy] of [[.06, .72], [.3, .84], [.55, .7], [.12, .3]]) {
+    const wx = Ws * fx2, wy = hr + rh * fy;
+    mk('path', {d: `M${f1(wx)},${f1(wy)} q${f1(wa)},${f1(-wa * .55)} ${f1(wa * 2)},0 t${f1(wa * 2)},0`, fill: 'none', stroke: WAVE, 'stroke-width': f1(Math.max(1.4, k * .75)), 'stroke-linecap': 'round'}, water);
+  }
+  // the pipe, down the far bank into the river
+  const pw = Math.max(4, k * 2.2);
+  mk('path', {d: `M${f1(px)},${f1(hb - 2)} V${f1(py)}`, stroke: INK, 'stroke-width': f1(pw + k * 1.6), fill: 'none'}, land);
+  mk('path', {d: `M${f1(px)},${f1(hb - 2)} V${f1(py)}`, stroke: STEEL, 'stroke-width': f1(pw), fill: 'none'}, land);
+  // what it is, on the streak where it is widest
+  if (rh * .3 > fs * .95) txt(land, px + pw + fs * .45, py + rh * .1 + fs * .36, 'C8', fs, {'font-weight': 800});
+  // the edges of the banks, and the slice's own edge
+  mk('path', {d: `M0,${f1(hr)} H${f1(W)} M0,${f1(hn)} H${f1(W)}`, stroke: INK, 'stroke-width': f1(k * .8), fill: 'none'}, root);
+  mk('path', {d: `M0,${f1(hb)} H${f1(W)} M0,${f1(hb)} V${f1(H - r)} Q0,${f1(H)} ${f1(r)},${f1(H)} H${f1(W - r)} Q${f1(W)},${f1(H)} ${f1(W)},${f1(H - r)} V${f1(hb)}`, fill: 'none', stroke: INK, 'stroke-width': f1(k), 'stroke-linejoin': 'round'}, root);
+
+  // The tank on the near bank, as wide as it is tall (4 m by 4 m holds 50 m³), and a person by it, 1.75 m.
+  const near = mk('g', {}, root);
+  const yB = H - (H - hn) * .24;
+  const th = clamp(Math.min((yB - hr) * .74, Ws * .46), 18, 400), tw = th;
+  const tx = Ws - tw - k * 1.5;
+  const tk = tank(near, tx, yB, tw, th, k, fs);
+  const ph = th * 1.75 / 4;
+  person(near, tx - ph * .42, yB + tk.ry * .6, ph, CLOTH);
+
+  // One drop: the dropper over the tank, the drop in its water, rings spreading. Shown at the second tap.
+  const one = mk('g', {opacity: step >= 2 ? 1 : 0}, root);
+  const dl = clamp((tk.top - tk.ry) * .55, 22, H * .3), dTip = tk.top - tk.ry - Math.max(6, dl * .28);
+  dropper(one, tk.cx, dTip, dl, k * .85);
+  const dr = Math.max(2.6, dl * .07);
+  const ripple = mk('g', {}, one);
+  for (const f of [.28, .5]) mk('ellipse', {cx: f1(tk.cx), cy: f1(tk.top), rx: f1(tk.rx * f), ry: f1(tk.ry * f), fill: 'none', stroke: C8, 'stroke-width': f1(Math.max(1.4, k * .7))}, ripple);
+  const drop = mk('path', {d: dropPath(tk.cx, tk.top - dr * .2, dr), fill: C8, stroke: INK, 'stroke-width': f1(k * .6)}, one);
+  // its name, to the dropper's left, in the sky, where the plant leaves room
+  const lab = mk('g', {}, one), lx = tk.cx - dl * .2 - fs * .5, ly = dTip - dl * .62;
+  const l1 = txt(lab, lx, ly, '1 drop', fs * 1.05, {'text-anchor': 'end', 'font-weight': 800, fill: '#fff'});
+  const l2 = txt(lab, lx, ly + fs * 1.2, '= 1 ppb', fs * .9, {'text-anchor': 'end', 'font-weight': 700, fill: '#fff'});
+
+  // The gauge: cream, the C8 in the water in parts per billion, the band from 1 ppb up in yellow.
+  const gauge = mk('g', {}, root), gy0 = k / 2, gh = H - k, gr = Math.min(10, bw * .12), inset = bw * .09;
+  const y0 = H - k / 2 - Math.max(fs * 1.05, H * .045), yT = gy0 + Math.max(4, bw * .08);
+  const Y = v => y0 - v / VMAX * (y0 - yT);
+  mk('rect', Object.assign({x: f1(bx), y: f1(gy0), width: f1(bw), height: f1(gh), rx: f1(gr), fill: WALL}, at), gauge);
+  const zt = gy0 + k / 2, zb = Y(1);
+  mk('path', {d: `M${f1(bx + k / 2)},${f1(zb)} V${f1(zt + gr)} Q${f1(bx + k / 2)},${f1(zt)} ${f1(bx + gr)},${f1(zt)} H${f1(bx + bw - gr)} Q${f1(bx + bw - k / 2)},${f1(zt)} ${f1(bx + bw - k / 2)},${f1(zt + gr)} V${f1(zb)} Z`, fill: ZONE}, gauge);
+  for (let i = 0; i <= 10; i++) {
+    const v = i / 10, y = Y(v), len = i % 5 === 0 ? bw * .22 : bw * .12;
+    mk('path', {d: `M${f1(bx + bw - inset - len)},${f1(y)} H${f1(bx + bw - inset)}`, stroke: INK, 'stroke-width': f1(Math.max(1.2, k * (i % 5 ? .5 : .75))), 'stroke-linecap': 'round'}, gauge);
+  }
+  mk('path', {d: `M${f1(bx + k / 2)},${f1(zb)} H${f1(bx + bw - k / 2)}`, stroke: INK, 'stroke-width': f1(k * 1.1)}, gauge);
+  txt(gauge, bx + inset, y0 + fs * .35, '0', fs, {'font-weight': 800});
+  const one1 = txt(gauge, bx + inset, zb + fs * 1.25, '1 ppb', fs * .92, {'font-weight': 800});
+  // what the yellow band is: detectable then; with a lens over it where it is tall enough. Both stay clear of the
+  // cursor once it has climbed to 1 ppb.
+  const ch = Math.max(fs * 2.8, 29);
+  const zh = zb - ch / 2 - 3 - zt, zf = clamp(Math.min(fs * .9, (bw - 2 * inset) / 5.6), 9.5, 12.5);
+  let zy = zt + zh / 2 + zf * .35;
+  if (zh > zf * 3.4) {
+    const lr = Math.min(zf * .62, zh * .16), lcx = bx + bw / 2 - lr * .3, lcy = zt + zh / 2 - zf * .55;
+    mk('circle', {cx: f1(lcx), cy: f1(lcy), r: f1(lr), fill: WALL, stroke: INK, 'stroke-width': f1(k * .75)}, gauge);
+    mk('path', {d: `M${f1(lcx + lr * .7)},${f1(lcy + lr * .7)} L${f1(lcx + lr * 1.5)},${f1(lcy + lr * 1.5)}`, stroke: INK, 'stroke-width': f1(k * 1.1), 'stroke-linecap': 'round'}, gauge);
+    zy = lcy + lr * 1.5 + zf * 1.15;
+  }
+  if (zh > zf * 1.15) txt(gauge, bx + bw / 2, zy, 'detectable', zf, {'text-anchor': 'middle', 'font-weight': 800});
+  // Where they started: 0.6, left behind once rounded up.
+  const ghost = mk('g', {opacity: step >= 1 ? 1 : 0}, gauge);
+  mk('path', {d: `M${f1(bx + inset * .6)},${f1(Y(.6))} H${f1(bx + bw - inset * .6)}`, stroke: INK, 'stroke-width': f1(Math.max(1.4, k * .7)), 'stroke-dasharray': `${f1(k * 1.6)} ${f1(k * 1.3)}`}, ghost);
+  txt(ghost, bx + inset, Y(.6) - fs * .45, '0.6', fs * .9, {'font-weight': 800});
+
+  // The cursor: ink, across the gauge, a notch on its outer side pointing at its level.
+  const cw = bw - inset * 1.1, cx0 = bx + inset * .55;
+  const c = mk('g', {}, gauge);
+  mk('path', {d: `M${f1(bx - fs * .6)},${f1(-fs * .5)} L${f1(bx + 1)},0 L${f1(bx - fs * .6)},${f1(fs * .5)} Z`, fill: INK}, c);
+  mk('rect', {x: f1(cx0), y: f1(-ch / 2), width: f1(cw), height: f1(ch), rx: f1(ch * .26), fill: INK}, c);
+  const c1 = txt(c, cx0 + cw / 2, -ch / 2 + ch * .37, '', Math.max(9.5, fs * .8), {'text-anchor': 'middle', 'font-weight': 700, fill: SOFT});
+  const c2 = txt(c, cx0 + cw / 2, -ch / 2 + ch * .84, '', fs * 1.05, {'text-anchor': 'middle', 'font-weight': 800, fill: '#fff'});
+
+  G = {W, H, k, fs, Y, c, c1, c2, one, drop, ripple, ghost, one1, tk, dTip, dr, lab, root};
+  render();
+  if (pending) { const p = pending; pending = null; p(); }
+}
+
+function render() {
+  if (!G) return;
+  G.c.setAttribute('transform', `translate(0,${f1(G.Y(cur.v))})`);
+  const up = cur.v > .8;
+  G.c1.textContent = up ? '“safe” limit' : 'calculated';
+  G.c2.textContent = up ? '1 ppb' : '0.6 ppb';
+  // the gauge's own "1 ppb" is under the cursor once it gets there
+  G.one1.setAttribute('opacity', cur.v > .75 ? 0 : 1);
 }
 
 function next() {
   const anim = !Kit.calm;
   if (step === 0) {
     step = 1; Kit.haptic('light');
-    if (anim) {
-      gsap.to(G.mk, {attr: {transform: `translate(${G.X(1)},0)`}, duration: .9, ease: 'back.out(1.6)'});
-      gsap.to(G.ghost, {opacity: 1, duration: .4});
-    } else draw();
-    G.mt.textContent = 'limit: 1 ppb';
+    if (anim && G) {
+      gsap.to(cur, {v: 1, duration: .9, ease: 'back.out(1.5)', onUpdate: render});
+      gsap.fromTo(G.ghost, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: .4, delay: .25});
+    } else { cur.v = 1; build(); }
     Kit.$('go').textContent = 'How much is 1 ppb?';
     Kit.$('say').textContent = 'It lands right at the detection line. Now see what 1 ppb means.';
   } else if (step === 1) {
-    step = 2; Kit.haptic('success');
-    if (anim) {
-      gsap.set(G.tanksG, {opacity: 1});
-      gsap.from(G.tanks, {opacity: 0, scale: .6, transformOrigin: '50% 50%', stagger: .03, duration: .3, ease: 'power2.out'});
-      gsap.fromTo(G.drop,
-        {attr: {transform: `translate(${G.t0.x},${G.t0.y - G.f * 4})`}, opacity: 0},
-        {attr: {transform: `translate(${G.t0.x},${G.t0.y})`}, opacity: 1, delay: .7, duration: .6, ease: 'bounce.out'});
-    } else draw();
+    step = 2; Kit.haptic('success'); gsap.killTweensOf(cur); cur.v = 1;
+    // The answer takes some of the picture's room: it is drawn again at the size it gets, and the drop falls there.
+    pending = anim ? () => {
+      const {drop, ripple, lab, tk, dTip, dr} = G;
+      gsap.fromTo(G.one, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: .35});
+      gsap.fromTo(drop, {y: dTip - tk.top + dr * 2.1}, {y: 0, duration: .55, delay: .45, ease: 'power2.in'});
+      gsap.fromTo(ripple, {opacity: 0, scale: .3, svgOrigin: `${f1(tk.cx)} ${f1(tk.top)}`}, {opacity: 1, scale: 1, duration: .6, delay: 1, ease: 'power2.out'});
+      gsap.from(lab, {opacity: 0, duration: .4, delay: 1.1});
+    } : () => {};
     Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    // If the room did not change, nothing draws it again: draw it here.
+    requestAnimationFrame(() => requestAnimationFrame(() => { if (pending) build(); }));
+    svg.setAttribute('aria-label', 'The cursor rounded up from 0.6 to 1 ppb, onto the line where C8 could first be detected. One drop of C8 falls into the 50,000 litre tank: that is 1 ppb.');
   }
 }
 Kit.$('go').addEventListener('click', next);
 
-Kit.onShow.card = () => draw();
-Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(G.mk, {opacity: 0, duration: .5, ease: 'power2.out'}); };
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.c, {opacity: 0, duration: .5, ease: 'power2.out'}); };
 Kit.play.card = async () => {
   const w = ms => new Promise(r => setTimeout(r, ms));
-  Kit.$('go').click(); await w(1000); Kit.$('go').click(); await w(1600);
+  Kit.$('go').click(); await w(1000); Kit.$('go').click(); await w(1800);
 };
-// Drawn again at the size it now has when the answer takes room from it: never shrunk whole into a corner.
-// Left too little room to draw again (a small phone), it keeps the drawing it has, shown smaller, whole.
-{ let seen = ''; const el = Kit.$('pic'); new ResizeObserver(() => { const b = el.getBoundingClientRect(), k = `${Math.round(b.width)}x${Math.round(b.height)}`; if (seen && k !== seen && b.height < 100) { el.dataset.kept = '1'; return; } if (seen && k !== seen) { const g = typeof gsap !== 'undefined' && gsap.globalTimeline, was = g ? new Set(g.getChildren(false, true, true)) : null; Kit.onShow.card(); if (g) g.getChildren(false, true, true).filter(t => !was.has(t) && t.totalDuration() < 60).forEach(t => t.progress(1, true)); } seen = k; }).observe(el); }
+// Drawn again, at the size it now has, whenever its box changes: another phone, or the answer taking room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) build(); }).observe(svg); }
 Kit.single();
 </script>
 </html>

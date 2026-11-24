@@ -1,31 +1,32 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: maths-fermat-padic-numbers -->
 <title>Astute free card</title>
+<!-- The picture: Diophantus' Arithmetica lies open at the top, and in the margin of its left page Fermat's note is
+     written in brown ink, xⁿ + yⁿ = zⁿ. The margin was too narrow: here it goes on, a long strip of paper hanging
+     from the book and marked in years since the note, 100 to 500, rolled up at its end. The reader drags Fermat's
+     quill down the strip to the year they think the proof came. Answered, the strip fills with writing down to 358
+     years, a line drawn under it, and beside it the new numbers the proof needed: the p-adics, drawn as they nest,
+     a disc holding three discs, each holding three.
+     Flat colours, thick ink outlines; drawn again at its real size whenever its room changes. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
 #sv{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .big{font:800 max(3cqh,18px)/1.1 var(--display)}
-#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
-.ink{fill:var(--k)}
-.mut{fill:var(--muted)}
-.trk{stroke:color-mix(in srgb,var(--k) 25%,transparent)}
-.tk{stroke:color-mix(in srgb,var(--k) 45%,transparent)}
-.gl{stroke:var(--k);stroke-dasharray:4 4;opacity:.7}
-.bar{fill:var(--k)}
-.flag{fill:var(--c);stroke:var(--k)}
-.hl{fill:color-mix(in srgb,var(--k) 10%,transparent)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.12 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);margin:0}
+/* Answered, the question steps back a size and gives the picture its room. */
+.answered .q{font-size:max(2.5cqh,15px)}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Guess · drag">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FERMAT</span></div>
-    <h2 class="q">How did Fermat’s Last Theorem lead to inventing p‑adic numbers?</h2>
-    <div class="stagebox" id="stage"><svg id="sv"></svg></div>
-    <p class="say" id="say">Drag the flag to how many years you think the proof took.</p>
-    <div id="why" class="gone"><p class="big" id="wbig">358 years</p><p class="body">Fermat’s “marvelous proof” never turned up, and the old tools couldn’t do it. New numbers had to be invented, the p‑adics, and they also gave a systematic way to solve other problems in Diophantus’ Arithmetica.</p></div>
+    <h2 class="q">How long did Fermat’s Last Theorem wait for its proof?</h2>
+    <div class="stagebox" id="stage"><svg id="sv" role="img" aria-label="Diophantus' Arithmetica lies open, with Fermat's note in its margin: x to the n plus y to the n equals z to the n, no whole-number answers for n greater than 2. The margin goes on below the book as a long strip of paper marked in years, 100 to 500, and you drag Fermat's quill down it to how many years you think the proof took."></svg></div>
+    <p class="say" id="say">Drag the quill to how many years you think the proof took.</p>
+    <div id="why" class="gone"><p class="big" id="wbig">358 years</p><p class="body">Fermat’s “marvelous proof” never turned up, and the old tools couldn’t do it. The proof needed numbers invented long after Fermat: the p‑adics, first described by Kurt Hensel in 1897. They also give a systematic way to solve other problems in Diophantus’ Arithmetica.</p></div>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Some problems only fall when we invent new numbers.</div>
     <div class="foot"><span class="src">Source · Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)</span></div>
   </div>
@@ -35,69 +36,194 @@
 const MAX = 500, REAL = 358;
 let guess = 60, shown = 0, revealed = false, done = false, dragging = false, G = {};
 const svg = Kit.$('sv');
-const S = (n, a) => Kit.mk(n, a, svg);
+// One ink for every outline; the book's leather and its cream pages with their printed lines; Fermat's brown ink;
+// the strip of paper; the p-adics in three flat tones, one for each level of the nest.
+const INK = '#10100c', LEATHER = '#8c4a2c', PAGE = '#fff8e8', GUTTER = '#efe0bf', PRINT = '#d6c8a5', BROWN = '#7a3f1d',
+  QUILL = '#ffffff', VANE = '#d9dee6', NEST = ['#fff8e8', '#b9edd3', '#ffc83d'], WHITE = '#ffffff';
+const FONT = 'Figtree, system-ui, sans-serif', SERIF = 'Fraunces, Georgia, serif', HAND = 'Caveat, cursive';
+const cl = (v, a, b) => Math.max(a, Math.min(b, v)), r1 = v => (+v).toFixed(1);
+const mk = (tag, at, par) => Kit.mk(tag, at, par || svg);
 function yOf(v){ return G.y0 + (G.y1 - G.y0) * v / MAX; }
 function vOf(clientY){
   const r = svg.getBoundingClientRect();
   const y = (clientY - r.top) * (G.H / r.height);
   return Math.round(Math.max(5, Math.min(MAX, (y - G.y0) / (G.y1 - G.y0) * MAX)));
 }
-function txt(x, y, s, size, cls, anchor, weight, fam){
-  const t = S('text', {x, y, 'font-size': size, 'text-anchor': anchor || 'start', class: cls || 'ink',
-    style: `font-family:${fam || 'var(--body)'};font-weight:${weight || 600}`});
+function txt(par, x, y, s, size, at = {}){
+  const t = mk('text', Object.assign({x: r1(x), y: r1(y), 'font-size': r1(size), 'font-family': FONT, 'font-weight': 700, fill: WHITE}, at), par);
   t.textContent = s; return t;
 }
-let fitted = null;
+// xⁿ + yⁿ = zⁿ, its powers raised in place, in any face.
+function formula(par, x, y, size, at){
+  const t = mk('text', Object.assign({x: r1(x), y: r1(y), 'font-size': r1(size)}, at), par);
+  for (const [s, up] of [['x', 0], ['n', 1], [' + y', 0], ['n', 1], [' = z', 0], ['n', 1]]) {
+    const sp = mk('tspan', up ? {'font-size': r1(Math.max(size * .7, 9.5)), dy: r1(-size * .38)} : {dy: r1(size * .38 * (s === 'x' ? 0 : 1))}, t);
+    sp.textContent = s;
+  }
+  return t;
+}
+
+// The open book, frontal: a leather cover under two cream pages that dip into the gutter, the left one with its
+// margin and Fermat's note in it.
+function book(W, bh, fs, k){
+  const g = mk('g', {}), L = 2 + k, R = W - 2 - k, top = k + 1, bot = bh - k, gx = W / 2, dip = Math.min(bh * .06, 7);
+  // Where the room is short, the book is only its foot: the leather and the two pages' lower edges, the gutter between.
+  if (bh < 40) {
+    mk('rect', {x: r1(L), y: r1(top + bh * .3), width: r1(R - L), height: r1(bot - top - bh * .3), rx: 4, fill: LEATHER, stroke: INK, 'stroke-width': k}, g);
+    mk('path', {d: `M${r1(L + 5)},${r1(top)} L${r1(gx)},${r1(top + 3)} L${r1(R - 5)},${r1(top)} L${r1(R - 5)},${r1(bot - 5)} Q${r1((gx + R) / 2)},${r1(bot - 7)} ${r1(gx)},${r1(bot - 3)} Q${r1((gx + L) / 2)},${r1(bot - 7)} ${r1(L + 5)},${r1(bot - 5)} Z`, fill: PAGE, stroke: INK, 'stroke-width': k * .8, 'stroke-linejoin': 'round'}, g);
+    mk('line', {x1: r1(gx), x2: r1(gx), y1: r1(top + 3), y2: r1(bot - 3), stroke: INK, 'stroke-width': k * .7}, g);
+    return {note: [L + 30, bot], margin: 0, pl: L + 5};
+  }
+  mk('path', {d: `M${L},${top + dip + 3} Q${L},${top + dip} ${L + 4},${top + dip} L${gx - 6},${top + dip} L${gx},${top + dip * 2.2} L${gx + 6},${top + dip} L${R - 4},${top + dip} Q${R},${top + dip} ${R},${top + dip + 3} L${R},${bot - 3} Q${R},${bot} ${R - 4},${bot} L${L + 4},${bot} Q${L},${bot} ${L},${bot - 3} Z`, fill: LEATHER, stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'}, g);
+  const pt = top, pb = bot - Math.max(4, bh * .045), pl = L + Math.max(4, W * .014), pr = R - Math.max(4, W * .014);
+  // The two pages: their top and bottom edges sag into the gutter.
+  const page = (x0, x1) => {
+    const inner = x1 === gx ? x1 : x0, outer = x1 === gx ? x0 : x1;
+    return `M${outer},${pt + dip * .3} Q${(outer + inner) / 2},${pt - dip * .5} ${inner},${pt + dip * 1.5} L${inner},${pb + dip * .9} Q${(outer + inner) / 2},${pb - dip * .4} ${outer},${pb} Z`;
+  };
+  const left = page(pl, gx), right = page(gx, pr);
+  mk('path', {d: left}, mk('clipPath', {id: 'lp'}, G.defs));
+  mk('path', {d: right}, mk('clipPath', {id: 'rp'}, G.defs));
+  mk('path', {d: left, fill: PAGE}, g); mk('path', {d: right, fill: PAGE}, g);
+  // The gutter's shade, inside each page.
+  const gw = (gx - pl) * .12;
+  mk('rect', {x: r1(gx - gw), y: 0, width: r1(gw), height: bh, fill: GUTTER, 'clip-path': 'url(#lp)'}, g);
+  mk('rect', {x: r1(gx), y: 0, width: r1(gw), height: bh, fill: GUTTER, 'clip-path': 'url(#rp)'}, g);
+  // The printed lines: the left page's column leaves its outer margin free; the right page's fills it.
+  const lh = cl(bh * .085, 5, 10), lw = Math.max(2, lh * .38), y0 = pt + dip * 2 + lh * 1.2, y1 = pb - lh * .6, pw = gx - pl;
+  const lines = (x0, x1, clip, seed) => {
+    let i = 0;
+    for (let y = y0; y < y1; y += lh, i++) {
+      const short = (i + seed) % 5 === 4 ? .55 : (i + seed) % 7 === 3 ? .8 : 1;
+      mk('line', {x1: r1(x0), x2: r1(x0 + (x1 - x0) * short), y1: r1(y), y2: r1(y), stroke: PRINT, 'stroke-width': r1(lw), 'stroke-linecap': 'round', 'clip-path': `url(#${clip})`}, g);
+    }
+  };
+  const margin = pw * .54;
+  lines(pl + margin, gx - pw * .14, 'lp', 0);
+  lines(gx + pw * .14, pr - pw * .1, 'rp', 2);
+  // Fermat's note, in his brown ink, in the left page's margin, a line of his writing under it.
+  const nx = pl + margin * .5, ny = y0 + (y1 - y0) * .34;
+  const note = mk('g', {transform: `rotate(-7 ${r1(nx)} ${r1(ny)})`}, g);
+  // Measured at one size, then set at the size that fits the margin.
+  const at = {'text-anchor': 'middle', 'font-family': HAND, 'font-weight': 700, fill: BROWN}, probe = formula(note, nx, ny, 20, at);
+  const nf = cl(20 * margin * .86 / Math.max(1, probe.getComputedTextLength()), 10, 19);
+  probe.remove(); formula(note, nx, ny, nf, at);
+  const sq = (y, w) => { let d = `M${r1(nx - w / 2)},${r1(y)}`; for (let i = 1; i <= 8; i++) d += ` Q${r1(nx - w / 2 + w * (i - .5) / 8)},${r1(y + (i % 2 ? -1 : 1) * nf * .18)} ${r1(nx - w / 2 + w * i / 8)},${r1(y)}`; mk('path', {d, fill: 'none', stroke: BROWN, 'stroke-width': Math.max(1.2, nf * .09), 'stroke-linecap': 'round'}, note); };
+  sq(ny + nf * .85, margin * .74); sq(ny + nf * 1.5, margin * .5);
+  // The page stack's edges, at the outer side of each page.
+  for (const s of [1, 2]) {
+    mk('path', {d: `M${r1(pl - s * 1.6)},${r1(pt + dip + s)} L${r1(pl - s * 1.6)},${r1(pb + s * .8)}`, stroke: INK, 'stroke-width': .9, opacity: .45}, g);
+    mk('path', {d: `M${r1(pr + s * 1.6)},${r1(pt + dip + s)} L${r1(pr + s * 1.6)},${r1(pb + s * .8)}`, stroke: INK, 'stroke-width': .9, opacity: .45}, g);
+  }
+  mk('path', {d: left, fill: 'none', stroke: INK, 'stroke-width': k * .8, 'stroke-linejoin': 'round'}, g);
+  mk('path', {d: right, fill: 'none', stroke: INK, 'stroke-width': k * .8, 'stroke-linejoin': 'round'}, g);
+  return {note: [nx, ny + nf * .3], margin, pl};
+}
+
+// Fermat's quill, its nib at (x, y), the feather sweeping up and right.
+function quill(par, x, y, len, k){
+  const g = mk('g', {transform: `translate(${r1(x)},${r1(y)}) rotate(-38)`}, par), w = len * .17;
+  mk('path', {d: `M${r1(len * .26)},0 C${r1(len * .42)},${r1(-w * 1.15)} ${r1(len * .86)},${r1(-w * 1.05)} ${r1(len)},${r1(-w * .15)} C${r1(len * .8)},${r1(w * .55)} ${r1(len * .45)},${r1(w * .75)} ${r1(len * .26)},0 Z`, fill: QUILL, stroke: INK, 'stroke-width': k * .8, 'stroke-linejoin': 'round'}, g);
+  for (const u of [.42, .56, .7, .84]) mk('path', {d: `M${r1(len * u)},${r1(-w * .02)} L${r1(len * (u + .07))},${r1(-w * .75)}`, stroke: VANE, 'stroke-width': Math.max(1.2, k * .55), 'stroke-linecap': 'round'}, g);
+  mk('path', {d: `M0,0 L${r1(len * .97)},${r1(-w * .12)}`, stroke: INK, 'stroke-width': k * .7, 'stroke-linecap': 'round'}, g);
+  mk('path', {d: `M0,0 L${r1(len * .13)},${r1(-w * .24)} L${r1(len * .28)},${r1(-w * .04)} L${r1(len * .13)},${r1(w * .16)} Z`, fill: INK}, g);
+  return g;
+}
+
+// The p-adic integers for p = 3, drawn as they nest: a disc holding three discs, each holding three more.
+function nest(par, cx, cy, r, k){
+  const g = mk('g', {}, par);
+  const level = (x, y, rr, d) => {
+    mk('circle', {cx: r1(x), cy: r1(y), r: r1(rr), fill: NEST[d], stroke: INK, 'stroke-width': r1(Math.max(1, k * (1 - d * .25)))}, g);
+    if (d === 2) return;
+    for (let i = 0; i < 3; i++) { const a = -Math.PI / 2 + i * 2 * Math.PI / 3; level(x + rr * .5 * Math.cos(a), y + rr * .5 * Math.sin(a), rr * .43, d + 1); }
+  };
+  level(cx, cy, r, 0);
+  return g;
+}
+
 function draw(){
-  // Left too little room to draw again (a small phone), it keeps the size it was drawn at, shown smaller, whole.
-  const keep = fitted && fitted.H >= 100 && svg.getBoundingClientRect().height < 100;
-  if (keep) svg.dataset.kept = '1';
-  const {W, H, f} = keep ? fitted : (fitted = Kit.fitSvg(svg));
-  while (svg.firstChild) svg.firstChild.remove();
-  const fs = Math.max(13, Math.min(f, 22)), sm = Math.max(12, fs * .85);
-  G = {W, H, fs, sm, y0: fs * 5.2, y1: H - fs * .9, ax: W * .42};
-  // Once revealed, the scale ends where the three lines under the bar's end still fit above the foot;
-  // where even a short scale leaves them no room, they are left out (the answer below says it).
-  // Shown smaller, its lines keep a little more air, so they stay apart at the smaller size.
-  const g0 = keep ? .9 : .4, st = keep ? 1.5 : 1.35;
-  let pad = revealed;
-  if (revealed) {
-    const fit = G.y0 + (H - 1 - fs * (g0 + 1.15 * st + .3) - sm * 2 * st - G.y0) * MAX / REAL;
-    if (fit - G.y0 >= fs * 4) G.y1 = Math.min(G.y1, fit); else pad = false;
-  }
-  const {ax, y0, y1} = G;
-  txt(W * .04, fs * 1.8, 'xⁿ + yⁿ = zⁿ', fs * 1.7, 'ink', 'start', 800, 'var(--display)');
-  txt(W * .04, fs * 3.3, 'no whole‑number answers for n > 2', sm, 'mut', 'start', 600);
-  S('line', {x1: ax, y1: y0, x2: ax, y2: y1, class: 'trk', 'stroke-width': fs * .5, 'stroke-linecap': 'round'});
-  for (let v = 100; v <= MAX; v += 100){
-    S('line', {x1: ax - fs * .6, x2: ax - fs * .25, y1: yOf(v), y2: yOf(v), class: 'tk', 'stroke-width': 1.5});
-    if (!revealed) txt(ax - fs * .9, yOf(v) + sm * .35, v + ' yrs', sm, 'mut', 'end', 600, 'var(--mono)');
-  }
-  S('circle', {cx: ax, cy: y0, r: fs * .45, class: 'ink'});
-  if (!revealed) txt(ax - fs * .9, y0 + sm * .35, 'margin note', sm, 'mut', 'end', 700);
-  // real bar
-  G.bar = S('rect', {x: ax - fs * .25, y: y0, width: fs * .5, height: Math.max(0, yOf(shown) - y0), rx: fs * .25, class: 'bar'});
-  G.cnt = txt(ax - fs * .9, yOf(shown) + fs * .4, shown + ' years', fs * 1.15, 'ink', 'end', 800, 'var(--display)');
-  G.cnt.style.opacity = revealed ? 1 : 0;
-  G.pad = S('g', {}); G.pad.style.opacity = done ? 1 : 0;
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.replaceChildren();
+  G = {W, H, defs: mk('defs', {})};
+  const fs = cl(f * .8, 11.5, 15), sm = cl(fs * .9, 11, 13.5), k = cl(Math.min(W, H) * .009, 1.7, 2.6);
+  // The book takes the top, the strip the rest, its roll at the foot under the last year.
+  const bh = cl(H * (revealed ? .24 : .34), 28, 150), sw = cl(W * .27, 58, 100), sx = W * .55 - sw / 2;
+  const rollH = cl(sw * .22, 12, 20), y0 = bh + fs * .45, y1 = H - rollH - sm * .9 - k;
+  Object.assign(G, {fs, sm, k, y0, y1, sx, sw});
+  // The strip: tucked under the book, its foot rolled up.
+  const strip = mk('g', {});
+  mk('rect', {x: r1(sx), y: r1(bh - 8), width: r1(sw), height: r1(y1 + sm * .9 - bh + 8 + rollH * .5), fill: PAGE, stroke: INK, 'stroke-width': k, 'stroke-linejoin': 'round'}, strip);
+  const ry = y1 + sm * .9;
+  mk('rect', {x: r1(sx - 3), y: r1(ry), width: r1(sw + 6), height: r1(rollH), rx: r1(rollH / 2), fill: GUTTER, stroke: INK, 'stroke-width': k}, strip);
+  mk('ellipse', {cx: r1(sx + sw + 3 - rollH * .3), cy: r1(ry + rollH / 2), rx: r1(rollH * .22), ry: r1(rollH * .36), fill: PAGE, stroke: INK, 'stroke-width': k * .6}, strip);
+  // The proof, written down the strip as it comes in: lines of handwriting, ruled off at 358 years.
   const yr = yOf(REAL);
-  txt(ax - fs * .9, yr + fs * 1.75, 'until proved,', sm, 'mut', 'end', 600).remove && null;
-  const lines = [['until proved,', sm, 'mut', 600], ['with new numbers:', sm, 'mut', 600], ['the p‑adics', fs * 1.15, 'ink', 800]];
-  svg.lastChild.remove();
-  let yy = yr + fs * g0;
-  if (pad) lines.forEach(([s, z, c, w]) => { yy += z * st; const t = txt(ax - fs * .9, yy, s, z, c, 'end', w, w > 700 ? 'var(--display)' : 'var(--body)'); G.pad.appendChild(t); });
-  // guess flag
-  const gy = yOf(guess);
-  G.g = S('g', {});
-  const ln = Kit.mk('line', {x1: ax, x2: W * .96, y1: gy, y2: gy, class: 'gl', 'stroke-width': 2}, G.g);
-  Kit.mk('circle', {cx: ax, cy: gy, r: fs * .7, class: 'flag', 'stroke-width': 3}, G.g);
-  // Its two lines above and below the line; both above it when the guess is too near the foot.
-  const low = gy + fs * 1.4 > H;
-  const t1 = Kit.mk('text', {x: ax + fs * 1.3, y: gy - fs * (low ? 1.9 : .45), 'font-size': sm, class: 'mut', style: 'font-family:var(--body);font-weight:700'}, G.g);
-  t1.textContent = revealed ? 'your guess' : 'your guess · drag';
-  const t2 = Kit.mk('text', {x: ax + fs * 1.3, y: low ? gy - fs * .45 : gy + fs * 1.05, 'font-size': fs * 1.1, class: 'ink', style: 'font-family:var(--display);font-weight:800'}, G.g);
-  t2.textContent = guess + ' years';
-  G.t2 = t2;
+  if (shown > 0) {
+    const w = mk('g', {}, strip), ye = yOf(shown), lh = cl((y1 - y0) / 40, 3.4, 7);
+    mk('rect', {x: r1(sx + k / 2), y: r1(y0 - fs * .45), width: r1(sw - k), height: r1(Math.max(0, ye - y0 + fs * .45)), fill: GUTTER}, w);
+    let i = 0;
+    for (let y = y0 + lh * .4; y < ye - lh * .3; y += lh, i++) {
+      const a = sx + sw * .14, b = sx + sw * (i % 4 === 3 ? .6 : .86); let d = `M${r1(a)},${r1(y)}`;
+      const n = 7; for (let j = 1; j <= n; j++) d += ` Q${r1(a + (b - a) * (j - .5) / n)},${r1(y + ((i + j) % 2 ? -1 : 1) * lh * .32)} ${r1(a + (b - a) * j / n)},${r1(y)}`;
+      mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': r1(Math.max(1, lh * .22)), 'stroke-linecap': 'round', opacity: .8}, w);
+    }
+    if (done) mk('line', {x1: r1(sx - k * 2.5), x2: r1(sx + sw + k * 2.5), y1: r1(yr), y2: r1(yr), stroke: INK, 'stroke-width': r1(k * 1.5), 'stroke-linecap': 'round'}, w);
+  }
+  // Under the rule, once the proof is done, the new numbers it needed: the p-adics, nested, like a seal.
+  let seal = 0;
+  if (done) {
+    seal = cl(Math.min(sw * .36, (y1 + sm * .9 - yr - k * 4) / 2), 0, 34);
+    if (seal >= 9) nest(strip, sx + sw / 2, yr + k * 2 + seal, seal, k);
+  }
+  // Years since the note, every hundred, written on the strip; every other hundred where they would crowd; none
+  // where the writing or the seal has covered them.
+  const step = (y1 - y0) / 5 < sm * 1.35 ? 200 : 100;
+  for (let v = 100; v <= MAX; v += 100) {
+    const y = yOf(v);
+    if (shown >= v - 6 || (done && seal >= 9)) continue;
+    mk('line', {x1: r1(sx), x2: r1(sx + sw * .13), y1: r1(y), y2: r1(y), stroke: INK, 'stroke-width': r1(k * .8)}, strip);
+    if (v % step === 0) txt(strip, sx + sw * .19, y + sm * .36, v + ' yrs', sm, {fill: INK, 'font-weight': 800});
+  }
+  const bk = book(W, bh, fs, k);
+  // What the note says, under the book on its side, a thin line up to it. Once the answer is in, the room is the answer's.
+  if (!revealed) {
+    const cap = mk('g', {}), cx = bk.pl + 2, cy = bh + fs * 1.6;
+    txt(cap, cx, cy, 'no whole‑number', sm, {'font-weight': 700});
+    txt(cap, cx, cy + sm * 1.4, 'answers for n > 2', sm, {'font-weight': 700});
+    const ny = Math.min(bk.note[1] + fs * 1.9, bh - k * 3);
+    mk('path', {d: `M${r1(bk.note[0])},${r1(ny)} L${r1(bk.note[0])},${r1(cy - sm * 1.15)}`, stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, cap);
+    mk('circle', {cx: r1(bk.note[0]), cy: r1(ny), r: 2.4, fill: INK}, cap);
+  }
+
+  // The answer, beside the strip on the left: 358 years, until proved, with new numbers, the p-adics; a line from its
+  // first words to the rule under the writing.
+  G.pad = mk('g', {opacity: done ? 1 : 0});
+  if (revealed) {
+    const big = cl(fs * 1.35, 15, 21), pad = cl(fs * 1.12, 13, 17), x = sx - fs * .8;
+    let lines = [['358 years', big, SERIF, 800], ['until proved,', sm, FONT, 600], ['with new numbers:', sm, FONT, 600], ['the p‑adics', pad, SERIF, 800]];
+    if (H - y0 < big + sm * 2.6 + pad * 2.4) lines = [lines[0], lines[3]];
+    // Each line's baseline under the one before: what the one before hangs below it, and what this one rises above it.
+    const gaps = lines.map((l, i) => i ? lines[i - 1][1] * .32 + l[1] * .98 : 0), hgt = gaps.reduce((a, b) => a + b, 0) + sm * .3;
+    const first = cl(yr + big * .32, y0 + big * .8, H - hgt - 2);
+    let y = first;
+    lines.forEach(([s, z, fam, w], i) => { y += gaps[i]; txt(G.pad, x, y, s, z, {'text-anchor': 'end', 'font-family': fam, 'font-weight': w}); });
+    mk('path', {d: `M${r1(x + fs * .3)},${r1(first - big * .32)} L${r1(sx - k * 2.5)},${r1(yr)}`, stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, G.pad);
+    // Where the strip below the rule is too short for the seal, the nest goes over the answer instead.
+    if (done && seal < 9) { const up = cl(Math.min((x - 4) * .3, (first - big - y0) / 2.2), 0, 40); if (up >= 12) nest(G.pad, x - up, first - big - up, up, k); }
+  }
+
+  // The guess: a dashed line across the strip, the quill's nib on it, and what it says on the right.
+  const gy = yOf(guess), qx = sx + sw + 1;
+  G.g = mk('g', {});
+  mk('line', {x1: r1(sx), x2: r1(sx + sw), y1: r1(gy), y2: r1(gy), stroke: INK, 'stroke-width': r1(k * .9), 'stroke-dasharray': `${r1(k * 2.4)} ${r1(k * 1.8)}`}, G.g);
+  const ql = cl(Math.min(W - qx - 4, H * .3) * 1.1, 34, 100);
+  quill(G.g, qx - 2, gy, ql, k);
+  // What the guess says: under the quill on its right; where the foot leaves no room, over the quill, clear of its feather.
+  const yrs = cl(fs * 1.15, 13, 18), lx = qx + fs * .35, low = gy + sm * .3 + yrs * 1.4 + sm > H;
+  const ty = low ? gy - ql * .8 - yrs * 1.02 - sm * .32 : gy + sm * 1.35;
+  txt(G.g, lx, ty, 'your guess', sm, {'font-weight': 700});
+  G.t2 = txt(G.g, lx, ty + sm * .32 + yrs * 1.02, guess + ' years', yrs, {'font-family': SERIF, 'font-weight': 800});
 }
 function move(e){ if (!dragging || revealed) return; guess = vOf(e.clientY); draw(); }
 svg.addEventListener('pointerdown', e => {
@@ -109,18 +235,16 @@ svg.addEventListener('pointerup', e => { if (!dragging || revealed) return; drag
 function reveal(){
   revealed = true; Kit.haptic('light');
   const off = Math.abs(guess - REAL);
+  // The drawing now says both numbers, the real one and the guess, beside the strip: the headline gives its room back.
   Kit.$('wbig').textContent = `358 years. You guessed ${guess}.`;
+  Kit.$('wbig').classList.add('gone');
+  Kit.$('card').classList.add('answered');
   Kit.hide('say'); Kit.show('why'); Kit.show('keep');
   draw();
   const fin = () => { shown = REAL; done = true; draw(); Kit.haptic(off <= 50 ? 'success' : 'light'); };
   if (Kit.calm){ fin(); return; }
   const o = {v: 0};
-  gsap.to(o, {v: REAL, duration: 2.2, ease: 'power2.inOut', onUpdate: () => {
-    shown = Math.round(o.v);
-    G.bar.setAttribute('height', Math.max(0, yOf(shown) - G.y0));
-    G.cnt.setAttribute('y', yOf(shown) + G.fs * .4);
-    G.cnt.textContent = shown + ' years'; G.cnt.style.opacity = 1;
-  }, onComplete: () => { fin(); gsap.from(G.pad, {opacity: 0, y: 8, duration: .5}); }});
+  gsap.to(o, {v: REAL, duration: 2.2, ease: 'power2.inOut', onUpdate: () => { shown = Math.round(o.v); draw(); }, onComplete: () => { fin(); gsap.from(G.pad, {opacity: 0, y: 8, duration: .5}); }});
 }
 Kit.onShow.card = () => draw();
 Kit.onEnter.card = () => { if (!Kit.calm && G.g && !revealed) gsap.fromTo(G.g, {y: -14}, {y: 0, duration: .7, ease: 'bounce.out', repeat: 1, repeatDelay: .6}); };
@@ -132,6 +256,8 @@ Kit.play.card = async () => {
   ev('pointermove', at(200)); await new Promise(r => setTimeout(r, 60));
   ev('pointerup', at(200)); await new Promise(r => setTimeout(r, 3000));
 };
+// Drawn again at the size it now has whenever its room changes: the answer coming in takes room from it.
+{ let seen = ''; new ResizeObserver(() => { const b = svg.getBoundingClientRect(), key = `${Math.round(b.width)}x${Math.round(b.height)}`; if (key === seen) return; const first = !seen; seen = key; if (!first) draw(); }).observe(svg); }
 Kit.single();
 </script>
 </html>
