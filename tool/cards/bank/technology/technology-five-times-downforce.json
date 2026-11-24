@@ -29,7 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Blocks to drag up to show how hard a micromouse's fan pulls it to the floor, in mouse weights. Drag first, then choose Drag up to stack the fan's pull."
+    "label": "A micromouse, a small robot car with a fan on its back, sits on the black floor of its maze in front of a white wall with a red top. Drag up to stack blocks on its fan, each one the mouse's own weight, to guess how hard the fan pulls it to the floor, then say how sure you are."
   },
   "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=1214s",

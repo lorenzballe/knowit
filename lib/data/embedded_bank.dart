@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611241159,
- "built": "2026-11-24T11:59:56Z",
+ "version": 202611241207,
+ "built": "2026-11-24T12:07:04Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -243660,8 +243660,8 @@ const String kEmbeddedBank = r'''
    "difficulty": "medium",
    "principle": "reflection",
    "question": "When the handle turns back, what does the pointer do first?",
-   "answer": "It waits, then follows. A hinge is a pin in a hole, with some give. When the motion reverses, the pointer waits before it follows, so it no longer matches the handle. That delay is backlash, the main cause of inaccuracy in traditional mechanisms.",
-   "move": "That delay is backlash, the main cause of inaccuracy in traditional mechanisms.",
+   "answer": "It waits, then follows. A hinge is a pin in a hole, with some give. When the motion reverses, the pointer waits before it follows, so it no longer matches the handle. That delay is backlash, a classic source of error in traditional mechanisms.",
+   "move": "That delay is backlash, a classic source of error in traditional mechanisms.",
    "keywords": [
     "backlash",
     "hinge",
@@ -243681,12 +243681,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Multiple-choice question: when a hinge's handle turns back, what does the pointer do first? Options: moves at once, waits then follows, or jumps past the hold point then lets go. Choices unlock after a first pass through the text.",
-    "page": "pages/technology-backlash-pin-hole.html?v=370b228fb017",
-    "bytes": 18012,
+    "label": "A hand holds a red handle whose pin sits in a hole in a pointer arm, with some give, shown big in a round zoom; the arm hangs from a pivot over a scale. Hold to push and let go to pull back, then pick what the pointer does first: moves at once, waits then follows, or jumps past; then say how sure you are.",
+    "page": "pages/technology-backlash-pin-hole.html?v=304c295911b9",
+    "bytes": 24142,
     "thumbs": {
-     "front": "thumbs/technology-backlash-pin-hole-front.webp?v=d81e84d6bc84",
-     "back": "thumbs/technology-backlash-pin-hole-back.webp?v=d81e84d6bc84"
+     "front": "thumbs/technology-backlash-pin-hole-front.webp?v=69bbef4ebea0",
+     "back": "thumbs/technology-backlash-pin-hole-back.webp?v=69bbef4ebea0"
     }
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
@@ -249140,12 +249140,12 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Blocks to drag up to show how hard a micromouse's fan pulls it to the floor, in mouse weights. Drag first, then choose Drag up to stack the fan's pull.",
-    "page": "pages/technology-five-times-downforce.html?v=e617deb1f6a9",
-    "bytes": 15483,
+    "label": "A micromouse, a small robot car with a fan on its back, sits on the black floor of its maze in front of a white wall with a red top. Drag up to stack blocks on its fan, each one the mouse's own weight, to guess how hard the fan pulls it to the floor, then say how sure you are.",
+    "page": "pages/technology-five-times-downforce.html?v=29e1083de17c",
+    "bytes": 17167,
     "thumbs": {
-     "front": "thumbs/technology-five-times-downforce-front.webp?v=9ae79647a9c7",
-     "back": "thumbs/technology-five-times-downforce-back.webp?v=9ae79647a9c7"
+     "front": "thumbs/technology-five-times-downforce-front.webp?v=13ee2aaaa325",
+     "back": "thumbs/technology-five-times-downforce-back.webp?v=13ee2aaaa325"
     }
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
@@ -249611,11 +249611,11 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Split-screen slide with a slider to move forward a century on both sides, from today to +100 years. It asks how to think about the future of graphene. One side shows a person from 1919 holding a piece of plastic, the other a person from 2019 holding a graphene sheet.",
-    "page": "pages/technology-graphene-plastic-century.html?v=c91ba9b2c8e7",
-    "bytes": 9314,
+    "page": "pages/technology-graphene-plastic-century.html?v=ee188c00b490",
+    "bytes": 18972,
     "thumbs": {
-     "front": "thumbs/technology-graphene-plastic-century-front.webp?v=0ce382b283e5",
-     "back": "thumbs/technology-graphene-plastic-century-back.webp?v=0ce382b283e5"
+     "front": "thumbs/technology-graphene-plastic-century-front.webp?v=bd6715f823c4",
+     "back": "thumbs/technology-graphene-plastic-century-back.webp?v=bd6715f823c4"
     }
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
@@ -255776,13 +255776,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two steel furnaces race side by side: a modern mill makes fast, even steel, while the ancient tatara makes slow, uneven steel. The page asks why the best Japanese swords still need tatara steel.",
+    "label": "A modern steel mill and the ancient tatara furnace of Shimane, with its smiths in white, race to make steel: the mill turns out identical grey bars fast, the tatara slowly a pile of pieces of every shade, darker with more carbon. The page asks why the best Japanese swords still need tatara steel.",
     "graded": false,
-    "page": "pages/technology-tatara-steel-race.html?v=dc4ef090fe89",
-    "bytes": 7885,
+    "page": "pages/technology-tatara-steel-race.html?v=781513d24678",
+    "bytes": 22764,
     "thumbs": {
-     "front": "thumbs/technology-tatara-steel-race-front.webp?v=2d195c673ef5",
-     "back": "thumbs/technology-tatara-steel-race-back.webp?v=2d195c673ef5"
+     "front": "thumbs/technology-tatara-steel-race-front.webp?v=eed8a97686ec",
+     "back": "thumbs/technology-tatara-steel-race-back.webp?v=eed8a97686ec"
     }
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
